@@ -202,18 +202,15 @@ _gcd.exit33.i.i:                                  ; preds = %.lr.ph.i28.i.i, %_g
 
 _grids_overlap_axis.exit.i:                       ; preds = %_gcd.exit33.i.i
   %i.pp = icmp ugt i16 %i.pg, %i.pc               ; 3 uses
-  %1 = zext i16 %.0.lcssa.i32.i.i to i32
   %i.pq = sub i16 %i.pc, %i.pg
   %i.pr = sub i16 %i.pg, %i.pc
   %.sink48.i.i = select i1 %i.pp, i16 %i.pr, i16 %i.pq
   %.sink.i.i = select i1 %i.pp, i16 %i.pe, i16 %i.pk
   %.sink44.i.i = select i1 %i.pp, i16 %i.pk, i16 %i.pe
   %i.ps = urem i16 %.sink48.i.i, %.0.lcssa.i32.i.i ; 2 uses
-  %.zext40.i.i = zext i16 %i.ps to i32
   %i.pt = icmp ult i16 %i.ps, %.sink.i.i
-  %2 = sub nuw nsw i32 %1, %.zext40.i.i
-  %3 = zext i16 %.sink44.i.i to i32
-  %i.pu = icmp samesign ult i32 %2, %3
+  %1 = sub nuw i16 %.0.lcssa.i32.i.i, %i.ps
+  %i.pu = icmp ult i16 %1, %.sink44.i.i
   %i.pv = select i1 %i.pt, i1 true, i1 %i.pu
   br i1 %i.pv, label %_grids_overlap_axis.exit.thread.i, label %bb.ck
 
@@ -257,18 +254,15 @@ _gcd.exit33.i82.i:                                ; preds = %.lr.ph.i28.i78.i, %
 
 _grids_overlap_axis.exit90.i:                     ; preds = %_gcd.exit33.i82.i
   %i.qj = icmp ugt i16 %i.qa, %i.pw               ; 3 uses
-  %4 = zext i16 %.0.lcssa.i32.i83.i to i32
   %i.qk = sub i16 %i.pw, %i.qa
   %i.ql = sub i16 %i.qa, %i.pw
   %.sink48.i85.i = select i1 %i.qj, i16 %i.ql, i16 %i.qk
   %.sink.i86.i = select i1 %i.qj, i16 %i.py, i16 %i.qe
   %.sink44.i87.i = select i1 %i.qj, i16 %i.qe, i16 %i.py
   %i.qm = urem i16 %.sink48.i85.i, %.0.lcssa.i32.i83.i ; 2 uses
-  %.zext40.i88.i = zext i16 %i.qm to i32
   %i.qn = icmp ult i16 %i.qm, %.sink.i86.i
-  %5 = sub nuw nsw i32 %4, %.zext40.i88.i
-  %6 = zext i16 %.sink44.i87.i to i32
-  %i.qo = icmp samesign ult i32 %5, %6
+  %2 = sub nuw i16 %.0.lcssa.i32.i83.i, %i.qm
+  %i.qo = icmp ult i16 %2, %.sink44.i87.i
   %i.qp = select i1 %i.qn, i1 true, i1 %i.qo
   br i1 %i.qp, label %_grids_overlap_axis.exit90.thread.i, label %bb.ck
 
@@ -312,18 +306,15 @@ _gcd.exit33.i103.i:                               ; preds = %.lr.ph.i28.i99.i, %
 
 _grids_overlap_axis.exit111.i:                    ; preds = %_gcd.exit33.i103.i
   %i.rd = icmp ugt i16 %i.qu, %i.qq               ; 3 uses
-  %7 = zext i16 %.0.lcssa.i32.i104.i to i32
   %i.re = sub i16 %i.qq, %i.qu
   %i.rf = sub i16 %i.qu, %i.qq
   %.sink48.i106.i = select i1 %i.rd, i16 %i.rf, i16 %i.re
   %.sink.i107.i = select i1 %i.rd, i16 %i.qs, i16 %i.qy
   %.sink44.i108.i = select i1 %i.rd, i16 %i.qy, i16 %i.qs
   %i.rg = urem i16 %.sink48.i106.i, %.0.lcssa.i32.i104.i ; 2 uses
-  %.zext40.i109.i = zext i16 %i.rg to i32
   %i.rh = icmp ult i16 %i.rg, %.sink.i107.i
-  %8 = sub nuw nsw i32 %7, %.zext40.i109.i
-  %9 = zext i16 %.sink44.i108.i to i32
-  %i.ri = icmp samesign ult i32 %8, %9
+  %3 = sub nuw i16 %.0.lcssa.i32.i104.i, %i.rg
+  %i.ri = icmp ult i16 %3, %.sink44.i108.i
   %i.rj = select i1 %i.rh, i1 true, i1 %i.ri
   br i1 %i.rj, label %_grids_overlap_axis.exit111.thread.i, label %bb.ck
 

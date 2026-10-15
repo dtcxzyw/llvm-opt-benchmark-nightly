@@ -204,10 +204,8 @@ bb.h:                                             ; preds = %bb.g, %bb.e
 bb.i:                                             ; preds = %bb.h
   %i.z = getelementptr i8, ptr %i.h, i64 1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !28   ; 3 uses
-  %5 = zext i8 %i.aa to i64
   %i.ab = getelementptr i8, ptr %i.x, i64 8
   %i.ac = load i8, ptr %i.ab, align 8, !tbaa !69  ; 2 uses
-  %6 = zext i8 %i.ac to i64
   %.not172 = icmp ult i8 %i.aa, %i.ac
   br i1 %.not172, label %bb.m, label %bb.j
 
@@ -218,8 +216,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not173, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %7 = sub nuw nsw i64 %5, %6
-  %i.af = getelementptr [2 x i8], ptr %i.y, i64 %7
+  %5 = sub nuw i8 %i.aa, %i.ac
+  %6 = zext i8 %5 to i64
+  %i.af = getelementptr [2 x i8], ptr %i.y, i64 %6
   %i.ag = load i16, ptr %i.af, align 2, !tbaa !34 ; 2 uses
   %.not174 = icmp eq i16 %i.ag, -2
   br i1 %.not174, label %bb.m, label %bb.l

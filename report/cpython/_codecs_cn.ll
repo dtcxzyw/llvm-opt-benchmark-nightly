@@ -204,10 +204,8 @@ bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr i8, ptr %i.b, i64 1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !25
   %i.o = xor i8 %i.n, -128                        ; 3 uses
-  %5 = zext i8 %i.o to i64
   %i.p = getelementptr i8, ptr %i.k, i64 8
   %i.q = load i8, ptr %i.p, align 8, !tbaa !37    ; 2 uses
-  %6 = zext i8 %i.q to i64
   %.not30 = icmp ult i8 %i.o, %i.q
   br i1 %.not30, label %.thread, label %bb.f
 
@@ -218,8 +216,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not31, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %7 = sub nuw nsw i64 %5, %6
-  %i.t = getelementptr [2 x i8], ptr %i.l, i64 %7
+  %5 = sub nuw i8 %i.o, %i.q
+  %6 = zext i8 %5 to i64
+  %i.t = getelementptr [2 x i8], ptr %i.l, i64 %6
   %i.u = load i16, ptr %i.t, align 2, !tbaa !29   ; 2 uses
   %.not32 = icmp eq i16 %i.u, -2
   br i1 %.not32, label %.thread, label %bb.h
@@ -472,10 +471,8 @@ bb.j:                                             ; preds = %.thread60
   %i.x = getelementptr i8, ptr %i.b, i64 1
   %i.y = load i8, ptr %i.x, align 1, !tbaa !25
   %i.z = xor i8 %i.y, -128                        ; 3 uses
-  %5 = zext i8 %i.z to i64
   %i.aa = getelementptr i8, ptr %i.v, i64 8
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !37  ; 2 uses
-  %6 = zext i8 %i.ab to i64
   %.not53 = icmp ult i8 %i.z, %i.ab
   br i1 %.not53, label %bb.n, label %bb.k
 
@@ -486,8 +483,9 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not54, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %7 = sub nuw nsw i64 %5, %6
-  %i.ae = getelementptr [2 x i8], ptr %i.w, i64 %7
+  %5 = sub nuw i8 %i.z, %i.ab
+  %6 = zext i8 %5 to i64
+  %i.ae = getelementptr [2 x i8], ptr %i.w, i64 %6
   %i.af = load i16, ptr %i.ae, align 2, !tbaa !29 ; 2 uses
   %.not55 = icmp eq i16 %i.af, -2
   br i1 %.not55, label %bb.n, label %bb.m
@@ -508,10 +506,8 @@ bb.n:                                             ; preds = %bb.l, %bb.k, %bb.j,
 bb.o:                                             ; preds = %bb.n
   %i.am = getelementptr i8, ptr %i.b, i64 1
   %i.an = load i8, ptr %i.am, align 1, !tbaa !25  ; 3 uses
-  %8 = zext i8 %i.an to i64
   %i.ao = getelementptr i8, ptr %i.ak, i64 8
   %i.ap = load i8, ptr %i.ao, align 8, !tbaa !37  ; 2 uses
-  %9 = zext i8 %i.ap to i64
   %.not57 = icmp ult i8 %i.an, %i.ap
   br i1 %.not57, label %.thread62, label %bb.p
 
@@ -522,8 +518,9 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not58, label %.thread62, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %10 = sub nuw nsw i64 %8, %9
-  %i.as = getelementptr [2 x i8], ptr %i.al, i64 %10
+  %7 = sub nuw i8 %i.an, %i.ap
+  %8 = zext i8 %7 to i64
+  %i.as = getelementptr [2 x i8], ptr %i.al, i64 %8
   %i.at = load i16, ptr %i.as, align 2, !tbaa !29 ; 2 uses
   %.not59 = icmp eq i16 %i.at, -2
   br i1 %.not59, label %.thread62, label %bb.r
@@ -926,10 +923,8 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.aa = getelementptr i8, ptr %i.b, i64 1
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !25  ; 3 uses
-  %5 = zext i8 %i.ab to i64
   %i.ac = getelementptr i8, ptr %i.y, i64 8
   %i.ad = load i8, ptr %i.ac, align 8, !tbaa !37  ; 2 uses
-  %6 = zext i8 %i.ad to i64
   %.not50 = icmp ult i8 %i.ab, %i.ad
   br i1 %.not50, label %.thread, label %bb.o
 
@@ -940,8 +935,9 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not51, label %.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %7 = sub nuw nsw i64 %5, %6
-  %i.ag = getelementptr [2 x i8], ptr %i.z, i64 %7
+  %5 = sub nuw i8 %i.ab, %i.ad
+  %6 = zext i8 %5 to i64
+  %i.ag = getelementptr [2 x i8], ptr %i.z, i64 %6
   %i.ah = load i16, ptr %i.ag, align 2, !tbaa !29 ; 2 uses
   %.not52 = icmp eq i16 %i.ah, -2
   br i1 %.not52, label %.thread, label %bb.q

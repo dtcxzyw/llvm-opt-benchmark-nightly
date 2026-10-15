@@ -204,12 +204,11 @@ bb.a:
   %i.v = tail call i64 @_ZN4llvm10RISCVVType11decodeVLMULENS0_5VLMULE(i8 noundef zeroext %i.j) #27
   %.sroa.0144.0.extract.trunc = trunc i64 %i.v to i32
   %i.w = mul i32 %.sroa.0144.0.extract.trunc, %i.m ; 10 uses
-  %16 = zext i16 %i.u to i32
-  %17 = zext i16 %i.r to i32
-  %18 = icmp ugt i16 %i.u, %i.r
-  %19 = sub nuw nsw i32 %16, %17
-  %20 = icmp ult i32 %19, %i.w
-  %i.x = select i1 %18, i1 %20, i1 false          ; 4 uses
+  %16 = icmp ugt i16 %i.u, %i.r
+  %17 = sub nuw i16 %i.u, %i.r
+  %18 = zext i16 %17 to i32
+  %19 = icmp ugt i32 %i.w, %18
+  %i.x = select i1 %16, i1 %19, i1 false          ; 4 uses
   %.not196 = icmp eq i32 %i.w, 0
   br i1 %.not196, label %._crit_edge, label %.lr.ph
 

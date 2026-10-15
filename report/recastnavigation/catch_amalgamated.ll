@@ -205,15 +205,14 @@ bb.b:                                             ; preds = %.loopexit34, %.lr.p
   %.lcssa29 = phi i32 [ %i.d, %.lr.ph.preheader ], [ %i.k, %.loopexit34 ] ; 2 uses
   %.lcssa = phi i32 [ %i.e, %.lr.ph.preheader ], [ 0, %.loopexit34 ] ; 2 uses
   %spec.select20 = tail call i32 @llvm.umax.i32(i32 %.lcssa29, i32 %.lcssa)
-  %spec.select = zext i32 %spec.select20 to i64
   %spec.select19.v = tail call i32 @llvm.umin.i32(i32 %.lcssa29, i32 %.lcssa)
-  %spec.select19 = zext i32 %spec.select19.v to i64
-  %2 = sub nuw nsw i64 %spec.select, %spec.select19
+  %2 = sub nuw i32 %spec.select20, %spec.select19.v
+  %3 = zext i32 %2 to i64
   br label %.loopexit
 
 .loopexit:                                        ; preds = %tailrecurse.peel, %bb.a, %bb.b
   %accumulator.tr23 = phi i64 [ %accumulator.tr25.lcssa, %bb.b ], [ 0, %bb.a ], [ %i.i, %tailrecurse.peel ]
-  %.0 = phi i64 [ %2, %bb.b ], [ 0, %bb.a ], [ 0, %tailrecurse.peel ]
+  %.0 = phi i64 [ %3, %bb.b ], [ 0, %bb.a ], [ 0, %tailrecurse.peel ]
   %accumulator.ret.tr = add i64 %.0, %accumulator.tr23
   ret i64 %accumulator.ret.tr
 }

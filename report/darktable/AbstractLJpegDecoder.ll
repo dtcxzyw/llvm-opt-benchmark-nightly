@@ -204,10 +204,8 @@ _ZSt13adjacent_findIN9__gnu_cxx17__normal_iteratorIPKN8rawspeed18AbstractPrefixC
   %i.af = load i16, ptr %i.ae, align 2, !tbaa !5994
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 2
   %i.ah = load i8, ptr %i.ag, align 2, !tbaa !5993 ; 3 uses
-  %1 = zext nneg i8 %i.ah to i32
   %i.ai = icmp ult i8 %i.ah, 17
   tail call void @llvm.assume(i1 %i.ai)
-  %2 = zext i16 %i.af to i32
   br label %bb.f
 
 ._crit_edge30:                                    ; preds = %._crit_edge28, %._crit_edge
@@ -228,16 +226,15 @@ bb.f:                                             ; preds = %.lr.ph27, %bb.e
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %.026 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 2
   %i.an = load i8, ptr %i.am, align 2, !tbaa !5993 ; 2 uses
-  %3 = zext i8 %i.an to i32
   %i.ao = icmp ule i8 %i.an, %i.ah
   tail call void @llvm.assume(i1 %i.ao)
-  %4 = sub nuw nsw i32 %1, %3                     ; 2 uses
-  %5 = icmp samesign ult i32 %4, 16
-  tail call void @llvm.assume(i1 %5)
-  %6 = lshr i32 %2, %4
-  %7 = trunc nuw i32 %6 to i16
+  %1 = sub nuw nsw i8 %i.ah, %i.an                ; 2 uses
+  %2 = zext nneg i8 %1 to i16
+  %3 = icmp samesign ult i8 %1, 16
+  tail call void @llvm.assume(i1 %3)
+  %4 = lshr i16 %i.af, %2
   %i.ap = load i16, ptr %i.al, align 2, !tbaa !5994
-  %i.aq = icmp eq i16 %i.ap, %7
+  %i.aq = icmp eq i16 %4, %i.ap
   br i1 %i.aq, label %bb.g, label %bb.e
 
 bb.g:                                             ; preds = %bb.f

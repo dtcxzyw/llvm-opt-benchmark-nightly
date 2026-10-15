@@ -204,7 +204,6 @@ bb.i:                                             ; preds = %bb.h
   %i.aa = select i1 %i.x, i8 -61, i8 33
   %i.ab = add i8 %i.aa, %i.v                      ; 4 uses
   %i.ac = icmp eq i8 %i.z, 0
-  %5 = zext i8 %i.ab to i64
   %i.ad = icmp eq i8 %i.ab, 64
   %or.cond17 = and i1 %i.ac, %i.ad
   br i1 %or.cond17, label %bb.j, label %bb.k
@@ -225,7 +224,6 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.k
   %i.ak = getelementptr i8, ptr %i.ai, i64 8
   %i.al = load i8, ptr %i.ak, align 8, !tbaa !38  ; 2 uses
-  %6 = zext i8 %i.al to i64
   %.not80 = icmp ult i8 %i.ab, %i.al
   br i1 %.not80, label %.thread, label %bb.m
 
@@ -236,8 +234,9 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not81, label %.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %7 = sub nuw nsw i64 %5, %6
-  %i.ao = getelementptr [2 x i8], ptr %i.aj, i64 %7
+  %5 = sub nuw i8 %i.ab, %i.al
+  %6 = zext i8 %5 to i64
+  %i.ao = getelementptr [2 x i8], ptr %i.aj, i64 %6
   %i.ap = load i16, ptr %i.ao, align 2, !tbaa !30 ; 2 uses
   %.not82 = icmp eq i16 %i.ap, -2
   br i1 %.not82, label %.thread, label %bb.o
@@ -560,10 +559,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not, label %bb.o, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %5 = zext i8 %i.u to i64
   %i.y = getelementptr i8, ptr %i.w, i64 8
   %i.z = load i8, ptr %i.y, align 8, !tbaa !38    ; 2 uses
-  %6 = zext i8 %i.z to i64
   %.not112 = icmp ult i8 %i.u, %i.z
   br i1 %.not112, label %bb.o, label %bb.l
 
@@ -574,8 +571,9 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not113, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %7 = sub nuw nsw i64 %5, %6
-  %i.ac = getelementptr [2 x i8], ptr %i.x, i64 %7
+  %5 = sub nuw i8 %i.u, %i.z
+  %6 = zext i8 %5 to i64
+  %i.ac = getelementptr [2 x i8], ptr %i.x, i64 %6
   %i.ad = load i16, ptr %i.ac, align 2, !tbaa !30 ; 2 uses
   %.not114 = icmp eq i16 %i.ad, -2
   br i1 %.not114, label %bb.o, label %bb.n
@@ -626,10 +624,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.aw = select i1 %i.ap, i8 -61, i8 33
   %i.ax = add i8 %i.aw, %i.an                     ; 3 uses
-  %8 = zext i8 %i.ax to i64
   %i.ay = getelementptr i8, ptr %i.au, i64 8
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !38  ; 2 uses
-  %9 = zext i8 %i.az to i64
   %.not118 = icmp ult i8 %i.ax, %i.az
   br i1 %.not118, label %.thread, label %bb.t
 
@@ -640,8 +636,9 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not119, label %.thread, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %10 = sub nuw nsw i64 %8, %9
-  %i.bc = getelementptr [2 x i8], ptr %i.av, i64 %10
+  %7 = sub nuw i8 %i.ax, %i.az
+  %8 = zext i8 %7 to i64
+  %i.bc = getelementptr [2 x i8], ptr %i.av, i64 %8
   %i.bd = load i16, ptr %i.bc, align 2, !tbaa !30 ; 2 uses
   %.not120 = icmp eq i16 %i.bd, -2
   br i1 %.not120, label %.thread, label %bb.v
@@ -942,10 +939,8 @@ bb.i:                                             ; preds = %bb.h
   %i.w = getelementptr i8, ptr %i.b, i64 2
   %i.x = load i8, ptr %i.w, align 1, !tbaa !26
   %i.y = xor i8 %i.x, -128                        ; 3 uses
-  %5 = zext i8 %i.y to i64
   %i.z = getelementptr i8, ptr %i.u, i64 8
   %i.aa = load i8, ptr %i.z, align 8, !tbaa !38   ; 2 uses
-  %6 = zext i8 %i.aa to i64
   %.not85 = icmp ult i8 %i.y, %i.aa
   br i1 %.not85, label %.thread102, label %bb.j
 
@@ -956,8 +951,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not86, label %.thread102, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %7 = sub nuw nsw i64 %5, %6
-  %i.ad = getelementptr [2 x i8], ptr %i.v, i64 %7
+  %5 = sub nuw i8 %i.y, %i.aa
+  %6 = zext i8 %5 to i64
+  %i.ad = getelementptr [2 x i8], ptr %i.v, i64 %6
   %i.ae = load i16, ptr %i.ad, align 2, !tbaa !30 ; 2 uses
   %.not87 = icmp eq i16 %i.ae, -2
   br i1 %.not87, label %.thread102, label %bb.l
@@ -995,10 +991,8 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.p
   %i.at = xor i8 %i.ak, -128                      ; 3 uses
-  %8 = zext i8 %i.at to i64
   %i.au = getelementptr i8, ptr %i.ar, i64 8
   %i.av = load i8, ptr %i.au, align 8, !tbaa !38  ; 2 uses
-  %9 = zext i8 %i.av to i64
   %.not81 = icmp ult i8 %i.at, %i.av
   br i1 %.not81, label %.thread102, label %bb.r
 
@@ -1009,8 +1003,9 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not82, label %.thread102, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %10 = sub nuw nsw i64 %8, %9
-  %i.ay = getelementptr [2 x i8], ptr %i.as, i64 %10
+  %7 = sub nuw i8 %i.at, %i.av
+  %8 = zext i8 %7 to i64
+  %i.ay = getelementptr [2 x i8], ptr %i.as, i64 %8
   %i.az = load i16, ptr %i.ay, align 2, !tbaa !30 ; 2 uses
   %.not83 = icmp eq i16 %i.az, -2
   br i1 %.not83, label %.thread102, label %bb.t
@@ -1413,10 +1408,8 @@ bb.x:                                             ; preds = %bb.w, %bb.r
   br i1 %.not261, label %bb.ac, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %5 = zext i8 %i.aq to i64
   %i.bh = getelementptr i8, ptr %i.bf, i64 8
   %i.bi = load i8, ptr %i.bh, align 8, !tbaa !38  ; 2 uses
-  %6 = zext i8 %i.bi to i64
   %.not262 = icmp ult i8 %i.aq, %i.bi
   br i1 %.not262, label %bb.ac, label %bb.z
 
@@ -1427,8 +1420,9 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not263, label %bb.ac, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %7 = sub nuw nsw i64 %5, %6
-  %i.bl = getelementptr [2 x i8], ptr %i.bg, i64 %7
+  %5 = sub nuw i8 %i.aq, %i.bi
+  %6 = zext i8 %5 to i64
+  %i.bl = getelementptr [2 x i8], ptr %i.bg, i64 %6
   %i.bm = load i16, ptr %i.bl, align 2, !tbaa !30 ; 2 uses
   %.not264 = icmp eq i16 %i.bm, -2
   br i1 %.not264, label %bb.ac, label %bb.ab
@@ -1446,10 +1440,8 @@ bb.ac:                                            ; preds = %bb.aa, %bb.z, %bb.y
   br i1 %.not265, label %bb.ah, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %8 = zext i8 %i.aq to i64
   %i.bs = getelementptr i8, ptr %i.bq, i64 8
   %i.bt = load i8, ptr %i.bs, align 8, !tbaa !38  ; 2 uses
-  %9 = zext i8 %i.bt to i64
   %.not266 = icmp ult i8 %i.aq, %i.bt
   br i1 %.not266, label %bb.ah, label %bb.ae
 
@@ -1460,8 +1452,9 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not267, label %bb.ah, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %10 = sub nuw nsw i64 %8, %9
-  %i.bw = getelementptr [2 x i8], ptr %i.br, i64 %10
+  %7 = sub nuw i8 %i.aq, %i.bt
+  %8 = zext i8 %7 to i64
+  %i.bw = getelementptr [2 x i8], ptr %i.br, i64 %8
   %i.bx = load i16, ptr %i.bw, align 2, !tbaa !30 ; 2 uses
   %.not268 = icmp eq i16 %i.bx, -2
   br i1 %.not268, label %bb.ah, label %bb.ag
@@ -1479,10 +1472,8 @@ bb.ah:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %.not269, label %bb.am, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %11 = zext i8 %i.aq to i64
   %i.cd = getelementptr i8, ptr %i.cb, i64 8
   %i.ce = load i8, ptr %i.cd, align 8, !tbaa !38  ; 2 uses
-  %12 = zext i8 %i.ce to i64
   %.not270 = icmp ult i8 %i.aq, %i.ce
   br i1 %.not270, label %bb.am, label %bb.aj
 
@@ -1493,8 +1484,9 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not271, label %bb.am, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %13 = sub nuw nsw i64 %11, %12
-  %i.ch = getelementptr [2 x i8], ptr %i.cc, i64 %13
+  %9 = sub nuw i8 %i.aq, %i.ce
+  %10 = zext i8 %9 to i64
+  %i.ch = getelementptr [2 x i8], ptr %i.cc, i64 %10
   %i.ci = load i16, ptr %i.ch, align 2, !tbaa !30 ; 2 uses
   %.not272 = icmp eq i16 %i.ci, -2
   br i1 %.not272, label %bb.am, label %bb.al
@@ -1513,10 +1505,8 @@ bb.am:                                            ; preds = %bb.ak, %bb.aj, %bb.
   br i1 %.not273, label %.thread287, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %14 = zext i8 %i.aq to i64
   %i.cp = getelementptr i8, ptr %i.cn, i64 8
   %i.cq = load i8, ptr %i.cp, align 8, !tbaa !44  ; 2 uses
-  %15 = zext i8 %i.cq to i64
   %.not274 = icmp ult i8 %i.aq, %i.cq
   br i1 %.not274, label %.thread287, label %bb.ao
 
@@ -1527,8 +1517,9 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %.not275, label %.thread287, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %16 = sub nuw nsw i64 %14, %15
-  %i.ct = getelementptr [4 x i8], ptr %i.co, i64 %16
+  %11 = sub nuw i8 %i.aq, %i.cq
+  %12 = zext i8 %11 to i64
+  %i.ct = getelementptr [4 x i8], ptr %i.co, i64 %12
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !10 ; 5 uses
   %.not276 = icmp eq i32 %i.cu, 65534
   br i1 %.not276, label %.thread287, label %bb.aq

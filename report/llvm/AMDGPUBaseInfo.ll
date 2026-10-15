@@ -205,11 +205,10 @@ _ZN4llvm6AMDGPU7IsaInfo19getVGPRAllocGranuleERKNS_15MCSubtargetInfoEjSt8optional
   %.1.i41.peel = phi i32 [ %spec.select.peel, %bb.b ], [ 8, %_ZN4llvm6AMDGPU7IsaInfo16getMaxWavesPerEUERKNS_15MCSubtargetInfoE.exit.thread.peel ] ; 3 uses
   %.rhs.trunc.peel = trunc nuw nsw i32 %1 to i16  ; 2 uses
   %i.ad = udiv i16 %.1.i6469.peel, %.rhs.trunc.peel ; 2 uses
-  %.zext.peel = zext nneg i16 %i.ad to i32
   %.rhs.trunc73.peel = trunc nuw nsw i32 %.1.i41.peel to i16 ; 2 uses
   %i.ae = urem i16 %i.ad, %.rhs.trunc73.peel
-  %.zext74.peel = zext nneg i16 %i.ae to i32
-  %3 = sub nuw nsw i32 %.zext.peel, %.zext74.peel ; 2 uses
+  %3 = sub nuw nsw i16 %i.ad, %i.ae
+  %4 = zext nneg i16 %3 to i32                    ; 2 uses
   %i.af = udiv i16 %.1.i6469.peel, %.0.i57596270.peel ; 2 uses
   %.zext77.peel = zext nneg i16 %i.af to i32
   %.lhs.trunc78.peel = trunc nuw i16 %i.af to i8
@@ -217,7 +216,7 @@ _ZN4llvm6AMDGPU7IsaInfo19getVGPRAllocGranuleERKNS_15MCSubtargetInfoEjSt8optional
   %i.ag = urem i8 %.lhs.trunc78.peel, %.rhs.trunc79.peel
   %.zext80.peel = zext nneg i8 %i.ag to i32
   %i.ah = sub nsw i32 %.zext77.peel, %.zext80.peel
-  %i.ai = icmp eq i32 %3, %i.ah
+  %i.ai = icmp eq i32 %i.ah, %4
   br i1 %i.ai, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4llvm6AMDGPU7IsaInfo19getVGPRAllocGranuleERKNS_15MCSubtargetInfoEjSt8optionalIbE.exit.peel
@@ -294,11 +293,10 @@ _ZN4llvm6AMDGPU7IsaInfo19getVGPRAllocGranuleERKNS_15MCSubtargetInfoEjSt8optional
   %.1.i41 = phi i32 [ 8, %_ZN4llvm6AMDGPU7IsaInfo16getMaxWavesPerEUERKNS_15MCSubtargetInfoE.exit.thread ], [ %spec.select, %_ZN4llvm6AMDGPU7IsaInfo16getMaxWavesPerEUERKNS_15MCSubtargetInfoE.exit ] ; 3 uses
   %.rhs.trunc = trunc nsw i32 %.tr94 to i16       ; 2 uses
   %i.av = udiv i16 %.1.i6469, %.rhs.trunc         ; 2 uses
-  %.zext = zext nneg i16 %i.av to i32
   %.rhs.trunc73 = trunc nuw nsw i32 %.1.i41 to i16 ; 2 uses
   %i.aw = urem i16 %i.av, %.rhs.trunc73
-  %.zext74 = zext nneg i16 %i.aw to i32
-  %4 = sub nuw nsw i32 %.zext, %.zext74           ; 2 uses
+  %5 = sub nuw nsw i16 %i.av, %i.aw
+  %6 = zext nneg i16 %5 to i32                    ; 2 uses
   %i.ax = udiv i16 %.1.i6469, %.0.i57596270       ; 2 uses
   %.zext77 = zext nneg i16 %i.ax to i32
   %.lhs.trunc78 = trunc nuw i16 %i.ax to i8
@@ -306,7 +304,7 @@ _ZN4llvm6AMDGPU7IsaInfo19getVGPRAllocGranuleERKNS_15MCSubtargetInfoEjSt8optional
   %i.ay = urem i8 %.lhs.trunc78, %.rhs.trunc79
   %.zext80 = zext nneg i8 %i.ay to i32
   %i.az = sub nsw i32 %.zext77, %.zext80
-  %i.ba = icmp eq i32 %4, %i.az
+  %i.ba = icmp eq i32 %i.az, %6
   br i1 %i.ba, label %.loopexit, label %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i
 
 _ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i: ; preds = %_ZN4llvm6AMDGPU7IsaInfo19getVGPRAllocGranuleERKNS_15MCSubtargetInfoEjSt8optionalIbE.exit
@@ -331,15 +329,14 @@ _ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i: ; pred
   %.0.i4071.lcssa = phi i32 [ %.0.i4071.peel, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i.peel ], [ %.0.i4071, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i ]
   %.1.i6469.lcssa = phi i16 [ %.1.i6469.peel, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i.peel ], [ %.1.i6469, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i ]
   %.1.i41.lcssa = phi i32 [ %.1.i41.peel, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i.peel ], [ %.1.i41, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i ]
-  %.lcssa = phi i32 [ %3, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i.peel ], [ %4, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i ]
+  %.lcssa = phi i32 [ %4, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i.peel ], [ %6, %_ZN4llvm6AMDGPU7IsaInfo16getTotalNumVGPRsERKNS_15MCSubtargetInfoE.exit.i ]
   %.rhs.trunc82 = add i16 %.pre-phi, 1
   %i.bj = udiv i16 %.1.i6469.lcssa, %.rhs.trunc82 ; 2 uses
-  %.zext83 = zext nneg i16 %i.bj to i32
   %i.bk = urem i16 %i.bj, %.rhs.trunc85.pre-phi
-  %.zext86 = zext nneg i16 %i.bk to i32
-  %5 = sub nuw nsw i32 %.zext83, %.zext86
+  %7 = sub nuw nsw i16 %i.bj, %i.bk
+  %8 = zext nneg i16 %7 to i32
   %i.bl = sub nsw i32 %.lcssa, %.1.i41.lcssa
-  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %5, i32 %i.bl)
+  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %8, i32 %i.bl)
   %i.bm = add nuw nsw i32 %.sroa.speculated, 1
   %.sroa.speculated47 = tail call i32 @llvm.umin.i32(i32 %.0.i4071.lcssa, i32 %i.bm)
   br label %.loopexit

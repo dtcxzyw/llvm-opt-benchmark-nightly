@@ -205,7 +205,6 @@ duckdb_je_arena_bin_choose.exit:                  ; preds = %bb.a, %bb.b, %bb.c
   %i.bb = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 192 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 208 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 216 ; 2 uses
-  %7 = zext i16 %4 to i32
   %i.be = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 168 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 160 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 120 ; 4 uses
@@ -515,7 +514,6 @@ arena_bin_flush_batch_after_lock.exit:            ; preds = %._crit_edge162, %bb
   %.1165 = phi i1 [ %.2, %bb.ah ], [ %.073, %arena_bin_flush_batch_after_lock.exit ] ; 3 uses
   %.175164 = phi ptr [ %.276, %bb.ah ], [ %.074, %arena_bin_flush_batch_after_lock.exit ] ; 4 uses
   %.178163 = phi i16 [ %.279, %bb.ah ], [ %.077, %arena_bin_flush_batch_after_lock.exit ] ; 7 uses
-  %8 = zext i16 %.178163 to i32
   %i.gi = load ptr, ptr %i.av, align 8, !tbaa !111 ; 12 uses
   %.not = icmp eq ptr %i.gi, null
   br i1 %.not, label %arena_bin_slabs_full_insert.exit.i, label %bb.ab
@@ -529,8 +527,9 @@ bb.ab:                                            ; preds = %.lr.ph166
   br i1 %.not88, label %bb.ac, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %bb.ab
-  %9 = sub nsw i32 %7, %8
-  %i.gm = call i32 @llvm.umin.i32(i32 %9, i32 %i.gl) ; 5 uses
+  %7 = sub i16 %4, %.178163
+  %8 = zext i16 %7 to i32
+  %i.gm = call i32 @llvm.umin.i32(i32 %8, i32 %i.gl) ; 5 uses
   %i.gn = zext i16 %.178163 to i64
   %i.go = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.gn ; 3 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %i.gi, i64 64 ; 4 uses

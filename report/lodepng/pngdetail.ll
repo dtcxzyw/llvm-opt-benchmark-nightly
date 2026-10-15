@@ -205,50 +205,49 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0103 = phi i8 [ %0, %bb.a ], [ %i.e, %bb.b ]  ; 9 uses
-  %.0102 = phi i8 [ %1, %bb.a ], [ %i.i, %bb.b ]  ; 8 uses
-  %.0101 = phi i8 [ %2, %bb.a ], [ %i.m, %bb.b ]  ; 6 uses
+  %.0103 = phi i8 [ %0, %bb.a ], [ %i.e, %bb.b ]  ; 8 uses
+  %.0102 = phi i8 [ %1, %bb.a ], [ %i.i, %bb.b ]  ; 7 uses
+  %.0101 = phi i8 [ %2, %bb.a ], [ %i.m, %bb.b ]  ; 5 uses
   %i.n = zext i8 %.0103 to i32                    ; 4 uses
   %i.o = zext i8 %.0102 to i32                    ; 4 uses
   %i.p = zext i8 %.0101 to i32                    ; 4 uses
-  %i.q = tail call i8 @llvm.umax.i8(i8 %.0102, i8 %.0101) ; 3 uses
-  %i.r = tail call i8 @llvm.umax.i8(i8 %.0103, i8 %i.q) ; 6 uses
+  %8 = tail call i8 @llvm.umax.i8(i8 %.0102, i8 %.0101) ; 3 uses
+  %9 = tail call i8 @llvm.umax.i8(i8 %.0103, i8 %8) ; 5 uses
+  %i.q = tail call i8 @llvm.umin.i8(i8 %.0101, i8 %.0102)
+  %i.r = tail call i8 @llvm.umin.i8(i8 %i.q, i8 %.0103) ; 3 uses
+  %10 = icmp eq i8 %i.r, %9                       ; 2 uses
   br i1 %6, label %bb.d, label %bb.ad
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.speculated29.i = zext i8 %i.r to i32
-  %8 = tail call i8 @llvm.umin.i8(i8 %.0101, i8 %.0102)
-  %9 = tail call i8 @llvm.umin.i8(i8 %8, i8 %.0103) ; 2 uses
-  %.sroa.speculated.i = zext i8 %9 to i32
-  %10 = icmp eq i8 %9, %i.r
-  %.pre.i = sub nuw nsw i32 %.sroa.speculated29.i, %.sroa.speculated.i ; 4 uses
+  %11 = sub nuw i8 %9, %i.r
+  %.sroa.speculated.i = zext i8 %11 to i32        ; 4 uses
   br i1 %10, label %_Z8RGBtoHSLhhhPhS_S_.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.not.i.i = icmp ult i8 %.0103, %i.q
+  %.not.i.i = icmp ult i8 %.0103, %8
   br i1 %.not.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.s = sub nsw i32 %i.o, %i.p
   %i.t = mul nsw i32 %i.s, 255
-  %i.u = sdiv i32 %i.t, %.pre.i
+  %i.u = sdiv i32 %i.t, %.sroa.speculated.i
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.e
-  %i.v = icmp eq i8 %i.r, %.0102
+  %i.v = icmp eq i8 %9, %.0102
   br i1 %i.v, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.w = sub nsw i32 %i.p, %i.n
   %i.x = mul nsw i32 %i.w, 255
-  %i.y = sdiv i32 %i.x, %.pre.i
+  %i.y = sdiv i32 %i.x, %.sroa.speculated.i
   %i.z = add nsw i32 %i.y, 512
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
   %i.aa = sub nsw i32 %i.n, %i.o
   %i.ab = mul nsw i32 %i.aa, 255
-  %i.ac = sdiv i32 %i.ab, %.pre.i
+  %i.ac = sdiv i32 %i.ab, %.sroa.speculated.i
   %i.ad = add nsw i32 %i.ac, 1024
   br label %bb.j
 
@@ -280,7 +279,7 @@ _Z8RGBtoHSLhhhPhS_S_.exit.i:                      ; preds = %bb.d, %bb.j
   %i.at = add nsw i32 %i.as, -128                 ; 3 uses
   %i.au = mul nsw i32 %i.at, 127
   %i.av = sdiv i32 %i.au, 128
-  %i.aw = add nsw i32 %i.av, %.pre.i
+  %i.aw = add nsw i32 %i.av, %.sroa.speculated.i
   %i.ax = icmp sgt i32 %i.aw, 127
   br i1 %i.ax, label %bb.k, label %bb.v
 
@@ -386,10 +385,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %_Z17lightnessToLetteri.exit
 
 bb.ad:                                            ; preds = %bb.c
-  %11 = tail call i8 @llvm.umin.i8(i8 %.0101, i8 %.0102)
-  %12 = tail call i8 @llvm.umin.i8(i8 %11, i8 %.0103) ; 2 uses
-  %13 = icmp eq i8 %12, %i.r
-  br i1 %13, label %_Z11HueToLetteri.exit46.thread, label %bb.ae
+  br i1 %10, label %_Z11HueToLetteri.exit46.thread, label %bb.ae
 
 _Z11HueToLetteri.exit46.thread:                   ; preds = %bb.ad
   %i.cj = sext i1 %7 to i8
@@ -397,8 +393,8 @@ _Z11HueToLetteri.exit46.thread:                   ; preds = %bb.ad
   br label %bb.at
 
 bb.ae:                                            ; preds = %bb.ad
-  %.sroa.speculated50.i = zext i8 %i.r to i32     ; 2 uses
-  %.sroa.speculated.i40 = zext i8 %12 to i32      ; 2 uses
+  %.sroa.speculated50.i = zext i8 %9 to i32       ; 2 uses
+  %.sroa.speculated.i40 = zext i8 %i.r to i32     ; 2 uses
   %i.ck = add nuw nsw i32 %.sroa.speculated.i40, %.sroa.speculated50.i ; 4 uses
   %i.cl = sub nuw nsw i32 %.sroa.speculated50.i, %.sroa.speculated.i40 ; 4 uses
   %i.cm = lshr i32 %i.ck, 1
@@ -410,7 +406,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.lhs.trunc.i41 = mul nuw i16 %i.cq, 255
   %.rhs.trunc.i42 = trunc nuw nsw i32 %i.cp to i16
   %i.cr = udiv i16 %.lhs.trunc.i41, %.rhs.trunc.i42
-  %.not.i = icmp ult i8 %.0103, %i.q
+  %.not.i = icmp ult i8 %.0103, %8
   br i1 %.not.i, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
@@ -420,7 +416,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %_Z8RGBtoHSLhhhPhS_S_.exit
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.cv = icmp eq i8 %i.r, %.0102
+  %i.cv = icmp eq i8 %9, %.0102
   br i1 %i.cv, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
@@ -823,12 +819,11 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.eb = zext i8 %.0101.i to i32                 ; 2 uses
   %i.ec = call i8 @llvm.umax.i8(i8 %.0102.i, i8 %.0101.i) ; 2 uses
   %i.ed = call i8 @llvm.umax.i8(i8 %.0103.i, i8 %i.ec) ; 3 uses
-  %.sroa.speculated29.i.i = zext i8 %i.ed to i32
   %i.ee = call i8 @llvm.umin.i8(i8 %.0101.i, i8 %.0102.i)
   %i.ef = call i8 @llvm.umin.i8(i8 %i.ee, i8 %.0103.i) ; 2 uses
-  %.sroa.speculated.i.i = zext i8 %i.ef to i32
   %5 = icmp eq i8 %i.ef, %i.ed
-  %.pre.i.i = sub nuw nsw i32 %.sroa.speculated29.i.i, %.sroa.speculated.i.i ; 4 uses
+  %6 = sub nuw i8 %i.ed, %i.ef
+  %.pre.i.i = zext i8 %6 to i32                   ; 4 uses
   br i1 %5, label %_Z8RGBtoHSLhhhPhS_S_.exit.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
