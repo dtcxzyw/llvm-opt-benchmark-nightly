@@ -205,9 +205,13 @@ bb.p:                                             ; preds = %bb.k
   store i32 0, ptr %i.aq, align 8, !tbaa !204
   %i.ar = getelementptr inbounds nuw i8, ptr %10, i64 12 ; 2 uses
   store i32 6, ptr %i.ar, align 4, !tbaa !205
-  %i.as = trunc i64 %2 to i32                     ; 2 uses
+  %i.as = trunc i64 %2 to i32
   %i.at = icmp ugt i32 %i.as, 2
-  br i1 %i.at, label %.lr.ph, label %._crit_edge
+  br i1 %i.at, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.p
+  %17 = and i64 %2, 4294967294
+  br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir5BlockELb1EE9push_backES3_.exit
   %.pre = load i32, ptr %i.aq, align 8, !tbaa !204
@@ -378,10 +382,9 @@ _ZN4llvm11SmallVectorIiLj12EED2Ev.exit:           ; preds = %_ZN4llvm11SmallVect
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #22
   br label %bb.x
 
-.lr.ph:                                           ; preds = %bb.p, %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir5BlockELb1EE9push_backES3_.exit
-  %.031 = phi i32 [ %21, %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir5BlockELb1EE9push_backES3_.exit ], [ 2, %bb.p ] ; 3 uses
-  %17 = zext i32 %.031 to i64
-  %i.ck = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %17
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir5BlockELb1EE9push_backES3_.exit
+  %indvars.iv = phi i64 [ 2, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir5BlockELb1EE9push_backES3_.exit ] ; 3 uses
+  %i.ck = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !227 ; 2 uses
   %i.cm = load i32, ptr %i.an, align 8, !tbaa !204 ; 2 uses
   %i.cn = load i32, ptr %i.ao, align 4, !tbaa !205
@@ -403,10 +406,9 @@ bb.u:                                             ; preds = %.lr.ph
   br label %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit
 
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit: ; preds = %bb.t, %bb.u
-  %18 = or disjoint i32 %.031, 1
-  %19 = zext i32 %18 to i64
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %19
-  %i.ct = load i32, ptr %20, align 4, !tbaa !227
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 4
+  %i.ct = load i32, ptr %19, align 4, !tbaa !227
   %i.cu = call noundef ptr @_ZN4mlir5spirv12Deserializer16getOrCreateBlockEj(ptr noundef nonnull align 8 dereferenceable(1144) %0, i32 noundef %i.ct) ; 2 uses
   %i.cv = load i32, ptr %i.aq, align 8, !tbaa !204 ; 2 uses
   %i.cw = load i32, ptr %i.ar, align 4, !tbaa !205
@@ -428,8 +430,8 @@ bb.w:                                             ; preds = %_ZN4llvm23SmallVect
   br label %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir5BlockELb1EE9push_backES3_.exit
 
 _ZN4llvm23SmallVectorTemplateBaseIPN4mlir5BlockELb1EE9push_backES3_.exit: ; preds = %bb.v, %bb.w
-  %21 = add i32 %.031, 2                          ; 2 uses
-  %i.dc = icmp ult i32 %21, %i.as
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %i.dc = icmp samesign ult i64 %indvars.iv.next, %17
   br i1 %i.dc, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !1424
 
 bb.x:                                             ; preds = %_ZN4llvm11SmallVectorIiLj12EED2Ev.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit18, %_ZN4mlir18InFlightDiagnosticD2Ev.exit16, %_ZN4mlir18InFlightDiagnosticD2Ev.exit

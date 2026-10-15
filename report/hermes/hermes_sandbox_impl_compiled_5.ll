@@ -204,13 +204,14 @@ bb.s:                                             ; preds = %bb.r
   %.0.copyload.i536 = load double, ptr %i.cy, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i536) #8, !srcloc !37
   %i.cz = fdiv double %.0.copyload.i536, %i.ce    ; 2 uses
-  %i.da = fmul double %i.cz, %i.cz                ; 3 uses
-  %i.db = fsub double %i.da, %i.da
+  %i.da = fmul double %i.cz, %i.cz                ; 2 uses
+  %5 = fadd double %i.da, 0.000000e+00            ; 2 uses
+  %i.db = fsub double %5, %i.da
   %i.dc = add i32 %.0.copyload.i535, 8
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s
-  %.0449 = phi double [ %i.da, %bb.s ], [ 0.000000e+00, %bb.r ] ; 2 uses
+  %.0449 = phi double [ %5, %bb.s ], [ 0.000000e+00, %bb.r ] ; 2 uses
   %.0446 = phi double [ %i.db, %bb.s ], [ 0.000000e+00, %bb.r ]
   %.1 = phi i32 [ %i.dc, %bb.s ], [ %.0.copyload.i535, %bb.r ]
   %i.dd = and i32 %.0.copyload.i534, 536870911
@@ -245,13 +246,13 @@ bb.v:                                             ; preds = %bb.v, %bb.u
   %i.dq = extractelement <2 x double> %i.dp, i64 0
   %i.dr = fsub double %i.dq, %.1447               ; 2 uses
   %i.ds = fadd double %.1450, %i.dr               ; 3 uses
-  %i.dt = fsub double %.1450, %i.ds
-  %5 = fadd double %i.dr, %i.dt
+  %i.dt = fsub double %i.ds, %.1450
+  %6 = fsub double %i.dt, %i.dr
   %i.du = extractelement <2 x double> %i.dp, i64 1
-  %6 = fadd double %i.du, %5                      ; 2 uses
-  %i.dv = fadd double %i.ds, %6                   ; 3 uses
+  %7 = fsub double %i.du, %6                      ; 2 uses
+  %i.dv = fadd double %i.ds, %7                   ; 3 uses
   %i.dw = fsub double %i.dv, %i.ds
-  %i.dx = fsub double %i.dw, %6
+  %i.dx = fsub double %i.dw, %7
   %i.dy = add i32 %.2457, 16                      ; 2 uses
   %.not473 = icmp eq i32 %i.dy, %i.df
   br i1 %.not473, label %.loopexit, label %bb.v

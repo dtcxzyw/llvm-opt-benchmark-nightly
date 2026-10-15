@@ -199,7 +199,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable
 define void @_ZN6Assimp13GeometryUtils20normalizeVectorArrayEP10aiVector3tIfES3_m(ptr nofree noundef captures(address_is_null) %0, ptr nofree noundef writeonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #7 align 2 {
 bb.a:
   %i.a = icmp ne ptr %0, null
@@ -211,30 +211,43 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN10aiVector3tIfE9NormalizeEv.exit
   %.011 = phi i64 [ %i.o, %_ZN10aiVector3tIfE9NormalizeEv.exit ], [ 0, %bb.a ] ; 3 uses
-  %i.d = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %.011 ; 4 uses
-  %3 = load <2 x float>, ptr %i.d, align 4        ; 4 uses
-  %foldExtExtBinop = fmul <2 x float> %3, %3
-  %4 = extractelement <2 x float> %foldExtExtBinop, i64 1
-  %5 = extractelement <2 x float> %3, i64 0       ; 2 uses
-  %i.e = tail call float @llvm.fmuladd.f32(float %5, float %5, float %4)
-  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  %i.g = load float, ptr %i.f, align 4            ; 3 uses
-  %i.h = tail call noundef float @llvm.fmuladd.f32(float %i.g, float %i.g, float %i.e) ; 2 uses
-  %i.i = fcmp oeq float %i.h, 0.000000e+00
-  br i1 %i.i, label %_ZN10aiVector3tIfE9NormalizeEv.exit, label %_ZN10aiVector3tIfEdVEf.exit.i
+  %i.d = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %.011 ; 7 uses
+  %3 = load float, ptr %i.d, align 4              ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
+  %5 = load float, ptr %4, align 4                ; 2 uses
+  %6 = fmul float %5, %5
+  %i.e = tail call float @llvm.fmuladd.f32(float %3, float %3, float %6)
+  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
+  %i.g = load float, ptr %i.f, align 4            ; 2 uses
+  %i.h = tail call noundef float @llvm.fmuladd.f32(float %i.g, float %i.g, float %i.e)
+  %7 = tail call noundef float @sqrtf(float noundef %i.h) #8
+  %i.i = fcmp oeq float %7, 0.000000e+00
+  br i1 %i.i, label %_ZN10aiVector3tIfE9NormalizeEv.exit, label %8
 
-_ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %.lr.ph
-  %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.h)
-  %6 = fdiv float 1.000000e+00, %sqrt.i.i         ; 2 uses
-  %i.j = insertelement <2 x float> poison, float %6, i64 0
+8:                                                ; preds = %.lr.ph
+  %9 = load float, ptr %i.d, align 4              ; 2 uses
+  %10 = load float, ptr %4, align 4               ; 2 uses
+  %11 = fmul float %10, %10
+  %12 = tail call float @llvm.fmuladd.f32(float %9, float %9, float %11)
+  %13 = load float, ptr %i.f, align 4             ; 2 uses
+  %14 = tail call noundef float @llvm.fmuladd.f32(float %13, float %13, float %12)
+  %15 = tail call noundef float @sqrtf(float noundef %14) #8 ; 2 uses
+  %16 = fcmp oeq float %15, 0.000000e+00
+  br i1 %16, label %_ZN10aiVector3tIfE9NormalizeEv.exit, label %_ZN10aiVector3tIfEdVEf.exit.i
+
+_ZN10aiVector3tIfEdVEf.exit.i:                    ; preds = %8
+  %17 = fdiv float 1.000000e+00, %15              ; 2 uses
+  %18 = load <2 x float>, ptr %i.d, align 4
+  %i.j = insertelement <2 x float> poison, float %17, i64 0
   %i.k = shufflevector <2 x float> %i.j, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.l = fmul <2 x float> %3, %i.k
+  %i.l = fmul <2 x float> %i.k, %18
   store <2 x float> %i.l, ptr %i.d, align 4
-  %i.m = fmul float %i.g, %6
+  %19 = load float, ptr %i.f, align 4
+  %i.m = fmul float %17, %19
   store float %i.m, ptr %i.f, align 4
   br label %_ZN10aiVector3tIfE9NormalizeEv.exit
 
-_ZN10aiVector3tIfE9NormalizeEv.exit:              ; preds = %.lr.ph, %_ZN10aiVector3tIfEdVEf.exit.i
+_ZN10aiVector3tIfE9NormalizeEv.exit:              ; preds = %.lr.ph, %8, %_ZN10aiVector3tIfEdVEf.exit.i
   %i.n = getelementptr inbounds nuw [12 x i8], ptr %1, i64 %.011
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.n, ptr noundef nonnull align 4 dereferenceable(12) %i.d, i64 12, i1 false)
   %i.o = add nuw i64 %.011, 1                     ; 2 uses
@@ -245,11 +258,11 @@ _ZN10aiVector3tIfE9NormalizeEv.exit:              ; preds = %.lr.ph, %_ZN10aiVec
   ret void
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fabs.f32(float) #3
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #3
+declare float @llvm.fabs.f32(float) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #3
@@ -261,7 +274,7 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, errnomem: readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}

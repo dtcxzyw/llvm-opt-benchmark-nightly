@@ -204,23 +204,30 @@ bb.bi:                                            ; preds = %bb.ad
   %i.ex = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.ey = load double, ptr %i.ex, align 8, !tbaa !11 ; 2 uses
   %i.ez = load double, ptr @dt_shortcut_dispatcher.move_start_x, align 8, !tbaa !275
-  %i.fa = fsub reassoc nsz arcp contract afn double %i.ey, %i.ez ; 2 uses
+  %i.fa = fsub reassoc nsz arcp contract afn double %i.ey, %i.ez ; 4 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.fc = load double, ptr %i.fb, align 8, !tbaa !11 ; 2 uses
   %i.fd = load double, ptr @dt_shortcut_dispatcher.move_start_y, align 8, !tbaa !275
-  %i.fe = fsub reassoc nsz arcp contract afn double %i.fc, %i.fd ; 2 uses
+  %i.fe = fsub reassoc nsz arcp contract afn double %i.fc, %i.fd ; 4 uses
   %i.ff = load i32, ptr @dt_shortcut_dispatcher.move_last_time, align 4, !tbaa !12 ; 3 uses
   %i.fg = load i32, ptr @_last_time, align 4, !tbaa !12 ; 2 uses
   %.not170 = icmp eq i32 %i.ff, %i.fg
-  br i1 %.not170, label %bb.bk, label %bb.bj
+  br i1 %.not170, label %5, label %bb.bj
 
-bb.bj:                                            ; preds = %bb.bi
+5:                                                ; preds = %bb.bi
+  %6 = fmul reassoc nsz arcp contract afn double %i.fa, %i.fa
+  %7 = fmul reassoc nsz arcp contract afn double %i.fe, %i.fe
+  %8 = fadd reassoc nsz arcp contract afn double %7, %6
+  %9 = fcmp reassoc nsz arcp contract afn olt double %8, 0.000000e+00
+  br i1 %9, label %bb.bj, label %bb.bk
+
+bb.bj:                                            ; preds = %5, %bb.bi
   store double %i.ey, ptr @dt_shortcut_dispatcher.move_start_x, align 8, !tbaa !275
   store double %i.fc, ptr @dt_shortcut_dispatcher.move_start_y, align 8, !tbaa !275
   store i32 %i.fg, ptr @dt_shortcut_dispatcher.move_last_time, align 4, !tbaa !12
   br label %g_set_weak_pointer.exit
 
-bb.bk:                                            ; preds = %bb.bi
+bb.bk:                                            ; preds = %5
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %i.fi = load i32, ptr %i.fh, align 4, !tbaa !11 ; 2 uses
   %i.fj = icmp ugt i32 %i.fi, %i.ff

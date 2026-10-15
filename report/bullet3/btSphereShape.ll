@@ -84,11 +84,11 @@ bb.a:
   %i.k = fmul float %.sroa.8.0, %.sroa.8.0
   %i.l = tail call float @llvm.fmuladd.f32(float %.sroa.06.0, float %.sroa.06.0, float %i.k)
   %i.m = tail call noundef float @llvm.fmuladd.f32(float %.sroa.13.0, float %.sroa.13.0, float %i.l)
-  %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.m)
+  %sqrt.i.i = tail call noundef float @sqrtf(float noundef %i.m) #14
   %i.n = fdiv float 1.000000e+00, %sqrt.i.i       ; 3 uses
-  %i.o = fmul float %.sroa.06.0, %i.n
-  %i.p = fmul float %.sroa.8.0, %i.n
-  %i.q = fmul float %.sroa.13.0, %i.n
+  %i.o = fmul float %i.n, %.sroa.06.0
+  %i.p = fmul float %i.n, %.sroa.8.0
+  %i.q = fmul float %i.n, %.sroa.13.0
   %i.r = load ptr, ptr %0, align 8, !tbaa !12
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 96
   %i.t = load ptr, ptr %i.s, align 8
@@ -174,7 +174,7 @@ declare void @_ZN13btConvexShapeD2Ev(ptr noundef nonnull align 8 dead_on_return(
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN13btSphereShapeD0Ev(ptr noundef nonnull align 8 dereferenceable(72) %0) unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  tail call void @_ZN13btConvexShapeD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %0) #13
+  tail call void @_ZN13btConvexShapeD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %0) #14
   invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %0)
           to label %_ZN13btSphereShapedlEPv.exit unwind label %bb.b
 
@@ -182,7 +182,7 @@ bb.b:                                             ; preds = %bb.a
   %i.a = landingpad { ptr, i32 }
           catch ptr null
   %i.b = extractvalue { ptr, i32 } %i.a, 0
-  tail call void @__clang_call_terminate(ptr %i.b) #14
+  tail call void @__clang_call_terminate(ptr %i.b) #15
   unreachable
 
 _ZN13btSphereShapedlEPv.exit:                     ; preds = %bb.a
@@ -307,30 +307,30 @@ bb.a:
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #9
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #10
+
 declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #6
 
 declare i32 @__gxx_personality_v0(...)
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #10 comdat {
+define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #11 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #13 ; 0 uses
-  tail call void @_ZSt9terminatev() #14
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #14 ; 0 uses
+  tail call void @_ZSt9terminatev() #15
   unreachable
 }
 
 declare ptr @__cxa_begin_catch(ptr) local_unnamed_addr
 
 ; Function Attrs: cold nofree noreturn
-declare void @_ZSt9terminatev() local_unnamed_addr #11
+declare void @_ZSt9terminatev() local_unnamed_addr #12
 
 declare noundef ptr @_ZNK16btCollisionShape9serializeEPvP12btSerializer(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef, ptr noundef) unnamed_addr #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #9
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -342,11 +342,12 @@ attributes #6 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #7 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { cold nofree noreturn }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #13 = { nounwind }
-attributes #14 = { noreturn nounwind }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { cold nofree noreturn }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #14 = { nounwind }
+attributes #15 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -205,7 +205,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %47, i64 8
   store ptr %.sroa.21.0.copyload.i.i571, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !847  ; 20 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !847  ; 19 uses
   %.not.i.i.i = icmp eq i16 %.sroa.0.0.copyload.i.i569, 0
   br i1 %.not.i.i.i, label %_ZNK4llvm3EVT16isScalableVectorEv.exit.i.i, label %.split.i.i
 
@@ -608,36 +608,40 @@ _ZNK4llvm3EVT20getVectorNumElementsEv.exit.i729:  ; preds = %bb.bz, %_ZNK4llvm3M
   br i1 %.not.i730, label %bb.ca, label %.loopexit
 
 bb.ca:                                            ; preds = %_ZNK4llvm3EVT20getVectorNumElementsEv.exit.i729
-  %i.ow = icmp ne i32 %i.gi, 0                    ; 2 uses
-  %i.ox = zext i1 %i.ow to i32                    ; 2 uses
+  %i.ow = icmp ne i32 %i.gi, 0                    ; 3 uses
+  %i.ox = zext i1 %i.ow to i32
   store i32 %i.ox, ptr %i.c, align 4, !tbaa !337
   %.not1824.i = icmp eq i32 %i.ou, 0
-  br i1 %.not1824.i, label %.loopexit803, label %.lr.ph.i732
+  br i1 %.not1824.i, label %.loopexit803, label %.lr.ph.preheader.i732
+
+.lr.ph.preheader.i732:                            ; preds = %bb.ca
+  %64 = zext i1 %i.ow to i64
+  %65 = zext i32 %i.ou to i64
+  br label %.lr.ph.i732
 
 bb.cb:                                            ; preds = %bb.cc
-  %64 = add i32 %.025.i, 2                        ; 2 uses
-  %.not18.not.i = icmp ult i32 %64, %i.ou
+  %indvars.iv.next.i736 = add nuw nsw i64 %indvars.iv.i734, 2 ; 2 uses
+  %.not18.not.i = icmp samesign ult i64 %indvars.iv.next.i736, %65
   br i1 %.not18.not.i, label %.lr.ph.i732, label %.loopexit803, !llvm.loop !18
 
-.lr.ph.i732:                                      ; preds = %bb.ca, %bb.cb
-  %.025.i = phi i32 [ %64, %bb.cb ], [ 0, %bb.ca ] ; 4 uses
-  %65 = zext i32 %.025.i to i64
-  %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %65
+.lr.ph.i732:                                      ; preds = %bb.cb, %.lr.ph.preheader.i732
+  %indvars.iv.i734 = phi i64 [ 0, %.lr.ph.preheader.i732 ], [ %indvars.iv.next.i736, %bb.cb ] ; 3 uses
+  %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i734 ; 2 uses
   %i.oz = load i32, ptr %i.oy, align 4, !tbaa !337 ; 2 uses
   %i.pa = icmp slt i32 %i.oz, 0
-  %66 = or disjoint i32 %.025.i, %i.ox            ; 2 uses
-  %.not16.i = icmp eq i32 %i.oz, %66
+  %66 = or disjoint i64 %indvars.iv.i734, %64     ; 2 uses
+  %67 = zext i32 %i.oz to i64
+  %.not16.i = icmp eq i64 %66, %67
   %or.cond.i733 = select i1 %i.pa, i1 true, i1 %.not16.i
   br i1 %or.cond.i733, label %bb.cc, label %.loopexit
 
 bb.cc:                                            ; preds = %.lr.ph.i732
-  %67 = or disjoint i32 %.025.i, 1
-  %68 = zext i32 %67 to i64
-  %69 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %68
-  %70 = load i32, ptr %69, align 4, !tbaa !337    ; 2 uses
-  %71 = icmp slt i32 %70, 0
-  %.not17.i = icmp eq i32 %70, %66
-  %or.cond23.i = select i1 %71, i1 true, i1 %.not17.i
+  %68 = getelementptr inbounds nuw i8, ptr %i.oy, i64 4
+  %69 = load i32, ptr %68, align 4, !tbaa !337    ; 2 uses
+  %70 = icmp slt i32 %69, 0
+  %71 = zext i32 %69 to i64
+  %.not17.i = icmp eq i64 %66, %71
+  %or.cond23.i = select i1 %70, i1 true, i1 %.not17.i
   br i1 %or.cond23.i, label %bb.cb, label %.loopexit
 
 .loopexit803:                                     ; preds = %bb.cb, %bb.ca
@@ -1040,35 +1044,40 @@ _ZNK4llvm3EVT20getVectorNumElementsEv.exit:       ; preds = %_ZNK4llvm3MVT20getV
 
 bb.d:                                             ; preds = %_ZNK4llvm3EVT20getVectorNumElementsEv.exit
   %i.l = load i32, ptr %0, align 4, !tbaa !337
-  %i.m = icmp ne i32 %i.l, 0
-  %i.n = zext i1 %i.m to i32                      ; 2 uses
+  %i.m = icmp ne i32 %i.l, 0                      ; 2 uses
+  %i.n = zext i1 %i.m to i32
   store i32 %i.n, ptr %3, align 4, !tbaa !337
   %.not1824 = icmp eq i32 %i.j, 0
-  br i1 %.not1824, label %.loopexit, label %.lr.ph
+  br i1 %.not1824, label %.loopexit, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.d
+  %5 = zext i1 %i.m to i64
+  %6 = zext i32 %i.j to i64
+  br label %.lr.ph
 
 bb.e:                                             ; preds = %bb.f
-  %5 = add i32 %.025, 2                           ; 2 uses
-  %.not18.not = icmp ult i32 %5, %i.j
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %.not18.not = icmp samesign ult i64 %indvars.iv.next, %6
   br i1 %.not18.not, label %.lr.ph, label %.loopexit, !llvm.loop !18
 
-.lr.ph:                                           ; preds = %bb.d, %bb.e
-  %.025 = phi i32 [ %5, %bb.e ], [ 0, %bb.d ]     ; 4 uses
-  %6 = zext i32 %.025 to i64
-  %i.o = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %6
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 4 uses
+  %i.o = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
   %i.p = load i32, ptr %i.o, align 4, !tbaa !337  ; 2 uses
   %i.q = icmp slt i32 %i.p, 0
-  %7 = or disjoint i32 %.025, %i.n                ; 2 uses
-  %.not16 = icmp eq i32 %i.p, %7
+  %7 = or disjoint i64 %indvars.iv, %5            ; 2 uses
+  %8 = zext i32 %i.p to i64
+  %.not16 = icmp eq i64 %7, %8
   %or.cond = select i1 %i.q, i1 true, i1 %.not16
   br i1 %or.cond, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %.lr.ph
-  %8 = or disjoint i32 %.025, 1
-  %9 = zext i32 %8 to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %9
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 4
   %11 = load i32, ptr %10, align 4, !tbaa !337    ; 2 uses
   %12 = icmp slt i32 %11, 0
-  %.not17 = icmp eq i32 %11, %7
+  %13 = zext i32 %11 to i64
+  %.not17 = icmp eq i64 %7, %13
   %or.cond23 = select i1 %12, i1 true, i1 %.not17
   br i1 %or.cond23, label %bb.e, label %.loopexit
 

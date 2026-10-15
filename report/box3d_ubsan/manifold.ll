@@ -65,7 +65,7 @@ bb.a:
   br i1 %i.e, label %bb.c, label %bb.b, !prof !10, !nosanitize !9
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @40, i64 %i.b) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @40, i64 %i.b) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.c:                                             ; preds = %bb.a
@@ -81,7 +81,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %bb.e, label %bb.f, !prof !12, !nosanitize !9
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @42, i64 %i.b, i64 %i.i) #4, !nosanitize !9
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @42, i64 %i.b, i64 %i.i) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.f:                                             ; preds = %bb.d
@@ -103,7 +103,7 @@ bb.g:                                             ; preds = %b3GetHullVertices.e
   br i1 %i.s, label %bb.h, label %bb.i, !prof !12, !nosanitize !9
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @43, i64 %i.b, i64 %i.q) #4, !nosanitize !9
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @43, i64 %i.b, i64 %i.q) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.i:                                             ; preds = %bb.g
@@ -125,7 +125,7 @@ bb.j:                                             ; preds = %b3GetHullEdges.exit
   br i1 %i.aa, label %bb.k, label %bb.l, !prof !12, !nosanitize !9
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @44, i64 %i.b, i64 %i.y) #4, !nosanitize !9
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @44, i64 %i.b, i64 %i.y) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.l:                                             ; preds = %bb.j
@@ -147,7 +147,7 @@ bb.m:                                             ; preds = %b3GetHullPlanes.exi
   br i1 %i.ai, label %bb.n, label %bb.o, !prof !12, !nosanitize !9
 
 bb.n:                                             ; preds = %bb.m
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @45, i64 %i.b, i64 %i.ag) #4, !nosanitize !9
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @45, i64 %i.b, i64 %i.ag) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.o:                                             ; preds = %bb.m
@@ -171,7 +171,7 @@ b3GetHullPoints.exit:                             ; preds = %b3GetHullPlanes.exi
   br i1 %i.av, label %bb.q, label %bb.p, !prof !10, !nosanitize !9
 
 bb.p:                                             ; preds = %b3GetHullPoints.exit
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @0, i64 %i.an, i64 %i.ao) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @0, i64 %i.an, i64 %i.ao) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.q:                                             ; preds = %b3GetHullPoints.exit
@@ -179,7 +179,7 @@ bb.q:                                             ; preds = %b3GetHullPoints.exi
 
 bb.r:                                             ; preds = %bb.q
   %i.aw = ptrtoint ptr %i.am to i64, !nosanitize !9
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @2, i64 %i.aw) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @2, i64 %i.aw) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.s:                                             ; preds = %bb.q
@@ -197,7 +197,7 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.bh, label %bb.u, label %bb.t, !prof !10, !nosanitize !9
 
 bb.t:                                             ; preds = %bb.s
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @3, i64 %i.bb, i64 %i.bc) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @3, i64 %i.bb, i64 %i.bc) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.u:                                             ; preds = %bb.s
@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.s
 
 bb.v:                                             ; preds = %bb.u
   %i.bi = ptrtoint ptr %i.az to i64, !nosanitize !9
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @5, i64 %i.bi) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @5, i64 %i.bi) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.w:                                             ; preds = %bb.u
@@ -224,7 +224,7 @@ bb.w:                                             ; preds = %bb.u
   br i1 %i.bu, label %bb.y, label %bb.x, !prof !10, !nosanitize !9
 
 bb.x:                                             ; preds = %bb.w
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @6, i64 %i.bo, i64 %i.bp) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @6, i64 %i.bo, i64 %i.bp) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.y:                                             ; preds = %bb.w
@@ -235,7 +235,7 @@ bb.y:                                             ; preds = %bb.w
   br i1 %i.by, label %bb.aa, label %bb.z, !prof !10, !nosanitize !9
 
 bb.z:                                             ; preds = %bb.y
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @8, i64 %i.bv) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @8, i64 %i.bv) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.aa:                                            ; preds = %bb.y
@@ -261,7 +261,7 @@ bb.ab:                                            ; preds = %bb.ak, %bb.aa
   br i1 %.not122, label %bb.ac, label %bb.ad, !prof !12, !nosanitize !9
 
 bb.ac:                                            ; preds = %bb.ab
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @9, i64 %i.bb, i64 %i.cg) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @9, i64 %i.bb, i64 %i.cg) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ad:                                            ; preds = %bb.ab
@@ -275,7 +275,7 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %.not123, label %bb.ae, label %bb.af, !prof !12, !nosanitize !9
 
 bb.ae:                                            ; preds = %bb.ad
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @10, i64 %i.bo, i64 %i.cm) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @10, i64 %i.bo, i64 %i.cm) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.af:                                            ; preds = %bb.ad
@@ -285,7 +285,7 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %i.cp, label %bb.ah, label %bb.ag, !prof !10, !nosanitize !9
 
 bb.ag:                                            ; preds = %bb.af
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @11, i64 %i.cn) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @11, i64 %i.cn) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ah:                                            ; preds = %bb.af
@@ -304,7 +304,7 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %i.cw, label %bb.ai, label %b3Normalize.exit
 
 bb.ai:                                            ; preds = %bb.ah
-  %sqrt = tail call float @llvm.sqrt.f32(float %i.cv)
+  %sqrt = tail call float @sqrtf(float noundef %i.cv) #6
   %i.cx = fdiv float 1.000000e+00, %sqrt          ; 2 uses
   %i.cy = insertelement <2 x float> poison, float %i.cx, i64 0
   %i.cz = shufflevector <2 x float> %i.cy, <2 x float> poison, <2 x i32> zeroinitializer
@@ -323,7 +323,7 @@ b3Normalize.exit:                                 ; preds = %bb.ah, %bb.ai
   br i1 %.not124, label %bb.aj, label %bb.ak, !prof !12, !nosanitize !9
 
 bb.aj:                                            ; preds = %b3Normalize.exit
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @12, i64 %i.bb, i64 %i.df) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @12, i64 %i.bb, i64 %i.df) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ak:                                            ; preds = %b3Normalize.exit
@@ -355,7 +355,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.dw, label %bb.an, label %bb.am, !prof !10, !nosanitize !9
 
 bb.am:                                            ; preds = %bb.al
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @13, i64 %i.bb, i64 %i.dr) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @13, i64 %i.bb, i64 %i.dr) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.an:                                            ; preds = %bb.al
@@ -374,7 +374,7 @@ bb.an:                                            ; preds = %bb.al
   br i1 %i.ei, label %bb.ap, label %bb.ao, !prof !10, !nosanitize !9
 
 bb.ao:                                            ; preds = %bb.an
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @14, i64 %i.ec, i64 %i.ed) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @14, i64 %i.ec, i64 %i.ed) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ap:                                            ; preds = %bb.an
@@ -385,7 +385,7 @@ bb.ap:                                            ; preds = %bb.an
   br i1 %i.em, label %bb.ar, label %bb.aq, !prof !10, !nosanitize !9
 
 bb.aq:                                            ; preds = %bb.ap
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @16, i64 %i.ej) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @16, i64 %i.ej) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ar:                                            ; preds = %bb.ap
@@ -401,7 +401,7 @@ bb.ar:                                            ; preds = %bb.ap
   br i1 %.not125, label %bb.as, label %bb.at, !prof !12, !nosanitize !9
 
 bb.as:                                            ; preds = %bb.ar
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @17, i64 %i.bb, i64 %i.er) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @17, i64 %i.bb, i64 %i.er) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.at:                                            ; preds = %bb.ar
@@ -416,7 +416,7 @@ bb.at:                                            ; preds = %bb.ar
   br i1 %.not126, label %bb.au, label %bb.av, !prof !12, !nosanitize !9
 
 bb.au:                                            ; preds = %bb.at
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @18, i64 %i.ec, i64 %i.ey) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @18, i64 %i.ec, i64 %i.ey) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.av:                                            ; preds = %bb.at
@@ -426,7 +426,7 @@ bb.av:                                            ; preds = %bb.at
   br i1 %i.fb, label %bb.ax, label %bb.aw, !prof !10, !nosanitize !9
 
 bb.aw:                                            ; preds = %bb.av
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @19, i64 %i.ez) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @19, i64 %i.ez) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ax:                                            ; preds = %bb.av
@@ -504,7 +504,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = zext i32 %2 to i64, !nosanitize !9
-  tail call void @__ubsan_handle_sub_overflow_abort(ptr nonnull @21, i64 %i.c, i64 1) #4, !nosanitize !9
+  tail call void @__ubsan_handle_sub_overflow_abort(ptr nonnull @21, i64 %i.c, i64 1) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.c:                                             ; preds = %bb.a
@@ -524,7 +524,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.p, label %bb.e, label %bb.d, !prof !10, !nosanitize !9
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @22, i64 %i.h, i64 %i.i) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @22, i64 %i.h, i64 %i.i) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.e:                                             ; preds = %bb.c
@@ -535,7 +535,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.t, label %bb.g, label %bb.f, !prof !10, !nosanitize !9
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @24, i64 %i.q) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @24, i64 %i.q) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.g:                                             ; preds = %bb.e
@@ -585,7 +585,7 @@ bb.h:                                             ; preds = %.lr.ph, %bb.ap
   br i1 %.not, label %bb.i, label %bb.j, !prof !12, !nosanitize !9
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @25, i64 %i.h, i64 %i.ae) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @25, i64 %i.h, i64 %i.ae) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.j:                                             ; preds = %bb.h
@@ -595,7 +595,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.ah, label %bb.l, label %bb.k, !prof !10, !nosanitize !9
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @26, i64 %i.af) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @26, i64 %i.af) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.l:                                             ; preds = %bb.j
@@ -631,7 +631,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ay, label %bb.o, label %bb.n, !prof !10, !nosanitize !9
 
 bb.n:                                             ; preds = %bb.m
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @27, i64 %i.aa, i64 %i.as) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @27, i64 %i.aa, i64 %i.as) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.o:                                             ; preds = %bb.m
@@ -642,7 +642,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.bc, label %bb.q, label %bb.p, !prof !10, !nosanitize !9
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @28, i64 %i.az) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @28, i64 %i.az) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.q:                                             ; preds = %bb.o
@@ -657,7 +657,7 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.bf = zext nneg i32 %.091261 to i64, !nosanitize !9
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @29, i64 %i.bf, i64 1) #4, !nosanitize !9
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @29, i64 %i.bf, i64 1) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.s:                                             ; preds = %bb.q
@@ -703,7 +703,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.cf, label %bb.w, label %bb.v, !prof !10, !nosanitize !9
 
 bb.v:                                             ; preds = %bb.u
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @30, i64 %i.aa, i64 %i.bz) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @30, i64 %i.aa, i64 %i.bz) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.w:                                             ; preds = %bb.u
@@ -714,7 +714,7 @@ bb.w:                                             ; preds = %bb.u
   br i1 %i.cj, label %bb.y, label %bb.x, !prof !10, !nosanitize !9
 
 bb.x:                                             ; preds = %bb.w
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @31, i64 %i.cg) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @31, i64 %i.cg) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.y:                                             ; preds = %bb.w
@@ -731,7 +731,7 @@ bb.y:                                             ; preds = %bb.w
 
 bb.z:                                             ; preds = %bb.y
   %i.cm = zext nneg i32 %.091261 to i64, !nosanitize !9
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @32, i64 %i.cm, i64 1) #4, !nosanitize !9
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @32, i64 %i.cm, i64 1) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.aa:                                            ; preds = %bb.y
@@ -777,7 +777,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.dm, label %bb.ae, label %bb.ad, !prof !10, !nosanitize !9
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @33, i64 %i.aa, i64 %i.dg) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @33, i64 %i.aa, i64 %i.dg) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ae:                                            ; preds = %bb.ac
@@ -788,7 +788,7 @@ bb.ae:                                            ; preds = %bb.ac
   br i1 %i.dq, label %bb.ag, label %bb.af, !prof !10, !nosanitize !9
 
 bb.af:                                            ; preds = %bb.ae
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @34, i64 %i.dn) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @34, i64 %i.dn) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ag:                                            ; preds = %bb.ae
@@ -806,7 +806,7 @@ bb.ag:                                            ; preds = %bb.ae
 
 bb.ah:                                            ; preds = %bb.ag
   %i.du = zext nneg i32 %.091261 to i64, !nosanitize !9
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @35, i64 %i.du, i64 1) #4, !nosanitize !9
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @35, i64 %i.du, i64 1) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ai:                                            ; preds = %bb.ag
@@ -822,7 +822,7 @@ bb.ai:                                            ; preds = %bb.ag
   br i1 %i.ed, label %bb.ak, label %bb.aj, !prof !10, !nosanitize !9
 
 bb.aj:                                            ; preds = %bb.ai
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @36, i64 %i.aa, i64 %i.dy) #4, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @36, i64 %i.aa, i64 %i.dy) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ak:                                            ; preds = %bb.ai
@@ -832,7 +832,7 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %i.eg, label %bb.am, label %bb.al, !prof !10, !nosanitize !9
 
 bb.al:                                            ; preds = %bb.ak
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @37, i64 %i.ee) #4, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @37, i64 %i.ee) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.am:                                            ; preds = %bb.ak
@@ -847,7 +847,7 @@ bb.am:                                            ; preds = %bb.ak
 
 bb.an:                                            ; preds = %bb.am
   %i.ej = zext nneg i32 %i.ds to i64, !nosanitize !9
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @38, i64 %i.ej, i64 1) #4, !nosanitize !9
+  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @38, i64 %i.ej, i64 1) #5, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ao:                                            ; preds = %bb.am
@@ -867,14 +867,16 @@ declare { i32, i1 } @llvm.sadd.with.overflow.i32(i32, i32) #1
 ; Function Attrs: noreturn nounwind uwtable
 declare void @__ubsan_handle_add_overflow_abort(ptr, i64, i64) local_unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #1
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #4
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #2 = { noreturn nounwind uwtable }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { noreturn nounwind }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { noreturn nounwind }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

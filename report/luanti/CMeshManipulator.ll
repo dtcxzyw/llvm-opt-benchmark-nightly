@@ -204,7 +204,7 @@ _ZN5scene11IMeshBuffer10getIndicesEv.exit.i:      ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.dk = fpext float %i.di to double
-  %sqrt.i.i.i.i = tail call double @llvm.sqrt.f64(double %i.dk)
+  %sqrt.i.i.i.i = tail call double @sqrt(double noundef %i.dk) #19
   %i.dl = fdiv double 1.000000e+00, %sqrt.i.i.i.i ; 2 uses
   %i.dm = fpext <2 x float> %i.cx to <2 x double>
   %i.dn = insertelement <2 x double> poison, double %i.dl, i64 0
@@ -363,7 +363,7 @@ _ZN4core7plane3dIfEC2ERKNS_8vector3dIfEES5_S5_.exit.i: ; preds = %bb.e, %.lr.ph.
 
 bb.f:                                             ; preds = %.lr.ph140.i
   %i.ic = fpext float %i.ia to double
-  %sqrt.i.i.i83.i = tail call double @llvm.sqrt.f64(double %i.ic)
+  %sqrt.i.i.i83.i = tail call double @sqrt(double noundef %i.ic) #19
   %i.id = fdiv double 1.000000e+00, %sqrt.i.i.i83.i ; 2 uses
   %i.ie = fpext <2 x float> %i.hp to <2 x double>
   %i.if = insertelement <2 x double> poison, double %i.id, i64 0
@@ -389,8 +389,8 @@ bb.g:                                             ; preds = %_ZN4core7plane3dIfE
   %foldExtExtBinop97.a = fmul <2 x float> %foldExtExtBinop93.a, %foldExtExtBinop93.a
   %i.io = extractelement <2 x float> %foldExtExtBinop97.a, i64 0
   %i.ip = tail call float @llvm.fmuladd.f32(float %i.im, float %i.im, float %i.io)
-  %i.iq = tail call noundef float @llvm.fmuladd.f32(float %i.in, float %i.in, float %i.ip) ; 4 uses
-  %sqrt26.i.i = tail call float @llvm.sqrt.f32(float %i.iq) ; 2 uses
+  %i.iq = tail call noundef float @llvm.fmuladd.f32(float %i.in, float %i.in, float %i.ip) ; 3 uses
+  %sqrt26.i.i = tail call float @sqrtf(float noundef %i.iq) #19 ; 2 uses
   %i.ir = insertelement <2 x float> poison, float %i.gz, i64 0
   %i.is = shufflevector <2 x float> %i.ir, <2 x float> poison, <2 x i32> zeroinitializer
   %i.it = shufflevector <2 x float> %i.hb, <2 x float> %i.ha, <2 x i32> <i32 0, i32 2>
@@ -403,30 +403,35 @@ bb.g:                                             ; preds = %_ZN4core7plane3dIfE
   %i.ja = fsub <2 x float> %i.iy, %i.iz           ; 2 uses
   %i.jb = fmul <2 x float> %i.ix, %i.ix
   %i.jc = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.iu, <2 x float> %i.iu, <2 x float> %i.jb)
-  %i.jd = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ja, <2 x float> %i.ja, <2 x float> %i.jc) ; 2 uses
-  %i.je = extractelement <2 x float> %i.jd, i64 0 ; 4 uses
-  %sqrt25.i.i = tail call float @llvm.sqrt.f32(float %i.je)
-  %i.jf = extractelement <2 x float> %i.jd, i64 1 ; 4 uses
-  %sqrt.i.i = tail call float @llvm.sqrt.f32(float %i.jf) ; 2 uses
+  %i.jd = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ja, <2 x float> %i.ja, <2 x float> %i.jc) ; 4 uses
+  %4 = shufflevector <2 x float> %i.jd, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %i.je = extractelement <2 x float> %i.jd, i64 0 ; 2 uses
+  %sqrt25.i.i = tail call float @sqrtf(float noundef %i.je) #19
+  %i.jf = extractelement <2 x float> %i.jd, i64 1 ; 2 uses
+  %sqrt.i.i = tail call float @sqrtf(float noundef %i.jf) #19 ; 2 uses
   %i.jg = fadd float %i.jf, %i.je
   %i.jh = fsub float %i.jg, %i.iq
-  %4 = fmul float %sqrt25.i.i, 2.000000e+00       ; 2 uses
-  %i.ji = fmul float %sqrt.i.i, %4
+  %5 = insertelement <2 x float> poison, float %sqrt26.i.i, i64 0
+  %6 = insertelement <2 x float> %5, float %sqrt25.i.i, i64 1
+  %7 = fmul <2 x float> %6, splat (float 2.000000e+00) ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 1
+  %i.ji = fmul float %8, %sqrt.i.i
   %i.jj = fdiv float %i.jh, %i.ji
   %i.jk = tail call float @acosf(float noundef %i.jj) #19
-  %5 = fsub float %i.jf, %i.je
-  %6 = fadd float %i.iq, %5
-  %7 = fmul float %sqrt26.i.i, 2.000000e+00
-  %8 = fmul float %sqrt.i.i, %7
-  %9 = fdiv float %6, %8
-  %10 = tail call float @acosf(float noundef %9) #19
-  %11 = fsub float %i.je, %i.jf
-  %12 = fadd float %i.iq, %11
-  %13 = fmul float %sqrt26.i.i, %4
-  %14 = fdiv float %12, %13
-  %i.jl = tail call float @acosf(float noundef %14) #19
+  %9 = fsub <2 x float> %4, %i.jd
+  %10 = insertelement <2 x float> poison, float %i.iq, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = fadd <2 x float> %11, %9
+  %13 = insertelement <2 x float> poison, float %sqrt.i.i, i64 0
+  %14 = insertelement <2 x float> %13, float %sqrt26.i.i, i64 1
+  %15 = fmul <2 x float> %7, %14
+  %16 = fdiv <2 x float> %12, %15                 ; 2 uses
+  %17 = extractelement <2 x float> %16, i64 0
+  %18 = tail call float @acosf(float noundef %17) #19
+  %19 = extractelement <2 x float> %16, i64 1
+  %i.jl = tail call float @acosf(float noundef %19) #19
   %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.jk, i64 0
-  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %10, i64 1
+  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %18, i64 1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZN4core7plane3dIfEC2ERKNS_8vector3dIfEES5_S5_.exit84.i
@@ -522,7 +527,7 @@ bb.h:                                             ; preds = %bb.g, %_ZN4core7pla
 
 bb.i:                                             ; preds = %.lr.ph143.i
   %i.mh = fpext float %i.mf to double
-  %sqrt.i93.i = tail call double @llvm.sqrt.f64(double %i.mh)
+  %sqrt.i93.i = tail call double @sqrt(double noundef %i.mh) #19
   %i.mi = fdiv double 1.000000e+00, %sqrt.i93.i   ; 2 uses
   %i.mj = fpext <2 x float> %i.lz to <2 x double>
   %i.mk = insertelement <2 x double> poison, double %i.mi, i64 0
@@ -643,7 +648,7 @@ _ZN5scene11IMeshBuffer10getIndicesEv.exit.i7:     ; preds = %bb.j
 
 bb.l:                                             ; preds = %.lr.ph.i10
   %i.pr = fpext float %i.pp to double
-  %sqrt.i.i.i.i14 = tail call double @llvm.sqrt.f64(double %i.pr)
+  %sqrt.i.i.i.i14 = tail call double @sqrt(double noundef %i.pr) #19
   %i.ps = fdiv double 1.000000e+00, %sqrt.i.i.i.i14 ; 2 uses
   %i.pt = fpext <2 x float> %i.pe to <2 x double>
   %i.pu = insertelement <2 x double> poison, double %i.ps, i64 0
@@ -796,7 +801,7 @@ _ZN4core7plane3dIfEC2ERKNS_8vector3dIfEES5_S5_.exit.i17: ; preds = %bb.l, %.lr.p
 
 bb.m:                                             ; preds = %.lr.ph140.i30
   %i.ud = fpext float %i.ub to double
-  %sqrt.i.i.i83.i34 = tail call double @llvm.sqrt.f64(double %i.ud)
+  %sqrt.i.i.i83.i34 = tail call double @sqrt(double noundef %i.ud) #19
   %i.ue = fdiv double 1.000000e+00, %sqrt.i.i.i83.i34 ; 2 uses
   %i.uf = fpext <2 x float> %i.tq to <2 x double>
   %i.ug = insertelement <2 x double> poison, double %i.ue, i64 0
@@ -822,8 +827,8 @@ bb.n:                                             ; preds = %_ZN4core7plane3dIfE
   %foldExtExtBinop111 = fmul <2 x float> %foldExtExtBinop107.a, %foldExtExtBinop107.a
   %i.up = extractelement <2 x float> %foldExtExtBinop111, i64 0
   %i.uq = tail call float @llvm.fmuladd.f32(float %i.un, float %i.un, float %i.up)
-  %i.ur = tail call noundef float @llvm.fmuladd.f32(float %i.uo, float %i.uo, float %i.uq) ; 4 uses
-  %sqrt26.i.i52 = tail call float @llvm.sqrt.f32(float %i.ur) ; 2 uses
+  %i.ur = tail call noundef float @llvm.fmuladd.f32(float %i.uo, float %i.uo, float %i.uq) ; 3 uses
+  %sqrt26.i.i52 = tail call float @sqrtf(float noundef %i.ur) #19 ; 2 uses
   %i.us = insertelement <2 x float> poison, float %i.ta, i64 0
   %i.ut = shufflevector <2 x float> %i.us, <2 x float> poison, <2 x i32> zeroinitializer
   %i.uu = shufflevector <2 x float> %i.tc, <2 x float> %i.tb, <2 x i32> <i32 0, i32 2>
@@ -836,30 +841,35 @@ bb.n:                                             ; preds = %_ZN4core7plane3dIfE
   %i.vb = fsub <2 x float> %i.uz, %i.va           ; 2 uses
   %i.vc = fmul <2 x float> %i.uy, %i.uy
   %i.vd = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.uv, <2 x float> %i.uv, <2 x float> %i.vc)
-  %i.ve = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.vb, <2 x float> %i.vb, <2 x float> %i.vd) ; 2 uses
-  %i.vf = extractelement <2 x float> %i.ve, i64 0 ; 4 uses
-  %sqrt25.i.i53 = tail call float @llvm.sqrt.f32(float %i.vf)
-  %i.vg = extractelement <2 x float> %i.ve, i64 1 ; 4 uses
-  %sqrt.i.i54 = tail call float @llvm.sqrt.f32(float %i.vg) ; 2 uses
+  %i.ve = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.vb, <2 x float> %i.vb, <2 x float> %i.vd) ; 4 uses
+  %20 = shufflevector <2 x float> %i.ve, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %i.vf = extractelement <2 x float> %i.ve, i64 0 ; 2 uses
+  %sqrt25.i.i53 = tail call float @sqrtf(float noundef %i.vf) #19
+  %i.vg = extractelement <2 x float> %i.ve, i64 1 ; 2 uses
+  %sqrt.i.i54 = tail call float @sqrtf(float noundef %i.vg) #19 ; 2 uses
   %i.vh = fadd float %i.vg, %i.vf
   %i.vi = fsub float %i.vh, %i.ur
-  %15 = fmul float %sqrt25.i.i53, 2.000000e+00    ; 2 uses
-  %i.vj = fmul float %sqrt.i.i54, %15
+  %21 = insertelement <2 x float> poison, float %sqrt26.i.i52, i64 0
+  %22 = insertelement <2 x float> %21, float %sqrt25.i.i53, i64 1
+  %23 = fmul <2 x float> %22, splat (float 2.000000e+00) ; 2 uses
+  %24 = extractelement <2 x float> %23, i64 1
+  %i.vj = fmul float %24, %sqrt.i.i54
   %i.vk = fdiv float %i.vi, %i.vj
   %i.vl = tail call float @acosf(float noundef %i.vk) #19
-  %16 = fsub float %i.vg, %i.vf
-  %17 = fadd float %i.ur, %16
-  %18 = fmul float %sqrt26.i.i52, 2.000000e+00
-  %19 = fmul float %sqrt.i.i54, %18
-  %20 = fdiv float %17, %19
-  %21 = tail call float @acosf(float noundef %20) #19
-  %22 = fsub float %i.vf, %i.vg
-  %23 = fadd float %i.ur, %22
-  %24 = fmul float %sqrt26.i.i52, %15
-  %25 = fdiv float %23, %24
-  %i.vm = tail call float @acosf(float noundef %25) #19
+  %25 = fsub <2 x float> %20, %i.ve
+  %26 = insertelement <2 x float> poison, float %i.ur, i64 0
+  %27 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> zeroinitializer
+  %28 = fadd <2 x float> %27, %25
+  %29 = insertelement <2 x float> poison, float %sqrt.i.i54, i64 0
+  %30 = insertelement <2 x float> %29, float %sqrt26.i.i52, i64 1
+  %31 = fmul <2 x float> %23, %30
+  %32 = fdiv <2 x float> %28, %31                 ; 2 uses
+  %33 = extractelement <2 x float> %32, i64 0
+  %34 = tail call float @acosf(float noundef %33) #19
+  %35 = extractelement <2 x float> %32, i64 1
+  %i.vm = tail call float @acosf(float noundef %35) #19
   %.sroa.0.0.vec.insert.i.i55 = insertelement <2 x float> poison, float %i.vl, i64 0
-  %.sroa.0.4.vec.insert.i.i56 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i55, float %21, i64 1
+  %.sroa.0.4.vec.insert.i.i56 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i55, float %34, i64 1
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_ZN4core7plane3dIfEC2ERKNS_8vector3dIfEES5_S5_.exit84.i37
@@ -952,7 +962,7 @@ bb.o:                                             ; preds = %bb.n, %_ZN4core7pla
 
 bb.p:                                             ; preds = %.lr.ph143.i47
   %i.yf = fpext float %i.yd to double
-  %sqrt.i93.i49 = tail call double @llvm.sqrt.f64(double %i.yf)
+  %sqrt.i93.i49 = tail call double @sqrt(double noundef %i.yf) #19
   %i.yg = fdiv double 1.000000e+00, %sqrt.i93.i49 ; 2 uses
   %i.yh = fpext <2 x float> %i.xx to <2 x double>
   %i.yi = insertelement <2 x double> poison, double %i.yg, i64 0
@@ -1355,7 +1365,13 @@ declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #12
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #6
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #16
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @acosf(float noundef) local_unnamed_addr #16
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sqrt(double noundef) local_unnamed_addr #16
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5video9SMaterialD2Ev(ptr noundef nonnull align 8 dead_on_return(127) dereferenceable(127) %0) unnamed_addr #7 comdat align 2 {
@@ -1757,12 +1773,6 @@ _ZSt22__uninitialized_copy_aIPKN5video17S3DVertexTangentsEPS1_S1_ET0_T_S6_S5_RSa
 _ZNSt6vectorIN5video17S3DVertexTangentsESaIS1_EE15_M_erase_at_endEPS1_.exit: ; preds = %_ZSt8_DestroyIPN5video17S3DVertexTangentsES1_EvT_S3_RSaIT0_E.exit.i, %_ZSt4copyIPKN5video17S3DVertexTangentsEPS1_ET0_T_S6_S5_.exit, %_ZSt22__uninitialized_copy_aIPKN5video17S3DVertexTangentsEPS1_S1_ET0_T_S6_S5_RSaIT1_E.exit, %_ZNSt12_Vector_baseIN5video17S3DVertexTangentsESaIS1_EE13_M_deallocateEPS1_m.exit
   ret void
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #14

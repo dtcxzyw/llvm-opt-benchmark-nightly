@@ -205,6 +205,7 @@ bb.a:
 
 .lr.ph49:                                         ; preds = %.preheader
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %3 = zext nneg i32 %i.f to i64
   br label %bb.d
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
@@ -236,34 +237,35 @@ bb.c:                                             ; preds = %._crit_edge
   ret i1 %.033.lcssa
 
 bb.d:                                             ; preds = %.lr.ph49, %get_arg_by_name.exit.thread
-  %.048 = phi i32 [ 0, %.lr.ph49 ], [ %6, %get_arg_by_name.exit.thread ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph49 ], [ %indvars.iv.next, %get_arg_by_name.exit.thread ] ; 8 uses
   %.03347 = phi i1 [ true, %.lr.ph49 ], [ %.1, %get_arg_by_name.exit.thread ] ; 3 uses
   %i.t = load ptr, ptr %i.b, align 8              ; 2 uses
-  %3 = sext i32 %.048 to i64                      ; 4 uses
-  %i.u = getelementptr inbounds i8, ptr %i.t, i64 %3
+  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %indvars.iv
   %i.v = load i8, ptr %i.u, align 1, !range !4, !noundef !5
   %i.w = trunc nuw i8 %i.v to i1
   br i1 %i.w, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
   %i.x = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #7 ; 0 uses
-  %i.y = or disjoint i32 %.048, 1
+  %i.y = or disjoint i32 %4, 1
   %i.z = call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.12, i32 noundef %i.y) #8 ; 0 uses
   call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 387, ptr noundef nonnull @__func__.stats_fill_fcinfo_from_arg_pairs) #8
   unreachable
 
 bb.f:                                             ; preds = %bb.d
   %i.aa = load ptr, ptr %i.c, align 8
-  %i.ab = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %3
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %indvars.iv
   %i.ac = load i32, ptr %i.ab, align 4
   %.not36 = icmp eq i32 %i.ac, 25
   br i1 %.not36, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
   %i.ad = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #7 ; 0 uses
-  %i.ae = or disjoint i32 %.048, 1
+  %i.ae = or disjoint i32 %5, 1
   %i.af = load ptr, ptr %i.c, align 8
-  %i.ag = getelementptr inbounds [4 x i8], ptr %i.af, i64 %3
+  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %indvars.iv
   %i.ah = load i32, ptr %i.ag, align 4
   %i.ai = call ptr @format_type_be(i32 noundef %i.ah) #8
   %i.aj = call ptr @format_type_be(i32 noundef 25) #8
@@ -272,16 +274,15 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %4 = or disjoint i32 %.048, 1
-  %5 = sext i32 %4 to i64                         ; 3 uses
-  %i.al = getelementptr inbounds i8, ptr %i.t, i64 %5
+  %6 = or disjoint i64 %indvars.iv, 1             ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.t, i64 %6
   %i.am = load i8, ptr %i.al, align 1, !range !4, !noundef !5
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %get_arg_by_name.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ao = load ptr, ptr %i.a, align 8
-  %i.ap = getelementptr inbounds [8 x i8], ptr %i.ao, i64 %3
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv
   %i.aq = load i64, ptr %i.ap, align 8
   %i.ar = inttoptr i64 %i.aq to ptr
   %i.as = call ptr @text_to_cstring(ptr noundef %i.ar) #8 ; 4 uses
@@ -324,7 +325,7 @@ get_arg_by_name.exit:                             ; preds = %.lr.ph.i
 
 bb.m:                                             ; preds = %get_arg_by_name.exit
   %i.bg = load ptr, ptr %i.c, align 8
-  %i.bh = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %5
+  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %6
   %i.bi = load i32, ptr %i.bh, align 4            ; 2 uses
   %i.bj = zext nneg i32 %.012.i to i64            ; 2 uses
   %i.bk = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.bj
@@ -346,7 +347,7 @@ bb.o:                                             ; preds = %bb.n
 
 stats_check_arg_type.exit:                        ; preds = %bb.m
   %i.br = load ptr, ptr %i.a, align 8
-  %i.bs = getelementptr inbounds [8 x i8], ptr %i.br, i64 %5
+  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %6
   %i.bt = load i64, ptr %i.bs, align 8
   %i.bu = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %i.bj ; 2 uses
   store i64 %i.bt, ptr %i.bu, align 8
@@ -356,8 +357,8 @@ stats_check_arg_type.exit:                        ; preds = %bb.m
 
 get_arg_by_name.exit.thread:                      ; preds = %bb.o, %bb.n, %bb.l, %._crit_edge.i, %get_arg_by_name.exit, %bb.i, %bb.h, %stats_check_arg_type.exit
   %.1 = phi i1 [ %.03347, %stats_check_arg_type.exit ], [ %.03347, %bb.h ], [ %.03347, %bb.i ], [ false, %bb.l ], [ false, %get_arg_by_name.exit ], [ false, %._crit_edge.i ], [ false, %bb.n ], [ false, %bb.o ] ; 2 uses
-  %6 = add i32 %.048, 2                           ; 2 uses
-  %7 = icmp slt i32 %6, %i.f
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %7 = icmp samesign ult i64 %indvars.iv.next, %3
   br i1 %7, label %bb.d, label %._crit_edge50, !llvm.loop !9
 }
 

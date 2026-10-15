@@ -26,8 +26,8 @@ bb.a:
   br i1 %or.cond, label %bb.o, label %.lr.ph232.preheader
 
 .lr.ph232.preheader:                              ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
-  %i.c = tail call float @b2GetLengthUnitsPerMeter() #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
+  %i.c = tail call float @b2GetLengthUnitsPerMeter() #7
   %i.d = fmul float %i.c, 5.000000e-03            ; 5 uses
   %i.e = fmul float %i.d, 1.600000e+01
   %i.f = fmul float %i.d, %i.e                    ; 28 uses
@@ -430,8 +430,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   %i.ix = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.iw
   %i.iy = load i64, ptr %i.ix, align 8, !tbaa !9
   store i64 %i.iy, ptr %i.iu, align 8, !tbaa !9
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   %i.iz = fsub <2 x float> %.sroa.045.0.copyload, %.sroa.059.0.copyload ; 3 uses
   %i.ja = fmul <2 x float> %i.iz, %i.iz
   %i.jb = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.ja) ; 2 uses
@@ -439,8 +439,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   br i1 %i.jc, label %bb.c, label %.lr.ph248
 
 bb.c:                                             ; preds = %._crit_edge243
-  %sqrt.i = tail call nnan float @llvm.sqrt.f32(float %i.jb)
-  %i.jd = fdiv nnan float 1.000000e+00, %sqrt.i
+  %sqrt.i = tail call float @sqrtf(float noundef %i.jb) #7
+  %i.jd = fdiv float 1.000000e+00, %sqrt.i
   %i.je = insertelement <2 x float> poison, float %i.jd, i64 0
   %i.jf = shufflevector <2 x float> %i.je, <2 x float> poison, <2 x i32> zeroinitializer
   %i.jg = fmul <2 x float> %i.iz, %i.jf
@@ -484,9 +484,9 @@ bb.c:                                             ; preds = %._crit_edge243
   br i1 %niter384.ncmp.1, label %._crit_edge243.unr-lcssa, label %.lr.ph242, !llvm.loop !14
 
 ._crit_edge249:                                   ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
   call fastcc void @b2RecurseHull(ptr dead_on_unwind noalias writable align 4 %6, <2 x float> %.sroa.059.0.copyload, <2 x float> %.sroa.045.0.copyload, ptr noundef %4, i32 noundef %.1132)
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #7
   call fastcc void @b2RecurseHull(ptr dead_on_unwind noalias writable align 4 %7, <2 x float> %.sroa.045.0.copyload, <2 x float> %.sroa.059.0.copyload, ptr noundef %5, i32 noundef %.1130)
   %i.jy = getelementptr inbounds nuw i8, ptr %6, i64 64
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !12 ; 4 uses
@@ -622,8 +622,8 @@ bb.k:                                             ; preds = %b2Normalize.exit211
   br i1 %i.lx, label %bb.l, label %b2Normalize.exit211
 
 bb.l:                                             ; preds = %.lr.ph343
-  %sqrt.i208 = tail call nnan float @llvm.sqrt.f32(float %i.lw)
-  %i.ly = fdiv nnan float 1.000000e+00, %sqrt.i208
+  %sqrt.i208 = tail call float @sqrtf(float noundef %i.lw) #7
+  %i.ly = fdiv float 1.000000e+00, %sqrt.i208
   %i.lz = insertelement <2 x float> poison, float %i.ly, i64 0
   %i.ma = shufflevector <2 x float> %i.lz, <2 x float> poison, <2 x i32> zeroinitializer
   %i.mb = fmul <2 x float> %i.lu, %i.ma
@@ -677,14 +677,14 @@ b2Normalize.exit211:                              ; preds = %.lr.ph343, %bb.l
   br label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge266, %._crit_edge266.thread, %._crit_edge249
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   br label %bb.n
 
 bb.n:                                             ; preds = %._crit_edge, %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.a, %bb.n
@@ -724,8 +724,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.c, label %b2Normalize.exit
 
 bb.c:                                             ; preds = %bb.b
-  %sqrt.i = tail call nnan float @llvm.sqrt.f32(float %i.e)
-  %i.g = fdiv nnan float 1.000000e+00, %sqrt.i
+  %sqrt.i = tail call float @sqrtf(float noundef %i.e) #7
+  %i.g = fdiv float 1.000000e+00, %sqrt.i
   %i.h = insertelement <2 x float> poison, float %i.g, i64 0
   %i.i = shufflevector <2 x float> %i.h, <2 x float> poison, <2 x i32> zeroinitializer
   %i.j = fmul <2 x float> %i.c, %i.i
@@ -734,7 +734,7 @@ bb.c:                                             ; preds = %bb.b
 
 b2Normalize.exit:                                 ; preds = %bb.b, %bb.c
   %.sroa.012.0.i = phi <2 x float> [ %i.k, %bb.c ], [ zeroinitializer, %bb.b ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   %i.l = load <2 x float>, ptr %3, align 4        ; 2 uses
   %i.m = fsub <2 x float> %i.l, %1
   %i.n = fmul <2 x float> %.sroa.012.0.i, %i.m    ; 2 uses
@@ -765,7 +765,7 @@ bb.e:                                             ; preds = %bb.d, %b2Normalize.
   %.048.lcssa = phi i64 [ 0, %bb.e ], [ %i.r, %._crit_edge.loopexit ]
   %.046.lcssa = phi float [ %i.o, %bb.e ], [ %.147, %._crit_edge.loopexit ]
   %.1.lcssa = phi i32 [ %.045, %bb.e ], [ %.2, %._crit_edge.loopexit ] ; 2 uses
-  %i.s = tail call float @b2GetLengthUnitsPerMeter() #6
+  %i.s = tail call float @b2GetLengthUnitsPerMeter() #7
   %i.t = fmul float %i.s, 5.000000e-03
   %i.u = fmul float %i.t, 2.000000e+00
   %i.v = fcmp olt float %.046.lcssa, %i.u
@@ -806,9 +806,9 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph
 bb.h:                                             ; preds = %._crit_edge
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.048.lcssa
   %.sroa.0.0.copyload = load <2 x float>, ptr %i.ah, align 4, !tbaa !9 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
   call fastcc void @b2RecurseHull(ptr dead_on_unwind noalias writable align 4 %6, <2 x float> %1, <2 x float> %.sroa.0.0.copyload, ptr noundef %5, i32 noundef %.1.lcssa)
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #7
   call fastcc void @b2RecurseHull(ptr dead_on_unwind noalias writable align 4 %7, <2 x float> %.sroa.0.0.copyload, <2 x float> %2, ptr noundef %5, i32 noundef %.1.lcssa)
   %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 64
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !12 ; 3 uses
@@ -846,12 +846,12 @@ bb.i:                                             ; preds = %.lr.ph82, %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph86, %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
   br label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge, %bb.j
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.a, %bb.k
@@ -883,8 +883,8 @@ bb.a:
   br i1 %i.l, label %bb.b, label %b2Normalize.exit.us.peel
 
 bb.b:                                             ; preds = %.lr.ph115
-  %sqrt.i.us.peel = tail call nnan float @llvm.sqrt.f32(float %i.k)
-  %i.m = fdiv nnan float 1.000000e+00, %sqrt.i.us.peel
+  %sqrt.i.us.peel = tail call float @sqrtf(float noundef %i.k) #7
+  %i.m = fdiv float 1.000000e+00, %sqrt.i.us.peel
   %i.n = insertelement <2 x float> poison, float %i.m, i64 0
   %i.o = shufflevector <2 x float> %i.n, <2 x float> poison, <2 x i32> zeroinitializer
   %i.p = fmul <2 x float> %i.i, %i.o
@@ -1036,8 +1036,8 @@ bb.q:                                             ; preds = %..loopexit_crit_edg
   br i1 %i.bv, label %bb.r, label %b2Normalize.exit.us
 
 bb.r:                                             ; preds = %bb.q
-  %sqrt.i.us = tail call nnan float @llvm.sqrt.f32(float %i.bu)
-  %i.bw = fdiv nnan float 1.000000e+00, %sqrt.i.us
+  %sqrt.i.us = tail call float @sqrtf(float noundef %i.bu) #7
+  %i.bw = fdiv float 1.000000e+00, %sqrt.i.us
   %i.bx = insertelement <2 x float> poison, float %i.bw, i64 0
   %i.by = shufflevector <2 x float> %i.bx, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bz = fmul <2 x float> %i.bs, %i.by
@@ -1191,7 +1191,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %exitcond122.not, label %._crit_edge, label %bb.q, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %b2Normalize.exit.us.peel, %..loopexit_crit_edge.us, %..loopexit_crit_edge.us.peel
-  %i.ec = tail call float @b2GetLengthUnitsPerMeter() #6
+  %i.ec = tail call float @b2GetLengthUnitsPerMeter() #7
   %i.ed = fmul float %i.ec, 5.000000e-03
   %i.ee = load i32, ptr %i.a, align 4, !tbaa !12  ; 4 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.ee, i32 0)
@@ -1226,8 +1226,8 @@ bb.an:                                            ; preds = %b2Normalize.exit97
   br i1 %i.es, label %bb.ao, label %b2Normalize.exit97
 
 bb.ao:                                            ; preds = %.lr.ph
-  %sqrt.i94 = tail call nnan float @llvm.sqrt.f32(float %i.er)
-  %i.et = fdiv nnan float 1.000000e+00, %sqrt.i94
+  %sqrt.i94 = tail call float @sqrtf(float noundef %i.er) #7
+  %i.et = fdiv float 1.000000e+00, %sqrt.i94
   %i.eu = insertelement <2 x float> poison, float %i.et, i64 0
   %i.ev = shufflevector <2 x float> %i.eu, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ew = fmul <2 x float> %i.ep, %i.ev
@@ -1252,28 +1252,29 @@ b2Normalize.exit97..critedge.loopexit_crit_edge:  ; preds = %b2Normalize.exit97
   ret i1 %.10
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #4
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
+declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #4
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #5
+declare void @llvm.assume(i1 noundef) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #6 = { nounwind }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.preheader, %bb.dy
   %i.ch = fadd float %i.cg, %i.bn
   %i.ci = extractelement <2 x float> %i.cf, i64 1
   %i.cj = fadd float %i.ch, %i.ci
-  %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.cj)
+  %sqrt.i.i = call noundef float @sqrtf(float noundef %i.cj) #25
   %i.ck = extractelement <2 x float> %i.ce, i64 1 ; 2 uses
   %i.cl = fdiv float %i.ck, %sqrt.i.i
   %i.cm = call noundef float @acosf(float noundef %i.cl) #25
@@ -608,6 +608,9 @@ declare void @_ZN7testing4TestC2Ev(ptr noundef nonnull align 8 dereferenceable(1
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @acosf(float noundef) local_unnamed_addr #12
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #12
+
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4pbrt6detail8DispatchIRZNKS_5Light8SampleLiENS_18LightSampleContextENS_6Point2IfEENS_18SampledWavelengthsEbEUlT_E_N4pstd8optionalINS_13LightLiSampleEEENS_10PointLightENS_12DistantLightENS_15ProjectionLightENS_16GoniometricLightENS_9SpotLightENS_16DiffuseAreaLightENS_20UniformInfiniteLightENS_18ImageInfiniteLightEJNS_24PortalImageInfiniteLightEEvEET0_OS7_PKvi(ptr dead_on_unwind noalias writable sret(%"class.pstd::optional") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #5 comdat {
 bb.a:
@@ -700,7 +703,7 @@ bb.b:                                             ; preds = %bb.a
   %i.av = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.aw = fmul float %i.at, %i.at
   %i.ax = fadd float %i.aw, %i.av                 ; 2 uses
-  %sqrt.i.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.ax) ; 2 uses
+  %sqrt.i.i.i.i = tail call noundef float @sqrtf(float noundef %i.ax) #25, !noalias !389 ; 2 uses
   %i.ay = insertelement <2 x float> poison, float %sqrt.i.i.i.i, i64 0
   %i.az = shufflevector <2 x float> %i.ay, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ba = fdiv <2 x float> %i.as, %i.az
@@ -797,7 +800,7 @@ bb.c:                                             ; preds = %bb.a
   %foldExtExtBinop73 = fadd <2 x float> %i.cs, %shift72
   %i.ct = extractelement <2 x float> %foldExtExtBinop73, i64 0
   %i.cu = fadd float %i.ct, %i.ch
-  %sqrt.i.i.i.i30 = tail call noundef float @llvm.sqrt.f32(float %i.cu) ; 2 uses
+  %sqrt.i.i.i.i30 = tail call noundef float @sqrtf(float noundef %i.cu) #25, !noalias !392 ; 2 uses
   %i.cv = insertelement <2 x float> poison, float %sqrt.i.i.i.i30, i64 0
   %i.cw = shufflevector <2 x float> %i.cv, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cx = fdiv <2 x float> %i.cr, %i.cw           ; 3 uses
@@ -812,10 +815,10 @@ bb.c:                                             ; preds = %bb.a
   %i.dg = load float, ptr %i.df, align 8, !tbaa !394, !noalias !392
   %i.dh = fmul float %i.dg, 2.000000e+00          ; 3 uses
   %i.di = extractelement <2 x float> %i.cx, i64 0
-  %i.dj = fmul float %i.dh, %i.di
+  %i.dj = fmul float %i.di, %i.dh
   %i.dk = extractelement <2 x float> %i.cx, i64 1
-  %i.dl = fmul float %i.dh, %i.dk
-  %i.dm = fmul float %i.dh, %i.cy
+  %i.dl = fmul float %i.dk, %i.dh
+  %i.dm = fmul float %i.cy, %i.dh
   %i.dn = fadd float %i.da, %i.dj
   %i.do = fadd float %i.dc, %i.dl
   %i.dp = fadd float %i.de, %i.dm
@@ -1218,7 +1221,7 @@ bb.a:
   %foldExtExtBinop = fadd <2 x float> %i.ar, %shift
   %i.as = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.at = fadd float %i.as, %i.u                  ; 2 uses
-  %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.at) ; 2 uses
+  %sqrt.i.i = tail call noundef float @sqrtf(float noundef %i.at) #25 ; 2 uses
   %i.au = insertelement <2 x float> poison, float %sqrt.i.i, i64 0
   %i.av = shufflevector <2 x float> %i.au, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aw = fdiv <2 x float> %i.aq, %i.av           ; 4 uses
@@ -1247,21 +1250,21 @@ bb.a:
   %i.bt = insertelement <2 x float> poison, float %i.az, i64 0
   %i.bu = shufflevector <2 x float> %i.bt, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bv = fmul <2 x float> %i.bs, %i.bu
-  %6 = shufflevector <5 x float> %i.bp, <5 x float> poison, <2 x i32> <i32 0, i32 4>
-  %7 = shufflevector <2 x float> %i.aw, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = shufflevector <2 x float> %i.aw, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = shufflevector <5 x float> %i.bp, <5 x float> poison, <2 x i32> <i32 0, i32 4>
   %i.bw = fmul <2 x float> %6, %7
   %i.bx = fsub <2 x float> %i.bv, %i.bw
-  %8 = shufflevector <5 x float> %i.bp, <5 x float> %i.br, <2 x i32> <i32 2, i32 6>
-  %9 = insertelement <2 x float> poison, float %i.ax, i64 0
-  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.by = fmul <2 x float> %8, %10
+  %8 = insertelement <2 x float> poison, float %i.ax, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = shufflevector <5 x float> %i.bp, <5 x float> %i.br, <2 x i32> <i32 2, i32 6>
+  %i.by = fmul <2 x float> %9, %10
   %i.bz = fsub <2 x float> %i.bx, %i.by           ; 3 uses
   %i.ca = fmul <2 x float> %i.bz, %i.bz           ; 2 uses
   %shift131 = shufflevector <2 x float> %i.ca, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop132 = fadd <2 x float> %i.ca, %shift131
   %i.cb = extractelement <2 x float> %foldExtExtBinop132, i64 0
-  %i.cc = fadd float %i.bo, %i.cb
-  %sqrt.i.i83 = tail call noundef float @llvm.sqrt.f32(float %i.cc) ; 2 uses
+  %i.cc = fadd float %i.cb, %i.bo
+  %sqrt.i.i83 = tail call noundef float @sqrtf(float noundef %i.cc) #25 ; 2 uses
   %i.cd = insertelement <2 x float> poison, float %sqrt.i.i83, i64 0
   %i.ce = shufflevector <2 x float> %i.cd, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cf = fdiv <2 x float> %i.bz, %i.ce
@@ -1664,20 +1667,18 @@ bb.a:
   %i.v = shufflevector <2 x float> %i.s, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.w = shufflevector <2 x float> %i.s, <2 x float> poison, <2 x i32> zeroinitializer
   %i.x = select <2 x i1> %i.u, <2 x float> %i.v, <2 x float> %i.w ; 4 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i32, ptr %i.y, align 4                ; 2 uses
-  %7 = insertelement <2 x i32> poison, i32 %6, i64 0
-  %i.z = shufflevector <2 x i32> %7, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %6 = load <1 x i32>, ptr %i.y, align 4
+  %i.z = shufflevector <1 x i32> %6, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.aa = lshr <2 x i32> %i.z, <i32 0, i32 15>
   %i.ab = and <2 x i32> %i.aa, splat (i32 32767)
   %i.ac = uitofp nneg <2 x i32> %i.ab to <2 x float>
-  %i.ad = fdiv nnan <2 x float> %i.ac, splat (float 3.276700e+04) ; 2 uses
-  %8 = extractelement <2 x float> %i.ad, i64 0
-  %9 = fmul nnan float %8, 2.000000e+00
-  %i.ae = fadd float %9, -1.000000e+00            ; 4 uses
-  %i.af = extractelement <2 x float> %i.ad, i64 1
-  %10 = fmul nnan float %i.af, 2.000000e+00
-  %i.ag = fadd float %10, -1.000000e+00
+  %i.ad = fdiv nnan <2 x float> %i.ac, splat (float 3.276700e+04)
+  %7 = fmul nnan <2 x float> %i.ad, splat (float 2.000000e+00) ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0
+  %i.ae = fadd float %8, -1.000000e+00            ; 4 uses
+  %i.af = extractelement <2 x float> %7, i64 1
+  %i.ag = fadd float %i.af, -1.000000e+00
   %i.ah = extractelement <2 x float> %i.x, i64 0  ; 3 uses
   %i.ai = extractelement <2 x float> %i.x, i64 1  ; 2 uses
   %i.aj = fadd float %i.ah, %i.ai
@@ -1725,11 +1726,11 @@ bb.a:
   %foldExtExtBinop180 = fadd <2 x float> %shift, %foldExtExtBinop178
   %foldExtExtBinop182.a = fadd <2 x float> %i.bu, %foldExtExtBinop180
   %i.bv = extractelement <2 x float> %foldExtExtBinop182.a, i64 0
-  %sqrt.i.a = tail call noundef float @llvm.sqrt.f32(float %i.bv)
+  %sqrt.i.a = tail call noundef float @sqrtf(float noundef %i.bv) #25
   %i.bw = fmul float %sqrt.i.a, 5.000000e-01      ; 2 uses
   %i.bx = fcmp olt float %i.bq, %i.bw
   %.sroa.speculated149 = select i1 %i.bx, float %i.bw, float %i.bq
-  %sqrt.i.i.a = tail call noundef float @llvm.sqrt.f32(float %i.bq) ; 2 uses
+  %sqrt.i.i.a = tail call noundef float @sqrtf(float noundef %i.bq) #25 ; 2 uses
   %i.by = fdiv float %i.al, %sqrt.i.i.a           ; 2 uses
   %i.bz = insertelement <2 x float> poison, float %sqrt.i.i.a, i64 0
   %i.ca = shufflevector <2 x float> %i.bz, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1763,7 +1764,7 @@ _ZNK4pbrt16OctahedralVectorcvNS_7Vector3IfEEEv.exit: ; preds = %bb.a, %bb.b
   %i.cq = extractelement <2 x float> %foldExtExtBinop188, i64 0
   %i.cr = fmul float %i.cj, %i.cj
   %i.cs = fadd float %i.cr, %i.cq
-  %sqrt.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.cs) ; 2 uses
+  %sqrt.i.i.i = tail call noundef float @sqrtf(float noundef %i.cs) #25 ; 2 uses
   %i.ct = fdiv float %.sroa.01.0.vec.extract.i.i.i.i, %sqrt.i.i.i
   %i.cu = fmul float %i.by, %i.ct
   %i.cv = shufflevector <2 x float> %.sroa.0.0.i, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
@@ -1776,7 +1777,8 @@ _ZNK4pbrt16OctahedralVectorcvNS_7Vector3IfEEEv.exit: ; preds = %bb.a, %bb.b
   %i.dc = fadd float %i.cu, %i.db
   %i.dd = extractelement <2 x float> %i.da, i64 1
   %i.de = fadd float %i.dd, %i.dc                 ; 2 uses
-  %i.df = and i32 %6, 1073741824
+  %9 = load i32, ptr %i.y, align 4
+  %i.df = and i32 %9, 1073741824
   %.not = icmp eq i32 %i.df, 0
   %i.dg = tail call float @llvm.fabs.f32(float %i.de)
   %spec.select = select i1 %.not, float %i.de, float %i.dg ; 5 uses
@@ -1788,7 +1790,7 @@ _ZNK4pbrt16OctahedralVectorcvNS_7Vector3IfEEEv.exit: ; preds = %bb.a, %bb.b
   %i.dk = fcmp ult float %i.ak, %i.ai
   %i.dl = fcmp ugt float %i.ak, %i.ah
   %or.cond.i.i.i = select i1 %i.dk, i1 true, i1 %i.dl
-  br i1 %or.cond.i.i.i, label %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread, label %bb.c
+  br i1 %or.cond.i.i.i, label %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK4pbrt16OctahedralVectorcvNS_7Vector3IfEEEv.exit
   %i.dm = shufflevector <2 x float> %i.bh, <2 x float> %i.bd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -1797,7 +1799,7 @@ bb.c:                                             ; preds = %_ZNK4pbrt16Octahedr
   %i.dp = freeze <4 x i1> %i.do
   %i.dq = bitcast <4 x i1> %i.dp to i4
   %.not206 = icmp eq i4 %i.dq, 0
-  br i1 %.not206, label %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a, label %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread
+  br i1 %.not206, label %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a, label %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i
 
 _ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a: ; preds = %bb.c
   %i.dr = fsub float %i.ak, %i.ah                 ; 2 uses
@@ -1810,13 +1812,16 @@ _ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a: ; preds = %bb.c
   %foldExtExtBinop196.a = fmul <2 x float> %foldExtExtBinop192, %foldExtExtBinop192
   %i.dv = extractelement <2 x float> %foldExtExtBinop196.a, i64 1
   %i.dw = fadd float %i.dv, %i.du
-  %sqrt.i.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.dw) ; 2 uses
-  %i.dx = fmul float %sqrt.i.i.i.i, %sqrt.i.i.i.i ; 2 uses
-  %11 = fcmp olt float %i.bq, %i.dx
+  %sqrt.i.i.i.i = tail call noundef float @sqrtf(float noundef %i.dw) #25 ; 2 uses
+  %i.dx = fmul float %sqrt.i.i.i.i, %sqrt.i.i.i.i
+  br label %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i
+
+_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i: ; preds = %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a, %bb.c, %_ZNK4pbrt16OctahedralVectorcvNS_7Vector3IfEEEv.exit
+  %10 = phi float [ %i.dx, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a ], [ 0.000000e+00, %bb.c ], [ 0.000000e+00, %_ZNK4pbrt16OctahedralVectorcvNS_7Vector3IfEEEv.exit ] ; 2 uses
+  %11 = fcmp olt float %i.bq, %10
   br i1 %11, label %_ZN4pbrt24BoundSubtendedDirectionsERKNS_7Bounds3IfEENS_6Point3IfEE.exit, label %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread
 
-_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread: ; preds = %_ZNK4pbrt16OctahedralVectorcvNS_7Vector3IfEEEv.exit, %bb.c, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a
-  %12 = phi float [ %i.dx, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a ], [ 0.000000e+00, %bb.c ], [ 0.000000e+00, %_ZNK4pbrt16OctahedralVectorcvNS_7Vector3IfEEEv.exit ]
+_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread: ; preds = %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i
   %i.dy = fsub float %i.ak, %.sroa.0.0.vec.extract.i ; 3 uses
   %shift198 = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop199 = fsub <2 x float> %i.bh, %shift198 ; 3 uses
@@ -1829,11 +1834,11 @@ _ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread: ; preds = 
   %i.ee = fadd float %i.ec, %i.ed
   %i.ef = fmul float %i.eb, %i.eb
   %i.eg = fadd float %i.ef, %i.ee                 ; 2 uses
-  %sqrt.i.i.i125 = tail call noundef float @llvm.sqrt.f32(float %i.eg) ; 3 uses
+  %sqrt.i.i.i125 = tail call noundef float @sqrtf(float noundef %i.eg) #25 ; 3 uses
   %i.eh = fdiv float %i.dy, %sqrt.i.i.i125        ; 2 uses
   %i.ei = fdiv float %i.dz, %sqrt.i.i.i125        ; 2 uses
   %i.ej = fdiv float %i.eb, %sqrt.i.i.i125        ; 3 uses
-  %i.ek = fdiv float %12, %i.eg
+  %i.ek = fdiv float %10, %i.eg
   %i.el = fsub float 1.000000e+00, %i.ek          ; 2 uses
   %i.em = fcmp ogt float %i.el, 0.000000e+00
   %.sroa.speculated.i.i = select i1 %i.em, float %i.el, float 0.000000e+00
@@ -1843,14 +1848,14 @@ _ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread: ; preds = 
   %i.ep = fadd float %i.en, %i.eo
   %i.eq = fmul float %i.ej, %i.ej
   %i.er = fadd float %i.eq, %i.ep
-  %sqrt.i.i.i48.i = tail call noundef float @llvm.sqrt.f32(float %i.er)
+  %sqrt.i.i.i48.i = tail call noundef float @sqrtf(float noundef %i.er) #25
   %i.es = fdiv float %i.ej, %sqrt.i.i.i48.i
   %.sroa.3.8.vec.insert.i = insertelement <2 x float> poison, float %i.es, i64 0
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> %.sroa.3.8.vec.insert.i, float %sqrt.i.i126, i64 1
   br label %_ZN4pbrt24BoundSubtendedDirectionsERKNS_7Bounds3IfEENS_6Point3IfEE.exit
 
-_ZN4pbrt24BoundSubtendedDirectionsERKNS_7Bounds3IfEENS_6Point3IfEE.exit: ; preds = %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread
-  %.sroa.3.0.i = phi <2 x float> [ %.sroa.3.12.vec.insert.i, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread ], [ <float 1.000000e+00, float -1.000000e+00>, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.a ] ; 2 uses
+_ZN4pbrt24BoundSubtendedDirectionsERKNS_7Bounds3IfEENS_6Point3IfEE.exit: ; preds = %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread
+  %.sroa.3.0.i = phi <2 x float> [ %.sroa.3.12.vec.insert.i, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i.thread ], [ <float 1.000000e+00, float -1.000000e+00>, %_ZNK4pbrt7Bounds3IfE14BoundingSphereEPNS_6Point3IfEEPf.exit.i ] ; 2 uses
   %.sroa.3.12.vec.extract = extractelement <2 x float> %.sroa.3.0.i, i64 1 ; 4 uses
   %i.et = shufflevector <2 x float> %.sroa.3.0.i, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.eu = insertelement <2 x float> %i.et, float %i.ae, i64 1 ; 2 uses

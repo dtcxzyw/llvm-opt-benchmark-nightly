@@ -204,11 +204,12 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k,
   %i.ew = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ev)
   %i.ex = fmul double %.155.i.i.i, %i.ec          ; 2 uses
   %i.ey = fmul double %i.ex, %i.ex
-  %i.ez = fadd double %i.ew, %i.ey
+  %17 = fadd double %i.ew, %i.ey
+  %i.ez = fadd double %17, 0.000000e+00
   br label %_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIKS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS8_IT0_EEiiiRKNS8_IT1_EEiiNS9_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESO_SO_SO_E_clESO_SO_SO_SO_.exit
 
-_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIKS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS8_IT0_EEiiiRKNS8_IT1_EEiiNS9_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESO_SO_SO_E_clESO_SO_SO_SO_.exit: ; preds = %.lr.ph85.i.i.i.i32.i.i.i.i, %bb.n
-  %.2.i.i.i = phi double [ 0.000000e+00, %bb.n ], [ %i.ez, %.lr.ph85.i.i.i.i32.i.i.i.i ]
+_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIKS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS8_IT0_EEiiiRKNS8_IT1_EEiiNS9_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESO_SO_SO_E_clESO_SO_SO_SO_.exit: ; preds = %bb.n, %.lr.ph85.i.i.i.i32.i.i.i.i
+  %.2.i.i.i = phi double [ %i.ez, %.lr.ph85.i.i.i.i32.i.i.i.i ], [ 0.000000e+00, %bb.n ]
   %i.fa = fsub <2 x double> %i.ee, %i.ef          ; 3 uses
   %i.fb = fmul <2 x double> %i.ed, %i.fa          ; 2 uses
   %shift = shufflevector <2 x double> %i.fb, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -611,11 +612,12 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
   %i.ps = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.pr)
   %i.pt = fmul double %.155.i.i.i73, %i.oy        ; 2 uses
   %i.pu = fmul double %i.pt, %i.pt
-  %i.pv = fadd double %i.ps, %i.pu
+  %18 = fadd double %i.ps, %i.pu
+  %i.pv = fadd double %18, 0.000000e+00
   br label %_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIKS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS8_IT0_EEiiiRKNS8_IT1_EEiiNS9_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESO_SO_SO_E_clESO_SO_SO_SO_.exit87
 
-_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIKS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS8_IT0_EEiiiRKNS8_IT1_EEiiNS9_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESO_SO_SO_E_clESO_SO_SO_SO_.exit87: ; preds = %.lr.ph85.i.i.i.i32.i.i.i.i79, %bb.ab
-  %.2.i.i.i75 = phi double [ 0.000000e+00, %bb.ab ], [ %i.pv, %.lr.ph85.i.i.i.i32.i.i.i.i79 ]
+_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIKS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS8_IT0_EEiiiRKNS8_IT1_EEiiNS9_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESO_SO_SO_E_clESO_SO_SO_SO_.exit87: ; preds = %bb.ab, %.lr.ph85.i.i.i.i32.i.i.i.i79
+  %.2.i.i.i75 = phi double [ %i.pv, %.lr.ph85.i.i.i.i32.i.i.i.i79 ], [ 0.000000e+00, %bb.ab ]
   %i.pw = fsub <2 x double> %i.pa, %i.pb          ; 3 uses
   %i.px = fmul <2 x double> %i.oz, %i.pw          ; 2 uses
   %shift260 = shufflevector <2 x double> %i.px, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -1018,11 +1020,12 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k,
   %i.ej = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ei)
   %i.ek = fmul double %.155.i.i.i, %i.dp          ; 2 uses
   %i.el = fmul double %i.ek, %i.ek
-  %i.em = fadd double %i.ej, %i.el
+  %17 = fadd double %i.ej, %i.el
+  %i.em = fadd double %17, 0.000000e+00
   br label %_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi1ELin1ELi1ELi1ELin1EEEEEbRKNS1_10MatrixBaseIT_EERKNS6_IT0_EEiiiRKNS6_IT1_EEiiNS7_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESM_SM_SM_E_clESM_SM_SM_SM_.exit
 
-_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi1ELin1ELi1ELi1ELin1EEEEEbRKNS1_10MatrixBaseIT_EERKNS6_IT0_EEiiiRKNS6_IT1_EEiiNS7_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESM_SM_SM_E_clESM_SM_SM_SM_.exit: ; preds = %.lr.ph85.i.i.i.i32.i.i.i.i, %bb.n
-  %.2.i.i.i = phi double [ 0.000000e+00, %bb.n ], [ %i.em, %.lr.ph85.i.i.i.i32.i.i.i.i ]
+_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi1ELin1ELi1ELi1ELin1EEEEEbRKNS1_10MatrixBaseIT_EERKNS6_IT0_EEiiiRKNS6_IT1_EEiiNS7_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESM_SM_SM_E_clESM_SM_SM_SM_.exit: ; preds = %bb.n, %.lr.ph85.i.i.i.i32.i.i.i.i
+  %.2.i.i.i = phi double [ %i.em, %.lr.ph85.i.i.i.i32.i.i.i.i ], [ 0.000000e+00, %bb.n ]
   %i.en = fsub <2 x double> %i.dr, %i.ds          ; 3 uses
   %i.eo = fmul <2 x double> %i.dq, %i.en          ; 2 uses
   %shift = shufflevector <2 x double> %i.eo, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -1415,11 +1418,12 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
   %i.oy = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ox)
   %i.oz = fmul double %.155.i.i.i70, %i.oe        ; 2 uses
   %i.pa = fmul double %i.oz, %i.oz
-  %i.pb = fadd double %i.oy, %i.pa
+  %18 = fadd double %i.oy, %i.pa
+  %i.pb = fadd double %18, 0.000000e+00
   br label %_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi1ELin1ELi1ELi1ELin1EEEEEbRKNS1_10MatrixBaseIT_EERKNS6_IT0_EEiiiRKNS6_IT1_EEiiNS7_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESM_SM_SM_E_clESM_SM_SM_SM_.exit84
 
-_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi1ELin1ELi1ELi1ELin1EEEEEbRKNS1_10MatrixBaseIT_EERKNS6_IT0_EEiiiRKNS6_IT1_EEiiNS7_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESM_SM_SM_E_clESM_SM_SM_SM_.exit84: ; preds = %.lr.ph85.i.i.i.i32.i.i.i.i76, %bb.ab
-  %.2.i.i.i72 = phi double [ 0.000000e+00, %bb.ab ], [ %i.pb, %.lr.ph85.i.i.i.i32.i.i.i.i76 ]
+_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLi1ELin1ELi1ELi1ELin1EEEEEbRKNS1_10MatrixBaseIT_EERKNS6_IT0_EEiiiRKNS6_IT1_EEiiNS7_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESM_SM_SM_E_clESM_SM_SM_SM_.exit84: ; preds = %bb.ab, %.lr.ph85.i.i.i.i32.i.i.i.i76
+  %.2.i.i.i72 = phi double [ %i.pb, %.lr.ph85.i.i.i.i32.i.i.i.i76 ], [ 0.000000e+00, %bb.ab ]
   %i.pc = fsub <2 x double> %i.og, %i.oh          ; 3 uses
   %i.pd = fmul <2 x double> %i.of, %i.pc          ; 2 uses
   %shift253 = shufflevector <2 x double> %i.pd, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -1822,11 +1826,12 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k,
   %i.ew = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ev)
   %i.ex = fmul double %.155.i.i.i, %i.ec          ; 2 uses
   %i.ey = fmul double %i.ex, %i.ex
-  %i.ez = fadd double %i.ew, %i.ey
+  %17 = fadd double %i.ew, %i.ey
+  %i.ez = fadd double %17, 0.000000e+00
   br label %_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS7_IT0_EEiiiRKNS7_IT1_EEiiNS8_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESN_SN_SN_E_clESN_SN_SN_SN_.exit
 
-_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS7_IT0_EEiiiRKNS7_IT1_EEiiNS8_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESN_SN_SN_E_clESN_SN_SN_SN_.exit: ; preds = %.lr.ph85.i.i.i.i32.i.i.i.i, %bb.n
-  %.2.i.i.i = phi double [ 0.000000e+00, %bb.n ], [ %i.ez, %.lr.ph85.i.i.i.i32.i.i.i.i ]
+_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS7_IT0_EEiiiRKNS7_IT1_EEiiNS8_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESN_SN_SN_E_clESN_SN_SN_SN_.exit: ; preds = %bb.n, %.lr.ph85.i.i.i.i32.i.i.i.i
+  %.2.i.i.i = phi double [ %i.ez, %.lr.ph85.i.i.i.i32.i.i.i.i ], [ 0.000000e+00, %bb.n ]
   %i.fa = fsub <2 x double> %i.ee, %i.ef          ; 3 uses
   %i.fb = fmul <2 x double> %i.ed, %i.fa          ; 2 uses
   %shift = shufflevector <2 x double> %i.fb, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -2229,11 +2234,12 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
   %i.ps = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.pr)
   %i.pt = fmul double %.155.i.i.i73, %i.oy        ; 2 uses
   %i.pu = fmul double %i.pt, %i.pt
-  %i.pv = fadd double %i.ps, %i.pu
+  %18 = fadd double %i.ps, %i.pu
+  %i.pv = fadd double %18, 0.000000e+00
   br label %_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS7_IT0_EEiiiRKNS7_IT1_EEiiNS8_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESN_SN_SN_E_clESN_SN_SN_SN_.exit87
 
-_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS7_IT0_EEiiiRKNS7_IT1_EEiiNS8_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESN_SN_SN_E_clESN_SN_SN_SN_.exit87: ; preds = %.lr.ph85.i.i.i.i32.i.i.i.i79, %bb.ab
-  %.2.i.i.i75 = phi double [ 0.000000e+00, %bb.ab ], [ %i.pv, %.lr.ph85.i.i.i.i32.i.i.i.i79 ]
+_ZZN3igl41triangle_triangle_intersect_shared_vertexIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS1_5BlockIS3_Li1ELin1ELb0EEEEEbRKNS1_10MatrixBaseIT_EERKNS7_IT0_EEiiiRKNS7_IT1_EEiiNS8_6ScalarEENKUlRKNS2_IdLi1ELi3ELi1ELi1ELi3EEESN_SN_SN_E_clESN_SN_SN_SN_.exit87: ; preds = %bb.ab, %.lr.ph85.i.i.i.i32.i.i.i.i79
+  %.2.i.i.i75 = phi double [ %i.pv, %.lr.ph85.i.i.i.i32.i.i.i.i79 ], [ 0.000000e+00, %bb.ab ]
   %i.pw = fsub <2 x double> %i.pa, %i.pb          ; 3 uses
   %i.px = fmul <2 x double> %i.oz, %i.pw          ; 2 uses
   %shift260 = shufflevector <2 x double> %i.px, <2 x double> poison, <2 x i32> <i32 1, i32 poison>

@@ -204,14 +204,16 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
+  %5 = zext i32 %i.e to i64
+  %6 = zext i32 %i.c to i64                       ; 2 uses
   %i.m = bitcast i64 %i.g to double
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit
-  %5 = phi i32 [ 2, %.lr.ph ], [ %9, %_ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit ] ; 8 uses
-  %.054 = phi i32 [ 0, %.lr.ph ], [ %5, %_ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit ] ; 3 uses
+  %indvars.iv58 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next59, %_ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit ] ; 4 uses
+  %indvars.iv = phi i64 [ 2, %.lr.ph ], [ %indvars.iv.next, %_ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit ]
   %i.n = load <2 x double>, ptr %i.f, align 8, !tbaa !113
-  %.not.i.i = icmp ult i32 %.054, %i.c
+  %.not.i.i = icmp samesign ult i64 %indvars.iv58, %6
   br i1 %.not.i.i, label %bb.d, label %bb.c, !prof !58
 
 bb.c:                                             ; preds = %bb.b
@@ -220,14 +222,13 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit
 
 bb.d:                                             ; preds = %bb.b
-  %6 = zext i32 %.054 to i64
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %6
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv58
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit: ; preds = %bb.c, %bb.d
   %.0.i.i = phi ptr [ @_hb_CrapPool, %bb.c ], [ %i.o, %bb.d ]
-  %7 = or disjoint i32 %.054, 1                   ; 2 uses
-  %.not.i.i29 = icmp ult i32 %7, %i.c
+  %7 = or disjoint i64 %indvars.iv58, 1           ; 2 uses
+  %.not.i.i29 = icmp samesign ult i64 %7, %6
   br i1 %.not.i.i29, label %bb.f, label %bb.e, !prof !58
 
 bb.e:                                             ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit
@@ -236,8 +237,7 @@ bb.e:                                             ; preds = %_ZN3CFF12interp_env
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit31
 
 bb.f:                                             ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit
-  %8 = zext i32 %7 to i64
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %8
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %7
   %.pre = load double, ptr %i.p, align 8, !tbaa !25
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit31
 
@@ -338,15 +338,19 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit
 
 _ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit: ; preds = %bb.t, %bb.u
-  %9 = add i32 %5, 2                              ; 4 uses
-  %.not = icmp ugt i32 %9, %i.e
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %.not = icmp samesign ugt i64 %indvars.iv.next, %5
+  %indvars.iv.next59 = add nuw nsw i64 %indvars.iv58, 2
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !220
 
 ._crit_edge:                                      ; preds = %_ZN25cff1_path_procs_extents_t4lineERN3CFF20cff1_cs_interp_env_tER20cff1_extents_param_tRKNS0_7point_tE.exit
+  %8 = and i32 %i.c, -2                           ; 5 uses
+  %9 = add i32 %8, -4                             ; 2 uses
+  %10 = add i32 %8, -6                            ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #5
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 4448
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.av, i64 16, i1 false), !tbaa.struct !167
-  %.not.i.i32 = icmp ult i32 %5, %i.c
+  %.not.i.i32 = icmp ult i32 %10, %i.c
   br i1 %.not.i.i32, label %bb.w, label %bb.v, !prof !58
 
 bb.v:                                             ; preds = %._crit_edge
@@ -357,13 +361,13 @@ bb.v:                                             ; preds = %._crit_edge
 
 bb.w:                                             ; preds = %._crit_edge
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.ay = zext i32 %5 to i64
+  %i.ay = zext i32 %10 to i64
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %i.ay
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit34
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit34: ; preds = %bb.v, %bb.w
   %.0.i.i33 = phi ptr [ @_hb_CrapPool, %bb.v ], [ %i.az, %bb.w ]
-  %i.ba = or disjoint i32 %5, 1                   ; 2 uses
+  %i.ba = or disjoint i32 %10, 1                  ; 2 uses
   %.not.i.i35 = icmp ult i32 %i.ba, %i.c
   br i1 %.not.i.i35, label %bb.y, label %bb.x, !prof !58
 
@@ -408,7 +412,7 @@ bb.aa:                                            ; preds = %_ZN3CFF12interp_env
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit40: ; preds = %bb.z, %bb.aa
   %.0.i.i39 = phi ptr [ @_hb_CrapPool, %bb.z ], [ %i.bp, %bb.aa ]
-  %i.bq = add i32 %5, 3                           ; 2 uses
+  %i.bq = add i32 %8, -3                          ; 2 uses
   %.not.i.i41 = icmp ult i32 %i.bq, %i.c
   br i1 %.not.i.i41, label %bb.ac, label %bb.ab, !prof !58
 
@@ -436,7 +440,7 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit43: ; preds = %bb.ab, %bb.ac
   store <2 x double> %i.cb, ptr %3, align 16, !tbaa !25
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !167
-  %i.cc = add i32 %5, 4                           ; 2 uses
+  %i.cc = add i32 %8, -2                          ; 2 uses
   %.not.i.i44 = icmp ult i32 %i.cc, %i.c
   br i1 %.not.i.i44, label %bb.ae, label %bb.ad, !prof !58
 
@@ -454,7 +458,7 @@ bb.ae:                                            ; preds = %_ZN3CFF12interp_env
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit46: ; preds = %bb.ad, %bb.ae
   %.0.i.i45 = phi ptr [ @_hb_CrapPool, %bb.ad ], [ %i.cg, %bb.ae ]
-  %i.ch = add i32 %5, 5                           ; 2 uses
+  %i.ch = add i32 %8, -1                          ; 2 uses
   %.not.i.i47 = icmp ult i32 %i.ch, %i.c
   br i1 %.not.i.i47, label %bb.ag, label %bb.af, !prof !58
 

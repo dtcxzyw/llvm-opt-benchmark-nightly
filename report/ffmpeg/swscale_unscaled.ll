@@ -205,16 +205,22 @@ bb.c:                                             ; preds = %switch.lookup
   %i.ah = shl nsw i32 %i.ag, 1
   %i.ai = sext i32 %i.ah to i64
   %i.aj = getelementptr inbounds i8, ptr %.04952, i64 %i.ai ; 2 uses
-  %i.ak = add nuw nsw i32 %.04754, 2              ; 3 uses
+  %i.ak = add nuw nsw i32 %.04754, 2              ; 2 uses
   %i.al = icmp slt i32 %i.ak, %i.x
-  br i1 %i.al, label %.lr.ph, label %._crit_edge, !llvm.loop !155
+  br i1 %i.al, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !155
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.c
-  %i.am = phi i32 [ %i.t, %bb.c ], [ %i.ag, %.lr.ph ] ; 2 uses
-  %i.an = phi i32 [ %i.p, %bb.c ], [ %i.ac, %.lr.ph ] ; 2 uses
-  %.049.lcssa = phi ptr [ %i.w, %bb.c ], [ %i.aj, %.lr.ph ] ; 2 uses
-  %.048.lcssa = phi ptr [ %i.s, %bb.c ], [ %i.af, %.lr.ph ] ; 2 uses
-  %.047.lcssa = phi i32 [ 2, %bb.c ], [ %i.ak, %.lr.ph ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %7 = add nsw i32 %4, -5
+  %8 = and i32 %7, -2
+  %9 = add nuw nsw i32 %8, 4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
+  %i.am = phi i32 [ %i.t, %bb.c ], [ %i.ag, %._crit_edge.loopexit ] ; 2 uses
+  %i.an = phi i32 [ %i.p, %bb.c ], [ %i.ac, %._crit_edge.loopexit ] ; 2 uses
+  %.049.lcssa = phi ptr [ %i.w, %bb.c ], [ %i.aj, %._crit_edge.loopexit ] ; 2 uses
+  %.048.lcssa = phi ptr [ %i.s, %bb.c ], [ %i.af, %._crit_edge.loopexit ] ; 2 uses
+  %.047.lcssa = phi i32 [ 2, %bb.c ], [ %9, %._crit_edge.loopexit ] ; 2 uses
   %i.ao = or disjoint i32 %.047.lcssa, 1
   %i.ap = icmp eq i32 %i.ao, %4
   br i1 %i.ap, label %bb.d, label %bb.e
@@ -303,16 +309,22 @@ bb.c:                                             ; preds = %switch.lookup
   %i.ah = shl nsw i32 %i.ag, 1
   %i.ai = sext i32 %i.ah to i64
   %i.aj = getelementptr inbounds i8, ptr %.04952, i64 %i.ai ; 2 uses
-  %i.ak = add nuw nsw i32 %.04754, 2              ; 3 uses
+  %i.ak = add nuw nsw i32 %.04754, 2              ; 2 uses
   %i.al = icmp slt i32 %i.ak, %i.x
-  br i1 %i.al, label %.lr.ph, label %._crit_edge, !llvm.loop !156
+  br i1 %i.al, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !156
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.c
-  %i.am = phi i32 [ %i.t, %bb.c ], [ %i.ag, %.lr.ph ] ; 2 uses
-  %i.an = phi i32 [ %i.p, %bb.c ], [ %i.ac, %.lr.ph ] ; 2 uses
-  %.049.lcssa = phi ptr [ %i.w, %bb.c ], [ %i.aj, %.lr.ph ] ; 2 uses
-  %.048.lcssa = phi ptr [ %i.s, %bb.c ], [ %i.af, %.lr.ph ] ; 2 uses
-  %.047.lcssa = phi i32 [ 2, %bb.c ], [ %i.ak, %.lr.ph ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %7 = add nsw i32 %4, -5
+  %8 = and i32 %7, -2
+  %9 = add nuw nsw i32 %8, 4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
+  %i.am = phi i32 [ %i.t, %bb.c ], [ %i.ag, %._crit_edge.loopexit ] ; 2 uses
+  %i.an = phi i32 [ %i.p, %bb.c ], [ %i.ac, %._crit_edge.loopexit ] ; 2 uses
+  %.049.lcssa = phi ptr [ %i.w, %bb.c ], [ %i.aj, %._crit_edge.loopexit ] ; 2 uses
+  %.048.lcssa = phi ptr [ %i.s, %bb.c ], [ %i.af, %._crit_edge.loopexit ] ; 2 uses
+  %.047.lcssa = phi i32 [ 2, %bb.c ], [ %9, %._crit_edge.loopexit ] ; 2 uses
   %i.ao = or disjoint i32 %.047.lcssa, 1
   %i.ap = icmp eq i32 %i.ao, %4
   br i1 %i.ap, label %bb.d, label %bb.e
@@ -428,18 +440,24 @@ bb.c:                                             ; preds = %switch.lookup
   %i.bg = sext i32 %i.bf to i64                   ; 2 uses
   %i.bh = getelementptr inbounds i8, ptr %.07582, i64 %i.bg ; 2 uses
   %i.bi = getelementptr inbounds i8, ptr %.07483, i64 %i.bg ; 2 uses
-  %i.bj = add nuw nsw i32 %.07384, 2              ; 3 uses
+  %i.bj = add nuw nsw i32 %.07384, 2              ; 2 uses
   %i.bk = icmp slt i32 %i.bj, %i.as
-  br i1 %i.bk, label %.lr.ph, label %._crit_edge, !llvm.loop !157
+  br i1 %i.bk, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !157
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.c
-  %i.bl = phi i32 [ %i.ak, %bb.c ], [ %i.bb, %.lr.ph ] ; 2 uses
-  %i.bm = phi i32 [ %i.ag, %bb.c ], [ %i.ax, %.lr.ph ] ; 2 uses
-  %.077.lcssa = phi ptr [ %i.aj, %bb.c ], [ %i.ba, %.lr.ph ] ; 2 uses
-  %.076.lcssa = phi ptr [ %i.an, %bb.c ], [ %i.be, %.lr.ph ] ; 2 uses
-  %.075.lcssa = phi ptr [ %i.aq, %bb.c ], [ %i.bh, %.lr.ph ] ; 2 uses
-  %.074.lcssa = phi ptr [ %i.ar, %bb.c ], [ %i.bi, %.lr.ph ] ; 2 uses
-  %.073.lcssa = phi i32 [ 2, %bb.c ], [ %i.bj, %.lr.ph ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %7 = add nsw i32 %4, -5
+  %8 = and i32 %7, -2
+  %9 = add nuw nsw i32 %8, 4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
+  %i.bl = phi i32 [ %i.ak, %bb.c ], [ %i.bb, %._crit_edge.loopexit ] ; 2 uses
+  %i.bm = phi i32 [ %i.ag, %bb.c ], [ %i.ax, %._crit_edge.loopexit ] ; 2 uses
+  %.077.lcssa = phi ptr [ %i.aj, %bb.c ], [ %i.ba, %._crit_edge.loopexit ] ; 2 uses
+  %.076.lcssa = phi ptr [ %i.an, %bb.c ], [ %i.be, %._crit_edge.loopexit ] ; 2 uses
+  %.075.lcssa = phi ptr [ %i.aq, %bb.c ], [ %i.bh, %._crit_edge.loopexit ] ; 2 uses
+  %.074.lcssa = phi ptr [ %i.ar, %bb.c ], [ %i.bi, %._crit_edge.loopexit ] ; 2 uses
+  %.073.lcssa = phi i32 [ 2, %bb.c ], [ %9, %._crit_edge.loopexit ] ; 2 uses
   %i.bn = or disjoint i32 %.073.lcssa, 1
   %i.bo = icmp eq i32 %i.bn, %4
   br i1 %i.bo, label %bb.d, label %bb.e

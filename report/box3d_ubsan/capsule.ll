@@ -75,11 +75,11 @@ bb.c:                                             ; preds = %bb.a
   %foldExtExtBinop = fadd <2 x float> %i.k, %shift
   %i.l = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.m = fmul float %i.j, %i.j
-  %i.n = fadd float %i.m, %i.l                    ; 2 uses
-  %sqrt.i.i = tail call float @llvm.sqrt.f32(float %i.n) ; 7 uses
+  %i.n = fadd float %i.m, %i.l                    ; 3 uses
+  %sqrt.i.i = tail call float @sqrtf(float noundef %i.n) #9 ; 6 uses
   %i.o = fmul float %i.h, f0x40490FDB
   %i.p = fmul float %i.h, %i.o
-  %i.q = fmul float %i.p, %sqrt.i.i
+  %i.q = fmul float %sqrt.i.i, %i.p
   %i.r = fmul float %2, %i.q                      ; 2 uses
   %i.s = fmul float %i.h, f0x40860A92
   %i.t = fmul float %i.h, %i.s
@@ -111,17 +111,24 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.11191.0.copyload = load float, ptr %.sroa.11191.0..sroa_idx, align 8
   %i.ac = fmul float %sqrt.i.i, %sqrt.i.i
   %i.ad = fcmp ogt float %i.ac, f0x057A0000
-  br i1 %i.ad, label %b3Normalize.exit, label %bb.d
+  br i1 %i.ad, label %5, label %bb.d
 
-b3Normalize.exit:                                 ; preds = %bb.c
-  %5 = fcmp ogt float %i.n, f0x057A0000           ; 2 uses
-  %6 = fdiv float 1.000000e+00, %sqrt.i.i         ; 2 uses
-  %7 = insertelement <2 x float> poison, float %6, i64 0
-  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
-  %9 = fmul <2 x float> %i.i, %8
-  %10 = fmul float %i.j, %6
-  %.sroa.07.0.i = select i1 %5, <2 x float> %9, <2 x float> zeroinitializer
-  %.sroa.5.0.i = select i1 %5, float %10, float 0.000000e+00
+5:                                                ; preds = %bb.c
+  %6 = fcmp ogt float %i.n, f0x057A0000
+  br i1 %6, label %7, label %b3Normalize.exit
+
+7:                                                ; preds = %5
+  %8 = call float @sqrtf(float noundef %i.n) #9
+  %9 = fdiv float 1.000000e+00, %8                ; 2 uses
+  %10 = insertelement <2 x float> poison, float %9, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = fmul <2 x float> %i.i, %11
+  %13 = fmul float %i.j, %9
+  br label %b3Normalize.exit
+
+b3Normalize.exit:                                 ; preds = %5, %7
+  %.sroa.07.0.i = phi <2 x float> [ %12, %7 ], [ zeroinitializer, %5 ]
+  %.sroa.5.0.i = phi float [ %13, %7 ], [ 0.000000e+00, %5 ]
   %i.ae = call { <2 x float>, <2 x float> } @b3ComputeQuatBetweenUnitVectors(<2 x float> <float 0.000000e+00, float 1.000000e+00>, float 0.000000e+00, <2 x float> %.sroa.07.0.i, float %.sroa.5.0.i) #9 ; 2 uses
   %i.af = extractvalue { <2 x float>, <2 x float> } %i.ae, 0 ; 6 uses
   %i.ag = extractvalue { <2 x float>, <2 x float> } %i.ae, 1 ; 4 uses
@@ -163,7 +170,7 @@ bb.d:                                             ; preds = %b3Normalize.exit, %
   %i.bl = fmul float %i.h, 3.000000e+00
   %i.bm = fmul float %sqrt.i.i, 2.000000e+00
   %i.bn = fadd float %i.bl, %i.bm
-  %i.bo = fmul float %i.bk, %i.bn
+  %i.bo = fmul float %i.bn, %i.bk
   %i.bp = fmul float %sqrt.i.i, %i.bo             ; 2 uses
   %i.bq = fadd float %i.bp, %i.bj                 ; 2 uses
   %i.br = fadd float %.sroa.0192.0.copyload, %.sroa.0183.0.copyload
@@ -566,7 +573,7 @@ bb.g:                                             ; preds = %bb.e
   %.sroa.2242.0.copyload = load float, ptr %.sroa.2242.0..sroa_idx, align 4 ; 2 uses
   %i.ag = fsub <2 x float> %.sroa.0241.0.copyload, %.sroa.0308.0.copyload ; 7 uses
   %i.ah = fsub float %.sroa.2242.0.copyload, %.sroa.8.0.copyload ; 6 uses
-  %sqrt = tail call float @llvm.sqrt.f32(float %i.r) ; 5 uses
+  %sqrt = tail call float @sqrtf(float noundef %i.r) #9 ; 5 uses
   %i.ai = fdiv float 1.000000e+00, %sqrt          ; 2 uses
   %i.aj = insertelement <2 x float> poison, float %i.ai, i64 0
   %i.ak = shufflevector <2 x float> %i.aj, <2 x float> poison, <2 x i32> zeroinitializer
@@ -574,13 +581,13 @@ bb.g:                                             ; preds = %bb.e
   %i.am = fmul float %i.k, %i.ai                  ; 8 uses
   %i.an = extractelement <2 x float> %i.al, i64 0
   %i.ao = extractelement <2 x float> %i.ag, i64 0
-  %foldExtExtBinop611 = fmul <2 x float> %i.al, %i.ag
+  %foldExtExtBinop611 = fmul <2 x float> %i.ag, %i.al
   %i.ap = extractelement <2 x float> %foldExtExtBinop611, i64 0
   %i.aq = extractelement <2 x float> %i.al, i64 1 ; 2 uses
   %i.ar = extractelement <2 x float> %i.ag, i64 1 ; 2 uses
-  %i.as = fmul float %i.aq, %i.ar
+  %i.as = fmul float %i.ar, %i.aq
   %i.at = fadd float %i.ap, %i.as
-  %i.au = fmul float %i.am, %i.ah
+  %i.au = fmul float %i.ah, %i.am
   %i.av = fadd float %i.au, %i.at                 ; 12 uses
   %i.aw = fmul float %i.an, %i.av
   %i.ax = fmul float %i.aq, %i.av
@@ -658,19 +665,23 @@ bb.k:                                             ; preds = %bb.g
   %i.ce = fmul float %.sroa.5152.0.copyload, %.sroa.5152.0.copyload
   %i.cf = fadd float %i.ce, %i.cd                 ; 2 uses
   %i.cg = fcmp ogt float %i.cf, f0x057A0000
-  br i1 %i.cg, label %bb.l, label %b3GetLengthAndNormalize.exit.thread
+  br i1 %i.cg, label %b3GetLengthAndNormalize.exit, label %b3GetLengthAndNormalize.exit.thread
 
-b3GetLengthAndNormalize.exit.thread:              ; preds = %bb.k
+b3GetLengthAndNormalize.exit:                     ; preds = %bb.k
+  %7 = tail call float @sqrtf(float noundef %i.cf) #9 ; 4 uses
+  %8 = fdiv float 1.000000e+00, %7                ; 2 uses
+  %9 = insertelement <2 x float> poison, float %8, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = fmul <2 x float> %.sroa.0150.0.copyload, %10 ; 5 uses
+  %12 = fmul float %.sroa.5152.0.copyload, %8     ; 5 uses
+  %13 = fcmp oeq float %7, 0.000000e+00
+  br i1 %13, label %b3GetLengthAndNormalize.exit.thread, label %bb.l
+
+b3GetLengthAndNormalize.exit.thread:              ; preds = %bb.k, %b3GetLengthAndNormalize.exit
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %0, i8 0, i64 48, i1 false)
   br label %bb.ab
 
-bb.l:                                             ; preds = %bb.k
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.cf) ; 3 uses
-  %7 = fdiv float 1.000000e+00, %sqrt.i           ; 2 uses
-  %8 = insertelement <2 x float> poison, float %7, i64 0
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
-  %10 = fmul <2 x float> %.sroa.0150.0.copyload, %9 ; 5 uses
-  %11 = fmul float %.sroa.5152.0.copyload, %7     ; 5 uses
+bb.l:                                             ; preds = %b3GetLengthAndNormalize.exit
   %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.ci = load float, ptr %i.ch, align 4, !tbaa !41 ; 4 uses
   %i.cj = fmul <2 x float> %i.al, %.sroa.0150.0.copyload ; 2 uses
@@ -688,7 +699,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %or.cond, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.cs = fadd float %sqrt, %i.h                  ; 2 uses
+  %i.cs = fadd float %i.h, %sqrt                  ; 2 uses
   %i.ct = fcmp olt float %i.cs, %i.av
   %i.cu = fcmp olt float %i.cs, %i.co
   %or.cond348 = select i1 %i.ct, i1 %i.cu, i1 false
@@ -699,11 +710,11 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br label %bb.ab
 
 bb.o:                                             ; preds = %bb.m
-  %i.cv = fmul <2 x float> %i.al, %10             ; 2 uses
+  %i.cv = fmul <2 x float> %i.al, %11             ; 2 uses
   %shift622 = shufflevector <2 x float> %i.cv, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop623 = fadd <2 x float> %i.cv, %shift622
   %i.cw = extractelement <2 x float> %foldExtExtBinop623, i64 0
-  %i.cx = fmul float %i.am, %11
+  %i.cx = fmul float %i.am, %12
   %i.cy = fadd float %i.cx, %i.cw                 ; 7 uses
   %i.cz = fmul float %i.cy, %i.cy
   %i.da = fsub float 1.000000e+00, %i.cz          ; 2 uses
@@ -712,11 +723,11 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.o
   %i.dc = fmul float %i.am, %i.cy
-  %i.dd = fsub float %11, %i.dc                   ; 3 uses
+  %i.dd = fsub float %12, %i.dc                   ; 3 uses
   %i.de = insertelement <2 x float> poison, float %i.cy, i64 0
   %i.df = shufflevector <2 x float> %i.de, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dg = fmul <2 x float> %i.al, %i.df
-  %i.dh = fsub <2 x float> %10, %i.dg             ; 4 uses
+  %i.dh = fsub <2 x float> %11, %i.dg             ; 4 uses
   %i.di = fmul <2 x float> %i.dh, %i.dh           ; 2 uses
   %shift625 = shufflevector <2 x float> %i.di, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop626 = fadd <2 x float> %i.di, %shift625
@@ -751,11 +762,11 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.o
   %i.ec = fdiv float 1.000000e+00, %i.da          ; 3 uses
-  %i.ed = fmul <2 x float> %i.ag, %10             ; 2 uses
+  %i.ed = fmul <2 x float> %i.ag, %11             ; 2 uses
   %shift628 = shufflevector <2 x float> %i.ed, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop629 = fadd <2 x float> %i.ed, %shift628
   %i.ee = extractelement <2 x float> %foldExtExtBinop629, i64 0
-  %i.ef = fmul float %i.ah, %11
+  %i.ef = fmul float %i.ah, %12
   %i.eg = fadd float %i.ef, %i.ee                 ; 2 uses
   %i.eh = fmul float %i.cy, %i.eg
   %i.ei = fmul float %i.av, %i.cy
@@ -769,9 +780,9 @@ bb.r:                                             ; preds = %bb.o
   %i.eq = fmul float %i.am, %i.ek
   %i.er = insertelement <2 x float> poison, float %i.em, i64 0
   %i.es = shufflevector <2 x float> %i.er, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.et = fmul <2 x float> %10, %i.es
+  %i.et = fmul <2 x float> %11, %i.es
   %i.eu = fadd <2 x float> %i.ag, %i.et
-  %i.ev = fmul float %11, %i.em
+  %i.ev = fmul float %12, %i.em
   %i.ew = fadd float %i.ah, %i.ev
   %i.ex = fsub <2 x float> %i.eu, %i.ep           ; 2 uses
   %i.ey = fsub float %i.ew, %i.eq                 ; 2 uses
@@ -798,7 +809,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %.thread594, %.thread
   %.2 = phi float [ %i.eb, %.thread ], [ %i.fh, %.thread594 ] ; 6 uses
   %i.fi = fcmp olt float %.2, 0.000000e+00
-  %i.fj = fmul float %sqrt.i, %i.ci
+  %i.fj = fmul float %7, %i.ci
   %i.fk = fcmp olt float %i.fj, %.2
   %or.cond597 = select i1 %i.fi, i1 true, i1 %i.fk
   br i1 %or.cond597, label %bb.u, label %bb.v
@@ -840,9 +851,9 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.x
   %i.fq = insertelement <2 x float> poison, float %.2, i64 0
   %i.fr = shufflevector <2 x float> %i.fq, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.fs = fmul <2 x float> %10, %i.fr
+  %i.fs = fmul <2 x float> %11, %i.fr
   %i.ft = fadd <2 x float> %i.ag, %i.fs           ; 2 uses
-  %i.fu = fmul float %11, %.2
+  %i.fu = fmul float %12, %.2
   %i.fv = fadd float %i.ah, %i.fu                 ; 2 uses
   %i.fw = insertelement <2 x float> poison, float %i.fm, i64 0
   %i.fx = shufflevector <2 x float> %i.fw, <2 x float> poison, <2 x i32> zeroinitializer
@@ -860,7 +871,7 @@ bb.z:                                             ; preds = %bb.x
   br i1 %i.gg, label %bb.aa, label %b3Normalize.exit
 
 bb.aa:                                            ; preds = %bb.z
-  %sqrt598 = tail call float @llvm.sqrt.f32(float %i.gf)
+  %sqrt598 = tail call float @sqrtf(float noundef %i.gf) #9
   %i.gh = fdiv float 1.000000e+00, %sqrt598       ; 2 uses
   %i.gi = insertelement <2 x float> poison, float %i.gh, i64 0
   %i.gj = shufflevector <2 x float> %i.gi, <2 x float> poison, <2 x i32> zeroinitializer
@@ -873,7 +884,7 @@ b3Normalize.exit:                                 ; preds = %bb.z, %bb.aa
   %.sroa.5.0.i = phi float [ %i.gl, %bb.aa ], [ 0.000000e+00, %bb.z ]
   %i.gm = fadd <2 x float> %.sroa.0308.0.copyload, %i.ft
   %i.gn = fadd float %.sroa.8.0.copyload, %i.fv
-  %i.go = fdiv float %.2, %sqrt.i                 ; 3 uses
+  %i.go = fdiv float %.2, %7                      ; 3 uses
   %i.gp = fcmp olt float %i.go, 0.000000e+00
   %i.gq = fcmp olt float %i.ci, %i.go
   %i.gr = select i1 %i.gq, float %i.ci, float %i.go
@@ -1044,7 +1055,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.y, label %bb.f, label %b3GetLengthAndNormalize.exit
 
 bb.f:                                             ; preds = %bb.e
-  %sqrt.i = call float @llvm.sqrt.f32(float %i.x) ; 2 uses
+  %sqrt.i = call float @sqrtf(float noundef %i.x) #9 ; 2 uses
   %i.z = fdiv float 1.000000e+00, %sqrt.i         ; 2 uses
   %i.aa = insertelement <2 x float> poison, float %i.z, i64 0
   %i.ab = shufflevector <2 x float> %i.aa, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1082,7 +1093,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ao, label %bb.i, label %b3GetLengthAndNormalize.exit87
 
 bb.i:                                             ; preds = %bb.h
-  %sqrt.i84 = call float @llvm.sqrt.f32(float %i.an) ; 2 uses
+  %sqrt.i84 = call float @sqrtf(float noundef %i.an) #9 ; 2 uses
   %i.ap = fdiv float 1.000000e+00, %sqrt.i84      ; 2 uses
   %i.aq = insertelement <2 x float> poison, float %i.ap, i64 0
   %i.ar = shufflevector <2 x float> %i.aq, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1135,7 +1146,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.bc, label %bb.n, label %b3Perp.exit
 
 bb.n:                                             ; preds = %bb.m
-  %sqrt.i89 = call float @llvm.sqrt.f32(float %i.bb)
+  %sqrt.i89 = call float @sqrtf(float noundef %i.bb) #9
   %i.bd = fdiv float 1.000000e+00, %sqrt.i89      ; 2 uses
   %i.be = insertelement <2 x float> poison, float %i.bd, i64 0
   %i.bf = shufflevector <2 x float> %i.be, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1189,9 +1200,6 @@ bb.r:                                             ; preds = %b3GetLengthAndNorma
 }
 
 declare void @b3SegmentDistance(ptr dead_on_unwind writable sret(%struct.b3SegmentDistanceResult) align 4, <2 x float>, float, <2 x float>, float, <2 x float>, float, <2 x float>, float) local_unnamed_addr #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #7

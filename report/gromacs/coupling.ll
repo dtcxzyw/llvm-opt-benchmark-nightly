@@ -205,8 +205,8 @@ _ZN3gmx23UniformRealDistributionIfEclINS_12ThreeFry2x64ILj64EEEEEfRT_.exit26: ; 
 
 bb.f:                                             ; preds = %_ZN3gmx23UniformRealDistributionIfEclINS_12ThreeFry2x64ILj64EEEEEfRT_.exit26
   %i.ak = fpext float %i.ag to double
-  %i.al = tail call ninf float @llvm.log.f32(float %i.ag)
-  %i.am = fpext ninf float %i.al to double
+  %i.al = tail call noundef float @logf(float noundef %i.ag) #22
+  %i.am = fpext float %i.al to double
   %i.an = fmul double %i.am, -2.000000e+00
   %i.ao = fdiv double %i.an, %i.ak
   %i.ap = tail call double @sqrt(double noundef %i.ao) #22
@@ -609,7 +609,8 @@ bb.l:                                             ; preds = %.preheader
   %i.dq = fpext nnan float %i.ag to double
   %i.dr = fmul nnan double %i.dq, f0x40309AFAE1F7C60E
   %i.ds = fdiv double %i.dp, %i.dr
-  %i.dt = fptrunc double %i.ds to float
+  %8 = fadd double %i.ds, 0.000000e+00
+  %i.dt = fptrunc double %8 to float
   br label %.preheader.1
 
 .preheader.1:                                     ; preds = %.preheader, %bb.l
@@ -1012,8 +1013,8 @@ _ZN3gmx23UniformRealDistributionIfEclINS_12ThreeFry2x64ILj64EEEEEfRT_.exit26.i: 
 
 bb.v:                                             ; preds = %_ZN3gmx23UniformRealDistributionIfEclINS_12ThreeFry2x64ILj64EEEEEfRT_.exit26.i
   %i.hz = fpext float %i.hv to double
-  %i.ia = tail call ninf float @llvm.log.f32(float %i.hv)
-  %i.ib = fpext ninf float %i.ia to double
+  %i.ia = tail call noundef float @logf(float noundef %i.hv) #22
+  %i.ib = fpext float %i.ia to double
   %i.ic = fmul double %i.ib, -2.000000e+00
   %i.id = fdiv double %i.ic, %i.hz
   %i.ie = tail call double @sqrt(double noundef %i.id) #22

@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sentencepiece/original/match?download=true
 inline.NumInlined: 64
 inline.NumDeleted: 23
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -32,7 +34,7 @@ bb.e:                                             ; preds = %bb.b
   %i.e = landingpad { ptr, i32 }
           catch ptr null
   %i.f = extractvalue { ptr, i32 } %i.e, 0
-  tail call void @__clang_call_terminate(ptr %i.f) #9
+  tail call void @__clang_call_terminate(ptr %i.f) #10
   unreachable
 }
 
@@ -43,8 +45,8 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #2 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #10 ; 0 uses
-  tail call void @_ZSt9terminatev() #9
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #11 ; 0 uses
+  tail call void @_ZSt9terminatev() #10
   unreachable
 }
 
@@ -69,7 +71,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.b = landingpad { ptr, i32 }
           catch ptr null
   %i.c = extractvalue { ptr, i32 } %i.b, 0
-  tail call void @__clang_call_terminate(ptr %i.c) #9
+  tail call void @__clang_call_terminate(ptr %i.c) #10
   unreachable
 
 _ZN4absl12lts_2026052620StartsWithIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_.exit: ; preds = %.lr.ph
@@ -99,7 +101,7 @@ bb.c:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           catch ptr null
   %i.c = extractvalue { ptr, i32 } %i.b, 0
-  tail call void @__clang_call_terminate(ptr %i.c) #9
+  tail call void @__clang_call_terminate(ptr %i.c) #10
   unreachable
 
 _ZN4absl12lts_2026052616EqualsIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_.exit: ; preds = %bb.b
@@ -129,7 +131,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.b
   %i.h = sext i8 %2 to i32
-  %i.i = tail call ptr @memchr(ptr noundef %1, i32 noundef %i.h, i64 noundef %0) #10 ; 2 uses
+  %i.i = tail call ptr @memchr(ptr noundef %1, i32 noundef %i.h, i64 noundef %0) #11 ; 2 uses
   %.not.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i.i, label %_ZN4absl12lts_2026052611StrContainsESt17basic_string_viewIcSt11char_traitsIcEEc.exit, label %bb.c
 
@@ -141,13 +143,13 @@ bb.c:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZN4absl12lts_2026052611StrContainsESt17basic_string_viewIcSt11char_traitsIcEEc.exit
 
 bb.d:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store i8 %i.f, ptr %i.a, align 1, !tbaa !10
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   store i8 %i.d, ptr %i.n, align 1, !tbaa !10
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 0, ptr %i.o, align 1, !tbaa !10
-  %i.p = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #10 ; 2 uses
+  %i.p = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #11 ; 2 uses
   %.not.i.i7 = icmp ne i64 %i.p, 0
   %i.q = icmp ne i64 %0, 0
   %or.cond15.i.i = select i1 %.not.i.i7, i1 %i.q, i1 false
@@ -158,7 +160,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8:    ; preds = %bb.d, %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %.01116.i.i
   %i.s = load i8, ptr %i.r, align 1, !tbaa !10
   %i.t = sext i8 %i.s to i32
-  %i.u = call ptr @memchr(ptr noundef nonnull %i.a, i32 noundef %i.t, i64 noundef %i.p) #10
+  %i.u = call ptr @memchr(ptr noundef nonnull %i.a, i32 noundef %i.t, i64 noundef %i.p) #11
   %.not13.not.i.i = icmp eq ptr %i.u, null
   br i1 %.not13.not.i.i, label %bb.e, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit
 
@@ -174,7 +176,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit, %bb.d
   %.2.i.i = phi i1 [ false, %bb.d ], [ %i.w, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %_ZN4absl12lts_2026052611StrContainsESt17basic_string_viewIcSt11char_traitsIcEEc.exit
 
 _ZN4absl12lts_2026052611StrContainsESt17basic_string_viewIcSt11char_traitsIcEEc.exit: ; preds = %bb.c, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %bb.b, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
@@ -204,7 +206,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = landingpad { ptr, i32 }
           catch ptr null
   %i.e = extractvalue { ptr, i32 } %i.d, 0
-  tail call void @__clang_call_terminate(ptr %i.e) #9
+  tail call void @__clang_call_terminate(ptr %i.e) #10
   unreachable
 
 _ZN4absl12lts_2026052616EqualsIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_.exit: ; preds = %bb.b
@@ -219,44 +221,123 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20260
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local { i64, ptr } @_ZN4absl12lts_2026052623FindLongestCommonPrefixESt17basic_string_viewIcSt11char_traitsIcEES4_(i64 %0, ptr %1, i64 %2, ptr nofree readonly captures(none) %3) local_unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %0) ; 7 uses
-  %i.a = icmp ult i64 %.sroa.speculated, 8
-  br i1 %i.a, label %.preheader.a, label %.preheader82, !prof !14
+  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %0)
+  %.sroa.speculated.fr = freeze i64 %.sroa.speculated ; 9 uses
+  %i.a = icmp ult i64 %.sroa.speculated.fr, 8
+  br i1 %i.a, label %.preheader.preheader, label %.preheader82, !prof !16
 
-.preheader.a:                                     ; preds = %bb.a, %bb.b
-  %.048 = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]   ; 8 uses
-  %i.b = add nuw nsw i64 %.048, 2                 ; 2 uses
-  %.not57 = icmp ugt i64 %i.b, %.sroa.speculated
-  br i1 %.not57, label %bb.c, label %bb.b, !prof !14
+.preheader.preheader:                             ; preds = %bb.a
+  %4 = and i64 %.sroa.speculated.fr, 6            ; 4 uses
+  %.not57100 = icmp ult i64 %.sroa.speculated.fr, 2
+  br i1 %.not57100, label %bb.c, label %.lr.ph.preheader, !prof !17
 
-bb.b:                                             ; preds = %.preheader.a
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.048
+.lr.ph.preheader:                                 ; preds = %.preheader.preheader
+  %5 = add nsw i64 %.sroa.speculated.fr, -2       ; 2 uses
+  %6 = lshr i64 %5, 1
+  %7 = add nuw i64 %6, 1                          ; 2 uses
+  %xtraiter = and i64 %7, 3                       ; 3 uses
+  %8 = icmp ult i64 %5, 6
+  br i1 %8, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new, !prof !18
+
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %7, -4
+  br label %bb.b
+
+.preheader:                                       ; preds = %bb.b
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 %19
+  %.0.copyload.i.i.1 = load i16, ptr %9, align 1  ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %3, i64 %19
+  %.0.copyload.i.i61.1 = load i16, ptr %10, align 1 ; 2 uses
+  %.not59.1 = icmp eq i16 %.0.copyload.i.i.1, %.0.copyload.i.i61.1
+  br i1 %.not59.1, label %.preheader.1, label %.thread, !prof !19
+
+.preheader.1:                                     ; preds = %.preheader
+  %11 = add nuw nsw i64 %19, 2                    ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 %11
+  %.0.copyload.i.i.2 = load i16, ptr %12, align 1 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %3, i64 %11
+  %.0.copyload.i.i61.2 = load i16, ptr %13, align 1 ; 2 uses
+  %.not59.2 = icmp eq i16 %.0.copyload.i.i.2, %.0.copyload.i.i61.2
+  br i1 %.not59.2, label %.preheader.2, label %.thread, !prof !19
+
+.preheader.2:                                     ; preds = %.preheader.1
+  %14 = add nuw nsw i64 %19, 4                    ; 3 uses
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 %14
+  %.0.copyload.i.i.3 = load i16, ptr %15, align 1 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %3, i64 %14
+  %.0.copyload.i.i61.3 = load i16, ptr %16, align 1 ; 2 uses
+  %.not59.3 = icmp eq i16 %.0.copyload.i.i.3, %.0.copyload.i.i61.3
+  br i1 %.not59.3, label %.preheader.a, label %.thread, !prof !19
+
+.preheader.a:                                     ; preds = %.preheader.2
+  %17 = add nuw nsw i64 %19, 6                    ; 2 uses
+  %18 = add nuw nsw i64 %19, 8                    ; 2 uses
+  %i.b = add i64 %niter, 4                        ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %i.b, %unroll_iter
+  br i1 %niter.ncmp.3, label %.preheader._crit_edge.loopexit.unr-lcssa, label %bb.b, !prof !20, !llvm.loop !13
+
+bb.b:                                             ; preds = %.preheader.a, %.lr.ph.preheader.new
+  %19 = phi i64 [ 2, %.lr.ph.preheader.new ], [ %18, %.preheader.a ] ; 7 uses
+  %.048101 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %17, %.preheader.a ] ; 3 uses
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.b, %.preheader.a ]
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.048101
   %.0.copyload.i.i = load i16, ptr %i.c, align 1  ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 %.048
+  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 %.048101
   %.0.copyload.i.i61 = load i16, ptr %i.d, align 1 ; 2 uses
   %.not59 = icmp eq i16 %.0.copyload.i.i, %.0.copyload.i.i61
-  br i1 %.not59, label %.preheader.a, label %.thread, !prof !15
+  br i1 %.not59, label %.preheader, label %.thread, !prof !19
 
-.thread:                                          ; preds = %bb.b
-  %i.e = xor i16 %.0.copyload.i.i61, %.0.copyload.i.i
+.thread:                                          ; preds = %.lr.ph.epil, %bb.b, %.preheader, %.preheader.1, %.preheader.2
+  %.048101.lcssa = phi i64 [ %14, %.preheader.2 ], [ %.048101, %bb.b ], [ %19, %.preheader ], [ %11, %.preheader.1 ], [ %.048101.epil, %.lr.ph.epil ]
+  %.0.copyload.i.i.lcssa = phi i16 [ %.0.copyload.i.i.3, %.preheader.2 ], [ %.0.copyload.i.i, %bb.b ], [ %.0.copyload.i.i.1, %.preheader ], [ %.0.copyload.i.i.2, %.preheader.1 ], [ %.0.copyload.i.i.epil, %.lr.ph.epil ]
+  %.0.copyload.i.i61.lcssa = phi i16 [ %.0.copyload.i.i61.3, %.preheader.2 ], [ %.0.copyload.i.i61, %bb.b ], [ %.0.copyload.i.i61.1, %.preheader ], [ %.0.copyload.i.i61.2, %.preheader.1 ], [ %.0.copyload.i.i61.epil, %.lr.ph.epil ]
+  %i.e = xor i16 %.0.copyload.i.i61.lcssa, %.0.copyload.i.i.lcssa
   %i.f = and i16 %i.e, 255
   %i.g = icmp eq i16 %i.f, 0
   %i.h = zext i1 %i.g to i64
-  %spec.select = or disjoint i64 %.048, %i.h
+  %spec.select = or disjoint i64 %.048101.lcssa, %i.h
   br label %bb.i
 
-bb.c:                                             ; preds = %.preheader.a
-  %.not58 = icmp eq i64 %.048, %.sroa.speculated
-  br i1 %.not58, label %bb.i, label %bb.d, !prof !14
+.preheader._crit_edge.loopexit.unr-lcssa:         ; preds = %.preheader.a
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %bb.c, label %.lr.ph.epil.preheader, !prof !22
+
+.lr.ph.epil.preheader:                            ; preds = %.preheader._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
+  %.epil.init = phi i64 [ 2, %.lr.ph.preheader ], [ %18, %.preheader._crit_edge.loopexit.unr-lcssa ]
+  %.048101.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %17, %.preheader._crit_edge.loopexit.unr-lcssa ]
+  %lcmp.mod108 = icmp ne i64 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod108)
+  br label %.lr.ph.epil
+
+.lr.ph.epil:                                      ; preds = %.preheader.epil, %.lr.ph.epil.preheader
+  %20 = phi i64 [ %23, %.preheader.epil ], [ %.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
+  %.048101.epil = phi i64 [ %20, %.preheader.epil ], [ %.048101.epil.init, %.lr.ph.epil.preheader ] ; 3 uses
+  %epil.iter = phi i64 [ %epil.iter.next, %.preheader.epil ], [ 0, %.lr.ph.epil.preheader ]
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 %.048101.epil
+  %.0.copyload.i.i.epil = load i16, ptr %21, align 1 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %3, i64 %.048101.epil
+  %.0.copyload.i.i61.epil = load i16, ptr %22, align 1 ; 2 uses
+  %.not59.epil = icmp eq i16 %.0.copyload.i.i.epil, %.0.copyload.i.i61.epil
+  br i1 %.not59.epil, label %.preheader.epil, label %.thread, !prof !19
+
+.preheader.epil:                                  ; preds = %.lr.ph.epil
+  %23 = add nuw nsw i64 %20, 2
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
+  br i1 %epil.iter.cmp.not, label %bb.c, label %.lr.ph.epil, !prof !23, !llvm.loop !14
+
+bb.c:                                             ; preds = %.preheader._crit_edge.loopexit.unr-lcssa, %.preheader.epil, %.preheader.preheader
+  %.not58 = icmp eq i64 %4, %.sroa.speculated.fr
+  br i1 %.not58, label %bb.i, label %bb.d, !prof !16
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.048
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %4
   %i.j = load i8, ptr %i.i, align 1, !tbaa !10
-  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 %.048
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 %4
   %i.l = load i8, ptr %i.k, align 1, !tbaa !10
   %i.m = icmp eq i8 %i.j, %i.l
   %i.n = zext i1 %i.m to i64
-  %spec.select60 = or disjoint i64 %.048, %i.n
+  %spec.select60 = or disjoint i64 %4, %i.n
   br label %bb.i
 
 .preheader82:                                     ; preds = %bb.a, %bb.f
@@ -266,7 +347,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 %.4
   %.0.copyload.i.i63 = load i64, ptr %i.p, align 1 ; 2 uses
   %.not = icmp eq i64 %.0.copyload.i.i62, %.0.copyload.i.i63
-  br i1 %.not, label %bb.f, label %bb.e, !prof !15
+  br i1 %.not, label %bb.f, label %bb.e, !prof !19
 
 bb.e:                                             ; preds = %.preheader82
   %i.q = xor i64 %.0.copyload.i.i63, %.0.copyload.i.i62
@@ -278,17 +359,17 @@ bb.e:                                             ; preds = %.preheader82
 bb.f:                                             ; preds = %.preheader82
   %i.u = add i64 %.4, 8
   %i.v = add i64 %.4, 16
-  %i.w = icmp ult i64 %i.v, %.sroa.speculated
-  br i1 %i.w, label %.preheader82, label %bb.g, !prof !15, !llvm.loop !13
+  %i.w = icmp ult i64 %i.v, %.sroa.speculated.fr
+  br i1 %i.w, label %.preheader82, label %bb.g, !prof !19, !llvm.loop !15
 
 bb.g:                                             ; preds = %bb.f
-  %i.x = add i64 %.sroa.speculated, -8            ; 3 uses
+  %i.x = add i64 %.sroa.speculated.fr, -8         ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %i.x
   %.0.copyload.i.i64 = load i64, ptr %i.y, align 1 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 %i.x
   %.0.copyload.i.i65 = load i64, ptr %i.z, align 1 ; 2 uses
   %.not56 = icmp eq i64 %.0.copyload.i.i64, %.0.copyload.i.i65
-  br i1 %.not56, label %bb.i, label %bb.h, !prof !14
+  br i1 %.not56, label %bb.i, label %bb.h, !prof !16
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = xor i64 %.0.copyload.i.i65, %.0.copyload.i.i64
@@ -298,7 +379,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.e, %bb.c, %bb.d, %.thread, %bb.h
-  %.sroa.071.4 = phi i64 [ %i.t, %bb.e ], [ %spec.select, %.thread ], [ %spec.select60, %bb.d ], [ %i.ad, %bb.h ], [ %.sroa.speculated, %bb.c ], [ %.sroa.speculated, %bb.g ]
+  %.sroa.071.4 = phi i64 [ %i.t, %bb.e ], [ %spec.select, %.thread ], [ %spec.select60, %bb.d ], [ %i.ad, %bb.h ], [ %.sroa.speculated.fr, %bb.c ], [ %.sroa.speculated.fr, %bb.g ]
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.071.4, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %1, 1
   ret { i64, ptr } %.fca.1.insert
@@ -332,7 +413,7 @@ bb.c:                                             ; preds = %bb.b, %bb.d
 bb.d:                                             ; preds = %bb.c
   %i.h = add nuw i64 %.025, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.h, %.sroa.speculated
-  br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !16
+  br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !26
 
 .critedge:                                        ; preds = %bb.c, %bb.d, %bb.a
   %.sroa.321.0 = phi ptr [ null, %bb.a ], [ %scevgep, %bb.d ], [ %.pn24, %bb.c ]
@@ -354,6 +435,9 @@ declare i64 @llvm.cttz.i64(i64, i1 immarg) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #9
+
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -363,8 +447,9 @@ attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { noreturn nounwind }
-attributes #10 = { nounwind }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #10 = { noreturn nounwind }
+attributes #11 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
@@ -383,8 +468,18 @@ attributes #10 = { nounwind }
 !10 = !{!5, !5, i64 0}
 !11 = distinct !{!11, !9}
 !12 = distinct !{!12, !9}
-!13 = distinct !{!13, !9}
-!14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!15 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!16 = distinct !{!16, !9}
+!13 = distinct !{!13, !21}
+!14 = distinct !{!14, !24, !25}
+!15 = distinct !{!15, !9}
+!16 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!17 = !{!"branch_weights", i32 1, i32 127}
+!18 = !{!"branch_weights", i32 3194473, i32 2144289175}
+!19 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!20 = !{!"branch_weights", i32 4258241, i32 2143225407}
+!21 = !{!"llvm.loop.estimated_trip_count", i32 504}
+!22 = !{!"branch_weights", i32 537270706, i32 1610212942}
+!23 = !{!"branch_weights", i32 1073919557, i32 1073564091}
+!24 = !{!"llvm.loop.estimated_trip_count", i32 0}
+!25 = !{!"llvm.loop.unroll.disable"}
+!26 = distinct !{!26, !9}
 end_hunk_0

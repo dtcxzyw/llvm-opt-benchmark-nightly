@@ -202,20 +202,24 @@ bb.d:                                             ; preds = %bb.c
 define dso_local i32 @bit_overlap(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8              ; 4 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 6 uses
   %i.c = icmp sgt i64 %i.b, 0
-  br i1 %i.c, label %.lr.ph.split.us.i, label %_bit_overlap_internal.exit
+  br i1 %i.c, label %.lr.ph.split.us.i.preheader, label %_bit_overlap_internal.exit
 
-.lr.ph.split.us.i:                                ; preds = %bb.a, %bb.b
-  %.02841.us.i = phi i64 [ %i.e, %bb.b ], [ 0, %bb.a ] ; 4 uses
-  %.02940.us.i = phi i32 [ %i.o, %bb.b ], [ 0, %bb.a ] ; 2 uses
-  %i.d = or disjoint i64 %.02841.us.i, 63
+.lr.ph.split.us.i.preheader:                      ; preds = %bb.a
+  %.not.us.i7 = icmp ugt i64 %i.b, 63
+  br i1 %.not.us.i7, label %bb.b, label %.split.us.i
+
+.lr.ph.split.us.i:                                ; preds = %bb.b
+  %i.d = or disjoint i64 %i.e, 63
   %.not.us.i = icmp ult i64 %i.d, %i.b
-  br i1 %.not.us.i, label %bb.b, label %.split.us.i
+  br i1 %.not.us.i, label %bb.b, label %.split.us.i, !llvm.loop !8
 
-bb.b:                                             ; preds = %.lr.ph.split.us.i
-  %i.e = add i64 %.02841.us.i, 64                 ; 2 uses
-  %i.f = ashr exact i64 %.02841.us.i, 6
+bb.b:                                             ; preds = %.lr.ph.split.us.i.preheader, %.lr.ph.split.us.i
+  %.02940.us.i9 = phi i32 [ %i.o, %.lr.ph.split.us.i ], [ 0, %.lr.ph.split.us.i.preheader ]
+  %.02841.us.i8 = phi i64 [ %i.e, %.lr.ph.split.us.i ], [ 0, %.lr.ph.split.us.i.preheader ] ; 2 uses
+  %i.e = add i64 %.02841.us.i8, 64                ; 3 uses
+  %i.f = ashr exact i64 %.02841.us.i8, 6
   %i.g = add nsw i64 %i.f, 2                      ; 2 uses
   %i.h = getelementptr inbounds [8 x i8], ptr %0, i64 %i.g
   %i.i = load i64, ptr %i.h, align 8
@@ -224,25 +228,26 @@ bb.b:                                             ; preds = %.lr.ph.split.us.i
   %i.l = and i64 %i.k, %i.i
   %i.m = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.l)
   %i.n = trunc nuw nsw i64 %i.m to i32
-  %i.o = add nuw nsw i32 %.02940.us.i, %i.n       ; 2 uses
+  %i.o = add nuw nsw i32 %.02940.us.i9, %i.n      ; 3 uses
   %i.p = icmp slt i64 %i.e, %i.b
   br i1 %i.p, label %.lr.ph.split.us.i, label %_bit_overlap_internal.exit, !llvm.loop !8
 
-.split.us.i:                                      ; preds = %.lr.ph.split.us.i
+.split.us.i:                                      ; preds = %.lr.ph.split.us.i, %.lr.ph.split.us.i.preheader
+  %.02940.us.i.lcssa = phi i32 [ 0, %.lr.ph.split.us.i.preheader ], [ %i.o, %.lr.ph.split.us.i ]
   %i.q = and i64 %i.b, 63
   %notmask.i = shl nsw i64 -1, %i.q
   %i.r = xor i64 %notmask.i, -1
-  %2 = ashr exact i64 %.02841.us.i, 6
-  %i.s = add nsw i64 %2, 2                        ; 2 uses
-  %i.t = getelementptr inbounds [8 x i8], ptr %0, i64 %i.s
+  %2 = lshr i64 %i.b, 6
+  %i.s = add nuw nsw i64 %2, 2                    ; 2 uses
+  %i.t = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.s
   %i.u = load i64, ptr %i.t, align 8
-  %i.v = getelementptr inbounds [8 x i8], ptr %1, i64 %i.s
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.s
   %i.w = load i64, ptr %i.v, align 8
   %i.x = and i64 %i.u, %i.r
   %i.y = and i64 %i.x, %i.w
   %i.z = tail call range(i64 0, 64) i64 @llvm.ctpop.i64(i64 %i.y)
   %i.aa = trunc nuw nsw i64 %i.z to i32
-  %i.ab = add nuw nsw i32 %.02940.us.i, %i.aa
+  %i.ab = add nuw nsw i32 %.02940.us.i.lcssa, %i.aa
   br label %_bit_overlap_internal.exit
 
 _bit_overlap_internal.exit:                       ; preds = %bb.b, %bb.a, %.split.us.i
@@ -254,19 +259,24 @@ _bit_overlap_internal.exit:                       ; preds = %bb.b, %bb.a, %.spli
 define dso_local range(i32 0, 2) i32 @bit_overlap_any(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8              ; 4 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 6 uses
   %i.c = icmp sgt i64 %i.b, 0
-  br i1 %i.c, label %.lr.ph.split.i, label %_bit_overlap_internal.exit
+  br i1 %i.c, label %.lr.ph.split.i.preheader, label %_bit_overlap_internal.exit
 
-.lr.ph.split.i:                                   ; preds = %bb.a, %bb.c
-  %.02841.i = phi i64 [ %i.d, %bb.c ], [ 0, %bb.a ] ; 4 uses
-  %i.d = add i64 %.02841.i, 64                    ; 2 uses
-  %i.e = or disjoint i64 %.02841.i, 63
+.lr.ph.split.i.preheader:                         ; preds = %bb.a
+  %.not.i3 = icmp ugt i64 %i.b, 63
+  br i1 %.not.i3, label %bb.b, label %.split.us.i
+
+.lr.ph.split.i:                                   ; preds = %bb.c
+  %i.d = add i64 %2, 64
+  %i.e = or disjoint i64 %2, 63
   %.not.i = icmp ult i64 %i.e, %i.b
-  br i1 %.not.i, label %bb.b, label %.split.us.i
+  br i1 %.not.i, label %bb.b, label %.split.us.i, !llvm.loop !8
 
-bb.b:                                             ; preds = %.lr.ph.split.i
-  %i.f = ashr exact i64 %.02841.i, 6
+bb.b:                                             ; preds = %.lr.ph.split.i.preheader, %.lr.ph.split.i
+  %2 = phi i64 [ %i.d, %.lr.ph.split.i ], [ 64, %.lr.ph.split.i.preheader ] ; 4 uses
+  %.02841.i4 = phi i64 [ %2, %.lr.ph.split.i ], [ 0, %.lr.ph.split.i.preheader ]
+  %i.f = ashr exact i64 %.02841.i4, 6
   %i.g = add nsw i64 %i.f, 2                      ; 2 uses
   %i.h = getelementptr inbounds [8 x i8], ptr %0, i64 %i.g
   %i.i = load i64, ptr %i.h, align 8
@@ -277,18 +287,18 @@ bb.b:                                             ; preds = %.lr.ph.split.i
   br i1 %.not34.i, label %bb.c, label %_bit_overlap_internal.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.m = icmp slt i64 %i.d, %i.b
+  %i.m = icmp slt i64 %2, %i.b
   br i1 %i.m, label %.lr.ph.split.i, label %_bit_overlap_internal.exit, !llvm.loop !8
 
-.split.us.i:                                      ; preds = %.lr.ph.split.i
+.split.us.i:                                      ; preds = %.lr.ph.split.i, %.lr.ph.split.i.preheader
   %i.n = and i64 %i.b, 63
   %notmask.i = shl nsw i64 -1, %i.n
   %i.o = xor i64 %notmask.i, -1
-  %2 = ashr exact i64 %.02841.i, 6
-  %i.p = add nsw i64 %2, 2                        ; 2 uses
-  %i.q = getelementptr inbounds [8 x i8], ptr %0, i64 %i.p
+  %3 = lshr i64 %i.b, 6
+  %i.p = add nuw nsw i64 %3, 2                    ; 2 uses
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.p
   %i.r = load i64, ptr %i.q, align 8
-  %i.s = getelementptr inbounds [8 x i8], ptr %1, i64 %i.p
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.p
   %i.t = load i64, ptr %i.s, align 8
   %i.u = and i64 %i.r, %i.o
   %i.v = and i64 %i.u, %i.t

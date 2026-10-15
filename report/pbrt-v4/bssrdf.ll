@@ -204,10 +204,10 @@ bb.c:                                             ; preds = %bb.a, %_ZN4pbrt7Fas
   %i.ak = fsub float %i.x, %i.aj                  ; 3 uses
   %i.al = fmul float %i.aj, %i.aj
   %i.am = fadd float %i.y, %i.al
-  %sqrt69 = tail call float @llvm.sqrt.f32(float %i.am) ; 7 uses
+  %sqrt69 = tail call noundef float @sqrtf(float noundef %i.am) #23 ; 7 uses
   %i.an = fmul float %i.ak, %i.ak
   %i.ao = fadd float %i.y, %i.an
-  %sqrt = tail call float @llvm.sqrt.f32(float %i.ao) ; 6 uses
+  %sqrt = tail call noundef float @sqrtf(float noundef %i.ao) #23 ; 6 uses
   %i.ap = fmul float %sqrt69, %i.aa
   %i.aq = fmul float %i.ap, f0x3FB8AA3B           ; 2 uses
   %i.ar = tail call noundef float @llvm.floor.f32(float %i.aq) ; 2 uses
@@ -321,7 +321,7 @@ _ZN4pbrt7FastExpEf.exit66:                        ; preds = %_ZN4pbrt7FastExpEf.
   %i.dh = fmul float %i.u, %i.ce
   %i.di = fmul float %i.w, %i.dg
   %i.dj = fadd float %i.dh, %i.di
-  %i.dk = fadd float %i.aj, %sqrt69
+  %i.dk = fadd float %sqrt69, %i.aj
   %i.dl = fmul float %i.ab, %i.dk
   %i.dm = fmul float %i.dl, f0x3FB8AA3B           ; 2 uses
   %i.dn = tail call noundef float @llvm.floor.f32(float %i.dm) ; 2 uses
@@ -407,7 +407,7 @@ bb.c:                                             ; preds = %bb.a, %_ZN4pbrt12Fr
   %i.y = fsub float %i.f, %i.x                    ; 3 uses
   %i.z = fmul float %i.y, %i.y
   %i.aa = fadd float %i.g, %i.z
-  %sqrt = tail call float @llvm.sqrt.f32(float %i.aa) ; 4 uses
+  %sqrt = tail call noundef float @sqrtf(float noundef %i.aa) #23 ; 4 uses
   %i.ab = fdiv float %i.y, %sqrt                  ; 4 uses
   %i.ac = fadd float %i.f, %sqrt
   %i.ad = fmul float %i.ac, %i.h
@@ -809,6 +809,9 @@ declare void @_ZN4pbrt16StatsAccumulator16ReportPercentageEPKcll(ptr noundef non
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @logf(float noundef) local_unnamed_addr #7
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.floor.f32(float) #8

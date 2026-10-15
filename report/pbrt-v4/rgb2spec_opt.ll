@@ -205,15 +205,16 @@ bb.h:                                             ; preds = %bb.f
   store <2 x double> %i.ey, ptr %1, align 8, !tbaa !13
   %i.fb = load <2 x double>, ptr %i.e, align 16, !tbaa !13 ; 2 uses
   %i.fc = fmul <2 x double> %i.fb, %i.fb          ; 2 uses
-  %shift = shufflevector <2 x double> %i.fc, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.fc, %shift
-  %i.fd = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %3 = extractelement <2 x double> %i.fc, i64 0
+  %4 = fadd double %3, 0.000000e+00
+  %i.fd = extractelement <2 x double> %i.fc, i64 1
+  %5 = fadd double %4, %i.fd
   %i.fe = load double, ptr %i.k, align 8, !tbaa !13
   %i.ff = fsub double %i.fe, %i.eb                ; 4 uses
   store double %i.ff, ptr %i.k, align 8, !tbaa !13
   %i.fg = load double, ptr %i.o, align 16, !tbaa !13 ; 2 uses
   %i.fh = fmul double %i.fg, %i.fg
-  %i.fi = fadd double %i.fd, %i.fh
+  %i.fi = fadd double %5, %i.fh
   %i.fj = fcmp olt double %i.ez, %i.fa
   %i.fk = select i1 %i.fj, double %i.fa, double %i.ez ; 2 uses
   %i.fl = fcmp olt double %i.fk, %i.ff

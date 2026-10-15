@@ -204,13 +204,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.m = load float, ptr %3, align 4, !tbaa !10
   %i.n = fpext float %i.m to double
   %i.o = fmul double %.156.us.peel, %i.n          ; 2 uses
-  %i.p = fmul double %i.o, %i.o                   ; 3 uses
+  %i.p = fmul double %i.o, %i.o
+  %7 = fadd double %i.p, 0.000000e+00             ; 3 uses
   %i.q = fcmp ult float %.pre123.pre, %4
   br i1 %i.q, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.r = fadd double %i.l, 0.000000e+00
-  %i.s = tail call double @sqrt(double noundef %i.p) #14
+  %i.s = tail call double @sqrt(double noundef %7) #14
   %i.t = fadd double %i.s, 0.000000e+00
   br label %bb.f
 
@@ -327,7 +328,7 @@ bb.k:                                             ; preds = %.preheader.split.us
 .preheader.split.us.split.peel.next:              ; preds = %bb.f, %bb.o
   %indvars.iv110 = phi i64 [ %indvars.iv.next111, %bb.o ], [ 1, %bb.f ] ; 6 uses
   %.067.us = phi double [ %i.co, %bb.o ], [ %i.l, %bb.f ]
-  %.04666.us = phi double [ %i.cu, %bb.o ], [ %i.p, %bb.f ]
+  %.04666.us = phi double [ %i.cu, %bb.o ], [ %7, %bb.f ]
   %.04865.us = phi i32 [ %.149.us, %bb.o ], [ %.149.us.peel, %bb.f ] ; 2 uses
   %.05163.us = phi double [ %.152.us, %bb.o ], [ %.152.us.peel, %bb.f ] ; 2 uses
   %.05362.us = phi double [ %.154.us, %bb.o ], [ %.154.us.peel, %bb.f ] ; 2 uses
@@ -410,7 +411,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.dj = load float, ptr %3, align 4, !tbaa !10
   %i.dk = fpext float %i.dj to double
   %i.dl = fmul double %.156.peel, %i.dk           ; 2 uses
-  %i.dm = fmul double %i.dl, %i.dl                ; 3 uses
+  %i.dm = fmul double %i.dl, %i.dl
+  %8 = fadd double %i.dm, 0.000000e+00            ; 3 uses
   %exitcond.peel.not = icmp eq i32 %0, 1
   br i1 %exitcond.peel.not, label %.split.us.thread, label %.preheader.split.split.peel.next.preheader
 
@@ -529,7 +531,7 @@ bb.aa:                                            ; preds = %bb.y
 .preheader.split.split.peel.next:                 ; preds = %bb.ad, %.preheader.split.split.peel.next.preheader.new
   %indvars.iv = phi i64 [ 1, %.preheader.split.split.peel.next.preheader.new ], [ %indvars.iv.next.1, %bb.ad ] ; 7 uses
   %.067 = phi double [ %i.di, %.preheader.split.split.peel.next.preheader.new ], [ %i.gz, %bb.ad ]
-  %.04666 = phi double [ %i.dm, %.preheader.split.split.peel.next.preheader.new ], [ %i.hf, %bb.ad ]
+  %.04666 = phi double [ %8, %.preheader.split.split.peel.next.preheader.new ], [ %i.hf, %bb.ad ]
   %niter = phi i64 [ 0, %.preheader.split.split.peel.next.preheader.new ], [ %niter.next.1, %bb.ad ]
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.fn = load float, ptr %i.fm, align 4, !tbaa !10 ; 3 uses
@@ -650,7 +652,7 @@ bb.ae:                                            ; preds = %.preheader.split.us
   %.us-phi = phi double [ %.154.us.peel, %bb.f ], [ %.154.us.us.epil, %.split.us.loopexit.epilog-lcssa ], [ %.154.us.us.peel, %bb.i ], [ %.154.us.us.1, %.split.us.loopexit.unr-lcssa ], [ %.154.us, %bb.o ]
   %.us-phi68 = phi double [ %.152.us.peel, %bb.f ], [ 0.000000e+00, %.split.us.loopexit.epilog-lcssa ], [ 0.000000e+00, %bb.i ], [ 0.000000e+00, %.split.us.loopexit.unr-lcssa ], [ %.152.us, %bb.o ]
   %.us-phi69 = phi i32 [ %.149.us.peel, %bb.f ], [ %.149.us.us.epil, %.split.us.loopexit.epilog-lcssa ], [ %i.ae, %bb.i ], [ %.149.us.us.1, %.split.us.loopexit.unr-lcssa ], [ %.149.us, %bb.o ] ; 2 uses
-  %.us-phi70 = phi double [ %i.p, %bb.f ], [ 0.000000e+00, %.split.us.loopexit.epilog-lcssa ], [ 0.000000e+00, %bb.i ], [ 0.000000e+00, %.split.us.loopexit.unr-lcssa ], [ %i.cu, %bb.o ]
+  %.us-phi70 = phi double [ %7, %bb.f ], [ 0.000000e+00, %.split.us.loopexit.epilog-lcssa ], [ 0.000000e+00, %bb.i ], [ 0.000000e+00, %.split.us.loopexit.unr-lcssa ], [ %i.cu, %bb.o ]
   %.us-phi71 = phi double [ %i.l, %bb.f ], [ %i.hz, %.split.us.loopexit.epilog-lcssa ], [ %i.ab, %bb.i ], [ %i.br, %.split.us.loopexit.unr-lcssa ], [ %i.co, %bb.o ]
   %i.id = icmp sgt i32 %.us-phi69, 0
   br i1 %i.id, label %bb.af, label %.split.us.thread
@@ -710,7 +712,7 @@ bb.ag:                                            ; preds = %.epil.preheader
 .preheader.split.split.peel.next.epil.preheader:  ; preds = %.split.us.thread.loopexit163.unr-lcssa, %.preheader.split.split.peel.next.preheader
   %indvars.iv.epil.init = phi i64 [ 1, %.preheader.split.split.peel.next.preheader ], [ %indvars.iv.next.1, %.split.us.thread.loopexit163.unr-lcssa ] ; 5 uses
   %.067.epil.init = phi double [ %i.di, %.preheader.split.split.peel.next.preheader ], [ %i.gz, %.split.us.thread.loopexit163.unr-lcssa ]
-  %.04666.epil.init = phi double [ %i.dm, %.preheader.split.split.peel.next.preheader ], [ %i.hf, %.split.us.thread.loopexit163.unr-lcssa ]
+  %.04666.epil.init = phi double [ %8, %.preheader.split.split.peel.next.preheader ], [ %i.hf, %.split.us.thread.loopexit163.unr-lcssa ]
   %lcmp.mod168 = trunc i64 %i.dn to i1
   tail call void @llvm.assume(i1 %lcmp.mod168)
   %i.jf = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.epil.init ; 2 uses
@@ -749,7 +751,7 @@ bb.ah:                                            ; preds = %.preheader.split.sp
 
 .split.us.thread:                                 ; preds = %.split.us.thread.loopexit163.epilog-lcssa, %.split.us.thread.loopexit163.unr-lcssa, %.split.us.thread.loopexit.epilog-lcssa, %.split.us.thread.loopexit.unr-lcssa, %bb.r, %.thread, %.split.us
   %.us-phi71144 = phi double [ %.us-phi71, %.split.us ], [ %i.je, %.split.us.thread.loopexit.epilog-lcssa ], [ %i.di, %bb.r ], [ %i.dr, %.thread ], [ %i.fk, %.split.us.thread.loopexit.unr-lcssa ], [ %i.gz, %.split.us.thread.loopexit163.unr-lcssa ], [ %i.jx, %.split.us.thread.loopexit163.epilog-lcssa ]
-  %.us-phi70143 = phi double [ %.us-phi70, %.split.us ], [ 0.000000e+00, %.split.us.thread.loopexit.epilog-lcssa ], [ %i.dm, %bb.r ], [ 0.000000e+00, %.thread ], [ 0.000000e+00, %.split.us.thread.loopexit.unr-lcssa ], [ %i.hf, %.split.us.thread.loopexit163.unr-lcssa ], [ %i.kd, %.split.us.thread.loopexit163.epilog-lcssa ]
+  %.us-phi70143 = phi double [ %.us-phi70, %.split.us ], [ 0.000000e+00, %.split.us.thread.loopexit.epilog-lcssa ], [ %8, %bb.r ], [ 0.000000e+00, %.thread ], [ 0.000000e+00, %.split.us.thread.loopexit.unr-lcssa ], [ %i.hf, %.split.us.thread.loopexit163.unr-lcssa ], [ %i.kd, %.split.us.thread.loopexit163.epilog-lcssa ]
   %i.ke = tail call double @sqrt(double noundef %.us-phi70143) #14
   br label %bb.ai
 

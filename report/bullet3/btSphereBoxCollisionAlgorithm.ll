@@ -74,7 +74,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.b
   %i.x = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN30btActivatingCollisionAlgorithmD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #12
+  tail call void @_ZN30btActivatingCollisionAlgorithmD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #13
   resume { ptr, i32 } %i.x
 
 bb.g:                                             ; preds = %bb.e, %bb.c, %bb.a
@@ -119,22 +119,22 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
-  tail call void @_ZN30btActivatingCollisionAlgorithmD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #12
+  tail call void @_ZN30btActivatingCollisionAlgorithmD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #13
   ret void
 
 bb.e:                                             ; preds = %bb.c
   %i.k = landingpad { ptr, i32 }
           catch ptr null
   %i.l = extractvalue { ptr, i32 } %i.k, 0
-  tail call void @__clang_call_terminate(ptr %i.l) #13
+  tail call void @__clang_call_terminate(ptr %i.l) #14
   unreachable
 }
 
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #5 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #12 ; 0 uses
-  tail call void @_ZSt9terminatev() #13
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #13 ; 0 uses
+  tail call void @_ZSt9terminatev() #14
   unreachable
 }
 
@@ -171,12 +171,12 @@ bb.d:                                             ; preds = %bb.c
   %i.k = landingpad { ptr, i32 }
           catch ptr null
   %i.l = extractvalue { ptr, i32 } %i.k, 0
-  tail call void @__clang_call_terminate(ptr %i.l) #13, !inline_history !37
+  tail call void @__clang_call_terminate(ptr %i.l) #14, !inline_history !37
   unreachable
 
 _ZN29btSphereBoxCollisionAlgorithmD2Ev.exit:      ; preds = %bb.a, %bb.b, %bb.c
-  tail call void @_ZN30btActivatingCollisionAlgorithmD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(33) %0) #12, !inline_history !37
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 40) #14
+  tail call void @_ZN30btActivatingCollisionAlgorithmD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(33) %0) #13, !inline_history !37
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 40) #15
   ret void
 }
 
@@ -201,10 +201,10 @@ bb.b:                                             ; preds = %bb.a
   %i.f = trunc nuw i8 %i.e to i1                  ; 2 uses
   %i.g = select i1 %i.f, ptr %2, ptr %1           ; 2 uses
   %i.h = select i1 %i.f, ptr %1, ptr %2
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !30, !nonnull !29, !align !31
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 48
@@ -271,10 +271,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN16btManifoldResult20refreshContactPointsEv.exit
 
 _ZN16btManifoldResult20refreshContactPointsEv.exit: ; preds = %.sink.split.i, %bb.f, %bb.e, %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.a, %_ZN16btManifoldResult20refreshContactPointsEv.exit
@@ -468,7 +468,7 @@ _ZN29btSphereBoxCollisionAlgorithm20getSpherePenetrationERK9btVector3S2_RS0_S3_.
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.b
-  %sqrt.i = tail call noundef float @llvm.sqrt.f32(float %i.bp) ; 2 uses
+  %sqrt.i = tail call noundef float @sqrtf(float noundef %i.bp) #13 ; 2 uses
   %i.de = fdiv float 1.000000e+00, %sqrt.i        ; 2 uses
   %i.df = insertelement <2 x float> poison, float %i.de, i64 0
   %i.dg = shufflevector <2 x float> %i.df, <2 x float> poison, <2 x i32> zeroinitializer
@@ -844,12 +844,12 @@ declare void @_ZN20btPersistentManifold20refreshContactPointsERK11btTransformS2_
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #11
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #12
+
 declare noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef, i32 noundef) local_unnamed_addr #1
 
 declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #11
@@ -866,9 +866,10 @@ attributes #8 = { mustprogress uwtable "min-legal-vector-width"="64" "no-trappin
 attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nounwind }
-attributes #13 = { noreturn nounwind }
-attributes #14 = { builtin nounwind }
+attributes #12 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #13 = { nounwind }
+attributes #14 = { noreturn nounwind }
+attributes #15 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

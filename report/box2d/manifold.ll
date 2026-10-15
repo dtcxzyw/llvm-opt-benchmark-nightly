@@ -44,8 +44,8 @@ bb.a:
   br i1 %i.n, label %bb.b, label %b2GetLengthAndNormalize.exit
 
 bb.b:                                             ; preds = %bb.a
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.m) ; 2 uses
-  %i.o = fdiv nnan float 1.000000e+00, %sqrt.i
+  %sqrt.i = tail call float @sqrtf(float noundef %i.m) #10 ; 2 uses
+  %i.o = fdiv float 1.000000e+00, %sqrt.i
   %i.p = insertelement <2 x float> poison, float %i.o, i64 0
   %i.q = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> zeroinitializer
   %i.r = fmul <2 x float> %i.k, %i.q
@@ -157,8 +157,8 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
   br i1 %i.af, label %bb.e, label %b2GetLengthAndNormalize.exit
 
 bb.e:                                             ; preds = %bb.d
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.ae) ; 2 uses
-  %i.ag = fdiv nnan float 1.000000e+00, %sqrt.i
+  %sqrt.i = tail call float @sqrtf(float noundef %i.ae) #10 ; 2 uses
+  %i.ag = fdiv float 1.000000e+00, %sqrt.i
   %i.ah = insertelement <2 x float> poison, float %i.ag, i64 0
   %i.ai = shufflevector <2 x float> %i.ah, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aj = fmul <2 x float> %i.ac, %i.ai
@@ -334,8 +334,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.bq, label %bb.d, label %b2Normalize.exit
 
 bb.d:                                             ; preds = %bb.c
-  %sqrt.i = tail call nnan float @llvm.sqrt.f32(float %i.bp)
-  %i.br = fdiv nnan float 1.000000e+00, %sqrt.i
+  %sqrt.i = tail call float @sqrtf(float noundef %i.bp) #10
+  %i.br = fdiv float 1.000000e+00, %sqrt.i
   %i.bs = insertelement <2 x float> poison, float %i.br, i64 0
   %i.bt = shufflevector <2 x float> %i.bs, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bu = fmul <2 x float> %i.bh, %i.bt
@@ -383,8 +383,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ct, label %bb.h, label %b2Normalize.exit222
 
 bb.h:                                             ; preds = %bb.g
-  %sqrt.i219 = tail call nnan float @llvm.sqrt.f32(float %i.cs)
-  %i.cu = fdiv nnan float 1.000000e+00, %sqrt.i219
+  %sqrt.i219 = tail call float @sqrtf(float noundef %i.cs) #10
+  %i.cu = fdiv float 1.000000e+00, %sqrt.i219
   %i.cv = insertelement <2 x float> poison, float %i.cu, i64 0
   %i.cw = shufflevector <2 x float> %i.cv, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cx = fmul <2 x float> %i.bl, %i.cw
@@ -564,7 +564,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d
   %i.bz = fadd <2 x float> %i.p, %i.bx            ; 2 uses
   %i.ca = fsub <2 x float> %i.bz, %i.by           ; 3 uses
   %i.cb = fmul <2 x float> %i.ca, %i.ca
-  %i.cc = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.cb) ; 3 uses
+  %i.cc = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.cb) ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %0, i8 0, i64 44, i1 false)
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ce = load float, ptr %i.cd, align 4, !tbaa !20 ; 4 uses
@@ -580,13 +580,13 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d
   br i1 %i.cn, label %.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %sqrt = tail call float @llvm.sqrt.f32(float %i.cc) ; 6 uses
+  %sqrt = tail call float @sqrtf(float noundef %i.cc) #10 ; 4 uses
   %i.co = fcmp ogt float %i.aa, f0x057A0000
   br i1 %i.co, label %bb.i, label %b2GetLengthAndNormalize.exit
 
 bb.i:                                             ; preds = %bb.h
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.aa) ; 2 uses
-  %i.cp = fdiv nnan float 1.000000e+00, %sqrt.i
+  %sqrt.i = tail call float @sqrtf(float noundef %i.aa) #10 ; 2 uses
+  %i.cp = fdiv float 1.000000e+00, %sqrt.i
   %i.cq = insertelement <2 x float> poison, float %i.cp, i64 0
   %i.cr = shufflevector <2 x float> %i.cq, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cs = fmul <2 x float> %i.g, %i.cr
@@ -599,8 +599,8 @@ b2GetLengthAndNormalize.exit:                     ; preds = %bb.h, %bb.i
   br i1 %i.ct, label %bb.j, label %b2GetLengthAndNormalize.exit420
 
 bb.j:                                             ; preds = %b2GetLengthAndNormalize.exit
-  %sqrt.i417 = tail call float @llvm.sqrt.f32(float %i.am) ; 2 uses
-  %i.cu = fdiv nnan float 1.000000e+00, %sqrt.i417
+  %sqrt.i417 = tail call float @sqrtf(float noundef %i.am) #10 ; 2 uses
+  %i.cu = fdiv float 1.000000e+00, %sqrt.i417
   %i.cv = insertelement <2 x float> poison, float %i.cu, i64 0
   %i.cw = shufflevector <2 x float> %i.cv, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cx = fmul <2 x float> %i.y, %i.cw
@@ -980,7 +980,8 @@ bb.ah:                                            ; preds = %bb.u, %bb.af, %b2Ge
   br i1 %i.ln, label %b2Normalize.exit, label %bb.ai
 
 b2Normalize.exit:                                 ; preds = %bb.ah
-  %i.lo = fdiv nnan float 1.000000e+00, %sqrt
+  %5 = tail call float @sqrtf(float noundef %i.cc) #10
+  %i.lo = fdiv float 1.000000e+00, %5
   %i.lp = insertelement <2 x float> poison, float %i.lo, i64 0
   %i.lq = shufflevector <2 x float> %i.lp, <2 x float> poison, <2 x i32> zeroinitializer
   %i.lr = fmul <2 x float> %i.ca, %i.lq
@@ -1010,7 +1011,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.mf = fmul <2 x float> %i.md, splat (float 5.000000e-01)
   %i.mg = fadd <2 x float> %i.mf, %i.me
   store <2 x float> %i.mg, ptr %i.lv, align 4, !tbaa !9
-  %i.mh = fsub float %sqrt, %i.ch
+  %6 = tail call float @sqrtf(float noundef %i.cc) #10
+  %i.mh = fsub float %6, %i.ch
   %i.mi = getelementptr inbounds nuw i8, ptr %0, i64 16
   store float %i.mh, ptr %i.mi, align 4, !tbaa !15
   %i.mj = select i1 %i.lt, i16 256, i16 0
@@ -1056,6 +1058,7 @@ bb.a:
   %i.c = load float, ptr %i.b, align 4, !tbaa !20
   %i.d = load <2 x float>, ptr %2, align 4        ; 3 uses
   %i.e = load <2 x float>, ptr %i.a, align 4      ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !28)
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.f, i8 0, i64 112, i1 false), !alias.scope !28
   store <2 x float> %i.d, ptr %5, align 8, !tbaa !9, !alias.scope !28
@@ -1073,8 +1076,8 @@ bb.a:
   br i1 %i.o, label %bb.b, label %b2MakeCapsule.exit
 
 bb.b:                                             ; preds = %bb.a
-  %sqrt.i.i = tail call nnan float @llvm.sqrt.f32(float %i.n)
-  %i.p = fdiv nnan float 1.000000e+00, %sqrt.i.i
+  %sqrt.i.i = tail call float @sqrtf(float noundef %i.n) #10, !noalias !28
+  %i.p = fdiv float 1.000000e+00, %sqrt.i.i
   %i.q = insertelement <2 x float> poison, float %i.p, i64 0
   %i.r = shufflevector <2 x float> %i.q, <2 x float> poison, <2 x i32> zeroinitializer
   %i.s = fmul <2 x float> %i.l, %i.r
@@ -1477,8 +1480,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   br i1 %i.ah, label %bb.e, label %b2GetLengthAndNormalize.exit.i
 
 bb.e:                                             ; preds = %bb.d
-  %sqrt.i.i = tail call float @llvm.sqrt.f32(float %i.ag) ; 2 uses
-  %i.ai = fdiv nnan float 1.000000e+00, %sqrt.i.i
+  %sqrt.i.i = tail call float @sqrtf(float noundef %i.ag) #10, !noalias !46 ; 2 uses
+  %i.ai = fdiv float 1.000000e+00, %sqrt.i.i
   %i.aj = insertelement <2 x float> poison, float %i.ai, i64 0
   %i.ak = shufflevector <2 x float> %i.aj, <2 x float> poison, <2 x i32> zeroinitializer
   %i.al = fmul <2 x float> %i.ae, %i.ak
@@ -1529,6 +1532,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load <2 x float>, ptr %1, align 4        ; 3 uses
   %i.c = load <2 x float>, ptr %i.a, align 4      ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !49)
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.d, i8 0, i64 112, i1 false), !alias.scope !49
   store <2 x float> %i.b, ptr %5, align 8, !tbaa !9, !alias.scope !49
@@ -1546,8 +1550,8 @@ bb.a:
   br i1 %i.m, label %bb.b, label %b2MakeCapsule.exit
 
 bb.b:                                             ; preds = %bb.a
-  %sqrt.i.i = tail call nnan float @llvm.sqrt.f32(float %i.l)
-  %i.n = fdiv nnan float 1.000000e+00, %sqrt.i.i
+  %sqrt.i.i = tail call float @sqrtf(float noundef %i.l) #10, !noalias !49
+  %i.n = fdiv float 1.000000e+00, %sqrt.i.i
   %i.o = insertelement <2 x float> poison, float %i.n, i64 0
   %i.p = shufflevector <2 x float> %i.o, <2 x float> poison, <2 x i32> zeroinitializer
   %i.q = fmul <2 x float> %i.j, %i.p
@@ -1662,8 +1666,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   br i1 %i.bi, label %bb.i, label %b2GetLengthAndNormalize.exit
 
 bb.i:                                             ; preds = %bb.h
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.bh) ; 2 uses
-  %i.bj = fdiv nnan float 1.000000e+00, %sqrt.i
+  %sqrt.i = tail call float @sqrtf(float noundef %i.bh) #10 ; 2 uses
+  %i.bj = fdiv float 1.000000e+00, %sqrt.i
   %i.bk = insertelement <2 x float> poison, float %i.bj, i64 0
   %i.bl = shufflevector <2 x float> %i.bk, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bm = fmul <2 x float> %i.bf, %i.bl
@@ -1714,6 +1718,7 @@ bb.a:
   %i.c = load float, ptr %i.b, align 4, !tbaa !20
   %i.d = load <2 x float>, ptr %2, align 4        ; 3 uses
   %i.e = load <2 x float>, ptr %i.a, align 4      ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.f, i8 0, i64 112, i1 false), !alias.scope !52
   store <2 x float> %i.d, ptr %6, align 8, !tbaa !9, !alias.scope !52
@@ -1731,8 +1736,8 @@ bb.a:
   br i1 %i.o, label %bb.b, label %b2MakeCapsule.exit
 
 bb.b:                                             ; preds = %bb.a
-  %sqrt.i.i = tail call nnan float @llvm.sqrt.f32(float %i.n)
-  %i.p = fdiv nnan float 1.000000e+00, %sqrt.i.i
+  %sqrt.i.i = tail call float @sqrtf(float noundef %i.n) #10, !noalias !52
+  %i.p = fdiv float 1.000000e+00, %sqrt.i.i
   %i.q = insertelement <2 x float> poison, float %i.p, i64 0
   %i.r = shufflevector <2 x float> %i.q, <2 x float> poison, <2 x i32> zeroinitializer
   %i.s = fmul <2 x float> %i.l, %i.r
@@ -1790,8 +1795,8 @@ bb.a:
   br i1 %i.s, label %bb.b, label %b2Normalize.exit
 
 bb.b:                                             ; preds = %bb.a
-  %sqrt.i = tail call nnan float @llvm.sqrt.f32(float %i.r)
-  %i.t = fdiv nnan float 1.000000e+00, %sqrt.i
+  %sqrt.i = tail call float @sqrtf(float noundef %i.r) #10
+  %i.t = fdiv float 1.000000e+00, %sqrt.i
   %i.u = insertelement <2 x float> poison, float %i.t, i64 0
   %i.v = shufflevector <2 x float> %i.u, <2 x float> poison, <2 x i32> zeroinitializer
   %i.w = fmul <2 x float> %i.p, %i.v
@@ -1807,8 +1812,8 @@ b2Normalize.exit:                                 ; preds = %bb.a, %bb.b
   br i1 %i.ab, label %bb.c, label %b2Normalize.exit347
 
 bb.c:                                             ; preds = %b2Normalize.exit
-  %sqrt.i344 = tail call nnan float @llvm.sqrt.f32(float %i.aa)
-  %i.ac = fdiv nnan float 1.000000e+00, %sqrt.i344
+  %sqrt.i344 = tail call float @sqrtf(float noundef %i.aa) #10
+  %i.ac = fdiv float 1.000000e+00, %sqrt.i344
   %i.ad = insertelement <2 x float> poison, float %i.ac, i64 0
   %i.ae = shufflevector <2 x float> %i.ad, <2 x float> poison, <2 x i32> zeroinitializer
   %i.af = fmul <2 x float> %i.y, %i.ae
@@ -1835,8 +1840,8 @@ b2Normalize.exit347:                              ; preds = %b2Normalize.exit, %
   br i1 %i.ar, label %bb.d, label %b2Normalize.exit366
 
 bb.d:                                             ; preds = %b2Normalize.exit347
-  %sqrt.i363 = tail call nnan float @llvm.sqrt.f32(float %i.aq)
-  %i.as = fdiv nnan float 1.000000e+00, %sqrt.i363
+  %sqrt.i363 = tail call float @sqrtf(float noundef %i.aq) #10
+  %i.as = fdiv float 1.000000e+00, %sqrt.i363
   %i.at = insertelement <2 x float> poison, float %i.as, i64 0
   %i.au = shufflevector <2 x float> %i.at, <2 x float> poison, <2 x i32> zeroinitializer
   %i.av = fmul <2 x float> %i.ao, %i.au
@@ -1973,8 +1978,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.dm, label %bb.k, label %b2Normalize.exit431
 
 bb.k:                                             ; preds = %bb.j
-  %sqrt.i428 = call nnan float @llvm.sqrt.f32(float %i.dl)
-  %i.dn = fdiv nnan float 1.000000e+00, %sqrt.i428
+  %sqrt.i428 = call float @sqrtf(float noundef %i.dl) #10
+  %i.dn = fdiv float 1.000000e+00, %sqrt.i428
   %i.do = insertelement <2 x float> poison, float %i.dn, i64 0
   %i.dp = shufflevector <2 x float> %i.do, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dq = fmul <2 x float> %i.dj, %i.dp
@@ -2377,14 +2382,11 @@ bb.i:                                             ; preds = %bb.a, %bb.h
   ret void
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #7
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #8
+declare void @llvm.experimental.noalias.scope.decl(metadata) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #7
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9
@@ -2396,8 +2398,8 @@ attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #10 = { nounwind }
 

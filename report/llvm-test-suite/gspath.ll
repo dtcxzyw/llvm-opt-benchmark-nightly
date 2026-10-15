@@ -201,15 +201,15 @@ bb.c:                                             ; preds = %gs_currentpoint.exi
   %i.w = shufflevector <4 x double> %i.v, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
   %i.x = fsub <4 x double> %i.t, %i.w
   %i.y = fptrunc <4 x double> %i.x to <4 x float> ; 8 uses
-  %10 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 1, i32 3> ; 2 uses
+  %10 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 3, i32 1> ; 2 uses
   %i.z = fmul <2 x float> %10, %10
-  %11 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %11 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 2, i32 0> ; 2 uses
   %i.aa = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> %11, <2 x float> %i.z)
-  %i.ab = fpext <2 x float> %i.aa to <2 x double> ; 3 uses
-  %shift = shufflevector <2 x double> %i.ab, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fmul <2 x double> %shift, %i.ab
-  %12 = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.ac = call double @sqrt(double noundef %12) #5, !tbaa !7
+  %i.ab = fpext <2 x float> %i.aa to <2 x double> ; 2 uses
+  %12 = extractelement <2 x double> %i.ab, i64 0  ; 2 uses
+  %13 = extractelement <2 x double> %i.ab, i64 1  ; 2 uses
+  %14 = fmul double %12, %13
+  %i.ac = call double @sqrt(double noundef %14) #5, !tbaa !7
   %i.ad = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 3, i32 3>
   %i.ae = fneg <4 x float> %i.y
   %i.af = shufflevector <4 x float> %i.y, <4 x float> %i.ae, <2 x i32> <i32 1, i32 4>
@@ -255,12 +255,15 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.c
   %i.be = fmul double %5, %i.al
   %i.bf = fdiv double %i.be, %i.ao
-  %i.bg = call double @llvm.fabs.f64(double %i.bf)
-  %13 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.ab)
+  %15 = call double @llvm.fabs.f64(double %i.bf)
+  %i.bg = call double @sqrt(double noundef %13) #5, !tbaa !7
+  %sqrt = call double @llvm.sqrt.f64(double %12)
   %i.bh = fpext <4 x float> %i.y to <4 x double>
-  %i.bi = insertelement <2 x double> poison, double %i.bg, i64 0
+  %i.bi = insertelement <2 x double> poison, double %15, i64 0
   %i.bj = shufflevector <2 x double> %i.bi, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bk = fdiv <2 x double> %i.bj, %13
+  %16 = insertelement <2 x double> poison, double %i.bg, i64 0
+  %17 = insertelement <2 x double> %16, double %sqrt, i64 1
+  %i.bk = fdiv <2 x double> %i.bj, %17
   %i.bl = shufflevector <2 x double> %i.bk, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.bm = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.bh, <4 x double> %i.bl, <4 x double> %i.w)
   %i.bn = fptrunc <4 x double> %i.bm to <4 x float> ; 2 uses
@@ -411,10 +414,10 @@ bb.f:                                             ; preds = %bb.b, %bb.c, %bb.d,
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4
+declare double @llvm.sqrt.f64(double) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #4
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #4

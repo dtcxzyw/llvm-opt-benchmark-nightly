@@ -107,16 +107,11 @@ bb.a:
   %i.k = load double, ptr %i.j, align 8, !tbaa !22 ; 6 uses
   %i.l = fmul double %i.i, %i.i
   %i.m = call double @llvm.fmuladd.f64(double %i.g, double %i.g, double %i.l)
-  %i.n = call double @llvm.fmuladd.f64(double %i.k, double %i.k, double %i.m) ; 2 uses
-  %sqrt.i = call double @llvm.sqrt.f64(double %i.n)
+  %i.n = call double @llvm.fmuladd.f64(double %i.k, double %i.k, double %i.m)
+  %sqrt.i = call double @sqrt(double noundef %i.n) #6 ; 3 uses
   store double %sqrt.i, ptr %2, align 8, !tbaa !18
-  %i.o = fcmp oeq double %i.n, 0.000000e+00
-  br i1 %i.o, label %.thread, label %bb.b
-
-.thread:                                          ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
-  br label %QuantizeToSector.exit
+  %i.o = fcmp oeq double %sqrt.i, 0.000000e+00
+  br i1 %i.o, label %.thread34, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.p = fcmp oeq double %i.k, 0.000000e+00
@@ -142,15 +137,15 @@ _cmsAtan2.exit.i:                                 ; preds = %.lr.ph.i.i, %bb.c, 
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 8
   store double %.09.i.i, ptr %i.x, align 8, !tbaa !20
   %i.y = fmul double %i.k, %i.k
-  %i.z = call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %i.y) ; 2 uses
+  %i.z = call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %i.y)
+  %4 = call double @sqrt(double noundef %i.z) #6  ; 2 uses
   %i.aa = fcmp oeq double %i.g, 0.000000e+00
-  %i.ab = fcmp oeq double %i.z, 0.000000e+00
+  %i.ab = fcmp oeq double %4, 0.000000e+00
   %or.cond.i22.i = and i1 %i.aa, %i.ab
   br i1 %or.cond.i22.i, label %ToSpherical.exit, label %bb.d
 
 bb.d:                                             ; preds = %_cmsAtan2.exit.i
-  %sqrt27.i = call double @llvm.sqrt.f64(double %i.z)
-  %i.ac = call double @atan2(double noundef %sqrt27.i, double noundef %i.g) #6
+  %i.ac = call double @atan2(double noundef %4, double noundef %i.g) #6
   %i.ad = fmul double %i.ac, 1.800000e+02
   %i.ae = fdiv double %i.ad, f0x400921FB54442D18  ; 3 uses
   %i.af = fcmp olt double %i.ae, 0.000000e+00
@@ -166,20 +161,27 @@ ToSpherical.exit:                                 ; preds = %.lr.ph.i24.i, %_cms
   %.09.i23.i = phi double [ 0.000000e+00, %_cmsAtan2.exit.i ], [ %i.ae, %bb.d ], [ %i.ag, %.lr.ph.i24.i ] ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 16
   store double %.09.i23.i, ptr %i.ai, align 8, !tbaa !21
+  %5 = fcmp olt double %sqrt.i, 0.000000e+00
   %i.aj = fcmp olt double %.09.i.i, 0.000000e+00
+  %or.cond = or i1 %5, %i.aj
   %i.ak = fcmp olt double %.09.i23.i, 0.000000e+00
-  %or.cond.a = or i1 %i.aj, %i.ak
+  %or.cond.a = or i1 %or.cond, %i.ak
   %i.al = insertelement <2 x double> poison, double %.09.i23.i, i64 0
   %i.am = insertelement <2 x double> %i.al, double %.09.i.i, i64 1
   br i1 %or.cond.a, label %bb.e, label %QuantizeToSector.exit
+
+.thread34:                                        ; preds = %bb.a
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
+  br label %QuantizeToSector.exit
 
 bb.e:                                             ; preds = %ToSpherical.exit
   %i.an = load ptr, ptr %0, align 8, !tbaa !13
   call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef %i.an, i32 noundef 2, ptr noundef nonnull @.str) #6
   br label %bb.h
 
-QuantizeToSector.exit:                            ; preds = %ToSpherical.exit, %.thread
-  %i.ao = phi <2 x double> [ zeroinitializer, %.thread ], [ %i.am, %ToSpherical.exit ]
+QuantizeToSector.exit:                            ; preds = %ToSpherical.exit, %.thread34
+  %i.ao = phi <2 x double> [ zeroinitializer, %.thread34 ], [ %i.am, %ToSpherical.exit ]
   %i.ap = fmul <2 x double> %i.ao, splat (double 1.600000e+01)
   %i.aq = fdiv <2 x double> %i.ap, <double 1.800000e+02, double 3.600000e+02>
   %i.ar = call <2 x double> @llvm.floor.v2f64(<2 x double> %i.aq)
@@ -564,9 +566,9 @@ ClosestLineToLine.exit:                           ; preds = %bb.j, %bb.k, %bb.l,
   %i.em = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.en = call double @llvm.fmuladd.f64(double %i.ef, double %i.ef, double %i.em)
   %i.eo = extractelement <2 x double> %i.ek, i64 1 ; 5 uses
-  %i.ep = call double @llvm.fmuladd.f64(double %i.eo, double %i.eo, double %i.en) ; 2 uses
-  %sqrt.i = call double @llvm.sqrt.f64(double %i.ep) ; 2 uses
-  %i.eq = fcmp oeq double %i.ep, 0.000000e+00
+  %i.ep = call double @llvm.fmuladd.f64(double %i.eo, double %i.eo, double %i.en)
+  %sqrt.i = call double @sqrt(double noundef %i.ep) #6 ; 3 uses
+  %i.eq = fcmp oeq double %sqrt.i, 0.000000e+00
   br i1 %i.eq, label %ToSpherical.exit, label %bb.o
 
 bb.o:                                             ; preds = %ClosestLineToLine.exit
@@ -591,15 +593,15 @@ bb.p:                                             ; preds = %bb.o
 _cmsAtan2.exit.i:                                 ; preds = %.lr.ph.i.i, %bb.p, %bb.o
   %.09.i.i = phi double [ 0.000000e+00, %bb.o ], [ %i.ew, %bb.p ], [ %i.ey, %.lr.ph.i.i ] ; 3 uses
   %i.fa = fmul double %i.eo, %i.eo
-  %i.fb = call double @llvm.fmuladd.f64(double %i.el, double %i.el, double %i.fa) ; 2 uses
+  %i.fb = call double @llvm.fmuladd.f64(double %i.el, double %i.el, double %i.fa)
+  %7 = call double @sqrt(double noundef %i.fb) #6 ; 2 uses
   %i.fc = fcmp oeq double %i.ef, 0.000000e+00
-  %i.fd = fcmp oeq double %i.fb, 0.000000e+00
+  %i.fd = fcmp oeq double %7, 0.000000e+00
   %or.cond.i22.i = and i1 %i.fc, %i.fd
   br i1 %or.cond.i22.i, label %ToSpherical.exit, label %bb.q
 
 bb.q:                                             ; preds = %_cmsAtan2.exit.i
-  %sqrt27.i = call double @llvm.sqrt.f64(double %i.fb)
-  %i.fe = call double @atan2(double noundef %sqrt27.i, double noundef %i.ef) #6
+  %i.fe = call double @atan2(double noundef %7, double noundef %i.ef) #6
   %i.ff = fmul double %i.fe, 1.800000e+02
   %i.fg = fdiv double %i.ff, f0x400921FB54442D18  ; 3 uses
   %i.fh = fcmp olt double %i.fg, 0.000000e+00
@@ -657,45 +659,45 @@ declare void @_cmsVEC3init(ptr noundef, double noundef, double noundef, double n
 
 declare void @cmsSignalError(ptr noundef, i32 noundef, ptr noundef, ...) local_unnamed_addr #2
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sqrt(double noundef) local_unnamed_addr #3
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #3
+declare double @llvm.fmuladd.f64(double, double, double) #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @atan2(double noundef, double noundef) local_unnamed_addr #4
+declare double @atan2(double noundef, double noundef) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #4
+declare double @sin(double noundef) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #4
+declare double @cos(double noundef) local_unnamed_addr #3
 
 declare void @_cmsVEC3minus(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 declare double @_cmsVEC3dot(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fabs.f64(double) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #3
+declare double @llvm.fabs.f64(double) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.floor.v2f64(<2 x double>) #3
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #3
+declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #6 = { nounwind }
 

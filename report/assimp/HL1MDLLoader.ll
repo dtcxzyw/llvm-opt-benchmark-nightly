@@ -205,16 +205,15 @@ bb.ae:                                            ; preds = %.lr.ph159, %_ZN13ai
   br i1 %.not113, label %_ZN10aiVector3tIfEixEj.exit118, label %_ZN10aiVector3tIfEixEj.exit
 
 bb.af:                                            ; preds = %_ZN10aiVector3tIfEixEj.exit134.2
-  %sqrt.i = call float @llvm.sqrt.f32(float %3)
-  %1 = fdiv float 1.000000e+00, %sqrt.i
+  %1 = fdiv float 1.000000e+00, %5
+  %2 = load <4 x float>, ptr %3, align 8
   %i.ku = insertelement <4 x float> poison, float %1, i64 0
   %i.kv = shufflevector <4 x float> %i.ku, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.kw = fmul <4 x float> %i.sx, %i.kv
+  %i.kw = fmul <4 x float> %i.kv, %2
+  store <4 x float> %i.kw, ptr %3, align 8
   br label %_ZN13aiQuaterniontIfE9NormalizeEv.exit
 
 _ZN13aiQuaterniontIfE9NormalizeEv.exit:           ; preds = %_ZN10aiVector3tIfEixEj.exit134.2, %bb.af
-  %storemerge = phi <4 x float> [ %i.kw, %bb.af ], [ %i.sx, %_ZN10aiVector3tIfEixEj.exit134.2 ]
-  store <4 x float> %storemerge, ptr %2, align 8
   %indvars.iv.next188 = add nuw nsw i64 %indvars.iv187, 1 ; 2 uses
   %i.kx = load i32, ptr %i.ek, align 1
   %i.ky = sext i32 %i.kx to i64
@@ -572,6 +571,7 @@ _ZN10aiVector3tIfEixEj.exit134.2:                 ; preds = %_ZN6Assimp3MDL8Half
   %i.sc = fmul float %i.rt, %i.ry
   %i.sd = fmul float %i.rs, %i.ry
   %i.se = fneg float %i.rw
+  %3 = getelementptr inbounds nuw i8, ptr %i.ro, i64 8 ; 3 uses
   %i.sf = insertelement <4 x float> poison, float %i.rt, i64 0
   %i.sg = insertelement <4 x float> %i.sf, float %i.rs, i64 1
   %i.sh = shufflevector <4 x float> %i.sg, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
@@ -590,17 +590,18 @@ _ZN10aiVector3tIfEixEj.exit134.2:                 ; preds = %_ZN6Assimp3MDL8Half
   %i.su = fmul <4 x float> %i.sp, %i.st
   %i.sv = shufflevector <4 x float> %i.sj, <4 x float> %i.sq, <4 x i32> <i32 1, i32 4, i32 0, i32 poison>
   %i.sw = insertelement <4 x float> %i.sv, float %i.rv, i64 3
-  %i.sx = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.sw, <4 x float> %i.sl, <4 x float> %i.su) ; 7 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ro, i64 8
-  %i.sy = extractelement <4 x float> %i.sx, i64 0 ; 2 uses
-  %i.sz = extractelement <4 x float> %i.sx, i64 1 ; 2 uses
+  %i.sx = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.sw, <4 x float> %i.sl, <4 x float> %i.su) ; 6 uses
+  store <4 x float> %i.sx, ptr %3, align 8
   %foldExtExtBinop = fmul <4 x float> %i.sx, %i.sx
-  %i.ta = extractelement <4 x float> %foldExtExtBinop, i64 2
-  %i.tb = call float @llvm.fmuladd.f32(float %i.sz, float %i.sz, float %i.ta)
-  %i.tc = extractelement <4 x float> %i.sx, i64 3 ; 2 uses
+  %i.sy = extractelement <4 x float> %foldExtExtBinop, i64 2
+  %i.sz = extractelement <4 x float> %i.sx, i64 1 ; 2 uses
+  %4 = call float @llvm.fmuladd.f32(float %i.sz, float %i.sz, float %i.sy)
+  %i.ta = extractelement <4 x float> %i.sx, i64 3 ; 2 uses
+  %i.tb = call float @llvm.fmuladd.f32(float %i.ta, float %i.ta, float %4)
+  %i.tc = extractelement <4 x float> %i.sx, i64 0 ; 2 uses
   %i.td = call float @llvm.fmuladd.f32(float %i.tc, float %i.tc, float %i.tb)
-  %3 = call float @llvm.fmuladd.f32(float %i.sy, float %i.sy, float %i.td) ; 2 uses
-  %i.te = fcmp une float %3, 0.000000e+00
+  %5 = call noundef float @sqrtf(float noundef %i.td) #23 ; 2 uses
+  %i.te = fcmp une float %5, 0.000000e+00
   br i1 %i.te, label %bb.af, label %_ZN13aiQuaterniontIfE9NormalizeEv.exit
 
 .loopexit143:                                     ; preds = %._crit_edge172, %_ZN6Assimp3MDL8HalfLife12HL1MDLLoader25get_num_blend_controllersEiRi.exit, %bb.a
@@ -1003,6 +1004,9 @@ bb.k:                                             ; preds = %bb.i, %bb.d
   resume { ptr, i32 } %.pn
 }
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #19
+
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZNK6Assimp3MDL8HalfLife13HL1DataBuffer8get_dataINS1_13AnimEvent_HL1EEEPKT_ii(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
@@ -1403,9 +1407,6 @@ declare i16 @llvm.abs.i16(i16, i1 immarg) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #18

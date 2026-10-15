@@ -28,7 +28,7 @@ bb.a:
   %i.d = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.e = fmul float %i.a, %i.a
   %i.f = fadd float %i.e, %i.d
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.f) ; 7 uses
+  %sqrt.i = tail call float @sqrtf(float noundef %i.f) #4 ; 7 uses
   %i.g = fcmp olt float %sqrt.i, f0x34000000
   br i1 %i.g, label %bb.b, label %bb.i
 
@@ -70,7 +70,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ac, label %bb.g, label %bb.f, !prof !17, !nosanitize !16
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @1, i64 %i.z) #3, !nosanitize !16
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @1, i64 %i.z) #5, !nosanitize !16
   unreachable, !nosanitize !16
 
 bb.g:                                             ; preds = %bb.e
@@ -83,7 +83,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.ah, label %.critedge.sink.split, label %bb.h, !prof !17, !nosanitize !16
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @2, i64 %i.ae) #3, !nosanitize !16
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @2, i64 %i.ae) #5, !nosanitize !16
   unreachable, !nosanitize !16
 
 bb.i:                                             ; preds = %bb.a
@@ -231,7 +231,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.el, label %bb.u, label %bb.t, !prof !17, !nosanitize !16
 
 bb.t:                                             ; preds = %bb.s
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @3, i64 %i.ei) #3, !nosanitize !16
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @3, i64 %i.ei) #5, !nosanitize !16
   unreachable, !nosanitize !16
 
 bb.u:                                             ; preds = %bb.s
@@ -250,7 +250,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.ew, label %bb.w, label %bb.v, !prof !17, !nosanitize !16
 
 bb.v:                                             ; preds = %bb.u
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @4, i64 %i.et) #3, !nosanitize !16
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @4, i64 %i.et) #5, !nosanitize !16
   unreachable, !nosanitize !16
 
 bb.w:                                             ; preds = %bb.u
@@ -274,16 +274,18 @@ bb.w:                                             ; preds = %bb.u
 ; Function Attrs: noreturn nounwind uwtable
 declare void @__ubsan_handle_type_mismatch_v1_abort(ptr, i64) local_unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #2
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fabs.f32(float) #2
+declare float @llvm.fabs.f32(float) #3
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { noreturn nounwind uwtable }
-attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #3 = { noreturn nounwind }
+attributes #2 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
+attributes #5 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

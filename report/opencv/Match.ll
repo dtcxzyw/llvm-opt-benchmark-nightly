@@ -183,8 +183,11 @@ bb.a:
   %i.f = shufflevector <4 x float> %i.d, <4 x float> poison, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.g = fmul <2 x float> %i.f, %i.f
   %i.h = shufflevector <4 x float> %i.d, <4 x float> poison, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %i.i = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.h, <2 x float> %i.h, <2 x float> %i.g)
-  %1 = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.i) ; 2 uses
+  %i.i = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.h, <2 x float> %i.h, <2 x float> %i.g) ; 2 uses
+  %1 = extractelement <2 x float> %i.i, i64 0
+  %2 = tail call noundef float @sqrtf(float noundef %1) #9 ; 2 uses
+  %3 = extractelement <2 x float> %i.i, i64 1
+  %4 = tail call noundef float @sqrtf(float noundef %3) #9 ; 2 uses
   %i.j = load <2 x float>, ptr %i.c, align 8, !tbaa !19 ; 3 uses
   %i.k = extractelement <2 x float> %i.j, i64 0
   %i.l = fneg float %i.k
@@ -195,9 +198,7 @@ bb.a:
   %i.q = insertelement <2 x float> poison, float %i.o, i64 0
   %i.r = insertelement <2 x float> %i.q, float %i.m, i64 1
   %i.s = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.p, <2 x float> %i.j, <2 x float> %i.r) ; 2 uses
-  %2 = extractelement <2 x float> %1, i64 0       ; 2 uses
-  %3 = extractelement <2 x float> %1, i64 1       ; 2 uses
-  %i.t = fmul float %2, %3
+  %i.t = fmul float %2, %4
   %i.u = extractelement <2 x float> %i.s, i64 0
   %i.v = fdiv float %i.u, %i.t                    ; 2 uses
   %i.w = fcmp olt float %i.v, -1.000000e+00
@@ -216,7 +217,7 @@ bb.a:
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32
   store float %i.af, ptr %i.ag, align 8, !tbaa !28
   %i.ah = tail call noundef float @logf(float noundef %2) #9
-  %i.ai = tail call noundef float @logf(float noundef %3) #9
+  %i.ai = tail call noundef float @logf(float noundef %4) #9
   %i.aj = fsub float %i.ah, %i.ai                 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 36
   store float %i.aj, ptr %i.ak, align 4, !tbaa !29
@@ -520,6 +521,9 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit20: ; preds = %bb
 declare float @llvm.fabs.f32(float) #5
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #6
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @acosf(float noundef) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
@@ -540,9 +544,6 @@ declare void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 deref
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, errnomem: readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

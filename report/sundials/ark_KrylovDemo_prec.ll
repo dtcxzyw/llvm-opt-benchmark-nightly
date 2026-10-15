@@ -205,7 +205,6 @@ bb.f:                                             ; preds = %.preheader, %PrintF
   %broadcast.splatinsert544 = insertelement <2 x double> poison, double %i.ei, i64 0
   %broadcast.splat545 = shufflevector <2 x double> %broadcast.splatinsert544, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %cmp.n553 = icmp eq i64 %n.vec541, %i.ff
-  %2 = call ninf double @llvm.fabs.f64(double %i.ei)
   %i.fh = zext nneg i32 %i.ds to i64              ; 2 uses
   %min.iters.check522 = icmp ult i32 %i.ds, 4
   %n.vec524 = and i64 %i.fh, 2147483644           ; 3 uses
@@ -283,14 +282,17 @@ middle.block552:                                  ; preds = %vector.body546
 
 scalar.ph538.preheader:                           ; preds = %.split.i, %middle.block552
   %indvars.iv.i.ph = phi i64 [ 1, %.split.i ], [ %i.fg, %middle.block552 ]
-  %3 = call double @llvm.fmuladd.f64(double %2, double %i.fx, double 1.000000e+01)
   br label %scalar.ph538
 
 scalar.ph538:                                     ; preds = %scalar.ph538.preheader, %scalar.ph538
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %scalar.ph538 ], [ %indvars.iv.i.ph, %scalar.ph538.preheader ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %scalar.ph538 ], [ %indvars.iv.i.ph, %scalar.ph538.preheader ] ; 3 uses
+  %2 = trunc nuw nsw i64 %indvars.iv.i to i32
+  %3 = uitofp nneg i32 %2 to double
+  %4 = fmul ninf double %i.ei, %3
+  %5 = call double @llvm.fmuladd.f64(double %4, double %i.fx, double 1.000000e+01)
   %i.gj = getelementptr [8 x i8], ptr %i.fz, i64 %indvars.iv.i
   %i.gk = getelementptr i8, ptr %i.gj, i64 -8
-  store double %3, ptr %i.gk, align 8, !tbaa !22
+  store double %5, ptr %i.gk, align 8, !tbaa !22
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %scalar.ph538, !llvm.loop !37

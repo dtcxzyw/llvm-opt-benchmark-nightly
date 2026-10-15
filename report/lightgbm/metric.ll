@@ -204,14 +204,15 @@ bb.b:                                             ; preds = %bb.a
   %i.y = load double, ptr %i.x, align 8, !tbaa !88
   %i.z = fpext float %i.w to double
   %i.aa = fsub double %i.y, %i.z                  ; 2 uses
-  %i.ab = fmul double %i.aa, %i.aa                ; 2 uses
-  store double %i.ab, ptr %i.e, align 8, !tbaa !88
+  %i.ab = fmul double %i.aa, %i.aa
+  %5 = fadd double %i.ab, 0.000000e+00            ; 2 uses
+  store double %5, ptr %i.e, align 8, !tbaa !88
   %indvars.iv.next.prol = add nsw i64 %i.r, 1
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.unr = phi i64 [ %i.r, %.lr.ph ], [ %indvars.iv.next.prol, %.prol.loopexit.unr-lcssa ]
-  %.unr = phi double [ 0.000000e+00, %.lr.ph ], [ %i.ab, %.prol.loopexit.unr-lcssa ]
+  %.unr = phi double [ 0.000000e+00, %.lr.ph ], [ %5, %.prol.loopexit.unr-lcssa ]
   %i.ac = icmp eq i32 %i.m, %i.n
   br i1 %i.ac, label %._crit_edge, label %.lr.ph.new
 
@@ -614,14 +615,15 @@ bb.b:                                             ; preds = %bb.a
   %i.y = load double, ptr %i.x, align 8, !tbaa !88
   %i.z = fpext float %i.w to double
   %i.aa = fsub double %i.y, %i.z                  ; 2 uses
-  %i.ab = fmul double %i.aa, %i.aa                ; 2 uses
-  store double %i.ab, ptr %i.e, align 8, !tbaa !88
+  %i.ab = fmul double %i.aa, %i.aa
+  %5 = fadd double %i.ab, 0.000000e+00            ; 2 uses
+  store double %5, ptr %i.e, align 8, !tbaa !88
   %indvars.iv.next.prol = add nsw i64 %i.r, 1
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.unr = phi i64 [ %i.r, %.lr.ph ], [ %indvars.iv.next.prol, %.prol.loopexit.unr-lcssa ]
-  %.unr = phi double [ 0.000000e+00, %.lr.ph ], [ %i.ab, %.prol.loopexit.unr-lcssa ]
+  %.unr = phi double [ 0.000000e+00, %.lr.ph ], [ %5, %.prol.loopexit.unr-lcssa ]
   %i.ac = icmp eq i32 %i.m, %i.n
   br i1 %i.ac, label %._crit_edge, label %.lr.ph.new
 

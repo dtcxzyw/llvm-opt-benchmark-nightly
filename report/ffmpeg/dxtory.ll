@@ -205,6 +205,7 @@ bb.a:
 
 .lr.ph236.split.us.preheader:                     ; preds = %.lr.ph236
   %i.ba = zext nneg i32 %i.aa to i64
+  %5 = and i32 %3, 2147483646
   br label %.lr.ph236.split.us
 
 .lr.ph236.split.us:                               ; preds = %.lr.ph236.split.us.preheader, %bb.as
@@ -607,7 +608,7 @@ bb.as:                                            ; preds = %bb.ar, %._crit_edge
   %i.xe = getelementptr inbounds i8, ptr %.0112232.us, i64 %i.aw ; 2 uses
   %i.xf = getelementptr inbounds i8, ptr %.0111233.us, i64 %i.ax ; 2 uses
   %i.xg = getelementptr inbounds i8, ptr %.0234.us, i64 %i.ay ; 2 uses
-  %i.xh = add nuw nsw i32 %.0113231.us, 2         ; 3 uses
+  %i.xh = add nuw nsw i32 %.0113231.us, 2         ; 2 uses
   %i.xi = icmp slt i32 %i.xh, %i.ah
   br i1 %i.xi, label %.lr.ph236.split.us, label %.critedge, !llvm.loop !98
 
@@ -615,7 +616,11 @@ bb.as:                                            ; preds = %bb.ar, %._crit_edge
   br i1 %.not117, label %bb.as, label %bb.ar
 
 .lr.ph236.split:                                  ; preds = %.lr.ph236
-  br i1 %.not117, label %.lr.ph236.split.split.us, label %.lr.ph236.split.split
+  br i1 %.not117, label %.lr.ph236.split.split.us, label %.lr.ph236.split.split.preheader
+
+.lr.ph236.split.split.preheader:                  ; preds = %.lr.ph236.split
+  %6 = and i32 %3, 2147483646
+  br label %.lr.ph236.split.split
 
 .lr.ph236.split.split.us:                         ; preds = %.lr.ph236.split
   %.val.us257 = load i32, ptr %i.ag, align 8, !tbaa !45
@@ -642,11 +647,11 @@ bb.as:                                            ; preds = %bb.ar, %._crit_edge
   %i.xu = add nuw nsw i32 %i.xt, 2
   br label %.critedge
 
-.lr.ph236.split.split:                            ; preds = %.lr.ph236.split, %.preheader229
-  %.0234 = phi ptr [ %i.yh, %.preheader229 ], [ %i.x, %.lr.ph236.split ] ; 3 uses
-  %.0111233 = phi ptr [ %i.yg, %.preheader229 ], [ %i.r, %.lr.ph236.split ] ; 3 uses
-  %.0112232 = phi ptr [ %i.yf, %.preheader229 ], [ %i.l, %.lr.ph236.split ] ; 4 uses
-  %.0113231 = phi i32 [ %i.yi, %.preheader229 ], [ 0, %.lr.ph236.split ] ; 2 uses
+.lr.ph236.split.split:                            ; preds = %.lr.ph236.split.split.preheader, %.preheader229
+  %.0234 = phi ptr [ %i.yh, %.preheader229 ], [ %i.x, %.lr.ph236.split.split.preheader ] ; 3 uses
+  %.0111233 = phi ptr [ %i.yg, %.preheader229 ], [ %i.r, %.lr.ph236.split.split.preheader ] ; 3 uses
+  %.0112232 = phi ptr [ %i.yf, %.preheader229 ], [ %i.l, %.lr.ph236.split.split.preheader ] ; 4 uses
+  %.0113231 = phi i32 [ %i.yi, %.preheader229 ], [ 0, %.lr.ph236.split.split.preheader ] ; 2 uses
   %.val = load i32, ptr %i.ag, align 8, !tbaa !45
   %.val118 = load i32, ptr %i.aj, align 4, !tbaa !43
   %i.xv = sub nsw i32 %.val118, %.val
@@ -670,12 +675,12 @@ bb.as:                                            ; preds = %bb.ar, %._crit_edge
   %i.yf = getelementptr inbounds i8, ptr %.0112232, i64 %i.aw ; 2 uses
   %i.yg = getelementptr inbounds i8, ptr %.0111233, i64 %i.ax ; 2 uses
   %i.yh = getelementptr inbounds i8, ptr %.0234, i64 %i.ay ; 2 uses
-  %i.yi = add nuw nsw i32 %.0113231, 2            ; 3 uses
+  %i.yi = add nuw nsw i32 %.0113231, 2            ; 2 uses
   %i.yj = icmp slt i32 %i.yi, %i.ah
   br i1 %i.yj, label %.lr.ph236.split.split, label %.critedge, !llvm.loop !98
 
 .critedge:                                        ; preds = %.lr.ph236.split.split, %.preheader229, %.lr.ph236.split.us, %bb.as, %.preheader229.us260.preheader, %.lr.ph236.split.split.us, %bb.a
-  %.0113.lcssa = phi i32 [ 0, %bb.a ], [ %i.xu, %.preheader229.us260.preheader ], [ 0, %.lr.ph236.split.split.us ], [ %i.xh, %bb.as ], [ %.0113231.us, %.lr.ph236.split.us ], [ %i.yi, %.preheader229 ], [ %.0113231, %.lr.ph236.split.split ]
+  %.0113.lcssa = phi i32 [ 0, %bb.a ], [ %i.xu, %.preheader229.us260.preheader ], [ 0, %.lr.ph236.split.split.us ], [ %5, %bb.as ], [ %.0113231.us, %.lr.ph236.split.us ], [ %6, %.preheader229 ], [ %.0113231, %.lr.ph236.split.split ]
   %.0112.lcssa = phi ptr [ %i.l, %bb.a ], [ %scevgep, %.preheader229.us260.preheader ], [ %i.l, %.lr.ph236.split.split.us ], [ %i.xe, %bb.as ], [ %.0112232.us, %.lr.ph236.split.us ], [ %i.yf, %.preheader229 ], [ %.0112232, %.lr.ph236.split.split ] ; 2 uses
   %.0111.lcssa = phi ptr [ %i.r, %bb.a ], [ %scevgep290, %.preheader229.us260.preheader ], [ %i.r, %.lr.ph236.split.split.us ], [ %i.xf, %bb.as ], [ %.0111233.us, %.lr.ph236.split.us ], [ %i.yg, %.preheader229 ], [ %.0111233, %.lr.ph236.split.split ] ; 2 uses
   %.0.lcssa = phi ptr [ %i.x, %bb.a ], [ %scevgep291, %.preheader229.us260.preheader ], [ %i.x, %.lr.ph236.split.split.us ], [ %i.xg, %bb.as ], [ %.0234.us, %.lr.ph236.split.us ], [ %i.yh, %.preheader229 ], [ %.0234, %.lr.ph236.split.split ] ; 2 uses
@@ -798,6 +803,7 @@ bb.a:
   %i.ba = sext i32 %i.f to i64
   %i.bb = sext i32 %i.h to i64
   %i.bc = sext i32 %i.ai to i64
+  %5 = and i32 %3, 2147483644
   %exitcond300.not = icmp eq i32 %i.aa, 1
   %exitcond300.not.1 = icmp eq i32 %i.aa, 2
   br label %bb.b
@@ -1200,12 +1206,12 @@ bb.az:                                            ; preds = %bb.ay, %._crit_edge
   %i.xq = getelementptr inbounds i8, ptr %.0128271, i64 %i.az ; 2 uses
   %i.xr = getelementptr inbounds i8, ptr %.0127272, i64 %i.ba ; 2 uses
   %i.xs = getelementptr inbounds i8, ptr %.0273, i64 %i.bb ; 2 uses
-  %i.xt = add nuw nsw i32 %.0134270, 4            ; 3 uses
+  %i.xt = add nuw nsw i32 %.0134270, 4            ; 2 uses
   %i.xu = icmp slt i32 %i.xt, %i.ag
   br i1 %i.xu, label %bb.b, label %.critedge, !llvm.loop !104
 
 .critedge:                                        ; preds = %bb.b, %bb.az, %bb.a
-  %.0134.lcssa = phi i32 [ 0, %bb.a ], [ %i.xt, %bb.az ], [ %.0134270, %bb.b ] ; 2 uses
+  %.0134.lcssa = phi i32 [ 0, %bb.a ], [ %5, %bb.az ], [ %.0134270, %bb.b ] ; 2 uses
   %.0128.lcssa = phi ptr [ %i.l, %bb.a ], [ %i.xq, %bb.az ], [ %.0128271, %bb.b ] ; 4 uses
   %.0127.lcssa = phi ptr [ %i.r, %bb.a ], [ %i.xr, %bb.az ], [ %.0127272, %bb.b ] ; 2 uses
   %.0.lcssa = phi ptr [ %i.x, %bb.a ], [ %i.xs, %bb.az ], [ %.0273, %bb.b ] ; 2 uses

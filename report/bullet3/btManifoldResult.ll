@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.eh = tail call float @llvm.fmuladd.f32(float %i.dj, float %i.do, float %i.eg)
   %i.ei = tail call noundef float @llvm.fmuladd.f32(float %i.dl, float %i.dt, float %i.eh)
   %.sroa.3.12.vec.insert.i4.i50 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ei, i64 0
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   store <2 x float> %.sroa.053.0, ptr %4, align 8
   %.sroa.554.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   store <2 x float> %.sroa.554.0, ptr %.sroa.554.0..sroa_idx, align 8, !tbaa !54
@@ -350,7 +350,7 @@ bb.k:                                             ; preds = %bb.j
   %i.hv = load float, ptr %i.hu, align 4, !tbaa !50 ; 3 uses
   %i.hw = fmul nnan float %i.hq, %i.hq
   %i.hx = call float @llvm.fmuladd.f32(float %i.hv, float %i.hv, float %i.hw) ; 2 uses
-  %sqrt.i = call float @llvm.sqrt.f32(float %i.hx)
+  %sqrt.i = call noundef float @sqrtf(float noundef %i.hx) #10
   %i.hy = fdiv float 1.000000e+00, %sqrt.i        ; 3 uses
   %i.hz = fneg float %i.hq
   %i.ia = fmul float %i.hy, %i.hz                 ; 2 uses
@@ -368,7 +368,7 @@ bb.l:                                             ; preds = %bb.j
   %i.ij = load float, ptr %i.ii, align 4, !tbaa !50 ; 3 uses
   %i.ik = fmul float %i.ij, %i.ij
   %i.il = call float @llvm.fmuladd.f32(float %i.ih, float %i.ih, float %i.ik) ; 2 uses
-  %sqrt43.i = call float @llvm.sqrt.f32(float %i.il)
+  %sqrt43.i = call noundef float @sqrtf(float noundef %i.il) #10
   %i.im = fdiv float 1.000000e+00, %sqrt43.i      ; 3 uses
   %i.in = fneg float %i.ij
   %i.io = fmul float %i.im, %i.in                 ; 2 uses
@@ -515,7 +515,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.a, %bb.v
@@ -540,7 +540,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN16btManifoldResultD0Ev(ptr noundef nonnull align 8 dereferenceable(52) %0) unnamed_addr #6 comdat align 2 {
 bb.a:
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 56) #10
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 56) #11
   ret void
 }
 
@@ -570,11 +570,11 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #2
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #2
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #2
@@ -590,9 +590,10 @@ attributes #4 = { mustprogress uwtable "min-legal-vector-width"="64" "no-trappin
 attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #9 = { nounwind }
-attributes #10 = { builtin nounwind }
+attributes #8 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #10 = { nounwind }
+attributes #11 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

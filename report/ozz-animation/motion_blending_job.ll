@@ -202,7 +202,7 @@ _ZNK3ozz9animation17MotionBlendingJob8ValidateEv.exit.thread: ; preds = %.lr.ph.
   %i.bb = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.bc = tail call float @llvm.fmuladd.f32(float %.sroa.0114.0.vec.extract, float %.sroa.0114.0.vec.extract, float %i.bb)
   %i.bd = tail call float @llvm.fmuladd.f32(float %.sroa.11.0.lcssa, float %.sroa.11.0.lcssa, float %i.bc)
-  %sqrt = tail call float @llvm.sqrt.f32(float %i.bd)
+  %sqrt = tail call noundef float @sqrtf(float noundef %i.bd) #4
   %i.be = fmul float %.045.lcssa, %sqrt           ; 2 uses
   %i.bf = fcmp oeq float %i.be, 0.000000e+00
   %i.bg = fdiv float %.046.lcssa, %i.be
@@ -226,7 +226,7 @@ _ZNK3ozz9animation17MotionBlendingJob8ValidateEv.exit.thread: ; preds = %.lr.ph.
   br i1 %i.bq, label %_ZN3ozz4math13NormalizeSafeERKNS0_10QuaternionES3_.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  %sqrt151 = tail call float @llvm.sqrt.f32(float %i.bp)
+  %sqrt151 = tail call noundef float @sqrtf(float noundef %i.bp) #4
   %i.br = fdiv float 1.000000e+00, %sqrt151
   %i.bs = insertelement <2 x float> poison, float %i.br, i64 0
   %i.bt = shufflevector <2 x float> %i.bs, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -270,10 +270,10 @@ bb.c:                                             ; preds = %.lr.ph
   %i.cg = extractelement <2 x float> %foldExtExtBinop201.a, i64 1
   %i.ch = extractelement <2 x float> %i.cf, i64 0 ; 2 uses
   %i.ci = tail call float @llvm.fmuladd.f32(float %i.ch, float %i.ch, float %i.cg)
-  %i.cj = tail call float @llvm.fmuladd.f32(float %i.ce, float %i.ce, float %i.ci) ; 2 uses
-  %sqrt152 = tail call float @llvm.sqrt.f32(float %i.cj) ; 2 uses
+  %i.cj = tail call float @llvm.fmuladd.f32(float %i.ce, float %i.ce, float %i.ci)
+  %sqrt152 = tail call noundef float @sqrtf(float noundef %i.cj) #4 ; 3 uses
   %i.ck = tail call float @llvm.fmuladd.f32(float %sqrt152, float %i.by, float %.046159)
-  %i.cl = fcmp oeq float %i.cj, 0.000000e+00
+  %i.cl = fcmp oeq float %sqrt152, 0.000000e+00
   %i.cm = fdiv float %i.by, %sqrt152
   %i.cn = select i1 %i.cl, float 0.000000e+00, float %i.cm ; 2 uses
   %i.co = insertelement <2 x float> poison, float %i.cn, i64 0
@@ -325,15 +325,17 @@ bb.e:                                             ; preds = %_ZNK3ozz9animation1
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.copysign.f32(float, float) #2
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #2
+declare float @llvm.copysign.f32(float, float) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

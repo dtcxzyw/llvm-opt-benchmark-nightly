@@ -204,10 +204,12 @@ bb.f:                                             ; preds = %bb.e
   %i.u = extractelement <2 x float> %foldExtExtBinop91, i64 0
   %i.v = fmul float %i.s, %i.s
   %i.w = fadd float %i.v, %i.u
-  %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.w)
-  %i.x = fmul float %sqrt.i.i, 5.000000e-01       ; 2 uses
+  %sqrt.i.i = tail call noundef float @sqrtf(float noundef %i.w) #20
+  %i.x = fmul float %sqrt.i.i, 5.000000e-01       ; 3 uses
+  %3 = fcmp olt float %i.x, -1.000000e+00
   %i.y = fcmp ogt float %i.x, 1.000000e+00
-  %..i.i.i.a = select i1 %i.y, float 1.000000e+00, float %i.x
+  %..i.i.i = select i1 %i.y, float 1.000000e+00, float %i.x
+  %..i.i.i.a = select i1 %3, float -1.000000e+00, float %..i.i.i
   %i.z = tail call noundef float @asinf(float noundef %..i.i.i.a) #20
   %i.aa = fmul float %i.z, 2.000000e+00
   %i.ab = fsub float f0x40490FDB, %i.aa
@@ -222,10 +224,12 @@ bb.g:                                             ; preds = %bb.e
   %i.af = extractelement <2 x float> %foldExtExtBinop94, i64 0
   %i.ag = fmul float %i.ad, %i.ad
   %i.ah = fadd float %i.ag, %i.af
-  %sqrt.i41.i = tail call noundef float @llvm.sqrt.f32(float %i.ah)
-  %i.ai = fmul float %sqrt.i41.i, 5.000000e-01    ; 2 uses
+  %sqrt.i41.i = tail call noundef float @sqrtf(float noundef %i.ah) #20
+  %i.ai = fmul float %sqrt.i41.i, 5.000000e-01    ; 3 uses
+  %4 = fcmp olt float %i.ai, -1.000000e+00
   %i.aj = fcmp ogt float %i.ai, 1.000000e+00
-  %..i.i42.i = select i1 %i.aj, float 1.000000e+00, float %i.ai
+  %..i.i41.i = select i1 %i.aj, float 1.000000e+00, float %i.ai
+  %..i.i42.i = select i1 %4, float -1.000000e+00, float %..i.i41.i
   %i.ak = tail call noundef float @asinf(float noundef %..i.i42.i) #20
   %i.al = fmul float %i.ak, 2.000000e+00
   br label %_ZN4pbrt12AngleBetweenIfEEfNS_7Vector3IT_EES3_.exit
@@ -308,7 +312,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bz = extractelement <2 x float> %foldExtExtBinop97, i64 0
   %i.ca = fmul float %.fca.1.extract, %.fca.1.extract
   %i.cb = fadd float %i.ca, %i.bz
-  %sqrt.i.i.i = call noundef float @llvm.sqrt.f32(float %i.cb) ; 2 uses
+  %sqrt.i.i.i = call noundef float @sqrtf(float noundef %i.cb) #20 ; 2 uses
   %i.cc = insertelement <2 x float> poison, float %sqrt.i.i.i, i64 0
   %i.cd = shufflevector <2 x float> %i.cc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ce = fdiv <2 x float> %.fca.0.extract, %i.cd
@@ -337,6 +341,7 @@ bb.a:
   %i.a = fmul float %1, f0x3C8EFA35               ; 2 uses
   %i.b = tail call noundef float @sinf(float noundef %i.a) #20 ; 3 uses
   %i.c = tail call noundef float @cosf(float noundef %i.a) #20 ; 4 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
   %.sroa.01.0.vec.extract.i.i.i.i = extractelement <2 x float> %2, i64 0
   %foldExtExtBinop = fmul <2 x float> %2, %2
   %i.d = extractelement <2 x float> %foldExtExtBinop, i64 0
@@ -345,15 +350,15 @@ bb.a:
   %i.f = fadd float %i.d, %i.e
   %i.g = fmul float %3, %3
   %i.h = fadd float %i.g, %i.f
-  %sqrt.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.h) ; 3 uses
+  %sqrt.i.i.i = tail call noundef float @sqrtf(float noundef %i.h) #20, !noalias !73 ; 3 uses
   %i.i = fsub float 1.000000e+00, %i.c            ; 3 uses
   %.sroa.5.0..sroa_idx115.i = getelementptr inbounds nuw i8, ptr %0, i64 4
   %.sroa.7.0..sroa_idx116.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = fdiv float %3, %sqrt.i.i.i               ; 5 uses
-  %i.k = fmul float %i.j, %i.b                    ; 2 uses
+  %i.k = fmul float %i.b, %i.j                    ; 2 uses
   %i.l = fmul float %i.j, %i.j                    ; 2 uses
   %i.m = fsub float 1.000000e+00, %i.l
-  %i.n = fmul float %i.m, %i.c
+  %i.n = fmul float %i.c, %i.m
   %i.o = fadd float %i.l, %i.n                    ; 2 uses
   %.sroa.13.0..sroa_idx120.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.16.0..sroa_idx121.i = getelementptr inbounds nuw i8, ptr %0, i64 28
@@ -376,25 +381,25 @@ bb.a:
   %i.q = fdiv float %.sroa.01.0.vec.extract.i.i.i.i, %sqrt.i.i.i ; 5 uses
   %i.r = fmul float %i.q, %i.q                    ; 2 uses
   %i.s = fsub float 1.000000e+00, %i.r
-  %i.t = fmul float %i.s, %i.c
+  %i.t = fmul float %i.c, %i.s
   %i.u = fadd float %i.r, %i.t                    ; 2 uses
-  %i.v = fmul float %i.q, %i.b                    ; 2 uses
+  %i.v = fmul float %i.b, %i.q                    ; 2 uses
   store float %i.u, ptr %0, align 4, !alias.scope !73
   %i.w = fdiv float %.sroa.01.4.vec.extract.i.i.i.i, %sqrt.i.i.i ; 5 uses
   %i.x = fmul float %i.q, %i.w
-  %i.y = fmul float %i.x, %i.i                    ; 2 uses
+  %i.y = fmul float %i.i, %i.x                    ; 2 uses
   %i.z = fsub float %i.y, %i.k                    ; 2 uses
   %i.aa = fmul float %i.q, %i.j
-  %i.ab = fmul float %i.aa, %i.i                  ; 2 uses
-  %i.ac = fmul float %i.w, %i.b                   ; 2 uses
+  %i.ab = fmul float %i.i, %i.aa                  ; 2 uses
+  %i.ac = fmul float %i.b, %i.w                   ; 2 uses
   %i.ad = fadd float %i.ac, %i.ab                 ; 2 uses
   %i.ae = fadd float %i.k, %i.y                   ; 2 uses
   %i.af = fmul float %i.w, %i.w                   ; 2 uses
   %i.ag = fsub float 1.000000e+00, %i.af
-  %i.ah = fmul float %i.ag, %i.c
+  %i.ah = fmul float %i.c, %i.ag
   %i.ai = fadd float %i.af, %i.ah                 ; 2 uses
   %i.aj = fmul float %i.w, %i.j
-  %i.ak = fmul float %i.aj, %i.i                  ; 2 uses
+  %i.ak = fmul float %i.i, %i.aj                  ; 2 uses
   %i.al = fsub float %i.ak, %i.v                  ; 2 uses
   %i.am = fsub float %i.ab, %i.ac                 ; 2 uses
   %i.an = fadd float %i.v, %i.ak                  ; 2 uses
@@ -497,6 +502,9 @@ declare float @acosf(float noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @sinf(float noundef) local_unnamed_addr #4
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @cosf(float noundef) local_unnamed_addr #4
@@ -899,9 +907,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fma.v2f32(<2 x float>, <2 x float>, <2 x float>) #5
