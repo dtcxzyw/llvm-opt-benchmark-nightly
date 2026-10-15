@@ -205,6 +205,8 @@ gv_calloc.exit308:                                ; preds = %gv_alloc.exit307
   br i1 %i.ku, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %gv_calloc.exit308
+  %5 = extractelement <2 x double> %i.kr, i64 0   ; 4 uses
+  %6 = extractelement <2 x double> %i.kr, i64 1   ; 4 uses
   %i.ky = load double, ptr %1, align 8, !tbaa !60 ; 4 uses
   %i.kz = fsub double %i.kx, %i.ky
   %i.la = getelementptr inbounds nuw i8, ptr %i.kp, i64 96 ; 4 uses
@@ -213,9 +215,7 @@ bb.x:                                             ; preds = %gv_calloc.exit308
   %i.ld = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.le = load double, ptr %i.ld, align 8, !tbaa !61 ; 4 uses
   %i.lf = fsub double %i.lc, %i.le
-  %5 = extractelement <2 x double> %i.kr, i64 0   ; 4 uses
   %i.lg = fadd double %5, %i.kz
-  %6 = extractelement <2 x double> %i.kr, i64 1   ; 4 uses
   %i.lh = fadd double %6, %i.lf
   store double %i.lg, ptr %i.kk, align 8, !tbaa !14
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kk, i64 8

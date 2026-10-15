@@ -200,13 +200,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.fq = fsub <2 x double> %i.es, %i.er
   %i.fr = shufflevector <2 x double> %i.fp, <2 x double> %i.fq, <2 x i32> <i32 0, i32 3>
   %i.fs = fmul <2 x double> %i.fr, splat (double f0x3FE6A09E667F3BCD) ; 4 uses
+  %10 = fadd <2 x double> %i.fo, %i.fs            ; 2 uses
   %foldExtExtBinop = fsub <2 x double> %i.fo, %i.fs ; 2 uses
-  %foldExtExtBinop221 = fadd <2 x double> %i.fo, %i.fs ; 2 uses
+  %11 = shufflevector <2 x double> %10, <2 x double> %foldExtExtBinop, <2 x i32> <i32 1, i32 2>
   %i.ft = fadd <2 x double> %i.fs, %i.fo          ; 2 uses
   %i.fu = fsub <2 x double> %i.fs, %i.fo          ; 2 uses
   %i.fv = shufflevector <2 x double> %i.ft, <2 x double> %i.fu, <2 x i32> <i32 0, i32 3>
-  %10 = shufflevector <2 x double> %foldExtExtBinop221, <2 x double> %foldExtExtBinop, <2 x i32> <i32 1, i32 2>
-  %i.fw = fmul <2 x double> %10, <double f0xBFD8F8B83C69A60B, double f0xBFFA9B66290EA1A3>
+  %i.fw = fmul <2 x double> %11, <double f0xBFD8F8B83C69A60B, double f0xBFFA9B66290EA1A3>
   %i.fx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fv, <2 x double> <double f0x3FFF6297CFF75CB0, double f0x3FF1C73B39AE68C8>, <2 x double> %i.fw) ; 2 uses
   %i.fy = extractelement <2 x double> %i.fx, i64 0
   store double %i.fy, ptr %.0205218, align 8, !tbaa !13
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ga = extractelement <2 x double> %i.fx, i64 1
   store double %i.ga, ptr %i.fz, align 8, !tbaa !13
   %i.gb = getelementptr inbounds [8 x i8], ptr %.0205218, i64 %i.cd
-  %i.gc = shufflevector <2 x double> %foldExtExtBinop221, <2 x double> %i.fu, <2 x i32> <i32 1, i32 3>
+  %i.gc = shufflevector <2 x double> %10, <2 x double> %i.fu, <2 x i32> <i32 1, i32 3>
   %i.gd = fmul <2 x double> %i.gc, <double f0x3FFF6297CFF75CB0, double f0x3FFA9B66290EA1A3>
   %i.ge = shufflevector <2 x double> %i.ft, <2 x double> %foldExtExtBinop, <2 x i32> <i32 0, i32 2>
   %i.gf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ge, <2 x double> <double f0x3FD8F8B83C69A60B, double f0x3FF1C73B39AE68C8>, <2 x double> %i.gd) ; 2 uses

@@ -205,6 +205,7 @@ _ZNK3g2o16OptimizableGraph4Edge9parameterEi.exit: ; preds = %bb.a
   %i.be = insertelement <2 x double> poison, double %i.am, i64 0
   %i.bf = shufflevector <2 x double> %i.be, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bg = fdiv <2 x double> %i.bd, %i.bf          ; 2 uses
+  %2 = extractelement <2 x double> %i.bg, i64 0
   %i.bh = insertelement <2 x double> poison, double %i.az, i64 0
   %i.bi = shufflevector <2 x double> %i.bh, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bj = fmul <2 x double> %i.bi, %i.bg
@@ -341,7 +342,6 @@ _ZNK3g2o16OptimizableGraph4Edge9parameterEi.exit: ; preds = %bb.a
   %i.fr = getelementptr i8, ptr %i.el, i64 24
   store double %i.fq, ptr %i.fr, align 8, !tbaa !121
   %i.fs = load double, ptr %i.ay, align 16, !tbaa !225
-  %2 = extractelement <2 x double> %i.bg, i64 0
   %i.ft = fmul double %2, %i.fs
   %i.fu = getelementptr i8, ptr %i.el, i64 40
   store double %i.ft, ptr %i.fu, align 8, !tbaa !121
