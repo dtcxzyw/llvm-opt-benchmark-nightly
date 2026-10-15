@@ -205,52 +205,60 @@ _RNvMs1_NtNtCs3csC7NK4ZxG_8chacha208backends4avx2INtB5_7BackendNtB9_3R12NtNtB9_8
   %i.cz = add <8 x i32> %i.ce, %i.g               ; 2 uses
   %i.da = add <8 x i32> %i.cm, %i.h               ; 2 uses
   %.sroa.2.32.vec.extract = shufflevector <8 x i32> %i.da, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %2 = bitcast <4 x i32> %.sroa.2.32.vec.extract to <2 x i64>
   %.sroa.2.48.vec.extract = shufflevector <8 x i32> %i.da, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %3 = bitcast <4 x i32> %.sroa.2.48.vec.extract to <2 x i64>
   %.sroa.5.64.vec.extract = shufflevector <8 x i32> %i.cz, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = bitcast <4 x i32> %.sroa.5.64.vec.extract to <2 x i64>
   %.sroa.5.80.vec.extract = shufflevector <8 x i32> %i.cz, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %5 = bitcast <4 x i32> %.sroa.5.80.vec.extract to <2 x i64>
   %.sroa.8.96.vec.extract = shufflevector <8 x i32> %i.cy, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = bitcast <4 x i32> %.sroa.8.96.vec.extract to <2 x i64>
   %.sroa.8.112.vec.extract = shufflevector <8 x i32> %i.cy, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %7 = bitcast <4 x i32> %.sroa.8.112.vec.extract to <2 x i64>
   %.sroa.11.128.vec.extract = shufflevector <8 x i32> %i.cx, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = bitcast <4 x i32> %.sroa.11.128.vec.extract to <2 x i64>
   %.sroa.11.144.vec.extract = shufflevector <8 x i32> %i.cx, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  store <4 x i32> %.sroa.2.32.vec.extract, ptr %1, align 4, !noalias !31518
+  %9 = bitcast <4 x i32> %.sroa.11.144.vec.extract to <2 x i64>
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 64
-  store <4 x i32> %.sroa.2.48.vec.extract, ptr %i.db, align 4, !noalias !31519
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store <4 x i32> %.sroa.5.64.vec.extract, ptr %2, align 4, !noalias !31518
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 80
-  store <4 x i32> %.sroa.5.80.vec.extract, ptr %3, align 4, !noalias !31519
+  %10 = shufflevector <2 x i64> %2, <2 x i64> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %10, ptr %1, align 4, !noalias !31518
+  %11 = shufflevector <2 x i64> %3, <2 x i64> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %11, ptr %i.db, align 4, !noalias !31519
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 32
-  store <4 x i32> %.sroa.8.96.vec.extract, ptr %i.dc, align 4, !noalias !31518
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 96
-  store <4 x i32> %.sroa.8.112.vec.extract, ptr %i.dd, align 4, !noalias !31519
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  store <4 x i32> %.sroa.11.128.vec.extract, ptr %4, align 4, !noalias !31518
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 112
-  store <4 x i32> %.sroa.11.144.vec.extract, ptr %5, align 4, !noalias !31519
+  %12 = shufflevector <2 x i64> %6, <2 x i64> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %12, ptr %i.dc, align 4, !noalias !31518
+  %13 = shufflevector <2 x i64> %7, <2 x i64> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %13, ptr %i.dd, align 4, !noalias !31519
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 128
   %.sroa.14.160.vec.extract = shufflevector <8 x i32> %i.cv, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = bitcast <4 x i32> %.sroa.14.160.vec.extract to <2 x i64>
   %.sroa.14.176.vec.extract = shufflevector <8 x i32> %i.cv, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %15 = bitcast <4 x i32> %.sroa.14.176.vec.extract to <2 x i64>
   %.sroa.17.192.vec.extract = shufflevector <8 x i32> %i.cu, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %16 = bitcast <4 x i32> %.sroa.17.192.vec.extract to <2 x i64>
   %.sroa.17.208.vec.extract = shufflevector <8 x i32> %i.cu, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %17 = bitcast <4 x i32> %.sroa.17.208.vec.extract to <2 x i64>
   %.sroa.20.224.vec.extract = shufflevector <8 x i32> %i.ct, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %18 = bitcast <4 x i32> %.sroa.20.224.vec.extract to <2 x i64>
   %.sroa.20.240.vec.extract = shufflevector <8 x i32> %i.ct, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %19 = bitcast <4 x i32> %.sroa.20.240.vec.extract to <2 x i64>
   %.sroa.23.256.vec.extract = shufflevector <8 x i32> %i.cs, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %20 = bitcast <4 x i32> %.sroa.23.256.vec.extract to <2 x i64>
   %.sroa.23.272.vec.extract = shufflevector <8 x i32> %i.cs, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  store <4 x i32> %.sroa.14.160.vec.extract, ptr %i.de, align 4, !noalias !31518
+  %21 = bitcast <4 x i32> %.sroa.23.272.vec.extract to <2 x i64>
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 192
-  store <4 x i32> %.sroa.14.176.vec.extract, ptr %i.df, align 4, !noalias !31519
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 144
-  store <4 x i32> %.sroa.17.192.vec.extract, ptr %6, align 4, !noalias !31518
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 208
-  store <4 x i32> %.sroa.17.208.vec.extract, ptr %7, align 4, !noalias !31519
+  %22 = shufflevector <2 x i64> %14, <2 x i64> %16, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %22, ptr %i.de, align 4, !noalias !31518
+  %23 = shufflevector <2 x i64> %15, <2 x i64> %17, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %23, ptr %i.df, align 4, !noalias !31519
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 160
-  store <4 x i32> %.sroa.20.224.vec.extract, ptr %i.dg, align 4, !noalias !31518
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 224
-  store <4 x i32> %.sroa.20.240.vec.extract, ptr %i.dh, align 4, !noalias !31519
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 176
-  store <4 x i32> %.sroa.23.256.vec.extract, ptr %8, align 4, !noalias !31518
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 240
-  store <4 x i32> %.sroa.23.272.vec.extract, ptr %9, align 4, !noalias !31519
+  %24 = shufflevector <2 x i64> %18, <2 x i64> %20, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %24, ptr %i.dg, align 4, !noalias !31518
+  %25 = shufflevector <2 x i64> %19, <2 x i64> %21, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %25, ptr %i.dh, align 4, !noalias !31519
   %i.di = add <4 x i64> %i.d, <i64 4, i64 poison, i64 poison, i64 poison>
   %i.dj = bitcast <4 x i64> %i.di to <8 x i32>
   %i.dk = shufflevector <8 x i32> %i.dj, <8 x i32> poison, <2 x i32> <i32 0, i32 1>
