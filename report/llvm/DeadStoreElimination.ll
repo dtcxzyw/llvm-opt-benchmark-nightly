@@ -204,14 +204,14 @@ bb.s:                                             ; preds = %_ZL10canSkipDefPN4l
   %i.hz = getelementptr inbounds nuw i8, ptr %.0432583.i.i, i64 64
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !856
   %i.ib = icmp eq ptr %i.hy, %i.ia
-  %.val528.i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL23MemorySSASameBBStepCost, i64 120), align 8
-  %.val529.i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL24MemorySSAOtherBBStepCost, i64 120), align 8
-  %42 = select i1 %i.ib, i32 %.val528.i.i, i32 %.val529.i.i ; 2 uses
-  %.not139.i.i = icmp ugt i32 %.2187.i, %42
+  %_ZL23MemorySSASameBBStepCost._ZL24MemorySSAOtherBBStepCost.i.i = select i1 %i.ib, ptr @_ZL23MemorySSASameBBStepCost, ptr @_ZL24MemorySSAOtherBBStepCost
+  %42 = getelementptr inbounds nuw i8, ptr %_ZL23MemorySSASameBBStepCost._ZL24MemorySSAOtherBBStepCost.i.i, i64 120
+  %43 = load i32, ptr %42, align 8, !tbaa !135    ; 2 uses
+  %.not139.i.i = icmp ugt i32 %.2187.i, %43
   br i1 %.not139.i.i, label %bb.t, label %_ZN12_GLOBAL__N_18DSEState15getDomMemoryDefEPN4llvm9MemoryDefEPNS1_12MemoryAccessERKNS1_14MemoryLocationEPKNS1_5ValueERjSC_bSC_b.exit.thread226.i
 
 bb.t:                                             ; preds = %bb.s
-  %i.ic = sub nuw i32 %.2187.i, %42               ; 34 uses
+  %i.ic = sub nuw i32 %.2187.i, %43               ; 34 uses
   %i.id = load i8, ptr %.0432583.i.i, align 8, !tbaa !129
   %i.ie = icmp eq i8 %i.id, 29
   br i1 %i.ie, label %_ZN12_GLOBAL__N_18DSEState15getDomMemoryDefEPN4llvm9MemoryDefEPNS1_12MemoryAccessERKNS1_14MemoryLocationEPKNS1_5ValueERjSC_bSC_b.exit.thread234.i, label %bb.u
