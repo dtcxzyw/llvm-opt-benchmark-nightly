@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.critedge294
-  %.val298 = phi i32 [ %i.dt, %.preheader.lr.ph ], [ %.val298454, %.critedge294 ] ; 3 uses
+  %.val298 = phi i32 [ %i.dt, %.preheader.lr.ph ], [ %.val298454, %.critedge294 ] ; 2 uses
   %.0230400 = phi ptr [ %i.cp, %.preheader.lr.ph ], [ %.2, %.critedge294 ]
   %.0231399 = phi ptr [ %i.co, %.preheader.lr.ph ], [ %.2233, %.critedge294 ] ; 4 uses
   %i.dv = lshr i32 %.val298, 1                    ; 2 uses
@@ -227,7 +227,7 @@ bb.at:                                            ; preds = %bb.as
 .critedge:                                        ; preds = %bb.at, %bb.as
   %.1.lcssa = phi ptr [ %i.dz, %bb.at ], [ %.1393, %bb.as ] ; 7 uses
   %.not293394 = icmp ugt ptr %.1.lcssa, %.0231399
-  br i1 %.not293394, label %.critedge294, label %.lr.ph396
+  br i1 %.not293394, label %._crit_edge401.loopexit, label %.lr.ph396
 
 .lr.ph396:                                        ; preds = %.critedge, %bb.au
   %.1232395 = phi ptr [ %i.ed, %bb.au ], [ %.0231399, %.critedge ] ; 5 uses
@@ -252,21 +252,23 @@ bb.au:                                            ; preds = %.lr.ph396
   %.val298.pre = load i32, ptr %i.du, align 4, !tbaa !22
   br label %.critedge294
 
-.critedge294:                                     ; preds = %bb.au, %.critedge, %.critedge4
-  %.val298454 = phi i32 [ %.val298.pre, %.critedge4 ], [ %.val298, %.critedge ], [ %.val298, %bb.au ]
-  %.2233 = phi ptr [ %i.eh, %.critedge4 ], [ %.0231399, %.critedge ], [ %i.ed, %bb.au ] ; 3 uses
-  %.2 = phi ptr [ %i.eg, %.critedge4 ], [ %.1.lcssa, %.critedge ], [ %.1.lcssa, %bb.au ] ; 3 uses
+.critedge294:                                     ; preds = %bb.au, %.critedge4
+  %.val298454 = phi i32 [ %.val298.pre, %.critedge4 ], [ %.val298, %bb.au ]
+  %.2233 = phi ptr [ %i.eh, %.critedge4 ], [ %i.ed, %bb.au ] ; 3 uses
+  %.2 = phi ptr [ %i.eg, %.critedge4 ], [ %.1.lcssa, %bb.au ] ; 3 uses
   %.not290 = icmp ugt ptr %.2, %.2233
   br i1 %.not290, label %._crit_edge401.loopexit, label %.preheader, !llvm.loop !36
 
-._crit_edge401.loopexit:                          ; preds = %.critedge294
+._crit_edge401.loopexit:                          ; preds = %.critedge, %.critedge294
+  %.2479 = phi ptr [ %.2, %.critedge294 ], [ %.1.lcssa, %.critedge ]
+  %.2233478 = phi ptr [ %.2233, %.critedge294 ], [ %.0231399, %.critedge ]
   %.pre = load i64, ptr %i.cm, align 4
   br label %._crit_edge401
 
 ._crit_edge401:                                   ; preds = %._crit_edge401.loopexit, %bb.ar
   %i.ei = phi i64 [ %i.dq, %bb.ar ], [ %.pre, %._crit_edge401.loopexit ]
-  %.0231.lcssa = phi ptr [ %i.co, %bb.ar ], [ %.2233, %._crit_edge401.loopexit ] ; 2 uses
-  %.0230.lcssa = phi ptr [ %i.cp, %bb.ar ], [ %.2, %._crit_edge401.loopexit ] ; 7 uses
+  %.0231.lcssa = phi ptr [ %i.co, %bb.ar ], [ %.2233478, %._crit_edge401.loopexit ] ; 2 uses
+  %.0230.lcssa = phi ptr [ %i.cp, %bb.ar ], [ %.2479, %._crit_edge401.loopexit ] ; 7 uses
   %i.ej = load i64, ptr %.0230.lcssa, align 4
   store i64 %i.ei, ptr %.0230.lcssa, align 4
   store i64 %i.ej, ptr %i.cm, align 4

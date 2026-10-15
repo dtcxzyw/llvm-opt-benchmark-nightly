@@ -202,7 +202,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 13 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !69   ; 4 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
@@ -227,10 +227,10 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %.0106202, i64 1 ; 3 uses
   %i.i = icmp ult ptr %i.h, %i.f
-  br i1 %i.i, label %.lr.ph, label %.critedge, !llvm.loop !102
+  br i1 %i.i, label %.lr.ph, label %.critedge2, !llvm.loop !102
 
-.critedge:                                        ; preds = %bb.b, %.lr.ph, %bb.a
-  %.0106.lcssa = phi ptr [ %i.c, %bb.a ], [ %.0106202, %.lr.ph ], [ %i.h, %bb.b ] ; 7 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.a
+  %.0106.lcssa = phi ptr [ %i.c, %bb.a ], [ %.0106202, %.lr.ph ] ; 6 uses
   %i.j = icmp ult ptr %.0106.lcssa, %i.f
   br i1 %i.j, label %.lr.ph206.preheader, label %.critedge2
 
@@ -257,10 +257,11 @@ zend_is_whitespace.exit193:                       ; preds = %.lr.ph206, %.lr.ph2
   %i.n = icmp ult ptr %.0106.lcssa, %i.l
   br i1 %i.n, label %.lr.ph206, label %.critedge2, !llvm.loop !103
 
-.critedge2:                                       ; preds = %zend_is_whitespace.exit193, %.lr.ph206, %.critedge
-  %.0109.lcssa = phi ptr [ %i.f, %.critedge ], [ %.0109205, %.lr.ph206 ], [ %scevgep, %zend_is_whitespace.exit193 ] ; 12 uses
+.critedge2:                                       ; preds = %bb.b, %zend_is_whitespace.exit193, %.lr.ph206, %.critedge
+  %.0106.lcssa262 = phi ptr [ %.0106.lcssa, %.critedge ], [ %.0106.lcssa, %zend_is_whitespace.exit193 ], [ %.0106.lcssa, %.lr.ph206 ], [ %i.h, %bb.b ] ; 4 uses
+  %.0109.lcssa = phi ptr [ %i.f, %.critedge ], [ %scevgep, %zend_is_whitespace.exit193 ], [ %.0109205, %.lr.ph206 ], [ %i.f, %bb.b ] ; 12 uses
   %.0109.lcssa219 = ptrtoaddr ptr %.0109.lcssa to i64 ; 2 uses
-  %i.o = icmp eq ptr %.0106.lcssa, %.0109.lcssa
+  %i.o = icmp eq ptr %.0106.lcssa262, %.0109.lcssa
   br i1 %i.o, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.critedge2
@@ -268,7 +269,7 @@ bb.c:                                             ; preds = %.critedge2
   br label %smart_str_free_ex.exit
 
 bb.d:                                             ; preds = %.critedge2
-  %i.p = load i8, ptr %.0106.lcssa, align 1, !tbaa !50 ; 2 uses
+  %i.p = load i8, ptr %.0106.lcssa262, align 1, !tbaa !50 ; 2 uses
   switch i8 %i.p, label %bb.f [
     i8 43, label %thread-pre-split
     i8 45, label %bb.e
@@ -279,13 +280,13 @@ bb.e:                                             ; preds = %bb.d
 
 thread-pre-split:                                 ; preds = %bb.d, %bb.e
   %.0102.ph = phi i1 [ true, %bb.e ], [ false, %bb.d ]
-  %.1107.ph = getelementptr inbounds nuw i8, ptr %.0106.lcssa, i64 1 ; 2 uses
+  %.1107.ph = getelementptr inbounds nuw i8, ptr %.0106.lcssa262, i64 1 ; 2 uses
   %.pr = load i8, ptr %.1107.ph, align 1, !tbaa !50
   br label %bb.f
 
 bb.f:                                             ; preds = %thread-pre-split, %bb.d
   %i.q = phi i8 [ %.pr, %thread-pre-split ], [ %i.p, %bb.d ] ; 2 uses
-  %.1107 = phi ptr [ %.1107.ph, %thread-pre-split ], [ %.0106.lcssa, %bb.d ] ; 10 uses
+  %.1107 = phi ptr [ %.1107.ph, %thread-pre-split ], [ %.0106.lcssa262, %bb.d ] ; 10 uses
   %.0102 = phi i1 [ %.0102.ph, %thread-pre-split ], [ false, %bb.d ] ; 3 uses
   %i.r = tail call ptr @__ctype_b_loc() #19
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !107  ; 3 uses

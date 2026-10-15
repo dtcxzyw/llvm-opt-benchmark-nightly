@@ -24,12 +24,13 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.thread, %.lr.ph.preheader
-  %or.cond = icmp ult i64 %6, 2
-  br i1 %or.cond, label %.preheader, label %.lr.ph.preheader114
+  %.not83 = icmp eq i64 %6, 0
+  br i1 %.not83, label %._crit_edge94, label %.lr.ph.preheader114
 
 .lr.ph.preheader114:                              ; preds = %._crit_edge
-  %.075109 = add i64 %6, -1
-  br label %.lr.ph
+  %.075109 = add i64 %6, -1                       ; 2 uses
+  %.not84112 = icmp eq i64 %.075109, 0
+  br i1 %.not84112, label %.preheader, label %.lr.ph
 
 .preheader85:                                     ; preds = %.lr.ph
   %.075 = add i64 %.075113, -1                    ; 2 uses
@@ -47,9 +48,9 @@ bb.a:
   %i.i = icmp samesign ugt i64 %i.h, 31
   br i1 %i.i, label %.lr.ph90, label %.preheader85, !llvm.loop !19
 
-.preheader:                                       ; preds = %.preheader85, %bb.d, %._crit_edge
-  %.178104 = phi i64 [ %.075.in112, %bb.d ], [ 0, %._crit_edge ], [ 0, %.preheader85 ] ; 2 uses
-  %.071.lcssa = phi ptr [ %i.y, %bb.d ], [ %4, %._crit_edge ], [ %4, %.preheader85 ]
+.preheader:                                       ; preds = %.preheader85, %bb.d, %.lr.ph.preheader114
+  %.178104 = phi i64 [ 0, %.lr.ph.preheader114 ], [ %.075.in112, %bb.d ], [ 0, %.preheader85 ] ; 2 uses
+  %.071.lcssa = phi ptr [ %4, %.lr.ph.preheader114 ], [ %i.y, %bb.d ], [ %4, %.preheader85 ]
   %i.j = icmp ult i64 %.178104, %6
   br i1 %i.j, label %.lr.ph93, label %._crit_edge94
 
@@ -95,7 +96,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %exitcond.not = icmp eq i64 %i.ad, %.075.in112
   br i1 %exitcond.not, label %.preheader, label %.lr.ph90, !llvm.loop !20
 
-._crit_edge94:                                    ; preds = %.lr.ph93, %.preheader
+._crit_edge94:                                    ; preds = %.lr.ph93, %._crit_edge, %.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   ret void
 
@@ -161,12 +162,13 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.thread, %.lr.ph.preheader
-  %or.cond = icmp ult i64 %6, 2
-  br i1 %or.cond, label %.preheader, label %.lr.ph.preheader114
+  %.not83 = icmp eq i64 %6, 0
+  br i1 %.not83, label %._crit_edge94, label %.lr.ph.preheader114
 
 .lr.ph.preheader114:                              ; preds = %._crit_edge
-  %.075109 = add i64 %6, -1
-  br label %.lr.ph
+  %.075109 = add i64 %6, -1                       ; 2 uses
+  %.not84112 = icmp eq i64 %.075109, 0
+  br i1 %.not84112, label %.preheader, label %.lr.ph
 
 .preheader85:                                     ; preds = %.lr.ph
   %.075 = add i64 %.075113, -1                    ; 2 uses
@@ -184,9 +186,9 @@ bb.a:
   %i.i = icmp samesign ugt i64 %i.h, 31
   br i1 %i.i, label %.lr.ph90, label %.preheader85, !llvm.loop !23
 
-.preheader:                                       ; preds = %.preheader85, %bb.d, %._crit_edge
-  %.178104 = phi i64 [ %.075.in112, %bb.d ], [ 0, %._crit_edge ], [ 0, %.preheader85 ] ; 2 uses
-  %.071.lcssa = phi ptr [ %i.y, %bb.d ], [ %4, %._crit_edge ], [ %4, %.preheader85 ]
+.preheader:                                       ; preds = %.preheader85, %bb.d, %.lr.ph.preheader114
+  %.178104 = phi i64 [ 0, %.lr.ph.preheader114 ], [ %.075.in112, %bb.d ], [ 0, %.preheader85 ] ; 2 uses
+  %.071.lcssa = phi ptr [ %4, %.lr.ph.preheader114 ], [ %i.y, %bb.d ], [ %4, %.preheader85 ]
   %i.j = icmp ult i64 %.178104, %6
   br i1 %i.j, label %.lr.ph93, label %._crit_edge94
 
@@ -232,7 +234,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %exitcond.not = icmp eq i64 %i.ad, %.075.in112
   br i1 %exitcond.not, label %.preheader, label %.lr.ph90, !llvm.loop !24
 
-._crit_edge94:                                    ; preds = %.lr.ph93, %.preheader
+._crit_edge94:                                    ; preds = %.lr.ph93, %._crit_edge, %.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   ret void
 

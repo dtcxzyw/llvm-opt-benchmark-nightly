@@ -202,7 +202,7 @@ rb_scan_args_keyword_p.exit.thread:               ; preds = %rb_scan_args_n_opt.
   %i.t = tail call i64 @rb_hash_dup(i64 noundef %i.j) #16 ; 2 uses
   %i.u = add nsw i32 %0, -1                       ; 2 uses
   %.not13 = icmp eq i32 %i.u, 0
-  br i1 %.not13, label %.preheader.thread, label %.preheader.thread36
+  br i1 %.not13, label %rb_scan_args_set.exit, label %.preheader.thread36
 
 .preheader.thread36:                              ; preds = %rb_scan_args_keyword_p.exit, %bb.d, %.preheader
   %.1.i.ph41 = phi i64 [ %i.t, %.preheader ], [ 4, %bb.d ], [ 4, %rb_scan_args_keyword_p.exit ]
@@ -211,11 +211,11 @@ rb_scan_args_keyword_p.exit.thread:               ; preds = %rb_scan_args_n_opt.
   %i.w = icmp eq i32 %.193.i.ph40, 1
   br label %.preheader.thread
 
-.preheader.thread:                                ; preds = %rb_scan_args_keyword_p.exit.thread, %.preheader, %.preheader.thread36
-  %.193.i2634 = phi i32 [ %.193.i.ph40, %.preheader.thread36 ], [ 0, %.preheader ], [ 0, %rb_scan_args_keyword_p.exit.thread ]
-  %.1.i2832 = phi i64 [ %.1.i.ph41, %.preheader.thread36 ], [ %i.t, %.preheader ], [ 4, %rb_scan_args_keyword_p.exit.thread ] ; 2 uses
-  %3 = phi i64 [ %i.v, %.preheader.thread36 ], [ 4, %.preheader ], [ 4, %rb_scan_args_keyword_p.exit.thread ] ; 2 uses
-  %.185.i.lcssa = phi i1 [ %i.w, %.preheader.thread36 ], [ true, %.preheader ], [ true, %rb_scan_args_keyword_p.exit.thread ]
+.preheader.thread:                                ; preds = %rb_scan_args_keyword_p.exit.thread, %.preheader.thread36
+  %.193.i2634 = phi i32 [ %.193.i.ph40, %.preheader.thread36 ], [ 0, %rb_scan_args_keyword_p.exit.thread ]
+  %.1.i2832 = phi i64 [ %.1.i.ph41, %.preheader.thread36 ], [ 4, %rb_scan_args_keyword_p.exit.thread ]
+  %3 = phi i64 [ %i.v, %.preheader.thread36 ], [ 4, %rb_scan_args_keyword_p.exit.thread ]
+  %.185.i.lcssa = phi i1 [ %i.w, %.preheader.thread36 ], [ true, %rb_scan_args_keyword_p.exit.thread ]
   br i1 %.185.i.lcssa, label %rb_scan_args_set.exit, label %bb.e
 
 bb.e:                                             ; preds = %.preheader.thread, %rb_scan_args_keyword_p.exit.thread
@@ -223,8 +223,10 @@ bb.e:                                             ; preds = %.preheader.thread, 
   tail call void @rb_error_arity(i32 noundef %.193.i27, i32 noundef 0, i32 noundef 1) #17
   unreachable
 
-rb_scan_args_set.exit:                            ; preds = %.preheader.thread
-  %i.x = call i32 @rb_get_kwargs(i64 noundef %.1.i2832, ptr noundef nonnull %i.b, i32 noundef 0, i32 noundef 1, ptr noundef nonnull %i.a) #16 ; 0 uses
+rb_scan_args_set.exit:                            ; preds = %.preheader, %.preheader.thread
+  %4 = phi i64 [ %3, %.preheader.thread ], [ 4, %.preheader ] ; 2 uses
+  %.1.i283245 = phi i64 [ %.1.i2832, %.preheader.thread ], [ %i.t, %.preheader ] ; 2 uses
+  %i.x = call i32 @rb_get_kwargs(i64 noundef %.1.i283245, ptr noundef nonnull %i.b, i32 noundef 0, i32 noundef 1, ptr noundef nonnull %i.a) #16 ; 0 uses
   %i.y = load i64, ptr %i.a, align 8, !tbaa !14   ; 13 uses
   switch i64 %i.y, label %bb.g [
     i64 36, label %bb.f
@@ -295,14 +297,14 @@ convert_to_feasible_size_value.exit:              ; preds = %rb_scan_args_set.ex
   ]
 
 bb.m:                                             ; preds = %convert_to_feasible_size_value.exit
-  %i.av = icmp eq i64 %.1.i2832, 4
+  %i.av = icmp eq i64 %.1.i283245, 4
   br i1 %i.av, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %convert_to_feasible_size_value.exit, %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %convert_to_feasible_size_value.exit, %bb.n, %bb.m
-  %i.aw = phi i64 [ %3, %convert_to_feasible_size_value.exit ], [ 36, %bb.n ], [ %3, %bb.m ] ; 4 uses
+  %i.aw = phi i64 [ %4, %convert_to_feasible_size_value.exit ], [ 36, %bb.n ], [ %4, %bb.m ] ; 4 uses
   %i.ax = load i64, ptr @rb_cEnumProducer, align 8, !tbaa !14
   %i.ay = call i64 @rb_data_typed_object_zalloc(i64 noundef %i.ax, i64 noundef 24, ptr noundef nonnull @producer_data_type) #16 ; 8 uses
   %i.az = inttoptr i64 %i.ay to ptr               ; 3 uses

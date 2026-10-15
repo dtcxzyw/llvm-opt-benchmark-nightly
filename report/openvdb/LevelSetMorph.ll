@@ -205,7 +205,7 @@ define linkonce_odr noundef zeroext i1 @_ZN3tbb6detail2d219concurrent_hash_mapIP
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = load atomic i64, ptr %i.c acquire, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 9 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.not52 = icmp eq ptr %3, null
@@ -277,7 +277,9 @@ _ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseI
   %i.y = trunc nuw i8 %i.x to i1
   br i1 %i.y, label %.critedge, label %.lr.ph
 
-bb.g:                                             ; preds = %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59
+bb.g:                                             ; preds = %bb.h, %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59
+  %8 = load i8, ptr %i.f, align 8, !tbaa !433, !range !222, !noundef !223
+  %9 = trunc nuw i8 %8 to i1
   br i1 %9, label %.critedge, label %.lr.ph, !llvm.loop !2014
 
 .lr.ph:                                           ; preds = %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE20allocate_node_helperISI_PFPNSR_4nodeERNSM_INS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketEEERSO_PKbEEESU_RKT_S13_T0_St17integral_constantIbLb1EE.exit, %bb.g
@@ -292,9 +294,9 @@ _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exi
 bb.h:                                             ; preds = %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit
   %i.ab = load ptr, ptr %i.e, align 8, !tbaa !477
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ad = load atomic ptr, ptr %i.ac monotonic, align 8 ; 3 uses
+  %i.ad = load atomic ptr, ptr %i.ac monotonic, align 8 ; 2 uses
   %i.ae = icmp ugt ptr %i.ad, inttoptr (i64 63 to ptr)
-  br i1 %i.ae, label %.lr.ph.i57, label %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59
+  br i1 %i.ae, label %.lr.ph.i57, label %bb.g
 
 .lr.ph.i57:                                       ; preds = %bb.h
   %i.af = load ptr, ptr %1, align 8, !tbaa !435
@@ -312,15 +314,15 @@ bb.j:                                             ; preds = %bb.i
   %i.ak = icmp ugt ptr %i.aj, inttoptr (i64 63 to ptr)
   br i1 %i.ak, label %bb.i, label %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59, !llvm.loop !2012
 
-_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59: ; preds = %bb.j, %bb.i, %bb.h
-  %.0.lcssa.i56 = phi ptr [ %i.ad, %bb.h ], [ %.07.i58, %bb.i ], [ %i.aj, %bb.j ] ; 3 uses
+_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59: ; preds = %bb.j, %bb.i
+  %.0.lcssa.i56 = phi ptr [ %.07.i58, %bb.i ], [ %i.aj, %bb.j ] ; 3 uses
   %i.al = icmp ugt ptr %.0.lcssa.i56, inttoptr (i64 63 to ptr)
-  %8 = load i8, ptr %i.f, align 8, !tbaa !433, !range !222, !noundef !223
-  %9 = trunc nuw i8 %8 to i1                      ; 2 uses
   br i1 %i.al, label %bb.k, label %bb.g, !llvm.loop !2014
 
 bb.k:                                             ; preds = %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59
-  br i1 %9, label %bb.l, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE19downgrade_to_readerEv.exit
+  %10 = load i8, ptr %i.f, align 8, !tbaa !433, !range !222, !noundef !223
+  %11 = trunc nuw i8 %10 to i1
+  br i1 %11, label %bb.l, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE19downgrade_to_readerEv.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.am = load ptr, ptr %7, align 8, !tbaa !432
@@ -723,7 +725,7 @@ define linkonce_odr noundef zeroext i1 @_ZN3tbb6detail2d219concurrent_hash_mapIP
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = load atomic i64, ptr %i.c acquire, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 9 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.not52 = icmp eq ptr %3, null
@@ -795,7 +797,9 @@ _ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseI
   %i.y = trunc nuw i8 %i.x to i1
   br i1 %i.y, label %.critedge, label %.lr.ph
 
-bb.g:                                             ; preds = %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59
+bb.g:                                             ; preds = %bb.h, %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59
+  %8 = load i8, ptr %i.f, align 8, !tbaa !433, !range !222, !noundef !223
+  %9 = trunc nuw i8 %8 to i1
   br i1 %9, label %.critedge, label %.lr.ph, !llvm.loop !4677
 
 .lr.ph:                                           ; preds = %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE20allocate_node_helperISI_PFPNSR_4nodeERNSM_INS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketEEERSO_PKbEEESU_RKT_S13_T0_St17integral_constantIbLb1EE.exit, %bb.g
@@ -810,9 +814,9 @@ _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exi
 bb.h:                                             ; preds = %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit
   %i.ab = load ptr, ptr %i.e, align 8, !tbaa !1224
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ad = load atomic ptr, ptr %i.ac monotonic, align 8 ; 3 uses
+  %i.ad = load atomic ptr, ptr %i.ac monotonic, align 8 ; 2 uses
   %i.ae = icmp ugt ptr %i.ad, inttoptr (i64 63 to ptr)
-  br i1 %i.ae, label %.lr.ph.i57, label %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59
+  br i1 %i.ae, label %.lr.ph.i57, label %bb.g
 
 .lr.ph.i57:                                       ; preds = %bb.h
   %i.af = load ptr, ptr %1, align 8, !tbaa !1197
@@ -830,15 +834,15 @@ bb.j:                                             ; preds = %bb.i
   %i.ak = icmp ugt ptr %i.aj, inttoptr (i64 63 to ptr)
   br i1 %i.ak, label %bb.i, label %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59, !llvm.loop !4675
 
-_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59: ; preds = %bb.j, %bb.i, %bb.h
-  %.0.lcssa.i56 = phi ptr [ %i.ad, %bb.h ], [ %.07.i58, %bb.i ], [ %i.aj, %bb.j ] ; 3 uses
+_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59: ; preds = %bb.j, %bb.i
+  %.0.lcssa.i56 = phi ptr [ %.07.i58, %bb.i ], [ %i.aj, %bb.j ] ; 3 uses
   %i.al = icmp ugt ptr %.0.lcssa.i56, inttoptr (i64 63 to ptr)
-  %8 = load i8, ptr %i.f, align 8, !tbaa !433, !range !222, !noundef !223
-  %9 = trunc nuw i8 %8 to i1                      ; 2 uses
   br i1 %i.al, label %bb.k, label %bb.g, !llvm.loop !4677
 
 bb.k:                                             ; preds = %_ZNK3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE13search_bucketISI_EEPNSR_4nodeERKT_PNS1_13hash_map_baseISQ_NSJ_13spin_rw_mutexEE6bucketE.exit59
-  br i1 %9, label %bb.l, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE19downgrade_to_readerEv.exit
+  %10 = load i8, ptr %i.f, align 8, !tbaa !433, !range !222, !noundef !223
+  %11 = trunc nuw i8 %10 to i1
+  br i1 %11, label %bb.l, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE19downgrade_to_readerEv.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.am = load ptr, ptr %7, align 8, !tbaa !432

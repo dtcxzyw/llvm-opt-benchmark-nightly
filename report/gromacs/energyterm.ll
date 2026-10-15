@@ -202,7 +202,7 @@ bb.a:
   %1 = alloca %"class.std::vector.3", align 8     ; 11 uses
   %2 = alloca %"class.std::vector.3", align 8     ; 11 uses
   %i.b = alloca float, align 4                    ; 5 uses
-  %i.c = alloca float, align 4                    ; 5 uses
+  %i.c = alloca float, align 4                    ; 6 uses
   %i.d = alloca float, align 4                    ; 4 uses
   %i.e = alloca float, align 4                    ; 4 uses
   %i.f = alloca float, align 4                    ; 4 uses
@@ -235,7 +235,11 @@ _ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
   store float 0.000000e+00, ptr %i.c, align 4, !tbaa !36
   %.not46 = icmp eq ptr %i.p, %i.q
-  br i1 %.not46, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19, label %bb.c
+  br i1 %.not46, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19.thread, label %bb.c
+
+_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19.thread:   ; preds = %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
+  br label %._crit_edge
 
 bb.c:                                             ; preds = %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
   %i.r = ptrtoint ptr %i.p to i64
@@ -243,23 +247,18 @@ bb.c:                                             ; preds = %_ZNSt6vectorIfSaIfE
   %i.t = sub i64 %i.r, %i.s
   %i.u = sdiv exact i64 %i.t, 48
   invoke void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr null, i64 noundef %i.u, ptr noundef nonnull align 4 dereferenceable(4) %i.c)
-          to label %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19_crit_edge36 unwind label %bb.e
+          to label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19 unwind label %bb.e
 
-._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19_crit_edge36: ; preds = %bb.c
-  %.pre = load ptr, ptr %i.g, align 8, !tbaa !34
-  %.pre37 = load ptr, ptr %i.h, align 8, !tbaa !34
-  br label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19
-
-_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19:          ; preds = %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit, %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19_crit_edge36
-  %3 = phi ptr [ %.pre37, %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19_crit_edge36 ], [ %i.p, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit ] ; 4 uses
-  %4 = phi ptr [ %.pre, %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19_crit_edge36 ], [ %i.q, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit ] ; 6 uses
+_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19:          ; preds = %bb.c
+  %.pre = load ptr, ptr %i.g, align 8, !tbaa !34  ; 7 uses
+  %.pre37 = load ptr, ptr %i.h, align 8, !tbaa !34 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
-  %.not32 = icmp eq ptr %4, %3
+  %.not32 = icmp eq ptr %.pre, %.pre37
   br i1 %.not32, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19
-  %i.v = ptrtoaddr ptr %3 to i64
-  %i.w = ptrtoaddr ptr %4 to i64
+  %i.v = ptrtoaddr ptr %.pre37 to i64
+  %i.w = ptrtoaddr ptr %.pre to i64
   %i.x = load ptr, ptr %1, align 8, !tbaa !39     ; 3 uses
   %i.y = load ptr, ptr %2, align 8, !tbaa !39     ; 3 uses
   %i.z = add i64 %i.v, -48
@@ -274,7 +273,7 @@ _ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19:          ; preds = %_ZNSt6vectorIfSaIfE
 
 scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph
   %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %vector.body ]
-  %.sroa.028.033.ph = phi ptr [ %4, %.lr.ph ], [ %i.ak, %vector.body ]
+  %.sroa.028.033.ph = phi ptr [ %.pre, %.lr.ph ], [ %i.ak, %vector.body ]
   br label %scalar.ph
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -285,12 +284,12 @@ vector.ph:                                        ; preds = %.lr.ph
   %i.ai = select i1 %i.ah, i64 8, i64 %i.ag
   %n.vec = sub nsw i64 %i.af, %i.ai               ; 3 uses
   %i.aj = mul i64 %n.vec, 48
-  %i.ak = getelementptr i8, ptr %4, i64 %i.aj
+  %i.ak = getelementptr i8, ptr %.pre, i64 %i.aj
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %pointer.phi = phi ptr [ %4, %vector.ph ], [ %ptr.ind, %vector.body ] ; 2 uses
+  %pointer.phi = phi ptr [ %.pre, %vector.ph ], [ %ptr.ind, %vector.body ] ; 2 uses
   %vector.gep = getelementptr i8, ptr %pointer.phi, <4 x i64> <i64 0, i64 48, i64 96, i64 144> ; 4 uses
   %step.add52 = getelementptr i8, <4 x ptr> %vector.gep, i64 192
   %wide.masked.gather = call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %vector.gep, <4 x i1> splat (i1 true), <4 x double> poison), !tbaa !30
@@ -320,11 +319,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.au = trunc nuw i64 %indvars.iv.next to i32
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19
-  %.011.lcssa = phi i32 [ 0, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19 ], [ %i.au, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19.thread, %._crit_edge.loopexit, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19
+  %3 = phi ptr [ %.pre, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19 ], [ %.pre, %._crit_edge.loopexit ], [ %i.q, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19.thread ]
+  %4 = phi ptr [ %.pre37, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19 ], [ %.pre37, %._crit_edge.loopexit ], [ %i.p, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19.thread ]
+  %.011.lcssa = phi i32 [ 0, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19 ], [ %i.au, %._crit_edge.loopexit ], [ 0, %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19.thread ] ; 2 uses
   %i.av = zext nneg i32 %.011.lcssa to i64
-  %i.aw = ptrtoint ptr %3 to i64
-  %i.ax = ptrtoint ptr %4 to i64
+  %i.aw = ptrtoint ptr %4 to i64
+  %i.ax = ptrtoint ptr %3 to i64
   %i.ay = sub i64 %i.aw, %i.ax
   %i.az = sdiv exact i64 %i.ay, 48
   %i.ba = icmp eq i64 %i.az, %i.av
@@ -356,7 +357,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store float %i.bi, ptr %i.bj, align 4, !tbaa !36
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.028.033, i64 48 ; 2 uses
-  %.not = icmp eq ptr %i.bk, %3
+  %.not = icmp eq ptr %i.bk, %.pre37
   br i1 %.not, label %._crit_edge.loopexit, label %scalar.ph, !llvm.loop !75
 
 bb.f:                                             ; preds = %._crit_edge

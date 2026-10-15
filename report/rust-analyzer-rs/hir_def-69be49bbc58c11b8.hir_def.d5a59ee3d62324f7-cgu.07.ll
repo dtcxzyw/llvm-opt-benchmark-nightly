@@ -205,20 +205,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.i = load i8, ptr %i.h, align 8, !range !20, !noundef !10 ; 2 uses
+  %i.i = load i8, ptr %i.h, align 8, !range !20, !noundef !10
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %4 = load i8, ptr %i.j, align 8, !range !20, !noundef !10 ; 2 uses
-  %5 = sub nsw i8 %i.i, %4
-  %6 = icmp eq i8 %i.i, %4
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 49
-  %.val.a = load i8, ptr %7, align 1, !range !20  ; 2 uses
-  %8 = select i1 %2, i8 %.val.a, i8 %i.g
-  %9 = select i1 %2, i8 %i.g, i8 %.val.a
-  %i.k = sub nsw i8 %8, %9
-  %.sroa.0.0 = select i1 %6, i8 %i.k, i8 %5       ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.l = icmp eq i8 %.sroa.0.0, 0
-  br i1 %i.l, label %bb.g, label %bb.j
+  %.val.a = load i8, ptr %i.j, align 8, !range !20, !noundef !10
+  %i.k = sub nsw i8 %i.i, %.val.a                 ; 2 uses
+  %i.l = icmp eq i8 %i.k, 0
+  br i1 %i.l, label %5, label %.thread37
+
+.thread37:                                        ; preds = %bb.b
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  br label %bb.j
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -262,7 +258,17 @@ bb.f:                                             ; preds = %bb.r
           cleanup
   br label %bb.z
 
-bb.g:                                             ; preds = %bb.b
+5:                                                ; preds = %bb.b
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 49
+  %.val = load i8, ptr %6, align 1, !range !20    ; 2 uses
+  %7 = select i1 %2, i8 %.val, i8 %i.g
+  %8 = select i1 %2, i8 %i.g, i8 %.val
+  %9 = sub nsw i8 %7, %8                          ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %11 = icmp eq i8 %9, 0
+  br i1 %11, label %bb.g, label %bb.j
+
+bb.g:                                             ; preds = %5
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ad = invoke noundef i64 @_RNvMs_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB4_7ModPath3len(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.ac)
           to label %bb.h unwind label %bb.x
@@ -276,8 +282,9 @@ bb.i:                                             ; preds = %bb.h
   %i.ag = tail call i8 @llvm.ucmp.i8.i64(i64 %i.ad, i64 %i.af)
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.b, %bb.i
-  %.sroa.0.1 = phi i8 [ %i.ag, %bb.i ], [ %.sroa.0.0, %bb.b ]
+bb.j:                                             ; preds = %.thread37, %5, %bb.i
+  %12 = phi ptr [ %10, %bb.i ], [ %10, %5 ], [ %4, %.thread37 ] ; 2 uses
+  %.sroa.0.1 = phi i8 [ %i.ag, %bb.i ], [ %9, %5 ], [ %i.k, %.thread37 ]
   %.pre = ptrtoint ptr %3 to i64
   %.pre46 = and i64 %.pre, 1                      ; 3 uses
   switch i8 %.sroa.0.1, label %bb.k [
@@ -353,14 +360,14 @@ bb.p:                                             ; preds = %.noexc10, %bb.m, %b
   br label %bb.z
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECsileJQcQObtj_7hir_def.exit: ; preds = %.noexc11, %._crit_edge
-  call void @_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCs33K2ylI4knu_10hir_expand4name4Namej1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %10)
+  call void @_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCs33K2ylI4knu_10hir_expand4name4Namej1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %12)
   br label %bb.q
 
 bb.q:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsileJQcQObtj_7hir_def9find_path6ChoiceEEB11_.exit, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsileJQcQObtj_7hir_def9find_path6ChoiceEBF_.exit, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECsileJQcQObtj_7hir_def.exit
   ret void
 
 bb.r:                                             ; preds = %bb.n, %bb.o
-  invoke void @_RNvMs_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB4_7ModPath12push_segment(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %10, ptr noundef nonnull %3)
+  invoke void @_RNvMs_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB4_7ModPath12push_segment(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %12, ptr noundef nonnull %3)
           to label %bb.s unwind label %bb.f
 
 bb.s:                                             ; preds = %bb.r
@@ -426,7 +433,8 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsileJQcQObtj_7hir_def9find_path6Cho
 
 bb.z:                                             ; preds = %bb.p, %bb.x, %bb.f
   %.pn7.ph = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.f ], [ %lpad.thr_comm, %bb.x ], [ %i.bb, %bb.p ]
-  invoke void @_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCs33K2ylI4knu_10hir_expand4name4Namej1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %10)
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  invoke void @_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCs33K2ylI4knu_10hir_expand4name4Namej1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %13)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsileJQcQObtj_7hir_def9find_path6ChoiceEBF_.exit15 unwind label %bb.y
 }
 

@@ -205,7 +205,7 @@ _ZNSt6vectorISt4pairIjjESaIS1_EEC2EmRKS1_RKS2_.exit: ; preds = %_ZNSt12_Vector_b
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph690, %bb.an
-  %.sroa.0526.0689 = phi ptr [ %i.ex, %.lr.ph690 ], [ %i.ji, %bb.an ] ; 5 uses
+  %.sroa.0526.0689 = phi ptr [ %i.ex, %.lr.ph690 ], [ %i.ji, %bb.an ] ; 6 uses
   %i.fe = load i32, ptr %.sroa.0526.0689, align 8 ; 2 uses
   %i.ff = zext i32 %i.fe to i64
   %.not325 = icmp ugt i64 %i.fc, %i.ff
@@ -219,7 +219,7 @@ bb.w:                                             ; preds = %bb.v
   invoke void @_ZN6Assimp6Logger5errorEPKc(ptr noundef nonnull align 8 dereferenceable(12) %i.fg, ptr noundef nonnull @.str.41)
           to label %bb.y unwind label %bb.x
 
-bb.x:                                             ; preds = %8, %6, %bb.w, %bb.v
+bb.x:                                             ; preds = %12, %10, %bb.w, %bb.v
   %i.fh = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit412
@@ -231,34 +231,45 @@ bb.y:                                             ; preds = %bb.w, %bb.u
   %i.fk = getelementptr inbounds nuw i8, ptr %.sroa.0526.0689, i64 16 ; 9 uses
   %i.fl = load ptr, ptr %i.fk, align 8            ; 2 uses
   %i.fm = icmp eq ptr %i.fj, %i.fl
-  br i1 %i.fm, label %6, label %bb.z
+  br i1 %i.fm, label %10, label %._crit_edge793
 
-6:                                                ; preds = %bb.y
-  %7 = invoke noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
-          to label %8 unwind label %bb.x
+._crit_edge793:                                   ; preds = %bb.y
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0526.0689, i64 4 ; 2 uses
+  %7 = load i32, ptr %6, align 4
+  %8 = and i32 %7, 32                             ; 2 uses
+  %.not326.not.not.not842 = icmp eq i32 %8, 0
+  %9 = select i1 %.not326.not.not.not842, i32 1, i32 2
+  br label %.lr.ph.preheader
 
-8:                                                ; preds = %6
-  invoke void @_ZN6Assimp6Logger4warnEPKc(ptr noundef nonnull align 8 dereferenceable(12) %7, ptr noundef nonnull @.str.42)
-          to label %._crit_edge793 unwind label %bb.x
+10:                                               ; preds = %bb.y
+  %11 = invoke noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
+          to label %12 unwind label %bb.x
 
-._crit_edge793:                                   ; preds = %8
-  %.pre794 = load ptr, ptr %i.fi, align 8
-  %.pre795 = load ptr, ptr %i.fk, align 8
-  br label %bb.z
+12:                                               ; preds = %10
+  invoke void @_ZN6Assimp6Logger4warnEPKc(ptr noundef nonnull align 8 dereferenceable(12) %11, ptr noundef nonnull @.str.42)
+          to label %bb.z unwind label %bb.x
 
-bb.z:                                             ; preds = %._crit_edge793, %bb.y
-  %9 = phi ptr [ %.pre795, %._crit_edge793 ], [ %i.fl, %bb.y ] ; 2 uses
-  %10 = phi ptr [ %.pre794, %._crit_edge793 ], [ %i.fj, %bb.y ] ; 2 uses
-  %i.fn = getelementptr inbounds nuw i8, ptr %.sroa.0526.0689, i64 4 ; 5 uses
+bb.z:                                             ; preds = %12
+  %.pre794 = load ptr, ptr %i.fi, align 8         ; 2 uses
+  %.pre795 = load ptr, ptr %i.fk, align 8         ; 2 uses
+  %i.fn = getelementptr inbounds nuw i8, ptr %.sroa.0526.0689, i64 4 ; 3 uses
   %i.fo = load i32, ptr %i.fn, align 4
   %i.fp = and i32 %i.fo, 32                       ; 3 uses
   %.not326.not.not.not = icmp eq i32 %i.fp, 0
-  %i.fq = select i1 %.not326.not.not.not, i32 1, i32 2
-  %.not615686 = icmp eq ptr %10, %9
-  br i1 %.not615686, label %._crit_edge, label %.lr.ph
+  %i.fq = select i1 %.not326.not.not.not, i32 1, i32 2 ; 2 uses
+  %.not615686 = icmp eq ptr %.pre794, %.pre795
+  br i1 %.not615686, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.z, %bb.ad
-  %.sroa.0512.0687 = phi ptr [ %i.ga, %bb.ad ], [ %10, %bb.z ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %._crit_edge793, %bb.z
+  %13 = phi i32 [ %9, %._crit_edge793 ], [ %i.fq, %bb.z ]
+  %14 = phi i32 [ %8, %._crit_edge793 ], [ %i.fp, %bb.z ]
+  %15 = phi ptr [ %6, %._crit_edge793 ], [ %i.fn, %bb.z ]
+  %16 = phi ptr [ %i.fj, %._crit_edge793 ], [ %.pre794, %bb.z ]
+  %17 = phi ptr [ %i.fl, %._crit_edge793 ], [ %.pre795, %bb.z ]
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ad
+  %.sroa.0512.0687 = phi ptr [ %i.ga, %bb.ad ], [ %16, %.lr.ph.preheader ] ; 3 uses
   %i.fr = load i32, ptr %.sroa.0512.0687, align 4
   %i.fs = zext i32 %i.fr to i64
   %i.ft = load ptr, ptr %i.d, align 8
@@ -294,10 +305,13 @@ _ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit412.thre
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ac
   %i.ga = getelementptr inbounds nuw i8, ptr %.sroa.0512.0687, i64 12 ; 2 uses
-  %.not615 = icmp eq ptr %i.ga, %9
+  %.not615 = icmp eq ptr %i.ga, %17
   br i1 %.not615, label %._crit_edge, label %.lr.ph, !llvm.loop !54
 
 ._crit_edge:                                      ; preds = %bb.ad, %bb.z
+  %18 = phi i32 [ %i.fq, %bb.z ], [ %13, %bb.ad ]
+  %19 = phi i32 [ %i.fp, %bb.z ], [ %14, %bb.ad ] ; 2 uses
+  %20 = phi ptr [ %i.fn, %bb.z ], [ %15, %bb.ad ] ; 4 uses
   %i.gb = zext i32 %.0262 to i64
   %i.gc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0557.0, i64 %i.gb ; 10 uses
   %i.gd = load i32, ptr %i.gc, align 4            ; 5 uses
@@ -311,7 +325,7 @@ bb.ae:                                            ; preds = %._crit_edge
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %._crit_edge
-  %i.gg = load i32, ptr %i.fn, align 4
+  %i.gg = load i32, ptr %20, align 4
   %i.gh = trunc i32 %i.gg to i8
   %i.gi = and i8 %i.gh, 15
   switch i8 %i.gi, label %bb.aj [
@@ -380,7 +394,7 @@ bb.ai:                                            ; preds = %bb.af
   %i.ia = sdiv exact i64 %i.hz, 12
   %i.ib = trunc i64 %i.ia to i32
   %i.ic = add i32 %i.ib, -2
-  %.lobit = lshr exact i32 %i.fp, 5               ; 2 uses
+  %.lobit = lshr exact i32 %19, 5                 ; 2 uses
   %i.id = shl i32 %i.ic, %.lobit
   %i.ie = add i32 %i.id, %i.gd
   store i32 %i.ie, ptr %i.gc, align 4
@@ -405,19 +419,19 @@ bb.aj:                                            ; preds = %bb.af
           to label %bb.ak unwind label %_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit412.thread
 
 bb.ak:                                            ; preds = %bb.aj
-  invoke void @_ZN6Assimp6Logger4warnIJRA46_KcRjEEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.is, ptr noundef nonnull align 1 dereferenceable(46) @.str.44, ptr noundef nonnull align 4 dereferenceable(4) %i.fn)
+  invoke void @_ZN6Assimp6Logger4warnIJRA46_KcRjEEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.is, ptr noundef nonnull align 1 dereferenceable(46) @.str.44, ptr noundef nonnull align 4 dereferenceable(4) %20)
           to label %bb.al unwind label %_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit412.thread
 
 bb.al:                                            ; preds = %bb.ak
-  %i.it = load i32, ptr %i.fn, align 4
+  %i.it = load i32, ptr %20, align 4
   %i.iu = and i32 %i.it, -16
-  store i32 %i.iu, ptr %i.fn, align 4
+  store i32 %i.iu, ptr %20, align 4
   %.pre796 = load i32, ptr %i.gc, align 4
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.af
   %i.iv = phi i32 [ %.pre796, %bb.al ], [ %i.gd, %bb.af ]
-  %i.iw = add i32 %i.iv, %i.fq
+  %i.iw = add i32 %i.iv, %18
   store i32 %i.iw, ptr %i.gc, align 4
   %i.ix = load ptr, ptr %i.fk, align 8
   %i.iy = load ptr, ptr %i.fi, align 8
@@ -426,7 +440,7 @@ bb.am:                                            ; preds = %bb.al, %bb.af
   %i.jb = sub i64 %i.iz, %i.ja
   %i.jc = sdiv exact i64 %i.jb, 12
   %i.jd = trunc i64 %i.jc to i32
-  %.lobit330 = lshr exact i32 %i.fp, 5
+  %.lobit330 = lshr exact i32 %19, 5
   %i.je = shl i32 %i.jd, %.lobit330
   %i.jf = getelementptr inbounds nuw i8, ptr %i.gc, i64 4 ; 2 uses
   %i.jg = load i32, ptr %i.jf, align 4

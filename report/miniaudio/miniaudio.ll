@@ -205,7 +205,7 @@ ma_node_get_output_channels.exit:                 ; preds = %bb.d, %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 736 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 440
   %.not103 = icmp eq i64 %2, 0
-  br i1 %.not103, label %.loopexit, label %.lr.ph
+  br i1 %.not103, label %ma_silence_pcm_frames.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %ma_node_get_output_channels.exit, %.backedge
   %.068101 = phi i64 [ %.068.be, %.backedge ], [ 0, %ma_node_get_output_channels.exit ] ; 5 uses
@@ -262,7 +262,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   %i.ao = atomicrmw xchg ptr %i.o, i32 1 seq_cst, align 8 ; 0 uses
   %i.ap = trunc nuw i64 %.065 to i32
   %i.aq = load atomic i64, ptr %i.p seq_cst, align 8
-  %i.ar = call fastcc i32 @ma_node_read_pcm_frames(ptr noundef nonnull %i.c, i32 noundef 0, ptr noundef %.1, i32 noundef %i.ap, ptr noundef %i.a, i64 noundef %i.aq) ; 2 uses
+  %i.ar = call fastcc i32 @ma_node_read_pcm_frames(ptr noundef nonnull %i.c, i32 noundef 0, ptr noundef %.1, i32 noundef %i.ap, ptr noundef %i.a, i64 noundef %i.aq) ; 4 uses
   %i.as = atomicrmw xchg ptr %i.o, i32 0 seq_cst, align 8 ; 0 uses
   %i.at = load ptr, ptr %i.m, align 8, !tbaa !955
   %i.au = icmp eq ptr %.1, %i.at
@@ -279,7 +279,7 @@ bb.k:                                             ; preds = %bb.i
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.169 = phi i64 [ %.068101, %bb.j ], [ %i.ax, %bb.k ] ; 3 uses
+  %.169 = phi i64 [ %.068101, %bb.j ], [ %i.ax, %bb.k ] ; 7 uses
   %.not84 = icmp eq i32 %i.ar, 0
   br i1 %.not84, label %select.unfold, label %.thread
 
@@ -295,22 +295,20 @@ select.unfold:                                    ; preds = %bb.l
 .backedge:                                        ; preds = %select.unfold, %.split
   %.068.be = phi i64 [ %.169, %select.unfold ], [ %i.aj, %.split ] ; 3 uses
   %i.az = icmp ult i64 %.068.be, %2
-  br i1 %i.az, label %.lr.ph, label %.loopexit
+  br i1 %i.az, label %.lr.ph, label %ma_silence_pcm_frames.exit
 
-.loopexit:                                        ; preds = %.backedge, %select.unfold, %ma_node_get_output_channels.exit, %.thread
-  %.272 = phi i32 [ %i.ar, %.thread ], [ 0, %ma_node_get_output_channels.exit ], [ 0, %select.unfold ], [ 0, %.backedge ] ; 2 uses
-  %.3 = phi i64 [ %.169, %.thread ], [ 0, %ma_node_get_output_channels.exit ], [ %.068.be, %.backedge ], [ %.169, %select.unfold ] ; 4 uses
-  %i.ba = icmp ult i64 %.3, %2
+.loopexit:                                        ; preds = %select.unfold, %.thread
+  %i.ba = icmp ult i64 %.169, %2
   br i1 %i.ba, label %bb.m, label %ma_silence_pcm_frames.exit
 
 bb.m:                                             ; preds = %.loopexit
-  %i.bb = sub nuw i64 %2, %.3
+  %i.bb = sub nuw i64 %2, %.169
   %i.bc = mul i64 %i.bb, %i.k                     ; 2 uses
   %.not.i13.i = icmp eq i64 %i.bc, 0
   br i1 %.not.i13.i, label %ma_silence_pcm_frames.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.m
-  %i.bd = mul i64 %.3, %i.k
+  %i.bd = mul i64 %.169, %i.k
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 %i.bd
   br label %.lr.ph.i
 
@@ -331,15 +329,17 @@ ma_zero_memory_default.exit.i.i:                  ; preds = %bb.n, %.lr.ph.i
   %.not.i.i = icmp eq i64 %i.bf, 0
   br i1 %.not.i.i, label %ma_silence_pcm_frames.exit, label %.lr.ph.i, !llvm.loop !7
 
-ma_silence_pcm_frames.exit:                       ; preds = %ma_zero_memory_default.exit.i.i, %bb.m, %.loopexit
+ma_silence_pcm_frames.exit:                       ; preds = %.backedge, %ma_zero_memory_default.exit.i.i, %ma_node_get_output_channels.exit, %bb.m, %.loopexit
+  %.394 = phi i64 [ %.169, %ma_zero_memory_default.exit.i.i ], [ %.169, %.loopexit ], [ %.169, %bb.m ], [ 0, %ma_node_get_output_channels.exit ], [ %.068.be, %.backedge ]
+  %.27293 = phi i32 [ %i.ar, %ma_zero_memory_default.exit.i.i ], [ %i.ar, %.loopexit ], [ %i.ar, %bb.m ], [ 0, %ma_node_get_output_channels.exit ], [ 0, %.backedge ] ; 2 uses
   br i1 %.not, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %ma_silence_pcm_frames.exit
-  store i64 %.3, ptr %3, align 8, !tbaa !164
+  store i64 %.394, ptr %3, align 8, !tbaa !164
   br label %bb.p
 
 bb.p:                                             ; preds = %ma_silence_pcm_frames.exit, %bb.o, %bb.c
-  %.073 = phi i32 [ -2, %bb.c ], [ %.272, %bb.o ], [ %.272, %ma_silence_pcm_frames.exit ]
+  %.073 = phi i32 [ -2, %bb.c ], [ %.27293, %bb.o ], [ %.27293, %ma_silence_pcm_frames.exit ]
   ret i32 %.073
 }
 
@@ -437,7 +437,7 @@ ma_node_get_state_time.exit213:                   ; preds = %ma_node_get_state_b
 ma_node_get_output_bus_count.exit.i:              ; preds = %ma_node_get_state_time.exit213
   %spec.select = tail call i32 @llvm.umin.i32(i32 %3, i32 %i.y) ; 4 uses
   %.not.i = icmp ult i32 %1, %.pre349
-  br i1 %.not.i, label %ma_node_get_output_channels.exit, label %ma_node_get_output_bus_count.exit.i216
+  br i1 %.not.i, label %ma_node_get_output_channels.exit, label %ma_node_get_output_channels.exit220
 
 ma_node_get_output_channels.exit:                 ; preds = %ma_node_get_output_bus_count.exit.i
   %i.ad = zext i32 %spec.select to i64
@@ -474,8 +474,8 @@ ma_node_get_output_bus_count.exit.i216.loopexit:  ; preds = %ma_zero_memory_defa
   %.pre = load i32, ptr %i.i, align 4, !tbaa !967
   br label %ma_node_get_output_bus_count.exit.i216
 
-ma_node_get_output_bus_count.exit.i216:           ; preds = %ma_node_get_output_bus_count.exit.i, %ma_node_get_output_bus_count.exit.i216.loopexit, %ma_node_get_output_channels.exit
-  %6 = phi i32 [ %.pre, %ma_node_get_output_bus_count.exit.i216.loopexit ], [ %.pre349, %ma_node_get_output_channels.exit ], [ %.pre349, %ma_node_get_output_bus_count.exit.i ] ; 2 uses
+ma_node_get_output_bus_count.exit.i216:           ; preds = %ma_node_get_output_bus_count.exit.i216.loopexit, %ma_node_get_output_channels.exit
+  %6 = phi i32 [ %.pre, %ma_node_get_output_bus_count.exit.i216.loopexit ], [ %.pre349, %ma_node_get_output_channels.exit ] ; 3 uses
   %.not.i217 = icmp ult i32 %1, %6
   br i1 %.not.i217, label %bb.c, label %ma_node_get_output_channels.exit220
 
@@ -491,14 +491,15 @@ bb.c:                                             ; preds = %ma_node_get_output_
   %i.av = zext i32 %i.au to i64
   br label %ma_node_get_output_channels.exit220
 
-ma_node_get_output_channels.exit220:              ; preds = %ma_node_get_output_bus_count.exit.i216, %bb.c
-  %.0.i218 = phi i64 [ %i.av, %bb.c ], [ 0, %ma_node_get_output_bus_count.exit.i216 ]
+ma_node_get_output_channels.exit220:              ; preds = %ma_node_get_output_bus_count.exit.i, %ma_node_get_output_bus_count.exit.i216, %bb.c
+  %7 = phi i32 [ %6, %bb.c ], [ %6, %ma_node_get_output_bus_count.exit.i216 ], [ %.pre349, %ma_node_get_output_bus_count.exit.i ]
+  %.0.i218 = phi i64 [ %i.av, %bb.c ], [ 0, %ma_node_get_output_bus_count.exit.i216 ], [ 0, %ma_node_get_output_bus_count.exit.i ]
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.0.i218
   %i.ax = sub nuw i32 %3, %spec.select
   br label %ma_node_get_output_bus_count.exit223
 
 ma_node_get_output_bus_count.exit223:             ; preds = %ma_node_get_output_channels.exit220, %ma_node_get_state_time.exit213
-  %i.ay = phi i32 [ %6, %ma_node_get_output_channels.exit220 ], [ %.pre349, %ma_node_get_state_time.exit213 ] ; 3 uses
+  %i.ay = phi i32 [ %7, %ma_node_get_output_channels.exit220 ], [ %.pre349, %ma_node_get_state_time.exit213 ] ; 3 uses
   %.0176 = phi i32 [ %i.ax, %ma_node_get_output_channels.exit220 ], [ %3, %ma_node_get_state_time.exit213 ] ; 2 uses
   %.1170 = phi i32 [ %spec.select, %ma_node_get_output_channels.exit220 ], [ 0, %ma_node_get_state_time.exit213 ]
   %.0164 = phi ptr [ %i.aw, %ma_node_get_output_channels.exit220 ], [ %2, %ma_node_get_state_time.exit213 ] ; 13 uses

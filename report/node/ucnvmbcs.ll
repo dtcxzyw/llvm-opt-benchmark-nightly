@@ -205,11 +205,11 @@ bb.l:                                             ; preds = %.loopexit174.i
   %.promoted.i436 = phi ptr [ %.promoted.i, %.outer.backedge.i ], [ %.promoted.i434, %.loopexit173.i ] ; 3 uses
   %.3142.ph.i435 = phi i32 [ %.3142.ph.be.i, %.outer.backedge.i ], [ %.2141.fr.i, %.loopexit173.i ] ; 2 uses
   %i.jx = icmp ult ptr %.promoted.i436, %i.ae
-  br i1 %i.jx, label %.lr.ph781, label %.loopexit171.split.i
+  br i1 %i.jx, label %.lr.ph781, label %bb.u
 
 .outer.split.i:                                   ; preds = %bb.m
   %i.jy = icmp ult ptr %i.ka, %i.ae
-  br i1 %i.jy, label %.lr.ph781, label %.loopexit171.split.i
+  br i1 %i.jy, label %.lr.ph781, label %bb.u
 
 .lr.ph781:                                        ; preds = %.outer.split.i.preheader, %.outer.split.i
   %i.jz = phi ptr [ %i.ka, %.outer.split.i ], [ %.promoted.i436, %.outer.split.i.preheader ] ; 2 uses
@@ -376,10 +376,10 @@ bb.r:                                             ; preds = %_ZL7_extToUP10UConv
   %spec.select168.i = call i32 @llvm.smin.i32(i32 %i.mr, i32 %i.mp)
   br label %bb.g
 
-.loopexit171.split.i:                             ; preds = %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i, %.loopexit170.i, %.loopexit173.i, %.outer.backedge.i, %.outer.split.i.preheader, %.outer.split.i
-  %2 = phi ptr [ %.promoted.i, %.outer.backedge.i ], [ %i.ka, %.outer.split.i ], [ %.promoted.i436, %.outer.split.i.preheader ], [ %i.ma, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.promoted.i434, %.loopexit173.i ], [ %.pre.pre.i, %.loopexit170.i ] ; 3 uses
-  %.3147.i = phi ptr [ %.2146.i, %.outer.backedge.i ], [ %.2146.i, %.outer.split.i ], [ %.2146.i, %.outer.split.i.preheader ], [ %.pre.pre.i, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.2146.i, %.loopexit173.i ], [ %.2146.i, %.loopexit170.i ]
-  %.6.i = phi i32 [ %.3.i, %.outer.backedge.i ], [ %.3.i, %.outer.split.i ], [ %.3.i, %.outer.split.i.preheader ], [ %i.mg, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.3.i, %.loopexit173.i ], [ %.5.i, %.loopexit170.i ] ; 2 uses
+.loopexit171.split.i:                             ; preds = %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i, %.loopexit170.i, %.loopexit173.i, %.outer.backedge.i
+  %2 = phi ptr [ %.promoted.i, %.outer.backedge.i ], [ %.promoted.i434, %.loopexit173.i ], [ %i.ma, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.pre.pre.i, %.loopexit170.i ] ; 4 uses
+  %.3147.i = phi ptr [ %.2146.i, %.outer.backedge.i ], [ %.2146.i, %.loopexit173.i ], [ %.pre.pre.i, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.2146.i, %.loopexit170.i ] ; 3 uses
+  %.6.i = phi i32 [ %.3.i, %.outer.backedge.i ], [ %.3.i, %.loopexit173.i ], [ %i.mg, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.5.i, %.loopexit170.i ] ; 3 uses
   %i.ms = load i32, ptr %1, align 4
   %i.mt = icmp slt i32 %i.ms, 1
   %i.mu = icmp ult ptr %2, %i.ae
@@ -396,11 +396,14 @@ bb.t:                                             ; preds = %bb.s
   store i32 15, ptr %1, align 4
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.t, %bb.s, %.loopexit171.split.i
+bb.u:                                             ; preds = %.outer.split.i.preheader, %.outer.split.i, %bb.t, %bb.s, %.loopexit171.split.i
+  %.6238.i = phi i32 [ %.6.i, %.loopexit171.split.i ], [ %.6.i, %bb.t ], [ %.6.i, %bb.s ], [ %.3.i, %.outer.split.i ], [ %.3.i, %.outer.split.i.preheader ] ; 2 uses
+  %.3147237.i = phi ptr [ %.3147.i, %.loopexit171.split.i ], [ %.3147.i, %bb.t ], [ %.3147.i, %bb.s ], [ %.2146.i, %.outer.split.i ], [ %.2146.i, %.outer.split.i.preheader ]
+  %3 = phi ptr [ %2, %.loopexit171.split.i ], [ %2, %bb.t ], [ %2, %bb.s ], [ %i.ka, %.outer.split.i ], [ %.promoted.i436, %.outer.split.i.preheader ] ; 2 uses
   %i.mx = load ptr, ptr %i.f, align 8             ; 2 uses
   %.not166.i = icmp eq ptr %i.mx, null
-  %i.my = ptrtoint ptr %2 to i64                  ; 2 uses
-  %i.mz = ptrtoint ptr %.3147.i to i64            ; 2 uses
+  %i.my = ptrtoint ptr %3 to i64                  ; 2 uses
+  %i.mz = ptrtoint ptr %.3147237.i to i64         ; 2 uses
   %i.na = sub i64 %i.my, %i.mz                    ; 4 uses
   %.not167194.i = icmp eq i64 %i.na, 0
   %or.cond205.i = select i1 %.not166.i, i1 true, i1 %.not167194.i
@@ -413,7 +416,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %.loop
 
 .lr.ph197.i.prol:                                 ; preds = %.lr.ph197.i.preheader, %.lr.ph197.i.prol
   %.0196.i.prol = phi i64 [ %i.ne, %.lr.ph197.i.prol ], [ %i.na, %.lr.ph197.i.preheader ]
-  %.7195.i.prol = phi i32 [ %i.nb, %.lr.ph197.i.prol ], [ %.6.i, %.lr.ph197.i.preheader ] ; 2 uses
+  %.7195.i.prol = phi i32 [ %i.nb, %.lr.ph197.i.prol ], [ %.6238.i, %.lr.ph197.i.preheader ] ; 2 uses
   %prol.iter887 = phi i64 [ %prol.iter887.next, %.lr.ph197.i.prol ], [ 0, %.lr.ph197.i.preheader ]
   %i.nb = add nsw i32 %.7195.i.prol, 1            ; 2 uses
   %i.nc = load ptr, ptr %i.f, align 8             ; 2 uses
@@ -427,7 +430,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %.loop
 
 .lr.ph197.i.prol.loopexit:                        ; preds = %.lr.ph197.i.prol, %.lr.ph197.i.preheader
   %.0196.i.unr = phi i64 [ %i.na, %.lr.ph197.i.preheader ], [ %i.ne, %.lr.ph197.i.prol ]
-  %.7195.i.unr = phi i32 [ %.6.i, %.lr.ph197.i.preheader ], [ %i.nb, %.lr.ph197.i.prol ]
+  %.7195.i.unr = phi i32 [ %.6238.i, %.lr.ph197.i.preheader ], [ %i.nb, %.lr.ph197.i.prol ]
   %i.nf = sub i64 %i.mz, %i.my
   %i.ng = icmp ugt i64 %i.nf, -4
   br i1 %i.ng, label %.loopexit.loopexit.i, label %.lr.ph197.i
@@ -466,7 +469,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %.loop
 
 _ZL31ucnv_MBCSSingleToBMPWithOffsetsP23UConverterToUnicodeArgsP10UErrorCode.exit: ; preds = %bb.u, %.loopexit.loopexit.i
   %i.nu = phi ptr [ %.pre224.i, %.loopexit.loopexit.i ], [ %i.mx, %bb.u ]
-  %i.nv = phi ptr [ %.pre223.i, %.loopexit.loopexit.i ], [ %2, %bb.u ]
+  %i.nv = phi ptr [ %.pre223.i, %.loopexit.loopexit.i ], [ %3, %bb.u ]
   store ptr %i.nv, ptr %i.aa, align 8
   %i.nw = load ptr, ptr %i.e, align 8
   store ptr %i.nw, ptr %i.af, align 8

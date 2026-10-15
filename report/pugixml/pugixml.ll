@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.loopexit, %bb.c
-  %.062 = phi i32 [ %4, %bb.c ], [ %.365, %.loopexit ] ; 6 uses
+  %.062 = phi i32 [ %4, %bb.c ], [ %.365, %.loopexit ] ; 5 uses
   %.059 = phi i32 [ 2, %bb.c ], [ %.5, %.loopexit ] ; 2 uses
-  %.0 = phi ptr [ %1, %bb.c ], [ %.2, %.loopexit ] ; 14 uses
+  %.0 = phi ptr [ %1, %bb.c ], [ %.2, %.loopexit ] ; 13 uses
   %i.k = load i64, ptr %.0, align 8, !tbaa !117
   %i.l = trunc i64 %i.k to i32
   %i.m = and i32 %i.l, 15
@@ -498,7 +498,7 @@ bb.ah:                                            ; preds = %bb.k
 bb.ai:                                            ; preds = %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread99, %bb.ag, %bb.ah, %bb.e
   %.261 = phi i32 [ 0, %bb.e ], [ 3, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread99 ], [ 2, %bb.ag ], [ 3, %bb.ah ] ; 2 uses
   %.not75106 = icmp eq ptr %.0, %1
-  br i1 %.not75106, label %.loopexit, label %.lr.ph
+  br i1 %.not75106, label %bb.ay, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ai, %bb.ax
   %.1109 = phi ptr [ %i.ck, %bb.ax ], [ %.0, %bb.ai ] ; 2 uses
@@ -511,7 +511,7 @@ bb.ai:                                            ; preds = %_ZN4pugi4impl12_GLO
 
 bb.aj:                                            ; preds = %.lr.ph
   %i.cj = getelementptr inbounds nuw i8, ptr %.1109, i64 24
-  %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !122 ; 5 uses
+  %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !122 ; 4 uses
   %i.cl = load i64, ptr %i.ck, align 8, !tbaa !117
   %i.cm = and i64 %i.cl, 15
   %i.cn = icmp eq i64 %i.cm, 2
@@ -730,20 +730,21 @@ _ZN4pugi4impl12_GLOBAL__N_115node_output_endERNS1_19xml_buffered_writerEPNS_15xm
   br label %bb.ax
 
 bb.ax:                                            ; preds = %_ZN4pugi4impl12_GLOBAL__N_115node_output_endERNS1_19xml_buffered_writerEPNS_15xml_node_structE.exit, %bb.aj
-  %.264 = phi i32 [ %i.co, %_ZN4pugi4impl12_GLOBAL__N_115node_output_endERNS1_19xml_buffered_writerEPNS_15xml_node_structE.exit ], [ %.163107, %bb.aj ] ; 2 uses
+  %.264 = phi i32 [ %i.co, %_ZN4pugi4impl12_GLOBAL__N_115node_output_endERNS1_19xml_buffered_writerEPNS_15xml_node_structE.exit ], [ %.163107, %bb.aj ]
   %.4 = phi i32 [ 3, %_ZN4pugi4impl12_GLOBAL__N_115node_output_endERNS1_19xml_buffered_writerEPNS_15xml_node_structE.exit ], [ %.3108, %bb.aj ] ; 2 uses
   %.not75 = icmp eq ptr %i.ck, %1
-  br i1 %.not75, label %.loopexit, label %.lr.ph, !llvm.loop !385
+  br i1 %.not75, label %bb.ay, label %.lr.ph, !llvm.loop !385
 
-.loopexit:                                        ; preds = %bb.ax, %.lr.ph, %bb.ai, %bb.ag, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread
-  %.365 = phi i32 [ %.062, %bb.ag ], [ %i.ce, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread ], [ %.062, %bb.ai ], [ %.264, %bb.ax ], [ %.163107, %.lr.ph ]
-  %.5 = phi i32 [ 2, %bb.ag ], [ %spec.select, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread ], [ %.261, %bb.ai ], [ %.4, %bb.ax ], [ %.3108, %.lr.ph ] ; 2 uses
-  %.2 = phi ptr [ %i.cg, %bb.ag ], [ %i.cc, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread ], [ %.0, %bb.ai ], [ %i.ck, %bb.ax ], [ %i.ci, %.lr.ph ] ; 2 uses
+.loopexit:                                        ; preds = %.lr.ph, %bb.ag, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread
+  %.365 = phi i32 [ %.062, %bb.ag ], [ %i.ce, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread ], [ %.163107, %.lr.ph ]
+  %.5 = phi i32 [ 2, %bb.ag ], [ %spec.select, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread ], [ %.3108, %.lr.ph ] ; 2 uses
+  %.2 = phi ptr [ %i.cg, %bb.ag ], [ %i.cc, %_ZN4pugi4impl12_GLOBAL__N_117node_output_startERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcmjj.exit.thread ], [ %i.ci, %.lr.ph ] ; 2 uses
   %.not78 = icmp eq ptr %.2, %1
   br i1 %.not78, label %bb.ay, label %bb.d, !llvm.loop !386
 
-bb.ay:                                            ; preds = %.loopexit
-  %.not79 = trunc i32 %.5 to i1
+bb.ay:                                            ; preds = %.loopexit, %bb.ai, %bb.ax
+  %.5106 = phi i32 [ %.4, %bb.ax ], [ %.261, %bb.ai ], [ %.5, %.loopexit ]
+  %.not79 = trunc i32 %.5106 to i1
   %or.cond87 = and i1 %i.c, %.not79
   br i1 %or.cond87, label %bb.az, label %bb.bb
 
@@ -1146,7 +1147,7 @@ bb.ab:                                            ; preds = %_ZNK4pugi10xpath_no
 _ZNK4pugi10xpath_node6parentEv.exit61:            ; preds = %bb.ab
   %.sroa.0.0.copyload.i57 = load ptr, ptr %1, align 8, !tbaa !115 ; 2 uses
   %i.cj = icmp eq ptr %.sroa.0.0.copyload.i81, %.sroa.0.0.copyload.i57
-  br i1 %i.cj, label %.lr.ph, label %_ZNK4pugi10xpath_node6parentEv.exit77
+  br i1 %i.cj, label %.lr.ph, label %bb.ad
 
 .lr.ph:                                           ; preds = %_ZNK4pugi10xpath_node6parentEv.exit61, %_ZNK4pugi13xml_attribute14next_attributeEv.exit
   %storemerge41 = phi ptr [ %i.cn, %_ZNK4pugi13xml_attribute14next_attributeEv.exit ], [ %.sroa.0.0.copyload.i, %_ZNK4pugi10xpath_node6parentEv.exit61 ] ; 2 uses
@@ -1180,25 +1181,27 @@ _ZNK4pugi10xpath_node4nodeEv.exit105:             ; preds = %bb.ac
   %i.ct = icmp eq ptr %.sroa.0.0.copyload.i98, %i.cs
   br i1 %i.ct, label %_ZN4pugi4impl12_GLOBAL__N_114node_is_beforeEPNS_15xml_node_structES3_.exit, label %_ZNK4pugi10xpath_node6parentEv.exit77
 
-_ZNK4pugi10xpath_node6parentEv.exit77:            ; preds = %_ZNK4pugi10xpath_node4nodeEv.exit105, %_ZNK4pugi10xpath_node4nodeEv.exit88, %_ZNK4pugi10xpath_node6parentEv.exit61, %bb.ac
-  %.sroa.014.0 = phi ptr [ %i.ci, %bb.ac ], [ %i.ci, %_ZNK4pugi10xpath_node4nodeEv.exit88 ], [ %.sroa.0.0.copyload.i57, %_ZNK4pugi10xpath_node6parentEv.exit61 ], [ %.sroa.0.0.copyload.i98, %_ZNK4pugi10xpath_node4nodeEv.exit105 ] ; 6 uses
-  %.sroa.018.0 = phi ptr [ %i.ce, %bb.ac ], [ %.sroa.0.0.copyload.i81, %_ZNK4pugi10xpath_node4nodeEv.exit88 ], [ %.sroa.0.0.copyload.i81, %_ZNK4pugi10xpath_node6parentEv.exit61 ], [ %i.ce, %_ZNK4pugi10xpath_node4nodeEv.exit105 ] ; 6 uses
+_ZNK4pugi10xpath_node6parentEv.exit77:            ; preds = %_ZNK4pugi10xpath_node4nodeEv.exit105, %_ZNK4pugi10xpath_node4nodeEv.exit88, %bb.ac
+  %.sroa.014.0 = phi ptr [ %i.ci, %bb.ac ], [ %i.ci, %_ZNK4pugi10xpath_node4nodeEv.exit88 ], [ %.sroa.0.0.copyload.i98, %_ZNK4pugi10xpath_node4nodeEv.exit105 ] ; 2 uses
+  %.sroa.018.0 = phi ptr [ %i.ce, %bb.ac ], [ %.sroa.0.0.copyload.i81, %_ZNK4pugi10xpath_node4nodeEv.exit88 ], [ %i.ce, %_ZNK4pugi10xpath_node4nodeEv.exit105 ] ; 2 uses
   %i.cu = icmp eq ptr %.sroa.018.0, %.sroa.014.0
   br i1 %i.cu, label %_ZN4pugi4impl12_GLOBAL__N_114node_is_beforeEPNS_15xml_node_structES3_.exit, label %bb.ad
 
-bb.ad:                                            ; preds = %_ZNK4pugi10xpath_node6parentEv.exit77
-  %.not.i112 = icmp eq ptr %.sroa.018.0, null
-  %.not.i113 = icmp eq ptr %.sroa.014.0, null
+bb.ad:                                            ; preds = %_ZNK4pugi10xpath_node6parentEv.exit61, %_ZNK4pugi10xpath_node6parentEv.exit77
+  %.sroa.018.080 = phi ptr [ %.sroa.018.0, %_ZNK4pugi10xpath_node6parentEv.exit77 ], [ %.sroa.0.0.copyload.i81, %_ZNK4pugi10xpath_node6parentEv.exit61 ] ; 5 uses
+  %.sroa.014.079 = phi ptr [ %.sroa.014.0, %_ZNK4pugi10xpath_node6parentEv.exit77 ], [ %.sroa.0.0.copyload.i57, %_ZNK4pugi10xpath_node6parentEv.exit61 ] ; 5 uses
+  %.not.i112 = icmp eq ptr %.sroa.018.080, null
+  %.not.i113 = icmp eq ptr %.sroa.014.079, null
   %or.cond24 = or i1 %.not.i113, %.not.i112
   br i1 %or.cond24, label %bb.ae, label %.preheader
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cv = icmp ult ptr %.sroa.018.0, %.sroa.014.0
+  %i.cv = icmp ult ptr %.sroa.018.080, %.sroa.014.079
   br label %_ZN4pugi4impl12_GLOBAL__N_114node_is_beforeEPNS_15xml_node_structES3_.exit
 
 .preheader:                                       ; preds = %bb.ad, %bb.af
-  %.031.i = phi ptr [ %i.cz, %bb.af ], [ %.sroa.018.0, %bb.ad ] ; 6 uses
-  %.0.i = phi ptr [ %i.db, %bb.af ], [ %.sroa.014.0, %bb.ad ] ; 6 uses
+  %.031.i = phi ptr [ %i.cz, %bb.af ], [ %.sroa.018.080, %bb.ad ] ; 6 uses
+  %.0.i = phi ptr [ %i.db, %bb.af ], [ %.sroa.014.079, %bb.ad ] ; 6 uses
   %i.cw = icmp ne ptr %.031.i, null               ; 3 uses
   %i.cx = icmp ne ptr %.0.i, null                 ; 2 uses
   %or.cond.i114 = and i1 %i.cw, %i.cx
@@ -1247,12 +1250,12 @@ bb.ah:                                            ; preds = %.lr.ph.i.i
   br i1 %i.cw, label %.lr.ph.i, label %.preheader59.i
 
 .preheader59.i:                                   ; preds = %.lr.ph.i, %.critedge46.i
-  %.035.lcssa.i = phi ptr [ %.sroa.018.0, %.critedge46.i ], [ %i.dr, %.lr.ph.i ] ; 2 uses
+  %.035.lcssa.i = phi ptr [ %.sroa.018.080, %.critedge46.i ], [ %i.dr, %.lr.ph.i ] ; 2 uses
   br i1 %i.cx, label %.lr.ph73.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.critedge46.i, %.lr.ph.i
   %.13269.i = phi ptr [ %i.dp, %.lr.ph.i ], [ %.031.i, %.critedge46.i ]
-  %.03568.i = phi ptr [ %i.dr, %.lr.ph.i ], [ %.sroa.018.0, %.critedge46.i ]
+  %.03568.i = phi ptr [ %i.dr, %.lr.ph.i ], [ %.sroa.018.080, %.critedge46.i ]
   %i.do = getelementptr inbounds nuw i8, ptr %.13269.i, i64 24
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !122 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.03568.i, i64 24
@@ -1262,7 +1265,7 @@ bb.ah:                                            ; preds = %.lr.ph.i.i
 
 .lr.ph73.i:                                       ; preds = %.preheader59.i, %.lr.ph73.i
   %.172.i = phi ptr [ %i.dt, %.lr.ph73.i ], [ %.0.i, %.preheader59.i ]
-  %.03371.i = phi ptr [ %i.dv, %.lr.ph73.i ], [ %.sroa.014.0, %.preheader59.i ]
+  %.03371.i = phi ptr [ %i.dv, %.lr.ph73.i ], [ %.sroa.014.079, %.preheader59.i ]
   %i.ds = getelementptr inbounds nuw i8, ptr %.172.i, i64 24
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !122 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.03371.i, i64 24
@@ -1271,7 +1274,7 @@ bb.ah:                                            ; preds = %.lr.ph.i.i
   br i1 %.not44.i, label %._crit_edge.i, label %.lr.ph73.i, !llvm.loop !653
 
 ._crit_edge.i:                                    ; preds = %.lr.ph73.i, %.preheader59.i
-  %.033.lcssa.i = phi ptr [ %.sroa.014.0, %.preheader59.i ], [ %i.dv, %.lr.ph73.i ] ; 2 uses
+  %.033.lcssa.i = phi ptr [ %.sroa.014.079, %.preheader59.i ], [ %i.dv, %.lr.ph73.i ] ; 2 uses
   %i.dw = icmp eq ptr %.035.lcssa.i, %.033.lcssa.i
   br i1 %i.dw, label %_ZN4pugi4impl12_GLOBAL__N_114node_is_beforeEPNS_15xml_node_structES3_.exit, label %.preheader.i
 

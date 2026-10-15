@@ -192,7 +192,7 @@ inBoxf.exit.i:                                    ; preds = %bb.o
   br i1 %i.ce, label %.sink.split.i, label %bb.p
 
 bb.p:                                             ; preds = %inBoxf.exit.i
-  %i.cf = load ptr, ptr %i.as, align 8, !tbaa !56 ; 2 uses
+  %i.cf = load ptr, ptr %i.as, align 8, !tbaa !56 ; 3 uses
   %i.cg = load double, ptr %i.cf, align 8         ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
   %i.ci = load double, ptr %i.ch, align 8         ; 3 uses
@@ -208,7 +208,7 @@ bb.p:                                             ; preds = %inBoxf.exit.i
 .preheader270.i:                                  ; preds = %bb.p
   %i.co = add i64 %i.au, -1                       ; 5 uses
   %.not287.i = icmp eq i64 %i.co, 0
-  br i1 %.not287.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not287.i, label %bb.t, label %.lr.ph.i
 
 bb.q:                                             ; preds = %bb.p
   %i.cp = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
@@ -286,16 +286,20 @@ bb.s:                                             ; preds = %.lr.ph.i
   %i.eh = icmp ult i64 %i.eg, %i.co
   br i1 %i.eh, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !19
 
-._crit_edge.i:                                    ; preds = %bb.s, %.lr.ph.i, %.preheader270.i
-  %.1204.lcssa.i = phi i64 [ 0, %.preheader270.i ], [ %i.eg, %bb.s ], [ %.1204272.i, %.lr.ph.i ] ; 3 uses
+._crit_edge.i:                                    ; preds = %bb.s, %.lr.ph.i
+  %.1204.lcssa.i = phi i64 [ %.1204272.i, %.lr.ph.i ], [ %i.eg, %bb.s ] ; 3 uses
   %i.ei = icmp eq i64 %.1204.lcssa.i, %i.co
-  br i1 %i.ei, label %bb.t, label %bb.u
+  br i1 %i.ei, label %._crit_edge.i.._crit_edge.thread.i_crit_edge, label %bb.u
 
-bb.t:                                             ; preds = %._crit_edge.i
-  %3 = getelementptr inbounds nuw i8, ptr %i.as, i64 40
-  %4 = load ptr, ptr %i.as, align 8, !tbaa !56
-  %i.ej = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.co ; 2 uses
-  %i.ek = load double, ptr %3, align 8
+._crit_edge.i.._crit_edge.thread.i_crit_edge:     ; preds = %._crit_edge.i
+  %.pre = load ptr, ptr %i.as, align 8, !tbaa !56
+  br label %bb.t
+
+bb.t:                                             ; preds = %._crit_edge.i.._crit_edge.thread.i_crit_edge, %.preheader270.i
+  %3 = phi ptr [ %.pre, %._crit_edge.i.._crit_edge.thread.i_crit_edge ], [ %i.cf, %.preheader270.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 40
+  %i.ej = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.co ; 2 uses
+  %i.ek = load double, ptr %4, align 8
   %i.el = getelementptr inbounds nuw i8, ptr %i.as, i64 48
   %i.em = load double, ptr %i.el, align 8
   %i.en = load double, ptr %i.ej, align 8

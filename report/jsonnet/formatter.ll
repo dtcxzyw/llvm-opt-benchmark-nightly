@@ -204,27 +204,23 @@ declare void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev(pt
 define linkonce_odr dso_local void @_ZN7jsonnet8internal9AllocatorD2Ev(ptr noundef nonnull align 8 dead_on_return(120) dereferenceable(120) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 12 uses
-  %.sroa.024.029 = load ptr, ptr %i.a, align 8, !tbaa !76 ; 3 uses
+  %.sroa.024.029 = load ptr, ptr %i.a, align 8, !tbaa !76 ; 2 uses
   %.not30 = icmp eq ptr %.sroa.024.029, %i.a
-  br i1 %.not30, label %._crit_edge, label %.lr.ph
+  br i1 %.not30, label %_ZNSt7__cxx114listIPN7jsonnet8internal3ASTESaIS4_EE5clearEv.exit, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %bb.c
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !76
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %1 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.sroa.024.029, %bb.a ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %1, %i.a
+._crit_edge:                                      ; preds = %bb.c
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !76  ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre, %i.a
   br i1 %.not8.i.i, label %_ZNSt7__cxx114listIPN7jsonnet8internal3ASTESaIS4_EE5clearEv.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge, %.lr.ph.i.i
-  %.09.i.i = phi ptr [ %i.b, %.lr.ph.i.i ], [ %1, %._crit_edge ] ; 2 uses
+  %.09.i.i = phi ptr [ %i.b, %.lr.ph.i.i ], [ %.pre, %._crit_edge ] ; 2 uses
   %i.b = load ptr, ptr %.09.i.i, align 8, !tbaa !76 ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #28
   %.not.i.i = icmp eq ptr %i.b, %i.a
   br i1 %.not.i.i, label %_ZNSt7__cxx114listIPN7jsonnet8internal3ASTESaIS4_EE5clearEv.exit, label %.lr.ph.i.i, !llvm.loop !343
 
-_ZNSt7__cxx114listIPN7jsonnet8internal3ASTESaIS4_EE5clearEv.exit: ; preds = %.lr.ph.i.i, %._crit_edge
+_ZNSt7__cxx114listIPN7jsonnet8internal3ASTESaIS4_EE5clearEv.exit: ; preds = %.lr.ph.i.i, %bb.a, %._crit_edge
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
   store ptr %i.a, ptr %i.c, align 8, !tbaa !75
   store ptr %i.a, ptr %i.a, align 8, !tbaa !76
@@ -253,7 +249,7 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %bb.b, %.lr.ph
   %.sroa.024.0 = load ptr, ptr %.sroa.024.031, align 8, !tbaa !76 ; 2 uses
   %.not = icmp eq ptr %.sroa.024.0, %i.a
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge35:                                    ; preds = %bb.f, %_ZNSt7__cxx114listIPN7jsonnet8internal3ASTESaIS4_EE5clearEv.exit
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses

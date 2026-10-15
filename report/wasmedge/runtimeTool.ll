@@ -205,6 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit30.i: ; preds = %b
   br label %.body
 
 ._crit_edge.thread.i:                             ; preds = %bb.gn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i304, %._crit_edge.i
+  %.3.i444 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i304 ], [ false, %._crit_edge.i ], [ true, %bb.gn ] ; 2 uses
   %.345.i = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i304 ], [ false, %._crit_edge.i ], [ true, %bb.gn ] ; 2 uses
   %i.xa = phi ptr [ %.pre23.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i304 ], [ %i.va, %._crit_edge.i ], [ %i.va, %bb.gn ] ; 2 uses
   %i.xb = phi ptr [ %.pre.i305, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i304 ], [ %i.uy, %._crit_edge.i ], [ %i.uy, %bb.gn ] ; 3 uses
@@ -233,8 +234,9 @@ _ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8W
   %.pr.i.i = load ptr, ptr %2, align 8, !tbaa !89
   br label %_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exit.i.i
 
-_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exit.i.i: ; preds = %_ZNK8WasmEdge2VM2VM15getFunctionListB5cxx11Ev.exit.i, %_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exitthread-pre-split.i.i, %._crit_edge.thread.i
+_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exit.i.i: ; preds = %_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exitthread-pre-split.i.i, %._crit_edge.thread.i, %_ZNK8WasmEdge2VM2VM15getFunctionListB5cxx11Ev.exit.i
   %.345.i587 = phi i1 [ %.345.i, %_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exitthread-pre-split.i.i ], [ %.345.i, %._crit_edge.thread.i ], [ false, %_ZNK8WasmEdge2VM2VM15getFunctionListB5cxx11Ev.exit.i ]
+  %.34549.i = phi i1 [ %.3.i444, %_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exitthread-pre-split.i.i ], [ %.3.i444, %._crit_edge.thread.i ], [ false, %_ZNK8WasmEdge2VM2VM15getFunctionListB5cxx11Ev.exit.i ]
   %i.xi = phi ptr [ %.pr.i.i, %_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exitthread-pre-split.i.i ], [ %i.xb, %._crit_edge.thread.i ], [ %i.uy, %_ZNK8WasmEdge2VM2VM15getFunctionListB5cxx11Ev.exit.i ] ; 3 uses
   %.not.i.i1.i.i = icmp eq ptr %i.xi, null
   br i1 %.not.i.i1.i.i, label %"_ZZN8WasmEdge6Driver4ToolERNS0_17DriverToolOptionsEENK3$_0clEv.exit", label %bb.gv
@@ -249,11 +251,12 @@ bb.gv:                                            ; preds = %_ZSt8_DestroyIPSt4p
   br label %"_ZZN8WasmEdge6Driver4ToolERNS0_17DriverToolOptionsEENK3$_0clEv.exit"
 
 "_ZZN8WasmEdge6Driver4ToolERNS0_17DriverToolOptionsEENK3$_0clEv.exit": ; preds = %_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN8WasmEdge3AST12FunctionTypeEESC_EvT_SE_RSaIT0_E.exit.i.i, %bb.gv
+  %41 = and i1 %.345.i587, %.34549.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
   br label %bb.gw
 
 bb.gw:                                            ; preds = %"_ZZN8WasmEdge6Driver4ToolERNS0_17DriverToolOptionsEENK3$_0clEv.exit", %bb.gk
-  %i.xo = phi i1 [ false, %bb.gk ], [ %.345.i587, %"_ZZN8WasmEdge6Driver4ToolERNS0_17DriverToolOptionsEENK3$_0clEv.exit" ]
+  %i.xo = phi i1 [ false, %bb.gk ], [ %41, %"_ZZN8WasmEdge6Driver4ToolERNS0_17DriverToolOptionsEENK3$_0clEv.exit" ]
   %i.xp = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.xq = load ptr, ptr %i.xp, align 8, !tbaa !92 ; 2 uses
   %i.xr = getelementptr inbounds nuw i8, ptr %0, i64 272
@@ -656,13 +659,13 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.ag, label %bb.h, label %bb.p
 
 bb.h:                                             ; preds = %bb.g
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 5 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   store ptr %4, ptr %5, align 8, !tbaa !564
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %3, ptr %i.ai, align 8, !tbaa !565
   %.not = icmp eq ptr %i.ah, %1
-  br i1 %.not, label %_ZN3fmt3v116detail12parse_arg_idIcRNS1_23dynamic_spec_id_handlerIcEEEEPKT_S8_S8_OT0_.exit, label %bb.i
+  br i1 %.not, label %bb.o, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.aj = load i8, ptr %i.ah, align 1, !tbaa !61
@@ -693,8 +696,8 @@ _ZN3fmt3v116detail23dynamic_spec_id_handlerIcE7on_autoEv.exit.i: ; preds = %bb.k
   store i32 %i.am, ptr %.sroa.42.0..sroa_idx.i.i, align 8
   br label %_ZN3fmt3v116detail12parse_arg_idIcRNS1_23dynamic_spec_id_handlerIcEEEEPKT_S8_S8_OT0_.exit
 
-_ZN3fmt3v116detail12parse_arg_idIcRNS1_23dynamic_spec_id_handlerIcEEEEPKT_S8_S8_OT0_.exit: ; preds = %_ZN3fmt3v116detail23dynamic_spec_id_handlerIcE7on_autoEv.exit.i, %bb.j, %bb.h
-  %.022 = phi ptr [ %i.ah, %bb.h ], [ %i.ak, %bb.j ], [ %i.ah, %_ZN3fmt3v116detail23dynamic_spec_id_handlerIcE7on_autoEv.exit.i ] ; 3 uses
+_ZN3fmt3v116detail12parse_arg_idIcRNS1_23dynamic_spec_id_handlerIcEEEEPKT_S8_S8_OT0_.exit: ; preds = %_ZN3fmt3v116detail23dynamic_spec_id_handlerIcE7on_autoEv.exit.i, %bb.j
+  %.022 = phi ptr [ %i.ah, %_ZN3fmt3v116detail23dynamic_spec_id_handlerIcE7on_autoEv.exit.i ], [ %i.ak, %bb.j ] ; 3 uses
   %.not15 = icmp eq ptr %.022, %1
   br i1 %.not15, label %bb.o, label %bb.m
 
@@ -708,7 +711,7 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   br label %bb.p
 
-bb.o:                                             ; preds = %bb.m, %_ZN3fmt3v116detail12parse_arg_idIcRNS1_23dynamic_spec_id_handlerIcEEEEPKT_S8_S8_OT0_.exit
+bb.o:                                             ; preds = %bb.h, %bb.m, %_ZN3fmt3v116detail12parse_arg_idIcRNS1_23dynamic_spec_id_handlerIcEEEEPKT_S8_S8_OT0_.exit
   call void @_ZN3fmt3v1112report_errorEPKc(ptr noundef nonnull @.str.43) #27
   unreachable
 

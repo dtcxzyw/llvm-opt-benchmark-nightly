@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %i.ah = zext i16 %.fr to i32                    ; 2 uses
   %i.ai = and i32 %i.ah, 8192
   %.not186 = icmp eq i32 %i.ai, 0
-  %i.aj = getelementptr inbounds nuw i8, ptr %.0164, i64 1 ; 9 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %.0164, i64 1 ; 7 uses
   br i1 %.not186, label %bb.j, label %bb.i, !llvm.loop !103
 
 bb.j:                                             ; preds = %bb.i
@@ -296,12 +296,12 @@ bb.u:                                             ; preds = %bb.t
 
 .preheader249:                                    ; preds = %bb.u
   %i.be = icmp ult ptr %i.aj, %i.ak
-  br i1 %i.be, label %.lr.ph, label %.loopexit
+  br i1 %i.be, label %.lr.ph, label %bb.ab
 
 .preheader:                                       ; preds = %bb.t, %bb.u
   %.pre-phi304 = phi i32 [ %.pre, %bb.u ], [ %i.ba, %bb.t ] ; 3 uses
   %i.bf = icmp ult ptr %i.aj, %i.ak
-  br i1 %i.bf, label %.lr.ph263, label %.loopexit
+  br i1 %i.bf, label %.lr.ph263, label %bb.ab
 
 .lr.ph263:                                        ; preds = %.preheader, %bb.w
   %.0161262 = phi ptr [ %i.bl, %bb.w ], [ %i.aj, %.preheader ] ; 4 uses
@@ -318,9 +318,9 @@ bb.v:                                             ; preds = %.lr.ph263
 
 bb.w:                                             ; preds = %.lr.ph263, %bb.v
   %.1162 = phi ptr [ %.0161262, %bb.v ], [ %i.bi, %.lr.ph263 ]
-  %i.bl = getelementptr inbounds nuw i8, ptr %.1162, i64 1 ; 3 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %.1162, i64 1 ; 2 uses
   %i.bm = icmp ult ptr %i.bl, %i.ak
-  br i1 %i.bm, label %.lr.ph263, label %.loopexit, !llvm.loop !104
+  br i1 %i.bm, label %.lr.ph263, label %bb.ab, !llvm.loop !104
 
 .lr.ph:                                           ; preds = %.preheader249, %bb.aa
   %.0152259 = phi i32 [ %.2154, %bb.aa ], [ 1, %.preheader249 ] ; 4 uses
@@ -351,18 +351,20 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 bb.aa:                                            ; preds = %bb.z, %.lr.ph
   %.3 = phi ptr [ %.2163258, %bb.z ], [ %i.bp, %.lr.ph ]
   %.2154 = phi i32 [ %spec.select, %bb.z ], [ %.0152259, %.lr.ph ]
-  %i.bw = getelementptr inbounds nuw i8, ptr %.3, i64 1 ; 3 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %.3, i64 1 ; 2 uses
   %i.bx = icmp ult ptr %i.bw, %i.ak
-  br i1 %i.bx, label %.lr.ph, label %.loopexit, !llvm.loop !105
+  br i1 %i.bx, label %.lr.ph, label %bb.ab, !llvm.loop !105
 
-.loopexit:                                        ; preds = %bb.y, %bb.aa, %bb.v, %bb.w, %.preheader249, %.preheader
-  %.str.3..str.4 = phi ptr [ @.str.4, %.preheader249 ], [ @.str.3, %.preheader ], [ @.str.3, %bb.v ], [ @.str.3, %bb.w ], [ @.str.4, %bb.aa ], [ @.str.4, %bb.y ]
-  %.pre-phi303 = phi i32 [ %.pre, %.preheader249 ], [ %.pre-phi304, %.preheader ], [ %.pre-phi304, %bb.v ], [ %.pre-phi304, %bb.w ], [ %.pre, %bb.aa ], [ %.pre, %bb.y ]
-  %.4 = phi ptr [ %i.aj, %.preheader249 ], [ %i.aj, %.preheader ], [ %.0161262, %bb.v ], [ %i.bl, %bb.w ], [ %.2163258, %bb.y ], [ %i.bw, %bb.aa ] ; 4 uses
+.loopexit:                                        ; preds = %bb.y, %bb.v
+  %6 = phi i1 [ true, %bb.v ], [ false, %bb.y ]
+  %.pre-phi302 = phi i32 [ %.pre-phi304, %bb.v ], [ %.pre, %bb.y ]
+  %.4 = phi ptr [ %.0161262, %bb.v ], [ %.2163258, %bb.y ] ; 4 uses
   %.not189 = icmp ult ptr %.4, %i.ak
   br i1 %.not189, label %bb.af, label %bb.ab
 
-bb.ab:                                            ; preds = %.loopexit
+bb.ab:                                            ; preds = %bb.aa, %bb.w, %.preheader249, %.preheader, %.loopexit
+  %7 = phi i1 [ true, %bb.w ], [ %6, %.loopexit ], [ false, %.preheader249 ], [ true, %.preheader ], [ false, %bb.aa ]
+  %.pre-phi301 = phi i32 [ %.pre-phi304, %bb.w ], [ %.pre-phi302, %.loopexit ], [ %.pre, %.preheader249 ], [ %.pre-phi304, %.preheader ], [ %.pre, %bb.aa ]
   %.not196 = icmp eq ptr %.0157, %0
   br i1 %.not196, label %zend_string_release_ex.exit216, label %bb.ac
 
@@ -387,7 +389,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %zend_string_release_ex.exit216
 
 zend_string_release_ex.exit216:                   ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.ab
-  tail call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 2, ptr noundef nonnull %.str.3..str.4, i32 noundef %.pre-phi303) #23
+  %.str.3..str.4 = select i1 %7, ptr @.str.3, ptr @.str.4
+  tail call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 2, ptr noundef nonnull %.str.3..str.4, i32 noundef %.pre-phi301) #23
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @pcre_globals, i64 76), align 4, !tbaa !27
   br label %zend_string_release_ex.exit214
 

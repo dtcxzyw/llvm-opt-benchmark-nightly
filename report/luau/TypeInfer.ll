@@ -205,12 +205,7 @@ _ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8L
 
 bb.ah:                                            ; preds = %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit
   %i.ek = invoke noundef ptr @_ZNK4Luau8Property15type_DEPRECATEDEv(ptr noundef nonnull align 8 dereferenceable(176) %13)
-          to label %._crit_edge252 unwind label %bb.al
-
-._crit_edge252:                                   ; preds = %bb.ah
-  %.pre253 = load ptr, ptr %14, align 8, !tbaa !557
-  %.pre254 = load ptr, ptr %i.aa, align 8, !tbaa !548
-  br label %bb.am
+          to label %24 unwind label %bb.al        ; 2 uses
 
 .loopexit:                                        ; preds = %.noexc.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -243,12 +238,17 @@ bb.al:                                            ; preds = %bb.ah
   call void @_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %14) #35
   br label %bb.ar
 
-bb.am:                                            ; preds = %._crit_edge252, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit
-  %i.eo = phi ptr [ %i.ei, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ], [ %.pre254, %._crit_edge252 ] ; 2 uses
-  %i.ep = phi ptr [ %i.eh, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ], [ %.pre253, %._crit_edge252 ] ; 3 uses
-  %.161 = phi ptr [ %.060, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ], [ %i.ek, %._crit_edge252 ]
-  %.not4.i.i.i = icmp eq ptr %i.ep, %i.eo
-  br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph.i.i.i111
+24:                                               ; preds = %bb.ah
+  %.pre253 = load ptr, ptr %14, align 8, !tbaa !557 ; 3 uses
+  %.pre254 = load ptr, ptr %i.aa, align 8, !tbaa !548 ; 2 uses
+  %.not4.i.i.i = icmp eq ptr %.pre253, %.pre254
+  br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i, label %bb.am
+
+bb.am:                                            ; preds = %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit, %24
+  %i.eo = phi ptr [ %i.ek, %24 ], [ %.060, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ]
+  %i.ep = phi ptr [ %.pre253, %24 ], [ %i.eh, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ]
+  %.161 = phi ptr [ %.pre254, %24 ], [ %i.ei, %_ZN4Luau11TypeChecker8tryUnifyEPKNS_4TypeES3_RKSt10shared_ptrINS_5ScopeEERKNS_8LocationE.exit ]
+  br label %.lr.ph.i.i.i111
 
 .lr.ph.i.i.i111:                                  ; preds = %bb.am, %_ZSt8_DestroyIN4Luau9TypeErrorEEvPT_.exit.i.i.i
   %.05.i.i.i = phi ptr [ %i.fe, %_ZSt8_DestroyIN4Luau9TypeErrorEEvPT_.exit.i.i.i ], [ %i.ep, %bb.am ] ; 5 uses
@@ -283,15 +283,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyIN4Luau9TypeErrorEEvPT_.exit.i.i.i:  ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExternTy, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
   %i.fe = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 184 ; 2 uses
-  %.not.i.i.i112 = icmp eq ptr %i.fe, %i.eo
+  %.not.i.i.i112 = icmp eq ptr %i.fe, %.161
   br i1 %.not.i.i.i112, label %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, label %.lr.ph.i.i.i111, !llvm.loop !4
 
 _ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i: ; preds = %_ZSt8_DestroyIN4Luau9TypeErrorEEvPT_.exit.i.i.i
   %.pr.i = load ptr, ptr %14, align 8, !tbaa !557
   br label %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i
 
-_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, %bb.am
-  %i.ff = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i ], [ %i.ep, %bb.am ] ; 3 uses
+_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, %24
+  %.161329 = phi ptr [ %i.eo, %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i ], [ %i.ek, %24 ]
+  %i.ff = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4Luau9TypeErrorES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i ], [ %.pre253, %24 ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %i.ff, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit, label %bb.ao
 
@@ -488,7 +489,7 @@ _ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit130: ; preds = %_ZSt8_DestroyIPN4
   br label %bb.bb
 
 bb.bb:                                            ; preds = %_ZN4Luau8PropertyD2Ev.exit, %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit130, %bb.av, %bb.at, %_ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit
-  %.4 = phi ptr [ %.060, %_ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit ], [ %.161, %_ZN4Luau8PropertyD2Ev.exit ], [ %.2225, %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit130 ], [ %.060, %bb.av ], [ %.060, %bb.at ]
+  %.4 = phi ptr [ %.060, %_ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit ], [ %.161329, %_ZN4Luau8PropertyD2Ev.exit ], [ %.2225, %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit130 ], [ %.060, %bb.av ], [ %.060, %bb.at ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #35
   store ptr %i.ap, ptr %17, align 8, !tbaa !287

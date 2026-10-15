@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   br label %._crit_edge350.thread
 
 ._crit_edge350.thread:                            ; preds = %.thread285, %._crit_edge350
-  %.2 = phi i64 [ %spec.select239, %._crit_edge350 ], [ 0, %.thread285 ] ; 21 uses
+  %.2 = phi i64 [ %spec.select239, %._crit_edge350 ], [ 0, %.thread285 ] ; 22 uses
   %i.eu = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.2, i64 2) ; 2 uses
   %i.ev = extractvalue { i64, i1 } %i.eu, 1
   br i1 %i.ev, label %bb.ak, label %st_add.exit
@@ -607,10 +607,10 @@ find_next.exit.i:                                 ; preds = %bb.dh, %.lr.ph.spli
   br i1 %.not.i275, label %give_context.exit, label %bb.di
 
 bb.di:                                            ; preds = %.loopexit82.i, %.preheader84.i.a
-  %.05791.i = phi i64 [ %.012.lcssa.i.i, %.preheader84.i.a ], [ %.012.lcssa.i76.i, %.loopexit82.i ] ; 5 uses
+  %.05791.i = phi i64 [ %.012.lcssa.i.i, %.preheader84.i.a ], [ %.012.lcssa.i76.i, %.loopexit82.i ] ; 6 uses
   %i.wl = call i64 @llvm.usub.sat.i64(i64 %.05791.i, i64 %i.wk) ; 4 uses
   %i.wm = icmp ult i64 %i.wl, %.05791.i
-  br i1 %i.wm, label %.lr.ph.i278.preheader, label %.preheader83.i.preheader
+  br i1 %i.wm, label %.lr.ph.i278.preheader, label %.preheader84.i
 
 .lr.ph.i278.preheader:                            ; preds = %bb.di
   %umin = call i64 @llvm.umin.i64(i64 %.05791.i, i64 %i.wk) ; 2 uses
@@ -634,7 +634,11 @@ bb.di:                                            ; preds = %.loopexit82.i, %.pr
 .lr.ph.i278.prol.loopexit:                        ; preds = %.lr.ph.i278.prol, %.lr.ph.i278.preheader
   %.086.i.unr = phi i64 [ %i.wl, %.lr.ph.i278.preheader ], [ %i.ws, %.lr.ph.i278.prol ]
   %i.wv = icmp eq i64 %umin, 1
-  br i1 %i.wv, label %.preheader83.i.preheader, label %.lr.ph.i278
+  br i1 %i.wv, label %.preheader84.i, label %.lr.ph.i278
+
+.preheader84.i:                                   ; preds = %.lr.ph.i278.prol.loopexit, %.lr.ph.i278, %bb.di
+  %.not16.i90.i = icmp ugt i64 %.05791.i, %.2
+  br i1 %.not16.i90.i, label %give_context.exit, label %.preheader83.i
 
 .lr.ph.i278:                                      ; preds = %.lr.ph.i278.prol.loopexit, %.lr.ph.i278
   %.086.i = phi i64 [ %i.xi, %.lr.ph.i278 ], [ %.086.i.unr, %.lr.ph.i278.prol.loopexit ] ; 3 uses
@@ -658,17 +662,17 @@ bb.di:                                            ; preds = %.loopexit82.i, %.pr
   %i.xk = or i64 %i.xj, %i.xf
   store i64 %i.xk, ptr %i.xe, align 8, !tbaa !111
   %exitcond.not.i280.1 = icmp eq i64 %i.xi, %.05791.i
-  br i1 %exitcond.not.i280.1, label %.preheader83.i.preheader, label %.lr.ph.i278, !llvm.loop !176
+  br i1 %exitcond.not.i280.1, label %.preheader84.i, label %.lr.ph.i278, !llvm.loop !176
 
-.preheader83.i.preheader:                         ; preds = %.lr.ph.i278.prol.loopexit, %.lr.ph.i278, %bb.di
-  br label %.preheader83.i
+.preheader83.i.preheader:                         ; preds = %.lr.ph88.i.prol.loopexit, %.lr.ph88.i, %.preheader.i276
+  %.not16.i.i = icmp ugt i64 %.012.lcssa.i76.i, %.2
+  br i1 %.not16.i.i, label %give_context.exit, label %.preheader83.i
 
-.preheader83.i:                                   ; preds = %.preheader83.i.backedge, %.preheader83.i.preheader
-  %.158.i = phi i64 [ %.05791.i, %.preheader83.i.preheader ], [ %.012.lcssa.i76.i, %.preheader83.i.backedge ] ; 4 uses
-  %.not16.i.i = icmp ugt i64 %.158.i, %.2
-  br i1 %.not16.i.i, label %find_next.exit70.i, label %.lr.ph.split.i.i
+.preheader83.i:                                   ; preds = %.preheader84.i, %.preheader83.i.preheader
+  %.158.i = phi i64 [ %.012.lcssa.i76.i, %.preheader83.i.preheader ], [ %.05791.i, %.preheader84.i ] ; 2 uses
+  br label %.lr.ph.split.i.i
 
-.lr.ph.split.i.i:                                 ; preds = %.preheader83.i, %bb.dj
+.lr.ph.split.i.i:                                 ; preds = %bb.dj, %.preheader83.i
   %.01217.i.i = phi i64 [ %i.xp, %bb.dj ], [ %.158.i, %.preheader83.i ] ; 3 uses
   %i.xl = getelementptr inbounds nuw [72 x i8], ptr %i.ex, i64 %.01217.i.i
   %i.xm = getelementptr inbounds nuw i8, ptr %i.xl, i64 56
@@ -682,8 +686,8 @@ bb.dj:                                            ; preds = %.lr.ph.split.i.i
   %.not.i.i269 = icmp ugt i64 %i.xp, %.2
   br i1 %.not.i.i269, label %find_next.exit70.i, label %.lr.ph.split.i.i, !llvm.loop !175
 
-find_next.exit70.i:                               ; preds = %bb.dj, %.lr.ph.split.i.i, %.preheader83.i
-  %.012.lcssa.i69.i = phi i64 [ %.158.i, %.preheader83.i ], [ %i.xp, %bb.dj ], [ %.01217.i.i, %.lr.ph.split.i.i ] ; 6 uses
+find_next.exit70.i:                               ; preds = %bb.dj, %.lr.ph.split.i.i
+  %.012.lcssa.i69.i = phi i64 [ %.01217.i.i, %.lr.ph.split.i.i ], [ %i.xp, %bb.dj ] ; 6 uses
   %i.xq = icmp ult i64 %.2, %.012.lcssa.i69.i
   br i1 %i.xq, label %give_context.exit, label %.lr.ph.split.us.i73.i
 
@@ -702,7 +706,7 @@ bb.dk:                                            ; preds = %.lr.ph.split.us.i73
   br i1 %.not.us.i77.i, label %find_next.exit78.i, label %.lr.ph.split.us.i73.i, !llvm.loop !175
 
 find_next.exit78.i:                               ; preds = %bb.dk, %.lr.ph.split.us.i73.i
-  %.012.lcssa.i76.i = phi i64 [ %.01217.us.i74.i, %.lr.ph.split.us.i73.i ], [ %i.xv, %bb.dk ] ; 8 uses
+  %.012.lcssa.i76.i = phi i64 [ %.01217.us.i74.i, %.lr.ph.split.us.i73.i ], [ %i.xv, %bb.dk ] ; 9 uses
   %i.xw = add i64 %.158.i, 1
   %.not.i79.i = icmp ugt i64 %i.xw, %.012.lcssa.i69.i
   br i1 %.not.i79.i, label %adjust_hunk_tail.exit.i272, label %bb.dl
@@ -725,10 +729,7 @@ adjust_hunk_tail.exit.i272:                       ; preds = %bb.dl, %find_next.e
 
 .preheader.i276:                                  ; preds = %adjust_hunk_tail.exit.i272
   %i.ye = icmp ult i64 %.0.i.i273, %.012.lcssa.i76.i
-  br i1 %i.ye, label %.lr.ph88.i.preheader, label %.preheader83.i.backedge
-
-.preheader83.i.backedge:                          ; preds = %.lr.ph88.i.prol.loopexit, %.lr.ph88.i, %.preheader.i276
-  br label %.preheader83.i
+  br i1 %i.ye, label %.lr.ph88.i.preheader, label %.preheader83.i.preheader
 
 .lr.ph88.i.preheader:                             ; preds = %.preheader.i276
   %i.yf = sub nuw i64 %.012.lcssa.i76.i, %.0.i.i273
@@ -753,7 +754,7 @@ adjust_hunk_tail.exit.i272:                       ; preds = %bb.dl, %find_next.e
   %.187.i.unr = phi i64 [ %.0.i.i273, %.lr.ph88.i.preheader ], [ %i.yg, %.lr.ph88.i.prol ]
   %i.yl = sub i64 %.0.i.i273, %.012.lcssa.i76.i
   %i.ym = icmp ugt i64 %i.yl, -4
-  br i1 %i.ym, label %.preheader83.i.backedge, label %.lr.ph88.i
+  br i1 %i.ym, label %.preheader83.i.preheader, label %.lr.ph88.i
 
 .lr.ph88.i:                                       ; preds = %.lr.ph88.i.prol.loopexit, %.lr.ph88.i
   %.187.i = phi i64 [ %i.yz, %.lr.ph88.i ], [ %.187.i.unr, %.lr.ph88.i.prol.loopexit ] ; 5 uses
@@ -779,7 +780,7 @@ adjust_hunk_tail.exit.i272:                       ; preds = %bb.dl, %find_next.e
   %i.zd = or i64 %i.zc, %i.tm
   store i64 %i.zd, ptr %i.zb, align 8, !tbaa !111
   %exitcond93.not.i.3 = icmp eq i64 %i.yz, %.012.lcssa.i76.i
-  br i1 %exitcond93.not.i.3, label %.preheader83.i.backedge, label %.lr.ph88.i, !llvm.loop !178
+  br i1 %exitcond93.not.i.3, label %.preheader83.i.preheader, label %.lr.ph88.i, !llvm.loop !178
 
 bb.dm:                                            ; preds = %adjust_hunk_tail.exit.i272
   %..i274 = call i64 @llvm.umin.i64(i64 %i.yc, i64 %i.go) ; 4 uses
@@ -837,8 +838,8 @@ bb.dm:                                            ; preds = %adjust_hunk_tail.ex
   %exitcond94.not.i.3 = icmp eq i64 %i.zz, %..i274
   br i1 %exitcond94.not.i.3, label %.loopexit82.i, label %.lr.ph90.i, !llvm.loop !180
 
-give_context.exit:                                ; preds = %.loopexit82.i, %find_next.exit70.i, %find_next.exit.i
-  %.060.i = phi i32 [ 0, %find_next.exit.i ], [ 1, %find_next.exit70.i ], [ 1, %.loopexit82.i ]
+give_context.exit:                                ; preds = %.loopexit82.i, %.preheader84.i, %.preheader83.i.preheader, %find_next.exit70.i, %find_next.exit.i
+  %.060.i = phi i32 [ 0, %find_next.exit.i ], [ 1, %.preheader83.i.preheader ], [ 1, %find_next.exit70.i ], [ 1, %.preheader84.i ], [ 1, %.loopexit82.i ]
   %i.aae = or i32 %.060.i, %2
   %i.aaf = icmp ne i32 %i.aae, 0
   %or.cond4 = or i1 %.lcssa330, %i.aaf

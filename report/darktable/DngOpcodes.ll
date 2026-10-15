@@ -205,7 +205,7 @@ _ZNSt6vectorIdSaIdEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_base
 
 bb.g:                                             ; preds = %_ZNSt6vectorIdSaIdEE7reserveEm.exit
   %i.ap = load ptr, ptr %i.e, align 8, !tbaa !2057 ; 4 uses
-  %i.aq = load ptr, ptr %i.a, align 8, !tbaa !2045 ; 5 uses
+  %i.aq = load ptr, ptr %i.a, align 8, !tbaa !2045 ; 4 uses
   %i.ar = ptrtoint ptr %i.ap to i64
   %i.as = ptrtoint ptr %i.aq to i64               ; 3 uses
   %i.at = sub i64 %i.ar, %i.as                    ; 2 uses
@@ -226,33 +226,39 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %.not37 = icmp eq i64 %i.at, 131072
-  br i1 %.not37, label %_ZNSt6vectorItSaItEE6resizeEm.exit, label %bb.j
+  br i1 %.not37, label %_ZNSt6vectorItSaItEE6resizeEm.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 131072 ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 131072 ; 3 uses
   %.not.i.i = icmp eq ptr %i.ap, %i.ax
-  br i1 %.not.i.i, label %_ZNSt6vectorItSaItEE6resizeEm.exit, label %_ZNSt6vectorItSaItEE6resizeEm.exit.thread
+  br i1 %.not.i.i, label %_ZNSt6vectorItSaItEE6resizeEm.exit, label %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i
 
-_ZNSt6vectorItSaItEE6resizeEm.exit.thread:        ; preds = %bb.j
+_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.j
   store ptr %i.ax, ptr %i.e, align 8, !tbaa !2057
+  br label %_ZNSt6vectorItSaItEE6resizeEm.exit.thread
+
+_ZNSt6vectorItSaItEE6resizeEm.exit.thread:        ; preds = %bb.i, %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i
+  %.ph = phi ptr [ %i.ax, %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i ], [ %i.ap, %bb.i ]
+  %5 = ptrtoint ptr %.ph to i64
+  %6 = sub i64 %5, %i.as
   %.pre4961 = load ptr, ptr %4, align 8, !tbaa !2061
   br label %.lr.ph41
 
-_ZNSt6vectorItSaItEE6resizeEm.exit:               ; preds = %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge, %bb.i, %bb.j
-  %.pre-phi = phi i64 [ %.pre50, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge ], [ %i.as, %bb.i ], [ %i.as, %bb.j ]
-  %5 = phi ptr [ %.pre48, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge ], [ %i.aq, %bb.i ], [ %i.aq, %bb.j ] ; 2 uses
-  %6 = phi ptr [ %.pre, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge ], [ %i.ap, %bb.i ], [ %i.ap, %bb.j ] ; 2 uses
-  %i.ay = ptrtoint ptr %6 to i64
+_ZNSt6vectorItSaItEE6resizeEm.exit:               ; preds = %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge, %bb.j
+  %.pre-phi = phi i64 [ %.pre50, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge ], [ %i.as, %bb.j ]
+  %7 = phi ptr [ %.pre48, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge ], [ %i.aq, %bb.j ] ; 2 uses
+  %8 = phi ptr [ %.pre, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge ], [ %i.ap, %bb.j ] ; 2 uses
+  %i.ay = ptrtoint ptr %8 to i64
   %i.az = sub i64 %i.ay, %.pre-phi
-  %7 = ashr exact i64 %i.az, 1
-  %.not43 = icmp eq ptr %6, %5
+  %.not43 = icmp eq ptr %8, %7
   %.pre49 = load ptr, ptr %4, align 8, !tbaa !2061 ; 3 uses
   br i1 %.not43, label %._crit_edge42, label %.lr.ph41
 
 .lr.ph41:                                         ; preds = %_ZNSt6vectorItSaItEE6resizeEm.exit.thread, %_ZNSt6vectorItSaItEE6resizeEm.exit
   %.pre4962 = phi ptr [ %.pre4961, %_ZNSt6vectorItSaItEE6resizeEm.exit.thread ], [ %.pre49, %_ZNSt6vectorItSaItEE6resizeEm.exit ] ; 15 uses
-  %i.ba = phi i64 [ 65536, %_ZNSt6vectorItSaItEE6resizeEm.exit.thread ], [ %7, %_ZNSt6vectorItSaItEE6resizeEm.exit ] ; 6 uses
-  %i.bb = phi ptr [ %i.aq, %_ZNSt6vectorItSaItEE6resizeEm.exit.thread ], [ %5, %_ZNSt6vectorItSaItEE6resizeEm.exit ] ; 4 uses
+  %i.ba = phi i64 [ %6, %_ZNSt6vectorItSaItEE6resizeEm.exit.thread ], [ %i.az, %_ZNSt6vectorItSaItEE6resizeEm.exit ]
+  %i.bb = phi ptr [ %i.aq, %_ZNSt6vectorItSaItEE6resizeEm.exit.thread ], [ %7, %_ZNSt6vectorItSaItEE6resizeEm.exit ] ; 4 uses
+  %9 = ashr exact i64 %i.ba, 1                    ; 6 uses
   %i.bc = load double, ptr %.pre4962, align 8, !tbaa !2064 ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !2062
@@ -264,7 +270,7 @@ _ZNSt6vectorItSaItEE6resizeEm.exit:               ; preds = %._ZNSt6vectorItSaIt
   br i1 %i.bj, label %.lr.ph.us.preheader, label %iter.check
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph41
-  %umax46 = call i64 @llvm.umax.i64(i64 %i.ba, i64 1)
+  %umax46 = call i64 @llvm.umax.i64(i64 %9, i64 1)
   %i.bk = add nsw i64 %i.bi, -1                   ; 2 uses
   %i.bl = add nsw i64 %i.bi, -2
   %xtraiter = and i64 %i.bk, 7                    ; 3 uses
@@ -380,12 +386,12 @@ iter.check:                                       ; preds = %.lr.ph41
   %i.eb = fcmp ogt double %i.ea, 6.553500e+04
   %.sroa.speculated = select i1 %i.eb, double 6.553500e+04, double %i.ea
   %i.ec = fptoui double %.sroa.speculated to i16  ; 3 uses
-  %umax = call i64 @llvm.umax.i64(i64 %i.ba, i64 1) ; 4 uses
-  %min.iters.check = icmp ult i64 %i.ba, 8
+  %umax = call i64 @llvm.umax.i64(i64 %9, i64 1)  ; 4 uses
+  %min.iters.check = icmp ult i64 %9, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check69 = icmp ult i64 %i.ba, 64
+  %min.iters.check69 = icmp ult i64 %9, 64
   br i1 %min.iters.check69, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -410,7 +416,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.ei, label %middle.block, label %vector.body, !llvm.loop !3190
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.ba, %n.vec
+  %cmp.n = icmp eq i64 %9, %n.vec
   br i1 %cmp.n, label %._crit_edge42.thread, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -433,7 +439,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ek, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !3191
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n75 = icmp eq i64 %i.ba, %n.vec70
+  %cmp.n75 = icmp eq i64 %9, %n.vec70
   br i1 %cmp.n75, label %._crit_edge42.thread, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block

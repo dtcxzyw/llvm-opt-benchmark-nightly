@@ -204,7 +204,7 @@ bb.ix:                                            ; preds = %.lr.ph839, %._crit_
   %i.bki = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i361, i64 16 ; 4 uses
   %i.bkj = load ptr, ptr %i.bki, align 8, !tbaa !304 ; 2 uses
   %i.bkk = icmp eq ptr %i.bkh, %i.bkj
-  br i1 %i.bkk, label %bb.iy, label %_ZNSt6vectorImSaImEE9push_backEOm.exit
+  br i1 %i.bkk, label %bb.iy, label %.lr.ph835
 
 bb.iy:                                            ; preds = %bb.ix
   %i.bkl = load i64, ptr %i.bke, align 8, !tbaa !668 ; 8 uses
@@ -607,13 +607,15 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS
   store ptr %i.bse, ptr %i.brj, align 8, !tbaa !55
   br label %_ZNSt6vectorImSaImEE9push_backEOm.exit
 
-_ZNSt6vectorImSaImEE9push_backEOm.exit:           ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i, %bb.kh, %bb.ix
-  %70 = phi ptr [ %i.bsa, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %i.brl, %bb.kh ], [ %i.bkj, %bb.ix ] ; 2 uses
-  %71 = phi ptr [ %i.brx, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %.pre898, %bb.kh ], [ %i.bkh, %bb.ix ] ; 2 uses
+_ZNSt6vectorImSaImEE9push_backEOm.exit:           ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i, %bb.kh
+  %70 = phi ptr [ %i.bsa, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %i.brl, %bb.kh ] ; 2 uses
+  %71 = phi ptr [ %i.brx, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %.pre898, %bb.kh ] ; 2 uses
   %.not606833 = icmp eq ptr %71, %70
   br i1 %.not606833, label %._crit_edge836, label %.lr.ph835
 
-.lr.ph835:                                        ; preds = %_ZNSt6vectorImSaImEE9push_backEOm.exit
+.lr.ph835:                                        ; preds = %bb.ix, %_ZNSt6vectorImSaImEE9push_backEOm.exit
+  %72 = phi ptr [ %71, %_ZNSt6vectorImSaImEE9push_backEOm.exit ], [ %i.bkh, %bb.ix ]
+  %73 = phi ptr [ %70, %_ZNSt6vectorImSaImEE9push_backEOm.exit ], [ %i.bkj, %bb.ix ]
   %i.bsf = getelementptr inbounds nuw i8, ptr %.sroa.0507.0838, i64 16
   %i.bsg = getelementptr inbounds nuw i8, ptr %.sroa.0507.0838, i64 8
   br label %bb.km
@@ -624,7 +626,7 @@ _ZNSt6vectorImSaImEE9push_backEOm.exit:           ; preds = %_ZNSt6vectorImSaImE
   br i1 %.not605, label %._crit_edge840, label %bb.ix
 
 bb.km:                                            ; preds = %.lr.ph835, %bb.ko
-  %.sroa.0499.0834 = phi ptr [ %71, %.lr.ph835 ], [ %i.bsn, %bb.ko ] ; 2 uses
+  %.sroa.0499.0834 = phi ptr [ %72, %.lr.ph835 ], [ %i.bsn, %bb.ko ] ; 2 uses
   %i.bsi = load i64, ptr %.sroa.0499.0834, align 8, !tbaa !164 ; 2 uses
   %i.bsj = load i64, ptr %.sroa.0507.0838, align 8, !tbaa !680 ; 2 uses
   %.not = icmp eq i64 %i.bsi, %i.bsj
@@ -639,7 +641,7 @@ bb.kn:                                            ; preds = %bb.km
 
 bb.ko:                                            ; preds = %bb.kn, %bb.km
   %i.bsn = getelementptr inbounds nuw i8, ptr %.sroa.0499.0834, i64 8 ; 2 uses
-  %.not606 = icmp eq ptr %i.bsn, %70
+  %.not606 = icmp eq ptr %i.bsn, %73
   br i1 %.not606, label %._crit_edge836, label %bb.km
 }
 

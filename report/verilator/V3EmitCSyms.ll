@@ -205,14 +205,19 @@ bb.t:                                             ; preds = %bb.s
   %.not14552297 = icmp eq ptr %i.ck, %i.cm
   br i1 %.not14552297, label %.loopexit1516, label %.lr.ph
 
+99:                                               ; preds = %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+  %100 = getelementptr inbounds nuw i8, ptr %.sroa.01452.02298, i64 32 ; 2 uses
+  %.not1458 = icmp eq ptr %100, %i.cm
+  br i1 %.not1458, label %.loopexit1516, label %.lr.ph
+
 bb.u:                                             ; preds = %bb.q
   %i.cn = landingpad { ptr, i32 }
           cleanup
   br label %bb.kg
 
-.lr.ph:                                           ; preds = %bb.t, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
-  %.0542299 = phi i64 [ %i.cs, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ 200, %bb.t ]
-  %.sroa.01452.02298 = phi ptr [ %99, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ %i.ck, %bb.t ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.t, %99
+  %.0542299 = phi i64 [ %i.cs, %99 ], [ 200, %bb.t ]
+  %.sroa.01452.02298 = phi ptr [ %100, %99 ], [ %i.ck, %bb.t ] ; 3 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.sroa.01452.02298, i64 8
   %i.cp = load i64, ptr %i.co, align 8, !tbaa !36
   %i.cq = icmp eq i64 %i.cp, 0
@@ -228,13 +233,10 @@ _ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.ex
   %.0.i = phi i64 [ 0, %.lr.ph ], [ %..i, %bb.v ]
   %i.cs = add i64 %.0.i, %.0542299                ; 3 uses
   %.not172 = icmp ugt i64 %i.cs, %i.ci
-  %99 = getelementptr inbounds nuw i8, ptr %.sroa.01452.02298, i64 32 ; 2 uses
-  %.not1455 = icmp eq ptr %99, %i.cm
-  %or.cond = select i1 %.not172, i1 true, i1 %.not1455
-  br i1 %or.cond, label %.loopexit1516, label %.lr.ph
+  br i1 %.not172, label %.critedge, label %99
 
-.loopexit1516:                                    ; preds = %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %bb.t, %bb.s
-  %.2 = phi i64 [ 200, %bb.s ], [ 200, %bb.t ], [ %i.cs, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ] ; 2 uses
+.loopexit1516:                                    ; preds = %99, %bb.t, %bb.s
+  %.2 = phi i64 [ 200, %bb.s ], [ 200, %bb.t ], [ %i.cs, %99 ] ; 2 uses
   %.not173 = icmp ugt i64 %.2, %i.ci
   br i1 %.not173, label %.critedge, label %bb.w
 
@@ -270,7 +272,7 @@ _ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.ex
   %.not174 = icmp ugt i64 %i.db, %i.ci
   br i1 %.not174, label %.critedge, label %bb.x
 
-.critedge:                                        ; preds = %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit351, %.loopexit1516
+.critedge:                                        ; preds = %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit351, %.loopexit1516
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 59), align 1, !tbaa !1092
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
   %i.dc = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 6 uses

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_ZN4llvh11SmallStri
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4llvh2cl18tokenizeConfigFileENS_9StringRefERNS_11StringSaverERNS_15SmallVectorImplIPKcEEb(ptr %0, i64 %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(16) %3, i1 noundef zeroext %4) #0 {
 bb.a:
-  %5 = alloca %"class.llvh::SmallString", align 8 ; 12 uses
+  %5 = alloca %"class.llvh::SmallString", align 8 ; 13 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 7 uses
   %.not81 = icmp samesign eq i64 %1, 0
   br i1 %.not81, label %._crit_edge85, label %.lr.ph84
@@ -217,11 +217,11 @@ bb.a:
   %i.f = add i64 %1, %i.b                         ; 2 uses
   br label %bb.b
 
-._crit_edge85:                                    ; preds = %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit, %bb.a
+._crit_edge85:                                    ; preds = %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit, %bb.s, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph84, %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit
-  %.082 = phi ptr [ %0, %.lr.ph84 ], [ %.6106, %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit ] ; 13 uses
+  %.082 = phi ptr [ %0, %.lr.ph84 ], [ %.6106, %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit ] ; 11 uses
   %.08289 = ptrtoaddr ptr %.082 to i64            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   store ptr %i.c, ptr %5, align 8, !tbaa !125
@@ -238,7 +238,7 @@ bb.b:                                             ; preds = %.lr.ph84, %_ZN4llvh
   ]
 
 .preheader60:                                     ; preds = %bb.b
-  br i1 %.not4172, label %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit, label %.lr.ph, !llvm.loop !279
+  br i1 %.not4172, label %bb.s, label %.lr.ph, !llvm.loop !279
 
 .lr.ph:                                           ; preds = %.preheader60
   %scevgep = getelementptr i8, ptr %.082, i64 %i.f
@@ -250,7 +250,7 @@ bb.b:                                             ; preds = %.lr.ph84, %_ZN4llvh
   br i1 %.not4172, label %._crit_edge, label %.lr.ph75
 
 _ZL12isWhitespacec.exit:                          ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  br i1 %.not4172, label %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit, label %.lr.ph68, !llvm.loop !279
+  br i1 %.not4172, label %bb.s, label %.lr.ph68, !llvm.loop !279
 
 .lr.ph68:                                         ; preds = %_ZL12isWhitespacec.exit
   %scevgep91 = getelementptr i8, ptr %.082, i64 %i.f
@@ -433,14 +433,18 @@ bb.r:                                             ; preds = %bb.q
   call void @_ZN4llvh2cl22TokenizeGNUCommandLineENS_9StringRefERNS_11StringSaverERNS_15SmallVectorImplIPKcEEb(ptr %i.bc, i64 %i.bg, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(16) %3, i1 noundef zeroext %4)
   %.pre95 = load ptr, ptr %5, align 8, !tbaa !125 ; 2 uses
   %i.bh = icmp eq ptr %.pre95, %i.c
-  br i1 %i.bh, label %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit, label %bb.s
+  br i1 %i.bh, label %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit, label %6
 
-bb.s:                                             ; preds = %.critedge
+6:                                                ; preds = %.critedge
   call void @free(ptr noundef %.pre95) #28
   br label %_ZN4llvh11SmallVectorIcLj128EED2Ev.exit
 
-_ZN4llvh11SmallVectorIcLj128EED2Ev.exit:          ; preds = %.preheader60, %..critedge.loopexit61_crit_edge64, %..critedge.loopexit61_crit_edge, %..critedge.loopexit_crit_edge70, %..critedge.loopexit_crit_edge, %_ZL12isWhitespacec.exit, %.critedge, %bb.s
-  %.6106 = phi ptr [ %.3.lcssa, %bb.s ], [ %.3.lcssa, %.critedge ], [ %.082, %.preheader60 ], [ %.263, %..critedge.loopexit61_crit_edge64 ], [ %scevgep90, %..critedge.loopexit61_crit_edge ], [ %.167, %..critedge.loopexit_crit_edge70 ], [ %scevgep92, %..critedge.loopexit_crit_edge ], [ %.082, %_ZL12isWhitespacec.exit ] ; 2 uses
+bb.s:                                             ; preds = %.preheader60, %_ZL12isWhitespacec.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #28
+  br label %._crit_edge85
+
+_ZN4llvh11SmallVectorIcLj128EED2Ev.exit:          ; preds = %..critedge.loopexit61_crit_edge64, %..critedge.loopexit61_crit_edge, %..critedge.loopexit_crit_edge70, %..critedge.loopexit_crit_edge, %.critedge, %6
+  %.6106 = phi ptr [ %.3.lcssa, %6 ], [ %.3.lcssa, %.critedge ], [ %scevgep92, %..critedge.loopexit_crit_edge ], [ %.263, %..critedge.loopexit61_crit_edge64 ], [ %scevgep90, %..critedge.loopexit61_crit_edge ], [ %.167, %..critedge.loopexit_crit_edge70 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #28
   %.not = icmp eq ptr %.6106, %i.a
   br i1 %.not, label %._crit_edge85, label %bb.b

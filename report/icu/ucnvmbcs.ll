@@ -205,11 +205,11 @@ bb.l:                                             ; preds = %.loopexit174.i
   %.3142.ph.i460 = phi i32 [ %.3142.ph.be.i, %.outer.backedge.i ], [ %.2141.fr.i, %.loopexit173.i ] ; 2 uses
   %i.if = phi ptr [ %storemerge253.i, %.outer.backedge.i ], [ %i.id, %.loopexit173.i ] ; 2 uses
   %i.ig = icmp ult ptr %.promoted202.i461, %i.ag
-  br i1 %i.ig, label %.lr.ph889, label %.loopexit171.split.i
+  br i1 %i.ig, label %.lr.ph889, label %bb.t
 
 .outer.split.i:                                   ; preds = %bb.m
   %i.ih = icmp ult ptr %i.ij, %i.ag
-  br i1 %i.ih, label %.lr.ph889, label %.loopexit171.split.i
+  br i1 %i.ih, label %.lr.ph889, label %bb.t
 
 .lr.ph889:                                        ; preds = %.outer.split.i.preheader, %.outer.split.i
   %i.ii = phi ptr [ %i.ij, %.outer.split.i ], [ %.promoted202.i461, %.outer.split.i.preheader ] ; 3 uses
@@ -382,10 +382,10 @@ bb.q:                                             ; preds = %_ZL7_extToUP10UConv
   %spec.select168.i = call i32 @llvm.smin.i32(i32 %i.kq, i32 %i.ko)
   br label %bb.g
 
-.loopexit171.split.i:                             ; preds = %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i, %.loopexit173.i, %.outer.backedge.i, %.outer.split.i.preheader, %.outer.split.i, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.thread.i, %.loopexit170..loopexit171.split.loopexit216_crit_edge.i
-  %2 = phi ptr [ %.promoted202.i, %.outer.backedge.i ], [ %i.ij, %.outer.split.i ], [ %.pre241.pre.i, %.loopexit170..loopexit171.split.loopexit216_crit_edge.i ], [ %i.jw, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.thread.i ], [ %.promoted202.i461, %.outer.split.i.preheader ], [ %.promoted202.i459, %.loopexit173.i ], [ %.pre565, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ] ; 3 uses
-  %.3147.i = phi ptr [ %.2146.i, %.outer.backedge.i ], [ %.2146.i, %.outer.split.i ], [ %.2146.i, %.loopexit170..loopexit171.split.loopexit216_crit_edge.i ], [ %i.ij, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.thread.i ], [ %.2146.i, %.outer.split.i.preheader ], [ %.2146.i, %.loopexit173.i ], [ %i.ij, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ]
-  %.6.i = phi i32 [ %.3.i, %.outer.backedge.i ], [ %.3.i, %.outer.split.i ], [ %.5.i, %.loopexit170..loopexit171.split.loopexit216_crit_edge.i ], [ %i.kb, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.thread.i ], [ %.3.i, %.outer.split.i.preheader ], [ %.3.i, %.loopexit173.i ], [ %i.kh, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ] ; 3 uses
+.loopexit171.split.i:                             ; preds = %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i, %.loopexit173.i, %.outer.backedge.i, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.thread.i, %.loopexit170..loopexit171.split.loopexit216_crit_edge.i
+  %2 = phi ptr [ %.promoted202.i, %.outer.backedge.i ], [ %i.jw, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.thread.i ], [ %.pre241.pre.i, %.loopexit170..loopexit171.split.loopexit216_crit_edge.i ], [ %.promoted202.i459, %.loopexit173.i ], [ %.pre565, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ] ; 4 uses
+  %.3147.i = phi ptr [ %.2146.i, %.outer.backedge.i ], [ %i.ij, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.thread.i ], [ %.2146.i, %.loopexit170..loopexit171.split.loopexit216_crit_edge.i ], [ %.2146.i, %.loopexit173.i ], [ %i.ij, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ] ; 3 uses
+  %.6.i = phi i32 [ %.3.i, %.outer.backedge.i ], [ %i.kb, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.thread.i ], [ %.5.i, %.loopexit170..loopexit171.split.loopexit216_crit_edge.i ], [ %.3.i, %.loopexit173.i ], [ %i.kh, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ] ; 3 uses
   %i.kr = load i32, ptr %1, align 4, !tbaa !29
   %i.ks = icmp slt i32 %i.kr, 1
   %i.kt = icmp ult ptr %2, %i.ag
@@ -402,14 +402,17 @@ bb.s:                                             ; preds = %bb.r
   store i32 15, ptr %1, align 4, !tbaa !29
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.s, %bb.r, %.loopexit171.split.i
+bb.t:                                             ; preds = %.outer.split.i.preheader, %.outer.split.i, %bb.s, %bb.r, %.loopexit171.split.i
+  %.6259.i = phi i32 [ %.6.i, %.loopexit171.split.i ], [ %.6.i, %bb.s ], [ %.6.i, %bb.r ], [ %.3.i, %.outer.split.i ], [ %.3.i, %.outer.split.i.preheader ] ; 3 uses
+  %.3147258.i = phi ptr [ %.3147.i, %.loopexit171.split.i ], [ %.3147.i, %bb.s ], [ %.3147.i, %bb.r ], [ %.2146.i, %.outer.split.i ], [ %.2146.i, %.outer.split.i.preheader ]
+  %3 = phi ptr [ %2, %.loopexit171.split.i ], [ %2, %bb.s ], [ %2, %bb.r ], [ %i.ij, %.outer.split.i ], [ %.promoted202.i461, %.outer.split.i.preheader ] ; 2 uses
   %i.kw = load ptr, ptr %i.f, align 8, !tbaa !47  ; 5 uses
   %.not166.i = icmp eq ptr %i.kw, null
   br i1 %.not166.i, label %_ZL31ucnv_MBCSSingleToBMPWithOffsetsP23UConverterToUnicodeArgsP10UErrorCode.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.kx = ptrtoint ptr %2 to i64
-  %i.ky = ptrtoint ptr %.3147.i to i64
+  %i.kx = ptrtoint ptr %3 to i64
+  %i.ky = ptrtoint ptr %.3147258.i to i64
   %i.kz = sub i64 %i.kx, %i.ky                    ; 6 uses
   %.not167209.i = icmp eq i64 %i.kz, 0
   br i1 %.not167209.i, label %_ZL31ucnv_MBCSSingleToBMPWithOffsetsP23UConverterToUnicodeArgsP10UErrorCode.exit, label %.lr.ph212.i.preheader
@@ -424,8 +427,8 @@ vector.ph899:                                     ; preds = %.lr.ph212.i.prehead
   %i.lb = getelementptr i8, ptr %i.kw, i64 %i.la  ; 2 uses
   %i.lc = and i64 %i.kz, 7
   %i.ld = trunc i64 %n.vec900 to i32
-  %i.le = add i32 %.6.i, %i.ld
-  %broadcast.splatinsert901 = insertelement <4 x i32> poison, i32 %.6.i, i64 0
+  %i.le = add i32 %.6259.i, %i.ld
+  %broadcast.splatinsert901 = insertelement <4 x i32> poison, i32 %.6259.i, i64 0
   %broadcast.splat902 = shufflevector <4 x i32> %broadcast.splatinsert901, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction903 = add nsw <4 x i32> %broadcast.splat902, <i32 0, i32 1, i32 2, i32 3>
   br label %vector.body904
@@ -451,7 +454,7 @@ middle.block911:                                  ; preds = %vector.body904
 .lr.ph212.i.preheader916:                         ; preds = %.lr.ph212.i.preheader, %middle.block911
   %.ph917 = phi ptr [ %i.kw, %.lr.ph212.i.preheader ], [ %i.lb, %middle.block911 ]
   %.0211.i.ph = phi i64 [ %i.kz, %.lr.ph212.i.preheader ], [ %i.lc, %middle.block911 ]
-  %.7210.i.ph = phi i32 [ %.6.i, %.lr.ph212.i.preheader ], [ %i.le, %middle.block911 ]
+  %.7210.i.ph = phi i32 [ %.6259.i, %.lr.ph212.i.preheader ], [ %i.le, %middle.block911 ]
   br label %.lr.ph212.i
 
 .lr.ph212.i:                                      ; preds = %.lr.ph212.i.preheader916, %.lr.ph212.i
@@ -467,7 +470,7 @@ middle.block911:                                  ; preds = %vector.body904
 
 _ZL31ucnv_MBCSSingleToBMPWithOffsetsP23UConverterToUnicodeArgsP10UErrorCode.exit: ; preds = %.lr.ph212.i, %middle.block911, %bb.t, %bb.u
   %i.lm = phi ptr [ %i.kw, %bb.u ], [ null, %bb.t ], [ %i.lb, %middle.block911 ], [ %i.lk, %.lr.ph212.i ]
-  store ptr %2, ptr %i.aa, align 8, !tbaa !44
+  store ptr %3, ptr %i.aa, align 8, !tbaa !44
   %i.ln = load ptr, ptr %i.e, align 8, !tbaa !46
   store ptr %i.ln, ptr %i.ac, align 8, !tbaa !123
   store ptr %i.lm, ptr %i.ao, align 8, !tbaa !125

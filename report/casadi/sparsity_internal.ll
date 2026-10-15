@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ey = ptrtoint ptr %.sroa.39.0 to i64
   %i.ez = ptrtoint ptr %.sroa.0930.0 to i64
   %i.fa = sub i64 %i.ey, %i.ez                    ; 4 uses
-  %i.fb = ashr exact i64 %i.fa, 3                 ; 3 uses
+  %i.fb = ashr exact i64 %i.fa, 3                 ; 2 uses
   %i.fc = load ptr, ptr %0, align 8, !tbaa !53    ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.dr, i8 -1, i64 %i.bd, i1 false), !tbaa !43
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.dp, i8 -1, i64 %i.bd, i1 false), !tbaa !43
@@ -460,7 +460,7 @@ _ZN6casadi16SparsityInternal6wclearExxPxx.exit:   ; preds = %.lr.ph.i.epil.prehe
   store i64 -1, ptr %i.ht, align 8, !tbaa !43
   %i.hu = getelementptr inbounds nuw [8 x i8], ptr %i.eb, i64 %i.bb
   store i64 0, ptr %i.hu, align 8, !tbaa !43
-  br i1 %i.by, label %.lr.ph1503, label %.preheader1484
+  br i1 %i.by, label %.lr.ph1503, label %.lr.ph1622.preheader
 
 .lr.ph1503:                                       ; preds = %_ZN6casadi16SparsityInternal6wclearExxPxx.exit
   %i.hv = load ptr, ptr %0, align 8
@@ -499,11 +499,11 @@ scalar.ph2052:                                    ; preds = %scalar.ph2052.prol.
   %exitcond1635.not.1 = icmp eq i64 %i.if, %i.bb
   br i1 %exitcond1635.not.1, label %._crit_edge1500, label %scalar.ph2052, !llvm.loop !233
 
-.preheader1484:                                   ; preds = %bb.aw, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit
-  %.not1496181018941950 = phi i1 [ false, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit ], [ %.not149618101894.ph, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread ], [ false, %bb.aw ] ; 2 uses
-  %12 = phi i64 [ %i.fb, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit ], [ %.ph1914, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread ], [ %i.fb, %bb.aw ]
-  %13 = phi i64 [ %i.fa, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit ], [ %.ph1913, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread ], [ %i.fa, %bb.aw ]
-  %.0436.lcssa = phi i64 [ 0, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit ], [ 0, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread ], [ %.1437, %bb.aw ] ; 2 uses
+.preheader1484:                                   ; preds = %bb.aw, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread
+  %.not1496181018941950 = phi i1 [ %.not149618101894.ph, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread ], [ false, %bb.aw ]
+  %12 = phi i64 [ %.ph1914, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread ], [ %i.fb, %bb.aw ]
+  %13 = phi i64 [ %.ph1913, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread ], [ %i.fa, %bb.aw ] ; 2 uses
+  %.0436.lcssa = phi i64 [ 0, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.thread ], [ %.1437, %bb.aw ] ; 2 uses
   %i.io = icmp slt i64 %.0436.lcssa, %i.bb
   br i1 %i.io, label %.preheader1483.lr.ph, label %.preheader1475
 
@@ -906,7 +906,8 @@ bb.cu:                                            ; preds = %bb.ct, %._crit_edge
 .preheader1474:                                   ; preds = %.lr.ph1619, %middle.block2088, %.preheader1475
   br i1 %.not1496181018941950, label %.preheader1473, label %.lr.ph1622.preheader
 
-.lr.ph1622.preheader:                             ; preds = %.preheader1474
+.lr.ph1622.preheader:                             ; preds = %_ZN6casadi16SparsityInternal6wclearExxPxx.exit, %.preheader1474
+  %14 = phi i64 [ %13, %.preheader1474 ], [ %i.fa, %_ZN6casadi16SparsityInternal6wclearExxPxx.exit ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.dr, i8 -1, i64 %i.bd, i1 false), !tbaa !43
   br label %.preheader1473
 
@@ -921,8 +922,10 @@ bb.cu:                                            ; preds = %bb.ct, %._crit_edge
   br i1 %exitcond1651.not, label %.preheader1474, label %.lr.ph1619, !llvm.loop !256
 
 .preheader1473:                                   ; preds = %.lr.ph1622.preheader, %.preheader1474
+  %15 = phi i64 [ %13, %.preheader1474 ], [ %14, %.lr.ph1622.preheader ]
+  %.not1496181018941950197020232079 = phi i1 [ true, %.preheader1474 ], [ false, %.lr.ph1622.preheader ] ; 2 uses
   %i.vw = icmp sgt i64 %i.bb, -1
-  br i1 %i.vw, label %.lr.ph1624.preheader, label %.preheader
+  br i1 %i.vw, label %.lr.ph1624.preheader, label %.preheader1472.thread
 
 .lr.ph1624.preheader:                             ; preds = %.preheader1473
   %i.vx = and i64 %i.bb, 1
@@ -953,6 +956,10 @@ bb.cv:                                            ; preds = %.lr.ph1624.prol
   %.03731623.unr = phi i64 [ %i.bb, %.lr.ph1624.preheader ], [ %i.wg, %.lr.ph1624.prol.loopexit.unr-lcssa ]
   %i.wh = icmp eq i64 %i.bb, 0
   br i1 %i.wh, label %.lr.ph1626.preheader, label %.lr.ph1624
+
+.preheader1472.thread:                            ; preds = %.preheader1473
+  %.pre16592242 = load ptr, ptr %0, align 8       ; 2 uses
+  br i1 %.not1496181018941950197020232079, label %._crit_edge1631, label %.lr.ph1630
 
 .lr.ph1624:                                       ; preds = %.lr.ph1624.prol.loopexit, %bb.cy
   %.03731623 = phi i64 [ %i.wz, %bb.cy ], [ %.03731623.unr, %.lr.ph1624.prol.loopexit ] ; 7 uses
@@ -996,9 +1003,13 @@ bb.cy:                                            ; preds = %bb.cx, %.lr.ph1624.
 .lr.ph1626.preheader:                             ; preds = %bb.cy, %.lr.ph1624.prol.loopexit
   br label %.lr.ph1626
 
-.preheader:                                       ; preds = %bb.db, %.preheader1473
+.preheader:                                       ; preds = %bb.db
   %.pre1659 = load ptr, ptr %0, align 8           ; 2 uses
-  br i1 %.not1496181018941950, label %._crit_edge1631, label %.lr.ph1630.a
+  br i1 %.not1496181018941950197020232079, label %._crit_edge1631, label %.lr.ph1630
+
+.lr.ph1630:                                       ; preds = %.preheader1472.thread, %.preheader
+  %.pre16592260 = phi ptr [ %.pre16592242, %.preheader1472.thread ], [ %.pre1659, %.preheader ]
+  br label %.lr.ph1630.a
 
 .lr.ph1626:                                       ; preds = %.lr.ph1626.preheader, %bb.db
   %.03721625 = phi i64 [ %i.xj, %bb.db ], [ %i.bb, %.lr.ph1626.preheader ] ; 6 uses
@@ -1030,11 +1041,11 @@ bb.db:                                            ; preds = %bb.cz, %bb.da, %.lr
   %.pre1658 = load ptr, ptr %0, align 8, !tbaa !53
   br label %._crit_edge1631
 
-._crit_edge1631:                                  ; preds = %._crit_edge1631.loopexit, %.preheader
-  %14 = phi ptr [ %.pre1658, %._crit_edge1631.loopexit ], [ %.pre1659, %.preheader ] ; 2 uses
+._crit_edge1631:                                  ; preds = %.preheader1472.thread, %._crit_edge1631.loopexit, %.preheader
+  %16 = phi ptr [ %.pre1658, %._crit_edge1631.loopexit ], [ %.pre1659, %.preheader ], [ %.pre16592242, %.preheader1472.thread ] ; 2 uses
   %i.xl = load ptr, ptr %i.di, align 8, !tbaa !55 ; 2 uses
   %i.xm = ptrtoint ptr %i.xl to i64
-  %i.xn = ptrtoint ptr %14 to i64
+  %i.xn = ptrtoint ptr %16 to i64
   %i.xo = sub i64 %i.xm, %i.xn
   %i.xp = ashr exact i64 %i.xo, 3                 ; 3 uses
   %i.xq = icmp ugt i64 %i.bb, %i.xp
@@ -1050,7 +1061,7 @@ bb.dd:                                            ; preds = %._crit_edge1631
   br i1 %i.xs, label %bb.de, label %_ZNSt6vectorIxSaIxEE6resizeEm.exit
 
 bb.de:                                            ; preds = %bb.dd
-  %i.xt = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %i.bb ; 2 uses
+  %i.xt = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bb ; 2 uses
   %.not.i.i = icmp eq ptr %i.xl, %i.xt
   br i1 %.not.i.i, label %_ZNSt6vectorIxSaIxEE6resizeEm.exit, label %_ZSt8_DestroyIPxxEvT_S1_RSaIT0_E.exit.i.i
 
@@ -1058,9 +1069,9 @@ _ZSt8_DestroyIPxxEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.de
   store ptr %i.xt, ptr %i.di, align 8, !tbaa !55
   br label %_ZNSt6vectorIxSaIxEE6resizeEm.exit
 
-.lr.ph1630.a:                                     ; preds = %.preheader, %_ZN6casadi16SparsityInternal13postorder_dfsExxPxPKxS1_S1_.exit
-  %.01629 = phi i64 [ %i.yk, %_ZN6casadi16SparsityInternal13postorder_dfsExxPxPKxS1_S1_.exit ], [ 0, %.preheader ] ; 4 uses
-  %.03711628 = phi i64 [ %.1, %_ZN6casadi16SparsityInternal13postorder_dfsExxPxPKxS1_S1_.exit ], [ 0, %.preheader ] ; 2 uses
+.lr.ph1630.a:                                     ; preds = %.lr.ph1630, %_ZN6casadi16SparsityInternal13postorder_dfsExxPxPKxS1_S1_.exit
+  %.01629 = phi i64 [ 0, %.lr.ph1630 ], [ %i.yk, %_ZN6casadi16SparsityInternal13postorder_dfsExxPxPKxS1_S1_.exit ] ; 4 uses
+  %.03711628 = phi i64 [ 0, %.lr.ph1630 ], [ %.1, %_ZN6casadi16SparsityInternal13postorder_dfsExxPxPKxS1_S1_.exit ] ; 2 uses
   %i.xu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0963.0, i64 %.01629
   %i.xv = load i64, ptr %i.xu, align 8, !tbaa !43
   %i.xw = icmp eq i64 %i.xv, -1
@@ -1083,7 +1094,7 @@ bb.dg:                                            ; preds = %bb.dj, %bb.df
 bb.dh:                                            ; preds = %bb.dg
   %i.yc = add nsw i64 %.023.i, -1
   %i.yd = add nsw i64 %.01922.i, 1
-  %i.ye = getelementptr inbounds [8 x i8], ptr %.pre1659, i64 %.01922.i
+  %i.ye = getelementptr inbounds [8 x i8], ptr %.pre16592260, i64 %.01922.i
   store i64 %i.xy, ptr %i.ye, align 8, !tbaa !43
   br label %bb.dj
 
@@ -1129,7 +1140,7 @@ _ZNSt6vectorIxSaIxEE6resizeEm.exit:               ; preds = %bb.dc, %bb.dd, %bb.
   br i1 %.not.i.i.i680, label %_ZNSt6vectorIxSaIxEED2Ev.exit681, label %bb.dk
 
 bb.dk:                                            ; preds = %_ZNSt6vectorIxSaIxEE6resizeEm.exit
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0930.0, i64 noundef %13) #30
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0930.0, i64 noundef %15) #30
   br label %_ZNSt6vectorIxSaIxEED2Ev.exit681
 
 _ZNSt6vectorIxSaIxEED2Ev.exit681:                 ; preds = %_ZNSt6vectorIxSaIxEE6resizeEm.exit, %bb.dk
@@ -1532,7 +1543,7 @@ bb.n:                                             ; preds = %_ZNSt6vectorIxSaIxE
 
 bb.o:                                             ; preds = %_ZNSt6vectorIxSaIxEE6resizeEm.exit190
   %.not340 = icmp eq i64 %i.bk, 40
-  br i1 %.not340, label %_ZNSt6vectorIxSaIxEE6resizeEm.exit194, label %bb.p
+  br i1 %.not340, label %.lr.ph.i.i.i.i.preheader, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bh, i64 40 ; 3 uses
@@ -1543,15 +1554,15 @@ _ZNSt6vectorIxSaIxEE6resizeEm.exit194.thread:     ; preds = %bb.p
   store ptr %i.bo, ptr %i.bf, align 8, !tbaa !55
   br label %.lr.ph.i.i.i.i.preheader
 
-_ZNSt6vectorIxSaIxEE6resizeEm.exit194:            ; preds = %._ZNSt6vectorIxSaIxEE6resizeEm.exit194_crit_edge, %bb.p, %bb.o
-  %16 = phi ptr [ %.pre385, %._ZNSt6vectorIxSaIxEE6resizeEm.exit194_crit_edge ], [ %i.bg, %bb.o ], [ %i.bg, %bb.p ] ; 2 uses
-  %17 = phi ptr [ %.pre384, %._ZNSt6vectorIxSaIxEE6resizeEm.exit194_crit_edge ], [ %i.bh, %bb.o ], [ %i.bh, %bb.p ] ; 2 uses
+_ZNSt6vectorIxSaIxEE6resizeEm.exit194:            ; preds = %._ZNSt6vectorIxSaIxEE6resizeEm.exit194_crit_edge, %bb.p
+  %16 = phi ptr [ %.pre385, %._ZNSt6vectorIxSaIxEE6resizeEm.exit194_crit_edge ], [ %i.bg, %bb.p ] ; 2 uses
+  %17 = phi ptr [ %.pre384, %._ZNSt6vectorIxSaIxEE6resizeEm.exit194_crit_edge ], [ %i.bh, %bb.p ] ; 2 uses
   %.not5.i.i.i.i = icmp eq ptr %17, %16
   br i1 %.not5.i.i.i.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEiEvT_S7_RKT0_.exit, label %.lr.ph.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt6vectorIxSaIxEE6resizeEm.exit194.thread, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194
-  %18 = phi ptr [ %i.bh, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194.thread ], [ %17, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194 ] ; 2 uses
-  %19 = phi ptr [ %i.bo, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194.thread ], [ %16, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194 ]
+.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.o, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194.thread, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194
+  %18 = phi ptr [ %17, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194 ], [ %i.bh, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194.thread ], [ %i.bh, %bb.o ] ; 2 uses
+  %19 = phi ptr [ %16, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194 ], [ %i.bo, %_ZNSt6vectorIxSaIxEE6resizeEm.exit194.thread ], [ %i.bg, %bb.o ]
   %i.bp = ptrtoaddr ptr %19 to i64
   %i.bq = ptrtoaddr ptr %18 to i64
   %i.br = add i64 %i.bp, -8
@@ -1584,7 +1595,7 @@ bb.q:                                             ; preds = %_ZSt4fillIN9__gnu_c
 
 bb.r:                                             ; preds = %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEiEvT_S7_RKT0_.exit
   %.not341 = icmp eq i64 %i.ca, 40
-  br i1 %.not341, label %_ZNSt6vectorIxSaIxEE6resizeEm.exit198, label %bb.s
+  br i1 %.not341, label %.lr.ph.i.i.i.i200.preheader, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bx, i64 40 ; 3 uses
@@ -1595,15 +1606,15 @@ _ZNSt6vectorIxSaIxEE6resizeEm.exit198.thread:     ; preds = %bb.s
   store ptr %i.ce, ptr %i.bv, align 8, !tbaa !55
   br label %.lr.ph.i.i.i.i200.preheader
 
-_ZNSt6vectorIxSaIxEE6resizeEm.exit198:            ; preds = %._ZNSt6vectorIxSaIxEE6resizeEm.exit198_crit_edge, %bb.s, %bb.r
-  %20 = phi ptr [ %.pre387, %._ZNSt6vectorIxSaIxEE6resizeEm.exit198_crit_edge ], [ %i.bw, %bb.r ], [ %i.bw, %bb.s ] ; 2 uses
-  %21 = phi ptr [ %.pre386, %._ZNSt6vectorIxSaIxEE6resizeEm.exit198_crit_edge ], [ %i.bx, %bb.r ], [ %i.bx, %bb.s ] ; 2 uses
+_ZNSt6vectorIxSaIxEE6resizeEm.exit198:            ; preds = %._ZNSt6vectorIxSaIxEE6resizeEm.exit198_crit_edge, %bb.s
+  %20 = phi ptr [ %.pre387, %._ZNSt6vectorIxSaIxEE6resizeEm.exit198_crit_edge ], [ %i.bw, %bb.s ] ; 2 uses
+  %21 = phi ptr [ %.pre386, %._ZNSt6vectorIxSaIxEE6resizeEm.exit198_crit_edge ], [ %i.bx, %bb.s ] ; 2 uses
   %.not5.i.i.i.i199 = icmp eq ptr %21, %20
   br i1 %.not5.i.i.i.i199, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEiEvT_S7_RKT0_.exit203, label %.lr.ph.i.i.i.i200.preheader
 
-.lr.ph.i.i.i.i200.preheader:                      ; preds = %_ZNSt6vectorIxSaIxEE6resizeEm.exit198.thread, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198
-  %22 = phi ptr [ %i.bx, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198.thread ], [ %21, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198 ] ; 2 uses
-  %23 = phi ptr [ %i.ce, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198.thread ], [ %20, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198 ]
+.lr.ph.i.i.i.i200.preheader:                      ; preds = %bb.r, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198.thread, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198
+  %22 = phi ptr [ %21, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198 ], [ %i.bx, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198.thread ], [ %i.bx, %bb.r ] ; 2 uses
+  %23 = phi ptr [ %20, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198 ], [ %i.ce, %_ZNSt6vectorIxSaIxEE6resizeEm.exit198.thread ], [ %i.bw, %bb.r ]
   %i.cf = ptrtoaddr ptr %23 to i64
   %i.cg = ptrtoaddr ptr %22 to i64
   %i.ch = add i64 %i.cf, -8

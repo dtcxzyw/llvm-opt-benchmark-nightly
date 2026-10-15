@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 array_get.exit:                                   ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32896 ; 7 uses
   %i.h = icmp ult i32 %i.d, %i.e
-  br i1 %i.h, label %array_get.exit46, label %bb.i
+  br i1 %i.h, label %array_get.exit46, label %bb.k
 
 array_get.exit46:                                 ; preds = %array_get.exit
   %i.i = load i32, ptr %i.g, align 8
@@ -244,11 +244,11 @@ array_get.exit48:                                 ; preds = %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.v
   br label %bb.i
 
-bb.i:                                             ; preds = %array_get.exit48, %array_get.exit46, %array_get.exit
-  %.pre.i = phi ptr [ %i.s, %array_get.exit48 ], [ %i.f, %array_get.exit46 ], [ %i.f, %array_get.exit ] ; 2 uses
-  %3 = phi i32 [ %i.q, %array_get.exit48 ], [ %i.e, %array_get.exit46 ], [ %i.e, %array_get.exit ] ; 3 uses
-  %.035 = phi i32 [ %i.p, %array_get.exit48 ], [ %i.d, %array_get.exit46 ], [ %i.d, %array_get.exit ] ; 7 uses
-  %.0 = phi ptr [ %i.w, %array_get.exit48 ], [ %i.l, %array_get.exit46 ], [ null, %array_get.exit ] ; 2 uses
+bb.i:                                             ; preds = %array_get.exit48, %array_get.exit46
+  %.pre.i = phi ptr [ %i.s, %array_get.exit48 ], [ %i.f, %array_get.exit46 ] ; 2 uses
+  %3 = phi i32 [ %i.q, %array_get.exit48 ], [ %i.e, %array_get.exit46 ] ; 3 uses
+  %.035 = phi i32 [ %i.p, %array_get.exit48 ], [ %i.d, %array_get.exit46 ] ; 3 uses
+  %.0 = phi ptr [ %i.w, %array_get.exit48 ], [ %i.l, %array_get.exit46 ] ; 2 uses
   %.not = icmp ult i32 %.035, %3
   br i1 %.not, label %bb.j, label %bb.k
 
@@ -257,8 +257,11 @@ bb.j:                                             ; preds = %bb.i
   %i.y = icmp ugt i32 %i.x, %1
   br i1 %i.y, label %bb.k, label %adjust_mapping_indices.exit
 
-bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.z = add i32 %3, 1
+bb.k:                                             ; preds = %array_get.exit, %bb.j, %bb.i
+  %.03576 = phi i32 [ %.035, %bb.i ], [ %.035, %bb.j ], [ %i.d, %array_get.exit ] ; 6 uses
+  %4 = phi i32 [ %3, %bb.i ], [ %3, %bb.j ], [ %i.e, %array_get.exit ] ; 2 uses
+  %.pre.i75 = phi ptr [ %.pre.i, %bb.i ], [ %.pre.i, %bb.j ], [ %i.f, %array_get.exit ] ; 2 uses
+  %i.z = add i32 %4, 1
   %i.aa = load i32, ptr %i.g, align 8             ; 4 uses
   %i.ab = mul i32 %i.z, %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 32888 ; 3 uses
@@ -269,7 +272,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 .thread.i:                                        ; preds = %bb.k
   %i.af = add i32 %i.ad, %i.aa
   %i.ag = zext i32 %i.af to i64
-  %i.ah = tail call ptr @g_realloc(ptr noundef nonnull %.pre.i, i64 noundef %i.ag) #22 ; 3 uses
+  %i.ah = tail call ptr @g_realloc(ptr noundef nonnull %.pre.i75, i64 noundef %i.ag) #22 ; 3 uses
   store ptr %i.ah, ptr %i.a, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
   %i.ai = load i32, ptr %i.ac, align 8
@@ -280,17 +283,17 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br label %array_insert.exit
 
 array_insert.exit:                                ; preds = %.thread.i, %bb.k
-  %i.ak = phi i32 [ %.pre32.i, %.thread.i ], [ %3, %bb.k ]
+  %i.ak = phi i32 [ %.pre32.i, %.thread.i ], [ %4, %bb.k ]
   %i.al = phi i32 [ %.pre31.i, %.thread.i ], [ %i.aa, %bb.k ] ; 3 uses
-  %i.am = phi ptr [ %i.ah, %.thread.i ], [ %.pre.i, %bb.k ] ; 2 uses
-  %i.an = add i32 %.035, 1
+  %i.am = phi ptr [ %i.ah, %.thread.i ], [ %.pre.i75, %bb.k ] ; 2 uses
+  %i.an = add i32 %.03576, 1
   %i.ao = mul i32 %i.al, %i.an
   %i.ap = zext i32 %i.ao to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ap
-  %i.ar = mul i32 %i.al, %.035
+  %i.ar = mul i32 %i.al, %.03576
   %i.as = zext i32 %i.ar to i64
   %i.at = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.as
-  %i.au = sub i32 %i.ak, %.035
+  %i.au = sub i32 %i.ak, %.03576
   %i.av = mul i32 %i.au, %i.al
   %i.aw = zext i32 %i.av to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.aq, ptr noundef nonnull align 1 %i.at, i64 noundef range(i64 0, 4294967296) %i.aw, i1 noundef false) #22
@@ -299,7 +302,7 @@ array_insert.exit:                                ; preds = %.thread.i, %bb.k
   store i32 %i.ay, ptr %i.b, align 4
   %i.az = load ptr, ptr %i.a, align 8
   %i.ba = load i32, ptr %i.g, align 8
-  %i.bb = mul i32 %i.ba, %.035
+  %i.bb = mul i32 %i.ba, %.03576
   %i.bc = zext i32 %i.bb to i64
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.bc ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 24
@@ -325,7 +328,7 @@ array_get.exit.i:                                 ; preds = %.lr.ph.i
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bj ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 12 ; 2 uses
   %i.bm = load i32, ptr %i.bl, align 4            ; 2 uses
-  %.not.i50 = icmp slt i32 %i.bm, %.035
+  %.not.i50 = icmp slt i32 %i.bm, %.03576
   br i1 %.not.i50, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %array_get.exit.i
@@ -343,7 +346,7 @@ bb.n:                                             ; preds = %bb.m, %array_get.ex
 bb.o:                                             ; preds = %bb.n
   %i.br = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 2 uses
   %i.bs = load i32, ptr %i.br, align 8            ; 2 uses
-  %.not16.i = icmp slt i32 %i.bs, %.035
+  %.not16.i = icmp slt i32 %i.bs, %.03576
   br i1 %.not16.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
