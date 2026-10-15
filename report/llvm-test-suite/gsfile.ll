@@ -20,7 +20,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.e = load i32, ptr %i.d, align 8, !tbaa !23   ; 2 uses
   %i.f = mul nsw i32 %.fr120, 3                   ; 4 uses
-  %i.g = tail call ptr @gs_malloc(i32 noundef %i.f, i32 noundef 1, ptr noundef nonnull @.str) #4 ; 19 uses
+  %i.g = tail call ptr @gs_malloc(i32 noundef %i.f, i32 noundef 1, ptr noundef nonnull @.str) #4 ; 20 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.m, label %bb.b
 
@@ -55,11 +55,12 @@ bb.f:                                             ; preds = %bb.b, %bb.e, %bb.d,
 
 .lr.ph102:                                        ; preds = %bb.f
   %i.p = sext i32 %.fr120 to i64                  ; 7 uses
-  %i.q = getelementptr i8, ptr %i.g, i64 %i.p     ; 3 uses
+  %i.q = getelementptr i8, ptr %i.g, i64 %i.p     ; 2 uses
   %i.r = ptrtoint ptr %i.g to i64
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %i.u = getelementptr inbounds i8, ptr %i.q, i64 %i.p ; 4 uses
+  %2 = shl nsw i64 %i.p, 1
+  %i.u = getelementptr inbounds i8, ptr %i.g, i64 %2 ; 4 uses
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 %i.p
   %i.w = icmp sgt i32 %.fr120, 0                  ; 2 uses
   switch i32 %i.e, label %.lr.ph102.split [

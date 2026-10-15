@@ -205,15 +205,14 @@ scalar.ph72.prol.loopexit:                        ; preds = %scalar.ph72.prol, %
   br i1 %i.sd, label %.loopexit, label %scalar.ph72
 
 .loopexit:                                        ; preds = %scalar.ph72.prol.loopexit, %scalar.ph72, %middle.block89
-  %i.se = add nsw i32 %i.iw, -1                   ; 2 uses
+  %i.se = add nsw i32 %i.iw, -1                   ; 3 uses
   %i.sf = shl nuw nsw i32 %i.se, 2
-  %i.sg = zext nneg i32 %i.sf to i64              ; 17 uses
+  %i.sg = zext nneg i32 %i.sf to i64              ; 16 uses
   %i.sh = shl i32 %i.iw, 2                        ; 2 uses
   %i.si = zext nneg i32 %i.sh to i64              ; 18 uses
   %i.sj = add i32 %i.sh, 4
   %i.sk = zext nneg i32 %i.sj to i64              ; 18 uses
   %.not.i39 = icmp eq i32 %i.iu, 0
-  %wide.trip.count339.i = zext nneg i32 %i.se to i64 ; 4 uses
   br i1 %.not.i39, label %.lr.ph297.i, label %.lr.ph262.i
 
 .lr.ph262.i:                                      ; preds = %.loopexit
@@ -221,7 +220,9 @@ scalar.ph72.prol.loopexit:                        ; preds = %scalar.ph72.prol, %
   %factor.op.fmul225.i = fmul reassoc nnan nsz arcp contract afn float %i.mx, 1.100000e-01 ; 11 uses
   %factor.op.fmul227.i = fmul reassoc nnan nsz arcp contract afn float %i.mx, 3.000000e-01 ; 11 uses
   %factor.op.fmul229.i = fmul reassoc nnan nsz arcp contract afn float %i.mx, 5.900000e-01 ; 11 uses
-  %i.sm = zext nneg i32 %i.sl to i64              ; 2 uses
+  %.idx.i = shl nuw nsw i64 %i.sg, 3
+  %6 = zext nneg i32 %i.sl to i64                 ; 2 uses
+  %i.sm = zext nneg i32 %i.se to i64              ; 4 uses
   %i.sn = insertelement <2 x float> poison, float %i.mx, i64 0
   %i.so = shufflevector <2 x float> %i.sn, <2 x float> poison, <2 x i32> zeroinitializer ; 11 uses
   %i.sp = insertelement <2 x float> poison, float %i.my, i64 0
@@ -237,7 +238,8 @@ scalar.ph72.prol.loopexit:                        ; preds = %scalar.ph72.prol, %
   %factor.op.fmul286.i = fmul reassoc nnan nsz arcp contract afn float %i.mx, 3.000000e-01 ; 4 uses
   %factor.op.fmul288.i = fmul reassoc nnan nsz arcp contract afn float %i.mx, 5.900000e-01 ; 4 uses
   %i.sv = add nsw i32 %i.iy, -1
-  %wide.trip.count344.i.a = zext nneg i32 %i.sv to i64
+  %wide.trip.count344.i = zext nneg i32 %i.sv to i64
+  %wide.trip.count344.i.a = zext nneg i32 %i.se to i64 ; 2 uses
   %i.sw = insertelement <2 x float> poison, float %i.mx, i64 0
   %i.sx = shufflevector <2 x float> %i.sw, <2 x float> poison, <2 x i32> zeroinitializer ; 6 uses
   %i.sy = insertelement <2 x float> poison, float %i.my, i64 0
@@ -640,8 +642,7 @@ _nearest_color.exit355.i:                         ; preds = %.loopexit.loopexit3
   %i.aei = load <4 x float>, ptr %i.aee, align 4, !tbaa !396, !alias.scope !486, !noalias !487
   %i.aej = fadd reassoc nsz arcp contract afn <4 x float> %i.aei, %i.aeh
   store <4 x float> %i.aej, ptr %i.aee, align 4, !tbaa !396, !alias.scope !486, !noalias !487
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.us, i64 %i.sg
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.sg
+  %7 = getelementptr inbounds nuw i8, ptr %i.us, i64 %.idx.i
   br i1 %.2.i181.i, label %.preheader.preheader.i358.i, label %.loopexit.loopexit32.i357.i
 
 .preheader.preheader.i358.i:                      ; preds = %_nearest_color.exit355.i
@@ -767,7 +768,7 @@ _nearest_color.exit363.i:                         ; preds = %.loopexit.loopexit3
   %i.aho = fadd reassoc nsz arcp contract afn <4 x float> %i.ahn, %i.ahm
   store <4 x float> %i.aho, ptr %i.ahl, align 4, !tbaa !396, !alias.scope !505, !noalias !506
   %indvars.iv.next329.i = add nuw nsw i64 %indvars.iv328.i, 2 ; 2 uses
-  %i.ahp = icmp samesign ult i64 %indvars.iv.next329.i, %i.sm
+  %i.ahp = icmp samesign ult i64 %indvars.iv.next329.i, %6
   br i1 %i.ahp, label %bb.x, label %._crit_edge263.i
 
 .lr.ph224.i:                                      ; preds = %_nearest_color.exit371.i, %.lr.ph224.preheader.i
@@ -926,11 +927,11 @@ _nearest_color.exit371.i:                         ; preds = %.loopexit.loopexit3
   %i.alt = fadd reassoc nsz arcp contract afn <4 x float> %i.als, %i.alr
   store <4 x float> %i.alt, ptr %i.akv, align 4, !tbaa !396, !alias.scope !530, !noalias !531
   %indvars.iv.next324.i = add nuw nsw i64 %indvars.iv323.i, 1 ; 2 uses
-  %exitcond327.not.i = icmp eq i64 %indvars.iv.next324.i, %wide.trip.count339.i
+  %exitcond327.not.i = icmp eq i64 %indvars.iv.next324.i, %i.sm
   br i1 %exitcond327.not.i, label %._crit_edge.i, label %.lr.ph224.i
 
 bb.y:                                             ; preds = %._crit_edge263.i
-  %i.alu = shl nuw nsw i64 %i.sm, 2
+  %i.alu = shl nuw nsw i64 %6, 2
   %i.alv = mul nuw i64 %i.alu, %wide.trip.count321.i ; 2 uses
   %i.alw = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.alv ; 2 uses
   %i.alx = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.alv ; 12 uses
@@ -1201,7 +1202,7 @@ _nearest_color.exit383.i:                         ; preds = %.loopexit.loopexit3
   %i.atf = fadd reassoc nsz arcp contract afn <4 x float> %i.ate, %i.atd
   store <4 x float> %i.atf, ptr %i.asf, align 4, !tbaa !396, !alias.scope !563, !noalias !564
   %indvars.iv.next332.i = add nuw nsw i64 %indvars.iv331.i, 1 ; 2 uses
-  %exitcond335.not.i = icmp eq i64 %indvars.iv.next332.i, %wide.trip.count339.i
+  %exitcond335.not.i = icmp eq i64 %indvars.iv.next332.i, %i.sm
   br i1 %exitcond335.not.i, label %._crit_edge272.i, label %.lr.ph271.i
 
 bb.z:                                             ; preds = %_nearest_color.exit391.i, %.lr.ph297.i
@@ -1378,7 +1379,7 @@ _nearest_color.exit391.i:                         ; preds = %.loopexit.loopexit3
   %i.axw = fadd reassoc nsz arcp contract afn <4 x float> %i.axv, %i.axu
   store <4 x float> %i.axw, ptr %i.axt, align 4, !tbaa !396, !alias.scope !583, !noalias !584
   %indvars.iv.next342.i = add nuw nsw i64 %indvars.iv341.i, 1 ; 2 uses
-  %exitcond345.not.i = icmp eq i64 %indvars.iv.next342.i, %wide.trip.count344.i.a
+  %exitcond345.not.i = icmp eq i64 %indvars.iv.next342.i, %wide.trip.count344.i
   br i1 %exitcond345.not.i, label %.lr.ph306.i, label %bb.z
 
 .lr.ph282.i:                                      ; preds = %_nearest_color.exit395.i, %.lr.ph282.preheader.i
@@ -1475,10 +1476,11 @@ _nearest_color.exit395.i:                         ; preds = %.loopexit.loopexit3
   %i.baj = fadd reassoc nsz arcp contract afn <4 x float> %i.bai, %i.bah
   store <4 x float> %i.baj, ptr %i.azj, align 4, !tbaa !396, !alias.scope !596, !noalias !597
   %indvars.iv.next337.i = add nuw nsw i64 %indvars.iv336.i, 1 ; 2 uses
-  %exitcond340.not.i = icmp eq i64 %indvars.iv.next337.i, %wide.trip.count339.i
+  %exitcond340.not.i = icmp eq i64 %indvars.iv.next337.i, %wide.trip.count344.i.a
   br i1 %exitcond340.not.i, label %._crit_edge283.i, label %.lr.ph282.i
 
 .lr.ph306.i:                                      ; preds = %_nearest_color.exit391.i, %_nearest_color.exit379.i, %._crit_edge263.i
+  %wide.trip.count349.i.pre-phi = phi i64 [ %i.sm, %._crit_edge263.i ], [ %i.sm, %_nearest_color.exit379.i ], [ %wide.trip.count344.i.a, %_nearest_color.exit391.i ]
   %factor.op.fmul302.pre-phi.i = phi float [ %factor.op.fmul229.i, %._crit_edge263.i ], [ %factor.op.fmul229.i, %_nearest_color.exit379.i ], [ %factor.op.fmul288.i, %_nearest_color.exit391.i ]
   %factor.op.fmul300.pre-phi.i = phi float [ %factor.op.fmul227.i, %._crit_edge263.i ], [ %factor.op.fmul227.i, %_nearest_color.exit379.i ], [ %factor.op.fmul286.i, %_nearest_color.exit391.i ]
   %factor.op.fmul298.pre-phi.i = phi float [ %factor.op.fmul225.i, %._crit_edge263.i ], [ %factor.op.fmul225.i, %_nearest_color.exit379.i ], [ %factor.op.fmul284.i, %_nearest_color.exit391.i ]
@@ -1605,7 +1607,7 @@ _nearest_color.exit403.i:                         ; preds = %.loopexit.loopexit3
   %i.bds = fadd reassoc nsz arcp contract afn <4 x float> %i.bdq, %i.bdr
   store <4 x float> %i.bds, ptr %i.bdl, align 4, !tbaa !396, !alias.scope !604, !noalias !605
   %indvars.iv.next347.i = add nuw nsw i64 %indvars.iv346.i, 1 ; 2 uses
-  %exitcond350.not.i = icmp eq i64 %indvars.iv.next347.i, %wide.trip.count339.i
+  %exitcond350.not.i = icmp eq i64 %indvars.iv.next347.i, %wide.trip.count349.i.pre-phi
   br i1 %exitcond350.not.i, label %._crit_edge307.i, label %bb.aa
 
 _process_floyd_steinberg.exit:                    ; preds = %.lr.ph.i41.prol.loopexit, %.lr.ph.i41, %_nearest_color.exit.i, %middle.block, %.loopexit.loopexit32.i397.i, %.preheader.preheader.i398.i, %.preheader.i, %.preheader209.i, %_process_random.exit, %_process_posterize.exit, %bb.a

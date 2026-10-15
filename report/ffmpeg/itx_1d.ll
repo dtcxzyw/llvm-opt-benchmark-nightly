@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
 inv_dct8.exit:                                    ; preds = %inv_dct8.exit.loopexit.unr-lcssa, %bb.g, %.preheader.i.i.preheader
   %.lcssa.sink = phi i32 [ 0, %.preheader.i.i.preheader ], [ %i.fp, %inv_dct8.exit.loopexit.unr-lcssa ], [ %i.gn, %bb.g ]
   %i.go = getelementptr inbounds [4 x i8], ptr %0, i64 %1
-  %3 = getelementptr inbounds [4 x i8], ptr %i.go, i64 %1
-  %4 = getelementptr inbounds [4 x i8], ptr %3, i64 %1
-  store i32 %.lcssa.sink, ptr %4, align 4, !tbaa !11
+  %.idx = shl i64 %1, 3
+  %3 = getelementptr inbounds i8, ptr %i.go, i64 %.idx
+  store i32 %.lcssa.sink, ptr %3, align 4, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
 }
@@ -287,7 +287,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 0, ptr %0, align 4, !tbaa !11
   %i.o = getelementptr inbounds [4 x i8], ptr %0, i64 %1 ; 2 uses
   store i32 0, ptr %i.o, align 4, !tbaa !11
-  %i.p = getelementptr inbounds [4 x i8], ptr %i.o, i64 %1 ; 3 uses
+  %i.p = getelementptr inbounds [4 x i8], ptr %i.o, i64 %1 ; 2 uses
   store i32 0, ptr %i.p, align 4, !tbaa !11
   %i.q = getelementptr inbounds [4 x i8], ptr %i.p, i64 %1 ; 2 uses
   store i32 0, ptr %i.q, align 4, !tbaa !11
@@ -540,7 +540,7 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
 
 ._crit_edge.us.i.i.2:                             ; preds = %bb.e, %._crit_edge.us.i.i.2.unr-lcssa
   %.lcssa24.a = phi i32 [ %i.ee, %._crit_edge.us.i.i.2.unr-lcssa ], [ %i.em, %bb.e ]
-  %i.en = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %1 ; 4 uses
+  %i.en = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %1 ; 2 uses
   store i32 %.lcssa24.a, ptr %i.en, align 4, !tbaa !11
   %xtraiter60 = and i64 %2, 3                     ; 3 uses
   %i.eo = icmp ult i64 %i.m, 3
@@ -943,14 +943,15 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   br i1 %epil.iter93.cmp.not, label %inv_dct8.exit, label %bb.o, !llvm.loop !34
 
 inv_dct8.exit:                                    ; preds = %inv_dct8.exit.loopexit.unr-lcssa, %bb.o, %.preheader.i.i.preheader
-  %3 = phi ptr [ %i.p, %.preheader.i.i.preheader ], [ %i.en, %bb.o ], [ %i.en, %inv_dct8.exit.loopexit.unr-lcssa ]
   %.lcssa.sink = phi i32 [ 0, %.preheader.i.i.preheader ], [ %i.mg, %inv_dct8.exit.loopexit.unr-lcssa ], [ %i.ne, %bb.o ]
-  %i.nf = getelementptr inbounds [4 x i8], ptr %3, i64 %1
-  %4 = getelementptr inbounds [4 x i8], ptr %i.nf, i64 %1
-  %5 = getelementptr inbounds [4 x i8], ptr %4, i64 %1
-  %6 = getelementptr inbounds [4 x i8], ptr %5, i64 %1
-  %7 = getelementptr inbounds [4 x i8], ptr %6, i64 %1
-  store i32 %.lcssa.sink, ptr %7, align 4, !tbaa !11
+  %i.nf = getelementptr inbounds [4 x i8], ptr %0, i64 %1
+  %.idx21 = shl i64 %1, 3
+  %3 = getelementptr inbounds i8, ptr %i.nf, i64 %.idx21
+  %.idx20 = shl i64 %1, 3
+  %4 = getelementptr inbounds i8, ptr %3, i64 %.idx20
+  %.idx = shl i64 %1, 3
+  %5 = getelementptr inbounds i8, ptr %4, i64 %.idx
+  store i32 %.lcssa.sink, ptr %5, align 4, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
 }
@@ -1038,7 +1039,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 0, ptr %i.r, align 4, !tbaa !11
   %i.s = getelementptr inbounds [4 x i8], ptr %i.r, i64 %1 ; 2 uses
   store i32 0, ptr %i.s, align 4, !tbaa !11
-  %i.t = getelementptr inbounds [4 x i8], ptr %i.s, i64 %1 ; 2 uses
+  %i.t = getelementptr inbounds [4 x i8], ptr %i.s, i64 %1 ; 3 uses
   store i32 0, ptr %i.t, align 4, !tbaa !11
   %i.u = getelementptr inbounds [4 x i8], ptr %i.t, i64 %1 ; 2 uses
   store i32 0, ptr %i.u, align 4, !tbaa !11
@@ -1046,7 +1047,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 0, ptr %i.v, align 4, !tbaa !11
   %i.w = getelementptr inbounds [4 x i8], ptr %i.v, i64 %1 ; 2 uses
   store i32 0, ptr %i.w, align 4, !tbaa !11
-  %i.x = getelementptr inbounds [4 x i8], ptr %i.w, i64 %1 ; 3 uses
+  %i.x = getelementptr inbounds [4 x i8], ptr %i.w, i64 %1 ; 2 uses
   store i32 0, ptr %i.x, align 4, !tbaa !11
   %i.y = getelementptr inbounds [4 x i8], ptr %i.x, i64 %1 ; 2 uses
   store i32 0, ptr %i.y, align 4, !tbaa !11
@@ -1449,7 +1450,7 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
 
 ._crit_edge.us.i.i.6:                             ; preds = %bb.m, %._crit_edge.us.i.i.6.unr-lcssa
   %.lcssa44.a = phi i32 [ %i.ky, %._crit_edge.us.i.i.6.unr-lcssa ], [ %i.lg, %bb.m ]
-  %i.lh = getelementptr inbounds [4 x i8], ptr %i.jr, i64 %1 ; 2 uses
+  %i.lh = getelementptr inbounds [4 x i8], ptr %i.jr, i64 %1 ; 4 uses
   store i32 %.lcssa44.a, ptr %i.lh, align 4, !tbaa !11
   %xtraiter116 = and i64 %2, 3                    ; 3 uses
   %i.li = icmp ult i64 %i.m, 3
@@ -1785,7 +1786,7 @@ bb.u:                                             ; preds = %bb.u, %.epil.prehea
 
 ._crit_edge.us.i.i.10:                            ; preds = %bb.u, %._crit_edge.us.i.i.10.unr-lcssa
   %.lcssa40.a = phi i32 [ %i.rk, %._crit_edge.us.i.i.10.unr-lcssa ], [ %i.rs, %bb.u ]
-  %i.rt = getelementptr inbounds [4 x i8], ptr %i.qd, i64 %1 ; 4 uses
+  %i.rt = getelementptr inbounds [4 x i8], ptr %i.qd, i64 %1 ; 2 uses
   store i32 %.lcssa40.a, ptr %i.rt, align 4, !tbaa !11
   %xtraiter148 = and i64 %2, 3                    ; 3 uses
   %i.ru = icmp ult i64 %i.m, 3
@@ -2188,13 +2189,17 @@ bb.ae:                                            ; preds = %bb.ae, %.epil.prehe
   br i1 %epil.iter181.cmp.not, label %inv_dct8.exit, label %bb.ae, !llvm.loop !53
 
 inv_dct8.exit:                                    ; preds = %inv_dct8.exit.loopexit.unr-lcssa, %bb.ae, %.preheader.i.i.preheader
-  %i.aal = phi ptr [ %i.x, %.preheader.i.i.preheader ], [ %i.rt, %bb.ae ], [ %i.rt, %inv_dct8.exit.loopexit.unr-lcssa ]
+  %i.aal = phi ptr [ %i.t, %.preheader.i.i.preheader ], [ %i.lh, %bb.ae ], [ %i.lh, %inv_dct8.exit.loopexit.unr-lcssa ]
   %.lcssa.sink = phi i32 [ 0, %.preheader.i.i.preheader ], [ %i.zm, %inv_dct8.exit.loopexit.unr-lcssa ], [ %i.aak, %bb.ae ]
   %i.aam = getelementptr inbounds [4 x i8], ptr %i.aal, i64 %1
-  %3 = getelementptr inbounds [4 x i8], ptr %i.aam, i64 %1
-  %4 = getelementptr inbounds [4 x i8], ptr %3, i64 %1
-  %5 = getelementptr inbounds [4 x i8], ptr %4, i64 %1
-  %6 = getelementptr inbounds [4 x i8], ptr %5, i64 %1
+  %.idx189 = shl i64 %1, 3
+  %3 = getelementptr inbounds i8, ptr %i.aam, i64 %.idx189
+  %.idx37 = shl i64 %1, 3
+  %4 = getelementptr inbounds i8, ptr %3, i64 %.idx37
+  %.idx36 = shl i64 %1, 3
+  %5 = getelementptr inbounds i8, ptr %4, i64 %.idx36
+  %.idx = shl i64 %1, 3
+  %6 = getelementptr inbounds i8, ptr %5, i64 %.idx
   store i32 %.lcssa.sink, ptr %6, align 4, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
@@ -2597,9 +2602,9 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
 inv_dst7.exit:                                    ; preds = %inv_dst7.exit.loopexit.unr-lcssa, %bb.g, %.preheader.i.i.preheader
   %.lcssa.sink = phi i32 [ 0, %.preheader.i.i.preheader ], [ %i.fp, %inv_dst7.exit.loopexit.unr-lcssa ], [ %i.gn, %bb.g ]
   %i.go = getelementptr inbounds [4 x i8], ptr %0, i64 %1
-  %3 = getelementptr inbounds [4 x i8], ptr %i.go, i64 %1
-  %4 = getelementptr inbounds [4 x i8], ptr %3, i64 %1
-  store i32 %.lcssa.sink, ptr %4, align 4, !tbaa !11
+  %.idx = shl i64 %1, 3
+  %3 = getelementptr inbounds i8, ptr %i.go, i64 %.idx
+  store i32 %.lcssa.sink, ptr %3, align 4, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
 }
@@ -2679,7 +2684,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 0, ptr %0, align 4, !tbaa !11
   %i.o = getelementptr inbounds [4 x i8], ptr %0, i64 %1 ; 2 uses
   store i32 0, ptr %i.o, align 4, !tbaa !11
-  %i.p = getelementptr inbounds [4 x i8], ptr %i.o, i64 %1 ; 3 uses
+  %i.p = getelementptr inbounds [4 x i8], ptr %i.o, i64 %1 ; 2 uses
   store i32 0, ptr %i.p, align 4, !tbaa !11
   %i.q = getelementptr inbounds [4 x i8], ptr %i.p, i64 %1 ; 2 uses
   store i32 0, ptr %i.q, align 4, !tbaa !11
@@ -2932,7 +2937,7 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
 
 ._crit_edge.us.i.i.2:                             ; preds = %bb.e, %._crit_edge.us.i.i.2.unr-lcssa
   %.lcssa24.a = phi i32 [ %i.ee, %._crit_edge.us.i.i.2.unr-lcssa ], [ %i.em, %bb.e ]
-  %i.en = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %1 ; 4 uses
+  %i.en = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %1 ; 2 uses
   store i32 %.lcssa24.a, ptr %i.en, align 4, !tbaa !11
   %xtraiter60 = and i64 %2, 3                     ; 3 uses
   %i.eo = icmp ult i64 %i.m, 3
@@ -3335,14 +3340,15 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   br i1 %epil.iter93.cmp.not, label %inv_dst7.exit, label %bb.o, !llvm.loop !75
 
 inv_dst7.exit:                                    ; preds = %inv_dst7.exit.loopexit.unr-lcssa, %bb.o, %.preheader.i.i.preheader
-  %3 = phi ptr [ %i.p, %.preheader.i.i.preheader ], [ %i.en, %bb.o ], [ %i.en, %inv_dst7.exit.loopexit.unr-lcssa ]
   %.lcssa.sink = phi i32 [ 0, %.preheader.i.i.preheader ], [ %i.mg, %inv_dst7.exit.loopexit.unr-lcssa ], [ %i.ne, %bb.o ]
-  %i.nf = getelementptr inbounds [4 x i8], ptr %3, i64 %1
-  %4 = getelementptr inbounds [4 x i8], ptr %i.nf, i64 %1
-  %5 = getelementptr inbounds [4 x i8], ptr %4, i64 %1
-  %6 = getelementptr inbounds [4 x i8], ptr %5, i64 %1
-  %7 = getelementptr inbounds [4 x i8], ptr %6, i64 %1
-  store i32 %.lcssa.sink, ptr %7, align 4, !tbaa !11
+  %i.nf = getelementptr inbounds [4 x i8], ptr %0, i64 %1
+  %.idx21 = shl i64 %1, 3
+  %3 = getelementptr inbounds i8, ptr %i.nf, i64 %.idx21
+  %.idx20 = shl i64 %1, 3
+  %4 = getelementptr inbounds i8, ptr %3, i64 %.idx20
+  %.idx = shl i64 %1, 3
+  %5 = getelementptr inbounds i8, ptr %4, i64 %.idx
+  store i32 %.lcssa.sink, ptr %5, align 4, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
 }
@@ -3430,7 +3436,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 0, ptr %i.r, align 4, !tbaa !11
   %i.s = getelementptr inbounds [4 x i8], ptr %i.r, i64 %1 ; 2 uses
   store i32 0, ptr %i.s, align 4, !tbaa !11
-  %i.t = getelementptr inbounds [4 x i8], ptr %i.s, i64 %1 ; 2 uses
+  %i.t = getelementptr inbounds [4 x i8], ptr %i.s, i64 %1 ; 3 uses
   store i32 0, ptr %i.t, align 4, !tbaa !11
   %i.u = getelementptr inbounds [4 x i8], ptr %i.t, i64 %1 ; 2 uses
   store i32 0, ptr %i.u, align 4, !tbaa !11
@@ -3438,7 +3444,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 0, ptr %i.v, align 4, !tbaa !11
   %i.w = getelementptr inbounds [4 x i8], ptr %i.v, i64 %1 ; 2 uses
   store i32 0, ptr %i.w, align 4, !tbaa !11
-  %i.x = getelementptr inbounds [4 x i8], ptr %i.w, i64 %1 ; 3 uses
+  %i.x = getelementptr inbounds [4 x i8], ptr %i.w, i64 %1 ; 2 uses
   store i32 0, ptr %i.x, align 4, !tbaa !11
   %i.y = getelementptr inbounds [4 x i8], ptr %i.x, i64 %1 ; 2 uses
   store i32 0, ptr %i.y, align 4, !tbaa !11
@@ -3841,7 +3847,7 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
 
 ._crit_edge.us.i.i.6:                             ; preds = %bb.m, %._crit_edge.us.i.i.6.unr-lcssa
   %.lcssa44.a = phi i32 [ %i.ky, %._crit_edge.us.i.i.6.unr-lcssa ], [ %i.lg, %bb.m ]
-  %i.lh = getelementptr inbounds [4 x i8], ptr %i.jr, i64 %1 ; 2 uses
+  %i.lh = getelementptr inbounds [4 x i8], ptr %i.jr, i64 %1 ; 4 uses
   store i32 %.lcssa44.a, ptr %i.lh, align 4, !tbaa !11
   %xtraiter116 = and i64 %2, 3                    ; 3 uses
   %i.li = icmp ult i64 %i.m, 3
@@ -4177,7 +4183,7 @@ bb.u:                                             ; preds = %bb.u, %.epil.prehea
 
 ._crit_edge.us.i.i.10:                            ; preds = %bb.u, %._crit_edge.us.i.i.10.unr-lcssa
   %.lcssa40.a = phi i32 [ %i.rk, %._crit_edge.us.i.i.10.unr-lcssa ], [ %i.rs, %bb.u ]
-  %i.rt = getelementptr inbounds [4 x i8], ptr %i.qd, i64 %1 ; 4 uses
+  %i.rt = getelementptr inbounds [4 x i8], ptr %i.qd, i64 %1 ; 2 uses
   store i32 %.lcssa40.a, ptr %i.rt, align 4, !tbaa !11
   %xtraiter148 = and i64 %2, 3                    ; 3 uses
   %i.ru = icmp ult i64 %i.m, 3
@@ -4580,13 +4586,17 @@ bb.ae:                                            ; preds = %bb.ae, %.epil.prehe
   br i1 %epil.iter181.cmp.not, label %inv_dst7.exit, label %bb.ae, !llvm.loop !94
 
 inv_dst7.exit:                                    ; preds = %inv_dst7.exit.loopexit.unr-lcssa, %bb.ae, %.preheader.i.i.preheader
-  %i.aal = phi ptr [ %i.x, %.preheader.i.i.preheader ], [ %i.rt, %bb.ae ], [ %i.rt, %inv_dst7.exit.loopexit.unr-lcssa ]
+  %i.aal = phi ptr [ %i.t, %.preheader.i.i.preheader ], [ %i.lh, %bb.ae ], [ %i.lh, %inv_dst7.exit.loopexit.unr-lcssa ]
   %.lcssa.sink = phi i32 [ 0, %.preheader.i.i.preheader ], [ %i.zm, %inv_dst7.exit.loopexit.unr-lcssa ], [ %i.aak, %bb.ae ]
   %i.aam = getelementptr inbounds [4 x i8], ptr %i.aal, i64 %1
-  %3 = getelementptr inbounds [4 x i8], ptr %i.aam, i64 %1
-  %4 = getelementptr inbounds [4 x i8], ptr %3, i64 %1
-  %5 = getelementptr inbounds [4 x i8], ptr %4, i64 %1
-  %6 = getelementptr inbounds [4 x i8], ptr %5, i64 %1
+  %.idx189 = shl i64 %1, 3
+  %3 = getelementptr inbounds i8, ptr %i.aam, i64 %.idx189
+  %.idx37 = shl i64 %1, 3
+  %4 = getelementptr inbounds i8, ptr %3, i64 %.idx37
+  %.idx36 = shl i64 %1, 3
+  %5 = getelementptr inbounds i8, ptr %4, i64 %.idx36
+  %.idx = shl i64 %1, 3
+  %6 = getelementptr inbounds i8, ptr %5, i64 %.idx
   store i32 %.lcssa.sink, ptr %6, align 4, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
