@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.v, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.y = fadd <2 x float> %i.q, %i.s              ; 2 uses
   %i.z = load <2 x float>, ptr %i.w, align 4, !tbaa !16 ; 3 uses
   %i.aa = fcmp ole <2 x float> %i.z, %i.q
@@ -215,8 +215,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ae = fcmp oge <2 x float> %i.ad, %i.y
   %i.af = select <2 x i1> %i.ae, <2 x float> %i.ad, <2 x float> %i.y
   %i.ag = fsub <2 x float> %i.af, %i.ab
-  store <2 x float> %i.ab, ptr %i.w, align 4, !tbaa !16
-  store <2 x float> %i.ag, ptr %i.x, align 4, !tbaa !16
+  %2 = shufflevector <2 x float> %i.ab, <2 x float> %i.ag, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.w, align 4, !tbaa !16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -335,7 +335,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.au = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.av = load <2 x float>, ptr %4, align 4, !tbaa !16 ; 3 uses
   %i.aw = fcmp ole <2 x float> %i.av, %i.ak
   %i.ax = select <2 x i1> %i.aw, <2 x float> %i.av, <2 x float> %i.ak ; 2 uses
@@ -344,8 +344,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ba = fcmp oge <2 x float> %i.az, %i.am
   %i.bb = select <2 x i1> %i.ba, <2 x float> %i.az, <2 x float> %i.am
   %i.bc = fsub <2 x float> %i.bb, %i.ax
-  store <2 x float> %i.ax, ptr %4, align 4, !tbaa !16
-  store <2 x float> %i.bc, ptr %i.au, align 4, !tbaa !16
+  %6 = shufflevector <2 x float> %i.ax, <2 x float> %i.bc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %4, align 4, !tbaa !16
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
