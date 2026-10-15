@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.o, %_ZNK5Ipopt14
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 56
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !305
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 12
-  %i.dg = load i32, ptr %i.df, align 4, !tbaa !307 ; 3 uses
+  %i.dg = load i32, ptr %i.df, align 4, !tbaa !307 ; 2 uses
   %i.dh = icmp sgt i32 %i.dg, 0
   br i1 %i.dh, label %bb.q, label %_ZNK5Ipopt6Vector3DotERKS0_.exit.a
 
@@ -217,7 +217,7 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.r unwind label %_ZN5Ipopt8SmartPtrINS_6VectorEED2Ev.exit388.thread
 
 bb.r:                                             ; preds = %bb.q
-  %i.dn = load ptr, ptr %8, align 8, !tbaa !310   ; 22 uses
+  %i.dn = load ptr, ptr %8, align 8, !tbaa !310   ; 21 uses
   %.not.i.i.i130 = icmp eq ptr %i.dn, null
   br i1 %.not.i.i.i130, label %_ZN5Ipopt8SmartPtrIKNS_6MatrixEED2Ev.exit, label %bb.s
 
@@ -243,7 +243,7 @@ _ZN5Ipopt8SmartPtrIKNS_6MatrixEED2Ev.exit:        ; preds = %bb.r, %bb.s, %bb.t
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 16
   %i.dz = load ptr, ptr %i.dy, align 8
   %i.ea = invoke noundef ptr %i.dz(ptr noundef nonnull align 8 dereferenceable(16) %i.dw)
-          to label %_ZNK5Ipopt6Vector7MakeNewEv.exit unwind label %bb.bf, !inline_history !235 ; 54 uses
+          to label %_ZNK5Ipopt6Vector7MakeNewEv.exit unwind label %bb.bf, !inline_history !235 ; 53 uses
 
 _ZNK5Ipopt6Vector7MakeNewEv.exit:                 ; preds = %_ZN5Ipopt8SmartPtrIKNS_6MatrixEED2Ev.exit
   %.not.i.i133 = icmp eq ptr %i.ea, null
@@ -435,7 +435,7 @@ _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit:        ; preds = %_ZNK5Ipopt6Matrix15
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 16
   %i.hr = load ptr, ptr %i.hq, align 8
   %i.hs = invoke noundef ptr %i.hr(ptr noundef nonnull align 8 dereferenceable(16) %i.ho)
-          to label %_ZNK5Ipopt6Vector7MakeNewEv.exit145 unwind label %bb.bf, !inline_history !235 ; 43 uses
+          to label %_ZNK5Ipopt6Vector7MakeNewEv.exit145 unwind label %bb.bf, !inline_history !235 ; 42 uses
 
 _ZNK5Ipopt6Vector7MakeNewEv.exit145:              ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit
   %.not.i.i146 = icmp eq ptr %i.hs, null
@@ -658,7 +658,7 @@ bb.az:                                            ; preds = %bb.ay
 _ZNK5Ipopt6Vector4Nrm2Ev.exit.i:                  ; preds = %.noexc164, %._crit_edge.i.i
   %i.lq = phi double [ %.pre.i.i, %._crit_edge.i.i ], [ %i.ln, %.noexc164 ] ; 2 uses
   %i.lr = fmul double %i.lq, %i.lq
-  br label %_ZNK5Ipopt6Vector3DotERKS0_.exit.a
+  br label %_ZNK5Ipopt6Vector3DotERKS0_.exit
 
 bb.ba:                                            ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit162
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #20
@@ -684,7 +684,11 @@ bb.bb:                                            ; preds = %.noexc165
 .noexc167:                                        ; preds = %.noexc166, %.noexc165
   %i.ly = load double, ptr %i.d, align 8, !tbaa !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #20
-  %12 = fadd double %i.ly, 0.000000e+00
+  br label %_ZNK5Ipopt6Vector3DotERKS0_.exit
+
+_ZNK5Ipopt6Vector3DotERKS0_.exit:                 ; preds = %.noexc167, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i
+  %.0.i = phi double [ %i.lr, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i ], [ %i.ly, %.noexc167 ]
+  %12 = fadd double %.0.i, 0.000000e+00
   br label %_ZNK5Ipopt6Vector3DotERKS0_.exit.a
 
 bb.bc:                                            ; preds = %bb.a
@@ -734,12 +738,12 @@ bb.bh:                                            ; preds = %_ZNK5Ipopt14Compoun
   %i.ml = icmp eq i32 %i.mk, 0
   br i1 %i.ml, label %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit179.thread.sink.split, label %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit179.thread
 
-_ZNK5Ipopt6Vector3DotERKS0_.exit.a:               ; preds = %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i, %.noexc167, %bb.p
-  %.sroa.0458.1 = phi ptr [ null, %bb.p ], [ %i.ea, %.noexc167 ], [ %i.ea, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i ] ; 7 uses
-  %.sroa.0440.1 = phi ptr [ null, %bb.p ], [ %i.hs, %.noexc167 ], [ %i.hs, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i ] ; 12 uses
-  %.sroa.0430.1 = phi ptr [ null, %bb.p ], [ %i.dn, %.noexc167 ], [ %i.dn, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i ] ; 6 uses
-  %.028 = phi i32 [ 0, %bb.p ], [ %i.dg, %.noexc167 ], [ %i.dg, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i ] ; 2 uses
-  %.0 = phi double [ 0.000000e+00, %bb.p ], [ %12, %.noexc167 ], [ %i.lr, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i ] ; 2 uses
+_ZNK5Ipopt6Vector3DotERKS0_.exit.a:               ; preds = %bb.p, %_ZNK5Ipopt6Vector3DotERKS0_.exit
+  %.sroa.0458.1 = phi ptr [ %i.ea, %_ZNK5Ipopt6Vector3DotERKS0_.exit ], [ null, %bb.p ] ; 7 uses
+  %.sroa.0440.1 = phi ptr [ %i.hs, %_ZNK5Ipopt6Vector3DotERKS0_.exit ], [ null, %bb.p ] ; 12 uses
+  %.sroa.0430.1 = phi ptr [ %i.dn, %_ZNK5Ipopt6Vector3DotERKS0_.exit ], [ null, %bb.p ] ; 6 uses
+  %.028 = phi i32 [ %i.dg, %_ZNK5Ipopt6Vector3DotERKS0_.exit ], [ 0, %bb.p ] ; 2 uses
+  %.0 = phi double [ %12, %_ZNK5Ipopt6Vector3DotERKS0_.exit ], [ 0.000000e+00, %bb.p ] ; 2 uses
   %i.mm = load ptr, ptr %5, align 8, !tbaa !46
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mm, i64 56
   %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !305

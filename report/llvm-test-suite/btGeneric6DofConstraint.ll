@@ -204,7 +204,7 @@ _Z16matrixToEulerXYZRK11btMatrix3x3R9btVector3.exit: ; preds = %bb.c, %bb.d, %bb
   %i.et = extractelement <2 x float> %i.em, i64 0 ; 2 uses
   %i.eu = tail call float @llvm.fmuladd.f32(float %i.et, float %i.et, float %i.es)
   %i.ev = tail call noundef float @llvm.fmuladd.f32(float %i.en, float %i.en, float %i.eu)
-  %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.ev)
+  %sqrt.i.i = tail call noundef float @sqrtf(float noundef %i.ev) #19, !tbaa !7
   %i.ew = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
   %i.ex = insertelement <2 x float> poison, float %i.ew, i64 0
   %i.ey = shufflevector <2 x float> %i.ex, <2 x float> poison, <2 x i32> zeroinitializer
@@ -218,9 +218,14 @@ _Z16matrixToEulerXYZRK11btMatrix3x3R9btVector3.exit: ; preds = %bb.c, %bb.d, %bb
   %i.fe = insertelement <2 x float> %i.fd, float %i.ej, i64 0 ; 2 uses
   %i.ff = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fe, <2 x float> %i.fe, <2 x float> %i.fc)
   %i.fg = insertelement <2 x float> %i.ed, float %i.er, i64 1 ; 2 uses
-  %i.fh = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fg, <2 x float> %i.fg, <2 x float> %i.ff)
-  %1 = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.fh)
-  %i.fi = fdiv <2 x float> splat (float 1.000000e+00), %1 ; 4 uses
+  %i.fh = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fg, <2 x float> %i.fg, <2 x float> %i.ff) ; 2 uses
+  %1 = extractelement <2 x float> %i.fh, i64 0
+  %2 = tail call noundef float @sqrtf(float noundef %1) #19, !tbaa !7
+  %3 = extractelement <2 x float> %i.fh, i64 1
+  %4 = tail call noundef float @sqrtf(float noundef %3) #19, !tbaa !7
+  %5 = insertelement <2 x float> poison, float %2, i64 0
+  %6 = insertelement <2 x float> %5, float %4, i64 1
+  %i.fi = fdiv <2 x float> splat (float 1.000000e+00), %6 ; 4 uses
   %i.fj = extractelement <2 x float> %i.fi, i64 0
   %i.fk = fmul float %i.ej, %i.fj
   store float %i.fk, ptr %i.dq, align 8, !tbaa !11
@@ -623,6 +628,9 @@ declare float @atan2f(float noundef, float noundef) local_unnamed_addr #16
 declare float @asinf(float noundef) local_unnamed_addr #16
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #16
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @fmodf(float noundef, float noundef) local_unnamed_addr #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -635,16 +643,10 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #17
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #7

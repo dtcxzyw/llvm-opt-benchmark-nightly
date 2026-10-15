@@ -204,27 +204,27 @@ _Z18get_dym_face_indexPKN12_GLOBAL__N_116pj_airocean_dataEPK5PJ_XY.exit: ; preds
   %i.bz = load <2 x double>, ptr %i.bq, align 8, !tbaa !40, !noalias !69 ; 2 uses
   %i.ca = insertelement <2 x double> poison, double %1, i64 0
   %i.cb = shufflevector <2 x double> %i.ca, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cc = insertelement <2 x double> %i.by, double %i.bs, i64 0
+  %3 = shufflevector <2 x double> %i.by, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.cc = insertelement <2 x double> %3, double %i.bs, i64 1
   %i.cd = fmul <2 x double> %i.cb, %i.cc
-  %3 = shufflevector <2 x double> %i.bz, <2 x double> %i.by, <2 x i32> <i32 1, i32 2>
+  %4 = shufflevector <2 x double> %i.by, <2 x double> %i.bz, <2 x i32> <i32 0, i32 3>
   %i.ce = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %i.ce, <2 x double> %i.cd)
-  %4 = shufflevector <2 x double> %i.bz, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %i.cg = insertelement <2 x double> %4, double %i.bu, i64 0
+  %i.cf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %i.ce, <2 x double> %i.cd)
+  %i.cg = insertelement <2 x double> %i.bz, double %i.bu, i64 1
   %i.ch = fadd <2 x double> %i.cg, %i.cf          ; 5 uses
   %i.ci = load <2 x double>, ptr %i.bv, align 8, !tbaa !40, !noalias !69 ; 2 uses
-  %5 = shufflevector <2 x double> %i.ch, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %6 = insertelement <2 x double> %5, double %1, i64 0
-  %7 = shufflevector <2 x double> %i.ci, <2 x double> %i.ch, <2 x i32> <i32 1, i32 2>
-  %8 = fmul <2 x double> %6, %7
-  %9 = shufflevector <2 x double> %i.ci, <2 x double> %i.ch, <2 x i32> <i32 0, i32 3>
-  %i.cj = insertelement <2 x double> %i.ch, double %0, i64 0
-  %i.ck = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %i.cj, <2 x double> %8) ; 2 uses
+  %5 = insertelement <2 x double> %i.ch, double %1, i64 0
+  %6 = shufflevector <2 x double> %i.ch, <2 x double> %i.ci, <2 x i32> <i32 3, i32 1>
+  %7 = fmul <2 x double> %5, %6
+  %8 = shufflevector <2 x double> %i.ch, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %9 = shufflevector <2 x double> %i.ci, <2 x double> %i.ch, <2 x i32> <i32 0, i32 2>
+  %i.cj = insertelement <2 x double> %8, double %0, i64 0
+  %i.ck = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %i.cj, <2 x double> %7) ; 2 uses
   %i.cl = extractelement <2 x double> %i.ck, i64 0
   %i.cm = fadd double %i.bx, %i.cl                ; 3 uses
   %i.cn = extractelement <2 x double> %i.ck, i64 1
   %i.co = tail call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double %i.cn)
-  %sqrt = tail call double @llvm.sqrt.f64(double %i.co) ; 2 uses
+  %sqrt = tail call double @sqrt(double noundef %i.co) #10 ; 2 uses
   %i.cp = insertelement <2 x double> poison, double %sqrt, i64 0
   %i.cq = shufflevector <2 x double> %i.cp, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cr = fdiv <2 x double> %i.ch, %i.cq          ; 2 uses
@@ -234,7 +234,7 @@ _Z18get_dym_face_indexPKN12_GLOBAL__N_116pj_airocean_dataEPK5PJ_XY.exit: ; preds
   %i.cv = fadd double %i.cu, f0xBFF921FB54442D18  ; 3 uses
   %i.cw = extractelement <2 x double> %i.cr, i64 0
   %i.cx = extractelement <2 x double> %i.cr, i64 1
-  %i.cy = tail call double @atan2(double noundef %i.cw, double noundef %i.cx) #10 ; 2 uses
+  %i.cy = tail call double @atan2(double noundef %i.cx, double noundef %i.cw) #10 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %2, i64 216
   %i.da = load double, ptr %i.cz, align 8, !tbaa !44
   %i.db = fcmp une double %i.da, 0.000000e+00
@@ -635,9 +635,6 @@ declare double @sin(double noundef) local_unnamed_addr #7
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @cos(double noundef) local_unnamed_addr #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #6

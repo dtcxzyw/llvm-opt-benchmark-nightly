@@ -205,14 +205,18 @@ bb.ak:                                            ; preds = %.thread.i, %bb.aj
   %.0388643.i = phi double [ %.0388644.i, %.thread.i ], [ %.0388645.i, %bb.aj ] ; 2 uses
   %i.li = phi i1 [ true, %.thread.i ], [ false, %bb.aj ] ; 4 uses
   %.0394.i = phi nsz float [ %i.lh, %.thread.i ], [ undef, %bb.aj ] ; 3 uses
-  %i.lj = load i32, ptr %i.bp, align 8, !tbaa !34 ; 6 uses
-  %1 = add nsw i32 %i.lj, -8
+  %i.lj = load i32, ptr %i.bp, align 8, !tbaa !34 ; 7 uses
   %i.lk = icmp sgt i32 %i.lj, 8
   br i1 %i.lk, label %.lr.ph.i, label %.thread474.thread.i
 
 .lr.ph.i:                                         ; preds = %bb.ak
+  %1 = add nsw i32 %i.lj, -8
   %i.ll = load ptr, ptr %i.bq, align 8, !tbaa !35 ; 9 uses
   %i.lm = fpext nsz float %.0394.i to double      ; 4 uses
+  %2 = zext nneg i32 %1 to i64
+  %3 = add nsw i32 %i.lj, -9
+  %4 = and i32 %3, -8
+  %5 = add nuw nsw i32 %4, 8
   %i.ln = add nsw i32 %i.lj, -1
   br label %bb.al
 
@@ -510,17 +514,16 @@ bb.ax:                                            ; preds = %bb.au
   br label %.thread474.i
 
 bb.ay:                                            ; preds = %.lr.ph533.i
-  %indvars.iv.next589.i = add nuw i64 %indvars.iv588.i, 1 ; 2 uses
+  %indvars.iv.next589.i = add nuw nsw i64 %indvars.iv588.i, 1 ; 2 uses
   %exitcond599.not.i = icmp eq i64 %indvars.iv.next589.i, %wide.trip.count598.i
   br i1 %exitcond599.not.i, label %.thread474.loopexit.i, label %.lr.ph533.i, !llvm.loop !46
 
 bb.az:                                            ; preds = %bb.at
   %indvars.iv.next584.i = add nuw nsw i64 %indvars.iv583.i, 8 ; 2 uses
-  %indvars585.i = trunc i64 %indvars.iv.next584.i to i32 ; 2 uses
-  %2 = icmp sgt i32 %1, %indvars585.i
+  %6 = icmp samesign ult i64 %indvars.iv.next584.i, %2
   %indvars.iv.next591.i = add i32 %indvars.iv590.i, 8
   %indvars.iv.next594.i = add i32 %indvars.iv593.i, -8
-  br i1 %2, label %bb.al, label %.thread474.thread.i, !llvm.loop !47
+  br i1 %6, label %bb.al, label %.thread474.thread.i, !llvm.loop !47
 
 .thread474.loopexit.i:                            ; preds = %bb.ay
   %i.tw = add i32 %indvars.iv590.i, %indvars.iv593.i
@@ -556,7 +559,7 @@ bb.az:                                            ; preds = %bb.at
 .thread474.thread.i:                              ; preds = %bb.az, %.thread474.thread.loopexit.split.loop.exit684.i, %.thread474.thread.loopexit.split.loop.exit680.i, %.thread474.thread.loopexit.split.loop.exit676.i, %.thread474.thread.loopexit.split.loop.exit.i, %.thread474.i, %.thread474.loopexit.i, %bb.au, %.preheader489.i, %bb.ak
   %.5387656.i = phi double [ %i.tz, %.thread474.i ], [ %i.qz, %bb.au ], [ %.0382646.i, %bb.ak ], [ %i.qf, %.preheader489.i ], [ %i.qz, %.thread474.loopexit.i ], [ %i.me, %.thread474.thread.loopexit.split.loop.exit684.i ], [ %i.qf, %.thread474.thread.loopexit.split.loop.exit.i ], [ %i.ow, %.thread474.thread.loopexit.split.loop.exit676.i ], [ %i.nn, %.thread474.thread.loopexit.split.loop.exit680.i ], [ %i.qf, %bb.az ]
   %.5393655.i = phi double [ %i.ty, %.thread474.i ], [ %i.rb, %bb.au ], [ %.0388643.i, %bb.ak ], [ %i.qh, %.preheader489.i ], [ %i.rb, %.thread474.loopexit.i ], [ %i.mg, %.thread474.thread.loopexit.split.loop.exit684.i ], [ %i.qh, %.thread474.thread.loopexit.split.loop.exit.i ], [ %i.oy, %.thread474.thread.loopexit.split.loop.exit676.i ], [ %i.np, %.thread474.thread.loopexit.split.loop.exit680.i ], [ %i.qh, %bb.az ]
-  %.3398654.i = phi i32 [ %i.re, %.thread474.i ], [ %i.re, %bb.au ], [ 0, %bb.ak ], [ %indvars586.le699.i, %.preheader489.i ], [ %i.tw, %.thread474.loopexit.i ], [ %i.ud, %.thread474.thread.loopexit.split.loop.exit684.i ], [ %i.ua, %.thread474.thread.loopexit.split.loop.exit.i ], [ %i.ub, %.thread474.thread.loopexit.split.loop.exit676.i ], [ %i.uc, %.thread474.thread.loopexit.split.loop.exit680.i ], [ %indvars585.i, %bb.az ] ; 7 uses
+  %.3398654.i = phi i32 [ %i.re, %.thread474.i ], [ %i.re, %bb.au ], [ 0, %bb.ak ], [ %indvars586.le699.i, %.preheader489.i ], [ %i.tw, %.thread474.loopexit.i ], [ %i.ud, %.thread474.thread.loopexit.split.loop.exit684.i ], [ %i.ua, %.thread474.thread.loopexit.split.loop.exit.i ], [ %i.ub, %.thread474.thread.loopexit.split.loop.exit676.i ], [ %i.uc, %.thread474.thread.loopexit.split.loop.exit680.i ], [ %5, %bb.az ] ; 7 uses
   %i.ue = load i32, ptr %i.bo, align 4, !tbaa !72
   switch i32 %i.ue, label %.critedge.i [
     i32 1, label %.preheader.i

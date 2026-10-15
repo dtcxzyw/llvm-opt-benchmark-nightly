@@ -204,6 +204,7 @@ bb.z:                                             ; preds = %bb.y
 
 .lr.ph.i.i.i:                                     ; preds = %bb.z
   %i.jx = getelementptr inbounds [4 x i8], ptr %i.jv, i64 %.pre708.i
+  %3 = zext nneg i32 %i.jw to i64
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.ad, %.lr.ph.i.i.i
@@ -212,13 +213,13 @@ bb.aa:                                            ; preds = %bb.ad, %.lr.ph.i.i.
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.ac, %bb.aa
-  %.010.i.i.i.i = phi i32 [ %spec.select.i.i, %bb.aa ], [ %i.ke, %bb.ac ] ; 3 uses
+  %.010.i.i.i.i = phi i32 [ %spec.select.i.i, %bb.aa ], [ %i.ke, %bb.ac ] ; 2 uses
   %.069.i.i.i.i = phi ptr [ %i.jx, %bb.aa ], [ %i.kd, %bb.ac ] ; 2 uses
   %.078.i.i.i.i = phi ptr [ %i.jy, %bb.aa ], [ %i.kc, %bb.ac ] ; 2 uses
   %i.jz = load i32, ptr %.078.i.i.i.i, align 4, !tbaa !27
   %i.ka = load i32, ptr %.069.i.i.i.i, align 4, !tbaa !27
   %i.kb = icmp eq i32 %i.jz, %i.ka
-  br i1 %i.kb, label %bb.ac, label %_ZL12equal_uint32PKjS0_i.exit.i.i.i
+  br i1 %i.kb, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
   %i.kc = getelementptr inbounds nuw i8, ptr %.078.i.i.i.i, i64 4
@@ -227,17 +228,12 @@ bb.ac:                                            ; preds = %bb.ab
   %i.kf = icmp sgt i32 %.010.i.i.i.i, 1
   br i1 %i.kf, label %bb.ab, label %_ZL17findSameDataBlockPKjiii.exit.i.i, !llvm.loop !60
 
-_ZL12equal_uint32PKjS0_i.exit.i.i.i:              ; preds = %bb.ab
-  %.not15.i.i.i = icmp eq i32 %.010.i.i.i.i, 0
-  br i1 %.not15.i.i.i, label %_ZL17findSameDataBlockPKjiii.exit.i.i, label %bb.ad
-
-bb.ad:                                            ; preds = %_ZL12equal_uint32PKjS0_i.exit.i.i.i
+bb.ad:                                            ; preds = %bb.ab
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 4 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next.i.i.i to i32
-  %.not.i.i.i = icmp slt i32 %i.jw, %3
+  %.not.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i.i.i, %3
   br i1 %.not.i.i.i, label %.lr.ph141.i.i, label %bb.aa, !llvm.loop !61
 
-_ZL17findSameDataBlockPKjiii.exit.i.i:            ; preds = %_ZL12equal_uint32PKjS0_i.exit.i.i.i, %bb.ac
+_ZL17findSameDataBlockPKjiii.exit.i.i:            ; preds = %bb.ac
   %i.kg = trunc nuw nsw i64 %indvars.iv.i.i.i to i32 ; 3 uses
   %i.kh = tail call i32 @llvm.smin.i32(i32 %spec.select110.i.i, i32 1)
   %i.ki = sub i32 %spec.select110.i.i, %i.kh      ; 2 uses

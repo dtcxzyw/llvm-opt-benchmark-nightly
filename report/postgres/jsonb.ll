@@ -204,23 +204,23 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.c
+  %7 = zext nneg i32 %0 to i64                    ; 3 uses
   br i1 %4, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   br i1 %5, label %.lr.ph.split.us.split.us, label %.lr.ph.split.us.split
 
 .lr.ph.split.us.split.us:                         ; preds = %.lr.ph.split.us, %add_jsonb.exit.us.us
-  %.027.us.us = phi i32 [ %10, %add_jsonb.exit.us.us ], [ 0, %.lr.ph.split.us ] ; 4 uses
-  %7 = sext i32 %.027.us.us to i64                ; 3 uses
-  %i.o = getelementptr inbounds i8, ptr %2, i64 %7
+  %indvars.iv47 = phi i64 [ %indvars.iv.next48, %add_jsonb.exit.us.us ], [ 0, %.lr.ph.split.us ] ; 6 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv47
   %i.p = load i8, ptr %i.o, align 1, !range !6, !noundef !7
   %i.q = trunc nuw i8 %i.p to i1
   br i1 %i.q, label %.split.us, label %.critedge.us.us
 
 .critedge.us.us:                                  ; preds = %.lr.ph.split.us.split.us
-  %i.r = getelementptr inbounds [8 x i8], ptr %1, i64 %7
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv47
   %i.s = load i64, ptr %i.r, align 8
-  %i.t = getelementptr inbounds [4 x i8], ptr %3, i64 %7
+  %i.t = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv47
   %i.u = load i32, ptr %i.t, align 4              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -234,24 +234,22 @@ add_jsonb.exit.us.us:                             ; preds = %.critedge.us.us
   call fastcc void @datum_to_jsonb_internal(i64 noundef %i.s, i1 noundef zeroext false, ptr noundef nonnull %6, i32 noundef %.pre.i.us.us, i32 noundef %.pre6.i.us.us, i1 noundef zeroext true)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  %8 = or disjoint i32 %.027.us.us, 1
-  %9 = sext i32 %8 to i64                         ; 3 uses
-  %i.w = getelementptr inbounds [8 x i8], ptr %1, i64 %9
+  %8 = or disjoint i64 %indvars.iv47, 1           ; 3 uses
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %8
   %i.x = load i64, ptr %i.w, align 8
-  %i.y = getelementptr inbounds i8, ptr %2, i64 %9
+  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 %8
   %i.z = load i8, ptr %i.y, align 1, !range !6, !noundef !7
   %i.aa = trunc nuw i8 %i.z to i1
-  %i.ab = getelementptr inbounds [4 x i8], ptr %3, i64 %9
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %8
   %i.ac = load i32, ptr %i.ab, align 4
   call fastcc void @add_jsonb(i64 noundef %i.x, i1 noundef zeroext %i.aa, ptr noundef %6, i32 noundef %i.ac, i1 noundef zeroext false)
-  %10 = add i32 %.027.us.us, 2                    ; 2 uses
-  %11 = icmp slt i32 %10, %0
-  br i1 %11, label %.lr.ph.split.us.split.us, label %._crit_edge, !llvm.loop !17
+  %indvars.iv.next48 = add nuw nsw i64 %indvars.iv47, 2 ; 2 uses
+  %9 = icmp samesign ult i64 %indvars.iv.next48, %7
+  br i1 %9, label %.lr.ph.split.us.split.us, label %._crit_edge, !llvm.loop !17
 
 .lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us, %bb.e
-  %.027.us = phi i32 [ %15, %bb.e ], [ 0, %.lr.ph.split.us ] ; 4 uses
-  %12 = sext i32 %.027.us to i64                  ; 3 uses
-  %i.ad = getelementptr inbounds i8, ptr %2, i64 %12 ; 2 uses
+  %indvars.iv44 = phi i64 [ %indvars.iv.next45, %bb.e ], [ 0, %.lr.ph.split.us ] ; 6 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv44 ; 2 uses
   %i.ae = load i8, ptr %i.ad, align 1, !range !6, !noundef !7
   %i.af = trunc nuw i8 %i.ae to i1
   br i1 %i.af, label %.split.us, label %bb.d
@@ -263,9 +261,9 @@ bb.d:                                             ; preds = %.lr.ph.split.us.spl
   br i1 %i.ai, label %bb.e, label %.critedge.us
 
 .critedge.us:                                     ; preds = %bb.d
-  %i.aj = getelementptr inbounds [8 x i8], ptr %1, i64 %12
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv44
   %i.ak = load i64, ptr %i.aj, align 8
-  %i.al = getelementptr inbounds [4 x i8], ptr %3, i64 %12
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv44
   %i.am = load i32, ptr %i.al, align 4            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -279,33 +277,32 @@ add_jsonb.exit.us:                                ; preds = %.critedge.us
   call fastcc void @datum_to_jsonb_internal(i64 noundef %i.ak, i1 noundef zeroext false, ptr noundef nonnull %6, i32 noundef %.pre.i.us, i32 noundef %.pre6.i.us, i1 noundef zeroext true)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  %13 = or disjoint i32 %.027.us, 1
-  %14 = sext i32 %13 to i64                       ; 3 uses
-  %i.ao = getelementptr inbounds [8 x i8], ptr %1, i64 %14
+  %10 = or disjoint i64 %indvars.iv44, 1          ; 3 uses
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %10
   %i.ap = load i64, ptr %i.ao, align 8
-  %i.aq = getelementptr inbounds i8, ptr %2, i64 %14
+  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 %10
   %i.ar = load i8, ptr %i.aq, align 1, !range !6, !noundef !7
   %i.as = trunc nuw i8 %i.ar to i1
-  %i.at = getelementptr inbounds [4 x i8], ptr %3, i64 %14
+  %i.at = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %10
   %i.au = load i32, ptr %i.at, align 4
   call fastcc void @add_jsonb(i64 noundef %i.ap, i1 noundef zeroext %i.as, ptr noundef %6, i32 noundef %i.au, i1 noundef zeroext false)
   br label %bb.e
 
 bb.e:                                             ; preds = %add_jsonb.exit.us, %bb.d
-  %15 = add i32 %.027.us, 2                       ; 2 uses
-  %16 = icmp slt i32 %15, %0
-  br i1 %16, label %.lr.ph.split.us.split, label %._crit_edge, !llvm.loop !17
+  %indvars.iv.next45 = add nuw nsw i64 %indvars.iv44, 2 ; 2 uses
+  %11 = icmp samesign ult i64 %indvars.iv.next45, %7
+  br i1 %11, label %.lr.ph.split.us.split, label %._crit_edge, !llvm.loop !17
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %add_jsonb.exit
-  %.027 = phi i32 [ %20, %add_jsonb.exit ], [ 0, %.lr.ph ] ; 4 uses
-  %17 = sext i32 %.027 to i64                     ; 3 uses
-  %i.av = getelementptr inbounds i8, ptr %2, i64 %17
+  %indvars.iv = phi i64 [ %indvars.iv.next, %add_jsonb.exit ], [ 0, %.lr.ph ] ; 6 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv
   %i.aw = load i8, ptr %i.av, align 1, !range !6, !noundef !7
   %i.ax = trunc nuw i8 %i.aw to i1
   br i1 %i.ax, label %.split.us, label %.critedge
 
 .split.us:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us.split, %.lr.ph.split.us.split.us
-  %.us-phi = phi i32 [ %.027.us, %.lr.ph.split.us.split ], [ %.027.us.us, %.lr.ph.split.us.split.us ], [ %.027, %.lr.ph.split ]
+  %.us-phi.in = phi i64 [ %indvars.iv44, %.lr.ph.split.us.split ], [ %indvars.iv47, %.lr.ph.split.us.split.us ], [ %indvars.iv, %.lr.ph.split ]
+  %.us-phi = trunc i64 %.us-phi.in to i32
   %i.ay = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
   %i.az = call i32 @errcode(i32 noundef 50856066) #10 ; 0 uses
   %i.ba = or disjoint i32 %.us-phi, 1
@@ -314,9 +311,9 @@ bb.e:                                             ; preds = %add_jsonb.exit.us, 
   unreachable
 
 .critedge:                                        ; preds = %.lr.ph.split
-  %i.bc = getelementptr inbounds [8 x i8], ptr %1, i64 %17
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.bd = load i64, ptr %i.bc, align 8
-  %i.be = getelementptr inbounds [4 x i8], ptr %3, i64 %17
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   %i.bf = load i32, ptr %i.be, align 4            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -337,19 +334,18 @@ add_jsonb.exit:                                   ; preds = %.critedge
   call fastcc void @datum_to_jsonb_internal(i64 noundef %i.bd, i1 noundef zeroext false, ptr noundef nonnull %6, i32 noundef %.pre.i, i32 noundef %.pre6.i, i1 noundef zeroext true)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  %18 = or disjoint i32 %.027, 1
-  %19 = sext i32 %18 to i64                       ; 3 uses
-  %i.bk = getelementptr inbounds [8 x i8], ptr %1, i64 %19
+  %12 = or disjoint i64 %indvars.iv, 1            ; 3 uses
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %12
   %i.bl = load i64, ptr %i.bk, align 8
-  %i.bm = getelementptr inbounds i8, ptr %2, i64 %19
+  %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 %12
   %i.bn = load i8, ptr %i.bm, align 1, !range !6, !noundef !7
   %i.bo = trunc nuw i8 %i.bn to i1
-  %i.bp = getelementptr inbounds [4 x i8], ptr %3, i64 %19
+  %i.bp = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %12
   %i.bq = load i32, ptr %i.bp, align 4
   call fastcc void @add_jsonb(i64 noundef %i.bl, i1 noundef zeroext %i.bo, ptr noundef %6, i32 noundef %i.bq, i1 noundef zeroext false)
-  %20 = add i32 %.027, 2                          ; 2 uses
-  %21 = icmp slt i32 %20, %0
-  br i1 %21, label %.lr.ph.split, label %._crit_edge, !llvm.loop !17
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %13 = icmp samesign ult i64 %indvars.iv.next, %7
+  br i1 %13, label %.lr.ph.split, label %._crit_edge, !llvm.loop !17
 
 ._crit_edge:                                      ; preds = %add_jsonb.exit, %bb.e, %add_jsonb.exit.us.us, %bb.c
   call void @pushJsonbValue(ptr noundef nonnull %6, i32 noundef 7, ptr noundef null) #10

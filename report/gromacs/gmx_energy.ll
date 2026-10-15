@@ -205,7 +205,7 @@ bb.oa:                                            ; preds = %bb.nz, %bb.ny
   %.0133.i = phi double [ %i.cwj, %bb.nz ], [ -2.345100e+04, %bb.ny ] ; 2 uses
   %.0132.i = phi double [ %i.cwn, %bb.nz ], [ -2.345100e+04, %bb.ny ] ; 2 uses
   %.0125.i = phi double [ %i.cwq, %bb.nz ], [ -2.345100e+04, %bb.ny ] ; 4 uses
-  %i.cwr = icmp slt i32 %.sroa.5.0.i, %i.cml      ; 3 uses
+  %i.cwr = icmp slt i32 %.sroa.5.0.i, %i.cml      ; 2 uses
   br i1 %i.cwr, label %bb.ob, label %bb.oc
 
 bb.ob:                                            ; preds = %bb.oa
@@ -216,18 +216,20 @@ bb.ob:                                            ; preds = %bb.oa
   %i.cww = fmul <2 x double> %i.cwv, splat (double 1.000000e+03)
   %i.cwx = fdiv <2 x double> %i.cww, splat (double f0x44DFE185CA57C517) ; 3 uses
   %foldExtExtBinop = fmul <2 x double> %i.cwx, %i.cwx
-  %i.cwy = extractelement <2 x double> %foldExtExtBinop, i64 1
+  %i.cwy = extractelement <2 x double> %foldExtExtBinop, i64 1 ; 2 uses
   %i.cwz = sitofp i32 %i.cmm to double
   %i.cxa = fdiv double %i.cwy, %i.cwz
   %i.cxb = fmul double %i.cwd, f0x3B30B0E6D55E647C
   %i.cxc = fmul double %i.cwd, %i.cxb
   %i.cxd = fdiv double %i.cxa, %i.cxc
   %i.cxe = fmul double %i.cxd, f0x44DFE185CA57C517
+  %54 = fcmp une double %i.cwy, -2.345100e+04
   %i.cxf = extractelement <2 x double> %i.cwx, i64 0
   br label %bb.oc
 
 bb.oc:                                            ; preds = %bb.ob, %bb.oa
   %.0131.i = phi double [ %i.cxf, %bb.ob ], [ -2.345100e+04, %bb.oa ] ; 2 uses
+  %.0130.i = phi i1 [ %54, %bb.ob ], [ false, %bb.oa ]
   %.0127.i = phi double [ %i.cxe, %bb.ob ], [ -2.345100e+04, %bb.oa ] ; 2 uses
   %i.cxg = icmp slt i32 %.sroa.9.0.i, %i.cml
   %i.cxh = fcmp oeq double %.0131.i, -2.345100e+04
@@ -449,7 +451,7 @@ bb.on:                                            ; preds = %bb.om
   br label %bb.oo
 
 bb.oo:                                            ; preds = %bb.on, %bb.om
-  br i1 %i.cwr, label %bb.op, label %bb.oq
+  br i1 %.0130.i, label %bb.op, label %bb.oq
 
 bb.op:                                            ; preds = %bb.oo
   %i.dce = fmul double %.0131.i, f0x44DFE185CA57C517

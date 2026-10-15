@@ -205,12 +205,11 @@ bb.bj:                                            ; preds = %bb.bi
   %i.kz = getelementptr i8, ptr %.0273.i38, i64 5
   %i.la = getelementptr i8, ptr %.0273.i38, i64 7
   %.val387.i = load i8, ptr %i.la, align 1, !tbaa !50
-  %i.lb = load <2 x i8>, ptr %i.kz, align 1, !tbaa !50
-  %5 = shufflevector <2 x i8> %i.lb, <2 x i8> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.lc = insertelement <2 x i8> %5, i8 %i.ky, i64 1
+  %i.lb = load <2 x i8>, ptr %i.kz, align 1, !tbaa !50 ; 2 uses
+  %i.lc = insertelement <2 x i8> %i.lb, i8 %i.ky, i64 0
   %i.ld = zext <2 x i8> %i.lc to <2 x i16>
   %i.le = shl nuw <2 x i16> %i.ld, splat (i16 8)
-  %i.lf = insertelement <2 x i8> %5, i8 %.val387.i, i64 0
+  %i.lf = insertelement <2 x i8> %i.lb, i8 %.val387.i, i64 1
   %i.lg = zext <2 x i8> %i.lf to <2 x i16>
   %i.lh = or disjoint <2 x i16> %i.le, %i.lg
   %i.li = sitofp <2 x i16> %i.lh to <2 x float>
@@ -220,16 +219,16 @@ bb.bj:                                            ; preds = %bb.bi
 bb.bk:                                            ; preds = %bb.bi
   %i.lk = getelementptr inbounds nuw i8, ptr %.0273.i38, i64 5
   %i.ll = load i8, ptr %i.lk, align 1, !tbaa !50
-  %i.lm = insertelement <2 x i8> poison, i8 %i.ll, i64 0
-  %i.ln = insertelement <2 x i8> %i.lm, i8 %i.ky, i64 1
+  %i.lm = insertelement <2 x i8> poison, i8 %i.ky, i64 0
+  %i.ln = insertelement <2 x i8> %i.lm, i8 %i.ll, i64 1
   %i.lo = sitofp <2 x i8> %i.ln to <2 x float>
   %i.lp = getelementptr inbounds nuw i8, ptr %.0273.i38, i64 6
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.bh
-  %.1274.i = phi ptr [ %i.lj, %bb.bj ], [ %i.lp, %bb.bk ], [ %i.kv, %bb.bh ] ; 11 uses
+  %.1274.i = phi ptr [ %i.lj, %bb.bj ], [ %i.lp, %bb.bk ], [ %i.kv, %bb.bh ] ; 12 uses
   %i.lq = phi <2 x float> [ %i.li, %bb.bj ], [ %i.lo, %bb.bk ], [ zeroinitializer, %bb.bh ] ; 3 uses
-  %6 = shufflevector <2 x float> %i.lq, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
+  %5 = shufflevector <2 x float> %i.lq, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.lr = and i32 %i.ko, 8
   %.not344.i = icmp eq i32 %i.lr, 0
   br i1 %.not344.i, label %bb.bn, label %bb.bm
@@ -245,8 +244,8 @@ bb.bm:                                            ; preds = %bb.bl
   %i.lx = sitofp i16 %i.lw to float
   %i.ly = fmul nnan float %i.lx, f0x38800000      ; 2 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %.1274.i, i64 2
-  %i.ma = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.ly, i64 1
-  %i.mb = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ly, i64 0
+  %i.ma = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ly, i64 0
+  %i.mb = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.ly, i64 1
   br label %bb.br
 
 bb.bn:                                            ; preds = %bb.bl
@@ -275,8 +274,8 @@ bb.bo:                                            ; preds = %bb.bn
   %i.mq = sitofp <2 x i16> %i.mp to <2 x float>
   %i.mr = fmul nnan <2 x float> %i.mq, splat (float f0x38800000) ; 2 uses
   %i.ms = getelementptr inbounds nuw i8, ptr %.1274.i, i64 4
-  %7 = shufflevector <2 x float> <float 0.000000e+00, float poison>, <2 x float> %i.mr, <2 x i32> <i32 0, i32 2>
-  %8 = shufflevector <2 x float> <float poison, float 0.000000e+00>, <2 x float> %i.mr, <2 x i32> <i32 3, i32 1>
+  %6 = insertelement <2 x float> %i.mr, float 0.000000e+00, i64 1
+  %7 = insertelement <2 x float> %i.mr, float 0.000000e+00, i64 0
   br label %bb.br
 
 bb.bp:                                            ; preds = %bb.bn
@@ -284,34 +283,36 @@ bb.bp:                                            ; preds = %bb.bn
   br i1 %.not346.i, label %bb.br, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %9 = load <8 x i8>, ptr %.1274.i, align 1, !tbaa !50 ; 4 uses
-  %10 = shufflevector <8 x i8> %9, <8 x i8> poison, <2 x i32> <i32 4, i32 0>
-  %11 = zext <2 x i8> %10 to <2 x i16>
-  %12 = shl nuw <2 x i16> %11, splat (i16 8)
-  %13 = shufflevector <8 x i8> %9, <8 x i8> poison, <2 x i32> <i32 5, i32 1>
-  %14 = zext <2 x i8> %13 to <2 x i16>
-  %15 = or disjoint <2 x i16> %12, %14
-  %i.mt = sitofp <2 x i16> %15 to <2 x float>
-  %16 = shufflevector <8 x i8> %9, <8 x i8> poison, <2 x i32> <i32 6, i32 2>
-  %17 = zext <2 x i8> %16 to <2 x i16>
-  %18 = shl nuw <2 x i16> %17, splat (i16 8)
-  %19 = shufflevector <8 x i8> %9, <8 x i8> poison, <2 x i32> <i32 7, i32 3>
-  %20 = zext <2 x i8> %19 to <2 x i16>
-  %21 = or disjoint <2 x i16> %18, %20
-  %i.mu = sitofp <2 x i16> %21 to <2 x float>
-  %22 = fmul nnan <2 x float> %i.mt, splat (float f0x38800000)
+  %8 = getelementptr inbounds nuw i8, ptr %.1274.i, i64 4
+  %9 = load <4 x i8>, ptr %.1274.i, align 1, !tbaa !50
+  %10 = freeze <4 x i8> %9
+  %11 = bitcast <4 x i8> %10 to <2 x i16>
+  %12 = tail call <2 x i16> @llvm.bswap.v2i16(<2 x i16> %11)
+  %i.mt = sitofp <2 x i16> %12 to <2 x float>
+  %13 = fmul nnan <2 x float> %i.mt, splat (float f0x38800000)
+  %14 = load <4 x i8>, ptr %8, align 1, !tbaa !50
+  %15 = freeze <4 x i8> %14
+  %16 = bitcast <4 x i8> %15 to <2 x i16>
+  %17 = tail call <2 x i16> @llvm.bswap.v2i16(<2 x i16> %16)
+  %i.mu = sitofp <2 x i16> %17 to <2 x float>
   %i.mv = fmul nnan <2 x float> %i.mu, splat (float f0x38800000)
   %i.mw = getelementptr inbounds nuw i8, ptr %.1274.i, i64 8
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp, %bb.bo, %bb.bm
   %.2275.i = phi ptr [ %i.lz, %bb.bm ], [ %i.ms, %bb.bo ], [ %i.mw, %bb.bq ], [ %.1274.i, %bb.bp ]
-  %i.mx = phi <2 x float> [ %i.ma, %bb.bm ], [ %7, %bb.bo ], [ %22, %bb.bq ], [ <float 0.000000e+00, float 1.000000e+00>, %bb.bp ] ; 6 uses
-  %i.my = phi <2 x float> [ %i.mb, %bb.bm ], [ %8, %bb.bo ], [ %i.mv, %bb.bq ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.bp ] ; 6 uses
-  %i.mz = fmul nnan <2 x float> %i.my, %i.my
-  %i.na = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.mx, <2 x float> %i.mx, <2 x float> %i.mz)
-  %23 = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.na) ; 3 uses
-  %24 = shufflevector <2 x float> %23, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
+  %i.mx = phi <2 x float> [ %i.ma, %bb.bm ], [ %6, %bb.bo ], [ %13, %bb.bq ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.bp ] ; 5 uses
+  %i.my = phi <2 x float> [ %i.mb, %bb.bm ], [ %7, %bb.bo ], [ %i.mv, %bb.bq ], [ <float 0.000000e+00, float 1.000000e+00>, %bb.bp ] ; 5 uses
+  %18 = shufflevector <2 x float> %i.my, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %19 = shufflevector <2 x float> %i.mx, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %20 = shufflevector <2 x float> %i.mx, <2 x float> %i.my, <2 x i32> <i32 1, i32 3> ; 2 uses
+  %i.mz = fmul nnan <2 x float> %20, %20
+  %21 = shufflevector <2 x float> %i.mx, <2 x float> %i.my, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %i.na = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %21, <2 x float> %21, <2 x float> %i.mz) ; 2 uses
+  %22 = extractelement <2 x float> %i.na, i64 0
+  %23 = tail call float @sqrtf(float noundef %22) #38, !inline_history !876 ; 2 uses
+  %24 = extractelement <2 x float> %i.na, i64 1
+  %25 = tail call float @sqrtf(float noundef %24) #38, !inline_history !876 ; 2 uses
   %i.nb = call fastcc noundef i32 @_ZL19stbtt_GetGlyphShapePK14stbtt_fontinfoiPP12stbtt_vertex(ptr noundef %0, i32 noundef %i.ku, ptr noundef %i.a), !inline_history !876 ; 4 uses
   %i.nc = icmp sgt i32 %i.nb, 0
   br i1 %i.nc, label %.preheader32, label %bb.bz
@@ -327,14 +328,16 @@ vector.ph:                                        ; preds = %.preheader32
   %i.nf = icmp eq i64 %i.ne, 0
   %i.ng = select i1 %i.nf, i64 8, i64 %i.ne
   %n.vec = sub nsw i64 %wide.trip.count, %i.ng    ; 2 uses
+  %broadcast.splat = shufflevector <2 x float> %i.my, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
   %broadcast.splat.a = shufflevector <2 x float> %i.mx, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
-  %broadcast.splat96 = shufflevector <2 x float> %i.mx, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %broadcast.splat98 = shufflevector <2 x float> %i.lq, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %broadcast.splat100 = shufflevector <2 x float> %23, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %broadcast.splat102 = shufflevector <2 x float> %i.my, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
-  %broadcast.splat104 = shufflevector <2 x float> %i.my, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %broadcast.splat106 = shufflevector <2 x float> %i.lq, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
-  %broadcast.splat108 = shufflevector <2 x float> %23, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat97 = shufflevector <2 x float> %i.lq, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert98 = insertelement <8 x float> poison, float %23, i64 0
+  %broadcast.splat99 = shufflevector <8 x float> %broadcast.splatinsert98, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat100 = shufflevector <2 x float> %i.my, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
+  %broadcast.splat103 = shufflevector <2 x float> %i.mx, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
+  %broadcast.splat104 = shufflevector <2 x float> %i.lq, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
+  %broadcast.splatinsert106 = insertelement <8 x float> poison, float %25, i64 0
+  %broadcast.splat108 = shufflevector <8 x float> %broadcast.splatinsert106, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -396,10 +399,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.pj = insertelement <8 x i16> %i.pi, i16 %i.pb, i64 7
   %i.pk = sitofp <8 x i16> %i.ol to <8 x float>   ; 2 uses
   %i.pl = sitofp <8 x i16> %i.pj to <8 x float>   ; 2 uses
-  %i.pm = fmul nnan <8 x float> %broadcast.splat.a, %i.pl
-  %i.pn = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat96, <8 x float> %i.pk, <8 x float> %i.pm)
-  %i.po = fadd <8 x float> %broadcast.splat98, %i.pn
-  %i.pp = fmul <8 x float> %broadcast.splat100, %i.po
+  %i.pm = fmul nnan <8 x float> %broadcast.splat, %i.pl
+  %i.pn = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat.a, <8 x float> %i.pk, <8 x float> %i.pm)
+  %i.po = fadd <8 x float> %broadcast.splat97, %i.pn
+  %i.pp = fmul <8 x float> %broadcast.splat99, %i.po
   %i.pq = fptosi <8 x float> %i.pp to <8 x i16>   ; 8 uses
   %i.pr = extractelement <8 x i16> %i.pq, i64 4
   store i16 %i.pr, ptr %i.np, align 2, !tbaa !519
@@ -409,9 +412,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store i16 %i.pt, ptr %i.nt, align 2, !tbaa !519
   %i.pu = extractelement <8 x i16> %i.pq, i64 7
   store i16 %i.pu, ptr %i.nv, align 2, !tbaa !519
-  %i.pv = fmul nnan <8 x float> %broadcast.splat102, %i.pl
-  %i.pw = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat104, <8 x float> %i.pk, <8 x float> %i.pv)
-  %i.px = fadd <8 x float> %broadcast.splat106, %i.pw
+  %i.pv = fmul nnan <8 x float> %broadcast.splat100, %i.pl
+  %i.pw = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat103, <8 x float> %i.pk, <8 x float> %i.pv)
+  %i.px = fadd <8 x float> %broadcast.splat104, %i.pw
   %i.py = fmul <8 x float> %broadcast.splat108, %i.px
   %i.pz = fptosi <8 x float> %i.py to <8 x i16>   ; 8 uses
   %i.qa = extractelement <8 x i16> %i.pz, i64 4
@@ -472,10 +475,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.rz = insertelement <8 x i16> %i.ry, i16 %i.rr, i64 7
   %i.sa = sitofp <8 x i16> %i.rb to <8 x float>   ; 2 uses
   %i.sb = sitofp <8 x i16> %i.rz to <8 x float>   ; 2 uses
-  %i.sc = fmul nnan <8 x float> %broadcast.splat.a, %i.sb
-  %i.sd = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat96, <8 x float> %i.sa, <8 x float> %i.sc)
-  %i.se = fadd <8 x float> %broadcast.splat98, %i.sd
-  %i.sf = fmul <8 x float> %broadcast.splat100, %i.se
+  %i.sc = fmul nnan <8 x float> %broadcast.splat, %i.sb
+  %i.sd = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat.a, <8 x float> %i.sa, <8 x float> %i.sc)
+  %i.se = fadd <8 x float> %broadcast.splat97, %i.sd
+  %i.sf = fmul <8 x float> %broadcast.splat99, %i.se
   %i.sg = fptosi <8 x float> %i.sf to <8 x i16>   ; 8 uses
   %i.sh = extractelement <8 x i16> %i.sg, i64 4
   store i16 %i.sh, ptr %i.qi, align 2, !tbaa !515
@@ -485,9 +488,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store i16 %i.sj, ptr %i.qk, align 2, !tbaa !515
   %i.sk = extractelement <8 x i16> %i.sg, i64 7
   store i16 %i.sk, ptr %i.ql, align 2, !tbaa !515
-  %i.sl = fmul nnan <8 x float> %broadcast.splat102, %i.sb
-  %i.sm = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat104, <8 x float> %i.sa, <8 x float> %i.sl)
-  %i.sn = fadd <8 x float> %broadcast.splat106, %i.sm
+  %i.sl = fmul nnan <8 x float> %broadcast.splat100, %i.sb
+  %i.sm = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat103, <8 x float> %i.sa, <8 x float> %i.sl)
+  %i.sn = fadd <8 x float> %broadcast.splat104, %i.sm
   %i.so = fmul <8 x float> %broadcast.splat108, %i.sn
   %i.sp = fptosi <8 x float> %i.so to <8 x i16>   ; 8 uses
   %i.sq = shufflevector <8 x i16> %i.pq, <8 x i16> %i.pz, <4 x i32> <i32 0, i32 8, i32 poison, i32 poison>
@@ -528,8 +531,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 scalar.ph.preheader:                              ; preds = %vector.body, %.preheader32
   %indvars.iv.ph = phi i64 [ 0, %.preheader32 ], [ %n.vec, %vector.body ]
-  %25 = shufflevector <2 x float> %i.mx, <2 x float> %i.my, <4 x i32> <i32 0, i32 2, i32 0, i32 2>
-  %26 = shufflevector <2 x float> %i.mx, <2 x float> %i.my, <4 x i32> <i32 1, i32 3, i32 1, i32 3>
+  %26 = insertelement <4 x float> poison, float %23, i64 0
+  %27 = insertelement <4 x float> %26, float %25, i64 1
+  %28 = shufflevector <4 x float> %27, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -540,10 +544,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ts = sitofp <4 x i16> %i.tr to <4 x float>
   %i.tt = shufflevector <4 x i16> %i.tq, <4 x i16> poison, <4 x i32> <i32 1, i32 1, i32 3, i32 3>
   %i.tu = sitofp <4 x i16> %i.tt to <4 x float>
-  %i.tv = fmul nnan <4 x float> %25, %i.tu
-  %i.tw = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %26, <4 x float> %i.ts, <4 x float> %i.tv)
-  %i.tx = fadd <4 x float> %6, %i.tw
-  %i.ty = fmul <4 x float> %24, %i.tx
+  %i.tv = fmul nnan <4 x float> %18, %i.tu
+  %i.tw = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %19, <4 x float> %i.ts, <4 x float> %i.tv)
+  %i.tx = fadd <4 x float> %5, %i.tw
+  %i.ty = fmul <4 x float> %28, %i.tx
   %i.tz = fptosi <4 x float> %i.ty to <4 x i16>
   store <4 x i16> %i.tz, ptr %i.tp, align 2, !tbaa !243
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -944,6 +948,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i16> @llvm.bswap.v2i16(<2 x i16>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #9

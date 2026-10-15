@@ -205,7 +205,7 @@ _ZN12_GLOBAL__N_113SampleChannelISt6vectorIN3ozz9animation7offline12RawAnimation
   %i.aes = call float @llvm.fmuladd.f32(float %i.aer, float %i.aer, float %i.aeq)
   %i.aet = call float @llvm.fmuladd.f32(float %i.aen, float %i.aen, float %i.aes)
   %i.aeu = call float @llvm.fmuladd.f32(float %i.aeo, float %i.aeo, float %i.aet)
-  %sqrt = call float @llvm.sqrt.f32(float %i.aeu)
+  %sqrt = call noundef float @sqrtf(float noundef %i.aeu) #41
   %i.aev = fdiv float 1.000000e+00, %sqrt
   %i.aew = insertelement <2 x float> poison, float %i.aev, i64 0
   %i.aex = shufflevector <2 x float> %i.aew, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -607,6 +607,9 @@ _ZNSt12_Vector_baseIN3ozz9animation7offline12RawAnimation11RotationKeyENS0_12Std
 bb.j:                                             ; preds = %_ZSt27__uninitialized_default_n_aIPN3ozz9animation7offline12RawAnimation11RotationKeyEmNS0_12StdAllocatorIS4_EEET_S8_T0_RT1_.exit, %_ZNSt12_Vector_baseIN3ozz9animation7offline12RawAnimation11RotationKeyENS0_12StdAllocatorIS4_EEE13_M_deallocateEPS4_m.exit, %bb.a
   ret void
 }
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #32
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorIN3ozz9animation7offline12RawAnimation8ScaleKeyENS0_12StdAllocatorIS4_EEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {

@@ -37,7 +37,7 @@ bb.c:                                             ; preds = %bb.b, %bb.c
   %shift = shufflevector <2 x double> %i.r, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.r, %shift
   %i.s = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %sqrt = tail call double @llvm.sqrt.f64(double %i.s)
+  %sqrt = tail call double @sqrt(double noundef %i.s) #2
   %i.t = fadd double %.02432, %sqrt               ; 2 uses
   %i.u = add nuw i64 %.02531, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.d
@@ -48,11 +48,12 @@ bb.c:                                             ; preds = %bb.b, %bb.c
   ret double %.0
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #1
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sqrt(double noundef) local_unnamed_addr #1
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #2 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

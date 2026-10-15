@@ -203,7 +203,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ny = fmul float %i.nx, %i.nx
   %i.nz = tail call float @llvm.fmuladd.f32(float %i.nu, float %i.nu, float %i.ny)
   %i.oa = fpext float %i.nz to double
-  %sqrt.peel = tail call double @llvm.sqrt.f64(double %i.oa)
+  %sqrt.peel = tail call double @sqrt(double noundef %i.oa) #11, !tbaa !7
   %i.ob = fpext float %i.no to double
   %i.oc = fdiv double %sqrt.peel, %i.ob
   %i.od = fptrunc double %i.oc to float
@@ -382,7 +382,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.rs = fmul float %i.rr, %i.rr
   %i.rt = tail call float @llvm.fmuladd.f32(float %i.ro, float %i.ro, float %i.rs)
   %i.ru = fpext float %i.rt to double
-  %sqrt = tail call double @llvm.sqrt.f64(double %i.ru)
+  %sqrt = tail call double @sqrt(double noundef %i.ru) #11, !tbaa !7
   %i.rv = fpext float %i.ri to double
   %i.rw = fdiv double %sqrt, %i.rv
   %i.rx = fptrunc double %i.rw to float
@@ -492,7 +492,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.ui = fmul float %i.uh, %i.uh
   %i.uj = tail call float @llvm.fmuladd.f32(float %i.ue, float %i.ue, float %i.ui)
   %i.uk = fpext float %i.uj to double
-  %sqrt943 = tail call double @llvm.sqrt.f64(double %i.uk)
+  %sqrt943 = tail call double @sqrt(double noundef %i.uk) #11, !tbaa !7
   %i.ul = fpext float %i.ts to double
   %i.um = fdiv double %sqrt943, %i.ul
   %i.un = fptrunc double %i.um to float
@@ -894,6 +894,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #5
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sqrt(double noundef) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #5

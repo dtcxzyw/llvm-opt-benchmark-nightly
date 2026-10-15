@@ -204,7 +204,7 @@ _ZN12_GLOBAL__N_110clampAngleEd.exit:             ; preds = %.lr.ph8.i, %.prehea
   %i.ji = extractelement <2 x double> %foldExtExtBinop, i64 1
   %i.jj = extractelement <2 x double> %i.iv, i64 0 ; 2 uses
   %i.jk = tail call double @llvm.fmuladd.f64(double %i.jj, double %i.jj, double %i.ji)
-  %sqrt.i = tail call noundef double @llvm.sqrt.f64(double %i.jk) ; 3 uses
+  %sqrt.i = tail call noundef double @sqrt(double noundef %i.jk) #31 ; 3 uses
   %i.jl = fcmp ule double %sqrt.i, %i.u
   br i1 %i.jl, label %bb.bc, label %_ZNSt6vectorIN12_GLOBAL__N_124GeneralizedHoughGuilImpl7FeatureESaIS2_EE9push_backERKS2_.exit
 
@@ -371,6 +371,9 @@ _ZNSt6vectorIN12_GLOBAL__N_124GeneralizedHoughGuilImpl12ContourPointESaIS2_EED2E
   %.pn39.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.pn39.pn.pn.pn.pn177, %.body.thread170 ], [ %.pn39.pn.pn.pn.pn, %.body ], [ %.pn44.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit51.i ], [ %.pn46.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit54.i ], [ %i.bk, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ], [ %.pn.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ]
   resume { ptr, i32 } %.pn39.pn.pn.pn.pn.pn
 }
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sqrt(double noundef) local_unnamed_addr #26
 
 declare noundef zeroext i1 @_ZN2cveqERKNS_8MatShapeES2_(ptr noundef nonnull align 4 dereferenceable(52), ptr noundef nonnull align 4 dereferenceable(52)) local_unnamed_addr #11
 

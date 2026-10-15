@@ -204,19 +204,20 @@ cipso_v4_map_lvl_ntoh.exit.i37:                   ; preds = %bb.ak, %bb.ai
 bb.al:                                            ; preds = %cipso_v4_map_lvl_ntoh.exit.i37
   %i.ff = zext i8 %i.ek to i64
   %i.fg = getelementptr i8, ptr %0, i64 10
-  %i.fh = add nsw i64 %i.ff, -4                   ; 2 uses
-  br label %bb.am
+  %i.fh = add nsw i64 %i.ff, -4                   ; 3 uses
+  %.not111 = icmp eq i64 %i.fh, 0
+  br i1 %.not111, label %bb.aq, label %bb.an
 
-bb.am:                                            ; preds = %bb.ap, %bb.al
-  %indvars.iv.i.i39 = phi i64 [ %indvars.iv.next.i.i41, %bb.ap ], [ 0, %bb.al ] ; 3 uses
-  %i.fi = icmp samesign ult i64 %indvars.iv.i.i39, %i.fh
-  br i1 %i.fi, label %bb.an, label %bb.aq
+bb.am:                                            ; preds = %bb.ap
+  %i.fi = icmp samesign ult i64 %indvars.iv.next.i.i41, %i.fh
+  br i1 %i.fi, label %bb.an, label %bb.aq, !llvm.loop !41
 
-bb.an:                                            ; preds = %bb.am
-  %i.fj = getelementptr i8, ptr %i.fg, i64 %indvars.iv.i.i39 ; 2 uses
+bb.an:                                            ; preds = %bb.al, %bb.am
+  %indvars.iv.i.i39110 = phi i64 [ %indvars.iv.next.i.i41, %bb.am ], [ 0, %bb.al ] ; 2 uses
+  %i.fj = getelementptr i8, ptr %i.fg, i64 %indvars.iv.i.i39110 ; 2 uses
   %.val19.i.i = load i16, ptr %i.fj, align 1
   %i.fk = tail call i16 @llvm.bswap.i16(i16 %.val19.i.i)
-  %indvars.iv.next.i.i41 = add nuw nsw i64 %indvars.iv.i.i39, 4 ; 2 uses
+  %indvars.iv.next.i.i41 = add nuw nsw i64 %indvars.iv.i.i39110, 4 ; 3 uses
   %.not.i.i42 = icmp samesign ugt i64 %indvars.iv.next.i.i41, %i.fh
   br i1 %.not.i.i42, label %bb.ap, label %bb.ao
 
@@ -247,7 +248,7 @@ cipso_v4_map_cat_rng_ntoh.exit.i:                 ; preds = %bb.ap
   %.not.i23.i48 = icmp eq ptr %i.fs, null
   br i1 %.not.i23.i48, label %cipso_v4_doi_search.exit.thread, label %.lr.ph.i.i46, !llvm.loop !39
 
-bb.aq:                                            ; preds = %bb.am
+bb.aq:                                            ; preds = %bb.am, %bb.al
   %i.ft = load ptr, ptr %i.fa, align 8
   %.not21.i40 = icmp eq ptr %i.ft, null
   br i1 %.not21.i40, label %cipso_v4_parsetag_rbm.exit, label %cipso_v4_parsetag_rbm.exit.sink.split

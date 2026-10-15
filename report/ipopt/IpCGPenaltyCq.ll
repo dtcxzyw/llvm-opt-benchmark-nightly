@@ -204,11 +204,10 @@ bb.bl:                                            ; preds = %.noexc282
 .noexc284:                                        ; preds = %.noexc283, %.noexc282
   %i.qh = load double, ptr %i.f, align 8, !tbaa !46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #19
-  %10 = fadd double %i.qh, 0.000000e+00
   br label %_ZNK5Ipopt6Vector3DotERKS0_.exit285
 
 _ZNK5Ipopt6Vector3DotERKS0_.exit285:              ; preds = %.noexc284, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i277
-  %.0.i275 = phi double [ %i.qa, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i277 ], [ %10, %.noexc284 ] ; 2 uses
+  %.0.i275 = phi double [ %i.qa, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i277 ], [ %i.qh, %.noexc284 ] ; 2 uses
   %i.qi = load ptr, ptr %9, align 8, !tbaa !60    ; 12 uses
   %i.qj = icmp eq ptr %i.qi, %storemerge.i.i269
   br i1 %i.qj, label %bb.bm, label %bb.bo
@@ -264,13 +263,15 @@ bb.bp:                                            ; preds = %.noexc293
 _ZNK5Ipopt6Vector3DotERKS0_.exit296.thread:       ; preds = %.noexc293, %.noexc294
   %i.ra = load double, ptr %i.e, align 8, !tbaa !46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #19
-  %i.rb = fadd double %.0.i275, %i.ra
+  %10 = fadd double %.0.i275, 0.000000e+00
+  %i.rb = fadd double %10, %i.ra
   br label %bb.bq
 
 _ZNK5Ipopt6Vector3DotERKS0_.exit296:              ; preds = %._crit_edge.i.i289, %.noexc292
   %i.rc = phi double [ %.pre.i.i291, %._crit_edge.i.i289 ], [ %i.qr, %.noexc292 ] ; 2 uses
   %i.rd = fmul double %i.rc, %i.rc
-  %i.re = fadd double %.0.i275, %i.rd             ; 2 uses
+  %11 = fadd double %.0.i275, 0.000000e+00
+  %i.re = fadd double %11, %i.rd                  ; 2 uses
   %.not.i.i297 = icmp eq ptr %storemerge.i.i269, null
   br i1 %.not.i.i297, label %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit298, label %bb.bq
 
@@ -643,11 +644,10 @@ bb.db:                                            ; preds = %.noexc353
 .noexc355:                                        ; preds = %.noexc354, %.noexc353
   %i.vz = load double, ptr %i.d, align 8, !tbaa !46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
-  %11 = fadd double %i.vz, 0.000000e+00
   br label %_ZNK5Ipopt6Vector3DotERKS0_.exit356
 
 _ZNK5Ipopt6Vector3DotERKS0_.exit356:              ; preds = %.noexc355, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i348
-  %.0.i346 = phi double [ %i.vs, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i348 ], [ %11, %.noexc355 ]
+  %.0.i346 = phi double [ %i.vs, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i348 ], [ %i.vz, %.noexc355 ]
   %i.wa = load ptr, ptr %8, align 8, !tbaa !60    ; 12 uses
   %i.wb = icmp eq ptr %i.wa, %storemerge.i.i137
   br i1 %i.wb, label %bb.dc, label %bb.de
@@ -840,7 +840,8 @@ bb.dn:                                            ; preds = %.noexc386
 
 _ZNK5Ipopt6Vector3DotERKS0_.exit389:              ; preds = %.noexc388, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i381
   %.0.i379 = phi double [ %i.yd, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i381 ], [ %i.yk, %.noexc388 ]
-  %i.yl = fadd double %.0.i346, %.0.i357
+  %12 = fadd double %.0.i346, 0.000000e+00
+  %i.yl = fadd double %12, %.0.i357
   %i.ym = fadd double %i.yl, %.0.i368
   %i.yn = fadd double %i.ym, %.0.i379             ; 3 uses
   %.not.i.i390 = icmp eq ptr %storemerge.i.i340, null

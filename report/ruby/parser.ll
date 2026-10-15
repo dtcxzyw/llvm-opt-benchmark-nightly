@@ -205,7 +205,7 @@ define internal fastcc i64 @json_string_fastpath(ptr nofree noundef nonnull capt
 bb.a:
   %i.a = ptrtoint ptr %3 to i64
   %i.b = ptrtoint ptr %2 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 11 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 13 uses
   br i1 %4, label %bb.b, label %bb.m
 
 bb.b:                                             ; preds = %bb.a
@@ -243,6 +243,9 @@ bb.e:                                             ; preds = %bb.c
 .lr.ph69:                                         ; preds = %bb.e
   %i.q = add nsw i32 %i.p, -1
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %5 = and i64 %i.c, 56                           ; 2 uses
+  %6 = icmp slt i64 %5, %i.c
+  %.not.i28102 = icmp slt i64 %i.c, 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph69, %rstring_cache_cmp.exit.thread
@@ -269,22 +272,25 @@ RSTRING_PTR.exit:                                 ; preds = %bb.f, %bb.g
   %i.ad = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !44 ; 2 uses
   %i.af = icmp eq i64 %i.c, %i.ae
-  br i1 %i.af, label %.preheader56, label %rstring_cache_cmp.exit
+  br i1 %i.af, label %.preheader56.preheader, label %rstring_cache_cmp.exit
 
-.preheader56:                                     ; preds = %RSTRING_PTR.exit, %bb.h
-  %.026.i = phi i64 [ %i.ag, %bb.h ], [ 0, %RSTRING_PTR.exit ] ; 5 uses
-  %i.ag = add nuw nsw i64 %.026.i, 8              ; 2 uses
+.preheader56.preheader:                           ; preds = %RSTRING_PTR.exit
+  br i1 %.not.i28102, label %.preheader, label %bb.h
+
+.preheader56:                                     ; preds = %bb.h
+  %i.ag = add nuw nsw i64 %7, 8                   ; 2 uses
   %.not.i28 = icmp sgt i64 %i.ag, %i.c
   br i1 %.not.i28, label %.preheader, label %bb.h
 
-.preheader:                                       ; preds = %.preheader56
-  %5 = icmp slt i64 %.026.i, %i.c
-  br i1 %5, label %.lr.ph, label %rstring_cache_fetch.exit
+.preheader:                                       ; preds = %.preheader56, %.preheader56.preheader
+  br i1 %6, label %.lr.ph, label %rstring_cache_fetch.exit
 
-bb.h:                                             ; preds = %.preheader56
-  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 %.026.i
+bb.h:                                             ; preds = %.preheader56.preheader, %.preheader56
+  %7 = phi i64 [ %i.ag, %.preheader56 ], [ 8, %.preheader56.preheader ] ; 2 uses
+  %.026.i103 = phi i64 [ %7, %.preheader56 ], [ 0, %.preheader56.preheader ] ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 %.026.i103
   %.0.copyload4.i = load i64, ptr %i.ah, align 1  ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.026.i
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.026.i103
   %.0.copyload.i = load i64, ptr %i.ai, align 1   ; 2 uses
   %.not33.i = icmp eq i64 %.0.copyload4.i, %.0.copyload.i
   br i1 %.not33.i, label %.preheader56, label %.thread
@@ -297,12 +303,12 @@ bb.h:                                             ; preds = %.preheader56
   br label %rstring_cache_cmp.exit.thread
 
 bb.i:                                             ; preds = %.lr.ph
-  %i.an = add nuw i64 %.1.i3164, 1                ; 2 uses
-  %exitcond.not = icmp eq i64 %i.an, %i.c
-  br i1 %exitcond.not, label %rstring_cache_fetch.exit, label %.lr.ph
+  %i.an = add nuw nsw i64 %.1.i3164, 1            ; 2 uses
+  %8 = icmp slt i64 %i.an, %i.c
+  br i1 %8, label %.lr.ph, label %rstring_cache_fetch.exit
 
 .lr.ph:                                           ; preds = %.preheader, %bb.i
-  %.1.i3164 = phi i64 [ %i.an, %bb.i ], [ %.026.i, %.preheader ] ; 3 uses
+  %.1.i3164 = phi i64 [ %i.an, %bb.i ], [ %5, %.preheader ] ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 %.1.i3164
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !42  ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i3164

@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %foldExtExtBinop = fmul nnan <2 x float> %.sroa.011.0.copyload.us.us, %.sroa.011.0.copyload.us.us
   %i.av = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.aw = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i.us.us, float %.sroa.0.0.vec.extract.i.us.us, float %i.av)
-  %sqrt.us.us = call float @llvm.sqrt.f32(float %i.aw) ; 2 uses
+  %sqrt.us.us = call noundef float @sqrtf(float noundef %i.aw) #16 ; 2 uses
   %i.ax = fcmp olt float %.155.us.us, %sqrt.us.us
   %.sroa.speculated.us.us = select i1 %i.ax, float %sqrt.us.us, float %.155.us.us
   br label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us.us
@@ -247,7 +247,7 @@ bb.m:                                             ; preds = %bb.l
   %foldExtExtBinop3 = fmul nnan <2 x float> %.sroa.011.0.copyload.us, %.sroa.011.0.copyload.us
   %i.bg = extractelement <2 x float> %foldExtExtBinop3, i64 1
   %i.bh = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i.us, float %.sroa.0.0.vec.extract.i.us, float %i.bg)
-  %sqrt.us = call float @llvm.sqrt.f32(float %i.bh) ; 2 uses
+  %sqrt.us = call noundef float @sqrtf(float noundef %i.bh) #16 ; 2 uses
   %i.bi = fcmp olt float %.155.us, %sqrt.us
   %.sroa.speculated.us = select i1 %i.bi, float %sqrt.us, float %.155.us
   br label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us
@@ -650,14 +650,17 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #9
 
-; Function Attrs: nofree nounwind
-declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #10
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #10
 
 ; Function Attrs: nofree nounwind
-declare void @__cxa_guard_release(ptr) local_unnamed_addr #10
+declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #11
+
+; Function Attrs: nofree nounwind
+declare void @__cxa_guard_release(ptr) local_unnamed_addr #11
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @atan2f(float noundef, float noundef) local_unnamed_addr #11
+declare float @atan2f(float noundef, float noundef) local_unnamed_addr #10
 
 ; Function Attrs: mustprogress uwtable
 declare void @_ZNSt14basic_ofstreamIcSt11char_traitsIcEEC1EPKcSt13_Ios_Openmode(ptr noundef nonnull align 8 dereferenceable(248), ptr noundef, i32 noundef) unnamed_addr #2 align 2
@@ -758,8 +761,8 @@ attributes #6 = { mustprogress norecurse uwtable "min-legal-vector-width"="64" "
 attributes #7 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nofree nounwind }
-attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #11 = { nofree nounwind }
 attributes #12 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #13 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #14 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

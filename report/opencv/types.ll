@@ -205,7 +205,7 @@ bb.a:
   %i.n = fpext float %i.m to double               ; 2 uses
   %i.o = fmul double %i.n, %i.n
   %i.p = tail call double @llvm.fmuladd.f64(double %i.l, double %i.l, double %i.o)
-  %sqrt.i = tail call noundef double @llvm.sqrt.f64(double %i.p)
+  %sqrt.i = tail call noundef double @sqrt(double noundef %i.p) #20
   %i.q = fptrunc double %sqrt.i to float          ; 5 uses
   %i.r = extractelement <2 x float> %i.f, i64 0   ; 4 uses
   %i.s = extractelement <2 x float> %i.f, i64 1   ; 4 uses
@@ -302,19 +302,20 @@ bb.a:
   %i.o = fpext float %.val39 to double            ; 2 uses
   %i.p = fmul double %i.o, %i.o
   %i.q = tail call double @llvm.fmuladd.f64(double %i.n, double %i.n, double %i.p)
-  %sqrt.i = tail call noundef double @llvm.sqrt.f64(double %i.q) ; 2 uses
+  %sqrt.i = tail call noundef double @sqrt(double noundef %i.q) #20 ; 2 uses
   %i.r = shufflevector <2 x float> %i.f, <2 x float> %i.e, <2 x i32> <i32 0, i32 2>
   %i.s = fpext <2 x float> %i.r to <2 x double>   ; 2 uses
   %i.t = insertelement <2 x float> poison, float %.val31, i64 0
   %i.u = insertelement <2 x float> %i.t, float %.val41, i64 1
   %i.v = fpext <2 x float> %i.u to <2 x double>   ; 2 uses
   %i.w = fmul <2 x double> %i.v, %i.v
-  %i.x = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.s, <2 x double> %i.s, <2 x double> %i.w)
-  %6 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.x) ; 2 uses
-  %i.y = extractelement <2 x double> %6, i64 0    ; 2 uses
-  %7 = extractelement <2 x double> %6, i64 1      ; 2 uses
-  %i.z = fcmp olt double %i.y, %7
-  %i.aa = select i1 %i.z, double %7, double %i.y  ; 2 uses
+  %i.x = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.s, <2 x double> %i.s, <2 x double> %i.w) ; 2 uses
+  %6 = extractelement <2 x double> %i.x, i64 0
+  %7 = tail call noundef double @sqrt(double noundef %6) #20 ; 2 uses
+  %i.y = extractelement <2 x double> %i.x, i64 1
+  %8 = tail call noundef double @sqrt(double noundef %i.y) #20 ; 2 uses
+  %i.z = fcmp olt double %7, %8
+  %i.aa = select i1 %i.z, double %8, double %7    ; 2 uses
   %i.ab = fcmp olt double %sqrt.i, %i.aa
   %.sroa.speculated76 = select i1 %i.ab, double %i.aa, double %sqrt.i
   %i.ac = fpext <2 x float> %i.i to <2 x double>  ; 4 uses
@@ -717,6 +718,9 @@ bb.f:                                             ; preds = %_ZSt27__uninitializ
   ret void
 }
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sqrt(double noundef) local_unnamed_addr #10
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #8
 
@@ -734,9 +738,6 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #8

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph, %_Z8notExis
   br i1 %i.bb, label %bb.e, label %_Z8notExistRK9btVector3RK20btAlignedObjectArrayIS_E.exit
 
 bb.e:                                             ; preds = %bb.d
-  %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.ba)
+  %sqrt.i.i = tail call noundef float @sqrtf(float noundef %i.ba) #8
   %i.bc = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
   %i.bd = insertelement <2 x float> poison, float %i.bc, i64 0
   %i.be = shufflevector <2 x float> %i.bd, <2 x float> poison, <2 x i32> zeroinitializer
@@ -394,7 +394,7 @@ _Z8notExistRK9btVector3RK20btAlignedObjectArrayIS_E.exit: ; preds = %bb.g, %bb.i
 bb.p:                                             ; preds = %_Z8notExistRK9btVector3RK20btAlignedObjectArrayIS_E.exit
   %i.dw = fneg float %i.av
   %i.dx = fneg <2 x float> %i.ao
-  %sqrt.i.i.1 = tail call noundef float @llvm.sqrt.f32(float %i.du)
+  %sqrt.i.i.1 = tail call noundef float @sqrtf(float noundef %i.du) #8
   %i.dy = fdiv float 1.000000e+00, %sqrt.i.i.1    ; 2 uses
   %i.dz = insertelement <2 x float> poison, float %i.dy, i64 0
   %i.ea = shufflevector <2 x float> %i.dz, <2 x float> poison, <2 x i32> zeroinitializer
@@ -797,21 +797,21 @@ _ZN14btGeometryUtil19isPointInsidePlanesERK20btAlignedObjectArrayI9btVector3ERKS
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #4
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #5
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #4
 
-declare noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef, i32 noundef) local_unnamed_addr #5
+declare noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef, i32 noundef) local_unnamed_addr #6
 
-declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #4
+declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #6
+declare void @llvm.assume(i1 noundef) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
@@ -821,8 +821,10 @@ attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #2 = { mustprogress uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!4, !5, !6}
 !llvm.ident = !{!7}

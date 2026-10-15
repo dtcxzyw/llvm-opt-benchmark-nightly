@@ -21,7 +21,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.j = load double, ptr %i.i, align 8, !tbaa !10 ; 2 uses
   %i.k = tail call double @llvm.fmuladd.f64(double %i.j, double %i.j, double %i.h)
-  %sqrt = tail call double @llvm.sqrt.f64(double %i.k) ; 5 uses
+  %sqrt = tail call double @sqrt(double noundef %i.k) #4 ; 5 uses
   %i.l = fdiv double %i.a, %sqrt
   store double %i.l, ptr %1, align 8, !tbaa !10
   %i.m = load double, ptr %i.b, align 8, !tbaa !10
@@ -41,10 +41,13 @@ bb.a:
   ret i1 %i.w
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #1
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sqrt(double noundef) local_unnamed_addr #1
 
-declare noundef double @_ZN3igl3EPSIdEET_v() local_unnamed_addr #2
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fmuladd.f64(double, double, double) #2
+
+declare noundef double @_ZN3igl3EPSIdEET_v() local_unnamed_addr #3
 
 ; Function Attrs: mustprogress uwtable
 define weak_odr dso_local noundef zeroext i1 @_ZN3igl14normalize_quatIfEEbPKT_PS1_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 comdat {
@@ -59,29 +62,29 @@ bb.a:
   br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !11
 
 .rtvec:                                           ; preds = %bb.a
+  %2 = load float, ptr %0, align 4, !tbaa !13     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.f = load float, ptr %i.e, align 4, !tbaa !13 ; 2 uses
   %i.g = fmul float %i.f, %i.f
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load float, ptr %2, align 4, !tbaa !13     ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %3 = tail call float @llvm.fmuladd.f32(float %2, float %2, float %i.g)
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load float, ptr %i.h, align 4, !tbaa !13 ; 2 uses
-  %4 = load <4 x float>, ptr %0, align 4, !tbaa !13 ; 2 uses
-  %5 = extractelement <4 x float> %4, i64 0       ; 2 uses
-  %6 = tail call float @llvm.fmuladd.f32(float %5, float %5, float %i.g)
-  %i.j = tail call float @llvm.fmuladd.f32(float %3, float %3, float %6)
-  %7 = tail call float @llvm.fmuladd.f32(float %i.i, float %i.i, float %i.j)
-  %sqrt = tail call float @llvm.sqrt.f32(float %7) ; 2 uses
-  %i.k = insertelement <4 x float> poison, float %sqrt, i64 0
+  %4 = tail call float @llvm.fmuladd.f32(float %i.i, float %i.i, float %3)
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %6 = load float, ptr %5, align 4, !tbaa !13     ; 2 uses
+  %i.j = tail call float @llvm.fmuladd.f32(float %6, float %6, float %4)
+  %sqrtf = tail call float @sqrtf(float noundef %i.j) #4 ; 2 uses
+  %7 = load <4 x float>, ptr %0, align 4, !tbaa !13
+  %i.k = insertelement <4 x float> poison, float %sqrtf, i64 0
   %i.l = shufflevector <4 x float> %i.k, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.m = fdiv <4 x float> %4, %i.l
+  %i.m = fdiv <4 x float> %7, %i.l
   store <4 x float> %i.m, ptr %1, align 4, !tbaa !13
   %i.n = tail call noundef float @_ZN3igl3EPSIfEET_v()
-  %i.o = fcmp ogt float %sqrt, %i.n
+  %i.o = fcmp ogt float %sqrtf, %i.n
   br label %.rtcont
 
 .rtscalar:                                        ; preds = %bb.a
-  %i.p = load float, ptr %0, align 4, !tbaa !13   ; 3 uses
+  %i.p = load float, ptr %0, align 4, !tbaa !13   ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.r = load float, ptr %i.q, align 4, !tbaa !13 ; 2 uses
   %i.s = fmul float %i.r, %i.r
@@ -92,8 +95,9 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.y = load float, ptr %i.x, align 4, !tbaa !13 ; 2 uses
   %i.z = tail call float @llvm.fmuladd.f32(float %i.y, float %i.y, float %i.w)
-  %sqrt.scalar = tail call float @llvm.sqrt.f32(float %i.z) ; 5 uses
-  %i.aa = fdiv float %i.p, %sqrt.scalar
+  %sqrt.scalar = tail call float @sqrtf(float noundef %i.z) #4 ; 5 uses
+  %8 = load float, ptr %0, align 4, !tbaa !13
+  %i.aa = fdiv float %8, %sqrt.scalar
   store float %i.aa, ptr %1, align 4, !tbaa !13
   %i.ab = load float, ptr %i.q, align 4, !tbaa !13
   %i.ac = fdiv float %i.ab, %sqrt.scalar
@@ -117,19 +121,17 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fmuladd.f32(float, float, float) #1
+declare float @llvm.fmuladd.f32(float, float, float) #2
 
-declare noundef float @_ZN3igl3EPSIfEET_v() local_unnamed_addr #2
+declare noundef float @_ZN3igl3EPSIfEET_v() local_unnamed_addr #3
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #1
+declare float @sqrtf(float) local_unnamed_addr
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

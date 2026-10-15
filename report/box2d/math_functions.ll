@@ -8,7 +8,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef zeroext i1 @b2IsValidFloat(float noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call float @llvm.fabs.f32(float %0) #3
+  %i.a = tail call float @llvm.fabs.f32(float %0) #5
   %.0 = fcmp one float %i.a, +inf
   ret i1 %.0
 }
@@ -137,7 +137,7 @@ bb.b:                                             ; preds = %b2IsValidVec2.exit
   br i1 %i.k, label %bb.c, label %b2IsValidVec2.exit.thread
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = tail call float @llvm.fabs.f32(float %1) #3
+  %i.l = tail call float @llvm.fabs.f32(float %1) #5
   %.0.i3 = fcmp one float %i.l, +inf
   br label %b2IsValidVec2.exit.thread
 
@@ -255,8 +255,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   ret float %.034
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define <2 x float> @b2ComputeCosSin(float noundef %0) local_unnamed_addr #2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable
+define <2 x float> @b2ComputeCosSin(float noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = fcmp olt float %0, -1.000000e+06
   %i.b = fcmp ogt float %0, 1.000000e+06
@@ -275,7 +275,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.m = fadd float %i.k, f0x40490FDB             ; 2 uses
   %i.n = fmul float %i.m, %i.m                    ; 2 uses
-  %i.o = fmul nnan float %i.n, 4.000000e+00
+  %i.o = fmul float %i.n, 4.000000e+00
   %i.p = fsub float f0x411DE9E7, %i.o
   %i.q = fneg float %i.p
   br label %bb.f
@@ -287,7 +287,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.s = fadd float %i.k, f0xC0490FDB             ; 2 uses
   %i.t = fmul float %i.s, %i.s                    ; 2 uses
-  %i.u = fmul nnan float %i.t, 4.000000e+00
+  %i.u = fmul float %i.t, 4.000000e+00
   %i.v = fsub float f0x411DE9E7, %i.u
   %i.w = fneg float %i.v
   br label %bb.f
@@ -318,9 +318,9 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
   %i.am = insertelement <2 x float> %i.al, float %i.af, i64 1
   %i.an = fdiv <2 x float> %i.am, %i.ak           ; 3 uses
   %i.ao = fmul <2 x float> %i.an, %i.an
-  %i.ap = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.ao) ; 2 uses
-  %sqrt = tail call float @llvm.sqrt.f32(float %i.ap)
-  %i.aq = fcmp ogt float %i.ap, 0.000000e+00
+  %i.ap = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.ao)
+  %sqrt = tail call float @sqrtf(float noundef %i.ap) #6 ; 2 uses
+  %i.aq = fcmp ogt float %sqrt, 0.000000e+00
   %i.ar = fdiv float 1.000000e+00, %sqrt
   %i.as = select i1 %i.aq, float %i.ar, float 0.000000e+00
   %i.at = insertelement <2 x float> poison, float %i.as, i64 0
@@ -329,8 +329,11 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
   ret <2 x float> %i.av
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define <2 x float> @b2ComputeRotationBetweenUnitVectors(<2 x float> %0, <2 x float> %1) local_unnamed_addr #2 {
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #4
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable
+define <2 x float> @b2ComputeRotationBetweenUnitVectors(<2 x float> %0, <2 x float> %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = shufflevector <2 x float> %0, <2 x float> poison, <2 x i32> zeroinitializer
   %i.b = fmul <2 x float> %i.a, %1                ; 2 uses
@@ -341,9 +344,9 @@ bb.a:
   %i.g = fsub <2 x float> %i.b, %i.e
   %i.h = shufflevector <2 x float> %i.f, <2 x float> %i.g, <2 x i32> <i32 0, i32 3> ; 3 uses
   %i.i = fmul <2 x float> %i.h, %i.h
-  %i.j = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.i) ; 2 uses
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.j)
-  %i.k = fcmp ogt float %i.j, 0.000000e+00
+  %i.j = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.i)
+  %sqrt.i = tail call float @sqrtf(float noundef %i.j) #6 ; 2 uses
+  %i.k = fcmp ogt float %sqrt.i, 0.000000e+00
   %i.l = fdiv float 1.000000e+00, %sqrt.i
   %i.m = select i1 %i.k, float %i.l, float 0.000000e+00
   %i.n = insertelement <2 x float> poison, float %i.m, i64 0
@@ -351,9 +354,6 @@ bb.a:
   %i.p = fmul <2 x float> %i.h, %i.o
   ret <2 x float> %i.p
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #1
@@ -364,7 +364,10 @@ declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #1
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { memory(none) }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -205,7 +205,7 @@ _ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.epil:          ; preds = %_ZN2cv4Mat_IdEC2ERK
   br i1 %epil.iter.cmp.not, label %.preheader, label %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.epil, !llvm.loop !439
 
 .preheader:                                       ; preds = %.preheader.loopexit193.unr-lcssa, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.epil, %.preheader.loopexit.unr-lcssa, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.us.epil, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.preheader
-  %i.bt = phi <2 x double> [ zeroinitializer, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.preheader ], [ %i.bl, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.us.epil ], [ %i.bi, %.preheader.loopexit.unr-lcssa ], [ %i.du, %.preheader.loopexit193.unr-lcssa ], [ %i.bs, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.epil ]
+  %i.bt = phi <2 x double> [ zeroinitializer, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.preheader ], [ %i.bl, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.us.epil ], [ %i.bi, %.preheader.loopexit.unr-lcssa ], [ %i.du, %.preheader.loopexit193.unr-lcssa ], [ %i.bs, %_ZN2cv4Mat_IdEC2ERKNS_3MatE.exit83.epil ] ; 2 uses
   %i.bu = load ptr, ptr %i.n, align 8, !tbaa !52
   %i.bv = load ptr, ptr %5, align 8, !tbaa !54    ; 6 uses
   %i.bw = ptrtoint ptr %i.bu to i64
@@ -346,22 +346,23 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   br i1 %epil.iter211.cmp.not, label %._crit_edge, label %.lr.ph114.split.epil, !llvm.loop !442
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit192.unr-lcssa, %.lr.ph114.split.epil, %._crit_edge.loopexit.unr-lcssa, %bb.f, %.preheader
-  %i.ee = phi <2 x double> [ zeroinitializer, %.preheader ], [ %i.dw, %bb.f ], [ %i.cs, %._crit_edge.loopexit.unr-lcssa ], [ %i.fj, %._crit_edge.loopexit192.unr-lcssa ], [ %i.ed, %.lr.ph114.split.epil ]
-  %16 = uitofp i64 %i.ap to double
-  %17 = insertelement <2 x double> poison, double %16, i64 0
-  %18 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
-  %19 = fdiv <2 x double> %i.bt, %18              ; 2 uses
-  %20 = uitofp i64 %i.bz to double
-  %21 = insertelement <2 x double> poison, double %20, i64 0
-  %22 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
-  %23 = fdiv <2 x double> %i.ee, %22              ; 2 uses
-  %foldExtExtBinop = fsub <2 x double> %23, %19
+  %i.ee = phi <2 x double> [ zeroinitializer, %.preheader ], [ %i.dw, %bb.f ], [ %i.cs, %._crit_edge.loopexit.unr-lcssa ], [ %i.fj, %._crit_edge.loopexit192.unr-lcssa ], [ %i.ed, %.lr.ph114.split.epil ] ; 2 uses
+  %16 = insertelement <2 x i64> poison, i64 %i.bz, i64 0
+  %17 = insertelement <2 x i64> %16, i64 %i.ap, i64 1
+  %18 = uitofp <2 x i64> %17 to <2 x double>      ; 2 uses
+  %19 = shufflevector <2 x double> %i.ee, <2 x double> %i.bt, <2 x i32> <i32 0, i32 2>
+  %20 = fdiv <2 x double> %19, %18                ; 2 uses
+  %21 = shufflevector <2 x double> %i.ee, <2 x double> %i.bt, <2 x i32> <i32 1, i32 3>
+  %22 = fdiv <2 x double> %21, %18                ; 2 uses
+  %shift = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x double> %20, %shift
   %i.ef = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
-  %foldExtExtBinop188 = fsub <2 x double> %23, %19 ; 2 uses
+  %shift188 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop188 = fsub <2 x double> %22, %shift188 ; 2 uses
   %foldExtExtBinop190 = fmul <2 x double> %foldExtExtBinop188, %foldExtExtBinop188
-  %i.eg = extractelement <2 x double> %foldExtExtBinop190, i64 1
+  %i.eg = extractelement <2 x double> %foldExtExtBinop190, i64 0
   %i.eh = call double @llvm.fmuladd.f64(double %i.ef, double %i.ef, double %i.eg)
-  %sqrt = call double @llvm.sqrt.f64(double %i.eh)
+  %sqrt = call double @sqrt(double noundef %i.eh) #29
   br i1 %i.o, label %.lr.ph125, label %._crit_edge126
 
 .lr.ph114.split:                                  ; preds = %.lr.ph114.split, %.lr.ph114.split.preheader.new

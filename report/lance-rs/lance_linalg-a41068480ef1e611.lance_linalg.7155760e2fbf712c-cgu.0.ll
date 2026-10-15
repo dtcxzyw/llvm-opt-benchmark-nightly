@@ -205,7 +205,7 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
   br i1 %epil.iter.cmp.not, label %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit, label %.lr.ph.i.i.i.i.epil, !llvm.loop !1853
 
 _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit: ; preds = %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.epil, %bb.c
-  %.sroa.0.0 = phi float [ 0.000000e+00, %bb.c ], [ %i.ai, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit.loopexit.unr-lcssa ], [ %i.ao, %.lr.ph.i.i.i.i.epil ] ; 2 uses
+  %.sroa.0.0 = phi float [ 0.000000e+00, %bb.c ], [ %i.ai, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit.loopexit.unr-lcssa ], [ %i.ao, %.lr.ph.i.i.i.i.epil ]
   %i.ap = lshr i64 %1, 4                          ; 2 uses
   %.not = icmp eq i64 %i.ap, 0
   br i1 %.not, label %.preheader, label %.lr.ph
@@ -241,13 +241,13 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
   %i.br = extractelement <16 x float> %i.ce, i64 14
   %i.bs = fadd float %i.bq, %i.br
   %i.bt = extractelement <16 x float> %i.ce, i64 15
-  %4 = fadd float %i.bs, %i.bt
-  %i.bu = fadd float %.sroa.0.0, %4
+  %i.bu = fadd float %i.bs, %i.bt
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit
-  %i.bv = phi float [ %.sroa.0.0, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit ], [ %i.bu, %.preheader.loopexit ]
-  ret float %i.bv
+  %i.bv = phi float [ 0.000000e+00, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit ], [ %i.bu, %.preheader.loopexit ]
+  %4 = fadd float %.sroa.0.0, %i.bv
+  ret float %4
 
 .lr.ph:                                           ; preds = %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit, %.lr.ph
   %.sroa.16.062 = phi i64 [ %i.cf, %.lr.ph ], [ 0, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterfEB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarffKj10_E0EEB2q_.exit ] ; 2 uses
@@ -650,7 +650,7 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
   br i1 %epil.iter.cmp.not, label %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_E0EEB24_.exit.i, label %.preheader16.i.epil, !llvm.loop !7633
 
 _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_E0EEB24_.exit.i: ; preds = %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_E0EEB24_.exit.i.loopexit.unr-lcssa, %.preheader16.i.epil, %bb.c
-  %.sroa.0.0.i = phi float [ 0.000000e+00, %bb.c ], [ %i.y, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_E0EEB24_.exit.i.loopexit.unr-lcssa ], [ %i.ac, %.preheader16.i.epil ] ; 2 uses
+  %.sroa.0.0.i = phi float [ 0.000000e+00, %bb.c ], [ %i.y, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_E0EEB24_.exit.i.loopexit.unr-lcssa ], [ %i.ac, %.preheader16.i.epil ]
   %.not19.i = icmp eq i64 %i.g, 0
   br i1 %.not19.i, label %_RINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_EB6_.exit, label %.lr.ph.i.preheader
 
@@ -662,16 +662,17 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
   %i.ag = load <16 x float>, ptr %0, align 4, !alias.scope !7634 ; 2 uses
-  %i.ah = fmul <16 x float> %i.ag, %i.ag          ; 2 uses
+  %i.ah = fmul <16 x float> %i.ag, %i.ag
+  %2 = fadd <16 x float> %i.ah, zeroinitializer   ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.aj = add nsw i64 %i.g, -16
   br label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
-  %.lcssa.unr = phi <16 x float> [ poison, %.lr.ph.i.preheader ], [ %i.ah, %.lr.ph.i.prol ]
+  %.lcssa.unr = phi <16 x float> [ poison, %.lr.ph.i.preheader ], [ %2, %.lr.ph.i.prol ]
   %.sroa.01.021.i.unr = phi ptr [ %0, %.lr.ph.i.preheader ], [ %i.ai, %.lr.ph.i.prol ]
   %.sroa.5.020.i.unr = phi i64 [ %i.g, %.lr.ph.i.preheader ], [ %i.aj, %.lr.ph.i.prol ]
-  %.unr = phi <16 x float> [ zeroinitializer, %.lr.ph.i.preheader ], [ %i.ah, %.lr.ph.i.prol ]
+  %.unr = phi <16 x float> [ zeroinitializer, %.lr.ph.i.preheader ], [ %2, %.lr.ph.i.prol ]
   %i.ak = icmp ult i64 %i.ae, 16
   br i1 %i.ak, label %.preheader.loopexit.i, label %.lr.ph.i
 
@@ -707,8 +708,7 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
   %i.bm = extractelement <16 x float> %.lcssa, i64 14
   %i.bn = fadd float %i.bl, %i.bm
   %i.bo = extractelement <16 x float> %.lcssa, i64 15
-  %2 = fadd float %i.bn, %i.bo
-  %i.bp = fadd float %.sroa.0.0.i, %2
+  %i.bp = fadd float %i.bn, %i.bo
   br label %_RINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_EB6_.exit
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
@@ -728,8 +728,9 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
   br i1 %.not.i.1, label %.preheader.loopexit.i, label %.lr.ph.i
 
 _RINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_EB6_.exit: ; preds = %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_E0EEB24_.exit.i, %.preheader.loopexit.i
-  %i.ca = phi float [ %.sroa.0.0.i, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_E0EEB24_.exit.i ], [ %i.bp, %.preheader.loopexit.i ]
-  %i.cb = call noundef float @llvm.sqrt.f32(float %i.ca)
+  %i.ca = phi float [ 0.000000e+00, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterfENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implffKj10_E0EEB24_.exit.i ], [ %i.bp, %.preheader.loopexit.i ]
+  %3 = fadd float %.sroa.0.0.i, %i.ca
+  %i.cb = call noundef float @llvm.sqrt.f32(float %3)
   br label %bb.g
 
 bb.d:                                             ; preds = %_RINvMs0_NtNtCsgczF5crJ4sT_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCs63DIHKhvmTb_10lance_core5utils3cpu11SimdSupportE5force0ECs9JgWGBoX3PY_12lance_linalg.exit
@@ -1132,7 +1133,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldTRNtNtCs2k6O4uMwKJm_4
   br i1 %exitcond.not.i.i.i.i.i, label %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16EB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarB2a_fKj10_E0EEB2Z_.exit.i, label %.lr.ph.i.i.i.i.i
 
 _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16EB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarB2a_fKj10_E0EEB2Z_.exit.i: ; preds = %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldTRNtNtCs2k6O4uMwKJm_4half8binary163f16BV_EffNCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarBW_fKj10_E0NCINvXs22_NtNtB8_6traits5accumfNtB2U_3Sum3sumINtB4_3MapINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterBW_EB3T_EB1C_EE0E0B1L_.exit.i.i.i.i.i, %bb.e
-  %.sroa.0.0.i = phi float [ 0.000000e+00, %bb.e ], [ %i.cw, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldTRNtNtCs2k6O4uMwKJm_4half8binary163f16BV_EffNCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarBW_fKj10_E0NCINvXs22_NtNtB8_6traits5accumfNtB2U_3Sum3sumINtB4_3MapINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterBW_EB3T_EB1C_EE0E0B1L_.exit.i.i.i.i.i ] ; 2 uses
+  %.sroa.0.0.i = phi float [ 0.000000e+00, %bb.e ], [ %i.cw, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldTRNtNtCs2k6O4uMwKJm_4half8binary163f16BV_EffNCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarBW_fKj10_E0NCINvXs22_NtNtB8_6traits5accumfNtB2U_3Sum3sumINtB4_3MapINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterBW_EB3T_EB1C_EE0E0B1L_.exit.i.i.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !8438
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.a, i8 0, i64 64, i1 false), !noalias !8438
   %i.cx = lshr i64 %1, 4                          ; 2 uses
@@ -1176,22 +1177,21 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
   %.val.i.i.i.14.pre.i = load float, ptr %.phi.trans.insert105.i, align 4, !noalias !8438
   %.phi.trans.insert107.i = getelementptr inbounds nuw i8, ptr %i.a, i64 60
   %.val.i.i.i.15.pre.i = load float, ptr %.phi.trans.insert107.i, align 4, !noalias !8438
-  %4 = fadd float %.val.i.i.i.pre.i, %.val.i.i.i.1.pre.i
-  %i.cz = fadd float %4, %.val.i.i.i.2.pre.i
-  %i.da = fadd float %i.cz, %.val.i.i.i.3.pre.i
-  %i.db = fadd float %i.da, %.val.i.i.i.4.pre.i
-  %i.dc = fadd float %i.db, %.val.i.i.i.5.pre.i
-  %i.dd = fadd float %i.dc, %.val.i.i.i.6.pre.i
-  %i.de = fadd float %i.dd, %.val.i.i.i.7.pre.i
-  %i.df = fadd float %i.de, %.val.i.i.i.8.pre.i
-  %i.dg = fadd float %i.df, %.val.i.i.i.9.pre.i
-  %i.dh = fadd float %i.dg, %.val.i.i.i.10.pre.i
-  %i.di = fadd float %i.dh, %.val.i.i.i.11.pre.i
-  %i.dj = fadd float %i.di, %.val.i.i.i.12.pre.i
-  %i.dk = fadd float %i.dj, %.val.i.i.i.13.pre.i
-  %i.dl = fadd float %i.dk, %.val.i.i.i.14.pre.i
-  %i.dm = fadd float %i.dl, %.val.i.i.i.15.pre.i
-  %i.dn = fadd float %.sroa.0.0.i, %i.dm
+  %i.cz = fadd float %.val.i.i.i.pre.i, %.val.i.i.i.1.pre.i
+  %i.da = fadd float %i.cz, %.val.i.i.i.2.pre.i
+  %i.db = fadd float %i.da, %.val.i.i.i.3.pre.i
+  %i.dc = fadd float %i.db, %.val.i.i.i.4.pre.i
+  %i.dd = fadd float %i.dc, %.val.i.i.i.5.pre.i
+  %i.de = fadd float %i.dd, %.val.i.i.i.6.pre.i
+  %i.df = fadd float %i.de, %.val.i.i.i.7.pre.i
+  %i.dg = fadd float %i.df, %.val.i.i.i.8.pre.i
+  %i.dh = fadd float %i.dg, %.val.i.i.i.9.pre.i
+  %i.di = fadd float %i.dh, %.val.i.i.i.10.pre.i
+  %i.dj = fadd float %i.di, %.val.i.i.i.11.pre.i
+  %i.dk = fadd float %i.dj, %.val.i.i.i.12.pre.i
+  %i.dl = fadd float %i.dk, %.val.i.i.i.13.pre.i
+  %i.dm = fadd float %i.dl, %.val.i.i.i.14.pre.i
+  %i.dn = fadd float %i.dm, %.val.i.i.i.15.pre.i
   br label %_RINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarNtNtCs2k6O4uMwKJm_4half8binary163f16fKj10_EB6_.exit
 
 .lr.ph.i:                                         ; preds = %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16EB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarB2a_fKj10_E0EEB2Z_.exit.i, %.loopexit.i
@@ -1392,9 +1392,10 @@ _RNvXsy_NtCs2k6O4uMwKJm_4half10num_traitsNtNtB7_8binary163f16INtNtCs9Dp5gG9Z4kl_
   br i1 %exitcond.not.i, label %.loopexit.i, label %bb.z
 
 _RINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarNtNtCs2k6O4uMwKJm_4half8binary163f16fKj10_EB6_.exit: ; preds = %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16EB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarB2a_fKj10_E0EEB2Z_.exit.i, %.preheader.loopexit.i
-  %i.hb = phi float [ %i.dn, %.preheader.loopexit.i ], [ %.sroa.0.0.i, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16EB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarB2a_fKj10_E0EEB2Z_.exit.i ]
+  %i.hb = phi float [ %i.dn, %.preheader.loopexit.i ], [ 0.000000e+00, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtB17_3zip3ZipINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16EB1K_ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance2l29l2_scalarB2a_fKj10_E0EEB2Z_.exit.i ]
+  %4 = fadd float %.sroa.0.0.i, %i.hb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8438
-  ret float %i.hb
+  ret float %4
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -1797,7 +1798,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRNtNtCs2k6O4uMwKJm_4h
   br i1 %i.bb, label %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implB1T_fKj20_E0EEB2D_.exit.i, label %.preheader16.i
 
 _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implB1T_fKj20_E0EEB2D_.exit.i: ; preds = %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRNtNtCs2k6O4uMwKJm_4half8binary163f16ffNCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implBV_fKj20_E0NCINvXs22_NtNtB8_6traits5accumfNtB2Y_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0B1G_.exit.i.i.i.i, %_RINvMs0_NtNtCsgczF5crJ4sT_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCs63DIHKhvmTb_10lance_core5utils3cpu11SimdSupportE5force0ECs9JgWGBoX3PY_12lance_linalg.exit
-  %.sroa.0.0.i = phi float [ 0.000000e+00, %_RINvMs0_NtNtCsgczF5crJ4sT_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCs63DIHKhvmTb_10lance_core5utils3cpu11SimdSupportE5force0ECs9JgWGBoX3PY_12lance_linalg.exit ], [ %i.az, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRNtNtCs2k6O4uMwKJm_4half8binary163f16ffNCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implBV_fKj20_E0NCINvXs22_NtNtB8_6traits5accumfNtB2Y_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0B1G_.exit.i.i.i.i ] ; 2 uses
+  %.sroa.0.0.i = phi float [ 0.000000e+00, %_RINvMs0_NtNtCsgczF5crJ4sT_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCs63DIHKhvmTb_10lance_core5utils3cpu11SimdSupportE5force0ECs9JgWGBoX3PY_12lance_linalg.exit ], [ %i.az, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRNtNtCs2k6O4uMwKJm_4half8binary163f16ffNCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implBV_fKj20_E0NCINvXs22_NtNtB8_6traits5accumfNtB2Y_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB1x_EE0E0B1G_.exit.i.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !9637
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(128) %i.a, i8 0, i64 128, i1 false), !noalias !9637
   %.not19.i = icmp eq i64 %i.g, 0
@@ -1873,38 +1874,37 @@ _RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8ad
   %.val.i.i.i.30.pre.i = load float, ptr %.phi.trans.insert82.i, align 4, !noalias !9637
   %.phi.trans.insert84.i = getelementptr inbounds nuw i8, ptr %i.a, i64 124
   %.val.i.i.i.31.pre.i = load float, ptr %.phi.trans.insert84.i, align 4, !noalias !9637
-  %2 = fadd float %.val.i.i.i.pre.i, %.val.i.i.i.1.pre.i
-  %i.be = fadd float %2, %.val.i.i.i.2.pre.i
-  %i.bf = fadd float %i.be, %.val.i.i.i.3.pre.i
-  %i.bg = fadd float %i.bf, %.val.i.i.i.4.pre.i
-  %i.bh = fadd float %i.bg, %.val.i.i.i.5.pre.i
-  %i.bi = fadd float %i.bh, %.val.i.i.i.6.pre.i
-  %i.bj = fadd float %i.bi, %.val.i.i.i.7.pre.i
-  %i.bk = fadd float %i.bj, %.val.i.i.i.8.pre.i
-  %i.bl = fadd float %i.bk, %.val.i.i.i.9.pre.i
-  %i.bm = fadd float %i.bl, %.val.i.i.i.10.pre.i
-  %i.bn = fadd float %i.bm, %.val.i.i.i.11.pre.i
-  %i.bo = fadd float %i.bn, %.val.i.i.i.12.pre.i
-  %i.bp = fadd float %i.bo, %.val.i.i.i.13.pre.i
-  %i.bq = fadd float %i.bp, %.val.i.i.i.14.pre.i
-  %i.br = fadd float %i.bq, %.val.i.i.i.15.pre.i
-  %i.bs = fadd float %i.br, %.val.i.i.i.16.pre.i
-  %i.bt = fadd float %i.bs, %.val.i.i.i.17.pre.i
-  %i.bu = fadd float %i.bt, %.val.i.i.i.18.pre.i
-  %i.bv = fadd float %i.bu, %.val.i.i.i.19.pre.i
-  %i.bw = fadd float %i.bv, %.val.i.i.i.20.pre.i
-  %i.bx = fadd float %i.bw, %.val.i.i.i.21.pre.i
-  %i.by = fadd float %i.bx, %.val.i.i.i.22.pre.i
-  %i.bz = fadd float %i.by, %.val.i.i.i.23.pre.i
-  %i.ca = fadd float %i.bz, %.val.i.i.i.24.pre.i
-  %i.cb = fadd float %i.ca, %.val.i.i.i.25.pre.i
-  %i.cc = fadd float %i.cb, %.val.i.i.i.26.pre.i
-  %i.cd = fadd float %i.cc, %.val.i.i.i.27.pre.i
-  %i.ce = fadd float %i.cd, %.val.i.i.i.28.pre.i
-  %i.cf = fadd float %i.ce, %.val.i.i.i.29.pre.i
-  %i.cg = fadd float %i.cf, %.val.i.i.i.30.pre.i
-  %i.ch = fadd float %i.cg, %.val.i.i.i.31.pre.i
-  %i.ci = fadd float %.sroa.0.0.i, %i.ch
+  %i.be = fadd float %.val.i.i.i.pre.i, %.val.i.i.i.1.pre.i
+  %i.bf = fadd float %i.be, %.val.i.i.i.2.pre.i
+  %i.bg = fadd float %i.bf, %.val.i.i.i.3.pre.i
+  %i.bh = fadd float %i.bg, %.val.i.i.i.4.pre.i
+  %i.bi = fadd float %i.bh, %.val.i.i.i.5.pre.i
+  %i.bj = fadd float %i.bi, %.val.i.i.i.6.pre.i
+  %i.bk = fadd float %i.bj, %.val.i.i.i.7.pre.i
+  %i.bl = fadd float %i.bk, %.val.i.i.i.8.pre.i
+  %i.bm = fadd float %i.bl, %.val.i.i.i.9.pre.i
+  %i.bn = fadd float %i.bm, %.val.i.i.i.10.pre.i
+  %i.bo = fadd float %i.bn, %.val.i.i.i.11.pre.i
+  %i.bp = fadd float %i.bo, %.val.i.i.i.12.pre.i
+  %i.bq = fadd float %i.bp, %.val.i.i.i.13.pre.i
+  %i.br = fadd float %i.bq, %.val.i.i.i.14.pre.i
+  %i.bs = fadd float %i.br, %.val.i.i.i.15.pre.i
+  %i.bt = fadd float %i.bs, %.val.i.i.i.16.pre.i
+  %i.bu = fadd float %i.bt, %.val.i.i.i.17.pre.i
+  %i.bv = fadd float %i.bu, %.val.i.i.i.18.pre.i
+  %i.bw = fadd float %i.bv, %.val.i.i.i.19.pre.i
+  %i.bx = fadd float %i.bw, %.val.i.i.i.20.pre.i
+  %i.by = fadd float %i.bx, %.val.i.i.i.21.pre.i
+  %i.bz = fadd float %i.by, %.val.i.i.i.22.pre.i
+  %i.ca = fadd float %i.bz, %.val.i.i.i.23.pre.i
+  %i.cb = fadd float %i.ca, %.val.i.i.i.24.pre.i
+  %i.cc = fadd float %i.cb, %.val.i.i.i.25.pre.i
+  %i.cd = fadd float %i.cc, %.val.i.i.i.26.pre.i
+  %i.ce = fadd float %i.cd, %.val.i.i.i.27.pre.i
+  %i.cf = fadd float %i.ce, %.val.i.i.i.28.pre.i
+  %i.cg = fadd float %i.cf, %.val.i.i.i.29.pre.i
+  %i.ch = fadd float %i.cg, %.val.i.i.i.30.pre.i
+  %i.ci = fadd float %i.ch, %.val.i.i.i.31.pre.i
   br label %_RINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implNtNtCs2k6O4uMwKJm_4half8binary163f16fKj20_EB6_.exit
 
 .lr.ph.i:                                         ; preds = %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implB1T_fKj20_E0EEB2D_.exit.i, %.loopexit.i
@@ -2013,8 +2013,9 @@ _RNvXsy_NtCs2k6O4uMwKJm_4half10num_traitsNtNtB7_8binary163f16INtNtCs9Dp5gG9Z4kl_
   br i1 %exitcond.not.i, label %.loopexit.i, label %bb.m
 
 _RINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implNtNtCs2k6O4uMwKJm_4half8binary163f16fKj20_EB6_.exit: ; preds = %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implB1T_fKj20_E0EEB2D_.exit.i, %.preheader.loopexit.i
-  %i.ed = phi float [ %i.ci, %.preheader.loopexit.i ], [ %.sroa.0.0.i, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implB1T_fKj20_E0EEB2D_.exit.i ]
-  %i.ee = call noundef float @llvm.sqrt.f32(float %i.ed)
+  %i.ed = phi float [ %i.ci, %.preheader.loopexit.i ], [ 0.000000e+00, %_RINvXs22_NtNtNtCscI6d9CVNmLh_4core4iter6traits5accumfNtB7_3Sum3sumINtNtNtBb_8adapters3map3MapINtNtNtBd_5slice4iter4IterNtNtCs2k6O4uMwKJm_4half8binary163f16ENCINvNtNtCs9JgWGBoX3PY_12lance_linalg8distance7norm_l212norm_l2_implB1T_fKj20_E0EEB2D_.exit.i ]
+  %2 = fadd float %.sroa.0.0.i, %i.ed
+  %i.ee = call noundef float @llvm.sqrt.f32(float %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !9637
   ret float %i.ee
 }

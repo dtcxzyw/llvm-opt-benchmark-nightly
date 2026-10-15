@@ -204,6 +204,9 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond119.not, label %._crit_edge102, label %scalar.ph, !llvm.loop !39
 }
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #6
+
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN11flip_detail5image8convolveERS0_S1_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) local_unnamed_addr #8 align 2 {
 bb.a:
@@ -606,7 +609,7 @@ bb.e:                                             ; preds = %.preheader, %bb.h
   %i.as = fsub float %.sroa.535.0.copyload, %.sroa.532.0.copyload ; 2 uses
   %i.at = fmul float %i.as, %i.as
   %i.au = call float @llvm.fmuladd.f32(float %i.ar, float %i.ar, float %i.at)
-  %sqrt.i = call float @llvm.sqrt.f32(float %i.au)
+  %sqrt.i = call float @sqrtf(float noundef %i.au) #17
   %i.av = fadd float %i.aq, %sqrt.i
   %i.aw = call float @powf(float noundef %i.av, float noundef f0x3F333333) #17 ; 3 uses
   %i.ax = fcmp olt float %i.aw, f0x41841561
@@ -1009,32 +1012,40 @@ _ZN11flip_detail5imageD2Ev.exit108:               ; preds = %_ZN11flip_detail5im
 
 bb.ah:                                            ; preds = %.preheader, %bb.ah
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.ah ] ; 6 uses
-  %i.if = getelementptr [12 x i8], ptr %i.fy, i64 %indvars.iv
-  %i.ig = getelementptr [12 x i8], ptr %i.fz, i64 %indvars.iv
-  %17 = load <2 x float>, ptr %i.if, align 4, !tbaa !15 ; 2 uses
-  %18 = load <2 x float>, ptr %i.ig, align 4, !tbaa !15 ; 2 uses
-  %19 = shufflevector <2 x float> %17, <2 x float> %18, <2 x i32> <i32 1, i32 3> ; 2 uses
-  %20 = fmul <2 x float> %19, %19
-  %21 = shufflevector <2 x float> %17, <2 x float> %18, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %22 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %21, <2 x float> %21, <2 x float> %20)
-  %23 = call <2 x float> @llvm.sqrt.v2f32(<2 x float> %22) ; 2 uses
-  %24 = getelementptr [12 x i8], ptr %i.ga, i64 %indvars.iv
-  %25 = getelementptr [12 x i8], ptr %i.gb, i64 %indvars.iv
-  %26 = load <2 x float>, ptr %24, align 4, !tbaa !15 ; 2 uses
-  %27 = load <2 x float>, ptr %25, align 4, !tbaa !15 ; 2 uses
-  %28 = shufflevector <2 x float> %26, <2 x float> %27, <2 x i32> <i32 1, i32 3> ; 2 uses
-  %29 = fmul <2 x float> %28, %28
-  %30 = shufflevector <2 x float> %26, <2 x float> %27, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %31 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %30, <2 x float> %30, <2 x float> %29)
-  %32 = call <2 x float> @llvm.sqrt.v2f32(<2 x float> %31) ; 2 uses
-  %33 = shufflevector <2 x float> %23, <2 x float> %32, <2 x i32> <i32 0, i32 2>
-  %34 = shufflevector <2 x float> %23, <2 x float> %32, <2 x i32> <i32 1, i32 3>
-  %35 = fsub <2 x float> %33, %34
-  %36 = call <2 x float> @llvm.fabs.v2f32(<2 x float> %35) ; 2 uses
-  %37 = extractelement <2 x float> %36, i64 0     ; 2 uses
-  %38 = extractelement <2 x float> %36, i64 1     ; 2 uses
-  %i.ih = fcmp olt float %37, %38
-  %.sroa.speculated = select i1 %i.ih, float %38, float %37
+  %i.if = getelementptr [12 x i8], ptr %i.fy, i64 %indvars.iv ; 2 uses
+  %.sroa.0127.0.copyload = load float, ptr %i.if, align 4, !tbaa !15 ; 2 uses
+  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.if, i64 4
+  %.sroa.11.0.copyload = load float, ptr %.sroa.11.0..sroa_idx, align 4, !tbaa !15 ; 2 uses
+  %17 = fmul float %.sroa.11.0.copyload, %.sroa.11.0.copyload
+  %18 = call float @llvm.fmuladd.f32(float %.sroa.0127.0.copyload, float %.sroa.0127.0.copyload, float %17)
+  %19 = call float @sqrtf(float noundef %18) #17
+  %i.ig = getelementptr [12 x i8], ptr %i.fz, i64 %indvars.iv ; 2 uses
+  %.sroa.0127.0.copyload131 = load float, ptr %i.ig, align 4, !tbaa !15 ; 2 uses
+  %.sroa.11.0..sroa_idx134 = getelementptr inbounds nuw i8, ptr %i.ig, i64 4
+  %.sroa.11.0.copyload135 = load float, ptr %.sroa.11.0..sroa_idx134, align 4, !tbaa !15 ; 2 uses
+  %20 = fmul float %.sroa.11.0.copyload135, %.sroa.11.0.copyload135
+  %21 = call float @llvm.fmuladd.f32(float %.sroa.0127.0.copyload131, float %.sroa.0127.0.copyload131, float %20)
+  %22 = call float @sqrtf(float noundef %21) #17
+  %23 = getelementptr [12 x i8], ptr %i.ga, i64 %indvars.iv ; 2 uses
+  %.sroa.0127.0.copyload132 = load float, ptr %23, align 4, !tbaa !15 ; 2 uses
+  %.sroa.11.0..sroa_idx136 = getelementptr inbounds nuw i8, ptr %23, i64 4
+  %.sroa.11.0.copyload137 = load float, ptr %.sroa.11.0..sroa_idx136, align 4, !tbaa !15 ; 2 uses
+  %24 = fmul float %.sroa.11.0.copyload137, %.sroa.11.0.copyload137
+  %25 = call float @llvm.fmuladd.f32(float %.sroa.0127.0.copyload132, float %.sroa.0127.0.copyload132, float %24)
+  %26 = call float @sqrtf(float noundef %25) #17
+  %27 = getelementptr [12 x i8], ptr %i.gb, i64 %indvars.iv ; 2 uses
+  %.sroa.0127.0.copyload133 = load float, ptr %27, align 4, !tbaa !15 ; 2 uses
+  %.sroa.11.0..sroa_idx138 = getelementptr inbounds nuw i8, ptr %27, i64 4
+  %.sroa.11.0.copyload139 = load float, ptr %.sroa.11.0..sroa_idx138, align 4, !tbaa !15 ; 2 uses
+  %28 = fmul float %.sroa.11.0.copyload139, %.sroa.11.0.copyload139
+  %29 = call float @llvm.fmuladd.f32(float %.sroa.0127.0.copyload133, float %.sroa.0127.0.copyload133, float %28)
+  %30 = call float @sqrtf(float noundef %29) #17
+  %31 = fsub float %19, %22
+  %32 = call noundef float @llvm.fabs.f32(float %31) ; 2 uses
+  %33 = fsub float %26, %30
+  %34 = call noundef float @llvm.fabs.f32(float %33) ; 2 uses
+  %i.ih = fcmp olt float %32, %34
+  %.sroa.speculated = select i1 %i.ih, float %34, float %32
   %i.ii = fmul float %.sroa.speculated, f0x3F3504F3
   %i.ij = call noundef float @powf(float noundef %i.ii, float noundef 5.000000e-01) #17
   %i.ik = getelementptr inbounds nuw [12 x i8], ptr %i.gc, i64 %indvars.iv ; 2 uses
@@ -1437,16 +1448,10 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare i32 @llvm.abs.i32(i32, i1 immarg) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.sqrt.f32(float) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #16

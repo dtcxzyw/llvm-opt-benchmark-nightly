@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %.pre408 = load double, ptr %.phi.trans.insert407, align 8, !tbaa !18 ; 2 uses
   %i.bu = fmul double %.pre408, %.pre408
   %i.bv = tail call double @llvm.fmuladd.f64(double %.pre406.a, double %.pre406.a, double %i.bu)
-  %sqrt318 = tail call double @llvm.sqrt.f64(double %i.bv)
+  %sqrt318 = tail call double @sqrt(double noundef %i.bv) #18
   %i.bw = fmul double %sqrt318, 5.000000e-01
   br label %bb.h
 
@@ -300,9 +300,9 @@ bb.b:                                             ; preds = %bb.a
   %foldExtExtBinop = fmul <2 x double> %i.ei, %i.ei
   %i.ej = extractelement <2 x double> %foldExtExtBinop, i64 1
   %i.ek = extractelement <2 x double> %i.ei, i64 0 ; 2 uses
-  %i.el = tail call double @llvm.fmuladd.f64(double %i.ek, double %i.ek, double %i.ej) ; 2 uses
-  %sqrt = tail call double @llvm.sqrt.f64(double %i.el) ; 2 uses
-  %i.em = fcmp une double %i.el, 0.000000e+00
+  %i.el = tail call double @llvm.fmuladd.f64(double %i.ek, double %i.ek, double %i.ej)
+  %sqrt = tail call double @sqrt(double noundef %i.el) #18 ; 3 uses
+  %i.em = fcmp une double %sqrt, 0.000000e+00
   %i.en = insertelement <2 x double> poison, double %sqrt, i64 0
   %i.eo = shufflevector <2 x double> %i.en, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ep = fdiv <2 x double> %i.ei, %i.eo
@@ -541,17 +541,17 @@ bb.i:                                             ; preds = %.thread301.thread, 
   %i.ii = fsub double %i.if, %i.ih                ; 2 uses
   %i.ij = fmul double %i.ii, %i.ii
   %i.ik = tail call double @llvm.fmuladd.f64(double %i.id, double %i.id, double %i.ij)
-  %sqrt319 = tail call double @llvm.sqrt.f64(double %i.ik) ; 4 uses
+  %sqrt319 = tail call double @sqrt(double noundef %i.ik) #18 ; 4 uses
   %i.il = fsub double %i.ib, %sqrt319
   %i.im = getelementptr inbounds nuw i8, ptr %0, i64 16
   store double %i.il, ptr %i.im, align 8, !tbaa !36
-  %i.in = fadd double %i.ib, %sqrt319
+  %i.in = fadd double %sqrt319, %i.ib
   %i.io = getelementptr inbounds nuw i8, ptr %0, i64 24
   store double %i.in, ptr %i.io, align 8, !tbaa !37
   %i.ip = fsub double %i.if, %sqrt319
   %i.iq = getelementptr inbounds nuw i8, ptr %0, i64 32
   store double %i.ip, ptr %i.iq, align 8, !tbaa !38
-  %i.ir = fadd double %i.if, %sqrt319
+  %i.ir = fadd double %sqrt319, %i.if
   br label %.loopexit.sink.split
 
 bb.j:                                             ; preds = %bb.a
@@ -953,9 +953,6 @@ declare i32 @ffwldp(double noundef, double noundef, double noundef, double nound
 declare i32 @ffgcv(ptr noundef, i32 noundef, i32 noundef, i64 noundef, i64 noundef, i64 noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 declare i32 @ffclos(ptr noundef, ptr noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16

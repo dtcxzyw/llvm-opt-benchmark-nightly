@@ -205,8 +205,8 @@ _ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit: ; preds = %_ZN2cvL8decToBinEi
   %.inv = icmp sgt i32 %i.l, 9
   %.035 = select i1 %.inv, i64 %spec.select, i64 9 ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !25
-  %i.p = trunc i64 %i.o to i32                    ; 6 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !25   ; 2 uses
+  %i.p = trunc i64 %i.o to i32                    ; 5 uses
   %i.q = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.035) #30 ; 6 uses
   %i.r = getelementptr i8, ptr %i.q, i64 %.035    ; 4 uses
   store i8 0, ptr %i.q, align 1, !tbaa !16
@@ -264,12 +264,17 @@ _ZNSt6vectorIhSaIhEED2Ev.exit12.i49:              ; preds = %_ZN2cvL8decToBinEii
 
 _ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50: ; preds = %_ZN2cvL8decToBinEiiRSt6vectorIhSaIhEE.exit.i48.epilog-lcssa
   tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %.035) #29
-  %3 = add nsw i32 %i.p, -1
   %.not75 = icmp sgt i32 %i.p, 1
-  br i1 %.not75, label %.lr.ph, label %.critedge42
+  br i1 %.not75, label %.lr.ph.preheader, label %.critedge42
 
-.lr.ph:                                           ; preds = %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60 ], [ 0, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50 ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50
+  %3 = shl i64 %i.o, 32
+  %sext = add nsw i64 %3, -4294967296
+  %4 = ashr exact i64 %sext, 32
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60 ] ; 2 uses
   %i.av = load ptr, ptr %1, align 8, !tbaa !22
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %indvars.iv ; 2 uses
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !16  ; 4 uses
@@ -392,8 +397,7 @@ _ZNSt6vectorIhSaIhEED2Ev.exit12.i59:              ; preds = %.critedge
 _ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60: ; preds = %.critedge
   tail call void @_ZdlPvm(ptr noundef nonnull %i.br, i64 noundef 11) #29
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv.next to i32
-  %.not = icmp sgt i32 %3, %4
+  %.not = icmp slt i64 %indvars.iv.next, %4
   br i1 %.not, label %.lr.ph, label %.critedge42, !llvm.loop !171
 
 .critedge42:                                      ; preds = %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50

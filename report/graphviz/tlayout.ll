@@ -202,7 +202,7 @@ bb.ax:                                            ; preds = %bb.aw
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.ax
   %.0.lcssa.i.i = phi double [ %i.lt, %bb.ax ], [ %i.me, %.lr.ph.i.i ]
   %i.mg = phi <2 x double> [ %i.lq, %bb.ax ], [ %i.mb, %.lr.ph.i.i ] ; 2 uses
-  %sqrt.i.i = tail call double @llvm.sqrt.f64(double %.0.lcssa.i.i) ; 3 uses
+  %sqrt.i.i = tail call double @sqrt(double noundef %.0.lcssa.i.i) #6 ; 3 uses
   %i.mh = load i32, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 4), align 4, !tbaa !54
   %.not.i.i = icmp eq i32 %i.mh, 0
   %i.mi = getelementptr inbounds nuw i8, ptr %.045.i, i64 16
@@ -491,7 +491,7 @@ bb.bm:                                            ; preds = %bb.bl
 ._crit_edge.i.i46:                                ; preds = %.lr.ph.i.i55, %bb.bm
   %.0.lcssa.i.i49 = phi double [ %i.rq, %bb.bm ], [ %i.sb, %.lr.ph.i.i55 ]
   %i.sd = phi <2 x double> [ %i.rn, %bb.bm ], [ %i.ry, %.lr.ph.i.i55 ] ; 2 uses
-  %sqrt.i.i50 = tail call double @llvm.sqrt.f64(double %.0.lcssa.i.i49) ; 3 uses
+  %sqrt.i.i50 = tail call double @sqrt(double noundef %.0.lcssa.i.i49) #6 ; 3 uses
   %i.se = load i32, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 4), align 4, !tbaa !54
   %.not.i.i51 = icmp eq i32 %i.se, 0
   %i.sf = getelementptr inbounds nuw i8, ptr %.059.i, i64 16
@@ -855,7 +855,7 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   br i1 %i.o, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %sqrt.us = tail call double @llvm.sqrt.f64(double %i.n)
+  %sqrt.us = tail call double @sqrt(double noundef %i.n) #6
   %i.p = fdiv double %1, %sqrt.us
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 176
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !46   ; 2 uses
@@ -913,7 +913,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %sqrt = tail call double @llvm.sqrt.f64(double %i.ao)
+  %sqrt = tail call double @sqrt(double noundef %i.ao) #6
   %i.au = fdiv double %1, %sqrt
   %i.av = getelementptr inbounds nuw i8, ptr %i.ae, i64 176
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !46 ; 2 uses
@@ -929,11 +929,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bd = fmul <2 x double> %i.bc, %i.bc
   %i.be = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 80), align 8, !tbaa !18 ; 2 uses
   %i.bf = fmul <2 x double> %i.be, %i.be
-  %i.bg = fdiv <2 x double> %i.bd, %i.bf          ; 2 uses
-  %shift = shufflevector <2 x double> %i.bg, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop77 = fadd <2 x double> %i.bg, %shift
-  %3 = extractelement <2 x double> %foldExtExtBinop77, i64 0
-  %sqrt63 = tail call double @llvm.sqrt.f64(double %3) ; 3 uses
+  %i.bg = fdiv <2 x double> %i.bd, %i.bf
+  %3 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.bg)
+  %sqrt63 = tail call double @sqrt(double noundef %3) #6 ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !50
   %.not61 = icmp eq ptr %i.bi, null
@@ -1176,14 +1174,14 @@ declare double @hypot(double noundef, double noundef) local_unnamed_addr #2
 
 declare ptr @findGrid(ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #4
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

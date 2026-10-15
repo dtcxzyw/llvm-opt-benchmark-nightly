@@ -205,10 +205,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.h
 bb.c:                                             ; preds = %bb.b
   %i.r = load float, ptr %i.p, align 4, !tbaa !333 ; 2 uses
   %i.s = fmul float %i.r, %i.r
+  %7 = fadd float %i.s, 0.000000e+00
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.177 = phi float [ 0.000000e+00, %bb.b ], [ %i.s, %bb.c ] ; 2 uses
+  %.177 = phi float [ 0.000000e+00, %bb.b ], [ %7, %bb.c ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 4
   %i.u = load i32, ptr %i.t, align 4, !tbaa !332
   %.not.1 = icmp eq i32 %i.u, 0

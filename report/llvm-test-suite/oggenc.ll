@@ -205,11 +205,12 @@ bb.a:
   %i.j = fcmp olt float %i.i, 1.000000e+00
   %spec.store.select = select i1 %i.j, float 1.000000e+00, float %i.i ; 3 uses
   %i.k = fmul float %spec.store.select, %spec.store.select
-  %i.l = fmul float %i.k, 5.000000e-01            ; 5 uses
+  %i.l = fmul float %i.k, 5.000000e-01            ; 2 uses
+  %6 = fadd float %i.l, 0.000000e+00              ; 4 uses
   %i.m = fmul float %spec.store.select, %i.l
   %i.n = fadd float %i.m, 0.000000e+00            ; 2 uses
-  store float %i.l, ptr %i.c, align 16
-  store float %i.l, ptr %i.d, align 16
+  store float %6, ptr %i.c, align 16
+  store float %6, ptr %i.d, align 16
   store float 0.000000e+00, ptr %i.e, align 16
   store float %i.n, ptr %i.f, align 16
   store float 0.000000e+00, ptr %i.g, align 16
@@ -232,8 +233,8 @@ bb.a:
   %.0320344 = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ %i.af, %.lr.ph ]
   %.0321343 = phi float [ %i.n, %.lr.ph.preheader ], [ %i.ad, %.lr.ph ]
   %.0322342 = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ %i.ab, %.lr.ph ]
-  %.0323341 = phi float [ %i.l, %.lr.ph.preheader ], [ %i.z, %.lr.ph ]
-  %.0324340 = phi float [ %i.l, %.lr.ph.preheader ], [ %i.x, %.lr.ph ]
+  %.0323341 = phi float [ %6, %.lr.ph.preheader ], [ %i.z, %.lr.ph ]
+  %.0324340 = phi float [ %6, %.lr.ph.preheader ], [ %i.x, %.lr.ph ]
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %i.t = load float, ptr %i.s, align 4
   %i.u = fadd float %4, %i.t                      ; 2 uses

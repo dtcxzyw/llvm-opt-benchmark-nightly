@@ -68,17 +68,20 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local double @V2_magn(ptr nofree noundef readonly byval(%struct.VEC2) align 8 captures(none) %0) local_unnamed_addr #0 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable
+define dso_local double @V2_magn(ptr nofree noundef readonly byval(%struct.VEC2) align 8 captures(none) %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = load double, ptr %0, align 8, !tbaa !10  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load double, ptr %i.b, align 8, !tbaa !11 ; 2 uses
   %i.d = fmul double %i.c, %i.c
   %i.e = tail call double @llvm.fmuladd.f64(double %i.a, double %i.a, double %i.d)
-  %sqrt = tail call double @llvm.sqrt.f64(double %i.e)
+  %sqrt = tail call double @sqrt(double noundef %i.e) #5, !tbaa !7
   ret double %sqrt
 }
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sqrt(double noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local void @V2_cross(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.VEC2) align 8 captures(none) initializes((0, 16)) %0, ptr nofree noundef readonly byval(%struct.VEC2) align 8 captures(none) %1) local_unnamed_addr #2 {
@@ -93,12 +96,12 @@ bb.a:
   ret void
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #1
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
