@@ -205,10 +205,10 @@ bb.a:
   %i.l = alloca float, align 4                    ; 8 uses
   %0 = alloca %struct.ImVec2, align 8             ; 4 uses
   %1 = alloca %struct.ImVec2, align 8             ; 4 uses
-  %2 = alloca %struct.ImVec4, align 8             ; 9 uses
-  %3 = alloca %struct.ImVec4, align 8             ; 9 uses
-  %4 = alloca %struct.ImVec4, align 8             ; 9 uses
-  %5 = alloca %struct.ImVec4, align 8             ; 9 uses
+  %2 = alloca %struct.ImVec4, align 16            ; 8 uses
+  %3 = alloca %struct.ImVec4, align 16            ; 8 uses
+  %4 = alloca %struct.ImVec4, align 16            ; 8 uses
+  %5 = alloca %struct.ImVec4, align 16            ; 8 uses
   %6 = alloca %struct.ImVec2, align 8             ; 8 uses
   %7 = alloca %struct.ImVec2, align 8             ; 15 uses
   %8 = alloca %struct.ImVec2, align 8             ; 16 uses
@@ -360,9 +360,9 @@ bb.a:
   %i.ck = alloca float, align 4                   ; 8 uses
   %i.cl = alloca float, align 4                   ; 8 uses
   %78 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %79 = alloca %struct.ImVec4, align 8            ; 9 uses
-  %80 = alloca %struct.ImVec4, align 8            ; 9 uses
-  %81 = alloca %struct.ImVec4, align 8            ; 9 uses
+  %79 = alloca %struct.ImVec4, align 16           ; 8 uses
+  %80 = alloca %struct.ImVec4, align 16           ; 8 uses
+  %81 = alloca %struct.ImVec4, align 16           ; 8 uses
   %82 = alloca %struct.ImVec2, align 8            ; 8 uses
   %83 = alloca %struct.ImVec2, align 8            ; 4 uses
   %i.cm = alloca [11 x ptr], align 16             ; 4 uses
@@ -438,9 +438,6 @@ bb.j:                                             ; preds = %bb.i
   call void @_ZN5ImGui23AlignTextToFramePaddingEv()
   %i.di = call noundef zeroext i1 @_ZN5ImGui15TextLinkOpenURLEPKcS1_(ptr noundef nonnull @.str.427, ptr noundef nonnull @.str.428) ; 0 uses
   call void @_ZN5ImGui10DemoMarkerEPKciS1_(ptr noundef nonnull @.str.5, i32 noundef 956, ptr noundef nonnull @.str.429)
-  %84 = getelementptr inbounds nuw i8, ptr %79, i64 8 ; 2 uses
-  %85 = getelementptr inbounds nuw i8, ptr %80, i64 8 ; 2 uses
-  %86 = getelementptr inbounds nuw i8, ptr %81, i64 8 ; 2 uses
   call void @_ZN5ImGui6PushIDEi(i32 noundef 0)
   call void @llvm.lifetime.start.p0(ptr nonnull %79) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cj) #30
@@ -456,8 +453,8 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cl) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ck) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cj) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i.peel.i, ptr %79, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i.peel.i, ptr %84, align 8
+  %84 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i.peel.i, <2 x float> %.sroa.3.12.vec.insert.i.peel.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %84, ptr %79, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 22, ptr noundef nonnull align 4 dereferenceable(16) %79)
   call void @llvm.lifetime.end.p0(ptr nonnull %79) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %80) #30
@@ -474,8 +471,8 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ci) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ch) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cg) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i14.peel.i, ptr %80, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i16.peel.i, ptr %85, align 8
+  %85 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i14.peel.i, <2 x float> %.sroa.3.12.vec.insert.i16.peel.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %85, ptr %80, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 23, ptr noundef nonnull align 4 dereferenceable(16) %80)
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %81) #30
@@ -492,8 +489,8 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cf) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ce) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cd) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i25.peel.i, ptr %81, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i27.peel.i, ptr %86, align 8
+  %86 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i25.peel.i, <2 x float> %.sroa.3.12.vec.insert.i27.peel.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %86, ptr %81, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 24, ptr noundef nonnull align 4 dereferenceable(16) %81)
   call void @llvm.lifetime.end.p0(ptr nonnull %81) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %82) #30
@@ -536,8 +533,8 @@ bb.k:                                             ; preds = %bb.k, %.peel.next.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cl) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ck) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cj) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %79, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %84, align 8
+  %87 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i.i, <2 x float> %.sroa.3.12.vec.insert.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %87, ptr %79, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 22, ptr noundef nonnull align 4 dereferenceable(16) %79)
   call void @llvm.lifetime.end.p0(ptr nonnull %79) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %80) #30
@@ -554,8 +551,8 @@ bb.k:                                             ; preds = %bb.k, %.peel.next.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ci) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ch) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cg) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i14.i, ptr %80, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i16.i, ptr %85, align 8
+  %88 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i14.i, <2 x float> %.sroa.3.12.vec.insert.i16.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %88, ptr %80, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 23, ptr noundef nonnull align 4 dereferenceable(16) %80)
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %81) #30
@@ -572,8 +569,8 @@ bb.k:                                             ; preds = %bb.k, %.peel.next.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cf) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ce) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cd) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i25.i, ptr %81, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i27.i, ptr %86, align 8
+  %89 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i25.i, <2 x float> %.sroa.3.12.vec.insert.i27.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %89, ptr %81, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 24, ptr noundef nonnull align 4 dereferenceable(16) %81)
   call void @llvm.lifetime.end.p0(ptr nonnull %81) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %82) #30
@@ -976,10 +973,6 @@ bb.aaa:                                           ; preds = %_ZL26DemoWindowWidg
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   call void @_ZN5ImGui8SameLineEff(float noundef 0.000000e+00, float noundef -1.000000e+00)
   call void @_ZN5ImGui6PushIDEPKc(ptr noundef nonnull @.str.1282)
-  %87 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %88 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %89 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %90 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   call void @_ZN5ImGui6PushIDEi(i32 noundef 0)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #30
@@ -995,8 +988,8 @@ bb.aaa:                                           ; preds = %_ZL26DemoWindowWidg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i.peel.i94, ptr %2, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i.peel.i95, ptr %87, align 8
+  %90 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i.peel.i94, <2 x float> %.sroa.3.12.vec.insert.i.peel.i95, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %90, ptr %2, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 7, ptr noundef nonnull align 4 dereferenceable(16) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
@@ -1013,8 +1006,8 @@ bb.aaa:                                           ; preds = %_ZL26DemoWindowWidg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i32.peel.i, ptr %3, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i34.peel.i, ptr %88, align 8
+  %91 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i32.peel.i, <2 x float> %.sroa.3.12.vec.insert.i34.peel.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %91, ptr %3, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 8, ptr noundef nonnull align 4 dereferenceable(16) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
@@ -1031,8 +1024,8 @@ bb.aaa:                                           ; preds = %_ZL26DemoWindowWidg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i43.peel.i, ptr %4, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i45.peel.i, ptr %89, align 8
+  %92 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i43.peel.i, <2 x float> %.sroa.3.12.vec.insert.i45.peel.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %92, ptr %4, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 9, ptr noundef nonnull align 4 dereferenceable(16) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
@@ -1049,8 +1042,8 @@ bb.aaa:                                           ; preds = %_ZL26DemoWindowWidg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i54.peel.i, ptr %5, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i56.peel.i, ptr %90, align 8
+  %93 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i54.peel.i, <2 x float> %.sroa.3.12.vec.insert.i56.peel.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %93, ptr %5, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 20, ptr noundef nonnull align 4 dereferenceable(16) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
@@ -1162,8 +1155,8 @@ bb.aam:                                           ; preds = %bb.aap, %.peel.next
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i.i99, ptr %2, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i.i100, ptr %87, align 8
+  %94 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i.i99, <2 x float> %.sroa.3.12.vec.insert.i.i100, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %94, ptr %2, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 7, ptr noundef nonnull align 4 dereferenceable(16) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
@@ -1180,8 +1173,8 @@ bb.aam:                                           ; preds = %bb.aap, %.peel.next
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i32.i, ptr %3, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i34.i, ptr %88, align 8
+  %95 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i32.i, <2 x float> %.sroa.3.12.vec.insert.i34.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %95, ptr %3, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 8, ptr noundef nonnull align 4 dereferenceable(16) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
@@ -1198,8 +1191,8 @@ bb.aam:                                           ; preds = %bb.aap, %.peel.next
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i43.i, ptr %4, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i45.i, ptr %89, align 8
+  %96 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i43.i, <2 x float> %.sroa.3.12.vec.insert.i45.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %96, ptr %4, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 9, ptr noundef nonnull align 4 dereferenceable(16) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
@@ -1216,8 +1209,8 @@ bb.aam:                                           ; preds = %bb.aap, %.peel.next
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i54.i, ptr %5, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i56.i, ptr %90, align 8
+  %97 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i54.i, <2 x float> %.sroa.3.12.vec.insert.i56.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %97, ptr %5, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 20, ptr noundef nonnull align 4 dereferenceable(16) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
@@ -1527,9 +1520,9 @@ bb.a:
   %46 = alloca %struct.ImVec2, align 8            ; 4 uses
   %47 = alloca %struct.ImVec2, align 4            ; 5 uses
   %i.m = alloca [16 x i8], align 16               ; 7 uses
-  %48 = alloca %struct.ImVec4, align 8            ; 9 uses
-  %49 = alloca %struct.ImVec4, align 8            ; 9 uses
-  %50 = alloca %struct.ImVec4, align 8            ; 9 uses
+  %48 = alloca %struct.ImVec4, align 16           ; 8 uses
+  %49 = alloca %struct.ImVec4, align 16           ; 8 uses
+  %50 = alloca %struct.ImVec4, align 16           ; 8 uses
   %51 = alloca %struct.ImVec2, align 8            ; 9 uses
   %52 = alloca %struct.ImVec2, align 8            ; 4 uses
   %53 = alloca %struct.ImVec2, align 8            ; 4 uses
@@ -1932,9 +1925,6 @@ _ZL10HelpMarkerPKc.exit211:                       ; preds = %bb.ce, %bb.cf
   br i1 %i.lx, label %.lr.ph268, label %._crit_edge
 
 .lr.ph268:                                        ; preds = %_ZL10HelpMarkerPKc.exit211
-  %72 = getelementptr inbounds nuw i8, ptr %48, i64 8 ; 2 uses
-  %73 = getelementptr inbounds nuw i8, ptr %49, i64 8 ; 2 uses
-  %74 = getelementptr inbounds nuw i8, ptr %50, i64 8 ; 2 uses
   %i.ly = getelementptr inbounds nuw i8, ptr %51, i64 4
   br label %bb.cr
 
@@ -2084,8 +2074,8 @@ bb.cr:                                            ; preds = %.lr.ph268, %.loopex
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i.peel, ptr %48, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i.peel, ptr %72, align 8
+  %72 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i.peel, <2 x float> %.sroa.3.12.vec.insert.i.peel, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %72, ptr %48, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 22, ptr noundef nonnull align 4 dereferenceable(16) %48)
   call void @llvm.lifetime.end.p0(ptr nonnull %48) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #30
@@ -2102,8 +2092,8 @@ bb.cr:                                            ; preds = %.lr.ph268, %.loopex
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i215.peel, ptr %49, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i217.peel, ptr %73, align 8
+  %73 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i215.peel, <2 x float> %.sroa.3.12.vec.insert.i217.peel, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %73, ptr %49, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 23, ptr noundef nonnull align 4 dereferenceable(16) %49)
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #30
@@ -2120,8 +2110,8 @@ bb.cr:                                            ; preds = %.lr.ph268, %.loopex
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i226.peel, ptr %50, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i228.peel, ptr %74, align 8
+  %74 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i226.peel, <2 x float> %.sroa.3.12.vec.insert.i228.peel, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %74, ptr %50, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 24, ptr noundef nonnull align 4 dereferenceable(16) %50)
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #30
@@ -2185,8 +2175,8 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs, %.pe
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %48, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %72, align 8
+  %75 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i, <2 x float> %.sroa.3.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %75, ptr %48, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 22, ptr noundef nonnull align 4 dereferenceable(16) %48)
   call void @llvm.lifetime.end.p0(ptr nonnull %48) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #30
@@ -2203,8 +2193,8 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs, %.pe
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i215, ptr %49, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i217, ptr %73, align 8
+  %76 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i215, <2 x float> %.sroa.3.12.vec.insert.i217, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %76, ptr %49, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 23, ptr noundef nonnull align 4 dereferenceable(16) %49)
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #30
@@ -2221,8 +2211,8 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs, %.pe
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
-  store <2 x float> %.sroa.0.4.vec.insert.i226, ptr %50, align 8
-  store <2 x float> %.sroa.3.12.vec.insert.i228, ptr %74, align 8
+  %77 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i226, <2 x float> %.sroa.3.12.vec.insert.i228, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %77, ptr %50, align 16
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 24, ptr noundef nonnull align 4 dereferenceable(16) %50)
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #30
@@ -2625,7 +2615,7 @@ bb.a:
   %21 = alloca %struct.ImVec2, align 8            ; 4 uses
   %22 = alloca %struct.ImGuiListClipper, align 8  ; 12 uses
   %i.i = alloca [64 x i8], align 16               ; 8 uses
-  %23 = alloca %struct.ImVec4, align 8            ; 6 uses
+  %23 = alloca %struct.ImVec4, align 16           ; 5 uses
   %24 = alloca %struct.ImVec2, align 8            ; 5 uses
   %25 = alloca %struct.ImVector.21, align 8       ; 11 uses
   %i.j = alloca ptr, align 8                      ; 5 uses
@@ -3028,8 +3018,7 @@ bb.hs:                                            ; preds = %_ZN16ImGuiListClipp
           to label %_ZN16ImGuiListClipper18IncludeItemByIndexEi.exit288 unwind label %.loopexit.split-lp13
 
 _ZN16ImGuiListClipper18IncludeItemByIndexEi.exit288: ; preds = %bb.hs, %_ZN16ImGuiListClipper18IncludeItemByIndexEi.exit287, %bb.ho
-  %29 = getelementptr inbounds nuw i8, ptr %22, i64 4
-  %i.xf = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.xf = getelementptr inbounds nuw i8, ptr %22, i64 4
   %i.xg = getelementptr inbounds nuw i8, ptr %25, i64 4 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 3 uses
   %.pre126 = load i8, ptr @_ZZL40DemoWindowWidgetsSelectionAndMultiSelectP19ImGuiDemoWindowDataE11use_clipper, align 1, !tbaa !35, !range !19
@@ -3053,7 +3042,7 @@ bb.ht:                                            ; preds = %.backedge
   %.pre127.fr = freeze i8 %.pre127
   %i.xk = trunc i8 %.pre127.fr to i1
   %i.xl = load i32, ptr %22, align 8
-  %i.xm = load i32, ptr %29, align 4
+  %i.xm = load i32, ptr %i.xf, align 4
   br i1 %i.xk, label %.split, label %bb.hu
 
 bb.hu:                                            ; preds = %.critedge
@@ -3130,8 +3119,8 @@ bb.hz:                                            ; preds = %bb.hy
   %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %i.yl, i64 0
   %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %i.yp, i64 1
   %.sroa.6.12.vec.insert = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.yt, i64 0
-  store <2 x float> %.sroa.0.4.vec.insert, ptr %23, align 8
-  store <2 x float> %.sroa.6.12.vec.insert, ptr %i.xf, align 8
+  %29 = shufflevector <2 x float> %.sroa.0.4.vec.insert, <2 x float> %.sroa.6.12.vec.insert, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %29, ptr %23, align 16
   %i.yu = invoke noundef zeroext i1 @_ZN5ImGui11ColorButtonEPKcRK6ImVec4iRK6ImVec2(ptr noundef nonnull @.str.1031, ptr noundef nonnull align 4 dereferenceable(16) %23, i32 noundef 64, ptr noundef nonnull align 4 dereferenceable(8) %19)
           to label %bb.ia unwind label %bb.ic     ; 0 uses
 

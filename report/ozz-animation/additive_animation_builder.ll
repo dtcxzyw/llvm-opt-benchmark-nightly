@@ -50,7 +50,7 @@ $_ZNSt6vectorIN3ozz9animation7offline12RawAnimation8ScaleKeyENS0_12StdAllocatorI
 define dso_local noundef zeroext i1 @_ZNK3ozz9animation7offline24AdditiveAnimationBuilderclERKNS1_12RawAnimationEPS3_(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.ozz::animation::offline::RawAnimation", align 8 ; 10 uses
-  %4 = alloca %"struct.ozz::math::Quaternion", align 8 ; 6 uses
+  %4 = alloca %"struct.ozz::math::Quaternion", align 16 ; 5 uses
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %bb.an, label %bb.b
 
@@ -182,19 +182,15 @@ _ZNSt6vectorIN3ozz9animation7offline12RawAnimation10JointTrackENS0_12StdAllocato
   %i.av = load ptr, ptr %i.ac, align 8, !tbaa !26
   %i.aw = load ptr, ptr %1, align 8, !tbaa !25    ; 2 uses
   %.not107 = icmp eq ptr %i.av, %i.aw
-  br i1 %.not107, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_ZNSt6vectorIN3ozz9animation7offline12RawAnimation10JointTrackENS0_12StdAllocatorIS4_EEE6resizeEm.exit
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  br label %bb.l
+  br i1 %.not107, label %._crit_edge, label %bb.l
 
 ._crit_edge:                                      ; preds = %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit, %_ZNSt6vectorIN3ozz9animation7offline12RawAnimation10JointTrackENS0_12StdAllocatorIS4_EEE6resizeEm.exit
   %i.ax = call noundef zeroext i1 @_ZNK3ozz9animation7offline12RawAnimation8ValidateEv(ptr noundef nonnull align 8 dereferenceable(64) %2)
   br label %bb.an
 
-bb.l:                                             ; preds = %.lr.ph, %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit
-  %i.ay = phi ptr [ %i.aw, %.lr.ph ], [ %i.gm, %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit ]
-  %.036106 = phi i64 [ 0, %.lr.ph ], [ %i.gk, %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit ] ; 3 uses
+bb.l:                                             ; preds = %_ZNSt6vectorIN3ozz9animation7offline12RawAnimation10JointTrackENS0_12StdAllocatorIS4_EEE6resizeEm.exit, %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit
+  %i.ay = phi ptr [ %i.gm, %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit ], [ %i.aw, %_ZNSt6vectorIN3ozz9animation7offline12RawAnimation10JointTrackENS0_12StdAllocatorIS4_EEE6resizeEm.exit ]
+  %.036106 = phi i64 [ %i.gk, %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit ], [ 0, %_ZNSt6vectorIN3ozz9animation7offline12RawAnimation10JointTrackENS0_12StdAllocatorIS4_EEE6resizeEm.exit ] ; 3 uses
   %i.az = getelementptr inbounds nuw [72 x i8], ptr %i.ay, i64 %.036106 ; 8 uses
   %i.ba = load ptr, ptr %2, align 8, !tbaa !25
   %i.bb = getelementptr inbounds nuw [72 x i8], ptr %i.ba, i64 %.036106 ; 9 uses
@@ -228,12 +224,11 @@ bb.n:                                             ; preds = %bb.l, %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %i.bo, i64 16, i1 false), !tbaa.struct !43
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %i.bo, i64 16, i1 false), !tbaa.struct !43
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.n
-  store <2 x float> zeroinitializer, ptr %4, align 8
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %5, align 8
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %4, align 16
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -636,7 +631,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation11RotationKeyENS_12StdAllocatorIS6_EEENS_4math10QuaternionEFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1, ptr noundef nonnull %2) unnamed_addr #0 {
 bb.a:
-  %3 = alloca %"struct.ozz::animation::offline::RawAnimation::RotationKey", align 4 ; 7 uses
+  %3 = alloca %"struct.ozz::animation::offline::RawAnimation::RotationKey", align 4 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !41
   %i.c = load ptr, ptr %0, align 8, !tbaa !42
@@ -654,7 +649,6 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16
   br label %bb.b
@@ -705,8 +699,8 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.bb = call float @llvm.fmuladd.f32(float %i.z, float %i.aq, float %i.ba)
   %.sroa.59.8.vec.insert.i = insertelement <2 x float> poison, float %i.ax, i64 0
   %.sroa.59.12.vec.insert.i = insertelement <2 x float> %.sroa.59.8.vec.insert.i, float %i.bb, i64 1
-  store <2 x float> %i.ao, ptr %i.k, align 4
-  store <2 x float> %.sroa.59.12.vec.insert.i, ptr %4, align 4
+  %4 = shufflevector <2 x float> %i.ao, <2 x float> %.sroa.59.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.k, align 4
   %i.bc = load ptr, ptr %i.n, align 8, !tbaa !41  ; 3 uses
   %i.bd = load ptr, ptr %i.o, align 8, !tbaa !62
   %.not.i = icmp eq ptr %i.bc, %i.bd

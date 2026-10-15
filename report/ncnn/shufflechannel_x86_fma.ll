@@ -202,25 +202,19 @@ bb.r:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
 .lr.ph1980:                                       ; preds = %.lr.ph1980, %.lr.ph1980.preheader.new
   %.05321979 = phi ptr [ %i.cx, %.lr.ph1980.preheader.new ], [ %i.es, %.lr.ph1980 ] ; 3 uses
   %.05331978 = phi ptr [ %i.co, %.lr.ph1980.preheader.new ], [ %i.et, %.lr.ph1980 ] ; 3 uses
-  %.05341977 = phi ptr [ %i.ct, %.lr.ph1980.preheader.new ], [ %i.eu, %.lr.ph1980 ] ; 5 uses
+  %.05341977 = phi ptr [ %i.ct, %.lr.ph1980.preheader.new ], [ %i.eu, %.lr.ph1980 ] ; 3 uses
   %niter2160 = phi i32 [ 0, %.lr.ph1980.preheader.new ], [ %niter2160.next.1, %.lr.ph1980 ]
-  %i.el = load <4 x float>, ptr %.05321979, align 1, !tbaa !114 ; 2 uses
-  %i.em = load <4 x float>, ptr %.05331978, align 1, !tbaa !114 ; 2 uses
-  %10 = shufflevector <4 x float> %i.el, <4 x float> %i.em, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  %11 = shufflevector <4 x float> %i.el, <4 x float> %i.em, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
-  store <4 x float> %10, ptr %.05341977, align 1, !tbaa !114
-  %12 = getelementptr inbounds nuw i8, ptr %.05341977, i64 16
-  store <4 x float> %11, ptr %12, align 1, !tbaa !114
+  %i.el = load <4 x float>, ptr %.05321979, align 1, !tbaa !114
+  %i.em = load <4 x float>, ptr %.05331978, align 1, !tbaa !114
+  %10 = shufflevector <4 x float> %i.el, <4 x float> %i.em, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %10, ptr %.05341977, align 1, !tbaa !114
   %i.en = getelementptr inbounds nuw i8, ptr %.05321979, i64 32
   %i.eo = getelementptr inbounds nuw i8, ptr %.05331978, i64 32
   %i.ep = getelementptr inbounds nuw i8, ptr %.05341977, i64 32
-  %i.eq = load <4 x float>, ptr %i.en, align 1, !tbaa !114 ; 2 uses
-  %i.er = load <4 x float>, ptr %i.eo, align 1, !tbaa !114 ; 2 uses
-  %13 = shufflevector <4 x float> %i.eq, <4 x float> %i.er, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  %14 = shufflevector <4 x float> %i.eq, <4 x float> %i.er, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
-  store <4 x float> %13, ptr %i.ep, align 1, !tbaa !114
-  %15 = getelementptr inbounds nuw i8, ptr %.05341977, i64 48
-  store <4 x float> %14, ptr %15, align 1, !tbaa !114
+  %i.eq = load <4 x float>, ptr %i.en, align 1, !tbaa !114
+  %i.er = load <4 x float>, ptr %i.eo, align 1, !tbaa !114
+  %11 = shufflevector <4 x float> %i.eq, <4 x float> %i.er, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %11, ptr %i.ep, align 1, !tbaa !114
   %i.es = getelementptr inbounds nuw i8, ptr %.05321979, i64 64 ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %.05331978, i64 64 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %.05341977, i64 64 ; 2 uses
@@ -623,16 +617,13 @@ _ZN4ncnn3MataSERKS0_.exit.loopexit2133.unr-lcssa: ; preds = %.lr.ph1980
 .lr.ph1980.epil.preheader:                        ; preds = %_ZN4ncnn3MataSERKS0_.exit.loopexit2133.unr-lcssa, %.lr.ph1980.preheader
   %.05321979.epil.init = phi ptr [ %i.cx, %.lr.ph1980.preheader ], [ %i.es, %_ZN4ncnn3MataSERKS0_.exit.loopexit2133.unr-lcssa ]
   %.05331978.epil.init = phi ptr [ %i.co, %.lr.ph1980.preheader ], [ %i.et, %_ZN4ncnn3MataSERKS0_.exit.loopexit2133.unr-lcssa ]
-  %.05341977.epil.init = phi ptr [ %i.ct, %.lr.ph1980.preheader ], [ %i.eu, %_ZN4ncnn3MataSERKS0_.exit.loopexit2133.unr-lcssa ] ; 2 uses
+  %.05341977.epil.init = phi ptr [ %i.ct, %.lr.ph1980.preheader ], [ %i.eu, %_ZN4ncnn3MataSERKS0_.exit.loopexit2133.unr-lcssa ]
   %lcmp.mod2158 = trunc i32 %i.t to i1
   tail call void @llvm.assume(i1 %lcmp.mod2158)
-  %i.acq = load <4 x float>, ptr %.05321979.epil.init, align 1, !tbaa !114 ; 2 uses
-  %i.acr = load <4 x float>, ptr %.05331978.epil.init, align 1, !tbaa !114 ; 2 uses
-  %16 = shufflevector <4 x float> %i.acq, <4 x float> %i.acr, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  %17 = shufflevector <4 x float> %i.acq, <4 x float> %i.acr, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
-  store <4 x float> %16, ptr %.05341977.epil.init, align 1, !tbaa !114
-  %18 = getelementptr inbounds nuw i8, ptr %.05341977.epil.init, i64 16
-  store <4 x float> %17, ptr %18, align 1, !tbaa !114
+  %i.acq = load <4 x float>, ptr %.05321979.epil.init, align 1, !tbaa !114
+  %i.acr = load <4 x float>, ptr %.05331978.epil.init, align 1, !tbaa !114
+  %12 = shufflevector <4 x float> %i.acq, <4 x float> %i.acr, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %12, ptr %.05341977.epil.init, align 1, !tbaa !114
   br label %_ZN4ncnn3MataSERKS0_.exit
 
 _ZN4ncnn3MataSERKS0_.exit:                        ; preds = %._crit_edge1943, %._crit_edge1955, %._crit_edge1965, %.lr.ph1980.epil.preheader, %_ZN4ncnn3MataSERKS0_.exit.loopexit2133.unr-lcssa, %._crit_edge1987, %._crit_edge1999, %._crit_edge2009, %_ZN4ncnn3MatD2Ev.exit701.lr.ph, %.preheader1920, %_ZN4ncnn3MatD2Ev.exit659.lr.ph, %.preheader1918, %_ZN4ncnn3MatD2Ev.exit649.lr.ph, %.preheader1916, %_ZN4ncnn3MatD2Ev.exit655.lr.ph, %_ZN4ncnn3MatD2Ev.exit696, %.preheader1912, %_ZN4ncnn3MatD2Ev.exit689.lr.ph, %.preheader1910, %_ZN4ncnn3MatD2Ev.exit679.lr.ph, %.preheader, %_ZN4ncnn3MatD2Ev.exit685.lr.ph, %bb.cq, %bb.bi, %bb.bc, %bb.q, %_ZN4ncnn3Mat7releaseEv.exit964, %bb.f, %_ZN4ncnn3MatD2Ev.exit691, %._crit_edge1934, %_ZN4ncnn3MatD2Ev.exit661, %bb.cv, %_ZNK4ncnn3Mat5emptyEv.exit615, %_ZNK4ncnn3Mat5emptyEv.exit612, %_ZNK4ncnn3Mat5emptyEv.exit611, %_ZNK4ncnn3Mat5emptyEv.exit, %_ZNK4ncnn3Mat8elembitsEv.exit.thread

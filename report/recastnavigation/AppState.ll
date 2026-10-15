@@ -151,18 +151,17 @@ declare void @glGetDoublev(i32 noundef, ptr noundef) local_unnamed_addr #3
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZNK8AppState13updateUIScaleEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(936) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(3032) ptr @_ZN5ImGui5GetIOEv() #4 ; 2 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(3032) ptr @_ZN5ImGui5GetIOEv() #4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.e = load <2 x i32>, ptr %i.b, align 8, !tbaa !54
   %i.f = sitofp <2 x i32> %i.e to <2 x float>     ; 2 uses
-  store <2 x float> %i.f, ptr %i.c, align 8, !tbaa !51
   %i.g = load <2 x i32>, ptr %i.d, align 8, !tbaa !54
   %i.h = sitofp <2 x i32> %i.g to <2 x float>
   %i.i = fdiv <2 x float> %i.h, %i.f
-  store <2 x float> %i.i, ptr %1, align 8, !tbaa !51
+  %1 = shufflevector <2 x float> %i.f, <2 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %1, ptr %i.c, align 8, !tbaa !51
   ret void
 }
 

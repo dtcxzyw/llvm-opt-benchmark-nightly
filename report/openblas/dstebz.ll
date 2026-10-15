@@ -202,8 +202,9 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.qt = add nsw i64 %n.vec, %i.qm
   %broadcast.splatinsert = insertelement <4 x double> poison, double %i.qe, i64 0
   %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
-  %broadcast.splatinsert1019 = insertelement <4 x i32> poison, i32 %.0669, i64 0
-  %broadcast.splat1020 = shufflevector <4 x i32> %broadcast.splatinsert1019, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert1019 = insertelement <4 x i32> poison, i32 %.0669, i64 0 ; 2 uses
+  %18 = shufflevector <4 x i32> %broadcast.splatinsert1019, <4 x i32> poison, <8 x i32> zeroinitializer
+  %19 = shufflevector <4 x i32> %broadcast.splatinsert1019, <4 x i32> poison, <8 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
@@ -217,14 +218,10 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <4 x double> %broadcast.splat, ptr %i.qw, align 8, !tbaa !31
   store <4 x double> %broadcast.splat, ptr %i.qx, align 8, !tbaa !31
   store <4 x double> %broadcast.splat, ptr %i.qy, align 8, !tbaa !31
-  %i.qz = getelementptr inbounds [4 x i8], ptr %i.o, i64 %i.qu ; 4 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.qz, i64 16
-  %19 = getelementptr inbounds nuw i8, ptr %i.qz, i64 32
-  %i.ra = getelementptr inbounds nuw i8, ptr %i.qz, i64 48
-  store <4 x i32> %broadcast.splat1020, ptr %i.qz, align 4, !tbaa !29
-  store <4 x i32> %broadcast.splat1020, ptr %18, align 4, !tbaa !29
-  store <4 x i32> %broadcast.splat1020, ptr %19, align 4, !tbaa !29
-  store <4 x i32> %broadcast.splat1020, ptr %i.ra, align 4, !tbaa !29
+  %i.qz = getelementptr inbounds [4 x i8], ptr %i.o, i64 %i.qu ; 2 uses
+  %i.ra = getelementptr inbounds nuw i8, ptr %i.qz, i64 32
+  store <8 x i32> %18, ptr %i.qz, align 4, !tbaa !29
+  store <8 x i32> %19, ptr %i.ra, align 4, !tbaa !29
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.rb = icmp eq i64 %index.next, %n.vec
   br i1 %i.rb, label %middle.block, label %vector.body, !llvm.loop !12

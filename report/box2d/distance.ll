@@ -200,13 +200,12 @@ bb.m:                                             ; preds = %.sink.split, %bb.d
   %i.bk = shufflevector <2 x float> %i.bj, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bl = fmul <2 x float> %i.b, %i.bk
   %i.bm = fadd <2 x float> %1, %i.bl              ; 2 uses
-  store <2 x float> %i.bm, ptr %0, align 4, !tbaa !10
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bn = insertelement <2 x float> poison, float %i.bh, i64 0
   %i.bo = shufflevector <2 x float> %i.bn, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bp = fmul <2 x float> %i.c, %i.bo
   %i.bq = fadd <2 x float> %3, %i.bp              ; 2 uses
-  store <2 x float> %i.bq, ptr %5, align 4, !tbaa !10
+  %5 = shufflevector <2 x float> %i.bm, <2 x float> %i.bq, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %0, align 4, !tbaa !10
   %i.br = fsub <2 x float> %i.bq, %i.bm           ; 2 uses
   %i.bs = fmul <2 x float> %i.br, %i.br
   %i.bt = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.bs)
@@ -609,12 +608,11 @@ bb.y:                                             ; preds = %bb.x
   %i.kb = fadd <2 x float> %i.jy, %i.ka
   %i.kc = shufflevector <3 x float> %i.jw, <3 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.kd = fmul <2 x float> %i.kc, %i.jt
-  %i.ke = fadd <2 x float> %i.kb, %i.kd           ; 2 uses
+  %i.ke = fadd <2 x float> %i.kb, %i.kd
   %i.kf = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float 0.000000e+00, ptr %i.kf, align 4, !tbaa !22
-  store <2 x float> %i.ke, ptr %0, align 4, !tbaa !10
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %i.ke, ptr %10, align 4, !tbaa !10
+  %10 = shufflevector <2 x float> %i.ke, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  store <4 x float> %10, ptr %0, align 4, !tbaa !10
   br label %.thread
 
 b2SolveSimplex2.exit.thread:                      ; preds = %bb.h, %._crit_edge255, %bb.l, %bb.m, %bb.q, %bb.s, %bb.u, %bb.w, %bb.y, %bb.j, %bb.o
@@ -765,9 +763,8 @@ b2ComputeWitnessPoints.exit130:                   ; preds = %b2MakeSimplexCache.
   %.sroa.0212.0 = phi <2 x float> [ %i.nc, %bb.ad ], [ %i.ly, %bb.ab ], [ %i.mo, %bb.ac ], [ zeroinitializer, %b2MakeSimplexCache.exit109 ]
   %i.nd = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float 0.000000e+00, ptr %i.nd, align 4, !tbaa !22
-  store <2 x float> %.sroa.0215.0, ptr %0, align 4, !tbaa !10
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %.sroa.0212.0, ptr %11, align 4, !tbaa !10
+  %11 = shufflevector <2 x float> %.sroa.0215.0, <2 x float> %.sroa.0212.0, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %0, align 4, !tbaa !10
   br label %.thread
 
 bb.ae:                                            ; preds = %b2SolveSimplex2.exit.thread
@@ -1029,9 +1026,8 @@ b2ComputeWitnessPoints.exit188:                   ; preds = %b2Normalize.exit, %
   %i.rs = call float @sqrtf(float noundef %i.rr) #13 ; 2 uses
   %i.rt = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store float %i.rs, ptr %i.rt, align 4, !tbaa !22
-  store <2 x float> %i.rm, ptr %0, align 4, !tbaa !10
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store <2 x float> %i.rn, ptr %12, align 4, !tbaa !10
+  %12 = shufflevector <2 x float> %i.rm, <2 x float> %i.rn, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %0, align 4, !tbaa !10
   %i.ru = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 %i.py, ptr %i.ru, align 4, !tbaa !57
   %i.rv = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -1139,12 +1135,12 @@ bb.am:                                            ; preds = %b2MakeSimplexCache.
   %i.tt = shufflevector <2 x float> %i.ts, <2 x float> poison, <2 x i32> zeroinitializer
   %i.tu = fmul <2 x float> %.sroa.012.0.i, %i.tt
   %i.tv = fadd <2 x float> %i.tu, %i.rm
-  store <2 x float> %i.tv, ptr %0, align 4, !tbaa !10
   %i.tw = insertelement <2 x float> poison, float %i.tn, i64 0
   %i.tx = shufflevector <2 x float> %i.tw, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ty = fmul <2 x float> %.sroa.012.0.i, %i.tx
   %i.tz = fsub <2 x float> %i.rn, %i.ty
-  store <2 x float> %i.tz, ptr %12, align 4, !tbaa !10
+  %13 = shufflevector <2 x float> %i.tv, <2 x float> %i.tz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %0, align 4, !tbaa !10
   br label %.thread
 
 .thread:                                          ; preds = %b2ComputeWitnessPoints.exit130, %.lr.ph.i95, %b2MakeSimplexCache.exit196, %bb.am
@@ -1343,7 +1339,7 @@ declare float @b2GetLengthUnitsPerMeter() local_unnamed_addr #8
 define void @b2TimeOfImpact(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.b2TOIOutput) align 4 captures(none) initializes((0, 24)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %2 = alloca %struct.b2SimplexCache, align 8     ; 5 uses
-  %3 = alloca %struct.b2DistanceInput, align 4    ; 8 uses
+  %3 = alloca %struct.b2DistanceInput, align 4    ; 7 uses
   %4 = alloca %struct.b2DistanceOutput, align 8   ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 224
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %0, i8 0, i64 20, i1 false)
@@ -1398,8 +1394,7 @@ bb.a:
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 160
   store i32 0, ptr %i.ac, align 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %i.ab, ptr noundef nonnull align 4 dereferenceable(72) %i.l, i64 72, i1 false), !tbaa.struct !25
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 144
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 152
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 144
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %4, i64 24
@@ -1490,8 +1485,8 @@ bb.b:                                             ; preds = %bb.al, %bb.a
   %i.dh = fadd <2 x float> %i.de, %i.dg
   %i.di = fsub <2 x float> %i.de, %i.dg
   %i.dj = shufflevector <2 x float> %i.dh, <2 x float> %i.di, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.dj, ptr %5, align 4, !tbaa !10
-  store <2 x float> %i.dc, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !10
+  %5 = shufflevector <2 x float> %i.dj, <2 x float> %i.dc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !10
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   call void @b2ShapeDistance(ptr dead_on_unwind nonnull writable sret(%struct.b2DistanceOutput) align 4 %4, ptr noundef nonnull %3, ptr noundef nonnull %2, ptr noundef null, i32 noundef 0)
   %i.dk = load <2 x float>, ptr %i.ad, align 8    ; 6 uses
@@ -1546,9 +1541,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ew = fmul <2 x float> %i.er, splat (float 5.000000e-01)
   %i.ex = fmul <2 x float> %i.ev, splat (float 5.000000e-01)
   %i.ey = fadd <2 x float> %i.ew, %i.ex
-  store <2 x float> %i.ey, ptr %i.dt, align 4, !tbaa !10
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store <2 x float> %i.dz, ptr %6, align 4, !tbaa !10
+  %6 = shufflevector <2 x float> %i.ey, <2 x float> %i.dz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.dt, align 4, !tbaa !10
   br label %.thread379
 
 bb.f:                                             ; preds = %bb.d
@@ -1951,9 +1945,8 @@ bb.ab:                                            ; preds = %bb.aa
   %i.za = fmul <2 x float> %i.yv, splat (float 5.000000e-01)
   %i.zb = fmul <2 x float> %i.yz, splat (float 5.000000e-01)
   %i.zc = fadd <2 x float> %i.za, %i.zb
-  store <2 x float> %i.zc, ptr %i.xx, align 4, !tbaa !10
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store <2 x float> %i.yd, ptr %7, align 4, !tbaa !10
+  %7 = shufflevector <2 x float> %i.zc, <2 x float> %i.yd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.xx, align 4, !tbaa !10
   br label %.thread379
 
 bb.ac:                                            ; preds = %.preheader, %bb.aj
@@ -2169,9 +2162,8 @@ bb.ak:                                            ; preds = %select.unfold368
   %i.aew = fmul <2 x float> %i.aer, splat (float 5.000000e-01)
   %i.aex = fmul <2 x float> %i.aev, splat (float 5.000000e-01)
   %i.aey = fadd <2 x float> %i.aew, %i.aex
-  store <2 x float> %i.aey, ptr %i.adt, align 4, !tbaa !10
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store <2 x float> %i.adz, ptr %8, align 4, !tbaa !10
+  %8 = shufflevector <2 x float> %i.aey, <2 x float> %i.adz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.adt, align 4, !tbaa !10
   br label %.thread379
 
 bb.al:                                            ; preds = %select.unfold368

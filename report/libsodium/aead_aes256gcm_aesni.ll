@@ -204,17 +204,14 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %requi
   %i.gr = getelementptr i8, ptr %3, i64 96
   %i.gs = load <2 x i64>, ptr %i.gr, align 1
   %i.gt = xor <2 x i64> %i.gs, %i.gq
-  store <2 x i64> %i.fv, ptr %0, align 1
-  %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <2 x i64> %i.fz, ptr %.sroa.9.0..sroa_idx.i.i, align 1
+  %11 = shufflevector <2 x i64> %i.fv, <2 x i64> %i.fz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %11, ptr %0, align 1
   %.sroa.15.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store <2 x i64> %i.gd, ptr %.sroa.15.0..sroa_idx.i.i, align 1
-  %.sroa.21.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store <2 x i64> %i.gh, ptr %.sroa.21.0..sroa_idx.i.i, align 1
+  %12 = shufflevector <2 x i64> %i.gd, <2 x i64> %i.gh, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %12, ptr %.sroa.15.0..sroa_idx.i.i, align 1
   %.sroa.27.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store <2 x i64> %i.gl, ptr %.sroa.27.0..sroa_idx.i.i, align 1
-  %.sroa.33.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store <2 x i64> %i.gp, ptr %.sroa.33.0..sroa_idx.i.i, align 1
+  %13 = shufflevector <2 x i64> %i.gl, <2 x i64> %i.gp, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %13, ptr %.sroa.27.0..sroa_idx.i.i, align 1
   %.sroa.39.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 96
   store <2 x i64> %i.gt, ptr %.sroa.39.0..sroa_idx.i.i, align 1
   %.not255504.i = icmp samesign ult i64 %4, 336
@@ -617,7 +614,7 @@ bb.h:                                             ; preds = %._crit_edge.i, %bb.
   %i.akr = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.aki, <2 x i64> %i.akl)
   %i.aks = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.akj, <2 x i64> %i.akl)
   %i.akt = add <2 x i64> %.1238.i, <i64 7, i64 0> ; 2 uses
-  %i.aku = getelementptr i8, ptr %0, i64 %.1231.i ; 7 uses
+  %i.aku = getelementptr i8, ptr %0, i64 %.1231.i ; 4 uses
   %i.akv = getelementptr i8, ptr %3, i64 %.1231.i ; 7 uses
   %i.akw = getelementptr i8, ptr %9, i64 224      ; 2 uses
   %i.akx = load <2 x i64>, ptr %i.akw, align 16   ; 7 uses
@@ -648,17 +645,14 @@ bb.h:                                             ; preds = %._crit_edge.i, %bb.
   %i.alw = getelementptr i8, ptr %i.akv, i64 96
   %i.alx = load <2 x i64>, ptr %i.alw, align 1
   %i.aly = xor <2 x i64> %i.alx, %i.alv
-  store <2 x i64> %i.ala, ptr %i.aku, align 1
-  %.sroa.9.0..sroa_idx.i338.i = getelementptr inbounds nuw i8, ptr %i.aku, i64 16
-  store <2 x i64> %i.ale, ptr %.sroa.9.0..sroa_idx.i338.i, align 1
+  %14 = shufflevector <2 x i64> %i.ala, <2 x i64> %i.ale, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %14, ptr %i.aku, align 1
   %.sroa.15.0..sroa_idx.i339.i = getelementptr inbounds nuw i8, ptr %i.aku, i64 32
-  store <2 x i64> %i.ali, ptr %.sroa.15.0..sroa_idx.i339.i, align 1
-  %.sroa.21.0..sroa_idx.i340.i = getelementptr inbounds nuw i8, ptr %i.aku, i64 48
-  store <2 x i64> %i.alm, ptr %.sroa.21.0..sroa_idx.i340.i, align 1
+  %15 = shufflevector <2 x i64> %i.ali, <2 x i64> %i.alm, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %15, ptr %.sroa.15.0..sroa_idx.i339.i, align 1
   %.sroa.27.0..sroa_idx.i341.i = getelementptr inbounds nuw i8, ptr %i.aku, i64 64
-  store <2 x i64> %i.alq, ptr %.sroa.27.0..sroa_idx.i341.i, align 1
-  %.sroa.33.0..sroa_idx.i342.i = getelementptr inbounds nuw i8, ptr %i.aku, i64 80
-  store <2 x i64> %i.alu, ptr %.sroa.33.0..sroa_idx.i342.i, align 1
+  %16 = shufflevector <2 x i64> %i.alq, <2 x i64> %i.alu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %16, ptr %.sroa.27.0..sroa_idx.i341.i, align 1
   %.sroa.39.0..sroa_idx.i343.i = getelementptr inbounds nuw i8, ptr %i.aku, i64 96
   store <2 x i64> %i.aly, ptr %.sroa.39.0..sroa_idx.i343.i, align 1
   %i.alz = add nuw nsw i64 %.1231.i, 112          ; 2 uses
@@ -836,7 +830,7 @@ bb.h:                                             ; preds = %._crit_edge.i, %bb.
   %i.arp = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.arh, <2 x i64> %i.ark)
   %i.arq = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.ari, <2 x i64> %i.ark)
   %i.arr = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.arj, <2 x i64> %i.ark)
-  %i.ars = getelementptr i8, ptr %0, i64 %.2232518.i ; 14 uses
+  %i.ars = getelementptr i8, ptr %0, i64 %.2232518.i ; 11 uses
   %i.art = getelementptr i8, ptr %3, i64 %.2232518.i ; 7 uses
   %i.aru = load <2 x i64>, ptr %i.akw, align 16   ; 7 uses
   %i.arv = call <2 x i64> @llvm.x86.aesni.aesenclast(<2 x i64> %i.arl, <2 x i64> %i.aru)
@@ -866,17 +860,14 @@ bb.h:                                             ; preds = %._crit_edge.i, %bb.
   %i.ast = getelementptr i8, ptr %i.art, i64 96
   %i.asu = load <2 x i64>, ptr %i.ast, align 1
   %i.asv = xor <2 x i64> %i.asu, %i.ass
-  store <2 x i64> %i.arx, ptr %i.ars, align 1
-  %.sroa.9.0..sroa_idx.i359.i = getelementptr inbounds nuw i8, ptr %i.ars, i64 16
-  store <2 x i64> %i.asb, ptr %.sroa.9.0..sroa_idx.i359.i, align 1
+  %17 = shufflevector <2 x i64> %i.arx, <2 x i64> %i.asb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %17, ptr %i.ars, align 1
   %.sroa.15.0..sroa_idx.i360.i = getelementptr inbounds nuw i8, ptr %i.ars, i64 32
-  store <2 x i64> %i.asf, ptr %.sroa.15.0..sroa_idx.i360.i, align 1
-  %.sroa.21.0..sroa_idx.i361.i = getelementptr inbounds nuw i8, ptr %i.ars, i64 48
-  store <2 x i64> %i.asj, ptr %.sroa.21.0..sroa_idx.i361.i, align 1
+  %18 = shufflevector <2 x i64> %i.asf, <2 x i64> %i.asj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %18, ptr %.sroa.15.0..sroa_idx.i360.i, align 1
   %.sroa.27.0..sroa_idx.i362.i = getelementptr inbounds nuw i8, ptr %i.ars, i64 64
-  store <2 x i64> %i.asn, ptr %.sroa.27.0..sroa_idx.i362.i, align 1
-  %.sroa.33.0..sroa_idx.i363.i = getelementptr inbounds nuw i8, ptr %i.ars, i64 80
-  store <2 x i64> %i.asr, ptr %.sroa.33.0..sroa_idx.i363.i, align 1
+  %19 = shufflevector <2 x i64> %i.asn, <2 x i64> %i.asr, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %19, ptr %.sroa.27.0..sroa_idx.i362.i, align 1
   %.sroa.39.0..sroa_idx.i364.i = getelementptr inbounds nuw i8, ptr %i.ars, i64 96
   store <2 x i64> %i.asv, ptr %.sroa.39.0..sroa_idx.i364.i, align 1
   %i.asw = getelementptr i8, ptr %i.ars, i64 -112
@@ -1279,7 +1270,7 @@ begin_hunk_2_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.kh = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.jz, <2 x i64> %i.kb)
   %i.ki = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.ka, <2 x i64> %i.kb)
   %i.kj = add <2 x i64> %.0181360.i, <i64 7, i64 0>
-  %i.kk = getelementptr i8, ptr %0, i64 %.0176361.i ; 7 uses
+  %i.kk = getelementptr i8, ptr %0, i64 %.0176361.i ; 4 uses
   %i.kl = load <2 x i64>, ptr %i.db, align 16     ; 7 uses
   %i.km = call <2 x i64> @llvm.x86.aesni.aesenclast(<2 x i64> %i.kc, <2 x i64> %i.kl)
   %i.kn = xor <2 x i64> %i.km, %.val209.i
@@ -1301,17 +1292,14 @@ begin_hunk_2_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.ld = call <2 x i64> @llvm.x86.aesni.aesenclast(<2 x i64> %i.ki, <2 x i64> %i.kl)
   %i.le = load <2 x i64>, ptr %i.fz, align 1
   %i.lf = xor <2 x i64> %i.le, %i.ld
-  store <2 x i64> %i.kn, ptr %i.kk, align 1
-  %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.kk, i64 16
-  store <2 x i64> %i.kq, ptr %.sroa.9.0..sroa_idx.i.i, align 1
+  %11 = shufflevector <2 x i64> %i.kn, <2 x i64> %i.kq, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %11, ptr %i.kk, align 1
   %.sroa.15.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.kk, i64 32
-  store <2 x i64> %i.kt, ptr %.sroa.15.0..sroa_idx.i.i, align 1
-  %.sroa.21.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.kk, i64 48
-  store <2 x i64> %i.kw, ptr %.sroa.21.0..sroa_idx.i.i, align 1
+  %12 = shufflevector <2 x i64> %i.kt, <2 x i64> %i.kw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %12, ptr %.sroa.15.0..sroa_idx.i.i, align 1
   %.sroa.27.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.kk, i64 64
-  store <2 x i64> %i.kz, ptr %.sroa.27.0..sroa_idx.i.i, align 1
-  %.sroa.33.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.kk, i64 80
-  store <2 x i64> %i.lc, ptr %.sroa.33.0..sroa_idx.i.i, align 1
+  %13 = shufflevector <2 x i64> %i.kz, <2 x i64> %i.lc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %13, ptr %.sroa.27.0..sroa_idx.i.i, align 1
   %.sroa.39.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.kk, i64 96
   store <2 x i64> %i.lf, ptr %.sroa.39.0..sroa_idx.i.i, align 1
   %i.lg = bitcast <2 x i64> %i.kj to <16 x i8>
@@ -1617,7 +1605,7 @@ begin_hunk_2_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.wn = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.wf, <2 x i64> %i.wh)
   %i.wo = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.wg, <2 x i64> %i.wh)
   %i.wp = add <2 x i64> %.0181360.i, <i64 14, i64 0> ; 2 uses
-  %i.wq = getelementptr i8, ptr %0, i64 %i.oj     ; 7 uses
+  %i.wq = getelementptr i8, ptr %0, i64 %i.oj     ; 4 uses
   %i.wr = load <2 x i64>, ptr %i.db, align 16     ; 7 uses
   %i.ws = call <2 x i64> @llvm.x86.aesni.aesenclast(<2 x i64> %i.wi, <2 x i64> %i.wr)
   %i.wt = load <2 x i64>, ptr %i.ok, align 1
@@ -1640,17 +1628,14 @@ begin_hunk_2_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.xk = call <2 x i64> @llvm.x86.aesni.aesenclast(<2 x i64> %i.wo, <2 x i64> %i.wr)
   %i.xl = load <2 x i64>, ptr %i.qy, align 1
   %i.xm = xor <2 x i64> %i.xl, %i.xk
-  store <2 x i64> %i.wu, ptr %i.wq, align 1
-  %.sroa.9.0..sroa_idx.i230.i = getelementptr inbounds nuw i8, ptr %i.wq, i64 16
-  store <2 x i64> %i.wx, ptr %.sroa.9.0..sroa_idx.i230.i, align 1
+  %14 = shufflevector <2 x i64> %i.wu, <2 x i64> %i.wx, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %14, ptr %i.wq, align 1
   %.sroa.15.0..sroa_idx.i231.i = getelementptr inbounds nuw i8, ptr %i.wq, i64 32
-  store <2 x i64> %i.xa, ptr %.sroa.15.0..sroa_idx.i231.i, align 1
-  %.sroa.21.0..sroa_idx.i232.i = getelementptr inbounds nuw i8, ptr %i.wq, i64 48
-  store <2 x i64> %i.xd, ptr %.sroa.21.0..sroa_idx.i232.i, align 1
+  %15 = shufflevector <2 x i64> %i.xa, <2 x i64> %i.xd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %15, ptr %.sroa.15.0..sroa_idx.i231.i, align 1
   %.sroa.27.0..sroa_idx.i233.i = getelementptr inbounds nuw i8, ptr %i.wq, i64 64
-  store <2 x i64> %i.xg, ptr %.sroa.27.0..sroa_idx.i233.i, align 1
-  %.sroa.33.0..sroa_idx.i234.i = getelementptr inbounds nuw i8, ptr %i.wq, i64 80
-  store <2 x i64> %i.xj, ptr %.sroa.33.0..sroa_idx.i234.i, align 1
+  %16 = shufflevector <2 x i64> %i.xg, <2 x i64> %i.xj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %16, ptr %.sroa.27.0..sroa_idx.i233.i, align 1
   %.sroa.39.0..sroa_idx.i235.i = getelementptr inbounds nuw i8, ptr %i.wq, i64 96
   store <2 x i64> %i.xm, ptr %.sroa.39.0..sroa_idx.i235.i, align 1
   %i.xn = add nuw nsw i64 %i.ec, 224              ; 2 uses
@@ -1938,7 +1923,7 @@ begin_hunk_2_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.ahi = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.aha, <2 x i64> %i.ahc)
   %i.ahj = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %i.ahb, <2 x i64> %i.ahc)
   %i.ahk = add <2 x i64> %.1182368.i, <i64 7, i64 0> ; 2 uses
-  %i.ahl = getelementptr i8, ptr %0, i64 %.1177369.i ; 7 uses
+  %i.ahl = getelementptr i8, ptr %0, i64 %.1177369.i ; 4 uses
   %i.ahm = load <2 x i64>, ptr %i.xr, align 16    ; 7 uses
   %i.ahn = call <2 x i64> @llvm.x86.aesni.aesenclast(<2 x i64> %i.ahd, <2 x i64> %i.ahm)
   %i.aho = load <2 x i64>, ptr %i.zn, align 1
@@ -1961,17 +1946,14 @@ begin_hunk_2_@crypto_aead_aes256gcm_decrypt_detached_afternm:bb.a
   %i.aif = call <2 x i64> @llvm.x86.aesni.aesenclast(<2 x i64> %i.ahj, <2 x i64> %i.ahm)
   %i.aig = load <2 x i64>, ptr %i.aca, align 1
   %i.aih = xor <2 x i64> %i.aig, %i.aif
-  store <2 x i64> %i.ahp, ptr %i.ahl, align 1
-  %.sroa.9.0..sroa_idx.i251.i = getelementptr inbounds nuw i8, ptr %i.ahl, i64 16
-  store <2 x i64> %i.ahs, ptr %.sroa.9.0..sroa_idx.i251.i, align 1
+  %17 = shufflevector <2 x i64> %i.ahp, <2 x i64> %i.ahs, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %17, ptr %i.ahl, align 1
   %.sroa.15.0..sroa_idx.i252.i = getelementptr inbounds nuw i8, ptr %i.ahl, i64 32
-  store <2 x i64> %i.ahv, ptr %.sroa.15.0..sroa_idx.i252.i, align 1
-  %.sroa.21.0..sroa_idx.i253.i = getelementptr inbounds nuw i8, ptr %i.ahl, i64 48
-  store <2 x i64> %i.ahy, ptr %.sroa.21.0..sroa_idx.i253.i, align 1
+  %18 = shufflevector <2 x i64> %i.ahv, <2 x i64> %i.ahy, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %18, ptr %.sroa.15.0..sroa_idx.i252.i, align 1
   %.sroa.27.0..sroa_idx.i254.i = getelementptr inbounds nuw i8, ptr %i.ahl, i64 64
-  store <2 x i64> %i.aib, ptr %.sroa.27.0..sroa_idx.i254.i, align 1
-  %.sroa.33.0..sroa_idx.i255.i = getelementptr inbounds nuw i8, ptr %i.ahl, i64 80
-  store <2 x i64> %i.aie, ptr %.sroa.33.0..sroa_idx.i255.i, align 1
+  %19 = shufflevector <2 x i64> %i.aib, <2 x i64> %i.aie, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %19, ptr %.sroa.27.0..sroa_idx.i254.i, align 1
   %.sroa.39.0..sroa_idx.i256.i = getelementptr inbounds nuw i8, ptr %i.ahl, i64 96
   store <2 x i64> %i.aih, ptr %.sroa.39.0..sroa_idx.i256.i, align 1
   %i.aii = add nuw nsw i64 %i.yl, 112             ; 2 uses

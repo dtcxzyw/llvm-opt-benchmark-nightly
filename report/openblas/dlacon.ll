@@ -175,18 +175,14 @@ vector.body196:                                   ; preds = %vector.ph194, %vect
   store <4 x double> %i.aq, ptr %i.ai, align 8, !tbaa !22
   store <4 x double> %i.ar, ptr %i.aj, align 8, !tbaa !22
   store <4 x double> %i.as, ptr %i.ak, align 8, !tbaa !22
-  %6 = select <4 x i1> %i.al, <4 x i32> splat (i32 -1), <4 x i32> splat (i32 1)
-  %7 = select <4 x i1> %i.am, <4 x i32> splat (i32 -1), <4 x i32> splat (i32 1)
-  %8 = select <4 x i1> %i.an, <4 x i32> splat (i32 -1), <4 x i32> splat (i32 1)
-  %9 = select <4 x i1> %i.ao, <4 x i32> splat (i32 -1), <4 x i32> splat (i32 1)
-  %i.at = getelementptr [4 x i8], ptr %3, i64 %index197 ; 4 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
-  %10 = getelementptr inbounds nuw i8, ptr %i.at, i64 32
-  %11 = getelementptr inbounds nuw i8, ptr %i.at, i64 48
-  store <4 x i32> %6, ptr %i.at, align 4, !tbaa !20
-  store <4 x i32> %7, ptr %i.au, align 4, !tbaa !20
-  store <4 x i32> %8, ptr %10, align 4, !tbaa !20
-  store <4 x i32> %9, ptr %11, align 4, !tbaa !20
+  %i.at = getelementptr [4 x i8], ptr %3, i64 %index197 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 32
+  %6 = shufflevector <4 x i1> %i.al, <4 x i1> %i.am, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = select <8 x i1> %6, <8 x i32> splat (i32 -1), <8 x i32> splat (i32 1)
+  store <8 x i32> %7, ptr %i.at, align 4, !tbaa !20
+  %8 = shufflevector <4 x i1> %i.an, <4 x i1> %i.ao, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %9 = select <8 x i1> %8, <8 x i32> splat (i32 -1), <8 x i32> splat (i32 1)
+  store <8 x i32> %9, ptr %i.au, align 4, !tbaa !20
   %index.next202 = add nuw i64 %index197, 16      ; 2 uses
   %i.av = icmp eq i64 %index.next202, %n.vec195
   br i1 %i.av, label %middle.block203, label %vector.body196, !llvm.loop !11
@@ -346,18 +342,14 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <4 x double> %i.cl, ptr %i.cd, align 8, !tbaa !22
   store <4 x double> %i.cm, ptr %i.ce, align 8, !tbaa !22
   store <4 x double> %i.cn, ptr %i.cf, align 8, !tbaa !22
-  %12 = select <4 x i1> %i.cg, <4 x i32> splat (i32 -1), <4 x i32> splat (i32 1)
-  %13 = select <4 x i1> %i.ch, <4 x i32> splat (i32 -1), <4 x i32> splat (i32 1)
-  %14 = select <4 x i1> %i.ci, <4 x i32> splat (i32 -1), <4 x i32> splat (i32 1)
-  %15 = select <4 x i1> %i.cj, <4 x i32> splat (i32 -1), <4 x i32> splat (i32 1)
-  %i.co = getelementptr [4 x i8], ptr %3, i64 %index ; 4 uses
-  %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 16
-  %16 = getelementptr inbounds nuw i8, ptr %i.co, i64 32
-  %17 = getelementptr inbounds nuw i8, ptr %i.co, i64 48
-  store <4 x i32> %12, ptr %i.co, align 4, !tbaa !20
-  store <4 x i32> %13, ptr %i.cp, align 4, !tbaa !20
-  store <4 x i32> %14, ptr %16, align 4, !tbaa !20
-  store <4 x i32> %15, ptr %17, align 4, !tbaa !20
+  %i.co = getelementptr [4 x i8], ptr %3, i64 %index ; 2 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 32
+  %10 = shufflevector <4 x i1> %i.cg, <4 x i1> %i.ch, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %11 = select <8 x i1> %10, <8 x i32> splat (i32 -1), <8 x i32> splat (i32 1)
+  store <8 x i32> %11, ptr %i.co, align 4, !tbaa !20
+  %12 = shufflevector <4 x i1> %i.ci, <4 x i1> %i.cj, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %13 = select <8 x i1> %12, <8 x i32> splat (i32 -1), <8 x i32> splat (i32 1)
+  store <8 x i32> %13, ptr %i.cp, align 4, !tbaa !20
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.cq = icmp eq i64 %index.next, %n.vec
   br i1 %i.cq, label %middle.block, label %vector.body, !llvm.loop !15

@@ -205,7 +205,7 @@ bb.bh:                                            ; preds = %bb.bg
   %n.vec = and i64 %wide.trip.count809, 2147483644 ; 4 uses
   %i.apz = shl nuw nsw i64 %n.vec, 2
   %broadcast.splatinsert = insertelement <2 x float> poison, float %i.apj, i64 0
-  %broadcast.splat = shufflevector <2 x float> %broadcast.splatinsert, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %4 = shufflevector <2 x float> %broadcast.splatinsert, <2 x float> poison, <4 x i32> zeroinitializer
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count809
   %xtraiter = and i64 %wide.trip.count809, 3      ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -240,12 +240,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.aqc = getelementptr i8, ptr %next.gep, i64 8
   %wide.load = load <2 x float>, ptr %next.gep, align 1, !tbaa !118, !alias.scope !149
   %wide.load1026 = load <2 x float>, ptr %i.aqc, align 1, !tbaa !118, !alias.scope !149
-  %4 = fmul nsz <2 x float> %broadcast.splat, %wide.load
-  %5 = fmul nsz <2 x float> %broadcast.splat, %wide.load1026
-  %i.aqd = getelementptr inbounds nuw [4 x i8], ptr %.0475663, i64 %index ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.aqd, i64 8
-  store <2 x float> %4, ptr %i.aqd, align 4, !tbaa !141, !alias.scope !150, !noalias !151
-  store <2 x float> %5, ptr %6, align 4, !tbaa !141, !alias.scope !150, !noalias !151
+  %i.aqd = getelementptr inbounds nuw [4 x i8], ptr %.0475663, i64 %index
+  %5 = shufflevector <2 x float> %wide.load, <2 x float> %wide.load1026, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = fmul nsz <4 x float> %4, %5
+  store <4 x float> %6, ptr %i.aqd, align 4, !tbaa !141, !alias.scope !150, !noalias !151
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aqe = icmp eq i64 %index.next, %n.vec
   br i1 %i.aqe, label %middle.block, label %vector.body, !llvm.loop !91
@@ -355,7 +353,7 @@ bb.bi:                                            ; preds = %bb.bg
   %n.vec1048 = and i64 %wide.trip.count815, 2147483644 ; 4 uses
   %i.arv = shl nuw nsw i64 %n.vec1048, 2
   %broadcast.splatinsert1049 = insertelement <2 x float> poison, float %i.apj, i64 0
-  %broadcast.splat1050 = shufflevector <2 x float> %broadcast.splatinsert1049, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %7 = shufflevector <2 x float> %broadcast.splatinsert1049, <2 x float> poison, <4 x i32> zeroinitializer
   %cmp.n1059 = icmp eq i64 %n.vec1048, %wide.trip.count815
   %xtraiter1380 = and i64 %wide.trip.count815, 1
   %lcmp.mod1381.not = icmp eq i64 %xtraiter1380, 0
@@ -393,14 +391,11 @@ vector.body1051:                                  ; preds = %vector.body1051, %v
   %wide.load1056 = load <2 x i32>, ptr %i.arz, align 1, !tbaa !118, !alias.scope !153
   %i.asa = tail call <2 x i32> @llvm.bswap.v2i32(<2 x i32> %wide.load1055)
   %i.asb = tail call <2 x i32> @llvm.bswap.v2i32(<2 x i32> %wide.load1056)
-  %7 = bitcast <2 x i32> %i.asa to <2 x float>
-  %8 = bitcast <2 x i32> %i.asb to <2 x float>
-  %9 = fmul nsz <2 x float> %broadcast.splat1050, %7
-  %10 = fmul nsz <2 x float> %broadcast.splat1050, %8
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %.0472670, i64 %index1052 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 8
-  store <2 x float> %9, ptr %11, align 4, !tbaa !141, !alias.scope !154, !noalias !155
-  store <2 x float> %10, ptr %12, align 4, !tbaa !141, !alias.scope !154, !noalias !155
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %.0472670, i64 %index1052
+  %.uncasted = shufflevector <2 x i32> %i.asa, <2 x i32> %i.asb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = bitcast <4 x i32> %.uncasted to <4 x float>
+  %10 = fmul nsz <4 x float> %7, %9
+  store <4 x float> %10, ptr %8, align 4, !tbaa !141, !alias.scope !154, !noalias !155
   %index.next1057 = add nuw i64 %index1052, 4     ; 2 uses
   %i.asc = icmp eq i64 %index.next1057, %n.vec1048
   br i1 %i.asc, label %middle.block1058, label %vector.body1051, !llvm.loop !99

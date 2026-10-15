@@ -37,7 +37,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.0111 = phi ptr [ %4, %.lr.ph ], [ %i.az, %bb.b ] ; 6 uses
   %.0101110 = phi i64 [ %6, %.lr.ph ], [ %i.aw, %bb.b ] ; 2 uses
   %.0102109 = phi ptr [ %0, %.lr.ph ], [ %i.ax, %bb.b ] ; 7 uses
-  %.0103108 = phi ptr [ %2, %.lr.ph ], [ %i.ay, %bb.b ] ; 7 uses
+  %.0103108 = phi ptr [ %2, %.lr.ph ], [ %i.ay, %bb.b ] ; 5 uses
   %.0102.val = load <2 x double>, ptr %.0102109, align 16, !tbaa !12 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.0111, i64 24
   %i.d = load i64, ptr %i.c, align 8, !tbaa !11
@@ -68,11 +68,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.x = fadd <2 x double> %i.o, %i.v             ; 2 uses
   %i.y = fadd <2 x double> %i.p, %i.w             ; 2 uses
   %i.z = fadd <2 x double> %i.g, %i.x
-  %9 = getelementptr inbounds nuw i8, ptr %.0103108, i64 48
-  %i.aa = getelementptr inbounds nuw i8, ptr %.0103108, i64 16
-  store <2 x double> %i.z, ptr %9, align 16, !tbaa !12
+  %i.aa = getelementptr inbounds nuw i8, ptr %.0103108, i64 48
   %i.ab = fadd <2 x double> %i.h, %i.y
-  store <2 x double> %i.ab, ptr %.0103108, align 16, !tbaa !12
   %i.ac = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.x, <2 x double> splat (double -5.000000e-01), <2 x double> %i.g) ; 2 uses
   %i.ad = fsub <2 x double> %i.v, %i.o
   %i.ae = fmul <2 x double> %i.ad, splat (double f0x3FEBB67AE8584CAA)
@@ -84,7 +81,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ak = getelementptr inbounds nuw i8, ptr %.0103108, i64 80
   store <2 x double> %i.aj, ptr %i.ak, align 16, !tbaa !12
   %i.al = fadd <2 x double> %i.ac, %i.ai
-  store <2 x double> %i.al, ptr %i.aa, align 16, !tbaa !12
+  %9 = shufflevector <2 x double> %i.ab, <2 x double> %i.al, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %9, ptr %.0103108, align 16, !tbaa !12
   %i.am = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.y, <2 x double> splat (double -5.000000e-01), <2 x double> %i.h) ; 2 uses
   %i.an = fsub <2 x double> %i.w, %i.p
   %i.ao = fmul <2 x double> %i.an, splat (double f0x3FEBB67AE8584CAA)
@@ -96,8 +94,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %.0103108, i64 32
   store <2 x double> %i.at, ptr %i.au, align 16, !tbaa !12
   %i.av = fadd <2 x double> %i.am, %i.as
-  %10 = getelementptr inbounds nuw i8, ptr %.0103108, i64 64
-  store <2 x double> %i.av, ptr %10, align 16, !tbaa !12
+  %10 = shufflevector <2 x double> %i.z, <2 x double> %i.av, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %10, ptr %i.aa, align 16, !tbaa !12
   %i.aw = add nsw i64 %.0101110, -1
   %i.ax = getelementptr inbounds [8 x i8], ptr %.0102109, i64 %7
   %i.ay = getelementptr inbounds [8 x i8], ptr %.0103108, i64 %8

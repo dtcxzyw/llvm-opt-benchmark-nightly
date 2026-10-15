@@ -204,9 +204,8 @@ _ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnim
   %i.dp = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i25, 0
   %i.dq = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i25, 1
   %i.dr = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store <2 x float> %i.dp, ptr %i.dr, align 4, !tbaa !12
-  %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 20
-  store <2 x float> %i.dq, ptr %.sroa.43.0..sroa_idx, align 4, !tbaa !12
+  %3 = shufflevector <2 x float> %i.dp, <2 x float> %i.dq, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.dr, align 4, !tbaa !12
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.val21 = load ptr, ptr %i.ds, align 8, !tbaa !65 ; 7 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -350,12 +349,10 @@ bb.b:                                             ; preds = %bb.a
 .prol.preheader:                                  ; preds = %.lr.ph40, %.prol.preheader
   %.039.prol = phi i64 [ %i.q, %.prol.preheader ], [ %.lcssa, %.lr.ph40 ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph40 ]
-  %i.p = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039.prol ; 4 uses
+  %i.p = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039.prol ; 3 uses
   %.sroa.6.0..sroa_idx.prol = getelementptr inbounds nuw i8, ptr %i.p, i64 20
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.p, i8 0, i64 20, i1 false)
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx.prol, align 4, !tbaa !12
-  %.sroa.7.0..sroa_idx.prol = getelementptr inbounds nuw i8, ptr %i.p, i64 28
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.7.0..sroa_idx.prol, align 4, !tbaa !12
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx.prol, align 4, !tbaa !12
   %.sroa.8.0..sroa_idx.prol = getelementptr inbounds nuw i8, ptr %i.p, i64 36
   store float 1.000000e+00, ptr %.sroa.8.0..sroa_idx.prol, align 4, !tbaa !12
   %i.q = add nuw i64 %.039.prol, 1                ; 2 uses
@@ -388,39 +385,31 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph40.new:                                     ; preds = %.prol.loopexit, %.lr.ph40.new
   %.039 = phi i64 [ %i.am, %.lr.ph40.new ], [ %.039.unr, %.prol.loopexit ] ; 5 uses
-  %i.af = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039 ; 4 uses
+  %i.af = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 20
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.af, i8 0, i64 20, i1 false)
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !12
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 28
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !12
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !12
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 36
   store float 1.000000e+00, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !12
-  %i.ag = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039 ; 4 uses
+  %i.ag = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
   %.sroa.6.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.ag, i64 60
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ah, i8 0, i64 20, i1 false)
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx.1, align 4, !tbaa !12
-  %.sroa.7.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.ag, i64 68
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.7.0..sroa_idx.1, align 4, !tbaa !12
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx.1, align 4, !tbaa !12
   %.sroa.8.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.ag, i64 76
   store float 1.000000e+00, ptr %.sroa.8.0..sroa_idx.1, align 4, !tbaa !12
-  %i.ai = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039 ; 4 uses
+  %i.ai = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 80
   %.sroa.6.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.ai, i64 100
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.aj, i8 0, i64 20, i1 false)
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx.2, align 4, !tbaa !12
-  %.sroa.7.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.ai, i64 108
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.7.0..sroa_idx.2, align 4, !tbaa !12
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx.2, align 4, !tbaa !12
   %.sroa.8.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.ai, i64 116
   store float 1.000000e+00, ptr %.sroa.8.0..sroa_idx.2, align 4, !tbaa !12
-  %i.ak = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039 ; 4 uses
+  %i.ak = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.039 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 120
   %.sroa.6.0..sroa_idx.3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 140
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.al, i8 0, i64 20, i1 false)
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx.3, align 4, !tbaa !12
-  %.sroa.7.0..sroa_idx.3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 148
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.7.0..sroa_idx.3, align 4, !tbaa !12
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.6.0..sroa_idx.3, align 4, !tbaa !12
   %.sroa.8.0..sroa_idx.3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 156
   store float 1.000000e+00, ptr %.sroa.8.0..sroa_idx.3, align 4, !tbaa !12
   %i.am = add nuw i64 %.039, 4                    ; 2 uses
@@ -443,7 +432,7 @@ bb.a:
   %6 = alloca %"struct.ozz::span.25", align 8     ; 6 uses
   %7 = alloca %"class.std::vector.14", align 8    ; 11 uses
   %8 = alloca %"struct.ozz::math::Transform", align 16 ; 12 uses
-  %9 = alloca %"struct.std::pair.33", align 16    ; 10 uses
+  %9 = alloca %"struct.std::pair.33", align 16    ; 8 uses
   %i.b = tail call noundef zeroext i1 @_ZNK3ozz9animation7offline12RawAnimation8ValidateEv(ptr noundef nonnull align 8 dereferenceable(64) %1)
   br i1 %i.b, label %bb.b, label %_ZNSt6vectorISt4pairIfN3ozz4math8Float4x4EENS1_12StdAllocatorIS4_EEED2Ev.exit
 
@@ -718,17 +707,15 @@ bb.k:                                             ; preds = %bb.i
   br label %_ZNSt12_Vector_baseISt4pairIfN3ozz4math8Float4x4EENS1_12StdAllocatorIS4_EEEC2EmRKS6_.exit.i.i60.thread
 
 .lr.ph139:                                        ; preds = %bb.k
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 20
-  %11 = getelementptr inbounds nuw i8, ptr %8, i64 28 ; 2 uses
-  %.sroa.2.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %8, i64 36 ; 2 uses
-  %i.ct = getelementptr inbounds nuw i8, ptr %8, i64 4
-  %i.cu = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.cv = getelementptr inbounds nuw i8, ptr %8, i64 12
-  %i.cw = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %i.cx = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %.sroa.1090.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 32
-  %.sroa.15.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %9, i64 48
-  %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 64
+  %.sroa.2.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %8, i64 20
+  %i.ct = getelementptr inbounds nuw i8, ptr %8, i64 28
+  %i.cu = getelementptr inbounds nuw i8, ptr %8, i64 36 ; 2 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.cw = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.cx = getelementptr inbounds nuw i8, ptr %8, i64 12
+  %.sroa.1090.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %.sroa.15.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 48
   %i.cy = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %7, i64 16
   br label %bb.o
@@ -818,10 +805,10 @@ bb.o:                                             ; preds = %.lr.ph139, %_ZNSt6v
   %.sroa.085.0.lcssa = phi <4 x float> [ <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.o ], [ %i.gg, %bb.r ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #19
   store float %i.dt, ptr %9, align 16, !tbaa !103
-  store <4 x float> %.sroa.085.0.lcssa, ptr %i.cx, align 16
-  store <4 x float> %.sroa.1090.0.lcssa, ptr %.sroa.1090.0..sroa_idx, align 16
-  store <4 x float> %.sroa.15.0.lcssa, ptr %.sroa.15.0..sroa_idx.a, align 16
-  store <4 x float> %.sroa.20.0.lcssa, ptr %.sroa.20.0..sroa_idx, align 16, !tbaa !104
+  %10 = shufflevector <4 x float> %.sroa.085.0.lcssa, <4 x float> %.sroa.1090.0.lcssa, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %10, ptr %.sroa.15.0..sroa_idx.a, align 16
+  %11 = shufflevector <4 x float> %.sroa.15.0.lcssa, <4 x float> %.sroa.20.0.lcssa, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %11, ptr %.sroa.20.0..sroa_idx, align 16
   %i.eb = load ptr, ptr %i.cy, align 8, !tbaa !39 ; 4 uses
   %i.ec = load ptr, ptr %i.cz, align 8, !tbaa !43
   %.not.i.i = icmp eq ptr %i.eb, %i.ec
@@ -845,22 +832,21 @@ bb.r:                                             ; preds = %.lr.ph131, %bb.r
   %.sroa.20.0125 = phi <4 x float> [ <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, %.lr.ph131 ], [ %i.hl, %bb.r ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %8, i8 0, i64 20, i1 false)
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %10, align 4
-  store <2 x float> splat (float 1.000000e+00), ptr %11, align 4
-  store float 1.000000e+00, ptr %.sroa.2.0..sroa_idx.i.a, align 4
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.2.0..sroa_idx.i.a, align 4
+  store float 1.000000e+00, ptr %i.cu, align 4
   %i.ee = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %.0129
   %i.ef = load i16, ptr %i.ee, align 2, !tbaa !30
   %i.eg = sext i16 %i.ef to i64
   %i.eh = getelementptr inbounds nuw [72 x i8], ptr %i.ea, i64 %i.eg
   call fastcc void @_ZN3ozz9animation7offline12_GLOBAL__N_122SampleTrack_NoValidateERKNS1_12RawAnimation10JointTrackEfPNS_4math9TransformE(ptr noundef nonnull align 8 dereferenceable(72) %i.eh, float noundef %i.dt, ptr noundef nonnull %8)
   %i.ei = load <1 x float>, ptr %8, align 16
-  %i.ej = load <1 x float>, ptr %i.ct, align 4
-  %i.ek = load <1 x float>, ptr %i.cu, align 8
-  %i.el = load <4 x float>, ptr %i.cv, align 4, !tbaa !104 ; 5 uses
-  %i.em = load float, ptr %11, align 4, !tbaa !104
+  %i.ej = load <1 x float>, ptr %i.cv, align 4
+  %i.ek = load <1 x float>, ptr %i.cw, align 8
+  %i.el = load <4 x float>, ptr %i.cx, align 4, !tbaa !104 ; 5 uses
+  %i.em = load float, ptr %i.ct, align 4, !tbaa !104
   %i.en = insertelement <4 x float> poison, float %i.em, i64 0
-  %i.eo = load float, ptr %i.cw, align 16, !tbaa !104
-  %i.ep = load float, ptr %.sroa.2.0..sroa_idx.i.a, align 4, !tbaa !104
+  %i.eo = load float, ptr %.sroa.1090.0..sroa_idx, align 16, !tbaa !104
+  %i.ep = load float, ptr %i.cu, align 4, !tbaa !104
   %i.eq = fadd <4 x float> %i.el, %i.el           ; 3 uses
   %i.er = fmul <4 x float> %i.el, %i.eq
   %i.es = bitcast <4 x float> %i.er to <4 x i32>  ; 2 uses

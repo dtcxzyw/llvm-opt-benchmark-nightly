@@ -36,7 +36,7 @@ bb.a:
 
 .preheader159.split.us:                           ; preds = %.preheader159.split.us.preheader, %bb.t
   %.0142.us = phi i64 [ %i.bw, %bb.t ], [ %5, %.preheader159.split.us.preheader ] ; 12 uses
-  %.0135.us = phi ptr [ %.4139.us, %bb.t ], [ %6, %.preheader159.split.us.preheader ] ; 8 uses
+  %.0135.us = phi ptr [ %.4139.us, %bb.t ], [ %6, %.preheader159.split.us.preheader ] ; 7 uses
   %.0132.us = phi i64 [ %i.bx, %bb.t ], [ %i.a, %.preheader159.split.us.preheader ] ; 2 uses
   %.not.us = icmp sgt i64 %4, %.0142.us
   br i1 %.not.us, label %bb.c, label %bb.b
@@ -82,10 +82,9 @@ bb.e:                                             ; preds = %bb.d
   br label %.preheader157.us.prol.loopexit.unr-lcssa
 
 bb.f:                                             ; preds = %bb.d
-  %7 = getelementptr inbounds nuw i8, ptr %.0135.us, i64 16
   %i.ah = load <2 x double>, ptr %.1.us.ph, align 8, !tbaa !14
-  store <2 x double> %i.aa, ptr %.0135.us, align 8, !tbaa !14
-  store <2 x double> %i.ah, ptr %7, align 8, !tbaa !14
+  %7 = shufflevector <2 x double> %i.aa, <2 x double> %i.ah, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %7, ptr %.0135.us, align 8, !tbaa !14
   %i.ai = getelementptr inbounds [8 x i8], ptr %.1126.us.ph, i64 %i.j
   %i.aj = getelementptr inbounds [8 x i8], ptr %.1.us.ph, i64 %i.j
   br label %.preheader157.us.prol.loopexit.unr-lcssa
@@ -112,7 +111,7 @@ bb.g:                                             ; preds = %.preheader157.us.pr
   br i1 %i.p, label %.loopexit158.us, label %.preheader157.us
 
 .preheader157.us:                                 ; preds = %.preheader157.us.prol.loopexit, %bb.p
-  %.1136.us = phi ptr [ %.2137.us.1, %bb.p ], [ %.1136.us.unr, %.preheader157.us.prol.loopexit ] ; 10 uses
+  %.1136.us = phi ptr [ %.2137.us.1, %bb.p ], [ %.1136.us.unr, %.preheader157.us.prol.loopexit ] ; 8 uses
   %.0133.us = phi i64 [ %i.bq, %bb.p ], [ %.0133.us.unr, %.preheader157.us.prol.loopexit ] ; 2 uses
   %.0129.us = phi i64 [ %i.bp, %bb.p ], [ %.0129.us.unr, %.preheader157.us.prol.loopexit ] ; 4 uses
   %.1126.us = phi ptr [ %.2127.us.1, %bb.p ], [ %.1126.us.unr, %.preheader157.us.prol.loopexit ] ; 4 uses
@@ -138,10 +137,9 @@ bb.i:                                             ; preds = %bb.h
   br label %.preheader157.us.1
 
 bb.j:                                             ; preds = %bb.h
-  %8 = getelementptr inbounds nuw i8, ptr %.1136.us, i64 16
   %i.av = load <2 x double>, ptr %.1.us, align 8, !tbaa !14
-  store <2 x double> %i.ao, ptr %.1136.us, align 8, !tbaa !14
-  store <2 x double> %i.av, ptr %8, align 8, !tbaa !14
+  %8 = shufflevector <2 x double> %i.ao, <2 x double> %i.av, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %8, ptr %.1136.us, align 8, !tbaa !14
   %i.aw = getelementptr inbounds [8 x i8], ptr %.1126.us, i64 %i.j
   %i.ax = getelementptr inbounds [8 x i8], ptr %.1.us, i64 %i.j
   br label %.preheader157.us.1
@@ -177,10 +175,9 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
-  %9 = getelementptr inbounds nuw i8, ptr %.1136.us, i64 48
   %i.bk = load <2 x double>, ptr %.2.us, align 8, !tbaa !14
-  store <2 x double> %i.bd, ptr %.2137.us, align 8, !tbaa !14
-  store <2 x double> %i.bk, ptr %9, align 8, !tbaa !14
+  %9 = shufflevector <2 x double> %i.bd, <2 x double> %i.bk, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %9, ptr %.2137.us, align 8, !tbaa !14
   %i.bl = getelementptr inbounds [8 x i8], ptr %.2127.us, i64 %i.j
   %i.bm = getelementptr inbounds [8 x i8], ptr %.2.us, i64 %i.j
   br label %bb.p

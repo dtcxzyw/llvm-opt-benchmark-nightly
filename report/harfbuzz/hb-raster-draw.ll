@@ -205,9 +205,8 @@ bb.e:                                             ; preds = %bb.b
   %i.br = add nsw i32 %.0102.i.i, 1               ; 2 uses
   %i.bs = add nuw i32 %.0104.i.i, 1
   %i.bt = zext i32 %.0104.i.i to i64
-  %i.bu = getelementptr inbounds nuw [36 x i8], ptr %10, i64 %i.bt ; 4 uses
-  %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
-  %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 24
+  %i.bu = getelementptr inbounds nuw [36 x i8], ptr %10, i64 %i.bt ; 3 uses
+  %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   %i.bv = fmul <2 x float> %i.bo, splat (float 5.000000e-01) ; 2 uses
   %i.bw = fmul <2 x float> %i.bp, splat (float 5.000000e-01) ; 2 uses
   %i.bx = fmul <2 x float> %i.bq, splat (float 5.000000e-01) ; 2 uses
@@ -219,8 +218,8 @@ bb.e:                                             ; preds = %bb.b
   %i.cd = fmul <2 x float> %i.cc, splat (float 5.000000e-01) ; 2 uses
   %i.ce = shufflevector <2 x float> %i.cd, <2 x float> %i.cb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   store <4 x float> %i.ce, ptr %i.bu, align 4, !tbaa !14
-  store <2 x float> %i.bx, ptr %.sroa.7.0..sroa_idx.i.i, align 4, !tbaa !14
-  store <2 x float> %i.ak, ptr %.sroa.9.0..sroa_idx.i.i, align 4, !tbaa !14
+  %11 = shufflevector <2 x float> %i.bx, <2 x float> %i.ak, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %.sroa.9.0..sroa_idx.i.i, align 4, !tbaa !14
   %.sroa.11.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 32
   store i32 %i.br, ptr %.sroa.11.0..sroa_idx.i.i, align 4, !tbaa !50
   br label %bb.b

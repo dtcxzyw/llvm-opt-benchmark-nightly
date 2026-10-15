@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %struct.ImVec2, align 8             ; 5 uses
   %4 = alloca %struct.ImRect, align 8             ; 8 uses
   %5 = alloca %struct.ImVec2, align 8             ; 11 uses
-  %6 = alloca %struct.ImRect, align 8             ; 7 uses
+  %6 = alloca %struct.ImRect, align 16            ; 6 uses
   %7 = alloca %struct.ImRect, align 4             ; 6 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 5312
@@ -366,9 +366,8 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #41
   %i.bv = insertelement <2 x float> <float f0x7F7FFFFF, float poison>, float %i.ah, i64 1
   %i.bw = fadd <2 x float> %i.bv, %.sroa.0113.0
-  store <2 x float> %.sroa.0113.0, ptr %6, align 8, !tbaa !190
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store <2 x float> %i.bw, ptr %8, align 8, !tbaa !190
+  %8 = shufflevector <2 x float> %.sroa.0113.0, <2 x float> %i.bw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %6, align 16, !tbaa !190
   %i.bx = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   br label %bb.m
@@ -771,8 +770,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN5ImGui32ExtendHitBoxWhenNearViewportEdgeEP11ImGuiWindowP6ImRectf9ImGuiAxis(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, float noundef %2, i32 noundef %3) local_unnamed_addr #8 {
 bb.a:
-  %4 = alloca %struct.ImRect, align 8             ; 5 uses
-  %5 = alloca %struct.ImRect, align 8             ; 5 uses
+  %4 = alloca %struct.ImRect, align 16            ; 5 uses
+  %5 = alloca %struct.ImRect, align 16            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 960
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !210  ; 2 uses
@@ -781,9 +780,9 @@ bb.a:
   %i.e = load <2 x float>, ptr %i.c, align 8, !tbaa !190 ; 2 uses
   %i.f = load <2 x float>, ptr %i.d, align 8, !tbaa !190
   %i.g = fadd <2 x float> %i.e, %i.f
-  store <2 x float> %i.e, ptr %4, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store <2 x float> %i.g, ptr %6, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %7 = shufflevector <2 x float> %i.e, <2 x float> %i.g, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %4, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #41
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !247  ; 2 uses
@@ -792,9 +791,9 @@ bb.a:
   %i.l = load <2 x float>, ptr %i.j, align 8, !tbaa !190 ; 2 uses
   %i.m = load <2 x float>, ptr %i.k, align 8, !tbaa !190
   %i.n = fadd <2 x float> %i.l, %i.m
-  store <2 x float> %i.l, ptr %5, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  store <2 x float> %i.n, ptr %7, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %9 = shufflevector <2 x float> %i.l, <2 x float> %i.n, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %5, align 16
   %i.o = sext i32 %3 to i64                       ; 6 uses
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.o
   %i.q = load float, ptr %i.p, align 4, !tbaa !190 ; 4 uses
@@ -819,7 +818,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.o
   %i.aa = load float, ptr %i.z, align 4, !tbaa !190 ; 4 uses
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.o
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %i.o
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !190
   %i.ad = fcmp oeq float %i.aa, %i.ac
   br i1 %i.ad, label %bb.e, label %bb.g
@@ -847,8 +846,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5ImGui9ScrollbarE9ImGuiAxis(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca %struct.ImRect, align 8             ; 6 uses
-  %2 = alloca %struct.ImRect, align 8             ; 5 uses
+  %1 = alloca %struct.ImRect, align 16            ; 5 uses
+  %2 = alloca %struct.ImRect, align 16            ; 4 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 5312
@@ -937,13 +936,11 @@ _ZN5ImGui22GetWindowScrollbarRectEP11ImGuiWindow9ImGuiAxis.exit: ; preds = %bb.e
   %.sroa.0.4.vec.insert31.i = insertelement <2 x float> %.sroa.0.0.vec.insert29.i, float %.sink38.i, i64 1
   %.sroa.5.8.vec.insert34.i = insertelement <2 x float> poison, float %.sink37.i, i64 0
   %.sroa.5.12.vec.insert36.i = insertelement <2 x float> %.sroa.5.8.vec.insert34.i, float %.sink.i, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert31.i, ptr %1, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store <2 x float> %.sroa.5.12.vec.insert36.i, ptr %3, align 8
+  %3 = shufflevector <2 x float> %.sroa.0.4.vec.insert31.i, <2 x float> %.sroa.5.12.vec.insert36.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %1, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #41
-  store <2 x float> %i.i, ptr %2, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> %i.k, ptr %4, align 8
+  %4 = shufflevector <2 x float> %i.i, <2 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %2, align 16
   %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 3240
   %i.ba = load float, ptr %i.az, align 8, !tbaa !248
   %i.bb = call noundef i32 @_ZN5ImGui30CalcRoundingFlagsForRectInRectERK6ImRectS2_f(ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %2, float noundef %i.ba)
@@ -983,8 +980,8 @@ declare noundef i32 @_ZN5ImGui30CalcRoundingFlagsForRectInRectERK6ImRectS2_f(ptr
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN5ImGui11ScrollbarExERK6ImRectj9ImGuiAxisPxxxi(ptr noundef nonnull align 4 dereferenceable(16) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef captures(none) %3, i64 noundef %4, i64 noundef %5, i32 noundef %6) local_unnamed_addr #0 {
 bb.a:
-  %7 = alloca %struct.ImRect, align 8             ; 5 uses
-  %8 = alloca %struct.ImRect, align 8             ; 5 uses
+  %7 = alloca %struct.ImRect, align 16            ; 5 uses
+  %8 = alloca %struct.ImRect, align 16            ; 5 uses
   %9 = alloca %struct.ImRect, align 16            ; 6 uses
   %10 = alloca %struct.ImVec2, align 8            ; 4 uses
   %11 = alloca %struct.ImRect, align 4            ; 6 uses
@@ -1098,9 +1095,9 @@ bb.e:                                             ; preds = %.thread
   %i.bz = load <2 x float>, ptr %i.bx, align 8, !tbaa !190 ; 2 uses
   %i.ca = load <2 x float>, ptr %i.by, align 8, !tbaa !190
   %i.cb = fadd <2 x float> %i.bz, %i.ca
-  store <2 x float> %i.bz, ptr %7, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
-  store <2 x float> %i.cb, ptr %13, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %14 = shufflevector <2 x float> %i.bz, <2 x float> %i.cb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #41
   %i.cc = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !247 ; 2 uses
@@ -1109,9 +1106,9 @@ bb.e:                                             ; preds = %.thread
   %i.cg = load <2 x float>, ptr %i.ce, align 8, !tbaa !190 ; 2 uses
   %i.ch = load <2 x float>, ptr %i.cf, align 8, !tbaa !190
   %i.ci = fadd <2 x float> %i.cg, %i.ch
-  store <2 x float> %i.cg, ptr %8, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  store <2 x float> %i.ci, ptr %14, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %16 = shufflevector <2 x float> %i.cg, <2 x float> %i.ci, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %16, ptr %8, align 16
   %i.cj = sext i32 %i.bu to i64                   ; 6 uses
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.cj
   %i.cl = load float, ptr %i.ck, align 4, !tbaa !190 ; 4 uses
@@ -1136,7 +1133,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %i.cj
   %i.cv = load float, ptr %i.cu, align 4, !tbaa !190 ; 4 uses
-  %i.cw = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %i.cj
+  %i.cw = getelementptr inbounds nuw [4 x i8], ptr %15, i64 %i.cj
   %i.cx = load float, ptr %i.cw, align 4, !tbaa !190
   %i.cy = fcmp oeq float %i.cv, %i.cx
   br i1 %i.cy, label %bb.i, label %_ZN5ImGui32ExtendHitBoxWhenNearViewportEdgeEP11ImGuiWindowP6ImRectf9ImGuiAxis.exit
@@ -1539,7 +1536,7 @@ bb.a:
   %4 = alloca %struct.ImVec2, align 8             ; 5 uses
   %i.a = alloca [16 x i8], align 16               ; 5 uses
   %5 = alloca %struct.ImVec2, align 8             ; 4 uses
-  %6 = alloca %struct.ImRect, align 8             ; 5 uses
+  %6 = alloca %struct.ImRect, align 16            ; 4 uses
   %7 = alloca %struct.ImVec2, align 8             ; 4 uses
   %8 = alloca %struct.ImVec2, align 8             ; 4 uses
   %9 = alloca %struct.ImVec2, align 8             ; 4 uses
@@ -1680,10 +1677,9 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #41
   %i.bc = call { <2 x float>, <2 x float> } @_ZN5ImGui25GetPopupAllowedExtentRectEP11ImGuiWindow(ptr noundef nonnull %i.au) ; 2 uses
   %i.bd = extractvalue { <2 x float>, <2 x float> } %i.bc, 0
-  store <2 x float> %i.bd, ptr %6, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %11 = extractvalue { <2 x float>, <2 x float> } %i.bc, 1
-  store <2 x float> %11, ptr %10, align 8
+  %10 = extractvalue { <2 x float>, <2 x float> } %i.bc, 1
+  %11 = shufflevector <2 x float> %i.bd, <2 x float> %10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %6, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #41
   %i.be = load <4 x float>, ptr %1, align 4
@@ -2086,7 +2082,7 @@ bb.a:
   %i.c = alloca i8, align 1                       ; 7 uses
   %i.d = alloca i8, align 1                       ; 6 uses
   %i.e = alloca i8, align 1                       ; 6 uses
-  %8 = alloca %struct.ImRect, align 8             ; 5 uses
+  %8 = alloca %struct.ImRect, align 16            ; 4 uses
   %9 = alloca %struct.ImVec2, align 4             ; 5 uses
   %i.f = zext i1 %1 to i8                         ; 4 uses
   store i8 %i.f, ptr %i.a, align 1, !tbaa !231
@@ -2446,14 +2442,13 @@ bb.ai:                                            ; preds = %bb.ah
   %i.fo = load i32, ptr %i.fn, align 4, !tbaa !344
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #41
   %i.fp = getelementptr inbounds nuw i8, ptr %i.i, i64 296
-  %i.fq = load <2 x float>, ptr %i.fp, align 8, !tbaa !190 ; 2 uses
+  %i.fq = load <2 x float>, ptr %i.fp, align 8, !tbaa !190
   %i.fr = load <2 x float>, ptr %7, align 8, !tbaa !190
-  %10 = fsub <2 x float> %i.fr, %i.fq
   %i.fs = load <2 x float>, ptr %i.ax, align 8, !tbaa !190
-  %11 = fsub <2 x float> %i.fs, %i.fq
-  store <2 x float> %10, ptr %8, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store <2 x float> %11, ptr %12, align 8
+  %10 = shufflevector <2 x float> %i.fr, <2 x float> %i.fs, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = shufflevector <2 x float> %i.fq, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %12 = fsub <4 x float> %10, %11
+  store <4 x float> %12, ptr %8, align 16
   call void @_ZN5ImGui8SetNavIDEj13ImGuiNavLayerjRK6ImRect(i32 noundef %i.n, i32 noundef %i.fj, i32 noundef %i.fo, ptr noundef nonnull align 4 dereferenceable(16) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #41
   %i.ft = getelementptr inbounds nuw i8, ptr %i.g, i64 118
@@ -2856,10 +2851,10 @@ bb.a:
   %16 = alloca %struct.ImGuiInputTextCallbackData, align 8 ; 18 uses
   %17 = alloca %struct.ImGuiInputTextCallbackData, align 8 ; 13 uses
   %18 = alloca %struct.ImVec2, align 8            ; 15 uses
-  %19 = alloca %struct.ImRect, align 16           ; 10 uses
+  %19 = alloca %struct.ImRect, align 16           ; 9 uses
   %i.g = alloca i32, align 4                      ; 9 uses
   %i.h = alloca i32, align 4                      ; 16 uses
-  %20 = alloca %struct.ImRect, align 8            ; 6 uses
+  %20 = alloca %struct.ImRect, align 16           ; 6 uses
   %21 = alloca %struct.ImVec2, align 8            ; 4 uses
   %22 = alloca %struct.ImVec2, align 4            ; 5 uses
   %i.i = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 132 uses
@@ -3262,17 +3257,17 @@ bb.lr:                                            ; preds = %bb.lq, %.critedge13
   br i1 %i.r, label %bb.ls, label %bb.lt
 
 bb.ls:                                            ; preds = %bb.lr
-  %23 = getelementptr inbounds nuw i8, ptr %19, i64 8
   %i.aqf = getelementptr inbounds nuw i8, ptr %.21264, i64 616
   %i.aqg = load <2 x float>, ptr %i.aqf, align 4, !tbaa !190 ; 2 uses
   %i.aqh = fcmp oge <2 x float> %i.aqb, %i.aqg
-  %24 = select <2 x i1> %i.aqh, <2 x float> %i.aqb, <2 x float> %i.aqg
-  store <2 x float> %24, ptr %19, align 16, !tbaa !190
-  %25 = getelementptr inbounds nuw i8, ptr %.21264, i64 624
-  %26 = load <2 x float>, ptr %25, align 4, !tbaa !190 ; 2 uses
-  %27 = fcmp olt <2 x float> %i.aqd, %26
-  %28 = select <2 x i1> %27, <2 x float> %i.aqd, <2 x float> %26
-  store <2 x float> %28, ptr %23, align 8, !tbaa !190
+  %23 = getelementptr inbounds nuw i8, ptr %.21264, i64 624
+  %24 = load <2 x float>, ptr %23, align 4, !tbaa !190 ; 2 uses
+  %25 = fcmp olt <2 x float> %i.aqd, %24
+  %26 = shufflevector <2 x i1> %i.aqh, <2 x i1> %25, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %27 = shufflevector <2 x float> %i.aqb, <2 x float> %i.aqd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %28 = shufflevector <2 x float> %i.aqg, <2 x float> %24, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %29 = select <4 x i1> %26, <4 x float> %27, <4 x float> %28
+  store <4 x float> %29, ptr %19, align 16, !tbaa !190
   br label %bb.lt
 
 bb.lt:                                            ; preds = %bb.ls, %bb.lr
@@ -3675,7 +3670,7 @@ bb.oz:                                            ; preds = %bb.oy
 .lr.ph1663:                                       ; preds = %bb.oz
   %i.bhg = getelementptr inbounds nuw i8, ptr %i.i, i64 9552 ; 2 uses
   %i.bhh = getelementptr inbounds nuw i8, ptr %18, i64 4
-  %i.bhi = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
+  %i.bhi = getelementptr inbounds nuw i8, ptr %20, i64 8
   %i.bhj = getelementptr inbounds nuw i8, ptr %.21264, i64 712
   %i.bhk = sext i32 %i.bhd to i64
   br label %bb.pa
@@ -3756,7 +3751,7 @@ bb.pg:                                            ; preds = %bb.pf, %.thread1613
 
 bb.ph:                                            ; preds = %bb.pg
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #41
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %20, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %20, i8 0, i64 16, i1 false)
   %i.bir = load float, ptr %18, align 8, !tbaa !194
   %i.bis = fsub float %i.bir, %i.bgf
   %i.bit = call <2 x float> @_ZN5ImGui12CalcTextSizeEPKcS1_bf(ptr noundef %i.bhr, ptr noundef %i.bii, i1 noundef zeroext false, float noundef -1.000000e+00)
@@ -3779,11 +3774,8 @@ bb.ph:                                            ; preds = %bb.pg
   %i.bjj = fcmp oge <4 x float> %i.bji, %i.bje
   %i.bjk = fcmp olt <4 x float> %i.bji, %i.bje
   %i.bjl = shufflevector <4 x i1> %i.bjj, <4 x i1> %i.bjk, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.bjm = select <4 x i1> %i.bjl, <4 x float> %i.bji, <4 x float> %i.bje ; 2 uses
-  %29 = shufflevector <4 x float> %i.bjm, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %29, ptr %20, align 8, !tbaa !190
-  %30 = shufflevector <4 x float> %i.bjm, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x float> %30, ptr %i.bhi, align 8, !tbaa !190
+  %i.bjm = select <4 x i1> %i.bjl, <4 x float> %i.bji, <4 x float> %i.bje
+  store <4 x float> %i.bjm, ptr %20, align 16, !tbaa !190
   %i.bjn = load ptr, ptr %i.bhj, align 8, !tbaa !202
   call void @_ZN10ImDrawList13AddRectFilledERK6ImVec2S2_jfi(ptr noundef nonnull align 8 dereferenceable(224) %i.bjn, ptr noundef nonnull align 4 dereferenceable(8) %20, ptr noundef nonnull align 4 dereferenceable(8) %i.bhi, i32 noundef %i.bgi, float noundef 0.000000e+00, i32 noundef 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #41
@@ -4186,16 +4178,14 @@ bb.dj:                                            ; preds = %bb.dk
   store i16 %i.vd, ptr %i.vf, align 2, !tbaa !219
   %i.vg = getelementptr inbounds nuw i8, ptr %i.vf, i64 2
   %i.vh = getelementptr inbounds nuw i8, ptr %i.ae, i64 64 ; 2 uses
-  %i.vi = load ptr, ptr %i.vh, align 8, !tbaa !774 ; 10 uses
-  store <2 x float> %i.um, ptr %i.vi, align 4, !tbaa !190
-  %41 = getelementptr inbounds nuw i8, ptr %i.vi, i64 8
-  store <2 x float> %i.va, ptr %41, align 4, !tbaa !190
+  %i.vi = load ptr, ptr %i.vh, align 8, !tbaa !774 ; 7 uses
+  %41 = shufflevector <2 x float> %i.um, <2 x float> %i.va, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %41, ptr %i.vi, align 4, !tbaa !190
   %i.vj = getelementptr inbounds nuw i8, ptr %i.vi, i64 16
   store i32 %i.sm, ptr %i.vj, align 4, !tbaa !776
   %i.vk = getelementptr inbounds nuw i8, ptr %i.vi, i64 20
-  store <2 x float> %i.ux, ptr %i.vk, align 4, !tbaa !190
-  %42 = getelementptr inbounds nuw i8, ptr %i.vi, i64 28
-  store <2 x float> %i.va, ptr %42, align 4, !tbaa !190
+  %42 = shufflevector <2 x float> %i.ux, <2 x float> %i.va, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %42, ptr %i.vk, align 4, !tbaa !190
   %i.vl = getelementptr inbounds nuw i8, ptr %i.vi, i64 36
   store i32 %i.rt, ptr %i.vl, align 4, !tbaa !776
   %i.vm = getelementptr inbounds nuw i8, ptr %i.vi, i64 40
@@ -4206,9 +4196,8 @@ bb.dj:                                            ; preds = %bb.dk
   store <2 x i16> %i.vq, ptr %i.vg, align 2, !tbaa !219
   %i.vr = getelementptr inbounds nuw i8, ptr %i.vf, i64 6
   store ptr %i.vr, ptr %i.ve, align 8, !tbaa !773
-  store <2 x float> %i.uz, ptr %i.vm, align 4, !tbaa !190
-  %43 = getelementptr inbounds nuw i8, ptr %i.vi, i64 48
-  store <2 x float> %i.va, ptr %43, align 4, !tbaa !190
+  %43 = shufflevector <2 x float> %i.uz, <2 x float> %i.va, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %43, ptr %i.vm, align 4, !tbaa !190
   %i.vs = getelementptr inbounds nuw i8, ptr %i.vi, i64 56
   store i32 %i.rw, ptr %i.vs, align 4, !tbaa !776
   %i.vt = getelementptr inbounds nuw i8, ptr %i.vi, i64 60
@@ -4611,7 +4600,7 @@ declare void @_ZN5ImGui28TableApplyExternalUnclipRectEP10ImGuiTableR6ImRect(ptr 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5ImGui12EndBoxSelectERK6ImRecti(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.ImRect, align 8             ; 8 uses
+  %2 = alloca %struct.ImRect, align 16            ; 8 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 5312
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !158  ; 8 uses
@@ -4657,18 +4646,19 @@ _Z7ImClampRK6ImVec2S1_S1_.exit:                   ; preds = %bb.c, %bb.d
   store <2 x float> %i.z, ptr %i.aa, align 4, !tbaa !190
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #41
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 9284
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 4 dereferenceable(16) %i.ab, i64 16, i1 false), !tbaa.struct !236
-  %i.ac = load <2 x float>, ptr %2, align 8, !tbaa !190 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 4 dereferenceable(16) %i.ab, i64 16, i1 false), !tbaa.struct !236
+  %i.ac = load <2 x float>, ptr %2, align 16, !tbaa !190 ; 2 uses
   %i.ad = load <2 x float>, ptr %0, align 4, !tbaa !190 ; 2 uses
   %i.ae = fcmp oge <2 x float> %i.ac, %i.ad
-  %3 = select <2 x i1> %i.ae, <2 x float> %i.ac, <2 x float> %i.ad
-  store <2 x float> %3, ptr %2, align 8, !tbaa !190
-  %i.af = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.ag = load <2 x float>, ptr %i.af, align 8, !tbaa !190 ; 2 uses
   %i.ah = load <2 x float>, ptr %i.f, align 4, !tbaa !190 ; 2 uses
   %i.ai = fcmp olt <2 x float> %i.ag, %i.ah
-  %4 = select <2 x i1> %i.ai, <2 x float> %i.ag, <2 x float> %i.ah
-  store <2 x float> %4, ptr %i.af, align 8, !tbaa !190
+  %3 = shufflevector <2 x i1> %i.ae, <2 x i1> %i.ai, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = shufflevector <2 x float> %i.ac, <2 x float> %i.ag, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %5 = shufflevector <2 x float> %i.ad, <2 x float> %i.ah, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = select <4 x i1> %3, <4 x float> %4, <4 x float> %5
+  store <4 x float> %6, ptr %2, align 16, !tbaa !190
   %i.aj = tail call noundef ptr @_ZN5ImGui31FindFrontMostVisibleChildWindowEP11ImGuiWindow(ptr noundef %i.c)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 712 ; 2 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !202
@@ -4872,7 +4862,7 @@ declare noundef ptr @_ZN5ImGui31FindFrontMostVisibleChildWindowEP11ImGuiWindow(p
 define noundef nonnull ptr @_ZN5ImGui16BeginMultiSelectEiii(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %struct.ImGuiMultiSelectTempData, align 8 ; 12 uses
-  %4 = alloca %struct.ImRect, align 8             ; 5 uses
+  %4 = alloca %struct.ImRect, align 16            ; 4 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 26 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 5312
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !158  ; 10 uses
@@ -5275,9 +5265,8 @@ bb.ak:                                            ; preds = %bb.ai
 _ZL13CalcScopeRectP24ImGuiMultiSelectTempDataP11ImGuiWindow.exit: ; preds = %bb.aj, %bb.ak
   %.sroa.014.0.i = phi <2 x float> [ %i.ft, %bb.ak ], [ %i.fl, %bb.aj ]
   %.sroa.6.0.i = phi <2 x float> [ %.sroa.6.0.copyload.i, %bb.ak ], [ %i.fn, %bb.aj ]
-  store <2 x float> %.sroa.014.0.i, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store <2 x float> %.sroa.6.0.i, ptr %5, align 8
+  %5 = shufflevector <2 x float> %.sroa.014.0.i, <2 x float> %.sroa.6.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %4, align 16
   %i.fu = call noundef zeroext i1 @_ZN5ImGui14BeginBoxSelectERK6ImRectP11ImGuiWindowji(ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull %i.c, i32 noundef %i.fg, i32 noundef %.2120)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #41
   br i1 %i.fu, label %bb.al, label %bb.am
@@ -5680,7 +5669,7 @@ _ZN8ImVectorI21ImGuiSelectionRequestE9push_backERKS0_.exit: ; preds = %._ZN8ImVe
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN5ImGui14EndMultiSelectEv() local_unnamed_addr #0 {
 bb.a:
-  %0 = alloca %struct.ImRect, align 8             ; 5 uses
+  %0 = alloca %struct.ImRect, align 16            ; 4 uses
   %1 = alloca %struct.ImRect, align 8             ; 5 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 17 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 9304 ; 2 uses
@@ -5732,9 +5721,8 @@ bb.e:                                             ; preds = %bb.c
 _ZL13CalcScopeRectP24ImGuiMultiSelectTempDataP11ImGuiWindow.exit: ; preds = %bb.d, %bb.e
   %.sroa.014.0.i = phi <2 x float> [ %i.ab, %bb.e ], [ %i.t, %bb.d ] ; 3 uses
   %.sroa.6.0.i = phi <2 x float> [ %.sroa.6.0.copyload.i, %bb.e ], [ %i.v, %bb.d ] ; 3 uses
-  store <2 x float> %.sroa.014.0.i, ptr %0, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %.sroa.6.0.i, ptr %2, align 8
+  %2 = shufflevector <2 x float> %.sroa.014.0.i, <2 x float> %.sroa.6.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %0, align 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 82
   %i.ad = load i8, ptr %i.ac, align 2, !tbaa !262, !range !184, !noundef !185
   %i.ae = trunc nuw i8 %i.ad to i1
@@ -6137,7 +6125,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN5ImGui12BeginMenuBarEv() local_unnamed_addr #0 {
 bb.a:
-  %0 = alloca %struct.ImRect, align 8             ; 5 uses
+  %0 = alloca %struct.ImRect, align 16            ; 5 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !29
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 5312
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !158  ; 22 uses
@@ -6183,7 +6171,7 @@ bb.c:                                             ; preds = %bb.b
   %i.af = fsub float %i.w, %i.ae                  ; 2 uses
   %i.ag = fcmp oge float %i.t, %i.af
   %i.ah = select i1 %i.ag, float %i.t, float %i.af
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.c, i64 536
   %i.ak = insertelement <2 x float> poison, float %i.l, i64 0
   %i.al = shufflevector <2 x float> %i.ak, <2 x float> poison, <2 x i32> zeroinitializer
@@ -6201,8 +6189,6 @@ bb.c:                                             ; preds = %bb.b
   %i.ax = sitofp <2 x i32> %i.aw to <2 x float>   ; 2 uses
   %i.ay = load <2 x float>, ptr %i.aj, align 8, !tbaa !190 ; 2 uses
   %i.az = fcmp ole <2 x float> %i.ay, %i.ax
-  %1 = select <2 x i1> %i.az, <2 x float> %i.ax, <2 x float> %i.ay
-  store <2 x float> %1, ptr %0, align 8, !tbaa !190
   %i.ba = getelementptr inbounds nuw i8, ptr %i.c, i64 544
   %i.bb = insertelement <2 x float> poison, float %i.ah, i64 0
   %i.bc = insertelement <2 x float> %i.bb, float %i.z, i64 1
@@ -6211,8 +6197,11 @@ bb.c:                                             ; preds = %bb.b
   %i.bf = sitofp <2 x i32> %i.be to <2 x float>   ; 2 uses
   %i.bg = load <2 x float>, ptr %i.ba, align 8, !tbaa !190 ; 2 uses
   %i.bh = fcmp ogt <2 x float> %i.bg, %i.bf
-  %2 = select <2 x i1> %i.bh, <2 x float> %i.bf, <2 x float> %i.bg
-  store <2 x float> %2, ptr %i.ai, align 8, !tbaa !190
+  %1 = shufflevector <2 x i1> %i.az, <2 x i1> %i.bh, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %2 = shufflevector <2 x float> %i.ax, <2 x float> %i.bf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %3 = shufflevector <2 x float> %i.ay, <2 x float> %i.bg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = select <4 x i1> %1, <4 x float> %2, <4 x float> %3
+  store <4 x float> %4, ptr %0, align 16, !tbaa !190
   call void @_ZN5ImGui12PushClipRectERK6ImVec2S2_b(ptr noundef nonnull align 4 dereferenceable(8) %0, ptr noundef nonnull align 4 dereferenceable(8) %i.ai, i1 noundef zeroext false)
   %i.bi = getelementptr inbounds nuw i8, ptr %i.c, i64 280
   %i.bj = getelementptr inbounds nuw i8, ptr %i.c, i64 380

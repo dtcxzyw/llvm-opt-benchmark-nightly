@@ -205,7 +205,7 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   br i1 %i.au, label %.lr.ph275, label %.preheader
 
 .lr.ph:                                           ; preds = %.preheader260, %.lr.ph
-  %.1265 = phi ptr [ %i.eb, %.lr.ph ], [ %.0212295, %.preheader260 ] ; 5 uses
+  %.1265 = phi ptr [ %i.eb, %.lr.ph ], [ %.0212295, %.preheader260 ] ; 4 uses
   %.1214264 = phi ptr [ %i.di, %.lr.ph ], [ %.0213294, %.preheader260 ] ; 9 uses
   %.1218263 = phi ptr [ %i.dm, %.lr.ph ], [ %.0217293, %.preheader260 ] ; 9 uses
   %.1222262 = phi ptr [ %i.dq, %.lr.ph ], [ %.0221292, %.preheader260 ] ; 9 uses
@@ -289,7 +289,6 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   %i.dr = load <8 x float>, ptr %i.dq, align 1, !tbaa !63
   %i.ds = getelementptr inbounds nuw i8, ptr %.1265, i64 64
   %i.dt = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.df, <8 x float> nofpclass(nan inf) %i.dd)
-  store <8 x float> %i.dt, ptr %i.ds, align 1, !tbaa !63
   %i.du = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.dh, <8 x float> nofpclass(nan inf) %i.dj)
   %i.dv = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.du, <8 x float> nofpclass(nan inf) %i.co)
   %i.dw = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.dv, <8 x float> nofpclass(nan inf) %i.dl)
@@ -297,9 +296,9 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   %i.dy = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.cs, <8 x float> nofpclass(nan inf) %i.dp)
   %i.dz = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.dx, <8 x float> nofpclass(nan inf) %i.dr)
   %i.ea = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.dz, <8 x float> nofpclass(nan inf) %i.cw)
-  %8 = getelementptr inbounds nuw i8, ptr %.1265, i64 96
-  %9 = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.ea, <8 x float> nofpclass(nan inf) %i.dy)
-  store <8 x float> %9, ptr %8, align 1, !tbaa !63
+  %8 = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.ea, <8 x float> nofpclass(nan inf) %i.dy)
+  %9 = shufflevector <8 x float> %i.dt, <8 x float> %8, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x float> %9, ptr %i.ds, align 1, !tbaa !63
   %i.eb = getelementptr inbounds nuw i8, ptr %.1265, i64 128 ; 2 uses
   %i.ec = add nuw nsw i32 %.0226261, 4            ; 3 uses
   %i.ed = or disjoint i32 %i.ec, 3
@@ -318,7 +317,7 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   br i1 %i.eh, label %.lr.ph286, label %._crit_edge
 
 .lr.ph275:                                        ; preds = %.preheader259, %.lr.ph275
-  %.2274 = phi ptr [ %i.fy, %.lr.ph275 ], [ %.1.lcssa, %.preheader259 ] ; 3 uses
+  %.2274 = phi ptr [ %i.fy, %.lr.ph275 ], [ %.1.lcssa, %.preheader259 ] ; 2 uses
   %.2215273 = phi ptr [ %i.fg, %.lr.ph275 ], [ %.1214.lcssa, %.preheader259 ] ; 5 uses
   %.2219272 = phi ptr [ %i.fk, %.lr.ph275 ], [ %.1218.lcssa, %.preheader259 ] ; 5 uses
   %.2223271 = phi ptr [ %i.fo, %.lr.ph275 ], [ %.1222.lcssa, %.preheader259 ] ; 5 uses
@@ -358,7 +357,6 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   %i.fo = getelementptr inbounds nuw i8, ptr %.2223271, i64 128 ; 3 uses
   %i.fp = load <8 x float>, ptr %i.fo, align 1, !tbaa !63
   %i.fq = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.fa, <8 x float> nofpclass(nan inf) %i.fd)
-  store <8 x float> %i.fq, ptr %.2274, align 1, !tbaa !63
   %i.fr = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.ff, <8 x float> nofpclass(nan inf) %i.fh)
   %i.fs = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.fr, <8 x float> nofpclass(nan inf) %i.em)
   %i.ft = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.fs, <8 x float> nofpclass(nan inf) %i.fj)
@@ -366,9 +364,9 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   %i.fv = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.er, <8 x float> nofpclass(nan inf) %i.fn)
   %i.fw = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.fu, <8 x float> nofpclass(nan inf) %i.fp)
   %i.fx = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.fw, <8 x float> nofpclass(nan inf) %i.ew)
-  %10 = getelementptr inbounds nuw i8, ptr %.2274, i64 32
-  %11 = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.fx, <8 x float> nofpclass(nan inf) %i.fv)
-  store <8 x float> %11, ptr %10, align 1, !tbaa !63
+  %10 = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.fx, <8 x float> nofpclass(nan inf) %i.fv)
+  %11 = shufflevector <8 x float> %i.fq, <8 x float> %10, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x float> %11, ptr %.2274, align 1, !tbaa !63
   %i.fy = getelementptr inbounds nuw i8, ptr %.2274, i64 64 ; 2 uses
   %i.fz = add nuw nsw i32 %.1227270, 2            ; 3 uses
   %i.ga = or disjoint i32 %i.fz, 1
@@ -692,7 +690,7 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   br i1 %i.at, label %.lr.ph169, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader154, %.lr.ph
-  %.1159 = phi ptr [ %i.ck, %.lr.ph ], [ %.0111178, %.preheader154 ] ; 3 uses
+  %.1159 = phi ptr [ %i.ck, %.lr.ph ], [ %.0111178, %.preheader154 ] ; 2 uses
   %.1113158 = phi ptr [ %i.bs, %.lr.ph ], [ %.0112177, %.preheader154 ] ; 5 uses
   %.1116157 = phi ptr [ %i.bw, %.lr.ph ], [ %.0115176, %.preheader154 ] ; 5 uses
   %.1119156 = phi ptr [ %i.ca, %.lr.ph ], [ %.0118175, %.preheader154 ] ; 5 uses
@@ -732,7 +730,6 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   %i.ca = getelementptr inbounds nuw i8, ptr %.1119156, i64 64 ; 3 uses
   %i.cb = load <4 x float>, ptr %i.ca, align 1, !tbaa !63
   %i.cc = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.bm, <4 x float> nofpclass(nan inf) %i.bp)
-  store <4 x float> %i.cc, ptr %.1159, align 1, !tbaa !63
   %i.cd = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.br, <4 x float> nofpclass(nan inf) %i.bt)
   %i.ce = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.cd, <4 x float> nofpclass(nan inf) %i.ay)
   %i.cf = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.ce, <4 x float> nofpclass(nan inf) %i.bv)
@@ -740,9 +737,9 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.noex
   %i.ch = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.bd, <4 x float> nofpclass(nan inf) %i.bz)
   %i.ci = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.cg, <4 x float> nofpclass(nan inf) %i.cb)
   %i.cj = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.ci, <4 x float> nofpclass(nan inf) %i.bi)
-  %8 = getelementptr inbounds nuw i8, ptr %.1159, i64 16
-  %9 = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.cj, <4 x float> nofpclass(nan inf) %i.ch)
-  store <4 x float> %9, ptr %8, align 1, !tbaa !63
+  %8 = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.sse.max.ps(<4 x float> nofpclass(nan inf) %i.cj, <4 x float> nofpclass(nan inf) %i.ch)
+  %9 = shufflevector <4 x float> %i.cc, <4 x float> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %9, ptr %.1159, align 1, !tbaa !63
   %i.ck = getelementptr inbounds nuw i8, ptr %.1159, i64 32 ; 2 uses
   %i.cl = add nuw nsw i32 %.0122155, 2            ; 3 uses
   %i.cm = or disjoint i32 %i.cl, 1

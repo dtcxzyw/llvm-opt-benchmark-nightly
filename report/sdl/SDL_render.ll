@@ -205,12 +205,11 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph:                                           ; preds = %.lr.ph.preheader45, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader45 ] ; 3 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
-  %i.t = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %indvars.iv ; 2 uses
+  %i.t = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %indvars.iv
   %i.u = load <2 x float>, ptr %i.s, align 4
   %i.v = fmul <2 x float> %i.k, %i.u
-  store <2 x float> %i.v, ptr %i.t, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  store <2 x float> %i.k, ptr %3, align 4
+  %3 = shufflevector <2 x float> %i.v, <2 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.t, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !47
@@ -613,7 +612,7 @@ bb.r:                                             ; preds = %bb.o, %bb.n, %bb.q,
 ; Function Attrs: nounwind uwtable
 define hidden zeroext i1 @SDL_RenderTexture_REAL(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = alloca %struct.SDL_FRect, align 8          ; 7 uses
+  %4 = alloca %struct.SDL_FRect, align 16         ; 6 uses
   %5 = alloca %struct.SDL_FRect, align 8          ; 6 uses
   %.not.i29 = icmp eq ptr %0, null
   br i1 %.not.i29, label %SDL_ObjectValid.exit31.thread33, label %bb.b
@@ -670,12 +669,11 @@ bb.f:                                             ; preds = %SDL_ObjectValid.exi
 
 bb.g:                                             ; preds = %SDL_ObjectValid.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
-  store <2 x float> zeroinitializer, ptr %4, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %7 = load <2 x i32>, ptr %i.p, align 4
-  %8 = sitofp <2 x i32> %7 to <2 x float>
-  store <2 x float> %8, ptr %6, align 8
+  %6 = load <2 x i32>, ptr %i.p, align 4
+  %7 = sitofp <2 x i32> %6 to <2 x float>
+  %8 = shufflevector <2 x float> zeroinitializer, <2 x float> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %4, align 16
   %.not26 = icmp eq ptr %2, null
   br i1 %.not26, label %bb.i, label %bb.h
 
@@ -1078,7 +1076,7 @@ bb.h:                                             ; preds = %QueueCmdCopy.exit, 
 ; Function Attrs: nounwind uwtable
 define hidden zeroext i1 @SDL_RenderTextureAffine_REAL(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3, ptr nofree noundef readonly captures(address_is_null) %4, ptr nofree noundef readonly captures(address_is_null) %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = alloca %struct.SDL_FRect, align 8          ; 7 uses
+  %6 = alloca %struct.SDL_FRect, align 16         ; 7 uses
   %i.a = alloca [8 x float], align 16             ; 12 uses
   %i.b = alloca [8 x float], align 16             ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
@@ -1152,12 +1150,12 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.aa
 
 bb.j:                                             ; preds = %bb.h, %bb.g
-  store <2 x float> zeroinitializer, ptr %6, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.y = load <2 x i32>, ptr %i.w, align 4
   %i.z = sitofp <2 x i32> %i.y to <2 x float>
-  store <2 x float> %i.z, ptr %i.x, align 8
+  %7 = shufflevector <2 x float> zeroinitializer, <2 x float> %i.z, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %6, align 16
   %.not63 = icmp eq ptr %2, null
   br i1 %.not63, label %bb.l, label %bb.k
 
@@ -1229,7 +1227,7 @@ bb.r:                                             ; preds = %GetRenderViewportSi
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   %i.bi = getelementptr inbounds nuw i8, ptr %spec.select, i64 4
-  %i.bj = load <2 x float>, ptr %6, align 8       ; 3 uses
+  %i.bj = load <2 x float>, ptr %6, align 16      ; 3 uses
   %i.bk = load <2 x float>, ptr %i.x, align 8
   %i.bl = fadd <2 x float> %i.bj, %i.bk           ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -1327,7 +1325,7 @@ bb.aa:                                            ; preds = %GetRenderViewportSi
 ; Function Attrs: nounwind uwtable
 define hidden zeroext i1 @SDL_RenderTextureRotated_REAL(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, double noundef %4, ptr nofree noundef readonly captures(address_is_null) %5, i32 noundef %6) local_unnamed_addr #0 {
 bb.a:
-  %7 = alloca %struct.SDL_FRect, align 8          ; 8 uses
+  %7 = alloca %struct.SDL_FRect, align 16         ; 8 uses
   %8 = alloca %struct.SDL_FPoint, align 8         ; 5 uses
   %9 = alloca %struct.SDL_FRect, align 8          ; 7 uses
   %i.a = alloca [8 x float], align 16             ; 5 uses
@@ -1425,12 +1423,12 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.ad
 
 bb.m:                                             ; preds = %bb.k, %bb.j
-  store <2 x float> zeroinitializer, ptr %7, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.ad = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.ae = load <2 x i32>, ptr %i.ac, align 4
   %i.af = sitofp <2 x i32> %i.ae to <2 x float>
-  store <2 x float> %i.af, ptr %i.ad, align 8
+  %10 = shufflevector <2 x float> zeroinitializer, <2 x float> %i.af, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %7, align 16
   %.not187 = icmp eq ptr %2, null
   br i1 %.not187, label %bb.o, label %bb.n
 
@@ -1546,7 +1544,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.bz = call float @SDL_sinf_REAL(float noundef %i.by) #14 ; 2 uses
   %i.ca = call float @SDL_cosf_REAL(float noundef %i.by) #14 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %spec.select, i64 4
-  %i.cc = load <2 x float>, ptr %7, align 8       ; 3 uses
+  %i.cc = load <2 x float>, ptr %7, align 16      ; 3 uses
   %i.cd = load <2 x float>, ptr %i.ad, align 8
   %i.ce = fadd <2 x float> %i.cc, %i.cd           ; 2 uses
   %i.cf = insertelement <2 x i32> poison, i32 %6, i64 0
@@ -1666,7 +1664,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 ; Function Attrs: nounwind uwtable
 define hidden zeroext i1 @SDL_RenderTextureTiled_REAL(ptr noundef %0, ptr noundef %1, ptr noundef %2, float noundef %3, ptr nofree noundef readonly captures(address_is_null) %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = alloca %struct.SDL_FRect, align 8          ; 10 uses
+  %5 = alloca %struct.SDL_FRect, align 16         ; 10 uses
   %6 = alloca %struct.SDL_FRect, align 8          ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   %.not.i52 = icmp eq ptr %0, null
@@ -1732,13 +1730,13 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store <2 x float> zeroinitializer, ptr %5, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   %i.v = load <2 x i32>, ptr %i.s, align 4
   %i.w = sitofp <2 x i32> %i.v to <2 x float>
-  store <2 x float> %i.w, ptr %i.t, align 8
+  %7 = shufflevector <2 x float> zeroinitializer, <2 x float> %i.w, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %5, align 16
   %.not44 = icmp eq ptr %2, null                  ; 2 uses
   br i1 %.not44, label %bb.k, label %bb.j
 
@@ -1821,7 +1819,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %brmerge, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.bd = load float, ptr %5, align 8
+  %i.bd = load float, ptr %5, align 16
   %i.be = fcmp oeq float %i.bd, 0.000000e+00
   %i.bf = load float, ptr %i.r, align 4
   %i.bg = fcmp oeq float %i.bf, 0.000000e+00
@@ -2224,8 +2222,8 @@ bb.al:                                            ; preds = %.split.us, %bb.w, %
 define internal fastcc noundef zeroext i1 @SDL_SW_RenderGeometryRaw(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2, i32 noundef %3, ptr noundef nonnull %4, i32 noundef %5, ptr noundef %6, i32 noundef %7, i32 noundef range(i32 3, -2147483648) %8, ptr nofree noundef readonly captures(address_is_null) %9, i32 noundef %10, i32 noundef %11) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [3 x i32], align 4                ; 14 uses
-  %12 = alloca %struct.SDL_FRect, align 8         ; 11 uses
-  %13 = alloca %struct.SDL_FRect, align 16        ; 7 uses
+  %12 = alloca %struct.SDL_FRect, align 16        ; 11 uses
+  %13 = alloca %struct.SDL_FRect, align 16        ; 6 uses
   %.not = icmp eq ptr %9, null                    ; 2 uses
   %i.b = select i1 %.not, i32 %8, i32 %10         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
@@ -2329,10 +2327,9 @@ SDL_GetTextureSize_REAL.exit:                     ; preds = %SDL_ObjectValid.exi
 .lr.ph:                                           ; preds = %SDL_GetTextureSize_REAL.exit
   %.not484 = icmp eq ptr %6, null
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 12 ; 2 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 4 ; 2 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %i.aq = getelementptr inbounds nuw i8, ptr %12, i64 12 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %12, i64 4 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 728 ; 4 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 556
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 540
@@ -2606,11 +2603,11 @@ bb.w:                                             ; preds = %bb.v
   %i.gr = getelementptr inbounds i8, ptr %6, i64 %i.gq
   %i.gs = load <2 x float>, ptr %i.go, align 4
   %i.gt = fmul <2 x float> %i.ak, %i.gs           ; 2 uses
-  store <2 x float> %i.gt, ptr %12, align 8
   %i.gu = load <2 x float>, ptr %i.gr, align 4
   %i.gv = fneg <2 x float> %i.gt
   %i.gw = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gu, <2 x float> %i.ak, <2 x float> %i.gv) ; 3 uses
-  store <2 x float> %i.gw, ptr %i.aq, align 8
+  %14 = shufflevector <2 x float> %i.gt, <2 x float> %i.gw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %12, align 16
   %i.gx = extractelement <2 x float> %i.gw, i64 0
   %i.gy = fcmp une float %i.gx, 0.000000e+00
   %i.gz = extractelement <2 x float> %i.gw, i64 1
@@ -2619,16 +2616,16 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.y
 
 bb.x:                                             ; preds = %bb.v
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %12, i8 0, i64 16, i1 false)
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
   %or.cond4 = phi i1 [ false, %bb.x ], [ %i.hb, %bb.w ]
   %i.hc = load <2 x float>, ptr %i.dw, align 4    ; 2 uses
-  store <2 x float> %i.hc, ptr %13, align 16
   %i.hd = load <2 x float>, ptr %i.dz, align 4
   %i.he = fsub <2 x float> %i.hd, %i.hc           ; 3 uses
-  store <2 x float> %i.he, ptr %i.as, align 8
+  %15 = shufflevector <2 x float> %i.hc, <2 x float> %i.he, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %15, ptr %13, align 16
   br i1 %or.cond4, label %bb.z, label %bb.ag
 
 bb.z:                                             ; preds = %bb.y
@@ -2734,9 +2731,9 @@ SDL_ObjectValid.exit.thread.i397:                 ; preds = %SDL_ObjectValid.exi
   br i1 %.not.i398, label %SDL_SetTextureColorModFloat_REAL.exit, label %SDL_SetTextureAlphaModFloat_REAL.exit.split, !llvm.loop !66
 
 SDL_SetTextureColorModFloat_REAL.exit:            ; preds = %SDL_ObjectValid.exit.thread.i397.us, %SDL_ObjectValid.exit.thread.i397, %SDL_ObjectValid.exit.thread15.i
-  %i.iv = load float, ptr %i.aq, align 8          ; 4 uses
+  %i.iv = load float, ptr %i.ar, align 8          ; 4 uses
   %i.iw = fcmp ogt float %i.iv, 0.000000e+00
-  %i.ix = load float, ptr %14, align 4            ; 4 uses
+  %i.ix = load float, ptr %i.aq, align 4          ; 4 uses
   %i.iy = fcmp ogt float %i.ix, 0.000000e+00
   %or.cond10 = select i1 %i.iw, i1 %i.iy, i1 false
   br i1 %or.cond10, label %bb.aa, label %bb.ab
@@ -2751,10 +2748,10 @@ bb.ab:                                            ; preds = %SDL_SetTextureColor
 
 bb.ac:                                            ; preds = %bb.ab
   %i.jb = fneg float %i.iv
-  store float %i.jb, ptr %i.aq, align 8
-  %i.jc = load float, ptr %12, align 8
+  store float %i.jb, ptr %i.ar, align 8
+  %i.jc = load float, ptr %12, align 16
   %i.jd = fadd float %i.iv, %i.jc
-  store float %i.jd, ptr %12, align 8
+  store float %i.jd, ptr %12, align 16
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
@@ -2765,10 +2762,10 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
 bb.ae:                                            ; preds = %bb.ad
   %i.jf = or disjoint i32 %.0, 2
   %i.jg = fneg float %i.ix
-  store float %i.jg, ptr %14, align 4
-  %i.jh = load float, ptr %i.ar, align 4
+  store float %i.jg, ptr %i.aq, align 4
+  %i.jh = load float, ptr %i.as, align 4
   %i.ji = fadd float %i.ix, %i.jh
-  store float %i.ji, ptr %i.ar, align 4
+  store float %i.ji, ptr %i.as, align 4
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad

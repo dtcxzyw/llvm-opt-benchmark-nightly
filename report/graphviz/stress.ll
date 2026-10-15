@@ -205,12 +205,10 @@ vector.body887:                                   ; preds = %.lr.ph511, %vector.
   %i.ach = getelementptr inbounds nuw i8, ptr %i.acg, i64 16
   %wide.load889 = load <2 x double>, ptr %i.acg, align 8, !tbaa !35
   %wide.load890 = load <2 x double>, ptr %i.ach, align 8, !tbaa !35
-  %8 = fptrunc <2 x double> %wide.load889 to <2 x float>
-  %9 = fptrunc <2 x double> %wide.load890 to <2 x float>
-  %i.aci = getelementptr inbounds nuw [4 x i8], ptr %i.acc, i64 %index888 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.aci, i64 8
-  store <2 x float> %8, ptr %i.aci, align 4, !tbaa !48
-  store <2 x float> %9, ptr %10, align 4, !tbaa !48
+  %i.aci = getelementptr inbounds nuw [4 x i8], ptr %i.acc, i64 %index888
+  %8 = shufflevector <2 x double> %wide.load889, <2 x double> %wide.load890, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = fptrunc <4 x double> %8 to <4 x float>
+  store <4 x float> %9, ptr %i.aci, align 4, !tbaa !48
   %index.next891 = add nuw i64 %index888, 4       ; 2 uses
   %i.acj = icmp eq i64 %index.next891, %n.vec886
   br i1 %i.acj, label %middle.block892, label %vector.body887, !llvm.loop !114

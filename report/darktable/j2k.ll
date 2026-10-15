@@ -204,20 +204,19 @@ bb.e:                                             ; preds = %.split, %bb.d
   %i.ap = getelementptr inbounds nuw i8, ptr %13, i64 96
   store i32 12, ptr %i.ap, align 16, !tbaa !95
   store <4 x i32> %i.al, ptr %i.ao, align 8, !tbaa !21
-  %i.aq = call ptr @opj_image_create(i32 noundef 3, ptr noundef nonnull %13, i32 noundef 1) #15 ; 19 uses
+  %i.aq = call ptr @opj_image_create(i32 noundef 3, ptr noundef nonnull %13, i32 noundef 1) #15 ; 18 uses
   %.not129 = icmp eq ptr %i.aq, null
   br i1 %.not129, label %bb.p, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 18188
   %i.as = add nsw <2 x i32> %i.ai, splat (i32 -1)
-  %14 = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.at = load <2 x i32>, ptr %i.ar, align 4, !tbaa !21 ; 2 uses
-  store <2 x i32> %i.at, ptr %i.aq, align 8, !tbaa !21
-  %15 = mul nsw <2 x i32> %i.as, %i.ah
-  %i.au = add <2 x i32> %15, splat (i32 1)
-  %16 = add <2 x i32> %i.au, %i.at
-  store <2 x i32> %16, ptr %14, align 8, !tbaa !21
+  %14 = mul nsw <2 x i32> %i.as, %i.ah
+  %15 = add <2 x i32> %14, splat (i32 1)
+  %i.au = add <2 x i32> %15, %i.at
+  %16 = shufflevector <2 x i32> %i.at, <2 x i32> %i.au, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i32> %16, ptr %i.aq, align 8, !tbaa !21
   %shift = shufflevector <2 x i32> %i.ai, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = mul nsw <2 x i32> %shift, %i.ai
   %i.av = extractelement <2 x i32> %foldExtExtBinop, i64 0 ; 3 uses

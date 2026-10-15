@@ -171,7 +171,7 @@ bb.a:
 define void @process(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca [4 x float], align 16             ; 4 uses
-  %6 = alloca %struct.dt_nlmeans_param_t, align 8 ; 12 uses
+  %6 = alloca %struct.dt_nlmeans_param_t, align 16 ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = load ptr, ptr %i.b, align 16, !tbaa !31  ; 3 uses
   %i.d = load ptr, ptr %1, align 16, !tbaa !50
@@ -205,13 +205,12 @@ bb.b:                                             ; preds = %bb.a
   %i.y = zext i1 %i.x to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
   %i.z = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.n, i64 1
-  store <2 x float> %i.z, ptr %6, align 8, !tbaa !12
-  %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %8 = load <2 x float>, ptr %7, align 4, !tbaa !12
-  store <2 x float> %8, ptr %i.aa, align 8, !tbaa !12
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %7 = load <2 x float>, ptr %i.aa, align 4, !tbaa !12
+  %8 = shufflevector <2 x float> %i.z, <2 x float> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %6, align 16, !tbaa !12
   %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store float -1.000000e+00, ptr %i.ab, align 8, !tbaa !70
+  store float -1.000000e+00, ptr %i.ab, align 16, !tbaa !70
   %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 20
   store float %i.s, ptr %i.ac, align 4, !tbaa !71
   %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 24
@@ -223,13 +222,13 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = fptosi <2 x float> %i.ai to <2 x i32>
   store <2 x i32> %i.aj, ptr %i.ad, align 8, !tbaa !14
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 32
-  store i32 %i.y, ptr %i.ak, align 8, !tbaa !72
+  store i32 %i.y, ptr %i.ak, align 16, !tbaa !72
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 36
   store i32 0, ptr %i.al, align 4
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 40
   store ptr %i.a, ptr %i.am, align 8, !tbaa !73
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 48
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.an, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.an, i8 0, i64 24, i1 false)
   call void @nlmeans_denoise(ptr noundef %2, ptr noundef %3, ptr noundef nonnull %4, ptr noundef %5, ptr noundef nonnull %6) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18

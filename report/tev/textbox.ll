@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %struct.NVGcolor, align 16          ; 2 uses
   %6 = alloca %struct.NVGcolor, align 16          ; 2 uses
   %7 = alloca %struct.NVGpaint, align 4           ; 4 uses
-  %8 = alloca %struct.NVGcolor, align 8           ; 3 uses
+  %8 = alloca %struct.NVGcolor, align 16          ; 2 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %9 = alloca %struct.NVGpaint, align 8           ; 4 uses
@@ -291,10 +291,9 @@ bb.c:                                             ; preds = %bb.a
   %i.bd = extractvalue { <2 x float>, <2 x float> } %i.bb, 1
   %i.be = call { <2 x float>, <2 x float> } @nvgRGBA(i8 noundef zeroext -1, i8 noundef zeroext 0, i8 noundef zeroext 0, i8 noundef zeroext 50) ; 2 uses
   %i.bf = extractvalue { <2 x float>, <2 x float> } %i.be, 0
-  store <2 x float> %i.bf, ptr %8, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %14 = extractvalue { <2 x float>, <2 x float> } %i.be, 1
-  store <2 x float> %14, ptr %13, align 8
+  %13 = extractvalue { <2 x float>, <2 x float> } %i.be, 1
+  %14 = shufflevector <2 x float> %i.bf, <2 x float> %13, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %8, align 16
   %i.bg = extractelement <4 x float> %i.ay, i64 0
   %i.bh = extractelement <4 x float> %i.ay, i64 2
   %i.bi = extractelement <4 x float> %i.ay, i64 3

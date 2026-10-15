@@ -205,7 +205,7 @@ bb.a:
   %10 = alloca %"class.gmx::NotImplementedError", align 8 ; 4 uses
   %11 = alloca %"class.gmx::ExceptionInitializer", align 8 ; 7 uses
   %12 = alloca %"class.gmx::ExceptionInfo", align 8 ; 8 uses
-  %i.a = alloca [3 x [3 x float]], align 16       ; 7 uses
+  %i.a = alloca [3 x [3 x float]], align 16       ; 6 uses
   %i.b = alloca [3 x float], align 4              ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !106
@@ -397,11 +397,10 @@ bb.s:                                             ; preds = %.sink.split119, %bb
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.aq = load <2 x float>, ptr %i.ao, align 4, !tbaa !81
-  store <2 x float> %i.aq, ptr %i.ap, align 16, !tbaa !81
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store <2 x float> zeroinitializer, ptr %i.ar, align 8, !tbaa !81
-  store float 0.000000e+00, ptr %13, align 16, !tbaa !81
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %13 = shufflevector <2 x float> %i.aq, <2 x float> zeroinitializer, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %i.ap, align 16, !tbaa !81
+  store float 0.000000e+00, ptr %i.ar, align 16, !tbaa !81
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 56
   call void @_Z7set_pbcP5t_pbc7PbcTypePA3_Kf(ptr noundef nonnull %i.as, i32 noundef 2, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #35

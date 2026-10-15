@@ -205,16 +205,15 @@ bb.a:
   store float %i.o, ptr %i.p, align 4, !tbaa !85
   %i.q = load <2 x float>, ptr %2, align 4, !tbaa !58 ; 6 uses
   %i.r = load <2 x float>, ptr %i.e, align 4, !tbaa !58 ; 2 uses
-  %i.s = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znam(i64 noundef 80) #22 ; 9 uses
+  %i.s = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znam(i64 noundef 80) #22 ; 8 uses
   %i.t = shufflevector <2 x float> %i.q, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 3 uses
-  store <2 x float> %i.q, ptr %i.s, align 4, !tbaa !58
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 72
   store <2 x float> %i.r, ptr %i.u, align 4, !tbaa !58
   %i.v = fsub <2 x float> %i.r, %i.q
   %i.w = fdiv <2 x float> %i.v, splat (float 9.000000e+00) ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  %6 = fadd <2 x float> %i.w, %i.q
-  store <2 x float> %6, ptr %5, align 4, !tbaa !58
+  %5 = fadd <2 x float> %i.w, %i.q
+  %6 = shufflevector <2 x float> %i.q, <2 x float> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.s, align 4, !tbaa !58
   %i.x = shufflevector <2 x float> %i.w, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %i.z = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.x, <4 x float> <float 2.000000e+00, float 2.000000e+00, float 3.000000e+00, float 3.000000e+00>, <4 x float> %i.t)

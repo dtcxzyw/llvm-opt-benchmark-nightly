@@ -204,7 +204,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
   %i.xc = getelementptr inbounds nuw i8, ptr %i.uw, i64 36 ; 2 uses
   %i.xd = fmul float %i.tv, %.sroa.12.0.i62
   %i.xe = load <2 x float>, ptr %i.xc, align 4    ; 6 uses
-  %i.xf = getelementptr inbounds nuw i8, ptr %i.uw, i64 44 ; 2 uses
+  %i.xf = getelementptr inbounds nuw i8, ptr %i.uw, i64 44
   %i.xg = load <2 x float>, ptr %i.xf, align 4    ; 5 uses
   %i.xh = fmul float %i.xd, 5.000000e-01          ; 4 uses
   %.sroa.0.4.vec.extract8.i.i.i.i65 = extractelement <2 x float> %i.xe, i64 1
@@ -267,8 +267,8 @@ bb.bt:                                            ; preds = %bb.bs
 b3IntegrateRotation.exit.i:                       ; preds = %bb.bt, %bb.bs
   %.sroa.4.0.i.i.i = phi <2 x float> [ %i.yz, %bb.bt ], [ <float 0.000000e+00, float 1.000000e+00>, %bb.bs ]
   %.sroa.0.0.i.i.i = phi <2 x float> [ %i.yy, %bb.bt ], [ zeroinitializer, %bb.bs ]
-  store <2 x float> %.sroa.0.0.i.i.i, ptr %i.xc, align 4, !tbaa !146
-  store <2 x float> %.sroa.4.0.i.i.i, ptr %i.xf, align 4, !tbaa !146
+  %4 = shufflevector <2 x float> %.sroa.0.0.i.i.i, <2 x float> %.sroa.4.0.i.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.xc, align 4, !tbaa !146
   %indvars.iv.next.i67 = add nsw i64 %indvars.iv.i59214, 1 ; 2 uses
   %exitcond.not.i60 = icmp eq i64 %indvars.iv.next.i67, %wide.trip.count.i57
   br i1 %exitcond.not.i60, label %b3PrepareJointsTask.exit, label %.lr.ph
@@ -671,11 +671,11 @@ declare void @b3Log(ptr noundef, ...) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @b3SolveContinuous(ptr noundef %0, i32 noundef %1, ptr noundef %2) unnamed_addr #0 !func_sanitize !388 {
 bb.a:
-  %3 = alloca %struct.b3Transform, align 8        ; 7 uses
+  %3 = alloca %struct.b3Transform, align 8        ; 6 uses
   %4 = alloca %struct.b3ContinuousContext, align 8 ; 39 uses
   %5 = alloca %struct.b3AABB, align 8             ; 5 uses
   %6 = alloca %struct.b3AABB, align 8             ; 9 uses
-  %7 = alloca %struct.b3Transform, align 8        ; 9 uses
+  %7 = alloca %struct.b3Transform, align 8        ; 8 uses
   %8 = alloca %struct.b3AABB, align 8             ; 9 uses
   %i.a = tail call i64 @b3GetTicks() #13
   %i.b = icmp ne ptr %0, null, !nosanitize !9
@@ -800,9 +800,8 @@ b3MakeRelativeSweep.exit:                         ; preds = %bb.i
   %i.bq = fsub <2 x float> %i.an, %i.bp
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 12
-  store <2 x float> %.sroa.34.52.copyload491, ptr %i.br, align 4, !tbaa !146
-  %.sroa.38.52..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 20
-  store <2 x float> %.sroa.38.52.copyload493, ptr %.sroa.38.52..sroa_idx, align 4, !tbaa !146
+  %9 = shufflevector <2 x float> %.sroa.34.52.copyload491, <2 x float> %.sroa.38.52.copyload493, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.br, align 4, !tbaa !146
   %.sroa.09.0.vec.extract.i.i307 = extractelement <2 x float> %.sroa.34.52.copyload491, i64 0 ; 2 uses
   %foldExtExtBinop1358 = fmul <2 x float> %.sroa.38.52.copyload493, %.sroa.0475.0.copyload478
   %i.bs = extractelement <2 x float> %foldExtExtBinop1358, i64 0
@@ -1205,9 +1204,8 @@ b3NLerp.exit:                                     ; preds = %bb.ab, %bb.ac
   %.sroa.283.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
   store float %i.kw, ptr %.sroa.283.0..sroa_idx, align 8
   %i.kx = getelementptr inbounds nuw i8, ptr %7, i64 12
-  store <2 x float> %.sroa.0.0.i.i, ptr %i.kx, align 4, !tbaa !146
-  %.sroa.6118.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 20
-  store <2 x float> %.sroa.4.0.i.i, ptr %.sroa.6118.0..sroa_idx, align 4, !tbaa !146
+  %10 = shufflevector <2 x float> %.sroa.0.0.i.i, <2 x float> %.sroa.4.0.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.kx, align 4, !tbaa !146
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.v, ptr noundef nonnull align 8 dereferenceable(28) %7, i64 28, i1 false), !tbaa.struct !166
   %i.ky = fadd float %.sroa.8.0.copyload, %i.jt   ; 2 uses
   %i.kz = fadd <2 x float> %.sroa.0205.0.copyload, %i.ju ; 2 uses

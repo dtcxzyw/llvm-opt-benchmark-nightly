@@ -202,16 +202,13 @@ middle.block385:                                  ; preds = %vector.body376
   %indvars.iv289 = phi i64 [ %i.cw, %.lr.ph230.preheader ], [ %indvars.iv.next290, %.lr.ph230 ] ; 4 uses
   %indvars.iv287 = phi i64 [ %i.cx, %.lr.ph230.preheader ], [ %indvars.iv.next288, %.lr.ph230 ] ; 2 uses
   %i.em = getelementptr inbounds nuw [4 x i8], ptr %.0157238, i64 %indvars.iv289
-  %i.en = load <4 x float>, ptr %i.em, align 1, !tbaa !83 ; 2 uses
+  %i.en = load <4 x float>, ptr %i.em, align 1, !tbaa !83
   %i.eo = getelementptr inbounds nuw [4 x i8], ptr %.0158237, i64 %indvars.iv289
-  %i.ep = load <4 x float>, ptr %i.eo, align 1, !tbaa !83 ; 2 uses
-  %10 = shufflevector <4 x float> %i.en, <4 x float> %i.ep, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  %11 = shufflevector <4 x float> %i.en, <4 x float> %i.ep, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %i.ep = load <4 x float>, ptr %i.eo, align 1, !tbaa !83
   %.idx322 = shl nuw nsw i64 %indvars.iv289, 3
-  %i.eq = getelementptr inbounds nuw i8, ptr %i.cs, i64 %.idx322 ; 2 uses
-  store <4 x float> %10, ptr %i.eq, align 1, !tbaa !83
-  %12 = getelementptr inbounds nuw i8, ptr %i.eq, i64 16
-  store <4 x float> %11, ptr %12, align 1, !tbaa !83
+  %i.eq = getelementptr inbounds nuw i8, ptr %i.cs, i64 %.idx322
+  %10 = shufflevector <4 x float> %i.en, <4 x float> %i.ep, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %10, ptr %i.eq, align 1, !tbaa !83
   %indvars.iv.next288 = add nuw nsw i64 %indvars.iv287, 4 ; 2 uses
   %i.er = load i32, ptr %9, align 4, !tbaa !15    ; 2 uses
   %i.es = trunc nuw i64 %indvars.iv.next288 to i32
@@ -405,23 +402,17 @@ middle.block:                                     ; preds = %vector.body
   %i.hk = load <4 x float>, ptr %i.hj, align 1, !tbaa !83 ; 2 uses
   %i.hl = getelementptr inbounds nuw [4 x i8], ptr %.0153219, i64 %indvars.iv267
   %i.hm = load <4 x float>, ptr %i.hl, align 1, !tbaa !83 ; 2 uses
-  %i.hn = shufflevector <4 x float> %i.hg, <4 x float> %i.hi, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.ho = shufflevector <4 x float> %i.hk, <4 x float> %i.hm, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.hp = shufflevector <4 x float> %i.hg, <4 x float> %i.hi, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.hq = shufflevector <4 x float> %i.hk, <4 x float> %i.hm, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %13 = shufflevector <4 x float> %i.hn, <4 x float> %i.ho, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %14 = shufflevector <4 x float> %i.ho, <4 x float> %i.hn, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
-  %15 = shufflevector <4 x float> %i.hp, <4 x float> %i.hq, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %16 = shufflevector <4 x float> %i.hq, <4 x float> %i.hp, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
+  %i.hn = shufflevector <4 x float> %i.hg, <4 x float> %i.hi, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.ho = shufflevector <4 x float> %i.hk, <4 x float> %i.hm, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.hp = shufflevector <4 x float> %i.hg, <4 x float> %i.hi, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %i.hq = shufflevector <4 x float> %i.hk, <4 x float> %i.hm, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
   %.idx = shl nuw nsw i64 %indvars.iv267, 4
-  %i.hr = getelementptr inbounds nuw i8, ptr %i.fv, i64 %.idx ; 4 uses
-  store <4 x float> %13, ptr %i.hr, align 1, !tbaa !83
-  %17 = getelementptr inbounds nuw i8, ptr %i.hr, i64 16
-  store <4 x float> %14, ptr %17, align 1, !tbaa !83
+  %i.hr = getelementptr inbounds nuw i8, ptr %i.fv, i64 %.idx ; 2 uses
+  %11 = shufflevector <4 x float> %i.hn, <4 x float> %i.ho, <8 x i32> <i32 0, i32 1, i32 4, i32 5, i32 2, i32 3, i32 6, i32 7>
+  store <8 x float> %11, ptr %i.hr, align 1, !tbaa !83
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hr, i64 32
-  store <4 x float> %15, ptr %i.hs, align 1, !tbaa !83
-  %18 = getelementptr inbounds nuw i8, ptr %i.hr, i64 48
-  store <4 x float> %16, ptr %18, align 1, !tbaa !83
+  %12 = shufflevector <4 x float> %i.hp, <4 x float> %i.hq, <8 x i32> <i32 0, i32 1, i32 4, i32 5, i32 2, i32 3, i32 6, i32 7>
+  store <8 x float> %12, ptr %i.hs, align 1, !tbaa !83
   %indvars.iv.next266 = add nuw nsw i64 %indvars.iv265, 4 ; 2 uses
   %i.ht = load i32, ptr %9, align 4, !tbaa !15    ; 2 uses
   %i.hu = sext i32 %i.ht to i64

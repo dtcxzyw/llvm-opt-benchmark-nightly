@@ -205,10 +205,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load = load <2 x float>, ptr %i.ey, align 1, !alias.scope !71
   %wide.load96 = load <2 x float>, ptr %i.ez, align 1, !alias.scope !71
   %i.fa = add i64 %i.ew, 12
-  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
-  store <2 x float> %wide.load, ptr %i.fb, align 16
-  store <2 x float> %wide.load96, ptr %10, align 8
+  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index
+  %10 = shufflevector <2 x float> %wide.load, <2 x float> %wide.load96, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.fb, align 16
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.fc = add i64 %i.ew, 16
   %i.fd = icmp eq i64 %index.next, %n.vec
@@ -611,7 +610,7 @@ _ZN6Assimp11B3DImporter7ReadIntEv.exit:           ; preds = %bb.a
 bb.e:                                             ; preds = %.lr.ph, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit
   %i.y = phi i64 [ %i.c, %.lr.ph ], [ %i.do, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 2 uses
   %.sroa.18.0305 = phi ptr [ null, %.lr.ph ], [ %.sroa.18.2, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 14 uses
-  %.sroa.11.0304 = phi ptr [ null, %.lr.ph ], [ %.sroa.11.1, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 7 uses
+  %.sroa.11.0304 = phi ptr [ null, %.lr.ph ], [ %.sroa.11.1, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 6 uses
   %.sroa.0107.0303 = phi ptr [ null, %.lr.ph ], [ %.sroa.0107.2, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 15 uses
   %.sroa.18131.0302 = phi ptr [ null, %.lr.ph ], [ %.sroa.18131.2, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 12 uses
   %.sroa.11126.0301 = phi ptr [ null, %.lr.ph ], [ %.sroa.11126.1, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 7 uses
@@ -898,9 +897,8 @@ bb.z:                                             ; preds = %bb.y
   %i.co = sitofp i32 %.0.copyload.i28 to double
   store double %i.co, ptr %.sroa.11.0304, align 8
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.11.0304, i64 8
-  store <2 x float> %i.cm, ptr %i.cp, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.11.0304, i64 16
-  store <2 x float> %i.cn, ptr %.sroa.6.0..sroa_idx, align 8
+  %6 = shufflevector <2 x float> %i.cm, <2 x float> %i.cn, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.cp, align 8
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.11.0304, i64 24
   store i32 1, ptr %i.cq, align 8
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.11.0304, i64 32
@@ -934,13 +932,12 @@ _ZNKSt6vectorI9aiQuatKeySaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.aa
           to label %.noexc65 unwind label %.loopexit182 ; 5 uses
 
 .noexc65:                                         ; preds = %_ZNKSt6vectorI9aiQuatKeySaIS0_EE12_M_check_lenEmPKc.exit.i.i
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.cu ; 4 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.cu ; 3 uses
   %i.de = sitofp i32 %.0.copyload.i28 to double
   store double %i.de, ptr %i.dd, align 8
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  store <2 x float> %i.cm, ptr %i.df, align 8
-  %.sroa.6.0..sroa_idx90 = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
-  store <2 x float> %i.cn, ptr %.sroa.6.0..sroa_idx90, align 8
+  %7 = shufflevector <2 x float> %i.cm, <2 x float> %i.cn, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.df, align 8
   %i.dg = getelementptr inbounds nuw i8, ptr %i.dd, i64 24
   store i32 1, ptr %i.dg, align 8
   %.not10.i.i.i.i.i57 = icmp eq ptr %.sroa.0107.0303, %.sroa.18.0305

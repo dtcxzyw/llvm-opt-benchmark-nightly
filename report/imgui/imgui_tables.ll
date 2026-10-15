@@ -205,8 +205,8 @@ declare noundef zeroext i1 @_ZN5ImGui8ErrorLogEPKc(ptr noundef) local_unnamed_ad
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5ImGui11TableEndRowEP10ImGuiTable(ptr nofree noundef %0) local_unnamed_addr #3 {
 bb.a:
-  %1 = alloca %struct.ImRect, align 8             ; 8 uses
-  %2 = alloca %struct.ImRect, align 8             ; 6 uses
+  %1 = alloca %struct.ImRect, align 16            ; 8 uses
+  %2 = alloca %struct.ImRect, align 16            ; 6 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !19 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 5312
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !149  ; 10 uses
@@ -465,15 +465,11 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 320
-  %i.ea = load <4 x float>, ptr %i.dz, align 8    ; 2 uses
-  %.sroa.0.4.vec.insert.i = shufflevector <4 x float> %i.ea, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %.sroa.3.12.vec.insert.i = shufflevector <4 x float> %i.ea, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %i.ea = load <4 x float>, ptr %i.dz, align 8
   %i.eb = getelementptr inbounds nuw i8, ptr %i.c, i64 712
-  %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !401 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ec, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %3, align 8, !tbaa !177
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ec, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !177
+  %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !401 ; 2 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ec, i64 96
+  store <4 x float> %i.ea, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !177
   br label %bb.ad
 
 bb.ad:                                            ; preds = %._crit_edge214, %bb.ac
@@ -496,7 +492,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.ej = load float, ptr %i.ei, align 8, !tbaa !378
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.el = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.eo = load <2 x float>, ptr %i.en, align 8, !tbaa !177 ; 2 uses
@@ -504,14 +500,14 @@ bb.af:                                            ; preds = %bb.ae
   %i.eq = insertelement <2 x float> %i.ep, float %i.bc, i64 1 ; 2 uses
   %i.er = fcmp oge <2 x float> %i.eq, %i.eo
   %i.es = select <2 x i1> %i.er, <2 x float> %i.eq, <2 x float> %i.eo ; 2 uses
-  store <2 x float> %i.es, ptr %1, align 8, !tbaa !177
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.eu = load <2 x float>, ptr %i.et, align 8, !tbaa !177 ; 2 uses
   %i.ev = insertelement <2 x float> poison, float %i.ej, i64 0
   %i.ew = insertelement <2 x float> %i.ev, float %i.az, i64 1 ; 2 uses
   %i.ex = fcmp olt <2 x float> %i.ew, %i.eu
   %i.ey = select <2 x i1> %i.ex, <2 x float> %i.ew, <2 x float> %i.eu ; 2 uses
-  store <2 x float> %i.ey, ptr %i.el, align 8, !tbaa !177
+  %3 = shufflevector <2 x float> %i.es, <2 x float> %i.ey, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %1, align 16, !tbaa !177
   %i.ez = fcmp olt <2 x float> %i.es, %i.ey
   %i.fa = extractelement <2 x i1> %i.ez, i64 1
   %or.cond228 = select i1 %.not179, i1 %i.fa, i1 false
@@ -559,7 +555,7 @@ bb.am:                                            ; preds = %bb.al
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 272
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 280
-  %i.fq = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.fq = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.ft = getelementptr inbounds nuw i8, ptr %i.c, i64 712
@@ -590,19 +586,19 @@ bb.an:                                            ; preds = %.lr.ph, %bb.ap
   %i.gn = insertelement <2 x float> %i.gm, float %i.gj, i64 1 ; 2 uses
   %i.go = fcmp ole <2 x float> %i.gl, %i.gn
   %i.gp = select <2 x i1> %i.go, <2 x float> %i.gn, <2 x float> %i.gl ; 3 uses
-  store <2 x float> %i.gp, ptr %2, align 8, !tbaa !177
   %i.gq = load <2 x float>, ptr %i.fs, align 8, !tbaa !177 ; 2 uses
   %i.gr = insertelement <2 x float> poison, float %i.gi, i64 0
   %i.gs = insertelement <2 x float> %i.gr, float %i.gk, i64 1 ; 2 uses
   %i.gt = fcmp ogt <2 x float> %i.gq, %i.gs
   %i.gu = select <2 x i1> %i.gt, <2 x float> %i.gs, <2 x float> %i.gq ; 3 uses
-  store <2 x float> %i.gu, ptr %i.fq, align 8, !tbaa !177
+  %4 = shufflevector <2 x float> %i.gp, <2 x float> %i.gu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %2, align 16, !tbaa !177
   %i.gv = getelementptr inbounds nuw i8, ptr %i.fy, i64 36
   %i.gw = load float, ptr %i.gv, align 4, !tbaa !452 ; 2 uses
   %i.gx = extractelement <2 x float> %i.gp, i64 0 ; 2 uses
   %i.gy = fcmp ole float %i.gw, %i.gx
   %i.gz = select i1 %i.gy, float %i.gx, float %i.gw
-  store float %i.gz, ptr %2, align 8, !tbaa !359
+  store float %i.gz, ptr %2, align 16, !tbaa !359
   %i.ha = load float, ptr %i.gb, align 4, !tbaa !374 ; 2 uses
   %i.hb = extractelement <2 x float> %i.gu, i64 0 ; 2 uses
   %i.hc = fcmp ogt float %i.ha, %i.hb
@@ -837,17 +833,15 @@ bb.ba:                                            ; preds = %bb.ba, %.epil.prehe
 ._crit_edge207:                                   ; preds = %._crit_edge207.loopexit.unr-lcssa, %bb.ba, %bb.az
   %i.kt = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ku = getelementptr inbounds nuw i8, ptr %i.km, i64 36 ; 2 uses
-  %i.kv = load <4 x float>, ptr %i.ku, align 4    ; 2 uses
-  %.sroa.0.4.vec.insert.i.i199 = shufflevector <4 x float> %i.kv, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.kv, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.kv = load <4 x float>, ptr %i.ku, align 4    ; 3 uses
+  %.sroa.0.4.vec.insert.i.i199 = shufflevector <4 x float> %i.kv, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.kv, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.kw = getelementptr inbounds nuw i8, ptr %i.c, i64 616
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kw, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.ku, i64 16, i1 false), !tbaa.struct !230
   %i.kx = getelementptr inbounds nuw i8, ptr %i.c, i64 712
-  %i.ky = load ptr, ptr %i.kx, align 8, !tbaa !401 ; 5 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.ky, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i199, ptr %4, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ky, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.ky = load ptr, ptr %i.kx, align 8, !tbaa !401 ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ky, i64 96
+  store <4 x float> %i.kv, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.kz = getelementptr inbounds nuw i8, ptr %i.ky, i64 160
   %i.la = getelementptr inbounds nuw i8, ptr %i.ky, i64 168
   %i.lb = load ptr, ptr %i.la, align 8, !tbaa !456
@@ -1250,7 +1244,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.ao
-  %.sroa.0.3 = phi <4 x float> [ %.sroa.0.12.vec.insert, %bb.aq ], [ %.sroa.0.2, %bb.ap ], [ %.sroa.0.2, %bb.ao ] ; 2 uses
+  %.sroa.0.3 = phi <4 x float> [ %.sroa.0.12.vec.insert, %bb.aq ], [ %.sroa.0.2, %bb.ap ], [ %.sroa.0.2, %bb.ao ]
   %i.jg = sub nsw i32 %.0145198, %i.is            ; 2 uses
   br i1 %i.ih, label %.lr.ph191, label %.preheader183
 
@@ -1317,8 +1311,6 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 .lr.ph195:                                        ; preds = %.preheader183
   %i.kb = getelementptr inbounds nuw i8, ptr %i.iq, i64 24
   %i.kc = load ptr, ptr %i.kb, align 8, !tbaa !626
-  %.sroa.0.4.vec.insert.i = shufflevector <4 x float> %.sroa.0.3, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %.sroa.3.12.vec.insert.i = shufflevector <4 x float> %.sroa.0.3, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   br label %bb.as
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
@@ -1366,10 +1358,8 @@ bb.at:                                            ; preds = %bb.as
   %i.lb = load ptr, ptr %i.ii, align 8, !tbaa !191
   %i.lc = getelementptr inbounds nuw [32 x i8], ptr %i.lb, i64 %indvars.iv212 ; 2 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %i.lc, i64 8
-  %i.le = load ptr, ptr %i.ld, align 8, !tbaa !629 ; 2 uses
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %i.le, align 8, !tbaa !177
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.le, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !177
+  %i.le = load ptr, ptr %i.ld, align 8, !tbaa !629
+  store <4 x float> %.sroa.0.3, ptr %i.le, align 8, !tbaa !177
   %i.lf = getelementptr inbounds nuw i8, ptr %.1148192, i64 32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.1148192, ptr noundef nonnull align 8 dereferenceable(32) %i.lc, i64 32, i1 false)
   %.pre233 = load i32, ptr %i.gd, align 4, !tbaa !212
@@ -1772,17 +1762,15 @@ declare void @_ZN10ImDrawList8AddLineHEfffjf(ptr noundef nonnull align 8 derefer
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN5ImGui33SetWindowClipRectBeforeSetChannelEP11ImGuiWindowRK6ImRect(ptr nofree noundef captures(none) initializes((616, 632)) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1) local_unnamed_addr #16 {
 bb.a:
-  %i.a = load <4 x float>, ptr %1, align 4        ; 2 uses
-  %.sroa.0.4.vec.insert.i = shufflevector <4 x float> %i.a, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i = shufflevector <4 x float> %i.a, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.a = load <4 x float>, ptr %1, align 4        ; 3 uses
+  %.sroa.0.4.vec.insert.i = shufflevector <4 x float> %i.a, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i = shufflevector <4 x float> %i.a, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 616
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !230
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 712
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !401  ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %2, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !177
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !401  ; 3 uses
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 96
+  store <4 x float> %i.a, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !177
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 160
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 168
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !456
@@ -2038,17 +2026,15 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.bh = getelementptr inbounds nuw i8, ptr %i.e, i64 36 ; 2 uses
-  %i.bi = load <4 x float>, ptr %i.bh, align 4    ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.bi, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.bi, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.bi = load <4 x float>, ptr %i.bh, align 4    ; 3 uses
+  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.bi, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.bi, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.bj = getelementptr inbounds nuw i8, ptr %i.g, i64 616
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bj, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.bh, i64 16, i1 false), !tbaa.struct !230
   %i.bk = getelementptr inbounds nuw i8, ptr %i.g, i64 712
-  %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !401 ; 5 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.bl, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %2, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bl, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !401 ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bl, i64 96
+  store <4 x float> %i.bi, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 160
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 168
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !456
@@ -2451,16 +2437,14 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 368
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !230
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 336 ; 2 uses
-  %i.i = load <4 x float>, ptr %i.h, align 8      ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.i, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.i, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.i = load <4 x float>, ptr %i.h, align 8      ; 3 uses
+  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.i, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.i, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.h, i64 16, i1 false), !tbaa.struct !230
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 712
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !401  ; 5 uses
-  %0 = getelementptr inbounds nuw i8, ptr %i.k, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %0, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !401  ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 96
+  store <4 x float> %i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 160
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 168
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !456
@@ -2489,17 +2473,15 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8984
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !263  ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 368 ; 2 uses
-  %i.g = load <4 x float>, ptr %i.f, align 4      ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.g, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.g, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.g = load <4 x float>, ptr %i.f, align 4      ; 3 uses
+  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.g, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.g, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 616
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !230
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 712
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !401  ; 5 uses
-  %0 = getelementptr inbounds nuw i8, ptr %i.j, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %0, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !401  ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 96
+  store <4 x float> %i.g, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 160
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 168
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !456
@@ -2545,17 +2527,15 @@ bb.b:                                             ; preds = %bb.a
   %i.k = sext i32 %0 to i64
   %i.l = getelementptr inbounds [120 x i8], ptr %i.j, i64 %i.k ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 36 ; 2 uses
-  %i.n = load <4 x float>, ptr %i.m, align 4      ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.n, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.n, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.n = load <4 x float>, ptr %i.m, align 4      ; 3 uses
+  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.n, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.n, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 616
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.m, i64 16, i1 false), !tbaa.struct !230
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 712
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !401  ; 5 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.q, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %1, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !401  ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 96
+  store <4 x float> %i.n, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 160
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 168
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !456
@@ -2604,17 +2584,15 @@ bb.c:                                             ; preds = %bb.b
   %i.n = sext i32 %i.h to i64
   %i.o = getelementptr inbounds [120 x i8], ptr %i.m, i64 %i.n ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 36 ; 2 uses
-  %i.q = load <4 x float>, ptr %i.p, align 4      ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.q, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.q, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.q = load <4 x float>, ptr %i.p, align 4      ; 3 uses
+  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.q, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.q, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 616
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.p, i64 16, i1 false), !tbaa.struct !230
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 712
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !401  ; 5 uses
-  %0 = getelementptr inbounds nuw i8, ptr %i.t, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %0, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !401  ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.t, i64 96
+  store <4 x float> %i.q, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 160
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 168
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !456
@@ -3017,7 +2995,7 @@ _ZN5ImGui15TableSetBgColorEiji.exit:              ; preds = %bb.t, %bb.u, %bb.v
   %i.ga = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   %.sroa_idx207 = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.gb = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
-  %i.gc = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 5 uses
+  %i.gc = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 4 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %i.c, i64 569
   %i.ge = getelementptr inbounds nuw i8, ptr %i.c, i64 518
   %i.gf = getelementptr inbounds nuw i8, ptr %i.c, i64 408
@@ -3083,12 +3061,12 @@ bb.w:                                             ; preds = %.preheader.us, %.lo
   %i.hu = insertelement <2 x i32> poison, i32 %i.ht, i64 0
   %i.hv = insertelement <2 x i32> %i.hu, i32 %i.hr, i64 1
   %i.hw = bitcast <2 x i32> %i.hv to <2 x float>
-  %i.hx = fadd <2 x float> %i.ce, %i.hw           ; 2 uses
-  store <2 x float> %i.hx, ptr %i.gb, align 16, !tbaa !177
+  %i.hx = fadd <2 x float> %i.ce, %i.hw
   %i.hy = bitcast i32 %i.hq to float
   %i.hz = fadd float %i.hg, %i.hy
-  %i.ia = insertelement <2 x float> %i.hx, float %i.hz, i64 0
-  store <2 x float> %i.ia, ptr %i.gc, align 8, !tbaa !177
+  %i.ia = insertelement <2 x float> poison, float %i.hz, i64 0
+  %16 = shufflevector <2 x float> %i.hx, <2 x float> %i.ia, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  store <4 x float> %16, ptr %i.gb, align 16, !tbaa !177
   br i1 %i.hi, label %bb.x, label %.loopexit.us
 
 bb.x:                                             ; preds = %bb.w
@@ -3491,16 +3469,14 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 60
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.j, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !230
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 44 ; 2 uses
-  %i.l = load <4 x float>, ptr %i.k, align 4      ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.l, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.l, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.l = load <4 x float>, ptr %i.k, align 4      ; 3 uses
+  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.l, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.l, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.k, i64 16, i1 false), !tbaa.struct !230
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 712
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !401  ; 5 uses
-  %0 = getelementptr inbounds nuw i8, ptr %i.n, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %0, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !401  ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 96
+  store <4 x float> %i.l, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 160
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 168
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !456
@@ -3534,17 +3510,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 60 ; 2 uses
-  %i.j = load <4 x float>, ptr %i.i, align 4      ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.j, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.j, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.j = load <4 x float>, ptr %i.i, align 4      ; 3 uses
+  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.j, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.j, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 616
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !230
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 712
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !401  ; 5 uses
-  %0 = getelementptr inbounds nuw i8, ptr %i.m, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %0, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.m, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !401  ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.m, i64 96
+  store <4 x float> %i.j, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 160
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 168
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !456
@@ -3947,17 +3921,15 @@ bb.e:                                             ; preds = %bb.c
   %i.af = sext i32 %i.ac to i64
   %i.ag = getelementptr inbounds [28 x i8], ptr %i.ae, i64 %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 12 ; 2 uses
-  %i.ai = load <4 x float>, ptr %i.ah, align 4    ; 2 uses
-  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.ai = load <4 x float>, ptr %i.ah, align 4    ; 3 uses
+  %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.aj = getelementptr inbounds nuw i8, ptr %i.c, i64 616
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.ah, i64 16, i1 false), !tbaa.struct !230
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 712
-  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !401 ; 5 uses
-  %0 = getelementptr inbounds nuw i8, ptr %i.al, i64 96
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %0, align 8, !tbaa !177
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 104
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
+  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !401 ; 4 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 96
+  store <4 x float> %i.ai, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !177
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 160
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 168
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !456

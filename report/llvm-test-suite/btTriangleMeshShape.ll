@@ -204,15 +204,13 @@ bb.a:
   %i.ca = fsub <2 x float> %i.bf, %i.bt
   %i.cb = fsub float %i.bn, %i.bz
   %.sroa.3.12.vec.insert.i24 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.cb, i64 0
-  store <2 x float> %i.ca, ptr %2, align 4
-  %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i24, ptr %.sroa.42.0..sroa_idx, align 4, !tbaa !21
+  %4 = shufflevector <2 x float> %i.ca, <2 x float> %.sroa.3.12.vec.insert.i24, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %2, align 4
   %i.cc = fadd <2 x float> %i.bt, %i.bf
   %i.cd = fadd float %i.bz, %i.bn
   %.sroa.3.12.vec.insert.i29 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.cd, i64 0
-  store <2 x float> %i.cc, ptr %3, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i29, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !21
+  %5 = shufflevector <2 x float> %i.cc, <2 x float> %.sroa.3.12.vec.insert.i29, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %3, align 4
   ret void
 }
 
@@ -380,7 +378,7 @@ define dso_local { <2 x float>, <2 x float> } @_ZNK19btTriangleMeshShape24localG
 bb.a:
   %2 = alloca %class.SupportVertexCallback, align 8 ; 20 uses
   %3 = alloca %class.btVector3, align 16          ; 5 uses
-  %4 = alloca %class.btVector3, align 8           ; 6 uses
+  %4 = alloca %class.btVector3, align 16          ; 5 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 28 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5.0..sroa_idx, i8 0, i64 12, i1 false)
@@ -427,9 +425,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   store <4 x float> <float f0x5D5E0B6B, float f0x5D5E0B6B, float f0x5D5E0B6B, float 0.000000e+00>, ptr %3, align 16, !tbaa !18
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
-  store <2 x float> splat (float f0xDD5E0B6B), ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store <2 x float> <float f0xDD5E0B6B, float 0.000000e+00>, ptr %5, align 8
+  store <4 x float> <float f0xDD5E0B6B, float f0xDD5E0B6B, float f0xDD5E0B6B, float 0.000000e+00>, ptr %4, align 16
   %i.u = load ptr, ptr %0, align 8, !tbaa !9
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 96
   %i.w = load ptr, ptr %i.v, align 8

@@ -204,13 +204,12 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   %i.i = load <2 x i32>, ptr %i.e, align 4, !tbaa !109
   %i.j = sitofp <2 x i32> %i.i to <2 x float>     ; 2 uses
   %i.k = load <2 x float>, ptr %i.f, align 4, !tbaa !110 ; 2 uses
   %i.l = fmul reassoc nsz arcp contract afn <2 x float> %i.k, %i.j
-  %i.m = load <2 x float>, ptr %4, align 4, !tbaa !110
+  %i.m = load <2 x float>, ptr %i.h, align 4, !tbaa !110
   %i.n = fsub reassoc nsz arcp contract afn <2 x float> %i.m, %i.k
   %i.o = fmul reassoc nsz arcp contract afn <2 x float> %i.n, %i.j ; 3 uses
   %i.p = extractelement <2 x float> %i.o, i64 1   ; 2 uses
@@ -302,10 +301,10 @@ bb.h:                                             ; preds = %bb.g
   %i.bk = phi <2 x i32> [ %i.bj, %bb.h ], [ zeroinitializer, %bb.g ] ; 4 uses
   %i.bl = lshr <2 x i32> %i.bk, splat (i32 1)
   %i.bm = add nuw nsw <2 x i32> %i.bl, %i.r
-  store <2 x i32> %i.bm, ptr %2, align 4, !tbaa !109
-  %5 = sub nsw <2 x i32> %i.u, %i.bk
-  %6 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %5, <2 x i32> splat (i32 4))
-  store <2 x i32> %6, ptr %i.h, align 4, !tbaa !109
+  %4 = sub nsw <2 x i32> %i.u, %i.bk
+  %5 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %4, <2 x i32> splat (i32 4))
+  %6 = shufflevector <2 x i32> %i.bm, <2 x i32> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i32> %6, ptr %2, align 4, !tbaa !109
   %i.bn = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !107
   %i.bo = and i32 %i.bn, 50331648
   %or.cond107.not = icmp eq i32 %i.bo, 50331648
@@ -708,7 +707,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 156
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.ad = load <2 x i32>, ptr %i.z, align 4, !tbaa !109
   %i.ae = shufflevector <2 x i32> %i.ad, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
@@ -821,12 +820,12 @@ bb.o:                                             ; preds = %bb.n
   %i.cm = sitofp <2 x i32> %i.cl to <2 x float>   ; 2 uses
   %i.cn = fmul reassoc nnan nsz arcp contract afn <2 x float> %i.cm, splat (float 5.000000e-01)
   %i.co = fadd reassoc nsz arcp contract afn <2 x float> %i.cn, %i.bm ; 2 uses
-  store <2 x float> %i.co, ptr %i.a, align 16, !tbaa !110
   %i.cp = insertelement <2 x float> poison, float %.0108, i64 0
   %i.cq = insertelement <2 x float> %i.cp, float %.0, i64 1
   %i.cr = fsub reassoc nsz arcp contract afn <2 x float> %i.cq, %i.cm ; 2 uses
   %i.cs = fadd reassoc nsz arcp contract afn <2 x float> %i.cr, %i.co
-  store <2 x float> %i.cs, ptr %i.ab, align 8, !tbaa !110
+  %4 = shufflevector <2 x float> %i.co, <2 x float> %i.cs, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.a, align 16, !tbaa !110
   %i.ct = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !107
   %i.cu = and i32 %i.ct, 33554432
   %.not128 = icmp eq i32 %i.cu, 0
@@ -1229,20 +1228,19 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 164
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  store <2 x float> zeroinitializer, ptr %i.a, align 16, !tbaa !110
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %2 = load <2 x i32>, ptr %i.t, align 4, !tbaa !109
-  %3 = sitofp <2 x i32> %2 to <2 x float>         ; 3 uses
-  store <2 x float> %3, ptr %1, align 8, !tbaa !110
+  %1 = load <2 x i32>, ptr %i.t, align 4, !tbaa !109
+  %2 = sitofp <2 x i32> %1 to <2 x float>         ; 3 uses
+  %3 = shufflevector <2 x float> zeroinitializer, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.a, align 16, !tbaa !110
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.v = load float, ptr %i.e, align 4, !tbaa !66
-  %i.w = extractelement <2 x float> %3, i64 0     ; 2 uses
+  %i.w = extractelement <2 x float> %2, i64 0     ; 2 uses
   %i.x = fmul reassoc nsz arcp contract afn float %i.v, %i.w
   store float %i.x, ptr %i.u, align 16, !tbaa !110
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %i.aa = load float, ptr %i.z, align 4, !tbaa !67
-  %i.ab = extractelement <2 x float> %3, i64 1    ; 2 uses
+  %i.ab = extractelement <2 x float> %2, i64 1    ; 2 uses
   %i.ac = fmul reassoc nsz arcp contract afn float %i.aa, %i.ab
   store float %i.ac, ptr %i.y, align 4, !tbaa !110
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
@@ -1264,6 +1262,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not73, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %i.r, i64 156
   %i.ar = getelementptr inbounds nuw i8, ptr %i.c, i64 96
   %i.as = getelementptr inbounds nuw i8, ptr %i.c, i64 56
@@ -1271,7 +1270,7 @@ bb.e:                                             ; preds = %bb.d
   %i.au = shufflevector <2 x i32> %i.at, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.av = sitofp <4 x i32> %i.au to <4 x float>   ; 2 uses
   %i.aw = load <2 x float>, ptr %i.a, align 16, !tbaa !110 ; 2 uses
-  %i.ax = load <2 x float>, ptr %1, align 8, !tbaa !110
+  %i.ax = load <2 x float>, ptr %4, align 8, !tbaa !110
   %i.ay = fsub reassoc nsz arcp contract afn <2 x float> %i.ax, %i.aw
   %i.az = shufflevector <2 x float> %i.aw, <2 x float> %i.ay, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ba = fdiv reassoc nsz arcp contract afn <4 x float> %i.az, %i.av ; 3 uses

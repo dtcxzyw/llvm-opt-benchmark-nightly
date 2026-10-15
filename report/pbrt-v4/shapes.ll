@@ -205,7 +205,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZNK4pbrt6Sphere6SampleENS_6Point2IfEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.pstd::optional") align 8 captures(none) initializes((0, 60), (64, 84), (88, 89)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(42) %1, <2 x float> %2) local_unnamed_addr #2 align 2 {
 bb.a:
-  %3 = alloca %"class.pbrt::Point3fi", align 8    ; 6 uses
+  %3 = alloca %"class.pbrt::Point3fi", align 16   ; 5 uses
   %.sroa.0 = alloca { %"class.pbrt::Point3fi", float, %"class.pbrt::Vector3" }, align 8 ; 5 uses
   %i.a = load float, ptr %1, align 8, !tbaa !25   ; 5 uses
   %.sroa.0.0.vec.extract.i = extractelement <2 x float> %2, i64 0
@@ -456,11 +456,10 @@ _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit: ; preds = %bb.j, %_ZN4pb
   %i.dz = insertelement <2 x float> %i.dy, float %i.dw, i64 1
   %i.ea = insertelement <2 x float> %i.by, float %i.dx, i64 1
   %i.eb = fdiv <2 x float> %i.dz, %i.ea
-  store <2 x float> %.sroa.0.0.i.i, ptr %3, align 8, !tbaa !28
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store <2 x float> %.sroa.0.0.i23.i, ptr %4, align 8, !tbaa !28
+  %4 = shufflevector <2 x float> %.sroa.0.0.i.i, <2 x float> %.sroa.0.0.i23.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %3, align 16, !tbaa !28
   %i.ec = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store <2 x float> %.sroa.0.0.i40.i, ptr %i.ec, align 8, !tbaa !28
+  store <2 x float> %.sroa.0.0.i40.i, ptr %i.ec, align 16, !tbaa !28
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @_ZNK4pbrt9TransformclERKNS_8Point3fiE(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::Point3fi") align 4 %.sroa.0, ptr noundef nonnull align 4 dereferenceable(128) %i.ai, ptr noundef nonnull align 4 dereferenceable(24) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
@@ -497,7 +496,7 @@ _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit: ; preds = %bb.j, %_ZN4pb
 define linkonce_odr dso_local void @_ZNK4pbrt9TransformclERKNS_8Point3fiE(ptr dead_on_unwind noalias writable sret(%"class.pbrt::Point3fi") align 4 %0, ptr noundef nonnull align 4 dereferenceable(128) %1, ptr noundef nonnull align 4 dereferenceable(24) %2) local_unnamed_addr #2 comdat align 2 {
 bb.a:
   %3 = alloca %"class.pbrt::Point3.5", align 8    ; 2 uses
-  %4 = alloca %"class.pbrt::Point3fi", align 8    ; 6 uses
+  %4 = alloca %"class.pbrt::Point3fi", align 16   ; 5 uses
   %i.a = load float, ptr %2, align 4, !tbaa !54   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.c = load float, ptr %i.b, align 4, !tbaa !55 ; 2 uses
@@ -822,9 +821,8 @@ _ZN4pbrt10AddRoundUpEff.exit.i37.i:               ; preds = %bb.p, %_ZN4pbrt12Su
 
 _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit: ; preds = %bb.m, %_ZN4pbrt10AddRoundUpEff.exit.i37.i
   %.sroa.0.0.i40.i = phi <2 x float> [ %.sroa.0.0.vec.insert.i41.i, %bb.m ], [ %.sroa.0.4.vec.insert10.i39.i, %_ZN4pbrt10AddRoundUpEff.exit.i37.i ]
-  store <2 x float> %.sroa.0.0.i.i, ptr %0, align 4, !tbaa !28
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %.sroa.0.0.i23.i, ptr %5, align 4, !tbaa !28
+  %5 = shufflevector <2 x float> %.sroa.0.0.i.i, <2 x float> %.sroa.0.0.i23.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %0, align 4, !tbaa !28
   %i.go = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <2 x float> %.sroa.0.0.i40.i, ptr %i.go, align 4, !tbaa !28
   br label %bb.ad
@@ -974,11 +972,10 @@ _ZN4pbrt10AddRoundUpEff.exit.i37.i212:            ; preds = %bb.ac, %_ZN4pbrt12S
 
 _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit219: ; preds = %bb.z, %_ZN4pbrt10AddRoundUpEff.exit.i37.i212
   %.sroa.0.0.i40.i215 = phi <2 x float> [ %.sroa.0.0.vec.insert.i41.i216, %bb.z ], [ %.sroa.0.4.vec.insert10.i39.i214, %_ZN4pbrt10AddRoundUpEff.exit.i37.i212 ]
-  store <2 x float> %.sroa.0.0.i.i182, ptr %4, align 8, !tbaa !28
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store <2 x float> %.sroa.0.0.i23.i200, ptr %6, align 8, !tbaa !28
+  %6 = shufflevector <2 x float> %.sroa.0.0.i.i182, <2 x float> %.sroa.0.0.i23.i200, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %4, align 16, !tbaa !28
   %i.hy = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store <2 x float> %.sroa.0.0.i40.i215, ptr %i.hy, align 8, !tbaa !28
+  store <2 x float> %.sroa.0.0.i40.i215, ptr %i.hy, align 16, !tbaa !28
   call void @_ZNK4pbrt6Tuple3INS_6Point3ENS_8IntervalEEdvIfEENS1_IDTdvtlS2_EtlT_EEEES5_(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::Point3.5") align 4 %3, ptr noundef nonnull align 4 dereferenceable(24) %4, float noundef %i.bt)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32
@@ -1135,9 +1132,8 @@ _ZN4pbrt10AddRoundUpEff.exit.i37:                 ; preds = %bb.m, %_ZN4pbrt12Su
 
 _ZN4pbrt8Interval17FromValueAndErrorEff.exit42:   ; preds = %bb.j, %_ZN4pbrt10AddRoundUpEff.exit.i37
   %.sroa.0.0.i40 = phi <2 x float> [ %.sroa.0.0.vec.insert.i41, %bb.j ], [ %.sroa.0.4.vec.insert10.i39, %_ZN4pbrt10AddRoundUpEff.exit.i37 ]
-  store <2 x float> %.sroa.0.0.i, ptr %0, align 4, !tbaa !28
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %.sroa.0.0.i23, ptr %5, align 4, !tbaa !28
+  %5 = shufflevector <2 x float> %.sroa.0.0.i, <2 x float> %.sroa.0.0.i23, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %0, align 4, !tbaa !28
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <2 x float> %.sroa.0.0.i40, ptr %i.ai, align 4, !tbaa !28
   ret void
@@ -1540,7 +1536,7 @@ bb.a:
 define dso_local noundef zeroext i1 @_ZNK4pbrt5Curve12IntersectRayERKNS_3RayEfPN4pstd8optionalINS_17ShapeIntersectionEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, float noundef %2, ptr nofree noundef captures(address_is_null) %3) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.pbrt::Point3fi", align 16   ; 11 uses
-  %5 = alloca %"class.pbrt::Point3fi", align 8    ; 6 uses
+  %5 = alloca %"class.pbrt::Point3fi", align 16   ; 5 uses
   %6 = alloca %"class.pbrt::Ray", align 8         ; 9 uses
   %7 = alloca %"class.pstd::array.64", align 8    ; 13 uses
   %8 = alloca %"class.pbrt::Transform", align 8   ; 15 uses
@@ -1558,18 +1554,15 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #32, !noalias !392
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32, !noalias !392
   %i.g = load <1 x float>, ptr %1, align 8, !noalias !392
-  %.sroa.07.4.vec.insert.i.i = shufflevector <1 x float> %i.g, <1 x float> poison, <2 x i32> zeroinitializer
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.i = load <1 x float>, ptr %i.h, align 4, !noalias !392
-  %.sroa.05.4.vec.insert.i.i = shufflevector <1 x float> %i.i, <1 x float> poison, <2 x i32> zeroinitializer
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = load <1 x float>, ptr %i.j, align 8, !noalias !392
   %.sroa.0.4.vec.insert.i.i = shufflevector <1 x float> %i.k, <1 x float> poison, <2 x i32> zeroinitializer
-  store <2 x float> %.sroa.07.4.vec.insert.i.i, ptr %5, align 8, !tbaa !28, !noalias !392
-  %11 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store <2 x float> %.sroa.05.4.vec.insert.i.i, ptr %11, align 8, !tbaa !28, !noalias !392
+  %11 = shufflevector <1 x float> %i.g, <1 x float> %i.i, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  store <4 x float> %11, ptr %5, align 16, !tbaa !28, !noalias !392
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.l, align 8, !tbaa !28, !noalias !392
+  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.l, align 16, !tbaa !28, !noalias !392
   call void @_ZNK4pbrt9TransformclERKNS_8Point3fiE(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::Point3fi") align 4 %4, ptr noundef nonnull align 4 dereferenceable(128) %i.f, ptr noundef nonnull align 4 dereferenceable(24) %5), !noalias !392
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32, !noalias !392
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -1972,7 +1965,7 @@ _ZN4pbrt12StringPrintfIJRKNS_6Point2IfEERKfEEENSt7__cxx1112basic_stringIcSt11cha
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef ptr @_ZN4pbrt13BilinearPatch10CreateMeshEPKNS_9TransformEbRKNS_19ParameterDictionaryEPKNS_7FileLocEN4pstd3pmr21polymorphic_allocatorISt4byteEE(ptr noundef %0, i1 noundef zeroext %1, ptr noundef nonnull align 8 dereferenceable(108) %2, ptr noundef %3, ptr %4) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i:
-  %5 = alloca %"class.pbrt::Bounds2", align 8     ; 5 uses
+  %5 = alloca %"class.pbrt::Bounds2", align 16    ; 4 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -2375,9 +2368,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189: ; preds = %bb
 bb.bb:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #32
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32, !noalias !470
-  store <2 x float> zeroinitializer, ptr %5, align 8, !noalias !470
-  %28 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store <2 x float> splat (float 1.000000e+00), ptr %28, align 8, !noalias !470
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %5, align 16, !noalias !470
   %i.kj = call noundef ptr @_ZN4pstd3pmr19new_delete_resourceEv() #32, !noalias !470
   invoke void @_ZN4pbrt5Image23GetSamplingDistributionIZNS0_23GetSamplingDistributionEvEUlNS_6Point2IfEEE_EENS_7Array2DIfEET_RKNS_7Bounds2IfEEN4pstd3pmr21polymorphic_allocatorISt4byteEE(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::Array2D") align 8 %27, ptr noundef nonnull align 8 dereferenceable(152) %24, ptr noundef nonnull align 4 dereferenceable(16) %5, ptr %i.kj)
           to label %bb.bc unwind label %bb.bk
@@ -2780,9 +2771,8 @@ _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit: ; preds = %bb.z, %_ZN4pb
   %i.qa = fdiv float %i.pz, %sqrt821
   %i.qb = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i8 1, ptr %i.qb, align 8, !tbaa !36
-  store <2 x float> %.sroa.0.0.i.i, ptr %0, align 8
-  %.sroa.4727.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %.sroa.0.0.i23.i, ptr %.sroa.4727.0..sroa_idx, align 8
+  %3 = shufflevector <2 x float> %.sroa.0.0.i.i, <2 x float> %.sroa.0.0.i23.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %0, align 8
   %.sroa.5728.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <2 x float> %.sroa.0.0.i40.i, ptr %.sroa.5728.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -3185,9 +3175,8 @@ _ZN4pbrtdvENS_8IntervalEf.exit84:                 ; preds = %bb.a, %_ZN4pbrt10Di
   %.sroa.028.0.i2796 = phi <2 x float> [ %.sroa.028.4.vec.insert37.i26, %_ZN4pbrt10DivRoundUpEff.exit21.i59 ], [ %.sroa.028.4.vec.insert35.i45, %_ZN4pbrt10DivRoundUpEff.exit.i78 ], [ <float -inf, float +inf>, %bb.a ]
   %.sroa.028.0.i8894 = phi <2 x float> [ %.sroa.028.4.vec.insert37.i, %_ZN4pbrt10DivRoundUpEff.exit21.i59 ], [ %.sroa.028.4.vec.insert35.i, %_ZN4pbrt10DivRoundUpEff.exit.i78 ], [ <float -inf, float +inf>, %bb.a ]
   %.sroa.028.0.i65 = phi <2 x float> [ %.sroa.028.4.vec.insert37.i64, %_ZN4pbrt10DivRoundUpEff.exit21.i59 ], [ %.sroa.028.4.vec.insert35.i83, %_ZN4pbrt10DivRoundUpEff.exit.i78 ], [ <float -inf, float +inf>, %bb.a ]
-  store <2 x float> %.sroa.028.0.i8894, ptr %0, align 4, !tbaa !28
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %.sroa.028.0.i2796, ptr %3, align 4, !tbaa !28
+  %3 = shufflevector <2 x float> %.sroa.028.0.i8894, <2 x float> %.sroa.028.0.i2796, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %0, align 4, !tbaa !28
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <2 x float> %.sroa.028.0.i65, ptr %i.ca, align 4, !tbaa !28
   ret void
@@ -3590,16 +3579,13 @@ _ZN4pbrt6Tuple3INS_7Vector3EfEixEi.exit107.2.2:   ; preds = %..preheader_crit_ed
   store float 1.000000e+00, ptr %.sroa.33.0..sroa_idx, align 4, !tbaa !62
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.cw = shufflevector <8 x float> %i.ca, <8 x float> poison, <2 x i32> <i32 0, i32 4>
-  store <2 x float> %i.cw, ptr %i.cv, align 4
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.cx = insertelement <2 x float> %i.cu, float 0.000000e+00, i64 1
-  store <2 x float> %i.cx, ptr %.sroa.5.0..sroa_idx, align 4
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %5 = shufflevector <2 x float> %i.cw, <2 x float> %i.cx, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.cy = shufflevector <8 x float> %i.ca, <8 x float> poison, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.cy, ptr %.sroa.7.0..sroa_idx, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %5 = shufflevector <2 x float> %i.cu, <2 x float> <float poison, float 0.000000e+00>, <2 x i32> <i32 1, i32 3>
-  store <2 x float> %5, ptr %.sroa.9.0..sroa_idx, align 4
+  %6 = shufflevector <2 x float> %i.cu, <2 x float> <float poison, float 0.000000e+00>, <2 x i32> <i32 1, i32 3>
+  %7 = shufflevector <2 x float> %i.cy, <2 x float> %6, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = shufflevector <4 x float> %5, <4 x float> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %8, ptr %i.cv, align 4
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.cz = shufflevector <8 x float> %i.ca, <8 x float> poison, <2 x i32> <i32 2, i32 6>
   store <2 x float> %i.cz, ptr %.sroa.11.0..sroa_idx, align 4

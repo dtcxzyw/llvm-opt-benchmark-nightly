@@ -37,7 +37,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.0309 = phi ptr [ %4, %.lr.ph ], [ %i.fd, %bb.b ] ; 14 uses
   %.0291308 = phi i64 [ %6, %.lr.ph ], [ %i.fa, %bb.b ] ; 2 uses
   %.0292307 = phi ptr [ %0, %.lr.ph ], [ %i.fb, %bb.b ] ; 15 uses
-  %.0293306 = phi ptr [ %2, %.lr.ph ], [ %i.fc, %bb.b ] ; 15 uses
+  %.0293306 = phi ptr [ %2, %.lr.ph ], [ %i.fc, %bb.b ] ; 13 uses
   %.0292.val = load <2 x double>, ptr %.0292307, align 16, !tbaa !12 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.0309, i64 56
   %i.d = load i64, ptr %i.c, align 8, !tbaa !11
@@ -158,7 +158,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store <2 x double> %i.cv, ptr %i.cw, align 16, !tbaa !12
   %i.cx = fsub <2 x double> %i.cu, %i.cr
   %i.cy = getelementptr inbounds nuw i8, ptr %.0293306, i64 192
-  store <2 x double> %i.cx, ptr %i.cy, align 16, !tbaa !12
   %i.cz = fmul <2 x double> %i.z, splat (double f0x3FDBC4C04D71ABC1)
   %i.da = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.bn, <2 x double> splat (double f0x3FEF329C0558E969), <2 x double> %i.cz)
   %i.db = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.at, <2 x double> splat (double f0x3FE904C37505DE4B), <2 x double> %i.da)
@@ -170,8 +169,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.dh = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.x, <2 x double> splat (double f0xBFECD4BCA9CB5C71), <2 x double> %i.dg)
   %i.di = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.ar, <2 x double> splat (double f0x3FE3F3A0E28BEDD1), <2 x double> %i.dh) ; 2 uses
   %i.dj = fsub <2 x double> %i.di, %i.df
-  %9 = getelementptr inbounds nuw i8, ptr %.0293306, i64 208
-  store <2 x double> %i.dj, ptr %9, align 16, !tbaa !12
+  %9 = shufflevector <2 x double> %i.cx, <2 x double> %i.dj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %9, ptr %i.cy, align 16, !tbaa !12
   %i.dk = fadd <2 x double> %i.di, %i.df
   store <2 x double> %i.dk, ptr %i.bt, align 16, !tbaa !12
   %i.dl = fmul <2 x double> %i.as, splat (double f0x3FE904C37505DE4B)
@@ -205,7 +204,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store <2 x double> %i.ej, ptr %i.ek, align 16, !tbaa !12
   %i.el = fadd <2 x double> %i.ei, %i.ef
   %i.em = getelementptr inbounds nuw i8, ptr %.0293306, i64 160
-  store <2 x double> %i.el, ptr %i.em, align 16, !tbaa !12
   %i.en = fmul <2 x double> %i.z, splat (double f0x3FEF329C0558E969)
   %i.eo = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.bn, <2 x double> splat (double f0xBFE904C37505DE4B), <2 x double> %i.en)
   %i.ep = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.at, <2 x double> splat (double f0x3FDBC4C04D71ABC1), <2 x double> %i.eo)
@@ -217,8 +215,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ev = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.x, <2 x double> splat (double f0xBFCC7B90E3024582), <2 x double> %i.eu)
   %i.ew = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %i.bl, <2 x double> splat (double f0x3FE3F3A0E28BEDD1), <2 x double> %i.ev) ; 2 uses
   %i.ex = fsub <2 x double> %i.ew, %i.et
-  %10 = getelementptr inbounds nuw i8, ptr %.0293306, i64 176
-  store <2 x double> %i.ex, ptr %10, align 16, !tbaa !12
+  %10 = shufflevector <2 x double> %i.el, <2 x double> %i.ex, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %10, ptr %i.em, align 16, !tbaa !12
   %i.ey = fadd <2 x double> %i.ew, %i.et
   %i.ez = getelementptr inbounds nuw i8, ptr %.0293306, i64 48
   store <2 x double> %i.ey, ptr %i.ez, align 16, !tbaa !12

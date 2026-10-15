@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %bb.ae
   store i32 %i.ia, ptr %i.ib, align 8
   %i.ic = and i64 %i.hy, 4294967295               ; 4 uses
   %i.id = shl nuw nsw i64 %i.ic, 5
-  %i.ie = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.id) #26 ; 8 uses
+  %i.ie = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.id) #26 ; 7 uses
   %i.if = icmp eq i64 %i.ic, 0
   br i1 %i.if, label %.loopexit135, label %bb.ag
 
@@ -338,9 +338,8 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit.peel:      ; preds = %bb.ai, %bb.ah, %.lr
   %.sroa.4.0.peel = phi <2 x float> [ %.sroa.4.0.copyload.peel, %.lr.ph151.preheader ], [ %i.kf, %bb.ai ], [ %.sroa.4.0.copyload.peel, %bb.ah ] ; 2 uses
   store double %.sroa.0.0.copyload77.peel, ptr %i.ie, align 8
   %.sroa.4.0..sroa_idx79.peel = getelementptr inbounds nuw i8, ptr %i.ie, i64 8 ; 2 uses
-  store <2 x float> %.sroa.4.0.peel, ptr %.sroa.4.0..sroa_idx79.peel, align 8
-  %.sroa.8.0..sroa_idx82.peel = getelementptr inbounds nuw i8, ptr %i.ie, i64 16
-  store <2 x float> %.sroa.8.0.peel, ptr %.sroa.8.0..sroa_idx82.peel, align 8
+  %3 = shufflevector <2 x float> %.sroa.4.0.peel, <2 x float> %.sroa.8.0.peel, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %.sroa.4.0..sroa_idx79.peel, align 8
   %.sroa.11.0..sroa_idx85.peel = getelementptr inbounds nuw i8, ptr %i.ie, i64 24
   store i32 %.sroa.11.sroa.0.0.extract.trunc161, ptr %.sroa.11.0..sroa_idx85.peel, align 8
   %i.kg = extractelement <2 x float> %.sroa.4.0.peel, i64 0
@@ -420,12 +419,11 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit:           ; preds = %bb.ak, %bb.aj, %.lr
   %.sroa.8.0 = phi <2 x float> [ %.sroa.8.0.copyload, %.lr.ph151 ], [ %i.ly, %bb.ak ], [ %i.la, %bb.aj ]
   %.sroa.4.0 = phi <2 x float> [ %.sroa.4.0.copyload, %.lr.ph151 ], [ %i.lz, %bb.ak ], [ %i.ll, %bb.aj ]
   %i.ma = load ptr, ptr %i.gf, align 8
-  %i.mb = getelementptr inbounds nuw [32 x i8], ptr %i.ma, i64 %indvars.iv ; 4 uses
+  %i.mb = getelementptr inbounds nuw [32 x i8], ptr %i.ma, i64 %indvars.iv ; 3 uses
   store double %.sroa.0.0.copyload77, ptr %i.mb, align 8
   %.sroa.4.0..sroa_idx79 = getelementptr inbounds nuw i8, ptr %i.mb, i64 8
-  store <2 x float> %.sroa.4.0, ptr %.sroa.4.0..sroa_idx79, align 8
-  %.sroa.8.0..sroa_idx82 = getelementptr inbounds nuw i8, ptr %i.mb, i64 16
-  store <2 x float> %.sroa.8.0, ptr %.sroa.8.0..sroa_idx82, align 8
+  %4 = shufflevector <2 x float> %.sroa.4.0, <2 x float> %.sroa.8.0, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %.sroa.4.0..sroa_idx79, align 8
   %.sroa.11.0..sroa_idx85 = getelementptr inbounds nuw i8, ptr %i.mb, i64 24
   store i32 %.sroa.11.sroa.0.0.extract.trunc, ptr %.sroa.11.0..sroa_idx85, align 8
   %i.mc = load ptr, ptr %i.gf, align 8

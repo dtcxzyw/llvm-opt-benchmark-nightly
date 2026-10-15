@@ -205,13 +205,12 @@ vector.body1033:                                  ; preds = %vector.body1033, %v
   store <4 x double> %i.alr, ptr %i.alp, align 8, !tbaa !90
   store <4 x double> %i.als, ptr %i.alq, align 8, !tbaa !90
   %i.alt = getelementptr inbounds nuw [4 x i8], ptr %i.ajc, i64 %index1034 ; 3 uses
-  %i.alu = getelementptr inbounds nuw i8, ptr %i.alt, i64 16 ; 2 uses
+  %i.alu = getelementptr inbounds nuw i8, ptr %i.alt, i64 16
   %wide.load1041 = load <4 x i32>, ptr %i.alt, align 4, !tbaa !12
   %wide.load1042 = load <4 x i32>, ptr %i.alu, align 4, !tbaa !12
-  %44 = add nsw <4 x i32> %wide.load1041, splat (i32 1)
-  %45 = add nsw <4 x i32> %wide.load1042, splat (i32 1)
-  store <4 x i32> %44, ptr %i.alt, align 4, !tbaa !12
-  store <4 x i32> %45, ptr %i.alu, align 4, !tbaa !12
+  %44 = shufflevector <4 x i32> %wide.load1041, <4 x i32> %wide.load1042, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %45 = add nsw <8 x i32> %44, splat (i32 1)
+  store <8 x i32> %45, ptr %i.alt, align 4, !tbaa !12
   %index.next1043 = add nuw i64 %index1034, 8     ; 2 uses
   %i.alv = icmp eq i64 %index.next1043, %n.vec1030
   br i1 %i.alv, label %scalar.ph1027.preheader, label %vector.body1033, !llvm.loop !181
