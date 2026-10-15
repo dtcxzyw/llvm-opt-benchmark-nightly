@@ -1,0 +1,269 @@
+diff --git a/llvm/include/llvm/ADT/SmallPtrSet.h b/llvm/include/llvm/ADT/SmallPtrSet.h
+index 1a556d6a4145a2..e018758ff1d06f 100644
+--- a/llvm/include/llvm/ADT/SmallPtrSet.h
++++ b/llvm/include/llvm/ADT/SmallPtrSet.h
+@@ -78,7 +78,9 @@ class SmallPtrSetImplBase : public DebugEpochBase {
+                                const SmallPtrSetImplBase &that);
+   LLVM_ABI SmallPtrSetImplBase(const void **SmallStorage, unsigned SmallSize,
+                                const void **RHSSmallStorage,
+-                               SmallPtrSetImplBase &&that);
++                               SmallPtrSetImplBase &&that) {
++    moveHelper(SmallStorage, SmallSize, RHSSmallStorage, std::move(that));
++  }
+ 
+   explicit SmallPtrSetImplBase(const void **SmallStorage, unsigned SmallSize)
+       : CurArray(SmallStorage), CurArraySize(SmallSize), NumEntries(0),
+@@ -244,15 +246,63 @@ class SmallPtrSetImplBase : public DebugEpochBase {
+   bool isSmall() const { return IsSmall; }
+ 
+ private:
+-  LLVM_ABI std::pair<const void *const *, bool> insert_imp_big(const void *Ptr);
++  LLVM_ABI std::pair<const void *const *, bool>
++  insert_imp_big(const void *Ptr) {
++    if (LLVM_UNLIKELY(size() * 3 >= CurArraySize * 2)) {
++      // If more than 2/3 of the array is full, grow.
++      Grow(CurArraySize < 64 ? 128 : CurArraySize * 2);
++    }
++
++    // Find the first empty bucket or Ptr itself on the probe chain.
++    unsigned Mask = CurArraySize - 1;
++    unsigned I = DenseMapInfo<void *>::getHashValue(Ptr) & Mask;
++    const void **Array = CurArray;
++    while (Array[I] != getEmptyMarker()) {
++      if (Array[I] == Ptr)
++        return {Array + I, false};
++      I = (I + 1) & Mask;
++    }
+ 
+-  LLVM_ABI const void *const *doFind(const void *Ptr) const;
++    // Insert into the empty bucket.
++    ++NumEntries;
++    Array[I] = Ptr;
++    incrementEpoch();
++    return {Array + I, true};
++  }
++
++  LLVM_ABI const void *const *doFind(const void *Ptr) const {
++    unsigned Mask = CurArraySize - 1;
++    unsigned BucketNo = DenseMapInfo<void *>::getHashValue(Ptr) & Mask;
++    while (true) {
++      const void *const *Bucket = CurArray + BucketNo;
++      if (LLVM_LIKELY(*Bucket == Ptr))
++        return Bucket;
++      if (LLVM_LIKELY(*Bucket == getEmptyMarker()))
++        return nullptr;
++      BucketNo = (BucketNo + 1) & Mask;
++    }
++  }
+   LLVM_ABI void shrink_and_clear();
+ 
+ protected:
+   /// Erase the entry at \p Bucket and close the resulting hole via Knuth
+   /// TAOCP 6.4 Algorithm R. Caller must update \c NumEntries and the epoch.
+-  LLVM_ABI void eraseFromBucket(const void **Bucket);
++  LLVM_ABI void eraseFromBucket(const void **Bucket) {
++    // Knuth TAOCP 6.4 Algorithm R: walk forward sliding each following entry
++    // whose probe path crosses the hole.
++    unsigned Mask = CurArraySize - 1;
++    unsigned I = Bucket - CurArray;
++    unsigned J = I;
++    const void *Empty = getEmptyMarker();
++    while ((J = (J + 1) & Mask), CurArray[J] != Empty) {
++      auto Ideal = DenseMapInfo<void *>::getHashValue(CurArray[J]);
++      if (((I - Ideal) & Mask) < ((J - Ideal) & Mask)) {
++        CurArray[I] = CurArray[J];
++        I = J;
++      }
++    }
++    CurArray[I] = Empty;
++  }
+ 
+   /// Allocate a larger backing store for the buckets and move it over.
+   /// Passing the current size triggers a same-size rehash, used by batch
+@@ -268,14 +318,50 @@ class SmallPtrSetImplBase : public DebugEpochBase {
+                          const SmallPtrSetImplBase &RHS);
+   LLVM_ABI void moveFrom(const void **SmallStorage, unsigned SmallSize,
+                          const void **RHSSmallStorage,
+-                         SmallPtrSetImplBase &&RHS);
++                         SmallPtrSetImplBase &&RHS) {
++    if (!isSmall())
++      free(CurArray);
++    moveHelper(SmallStorage, SmallSize, RHSSmallStorage, std::move(RHS));
++  }
+ 
+ private:
+   /// Code shared by moveFrom() and move constructor.
+   void moveHelper(const void **SmallStorage, unsigned SmallSize,
+-                  const void **RHSSmallStorage, SmallPtrSetImplBase &&RHS);
++                  const void **RHSSmallStorage, SmallPtrSetImplBase &&RHS) {
++    assert(&RHS != this && "Self-move should be handled by the caller.");
++    incrementEpoch();
++    RHS.incrementEpoch();
++
++    if (RHS.isSmall()) {
++      // Copy a small RHS rather than moving.
++      CurArray = SmallStorage;
++      llvm::copy(RHS.small_buckets(), CurArray);
++    } else {
++      CurArray = RHS.CurArray;
++      RHS.CurArray = RHSSmallStorage;
++    }
++
++    // Copy the rest of the trivial members.
++    CurArraySize = RHS.CurArraySize;
++    NumEntries = RHS.NumEntries;
++    IsSmall = RHS.IsSmall;
++
++    // Make the RHS small and empty.
++    RHS.CurArraySize = SmallSize;
++    RHS.NumEntries = 0;
++    RHS.IsSmall = true;
++  }
++
+   /// Code shared by copyFrom() and copy constructor.
+-  void copyHelper(const SmallPtrSetImplBase &RHS);
++  void copyHelper(const SmallPtrSetImplBase &RHS) {
++    // Copy over the new array size
++    CurArraySize = RHS.CurArraySize;
++
++    // Copy over the contents from the other set
++    llvm::copy(RHS.buckets(), CurArray);
++
++    NumEntries = RHS.NumEntries;
++  }
+ };
+ 
+ /// This implements a const_iterator for SmallPtrSet.
+diff --git a/llvm/lib/Support/SmallPtrSet.cpp b/llvm/lib/Support/SmallPtrSet.cpp
+index fa3e35622248f2..c99a38329a1d07 100644
+--- a/llvm/lib/Support/SmallPtrSet.cpp
++++ b/llvm/lib/Support/SmallPtrSet.cpp
+@@ -37,60 +37,6 @@ void SmallPtrSetImplBase::shrink_and_clear() {
+   memset(CurArray, -1, CurArraySize*sizeof(void*));
+ }
+ 
+-std::pair<const void *const *, bool>
+-SmallPtrSetImplBase::insert_imp_big(const void *Ptr) {
+-  if (LLVM_UNLIKELY(size() * 3 >= CurArraySize * 2)) {
+-    // If more than 2/3 of the array is full, grow.
+-    Grow(CurArraySize < 64 ? 128 : CurArraySize * 2);
+-  }
+-
+-  // Find the first empty bucket or Ptr itself on the probe chain.
+-  unsigned Mask = CurArraySize - 1;
+-  unsigned I = DenseMapInfo<void *>::getHashValue(Ptr) & Mask;
+-  const void **Array = CurArray;
+-  while (Array[I] != getEmptyMarker()) {
+-    if (Array[I] == Ptr)
+-      return {Array + I, false};
+-    I = (I + 1) & Mask;
+-  }
+-
+-  // Insert into the empty bucket.
+-  ++NumEntries;
+-  Array[I] = Ptr;
+-  incrementEpoch();
+-  return {Array + I, true};
+-}
+-
+-const void *const *SmallPtrSetImplBase::doFind(const void *Ptr) const {
+-  unsigned Mask = CurArraySize - 1;
+-  unsigned BucketNo = DenseMapInfo<void *>::getHashValue(Ptr) & Mask;
+-  while (true) {
+-    const void *const *Bucket = CurArray + BucketNo;
+-    if (LLVM_LIKELY(*Bucket == Ptr))
+-      return Bucket;
+-    if (LLVM_LIKELY(*Bucket == getEmptyMarker()))
+-      return nullptr;
+-    BucketNo = (BucketNo + 1) & Mask;
+-  }
+-}
+-
+-void SmallPtrSetImplBase::eraseFromBucket(const void **Bucket) {
+-  // Knuth TAOCP 6.4 Algorithm R: walk forward sliding each following entry
+-  // whose probe path crosses the hole.
+-  unsigned Mask = CurArraySize - 1;
+-  unsigned I = Bucket - CurArray;
+-  unsigned J = I;
+-  const void *Empty = getEmptyMarker();
+-  while ((J = (J + 1) & Mask), CurArray[J] != Empty) {
+-    auto Ideal = DenseMapInfo<void *>::getHashValue(CurArray[J]);
+-    if (((I - Ideal) & Mask) < ((J - Ideal) & Mask)) {
+-      CurArray[I] = CurArray[J];
+-      I = J;
+-    }
+-  }
+-  CurArray[I] = Empty;
+-}
+-
+ /// Grow - Allocate a larger backing store for the buckets and move it over.
+ ///
+ void SmallPtrSetImplBase::Grow(unsigned NewSize) {
+@@ -138,13 +84,6 @@ SmallPtrSetImplBase::SmallPtrSetImplBase(const void **SmallStorage,
+   copyHelper(that);
+ }
+ 
+-SmallPtrSetImplBase::SmallPtrSetImplBase(const void **SmallStorage,
+-                                         unsigned SmallSize,
+-                                         const void **RHSSmallStorage,
+-                                         SmallPtrSetImplBase &&that) {
+-  moveHelper(SmallStorage, SmallSize, RHSSmallStorage, std::move(that));
+-}
+-
+ void SmallPtrSetImplBase::copyFrom(const void **SmallStorage,
+                                    const SmallPtrSetImplBase &RHS) {
+   assert(&RHS != this && "Self-copy should be handled by the caller.");
+@@ -174,53 +113,6 @@ void SmallPtrSetImplBase::copyFrom(const void **SmallStorage,
+   copyHelper(RHS);
+ }
+ 
+-void SmallPtrSetImplBase::copyHelper(const SmallPtrSetImplBase &RHS) {
+-  // Copy over the new array size
+-  CurArraySize = RHS.CurArraySize;
+-
+-  // Copy over the contents from the other set
+-  llvm::copy(RHS.buckets(), CurArray);
+-
+-  NumEntries = RHS.NumEntries;
+-}
+-
+-void SmallPtrSetImplBase::moveFrom(const void **SmallStorage,
+-                                   unsigned SmallSize,
+-                                   const void **RHSSmallStorage,
+-                                   SmallPtrSetImplBase &&RHS) {
+-  if (!isSmall())
+-    free(CurArray);
+-  moveHelper(SmallStorage, SmallSize, RHSSmallStorage, std::move(RHS));
+-}
+-
+-void SmallPtrSetImplBase::moveHelper(const void **SmallStorage,
+-                                     unsigned SmallSize,
+-                                     const void **RHSSmallStorage,
+-                                     SmallPtrSetImplBase &&RHS) {
+-  assert(&RHS != this && "Self-move should be handled by the caller.");
+-  incrementEpoch();
+-  RHS.incrementEpoch();
+-
+-  if (RHS.isSmall()) {
+-    // Copy a small RHS rather than moving.
+-    CurArray = SmallStorage;
+-    llvm::copy(RHS.small_buckets(), CurArray);
+-  } else {
+-    CurArray = RHS.CurArray;
+-    RHS.CurArray = RHSSmallStorage;
+-  }
+-
+-  // Copy the rest of the trivial members.
+-  CurArraySize = RHS.CurArraySize;
+-  NumEntries = RHS.NumEntries;
+-  IsSmall = RHS.IsSmall;
+-
+-  // Make the RHS small and empty.
+-  RHS.CurArraySize = SmallSize;
+-  RHS.NumEntries = 0;
+-  RHS.IsSmall = true;
+-}
+-
+ void SmallPtrSetImplBase::swap(const void **SmallStorage,
+                                const void **RHSSmallStorage,
+                                SmallPtrSetImplBase &RHS) {
