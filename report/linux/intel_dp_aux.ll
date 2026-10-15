@@ -205,27 +205,22 @@ bb.ab:                                            ; preds = %.lr.ph234, %.crited
   %i.dn = load ptr, ptr %i.cn, align 8
   %i.do = call i32 %i.dn(ptr noundef %0, i32 noundef %2, i32 noundef %i.dl) #10
   %i.dp = or i32 %i.do, %5
-  br label %.preheader
+  br label %.lr.ph
 
-.preheader:                                       ; preds = %bb.ab, %bb.an
-  %.1151232 = phi i32 [ 0, %bb.ab ], [ %i.ha, %bb.an ]
-  br i1 %i.co, label %.lr.ph, label %._crit_edge
+.lr.ph:                                           ; preds = %bb.ab, %bb.an
+  %indvar.a = phi i32 [ 0, %bb.ab ], [ %i.ha, %bb.an ]
+  br i1 %i.co, label %.lr.ph.preheader.i, label %._crit_edge
 
-.lr.ph:                                           ; preds = %.preheader, %intel_dp_aux_pack.exit
-  %indvar.a = phi i32 [ %indvar.next, %intel_dp_aux_pack.exit ], [ 0, %.preheader ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %intel_dp_aux_pack.exit ], [ 0, %.preheader ] ; 4 uses
-  %8 = getelementptr i8, ptr %7, i64 %indvars.iv
-  %9 = getelementptr i8, ptr %1, i64 %indvars.iv  ; 5 uses
-  %10 = sub nsw i64 %i.cq, %indvars.iv            ; 2 uses
-  %11 = icmp sgt i64 %10, 0
-  br i1 %11, label %.lr.ph.preheader.i, label %intel_dp_aux_pack.exit
-
-.lr.ph.preheader.i:                               ; preds = %.lr.ph
-  %i.dq = shl i32 %indvar.a, 2
+.lr.ph.preheader.i:                               ; preds = %.lr.ph, %intel_dp_aux_pack.exit
+  %indvar = phi i32 [ %indvar.next, %intel_dp_aux_pack.exit ], [ 0, %.lr.ph ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %intel_dp_aux_pack.exit ], [ 0, %.lr.ph ] ; 4 uses
+  %i.dq = shl i32 %indvar, 2
   %i.dr = sub i32 %2, %i.dq
   %i.ds = call i32 @llvm.umin.i32(i32 %i.dr, i32 4)
-  %i.dt = trunc nsw i64 %10 to i32
-  %i.du = call i32 @llvm.umin.i32(i32 %i.dt, i32 4)
+  %8 = getelementptr i8, ptr %1, i64 %indvars.iv  ; 5 uses
+  %i.dt = trunc i64 %indvars.iv to i32
+  %9 = sub i32 %2, %i.dt
+  %i.du = call i32 @llvm.umin.i32(i32 %9, i32 4)
   %wide.trip.count.i = zext nneg i32 %i.du to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 3       ; 3 uses
   %i.dv = add nsw i32 %i.ds, -1
@@ -240,7 +235,7 @@ bb.ab:                                            ; preds = %.lr.ph234, %.crited
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.3, %.lr.ph.i ] ; 6 uses
   %.010.i = phi i32 [ 0, %.lr.ph.preheader.i.new ], [ %i.ew, %.lr.ph.i ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.3, %.lr.ph.i ]
-  %i.dx = getelementptr i8, ptr %9, i64 %indvars.iv.i
+  %i.dx = getelementptr i8, ptr %8, i64 %indvars.iv.i
   %i.dy = load i8, ptr %i.dx, align 1
   %i.dz = zext i8 %i.dy to i32
   %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
@@ -249,7 +244,7 @@ bb.ab:                                            ; preds = %.lr.ph234, %.crited
   %i.ec = shl nuw i32 %i.dz, %i.eb
   %i.ed = or i32 %i.ec, %.010.i
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
-  %i.ee = getelementptr i8, ptr %9, i64 %indvars.iv.next.i
+  %i.ee = getelementptr i8, ptr %8, i64 %indvars.iv.next.i
   %i.ef = load i8, ptr %i.ee, align 1
   %i.eg = zext i8 %i.ef to i32
   %indvars.iv.tr.i.1 = trunc i64 %indvars.iv.next.i to i32
@@ -258,7 +253,7 @@ bb.ab:                                            ; preds = %.lr.ph234, %.crited
   %i.ej = shl nuw i32 %i.eg, %i.ei
   %i.ek = or i32 %i.ej, %i.ed
   %indvars.iv.next.i.1 = or disjoint i64 %indvars.iv.i, 2 ; 2 uses
-  %i.el = getelementptr i8, ptr %9, i64 %indvars.iv.next.i.1
+  %i.el = getelementptr i8, ptr %8, i64 %indvars.iv.next.i.1
   %i.em = load i8, ptr %i.el, align 1
   %i.en = zext i8 %i.em to i32
   %indvars.iv.tr.i.2 = trunc i64 %indvars.iv.next.i.1 to i32
@@ -266,7 +261,7 @@ bb.ab:                                            ; preds = %.lr.ph234, %.crited
   %i.ep = sub i32 24, %i.eo
   %i.eq = shl nuw i32 %i.en, %i.ep
   %i.er = or i32 %i.eq, %i.ek
-  %i.es = getelementptr i8, ptr %9, i64 %indvars.iv.i
+  %i.es = getelementptr i8, ptr %8, i64 %indvars.iv.i
   %i.et = getelementptr i8, ptr %i.es, i64 3
   %i.eu = load i8, ptr %i.et, align 1
   %i.ev = zext i8 %i.eu to i32
@@ -291,7 +286,7 @@ intel_dp_aux_pack.exit.loopexit.unr-lcssa:        ; preds = %.lr.ph.i
   %indvars.iv.i.epil = phi i64 [ %indvars.iv.i.epil.init, %.lr.ph.i.epil.preheader ], [ %indvars.iv.next.i.epil, %.lr.ph.i.epil ] ; 3 uses
   %.010.i.epil = phi i32 [ %.010.i.epil.init, %.lr.ph.i.epil.preheader ], [ %i.fd, %.lr.ph.i.epil ]
   %epil.iter = phi i64 [ 0, %.lr.ph.i.epil.preheader ], [ %epil.iter.next, %.lr.ph.i.epil ]
-  %i.ex = getelementptr i8, ptr %9, i64 %indvars.iv.i.epil
+  %i.ex = getelementptr i8, ptr %8, i64 %indvars.iv.i.epil
   %i.ey = load i8, ptr %i.ex, align 1
   %i.ez = zext i8 %i.ey to i32
   %indvars.iv.tr.i.epil = trunc i64 %indvars.iv.i.epil to i32
@@ -304,23 +299,23 @@ intel_dp_aux_pack.exit.loopexit.unr-lcssa:        ; preds = %.lr.ph.i
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %intel_dp_aux_pack.exit, label %.lr.ph.i.epil, !llvm.loop !50
 
-intel_dp_aux_pack.exit:                           ; preds = %intel_dp_aux_pack.exit.loopexit.unr-lcssa, %.lr.ph.i.epil, %.lr.ph
-  %.0.lcssa.i = phi i32 [ 0, %.lr.ph ], [ %i.ew, %intel_dp_aux_pack.exit.loopexit.unr-lcssa ], [ %i.fd, %.lr.ph.i.epil ]
-  %i.fe = load i32, ptr %8, align 4               ; 3 uses
+intel_dp_aux_pack.exit:                           ; preds = %.lr.ph.i.epil, %intel_dp_aux_pack.exit.loopexit.unr-lcssa
+  %.lcssa = phi i32 [ %i.ew, %intel_dp_aux_pack.exit.loopexit.unr-lcssa ], [ %i.fd, %.lr.ph.i.epil ]
+  %10 = getelementptr i8, ptr %7, i64 %indvars.iv
+  %i.fe = load i32, ptr %10, align 4              ; 3 uses
   call void @intel_dmc_wl_get(ptr noundef %i.e, i32 %i.fe) #10
   %.val.i201 = load ptr, ptr %i.e, align 8
   %i.ff = call ptr @to_intel_uncore(ptr noundef %.val.i201) #10 ; 2 uses
   %i.fg = getelementptr i8, ptr %i.ff, i64 176
   %i.fh = load ptr, ptr %i.fg, align 8
-  call void %i.fh(ptr noundef %i.ff, i32 %i.fe, i32 noundef %.0.lcssa.i, i1 noundef zeroext true) #10, !inline_history !51
+  call void %i.fh(ptr noundef %i.ff, i32 %i.fe, i32 noundef %.lcssa, i1 noundef zeroext true) #10, !inline_history !51
   call void @intel_dmc_wl_put(ptr noundef %i.e, i32 %i.fe) #10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %12 = trunc nuw i64 %indvars.iv.next to i32
-  %13 = icmp sgt i32 %2, %12
-  %indvar.next = add i32 %indvar.a, 1
-  br i1 %13, label %.lr.ph, label %._crit_edge, !llvm.loop !52
+  %11 = icmp slt i64 %indvars.iv.next, %i.cq
+  %indvar.next = add i32 %indvar, 1
+  br i1 %11, label %.lr.ph.preheader.i, label %._crit_edge, !llvm.loop !52
 
-._crit_edge:                                      ; preds = %intel_dp_aux_pack.exit, %.preheader
+._crit_edge:                                      ; preds = %intel_dp_aux_pack.exit, %.lr.ph
   call void @intel_dmc_wl_get(ptr noundef %i.e, i32 %i.h) #10
   %.val.i202 = load ptr, ptr %i.e, align 8
   %i.fi = call ptr @to_intel_uncore(ptr noundef %.val.i202) #10 ; 2 uses
@@ -453,9 +448,9 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %.not167, label %bb.an, label %.thread
 
 bb.an:                                            ; preds = %bb.am, %intel_dp_aux_wait_done.exit, %bb.al
-  %i.ha = add nuw nsw i32 %.1151232, 1            ; 2 uses
+  %i.ha = add nuw nsw i32 %indvar.a, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.ha, 5
-  br i1 %exitcond.not, label %.critedge.loopexit, label %.preheader, !llvm.loop !55
+  br i1 %exitcond.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !55
 
 .critedge._crit_edge:                             ; preds = %.critedge.loopexit, %.critedge.preheader
   %.2155.lcssa = phi i32 [ %.lcssa239, %.critedge.preheader ], [ %i.gs, %.critedge.loopexit ] ; 3 uses

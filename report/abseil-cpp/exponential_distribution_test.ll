@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %_ZN4absl12lts_20260
 bb.w:                                             ; preds = %bb.v
   %.val31.i = load double, ptr %i.ac, align 16, !tbaa !84 ; 2 uses
   %i.cm = fmul double %.val31.i, %.val31.i
-  %sqrt.i.i = call noundef double @llvm.sqrt.f64(double %i.cm)
+  %sqrt.i.i = call noundef double @sqrt(double noundef %i.cm) #38
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store double %sqrt.i.i, ptr %i.f, align 8, !tbaa !96
   %i.cn = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN4absl12lts_2026052612log_internal10LogMessagelsIdEERS2_RKT_(ptr noundef nonnull align 8 dereferenceable(16) %i.cl, ptr noundef nonnull align 8 dereferenceable(8) %i.f)
@@ -606,9 +606,6 @@ declare i64 @llvm.smin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #35
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #19

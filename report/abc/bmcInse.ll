@@ -193,7 +193,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %0, i64 792
   %.val172 = load ptr, ptr %i.g, align 8, !tbaa !35 ; 4 uses
-  %.val172301 = ptrtoaddr ptr %.val172 to i64     ; 5 uses
+  %.val172301 = ptrtoaddr ptr %.val172 to i64     ; 4 uses
   %i.h = getelementptr i8, ptr %0, i64 808
   %.val173 = load i32, ptr %i.h, align 8, !tbaa !36 ; 5 uses
   %i.i = shl i32 %.val173, 1                      ; 3 uses
@@ -238,8 +238,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check323, label %.lr.ph209.preheader340, label %vector.memcheck299
 
 vector.memcheck299:                               ; preds = %.lr.ph209.preheader
-  %i.ag = shl nuw nsw i64 %i.m, 3                 ; 2 uses
-  %i.ah = shl nsw i64 %i.k, 3                     ; 5 uses
+  %i.ag = shl nuw nsw i64 %i.m, 3
+  %i.ah = shl nsw i64 %i.k, 3                     ; 4 uses
   %i.ai = add i64 %i.ah, %.val172301              ; 2 uses
   %i.aj = sub i64 %.248302, %i.ai
   %diff.check303.a = icmp ugt i64 %i.aj, -32
@@ -255,19 +255,17 @@ vector.memcheck299:                               ; preds = %.lr.ph209.preheader
   %diff.check312 = icmp ugt i64 %i.ao, -32
   %conflict.rdx313 = or i1 %conflict.rdx310, %diff.check312
   %i.ap = add i64 %i.ag, %.val172301
-  %i.aq = add i64 %i.ap, %i.ah                    ; 2 uses
+  %i.aq = add i64 %i.ap, %i.ah                    ; 4 uses
   %i.ar = sub i64 %.248302, %i.aq
   %diff.check314 = icmp ugt i64 %i.ar, -32
   %conflict.rdx315 = or i1 %conflict.rdx313, %diff.check314
   %i.as = sub i64 %.238305, %i.aq
   %diff.check316 = icmp ugt i64 %i.as, -32
   %conflict.rdx317 = or i1 %conflict.rdx315, %diff.check316
-  %2 = add i64 %i.ag, %.val172301
-  %3 = add i64 %2, %i.ah                          ; 2 uses
-  %i.at = sub i64 %.249308, %3
+  %i.at = sub i64 %.249308, %i.aq
   %diff.check318 = icmp ugt i64 %i.at, -32
   %conflict.rdx319 = or i1 %conflict.rdx317, %diff.check318
-  %i.au = sub i64 %.239311, %3
+  %i.au = sub i64 %.239311, %i.aq
   %diff.check320 = icmp ugt i64 %i.au, -32
   %conflict.rdx321 = or i1 %conflict.rdx319, %diff.check320
   br i1 %conflict.rdx321, label %.lr.ph209.preheader340, label %vector.ph324

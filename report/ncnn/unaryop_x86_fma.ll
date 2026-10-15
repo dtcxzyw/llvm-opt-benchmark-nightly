@@ -202,9 +202,9 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.noexc, %.lr.ph
   %.084 = phi i32 [ %i.ay, %.lr.ph ], [ 0, %.noexc ]
   %.03083 = phi ptr [ %i.ax, %.lr.ph ], [ %i.v, %.noexc ] ; 3 uses
-  %i.aa = load <8 x float>, ptr %.03083, align 1, !tbaa !41 ; 4 uses
+  %i.aa = load <8 x float>, ptr %.03083, align 1, !tbaa !41 ; 3 uses
   %i.ab = bitcast <8 x float> %i.aa to <8 x i32>
-  %i.ac = and <8 x i32> %i.ab, splat (i32 -2147483648)
+  %i.ac = and <8 x i32> %i.ab, splat (i32 -2147483648) ; 2 uses
   %i.ad = call <8 x float> @llvm.fabs.v8f32(<8 x float> %i.aa) ; 3 uses
   %i.ae = fcmp fast ugt <8 x float> %i.ad, splat (float 5.000000e-01) ; 2 uses
   %i.af = fmul fast <8 x float> %i.ad, splat (float 5.000000e-01)
@@ -219,8 +219,10 @@ bb.b:                                             ; preds = %bb.a
   %i.an = call fast noundef nofpclass(nan inf) <8 x float> @llvm.fma.v8f32(<8 x float> nofpclass(nan inf) %i.aj, <8 x float> nofpclass(nan inf) %i.am, <8 x float> nofpclass(nan inf) splat (float 1.000000e+00))
   %i.ao = call fast noundef nofpclass(nan inf) <8 x float> @llvm.fma.v8f32(<8 x float> nofpclass(nan inf) %i.ai, <8 x float> nofpclass(nan inf) %i.al, <8 x float> nofpclass(nan inf) %i.an)
   %i.ap = fmul fast <8 x float> %i.ao, %.v79      ; 2 uses
-  %6 = call <8 x float> @llvm.copysign.v8f32(<8 x float> %i.ap, <8 x float> %i.aa)
-  %i.aq = fsub fast <8 x float> splat (float f0x3FC90FDB), %6
+  %6 = bitcast <8 x float> %i.ap to <8 x i32>
+  %7 = or <8 x i32> %i.ac, %6
+  %8 = bitcast <8 x i32> %7 to <8 x float>
+  %i.aq = fsub fast <8 x float> splat (float f0x3FC90FDB), %8
   %i.ar = fcmp fast olt <8 x float> %i.aa, zeroinitializer
   %i.as = select <8 x i1> %i.ar, <8 x float> splat (float f0x40490FDB), <8 x float> zeroinitializer
   %factor81 = fmul fast <8 x float> %i.ap, splat (float 2.000000e+00)
@@ -283,9 +285,9 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph88:                                         ; preds = %.preheader82, %.lr.ph88
   %.187 = phi i32 [ %i.cn, %.lr.ph88 ], [ %.0.lcssa, %.preheader82 ]
   %.13186 = phi ptr [ %i.cm, %.lr.ph88 ], [ %.030.lcssa, %.preheader82 ] ; 3 uses
-  %i.bp = load <4 x float>, ptr %.13186, align 16, !tbaa !41 ; 4 uses
+  %i.bp = load <4 x float>, ptr %.13186, align 16, !tbaa !41 ; 3 uses
   %i.bq = bitcast <4 x float> %i.bp to <4 x i32>
-  %i.br = and <4 x i32> %i.bq, splat (i32 -2147483648)
+  %i.br = and <4 x i32> %i.bq, splat (i32 -2147483648) ; 2 uses
   %i.bs = call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.bp) ; 3 uses
   %i.bt = fcmp fast ugt <4 x float> %i.bs, splat (float 5.000000e-01) ; 2 uses
   %i.bu = fmul fast <4 x float> %i.bs, splat (float 5.000000e-01)
@@ -300,8 +302,10 @@ middle.block:                                     ; preds = %vector.body
   %i.cc = call fast noundef nofpclass(nan inf) <4 x float> @llvm.fma.v4f32(<4 x float> nofpclass(nan inf) %i.by, <4 x float> nofpclass(nan inf) %i.cb, <4 x float> nofpclass(nan inf) splat (float 1.000000e+00))
   %i.cd = call fast noundef nofpclass(nan inf) <4 x float> @llvm.fma.v4f32(<4 x float> nofpclass(nan inf) %i.bx, <4 x float> nofpclass(nan inf) %i.ca, <4 x float> nofpclass(nan inf) %i.cc)
   %i.ce = fmul fast <4 x float> %i.cd, %.v        ; 2 uses
-  %7 = call <4 x float> @llvm.copysign.v4f32(<4 x float> %i.ce, <4 x float> %i.bp)
-  %i.cf = fsub fast <4 x float> splat (float f0x3FC90FDB), %7
+  %9 = bitcast <4 x float> %i.ce to <4 x i32>
+  %10 = or <4 x i32> %i.br, %9
+  %11 = bitcast <4 x i32> %10 to <4 x float>
+  %i.cf = fsub fast <4 x float> splat (float f0x3FC90FDB), %11
   %i.cg = fcmp fast olt <4 x float> %i.bp, zeroinitializer
   %i.ch = select <4 x i1> %i.cg, <4 x float> splat (float f0x40490FDB), <4 x float> zeroinitializer
   %factor = fmul fast <4 x float> %i.ce, splat (float 2.000000e+00)
@@ -704,7 +708,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bg = fmul fast <16 x float> %i.bf, %i.bf
   %i.bh = bitcast <16 x float> %i.bg to <16 x i32>
   %i.bi = lshr <16 x i32> %i.bh, splat (i32 16)
-  %i.bj = trunc nuw nsw <16 x i32> %i.bi to <16 x i16>
+  %i.bj = trunc nuw <16 x i32> %i.bi to <16 x i16>
   store <16 x i16> %i.bj, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.bk = icmp eq i64 %index.next, %n.vec
@@ -738,7 +742,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.bt = fmul fast <4 x float> %i.bs, %i.bs
   %i.bu = bitcast <4 x float> %i.bt to <4 x i32>
   %i.bv = lshr <4 x i32> %i.bu, splat (i32 16)
-  %i.bw = trunc nuw nsw <4 x i32> %i.bv to <4 x i16>
+  %i.bw = trunc nuw <4 x i32> %i.bv to <4 x i16>
   store <4 x i16> %i.bw, ptr %next.gep92, align 2, !tbaa !51
   %index.next94 = add nuw i64 %index91, 4         ; 2 uses
   %i.bx = icmp eq i64 %index.next94, %n.vec90
@@ -785,7 +789,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.cs = fmul fast float %i.cr, %i.cr
   %i.ct = bitcast float %i.cs to i32
   %i.cu = lshr i32 %i.ct, 16
-  %i.cv = trunc nuw nsw i32 %i.cu to i16
+  %i.cv = trunc nuw i32 %i.cu to i16
   store i16 %i.cv, ptr %.23258, align 2, !tbaa !51
   %i.cw = getelementptr inbounds nuw i8, ptr %.23258, i64 2
   %i.cx = add nuw nsw i32 %.259, 1                ; 2 uses
@@ -1186,12 +1190,6 @@ declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.copysign.v4f32(<4 x float>, <4 x float>) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x float> @llvm.copysign.v8f32(<8 x float>, <8 x float>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.floor.v8f32(<8 x float>) #9

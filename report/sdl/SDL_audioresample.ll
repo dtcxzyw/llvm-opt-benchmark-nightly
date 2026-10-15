@@ -204,8 +204,8 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @ResampleFrame_Generic(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, float noundef %3, i32 noundef %4) #5 {
 .preheader32:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 5 uses
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 5 uses
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = fmul float %3, %3                        ; 11 uses
   %i.d = fmul float %3, %i.c                      ; 10 uses
   %i.e = load float, ptr %2, align 4
@@ -343,39 +343,35 @@ define internal void @ResampleFrame_Generic(ptr nofree noundef readonly captures
   br i1 %min.iters.check, label %.preheader.preheader92, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
-  %i.dt = sub i64 %i.b, %i.a                      ; 2 uses
+  %i.dt = sub i64 %i.b, %i.a                      ; 10 uses
   %i.du = sub i64 %.idx47, %i.dt
   %diff.check = icmp ugt i64 %i.du, -16
   %i.dv = sub i64 %.idx46, %i.dt
   %diff.check48 = icmp ugt i64 %i.dv, -16
   %conflict.rdx = or i1 %diff.check, %diff.check48
-  %5 = sub i64 %i.b, %i.a                         ; 2 uses
-  %i.dw = sub i64 %.idx45, %5
+  %i.dw = sub i64 %.idx45, %i.dt
   %diff.check49 = icmp ugt i64 %i.dw, -16
   %conflict.rdx50 = or i1 %conflict.rdx, %diff.check49
-  %i.dx = sub i64 %.idx44, %5
+  %i.dx = sub i64 %.idx44, %i.dt
   %diff.check51 = icmp ugt i64 %i.dx, -16
   %conflict.rdx52 = or i1 %conflict.rdx50, %diff.check51
-  %6 = sub i64 %i.b, %i.a                         ; 2 uses
-  %i.dy = sub i64 %.idx43, %6
+  %i.dy = sub i64 %.idx43, %i.dt
   %diff.check53 = icmp ugt i64 %i.dy, -16
   %conflict.rdx54 = or i1 %conflict.rdx52, %diff.check53
-  %i.dz = sub i64 %.idx42, %6
+  %i.dz = sub i64 %.idx42, %i.dt
   %diff.check55 = icmp ugt i64 %i.dz, -16
   %conflict.rdx56 = or i1 %conflict.rdx54, %diff.check55
-  %7 = sub i64 %i.b, %i.a                         ; 2 uses
-  %i.ea = sub i64 %.idx41, %7
+  %i.ea = sub i64 %.idx41, %i.dt
   %diff.check57 = icmp ugt i64 %i.ea, -16
   %conflict.rdx58 = or i1 %conflict.rdx56, %diff.check57
-  %i.eb = sub i64 %.idx, %7
+  %i.eb = sub i64 %.idx, %i.dt
   %diff.check59 = icmp ugt i64 %i.eb, -16
   %conflict.rdx60 = or i1 %conflict.rdx58, %diff.check59
-  %8 = sub i64 %i.b, %i.a                         ; 2 uses
   %i.ec = shl nuw nsw i64 %i.dk, 2
-  %i.ed = sub i64 %i.ec, %8
+  %i.ed = sub i64 %i.ec, %i.dt
   %diff.check61 = icmp ugt i64 %i.ed, -16
   %conflict.rdx62 = or i1 %conflict.rdx60, %diff.check61
-  %i.ee = add i64 %8, -1
+  %i.ee = add i64 %i.dt, -1
   %diff.check63 = icmp ult i64 %i.ee, 15
   %conflict.rdx64 = or i1 %conflict.rdx62, %diff.check63
   br i1 %conflict.rdx64, label %.preheader.preheader92, label %vector.ph

@@ -81,7 +81,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = fmul double %i.f, f0x4033BD3CC9BE45DE
   %i.h = tail call double @llvm.fmuladd.f64(double %i.a, double %i.a, double %i.g)
   %i.i = fadd double %i.a, f0xC023BD3CC9BE45DE
-  %sqrt = tail call double @llvm.sqrt.f64(double %i.h)
+  %sqrt = tail call double @sqrt(double noundef %i.h) #6
   %i.j = fadd double %i.i, %sqrt
   %i.k = fmul double %i.j, 5.000000e-01
   %i.l = fdiv double %i.k, %0
@@ -359,9 +359,6 @@ declare double @tan(double noundef) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @asin(double noundef) local_unnamed_addr #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4

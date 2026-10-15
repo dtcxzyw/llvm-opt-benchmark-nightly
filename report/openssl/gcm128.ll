@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.sink.split, %bb.b,
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @CRYPTO_gcm128_encrypt(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !14
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 384
@@ -431,8 +431,8 @@ bb.m:                                             ; preds = %._crit_edge218, %._
   %.4150 = phi i64 [ %i.cm, %._crit_edge218 ], [ %.2148.lcssa, %._crit_edge207 ] ; 14 uses
   %.5145 = phi ptr [ %i.ck, %._crit_edge218 ], [ %.2142.lcssa, %._crit_edge207 ] ; 6 uses
   %.5 = phi ptr [ %i.cl, %._crit_edge218 ], [ %.2.lcssa, %._crit_edge207 ] ; 6 uses
-  %.5145282 = ptrtoaddr ptr %.5145 to i64         ; 3 uses
-  %.5284 = ptrtoaddr ptr %.5 to i64               ; 2 uses
+  %.5145282 = ptrtoaddr ptr %.5 to i64            ; 2 uses
+  %.5284 = ptrtoaddr ptr %.5145 to i64            ; 3 uses
   %.not175 = icmp eq i64 %.4150, 0
   br i1 %.not175, label %.loopexit, label %iter.check
 
@@ -456,23 +456,21 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %i.dd, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.de = sub i64 %.5145282, %i.a
+  %i.de = sub i64 %.5284, %i.a
   %i.df = add i64 %i.de, -17
   %diff.check = icmp ult i64 %i.df, 15
-  %i.dg = zext i32 %.3163 to i64                  ; 2 uses
+  %i.dg = zext i32 %.3163 to i64
   %i.dh = add i64 %i.a, %i.dg
-  %4 = sub i64 %i.dh, %.5145282
-  %5 = add i64 %4, 399
-  %diff.check283 = icmp ult i64 %5, 15
-  %conflict.rdx = or i1 %diff.check, %diff.check283
-  %i.di = sub i64 %.5284, %.5145282
+  %4 = add i64 %i.dh, 400                         ; 2 uses
+  %5 = sub i64 %.5284, %4
+  %diff.check291 = icmp ugt i64 %5, -16
+  %conflict.rdx = or i1 %diff.check, %diff.check291
+  %i.di = sub i64 %.5145282, %.5284
   %diff.check285 = icmp ugt i64 %i.di, -16
   %conflict.rdx286 = or i1 %conflict.rdx, %diff.check285
-  %6 = add i64 %i.a, %i.dg
-  %i.dj = sub i64 %6, %.5284
-  %7 = add i64 %i.dj, 399
-  %diff.check287 = icmp ult i64 %7, 15
-  %conflict.rdx288 = or i1 %conflict.rdx286, %diff.check287
+  %i.dj = sub i64 %.5145282, %4
+  %diff.check294 = icmp ugt i64 %i.dj, -16
+  %conflict.rdx288 = or i1 %conflict.rdx286, %diff.check294
   br i1 %conflict.rdx288, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -875,7 +873,7 @@ bb.n:                                             ; preds = %bb.a, %.loopexit, %
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @CRYPTO_gcm128_encrypt_ctr32(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !14
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 392
@@ -1025,8 +1023,8 @@ bb.j:                                             ; preds = %.lr.ph172, %bb.j
   %.2128.lcssa = phi i64 [ %.1127155, %bb.i ], [ %i.bh, %bb.j ] ; 4 uses
   %.2124.lcssa = phi ptr [ %.1123156, %bb.i ], [ %i.bf, %bb.j ] ; 5 uses
   %.2.lcssa = phi ptr [ %.1157, %bb.i ], [ %i.bg, %bb.j ] ; 4 uses
-  %.2124.lcssa224 = ptrtoaddr ptr %.2124.lcssa to i64 ; 3 uses
-  %.2.lcssa226 = ptrtoaddr ptr %.2.lcssa to i64   ; 2 uses
+  %.2124.lcssa224 = ptrtoaddr ptr %.2.lcssa to i64 ; 2 uses
+  %.2.lcssa226 = ptrtoaddr ptr %.2124.lcssa to i64 ; 3 uses
   %i.bj = and i64 %.2128.lcssa, 4080              ; 7 uses
   %.not146 = icmp eq i64 %i.bj, 0
   br i1 %.not146, label %bb.l, label %bb.k
@@ -1078,26 +1076,24 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %i.cg, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.ch = add i64 %i.bj, %.2124.lcssa224
+  %i.ch = add i64 %i.bj, %.2.lcssa226
   %i.ci = sub i64 %i.ch, %i.a
   %i.cj = add i64 %i.ci, -17
   %diff.check = icmp ult i64 %i.cj, 15
-  %i.ck = zext i32 %.3138 to i64                  ; 2 uses
+  %i.ck = zext i32 %.3138 to i64
   %i.cl = add i64 %i.a, %i.ck
-  %i.cm = add i64 %i.bj, %.2124.lcssa224
-  %5 = sub i64 %i.cl, %i.cm
-  %6 = add i64 %5, 399
-  %diff.check225 = icmp ult i64 %6, 15
-  %conflict.rdx = or i1 %diff.check, %diff.check225
-  %i.cn = sub i64 %.2.lcssa226, %.2124.lcssa224
+  %i.cm = add i64 %i.cl, 400                      ; 2 uses
+  %5 = add i64 %i.bj, %.2.lcssa226
+  %6 = sub i64 %5, %i.cm
+  %diff.check233 = icmp ugt i64 %6, -16
+  %conflict.rdx = or i1 %diff.check, %diff.check233
+  %i.cn = sub i64 %.2124.lcssa224, %.2.lcssa226
   %diff.check227 = icmp ugt i64 %i.cn, -16
   %conflict.rdx228 = or i1 %conflict.rdx, %diff.check227
-  %7 = add i64 %i.a, %i.ck
-  %i.co = add i64 %i.bj, %.2.lcssa226
-  %i.cp = sub i64 %7, %i.co
-  %8 = add i64 %i.cp, 399
-  %diff.check229 = icmp ult i64 %8, 15
-  %conflict.rdx230 = or i1 %conflict.rdx228, %diff.check229
+  %i.co = add i64 %i.bj, %.2124.lcssa224
+  %i.cp = sub i64 %i.co, %i.cm
+  %diff.check236 = icmp ugt i64 %i.cp, -16
+  %conflict.rdx230 = or i1 %conflict.rdx228, %diff.check236
   br i1 %conflict.rdx230, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -1400,9 +1396,9 @@ bb.j:                                             ; preds = %.lr.ph172, %bb.j
   %.2128.lcssa = phi i64 [ %.1127155, %bb.i ], [ %i.bh, %bb.j ] ; 4 uses
   %.2124.lcssa = phi ptr [ %.1123156, %bb.i ], [ %i.bf, %bb.j ] ; 4 uses
   %.2.lcssa = phi ptr [ %.1157, %bb.i ], [ %i.bg, %bb.j ] ; 5 uses
-  %.2124.lcssa224 = ptrtoaddr ptr %.2124.lcssa to i64 ; 3 uses
+  %.2124.lcssa224 = ptrtoaddr ptr %.2124.lcssa to i64 ; 2 uses
   %.2.lcssa225 = ptrtoaddr ptr %.2.lcssa to i64   ; 2 uses
-  %i.bj = and i64 %.2128.lcssa, 4080              ; 7 uses
+  %i.bj = and i64 %.2128.lcssa, 4080              ; 6 uses
   %.not146 = icmp eq i64 %i.bj, 0
   br i1 %.not146, label %bb.l, label %bb.k
 
@@ -1453,13 +1449,13 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %i.cg, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %5 = add i64 %i.bj, %.2124.lcssa224
-  %6 = zext i32 %.3138 to i64                     ; 2 uses
-  %i.ch = add i64 %i.a, %6
-  %i.ci = sub i64 %5, %i.ch
+  %5 = zext i32 %.3138 to i64                     ; 2 uses
+  %6 = add i64 %i.bj, %.2124.lcssa224             ; 2 uses
+  %i.ch = add i64 %i.a, %5
+  %i.ci = sub i64 %6, %i.ch
   %i.cj = add i64 %i.ci, -401
   %diff.check = icmp ult i64 %i.cj, 31
-  %i.ck = add i64 %i.a, %6
+  %i.ck = add i64 %i.a, %5
   %i.cl = add i64 %i.bj, %.2.lcssa225
   %i.cm = sub i64 %i.ck, %i.cl
   %i.cn = add i64 %i.cm, 399
@@ -1468,8 +1464,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.co = sub i64 %.2.lcssa225, %.2124.lcssa224
   %diff.check229 = icmp ugt i64 %i.co, -32
   %conflict.rdx230 = or i1 %conflict.rdx, %diff.check229
-  %7 = add i64 %i.bj, %.2124.lcssa224
-  %i.cp = sub i64 %7, %i.a
+  %i.cp = sub i64 %6, %i.a
   %i.cq = add i64 %i.cp, -17
   %diff.check231 = icmp ult i64 %i.cq, 31
   %conflict.rdx232 = or i1 %conflict.rdx230, %diff.check231
