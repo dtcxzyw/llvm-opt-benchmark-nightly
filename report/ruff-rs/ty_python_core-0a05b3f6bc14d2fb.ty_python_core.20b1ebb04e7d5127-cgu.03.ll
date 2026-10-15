@@ -204,32 +204,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
   %1 = load ptr, ptr %0, align 8, !noalias !48, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !48, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !48, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !48, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_core1__29semantic_index_Configuration_E7executes1_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !48
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_core1__29semantic_index_Configuration_E7executes1_0B19_.exit
 
 _RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_core1__29semantic_index_Configuration_E7executes1_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !48, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !48, !inline_history !38
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB2l_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_core1__29semantic_index_Configuration_E7executes1_0E0bEB3p_.exit
@@ -405,32 +403,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !65)
   %1 = load ptr, ptr %0, align 8, !noalias !65, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !65, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !65, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !65, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores0_1__26use_def_map_Configuration_E7executes1_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !65
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores0_1__26use_def_map_Configuration_E7executes1_0B19_.exit
 
 _RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores0_1__26use_def_map_Configuration_E7executes1_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !65, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !65, !inline_history !55
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB2l_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores0_1__26use_def_map_Configuration_E7executes1_0E0bEB3p_.exit
@@ -606,32 +602,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !82)
   %1 = load ptr, ptr %0, align 8, !noalias !82, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !82, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !82, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !82, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores1_1__27global_scope_Configuration_E7executes1_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !82
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores1_1__27global_scope_Configuration_E7executes1_0B19_.exit
 
 _RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores1_1__27global_scope_Configuration_E7executes1_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !82, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !82, !inline_history !72
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB2l_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores1_1__27global_scope_Configuration_E7executes1_0E0bEB3p_.exit
@@ -807,32 +801,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !99)
   %1 = load ptr, ptr %0, align 8, !noalias !99, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !99, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !99, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !99, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores_1__26place_table_Configuration_E7executes1_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !99
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores_1__26place_table_Configuration_E7executes1_0B19_.exit
 
 _RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores_1__26place_table_Configuration_E7executes1_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !99, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !99, !inline_history !89
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB2l_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores_1__26place_table_Configuration_E7executes1_0E0bEB3p_.exit
@@ -1008,32 +1000,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !116)
   %1 = load ptr, ptr %0, align 8, !noalias !116, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !116, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !116, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !116, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvNtCs2O29vuvTAEJ_14ty_python_core10re_exports1__29exported_names_Configuration_E7executes1_0B1b_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !116
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvNtCs2O29vuvTAEJ_14ty_python_core10re_exports1__29exported_names_Configuration_E7executes1_0B1b_.exit
 
 _RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvNtCs2O29vuvTAEJ_14ty_python_core10re_exports1__29exported_names_Configuration_E7executes1_0B1b_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !116, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !116, !inline_history !106
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB2l_14IngredientImplNtNvNtCs2O29vuvTAEJ_14ty_python_core10re_exports1__29exported_names_Configuration_E7executes1_0E0bEB3r_.exit
@@ -1209,32 +1199,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !133)
   %1 = load ptr, ptr %0, align 8, !noalias !133, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !133, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !133, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !133, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvNvNtNtCs2O29vuvTAEJ_14ty_python_core2db13TestProgramDb7program1__28program_inner_Configuration_E7executes1_0B1f_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !133
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvNvNtNtCs2O29vuvTAEJ_14ty_python_core2db13TestProgramDb7program1__28program_inner_Configuration_E7executes1_0B1f_.exit
 
 _RNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB6_14IngredientImplNtNvNvNtNtCs2O29vuvTAEJ_14ty_python_core2db13TestProgramDb7program1__28program_inner_Configuration_E7executes1_0B1f_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !133, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !133, !inline_history !123
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMNtNtCs45bxiIjzMqg_5salsa8function7executeINtB2l_14IngredientImplNtNvNvNtNtCs2O29vuvTAEJ_14ty_python_core2db13TestProgramDb7program1__28program_inner_Configuration_E7executes1_0E0bEB3v_.exit
@@ -1410,32 +1398,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !150)
   %1 = load ptr, ptr %0, align 8, !noalias !150, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !150, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !150, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !150, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionE6updates_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !150
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionE6updates_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionE6updates_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !150, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !150, !inline_history !140
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionE6updates_0E0bEB3p_.exit
@@ -1611,32 +1597,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !167)
   %1 = load ptr, ptr %0, align 8, !noalias !167, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !167, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !167, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !167, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionE8allocates0_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !167
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionE8allocates0_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionE8allocates0_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !167, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !167, !inline_history !157
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionE8allocates0_0E0bEB3p_.exit
@@ -1812,32 +1796,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !184)
   %1 = load ptr, ptr %0, align 8, !noalias !184, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !184, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !184, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !184, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionE6updates_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !184
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionE6updates_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionE6updates_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !184, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !184, !inline_history !174
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionE6updates_0E0bEB3p_.exit
@@ -2013,32 +1995,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !201)
   %1 = load ptr, ptr %0, align 8, !noalias !201, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !201, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !201, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !201, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionE8allocates0_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !201
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionE8allocates0_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionE8allocates0_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !201, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !201, !inline_history !191
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionE8allocates0_0E0bEB3p_.exit
@@ -2214,32 +2194,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !218)
   %1 = load ptr, ptr %0, align 8, !noalias !218, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !218, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !218, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !218, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdE6updates_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !218
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdE6updates_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdE6updates_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !218, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !218, !inline_history !208
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdE6updates_0E0bEB3p_.exit
@@ -2415,32 +2393,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !235)
   %1 = load ptr, ptr %0, align 8, !noalias !235, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !235, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !235, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !235, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdE8allocates0_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !235
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdE8allocates0_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdE8allocates0_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !235, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !235, !inline_history !225
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdE8allocates0_0E0bEB3p_.exit
@@ -2616,32 +2592,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !252)
   %1 = load ptr, ptr %0, align 8, !noalias !252, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !252, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !252, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !252, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core6unpack6UnpackE6updates_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !252
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core6unpack6UnpackE6updates_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core6unpack6UnpackE6updates_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !252, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !252, !inline_history !242
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core6unpack6UnpackE6updates_0E0bEB3p_.exit
@@ -2817,32 +2791,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !269)
   %1 = load ptr, ptr %0, align 8, !noalias !269, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !269, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !269, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !269, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core6unpack6UnpackE8allocates0_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !269
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core6unpack6UnpackE8allocates0_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core6unpack6UnpackE8allocates0_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !269, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !269, !inline_history !259
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core6unpack6UnpackE8allocates0_0E0bEB3p_.exit
@@ -3018,32 +2990,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !286)
   %1 = load ptr, ptr %0, align 8, !noalias !286, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !286, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !286, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !286, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate16PatternPredicateE6updates_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !286
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate16PatternPredicateE6updates_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate16PatternPredicateE6updates_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !286, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !286, !inline_history !276
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate16PatternPredicateE6updates_0E0bEB3p_.exit
@@ -3219,32 +3189,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !303)
   %1 = load ptr, ptr %0, align 8, !noalias !303, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !303, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !303, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !303, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate16PatternPredicateE8allocates0_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !303
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate16PatternPredicateE8allocates0_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate16PatternPredicateE8allocates0_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !303, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !303, !inline_history !293
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate16PatternPredicateE8allocates0_0E0bEB3p_.exit
@@ -3420,32 +3388,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !320)
   %1 = load ptr, ptr %0, align 8, !noalias !320, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !320, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !320, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !320, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate30StarImportPlaceholderPredicateE6updates_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !320
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate30StarImportPlaceholderPredicateE6updates_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate30StarImportPlaceholderPredicateE6updates_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !320, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !320, !inline_history !310
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate30StarImportPlaceholderPredicateE6updates_0E0bEB3p_.exit
@@ -3621,32 +3587,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !337)
   %1 = load ptr, ptr %0, align 8, !noalias !337, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !337, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !337, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !337, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate30StarImportPlaceholderPredicateE8allocates0_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !337
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate30StarImportPlaceholderPredicateE8allocates0_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate30StarImportPlaceholderPredicateE8allocates0_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !337, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !337, !inline_history !327
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9predicate30StarImportPlaceholderPredicateE8allocates0_0E0bEB3p_.exit
@@ -3822,32 +3786,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !354)
   %1 = load ptr, ptr %0, align 8, !noalias !354, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !354, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !354, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !354, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9statement14StatementInnerE6updates_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !354
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9statement14StatementInnerE6updates_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9statement14StatementInnerE6updates_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !354, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !354, !inline_history !344
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9statement14StatementInnerE6updates_0E0bEB3p_.exit
@@ -4023,32 +3985,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !371)
   %1 = load ptr, ptr %0, align 8, !noalias !371, !nonnull !9, !align !11, !noundef !9
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !12
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !12
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !12, !alias.scope !371, !noundef !9
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !9
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !9
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !9, !align !11
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !9, !align !11
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !371, !nonnull !9, !noundef !9 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !371, !nonnull !9, !align !11, !noundef !9 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9statement14StatementInnerE8allocates0_0B19_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !13, !invariant.load !9, !noalias !371
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9statement14StatementInnerE8allocates0_0B19_.exit
 
 _RNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB7_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9statement14StatementInnerE8allocates0_0B19_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !9, !noalias !371, !nonnull !9
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !371, !inline_history !361
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCNvMs3_NtCs45bxiIjzMqg_5salsa14tracked_structINtB2m_14IngredientImplNtNtCs2O29vuvTAEJ_14ty_python_core9statement14StatementInnerE8allocates0_0E0bEB3p_.exit

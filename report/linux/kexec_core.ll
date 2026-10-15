@@ -202,10 +202,10 @@ bb.a:
   br i1 %or.cond.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = icmp eq i32 %0, 1                        ; 2 uses
-  %i.e = select i1 %i.d, ptr @load_limit_panic, ptr @load_limit_reboot ; 2 uses
+  %i.d = icmp eq i32 %0, 1
+  %i.e = select i1 %i.d, ptr @load_limit_panic, ptr @load_limit_reboot ; 3 uses
   tail call void @mutex_lock(ptr noundef nonnull %i.e) #17
-  %1 = select i1 %i.d, ptr getelementptr inbounds nuw (i8, ptr @load_limit_panic, i64 24), ptr getelementptr inbounds nuw (i8, ptr @load_limit_reboot, i64 24) ; 2 uses
+  %1 = getelementptr i8, ptr %i.e, i64 24         ; 2 uses
   %i.f = load i32, ptr %1, align 8                ; 2 uses
   switch i32 %i.f, label %bb.c [
     i32 0, label %.sink.split

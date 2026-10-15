@@ -204,6 +204,7 @@ begin_hunk_0
 @l_Lean_Elab_Command_elabWhere___redArg___closed__6_value = internal constant <{ { i32, i8, i8, i8, i8 }, i64, i64, i64, [14 x i8] }> <{ { i32, i8, i8, i8, i8 } { i32 0, i8 0, i8 0, i8 0, i8 -7 }, i64 14, i64 14, i64 13, [14 x i8] c"noncomputable\00" }>, align 8
 @l_Lean_Elab_Command_elabWhere___redArg___closed__7_value = internal constant <{ { i32, i8, i8, i8, i8 }, i64, i64, i64, [7 x i8] }> <{ { i32, i8, i8, i8, i8 } { i32 0, i8 0, i8 0, i8 0, i8 -7 }, i64 7, i64 7, i64 6, [7 x i8] c"public\00" }>, align 8
 @l_Lean_Elab_Command_elabWhere___redArg___closed__8_value = internal constant <{ { i32, i8, i8, i8, i8 }, i64, i64, i64, [3 x i8] }> <{ { i32, i8, i8, i8, i8 } { i32 0, i8 0, i8 0, i8 0, i8 -7 }, i64 3, i64 3, i64 2, [3 x i8] c"@[\00" }>, align 8
+@l_Lean_Elab_Command_elabWhere___redArg___closed__9_value = internal constant { { i32, i8, i8, i8, i8 }, [1 x ptr] } { { i32, i8, i8, i8, i8 } { i32 0, i8 16, i8 0, i8 1, i8 1 }, [1 x ptr] [ptr inttoptr (i64 1 to ptr)] }, align 8
 @l_Lean_Elab_Command_elabWhere___redArg___closed__1_value = internal constant { { i32, i8, i8, i8, i8 }, [1 x ptr] } { { i32, i8, i8, i8, i8 } { i32 0, i8 16, i8 0, i8 1, i8 3 }, [1 x ptr] [ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__0_value] }, align 8
 @l_Lean_Elab_Command_elabWhere___redArg___closed__0_value = internal constant <{ { i32, i8, i8, i8, i8 }, i64, i64, i64, [3 x i8] }> <{ { i32, i8, i8, i8, i8 } { i32 0, i8 0, i8 0, i8 0, i8 -7 }, i64 3, i64 3, i64 2, [3 x i8] c"\0A\0A\00" }>, align 8
 @l_Lean_Elab_Command_elabWhere___redArg___closed__3_value = internal constant { { i32, i8, i8, i8, i8 }, i64, i64, i64, [40 x i8] } { { i32, i8, i8, i8, i8 } { i32 0, i8 0, i8 0, i8 0, i8 -7 }, i64 40, i64 40, i64 39, [40 x i8] c"-- In root namespace with initial scope\00" }, align 8
@@ -606,23 +607,32 @@ bb.xx:                                            ; preds = %bb.xw
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.ae) #8
   br label %lean_dec_ref.exit1702
 
-bb.xy:                                            ; preds = %lean_obj_tag.exit2042.a
+2:                                                ; preds = %lean_obj_tag.exit2042
+  %3 = getelementptr inbounds nuw i8, ptr %.01243, i64 8
+  %4 = load ptr, ptr %3, align 8, !tbaa !12
+  %5 = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %4, i8 noundef zeroext 1) #8
+  tail call void @lean_inc_heartbeat() #8
+  %6 = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #8 ; 6 uses
+  %7 = icmp eq ptr %6, null
+  br i1 %7, label %bb.xy, label %lean_alloc_ctor.exit2021
+
+bb.xy:                                            ; preds = %2
   tail call void @lean_internal_panic_out_of_memory() #9
   unreachable
 
-lean_alloc_ctor.exit2021:                         ; preds = %lean_obj_tag.exit2042.a
-  %i.agw = getelementptr inbounds nuw i8, ptr %i.aja, i64 4
-  store i32 1, ptr %i.aja, align 4, !tbaa !14
+lean_alloc_ctor.exit2021:                         ; preds = %2
+  %i.agw = getelementptr inbounds nuw i8, ptr %6, i64 4
+  store i32 1, ptr %6, align 4, !tbaa !14
   store i32 33685528, ptr %i.agw, align 4
-  %i.agx = getelementptr inbounds nuw i8, ptr %i.aja, i64 8
-  store ptr %i.aiz, ptr %i.agx, align 8, !tbaa !12
-  %i.agy = getelementptr inbounds nuw i8, ptr %i.aja, i64 16
+  %i.agx = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store ptr %5, ptr %i.agx, align 8, !tbaa !12
+  %i.agy = getelementptr inbounds nuw i8, ptr %6, i64 16
   store ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__5_value, ptr %i.agy, align 8, !tbaa !12
-  %i.agz = tail call ptr @l_Array_mkArray1___redArg(ptr noundef nonnull %i.aja) #8
+  %i.agz = tail call ptr @l_Array_mkArray1___redArg(ptr noundef nonnull %6) #8
   br label %lean_obj_tag.exit2042.thread
 
-lean_obj_tag.exit2042.thread:                     ; preds = %lean_alloc_ctor.exit2038, %lean_alloc_ctor.exit2021
-  %.01169 = phi ptr [ %i.agz, %lean_alloc_ctor.exit2021 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_alloc_ctor.exit2038 ] ; 4 uses
+lean_obj_tag.exit2042.thread:                     ; preds = %lean_alloc_ctor.exit2038, %lean_obj_tag.exit2042, %lean_alloc_ctor.exit2021
+  %.01169 = phi ptr [ %i.agz, %lean_alloc_ctor.exit2021 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_obj_tag.exit2042 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_alloc_ctor.exit2038 ] ; 4 uses
   %.val.i2022 = load i32, ptr %.0.i2055, align 4, !tbaa !14 ; 3 uses
   %i.aha = icmp sgt i32 %.val.i2022, 0
   br i1 %i.aha, label %bb.xz, label %bb.ya, !prof !15
@@ -742,23 +752,32 @@ lean_inc.exit1314:                                ; preds = %lean_alloc_ctor.exi
   %i.aie = tail call ptr @lean_array_push(ptr noundef nonnull @l___private_Lean_Elab_BuiltinCommand_0__Lean_Elab_Command_elabWhere_describeOpenDecls___closed__3_value, ptr noundef %i.aid) #8
   br label %bb.ti
 
-bb.ym:                                            ; preds = %lean_obj_tag.exit2054
+8:                                                ; preds = %lean_obj_tag.exit2054
+  %9 = getelementptr inbounds nuw i8, ptr %.01247, i64 8
+  %10 = load ptr, ptr %9, align 8, !tbaa !12
+  %11 = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %10, i8 noundef zeroext 1) #8
+  tail call void @lean_inc_heartbeat() #8
+  %12 = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #8 ; 6 uses
+  %13 = icmp eq ptr %12, null
+  br i1 %13, label %bb.ym, label %lean_alloc_ctor.exit2031
+
+bb.ym:                                            ; preds = %8
   tail call void @lean_internal_panic_out_of_memory() #9
   unreachable
 
-lean_alloc_ctor.exit2031:                         ; preds = %lean_obj_tag.exit2054
-  %i.aif = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 1, ptr %3, align 4, !tbaa !14
+lean_alloc_ctor.exit2031:                         ; preds = %8
+  %i.aif = getelementptr inbounds nuw i8, ptr %12, i64 4
+  store i32 1, ptr %12, align 4, !tbaa !14
   store i32 33685528, ptr %i.aif, align 4
-  %i.aig = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %2, ptr %i.aig, align 8, !tbaa !12
-  %i.aih = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.aig = getelementptr inbounds nuw i8, ptr %12, i64 8
+  store ptr %11, ptr %i.aig, align 8, !tbaa !12
+  %i.aih = getelementptr inbounds nuw i8, ptr %12, i64 16
   store ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__6_value, ptr %i.aih, align 8, !tbaa !12
-  %i.aii = tail call ptr @l_Array_mkArray1___redArg(ptr noundef nonnull %3) #8
+  %i.aii = tail call ptr @l_Array_mkArray1___redArg(ptr noundef nonnull %12) #8
   br label %lean_obj_tag.exit2054.thread
 
-lean_obj_tag.exit2054.thread:                     ; preds = %lean_alloc_ctor.exit2050, %lean_alloc_ctor.exit2031
-  %.01186 = phi ptr [ %i.aii, %lean_alloc_ctor.exit2031 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_alloc_ctor.exit2050 ] ; 4 uses
+lean_obj_tag.exit2054.thread:                     ; preds = %lean_alloc_ctor.exit2050, %lean_obj_tag.exit2054, %lean_alloc_ctor.exit2031
+  %.01186 = phi ptr [ %i.aii, %lean_alloc_ctor.exit2031 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_obj_tag.exit2054 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_alloc_ctor.exit2050 ] ; 4 uses
   %.val.i.i2032 = load i32, ptr %.0.i2055, align 4, !tbaa !14 ; 3 uses
   %i.aij = icmp sgt i32 %.val.i.i2032, 0
   br i1 %i.aij, label %bb.yn, label %bb.yo, !prof !15
@@ -836,32 +855,44 @@ lean_alloc_ctor.exit2038:                         ; preds = %lean_inc.exit1310
   store ptr @l_Lean_Elab_Command_elabSection___closed__10_value, ptr %i.aix, align 8, !tbaa !12
   %i.aiy = getelementptr inbounds nuw i8, ptr %i.ait, i64 24
   store ptr %i.aim, ptr %i.aiy, align 8, !tbaa !12
-  br i1 %i.cl, label %lean_obj_tag.exit2042.thread, label %lean_obj_tag.exit2042.a
+  %14 = ptrtoint ptr %.01243 to i64
+  %15 = and i64 %14, 1
+  %.not.i2039 = icmp eq i64 %15, 0
+  br i1 %.not.i2039, label %lean_obj_tag.exit2042, label %lean_obj_tag.exit2042.thread
 
-lean_obj_tag.exit2042.a:                          ; preds = %lean_alloc_ctor.exit2038
-  %i.aiz = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef nonnull inttoptr (i64 1 to ptr), i8 noundef zeroext 1) #8
+lean_obj_tag.exit2042:                            ; preds = %lean_alloc_ctor.exit2038
+  %16 = getelementptr i8, ptr %.01243, i64 4
+  %.val.i2041 = load i32, ptr %16, align 4
+  %.mask2249 = and i32 %.val.i2041, -16777216
+  %17 = icmp eq i32 %.mask2249, 16777216
+  br i1 %17, label %2, label %lean_obj_tag.exit2042.thread
+
+lean_obj_tag.exit2042.a:                          ; preds = %lean_obj_tag.exit2078
+  %18 = getelementptr inbounds nuw i8, ptr %.01250, i64 8
+  %19 = load ptr, ptr %18, align 8, !tbaa !12
+  %i.aiz = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %19, i8 noundef zeroext 1) #8
   tail call void @lean_inc_heartbeat() #8
   %i.aja = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #8 ; 6 uses
   %i.ajb = icmp eq ptr %i.aja, null
-  br i1 %i.ajb, label %bb.xy, label %lean_alloc_ctor.exit2021
+  br i1 %i.ajb, label %bb.yy, label %lean_alloc_ctor.exit2043
 
-bb.yy:                                            ; preds = %lean_obj_tag.exit2078
+bb.yy:                                            ; preds = %lean_obj_tag.exit2042.a
   tail call void @lean_internal_panic_out_of_memory() #9
   unreachable
 
-lean_alloc_ctor.exit2043:                         ; preds = %lean_obj_tag.exit2078
-  %i.ajc = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store i32 1, ptr %5, align 4, !tbaa !14
+lean_alloc_ctor.exit2043:                         ; preds = %lean_obj_tag.exit2042.a
+  %i.ajc = getelementptr inbounds nuw i8, ptr %i.aja, i64 4
+  store i32 1, ptr %i.aja, align 4, !tbaa !14
   store i32 33685528, ptr %i.ajc, align 4
-  %i.ajd = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %4, ptr %i.ajd, align 8, !tbaa !12
-  %i.aje = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.ajd = getelementptr inbounds nuw i8, ptr %i.aja, i64 8
+  store ptr %i.aiz, ptr %i.ajd, align 8, !tbaa !12
+  %i.aje = getelementptr inbounds nuw i8, ptr %i.aja, i64 16
   store ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__7_value, ptr %i.aje, align 8, !tbaa !12
-  %i.ajf = tail call ptr @l_Array_mkArray1___redArg(ptr noundef nonnull %5) #8
+  %i.ajf = tail call ptr @l_Array_mkArray1___redArg(ptr noundef nonnull %i.aja) #8
   br label %lean_obj_tag.exit2078.thread
 
-lean_obj_tag.exit2078.thread:                     ; preds = %lean_alloc_ctor.exit2074, %lean_alloc_ctor.exit2043
-  %.01200 = phi ptr [ %i.ajf, %lean_alloc_ctor.exit2043 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_alloc_ctor.exit2074 ] ; 4 uses
+lean_obj_tag.exit2078.thread:                     ; preds = %lean_alloc_ctor.exit2074, %lean_obj_tag.exit2078, %lean_alloc_ctor.exit2043
+  %.01200 = phi ptr [ %i.ajf, %lean_alloc_ctor.exit2043 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_obj_tag.exit2078 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_alloc_ctor.exit2074 ] ; 4 uses
   %.val.i.i2044 = load i32, ptr %.0.i2055, align 4, !tbaa !14 ; 3 uses
   %i.ajg = icmp sgt i32 %.val.i.i2044, 0
   br i1 %i.ajg, label %bb.yz, label %bb.za, !prof !15
@@ -939,14 +970,17 @@ lean_alloc_ctor.exit2050:                         ; preds = %lean_inc.exit1306
   store ptr @l_Lean_Elab_Command_elabSection___closed__10_value, ptr %i.aju, align 8, !tbaa !12
   %i.ajv = getelementptr inbounds nuw i8, ptr %i.ajq, i64 24
   store ptr %i.ajj, ptr %i.ajv, align 8, !tbaa !12
-  br i1 %i.ck, label %lean_obj_tag.exit2054.thread, label %lean_obj_tag.exit2054
+  %20 = ptrtoint ptr %.01247 to i64
+  %21 = and i64 %20, 1
+  %.not.i2051 = icmp eq i64 %21, 0
+  br i1 %.not.i2051, label %lean_obj_tag.exit2054, label %lean_obj_tag.exit2054.thread
 
 lean_obj_tag.exit2054:                            ; preds = %lean_alloc_ctor.exit2050
-  %2 = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef nonnull inttoptr (i64 1 to ptr), i8 noundef zeroext 1) #8
-  tail call void @lean_inc_heartbeat() #8
-  %3 = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #8 ; 6 uses
-  %i.ajw = icmp eq ptr %3, null
-  br i1 %i.ajw, label %bb.ym, label %lean_alloc_ctor.exit2031
+  %22 = getelementptr i8, ptr %.01247, i64 4
+  %.val.i2053 = load i32, ptr %22, align 4
+  %.mask2248 = and i32 %.val.i2053, -16777216
+  %i.ajw = icmp eq i32 %.mask2248, 16777216
+  br i1 %i.ajw, label %8, label %lean_obj_tag.exit2054.thread
 
 bb.zk:                                            ; preds = %lean_obj_tag.exit2115, %bb.abo, %bb.abm, %bb.abn
   %i.ajx = load atomic i32, ptr @l_Lean_Elab_Command_elabSection___closed__11_once seq_cst, align 4, !tbaa !21
@@ -963,9 +997,21 @@ bb.zm:                                            ; preds = %bb.zk
 
 lean_obj_once.exit2056:                           ; preds = %bb.zl, %bb.zm
   %.0.i2055 = phi ptr [ %i.ajz, %bb.zl ], [ %i.aka, %bb.zm ] ; 17 uses
-  br i1 %i.ci, label %lean_obj_tag.exit2060.thread, label %lean_obj_tag.exit2060.a
+  %23 = ptrtoint ptr %spec.select to i64
+  %24 = and i64 %23, 1
+  %.not.i2057 = icmp eq i64 %24, 0
+  br i1 %.not.i2057, label %lean_obj_tag.exit2060, label %lean_obj_tag.exit2060.thread
 
-lean_obj_tag.exit2060.a:                          ; preds = %lean_obj_once.exit2056
+lean_obj_tag.exit2060:                            ; preds = %lean_obj_once.exit2056
+  %25 = getelementptr i8, ptr %spec.select, i64 4
+  %.val.i2059 = load i32, ptr %25, align 4
+  %.mask = and i32 %.val.i2059, -16777216
+  %26 = icmp eq i32 %.mask, 16777216
+  br i1 %26, label %lean_obj_tag.exit2060.a, label %lean_obj_tag.exit2060.thread
+
+lean_obj_tag.exit2060.a:                          ; preds = %lean_obj_tag.exit2060
+  %27 = getelementptr inbounds nuw i8, ptr %spec.select, i64 8
+  %28 = load ptr, ptr %27, align 8, !tbaa !12
   %i.akb = ptrtoint ptr %i.anf to i64
   %i.akc = and i64 %i.akb, 1
   %.not.i2061 = icmp eq i64 %i.akc, 0
@@ -1007,7 +1053,7 @@ lean_alloc_ctor.exit2065:                         ; preds = %lean_inc_n.exit2064
   store ptr %i.anf, ptr %i.akj, align 8, !tbaa !12
   %i.akk = getelementptr inbounds nuw i8, ptr %i.akg, i64 16
   store ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__8_value, ptr %i.akk, align 8, !tbaa !12
-  %i.akl = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef nonnull inttoptr (i64 1 to ptr), i8 noundef zeroext 1) #8
+  %i.akl = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %28, i8 noundef zeroext 1) #8
   tail call void @lean_inc_heartbeat() #8
   %i.akm = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #8 ; 6 uses
   %i.akn = icmp eq ptr %i.akm, null
@@ -1045,8 +1091,8 @@ lean_alloc_ctor.exit2067:                         ; preds = %lean_alloc_ctor.exi
   %i.akw = tail call ptr @l_Array_mkArray3___redArg(ptr noundef nonnull %i.akg, ptr noundef nonnull %i.akm, ptr noundef nonnull %i.akr) #8
   br label %lean_obj_tag.exit2060.thread
 
-lean_obj_tag.exit2060.thread:                     ; preds = %lean_obj_once.exit2056, %lean_alloc_ctor.exit2067
-  %.01214 = phi ptr [ %i.akw, %lean_alloc_ctor.exit2067 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_obj_once.exit2056 ] ; 4 uses
+lean_obj_tag.exit2060.thread:                     ; preds = %lean_obj_once.exit2056, %lean_obj_tag.exit2060, %lean_alloc_ctor.exit2067
+  %.01214 = phi ptr [ %i.akw, %lean_alloc_ctor.exit2067 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_obj_tag.exit2060 ], [ @l_Lean_Elab_OpenDecl_elabOpenDecl___at___00Lean_Elab_Command_elabOpen_spec__0___closed__10_value, %lean_obj_once.exit2056 ] ; 4 uses
   %.val.i.i2068 = load i32, ptr %.0.i2055, align 4, !tbaa !14 ; 3 uses
   %i.akx = icmp sgt i32 %.val.i.i2068, 0
   br i1 %i.akx, label %bb.zu, label %bb.zv, !prof !15
@@ -1127,14 +1173,17 @@ lean_alloc_ctor.exit2074:                         ; preds = %lean_inc.exit1302
   store ptr @l_Lean_Elab_Command_elabSection___closed__10_value, ptr %i.aln, align 8, !tbaa !12
   %i.alo = getelementptr inbounds nuw i8, ptr %i.alj, i64 24
   store ptr %i.ala, ptr %i.alo, align 8, !tbaa !12
-  br i1 %i.cj, label %lean_obj_tag.exit2078.thread, label %lean_obj_tag.exit2078
+  %29 = ptrtoint ptr %.01250 to i64
+  %30 = and i64 %29, 1
+  %.not.i2075 = icmp eq i64 %30, 0
+  br i1 %.not.i2075, label %lean_obj_tag.exit2078, label %lean_obj_tag.exit2078.thread
 
 lean_obj_tag.exit2078:                            ; preds = %lean_alloc_ctor.exit2074
-  %4 = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef nonnull inttoptr (i64 1 to ptr), i8 noundef zeroext 1) #8
-  tail call void @lean_inc_heartbeat() #8
-  %5 = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #8 ; 6 uses
-  %i.alp = icmp eq ptr %5, null
-  br i1 %i.alp, label %bb.yy, label %lean_alloc_ctor.exit2043
+  %31 = getelementptr i8, ptr %.01250, i64 4
+  %.val.i2077 = load i32, ptr %31, align 4
+  %.mask2247 = and i32 %.val.i2077, -16777216
+  %i.alp = icmp eq i32 %.mask2247, 16777216
+  br i1 %i.alp, label %lean_obj_tag.exit2042.a, label %lean_obj_tag.exit2078.thread
 
 bb.aaf:                                           ; preds = %bb.aer
   %i.alq = lshr i64 %i.aqs, 1
@@ -1537,6 +1586,10 @@ lean_alloc_ctor.exit2123:                         ; preds = %bb.aep
   br label %lean_dec.exit
 
 bb.aer:                                           ; preds = %lean_dec.exit1521
+  %spec.select = select i1 %i.ci, ptr inttoptr (i64 1 to ptr), ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__9_value ; 3 uses
+  %.01250 = select i1 %i.cj, ptr inttoptr (i64 1 to ptr), ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__9_value ; 3 uses
+  %.01247 = select i1 %i.ck, ptr inttoptr (i64 1 to ptr), ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__9_value ; 3 uses
+  %.01243 = select i1 %i.cl, ptr inttoptr (i64 1 to ptr), ptr @l_Lean_Elab_Command_elabWhere___redArg___closed__9_value ; 3 uses
   %i.aqr = tail call ptr @l_Lean_Elab_Command_getRef___redArg(ptr noundef %0) #8 ; 13 uses
   %i.aqs = ptrtoint ptr %i.aqr to i64             ; 2 uses
   %i.aqt = and i64 %i.aqs, 1

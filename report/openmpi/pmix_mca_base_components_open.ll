@@ -165,10 +165,11 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.w = load i8, ptr %i.r, align 1, !tbaa !40
-  %i.x = icmp eq i8 %i.w, 94                      ; 5 uses
+  %i.x = icmp eq i8 %i.w, 94                      ; 3 uses
   %spec.store.select = select i1 %i.x, i32 2, i32 1
   store i32 %spec.store.select, ptr @show_load_errors, align 4, !tbaa !21
   %spec.select = zext i1 %i.x to i64
+  %spec.select51 = select i1 %i.x, ptr @show_load_errors_exclude, ptr @show_load_errors_include ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 %spec.select
   %i.z = call ptr @PMIx_Argv_split(ptr noundef nonnull %i.y, i32 noundef 44) #15 ; 5 uses
   %i.aa = icmp eq ptr %i.z, null
@@ -180,9 +181,9 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not5067, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %1 = select i1 %i.x, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 120), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 120)
-  %2 = select i1 %i.x, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 248), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 248) ; 2 uses
-  %3 = select i1 %i.x, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 264), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 264) ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %spec.select51, i64 120
+  %2 = getelementptr inbounds nuw i8, ptr %spec.select51, i64 248 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %spec.select51, i64 264 ; 2 uses
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.l
