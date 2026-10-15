@@ -205,7 +205,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !23   ; 4 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !20     ; 8 uses
   %i.d = icmp sgt i64 %i.b, 0
-  br i1 %i.d, label %.lr.ph, label %.thread80
+  br i1 %i.d, label %.lr.ph, label %bb.v
 
 ._crit_edge:                                      ; preds = %.backedge
   %i.e = trunc nuw i8 %.055.be to i1
@@ -333,16 +333,15 @@ bb.t:                                             ; preds = %bb.s, %._crit_edge
   store i8 10, ptr %i.ah, align 1, !tbaa !21
   br label %bb.v
 
-.thread80:                                        ; preds = %bb.a, %bb.s, %bb.r
-  %.057.lcssa7883 = phi i64 [ %.057.be, %bb.r ], [ %.057.be, %bb.s ], [ 0, %bb.a ] ; 2 uses
-  %i.ai = icmp slt i64 %.057.lcssa7883, %i.b
+.thread80:                                        ; preds = %bb.s, %bb.r
+  %i.ai = icmp slt i64 %.057.be, %i.b
   br i1 %i.ai, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %.thread80
-  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %.057.lcssa7883, i8 noundef signext 0)
+  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %.057.be, i8 noundef signext 0)
   br label %bb.v
 
-bb.v:                                             ; preds = %.thread80, %bb.u, %bb.t
+bb.v:                                             ; preds = %bb.a, %.thread80, %bb.u, %bb.t
   ret void
 }
 

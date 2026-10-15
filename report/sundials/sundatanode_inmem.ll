@@ -202,36 +202,33 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.i = icmp eq i64 %i.e, 0
-  br i1 %i.i, label %2, label %bb.c
+  br i1 %i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.j = sitofp i64 %i.e to x86_fp80
   %i.k = fmul nnan x86_fp80 %i.j, 1.500000e+00
   %i.l = tail call x86_fp80 @llvm.ceil.f80(x86_fp80 %i.k)
-  %i.m = fptosi x86_fp80 %i.l to i64
-  br label %2
-
-2:                                                ; preds = %bb.c, %bb.b
-  %3 = phi i64 [ %i.m, %bb.c ], [ 2, %bb.b ]      ; 3 uses
-  %.not.i.i.i = icmp sgt i64 %3, %i.e
+  %i.m = fptosi x86_fp80 %i.l to i64              ; 2 uses
+  %.not.i.i.i = icmp slt i64 %i.e, %i.m
   br i1 %.not.i.i.i, label %bb.d, label %SUNStlVector_SUNDataNode_Grow.exit.thread.i
 
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %2 = phi i64 [ %i.m, %bb.c ], [ 2, %bb.b ]      ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !37
-  %i.p = shl i64 %3, 3
+  %i.p = shl i64 %2, 3
   %i.q = tail call ptr @realloc(ptr noundef %i.o, i64 noundef %i.p) #14 ; 2 uses
   %.not11.i.i.i = icmp eq ptr %i.q, null
   br i1 %.not11.i.i.i, label %SUNStlVector_SUNDataNode_PushBack.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   store ptr %i.q, ptr %i.n, align 8, !tbaa !37
-  store i64 %3, ptr %i.f, align 8, !tbaa !39
+  store i64 %2, ptr %i.f, align 8, !tbaa !39
   %.pre.i = load i64, ptr %i.d, align 8, !tbaa !38
   br label %SUNStlVector_SUNDataNode_Grow.exit.thread.i
 
-SUNStlVector_SUNDataNode_Grow.exit.thread.i:      ; preds = %bb.e, %2, %bb.a
-  %i.r = phi i64 [ %.pre.i, %bb.e ], [ %i.e, %2 ], [ %i.e, %bb.a ] ; 2 uses
+SUNStlVector_SUNDataNode_Grow.exit.thread.i:      ; preds = %bb.e, %bb.c, %bb.a
+  %i.r = phi i64 [ %.pre.i, %bb.e ], [ %i.e, %bb.c ], [ %i.e, %bb.a ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !37
   %i.u = add nsw i64 %i.r, 1
