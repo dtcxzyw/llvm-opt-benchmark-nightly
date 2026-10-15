@@ -206,7 +206,7 @@ bb.a:
   %14 = alloca %"class.std::shared_ptr.289", align 16 ; 8 uses
   %15 = alloca %"class.dropbox::oxygen::nn.288", align 16 ; 8 uses
   %16 = alloca %"class.osgeo::proj::common::Angle", align 8 ; 7 uses
-  %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
+  %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 20 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 19 uses
   %19 = alloca %"class.dropbox::oxygen::nn.292", align 16 ; 9 uses
   %20 = alloca %"class.std::shared_ptr.289", align 16 ; 10 uses
@@ -215,7 +215,7 @@ bb.a:
   %23 = alloca %"class.dropbox::oxygen::nn.288", align 16 ; 10 uses
   %24 = alloca %"class.osgeo::proj::common::Angle", align 8 ; 10 uses
   %25 = alloca %"class.dropbox::oxygen::nn.292", align 16 ; 12 uses
-  %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 19 uses
+  %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 21 uses
   %27 = alloca %"class.std::__cxx11::basic_string", align 8 ; 20 uses
   %28 = alloca %"class.dropbox::oxygen::nn.292", align 16 ; 13 uses
   %29 = alloca %"class.std::__cxx11::basic_string", align 8 ; 21 uses
@@ -227,7 +227,7 @@ bb.a:
   %35 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %36 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %i.m = tail call noundef i32 @_ZNK5osgeo4proj6common13UnitOfMeasure4typeEv(ptr noundef nonnull align 8 dereferenceable(24) %3) #45
-  %i.n = icmp eq i32 %i.m, 2                      ; 17 uses
+  %i.n = icmp eq i32 %i.m, 2                      ; 12 uses
   br i1 %i.n, label %bb.b, label %.loopexit784
 
 bb.b:                                             ; preds = %bb.a
@@ -341,17 +341,15 @@ bb.d:                                             ; preds = %._crit_edge.i.i345
   store i8 0, ptr %i.aw, align 1, !tbaa !166
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #41
+  %_ZN5osgeo4proj2cs16AxisAbbreviation3lonB5cxx11E._ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E = select i1 %i.n, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation3lonB5cxx11E, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E ; 2 uses
   %37 = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
   store ptr %37, ptr %12, align 8, !tbaa !160
-  %_ZN5osgeo4proj2cs16AxisAbbreviation3lonB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation3lonB5cxx11E, align 8
-  %_ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E, align 8
-  %38 = select i1 %i.n, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation3lonB5cxx11E.val, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation3lonB5cxx11E, i64 8), align 8
-  %.val769 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E, i64 8), align 8
-  %39 = select i1 %i.n, i64 %.val, i64 %.val769   ; 4 uses
+  %_ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E.val = load ptr, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation3lonB5cxx11E._ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E, align 8, !tbaa !163 ; 2 uses
+  %38 = getelementptr inbounds nuw i8, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation3lonB5cxx11E._ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E, i64 8
+  %.val769 = load i64, ptr %38, align 8, !tbaa !164 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #41
-  store i64 %39, ptr %i.j, align 8, !tbaa !165
-  %i.ax = icmp ugt i64 %39, 15
+  store i64 %.val769, ptr %i.j, align 8, !tbaa !165
+  %i.ax = icmp ugt i64 %.val769, 15
   br i1 %i.ax, label %.noexc.i353, label %._crit_edge.i.i352
 
 .noexc.i353:                                      ; preds = %.critedge290
@@ -366,18 +364,18 @@ bb.d:                                             ; preds = %._crit_edge.i.i345
 
 ._crit_edge.i.i352:                               ; preds = %.noexc354, %.critedge290
   %i.ba = phi ptr [ %i.ay, %.noexc354 ], [ %37, %.critedge290 ] ; 2 uses
-  switch i64 %39, label %bb.f [
+  switch i64 %.val769, label %bb.f [
     i64 1, label %bb.e
     i64 0, label %bb.g
   ]
 
 bb.e:                                             ; preds = %._crit_edge.i.i352
-  %i.bb = load i8, ptr %38, align 1, !tbaa !166
+  %i.bb = load i8, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E.val, align 1, !tbaa !166
   store i8 %i.bb, ptr %i.ba, align 1, !tbaa !166
   br label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge.i.i352
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr align 1 %38, i64 %39, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr align 1 %_ZN5osgeo4proj2cs16AxisAbbreviation1EB5cxx11E.val, i64 %.val769, i1 false)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %._crit_edge.i.i352
@@ -595,11 +593,11 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj2cs8MeridianEEED2Ev.exit: ; pre
 .critedge298:                                     ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj2cs8MeridianELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj2cs8MeridianEEED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #41
-  %40 = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 4 uses
-  store ptr %40, ptr %17, align 8, !tbaa !160
   br i1 %i.bg, label %.noexc.i364, label %bb.ag
 
 .noexc.i364:                                      ; preds = %.critedge298
+  %39 = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
+  store ptr %39, ptr %17, align 8, !tbaa !160
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #41
   store i64 23, ptr %i.i, align 8, !tbaa !165
   %i.dl = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %17, ptr noundef nonnull align 8 dereferenceable(8) %i.i, i64 noundef 0)
@@ -608,7 +606,7 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj2cs8MeridianEEED2Ev.exit: ; pre
 .noexc365:                                        ; preds = %.noexc.i364
   store ptr %i.dl, ptr %17, align 8, !tbaa !163
   %i.dm = load i64, ptr %i.i, align 8, !tbaa !165 ; 3 uses
-  store i64 %i.dm, ptr %40, align 8, !tbaa !166
+  store i64 %i.dm, ptr %39, align 8, !tbaa !166
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %i.dl, ptr noundef nonnull align 1 dereferenceable(23) @.str.516, i64 23, i1 false)
   %i.dn = getelementptr inbounds nuw i8, ptr %17, i64 8
   store i64 %i.dm, ptr %i.dn, align 8, !tbaa !164
@@ -627,15 +625,15 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj2cs8MeridianEEED2Ev.exit: ; pre
   br label %.critedge303
 
 bb.ag:                                            ; preds = %.critedge298
-  %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E, align 8
-  %_ZN5osgeo4proj2cs8AxisName8NorthingB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs8AxisName8NorthingB5cxx11E, align 8
-  %41 = select i1 %i.n, ptr %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E.val, ptr %_ZN5osgeo4proj2cs8AxisName8NorthingB5cxx11E.val ; 2 uses
-  %.val770 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E, i64 8), align 8
-  %.val771 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs8AxisName8NorthingB5cxx11E, i64 8), align 8
-  %42 = select i1 %i.n, i64 %.val770, i64 %.val771 ; 4 uses
+  %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName8NorthingB5cxx11E = select i1 %i.n, ptr @_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E, ptr @_ZN5osgeo4proj2cs8AxisName8NorthingB5cxx11E ; 2 uses
+  %40 = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 3 uses
+  store ptr %40, ptr %17, align 8, !tbaa !160
+  %41 = load ptr, ptr %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName8NorthingB5cxx11E, align 8, !tbaa !163 ; 2 uses
+  %42 = getelementptr inbounds nuw i8, ptr %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName8NorthingB5cxx11E, i64 8
+  %43 = load i64, ptr %42, align 8, !tbaa !164    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #41
-  store i64 %42, ptr %i.h, align 8, !tbaa !165
-  %i.dt = icmp ugt i64 %42, 15
+  store i64 %43, ptr %i.h, align 8, !tbaa !165
+  %i.dt = icmp ugt i64 %43, 15
   br i1 %i.dt, label %.noexc.i368, label %._crit_edge.i.i367
 
 .noexc.i368:                                      ; preds = %bb.ag
@@ -650,7 +648,7 @@ bb.ag:                                            ; preds = %.critedge298
 
 ._crit_edge.i.i367:                               ; preds = %.noexc369, %bb.ag
   %i.dw = phi ptr [ %i.du, %.noexc369 ], [ %40, %bb.ag ] ; 2 uses
-  switch i64 %42, label %bb.ai [
+  switch i64 %43, label %bb.ai [
     i64 1, label %bb.ah
     i64 0, label %.critedge301
   ]
@@ -661,7 +659,7 @@ bb.ah:                                            ; preds = %._crit_edge.i.i367
   br label %.critedge301
 
 bb.ai:                                            ; preds = %._crit_edge.i.i367
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dw, ptr align 1 %41, i64 %42, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dw, ptr align 1 %41, i64 %43, i1 false)
   br label %.critedge301
 
 .critedge301:                                     ; preds = %._crit_edge.i.i367, %bb.ah, %bb.ai
@@ -673,17 +671,15 @@ bb.ai:                                            ; preds = %._crit_edge.i.i367
   store i8 0, ptr %i.eb, align 1, !tbaa !166
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #41
-  %43 = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 3 uses
-  store ptr %43, ptr %18, align 8, !tbaa !160
-  %_ZN5osgeo4proj2cs16AxisAbbreviation3latB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation3latB5cxx11E, align 8
-  %_ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E, align 8
-  %44 = select i1 %i.n, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation3latB5cxx11E.val, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E.val ; 2 uses
-  %.val772 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation3latB5cxx11E, i64 8), align 8
-  %.val773 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E, i64 8), align 8
-  %45 = select i1 %i.n, i64 %.val772, i64 %.val773 ; 4 uses
+  %_ZN5osgeo4proj2cs16AxisAbbreviation3latB5cxx11E._ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E = select i1 %i.n, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation3latB5cxx11E, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E ; 2 uses
+  %44 = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 3 uses
+  store ptr %44, ptr %18, align 8, !tbaa !160
+  %_ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E.val = load ptr, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation3latB5cxx11E._ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E, align 8, !tbaa !163 ; 2 uses
+  %45 = getelementptr inbounds nuw i8, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation3latB5cxx11E._ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E, i64 8
+  %.val773 = load i64, ptr %45, align 8, !tbaa !164 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #41
-  store i64 %45, ptr %i.g, align 8, !tbaa !165
-  %i.ec = icmp ugt i64 %45, 15
+  store i64 %.val773, ptr %i.g, align 8, !tbaa !165
+  %i.ec = icmp ugt i64 %.val773, 15
   br i1 %i.ec, label %.noexc.i376, label %._crit_edge.i.i375
 
 .noexc.i376:                                      ; preds = %.critedge301
@@ -693,23 +689,23 @@ bb.ai:                                            ; preds = %._crit_edge.i.i367
 .noexc377:                                        ; preds = %.noexc.i376
   store ptr %i.ed, ptr %18, align 8, !tbaa !163
   %i.ee = load i64, ptr %i.g, align 8, !tbaa !165
-  store i64 %i.ee, ptr %43, align 8, !tbaa !166
+  store i64 %i.ee, ptr %44, align 8, !tbaa !166
   br label %._crit_edge.i.i375
 
 ._crit_edge.i.i375:                               ; preds = %.noexc377, %.critedge301
-  %i.ef = phi ptr [ %i.ed, %.noexc377 ], [ %43, %.critedge301 ] ; 2 uses
-  switch i64 %45, label %bb.ak [
+  %i.ef = phi ptr [ %i.ed, %.noexc377 ], [ %44, %.critedge301 ] ; 2 uses
+  switch i64 %.val773, label %bb.ak [
     i64 1, label %bb.aj
     i64 0, label %bb.al
   ]
 
 bb.aj:                                            ; preds = %._crit_edge.i.i375
-  %i.eg = load i8, ptr %44, align 1, !tbaa !166
+  %i.eg = load i8, ptr %_ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E.val, align 1, !tbaa !166
   store i8 %i.eg, ptr %i.ef, align 1, !tbaa !166
   br label %bb.al
 
 bb.ak:                                            ; preds = %._crit_edge.i.i375
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ef, ptr align 1 %44, i64 %45, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ef, ptr align 1 %_ZN5osgeo4proj2cs16AxisAbbreviation1NB5cxx11E.val, i64 %.val773, i1 false)
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj, %._crit_edge.i.i375
@@ -1029,11 +1025,11 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj2cs8MeridianEEED2Ev.exit406: ; 
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #41
-  %46 = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 4 uses
-  store ptr %46, ptr %26, align 8, !tbaa !160
   br i1 %i.bg, label %.noexc.i408, label %bb.ca
 
 .noexc.i408:                                      ; preds = %.critedge311
+  %46 = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 2 uses
+  store ptr %46, ptr %26, align 8, !tbaa !160
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #41
   store i64 24, ptr %i.f, align 8, !tbaa !165
   %i.hm = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %26, ptr noundef nonnull align 8 dereferenceable(8) %i.f, i64 noundef 0)
@@ -1061,15 +1057,15 @@ _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj2cs8MeridianEEED2Ev.exit406: ; 
   br label %bb.ci
 
 bb.ca:                                            ; preds = %.critedge311
-  %_ZN5osgeo4proj2cs8AxisName9LongitudeB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs8AxisName9LongitudeB5cxx11E, align 8
-  %_ZN5osgeo4proj2cs8AxisName7WestingB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs8AxisName7WestingB5cxx11E, align 8
-  %47 = select i1 %i.n, ptr %_ZN5osgeo4proj2cs8AxisName9LongitudeB5cxx11E.val, ptr %_ZN5osgeo4proj2cs8AxisName7WestingB5cxx11E.val ; 2 uses
-  %.val774 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs8AxisName9LongitudeB5cxx11E, i64 8), align 8
-  %.val775 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs8AxisName7WestingB5cxx11E, i64 8), align 8
-  %48 = select i1 %i.n, i64 %.val774, i64 %.val775 ; 4 uses
+  %_ZN5osgeo4proj2cs8AxisName9LongitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName7WestingB5cxx11E = select i1 %i.n, ptr @_ZN5osgeo4proj2cs8AxisName9LongitudeB5cxx11E, ptr @_ZN5osgeo4proj2cs8AxisName7WestingB5cxx11E ; 2 uses
+  %47 = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 3 uses
+  store ptr %47, ptr %26, align 8, !tbaa !160
+  %48 = load ptr, ptr %_ZN5osgeo4proj2cs8AxisName9LongitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName7WestingB5cxx11E, align 8, !tbaa !163 ; 2 uses
+  %49 = getelementptr inbounds nuw i8, ptr %_ZN5osgeo4proj2cs8AxisName9LongitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName7WestingB5cxx11E, i64 8
+  %50 = load i64, ptr %49, align 8, !tbaa !164    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #41
-  store i64 %48, ptr %i.e, align 8, !tbaa !165
-  %i.hu = icmp ugt i64 %48, 15
+  store i64 %50, ptr %i.e, align 8, !tbaa !165
+  %i.hu = icmp ugt i64 %50, 15
   br i1 %i.hu, label %.noexc.i412, label %._crit_edge.i.i411
 
 .noexc.i412:                                      ; preds = %bb.ca
@@ -1079,23 +1075,23 @@ bb.ca:                                            ; preds = %.critedge311
 .noexc413:                                        ; preds = %.noexc.i412
   store ptr %i.hv, ptr %26, align 8, !tbaa !163
   %i.hw = load i64, ptr %i.e, align 8, !tbaa !165
-  store i64 %i.hw, ptr %46, align 8, !tbaa !166
+  store i64 %i.hw, ptr %47, align 8, !tbaa !166
   br label %._crit_edge.i.i411
 
 ._crit_edge.i.i411:                               ; preds = %.noexc413, %bb.ca
-  %i.hx = phi ptr [ %i.hv, %.noexc413 ], [ %46, %bb.ca ] ; 2 uses
-  switch i64 %48, label %bb.cc [
+  %i.hx = phi ptr [ %i.hv, %.noexc413 ], [ %47, %bb.ca ] ; 2 uses
+  switch i64 %50, label %bb.cc [
     i64 1, label %bb.cb
     i64 0, label %bb.cd
   ]
 
 bb.cb:                                            ; preds = %._crit_edge.i.i411
-  %i.hy = load i8, ptr %47, align 1, !tbaa !166
+  %i.hy = load i8, ptr %48, align 1, !tbaa !166
   store i8 %i.hy, ptr %i.hx, align 1, !tbaa !166
   br label %bb.cd
 
 bb.cc:                                            ; preds = %._crit_edge.i.i411
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hx, ptr align 1 %47, i64 %48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hx, ptr align 1 %48, i64 %50, i1 false)
   br label %bb.cd
 
 bb.cd:                                            ; preds = %._crit_edge.i.i411, %bb.cb, %bb.cc
@@ -1256,17 +1252,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i43
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #41
-  %49 = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 3 uses
-  store ptr %49, ptr %29, align 8, !tbaa !160
-  %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E.val776 = load ptr, ptr @_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E, align 8
-  %_ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E.val = load ptr, ptr @_ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E, align 8
-  %50 = select i1 %i.n, ptr %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E.val776, ptr %_ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E.val ; 2 uses
-  %.val777 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E, i64 8), align 8
-  %.val778 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E, i64 8), align 8
-  %51 = select i1 %i.n, i64 %.val777, i64 %.val778 ; 4 uses
+  %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E = select i1 %i.n, ptr @_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E, ptr @_ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E ; 2 uses
+  %51 = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 3 uses
+  store ptr %51, ptr %29, align 8, !tbaa !160
+  %_ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E.val = load ptr, ptr %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E, align 8, !tbaa !163 ; 2 uses
+  %52 = getelementptr inbounds nuw i8, ptr %_ZN5osgeo4proj2cs8AxisName8LatitudeB5cxx11E._ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E, i64 8
+  %.val778 = load i64, ptr %52, align 8, !tbaa !164 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #41
-  store i64 %51, ptr %i.b, align 8, !tbaa !165
-  %i.jn = icmp ugt i64 %51, 15
+  store i64 %.val778, ptr %i.b, align 8, !tbaa !165
+  %i.jn = icmp ugt i64 %.val778, 15
   br i1 %i.jn, label %.noexc.i438, label %._crit_edge.i.i437
 
 .noexc.i438:                                      ; preds = %.critedge317
@@ -1276,23 +1270,23 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i43
 .noexc439:                                        ; preds = %.noexc.i438
   store ptr %i.jo, ptr %29, align 8, !tbaa !163
   %i.jp = load i64, ptr %i.b, align 8, !tbaa !165
-  store i64 %i.jp, ptr %49, align 8, !tbaa !166
+  store i64 %i.jp, ptr %51, align 8, !tbaa !166
   br label %._crit_edge.i.i437
 
 ._crit_edge.i.i437:                               ; preds = %.noexc439, %.critedge317
-  %i.jq = phi ptr [ %i.jo, %.noexc439 ], [ %49, %.critedge317 ] ; 2 uses
-  switch i64 %51, label %bb.cn [
+  %i.jq = phi ptr [ %i.jo, %.noexc439 ], [ %51, %.critedge317 ] ; 2 uses
+  switch i64 %.val778, label %bb.cn [
     i64 1, label %bb.cm
     i64 0, label %bb.co
   ]
 
 bb.cm:                                            ; preds = %._crit_edge.i.i437
-  %i.jr = load i8, ptr %50, align 1, !tbaa !166
+  %i.jr = load i8, ptr %_ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E.val, align 1, !tbaa !166
   store i8 %i.jr, ptr %i.jq, align 1, !tbaa !166
   br label %bb.co
 
 bb.cn:                                            ; preds = %._crit_edge.i.i437
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jq, ptr align 1 %50, i64 %51, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jq, ptr align 1 %_ZN5osgeo4proj2cs8AxisName8SouthingB5cxx11E.val, i64 %.val778, i1 false)
   br label %bb.co
 
 bb.co:                                            ; preds = %._crit_edge.i.i437, %bb.cm, %bb.cn
