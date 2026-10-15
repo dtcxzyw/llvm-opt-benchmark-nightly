@@ -1,0 +1,80 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index deaf4235b0468..bda86ab51a6ff 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -3121,6 +3121,13 @@ Instruction *InstCombinerImpl::visitSub(BinaryOperator &I) {
+     return BinaryOperator::CreateAnd(Op1, ConstantInt::get(Ty, *AddC));
+   }
+ 
++  // zext X -nuw zext Y -> zext (X -nuw Y)
++  if (match(Op0, m_OneUse(m_ZExt(m_Value(X)))) &&
++      match(Op1, m_OneUse(m_ZExt(m_Value(Y)))) &&
++      (Op0->hasOneUse() || Op1->hasOneUse()) && X->getType() == Y->getType() &&
++      I.hasNoUnsignedWrap())
++    return new ZExtInst(Builder.CreateNUWSub(X, Y), I.getType());
++
+   return TryToNarrowDeduceFlags();
+ }
+ 
+diff --git a/llvm/test/CodeGen/NVPTX/i16x2-instructions.ll b/llvm/test/CodeGen/NVPTX/i16x2-instructions.ll
+index 78061dda354ca..3196423a311c5 100644
+--- a/llvm/test/CodeGen/NVPTX/i16x2-instructions.ll
++++ b/llvm/test/CodeGen/NVPTX/i16x2-instructions.ll
+@@ -304,15 +304,12 @@ define <2 x i16> @test_smulh(<2 x i16> %a, <2 x i16> %b) #0 {
+ ; COMMON-LABEL: test_smulh(
+ ; COMMON:       {
+ ; COMMON-NEXT:    .reg .b16 %rs<7>;
+-; COMMON-NEXT:    .reg .b32 %r<3>;
+ ; COMMON-EMPTY:
+ ; COMMON-NEXT:  // %bb.0:
+-; COMMON-NEXT:    ld.param.b32 %r2, [test_smulh_param_1];
+-; COMMON-NEXT:    ld.param.b32 %r1, [test_smulh_param_0];
+-; COMMON-NEXT:    mov.b32 {%rs1, %rs2}, %r2;
+-; COMMON-NEXT:    mov.b32 {%rs3, %rs4}, %r1;
+-; COMMON-NEXT:    mul.hi.s16 %rs5, %rs4, %rs2;
+-; COMMON-NEXT:    mul.hi.s16 %rs6, %rs3, %rs1;
++; COMMON-NEXT:    ld.param.v2.b16 {%rs1, %rs2}, [test_smulh_param_0];
++; COMMON-NEXT:    ld.param.v2.b16 {%rs3, %rs4}, [test_smulh_param_1];
++; COMMON-NEXT:    mul.hi.s16 %rs5, %rs2, %rs4;
++; COMMON-NEXT:    mul.hi.s16 %rs6, %rs1, %rs3;
+ ; COMMON-NEXT:    st.param.v2.b16 [func_retval0], {%rs6, %rs5};
+ ; COMMON-NEXT:    ret;
+   %r = call <2 x i16> @llvm.smulh.v2i16(<2 x i16> %a, <2 x i16> %b)
+@@ -323,15 +320,12 @@ define <2 x i16> @test_umulh(<2 x i16> %a, <2 x i16> %b) #0 {
+ ; COMMON-LABEL: test_umulh(
+ ; COMMON:       {
+ ; COMMON-NEXT:    .reg .b16 %rs<7>;
+-; COMMON-NEXT:    .reg .b32 %r<3>;
+ ; COMMON-EMPTY:
+ ; COMMON-NEXT:  // %bb.0:
+-; COMMON-NEXT:    ld.param.b32 %r2, [test_umulh_param_1];
+-; COMMON-NEXT:    ld.param.b32 %r1, [test_umulh_param_0];
+-; COMMON-NEXT:    mov.b32 {%rs1, %rs2}, %r2;
+-; COMMON-NEXT:    mov.b32 {%rs3, %rs4}, %r1;
+-; COMMON-NEXT:    mul.hi.u16 %rs5, %rs4, %rs2;
+-; COMMON-NEXT:    mul.hi.u16 %rs6, %rs3, %rs1;
++; COMMON-NEXT:    ld.param.v2.b16 {%rs1, %rs2}, [test_umulh_param_0];
++; COMMON-NEXT:    ld.param.v2.b16 {%rs3, %rs4}, [test_umulh_param_1];
++; COMMON-NEXT:    mul.hi.u16 %rs5, %rs2, %rs4;
++; COMMON-NEXT:    mul.hi.u16 %rs6, %rs1, %rs3;
+ ; COMMON-NEXT:    st.param.v2.b16 [func_retval0], {%rs6, %rs5};
+ ; COMMON-NEXT:    ret;
+   %r = call <2 x i16> @llvm.umulh.v2i16(<2 x i16> %a, <2 x i16> %b)
+diff --git a/llvm/test/Transforms/InstCombine/sub.ll b/llvm/test/Transforms/InstCombine/sub.ll
+index 5b254d31abd1d..7c60603dc51f1 100644
+--- a/llvm/test/Transforms/InstCombine/sub.ll
++++ b/llvm/test/Transforms/InstCombine/sub.ll
+@@ -1781,10 +1781,9 @@ define i32 @nuw_const_zext_big(i8 %y) {
+ 
+ define i32 @nuw_zext_zext(i8 %x, i8 %y) {
+ ; CHECK-LABEL: @nuw_zext_zext(
+-; CHECK-NEXT:    [[ZX:%.*]] = zext i8 [[X:%.*]] to i32
+-; CHECK-NEXT:    [[ZY:%.*]] = zext i8 [[Y:%.*]] to i32
+-; CHECK-NEXT:    [[S:%.*]] = sub nuw nsw i32 [[ZX]], [[ZY]]
+-; CHECK-NEXT:    ret i32 [[S]]
++; CHECK-NEXT:    [[Y:%.*]] = sub nuw i8 [[X:%.*]], [[Y1:%.*]]
++; CHECK-NEXT:    [[ZY:%.*]] = zext i8 [[Y]] to i32
++; CHECK-NEXT:    ret i32 [[ZY]]
+ ;
+   %zx = zext i8 %x to i32
+   %zy = zext i8 %y to i32
