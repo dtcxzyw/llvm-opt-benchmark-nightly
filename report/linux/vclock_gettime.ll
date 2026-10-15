@@ -202,16 +202,16 @@ bb.m:                                             ; preds = %.lr.ph76.i.i
   br i1 %.not.i24.i.i.i, label %.lr.ph76.i.i, label %._crit_edge77.i.i, !prof !20, !llvm.loop !0
 
 bb.n:                                             ; preds = %.lr.ph76.i.i
-  %.not.i25.i.i.i = icmp eq i32 %0, 4             ; 7 uses
-  %..i.i.i.i = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4328), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096) ; 3 uses
-  %2 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4368), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4136)
+  %.not.i25.i.i.i = icmp eq i32 %0, 4
+  %..i.i.i.i = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4328), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096) ; 9 uses
+  %2 = getelementptr i8, ptr %..i.i.i.i, i32 40
   %i.ax = getelementptr [16 x i8], ptr %2, i32 %0 ; 2 uses
-  %3 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4332), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4100)
+  %3 = getelementptr i8, ptr %..i.i.i.i, i32 4
   %i.ay = getelementptr i8, ptr %i.ax, i32 8
-  %4 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4336), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4104)
-  %5 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4344), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4112)
-  %6 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4360), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4128) ; 2 uses
-  %7 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4364), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4132) ; 3 uses
+  %4 = getelementptr i8, ptr %..i.i.i.i, i32 8
+  %5 = getelementptr i8, ptr %..i.i.i.i, i32 16
+  %6 = getelementptr i8, ptr %..i.i.i.i, i32 32   ; 2 uses
+  %7 = getelementptr i8, ptr %..i.i.i.i, i32 36   ; 3 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.v, %bb.n
@@ -614,16 +614,16 @@ bb.m:                                             ; preds = %.lr.ph61.i.i
   br i1 %.not.i24.i.i.i, label %.lr.ph61.i.i, label %._crit_edge62.i.i, !prof !20, !llvm.loop !0
 
 bb.n:                                             ; preds = %.lr.ph61.i.i
-  %.not.i25.i.i.i = icmp eq i32 %0, 4             ; 7 uses
-  %..i.i.i.i = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4328), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096) ; 3 uses
-  %2 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4368), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4136)
+  %.not.i25.i.i.i = icmp eq i32 %0, 4
+  %..i.i.i.i = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4328), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096) ; 9 uses
+  %2 = getelementptr i8, ptr %..i.i.i.i, i32 40
   %i.az = getelementptr [16 x i8], ptr %2, i32 %0 ; 2 uses
-  %3 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4332), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4100)
+  %3 = getelementptr i8, ptr %..i.i.i.i, i32 4
   %i.ba = getelementptr i8, ptr %i.az, i32 8
-  %4 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4336), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4104)
-  %5 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4344), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4112)
-  %6 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4360), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4128) ; 2 uses
-  %7 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4364), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4132) ; 3 uses
+  %4 = getelementptr i8, ptr %..i.i.i.i, i32 8
+  %5 = getelementptr i8, ptr %..i.i.i.i, i32 16
+  %6 = getelementptr i8, ptr %..i.i.i.i, i32 32   ; 2 uses
+  %7 = getelementptr i8, ptr %..i.i.i.i, i32 36   ; 3 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.v, %bb.n

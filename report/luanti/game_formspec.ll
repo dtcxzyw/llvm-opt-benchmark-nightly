@@ -202,10 +202,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit352: ; preds = %bb
   %i.qj = getelementptr inbounds nuw i8, ptr %17, i64 31
   store i8 0, ptr %i.qj, align 1, !tbaa !36
   %i.qk = invoke noundef zeroext i1 @_ZNK8Settings7getBoolERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(236) %i.qg, ptr noundef nonnull align 8 dereferenceable(32) %17)
-          to label %bb.de unwind label %bb.do     ; 2 uses
+          to label %bb.de unwind label %bb.do
 
 bb.de:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit352
-  %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 = select i1 %i.qk, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 ; 2 uses
+  %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 = select i1 %i.qk, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 ; 3 uses
   %i.ql = load ptr, ptr %17, align 8, !tbaa !41   ; 2 uses
   %i.qm = icmp eq ptr %i.ql, %i.qh
   br i1 %i.qm, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit359, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i357
@@ -489,7 +489,7 @@ bb.dw:                                            ; preds = %bb.dv, %bb.du, %._c
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit401: ; preds = %bb.dw
   %i.tj = load ptr, ptr %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11, align 8, !tbaa !41
-  %26 = select i1 %i.qk, ptr getelementptr inbounds nuw (i8, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11, i64 8) ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11, i64 8 ; 2 uses
   %i.tk = load i64, ptr %26, align 8, !tbaa !46
   %i.tl = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ti, ptr noundef %i.tj, i64 noundef %i.tk)
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit403 unwind label %bb.ej

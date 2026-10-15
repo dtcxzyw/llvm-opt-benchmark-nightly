@@ -204,8 +204,8 @@ bb.a:
   %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @perf_ibs_fetch, i64 88), align 8
   %i.e = icmp ne i32 %i.d, %i.c                   ; 5 uses
   %i.f = load i32, ptr getelementptr inbounds nuw (i8, ptr @perf_ibs_op, i64 88), align 8
-  %i.g = icmp eq i32 %i.f, %i.c                   ; 5 uses
-  %perf_ibs_op..i = select i1 %i.g, ptr @perf_ibs_op, ptr null
+  %i.g = icmp eq i32 %i.f, %i.c                   ; 3 uses
+  %perf_ibs_op..i = select i1 %i.g, ptr @perf_ibs_op, ptr null ; 3 uses
   %.0.i149 = select i1 %i.e, ptr %perf_ibs_op..i, ptr @perf_ibs_fetch ; 14 uses
   %.not = icmp eq ptr %.0.i149, null
   br i1 %.not, label %.critedge, label %bb.b
@@ -348,7 +348,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bf = load i64, ptr %i.j, align 8
   %i.bg = or i64 %i.bf, 4
   store i64 %i.bg, ptr %i.j, align 8
-  %1 = select i1 %i.g, ptr getelementptr inbounds nuw (i8, ptr @perf_ibs_op, i64 324), ptr inttoptr (i64 324 to ptr)
+  %1 = getelementptr i8, ptr %perf_ibs_op..i, i64 324
   %i.bh = load i32, ptr %1, align 4
   store i32 %i.bh, ptr %i.k, align 8
   br label %bb.w
@@ -362,7 +362,7 @@ bb.x:                                             ; preds = %bb.w
   %i.bj = load i64, ptr %i.j, align 8
   %i.bk = or i64 %i.bj, 2
   store i64 %i.bk, ptr %i.j, align 8
-  %2 = select i1 %i.g, ptr getelementptr inbounds nuw (i8, ptr @perf_ibs_op, i64 324), ptr inttoptr (i64 324 to ptr)
+  %2 = getelementptr i8, ptr %perf_ibs_op..i, i64 324
   br label %.sink.split
 
 bb.y:                                             ; preds = %bb.o

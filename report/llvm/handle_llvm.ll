@@ -204,130 +204,130 @@ _ZNSt10unique_ptrIN4llvm15ExecutionEngineESt14default_deleteIS1_EED2Ev.exit: ; p
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 128
   %i.fu = load ptr, ptr %i.ft, align 8
   %i.fv = call noundef ptr %i.fu(ptr noundef nonnull align 8 dereferenceable(1136) %i.fg, ptr noundef nonnull %i.ba) #21 ; 31 uses
-  %i.fw = icmp eq i32 %1, 0                       ; 93 uses
-  %_ZL11UnoptArrays._ZL9OptArrays = select i1 %i.fw, ptr @_ZL11UnoptArrays, ptr @_ZL9OptArrays
-  %19 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 7936), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 7936)
-  %20 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 15872), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 15872)
+  %i.fw = icmp eq i32 %1, 0
+  %_ZL11UnoptArrays._ZL9OptArrays = select i1 %i.fw, ptr @_ZL11UnoptArrays, ptr @_ZL9OptArrays ; 93 uses
+  %19 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 7936
+  %20 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 15872
   call void %i.fv(ptr noundef nonnull %_ZL11UnoptArrays._ZL9OptArrays, ptr noundef nonnull %19, ptr noundef nonnull %20, i32 noundef 64) #21, !inline_history !252
-  %21 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 256), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 256)
-  %22 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 8192), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 8192)
-  %23 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 16128), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 16128)
+  %21 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 256
+  %22 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 8192
+  %23 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 16128
   call void %i.fv(ptr noundef nonnull %21, ptr noundef nonnull %22, ptr noundef nonnull %23, i32 noundef 64) #21, !inline_history !252
-  %24 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 512), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 512)
-  %25 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 8448), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 8448)
-  %26 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 16384), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 16384)
+  %24 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 512
+  %25 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 8448
+  %26 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 16384
   call void %i.fv(ptr noundef nonnull %24, ptr noundef nonnull %25, ptr noundef nonnull %26, i32 noundef 64) #21, !inline_history !252
-  %27 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 768), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 768)
-  %28 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 8704), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 8704)
-  %29 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 16640), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 16640)
+  %27 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 768
+  %28 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 8704
+  %29 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 16640
   call void %i.fv(ptr noundef nonnull %27, ptr noundef nonnull %28, ptr noundef nonnull %29, i32 noundef 64) #21, !inline_history !252
-  %30 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 1024), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 1024)
-  %31 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 8960), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 8960)
-  %32 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 16896), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 16896)
+  %30 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 1024
+  %31 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 8960
+  %32 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 16896
   call void %i.fv(ptr noundef nonnull %30, ptr noundef nonnull %31, ptr noundef nonnull %32, i32 noundef 64) #21, !inline_history !252
-  %33 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 1280), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 1280)
-  %34 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 9216), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 9216)
-  %35 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 17152), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 17152)
+  %33 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 1280
+  %34 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 9216
+  %35 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 17152
   call void %i.fv(ptr noundef nonnull %33, ptr noundef nonnull %34, ptr noundef nonnull %35, i32 noundef 64) #21, !inline_history !252
-  %36 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 1536), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 1536)
-  %37 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 9472), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 9472)
-  %38 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 17408), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 17408)
+  %36 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 1536
+  %37 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 9472
+  %38 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 17408
   call void %i.fv(ptr noundef nonnull %36, ptr noundef nonnull %37, ptr noundef nonnull %38, i32 noundef 64) #21, !inline_history !252
-  %39 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 1792), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 1792)
-  %40 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 9728), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 9728)
-  %41 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 17664), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 17664)
+  %39 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 1792
+  %40 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 9728
+  %41 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 17664
   call void %i.fv(ptr noundef nonnull %39, ptr noundef nonnull %40, ptr noundef nonnull %41, i32 noundef 64) #21, !inline_history !252
-  %42 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 2048), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 2048)
-  %43 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 9984), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 9984)
-  %44 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 17920), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 17920)
+  %42 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 2048
+  %43 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 9984
+  %44 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 17920
   call void %i.fv(ptr noundef nonnull %42, ptr noundef nonnull %43, ptr noundef nonnull %44, i32 noundef 64) #21, !inline_history !252
-  %45 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 2304), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 2304)
-  %46 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 10240), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 10240)
-  %47 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 18176), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 18176)
+  %45 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 2304
+  %46 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 10240
+  %47 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 18176
   call void %i.fv(ptr noundef nonnull %45, ptr noundef nonnull %46, ptr noundef nonnull %47, i32 noundef 64) #21, !inline_history !252
-  %48 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 2560), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 2560)
-  %49 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 10496), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 10496)
-  %50 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 18432), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 18432)
+  %48 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 2560
+  %49 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 10496
+  %50 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 18432
   call void %i.fv(ptr noundef nonnull %48, ptr noundef nonnull %49, ptr noundef nonnull %50, i32 noundef 64) #21, !inline_history !252
-  %51 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 2816), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 2816)
-  %52 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 10752), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 10752)
-  %53 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 18688), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 18688)
+  %51 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 2816
+  %52 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 10752
+  %53 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 18688
   call void %i.fv(ptr noundef nonnull %51, ptr noundef nonnull %52, ptr noundef nonnull %53, i32 noundef 64) #21, !inline_history !252
-  %54 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 3072), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 3072)
-  %55 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 11008), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 11008)
-  %56 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 18944), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 18944)
+  %54 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 3072
+  %55 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 11008
+  %56 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 18944
   call void %i.fv(ptr noundef nonnull %54, ptr noundef nonnull %55, ptr noundef nonnull %56, i32 noundef 64) #21, !inline_history !252
-  %57 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 3328), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 3328)
-  %58 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 11264), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 11264)
-  %59 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 19200), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 19200)
+  %57 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 3328
+  %58 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 11264
+  %59 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 19200
   call void %i.fv(ptr noundef nonnull %57, ptr noundef nonnull %58, ptr noundef nonnull %59, i32 noundef 64) #21, !inline_history !252
-  %60 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 3584), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 3584)
-  %61 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 11520), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 11520)
-  %62 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 19456), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 19456)
+  %60 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 3584
+  %61 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 11520
+  %62 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 19456
   call void %i.fv(ptr noundef nonnull %60, ptr noundef nonnull %61, ptr noundef nonnull %62, i32 noundef 64) #21, !inline_history !252
-  %63 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 3840), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 3840)
-  %64 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 11776), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 11776)
-  %65 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 19712), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 19712)
+  %63 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 3840
+  %64 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 11776
+  %65 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 19712
   call void %i.fv(ptr noundef nonnull %63, ptr noundef nonnull %64, ptr noundef nonnull %65, i32 noundef 64) #21, !inline_history !252
-  %66 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 4096), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 4096)
-  %67 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 12032), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 12032)
-  %68 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 19968), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 19968)
+  %66 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 4096
+  %67 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 12032
+  %68 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 19968
   call void %i.fv(ptr noundef nonnull %66, ptr noundef nonnull %67, ptr noundef nonnull %68, i32 noundef 64) #21, !inline_history !252
-  %69 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 4352), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 4352)
-  %70 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 12288), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 12288)
-  %71 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 20224), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 20224)
+  %69 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 4352
+  %70 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 12288
+  %71 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 20224
   call void %i.fv(ptr noundef nonnull %69, ptr noundef nonnull %70, ptr noundef nonnull %71, i32 noundef 64) #21, !inline_history !252
-  %72 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 4608), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 4608)
-  %73 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 12544), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 12544)
-  %74 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 20480), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 20480)
+  %72 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 4608
+  %73 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 12544
+  %74 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 20480
   call void %i.fv(ptr noundef nonnull %72, ptr noundef nonnull %73, ptr noundef nonnull %74, i32 noundef 64) #21, !inline_history !252
-  %75 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 4864), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 4864)
-  %76 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 12800), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 12800)
-  %77 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 20736), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 20736)
+  %75 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 4864
+  %76 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 12800
+  %77 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 20736
   call void %i.fv(ptr noundef nonnull %75, ptr noundef nonnull %76, ptr noundef nonnull %77, i32 noundef 64) #21, !inline_history !252
-  %78 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 5120), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 5120)
-  %79 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 13056), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 13056)
-  %80 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 20992), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 20992)
+  %78 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 5120
+  %79 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 13056
+  %80 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 20992
   call void %i.fv(ptr noundef nonnull %78, ptr noundef nonnull %79, ptr noundef nonnull %80, i32 noundef 64) #21, !inline_history !252
-  %81 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 5376), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 5376)
-  %82 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 13312), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 13312)
-  %83 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 21248), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 21248)
+  %81 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 5376
+  %82 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 13312
+  %83 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 21248
   call void %i.fv(ptr noundef nonnull %81, ptr noundef nonnull %82, ptr noundef nonnull %83, i32 noundef 64) #21, !inline_history !252
-  %84 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 5632), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 5632)
-  %85 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 13568), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 13568)
-  %86 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 21504), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 21504)
+  %84 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 5632
+  %85 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 13568
+  %86 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 21504
   call void %i.fv(ptr noundef nonnull %84, ptr noundef nonnull %85, ptr noundef nonnull %86, i32 noundef 64) #21, !inline_history !252
-  %87 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 5888), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 5888)
-  %88 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 13824), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 13824)
-  %89 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 21760), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 21760)
+  %87 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 5888
+  %88 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 13824
+  %89 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 21760
   call void %i.fv(ptr noundef nonnull %87, ptr noundef nonnull %88, ptr noundef nonnull %89, i32 noundef 64) #21, !inline_history !252
-  %90 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 6144), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 6144)
-  %91 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 14080), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 14080)
-  %92 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 22016), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 22016)
+  %90 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 6144
+  %91 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 14080
+  %92 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 22016
   call void %i.fv(ptr noundef nonnull %90, ptr noundef nonnull %91, ptr noundef nonnull %92, i32 noundef 64) #21, !inline_history !252
-  %93 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 6400), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 6400)
-  %94 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 14336), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 14336)
-  %95 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 22272), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 22272)
+  %93 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 6400
+  %94 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 14336
+  %95 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 22272
   call void %i.fv(ptr noundef nonnull %93, ptr noundef nonnull %94, ptr noundef nonnull %95, i32 noundef 64) #21, !inline_history !252
-  %96 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 6656), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 6656)
-  %97 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 14592), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 14592)
-  %98 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 22528), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 22528)
+  %96 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 6656
+  %97 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 14592
+  %98 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 22528
   call void %i.fv(ptr noundef nonnull %96, ptr noundef nonnull %97, ptr noundef nonnull %98, i32 noundef 64) #21, !inline_history !252
-  %99 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 6912), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 6912)
-  %100 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 14848), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 14848)
-  %101 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 22784), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 22784)
+  %99 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 6912
+  %100 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 14848
+  %101 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 22784
   call void %i.fv(ptr noundef nonnull %99, ptr noundef nonnull %100, ptr noundef nonnull %101, i32 noundef 64) #21, !inline_history !252
-  %102 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 7168), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 7168)
-  %103 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 15104), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 15104)
-  %104 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 23040), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 23040)
+  %102 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 7168
+  %103 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 15104
+  %104 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 23040
   call void %i.fv(ptr noundef nonnull %102, ptr noundef nonnull %103, ptr noundef nonnull %104, i32 noundef 64) #21, !inline_history !252
-  %105 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 7424), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 7424)
-  %106 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 15360), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 15360)
-  %107 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 23296), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 23296)
+  %105 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 7424
+  %106 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 15360
+  %107 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 23296
   call void %i.fv(ptr noundef nonnull %105, ptr noundef nonnull %106, ptr noundef nonnull %107, i32 noundef 64) #21, !inline_history !252
-  %108 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 7680), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 7680)
-  %109 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 15616), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 15616)
-  %110 = select i1 %i.fw, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnoptArrays, i64 23552), ptr getelementptr inbounds nuw (i8, ptr @_ZL9OptArrays, i64 23552)
+  %108 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 7680
+  %109 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 15616
+  %110 = getelementptr inbounds nuw i8, ptr %_ZL11UnoptArrays._ZL9OptArrays, i64 23552
   call void %i.fv(ptr noundef nonnull %108, ptr noundef nonnull %109, ptr noundef nonnull %110, i32 noundef 64) #21, !inline_history !252
   %i.fx = load ptr, ptr %i.fg, align 8, !tbaa !61
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 120
