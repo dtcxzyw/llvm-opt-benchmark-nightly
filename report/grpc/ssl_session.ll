@@ -97,49 +97,47 @@ _ZN4bssl10MakeUniqueI14ssl_session_stJRPKNS_15SSL_X509_METHODEEEESt10unique_ptrI
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef i32 @_ZN4bssl19ssl_hash_session_idENS_4SpanIKhEE(ptr nofree readonly captures(none) %0, i64 %1) local_unnamed_addr #1 {
 bb.a:
-  %.sroa.0 = alloca i32, align 4                  ; 8 uses
+  %.sroa.0 = alloca i32, align 4                  ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.a = icmp ult i64 %1, 4
-  %.sroa.0.3.gep55.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
+  %.sroa.0.1.gep.sroa_idx30 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1 ; 2 uses
+  %.sroa.07.0.sroa.gep17 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %.sroa.0.2.gep19.sroa_idx31 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2 ; 2 uses
+  %.sroa.07.0.sroa.gep20 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %.sroa.0.3.gep22.sroa_idx32 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3 ; 2 uses
+  %.sroa.0.3.gep55.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 3
   br i1 %i.a, label %bb.b, label %_ZNK4bssl4SpanIKhEixEm.exit
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.0.3.gep54.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
   store i32 0, ptr %.sroa.0, align 4
   %i.b = icmp eq i64 %1, 0
-  br i1 %i.b, label %_ZNK4bssl4SpanIKhEixEm.exit6, label %bb.c
+  br i1 %i.b, label %_ZNK4bssl4SpanIKhEixEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0, ptr readonly align 1 %0, i64 %1, i1 false)
-  %.sroa.0.0..sroa.0.0..pre = load i16, ptr %.sroa.0, align 4
-  %.sroa.0.2.gep19.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  %.sroa.0.2..sroa.0.2..pre = load i8, ptr %.sroa.0.2.gep19.sroa_idx, align 2, !tbaa !14
-  %2 = zext i16 %.sroa.0.0..sroa.0.0..pre to i32
-  %3 = zext i8 %.sroa.0.2..sroa.0.2..pre to i32
-  %4 = shl nuw nsw i32 %3, 16
-  %5 = or disjoint i32 %4, %2
-  br label %_ZNK4bssl4SpanIKhEixEm.exit6
+  br label %_ZNK4bssl4SpanIKhEixEm.exit
 
-_ZNK4bssl4SpanIKhEixEm.exit:                      ; preds = %bb.a
-  %.sroa.0.pn.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %.sroa.07.0.sroa.gep20 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %6 = load i16, ptr %0, align 1
-  %i.c = zext i16 %6 to i32
-  %i.d = load i8, ptr %.sroa.07.0.sroa.gep20, align 1, !tbaa !14
+_ZNK4bssl4SpanIKhEixEm.exit:                      ; preds = %bb.c, %bb.b, %bb.a
+  %.sroa.07.0.sroa.phi = phi ptr [ %.sroa.07.0.sroa.gep17, %bb.a ], [ %.sroa.0.1.gep.sroa_idx30, %bb.b ], [ %.sroa.0.1.gep.sroa_idx30, %bb.c ]
+  %.sroa.07.0.sroa.phi18 = phi ptr [ %.sroa.07.0.sroa.gep20, %bb.a ], [ %.sroa.0.2.gep19.sroa_idx31, %bb.b ], [ %.sroa.0.2.gep19.sroa_idx31, %bb.c ]
+  %.sroa.07.0.sroa.phi21 = phi ptr [ %.sroa.0.3.gep55.sroa_idx, %bb.a ], [ %.sroa.0.3.gep22.sroa_idx32, %bb.b ], [ %.sroa.0.3.gep22.sroa_idx32, %bb.c ]
+  %.sroa.07.0 = phi ptr [ %0, %bb.a ], [ %.sroa.0, %bb.b ], [ %.sroa.0, %bb.c ]
+  %2 = load i8, ptr %.sroa.07.0, align 1, !tbaa !14
+  %3 = zext i8 %2 to i32
+  %4 = load i8, ptr %.sroa.07.0.sroa.phi, align 1, !tbaa !14
+  %5 = zext i8 %4 to i32
+  %6 = shl nuw nsw i32 %5, 8
+  %7 = or disjoint i32 %6, %3
+  %8 = load i8, ptr %.sroa.07.0.sroa.phi18, align 1, !tbaa !14
+  %i.c = zext i8 %8 to i32
+  %9 = shl nuw nsw i32 %i.c, 16
+  %10 = or disjoint i32 %7, %9
+  %i.d = load i8, ptr %.sroa.07.0.sroa.phi21, align 1, !tbaa !14
   %i.e = zext i8 %i.d to i32
-  %i.f = shl nuw nsw i32 %i.e, 16
-  %i.g = or disjoint i32 %i.f, %i.c
-  br label %_ZNK4bssl4SpanIKhEixEm.exit6
-
-_ZNK4bssl4SpanIKhEixEm.exit6:                     ; preds = %bb.c, %bb.b, %_ZNK4bssl4SpanIKhEixEm.exit
-  %7 = phi i32 [ %i.g, %_ZNK4bssl4SpanIKhEixEm.exit ], [ 0, %bb.b ], [ %5, %bb.c ]
-  %.sroa.0.pn.sroa.phi53 = phi ptr [ %.sroa.0.pn.sroa.gep, %_ZNK4bssl4SpanIKhEixEm.exit ], [ %.sroa.0.3.gep54.sroa_idx, %bb.b ], [ %.sroa.0.3.gep55.sroa_idx, %bb.c ]
-  %8 = load i8, ptr %.sroa.0.pn.sroa.phi53, align 1, !tbaa !14
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw i32 %9, 24
-  %11 = add nuw nsw i32 %10, %7
+  %i.f = shl nuw i32 %i.e, 24
+  %i.g = or disjoint i32 %10, %i.f
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  ret i32 %11
+  ret i32 %i.g
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -542,7 +540,7 @@ _ZN4bssl28ssl_session_is_context_validEPKNS_13SSL_HANDSHAKEEPK14ssl_session_st.e
 define hidden noundef range(i32 0, 12) i32 @_ZN4bssl20ssl_get_prev_sessionEPNS_13SSL_HANDSHAKEEPSt10unique_ptrI14ssl_session_stNS_8internal7DeleterEEPbS8_PK22ssl_early_callback_ctx(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3, ptr noundef %4) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %struct.LHASH_CMP_KEY_SSL_SESSION, align 8 ; 5 uses
-  %.sroa.0.i.i = alloca i32, align 4              ; 6 uses
+  %.sroa.0.i.i = alloca i32, align 4              ; 8 uses
   %6 = alloca %"class.bssl::Span", align 8        ; 8 uses
   %7 = alloca %"class.std::unique_ptr", align 8   ; 8 uses
   %i.a = alloca i32, align 4                      ; 8 uses
@@ -661,42 +659,47 @@ bb.m:                                             ; preds = %_ZNSt10unique_ptrI1
   br i1 %.not.i, label %bb.n, label %_ZN4bssl8internal13MutexLockBaseIXadL_Z22CRYPTO_MUTEX_lock_readEEXadL_Z24CRYPTO_MUTEX_unlock_readEEED2Ev.exit.thread.i
 
 bb.n:                                             ; preds = %bb.m
-  %.sroa.0.0.copyload.i = load ptr, ptr %6, align 8 ; 3 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %6, align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
   %i.ah = icmp samesign ult i64 %i.aa, 4
-  br i1 %i.ah, label %bb.o, label %_ZNK4bssl4SpanIKhEixEm.exit.i.i
+  %.sroa.07.0.sroa.gep17.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i, i64 1
+  %.sroa.07.0.sroa.gep20.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i, i64 2
+  %.sroa.07.0.sroa.gep23.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i, i64 3
+  br i1 %i.ah, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
+  %.sroa.0.i.i.3.i.i.3.i.i.3.i.3.i.3.i.3.gep22.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i, i64 3
+  %.sroa.0.i.i.2.i.i.2.i.i.2.i.2.i.2.i.2.gep19.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i, i64 2
+  %.sroa.0.2.gep19.sroa_idx.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i, i64 1
   store i32 0, ptr %.sroa.0.i.i, align 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i.i, ptr readonly align 1 %.sroa.0.0.copyload.i, i64 %i.aa, i1 false)
-  %.sroa.0.2.gep19.sroa_idx.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i, i64 2
-  %.sroa.0.2..pre.i.i = load i8, ptr %.sroa.0.2.gep19.sroa_idx.phi.trans.insert.i.i, align 2, !tbaa !14
   br label %bb.p
 
-_ZNK4bssl4SpanIKhEixEm.exit.i.i:                  ; preds = %bb.n
-  %.sroa.07.0.sroa.gep20.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i, i64 2
-  %11 = load i8, ptr %.sroa.07.0.sroa.gep20.i.i, align 1, !tbaa !14
-  br label %bb.p
-
-bb.p:                                             ; preds = %_ZNK4bssl4SpanIKhEixEm.exit.i.i, %bb.o
-  %.sink.i = phi i8 [ %11, %_ZNK4bssl4SpanIKhEixEm.exit.i.i ], [ %.sroa.0.2..pre.i.i, %bb.o ]
-  %.sroa.0.pn.i.i = phi ptr [ %.sroa.0.0.copyload.i, %_ZNK4bssl4SpanIKhEixEm.exit.i.i ], [ %.sroa.0.i.i, %bb.o ] ; 2 uses
-  %.sink34.in.i = load i16, ptr %.sroa.0.pn.i.i, align 1
-  %.sroa.0.pn.sroa.phi.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.pn.i.i, i64 3
-  %i.ai = load i8, ptr %.sroa.0.pn.sroa.phi.i.i, align 1, !tbaa !14
+bb.p:                                             ; preds = %bb.o, %bb.n
+  %.sroa.07.0.sroa.phi.i.i = phi ptr [ %.sroa.07.0.sroa.gep17.i.i, %bb.n ], [ %.sroa.0.2.gep19.sroa_idx.phi.trans.insert.i.i, %bb.o ]
+  %.sroa.07.0.sroa.phi18.i.i = phi ptr [ %.sroa.07.0.sroa.gep20.i.i, %bb.n ], [ %.sroa.0.i.i.2.i.i.2.i.i.2.i.2.i.2.i.2.gep19.sroa_idx, %bb.o ]
+  %.sroa.07.0.sroa.phi21.i.i = phi ptr [ %.sroa.07.0.sroa.gep23.i.i, %bb.n ], [ %.sroa.0.i.i.3.i.i.3.i.i.3.i.3.i.3.i.3.gep22.sroa_idx, %bb.o ]
+  %.sroa.0.pn.i.i = phi ptr [ %.sroa.0.0.copyload.i, %bb.n ], [ %.sroa.0.i.i, %bb.o ]
+  %11 = load i8, ptr %.sroa.0.pn.i.i, align 1, !tbaa !14
+  %12 = load i8, ptr %.sroa.07.0.sroa.phi.i.i, align 1, !tbaa !14
+  %13 = load i8, ptr %.sroa.07.0.sroa.phi18.i.i, align 1, !tbaa !14
+  %i.ai = load i8, ptr %.sroa.07.0.sroa.phi21.i.i, align 1, !tbaa !14
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 24 ; 3 uses
   invoke void @CRYPTO_MUTEX_lock_read(ptr noundef nonnull %i.aj)
           to label %_ZN4bssl8internal13MutexLockBaseIXadL_Z22CRYPTO_MUTEX_lock_readEEXadL_Z24CRYPTO_MUTEX_unlock_readEEEC2EP16pthread_rwlock_t.exit.i unwind label %bb.s
 
 _ZN4bssl8internal13MutexLockBaseIXadL_Z22CRYPTO_MUTEX_lock_readEEXadL_Z24CRYPTO_MUTEX_unlock_readEEEC2EP16pthread_rwlock_t.exit.i: ; preds = %bb.p
-  %i.ak = zext i8 %.sink.i to i32
-  %i.al = shl nuw nsw i32 %i.ak, 16
-  %.sink34.i = zext i16 %.sink34.in.i to i32
-  %i.am = or disjoint i32 %i.al, %.sink34.i
+  %i.ak = zext i8 %12 to i32
+  %i.al = shl nuw nsw i32 %i.ak, 8
+  %14 = zext i8 %11 to i32
+  %15 = or disjoint i32 %i.al, %14
+  %.sink34.i = zext i8 %13 to i32
+  %16 = shl nuw nsw i32 %.sink34.i, 16
+  %i.am = or disjoint i32 %15, %16
   %i.an = zext i8 %i.ai to i32
   %i.ao = shl nuw i32 %i.an, 24
-  %i.ap = or disjoint i32 %i.ao, %i.am
+  %i.ap = or disjoint i32 %i.am, %i.ao
   %i.aq = load ptr, ptr %i.ac, align 8, !tbaa !72
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 112
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !273

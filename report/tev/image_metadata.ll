@@ -204,10 +204,10 @@ define hidden void @_ZN3jxl13ImageMetadata12SetAlphaBitsEjb(ptr noundef nonnull 
 bb.a:
   %3 = alloca %"struct.jxl::ExtraChannelInfo", align 8 ; 13 uses
   %i.a = zext i1 %2 to i8                         ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 5 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !69   ; 6 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 6 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !69   ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !68   ; 9 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !68   ; 10 uses
   %.not1516.i = icmp eq ptr %i.c, %i.e            ; 2 uses
   br i1 %.not1516.i, label %_ZN3jxl13ImageMetadata4FindENS_12ExtraChannelE.exit, label %.lr.ph.i
 
@@ -243,7 +243,18 @@ _ZNSt3__16vectorIN3jxl16ExtraChannelInfoENS_9allocatorIS2_EEE5eraseENS_11__wrap_
   br label %bb.p
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %.not1516.i, label %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i", label %.lr.ph.i.i
+  br i1 %.not1516.i, label %_ZNSt3__16vectorIN3jxl16ExtraChannelInfoENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit.thread50, label %.lr.ph.i.i
+
+_ZNSt3__16vectorIN3jxl16ExtraChannelInfoENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit.thread50: ; preds = %bb.d
+  %4 = load ptr, ptr %i.b, align 8, !tbaa !69
+  %5 = ptrtoint ptr %i.e to i64
+  %6 = ptrtoint ptr %4 to i64
+  %7 = sub i64 %5, %6
+  %8 = sdiv exact i64 %7, 96
+  %9 = trunc i64 %8 to i32
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 320
+  store i32 %9, ptr %10, align 8, !tbaa !70
+  br label %bb.p
 
 .lr.ph.i.i:                                       ; preds = %bb.d, %bb.e
   %.sroa.01.05.i.i = phi ptr [ %i.s, %bb.e ], [ %i.c, %bb.d ] ; 3 uses
@@ -257,8 +268,8 @@ bb.e:                                             ; preds = %.lr.ph.i.i
   %.not.i.i = icmp eq ptr %i.s, %i.e
   br i1 %.not.i.i, label %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i", label %.lr.ph.i.i, !llvm.loop !125
 
-"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i": ; preds = %bb.e, %.lr.ph.i.i, %bb.d
-  %.sroa.01.0.lcssa.i.i = phi ptr [ %i.c, %bb.d ], [ %.sroa.01.05.i.i, %.lr.ph.i.i ], [ %i.s, %bb.e ] ; 5 uses
+"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i": ; preds = %bb.e, %.lr.ph.i.i
+  %.sroa.01.0.lcssa.i.i = phi ptr [ %i.s, %bb.e ], [ %.sroa.01.05.i.i, %.lr.ph.i.i ] ; 5 uses
   %.not.i22 = icmp eq ptr %.sroa.01.0.lcssa.i.i, %i.e
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.01.0.lcssa.i.i, i64 96 ; 2 uses
   %.not1213.i = icmp eq ptr %i.t, %i.e
@@ -323,9 +334,9 @@ bb.h:                                             ; preds = %_ZN3jxl16ExtraChann
   br label %"_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit"
 
 "_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit": ; preds = %"_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit.loopexit", %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i"
-  %i.as = phi ptr [ %i.c, %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i" ], [ %.pre30, %"_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit.loopexit" ] ; 2 uses
-  %i.at = phi ptr [ %i.e, %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i" ], [ %.pre, %"_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit.loopexit" ] ; 6 uses
-  %.sroa.09.2.i = phi ptr [ %.sroa.01.0.lcssa.i.i, %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i" ], [ %.sroa.09.1.i, %"_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit.loopexit" ] ; 2 uses
+  %i.as = phi ptr [ %.pre30, %"_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit.loopexit" ], [ %i.c, %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i" ] ; 2 uses
+  %i.at = phi ptr [ %.pre, %"_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit.loopexit" ], [ %i.e, %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i" ] ; 6 uses
+  %.sroa.09.2.i = phi ptr [ %.sroa.09.1.i, %"_ZNSt3__19remove_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEEZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S8_S8_T0_.exit.loopexit" ], [ %.sroa.01.0.lcssa.i.i, %"_ZNSt3__17find_ifB8nn180100INS_11__wrap_iterIPN3jxl16ExtraChannelInfoEEERZNS2_13ImageMetadata12SetAlphaBitsEjbE3$_0EET_S9_S9_T0_.exit.i" ] ; 2 uses
   %i.au = ptrtoint ptr %.sroa.09.2.i to i64       ; 3 uses
   %i.av = ptrtoint ptr %i.as to i64
   %i.aw = sub i64 %i.au, %i.av
@@ -476,7 +487,7 @@ bb.o:                                             ; preds = %_ZNSt3__16vectorIN3
   store i8 0, ptr %i.de, align 8, !tbaa !132
   br label %bb.p
 
-bb.p:                                             ; preds = %_ZNSt3__16vectorIN3jxl16ExtraChannelInfoENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit.thread, %bb.o, %_ZNSt3__16vectorIN3jxl16ExtraChannelInfoENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit
+bb.p:                                             ; preds = %_ZNSt3__16vectorIN3jxl16ExtraChannelInfoENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit.thread50, %_ZNSt3__16vectorIN3jxl16ExtraChannelInfoENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit.thread, %bb.o, %_ZNSt3__16vectorIN3jxl16ExtraChannelInfoENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit
   ret void
 }
 

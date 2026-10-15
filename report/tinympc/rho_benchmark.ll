@@ -205,7 +205,7 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE7setZeroEv.exit226: ;
   %i.jp = getelementptr inbounds nuw i8, ptr %68, i64 40 ; 2 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %68, i64 48 ; 2 uses
   %.not = icmp eq i32 %i.bb, 0
-  br i1 %.not, label %.preheader.loopexit.peel.begin, label %.lr.ph436.split
+  br i1 %.not, label %bb.s, label %.lr.ph436.split
 
 .lr.ph436.split:                                  ; preds = %.lr.ph436
   %i.jr = add nsw i32 %9, -2
@@ -400,17 +400,15 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13Fixe
   %exitcond451.not = icmp eq i64 %indvars.iv.next448, %wide.trip.count450
   br i1 %exitcond451.not, label %._crit_edge433, label %bb.l, !llvm.loop !148
 
-.preheader.loopexit.peel.begin:                   ; preds = %bb.ac, %.lr.ph436
-  %75 = phi i32 [ 0, %.lr.ph436 ], [ %i.oy, %bb.ac ] ; 2 uses
-  %76 = phi i32 [ 0, %.lr.ph436 ], [ %.3174, %bb.ac ] ; 3 uses
-  %i.lj = icmp eq i32 %75, %i.bb
+.preheader.loopexit.peel.begin:                   ; preds = %bb.ac
+  %i.lj = icmp eq i32 %i.oy, %i.bb
   br i1 %i.lj, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %.preheader.loopexit.peel.begin
   call void @llvm.lifetime.start.p0(ptr nonnull %65) #22
   store ptr %i.im, ptr %65, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %66) #22
-  %i.lk = sext i32 %76 to i64                     ; 4 uses
+  %i.lk = sext i32 %.3174 to i64                  ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !206)
   br i1 %i.in, label %._crit_edge.i.i.i.i263.peel, label %bb.r
 
@@ -445,9 +443,11 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13Fixe
   call void @llvm.lifetime.end.p0(ptr nonnull %65) #22
   br label %bb.u
 
-bb.s:                                             ; preds = %.preheader.loopexit.peel.begin
+bb.s:                                             ; preds = %.lr.ph436, %.preheader.loopexit.peel.begin
+  %75 = phi i32 [ %.3174, %.preheader.loopexit.peel.begin ], [ 0, %.lr.ph436 ] ; 2 uses
+  %76 = phi i32 [ %i.oy, %.preheader.loopexit.peel.begin ], [ 0, %.lr.ph436 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %64) #22
-  %i.lt = sext i32 %76 to i64                     ; 4 uses
+  %i.lt = sext i32 %75 to i64                     ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !207)
   br i1 %i.in, label %._crit_edge.i.i.i.i257.peel, label %bb.t
 
@@ -498,11 +498,13 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13Fixe
   br label %bb.u
 
 bb.u:                                             ; preds = %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit260.peel, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit266.peel
-  %i.me = icmp slt i32 %75, %i.bb
+  %77 = phi i32 [ %75, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit260.peel ], [ %.3174, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit266.peel ]
+  %78 = phi i32 [ %76, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit260.peel ], [ %i.oy, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit266.peel ]
+  %i.me = icmp slt i32 %78, %i.bb
   br i1 %i.me, label %bb.v, label %.lr.ph439
 
 bb.v:                                             ; preds = %bb.u
-  %i.mf = add nsw i32 %76, %i.k
+  %i.mf = add nsw i32 %77, %i.k
   call void @llvm.lifetime.start.p0(ptr nonnull %67) #22
   store ptr %i.ji, ptr %67, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %68) #22
@@ -670,8 +672,8 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13Fixe
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.z, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit272
-  %.3174 = phi i32 [ %i.ox, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit272 ], [ %i.om, %bb.z ] ; 2 uses
-  %i.oy = add nuw nsw i32 %.0167435, 1            ; 2 uses
+  %.3174 = phi i32 [ %i.ox, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE5blockIiiEENS3_13FixedBlockXprIXsr8internal15get_fixed_valueIT_EE5valueEXsr8internal15get_fixed_valueIT0_EE5valueEE4TypeEllS6_S7_.exit272 ], [ %i.om, %bb.z ] ; 4 uses
+  %i.oy = add nuw nsw i32 %.0167435, 1            ; 4 uses
   %exitcond452.not = icmp eq i32 %.0167435, %i.jr
   br i1 %exitcond452.not, label %.preheader.loopexit.peel.begin, label %bb.x, !llvm.loop !157
 

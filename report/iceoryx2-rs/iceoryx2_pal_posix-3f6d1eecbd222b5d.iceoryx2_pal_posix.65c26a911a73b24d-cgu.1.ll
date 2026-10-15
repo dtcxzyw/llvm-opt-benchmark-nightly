@@ -205,14 +205,14 @@ bb.c:                                             ; preds = %bb.a
   call void @_RNvMNtCsbqH9stoieM8_5alloc6stringNtB2_6String15from_utf8_lossy(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef 1024) #33
   %i.m = load i64, ptr %i.e, align 8, !range !151, !noundef !8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %i.q = load i64, ptr %i.p, align 8              ; 10 uses
+  %i.q = load i64, ptr %i.p, align 8              ; 11 uses
   br label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.split.i.backedge, %.lr.ph.split.preheader.i
-  %i.r = phi i64 [ 0, %.lr.ph.split.preheader.i ], [ %0, %.lr.ph.split.i.backedge ] ; 3 uses
-  %.lcssa2021.i = phi i64 [ 0, %.lr.ph.split.preheader.i ], [ %.lcssa19.i, %.lr.ph.split.i.backedge ] ; 5 uses
+  %i.r = phi i64 [ 0, %.lr.ph.split.preheader.i ], [ %7, %.lr.ph.split.i.backedge ] ; 3 uses
+  %.lcssa2021.i = phi i64 [ 0, %.lr.ph.split.preheader.i ], [ %.lcssa19.i81, %.lr.ph.split.i.backedge ] ; 10 uses
   %i.s = icmp ult i64 %i.q, %i.r
   br i1 %i.s, label %_RNvMsf_NtNtCs8Chj7Szqq0n_4core3str4iterINtB5_13SplitInternalcE7get_endCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i
 
@@ -251,7 +251,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.af = icmp ult i64 %.sroa.5.0.i.i.i.i.i.i.i, %i.u
   call void @llvm.assume(i1 %i.af)
   %i.ag = add i64 %i.t, 1
-  %i.ah = add i64 %i.ag, %.sroa.5.0.i.i.i.i.i.i.i ; 6 uses
+  %i.ah = add i64 %i.ag, %.sroa.5.0.i.i.i.i.i.i.i ; 8 uses
   %.not12.i.i.i.i.i.i = icmp ugt i64 %i.ah, %i.q
   %i.ai = add i64 %i.t, %.sroa.5.0.i.i.i.i.i.i.i
   %or.cond.i.i.i.i.i.i.not = icmp ult i64 %i.ai, %i.q
@@ -270,42 +270,53 @@ bb.g:                                             ; preds = %.loopexit.i.i.i.i.i
 _RNvMsf_NtNtCs8Chj7Szqq0n_4core3str4iterINtB5_13SplitInternalcE7get_endCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i: ; preds = %bb.f, %.preheader.i.i.i.i.i.i.i, %bb.d, %bb.e, %.lr.ph.split.i
   %i.am = phi i64 [ %i.r, %.lr.ph.split.i ], [ %i.q, %bb.e ], [ %i.q, %bb.d ], [ %i.q, %.preheader.i.i.i.i.i.i.i ], [ %i.ah, %bb.f ]
   %.not.i3.i.i.i.i.i.not = icmp eq i64 %i.q, %.lcssa2021.i
-  br i1 %.not.i3.i.i.i.i.i.not, label %_RINvYNtNtNtCs8Chj7Szqq0n_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNvBH_4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0INtNtNtB9_3ops12control_flow11ControlFlowB1R_EEB23_.exit.thread, label %select.unfold.i.i.i
+  br i1 %.not.i3.i.i.i.i.i.not, label %_RINvYNtNtNtCs8Chj7Szqq0n_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNvBH_4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0INtNtNtB9_3ops12control_flow11ControlFlowB1R_EEB23_.exit.thread, label %select.unfold.i.i.i.thread
 
-select.unfold.i.i.i:                              ; preds = %bb.g, %_RNvMsf_NtNtCs8Chj7Szqq0n_4core3str4iterINtB5_13SplitInternalcE7get_endCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i
-  %0 = phi i64 [ %i.am, %_RNvMsf_NtNtCs8Chj7Szqq0n_4core3str4iterINtB5_13SplitInternalcE7get_endCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i ], [ %i.ah, %bb.g ]
-  %.lcssa19.i = phi i64 [ %.lcssa2021.i, %_RNvMsf_NtNtCs8Chj7Szqq0n_4core3str4iterINtB5_13SplitInternalcE7get_endCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i ], [ %i.ah, %bb.g ]
-  %1 = phi i1 [ true, %_RNvMsf_NtNtCs8Chj7Szqq0n_4core3str4iterINtB5_13SplitInternalcE7get_endCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i ], [ false, %bb.g ] ; 2 uses
-  %.pn.i = phi i64 [ %i.q, %_RNvMsf_NtNtCs8Chj7Szqq0n_4core3str4iterINtB5_13SplitInternalcE7get_endCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i ], [ %i.ah, %bb.g ] ; 3 uses
-  %.sroa.4.1.i.i.i.i.i = sub nuw i64 %.pn.i, %.lcssa2021.i ; 3 uses
-  %.sroa.0.1.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 %.lcssa2021.i ; 3 uses
+select.unfold.i.i.i.thread:                       ; preds = %_RNvMsf_NtNtCs8Chj7Szqq0n_4core3str4iterINtB5_13SplitInternalcE7get_endCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i
+  %.sroa.4.1.i.i.i.i.i77 = sub nuw i64 %i.q, %.lcssa2021.i ; 2 uses
+  %.sroa.0.1.i.i.i.i.i78 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.lcssa2021.i ; 2 uses
+  %0 = insertvalue { ptr, i64 } poison, ptr %.sroa.0.1.i.i.i.i.i78, 0
+  %1 = insertvalue { ptr, i64 } %0, i64 %.sroa.4.1.i.i.i.i.i77, 1
+  br label %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i
+
+select.unfold.i.i.i:                              ; preds = %bb.g
+  %.sroa.4.1.i.i.i.i.i = sub nuw i64 %i.ah, %.lcssa2021.i ; 2 uses
+  %.sroa.0.1.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 %.lcssa2021.i ; 2 uses
   %i.an = insertvalue { ptr, i64 } poison, ptr %.sroa.0.1.i.i.i.i.i, 0
-  %i.ao = insertvalue { ptr, i64 } %i.an, i64 %.sroa.4.1.i.i.i.i.i, 1 ; 3 uses
-  %.not.i.i.i.i4.i.i.i = icmp eq i64 %.pn.i, %.lcssa2021.i
+  %i.ao = insertvalue { ptr, i64 } %i.an, i64 %.sroa.4.1.i.i.i.i.i, 1 ; 2 uses
+  %.not.i.i.i.i4.i.i.i = icmp eq i64 %i.ah, %.lcssa2021.i
   br i1 %.not.i.i.i.i4.i.i.i, label %_RNvXss_NtNtCs8Chj7Szqq0n_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i, label %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i
 
-_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i: ; preds = %select.unfold.i.i.i
-  %i.ap = getelementptr i8, ptr %i.o, i64 %.pn.i
+_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i: ; preds = %select.unfold.i.i.i.thread, %select.unfold.i.i.i
+  %2 = phi { ptr, i64 } [ %1, %select.unfold.i.i.i.thread ], [ %i.ao, %select.unfold.i.i.i ] ; 2 uses
+  %.sroa.0.1.i.i.i.i.i84 = phi ptr [ %.sroa.0.1.i.i.i.i.i78, %select.unfold.i.i.i.thread ], [ %.sroa.0.1.i.i.i.i.i, %select.unfold.i.i.i ]
+  %.sroa.4.1.i.i.i.i.i83 = phi i64 [ %.sroa.4.1.i.i.i.i.i77, %select.unfold.i.i.i.thread ], [ %.sroa.4.1.i.i.i.i.i, %select.unfold.i.i.i ] ; 2 uses
+  %.pn.i82 = phi i64 [ %i.q, %select.unfold.i.i.i.thread ], [ %i.ah, %select.unfold.i.i.i ]
+  %3 = phi i1 [ true, %select.unfold.i.i.i.thread ], [ false, %select.unfold.i.i.i ] ; 2 uses
+  %.lcssa19.i80 = phi i64 [ %.lcssa2021.i, %select.unfold.i.i.i.thread ], [ %i.ah, %select.unfold.i.i.i ] ; 2 uses
+  %4 = phi i64 [ %i.am, %select.unfold.i.i.i.thread ], [ %i.ah, %select.unfold.i.i.i ] ; 2 uses
+  %i.ap = getelementptr i8, ptr %i.o, i64 %.pn.i82
   %i.aq = getelementptr i8, ptr %i.ap, i64 -1
   %rhsc.i.i.i.i.i.i.i = load i8, ptr %i.aq, align 1, !alias.scope !154, !noalias !155
   %rhsc.i.i.fr.i.i.i.i.i = freeze i8 %rhsc.i.i.i.i.i.i.i
   %i.ar = icmp eq i8 %rhsc.i.i.fr.i.i.i.i.i, 10
-  %i.as = add i64 %.sroa.4.1.i.i.i.i.i, -1        ; 3 uses
+  %i.as = add i64 %.sroa.4.1.i.i.i.i.i83, -1      ; 3 uses
   br i1 %i.ar, label %bb.h, label %_RNvXss_NtNtCs8Chj7Szqq0n_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i
 
 bb.h:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i
-  %i.at = insertvalue { ptr, i64 } %i.ao, i64 %i.as, 1
+  %i.at = insertvalue { ptr, i64 } %2, i64 %i.as, 1
   %.not.i.i15.i.i.i.i.i = icmp eq i64 %i.as, 0
   br i1 %.not.i.i15.i.i.i.i.i, label %_RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i, label %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i16.i.i.i.i.i
 
 _RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i16.i.i.i.i.i: ; preds = %bb.h
-  %i.au = getelementptr i8, ptr %.sroa.0.1.i.i.i.i.i, i64 %i.as
+  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.lcssa2021.i
+  %i.au = getelementptr i8, ptr %5, i64 %i.as
   %i.av = getelementptr i8, ptr %i.au, i64 -1
   %rhsc.i.i18.i.i.i.i.i = load i8, ptr %i.av, align 1, !alias.scope !156, !noalias !157
   %rhsc.i.i18.fr.i.i.i.i.i = freeze i8 %rhsc.i.i18.i.i.i.i.i
   %i.aw = icmp eq i8 %rhsc.i.i18.fr.i.i.i.i.i, 13
-  %i.ax = add i64 %.sroa.4.1.i.i.i.i.i, -2
-  %spec.select.i20.i.i.i.i.i = select i1 %i.aw, ptr %.sroa.0.1.i.i.i.i.i, ptr null
+  %i.ax = add i64 %.sroa.4.1.i.i.i.i.i83, -2
+  %spec.select.i20.i.i.i.i.i = select i1 %i.aw, ptr %.sroa.0.1.i.i.i.i.i84, ptr null
   br label %_RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i
 
 _RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i: ; preds = %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i16.i.i.i.i.i, %bb.h
@@ -318,7 +329,10 @@ _RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit
   br label %_RNvXss_NtNtCs8Chj7Szqq0n_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i
 
 _RNvXss_NtNtCs8Chj7Szqq0n_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i: ; preds = %_RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i, %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i, %select.unfold.i.i.i
-  %.merged.i.i.i.i.i = phi { ptr, i64 } [ %..i.i.i.i.i, %_RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %i.ao, %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i ], [ %i.ao, %select.unfold.i.i.i ] ; 2 uses
+  %6 = phi i1 [ %3, %_RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %3, %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i ], [ false, %select.unfold.i.i.i ] ; 2 uses
+  %.lcssa19.i81 = phi i64 [ %.lcssa19.i80, %_RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %.lcssa19.i80, %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i ], [ %.lcssa2021.i, %select.unfold.i.i.i ]
+  %7 = phi i64 [ %4, %_RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %4, %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i ], [ %.lcssa2021.i, %select.unfold.i.i.i ]
+  %.merged.i.i.i.i.i = phi { ptr, i64 } [ %..i.i.i.i.i, %_RNvXst_NtNtCs8Chj7Szqq0n_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %2, %_RNvMNtCs8Chj7Szqq0n_4core5sliceSh9ends_withCs8JF6YcdXpCX_18iceoryx2_pal_posix.exit.i.i.i.i.i.i ], [ %i.ao, %select.unfold.i.i.i ] ; 2 uses
   %i.bc = extractvalue { ptr, i64 } %.merged.i.i.i.i.i, 0 ; 6 uses
   %i.bd = extractvalue { ptr, i64 } %.merged.i.i.i.i.i, 1 ; 10 uses
   %.not.i = icmp eq ptr %i.bc, null
@@ -340,14 +354,14 @@ _RNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0B9_.e
   %i.bn = zext i1 %i.bm to i32
   %bcmp.i.i.i.fr.i.i = freeze i32 %i.bn
   %i.bo = icmp eq i32 %bcmp.i.i.i.fr.i.i, 0       ; 3 uses
-  %brmerge.i = or i1 %1, %i.bo
+  %brmerge.i = or i1 %6, %i.bo
   br i1 %brmerge.i, label %_RINvYNtNtNtCs8Chj7Szqq0n_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNvBH_4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0INtNtNtB9_3ops12control_flow11ControlFlowB1R_EEB23_.exit, label %.lr.ph.split.i.backedge
 
 .lr.ph.split.i.backedge:                          ; preds = %_RNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0B9_.exit.i.i, %_RNCINvNvNtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0B1o_.exit.i
   br label %.lr.ph.split.i
 
 _RNCINvNvNtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0B1o_.exit.i: ; preds = %bb.i
-  br i1 %1, label %_RINvYNtNtNtCs8Chj7Szqq0n_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNvBH_4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0INtNtNtB9_3ops12control_flow11ControlFlowB1R_EEB23_.exit.thread, label %.lr.ph.split.i.backedge
+  br i1 %6, label %_RINvYNtNtNtCs8Chj7Szqq0n_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNvBH_4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0INtNtNtB9_3ops12control_flow11ControlFlowB1R_EEB23_.exit.thread, label %.lr.ph.split.i.backedge
 
 _RINvYNtNtNtCs8Chj7Szqq0n_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNvBH_4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0INtNtNtB9_3ops12control_flow11ControlFlowB1R_EEB23_.exit: ; preds = %_RNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0B9_.exit.i.i
   %.mux.i = select i1 %i.bo, i64 %i.bd, i64 undef ; 5 uses

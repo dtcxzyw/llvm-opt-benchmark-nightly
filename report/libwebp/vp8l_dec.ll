@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 204
   store i32 %i.dg, ptr %i.dq, align 4, !tbaa !78
   %i.dr = icmp sgt i32 %i.do, 0                   ; 2 uses
-  br i1 %i.dr, label %.lr.ph, label %._crit_edge
+  br i1 %i.dr, label %.lr.ph, label %bb.m
 
 .lr.ph:                                           ; preds = %bb.l
   %i.ds = load ptr, ptr %i.a, align 8, !tbaa !130 ; 2 uses
@@ -264,15 +264,16 @@ scalar.ph182:                                     ; preds = %scalar.ph182.prehea
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph182, !llvm.loop !123
 
-._crit_edge:                                      ; preds = %scalar.ph182, %middle.block192, %bb.l
-  %.067.i.lcssa = phi i32 [ 1, %bb.l ], [ %i.ee, %middle.block192 ], [ %spec.select.i, %scalar.ph182 ] ; 10 uses
-  %i.ek = icmp samesign ugt i32 %.067.i.lcssa, 200
-  %5 = icmp sgt i32 %.067.i.lcssa, %i.do
+._crit_edge:                                      ; preds = %scalar.ph182, %middle.block192
+  %spec.select.i.lcssa = phi i32 [ %i.ee, %middle.block192 ], [ %spec.select.i, %scalar.ph182 ] ; 5 uses
+  %i.ek = icmp samesign ugt i32 %spec.select.i.lcssa, 200
+  %5 = icmp samesign ugt i32 %spec.select.i.lcssa, %i.do
   %or.cond.i = or i1 %i.ek, %5
   br i1 %or.cond.i, label %bb.m, label %VP8LSetError.exit81.thread
 
-bb.m:                                             ; preds = %._crit_edge
-  %i.el = zext nneg i32 %.067.i.lcssa to i64      ; 2 uses
+bb.m:                                             ; preds = %bb.l, %._crit_edge
+  %.067.i.lcssa157 = phi i32 [ %spec.select.i.lcssa, %._crit_edge ], [ 1, %bb.l ] ; 6 uses
+  %i.el = zext nneg i32 %.067.i.lcssa157 to i64   ; 2 uses
   %i.em = call ptr @WebPSafeMalloc(i64 noundef %i.el, i64 noundef 4) #7, !inline_history !121 ; 8 uses
   %i.en = icmp eq ptr %i.em, null
   br i1 %i.en, label %bb.n, label %bb.p
@@ -378,7 +379,7 @@ bb.v:                                             ; preds = %.epil.preheader
 
 ._crit_edge137:                                   ; preds = %._crit_edge137.unr-lcssa, %._crit_edge137.epilog-lcssa
   %.172.i.lcssa = phi i32 [ %.172.i.1, %._crit_edge137.unr-lcssa ], [ %.172.i.epil, %._crit_edge137.epilog-lcssa ] ; 2 uses
-  %i.fr = icmp eq i32 %.172.i.lcssa, %.067.i.lcssa
+  %i.fr = icmp eq i32 %.172.i.lcssa, %.067.i.lcssa157
   br i1 %i.fr, label %bb.w, label %VP8LSetError.exit81.thread
 
 bb.w:                                             ; preds = %._crit_edge137
@@ -386,8 +387,8 @@ bb.w:                                             ; preds = %._crit_edge137
   br label %VP8LSetError.exit81.thread
 
 VP8LSetError.exit81.thread:                       ; preds = %bb.p, %._crit_edge137, %._crit_edge, %bb.w, %bb.j, %.critedge74
-  %.4.i = phi i32 [ 1, %.critedge74 ], [ 1, %bb.j ], [ %.172.i.lcssa, %._crit_edge137 ], [ %.067.i.lcssa, %bb.w ], [ %.067.i.lcssa, %._crit_edge ], [ 0, %bb.p ] ; 2 uses
-  %.370.i = phi i32 [ 1, %.critedge74 ], [ 1, %bb.j ], [ %.067.i.lcssa, %._crit_edge137 ], [ %.067.i.lcssa, %bb.w ], [ %.067.i.lcssa, %._crit_edge ], [ %.067.i.lcssa, %bb.p ]
+  %.4.i = phi i32 [ 1, %.critedge74 ], [ 1, %bb.j ], [ %.172.i.lcssa, %._crit_edge137 ], [ %.067.i.lcssa157, %bb.w ], [ %spec.select.i.lcssa, %._crit_edge ], [ 0, %bb.p ] ; 2 uses
+  %.370.i = phi i32 [ 1, %.critedge74 ], [ 1, %bb.j ], [ %.067.i.lcssa157, %._crit_edge137 ], [ %.067.i.lcssa157, %bb.w ], [ %spec.select.i.lcssa, %._crit_edge ], [ %.067.i.lcssa157, %bb.p ]
   %.2.i = phi ptr [ null, %.critedge74 ], [ null, %bb.j ], [ %i.em, %._crit_edge137 ], [ null, %bb.w ], [ null, %._crit_edge ], [ %i.em, %bb.p ] ; 4 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %3, i64 84 ; 2 uses
   %i.ft = load i32, ptr %i.fs, align 4, !tbaa !46

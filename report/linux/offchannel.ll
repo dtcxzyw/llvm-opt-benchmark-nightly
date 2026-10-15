@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.x = getelementptr i8, ptr %0, i64 5744       ; 11 uses
   %i.y = load volatile ptr, ptr %i.x, align 8     ; 3 uses
   %.not117 = icmp eq ptr %i.y, %i.x
-  br i1 %.not117, label %bb.i, label %bb.p
+  br i1 %.not117, label %bb.i, label %.lr.ph
 
 bb.i:                                             ; preds = %bb.h
   %i.z = getelementptr i8, ptr %0, i64 4688
@@ -263,18 +263,19 @@ bb.o:                                             ; preds = %bb.m
   store volatile ptr %i.k, ptr %i.ap, align 8
   br label %.thread
 
-bb.p:                                             ; preds = %._crit_edge133, %bb.i, %bb.h
-  %.092125 = phi ptr [ %.092125.pre, %._crit_edge133 ], [ %i.y, %bb.i ], [ %i.y, %bb.h ] ; 2 uses
+bb.p:                                             ; preds = %._crit_edge133, %bb.i
+  %.092125 = phi ptr [ %.092125.pre, %._crit_edge133 ], [ %i.y, %bb.i ] ; 2 uses
   %.not118126 = icmp eq ptr %.092125, %i.x
   br i1 %.not118126, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.p
+.lr.ph:                                           ; preds = %bb.h, %bb.p
+  %.092125146 = phi ptr [ %.092125, %bb.p ], [ %i.y, %bb.h ]
   %i.ar = getelementptr i8, ptr %0, i64 464
   %i.as = getelementptr i8, ptr %0, i64 80        ; 2 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph, %ieee80211_recalc_sw_work.exit
-  %.092128 = phi ptr [ %.092125, %.lr.ph ], [ %.092, %ieee80211_recalc_sw_work.exit ] ; 20 uses
+  %.092128 = phi ptr [ %.092125146, %.lr.ph ], [ %.092, %ieee80211_recalc_sw_work.exit ] ; 20 uses
   %.094127 = phi i1 [ true, %.lr.ph ], [ %.296, %ieee80211_recalc_sw_work.exit ] ; 3 uses
   %i.at = getelementptr i8, ptr %.092128, i64 24
   %i.au = load ptr, ptr %i.at, align 8

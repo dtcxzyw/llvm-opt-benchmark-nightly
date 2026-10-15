@@ -203,21 +203,23 @@ bb.g:                                             ; preds = %.lr.ph
 .critedge99:                                      ; preds = %bb.g, %.critedge
   %.169118 = phi ptr [ %.169120, %.critedge ], [ %scevgep133, %bb.g ] ; 8 uses
   %.sroa.59.0 = phi i32 [ %i.aa, %.critedge ], [ 0, %bb.g ] ; 2 uses
-  %i.ab = load i8, ptr %.169118, align 1, !tbaa !14
+  %.169122137 = ptrtoaddr ptr %.169118 to i64
+  %i.ab = load i8, ptr %.169118, align 1, !tbaa !14 ; 2 uses
   %i.ac = icmp eq i8 %i.ab, 58
-  %i.ad = icmp ult ptr %.169118, %i.g
-  %or.cond128 = select i1 %i.ac, i1 %i.ad, i1 false
-  br i1 %or.cond128, label %.lr.ph122.preheader, label %.critedge100
+  %i.ad = icmp ult ptr %.169118, %i.g             ; 2 uses
+  br i1 %i.ac, label %.preheader, label %.critedge100
 
-.lr.ph122.preheader:                              ; preds = %.critedge99
-  %.169118135 = ptrtoaddr ptr %.169118 to i64
+.preheader:                                       ; preds = %.critedge99
+  br i1 %i.ad, label %.lr.ph122.preheader, label %.thread104.a
+
+.lr.ph122.preheader:                              ; preds = %.preheader
   %scevgep134 = getelementptr i8, ptr %.169118, i64 %i.m
-  %i.ae = sub i64 0, %.169118135
-  %scevgep136 = getelementptr i8, ptr %scevgep134, i64 %i.ae ; 2 uses
+  %i.ae = sub i64 0, %.169122137
+  %scevgep136 = getelementptr i8, ptr %scevgep134, i64 %i.ae
   br label %.lr.ph122
 
 .lr.ph122:                                        ; preds = %.lr.ph122.preheader, %bb.h
-  %.270121 = phi ptr [ %i.ag, %bb.h ], [ %.169118, %.lr.ph122.preheader ] ; 4 uses
+  %.270121 = phi ptr [ %i.ag, %bb.h ], [ %.169118, %.lr.ph122.preheader ] ; 5 uses
   %i.af = load i8, ptr %.270121, align 1, !tbaa !14
   %.not96 = icmp eq i8 %i.af, 125
   br i1 %.not96, label %.critedge3, label %bb.h
@@ -225,24 +227,21 @@ bb.g:                                             ; preds = %.lr.ph
 bb.h:                                             ; preds = %.lr.ph122
   %i.ag = getelementptr inbounds nuw i8, ptr %.270121, i64 1 ; 2 uses
   %exitcond137.not = icmp eq ptr %i.ag, %scevgep136
-  br i1 %exitcond137.not, label %.critedge100, label %.lr.ph122, !llvm.loop !39
+  br i1 %exitcond137.not, label %.thread104.a, label %.lr.ph122, !llvm.loop !39
+
+.critedge100:                                     ; preds = %.critedge99
+  br i1 %i.ad, label %bb.i, label %.thread104.a
 
 .critedge3:                                       ; preds = %.lr.ph122
   %i.ah = ptrtoint ptr %.270121 to i64
   %i.ai = ptrtoint ptr %.169118 to i64
   %i.aj = sub i64 %i.ah, %i.ai
   %i.ak = trunc i64 %i.aj to i32
-  br label %.critedge100
-
-.critedge100:                                     ; preds = %bb.h, %.critedge3, %.critedge99
-  %.371 = phi ptr [ %.270121, %.critedge3 ], [ %.169118, %.critedge99 ], [ %scevgep136, %bb.h ] ; 3 uses
-  %.sroa.5.0 = phi i32 [ %i.ak, %.critedge3 ], [ 0, %.critedge99 ], [ 0, %bb.h ]
-  %3 = icmp ult ptr %.371, %i.g
-  br i1 %3, label %bb.i, label %.thread104.a
+  %3 = icmp ult ptr %.270121, %i.g
+  br i1 %3, label %bb.k, label %.thread104.a
 
 bb.i:                                             ; preds = %.critedge100
-  %4 = load i8, ptr %.371, align 1, !tbaa !14
-  %i.al = icmp eq i8 %4, 125
+  %i.al = icmp eq i8 %i.ab, 125
   br i1 %i.al, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -252,12 +251,14 @@ bb.j:                                             ; preds = %bb.i
   call void @abort() #13
   unreachable
 
-.thread104.a:                                     ; preds = %.critedge100
+.thread104.a:                                     ; preds = %.critedge100, %.preheader, %.critedge3, %bb.h
   call void @c11_sbuf__dtor(ptr noundef nonnull %2) #10
   %i.ap = call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 47, ptr noundef nonnull @.str.45) #10
   br label %bb.af
 
-bb.k:                                             ; preds = %bb.i
+bb.k:                                             ; preds = %.critedge3, %bb.i
+  %.371148153 = phi ptr [ %.169118, %bb.i ], [ %.270121, %.critedge3 ]
+  %.sroa.5.0149152 = phi i32 [ 0, %bb.i ], [ %i.ak, %.critedge3 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.aq = icmp sgt i32 %.sroa.59.0, 0             ; 2 uses
   br i1 %i.aq, label %bb.l, label %bb.p
@@ -315,7 +316,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.s
   %i.bb = load ptr, ptr %i.l, align 8, !tbaa !46
   %i.bc = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %i.ax
-  %i.bd = call zeroext i1 @pk_format_object(ptr noundef %i.bb, ptr noundef nonnull %i.bc, ptr nonnull %.169118, i32 %.sroa.5.0) #10
+  %i.bd = call zeroext i1 @pk_format_object(ptr noundef %i.bb, ptr noundef nonnull %i.bc, ptr nonnull %.169118, i32 %.sroa.5.0149152) #10
   br i1 %i.bd, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -345,7 +346,7 @@ bb.y:                                             ; preds = %bb.w
   %i.bl = extractvalue { ptr, i32 } %i.bk, 0
   %i.bm = extractvalue { ptr, i32 } %i.bk, 1
   call void @c11_sbuf__write_sv(ptr noundef nonnull %2, ptr %i.bl, i32 %i.bm) #10
-  %i.bn = getelementptr inbounds nuw i8, ptr %.371, i64 1
+  %i.bn = getelementptr inbounds nuw i8, ptr %.371148153, i64 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %bb.ae
 

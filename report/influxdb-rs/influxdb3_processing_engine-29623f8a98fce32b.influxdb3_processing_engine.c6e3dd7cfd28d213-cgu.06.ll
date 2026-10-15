@@ -202,14 +202,14 @@ bb.aa:                                            ; preds = %bb.y
 
 .lr.ph.i:                                         ; preds = %bb.aa
   %i.bp = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  %i.bq = load ptr, ptr %i.bp, align 8, !nonnull !6 ; 3 uses
+  %i.bq = load ptr, ptr %i.bp, align 8, !nonnull !6 ; 5 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.bs = load i64, ptr %i.br, align 8            ; 7 uses
   br label %bb.ab
 
 bb.ab:                                            ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map15filter_map_foldReTB1a_B1a_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1c_NCB1p_s_0E0E0B1t_.exit.i, %.lr.ph.i
-  %i.bt = phi i64 [ 0, %.lr.ph.i ], [ %3, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map15filter_map_foldReTB1a_B1a_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1c_NCB1p_s_0E0E0B1t_.exit.i ] ; 3 uses
-  %.lcssa1617.i = phi i64 [ 0, %.lr.ph.i ], [ %.lcssa15.i, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map15filter_map_foldReTB1a_B1a_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1c_NCB1p_s_0E0E0B1t_.exit.i ] ; 5 uses
+  %i.bt = phi i64 [ 0, %.lr.ph.i ], [ %10, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map15filter_map_foldReTB1a_B1a_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1c_NCB1p_s_0E0E0B1t_.exit.i ] ; 3 uses
+  %.lcssa1617.i = phi i64 [ 0, %.lr.ph.i ], [ %.lcssa15.i137, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map15filter_map_foldReTB1a_B1a_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1c_NCB1p_s_0E0E0B1t_.exit.i ] ; 10 uses
   %i.bu = icmp ult i64 %i.bs, %i.bt
   br i1 %i.bu, label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i
 
@@ -256,7 +256,7 @@ _RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i.i: ; preds = %bb.
 bb.ae:                                            ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i.i
   %i.ci = extractvalue { i64, i64 } %.merged.i.i.i.i.i.i.i, 1 ; 3 uses
   %i.cj = add i64 %i.bv, 1
-  %i.ck = add i64 %i.cj, %i.ci                    ; 6 uses
+  %i.ck = add i64 %i.cj, %i.ci                    ; 7 uses
   %.not13.i.i.i.i.i.i = icmp ugt i64 %i.ck, %i.bs
   %i.cl = add i64 %i.bv, %i.ci
   %or.cond.i.i.i.i.i.i.not = icmp ult i64 %i.cl, %i.bs
@@ -275,40 +275,50 @@ bb.ag:                                            ; preds = %bb.ae
 _RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i: ; preds = %bb.af, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i.i, %bb.ab
   %i.cp = phi i64 [ %i.bt, %bb.ab ], [ %i.ck, %bb.af ], [ %i.bs, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i.i ]
   %.not.i3.i.i.i.i.i.not = icmp eq i64 %i.bs, %.lcssa1617.i
-  br i1 %.not.i3.i.i.i.i.i.not, label %_RINvYNtNtNtCs4NRVxsYgnAr_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4folduNCINvNtNtBN_8adapters10filter_map15filter_map_foldReTB2g_B2g_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvBH_8for_each4callB2i_NCB2v_s_0E0E0EB2z_.exit, label %select.unfold.i.i.i
+  br i1 %.not.i3.i.i.i.i.i.not, label %_RINvYNtNtNtCs4NRVxsYgnAr_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4folduNCINvNtNtBN_8adapters10filter_map15filter_map_foldReTB2g_B2g_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvBH_8for_each4callB2i_NCB2v_s_0E0E0EB2z_.exit, label %select.unfold.i.i.i.thread
 
-select.unfold.i.i.i:                              ; preds = %bb.ag, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i
-  %3 = phi i64 [ %i.cp, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i ], [ %i.ck, %bb.ag ]
-  %.lcssa15.i = phi i64 [ %.lcssa1617.i, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i ], [ %i.ck, %bb.ag ]
-  %4 = phi i1 [ true, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i ], [ false, %bb.ag ]
-  %.pn.i = phi i64 [ %i.bs, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i ], [ %i.ck, %bb.ag ] ; 2 uses
-  %.sroa.4.1.i.i.i.i.i = sub nuw i64 %.pn.i, %.lcssa1617.i ; 3 uses
-  %.sroa.0.1.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.lcssa1617.i ; 4 uses
+select.unfold.i.i.i.thread:                       ; preds = %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i
+  %.sroa.4.1.i.i.i.i.i132 = sub nuw i64 %i.bs, %.lcssa1617.i ; 2 uses
+  %.sroa.0.1.i.i.i.i.i133 = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.lcssa1617.i ; 2 uses
+  %3 = insertvalue { ptr, i64 } poison, ptr %.sroa.0.1.i.i.i.i.i133, 0
+  %4 = insertvalue { ptr, i64 } %3, i64 %.sroa.4.1.i.i.i.i.i132, 1
+  br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i
+
+select.unfold.i.i.i:                              ; preds = %bb.ag
+  %.sroa.4.1.i.i.i.i.i = sub nuw i64 %i.ck, %.lcssa1617.i ; 2 uses
+  %.sroa.0.1.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.lcssa1617.i ; 2 uses
   %i.cq = insertvalue { ptr, i64 } poison, ptr %.sroa.0.1.i.i.i.i.i, 0
-  %i.cr = insertvalue { ptr, i64 } %i.cq, i64 %.sroa.4.1.i.i.i.i.i, 1 ; 3 uses
-  %.not.i.i.i.i4.i.i.i = icmp eq i64 %.pn.i, %.lcssa1617.i
-  %.pre.i.i.i5.i.i.i = add i64 %.sroa.4.1.i.i.i.i.i, -1 ; 3 uses
+  %i.cr = insertvalue { ptr, i64 } %i.cq, i64 %.sroa.4.1.i.i.i.i.i, 1 ; 2 uses
+  %.not.i.i.i.i4.i.i.i = icmp eq i64 %i.ck, %.lcssa1617.i
   br i1 %.not.i.i.i.i4.i.i.i, label %_RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i: ; preds = %select.unfold.i.i.i
-  %i.cs = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 %.pre.i.i.i5.i.i.i
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i: ; preds = %select.unfold.i.i.i.thread, %select.unfold.i.i.i
+  %5 = phi { ptr, i64 } [ %4, %select.unfold.i.i.i.thread ], [ %i.cr, %select.unfold.i.i.i ] ; 2 uses
+  %.sroa.0.1.i.i.i.i.i139 = phi ptr [ %.sroa.0.1.i.i.i.i.i133, %select.unfold.i.i.i.thread ], [ %.sroa.0.1.i.i.i.i.i, %select.unfold.i.i.i ]
+  %.sroa.4.1.i.i.i.i.i138 = phi i64 [ %.sroa.4.1.i.i.i.i.i132, %select.unfold.i.i.i.thread ], [ %.sroa.4.1.i.i.i.i.i, %select.unfold.i.i.i ] ; 2 uses
+  %6 = phi i1 [ true, %select.unfold.i.i.i.thread ], [ false, %select.unfold.i.i.i ] ; 2 uses
+  %.lcssa15.i136 = phi i64 [ %.lcssa1617.i, %select.unfold.i.i.i.thread ], [ %i.ck, %select.unfold.i.i.i ] ; 2 uses
+  %7 = phi i64 [ %i.cp, %select.unfold.i.i.i.thread ], [ %i.ck, %select.unfold.i.i.i ] ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.lcssa1617.i ; 2 uses
+  %.pre.i.i.i5.i.i.i140 = add i64 %.sroa.4.1.i.i.i.i.i138, -1 ; 3 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %8, i64 %.pre.i.i.i5.i.i.i140
   %rhsc.i.i.i.i.i = load i8, ptr %i.cs, align 1, !alias.scope !735, !noalias !736
   %rhsc.fr.i.i.i.i.i = freeze i8 %rhsc.i.i.i.i.i
   %i.ct = icmp eq i8 %rhsc.fr.i.i.i.i.i, 10
   br i1 %i.ct, label %bb.ah, label %_RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i
 
 bb.ah:                                            ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i
-  %i.cu = insertvalue { ptr, i64 } %i.cr, i64 %.pre.i.i.i5.i.i.i, 1
-  %.not.i.i15.i.i.i.i.i = icmp eq i64 %.pre.i.i.i5.i.i.i, 0
-  %.pre.i16.i.i.i.i.i = add i64 %.sroa.4.1.i.i.i.i.i, -2 ; 2 uses
+  %i.cu = insertvalue { ptr, i64 } %5, i64 %.pre.i.i.i5.i.i.i140, 1
+  %.not.i.i15.i.i.i.i.i = icmp eq i64 %.pre.i.i.i5.i.i.i140, 0
+  %.pre.i16.i.i.i.i.i = add i64 %.sroa.4.1.i.i.i.i.i138, -2 ; 2 uses
   br i1 %.not.i.i15.i.i.i.i.i, label %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i17.i.i.i.i.i
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i17.i.i.i.i.i: ; preds = %bb.ah
-  %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 %.pre.i16.i.i.i.i.i
+  %i.cv = getelementptr inbounds nuw i8, ptr %8, i64 %.pre.i16.i.i.i.i.i
   %rhsc4.i.i.i.i.i = load i8, ptr %i.cv, align 1, !alias.scope !735, !noalias !736
   %rhsc4.fr.i.i.i.i.i = freeze i8 %rhsc4.i.i.i.i.i
   %i.cw = icmp eq i8 %rhsc4.fr.i.i.i.i.i, 13
-  %spec.select.i20.i.i.i.i.i = select i1 %i.cw, ptr %.sroa.0.1.i.i.i.i.i, ptr null
+  %spec.select.i20.i.i.i.i.i = select i1 %i.cw, ptr %.sroa.0.1.i.i.i.i.i139, ptr null
   br label %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i
 
 _RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i17.i.i.i.i.i, %bb.ah
@@ -320,7 +330,10 @@ _RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit
   br label %_RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i
 
 _RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i: ; preds = %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i, %select.unfold.i.i.i
-  %.merged.i.i.i.i.i = phi { ptr, i64 } [ %..i.i.i.i.i, %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %i.cr, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i ], [ %i.cr, %select.unfold.i.i.i ] ; 2 uses
+  %9 = phi i1 [ %6, %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %6, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i ], [ false, %select.unfold.i.i.i ]
+  %.lcssa15.i137 = phi i64 [ %.lcssa15.i136, %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %.lcssa15.i136, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i ], [ %.lcssa1617.i, %select.unfold.i.i.i ]
+  %10 = phi i64 [ %7, %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %7, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i ], [ %.lcssa1617.i, %select.unfold.i.i.i ]
+  %.merged.i.i.i.i.i = phi { ptr, i64 } [ %..i.i.i.i.i, %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15strip_suffix_of.exit21.i.i.i.i.i ], [ %5, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i.i ], [ %i.cr, %select.unfold.i.i.i ] ; 2 uses
   %i.da = extractvalue { ptr, i64 } %.merged.i.i.i.i.i, 0 ; 5 uses
   %i.db = extractvalue { ptr, i64 } %.merged.i.i.i.i.i, 1 ; 4 uses
   %.not.i106 = icmp eq ptr %i.da, null
@@ -391,7 +404,7 @@ bb.an:                                            ; preds = %bb.am
           to label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map15filter_map_foldReTB1a_B1a_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1c_NCB1p_s_0E0E0B1t_.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp
 
 _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map15filter_map_foldReTB1a_B1a_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1c_NCB1p_s_0E0E0B1t_.exit.i: ; preds = %bb.al, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i, %bb.an
-  br i1 %4, label %_RINvYNtNtNtCs4NRVxsYgnAr_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4folduNCINvNtNtBN_8adapters10filter_map15filter_map_foldReTB2g_B2g_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvBH_8for_each4callB2i_NCB2v_s_0E0E0EB2z_.exit, label %bb.ab
+  br i1 %9, label %_RINvYNtNtNtCs4NRVxsYgnAr_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4folduNCINvNtNtBN_8adapters10filter_map15filter_map_foldReTB2g_B2g_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvBH_8for_each4callB2i_NCB2v_s_0E0E0EB2z_.exit, label %bb.ab
 
 _RINvYNtNtNtCs4NRVxsYgnAr_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4folduNCINvNtNtBN_8adapters10filter_map15filter_map_foldReTB2g_B2g_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvBH_8for_each4callB2i_NCB2v_s_0E0E0EB2z_.exit: ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map15filter_map_foldReTB1a_B1a_EuNCNvNtCsh4GC5dvIChH_27influxdb3_processing_engine10virtualenv15initialize_venv0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB1c_NCB1p_s_0E0E0B1t_.exit.i, %_RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i.i.i.i
   %i.dx = load i64, ptr %i.o, align 8, !range !10, !alias.scope !741, !noundef !6

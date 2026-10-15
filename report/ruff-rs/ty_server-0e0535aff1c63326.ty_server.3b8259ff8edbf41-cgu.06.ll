@@ -204,12 +204,17 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   %i.f = load i64, ptr %i.e, align 8, !noundef !6 ; 4 uses
   %i.g = icmp ugt i64 %1, %i.f
-  br i1 %i.g, label %.preheader.i, label %bb.b
+  br i1 %i.g, label %..preheader.i_crit_edge, label %bb.b
+
+..preheader.i_crit_edge:                          ; preds = %bb.a
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8
+  br label %.preheader.i
 
 bb.b:                                             ; preds = %bb.a
   %i.h = sub nuw i64 %i.f, %1                     ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.j = load ptr, ptr %i.i, align 8, !alias.scope !4616, !nonnull !6, !noundef !6
+  %i.j = load ptr, ptr %i.i, align 8, !alias.scope !4616, !nonnull !6, !noundef !6 ; 3 uses
   %i.k = getelementptr inbounds nuw [96 x i8], ptr %i.j, i64 %1 ; 2 uses
   store i64 %1, ptr %i.e, align 8, !alias.scope !4616
   %i.l = icmp eq i64 %i.f, %1
@@ -253,11 +258,10 @@ bb.f:                                             ; preds = %.lr.ph216
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #29, !noalias !4616
   unreachable
 
-.preheader.i:                                     ; preds = %bb.c, %bb.b, %bb.a
-  %i.v = phi i64 [ %i.f, %bb.a ], [ %1, %bb.b ], [ %1, %bb.c ] ; 3 uses
+.preheader.i:                                     ; preds = %bb.c, %bb.b, %..preheader.i_crit_edge
+  %3 = phi ptr [ %.pre, %..preheader.i_crit_edge ], [ %i.j, %bb.b ], [ %i.j, %bb.c ]
+  %i.v = phi i64 [ %i.f, %..preheader.i_crit_edge ], [ %1, %bb.b ], [ %1, %bb.c ] ; 3 uses
   %i.w = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %i.v ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %4 = load ptr, ptr %3, align 8, !nonnull !6, !noundef !6
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4617)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4618)
   %.not.i1 = icmp eq i64 %i.v, 0
@@ -265,7 +269,7 @@ bb.f:                                             ; preds = %.lr.ph216
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %_RNvXs_Cs5e9M2GLoJMY_8indexmapINtB4_6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtCscdodAO9FK5_5alloc6string6StringEIBF_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEENtNtCs4NRVxsYgnAr_4core5clone5Clone10clone_fromCsjNt1Wzngcv_9ty_server.exit.i
   %.sroa.0.037.i = phi i64 [ %i.cd, %_RNvXs_Cs5e9M2GLoJMY_8indexmapINtB4_6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtCscdodAO9FK5_5alloc6string6StringEIBF_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEENtNtCs4NRVxsYgnAr_4core5clone5Clone10clone_fromCsjNt1Wzngcv_9ty_server.exit.i ], [ 0, %.preheader.i ] ; 3 uses
-  %i.x = getelementptr inbounds nuw [96 x i8], ptr %4, i64 %.sroa.0.037.i ; 27 uses
+  %i.x = getelementptr inbounds nuw [96 x i8], ptr %3, i64 %.sroa.0.037.i ; 27 uses
   %i.y = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.0.037.i ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4619)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4620)
@@ -512,7 +516,8 @@ bb.w:                                             ; preds = %_RNvXs3_NtCs4NRVxsY
 
 _RNvXs1_NtNtCscdodAO9FK5_5alloc3vec11spec_extendINtB7_3VecINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB9_6string6StringEIB1r_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEEEINtB5_10SpecExtendRBT_INtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterBT_EE11spec_extendCsjNt1Wzngcv_9ty_server.exit: ; preds = %bb.u, %bb.v
   %i.cp = phi i64 [ %i.cl, %bb.u ], [ %.pre.i.i.i, %bb.v ]
-  %i.cq = load ptr, ptr %3, align 8, !alias.scope !4664, !nonnull !6, !noundef !6
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.cq = load ptr, ptr %4, align 8, !alias.scope !4664, !nonnull !6, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !4666
   store ptr %i.e, ptr %i.a, align 8, !noalias !4664
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8

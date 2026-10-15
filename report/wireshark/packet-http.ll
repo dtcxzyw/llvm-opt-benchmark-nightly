@@ -204,7 +204,7 @@ bb.gg:                                            ; preds = %bb.gf, %.thread1248
   %.377812431265 = phi ptr [ %.2777, %bb.gf ], [ %.377812431266, %.thread1248 ]
   %.677412441263 = phi ptr [ %.17691388, %bb.gf ], [ %.677412441264, %.thread1248 ] ; 4 uses
   %.076712461261 = phi ptr [ %i.jg, %bb.gf ], [ %.076712461262, %.thread1248 ]
-  %storemerge = phi ptr [ %i.yv, %bb.gf ], [ %i.yu, %.thread1248 ] ; 19 uses
+  %storemerge = phi ptr [ %i.yv, %bb.gf ], [ %i.yu, %.thread1248 ] ; 20 uses
   %i.yx = getelementptr i8, ptr %.1826116812311281, i64 45
   %i.yy = load i8, ptr %i.yx, align 1, !range !10, !noundef !11
   %i.yz = trunc nuw i8 %i.yy to i1
@@ -238,7 +238,7 @@ bb.gk:                                            ; preds = %bb.gj
   %i.zj = zext i32 %i.ze to i64
   %i.zk = call noalias ptr @wmem_alloc(ptr noundef %i.zi, i64 noundef %i.zj) #22 ; 2 uses
   %.not156.i = icmp eq i32 %i.ze, 0
-  br i1 %.not156.i, label %.loopexit.i, label %.lr.ph.i
+  br i1 %.not156.i, label %chunked_encoding_dissector.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.gk
   %.not122.i = icmp eq ptr %i.zg, null
@@ -429,11 +429,11 @@ bb.hf:                                            ; preds = %bb.gx
   %.not.i1039 = icmp eq i32 %i.abg, 0
   br i1 %.not.i1039, label %.loopexit.i, label %bb.gl
 
-.loopexit.i:                                      ; preds = %bb.hf, %.thread.i, %bb.gk
-  %.4107.i = phi i32 [ %.3106.ph.i, %.thread.i ], [ 0, %bb.gk ], [ 0, %bb.hf ] ; 3 uses
-  %.2102.i = phi i32 [ %.1101.ph.i, %.thread.i ], [ 0, %bb.gk ], [ %i.zs, %bb.hf ] ; 2 uses
-  %.297.i = phi i32 [ %.196.ph.i, %.thread.i ], [ 0, %bb.gk ], [ %i.aab, %bb.hf ] ; 3 uses
-  %.4.i = phi i32 [ %.3.ph.i, %.thread.i ], [ -1, %bb.gk ], [ %.2205.i, %bb.hf ] ; 2 uses
+.loopexit.i:                                      ; preds = %bb.hf, %.thread.i
+  %.4107.i = phi i32 [ %.3106.ph.i, %.thread.i ], [ 0, %bb.hf ] ; 5 uses
+  %.2102.i = phi i32 [ %.1101.ph.i, %.thread.i ], [ %i.zs, %bb.hf ] ; 2 uses
+  %.297.i = phi i32 [ %.196.ph.i, %.thread.i ], [ %i.aab, %bb.hf ] ; 3 uses
+  %.4.i = phi i32 [ %.3.ph.i, %.thread.i ], [ %.2205.i, %bb.hf ] ; 2 uses
   %i.abz = icmp ult i32 %.4107.i, %i.ze
   br i1 %i.abz, label %bb.hg, label %bb.hh
 
@@ -445,7 +445,7 @@ bb.hg:                                            ; preds = %.loopexit.i
   br label %bb.hh
 
 bb.hh:                                            ; preds = %bb.hg, %.loopexit.i
-  %.31068 = phi ptr [ %i.acc, %bb.hg ], [ %storemerge, %.loopexit.i ] ; 2 uses
+  %.31068 = phi ptr [ %i.acc, %bb.hg ], [ %storemerge, %.loopexit.i ] ; 3 uses
   %.not126.i = icmp eq i32 %.297.i, 0
   br i1 %.not126.i, label %chunked_encoding_dissector.exit, label %bb.hi
 
@@ -465,18 +465,20 @@ bb.hj:                                            ; preds = %bb.hi
   call void @col_append_sep_str(ptr noundef %i.ack, i32 noundef 25, ptr noundef nonnull @.str.528, ptr noundef nonnull @.str.529)
   br label %chunked_encoding_dissector.exit
 
-chunked_encoding_dissector.exit:                  ; preds = %bb.hh, %bb.hi, %bb.hj
-  %i.acl = sub i32 %i.ze, %.4107.i                ; 2 uses
+chunked_encoding_dissector.exit:                  ; preds = %bb.gk, %bb.hh, %bb.hi, %bb.hj
+  %.41069 = phi ptr [ %storemerge, %bb.gk ], [ %.31068, %bb.hh ], [ %.31068, %bb.hj ], [ %.31068, %bb.hi ] ; 2 uses
+  %.4107211219.i = phi i32 [ 0, %bb.gk ], [ %.4107.i, %bb.hh ], [ %.4107.i, %bb.hj ], [ %.4107.i, %bb.hi ]
+  %i.acl = sub i32 %i.ze, %.4107211219.i          ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   %i.acm = icmp eq i32 %i.acl, 0
   br i1 %i.acm, label %.thread1289, label %bb.hk
 
 bb.hk:                                            ; preds = %chunked_encoding_dissector.exit
-  %i.acn = call ptr @add_new_data_source(ptr noundef %2, ptr noundef %.31068, ptr noundef nonnull @.str.428) ; 0 uses
+  %i.acn = call ptr @add_new_data_source(ptr noundef %2, ptr noundef %.41069, ptr noundef nonnull @.str.428) ; 0 uses
   br label %bb.hl
 
 bb.hl:                                            ; preds = %bb.hk, %bb.gg
-  %.01065 = phi ptr [ %.31068, %bb.hk ], [ %storemerge, %bb.gg ] ; 20 uses
+  %.01065 = phi ptr [ %.41069, %bb.hk ], [ %storemerge, %bb.gg ] ; 20 uses
   %.3823 = phi i32 [ %i.acl, %bb.hk ], [ %.282212391269, %bb.gg ] ; 9 uses
   %i.aco = getelementptr i8, ptr %.1826116812311281, i64 40
   %i.acp = load i32, ptr %i.aco, align 8

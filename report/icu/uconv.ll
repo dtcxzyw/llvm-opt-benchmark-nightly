@@ -204,11 +204,11 @@ sub_0:                                            ; preds = %sub_0.lr.ph, %bb.da
   %.02491029 = phi ptr [ null, %sub_0.lr.ph ], [ %.1250, %bb.da ] ; 23 uses
   %.02521028 = phi ptr [ null, %sub_0.lr.ph ], [ %.1253, %bb.da ] ; 23 uses
   %.02551027 = phi i64 [ 4096, %sub_0.lr.ph ], [ %.1256, %bb.da ] ; 23 uses
-  %i.s = load ptr, ptr %.02241037, align 8, !tbaa !24 ; 51 uses
+  %i.s = load ptr, ptr %.02241037, align 8, !tbaa !24 ; 52 uses
   %i.t = load i8, ptr %i.s, align 1               ; 2 uses
   %i.u = zext i8 %i.t to i32
-  %i.v = sub nsw i32 45, %i.u                     ; 13 uses
-  %.not = icmp eq i8 %i.t, 45                     ; 14 uses
+  %i.v = sub nsw i32 45, %i.u                     ; 12 uses
+  %.not = icmp eq i8 %i.t, 45                     ; 13 uses
   br i1 %.not, label %sub_1, label %.tail
 
 sub_1:                                            ; preds = %sub_0
@@ -245,8 +245,8 @@ bb.h:                                             ; preds = %bb.g
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !24
   br label %bb.da
 
-.invoke:                                          ; preds = %bb.cy, %bb.cr, %bb.ca, %bb.bn, %bb.ba, %bb.ax, %bb.ai, %bb.ah, %bb.ae, %bb.ac, %bb.q, %bb.l, %bb.j, %.tail460, %.tail465, %bb.ay, %bb.g
-  %12 = phi i32 [ 0, %.tail460 ], [ 1, %bb.g ], [ 1, %bb.cy ], [ 0, %bb.ay ], [ 0, %.tail465 ], [ 1, %bb.j ], [ 1, %bb.l ], [ 1, %bb.q ], [ 1, %bb.ac ], [ 1, %bb.ae ], [ 1, %bb.ah ], [ 1, %bb.ai ], [ 1, %bb.ax ], [ 1, %bb.ba ], [ 1, %bb.bn ], [ 1, %bb.ca ], [ 1, %bb.cr ]
+.invoke:                                          ; preds = %bb.cy, %bb.cr, %bb.ca, %bb.bn, %bb.ba, %bb.ax, %bb.ai, %bb.ah, %bb.ae, %bb.ac, %bb.q, %bb.l, %bb.j, %.tail460, %.tail465, %bb.ay, %sub_0471, %bb.g
+  %12 = phi i32 [ 0, %sub_0471 ], [ 1, %bb.g ], [ 1, %bb.cy ], [ 0, %bb.ay ], [ 0, %.tail465 ], [ 0, %.tail460 ], [ 1, %bb.j ], [ 1, %bb.l ], [ 1, %bb.q ], [ 1, %bb.ac ], [ 1, %bb.ae ], [ 1, %bb.ah ], [ 1, %bb.ai ], [ 1, %bb.ax ], [ 1, %bb.ba ], [ 1, %bb.bn ], [ 1, %bb.ca ], [ 1, %bb.cr ]
   invoke fastcc void @_ZL5usagePKci(ptr noundef nonnull %.0221, i32 noundef %12)
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -583,7 +583,7 @@ bb.ax:                                            ; preds = %bb.aw, %.tail455
   br i1 %.not345, label %bb.da, label %.invoke
 
 sub_0461:                                         ; preds = %bb.aw
-  br i1 %.not, label %sub_1462, label %.tail465
+  br i1 %.not, label %sub_1462, label %sub_0471
 
 sub_1462:                                         ; preds = %sub_0461
   %i.dx = getelementptr inbounds nuw i8, ptr %i.s, i64 1
@@ -620,20 +620,22 @@ sub_2468:                                         ; preds = %sub_1467
   %i.eo = sub nsw i32 0, %i.en
   br label %.tail465
 
-.tail465:                                         ; preds = %sub_0461, %sub_1467, %sub_2468
-  %13 = phi i32 [ %i.eo, %sub_2468 ], [ %i.ek, %sub_1467 ], [ %i.v, %sub_0461 ]
+.tail465:                                         ; preds = %sub_1467, %sub_2468
+  %13 = phi i32 [ %i.eo, %sub_2468 ], [ %i.ek, %sub_1467 ]
   %.not314 = icmp eq i32 %13, 0
   br i1 %.not314, label %.invoke, label %bb.ay
 
 bb.ay:                                            ; preds = %.tail465
   %i.ep = call i32 @strcmp(ptr noundef nonnull dereferenceable(7) @.str.40, ptr noundef nonnull dereferenceable(1) %i.s) #21
   %.not315 = icmp eq i32 %i.ep, 0
-  br i1 %.not315, label %.invoke, label %sub_0471
+  br i1 %.not315, label %.invoke, label %sub_1472
 
-sub_0471:                                         ; preds = %bb.ay
-  br i1 %.not, label %sub_1472, label %.tail470
+sub_0471:                                         ; preds = %sub_0461
+  %14 = call i32 @strcmp(ptr noundef nonnull dereferenceable(7) @.str.40, ptr noundef nonnull dereferenceable(1) %i.s) #21
+  %.not3151270 = icmp eq i32 %14, 0
+  br i1 %.not3151270, label %.invoke, label %.tail470
 
-sub_1472:                                         ; preds = %sub_0471
+sub_1472:                                         ; preds = %bb.ay
   %i.eq = getelementptr inbounds nuw i8, ptr %i.s, i64 1
   %i.er = load i8, ptr %i.eq, align 1             ; 2 uses
   %i.es = zext i8 %i.er to i32

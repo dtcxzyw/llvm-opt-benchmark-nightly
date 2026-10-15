@@ -205,14 +205,15 @@ bb.f:                                             ; preds = %_ZN5folly5ArenaINS_
 
 bb.g:                                             ; preds = %_ZN5folly5ArenaINS_12SysAllocatorIcEEE18blockGoodAllocSizeEv.exit19
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 10 uses
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !46 ; 4 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 11 uses
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !46 ; 3 uses
   %i.ak = icmp eq ptr %i.aj, %i.ai
-  br i1 %i.ak, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE5BlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit, label %bb.h
+  br i1 %i.ak, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !47, !noalias !1139 ; 5 uses
+  store ptr %i.ai, ptr %i.al, align 8, !tbaa !47
   %i.an = load ptr, ptr %i.ah, align 8, !tbaa !46 ; 2 uses
   %i.ao = icmp eq ptr %i.an, %i.ah
   br i1 %i.ao, label %bb.i, label %bb.j
@@ -238,8 +239,8 @@ bb.k:                                             ; preds = %bb.j
   %.pre = load ptr, ptr %i.ai, align 8, !tbaa !46
   br label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE5BlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit
 
-_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE5BlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit: ; preds = %bb.j, %bb.k, %bb.g
-  %2 = phi ptr [ %i.aj, %bb.j ], [ %.pre, %bb.k ], [ %i.aj, %bb.g ] ; 2 uses
+_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE5BlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit: ; preds = %bb.j, %bb.k
+  %2 = phi ptr [ %i.aj, %bb.j ], [ %.pre, %bb.k ] ; 2 uses
   %.not11.i.i.i = icmp eq ptr %2, %i.ai
   br i1 %.not11.i.i.i, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit, label %.lr.ph.i.i.i
 
@@ -250,19 +251,20 @@ _ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIc
   %.not.i.i.i20 = icmp eq ptr %i.ar, %i.ai
   br i1 %.not.i.i.i20, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit, label %.lr.ph.i.i.i, !llvm.loop !2
 
-_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit: ; preds = %.lr.ph.i.i.i, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE5BlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit
+_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit: ; preds = %.lr.ph.i.i.i, %bb.g, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE5BlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit
   store ptr %i.ai, ptr %i.ai, align 8, !tbaa !46
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 16
   store ptr %i.ai, ptr %i.as, align 8, !tbaa !47
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 10 uses
-  %i.av = load ptr, ptr %i.au, align 8, !tbaa !46 ; 4 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 11 uses
+  %i.av = load ptr, ptr %i.au, align 8, !tbaa !46 ; 3 uses
   %i.aw = icmp eq ptr %i.av, %i.au
-  br i1 %i.aw, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit, label %bb.l
+  br i1 %i.aw, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE5clearEv.exit, label %bb.l
 
 bb.l:                                             ; preds = %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit
-  %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !47, !noalias !1140 ; 5 uses
+  store ptr %i.au, ptr %i.ax, align 8, !tbaa !47
   %i.az = load ptr, ptr %i.at, align 8, !tbaa !46 ; 2 uses
   %i.ba = icmp eq ptr %i.az, %i.at
   br i1 %i.ba, label %bb.m, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit.i
@@ -288,8 +290,8 @@ bb.n:                                             ; preds = %_ZN5boost9intrusive
   %.pre38 = load ptr, ptr %i.au, align 8, !tbaa !46
   br label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit
 
-_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit: ; preds = %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit.i, %bb.n, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit
-  %3 = phi ptr [ %i.av, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit.i ], [ %.pre38, %bb.n ], [ %i.av, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit ] ; 2 uses
+_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit: ; preds = %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit.i, %bb.n
+  %3 = phi ptr [ %i.av, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit.i ], [ %.pre38, %bb.n ] ; 2 uses
   %.not11.i.i.i27 = icmp eq ptr %3, %i.au
   br i1 %.not11.i.i.i27, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE5clearEv.exit, label %.lr.ph.i.i.i28
 
@@ -300,7 +302,7 @@ _ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIc
   %.not.i.i.i30 = icmp eq ptr %i.bd, %i.au
   br i1 %.not.i.i.i30, label %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE5clearEv.exit, label %.lr.ph.i.i.i28, !llvm.loop !1
 
-_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE5clearEv.exit: ; preds = %.lr.ph.i.i.i28, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit
+_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE5clearEv.exit: ; preds = %.lr.ph.i.i.i28, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12before_beginEv.exit, %_ZN5boost9intrusive10slist_implINS0_8mhtraitsIN5folly5ArenaINS3_12SysAllocatorIcEEE10LargeBlockENS0_17slist_member_hookIJEEEXadL_ZNS8_4linkEEEEEmLm4EvE12splice_afterENS0_14slist_iteratorISB_Lb1EEERSC_PSE_.exit
   store ptr %i.au, ptr %i.au, align 8, !tbaa !46
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 40
   store ptr %i.au, ptr %i.be, align 8, !tbaa !47
@@ -400,11 +402,11 @@ _ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTa
   %.not.i.i.i.i = icmp eq ptr %i.k, null
   %.neg.i.i.i.i = select i1 %.not.i.i.i.i, i64 0, i64 -48
   %i.l = getelementptr inbounds i8, ptr %i.k, i64 %.neg.i.i.i.i ; 2 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !1151, !noalias !1150 ; 5 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !1151, !noalias !1150 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !1151, !noalias !1150 ; 6 uses
   %i.p = icmp eq ptr %i.m, %i.o
-  br i1 %i.p, label %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor5beginEv.exit, label %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.preheader.i
+  br i1 %i.p, label %._crit_edge, label %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.preheader.i
 
 _ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.preheader.i: ; preds = %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE16accessAllThreadsEv.exit
   %i.q = load ptr, ptr %i.m, align 8, !tbaa !1153, !noalias !1150
@@ -425,13 +427,13 @@ _ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTa
 ._ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorC2EPKS5_b.exit.loopexit_crit_edge.i: ; preds = %.lr.ph.i
   br label %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor5beginEv.exit, !llvm.loop !1146
 
-_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor5beginEv.exit: ; preds = %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE16accessAllThreadsEv.exit, %._ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorC2EPKS5_b.exit.loopexit_crit_edge.i, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.preheader.i
-  %.sroa.7.1 = phi ptr [ %i.m, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE16accessAllThreadsEv.exit ], [ %i.t, %._ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorC2EPKS5_b.exit.loopexit_crit_edge.i ], [ %i.m, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.preheader.i ], [ %i.t, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i ] ; 2 uses
+_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor5beginEv.exit: ; preds = %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i, %._ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorC2EPKS5_b.exit.loopexit_crit_edge.i, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.preheader.i
+  %.sroa.7.1 = phi ptr [ %i.m, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.preheader.i ], [ %i.t, %._ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorC2EPKS5_b.exit.loopexit_crit_edge.i ], [ %i.t, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i ] ; 2 uses
   %.not31 = icmp eq ptr %.sroa.7.1, %i.o
   br i1 %.not31, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorppEv.exit, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor5beginEv.exit
-  %.011.lcssa = phi i64 [ 128, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor5beginEv.exit ], [ %i.an, %_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorppEv.exit ]
+._crit_edge:                                      ; preds = %.lr.ph, %_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorppEv.exit, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE16accessAllThreadsEv.exit, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor5beginEv.exit
+  %.011.lcssa = phi i64 [ 128, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor5beginEv.exit ], [ 128, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE16accessAllThreadsEv.exit ], [ %i.an, %_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorppEv.exit ], [ %i.an, %.lr.ph ]
   call void @_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8AccessorD2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %2) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
@@ -479,10 +481,10 @@ _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 64
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !135
   %i.am = add i64 %.01133, 96
-  %i.an = add i64 %i.am, %i.al                    ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.7.032, i64 24 ; 3 uses
+  %i.an = add i64 %i.am, %i.al                    ; 3 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.7.032, i64 24 ; 2 uses
   %i.ap = icmp eq ptr %i.ao, %i.o
-  br i1 %i.ap, label %_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorppEv.exit, label %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i19
+  br i1 %i.ap, label %._crit_edge, label %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i19
 
 _ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i19: ; preds = %.lr.ph, %bb.e
   %.sroa.7.2 = phi ptr [ %i.ar, %bb.e ], [ %i.ao, %.lr.ph ] ; 3 uses
@@ -495,8 +497,8 @@ bb.e:                                             ; preds = %_ZNK5folly14ThreadL
   %i.as = icmp eq ptr %i.ar, %i.o
   br i1 %i.as, label %_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorppEv.exit, label %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i19, !llvm.loop !1146
 
-_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorppEv.exit: ; preds = %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i19, %bb.e, %.lr.ph
-  %.sroa.7.3 = phi ptr [ %i.ao, %.lr.ph ], [ %i.ar, %bb.e ], [ %.sroa.7.2, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i19 ] ; 2 uses
+_ZN5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8IteratorppEv.exit: ; preds = %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i19, %bb.e
+  %.sroa.7.3 = phi ptr [ %i.ar, %bb.e ], [ %.sroa.7.2, %_ZNK5folly14ThreadLocalPtrINS_8SysArenaENS_17ThreadCachedArena17ThreadLocalPtrTagEvE8Accessor8Iterator5validEv.exit.i.i.i19 ] ; 2 uses
   %.not = icmp eq ptr %.sroa.7.3, %i.o
   br i1 %.not, label %._crit_edge, label %.lr.ph
 

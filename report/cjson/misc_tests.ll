@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = add nuw i64 %i.f, 1                      ; 4 uses
   store i64 %i.m, ptr %i.e, align 8, !tbaa !53
   %i.n = icmp ult i64 %i.m, %i.h
-  br i1 %i.n, label %.lr.ph.i, label %buffer_skip_whitespace.exit
+  br i1 %i.n, label %.lr.ph.i, label %bb.g
 
 .lr.ph.i:                                         ; preds = %bb.d, %bb.e
   %i.o = phi i64 [ %i.s, %bb.e ], [ %i.m, %bb.d ] ; 3 uses
@@ -224,8 +224,8 @@ bb.e:                                             ; preds = %.lr.ph.i
   store i64 %i.t, ptr %i.e, align 8, !tbaa !53
   br label %buffer_skip_whitespace.exit
 
-buffer_skip_whitespace.exit:                      ; preds = %.lr.ph.i, %bb.d, %.critedge.thread.i
-  %2 = phi i64 [ %i.t, %.critedge.thread.i ], [ %i.m, %bb.d ], [ %i.o, %.lr.ph.i ] ; 5 uses
+buffer_skip_whitespace.exit:                      ; preds = %.lr.ph.i, %.critedge.thread.i
+  %2 = phi i64 [ %i.t, %.critedge.thread.i ], [ %i.o, %.lr.ph.i ] ; 5 uses
   %i.u = icmp ult i64 %2, %i.h
   br i1 %i.u, label %bb.f, label %bb.g
 
@@ -239,8 +239,9 @@ bb.f:                                             ; preds = %buffer_skip_whitesp
   store i64 %i.b, ptr %i.a, align 8, !tbaa !63
   br label %bb.x
 
-bb.g:                                             ; preds = %buffer_skip_whitespace.exit
-  %i.y = add i64 %2, -1
+bb.g:                                             ; preds = %bb.d, %buffer_skip_whitespace.exit
+  %3 = phi i64 [ %2, %buffer_skip_whitespace.exit ], [ %i.m, %bb.d ]
+  %i.y = add i64 %3, -1
   store i64 %i.y, ptr %i.e, align 8, !tbaa !53
   br label %.critedge.thread119
 
