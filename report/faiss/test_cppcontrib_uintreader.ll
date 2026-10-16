@@ -204,16 +204,14 @@ bb.a:
   store i64 256, ptr %i.a, align 8, !tbaa !29
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 10 uses
-  %i.d = tail call noalias noundef nonnull dereferenceable(1) ptr @_Znam(i64 noundef 1) #18 ; 8 uses
+  %i.d = tail call noalias noundef nonnull dereferenceable(1) ptr @_Znam(i64 noundef 1) #18 ; 7 uses
   store i8 0, ptr %i.d, align 1
   %i.e = invoke noundef i64 @_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEmRT_RKNS0_10param_typeE(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(16) %1)
           to label %_ZN5faiss15BitstringWriter5writeEmi.exit unwind label %bb.b
 
 _ZN5faiss15BitstringWriter5writeEmi.exit:         ; preds = %bb.a
-  %3 = load i8, ptr %i.d, align 1, !tbaa !30
   %i.f = trunc i64 %i.e to i8
-  %4 = or i8 %3, %i.f
-  store i8 %4, ptr %i.d, align 1, !tbaa !30
+  store i8 %i.f, ptr %i.d, align 1, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   store ptr %i.d, ptr %2, align 8, !tbaa !33
   store i64 1, ptr %i.b, align 8, !tbaa !34

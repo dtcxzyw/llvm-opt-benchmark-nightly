@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/nf_conntrack_proto?download=true
 inline.NumInlined: 68
 inline.NumDeleted: 40
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@nf_confirm:bb.a
   call void asm sideeffect "incl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.by, ptr elementtype(i32) %i.by) #8, !srcloc !15
   br label %nf_conntrack_confirm.exit
@@ -204,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 0, ptr %i.k, align 4
   br label %.thread
 
-.split53.us:                                      ; preds = %.lr.ph.preheader, %.split.us50
+.split53.us:                                      ; preds = %.split.us50, %.lr.ph.preheader
   %.lcssa.us = phi ptr [ %i.o, %.split.us50 ], [ %i.q, %.lr.ph.preheader ]
   %i.w = getelementptr i8, ptr %.lcssa.us, i64 16
   %i.x = load ptr, ptr %i.w, align 8

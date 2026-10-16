@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nuttx/original/intel64_irq?download=true
 inline.NumInlined: 68
 inline.NumDeleted: 9
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@x86_64_cpu_tss_init
 declare dso_local void @x86_64_cpu_tss_init(i32 noundef) local_unnamed_addr #5
 
@@ -204,10 +202,10 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sext i32 %0 to i64
   %i.c = tail call zeroext i8 @x86_64_cpu_to_loapic(i8 noundef zeroext 0) #10
   %i.d = zext i8 %i.c to i64
   %i.e = shl nuw nsw i64 %i.d, 32
+  %2 = sext i32 %0 to i64
   %i.f = or i64 %i.e, %2                          ; 2 uses
   %i.g = or i64 %i.f, 16384
   %i.h = lshr i64 %i.f, 32
@@ -429,24 +427,24 @@ bb.a:
   %i.e = load i32, ptr @g_msi_now, align 4
   %.not = icmp sgt i32 %0, %i.e
   %or.cond = select i1 %i.d, i1 true, i1 %.not
-  br i1 %or.cond, label %.preheader.preheader, label %bb.b
+  br i1 %or.cond, label %bb.c, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.a
-  %.0..0..0..0. = load volatile i32, ptr %i.b, align 4
-  %2 = and i32 %.0..0..0..0., 1
-  %.not11.a = icmp eq i32 %2, 0
-  br i1 %.not11.a, label %.loopexit, label %bb.d
+  %2 = and i64 %i.c, 512
+  %.not11.a = icmp eq i64 %2, 0
+  br i1 %.not11.a, label %up_irq_restore.exit12, label %bb.b
 
-bb.b:                                             ; preds = %bb.a
-  %3 = and i64 %i.c, 512
-  %.not13 = icmp eq i64 %3, 0
-  br i1 %.not13, label %up_irq_restore.exit12, label %bb.c
-
-bb.c:                                             ; preds = %bb.b
+bb.b:                                             ; preds = %.preheader.preheader
   call void asm sideeffect "sti", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !12
   br label %up_irq_restore.exit12
 
-bb.d:                                             ; preds = %.preheader.preheader
+bb.c:                                             ; preds = %bb.a
+  %.0..0..0..0. = load volatile i32, ptr %i.b, align 4
+  %3 = and i32 %.0..0..0..0., 1
+  %.not11 = icmp eq i32 %3, 0
+  br i1 %.not11, label %.loopexit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
   %i.f = call zeroext i8 @x86_64_cpu_to_loapic(i8 noundef zeroext 0) #10
   %i.g = zext i8 %i.f to i32
   %i.h = shl nuw i32 %i.g, 24
@@ -456,7 +454,7 @@ bb.d:                                             ; preds = %.preheader.preheade
   call void asm sideeffect "movl $0,($1)", "r,r,~{dirflag},~{fpsr},~{flags}"(i32 %i.h, ptr nonnull inttoptr (i64 4273995792 to ptr)) #9, !srcloc !7
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader.preheader, %bb.d
+.loopexit:                                        ; preds = %bb.c, %bb.d
   %i.k = and i64 %i.c, 512
   %.not14 = icmp eq i64 %i.k, 0
   br i1 %.not14, label %up_irq_restore.exit12, label %bb.e
@@ -465,7 +463,7 @@ bb.e:                                             ; preds = %.loopexit
   call void asm sideeffect "sti", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !12
   br label %up_irq_restore.exit12
 
-up_irq_restore.exit12:                            ; preds = %bb.e, %.loopexit, %bb.c, %bb.b
+up_irq_restore.exit12:                            ; preds = %bb.e, %.loopexit, %bb.b, %.preheader.preheader
   ret void
 }
 

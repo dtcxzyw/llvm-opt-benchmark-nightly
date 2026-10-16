@@ -105,51 +105,39 @@ bb.a:
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31)
-  %1 = load i64, ptr %0, align 8, !range !32, !alias.scope !33, !noundef !6
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  switch i64 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.i [
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !32)
+  %1 = load i64, ptr %0, align 8, !range !33, !alias.scope !34, !noundef !6
+  switch i64 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit [
     i64 2, label %.split.us.i
     i64 3, label %.split.us9.i
   ]
 
 .split.us.i:                                      ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val2.i.us.i = load i64, ptr %i.a, align 8, !alias.scope !33 ; 2 uses
+  %.val2.i.us.i = load i64, ptr %i.a, align 8, !alias.scope !34 ; 2 uses
   %i.b = icmp eq i64 %.val2.i.us.i, 0
-  br i1 %i.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.us.us.i, label %.split.us.split.i
-
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.us.us.i: ; preds = %.split.us.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit
+  br i1 %i.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit, label %.split.us.split.i
 
 .split.us.split.i:                                ; preds = %.split.us.i
-  %.val3.i.us.i = load ptr, ptr %2, align 8, !alias.scope !33, !nonnull !6, !noundef !6
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.i.us.i, i64 noundef %.val2.i.us.i, i64 noundef range(i64 1, -9223372036854775807) 1) #23, !noalias !35
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.val3.i.i = load ptr, ptr %2, align 8, !alias.scope !34, !nonnull !6, !noundef !6
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.i.i, i64 noundef %.val2.i.us.i, i64 noundef range(i64 1, -9223372036854775807) 1) #23, !noalias !35
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit
 
 .split.us9.i:                                     ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val.i.us.i = load i64, ptr %i.c, align 8, !alias.scope !33 ; 2 uses
+  %.val.i.us.i = load i64, ptr %i.c, align 8, !alias.scope !34 ; 2 uses
   %i.d = icmp eq i64 %.val.i.us.i, 0
-  br i1 %i.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.us10.us.i, label %.split.us9.split.i
-
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.us10.us.i: ; preds = %.split.us9.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit
+  br i1 %i.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit, label %.split.us9.split.i
 
 .split.us9.split.i:                               ; preds = %.split.us9.i
-  %3 = shl nuw i64 %.val.i.us.i, 2
-  %.val1.i.us.i = load ptr, ptr %2, align 8, !alias.scope !33, !nonnull !6, !noundef !6
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.us.i, i64 noundef %3, i64 noundef range(i64 1, -9223372036854775807) 4) #23, !noalias !36
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.val1.i.us.i = load ptr, ptr %3, align 8, !alias.scope !34, !nonnull !6, !noundef !6
+  %4 = shl nuw i64 %.val.i.us.i, 2
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.us.i, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) 4) #23, !noalias !36
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.i: ; preds = %bb.a
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit
-
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.us.us.i, %.split.us.split.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.us10.us.i, %.split.us9.split.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit.i
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs4RW8js5ES7g_4fish.exit: ; preds = %bb.a, %.split.us.i, %.split.us.split.i, %.split.us9.i, %.split.us9.split.i
   ret void
 }
 
@@ -552,9 +540,9 @@ attributes #28 = { noreturn }
 !29 = distinct !{!29, i1 true, !"_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecmENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs4RW8js5ES7g_4fish"}
 !30 = distinct !{!30, !29, !"_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecmENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs4RW8js5ES7g_4fish: argument 0"}
 !31 = !{!24}
-!32 = !{i64 0, i64 8}
-!33 = !{!26, !24}
-!34 = !{!26}
+!32 = !{!26}
+!33 = !{i64 0, i64 8}
+!34 = !{!26, !24}
 !35 = !{!28, !26, !24}
 !36 = !{!30, !26, !24}
 !37 = distinct !{!37, i1 true, !"_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs4RW8js5ES7g_4fish"}

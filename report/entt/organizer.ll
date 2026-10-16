@@ -1,9 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/entt/original/organizer?download=true
 inline.NumInlined: 8145
 inline.NumDeleted: 3037
-loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 16
-loop-unroll.NumUnrolled: 18
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@_ZN4entt14basic_registryINS_6entityESaIS1_EE5groupIJiEJKcEJEEENS_11basic_groupINS_7owned_tIJDpNS_11storage_forIT_S1_SaINSt12remove_constIS9_E4typeEEE4typeEEEENS_5get_tIJDpNS8_IT0_S1_SaINSA_ISJ_E4typeEEE4typeEEEENS_9exclude_tIJDpNS8_IT1_S1_SaINSA_ISS_E4typeEEE4typeEEEEEENSI_IJDpSJ_EEENSR_IJDpSS_EEE:bb.a
   br label %_ZNSt12__shared_ptrIN4entt8internal13group_handlerINS0_16basic_sparse_setINS0_6entityESaIS4_EEELm1ELm1ELm0EEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit22
 
@@ -205,7 +204,7 @@ bb.a:
 define linkonce_odr hidden noundef zeroext i1 @_ZNK4entt8internal13group_handlerINS_16basic_sparse_setINS_6entityESaIS3_EEELm1ELm1ELm0EE5ownedEj(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1) unnamed_addr #12 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !366
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !254
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
@@ -608,7 +607,7 @@ bb.a:
 define linkonce_odr hidden noundef zeroext i1 @_ZNK4entt8internal13group_handlerINS_16basic_sparse_setINS_6entityESaIS3_EEELm1ELm0ELm0EE5ownedEj(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1) unnamed_addr #12 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !366
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !254
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4

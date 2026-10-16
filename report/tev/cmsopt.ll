@@ -205,7 +205,7 @@ IsDegenerated.exit.thread227:                     ; preds = %bb.l, %._crit_edge.
   br i1 %exitcond.not, label %.loopexit, label %bb.k, !llvm.loop !130
 
 .loopexit:                                        ; preds = %IsDegenerated.exit.thread227, %bb.j, %bb.i
-  %i.br = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 13 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 12 uses
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !32
   %.not269 = icmp eq i32 %i.bs, 0
   br i1 %.not269, label %.preheader242.preheader, label %.lr.ph249
@@ -345,12 +345,7 @@ bb.s:                                             ; preds = %bb.o, %_cmsQuickSat
 ._crit_edge255.thread:                            ; preds = %._crit_edge
   %indvars.iv.next294333 = add nuw nsw i64 %indvars.iv293, 1 ; 2 uses
   %exitcond296.not334 = icmp eq i64 %indvars.iv.next294333, 4096
-  br i1 %exitcond296.not334, label %.preheader239, label %.preheader242.backedge
-
-.preheader239:                                    ; preds = %._crit_edge255.thread, %SlopeLimiting.exit
-  %5 = load i32, ptr %i.br, align 8, !tbaa !32
-  %.not427 = icmp eq i32 %5, 0
-  br i1 %.not427, label %.critedge._crit_edge, label %.lr.ph355
+  br i1 %exitcond296.not334, label %.preheader240.preheader, label %.preheader242.backedge
 
 .lr.ph258:                                        ; preds = %._crit_edge255, %SlopeLimiting.exit
   %indvars.iv297 = phi i64 [ %indvars.iv.next298, %SlopeLimiting.exit ], [ 0, %._crit_edge255 ] ; 2 uses
@@ -557,35 +552,38 @@ SlopeLimiting.exit:                               ; preds = %_cmsQuickSaturateWo
   %i.gn = load i32, ptr %i.br, align 8, !tbaa !32
   %i.go = zext i32 %i.gn to i64
   %i.gp = icmp samesign ult i64 %indvars.iv.next298, %i.go
-  br i1 %i.gp, label %.lr.ph258, label %.preheader239, !llvm.loop !140
+  br i1 %i.gp, label %.lr.ph258, label %.preheader240.preheader, !llvm.loop !140
 
-.backedge:                                        ; preds = %._crit_edge.i215
-  br i1 %.not184, label %.critedge191, label %.backedge340
+.preheader240.preheader:                          ; preds = %._crit_edge255.thread, %SlopeLimiting.exit
+  br label %.backedge340
 
-.backedge340:                                     ; preds = %.backedge, %IsDegenerated.exit221
-  %indvars.iv300.be = add nuw nsw i64 %indvars.iv300354, 1 ; 2 uses
+.backedge:                                        ; preds = %IsDegenerated.exit221, %.lr.ph355, %._crit_edge.i215
+  %indvars.iv.next302 = add nuw nsw i64 %indvars.iv301, 1
+  br i1 %.not184, label %.critedge191, label %.backedge340, !llvm.loop !141
+
+.backedge340:                                     ; preds = %.preheader240.preheader, %.backedge
+  %indvars.iv301 = phi i64 [ %indvars.iv.next302, %.backedge ], [ 0, %.preheader240.preheader ] ; 3 uses
   %i.gq = load i32, ptr %i.br, align 8, !tbaa !32 ; 2 uses
   %i.gr = zext i32 %i.gq to i64
-  %i.gs = icmp samesign ult i64 %indvars.iv300.be, %i.gr
-  br i1 %i.gs, label %.lr.ph355, label %..critedge.preheader_crit_edge, !llvm.loop !141
+  %i.gs = icmp samesign ult i64 %indvars.iv301, %i.gr
+  br i1 %i.gs, label %.lr.ph355, label %..critedge.preheader_crit_edge
 
 ..critedge.preheader_crit_edge:                   ; preds = %.backedge340
   %i.gt = icmp eq i32 %i.gq, 0
   br i1 %i.gt, label %.critedge._crit_edge, label %.lr.ph262
 
-.lr.ph355:                                        ; preds = %.preheader239, %.backedge340
-  %indvars.iv300354 = phi i64 [ %indvars.iv300.be, %.backedge340 ], [ 0, %.preheader239 ] ; 2 uses
-  %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv300354 ; 3 uses
+.lr.ph355:                                        ; preds = %.backedge340
+  %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv301 ; 3 uses
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !50
   %i.gw = call i32 @cmsIsToneCurveLinear(ptr noundef %i.gv) #9 ; 0 uses
   %i.gx = load ptr, ptr %i.gu, align 8, !tbaa !50
   %i.gy = call i32 @cmsIsToneCurveMonotonic(ptr noundef %i.gx) #9
-  %.not184 = icmp eq i32 %i.gy, 0                 ; 2 uses
+  %.not184 = icmp eq i32 %i.gy, 0
   %i.gz = load ptr, ptr %i.gu, align 8, !tbaa !50 ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 40
   %i.hb = load i32, ptr %i.ha, align 8, !tbaa !147 ; 4 uses
   %.not.i205 = icmp eq i32 %i.hb, 0
-  br i1 %.not.i205, label %IsDegenerated.exit221, label %.lr.ph.i206
+  br i1 %.not.i205, label %.backedge, label %.lr.ph.i206
 
 .lr.ph.i206:                                      ; preds = %.lr.ph355
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gz, i64 48
@@ -660,19 +658,14 @@ scalar.ph407:                                     ; preds = %scalar.ph407.prehea
   %i.ib = icmp eq i32 %spec.select.i211.lcssa, 1
   %i.ic = icmp eq i32 %.1.i212.lcssa, 1
   %or.cond.i216 = select i1 %i.ib, i1 %i.ic, i1 false
-  br i1 %or.cond.i216, label %.backedge, label %6
+  br i1 %or.cond.i216, label %.backedge, label %IsDegenerated.exit221
 
-6:                                                ; preds = %._crit_edge.i215
-  %7 = udiv i32 %i.hb, 20                         ; 2 uses
-  %8 = icmp ugt i32 %spec.select.i211.lcssa, %7
-  br i1 %8, label %.critedge191, label %IsDegenerated.exit221
-
-IsDegenerated.exit221:                            ; preds = %.lr.ph355, %6
-  %9 = phi i32 [ %7, %6 ], [ 0, %.lr.ph355 ]
-  %.0.lcssa3336.i218 = phi i32 [ %.1.i212.lcssa, %6 ], [ 0, %.lr.ph355 ]
-  %10 = icmp ugt i32 %.0.lcssa3336.i218, %9
-  %i.id = select i1 %10, i1 true, i1 %.not184
-  br i1 %i.id, label %.critedge191, label %.backedge340
+IsDegenerated.exit221:                            ; preds = %._crit_edge.i215
+  %5 = udiv i32 %i.hb, 20                         ; 2 uses
+  %6 = icmp ule i32 %spec.select.i211.lcssa, %5
+  %7 = icmp ule i32 %.1.i212.lcssa, %5
+  %i.id = select i1 %6, i1 %7, i1 false
+  br i1 %i.id, label %.backedge, label %.critedge191
 
 .critedge:                                        ; preds = %.lr.ph262
   %indvars.iv.next304 = add nuw nsw i64 %indvars.iv303, 1 ; 2 uses
@@ -691,7 +684,7 @@ IsDegenerated.exit221:                            ; preds = %.lr.ph355, %6
   %i.il = icmp eq ptr %i.ij, null
   br i1 %i.il, label %.critedge191, label %.critedge
 
-.critedge._crit_edge:                             ; preds = %.critedge, %.preheader239, %..critedge.preheader_crit_edge
+.critedge._crit_edge:                             ; preds = %.critedge, %..critedge.preheader_crit_edge
   %i.im = call ptr @cmsPipelineDup(ptr noundef nonnull %i.p) #9 ; 9 uses
   %i.in = icmp eq ptr %i.im, null
   br i1 %i.in, label %.critedge191, label %bb.x
@@ -827,9 +820,9 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   store ptr %i.ix, ptr %0, align 8, !tbaa !20
   br label %.critedge193
 
-.critedge191:                                     ; preds = %bb.l, %bb.n, %6, %.backedge, %IsDegenerated.exit221, %.lr.ph262, %bb.h, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %.critedge._crit_edge
-  %.0136 = phi ptr [ null, %.lr.ph262 ], [ null, %bb.n ], [ null, %.critedge._crit_edge ], [ null, %bb.y ], [ %i.ix, %bb.ab ], [ %i.ix, %bb.aa ], [ %i.ix, %bb.z ], [ null, %bb.x ], [ null, %6 ], [ null, %bb.h ], [ null, %IsDegenerated.exit221 ], [ null, %.backedge ], [ null, %bb.l ] ; 2 uses
-  %.0135 = phi ptr [ null, %.lr.ph262 ], [ null, %bb.n ], [ null, %.critedge._crit_edge ], [ %i.im, %bb.y ], [ %i.im, %bb.ab ], [ %i.im, %bb.aa ], [ %i.im, %bb.z ], [ %i.im, %bb.x ], [ null, %6 ], [ null, %bb.h ], [ null, %IsDegenerated.exit221 ], [ null, %.backedge ], [ null, %bb.l ] ; 2 uses
+.critedge191:                                     ; preds = %bb.l, %bb.n, %IsDegenerated.exit221, %.backedge, %.lr.ph262, %bb.h, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %.critedge._crit_edge
+  %.0136 = phi ptr [ null, %.lr.ph262 ], [ null, %bb.n ], [ null, %.critedge._crit_edge ], [ null, %bb.y ], [ %i.ix, %bb.ab ], [ %i.ix, %bb.aa ], [ %i.ix, %bb.z ], [ null, %bb.x ], [ null, %IsDegenerated.exit221 ], [ null, %bb.h ], [ null, %.backedge ], [ null, %bb.l ] ; 2 uses
+  %.0135 = phi ptr [ null, %.lr.ph262 ], [ null, %bb.n ], [ null, %.critedge._crit_edge ], [ %i.im, %bb.y ], [ %i.im, %bb.ab ], [ %i.im, %bb.aa ], [ %i.im, %bb.z ], [ %i.im, %bb.x ], [ null, %IsDegenerated.exit221 ], [ null, %bb.h ], [ null, %.backedge ], [ null, %bb.l ] ; 2 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 2 uses
   %i.ki = load i32, ptr %i.kh, align 8, !tbaa !32
   %.not275 = icmp eq i32 %i.ki, 0

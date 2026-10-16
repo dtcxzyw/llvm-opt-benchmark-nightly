@@ -202,50 +202,44 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   %i.h = load ptr, ptr @ruby_single_main_ractor, align 8, !tbaa !143
   %.not.i.i = icmp eq ptr %i.h, null
-  br i1 %.not.i.i, label %rb_vm_lock_enter.exit.a, label %rb_vm_lock_enter.exit.thread
-
-rb_vm_lock_enter.exit.thread:                     ; preds = %bb.b
-  %1 = getelementptr i8, ptr %i.f, i64 336
-  %2 = getelementptr i8, ptr %0, i64 120
-  %3 = getelementptr i8, ptr %0, i64 128
-  br label %rb_vm_lock_leave.exit.us
+  br i1 %.not.i.i, label %rb_vm_lock_leave.exit.us, label %rb_vm_lock_enter.exit.a
 
 rb_vm_lock_enter.exit.a:                          ; preds = %bb.b
+  %1 = getelementptr i8, ptr %i.f, i64 336        ; 3 uses
+  %2 = getelementptr i8, ptr %0, i64 120          ; 3 uses
+  %.pre.a = load ptr, ptr %1, align 8, !tbaa !77  ; 2 uses
+  store ptr %.pre.a, ptr %2, align 8, !tbaa !77
+  %i.i = getelementptr i8, ptr %0, i64 128
+  store ptr %1, ptr %i.i, align 8, !tbaa !76
+  %i.j = getelementptr i8, ptr %.pre.a, i64 8
+  store ptr %2, ptr %i.j, align 8, !tbaa !76
+  store ptr %2, ptr %1, align 8, !tbaa !77
+  br label %bb.c
+
+rb_vm_lock_leave.exit.us:                         ; preds = %bb.b
   call void @rb_vm_lock_enter_body(ptr noundef nonnull %i.a) #17
-  %.pre.a = load ptr, ptr @ruby_single_main_ractor, align 8, !tbaa !143
-  %4 = icmp eq ptr %.pre.a, null
-  %i.i = getelementptr i8, ptr %i.f, i64 336      ; 4 uses
-  %i.j = getelementptr i8, ptr %0, i64 120        ; 4 uses
-  %5 = getelementptr i8, ptr %0, i64 128          ; 2 uses
-  br i1 %4, label %bb.c, label %rb_vm_lock_leave.exit.us
-
-rb_vm_lock_leave.exit.us:                         ; preds = %rb_vm_lock_enter.exit.thread, %rb_vm_lock_enter.exit.a
-  %6 = phi ptr [ %3, %rb_vm_lock_enter.exit.thread ], [ %5, %rb_vm_lock_enter.exit.a ]
-  %7 = phi ptr [ %2, %rb_vm_lock_enter.exit.thread ], [ %i.j, %rb_vm_lock_enter.exit.a ] ; 3 uses
-  %8 = phi ptr [ %1, %rb_vm_lock_enter.exit.thread ], [ %i.i, %rb_vm_lock_enter.exit.a ] ; 3 uses
-  %i.k = load ptr, ptr %8, align 8, !tbaa !77     ; 2 uses
-  store ptr %i.k, ptr %7, align 8, !tbaa !77
-  store ptr %8, ptr %6, align 8, !tbaa !76
+  %.pre = load ptr, ptr @ruby_single_main_ractor, align 8, !tbaa !143
+  %3 = icmp eq ptr %.pre, null
+  %4 = getelementptr i8, ptr %i.f, i64 336        ; 3 uses
+  %5 = getelementptr i8, ptr %0, i64 120          ; 3 uses
+  %i.k = load ptr, ptr %4, align 8, !tbaa !77     ; 2 uses
+  store ptr %i.k, ptr %5, align 8, !tbaa !77
+  %6 = getelementptr i8, ptr %0, i64 128
+  store ptr %4, ptr %6, align 8, !tbaa !76
   %i.l = getelementptr i8, ptr %i.k, i64 8
-  store ptr %7, ptr %i.l, align 8, !tbaa !76
-  store ptr %7, ptr %8, align 8, !tbaa !77
-  br label %rb_vm_lock_leave.exit.a
+  store ptr %5, ptr %i.l, align 8, !tbaa !76
+  store ptr %5, ptr %4, align 8, !tbaa !77
+  br i1 %3, label %rb_vm_lock_leave.exit.a, label %bb.c
 
-rb_vm_lock_leave.exit.a:                          ; preds = %bb.c, %rb_vm_lock_leave.exit.us
+rb_vm_lock_leave.exit.a:                          ; preds = %rb_vm_lock_leave.exit.us
+  call void @rb_vm_lock_leave_body(ptr noundef nonnull %i.a) #17
+  br label %bb.c
+
+bb.c:                                             ; preds = %rb_vm_lock_enter.exit.a, %rb_vm_lock_leave.exit.us, %rb_vm_lock_leave.exit.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   br label %bb.d
 
-bb.c:                                             ; preds = %rb_vm_lock_enter.exit.a
-  %9 = load ptr, ptr %i.i, align 8, !tbaa !77     ; 2 uses
-  store ptr %9, ptr %i.j, align 8, !tbaa !77
-  store ptr %i.i, ptr %5, align 8, !tbaa !76
-  %10 = getelementptr i8, ptr %9, i64 8
-  store ptr %i.j, ptr %10, align 8, !tbaa !76
-  store ptr %i.j, ptr %i.i, align 8, !tbaa !77
-  call void @rb_vm_lock_leave_body(ptr noundef nonnull %i.a) #17
-  br label %rb_vm_lock_leave.exit.a
-
-bb.d:                                             ; preds = %bb.a, %rb_vm_lock_leave.exit.a
+bb.d:                                             ; preds = %bb.a, %bb.c
   ret void
 }
 
@@ -648,23 +642,23 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
   %i.ar = load ptr, ptr @ruby_single_main_ractor, align 8, !tbaa !143
   %.not.i.i = icmp eq ptr %i.ar, null
-  br i1 %.not.i.i, label %rb_vm_lock_enter.exit, label %.split.us
+  br i1 %.not.i.i, label %rb_vm_lock_enter.exit, label %bb.f
 
 rb_vm_lock_enter.exit:                            ; preds = %bb.e
   call void @rb_vm_lock_enter_body(ptr noundef nonnull %i.c) #17
   %.pre189 = load ptr, ptr @ruby_single_main_ractor, align 8, !tbaa !143
   %i.as = icmp eq ptr %.pre189, null
-  br i1 %i.as, label %bb.f, label %.split.us
+  br i1 %i.as, label %.split.us, label %bb.f
 
-.split.us:                                        ; preds = %bb.e, %bb.f, %rb_vm_lock_enter.exit
+.split.us:                                        ; preds = %rb_vm_lock_enter.exit
+  call void @rb_vm_lock_leave_body(ptr noundef nonnull %i.c) #17
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %rb_vm_lock_enter.exit, %.split.us
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   br label %bb.g
 
-bb.f:                                             ; preds = %rb_vm_lock_enter.exit
-  call void @rb_vm_lock_leave_body(ptr noundef nonnull %i.c) #17
-  br label %.split.us
-
-bb.g:                                             ; preds = %.split.us, %bb.d
+bb.g:                                             ; preds = %bb.f, %bb.d
   %.not79 = icmp eq i32 %i.an, 0
   br i1 %.not79, label %bb.i, label %bb.h
 

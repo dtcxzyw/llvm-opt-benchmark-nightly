@@ -205,11 +205,10 @@ bb.a:
   %9 = alloca %"class.grpc_core::Slice", align 8  ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1171 ; 2 uses
-  %i.c = load i8, ptr %0, align 4
-  %i.d = load i8, ptr %1, align 1
+  %i.c = load i8, ptr %0, align 4, !tbaa !156
+  %i.d = load i8, ptr %1, align 1, !tbaa !156
   %.not.i.i = icmp eq i8 %i.c, %i.d
-  %.not.fr.i.i = freeze i1 %.not.i.i
-  br i1 %.not.fr.i.i, label %bb.b, label %bb.d
+  br i1 %.not.i.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8

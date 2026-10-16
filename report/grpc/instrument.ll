@@ -204,9 +204,8 @@ bb.a:
   %6 = alloca %"class.grpc_core::InstrumentLabelList", align 1 ; 7 uses
   %7 = alloca %class.Filter, align 8              ; 22 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8
-  %.fr.i.i = freeze i64 %i.b
-  %.not.not.i.i = icmp eq i64 %.fr.i.i, 0
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !48
+  %.not.not.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.not.i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a

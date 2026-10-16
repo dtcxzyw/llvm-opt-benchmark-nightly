@@ -205,13 +205,12 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj1_NtNtB4_5array17TryFromSlice
 .loopexit:                                        ; preds = %.lr.ph, %.loopexit
   %.sroa.09.0.i17 = phi ptr [ %0, %.lr.ph ], [ %i.j, %.loopexit ] ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.09.0.i17, i64 1 ; 2 uses
-  %i.k = call i16 @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj1_EEB1F_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Z_B1W_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(i64 noundef %i.i), !noalias !727
-  %.fr18 = freeze i16 %i.k                        ; 2 uses
-  %.sroa.413.0.extract.shift = lshr i16 %.fr18, 8
+  %i.k = call i16 @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj1_EEB1F_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Z_B1W_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(i64 noundef %i.i), !noalias !727 ; 2 uses
+  %.sroa.413.0.extract.shift = lshr i16 %i.k, 8
   %.sroa.413.0.extract.trunc = trunc nuw i16 %.sroa.413.0.extract.shift to i8
-  %5 = trunc i16 %.fr18 to i1
-  %.sroa.09.0.i.promoted = load i8, ptr %.sroa.09.0.i17, align 1, !noalias !727
-  %.us-phi = select i1 %5, i8 %.sroa.413.0.extract.trunc, i8 %.sroa.09.0.i.promoted
+  %.sroa.06.0.copyload.i = load i8, ptr %.sroa.09.0.i17, align 1, !noalias !727
+  %5 = trunc i16 %i.k to i1
+  %.us-phi = select i1 %5, i8 %.sroa.413.0.extract.trunc, i8 %.sroa.06.0.copyload.i
   store i8 %.us-phi, ptr %.sroa.09.0.i17, align 1, !noalias !727
   %i.l = icmp eq ptr %i.j, %i.g
   br i1 %i.l, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj1_KBU_EB4_.exit, label %.loopexit
@@ -267,13 +266,12 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj1_NtNtB4_5array17TryFromSlice
 .loopexit:                                        ; preds = %.lr.ph, %.loopexit
   %.sroa.09.0.i17 = phi ptr [ %0, %.lr.ph ], [ %i.j, %.loopexit ] ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.09.0.i17, i64 2 ; 2 uses
-  %i.k = call i24 @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj2_EEj1_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Y_B1V_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(i64 noundef %i.i), !noalias !739
-  %.fr18 = freeze i24 %i.k                        ; 2 uses
-  %.sroa.413.0.extract.shift = lshr i24 %.fr18, 8
+  %i.k = call i24 @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj2_EEj1_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Y_B1V_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(i64 noundef %i.i), !noalias !739 ; 2 uses
+  %.sroa.413.0.extract.shift = lshr i24 %i.k, 8
   %.sroa.413.0.extract.trunc = trunc nuw i24 %.sroa.413.0.extract.shift to i16
-  %5 = trunc i24 %.fr18 to i1
-  %.sroa.09.0.i.promoted = load i16, ptr %.sroa.09.0.i17, align 1, !noalias !739
-  %.us-phi = select i1 %5, i16 %.sroa.413.0.extract.trunc, i16 %.sroa.09.0.i.promoted
+  %.sroa.06.0.copyload.i = load i16, ptr %.sroa.09.0.i17, align 1, !noalias !739
+  %5 = trunc i24 %i.k to i1
+  %.us-phi = select i1 %5, i16 %.sroa.413.0.extract.trunc, i16 %.sroa.06.0.copyload.i
   store i16 %.us-phi, ptr %.sroa.09.0.i17, align 1, !noalias !739
   %i.l = icmp eq ptr %i.j, %i.g
   br i1 %i.l, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj1_Kj2_EB4_.exit, label %.loopexit

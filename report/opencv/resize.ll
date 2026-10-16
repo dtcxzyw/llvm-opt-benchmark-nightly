@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.0.0.us = phi i32 [ %i.cd, %bb.e ], [ 0, %bb.d ] ; 2 uses
-  %i.ce = add nsw i32 %.sroa.067.0.us, %.sroa.0.0.us ; 4 uses
+  %i.ce = add nsw i32 %.sroa.0.0.us, %.sroa.067.0.us ; 4 uses
   %i.cf = xor i32 %i.ce, %.sroa.067.0.us
   %i.cg = xor i32 %i.ce, %.sroa.0.0.us
   %i.ch = and i32 %i.cf, %i.cg
@@ -608,11 +608,11 @@ scalar.ph139:                                     ; preds = %scalar.ph139.prehea
   %i.bq = trunc nuw i64 %.sroa.speculated.i.us to i32 ; 2 uses
   store i32 %i.bq, ptr %.379.us, align 4, !tbaa !410
   %gep = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep, i64 %indvars.iv109
-  %8 = load i16, ptr %gep, align 2, !tbaa !63, !noalias !1634
-  %i.br = zext i16 %8 to i64
-  %9 = load i32, ptr %i.ar, align 4, !tbaa !410, !noalias !1634
-  %i.bs = zext i32 %9 to i64
-  %i.bt = mul nuw nsw i64 %i.br, %i.bs
+  %8 = load i32, ptr %i.ar, align 4, !tbaa !410, !noalias !1634
+  %i.br = zext i32 %8 to i64
+  %9 = load i16, ptr %gep, align 2, !tbaa !63, !noalias !1634
+  %i.bs = zext i16 %9 to i64
+  %i.bt = mul nuw nsw i64 %i.bs, %i.br
   %.sroa.speculated.i63.us = tail call i64 @llvm.umin.i64(i64 range(i64 0, 281470681677826) %i.bt, i64 4294967295)
   %i.bu = trunc nuw i64 %.sroa.speculated.i63.us to i32
   %i.bv = tail call i32 @llvm.uadd.sat.i32(i32 %i.bq, i32 %i.bu)
@@ -1015,11 +1015,11 @@ scalar.ph138:                                     ; preds = %scalar.ph138.prehea
   %i.cb = trunc nsw i64 %i.ca to i32              ; 3 uses
   store i32 %i.cb, ptr %.378.us, align 4, !tbaa !405
   %gep = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep, i64 %indvars.iv108
-  %8 = load i16, ptr %gep, align 2, !tbaa !63, !noalias !1765
-  %i.cc = sext i16 %8 to i64
-  %9 = load i32, ptr %i.ar, align 4, !tbaa !405, !noalias !1765
-  %i.cd = sext i32 %9 to i64
-  %i.ce = mul nsw i64 %i.cc, %i.cd
+  %8 = load i32, ptr %i.ar, align 4, !tbaa !405, !noalias !1765
+  %i.cc = sext i32 %8 to i64
+  %9 = load i16, ptr %gep, align 2, !tbaa !63, !noalias !1765
+  %i.cd = sext i16 %9 to i64
+  %i.ce = mul nsw i64 %i.cd, %i.cc
   %i.cf = tail call i64 @llvm.smax.i64(i64 range(i64 -70368744144896, 70368744177665) %i.ce, i64 -2147483648)
   %i.cg = tail call i64 @llvm.smin.i64(i64 %i.cf, i64 2147483647)
   %i.ch = trunc nsw i64 %i.cg to i32              ; 2 uses
@@ -1285,7 +1285,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.0.0.us = phi i32 [ %i.bd, %bb.e ], [ 0, %bb.d ] ; 2 uses
-  %i.be = add nsw i32 %.sroa.067.0.us, %.sroa.0.0.us ; 4 uses
+  %i.be = add nsw i32 %.sroa.0.0.us, %.sroa.067.0.us ; 4 uses
   %i.bf = xor i32 %i.be, %.sroa.067.0.us
   %i.bg = xor i32 %i.be, %.sroa.0.0.us
   %i.bh = and i32 %i.bf, %i.bg
@@ -1688,16 +1688,16 @@ _ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us: ; preds = %bb.f, %bb.e, %bb.d
   %i.bg = load i32, ptr %gep, align 4, !tbaa !26, !noalias !1956
   %i.bh = sext i32 %i.bg to i64
   %i.bi = shl nsw i64 %i.bh, 32                   ; 2 uses
-  %8 = tail call i64 @llvm.abs.i64(i64 %i.bi, i1 true)
-  %9 = lshr exact i64 %8, 32                      ; 2 uses
-  %10 = load i64, ptr %i.ak, align 8, !tbaa !412, !noalias !1957 ; 2 uses
-  %i.bj = tail call i64 @llvm.abs.i64(i64 %10, i1 true) ; 2 uses
-  %.lobit34.i63.us = xor i64 %i.bi, %10
+  %8 = load i64, ptr %i.ak, align 8, !tbaa !412, !noalias !1957 ; 2 uses
+  %9 = tail call i64 @llvm.abs.i64(i64 %8, i1 true) ; 2 uses
+  %i.bj = tail call i64 @llvm.abs.i64(i64 %i.bi, i1 true)
+  %.lobit34.i63.us = xor i64 %i.bi, %8
   %.not.i64.us = icmp sgt i64 %.lobit34.i63.us, -1 ; 2 uses
-  %i.bk = and i64 %i.bj, 4294967295
-  %i.bl = lshr i64 %i.bj, 32
-  %i.bm = mul nuw nsw i64 %9, %i.bk               ; 2 uses
-  %i.bn = mul nuw nsw i64 %9, %i.bl               ; 2 uses
+  %i.bk = and i64 %9, 4294967295
+  %10 = lshr i64 %9, 32
+  %i.bl = lshr exact i64 %i.bj, 32                ; 2 uses
+  %i.bm = mul nuw nsw i64 %i.bl, %i.bk            ; 2 uses
+  %i.bn = mul nuw nsw i64 %i.bl, %10              ; 2 uses
   %i.bo = and i64 %i.bm, 4294967295               ; 2 uses
   %i.bp = and i64 %i.bn, 4294967295
   %i.bq = lshr i64 %i.bm, 32
@@ -1726,7 +1726,7 @@ bb.j:                                             ; preds = %_ZNK12_GLOBAL__N_11
 
 _ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit68.us: ; preds = %bb.j, %bb.i, %bb.h
   %.sroa.0.0.us = phi i64 [ %i.bw, %bb.j ], [ %i.bv, %bb.i ], [ %.neg35.i67.us, %bb.h ] ; 2 uses
-  %i.bx = add nsw i64 %.sroa.070.0.us, %.sroa.0.0.us ; 4 uses
+  %i.bx = add nsw i64 %.sroa.0.0.us, %.sroa.070.0.us ; 4 uses
   %i.by = xor i64 %i.bx, %.sroa.070.0.us
   %i.bz = xor i64 %i.bx, %.sroa.0.0.us
   %i.ca = and i64 %i.by, %i.bz
@@ -2045,7 +2045,7 @@ bb.l:                                             ; preds = %bb.h
 
 _ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit71.us: ; preds = %bb.l, %bb.k, %bb.j, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us
   %.sroa.0.0.us = phi i64 [ %.neg35.i70.us, %bb.j ], [ %i.cb, %bb.l ], [ %i.ca, %bb.k ], [ 0, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us ] ; 2 uses
-  %i.cc = add nsw i64 %.sroa.073.0.us, %.sroa.0.0.us ; 4 uses
+  %i.cc = add nsw i64 %.sroa.0.0.us, %.sroa.073.0.us ; 4 uses
   %i.cd = xor i64 %i.cc, %.sroa.073.0.us
   %i.ce = xor i64 %i.cc, %.sroa.0.0.us
   %i.cf = and i64 %i.cd, %i.ce
@@ -2448,7 +2448,7 @@ bb.o:                                             ; preds = %bb.m
   br label %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.i
 
 _ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.i: ; preds = %bb.o, %bb.n, %bb.l
-  %.sroa.02.0.i = phi i64 [ %i.fm, %bb.l ], [ %i.fo, %bb.o ], [ %.neg35.i20.i, %bb.n ] ; 6 uses
+  %.sroa.02.0.i = phi i64 [ %i.fm, %bb.l ], [ %i.fo, %bb.o ], [ %.neg35.i20.i, %bb.n ] ; 2 uses
   %i.fp = getelementptr [8 x i8], ptr %i.ej, i64 %indvars.iv.i80
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !412, !noalias !1991 ; 2 uses
   %i.fr = call i64 @llvm.abs.i64(i64 %i.fq, i1 true) ; 2 uses
@@ -2477,36 +2477,35 @@ _ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.i: ; preds = %bb.o, %bb.n, %bb.l
   %i.gm = icmp samesign ugt i64 %i.fy, 2147483647
   %i.gn = icmp samesign ugt i64 %i.gk, 2147483647
   %or.cond.i.i = select i1 %i.gm, i1 true, i1 %i.gn
-  %.neg.i.i = mul nsw i64 %i.gk, -4294967296
-  %.neg35.i.i = sub nsw i64 %.neg.i.i, %i.gl      ; 2 uses
-  %3 = shl nuw nsw i64 %i.gk, 32
   br i1 %or.cond.i.i, label %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us.i, label %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.split.i
 
 _ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us.i: ; preds = %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.i
-  %i.go = select i1 %.not.i.i81, i64 9223372036854775807, i64 -9223372036854775808 ; 2 uses
-  %4 = add nsw i64 %i.go, %.sroa.02.0.i           ; 3 uses
-  %5 = xor i64 %4, %.sroa.02.0.i
-  %6 = xor i64 %4, %i.go
-  %7 = and i64 %5, %6
+  %i.go = select i1 %.not.i.i81, i64 9223372036854775807, i64 -9223372036854775808
   br label %.split.i
 
 _ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.split.i: ; preds = %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.i
-  br i1 %.not.i.i81, label %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i, label %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.i
+  br i1 %.not.i.i81, label %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i, label %3
 
-_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i: ; preds = %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.split.i
-  %8 = add i64 %i.gl, %.sroa.02.0.i
-  %9 = add i64 %8, %3                             ; 2 uses
-  %10 = xor i64 %.sroa.02.0.i, -1
-  %11 = and i64 %9, %10
+3:                                                ; preds = %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.split.i
+  %.neg.i.i = mul nsw i64 %i.gk, -4294967296
+  %.neg35.i.i = sub nsw i64 %.neg.i.i, %i.gl
   br label %.split.i
 
-.split.i:                                         ; preds = %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.i, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us.i
-  %.sink19.i = phi i64 [ %15, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.i ], [ %11, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i ], [ %7, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us.i ]
-  %.sink18.i = phi i64 [ %12, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.i ], [ %9, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i ], [ %4, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us.i ] ; 2 uses
-  %i.gp = icmp slt i64 %.sink19.i, 0
-  %i.gq = and i64 %.sink18.i, -9223372036854775808
+_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i: ; preds = %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.split.i
+  %4 = shl nuw nsw i64 %i.gk, 32
+  %5 = or disjoint i64 %4, %i.gl
+  br label %.split.i
+
+.split.i:                                         ; preds = %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i, %3, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us.i
+  %.sink19.i = phi i64 [ %i.go, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us.i ], [ %5, %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i ], [ %.neg35.i.i, %3 ] ; 2 uses
+  %6 = add nsw i64 %.sink19.i, %.sroa.02.0.i      ; 4 uses
+  %7 = xor i64 %6, %.sroa.02.0.i
+  %8 = xor i64 %6, %.sink19.i
+  %9 = and i64 %7, %8
+  %i.gp = icmp slt i64 %9, 0
+  %i.gq = and i64 %6, -9223372036854775808
   %i.gr = xor i64 %i.gq, -1
-  %i.gs = select i1 %i.gp, i64 %i.gr, i64 %.sink18.i
+  %i.gs = select i1 %i.gp, i64 %i.gr, i64 %6
   %i.gt = add i64 %i.gs, 2147483648
   %i.gu = lshr i64 %i.gt, 32
   %i.gv = trunc nuw i64 %i.gu to i32
@@ -2515,13 +2514,6 @@ _ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.us8.i: ; preds = %_ZNK12_GLOBAL__N
   %indvars.iv.next.i82 = add nuw nsw i64 %indvars.iv.i80, 1 ; 2 uses
   %exitcond.not.i83 = icmp eq i64 %indvars.iv.next.i82, %i.ef
   br i1 %exitcond.not.i83, label %_ZN12_GLOBAL__N_111vlineResizeIiNS_12fixedpoint64ELi2EEEvPT0_mS3_PT_i.exit, label %bb.k, !llvm.loop !1980
-
-_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit.i:  ; preds = %_ZNK12_GLOBAL__N_112fixedpoint64mlERKS0_.exit21.split.i
-  %12 = add nsw i64 %.neg35.i.i, %.sroa.02.0.i    ; 3 uses
-  %13 = xor i64 %12, %.sroa.02.0.i
-  %14 = xor i64 %12, %.neg35.i.i
-  %15 = and i64 %13, %14
-  br label %.split.i
 
 _ZN12_GLOBAL__N_111vlineResizeIiNS_12fixedpoint64ELi2EEEvPT0_mS3_PT_i.exit: ; preds = %.split.i, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
