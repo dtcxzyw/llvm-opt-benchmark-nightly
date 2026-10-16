@@ -114,13 +114,13 @@ define linkonce_odr dso_local void @_ZN3ozz2io8IArchiversISt6vectorINS_9animatio
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   %i.c = load ptr, ptr %0, align 8, !tbaa !28     ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !25
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = call noundef i64 %i.f(ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull %i.b, i64 noundef 4), !inline_history !40 ; 0 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.h = load i8, ptr %2, align 8, !tbaa !29, !range !20, !noundef !21
   %i.i = trunc nuw i8 %i.h to i1
   %i.j = load i32, ptr %i.b, align 4              ; 2 uses

@@ -204,7 +204,7 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %i.nc = fadd <16 x float> %i.me, %i.nb
   store <16 x float> %i.nc, ptr %.val.val, align 64, !tbaa !32
   %.sroa.01.0.copyload.i852 = load <16 x float>, ptr %i.bt, align 64, !tbaa !32
-  %i.nd = fadd <16 x float> %i.na, %.sroa.01.0.copyload.i852
+  %i.nd = fadd <16 x float> %.sroa.01.0.copyload.i852, %i.na
   store <16 x float> %i.nd, ptr %i.bt, align 64, !tbaa !32
   %i.ne = fadd <16 x float> %i.lt, %i.my
   %i.nf = fmul <16 x float> %i.kx, %i.ne          ; 3 uses
@@ -397,7 +397,7 @@ _ZN3gmx17CoulombCalculatorILNS_17KernelCoulombTypeE2EE24forceAndCorrectionEnergy
   %i.sy = fadd <16 x float> %i.sc, %i.sx
   store <16 x float> %i.sy, ptr %.val.val, align 64, !tbaa !32
   %.sroa.01.0.copyload.i1005 = load <16 x float>, ptr %i.bt, align 64, !tbaa !32
-  %i.sz = fadd <16 x float> %i.sw, %.sroa.01.0.copyload.i1005
+  %i.sz = fadd <16 x float> %.sroa.01.0.copyload.i1005, %i.sw
   store <16 x float> %i.sz, ptr %i.bt, align 64, !tbaa !32
   %i.ta = fadd <16 x float> %i.rt, %i.sv
   %i.tb = fmul <16 x float> %i.qz, %i.ta          ; 3 uses

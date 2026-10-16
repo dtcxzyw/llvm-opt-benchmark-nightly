@@ -204,20 +204,20 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load i8, ptr %i.a, align 8, !range !14, !noundef !7
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %bb.b, label %.peel.begin
+  br i1 %i.c, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !align !6, !noundef !7
   %.not = icmp eq ptr %i.e, null
-  br i1 %.not, label %bb.c, label %.peel.begin, !prof !12
+  br i1 %.not, label %bb.c, label %.critedge, !prof !12
+
+.critedge:                                        ; preds = %bb.b, %bb.a
+  ret i1 true
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @89) #24
   unreachable
-
-.peel.begin:                                      ; preds = %bb.b, %bb.a
-  ret i1 true
 }
 
 ; Function Attrs: nonlazybind uwtable

@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cc = tail call ptr @expert_add_info(ptr noundef %1, ptr noundef %.0, ptr noundef nonnull @ei_esio_telegram_lost) ; 0 uses
   br label %.loopexit135
 
-.loopexit135:                                     ; preds = %.lr.ph, %.lr.ph139, %bb.m, %bb.p, %bb.q, %bb.k, %bb.l
+.loopexit135:                                     ; preds = %.lr.ph, %.lr.ph139, %bb.p, %bb.q, %bb.k, %bb.l, %bb.m
   %i.cd = tail call i32 @tvb_captured_length(ptr noundef %0)
   br label %is_esio_pdu.exit.thread
 

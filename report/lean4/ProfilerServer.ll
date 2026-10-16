@@ -202,6 +202,10 @@ bb.b:                                             ; preds = %bb.a
   %.not = icmp eq i32 %1, 0
   br i1 %.not, label %lean_dec.exit, label %.lr.ph
 
+lean_dec.exit:                                    ; preds = %.lr.ph, %bb.d, %bb.e, %bb.f, %bb.b
+  tail call void @lean_free_object(ptr noundef nonnull %0) #6
+  br label %lean_dec_ref.exit9
+
 .lr.ph:                                           ; preds = %bb.b
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !18   ; 4 uses
@@ -209,10 +213,6 @@ bb.b:                                             ; preds = %bb.a
   %i.e = and i64 %i.d, 1
   %.not.i = icmp eq i64 %i.e, 0
   br i1 %.not.i, label %bb.c, label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %.lr.ph, %bb.d, %bb.e, %bb.f, %bb.b
-  tail call void @lean_free_object(ptr noundef nonnull %0) #6
-  br label %lean_dec_ref.exit9
 
 bb.c:                                             ; preds = %.lr.ph
   %i.f = load i32, ptr %i.c, align 4, !tbaa !11   ; 3 uses

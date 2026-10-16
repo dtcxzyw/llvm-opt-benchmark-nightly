@@ -204,7 +204,7 @@ _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split: ; preds = %_ZN10aiV
   %i.my = fdiv double %i.mw, %i.mx
   br label %.loopexit401
 
-.split421.us:                                     ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split.us, %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split, %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.us
+.split421.us:                                     ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split, %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.us, %_ZN10aiVector3tIdE9NormalizeEv.exit.split.us
   %i.mz = extractelement <2 x double> %i.mc, i64 0
   %i.na = fmul double %.sroa.0324.0466, %i.mz
   %i.nb = extractelement <2 x double> %i.mc, i64 1

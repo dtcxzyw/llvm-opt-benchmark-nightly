@@ -204,14 +204,14 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.51.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 700
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.51.0..sroa_idx.i.i, i8 0, i64 9, i1 false), !noalias !723
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i.i)
-  %1 = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !731
   store i64 0, ptr %i.m, align 8, !noalias !732
-  store ptr inttoptr (i64 8 to ptr), ptr %2, align 8, !noalias !732
+  %.sroa.0.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 3 uses
+  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !732
+  %.sroa.0.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
   %.sroa.0.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   %.sroa.0.sroa.7.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 32 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false), !noalias !729
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.sroa.5.0..sroa_idx.i.i.i, i8 0, i64 16, i1 false), !noalias !729
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.0.sroa.7.0..sroa_idx.i.i.i, align 8, !noalias !732
   %.sroa.0.sroa.8.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 40 ; 2 uses
   %.sroa.0.sroa.9.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 48
@@ -255,7 +255,7 @@ bb.j:                                             ; preds = %bb.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs2C93r1qUspC_12clap_builder4util2id2IdE8push_mutCs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i.i: ; preds = %bb.j
   %i.cf = extractvalue { ptr, i64 } %i.cb, 1
-  %i.cg = load ptr, ptr %2, align 8, !alias.scope !736, !noalias !731, !nonnull !5, !noundef !5 ; 2 uses
+  %i.cg = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !736, !noalias !731, !nonnull !5, !noundef !5 ; 2 uses
   store ptr %i.cd, ptr %i.cg, align 8, !noalias !737
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
   store i64 %i.cf, ptr %i.ch, align 8, !noalias !735
@@ -269,9 +269,9 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs2C93r1qUspC_12clap_builder4util2id2IdE8push_mutCs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i.i, %bb.i
   %storemerge.i.i.i.i = phi i64 [ 1, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs2C93r1qUspC_12clap_builder4util2id2IdE8push_mutCs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i.i ], [ 0, %bb.i ] ; 3 uses
-  store i64 %storemerge.i.i.i.i, ptr %1, align 8, !alias.scope !733, !noalias !731
+  store i64 %storemerge.i.i.i.i, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !733, !noalias !731
   %.sroa.0.sroa.0.0.copyload64.i.i.i = load i64, ptr %i.m, align 8, !noalias !732 ; 2 uses
-  %.sroa.0.sroa.4.0.copyload67.i.i.i = load ptr, ptr %2, align 8, !noalias !732 ; 2 uses
+  %.sroa.0.sroa.4.0.copyload67.i.i.i = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !732 ; 2 uses
   %.sroa.0.sroa.6.0.copyload73.i.i.i = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx.i.i.i, align 8, !noalias !732 ; 2 uses
   %.sroa.0.sroa.7.0.copyload76.i.i.i = load ptr, ptr %.sroa.0.sroa.7.0..sroa_idx.i.i.i, align 8, !noalias !732 ; 2 uses
   %.sroa.0.sroa.8.0.copyload79.i.i.i = load i64, ptr %.sroa.0.sroa.8.0..sroa_idx.i.i.i, align 8, !noalias !732 ; 2 uses

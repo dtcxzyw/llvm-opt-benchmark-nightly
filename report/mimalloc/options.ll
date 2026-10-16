@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void (i32, ptr, ...) @_mi_error_message(i32 noundef %i.f, ptr noundef nonnull @.str.68, i32 noundef %i.f) #14, !inline_history !0
   br label %mi_lock_acquire.exit
 
-mi_lock_acquire.exit:                             ; preds = %bb.e, %bb.d
+mi_lock_acquire.exit:                             ; preds = %bb.d, %bb.e
   %i.g = atomicrmw add ptr @out_len, i64 %i.d acq_rel, align 8 ; 4 uses
   %i.h = icmp ult i64 %i.g, 16384
   br i1 %i.h, label %bb.f, label %_mi_memcpy.exit

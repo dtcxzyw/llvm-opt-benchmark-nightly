@@ -205,15 +205,11 @@ bb.a:
   %.sroa.79.16.copyload.i = load i8, ptr %.sroa.79.16..sroa_idx.i, align 8, !alias.scope !69 ; 2 uses
   %.sroa.810.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 9
   %.not.i = icmp eq i8 %.sroa.79.16.copyload.i, -1
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 64
   br i1 %.not.i, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_mapINtB3_7FlatMapNtNtNtB7_5error7context11ContextKindNtB13_12ContextValueE16extend_uncheckedATB11_B1B_Ej1_EB7_.exit, label %_RNvXs3_NtNtCsj6eKBz9Db1c_4core5array4iterINtB5_8IntoIterTNtNtNtCsfu0rQaTkGUu_12clap_builder5error7context11ContextKindNtBV_12ContextValueEKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextBZ_.exit.i
 
 _RNvXs3_NtNtCsj6eKBz9Db1c_4core5array4iterINtB5_8IntoIterTNtNtNtCsfu0rQaTkGUu_12clap_builder5error7context11ContextKindNtBV_12ContextValueEKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextBZ_.exit.i: ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !70)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.b = load i64, ptr %2, align 8, !alias.scope !71, !noundef !10 ; 3 uses
   %i.c = load i64, ptr %i.a, align 8, !range !11, !alias.scope !71, !noundef !10
   %i.d = icmp eq i64 %i.b, %i.c
@@ -224,12 +220,15 @@ bb.b:                                             ; preds = %_RNvXs3_NtNtCsj6eKB
   br label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder5error7context11ContextKindE8push_mutBL_.exit.i
 
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder5error7context11ContextKindE8push_mutBL_.exit.i: ; preds = %bb.b, %_RNvXs3_NtNtCsj6eKBz9Db1c_4core5array4iterINtB5_8IntoIterTNtNtNtCsfu0rQaTkGUu_12clap_builder5error7context11ContextKindNtBV_12ContextValueEKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextBZ_.exit.i
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.e = load ptr, ptr %3, align 8, !alias.scope !71, !nonnull !10, !noundef !10
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.b
   store i8 %.sroa.5.16.copyload.i, ptr %i.f, align 1, !noalias !72
   %i.g = add i64 %i.b, 1
   store i64 %i.g, ptr %2, align 8, !alias.scope !71
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.h = load i64, ptr %5, align 8, !alias.scope !74, !noundef !10 ; 3 uses
   %i.i = load i64, ptr %4, align 8, !range !11, !alias.scope !74, !noundef !10
   %i.j = icmp eq i64 %i.h, %i.i
@@ -240,6 +239,7 @@ bb.c:                                             ; preds = %_RNvMsG_NtCs4wP2HXf
   br label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder5error7context12ContextValueE8push_mutBL_.exit.i
 
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder5error7context12ContextValueE8push_mutBL_.exit.i: ; preds = %bb.c, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder5error7context11ContextKindE8push_mutBL_.exit.i
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.k = load ptr, ptr %6, align 8, !alias.scope !74, !nonnull !10, !noundef !10
   %i.l = getelementptr inbounds nuw [32 x i8], ptr %i.k, i64 %i.h ; 2 uses
   store i8 %.sroa.79.16.copyload.i, ptr %i.l, align 8, !noalias !76

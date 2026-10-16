@@ -205,7 +205,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.da)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCs21s4ZTvHFSd_5authz10permission10Permissionj1_ECsgsNUVCRJO2f_13influxdb3_lib.exit7.i unwind label %bb.av
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCs21s4ZTvHFSd_5authz10permission10Permissionj1_ECsgsNUVCRJO2f_13influxdb3_lib.exit.i: ; preds = %.body.i, %bb.av
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCs21s4ZTvHFSd_5authz10permission10Permissionj1_ECsgsNUVCRJO2f_13influxdb3_lib.exit.i: ; preds = %bb.av, %.body.i
   %.pn.i49 = phi { ptr, i32 } [ %i.dc, %bb.av ], [ %i.ct, %.body.i ]
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 329
   store i8 0, ptr %i.db, align 1
@@ -608,7 +608,7 @@ bb.fl:                                            ; preds = %_RINvNtCs4NRVxsYgnA
   %i.ol = trunc nuw i8 %i.ok to i1
   br i1 %i.ol, label %bb.fv, label %common.ret
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.body41, %.body34, %.body37, %bb.gd, %bb.fq, %bb.gc
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.gc, %bb.fq, %.body41, %bb.gd, %.body37, %.body34
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #31
@@ -642,8 +642,8 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc
   %i.ou = trunc nuw i8 %i.ot to i1
   br i1 %i.ou, label %bb.fo, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsgsNUVCRJO2f_13influxdb3_lib.exit
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCs21s4ZTvHFSd_5authz10permission10Permissionj1_ECsgsNUVCRJO2f_13influxdb3_lib.exit: ; preds = %.body41, %bb.al, %bb.ak, %bb.fn
-  %.pn12.pn = phi { ptr, i32 } [ %i.ca, %bb.al ], [ %i.or, %bb.fn ], [ %i.ca, %bb.ak ], [ %i.bm, %.body41 ] ; 2 uses
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCs21s4ZTvHFSd_5authz10permission10Permissionj1_ECsgsNUVCRJO2f_13influxdb3_lib.exit: ; preds = %bb.al, %bb.ak, %.body41, %bb.fn
+  %.pn12.pn = phi { ptr, i32 } [ %i.bm, %.body41 ], [ %i.or, %bb.fn ], [ %i.ca, %bb.ak ], [ %i.ca, %bb.al ] ; 2 uses
   %i.ov = getelementptr inbounds nuw i8, ptr %0, i64 211
   %i.ow = load i8, ptr %i.ov, align 1, !range !83, !noundef !84
   %i.ox = trunc nuw i8 %i.ow to i1

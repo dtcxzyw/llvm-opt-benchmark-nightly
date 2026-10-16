@@ -205,11 +205,15 @@ bb.cw:                                            ; preds = %bb.ct
   %i.bwd = getelementptr inbounds nuw [4 x i8], ptr %i.bvz, i64 %i.bwc
   %i.bwe = load i64, ptr %i.bst, align 8
   %.not2165 = icmp eq i64 %i.bwe, 0
-  br i1 %.not2165, label %._crit_edge2048, label %.preheader1878.lr.ph
+  br i1 %.not2165, label %._crit_edge2049, label %.preheader1878.lr.ph
 
 .preheader1878.lr.ph:                             ; preds = %bb.cw
   %i.bwf = getelementptr inbounds nuw i8, ptr %i.qp, i64 40
   br label %.preheader1878
+
+._crit_edge2049:                                  ; preds = %.preheader1878, %bb.cw
+  call void (i32, ptr, ...) @TraceLog(i32 noundef 4, ptr noundef nonnull @.str.363, ptr noundef %1) #54
+  br label %.loopexit1902.a
 
 .preheader1878:                                   ; preds = %.preheader1878.lr.ph, %.preheader1878
   %i.bwg = phi i64 [ 0, %.preheader1878.lr.ph ], [ %i.bws, %.preheader1878 ]
@@ -230,11 +234,7 @@ bb.cw:                                            ; preds = %bb.ct
   %i.bws = zext i32 %i.bwr to i64                 ; 2 uses
   %i.bwt = load i64, ptr %i.bst, align 8
   %i.bwu = icmp ugt i64 %i.bwt, %i.bws
-  br i1 %i.bwu, label %.preheader1878, label %._crit_edge2048
-
-._crit_edge2048:                                  ; preds = %.preheader1878, %bb.cw
-  call void (i32, ptr, ...) @TraceLog(i32 noundef 4, ptr noundef nonnull @.str.363, ptr noundef %1) #54
-  br label %.loopexit1902.a
+  br i1 %i.bwu, label %.preheader1878, label %._crit_edge2049
 
 bb.cx:                                            ; preds = %bb.ct
   call void (i32, ptr, ...) @TraceLog(i32 noundef 4, ptr noundef nonnull @.str.364, ptr noundef %1) #54
@@ -250,7 +250,7 @@ bb.cy:                                            ; preds = %._crit_edge2044._cr
   store i32 %i.bwz, ptr %i.bxa, align 4
   br label %.loopexit1902.a
 
-.loopexit1902.a:                                  ; preds = %.preheader1877, %.preheader1876, %bb.cv, %bb.cu, %bb.cs, %bb.cx, %._crit_edge2048, %bb.cy
+.loopexit1902.a:                                  ; preds = %.preheader1877, %.preheader1876, %bb.cv, %bb.cu, %bb.cs, %bb.cx, %._crit_edge2049, %bb.cy
   %i.bxb = load ptr, ptr %i.b, align 8            ; 2 uses
   %i.bxc = getelementptr inbounds nuw i8, ptr %i.bxb, i64 120
   %i.bxd = load i64, ptr %i.bxc, align 8          ; 2 uses
