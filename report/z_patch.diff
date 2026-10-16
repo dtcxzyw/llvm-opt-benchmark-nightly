@@ -1,0 +1,83 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 8893744821f7e6..846f9e79d838dc 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -7457,6 +7457,38 @@ Instruction *InstCombinerImpl::foldICmpUsingBoolRange(ICmpInst &I) {
+     }
+   }
+ 
++  // icmp eq (scmp X, 0), (zext (icmp ne V, 0)) --> xor (icmp ne V, 0), (X <s 1)
++  // icmp ne (scmp X, 0), (zext (icmp ne V, 0)) --> not (xor (icmp ne V, 0), (X <s 1))
++  // where X is V or obtained from V by truncation(s), i.e. V==0 implies X==0.
++  {
++    Value *ScmpX, *V, *ZextSrc;
++    CmpPredicate OuterPred;
++    if (match(&I, m_c_ICmp(OuterPred,
++           m_OneUse(m_Intrinsic<Intrinsic::scmp>(m_Value(ScmpX), m_Zero())),
++           m_OneUse(m_ZExt(m_Value(ZextSrc))))) &&
++        ICmpInst::isEquality(OuterPred) &&
++        ScmpX->getType()->isIntOrIntVectorTy()) {
++      if (auto *ZextIcmp = dyn_cast<ICmpInst>(ZextSrc)) {
++        if (ZextIcmp->getPredicate() == ICmpInst::ICMP_NE &&
++            match(ZextIcmp->getOperand(1), m_Zero())) {
++          V = ZextIcmp->getOperand(0);
++          // Check that ScmpX is V or obtained by truncating V
++          Value *Base = ScmpX;
++          while (auto *TI = dyn_cast<TruncInst>(Base))
++            Base = TI->getOperand(0);
++          if (Base == V) {
++            Value *XLe0 = Builder.CreateICmpSLT(
++                ScmpX, ConstantInt::get(ScmpX->getType(), 1));
++            Value *XorVal = Builder.CreateXor(ZextSrc, XLe0);
++            if (OuterPred == ICmpInst::ICMP_NE)
++              XorVal = Builder.CreateNot(XorVal);
++            return replaceInstUsesWith(I, XorVal);
++          }
++        }
++      }
++    }
++  }
++
+   return nullptr;
+ }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/scmp.ll b/llvm/test/Transforms/InstCombine/scmp.ll
+index 9d55843e348158..c30e5862b7e191 100644
+--- a/llvm/test/Transforms/InstCombine/scmp.ll
++++ b/llvm/test/Transforms/InstCombine/scmp.ll
+@@ -1197,3 +1197,35 @@ define i8 @scmp_zero_of_sext_memcmp(ptr %x, ptr %y) {
+ 
+ declare void @use64(i64 %value)
+ declare i32 @memcmp(ptr, ptr, i64)
++
++declare i8 @llvm.scmp.i8.i32(i32, i32)
++
++define i1 @scmp_eq_zext_ne_same(i32 %x) {
++; CHECK-LABEL: define i1 @scmp_eq_zext_ne_same(
++; CHECK-SAME: i32 [[X:%.*]]) {
++; CHECK-NEXT:    [[R:%.*]] = icmp sgt i32 [[X]], -1
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %cmp = call i8 @llvm.scmp.i8.i32(i32 %x, i32 0)
++  %ne = icmp ne i32 %x, 0
++  %zext = zext i1 %ne to i8
++  %r = icmp eq i8 %cmp, %zext
++  ret i1 %r
++}
++
++define i1 @scmp_eq_zext_ne_trunc(i64 %v) {
++; CHECK-LABEL: define i1 @scmp_eq_zext_ne_trunc(
++; CHECK-SAME: i64 [[V:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = trunc i64 [[V]] to i32
++; CHECK-NEXT:    [[NE:%.*]] = icmp ne i64 [[V]], 0
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp slt i32 [[X]], 1
++; CHECK-NEXT:    [[R:%.*]] = xor i1 [[NE]], [[TMP1]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %x = trunc i64 %v to i32
++  %cmp = call i8 @llvm.scmp.i8.i32(i32 %x, i32 0)
++  %ne = icmp ne i64 %v, 0
++  %zext = zext i1 %ne to i8
++  %r = icmp eq i8 %cmp, %zext
++  ret i1 %r
++}
