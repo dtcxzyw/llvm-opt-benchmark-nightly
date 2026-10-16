@@ -204,9 +204,9 @@ declare { ptr, i64 } @_ZN4llvm3sys4path8filenameENS_9StringRefENS1_5StyleE(ptr, 
 define dso_local void @_ZNK5clang6driver9ToolChain23buildCompilerRTBasenameB5cxx11ERKN4llvm3opt7ArgListENS2_9StringRefENS1_8FileTypeEbb(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(2568) %1, ptr noundef nonnull align 8 dereferenceable(176) %2, ptr %3, i64 %4, i32 noundef %5, i1 noundef zeroext %6, i1 noundef zeroext %7) unnamed_addr #0 align 2 {
 bb.a:
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
-  %10 = alloca %"class.llvm::Twine", align 8      ; 8 uses
-  %11 = alloca %"class.llvm::Twine", align 8      ; 9 uses
+  %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
+  %10 = alloca %"class.llvm::Twine", align 8      ; 9 uses
+  %11 = alloca %"class.llvm::Twine", align 8      ; 15 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %13 = alloca %"class.llvm::Twine", align 8      ; 8 uses
   %14 = alloca %"class.llvm::Twine", align 8      ; 8 uses
@@ -282,7 +282,7 @@ bb.j:                                             ; preds = %bb.i
   %i.w = call { ptr, i64 } @_ZNK4llvm6Triple11getArchNameEv(ptr noundef nonnull align 8 dereferenceable(56) %i.a) #30 ; 2 uses
   %i.x = extractvalue { ptr, i64 } %i.w, 0
   %i.y = extractvalue { ptr, i64 } %i.w, 1
-  br label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit
+  br label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exitthread-pre-split
 
 bb.k:                                             ; preds = %bb.i
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -300,15 +300,30 @@ bb.l:                                             ; preds = %bb.k, %bb.k
   %.not13.i = or i1 %i.d, %i.ac                   ; 2 uses
   %i.ad = select i1 %.not13.i, ptr @.str.257, ptr @.str.256
   %i.ae = select i1 %.not13.i, i64 3, i64 5
-  br label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit
+  br label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exitthread-pre-split
 
 bb.m:                                             ; preds = %bb.k
   %i.af = load i32, ptr %i.e, align 8, !tbaa !306
   %i.ag = icmp eq i32 %i.af, 17
-  br i1 %i.ag, label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit, label %.thread.i
+  br i1 %i.ag, label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit.thread, label %.thread.i
+
+_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit.thread: ; preds = %bb.m
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #30
+  %17 = getelementptr inbounds nuw i8, ptr %11, i64 32
+  store i8 3, ptr %17, align 8, !tbaa !152, !alias.scope !640
+  %18 = getelementptr inbounds nuw i8, ptr %11, i64 33
+  store i8 5, ptr %18, align 1, !tbaa !153, !alias.scope !640
+  store ptr @.str.36, ptr %11, align 8, !tbaa !43, !alias.scope !640
+  %19 = getelementptr inbounds nuw i8, ptr %11, i64 16
+  store ptr @.str.258, ptr %19, align 8, !tbaa !43, !alias.scope !640
+  %20 = getelementptr inbounds nuw i8, ptr %11, i64 24
+  store i64 4, ptr %20, align 8, !tbaa !43, !alias.scope !640
+  br label %bb.p
 
 bb.n:                                             ; preds = %bb.k
-  %i.ah = load i32, ptr %i.e, align 8, !tbaa !306
+  %i.ah = load i32, ptr %i.e, align 8, !tbaa !306 ; 3 uses
   switch i32 %i.ah, label %.thread.i [
     i32 25, label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit
     i32 12, label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit
@@ -318,14 +333,19 @@ bb.n:                                             ; preds = %bb.k
   %i.ai = call { ptr, i64 } @_ZN4llvm6Triple15getArchTypeNameENS0_8ArchTypeE(i32 noundef %i.aa) #30 ; 2 uses
   %i.aj = extractvalue { ptr, i64 } %i.ai, 0
   %i.ak = extractvalue { ptr, i64 } %i.ai, 1
+  br label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exitthread-pre-split
+
+_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exitthread-pre-split: ; preds = %.thread.i, %bb.l, %bb.j
+  %.sroa.6.0.i.ph = phi i64 [ %i.ak, %.thread.i ], [ %i.ae, %bb.l ], [ %i.y, %bb.j ]
+  %.sroa.0.0.i.ph = phi ptr [ %i.aj, %.thread.i ], [ %i.ad, %bb.l ], [ %i.x, %bb.j ]
+  %.pr = load i32, ptr %i.e, align 8, !tbaa !306
   br label %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit
 
-_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit: ; preds = %bb.j, %bb.l, %bb.m, %bb.n, %bb.n, %.thread.i
-  %.sroa.6.0.i = phi i64 [ %i.y, %bb.j ], [ %i.ae, %bb.l ], [ %i.ak, %.thread.i ], [ 4, %bb.m ], [ 3, %bb.n ], [ 3, %bb.n ]
-  %.sroa.0.0.i = phi ptr [ %i.x, %bb.j ], [ %i.ad, %bb.l ], [ %i.aj, %.thread.i ], [ @.str.258, %bb.m ], [ @.str.259, %bb.n ], [ @.str.259, %bb.n ]
-  %17 = load i32, ptr %i.e, align 8, !tbaa !306
-  %i.al = icmp eq i32 %17, 17
-  %18 = select i1 %i.al, ptr @.str.35, ptr @.str.2 ; 2 uses
+_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit: ; preds = %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exitthread-pre-split, %bb.n, %bb.n
+  %21 = phi i32 [ %.pr, %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exitthread-pre-split ], [ %i.ah, %bb.n ], [ %i.ah, %bb.n ]
+  %.sroa.6.0.i = phi i64 [ %.sroa.6.0.i.ph, %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exitthread-pre-split ], [ 3, %bb.n ], [ 3, %bb.n ]
+  %.sroa.0.0.i = phi ptr [ %.sroa.0.0.i.ph, %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exitthread-pre-split ], [ @.str.259, %bb.n ], [ @.str.259, %bb.n ]
+  %i.al = icmp eq i32 %21, 17
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #30
@@ -338,18 +358,16 @@ _ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE
   store ptr %.sroa.0.0.i, ptr %i.ao, align 8, !tbaa !43, !alias.scope !640
   %i.ap = getelementptr inbounds nuw i8, ptr %11, i64 24
   store i64 %.sroa.6.0.i, ptr %i.ap, align 8, !tbaa !43, !alias.scope !640
-  %19 = load i8, ptr %18, align 1, !tbaa !43
-  %.not.i = icmp eq i8 %19, 0
-  br i1 %.not.i, label %bb.o, label %bb.p
+  br i1 %i.al, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %10, ptr noundef nonnull align 8 dereferenceable(40) %11, i64 40, i1 false), !tbaa.struct !641
   br label %_ZN4llvmplERKNS_5TwineES2_.exit
 
-bb.p:                                             ; preds = %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit
+bb.p:                                             ; preds = %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit.thread, %_ZL27getArchNameForCompilerRTLibRKN5clang6driver9ToolChainERKN4llvm3opt7ArgListE.exit
   store ptr %11, ptr %10, align 8, !alias.scope !642
   %i.aq = getelementptr inbounds nuw i8, ptr %10, i64 16
-  store ptr %18, ptr %i.aq, align 8, !alias.scope !642
+  store ptr @.str.35, ptr %i.aq, align 8, !alias.scope !642
   %i.ar = getelementptr inbounds nuw i8, ptr %10, i64 32
   store i8 2, ptr %i.ar, align 8, !tbaa !152, !alias.scope !642
   %i.as = getelementptr inbounds nuw i8, ptr %10, i64 33
@@ -449,7 +467,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 ._crit_edge.i.i:                                  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.h
   %i.br = icmp eq i32 %5, 0
   %i.bs = or i1 %i.br, %i.l
-  %20 = select i1 %i.bs, ptr @.str.2, ptr @.str.28 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #30
   %.str.37..str.38 = select i1 %7, ptr @.str.37, ptr @.str.38
   %i.bt = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 4 uses
@@ -463,16 +480,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #30
-  %21 = load i8, ptr %20, align 1, !tbaa !43
-  %.not.i24 = icmp eq i8 %21, 0
-  br i1 %.not.i24, label %bb.v, label %bb.w
+  br i1 %i.bs, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %._crit_edge.i.i
   store ptr %12, ptr %16, align 8
   br label %_ZN4llvmplERKNS_5TwineES2_.exit71
 
 bb.w:                                             ; preds = %._crit_edge.i.i
-  store ptr %20, ptr %16, align 8, !alias.scope !643
+  store ptr @.str.28, ptr %16, align 8, !alias.scope !643
   %i.bw = getelementptr inbounds nuw i8, ptr %16, i64 16
   store ptr %12, ptr %i.bw, align 8, !alias.scope !643
   br label %_ZN4llvmplERKNS_5TwineES2_.exit71

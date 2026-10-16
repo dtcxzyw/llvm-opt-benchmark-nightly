@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lean4/original/ConstantFold?download=true
-inline.NumInlined: 9764
+inline.NumInlined: 9766
 inline.NumDeleted: 126
 loop-unroll.NumCompletelyUnrolled: 16
 loop-unroll.NumUnrolled: 16
@@ -204,21 +204,7 @@ lean_dec.exit:                                    ; preds = %bb.s, %bb.r, %bb.q,
 
 ; Function Attrs: nounwind uwtable
 define noalias nonnull ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  %2 = icmp eq i8 %0, 0
-  %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value = select i1 %2, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value ; 3 uses
-  %.val.i.i = load i32, ptr %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value, align 8, !tbaa !12 ; 2 uses
-  %3 = icmp sgt i32 %.val.i.i, 0
-  br i1 %3, label %lean_inc.exit, label %4, !prof !13
-
-4:                                                ; preds = %1
-  %.not.i.i = icmp eq i32 %.val.i.i, 0
-  br i1 %.not.i.i, label %lean_inc.exit, label %5
-
-5:                                                ; preds = %4
-  %6 = atomicrmw sub ptr %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc.exit
-
-lean_inc.exit:                                    ; preds = %1, %5, %4
+lean_inc.exit:
   tail call void @lean_inc_heartbeat() #5
   %i.a = tail call noalias ptr @mi_malloc_small(i64 noundef 32) #5 ; 7 uses
   %i.b = icmp eq ptr %i.a, null
@@ -229,6 +215,8 @@ bb.a:                                             ; preds = %lean_inc.exit
   unreachable
 
 lean_alloc_ctor.exit:                             ; preds = %lean_inc.exit
+  %1 = icmp eq i8 %0, 0
+  %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value = select i1 %1, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 1, ptr %i.a, align 4, !tbaa !12
   store i32 50528288, ptr %i.c, align 4
@@ -258,28 +246,128 @@ lean_alloc_ctor.exit17:                           ; preds = %lean_alloc_ctor.exi
 
 ; Function Attrs: nounwind uwtable
 define noalias nonnull ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___boxed(ptr noundef %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #0 {
-bb.a:
+  tail call void @lean_inc_heartbeat() #5
+  %3 = tail call noalias ptr @mi_malloc_small(i64 noundef 32) #5 ; 7 uses
+  %4 = icmp eq ptr %3, null
+  br i1 %4, label %5, label %bb.a
+
+5:                                                ; preds = %2
+  tail call void @lean_internal_panic_out_of_memory() #6
+  unreachable
+
+bb.a:                                             ; preds = %2
   %i.a = ptrtoint ptr %0 to i64
-  %2 = lshr i64 %i.a, 1
-  %3 = trunc i64 %2 to i8
-  %i.b = tail call ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg(i8 noundef zeroext %3)
+  %6 = and i64 %i.a, 510
+  %7 = icmp eq i64 %6, 0
+  %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value.i = select i1 %7, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i32 1, ptr %3, align 4, !tbaa !12
+  store i32 50528288, ptr %8, align 4
+  %9 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value.i, ptr %9, align 8, !tbaa !10
+  %10 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  store ptr inttoptr (i64 1 to ptr), ptr %10, align 8, !tbaa !10
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__0_value, ptr %11, align 8, !tbaa !10
+  tail call void @lean_inc_heartbeat() #5
+  %i.b = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #5 ; 5 uses
+  %12 = icmp eq ptr %i.b, null
+  br i1 %12, label %13, label %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg.exit
+
+13:                                               ; preds = %bb.a
+  tail call void @lean_internal_panic_out_of_memory() #6
+  unreachable
+
+l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg.exit: ; preds = %bb.a
+  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  store i32 1, ptr %i.b, align 4, !tbaa !12
+  store i32 65552, ptr %14, align 4
+  %15 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store ptr %3, ptr %15, align 8, !tbaa !10
   ret ptr %i.b
 }
 
 ; Function Attrs: nounwind uwtable
 define noalias nonnull ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit(i8 noundef zeroext %0, ptr nofree noundef readnone captures(none) %1, ptr nofree noundef readnone captures(none) %2, ptr nofree noundef readnone captures(none) %3, ptr nofree noundef readnone captures(none) %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #0 {
-bb.a:
-  %6 = tail call ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg(i8 noundef zeroext %0)
-  ret ptr %6
+  tail call void @lean_inc_heartbeat() #5
+  %7 = tail call noalias ptr @mi_malloc_small(i64 noundef 32) #5 ; 7 uses
+  %8 = icmp eq ptr %7, null
+  br i1 %8, label %9, label %lean_alloc_ctor.exit.i
+
+9:                                                ; preds = %6
+  tail call void @lean_internal_panic_out_of_memory() #6
+  unreachable
+
+lean_alloc_ctor.exit.i:                           ; preds = %6
+  %10 = icmp eq i8 %0, 0
+  %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value.i = select i1 %10, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  store i32 1, ptr %7, align 4, !tbaa !12
+  store i32 50528288, ptr %11, align 4
+  %12 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store ptr %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value.i, ptr %12, align 8, !tbaa !10
+  %13 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  store ptr inttoptr (i64 1 to ptr), ptr %13, align 8, !tbaa !10
+  %14 = getelementptr inbounds nuw i8, ptr %7, i64 24
+  store ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__0_value, ptr %14, align 8, !tbaa !10
+  tail call void @lean_inc_heartbeat() #5
+  %15 = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #5 ; 5 uses
+  %16 = icmp eq ptr %15, null
+  br i1 %16, label %17, label %bb.a
+
+17:                                               ; preds = %lean_alloc_ctor.exit.i
+  tail call void @lean_internal_panic_out_of_memory() #6
+  unreachable
+
+bb.a:                                             ; preds = %lean_alloc_ctor.exit.i
+  %18 = getelementptr inbounds nuw i8, ptr %15, i64 4
+  store i32 1, ptr %15, align 4, !tbaa !12
+  store i32 65552, ptr %18, align 4
+  %19 = getelementptr inbounds nuw i8, ptr %15, i64 8
+  store ptr %7, ptr %19, align 8, !tbaa !10
+  ret ptr %15
 }
 
 ; Function Attrs: nounwind uwtable
 define noalias nonnull ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr nofree readnone captures(none) %6) #0 {
-bb.a:
-  %7 = ptrtoint ptr %0 to i64
-  %8 = lshr i64 %7, 1
-  %9 = trunc i64 %8 to i8
-  %10 = tail call noalias nonnull ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg(i8 noundef zeroext %9)
+  tail call void @lean_inc_heartbeat() #5
+  %8 = tail call noalias ptr @mi_malloc_small(i64 noundef 32) #5 ; 7 uses
+  %9 = icmp eq ptr %8, null
+  br i1 %9, label %10, label %lean_alloc_ctor.exit.i.i
+
+10:                                               ; preds = %7
+  tail call void @lean_internal_panic_out_of_memory() #6
+  unreachable
+
+lean_alloc_ctor.exit.i.i:                         ; preds = %7
+  %11 = ptrtoint ptr %0 to i64
+  %12 = and i64 %11, 510
+  %13 = icmp eq i64 %12, 0
+  %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value.i.i = select i1 %13, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value, ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value
+  %14 = getelementptr inbounds nuw i8, ptr %8, i64 4
+  store i32 1, ptr %8, align 4, !tbaa !12
+  store i32 50528288, ptr %14, align 4
+  %15 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  store ptr %l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__1_value.l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__2_value.i.i, ptr %15, align 8, !tbaa !10
+  %16 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  store ptr inttoptr (i64 1 to ptr), ptr %16, align 8, !tbaa !10
+  %17 = getelementptr inbounds nuw i8, ptr %8, i64 24
+  store ptr @l_Lean_Compiler_LCNF_Simp_ConstantFold_mkBoolLit___redArg___closed__0_value, ptr %17, align 8, !tbaa !10
+  tail call void @lean_inc_heartbeat() #5
+  %18 = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #5 ; 5 uses
+  %19 = icmp eq ptr %18, null
+  br i1 %19, label %20, label %bb.a
+
+20:                                               ; preds = %lean_alloc_ctor.exit.i.i
+  tail call void @lean_internal_panic_out_of_memory() #6
+  unreachable
+
+bb.a:                                             ; preds = %lean_alloc_ctor.exit.i.i
+  %21 = getelementptr inbounds nuw i8, ptr %18, i64 4
+  store i32 1, ptr %18, align 4, !tbaa !12
+  store i32 65552, ptr %21, align 4
+  %22 = getelementptr inbounds nuw i8, ptr %18, i64 8
+  store ptr %8, ptr %22, align 8, !tbaa !10
   %i.a = ptrtoint ptr %5 to i64
   %i.b = and i64 %i.a, 1
   %.not.i14 = icmp eq i64 %i.b, 0
@@ -388,7 +476,7 @@ bb.s:                                             ; preds = %bb.r
   br label %lean_dec.exit
 
 lean_dec.exit:                                    ; preds = %bb.s, %bb.r, %bb.q, %lean_dec_ref.exit22
-  ret ptr %10
+  ret ptr %18
 }
 
 ; Function Attrs: nounwind uwtable
