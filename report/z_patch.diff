@@ -1,0 +1,252 @@
+diff --git a/llvm/include/llvm/Analysis/TargetTransformInfo.h b/llvm/include/llvm/Analysis/TargetTransformInfo.h
+index 42c11d72aa6694..5e271eb645c729 100644
+--- a/llvm/include/llvm/Analysis/TargetTransformInfo.h
++++ b/llvm/include/llvm/Analysis/TargetTransformInfo.h
+@@ -487,6 +487,11 @@ class TargetTransformInfo {
+   /// profitable to inline the call.
+   LLVM_ABI uint64_t getMaxMemIntrinsicInlineSizeThreshold() const;
+ 
++  /// Returns the maximum total size in bytes of a constant-length
++  /// llvm.experimental.memset.pattern that is profitable to expand into
++  /// straight-line stores instead of a library call or a loop.
++  LLVM_ABI uint64_t getMaxMemSetPatternInlineSizeThreshold() const;
++
+   /// \return The estimated number of case clusters when lowering \p 'SI'.
+   /// \p JTSize Set a jump table size only when \p SI is suitable for a jump
+   /// table.
+diff --git a/llvm/include/llvm/Analysis/TargetTransformInfoImpl.h b/llvm/include/llvm/Analysis/TargetTransformInfoImpl.h
+index b7b9ba23f50d9a..96e3626511751a 100644
+--- a/llvm/include/llvm/Analysis/TargetTransformInfoImpl.h
++++ b/llvm/include/llvm/Analysis/TargetTransformInfoImpl.h
+@@ -116,6 +116,10 @@ class LLVM_ABI TargetTransformInfoImplBase {
+ 
+   virtual uint64_t getMaxMemIntrinsicInlineSizeThreshold() const { return 64; }
+ 
++  virtual uint64_t getMaxMemSetPatternInlineSizeThreshold() const {
++    return getMaxMemIntrinsicInlineSizeThreshold();
++  }
++
+   // Although this default value is arbitrary, it is not random. It is assumed
+   // that a condition that evaluates the same way by a higher percentage than
+   // this is best represented as control flow. Therefore, the default value N
+diff --git a/llvm/lib/Analysis/TargetTransformInfo.cpp b/llvm/lib/Analysis/TargetTransformInfo.cpp
+index 607ac44783d73d..ced1b1cd3b4d06 100644
+--- a/llvm/lib/Analysis/TargetTransformInfo.cpp
++++ b/llvm/lib/Analysis/TargetTransformInfo.cpp
+@@ -1382,6 +1382,10 @@ uint64_t TargetTransformInfo::getMaxMemIntrinsicInlineSizeThreshold() const {
+   return TTIImpl->getMaxMemIntrinsicInlineSizeThreshold();
+ }
+ 
++uint64_t TargetTransformInfo::getMaxMemSetPatternInlineSizeThreshold() const {
++  return TTIImpl->getMaxMemSetPatternInlineSizeThreshold();
++}
++
+ InstructionCost TargetTransformInfo::getArithmeticReductionCost(
+     unsigned Opcode, VectorType *Ty, std::optional<FastMathFlags> FMF,
+     TTI::TargetCostKind CostKind) const {
+diff --git a/llvm/lib/CodeGen/PreISelIntrinsicLowering.cpp b/llvm/lib/CodeGen/PreISelIntrinsicLowering.cpp
+index dfe3d264dbb641..e997f7b58474c1 100644
+--- a/llvm/lib/CodeGen/PreISelIntrinsicLowering.cpp
++++ b/llvm/lib/CodeGen/PreISelIntrinsicLowering.cpp
+@@ -288,6 +288,38 @@ static bool canEmitMemcpy(const ModuleLibcallLoweringInfo &ModuleLowering,
+   return Lowering.getMemcpyImpl() != RTLIB::Unsupported;
+ }
+ 
++// Expand a memset.pattern with a small constant length into straight-line
++// stores.
++static bool expandSmallMemSetPatternAsStores(MemSetPatternInst *Memset,
++                                             const TargetTransformInfo &TTI) {
++  auto *Len = dyn_cast<ConstantInt>(Memset->getLength());
++  if (!Len || Memset->isVolatile())
++    return false;
++
++  Value *Val = Memset->getValue();
++  const DataLayout &DL = Memset->getDataLayout();
++  TypeSize EltSize = DL.getTypeAllocSize(Val->getType());
++  if (EltSize.isScalable() || EltSize.isZero())
++    return false;
++
++  uint64_t NumStores = Len->getZExtValue();
++  uint64_t Stride = EltSize.getFixedValue();
++  if (NumStores > TTI.getMaxMemSetPatternInlineSizeThreshold() / Stride)
++    return false;
++
++  IRBuilder<> Builder(Memset);
++  Value *Dest = Memset->getRawDest();
++  Align DestAlign = Memset->getDestAlign().valueOrOne();
++  for (uint64_t I = 0; I != NumStores; ++I) {
++    uint64_t Offset = I * Stride;
++    Value *Ptr = Offset ? Builder.CreateConstInBoundsGEP1_64(Builder.getInt8Ty(),
++                                                             Dest, Offset)
++                        : Dest;
++    Builder.CreateAlignedStore(Val, Ptr, commonAlignment(DestAlign, Offset));
++  }
++  return true;
++}
++
+ // Return a value appropriate for use with the memset_pattern16 libcall, if
+ // possible and if we know how. (Adapted from equivalent helper in
+ // LoopIdiomRecognize).
+@@ -436,12 +468,17 @@ bool PreISelIntrinsicLowering::expandMemIntrinsicUses(
+     case Intrinsic::experimental_memset_pattern: {
+       auto *Memset = cast<MemSetPatternInst>(Inst);
+       Function *ParentFunc = Memset->getFunction();
++      const TargetTransformInfo &TTI = LookupTTI(*ParentFunc);
++      if (expandSmallMemSetPatternAsStores(Memset, TTI)) {
++        Changed = true;
++        Memset->eraseFromParent();
++        break;
++      }
+       const TargetLibraryInfo &TLI = LookupTLI(*ParentFunc);
+       Constant *PatternValue = getMemSetPattern16Value(Memset, TLI);
+       if (!PatternValue) {
+         // If it isn't possible to emit a memset_pattern16 libcall, expand to
+         // a loop instead.
+-        const TargetTransformInfo &TTI = LookupTTI(*ParentFunc);
+         expandMemSetPatternAsLoop(Memset, TTI);
+         Changed = true;
+         Memset->eraseFromParent();
+diff --git a/llvm/test/Transforms/PreISelIntrinsicLowering/AArch64/memset-pattern.ll b/llvm/test/Transforms/PreISelIntrinsicLowering/AArch64/memset-pattern.ll
+new file mode 100644
+index 00000000000000..117f86c8421690
+--- /dev/null
++++ b/llvm/test/Transforms/PreISelIntrinsicLowering/AArch64/memset-pattern.ll
+@@ -0,0 +1,138 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -mtriple=arm64-apple-macosx15.0.0 -passes=pre-isel-intrinsic-lowering -S < %s | FileCheck %s
++
++; Constant-length memset.pattern up to TTI::getMaxMemSetPatternInlineSizeThreshold()
++; bytes (64 on AArch64) is expanded into stores; larger ones use memset_pattern16.
++
++define void @small_const_len_to_stores(ptr %dst) {
++; CHECK-LABEL: define void @small_const_len_to_stores(
++; CHECK-SAME: ptr [[DST:%.*]]) {
++; CHECK-NEXT:    store i32 1, ptr [[DST]], align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 4
++; CHECK-NEXT:    store i32 1, ptr [[TMP2]], align 4
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 %dst, i32 1, i64 2, i1 false)
++  ret void
++}
++
++define void @i32_at_threshold_to_stores(ptr %dst) {
++; CHECK-LABEL: define void @i32_at_threshold_to_stores(
++; CHECK-SAME: ptr [[DST:%.*]]) {
++; CHECK-NEXT:    store i32 1, ptr [[DST]], align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 4
++; CHECK-NEXT:    store i32 1, ptr [[TMP2]], align 4
++; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 8
++; CHECK-NEXT:    store i32 1, ptr [[TMP3]], align 4
++; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 12
++; CHECK-NEXT:    store i32 1, ptr [[TMP4]], align 4
++; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 16
++; CHECK-NEXT:    store i32 1, ptr [[TMP5]], align 4
++; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 20
++; CHECK-NEXT:    store i32 1, ptr [[TMP6]], align 4
++; CHECK-NEXT:    [[TMP7:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 24
++; CHECK-NEXT:    store i32 1, ptr [[TMP7]], align 4
++; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 28
++; CHECK-NEXT:    store i32 1, ptr [[TMP8]], align 4
++; CHECK-NEXT:    [[TMP9:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 32
++; CHECK-NEXT:    store i32 1, ptr [[TMP9]], align 4
++; CHECK-NEXT:    [[TMP10:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 36
++; CHECK-NEXT:    store i32 1, ptr [[TMP10]], align 4
++; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 40
++; CHECK-NEXT:    store i32 1, ptr [[TMP11]], align 4
++; CHECK-NEXT:    [[TMP12:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 44
++; CHECK-NEXT:    store i32 1, ptr [[TMP12]], align 4
++; CHECK-NEXT:    [[TMP13:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 48
++; CHECK-NEXT:    store i32 1, ptr [[TMP13]], align 4
++; CHECK-NEXT:    [[TMP14:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 52
++; CHECK-NEXT:    store i32 1, ptr [[TMP14]], align 4
++; CHECK-NEXT:    [[TMP15:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 56
++; CHECK-NEXT:    store i32 1, ptr [[TMP15]], align 4
++; CHECK-NEXT:    [[TMP16:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 60
++; CHECK-NEXT:    store i32 1, ptr [[TMP16]], align 4
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 %dst, i32 1, i64 16, i1 false)
++  ret void
++}
++
++define void @i32_over_threshold_libcall(ptr %dst) {
++; CHECK-LABEL: define void @i32_over_threshold_libcall(
++; CHECK-SAME: ptr [[DST:%.*]]) {
++; CHECK-NEXT:    call void @memset_pattern16(ptr align 4 [[DST]], ptr @.memset_pattern, i64 68)
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 %dst, i32 1, i64 17, i1 false)
++  ret void
++}
++
++define void @i64_at_threshold_to_stores(ptr %dst) {
++; CHECK-LABEL: define void @i64_at_threshold_to_stores(
++; CHECK-SAME: ptr [[DST:%.*]]) {
++; CHECK-NEXT:    store i64 81985529216486895, ptr [[DST]], align 8
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 8
++; CHECK-NEXT:    store i64 81985529216486895, ptr [[TMP2]], align 8
++; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 16
++; CHECK-NEXT:    store i64 81985529216486895, ptr [[TMP3]], align 8
++; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 24
++; CHECK-NEXT:    store i64 81985529216486895, ptr [[TMP4]], align 8
++; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 32
++; CHECK-NEXT:    store i64 81985529216486895, ptr [[TMP5]], align 8
++; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 40
++; CHECK-NEXT:    store i64 81985529216486895, ptr [[TMP6]], align 8
++; CHECK-NEXT:    [[TMP7:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 48
++; CHECK-NEXT:    store i64 81985529216486895, ptr [[TMP7]], align 8
++; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 56
++; CHECK-NEXT:    store i64 81985529216486895, ptr [[TMP8]], align 8
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.experimental.memset.pattern.p0.i64.i64(ptr align 8 %dst, i64 81985529216486895, i64 8, i1 false)
++  ret void
++}
++
++define void @optsize_same_threshold(ptr %dst) optsize {
++; CHECK-LABEL: define void @optsize_same_threshold(
++; CHECK-SAME: ptr [[DST:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    store i32 1, ptr [[DST]], align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 4
++; CHECK-NEXT:    store i32 1, ptr [[TMP2]], align 4
++; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 8
++; CHECK-NEXT:    store i32 1, ptr [[TMP3]], align 4
++; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 12
++; CHECK-NEXT:    store i32 1, ptr [[TMP4]], align 4
++; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 16
++; CHECK-NEXT:    store i32 1, ptr [[TMP5]], align 4
++; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 20
++; CHECK-NEXT:    store i32 1, ptr [[TMP6]], align 4
++; CHECK-NEXT:    [[TMP7:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 24
++; CHECK-NEXT:    store i32 1, ptr [[TMP7]], align 4
++; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 28
++; CHECK-NEXT:    store i32 1, ptr [[TMP8]], align 4
++; CHECK-NEXT:    [[TMP9:%.*]] = getelementptr inbounds i8, ptr [[DST]], i64 32
++; CHECK-NEXT:    store i32 1, ptr [[TMP9]], align 4
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 %dst, i32 1, i64 9, i1 false)
++  ret void
++}
++
++define void @volatile_libcall(ptr %dst) {
++; CHECK-LABEL: define void @volatile_libcall(
++; CHECK-SAME: ptr [[DST:%.*]]) {
++; CHECK-NEXT:    call void @memset_pattern16(ptr align 4 [[DST]], ptr @.memset_pattern, i64 8)
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 %dst, i32 1, i64 2, i1 true)
++  ret void
++}
++
++define void @variable_len_libcall(ptr %dst, i64 %n) {
++; CHECK-LABEL: define void @variable_len_libcall(
++; CHECK-SAME: ptr [[DST:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = mul i64 4, [[N]]
++; CHECK-NEXT:    call void @memset_pattern16(ptr align 4 [[DST]], ptr @.memset_pattern, i64 [[TMP1]])
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 %dst, i32 1, i64 %n, i1 false)
++  ret void
++}
