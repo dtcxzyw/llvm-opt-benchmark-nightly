@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/boost/original/ipv4_address?download=true
-inline.NumInlined: 609
+inline.NumInlined: 608
 inline.NumDeleted: 418
 begin_hunk_0_@_ZN5boost4urls12ipv4_addressC2ENS_4core17basic_string_viewIcEE:bb.a
 _ZNK5boost4urls22implementation_defined19ipv4_address_rule_t5parseERPKcS4_.exit.thread.i.i: ; preds = %bb.d, %bb.c
@@ -202,11 +202,11 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define { ptr, i64 } @_ZNK5boost4urls12ipv4_address9to_bufferEPcm(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
+define { ptr, i64 } @_ZNK5boost4urls12ipv4_address9to_bufferEPcm(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #5 align 2 {
 bb.a:
   %3 = alloca %"struct.boost::source_location", align 8 ; 6 uses
   %i.a = icmp ult i64 %2, 15
-  br i1 %i.a, label %bb.b, label %4
+  br i1 %i.a, label %bb.b, label %_ZNK5boost4urls12ipv4_address10print_implEPc.exit
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
@@ -220,150 +220,10 @@ bb.b:                                             ; preds = %bb.a
   call void @_ZN5boost4urls6detail18throw_length_errorERKNS_15source_locationE(ptr noundef nonnull align 8 dereferenceable(24) %3) #25
   unreachable
 
-4:                                                ; preds = %bb.a
-  %5 = load i32, ptr %0, align 4, !tbaa !9        ; 6 uses
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8                     ; 4 uses
-  %8 = icmp ugt i32 %5, 1677721599
-  br i1 %8, label %9, label %14
-
-9:                                                ; preds = %4
-  %10 = udiv i8 %7, 100
-  %11 = or disjoint i8 %10, 48
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %11, ptr %1, align 1, !tbaa !10
-  %13 = urem i8 %7, 100
-  br label %.sink.split.i.i
-
-14:                                               ; preds = %4
-  %15 = icmp samesign ugt i32 %5, 167772159
-  br i1 %15, label %.sink.split.i.i, label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i"
-
-.sink.split.i.i:                                  ; preds = %14, %9
-  %.0.i = phi ptr [ %12, %9 ], [ %1, %14 ]        ; 2 uses
-  %.sink7.i.i = phi i8 [ %13, %9 ], [ %7, %14 ]   ; 2 uses
-  %16 = udiv i8 %.sink7.i.i, 10
-  %17 = or disjoint i8 %16, 48
-  %18 = getelementptr inbounds nuw i8, ptr %.0.i, i64 1
-  store i8 %17, ptr %.0.i, align 1, !tbaa !10
-  %19 = urem i8 %.sink7.i.i, 10
-  br label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i"
-
-"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i": ; preds = %.sink.split.i.i, %14
-  %.1.i = phi ptr [ %18, %.sink.split.i.i ], [ %1, %14 ] ; 4 uses
-  %.0.i.i = phi i8 [ %19, %.sink.split.i.i ], [ %7, %14 ]
-  %20 = or disjoint i8 %.0.i.i, 48
-  %21 = getelementptr inbounds nuw i8, ptr %.1.i, i64 1
-  store i8 %20, ptr %.1.i, align 1, !tbaa !10
-  %22 = getelementptr inbounds nuw i8, ptr %.1.i, i64 2 ; 3 uses
-  store i8 46, ptr %21, align 1, !tbaa !10
-  %23 = lshr i32 %5, 16
-  %24 = trunc i32 %23 to i8                       ; 6 uses
-  %25 = icmp ugt i8 %24, 99
-  br i1 %25, label %26, label %31
-
-26:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i"
-  %27 = udiv i8 %24, 100
-  %28 = or disjoint i8 %27, 48
-  %29 = getelementptr inbounds nuw i8, ptr %.1.i, i64 3
-  store i8 %28, ptr %22, align 1, !tbaa !10
-  %30 = urem i8 %24, 100
-  br label %.sink.split.i6.i
-
-31:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i"
-  %32 = icmp samesign ugt i8 %24, 9
-  br i1 %32, label %.sink.split.i6.i, label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i"
-
-.sink.split.i6.i:                                 ; preds = %31, %26
-  %.2.i = phi ptr [ %29, %26 ], [ %22, %31 ]      ; 2 uses
-  %.sink7.i7.i = phi i8 [ %30, %26 ], [ %24, %31 ] ; 2 uses
-  %33 = udiv i8 %.sink7.i7.i, 10
-  %34 = or disjoint i8 %33, 48
-  %35 = getelementptr inbounds nuw i8, ptr %.2.i, i64 1
-  store i8 %34, ptr %.2.i, align 1, !tbaa !10
-  %36 = urem i8 %.sink7.i7.i, 10
-  br label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i"
-
-"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i": ; preds = %.sink.split.i6.i, %31
-  %.3.i = phi ptr [ %35, %.sink.split.i6.i ], [ %22, %31 ] ; 4 uses
-  %.0.i5.i = phi i8 [ %36, %.sink.split.i6.i ], [ %24, %31 ]
-  %37 = or disjoint i8 %.0.i5.i, 48
-  %38 = getelementptr inbounds nuw i8, ptr %.3.i, i64 1
-  store i8 %37, ptr %.3.i, align 1, !tbaa !10
-  %39 = getelementptr inbounds nuw i8, ptr %.3.i, i64 2 ; 3 uses
-  store i8 46, ptr %38, align 1, !tbaa !10
-  %40 = lshr i32 %5, 8
-  %41 = trunc i32 %40 to i8                       ; 6 uses
-  %42 = icmp ugt i8 %41, 99
-  br i1 %42, label %43, label %48
-
-43:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i"
-  %44 = udiv i8 %41, 100
-  %45 = or disjoint i8 %44, 48
-  %46 = getelementptr inbounds nuw i8, ptr %.3.i, i64 3
-  store i8 %45, ptr %39, align 1, !tbaa !10
-  %47 = urem i8 %41, 100
-  br label %.sink.split.i10.i
-
-48:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i"
-  %49 = icmp samesign ugt i8 %41, 9
-  br i1 %49, label %.sink.split.i10.i, label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i"
-
-.sink.split.i10.i:                                ; preds = %48, %43
-  %.4.i = phi ptr [ %46, %43 ], [ %39, %48 ]      ; 2 uses
-  %.sink7.i11.i = phi i8 [ %47, %43 ], [ %41, %48 ] ; 2 uses
-  %50 = udiv i8 %.sink7.i11.i, 10
-  %51 = or disjoint i8 %50, 48
-  %52 = getelementptr inbounds nuw i8, ptr %.4.i, i64 1
-  store i8 %51, ptr %.4.i, align 1, !tbaa !10
-  %53 = urem i8 %.sink7.i11.i, 10
-  br label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i"
-
-"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i": ; preds = %.sink.split.i10.i, %48
-  %.5.i = phi ptr [ %52, %.sink.split.i10.i ], [ %39, %48 ] ; 4 uses
-  %.0.i9.i = phi i8 [ %53, %.sink.split.i10.i ], [ %41, %48 ]
-  %54 = or disjoint i8 %.0.i9.i, 48
-  %55 = getelementptr inbounds nuw i8, ptr %.5.i, i64 1
-  store i8 %54, ptr %.5.i, align 1, !tbaa !10
-  %56 = getelementptr inbounds nuw i8, ptr %.5.i, i64 2 ; 3 uses
-  store i8 46, ptr %55, align 1, !tbaa !10
-  %57 = trunc i32 %5 to i8                        ; 6 uses
-  %58 = icmp ugt i8 %57, 99
-  br i1 %58, label %59, label %64
-
-59:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i"
-  %60 = udiv i8 %57, 100
-  %61 = or disjoint i8 %60, 48
-  %62 = getelementptr inbounds nuw i8, ptr %.5.i, i64 3
-  store i8 %61, ptr %56, align 1, !tbaa !10
-  %63 = urem i8 %57, 100
-  br label %.sink.split.i14.i
-
-64:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i"
-  %65 = icmp samesign ugt i8 %57, 9
-  br i1 %65, label %.sink.split.i14.i, label %_ZNK5boost4urls12ipv4_address10print_implEPc.exit
-
-.sink.split.i14.i:                                ; preds = %64, %59
-  %.6.i = phi ptr [ %62, %59 ], [ %56, %64 ]      ; 2 uses
-  %.sink7.i15.i = phi i8 [ %63, %59 ], [ %57, %64 ] ; 2 uses
-  %66 = udiv i8 %.sink7.i15.i, 10
-  %67 = or disjoint i8 %66, 48
-  %68 = getelementptr inbounds nuw i8, ptr %.6.i, i64 1
-  store i8 %67, ptr %.6.i, align 1, !tbaa !10
-  %69 = urem i8 %.sink7.i15.i, 10
-  br label %_ZNK5boost4urls12ipv4_address10print_implEPc.exit
-
-_ZNK5boost4urls12ipv4_address10print_implEPc.exit: ; preds = %64, %.sink.split.i14.i
-  %.7.i = phi ptr [ %68, %.sink.split.i14.i ], [ %56, %64 ] ; 2 uses
-  %.0.i13.i = phi i8 [ %69, %.sink.split.i14.i ], [ %57, %64 ]
-  %70 = or disjoint i8 %.0.i13.i, 48
-  %71 = getelementptr inbounds nuw i8, ptr %.7.i, i64 1
-  store i8 %70, ptr %.7.i, align 1, !tbaa !10
-  %72 = ptrtoint ptr %71 to i64
-  %73 = ptrtoint ptr %1 to i64
-  %74 = sub i64 %72, %73
+_ZNK5boost4urls12ipv4_address10print_implEPc.exit: ; preds = %bb.a
+  %4 = tail call noundef i64 @_ZNK5boost4urls12ipv4_address10print_implEPc(ptr noundef nonnull align 4 dereferenceable(4) %0, ptr noundef %1) #23
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %1, 0
-  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %74, 1
+  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %4, 1
   ret { ptr, i64 } %.fca.1.insert
 }
 
@@ -546,12 +406,10 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK5boost4urls12ipv4_address13write_ostreamERSo(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #5 align 2 {
 bb.a:
-  %i.a = alloca [15 x i8], align 1                ; 3 uses
+  %i.a = alloca [15 x i8], align 1                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  %2 = call { ptr, i64 } @_ZNK5boost4urls12ipv4_address9to_bufferEPcm(ptr noundef nonnull align 4 dereferenceable(4) %0, ptr noundef nonnull %i.a, i64 noundef 15) ; 2 uses
-  %3 = extractvalue { ptr, i64 } %2, 0
-  %4 = extractvalue { ptr, i64 } %2, 1
-  %i.b = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN5boost4corelsIcEERSt13basic_ostreamIT_St11char_traitsIS3_EES7_NS0_17basic_string_viewIS3_EE(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr %3, i64 %4) ; 0 uses
+  %2 = call noundef i64 @_ZNK5boost4urls12ipv4_address10print_implEPc(ptr noundef nonnull readonly align 4 dereferenceable(4) %0, ptr noundef nonnull %i.a) #23
+  %i.b = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN5boost4corelsIcEERSt13basic_ostreamIT_St11char_traitsIS3_EES7_NS0_17basic_string_viewIS3_EE(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr nonnull %i.a, i64 %2) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   ret void
 }
@@ -609,155 +467,16 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK5boost4urls12ipv4_address14to_string_implERNS0_12string_token3argE(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
-  %3 = alloca [15 x i8], align 1                  ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %4 = load i32, ptr %0, align 4, !tbaa !9        ; 6 uses
-  %5 = lshr i32 %4, 24
-  %6 = trunc nuw i32 %5 to i8                     ; 4 uses
-  %7 = icmp ugt i32 %4, 1677721599
-  br i1 %7, label %8, label %13
-
-8:                                                ; preds = %2
-  %9 = udiv i8 %6, 100
-  %10 = or disjoint i8 %9, 48
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  store i8 %10, ptr %3, align 1, !tbaa !10
-  %12 = urem i8 %6, 100
-  br label %.sink.split.i.i
-
-13:                                               ; preds = %2
-  %14 = icmp samesign ugt i32 %4, 167772159
-  br i1 %14, label %.sink.split.i.i, label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i"
-
-.sink.split.i.i:                                  ; preds = %13, %8
-  %.0.i = phi ptr [ %11, %8 ], [ %3, %13 ]        ; 2 uses
-  %.sink7.i.i = phi i8 [ %12, %8 ], [ %6, %13 ]   ; 2 uses
-  %15 = udiv i8 %.sink7.i.i, 10
-  %16 = or disjoint i8 %15, 48
-  %17 = getelementptr inbounds nuw i8, ptr %.0.i, i64 1
-  store i8 %16, ptr %.0.i, align 1, !tbaa !10
-  %18 = urem i8 %.sink7.i.i, 10
-  br label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i"
-
-"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i": ; preds = %.sink.split.i.i, %13
-  %.1.i = phi ptr [ %17, %.sink.split.i.i ], [ %3, %13 ] ; 4 uses
-  %.0.i.i = phi i8 [ %18, %.sink.split.i.i ], [ %6, %13 ]
-  %19 = or disjoint i8 %.0.i.i, 48
-  %20 = getelementptr inbounds nuw i8, ptr %.1.i, i64 1
-  store i8 %19, ptr %.1.i, align 1, !tbaa !10
-  %21 = getelementptr inbounds nuw i8, ptr %.1.i, i64 2 ; 3 uses
-  store i8 46, ptr %20, align 1, !tbaa !10
-  %22 = lshr i32 %4, 16
-  %23 = trunc i32 %22 to i8                       ; 6 uses
-  %24 = icmp ugt i8 %23, 99
-  br i1 %24, label %25, label %30
-
-25:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i"
-  %26 = udiv i8 %23, 100
-  %27 = or disjoint i8 %26, 48
-  %28 = getelementptr inbounds nuw i8, ptr %.1.i, i64 3
-  store i8 %27, ptr %21, align 1, !tbaa !10
-  %29 = urem i8 %23, 100
-  br label %.sink.split.i6.i
-
-30:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit.i"
-  %31 = icmp samesign ugt i8 %23, 9
-  br i1 %31, label %.sink.split.i6.i, label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i"
-
-.sink.split.i6.i:                                 ; preds = %30, %25
-  %.2.i = phi ptr [ %28, %25 ], [ %21, %30 ]      ; 2 uses
-  %.sink7.i7.i = phi i8 [ %29, %25 ], [ %23, %30 ] ; 2 uses
-  %32 = udiv i8 %.sink7.i7.i, 10
-  %33 = or disjoint i8 %32, 48
-  %34 = getelementptr inbounds nuw i8, ptr %.2.i, i64 1
-  store i8 %33, ptr %.2.i, align 1, !tbaa !10
-  %35 = urem i8 %.sink7.i7.i, 10
-  br label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i"
-
-"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i": ; preds = %.sink.split.i6.i, %30
-  %.3.i = phi ptr [ %34, %.sink.split.i6.i ], [ %21, %30 ] ; 4 uses
-  %.0.i5.i = phi i8 [ %35, %.sink.split.i6.i ], [ %23, %30 ]
-  %36 = or disjoint i8 %.0.i5.i, 48
-  %37 = getelementptr inbounds nuw i8, ptr %.3.i, i64 1
-  store i8 %36, ptr %.3.i, align 1, !tbaa !10
-  %38 = getelementptr inbounds nuw i8, ptr %.3.i, i64 2 ; 3 uses
-  store i8 46, ptr %37, align 1, !tbaa !10
-  %39 = lshr i32 %4, 8
-  %40 = trunc i32 %39 to i8                       ; 6 uses
-  %41 = icmp ugt i8 %40, 99
-  br i1 %41, label %42, label %47
-
-42:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i"
-  %43 = udiv i8 %40, 100
-  %44 = or disjoint i8 %43, 48
-  %45 = getelementptr inbounds nuw i8, ptr %.3.i, i64 3
-  store i8 %44, ptr %38, align 1, !tbaa !10
-  %46 = urem i8 %40, 100
-  br label %.sink.split.i10.i
-
-47:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit8.i"
-  %48 = icmp samesign ugt i8 %40, 9
-  br i1 %48, label %.sink.split.i10.i, label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i"
-
-.sink.split.i10.i:                                ; preds = %47, %42
-  %.4.i = phi ptr [ %45, %42 ], [ %38, %47 ]      ; 2 uses
-  %.sink7.i11.i = phi i8 [ %46, %42 ], [ %40, %47 ] ; 2 uses
-  %49 = udiv i8 %.sink7.i11.i, 10
-  %50 = or disjoint i8 %49, 48
-  %51 = getelementptr inbounds nuw i8, ptr %.4.i, i64 1
-  store i8 %50, ptr %.4.i, align 1, !tbaa !10
-  %52 = urem i8 %.sink7.i11.i, 10
-  br label %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i"
-
-"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i": ; preds = %.sink.split.i10.i, %47
-  %.5.i = phi ptr [ %51, %.sink.split.i10.i ], [ %38, %47 ] ; 4 uses
-  %.0.i9.i = phi i8 [ %52, %.sink.split.i10.i ], [ %40, %47 ]
-  %53 = or disjoint i8 %.0.i9.i, 48
-  %54 = getelementptr inbounds nuw i8, ptr %.5.i, i64 1
-  store i8 %53, ptr %.5.i, align 1, !tbaa !10
-  %55 = getelementptr inbounds nuw i8, ptr %.5.i, i64 2 ; 3 uses
-  store i8 46, ptr %54, align 1, !tbaa !10
-  %56 = trunc i32 %4 to i8                        ; 6 uses
-  %57 = icmp ugt i8 %56, 99
-  br i1 %57, label %58, label %63
-
-58:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i"
-  %59 = udiv i8 %56, 100
-  %60 = or disjoint i8 %59, 48
-  %61 = getelementptr inbounds nuw i8, ptr %.5.i, i64 3
-  store i8 %60, ptr %55, align 1, !tbaa !10
-  %62 = urem i8 %56, 100
-  br label %.sink.split.i14.i
-
-63:                                               ; preds = %"_ZZNK5boost4urls12ipv4_address10print_implEPcENK3$_0clERS2_h.exit12.i"
-  %64 = icmp samesign ugt i8 %56, 9
-  br i1 %64, label %.sink.split.i14.i, label %_ZNK5boost4urls12ipv4_address10print_implEPc.exit
-
-.sink.split.i14.i:                                ; preds = %63, %58
-  %.6.i = phi ptr [ %61, %58 ], [ %55, %63 ]      ; 2 uses
-  %.sink7.i15.i = phi i8 [ %62, %58 ], [ %56, %63 ] ; 2 uses
-  %65 = udiv i8 %.sink7.i15.i, 10
-  %66 = or disjoint i8 %65, 48
-  %67 = getelementptr inbounds nuw i8, ptr %.6.i, i64 1
-  store i8 %66, ptr %.6.i, align 1, !tbaa !10
-  %68 = urem i8 %.sink7.i15.i, 10
-  br label %_ZNK5boost4urls12ipv4_address10print_implEPc.exit
-
-_ZNK5boost4urls12ipv4_address10print_implEPc.exit: ; preds = %63, %.sink.split.i14.i
-  %.7.i = phi ptr [ %67, %.sink.split.i14.i ], [ %55, %63 ] ; 2 uses
-  %.0.i13.i = phi i8 [ %68, %.sink.split.i14.i ], [ %56, %63 ]
-  %69 = or disjoint i8 %.0.i13.i, 48
-  %70 = getelementptr inbounds nuw i8, ptr %.7.i, i64 1
-  store i8 %69, ptr %.7.i, align 1, !tbaa !10
-  %71 = ptrtoint ptr %70 to i64
-  %72 = ptrtoint ptr %3 to i64
-  %73 = sub i64 %71, %72                          ; 2 uses
+define void @_ZNK5boost4urls12ipv4_address14to_string_implERNS0_12string_token3argE(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #5 align 2 {
+_ZNK5boost4urls12ipv4_address10print_implEPc.exit:
+  %2 = alloca [15 x i8], align 1                  ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
+  %3 = call noundef i64 @_ZNK5boost4urls12ipv4_address10print_implEPc(ptr noundef nonnull align 4 dereferenceable(4) %0, ptr noundef nonnull %2) #23 ; 2 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !27
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = call noundef ptr %i.b(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef %73)
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.c, ptr nonnull align 1 %3, i64 %73, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
+  %i.c = call noundef ptr %i.b(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef %3)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.c, ptr nonnull align 1 %2, i64 %3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
   ret void
 }
 
