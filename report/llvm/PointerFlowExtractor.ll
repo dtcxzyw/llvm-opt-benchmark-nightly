@@ -202,7 +202,7 @@ bb.a:
 
 _ZNK5clang12DynTypedNode3getINS_4StmtEEEPKT_v.exit: ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !452  ; 17 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !452  ; 16 uses
   %.not.not = icmp eq ptr %i.c, null
   br i1 %.not.not, label %_ZN12_GLOBAL__N_118PointerFlowMatcher11matchesStmtEPKN5clang4StmtEPKNS1_9NamedDeclE.exit.thread71, label %bb.b
 
@@ -567,7 +567,6 @@ bb.z:                                             ; preds = %_ZN12_GLOBAL__N_118
   %i.em = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.en = getelementptr inbounds nuw i8, ptr %i.ek, i64 120
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.ep = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.eq = getelementptr inbounds nuw i8, ptr %11, i64 48
   %i.er = getelementptr inbounds nuw i8, ptr %11, i64 16
@@ -684,11 +683,10 @@ bb.af:                                            ; preds = %_ZN5clang4ssaf15has
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19, !noalias !638
   %i.gl = load i16, ptr %i.c, align 8, !noalias !638
   %i.gm = and i16 %i.gl, 511
-  %.not.i.i.i.i.i.i = icmp eq i16 %i.gm, 118      ; 2 uses
-  %spec.select.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr %i.c, ptr null
-  %i.gn = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr %i.gn, ptr %19
-  %i.go = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i.i.i, i64 %indvars.iv.i60.i
+  %.not.i.i.i.i.i.i = icmp eq i16 %i.gm, 118
+  %spec.select.v.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i64 48, i64 40
+  %i.gn = getelementptr inbounds nuw i8, ptr %i.c, i64 %spec.select.v.i.i.i.i.i.i
+  %i.go = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %indvars.iv.i60.i
   %i.gp = load ptr, ptr %i.go, align 8, !tbaa !486, !noalias !638
   %.val.i70.i = load ptr, ptr %i.ep, align 8, !tbaa !465, !noalias !638
   %.val28.i71.i = load ptr, ptr %i.eo, align 8, !tbaa !466, !noalias !638

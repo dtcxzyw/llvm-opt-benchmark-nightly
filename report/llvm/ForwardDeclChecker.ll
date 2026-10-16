@@ -204,15 +204,11 @@ bb.b:                                             ; preds = %_ZNK5clang13SourceM
   %i.t = zext i32 %i.s to i64
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.t
   %i.v = icmp ult ptr %i.o, %i.u
-  br i1 %i.v, label %.lr.ph.i.i, label %_ZZNK12_GLOBAL__N_118ForwardDeclChecker12checkASTDeclEPKN5clang19TranslationUnitDeclERNS1_4ento15AnalysisManagerERNS5_11BugReporterEEN12LocalVisitor21VisitCXXConstructExprEPKNS1_16CXXConstructExprE.exit
+  br i1 %i.v, label %bb.c, label %_ZZNK12_GLOBAL__N_118ForwardDeclChecker12checkASTDeclEPKN5clang19TranslationUnitDeclERNS1_4ento15AnalysisManagerERNS5_11BugReporterEEN12LocalVisitor21VisitCXXConstructExprEPKNS1_16CXXConstructExprE.exit
 
-.lr.ph.i.i:                                       ; preds = %bb.b
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  br label %bb.c
-
-bb.c:                                             ; preds = %bb.d, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.d ] ; 3 uses
-  %.018.i.i = phi ptr [ %i.o, %.lr.ph.i.i ], [ %i.af, %bb.d ] ; 2 uses
+bb.c:                                             ; preds = %bb.b, %bb.d
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.d ], [ 0, %bb.b ] ; 3 uses
+  %.018.i.i = phi ptr [ %i.af, %bb.d ], [ %i.o, %bb.b ] ; 2 uses
   %i.w = load i32, ptr %i.q, align 8, !tbaa !856
   %i.x = zext i32 %i.w to i64
   %i.y = icmp samesign ult i64 %indvars.iv.i.i, %i.x
@@ -221,11 +217,10 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph.i.i
 bb.d:                                             ; preds = %bb.c
   %i.z = load i16, ptr %0, align 8
   %i.aa = and i16 %i.z, 511
-  %.not.i.i.i.i.i.i = icmp eq i16 %i.aa, 118      ; 2 uses
-  %spec.select.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr %0, ptr null
-  %i.ab = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr %i.ab, ptr %1
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i.i.i, i64 %indvars.iv.i.i
+  %.not.i.i.i.i.i.i = icmp eq i16 %i.aa, 118
+  %spec.select.v.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i64 48, i64 40
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i.i.i.i
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %indvars.iv.i.i
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !137
   %i.ae = load ptr, ptr %.018.i.i, align 8, !tbaa !209
   tail call fastcc void @_ZNK12_GLOBAL__N_118ForwardDeclChecker12visitCallArgEPKN5clang4ExprEPKNS1_11ParmVarDeclEPKNS1_4DeclE(ptr noundef nonnull align 8 dereferenceable(232) %.0.val, ptr noundef %i.ad, ptr noundef %i.ae, ptr noundef %.8.val)

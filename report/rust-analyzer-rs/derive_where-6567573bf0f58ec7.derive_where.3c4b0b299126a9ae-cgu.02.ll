@@ -202,13 +202,10 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ag, label %.invoke, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 56
-  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 64
+  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
   %i.ai = load i64, ptr %i.ah, align 8
-  %.not.i = icmp eq i64 %i.ai, -1                 ; 2 uses
-  %..i = select i1 %.not.i, ptr null, ptr %5
-  %6 = getelementptr inbounds nuw i8, ptr %..i, i64 8
-  %spec.select.i = select i1 %.not.i, ptr null, ptr %6
+  %.not.i = icmp eq i64 %i.ai, -1
+  %spec.select.i = select i1 %.not.i, ptr null, ptr %i.ah
   store i64 0, ptr %0, align 8
   %.sroa.01.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(392) %.sroa.01.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(392) %i.m, i64 392, i1 false)
@@ -263,13 +260,10 @@ bb.s:                                             ; preds = %bb.r
           to label %bb.p unwind label %bb.j
 
 bb.t:                                             ; preds = %bb.s
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 56
-  %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 64
+  %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
   %i.ap = load i64, ptr %i.ao, align 8
-  %.not.i36 = icmp eq i64 %i.ap, -1               ; 2 uses
-  %..i37 = select i1 %.not.i36, ptr null, ptr %7
-  %8 = getelementptr inbounds nuw i8, ptr %..i37, i64 8
-  %spec.select.i39 = select i1 %.not.i36, ptr null, ptr %8
+  %.not.i36 = icmp eq i64 %i.ap, -1
+  %spec.select.i39 = select i1 %.not.i36, ptr null, ptr %i.ao
   store i64 1, ptr %0, align 8
   %.sroa.06.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(392) %.sroa.06.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(392) %i.j, i64 392, i1 false)
@@ -315,13 +309,10 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ar, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false)
   %i.as = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.as, ptr noundef nonnull align 8 dereferenceable(48) %i.e, i64 48, i1 false)
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 56
-  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 64
+  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
   %i.au = load i64, ptr %i.at, align 8
-  %.not.i40 = icmp eq i64 %i.au, -1               ; 2 uses
-  %..i41 = select i1 %.not.i40, ptr null, ptr %9
-  %10 = getelementptr inbounds nuw i8, ptr %..i41, i64 8
-  %spec.select.i43 = select i1 %.not.i40, ptr null, ptr %10
+  %.not.i40 = icmp eq i64 %i.au, -1
+  %spec.select.i43 = select i1 %.not.i40, ptr null, ptr %i.at
   store i64 2, ptr %0, align 8
   %.sroa.016.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 -9223372036854775802, ptr %.sroa.016.sroa.2.0..sroa_idx, align 8

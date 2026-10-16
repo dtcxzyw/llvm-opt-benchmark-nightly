@@ -204,7 +204,6 @@ bb.e:                                             ; preds = %_ZNK5clang22CXXTemp
   br i1 %.not1321, label %_ZNK5clang22CXXTemporaryObjectExpr9getEndLocEv.exit.thread, label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %bb.e
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.w = zext i32 %i.v to i64
   br label %bb.f
 
@@ -213,11 +212,10 @@ bb.f:                                             ; preds = %.lr.ph.a, %bb.h
   %i.x = add nsw i64 %indvars.iv, -1              ; 3 uses
   %i.y = load i16, ptr %0, align 8
   %i.z = and i16 %i.y, 511
-  %.not.i.i.i.i = icmp eq i16 %i.z, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %0, ptr null
-  %i.aa = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.aa, ptr %1
-  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.x
+  %.not.i.i.i.i = icmp eq i16 %i.z, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i.i
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.x
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !22 ; 2 uses
   %i.ad = tail call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ac) #17
   br i1 %i.ad, label %bb.h, label %bb.g
@@ -256,13 +254,11 @@ bb.c:                                             ; preds = %bb.b
   %i.e = add i32 %i.d, -1
   %i.f = load i16, ptr %0, align 8
   %i.g = and i16 %i.f, 511
-  %.not.i.i.i.i = icmp eq i16 %i.g, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %0, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr %i.h
+  %.not.i.i.i.i = icmp eq i16 %i.g, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i.i
   %i.i = zext i32 %i.e to i64
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.i
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !22
   %i.l = tail call i32 @_ZNK5clang4Stmt9getEndLocEv(ptr noundef nonnull align 8 dereferenceable(8) %i.k) #16
   br label %bb.d
@@ -665,11 +661,9 @@ _ZN5clang4ExprC2ENS_4Stmt9StmtClassENS_8QualTypeENS_13ExprValueKindENS_14ExprObj
 
 .lr.ph.i.i.i.i.i.preheader.i.i:                   ; preds = %_ZN5clang4ExprC2ENS_4Stmt9StmtClassENS_8QualTypeENS_13ExprValueKindENS_14ExprObjectKindE.exit.i
   %i.ac = and i32 %i.q, 511
-  %.not.i.i = icmp eq i32 %i.ac, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %0, ptr null
-  %12 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %spec.select.i.i = select i1 %.not.i.i, ptr %12, ptr %i.ad ; 3 uses
+  %.not.i.i = icmp eq i32 %i.ac, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i ; 3 uses
   %min.iters.check = icmp ult i64 %5, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i, label %vector.ph
 
@@ -677,14 +671,14 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.pr
   %n.vec = and i64 %5, 9223372036854775804        ; 3 uses
   %i.ae = and i64 %5, 3
   %i.af = shl i64 %n.vec, 3                       ; 2 uses
-  %i.ag = getelementptr i8, ptr %spec.select.i.i, i64 %i.af
+  %i.ag = getelementptr i8, ptr %i.ad, i64 %i.af
   %i.ah = getelementptr i8, ptr %4, i64 %i.af
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ai = shl i64 %index, 3                       ; 2 uses
-  %next.gep = getelementptr i8, ptr %spec.select.i.i, i64 %i.ai ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.ad, i64 %i.ai ; 2 uses
   %next.gep14 = getelementptr i8, ptr %4, i64 %i.ai ; 2 uses
   %i.aj = getelementptr i8, ptr %next.gep14, i64 16
   %wide.load = load <2 x ptr>, ptr %next.gep14, align 8, !tbaa !22
@@ -702,7 +696,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %middle.block, %.lr.ph.i.i.i.i.i.preheader.i.i
   %.012.i.i.i.i.i.i.i.ph = phi i64 [ %5, %.lr.ph.i.i.i.i.i.preheader.i.i ], [ %i.ae, %middle.block ] ; 2 uses
-  %.0811.i.i.i.i.i.i.i.ph = phi ptr [ %spec.select.i.i, %.lr.ph.i.i.i.i.i.preheader.i.i ], [ %i.ag, %middle.block ] ; 3 uses
+  %.0811.i.i.i.i.i.i.i.ph = phi ptr [ %i.ad, %.lr.ph.i.i.i.i.i.preheader.i.i ], [ %i.ag, %middle.block ] ; 3 uses
   %.0910.i.i.i.i.i.i.i.ph = phi ptr [ %4, %.lr.ph.i.i.i.i.i.preheader.i.i ], [ %i.ah, %middle.block ] ; 3 uses
   %i.am = load ptr, ptr %.0910.i.i.i.i.i.i.i.ph, align 8, !tbaa !22
   store ptr %i.am, ptr %.0811.i.i.i.i.i.i.i.ph, align 8, !tbaa !21
@@ -794,11 +788,9 @@ _ZN5clang4ExprC2ENS_4Stmt9StmtClassENS_8QualTypeENS_13ExprValueKindENS_14ExprObj
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %_ZN5clang4ExprC2ENS_4Stmt9StmtClassENS_8QualTypeENS_13ExprValueKindENS_14ExprObjectKindE.exit
   %i.ah = and i32 %i.ae, 511
-  %.not.i = icmp eq i32 %i.ah, 118                ; 2 uses
-  %spec.select.i.i.i = select i1 %.not.i, ptr %0, ptr null
-  %13 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 48
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %spec.select.i = select i1 %.not.i, ptr %13, ptr %i.ai ; 3 uses
+  %.not.i = icmp eq i32 %i.ah, 118
+  %spec.select.v.i = select i1 %.not.i, i64 48, i64 40
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i ; 3 uses
   %i.aj = load ptr, ptr %6, align 8, !tbaa !121   ; 3 uses
   %min.iters.check = icmp ult i64 %i.o, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i, label %vector.ph
@@ -807,14 +799,14 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.pr
   %n.vec = and i64 %i.o, 9223372036854775804      ; 3 uses
   %i.ak = and i64 %i.o, 3
   %i.al = shl i64 %n.vec, 3                       ; 2 uses
-  %i.am = getelementptr i8, ptr %spec.select.i, i64 %i.al
+  %i.am = getelementptr i8, ptr %i.ai, i64 %i.al
   %i.an = getelementptr i8, ptr %i.aj, i64 %i.al
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ao = shl i64 %index, 3                       ; 2 uses
-  %next.gep = getelementptr i8, ptr %spec.select.i, i64 %i.ao ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.ai, i64 %i.ao ; 2 uses
   %next.gep13 = getelementptr i8, ptr %i.aj, i64 %i.ao ; 2 uses
   %i.ap = getelementptr i8, ptr %next.gep13, i64 16
   %wide.load = load <2 x ptr>, ptr %next.gep13, align 8, !tbaa !22
@@ -832,7 +824,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %middle.block, %.lr.ph.i.i.i.i.i.preheader.i
   %.012.i.i.i.i.i.i.ph = phi i64 [ %i.o, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.ak, %middle.block ] ; 2 uses
-  %.0811.i.i.i.i.i.i.ph = phi ptr [ %spec.select.i, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.am, %middle.block ] ; 3 uses
+  %.0811.i.i.i.i.i.i.ph = phi ptr [ %i.ai, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.am, %middle.block ] ; 3 uses
   %.0910.i.i.i.i.i.i.ph = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.an, %middle.block ] ; 3 uses
   %i.as = load ptr, ptr %.0910.i.i.i.i.i.i.ph, align 8, !tbaa !22
   store ptr %i.as, ptr %.0811.i.i.i.i.i.i.ph, align 8, !tbaa !21

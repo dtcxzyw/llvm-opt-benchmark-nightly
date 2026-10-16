@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_ZN5clang29IgnoreIm
   br label %_ZN5clang24IgnoreImplicitSingleStepEPNS_4ExprE.exit
 
 _ZN5clang24IgnoreImplicitSingleStepEPNS_4ExprE.exit: ; preds = %_ZN5clang29IgnoreImplicitCastsSingleStepEPNS_4ExprE.exit.i, %_ZN5clang29IgnoreImplicitCastsSingleStepEPNS_4ExprE.exit.thread.i, %bb.c, %bb.d, %bb.e
-  %.2.i = phi ptr [ %i.j, %bb.c ], [ %i.f, %_ZN5clang29IgnoreImplicitCastsSingleStepEPNS_4ExprE.exit.i ], [ %i.n, %bb.d ], [ %i.p, %bb.e ], [ %.01012.i, %_ZN5clang29IgnoreImplicitCastsSingleStepEPNS_4ExprE.exit.thread.i ] ; 11 uses
+  %.2.i = phi ptr [ %i.j, %bb.c ], [ %i.f, %_ZN5clang29IgnoreImplicitCastsSingleStepEPNS_4ExprE.exit.i ], [ %i.n, %bb.d ], [ %i.p, %bb.e ], [ %.01012.i, %_ZN5clang29IgnoreImplicitCastsSingleStepEPNS_4ExprE.exit.thread.i ] ; 9 uses
   %i.q = load i16, ptr %.2.i, align 8             ; 4 uses
   %i.r = and i16 %i.q, 511                        ; 3 uses
   %i.s = add nsw i16 %i.r, -119
@@ -220,25 +220,20 @@ bb.f:                                             ; preds = %_ZN5clang24IgnoreIm
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %.not.i.i.i.i = icmp eq i16 %i.r, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %.2.i, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %2 = getelementptr inbounds nuw i8, ptr %.2.i, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %1, ptr %2
-  %i.v = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 8
+  %.not.i.i.i.i = icmp eq i16 %i.r, 118
+  %1 = select i1 %.not.i.i.i.i, i64 56, i64 48
+  %i.v = getelementptr inbounds nuw i8, ptr %.2.i, i64 %1
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !159
   %i.x = load i16, ptr %i.w, align 8
   %i.y = and i16 %i.x, 511
   %i.z = icmp eq i16 %i.y, 116
   br i1 %i.z, label %.critedge3.i, label %_ZL35IgnoreImplicitConstructorSingleStepPN5clang4ExprE.exit
 
-.critedge3.i:                                     ; preds = %bb.f, %bb.g
-  %.not.i.i.i24.i = icmp eq i16 %i.r, 118         ; 2 uses
-  %spec.select.i.i.i.i.i25.i = select i1 %.not.i.i.i24.i, ptr %.2.i, ptr null
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i25.i, i64 48
-  %i.aa = getelementptr inbounds nuw i8, ptr %.2.i, i64 40
-  %spec.select.i.i.i26.i = select i1 %.not.i.i.i24.i, ptr %3, ptr %i.aa
-  %i.ab = load ptr, ptr %spec.select.i.i.i26.i, align 8, !tbaa !159
+.critedge3.i:                                     ; preds = %bb.g, %bb.f
+  %.not.i.i.i24.i = icmp eq i16 %i.r, 118
+  %spec.select.v.i.i.i25.i = select i1 %.not.i.i.i24.i, i64 48, i64 40
+  %i.aa = getelementptr inbounds nuw i8, ptr %.2.i, i64 %spec.select.v.i.i.i25.i
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !159
   %i.ac = getelementptr inbounds nuw i8, ptr %.2.i, i64 24
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.ac, align 8, !tbaa !50 ; 2 uses
   %i.ad = and i64 %.sroa.0.0.copyload.i.i, 4294967295

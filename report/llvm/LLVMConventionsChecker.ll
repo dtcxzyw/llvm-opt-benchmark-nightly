@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %_ZL15IsLLVMStringRe
 
 bb.j:                                             ; preds = %bb.i
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !245 ; 4 uses
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !245 ; 3 uses
   %i.bh = load i16, ptr %i.bg, align 8
   %i.bi = and i16 %i.bh, 511                      ; 2 uses
   %i.bj = add nsw i16 %i.bi, -119
@@ -216,12 +216,10 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not32.i, label %bb.l, label %_ZN12_GLOBAL__N_123StringRefCheckerVisitor12VisitVarDeclEPN5clang7VarDeclE.exit
 
 bb.l:                                             ; preds = %bb.k
-  %.not.i.i.i.i = icmp eq i16 %i.bi, 118          ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.bg, ptr null
-  %10 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.bg, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %10, ptr %i.bm
-  %i.bn = load ptr, ptr %spec.select.i.i.i.i, align 8, !tbaa !250 ; 2 uses
+  %.not.i.i.i.i = icmp eq i16 %i.bi, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.bg, i64 %spec.select.v.i.i.i.i
+  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !250 ; 2 uses
   %i.bo = load i16, ptr %i.bn, align 8
   %i.bp = and i16 %i.bo, 511
   %.not53.i = icmp eq i16 %i.bp, 81
@@ -229,7 +227,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
-  %i.br = load ptr, ptr %i.bq, align 8, !tbaa !252 ; 4 uses
+  %i.br = load ptr, ptr %i.bq, align 8, !tbaa !252 ; 3 uses
   %i.bs = load i16, ptr %i.br, align 8
   %i.bt = and i16 %i.bs, 511                      ; 2 uses
   %i.bu = add nsw i16 %i.bt, -119
@@ -243,12 +241,10 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not35.i, label %bb.o, label %_ZN12_GLOBAL__N_123StringRefCheckerVisitor12VisitVarDeclEPN5clang7VarDeclE.exit
 
 bb.o:                                             ; preds = %bb.n
-  %.not.i.i.i42.i = icmp eq i16 %i.bt, 118        ; 2 uses
-  %spec.select.i.i.i.i.i43.i = select i1 %.not.i.i.i42.i, ptr %i.br, ptr null
-  %11 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i43.i, i64 48
-  %i.bx = getelementptr inbounds nuw i8, ptr %i.br, i64 40
-  %spec.select.i.i.i44.i = select i1 %.not.i.i.i42.i, ptr %11, ptr %i.bx
-  %i.by = load ptr, ptr %spec.select.i.i.i44.i, align 8, !tbaa !250 ; 2 uses
+  %.not.i.i.i42.i = icmp eq i16 %i.bt, 118
+  %spec.select.v.i.i.i43.i = select i1 %.not.i.i.i42.i, i64 48, i64 40
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.br, i64 %spec.select.v.i.i.i43.i
+  %i.by = load ptr, ptr %i.bx, align 8, !tbaa !250 ; 2 uses
   %i.bz = load i16, ptr %i.by, align 8
   %i.ca = and i16 %i.bz, 511
   %.not56.i = icmp eq i16 %i.ca, 81

@@ -205,10 +205,8 @@ define dso_local noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5vcpkg24Par
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.b = load i8, ptr %i.a, align 8, !tbaa !59, !range !60, !noundef !61
-  %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %2 = select i1 %i.c, ptr %1, ptr null
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 72
+  %i.c = trunc nuw i8 %i.b to i1
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 328
   %spec.select = select i1 %i.c, ptr %i.d, ptr @_ZN5vcpkg18PlatformExpression4Expr11always_trueE
   ret ptr %spec.select
 }
