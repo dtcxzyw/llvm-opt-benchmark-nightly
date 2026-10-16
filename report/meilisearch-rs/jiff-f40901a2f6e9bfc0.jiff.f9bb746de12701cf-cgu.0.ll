@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/jiff-f40901a2f6e9bfc0.jiff.f9bb746de12701cf-cgu.0?download=true
-inline.NumInlined: 4054
-inline.NumDeleted: 1353
+inline.NumInlined: 4056
+inline.NumDeleted: 1354
 loop-unroll.NumCompletelyUnrolled: 58
 loop-unroll.NumRuntimeUnrolled: 14
 loop-unroll.NumUnrolled: 73
@@ -205,6 +205,7 @@ define internal fastcc void @_ZN4jiff5civil4date8DateWith5build17h16f59ab13caeb7
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 9 uses
   %i.b = alloca [72 x i8], align 8                ; 9 uses
+  %2 = alloca [4 x i8], align 4                   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.d = load i8, ptr %i.c, align 2, !range !22, !noundef !11
   switch i8 %i.d, label %bb.d [
@@ -218,7 +219,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %bb.e, %bb.j, %bb.b
-  %.sroa.0.0 = phi i16 [ %.sroa.578.0.extract.trunc, %bb.e ], [ %i.ad, %bb.j ], [ %i.f, %bb.b ], [ %.sroa.584.0.extract.trunc, %bb.g ] ; 6 uses
+  %.sroa.0.0 = phi i16 [ %.sroa.578.0.extract.trunc, %bb.e ], [ %i.ad, %bb.j ], [ %i.f, %bb.b ], [ %.sroa.584.0.extract.trunc, %bb.g ] ; 10 uses
   %i.g = load i8, ptr %1, align 2, !range !21, !noundef !11
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %bb.l, label %bb.m
@@ -395,10 +396,74 @@ bb.v:                                             ; preds = %_ZN4jiff6shared4uti
 
 bb.w:                                             ; preds = %bb.n
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.bz = load i16, ptr %i.by, align 2, !noundef !11
-  %2 = tail call fastcc i48 @_ZN4jiff6shared4util5itime5IDate24from_day_of_year_no_leap17hc4209b8f4e04ba66E(i16 noundef %.sroa.0.0, i16 noundef %i.bz) ; 3 uses
-  %3 = trunc i48 %2 to i1
-  br i1 %3, label %bb.ae, label %bb.aj
+  %i.bz = load i16, ptr %i.by, align 2, !noundef !11 ; 4 uses
+  %3 = add i16 %i.bz, -366
+  %or.cond.i105 = icmp ult i16 %3, -365
+  br i1 %or.cond.i105, label %bb.ae, label %4
+
+4:                                                ; preds = %bb.w
+  %5 = icmp samesign ugt i16 %i.bz, 59
+  br i1 %5, label %6, label %12
+
+6:                                                ; preds = %4
+  %7 = srem i16 %.sroa.0.0, 25
+  %8 = icmp eq i16 %7, 0
+  %..i.i = select i1 %8, i16 15, i16 3
+  %9 = and i16 %..i.i, %.sroa.0.0
+  %10 = icmp eq i16 %9, 0
+  %11 = zext i1 %10 to i16
+  %spec.select.i = add nuw nsw i16 %i.bz, %11
+  br label %12
+
+12:                                               ; preds = %6, %4
+  %.sroa.0.0.i107 = phi i16 [ %i.bz, %4 ], [ %spec.select.i, %6 ]
+  %13 = sext i16 %.sroa.0.0 to i32
+  %14 = add nsw i32 %13, 32799                    ; 3 uses
+  %15 = udiv i32 %14, 100
+  %16 = mul nuw nsw i32 %14, 1461
+  %17 = lshr i32 %16, 2
+  %18 = udiv i32 %14, 400
+  %19 = zext nneg i16 %.sroa.0.0.i107 to i32
+  %reass.sub = sub nsw i32 %18, %15
+  %20 = add nsw i32 %reass.sub, -12699422
+  %21 = add nsw i32 %20, %17
+  %22 = add nsw i32 %21, %19                      ; 2 uses
+  %23 = add nsw i32 %22, 4371892
+  %or.cond.i.i.i = icmp ult i32 %23, 7304484
+  br i1 %or.cond.i.i.i, label %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i.i, label %41, !prof !77
+
+_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i.i: ; preds = %12
+  %24 = shl nsw i32 %22, 2
+  %25 = add nsw i32 %24, 50798911                 ; 2 uses
+  %26 = urem i32 %25, 146097
+  %27 = or i32 %26, 3
+  %28 = zext nneg i32 %27 to i64
+  %29 = mul nuw nsw i64 %28, 2939745              ; 2 uses
+  %30 = trunc i64 %29 to i32                      ; 2 uses
+  %31 = icmp ugt i32 %30, -696719417              ; 2 uses
+  %32 = udiv i32 %25, 146097
+  %33 = mul nuw nsw i32 %32, 100
+  %34 = lshr i64 %29, 32
+  %35 = trunc nuw nsw i64 %34 to i32
+  %36 = zext i1 %31 to i32
+  %37 = add nuw nsw i32 %33, 32736
+  %38 = add nuw nsw i32 %37, %35
+  %39 = add nuw nsw i32 %38, %36                  ; 2 uses
+  %.sroa.032.0.extract.trunc.i.i = trunc i32 %39 to i16
+  %.not.i.i = icmp eq i16 %.sroa.0.0, %.sroa.032.0.extract.trunc.i.i
+  br i1 %.not.i.i, label %bb.aj, label %40, !prof !78
+
+40:                                               ; preds = %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i.i
+  %.sroa.420.0.insert.ext.i.i = zext i16 %.sroa.0.0 to i32
+  %.sroa.420.0.insert.shift.i.i = shl nuw i32 %.sroa.420.0.insert.ext.i.i, 16
+  br label %41
+
+41:                                               ; preds = %40, %12
+  %.sroa.5.0.i.ph.i = phi i32 [ %.sroa.420.0.insert.shift.i.i, %40 ], [ 4, %12 ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  store i32 %.sroa.5.0.i.ph.i, ptr %2, align 4
+  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @52, i64 noundef 43, ptr noundef nonnull align 1 %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @49, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @406) #45
+  unreachable
 
 bb.x:                                             ; preds = %bb.r
   %i.ca = tail call fastcc noalias noundef nonnull ptr @_ZN4jiff5error5Error6bounds17h66a72a993116514bE(i8 noundef range(i8 0, 52) 3)
@@ -480,8 +545,6 @@ _ZN4jiff6shared4util5itime5IDate16from_day_of_year17h02e6bd8435b8d990E.exit: ; p
   br label %bb.y
 
 bb.ae:                                            ; preds = %bb.w
-  %.sroa.088.2.extract.shift = lshr i48 %2, 16
-  %.sroa.088.2.extract.trunc = trunc nuw nsw i48 %.sroa.088.2.extract.shift to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !9518
   store i64 1, ptr %i.a, align 8, !noalias !9518
   %i.cq = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -491,7 +554,7 @@ bb.ae:                                            ; preds = %bb.w
   %.sroa.5.0..sroa_idx.i.i105 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   store i8 21, ptr %.sroa.5.0..sroa_idx.i.i105, align 8
   %.sroa.43.0..sroa.5.0..sroa_idx.i.sroa_idx.i106 = getelementptr inbounds nuw i8, ptr %i.a, i64 34
-  store i32 %.sroa.088.2.extract.trunc, ptr %.sroa.43.0..sroa.5.0..sroa_idx.i.sroa_idx.i106, align 2
+  store i32 1, ptr %.sroa.43.0..sroa.5.0..sroa_idx.i.sroa_idx.i106, align 2
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #44, !noalias !9519
   %i.cs = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef 72, i64 noundef 8) #44, !noalias !9519 ; 3 uses
   %i.ct = icmp eq ptr %i.cs, null
@@ -524,11 +587,24 @@ bb.ai:                                            ; preds = %bb.ae
   store i16 1, ptr %0, align 8
   br label %bb.y
 
-bb.aj:                                            ; preds = %bb.w
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %5 = lshr i48 %2, 16
-  %6 = trunc nuw nsw i48 %5 to i32
-  store i32 %6, ptr %4, align 2
+bb.aj:                                            ; preds = %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i.i
+  %42 = udiv i32 %30, 11758980
+  %43 = mul nuw nsw i32 %42, 2141
+  %44 = add nuw nsw i32 %43, 197913               ; 3 uses
+  %.lhs.trunc.i.i.i = trunc i32 %44 to i16
+  %45 = udiv i16 %.lhs.trunc.i.i.i, 2141
+  %.zext.i.i.i = zext nneg i16 %45 to i32
+  %.sroa.3.0.insert.ext.i.i.i = shl nuw nsw i32 %.zext.i.i.i, 24
+  %.sroa.3.0.insert.shift.i.i.i = add nuw nsw i32 %.sroa.3.0.insert.ext.i.i.i, 16777216
+  %46 = and i32 %44, 4128768
+  %47 = add nuw nsw i32 %46, 15990784
+  %.sroa.2.0.insert.ext.i.i.i = select i1 %31, i32 %47, i32 %44
+  %.sroa.2.0.insert.shift.i.i.i = and i32 %.sroa.2.0.insert.ext.i.i.i, 16711680
+  %.sroa.2.0.insert.insert.i.i.i = or disjoint i32 %.sroa.3.0.insert.shift.i.i.i, %.sroa.2.0.insert.shift.i.i.i
+  %.sroa.0.0.insert.ext.i.i.i = and i32 %39, 65535
+  %.sroa.0.0.insert.insert.i.i.i = or disjoint i32 %.sroa.2.0.insert.insert.i.i.i, %.sroa.0.0.insert.ext.i.i.i
+  %48 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  store i32 %.sroa.0.0.insert.insert.i.i.i, ptr %48, align 2
   store i16 0, ptr %0, align 8
   br label %bb.y
 }
@@ -929,102 +1005,6 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.424.0.insert.insert = or disjoint i32 %.sroa.424.0.insert.shift, %.sroa.525.0.insert.shift
   %.sroa.023.0.insert.insert = or disjoint i32 %.sroa.424.0.insert.insert, 2
   br label %bb.c
-}
-
-; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc range(i48 65536, 35184372023298) i48 @_ZN4jiff6shared4util5itime5IDate24from_day_of_year_no_leap17hc4209b8f4e04ba66E(i16 noundef %0, i16 noundef %1) unnamed_addr #5 personality ptr @rust_eh_personality {
-  %3 = alloca [4 x i8], align 4                   ; 3 uses
-  %4 = add i16 %1, -1
-  %or.cond = icmp ult i16 %4, 365
-  br i1 %or.cond, label %5, label %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17hcef25793c996049dE.exit"
-
-5:                                                ; preds = %2
-  %6 = icmp samesign ugt i16 %1, 59
-  br i1 %6, label %7, label %13
-
-"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17hcef25793c996049dE.exit": ; preds = %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i, %2
-  %.sroa.3.0 = phi i32 [ 1, %2 ], [ %.sroa.0.0.insert.insert.i.i, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i ]
-  %.sroa.06.0 = phi i16 [ 1, %2 ], [ 0, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i ]
-  %.sroa.3.0.insert.ext = zext nneg i32 %.sroa.3.0 to i48
-  %.sroa.3.0.insert.shift = shl nuw nsw i48 %.sroa.3.0.insert.ext, 16
-  %.sroa.06.0.insert.ext = zext nneg i16 %.sroa.06.0 to i48
-  %.sroa.06.0.insert.insert = or disjoint i48 %.sroa.3.0.insert.shift, %.sroa.06.0.insert.ext
-  ret i48 %.sroa.06.0.insert.insert
-
-7:                                                ; preds = %5
-  %8 = srem i16 %0, 25
-  %9 = icmp eq i16 %8, 0
-  %..i = select i1 %9, i16 15, i16 3
-  %10 = and i16 %..i, %0
-  %11 = icmp eq i16 %10, 0
-  %12 = zext i1 %11 to i16
-  %spec.select = add nuw nsw i16 %1, %12
-  br label %13
-
-13:                                               ; preds = %7, %5
-  %.sroa.0.0 = phi i16 [ %1, %5 ], [ %spec.select, %7 ]
-  %14 = sext i16 %0 to i32
-  %15 = add nsw i32 %14, 32799                    ; 3 uses
-  %16 = udiv i32 %15, 100
-  %17 = mul nuw nsw i32 %15, 1461
-  %18 = lshr i32 %17, 2
-  %19 = udiv i32 %15, 400
-  %20 = zext nneg i16 %.sroa.0.0 to i32
-  %reass.sub = sub nsw i32 %19, %16
-  %21 = add nsw i32 %reass.sub, -12699422
-  %22 = add nsw i32 %21, %18
-  %23 = add nsw i32 %22, %20                      ; 2 uses
-  %24 = add nsw i32 %23, 4371892
-  %or.cond.i.i = icmp ult i32 %24, 7304484
-  br i1 %or.cond.i.i, label %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i, label %48, !prof !77
-
-_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i: ; preds = %13
-  %25 = shl nsw i32 %23, 2
-  %26 = add nsw i32 %25, 50798911                 ; 2 uses
-  %27 = urem i32 %26, 146097
-  %28 = or i32 %27, 3
-  %29 = zext nneg i32 %28 to i64
-  %30 = mul nuw nsw i64 %29, 2939745              ; 2 uses
-  %31 = trunc i64 %30 to i32                      ; 2 uses
-  %32 = udiv i32 %31, 11758980
-  %33 = mul nuw nsw i32 %32, 2141
-  %34 = add nuw nsw i32 %33, 197913               ; 3 uses
-  %35 = and i32 %34, 4128768
-  %36 = icmp ugt i32 %31, -696719417              ; 2 uses
-  %37 = udiv i32 %26, 146097
-  %38 = mul nuw nsw i32 %37, 100
-  %39 = lshr i64 %30, 32
-  %40 = trunc nuw nsw i64 %39 to i32
-  %41 = zext i1 %36 to i32
-  %42 = add nuw nsw i32 %38, 32736
-  %43 = add nuw nsw i32 %42, %40
-  %44 = add nuw nsw i32 %43, %41                  ; 2 uses
-  %.lhs.trunc.i.i = trunc i32 %34 to i16
-  %45 = udiv i16 %.lhs.trunc.i.i, 2141
-  %.zext.i.i = zext nneg i16 %45 to i32
-  %.sroa.3.0.insert.ext.i.i = shl nuw nsw i32 %.zext.i.i, 24
-  %.sroa.3.0.insert.shift.i.i = add nuw nsw i32 %.sroa.3.0.insert.ext.i.i, 16777216
-  %46 = add nuw nsw i32 %35, 15990784
-  %.sroa.2.0.insert.ext.i.i = select i1 %36, i32 %46, i32 %34
-  %.sroa.2.0.insert.shift.i.i = and i32 %.sroa.2.0.insert.ext.i.i, 16711680
-  %.sroa.2.0.insert.insert.i.i = or disjoint i32 %.sroa.3.0.insert.shift.i.i, %.sroa.2.0.insert.shift.i.i
-  %.sroa.0.0.insert.ext.i.i = and i32 %44, 65535
-  %.sroa.0.0.insert.insert.i.i = or disjoint i32 %.sroa.2.0.insert.insert.i.i, %.sroa.0.0.insert.ext.i.i
-  %.sroa.032.0.extract.trunc.i = trunc i32 %44 to i16
-  %.not.i = icmp eq i16 %0, %.sroa.032.0.extract.trunc.i
-  br i1 %.not.i, label %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17hcef25793c996049dE.exit", label %47, !prof !78
-
-47:                                               ; preds = %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i
-  %.sroa.420.0.insert.ext.i = zext i16 %0 to i32
-  %.sroa.420.0.insert.shift.i = shl nuw i32 %.sroa.420.0.insert.ext.i, 16
-  br label %48
-
-48:                                               ; preds = %13, %47
-  %.sroa.5.0.i.ph = phi i32 [ %.sroa.420.0.insert.shift.i, %47 ], [ 4, %13 ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store i32 %.sroa.5.0.i.ph, ptr %3, align 4
-  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @52, i64 noundef 43, ptr noundef nonnull align 1 %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @49, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @406) #45
-  unreachable
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
@@ -1429,13 +1409,14 @@ bb.bn:                                            ; preds = %bb.bk
 ; Function Attrs: nonlazybind uwtable
 define void @"_ZN4jiff6shared5posix44_$LT$impl$u20$jiff..shared..PosixDayTime$GT$11to_datetime17hc1571a40d9927b69E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([12 x i8]) align 4 captures(none) dereferenceable(12) %0, ptr noalias noundef readonly align 4 captures(none) dereferenceable(8) %1, i16 noundef %2, i32 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
+  %4 = alloca [4 x i8], align 4                   ; 3 uses
   %i.a = alloca [4 x i8], align 4                 ; 3 uses
   %i.b = alloca [4 x i8], align 4                 ; 3 uses
   %i.c = alloca [4 x i8], align 4                 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10794)
   %i.d = load i8, ptr %1, align 4, !range !22, !alias.scope !10794, !noundef !11
   switch i8 %i.d, label %default.unreachable [
-    i8 0, label %bb.b
+    i8 0, label %5
     i8 1, label %bb.d
     i8 2, label %bb.f
   ]
@@ -1443,19 +1424,96 @@ bb.a:
 default.unreachable:                              ; preds = %bb.a
   unreachable
 
-bb.b:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %5 = load i16, ptr %4, align 2, !alias.scope !10794, !noundef !11
-  %6 = tail call fastcc i48 @_ZN4jiff6shared4util5itime5IDate24from_day_of_year_no_leap17hc4209b8f4e04ba66E(i16 noundef %2, i16 noundef %5), !noalias !10794 ; 2 uses
-  %.sroa.02.2.extract.shift.i.i = lshr i48 %6, 16
-  %.sroa.02.2.extract.trunc.i.i.a = trunc nuw nsw i48 %.sroa.02.2.extract.shift.i.i to i32 ; 2 uses
-  %7 = trunc i48 %6 to i1
-  br i1 %7, label %bb.c, label %"_ZN4jiff6shared5posix40_$LT$impl$u20$jiff..shared..PosixDay$GT$7to_date17h240242919db3acffE.exit", !prof !23
+5:                                                ; preds = %bb.a
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %7 = load i16, ptr %6, align 2, !alias.scope !10794, !noundef !11 ; 4 uses
+  %8 = add i16 %7, -366
+  %or.cond.i.i = icmp ult i16 %8, -365
+  br i1 %or.cond.i.i, label %bb.c, label %9
 
-bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10795
-  store i32 %.sroa.02.2.extract.trunc.i.i.a, ptr %i.b, align 4, !noalias !10795
-  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @416, i64 noundef 34, ptr noundef nonnull align 1 %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @49, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @418) #45, !noalias !10794
+9:                                                ; preds = %5
+  %10 = icmp samesign ugt i16 %7, 59
+  br i1 %10, label %11, label %17
+
+11:                                               ; preds = %9
+  %12 = srem i16 %2, 25
+  %13 = icmp eq i16 %12, 0
+  %..i.i.i = select i1 %13, i16 15, i16 3
+  %14 = and i16 %..i.i.i, %2
+  %15 = icmp eq i16 %14, 0
+  %16 = zext i1 %15 to i16
+  %spec.select.i.i = add nuw nsw i16 %7, %16
+  br label %17
+
+17:                                               ; preds = %11, %9
+  %.sroa.0.0.i.i = phi i16 [ %7, %9 ], [ %spec.select.i.i, %11 ]
+  %18 = sext i16 %2 to i32
+  %19 = add nsw i32 %18, 32799                    ; 3 uses
+  %20 = udiv i32 %19, 100
+  %21 = mul nuw nsw i32 %19, 1461
+  %22 = lshr i32 %21, 2
+  %23 = udiv i32 %19, 400
+  %24 = zext nneg i16 %.sroa.0.0.i.i to i32
+  %reass.sub51 = sub nsw i32 %23, %20
+  %25 = add nsw i32 %reass.sub51, -12699422
+  %26 = add nsw i32 %25, %22
+  %27 = add nsw i32 %26, %24                      ; 2 uses
+  %28 = add nsw i32 %27, 4371892
+  %or.cond.i.i.i.i = icmp ult i32 %28, 7304484
+  br i1 %or.cond.i.i.i.i, label %bb.b, label %51, !prof !77
+
+bb.b:                                             ; preds = %17
+  %29 = shl nsw i32 %27, 2
+  %30 = add nsw i32 %29, 50798911                 ; 2 uses
+  %31 = urem i32 %30, 146097
+  %32 = or i32 %31, 3
+  %33 = zext nneg i32 %32 to i64
+  %34 = mul nuw nsw i64 %33, 2939745              ; 2 uses
+  %35 = trunc i64 %34 to i32                      ; 2 uses
+  %36 = udiv i32 %35, 11758980
+  %37 = mul nuw nsw i32 %36, 2141
+  %38 = add nuw nsw i32 %37, 197913               ; 3 uses
+  %39 = and i32 %38, 4128768
+  %40 = icmp ugt i32 %35, -696719417              ; 2 uses
+  %41 = udiv i32 %30, 146097
+  %42 = mul nuw nsw i32 %41, 100
+  %43 = lshr i64 %34, 32
+  %.sroa.02.2.extract.trunc.i.i.a = trunc nuw nsw i64 %43 to i32
+  %44 = zext i1 %40 to i32
+  %45 = add nuw nsw i32 %42, 32736
+  %46 = add nuw nsw i32 %45, %.sroa.02.2.extract.trunc.i.i.a
+  %47 = add nuw nsw i32 %46, %44                  ; 2 uses
+  %.lhs.trunc.i.i.i.i = trunc i32 %38 to i16
+  %48 = udiv i16 %.lhs.trunc.i.i.i.i, 2141
+  %.zext.i.i.i.i = zext nneg i16 %48 to i32
+  %.sroa.3.0.insert.ext.i.i.i.i = shl nuw nsw i32 %.zext.i.i.i.i, 24
+  %.sroa.3.0.insert.shift.i.i.i.i = add nuw nsw i32 %.sroa.3.0.insert.ext.i.i.i.i, 16777216
+  %49 = add nuw nsw i32 %39, 15990784
+  %.sroa.2.0.insert.ext.i.i.i.i = select i1 %40, i32 %49, i32 %38
+  %.sroa.2.0.insert.shift.i.i.i.i = and i32 %.sroa.2.0.insert.ext.i.i.i.i, 16711680
+  %.sroa.2.0.insert.insert.i.i.i.i = or disjoint i32 %.sroa.3.0.insert.shift.i.i.i.i, %.sroa.2.0.insert.shift.i.i.i.i
+  %.sroa.0.0.insert.ext.i.i.i.i = and i32 %47, 65535
+  %.sroa.0.0.insert.insert.i.i.i.i = or disjoint i32 %.sroa.2.0.insert.insert.i.i.i.i, %.sroa.0.0.insert.ext.i.i.i.i
+  %.sroa.032.0.extract.trunc.i.i.i = trunc i32 %47 to i16
+  %.not.i.i.i = icmp eq i16 %2, %.sroa.032.0.extract.trunc.i.i.i
+  br i1 %.not.i.i.i, label %"_ZN4jiff6shared5posix40_$LT$impl$u20$jiff..shared..PosixDay$GT$7to_date17h240242919db3acffE.exit", label %50, !prof !78
+
+50:                                               ; preds = %bb.b
+  %.sroa.420.0.insert.ext.i.i.i = zext i16 %2 to i32
+  %.sroa.420.0.insert.shift.i.i.i = shl nuw i32 %.sroa.420.0.insert.ext.i.i.i, 16
+  br label %51
+
+51:                                               ; preds = %50, %17
+  %.sroa.5.0.i.ph.i.i = phi i32 [ %.sroa.420.0.insert.shift.i.i.i, %50 ], [ 4, %17 ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10794
+  store i32 %.sroa.5.0.i.ph.i.i, ptr %i.b, align 4, !noalias !10794
+  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @52, i64 noundef 43, ptr noundef nonnull align 1 %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @49, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @406) #45, !noalias !10794
+  unreachable
+
+bb.c:                                             ; preds = %5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10795
+  store i32 1, ptr %i.a, align 4, !noalias !10795
+  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @416, i64 noundef 34, ptr noundef nonnull align 1 %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @49, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @418) #45, !noalias !10794
   unreachable
 
 bb.d:                                             ; preds = %bb.a
@@ -1542,13 +1600,13 @@ _ZN4jiff6shared4util5itime8IWeekday23from_sunday_zero_offset17h3b550d42d23a3cc6E
   br i1 %i.ax, label %bb.h, label %"_ZN4jiff6shared5posix40_$LT$impl$u20$jiff..shared..PosixDay$GT$7to_date17h240242919db3acffE.exit", !prof !23
 
 bb.h:                                             ; preds = %_ZN4jiff6shared4util5itime8IWeekday23from_sunday_zero_offset17h3b550d42d23a3cc6E.exit.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10796
-  store i32 %.sroa.02.2.extract.trunc.i26.i, ptr %i.a, align 4, !noalias !10796
-  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @419, i64 noundef 25, ptr noundef nonnull align 1 %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @49, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @420) #45, !noalias !10794
+  call void @llvm.lifetime.start.p0(ptr nonnull %4), !noalias !10796
+  store i32 %.sroa.02.2.extract.trunc.i26.i, ptr %4, align 4, !noalias !10796
+  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @419, i64 noundef 25, ptr noundef nonnull align 1 %4, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @49, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @420) #45, !noalias !10794
   unreachable
 
 "_ZN4jiff6shared5posix40_$LT$impl$u20$jiff..shared..PosixDay$GT$7to_date17h240242919db3acffE.exit": ; preds = %_ZN4jiff6shared4util5itime8IWeekday23from_sunday_zero_offset17h3b550d42d23a3cc6E.exit.i, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i.i, %bb.b
-  %.sroa.5.0.i = phi i32 [ %.sroa.02.2.extract.trunc.i.i.a, %bb.b ], [ %.sroa.02.2.extract.trunc.i26.i, %_ZN4jiff6shared4util5itime8IWeekday23from_sunday_zero_offset17h3b550d42d23a3cc6E.exit.i ], [ %.sroa.0.0.insert.insert.i.i.i, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i.i ]
+  %.sroa.5.0.i = phi i32 [ %.sroa.0.0.insert.insert.i.i.i.i, %bb.b ], [ %.sroa.02.2.extract.trunc.i26.i, %_ZN4jiff6shared4util5itime8IWeekday23from_sunday_zero_offset17h3b550d42d23a3cc6E.exit.i ], [ %.sroa.0.0.insert.insert.i.i.i, %_ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 %.sroa.5.0.i, ptr %i.c, align 4
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 4

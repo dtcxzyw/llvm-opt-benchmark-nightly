@@ -202,7 +202,7 @@ _ZNK2cv3Mat2atIdEERKT_i.exit317:                  ; preds = %bb.ep, %bb.eq, %bb.
   %i.wm = insertelement <2 x double> %i.wl, double %i.wg, i64 1 ; 2 uses
   %i.wn = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.wm, <2 x double> %i.wm, <2 x double> %i.wk) ; 3 uses
   %i.wo = extractelement <2 x double> %i.wn, i64 0
-  %i.wp = call double @sqrt(double noundef %i.wo) #18 ; 3 uses
+  %i.wp = call double @sqrt(double noundef %i.wo) #18 ; 4 uses
   %i.wq = extractelement <2 x double> %i.wn, i64 1 ; 2 uses
   %i.wr = fdiv double %i.wg, %i.wq
   %i.ws = insertelement <2 x double> poison, double %i.wh, i64 0
@@ -214,31 +214,28 @@ _ZNK2cv3Mat2atIdEERKT_i.exit317:                  ; preds = %bb.ep, %bb.eq, %bb.
   br i1 %i.wx, label %bb.eu, label %bb.fj
 
 bb.eu:                                            ; preds = %_ZNK2cv3Mat2atIdEERKT_i.exit317
-  %81 = insertelement <2 x double> poison, double %i.uk, i64 0
-  %82 = insertelement <2 x double> %81, double %i.ui, i64 1
-  %83 = insertelement <2 x double> poison, double %i.wp, i64 0
-  %84 = shufflevector <2 x double> %83, <2 x double> poison, <2 x i32> zeroinitializer
-  %85 = fdiv <2 x double> %82, %84                ; 3 uses
+  %81 = fdiv double %i.uk, %i.wp                  ; 2 uses
+  %82 = fdiv double %i.ui, %i.wp                  ; 2 uses
   %i.wy = fdiv double %i.uj, %i.wp
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #18
   store i64 0, ptr %i.pj, align 8
   store i32 50397184, ptr %63, align 8, !tbaa !90
   store ptr %14, ptr %i.pi, align 8, !tbaa !91
-  %86 = load i32, ptr %i.pk, align 4, !tbaa !143
-  %87 = sitofp i32 %86 to double                  ; 2 uses
-  %88 = extractelement <2 x double> %85, i64 0
-  %89 = call double @llvm.fmuladd.f64(double %i.wy, double %87, double %88)
-  %90 = insertelement <2 x double> %85, double %89, i64 1
-  %91 = fneg <2 x double> %90
-  %92 = shufflevector <2 x double> %85, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %93 = fdiv <2 x double> %91, %92                ; 2 uses
-  %94 = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %93)
-  %.sroa.2.0.insert.ext.i = zext i32 %94 to i64
+  %83 = fneg double %81
+  %84 = fdiv double %83, %82
+  %85 = insertelement <2 x double> poison, double %84, i64 0
+  %86 = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %85)
+  %.sroa.2.0.insert.ext.i = zext i32 %86 to i64
   %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
-  %.sroa.0440.0.vec.insert = insertelement <2 x double> poison, double %87, i64 0
+  %87 = load i32, ptr %i.pk, align 4, !tbaa !143
+  %88 = sitofp i32 %87 to double                  ; 2 uses
+  %89 = call double @llvm.fmuladd.f64(double %i.wy, double %88, double %81)
+  %90 = fneg double %89
+  %91 = fdiv double %90, %82
+  %.sroa.0440.0.vec.insert = insertelement <2 x double> poison, double %88, i64 0
   %i.wz = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %.sroa.0440.0.vec.insert)
-  %95 = shufflevector <2 x double> %93, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.xa = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %95)
+  %92 = insertelement <2 x double> poison, double %91, i64 0
+  %i.xa = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %92)
   %.sroa.2.0.insert.ext.i318 = zext i32 %i.xa to i64
   %.sroa.2.0.insert.shift.i319 = shl nuw i64 %.sroa.2.0.insert.ext.i318, 32
   %.sroa.0.0.insert.ext.i320 = zext i32 %i.wz to i64
