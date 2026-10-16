@@ -204,14 +204,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   call void @llvm.experimental.noalias.scope.decl(metadata !333)
   call void @llvm.experimental.noalias.scope.decl(metadata !334)
   %i.eb = getelementptr i8, ptr %next.gep48, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep48, align 8, !tbaa !211, !alias.scope !335, !noalias !333
-  %wide.load49 = load <2 x i64>, ptr %i.eb, align 8, !tbaa !211, !alias.scope !335, !noalias !333
+  %wide.load = load <2 x i64>, ptr %next.gep48, align 8, !tbaa !211, !alias.scope !335
+  %wide.load49 = load <2 x i64>, ptr %i.eb, align 8, !tbaa !211, !alias.scope !335
   %i.ec = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !211, !alias.scope !336, !noalias !335
-  store <2 x i64> %wide.load49, ptr %i.ec, align 8, !tbaa !211, !alias.scope !336, !noalias !335
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !211, !alias.scope !336, !noalias !337
+  store <2 x i64> %wide.load49, ptr %i.ec, align 8, !tbaa !211, !alias.scope !336, !noalias !337
   %i.ed = getelementptr i8, ptr %next.gep48, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep48, align 8, !tbaa !211, !alias.scope !335, !noalias !333
-  store <2 x ptr> splat (ptr null), ptr %i.ed, align 8, !tbaa !211, !alias.scope !335, !noalias !333
+  store <2 x ptr> splat (ptr null), ptr %next.gep48, align 8, !tbaa !211, !alias.scope !335
+  store <2 x ptr> splat (ptr null), ptr %i.ed, align 8, !tbaa !211, !alias.scope !335
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ee = icmp eq i64 %index.next, %n.vec
   br i1 %i.ee, label %middle.block, label %vector.body, !llvm.loop !329
@@ -230,9 +230,9 @@ middle.block:                                     ; preds = %vector.body
   %.0911.i.i.i.i = phi ptr [ %i.eg, %.lr.ph.i.i.i.i ], [ %.0911.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader51 ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !333)
   call void @llvm.experimental.noalias.scope.decl(metadata !334)
-  %i.ef = load i64, ptr %.0911.i.i.i.i, align 8, !tbaa !211, !alias.scope !334, !noalias !333
-  store i64 %i.ef, ptr %.012.i.i.i.i, align 8, !tbaa !211, !alias.scope !333, !noalias !334
-  store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !211, !alias.scope !334, !noalias !333
+  %i.ef = load i64, ptr %.0911.i.i.i.i, align 8, !tbaa !211, !alias.scope !334
+  store i64 %i.ef, ptr %.012.i.i.i.i, align 8, !tbaa !211, !alias.scope !333
+  store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !211, !alias.scope !334
   %i.eg = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.eg, %i.da
@@ -344,7 +344,7 @@ _ZTW11errorstream.exit:                           ; preds = %bb.b, %bb.c
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !77, !nonnull !78, !align !79 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !81
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call noundef zeroext i1 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %i.g), !inline_history !339
+  %i.j = tail call noundef zeroext i1 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %i.g), !inline_history !340
   %.v.i = select i1 %i.j, i64 976, i64 984
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %.v.i ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -513,7 +513,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !340  ; 2 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !341  ; 2 uses
   store i64 %i.d, ptr %i.b, align 8, !tbaa !59
   %.not = icmp eq i64 %i.d, 0
   br i1 %.not, label %bb.i, label %bb.b
@@ -535,7 +535,7 @@ _ZNSt13unordered_mapImSt5queueI15HTTPFetchResultSt5dequeIS1_SaIS1_EEESt4hashImES
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !180  ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 64
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !341
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !342
   %i.k = getelementptr inbounds i8, ptr %i.j, i64 -64
   %.not.i.i3 = icmp eq ptr %i.h, %i.k
   br i1 %.not.i.i3, label %bb.g, label %bb.d
@@ -938,7 +938,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !162, !noalias !344 ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !162, !noalias !345 ; 3 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !107
   store i32 %i.g, ptr %0, align 8, !tbaa !107
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1341,7 +1341,7 @@ begin_hunk_2_@llvm.smax.i32
 !217 = !{!159, !157, i64 24}
 !218 = !{!204, !24, i64 16}
 !219 = distinct !{!219, !32}
-!220 = distinct !{!220, i1 false, !"_ZL18default_user_agentB5cxx11v"}
+!220 = distinct !{!220, i1 true, !"_ZL18default_user_agentB5cxx11v"}
 !221 = distinct !{!221, !220, !"_ZL18default_user_agentB5cxx11v: argument 0"}
 !222 = !{!53, !24, i64 48}
 !223 = !{!53, !24, i64 56}
@@ -1374,16 +1374,16 @@ begin_hunk_2_@llvm.smax.i32
 !250 = !{!126, !24, i64 296}
 !251 = distinct !{null}
 !252 = distinct !{null}
-!253 = distinct !{!253, i1 false, !"_ZSt11make_uniqueI15CurlFetchThreadJRiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!253 = distinct !{!253, i1 true, !"_ZSt11make_uniqueI15CurlFetchThreadJRiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !254 = distinct !{!254, !253, !"_ZSt11make_uniqueI15CurlFetchThreadJRiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
 !255 = distinct !{null, null, null, null, null}
 !256 = !{!254}
 !257 = distinct !{null}
 !258 = distinct !{null, null, null}
 !259 = distinct !{!259, !32}
-!260 = distinct !{!260, i1 false, !"_ZNSt5dequeI15HTTPFetchResultSaIS0_EE5beginEv"}
+!260 = distinct !{!260, i1 true, !"_ZNSt5dequeI15HTTPFetchResultSaIS0_EE5beginEv"}
 !261 = distinct !{!261, !260, !"_ZNSt5dequeI15HTTPFetchResultSaIS0_EE5beginEv: argument 0"}
-!262 = distinct !{!262, i1 false, !"_ZNSt5dequeI15HTTPFetchResultSaIS0_EE3endEv"}
+!262 = distinct !{!262, i1 true, !"_ZNSt5dequeI15HTTPFetchResultSaIS0_EE3endEv"}
 !263 = distinct !{!263, !262, !"_ZNSt5dequeI15HTTPFetchResultSaIS0_EE3endEv: argument 0"}
 !264 = !{!261}
 !265 = !{!263}
@@ -1408,9 +1408,9 @@ begin_hunk_2_@llvm.smax.i32
 !284 = distinct !{!284, !32}
 !285 = !{!29, !25, i64 48}
 !286 = distinct !{!286, !32}
-!287 = distinct !{!287, i1 false, !"_ZN12MutexedQueueIN15CurlFetchThread7RequestEE13pop_frontNoExEv"}
+!287 = distinct !{!287, i1 true, !"_ZN12MutexedQueueIN15CurlFetchThread7RequestEE13pop_frontNoExEv"}
 !288 = distinct !{!288, !287, !"_ZN12MutexedQueueIN15CurlFetchThread7RequestEE13pop_frontNoExEv: argument 0"}
-!289 = distinct !{!289, i1 false, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv"}
+!289 = distinct !{!289, i1 true, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv"}
 !290 = distinct !{!290, !289, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv: argument 0"}
 !291 = distinct !{!291, !32}
 !292 = distinct !{!292, !32}
@@ -1431,9 +1431,9 @@ begin_hunk_2_@llvm.smax.i32
 !307 = !{!"_ZTS7CURLMsg", !306, i64 0, !21, i64 8, !17, i64 16}
 !308 = !{!307, !306, i64 0}
 !309 = !{!307, !21, i64 8}
-!310 = distinct !{!310, i1 false, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv"}
+!310 = distinct !{!310, i1 true, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv"}
 !311 = distinct !{!311, !310, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv: argument 0"}
-!312 = distinct !{!312, i1 false, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE3endEv"}
+!312 = distinct !{!312, i1 true, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE3endEv"}
 !313 = distinct !{!313, !312, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE3endEv: argument 0"}
 !314 = !{!311}
 !315 = !{!313}
@@ -1442,28 +1442,29 @@ begin_hunk_2_@llvm.smax.i32
 !318 = distinct !{!318, !32}
 !319 = distinct !{!319, !32}
 !320 = distinct !{!320, !32}
-!321 = distinct !{!321, i1 false, !"_ZSt11make_uniqueI16HTTPFetchOngoingJR16HTTPFetchRequestRP14CurlHandlePoolEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!321 = distinct !{!321, i1 true, !"_ZSt11make_uniqueI16HTTPFetchOngoingJR16HTTPFetchRequestRP14CurlHandlePoolEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !322 = distinct !{!322, !321, !"_ZSt11make_uniqueI16HTTPFetchOngoingJR16HTTPFetchRequestRP14CurlHandlePoolEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!323 = distinct !{!323, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrI16HTTPFetchOngoingSt14default_deleteIS1_EES4_SaIS4_EEvPT_PT0_RT1_"}
+!323 = distinct !{!323, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrI16HTTPFetchOngoingSt14default_deleteIS1_EES4_SaIS4_EEvPT_PT0_RT1_"}
 !324 = distinct !{!324, !323, !"_ZSt19__relocate_object_aISt10unique_ptrI16HTTPFetchOngoingSt14default_deleteIS1_EES4_SaIS4_EEvPT_PT0_RT1_: argument 0"}
 !325 = distinct !{!325, !323, !"_ZSt19__relocate_object_aISt10unique_ptrI16HTTPFetchOngoingSt14default_deleteIS1_EES4_SaIS4_EEvPT_PT0_RT1_: argument 1"}
 !326 = distinct !{!326, i1 false, !"LVerDomain"}
 !327 = distinct !{!327, !326}
 !328 = distinct !{!328, !326}
-!329 = distinct !{!329, !32, !337, !338}
-!330 = distinct !{!330, !32, !337}
+!329 = distinct !{!329, !32, !338, !339}
+!330 = distinct !{!330, !32, !338}
 !331 = distinct !{!331, !32}
 !332 = !{!322}
 !333 = !{!324}
 !334 = !{!325}
 !335 = !{!325, !327}
 !336 = !{!324, !328}
-!337 = !{!"llvm.loop.isvectorized", i32 1}
-!338 = !{!"llvm.loop.unroll.runtime.disable"}
-!339 = distinct !{null}
-!340 = !{!123, !24, i64 48}
-!341 = !{!115, !110, i64 64}
-!342 = distinct !{!342, i1 false, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv"}
-!343 = distinct !{!343, !342, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv: argument 0"}
-!344 = !{!343}
+!337 = !{!327}
+!338 = !{!"llvm.loop.isvectorized", i32 1}
+!339 = !{!"llvm.loop.unroll.runtime.disable"}
+!340 = distinct !{null}
+!341 = !{!123, !24, i64 48}
+!342 = !{!115, !110, i64 64}
+!343 = distinct !{!343, i1 true, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv"}
+!344 = distinct !{!344, !343, !"_ZNSt5dequeIN15CurlFetchThread7RequestESaIS1_EE5beginEv: argument 0"}
+!345 = !{!344}
 end_hunk_2

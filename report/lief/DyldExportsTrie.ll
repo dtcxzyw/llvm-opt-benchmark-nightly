@@ -205,14 +205,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   tail call void @llvm.experimental.noalias.scope.decl(metadata !715)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !716)
   %i.aa = getelementptr i8, ptr %next.gep35, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep35, align 8, !tbaa !61, !alias.scope !716, !noalias !715
-  %wide.load36 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !61, !alias.scope !716, !noalias !715
+  %wide.load = load <2 x i64>, ptr %next.gep35, align 8, !tbaa !61, !alias.scope !716
+  %wide.load36 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !61, !alias.scope !716
   %i.ab = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !61, !alias.scope !715, !noalias !716
-  store <2 x i64> %wide.load36, ptr %i.ab, align 8, !tbaa !61, !alias.scope !715, !noalias !716
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !61, !alias.scope !715
+  store <2 x i64> %wide.load36, ptr %i.ab, align 8, !tbaa !61, !alias.scope !715
   %i.ac = getelementptr i8, ptr %next.gep35, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep35, align 8, !tbaa !61, !alias.scope !716, !noalias !715
-  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !61, !alias.scope !716, !noalias !715
+  store <2 x ptr> splat (ptr null), ptr %next.gep35, align 8, !tbaa !61, !alias.scope !716
+  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !61, !alias.scope !716
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !705
@@ -231,9 +231,9 @@ middle.block:                                     ; preds = %vector.body
   %.0911.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i ], [ %.0911.i.i.i.ph, %.lr.ph.i.i.i.preheader55 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !715)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !716)
-  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !61, !alias.scope !716, !noalias !715
-  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !61, !alias.scope !715, !noalias !716
-  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !61, !alias.scope !716, !noalias !715
+  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !61, !alias.scope !716
+  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !61, !alias.scope !715
+  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !61, !alias.scope !716
   %i.af = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.af, %1
@@ -279,14 +279,14 @@ vector.body43:                                    ; preds = %vector.body43, %vec
   tail call void @llvm.experimental.noalias.scope.decl(metadata !717)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !718)
   %i.av = getelementptr i8, ptr %next.gep46, i64 16
-  %wide.load47 = load <2 x i64>, ptr %next.gep46, align 8, !tbaa !61, !alias.scope !719, !noalias !717
-  %wide.load48 = load <2 x i64>, ptr %i.av, align 8, !tbaa !61, !alias.scope !719, !noalias !717
+  %wide.load47 = load <2 x i64>, ptr %next.gep46, align 8, !tbaa !61, !alias.scope !719
+  %wide.load48 = load <2 x i64>, ptr %i.av, align 8, !tbaa !61, !alias.scope !719
   %i.aw = getelementptr i8, ptr %next.gep45, i64 16
-  store <2 x i64> %wide.load47, ptr %next.gep45, align 8, !tbaa !61, !alias.scope !720, !noalias !719
-  store <2 x i64> %wide.load48, ptr %i.aw, align 8, !tbaa !61, !alias.scope !720, !noalias !719
+  store <2 x i64> %wide.load47, ptr %next.gep45, align 8, !tbaa !61, !alias.scope !720, !noalias !721
+  store <2 x i64> %wide.load48, ptr %i.aw, align 8, !tbaa !61, !alias.scope !720, !noalias !721
   %i.ax = getelementptr i8, ptr %next.gep46, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep46, align 8, !tbaa !61, !alias.scope !719, !noalias !717
-  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !61, !alias.scope !719, !noalias !717
+  store <2 x ptr> splat (ptr null), ptr %next.gep46, align 8, !tbaa !61, !alias.scope !719
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !61, !alias.scope !719
   %index.next49 = add nuw i64 %index44, 4         ; 2 uses
   %i.ay = icmp eq i64 %index.next49, %n.vec42
   br i1 %i.ay, label %middle.block50, label %vector.body43, !llvm.loop !713
@@ -305,9 +305,9 @@ middle.block50:                                   ; preds = %vector.body43
   %.0911.i.i.i19 = phi ptr [ %i.ba, %.lr.ph.i.i.i17 ], [ %.0911.i.i.i19.ph, %.lr.ph.i.i.i17.preheader54 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !717)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !718)
-  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !61, !alias.scope !718, !noalias !717
-  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !61, !alias.scope !717, !noalias !718
-  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !61, !alias.scope !718, !noalias !717
+  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !61, !alias.scope !718
+  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !61, !alias.scope !717
+  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !61, !alias.scope !718
   %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i19, i64 8 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.012.i.i.i18, i64 8 ; 2 uses
   %.not.i.i.i20 = icmp eq ptr %i.ba, %i.b
@@ -702,9 +702,9 @@ attributes #29 = { nounwind allocsize(0) }
 !250 = !{!248, !40, i64 4}
 !251 = !{!52, !50, i64 32}
 !252 = !{!52, !40, i64 40}
-!253 = distinct !{!253, i1 false, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!253 = distinct !{!253, i1 true, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv"}
 !254 = distinct !{!254, !253, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!255 = distinct !{!255, i1 false, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!255 = distinct !{!255, i1 true, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
 !256 = distinct !{!256, !255, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
 !257 = !{!"p1 _ZTSSo", !44, i64 0}
 !258 = !{!"p1 _ZTSSt15basic_streambufIcSt11char_traitsIcEE", !44, i64 0}
@@ -728,11 +728,11 @@ attributes #29 = { nounwind allocsize(0) }
 !276 = !{!256, !254}
 !277 = !{!266, !45, i64 40}
 !278 = !{!266, !45, i64 32}
-!279 = distinct !{!279, i1 false, !"_ZN3fmt3v126formatIJjjEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_7fstringIJDpT_EE1tEDpOS9_"}
+!279 = distinct !{!279, i1 true, !"_ZN3fmt3v126formatIJjjEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_7fstringIJDpT_EE1tEDpOS9_"}
 !280 = distinct !{!280, !279, !"_ZN3fmt3v126formatIJjjEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_7fstringIJDpT_EE1tEDpOS9_: argument 0"}
-!281 = distinct !{!281, i1 false, !"_ZN3fmt3v127vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE"}
+!281 = distinct !{!281, i1 true, !"_ZN3fmt3v127vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE"}
 !282 = distinct !{!282, !281, !"_ZN3fmt3v127vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE: argument 0"}
-!283 = distinct !{!283, i1 false, !"_ZN3fmt3v129to_stringILm500EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_19basic_memory_bufferIcXT_ENS0_6detail9allocatorIcEEEE"}
+!283 = distinct !{!283, i1 true, !"_ZN3fmt3v129to_stringILm500EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_19basic_memory_bufferIcXT_ENS0_6detail9allocatorIcEEEE"}
 !284 = distinct !{!284, !283, !"_ZN3fmt3v129to_stringILm500EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_19basic_memory_bufferIcXT_ENS0_6detail9allocatorIcEEEE: argument 0"}
 !285 = !{!82, !51, i64 16}
 !286 = !{!"_ZTSN3tcb6detail12span_storageIhLm18446744073709551615EEE", !45, i64 0, !51, i64 8}
@@ -754,18 +754,18 @@ attributes #29 = { nounwind allocsize(0) }
 !302 = !{!301, !300, i64 0}
 !303 = !{!"p1 _ZTS8_IO_FILE", !44, i64 0}
 !304 = !{!303, !303, i64 0}
-!305 = distinct !{!305, i1 false, !"_ZNK3fmt3v127context3argEi"}
+!305 = distinct !{!305, i1 true, !"_ZNK3fmt3v127context3argEi"}
 !306 = distinct !{!306, !305, !"_ZNK3fmt3v127context3argEi: argument 0"}
-!307 = distinct !{!307, i1 false, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi"}
+!307 = distinct !{!307, i1 true, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi"}
 !308 = distinct !{!308, !307, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi: argument 0"}
 !309 = distinct !{null, null, null, null}
 !310 = distinct !{null, null, null, null}
 !311 = distinct !{null, null, null, null}
 !312 = distinct !{null, null, null, null, null}
 !313 = distinct !{null, null}
-!314 = distinct !{!314, i1 false, !"_ZNK3fmt3v127context3argEi"}
+!314 = distinct !{!314, i1 true, !"_ZNK3fmt3v127context3argEi"}
 !315 = distinct !{!315, !314, !"_ZNK3fmt3v127context3argEi: argument 0"}
-!316 = distinct !{!316, i1 false, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi"}
+!316 = distinct !{!316, i1 true, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi"}
 !317 = distinct !{!317, !316, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi: argument 0"}
 !318 = !{!308, !306}
 !319 = !{!116, !116, i64 0}
@@ -781,17 +781,17 @@ attributes #29 = { nounwind allocsize(0) }
 !329 = distinct !{null, null, null}
 !330 = distinct !{null, null, null, null}
 !331 = distinct !{!331, !62}
-!332 = distinct !{!332, i1 false, !"_ZNKSt7__cxx118numpunctIcE8groupingEv"}
+!332 = distinct !{!332, i1 true, !"_ZNKSt7__cxx118numpunctIcE8groupingEv"}
 !333 = distinct !{!333, !332, !"_ZNKSt7__cxx118numpunctIcE8groupingEv: argument 0"}
 !334 = distinct !{null}
 !335 = distinct !{null}
 !336 = !{!"_ZTSNSt6locale5facetE", !40, i64 8}
 !337 = !{!336, !40, i64 8}
 !338 = !{!333}
-!339 = distinct !{!339, i1 false, !"_ZN3fmt3v126detail18make_write_int_argInEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE"}
+!339 = distinct !{!339, i1 true, !"_ZN3fmt3v126detail18make_write_int_argInEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE"}
 !340 = distinct !{!340, !339, !"_ZN3fmt3v126detail18make_write_int_argInEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE: argument 0"}
 !341 = !{!340}
-!342 = distinct !{!342, i1 false, !"_ZN3fmt3v126detail18make_write_int_argIoEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE"}
+!342 = distinct !{!342, i1 true, !"_ZN3fmt3v126detail18make_write_int_argIoEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE"}
 !343 = distinct !{!343, !342, !"_ZN3fmt3v126detail18make_write_int_argIoEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE: argument 0"}
 !344 = !{!343}
 !345 = distinct !{!345, !62}
@@ -959,9 +959,9 @@ attributes #29 = { nounwind allocsize(0) }
 !507 = distinct !{null, null, null, null}
 !508 = !{!208, !208, i64 0}
 !509 = !{!199, !45, i64 8}
-!510 = distinct !{!510, i1 false, !"_ZN3fmt3v126detail18thousands_sep_implIcEENS1_20thousands_sep_resultIT_EENS0_10locale_refE"}
+!510 = distinct !{!510, i1 true, !"_ZN3fmt3v126detail18thousands_sep_implIcEENS1_20thousands_sep_resultIT_EENS0_10locale_refE"}
 !511 = distinct !{!511, !510, !"_ZN3fmt3v126detail18thousands_sep_implIcEENS1_20thousands_sep_resultIT_EENS0_10locale_refE: argument 0"}
-!512 = distinct !{!512, i1 false, !"_ZNKSt7__cxx118numpunctIcE8groupingEv"}
+!512 = distinct !{!512, i1 true, !"_ZNKSt7__cxx118numpunctIcE8groupingEv"}
 !513 = distinct !{!513, !512, !"_ZNKSt7__cxx118numpunctIcE8groupingEv: argument 0"}
 !514 = distinct !{null, null}
 !515 = distinct !{null, null}
@@ -1004,14 +1004,14 @@ attributes #29 = { nounwind allocsize(0) }
 !552 = distinct !{null, null, null, null}
 !553 = distinct !{!553, !62}
 !554 = !{!117, !116, i64 0}
-!555 = distinct !{!555, i1 false, !"_ZNK3fmt3v127context3argEi"}
+!555 = distinct !{!555, i1 true, !"_ZNK3fmt3v127context3argEi"}
 !556 = distinct !{!556, !555, !"_ZNK3fmt3v127context3argEi: argument 0"}
-!557 = distinct !{!557, i1 false, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi"}
+!557 = distinct !{!557, i1 true, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi"}
 !558 = distinct !{!558, !557, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi: argument 0"}
 !559 = distinct !{null}
-!560 = distinct !{!560, i1 false, !"_ZN3fmt3v126detail18make_write_int_argInEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE"}
+!560 = distinct !{!560, i1 true, !"_ZN3fmt3v126detail18make_write_int_argInEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE"}
 !561 = distinct !{!561, !560, !"_ZN3fmt3v126detail18make_write_int_argInEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE: argument 0"}
-!562 = distinct !{!562, i1 false, !"_ZN3fmt3v126detail18make_write_int_argIoEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE"}
+!562 = distinct !{!562, i1 true, !"_ZN3fmt3v126detail18make_write_int_argIoEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE"}
 !563 = distinct !{!563, !562, !"_ZN3fmt3v126detail18make_write_int_argIoEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE: argument 0"}
 !564 = !{!558, !556}
 !565 = !{!561}
@@ -1020,13 +1020,13 @@ attributes #29 = { nounwind allocsize(0) }
 !568 = !{!566, !40, i64 16}
 !569 = !{!563}
 !570 = distinct !{!570, !62}
-!571 = distinct !{!571, i1 false, !"_ZNK3fmt3v127context3argEi"}
+!571 = distinct !{!571, i1 true, !"_ZNK3fmt3v127context3argEi"}
 !572 = distinct !{!572, !571, !"_ZNK3fmt3v127context3argEi: argument 0"}
-!573 = distinct !{!573, i1 false, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi"}
+!573 = distinct !{!573, i1 true, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi"}
 !574 = distinct !{!574, !573, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getEi: argument 0"}
-!575 = distinct !{!575, i1 false, !"_ZNK3fmt3v127context3argENS0_17basic_string_viewIcEE"}
+!575 = distinct !{!575, i1 true, !"_ZNK3fmt3v127context3argENS0_17basic_string_viewIcEE"}
 !576 = distinct !{!576, !575, !"_ZNK3fmt3v127context3argENS0_17basic_string_viewIcEE: argument 0"}
-!577 = distinct !{!577, i1 false, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getIcEENS0_16basic_format_argIS2_EENS0_17basic_string_viewIT_EE"}
+!577 = distinct !{!577, i1 true, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getIcEENS0_16basic_format_argIS2_EENS0_17basic_string_viewIT_EE"}
 !578 = distinct !{!578, !577, !"_ZNK3fmt3v1217basic_format_argsINS0_7contextEE3getIcEENS0_16basic_format_argIS2_EENS0_17basic_string_viewIT_EE: argument 0"}
 !579 = !{!574, !572}
 !580 = !{!578, !576}
@@ -1112,7 +1112,7 @@ attributes #29 = { nounwind allocsize(0) }
 !660 = distinct !{!660, !62, !119, !120}
 !661 = distinct !{!661, !122}
 !662 = distinct !{!662, !62, !119}
-!663 = distinct !{!663, i1 false, !"_ZN3fmt3v126detail11find_escapeEPKcS3_"}
+!663 = distinct !{!663, i1 true, !"_ZN3fmt3v126detail11find_escapeEPKcS3_"}
 !664 = distinct !{!664, !663, !"_ZN3fmt3v126detail11find_escapeEPKcS3_: argument 0"}
 !665 = distinct !{!665, !62, !119, !120}
 !666 = distinct !{!666, !62, !119, !120}
@@ -1144,19 +1144,19 @@ attributes #29 = { nounwind allocsize(0) }
 !692 = !{!689, !234, i64 16}
 !693 = !{!689, !234, i64 24}
 !694 = !{!689, !236, i64 32}
-!695 = distinct !{!695, i1 false, !"_ZN3fmt3v126detail11find_escapeEPKcS3_"}
+!695 = distinct !{!695, i1 true, !"_ZN3fmt3v126detail11find_escapeEPKcS3_"}
 !696 = distinct !{!696, !695, !"_ZN3fmt3v126detail11find_escapeEPKcS3_: argument 0"}
 !697 = distinct !{null, null, null, null, null}
 !698 = distinct !{!698, !62}
 !699 = distinct !{!699, !62}
 !700 = !{!696}
 !701 = !{!244, !51, i64 8}
-!702 = distinct !{!702, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
+!702 = distinct !{!702, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
 !703 = distinct !{!703, !702, !"_ZSt19__relocate_object_aISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 0"}
 !704 = distinct !{!704, !702, !"_ZSt19__relocate_object_aISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 1"}
 !705 = distinct !{!705, !62, !119, !120}
 !706 = distinct !{!706, !62, !120, !119}
-!707 = distinct !{!707, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
+!707 = distinct !{!707, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
 !708 = distinct !{!708, !707, !"_ZSt19__relocate_object_aISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 0"}
 !709 = distinct !{!709, !707, !"_ZSt19__relocate_object_aISt10unique_ptrIN4LIEF5MachO10ExportInfoESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 1"}
 !710 = distinct !{!710, i1 false, !"LVerDomain"}
@@ -1170,4 +1170,5 @@ attributes #29 = { nounwind allocsize(0) }
 !718 = !{!709}
 !719 = !{!709, !711}
 !720 = !{!708, !712}
+!721 = !{!711}
 end_hunk_0

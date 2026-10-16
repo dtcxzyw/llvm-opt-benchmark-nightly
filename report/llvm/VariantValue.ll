@@ -202,22 +202,22 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 25 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
-  %.pre = load ptr, ptr %i.f, align 8, !tbaa !38, !noalias !162 ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !162)
+  %.pre = load ptr, ptr %i.f, align 8, !tbaa !38, !noalias !163 ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !163)
   %.not.i.peel = icmp eq ptr %.pre, null
   br i1 %.not.i.peel, label %_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev.exit.peel.thread, label %_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev.exit.peel
 
 _ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev.exit.peel.thread: ; preds = %bb.b
-  store ptr %i.k, ptr %2, align 8, !tbaa !25, !alias.scope !162
+  store ptr %i.k, ptr %2, align 8, !tbaa !25, !alias.scope !163
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.k, ptr noundef nonnull align 1 dereferenceable(9) @.str.9, i64 9, i1 false)
-  store i64 9, ptr %i.l, align 8, !tbaa !28, !alias.scope !162
-  store i8 0, ptr %i.m, align 1, !tbaa !17, !alias.scope !162
+  store i64 9, ptr %i.l, align 8, !tbaa !28, !alias.scope !163
+  store i8 0, ptr %i.m, align 1, !tbaa !17, !alias.scope !163
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.peel
 
 _ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev.exit.peel: ; preds = %bb.b
-  %i.n = load ptr, ptr %.pre, align 8, !tbaa !42, !noalias !162
+  %i.n = load ptr, ptr %.pre, align 8, !tbaa !42, !noalias !163
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 24
-  %i.p = load ptr, ptr %i.o, align 8, !noalias !162
+  %i.p = load ptr, ptr %i.o, align 8, !noalias !163
   call void %i.p(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %.pre) #18, !inline_history !75
   %.pre13 = load i64, ptr %i.l, align 8, !tbaa !28 ; 2 uses
   %.pre14 = load i64, ptr %i.b, align 8, !tbaa !28
@@ -259,24 +259,24 @@ bb.c:                                             ; preds = %.split7
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.ac = load ptr, ptr %i.c, align 8, !tbaa !77
   %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %.010
-  call void @llvm.experimental.noalias.scope.decl(metadata !163)
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !38, !noalias !163 ; 3 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !164)
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !38, !noalias !164 ; 3 uses
   %.not.i = icmp eq ptr %i.ae, null
   br i1 %.not.i, label %._crit_edge.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !42, !noalias !163
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !42, !noalias !164
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24
-  %i.ah = load ptr, ptr %i.ag, align 8, !noalias !163
+  %i.ah = load ptr, ptr %i.ag, align 8, !noalias !164
   call void %i.ah(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %i.ae) #18, !inline_history !75
   %.pre15 = load i64, ptr %i.l, align 8, !tbaa !28
   br label %_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev.exit
 
 ._crit_edge.i.i.i:                                ; preds = %bb.c
-  store ptr %i.k, ptr %2, align 8, !tbaa !25, !alias.scope !163
+  store ptr %i.k, ptr %2, align 8, !tbaa !25, !alias.scope !164
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.k, ptr noundef nonnull align 1 dereferenceable(9) @.str.9, i64 9, i1 false)
-  store i64 9, ptr %i.l, align 8, !tbaa !28, !alias.scope !163
-  store i8 0, ptr %i.m, align 1, !tbaa !17, !alias.scope !163
+  store i64 9, ptr %i.l, align 8, !tbaa !28, !alias.scope !164
+  store i8 0, ptr %i.m, align 1, !tbaa !17, !alias.scope !164
   br label %_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev.exit
 
 _ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev.exit: ; preds = %bb.d, %._crit_edge.i.i.i
@@ -307,7 +307,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   %i.as = add i64 %.010, 1                        ; 2 uses
   %.not = icmp eq i64 %i.as, %i.j
-  br i1 %.not, label %._crit_edge, label %.split7, !llvm.loop !161
+  br i1 %.not, label %._crit_edge, label %.split7, !llvm.loop !162
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel, %bb.a
   ret void
@@ -487,15 +487,15 @@ attributes #21 = { builtin nounwind }
 !76 = !{!"llvm.loop.peeled.count", i32 1}
 !77 = !{!61, !60, i64 0}
 !78 = !{!61, !60, i64 8}
-!79 = distinct !{!79, i1 false, !"_ZN4llvmplERKNS_5TwineES2_"}
+!79 = distinct !{!79, i1 true, !"_ZN4llvmplERKNS_5TwineES2_"}
 !80 = distinct !{!80, !79, !"_ZN4llvmplERKNS_5TwineES2_: argument 0"}
-!81 = distinct !{!81, i1 false, !"_ZNK4llvm5Twine6concatERKS0_"}
+!81 = distinct !{!81, i1 true, !"_ZNK4llvm5Twine6concatERKS0_"}
 !82 = distinct !{!82, !81, !"_ZNK4llvm5Twine6concatERKS0_: argument 0"}
-!83 = distinct !{!83, i1 false, !"_ZN4llvmplERKNS_5TwineES2_"}
+!83 = distinct !{!83, i1 true, !"_ZN4llvmplERKNS_5TwineES2_"}
 !84 = distinct !{!84, !83, !"_ZN4llvmplERKNS_5TwineES2_: argument 0"}
-!85 = distinct !{!85, i1 false, !"_ZNK4llvm5Twine6concatERKS0_"}
+!85 = distinct !{!85, i1 true, !"_ZNK4llvm5Twine6concatERKS0_"}
 !86 = distinct !{!86, !85, !"_ZNK4llvm5Twine6concatERKS0_: argument 0"}
-!87 = distinct !{!87, i1 false, !"_ZNK4llvm9StringRef3strB5cxx11Ev"}
+!87 = distinct !{!87, i1 true, !"_ZNK4llvm9StringRef3strB5cxx11Ev"}
 !88 = distinct !{!88, !87, !"_ZNK4llvm9StringRef3strB5cxx11Ev: argument 0"}
 !89 = !{!82, !80}
 !90 = !{!86, !84}
@@ -503,21 +503,21 @@ attributes #21 = { builtin nounwind }
 !92 = !{!33, !33, i64 0}
 !93 = distinct !{null, null, null, null, null, null, null, null, null}
 !94 = distinct !{!94, !55}
-!95 = distinct !{!95, i1 false, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher13SinglePayloadEJRKNS1_8internal15DynTypedMatcherEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESB_E4typeEEDpOT0_"}
+!95 = distinct !{!95, i1 true, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher13SinglePayloadEJRKNS1_8internal15DynTypedMatcherEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESB_E4typeEEDpOT0_"}
 !96 = distinct !{!96, !95, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher13SinglePayloadEJRKNS1_8internal15DynTypedMatcherEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESB_E4typeEEDpOT0_: argument 0"}
-!97 = distinct !{!97, i1 false, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher13SinglePayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_"}
+!97 = distinct !{!97, i1 true, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher13SinglePayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_"}
 !98 = distinct !{!98, !97, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher13SinglePayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_: argument 0"}
 !99 = !{!98, !96}
 !100 = !{!96}
-!101 = distinct !{!101, i1 false, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher18PolymorphicPayloadEJSt6vectorINS1_8internal15DynTypedMatcherESaIS7_EEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESC_E4typeEEDpOT0_"}
+!101 = distinct !{!101, i1 true, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher18PolymorphicPayloadEJSt6vectorINS1_8internal15DynTypedMatcherESaIS7_EEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESC_E4typeEEDpOT0_"}
 !102 = distinct !{!102, !101, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher18PolymorphicPayloadEJSt6vectorINS1_8internal15DynTypedMatcherESaIS7_EEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESC_E4typeEEDpOT0_: argument 0"}
-!103 = distinct !{!103, i1 false, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher18PolymorphicPayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_"}
+!103 = distinct !{!103, i1 true, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher18PolymorphicPayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_"}
 !104 = distinct !{!104, !103, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher18PolymorphicPayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_: argument 0"}
 !105 = !{!104, !102}
 !106 = !{!102}
-!107 = distinct !{!107, i1 false, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher17VariadicOpPayloadEJRNS1_8internal15DynTypedMatcher16VariadicOperatorESt6vectorIS3_SaIS3_EEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESE_E4typeEEDpOT0_"}
+!107 = distinct !{!107, i1 true, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher17VariadicOpPayloadEJRNS1_8internal15DynTypedMatcher16VariadicOperatorESt6vectorIS3_SaIS3_EEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESE_E4typeEEDpOT0_"}
 !108 = distinct !{!108, !107, !"_ZSt11make_sharedIN5clang12ast_matchers7dynamic14VariantMatcher17VariadicOpPayloadEJRNS1_8internal15DynTypedMatcher16VariadicOperatorESt6vectorIS3_SaIS3_EEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESE_E4typeEEDpOT0_: argument 0"}
-!109 = distinct !{!109, i1 false, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher17VariadicOpPayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_"}
+!109 = distinct !{!109, i1 true, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher17VariadicOpPayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_"}
 !110 = distinct !{!110, !109, !"_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN5clang12ast_matchers7dynamic14VariantMatcher17VariadicOpPayloadESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERSC_: argument 0"}
 !111 = !{!110, !108}
 !112 = !{!108}
@@ -525,9 +525,9 @@ attributes #21 = { builtin nounwind }
 !114 = !{!34, !34, i64 0}
 !115 = distinct !{null, null, null, null}
 !116 = distinct !{ptr @_ZNK5clang12ast_matchers7dynamic12VariantValue15isConvertibleToENS1_7ArgKindEPj, null}
-!117 = distinct !{!117, i1 false, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev"}
+!117 = distinct !{!117, i1 true, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev"}
 !118 = distinct !{!118, !117, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev: argument 0"}
-!119 = distinct !{!119, i1 false, !"_ZNK4llvm9StringRef3strB5cxx11Ev"}
+!119 = distinct !{!119, i1 true, !"_ZNK4llvm9StringRef3strB5cxx11Ev"}
 !120 = distinct !{!120, !119, !"_ZNK4llvm9StringRef3strB5cxx11Ev: argument 0"}
 !121 = !{!118}
 !122 = !{!120}
@@ -537,26 +537,26 @@ attributes #21 = { builtin nounwind }
 !126 = distinct !{null}
 !127 = distinct !{null, null, null, null, null}
 !128 = distinct !{ptr @_ZN5clang12ast_matchers7dynamic14VariantMatcher13SinglePayloadD2Ev, null, null, null, null, null}
-!129 = distinct !{!129, i1 false, !"_ZN4llvmplERKNS_5TwineES2_"}
+!129 = distinct !{!129, i1 true, !"_ZN4llvmplERKNS_5TwineES2_"}
 !130 = distinct !{!130, !129, !"_ZN4llvmplERKNS_5TwineES2_: argument 0"}
-!131 = distinct !{!131, i1 false, !"_ZNK4llvm5Twine6concatERKS0_"}
+!131 = distinct !{!131, i1 true, !"_ZNK4llvm5Twine6concatERKS0_"}
 !132 = distinct !{!132, !131, !"_ZNK4llvm5Twine6concatERKS0_: argument 0"}
-!133 = distinct !{!133, i1 false, !"_ZN4llvmplERKNS_5TwineES2_"}
+!133 = distinct !{!133, i1 true, !"_ZN4llvmplERKNS_5TwineES2_"}
 !134 = distinct !{!134, !133, !"_ZN4llvmplERKNS_5TwineES2_: argument 0"}
-!135 = distinct !{!135, i1 false, !"_ZNK4llvm5Twine6concatERKS0_"}
+!135 = distinct !{!135, i1 true, !"_ZNK4llvm5Twine6concatERKS0_"}
 !136 = distinct !{!136, !135, !"_ZNK4llvm5Twine6concatERKS0_: argument 0"}
 !137 = !{!132, !130}
 !138 = !{!136, !134}
 !139 = distinct !{null}
 !140 = distinct !{ptr @_ZN5clang12ast_matchers7dynamic14VariantMatcher18PolymorphicPayloadD2Ev, null, null, null, null, null, null, null, null, null}
 !141 = !{ptr @_ZN5clang12ast_matchers7dynamic14VariantMatcher18PolymorphicPayloadD2Ev}
-!142 = distinct !{!142, i1 false, !"_ZN4llvmplERKNS_5TwineES2_"}
+!142 = distinct !{!142, i1 true, !"_ZN4llvmplERKNS_5TwineES2_"}
 !143 = distinct !{!143, !142, !"_ZN4llvmplERKNS_5TwineES2_: argument 0"}
-!144 = distinct !{!144, i1 false, !"_ZNK4llvm5Twine6concatERKS0_"}
+!144 = distinct !{!144, i1 true, !"_ZNK4llvm5Twine6concatERKS0_"}
 !145 = distinct !{!145, !144, !"_ZNK4llvm5Twine6concatERKS0_: argument 0"}
-!146 = distinct !{!146, i1 false, !"_ZN4llvmplERKNS_5TwineES2_"}
+!146 = distinct !{!146, i1 true, !"_ZN4llvmplERKNS_5TwineES2_"}
 !147 = distinct !{!147, !146, !"_ZN4llvmplERKNS_5TwineES2_: argument 0"}
-!148 = distinct !{!148, i1 false, !"_ZNK4llvm5Twine6concatERKS0_"}
+!148 = distinct !{!148, i1 true, !"_ZNK4llvm5Twine6concatERKS0_"}
 !149 = distinct !{!149, !148, !"_ZNK4llvm5Twine6concatERKS0_: argument 0"}
 !150 = distinct !{!150, !55, !76}
 !151 = !{!145, !143}
@@ -566,10 +566,11 @@ attributes #21 = { builtin nounwind }
 !155 = distinct !{null, null, null, null, null, null, null, null}
 !156 = distinct !{ptr @_ZN5clang12ast_matchers7dynamic14VariantMatcher17VariadicOpPayloadD2Ev, null, null, null, null, null, null, null, null}
 !157 = !{ptr @_ZN5clang12ast_matchers7dynamic14VariantMatcher17VariadicOpPayloadD2Ev}
-!158 = distinct !{!158, i1 false, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev"}
+!158 = distinct !{!158, i1 true, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev"}
 !159 = distinct !{!159, !158, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev: argument 0:Peel0"}
-!160 = distinct !{!160, !158, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev: argument 0"}
-!161 = distinct !{!161, !55, !76}
-!162 = !{!159}
-!163 = !{!160}
+!160 = distinct !{!160, i1 true, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev"}
+!161 = distinct !{!161, !160, !"_ZNK5clang12ast_matchers7dynamic14VariantMatcher15getTypeAsStringB5cxx11Ev: argument 0"}
+!162 = distinct !{!162, !55, !76}
+!163 = !{!159}
+!164 = !{!161}
 end_hunk_0

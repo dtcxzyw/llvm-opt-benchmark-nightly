@@ -202,12 +202,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.r
   store i8 0, ptr %i.t, align 1, !tbaa !42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
-  call void @llvm.experimental.noalias.scope.decl(metadata !82)
-  store ptr %i.g, ptr %5, align 8, !tbaa !38, !alias.scope !82
-  %i.u = load ptr, ptr %6, align 8, !tbaa !49, !noalias !82 ; 2 uses
-  %i.v = load i64, ptr %i.f, align 8, !tbaa !41, !noalias !82 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21, !noalias !82
-  store i64 %i.v, ptr %i.a, align 8, !tbaa !54, !noalias !82
+  call void @llvm.experimental.noalias.scope.decl(metadata !83)
+  store ptr %i.g, ptr %5, align 8, !tbaa !38, !alias.scope !83
+  %i.u = load ptr, ptr %6, align 8, !tbaa !49, !noalias !83 ; 2 uses
+  %i.v = load i64, ptr %i.f, align 8, !tbaa !41, !noalias !83 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21, !noalias !83
+  store i64 %i.v, ptr %i.a, align 8, !tbaa !54, !noalias !83
   %i.w = icmp ugt i64 %i.v, 15
   br i1 %i.w, label %.noexc.i.i.peel, label %._crit_edge.i.i.i.peel
 
@@ -216,9 +216,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
           to label %.noexc18.peel unwind label %.loopexit.split-lp68 ; 2 uses
 
 .noexc18.peel:                                    ; preds = %.noexc.i.i.peel
-  store ptr %i.x, ptr %5, align 8, !tbaa !49, !alias.scope !82
-  %i.y = load i64, ptr %i.a, align 8, !tbaa !54, !noalias !82
-  store i64 %i.y, ptr %i.g, align 8, !tbaa !42, !alias.scope !82
+  store ptr %i.x, ptr %5, align 8, !tbaa !49, !alias.scope !83
+  %i.y = load i64, ptr %i.a, align 8, !tbaa !54, !noalias !83
+  store i64 %i.y, ptr %i.g, align 8, !tbaa !42, !alias.scope !83
   br label %._crit_edge.i.i.i.peel
 
 ._crit_edge.i.i.i.peel:                           ; preds = %.noexc18.peel, %bb.e
@@ -238,12 +238,12 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.p
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %._crit_edge.i.i.i.peel
-  %i.ab = load i64, ptr %i.a, align 8, !tbaa !54, !noalias !82 ; 2 uses
-  store i64 %i.ab, ptr %i.h, align 8, !tbaa !41, !alias.scope !82
-  %i.ac = load ptr, ptr %5, align 8, !tbaa !49, !alias.scope !82
+  %i.ab = load i64, ptr %i.a, align 8, !tbaa !54, !noalias !83 ; 2 uses
+  store i64 %i.ab, ptr %i.h, align 8, !tbaa !41, !alias.scope !83
+  %i.ac = load ptr, ptr %5, align 8, !tbaa !49, !alias.scope !83
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ab
   store i8 0, ptr %i.ad, align 1, !tbaa !42
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21, !noalias !82
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21, !noalias !83
   %i.ae = load i64, ptr %i.h, align 8, !tbaa !41  ; 2 uses
   %i.af = load i64, ptr %i.d, align 8, !tbaa !41
   %i.ag = sub i64 4611686018427387903, %i.af
@@ -361,12 +361,12 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %._cri
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bg
   store i8 0, ptr %i.bi, align 1, !tbaa !42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
-  call void @llvm.experimental.noalias.scope.decl(metadata !83)
-  store ptr %i.g, ptr %5, align 8, !tbaa !38, !alias.scope !83
-  %i.bj = load ptr, ptr %6, align 8, !tbaa !49, !noalias !83 ; 2 uses
-  %i.bk = load i64, ptr %i.f, align 8, !tbaa !41, !noalias !83 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21, !noalias !83
-  store i64 %i.bk, ptr %i.a, align 8, !tbaa !54, !noalias !83
+  call void @llvm.experimental.noalias.scope.decl(metadata !84)
+  store ptr %i.g, ptr %5, align 8, !tbaa !38, !alias.scope !84
+  %i.bj = load ptr, ptr %6, align 8, !tbaa !49, !noalias !84 ; 2 uses
+  %i.bk = load i64, ptr %i.f, align 8, !tbaa !41, !noalias !84 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21, !noalias !84
+  store i64 %i.bk, ptr %i.a, align 8, !tbaa !54, !noalias !84
   %i.bl = icmp ugt i64 %i.bk, 15
   br i1 %i.bl, label %.noexc.i.i, label %._crit_edge.i.i.i
 
@@ -375,9 +375,9 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %._cri
           to label %.noexc18 unwind label %.loopexit67 ; 2 uses
 
 .noexc18:                                         ; preds = %.noexc.i.i
-  store ptr %i.bm, ptr %5, align 8, !tbaa !49, !alias.scope !83
-  %i.bn = load i64, ptr %i.a, align 8, !tbaa !54, !noalias !83
-  store i64 %i.bn, ptr %i.g, align 8, !tbaa !42, !alias.scope !83
+  store ptr %i.bm, ptr %5, align 8, !tbaa !49, !alias.scope !84
+  %i.bn = load i64, ptr %i.a, align 8, !tbaa !54, !noalias !84
+  store i64 %i.bn, ptr %i.g, align 8, !tbaa !42, !alias.scope !84
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc18, %bb.l
@@ -397,12 +397,12 @@ bb.n:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %._crit_edge.i.i.i
-  %i.bq = load i64, ptr %i.a, align 8, !tbaa !54, !noalias !83 ; 2 uses
-  store i64 %i.bq, ptr %i.h, align 8, !tbaa !41, !alias.scope !83
-  %i.br = load ptr, ptr %5, align 8, !tbaa !49, !alias.scope !83
+  %i.bq = load i64, ptr %i.a, align 8, !tbaa !54, !noalias !84 ; 2 uses
+  store i64 %i.bq, ptr %i.h, align 8, !tbaa !41, !alias.scope !84
+  %i.br = load ptr, ptr %5, align 8, !tbaa !49, !alias.scope !84
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bq
   store i8 0, ptr %i.bs, align 1, !tbaa !42
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21, !noalias !83
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21, !noalias !84
   %i.bt = load i64, ptr %i.h, align 8, !tbaa !41  ; 2 uses
   %i.bu = load i64, ptr %i.d, align 8, !tbaa !41
   %i.bv = sub i64 4611686018427387903, %i.bu
@@ -448,7 +448,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.033.058, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ch, %2
-  br i1 %.not, label %._crit_edge, label %.peel.next, !llvm.loop !81
+  br i1 %.not, label %._crit_edge, label %.peel.next, !llvm.loop !82
 
 .loopexit.loopexit:                               ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i
   %lpad.loopexit62 = landingpad { ptr, i32 }
@@ -631,7 +631,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0.016, i64 8 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.017, i64 32 ; 2 uses
   %.not = icmp eq ptr %i.o, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !85
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !86
 
 .loopexit:                                        ; preds = %.noexc.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -901,15 +901,15 @@ bb.a:
           to label %_ZNSt10unique_ptrIN3gmx25ICommandLineOptionsModuleESt14default_deleteIS1_EED2Ev.exit unwind label %bb.c ; 6 uses
 
 _ZNSt10unique_ptrIN3gmx25ICommandLineOptionsModuleESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN3gmx12_GLOBAL__N_124CommandLineOptionsModuleE, i64 16), ptr %i.c, align 8, !tbaa !18, !noalias !88
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN3gmx12_GLOBAL__N_124CommandLineOptionsModuleE, i64 16), ptr %i.c, align 8, !tbaa !18, !noalias !89
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr %1, ptr %i.d, align 8, !tbaa !30, !noalias !88
+  store ptr %1, ptr %i.d, align 8, !tbaa !30, !noalias !89
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store ptr %2, ptr %i.e, align 8, !tbaa !31, !noalias !88
+  store ptr %2, ptr %i.e, align 8, !tbaa !31, !noalias !89
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.f, i8 0, i64 32, i1 false), !noalias !88
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.f, i8 0, i64 32, i1 false), !noalias !89
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  store i64 %i.a, ptr %i.g, align 8, !tbaa !16, !noalias !88
+  store i64 %i.a, ptr %i.g, align 8, !tbaa !16, !noalias !89
   %i.h = ptrtoint ptr %i.c to i64
   store i64 %i.h, ptr %4, align 8, !tbaa !33
   invoke void @_ZN3gmx24CommandLineModuleManager9addModuleESt10unique_ptrINS_18ICommandLineModuleESt14default_deleteIS2_EE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 %4)
@@ -1053,17 +1053,17 @@ attributes #23 = { noreturn }
 !53 = !{!20, !20, i64 0}
 !54 = !{!39, !39, i64 0}
 !55 = !{!23, !15, i64 0}
-!56 = distinct !{!56, i1 false, !"_ZNKSt8functionIFSt10unique_ptrIN3gmx25ICommandLineOptionsModuleESt14default_deleteIS2_EEvEEclEv"}
+!56 = distinct !{!56, i1 true, !"_ZNKSt8functionIFSt10unique_ptrIN3gmx25ICommandLineOptionsModuleESt14default_deleteIS2_EEvEEclEv"}
 !57 = distinct !{!57, !56, !"_ZNKSt8functionIFSt10unique_ptrIN3gmx25ICommandLineOptionsModuleESt14default_deleteIS2_EEvEEclEv: argument 0"}
 !58 = distinct !{null, null, null, null, null}
 !59 = !{!57}
 !60 = !{!11, !11, i64 0}
-!61 = distinct !{!61, i1 false, !"_ZNKSt8functionIFSt10unique_ptrIN3gmx25ICommandLineOptionsModuleESt14default_deleteIS2_EEvEEclEv"}
+!61 = distinct !{!61, i1 true, !"_ZNKSt8functionIFSt10unique_ptrIN3gmx25ICommandLineOptionsModuleESt14default_deleteIS2_EEvEEclEv"}
 !62 = distinct !{!62, !61, !"_ZNKSt8functionIFSt10unique_ptrIN3gmx25ICommandLineOptionsModuleESt14default_deleteIS2_EEvEEclEv: argument 0"}
 !63 = !{!62}
-!64 = distinct !{!64, i1 false, !"_ZN3gmx11joinStringsINS_8ArrayRefIKPKcEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_"}
+!64 = distinct !{!64, i1 true, !"_ZN3gmx11joinStringsINS_8ArrayRefIKPKcEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_"}
 !65 = distinct !{!65, !64, !"_ZN3gmx11joinStringsINS_8ArrayRefIKPKcEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_: argument 0"}
-!66 = distinct !{!66, i1 false, !"_ZN3gmx11joinStringsINS_12ArrayRefIterIKPKcEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SC_S3_"}
+!66 = distinct !{!66, i1 true, !"_ZN3gmx11joinStringsINS_12ArrayRefIterIKPKcEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SC_S3_"}
 !67 = distinct !{!67, !66, !"_ZN3gmx11joinStringsINS_12ArrayRefIterIKPKcEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SC_S3_: argument 0"}
 !68 = !{!65}
 !69 = !{!67, !65}
@@ -1075,15 +1075,16 @@ attributes #23 = { noreturn }
 !75 = !{!74, !43, i64 64}
 !76 = !{}
 !77 = !{i64 8}
-!78 = distinct !{!78, i1 false, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
+!78 = distinct !{!78, i1 true, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
 !79 = distinct !{!79, !78, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: argument 0:Peel0"}
-!80 = distinct !{!80, !78, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: argument 0"}
-!81 = distinct !{!81, !51, !84}
-!82 = !{!79}
-!83 = !{!80}
-!84 = !{!"llvm.loop.peeled.count", i32 1}
-!85 = distinct !{!85, !51}
-!86 = distinct !{!86, i1 false, !"_ZN3gmx25ICommandLineOptionsModule12createModuleEPKcS2_St10unique_ptrIS0_St14default_deleteIS0_EE"}
-!87 = distinct !{!87, !86, !"_ZN3gmx25ICommandLineOptionsModule12createModuleEPKcS2_St10unique_ptrIS0_St14default_deleteIS0_EE: argument 0"}
-!88 = !{!87}
+!80 = distinct !{!80, i1 true, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
+!81 = distinct !{!81, !80, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: argument 0"}
+!82 = distinct !{!82, !51, !85}
+!83 = !{!79}
+!84 = !{!81}
+!85 = !{!"llvm.loop.peeled.count", i32 1}
+!86 = distinct !{!86, !51}
+!87 = distinct !{!87, i1 true, !"_ZN3gmx25ICommandLineOptionsModule12createModuleEPKcS2_St10unique_ptrIS0_St14default_deleteIS0_EE"}
+!88 = distinct !{!88, !87, !"_ZN3gmx25ICommandLineOptionsModule12createModuleEPKcS2_St10unique_ptrIS0_St14default_deleteIS0_EE: argument 0"}
+!89 = !{!88}
 end_hunk_0

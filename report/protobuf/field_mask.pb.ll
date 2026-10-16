@@ -205,16 +205,16 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !51)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !53)
-  %i.k = load <8 x i8>, ptr %i.j, align 8, !tbaa !14, !alias.scope !54, !noalias !52
-  %i.l = load <8 x i8>, ptr %i.i, align 8, !tbaa !14, !alias.scope !52, !noalias !54
-  store <8 x i8> %i.k, ptr %i.i, align 8, !tbaa !14, !alias.scope !52, !noalias !54
-  store <8 x i8> %i.l, ptr %i.j, align 8, !tbaa !14, !alias.scope !54, !noalias !52
+  %i.k = load <8 x i8>, ptr %i.j, align 8, !tbaa !14, !alias.scope !54
+  %i.l = load <8 x i8>, ptr %i.i, align 8, !tbaa !14, !alias.scope !52, !noalias !55
+  store <8 x i8> %i.k, ptr %i.i, align 8, !tbaa !14, !alias.scope !52, !noalias !55
+  store <8 x i8> %i.l, ptr %i.j, align 8, !tbaa !14, !alias.scope !54
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.n = load <4 x i8>, ptr %i.m, align 8, !tbaa !14, !alias.scope !54, !noalias !52
-  %i.o = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 8, !tbaa !14, !alias.scope !52, !noalias !54
-  store <4 x i8> %i.n, ptr %.079.i.ptr.8.i.i.i, align 8, !tbaa !14, !alias.scope !52, !noalias !54
-  store <4 x i8> %i.o, ptr %i.m, align 8, !tbaa !14, !alias.scope !54, !noalias !52
+  %i.n = load <4 x i8>, ptr %i.m, align 8, !tbaa !14, !alias.scope !54
+  %i.o = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 8, !tbaa !14, !alias.scope !52, !noalias !55
+  store <4 x i8> %i.n, ptr %.079.i.ptr.8.i.i.i, align 8, !tbaa !14, !alias.scope !52, !noalias !55
+  store <4 x i8> %i.o, ptr %i.m, align 8, !tbaa !14, !alias.scope !54
   ret void
 }
 
@@ -257,7 +257,7 @@ bb.c:                                             ; preds = %bb.a
   %i.f = add nsw i64 %i.b, -1
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !57
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !58
   br label %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit
 
 _ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit: ; preds = %bb.b, %bb.c
@@ -322,12 +322,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %b
 _ZN6google8protobuf8internal20RepeatedPtrFieldBase6DeleteINS1_18GenericTypeHandlerINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvPvPNS0_5ArenaE.exit: ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !55
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !56
 
 _ZNK6google8protobuf8internal20RepeatedPtrFieldBase8CapacityEv.exit: ; preds = %._crit_edge
   %i.ab = add nsw i64 %.pre-phi17, -1
   %i.ac = inttoptr i64 %i.ab to ptr               ; 2 uses
-  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !58
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !59
   %i.ae = sext i32 %i.ad to i64
   %i.af = shl nsw i64 %i.ae, 3
   %i.ag = add nsw i64 %i.af, 8
@@ -400,7 +400,7 @@ bb.b:                                             ; preds = %bb.b, %.new
   store i8 0, ptr %i.ad, align 1, !tbaa !14
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.b, !llvm.loop !59
+  br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.b, !llvm.loop !60
 
 .unr-lcssa:                                       ; preds = %bb.b
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -424,7 +424,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   store i8 0, ptr %i.ah, align 1, !tbaa !14
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.c, !llvm.loop !60
+  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.c, !llvm.loop !61
 
 .epilog-lcssa:                                    ; preds = %bb.c, %.unr-lcssa
   store i32 0, ptr %i.a, align 8, !tbaa !6
@@ -523,11 +523,11 @@ attributes #19 = { builtin nounwind }
 !39 = !{!"_ZTSN6google8protobuf2io19EpsCopyOutputStreamE", !25, i64 0, !25, i64 8, !4, i64 16, !38, i64 48, !23, i64 56, !23, i64 57, !23, i64 58, !23, i64 59}
 !40 = !{!39, !25, i64 0}
 !41 = distinct !{!41, !30}
-!42 = distinct !{!42, i1 false, !"_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE12InternalSwapEPS8_"}
+!42 = distinct !{!42, i1 true, !"_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE12InternalSwapEPS8_"}
 !43 = distinct !{!43, !42, !"_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE12InternalSwapEPS8_: argument 0"}
-!44 = distinct !{!44, i1 false, !"_ZN6google8protobuf8internal20RepeatedPtrFieldBase12InternalSwapEPS2_"}
+!44 = distinct !{!44, i1 true, !"_ZN6google8protobuf8internal20RepeatedPtrFieldBase12InternalSwapEPS2_"}
 !45 = distinct !{!45, !44, !"_ZN6google8protobuf8internal20RepeatedPtrFieldBase12InternalSwapEPS2_: argument 0"}
-!46 = distinct !{!46, i1 false, !"_ZN6google8protobuf8internal7memswapILm12EEEvPcS3_"}
+!46 = distinct !{!46, i1 true, !"_ZN6google8protobuf8internal7memswapILm12EEEvPcS3_"}
 !47 = distinct !{!47, !46, !"_ZN6google8protobuf8internal7memswapILm12EEEvPcS3_: argument 0"}
 !48 = distinct !{!48, !46, !"_ZN6google8protobuf8internal7memswapILm12EEEvPcS3_: argument 1"}
 !49 = !{!7, !7, i64 0}
@@ -536,11 +536,12 @@ attributes #19 = { builtin nounwind }
 !52 = !{!47}
 !53 = !{!48}
 !54 = !{!48, !45, !43}
-!55 = distinct !{!55, !30}
-!56 = !{!"_ZTSN6google8protobuf8internal20RepeatedPtrFieldBase3RepE", !5, i64 0, !5, i64 4, !4, i64 8}
-!57 = !{!56, !5, i64 4}
-!58 = !{!56, !5, i64 0}
-!59 = distinct !{!59, !30}
-!60 = distinct !{!60, !61}
-!61 = !{!"llvm.loop.unroll.disable"}
+!55 = !{!45, !43}
+!56 = distinct !{!56, !30}
+!57 = !{!"_ZTSN6google8protobuf8internal20RepeatedPtrFieldBase3RepE", !5, i64 0, !5, i64 4, !4, i64 8}
+!58 = !{!57, !5, i64 4}
+!59 = !{!57, !5, i64 0}
+!60 = distinct !{!60, !30}
+!61 = distinct !{!61, !62}
+!62 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

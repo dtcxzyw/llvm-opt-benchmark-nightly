@@ -202,14 +202,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   tail call void @llvm.experimental.noalias.scope.decl(metadata !123)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !124)
   %i.ah = getelementptr i8, ptr %next.gep10, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !73, !alias.scope !125, !noalias !123
-  %wide.load11 = load <2 x i64>, ptr %i.ah, align 8, !tbaa !73, !alias.scope !125, !noalias !123
+  %wide.load = load <2 x i64>, ptr %next.gep10, align 8, !tbaa !73, !alias.scope !125
+  %wide.load11 = load <2 x i64>, ptr %i.ah, align 8, !tbaa !73, !alias.scope !125
   %i.ai = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !73, !alias.scope !126, !noalias !125
-  store <2 x i64> %wide.load11, ptr %i.ai, align 8, !tbaa !73, !alias.scope !126, !noalias !125
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !73, !alias.scope !126, !noalias !127
+  store <2 x i64> %wide.load11, ptr %i.ai, align 8, !tbaa !73, !alias.scope !126, !noalias !127
   %i.aj = getelementptr i8, ptr %next.gep10, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !73, !alias.scope !125, !noalias !123
-  store <2 x ptr> splat (ptr null), ptr %i.aj, align 8, !tbaa !73, !alias.scope !125, !noalias !123
+  store <2 x ptr> splat (ptr null), ptr %next.gep10, align 8, !tbaa !73, !alias.scope !125
+  store <2 x ptr> splat (ptr null), ptr %i.aj, align 8, !tbaa !73, !alias.scope !125
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
   br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !121
@@ -228,9 +228,9 @@ middle.block:                                     ; preds = %vector.body
   %.0911.i.i.i.i.i.i = phi ptr [ %i.am, %.lr.ph.i.i.i.i.i.i ], [ %.0911.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader13 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !123)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !124)
-  %i.al = load i64, ptr %.0911.i.i.i.i.i.i, align 8, !tbaa !73, !alias.scope !124, !noalias !123
-  store i64 %i.al, ptr %.012.i.i.i.i.i.i, align 8, !tbaa !73, !alias.scope !123, !noalias !124
-  store ptr null, ptr %.0911.i.i.i.i.i.i, align 8, !tbaa !73, !alias.scope !124, !noalias !123
+  %i.al = load i64, ptr %.0911.i.i.i.i.i.i, align 8, !tbaa !73, !alias.scope !124
+  store i64 %i.al, ptr %.012.i.i.i.i.i.i, align 8, !tbaa !73, !alias.scope !123
+  store ptr null, ptr %.0911.i.i.i.i.i.i, align 8, !tbaa !73, !alias.scope !124
   %i.am = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.am, %i.d
@@ -354,7 +354,7 @@ bb.c:                                             ; preds = %bb.b
 _ZSt8_DestroyISt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEEEvPT_.exit.i.i: ; preds = %bb.b, %.lr.ph.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %.05.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.g, %i.c
-  br i1 %.not.i.i, label %_ZSt8_DestroyIPSt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split, label %.lr.ph.i.i, !llvm.loop !129
+  br i1 %.not.i.i, label %_ZSt8_DestroyIPSt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split, label %.lr.ph.i.i, !llvm.loop !130
 
 _ZSt8_DestroyIPSt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split: ; preds = %_ZSt8_DestroyISt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEEEvPT_.exit.i.i
   %.pr = load ptr, ptr %0, align 8, !tbaa !77
@@ -626,7 +626,7 @@ attributes #28 = { cold }
 !76 = !{!75, !74, i64 8}
 !77 = !{!75, !74, i64 0}
 !78 = !{!75, !74, i64 16}
-!79 = distinct !{!79, i1 false, !"_ZSt20dynamic_pointer_castIN5folly3ssl6detail14OpenSSLSessionENS1_10SSLSessionEESt10shared_ptrIT_ERKS5_IT0_E"}
+!79 = distinct !{!79, i1 true, !"_ZSt20dynamic_pointer_castIN5folly3ssl6detail14OpenSSLSessionENS1_10SSLSessionEESt10shared_ptrIT_ERKS5_IT0_E"}
 !80 = distinct !{!80, !79, !"_ZSt20dynamic_pointer_castIN5folly3ssl6detail14OpenSSLSessionENS1_10SSLSessionEESt10shared_ptrIT_ERKS5_IT0_E: argument 0"}
 !81 = distinct !{ptr @_ZNSt12__shared_ptrIN5folly3ssl6detail14OpenSSLSessionELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
 !82 = !{!80}
@@ -662,19 +662,20 @@ attributes #28 = { cold }
 !112 = !{!111, !111, i64 0}
 !113 = !{!"p1 _ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !14, i64 0}
 !114 = !{!113, !113, i64 0}
-!115 = distinct !{!115, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEES5_SaIS5_EEvPT_PT0_RT1_"}
+!115 = distinct !{!115, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEES5_SaIS5_EEvPT_PT0_RT1_"}
 !116 = distinct !{!116, !115, !"_ZSt19__relocate_object_aISt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !117 = distinct !{!117, !115, !"_ZSt19__relocate_object_aISt10unique_ptrI12X509_name_stN5folly23static_function_deleterIS1_XadL_Z14X509_NAME_freeEEEEES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
 !118 = distinct !{!118, i1 false, !"LVerDomain"}
 !119 = distinct !{!119, !118}
 !120 = distinct !{!120, !118}
-!121 = distinct !{!121, !40, !127, !128}
-!122 = distinct !{!122, !40, !127}
+!121 = distinct !{!121, !40, !128, !129}
+!122 = distinct !{!122, !40, !128}
 !123 = !{!116}
 !124 = !{!117}
 !125 = !{!117, !119}
 !126 = !{!116, !120}
-!127 = !{!"llvm.loop.isvectorized", i32 1}
-!128 = !{!"llvm.loop.unroll.runtime.disable"}
-!129 = distinct !{!129, !40}
+!127 = !{!119}
+!128 = !{!"llvm.loop.isvectorized", i32 1}
+!129 = !{!"llvm.loop.unroll.runtime.disable"}
+!130 = distinct !{!130, !40}
 end_hunk_0

@@ -125,7 +125,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !30  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 132
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !69
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !70
   %i.e = tail call i32 @dt_iop_have_required_input_format(i32 noundef 4, ptr noundef %0, i32 noundef %i.d, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) #18
   %.not = icmp eq i32 %i.e, 0
   br i1 %.not, label %.loopexit, label %bb.b
@@ -134,16 +134,16 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 64) ]
   call void @llvm.assume(i1 true) [ "align"(ptr %3, i64 64) ]
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !70
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !71
   %i.h = sext i32 %i.g to i64
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !71
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !72
   %i.k = sext i32 %i.j to i64
   %i.l = mul nsw i64 %i.k, %i.h                   ; 6 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.o = load <4 x float>, ptr %i.b, align 4, !tbaa !12 ; 11 uses
-  %i.p = load float, ptr %i.n, align 4, !tbaa !72 ; 5 uses
+  %i.p = load float, ptr %i.n, align 4, !tbaa !73 ; 5 uses
   %i.q = load <2 x float>, ptr %i.m, align 4, !tbaa !12 ; 10 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.s = load i32, ptr %i.r, align 4, !tbaa !32
@@ -212,7 +212,7 @@ clamped_scaling.exit.preheader.new:               ; preds = %clamped_scaling.exi
   %i.ax = load float, ptr %i.aw, align 4, !tbaa !12
   %.sroa.0.12.vec.insert = insertelement <4 x float> %.sroa.0.8.vec.insert59, float %i.ax, i64 3
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.03645
-  store <4 x float> %.sroa.0.12.vec.insert, ptr %i.ay, align 64, !tbaa !33, !alias.scope !73, !nontemporal !74
+  store <4 x float> %.sroa.0.12.vec.insert, ptr %i.ay, align 64, !tbaa !33, !alias.scope !74, !nontemporal !75
   %i.az = or disjoint i64 %.03645, 4              ; 2 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.az ; 3 uses
   %i.bb = load float, ptr %i.ba, align 16, !tbaa !12
@@ -227,7 +227,7 @@ clamped_scaling.exit.preheader.new:               ; preds = %clamped_scaling.exi
   %i.bi = load float, ptr %i.bh, align 4, !tbaa !12
   %.sroa.0.12.vec.insert.1 = insertelement <4 x float> %.sroa.0.8.vec.insert59.1, float %i.bi, i64 3
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.az
-  store <4 x float> %.sroa.0.12.vec.insert.1, ptr %i.bj, align 16, !tbaa !33, !alias.scope !73, !nontemporal !74
+  store <4 x float> %.sroa.0.12.vec.insert.1, ptr %i.bj, align 16, !tbaa !33, !alias.scope !74, !nontemporal !75
   %i.bk = or disjoint i64 %.03645, 8              ; 2 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bk ; 3 uses
   %i.bm = load float, ptr %i.bl, align 32, !tbaa !12
@@ -242,7 +242,7 @@ clamped_scaling.exit.preheader.new:               ; preds = %clamped_scaling.exi
   %i.bt = load float, ptr %i.bs, align 4, !tbaa !12
   %.sroa.0.12.vec.insert.2 = insertelement <4 x float> %.sroa.0.8.vec.insert59.2, float %i.bt, i64 3
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bk
-  store <4 x float> %.sroa.0.12.vec.insert.2, ptr %i.bu, align 32, !tbaa !33, !alias.scope !73, !nontemporal !74
+  store <4 x float> %.sroa.0.12.vec.insert.2, ptr %i.bu, align 32, !tbaa !33, !alias.scope !74, !nontemporal !75
   %i.bv = or disjoint i64 %.03645, 12             ; 2 uses
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bv ; 3 uses
   %i.bx = load float, ptr %i.bw, align 16, !tbaa !12
@@ -257,7 +257,7 @@ clamped_scaling.exit.preheader.new:               ; preds = %clamped_scaling.exi
   %i.ce = load float, ptr %i.cd, align 4, !tbaa !12
   %.sroa.0.12.vec.insert.3 = insertelement <4 x float> %.sroa.0.8.vec.insert59.3, float %i.ce, i64 3
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bv
-  store <4 x float> %.sroa.0.12.vec.insert.3, ptr %i.cf, align 16, !tbaa !33, !alias.scope !73, !nontemporal !74
+  store <4 x float> %.sroa.0.12.vec.insert.3, ptr %i.cf, align 16, !tbaa !33, !alias.scope !74, !nontemporal !75
   %i.cg = add nuw i64 %.03645, 16                 ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
@@ -269,14 +269,14 @@ clamped_scaling.exit:                             ; preds = %clamped_scaling.exi
   %i.ch = shl i64 %.046, 2                        ; 2 uses
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ch
   %i.cj = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ch ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !75)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !76)
-  %i.ck = load float, ptr %i.cj, align 32, !tbaa !12, !alias.scope !76, !noalias !75
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !77)
+  %i.ck = load float, ptr %i.cj, align 32, !tbaa !12, !alias.scope !77
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 4
-  %i.cm = load <2 x float>, ptr %i.cl, align 4, !tbaa !12, !alias.scope !76, !noalias !75
+  %i.cm = load <2 x float>, ptr %i.cl, align 4, !tbaa !12, !alias.scope !77
   %i.cn = fmul reassoc nsz arcp contract afn <2 x float> %i.cm, %i.al
   %i.co = getelementptr inbounds nuw i8, ptr %i.cj, i64 12
-  %i.cp = load float, ptr %i.co, align 4, !tbaa !12, !alias.scope !76, !noalias !75
+  %i.cp = load float, ptr %i.co, align 4, !tbaa !12, !alias.scope !77
   %i.cq = insertelement <4 x float> poison, float %i.ck, i64 0
   %i.cr = shufflevector <2 x float> %i.cn, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.cs = fadd reassoc nsz arcp contract afn <4 x float> %i.cr, %i.am
@@ -286,19 +286,19 @@ clamped_scaling.exit:                             ; preds = %clamped_scaling.exi
   %i.cw = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.cu, <float f0x7F7FFFFF, float 1.280000e+02, float 1.280000e+02, float f0x7F7FFFFF>
   %i.cx = select <4 x i1> %i.cw, <4 x float> %i.cu, <4 x float> <float f0x7F7FFFFF, float 1.280000e+02, float 1.280000e+02, float f0x7F7FFFFF>
   %i.cy = select <4 x i1> %i.cv, <4 x float> %i.cx, <4 x float> <float f0xFF7FFFFF, float -1.280000e+02, float -1.280000e+02, float f0xFF7FFFFF>
-  store <4 x float> %i.cy, ptr %i.ci, align 32, !tbaa !33, !alias.scope !77, !noalias !76, !nontemporal !74
+  store <4 x float> %i.cy, ptr %i.ci, align 32, !tbaa !33, !alias.scope !78, !nontemporal !75
   %i.cz = shl i64 %.046, 2
   %i.da = or disjoint i64 %i.cz, 4                ; 2 uses
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.da
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.da ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !78)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !79)
-  %i.dd = load float, ptr %i.dc, align 16, !tbaa !12, !alias.scope !79, !noalias !78
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !80)
+  %i.dd = load float, ptr %i.dc, align 16, !tbaa !12, !alias.scope !80
   %i.de = getelementptr inbounds nuw i8, ptr %i.dc, i64 4
-  %i.df = load <2 x float>, ptr %i.de, align 4, !tbaa !12, !alias.scope !79, !noalias !78
+  %i.df = load <2 x float>, ptr %i.de, align 4, !tbaa !12, !alias.scope !80
   %i.dg = fmul reassoc nsz arcp contract afn <2 x float> %i.df, %i.an
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dc, i64 12
-  %i.di = load float, ptr %i.dh, align 4, !tbaa !12, !alias.scope !79, !noalias !78
+  %i.di = load float, ptr %i.dh, align 4, !tbaa !12, !alias.scope !80
   %i.dj = insertelement <4 x float> poison, float %i.dd, i64 0
   %i.dk = shufflevector <2 x float> %i.dg, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.dl = fadd reassoc nsz arcp contract afn <4 x float> %i.dk, %i.ao
@@ -308,7 +308,7 @@ clamped_scaling.exit:                             ; preds = %clamped_scaling.exi
   %i.dp = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.dn, <float f0x7F7FFFFF, float 1.280000e+02, float 1.280000e+02, float f0x7F7FFFFF>
   %i.dq = select <4 x i1> %i.dp, <4 x float> %i.dn, <4 x float> <float f0x7F7FFFFF, float 1.280000e+02, float 1.280000e+02, float f0x7F7FFFFF>
   %i.dr = select <4 x i1> %i.do, <4 x float> %i.dq, <4 x float> <float f0xFF7FFFFF, float -1.280000e+02, float -1.280000e+02, float f0xFF7FFFFF>
-  store <4 x float> %i.dr, ptr %i.db, align 16, !tbaa !33, !alias.scope !80, !noalias !79, !nontemporal !74
+  store <4 x float> %i.dr, ptr %i.db, align 16, !tbaa !33, !alias.scope !81, !nontemporal !75
   %i.ds = add nuw i64 %.046, 2                    ; 2 uses
   %niter67.next.1 = add i64 %niter67, 2           ; 2 uses
   %niter67.ncmp.1 = icmp eq i64 %niter67.next.1, %unroll_iter66
@@ -325,15 +325,15 @@ clamped_scaling.exit.epil.preheader:              ; preds = %.loopexit.loopexit.
   %i.dt = shl i64 %.046.epil.init, 2              ; 2 uses
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.dt
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dt ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !75)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !76)
-  %i.dw = load float, ptr %i.dv, align 16, !tbaa !12, !alias.scope !76, !noalias !75
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !77)
+  %i.dw = load float, ptr %i.dv, align 16, !tbaa !12, !alias.scope !77
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dv, i64 4
-  %i.dy = load <2 x float>, ptr %i.dx, align 4, !tbaa !12, !alias.scope !76, !noalias !75
+  %i.dy = load <2 x float>, ptr %i.dx, align 4, !tbaa !12, !alias.scope !77
   %i.dz = shufflevector <4 x float> %i.o, <4 x float> poison, <2 x i32> <i32 0, i32 2>
   %i.ea = fmul reassoc nsz arcp contract afn <2 x float> %i.dy, %i.dz
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dv, i64 12
-  %i.ec = load float, ptr %i.eb, align 4, !tbaa !12, !alias.scope !76, !noalias !75
+  %i.ec = load float, ptr %i.eb, align 4, !tbaa !12, !alias.scope !77
   %i.ed = insertelement <4 x float> poison, float %i.dw, i64 0
   %i.ee = shufflevector <2 x float> %i.ea, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ef = shufflevector <4 x float> %i.o, <4 x float> poison, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
@@ -344,7 +344,7 @@ clamped_scaling.exit.epil.preheader:              ; preds = %.loopexit.loopexit.
   %i.ek = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.ei, <float f0x7F7FFFFF, float 1.280000e+02, float 1.280000e+02, float f0x7F7FFFFF>
   %i.el = select <4 x i1> %i.ek, <4 x float> %i.ei, <4 x float> <float f0x7F7FFFFF, float 1.280000e+02, float 1.280000e+02, float f0x7F7FFFFF>
   %i.em = select <4 x i1> %i.ej, <4 x float> %i.el, <4 x float> <float f0xFF7FFFFF, float -1.280000e+02, float -1.280000e+02, float f0xFF7FFFFF>
-  store <4 x float> %i.em, ptr %i.du, align 16, !tbaa !33, !alias.scope !77, !noalias !76, !nontemporal !74
+  store <4 x float> %i.em, ptr %i.du, align 16, !tbaa !33, !alias.scope !78, !nontemporal !75
   br label %.loopexit
 
 .loopexit.loopexit60.unr-lcssa:                   ; preds = %.lr.ph
@@ -376,11 +376,11 @@ clamped_scaling.exit.epil.preheader:              ; preds = %.loopexit.loopexit.
   %i.ey = load float, ptr %i.ex, align 4, !tbaa !12
   %.sroa.0.12.vec.insert.epil = insertelement <4 x float> %.sroa.0.8.vec.insert59.epil, float %i.ey, i64 3
   %i.ez = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.03645.epil
-  store <4 x float> %.sroa.0.12.vec.insert.epil, ptr %i.ez, align 16, !tbaa !33, !alias.scope !73, !nontemporal !74
+  store <4 x float> %.sroa.0.12.vec.insert.epil, ptr %i.ez, align 16, !tbaa !33, !alias.scope !74, !nontemporal !75
   %i.fa = add nuw i64 %.03645.epil, 4
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph.epil, !llvm.loop !68
+  br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph.epil, !llvm.loop !69
 
 .loopexit:                                        ; preds = %.loopexit.loopexit60.unr-lcssa, %.lr.ph.epil, %clamped_scaling.exit.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader, %.preheader42, %bb.a
   ret void
@@ -397,7 +397,7 @@ bb.a:
   %i.a = tail call noalias dereferenceable_or_null(4) ptr @malloc(i64 noundef 4) #19 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 520
   store ptr %i.a, ptr %i.b, align 8, !tbaa !39
-  store i32 -999, ptr %i.a, align 4, !tbaa !83
+  store i32 -999, ptr %i.a, align 4, !tbaa !84
   ret void
 }
 
@@ -424,7 +424,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load i32, ptr %i.d, align 4, !tbaa !32
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i32 %i.e, ptr %i.f, align 4, !tbaa !85
+  store i32 %i.e, ptr %i.f, align 4, !tbaa !86
   ret void
 }
 
@@ -453,15 +453,15 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !50  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 680
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !86   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !87   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !53
-  %i.g = load float, ptr %i.d, align 4, !tbaa !87
+  %i.g = load float, ptr %i.d, align 4, !tbaa !88
   tail call void @dt_bauhaus_slider_set(ptr noundef %i.f, float noundef %i.g) #18
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !54
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.k = load float, ptr %i.j, align 4, !tbaa !88
+  %i.k = load float, ptr %i.j, align 4, !tbaa !89
   tail call void @dt_bauhaus_slider_set(ptr noundef %i.i, float noundef %i.k) #18
   ret void
 }
@@ -514,7 +514,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define range(i32 0, 2) i32 @introspection_init(ptr noundef %0, i32 noundef %1) local_unnamed_addr #13 {
 bb.a:
-  %i.a = load i32, ptr @introspection, align 8, !tbaa !91
+  %i.a = load i32, ptr @introspection, align 8, !tbaa !92
   %i.b = icmp ne i32 %i.a, 8
   %i.c = icmp ne i32 %1, 8
   %or.cond = or i1 %i.c, %i.b
@@ -713,37 +713,38 @@ attributes #20 = { nounwind willreturn memory(read) }
 !56 = !{!55, !8, i64 16}
 !57 = !{!13, !13, i64 0}
 !58 = !{!8, !8, i64 0}
-!59 = distinct !{!59, i1 false, !"copy_pixel_nontemporal"}
+!59 = distinct !{!59, i1 true, !"copy_pixel_nontemporal"}
 !60 = distinct !{!60, !59, !"copy_pixel_nontemporal: argument 0"}
-!61 = distinct !{!61, i1 false, !"clamped_scaling"}
+!61 = distinct !{!61, i1 true, !"clamped_scaling"}
 !62 = distinct !{!62, !61, !"clamped_scaling: argument 0"}
 !63 = distinct !{!63, !61, !"clamped_scaling: argument 1"}
-!64 = distinct !{!64, i1 false, !"copy_pixel_nontemporal"}
+!64 = distinct !{!64, i1 true, !"copy_pixel_nontemporal"}
 !65 = distinct !{!65, !64, !"copy_pixel_nontemporal: argument 0"}
-!66 = distinct !{!66, !61, !"clamped_scaling: argument 0:It1"}
-!67 = distinct !{!67, !61, !"clamped_scaling: argument 1:It1"}
-!68 = distinct !{!68, !81}
-!69 = !{!29, !8, i64 132}
-!70 = !{!21, !8, i64 8}
-!71 = !{!21, !8, i64 12}
-!72 = !{!31, !11, i64 12}
-!73 = !{!60}
-!74 = !{i32 1}
-!75 = !{!62}
-!76 = !{!63}
-!77 = !{!65, !62}
-!78 = !{!66}
+!66 = distinct !{!66, i1 true, !"clamped_scaling"}
+!67 = distinct !{!67, !66, !"clamped_scaling: argument 0:It1"}
+!68 = distinct !{!68, !66, !"clamped_scaling: argument 1:It1"}
+!69 = distinct !{!69, !82}
+!70 = !{!29, !8, i64 132}
+!71 = !{!21, !8, i64 8}
+!72 = !{!21, !8, i64 12}
+!73 = !{!31, !11, i64 12}
+!74 = !{!60}
+!75 = !{i32 1}
+!76 = !{!62}
+!77 = !{!63}
+!78 = !{!65, !62}
 !79 = !{!67}
-!80 = !{!65, !66}
-!81 = !{!"llvm.loop.unroll.disable"}
-!82 = !{!"dt_iop_colorcontrast_global_data_t", !8, i64 0}
-!83 = !{!82, !8, i64 0}
-!84 = !{!"dt_iop_colorcontrast_data_t", !11, i64 0, !11, i64 4, !11, i64 8, !11, i64 12, !8, i64 16}
-!85 = !{!84, !8, i64 16}
-!86 = !{!49, !13, i64 680}
-!87 = !{!31, !11, i64 0}
-!88 = !{!31, !11, i64 8}
-!89 = !{!"p1 _ZTS24dt_introspection_field_t", !13, i64 0}
-!90 = !{!"dt_introspection_t", !8, i64 0, !8, i64 4, !34, i64 8, !19, i64 16, !89, i64 24, !19, i64 32, !19, i64 40}
-!91 = !{!90, !8, i64 0}
+!80 = !{!68}
+!81 = !{!65, !67}
+!82 = !{!"llvm.loop.unroll.disable"}
+!83 = !{!"dt_iop_colorcontrast_global_data_t", !8, i64 0}
+!84 = !{!83, !8, i64 0}
+!85 = !{!"dt_iop_colorcontrast_data_t", !11, i64 0, !11, i64 4, !11, i64 8, !11, i64 12, !8, i64 16}
+!86 = !{!85, !8, i64 16}
+!87 = !{!49, !13, i64 680}
+!88 = !{!31, !11, i64 0}
+!89 = !{!31, !11, i64 8}
+!90 = !{!"p1 _ZTS24dt_introspection_field_t", !13, i64 0}
+!91 = !{!"dt_introspection_t", !8, i64 0, !8, i64 4, !34, i64 8, !19, i64 16, !90, i64 24, !19, i64 32, !19, i64 40}
+!92 = !{!91, !8, i64 0}
 end_hunk_0

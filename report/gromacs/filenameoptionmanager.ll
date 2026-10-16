@@ -204,12 +204,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.r
   store i8 0, ptr %i.t, align 1, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
-  call void @llvm.experimental.noalias.scope.decl(metadata !138)
-  store ptr %i.g, ptr %5, align 8, !tbaa !19, !alias.scope !138
-  %i.u = load ptr, ptr %6, align 8, !tbaa !25, !noalias !138 ; 2 uses
-  %i.v = load i64, ptr %i.f, align 8, !tbaa !20, !noalias !138 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !138
-  store i64 %i.v, ptr %i.a, align 8, !tbaa !34, !noalias !138
+  call void @llvm.experimental.noalias.scope.decl(metadata !139)
+  store ptr %i.g, ptr %5, align 8, !tbaa !19, !alias.scope !139
+  %i.u = load ptr, ptr %6, align 8, !tbaa !25, !noalias !139 ; 2 uses
+  %i.v = load i64, ptr %i.f, align 8, !tbaa !20, !noalias !139 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !139
+  store i64 %i.v, ptr %i.a, align 8, !tbaa !34, !noalias !139
   %i.w = icmp ugt i64 %i.v, 15
   br i1 %i.w, label %.noexc.i.i.peel, label %._crit_edge.i.i.i.peel
 
@@ -218,9 +218,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
           to label %.noexc15.peel unwind label %.loopexit.split-lp67 ; 2 uses
 
 .noexc15.peel:                                    ; preds = %.noexc.i.i.peel
-  store ptr %i.x, ptr %5, align 8, !tbaa !25, !alias.scope !138
-  %i.y = load i64, ptr %i.a, align 8, !tbaa !34, !noalias !138
-  store i64 %i.y, ptr %i.g, align 8, !tbaa !21, !alias.scope !138
+  store ptr %i.x, ptr %5, align 8, !tbaa !25, !alias.scope !139
+  %i.y = load i64, ptr %i.a, align 8, !tbaa !34, !noalias !139
+  store i64 %i.y, ptr %i.g, align 8, !tbaa !21, !alias.scope !139
   br label %._crit_edge.i.i.i.peel
 
 ._crit_edge.i.i.i.peel:                           ; preds = %.noexc15.peel, %bb.e
@@ -240,12 +240,12 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.p
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %._crit_edge.i.i.i.peel
-  %i.ab = load i64, ptr %i.a, align 8, !tbaa !34, !noalias !138 ; 2 uses
-  store i64 %i.ab, ptr %i.h, align 8, !tbaa !20, !alias.scope !138
-  %i.ac = load ptr, ptr %5, align 8, !tbaa !25, !alias.scope !138
+  %i.ab = load i64, ptr %i.a, align 8, !tbaa !34, !noalias !139 ; 2 uses
+  store i64 %i.ab, ptr %i.h, align 8, !tbaa !20, !alias.scope !139
+  %i.ac = load ptr, ptr %5, align 8, !tbaa !25, !alias.scope !139
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ab
   store i8 0, ptr %i.ad, align 1, !tbaa !21
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !138
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !139
   %i.ae = load i64, ptr %i.h, align 8, !tbaa !20  ; 2 uses
   %i.af = load i64, ptr %i.d, align 8, !tbaa !20
   %i.ag = sub i64 4611686018427387903, %i.af
@@ -363,12 +363,12 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %._cri
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bg
   store i8 0, ptr %i.bi, align 1, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
-  call void @llvm.experimental.noalias.scope.decl(metadata !139)
-  store ptr %i.g, ptr %5, align 8, !tbaa !19, !alias.scope !139
-  %i.bj = load ptr, ptr %6, align 8, !tbaa !25, !noalias !139 ; 2 uses
-  %i.bk = load i64, ptr %i.f, align 8, !tbaa !20, !noalias !139 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !139
-  store i64 %i.bk, ptr %i.a, align 8, !tbaa !34, !noalias !139
+  call void @llvm.experimental.noalias.scope.decl(metadata !140)
+  store ptr %i.g, ptr %5, align 8, !tbaa !19, !alias.scope !140
+  %i.bj = load ptr, ptr %6, align 8, !tbaa !25, !noalias !140 ; 2 uses
+  %i.bk = load i64, ptr %i.f, align 8, !tbaa !20, !noalias !140 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !140
+  store i64 %i.bk, ptr %i.a, align 8, !tbaa !34, !noalias !140
   %i.bl = icmp ugt i64 %i.bk, 15
   br i1 %i.bl, label %.noexc.i.i, label %._crit_edge.i.i.i
 
@@ -377,9 +377,9 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %._cri
           to label %.noexc15 unwind label %.loopexit66 ; 2 uses
 
 .noexc15:                                         ; preds = %.noexc.i.i
-  store ptr %i.bm, ptr %5, align 8, !tbaa !25, !alias.scope !139
-  %i.bn = load i64, ptr %i.a, align 8, !tbaa !34, !noalias !139
-  store i64 %i.bn, ptr %i.g, align 8, !tbaa !21, !alias.scope !139
+  store ptr %i.bm, ptr %5, align 8, !tbaa !25, !alias.scope !140
+  %i.bn = load i64, ptr %i.a, align 8, !tbaa !34, !noalias !140
+  store i64 %i.bn, ptr %i.g, align 8, !tbaa !21, !alias.scope !140
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc15, %bb.l
@@ -399,12 +399,12 @@ bb.n:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %._crit_edge.i.i.i
-  %i.bq = load i64, ptr %i.a, align 8, !tbaa !34, !noalias !139 ; 2 uses
-  store i64 %i.bq, ptr %i.h, align 8, !tbaa !20, !alias.scope !139
-  %i.br = load ptr, ptr %5, align 8, !tbaa !25, !alias.scope !139
+  %i.bq = load i64, ptr %i.a, align 8, !tbaa !34, !noalias !140 ; 2 uses
+  store i64 %i.bq, ptr %i.h, align 8, !tbaa !20, !alias.scope !140
+  %i.br = load ptr, ptr %5, align 8, !tbaa !25, !alias.scope !140
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bq
   store i8 0, ptr %i.bs, align 1, !tbaa !21
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !139
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !140
   %i.bt = load i64, ptr %i.h, align 8, !tbaa !20  ; 2 uses
   %i.bu = load i64, ptr %i.d, align 8, !tbaa !20
   %i.bv = sub i64 4611686018427387903, %i.bu
@@ -450,7 +450,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit20: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.030.057, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ch, %2
-  br i1 %.not, label %._crit_edge, label %.peel.next, !llvm.loop !137
+  br i1 %.not, label %._crit_edge, label %.peel.next, !llvm.loop !138
 
 .loopexit.loopexit:                               ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i
   %lpad.loopexit61 = landingpad { ptr, i32 }
@@ -654,15 +654,15 @@ attributes #22 = { nounwind willreturn memory(read) }
 !58 = !{!55, !5, i64 100}
 !59 = !{!54, !51, i64 64}
 !60 = !{!47, !12, i64 24}
-!61 = distinct !{!61, i1 false, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm"}
+!61 = distinct !{!61, i1 true, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm"}
 !62 = distinct !{!62, !61, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm: argument 0"}
-!63 = distinct !{!63, i1 false, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_"}
+!63 = distinct !{!63, i1 true, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_"}
 !64 = distinct !{!64, !63, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_: argument 0"}
-!65 = distinct !{!65, i1 false, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_"}
+!65 = distinct !{!65, i1 true, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_"}
 !66 = distinct !{!66, !65, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_: argument 0"}
-!67 = distinct !{!67, i1 false, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
+!67 = distinct !{!67, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
 !68 = distinct !{!68, !67, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
-!69 = distinct !{!69, i1 false, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
+!69 = distinct !{!69, i1 true, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
 !70 = distinct !{!70, !69, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
 !71 = !{!62}
 !72 = !{!64}
@@ -692,31 +692,31 @@ attributes #22 = { nounwind willreturn memory(read) }
 !96 = !{!"_ZTSNSt15__exception_ptr13exception_ptrE", !10, i64 0}
 !97 = !{!96, !10, i64 0}
 !98 = !{!93, !92, i64 16}
-!99 = distinct !{!99, i1 false, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
+!99 = distinct !{!99, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
 !100 = distinct !{!100, !99, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
-!101 = distinct !{!101, i1 false, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
+!101 = distinct !{!101, i1 true, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
 !102 = distinct !{!102, !101, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
 !103 = distinct !{!103, !43}
 !104 = !{!100}
 !105 = !{!102, !100}
-!106 = distinct !{!106, i1 false, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
+!106 = distinct !{!106, i1 true, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
 !107 = distinct !{!107, !106, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
 !108 = !{!107}
-!109 = distinct !{!109, i1 false, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
+!109 = distinct !{!109, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
 !110 = distinct !{!110, !109, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
-!111 = distinct !{!111, i1 false, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
+!111 = distinct !{!111, i1 true, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
 !112 = distinct !{!112, !111, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
-!113 = distinct !{!113, i1 false, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_"}
+!113 = distinct !{!113, i1 true, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_"}
 !114 = distinct !{!114, !113, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_: argument 0"}
-!115 = distinct !{!115, i1 false, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_"}
+!115 = distinct !{!115, i1 true, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_"}
 !116 = distinct !{!116, !115, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_: argument 0"}
-!117 = distinct !{!117, i1 false, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_"}
+!117 = distinct !{!117, i1 true, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_"}
 !118 = distinct !{!118, !117, !"_ZN3gmx11joinStringsISt6vectorIPKcSaIS3_EEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_S3_: argument 0"}
-!119 = distinct !{!119, i1 false, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_"}
+!119 = distinct !{!119, i1 true, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_"}
 !120 = distinct !{!120, !119, !"_ZN3gmx11joinStringsIN9__gnu_cxx17__normal_iteratorIPKPKcSt6vectorIS4_SaIS4_EEEEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_SH_S4_: argument 0"}
-!121 = distinct !{!121, i1 false, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
+!121 = distinct !{!121, i1 true, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
 !122 = distinct !{!122, !121, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
-!123 = distinct !{!123, i1 false, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
+!123 = distinct !{!123, i1 true, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
 !124 = distinct !{!124, !123, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
 !125 = !{!110}
 !126 = !{!112, !110}
@@ -727,11 +727,12 @@ attributes #22 = { nounwind willreturn memory(read) }
 !131 = !{!122}
 !132 = !{!124, !122}
 !133 = distinct !{null}
-!134 = distinct !{!134, i1 false, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
+!134 = distinct !{!134, i1 true, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
 !135 = distinct !{!135, !134, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: argument 0:Peel0"}
-!136 = distinct !{!136, !134, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: argument 0"}
-!137 = distinct !{!137, !43, !140}
-!138 = !{!135}
-!139 = !{!136}
-!140 = !{!"llvm.loop.peeled.count", i32 1}
+!136 = distinct !{!136, i1 true, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
+!137 = distinct !{!137, !136, !"_ZNK3gmx17IdentityFormatterclERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: argument 0"}
+!138 = distinct !{!138, !43, !141}
+!139 = !{!135}
+!140 = !{!137}
+!141 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_0
