@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raylib/original/raudio?download=true
 inline.NumInlined: 3136
-inline.NumDeleted: 391
+inline.NumDeleted: 390
 loop-unroll.NumCompletelyUnrolled: 96
 loop-unroll.NumRuntimeUnrolled: 195
 loop-unroll.NumUnrolled: 299
@@ -105,6 +105,7 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.ma_delay_config = type { i32, i32, i32, i32, float, float, float }
 %struct.ma_spatializer_listener_config = type { i32, ptr, i32, float, float, float, float, %struct.ma_vec3f }
 %struct.ma_spatializer_config = type { i32, i32, ptr, i32, i32, i32, float, float, float, float, float, float, float, float, float, float, float, i32 }
+%struct.ma_linear_resampler_heap_layout = type { i64, i64, i64, i64 }
 %struct.ma_channel_converter_config = type { i32, i32, i32, ptr, ptr, i32, i32, ptr }
 %struct.ma_channel_converter_heap_layout = type { i64, i64, i64, i64, i64 }
 %struct.ma_audio_buffer_config = type { i32, i32, i32, i64, ptr, %struct.ma_allocation_callbacks }
@@ -507,7 +508,8 @@ ma_linear_resampler_get_heap_layout.exit.thread:  ; preds = %bb.c, %bb.b, %bb.d,
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define hidden range(i32 -3, 1) i32 @ma_linear_resampler_init_preallocated(ptr nofree noundef readonly captures(address_is_null) %0, ptr noundef %1, ptr nofree noundef captures(address_is_null) %2) local_unnamed_addr #32 {
 bb.a:
-  %3 = alloca %struct.ma_lpf_config, align 8      ; 10 uses
+  %3 = alloca %struct.ma_linear_resampler_heap_layout, align 8 ; 7 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #61
   %i.a = icmp eq ptr %2, null
   br i1 %i.a, label %ma_linear_resampler_get_heap_layout.exit.thread, label %ma_zero_memory_default.exit32
 
@@ -530,13 +532,19 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   br i1 %i.f, label %ma_linear_resampler_get_heap_layout.exit.thread, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 0, ptr %4, align 8
   %i.g = icmp eq i32 %i.c, 5
   %i.h = zext i32 %i.e to i64                     ; 3 uses
   %..i = select i1 %i.g, i64 2, i64 1
-  %i.i = shl nuw nsw i64 %i.h, %..i               ; 2 uses
+  %i.i = shl nuw nsw i64 %i.h, %..i               ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  store i64 %i.i, ptr %5, align 8
   %storemerge35.i = shl nuw nsw i64 %i.i, 1
   %i.j = add nuw nsw i64 %storemerge35.i, 6       ; 2 uses
   %i.k = and i64 %i.j, 137438953464
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store i64 %i.k, ptr %6, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.m = load i32, ptr %i.l, align 8
   %i.n = tail call i32 @llvm.umin.i32(i32 %i.m, i32 8) ; 2 uses
@@ -563,6 +571,11 @@ bb.c:                                             ; preds = %bb.b, %bb.b
 
 bb.d:                                             ; preds = %.lr.ph76.i.i.preheader.i, %._crit_edge.i.i.i
   %i.ac = phi i64 [ %i.u, %._crit_edge.i.i.i ], [ %i.ab, %.lr.ph76.i.i.preheader.i ]
+  %7 = add nuw nsw i64 %i.ac, 7
+  %8 = and i64 %7, -8
+  %9 = add nuw nsw i64 %8, %i.j
+  %10 = and i64 %9, -8                            ; 2 uses
+  store i64 %10, ptr %3, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false)
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 120
   store ptr %1, ptr %i.ad, align 8
@@ -570,11 +583,7 @@ bb.d:                                             ; preds = %.lr.ph76.i.i.prehea
   br i1 %.not, label %ma_zero_memory_default.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %4 = add nuw nsw i64 %i.ac, 7
-  %5 = and i64 %4, -8
-  %6 = add nuw nsw i64 %5, %i.j
-  %7 = and i64 %6, -8
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %1, i8 0, i64 %7, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %1, i8 0, i64 %10, i1 false)
   br label %ma_zero_memory_default.exit
 
 ma_zero_memory_default.exit:                      ; preds = %bb.e, %bb.d
@@ -584,88 +593,134 @@ ma_zero_memory_default.exit:                      ; preds = %bb.e, %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 56
   store ptr %.sink, ptr %i.af, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ah = load i32, ptr %i.ag, align 8            ; 3 uses
+  %i.ah = load i32, ptr %i.ag, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.aj = load i32, ptr %i.ai, align 4            ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #61
-  %8 = icmp eq i32 %i.ah, 0
-  %i.ak = icmp eq i32 %i.aj, 0
-  %or.cond.i33 = or i1 %8, %i.ak
-  br i1 %or.cond.i33, label %ma_linear_resampler_set_rate_internal.exit.thread, label %9
+  %i.aj = load i32, ptr %i.ai, align 4
+  %11 = call fastcc i32 @ma_linear_resampler_set_rate_internal(ptr noundef nonnull %2, ptr noundef %1, ptr noundef nonnull %3, i32 noundef %i.ah, i32 noundef %i.aj, i32 noundef 0) ; 2 uses
+  %i.ak = icmp eq i32 %11, 0
+  br i1 %i.ak, label %bb.f, label %ma_linear_resampler_get_heap_layout.exit.thread
 
-9:                                                ; preds = %ma_zero_memory_default.exit
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
-  br label %11
-
-11:                                               ; preds = %11, %9
-  %.0.i58.i = phi i32 [ %i.ah, %9 ], [ %.06.i57.i, %11 ]
-  %.06.i57.i = phi i32 [ %i.aj, %9 ], [ %12, %11 ] ; 4 uses
-  %12 = urem i32 %.0.i58.i, %.06.i57.i            ; 2 uses
-  %13 = icmp eq i32 %12, 0
-  br i1 %13, label %ma_gcf_u32.exit.i, label %11
-
-ma_gcf_u32.exit.i:                                ; preds = %11
-  %14 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %15 = udiv i32 %i.ah, %.06.i57.i                ; 3 uses
-  store i32 %15, ptr %14, align 8
-  %16 = udiv i32 %i.aj, %.06.i57.i                ; 3 uses
-  store i32 %16, ptr %10, align 4
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %18 = load i32, ptr %17, align 8                ; 2 uses
-  %19 = icmp ugt i32 %18, 8
-  br i1 %19, label %ma_linear_resampler_set_rate_internal.exit.thread, label %20
-
-20:                                               ; preds = %ma_gcf_u32.exit.i
-  %..i34 = tail call i32 @llvm.umax.i32(i32 %15, i32 %16)
-  %21 = tail call i32 @llvm.umin.i32(i32 %15, i32 %16)
-  %22 = uitofp i32 %21 to double
-  %23 = fmul nnan double %22, 5.000000e-01
-  %24 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %25 = load double, ptr %24, align 8
-  %26 = fmul double %23, %25
-  %27 = load <2 x i32>, ptr %2, align 8
-  store <2 x i32> %27, ptr %3, align 8
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %..i34, ptr %.sroa.5.0..sroa_idx.i, align 8
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 12
-  store i32 0, ptr %.sroa.7.0..sroa_idx.i, align 4
-  %.sroa.756.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store double %26, ptr %.sroa.756.0..sroa_idx.i, align 8
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store i32 %18, ptr %.sroa.8.0..sroa_idx.i, align 8
-  %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 28
-  store i32 0, ptr %.sroa.9.0..sroa_idx.i, align 4
-  %28 = getelementptr inbounds nuw i8, ptr %1, i64 %i.k
-  %29 = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %29, i8 0, i64 56, i1 false)
-  %30 = call fastcc i32 @ma_lpf_reinit__internal(ptr noundef nonnull readonly %3, ptr noundef %28, ptr noundef nonnull %29, i32 noundef 1) ; 2 uses
-  %.not54.i = icmp eq i32 %30, 0
-  br i1 %.not54.i, label %bb.f, label %ma_linear_resampler_set_rate_internal.exit.thread
-
-ma_linear_resampler_set_rate_internal.exit.thread: ; preds = %20, %ma_zero_memory_default.exit, %ma_gcf_u32.exit.i
-  %.046.i.ph = phi i32 [ -2, %ma_gcf_u32.exit.i ], [ -2, %ma_zero_memory_default.exit ], [ %30, %20 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #61
-  br label %ma_linear_resampler_get_heap_layout.exit.thread
-
-bb.f:                                             ; preds = %20
-  %31 = load i32, ptr %14, align 8                ; 2 uses
-  %32 = load i32, ptr %10, align 4                ; 2 uses
-  %33 = udiv i32 %31, %32
-  %34 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store i32 %33, ptr %34, align 8
-  %35 = urem i32 %31, %32
-  %i.al = getelementptr inbounds nuw i8, ptr %2, i64 36
-  store i32 %35, ptr %i.al, align 4
+bb.f:                                             ; preds = %ma_zero_memory_default.exit
+  %i.al = getelementptr inbounds nuw i8, ptr %2, i64 40
+  store i32 1, ptr %i.al, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 44
-  %36 = getelementptr inbounds nuw i8, ptr %2, i64 40
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #61
-  store i32 1, ptr %36, align 8
   store i32 0, ptr %i.am, align 4
   br label %ma_linear_resampler_get_heap_layout.exit.thread
 
-ma_linear_resampler_get_heap_layout.exit.thread:  ; preds = %bb.b, %ma_zero_memory_default.exit32, %bb.c, %ma_linear_resampler_set_rate_internal.exit.thread, %bb.a, %bb.f
-  %.0 = phi i32 [ 0, %bb.f ], [ -2, %bb.a ], [ %.046.i.ph, %ma_linear_resampler_set_rate_internal.exit.thread ], [ -2, %bb.c ], [ -2, %ma_zero_memory_default.exit32 ], [ -2, %bb.b ]
+ma_linear_resampler_get_heap_layout.exit.thread:  ; preds = %bb.b, %ma_zero_memory_default.exit32, %bb.c, %ma_zero_memory_default.exit, %bb.a, %bb.f
+  %.0 = phi i32 [ 0, %bb.f ], [ -2, %bb.a ], [ %11, %ma_zero_memory_default.exit ], [ -2, %bb.c ], [ -2, %ma_zero_memory_default.exit32 ], [ -2, %bb.b ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #61
   ret i32 %.0
+}
+
+; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
+define internal fastcc range(i32 -3, 1) i32 @ma_linear_resampler_set_rate_internal(ptr nofree noundef captures(address_is_null) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4, i32 noundef range(i32 0, 2) %5) unnamed_addr #32 {
+  %7 = alloca %struct.ma_lpf_config, align 8      ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #61
+  %8 = icmp eq ptr %0, null
+  br i1 %8, label %62, label %9
+
+9:                                                ; preds = %6
+  %10 = icmp eq i32 %3, 0
+  %11 = icmp eq i32 %4, 0
+  %or.cond = or i1 %10, %11
+  br i1 %or.cond, label %62, label %12
+
+12:                                               ; preds = %9
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
+  %14 = load i32, ptr %13, align 4                ; 3 uses
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  br label %16
+
+16:                                               ; preds = %12, %16
+  %.0.i58 = phi i32 [ %3, %12 ], [ %.06.i57, %16 ]
+  %.06.i57 = phi i32 [ %4, %12 ], [ %17, %16 ]    ; 4 uses
+  %17 = urem i32 %.0.i58, %.06.i57                ; 2 uses
+  %18 = icmp eq i32 %17, 0
+  br i1 %18, label %ma_gcf_u32.exit, label %16
+
+ma_gcf_u32.exit:                                  ; preds = %16
+  %19 = udiv i32 %3, %.06.i57                     ; 3 uses
+  store i32 %19, ptr %15, align 8
+  %20 = udiv i32 %4, %.06.i57                     ; 3 uses
+  store i32 %20, ptr %13, align 4
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %22 = load i32, ptr %21, align 8                ; 2 uses
+  %23 = icmp ugt i32 %22, 8
+  br i1 %23, label %62, label %24
+
+24:                                               ; preds = %ma_gcf_u32.exit
+  %. = tail call i32 @llvm.umax.i32(i32 %19, i32 %20)
+  %25 = tail call i32 @llvm.umin.i32(i32 %19, i32 %20)
+  %26 = uitofp i32 %25 to double
+  %27 = fmul nnan double %26, 5.000000e-01
+  %28 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %29 = load double, ptr %28, align 8
+  %30 = fmul double %27, %29
+  %31 = load <2 x i32>, ptr %0, align 8
+  store <2 x i32> %31, ptr %7, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store i32 %., ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 12
+  store i32 0, ptr %.sroa.7.0..sroa_idx, align 4
+  %.sroa.756.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 16
+  store double %30, ptr %.sroa.756.0..sroa_idx, align 8
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 24
+  store i32 %22, ptr %.sroa.8.0..sroa_idx, align 8
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 28
+  store i32 0, ptr %.sroa.9.0..sroa_idx, align 4
+  %.not = icmp eq i32 %5, 0
+  br i1 %.not, label %35, label %32
+
+32:                                               ; preds = %24
+  %33 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %34 = call fastcc range(i32 -3, 1) i32 @ma_lpf_reinit__internal(ptr noundef nonnull readonly %7, ptr noundef null, ptr noundef nonnull %33, i32 noundef 0)
+  br label %41
+
+35:                                               ; preds = %24
+  %36 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %37 = load i64, ptr %36, align 8
+  %38 = getelementptr inbounds nuw i8, ptr %1, i64 %37
+  %39 = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %39, i8 0, i64 56, i1 false)
+  %40 = call fastcc i32 @ma_lpf_reinit__internal(ptr noundef nonnull readonly %7, ptr noundef %38, ptr noundef nonnull %39, i32 noundef 1)
+  br label %41
+
+41:                                               ; preds = %35, %32
+  %.0 = phi i32 [ %34, %32 ], [ %40, %35 ]        ; 2 uses
+  %.not54 = icmp eq i32 %.0, 0
+  br i1 %.not54, label %42, label %62
+
+42:                                               ; preds = %41
+  %43 = load i32, ptr %15, align 8                ; 2 uses
+  %44 = load i32, ptr %13, align 4                ; 6 uses
+  %45 = udiv i32 %43, %44
+  %46 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store i32 %45, ptr %46, align 8
+  %47 = urem i32 %43, %44
+  %48 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  store i32 %47, ptr %48, align 4
+  %49 = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %50 = load i32, ptr %49, align 4                ; 2 uses
+  %51 = udiv i32 %50, %14
+  %52 = urem i32 %50, %14
+  %53 = mul i32 %51, %44
+  %54 = mul i32 %52, %44
+  %55 = udiv i32 %54, %14
+  %56 = add i32 %55, %53                          ; 2 uses
+  %57 = udiv i32 %56, %44
+  %58 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %59 = load i32, ptr %58, align 8
+  %60 = add i32 %59, %57
+  store i32 %60, ptr %58, align 8
+  %61 = urem i32 %56, %44
+  store i32 %61, ptr %49, align 4
+  br label %62
+
+62:                                               ; preds = %41, %ma_gcf_u32.exit, %9, %6, %42
+  %.046 = phi i32 [ 0, %42 ], [ -2, %6 ], [ -2, %9 ], [ -2, %ma_gcf_u32.exit ], [ %.0, %41 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #61
+  ret i32 %.046
 }
 
 ; Function Attrs: nounwind uwtable
@@ -1070,95 +1125,9 @@ bb.am:                                            ; preds = %.sink.split, %bb.b,
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define hidden range(i32 -3, 1) i32 @ma_linear_resampler_set_rate(ptr nofree noundef captures(address_is_null) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #32 {
-  %4 = alloca %struct.ma_lpf_config, align 8      ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #61
-  %5 = icmp eq ptr %0, null
-  br i1 %5, label %ma_linear_resampler_set_rate_internal.exit, label %6
-
-6:                                                ; preds = %3
-  %7 = icmp eq i32 %1, 0
-  %8 = icmp eq i32 %2, 0
-  %or.cond.i = or i1 %7, %8
-  br i1 %or.cond.i, label %ma_linear_resampler_set_rate_internal.exit, label %9
-
-9:                                                ; preds = %6
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
-  %11 = load i32, ptr %10, align 4                ; 3 uses
-  br label %12
-
-12:                                               ; preds = %12, %9
-  %.0.i58.i = phi i32 [ %1, %9 ], [ %.06.i57.i, %12 ]
-  %.06.i57.i = phi i32 [ %2, %9 ], [ %13, %12 ]   ; 4 uses
-  %13 = urem i32 %.0.i58.i, %.06.i57.i            ; 2 uses
-  %14 = icmp eq i32 %13, 0
-  br i1 %14, label %ma_gcf_u32.exit.i, label %12
-
-ma_gcf_u32.exit.i:                                ; preds = %12
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %16 = udiv i32 %1, %.06.i57.i                   ; 3 uses
-  store i32 %16, ptr %15, align 8
-  %17 = udiv i32 %2, %.06.i57.i                   ; 3 uses
-  store i32 %17, ptr %10, align 4
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %19 = load i32, ptr %18, align 8                ; 2 uses
-  %20 = icmp ugt i32 %19, 8
-  br i1 %20, label %ma_linear_resampler_set_rate_internal.exit, label %21
-
-21:                                               ; preds = %ma_gcf_u32.exit.i
-  %..i = tail call i32 @llvm.umax.i32(i32 %16, i32 %17)
-  %22 = tail call i32 @llvm.umin.i32(i32 %16, i32 %17)
-  %23 = uitofp i32 %22 to double
-  %24 = fmul nnan double %23, 5.000000e-01
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %26 = load double, ptr %25, align 8
-  %27 = fmul double %24, %26
-  %28 = load <2 x i32>, ptr %0, align 8
-  store <2 x i32> %28, ptr %4, align 8
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %..i, ptr %.sroa.5.0..sroa_idx.i, align 8
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i32 0, ptr %.sroa.7.0..sroa_idx.i, align 4
-  %.sroa.756.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store double %27, ptr %.sroa.756.0..sroa_idx.i, align 8
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i32 %19, ptr %.sroa.8.0..sroa_idx.i, align 8
-  %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 28
-  store i32 0, ptr %.sroa.9.0..sroa_idx.i, align 4
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %30 = call fastcc range(i32 -3, 1) i32 @ma_lpf_reinit__internal(ptr noundef nonnull readonly %4, ptr noundef null, ptr noundef nonnull %29, i32 noundef 0) ; 2 uses
-  %.not54.i = icmp eq i32 %30, 0
-  br i1 %.not54.i, label %31, label %ma_linear_resampler_set_rate_internal.exit
-
-31:                                               ; preds = %21
-  %32 = load i32, ptr %15, align 8                ; 2 uses
-  %33 = load i32, ptr %10, align 4                ; 6 uses
-  %34 = udiv i32 %32, %33
-  %35 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %34, ptr %35, align 8
-  %36 = urem i32 %32, %33
-  %37 = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store i32 %36, ptr %37, align 4
-  %38 = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
-  %39 = load i32, ptr %38, align 4                ; 2 uses
-  %40 = udiv i32 %39, %11
-  %41 = urem i32 %39, %11
-  %42 = mul i32 %40, %33
-  %43 = mul i32 %41, %33
-  %44 = udiv i32 %43, %11
-  %45 = add i32 %44, %42                          ; 2 uses
-  %46 = udiv i32 %45, %33
-  %47 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %48 = load i32, ptr %47, align 8
-  %49 = add i32 %48, %46
-  store i32 %49, ptr %47, align 8
-  %50 = urem i32 %45, %33
-  store i32 %50, ptr %38, align 4
-  br label %ma_linear_resampler_set_rate_internal.exit
-
-ma_linear_resampler_set_rate_internal.exit:       ; preds = %3, %6, %ma_gcf_u32.exit.i, %21, %31
-  %.046.i = phi i32 [ 0, %31 ], [ -2, %3 ], [ -2, %6 ], [ -2, %ma_gcf_u32.exit.i ], [ %30, %21 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #61
-  ret i32 %.046.i
+ma_linear_resampler_set_rate_internal.exit:
+  %3 = tail call fastcc i32 @ma_linear_resampler_set_rate_internal(ptr noundef %0, ptr noundef null, ptr noundef null, i32 noundef %1, i32 noundef %2, i32 noundef 1)
+  ret i32 %3
 }
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
@@ -1561,7 +1530,7 @@ bb.a:
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define internal range(i32 -3, 1) i32 @ma_resampling_backend_set_rate__linear(ptr nofree readnone captures(none) %0, ptr nofree noundef captures(address_is_null) %1, i32 noundef %2, i32 noundef %3) #32 {
 bb.a:
-  %4 = tail call i32 @ma_linear_resampler_set_rate(ptr noundef %1, i32 noundef %2, i32 noundef %3)
+  %4 = tail call fastcc range(i32 -3, 1) i32 @ma_linear_resampler_set_rate_internal(ptr noundef %1, ptr noundef null, ptr noundef null, i32 noundef %2, i32 noundef %3, i32 noundef 1)
   ret i32 %4
 }
 

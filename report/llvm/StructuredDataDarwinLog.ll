@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/StructuredDataDarwinLog?download=true
-inline.NumInlined: 2736
+inline.NumInlined: 2735
 inline.NumDeleted: 1432
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -204,16 +204,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.bc = load i64, ptr %i.a, align 8, !tbaa !114
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %11 = load i64, ptr %10, align 8, !tbaa !659
-  %12 = sub i64 %i.bc, %11                        ; 2 uses
-  %13 = udiv i64 %12, 3600000000000
-  %14 = urem i64 %12, 3600000000000               ; 2 uses
-  %15 = udiv i64 %14, 60000000000
-  %16 = urem i64 %14, 60000000000                 ; 2 uses
-  %17 = udiv i64 %16, 1000000000
-  %18 = urem i64 %16, 1000000000
-  %19 = call noundef i64 (ptr, ptr, ...) @_ZN12lldb_private6Stream6PrintfEPKcz(ptr noundef nonnull align 8 dereferenceable(88) %3, ptr noundef nonnull @.str.47, i64 noundef %13, i64 noundef %15, i64 noundef %17, i64 noundef %18) #21 ; 0 uses
+  call void @_ZN12lldb_private23StructuredDataDarwinLog13DumpTimestampERNS_6StreamEm(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(88) %3, i64 noundef %i.bc)
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p

@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/array?download=true
-inline.NumInlined: 61
-inline.NumDeleted: 22
+inline.NumInlined: 57
+inline.NumDeleted: 21
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 32
 loop-unroll.NumUnrolled: 33
@@ -205,146 +205,9 @@ bb.p:                                             ; preds = %php_array_key_compa
 
 ; Function Attrs: nounwind uwtable
 define internal i32 @php_array_reverse_key_compare_string_natural_case(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #2 {
-  %3 = alloca [21 x i8], align 16                 ; 3 uses
-  %4 = alloca [21 x i8], align 16                 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %6 = load ptr, ptr %5, align 8, !tbaa !119      ; 3 uses
-  %.not.i = icmp eq ptr %6, null
-  br i1 %.not.i, label %11, label %7
-
-7:                                                ; preds = %2
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %10 = load i64, ptr %9, align 8, !tbaa !123
-  br label %35
-
-11:                                               ; preds = %2
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 5 uses
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %14 = load i64, ptr %13, align 8, !tbaa !120    ; 3 uses
-  %15 = icmp slt i64 %14, 0
-  br i1 %15, label %16, label %25
-
-16:                                               ; preds = %11
-  %17 = sub i64 0, %14
-  store i8 0, ptr %12, align 4, !tbaa !25
-  br label %18
-
-18:                                               ; preds = %18, %16
-  %.05.i.i = phi ptr [ %12, %16 ], [ %22, %18 ]   ; 2 uses
-  %.0.i22.i = phi i64 [ %17, %16 ], [ %23, %18 ]  ; 3 uses
-  %19 = urem i64 %.0.i22.i, 10
-  %20 = trunc nuw nsw i64 %19 to i8
-  %21 = or disjoint i8 %20, 48
-  %22 = getelementptr inbounds i8, ptr %.05.i.i, i64 -1 ; 2 uses
-  store i8 %21, ptr %22, align 1, !tbaa !25
-  %23 = udiv i64 %.0.i22.i, 10
-  %.not.i.i = icmp ult i64 %.0.i22.i, 10
-  br i1 %.not.i.i, label %zend_print_ulong_to_buf.exit.i, label %18, !llvm.loop !10
-
-zend_print_ulong_to_buf.exit.i:                   ; preds = %18
-  %24 = getelementptr inbounds i8, ptr %.05.i.i, i64 -2 ; 2 uses
-  store i8 45, ptr %24, align 1, !tbaa !25
-  br label %zend_print_long_to_buf.exit21.i
-
-25:                                               ; preds = %11
-  store i8 0, ptr %12, align 4, !tbaa !25
-  br label %26
-
-26:                                               ; preds = %26, %25
-  %.05.i23.i = phi ptr [ %12, %25 ], [ %30, %26 ]
-  %.0.i24.i = phi i64 [ %14, %25 ], [ %31, %26 ]  ; 3 uses
-  %27 = urem i64 %.0.i24.i, 10
-  %28 = trunc nuw nsw i64 %27 to i8
-  %29 = or disjoint i8 %28, 48
-  %30 = getelementptr inbounds i8, ptr %.05.i23.i, i64 -1 ; 3 uses
-  store i8 %29, ptr %30, align 1, !tbaa !25
-  %31 = udiv i64 %.0.i24.i, 10
-  %.not.i25.i = icmp ult i64 %.0.i24.i, 10
-  br i1 %.not.i25.i, label %zend_print_long_to_buf.exit21.i, label %26, !llvm.loop !10
-
-zend_print_long_to_buf.exit21.i:                  ; preds = %26, %zend_print_ulong_to_buf.exit.i
-  %.0.i20.i = phi ptr [ %24, %zend_print_ulong_to_buf.exit.i ], [ %30, %26 ] ; 2 uses
-  %32 = ptrtoint ptr %12 to i64
-  %33 = ptrtoint ptr %.0.i20.i to i64
-  %34 = sub i64 %32, %33
-  br label %35
-
-35:                                               ; preds = %zend_print_long_to_buf.exit21.i, %7
-  %.016.i = phi ptr [ %8, %7 ], [ %.0.i20.i, %zend_print_long_to_buf.exit21.i ]
-  %.014.i = phi i64 [ %10, %7 ], [ %34, %zend_print_long_to_buf.exit21.i ]
-  %36 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %37 = load ptr, ptr %36, align 8, !tbaa !119    ; 3 uses
-  %.not19.i = icmp eq ptr %37, null
-  br i1 %.not19.i, label %42, label %38
-
-38:                                               ; preds = %35
-  %39 = getelementptr inbounds nuw i8, ptr %37, i64 24
-  %40 = getelementptr inbounds nuw i8, ptr %37, i64 16
-  %41 = load i64, ptr %40, align 8, !tbaa !123
-  br label %php_array_key_compare_string_natural_general.exit
-
-42:                                               ; preds = %35
-  %43 = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 5 uses
-  %44 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %45 = load i64, ptr %44, align 8, !tbaa !120    ; 3 uses
-  %46 = icmp slt i64 %45, 0
-  br i1 %46, label %47, label %56
-
-47:                                               ; preds = %42
-  %48 = sub i64 0, %45
-  store i8 0, ptr %43, align 4, !tbaa !25
-  br label %49
-
-49:                                               ; preds = %49, %47
-  %.05.i27.i = phi ptr [ %43, %47 ], [ %53, %49 ] ; 2 uses
-  %.0.i28.i = phi i64 [ %48, %47 ], [ %54, %49 ]  ; 3 uses
-  %50 = urem i64 %.0.i28.i, 10
-  %51 = trunc nuw nsw i64 %50 to i8
-  %52 = or disjoint i8 %51, 48
-  %53 = getelementptr inbounds i8, ptr %.05.i27.i, i64 -1 ; 2 uses
-  store i8 %52, ptr %53, align 1, !tbaa !25
-  %54 = udiv i64 %.0.i28.i, 10
-  %.not.i29.i = icmp ult i64 %.0.i28.i, 10
-  br i1 %.not.i29.i, label %zend_print_ulong_to_buf.exit30.i, label %49, !llvm.loop !10
-
-zend_print_ulong_to_buf.exit30.i:                 ; preds = %49
-  %55 = getelementptr inbounds i8, ptr %.05.i27.i, i64 -2 ; 2 uses
-  store i8 45, ptr %55, align 1, !tbaa !25
-  br label %zend_print_long_to_buf.exit.i
-
-56:                                               ; preds = %42
-  store i8 0, ptr %43, align 4, !tbaa !25
-  br label %57
-
-57:                                               ; preds = %57, %56
-  %.05.i31.i = phi ptr [ %43, %56 ], [ %61, %57 ]
-  %.0.i32.i = phi i64 [ %45, %56 ], [ %62, %57 ]  ; 3 uses
-  %58 = urem i64 %.0.i32.i, 10
-  %59 = trunc nuw nsw i64 %58 to i8
-  %60 = or disjoint i8 %59, 48
-  %61 = getelementptr inbounds i8, ptr %.05.i31.i, i64 -1 ; 3 uses
-  store i8 %60, ptr %61, align 1, !tbaa !25
-  %62 = udiv i64 %.0.i32.i, 10
-  %.not.i33.i = icmp ult i64 %.0.i32.i, 10
-  br i1 %.not.i33.i, label %zend_print_long_to_buf.exit.i, label %57, !llvm.loop !10
-
-zend_print_long_to_buf.exit.i:                    ; preds = %57, %zend_print_ulong_to_buf.exit30.i
-  %.0.i.i = phi ptr [ %55, %zend_print_ulong_to_buf.exit30.i ], [ %61, %57 ] ; 2 uses
-  %63 = ptrtoint ptr %43 to i64
-  %64 = ptrtoint ptr %.0.i.i to i64
-  %65 = sub i64 %63, %64
-  br label %php_array_key_compare_string_natural_general.exit
-
-php_array_key_compare_string_natural_general.exit: ; preds = %38, %zend_print_long_to_buf.exit.i
-  %.015.i = phi ptr [ %39, %38 ], [ %.0.i.i, %zend_print_long_to_buf.exit.i ]
-  %.0.i = phi i64 [ %41, %38 ], [ %65, %zend_print_long_to_buf.exit.i ]
-  %66 = call i32 @strnatcmp_ex(ptr noundef nonnull %.016.i, i64 noundef %.014.i, ptr noundef nonnull %.015.i, i64 noundef %.0.i, i1 noundef zeroext true) #18 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  %.not = icmp eq i32 %66, 0
+php_array_key_compare_string_natural_general.exit:
+  %2 = tail call fastcc i32 @php_array_key_compare_string_natural_general(ptr noundef %1, ptr noundef %0, i32 noundef 1) ; 2 uses
+  %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.a, label %bb.b, !prof !30
 
 bb.a:                                             ; preds = %php_array_key_compare_string_natural_general.exit
@@ -352,156 +215,19 @@ bb.a:                                             ; preds = %php_array_key_compa
   %.val = load i32, ptr %i.a, align 4, !tbaa !25
   %i.b = getelementptr i8, ptr %1, i64 12
   %.val7 = load i32, ptr %i.b, align 4, !tbaa !25
-  %67 = call fastcc i32 @stable_sort_fallback(i32 %.val, i32 %.val7)
+  %3 = tail call fastcc i32 @stable_sort_fallback(i32 %.val, i32 %.val7)
   br label %bb.b
 
 bb.b:                                             ; preds = %php_array_key_compare_string_natural_general.exit, %bb.a
-  %.0 = phi i32 [ %67, %bb.a ], [ %66, %php_array_key_compare_string_natural_general.exit ]
+  %.0 = phi i32 [ %3, %bb.a ], [ %2, %php_array_key_compare_string_natural_general.exit ]
   ret i32 %.0
 }
 
 ; Function Attrs: nounwind uwtable
 define internal i32 @php_array_key_compare_string_natural_case(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #2 {
-  %3 = alloca [21 x i8], align 16                 ; 3 uses
-  %4 = alloca [21 x i8], align 16                 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %6 = load ptr, ptr %5, align 8, !tbaa !119      ; 3 uses
-  %.not.i = icmp eq ptr %6, null
-  br i1 %.not.i, label %11, label %7
-
-7:                                                ; preds = %2
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %10 = load i64, ptr %9, align 8, !tbaa !123
-  br label %35
-
-11:                                               ; preds = %2
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 5 uses
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %14 = load i64, ptr %13, align 8, !tbaa !120    ; 3 uses
-  %15 = icmp slt i64 %14, 0
-  br i1 %15, label %16, label %25
-
-16:                                               ; preds = %11
-  %17 = sub i64 0, %14
-  store i8 0, ptr %12, align 4, !tbaa !25
-  br label %18
-
-18:                                               ; preds = %18, %16
-  %.05.i.i = phi ptr [ %12, %16 ], [ %22, %18 ]   ; 2 uses
-  %.0.i22.i = phi i64 [ %17, %16 ], [ %23, %18 ]  ; 3 uses
-  %19 = urem i64 %.0.i22.i, 10
-  %20 = trunc nuw nsw i64 %19 to i8
-  %21 = or disjoint i8 %20, 48
-  %22 = getelementptr inbounds i8, ptr %.05.i.i, i64 -1 ; 2 uses
-  store i8 %21, ptr %22, align 1, !tbaa !25
-  %23 = udiv i64 %.0.i22.i, 10
-  %.not.i.i = icmp ult i64 %.0.i22.i, 10
-  br i1 %.not.i.i, label %zend_print_ulong_to_buf.exit.i, label %18, !llvm.loop !10
-
-zend_print_ulong_to_buf.exit.i:                   ; preds = %18
-  %24 = getelementptr inbounds i8, ptr %.05.i.i, i64 -2 ; 2 uses
-  store i8 45, ptr %24, align 1, !tbaa !25
-  br label %zend_print_long_to_buf.exit21.i
-
-25:                                               ; preds = %11
-  store i8 0, ptr %12, align 4, !tbaa !25
-  br label %26
-
-26:                                               ; preds = %26, %25
-  %.05.i23.i = phi ptr [ %12, %25 ], [ %30, %26 ]
-  %.0.i24.i = phi i64 [ %14, %25 ], [ %31, %26 ]  ; 3 uses
-  %27 = urem i64 %.0.i24.i, 10
-  %28 = trunc nuw nsw i64 %27 to i8
-  %29 = or disjoint i8 %28, 48
-  %30 = getelementptr inbounds i8, ptr %.05.i23.i, i64 -1 ; 3 uses
-  store i8 %29, ptr %30, align 1, !tbaa !25
-  %31 = udiv i64 %.0.i24.i, 10
-  %.not.i25.i = icmp ult i64 %.0.i24.i, 10
-  br i1 %.not.i25.i, label %zend_print_long_to_buf.exit21.i, label %26, !llvm.loop !10
-
-zend_print_long_to_buf.exit21.i:                  ; preds = %26, %zend_print_ulong_to_buf.exit.i
-  %.0.i20.i = phi ptr [ %24, %zend_print_ulong_to_buf.exit.i ], [ %30, %26 ] ; 2 uses
-  %32 = ptrtoint ptr %12 to i64
-  %33 = ptrtoint ptr %.0.i20.i to i64
-  %34 = sub i64 %32, %33
-  br label %35
-
-35:                                               ; preds = %zend_print_long_to_buf.exit21.i, %7
-  %.016.i = phi ptr [ %8, %7 ], [ %.0.i20.i, %zend_print_long_to_buf.exit21.i ]
-  %.014.i = phi i64 [ %10, %7 ], [ %34, %zend_print_long_to_buf.exit21.i ]
-  %36 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %37 = load ptr, ptr %36, align 8, !tbaa !119    ; 3 uses
-  %.not19.i = icmp eq ptr %37, null
-  br i1 %.not19.i, label %42, label %38
-
-38:                                               ; preds = %35
-  %39 = getelementptr inbounds nuw i8, ptr %37, i64 24
-  %40 = getelementptr inbounds nuw i8, ptr %37, i64 16
-  %41 = load i64, ptr %40, align 8, !tbaa !123
-  br label %php_array_key_compare_string_natural_general.exit
-
-42:                                               ; preds = %35
-  %43 = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 5 uses
-  %44 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %45 = load i64, ptr %44, align 8, !tbaa !120    ; 3 uses
-  %46 = icmp slt i64 %45, 0
-  br i1 %46, label %47, label %56
-
-47:                                               ; preds = %42
-  %48 = sub i64 0, %45
-  store i8 0, ptr %43, align 4, !tbaa !25
-  br label %49
-
-49:                                               ; preds = %49, %47
-  %.05.i27.i = phi ptr [ %43, %47 ], [ %53, %49 ] ; 2 uses
-  %.0.i28.i = phi i64 [ %48, %47 ], [ %54, %49 ]  ; 3 uses
-  %50 = urem i64 %.0.i28.i, 10
-  %51 = trunc nuw nsw i64 %50 to i8
-  %52 = or disjoint i8 %51, 48
-  %53 = getelementptr inbounds i8, ptr %.05.i27.i, i64 -1 ; 2 uses
-  store i8 %52, ptr %53, align 1, !tbaa !25
-  %54 = udiv i64 %.0.i28.i, 10
-  %.not.i29.i = icmp ult i64 %.0.i28.i, 10
-  br i1 %.not.i29.i, label %zend_print_ulong_to_buf.exit30.i, label %49, !llvm.loop !10
-
-zend_print_ulong_to_buf.exit30.i:                 ; preds = %49
-  %55 = getelementptr inbounds i8, ptr %.05.i27.i, i64 -2 ; 2 uses
-  store i8 45, ptr %55, align 1, !tbaa !25
-  br label %zend_print_long_to_buf.exit.i
-
-56:                                               ; preds = %42
-  store i8 0, ptr %43, align 4, !tbaa !25
-  br label %57
-
-57:                                               ; preds = %57, %56
-  %.05.i31.i = phi ptr [ %43, %56 ], [ %61, %57 ]
-  %.0.i32.i = phi i64 [ %45, %56 ], [ %62, %57 ]  ; 3 uses
-  %58 = urem i64 %.0.i32.i, 10
-  %59 = trunc nuw nsw i64 %58 to i8
-  %60 = or disjoint i8 %59, 48
-  %61 = getelementptr inbounds i8, ptr %.05.i31.i, i64 -1 ; 3 uses
-  store i8 %60, ptr %61, align 1, !tbaa !25
-  %62 = udiv i64 %.0.i32.i, 10
-  %.not.i33.i = icmp ult i64 %.0.i32.i, 10
-  br i1 %.not.i33.i, label %zend_print_long_to_buf.exit.i, label %57, !llvm.loop !10
-
-zend_print_long_to_buf.exit.i:                    ; preds = %57, %zend_print_ulong_to_buf.exit30.i
-  %.0.i.i = phi ptr [ %55, %zend_print_ulong_to_buf.exit30.i ], [ %61, %57 ] ; 2 uses
-  %63 = ptrtoint ptr %43 to i64
-  %64 = ptrtoint ptr %.0.i.i to i64
-  %65 = sub i64 %63, %64
-  br label %php_array_key_compare_string_natural_general.exit
-
-php_array_key_compare_string_natural_general.exit: ; preds = %38, %zend_print_long_to_buf.exit.i
-  %.015.i = phi ptr [ %39, %38 ], [ %.0.i.i, %zend_print_long_to_buf.exit.i ]
-  %.0.i = phi i64 [ %41, %38 ], [ %65, %zend_print_long_to_buf.exit.i ]
-  %66 = call i32 @strnatcmp_ex(ptr noundef nonnull %.016.i, i64 noundef %.014.i, ptr noundef nonnull %.015.i, i64 noundef %.0.i, i1 noundef zeroext true) #18 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  %.not = icmp eq i32 %66, 0
+php_array_key_compare_string_natural_general.exit:
+  %2 = tail call fastcc i32 @php_array_key_compare_string_natural_general(ptr noundef %0, ptr noundef %1, i32 noundef 1) ; 2 uses
+  %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.a, label %bb.b, !prof !30
 
 bb.a:                                             ; preds = %php_array_key_compare_string_natural_general.exit
@@ -509,156 +235,19 @@ bb.a:                                             ; preds = %php_array_key_compa
   %.val = load i32, ptr %i.a, align 4, !tbaa !25
   %i.b = getelementptr i8, ptr %1, i64 12
   %.val7 = load i32, ptr %i.b, align 4, !tbaa !25
-  %67 = call fastcc i32 @stable_sort_fallback(i32 %.val, i32 %.val7)
+  %3 = tail call fastcc i32 @stable_sort_fallback(i32 %.val, i32 %.val7)
   br label %bb.b
 
 bb.b:                                             ; preds = %php_array_key_compare_string_natural_general.exit, %bb.a
-  %.0 = phi i32 [ %67, %bb.a ], [ %66, %php_array_key_compare_string_natural_general.exit ]
+  %.0 = phi i32 [ %3, %bb.a ], [ %2, %php_array_key_compare_string_natural_general.exit ]
   ret i32 %.0
 }
 
 ; Function Attrs: nounwind uwtable
 define internal i32 @php_array_reverse_key_compare_string_natural(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #2 {
-  %3 = alloca [21 x i8], align 16                 ; 3 uses
-  %4 = alloca [21 x i8], align 16                 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %6 = load ptr, ptr %5, align 8, !tbaa !119      ; 3 uses
-  %.not.i = icmp eq ptr %6, null
-  br i1 %.not.i, label %11, label %7
-
-7:                                                ; preds = %2
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %10 = load i64, ptr %9, align 8, !tbaa !123
-  br label %35
-
-11:                                               ; preds = %2
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 5 uses
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %14 = load i64, ptr %13, align 8, !tbaa !120    ; 3 uses
-  %15 = icmp slt i64 %14, 0
-  br i1 %15, label %16, label %25
-
-16:                                               ; preds = %11
-  %17 = sub i64 0, %14
-  store i8 0, ptr %12, align 4, !tbaa !25
-  br label %18
-
-18:                                               ; preds = %18, %16
-  %.05.i.i = phi ptr [ %12, %16 ], [ %22, %18 ]   ; 2 uses
-  %.0.i22.i = phi i64 [ %17, %16 ], [ %23, %18 ]  ; 3 uses
-  %19 = urem i64 %.0.i22.i, 10
-  %20 = trunc nuw nsw i64 %19 to i8
-  %21 = or disjoint i8 %20, 48
-  %22 = getelementptr inbounds i8, ptr %.05.i.i, i64 -1 ; 2 uses
-  store i8 %21, ptr %22, align 1, !tbaa !25
-  %23 = udiv i64 %.0.i22.i, 10
-  %.not.i.i = icmp ult i64 %.0.i22.i, 10
-  br i1 %.not.i.i, label %zend_print_ulong_to_buf.exit.i, label %18, !llvm.loop !10
-
-zend_print_ulong_to_buf.exit.i:                   ; preds = %18
-  %24 = getelementptr inbounds i8, ptr %.05.i.i, i64 -2 ; 2 uses
-  store i8 45, ptr %24, align 1, !tbaa !25
-  br label %zend_print_long_to_buf.exit21.i
-
-25:                                               ; preds = %11
-  store i8 0, ptr %12, align 4, !tbaa !25
-  br label %26
-
-26:                                               ; preds = %26, %25
-  %.05.i23.i = phi ptr [ %12, %25 ], [ %30, %26 ]
-  %.0.i24.i = phi i64 [ %14, %25 ], [ %31, %26 ]  ; 3 uses
-  %27 = urem i64 %.0.i24.i, 10
-  %28 = trunc nuw nsw i64 %27 to i8
-  %29 = or disjoint i8 %28, 48
-  %30 = getelementptr inbounds i8, ptr %.05.i23.i, i64 -1 ; 3 uses
-  store i8 %29, ptr %30, align 1, !tbaa !25
-  %31 = udiv i64 %.0.i24.i, 10
-  %.not.i25.i = icmp ult i64 %.0.i24.i, 10
-  br i1 %.not.i25.i, label %zend_print_long_to_buf.exit21.i, label %26, !llvm.loop !10
-
-zend_print_long_to_buf.exit21.i:                  ; preds = %26, %zend_print_ulong_to_buf.exit.i
-  %.0.i20.i = phi ptr [ %24, %zend_print_ulong_to_buf.exit.i ], [ %30, %26 ] ; 2 uses
-  %32 = ptrtoint ptr %12 to i64
-  %33 = ptrtoint ptr %.0.i20.i to i64
-  %34 = sub i64 %32, %33
-  br label %35
-
-35:                                               ; preds = %zend_print_long_to_buf.exit21.i, %7
-  %.016.i = phi ptr [ %8, %7 ], [ %.0.i20.i, %zend_print_long_to_buf.exit21.i ]
-  %.014.i = phi i64 [ %10, %7 ], [ %34, %zend_print_long_to_buf.exit21.i ]
-  %36 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %37 = load ptr, ptr %36, align 8, !tbaa !119    ; 3 uses
-  %.not19.i = icmp eq ptr %37, null
-  br i1 %.not19.i, label %42, label %38
-
-38:                                               ; preds = %35
-  %39 = getelementptr inbounds nuw i8, ptr %37, i64 24
-  %40 = getelementptr inbounds nuw i8, ptr %37, i64 16
-  %41 = load i64, ptr %40, align 8, !tbaa !123
-  br label %php_array_key_compare_string_natural_general.exit
-
-42:                                               ; preds = %35
-  %43 = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 5 uses
-  %44 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %45 = load i64, ptr %44, align 8, !tbaa !120    ; 3 uses
-  %46 = icmp slt i64 %45, 0
-  br i1 %46, label %47, label %56
-
-47:                                               ; preds = %42
-  %48 = sub i64 0, %45
-  store i8 0, ptr %43, align 4, !tbaa !25
-  br label %49
-
-49:                                               ; preds = %49, %47
-  %.05.i27.i = phi ptr [ %43, %47 ], [ %53, %49 ] ; 2 uses
-  %.0.i28.i = phi i64 [ %48, %47 ], [ %54, %49 ]  ; 3 uses
-  %50 = urem i64 %.0.i28.i, 10
-  %51 = trunc nuw nsw i64 %50 to i8
-  %52 = or disjoint i8 %51, 48
-  %53 = getelementptr inbounds i8, ptr %.05.i27.i, i64 -1 ; 2 uses
-  store i8 %52, ptr %53, align 1, !tbaa !25
-  %54 = udiv i64 %.0.i28.i, 10
-  %.not.i29.i = icmp ult i64 %.0.i28.i, 10
-  br i1 %.not.i29.i, label %zend_print_ulong_to_buf.exit30.i, label %49, !llvm.loop !10
-
-zend_print_ulong_to_buf.exit30.i:                 ; preds = %49
-  %55 = getelementptr inbounds i8, ptr %.05.i27.i, i64 -2 ; 2 uses
-  store i8 45, ptr %55, align 1, !tbaa !25
-  br label %zend_print_long_to_buf.exit.i
-
-56:                                               ; preds = %42
-  store i8 0, ptr %43, align 4, !tbaa !25
-  br label %57
-
-57:                                               ; preds = %57, %56
-  %.05.i31.i = phi ptr [ %43, %56 ], [ %61, %57 ]
-  %.0.i32.i = phi i64 [ %45, %56 ], [ %62, %57 ]  ; 3 uses
-  %58 = urem i64 %.0.i32.i, 10
-  %59 = trunc nuw nsw i64 %58 to i8
-  %60 = or disjoint i8 %59, 48
-  %61 = getelementptr inbounds i8, ptr %.05.i31.i, i64 -1 ; 3 uses
-  store i8 %60, ptr %61, align 1, !tbaa !25
-  %62 = udiv i64 %.0.i32.i, 10
-  %.not.i33.i = icmp ult i64 %.0.i32.i, 10
-  br i1 %.not.i33.i, label %zend_print_long_to_buf.exit.i, label %57, !llvm.loop !10
-
-zend_print_long_to_buf.exit.i:                    ; preds = %57, %zend_print_ulong_to_buf.exit30.i
-  %.0.i.i = phi ptr [ %55, %zend_print_ulong_to_buf.exit30.i ], [ %61, %57 ] ; 2 uses
-  %63 = ptrtoint ptr %43 to i64
-  %64 = ptrtoint ptr %.0.i.i to i64
-  %65 = sub i64 %63, %64
-  br label %php_array_key_compare_string_natural_general.exit
-
-php_array_key_compare_string_natural_general.exit: ; preds = %38, %zend_print_long_to_buf.exit.i
-  %.015.i = phi ptr [ %39, %38 ], [ %.0.i.i, %zend_print_long_to_buf.exit.i ]
-  %.0.i = phi i64 [ %41, %38 ], [ %65, %zend_print_long_to_buf.exit.i ]
-  %66 = call i32 @strnatcmp_ex(ptr noundef nonnull %.016.i, i64 noundef %.014.i, ptr noundef nonnull %.015.i, i64 noundef %.0.i, i1 noundef zeroext false) #18 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  %.not = icmp eq i32 %66, 0
+php_array_key_compare_string_natural_general.exit:
+  %2 = tail call fastcc i32 @php_array_key_compare_string_natural_general(ptr noundef %1, ptr noundef %0, i32 noundef 0) ; 2 uses
+  %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.a, label %bb.b, !prof !30
 
 bb.a:                                             ; preds = %php_array_key_compare_string_natural_general.exit
@@ -666,156 +255,19 @@ bb.a:                                             ; preds = %php_array_key_compa
   %.val = load i32, ptr %i.a, align 4, !tbaa !25
   %i.b = getelementptr i8, ptr %1, i64 12
   %.val7 = load i32, ptr %i.b, align 4, !tbaa !25
-  %67 = call fastcc i32 @stable_sort_fallback(i32 %.val, i32 %.val7)
+  %3 = tail call fastcc i32 @stable_sort_fallback(i32 %.val, i32 %.val7)
   br label %bb.b
 
 bb.b:                                             ; preds = %php_array_key_compare_string_natural_general.exit, %bb.a
-  %.0 = phi i32 [ %67, %bb.a ], [ %66, %php_array_key_compare_string_natural_general.exit ]
+  %.0 = phi i32 [ %3, %bb.a ], [ %2, %php_array_key_compare_string_natural_general.exit ]
   ret i32 %.0
 }
 
 ; Function Attrs: nounwind uwtable
 define internal i32 @php_array_key_compare_string_natural(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #2 {
-  %3 = alloca [21 x i8], align 16                 ; 3 uses
-  %4 = alloca [21 x i8], align 16                 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %6 = load ptr, ptr %5, align 8, !tbaa !119      ; 3 uses
-  %.not.i = icmp eq ptr %6, null
-  br i1 %.not.i, label %11, label %7
-
-7:                                                ; preds = %2
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %10 = load i64, ptr %9, align 8, !tbaa !123
-  br label %35
-
-11:                                               ; preds = %2
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 5 uses
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %14 = load i64, ptr %13, align 8, !tbaa !120    ; 3 uses
-  %15 = icmp slt i64 %14, 0
-  br i1 %15, label %16, label %25
-
-16:                                               ; preds = %11
-  %17 = sub i64 0, %14
-  store i8 0, ptr %12, align 4, !tbaa !25
-  br label %18
-
-18:                                               ; preds = %18, %16
-  %.05.i.i = phi ptr [ %12, %16 ], [ %22, %18 ]   ; 2 uses
-  %.0.i22.i = phi i64 [ %17, %16 ], [ %23, %18 ]  ; 3 uses
-  %19 = urem i64 %.0.i22.i, 10
-  %20 = trunc nuw nsw i64 %19 to i8
-  %21 = or disjoint i8 %20, 48
-  %22 = getelementptr inbounds i8, ptr %.05.i.i, i64 -1 ; 2 uses
-  store i8 %21, ptr %22, align 1, !tbaa !25
-  %23 = udiv i64 %.0.i22.i, 10
-  %.not.i.i = icmp ult i64 %.0.i22.i, 10
-  br i1 %.not.i.i, label %zend_print_ulong_to_buf.exit.i, label %18, !llvm.loop !10
-
-zend_print_ulong_to_buf.exit.i:                   ; preds = %18
-  %24 = getelementptr inbounds i8, ptr %.05.i.i, i64 -2 ; 2 uses
-  store i8 45, ptr %24, align 1, !tbaa !25
-  br label %zend_print_long_to_buf.exit21.i
-
-25:                                               ; preds = %11
-  store i8 0, ptr %12, align 4, !tbaa !25
-  br label %26
-
-26:                                               ; preds = %26, %25
-  %.05.i23.i = phi ptr [ %12, %25 ], [ %30, %26 ]
-  %.0.i24.i = phi i64 [ %14, %25 ], [ %31, %26 ]  ; 3 uses
-  %27 = urem i64 %.0.i24.i, 10
-  %28 = trunc nuw nsw i64 %27 to i8
-  %29 = or disjoint i8 %28, 48
-  %30 = getelementptr inbounds i8, ptr %.05.i23.i, i64 -1 ; 3 uses
-  store i8 %29, ptr %30, align 1, !tbaa !25
-  %31 = udiv i64 %.0.i24.i, 10
-  %.not.i25.i = icmp ult i64 %.0.i24.i, 10
-  br i1 %.not.i25.i, label %zend_print_long_to_buf.exit21.i, label %26, !llvm.loop !10
-
-zend_print_long_to_buf.exit21.i:                  ; preds = %26, %zend_print_ulong_to_buf.exit.i
-  %.0.i20.i = phi ptr [ %24, %zend_print_ulong_to_buf.exit.i ], [ %30, %26 ] ; 2 uses
-  %32 = ptrtoint ptr %12 to i64
-  %33 = ptrtoint ptr %.0.i20.i to i64
-  %34 = sub i64 %32, %33
-  br label %35
-
-35:                                               ; preds = %zend_print_long_to_buf.exit21.i, %7
-  %.016.i = phi ptr [ %8, %7 ], [ %.0.i20.i, %zend_print_long_to_buf.exit21.i ]
-  %.014.i = phi i64 [ %10, %7 ], [ %34, %zend_print_long_to_buf.exit21.i ]
-  %36 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %37 = load ptr, ptr %36, align 8, !tbaa !119    ; 3 uses
-  %.not19.i = icmp eq ptr %37, null
-  br i1 %.not19.i, label %42, label %38
-
-38:                                               ; preds = %35
-  %39 = getelementptr inbounds nuw i8, ptr %37, i64 24
-  %40 = getelementptr inbounds nuw i8, ptr %37, i64 16
-  %41 = load i64, ptr %40, align 8, !tbaa !123
-  br label %php_array_key_compare_string_natural_general.exit
-
-42:                                               ; preds = %35
-  %43 = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 5 uses
-  %44 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %45 = load i64, ptr %44, align 8, !tbaa !120    ; 3 uses
-  %46 = icmp slt i64 %45, 0
-  br i1 %46, label %47, label %56
-
-47:                                               ; preds = %42
-  %48 = sub i64 0, %45
-  store i8 0, ptr %43, align 4, !tbaa !25
-  br label %49
-
-49:                                               ; preds = %49, %47
-  %.05.i27.i = phi ptr [ %43, %47 ], [ %53, %49 ] ; 2 uses
-  %.0.i28.i = phi i64 [ %48, %47 ], [ %54, %49 ]  ; 3 uses
-  %50 = urem i64 %.0.i28.i, 10
-  %51 = trunc nuw nsw i64 %50 to i8
-  %52 = or disjoint i8 %51, 48
-  %53 = getelementptr inbounds i8, ptr %.05.i27.i, i64 -1 ; 2 uses
-  store i8 %52, ptr %53, align 1, !tbaa !25
-  %54 = udiv i64 %.0.i28.i, 10
-  %.not.i29.i = icmp ult i64 %.0.i28.i, 10
-  br i1 %.not.i29.i, label %zend_print_ulong_to_buf.exit30.i, label %49, !llvm.loop !10
-
-zend_print_ulong_to_buf.exit30.i:                 ; preds = %49
-  %55 = getelementptr inbounds i8, ptr %.05.i27.i, i64 -2 ; 2 uses
-  store i8 45, ptr %55, align 1, !tbaa !25
-  br label %zend_print_long_to_buf.exit.i
-
-56:                                               ; preds = %42
-  store i8 0, ptr %43, align 4, !tbaa !25
-  br label %57
-
-57:                                               ; preds = %57, %56
-  %.05.i31.i = phi ptr [ %43, %56 ], [ %61, %57 ]
-  %.0.i32.i = phi i64 [ %45, %56 ], [ %62, %57 ]  ; 3 uses
-  %58 = urem i64 %.0.i32.i, 10
-  %59 = trunc nuw nsw i64 %58 to i8
-  %60 = or disjoint i8 %59, 48
-  %61 = getelementptr inbounds i8, ptr %.05.i31.i, i64 -1 ; 3 uses
-  store i8 %60, ptr %61, align 1, !tbaa !25
-  %62 = udiv i64 %.0.i32.i, 10
-  %.not.i33.i = icmp ult i64 %.0.i32.i, 10
-  br i1 %.not.i33.i, label %zend_print_long_to_buf.exit.i, label %57, !llvm.loop !10
-
-zend_print_long_to_buf.exit.i:                    ; preds = %57, %zend_print_ulong_to_buf.exit30.i
-  %.0.i.i = phi ptr [ %55, %zend_print_ulong_to_buf.exit30.i ], [ %61, %57 ] ; 2 uses
-  %63 = ptrtoint ptr %43 to i64
-  %64 = ptrtoint ptr %.0.i.i to i64
-  %65 = sub i64 %63, %64
-  br label %php_array_key_compare_string_natural_general.exit
-
-php_array_key_compare_string_natural_general.exit: ; preds = %38, %zend_print_long_to_buf.exit.i
-  %.015.i = phi ptr [ %39, %38 ], [ %.0.i.i, %zend_print_long_to_buf.exit.i ]
-  %.0.i = phi i64 [ %41, %38 ], [ %65, %zend_print_long_to_buf.exit.i ]
-  %66 = call i32 @strnatcmp_ex(ptr noundef nonnull %.016.i, i64 noundef %.014.i, ptr noundef nonnull %.015.i, i64 noundef %.0.i, i1 noundef zeroext false) #18 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  %.not = icmp eq i32 %66, 0
+php_array_key_compare_string_natural_general.exit:
+  %2 = tail call fastcc i32 @php_array_key_compare_string_natural_general(ptr noundef %0, ptr noundef %1, i32 noundef 0) ; 2 uses
+  %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.a, label %bb.b, !prof !30
 
 bb.a:                                             ; preds = %php_array_key_compare_string_natural_general.exit
@@ -823,11 +275,11 @@ bb.a:                                             ; preds = %php_array_key_compa
   %.val = load i32, ptr %i.a, align 4, !tbaa !25
   %i.b = getelementptr i8, ptr %1, i64 12
   %.val7 = load i32, ptr %i.b, align 4, !tbaa !25
-  %67 = call fastcc i32 @stable_sort_fallback(i32 %.val, i32 %.val7)
+  %3 = tail call fastcc i32 @stable_sort_fallback(i32 %.val, i32 %.val7)
   br label %bb.b
 
 bb.b:                                             ; preds = %php_array_key_compare_string_natural_general.exit, %bb.a
-  %.0 = phi i32 [ %67, %bb.a ], [ %66, %php_array_key_compare_string_natural_general.exit ]
+  %.0 = phi i32 [ %3, %bb.a ], [ %2, %php_array_key_compare_string_natural_general.exit ]
   ret i32 %.0
 }
 
@@ -1229,6 +681,151 @@ php_array_key_compare_string_unstable_i.exit:     ; preds = %bb.i, %zend_print_l
 }
 
 declare i32 @zend_binary_strcmp(ptr noundef, i64 noundef, ptr noundef, i64 noundef) local_unnamed_addr #4
+
+; Function Attrs: nounwind uwtable
+define internal fastcc i32 @php_array_key_compare_string_natural_general(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #2 {
+  %4 = alloca [21 x i8], align 16                 ; 3 uses
+  %5 = alloca [21 x i8], align 16                 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !119      ; 3 uses
+  %.not = icmp eq ptr %7, null
+  br i1 %.not, label %12, label %8
+
+8:                                                ; preds = %3
+  %9 = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %11 = load i64, ptr %10, align 8, !tbaa !123
+  br label %36
+
+12:                                               ; preds = %3
+  %13 = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 5 uses
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %15 = load i64, ptr %14, align 8, !tbaa !120    ; 3 uses
+  %16 = icmp slt i64 %15, 0
+  br i1 %16, label %17, label %26
+
+17:                                               ; preds = %12
+  %18 = sub i64 0, %15
+  store i8 0, ptr %13, align 4, !tbaa !25
+  br label %19
+
+19:                                               ; preds = %19, %17
+  %.05.i = phi ptr [ %13, %17 ], [ %23, %19 ]     ; 2 uses
+  %.0.i22 = phi i64 [ %18, %17 ], [ %24, %19 ]    ; 3 uses
+  %20 = urem i64 %.0.i22, 10
+  %21 = trunc nuw nsw i64 %20 to i8
+  %22 = or disjoint i8 %21, 48
+  %23 = getelementptr inbounds i8, ptr %.05.i, i64 -1 ; 2 uses
+  store i8 %22, ptr %23, align 1, !tbaa !25
+  %24 = udiv i64 %.0.i22, 10
+  %.not.i = icmp ult i64 %.0.i22, 10
+  br i1 %.not.i, label %zend_print_ulong_to_buf.exit, label %19, !llvm.loop !10
+
+zend_print_ulong_to_buf.exit:                     ; preds = %19
+  %25 = getelementptr inbounds i8, ptr %.05.i, i64 -2 ; 2 uses
+  store i8 45, ptr %25, align 1, !tbaa !25
+  br label %zend_print_long_to_buf.exit21
+
+26:                                               ; preds = %12
+  store i8 0, ptr %13, align 4, !tbaa !25
+  br label %27
+
+27:                                               ; preds = %27, %26
+  %.05.i23 = phi ptr [ %13, %26 ], [ %31, %27 ]
+  %.0.i24 = phi i64 [ %15, %26 ], [ %32, %27 ]    ; 3 uses
+  %28 = urem i64 %.0.i24, 10
+  %29 = trunc nuw nsw i64 %28 to i8
+  %30 = or disjoint i8 %29, 48
+  %31 = getelementptr inbounds i8, ptr %.05.i23, i64 -1 ; 3 uses
+  store i8 %30, ptr %31, align 1, !tbaa !25
+  %32 = udiv i64 %.0.i24, 10
+  %.not.i25 = icmp ult i64 %.0.i24, 10
+  br i1 %.not.i25, label %zend_print_long_to_buf.exit21, label %27, !llvm.loop !10
+
+zend_print_long_to_buf.exit21:                    ; preds = %27, %zend_print_ulong_to_buf.exit
+  %.0.i20 = phi ptr [ %25, %zend_print_ulong_to_buf.exit ], [ %31, %27 ] ; 2 uses
+  %33 = ptrtoint ptr %13 to i64
+  %34 = ptrtoint ptr %.0.i20 to i64
+  %35 = sub i64 %33, %34
+  br label %36
+
+36:                                               ; preds = %zend_print_long_to_buf.exit21, %8
+  %.016 = phi ptr [ %9, %8 ], [ %.0.i20, %zend_print_long_to_buf.exit21 ]
+  %.014 = phi i64 [ %11, %8 ], [ %35, %zend_print_long_to_buf.exit21 ]
+  %37 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %38 = load ptr, ptr %37, align 8, !tbaa !119    ; 3 uses
+  %.not19 = icmp eq ptr %38, null
+  br i1 %.not19, label %43, label %39
+
+39:                                               ; preds = %36
+  %40 = getelementptr inbounds nuw i8, ptr %38, i64 24
+  %41 = getelementptr inbounds nuw i8, ptr %38, i64 16
+  %42 = load i64, ptr %41, align 8, !tbaa !123
+  br label %67
+
+43:                                               ; preds = %36
+  %44 = getelementptr inbounds nuw i8, ptr %5, i64 20 ; 5 uses
+  %45 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %46 = load i64, ptr %45, align 8, !tbaa !120    ; 3 uses
+  %47 = icmp slt i64 %46, 0
+  br i1 %47, label %48, label %57
+
+48:                                               ; preds = %43
+  %49 = sub i64 0, %46
+  store i8 0, ptr %44, align 4, !tbaa !25
+  br label %50
+
+50:                                               ; preds = %50, %48
+  %.05.i27 = phi ptr [ %44, %48 ], [ %54, %50 ]   ; 2 uses
+  %.0.i28 = phi i64 [ %49, %48 ], [ %55, %50 ]    ; 3 uses
+  %51 = urem i64 %.0.i28, 10
+  %52 = trunc nuw nsw i64 %51 to i8
+  %53 = or disjoint i8 %52, 48
+  %54 = getelementptr inbounds i8, ptr %.05.i27, i64 -1 ; 2 uses
+  store i8 %53, ptr %54, align 1, !tbaa !25
+  %55 = udiv i64 %.0.i28, 10
+  %.not.i29 = icmp ult i64 %.0.i28, 10
+  br i1 %.not.i29, label %zend_print_ulong_to_buf.exit30, label %50, !llvm.loop !10
+
+zend_print_ulong_to_buf.exit30:                   ; preds = %50
+  %56 = getelementptr inbounds i8, ptr %.05.i27, i64 -2 ; 2 uses
+  store i8 45, ptr %56, align 1, !tbaa !25
+  br label %zend_print_long_to_buf.exit
+
+57:                                               ; preds = %43
+  store i8 0, ptr %44, align 4, !tbaa !25
+  br label %58
+
+58:                                               ; preds = %58, %57
+  %.05.i31 = phi ptr [ %44, %57 ], [ %62, %58 ]
+  %.0.i32 = phi i64 [ %46, %57 ], [ %63, %58 ]    ; 3 uses
+  %59 = urem i64 %.0.i32, 10
+  %60 = trunc nuw nsw i64 %59 to i8
+  %61 = or disjoint i8 %60, 48
+  %62 = getelementptr inbounds i8, ptr %.05.i31, i64 -1 ; 3 uses
+  store i8 %61, ptr %62, align 1, !tbaa !25
+  %63 = udiv i64 %.0.i32, 10
+  %.not.i33 = icmp ult i64 %.0.i32, 10
+  br i1 %.not.i33, label %zend_print_long_to_buf.exit, label %58, !llvm.loop !10
+
+zend_print_long_to_buf.exit:                      ; preds = %58, %zend_print_ulong_to_buf.exit30
+  %.0.i = phi ptr [ %56, %zend_print_ulong_to_buf.exit30 ], [ %62, %58 ] ; 2 uses
+  %64 = ptrtoint ptr %44 to i64
+  %65 = ptrtoint ptr %.0.i to i64
+  %66 = sub i64 %64, %65
+  br label %67
+
+67:                                               ; preds = %zend_print_long_to_buf.exit, %39
+  %.015 = phi ptr [ %40, %39 ], [ %.0.i, %zend_print_long_to_buf.exit ]
+  %.0 = phi i64 [ %42, %39 ], [ %66, %zend_print_long_to_buf.exit ]
+  %68 = icmp ne i32 %2, 0
+  %69 = call i32 @strnatcmp_ex(ptr noundef nonnull %.016, i64 noundef %.014, ptr noundef nonnull %.015, i64 noundef %.0, i1 noundef zeroext %68) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  ret i32 %69
+}
 
 declare i32 @strnatcmp_ex(ptr noundef, i64 noundef, ptr noundef, i64 noundef, i1 noundef zeroext) local_unnamed_addr #4
 

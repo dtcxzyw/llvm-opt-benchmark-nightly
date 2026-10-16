@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rocksdb/original/block_cache_tier_file?download=true
-inline.NumInlined: 1139
+inline.NumInlined: 1138
 inline.NumDeleted: 600
 begin_hunk_0_@_ZN7rocksdb14BlockCacheFileD0Ev:bb.a
 
@@ -202,7 +202,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.c = load i8, ptr %i.b, align 8, !tbaa !186, !range !64, !noundef !65
   %i.d = trunc nuw i8 %i.c to i1
-  br i1 %i.d, label %bb.b, label %.critedge
+  br i1 %i.d, label %bb.b, label %.loopexit.i
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 208
@@ -210,13 +210,13 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !350
   %i.i = icmp eq ptr %i.f, %i.h
-  br i1 %i.i, label %bb.c, label %.critedge
+  br i1 %i.i, label %bb.c, label %.loopexit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.j = invoke noundef zeroext i1 @_ZN7rocksdb21RandomAccessCacheFile4ReadERKNS_19LogicalBlockAddressEPNS_5SliceES5_Pc(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull align 4 dereferenceable(12) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
           to label %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPNS_5SliceES5_Pc.exit unwind label %bb.d
 
-bb.d:                                             ; preds = %.loopexit.i, %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.i, %bb.c
+bb.d:                                             ; preds = %.loopexit.i, %bb.c
   %i.k = landingpad { ptr, i32 }
           cleanup
   invoke void @_ZN7rocksdb4port7RWMutex10ReadUnlockEv(ptr noundef nonnull align 8 dereferenceable(56) %i.a)
@@ -232,99 +232,12 @@ bb.e:                                             ; preds = %bb.d
 _ZN7rocksdb8ReadLockD2Ev.exit:                    ; preds = %bb.d
   resume { ptr, i32 } %i.k
 
-.critedge:                                        ; preds = %bb.a, %bb.b
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load i32, ptr %5, align 4, !tbaa !162      ; 2 uses
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %9 = load i32, ptr %8, align 4, !tbaa !161      ; 2 uses
-  %10 = zext i32 %9 to i64                        ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %12 = load ptr, ptr %11, align 8, !tbaa !188
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 104
-  %14 = load i64, ptr %13, align 8, !tbaa !205    ; 2 uses
-  %15 = udiv i64 %10, %14                         ; 3 uses
-  %16 = urem i64 %10, %14                         ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
-  %.not29.i.i = icmp eq i32 %6, 0
-  br i1 %.not29.i.i, label %.loopexit.i, label %.lr.ph.preheader.i.i
-
-.lr.ph.preheader.i.i:                             ; preds = %.critedge
-  %19 = load ptr, ptr %18, align 8, !tbaa !108
-  %20 = load ptr, ptr %17, align 8, !tbaa !109    ; 2 uses
-  %21 = ptrtoint ptr %19 to i64
-  %22 = ptrtoint ptr %20 to i64
-  %23 = sub i64 %21, %22
-  %24 = ashr exact i64 %23, 3
-  %25 = icmp ult i64 %15, %24
-  br i1 %25, label %26, label %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.i
-
-26:                                               ; preds = %.lr.ph.preheader.i.i
-  %27 = getelementptr inbounds nuw [8 x i8], ptr %20, i64 %15
-  %28 = load ptr, ptr %27, align 8, !tbaa !111    ; 2 uses
-  %29 = getelementptr inbounds nuw i8, ptr %28, i64 24
-  %30 = load i64, ptr %29, align 8, !tbaa !120
-  %31 = sub i64 %30, %16
-  %spec.select.peel.i.i = tail call i64 @llvm.umin.i64(i64 %7, i64 %31) ; 3 uses
-  %32 = getelementptr inbounds nuw i8, ptr %28, i64 8
-  %33 = load ptr, ptr %32, align 8, !tbaa !77
-  %34 = getelementptr inbounds nuw i8, ptr %33, i64 %16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %4, ptr align 1 %34, i64 %spec.select.peel.i.i, i1 false)
-  %35 = sub nuw nsw i64 %7, %spec.select.peel.i.i ; 2 uses
-  %.not.peel.i.i = icmp eq i64 %35, 0
-  br i1 %.not.peel.i.i, label %.loopexit.i, label %.lr.ph.peel.next.i.i
-
-.lr.ph.peel.next.i.i:                             ; preds = %26
-  %36 = getelementptr inbounds nuw i8, ptr %4, i64 %spec.select.peel.i.i
-  br label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %44, %.lr.ph.peel.next.i.i
-  %.033.in.i.i = phi i64 [ %.033.i.i, %44 ], [ %15, %.lr.ph.peel.next.i.i ]
-  %.02631.i.i = phi i64 [ %51, %44 ], [ %35, %.lr.ph.peel.next.i.i ] ; 2 uses
-  %.02730.i.i = phi ptr [ %52, %44 ], [ %36, %.lr.ph.peel.next.i.i ] ; 2 uses
-  %.033.i.i = add nuw i64 %.033.in.i.i, 1         ; 3 uses
-  %37 = load ptr, ptr %18, align 8, !tbaa !108
-  %38 = load ptr, ptr %17, align 8, !tbaa !109    ; 2 uses
-  %39 = ptrtoint ptr %37 to i64
-  %40 = ptrtoint ptr %38 to i64
-  %41 = sub i64 %39, %40
-  %42 = ashr exact i64 %41, 3
-  %43 = icmp ult i64 %.033.i.i, %42
-  br i1 %43, label %44, label %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.loopexit.i
-
-44:                                               ; preds = %.lr.ph.i.i
-  %45 = getelementptr inbounds nuw [8 x i8], ptr %38, i64 %.033.i.i
-  %46 = load ptr, ptr %45, align 8, !tbaa !111    ; 2 uses
-  %47 = getelementptr inbounds nuw i8, ptr %46, i64 24
-  %48 = load i64, ptr %47, align 8, !tbaa !120
-  %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %.02631.i.i, i64 %48) ; 3 uses
-  %49 = getelementptr inbounds nuw i8, ptr %46, i64 8
-  %50 = load ptr, ptr %49, align 8, !tbaa !77
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.02730.i.i, ptr align 1 %50, i64 %spec.select.i.i, i1 false)
-  %51 = sub nuw nsw i64 %.02631.i.i, %spec.select.i.i ; 2 uses
-  %52 = getelementptr inbounds nuw i8, ptr %.02730.i.i, i64 %spec.select.i.i
-  %.not.i.i = icmp eq i64 %51, 0
-  br i1 %.not.i.i, label %.loopexit.i, label %.lr.ph.i.i, !llvm.loop !7
-
-_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.loopexit.i: ; preds = %.lr.ph.i.i
-  %.pre.i = load i32, ptr %8, align 4, !tbaa !161
-  br label %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.i
-
-_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.i: ; preds = %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.loopexit.i, %.lr.ph.preheader.i.i
-  %53 = phi i32 [ %.pre.i, %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.loopexit.i ], [ %9, %.lr.ph.preheader.i.i ]
-  %54 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %55 = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %56 = load i32, ptr %55, align 8, !tbaa !97
-  invoke void (ptr, ptr, ...) @_ZN7rocksdb5ErrorERKSt10shared_ptrINS_6LoggerEEPKcz(ptr noundef nonnull align 8 dereferenceable(16) %54, ptr noundef nonnull @.str.17, i32 noundef %56, i32 noundef %53)
+.loopexit.i:                                      ; preds = %bb.a, %bb.b
+  %i.n = invoke noundef zeroext i1 @_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPNS_5SliceES5_Pc(ptr noundef nonnull align 8 dereferenceable(273) %0, ptr noundef nonnull align 4 dereferenceable(12) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
           to label %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPNS_5SliceES5_Pc.exit unwind label %bb.d
 
-.loopexit.i:                                      ; preds = %44, %26, %.critedge
-  %i.n = invoke noundef zeroext i1 @_ZN7rocksdb21RandomAccessCacheFile8ParseRecERKNS_19LogicalBlockAddressEPNS_5SliceES5_Pc(ptr noundef nonnull align 8 dereferenceable(273) %0, ptr noundef nonnull readonly align 4 dereferenceable(12) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
-          to label %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPNS_5SliceES5_Pc.exit unwind label %bb.d
-
-_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPNS_5SliceES5_Pc.exit: ; preds = %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.i, %.loopexit.i, %bb.c
-  %.0 = phi i1 [ %i.j, %bb.c ], [ false, %_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPc.exit.i ], [ %i.n, %.loopexit.i ]
+_ZN7rocksdb18WriteableCacheFile10ReadBufferERKNS_19LogicalBlockAddressEPNS_5SliceES5_Pc.exit: ; preds = %.loopexit.i, %bb.c
+  %.0 = phi i1 [ %i.j, %bb.c ], [ %i.n, %.loopexit.i ]
   invoke void @_ZN7rocksdb4port7RWMutex10ReadUnlockEv(ptr noundef nonnull align 8 dereferenceable(56) %i.a)
           to label %_ZN7rocksdb8ReadLockD2Ev.exit13 unwind label %bb.f
 
