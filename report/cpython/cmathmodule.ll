@@ -202,9 +202,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.aj = fmul double %.0, 2.000000e+00
   %i.ak = fdiv double %i.c, %i.aj                 ; 2 uses
   %i.al = fcmp ult double %0, 0.000000e+00        ; 2 uses
-  %2 = tail call double @llvm.copysign.f64(double %i.ak, double %1)
-  %i.am = tail call double @llvm.copysign.f64(double %.0, double %1)
-  %.sroa.7.0 = select i1 %i.al, double %i.am, double %2
+  %.sroa.7.0.v = select i1 %i.al, double %.0, double %i.ak
+  %i.am = tail call double @llvm.copysign.f64(double %.sroa.7.0.v, double %1)
   %.sroa.0.0 = select i1 %i.al, double %i.ak, double %.0
   %i.an = tail call ptr @__errno_location() #8
   store i32 0, ptr %i.an, align 4, !tbaa !9
@@ -212,7 +211,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.m, %bb.q, %special_type.exit44
   %.sroa.034.0 = phi double [ %.sroa.034.0.copyload, %special_type.exit44 ], [ %.sroa.0.0, %bb.q ], [ 0.000000e+00, %bb.m ]
-  %.sroa.4.0 = phi double [ %.sroa.4.0.copyload, %special_type.exit44 ], [ %.sroa.7.0, %bb.q ], [ %1, %bb.m ]
+  %.sroa.4.0 = phi double [ %.sroa.4.0.copyload, %special_type.exit44 ], [ %i.am, %bb.q ], [ %1, %bb.m ]
   %.fca.0.insert = insertvalue { double, double } poison, double %.sroa.034.0, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %.sroa.4.0, 1
   ret { double, double } %.fca.1.insert

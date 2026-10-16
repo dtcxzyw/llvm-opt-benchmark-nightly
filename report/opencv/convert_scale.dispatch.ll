@@ -204,12 +204,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.c = load double, ptr %i.b, align 8, !tbaa !16 ; 3 uses
   %i.d = fcmp olt double %i.c, 0.000000e+00
-  %.sroa.speculated.i = select i1 %i.d, double 0.000000e+00, double %i.c
-  %8 = tail call double @llvm.round.f64(double %.sroa.speculated.i) ; 3 uses
+  %.sroa.speculated.i = select i1 %i.d, double 0.000000e+00, double %i.c ; 3 uses
   %i.e = fadd double %i.a, %i.c                   ; 2 uses
   %i.f = fcmp olt double %i.e, 0.000000e+00
-  %.sroa.speculated.i24 = select i1 %i.f, double 0.000000e+00, double %i.e
-  %9 = tail call double @llvm.round.f64(double %.sroa.speculated.i24) ; 3 uses
+  %.sroa.speculated.i24 = select i1 %i.f, double 0.000000e+00, double %i.e ; 3 uses
   %i.g = lshr i64 %5, 3
   %i.h = icmp sgt i32 %.sroa.2.0.extract.trunc, 0
   %i.i = icmp sgt i32 %.sroa.0.0.extract.trunc, 0
@@ -243,8 +241,9 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %.02326, i64 %indvars.iv.epil.init
   %i.l = load i8, ptr %i.k, align 1, !tbaa !14
   %.not.epil = icmp eq i8 %i.l, 0
-  %.v.epil.a = select i1 %.not.epil, double %8, double %9
-  %i.m = fptosi double %.v.epil.a to i64
+  %.v.epil.a = select i1 %.not.epil, double %.sroa.speculated.i, double %.sroa.speculated.i24
+  %.v.epil = tail call double @llvm.round.f64(double %.v.epil.a)
+  %i.m = fptosi double %.v.epil to i64
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %.02227, i64 %indvars.iv.epil.init
   store i64 %i.m, ptr %i.n, align 8, !tbaa !30
   br label %._crit_edge
@@ -262,16 +261,18 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %.02326, i64 %indvars.iv
   %i.s = load i8, ptr %i.r, align 1, !tbaa !14
   %.not = icmp eq i8 %i.s, 0
-  %.v.a = select i1 %.not, double %8, double %9
-  %i.t = fptosi double %.v.a to i64
+  %.v.a = select i1 %.not, double %.sroa.speculated.i, double %.sroa.speculated.i24
+  %.v = tail call double @llvm.round.f64(double %.v.a)
+  %i.t = fptosi double %.v to i64
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %.02227, i64 %indvars.iv
   store i64 %i.t, ptr %i.u, align 8, !tbaa !30
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.02326, i64 %indvars.iv.next
   %i.w = load i8, ptr %i.v, align 1, !tbaa !14
   %.not.1 = icmp eq i8 %i.w, 0
-  %.v.1.a = select i1 %.not.1, double %8, double %9
-  %i.x = fptosi double %.v.1.a to i64
+  %.v.1.a = select i1 %.not.1, double %.sroa.speculated.i, double %.sroa.speculated.i24
+  %.v.1 = tail call double @llvm.round.f64(double %.v.1.a)
+  %i.x = fptosi double %.v.1 to i64
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %.02227, i64 %indvars.iv.next
   store i64 %i.x, ptr %i.y, align 8, !tbaa !30
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
@@ -674,10 +675,8 @@ bb.a:
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32 ; 2 uses
   %i.a = load double, ptr %7, align 8, !tbaa !16
   %i.b = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.c = load double, ptr %i.b, align 8, !tbaa !16 ; 2 uses
-  %8 = tail call double @llvm.round.f64(double %i.c) ; 3 uses
-  %i.d = fadd double %i.a, %i.c
-  %9 = tail call double @llvm.round.f64(double %i.d) ; 3 uses
+  %i.c = load double, ptr %i.b, align 8, !tbaa !16 ; 4 uses
+  %i.d = fadd double %i.a, %i.c                   ; 3 uses
   %i.e = lshr i64 %5, 3
   %i.f = icmp sgt i32 %.sroa.2.0.extract.trunc, 0
   %i.g = icmp sgt i32 %.sroa.0.0.extract.trunc, 0
@@ -711,8 +710,9 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %.02325, i64 %indvars.iv.epil.init
   %i.j = load i8, ptr %i.i, align 1, !tbaa !14
   %.not.epil = icmp eq i8 %i.j, 0
-  %.v.epil.a = select i1 %.not.epil, double %8, double %9
-  %i.k = fptosi double %.v.epil.a to i64
+  %.v.epil.a = select i1 %.not.epil, double %i.c, double %i.d
+  %.v.epil = tail call double @llvm.round.f64(double %.v.epil.a)
+  %i.k = fptosi double %.v.epil to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %.02226, i64 %indvars.iv.epil.init
   store i64 %i.k, ptr %i.l, align 8, !tbaa !30
   br label %._crit_edge
@@ -730,16 +730,18 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %.02325, i64 %indvars.iv
   %i.q = load i8, ptr %i.p, align 1, !tbaa !14
   %.not = icmp eq i8 %i.q, 0
-  %.v.a = select i1 %.not, double %8, double %9
-  %i.r = fptosi double %.v.a to i64
+  %.v.a = select i1 %.not, double %i.c, double %i.d
+  %.v = tail call double @llvm.round.f64(double %.v.a)
+  %i.r = fptosi double %.v to i64
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %.02226, i64 %indvars.iv
   store i64 %i.r, ptr %i.s, align 8, !tbaa !30
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.02325, i64 %indvars.iv.next
   %i.u = load i8, ptr %i.t, align 1, !tbaa !14
   %.not.1 = icmp eq i8 %i.u, 0
-  %.v.1.a = select i1 %.not.1, double %8, double %9
-  %i.v = fptosi double %.v.1.a to i64
+  %.v.1.a = select i1 %.not.1, double %i.c, double %i.d
+  %.v.1 = tail call double @llvm.round.f64(double %.v.1.a)
+  %i.v = fptosi double %.v.1 to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %.02226, i64 %indvars.iv.next
   store i64 %i.v, ptr %i.w, align 8, !tbaa !30
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
