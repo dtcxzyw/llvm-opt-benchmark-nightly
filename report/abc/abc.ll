@@ -205,7 +205,7 @@ begin_hunk_0_@llvm.assume
 !407 = distinct !{!407, !44, !57, !58}
 !408 = distinct !{!408, !44, !58, !57}
 !409 = distinct !{!409, !44}
-!410 = distinct !{!410, i1 false, !"vprintf"}
+!410 = distinct !{!410, i1 true, !"vprintf"}
 !411 = distinct !{!411, !410, !"vprintf: argument 0"}
 !412 = distinct !{null}
 !413 = !{!411}

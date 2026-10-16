@@ -205,11 +205,11 @@ begin_hunk_0_@llvm.vector.reduce.umax.v8i16
 !646 = distinct !{!646, !31}
 !647 = !{ptr @tt_name_ascii_from_other, ptr @tt_name_ascii_from_utf16}
 !648 = !{!335, !22, i64 0}
-!649 = distinct !{!649, i1 false, !"extract_svg_doc"}
+!649 = distinct !{!649, i1 true, !"extract_svg_doc"}
 !650 = distinct !{!650, !649, !"extract_svg_doc: argument 0"}
-!651 = distinct !{!651, i1 false, !"extract_svg_doc"}
+!651 = distinct !{!651, i1 true, !"extract_svg_doc"}
 !652 = distinct !{!652, !651, !"extract_svg_doc: argument 0"}
-!653 = distinct !{!653, i1 false, !"extract_svg_doc"}
+!653 = distinct !{!653, i1 true, !"extract_svg_doc"}
 !654 = distinct !{!654, !653, !"extract_svg_doc: argument 0"}
 !655 = distinct !{!655, !31}
 !656 = !{!273, !21, i64 8}
