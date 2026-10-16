@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/xlog?download=true
-inline.NumInlined: 370
-inline.NumDeleted: 66
+inline.NumInlined: 372
+inline.NumDeleted: 67
 loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 7
@@ -205,24 +205,72 @@ bb.aa:                                            ; preds = %bb.z
   %i.dp = and i32 %i.do, -8
   tail call fastcc void @SpinLockAcquire(ptr noundef %i.dn)
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dn, i64 8 ; 2 uses
-  %i.dr = load i64, ptr %i.dq, align 8            ; 3 uses
+  %i.dr = load i64, ptr %i.dq, align 8            ; 4 uses
   %i.ds = sext i32 %i.dp to i64
   %i.dt = add i64 %i.dr, %i.ds                    ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dn, i64 16 ; 2 uses
-  %i.dv = load i64, ptr %i.du, align 8
+  %i.dv = load i64, ptr %i.du, align 8            ; 2 uses
   store i64 %i.dt, ptr %i.dq, align 8
   store i64 %i.dr, ptr %i.du, align 8
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #24, !srcloc !9
   store volatile i8 0, ptr %i.dn, align 8
-  %6 = tail call fastcc i64 @XLogBytePosToRecPtr(i64 noundef %i.dr) ; 4 uses
-  store i64 %6, ptr %i.a, align 8
-  %7 = tail call fastcc i64 @XLogBytePosToEndRecPtr(i64 noundef %i.dt) ; 2 uses
-  store i64 %7, ptr %i.b, align 8
-  %8 = tail call fastcc i64 @XLogBytePosToRecPtr(i64 noundef %i.dv)
-  store i64 %8, ptr %i.dm, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 152
-  store i64 %6, ptr %9, align 8
-  store i64 %6, ptr @RedoRecPtr, align 8
+  %6 = load i32, ptr @UsableBytesInSegment, align 4
+  %7 = sext i32 %6 to i64                         ; 4 uses
+  %8 = urem i64 %i.dr, %7                         ; 3 uses
+  %9 = udiv i64 %i.dr, %7
+  %10 = icmp ult i64 %8, 8152
+  br i1 %10, label %11, label %13
+
+11:                                               ; preds = %bb.aa
+  %12 = add nuw nsw i64 %8, 40
+  br label %XLogBytePosToRecPtr.exit58
+
+13:                                               ; preds = %bb.aa
+  %14 = add i64 %8, -8152                         ; 2 uses
+  %15 = udiv i64 %14, 8168
+  %16 = urem i64 %14, 8168
+  %17 = shl i64 %15, 13
+  %18 = add nuw nsw i64 %16, 8216
+  %19 = add i64 %18, %17
+  br label %XLogBytePosToRecPtr.exit58
+
+XLogBytePosToRecPtr.exit58:                       ; preds = %11, %13
+  %.0.i57 = phi i64 [ %12, %11 ], [ %19, %13 ]
+  %20 = load i32, ptr @wal_segment_size, align 4
+  %21 = sext i32 %20 to i64                       ; 2 uses
+  %22 = mul i64 %9, %21
+  %23 = and i64 %.0.i57, 4294967295
+  %24 = add i64 %22, %23                          ; 4 uses
+  store i64 %24, ptr %i.a, align 8
+  %25 = tail call fastcc i64 @XLogBytePosToEndRecPtr(i64 noundef %i.dt) ; 2 uses
+  store i64 %25, ptr %i.b, align 8
+  %26 = urem i64 %i.dv, %7                        ; 3 uses
+  %27 = udiv i64 %i.dv, %7
+  %28 = icmp ult i64 %26, 8152
+  br i1 %28, label %29, label %31
+
+29:                                               ; preds = %XLogBytePosToRecPtr.exit58
+  %30 = add nuw nsw i64 %26, 40
+  br label %XLogBytePosToRecPtr.exit60
+
+31:                                               ; preds = %XLogBytePosToRecPtr.exit58
+  %32 = add i64 %26, -8152                        ; 2 uses
+  %33 = udiv i64 %32, 8168
+  %34 = urem i64 %32, 8168
+  %35 = shl i64 %33, 13
+  %36 = add nuw nsw i64 %34, 8216
+  %37 = add i64 %36, %35
+  br label %XLogBytePosToRecPtr.exit60
+
+XLogBytePosToRecPtr.exit60:                       ; preds = %29, %31
+  %.0.i59 = phi i64 [ %30, %29 ], [ %37, %31 ]
+  %38 = mul i64 %27, %21
+  %39 = and i64 %.0.i59, 4294967295
+  %40 = add i64 %38, %39
+  store i64 %40, ptr %i.dm, align 8
+  %41 = getelementptr inbounds nuw i8, ptr %i.c, i64 152
+  store i64 %24, ptr %41, align 8
+  store i64 %24, ptr @RedoRecPtr, align 8
   br label %.thread
 
 bb.ab:                                            ; preds = %bb.z
@@ -235,9 +283,9 @@ bb.ab:                                            ; preds = %bb.z
   %.pre91 = load i64, ptr %i.b, align 8
   br label %.thread
 
-.thread:                                          ; preds = %..thread_crit_edge, %bb.aa, %XLogBytePosToRecPtr.exit56
-  %i.dy = phi i64 [ %.pre91, %..thread_crit_edge ], [ %7, %bb.aa ], [ %i.cx, %XLogBytePosToRecPtr.exit56 ] ; 3 uses
-  %i.dz = phi i64 [ %.pre, %..thread_crit_edge ], [ %6, %bb.aa ], [ %i.ch, %XLogBytePosToRecPtr.exit56 ] ; 4 uses
+.thread:                                          ; preds = %..thread_crit_edge, %XLogBytePosToRecPtr.exit60, %XLogBytePosToRecPtr.exit56
+  %i.dy = phi i64 [ %.pre91, %..thread_crit_edge ], [ %25, %XLogBytePosToRecPtr.exit60 ], [ %i.cx, %XLogBytePosToRecPtr.exit56 ] ; 3 uses
+  %i.dz = phi i64 [ %.pre, %..thread_crit_edge ], [ %24, %XLogBytePosToRecPtr.exit60 ], [ %i.ch, %XLogBytePosToRecPtr.exit56 ] ; 4 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.e, i64 20 ; 2 uses
   %i.eb = load i32, ptr %i.ea, align 4
   %i.ec = load ptr, ptr @pg_comp_crc32c, align 8
@@ -639,38 +687,6 @@ update_checkpoint_display.exit106:                ; preds = %bb.az, %bb.ay, %bb.
 declare void @SyncPreCheckpoint() local_unnamed_addr #5
 
 declare i32 @GetOldestActiveTransactionId(i1 noundef zeroext, i1 noundef zeroext) local_unnamed_addr #5
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc i64 @XLogBytePosToRecPtr(i64 noundef %0) unnamed_addr #10 {
-  %2 = load i32, ptr @UsableBytesInSegment, align 4
-  %3 = sext i32 %2 to i64                         ; 2 uses
-  %4 = urem i64 %0, %3                            ; 3 uses
-  %5 = udiv i64 %0, %3
-  %6 = icmp ult i64 %4, 8152
-  br i1 %6, label %7, label %9
-
-7:                                                ; preds = %1
-  %8 = add nuw nsw i64 %4, 40
-  br label %16
-
-9:                                                ; preds = %1
-  %10 = add i64 %4, -8152                         ; 2 uses
-  %11 = udiv i64 %10, 8168
-  %12 = urem i64 %10, 8168
-  %13 = shl i64 %11, 13
-  %14 = add nuw nsw i64 %12, 8216
-  %15 = add i64 %14, %13
-  br label %16
-
-16:                                               ; preds = %9, %7
-  %.0 = phi i64 [ %8, %7 ], [ %15, %9 ]
-  %17 = load i32, ptr @wal_segment_size, align 4
-  %18 = sext i32 %17 to i64
-  %19 = mul i64 %5, %18
-  %20 = and i64 %.0, 4294967295
-  %21 = add i64 %19, %20
-  ret i64 %21
-}
 
 declare void @XLogBeginInsert() local_unnamed_addr #5
 

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/a_time_posix?download=true
-inline.NumInlined: 7
+inline.NumInlined: 8
 inline.NumDeleted: 5
 begin_hunk_0_@OPENSSL_posix_to_tm:bb.a
   %i.s = trunc nsw i64 %i.r to i32                ; 2 uses
@@ -202,13 +202,86 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.a,
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @ossl_posix_to_asn1_time(i64 noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #4 {
 bb.a:
-  %2 = alloca %struct.tm, align 8                 ; 4 uses
+  %2 = alloca %struct.tm, align 8                 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
-  %3 = call i32 @OPENSSL_posix_to_tm(i64 noundef %0, ptr noundef nonnull %2)
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %bb.c, label %bb.b
+  %3 = add i64 %0, -253402300800
+  %4 = icmp ult i64 %3, -315569520000
+  br i1 %4, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %5 = sdiv i64 %0, 86400
+  %6 = srem i64 %0, 86400                         ; 4 uses
+  %7 = icmp slt i64 %6, 0
+  %8 = add nsw i64 %6, 86400
+  %.lobit.i.i = ashr i64 %6, 63
+  %.040.i.i = add nsw i64 %.lobit.i.i, %5         ; 3 uses
+  %.0.i.i = select i1 %7, i64 %8, i64 %6
+  %9 = add nsw i64 %.040.i.i, 719468              ; 2 uses
+  %10 = icmp sgt i64 %.040.i.i, -719468
+  %11 = add nuw nsw i64 %.040.i.i, 573372
+  %12 = select i1 %10, i64 %9, i64 %11
+  %.lhs.trunc57.i.i = trunc nsw i64 %12 to i32
+  %13 = sdiv i32 %.lhs.trunc57.i.i, 146097        ; 2 uses
+  %.sext.i.i = sext i32 %13 to i64
+  %.neg.i.i = mul nsw i64 %.sext.i.i, -146097
+  %14 = add nsw i64 %.neg.i.i, %9                 ; 2 uses
+  %.neg43.lhs.trunc.i.i = trunc nsw i64 %14 to i32 ; 4 uses
+  %.neg4358.i.i = sdiv i32 %.neg43.lhs.trunc.i.i, -1460
+  %15 = sdiv i32 %.neg43.lhs.trunc.i.i, 36524
+  %.neg4461.i.i = sdiv i32 %.neg43.lhs.trunc.i.i, -146096
+  %16 = add nsw i32 %.neg4358.i.i, %.neg43.lhs.trunc.i.i
+  %17 = add nsw i32 %16, %15
+  %.lhs.trunc62.i.i = add nsw i32 %17, %.neg4461.i.i ; 3 uses
+  %18 = sdiv i32 %.lhs.trunc62.i.i, 365           ; 2 uses
+  %.sext63.i.i = sext i32 %18 to i64
+  %19 = mul nsw i32 %13, 400
+  %.neg46.i.i = mul nsw i64 %.sext63.i.i, -365
+  %.neg4764.i.i = sdiv i32 %.lhs.trunc62.i.i, -1460
+  %.neg47.sext.i.i = sext i32 %.neg4764.i.i to i64
+  %.neg45.neg65.i.i = sdiv i32 %.lhs.trunc62.i.i, 36500
+  %.neg45.neg.sext.i.i = sext i32 %.neg45.neg65.i.i to i64
+  %.neg48.i.i = add nsw i64 %14, %.neg47.sext.i.i
+  %.neg49.i.i = add nsw i64 %.neg48.i.i, %.neg45.neg.sext.i.i
+  %20 = add nsw i64 %.neg49.i.i, %.neg46.i.i      ; 2 uses
+  %21 = trunc nsw i64 %20 to i32                  ; 2 uses
+  %22 = mul nsw i32 %21, 5
+  %.lhs.trunc66.i.i = add nsw i32 %22, 2
+  %23 = sdiv i32 %.lhs.trunc66.i.i, 153           ; 2 uses
+  %24 = icmp slt i64 %20, 306
+  %.v.i.i = select i1 %24, i32 3, i32 -9
+  %25 = add nsw i32 %23, %.v.i.i                  ; 2 uses
+  %26 = icmp slt i32 %25, 3
+  %27 = zext i1 %26 to i32
+  %28 = mul nsw i32 %23, 153
+  %.neg50.lhs.trunc.i.i = add nsw i32 %28, 2
+  %.neg5068.i.i = sdiv i32 %.neg50.lhs.trunc.i.i, -5
+  %29 = add nsw i32 %21, 1
+  %30 = add nsw i32 %29, %.neg5068.i.i
+  %.lhs.trunc.i.i = trunc nuw nsw i64 %.0.i.i to i32 ; 2 uses
+  %31 = udiv i32 %.lhs.trunc.i.i, 3600
+  %32 = urem i32 %.lhs.trunc.i.i, 3600
+  %.lhs.trunc53.i.i = trunc nuw nsw i32 %32 to i16 ; 2 uses
+  %33 = udiv i16 %.lhs.trunc53.i.i, 60
+  %.zext54.i.i = zext nneg i16 %33 to i32
+  %34 = urem i16 %.lhs.trunc53.i.i, 60
+  %.zext56.i.i = zext nneg i16 %34 to i32
+  %35 = add nsw i32 %19, -1900
+  %spec.select.i = add nsw i32 %35, %18
+  %36 = add nsw i32 %spec.select.i, %27
+  %37 = add nsw i32 %25, -1
+  store i32 %.zext56.i.i, ptr %2, align 8, !tbaa !11
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 4
+  store i32 %.zext54.i.i, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !11
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i32 %31, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !11
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 12
+  store i32 %30, ptr %.sroa.7.0..sroa_idx.i, align 4, !tbaa !11
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store i32 %37, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !11
+  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 20
+  store i32 %36, ptr %.sroa.11.0..sroa_idx.i, align 4, !tbaa !11
+  %.sroa.16.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.16.0..sroa_idx.i, i8 0, i64 32, i1 false)
   %i.a = load ptr, ptr %1, align 8, !tbaa !21
   %i.b = call ptr @ossl_asn1_time_from_tm(ptr noundef %i.a, ptr noundef nonnull %2, i32 noundef -1) #6 ; 2 uses
   store ptr %i.b, ptr %1, align 8, !tbaa !21
@@ -216,7 +289,7 @@ bb.b:                                             ; preds = %bb.a
   %. = zext i1 %i.c to i32
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
+bb.c:                                             ; preds = %bb.a, %bb.b
   %.0 = phi i32 [ %., %bb.b ], [ 0, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   ret i32 %.0

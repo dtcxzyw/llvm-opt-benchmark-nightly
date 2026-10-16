@@ -205,12 +205,13 @@ bb.a:
   br i1 %niter.ncmp.7, label %.lr.ph65.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !332
 
 ._crit_edge66:                                    ; preds = %bb.a
-  %i.ar = sitofp i32 %1 to float                  ; 3 uses
-  %5 = fdiv ninf float 0.000000e+00, %i.ar
-  %6 = fdiv float 0.000000e+00, %i.ar
-  %7 = insertelement <2 x float> poison, float %i.ar, i64 0
-  %i.as = insertelement <2 x float> %7, float %6, i64 1
+  %i.ar = sitofp i32 %1 to float                  ; 2 uses
+  %5 = insertelement <2 x float> poison, float %i.ar, i64 0
+  %6 = fdiv <2 x float> <float 0.000000e+00, float poison>, %5 ; 2 uses
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.as = insertelement <2 x float> %7, float %i.ar, i64 0
   %i.at = fdiv <2 x float> <float 0.000000e+00, float f0x3FB504F3>, %i.as
+  %8 = extractelement <2 x float> %6, i64 0
   br label %._crit_edge71
 
 .lr.ph70.preheader.unr-lcssa:                     ; preds = %.lr.ph65
@@ -302,7 +303,7 @@ middle.block:                                     ; preds = %vector.body
   br label %._crit_edge71
 
 ._crit_edge71:                                    ; preds = %._crit_edge71.loopexit, %middle.block, %._crit_edge66
-  %i.cd = phi float [ %5, %._crit_edge66 ], [ %i.bi, %middle.block ], [ %i.ca, %._crit_edge71.loopexit ]
+  %i.cd = phi float [ %8, %._crit_edge66 ], [ %i.bi, %middle.block ], [ %i.ca, %._crit_edge71.loopexit ]
   %i.ce = phi <2 x float> [ %i.at, %._crit_edge66 ], [ %i.bh, %middle.block ], [ %i.cc, %._crit_edge71.loopexit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @_ZN2cv3Mat3eyeEiii(ptr dead_on_unwind nonnull writable sret(%"class.cv::MatExpr") align 8 %4, i32 noundef 3, i32 noundef 3, i32 noundef 5)
