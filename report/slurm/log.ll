@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   store i1 true, ptr @at_forked, align 1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.b, %.lr.ph, %bb.a
+.loopexit:                                        ; preds = %.lr.ph, %bb.b, %bb.a
   %.b = load i1, ptr @syslog_open, align 1
   br i1 %.b, label %bb.c, label %bb.d
 
@@ -476,7 +476,7 @@ bb.b:                                             ; preds = %bb.a
   store i1 true, ptr @at_forked, align 1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.b, %.lr.ph, %bb.a
+.loopexit:                                        ; preds = %.lr.ph, %bb.b, %bb.a
   %.not35 = icmp eq ptr %0, null
   %i.d = load ptr, ptr @sched_log, align 8        ; 2 uses
   br i1 %.not35, label %bb.d, label %bb.c

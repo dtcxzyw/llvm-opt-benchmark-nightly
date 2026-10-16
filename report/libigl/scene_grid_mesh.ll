@@ -1,9 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/scene_grid_mesh?download=true
 inline.NumInlined: 372
 inline.NumDeleted: 55
-loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_ZNK6embree8Geometry13vlinearBoundsERKNS_6Vec3faEffRKNS_12LinearSpace3IS1_EEmRKNS_4BBoxIfEE:.noexc.i
   call void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(48) %i.c) #20
   %i.y = load ptr, ptr %8, align 8                ; 2 uses
@@ -205,14 +204,19 @@ bb.d:                                             ; preds = %bb.c
   br label %.preheader93
 
 .preheader93:                                     ; preds = %.preheader93.preheader, %..critedge40.i_crit_edge
-  %.028.i106 = phi i64 [ %i.bc, %..critedge40.i_crit_edge ], [ 0, %.preheader93.preheader ] ; 2 uses
+  %.028.i106 = phi i64 [ 0, %.preheader93.preheader ], [ %i.bc, %..critedge40.i_crit_edge ] ; 2 uses
   %i.as = mul nuw nsw i64 %.028.i106, %i.ar
   %invariant.op104 = add nuw nsw i64 %i.as, %i.z
   br label %.preheader91.a
 
-.preheader91.a:                                   ; preds = %.preheader93, %.critedge.i36
-  %.027.i34103 = phi i64 [ 0, %.preheader93 ], [ %7, %.critedge.i36 ] ; 2 uses
-  %.reass.reass = add nuw nsw i64 %.027.i34103, %invariant.op104
+7:                                                ; preds = %.preheader91.a
+  %8 = add nuw nsw i64 %.027.i34103, 1            ; 2 uses
+  %exitcond.not = icmp eq i64 %8, %i.aq
+  br i1 %exitcond.not, label %..critedge40.i_crit_edge, label %.preheader91.a, !llvm.loop !6
+
+.preheader91.a:                                   ; preds = %.preheader93, %7
+  %.027.i34103 = phi i64 [ 0, %.preheader93 ], [ %8, %7 ] ; 2 uses
+  %.reass.reass = add nuw nsw i64 %invariant.op104, %.027.i34103
   %i.at = mul i64 %.pre217.pre, %.reass.reass
   %i.au = getelementptr inbounds nuw i8, ptr %.pre216.pre, i64 %i.at
   %i.av = load <4 x float>, ptr %i.au, align 1, !noalias !99 ; 2 uses
@@ -222,14 +226,9 @@ bb.d:                                             ; preds = %bb.c
   %i.az = bitcast <4 x i1> %i.ay to i4
   %i.ba = and i4 %i.az, 7
   %i.bb = icmp eq i4 %i.ba, 7
-  br i1 %i.bb, label %.critedge.i36, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread
+  br i1 %i.bb, label %7, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread
 
-.critedge.i36:                                    ; preds = %.preheader91.a
-  %7 = add nuw nsw i64 %.027.i34103, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %7, %i.aq
-  br i1 %exitcond.not, label %..critedge40.i_crit_edge, label %.preheader91.a, !llvm.loop !6
-
-..critedge40.i_crit_edge:                         ; preds = %.critedge.i36
+..critedge40.i_crit_edge:                         ; preds = %7
   %i.bc = add nuw nsw i64 %.028.i106, 1           ; 2 uses
   %exitcond214.not = icmp eq i64 %i.bc, %i.ap
   br i1 %exitcond214.not, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread84, label %.preheader93, !llvm.loop !7

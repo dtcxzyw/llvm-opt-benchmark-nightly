@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %_RINvNtCs3oUPovFnLW
   tail call void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtNtCs3zuhHmEJ01l_5tokio4sync5mutex5MutexINtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7channel8ReceiverINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEEE9drop_slowB1x_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.o) #37, !dbg !4477
   br label %common.ret, !dbg !4477
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.n, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit, %bb.h, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit, %bb.q, %bb.t
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.t, %bb.q, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit, %bb.n, %bb.h, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #36, !dbg !4454
@@ -608,7 +608,7 @@ bb.er:                                            ; preds = %bb.ep
 bb.es:                                            ; preds = %bb.el, %bb.er
   %i.ou = getelementptr inbounds nuw i8, ptr %0, i64 640, !dbg !12186
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(224) %i.ou)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit unwind label %.loopexit104, !dbg !12187
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit unwind label %.loopexit.split-lp105, !dbg !12187
 
 bb.et:                                            ; preds = %bb.ep
   %i.ov = landingpad { ptr, i32 }
@@ -640,19 +640,14 @@ bb.ey:                                            ; preds = %bb.ev
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(224) %i.ot)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit46 unwind label %.loopexit.split-lp105, !dbg !12188
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMNtCs7qAQKZbgfvS_20cf_rustracing_jaeger8reporterNtBG_21JaegerCompactReporter6report0ECsbaWXNhtWAp9_11foundations.exit, %.loopexit104, %.loopexit.split-lp105
-  %.pn28 = phi { ptr, i32 } [ %lpad.loopexit.split-lp107, %.loopexit.split-lp105 ], [ %lpad.loopexit106, %.loopexit104 ], [ %.pn25.pn, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMNtCs7qAQKZbgfvS_20cf_rustracing_jaeger8reporterNtBG_21JaegerCompactReporter6report0ECsbaWXNhtWAp9_11foundations.exit ]
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMNtCs7qAQKZbgfvS_20cf_rustracing_jaeger8reporterNtBG_21JaegerCompactReporter6report0ECsbaWXNhtWAp9_11foundations.exit, %.loopexit.split-lp105
+  %.pn28 = phi { ptr, i32 } [ %lpad.loopexit.split-lp107, %.loopexit.split-lp105 ], [ %.pn25.pn, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMNtCs7qAQKZbgfvS_20cf_rustracing_jaeger8reporterNtBG_21JaegerCompactReporter6report0ECsbaWXNhtWAp9_11foundations.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.868), !dbg !12189
   %i.oy = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !12190
   invoke void @_RNvXs5_NtNtCs1xwejQucwHj_5alloc3vec5drainINtB5_5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.oy)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12191
 
-.loopexit104:                                     ; preds = %bb.es
-  %lpad.loopexit106 = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59
-
-.loopexit.split-lp105:                            ; preds = %bb.ey
+.loopexit.split-lp105:                            ; preds = %bb.ey, %bb.es
   %lpad.loopexit.split-lp107 = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59
@@ -675,7 +670,7 @@ bb.fa:                                            ; preds = %bb.eu, %bb.en
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs26L2cHvO7VQ_13cf_rustracing5error5ErrorECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef align 8 dereferenceable(40) %i.v) #38
           to label %bb.ew unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12184
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMNtCs7qAQKZbgfvS_20cf_rustracing_jaeger8reporterNtBG_21JaegerCompactReporter6report0ECsbaWXNhtWAp9_11foundations.exit, %bb.fa, %bb.fd, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit, %bb.e, %bb.h, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59, %bb.fp
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMNtCs7qAQKZbgfvS_20cf_rustracing_jaeger8reporterNtBG_21JaegerCompactReporter6report0ECsbaWXNhtWAp9_11foundations.exit, %bb.fp, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59, %bb.h, %bb.e, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit, %bb.fd, %bb.fa
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #36, !dbg !11920

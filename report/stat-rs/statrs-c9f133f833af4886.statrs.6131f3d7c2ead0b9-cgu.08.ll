@@ -205,12 +205,12 @@ define hidden void @_RNvMs_NtNtCsbADZB03g5jP_8nalgebra6linalg2luINtB4_2LUdNtNtNt
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 5 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
-  %i.c = alloca [24 x i8], align 8                ; 5 uses
+  %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = alloca [32 x i8], align 8                ; 7 uses
   %i.f = alloca [8 x i8], align 8                 ; 5 uses
   %i.g = alloca [8 x i8], align 8                 ; 5 uses
-  %i.h = alloca [24 x i8], align 8                ; 5 uses
+  %i.h = alloca [24 x i8], align 8                ; 6 uses
   %i.i = alloca [24 x i8], align 8                ; 6 uses
   %i.j = alloca [32 x i8], align 8                ; 7 uses
   %i.k = alloca [24 x i8], align 8                ; 4 uses
@@ -495,10 +495,10 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !89)
   %.val7.i.i = load i64, ptr %i.at, align 8, !alias.scope !89, !noalias !87, !noundef !4 ; 10 uses
   %.not.i.i = icmp eq i64 %.val7.i.i, 0
-  %.val8.i.i = load ptr, ptr %i.h, align 8, !alias.scope !89, !noalias !87 ; 3 uses
   br i1 %.not.i.i, label %_RNvXsy_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9MulAssigndE10mul_assignCs8lmMd0ZksV9_6statrs.exit.i, label %.preheader.i.i.preheader
 
 .preheader.i.i.preheader:                         ; preds = %.noexc19
+  %.val8.i.i = load ptr, ptr %i.h, align 8, !alias.scope !89, !noalias !87, !noundef !4 ; 2 uses
   %min.iters.check = icmp ult i64 %.val7.i.i, 4
   br i1 %min.iters.check, label %.preheader.i.i.preheader163, label %vector.ph
 
@@ -548,6 +548,7 @@ _RNvXsy_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimen
 _RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimension5ConstKj1_ENtB14_3DynINtNtB6_11matrix_view14ViewStorageMutdB11_B1u_B11_B1u_EEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexTjjEE5indexCs8lmMd0ZksV9_6statrs.exit.lr.ph.i: ; preds = %_RNvXsy_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9MulAssigndE10mul_assignCs8lmMd0ZksV9_6statrs.exit.i
   %i.cp = add i64 %.val13.i.i, -1                 ; 2 uses
   %i.cq = icmp eq i64 %i.cp, %.val7.i.i
+  %.sroa.0.0.i9.i.i = load ptr, ptr %i.h, align 8, !noalias !87, !nonnull !4
   br i1 %i.cq, label %_RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimension5ConstKj1_ENtB14_3DynINtNtB6_11matrix_view14ViewStorageMutdB11_B1u_B11_B1u_EEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexTjjEE5indexCs8lmMd0ZksV9_6statrs.exit.us.i, label %_RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimension5ConstKj1_ENtB14_3DynINtNtB6_11matrix_view14ViewStorageMutdB11_B1u_B11_B1u_EEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexTjjEE5indexCs8lmMd0ZksV9_6statrs.exit.i, !prof !5
 
 _RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimension5ConstKj1_ENtB14_3DynINtNtB6_11matrix_view14ViewStorageMutdB11_B1u_B11_B1u_EEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexTjjEE5indexCs8lmMd0ZksV9_6statrs.exit.us.i: ; preds = %_RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimension5ConstKj1_ENtB14_3DynINtNtB6_11matrix_view14ViewStorageMutdB11_B1u_B11_B1u_EEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexTjjEE5indexCs8lmMd0ZksV9_6statrs.exit.lr.ph.i, %.noexc20
@@ -562,7 +563,7 @@ _RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimen
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !94
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !94
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cv) ]
-  invoke void @_RINvNtNtCsbADZB03g5jP_8nalgebra4base11blas_uninit11array_axcpyNtNtB4_6uninit4InitdECs8lmMd0ZksV9_6statrs(ptr noalias nofree noundef nonnull align 8 %i.cv, i64 noundef %.val7.i.i, double noundef %i.cu, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %.val8.i.i, i64 noundef %.val7.i.i, double noundef 1.000000e+00, double noundef 1.000000e+00, i64 noundef 1, i64 noundef 1, i64 noundef %.val7.i.i)
+  invoke void @_RINvNtNtCsbADZB03g5jP_8nalgebra4base11blas_uninit11array_axcpyNtNtB4_6uninit4InitdECs8lmMd0ZksV9_6statrs(ptr noalias nofree noundef nonnull align 8 %i.cv, i64 noundef %.val7.i.i, double noundef %i.cu, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %.sroa.0.0.i9.i.i, i64 noundef %.val7.i.i, double noundef 1.000000e+00, double noundef 1.000000e+00, i64 noundef 1, i64 noundef 1, i64 noundef %.val7.i.i)
           to label %.noexc20 unwind label %.loopexit
 
 .noexc20:                                         ; preds = %_RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimension5ConstKj1_ENtB14_3DynINtNtB6_11matrix_view14ViewStorageMutdB11_B1u_B11_B1u_EEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexTjjEE5indexCs8lmMd0ZksV9_6statrs.exit.us.i
@@ -738,10 +739,10 @@ _RNvMs9_NtNtCsbADZB03g5jP_8nalgebra4base6matrixINtB5_6MatrixdNtNtB7_9dimension3D
   call void @llvm.experimental.noalias.scope.decl(metadata !101)
   %.val7.i8.i = load i64, ptr %i.ap, align 8, !alias.scope !101, !noalias !97, !noundef !4 ; 10 uses
   %.not.i9.i = icmp eq i64 %.val7.i8.i, 0
-  %.val8.i.i37 = load ptr, ptr %i.c, align 8, !alias.scope !101, !noalias !97 ; 3 uses
   br i1 %.not.i9.i, label %_RNvXsy_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9MulAssigndE10mul_assignCs8lmMd0ZksV9_6statrs.exit.i41, label %.preheader.i.i38.preheader
 
 .preheader.i.i38.preheader:                       ; preds = %.noexc47
+  %.val8.i.i38 = load ptr, ptr %i.c, align 8, !alias.scope !101, !noalias !97, !noundef !4 ; 2 uses
   %min.iters.check150 = icmp ult i64 %.val7.i8.i, 4
   br i1 %min.iters.check150, label %.preheader.i.i38.preheader164, label %vector.ph151
 
@@ -753,7 +754,7 @@ vector.ph151:                                     ; preds = %.preheader.i.i38.pr
 
 vector.body155:                                   ; preds = %vector.body155, %vector.ph151
   %index156 = phi i64 [ 0, %vector.ph151 ], [ %index.next159, %vector.body155 ] ; 2 uses
-  %i.eh = getelementptr [8 x i8], ptr %.val8.i.i37, i64 %index156 ; 3 uses
+  %i.eh = getelementptr [8 x i8], ptr %.val8.i.i38, i64 %index156 ; 3 uses
   %i.ei = getelementptr i8, ptr %i.eh, i64 16     ; 2 uses
   %wide.load157 = load <2 x double>, ptr %i.eh, align 8, !alias.scope !102, !noalias !101
   %wide.load158 = load <2 x double>, ptr %i.ei, align 8, !alias.scope !102, !noalias !101
@@ -776,7 +777,7 @@ middle.block160:                                  ; preds = %vector.body155
 .preheader.i.i38:                                 ; preds = %.preheader.i.i38.preheader164, %.preheader.i.i38
   %.sroa.05.010.i.i39 = phi i64 [ %i.em, %.preheader.i.i38 ], [ %.sroa.05.010.i.i39.ph, %.preheader.i.i38.preheader164 ] ; 2 uses
   %i.em = add nuw i64 %.sroa.05.010.i.i39, 1      ; 2 uses
-  %i.en = getelementptr [8 x i8], ptr %.val8.i.i37, i64 %.sroa.05.010.i.i39 ; 2 uses
+  %i.en = getelementptr [8 x i8], ptr %.val8.i.i38, i64 %.sroa.05.010.i.i39 ; 2 uses
   %i.eo = load double, ptr %i.en, align 8, !alias.scope !102, !noalias !101, !noundef !4
   %i.ep = fmul double %i.eb, %i.eo
   store double %i.ep, ptr %i.en, align 8, !alias.scope !102, !noalias !101
@@ -790,6 +791,7 @@ _RNvXsy_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimen
 
 _RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.lr.ph.i: ; preds = %_RNvXsy_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9MulAssigndE10mul_assignCs8lmMd0ZksV9_6statrs.exit.i41
   %i.er = add i64 %.val13.i.i32, -1               ; 2 uses
+  %.sroa.0.0.i9.i.i43 = load ptr, ptr %i.c, align 8, !noalias !97, !nonnull !4
   %i.es = icmp eq i64 %i.er, %.val7.i8.i
   br i1 %i.es, label %_RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.us.i, label %_RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.i, !prof !5
 
@@ -811,7 +813,7 @@ _RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dime
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !104
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !104
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ev) ]
-  invoke void @_RINvNtNtCsbADZB03g5jP_8nalgebra4base11blas_uninit11array_axcpyNtNtB4_6uninit4InitdECs8lmMd0ZksV9_6statrs(ptr noalias nofree noundef nonnull align 8 %i.ev, i64 noundef %.val7.i8.i, double noundef %i.fb, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %.val8.i.i37, i64 noundef %.val7.i8.i, double noundef 1.000000e+00, double noundef 1.000000e+00, i64 noundef 1, i64 noundef 1, i64 noundef %.val7.i8.i)
+  invoke void @_RINvNtNtCsbADZB03g5jP_8nalgebra4base11blas_uninit11array_axcpyNtNtB4_6uninit4InitdECs8lmMd0ZksV9_6statrs(ptr noalias nofree noundef nonnull align 8 %i.ev, i64 noundef %.val7.i8.i, double noundef %i.fb, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %.sroa.0.0.i9.i.i43, i64 noundef %.val7.i8.i, double noundef 1.000000e+00, double noundef 1.000000e+00, i64 noundef 1, i64 noundef 1, i64 noundef %.val7.i8.i)
           to label %.noexc48 unwind label %.loopexit.split-lp.loopexit
 
 .noexc48:                                         ; preds = %_RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.us.i

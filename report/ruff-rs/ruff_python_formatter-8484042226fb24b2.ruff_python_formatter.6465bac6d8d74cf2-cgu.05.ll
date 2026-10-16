@@ -202,62 +202,64 @@ _RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange13narrow_
 
 .split.i:                                         ; preds = %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange13narrow_offset.exit9.i, %bb.b
   call void @llvm.experimental.noalias.scope.decl(metadata !2587)
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %4 = load i32, ptr %3, align 8, !alias.scope !2587 ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %6 = load i32, ptr %5, align 4, !alias.scope !2587 ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 4 uses
-  %.promoted.i26 = load i32, ptr %i.z, align 8, !alias.scope !2587 ; 2 uses
-  %.promoted22.i = load i32, ptr %i.aa, align 4, !alias.scope !2587 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2588
   store i64 %1, ptr %i.a, align 8, !noalias !2588
-  store ptr %2, ptr %7, align 8, !noalias !2588
-  %8 = call noundef i32 @_RNvYNtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5startCs8CpBcHC8tKo_21ruff_python_formatter(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a), !noalias !2588 ; 4 uses
-  %.not.i.i6.i = icmp ugt i32 %8, %4
+  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store ptr %2, ptr %i.z, align 8, !noalias !2588
+  %3 = call noundef i32 @_RNvYNtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5startCs8CpBcHC8tKo_21ruff_python_formatter(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a), !noalias !2588 ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.promoted22.i = load i32, ptr %i.aa, align 8, !alias.scope !2589, !noundef !3 ; 2 uses
+  %.not.i.i6.i = icmp ugt i32 %3, %.promoted22.i
   br i1 %.not.i.i6.i, label %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i.i28, label %bb.h
 
 bb.h:                                             ; preds = %.split.i
-  %.sroa.0.0.i.i.i.i27 = call noundef i32 @llvm.umax.i32(i32 %8, i32 %.promoted.i26) ; 2 uses
-  store i32 %.sroa.0.0.i.i.i.i27, ptr %i.z, align 8, !alias.scope !2589
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %5 = load i32, ptr %4, align 8, !alias.scope !2589, !noundef !3
+  %.sroa.0.0.i.i.i.i27 = call noundef i32 @llvm.umax.i32(i32 %3, i32 %5)
+  store i32 %.sroa.0.0.i.i.i.i27, ptr %4, align 8, !alias.scope !2589
   br label %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i.i28
 
 _RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i.i28: ; preds = %bb.h, %.split.i
-  %.sroa.0.0.i.i.i20.i = phi i32 [ %.sroa.0.0.i.i.i.i27, %bb.h ], [ %.promoted.i26, %.split.i ]
-  %.not.i1.i.i29 = icmp ult i32 %8, %6
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %7 = load i32, ptr %6, align 4, !alias.scope !2590, !noundef !3 ; 2 uses
+  %.not.i1.i.i29 = icmp ult i32 %3, %7
   br i1 %.not.i1.i.i29, label %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange13narrow_offset.exit.i31, label %bb.i
 
 bb.i:                                             ; preds = %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i.i28
-  %.sroa.0.0.i.i2.i.i30 = call noundef i32 @llvm.umin.i32(i32 %8, i32 %.promoted22.i) ; 2 uses
-  store i32 %.sroa.0.0.i.i2.i.i30, ptr %i.aa, align 4, !alias.scope !2590
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %9 = load i32, ptr %8, align 4, !alias.scope !2590, !noundef !3
+  %.sroa.0.0.i.i2.i.i30 = call noundef i32 @llvm.umin.i32(i32 %3, i32 %9)
+  store i32 %.sroa.0.0.i.i2.i.i30, ptr %8, align 4, !alias.scope !2590
   br label %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange13narrow_offset.exit.i31
 
 _RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange13narrow_offset.exit.i31: ; preds = %bb.i, %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i.i28
-  %.sroa.0.0.i.i2.i24.i = phi i32 [ %.sroa.0.0.i.i2.i.i30, %bb.i ], [ %.promoted22.i, %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i.i28 ]
   %i.ab = call noundef i32 @_RNvYNtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged3endCs8CpBcHC8tKo_21ruff_python_formatter(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a), !noalias !2588 ; 4 uses
-  %.not.i.i7.i = icmp ugt i32 %i.ab, %4
+  %.not.i.i7.i = icmp ugt i32 %i.ab, %.promoted22.i
   br i1 %.not.i.i7.i, label %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i9.i, label %bb.j
 
 bb.j:                                             ; preds = %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange13narrow_offset.exit.i31
-  %.sroa.0.0.i.i.i8.i = call noundef i32 @llvm.umax.i32(i32 %i.ab, i32 %.sroa.0.0.i.i.i20.i)
-  store i32 %.sroa.0.0.i.i.i8.i, ptr %i.z, align 8, !alias.scope !2591
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %11 = load i32, ptr %10, align 8, !alias.scope !2591, !noundef !3
+  %.sroa.0.0.i.i.i8.i = call noundef i32 @llvm.umax.i32(i32 %i.ab, i32 %11)
+  store i32 %.sroa.0.0.i.i.i8.i, ptr %10, align 8, !alias.scope !2591
   br label %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i9.i
 
 _RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i9.i: ; preds = %bb.j, %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange13narrow_offset.exit.i31
-  %.not.i1.i10.i = icmp ult i32 %i.ab, %6
+  %.not.i1.i10.i = icmp ult i32 %i.ab, %7
   br i1 %.not.i1.i10.i, label %_RINvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB6_11NarrowRange6narrowANtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefj1_B1f_EB8_.exit, label %bb.k
 
 bb.k:                                             ; preds = %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i9.i
-  %.sroa.0.0.i.i2.i11.i = call noundef i32 @llvm.umin.i32(i32 %i.ab, i32 %.sroa.0.0.i.i2.i24.i)
-  store i32 %.sroa.0.0.i.i2.i11.i, ptr %i.aa, align 4, !alias.scope !2592
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %13 = load i32, ptr %12, align 4, !alias.scope !2592, !noundef !3
+  %.sroa.0.0.i.i2.i11.i = call noundef i32 @llvm.umin.i32(i32 %i.ab, i32 %13)
+  store i32 %.sroa.0.0.i.i2.i11.i, ptr %12, align 4, !alias.scope !2592
   br label %_RINvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB6_11NarrowRange6narrowANtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefj1_B1f_EB8_.exit
 
 _RINvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB6_11NarrowRange6narrowANtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefj1_B1f_EB8_.exit: ; preds = %_RNvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRange12narrow_start.exit.i9.i, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2588
   %i.ac = call { i32, i32 } @_RNvXs82_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_10AnyNodeRefNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d)
   %i.ad = extractvalue { i32, i32 } %i.ac, 1
-  %i.ae = load i32, ptr %3, align 8, !noundef !3
+  %i.ae = load i32, ptr %i.aa, align 8, !noundef !3
   %i.af = icmp ult i32 %i.ad, %i.ae
   br i1 %i.af, label %_RNvXs0_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRangeNtNtNtCskLngH8kgpZI_15ruff_python_ast7visitor12source_order18SourceOrderVisitor10visit_body.exit44, label %bb.l
 
@@ -275,14 +277,16 @@ _RNvXs0_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRangeNtNtNtCsk
 bb.l:                                             ; preds = %_RINvMs1_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB6_11NarrowRange6narrowANtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefj1_B1f_EB8_.exit
   %i.ah = call { i32, i32 } @_RNvXs82_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_10AnyNodeRefNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d)
   %i.ai = extractvalue { i32, i32 } %i.ah, 0
-  %i.aj = load i32, ptr %i.z, align 8, !noundef !3
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.aj = load i32, ptr %14, align 8, !noundef !3
   %i.ak = icmp ugt i32 %i.aj, %i.ai
   br i1 %i.ak, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.al = call { i32, i32 } @_RNvXs82_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_10AnyNodeRefNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d)
   %i.am = extractvalue { i32, i32 } %i.al, 1
-  %i.an = load i32, ptr %i.aa, align 4, !noundef !3
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %i.an = load i32, ptr %15, align 4, !noundef !3
   %.not = icmp ugt i32 %i.an, %i.am
   br i1 %.not, label %bb.n, label %_RNvXs0_NtCs8CpBcHC8tKo_21ruff_python_formatter5rangeNtB5_11NarrowRangeNtNtNtCskLngH8kgpZI_15ruff_python_ast7visitor12source_order18SourceOrderVisitor10visit_body.exit44
 

@@ -205,7 +205,7 @@ bb.fq:                                            ; preds = %bb.fp
   store i8 72, ptr %i.aep, align 1, !tbaa !97
   br label %emit_mov.exit.thread.a
 
-emit_mov.exit.thread.a:                           ; preds = %bb.fp, %bb.fq
+emit_mov.exit.thread.a:                           ; preds = %bb.fq, %bb.fp
   %.1197.i3234 = phi ptr [ %i.aes, %bb.fq ], [ %i.aep, %bb.fp ] ; 2 uses
   %i.aet = getelementptr inbounds nuw i8, ptr %.1197.i3234, i64 1
   store i8 -5, ptr %i.aet, align 1, !tbaa !97
@@ -235,7 +235,7 @@ bb.fs:                                            ; preds = %bb.fr
   store i8 %i.afd, ptr %i.afb, align 1, !tbaa !97
   br label %sljit_emit_enter.exit
 
-sljit_emit_enter.exit:                            ; preds = %bb.fr, %sljit_create_compiler.exit, %bb.ev, %emit_mov.exit.a, %emit_mov.exit.thread.a, %bb.fs
+sljit_emit_enter.exit:                            ; preds = %bb.fr, %emit_mov.exit.a, %sljit_create_compiler.exit, %bb.ev, %emit_mov.exit.thread.a, %bb.fs
   %i.afe = load i16, ptr %i.cm, align 8, !tbaa !99 ; 2 uses
   %i.aff = zext i16 %i.afe to i32
   %i.afg = shl nuw nsw i32 %i.aff, 1              ; 2 uses

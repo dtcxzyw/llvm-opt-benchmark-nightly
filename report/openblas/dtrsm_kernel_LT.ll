@@ -205,12 +205,10 @@ bb.o:                                             ; preds = %bb.n
 .preheader240:                                    ; preds = %._crit_edge268
   %i.po = ashr i64 %0, 4                          ; 2 uses
   %i.pp = icmp sgt i64 %i.po, 0
-  %.idx150 = shl i64 %2, 7                        ; 2 uses
-  %9 = and i64 %0, 15
-  %.not147 = icmp eq i64 %9, 0
   br i1 %i.pp, label %.lr.ph276.preheader, label %._crit_edge277
 
 .lr.ph276.preheader:                              ; preds = %.preheader240
+  %.idx150 = shl i64 %2, 7                        ; 2 uses
   %i.pq = shl i64 %8, 7                           ; 2 uses
   %i.pr = add i64 %.idx150, 2048
   %i.ps = getelementptr i8, ptr %4, i64 %i.pq
@@ -412,6 +410,8 @@ solve.exit211:                                    ; preds = %.split47.us.i196
   %.3138.lcssa = phi ptr [ %4, %.preheader240 ], [ %i.sm, %solve.exit211 ] ; 4 uses
   %.3132.lcssa = phi ptr [ %.0144.lcssa, %.preheader240 ], [ %i.sn, %solve.exit211 ] ; 40 uses
   %.3128.lcssa = phi i64 [ %8, %.preheader240 ], [ %i.so, %solve.exit211 ] ; 6 uses
+  %9 = and i64 %0, 15
+  %.not147 = icmp eq i64 %9, 0
   br i1 %.not147, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %._crit_edge277
@@ -814,7 +814,7 @@ bb.z:                                             ; preds = %bb.y
   store double %i.aaw, ptr %.5134.2, align 8, !tbaa !43
   br label %.loopexit
 
-.loopexit:                                        ; preds = %._crit_edge277, %.split47.us.i222.3, %.preheader.3, %._crit_edge268
+.loopexit:                                        ; preds = %.preheader.3, %.split47.us.i222.3, %._crit_edge277, %._crit_edge268
   ret i32 0
 }
 

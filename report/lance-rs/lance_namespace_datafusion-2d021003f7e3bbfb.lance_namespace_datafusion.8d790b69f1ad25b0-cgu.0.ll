@@ -205,9 +205,9 @@ begin_hunk_0_@llvm.smax.i32
 !25495 = distinct !{!25495, i1 true, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop"}
 !25496 = distinct !{!25496, !25495, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop: argument 0"}
 !25497 = distinct !{!25497, i1 true, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsc93vp1BCDlY_26lance_namespace_datafusion"}
-!25498 = distinct !{!25498, !25497, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsc93vp1BCDlY_26lance_namespace_datafusion: argument 0:Peel0"}
+!25498 = distinct !{!25498, !25497, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsc93vp1BCDlY_26lance_namespace_datafusion: argument 0"}
 !25499 = distinct !{!25499, i1 true, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop"}
-!25500 = distinct !{!25500, !25499, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop: argument 0:Peel0"}
+!25500 = distinct !{!25500, !25499, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop: argument 0"}
 !25501 = distinct !{!25501, i1 true, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueANtNtCs4XDKJNDGLq7_5bytes5bytes5Bytesj2_ECsc93vp1BCDlY_26lance_namespace_datafusion"}
 !25502 = distinct !{!25502, !25501, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueANtNtCs4XDKJNDGLq7_5bytes5bytes5Bytesj2_ECsc93vp1BCDlY_26lance_namespace_datafusion: argument 0"}
 !25503 = distinct !{!25503, i1 true, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueSNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsc93vp1BCDlY_26lance_namespace_datafusion"}
@@ -221,9 +221,9 @@ begin_hunk_0_@llvm.smax.i32
 !25511 = distinct !{!25511, i1 true, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop"}
 !25512 = distinct !{!25512, !25511, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop: argument 0:It1"}
 !25513 = distinct !{!25513, i1 true, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsc93vp1BCDlY_26lance_namespace_datafusion"}
-!25514 = distinct !{!25514, !25513, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsc93vp1BCDlY_26lance_namespace_datafusion: argument 0:Peel0"}
+!25514 = distinct !{!25514, !25513, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsc93vp1BCDlY_26lance_namespace_datafusion: argument 0"}
 !25515 = distinct !{!25515, i1 true, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop"}
-!25516 = distinct !{!25516, !25515, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop: argument 0:Peel0"}
+!25516 = distinct !{!25516, !25515, !"_RNvXs1_NtCs4XDKJNDGLq7_5bytes5bytesNtB5_5BytesNtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4drop: argument 0"}
 !25517 = distinct !{!25517, i1 true, !"_RNvXsB_NtCs40k4W9msRzi_5alloc6stringeNtB5_8ToString9to_stringCsc93vp1BCDlY_26lance_namespace_datafusion"}
 !25518 = distinct !{!25518, !25517, !"_RNvXsB_NtCs40k4W9msRzi_5alloc6stringeNtB5_8ToString9to_stringCsc93vp1BCDlY_26lance_namespace_datafusion: argument 1"}
 !25519 = distinct !{!25519, !25517, !"_RNvXsB_NtCs40k4W9msRzi_5alloc6stringeNtB5_8ToString9to_stringCsc93vp1BCDlY_26lance_namespace_datafusion: argument 0"}

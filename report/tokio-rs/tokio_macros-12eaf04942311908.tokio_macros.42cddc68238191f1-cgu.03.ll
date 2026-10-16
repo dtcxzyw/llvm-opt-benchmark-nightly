@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %.split.i.i.i
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #20, !noalias !1323
   unreachable
 
-common.resume:                                    ; preds = %bb.i, %bb.d, %bb.j, %.body, %.split.i.i.i
-  %common.resume.op = phi { ptr, i32 } [ %i.aa, %bb.j ], [ %eh.lpad-body, %.body ], [ %i.k, %.split.i.i.i ], [ %i.m, %bb.d ], [ %i.aa, %bb.i ]
+common.resume:                                    ; preds = %bb.i, %bb.j, %.body, %.split.i.i.i, %bb.d
+  %common.resume.op = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.m, %bb.d ], [ %i.k, %.split.i.i.i ], [ %i.aa, %bb.j ], [ %i.aa, %bb.i ]
   resume { ptr, i32 } %common.resume.op
 
 bb.d:                                             ; preds = %bb.b

@@ -204,7 +204,7 @@ bb.ch:                                            ; preds = %bb.cg
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #29
   unreachable
 
-.body370:                                         ; preds = %bb.cg, %.peel.begin
+.body370:                                         ; preds = %.peel.begin, %bb.cg
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCs9OLX912zl7o_3yew11virtual_dom5vnode5VNodeECsfh9HxMbthk9_27candle_wasm_example_whisper(ptr noalias nofree noundef align 8 dereferenceable(32) %i.cy) #27
           to label %.body unwind label %bb.ds
 

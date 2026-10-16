@@ -200,19 +200,14 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.w, %bb.x
   %i.jl = phi i32 [ %i.ji, %bb.x ], [ 0, %bb.w ]  ; 2 uses
   %i.jm = phi i32 [ %i.jk, %bb.x ], [ 0, %bb.w ]
-  %i.jn = load i32, ptr %i.b, align 4, !tbaa !7   ; 8 uses
-  %i.jo = load i32, ptr %i.au, align 4, !tbaa !7  ; 6 uses
-  %i.jp = load i32, ptr %i.av, align 4, !tbaa !7  ; 3 uses
-  %.0312 = call i32 @llvm.smax.i32(i32 %i.jo, i32 %i.jn)
-  %.1 = call i32 @llvm.smax.i32(i32 %i.jp, i32 %.0312)
-  %i.jq = icmp sgt i32 %.1, 0
+  %i.jn = load i32, ptr %i.b, align 4, !tbaa !7   ; 7 uses
+  %i.jo = load i32, ptr %i.au, align 4, !tbaa !7  ; 5 uses
+  %i.jp = load i32, ptr %i.av, align 4, !tbaa !7  ; 2 uses
+  %i.jq = icmp sgt i32 %i.jp, 0
   br i1 %i.jq, label %.preheader377.lr.ph, label %._crit_edge.split
 
 .preheader377.lr.ph:                              ; preds = %bb.y
   %i.jr = select i1 %i.iw, i32 %i.iy, i32 0       ; 3 uses
-  %factor.op.mul409 = mul i32 %i.jo, %i.jr
-  %factor.op.mul = mul i32 %i.jo, %i.jl
-  %factor.op.mul408 = mul i32 %i.jo, %i.jc
   %i.js = add nuw nsw i32 %i.im, 1
   %i.jt = mul nsw i32 %i.jr, %i.js
   %i.ju = select i1 %i.in, i32 %i.jt, i32 0
@@ -220,17 +215,18 @@ bb.y:                                             ; preds = %bb.w, %bb.x
   %i.jw = mul nsw i32 %i.jm, %i.jv
   %i.jx = select i1 %i.hr, i32 %i.jw, i32 0
   %i.jy = mul i32 %i.jn, %i.jg
-  %4 = icmp sgt i32 %i.jp, 0
   %i.jz = icmp sgt i32 %i.jo, 0
   %i.ka = sub i32 %i.jc, %i.jn
   %i.kb = sub i32 %i.jl, %i.jy
   %i.kc = sub i32 %i.jr, %i.jn
-  %i.kd = sub i32 %i.jf, %factor.op.mul408
-  %i.ke = sub i32 %i.jx, %factor.op.mul
-  %5 = sub i32 %i.ju, %factor.op.mul409
-  %brmerge.not469 = and i1 %4, %i.jz
+  %4 = mul i32 %i.jo, %i.jc
+  %i.kd = sub i32 %i.jf, %4
+  %5 = mul i32 %i.jo, %i.jl
+  %i.ke = sub i32 %i.jx, %5
+  %6 = mul i32 %i.jo, %i.jr
+  %7 = sub i32 %i.ju, %6
   %i.kf = icmp sgt i32 %i.jn, 0
-  %or.cond.a = and i1 %brmerge.not469, %i.kf
+  %or.cond.a = and i1 %i.jz, %i.kf
   br i1 %or.cond.a, label %.preheader376.us.us.preheader, label %._crit_edge.split
 
 .preheader376.us.us.preheader:                    ; preds = %.preheader377.lr.ph
@@ -375,7 +371,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 ._crit_edge390.split.us.us.us:                    ; preds = %._crit_edge.us.us.us
   %i.mo = add nsw i32 %i.kd, %i.mk
   %i.mp = add nsw i32 %i.ke, %i.ml
-  %i.mq = add nsw i32 %5, %i.mm
+  %i.mq = add nsw i32 %7, %i.mm
   %i.mr = add nuw nsw i32 %.1319404.us.us, 1      ; 2 uses
   %exitcond446.not = icmp eq i32 %i.mr, %i.jp
   br i1 %exitcond446.not, label %._crit_edge.split, label %.preheader376.us.us, !llvm.loop !37
@@ -460,9 +456,6 @@ declare i32 @hypre_ComputePkgDestroy(ptr noundef) local_unnamed_addr #2
 declare i32 @hypre_FinalizeTiming(i32 noundef) local_unnamed_addr #2
 
 declare void @hypre_Free(ptr noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3

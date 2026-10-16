@@ -204,20 +204,19 @@ bb.a:
   %1 = alloca %struct.nl_info, align 8            ; 6 uses
   tail call void @__rcu_read_lock() #21
   %i.a = getelementptr i8, ptr %0, i64 2392
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %4 = getelementptr i8, ptr %0, i64 2328
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = load volatile ptr, ptr %i.b, align 8     ; 2 uses
   %.not2834 = icmp eq ptr %i.c, null
-  br i1 %.not2834, label %.loopexit, label %.lr.ph
+  br i1 %.not2834, label %.critedge, label %.loopexit
 
-.loopexit:                                        ; preds = %bb.s, %bb.a
-  call void @__rcu_read_unlock() #21
-  ret void
+.loopexit:                                        ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %4 = getelementptr i8, ptr %0, i64 2328
+  br label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.a, %bb.s
-  %.035 = phi ptr [ %i.bm, %bb.s ], [ %i.c, %bb.a ] ; 3 uses
+.lr.ph:                                           ; preds = %.loopexit, %bb.s
+  %.035 = phi ptr [ %i.c, %.loopexit ], [ %i.bm, %bb.s ] ; 3 uses
   %i.d = getelementptr i8, ptr %.035, i64 112     ; 3 uses
   %i.e = load i32, ptr %i.d, align 8
   %i.f = and i32 %i.e, 1
@@ -405,7 +404,11 @@ __rt6_purge_dflt_routers.exit:                    ; preds = %bb.q, %bb.r, %bb.b
 bb.s:                                             ; preds = %.lr.ph, %__rt6_purge_dflt_routers.exit
   %i.bm = load volatile ptr, ptr %.035, align 8   ; 2 uses
   %.not28 = icmp eq ptr %i.bm, null
-  br i1 %.not28, label %.loopexit, label %.lr.ph, !llvm.loop !119
+  br i1 %.not28, label %.critedge, label %.lr.ph, !llvm.loop !119
+
+.critedge:                                        ; preds = %bb.s, %bb.a
+  call void @__rcu_read_unlock() #21
+  ret void
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong

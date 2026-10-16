@@ -204,7 +204,6 @@ bb.o:                                             ; preds = %.thread18
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeAINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraymEj1_ECseyIfFeUOWMb_17polars_mem_engine(ptr noalias noundef nonnull align 8 dereferenceable(88) %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !3413 {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs8774dFTUdNv_12polars_arrow9datatypes13ArrowDataTypeECseyIfFeUOWMb_17polars_mem_engine(ptr noalias noundef align 8 dereferenceable(88) %0)
           to label %bb.c unwind label %bb.b, !dbg !3433
 
@@ -216,12 +215,13 @@ bb.b:                                             ; preds = %bb.a
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit.i unwind label %bb.g, !dbg !3434
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !3433
   invoke void @_RNvXse_NtCsknLZRuU4977_13polars_buffer7storageINtB5_13SharedStoragemENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCseyIfFeUOWMb_17polars_mem_engine(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit2.i unwind label %bb.e, !dbg !3435
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit.i: ; preds = %bb.e, %bb.b
   %.pn.i = phi { ptr, i32 } [ %i.f, %bb.e ], [ %i.a, %bb.b ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !3433 ; 2 uses
   %i.d = load ptr, ptr %1, align 8, !dbg !3436, !alias.scope !3431, !noundef !1356
   %i.e = icmp eq ptr %i.d, null, !dbg !3436
   br i1 %i.e, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapEECseyIfFeUOWMb_17polars_mem_engine.exit.i, label %bb.d, !dbg !3436
@@ -236,12 +236,13 @@ bb.e:                                             ; preds = %bb.c
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit2.i: ; preds = %bb.c
-  %i.g = load ptr, ptr %1, align 8, !dbg !3438, !alias.scope !3432, !noundef !1356
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !3433 ; 2 uses
+  %i.g = load ptr, ptr %2, align 8, !dbg !3438, !alias.scope !3432, !noundef !1356
   %i.h = icmp eq ptr %i.g, null, !dbg !3438
   br i1 %i.h, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraymEECseyIfFeUOWMb_17polars_mem_engine.exit, label %bb.f, !dbg !3438
 
 bb.f:                                             ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit2.i
-  tail call void @_RNvXse_NtCsknLZRuU4977_13polars_buffer7storageINtB5_13SharedStoragehENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCseyIfFeUOWMb_17polars_mem_engine(ptr noalias noundef nonnull align 8 dereferenceable(32) %1), !dbg !3439
+  tail call void @_RNvXse_NtCsknLZRuU4977_13polars_buffer7storageINtB5_13SharedStoragehENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCseyIfFeUOWMb_17polars_mem_engine(ptr noalias noundef nonnull align 8 dereferenceable(32) %2), !dbg !3439
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraymEECseyIfFeUOWMb_17polars_mem_engine.exit, !dbg !3438
 
 bb.g:                                             ; preds = %bb.d, %bb.b
@@ -253,7 +254,7 @@ bb.g:                                             ; preds = %bb.d, %bb.b
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapEECseyIfFeUOWMb_17polars_mem_engine.exit.i: ; preds = %bb.d, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit.i
   resume { ptr, i32 } %.pn.i, !dbg !3433
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraymEECseyIfFeUOWMb_17polars_mem_engine.exit: ; preds = %bb.f, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit2.i
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraymEECseyIfFeUOWMb_17polars_mem_engine.exit: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEECseyIfFeUOWMb_17polars_mem_engine.exit2.i, %bb.f
   ret void, !dbg !3440
 }
 

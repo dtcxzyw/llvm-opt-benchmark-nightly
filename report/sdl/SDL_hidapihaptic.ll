@@ -1,6 +1,4 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sdl/original/SDL_hidapihaptic?download=true
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -91,7 +89,7 @@ bb.a:
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.preheader, %bb.a
-  %.05 = phi i1 [ false, %bb.a ], [ %i.d, %.preheader.preheader ]
+  %.05 = phi i1 [ %i.d, %.preheader.preheader ], [ false, %bb.a ]
   ret i1 %.05
 }
 
@@ -105,18 +103,18 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 320
   %i.b = load ptr, ptr %i.a, align 8
   %.not = icmp eq ptr %i.b, @SDL_HIDAPI_JoystickDriver
-  br i1 %.not, label %.preheader69.preheader, label %bb.b
+  br i1 %.not, label %bb.b, label %.preheader69.preheader
 
 .preheader69.preheader:                           ; preds = %bb.a
-  %3 = load ptr, ptr @SDL_HIDAPI_HapticDriverLg4ff, align 8
-  %i.c = tail call zeroext i1 %3(ptr noundef nonnull %1) #4
-  br i1 %i.c, label %.preheader69.preheader._crit_edge, label %.preheader69.1
-
-bb.b:                                             ; preds = %bb.a
-  %i.d = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str) #4
+  %i.c = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str) #4
   br label %bb.m
 
-.preheader69.preheader._crit_edge:                ; preds = %.preheader69.preheader
+bb.b:                                             ; preds = %bb.a
+  %3 = load ptr, ptr @SDL_HIDAPI_HapticDriverLg4ff, align 8
+  %i.d = tail call zeroext i1 %3(ptr noundef nonnull %1) #4
+  br i1 %i.d, label %.preheader69.preheader._crit_edge, label %.preheader69.1
+
+.preheader69.preheader._crit_edge:                ; preds = %bb.b
   %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @SDL_HIDAPI_HapticDriverLg4ff, i64 8), align 8
   %i.e = tail call ptr %.pre(ptr noundef nonnull %1) #4 ; 3 uses
   %i.f = icmp eq ptr %i.e, null
@@ -246,12 +244,12 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   tail call void @SDL_UnlockMutex_REAL(ptr noundef %i.bm) #4
   br label %bb.m
 
-.preheader69.1:                                   ; preds = %.preheader69.preheader
+.preheader69.1:                                   ; preds = %bb.b
   %i.bn = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.1) #4
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.d, %bb.f, %bb.h, %bb.l, %.preheader69.preheader._crit_edge, %.preheader69.1, %bb.b
-  %.1 = phi i1 [ %i.d, %bb.b ], [ %i.bn, %.preheader69.1 ], [ true, %bb.l ], [ %i.m, %bb.d ], [ %i.t, %bb.f ], [ %i.az, %bb.h ], [ false, %.preheader69.preheader._crit_edge ]
+bb.m:                                             ; preds = %bb.d, %bb.f, %bb.h, %bb.l, %.preheader69.preheader._crit_edge, %.preheader69.1, %.preheader69.preheader
+  %.1 = phi i1 [ %i.c, %.preheader69.preheader ], [ %i.bn, %.preheader69.1 ], [ true, %bb.l ], [ %i.m, %bb.d ], [ %i.t, %bb.f ], [ %i.az, %bb.h ], [ false, %.preheader69.preheader._crit_edge ]
   ret i1 %.1
 }
 

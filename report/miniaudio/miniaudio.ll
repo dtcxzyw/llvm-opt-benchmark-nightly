@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/miniaudio/original/miniaudio?download=true
 inline.NumInlined: 3924
 inline.NumDeleted: 447
-loop-unroll.NumCompletelyUnrolled: 59
+loop-unroll.NumCompletelyUnrolled: 57
 loop-unroll.NumRuntimeUnrolled: 215
-loop-unroll.NumUnrolled: 277
+loop-unroll.NumUnrolled: 275
 begin_hunk_0_@ma_dr_mp3_L3_imdct36:bb.a
   %i.af = getelementptr inbounds nuw i8, ptr %.0103, i64 40
   %i.ag = getelementptr inbounds nuw i8, ptr %.0103, i64 48
@@ -205,24 +205,24 @@ begin_hunk_0_@ma_dr_mp3_L3_imdct36:bb.a
   %i.hl = shufflevector <4 x float> %i.hj, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   store <4 x float> %i.hl, ptr %i.hk, align 4, !tbaa !119
   %i.hm = getelementptr inbounds nuw i8, ptr %.096102, i64 32 ; 2 uses
-  %4 = fmul float %i.fu, f0x3F7FC1A0
-  %5 = tail call float @llvm.fmuladd.f32(float %i.el, float f0x3D32AA3C, float %4) ; 2 uses
-  %i.hn = fmul float %i.fu, f0xBD32AA3C
-  %i.ho = tail call float @llvm.fmuladd.f32(float %i.el, float f0x3F7FC1A0, float %i.hn)
-  %6 = getelementptr inbounds nuw i8, ptr %.0103, i64 36
-  %7 = load float, ptr %i.hm, align 4, !tbaa !349 ; 2 uses
-  store float %i.ho, ptr %i.hm, align 4, !tbaa !349
+  %4 = load float, ptr %i.hm, align 4, !tbaa !349 ; 2 uses
+  %i.hn = fmul float %i.fu, f0x3F7FC1A0
+  %i.ho = tail call float @llvm.fmuladd.f32(float %i.el, float f0x3D32AA3C, float %i.hn) ; 2 uses
+  %5 = fmul float %i.fu, f0xBD32AA3C
+  %6 = tail call float @llvm.fmuladd.f32(float %i.el, float f0x3F7FC1A0, float %5)
+  store float %6, ptr %i.hm, align 4, !tbaa !349
   %i.hp = load float, ptr %i.b, align 4, !tbaa !349
   %i.hq = load float, ptr %i.c, align 4, !tbaa !349
   %i.hr = fneg float %i.hq
-  %i.hs = fmul float %5, %i.hr
-  %i.ht = tail call float @llvm.fmuladd.f32(float %7, float %i.hp, float %i.hs)
+  %i.hs = fmul float %i.ho, %i.hr
+  %i.ht = tail call float @llvm.fmuladd.f32(float %4, float %i.hp, float %i.hs)
   store float %i.ht, ptr %i.ad, align 4, !tbaa !349
   %i.hu = load float, ptr %i.c, align 4, !tbaa !349
   %i.hv = load float, ptr %i.b, align 4, !tbaa !349
-  %i.hw = fmul float %5, %i.hv
-  %i.hx = tail call float @llvm.fmuladd.f32(float %7, float %i.hu, float %i.hw)
-  store float %i.hx, ptr %6, align 4, !tbaa !349
+  %i.hw = fmul float %i.ho, %i.hv
+  %i.hx = tail call float @llvm.fmuladd.f32(float %4, float %i.hu, float %i.hw)
+  %7 = getelementptr inbounds nuw i8, ptr %.0103, i64 36
+  store float %i.hx, ptr %7, align 4, !tbaa !349
   %i.hy = add nuw nsw i32 %.098101, 1             ; 2 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %.0103, i64 72
   %i.ia = getelementptr inbounds nuw i8, ptr %.096102, i64 36

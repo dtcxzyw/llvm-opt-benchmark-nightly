@@ -204,14 +204,16 @@ bb.j:                                             ; preds = %.thread
 
 bb.k:                                             ; preds = %.thread
   call void @llvm.experimental.noalias.scope.decl(metadata !82)
-  %.val7.i = load i64, ptr %i.m, align 8, !alias.scope !82, !noundef !6 ; 4 uses
-  %.val8.i = load ptr, ptr %i.c, align 8, !alias.scope !82 ; 2 uses
-  switch i64 %.val7.i, label %vector.ph [
-    i64 0, label %_RNvXsB_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9DivAssigndE10div_assignCs8lmMd0ZksV9_6statrs.exit
-    i64 1, label %.preheader.i.preheader
-  ]
+  %.val7.i = load i64, ptr %i.m, align 8, !alias.scope !82, !noundef !6 ; 5 uses
+  %.not.i = icmp eq i64 %.val7.i, 0
+  br i1 %.not.i, label %_RNvXsB_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9DivAssigndE10div_assignCs8lmMd0ZksV9_6statrs.exit, label %.lr.ph.i
 
-vector.ph:                                        ; preds = %bb.k
+.lr.ph.i:                                         ; preds = %bb.k
+  %.val8.i = load ptr, ptr %i.c, align 8, !alias.scope !82, !noundef !6 ; 2 uses
+  %min.iters.check = icmp eq i64 %.val7.i, 1
+  br i1 %min.iters.check, label %.preheader.i.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.i
   %n.vec = and i64 %.val7.i, -2                   ; 3 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %.mux, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
@@ -231,8 +233,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %.val7.i, %n.vec
   br i1 %cmp.n, label %_RNvXsB_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9DivAssigndE10div_assignCs8lmMd0ZksV9_6statrs.exit, label %.preheader.i.preheader
 
-.preheader.i.preheader:                           ; preds = %bb.k, %middle.block
-  %.sroa.05.010.i.ph = phi i64 [ 0, %bb.k ], [ %n.vec, %middle.block ]
+.preheader.i.preheader:                           ; preds = %.lr.ph.i, %middle.block
+  %.sroa.05.010.i.ph = phi i64 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ]
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i

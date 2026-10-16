@@ -202,11 +202,9 @@ bb.a:
   br i1 %i.c, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %bb.a
-  %i.d = add i64 %1, 2415                         ; 2 uses
-  %i.e = and i64 %1, -262144                      ; 2 uses
+  %i.d = add i64 %1, 2415                         ; 4 uses
+  %i.e = and i64 %1, -262144                      ; 4 uses
   %i.f = inttoptr i64 %i.e to ptr                 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %4 = sub i64 %i.d, %i.e                         ; 3 uses
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.f, align 262144
   %i.g = and i64 %.sroa.0.0.copyload.i.i, 536
   %.not = icmp eq i64 %i.g, 0
@@ -223,6 +221,7 @@ bb.b:                                             ; preds = %.preheader
   br i1 %.not22, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.n = load ptr, ptr %3, align 8                ; 6 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 80
   %i.p = load atomic ptr, ptr %i.o seq_cst, align 8
@@ -253,6 +252,7 @@ _ZN2v88internal19MutablePageMetadata4castEPKNS0_19MemoryChunkMetadataE.exit: ; p
   br i1 %.not23, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZN2v88internal19MutablePageMetadata4castEPKNS0_19MemoryChunkMetadataE.exit
+  %4 = sub i64 %i.d, %i.e
   tail call void @_ZN2v88internal13RememberedSetILNS0_17RememberedSetTypeE4EE6InsertILNS0_10AccessModeE0EEEvPNS0_19MutablePageMetadataEm(ptr noundef nonnull %i.n, i64 noundef %4)
   br label %.loopexit
 
@@ -265,7 +265,8 @@ bb.g:                                             ; preds = %_ZN2v88internal19Mu
   br i1 %or.cond.not, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_ZN2v88internal13RememberedSetILNS0_17RememberedSetTypeE5EE6InsertILNS0_10AccessModeE0EEEvPNS0_19MutablePageMetadataEm(ptr noundef nonnull %i.n, i64 noundef %4)
+  %5 = sub i64 %i.d, %i.e
+  tail call void @_ZN2v88internal13RememberedSetILNS0_17RememberedSetTypeE5EE6InsertILNS0_10AccessModeE0EEEvPNS0_19MutablePageMetadataEm(ptr noundef nonnull %i.n, i64 noundef %5)
   br label %.loopexit
 
 bb.i:                                             ; preds = %bb.g
@@ -285,10 +286,11 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.aj, label %bb.k, label %.loopexit
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  tail call void @_ZN2v88internal13RememberedSetILNS0_17RememberedSetTypeE2EE6InsertILNS0_10AccessModeE0EEEvPNS0_19MutablePageMetadataEm(ptr noundef nonnull %i.n, i64 noundef %4)
+  %6 = sub i64 %i.d, %i.e
+  tail call void @_ZN2v88internal13RememberedSetILNS0_17RememberedSetTypeE2EE6InsertILNS0_10AccessModeE0EEEvPNS0_19MutablePageMetadataEm(ptr noundef nonnull %i.n, i64 noundef %6)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.k, %bb.j, %bb.h, %bb.f, %bb.b, %.preheader, %bb.a
+.loopexit:                                        ; preds = %.preheader, %bb.b, %bb.f, %bb.h, %bb.j, %bb.k, %bb.a
   ret void
 }
 

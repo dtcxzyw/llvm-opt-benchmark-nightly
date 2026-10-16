@@ -205,22 +205,21 @@ bb.g:                                             ; preds = %bb.e
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !171
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.p = load i64, ptr %i.o, align 8, !tbaa !180  ; 2 uses
-  %3 = trunc i64 %i.p to i32
   %.not39 = icmp eq i32 %i.b, 0
-  %4 = icmp slt i32 %3, 1
+  br i1 %.not39, label %.critedge, label %.preheader.lr.ph
+
+.preheader.lr.ph:                                 ; preds = %bb.g
+  %3 = trunc i64 %i.p to i32
+  %4 = icmp sgt i32 %3, 0
   %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 56
   %6 = getelementptr inbounds nuw i8, ptr %2, i64 40
   %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %brmerge = select i1 %.not39, i1 true, i1 %4
-  br i1 %brmerge, label %.split35, label %.preheader.preheader
+  br i1 %4, label %.preheader.preheader, label %.critedge
 
-.preheader.preheader:                             ; preds = %bb.g
+.preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.q = and i64 %i.p, 2147483647                 ; 2 uses
   %wide.trip.count44 = zext i32 %i.b to i64
   br label %.preheader
-
-.split35:                                         ; preds = %._crit_edge, %bb.g
-  ret void
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %indvars.iv41 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next42, %._crit_edge ] ; 3 uses
@@ -228,10 +227,13 @@ bb.g:                                             ; preds = %bb.e
   %i.s = getelementptr [4 x i8], ptr %i.n, i64 %i.r
   br label %bb.h
 
+.critedge:                                        ; preds = %._crit_edge, %.preheader.lr.ph, %bb.g
+  ret void
+
 ._crit_edge:                                      ; preds = %bb.h
   %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 1 ; 2 uses
   %exitcond45.not = icmp eq i64 %indvars.iv.next42, %wide.trip.count44
-  br i1 %exitcond45.not, label %.split35, label %.preheader, !llvm.loop !633
+  br i1 %exitcond45.not, label %.critedge, label %.preheader, !llvm.loop !633
 
 bb.h:                                             ; preds = %.preheader, %bb.h
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.h ] ; 3 uses

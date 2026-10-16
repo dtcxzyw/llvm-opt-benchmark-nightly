@@ -204,7 +204,7 @@ bb.ar:                                            ; preds = %bb.bd, %bb.o
   %.not.i = icmp eq i32 %i.dz, -1
   br i1 %.not.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtNtCse7JGOylGlDZ_3nix5errno6consts5ErrnoE6expectCs8frGy5WneL6_4fish.exit, label %.noexc38, !prof !21
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.at, %bb.q, %.thread47, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %bb.aw, %.body34, %bb.be
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.at, %bb.be, %.body34, %bb.aw, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %.thread47, %bb.q
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #51
@@ -215,17 +215,12 @@ bb.ar:                                            ; preds = %bb.bd, %bb.o
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsaL1QbXo9JQH_3std6thread11join_handle10JoinHandleuEECs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(24) %i.y) #50
           to label %.thread unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit: ; preds = %bb.at, %.loopexit61, %.loopexit.split-lp62
-  %.pn12 = phi { ptr, i32 } [ %lpad.loopexit.split-lp64, %.loopexit.split-lp62 ], [ %lpad.loopexit63, %.loopexit61 ], [ %i.ea, %bb.at ]
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit: ; preds = %bb.at, %.loopexit.split-lp62
+  %.pn12 = phi { ptr, i32 } [ %lpad.loopexit.split-lp64, %.loopexit.split-lp62 ], [ %i.ea, %bb.at ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q) #50
           to label %.body34 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit61:                                      ; preds = %.noexc32.preheader
-  %lpad.loopexit63 = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit
-
-.loopexit.split-lp62:                             ; preds = %bb.l
+.loopexit.split-lp62:                             ; preds = %.noexc32.preheader, %bb.l
   %lpad.loopexit.split-lp64 = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit
@@ -261,7 +256,7 @@ bb.av:                                            ; preds = %bb.au
 
 .noexc32.preheader:                               ; preds = %bb.au
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.o)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit33 unwind label %.loopexit61
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit33 unwind label %.loopexit.split-lp62
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit33: ; preds = %.noexc32.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
@@ -664,7 +659,7 @@ bb.as:                                            ; preds = %bb.be, %bb.p
   %.not.i.i = icmp eq i32 %i.dz, -1
   br i1 %.not.i.i, label %_RINvNtNtCs8frGy5WneL6_4fish7threads7threads5spawnNCNvMs1_B2_NtB2_10ThreadPool12spawn_thread0EB6_.exit, label %.noexc38.i, !prof !21
 
-.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.au, %bb.r, %.thread48.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i, %bb.ax, %.body34.i, %bb.bg
+.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bg, %.body34.i, %bb.ax, %bb.au, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i, %.thread48.i, %bb.r
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #51
@@ -675,17 +670,12 @@ bb.as:                                            ; preds = %bb.be, %bb.p
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsaL1QbXo9JQH_3std6thread11join_handle10JoinHandleuEECs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(24) %i.y) #50
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMs1_NtNtCs8frGy5WneL6_4fish7threads7threadsNtBJ_10ThreadPool12spawn_thread0EBN_.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i: ; preds = %bb.au, %.loopexit.split-lp63.i, %.loopexit62.i
-  %.pn12.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp65.i, %.loopexit.split-lp63.i ], [ %lpad.loopexit64.i, %.loopexit62.i ], [ %i.ea, %bb.au ]
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i: ; preds = %bb.au, %.loopexit.split-lp63.i
+  %.pn12.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp65.i, %.loopexit.split-lp63.i ], [ %i.ea, %bb.au ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q) #50
           to label %.body34.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit62.i:                                    ; preds = %.noexc32.i.preheader
-  %lpad.loopexit64.i = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i
-
-.loopexit.split-lp63.i:                           ; preds = %bb.m
+.loopexit.split-lp63.i:                           ; preds = %.noexc32.i.preheader, %bb.m
   %lpad.loopexit.split-lp65.i = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i
@@ -721,7 +711,7 @@ bb.aw:                                            ; preds = %bb.av
 
 .noexc32.i.preheader:                             ; preds = %bb.av
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.o)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit33.i unwind label %.loopexit62.i
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit33.i unwind label %.loopexit.split-lp63.i
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit33.i: ; preds = %.noexc32.i.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
@@ -1124,7 +1114,7 @@ bb.am:                                            ; preds = %bb.al
   store i64 %.sroa.6119.0, ptr %.sroa.6119.0..sroa_idx120, align 8, !alias.scope !2498
   br label %.body60
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.x, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish7history7history12TimeProfilerEBH_.exit, %.body58, %.body51, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %bb.ab, %.body79, %.body71, %.body60, %bb.k, %bb.an
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.an, %bb.x, %bb.k, %.body60, %.body71, %.body79, %bb.ab, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %.body51, %.body58, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish7history7history12TimeProfilerEBH_.exit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #51
@@ -1527,17 +1517,12 @@ bb.af:                                            ; preds = %bb.ad
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @242) #49
           to label %bb.ag unwind label %.loopexit.split-lp28.i, !noalias !2822
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i: ; preds = %bb.ah, %.loopexit.split-lp28.i, %.loopexit27.i
-  %.pn.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp30.i, %.loopexit.split-lp28.i ], [ %lpad.loopexit29.i, %.loopexit27.i ], [ %i.ex, %bb.ah ]
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i: ; preds = %bb.ah, %.loopexit.split-lp28.i
+  %.pn.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp30.i, %.loopexit.split-lp28.i ], [ %i.ex, %bb.ah ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.at) #50
           to label %.body.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2822
 
-.loopexit27.i:                                    ; preds = %.noexc20.i.preheader
-  %lpad.loopexit29.i = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i
-
-.loopexit.split-lp28.i:                           ; preds = %bb.af
+.loopexit.split-lp28.i:                           ; preds = %.noexc20.i.preheader, %bb.af
   %lpad.loopexit.split-lp30.i = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i
@@ -1570,7 +1555,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 .noexc20.i.preheader:                             ; preds = %bb.ai
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ar)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit21.i unwind label %.loopexit27.i, !noalias !2822
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit21.i unwind label %.loopexit.split-lp28.i, !noalias !2822
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit21.i: ; preds = %.noexc20.i.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !2822
@@ -1712,7 +1697,7 @@ _RNvMs3_NtNtCs8frGy5WneL6_4fish7history7historyNtB5_11HistoryImpl25save_internal
   store i64 2, ptr %i.gd, align 8, !alias.scope !2830
   br label %bb.fh
 
-.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ah, %.body.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i, %bb.ak
+.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ak, %bb.ah, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i, %.body.i
   %lpad.loopexit.split-lp192 = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #51, !noalias !2822
@@ -1835,17 +1820,12 @@ bb.bg:                                            ; preds = %bb.be
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @245) #49
           to label %bb.bh unwind label %.loopexit.split-lp112.i
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i42: ; preds = %bb.bi, %.loopexit.split-lp112.i, %.loopexit111.i
-  %.pn22.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp114.i, %.loopexit.split-lp112.i ], [ %lpad.loopexit113.i, %.loopexit111.i ], [ %i.hn, %bb.bi ]
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i42: ; preds = %bb.bi, %.loopexit.split-lp112.i
+  %.pn22.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp114.i, %.loopexit.split-lp112.i ], [ %i.hn, %bb.bi ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ah) #50
           to label %.body38.i unwind label %.loopexit.split-lp108.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit111.i:                                   ; preds = %.noexc35.i.preheader
-  %lpad.loopexit113.i = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i42
-
-.loopexit.split-lp112.i:                          ; preds = %bb.bg
+.loopexit.split-lp112.i:                          ; preds = %.noexc35.i.preheader, %bb.bg
   %lpad.loopexit.split-lp114.i = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i42
@@ -1878,7 +1858,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 .noexc35.i.preheader:                             ; preds = %bb.bj
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.af)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit36.i unwind label %.loopexit111.i
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit36.i unwind label %.loopexit.split-lp112.i
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit36.i: ; preds = %.noexc35.i.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !2832
@@ -2281,7 +2261,7 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapC
   %i.nz = icmp ult i64 %i.nx, %i.nw
   br i1 %i.nz, label %bb.ct, label %._crit_edge.loopexit.i
 
-.loopexit.split-lp108.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bi, %.body38.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i42, %bb.bl, %.body.i52
+.loopexit.split-lp108.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.body.i52, %bb.bl, %bb.bi, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i42, %.body38.i
   %lpad.loopexit.split-lp194 = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #51
@@ -2684,7 +2664,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.g
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.j, %.body, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %bb.n, %bb.d
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.j, %bb.d, %bb.n, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %.body
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #51
@@ -3087,17 +3067,12 @@ bb.e:                                             ; preds = %.noexc2.i
   %i.y = invoke noundef i32 @_RNvNtCs8frGy5WneL6_4fish3key12function_key(i8 noundef 1)
           to label %bb.f unwind label %.loopexit.split-lp2.i.i.i, !noalias !4010 ; 2 uses
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i.i.i: ; preds = %bb.j, %.loopexit.split-lp2.i.i.i, %.loopexit1.i.i.i
-  %.pn.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp4.i.i.i, %.loopexit.split-lp2.i.i.i ], [ %lpad.loopexit3.i.i.i, %.loopexit1.i.i.i ], [ %i.ad, %bb.j ]
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i.i.i: ; preds = %bb.j, %.loopexit.split-lp2.i.i.i
+  %.pn.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp4.i.i.i, %.loopexit.split-lp2.i.i.i ], [ %i.ad, %bb.j ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d) #50
           to label %.body.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !4010
 
-.loopexit1.i.i.i:                                 ; preds = %.noexc7.i.i.i.preheader
-  %lpad.loopexit3.i.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i.i.i
-
-.loopexit.split-lp2.i.i.i:                        ; preds = %bb.g, %bb.e
+.loopexit.split-lp2.i.i.i:                        ; preds = %.noexc7.i.i.i.preheader, %bb.g, %bb.e
   %lpad.loopexit.split-lp4.i.i.i = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i.i.i
@@ -3148,7 +3123,7 @@ bb.l:                                             ; preds = %bb.k
 
 .noexc7.i.i.i.preheader:                          ; preds = %bb.k
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1HV6ixfL8cZ_11fish_printf3arg3ArgECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b)
-          to label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE7or_elseNCNvXs4_NtCs8frGy5WneL6_4fish3keyBI_INtNtB5_7convert4FromNtB1Q_3KeyE4froms_0EB1S_.exit unwind label %.loopexit1.i.i.i, !noalias !4010
+          to label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE7or_elseNCNvXs4_NtCs8frGy5WneL6_4fish3keyBI_INtNtB5_7convert4FromNtB1Q_3KeyE4froms_0EB1S_.exit unwind label %.loopexit.split-lp2.i.i.i, !noalias !4010
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.j, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit.i.i.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
@@ -3551,7 +3526,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs8f
 bb.ad:                                            ; preds = %bb.b, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs8frGy5WneL6_4fish.exit59, %bb.f
   ret void
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.am, %.body33, %bb.o, %.body, %bb.u, %.body50, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %bb.aq
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.am, %bb.aq, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit, %.body50, %bb.u, %.body, %bb.o, %.body33
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #51
@@ -3954,7 +3929,7 @@ begin_hunk_8_@llvm.umin.i64
 !2830 = !{!2717, !2703}
 !2831 = !{!2719}
 !2832 = !{!2719, !2720}
-!2833 = !{!"branch_weights", !"expected", i32 2145766173, i32 1717475}
+!2833 = !{!"branch_weights", !"expected", i32 2145766191, i32 1717457}
 !2834 = !{!2722}
 !2835 = !{!2724}
 !2836 = !{!2726}

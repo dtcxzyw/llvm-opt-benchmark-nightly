@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_5array5drain5DrainuNCINvMNtNtB4_3ops9try_traitINtB1a_17NeverShortCircuitNtNtCshovLROGBtMy_11quinn_proto5frame10StreamMetaE10wrap_mut_1uNCNvXNtNtCslrs821VbQCb_7tinyvec5array18const_generic_implAB1V_j1_NtB33_5Array7default0E0EEB1Z_.exit unwind label %bb.d, !dbg !5926
 
 bb.c:                                             ; preds = %bb.a
-    #dbg_value(i64 1, !5906, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !5817)
+    #dbg_value(i64 0, !5906, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !5817)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !5927, !noalias !5897
     #dbg_value(ptr %i.c, !5917, !DIExpression(), !5822)
   call void @_RNvXs1_NtNtCskKLDkoKarTP_4core5array5drainINtB5_5DrainuNCINvMNtNtB9_3ops9try_traitINtBX_17NeverShortCircuitNtNtCshovLROGBtMy_11quinn_proto5frame10StreamMetaE10wrap_mut_1uNCNvXNtNtCslrs821VbQCb_7tinyvec5array18const_generic_implAB1H_j1_NtB2P_5Array7default0E0ENtNtBZ_4drop4Drop4dropB1L_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c), !dbg !5928

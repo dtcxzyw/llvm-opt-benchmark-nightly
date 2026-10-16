@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   br label %put_str.exit356
 
 bb.i:                                             ; preds = %put_str.exit.thread, %put_str.exit
-  %.0447 = phi ptr [ %i.x, %put_str.exit.thread ], [ %.0, %put_str.exit ] ; 41 uses
+  %.0447 = phi ptr [ %i.x, %put_str.exit.thread ], [ %.0, %put_str.exit ] ; 42 uses
   %i.ar = tail call i32 @jv_get_kind(i64 %1, ptr %2) #9
   switch i32 %i.ar, label %bb.j [
     i32 7, label %bb.bg
@@ -452,15 +452,19 @@ put_char.exit378:                                 ; preds = %bb.ap, %bb.aq
   %i.dv = extractvalue { i64, ptr } %i.du, 0
   %i.dw = extractvalue { i64, ptr } %i.du, 1
   %i.dx = call i32 @jv_array_length(i64 %i.dv, ptr %i.dw) #9 ; 3 uses
-  %.not332 = icmp eq ptr %.0447, null             ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 16 uses
-  %8 = and i32 %3, 1
-  %.not334459 = icmp eq i32 %8, 0                 ; 8 uses
-  %9 = add nsw i32 %4, 1                          ; 4 uses
   %.not330506 = icmp sgt i32 %i.dx, 0
-  br i1 %.not330506, label %bb.ar, label %.loopexit505
+  br i1 %.not330506, label %bb.ar, label %put_char.exit381..critedge_crit_edge
+
+put_char.exit381..critedge_crit_edge:             ; preds = %put_char.exit378
+  %.pre524 = and i32 %3, 1
+  br label %.loopexit505
 
 bb.ar:                                            ; preds = %put_char.exit378
+  %.not332 = icmp eq ptr %.0447, null             ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 12 uses
+  %8 = and i32 %3, 1                              ; 3 uses
+  %.not334457 = icmp eq i32 %8, 0                 ; 7 uses
+  %9 = add nsw i32 %4, 1                          ; 4 uses
   %i.dy = call { i64, ptr } @jv_copy(i64 %1, ptr %2) #9 ; 2 uses
   %i.dz = extractvalue { i64, ptr } %i.dy, 0
   %i.ea = extractvalue { i64, ptr } %i.dy, 1
@@ -480,7 +484,7 @@ put_str.exit387.thread.peel:                      ; preds = %bb.as
   %i.ei = extractvalue { i64, ptr } %i.eg, 1      ; 2 uses
   store i64 %i.eh, ptr %6, align 8
   store ptr %i.ei, ptr %7, align 8, !tbaa !12
-  br i1 %.not334459, label %bb.aw, label %.thread460.peel
+  br i1 %.not334457, label %bb.aw, label %.thread460.peel
 
 .thread460.peel:                                  ; preds = %put_str.exit387.thread.peel
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -489,7 +493,7 @@ put_str.exit387.thread.peel:                      ; preds = %bb.as
 
 put_str.exit387.thread461.peel:                   ; preds = %bb.as
   %i.ej = call i64 @fwrite(ptr noundef nonnull @.str.18, i64 noundef 1, i64 noundef 4, ptr noundef %5) ; 0 uses
-  br i1 %.not334459, label %bb.aw, label %.thread463.peel
+  br i1 %.not334457, label %bb.aw, label %.thread463.peel
 
 .thread463.peel:                                  ; preds = %put_str.exit387.thread461.peel
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -497,7 +501,7 @@ put_str.exit387.thread461.peel:                   ; preds = %bb.as
   br label %bb.av
 
 put_str.exit387.peel:                             ; preds = %bb.ar
-  br i1 %.not334459, label %bb.aw, label %bb.at
+  br i1 %.not334457, label %bb.aw, label %bb.at
 
 bb.at:                                            ; preds = %put_str.exit387.peel
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -533,8 +537,10 @@ bb.aw:                                            ; preds = %put_char.exit390.pe
   %exitcond.peel.not = icmp eq i32 %i.dx, 1
   br i1 %exitcond.peel.not, label %.loopexit505, label %.lr.ph.peel.next
 
-.loopexit505:                                     ; preds = %bb.az, %bb.aw, %put_char.exit378
-  br i1 %.not334459, label %bb.bb, label %bb.ba
+.loopexit505:                                     ; preds = %bb.az, %bb.aw, %put_char.exit381..critedge_crit_edge
+  %.pre-phi = phi i32 [ %.pre524, %put_char.exit381..critedge_crit_edge ], [ %8, %bb.aw ], [ %8, %bb.az ]
+  %.not327 = icmp eq i32 %.pre-phi, 0
+  br i1 %.not327, label %bb.bb, label %bb.ba
 
 .lr.ph.peel.next:                                 ; preds = %bb.aw, %bb.az
   %.1507 = phi i32 [ %i.ft, %bb.az ], [ 1, %bb.aw ] ; 2 uses
@@ -558,7 +564,7 @@ put_str.exit381:                                  ; preds = %.lr.ph.peel.next
 put_str.exit387:                                  ; preds = %put_str.exit381
   %fputc.i383539 = call i32 @fputc(i32 44, ptr %5) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  br i1 %.not334459, label %bb.az, label %.thread463
+  br i1 %.not334457, label %bb.az, label %.thread463
 
 put_str.exit387.thread536:                        ; preds = %put_str.exit381
   %.pre511.a = load i64, ptr %6, align 8
@@ -569,7 +575,7 @@ put_str.exit387.thread536:                        ; preds = %put_str.exit381
   store i64 %i.ex, ptr %6, align 8
   store ptr %i.ey, ptr %7, align 8, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  br i1 %.not334459, label %bb.az, label %._crit_edge513
+  br i1 %.not334457, label %bb.az, label %._crit_edge513
 
 put_str.exit387.thread461:                        ; preds = %bb.ax
   %sext.i380 = shl i64 %i.ev, 32
@@ -580,7 +586,7 @@ put_str.exit387.thread461:                        ; preds = %bb.ax
   %fputc.i383 = call i32 @fputc(i32 44, ptr %5)   ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   %i.fb = call i64 @fwrite(ptr noundef nonnull @.str.18, i64 noundef 1, i64 noundef 4, ptr noundef %5) ; 0 uses
-  br i1 %.not334459, label %bb.az, label %.thread463
+  br i1 %.not334457, label %bb.az, label %.thread463
 
 put_str.exit387.thread:                           ; preds = %bb.ax
   %i.fc = trunc i64 %i.ev to i32
@@ -604,7 +610,7 @@ put_str.exit387.thread:                           ; preds = %bb.ax
   %i.fn = extractvalue { i64, ptr } %i.fl, 1      ; 2 uses
   store i64 %i.fm, ptr %6, align 8
   store ptr %i.fn, ptr %7, align 8, !tbaa !12
-  br i1 %.not334459, label %bb.az, label %.thread460
+  br i1 %.not334457, label %bb.az, label %.thread460
 
 .thread460:                                       ; preds = %put_str.exit387.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -651,7 +657,8 @@ bb.ba:                                            ; preds = %.loopexit505
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %.loopexit505
-  br i1 %.not332, label %put_str.exit393, label %bb.bc
+  %.not328 = icmp eq ptr %.0447, null
+  br i1 %.not328, label %put_str.exit393, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.fu = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0447) #10 ; 2 uses
@@ -660,12 +667,13 @@ bb.bc:                                            ; preds = %bb.bb
 put_str.exit393.thread464:                        ; preds = %bb.bc
   %i.fv = trunc i64 %i.fu to i32
   %i.fw = load i64, ptr %6, align 8
-  %i.fx = load ptr, ptr %7, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.fx = load ptr, ptr %10, align 8
   %i.fy = call { i64, ptr } @jv_string_append_buf(i64 %i.fw, ptr %i.fx, ptr noundef nonnull %.0447, i32 noundef %i.fv) #9 ; 2 uses
   %i.fz = extractvalue { i64, ptr } %i.fy, 0      ; 2 uses
   %i.ga = extractvalue { i64, ptr } %i.fy, 1      ; 2 uses
   store i64 %i.fz, ptr %6, align 8
-  store ptr %i.ga, ptr %7, align 8, !tbaa !12
+  store ptr %i.ga, ptr %10, align 8, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store i8 93, ptr %i.h, align 1, !tbaa !12
   br label %bb.bd
@@ -684,17 +692,19 @@ put_str.exit393:                                  ; preds = %bb.bb
 
 put_str.exit393._crit_edge:                       ; preds = %put_str.exit393
   %.pre516.a = load i64, ptr %6, align 8
-  %.pre517 = load ptr, ptr %7, align 8
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %.pre517 = load ptr, ptr %.phi.trans.insert, align 8
   br label %bb.bd
 
 bb.bd:                                            ; preds = %put_str.exit393._crit_edge, %put_str.exit393.thread464
   %i.gd = phi ptr [ %.pre517, %put_str.exit393._crit_edge ], [ %i.ga, %put_str.exit393.thread464 ]
   %i.ge = phi i64 [ %.pre516.a, %put_str.exit393._crit_edge ], [ %i.fz, %put_str.exit393.thread464 ]
+  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.gf = call { i64, ptr } @jv_string_append_buf(i64 %i.ge, ptr %i.gd, ptr noundef nonnull %i.h, i32 noundef 1) #9 ; 2 uses
   %i.gg = extractvalue { i64, ptr } %i.gf, 0
   %i.gh = extractvalue { i64, ptr } %i.gf, 1
   store i64 %i.gg, ptr %6, align 8
-  store ptr %i.gh, ptr %7, align 8, !tbaa !12
+  store ptr %i.gh, ptr %11, align 8, !tbaa !12
   br label %put_char.exit396
 
 bb.be:                                            ; preds = %put_str.exit393.thread, %put_str.exit393

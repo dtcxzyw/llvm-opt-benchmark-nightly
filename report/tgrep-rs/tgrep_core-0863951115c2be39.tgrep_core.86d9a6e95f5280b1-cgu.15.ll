@@ -204,7 +204,7 @@ define hidden void @_RNvMs2_NtNtNtCs22empcGmRho_14regex_automata4util4pool5inner
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 5 uses
-  %i.c = alloca [24 x i8], align 8                ; 7 uses
+  %i.c = alloca [24 x i8], align 8                ; 9 uses
   %i.d = alloca [24 x i8], align 8                ; 5 uses
   %i.e = icmp eq i64 %3, 0
   br i1 %i.e, label %bb.b, label %bb.c
@@ -279,61 +279,30 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB1B_5boxed3BoxIB1x_jEEEEECsbzNSmZPCnTx_10tgrep_core.exit27: ; preds = %bb.x, %_RNvMNtNtCs5Xr050g3D4S_3std4sync6poisonNtB2_4Flag4done.exit.i.i26, %bb.t, %_RNvMNtCsgCecv3eZDcN_5alloc5boxedINtB2_3BoxINtNtB4_3vec3VecjEE3newCsbzNSmZPCnTx_10tgrep_core.exit9, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc3vec3VecjEEECsbzNSmZPCnTx_10tgrep_core.exit
   ret void
 
-common.resume:                                    ; preds = %5, %.body18, %bb.v
-  %common.resume.op = phi { ptr, i32 } [ %i.bl, %bb.v ], [ %eh.lpad-body19, %.body18 ], [ %6, %5 ]
+common.resume:                                    ; preds = %10, %.body18, %bb.v
+  %common.resume.op = phi { ptr, i32 } [ %i.bl, %bb.v ], [ %eh.lpad-body19, %.body18 ], [ %11, %10 ]
   resume { ptr, i32 } %common.resume.op
 
 bb.i:                                             ; preds = %bb.c
   tail call void @_RNvNtNtCsf3Ta7LF998c_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #34
   unreachable
 
-4:                                                ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB1X_5boxed3BoxIB1T_jEEEEINtB12_12TryLockErrorBX_EEECsbzNSmZPCnTx_10tgrep_core.exit38
-  invoke void @_RNvNtCsgCecv3eZDcN_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #33
-          to label %.noexc20 unwind label %5
-
-.noexc20:                                         ; preds = %4
-  unreachable
-
-5:                                                ; preds = %4
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecjEECsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #29
-          to label %common.resume unwind label %7
-
-7:                                                ; preds = %5
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #30
-  unreachable
-
-_RNvMNtCsgCecv3eZDcN_5alloc5boxedINtB2_3BoxINtNtB4_3vec3VecjEE3newCsbzNSmZPCnTx_10tgrep_core.exit9: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB1X_5boxed3BoxIB1T_jEEEEINtB12_12TryLockErrorBX_EEECsbzNSmZPCnTx_10tgrep_core.exit38
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bz, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %1, ptr %9, align 8
-  store i64 0, ptr %0, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.bz, ptr %10, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 1, ptr %11, align 8
-  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB1B_5boxed3BoxIB1x_jEEEEECsbzNSmZPCnTx_10tgrep_core.exit27
-
 bb.j:                                             ; preds = %bb.c
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  %4 = urem i64 %2, %i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %14 = urem i64 %2, %i.i
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !12, !noundef !12
-  %i.y = getelementptr inbounds nuw [64 x i8], ptr %i.x, i64 %14
+  %i.y = getelementptr inbounds nuw [64 x i8], ptr %i.x, i64 %4
   call void @_RNvMs5_NtNtNtCs5Xr050g3D4S_3std4sync6poison5mutexINtB5_5MutexINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB12_5boxed3BoxIBY_jEEEE8try_lockCsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noundef nonnull align 8 %i.y)
   %i.z = load i64, ptr %i.c, align 8, !range !18, !noundef !12
   %i.aa = trunc nuw i64 %i.z to i1
   br i1 %i.aa, label %bb.y, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ab = load ptr, ptr %12, align 8, !nonnull !12, !align !22, !noundef !12 ; 9 uses
-  %i.ac = load i8, ptr %13, align 8, !range !16, !noundef !12 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.ab = load ptr, ptr %5, align 8, !nonnull !12, !align !22, !noundef !12 ; 9 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.ac = load i8, ptr %6, align 8, !range !16, !noundef !12 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 24 ; 2 uses
   %i.ae = load i64, ptr %i.ad, align 8, !noundef !12 ; 3 uses
@@ -458,8 +427,10 @@ bb.x:                                             ; preds = %_RINvNtCsf3Ta7LF998
 
 bb.y:                                             ; preds = %bb.j
   tail call void @llvm.experimental.noalias.scope.decl(metadata !717)
-  %.val.i31 = load ptr, ptr %12, align 8, !alias.scope !717 ; 4 uses
-  %.val3.i32 = load i8, ptr %13, align 8, !range !17, !alias.scope !717, !noundef !12 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %.val.i31 = load ptr, ptr %7, align 8, !alias.scope !717 ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %.val3.i32 = load i8, ptr %8, align 8, !range !17, !alias.scope !717, !noundef !12 ; 2 uses
   %.not.i.i33 = icmp eq i8 %.val3.i32, 2
   br i1 %.not.i.i33, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB1X_5boxed3BoxIB1T_jEEEEINtB12_12TryLockErrorBX_EEECsbzNSmZPCnTx_10tgrep_core.exit38, label %bb.z
 
@@ -501,7 +472,38 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCs5Xr050g
   call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #32, !noalias !718
   %i.bz = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 24, 105) 24, i64 noundef 8) #32, !noalias !718 ; 3 uses
   %i.ca = icmp eq ptr %i.bz, null
-  br i1 %i.ca, label %4, label %_RNvMNtCsgCecv3eZDcN_5alloc5boxedINtB2_3BoxINtNtB4_3vec3VecjEE3newCsbzNSmZPCnTx_10tgrep_core.exit9, !prof !14
+  br i1 %i.ca, label %9, label %_RNvMNtCsgCecv3eZDcN_5alloc5boxedINtB2_3BoxINtNtB4_3vec3VecjEE3newCsbzNSmZPCnTx_10tgrep_core.exit9, !prof !14
+
+9:                                                ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB1X_5boxed3BoxIB1T_jEEEEINtB12_12TryLockErrorBX_EEECsbzNSmZPCnTx_10tgrep_core.exit38
+  invoke void @_RNvNtCsgCecv3eZDcN_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #33
+          to label %.noexc37 unwind label %10
+
+.noexc37:                                         ; preds = %9
+  unreachable
+
+10:                                               ; preds = %9
+  %11 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecjEECsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #29
+          to label %common.resume unwind label %12
+
+12:                                               ; preds = %10
+  %13 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #30
+  unreachable
+
+_RNvMNtCsgCecv3eZDcN_5alloc5boxedINtB2_3BoxINtNtB4_3vec3VecjEE3newCsbzNSmZPCnTx_10tgrep_core.exit9: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB1X_5boxed3BoxIB1T_jEEEEINtB12_12TryLockErrorBX_EEECsbzNSmZPCnTx_10tgrep_core.exit38
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bz, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %1, ptr %14, align 8
+  store i64 0, ptr %0, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %i.bz, ptr %15, align 8
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i8 1, ptr %16, align 8
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuardINtNtCsgCecv3eZDcN_5alloc3vec3VecINtNtB1B_5boxed3BoxIB1x_jEEEEECsbzNSmZPCnTx_10tgrep_core.exit27
 }
 
 ; Function Attrs: cold noinline nonlazybind uwtable

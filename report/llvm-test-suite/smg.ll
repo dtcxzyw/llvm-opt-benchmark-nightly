@@ -203,27 +203,23 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.bf = phi i32 [ %i.bc, %bb.e ], [ 0, %bb.d ]  ; 2 uses
   %i.bg = phi i32 [ %i.be, %bb.e ], [ 0, %bb.d ]
-  %i.bh = load i32, ptr %i.a, align 4, !tbaa !7   ; 8 uses
-  %i.bi = load i32, ptr %i.j, align 4, !tbaa !7   ; 4 uses
-  %i.bj = load i32, ptr %i.k, align 4, !tbaa !7   ; 3 uses
-  %.0129 = call i32 @llvm.smax.i32(i32 %i.bi, i32 %i.bh)
-  %.1 = call i32 @llvm.smax.i32(i32 %i.bj, i32 %.0129)
-  %i.bk = icmp sgt i32 %.1, 0
+  %i.bh = load i32, ptr %i.a, align 4, !tbaa !7   ; 7 uses
+  %i.bi = load i32, ptr %i.j, align 4, !tbaa !7   ; 3 uses
+  %i.bj = load i32, ptr %i.k, align 4, !tbaa !7   ; 2 uses
+  %i.bk = icmp sgt i32 %i.bj, 0
   br i1 %i.bk, label %.preheader156.lr.ph, label %._crit_edge.split
 
 .preheader156.lr.ph:                              ; preds = %bb.f
-  %factor.op.mul169 = mul i32 %i.bi, %i.bf
   %i.bl = add nuw nsw i32 %i.ai, 1
   %i.bm = mul nsw i32 %i.bg, %i.bl
   %i.bn = select i1 %i.aj, i32 %i.bm, i32 0
   %i.bo = mul i32 %i.bh, %i.ba
-  %4 = icmp sgt i32 %i.bj, 0
   %i.bp = icmp sgt i32 %i.bi, 0
   %i.bq = sub i32 %i.bf, %i.bo
-  %5 = sub i32 %i.bn, %factor.op.mul169
-  %brmerge.not192 = and i1 %4, %i.bp
+  %4 = mul i32 %i.bi, %i.bf
+  %5 = sub i32 %i.bn, %4
   %i.br = icmp sgt i32 %i.bh, 0
-  %or.cond.a = and i1 %brmerge.not192, %i.br
+  %or.cond.a = and i1 %i.bp, %i.br
   br i1 %or.cond.a, label %.preheader155.us.us.preheader, label %._crit_edge.split
 
 .preheader155.us.us.preheader:                    ; preds = %.preheader156.lr.ph

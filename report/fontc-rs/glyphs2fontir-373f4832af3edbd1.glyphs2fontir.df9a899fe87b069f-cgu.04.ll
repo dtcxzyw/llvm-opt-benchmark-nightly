@@ -202,9 +202,6 @@ bb.d:                                             ; preds = %bb.a
 define internal fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueATNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameBD_Ej1_ECsjceHdiZFn9b_13glyphs2fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49)
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !51)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
@@ -214,6 +211,7 @@ bb.a:
   br i1 %switch.i.i.i.i.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameECsjceHdiZFn9b_13glyphs2fontir.exit.i.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !55)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
   %i.b = load ptr, ptr %1, align 8, !alias.scope !57, !nonnull !6, !noundef !6
@@ -229,6 +227,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.e = landingpad { ptr, i32 }
           cleanup
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
@@ -237,6 +236,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %switch.i.i.i1.i.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameECsjceHdiZFn9b_13glyphs2fontir.exit3.i.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63)
   %i.g = load ptr, ptr %3, align 8, !alias.scope !64, !nonnull !6, !noundef !6
@@ -250,24 +250,26 @@ bb.f:                                             ; preds = %bb.e
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameECsjceHdiZFn9b_13glyphs2fontir.exit3.i.i unwind label %bb.i
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameECsjceHdiZFn9b_13glyphs2fontir.exit.i.i: ; preds = %bb.c, %bb.b, %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !67)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
-  %i.j = load i8, ptr %2, align 8, !range !8, !alias.scope !69, !noundef !6
+  %i.j = load i8, ptr %4, align 8, !range !8, !alias.scope !69, !noundef !6
   %switch.i.i.i4.i.i = icmp samesign ult i8 %i.j, 25
   br i1 %switch.i.i.i4.i.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameBD_EECsjceHdiZFn9b_13glyphs2fontir.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameECsjceHdiZFn9b_13glyphs2fontir.exit.i.i
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !70)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !71)
-  %i.k = load ptr, ptr %3, align 8, !alias.scope !72, !nonnull !6, !noundef !6
+  %i.k = load ptr, ptr %5, align 8, !alias.scope !72, !nonnull !6, !noundef !6
   %i.l = atomicrmw sub ptr %i.k, i64 1 release, align 8, !noalias !73
   %i.m = icmp eq i64 %i.l, 1
   br i1 %i.m, label %bb.h, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameBD_EECsjceHdiZFn9b_13glyphs2fontir.exit
 
 bb.h:                                             ; preds = %bb.g
   fence acquire
-  tail call void @_RNvMsn_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArceE9drop_slowCs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %3) #13
+  tail call void @_RNvMsn_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArceE9drop_slowCs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %5) #13
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameBD_EECsjceHdiZFn9b_13glyphs2fontir.exit
 
 bb.i:                                             ; preds = %bb.f

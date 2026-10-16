@@ -119,17 +119,22 @@ bb.e:                                             ; preds = %bb.c
   store i64 0, ptr %6, align 16
   %i.m = call i32 @pthread_create(ptr noundef nonnull %i.a, ptr noundef nonnull %4, ptr noundef %1, ptr noundef nonnull %6) #11 ; 2 uses
   %.not44 = icmp eq i32 %i.m, 0
-  br i1 %.not44, label %.preheader.preheader, label %bb.f, !llvm.loop !11
+  br i1 %.not44, label %.preheader.preheader, label %9
+
+9:                                                ; preds = %bb.e
+  %10 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.10, i32 noundef %i.m) #10 ; 0 uses
+  call void @__assert(ptr noundef nonnull @.str.7, i32 noundef 195, ptr noundef nonnull @.str.8) #12
+  unreachable
 
 .preheader.preheader:                             ; preds = %bb.e
   %i.n = load i32, ptr %i.a, align 4
   %i.o = call i32 @pthread_join(i32 noundef %i.n, ptr noundef null) #11 ; 2 uses
   %.not43 = icmp eq i32 %i.o, 0
-  br i1 %.not43, label %.preheader, label %9, !llvm.loop !12
+  br i1 %.not43, label %.preheader, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
-  %i.p = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.10, i32 noundef %i.m) #10 ; 0 uses
-  call void @__assert(ptr noundef nonnull @.str.7, i32 noundef 195, ptr noundef nonnull @.str.8) #12
+bb.f:                                             ; preds = %.preheader.preheader
+  %i.p = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, i32 noundef %i.o) #10 ; 0 uses
+  call void @__assert(ptr noundef nonnull @.str.7, i32 noundef 206, ptr noundef nonnull @.str.8) #12
   unreachable
 
 .preheader:                                       ; preds = %.preheader.preheader
@@ -137,11 +142,6 @@ bb.f:                                             ; preds = %bb.e
   %i.r = load i64, ptr %6, align 16               ; 2 uses
   %.not42 = icmp eq i64 %i.r, 0
   br i1 %.not42, label %bb.h, label %bb.g
-
-9:                                                ; preds = %.preheader.preheader
-  %10 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11, i32 noundef %i.o) #10 ; 0 uses
-  call void @__assert(ptr noundef nonnull @.str.7, i32 noundef 206, ptr noundef nonnull @.str.8) #12
-  unreachable
 
 bb.g:                                             ; preds = %.preheader
   %i.s = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.12, ptr noundef %2) #10 ; 0 uses
@@ -185,6 +185,82 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 ; Function Attrs: noredzone nounwind optsize uwtable
 define internal noalias noundef ptr @spinlock_t_test_thread(ptr nofree noundef captures(none) %0) #2 {
+bb.a:
+  %i.a = alloca i64, align 8                      ; 4 uses
+  %1 = alloca %struct.timespec, align 8           ; 5 uses
+  %2 = alloca %struct.timespec, align 8           ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 12 ; 3 uses
+  %i.e = atomicrmw volatile add ptr %i.d, i32 1 acq_rel, align 4 ; 0 uses
+  %i.f = load atomic volatile i32, ptr %i.d monotonic, align 4
+  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  %i.h = load i32, ptr %i.g, align 8
+  %.not16 = icmp eq i32 %i.f, %i.h
+  br i1 %.not16, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %i.i = tail call i32 @sched_yield() #11         ; 0 uses
+  %i.j = load atomic volatile i32, ptr %i.d monotonic, align 4
+  %i.k = load i32, ptr %i.g, align 8
+  %.not = icmp eq i32 %i.j, %i.k
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !11
+
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %i.l = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %1) #11 ; 0 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
+  br label %bb.b
+
+bb.b:                                             ; preds = %._crit_edge, %up_irq_restore.exit
+  %.017 = phi i32 [ 0, %._crit_edge ], [ %i.r, %up_irq_restore.exit ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void asm sideeffect "\09pushfq\0A\09popq $0\0A", "=*rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) %i.a) #9, !srcloc !8
+  %i.n = load i64, ptr %i.a, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void asm sideeffect "cli", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !9
+  %i.o = load volatile i32, ptr %i.m, align 8
+  %i.p = add i32 %i.o, 1
+  store volatile i32 %i.p, ptr %i.m, align 8
+  %i.q = and i64 %i.n, 512
+  %.not15 = icmp eq i64 %i.q, 0
+  br i1 %.not15, label %up_irq_restore.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  call void asm sideeffect "sti", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !10
+  br label %up_irq_restore.exit
+
+up_irq_restore.exit:                              ; preds = %bb.b, %bb.c
+  %i.r = add nuw nsw i32 %.017, 1                 ; 2 uses
+  %exitcond.not = icmp eq i32 %i.r, 10000000
+  br i1 %exitcond.not, label %bb.d, label %bb.b, !llvm.loop !12
+
+bb.d:                                             ; preds = %up_irq_restore.exit
+  %i.s = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %2) #11 ; 0 uses
+  %.val = load i64, ptr %1, align 8
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.val12 = load i64, ptr %i.t, align 8
+  %.val13 = load i64, ptr %2, align 8
+  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.val14 = load i64, ptr %i.u, align 8
+  %i.v = sub i64 %.val13, %.val
+  %i.w = sub nsw i64 %.val14, %.val12             ; 4 uses
+  %i.x = icmp slt i64 %i.w, 0
+  %i.y = add nsw i64 %i.w, 1000000000
+  %.lobit.i = ashr i64 %i.w, 63
+  %.08.i = add i64 %i.v, %.lobit.i
+  %.0.i = select i1 %i.x, i64 %i.y, i64 %i.w
+  %i.z = mul i64 %.08.i, 1000000000
+  %i.aa = add i64 %i.z, %.0.i
+  store i64 %i.aa, ptr %0, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
+  ret ptr null
+}
+
+; Function Attrs: noredzone nounwind optsize uwtable
+define internal noalias noundef ptr @rspinlock_t_test_thread(ptr nofree noundef captures(none) %0) #2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %1 = alloca %struct.timespec, align 8           ; 5 uses
@@ -260,82 +336,6 @@ bb.d:                                             ; preds = %up_irq_restore.exit
 }
 
 ; Function Attrs: noredzone nounwind optsize uwtable
-define internal noalias noundef ptr @rspinlock_t_test_thread(ptr nofree noundef captures(none) %0) #2 {
-bb.a:
-  %i.a = alloca i64, align 8                      ; 4 uses
-  %1 = alloca %struct.timespec, align 8           ; 5 uses
-  %2 = alloca %struct.timespec, align 8           ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 12 ; 3 uses
-  %i.e = atomicrmw volatile add ptr %i.d, i32 1 acq_rel, align 4 ; 0 uses
-  %i.f = load atomic volatile i32, ptr %i.d monotonic, align 4
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
-  %i.h = load i32, ptr %i.g, align 8
-  %.not16 = icmp eq i32 %i.f, %i.h
-  br i1 %.not16, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %i.i = tail call i32 @sched_yield() #11         ; 0 uses
-  %i.j = load atomic volatile i32, ptr %i.d monotonic, align 4
-  %i.k = load i32, ptr %i.g, align 8
-  %.not = icmp eq i32 %i.j, %i.k
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !15
-
-._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %i.l = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %1) #11 ; 0 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  br label %bb.b
-
-bb.b:                                             ; preds = %._crit_edge, %up_irq_restore.exit
-  %.017 = phi i32 [ 0, %._crit_edge ], [ %i.r, %up_irq_restore.exit ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void asm sideeffect "\09pushfq\0A\09popq $0\0A", "=*rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) %i.a) #9, !srcloc !8
-  %i.n = load i64, ptr %i.a, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  call void asm sideeffect "cli", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !9
-  %i.o = load volatile i32, ptr %i.m, align 8
-  %i.p = add i32 %i.o, 1
-  store volatile i32 %i.p, ptr %i.m, align 8
-  %i.q = and i64 %i.n, 512
-  %.not15 = icmp eq i64 %i.q, 0
-  br i1 %.not15, label %up_irq_restore.exit, label %bb.c
-
-bb.c:                                             ; preds = %bb.b
-  call void asm sideeffect "sti", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !10
-  br label %up_irq_restore.exit
-
-up_irq_restore.exit:                              ; preds = %bb.b, %bb.c
-  %i.r = add nuw nsw i32 %.017, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %i.r, 10000000
-  br i1 %exitcond.not, label %bb.d, label %bb.b, !llvm.loop !16
-
-bb.d:                                             ; preds = %up_irq_restore.exit
-  %i.s = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %2) #11 ; 0 uses
-  %.val = load i64, ptr %1, align 8
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val12 = load i64, ptr %i.t, align 8
-  %.val13 = load i64, ptr %2, align 8
-  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.val14 = load i64, ptr %i.u, align 8
-  %i.v = sub i64 %.val13, %.val
-  %i.w = sub nsw i64 %.val14, %.val12             ; 4 uses
-  %i.x = icmp slt i64 %i.w, 0
-  %i.y = add nsw i64 %i.w, 1000000000
-  %.lobit.i = ashr i64 %i.w, 63
-  %.08.i = add i64 %i.v, %.lobit.i
-  %.0.i = select i1 %i.x, i64 %i.y, i64 %i.w
-  %i.z = mul i64 %.08.i, 1000000000
-  %i.aa = add i64 %i.z, %.0.i
-  store i64 %i.aa, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
-  ret ptr null
-}
-
-; Function Attrs: noredzone nounwind optsize uwtable
 define internal noalias noundef ptr @seqcount_t_test_thread(ptr nofree noundef captures(none) %0) #2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
@@ -359,7 +359,7 @@ bb.a:
   %i.k = load atomic volatile i32, ptr %i.e monotonic, align 4
   %i.l = load i32, ptr %i.h, align 8
   %.not = icmp eq i32 %i.k, %i.l
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !17
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %i.m = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %1) #11 ; 0 uses
@@ -390,7 +390,7 @@ bb.c:                                             ; preds = %bb.b
 write_sequnlock_irqrestore.exit:                  ; preds = %bb.b, %bb.c
   %i.u = add nuw nsw i32 %.019, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.u, 10000000
-  br i1 %exitcond.not, label %bb.d, label %bb.b, !llvm.loop !18
+  br i1 %exitcond.not, label %bb.d, label %bb.b, !llvm.loop !16
 
 bb.d:                                             ; preds = %write_sequnlock_irqrestore.exit
   %i.v = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %2) #11 ; 0 uses
@@ -473,6 +473,4 @@ attributes #12 = { noredzone noreturn nounwind optsize }
 !14 = distinct !{!14, !7}
 !15 = distinct !{!15, !7}
 !16 = distinct !{!16, !7}
-!17 = distinct !{!17, !7}
-!18 = distinct !{!18, !7}
 end_hunk_0

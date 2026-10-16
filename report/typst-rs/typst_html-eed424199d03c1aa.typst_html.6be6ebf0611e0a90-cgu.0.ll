@@ -205,7 +205,7 @@ _RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread2.i.i.i.i.i.i.i.i
   unreachable
 
 _RNvXs6_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtB9_5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE9index_mut.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.i.i.i.i.i.i.i.i.i.i.i, %_RNvMs7_CsaPYV88GQHqL_7bumpaloNtB5_4Bump12alloc_layoutCs9gmjTwvRRSu_10typst_html.exit43.i.i.i.i.i.i.i.i.i.i
-  %.promoted.i.i.i.i.i.i.i.i.i.i.i = load i8, ptr %.sroa.0.0.i41.i.i.i.i.i.i.i.i.i.i, align 1, !alias.scope !25224, !noalias !25221 ; 2 uses
+  %.promoted.i.i.i.i.i.i.i.i.i.i.i = load i8, ptr %.sroa.0.0.i41.i.i.i.i.i.i.i.i.i.i, align 1, !alias.scope !25224, !noalias !25221, !noundef !52 ; 2 uses
   %i.ar = add i8 %.promoted.i.i.i.i.i.i.i.i.i.i.i, -97
   %i.as = icmp ult i8 %i.ar, 26
   %i.at = select i1 %i.as, i8 32, i8 0

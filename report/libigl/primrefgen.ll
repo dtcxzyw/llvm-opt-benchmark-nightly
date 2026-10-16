@@ -1,9 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/primrefgen?download=true
 inline.NumInlined: 3236
 inline.NumDeleted: 275
-loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 35
-loop-unroll.NumUnrolled: 81
+loop-unroll.NumUnrolled: 78
 begin_hunk_0_@"_ZN6embree13TaskScheduler19ClosureTaskFunctionIZNS0_5spawnImZNS_12parallel_forImZNS_29parallel_for_for_prefix_sum0_IZNS_28parallel_for_for_prefix_sum0INS_5Scene8IteratorINS_8GridMeshELb0EEEmNS_9PrimInfoTINS_4BBoxINS_6Vec3faEEEEEZNS_4sse223createPrimRefArrayGridsEPS6_RNS_8vector_tINS_7PrimRefENS_27aligned_monitored_allocatorISI_Lm32EEEEERNSH_INS_16SubGridBuildDataENSJ_ISN_Lm4EEEEEE3$_0ZNSF_23createPrimRefArrayGridsESG_SM_SQ_E3$_1EET1_RNS_28ParallelForForPrefixSumStateIST_EERT_T0_RKST_RKT2_RKT3_EUlmE_mSE_ZNS5_IS9_mSE_SR_SS_EEST_SW_SY_SZ_S11_S14_S17_EUlmRKNS_5rangeImEEmE_SS_EEST_SW_SZ_RKSX_S11_S14_S17_EUlmE_EEvSX_RKSZ_EUlS1C_E_EEvSX_SX_SX_S1I_PNS0_16TaskGroupContextEEUlvE_E7executeEv":bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %i.u, i64 48
   %i.ab = load <4 x float>, ptr %i.aa, align 16   ; 2 uses
@@ -205,13 +204,18 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader48.i.i.i.i.i
 
 .preheader48.i.i.i.i.i:                           ; preds = %..critedge40.i_crit_edge.i.i.i.i.i, %.preheader48.preheader.i.i.i.i.i
-  %.028.i55.i.i.i.i.i = phi i64 [ %i.dv, %..critedge40.i_crit_edge.i.i.i.i.i ], [ 0, %.preheader48.preheader.i.i.i.i.i ] ; 2 uses
+  %.028.i55.i.i.i.i.i = phi i64 [ 0, %.preheader48.preheader.i.i.i.i.i ], [ %i.dv, %..critedge40.i_crit_edge.i.i.i.i.i ] ; 2 uses
   %i.dl = mul nuw nsw i64 %.028.i55.i.i.i.i.i, %i.di
   %invariant.op53.i.i.i.i.i = add nuw nsw i64 %i.dl, %i.co
   br label %.preheader45.i.i.i.i.i
 
-.preheader45.i.i.i.i.i:                           ; preds = %.critedge.i.i.i.i.i.i, %.preheader48.i.i.i.i.i
-  %.027.i52.i.i.i.i.i = phi i64 [ 0, %.preheader48.i.i.i.i.i ], [ %1, %.critedge.i.i.i.i.i.i ] ; 2 uses
+1:                                                ; preds = %.preheader45.i.i.i.i.i
+  %2 = add nuw nsw i64 %.027.i52.i.i.i.i.i, 1     ; 2 uses
+  %exitcond.not.i.i.i.i.i = icmp eq i64 %2, %i.dh
+  br i1 %exitcond.not.i.i.i.i.i, label %..critedge40.i_crit_edge.i.i.i.i.i, label %.preheader45.i.i.i.i.i, !llvm.loop !18
+
+.preheader45.i.i.i.i.i:                           ; preds = %1, %.preheader48.i.i.i.i.i
+  %.027.i52.i.i.i.i.i = phi i64 [ 0, %.preheader48.i.i.i.i.i ], [ %2, %1 ] ; 2 uses
   %.reass.reass.i.i.i.i.i = add nuw nsw i64 %invariant.op53.i.i.i.i.i, %.027.i52.i.i.i.i.i
   %i.dm = mul i64 %.reass.reass.i.i.i.i.i, %.pre69.pre.i.i.i.i.i
   %i.dn = getelementptr inbounds nuw i8, ptr %.pre68.pre.i.i.i.i.i, i64 %i.dm
@@ -222,14 +226,9 @@ bb.l:                                             ; preds = %bb.k
   %i.ds = bitcast <4 x i1> %i.dr to i4
   %i.dt = and i4 %i.ds, 7
   %i.du = icmp eq i4 %i.dt, 7
-  br i1 %i.du, label %.critedge.i.i.i.i.i.i, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread.i.i.i.i.i
+  br i1 %i.du, label %1, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread.i.i.i.i.i
 
-.critedge.i.i.i.i.i.i:                            ; preds = %.preheader45.i.i.i.i.i
-  %1 = add nuw nsw i64 %.027.i52.i.i.i.i.i, 1     ; 2 uses
-  %exitcond.not.i.i.i.i.i = icmp eq i64 %1, %i.dh
-  br i1 %exitcond.not.i.i.i.i.i, label %..critedge40.i_crit_edge.i.i.i.i.i, label %.preheader45.i.i.i.i.i, !llvm.loop !18
-
-..critedge40.i_crit_edge.i.i.i.i.i:               ; preds = %.critedge.i.i.i.i.i.i
+..critedge40.i_crit_edge.i.i.i.i.i:               ; preds = %1
   %i.dv = add nuw nsw i64 %.028.i55.i.i.i.i.i, 1  ; 2 uses
   %exitcond64.not.i.i.i.i.i = icmp eq i64 %i.dv, %i.de
   br i1 %exitcond64.not.i.i.i.i.i, label %.preheader49.i.i.i.i.i, label %.preheader48.i.i.i.i.i, !llvm.loop !19
@@ -241,13 +240,18 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader47.i.i.i.i.i
 
 .preheader47.i.i.i.i.i:                           ; preds = %..critedge40.i20_crit_edge.i.i.i.i.i, %.preheader49.i.i.i.i.i
-  %.028.i1561.i.i.i.i.i = phi i64 [ %i.ei, %..critedge40.i20_crit_edge.i.i.i.i.i ], [ 0, %.preheader49.i.i.i.i.i ] ; 2 uses
+  %.028.i1561.i.i.i.i.i = phi i64 [ 0, %.preheader49.i.i.i.i.i ], [ %i.ei, %..critedge40.i20_crit_edge.i.i.i.i.i ] ; 2 uses
   %i.dy = mul nuw nsw i64 %.028.i1561.i.i.i.i.i, %i.di
   %invariant.op58.i.i.i.i.i = add nuw nsw i64 %i.dy, %i.co
   br label %.preheader.i.i.i.i.i
 
-.preheader.i.i.i.i.i:                             ; preds = %.critedge.i23.i.i.i.i.i, %.preheader47.i.i.i.i.i
-  %.027.i1857.i.i.i.i.i = phi i64 [ 0, %.preheader47.i.i.i.i.i ], [ %2, %.critedge.i23.i.i.i.i.i ] ; 2 uses
+3:                                                ; preds = %.preheader.i.i.i.i.i
+  %4 = add nuw nsw i64 %.027.i1857.i.i.i.i.i, 1   ; 2 uses
+  %exitcond60.not.i.i.i.i.i = icmp eq i64 %4, %i.dh
+  br i1 %exitcond60.not.i.i.i.i.i, label %..critedge40.i20_crit_edge.i.i.i.i.i, label %.preheader.i.i.i.i.i, !llvm.loop !18
+
+.preheader.i.i.i.i.i:                             ; preds = %3, %.preheader47.i.i.i.i.i
+  %.027.i1857.i.i.i.i.i = phi i64 [ 0, %.preheader47.i.i.i.i.i ], [ %4, %3 ] ; 2 uses
   %.reass.reass59.i.i.i.i.i = add nuw nsw i64 %invariant.op58.i.i.i.i.i, %.027.i1857.i.i.i.i.i
   %i.dz = mul i64 %.reass.reass59.i.i.i.i.i, %.pre69.pre.i.i.i.i.i
   %i.ea = getelementptr inbounds nuw i8, ptr %.pre68.pre.i.i.i.i.i, i64 %i.dz
@@ -258,14 +262,9 @@ bb.l:                                             ; preds = %bb.k
   %i.ef = bitcast <4 x i1> %i.ee to i4
   %i.eg = and i4 %i.ef, 7
   %i.eh = icmp eq i4 %i.eg, 7
-  br i1 %i.eh, label %.critedge.i23.i.i.i.i.i, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread.i.i.i.i.i
+  br i1 %i.eh, label %3, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread.i.i.i.i.i
 
-.critedge.i23.i.i.i.i.i:                          ; preds = %.preheader.i.i.i.i.i
-  %2 = add nuw nsw i64 %.027.i1857.i.i.i.i.i, 1   ; 2 uses
-  %exitcond65.not.i.i.i.i.i = icmp eq i64 %2, %i.dh
-  br i1 %exitcond65.not.i.i.i.i.i, label %..critedge40.i20_crit_edge.i.i.i.i.i, label %.preheader.i.i.i.i.i, !llvm.loop !18
-
-..critedge40.i20_crit_edge.i.i.i.i.i:             ; preds = %.critedge.i23.i.i.i.i.i
+..critedge40.i20_crit_edge.i.i.i.i.i:             ; preds = %3
   %i.ei = add nuw nsw i64 %.028.i1561.i.i.i.i.i, 1 ; 2 uses
   %exitcond66.not.i.i.i.i.i = icmp eq i64 %i.ei, %i.de
   br i1 %exitcond66.not.i.i.i.i.i, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit24.thread43.i.i.i.i.i, label %.preheader47.i.i.i.i.i, !llvm.loop !19
@@ -668,13 +667,18 @@ bb.e:                                             ; preds = %bb.d
   br label %.preheader34.i.i.i.i
 
 .preheader34.i.i.i.i:                             ; preds = %..critedge40.i_crit_edge.i.i.i.i, %.preheader34.preheader.i.i.i.i
-  %.028.i40.i.i.i.i = phi i64 [ %i.bw, %..critedge40.i_crit_edge.i.i.i.i ], [ 0, %.preheader34.preheader.i.i.i.i ] ; 2 uses
+  %.028.i40.i.i.i.i = phi i64 [ 0, %.preheader34.preheader.i.i.i.i ], [ %i.bw, %..critedge40.i_crit_edge.i.i.i.i ] ; 2 uses
   %i.bm = mul nuw nsw i64 %.028.i40.i.i.i.i, %i.bl
   %invariant.op38.i.i.i.i = add nuw nsw i64 %i.bm, %i.at
   br label %.preheader.i.i.i.i
 
-.preheader.i.i.i.i:                               ; preds = %.critedge.i.i.i.i.i, %.preheader34.i.i.i.i
-  %.027.i37.i.i.i.i = phi i64 [ 0, %.preheader34.i.i.i.i ], [ %1, %.critedge.i.i.i.i.i ] ; 2 uses
+1:                                                ; preds = %.preheader.i.i.i.i
+  %2 = add nuw nsw i64 %.027.i37.i.i.i.i, 1       ; 2 uses
+  %exitcond.not.i.i.i.i = icmp eq i64 %2, %i.bk
+  br i1 %exitcond.not.i.i.i.i, label %..critedge40.i_crit_edge.i.i.i.i, label %.preheader.i.i.i.i, !llvm.loop !18
+
+.preheader.i.i.i.i:                               ; preds = %1, %.preheader34.i.i.i.i
+  %.027.i37.i.i.i.i = phi i64 [ 0, %.preheader34.i.i.i.i ], [ %2, %1 ] ; 2 uses
   %.reass.reass.i.i.i.i = add nuw nsw i64 %invariant.op38.i.i.i.i, %.027.i37.i.i.i.i
   %i.bn = mul i64 %.reass.reass.i.i.i.i, %.pre45.pre.i.i.i.i
   %i.bo = getelementptr inbounds nuw i8, ptr %.pre44.pre.i.i.i.i, i64 %i.bn
@@ -685,14 +689,9 @@ bb.e:                                             ; preds = %bb.d
   %i.bt = bitcast <4 x i1> %i.bs to i4
   %i.bu = and i4 %i.bt, 7
   %i.bv = icmp eq i4 %i.bu, 7
-  br i1 %i.bv, label %.critedge.i.i.i.i.i, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread.i.i.i.i
+  br i1 %i.bv, label %1, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread.i.i.i.i
 
-.critedge.i.i.i.i.i:                              ; preds = %.preheader.i.i.i.i
-  %1 = add nuw nsw i64 %.027.i37.i.i.i.i, 1       ; 2 uses
-  %exitcond.not.i.i.i.i = icmp eq i64 %1, %i.bk
-  br i1 %exitcond.not.i.i.i.i, label %..critedge40.i_crit_edge.i.i.i.i, label %.preheader.i.i.i.i, !llvm.loop !18
-
-..critedge40.i_crit_edge.i.i.i.i:                 ; preds = %.critedge.i.i.i.i.i
+..critedge40.i_crit_edge.i.i.i.i:                 ; preds = %1
   %i.bw = add nuw nsw i64 %.028.i40.i.i.i.i, 1    ; 2 uses
   %exitcond42.not.i.i.i.i = icmp eq i64 %i.bw, %i.bj
   br i1 %exitcond42.not.i.i.i.i, label %_ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread32.i.i.i.i, label %.preheader34.i.i.i.i, !llvm.loop !19

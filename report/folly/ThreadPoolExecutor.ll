@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/folly/original/ThreadPoolExecutor?download=true
 inline.NumInlined: 1921
 inline.NumDeleted: 947
-loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZN5folly6detail8function13DispatchSmall4execISt5_BindIFMNS_18ThreadPoolExecutorEFvSt10shared_ptrINS5_6ThreadEEEPS5_S8_EEEEmNS1_2OpEPNS1_4DataESG_:bb.a
   store ptr null, ptr %i.e, align 8, !tbaa !312
   store <2 x ptr> %i.f, ptr %i.b, align 8, !tbaa !313
@@ -205,7 +205,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   %i.c = load ptr, ptr %i.b, align 8
   invoke void %i.c(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %1, ptr noundef nonnull align 64 dereferenceable(496) %0)
-          to label %bb.b unwind label %.loopexit.split-lp, !call_target !699
+          to label %bb.b unwind label %bb.aa, !call_target !699
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
@@ -317,45 +317,49 @@ _ZN5folly8FunctionIFvvEED2Ev.exit18:              ; preds = %bb.j, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   %i.al = call ptr @__cxa_begin_catch(ptr %.010) #12 ; 0 uses
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 23
   %i.am = call i64 @_ZNSt6chrono3_V212system_clock3nowEv() #12
   %i.an = sdiv i64 %i.am, 1000000                 ; 2 uses
-  %invariant.op = add nsw i64 %i.an, -1000
-  %9 = load atomic i64, ptr @_ZZN5folly18ThreadPoolExecutor15tryAddOneThreadEvE11FB_LEM_hist acquire, align 8 ; 2 uses
-  %10 = icmp sgt i64 %9, %invariant.op
-  br i1 %10, label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit, label %bb.l
+  %8 = load atomic i64, ptr @_ZZN5folly18ThreadPoolExecutor15tryAddOneThreadEvE11FB_LEM_hist acquire, align 8 ; 2 uses
+  %9 = sub nsw i64 %i.an, %8
+  %10 = icmp slt i64 %9, 1000
+  br i1 %10, label %.critedge.critedge, label %bb.l
+
+.critedge.critedge:                               ; preds = %bb.l, %_ZN5folly8FunctionIFvvEED2Ev.exit18, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit
+  invoke void @__cxa_end_catch()
+          to label %bb.t unwind label %bb.aa
 
 bb.l:                                             ; preds = %_ZN5folly8FunctionIFvvEED2Ev.exit18
-  %i.ao = cmpxchg ptr @_ZZN5folly18ThreadPoolExecutor15tryAddOneThreadEvE11FB_LEM_hist, i64 %9, i64 %i.an seq_cst seq_cst, align 8
+  %i.ao = cmpxchg ptr @_ZZN5folly18ThreadPoolExecutor15tryAddOneThreadEvE11FB_LEM_hist, i64 %8, i64 %i.an seq_cst seq_cst, align 8
   %i.ap = extractvalue { i64, i1 } %i.ao, 1
-  br i1 %i.ap, label %bb.m, label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+  br i1 %i.ap, label %bb.m, label %.critedge.critedge
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   invoke void @_ZN6google10LogMessageC1EPKcii(ptr noundef nonnull align 8 dereferenceable(96) %5, ptr noundef nonnull @.str.3, i32 noundef 316, i32 noundef 2)
-          to label %bb.n unwind label %.loopexit28
+          to label %bb.n unwind label %bb.aa
 
 bb.n:                                             ; preds = %bb.m
   %i.aq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6google10LogMessage6streamEv(ptr noundef nonnull align 8 dereferenceable(96) %5)
-          to label %bb.o unwind label %.loopexit28 ; 2 uses
+          to label %bb.o unwind label %bb.aa      ; 2 uses
 
 bb.o:                                             ; preds = %bb.n
   %i.ar = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, ptr noundef nonnull @.str.16, i64 noundef 44)
-          to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %.loopexit28 ; 0 uses
+          to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.aa ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
   call void @_ZSt17current_exceptionv(ptr dead_on_unwind nonnull writable sret(%"class.std::__exception_ptr::exception_ptr") align 8 %7) #12
   invoke void @_ZN5folly12exceptionStrERKNSt15__exception_ptr13exception_ptrE(ptr dead_on_unwind nonnull writable sret(%"class.folly::basic_fbstring") align 8 %6, ptr noundef nonnull align 8 dereferenceable(8) %7)
-          to label %bb.p unwind label %.loopexit28
+          to label %bb.p unwind label %bb.aa
 
 bb.p:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.as = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN5follylsIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEERSt13basic_ostreamINS_14basic_fbstringIT_T0_T1_T2_E10value_typeENSC_11traits_typeEESG_RKSC_(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, ptr noundef nonnull align 8 dereferenceable(24) %6)
-          to label %bb.q unwind label %.loopexit28 ; 0 uses
+          to label %bb.q unwind label %bb.aa      ; 0 uses
 
 bb.q:                                             ; preds = %bb.p
-  %i.at = load i8, ptr %8, align 1, !tbaa !7668
+  %11 = getelementptr inbounds nuw i8, ptr %6, i64 23
+  %i.at = load i8, ptr %11, align 1, !tbaa !7668
   %i.au = icmp ult i8 %i.at, 64
   br i1 %i.au, label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEED2Ev.exit, label %bb.r
 
@@ -377,14 +381,10 @@ _ZNSt15__exception_ptr13exception_ptrD2Ev.exit:   ; preds = %_ZN5folly14basic_fb
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %5) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
-  br label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+  br label %.critedge.critedge
 
-_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit: ; preds = %bb.l, %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit, %_ZN5folly8FunctionIFvvEED2Ev.exit18
-  invoke void @__cxa_end_catch()
-          to label %bb.t unwind label %.loopexit.split-lp
-
-bb.t:                                             ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit, %_ZNSt5_BindIFMN5folly18ThreadPoolExecutorEFvSt10shared_ptrINS1_6ThreadEEEPS1_S4_EED2Ev.exit
-  %.011 = phi i1 [ true, %_ZNSt5_BindIFMN5folly18ThreadPoolExecutorEFvSt10shared_ptrINS1_6ThreadEEEPS1_S4_EED2Ev.exit ], [ false, %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit ]
+bb.t:                                             ; preds = %.critedge.critedge, %_ZNSt5_BindIFMN5folly18ThreadPoolExecutorEFvSt10shared_ptrINS1_6ThreadEEEPS1_S4_EED2Ev.exit
+  %.011 = phi i1 [ true, %_ZNSt5_BindIFMN5folly18ThreadPoolExecutorEFvSt10shared_ptrINS1_6ThreadEEEPS1_S4_EED2Ev.exit ], [ false, %.critedge.critedge ]
   %i.aw = load ptr, ptr %i.i, align 8, !tbaa !312 ; 8 uses
   %.not.i.i20 = icmp eq ptr %i.aw, null
   br i1 %.not.i.i20, label %_ZNSt12__shared_ptrIN5folly18ThreadPoolExecutor6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.u
@@ -437,19 +437,10 @@ _ZNSt12__shared_ptrIN5folly18ThreadPoolExecutor6ThreadELN9__gnu_cxx12_Lock_polic
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
   ret i1 %.011
 
-.loopexit28:                                      ; preds = %bb.m, %bb.n, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.p, %bb.o
-  %lpad.loopexit = landingpad { ptr, i32 }
+bb.aa:                                            ; preds = %bb.o, %.critedge.critedge, %bb.p, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.n, %bb.m, %bb.a
+  %12 = landingpad { ptr, i32 }
           catch ptr null
-  br label %bb.aa
-
-.loopexit.split-lp:                               ; preds = %bb.a, %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          catch ptr null
-  br label %bb.aa
-
-bb.aa:                                            ; preds = %.loopexit.split-lp, %.loopexit28
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit28 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  %i.bm = extractvalue { ptr, i32 } %lpad.phi, 0
+  %i.bm = extractvalue { ptr, i32 } %12, 0
   call void @__clang_call_terminate(ptr %i.bm) #38
   unreachable
 }

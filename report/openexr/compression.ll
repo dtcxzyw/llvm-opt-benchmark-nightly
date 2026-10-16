@@ -205,9 +205,9 @@ bb.ap:                                            ; preds = %matchfinder_rebase_
 .prol.loopexit.unr-lcssa:                         ; preds = %bb.ap
   %i.kj = zext nneg i32 %i.cw to i64
   %i.kk = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.kj ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.kk, i64 2
-  %5 = load i16, ptr %i.kk, align 2, !tbaa !45
-  store i16 %5, ptr %4, align 2, !tbaa !45
+  %4 = load i16, ptr %i.kk, align 2, !tbaa !45
+  %5 = getelementptr inbounds nuw i8, ptr %i.kk, i64 2
+  store i16 %4, ptr %5, align 2, !tbaa !45
   %i.kl = trunc i32 %.031.i to i16
   store i16 %i.kl, ptr %i.kk, align 4, !tbaa !45
   %i.km = getelementptr inbounds nuw i8, ptr %.161, i64 2 ; 2 uses
@@ -234,9 +234,9 @@ bb.ap:                                            ; preds = %matchfinder_rebase_
   %.029.i = phi i32 [ %i.lg, %.new ], [ %.029.i.unr, %.prol.loopexit ]
   %i.ks = zext nneg i32 %.030.i to i64
   %i.kt = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ks ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.kt, i64 2
-  %7 = load i16, ptr %i.kt, align 2, !tbaa !45
-  store i16 %7, ptr %6, align 2, !tbaa !45
+  %6 = load i16, ptr %i.kt, align 2, !tbaa !45
+  %7 = getelementptr inbounds nuw i8, ptr %i.kt, i64 2
+  store i16 %6, ptr %7, align 2, !tbaa !45
   %i.ku = trunc i32 %.1.i to i16
   store i16 %i.ku, ptr %i.kt, align 4, !tbaa !45
   %i.kv = getelementptr inbounds nuw i8, ptr %.032.i, i64 1
@@ -245,9 +245,9 @@ bb.ap:                                            ; preds = %matchfinder_rebase_
   %i.kx = lshr i32 %i.kw, 17
   %i.ky = zext nneg i32 %i.kx to i64
   %i.kz = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ky ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.kz, i64 2
-  %9 = load i16, ptr %i.kz, align 2, !tbaa !45
-  store i16 %9, ptr %8, align 2, !tbaa !45
+  %8 = load i16, ptr %i.kz, align 2, !tbaa !45
+  %9 = getelementptr inbounds nuw i8, ptr %i.kz, i64 2
+  store i16 %8, ptr %9, align 2, !tbaa !45
   %i.la = trunc i32 %.1.i to i16
   %i.lb = add i16 %i.la, 1
   store i16 %i.lb, ptr %i.kz, align 4, !tbaa !45

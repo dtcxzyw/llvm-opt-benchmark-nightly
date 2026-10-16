@@ -204,9 +204,9 @@ _ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE
 define linkonce_odr dso_local { i64, ptr } @_Z3getILi1EESt17basic_string_viewIcSt11char_traitsIcEERK4Cont(ptr noundef nonnull align 8 dereferenceable(16) %0) local_unnamed_addr #2 comdat {
 bb.a:
   %1 = alloca %"class.absl::lts_20260526::strings_internal::Splitter", align 8 ; 6 uses
-  %2 = alloca %"class.absl::lts_20260526::strings_internal::SplitIterator", align 8 ; 14 uses
+  %2 = alloca %"class.absl::lts_20260526::strings_internal::SplitIterator", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
-  %.sroa.0.0.copyload = load i64, ptr %0, align 8, !tbaa !68 ; 8 uses
+  %.sroa.0.0.copyload = load i64, ptr %0, align 8, !tbaa !68 ; 9 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !61 ; 5 uses
   store i64 %.sroa.0.0.copyload, ptr %1, align 8, !tbaa !68, !alias.scope !616
@@ -230,7 +230,6 @@ bb.a:
 _ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit.thread: ; preds = %bb.a
   store i32 2, ptr %i.b, align 8, !tbaa !112, !alias.scope !617
   store i64 %.sroa.0.0.copyload, ptr %2, align 8, !tbaa !111, !alias.scope !617
-  %.sroa.4.0..sroa_idx.i12 = getelementptr inbounds nuw i8, ptr %2, i64 24
   br label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -267,21 +266,24 @@ _ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyE
   %i.s = add i64 %i.l, %i.h
   %i.t = add i64 %i.s, %.sroa.speculated.i.i.i.i  ; 2 uses
   %.pre.a = load i32, ptr %i.b, align 8, !tbaa !112
-  %3 = icmp eq i32 %.pre.a, 1
   store i64 %i.t, ptr %2, align 8, !tbaa !111, !alias.scope !617
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 24
-  br i1 %3, label %_ZN4absl12lts_2026052616strings_internal13SplitIteratorINS1_8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEEEEppEv.exit, label %bb.f
+  %3 = icmp eq i32 %.pre.a, 1
+  br i1 %3, label %_ZN4absl12lts_2026052616strings_internal13SplitIteratorINS1_8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEEEEppEv.exit, label %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit._crit_edge
 
-bb.f:                                             ; preds = %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit.thread, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit
-  %.sroa.4.0..sroa_idx.i13 = phi ptr [ %.sroa.4.0..sroa_idx.i12, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit.thread ], [ %.sroa.4.0..sroa_idx.i, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit ]
-  %i.u = phi i64 [ %.sroa.0.0.copyload, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit.thread ], [ %i.t, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit ]
-  %4 = load ptr, ptr %i.d, align 8, !tbaa !113    ; 2 uses
-  %.sroa.0.0.copyload.i.i = load i64, ptr %4, align 8, !tbaa !68 ; 5 uses
-  %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %.sroa.2.0.copyload.i.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !61 ; 3 uses
-  %i.v = call { i64, ptr } @_ZNK4absl12lts_202605266ByChar4FindESt17basic_string_viewIcSt11char_traitsIcEEm(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i64 %.sroa.0.0.copyload.i.i, ptr %.sroa.2.0.copyload.i.i, i64 noundef %i.u)
+_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit._crit_edge: ; preds = %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !113 ; 2 uses
+  %.sroa.0.0.copyload.i.i.pre = load i64, ptr %.pre, align 8, !tbaa !68
+  %.sroa.2.0..sroa_idx.i.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %.sroa.2.0.copyload.i.i.pre = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.phi.trans.insert, align 8, !tbaa !61
+  br label %bb.f
+
+bb.f:                                             ; preds = %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit._crit_edge, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit.thread
+  %.sroa.4.0..sroa_idx.i13 = phi ptr [ null, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit.thread ], [ %.sroa.2.0.copyload.i.i.pre, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit._crit_edge ] ; 3 uses
+  %i.u = phi i64 [ %.sroa.0.0.copyload, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit.thread ], [ %.sroa.0.0.copyload.i.i.pre, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit._crit_edge ] ; 5 uses
+  %storemerge.i5 = phi i64 [ %.sroa.0.0.copyload, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit.thread ], [ %i.t, %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit._crit_edge ]
+  %i.v = call { i64, ptr } @_ZNK4absl12lts_202605266ByChar4FindESt17basic_string_viewIcSt11char_traitsIcEEm(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i64 %i.u, ptr %.sroa.4.0..sroa_idx.i13, i64 noundef %storemerge.i5)
   %i.w = extractvalue { i64, ptr } %i.v, 1        ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i, i64 %.sroa.0.0.copyload.i.i
+  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.4.0..sroa_idx.i13, i64 %i.u
   %i.y = icmp eq ptr %i.w, %i.x
   br i1 %i.y, label %bb.g, label %bb.h
 
@@ -291,21 +293,20 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.z = load i64, ptr %2, align 8, !tbaa !111    ; 4 uses
-  %i.aa = icmp ugt i64 %i.z, %.sroa.0.0.copyload.i.i
+  %i.aa = icmp ugt i64 %i.z, %i.u
   br i1 %i.aa, label %bb.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i
 
 bb.i:                                             ; preds = %bb.h
-  call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.142, ptr noundef nonnull @.str.141, i64 noundef %i.z, i64 noundef %.sroa.0.0.copyload.i.i) #24
+  call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.142, ptr noundef nonnull @.str.141, i64 noundef %i.z, i64 noundef %i.u) #24
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i: ; preds = %bb.h
   %i.ab = ptrtoint ptr %i.w to i64
-  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i, i64 %i.z ; 3 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.4.0..sroa_idx.i13, i64 %i.z ; 2 uses
   %i.ad = ptrtoint ptr %i.ac to i64
   %i.ae = sub i64 %i.ab, %i.ad
-  %i.af = sub nuw i64 %.sroa.0.0.copyload.i.i, %i.z
+  %i.af = sub nuw i64 %i.u, %i.z
   %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.af, i64 %i.ae)
-  store ptr %i.ac, ptr %.sroa.4.0..sroa_idx.i13, align 8, !tbaa !61
   br label %_ZN4absl12lts_2026052616strings_internal13SplitIteratorINS1_8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEEEEppEv.exit, !llvm.loop !615
 
 _ZN4absl12lts_2026052616strings_internal13SplitIteratorINS1_8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEEEEppEv.exit: ; preds = %_ZNK4absl12lts_2026052616strings_internal8SplitterINS0_6ByCharENS0_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE5beginEv.exit, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i

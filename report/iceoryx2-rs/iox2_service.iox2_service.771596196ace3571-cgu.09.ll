@@ -63,17 +63,21 @@ bb.a:
   %.sroa.5.sroa.0.0.copyload = load ptr, ptr %2, align 8, !alias.scope !27, !nonnull !5, !noundef !5
   %.sroa.5.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.sroa.4.0.copyload = load i64, ptr %.sroa.5.sroa.4.0..sroa_idx, align 8, !alias.scope !27
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !28)
   %i.a = tail call { ptr, i64 } @_RNvXsk_NtNtCs5WK5l2q0aFk_12clap_builder7builder10resettableNtNtNtB9_4util2id2IdINtB5_14IntoResettableBV_E15into_resettableCsadSKrpJ73hd_12iox2_service(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5.sroa.0.0.copyload, i64 noundef %.sroa.5.sroa.4.0.copyload) #21, !noalias !29 ; 2 uses
   %i.b = extractvalue { ptr, i64 } %i.a, 0        ; 2 uses
   %i.c = icmp eq ptr %i.b, null
-  br i1 %i.c, label %_RINvMNtNtCs5WK5l2q0aFk_12clap_builder7builder9arg_groupNtB3_8ArgGroup3argNtNtNtB7_4util2id2IdECsadSKrpJ73hd_12iox2_service.exit, label %bb.b
+  br i1 %i.c, label %3, label %bb.b
+
+3:                                                ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  store i64 0, ptr %4, align 8, !alias.scope !28
+  br label %_RINvMNtNtCs5WK5l2q0aFk_12clap_builder7builder9arg_groupNtB3_8ArgGroup3argNtNtNtB7_4util2id2IdECsadSKrpJ73hd_12iox2_service.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = extractvalue { ptr, i64 } %i.a, 1
-  %i.e = load i64, ptr %3, align 8, !alias.scope !30, !noundef !5 ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.e = load i64, ptr %5, align 8, !alias.scope !30, !noundef !5 ; 3 uses
   %i.f = load i64, ptr %1, align 8, !range !6, !alias.scope !30, !noundef !5
   %i.g = icmp eq i64 %i.e, %i.f
   br i1 %i.g, label %bb.c, label %_RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecNtNtNtCs5WK5l2q0aFk_12clap_builder4util2id2IdE8push_mutCsadSKrpJ73hd_12iox2_service.exit.i
@@ -83,17 +87,17 @@ bb.c:                                             ; preds = %bb.b
   br label %_RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecNtNtNtCs5WK5l2q0aFk_12clap_builder4util2id2IdE8push_mutCsadSKrpJ73hd_12iox2_service.exit.i
 
 _RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecNtNtNtCs5WK5l2q0aFk_12clap_builder4util2id2IdE8push_mutCsadSKrpJ73hd_12iox2_service.exit.i: ; preds = %bb.c, %bb.b
-  %i.h = load ptr, ptr %4, align 8, !alias.scope !30, !nonnull !5, !noundef !5
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.h = load ptr, ptr %6, align 8, !alias.scope !30, !nonnull !5, !noundef !5
   %i.i = getelementptr inbounds nuw [16 x i8], ptr %i.h, i64 %i.e ; 2 uses
   store ptr %i.b, ptr %i.i, align 8, !noalias !31
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store i64 %i.d, ptr %i.j, align 8, !noalias !32
   %i.k = add i64 %i.e, 1
+  store i64 %i.k, ptr %5, align 8, !alias.scope !30
   br label %_RINvMNtNtCs5WK5l2q0aFk_12clap_builder7builder9arg_groupNtB3_8ArgGroup3argNtNtNtB7_4util2id2IdECsadSKrpJ73hd_12iox2_service.exit
 
-_RINvMNtNtCs5WK5l2q0aFk_12clap_builder7builder9arg_groupNtB3_8ArgGroup3argNtNtNtB7_4util2id2IdECsadSKrpJ73hd_12iox2_service.exit: ; preds = %bb.a, %_RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecNtNtNtCs5WK5l2q0aFk_12clap_builder4util2id2IdE8push_mutCsadSKrpJ73hd_12iox2_service.exit.i
-  %storemerge = phi i64 [ %i.k, %_RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecNtNtNtCs5WK5l2q0aFk_12clap_builder4util2id2IdE8push_mutCsadSKrpJ73hd_12iox2_service.exit.i ], [ 0, %bb.a ]
-  store i64 %storemerge, ptr %3, align 8, !alias.scope !28
+_RINvMNtNtCs5WK5l2q0aFk_12clap_builder7builder9arg_groupNtB3_8ArgGroup3argNtNtNtB7_4util2id2IdECsadSKrpJ73hd_12iox2_service.exit: ; preds = %3, %_RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecNtNtNtCs5WK5l2q0aFk_12clap_builder4util2id2IdE8push_mutCsadSKrpJ73hd_12iox2_service.exit.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false)
   ret void
 }

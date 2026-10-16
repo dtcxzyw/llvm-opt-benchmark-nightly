@@ -205,16 +205,15 @@ bb.ab:                                            ; preds = %bb.w, %_ZNSt7__cxx1
   br i1 %i.dg, label %.preheader98, label %bb.aj
 
 .preheader98:                                     ; preds = %bb.ab
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dh = call i64 @_ZNSt6chrono3_V212system_clock3nowEv() #33
   %i.di = sdiv i64 %i.dh, 1000000                 ; 2 uses
-  %invariant.op = add nsw i64 %i.di, -1000
-  %8 = load atomic i64, ptr @_ZZN8facebook5velox5cache7SsdFile17growOrEvictLockedEvE11FB_LEM_hist acquire, align 8 ; 2 uses
-  %9 = icmp sgt i64 %8, %invariant.op
+  %7 = load atomic i64, ptr @_ZZN8facebook5velox5cache7SsdFile17growOrEvictLockedEvE11FB_LEM_hist acquire, align 8 ; 2 uses
+  %8 = sub nsw i64 %i.di, %7
+  %9 = icmp slt i64 %8, 1000
   br i1 %9, label %.loopexit99, label %bb.ac
 
 bb.ac:                                            ; preds = %.preheader98
-  %i.dj = cmpxchg ptr @_ZZN8facebook5velox5cache7SsdFile17growOrEvictLockedEvE11FB_LEM_hist, i64 %8, i64 %i.di seq_cst seq_cst, align 8
+  %i.dj = cmpxchg ptr @_ZZN8facebook5velox5cache7SsdFile17growOrEvictLockedEvE11FB_LEM_hist, i64 %7, i64 %i.di seq_cst seq_cst, align 8
   %i.dk = extractvalue { i64, i1 } %i.dj, 1
   br i1 %i.dk, label %bb.ad, label %.loopexit99
 
@@ -237,7 +236,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit81: ; preds = %bb.af
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit83: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit81
   %i.do = load ptr, ptr %0, align 8, !tbaa !49
-  %i.dp = load i64, ptr %7, align 8, !tbaa !107
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.dp = load i64, ptr %10, align 8, !tbaa !107
   %i.dq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.dl, ptr noundef %i.do, i64 noundef %i.dp)
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit85 unwind label %bb.ah
 
@@ -640,7 +640,7 @@ define void @_ZN8facebook5velox5cache7SsdFile19maybeVerifyChecksumERKNS1_19Async
 bb.a:
   %3 = alloca %"struct.fmt::v11::detail::format_arg_store.539", align 16 ; 7 uses
   %4 = alloca %"class.google::LogMessage", align 8 ; 7 uses
-  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
+  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 38
   %i.b = load i8, ptr %i.a, align 2, !tbaa !111, !range !103, !noundef !104
@@ -662,17 +662,15 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load i32, ptr %i.j, align 4, !tbaa !470
   %i.l = add i32 %i.k, 1
   store i32 %i.l, ptr %i.j, align 4, !tbaa !470
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
   %i.m = tail call i64 @_ZNSt6chrono3_V212system_clock3nowEv() #33
   %i.n = sdiv i64 %i.m, 1000000                   ; 2 uses
-  %invariant.op = add nsw i64 %i.n, -1000
-  %9 = load atomic i64, ptr @_ZZN8facebook5velox5cache7SsdFile19maybeVerifyChecksumERKNS1_19AsyncDataCacheEntryERKNS1_6SsdRunEE11FB_LEM_hist acquire, align 8 ; 2 uses
-  %10 = icmp sgt i64 %9, %invariant.op
-  br i1 %10, label %.loopexit52, label %bb.c
+  %7 = load atomic i64, ptr @_ZZN8facebook5velox5cache7SsdFile19maybeVerifyChecksumERKNS1_19AsyncDataCacheEntryERKNS1_6SsdRunEE11FB_LEM_hist acquire, align 8 ; 2 uses
+  %8 = sub nsw i64 %i.n, %7
+  %9 = icmp slt i64 %8, 1000
+  br i1 %9, label %.loopexit52, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
-  %i.o = cmpxchg ptr @_ZZN8facebook5velox5cache7SsdFile19maybeVerifyChecksumERKNS1_19AsyncDataCacheEntryERKNS1_6SsdRunEE11FB_LEM_hist, i64 %9, i64 %i.n seq_cst seq_cst, align 8
+  %i.o = cmpxchg ptr @_ZZN8facebook5velox5cache7SsdFile19maybeVerifyChecksumERKNS1_19AsyncDataCacheEntryERKNS1_6SsdRunEE11FB_LEM_hist, i64 %7, i64 %i.n seq_cst seq_cst, align 8
   %i.p = extractvalue { i64, i1 } %i.o, 1
   br i1 %i.p, label %bb.d, label %.loopexit52
 
@@ -717,17 +715,19 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35: ; preds = %bb.f
 
 bb.g:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35
   %i.ab = load ptr, ptr %5, align 8, !tbaa !49
-  %i.ac = load i64, ptr %7, align 8, !tbaa !107
+  %10 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.ac = load i64, ptr %10, align 8, !tbaa !107
   %i.ad = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.z, ptr noundef %i.ab, i64 noundef %i.ac)
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit unwind label %bb.j ; 0 uses
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit: ; preds = %bb.g
   %i.ae = load ptr, ptr %5, align 8, !tbaa !49    ; 2 uses
-  %i.af = icmp eq ptr %i.ae, %8
+  %11 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %i.af = icmp eq ptr %i.ae, %11
   br i1 %i.af, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit
-  %i.ag = load i64, ptr %8, align 8, !tbaa !45
+  %i.ag = load i64, ptr %11, align 8, !tbaa !45
   %i.ah = add i64 %i.ag, 1
   call void @_ZdlPvm(ptr noundef %i.ae, i64 noundef %i.ah) #35
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -752,11 +752,12 @@ bb.j:                                             ; preds = %bb.g
   %i.ak = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.al = load ptr, ptr %5, align 8, !tbaa !49    ; 2 uses
-  %i.am = icmp eq ptr %i.al, %8
+  %12 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %i.am = icmp eq ptr %i.al, %12
   br i1 %i.am, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit38, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i36
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i36: ; preds = %bb.j
-  %i.an = load i64, ptr %8, align 8, !tbaa !45
+  %i.an = load i64, ptr %12, align 8, !tbaa !45
   %i.ao = add i64 %i.an, 1
   call void @_ZdlPvm(ptr noundef %i.al, i64 noundef %i.ao) #35
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit38
@@ -1159,7 +1160,7 @@ define void @_ZN8facebook5velox5cache7SsdFile5writeERSt6vectorINS1_8CachePinESaI
   %i.c = getelementptr inbounds nuw i8, ptr %8, i64 30
   store i8 0, ptr %i.c, align 2, !tbaa !45
   invoke void @_ZN8facebook5velox7process12TraceContextC1ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb(ptr noundef nonnull align 8 dereferenceable(64) %7, ptr noundef nonnull align 8 %8, i1 noundef zeroext false)
-          to label %bb.a unwind label %19
+          to label %bb.a unwind label %17
 
 bb.a:                                             ; preds = %._crit_edge.i.i
   %i.d = load ptr, ptr %8, align 8, !tbaa !49     ; 2 uses
@@ -1178,6 +1179,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a,
   %i.j = icmp eq i8 %i.i, 1
   br i1 %i.j, label %.preheader.a, label %bb.i
 
+17:                                               ; preds = %._crit_edge.i.i
+  %18 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  %19 = load ptr, ptr %8, align 8, !tbaa !49      ; 2 uses
+  %20 = icmp eq ptr %19, %i.a
+  br i1 %20, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i155
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i155: ; preds = %17
+  %21 = load i64, ptr %i.a, align 8, !tbaa !45
+  %22 = add i64 %21, 1
+  call void @_ZdlPvm(ptr noundef %19, i64 noundef %22) #35
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156
+
 .preheader.a:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 484 ; 2 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !500
@@ -1185,26 +1199,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a,
   store i32 %i.m, ptr %i.k, align 4, !tbaa !500
   %i.n = call i64 @_ZNSt6chrono3_V212system_clock3nowEv() #33
   %i.o = sdiv i64 %i.n, 1000000                   ; 2 uses
-  %invariant.op = add nsw i64 %i.o, -10000
-  %17 = load atomic i64, ptr @_ZZN8facebook5velox5cache7SsdFile5writeERSt6vectorINS1_8CachePinESaIS4_EEE11FB_LEM_hist acquire, align 8 ; 2 uses
-  %18 = icmp sgt i64 %17, %invariant.op
-  br i1 %18, label %.loopexit252, label %bb.b
-
-19:                                               ; preds = %._crit_edge.i.i
-  %20 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %21 = load ptr, ptr %8, align 8, !tbaa !49      ; 2 uses
-  %22 = icmp eq ptr %21, %i.a
-  br i1 %22, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154: ; preds = %19
-  %23 = load i64, ptr %i.a, align 8, !tbaa !45
-  %24 = add i64 %23, 1
-  call void @_ZdlPvm(ptr noundef %21, i64 noundef %24) #35
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156
+  %23 = load atomic i64, ptr @_ZZN8facebook5velox5cache7SsdFile5writeERSt6vectorINS1_8CachePinESaIS4_EEE11FB_LEM_hist acquire, align 8 ; 2 uses
+  %24 = sub nsw i64 %i.o, %23
+  %25 = icmp slt i64 %24, 10000
+  br i1 %25, label %.loopexit252, label %bb.b
 
 bb.b:                                             ; preds = %.preheader.a
-  %i.p = cmpxchg ptr @_ZZN8facebook5velox5cache7SsdFile5writeERSt6vectorINS1_8CachePinESaIS4_EEE11FB_LEM_hist, i64 %17, i64 %i.o seq_cst seq_cst, align 8
+  %i.p = cmpxchg ptr @_ZZN8facebook5velox5cache7SsdFile5writeERSt6vectorINS1_8CachePinESaIS4_EEE11FB_LEM_hist, i64 %23, i64 %i.o seq_cst seq_cst, align 8
   %i.q = extractvalue { i64, i1 } %i.p, 1
   br i1 %i.q, label %bb.c, label %.loopexit252
 
@@ -1607,8 +1608,8 @@ bb.cr:                                            ; preds = %bb.h, %bb.cn, %bb.c
   call void @_ZN8facebook5velox7process12TraceContextD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %7) #33
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156: ; preds = %19, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154, %bb.cr
-  %.pn145.pn.pn.pn = phi { ptr, i32 } [ %.pn145.pn.pn, %bb.cr ], [ %20, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154 ], [ %20, %19 ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156: ; preds = %17, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i155, %bb.cr
+  %.pn145.pn.pn.pn = phi { ptr, i32 } [ %.pn145.pn.pn, %bb.cr ], [ %18, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i155 ], [ %18, %17 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #33
   resume { ptr, i32 } %.pn145.pn.pn.pn
 }

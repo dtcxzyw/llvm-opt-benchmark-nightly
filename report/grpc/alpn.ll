@@ -23,16 +23,18 @@ target triple = "x86_64-pc-linux-gnu"
 define noundef range(i32 0, 2) i32 @_Z37grpc_chttp2_is_alpn_version_supportedPKcm(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i64 %1, 2
-  br i1 %i.a, label %.split, label %.split9
+  br i1 %i.a, label %.split, label %.critedge
 
 .split:                                           ; preds = %bb.a
   %i.b = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(3) @.str.2, i64 noundef 2) #8
   %.not = icmp eq i32 %i.b, 0
-  %spec.select = zext i1 %.not to i32
+  br i1 %.not, label %.split9, label %.critedge
+
+.critedge:                                        ; preds = %.split, %bb.a
   br label %.split9
 
-.split9:                                          ; preds = %.split, %bb.a
-  %.07.split = phi i32 [ 0, %bb.a ], [ %spec.select, %.split ]
+.split9:                                          ; preds = %.split, %.critedge
+  %.07.split = phi i32 [ 0, %.critedge ], [ 1, %.split ]
   ret i32 %.07.split
 }
 

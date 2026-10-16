@@ -204,7 +204,7 @@ gv_calloc.exit170.i.i:                            ; preds = %standardize.exit.i
   br label %.preheader.us.i.i48.i
 
 .preheader.us.i.i48.i:                            ; preds = %._crit_edge.us.i.i52.i, %.preheader.us.i.preheader.i.i
-  %indvars.iv31.i.i.i = phi i64 [ %indvars.iv.next32.i.i.i, %._crit_edge.us.i.i52.i ], [ 0, %.preheader.us.i.preheader.i.i ] ; 3 uses
+  %indvars.iv31.i.i.i = phi i64 [ 0, %.preheader.us.i.preheader.i.i ], [ %indvars.iv.next32.i.i.i, %._crit_edge.us.i.i52.i ] ; 3 uses
   %i.ja = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %indvars.iv31.i.i.i
   %i.jb = load ptr, ptr %i.ja, align 8, !tbaa !60 ; 5 uses
   br i1 %i.iz, label %.epil.preheader501, label %.preheader.us.i.i48.i.new
@@ -318,9 +318,9 @@ bb.v:                                             ; preds = %mat_mult_vec_orthog
   br label %power_iteration_orthog.exit.i
 
 power_iteration_orthog.exit.i:                    ; preds = %._crit_edge.us190.i.i, %..loopexit172_crit_edge.i.i, %gv_calloc.exit170.i.i
-  %sqrt.i = phi double [ 0.000000e+00, %gv_calloc.exit170.i.i ], [ %i.kr, %..loopexit172_crit_edge.i.i ], [ 0.000000e+00, %._crit_edge.us190.i.i ] ; 2 uses
-  %i.ky = phi ptr [ %i.in, %gv_calloc.exit170.i.i ], [ %i.ih, %..loopexit172_crit_edge.i.i ], [ %i.ih, %._crit_edge.us190.i.i ]
-  %i.kz = phi ptr [ %i.im, %gv_calloc.exit170.i.i ], [ %i.ic, %..loopexit172_crit_edge.i.i ], [ %i.ic, %._crit_edge.us190.i.i ]
+  %sqrt.i = phi double [ %i.kr, %..loopexit172_crit_edge.i.i ], [ 0.000000e+00, %gv_calloc.exit170.i.i ], [ 0.000000e+00, %._crit_edge.us190.i.i ] ; 2 uses
+  %i.ky = phi ptr [ %i.ih, %..loopexit172_crit_edge.i.i ], [ %i.in, %gv_calloc.exit170.i.i ], [ %i.ih, %._crit_edge.us190.i.i ]
+  %i.kz = phi ptr [ %i.ic, %..loopexit172_crit_edge.i.i ], [ %i.im, %gv_calloc.exit170.i.i ], [ %i.ic, %._crit_edge.us190.i.i ]
   tail call void @free(ptr noundef %i.kz) #15
   tail call void @free(ptr noundef %i.ky) #15
   br i1 %.not.i, label %power_iteration_orthog.exit.split.i, label %.thread.i231.critedge

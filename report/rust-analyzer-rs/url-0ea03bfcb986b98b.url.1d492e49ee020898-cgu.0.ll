@@ -204,12 +204,12 @@ _RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url
   %i.fd = trunc nuw i8 %i.er to i1
   %storemerge494 = add i64 %.pre.i.us.peel, 2     ; 4 uses
   store i64 %storemerge494, ptr %.sroa.528.0..sroa_idx, align 8, !alias.scope !436
+  call void @llvm.experimental.noalias.scope.decl(metadata !437)
   br i1 %i.fd, label %.split325, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url.exit.us.peel
   %i.fe = icmp ne i64 %.sroa.3.0.i.i.us, 0
   %.not485 = select i1 %or.cond.not.i.i.us, i1 %i.fe, i1 false
-  call void @llvm.experimental.noalias.scope.decl(metadata !437)
   call void @llvm.experimental.noalias.scope.decl(metadata !438)
   br i1 %.not485, label %bb.as, label %.split325
 
@@ -245,6 +245,7 @@ _RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url
   %.pre.i.us = load i64, ptr %.sroa.528.0..sroa_idx, align 8, !alias.scope !436
   %storemerge = add i64 %.pre.i.us, 2
   store i64 %storemerge, ptr %.sroa.528.0..sroa_idx, align 8, !alias.scope !436
+  call void @llvm.experimental.noalias.scope.decl(metadata !437)
   br label %.split325
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.us.loopexit: ; preds = %bb.at, %bb.au
@@ -402,7 +403,7 @@ bb.bi:                                            ; preds = %_RNvXs_NtNtCshzWfHU
   %or.cond94 = select i1 %.not88, i1 true, i1 %i.gx
   br i1 %or.cond94, label %.split325, label %bb.bj
 
-.split325:                                        ; preds = %bb.bb, %bb.bi, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url.exit.us.peel, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url.exit.us, %.lr.ph, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCs2vT3jxLudSK_3url.exit.i.us.peel, %bb.ao
+.split325:                                        ; preds = %bb.bb, %bb.bi, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCs2vT3jxLudSK_3url.exit.i.us.peel, %bb.ao, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url.exit.us, %.lr.ph, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE15append_elementsCs2vT3jxLudSK_3url.exit.us.peel
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.b, ptr noundef nonnull align 8 dereferenceable(96) %i.d, i64 96, i1 false)

@@ -202,7 +202,7 @@ bb.a:
   %i.f = add i64 %i.c, %i.e                       ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   %i.g = mul i64 %1, 1000
-  %i.h = add i64 %i.f, %i.g                       ; 7 uses
+  %i.h = add i64 %i.f, %i.g                       ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 6 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !32
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 32
@@ -305,28 +305,33 @@ thread-pre-split.preheader:                       ; preds = %bb.g, %_ZSt8_Destro
   br i1 %i.ap, label %.lr.ph.lr.ph, label %thread-pre-split._crit_edge
 
 .lr.ph.lr.ph:                                     ; preds = %thread-pre-split.preheader
-  %.not = icmp eq ptr %3, null
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.aq = icmp eq i64 %2, 0                       ; 2 uses
+  %.not = icmp eq ptr %3, null                    ; 2 uses
+  %i.aq = icmp eq i64 %2, 0
   %i.ar = mul i64 %2, 1000                        ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
-  br i1 %.not, label %.lr.ph.us, label %.lr.ph.lr.ph.split
+  %12 = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 120
+  br i1 %i.aq, label %.lr.ph.split.us, label %.lr.ph.us39
 
-.lr.ph.us:                                        ; preds = %.lr.ph.lr.ph, %thread-pre-split.backedge.us
-  %.027.ph38.us = phi i64 [ %i.bc, %thread-pre-split.backedge.us ], [ %i.f, %.lr.ph.lr.ph ] ; 2 uses
-  %13 = add i64 %.027.ph38.us, %i.ar
-  %spec.select.us = call i64 @llvm.umin.i64(i64 %13, i64 %i.h)
-  %.0.us = select i1 %i.aq, i64 %i.h, i64 %spec.select.us
+.lr.ph.split.us:                                  ; preds = %.lr.ph.lr.ph, %thread-pre-split.backedge.us
+  %.027.ph38.us = phi i64 [ %i.bc, %thread-pre-split.backedge.us ], [ %i.f, %.lr.ph.lr.ph ]
+  br i1 %.not, label %.lr.ph.us, label %13
+
+13:                                               ; preds = %.lr.ph.split.us
+  %14 = call noundef i32 %3(ptr noundef %4)
+  %.not33.us = icmp eq i32 %14, 0
+  br i1 %.not33.us, label %.lr.ph.us, label %thread-pre-split._crit_edge.sink.split
+
+.lr.ph.us:                                        ; preds = %13, %.lr.ph.split.us
   %i.au = load ptr, ptr %i.i, align 8, !tbaa !32
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 32
-  %i.aw = sub i64 %.0.us, %.027.ph38.us
+  %i.aw = sub i64 %i.h, %.027.ph38.us
   %i.ax = call noundef i32 @_Z28toku_external_cond_timedwaitPSt10shared_ptrIN7rocksdb20TransactionDBCondVarEEPS_INS0_18TransactionDBMutexEEl(ptr noundef nonnull %i.as, ptr noundef nonnull %i.av, i64 noundef %i.aw) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.ay = call i32 @gettimeofday(ptr noundef nonnull %8, ptr noundef null) #21 ; 0 uses
   %i.az = load i64, ptr %8, align 8, !tbaa !60
   %i.ba = mul i64 %i.az, 1000000
-  %i.bb = load i64, ptr %i.at, align 8, !tbaa !61
+  %i.bb = load i64, ptr %12, align 8, !tbaa !61
   %i.bc = add i64 %i.ba, %i.bb                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   %i.bd = load i32, ptr %i.r, align 4, !tbaa !43  ; 2 uses
@@ -337,27 +342,24 @@ thread-pre-split.preheader:                       ; preds = %bb.g, %_ZSt8_Destro
 
 thread-pre-split.backedge.us:                     ; preds = %.lr.ph.us
   %i.bf = icmp eq i32 %i.bd, 2
-  br i1 %i.bf, label %.lr.ph.us, label %thread-pre-split._crit_edge, !llvm.loop !116
+  br i1 %i.bf, label %.lr.ph.split.us, label %thread-pre-split._crit_edge, !llvm.loop !116
 
-.lr.ph.lr.ph.split:                               ; preds = %.lr.ph.lr.ph
-  br i1 %i.aq, label %.lr.ph.us39, label %.lr.ph
+.lr.ph.us39:                                      ; preds = %.lr.ph.lr.ph
+  br i1 %.not, label %.split.us41, label %.lr.ph
 
-.lr.ph.us39:                                      ; preds = %.lr.ph.lr.ph.split, %thread-pre-split.backedge.us45
-  %.027.ph38.us40 = phi i64 [ %i.bo, %thread-pre-split.backedge.us45 ], [ %i.f, %.lr.ph.lr.ph.split ]
-  %14 = call noundef i32 %3(ptr noundef %4)
-  %.not33.us = icmp eq i32 %14, 0
-  br i1 %.not33.us, label %.split.us41, label %thread-pre-split._crit_edge.sink.split
-
-.split.us41:                                      ; preds = %.lr.ph.us39
+.split.us41:                                      ; preds = %.lr.ph.us39, %thread-pre-split.backedge.us45
+  %.027.ph38.us39 = phi i64 [ %i.bo, %thread-pre-split.backedge.us45 ], [ %i.f, %.lr.ph.us39 ] ; 2 uses
+  %15 = add i64 %.027.ph38.us39, %i.ar
+  %spec.select.us = call i64 @llvm.umin.i64(i64 %15, i64 %i.h)
   %i.bg = load ptr, ptr %i.i, align 8, !tbaa !32
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
-  %i.bi = sub i64 %i.h, %.027.ph38.us40
+  %i.bi = sub i64 %spec.select.us, %.027.ph38.us39
   %i.bj = call noundef i32 @_Z28toku_external_cond_timedwaitPSt10shared_ptrIN7rocksdb20TransactionDBCondVarEEPS_INS0_18TransactionDBMutexEEl(ptr noundef nonnull %i.as, ptr noundef nonnull %i.bh, i64 noundef %i.bi) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.bk = call i32 @gettimeofday(ptr noundef nonnull %8, ptr noundef null) #21 ; 0 uses
   %i.bl = load i64, ptr %8, align 8, !tbaa !60
   %i.bm = mul i64 %i.bl, 1000000
-  %i.bn = load i64, ptr %i.at, align 8, !tbaa !61
+  %i.bn = load i64, ptr %12, align 8, !tbaa !61
   %i.bo = add i64 %i.bm, %i.bn                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   %i.bp = load i32, ptr %i.r, align 4, !tbaa !43  ; 2 uses
@@ -368,10 +370,10 @@ thread-pre-split.backedge.us:                     ; preds = %.lr.ph.us
 
 thread-pre-split.backedge.us45:                   ; preds = %.split.us41
   %i.br = icmp eq i32 %i.bp, 2
-  br i1 %i.br, label %.lr.ph.us39, label %thread-pre-split._crit_edge, !llvm.loop !116
+  br i1 %i.br, label %.split.us41, label %thread-pre-split._crit_edge, !llvm.loop !116
 
-.lr.ph:                                           ; preds = %.lr.ph.lr.ph.split, %thread-pre-split.backedge
-  %.027.ph38 = phi i64 [ %i.cc, %thread-pre-split.backedge ], [ %i.f, %.lr.ph.lr.ph.split ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.us39, %thread-pre-split.backedge
+  %.027.ph38 = phi i64 [ %i.cc, %thread-pre-split.backedge ], [ %i.f, %.lr.ph.us39 ] ; 2 uses
   %i.bs = call noundef i32 %3(ptr noundef %4)
   %.not33 = icmp eq i32 %i.bs, 0
   br i1 %.not33, label %.split, label %thread-pre-split._crit_edge.sink.split
@@ -387,7 +389,7 @@ thread-pre-split.backedge.us45:                   ; preds = %.split.us41
   %i.by = call i32 @gettimeofday(ptr noundef nonnull %8, ptr noundef null) #21 ; 0 uses
   %i.bz = load i64, ptr %8, align 8, !tbaa !60
   %i.ca = mul i64 %i.bz, 1000000
-  %i.cb = load i64, ptr %i.at, align 8, !tbaa !61
+  %i.cb = load i64, ptr %12, align 8, !tbaa !61
   %i.cc = add i64 %i.ca, %i.cb                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   %i.cd = load i32, ptr %i.r, align 4, !tbaa !43  ; 2 uses
@@ -408,10 +410,10 @@ thread-pre-split._crit_edge.sink.split.sink.split: ; preds = %.split, %.split.us
   store i64 %i.cj, ptr %i.ch, align 8, !tbaa !117
   br label %thread-pre-split._crit_edge.sink.split
 
-thread-pre-split._crit_edge.sink.split:           ; preds = %.lr.ph, %.lr.ph.us39, %thread-pre-split._crit_edge.sink.split.sink.split
-  %.sink = phi i32 [ -30993, %.lr.ph.us39 ], [ -30994, %thread-pre-split._crit_edge.sink.split.sink.split ], [ -30993, %.lr.ph ]
+thread-pre-split._crit_edge.sink.split:           ; preds = %.lr.ph, %13, %thread-pre-split._crit_edge.sink.split.sink.split
+  %.sink = phi i32 [ -30994, %thread-pre-split._crit_edge.sink.split.sink.split ], [ -30993, %13 ], [ -30993, %.lr.ph ]
   call void @_ZN4toku12lock_request25remove_from_lock_requestsEv(ptr noundef nonnull align 8 dereferenceable(224) %0)
-  store i32 %.sink, ptr %12, align 8, !tbaa !71
+  store i32 %.sink, ptr %i.at, align 8, !tbaa !71
   store i32 3, ptr %i.r, align 4, !tbaa !43
   br label %thread-pre-split._crit_edge
 
