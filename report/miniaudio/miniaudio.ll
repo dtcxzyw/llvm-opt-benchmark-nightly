@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.critedge
   br i1 %.not23, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %2 = atomicrmw sub ptr %i.j, i32 1 seq_cst, align 8 ; 0 uses
+  %2 = atomicrmw add ptr %i.j, i32 -1 seq_cst, align 8 ; 0 uses
   br label %.loopexit, !llvm.loop !4
 
 .loopexit:                                        ; preds = %.critedge, %bb.d, %bb.b, %bb.a
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %.critedge.i
   br i1 %.not23.i, label %bb.n, label %.critedge.i
 
 bb.n:                                             ; preds = %bb.m
-  %2 = atomicrmw sub ptr %i.bn, i32 1 seq_cst, align 8 ; 0 uses
+  %2 = atomicrmw add ptr %i.bn, i32 -1 seq_cst, align 8 ; 0 uses
   br label %ma_slot_allocator_free.exit, !llvm.loop !4
 
 ma_slot_allocator_free.exit:                      ; preds = %.critedge.i, %bb.l, %bb.n
@@ -1011,7 +1011,7 @@ bb.m:                                             ; preds = %.lr.ph.i
 ma_resource_manager_data_buffer_node_search.exit: ; preds = %.lr.ph.i, %ma_resource_manager_data_buffer_bst_lock.exit
   %.0 = phi ptr [ %1, %ma_resource_manager_data_buffer_bst_lock.exit ], [ %.016.i, %.lr.ph.i ] ; 11 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.0, i64 4
-  %6 = atomicrmw sub ptr %i.du, i32 1 seq_cst, align 4
+  %6 = atomicrmw add ptr %i.du, i32 -1 seq_cst, align 4
   %i.dv = icmp eq i32 %6, 1                       ; 2 uses
   br i1 %i.dv, label %bb.n, label %bb.o
 
@@ -1414,7 +1414,7 @@ ma_sound_at_end.exit.thread:                      ; preds = %.lr.ph, %ma_sound_a
 
 bb.c:                                             ; preds = %ma_sound_at_end.exit
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1280
-  %5 = atomicrmw sub ptr %i.u, i32 1 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.u, i32 -1 seq_cst, align 8 ; 0 uses
   %i.v = load ptr, ptr %i.n, align 8, !tbaa !1042
   %i.w = icmp eq ptr %i.v, %.067121
   br i1 %i.w, label %bb.d, label %bb.e
@@ -1817,7 +1817,7 @@ bb.e:                                             ; preds = %bb.d
   tail call fastcc void @ma_resource_manager_data_stream_fill_page(ptr noundef nonnull %i.b, i32 noundef 0)
   tail call fastcc void @ma_resource_manager_data_stream_fill_page(ptr noundef nonnull %i.b, i32 noundef 1)
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 720
-  %1 = atomicrmw sub ptr %i.u, i32 1 seq_cst, align 8 ; 0 uses
+  %1 = atomicrmw add ptr %i.u, i32 -1 seq_cst, align 8 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %ma_resource_manager_data_stream_result.exit, %bb.d, %bb.e
@@ -2220,8 +2220,8 @@ bb.b:                                             ; preds = %bb.c, %bb.a
 
 ma_node_input_bus_first.exit.thread:              ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %6 = atomicrmw sub ptr %i.i, i32 1 seq_cst, align 8 ; 0 uses
-  %7 = atomicrmw sub ptr %i.e, i32 1 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.i, i32 -1 seq_cst, align 8 ; 0 uses
+  %7 = atomicrmw add ptr %i.e, i32 -1 seq_cst, align 8 ; 0 uses
   br label %bb.m
 
 bb.c:                                             ; preds = %bb.b
@@ -2235,8 +2235,8 @@ bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.o = atomicrmw add ptr %i.n, i32 1 seq_cst, align 8 ; 0 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %8 = atomicrmw sub ptr %i.p, i32 1 seq_cst, align 8 ; 0 uses
-  %9 = atomicrmw sub ptr %i.e, i32 1 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.p, i32 -1 seq_cst, align 8 ; 0 uses
+  %9 = atomicrmw add ptr %i.e, i32 -1 seq_cst, align 8 ; 0 uses
   %.not82 = icmp eq ptr %2, null
   %i.q = shl nuw nsw i32 %i.d, 2                  ; 2 uses
   %i.r = zext nneg i32 %i.q to i64                ; 4 uses
@@ -2280,8 +2280,8 @@ ma_node_input_bus_next.exit.us:                   ; preds = %bb.e
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = atomicrmw add ptr %i.ai, i32 1 seq_cst, align 8 ; 0 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.070110.us, i64 16
-  %10 = atomicrmw sub ptr %i.ak, i32 1 seq_cst, align 8 ; 0 uses
-  %11 = atomicrmw sub ptr %i.e, i32 1 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.ak, i32 -1 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.e, i32 -1 seq_cst, align 8 ; 0 uses
   br label %.lr.ph.split.us, !llvm.loop !3181
 
 .preheader:                                       ; preds = %ma_node_input_bus_next.exit, %.preheader.preheader
@@ -2560,20 +2560,20 @@ ma_node_input_bus_next.exit:                      ; preds = %bb.k
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fd, i64 16
   %i.fi = atomicrmw add ptr %i.fh, i32 1 seq_cst, align 8 ; 0 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.070110, i64 16
-  %12 = atomicrmw sub ptr %i.fj, i32 1 seq_cst, align 8 ; 0 uses
-  %13 = atomicrmw sub ptr %i.e, i32 1 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.fj, i32 -1 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.e, i32 -1 seq_cst, align 8 ; 0 uses
   br label %.preheader, !llvm.loop !3181
 
 ._crit_edge.loopexit:                             ; preds = %bb.d
   %i.fk = getelementptr inbounds nuw i8, ptr %.070110.us, i64 16
-  %14 = atomicrmw sub ptr %i.fk, i32 1 seq_cst, align 8 ; 0 uses
-  %15 = atomicrmw sub ptr %i.e, i32 1 seq_cst, align 8 ; 0 uses
+  %14 = atomicrmw add ptr %i.fk, i32 -1 seq_cst, align 8 ; 0 uses
+  %15 = atomicrmw add ptr %i.e, i32 -1 seq_cst, align 8 ; 0 uses
   br label %._crit_edge
 
 ._crit_edge.loopexit125:                          ; preds = %bb.j
   %i.fl = getelementptr inbounds nuw i8, ptr %.070110, i64 16
-  %16 = atomicrmw sub ptr %i.fl, i32 1 seq_cst, align 8 ; 0 uses
-  %17 = atomicrmw sub ptr %i.e, i32 1 seq_cst, align 8 ; 0 uses
+  %16 = atomicrmw add ptr %i.fl, i32 -1 seq_cst, align 8 ; 0 uses
+  %17 = atomicrmw add ptr %i.e, i32 -1 seq_cst, align 8 ; 0 uses
   %i.fm = icmp eq i32 %spec.select84, 0
   br label %._crit_edge
 

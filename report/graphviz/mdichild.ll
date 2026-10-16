@@ -135,7 +135,7 @@ bb.a:
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit:              ; preds = %bb.a
-  %1 = atomicrmw sub ptr %i.a, i32 1 seq_cst, align 4
+  %1 = atomicrmw add ptr %i.a, i32 -1 seq_cst, align 4
   %.not = icmp eq i32 %1, 1
   br i1 %.not, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge, label %_ZN9QtPrivate8RefCount5derefEv.exit.thread
 
@@ -189,7 +189,7 @@ _ZNK7QString3argEiii5QChar.exit:                  ; preds = %bb.a
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i:            ; preds = %_ZNK7QString3argEiii5QChar.exit
-  %5 = atomicrmw sub ptr %i.h, i32 1 seq_cst, align 4
+  %5 = atomicrmw add ptr %i.h, i32 -1 seq_cst, align 4
   %.not.i = icmp eq i32 %5, 1
   br i1 %.not.i, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i, label %_ZN7QStringD2Ev.exit
 
@@ -211,7 +211,7 @@ _ZN7QStringD2Ev.exit:                             ; preds = %_ZNK7QString3argEii
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i7:           ; preds = %_ZN7QStringD2Ev.exit
-  %6 = atomicrmw sub ptr %i.l, i32 1 seq_cst, align 4
+  %6 = atomicrmw add ptr %i.l, i32 -1 seq_cst, align 4
   %.not.i8 = icmp eq i32 %6, 1
   br i1 %.not.i8, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i9, label %_ZN7QStringD2Ev.exit11
 
@@ -266,7 +266,7 @@ bb.b:                                             ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i13:          ; preds = %bb.b
-  %7 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %7 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %.not.i14 = icmp eq i32 %7, 1
   br i1 %.not.i14, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i15, label %_ZN7QStringD2Ev.exit17
 
@@ -409,7 +409,7 @@ bb.g:                                             ; preds = %bb.f
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i:            ; preds = %bb.g
-  %12 = atomicrmw sub ptr %i.e, i32 1 seq_cst, align 4
+  %12 = atomicrmw add ptr %i.e, i32 -1 seq_cst, align 4
   %.not.i = icmp eq i32 %12, 1
   br i1 %.not.i, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i, label %_ZN7QStringD2Ev.exit
 
@@ -431,7 +431,7 @@ _ZN7QStringD2Ev.exit:                             ; preds = %bb.g, %_ZN9QtPrivat
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i35:          ; preds = %_ZN7QStringD2Ev.exit
-  %13 = atomicrmw sub ptr %i.h, i32 1 seq_cst, align 4
+  %13 = atomicrmw add ptr %i.h, i32 -1 seq_cst, align 4
   %.not.i36 = icmp eq i32 %13, 1
   br i1 %.not.i36, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i37, label %_ZN7QStringD2Ev.exit39
 
@@ -454,7 +454,7 @@ _ZN7QStringD2Ev.exit39:                           ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i41:          ; preds = %_ZN7QStringD2Ev.exit39
-  %14 = atomicrmw sub ptr %i.k, i32 1 seq_cst, align 4
+  %14 = atomicrmw add ptr %i.k, i32 -1 seq_cst, align 4
   %.not.i42 = icmp eq i32 %14, 1
   br i1 %.not.i42, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i43, label %_ZN7QStringD2Ev.exit45
 
@@ -476,7 +476,7 @@ _ZN7QStringD2Ev.exit45:                           ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i47:          ; preds = %_ZN7QStringD2Ev.exit45
-  %15 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %15 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %.not.i48 = icmp eq i32 %15, 1
   br i1 %.not.i48, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i49, label %_ZN7QStringD2Ev.exit51
 
@@ -501,7 +501,7 @@ _ZN7QStringD2Ev.exit51:                           ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i53:          ; preds = %_ZN7QStringD2Ev.exit51
-  %16 = atomicrmw sub ptr %i.q, i32 1 seq_cst, align 4
+  %16 = atomicrmw add ptr %i.q, i32 -1 seq_cst, align 4
   %.not.i54 = icmp eq i32 %16, 1
   br i1 %.not.i54, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i55, label %_ZN7QStringD2Ev.exit57
 
@@ -617,7 +617,7 @@ bb.y:                                             ; preds = %bb.x
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i59:          ; preds = %bb.y
-  %17 = atomicrmw sub ptr %i.aa, i32 1 seq_cst, align 4
+  %17 = atomicrmw add ptr %i.aa, i32 -1 seq_cst, align 4
   %.not.i60 = icmp eq i32 %17, 1
   br i1 %.not.i60, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i61, label %_ZN7QStringD2Ev.exit63
 
@@ -790,7 +790,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i:            ; preds = %bb.b
-  %7 = atomicrmw sub ptr %i.b, i32 1 seq_cst, align 4
+  %7 = atomicrmw add ptr %i.b, i32 -1 seq_cst, align 4
   %.not.i = icmp eq i32 %7, 1
   br i1 %.not.i, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i, label %_ZN7QStringD2Ev.exit
 
@@ -874,7 +874,7 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i8:           ; preds = %bb.f
-  %8 = atomicrmw sub ptr %i.ad, i32 1 seq_cst, align 4
+  %8 = atomicrmw add ptr %i.ad, i32 -1 seq_cst, align 4
   %.not.i9 = icmp eq i32 %8, 1
   br i1 %.not.i9, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i10, label %_ZN7QStringD2Ev.exit12
 
@@ -896,7 +896,7 @@ _ZN7QStringD2Ev.exit12:                           ; preds = %bb.f, %_ZN9QtPrivat
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i14:          ; preds = %_ZN7QStringD2Ev.exit12
-  %9 = atomicrmw sub ptr %i.ag, i32 1 seq_cst, align 4
+  %9 = atomicrmw add ptr %i.ag, i32 -1 seq_cst, align 4
   %.not.i15 = icmp eq i32 %9, 1
   br i1 %.not.i15, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i16, label %_ZN7QStringD2Ev.exit18
 
@@ -993,7 +993,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i:            ; preds = %bb.b
-  %4 = atomicrmw sub ptr %i.b, i32 1 seq_cst, align 4
+  %4 = atomicrmw add ptr %i.b, i32 -1 seq_cst, align 4
   %.not.i = icmp eq i32 %4, 1
   br i1 %.not.i, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i, label %_ZN7QStringD2Ev.exit
 
@@ -1016,7 +1016,7 @@ _ZN7QStringD2Ev.exit:                             ; preds = %bb.b, %_ZN9QtPrivat
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i7:           ; preds = %_ZN7QStringD2Ev.exit
-  %5 = atomicrmw sub ptr %i.e, i32 1 seq_cst, align 4
+  %5 = atomicrmw add ptr %i.e, i32 -1 seq_cst, align 4
   %.not.i8 = icmp eq i32 %5, 1
   br i1 %.not.i8, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i9, label %_ZN7QStringD2Ev.exit11
 
@@ -1070,7 +1070,7 @@ bb.f:                                             ; preds = %._crit_edge, %_ZN7Q
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i13:          ; preds = %bb.f
-  %6 = atomicrmw sub ptr %i.o, i32 1 seq_cst, align 4
+  %6 = atomicrmw add ptr %i.o, i32 -1 seq_cst, align 4
   %.not.i14 = icmp eq i32 %6, 1
   br i1 %.not.i14, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i15, label %_ZN7QStringD2Ev.exit17
 
@@ -1151,7 +1151,7 @@ bb.g:                                             ; preds = %bb.f
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i:            ; preds = %bb.g
-  %11 = atomicrmw sub ptr %i.c, i32 1 seq_cst, align 4
+  %11 = atomicrmw add ptr %i.c, i32 -1 seq_cst, align 4
   %.not.i = icmp eq i32 %11, 1
   br i1 %.not.i, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i, label %_ZN7QStringD2Ev.exit
 
@@ -1173,7 +1173,7 @@ _ZN7QStringD2Ev.exit:                             ; preds = %bb.g, %_ZN9QtPrivat
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i32:          ; preds = %_ZN7QStringD2Ev.exit
-  %12 = atomicrmw sub ptr %i.f, i32 1 seq_cst, align 4
+  %12 = atomicrmw add ptr %i.f, i32 -1 seq_cst, align 4
   %.not.i33 = icmp eq i32 %12, 1
   br i1 %.not.i33, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i34, label %_ZN7QStringD2Ev.exit36
 
@@ -1196,7 +1196,7 @@ _ZN7QStringD2Ev.exit36:                           ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i38:          ; preds = %_ZN7QStringD2Ev.exit36
-  %13 = atomicrmw sub ptr %i.i, i32 1 seq_cst, align 4
+  %13 = atomicrmw add ptr %i.i, i32 -1 seq_cst, align 4
   %.not.i39 = icmp eq i32 %13, 1
   br i1 %.not.i39, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i40, label %_ZN7QStringD2Ev.exit42
 
@@ -1218,7 +1218,7 @@ _ZN7QStringD2Ev.exit42:                           ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i44:          ; preds = %_ZN7QStringD2Ev.exit42
-  %14 = atomicrmw sub ptr %i.l, i32 1 seq_cst, align 4
+  %14 = atomicrmw add ptr %i.l, i32 -1 seq_cst, align 4
   %.not.i45 = icmp eq i32 %14, 1
   br i1 %.not.i45, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i46, label %_ZN7QStringD2Ev.exit48
 
@@ -1243,7 +1243,7 @@ _ZN7QStringD2Ev.exit48:                           ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i50:          ; preds = %_ZN7QStringD2Ev.exit48
-  %15 = atomicrmw sub ptr %i.o, i32 1 seq_cst, align 4
+  %15 = atomicrmw add ptr %i.o, i32 -1 seq_cst, align 4
   %.not.i51 = icmp eq i32 %15, 1
   br i1 %.not.i51, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i52, label %_ZN7QStringD2Ev.exit54
 
@@ -1363,7 +1363,7 @@ bb.z:                                             ; preds = %bb.y
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i56:          ; preds = %bb.z
-  %16 = atomicrmw sub ptr %i.z, i32 1 seq_cst, align 4
+  %16 = atomicrmw add ptr %i.z, i32 -1 seq_cst, align 4
   %.not.i57 = icmp eq i32 %16, 1
   br i1 %.not.i57, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i58, label %_ZN7QStringD2Ev.exit60
 
@@ -1583,7 +1583,7 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i:            ; preds = %bb.f
-  %6 = atomicrmw sub ptr %i.f, i32 1 seq_cst, align 4
+  %6 = atomicrmw add ptr %i.f, i32 -1 seq_cst, align 4
   %.not.i = icmp eq i32 %6, 1
   br i1 %.not.i, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i, label %_ZN7QStringD2Ev.exit
 
@@ -1605,7 +1605,7 @@ _ZN7QStringD2Ev.exit:                             ; preds = %bb.f, %_ZN9QtPrivat
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i17:          ; preds = %_ZN7QStringD2Ev.exit
-  %7 = atomicrmw sub ptr %i.i, i32 1 seq_cst, align 4
+  %7 = atomicrmw add ptr %i.i, i32 -1 seq_cst, align 4
   %.not.i18 = icmp eq i32 %7, 1
   br i1 %.not.i18, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i19, label %_ZN7QStringD2Ev.exit21
 
@@ -1628,7 +1628,7 @@ _ZN7QStringD2Ev.exit21:                           ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i23:          ; preds = %_ZN7QStringD2Ev.exit21
-  %8 = atomicrmw sub ptr %i.l, i32 1 seq_cst, align 4
+  %8 = atomicrmw add ptr %i.l, i32 -1 seq_cst, align 4
   %.not.i24 = icmp eq i32 %8, 1
   br i1 %.not.i24, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i25, label %_ZN7QStringD2Ev.exit27
 
@@ -1652,7 +1652,7 @@ _ZN7QStringD2Ev.exit27:                           ; preds = %_ZN7QStringD2Ev.exi
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i29:          ; preds = %_ZN7QStringD2Ev.exit27
-  %9 = atomicrmw sub ptr %i.o, i32 1 seq_cst, align 4
+  %9 = atomicrmw add ptr %i.o, i32 -1 seq_cst, align 4
   %.not.i30 = icmp eq i32 %9, 1
   br i1 %.not.i30, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i31, label %_ZN7QStringD2Ev.exit33
 
@@ -1849,7 +1849,7 @@ bb.e:                                             ; preds = %bb.d
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i:            ; preds = %bb.e
-  %6 = atomicrmw sub ptr %i.al, i32 1 seq_cst, align 4
+  %6 = atomicrmw add ptr %i.al, i32 -1 seq_cst, align 4
   %.not.i11 = icmp eq i32 %6, 1
   br i1 %.not.i11, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i, label %_ZN5QListIP13QMdiSubWindowED2Ev.exit
 
@@ -1879,7 +1879,7 @@ _ZN5QListIP13QMdiSubWindowED2Ev.exit:             ; preds = %bb.e, %_ZN9QtPrivat
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit.i13:          ; preds = %_ZN5QListIP13QMdiSubWindowED2Ev.exit
-  %7 = atomicrmw sub ptr %i.aq, i32 1 seq_cst, align 4
+  %7 = atomicrmw add ptr %i.aq, i32 -1 seq_cst, align 4
   %.not.i14 = icmp eq i32 %7, 1
   br i1 %.not.i14, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge.i15, label %_ZN5QListIP13QMdiSubWindowED2Ev.exit17
 
@@ -1953,7 +1953,7 @@ bb.a:
   ]
 
 _ZN9QtPrivate8RefCount5derefEv.exit:              ; preds = %bb.a
-  %1 = atomicrmw sub ptr %i.a, i32 1 seq_cst, align 4
+  %1 = atomicrmw add ptr %i.a, i32 -1 seq_cst, align 4
   %.not = icmp eq i32 %1, 1
   br i1 %.not, label %_ZN9QtPrivate8RefCount5derefEv.exit._ZN9QtPrivate8RefCount5derefEv.exit.thread2_crit_edge, label %_ZN5QListIP13QMdiSubWindowE7deallocEPN9QListData4DataE.exit
 

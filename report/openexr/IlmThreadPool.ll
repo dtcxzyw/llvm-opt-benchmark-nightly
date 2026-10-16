@@ -199,7 +199,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN13IlmThread_3_49TaskGroup4Data10removeTaskEv(ptr noundef nonnull align 8 dereferenceable(48) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %1 = atomicrmw sub ptr %0, i32 1 seq_cst, align 4
+  %1 = atomicrmw add ptr %0, i32 -1 seq_cst, align 4
   %i.a = icmp eq i32 %1, 1
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -210,7 +210,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = atomicrmw sub ptr %i.c, i32 1 seq_cst, align 4 ; 0 uses
+  %2 = atomicrmw add ptr %i.c, i32 -1 seq_cst, align 4 ; 0 uses
   ret void
 }
 
@@ -613,7 +613,7 @@ bb.f:                                             ; preds = %bb.a
 define void @_ZN13IlmThread_3_49TaskGroup13finishOneTaskEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !43     ; 3 uses
-  %1 = atomicrmw sub ptr %i.a, i32 1 seq_cst, align 4
+  %1 = atomicrmw add ptr %i.a, i32 -1 seq_cst, align 4
   %i.b = icmp eq i32 %1, 1
   br i1 %i.b, label %bb.b, label %_ZN13IlmThread_3_49TaskGroup4Data10removeTaskEv.exit
 
@@ -624,7 +624,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN13IlmThread_3_49TaskGroup4Data10removeTaskEv.exit: ; preds = %bb.a, %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %2 = atomicrmw sub ptr %i.d, i32 1 seq_cst, align 4 ; 0 uses
+  %2 = atomicrmw add ptr %i.d, i32 -1 seq_cst, align 4 ; 0 uses
   ret void
 }
 
@@ -1027,7 +1027,7 @@ bb.h:                                             ; preds = %_ZNK13IlmThread_3_4
 
 bb.i:                                             ; preds = %.noexc
   %i.y = load ptr, ptr %i.r, align 8, !tbaa !43   ; 3 uses
-  %4 = atomicrmw sub ptr %i.y, i32 1 seq_cst, align 4
+  %4 = atomicrmw add ptr %i.y, i32 -1 seq_cst, align 4
   %i.z = icmp eq i32 %4, 1
   br i1 %i.z, label %bb.j, label %_ZN13IlmThread_3_49TaskGroup13finishOneTaskEv.exit.i
 
@@ -1038,7 +1038,7 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN13IlmThread_3_49TaskGroup13finishOneTaskEv.exit.i: ; preds = %bb.j, %bb.i
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 4
-  %5 = atomicrmw sub ptr %i.ab, i32 1 seq_cst, align 4 ; 0 uses
+  %5 = atomicrmw add ptr %i.ab, i32 -1 seq_cst, align 4 ; 0 uses
   br label %_ZN13IlmThread_3_412_GLOBAL__N_117handleProcessTaskEPNS_4TaskE.exit
 
 _ZN13IlmThread_3_412_GLOBAL__N_117handleProcessTaskEPNS_4TaskE.exit: ; preds = %_ZN13IlmThread_3_49TaskGroup13finishOneTaskEv.exit.i, %.noexc, %bb.f
@@ -1441,7 +1441,7 @@ bb.b:                                             ; preds = %_ZNSt11unique_lockI
 
 bb.c:                                             ; preds = %.noexc9
   %i.t = load ptr, ptr %i.m, align 8, !tbaa !43   ; 3 uses
-  %2 = atomicrmw sub ptr %i.t, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.t, i32 -1 seq_cst, align 4
   %i.u = icmp eq i32 %2, 1
   br i1 %i.u, label %bb.d, label %_ZN13IlmThread_3_49TaskGroup13finishOneTaskEv.exit.i
 
@@ -1452,7 +1452,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN13IlmThread_3_49TaskGroup13finishOneTaskEv.exit.i: ; preds = %bb.d, %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 4
-  %3 = atomicrmw sub ptr %i.w, i32 1 seq_cst, align 4 ; 0 uses
+  %3 = atomicrmw add ptr %i.w, i32 -1 seq_cst, align 4 ; 0 uses
   br label %.backedge
 
 _ZN13IlmThread_3_412_GLOBAL__N_117handleProcessTaskEPNS_4TaskE.exit: ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.noexc1
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %2 = atomicrmw sub ptr %i.d, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.d, i8 -1 acq_rel, align 1
   %.not.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i, label %bb.d, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE9detachOneEv.exit.i
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.j = load ptr, ptr %0, align 8, !tbaa !519    ; 11 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 216
-  %1 = atomicrmw sub ptr %i.k, i64 1 seq_cst, align 8
+  %1 = atomicrmw add ptr %i.k, i64 -1 seq_cst, align 8
   %i.l = icmp eq i64 %1, 1
   br i1 %i.l, label %bb.e, label %_ZN4asio6detail9scheduler13work_finishedEv.exit
 
@@ -930,7 +930,7 @@ define linkonce_odr dso_local void @_ZN4asio10io_context4workD2Ev(ptr noundef no
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !525, !nonnull !317, !align !362 ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 216
-  %1 = atomicrmw sub ptr %i.b, i64 1 seq_cst, align 8
+  %1 = atomicrmw add ptr %i.b, i64 -1 seq_cst, align 8
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.b, label %_ZN4asio6detail9scheduler13work_finishedEv.exit
 
@@ -1028,7 +1028,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !525, !nonnull !317, !align !362 ; 11 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 216
-  %1 = atomicrmw sub ptr %i.e, i64 1 seq_cst, align 8
+  %1 = atomicrmw add ptr %i.e, i64 -1 seq_cst, align 8
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.c, label %_ZN4asio10io_context4workD2Ev.exit
 
@@ -1431,7 +1431,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !361, !nonnull !317, !align !362 ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 216
-  %1 = atomicrmw sub ptr %i.f, i64 1 seq_cst, align 8
+  %1 = atomicrmw add ptr %i.f, i64 -1 seq_cst, align 8
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.c, label %_ZN4asio6detail9scheduler13work_finishedEv.exit
 
@@ -1834,7 +1834,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 216
-  %1 = atomicrmw sub ptr %i.c, i64 1 seq_cst, align 8
+  %1 = atomicrmw add ptr %i.c, i64 -1 seq_cst, align 8
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %bb.c, label %_ZN4asio6detail9scheduler13work_finishedEv.exit
 
@@ -2237,7 +2237,7 @@ _ZNSt10shared_ptrIN12async_simple6SignalEEC2ERKS2_.exit: ; preds = %_ZN12async_s
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.r = load i64, ptr %i.q, align 8, !tbaa !1073
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  %4 = atomicrmw sub ptr %i.s, i64 1 acq_rel, align 8
+  %4 = atomicrmw add ptr %i.s, i64 -1 acq_rel, align 8
   switch i64 %4, label %_ZNKSt7__n486116coroutine_handleIvE6resumeEv.exit [
     i64 1, label %bb.h
     i64 2, label %bb.f
@@ -2640,7 +2640,7 @@ _ZNSt10shared_ptrIN12async_simple6SignalEEC2ERKS2_.exit: ; preds = %_ZN12async_s
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.r = load i64, ptr %i.q, align 8, !tbaa !1073
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  %4 = atomicrmw sub ptr %i.s, i64 1 acq_rel, align 8
+  %4 = atomicrmw add ptr %i.s, i64 -1 acq_rel, align 8
   switch i64 %4, label %_ZNKSt7__n486116coroutine_handleIvE6resumeEv.exit [
     i64 1, label %bb.g
     i64 2, label %bb.f
@@ -3043,7 +3043,7 @@ _ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_
   br i1 %i.x, label %_ZN7coro_io6detail12client_queueISt10unique_ptrINS_16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS4_EEE7enqueueEOS7_.exit, label %_ZN7coro_io6detail12client_queueISt10unique_ptrINS_16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS4_EEE7enqueueEOS7_.exit.thread
 
 _ZN7coro_io6detail12client_queueISt10unique_ptrINS_16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS4_EEE7enqueueEOS7_.exit.thread: ; preds = %.noexc, %.noexc22
-  %8 = atomicrmw sub ptr %i.s, i64 1 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.s, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit
 
 _ZN7coro_io6detail12client_queueISt10unique_ptrINS_16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS4_EEE7enqueueEOS7_.exit: ; preds = %.noexc22
@@ -3446,7 +3446,7 @@ bb.j:                                             ; preds = %.preheader
   br i1 %.not108, label %.thread136, label %bb.k
 
 .thread136:                                       ; preds = %bb.j
-  %1 = atomicrmw sub ptr %i.am, i64 1 monotonic, align 8 ; 0 uses
+  %1 = atomicrmw add ptr %i.am, i64 -1 monotonic, align 8 ; 0 uses
   store atomic i8 0, ptr %i.ap monotonic, align 8
   br label %.thread134
 
@@ -3511,7 +3511,7 @@ _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit.pre
   br label %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit
 
 bb.n:                                             ; preds = %bb.m
-  %2 = atomicrmw sub ptr %i.am, i64 1 monotonic, align 8 ; 0 uses
+  %2 = atomicrmw add ptr %i.am, i64 -1 monotonic, align 8 ; 0 uses
   br label %.thread134
 
 _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit: ; preds = %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit.preheader
@@ -3625,7 +3625,7 @@ bb.g:                                             ; preds = %_ZNSt13__atomic_bas
 
 bb.h:                                             ; preds = %bb.g
   %i.aj = extractvalue { ptr, i1 } %i.ah, 0       ; 3 uses
-  %2 = atomicrmw sub ptr %i.x, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.x, i32 -1 acq_rel, align 4
   %i.ak = icmp eq i32 %2, -2147483647
   br i1 %i.ak, label %bb.i, label %_ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS6_EENS1_28ConcurrentQueueDefaultTraitsEE8FreeListINSB_5BlockEE28add_knowing_refcount_is_zeroEPSD_.exit.i.i.i
 
@@ -3653,7 +3653,7 @@ _ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_
   br i1 %.not.i.i.i, label %.loopexit.i, label %.lr.ph.i.i.i
 
 _ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS6_EENS1_28ConcurrentQueueDefaultTraitsEE28try_get_block_from_free_listEv.exit.i: ; preds = %bb.g
-  %3 = atomicrmw sub ptr %i.x, i32 2 release, align 4 ; 0 uses
+  %3 = atomicrmw add ptr %i.x, i32 -2 release, align 4 ; 0 uses
   br label %.thread
 
 .loopexit.i:                                      ; preds = %_ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS6_EENS1_28ConcurrentQueueDefaultTraitsEE8FreeListINSB_5BlockEE28add_knowing_refcount_is_zeroEPSD_.exit.i.i.i, %_ZN3ylt6detail10moodycamel15ConcurrentQueueISt10unique_ptrIN7coro_io16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS6_EENS1_28ConcurrentQueueDefaultTraitsEE31try_get_block_from_initial_poolEv.exit.thread.i
@@ -4056,7 +4056,7 @@ bb.j:                                             ; preds = %.preheader
   br i1 %.not108, label %.thread136, label %bb.k
 
 .thread136:                                       ; preds = %bb.j
-  %1 = atomicrmw sub ptr %i.am, i64 1 monotonic, align 8 ; 0 uses
+  %1 = atomicrmw add ptr %i.am, i64 -1 monotonic, align 8 ; 0 uses
   store atomic i8 0, ptr %i.ap monotonic, align 8
   br label %.thread134
 
@@ -4121,7 +4121,7 @@ _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit.pre
   br label %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit
 
 bb.n:                                             ; preds = %bb.m
-  %2 = atomicrmw sub ptr %i.am, i64 1 monotonic, align 8 ; 0 uses
+  %2 = atomicrmw add ptr %i.am, i64 -1 monotonic, align 8 ; 0 uses
   br label %.thread134
 
 _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit: ; preds = %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit.preheader
@@ -4235,7 +4235,7 @@ bb.g:                                             ; preds = %_ZNSt13__atomic_bas
 
 bb.h:                                             ; preds = %bb.g
   %i.aj = extractvalue { ptr, i1 } %i.ah, 0       ; 3 uses
-  %2 = atomicrmw sub ptr %i.x, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.x, i32 -1 acq_rel, align 4
   %i.ak = icmp eq i32 %2, -2147483647
   br i1 %i.ak, label %bb.i, label %_ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQueueDefaultTraitsEE8FreeListINS6_5BlockEE28add_knowing_refcount_is_zeroEPS8_.exit.i.i.i
 
@@ -4263,7 +4263,7 @@ _ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQ
   br i1 %.not.i.i.i, label %.loopexit.i, label %.lr.ph.i.i.i
 
 _ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQueueDefaultTraitsEE28try_get_block_from_free_listEv.exit.i: ; preds = %bb.g
-  %3 = atomicrmw sub ptr %i.x, i32 2 release, align 4 ; 0 uses
+  %3 = atomicrmw add ptr %i.x, i32 -2 release, align 4 ; 0 uses
   br label %.thread
 
 .loopexit.i:                                      ; preds = %_ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQueueDefaultTraitsEE8FreeListINS6_5BlockEE28add_knowing_refcount_is_zeroEPS8_.exit.i.i.i, %_ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQueueDefaultTraitsEE31try_get_block_from_initial_poolEv.exit.thread.i
@@ -4666,7 +4666,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %1 = atomicrmw sub ptr %i.b, i8 1 acq_rel, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 acq_rel, align 1
   %.not.i = icmp eq i8 %1, 1
   br i1 %.not.i, label %bb.c, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE9detachOneEv.exit
 
@@ -4880,7 +4880,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  %3 = atomicrmw sub ptr %i.b, i64 1 acq_rel, align 8
+  %3 = atomicrmw add ptr %i.b, i64 -1 acq_rel, align 8
   %i.c = load atomic i8, ptr %i.a acquire, align 1
   %i.d = and i8 %i.c, 33
   %i.e = icmp ne i8 %i.d, 0
@@ -4993,7 +4993,7 @@ _ZNSt15__exception_ptr13exception_ptrD2Ev.exit6:  ; preds = %_ZN12async_simple3T
 
 .noexc:                                           ; preds = %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit, %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %4 = atomicrmw sub ptr %i.v, i8 1 acq_rel, align 1
+  %4 = atomicrmw add ptr %i.v, i8 -1 acq_rel, align 1
   %.not.i.i = icmp eq i8 %4, 1
   br i1 %.not.i.i, label %bb.q, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE13detachPromiseEv.exit
 
@@ -5298,7 +5298,7 @@ bb.h:                                             ; preds = %bb.f
           to label %_ZNK12async_simple4util18move_only_functionIFvONS_3TryIN8coro_rpc8err_codeEEEEEclES6_.exit unwind label %bb.o, !inline_history !1515
 
 _ZNK12async_simple4util18move_only_functionIFvONS_3TryIN8coro_rpc8err_codeEEEEEclES6_.exit: ; preds = %bb.h
-  %9 = atomicrmw sub ptr %i.q, i8 1 monotonic, align 1
+  %9 = atomicrmw add ptr %i.q, i8 -1 monotonic, align 1
   %i.z = icmp eq i8 %9, 1
   br i1 %i.z, label %bb.i, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i
 
@@ -5319,7 +5319,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i: ; preds = %bb.j, %bb.i, %_ZNK12async_simple4util18move_only_functionIFvONS_3TryIN8coro_rpc8err_codeEEEEEclES6_.exit
-  %10 = atomicrmw sub ptr %i.o, i8 1 acq_rel, align 1
+  %10 = atomicrmw add ptr %i.o, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %10, 1
   br i1 %.not.i.i.i, label %bb.l, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.exit
 
@@ -5564,7 +5564,7 @@ bb.ao:                                            ; preds = %bb.an
           to label %bb.ap unwind label %bb.be
 
 bb.ap:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit36, %bb.ao, %_ZZN12async_simple11FutureStateIN8coro_rpc8err_codeEE20scheduleContinuationEbENUlvE_D2Ev.exit
-  %11 = atomicrmw sub ptr %i.ak, i8 1 monotonic, align 1
+  %11 = atomicrmw add ptr %i.ak, i8 -1 monotonic, align 1
   %i.cn = icmp eq i8 %11, 1
   br i1 %i.cn, label %bb.aq, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i48
 
@@ -5587,7 +5587,7 @@ bb.as:                                            ; preds = %bb.ar
   unreachable
 
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i48: ; preds = %bb.ar, %bb.aq, %bb.ap
-  %12 = atomicrmw sub ptr %i.ai, i8 1 acq_rel, align 1
+  %12 = atomicrmw add ptr %i.ai, i8 -1 acq_rel, align 1
   %.not.i.i.i49 = icmp eq i8 %12, 1
   br i1 %.not.i.i.i49, label %bb.at, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.exit55
 
@@ -5621,7 +5621,7 @@ _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.
 
 bb.aw:                                            ; preds = %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.exit55
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 2
-  %13 = atomicrmw sub ptr %i.cz, i8 1 monotonic, align 1
+  %13 = atomicrmw add ptr %i.cz, i8 -1 monotonic, align 1
   %i.da = icmp eq i8 %13, 1
   br i1 %i.da, label %bb.ax, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i57
 
@@ -5645,7 +5645,7 @@ bb.az:                                            ; preds = %bb.ay
 
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i57: ; preds = %bb.ay, %bb.ax, %bb.aw
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cy, i64 1
-  %14 = atomicrmw sub ptr %i.dg, i8 1 acq_rel, align 1
+  %14 = atomicrmw add ptr %i.dg, i8 -1 acq_rel, align 1
   %.not.i.i.i58 = icmp eq i8 %14, 1
   br i1 %.not.i.i.i58, label %bb.ba, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.exit64
 
@@ -5858,7 +5858,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %1 = atomicrmw sub ptr %i.b, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 monotonic, align 1
   %i.c = icmp eq i8 %1, 1
   br i1 %i.c, label %bb.c, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i
 
@@ -5883,7 +5883,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i: ; preds = %bb.d, %bb.c, %bb.b
   %i.i = load ptr, ptr %0, align 8, !tbaa !1512   ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %2 = atomicrmw sub ptr %i.j, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.j, i8 -1 acq_rel, align 1
   %.not.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i, label %bb.f, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReference6detachEv.exit
 
@@ -5922,7 +5922,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %1 = atomicrmw sub ptr %i.b, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 monotonic, align 1
   %i.c = icmp eq i8 %1, 1
   br i1 %i.c, label %bb.c, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i
 
@@ -5947,7 +5947,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i: ; preds = %bb.d, %bb.c, %bb.b
   %i.i = load ptr, ptr %0, align 8, !tbaa !1512   ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %2 = atomicrmw sub ptr %i.j, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.j, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i.i, label %bb.f, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.exit
 
@@ -5986,7 +5986,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %1 = atomicrmw sub ptr %i.b, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 monotonic, align 1
   %i.c = icmp eq i8 %1, 1
   br i1 %i.c, label %bb.c, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i
 
@@ -6011,7 +6011,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i: ; preds = %bb.d, %bb.c, %bb.b
   %i.i = load ptr, ptr %0, align 8, !tbaa !1512   ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %2 = atomicrmw sub ptr %i.j, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.j, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i.i, label %bb.f, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.exit
 
@@ -6132,7 +6132,7 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNK12async_simple4util18move_only_functionIFvONS_3TryIN8coro_rpc8err_codeEEEEEclES6_.exit: ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %2 = atomicrmw sub ptr %i.i, i8 1 monotonic, align 1
+  %2 = atomicrmw add ptr %i.i, i8 -1 monotonic, align 1
   %i.j = icmp eq i8 %2, 1
   br i1 %i.j, label %bb.d, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i
 
@@ -6154,7 +6154,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i: ; preds = %bb.e, %bb.d, %_ZNK12async_simple4util18move_only_functionIFvONS_3TryIN8coro_rpc8err_codeEEEEEclES6_.exit
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %3 = atomicrmw sub ptr %i.n, i8 1 acq_rel, align 1
+  %3 = atomicrmw add ptr %i.n, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %3, 1
   br i1 %.not.i.i.i, label %bb.g, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.exit
 
@@ -6205,7 +6205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %1 = atomicrmw sub ptr %i.d, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.d, i8 -1 monotonic, align 1
   %i.e = icmp eq i8 %1, 1
   br i1 %i.e, label %bb.d, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i.i
 
@@ -6230,7 +6230,7 @@ bb.f:                                             ; preds = %bb.e
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i.i: ; preds = %bb.e, %bb.d, %bb.c
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !1512 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
-  %2 = atomicrmw sub ptr %i.l, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.l, i8 -1 acq_rel, align 1
   %.not.i.i.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i.i.i, label %bb.g, label %_ZZN12async_simple11FutureStateIN8coro_rpc8err_codeEE20scheduleContinuationEbENUlvE_D2Ev.exit
 
@@ -6350,7 +6350,7 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNK12async_simple4util18move_only_functionIFvONS_3TryIN8coro_rpc8err_codeEEEEEclES6_.exit: ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %2 = atomicrmw sub ptr %i.i, i8 1 monotonic, align 1
+  %2 = atomicrmw add ptr %i.i, i8 -1 monotonic, align 1
   %i.j = icmp eq i8 %2, 1
   br i1 %i.j, label %bb.d, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i
 
@@ -6372,7 +6372,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i: ; preds = %bb.e, %bb.d, %_ZNK12async_simple4util18move_only_functionIFvONS_3TryIN8coro_rpc8err_codeEEEEEclES6_.exit
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %3 = atomicrmw sub ptr %i.n, i8 1 acq_rel, align 1
+  %3 = atomicrmw add ptr %i.n, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %3, 1
   br i1 %.not.i.i.i, label %bb.g, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE21ContinuationReferenceD2Ev.exit
 
@@ -6423,7 +6423,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %1 = atomicrmw sub ptr %i.d, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.d, i8 -1 monotonic, align 1
   %i.e = icmp eq i8 %1, 1
   br i1 %i.e, label %bb.d, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i.i
 
@@ -6448,7 +6448,7 @@ bb.f:                                             ; preds = %bb.e
 _ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE17derefContinuationEv.exit.i.i.i: ; preds = %bb.e, %bb.d, %bb.c
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !1512 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
-  %2 = atomicrmw sub ptr %i.l, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.l, i8 -1 acq_rel, align 1
   %.not.i.i.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i.i.i, label %bb.g, label %_ZZN12async_simple11FutureStateIN8coro_rpc8err_codeEE20scheduleContinuationEbENUlvE0_D2Ev.exit
 
@@ -6851,7 +6851,7 @@ bb.b:                                             ; preds = %.noexc
   %.sink10.i = phi i64 [ %i.c, %.noexc ], [ %i.f, %.noexc60 ]
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 1256
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sink10.i
-  %17 = atomicrmw sub ptr %i.j, i64 1 seq_cst, align 8 ; 0 uses
+  %17 = atomicrmw add ptr %i.j, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN7coro_io6detail12client_queueISt10unique_ptrINS_16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS4_EEE11try_dequeueERS7_.exit
 
 _ZN7coro_io6detail12client_queueISt10unique_ptrINS_16ib_buffer_pool_t16ib_buffer_impl_tESt14default_deleteIS4_EEE11try_dequeueERS7_.exit: ; preds = %.sink.split.i, %.noexc60
@@ -7254,7 +7254,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  %3 = atomicrmw sub ptr %i.b, i64 1 acq_rel, align 8
+  %3 = atomicrmw add ptr %i.b, i64 -1 acq_rel, align 8
   %i.c = load atomic i8, ptr %i.a acquire, align 1
   %i.d = and i8 %i.c, 33
   %i.e = icmp ne i8 %i.d, 0
@@ -7377,7 +7377,7 @@ bb.r:                                             ; preds = %bb.d
 
 _ZN12async_simple11FutureStateISt10error_codeE13detachPromiseEv.exit: ; preds = %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit, %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %4 = atomicrmw sub ptr %i.x, i8 1 acq_rel, align 1
+  %4 = atomicrmw add ptr %i.x, i8 -1 acq_rel, align 1
   %.not.i = icmp eq i8 %4, 1
   br i1 %.not.i, label %bb.s, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit
 
@@ -7593,7 +7593,7 @@ bb.h:                                             ; preds = %bb.f
           to label %_ZNK12async_simple4util18move_only_functionIFvONS_3TryISt10error_codeEEEEclES5_.exit unwind label %bb.o, !inline_history !1992
 
 _ZNK12async_simple4util18move_only_functionIFvONS_3TryISt10error_codeEEEEclES5_.exit: ; preds = %bb.h
-  %9 = atomicrmw sub ptr %i.q, i8 1 monotonic, align 1
+  %9 = atomicrmw add ptr %i.q, i8 -1 monotonic, align 1
   %i.z = icmp eq i8 %9, 1
   br i1 %i.z, label %bb.i, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i
 
@@ -7614,7 +7614,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i: ; preds = %bb.j, %bb.i, %_ZNK12async_simple4util18move_only_functionIFvONS_3TryISt10error_codeEEEEclES5_.exit
-  %10 = atomicrmw sub ptr %i.o, i8 1 acq_rel, align 1
+  %10 = atomicrmw add ptr %i.o, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %10, 1
   br i1 %.not.i.i.i, label %bb.l, label %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit
 
@@ -7859,7 +7859,7 @@ bb.ao:                                            ; preds = %bb.an
           to label %bb.ap unwind label %bb.be
 
 bb.ap:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit36, %bb.ao, %_ZZN12async_simple11FutureStateISt10error_codeE20scheduleContinuationEbENUlvE_D2Ev.exit
-  %11 = atomicrmw sub ptr %i.ak, i8 1 monotonic, align 1
+  %11 = atomicrmw add ptr %i.ak, i8 -1 monotonic, align 1
   %i.cn = icmp eq i8 %11, 1
   br i1 %i.cn, label %bb.aq, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i48
 
@@ -7882,7 +7882,7 @@ bb.as:                                            ; preds = %bb.ar
   unreachable
 
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i48: ; preds = %bb.ar, %bb.aq, %bb.ap
-  %12 = atomicrmw sub ptr %i.ai, i8 1 acq_rel, align 1
+  %12 = atomicrmw add ptr %i.ai, i8 -1 acq_rel, align 1
   %.not.i.i.i49 = icmp eq i8 %12, 1
   br i1 %.not.i.i.i49, label %bb.at, label %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit55
 
@@ -7916,7 +7916,7 @@ _ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit55
 
 bb.aw:                                            ; preds = %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit55
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 2
-  %13 = atomicrmw sub ptr %i.cz, i8 1 monotonic, align 1
+  %13 = atomicrmw add ptr %i.cz, i8 -1 monotonic, align 1
   %i.da = icmp eq i8 %13, 1
   br i1 %i.da, label %bb.ax, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i57
 
@@ -7940,7 +7940,7 @@ bb.az:                                            ; preds = %bb.ay
 
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i57: ; preds = %bb.ay, %bb.ax, %bb.aw
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cy, i64 1
-  %14 = atomicrmw sub ptr %i.dg, i8 1 acq_rel, align 1
+  %14 = atomicrmw add ptr %i.dg, i8 -1 acq_rel, align 1
   %.not.i.i.i58 = icmp eq i8 %14, 1
   br i1 %.not.i.i.i58, label %bb.ba, label %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit64
 
@@ -8155,7 +8155,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %1 = atomicrmw sub ptr %i.b, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 monotonic, align 1
   %i.c = icmp eq i8 %1, 1
   br i1 %i.c, label %bb.c, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i
 
@@ -8180,7 +8180,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i: ; preds = %bb.d, %bb.c, %bb.b
   %i.i = load ptr, ptr %0, align 8, !tbaa !1989   ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %2 = atomicrmw sub ptr %i.j, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.j, i8 -1 acq_rel, align 1
   %.not.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i, label %bb.f, label %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReference6detachEv.exit
 
@@ -8219,7 +8219,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %1 = atomicrmw sub ptr %i.b, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 monotonic, align 1
   %i.c = icmp eq i8 %1, 1
   br i1 %i.c, label %bb.c, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i
 
@@ -8244,7 +8244,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i: ; preds = %bb.d, %bb.c, %bb.b
   %i.i = load ptr, ptr %0, align 8, !tbaa !1989   ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %2 = atomicrmw sub ptr %i.j, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.j, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i.i, label %bb.f, label %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit
 
@@ -8283,7 +8283,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %1 = atomicrmw sub ptr %i.b, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 monotonic, align 1
   %i.c = icmp eq i8 %1, 1
   br i1 %i.c, label %bb.c, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i
 
@@ -8308,7 +8308,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i: ; preds = %bb.d, %bb.c, %bb.b
   %i.i = load ptr, ptr %0, align 8, !tbaa !1989   ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %2 = atomicrmw sub ptr %i.j, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.j, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i.i, label %bb.f, label %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit
 
@@ -8447,7 +8447,7 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNK12async_simple4util18move_only_functionIFvONS_3TryISt10error_codeEEEEclES5_.exit: ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %2 = atomicrmw sub ptr %i.i, i8 1 monotonic, align 1
+  %2 = atomicrmw add ptr %i.i, i8 -1 monotonic, align 1
   %i.j = icmp eq i8 %2, 1
   br i1 %i.j, label %bb.d, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i
 
@@ -8469,7 +8469,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i: ; preds = %bb.e, %bb.d, %_ZNK12async_simple4util18move_only_functionIFvONS_3TryISt10error_codeEEEEclES5_.exit
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %3 = atomicrmw sub ptr %i.n, i8 1 acq_rel, align 1
+  %3 = atomicrmw add ptr %i.n, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %3, 1
   br i1 %.not.i.i.i, label %bb.g, label %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit
 
@@ -8520,7 +8520,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %1 = atomicrmw sub ptr %i.d, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.d, i8 -1 monotonic, align 1
   %i.e = icmp eq i8 %1, 1
   br i1 %i.e, label %bb.d, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i.i
 
@@ -8545,7 +8545,7 @@ bb.f:                                             ; preds = %bb.e
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i.i: ; preds = %bb.e, %bb.d, %bb.c
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !1989 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
-  %2 = atomicrmw sub ptr %i.l, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.l, i8 -1 acq_rel, align 1
   %.not.i.i.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i.i.i, label %bb.g, label %_ZZN12async_simple11FutureStateISt10error_codeE20scheduleContinuationEbENUlvE_D2Ev.exit
 
@@ -8665,7 +8665,7 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNK12async_simple4util18move_only_functionIFvONS_3TryISt10error_codeEEEEclES5_.exit: ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %2 = atomicrmw sub ptr %i.i, i8 1 monotonic, align 1
+  %2 = atomicrmw add ptr %i.i, i8 -1 monotonic, align 1
   %i.j = icmp eq i8 %2, 1
   br i1 %i.j, label %bb.d, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i
 
@@ -8687,7 +8687,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i: ; preds = %bb.e, %bb.d, %_ZNK12async_simple4util18move_only_functionIFvONS_3TryISt10error_codeEEEEclES5_.exit
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %3 = atomicrmw sub ptr %i.n, i8 1 acq_rel, align 1
+  %3 = atomicrmw add ptr %i.n, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %3, 1
   br i1 %.not.i.i.i, label %bb.g, label %_ZN12async_simple11FutureStateISt10error_codeE21ContinuationReferenceD2Ev.exit
 
@@ -8738,7 +8738,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %1 = atomicrmw sub ptr %i.d, i8 1 monotonic, align 1
+  %1 = atomicrmw add ptr %i.d, i8 -1 monotonic, align 1
   %i.e = icmp eq i8 %1, 1
   br i1 %i.e, label %bb.d, label %_ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i.i
 
@@ -8763,7 +8763,7 @@ bb.f:                                             ; preds = %bb.e
 _ZN12async_simple11FutureStateISt10error_codeE17derefContinuationEv.exit.i.i.i: ; preds = %bb.e, %bb.d, %bb.c
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !1989 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
-  %2 = atomicrmw sub ptr %i.l, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.l, i8 -1 acq_rel, align 1
   %.not.i.i.i.i = icmp eq i8 %2, 1
   br i1 %.not.i.i.i.i, label %bb.g, label %_ZZN12async_simple11FutureStateISt10error_codeE20scheduleContinuationEbENUlvE0_D2Ev.exit
 
@@ -9166,7 +9166,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %1 = atomicrmw sub ptr %i.b, i8 1 acq_rel, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 acq_rel, align 1
   %.not.i.i = icmp eq i8 %1, 1
   br i1 %.not.i.i, label %bb.c, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i
 
@@ -9223,7 +9223,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %1 = atomicrmw sub ptr %i.b, i8 1 acq_rel, align 1
+  %1 = atomicrmw add ptr %i.b, i8 -1 acq_rel, align 1
   %.not.i = icmp eq i8 %1, 1
   br i1 %.not.i, label %bb.c, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit
 
@@ -9413,7 +9413,7 @@ bb.g:                                             ; preds = %_ZN12async_simple3T
 
 bb.h:                                             ; preds = %bb.g
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 1
-  %15 = atomicrmw sub ptr %i.ai, i8 1 acq_rel, align 1
+  %15 = atomicrmw add ptr %i.ai, i8 -1 acq_rel, align 1
   %.not.i.i25 = icmp eq i8 %15, 1
   br i1 %.not.i.i25, label %bb.i, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i
 
@@ -9729,7 +9729,7 @@ bb.ap:                                            ; preds = %_ZNSt12__shared_ptr
 
 bb.aq:                                            ; preds = %bb.ap
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 1
-  %16 = atomicrmw sub ptr %i.dl, i8 1 acq_rel, align 1
+  %16 = atomicrmw add ptr %i.dl, i8 -1 acq_rel, align 1
   %.not.i.i.i.i43 = icmp eq i8 %16, 1
   br i1 %.not.i.i.i.i43, label %bb.ar, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i.i.i
 
@@ -9895,7 +9895,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %1 = atomicrmw sub ptr %i.d, i8 1 acq_rel, align 1
+  %1 = atomicrmw add ptr %i.d, i8 -1 acq_rel, align 1
   %.not.i.i.i.i = icmp eq i8 %1, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i.i.i
 
@@ -10067,7 +10067,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %1 = atomicrmw sub ptr %i.c, i8 1 acq_rel, align 1
+  %1 = atomicrmw add ptr %i.c, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %1, 1
   br i1 %.not.i.i.i, label %bb.d, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i.i
 
@@ -10470,7 +10470,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !332    ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !2663
-  %3 = atomicrmw sub ptr %i.c, i64 1 acq_rel, align 8
+  %3 = atomicrmw add ptr %i.c, i64 -1 acq_rel, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.e = load i64, ptr %i.d, align 8, !tbaa !2652
   %i.f = add i64 %i.e, 1
@@ -10563,7 +10563,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !2655   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !2663
-  %3 = atomicrmw sub ptr %i.c, i64 1 acq_rel, align 8
+  %3 = atomicrmw add ptr %i.c, i64 -1 acq_rel, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = load i64, ptr %i.d, align 8, !tbaa !2657
   %i.f = add i64 %i.e, 1
@@ -10966,7 +10966,7 @@ _ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %.loopexit, %bb.j, %
 
 bb.l:                                             ; preds = %_ZNSt11unique_lockISt5mutexED2Ev.exit
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
-  %8 = atomicrmw sub ptr %i.ar, i8 1 acq_rel, align 1
+  %8 = atomicrmw add ptr %i.ar, i8 -1 acq_rel, align 1
   %.not.i.i12 = icmp eq i8 %8, 1
   br i1 %.not.i.i12, label %bb.m, label %_ZN12async_simple11FutureStateIN8coro_rpc8err_codeEE9detachOneEv.exit.i
 
@@ -11369,7 +11369,7 @@ bb.h:                                             ; preds = %.noexc
 
 bb.i:                                             ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 1
-  %3 = atomicrmw sub ptr %i.bh, i8 1 acq_rel, align 1
+  %3 = atomicrmw add ptr %i.bh, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %3, 1
   br i1 %.not.i.i.i, label %bb.j, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i.i
 
@@ -11419,7 +11419,7 @@ _ZN12async_simple4coro6detail13FutureAwaiterISt10error_codeED2Ev.exit: ; preds =
 
 bb.o:                                             ; preds = %_ZN12async_simple4coro6detail13FutureAwaiterISt10error_codeED2Ev.exit
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 1
-  %4 = atomicrmw sub ptr %i.bs, i8 1 acq_rel, align 1
+  %4 = atomicrmw add ptr %i.bs, i8 -1 acq_rel, align 1
   %.not.i.i16 = icmp eq i8 %4, 1
   br i1 %.not.i.i16, label %bb.p, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i
 
@@ -11533,7 +11533,7 @@ bb.a:                                             ; preds = %resume.entry
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %1 = atomicrmw sub ptr %i.d, i8 1 acq_rel, align 1
+  %1 = atomicrmw add ptr %i.d, i8 -1 acq_rel, align 1
   %.not.i.i.i = icmp eq i8 %1, 1
   br i1 %.not.i.i.i, label %bb.c, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i.i
 
@@ -11583,7 +11583,7 @@ _ZN12async_simple4coro6detail13FutureAwaiterISt10error_codeED2Ev.exit: ; preds =
 
 bb.h:                                             ; preds = %_ZN12async_simple4coro6detail13FutureAwaiterISt10error_codeED2Ev.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 1
-  %2 = atomicrmw sub ptr %i.o, i8 1 acq_rel, align 1
+  %2 = atomicrmw add ptr %i.o, i8 -1 acq_rel, align 1
   %.not.i.i16 = icmp eq i8 %2, 1
   br i1 %.not.i.i16, label %bb.i, label %_ZN12async_simple11FutureStateISt10error_codeE9detachOneEv.exit.i
 

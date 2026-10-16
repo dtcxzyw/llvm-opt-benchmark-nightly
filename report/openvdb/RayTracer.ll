@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b
-  %5 = atomicrmw sub ptr %i.l, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.l, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
@@ -228,7 +228,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i.i.i
 
 bb.h:                                             ; preds = %bb.f
-  %6 = atomicrmw sub ptr %i.q, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.q, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i.i.i
 
 common.resume:                                    ; preds = %bb.r, %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i.i.i
@@ -497,7 +497,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEEEE14attachAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i
 
 bb.e:                                             ; preds = %bb.c
-  %3 = atomicrmw sub ptr %i.i, i64 4 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.i, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEEEE14attachAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i
 
 bb.f:                                             ; preds = %bb.b
@@ -520,7 +520,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 bb.i:                                             ; preds = %bb.g
-  %4 = atomicrmw sub ptr %i.n, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.n, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 common.resume:                                    ; preds = %bb.n, %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
@@ -923,7 +923,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b
-  %5 = atomicrmw sub ptr %i.l, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.l, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
@@ -946,7 +946,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i.i.i
 
 bb.h:                                             ; preds = %bb.f
-  %6 = atomicrmw sub ptr %i.q, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.q, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i.i.i
 
 common.resume:                                    ; preds = %bb.r, %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i.i.i
@@ -1215,7 +1215,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEE14attachAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i
 
 bb.e:                                             ; preds = %bb.c
-  %3 = atomicrmw sub ptr %i.i, i64 4 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.i, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEE14attachAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i
 
 bb.f:                                             ; preds = %bb.b
@@ -1238,7 +1238,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 bb.i:                                             ; preds = %bb.g
-  %4 = atomicrmw sub ptr %i.n, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.n, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 common.resume:                                    ; preds = %bb.n, %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
@@ -1641,11 +1641,11 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i: ; preds = %bb.j, %_ZN3tbb6deta
   br i1 %.not2.i, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread, label %.lr.ph19.i, !llvm.loop !11
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread: ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i, %.preheader.i
-  %3 = atomicrmw sub ptr %i.at, i64 6 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.at, i64 -6 seq_cst, align 8 ; 0 uses
   br label %.loopexit
 
 ._crit_edge.i:                                    ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit.i, %bb.h
-  %4 = atomicrmw sub ptr %i.at, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.at, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer
 
 _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer: ; preds = %_ZN3tbb6detail2d0L13machine_pauseEi.exit.i.i.i, %._crit_edge.i
@@ -1765,7 +1765,7 @@ _ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13
   br i1 %.not.i34.jt2, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt2, label %bb.u
 
 _ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.thread.jt0: ; preds = %bb.s, %bb.t
-  %5 = atomicrmw sub ptr %i.h, i64 1 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.h, i64 -1 seq_cst, align 8 ; 0 uses
   %i.dd = load ptr, ptr %2, align 8, !tbaa !202   ; 3 uses
   %.not.i34.jt0 = icmp eq ptr %i.dd, null
   br i1 %.not.i34.jt0, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt0, label %bb.v
@@ -1806,15 +1806,15 @@ bb.z:                                             ; preds = %bb.w
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt1
 
 bb.aa:                                            ; preds = %bb.u
-  %6 = atomicrmw sub ptr %i.dc, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.dc, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt2
 
 bb.ab:                                            ; preds = %bb.v
-  %7 = atomicrmw sub ptr %i.dd, i64 4 seq_cst, align 8 ; 0 uses
+  %7 = atomicrmw add ptr %i.dd, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt0
 
 bb.ac:                                            ; preds = %bb.w
-  %8 = atomicrmw sub ptr %i.de, i64 4 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.de, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt1
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt2: ; preds = %bb.aa, %bb.x, %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.thread.jt2
@@ -2012,7 +2012,7 @@ bb.i:                                             ; preds = %.preheader9.i
   br i1 %.not5.not.i.i, label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE15bucket_accessor7acquireEPSR_mb.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %4 = atomicrmw sub ptr %i.w, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.w, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.preheader9.i
@@ -2089,7 +2089,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit
 
 bb.q:                                             ; preds = %bb.o
-  %5 = atomicrmw sub ptr %i.ax, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.ax, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit: ; preds = %bb.n, %bb.p, %bb.q
@@ -2233,11 +2233,11 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i: ; preds = %bb.e, %_ZN3tbb6deta
   br i1 %.not2.i, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread, label %.lr.ph19.i, !llvm.loop !11
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread: ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i, %.preheader.i
-  %4 = atomicrmw sub ptr %i.x, i64 6 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.x, i64 -6 seq_cst, align 8 ; 0 uses
   br label %bb.j
 
 ._crit_edge.i:                                    ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit.i, %bb.c
-  %5 = atomicrmw sub ptr %i.x, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.x, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer
 
 _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer: ; preds = %_ZN3tbb6detail2d0L13machine_pauseEi.exit.i.i.i, %._crit_edge.i
@@ -2345,7 +2345,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31
 
 bb.q:                                             ; preds = %bb.o
-  %6 = atomicrmw sub ptr %i.bo, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.bo, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31: ; preds = %._crit_edge, %bb.p, %bb.q
@@ -2453,11 +2453,11 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit:   ; preds = %_ZN3tbb6detail2d0L1
   br i1 %.not2, label %._crit_edge20, label %.lr.ph19, !llvm.loop !11
 
 ._crit_edge20:                                    ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit, %.preheader
-  %1 = atomicrmw sub ptr %0, i64 6 seq_cst, align 8 ; 0 uses
+  %1 = atomicrmw add ptr %0, i64 -6 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d113spin_rw_mutex4lockEv.exit
 
 ._crit_edge:                                      ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit, %bb.a
-  %2 = atomicrmw sub ptr %0, i64 4 seq_cst, align 8 ; 0 uses
+  %2 = atomicrmw add ptr %0, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.outer
 
 _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.outer: ; preds = %_ZN3tbb6detail2d0L13machine_pauseEi.exit.i.i, %._crit_edge
@@ -2836,7 +2836,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not5.not.i.i, label %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %8 = atomicrmw sub ptr %i.bw, i64 4 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.bw, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.y
 
 _ZN3tbb6detail2d113spin_rw_mutex8try_lockEv.exit.i: ; preds = %bb.u
@@ -2870,7 +2870,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not5.not.i.i68, label %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %9 = atomicrmw sub ptr %i.bw, i64 4 seq_cst, align 8 ; 0 uses
+  %9 = atomicrmw add ptr %i.bw, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.ae
 
 _ZN3tbb6detail2d113spin_rw_mutex8try_lockEv.exit.i71: ; preds = %bb.aa
@@ -2935,7 +2935,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.af
-  %10 = atomicrmw sub ptr %i.cs, i64 4 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.cs, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ag, %bb.ah
@@ -2994,15 +2994,15 @@ bb.ao:                                            ; preds = %bb.al
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt2
 
 bb.ap:                                            ; preds = %bb.aj
-  %11 = atomicrmw sub ptr %i.cy, i64 4 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.cy, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt0
 
 bb.aq:                                            ; preds = %bb.ak
-  %12 = atomicrmw sub ptr %i.cz, i64 4 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.cz, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt6
 
 bb.ar:                                            ; preds = %bb.al
-  %13 = atomicrmw sub ptr %i.da, i64 4 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.da, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt2
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt0: ; preds = %bb.ap, %bb.am, %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0
@@ -3151,7 +3151,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75
 
 bb.ax:                                            ; preds = %bb.av
-  %14 = atomicrmw sub ptr %i.w, i64 4 seq_cst, align 8 ; 0 uses
+  %14 = atomicrmw add ptr %i.w, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75: ; preds = %bb.f, %bb.aw, %bb.ax
@@ -3427,11 +3427,11 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i: ; preds = %bb.j, %_ZN3tbb6deta
   br i1 %.not2.i, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread, label %.lr.ph19.i, !llvm.loop !11
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread: ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i, %.preheader.i
-  %3 = atomicrmw sub ptr %i.at, i64 6 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.at, i64 -6 seq_cst, align 8 ; 0 uses
   br label %.loopexit
 
 ._crit_edge.i:                                    ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit.i, %bb.h
-  %4 = atomicrmw sub ptr %i.at, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.at, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer
 
 _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer: ; preds = %_ZN3tbb6detail2d0L13machine_pauseEi.exit.i.i.i, %._crit_edge.i
@@ -3551,7 +3551,7 @@ _ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13
   br i1 %.not.i34.jt2, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt2, label %bb.u
 
 _ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.thread.jt0: ; preds = %bb.s, %bb.t
-  %5 = atomicrmw sub ptr %i.h, i64 1 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.h, i64 -1 seq_cst, align 8 ; 0 uses
   %i.dd = load ptr, ptr %2, align 8, !tbaa !202   ; 3 uses
   %.not.i34.jt0 = icmp eq ptr %i.dd, null
   br i1 %.not.i34.jt0, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt0, label %bb.v
@@ -3592,15 +3592,15 @@ bb.z:                                             ; preds = %bb.w
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt1
 
 bb.aa:                                            ; preds = %bb.u
-  %6 = atomicrmw sub ptr %i.dc, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.dc, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt2
 
 bb.ab:                                            ; preds = %bb.v
-  %7 = atomicrmw sub ptr %i.dd, i64 4 seq_cst, align 8 ; 0 uses
+  %7 = atomicrmw add ptr %i.dd, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt0
 
 bb.ac:                                            ; preds = %bb.w
-  %8 = atomicrmw sub ptr %i.de, i64 4 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.de, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt1
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit35.jt2: ; preds = %bb.aa, %bb.x, %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.thread.jt2
@@ -3798,7 +3798,7 @@ bb.i:                                             ; preds = %.preheader9.i
   br i1 %.not5.not.i.i, label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE15bucket_accessor7acquireEPSR_mb.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %4 = atomicrmw sub ptr %i.w, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.w, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.preheader9.i
@@ -3875,7 +3875,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit
 
 bb.q:                                             ; preds = %bb.o
-  %5 = atomicrmw sub ptr %i.ax, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.ax, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit: ; preds = %bb.n, %bb.p, %bb.q
@@ -4019,11 +4019,11 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i: ; preds = %bb.e, %_ZN3tbb6deta
   br i1 %.not2.i, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread, label %.lr.ph19.i, !llvm.loop !11
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread: ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i, %.preheader.i
-  %4 = atomicrmw sub ptr %i.x, i64 6 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.x, i64 -6 seq_cst, align 8 ; 0 uses
   br label %bb.j
 
 ._crit_edge.i:                                    ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit.i, %bb.c
-  %5 = atomicrmw sub ptr %i.x, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.x, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer
 
 _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer: ; preds = %_ZN3tbb6detail2d0L13machine_pauseEi.exit.i.i.i, %._crit_edge.i
@@ -4131,7 +4131,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31
 
 bb.q:                                             ; preds = %bb.o
-  %6 = atomicrmw sub ptr %i.bo, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.bo, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31: ; preds = %._crit_edge, %bb.p, %bb.q
@@ -4456,7 +4456,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not5.not.i.i, label %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %8 = atomicrmw sub ptr %i.bw, i64 4 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.bw, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.y
 
 _ZN3tbb6detail2d113spin_rw_mutex8try_lockEv.exit.i: ; preds = %bb.u
@@ -4490,7 +4490,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not5.not.i.i68, label %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %9 = atomicrmw sub ptr %i.bw, i64 4 seq_cst, align 8 ; 0 uses
+  %9 = atomicrmw add ptr %i.bw, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.ae
 
 _ZN3tbb6detail2d113spin_rw_mutex8try_lockEv.exit.i71: ; preds = %bb.aa
@@ -4555,7 +4555,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.af
-  %10 = atomicrmw sub ptr %i.cs, i64 4 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.cs, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ag, %bb.ah
@@ -4614,15 +4614,15 @@ bb.ao:                                            ; preds = %bb.al
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt2
 
 bb.ap:                                            ; preds = %bb.aj
-  %11 = atomicrmw sub ptr %i.cy, i64 4 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.cy, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt0
 
 bb.aq:                                            ; preds = %bb.ak
-  %12 = atomicrmw sub ptr %i.cz, i64 4 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.cz, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt6
 
 bb.ar:                                            ; preds = %bb.al
-  %13 = atomicrmw sub ptr %i.da, i64 4 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.da, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt2
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt0: ; preds = %bb.ap, %bb.am, %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0
@@ -4771,7 +4771,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75
 
 bb.ax:                                            ; preds = %bb.av
-  %14 = atomicrmw sub ptr %i.w, i64 4 seq_cst, align 8 ; 0 uses
+  %14 = atomicrmw add ptr %i.w, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75: ; preds = %bb.f, %bb.aw, %bb.ax
@@ -5174,7 +5174,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b
-  %4 = atomicrmw sub ptr %i.j, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.j, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
@@ -5197,7 +5197,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 bb.h:                                             ; preds = %bb.f
-  %5 = atomicrmw sub ptr %i.o, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.o, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 common.resume:                                    ; preds = %bb.m, %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
@@ -5600,7 +5600,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(464) dereferenceable(464) %0) #17, !inline_history !29
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -5617,14 +5617,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -5651,7 +5651,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(464) dereferenceable(464) %0) #17, !inline_history !29
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -5668,14 +5668,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -5738,7 +5738,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEEEE14attachAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i
 
 bb.e:                                             ; preds = %bb.c
-  %3 = atomicrmw sub ptr %i.k, i64 4 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.k, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEEEE14attachAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i
 
 bb.f:                                             ; preds = %bb.b
@@ -5761,7 +5761,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 bb.i:                                             ; preds = %bb.g
-  %4 = atomicrmw sub ptr %i.p, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.p, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 common.resume:                                    ; preds = %bb.o, %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
@@ -6164,7 +6164,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b
-  %4 = atomicrmw sub ptr %i.j, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.j, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
@@ -6187,7 +6187,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 bb.h:                                             ; preds = %bb.f
-  %5 = atomicrmw sub ptr %i.o, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.o, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 common.resume:                                    ; preds = %bb.m, %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
@@ -6590,7 +6590,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(480) dereferenceable(480) %0) #17, !inline_history !32
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -6607,14 +6607,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -6641,7 +6641,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(480) dereferenceable(480) %0) #17, !inline_history !32
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -6658,14 +6658,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools17LevelSetRayTracerINS6_4GridINS6_4tree4TreeINSA_8RootNodeINSA_12InternalNodeINSD_INSA_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS7_22LevelSetRayIntersectorISK_NS7_16LinearSearchImplISK_Li0EdEELi2ENS6_4math3RayIdEEEEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -6728,7 +6728,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEE14attachAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i
 
 bb.e:                                             ; preds = %bb.c
-  %3 = atomicrmw sub ptr %i.k, i64 4 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.k, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEE14attachAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i
 
 bb.f:                                             ; preds = %bb.b
@@ -6751,7 +6751,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 bb.i:                                             ; preds = %bb.g
-  %4 = atomicrmw sub ptr %i.p, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.p, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
 
 common.resume:                                    ; preds = %bb.o, %_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14const_accessorD2Ev.exit5.i.i.i
@@ -7154,7 +7154,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(368) dereferenceable(368) %0) #17, !inline_history !33
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -7171,14 +7171,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -7205,7 +7205,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(368) dereferenceable(368) %0) #17, !inline_history !33
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -7222,14 +7222,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -7632,7 +7632,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(368) dereferenceable(368) %0) #17, !inline_history !35
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -7649,14 +7649,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -7683,7 +7683,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(368) dereferenceable(368) %0) #17, !inline_history !35
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -7700,14 +7700,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
