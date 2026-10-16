@@ -202,11 +202,11 @@ bb.a:
 define internal noundef zeroext i1 @_RNvXs1i_NtCshzWfHUSfYae_4core3fmtRReNtB6_7Display3fmtCsjQbM3MYDIrM_10serde_core(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #1 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !4, !align !7, !noundef !4 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !19)
-  %i.b = load ptr, ptr %i.a, align 8, !alias.scope !19, !noalias !20, !nonnull !4, !noundef !4
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !18)
+  %i.b = load ptr, ptr %i.a, align 8, !alias.scope !18, !nonnull !4, !noundef !4
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !alias.scope !19, !noalias !20, !noundef !4
-  %i.e = tail call noundef zeroext i1 @_RNvXsi_NtCshzWfHUSfYae_4core3fmteNtB5_7Display3fmt(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1), !noalias !19
+  %i.d = load i64, ptr %i.c, align 8, !alias.scope !18, !noundef !4
+  %i.e = tail call noundef zeroext i1 @_RNvXsi_NtCshzWfHUSfYae_4core3fmteNtB5_7Display3fmt(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1), !noalias !18
   ret i1 %i.e
 }
 
@@ -254,7 +254,7 @@ bb.a:
     i64 0, label %bb.c
     i64 1, label %bb.d
     i64 2, label %bb.e
-  ], !prof !22
+  ], !prof !20
 
 bb.b:                                             ; preds = %bb.a
   %i.g = tail call noundef zeroext i1 @_RNvMsa_NtCshzWfHUSfYae_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @80, i64 noundef 7)
@@ -346,7 +346,7 @@ bb.i:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.ad = icmp eq ptr %i.ab, %i.u
-  br i1 %i.ad, label %.loopexit, label %bb.h, !llvm.loop !21
+  br i1 %i.ad, label %.loopexit, label %bb.h, !llvm.loop !19
 
 .loopexit62:                                      ; preds = %bb.h, %.loopexit66
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -472,7 +472,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %1, i64 range(i64 0, -9223372036854775808) %2, i1 false), !alias.scope !27
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %1, i64 range(i64 0, -9223372036854775808) %2, i1 false), !alias.scope !25
   store i64 %i.c, ptr %i.a, align 8
   br label %bb.e
 
@@ -687,7 +687,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvYNtNvXs7_NtCsjQbM3MYDIrM_10serde_core2deNtBa_16WithDecimalPointNtNtCshzWfHUSfYae_4core3fmt7Display3fmt19LookForDecimalPointNtB14_5Write9write_fmtBc_(ptr noalias nofree noundef align 8 dereferenceable(16) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #1 {
 _RNvXs_NvNtNtCshzWfHUSfYae_4core3fmt5Write9write_fmtQNtNvXs7_NtCsjQbM3MYDIrM_10serde_core2deNtBW_16WithDecimalPointNtB8_7Display3fmt19LookForDecimalPointNtB4_12SpecWriteFmt14spec_write_fmtBY_.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCshzWfHUSfYae_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @83, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !28
+  %i.a = tail call noundef zeroext i1 @_RNvNtCshzWfHUSfYae_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @83, ptr noundef nonnull %1, ptr noundef nonnull %2), !inline_history !26
   ret i1 %i.a
 }
 
@@ -819,22 +819,20 @@ attributes #10 = { inlinehint }
 !8 = !{!"address", !"read_provenance"}
 !9 = !{i8 0, i8 18}
 !10 = !{i32 0, i32 1114112}
-!11 = distinct !{!11, i1 false, !"_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in"}
+!11 = distinct !{!11, i1 true, !"_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in"}
 !12 = distinct !{!12, !11, !"_RNvXs2_NtNtCshzWfHUSfYae_4core3str7patterncNtB5_7Pattern15is_contained_in: argument 0"}
-!13 = distinct !{!13, i1 false, !"_RNvNtNtCshzWfHUSfYae_4core5slice6memchr6memchr"}
+!13 = distinct !{!13, i1 true, !"_RNvNtNtCshzWfHUSfYae_4core5slice6memchr6memchr"}
 !14 = distinct !{!14, !13, !"_RNvNtNtCshzWfHUSfYae_4core5slice6memchr6memchr: argument 0"}
 !15 = !{!14, !12}
-!16 = distinct !{!16, i1 false, !"_RNvXs1i_NtCshzWfHUSfYae_4core3fmtReNtB6_7Display3fmtCsjQbM3MYDIrM_10serde_core"}
+!16 = distinct !{!16, i1 true, !"_RNvXs1i_NtCshzWfHUSfYae_4core3fmtReNtB6_7Display3fmtCsjQbM3MYDIrM_10serde_core"}
 !17 = distinct !{!17, !16, !"_RNvXs1i_NtCshzWfHUSfYae_4core3fmtReNtB6_7Display3fmtCsjQbM3MYDIrM_10serde_core: argument 0"}
-!18 = distinct !{!18, !16, !"_RNvXs1i_NtCshzWfHUSfYae_4core3fmtReNtB6_7Display3fmtCsjQbM3MYDIrM_10serde_core: argument 1"}
-!19 = !{!17}
-!20 = !{!18}
-!21 = distinct !{!21, !23}
-!22 = !{!"branch_weights", i32 2000, i32 1, i32 2000, i32 2000}
-!23 = !{!"llvm.loop.peeled.count", i32 1}
-!24 = distinct !{!24, i1 false, !"_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjQbM3MYDIrM_10serde_core"}
-!25 = distinct !{!25, !24, !"_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjQbM3MYDIrM_10serde_core: argument 1"}
-!26 = distinct !{!26, !24, !"_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjQbM3MYDIrM_10serde_core: argument 0"}
-!27 = !{!26, !25}
-!28 = distinct !{null}
+!18 = !{!17}
+!19 = distinct !{!19, !21}
+!20 = !{!"branch_weights", i32 2000, i32 1, i32 2000, i32 2000}
+!21 = !{!"llvm.loop.peeled.count", i32 1}
+!22 = distinct !{!22, i1 true, !"_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjQbM3MYDIrM_10serde_core"}
+!23 = distinct !{!23, !22, !"_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjQbM3MYDIrM_10serde_core: argument 1"}
+!24 = distinct !{!24, !22, !"_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjQbM3MYDIrM_10serde_core: argument 0"}
+!25 = !{!24, !23}
+!26 = distinct !{null}
 end_hunk_0

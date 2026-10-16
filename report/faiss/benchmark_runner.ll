@@ -202,7 +202,7 @@ bb.a:
   tail call void @_ZN9benchmark17BenchmarkReporter3RunC2EOS1_(ptr noundef nonnull align 8 dereferenceable(592) %.013, ptr noundef nonnull align 8 dereferenceable(592) %.0912) #23
   %i.a = getelementptr inbounds nuw i8, ptr %.0912, i64 496
   %i.b = getelementptr inbounds nuw i8, ptr %.0912, i64 512
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !100, !alias.scope !274, !noalias !275
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !100, !alias.scope !273
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9benchmark7CounterEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE8_M_eraseEPSt13_Rb_tree_nodeISA_E(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef %i.c)
           to label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9benchmark7CounterESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev.exit.i.i unwind label %bb.b
 
@@ -215,39 +215,39 @@ bb.b:                                             ; preds = %.lr.ph
 
 _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9benchmark7CounterESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev.exit.i.i: ; preds = %.lr.ph
   %i.f = getelementptr inbounds nuw i8, ptr %.0912, i64 360
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !17, !alias.scope !274, !noalias !275 ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !17, !alias.scope !273 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.0912, i64 376 ; 2 uses
   %i.i = icmp eq ptr %i.g, %i.h
   br i1 %i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9benchmark7CounterESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev.exit.i.i
-  %i.j = load i64, ptr %i.h, align 8, !tbaa !18, !alias.scope !274, !noalias !275
+  %i.j = load i64, ptr %i.h, align 8, !tbaa !18, !alias.scope !273
   %i.k = add i64 %i.j, 1
   tail call void @_ZdlPvm(ptr noundef %i.g, i64 noundef %i.k) #27
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9benchmark7CounterESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %.0912, i64 320
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !17, !alias.scope !274, !noalias !275 ; 2 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !17, !alias.scope !273 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.0912, i64 336 ; 2 uses
   %i.o = icmp eq ptr %i.m, %i.n
   br i1 %i.o, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
-  %i.p = load i64, ptr %i.n, align 8, !tbaa !18, !alias.scope !274, !noalias !275
+  %i.p = load i64, ptr %i.n, align 8, !tbaa !18, !alias.scope !273
   %i.q = add i64 %i.p, 1
   tail call void @_ZdlPvm(ptr noundef %i.m, i64 noundef %i.q) #27
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i
   %i.r = getelementptr inbounds nuw i8, ptr %.0912, i64 280
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !17, !alias.scope !274, !noalias !275 ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !17, !alias.scope !273 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.0912, i64 296 ; 2 uses
   %i.u = icmp eq ptr %i.s, %i.t
   br i1 %i.u, label %_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i
-  %i.v = load i64, ptr %i.t, align 8, !tbaa !18, !alias.scope !274, !noalias !275
+  %i.v = load i64, ptr %i.t, align 8, !tbaa !18, !alias.scope !273
   %i.w = add i64 %i.v, 1
   tail call void @_ZdlPvm(ptr noundef %i.s, i64 noundef %i.w) #27
   br label %_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_.exit
@@ -257,7 +257,7 @@ _ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_
   %i.x = getelementptr inbounds nuw i8, ptr %.0912, i64 592 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.013, i64 592 ; 2 uses
   %.not = icmp eq ptr %i.x, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !273
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !272
 
 ._crit_edge:                                      ; preds = %_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_.exit, %bb.a
   %.0.lcssa = phi ptr [ %2, %bb.a ], [ %i.y, %_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_.exit ]
@@ -660,12 +660,12 @@ attributes #28 = { noreturn nounwind }
 !156 = !{!151, !150, i64 16}
 !157 = !{!59, !57, i64 0}
 !158 = !{!12, !12, i64 0}
-!159 = distinct !{!159, i1 false, !"_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi"}
+!159 = distinct !{!159, i1 true, !"_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi"}
 !160 = distinct !{!160, !159, !"_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi: argument 0"}
-!161 = distinct !{!161, i1 false, !"_ZNKSt8functionIFSt10unique_ptrIN9benchmark16ThreadRunnerBaseESt14default_deleteIS2_EEiEEclEi"}
+!161 = distinct !{!161, i1 true, !"_ZNKSt8functionIFSt10unique_ptrIN9benchmark16ThreadRunnerBaseESt14default_deleteIS2_EEiEEclEi"}
 !162 = distinct !{!162, !161, !"_ZNKSt8functionIFSt10unique_ptrIN9benchmark16ThreadRunnerBaseESt14default_deleteIS2_EEiEEclEi: argument 0"}
 !163 = distinct !{null}
-!164 = distinct !{!164, i1 false, !"_ZSt11make_uniqueIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultEJRiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!164 = distinct !{!164, i1 true, !"_ZSt11make_uniqueIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultEJRiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !165 = distinct !{!165, !164, !"_ZSt11make_uniqueIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultEJRiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
 !166 = distinct !{null, null}
 !167 = !{!24, !24, i64 0}
@@ -713,7 +713,7 @@ attributes #28 = { noreturn nounwind }
 !209 = !{!192, !35, i64 40}
 !210 = !{!97, !35, i64 24}
 !211 = !{!199, !14, i64 56}
-!212 = distinct !{!212, i1 false, !"_ZN9benchmark8internal12_GLOBAL__N_115CreateRunReportERKNS0_17BenchmarkInstanceERKNS0_13ThreadManager6ResultElRKNS_13MemoryManager6ResultEdll"}
+!212 = distinct !{!212, i1 true, !"_ZN9benchmark8internal12_GLOBAL__N_115CreateRunReportERKNS0_17BenchmarkInstanceERKNS0_13ThreadManager6ResultElRKNS_13MemoryManager6ResultEdll"}
 !213 = distinct !{!213, !212, !"_ZN9benchmark8internal12_GLOBAL__N_115CreateRunReportERKNS0_17BenchmarkInstanceERKNS0_13ThreadManager6ResultElRKNS_13MemoryManager6ResultEdll: argument 0"}
 !214 = !{!213}
 !215 = !{!142, !140, i64 272}
@@ -771,10 +771,8 @@ attributes #28 = { noreturn nounwind }
 !267 = distinct !{!267, !145}
 !268 = !{!"_ZTSNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9benchmark7CounterEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE11_Alloc_nodeE", !150, i64 0}
 !269 = !{!268, !150, i64 0}
-!270 = distinct !{!270, i1 false, !"_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_"}
+!270 = distinct !{!270, i1 true, !"_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_"}
 !271 = distinct !{!271, !270, !"_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
-!272 = distinct !{!272, !270, !"_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
-!273 = distinct !{!273, !145}
-!274 = !{!271}
-!275 = !{!272}
+!272 = distinct !{!272, !145}
+!273 = !{!271}
 end_hunk_1

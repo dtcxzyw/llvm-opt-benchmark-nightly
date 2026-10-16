@@ -22,41 +22,41 @@ target triple = "x86_64-unknown-linux-gnu"
 define void @_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf825try_to_complete_codepoint(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) %0, ptr noalias nofree noundef dereferenceable(5) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef range(i64 0, -9223372036854775808) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 9 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !19)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !21)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
-  %i.c = load i8, ptr %i.b, align 1, !alias.scope !20, !noalias !21, !noundef !4 ; 4 uses
+  %i.c = load i8, ptr %i.b, align 1, !alias.scope !19, !noundef !4 ; 4 uses
   %i.d = zext i8 %i.c to i64                      ; 6 uses
   %i.e = icmp ugt i8 %i.c, 4
   br i1 %i.e, label %bb.b, label %bb.c, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.d, i64 noundef 4, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #6, !noalias !22
+  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.d, i64 noundef 4, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #6, !noalias !21
   unreachable
 
 bb.c:                                             ; preds = %bb.a
   %i.f = sub nuw nsw i64 4, %i.d
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.d
   %..i.i = tail call noundef range(i64 0, 5) i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %3, i64 range(i64 0, 5) %i.f) ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.g, ptr nonnull readonly align 1 %2, i64 range(i64 0, 5) %..i.i, i1 false), !alias.scope !23, !noalias !24
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.g, ptr nonnull readonly align 1 %2, i64 range(i64 0, 5) %..i.i, i1 false), !alias.scope !22
   %i.h = add nuw nsw i64 %..i.i, %i.d             ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !22
-  call void @_RNvNtNtCskKLDkoKarTP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %1, i64 noundef %i.h), !noalias !21
-  %i.i = load i64, ptr %i.a, align 8, !range !6, !noalias !22, !noundef !4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !21
+  call void @_RNvNtNtCskKLDkoKarTP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %1, i64 noundef %i.h), !noalias !20
+  %i.i = load i64, ptr %i.a, align 8, !range !6, !noalias !21, !noundef !4
   %i.j = trunc nuw i64 %i.i to i1
   br i1 %i.j, label %bb.d, label %bb.n
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.l = load i64, ptr %i.k, align 8, !noalias !22, !noundef !4 ; 4 uses
+  %i.l = load i64, ptr %i.k, align 8, !noalias !21, !noundef !4 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  %i.n = load i8, ptr %i.m, align 1, !noalias !22 ; 4 uses
+  %i.n = load i8, ptr %i.m, align 1, !noalias !21 ; 4 uses
   %.not17.i = icmp eq i64 %i.l, 0
   br i1 %.not17.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.p = load i8, ptr %i.o, align 8, !range !7, !noalias !22, !noundef !4
+  %i.p = load i8, ptr %i.o, align 8, !range !7, !noalias !21, !noundef !4
   %i.q = trunc nuw i8 %i.p to i1
   br i1 %i.q, label %bb.g, label %bb.k
 
@@ -69,7 +69,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.s, label %bb.h, label %bb.l, !prof !5
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #6, !noalias !21
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #6, !noalias !20
   unreachable
 
 bb.i:                                             ; preds = %bb.f
@@ -77,26 +77,26 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.n
 
 bb.j:                                             ; preds = %bb.f
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #6, !noalias !21
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #6, !noalias !20
   unreachable
 
 bb.k:                                             ; preds = %bb.e
   %i.u = trunc nuw nsw i64 %i.h to i8
-  store i8 %i.u, ptr %i.b, align 1, !alias.scope !20, !noalias !21
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !22
+  store i8 %i.u, ptr %i.b, align 1, !alias.scope !19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !21
   store i64 2, ptr %0, align 8
   br label %bb.p
 
 bb.l:                                             ; preds = %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !22
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !25)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !21
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !23)
   %i.v = zext i8 %i.n to i64                      ; 2 uses
-  store i8 0, ptr %i.b, align 1, !alias.scope !25
+  store i8 0, ptr %i.b, align 1, !alias.scope !23
   %i.w = icmp ult i8 %i.n, 5
   br i1 %i.w, label %_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer.exit, label %bb.m, !prof !8
 
 bb.m:                                             ; preds = %bb.l
-  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.v, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #6, !noalias !25
+  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.v, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #6, !noalias !23
   unreachable
 
 _RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer.exit: ; preds = %bb.l
@@ -108,15 +108,15 @@ bb.n:                                             ; preds = %bb.c, %bb.i
   %storemerge19.i.ph.in = phi i64 [ %i.l, %bb.i ], [ %i.h, %bb.c ] ; 2 uses
   %.sroa.0.0.i.ph = phi i64 [ %i.t, %bb.i ], [ %..i.i, %bb.c ]
   %storemerge19.i.ph = trunc i64 %storemerge19.i.ph.in to i8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !22
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !26)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !21
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !24)
   %i.y = and i64 %storemerge19.i.ph.in, 255       ; 2 uses
-  store i8 0, ptr %i.b, align 1, !alias.scope !26
+  store i8 0, ptr %i.b, align 1, !alias.scope !24
   %i.z = icmp ult i8 %storemerge19.i.ph, 5
   br i1 %i.z, label %_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer.exit6, label %bb.o, !prof !8
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.y, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #6, !noalias !26
+  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.y, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #6, !noalias !24
   unreachable
 
 bb.p:                                             ; preds = %bb.q, %bb.k
@@ -171,7 +171,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.c, label %_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril.exit, !prof !5
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @1, ptr noundef nonnull inttoptr (i64 19 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #6, !noalias !36
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @1, ptr noundef nonnull inttoptr (i64 19 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #6, !noalias !33
   unreachable
 
 _RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril.exit: ; preds = %bb.b
@@ -197,21 +197,21 @@ bb.e:                                             ; preds = %bb.i, %bb.d
 bb.f:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril.exit
   %i.q = zext i8 %i.i to i64                      ; 3 uses
   %.not = icmp samesign ult i64 %i.l, %i.q
-  br i1 %.not, label %bb.k, label %bb.j, !prof !37
+  br i1 %.not, label %bb.k, label %bb.j, !prof !34
 
 bb.g:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.r = icmp samesign ult i64 %i.l, 5
-  store i32 0, ptr %.sroa.0.i, align 4, !noalias !38
+  store i32 0, ptr %.sroa.0.i, align 4, !noalias !35
   br i1 %i.r, label %_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf83new.exit, label %bb.h, !prof !8
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef range(i64 0, -9223372036854775808) %i.l, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #6, !noalias !38
+  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef range(i64 0, -9223372036854775808) %i.l, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #6, !noalias !35
   unreachable
 
 _RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf83new.exit: ; preds = %bb.g
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i, ptr nonnull readonly align 1 %i.k, i64 range(i64 0, 5) %i.l, i1 false), !alias.scope !39, !noalias !40
-  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.01.0.copyload.i = load i32, ptr %.sroa.0.i, align 4, !noalias !38
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i, ptr nonnull readonly align 1 %i.k, i64 range(i64 0, 5) %i.l, i1 false), !alias.scope !36
+  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.01.0.copyload.i = load i32, ptr %.sroa.0.i, align 4, !noalias !35
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   %i.s = trunc nuw nsw i64 %i.l to i40
   %.sroa.2.0.insert.shift.i = shl nuw nsw i40 %i.s, 32
@@ -297,36 +297,32 @@ attributes #6 = { noinline noreturn }
 !6 = !{i64 0, i64 2}
 !7 = !{i8 0, i8 2}
 !8 = !{!"branch_weights", i32 4000000, i32 4001}
-!9 = distinct !{!9, i1 false, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf820try_complete_offsets"}
+!9 = distinct !{!9, i1 true, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf820try_complete_offsets"}
 !10 = distinct !{!10, !9, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf820try_complete_offsets: argument 0"}
 !11 = distinct !{!11, !9, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf820try_complete_offsets: argument 1"}
-!12 = distinct !{!12, i1 false, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril"}
+!12 = distinct !{!12, i1 true, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril"}
 !13 = distinct !{!13, !12, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril: argument 1"}
 !14 = distinct !{!14, !12, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril: argument 0"}
-!15 = distinct !{!15, !12, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril: argument 2"}
-!16 = distinct !{!16, i1 false, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer"}
-!17 = distinct !{!17, !16, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer: argument 0"}
-!18 = distinct !{!18, i1 false, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer"}
-!19 = distinct !{!19, !18, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer: argument 0"}
-!20 = !{!10}
-!21 = !{!11}
-!22 = !{!10, !11}
-!23 = !{!14, !13, !10, !11}
-!24 = !{!15}
-!25 = !{!17}
-!26 = !{!19}
-!27 = distinct !{!27, i1 false, !"_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril"}
-!28 = distinct !{!28, !27, !"_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril: argument 1"}
-!29 = distinct !{!29, !27, !"_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril: argument 0"}
-!30 = distinct !{!30, i1 false, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf83new"}
-!31 = distinct !{!31, !30, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf83new: argument 0"}
-!32 = distinct !{!32, i1 false, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril"}
-!33 = distinct !{!33, !32, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril: argument 1"}
-!34 = distinct !{!34, !32, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril: argument 0"}
-!35 = distinct !{!35, !32, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril: argument 2"}
-!36 = !{!29, !28}
-!37 = !{!"branch_weights", i32 4001, i32 4000000}
-!38 = !{!31}
-!39 = !{!34, !33}
-!40 = !{!35}
+!15 = distinct !{!15, i1 true, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer"}
+!16 = distinct !{!16, !15, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer: argument 0"}
+!17 = distinct !{!17, i1 true, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer"}
+!18 = distinct !{!18, !17, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer: argument 0"}
+!19 = !{!10}
+!20 = !{!11}
+!21 = !{!10, !11}
+!22 = !{!14, !13, !10, !11}
+!23 = !{!16}
+!24 = !{!18}
+!25 = distinct !{!25, i1 true, !"_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril"}
+!26 = distinct !{!26, !25, !"_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril: argument 1"}
+!27 = distinct !{!27, !25, !"_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril: argument 0"}
+!28 = distinct !{!28, i1 true, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf83new"}
+!29 = distinct !{!29, !28, !"_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf83new: argument 0"}
+!30 = distinct !{!30, i1 true, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril"}
+!31 = distinct !{!31, !30, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril: argument 1"}
+!32 = distinct !{!32, !30, !"_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsldpiDtalS19_7tendril: argument 0"}
+!33 = !{!27, !26}
+!34 = !{!"branch_weights", i32 4001, i32 4000000}
+!35 = !{!29}
+!36 = !{!32, !31}
 end_hunk_0

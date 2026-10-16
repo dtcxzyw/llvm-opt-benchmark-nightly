@@ -202,7 +202,7 @@ define internal noundef zeroext i1 @_RNvXs1g_NtCshzWfHUSfYae_4core3fmtRjNtB6_5De
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !5, !align !6, !noundef !5 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.c = load i32, ptr %i.b, align 8, !alias.scope !11, !noalias !12, !noundef !5 ; 2 uses
+  %i.c = load i32, ptr %i.b, align 8, !alias.scope !10, !noundef !5 ; 2 uses
   %i.d = and i32 %i.c, 33554432
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -300,7 +300,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
 define noundef range(i64 1, 5) i64 @_RNvXs7_NtCs8VQcym6bIqo_8powerfmt19smart_display_implscNtNtB7_13smart_display12SmartDisplay8metadata(ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #1 {
 bb.a:
-  %i.a = load i32, ptr %0, align 4, !range !13, !noundef !5 ; 3 uses
+  %i.a = load i32, ptr %0, align 4, !range !11, !noundef !5 ; 3 uses
   %i.b = icmp samesign ult i32 %i.a, 128
   br i1 %i.b, label %_RNvNtNtCshzWfHUSfYae_4core4char7methods15encode_utf8_raw.exit, label %bb.b
 
@@ -408,7 +408,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define internal noundef zeroext i1 @_RNvXsR_NtCshzWfHUSfYae_4core6optionINtB5_6OptionjENtNtB7_3fmt5Debug3fmtCs8VQcym6bIqo_8powerfmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #3 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
-  %i.b = load i64, ptr %0, align 8, !range !14, !noundef !5
+  %i.b = load i64, ptr %0, align 8, !range !12, !noundef !5
   %i.c = trunc nuw i64 %i.b to i1
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -811,11 +811,9 @@ attributes #8 = { inlinehint }
 !5 = !{}
 !6 = !{i64 8}
 !7 = !{i8 0, i8 3}
-!8 = distinct !{!8, i1 false, !"_RNvXsZ_NtNtCshzWfHUSfYae_4core3fmt3numjNtB7_5Debug3fmt"}
+!8 = distinct !{!8, i1 true, !"_RNvXsZ_NtNtCshzWfHUSfYae_4core3fmt3numjNtB7_5Debug3fmt"}
 !9 = distinct !{!9, !8, !"_RNvXsZ_NtNtCshzWfHUSfYae_4core3fmt3numjNtB7_5Debug3fmt: argument 1"}
-!10 = distinct !{!10, !8, !"_RNvXsZ_NtNtCshzWfHUSfYae_4core3fmt3numjNtB7_5Debug3fmt: argument 0"}
-!11 = !{!9}
-!12 = !{!10}
-!13 = !{i32 0, i32 1114112}
-!14 = !{i64 0, i64 2}
+!10 = !{!9}
+!11 = !{i32 0, i32 1114112}
+!12 = !{i64 0, i64 2}
 end_hunk_1

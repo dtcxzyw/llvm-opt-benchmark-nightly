@@ -26,7 +26,7 @@ define hidden noundef zeroext i1 @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRhNtB6_5Debu
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !3, !noundef !3 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.c = load i32, ptr %i.b, align 8, !alias.scope !8, !noalias !9, !noundef !3 ; 2 uses
+  %i.c = load i32, ptr %i.b, align 8, !alias.scope !7, !noundef !3 ; 2 uses
   %i.d = and i32 %i.c, 33554432
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %bb.b, label %bb.c
@@ -99,9 +99,7 @@ attributes #2 = { nocallback nofree nosync nounwind nonlazybind willreturn memor
 !2 = !{!"rustc version 1.97.1 (8bab26f4f 2026-07-14)"}
 !3 = !{}
 !4 = !{i64 8}
-!5 = distinct !{!5, i1 false, !"_RNvXsU_NtNtCs4NRVxsYgnAr_4core3fmt3numhNtB7_5Debug3fmt"}
+!5 = distinct !{!5, i1 true, !"_RNvXsU_NtNtCs4NRVxsYgnAr_4core3fmt3numhNtB7_5Debug3fmt"}
 !6 = distinct !{!6, !5, !"_RNvXsU_NtNtCs4NRVxsYgnAr_4core3fmt3numhNtB7_5Debug3fmt: argument 1"}
-!7 = distinct !{!7, !5, !"_RNvXsU_NtNtCs4NRVxsYgnAr_4core3fmt3numhNtB7_5Debug3fmt: argument 0"}
-!8 = !{!6}
-!9 = !{!7}
+!7 = !{!6}
 end_hunk_0

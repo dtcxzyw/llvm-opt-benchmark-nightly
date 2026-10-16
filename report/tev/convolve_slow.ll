@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.critedge47.i.i, %b
   %i.bc = shl nuw nsw i32 %i.bb, 2
   %i.bd = zext nneg i32 %i.bc to i64
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.bd
-  %i.bf = load float, ptr %i.be, align 4, !tbaa !50, !alias.scope !96, !noalias !97 ; 5 uses
+  %i.bf = load float, ptr %i.be, align 4, !tbaa !50, !alias.scope !96 ; 5 uses
   %i.bg = add i64 %i.as, %indvars.iv.i.i          ; 3 uses
   %.not.i.i = icmp ult i64 %i.bg, %i.al
   br i1 %.not.i.i, label %_ZN3jxlL6MirrorEll.exit.i.i, label %.lr.ph.i.i.i
@@ -227,7 +227,7 @@ bb.e:                                             ; preds = %_ZN3jxlL6MirrorEll.
   %i.bl = mul i64 %.0.lcssa.i.i.i, %i.au
   %i.bm = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.bl ; 6 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.bm, i64 64) ]
-  %i.bn = load float, ptr %i.aq, align 4, !tbaa !50, !alias.scope !95, !noalias !98 ; 2 uses
+  %i.bn = load float, ptr %i.aq, align 4, !tbaa !50, !alias.scope !95 ; 2 uses
   br i1 %.not9.i.i, label %_ZN3jxlL6MirrorEll.exit54.i.i, label %.lr.ph.i51.i.i
 
 .lr.ph.i51.i.i:                                   ; preds = %bb.e, %.lr.ph.i51.i.i
@@ -249,7 +249,7 @@ bb.f:                                             ; preds = %_ZN3jxlL6MirrorEll.
   %i.bt = load float, ptr %i.bs, align 4, !tbaa !50, !noalias !94
   %i.bu = fmul float %i.bn, %i.bt
   %i.bv = tail call float @llvm.fmuladd.f32(float %i.bu, float %i.bf, float %.0516.i.i)
-  %i.bw = load float, ptr %i.ar, align 4, !tbaa !50, !alias.scope !95, !noalias !98 ; 2 uses
+  %i.bw = load float, ptr %i.ar, align 4, !tbaa !50, !alias.scope !95 ; 2 uses
   br i1 %.not9.1.i.i, label %_ZN3jxlL6MirrorEll.exit54.1.i.i, label %.lr.ph.i51.1.i.i
 
 .lr.ph.i51.1.i.i:                                 ; preds = %bb.f, %.lr.ph.i51.1.i.i
@@ -271,7 +271,7 @@ bb.g:                                             ; preds = %_ZN3jxlL6MirrorEll.
   %i.cc = load float, ptr %i.cb, align 4, !tbaa !50, !noalias !94
   %i.cd = fmul float %i.bw, %i.cc
   %i.ce = tail call float @llvm.fmuladd.f32(float %i.cd, float %i.bf, float %i.bv)
-  %i.cf = load float, ptr %i.ac, align 4, !tbaa !50, !alias.scope !95, !noalias !98
+  %i.cf = load float, ptr %i.ac, align 4, !tbaa !50, !alias.scope !95
   br i1 %.not9.2.i.i, label %_ZN3jxlL6MirrorEll.exit54.2.i.i, label %.lr.ph.i51.2.i.i
 
 .lr.ph.i51.2.i.i:                                 ; preds = %bb.g, %.lr.ph.i51.2.i.i
@@ -442,10 +442,10 @@ attributes #11 = { nounwind "no-builtin-fread" "no-builtin-fwrite" }
 !56 = distinct !{null, null, null, null}
 !57 = !{!39, !39, i64 0}
 !58 = !{!40, !40, i64 0}
-!59 = distinct !{!59, i1 false, !"_ZN3jxl12_GLOBAL__N_117SlowSymmetric3RowINS_10WrapMirrorEEEvRKNS_5PlaneIfEElllRKNS_17WeightsSymmetric3EPf"}
+!59 = distinct !{!59, i1 true, !"_ZN3jxl12_GLOBAL__N_117SlowSymmetric3RowINS_10WrapMirrorEEEvRKNS_5PlaneIfEElllRKNS_17WeightsSymmetric3EPf"}
 !60 = distinct !{!60, !59, !"_ZN3jxl12_GLOBAL__N_117SlowSymmetric3RowINS_10WrapMirrorEEEvRKNS_5PlaneIfEElllRKNS_17WeightsSymmetric3EPf: argument 0"}
 !61 = distinct !{!61, !29}
-!62 = distinct !{!62, i1 false, !"_ZN3jxl12_GLOBAL__N_117SlowSymmetric3RowINS_13WrapUnchangedEEEvRKNS_5PlaneIfEElllRKNS_17WeightsSymmetric3EPf"}
+!62 = distinct !{!62, i1 true, !"_ZN3jxl12_GLOBAL__N_117SlowSymmetric3RowINS_13WrapUnchangedEEEvRKNS_5PlaneIfEElllRKNS_17WeightsSymmetric3EPf"}
 !63 = distinct !{!63, !62, !"_ZN3jxl12_GLOBAL__N_117SlowSymmetric3RowINS_13WrapUnchangedEEEvRKNS_5PlaneIfEElllRKNS_17WeightsSymmetric3EPf: argument 0"}
 !64 = distinct !{!64, !29, !77, !78}
 !65 = distinct !{!65, !29, !78, !77}
@@ -462,7 +462,7 @@ attributes #11 = { nounwind "no-builtin-fread" "no-builtin-fwrite" }
 !76 = !{!63}
 !77 = !{!"llvm.loop.isvectorized", i32 1}
 !78 = !{!"llvm.loop.unroll.runtime.disable"}
-!79 = distinct !{!79, i1 false, !"_ZN3jxl12_GLOBAL__N_118SlowSeparablePixelERKNS_5PlaneIfEERKNS_5RectTImEElllPKfSA_"}
+!79 = distinct !{!79, i1 true, !"_ZN3jxl12_GLOBAL__N_118SlowSeparablePixelERKNS_5PlaneIfEERKNS_5RectTImEElllPKfSA_"}
 !80 = distinct !{!80, !79, !"_ZN3jxl12_GLOBAL__N_118SlowSeparablePixelERKNS_5PlaneIfEERKNS_5RectTImEElllPKfSA_: argument 2"}
 !81 = distinct !{!81, !79, !"_ZN3jxl12_GLOBAL__N_118SlowSeparablePixelERKNS_5PlaneIfEERKNS_5RectTImEElllPKfSA_: argument 1"}
 !82 = distinct !{!82, !79, !"_ZN3jxl12_GLOBAL__N_118SlowSeparablePixelERKNS_5PlaneIfEERKNS_5RectTImEElllPKfSA_: argument 0"}
@@ -480,6 +480,4 @@ attributes #11 = { nounwind "no-builtin-fread" "no-builtin-fwrite" }
 !94 = !{!82, !81, !80}
 !95 = !{!81}
 !96 = !{!80}
-!97 = !{!82, !81}
-!98 = !{!82, !80}
 end_hunk_0

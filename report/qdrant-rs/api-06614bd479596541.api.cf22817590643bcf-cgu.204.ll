@@ -24,7 +24,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load i32, ptr %i.d, align 8, !alias.scope !9, !noalias !10, !noundef !4 ; 2 uses
+  %i.e = load i32, ptr %i.d, align 8, !alias.scope !8, !noundef !4 ; 2 uses
   %i.f = and i32 %i.e, 33554432
   %.not.i = icmp eq i32 %i.f, 0
   br i1 %.not.i, label %bb.c, label %bb.d
@@ -68,14 +68,14 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = load ptr, ptr %0, align 8, !nonnull !4, !align !5, !noundef !4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !14
-  store ptr %i.c, ptr %i.b, align 8, !noalias !14
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !12
+  store ptr %i.c, ptr %i.b, align 8, !noalias !12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !12
   call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter11debug_tuple(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 7)
   %i.d = call noundef nonnull align 8 ptr @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5)
   %i.e = call noundef zeroext i1 @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !14
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !12
   ret i1 %i.e
 }
 
@@ -134,13 +134,11 @@ attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
 !4 = !{}
 !5 = !{i64 4}
-!6 = distinct !{!6, i1 false, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt"}
+!6 = distinct !{!6, i1 true, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt"}
 !7 = distinct !{!7, !6, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt: argument 1"}
-!8 = distinct !{!8, !6, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt: argument 0"}
-!9 = !{!7}
-!10 = !{!8}
-!11 = distinct !{!11, i1 false, !"_RNvXsl_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant34binary_quantization_query_encodingNtB5_7VariantNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt"}
-!12 = distinct !{!12, !11, !"_RNvXsl_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant34binary_quantization_query_encodingNtB5_7VariantNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt: argument 1"}
-!13 = distinct !{!13, !11, !"_RNvXsl_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant34binary_quantization_query_encodingNtB5_7VariantNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt: argument 0"}
-!14 = !{!13, !12}
+!8 = !{!7}
+!9 = distinct !{!9, i1 true, !"_RNvXsl_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant34binary_quantization_query_encodingNtB5_7VariantNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt"}
+!10 = distinct !{!10, !9, !"_RNvXsl_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant34binary_quantization_query_encodingNtB5_7VariantNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt: argument 1"}
+!11 = distinct !{!11, !9, !"_RNvXsl_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant34binary_quantization_query_encodingNtB5_7VariantNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt: argument 0"}
+!12 = !{!11, !10}
 end_hunk_0

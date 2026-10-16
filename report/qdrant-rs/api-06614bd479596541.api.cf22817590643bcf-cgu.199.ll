@@ -18,14 +18,14 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nonlazybind uwtable
 define noundef zeroext i1 @_RNvXNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB8_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1b_3fmt(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !align !8, !noundef !4 ; 4 uses
+  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !align !7, !noundef !4 ; 4 uses
   %i.b = load i32, ptr %i.a, align 4, !noundef !4 ; 3 uses
   %i.c = icmp ult i32 %i.b, 3
   br i1 %i.c, label %switch.lookup, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load i32, ptr %i.d, align 8, !alias.scope !9, !noalias !10, !noundef !4 ; 2 uses
+  %i.e = load i32, ptr %i.d, align 8, !alias.scope !8, !noundef !4 ; 2 uses
   %i.f = and i32 %i.e, 33554432
   %.not.i = icmp eq i32 %i.f, 0
   br i1 %.not.i, label %bb.c, label %bb.d
@@ -66,7 +66,7 @@ _RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt.exit: ; preds = %bb.f, %
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRNtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistency5ValueNtB6_5Debug3fmtBE_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !align !11, !noundef !4
+  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !align !9, !noundef !4
   %i.b = tail call noundef zeroext i1 @_RNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB5_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
   ret i1 %i.b
 }
@@ -78,14 +78,14 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [8 x i8], align 8                 ; 4 uses
-  %i.e = load i32, ptr %0, align 8, !range !12, !noundef !4
+  %i.e = load i32, ptr %0, align 8, !range !10, !noundef !4
   %i.f = trunc nuw i32 %i.e to i1
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store ptr %i.g, ptr %i.b, align 8, !captures !13
+  store ptr %i.g, ptr %i.b, align 8, !captures !11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter11debug_tuple(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 6)
   %i.h = call noundef nonnull align 8 ptr @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @6)
@@ -152,13 +152,11 @@ attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
 !4 = !{}
-!5 = distinct !{!5, i1 false, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt"}
+!5 = distinct !{!5, i1 true, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt"}
 !6 = distinct !{!6, !5, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt: argument 1"}
-!7 = distinct !{!7, !5, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt: argument 0"}
-!8 = !{i64 4}
-!9 = !{!6}
-!10 = !{!7}
-!11 = !{i64 8}
-!12 = !{i32 0, i32 2}
-!13 = !{!"address", !"read_provenance"}
+!7 = !{i64 4}
+!8 = !{!6}
+!9 = !{i64 8}
+!10 = !{i32 0, i32 2}
+!11 = !{!"address", !"read_provenance"}
 end_hunk_0

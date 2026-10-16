@@ -204,7 +204,7 @@ bb.a:
   tail call void @_ZN9benchmark17BenchmarkReporter3RunC2EOS1_(ptr noundef nonnull align 8 dereferenceable(592) %.013, ptr noundef nonnull align 8 dereferenceable(592) %.0912) #28
   %i.a = getelementptr inbounds nuw i8, ptr %.0912, i64 496
   %i.b = getelementptr inbounds nuw i8, ptr %.0912, i64 512
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !54, !alias.scope !144, !noalias !145
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !54, !alias.scope !143
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9benchmark7CounterEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE8_M_eraseEPSt13_Rb_tree_nodeISA_E(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef %i.c)
           to label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9benchmark7CounterESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev.exit.i.i unwind label %bb.b
 
@@ -217,39 +217,39 @@ bb.b:                                             ; preds = %.lr.ph
 
 _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9benchmark7CounterESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev.exit.i.i: ; preds = %.lr.ph
   %i.f = getelementptr inbounds nuw i8, ptr %.0912, i64 360
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !64, !alias.scope !144, !noalias !145 ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !64, !alias.scope !143 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.0912, i64 376 ; 2 uses
   %i.i = icmp eq ptr %i.g, %i.h
   br i1 %i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9benchmark7CounterESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev.exit.i.i
-  %i.j = load i64, ptr %i.h, align 8, !tbaa !68, !alias.scope !144, !noalias !145
+  %i.j = load i64, ptr %i.h, align 8, !tbaa !68, !alias.scope !143
   %i.k = add i64 %i.j, 1
   tail call void @_ZdlPvm(ptr noundef %i.g, i64 noundef %i.k) #27
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9benchmark7CounterESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %.0912, i64 320
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !64, !alias.scope !144, !noalias !145 ; 2 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !64, !alias.scope !143 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.0912, i64 336 ; 2 uses
   %i.o = icmp eq ptr %i.m, %i.n
   br i1 %i.o, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
-  %i.p = load i64, ptr %i.n, align 8, !tbaa !68, !alias.scope !144, !noalias !145
+  %i.p = load i64, ptr %i.n, align 8, !tbaa !68, !alias.scope !143
   %i.q = add i64 %i.p, 1
   tail call void @_ZdlPvm(ptr noundef %i.m, i64 noundef %i.q) #27
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i
   %i.r = getelementptr inbounds nuw i8, ptr %.0912, i64 280
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !64, !alias.scope !144, !noalias !145 ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !64, !alias.scope !143 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.0912, i64 296 ; 2 uses
   %i.u = icmp eq ptr %i.s, %i.t
   br i1 %i.u, label %_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i
-  %i.v = load i64, ptr %i.t, align 8, !tbaa !68, !alias.scope !144, !noalias !145
+  %i.v = load i64, ptr %i.t, align 8, !tbaa !68, !alias.scope !143
   %i.w = add i64 %i.v, 1
   tail call void @_ZdlPvm(ptr noundef %i.s, i64 noundef %i.w) #27
   br label %_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_.exit
@@ -259,7 +259,7 @@ _ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_
   %i.x = getelementptr inbounds nuw i8, ptr %.0912, i64 592 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.013, i64 592 ; 2 uses
   %.not = icmp eq ptr %i.x, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !143
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !142
 
 ._crit_edge:                                      ; preds = %_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_.exit, %bb.a
   %.0.lcssa = phi ptr [ %2, %bb.a ], [ %i.y, %_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_.exit ]
@@ -662,10 +662,8 @@ attributes #30 = { nounwind willreturn memory(read) }
 !137 = !{}
 !138 = !{i64 8}
 !139 = !{!41, !39, i64 0}
-!140 = distinct !{!140, i1 false, !"_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_"}
+!140 = distinct !{!140, i1 true, !"_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_"}
 !141 = distinct !{!141, !140, !"_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
-!142 = distinct !{!142, !140, !"_ZSt19__relocate_object_aIN9benchmark17BenchmarkReporter3RunES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
-!143 = distinct !{!143, !19}
-!144 = !{!141}
-!145 = !{!142}
+!142 = distinct !{!142, !19}
+!143 = !{!141}
 end_hunk_1

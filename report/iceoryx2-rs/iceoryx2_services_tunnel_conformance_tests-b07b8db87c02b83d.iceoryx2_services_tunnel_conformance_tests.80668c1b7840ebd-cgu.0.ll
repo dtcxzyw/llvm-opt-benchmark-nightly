@@ -32,12 +32,12 @@ define void @_RNvNtNtCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @_RNvMs3_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_idNtB5_14UniqueSystemId3new(ptr noalias nofree noundef nonnull sret([20 x i8]) align 4 captures(none) dereferenceable(20) %i.d) #6
   tail call void @llvm.experimental.noalias.scope.decl(metadata !12)
-  %i.h = load i32, ptr %i.d, align 4, !range !13, !alias.scope !12, !noalias !14, !noundef !4
+  %i.h = load i32, ptr %i.d, align 4, !range !13, !alias.scope !12, !noundef !4
   %i.i = trunc nuw i32 %i.h to i1
-  br i1 %i.i, label %bb.a, label %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit, !prof !15
+  br i1 %i.i, label %bb.a, label %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit, !prof !14
 
 bb.a:                                             ; preds = %.split
-  call void @_RNvNtCs8Chj7Szqq0n_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #7, !noalias !16
+  call void @_RNvNtCs8Chj7Szqq0n_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #7, !noalias !15
   unreachable
 
 _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit: ; preds = %.split
@@ -58,23 +58,23 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_po
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @_RNvMs1_NtNtCsg6ZEkMtNi4J_8iceoryx27service12service_nameNtB5_11ServiceName3new(ptr noalias nofree noundef nonnull sret([272 x i8]) align 8 captures(address) dereferenceable(272) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.4.0.copyload, i64 noundef %.sroa.6.0.copyload) #6
+  call void @llvm.experimental.noalias.scope.decl(metadata !16)
   call void @llvm.experimental.noalias.scope.decl(metadata !17)
-  call void @llvm.experimental.noalias.scope.decl(metadata !18)
-  %i.k = load i8, ptr %i.g, align 8, !range !5, !alias.scope !18, !noalias !17, !noundef !4
+  %i.k = load i8, ptr %i.g, align 8, !range !5, !alias.scope !17, !noundef !4
   %i.l = trunc nuw i8 %i.k to i1
-  br i1 %i.l, label %bb.b, label %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12service_name11ServiceNameNtBJ_16ServiceNameErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit, !prof !15
+  br i1 %i.l, label %bb.b, label %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12service_name11ServiceNameNtBJ_16ServiceNameErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit, !prof !14
 
 bb.b:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !18
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 1
-  %i.n = load i8, ptr %i.m, align 1, !range !5, !alias.scope !18, !noalias !17, !noundef !4
-  store i8 %i.n, ptr %i.b, align 1, !noalias !19
-  call void @_RNvNtCs8Chj7Szqq0n_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #7, !noalias !19
+  %i.n = load i8, ptr %i.m, align 1, !range !5, !alias.scope !17, !noundef !4
+  store i8 %i.n, ptr %i.b, align 1, !noalias !18
+  call void @_RNvNtCs8Chj7Szqq0n_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #7, !noalias !18
   unreachable
 
 _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12service_name11ServiceNameNtBJ_16ServiceNameErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit: ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(264) %0, ptr noundef nonnull readonly align 8 dereferenceable(264) %i.o, i64 264, i1 false), !alias.scope !19
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(264) %0, ptr noundef nonnull readonly align 8 dereferenceable(264) %i.o, i64 264, i1 false), !alias.scope !18
   %i.p = icmp eq i64 %.sroa.0.0.copyload, 0
   br i1 %i.p, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsbqH9stoieM8_5alloc6string6StringECsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests.exit, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i
 
@@ -159,18 +159,17 @@ attributes #7 = { noinline noreturn nounwind }
 !3 = !{!"rustc version 1.100.0-nightly (0ed41eb41 2026-09-04)"}
 !4 = !{}
 !5 = !{i8 0, i8 2}
-!6 = distinct !{!6, i1 false, !"_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests"}
+!6 = distinct !{!6, i1 true, !"_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests"}
 !7 = distinct !{!7, !6, !"_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests: argument 1"}
 !8 = distinct !{!8, !6, !"_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix16unique_system_id14UniqueSystemIdNtBJ_27UniqueSystemIdCreationErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests: argument 0"}
-!9 = distinct !{!9, i1 false, !"_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12service_name11ServiceNameNtBJ_16ServiceNameErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests"}
+!9 = distinct !{!9, i1 true, !"_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12service_name11ServiceNameNtBJ_16ServiceNameErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests"}
 !10 = distinct !{!10, !9, !"_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12service_name11ServiceNameNtBJ_16ServiceNameErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests: argument 0"}
 !11 = distinct !{!11, !9, !"_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12service_name11ServiceNameNtBJ_16ServiceNameErrorE6unwrapCsGIsrN5OqRt_42iceoryx2_services_tunnel_conformance_tests: argument 1"}
 !12 = !{!7}
 !13 = !{i32 0, i32 2}
-!14 = !{!8}
-!15 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!16 = !{!8, !7}
-!17 = !{!10}
-!18 = !{!11}
-!19 = !{!10, !11}
+!14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!15 = !{!8, !7}
+!16 = !{!10}
+!17 = !{!11}
+!18 = !{!10, !11}
 end_hunk_0
