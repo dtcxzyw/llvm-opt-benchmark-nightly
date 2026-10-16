@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1692)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1693)
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !1694, !nonnull !5, !noundef !5
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !1694
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !1694
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -213,7 +213,7 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1696)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1697)
   %i.e = load ptr, ptr %i.b, align 8, !alias.scope !1698, !nonnull !5, !noundef !5
-  %2 = atomicrmw sub ptr %i.e, i64 1 release, align 8, !noalias !1698
+  %2 = atomicrmw add ptr %i.e, i64 -1 release, align 8, !noalias !1698
   %i.f = icmp eq i64 %2, 1
   br i1 %i.f, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -222,7 +222,7 @@ bb.d:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1700)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1701)
   %i.g = load ptr, ptr %i.b, align 8, !alias.scope !1702, !nonnull !5, !noundef !5
-  %3 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !1702
+  %3 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !1702
   %i.h = icmp eq i64 %3, 1
   br i1 %i.h, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -231,7 +231,7 @@ bb.e:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1704)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1705)
   %i.i = load ptr, ptr %i.b, align 8, !alias.scope !1706, !nonnull !5, !noundef !5
-  %4 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !1706
+  %4 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !1706
   %i.j = icmp eq i64 %4, 1
   br i1 %i.j, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -240,7 +240,7 @@ bb.f:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1708)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1709)
   %i.k = load ptr, ptr %i.b, align 8, !alias.scope !1710, !nonnull !5, !noundef !5
-  %5 = atomicrmw sub ptr %i.k, i64 1 release, align 8, !noalias !1710
+  %5 = atomicrmw add ptr %i.k, i64 -1 release, align 8, !noalias !1710
   %i.l = icmp eq i64 %5, 1
   br i1 %i.l, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -249,7 +249,7 @@ bb.g:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1712)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1713)
   %i.m = load ptr, ptr %i.b, align 8, !alias.scope !1714, !nonnull !5, !noundef !5
-  %6 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !1714
+  %6 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !1714
   %i.n = icmp eq i64 %6, 1
   br i1 %i.n, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -258,7 +258,7 @@ bb.h:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1716)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1717)
   %i.o = load ptr, ptr %i.b, align 8, !alias.scope !1718, !nonnull !5, !noundef !5
-  %7 = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !1718
+  %7 = atomicrmw add ptr %i.o, i64 -1 release, align 8, !noalias !1718
   %i.p = icmp eq i64 %7, 1
   br i1 %i.p, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -267,7 +267,7 @@ bb.i:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1720)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1721)
   %i.q = load ptr, ptr %i.b, align 8, !alias.scope !1722, !nonnull !5, !noundef !5
-  %8 = atomicrmw sub ptr %i.q, i64 1 release, align 8, !noalias !1722
+  %8 = atomicrmw add ptr %i.q, i64 -1 release, align 8, !noalias !1722
   %i.r = icmp eq i64 %8, 1
   br i1 %i.r, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -276,7 +276,7 @@ bb.j:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1724)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1725)
   %i.s = load ptr, ptr %i.b, align 8, !alias.scope !1726, !nonnull !5, !noundef !5
-  %9 = atomicrmw sub ptr %i.s, i64 1 release, align 8, !noalias !1726
+  %9 = atomicrmw add ptr %i.s, i64 -1 release, align 8, !noalias !1726
   %i.t = icmp eq i64 %9, 1
   br i1 %i.t, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -285,7 +285,7 @@ bb.k:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1728)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1729)
   %i.u = load ptr, ptr %i.b, align 8, !alias.scope !1730, !nonnull !5, !noundef !5
-  %10 = atomicrmw sub ptr %i.u, i64 1 release, align 8, !noalias !1730
+  %10 = atomicrmw add ptr %i.u, i64 -1 release, align 8, !noalias !1730
   %i.v = icmp eq i64 %10, 1
   br i1 %i.v, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -294,7 +294,7 @@ bb.l:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1732)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1733)
   %i.w = load ptr, ptr %i.b, align 8, !alias.scope !1734, !nonnull !5, !noundef !5
-  %11 = atomicrmw sub ptr %i.w, i64 1 release, align 8, !noalias !1734
+  %11 = atomicrmw add ptr %i.w, i64 -1 release, align 8, !noalias !1734
   %i.x = icmp eq i64 %11, 1
   br i1 %i.x, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -303,7 +303,7 @@ bb.m:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1736)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1737)
   %i.y = load ptr, ptr %i.b, align 8, !alias.scope !1738, !nonnull !5, !noundef !5
-  %12 = atomicrmw sub ptr %i.y, i64 1 release, align 8, !noalias !1738
+  %12 = atomicrmw add ptr %i.y, i64 -1 release, align 8, !noalias !1738
   %i.z = icmp eq i64 %12, 1
   br i1 %i.z, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -312,7 +312,7 @@ bb.n:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1740)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1741)
   %i.aa = load ptr, ptr %i.b, align 8, !alias.scope !1742, !nonnull !5, !noundef !5
-  %13 = atomicrmw sub ptr %i.aa, i64 1 release, align 8, !noalias !1742
+  %13 = atomicrmw add ptr %i.aa, i64 -1 release, align 8, !noalias !1742
   %i.ab = icmp eq i64 %13, 1
   br i1 %i.ab, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -321,7 +321,7 @@ bb.o:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1744)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1745)
   %i.ac = load ptr, ptr %i.b, align 8, !alias.scope !1746, !nonnull !5, !noundef !5
-  %14 = atomicrmw sub ptr %i.ac, i64 1 release, align 8, !noalias !1746
+  %14 = atomicrmw add ptr %i.ac, i64 -1 release, align 8, !noalias !1746
   %i.ad = icmp eq i64 %14, 1
   br i1 %i.ad, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -330,7 +330,7 @@ bb.p:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1748)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1749)
   %i.ae = load ptr, ptr %i.b, align 8, !alias.scope !1750, !nonnull !5, !noundef !5
-  %15 = atomicrmw sub ptr %i.ae, i64 1 release, align 8, !noalias !1750
+  %15 = atomicrmw add ptr %i.ae, i64 -1 release, align 8, !noalias !1750
   %i.af = icmp eq i64 %15, 1
   br i1 %i.af, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit.sink.split, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7WktTypeECscSToqyP0NyK_9lance_geo.exit
 
@@ -548,7 +548,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1808)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1809)
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !1810, !nonnull !5, !noundef !5
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !1810
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !1810
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.b, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs84Wnv3hhsUu_15geoarrow_schema4type7BoxTypeECscSToqyP0NyK_9lance_geo.exit
 

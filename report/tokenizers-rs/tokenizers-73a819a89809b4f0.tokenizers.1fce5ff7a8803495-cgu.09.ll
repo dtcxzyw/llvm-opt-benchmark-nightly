@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.t
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2363)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2364)
   %i.al = load ptr, ptr %i.d, align 8, !alias.scope !2365, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.al, i64 1 release, align 8, !noalias !2365
+  %1 = atomicrmw add ptr %i.al, i64 -1 release, align 8, !noalias !2365
   %i.am = icmp eq i64 %1, 1
   br i1 %i.am, label %bb.w, label %.body
 
@@ -224,7 +224,7 @@ bb.y:                                             ; preds = %bb.u
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2366)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2367)
   %i.ao = load ptr, ptr %i.d, align 8, !alias.scope !2368, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.ao, i64 1 release, align 8, !noalias !2368
+  %2 = atomicrmw add ptr %i.ao, i64 -1 release, align 8, !noalias !2368
   %i.ap = icmp eq i64 %2, 1
   br i1 %i.ap, label %bb.z, label %bb.aa
 
@@ -491,7 +491,7 @@ bb.ac:                                            ; preds = %bb.aa
   call void @llvm.experimental.noalias.scope.decl(metadata !2392)
   call void @llvm.experimental.noalias.scope.decl(metadata !2393)
   %i.aw = load ptr, ptr %i.e, align 8, !alias.scope !2394, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.aw, i64 1 release, align 8, !noalias !2394
+  %1 = atomicrmw add ptr %i.aw, i64 -1 release, align 8, !noalias !2394
   %i.ax = icmp eq i64 %1, 1
   br i1 %i.ax, label %bb.ad, label %.body44
 
@@ -510,7 +510,7 @@ bb.af:                                            ; preds = %bb.ab
   call void @llvm.experimental.noalias.scope.decl(metadata !2395)
   call void @llvm.experimental.noalias.scope.decl(metadata !2396)
   %i.az = load ptr, ptr %i.e, align 8, !alias.scope !2397, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.az, i64 1 release, align 8, !noalias !2397
+  %2 = atomicrmw add ptr %i.az, i64 -1 release, align 8, !noalias !2397
   %i.ba = icmp eq i64 %2, 1
   br i1 %i.ba, label %bb.ag, label %bb.ah
 
@@ -738,7 +738,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.experimental.noalias.scope.decl(metadata !2418)
   call void @llvm.experimental.noalias.scope.decl(metadata !2419)
   %i.ai = load ptr, ptr %i.e, align 8, !alias.scope !2420, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.ai, i64 1 release, align 8, !noalias !2420
+  %1 = atomicrmw add ptr %i.ai, i64 -1 release, align 8, !noalias !2420
   %i.aj = icmp eq i64 %1, 1
   br i1 %i.aj, label %bb.z, label %.body
 
@@ -757,7 +757,7 @@ bb.ab:                                            ; preds = %bb.x
   call void @llvm.experimental.noalias.scope.decl(metadata !2421)
   call void @llvm.experimental.noalias.scope.decl(metadata !2422)
   %i.al = load ptr, ptr %i.e, align 8, !alias.scope !2423, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.al, i64 1 release, align 8, !noalias !2423
+  %2 = atomicrmw add ptr %i.al, i64 -1 release, align 8, !noalias !2423
   %i.am = icmp eq i64 %2, 1
   br i1 %i.am, label %bb.ac, label %bb.ad
 
@@ -1024,7 +1024,7 @@ bb.ac:                                            ; preds = %bb.aa
   call void @llvm.experimental.noalias.scope.decl(metadata !2447)
   call void @llvm.experimental.noalias.scope.decl(metadata !2448)
   %i.aw = load ptr, ptr %i.e, align 8, !alias.scope !2449, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.aw, i64 1 release, align 8, !noalias !2449
+  %1 = atomicrmw add ptr %i.aw, i64 -1 release, align 8, !noalias !2449
   %i.ax = icmp eq i64 %1, 1
   br i1 %i.ax, label %bb.ad, label %.body44
 
@@ -1043,7 +1043,7 @@ bb.af:                                            ; preds = %bb.ab
   call void @llvm.experimental.noalias.scope.decl(metadata !2450)
   call void @llvm.experimental.noalias.scope.decl(metadata !2451)
   %i.az = load ptr, ptr %i.e, align 8, !alias.scope !2452, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.az, i64 1 release, align 8, !noalias !2452
+  %2 = atomicrmw add ptr %i.az, i64 -1 release, align 8, !noalias !2452
   %i.ba = icmp eq i64 %2, 1
   br i1 %i.ba, label %bb.ag, label %bb.ah
 
@@ -1271,7 +1271,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.experimental.noalias.scope.decl(metadata !2473)
   call void @llvm.experimental.noalias.scope.decl(metadata !2474)
   %i.ai = load ptr, ptr %i.e, align 8, !alias.scope !2475, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.ai, i64 1 release, align 8, !noalias !2475
+  %1 = atomicrmw add ptr %i.ai, i64 -1 release, align 8, !noalias !2475
   %i.aj = icmp eq i64 %1, 1
   br i1 %i.aj, label %bb.z, label %.body
 
@@ -1290,7 +1290,7 @@ bb.ab:                                            ; preds = %bb.x
   call void @llvm.experimental.noalias.scope.decl(metadata !2476)
   call void @llvm.experimental.noalias.scope.decl(metadata !2477)
   %i.al = load ptr, ptr %i.e, align 8, !alias.scope !2478, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.al, i64 1 release, align 8, !noalias !2478
+  %2 = atomicrmw add ptr %i.al, i64 -1 release, align 8, !noalias !2478
   %i.am = icmp eq i64 %2, 1
   br i1 %i.am, label %bb.ac, label %bb.ad
 
@@ -1531,7 +1531,7 @@ bb.z:                                             ; preds = %bb.x
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2500)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2501)
   %i.ay = load ptr, ptr %i.d, align 8, !alias.scope !2502, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.ay, i64 1 release, align 8, !noalias !2502
+  %1 = atomicrmw add ptr %i.ay, i64 -1 release, align 8, !noalias !2502
   %i.az = icmp eq i64 %1, 1
   br i1 %i.az, label %bb.aa, label %.body58
 
@@ -1550,7 +1550,7 @@ bb.ac:                                            ; preds = %bb.y
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2503)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2504)
   %i.bb = load ptr, ptr %i.d, align 8, !alias.scope !2505, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.bb, i64 1 release, align 8, !noalias !2505
+  %2 = atomicrmw add ptr %i.bb, i64 -1 release, align 8, !noalias !2505
   %i.bc = icmp eq i64 %2, 1
   br i1 %i.bc, label %bb.ad, label %bb.ae
 
@@ -1764,7 +1764,7 @@ bb.z:                                             ; preds = %bb.x
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2524)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2525)
   %i.at = load ptr, ptr %i.c, align 8, !alias.scope !2526, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.at, i64 1 release, align 8, !noalias !2526
+  %1 = atomicrmw add ptr %i.at, i64 -1 release, align 8, !noalias !2526
   %i.au = icmp eq i64 %1, 1
   br i1 %i.au, label %bb.aa, label %.body28
 
@@ -1783,7 +1783,7 @@ bb.ac:                                            ; preds = %bb.y
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2527)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2528)
   %i.aw = load ptr, ptr %i.c, align 8, !alias.scope !2529, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.aw, i64 1 release, align 8, !noalias !2529
+  %2 = atomicrmw add ptr %i.aw, i64 -1 release, align 8, !noalias !2529
   %i.ax = icmp eq i64 %2, 1
   br i1 %i.ax, label %bb.ad, label %bb.ae
 
@@ -1997,7 +1997,7 @@ bb.z:                                             ; preds = %bb.x
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2548)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2549)
   %i.at = load ptr, ptr %i.c, align 8, !alias.scope !2550, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.at, i64 1 release, align 8, !noalias !2550
+  %1 = atomicrmw add ptr %i.at, i64 -1 release, align 8, !noalias !2550
   %i.au = icmp eq i64 %1, 1
   br i1 %i.au, label %bb.aa, label %.body28
 
@@ -2016,7 +2016,7 @@ bb.ac:                                            ; preds = %bb.y
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2551)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2552)
   %i.aw = load ptr, ptr %i.c, align 8, !alias.scope !2553, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.aw, i64 1 release, align 8, !noalias !2553
+  %2 = atomicrmw add ptr %i.aw, i64 -1 release, align 8, !noalias !2553
   %i.ax = icmp eq i64 %2, 1
   br i1 %i.ax, label %bb.ad, label %bb.ae
 
@@ -2220,7 +2220,7 @@ bb.v:                                             ; preds = %bb.t
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2572)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2573)
   %i.ag = load ptr, ptr %i.d, align 8, !alias.scope !2574, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.ag, i64 1 release, align 8, !noalias !2574
+  %1 = atomicrmw add ptr %i.ag, i64 -1 release, align 8, !noalias !2574
   %i.ah = icmp eq i64 %1, 1
   br i1 %i.ah, label %bb.w, label %.body
 
@@ -2239,7 +2239,7 @@ bb.y:                                             ; preds = %bb.u
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2575)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2576)
   %i.aj = load ptr, ptr %i.d, align 8, !alias.scope !2577, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.aj, i64 1 release, align 8, !noalias !2577
+  %2 = atomicrmw add ptr %i.aj, i64 -1 release, align 8, !noalias !2577
   %i.ak = icmp eq i64 %2, 1
   br i1 %i.ak, label %bb.z, label %bb.aa
 
@@ -2442,7 +2442,7 @@ bb.v:                                             ; preds = %bb.t
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2596)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2597)
   %i.ah = load ptr, ptr %i.d, align 8, !alias.scope !2598, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.ah, i64 1 release, align 8, !noalias !2598
+  %1 = atomicrmw add ptr %i.ah, i64 -1 release, align 8, !noalias !2598
   %i.ai = icmp eq i64 %1, 1
   br i1 %i.ai, label %bb.w, label %.body
 
@@ -2461,7 +2461,7 @@ bb.y:                                             ; preds = %bb.u
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2599)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2600)
   %i.ak = load ptr, ptr %i.d, align 8, !alias.scope !2601, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.ak, i64 1 release, align 8, !noalias !2601
+  %2 = atomicrmw add ptr %i.ak, i64 -1 release, align 8, !noalias !2601
   %i.al = icmp eq i64 %2, 1
   br i1 %i.al, label %bb.z, label %bb.aa
 
@@ -2678,7 +2678,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.experimental.noalias.scope.decl(metadata !2622)
   call void @llvm.experimental.noalias.scope.decl(metadata !2623)
   %i.bc = load ptr, ptr %i.c, align 8, !alias.scope !2624, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.bc, i64 1 release, align 8, !noalias !2624
+  %1 = atomicrmw add ptr %i.bc, i64 -1 release, align 8, !noalias !2624
   %i.bd = icmp eq i64 %1, 1
   br i1 %i.bd, label %bb.z, label %.body31
 
@@ -2697,7 +2697,7 @@ bb.ab:                                            ; preds = %bb.x
   call void @llvm.experimental.noalias.scope.decl(metadata !2625)
   call void @llvm.experimental.noalias.scope.decl(metadata !2626)
   %i.bf = load ptr, ptr %i.c, align 8, !alias.scope !2627, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.bf, i64 1 release, align 8, !noalias !2627
+  %2 = atomicrmw add ptr %i.bf, i64 -1 release, align 8, !noalias !2627
   %i.bg = icmp eq i64 %2, 1
   br i1 %i.bg, label %bb.ac, label %bb.ad
 
@@ -2935,7 +2935,7 @@ bb.aa:                                            ; preds = %bb.y
   call void @llvm.experimental.noalias.scope.decl(metadata !2652)
   call void @llvm.experimental.noalias.scope.decl(metadata !2653)
   %i.az = load ptr, ptr %i.c, align 8, !alias.scope !2654, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.az, i64 1 release, align 8, !noalias !2654
+  %1 = atomicrmw add ptr %i.az, i64 -1 release, align 8, !noalias !2654
   %i.ba = icmp eq i64 %1, 1
   br i1 %i.ba, label %bb.ab, label %.body46
 
@@ -2954,7 +2954,7 @@ bb.ad:                                            ; preds = %bb.z
   call void @llvm.experimental.noalias.scope.decl(metadata !2655)
   call void @llvm.experimental.noalias.scope.decl(metadata !2656)
   %i.bc = load ptr, ptr %i.c, align 8, !alias.scope !2657, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.bc, i64 1 release, align 8, !noalias !2657
+  %2 = atomicrmw add ptr %i.bc, i64 -1 release, align 8, !noalias !2657
   %i.bd = icmp eq i64 %2, 1
   br i1 %i.bd, label %bb.ae, label %bb.af
 
@@ -3195,7 +3195,7 @@ bb.aa:                                            ; preds = %bb.y
   call void @llvm.experimental.noalias.scope.decl(metadata !2682)
   call void @llvm.experimental.noalias.scope.decl(metadata !2683)
   %i.az = load ptr, ptr %i.c, align 8, !alias.scope !2684, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.az, i64 1 release, align 8, !noalias !2684
+  %1 = atomicrmw add ptr %i.az, i64 -1 release, align 8, !noalias !2684
   %i.ba = icmp eq i64 %1, 1
   br i1 %i.ba, label %bb.ab, label %.body46
 
@@ -3214,7 +3214,7 @@ bb.ad:                                            ; preds = %bb.z
   call void @llvm.experimental.noalias.scope.decl(metadata !2685)
   call void @llvm.experimental.noalias.scope.decl(metadata !2686)
   %i.bc = load ptr, ptr %i.c, align 8, !alias.scope !2687, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.bc, i64 1 release, align 8, !noalias !2687
+  %2 = atomicrmw add ptr %i.bc, i64 -1 release, align 8, !noalias !2687
   %i.bd = icmp eq i64 %2, 1
   br i1 %i.bd, label %bb.ae, label %bb.af
 
@@ -3441,7 +3441,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.experimental.noalias.scope.decl(metadata !2712)
   call void @llvm.experimental.noalias.scope.decl(metadata !2713)
   %i.ax = load ptr, ptr %i.c, align 8, !alias.scope !2714, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.ax, i64 1 release, align 8, !noalias !2714
+  %1 = atomicrmw add ptr %i.ax, i64 -1 release, align 8, !noalias !2714
   %i.ay = icmp eq i64 %1, 1
   br i1 %i.ay, label %bb.z, label %.body46
 
@@ -3460,7 +3460,7 @@ bb.ab:                                            ; preds = %bb.x
   call void @llvm.experimental.noalias.scope.decl(metadata !2715)
   call void @llvm.experimental.noalias.scope.decl(metadata !2716)
   %i.ba = load ptr, ptr %i.c, align 8, !alias.scope !2717, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.ba, i64 1 release, align 8, !noalias !2717
+  %2 = atomicrmw add ptr %i.ba, i64 -1 release, align 8, !noalias !2717
   %i.bb = icmp eq i64 %2, 1
   br i1 %i.bb, label %bb.ac, label %bb.ad
 
@@ -3688,7 +3688,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.experimental.noalias.scope.decl(metadata !2742)
   call void @llvm.experimental.noalias.scope.decl(metadata !2743)
   %i.ay = load ptr, ptr %i.d, align 8, !alias.scope !2744, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.ay, i64 1 release, align 8, !noalias !2744
+  %1 = atomicrmw add ptr %i.ay, i64 -1 release, align 8, !noalias !2744
   %i.az = icmp eq i64 %1, 1
   br i1 %i.az, label %bb.z, label %.body46
 
@@ -3707,7 +3707,7 @@ bb.ab:                                            ; preds = %bb.x
   call void @llvm.experimental.noalias.scope.decl(metadata !2745)
   call void @llvm.experimental.noalias.scope.decl(metadata !2746)
   %i.bb = load ptr, ptr %i.d, align 8, !alias.scope !2747, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.bb, i64 1 release, align 8, !noalias !2747
+  %2 = atomicrmw add ptr %i.bb, i64 -1 release, align 8, !noalias !2747
   %i.bc = icmp eq i64 %2, 1
   br i1 %i.bc, label %bb.ac, label %bb.ad
 
@@ -3911,7 +3911,7 @@ bb.u:                                             ; preds = %bb.s
   call void @llvm.experimental.noalias.scope.decl(metadata !2769)
   call void @llvm.experimental.noalias.scope.decl(metadata !2770)
   %i.aq = load ptr, ptr %i.e, align 8, !alias.scope !2771, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.aq, i64 1 release, align 8, !noalias !2771
+  %1 = atomicrmw add ptr %i.aq, i64 -1 release, align 8, !noalias !2771
   %i.ar = icmp eq i64 %1, 1
   br i1 %i.ar, label %bb.v, label %.body
 
@@ -3930,7 +3930,7 @@ bb.x:                                             ; preds = %bb.t
   call void @llvm.experimental.noalias.scope.decl(metadata !2772)
   call void @llvm.experimental.noalias.scope.decl(metadata !2773)
   %i.at = load ptr, ptr %i.e, align 8, !alias.scope !2774, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.at, i64 1 release, align 8, !noalias !2774
+  %2 = atomicrmw add ptr %i.at, i64 -1 release, align 8, !noalias !2774
   %i.au = icmp eq i64 %2, 1
   br i1 %i.au, label %bb.y, label %bb.z
 
@@ -4190,7 +4190,7 @@ bb.aa:                                            ; preds = %bb.y
   call void @llvm.experimental.noalias.scope.decl(metadata !2799)
   call void @llvm.experimental.noalias.scope.decl(metadata !2800)
   %i.bf = load ptr, ptr %i.e, align 8, !alias.scope !2801, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.bf, i64 1 release, align 8, !noalias !2801
+  %1 = atomicrmw add ptr %i.bf, i64 -1 release, align 8, !noalias !2801
   %i.bg = icmp eq i64 %1, 1
   br i1 %i.bg, label %bb.ab, label %.body55
 
@@ -4209,7 +4209,7 @@ bb.ad:                                            ; preds = %bb.z
   call void @llvm.experimental.noalias.scope.decl(metadata !2802)
   call void @llvm.experimental.noalias.scope.decl(metadata !2803)
   %i.bi = load ptr, ptr %i.e, align 8, !alias.scope !2804, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.bi, i64 1 release, align 8, !noalias !2804
+  %2 = atomicrmw add ptr %i.bi, i64 -1 release, align 8, !noalias !2804
   %i.bj = icmp eq i64 %2, 1
   br i1 %i.bj, label %bb.ae, label %bb.af
 
@@ -4415,7 +4415,7 @@ bb.u:                                             ; preds = %bb.s
   call void @llvm.experimental.noalias.scope.decl(metadata !2826)
   call void @llvm.experimental.noalias.scope.decl(metadata !2827)
   %i.am = load ptr, ptr %i.e, align 8, !alias.scope !2828, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.am, i64 1 release, align 8, !noalias !2828
+  %1 = atomicrmw add ptr %i.am, i64 -1 release, align 8, !noalias !2828
   %i.an = icmp eq i64 %1, 1
   br i1 %i.an, label %bb.v, label %.body
 
@@ -4434,7 +4434,7 @@ bb.x:                                             ; preds = %bb.t
   call void @llvm.experimental.noalias.scope.decl(metadata !2829)
   call void @llvm.experimental.noalias.scope.decl(metadata !2830)
   %i.ap = load ptr, ptr %i.e, align 8, !alias.scope !2831, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.ap, i64 1 release, align 8, !noalias !2831
+  %2 = atomicrmw add ptr %i.ap, i64 -1 release, align 8, !noalias !2831
   %i.aq = icmp eq i64 %2, 1
   br i1 %i.aq, label %bb.y, label %bb.z
 
@@ -4642,7 +4642,7 @@ bb.x:                                             ; preds = %bb.v
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2852)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2853)
   %i.av = load ptr, ptr %i.b, align 8, !alias.scope !2854, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.av, i64 1 release, align 8, !noalias !2854
+  %1 = atomicrmw add ptr %i.av, i64 -1 release, align 8, !noalias !2854
   %i.aw = icmp eq i64 %1, 1
   br i1 %i.aw, label %bb.y, label %.body28
 
@@ -4661,7 +4661,7 @@ bb.aa:                                            ; preds = %bb.w
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2855)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2856)
   %i.ay = load ptr, ptr %i.b, align 8, !alias.scope !2857, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.ay, i64 1 release, align 8, !noalias !2857
+  %2 = atomicrmw add ptr %i.ay, i64 -1 release, align 8, !noalias !2857
   %i.az = icmp eq i64 %2, 1
   br i1 %i.az, label %bb.ab, label %bb.ac
 
@@ -4869,7 +4869,7 @@ bb.x:                                             ; preds = %bb.v
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2878)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2879)
   %i.av = load ptr, ptr %i.b, align 8, !alias.scope !2880, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.av, i64 1 release, align 8, !noalias !2880
+  %1 = atomicrmw add ptr %i.av, i64 -1 release, align 8, !noalias !2880
   %i.aw = icmp eq i64 %1, 1
   br i1 %i.aw, label %bb.y, label %.body28
 
@@ -4888,7 +4888,7 @@ bb.aa:                                            ; preds = %bb.w
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2881)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2882)
   %i.ay = load ptr, ptr %i.b, align 8, !alias.scope !2883, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.ay, i64 1 release, align 8, !noalias !2883
+  %2 = atomicrmw add ptr %i.ay, i64 -1 release, align 8, !noalias !2883
   %i.az = icmp eq i64 %2, 1
   br i1 %i.az, label %bb.ab, label %bb.ac
 

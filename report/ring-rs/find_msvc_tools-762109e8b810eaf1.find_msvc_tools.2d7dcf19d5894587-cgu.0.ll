@@ -205,7 +205,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsSt
 bb.m:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrE8and_thenNtNtCs3U9i7nQCKwt_15find_msvc_tools4tool4ToolNCNvNtNtB1C_10find_tools5impl_21find_msvc_environment0EB1C_.exit.i
   %i.u = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !noalias !23
-  %4 = atomicrmw sub ptr %i.v, i64 1 release, align 8, !noalias !23
+  %4 = atomicrmw add ptr %i.v, i64 -1 release, align 8, !noalias !23
   %i.w = icmp eq i64 %4, 1
   br i1 %i.w, label %bb.n, label %bb.q
 
@@ -608,7 +608,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsSt
 bb.e:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools3EnvEBF_.exit
 
@@ -985,7 +985,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc7raw_vec6RawVec
 define void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrEECs3U9i7nQCKwt_15find_msvc_tools(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #7 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
-  %1 = atomicrmw sub ptr %i.a, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.a, i64 -1 release, align 8
   %i.b = icmp eq i64 %1, 1
   br i1 %i.b, label %bb.b, label %_RNvXsE_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs3U9i7nQCKwt_15find_msvc_tools.exit
 
@@ -1008,7 +1008,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8
   %i.e = icmp eq i64 %1, 1
   br i1 %i.e, label %bb.c, label %_RNvXsO_NtCs1xwejQucwHj_5alloc4syncINtB5_4WeakNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrRNtNtB7_5alloc6GlobalENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs3U9i7nQCKwt_15find_msvc_tools.exit
 
@@ -1366,7 +1366,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsSt
 bb.e:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrEECs3U9i7nQCKwt_15find_msvc_tools.exit
 
@@ -1769,7 +1769,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrRNtNtBG_5alloc6GlobalEECs3U9i7nQCKwt_15find_msvc_tools.exit
 
@@ -2172,7 +2172,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsSt
 
 bb.r:                                             ; preds = %bb.n
   %i.do = load ptr, ptr %.sroa.223.0..sroa_idx.i, align 8, !noalias !80
-  %7 = atomicrmw sub ptr %i.do, i64 1 release, align 8, !noalias !80
+  %7 = atomicrmw add ptr %i.do, i64 -1 release, align 8, !noalias !80
   %i.dp = icmp eq i64 %7, 1
   br i1 %i.dp, label %bb.s, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools3EnvEBF_.exit.i
 
@@ -2212,7 +2212,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsSt
 
 bb.w:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools3EnvEBF_.exit.i
   %i.dt = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !80
-  %8 = atomicrmw sub ptr %i.dt, i64 1 release, align 8, !noalias !80
+  %8 = atomicrmw add ptr %i.dt, i64 -1 release, align 8, !noalias !80
   %i.du = icmp eq i64 %8, 1
   br i1 %i.du, label %bb.x, label %_RNvNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools5impl_21find_msvc_environment.exit
 
@@ -2255,7 +2255,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsSt
 
 bb.ad:                                            ; preds = %bb.z
   %i.dz = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !80
-  %9 = atomicrmw sub ptr %i.dz, i64 1 release, align 8, !noalias !80
+  %9 = atomicrmw add ptr %i.dz, i64 -1 release, align 8, !noalias !80
   %i.ea = icmp eq i64 %9, 1
   br i1 %i.ea, label %bb.ae, label %_RNvNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools5impl_21find_msvc_environment.exit
 
@@ -2658,7 +2658,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNt
 bb.c:                                             ; preds = %bb.f, %bb.e
   %i.e = landingpad { ptr, i32 }
           cleanup
-  %2 = atomicrmw sub ptr %i.h, i64 1 release, align 8
+  %2 = atomicrmw add ptr %i.h, i64 -1 release, align 8
   %i.f = icmp eq i64 %2, 1
   br i1 %i.f, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrEECs3U9i7nQCKwt_15find_msvc_tools.exit
 
@@ -2712,7 +2712,7 @@ bb.h:                                             ; preds = %bb.g, %_RNvMs5_NtCs
   store ptr %i.s, ptr %.sroa.25.0..sroa_idx.i, align 8
   %.sroa.36.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.j, ptr %.sroa.36.0..sroa_idx.i, align 8
-  %3 = atomicrmw sub ptr %i.h, i64 1 release, align 8
+  %3 = atomicrmw add ptr %i.h, i64 -1 release, align 8
   %i.t = icmp eq i64 %3, 1
   br i1 %i.t, label %bb.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrEECs3U9i7nQCKwt_15find_msvc_tools.exit2
 
@@ -3038,7 +3038,7 @@ _RNvXs26_NtCs1xwejQucwHj_5alloc6stringeNtB6_12SpecToString14spec_to_stringCs3U9i
 define void @_RNvXsE_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs3U9i7nQCKwt_15find_msvc_tools(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
-  %1 = atomicrmw sub ptr %i.a, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.a, i64 -1 release, align 8
   %i.b = icmp eq i64 %1, 1
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -3100,7 +3100,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8
   %i.e = icmp eq i64 %1, 1
   br i1 %i.e, label %bb.c, label %_RNvXs0_NtCs3oUPovFnLWP_4core5allocRNtNtCs1xwejQucwHj_5alloc5alloc6GlobalNtB5_9Allocator10deallocateCs3U9i7nQCKwt_15find_msvc_tools.exit
 

@@ -205,13 +205,13 @@ bb.e:                                             ; preds = %_ZN11OpenImageIO4v3
           to label %_ZNSt6vectorIN11OpenImageIO4v3_16CSInfoESaIS2_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERiSE_EEERS2_DpOT_.exit unwind label %bb.f
 
 _ZNSt6vectorIN11OpenImageIO4v3_16CSInfoESaIS2_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERiSE_EEERS2_DpOT_.exit: ; preds = %bb.e, %.noexc
-  %6 = atomicrmw sub ptr %i.c, i32 1073741824 release, align 4 ; 0 uses
+  %6 = atomicrmw add ptr %i.c, i32 -1073741824 release, align 4 ; 0 uses
   ret void
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.z = landingpad { ptr, i32 }
           cleanup
-  %7 = atomicrmw sub ptr %i.c, i32 1073741824 release, align 4 ; 0 uses
+  %7 = atomicrmw add ptr %i.c, i32 -1073741824 release, align 4 ; 0 uses
   resume { ptr, i32 } %i.z
 }
 
@@ -614,14 +614,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
-  %5 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %5 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   ret void
 
 bb.j:                                             ; preds = %_ZN11OpenImageIO4v3_113spin_rw_mutex16write_lock_guardC2ERS1_.exit
   %i.ap = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
-  %6 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %6 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   resume { ptr, i32 } %i.ap
 }
 
@@ -786,14 +786,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
-  %5 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %5 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   ret void
 
 bb.j:                                             ; preds = %_ZN11OpenImageIO4v3_113spin_rw_mutex16write_lock_guardC2ERS1_.exit
   %i.ar = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
-  %6 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %6 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   resume { ptr, i32 } %i.ar
 }
 
@@ -945,14 +945,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #38
-  %6 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %6 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   ret void
 
 bb.j:                                             ; preds = %_ZN11OpenImageIO4v3_113spin_rw_mutex16write_lock_guardC2ERS1_.exit
   %i.at = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #38
-  %7 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %7 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   resume { ptr, i32 } %i.at
 }
 
@@ -1239,7 +1239,7 @@ bb.a:
   br i1 %.not.i.i.i, label %_ZNK11OpenImageIO4v3_111ColorConfig4Impl8haserrorEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = atomicrmw sub ptr %i.b, i32 1 seq_cst, align 4
+  %1 = atomicrmw add ptr %i.b, i32 -1 seq_cst, align 4
   %i.e = add i32 %1, 1073741823
   %i.f = and i32 %i.e, 1073741823                 ; 2 uses
   %i.g = add nuw nsw i32 %i.f, 1
@@ -1284,7 +1284,7 @@ _ZNK11OpenImageIO4v3_111ColorConfig4Impl8haserrorEv.exit: ; preds = %bb.e, %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 232
   %i.t = load i64, ptr %i.s, align 8, !tbaa !78
   %i.u = icmp ne i64 %i.t, 0
-  %2 = atomicrmw sub ptr %i.b, i32 1 release, align 4 ; 0 uses
+  %2 = atomicrmw add ptr %i.b, i32 -1 release, align 4 ; 0 uses
   ret i1 %i.u
 }
 
@@ -1348,7 +1348,7 @@ bb.e:                                             ; preds = %_ZN11OpenImageIO4v3
 bb.f:                                             ; preds = %bb.e
   %i.n = landingpad { ptr, i32 }
           cleanup
-  %3 = atomicrmw sub ptr %i.d, i32 1073741824 release, align 4, !noalias !474 ; 0 uses
+  %3 = atomicrmw add ptr %i.d, i32 -1073741824 release, align 4, !noalias !474 ; 0 uses
   %i.o = load ptr, ptr %0, align 8, !tbaa !77, !alias.scope !474 ; 2 uses
   %i.p = icmp eq ptr %i.o, %i.b
   br i1 %i.p, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
@@ -1363,7 +1363,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   resume { ptr, i32 } %i.n
 
 _ZNK11OpenImageIO4v3_111ColorConfig4Impl8geterrorB5cxx11Eb.exit: ; preds = %bb.d, %bb.e
-  %4 = atomicrmw sub ptr %i.d, i32 1073741824 release, align 4, !noalias !474 ; 0 uses
+  %4 = atomicrmw add ptr %i.d, i32 -1073741824 release, align 4, !noalias !474 ; 0 uses
   ret void
 }
 
@@ -1766,7 +1766,7 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ba, %bb.aw, %bb.as, %bb.aq, %bb.am, %bb.ak, %bb.ai, %bb.ag, %bb.ab, %_ZN11OpenImageIO4v3_113spin_rw_mutex16write_lock_guardC2ERS1_.exit
   %i.ch = landingpad { ptr, i32 }
           cleanup
-  %26 = atomicrmw sub ptr %i.bh, i32 1073741824 release, align 4 ; 0 uses
+  %26 = atomicrmw add ptr %i.bh, i32 -1073741824 release, align 4 ; 0 uses
   br label %bb.bn
 
 bb.ag:                                            ; preds = %bb.ad, %bb.ac
@@ -1954,7 +1954,7 @@ bb.be:                                            ; preds = %bb.bc, %bb.bb
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %bb.bd, %bb.az, %bb.av, %bb.ap, %bb.ae
-  %27 = atomicrmw sub ptr %i.bh, i32 1073741824 release, align 4 ; 0 uses
+  %27 = atomicrmw add ptr %i.bh, i32 -1073741824 release, align 4 ; 0 uses
   br label %bb.bg
 
 bb.bg:                                            ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_510ColorSpaceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.bf
@@ -2357,7 +2357,7 @@ _ZN11OpenImageIO4v3_111ColorConfig4Impl11clear_errorEv.exit: ; preds = %_ZN11Ope
   store i64 0, ptr %i.gq, align 8, !tbaa !78
   %i.gr = load ptr, ptr %i.gp, align 8, !tbaa !77
   store i8 0, ptr %i.gr, align 1, !tbaa !79
-  %29 = atomicrmw sub ptr %i.gg, i32 1073741824 release, align 4 ; 0 uses
+  %29 = atomicrmw add ptr %i.gg, i32 -1073741824 release, align 4 ; 0 uses
   br label %bb.br
 
 bb.bo:                                            ; preds = %bb.ay
@@ -2760,7 +2760,7 @@ bb.a:
   br i1 %.not.i.i, label %_ZN11OpenImageIO4v3_113spin_rw_mutex15read_lock_guardC2ERS1_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = atomicrmw sub ptr %i.c, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.c, i32 -1 seq_cst, align 4
   %i.f = add i32 %3, 1073741823
   %i.g = and i32 %i.f, 1073741823                 ; 2 uses
   %i.h = add nuw nsw i32 %i.g, 1
@@ -2847,13 +2847,13 @@ bb.j:                                             ; preds = %bb.h
   br label %_ZNSt10shared_ptrIN11OpenImageIO4v3_114ColorProcessorEEC2ERKS3_.exit
 
 _ZNSt10shared_ptrIN11OpenImageIO4v3_114ColorProcessorEEC2ERKS3_.exit: ; preds = %bb.j, %bb.i, %bb.g, %bb.f
-  %4 = atomicrmw sub ptr %i.c, i32 1 release, align 4 ; 0 uses
+  %4 = atomicrmw add ptr %i.c, i32 -1 release, align 4 ; 0 uses
   ret void
 
 bb.k:                                             ; preds = %_ZN11OpenImageIO4v3_113spin_rw_mutex15read_lock_guardC2ERS1_.exit
   %i.am = landingpad { ptr, i32 }
           cleanup
-  %5 = atomicrmw sub ptr %i.c, i32 1 release, align 4 ; 0 uses
+  %5 = atomicrmw add ptr %i.c, i32 -1 release, align 4 ; 0 uses
   resume { ptr, i32 } %i.am
 }
 
@@ -3064,14 +3064,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #38
-  %4 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %4 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   ret void
 
 bb.j:                                             ; preds = %_ZN11OpenImageIO4v3_113spin_rw_mutex16write_lock_guardC2ERS1_.exit
   %i.an = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #38
-  %5 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %5 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   resume { ptr, i32 } %i.an
 }
 
@@ -3278,14 +3278,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
-  %5 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %5 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   ret void
 
 bb.j:                                             ; preds = %_ZN11OpenImageIO4v3_113spin_rw_mutex16write_lock_guardC2ERS1_.exit
   %i.ar = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
-  %6 = atomicrmw sub ptr %i.a, i32 1073741824 release, align 4 ; 0 uses
+  %6 = atomicrmw add ptr %i.a, i32 -1073741824 release, align 4 ; 0 uses
   resume { ptr, i32 } %i.ar
 }
 
@@ -3463,7 +3463,7 @@ _ZNSt10shared_ptrIN11OpenImageIO4v3_114ColorProcessorEEaSERKS3_.exit: ; preds = 
 bb.r:                                             ; preds = %bb.f, %_ZN11OpenImageIO4v3_113spin_rw_mutex16write_lock_guardC2ERS1_.exit
   %i.bb = landingpad { ptr, i32 }
           cleanup
-  %6 = atomicrmw sub ptr %i.e, i32 1073741824 release, align 4 ; 0 uses
+  %6 = atomicrmw add ptr %i.e, i32 -1073741824 release, align 4 ; 0 uses
   resume { ptr, i32 } %i.bb
 
 bb.s:                                             ; preds = %_ZN3tsl9robin_mapIN11OpenImageIO4v3_117ColorProcCacheKeyESt10shared_ptrINS2_14ColorProcessorEENS2_23ColorProcCacheKeyHasherESt8equal_toIS3_ESaISt4pairIS3_S6_EELb0ENS_2rh26power_of_two_growth_policyILm2EEEE4findERKS3_.exit
@@ -3560,7 +3560,7 @@ _ZNSt10shared_ptrIN11OpenImageIO4v3_114ColorProcessorEEaSERKS3_.exit15: ; preds 
   store ptr null, ptr %i.cg, align 8, !tbaa !95
   store ptr %i.cd, ptr %i.cf, align 8, !tbaa !95
   store ptr null, ptr %3, align 8, !tbaa !143
-  %7 = atomicrmw sub ptr %i.e, i32 1073741824 release, align 4 ; 0 uses
+  %7 = atomicrmw add ptr %i.e, i32 -1073741824 release, align 4 ; 0 uses
   br label %bb.ad
 
 bb.ad:                                            ; preds = %_ZNSt10shared_ptrIN11OpenImageIO4v3_114ColorProcessorEEaSERKS3_.exit15, %bb.b
@@ -3963,7 +3963,7 @@ _ZN11OpenImageIO4v3_111ColorConfig4Impl11clear_errorEv.exit: ; preds = %_ZN11Ope
   store i64 0, ptr %i.ib, align 8, !tbaa !78
   %i.ic = load ptr, ptr %i.ia, align 8, !tbaa !77
   store i8 0, ptr %i.ic, align 1, !tbaa !79
-  %33 = atomicrmw sub ptr %i.hr, i32 1073741824 release, align 4 ; 0 uses
+  %33 = atomicrmw add ptr %i.hr, i32 -1073741824 release, align 4 ; 0 uses
   %i.id = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #42
           to label %bb.ci unwind label %bb.df     ; 13 uses
 
@@ -4366,7 +4366,7 @@ _ZN11OpenImageIO4v3_111ColorConfig4Impl11clear_errorEv.exit: ; preds = %_ZN11Ope
   store i64 0, ptr %i.ib, align 8, !tbaa !78
   %i.ic = load ptr, ptr %i.ia, align 8, !tbaa !77
   store i8 0, ptr %i.ic, align 1, !tbaa !79
-  %31 = atomicrmw sub ptr %i.hr, i32 1073741824 release, align 4 ; 0 uses
+  %31 = atomicrmw add ptr %i.hr, i32 -1073741824 release, align 4 ; 0 uses
   %i.id = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #42
           to label %bb.bq unwind label %bb.cn     ; 13 uses
 
@@ -4769,7 +4769,7 @@ _ZN11OpenImageIO4v3_111ColorConfig4Impl11clear_errorEv.exit: ; preds = %_ZN11Ope
   store i64 0, ptr %i.dx, align 8, !tbaa !78
   %i.dy = load ptr, ptr %i.dw, align 8, !tbaa !77
   store i8 0, ptr %i.dy, align 1, !tbaa !79
-  %14 = atomicrmw sub ptr %i.dn, i32 1073741824 release, align 4 ; 0 uses
+  %14 = atomicrmw add ptr %i.dn, i32 -1073741824 release, align 4 ; 0 uses
   %i.dz = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #42
           to label %bb.as unwind label %bb.bs     ; 13 uses
 
@@ -5172,7 +5172,7 @@ _ZN11OpenImageIO4v3_111ColorConfig4Impl11clear_errorEv.exit: ; preds = %_ZN11Ope
   store i64 0, ptr %i.fr, align 8, !tbaa !78
   %i.fs = load ptr, ptr %i.fq, align 8, !tbaa !77
   store i8 0, ptr %i.fs, align 1, !tbaa !79
-  %22 = atomicrmw sub ptr %i.fh, i32 1073741824 release, align 4 ; 0 uses
+  %22 = atomicrmw add ptr %i.fh, i32 -1073741824 release, align 4 ; 0 uses
   %i.ft = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #42
           to label %bb.bb unwind label %bb.by     ; 13 uses
 
@@ -5575,7 +5575,7 @@ bb.ag:                                            ; preds = %_ZNSt12__shared_ptr
   br i1 %.not.i.i.i.i38, label %.loopexit68, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %29 = atomicrmw sub ptr %i.cv, i32 1 seq_cst, align 4
+  %29 = atomicrmw add ptr %i.cv, i32 -1 seq_cst, align 4
   %i.cy = add i32 %29, 1073741823
   %i.cz = and i32 %i.cy, 1073741823               ; 2 uses
   %i.da = add nuw nsw i32 %i.cz, 1
@@ -5620,7 +5620,7 @@ bb.ak:                                            ; preds = %bb.aj, %_ZN11OpenIm
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cu, i64 232
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !78
   %.not67 = icmp eq i64 %i.dn, 0
-  %30 = atomicrmw sub ptr %i.cv, i32 1 release, align 4 ; 0 uses
+  %30 = atomicrmw add ptr %i.cv, i32 -1 release, align 4 ; 0 uses
   br i1 %.not67, label %bb.ar, label %bb.al
 
 bb.al:                                            ; preds = %.loopexit68
@@ -5671,7 +5671,7 @@ _ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i: ; preds = %bb.an, %_ZN11
 .loopexit:                                        ; preds = %_ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i, %bb.al
   %i.ea = getelementptr inbounds nuw i8, ptr %i.do, i64 224
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %27, ptr noundef nonnull align 8 dereferenceable(32) %i.ea) #38
-  %31 = atomicrmw sub ptr %i.dr, i32 1073741824 release, align 4, !noalias !628 ; 0 uses
+  %31 = atomicrmw add ptr %i.dr, i32 -1073741824 release, align 4, !noalias !628 ; 0 uses
   invoke void @_ZNK11OpenImageIO4v3_18ImageBuf8errorfmtIA3_cJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvRKT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(3) @.str.69, ptr noundef nonnull align 8 dereferenceable(32) %27)
           to label %bb.ao unwind label %bb.aq
 
@@ -6074,7 +6074,7 @@ bb.an:                                            ; preds = %_ZNSt12__shared_ptr
   br i1 %.not.i.i.i.i50, label %.loopexit84, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %37 = atomicrmw sub ptr %i.di, i32 1 seq_cst, align 4
+  %37 = atomicrmw add ptr %i.di, i32 -1 seq_cst, align 4
   %i.dl = add i32 %37, 1073741823
   %i.dm = and i32 %i.dl, 1073741823               ; 2 uses
   %i.dn = add nuw nsw i32 %i.dm, 1
@@ -6119,7 +6119,7 @@ bb.ar:                                            ; preds = %bb.aq, %_ZN11OpenIm
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dh, i64 232
   %i.ea = load i64, ptr %i.dz, align 8, !tbaa !78
   %.not83 = icmp eq i64 %i.ea, 0
-  %38 = atomicrmw sub ptr %i.di, i32 1 release, align 4 ; 0 uses
+  %38 = atomicrmw add ptr %i.di, i32 -1 release, align 4 ; 0 uses
   br i1 %.not83, label %bb.ay, label %bb.as
 
 bb.as:                                            ; preds = %.loopexit84
@@ -6170,7 +6170,7 @@ _ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i: ; preds = %bb.au, %_ZN11
 .loopexit:                                        ; preds = %_ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i, %bb.as
   %i.en = getelementptr inbounds nuw i8, ptr %i.eb, i64 224
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %35, ptr noundef nonnull align 8 dereferenceable(32) %i.en) #38
-  %39 = atomicrmw sub ptr %i.ee, i32 1073741824 release, align 4, !noalias !683 ; 0 uses
+  %39 = atomicrmw add ptr %i.ee, i32 -1073741824 release, align 4, !noalias !683 ; 0 uses
   invoke void @_ZNK11OpenImageIO4v3_18ImageBuf8errorfmtIA3_cJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvRKT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(3) @.str.69, ptr noundef nonnull align 8 dereferenceable(32) %35)
           to label %bb.av unwind label %bb.ax
 
@@ -6573,7 +6573,7 @@ bb.ad:                                            ; preds = %_ZNSt12__shared_ptr
   br i1 %.not.i.i.i.i48, label %.loopexit129, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %40 = atomicrmw sub ptr %i.cq, i32 1 seq_cst, align 4
+  %40 = atomicrmw add ptr %i.cq, i32 -1 seq_cst, align 4
   %i.ct = add i32 %40, 1073741823
   %i.cu = and i32 %i.ct, 1073741823               ; 2 uses
   %i.cv = add nuw nsw i32 %i.cu, 1
@@ -6618,7 +6618,7 @@ bb.ah:                                            ; preds = %bb.ag, %_ZN11OpenIm
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cp, i64 232
   %i.di = load i64, ptr %i.dh, align 8, !tbaa !78
   %.not128 = icmp eq i64 %i.di, 0
-  %41 = atomicrmw sub ptr %i.cq, i32 1 release, align 4 ; 0 uses
+  %41 = atomicrmw add ptr %i.cq, i32 -1 release, align 4 ; 0 uses
   br i1 %.not128, label %bb.ao, label %bb.ai
 
 bb.ai:                                            ; preds = %.loopexit129
@@ -6669,7 +6669,7 @@ _ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i: ; preds = %bb.ak, %_ZN11
 .loopexit:                                        ; preds = %_ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i, %bb.ai
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dj, i64 224
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %33, ptr noundef nonnull align 8 dereferenceable(32) %i.dv) #38
-  %42 = atomicrmw sub ptr %i.dm, i32 1073741824 release, align 4, !noalias !710 ; 0 uses
+  %42 = atomicrmw add ptr %i.dm, i32 -1073741824 release, align 4, !noalias !710 ; 0 uses
   invoke void @_ZNK11OpenImageIO4v3_18ImageBuf8errorfmtIA3_cJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvRKT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(3) @.str.69, ptr noundef nonnull align 8 dereferenceable(32) %33)
           to label %bb.al unwind label %bb.an
 
@@ -7072,7 +7072,7 @@ bb.y:                                             ; preds = %_ZNSt12__shared_ptr
   br i1 %.not.i.i.i.i33, label %.loopexit57, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %19 = atomicrmw sub ptr %i.bc, i32 1 seq_cst, align 4
+  %19 = atomicrmw add ptr %i.bc, i32 -1 seq_cst, align 4
   %i.bf = add i32 %19, 1073741823
   %i.bg = and i32 %i.bf, 1073741823               ; 2 uses
   %i.bh = add nuw nsw i32 %i.bg, 1
@@ -7117,7 +7117,7 @@ bb.ac:                                            ; preds = %bb.ab, %_ZN11OpenIm
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bb, i64 232
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !78
   %.not56 = icmp eq i64 %i.bu, 0
-  %20 = atomicrmw sub ptr %i.bc, i32 1 release, align 4 ; 0 uses
+  %20 = atomicrmw add ptr %i.bc, i32 -1 release, align 4 ; 0 uses
   br i1 %.not56, label %bb.aj, label %bb.ad
 
 bb.ad:                                            ; preds = %.loopexit57
@@ -7168,7 +7168,7 @@ _ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i: ; preds = %bb.af, %_ZN11
 .loopexit:                                        ; preds = %_ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i, %bb.ad
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bv, i64 224
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %16, ptr noundef nonnull align 8 dereferenceable(32) %i.ch) #38
-  %21 = atomicrmw sub ptr %i.by, i32 1073741824 release, align 4, !noalias !727 ; 0 uses
+  %21 = atomicrmw add ptr %i.by, i32 -1073741824 release, align 4, !noalias !727 ; 0 uses
   invoke void @_ZNK11OpenImageIO4v3_18ImageBuf8errorfmtIA3_cJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvRKT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(3) @.str.69, ptr noundef nonnull align 8 dereferenceable(32) %16)
           to label %bb.ag unwind label %bb.ai
 
@@ -7571,7 +7571,7 @@ bb.x:                                             ; preds = %_ZNSt12__shared_ptr
   br i1 %.not.i.i.i.i26, label %.loopexit50, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %20 = atomicrmw sub ptr %i.bl, i32 1 seq_cst, align 4
+  %20 = atomicrmw add ptr %i.bl, i32 -1 seq_cst, align 4
   %i.bo = add i32 %20, 1073741823
   %i.bp = and i32 %i.bo, 1073741823               ; 2 uses
   %i.bq = add nuw nsw i32 %i.bp, 1
@@ -7616,7 +7616,7 @@ bb.ab:                                            ; preds = %bb.aa, %_ZN11OpenIm
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bk, i64 232
   %i.cd = load i64, ptr %i.cc, align 8, !tbaa !78
   %.not49 = icmp eq i64 %i.cd, 0
-  %21 = atomicrmw sub ptr %i.bl, i32 1 release, align 4 ; 0 uses
+  %21 = atomicrmw add ptr %i.bl, i32 -1 release, align 4 ; 0 uses
   br i1 %.not49, label %bb.ai, label %bb.ac
 
 bb.ac:                                            ; preds = %.loopexit50
@@ -7667,7 +7667,7 @@ _ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i: ; preds = %bb.ae, %_ZN11
 .loopexit:                                        ; preds = %_ZN11OpenImageIO4v3_114atomic_backoffclEv.exit.i.i.i.i, %bb.ac
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ce, i64 224
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %19, ptr noundef nonnull align 8 dereferenceable(32) %i.cq) #38
-  %22 = atomicrmw sub ptr %i.ch, i32 1073741824 release, align 4, !noalias !743 ; 0 uses
+  %22 = atomicrmw add ptr %i.ch, i32 -1073741824 release, align 4, !noalias !743 ; 0 uses
   invoke void @_ZNK11OpenImageIO4v3_18ImageBuf8errorfmtIA3_cJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvRKT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(3) @.str.69, ptr noundef nonnull align 8 dereferenceable(32) %19)
           to label %bb.af unwind label %bb.ah
 

@@ -202,7 +202,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.d:                                             ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8
-  %17 = atomicrmw sub ptr %i.n, i32 1 acq_rel, align 4
+  %17 = atomicrmw add ptr %i.n, i32 -1 acq_rel, align 4
   %i.o = icmp eq i32 %17, 1
   br i1 %i.o, label %bb.e, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
@@ -541,7 +541,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.av:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i185
   %i.dj = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.dk = load ptr, ptr %i.dj, align 8
-  %18 = atomicrmw sub ptr %i.dk, i32 1 acq_rel, align 4
+  %18 = atomicrmw add ptr %i.dk, i32 -1 acq_rel, align 4
   %i.dl = icmp eq i32 %18, 1
   br i1 %i.dl, label %bb.aw, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit187
 
@@ -880,7 +880,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.cn:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i208
   %i.hg = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   %i.hh = load ptr, ptr %i.hg, align 8
-  %19 = atomicrmw sub ptr %i.hh, i32 1 acq_rel, align 4
+  %19 = atomicrmw add ptr %i.hh, i32 -1 acq_rel, align 4
   %i.hi = icmp eq i32 %19, 1
   br i1 %i.hi, label %bb.co, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit210
 
@@ -1219,7 +1219,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.ef:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i231
   %i.ld = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
   %i.le = load ptr, ptr %i.ld, align 8
-  %20 = atomicrmw sub ptr %i.le, i32 1 acq_rel, align 4
+  %20 = atomicrmw add ptr %i.le, i32 -1 acq_rel, align 4
   %i.lf = icmp eq i32 %20, 1
   br i1 %i.lf, label %bb.eg, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit233
 
@@ -1622,7 +1622,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.b:                                             ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8
-  %1 = atomicrmw sub ptr %i.f, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.f, i32 -1 acq_rel, align 4
   %i.g = icmp eq i32 %1, 1
   br i1 %i.g, label %bb.c, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit
 
@@ -1726,7 +1726,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.d:                                             ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8
-  %17 = atomicrmw sub ptr %i.n, i32 1 acq_rel, align 4
+  %17 = atomicrmw add ptr %i.n, i32 -1 acq_rel, align 4
   %i.o = icmp eq i32 %17, 1
   br i1 %i.o, label %bb.e, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
@@ -2065,7 +2065,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.av:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i185
   %i.dj = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.dk = load ptr, ptr %i.dj, align 8
-  %18 = atomicrmw sub ptr %i.dk, i32 1 acq_rel, align 4
+  %18 = atomicrmw add ptr %i.dk, i32 -1 acq_rel, align 4
   %i.dl = icmp eq i32 %18, 1
   br i1 %i.dl, label %bb.aw, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit187
 
@@ -2404,7 +2404,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.cn:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i208
   %i.hg = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   %i.hh = load ptr, ptr %i.hg, align 8
-  %19 = atomicrmw sub ptr %i.hh, i32 1 acq_rel, align 4
+  %19 = atomicrmw add ptr %i.hh, i32 -1 acq_rel, align 4
   %i.hi = icmp eq i32 %19, 1
   br i1 %i.hi, label %bb.co, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit210
 
@@ -2743,7 +2743,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.ef:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i231
   %i.ld = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
   %i.le = load ptr, ptr %i.ld, align 8
-  %20 = atomicrmw sub ptr %i.le, i32 1 acq_rel, align 4
+  %20 = atomicrmw add ptr %i.le, i32 -1 acq_rel, align 4
   %i.lf = icmp eq i32 %20, 1
   br i1 %i.lf, label %bb.eg, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit233
 
@@ -3125,7 +3125,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.e:                                             ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8
-  %17 = atomicrmw sub ptr %i.n, i32 1 acq_rel, align 4
+  %17 = atomicrmw add ptr %i.n, i32 -1 acq_rel, align 4
   %i.o = icmp eq i32 %17, 1
   br i1 %i.o, label %bb.f, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
@@ -3481,7 +3481,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.ba:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i194
   %i.dl = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.dm = load ptr, ptr %i.dl, align 8
-  %18 = atomicrmw sub ptr %i.dm, i32 1 acq_rel, align 4
+  %18 = atomicrmw add ptr %i.dm, i32 -1 acq_rel, align 4
   %i.dn = icmp eq i32 %18, 1
   br i1 %i.dn, label %bb.bb, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit196
 
@@ -3837,7 +3837,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.cv:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i217
   %i.hk = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   %i.hl = load ptr, ptr %i.hk, align 8
-  %19 = atomicrmw sub ptr %i.hl, i32 1 acq_rel, align 4
+  %19 = atomicrmw add ptr %i.hl, i32 -1 acq_rel, align 4
   %i.hm = icmp eq i32 %19, 1
   br i1 %i.hm, label %bb.cw, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit219
 
@@ -4193,7 +4193,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.er:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i240
   %i.lj = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
   %i.lk = load ptr, ptr %i.lj, align 8
-  %20 = atomicrmw sub ptr %i.lk, i32 1 acq_rel, align 4
+  %20 = atomicrmw add ptr %i.lk, i32 -1 acq_rel, align 4
   %i.ll = icmp eq i32 %20, 1
   br i1 %i.ll, label %bb.es, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit242
 
@@ -4596,7 +4596,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.ac:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i
   %i.cc = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   %i.cd = load ptr, ptr %i.cc, align 8
-  %25 = atomicrmw sub ptr %i.cd, i32 1 acq_rel, align 4
+  %25 = atomicrmw add ptr %i.cd, i32 -1 acq_rel, align 4
   %i.ce = icmp eq i32 %25, 1
   br i1 %i.ce, label %bb.ad, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
@@ -4935,7 +4935,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.bu:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i195
   %i.fz = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
   %i.ga = load ptr, ptr %i.fz, align 8
-  %26 = atomicrmw sub ptr %i.ga, i32 1 acq_rel, align 4
+  %26 = atomicrmw add ptr %i.ga, i32 -1 acq_rel, align 4
   %i.gb = icmp eq i32 %26, 1
   br i1 %i.gb, label %bb.bv, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit197
 
@@ -5274,7 +5274,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.dm:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i218
   %i.jw = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
   %i.jx = load ptr, ptr %i.jw, align 8
-  %27 = atomicrmw sub ptr %i.jx, i32 1 acq_rel, align 4
+  %27 = atomicrmw add ptr %i.jx, i32 -1 acq_rel, align 4
   %i.jy = icmp eq i32 %27, 1
   br i1 %i.jy, label %bb.dn, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit220
 
@@ -5613,7 +5613,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.fe:                                            ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i241
   %i.nt = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
   %i.nu = load ptr, ptr %i.nt, align 8
-  %28 = atomicrmw sub ptr %i.nu, i32 1 acq_rel, align 4
+  %28 = atomicrmw add ptr %i.nu, i32 -1 acq_rel, align 4
   %i.nv = icmp eq i32 %28, 1
   br i1 %i.nv, label %bb.ff, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit243
 
@@ -6016,7 +6016,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.b:                                             ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8
-  %1 = atomicrmw sub ptr %i.f, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.f, i32 -1 acq_rel, align 4
   %i.g = icmp eq i32 %1, 1
   br i1 %i.g, label %bb.c, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
@@ -6130,7 +6130,7 @@ _ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsI
 bb.b:                                             ; preds = %_ZNK7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8IsSharedEv.exit.i.i
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8
-  %1 = atomicrmw sub ptr %i.f, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.f, i32 -1 acq_rel, align 4
   %i.g = icmp eq i32 %1, 1
   br i1 %i.g, label %bb.c, label %_ZN7testing8internal11MatcherBaseIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 

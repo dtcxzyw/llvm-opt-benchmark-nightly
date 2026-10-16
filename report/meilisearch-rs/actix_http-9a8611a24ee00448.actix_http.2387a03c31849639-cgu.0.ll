@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5117)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5118)
   %i.g = load ptr, ptr %i.e, align 8, !alias.scope !5119, !nonnull !20, !noundef !20
-  %1 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !5119
+  %1 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !5119
   %i.h = icmp eq i64 %1, 1
   br i1 %i.h, label %bb.d, label %_ZN3std3sys12thread_local20abort_on_dtor_unwind17hd4bc1f3928712bfcE.exit
 
@@ -218,7 +218,7 @@ bb.e:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5120)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5121)
   %i.i = load ptr, ptr %i.e, align 8, !alias.scope !5122, !nonnull !20, !noundef !20
-  %2 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !5122
+  %2 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !5122
   %i.j = icmp eq i64 %2, 1
   br i1 %i.j, label %bb.f, label %_ZN3std3sys12thread_local20abort_on_dtor_unwind17hd4bc1f3928712bfcE.exit
 
@@ -621,7 +621,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5726)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5727)
   %i.b = load ptr, ptr %i.a, align 32, !alias.scope !5728, !nonnull !20, !noundef !20
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !5728
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !5728
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.b, label %"_ZN4core3ptr71drop_in_place$LT$alloc..sync..Arc$LT$tokio..task..local..Shared$GT$$GT$17h5c5af91f9b5b9e3dE.exit.i"
 
@@ -747,7 +747,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.an, label %common.resume, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %2 = atomicrmw sub ptr %i.am, i64 1 release, align 8, !noalias !5733
+  %2 = atomicrmw add ptr %i.am, i64 -1 release, align 8, !noalias !5733
   %i.ao = icmp eq i64 %2, 1
   br i1 %i.ao, label %bb.p, label %common.resume
 
@@ -765,7 +765,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ar, label %"_ZN4core3ptr56drop_in_place$LT$tokio..runtime..task..core..Trailer$GT$17hcd46f80ca000a66eE.exit", label %bb.q
 
 bb.q:                                             ; preds = %"_ZN4core3ptr121drop_in_place$LT$tokio..loom..std..unsafe_cell..UnsafeCell$LT$core..option..Option$LT$core..task..wake..Waker$GT$$GT$$GT$17hcbf0098037298baaE.exit.i"
-  %3 = atomicrmw sub ptr %i.aq, i64 1 release, align 8, !noalias !5737
+  %3 = atomicrmw add ptr %i.aq, i64 -1 release, align 8, !noalias !5737
   %i.as = icmp eq i64 %3, 1
   br i1 %i.as, label %bb.r, label %"_ZN4core3ptr56drop_in_place$LT$tokio..runtime..task..core..Trailer$GT$17hcd46f80ca000a66eE.exit"
 
@@ -1153,7 +1153,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5834)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5835)
   %i.b = load ptr, ptr %i.a, align 32, !alias.scope !5836, !nonnull !20, !noundef !20
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !5836
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !5836
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.b, label %"_ZN4core3ptr94drop_in_place$LT$alloc..sync..Arc$LT$tokio..runtime..scheduler..current_thread..Handle$GT$$GT$17h70bff66d7ee9cf67E.exit.i"
 
@@ -1279,7 +1279,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.an, label %common.resume, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %2 = atomicrmw sub ptr %i.am, i64 1 release, align 8, !noalias !5841
+  %2 = atomicrmw add ptr %i.am, i64 -1 release, align 8, !noalias !5841
   %i.ao = icmp eq i64 %2, 1
   br i1 %i.ao, label %bb.p, label %common.resume
 
@@ -1297,7 +1297,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ar, label %"_ZN4core3ptr56drop_in_place$LT$tokio..runtime..task..core..Trailer$GT$17hcd46f80ca000a66eE.exit", label %bb.q
 
 bb.q:                                             ; preds = %"_ZN4core3ptr121drop_in_place$LT$tokio..loom..std..unsafe_cell..UnsafeCell$LT$core..option..Option$LT$core..task..wake..Waker$GT$$GT$$GT$17hcbf0098037298baaE.exit.i"
-  %3 = atomicrmw sub ptr %i.aq, i64 1 release, align 8, !noalias !5845
+  %3 = atomicrmw add ptr %i.aq, i64 -1 release, align 8, !noalias !5845
   %i.as = icmp eq i64 %3, 1
   br i1 %i.as, label %bb.r, label %"_ZN4core3ptr56drop_in_place$LT$tokio..runtime..task..core..Trailer$GT$17hcd46f80ca000a66eE.exit"
 
@@ -1465,7 +1465,7 @@ bb.k:                                             ; preds = %bb.j
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5878)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5879)
   %i.z = load ptr, ptr %i.w, align 8, !alias.scope !5880, !nonnull !20, !noundef !20
-  %1 = atomicrmw sub ptr %i.z, i64 1 release, align 8, !noalias !5881
+  %1 = atomicrmw add ptr %i.z, i64 -1 release, align 8, !noalias !5881
   %i.aa = icmp eq i64 %1, 1
   br i1 %i.aa, label %bb.l, label %common.resume
 
@@ -1478,7 +1478,7 @@ bb.m:                                             ; preds = %bb.j
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5882)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5883)
   %i.ab = load ptr, ptr %i.w, align 8, !alias.scope !5884, !nonnull !20, !noundef !20
-  %2 = atomicrmw sub ptr %i.ab, i64 1 release, align 8, !noalias !5885
+  %2 = atomicrmw add ptr %i.ab, i64 -1 release, align 8, !noalias !5885
   %i.ac = icmp eq i64 %2, 1
   br i1 %i.ac, label %bb.n, label %"_ZN4core3ptr209drop_in_place$LT$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$futures_core..stream..Stream$u2b$Item$u20$$u3d$$u20$core..result..Result$LT$bytes..bytes..Bytes$C$actix_http..error..PayloadError$GT$$GT$$GT$$GT$17hd81f17b901a14239E.exit"
 
@@ -1881,7 +1881,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6074)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6075)
   %i.b = load ptr, ptr %0, align 8, !alias.scope !6076, !nonnull !20, !noundef !20
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !6077
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !6077
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.c, label %"_ZN4core3ptr118drop_in_place$LT$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$h2..proto..streams..streams..Inner$GT$$GT$$GT$17h6b4d6b7eb5bb6ac9E.exit.i"
 
@@ -1894,7 +1894,7 @@ bb.d:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6078)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6079)
   %i.d = load ptr, ptr %0, align 8, !alias.scope !6080, !nonnull !20, !noundef !20
-  %2 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !6081
+  %2 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !6081
   %i.e = icmp eq i64 %2, 1
   br i1 %i.e, label %bb.e, label %"_ZN4core3ptr65drop_in_place$LT$h2..proto..streams..streams..OpaqueStreamRef$GT$17h3eb05d2aaa70f45bE.exit"
 
@@ -2070,7 +2070,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6120)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6121)
   %i.e = load ptr, ptr %i.c, align 8, !alias.scope !6122, !nonnull !20, !noundef !20
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8, !noalias !6122
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8, !noalias !6122
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.e, label %"_ZN4core3ptr54drop_in_place$LT$tokio..runtime..scheduler..Handle$GT$17hba8c8dd2fa190caeE.exit.i.i"
 
@@ -2083,7 +2083,7 @@ bb.f:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6123)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6124)
   %i.g = load ptr, ptr %i.c, align 8, !alias.scope !6125, !nonnull !20, !noundef !20
-  %2 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !6125
+  %2 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !6125
   %i.h = icmp eq i64 %2, 1
   br i1 %i.h, label %bb.g, label %"_ZN4core3ptr54drop_in_place$LT$tokio..runtime..scheduler..Handle$GT$17hba8c8dd2fa190caeE.exit.i.i"
 
@@ -2486,7 +2486,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6278)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6279)
   %i.d = load ptr, ptr %i.b, align 8, !alias.scope !6280, !nonnull !20, !noundef !20
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !6280
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !6280
   %i.e = icmp eq i64 %1, 1
   br i1 %i.e, label %bb.c, label %"_ZN4core3ptr94drop_in_place$LT$alloc..sync..Arc$LT$tokio..runtime..scheduler..current_thread..Handle$GT$$GT$17h70bff66d7ee9cf67E.exit"
 
@@ -2499,7 +2499,7 @@ bb.d:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6281)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6282)
   %i.f = load ptr, ptr %i.b, align 8, !alias.scope !6283, !nonnull !20, !noundef !20
-  %2 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !6283
+  %2 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !6283
   %i.g = icmp eq i64 %2, 1
   br i1 %i.g, label %bb.e, label %"_ZN4core3ptr94drop_in_place$LT$alloc..sync..Arc$LT$tokio..runtime..scheduler..current_thread..Handle$GT$$GT$17h70bff66d7ee9cf67E.exit"
 
@@ -2671,7 +2671,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %"_ZN4core3ptr67drop_in_place$LT$tokio..runtime..task..TaskHarnessScheduleHooks$GT$17h6024943275e96b99E.exit", label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %1 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !6329
+  %1 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !6329
   %i.j = icmp eq i64 %1, 1
   br i1 %i.j, label %bb.e, label %"_ZN4core3ptr67drop_in_place$LT$tokio..runtime..task..TaskHarnessScheduleHooks$GT$17h6024943275e96b99E.exit"
 
@@ -2689,7 +2689,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.m, label %"_ZN4core3ptr67drop_in_place$LT$tokio..runtime..task..TaskHarnessScheduleHooks$GT$17h6024943275e96b99E.exit3", label %bb.f
 
 bb.f:                                             ; preds = %"_ZN4core3ptr121drop_in_place$LT$tokio..loom..std..unsafe_cell..UnsafeCell$LT$core..option..Option$LT$core..task..wake..Waker$GT$$GT$$GT$17hcbf0098037298baaE.exit"
-  %2 = atomicrmw sub ptr %i.l, i64 1 release, align 8, !noalias !6333
+  %2 = atomicrmw add ptr %i.l, i64 -1 release, align 8, !noalias !6333
   %i.n = icmp eq i64 %2, 1
   br i1 %i.n, label %bb.g, label %"_ZN4core3ptr67drop_in_place$LT$tokio..runtime..task..TaskHarnessScheduleHooks$GT$17h6024943275e96b99E.exit3"
 

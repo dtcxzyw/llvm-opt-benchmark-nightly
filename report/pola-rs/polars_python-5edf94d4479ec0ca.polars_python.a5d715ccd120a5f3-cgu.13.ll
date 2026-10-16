@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6062), !dbg !6081
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6063), !dbg !6140
   %i.bh = load ptr, ptr %i.bg, align 8, !dbg !6141, !alias.scope !6064, !nonnull !2779, !noundef !2779
-  %1 = atomicrmw sub ptr %i.bh, i64 1 release, align 8, !dbg !6142, !noalias !6064
+  %1 = atomicrmw add ptr %i.bh, i64 -1 release, align 8, !dbg !6142, !noalias !6064
   %i.bi = icmp eq i64 %1, 1, !dbg !6143
   br i1 %i.bi, label %bb.aq, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc4sync3ArcNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !6143
 

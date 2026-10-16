@@ -206,7 +206,7 @@ bb.f:                                             ; preds = %"_ZN5alloc4sync22Ar
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2713)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2714)
   %i.t = load ptr, ptr %i.c, align 8, !alias.scope !2715, !noalias !2711, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.t, i64 1 release, align 8, !noalias !2716
+  %2 = atomicrmw add ptr %i.t, i64 -1 release, align 8, !noalias !2716
   %i.u = icmp eq i64 %2, 1
   br i1 %i.u, label %bb.g, label %.noexc9.i.i
 
@@ -609,7 +609,7 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.experimental.noalias.scope.decl(metadata !14506), !noalias !14502
   call void @llvm.experimental.noalias.scope.decl(metadata !14507), !noalias !14502
   %i.bq = load ptr, ptr %i.bp, align 8, !alias.scope !14508, !noalias !14502, !nonnull !145, !noundef !145
-  %3 = atomicrmw sub ptr %i.bq, i64 1 release, align 8, !noalias !14509
+  %3 = atomicrmw add ptr %i.bq, i64 -1 release, align 8, !noalias !14509
   %i.br = icmp eq i64 %3, 1
   br i1 %i.br, label %bb.u, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit3.i"
 
@@ -1012,7 +1012,7 @@ bb.bg:                                            ; preds = %bb.bf
   call void @llvm.experimental.noalias.scope.decl(metadata !53764)
   call void @llvm.experimental.noalias.scope.decl(metadata !53765)
   %i.sw = load ptr, ptr %i.jt, align 8, !alias.scope !53766, !noalias !53753, !nonnull !145, !noundef !145
-  %3 = atomicrmw sub ptr %i.sw, i64 1 release, align 8, !noalias !53767
+  %3 = atomicrmw add ptr %i.sw, i64 -1 release, align 8, !noalias !53767
   %i.sx = icmp eq i64 %3, 1
   br i1 %i.sx, label %bb.bh, label %"_ZN4core3ptr52drop_in_place$LT$rustyline..tty..unix..PosixMode$GT$17hd13339a45c518c0cE.exit.i"
 
@@ -1039,7 +1039,7 @@ bb.bh:                                            ; preds = %bb.bg
   call void @llvm.experimental.noalias.scope.decl(metadata !53769)
   call void @llvm.experimental.noalias.scope.decl(metadata !53770)
   %i.sy = load ptr, ptr %i.jt, align 8, !alias.scope !53771, !noalias !53753, !nonnull !145, !noundef !145
-  %4 = atomicrmw sub ptr %i.sy, i64 1 release, align 8, !noalias !53772
+  %4 = atomicrmw add ptr %i.sy, i64 -1 release, align 8, !noalias !53772
   %i.sz = icmp eq i64 %4, 1
   br i1 %i.sz, label %bb.bi, label %"_ZN4core3ptr52drop_in_place$LT$rustyline..tty..unix..PosixMode$GT$17hd13339a45c518c0cE.exit59.i"
 
@@ -1062,7 +1062,7 @@ bb.bj:                                            ; preds = %"_ZN4core3ptr104dro
   call void @llvm.experimental.noalias.scope.decl(metadata !53774)
   call void @llvm.experimental.noalias.scope.decl(metadata !53775)
   %i.ta = load ptr, ptr %i.jt, align 8, !alias.scope !53776, !noalias !53753, !nonnull !145, !noundef !145
-  %5 = atomicrmw sub ptr %i.ta, i64 1 release, align 8, !noalias !53777
+  %5 = atomicrmw add ptr %i.ta, i64 -1 release, align 8, !noalias !53777
   %i.tb = icmp eq i64 %5, 1
   br i1 %i.tb, label %bb.bk, label %.body167
 
@@ -1465,7 +1465,7 @@ bb.ao:                                            ; preds = %bb.al, %_ZN4core5al
   call void @llvm.experimental.noalias.scope.decl(metadata !56054)
   call void @llvm.experimental.noalias.scope.decl(metadata !56055)
   %i.dt = load ptr, ptr %i.s, align 8, !alias.scope !56056, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.dt, i64 1 release, align 8, !noalias !56056
+  %2 = atomicrmw add ptr %i.dt, i64 -1 release, align 8, !noalias !56056
   %i.du = icmp eq i64 %2, 1
   br i1 %i.du, label %bb.ap, label %"_ZN4core3ptr62drop_in_place$LT$regex_automata..util..captures..GroupInfo$GT$17h72ab410baa7b62d9E.exit.i.i"
 
@@ -1868,7 +1868,7 @@ bb.d:                                             ; preds = %_ZN3std2fs14read_to
   call void @llvm.experimental.noalias.scope.decl(metadata !57567)
   call void @llvm.experimental.noalias.scope.decl(metadata !57568)
   %i.ac = load ptr, ptr %i.b, align 8, !alias.scope !57569, !noalias !57564, !nonnull !145, !noundef !145
-  %6 = atomicrmw sub ptr %i.ac, i64 1 release, align 8, !noalias !57570
+  %6 = atomicrmw add ptr %i.ac, i64 -1 release, align 8, !noalias !57570
   %i.ad = icmp eq i64 %6, 1
   br i1 %i.ad, label %bb.e, label %.body.thread
 
@@ -2271,7 +2271,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.experimental.noalias.scope.decl(metadata !60712)
   call void @llvm.experimental.noalias.scope.decl(metadata !60713)
   %i.k = load ptr, ptr %i.b, align 8, !alias.scope !60714, !noalias !60710, !nonnull !145, !noundef !145
-  %3 = atomicrmw sub ptr %i.k, i64 1 release, align 8, !noalias !60715
+  %3 = atomicrmw add ptr %i.k, i64 -1 release, align 8, !noalias !60715
   %i.l = icmp eq i64 %3, 1
   br i1 %i.l, label %bb.c, label %.noexc.i.i
 
@@ -2674,7 +2674,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ZN3std4sync6poison4Flag4done17h723d8023d05917a8E.exit.i.i
 
 _ZN3std4sync6poison4Flag4done17h723d8023d05917a8E.exit.i.i: ; preds = %bb.bf, %bb.be, %bb.bd, %"_ZN18nickel_lang_parser10identifier8interner104_$LT$impl$u20$nickel_lang_parser..identifier..interner..ouroboros_impl_inner_interner..InnerInterner$GT$13get_or_intern17hfc0fb94a42c0f4f4E.exit"
-  %2 = atomicrmw sub ptr @_ZN18nickel_lang_parser10identifier8INTERNER17hc0447100e2e2068fE, i32 1073741823 release, align 4
+  %2 = atomicrmw add ptr @_ZN18nickel_lang_parser10identifier8INTERNER17hc0447100e2e2068fE, i32 -1073741823 release, align 4
   %i.kj = add i32 %2, -1073741823                 ; 2 uses
   %or.cond.i.i = icmp ult i32 %i.kj, 1073741824
   br i1 %or.cond.i.i, label %"_ZN4core3ptr158drop_in_place$LT$std..sync..poison..rwlock..RwLockWriteGuard$LT$nickel_lang_parser..identifier..interner..ouroboros_impl_inner_interner..InnerInterner$GT$$GT$17hcea99e8b00bf4752E.exit", label %bb.bg, !prof !213
@@ -3077,7 +3077,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !79891)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !79892)
   %i.m = load ptr, ptr %i.b, align 8, !alias.scope !79893, !noalias !79888, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !79894
+  %2 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !79894
   %i.n = icmp eq i64 %2, 1
   br i1 %i.n, label %bb.b, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit.i"
 
@@ -3364,7 +3364,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !79969)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !79970)
   %i.i = load ptr, ptr %i.c, align 8, !alias.scope !79971, !noalias !79967, !nonnull !145, !noundef !145
-  %3 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !79972
+  %3 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !79972
   %i.j = icmp eq i64 %3, 1
   br i1 %i.j, label %bb.b, label %.noexc.i
 
@@ -3767,7 +3767,7 @@ bb.o:                                             ; preds = %bb.l
   call void @llvm.experimental.noalias.scope.decl(metadata !80118)
   call void @llvm.experimental.noalias.scope.decl(metadata !80119)
   %i.as = load ptr, ptr %i.f, align 8, !alias.scope !80120, !noalias !80116, !nonnull !145, !noundef !145
-  %3 = atomicrmw sub ptr %i.as, i64 1 release, align 8, !noalias !80121
+  %3 = atomicrmw add ptr %i.as, i64 -1 release, align 8, !noalias !80121
   %i.at = icmp eq i64 %3, 1
   br i1 %i.at, label %bb.p, label %.noexc.i
 
@@ -4000,7 +4000,7 @@ bb.ag:                                            ; preds = %bb.ab, %"_ZN5alloc2
   call void @llvm.experimental.noalias.scope.decl(metadata !80134)
   call void @llvm.experimental.noalias.scope.decl(metadata !80135)
   %i.da = load ptr, ptr %i.am, align 8, !alias.scope !80136, !nonnull !145, !noundef !145
-  %4 = atomicrmw sub ptr %i.da, i64 1 release, align 8, !noalias !80136
+  %4 = atomicrmw add ptr %i.da, i64 -1 release, align 8, !noalias !80136
   %i.db = icmp eq i64 %4, 1
   br i1 %i.db, label %bb.ah, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit"
 
@@ -4108,7 +4108,7 @@ bb.ap:                                            ; preds = %bb.ao
   call void @llvm.experimental.noalias.scope.decl(metadata !80151)
   call void @llvm.experimental.noalias.scope.decl(metadata !80152)
   %i.dy = load ptr, ptr %i.dx, align 8, !alias.scope !80153, !nonnull !145, !noundef !145
-  %5 = atomicrmw sub ptr %i.dy, i64 1 release, align 8, !noalias !80154
+  %5 = atomicrmw add ptr %i.dy, i64 -1 release, align 8, !noalias !80154
   %i.dz = icmp eq i64 %5, 1
   br i1 %i.dz, label %bb.aq, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit3.i.i"
 
@@ -4205,7 +4205,7 @@ bb.ba:                                            ; preds = %.sink.split, %.noex
   call void @llvm.experimental.noalias.scope.decl(metadata !80163)
   call void @llvm.experimental.noalias.scope.decl(metadata !80164)
   %i.ep = load ptr, ptr %i.am, align 8, !alias.scope !80165, !nonnull !145, !noundef !145
-  %6 = atomicrmw sub ptr %i.ep, i64 1 release, align 8, !noalias !80165
+  %6 = atomicrmw add ptr %i.ep, i64 -1 release, align 8, !noalias !80165
   %i.eq = icmp eq i64 %6, 1
   br i1 %i.eq, label %bb.bb, label %.noexc19
 
@@ -4608,7 +4608,7 @@ bb.p:                                             ; preds = %bb.o
   tail call void @llvm.experimental.noalias.scope.decl(metadata !80416)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !80417)
   %i.ao = load ptr, ptr %i.an, align 8, !alias.scope !80418, !nonnull !145, !noundef !145
-  %4 = atomicrmw sub ptr %i.ao, i64 1 release, align 8, !noalias !80418
+  %4 = atomicrmw add ptr %i.ao, i64 -1 release, align 8, !noalias !80418
   %i.ap = icmp eq i64 %4, 1
   br i1 %i.ap, label %bb.q, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit3.i"
 
@@ -5011,7 +5011,7 @@ bb.c:                                             ; preds = %bb.g
   call void @llvm.experimental.noalias.scope.decl(metadata !81821)
   call void @llvm.experimental.noalias.scope.decl(metadata !81822)
   %i.x = load ptr, ptr %i.a, align 8, !alias.scope !81823, !noalias !81817, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.x, i64 1 release, align 8, !noalias !81823
+  %1 = atomicrmw add ptr %i.x, i64 -1 release, align 8, !noalias !81823
   %i.y = icmp eq i64 %1, 1
   br i1 %i.y, label %bb.d, label %"_ZN4core3ptr50drop_in_place$LT$std..sync..mpmc..waker..Entry$GT$17hd664f0248d866a15E.exit.i"
 
@@ -5051,7 +5051,7 @@ _ZN3std6thread6Thread6unpark17habd83e24d85fcb8eE.exit.i: ; preds = %bb.g, %bb.f,
   call void @llvm.experimental.noalias.scope.decl(metadata !81826)
   call void @llvm.experimental.noalias.scope.decl(metadata !81827)
   %i.al = load ptr, ptr %i.a, align 8, !alias.scope !81828, !noalias !81817, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.al, i64 1 release, align 8, !noalias !81828
+  %2 = atomicrmw add ptr %i.al, i64 -1 release, align 8, !noalias !81828
   %i.am = icmp eq i64 %2, 1
   br i1 %i.am, label %bb.h, label %"_ZN4core3ptr50drop_in_place$LT$std..sync..mpmc..waker..Entry$GT$17hd664f0248d866a15E.exit8.i"
 
@@ -5454,7 +5454,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !84516)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !84517)
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !84518, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !84519
+  %1 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !84519
   %i.n = icmp eq i64 %1, 1
   br i1 %i.n, label %bb.c, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit3.i.i.i"
 
@@ -5756,7 +5756,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !84581)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !84582)
   %i.g = load ptr, ptr %i.f, align 8, !alias.scope !84583, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !84583
+  %1 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !84583
   %i.h = icmp eq i64 %1, 1
   br i1 %i.h, label %bb.e, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit3.i.i"
 
@@ -6159,7 +6159,7 @@ bb.d:                                             ; preds = %"_ZN4core3ptr118dro
   tail call void @llvm.experimental.noalias.scope.decl(metadata !86838)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !86839)
   %i.x = load ptr, ptr %i.w, align 8, !alias.scope !86840, !noalias !86833, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.x, i64 1 release, align 8, !noalias !86841
+  %1 = atomicrmw add ptr %i.x, i64 -1 release, align 8, !noalias !86841
   %i.y = icmp eq i64 %1, 1
   br i1 %i.y, label %bb.e, label %"_ZN4core3ptr118drop_in_place$LT$$LP$regex_automata..util..determinize..state..State$C$regex_automata..hybrid..id..LazyStateID$RP$$GT$17hb85ce55625a44219E.exit.i.i.i.i.i"
 
@@ -6562,7 +6562,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN3std4sync6poison4Flag4done17h723d8023d05917a8E.exit.i
 
 _ZN3std4sync6poison4Flag4done17h723d8023d05917a8E.exit.i: ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %0 = atomicrmw sub ptr %.0.val, i32 1073741823 release, align 4
+  %0 = atomicrmw add ptr %.0.val, i32 -1073741823 release, align 4
   %i.g = add i32 %0, -1073741823                  ; 2 uses
   %or.cond.i = icmp ult i32 %i.g, 1073741824
   br i1 %or.cond.i, label %"_ZN94_$LT$std..sync..poison..rwlock..RwLockWriteGuard$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h2b9c142489570908E.exit", label %bb.e, !prof !213
@@ -6965,7 +6965,7 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !87603)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !87604)
   %i.d = load ptr, ptr %0, align 8, !alias.scope !87605, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !87605
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !87605
   %i.e = icmp eq i64 %1, 1
   br i1 %i.e, label %bb.d, label %"_ZN4core3ptr164drop_in_place$LT$$LP$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$std..fs..File$GT$$GT$$C$std..sync..mpsc..SyncSender$LT$alloc..string..String$GT$$RP$$GT$17hc1c1607f21904563E.exit"
 
@@ -7368,7 +7368,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN3std4sync6poison4Flag4done17h723d8023d05917a8E.exit.i.i
 
 _ZN3std4sync6poison4Flag4done17h723d8023d05917a8E.exit.i.i: ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %1 = atomicrmw sub ptr %.val, i32 1073741823 release, align 4
+  %1 = atomicrmw add ptr %.val, i32 -1073741823 release, align 4
   %i.h = add i32 %1, -1073741823                  ; 2 uses
   %or.cond.i.i = icmp ult i32 %i.h, 1073741824
   br i1 %or.cond.i.i, label %"_ZN4core3ptr158drop_in_place$LT$std..sync..poison..rwlock..RwLockWriteGuard$LT$nickel_lang_parser..identifier..interner..ouroboros_impl_inner_interner..InnerInterner$GT$$GT$17hcea99e8b00bf4752E.exit", label %bb.e, !prof !213
@@ -7771,7 +7771,7 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !88611)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !88612)
   %i.e = load ptr, ptr %i.d, align 8, !alias.scope !88613, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8, !noalias !88613
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8, !noalias !88613
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.d, label %"_ZN4core3ptr62drop_in_place$LT$regex_automata..util..captures..GroupInfo$GT$17h72ab410baa7b62d9E.exit.i.i.i.i"
 
@@ -8174,7 +8174,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %"_ZN4core3ptr76drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$str$GT$$GT$$GT$17hb92006dcf63f8391E.exit3", label %bb.c
 
 bb.c:                                             ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h1f1c2976ae622c0aE.exit"
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8, !noalias !89313
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8, !noalias !89313
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.d, label %"_ZN4core3ptr76drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$str$GT$$GT$$GT$17hb92006dcf63f8391E.exit3"
 
@@ -8577,7 +8577,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89712)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89713)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !89714, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.a, i64 1 release, align 8, !noalias !89714
+  %1 = atomicrmw add ptr %i.a, i64 -1 release, align 8, !noalias !89714
   %i.b = icmp eq i64 %1, 1
   br i1 %i.b, label %bb.b, label %"_ZN4core3ptr80drop_in_place$LT$alloc..sync..Arc$LT$regex_automata..meta..regex..RegexI$GT$$GT$17h865fc93f4db48ff1E.exit.i"
 
@@ -8617,7 +8617,7 @@ bb.e:                                             ; preds = %"_ZN4core3ptr80drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89715)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89716)
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !89717, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !89717
+  %2 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !89717
   %i.j = icmp eq i64 %2, 1
   br i1 %i.j, label %bb.f, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit"
 
@@ -8631,7 +8631,7 @@ bb.f:                                             ; preds = %.body
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89718)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89719)
   %i.l = load ptr, ptr %i.k, align 8, !alias.scope !89720, !nonnull !145, !noundef !145
-  %3 = atomicrmw sub ptr %i.l, i64 1 release, align 8, !noalias !89720
+  %3 = atomicrmw add ptr %i.l, i64 -1 release, align 8, !noalias !89720
   %i.m = icmp eq i64 %3, 1
   br i1 %i.m, label %bb.g, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit1"
 
@@ -9034,7 +9034,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89998)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89999)
   %i.f = load ptr, ptr %0, align 8, !alias.scope !90000, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !90000
+  %1 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !90000
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.c, label %"_ZN4core3ptr73drop_in_place$LT$alloc..sync..Arc$LT$serde_yaml..error..ErrorImpl$GT$$GT$17h74de237ab3a36858E.exit"
 
@@ -9414,7 +9414,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.g, label %"_ZN4core3ptr124drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$dyn$u20$comrak..parser..options..BrokenLinkCallback$GT$$GT$$GT$17h51b04c1a65c60f9eE.exit1", label %bb.d
 
 bb.d:                                             ; preds = %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$alloc..string..String$GT$$GT$17hd43155df8a5fd256E.exit"
-  %1 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !90066
+  %1 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !90066
   %i.h = icmp eq i64 %1, 1
   br i1 %i.h, label %bb.e, label %"_ZN4core3ptr124drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$dyn$u20$comrak..parser..options..BrokenLinkCallback$GT$$GT$$GT$17h51b04c1a65c60f9eE.exit1"
 
@@ -9817,7 +9817,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90197)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90198)
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !90199, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !90199
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !90199
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %bb.b, label %"_ZN4core3ptr62drop_in_place$LT$regex_automata..util..captures..GroupInfo$GT$17h72ab410baa7b62d9E.exit.i"
 
@@ -10220,7 +10220,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90311)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90312)
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !90313, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !90313
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !90313
   %i.e = icmp eq i64 %1, 1
   br i1 %i.e, label %bb.c, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17ha1e0e7dd1c7461fbE.exit3"
 
@@ -10588,7 +10588,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.l, label %"_ZN4core3ptr117drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$dyn$u20$comrak..parser..options..URLRewriter$GT$$GT$$GT$17hcce1219194016d8fE.exit9.i", label %bb.f
 
 bb.f:                                             ; preds = %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$alloc..string..String$GT$$GT$17hd43155df8a5fd256E.exit7.i"
-  %1 = atomicrmw sub ptr %i.k, i64 1 release, align 8, !noalias !90465
+  %1 = atomicrmw add ptr %i.k, i64 -1 release, align 8, !noalias !90465
   %i.m = icmp eq i64 %1, 1
   br i1 %i.m, label %bb.g, label %"_ZN4core3ptr117drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$dyn$u20$comrak..parser..options..URLRewriter$GT$$GT$$GT$17hcce1219194016d8fE.exit9.i"
 
@@ -10598,7 +10598,7 @@ bb.g:                                             ; preds = %bb.f
           to label %"_ZN4core3ptr117drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$dyn$u20$comrak..parser..options..URLRewriter$GT$$GT$$GT$17hcce1219194016d8fE.exit9.i" unwind label %bb.j
 
 bb.h:                                             ; preds = %bb.j
-  %2 = atomicrmw sub ptr %i.q, i64 1 release, align 8, !noalias !90466
+  %2 = atomicrmw add ptr %i.q, i64 -1 release, align 8, !noalias !90466
   %i.n = icmp eq i64 %2, 1
   br i1 %i.n, label %bb.i, label %.body
 
@@ -10624,7 +10624,7 @@ bb.j:                                             ; preds = %bb.g
   br i1 %i.u, label %"_ZN4core3ptr55drop_in_place$LT$comrak..parser..options..Extension$GT$17hb35936277672e7aaE.exit", label %bb.k
 
 bb.k:                                             ; preds = %"_ZN4core3ptr117drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$dyn$u20$comrak..parser..options..URLRewriter$GT$$GT$$GT$17hcce1219194016d8fE.exit9.i"
-  %3 = atomicrmw sub ptr %i.t, i64 1 release, align 8, !noalias !90471
+  %3 = atomicrmw add ptr %i.t, i64 -1 release, align 8, !noalias !90471
   %i.v = icmp eq i64 %3, 1
   br i1 %i.v, label %bb.l, label %"_ZN4core3ptr55drop_in_place$LT$comrak..parser..options..Extension$GT$17hb35936277672e7aaE.exit"
 
@@ -10678,7 +10678,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ag, label %"_ZN4core3ptr51drop_in_place$LT$comrak..parser..options..Parse$GT$17h53f4b7b2505f485fE.exit", label %bb.q
 
 bb.q:                                             ; preds = %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$alloc..string..String$GT$$GT$17hd43155df8a5fd256E.exit.i2"
-  %4 = atomicrmw sub ptr %i.af, i64 1 release, align 8, !noalias !90480
+  %4 = atomicrmw add ptr %i.af, i64 -1 release, align 8, !noalias !90480
   %i.ah = icmp eq i64 %4, 1
   br i1 %i.ah, label %bb.r, label %"_ZN4core3ptr51drop_in_place$LT$comrak..parser..options..Parse$GT$17h53f4b7b2505f485fE.exit"
 
@@ -11081,7 +11081,7 @@ bb.h:                                             ; preds = %"_ZN4core3ptr118dro
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90783)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90784)
   %i.aj = load ptr, ptr %i.ai, align 8, !alias.scope !90785, !noalias !90778, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.aj, i64 1 release, align 8, !noalias !90786
+  %1 = atomicrmw add ptr %i.aj, i64 -1 release, align 8, !noalias !90786
   %i.ak = icmp eq i64 %1, 1
   br i1 %i.ak, label %bb.i, label %"_ZN4core3ptr118drop_in_place$LT$$LP$regex_automata..util..determinize..state..State$C$regex_automata..hybrid..id..LazyStateID$RP$$GT$17hb85ce55625a44219E.exit.i.i.i.i.i.i"
 
@@ -11242,7 +11242,7 @@ bb.u:                                             ; preds = %"_ZN4core3ptr80drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90797)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90798)
   %i.ci = load ptr, ptr %i.ch, align 8, !alias.scope !90799, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.ci, i64 1 release, align 8, !noalias !90799
+  %2 = atomicrmw add ptr %i.ci, i64 -1 release, align 8, !noalias !90799
   %i.cj = icmp eq i64 %2, 1
   br i1 %i.cj, label %bb.v, label %"_ZN4core3ptr60drop_in_place$LT$regex_automata..hybrid..dfa..StateSaver$GT$17he6cc38a26418a84cE.exit"
 
@@ -11264,7 +11264,7 @@ bb.w:                                             ; preds = %"_ZN4core3ptr80drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90802)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90803)
   %i.co = load ptr, ptr %i.cn, align 8, !alias.scope !90804, !nonnull !145, !noundef !145
-  %3 = atomicrmw sub ptr %i.co, i64 1 release, align 8, !noalias !90804
+  %3 = atomicrmw add ptr %i.co, i64 -1 release, align 8, !noalias !90804
   %i.cp = icmp eq i64 %3, 1
   br i1 %i.cp, label %bb.x, label %"_ZN4core3ptr60drop_in_place$LT$regex_automata..hybrid..dfa..StateSaver$GT$17he6cc38a26418a84cE.exit30"
 
@@ -11296,7 +11296,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90833)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90834)
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !90835, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !90835
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !90835
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %bb.b, label %"_ZN4core3ptr62drop_in_place$LT$regex_automata..util..captures..GroupInfo$GT$17h72ab410baa7b62d9E.exit.i"
 
@@ -11699,7 +11699,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90999)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !91000)
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !91001, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !91001
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !91001
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %bb.c, label %"_ZN4core3ptr75drop_in_place$LT$alloc..sync..Arc$LT$core..sync..atomic..AtomicBool$GT$$GT$17h08e10ec5ad266592E.exit"
 
@@ -11713,7 +11713,7 @@ bb.d:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !91002)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !91003)
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !91004, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !91004
+  %2 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !91004
   %i.g = icmp eq i64 %2, 1
   br i1 %i.g, label %bb.e, label %"_ZN4core3ptr75drop_in_place$LT$alloc..sync..Arc$LT$core..sync..atomic..AtomicBool$GT$$GT$17h08e10ec5ad266592E.exit5"
 
@@ -11731,7 +11731,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.j, label %"_ZN4core3ptr190drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$$LP$std..fs..File$C$std..sync..mpsc..Receiver$LT$alloc..string..String$GT$$RP$$GT$$GT$$GT$$GT$17hfe22cc4a929cb3f2E.exit", label %bb.f
 
 bb.f:                                             ; preds = %"_ZN4core3ptr75drop_in_place$LT$alloc..sync..Arc$LT$core..sync..atomic..AtomicBool$GT$$GT$17h08e10ec5ad266592E.exit"
-  %3 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !91006
+  %3 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !91006
   %i.k = icmp eq i64 %3, 1
   br i1 %i.k, label %bb.g, label %"_ZN4core3ptr190drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$$LP$std..fs..File$C$std..sync..mpsc..Receiver$LT$alloc..string..String$GT$$RP$$GT$$GT$$GT$$GT$17hfe22cc4a929cb3f2E.exit"
 
@@ -11753,7 +11753,7 @@ bb.h:                                             ; preds = %bb.e
   br i1 %i.o, label %"_ZN4core3ptr190drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$$LP$std..fs..File$C$std..sync..mpsc..Receiver$LT$alloc..string..String$GT$$RP$$GT$$GT$$GT$$GT$17hfe22cc4a929cb3f2E.exit8", label %bb.i
 
 bb.i:                                             ; preds = %"_ZN4core3ptr75drop_in_place$LT$alloc..sync..Arc$LT$core..sync..atomic..AtomicBool$GT$$GT$17h08e10ec5ad266592E.exit5"
-  %4 = atomicrmw sub ptr %i.n, i64 1 release, align 8, !noalias !91008
+  %4 = atomicrmw add ptr %i.n, i64 -1 release, align 8, !noalias !91008
   %i.p = icmp eq i64 %4, 1
   br i1 %i.p, label %bb.j, label %"_ZN4core3ptr190drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$$LP$std..fs..File$C$std..sync..mpsc..Receiver$LT$alloc..string..String$GT$$RP$$GT$$GT$$GT$$GT$17hfe22cc4a929cb3f2E.exit8"
 
@@ -11786,7 +11786,7 @@ bb.l:                                             ; preds = %"_ZN4core3ptr190dro
   tail call void @llvm.experimental.noalias.scope.decl(metadata !91011)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !91012)
   %i.w = load ptr, ptr %i.s, align 8, !alias.scope !91013, !nonnull !145, !noundef !145
-  %5 = atomicrmw sub ptr %i.w, i64 1 release, align 8, !noalias !91013
+  %5 = atomicrmw add ptr %i.w, i64 -1 release, align 8, !noalias !91013
   %i.x = icmp eq i64 %5, 1
   br i1 %i.x, label %bb.m, label %"_ZN4core3ptr164drop_in_place$LT$$LP$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$std..fs..File$GT$$GT$$C$std..sync..mpsc..SyncSender$LT$alloc..string..String$GT$$RP$$GT$17hc1c1607f21904563E.exit.i"
 
@@ -12189,7 +12189,7 @@ bb.a:
   br i1 %i.f, label %"_ZN4core3ptr190drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$$LP$std..fs..File$C$std..sync..mpsc..Receiver$LT$alloc..string..String$GT$$RP$$GT$$GT$$GT$$GT$17hfe22cc4a929cb3f2E.exit3", label %bb.b
 
 bb.b:                                             ; preds = %"_ZN4core3ptr95drop_in_place$LT$std..io..buffered..bufreader..BufReader$LT$rustyline..tty..unix..TtyIn$GT$$GT$17hc315545e452e17d2E.exit"
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8, !noalias !91323
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8, !noalias !91323
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.c, label %"_ZN4core3ptr190drop_in_place$LT$core..option..Option$LT$alloc..sync..Arc$LT$std..sync..poison..mutex..Mutex$LT$$LP$std..fs..File$C$std..sync..mpsc..Receiver$LT$alloc..string..String$GT$$RP$$GT$$GT$$GT$$GT$17hfe22cc4a929cb3f2E.exit3"
 
@@ -12592,7 +12592,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !92223)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !92224)
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !92225, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !92225
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !92225
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.b, label %"_ZN4core3ptr62drop_in_place$LT$regex_automata..util..captures..GroupInfo$GT$17h72ab410baa7b62d9E.exit"
 
@@ -12995,7 +12995,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94079)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94080)
   %i.f = load ptr, ptr %i.d, align 8, !alias.scope !94081, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !94082
+  %1 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !94082
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.b, label %"_ZN4core3ptr50drop_in_place$LT$std..sync..mpmc..waker..Entry$GT$17hd664f0248d866a15E.exit.i.i"
 
@@ -13023,7 +13023,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94085)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94086)
   %i.m = load ptr, ptr %i.k, align 8, !alias.scope !94087, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !94088
+  %2 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !94088
   %i.n = icmp eq i64 %2, 1
   br i1 %i.n, label %bb.d, label %"_ZN4core3ptr50drop_in_place$LT$std..sync..mpmc..waker..Entry$GT$17hd664f0248d866a15E.exit8.i.i"
 
@@ -13426,7 +13426,7 @@ default.unreachable.i.i:                          ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 512
-  %0 = atomicrmw sub ptr %i.b, i64 1 acq_rel, align 8
+  %0 = atomicrmw add ptr %i.b, i64 -1 acq_rel, align 8
   %i.c = icmp eq i64 %0, 1
   br i1 %i.c, label %bb.c, label %"_ZN4core3ptr73drop_in_place$LT$std..sync..mpmc..Sender$LT$alloc..string..String$GT$$GT$17hbffc113f5adceeebE.exit"
 
@@ -13550,7 +13550,7 @@ bb.m:                                             ; preds = %bb.l, %bb.i, %.body
 
 bb.n:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %.8.val, i64 384
-  %1 = atomicrmw sub ptr %i.ag, i64 1 acq_rel, align 8
+  %1 = atomicrmw add ptr %i.ag, i64 -1 acq_rel, align 8
   %i.ah = icmp eq i64 %1, 1
   br i1 %i.ah, label %bb.o, label %"_ZN4core3ptr73drop_in_place$LT$std..sync..mpmc..Sender$LT$alloc..string..String$GT$$GT$17hbffc113f5adceeebE.exit"
 
@@ -13669,7 +13669,7 @@ bb.y:                                             ; preds = %bb.x, %bb.v
 
 bb.z:                                             ; preds = %bb.a
   %i.bl = getelementptr inbounds nuw i8, ptr %.8.val, i64 112
-  %2 = atomicrmw sub ptr %i.bl, i64 1 acq_rel, align 8
+  %2 = atomicrmw add ptr %i.bl, i64 -1 acq_rel, align 8
   %i.bm = icmp eq i64 %2, 1
   br i1 %i.bm, label %bb.aa, label %"_ZN4core3ptr73drop_in_place$LT$std..sync..mpmc..Sender$LT$alloc..string..String$GT$$GT$17hbffc113f5adceeebE.exit"
 
@@ -14072,7 +14072,7 @@ bb.f:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94834)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94835)
   %i.ae = load ptr, ptr %i.ac, align 8, !alias.scope !94836, !noalias !94831, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.ae, i64 1 release, align 8, !noalias !94837
+  %1 = atomicrmw add ptr %i.ae, i64 -1 release, align 8, !noalias !94837
   %i.af = icmp eq i64 %1, 1
   br i1 %i.af, label %bb.g, label %"_ZN4core3ptr50drop_in_place$LT$std..sync..mpmc..waker..Entry$GT$17hd664f0248d866a15E.exit.i.i"
 
@@ -14100,7 +14100,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94840)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94841)
   %i.al = load ptr, ptr %i.aj, align 8, !alias.scope !94842, !noalias !94831, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.al, i64 1 release, align 8, !noalias !94843
+  %2 = atomicrmw add ptr %i.al, i64 -1 release, align 8, !noalias !94843
   %i.am = icmp eq i64 %2, 1
   br i1 %i.am, label %bb.i, label %"_ZN4core3ptr50drop_in_place$LT$std..sync..mpmc..waker..Entry$GT$17hd664f0248d866a15E.exit8.i.i"
 
@@ -14503,7 +14503,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95453)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95454)
   %i.f = load ptr, ptr %i.d, align 8, !alias.scope !95455, !nonnull !145, !noundef !145
-  %1 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !95456
+  %1 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !95456
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.b, label %"_ZN4core3ptr68drop_in_place$LT$regex_automata..util..determinize..state..State$GT$17ha67a8fafa108f1abE.exit.i.i"
 
@@ -14530,7 +14530,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95458)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95459)
   %i.m = load ptr, ptr %i.k, align 8, !alias.scope !95460, !nonnull !145, !noundef !145
-  %2 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !95461
+  %2 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !95461
   %i.n = icmp eq i64 %2, 1
   br i1 %i.n, label %bb.d, label %"_ZN4core3ptr68drop_in_place$LT$regex_automata..util..determinize..state..State$GT$17ha67a8fafa108f1abE.exit8.i.i"
 
@@ -14933,7 +14933,7 @@ bb.t:                                             ; preds = %bb.p
 bb.u:                                             ; preds = %bb.s
   %i.dc = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %3 = atomicrmw sub ptr %i.cs, i64 1 release, align 8, !noalias !98667
+  %3 = atomicrmw add ptr %i.cs, i64 -1 release, align 8, !noalias !98667
   %i.dd = icmp eq i64 %3, 1
   br i1 %i.dd, label %bb.v, label %common.resume
 
@@ -15131,7 +15131,7 @@ bb.af:                                            ; preds = %.noexc2.i
   call void @llvm.experimental.noalias.scope.decl(metadata !98681)
   call void @llvm.experimental.noalias.scope.decl(metadata !98682)
   %i.dy = load ptr, ptr %.sroa.812.0..sroa_idx, align 8, !alias.scope !98683, !nonnull !145, !noundef !145
-  %4 = atomicrmw sub ptr %i.dy, i64 1 release, align 8, !noalias !98684
+  %4 = atomicrmw add ptr %i.dy, i64 -1 release, align 8, !noalias !98684
   %i.dz = icmp eq i64 %4, 1
   br i1 %i.dz, label %bb.ag, label %"_ZN4core3ptr62drop_in_place$LT$regex_automata..util..captures..GroupInfo$GT$17h72ab410baa7b62d9E.exit.i.i.i"
 
@@ -15534,7 +15534,7 @@ bb.ag:                                            ; preds = %"_ZN4core3ptr43drop
   br i1 %i.gy, label %"_ZN4core3ptr57drop_in_place$LT$rustyline..tty..unix..PosixRawReader$GT$17hebe23557e6b86c50E.exit", label %bb.ah
 
 bb.ah:                                            ; preds = %"_ZN4core3ptr95drop_in_place$LT$std..io..buffered..bufreader..BufReader$LT$rustyline..tty..unix..TtyIn$GT$$GT$17hc315545e452e17d2E.exit.i"
-  %5 = atomicrmw sub ptr %i.gx, i64 1 release, align 8, !noalias !129290
+  %5 = atomicrmw add ptr %i.gx, i64 -1 release, align 8, !noalias !129290
   %i.gz = icmp eq i64 %5, 1
   br i1 %i.gz, label %bb.ai, label %"_ZN4core3ptr57drop_in_place$LT$rustyline..tty..unix..PosixRawReader$GT$17hebe23557e6b86c50E.exit"
 
@@ -15937,7 +15937,7 @@ bb.qj:                                            ; preds = %bb.qh
   call void @llvm.experimental.noalias.scope.decl(metadata !129505)
   call void @llvm.experimental.noalias.scope.decl(metadata !129506)
   %i.aiz = load ptr, ptr %i.ir, align 8, !alias.scope !129507, !nonnull !145, !noundef !145
-  %6 = atomicrmw sub ptr %i.aiz, i64 1 release, align 8, !noalias !129507
+  %6 = atomicrmw add ptr %i.aiz, i64 -1 release, align 8, !noalias !129507
   %i.aja = icmp eq i64 %6, 1
   br i1 %i.aja, label %bb.qk, label %bb.ql
 

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCsibhcYuwTAtB_13typst_realize10RegexMatchEBD_.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i: ; preds = %bb.c
-  %1 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !544
+  %1 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !544
   %.not.i.i.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCsibhcYuwTAtB_13typst_realize10RegexMatchEBD_.exit
 
@@ -263,7 +263,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecTNtNtBG_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEEECsibhcYuwTAtB_13typst_realize.exit.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecTNtNtBN_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecTNtNtBN_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i: ; preds = %bb.c
-  %1 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !578
+  %1 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !578
   %.not.i.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtBN_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecTNtNtBG_6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEEECsibhcYuwTAtB_13typst_realize.exit.i.i
 
@@ -316,7 +316,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.f
-  %2 = atomicrmw sub ptr %i.u, i64 1 release, align 8, !noalias !581
+  %2 = atomicrmw add ptr %i.u, i64 -1 release, align 8, !noalias !581
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %2, 1
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i
 
@@ -388,7 +388,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i.i.i.i.i.i11.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.j
-  %3 = atomicrmw sub ptr %i.ae, i64 1 release, align 8, !noalias !583
+  %3 = atomicrmw add ptr %i.ae, i64 -1 release, align 8, !noalias !583
   %.not.i.i.i.i.i12.i.i.i.i = icmp eq i64 %3, 1
   br i1 %.not.i.i.i.i.i12.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtNtCseVcqU0FIJnD_5codex15numeral_systems18NamedNumeralSystemEECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i
 
@@ -474,7 +474,7 @@ bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLW
   br i1 %.not.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library5model10numbering_9NumberingECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i: ; preds = %bb.n
-  %4 = atomicrmw sub ptr %i.an, i64 1 release, align 8, !noalias !585
+  %4 = atomicrmw add ptr %i.an, i64 -1 release, align 8, !noalias !585
   %.not.i.i.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library5model10numbering_9NumberingECsibhcYuwTAtB_13typst_realize.exit
 
@@ -526,7 +526,7 @@ bb.s:                                             ; preds = %bb.r
   tail call void @llvm.experimental.noalias.scope.decl(metadata !589)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !590)
   %i.av = load ptr, ptr %i.au, align 8, !alias.scope !591, !nonnull !11, !noundef !11
-  %5 = atomicrmw sub ptr %i.av, i64 1 release, align 8, !noalias !591
+  %5 = atomicrmw add ptr %i.av, i64 -1 release, align 8, !noalias !591
   %i.aw = icmp eq i64 %5, 1
   br i1 %i.aw, label %bb.t, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library5model10numbering_9NumberingECsibhcYuwTAtB_13typst_realize.exit
 
@@ -539,7 +539,7 @@ bb.u:                                             ; preds = %bb.r
   tail call void @llvm.experimental.noalias.scope.decl(metadata !592)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !593)
   %i.ax = load ptr, ptr %i.au, align 8, !alias.scope !594, !nonnull !11, !noundef !11
-  %6 = atomicrmw sub ptr %i.ax, i64 1 release, align 8, !noalias !594
+  %6 = atomicrmw add ptr %i.ax, i64 -1 release, align 8, !noalias !594
   %i.ay = icmp eq i64 %6, 1
   br i1 %i.ay, label %bb.v, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library5model10numbering_9NumberingECsibhcYuwTAtB_13typst_realize.exit
 
@@ -552,7 +552,7 @@ bb.w:                                             ; preds = %bb.r
   tail call void @llvm.experimental.noalias.scope.decl(metadata !595)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !596)
   %i.az = load ptr, ptr %i.au, align 8, !alias.scope !597, !nonnull !11, !noundef !11
-  %7 = atomicrmw sub ptr %i.az, i64 1 release, align 8, !noalias !597
+  %7 = atomicrmw add ptr %i.az, i64 -1 release, align 8, !noalias !597
   %i.ba = icmp eq i64 %7, 1
   br i1 %i.ba, label %bb.x, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library5model10numbering_9NumberingECsibhcYuwTAtB_13typst_realize.exit
 
@@ -955,7 +955,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !624)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !625)
   %i.f = load ptr, ptr %i.d, align 8, !alias.scope !626, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !627
+  %1 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !627
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs7lTeezpKIYd_14regex_automata4util11determinize5state5StateECsibhcYuwTAtB_13typst_realize.exit.i.i
 
@@ -982,7 +982,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !629)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !630)
   %i.m = load ptr, ptr %i.k, align 8, !alias.scope !631, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !632
+  %2 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !632
   %i.n = icmp eq i64 %2, 1
   br i1 %i.n, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs7lTeezpKIYd_14regex_automata4util11determinize5state5StateECsibhcYuwTAtB_13typst_realize.exit8.i.i
 
@@ -1059,7 +1059,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i: ; preds = %bb.b
-  %0 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !635
+  %0 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !635
   %.not.i.i.i.i = icmp eq i64 %0, 1
   br i1 %.not.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit
 
@@ -1122,7 +1122,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i: ; preds = %bb.c
-  %1 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !650
+  %1 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !650
   %.not.i.i.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointECsibhcYuwTAtB_13typst_realize.exit
 
@@ -1170,7 +1170,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i: ; preds = %bb.g
-  %2 = atomicrmw sub ptr %i.q, i64 1 release, align 8, !noalias !653
+  %2 = atomicrmw add ptr %i.q, i64 -1 release, align 8, !noalias !653
   %.not.i.i.i.i.i2.i = icmp eq i64 %2, 1
   br i1 %.not.i.i.i.i.i2.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointECsibhcYuwTAtB_13typst_realize.exit
 
@@ -1213,7 +1213,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i.i.i.i.i6.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i7.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i7.i: ; preds = %bb.j
-  %3 = atomicrmw sub ptr %i.x, i64 1 release, align 8, !noalias !655
+  %3 = atomicrmw add ptr %i.x, i64 -1 release, align 8, !noalias !655
   %.not.i.i.i.i8.i = icmp eq i64 %3, 1
   br i1 %.not.i.i.i.i8.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i9.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointECsibhcYuwTAtB_13typst_realize.exit
 
@@ -1256,7 +1256,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not.i.i.i.i.i17.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i18.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i18.i: ; preds = %bb.m
-  %4 = atomicrmw sub ptr %i.ae, i64 1 release, align 8, !noalias !657
+  %4 = atomicrmw add ptr %i.ae, i64 -1 release, align 8, !noalias !657
   %.not.i.i.i.i19.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i19.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i20.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointECsibhcYuwTAtB_13typst_realize.exit
 
@@ -1400,7 +1400,7 @@ bb.l:                                             ; preds = %bb.k
   tail call void @llvm.experimental.noalias.scope.decl(metadata !691)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !692)
   %i.ac = load ptr, ptr %i.ab, align 16, !alias.scope !693, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.ac, i64 1 release, align 8, !noalias !693
+  %1 = atomicrmw add ptr %i.ac, i64 -1 release, align 8, !noalias !693
   %i.ad = icmp eq i64 %1, 1
   br i1 %i.ad, label %bb.m, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleECsibhcYuwTAtB_13typst_realize.exit
 
@@ -1413,7 +1413,7 @@ bb.n:                                             ; preds = %bb.k
   tail call void @llvm.experimental.noalias.scope.decl(metadata !694)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !695)
   %i.ae = load ptr, ptr %i.ab, align 16, !alias.scope !696, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.ae, i64 1 release, align 8, !noalias !696
+  %2 = atomicrmw add ptr %i.ae, i64 -1 release, align 8, !noalias !696
   %i.af = icmp eq i64 %2, 1
   br i1 %i.af, label %bb.o, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleECsibhcYuwTAtB_13typst_realize.exit
 
@@ -1426,7 +1426,7 @@ bb.p:                                             ; preds = %bb.k
   tail call void @llvm.experimental.noalias.scope.decl(metadata !697)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !698)
   %i.ag = load ptr, ptr %i.ab, align 16, !alias.scope !699, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.ag, i64 1 release, align 8, !noalias !699
+  %3 = atomicrmw add ptr %i.ag, i64 -1 release, align 8, !noalias !699
   %i.ah = icmp eq i64 %3, 1
   br i1 %i.ah, label %bb.q, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleECsibhcYuwTAtB_13typst_realize.exit
 
@@ -1457,7 +1457,7 @@ bb.a:
   br i1 %.not.i.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtB7_6string9EcoStringNtBK_8DiagSpanEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1R_8DiagSpanEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1R_8DiagSpanEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i: ; preds = %bb.a
-  %0 = atomicrmw sub ptr %i.d, i64 1 release, align 8
+  %0 = atomicrmw add ptr %i.d, i64 -1 release, align 8
   %.not.i = icmp eq i64 %0, 1
   br i1 %.not.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtBN_6string9EcoStringNtB1O_8DiagSpanEE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtB7_6string9EcoStringNtBK_8DiagSpanEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit
 
@@ -1510,7 +1510,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtBE_8DiagSpanEECsibhcYuwTAtB_13typst_realize.exit.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i: ; preds = %bb.d
-  %1 = atomicrmw sub ptr %i.s, i64 1 release, align 8, !noalias !710
+  %1 = atomicrmw add ptr %i.s, i64 -1 release, align 8, !noalias !710
   %.not.i.i.i.i.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtBE_8DiagSpanEECsibhcYuwTAtB_13typst_realize.exit.i.i
 
@@ -1583,7 +1583,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i.i.i.i.i.i11.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtBE_8DiagSpanEECsibhcYuwTAtB_13typst_realize.exit.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i: ; preds = %bb.h
-  %2 = atomicrmw sub ptr %i.ad, i64 1 release, align 8, !noalias !711
+  %2 = atomicrmw add ptr %i.ad, i64 -1 release, align 8, !noalias !711
   %.not.i.i.i.i.i12.i = icmp eq i64 %2, 1
   br i1 %.not.i.i.i.i.i12.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtBE_8DiagSpanEECsibhcYuwTAtB_13typst_realize.exit.i
 
@@ -1656,7 +1656,7 @@ bb.a:
   br i1 %.not.i.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i: ; preds = %bb.a
-  %0 = atomicrmw sub ptr %i.b, i64 1 release, align 8
+  %0 = atomicrmw add ptr %i.b, i64 -1 release, align 8
   %.not.i = icmp eq i64 %0, 1
   br i1 %.not.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointEE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs5PEMdK7bMAG_12typst_syntax4span7SpannedNtNtCsdaEETE4DqmE_13typst_library4diag10TracepointEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit
 
@@ -1758,7 +1758,7 @@ bb.a:
   br i1 %.not.i.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtBN_6string9EcoStringENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtBN_6string9EcoStringENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i: ; preds = %bb.a
-  %0 = atomicrmw sub ptr %i.b, i64 1 release, align 8
+  %0 = atomicrmw add ptr %i.b, i64 -1 release, align 8
   %.not.i = icmp eq i64 %0, 1
   br i1 %.not.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtBN_6string9EcoStringE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit
 
@@ -1821,7 +1821,7 @@ bb.a:
   br i1 %.not.i.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i: ; preds = %bb.a
-  %0 = atomicrmw sub ptr %i.b, i64 1 release, align 8
+  %0 = atomicrmw add ptr %i.b, i64 -1 release, align 8
   %.not.i = icmp eq i64 %0, 1
   br i1 %.not.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit
 
@@ -1914,7 +1914,7 @@ bb.a:
   br i1 %.not.i.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueINtNtCs3oUPovFnLWP_4core6option6OptionNtNtBM_6styles6StylesEEENtNtNtB1L_3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueIBw_NtNtB1T_6styles6StylesEEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueIBw_NtNtB1T_6styles6StylesEEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i: ; preds = %bb.a
-  %0 = atomicrmw sub ptr %i.b, i64 1 release, align 8
+  %0 = atomicrmw add ptr %i.b, i64 -1 release, align 8
   %.not.i = icmp eq i64 %0, 1
   br i1 %.not.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueIBw_NtNtB1Q_6styles6StylesEEE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecTNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueINtNtCs3oUPovFnLWP_4core6option6OptionNtNtBM_6styles6StylesEEENtNtNtB1L_3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit
 
@@ -2043,7 +2043,7 @@ bb.a:
   br i1 %.not.i.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i: ; preds = %bb.a
-  %0 = atomicrmw sub ptr %i.b, i64 1 release, align 8
+  %0 = atomicrmw add ptr %i.b, i64 -1 release, align 8
   %.not.i = icmp eq i64 %0, 1
   br i1 %.not.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i, label %_RNvXs7_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit
 
@@ -2115,7 +2115,7 @@ _RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtC
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtBN_6string9EcoStringENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i: ; preds = %_RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit._RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtBN_6string9EcoStringENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i_crit_edge, %bb.b
   %.val16 = phi i64 [ %.val16.pre, %_RNvXsC_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtB7_6string9EcoStringENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsibhcYuwTAtB_13typst_realize.exit._RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtBN_6string9EcoStringENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i_crit_edge ], [ 0, %bb.b ]
   %i.n = getelementptr inbounds i8, ptr %i.e, i64 -16 ; 2 uses
-  %1 = atomicrmw sub ptr %i.n, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.n, i64 -1 release, align 8
   %.not.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtBN_6string9EcoStringE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtBG_6string9EcoStringEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -2518,7 +2518,7 @@ _RINvMsi_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtNtCs7lTeezpKIY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !822)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !823)
   %i.x = load ptr, ptr %i.w, align 8, !alias.scope !824, !noalias !817, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.x, i64 1 release, align 8, !noalias !825
+  %1 = atomicrmw add ptr %i.x, i64 -1 release, align 8, !noalias !825
   %i.y = icmp eq i64 %1, 1
   br i1 %i.y, label %bb.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtNtNtCs7lTeezpKIYd_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i
 
@@ -2662,7 +2662,7 @@ bb.d:                                             ; preds = %_RINvNtCs3oUPovFnLW
   br i1 %.not.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4text8TextElemECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i: ; preds = %bb.d
-  %1 = atomicrmw sub ptr %i.j, i64 1 release, align 8, !noalias !854
+  %1 = atomicrmw add ptr %i.j, i64 -1 release, align 8, !noalias !854
   %.not.i.i.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4text8TextElemECsibhcYuwTAtB_13typst_realize.exit
 
@@ -2993,7 +2993,7 @@ bb.g:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !972)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !973)
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !974, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !974
+  %1 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !974
   %i.j = icmp eq i64 %1, 1
   br i1 %i.j, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsdaEETE4DqmE_13typst_library11foundations4auto5SmartIBC_NtNtNtB14_5model9reference10SupplementEEEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3006,7 +3006,7 @@ bb.i:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !975)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !976)
   %i.k = load ptr, ptr %i.h, align 8, !alias.scope !977, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.k, i64 1 release, align 8, !noalias !977
+  %2 = atomicrmw add ptr %i.k, i64 -1 release, align 8, !noalias !977
   %i.l = icmp eq i64 %2, 1
   br i1 %i.l, label %bb.j, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsdaEETE4DqmE_13typst_library11foundations4auto5SmartIBC_NtNtNtB14_5model9reference10SupplementEEEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3019,7 +3019,7 @@ bb.k:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !978)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !979)
   %i.m = load ptr, ptr %i.h, align 8, !alias.scope !980, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !980
+  %3 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !980
   %i.n = icmp eq i64 %3, 1
   br i1 %i.n, label %bb.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsdaEETE4DqmE_13typst_library11foundations4auto5SmartIBC_NtNtNtB14_5model9reference10SupplementEEEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3062,7 +3062,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_NtNtCsakL8LGkl72C_4ecow6string9EcoStringEEECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i: ; preds = %bb.d
-  %1 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !990
+  %1 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !990
   %.not.i.i.i.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_NtNtCsakL8LGkl72C_4ecow6string9EcoStringEEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3107,7 +3107,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i: ; preds = %bb.b
-  %0 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !20
+  %0 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !20
   %.not.i.i.i.i = icmp eq i64 %0, 1
   br i1 %.not.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3155,7 +3155,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow7dynamic10DynamicVecECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i: ; preds = %bb.b
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8
   %.not.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow7dynamic10DynamicVecECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3205,7 +3205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i: ; preds = %bb.b
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !993
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !993
   %.not.i.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3302,7 +3302,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i: ; preds = %bb.b
-  %0 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !29
+  %0 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !29
   %.not.i.i.i.i = icmp eq i64 %0, 1
   br i1 %.not.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3343,7 +3343,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1022)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1023)
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !1024, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !1024
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !1024
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs7lTeezpKIYd_14regex_automata4util8captures9GroupInfoECsibhcYuwTAtB_13typst_realize.exit.i
 
@@ -3746,7 +3746,7 @@ _RINvMsi_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtNtCs7lTeezpKIY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1130)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1131)
   %i.aj = load ptr, ptr %i.ai, align 8, !alias.scope !1132, !noalias !1125, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.aj, i64 1 release, align 8, !noalias !1133
+  %1 = atomicrmw add ptr %i.aj, i64 -1 release, align 8, !noalias !1133
   %i.ak = icmp eq i64 %1, 1
   br i1 %i.ak, label %bb.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtNtNtCs7lTeezpKIYd_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i
 
@@ -3905,7 +3905,7 @@ bb.u:                                             ; preds = %_RINvNtCs3oUPovFnLW
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1142)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1143)
   %i.ch = load ptr, ptr %i.cg, align 8, !alias.scope !1144, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.ch, i64 1 release, align 8, !noalias !1144
+  %2 = atomicrmw add ptr %i.ch, i64 -1 release, align 8, !noalias !1144
   %i.ci = icmp eq i64 %2, 1
   br i1 %i.ci, label %bb.v, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs7lTeezpKIYd_14regex_automata6hybrid3dfa10StateSaverECsibhcYuwTAtB_13typst_realize.exit
 
@@ -3927,7 +3927,7 @@ bb.w:                                             ; preds = %_RINvNtCs3oUPovFnLW
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1147)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1148)
   %i.cn = load ptr, ptr %i.cm, align 8, !alias.scope !1149, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.cn, i64 1 release, align 8, !noalias !1149
+  %3 = atomicrmw add ptr %i.cn, i64 -1 release, align 8, !noalias !1149
   %i.co = icmp eq i64 %3, 1
   br i1 %i.co, label %bb.x, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs7lTeezpKIYd_14regex_automata6hybrid3dfa10StateSaverECsibhcYuwTAtB_13typst_realize.exit30
 
@@ -4001,7 +4001,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1250)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1251)
   %i.l = load ptr, ptr %i.k, align 8, !alias.scope !1252, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.l, i64 1 release, align 8, !noalias !1252
+  %1 = atomicrmw add ptr %i.l, i64 -1 release, align 8, !noalias !1252
   %i.m = icmp eq i64 %1, 1
   br i1 %i.m, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4026,7 +4026,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1256)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1257)
   %i.r = load ptr, ptr %i.q, align 8, !alias.scope !1258, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.r, i64 1 release, align 8, !noalias !1258
+  %2 = atomicrmw add ptr %i.r, i64 -1 release, align 8, !noalias !1258
   %i.s = icmp eq i64 %2, 1
   br i1 %i.s, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4049,7 +4049,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1260)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1261)
   %i.w = load ptr, ptr %i.v, align 8, !alias.scope !1262, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.w, i64 1 release, align 8, !noalias !1262
+  %3 = atomicrmw add ptr %i.w, i64 -1 release, align 8, !noalias !1262
   %i.x = icmp eq i64 %3, 1
   br i1 %i.x, label %bb.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4062,7 +4062,7 @@ bb.j:                                             ; preds = %bb.g
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1263)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1264)
   %i.y = load ptr, ptr %i.v, align 8, !alias.scope !1265, !nonnull !11, !noundef !11
-  %4 = atomicrmw sub ptr %i.y, i64 1 release, align 8, !noalias !1265
+  %4 = atomicrmw add ptr %i.y, i64 -1 release, align 8, !noalias !1265
   %i.z = icmp eq i64 %4, 1
   br i1 %i.z, label %bb.k, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4075,7 +4075,7 @@ bb.l:                                             ; preds = %bb.g
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1266)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1267)
   %i.aa = load ptr, ptr %i.v, align 8, !alias.scope !1268, !nonnull !11, !noundef !11
-  %5 = atomicrmw sub ptr %i.aa, i64 1 release, align 8, !noalias !1268
+  %5 = atomicrmw add ptr %i.aa, i64 -1 release, align 8, !noalias !1268
   %i.ab = icmp eq i64 %5, 1
   br i1 %i.ab, label %bb.m, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4090,7 +4090,7 @@ bb.n:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1270)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1271)
   %i.ad = load ptr, ptr %i.ac, align 8, !alias.scope !1272, !nonnull !11, !noundef !11
-  %6 = atomicrmw sub ptr %i.ad, i64 1 release, align 8, !noalias !1272
+  %6 = atomicrmw add ptr %i.ad, i64 -1 release, align 8, !noalias !1272
   %i.ae = icmp eq i64 %6, 1
   br i1 %i.ae, label %bb.o, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4112,7 +4112,7 @@ bb.q:                                             ; preds = %bb.p
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1276)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1277)
   %i.ai = load ptr, ptr %i.ah, align 8, !alias.scope !1278, !nonnull !11, !noundef !11
-  %7 = atomicrmw sub ptr %i.ai, i64 1 release, align 8, !noalias !1278
+  %7 = atomicrmw add ptr %i.ai, i64 -1 release, align 8, !noalias !1278
   %i.aj = icmp eq i64 %7, 1
   br i1 %i.aj, label %bb.r, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4129,7 +4129,7 @@ bb.s:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecmENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecmENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i: ; preds = %bb.s
-  %8 = atomicrmw sub ptr %i.al, i64 1 release, align 8
+  %8 = atomicrmw add ptr %i.al, i64 -1 release, align 8
   %.not.i.i.i = icmp eq i64 %8, 1
   br i1 %.not.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecmE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4178,7 +4178,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i: ; preds = %bb.v
-  %9 = atomicrmw sub ptr %i.aw, i64 1 release, align 8, !noalias !1280
+  %9 = atomicrmw add ptr %i.aw, i64 -1 release, align 8, !noalias !1280
   %.not.i.i.i.i.i = icmp eq i64 %9, 1
   br i1 %.not.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4211,7 +4211,7 @@ bb.x:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1282)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1283)
   %i.bc = load ptr, ptr %i.bb, align 8, !alias.scope !1284, !nonnull !11, !noundef !11
-  %10 = atomicrmw sub ptr %i.bc, i64 1 release, align 8, !noalias !1284
+  %10 = atomicrmw add ptr %i.bc, i64 -1 release, align 8, !noalias !1284
   %i.bd = icmp eq i64 %10, 1
   br i1 %i.bd, label %bb.y, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4240,7 +4240,7 @@ bb.ab:                                            ; preds = %bb.a
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit: ; preds = %bb.ab
   %i.bh = getelementptr inbounds i8, ptr %.val4.i.i, i64 -16
-  %11 = atomicrmw sub ptr %i.bh, i64 1 release, align 8
+  %11 = atomicrmw add ptr %i.bh, i64 -1 release, align 8
   %.not28 = icmp eq i64 %11, 1
   br i1 %.not28, label %bb.ac, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4308,7 +4308,7 @@ bb.ai:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1289)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1290)
   %i.bw = load ptr, ptr %i.bv, align 8, !alias.scope !1291, !nonnull !11, !noundef !11
-  %12 = atomicrmw sub ptr %i.bw, i64 1 release, align 8, !noalias !1291
+  %12 = atomicrmw add ptr %i.bw, i64 -1 release, align 8, !noalias !1291
   %i.bx = icmp eq i64 %12, 1
   br i1 %i.bx, label %bb.aj, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4334,7 +4334,7 @@ bb.al:                                            ; preds = %bb.ak
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1295)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1296)
   %i.cb = load ptr, ptr %i.ca, align 8, !alias.scope !1297, !nonnull !11, !noundef !11
-  %13 = atomicrmw sub ptr %i.cb, i64 1 release, align 8, !noalias !1297
+  %13 = atomicrmw add ptr %i.cb, i64 -1 release, align 8, !noalias !1297
   %i.cc = icmp eq i64 %13, 1
   br i1 %i.cc, label %bb.am, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4347,7 +4347,7 @@ bb.an:                                            ; preds = %bb.ak
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1298)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1299)
   %i.cd = load ptr, ptr %i.ca, align 8, !alias.scope !1300, !nonnull !11, !noundef !11
-  %14 = atomicrmw sub ptr %i.cd, i64 1 release, align 8, !noalias !1300
+  %14 = atomicrmw add ptr %i.cd, i64 -1 release, align 8, !noalias !1300
   %i.ce = icmp eq i64 %14, 1
   br i1 %i.ce, label %bb.ao, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4360,7 +4360,7 @@ bb.ap:                                            ; preds = %bb.ak
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1301)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1302)
   %i.cf = load ptr, ptr %i.ca, align 8, !alias.scope !1303, !nonnull !11, !noundef !11
-  %15 = atomicrmw sub ptr %i.cf, i64 1 release, align 8, !noalias !1303
+  %15 = atomicrmw add ptr %i.cf, i64 -1 release, align 8, !noalias !1303
   %i.cg = icmp eq i64 %15, 1
   br i1 %i.cg, label %bb.aq, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4379,7 +4379,7 @@ bb.ar:                                            ; preds = %bb.a
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit: ; preds = %bb.ar
   %i.ci = getelementptr inbounds i8, ptr %.val4.i.i6, i64 -16
-  %16 = atomicrmw sub ptr %i.ci, i64 1 release, align 8
+  %16 = atomicrmw add ptr %i.ci, i64 -1 release, align 8
   %.not = icmp eq i64 %16, 1
   br i1 %.not, label %bb.as, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4454,7 +4454,7 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %.not.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsakL8LGkl72C_4ecow6string9EcoStringEECsibhcYuwTAtB_13typst_realize.exit.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i: ; preds = %bb.az
-  %17 = atomicrmw sub ptr %i.cx, i64 1 release, align 8, !noalias !1311
+  %17 = atomicrmw add ptr %i.cx, i64 -1 release, align 8, !noalias !1311
   %.not.i.i.i.i.i.i5 = icmp eq i64 %17, 1
   br i1 %.not.i.i.i.i.i.i5, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsakL8LGkl72C_4ecow6string9EcoStringEECsibhcYuwTAtB_13typst_realize.exit.i
 
@@ -4494,7 +4494,7 @@ bb.bb:                                            ; preds = %_RNvMs0_NtCsakL8LGk
   call void @llvm.experimental.noalias.scope.decl(metadata !1312)
   call void @llvm.experimental.noalias.scope.decl(metadata !1313)
   %i.de = load ptr, ptr %i.dd, align 8, !alias.scope !1314, !nonnull !11, !noundef !11
-  %18 = atomicrmw sub ptr %i.de, i64 1 release, align 8, !noalias !1314
+  %18 = atomicrmw add ptr %i.de, i64 -1 release, align 8, !noalias !1314
   %i.df = icmp eq i64 %18, 1
   br i1 %i.df, label %bb.bc, label %common.resume
 
@@ -4508,7 +4508,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsakL8LGkl72C_
   call void @llvm.experimental.noalias.scope.decl(metadata !1315)
   call void @llvm.experimental.noalias.scope.decl(metadata !1316)
   %i.dh = load ptr, ptr %i.dg, align 8, !alias.scope !1317, !nonnull !11, !noundef !11
-  %19 = atomicrmw sub ptr %i.dh, i64 1 release, align 8, !noalias !1317
+  %19 = atomicrmw add ptr %i.dh, i64 -1 release, align 8, !noalias !1317
   %i.di = icmp eq i64 %19, 1
   br i1 %i.di, label %bb.bd, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value7DynamicECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4558,7 +4558,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1337)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1338)
   %i.e = load ptr, ptr %i.d, align 8, !alias.scope !1339, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8, !noalias !1339
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8, !noalias !1339
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations4func4FuncECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4571,7 +4571,7 @@ bb.g:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1340)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1341)
   %i.g = load ptr, ptr %i.d, align 8, !alias.scope !1342, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !1342
+  %2 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !1342
   %i.h = icmp eq i64 %2, 1
   br i1 %i.h, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations4func4FuncECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4584,7 +4584,7 @@ bb.i:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1343)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1344)
   %i.i = load ptr, ptr %i.d, align 8, !alias.scope !1345, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !1345
+  %3 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !1345
   %i.j = icmp eq i64 %3, 1
   br i1 %i.j, label %bb.j, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations4func4FuncECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4619,7 +4619,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1413)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1414)
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !1415, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !1415
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !1415
   %i.e = icmp eq i64 %1, 1
   br i1 %i.e, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4742,7 +4742,7 @@ bb.k:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1423)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1424)
   %i.al = load ptr, ptr %i.ak, align 8, !alias.scope !1425, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.al, i64 1 release, align 8, !noalias !1425
+  %2 = atomicrmw add ptr %i.al, i64 -1 release, align 8, !noalias !1425
   %i.am = icmp eq i64 %2, 1
   br i1 %i.am, label %bb.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCs7lTeezpKIYd_14regex_automata4meta5regex6RegexIEECsibhcYuwTAtB_13typst_realize.exit.i.i.i
 
@@ -4782,7 +4782,7 @@ bb.o:                                             ; preds = %_RINvNtCs3oUPovFnLW
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1427)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1428)
   %i.at = load ptr, ptr %i.as, align 8, !alias.scope !1429, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.at, i64 1 release, align 8, !noalias !1430
+  %3 = atomicrmw add ptr %i.at, i64 -1 release, align 8, !noalias !1430
   %i.au = icmp eq i64 %3, 1
   br i1 %i.au, label %bb.p, label %common.resume
 
@@ -4796,7 +4796,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs7lTeezpKIYd_14regex_automata4met
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1431)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1432)
   %i.aw = load ptr, ptr %i.av, align 8, !alias.scope !1433, !nonnull !11, !noundef !11
-  %4 = atomicrmw sub ptr %i.aw, i64 1 release, align 8, !noalias !1434
+  %4 = atomicrmw add ptr %i.aw, i64 -1 release, align 8, !noalias !1434
   %i.ax = icmp eq i64 %4, 1
   br i1 %i.ax, label %bb.q, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtCsiSzwKAiqS6b_8smallvec8SmallVecAThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEj1_EEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4826,7 +4826,7 @@ bb.u:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1435)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1436)
   %i.bc = load ptr, ptr %i.bb, align 8, !alias.scope !1437, !nonnull !11, !noundef !11
-  %5 = atomicrmw sub ptr %i.bc, i64 1 release, align 8, !noalias !1437
+  %5 = atomicrmw add ptr %i.bc, i64 -1 release, align 8, !noalias !1437
   %i.bd = icmp eq i64 %5, 1
   br i1 %i.bd, label %bb.v, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorEECsibhcYuwTAtB_13typst_realize.exit3
 
@@ -4840,7 +4840,7 @@ bb.w:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1438)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1439)
   %i.bf = load ptr, ptr %i.be, align 8, !alias.scope !1440, !nonnull !11, !noundef !11
-  %6 = atomicrmw sub ptr %i.bf, i64 1 release, align 8, !noalias !1440
+  %6 = atomicrmw add ptr %i.bf, i64 -1 release, align 8, !noalias !1440
   %i.bg = icmp eq i64 %6, 1
   br i1 %i.bg, label %bb.x, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorEECsibhcYuwTAtB_13typst_realize.exit5
 
@@ -4856,7 +4856,7 @@ bb.y:                                             ; preds = %bb.v
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1441)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1442)
   %i.bj = load ptr, ptr %i.bi, align 16, !alias.scope !1443, !nonnull !11, !noundef !11
-  %7 = atomicrmw sub ptr %i.bj, i64 1 release, align 8, !noalias !1443
+  %7 = atomicrmw add ptr %i.bj, i64 -1 release, align 8, !noalias !1443
   %i.bk = icmp eq i64 %7, 1
   br i1 %i.bk, label %bb.z, label %common.resume
 
@@ -4870,7 +4870,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNt
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1444)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1445)
   %i.bm = load ptr, ptr %i.bl, align 16, !alias.scope !1446, !nonnull !11, !noundef !11
-  %8 = atomicrmw sub ptr %i.bm, i64 1 release, align 8, !noalias !1446
+  %8 = atomicrmw add ptr %i.bm, i64 -1 release, align 8, !noalias !1446
   %i.bn = icmp eq i64 %8, 1
   br i1 %i.bn, label %bb.aa, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtCsiSzwKAiqS6b_8smallvec8SmallVecAThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEj1_EEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4892,7 +4892,7 @@ bb.ac:                                            ; preds = %bb.x
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1447)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1448)
   %i.br = load ptr, ptr %i.bq, align 16, !alias.scope !1449, !nonnull !11, !noundef !11
-  %9 = atomicrmw sub ptr %i.br, i64 1 release, align 8, !noalias !1449
+  %9 = atomicrmw add ptr %i.br, i64 -1 release, align 8, !noalias !1449
   %i.bs = icmp eq i64 %9, 1
   br i1 %i.bs, label %bb.ad, label %common.resume
 
@@ -4906,7 +4906,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNt
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1450)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1451)
   %i.bu = load ptr, ptr %i.bt, align 16, !alias.scope !1452, !nonnull !11, !noundef !11
-  %10 = atomicrmw sub ptr %i.bu, i64 1 release, align 8, !noalias !1452
+  %10 = atomicrmw add ptr %i.bu, i64 -1 release, align 8, !noalias !1452
   %i.bv = icmp eq i64 %10, 1
   br i1 %i.bv, label %bb.ae, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtCsiSzwKAiqS6b_8smallvec8SmallVecAThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEj1_EEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -4922,7 +4922,7 @@ bb.af:                                            ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1453)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1454)
   %i.by = load ptr, ptr %i.bx, align 16, !alias.scope !1455, !nonnull !11, !noundef !11
-  %11 = atomicrmw sub ptr %i.by, i64 1 release, align 8, !noalias !1455
+  %11 = atomicrmw add ptr %i.by, i64 -1 release, align 8, !noalias !1455
   %i.bz = icmp eq i64 %11, 1
   br i1 %i.bz, label %bb.ag, label %common.resume
 
@@ -4936,7 +4936,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNt
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1456)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1457)
   %i.cb = load ptr, ptr %i.ca, align 16, !alias.scope !1458, !nonnull !11, !noundef !11
-  %12 = atomicrmw sub ptr %i.cb, i64 1 release, align 8, !noalias !1458
+  %12 = atomicrmw add ptr %i.cb, i64 -1 release, align 8, !noalias !1458
   %i.cc = icmp eq i64 %12, 1
   br i1 %i.cc, label %bb.ah, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtCsiSzwKAiqS6b_8smallvec8SmallVecAThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEj1_EEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5010,7 +5010,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content5field8SettableNtNtNtBK_4math8equation12EquationElemKh4_EECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i: ; preds = %bb.i
-  %1 = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !1478
+  %1 = atomicrmw add ptr %i.o, i64 -1 release, align 8, !noalias !1478
   %.not.i.i.i.i.i.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content5field8SettableNtNtNtBK_4math8equation12EquationElemKh4_EECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5105,7 +5105,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1508)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1509)
   %i.h = load ptr, ptr %i.g, align 8, !alias.scope !1510, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !1510
+  %1 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !1510
   %i.i = icmp eq i64 %1, 1
   br i1 %i.i, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content5field8SettableNtNtNtBK_5model4list8ListElemKh1_EECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5118,7 +5118,7 @@ bb.g:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1511)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1512)
   %i.j = load ptr, ptr %i.g, align 8, !alias.scope !1513, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.j, i64 1 release, align 8, !noalias !1513
+  %2 = atomicrmw add ptr %i.j, i64 -1 release, align 8, !noalias !1513
   %i.k = icmp eq i64 %2, 1
   br i1 %i.k, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content5field8SettableNtNtNtBK_5model4list8ListElemKh1_EECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5131,7 +5131,7 @@ bb.i:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1514)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1515)
   %i.l = load ptr, ptr %i.g, align 8, !alias.scope !1516, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.l, i64 1 release, align 8, !noalias !1516
+  %3 = atomicrmw add ptr %i.l, i64 -1 release, align 8, !noalias !1516
   %i.m = icmp eq i64 %3, 1
   br i1 %i.m, label %bb.j, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content5field8SettableNtNtNtBK_5model4list8ListElemKh1_EECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5248,7 +5248,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library13introspection11convergence13IntrospectionEECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library13introspection11convergence13IntrospectionENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library13introspection11convergence13IntrospectionENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i: ; preds = %bb.b
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8
   %.not.i.i = icmp eq i64 %1, 1
   br i1 %.not.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library13introspection11convergence13IntrospectionE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library13introspection11convergence13IntrospectionEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5288,7 +5288,7 @@ _RNvMs0_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_librar
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1547)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1548)
   %i.p = load ptr, ptr %i.n, align 8, !alias.scope !1549, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.p, i64 1 release, align 8, !noalias !1550
+  %2 = atomicrmw add ptr %i.p, i64 -1 release, align 8, !noalias !1550
   %i.q = icmp eq i64 %2, 1
   br i1 %i.q, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library13introspection11convergence13IntrospectionECsibhcYuwTAtB_13typst_realize.exit.i.i.i
 
@@ -5315,7 +5315,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1552)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1553)
   %i.w = load ptr, ptr %i.u, align 8, !alias.scope !1554, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.w, i64 1 release, align 8, !noalias !1555
+  %3 = atomicrmw add ptr %i.w, i64 -1 release, align 8, !noalias !1555
   %i.x = icmp eq i64 %3, 1
   br i1 %i.x, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library13introspection11convergence13IntrospectionECsibhcYuwTAtB_13typst_realize.exit8.i.i.i
 
@@ -5358,7 +5358,7 @@ bb.i:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1557)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1558)
   %i.ac = load ptr, ptr %i.ab, align 8, !alias.scope !1559, !nonnull !11, !noundef !11
-  %4 = atomicrmw sub ptr %i.ac, i64 1 release, align 8, !noalias !1559
+  %4 = atomicrmw add ptr %i.ac, i64 -1 release, align 8, !noalias !1559
   %i.ad = icmp eq i64 %4, 1
   br i1 %i.ad, label %bb.j, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library13introspection11convergence13IntrospectionECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5522,7 +5522,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i: ; preds = %bb.c
-  %2 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !1564
+  %2 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !1564
   %.not.i.i.i.i = icmp eq i64 %2, 1
   br i1 %.not.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5634,7 +5634,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrEECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i: ; preds = %bb.c
-  %2 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !1584
+  %2 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !1584
   %.not.i.i.i.i.i.i = icmp eq i64 %2, 1
   br i1 %.not.i.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -5736,7 +5736,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrEECsibhcYuwTAtB_13typst_realize.exit.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i: ; preds = %bb.i
-  %3 = atomicrmw sub ptr %i.ad, i64 1 release, align 8, !noalias !1589
+  %3 = atomicrmw add ptr %i.ad, i64 -1 release, align 8, !noalias !1589
   %.not.i.i.i.i.i.i.i26 = icmp eq i64 %3, 1
   br i1 %.not.i.i.i.i.i.i.i26, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrEECsibhcYuwTAtB_13typst_realize.exit.i
 
@@ -6139,7 +6139,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsibhcYuwTAtB_13typst_realize10RegexMatchEEBZ_.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i: ; preds = %bb.d
-  %4 = atomicrmw sub ptr %i.da, i64 1 release, align 8, !noalias !2968
+  %4 = atomicrmw add ptr %i.da, i64 -1 release, align 8, !noalias !2968
   %.not.i.i.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsibhcYuwTAtB_13typst_realize10RegexMatchEEBZ_.exit
 
@@ -6390,7 +6390,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not.i.i.i.i.i.i107, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i: ; preds = %bb.ae
-  %5 = atomicrmw sub ptr %i.fd, i64 1 release, align 8, !noalias !2981
+  %5 = atomicrmw add ptr %i.fd, i64 -1 release, align 8, !noalias !2981
   %.not.i.i.i.i.i108 = icmp eq i64 %5, 1
   br i1 %.not.i.i.i.i.i108, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit.i
 
@@ -6578,7 +6578,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not.i.i.i.i.i38.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit47.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i39.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i39.i: ; preds = %bb.as
-  %6 = atomicrmw sub ptr %i.gi, i64 1 release, align 8, !noalias !2994
+  %6 = atomicrmw add ptr %i.gi, i64 -1 release, align 8, !noalias !2994
   %.not.i.i.i.i40.i = icmp eq i64 %6, 1
   br i1 %.not.i.i.i.i40.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i41.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit47.i
 
@@ -6855,7 +6855,7 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %.not.i.i.i.i.i.i128, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit.i127, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i129
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i129: ; preds = %bb.bt
-  %7 = atomicrmw sub ptr %i.id, i64 1 release, align 8, !noalias !3008
+  %7 = atomicrmw add ptr %i.id, i64 -1 release, align 8, !noalias !3008
   %.not.i.i.i.i.i130 = icmp eq i64 %7, 1
   br i1 %.not.i.i.i.i.i130, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i131, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit.i127
 
@@ -7069,7 +7069,7 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %.not.i.i.i.i.i37.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit46.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i38.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i38.i: ; preds = %bb.cm
-  %8 = atomicrmw sub ptr %i.jq, i64 1 release, align 8, !noalias !3021
+  %8 = atomicrmw add ptr %i.jq, i64 -1 release, align 8, !noalias !3021
   %.not.i.i.i.i39.i = icmp eq i64 %8, 1
   br i1 %.not.i.i.i.i39.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i40.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit46.i
 
@@ -7383,7 +7383,7 @@ bb.do:                                            ; preds = %bb.dn
   br i1 %.not.i.i.i.i.i162, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i: ; preds = %bb.do
-  %9 = atomicrmw sub ptr %i.me, i64 1 release, align 8, !noalias !3026
+  %9 = atomicrmw add ptr %i.me, i64 -1 release, align 8, !noalias !3026
   %.not.i.i.i.i163 = icmp eq i64 %9, 1
   br i1 %.not.i.i.i.i163, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit
 
@@ -7470,7 +7470,7 @@ bb.dt:                                            ; preds = %bb.ds
   br i1 %.not.i.i.i.i.i171, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit180, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i172
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i172: ; preds = %bb.dt
-  %10 = atomicrmw sub ptr %i.mk, i64 1 release, align 8, !noalias !3027
+  %10 = atomicrmw add ptr %i.mk, i64 -1 release, align 8, !noalias !3027
   %.not.i.i.i.i173 = icmp eq i64 %10, 1
   br i1 %.not.i.i.i.i173, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i174, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit180
 
@@ -7667,7 +7667,7 @@ bb.ei:                                            ; preds = %bb.eh
   br i1 %.not.i.i.i.i.i.i206, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit.i205, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i207
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i207: ; preds = %bb.ei
-  %11 = atomicrmw sub ptr %i.nv, i64 1 release, align 8, !noalias !3041
+  %11 = atomicrmw add ptr %i.nv, i64 -1 release, align 8, !noalias !3041
   %.not.i.i.i.i.i208 = icmp eq i64 %11, 1
   br i1 %.not.i.i.i.i.i208, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i209, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit.i205
 
@@ -7866,7 +7866,7 @@ bb.ey:                                            ; preds = %bb.ex
   br i1 %.not.i.i.i.i.i38.i243, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit47.i242, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i39.i244
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i39.i244: ; preds = %bb.ey
-  %12 = atomicrmw sub ptr %i.pb, i64 1 release, align 8, !noalias !3053
+  %12 = atomicrmw add ptr %i.pb, i64 -1 release, align 8, !noalias !3053
   %.not.i.i.i.i40.i245 = icmp eq i64 %12, 1
   br i1 %.not.i.i.i.i40.i245, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i41.i246, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsakL8LGkl72C_4ecow6string9EcoStringECsibhcYuwTAtB_13typst_realize.exit47.i242
 
@@ -7960,7 +7960,7 @@ bb.fi:                                            ; preds = %bb.fh
   br i1 %.not.i.i.i.i.i.i.i265, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsibhcYuwTAtB_13typst_realize10RegexMatchEEBZ_.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i266
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i266: ; preds = %bb.fi
-  %13 = atomicrmw sub ptr %i.pp, i64 1 release, align 8, !noalias !3055
+  %13 = atomicrmw add ptr %i.pp, i64 -1 release, align 8, !noalias !3055
   %.not.i.i.i.i.i.i267 = icmp eq i64 %13, 1
   br i1 %.not.i.i.i.i.i.i267, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i.i.i.i.i268, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsibhcYuwTAtB_13typst_realize10RegexMatchEEBZ_.exit
 
@@ -8363,7 +8363,7 @@ bb.m:                                             ; preds = %bb.n, %_RNvMs0_NtCs
   br i1 %.not.i.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVechEECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.i.i: ; preds = %._crit_edge
-  %2 = atomicrmw sub ptr %i.al, i64 1 release, align 8
+  %2 = atomicrmw add ptr %i.al, i64 -1 release, align 8
   %.not.i.i = icmp eq i64 %2, 1
   br i1 %.not.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVechE8capacity0ECsibhcYuwTAtB_13typst_realize.exit.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVechEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -8741,7 +8741,7 @@ bb.a:
   br i1 %.not.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.thread, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit: ; preds = %bb.a
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8
   %.not = icmp eq i64 %1, 1
   br i1 %.not, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEE8capacity0ECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.thread
 
@@ -8881,7 +8881,7 @@ bb.m:                                             ; preds = %bb.l
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3599)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3600)
   %i.aq = load ptr, ptr %i.ap, align 16, !alias.scope !3601, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.aq, i64 1 release, align 8, !noalias !3602
+  %2 = atomicrmw add ptr %i.aq, i64 -1 release, align 8, !noalias !3602
   %i.ar = icmp eq i64 %2, 1
   br i1 %i.ar, label %bb.n, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -8894,7 +8894,7 @@ bb.o:                                             ; preds = %bb.l
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3603)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3604)
   %i.as = load ptr, ptr %i.ap, align 16, !alias.scope !3605, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.as, i64 1 release, align 8, !noalias !3606
+  %3 = atomicrmw add ptr %i.as, i64 -1 release, align 8, !noalias !3606
   %i.at = icmp eq i64 %3, 1
   br i1 %i.at, label %bb.p, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -8907,7 +8907,7 @@ bb.q:                                             ; preds = %bb.l
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3607)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3608)
   %i.au = load ptr, ptr %i.ap, align 16, !alias.scope !3609, !nonnull !11, !noundef !11
-  %4 = atomicrmw sub ptr %i.au, i64 1 release, align 8, !noalias !3610
+  %4 = atomicrmw add ptr %i.au, i64 -1 release, align 8, !noalias !3610
   %i.av = icmp eq i64 %4, 1
   br i1 %i.av, label %bb.r, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEECsibhcYuwTAtB_13typst_realize.exit
 
@@ -8985,7 +8985,7 @@ bb.a:
   br i1 %.not.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.thread, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit: ; preds = %bb.a
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8
   %.not = icmp eq i64 %1, 1
   br i1 %.not, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orjNCNvMBL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorE8capacity0ECsibhcYuwTAtB_13typst_realize.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorENtNtNtB5_3ops4drop4Drop4drop0ECsibhcYuwTAtB_13typst_realize.exit.thread
 
