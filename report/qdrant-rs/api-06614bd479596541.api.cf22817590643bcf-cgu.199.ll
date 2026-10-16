@@ -1,0 +1,164 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/api-06614bd479596541.api.cf22817590643bcf-cgu.199?download=true
+inline.NumInlined: 1
+inline.NumDeleted: 1
+begin_hunk_0
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
+
+@0 = private unnamed_addr constant [3 x i8] c"All", align 1
+@1 = private unnamed_addr constant [8 x i8] c"Majority", align 1
+@2 = private unnamed_addr constant [6 x i8] c"Quorum", align 1
+@3 = private unnamed_addr constant [4 x i8] c"Type", align 1
+@4 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB8_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1b_3fmt }>, align 8
+@5 = private unnamed_addr constant [6 x i8] c"Factor", align 1
+@6 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRyNtB6_5Debug3fmtCshMzyYDJGtjv_3api }>, align 8
+@switch.table._RNvXNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB8_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1b_3fmt = private unnamed_addr constant [3 x i8] c"\03\08\06", align 8
+@switch.table._RNvXNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB8_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1b_3fmt.1 = private unnamed_addr constant [3 x ptr] [ptr @0, ptr @1, ptr @2], align 8
+
+; Function Attrs: nonlazybind uwtable
+define noundef zeroext i1 @_RNvXNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB8_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1b_3fmt(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 {
+bb.a:
+  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !align !8, !noundef !4 ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !noundef !4 ; 3 uses
+  %i.c = icmp ult i32 %i.b, 3
+  br i1 %i.c, label %switch.lookup, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.e = load i32, ptr %i.d, align 8, !alias.scope !9, !noalias !10, !noundef !4 ; 2 uses
+  %i.f = and i32 %i.e, 33554432
+  %.not.i = icmp eq i32 %i.f, 0
+  br i1 %.not.i, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %bb.b
+  %i.g = and i32 %i.e, 67108864
+  %.not1.i = icmp eq i32 %i.g, 0
+  br i1 %.not1.i, label %bb.e, label %bb.f
+
+bb.d:                                             ; preds = %bb.b
+  %i.h = tail call noundef zeroext i1 @_RNvXsv_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_8LowerHex3fmt(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  br label %_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt.exit
+
+bb.e:                                             ; preds = %bb.c
+  %i.i = tail call noundef zeroext i1 @_RNvXs9_NtNtNtCskKLDkoKarTP_4core3fmt3num3implNtB9_7Display3fmt(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  br label %_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt.exit
+
+bb.f:                                             ; preds = %bb.c
+  %i.j = tail call noundef zeroext i1 @_RNvXsx_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_8UpperHex3fmt(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  br label %_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt.exit
+
+switch.lookup:                                    ; preds = %bb.a
+  %i.k = zext nneg i32 %i.b to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB8_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1b_3fmt, i64 %i.k
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.l = zext nneg i32 %i.b to i64
+  %switch.gep6 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB8_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1b_3fmt.1, i64 %i.l
+  %switch.load7 = load ptr, ptr %switch.gep6, align 8
+  %i.m = tail call noundef zeroext i1 @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load7, i64 noundef %switch.ext)
+  br label %_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt.exit
+
+_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt.exit: ; preds = %bb.f, %bb.e, %bb.d, %switch.lookup
+  %.sroa.0.0.in = phi i1 [ %i.m, %switch.lookup ], [ %i.h, %bb.d ], [ %i.j, %bb.f ], [ %i.i, %bb.e ]
+  ret i1 %.sroa.0.0.in
+}
+
+; Function Attrs: nonlazybind uwtable
+define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRNtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistency5ValueNtB6_5Debug3fmtBE_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 {
+bb.a:
+  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !align !11, !noundef !4
+  %i.b = tail call noundef zeroext i1 @_RNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB5_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  ret i1 %i.b
+}
+
+; Function Attrs: nonlazybind uwtable
+define noundef zeroext i1 @_RNvXs6_NtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16read_consistencyNtB5_5ValueNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 {
+bb.a:
+  %i.a = alloca [24 x i8], align 8                ; 4 uses
+  %i.b = alloca [8 x i8], align 8                 ; 4 uses
+  %i.c = alloca [24 x i8], align 8                ; 4 uses
+  %i.d = alloca [8 x i8], align 8                 ; 4 uses
+  %i.e = load i32, ptr %0, align 8, !range !12, !noundef !4
+  %i.f = trunc nuw i32 %i.e to i1
+  br i1 %i.f, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  store ptr %i.g, ptr %i.b, align 8, !captures !13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter11debug_tuple(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 6)
+  %i.h = call noundef nonnull align 8 ptr @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @6)
+  %i.i = call noundef zeroext i1 @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.a
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
+  store ptr %i.j, ptr %i.d, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter11debug_tuple(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 4)
+  %i.k = call noundef nonnull align 8 ptr @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @4)
+  %i.l = call noundef zeroext i1 @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.k)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sroa.0.0.in = phi i1 [ %i.i, %bb.b ], [ %i.l, %bb.c ]
+  ret i1 %.sroa.0.0.in
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+; Function Attrs: nonlazybind uwtable
+declare noundef zeroext i1 @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef align 8 dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
+; Function Attrs: nonlazybind uwtable
+declare void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter11debug_tuple(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noalias nofree noundef align 8 dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
+
+; Function Attrs: nonlazybind uwtable
+declare noundef nonnull align 8 ptr @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple5field(ptr noalias nofree noundef align 8 dereferenceable(24), ptr noundef nonnull, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32)) unnamed_addr #0
+
+; Function Attrs: nonlazybind uwtable
+declare noundef zeroext i1 @_RNvMs3_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_10DebugTuple6finish(ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
+
+; Function Attrs: nonlazybind uwtable
+declare hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRyNtB6_5Debug3fmtCshMzyYDJGtjv_3api(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
+
+; Function Attrs: nonlazybind uwtable
+declare noundef zeroext i1 @_RNvXs9_NtNtNtCskKLDkoKarTP_4core3fmt3num3implNtB9_7Display3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
+
+; Function Attrs: nonlazybind uwtable
+declare noundef zeroext i1 @_RNvXsx_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_8UpperHex3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
+
+; Function Attrs: nonlazybind uwtable
+declare noundef zeroext i1 @_RNvXsv_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_8LowerHex3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
+
+attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+
+!llvm.module.flags = !{!0, !1, !2}
+!llvm.ident = !{!3}
+
+!0 = !{i32 8, !"PIC Level", i32 2}
+!1 = !{i32 2, !"RtLibUseGOT", i32 1}
+!2 = !{i32 7, !"uwtable", i32 2}
+!3 = !{!"rustc version 1.100.0-nightly (bff8e12ff 2026-08-26)"}
+!4 = !{}
+!5 = distinct !{!5, i1 false, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt"}
+!6 = distinct !{!6, !5, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt: argument 1"}
+!7 = distinct !{!7, !5, !"_RNvXsQ_NtNtCskKLDkoKarTP_4core3fmt3numlNtB7_5Debug3fmt: argument 0"}
+!8 = !{i64 4}
+!9 = !{!6}
+!10 = !{!7}
+!11 = !{i64 8}
+!12 = !{i32 0, i32 2}
+!13 = !{!"address", !"read_provenance"}
+end_hunk_0
