@@ -204,13 +204,13 @@ bb.qb:                                            ; preds = %lean_obj_tag.exit11
   br i1 %.not.i821, label %bb.qc, label %lean_dec.exit824
 
 bb.qc:                                            ; preds = %bb.qb
-  %i.zw = load i32, ptr %l_Lean_Meta_matchMatcherApp_x3f___at___00__private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_foldAndCollect_spec__12___closed__2_value., align 4, !tbaa !11 ; 3 uses
+  %i.zw = load i32, ptr %l_Lean_Meta_matchMatcherApp_x3f___at___00__private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_foldAndCollect_spec__12___closed__2_value., align 8, !tbaa !11 ; 3 uses
   %i.zx = icmp sgt i32 %i.zw, 1
   br i1 %i.zx, label %bb.qd, label %bb.qe, !prof !16
 
 bb.qd:                                            ; preds = %bb.qc
   %i.zy = add nsw i32 %i.zw, -1
-  store i32 %i.zy, ptr %l_Lean_Meta_matchMatcherApp_x3f___at___00__private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_foldAndCollect_spec__12___closed__2_value., align 4, !tbaa !11
+  store i32 %i.zy, ptr %l_Lean_Meta_matchMatcherApp_x3f___at___00__private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_foldAndCollect_spec__12___closed__2_value., align 8, !tbaa !11
   br label %lean_dec.exit824
 
 bb.qe:                                            ; preds = %bb.qc
@@ -613,13 +613,13 @@ lean_del_object.exit:                             ; preds = %bb.r, %bb.s
   br i1 %.not.i207, label %bb.t, label %lean_dec.exit210.thread
 
 bb.t:                                             ; preds = %lean_del_object.exit
-  %i.ae = load i32, ptr %i.p, align 4, !tbaa !11  ; 3 uses
+  %i.ae = load i32, ptr %i.p, align 512, !tbaa !11 ; 3 uses
   %i.af = icmp sgt i32 %i.ae, 1
   br i1 %i.af, label %bb.u, label %bb.v, !prof !16
 
 bb.u:                                             ; preds = %bb.t
   %i.ag = add nsw i32 %i.ae, -1
-  store i32 %i.ag, ptr %i.p, align 4, !tbaa !11
+  store i32 %i.ag, ptr %i.p, align 512, !tbaa !11
   br label %lean_dec.exit210.thread
 
 bb.v:                                             ; preds = %bb.t
@@ -1022,13 +1022,13 @@ bb.sv:                                            ; preds = %lean_obj_tag.exit14
   br i1 %.not.i993, label %bb.sw, label %lean_dec.exit996
 
 bb.sw:                                            ; preds = %bb.sv
-  %i.adv = load i32, ptr %l_Lean_Meta_matchMatcherApp_x3f___at___00__private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_foldAndCollect_spec__12___closed__2_value., align 4, !tbaa !11 ; 3 uses
+  %i.adv = load i32, ptr %l_Lean_Meta_matchMatcherApp_x3f___at___00__private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_foldAndCollect_spec__12___closed__2_value., align 8, !tbaa !11 ; 3 uses
   %i.adw = icmp sgt i32 %i.adv, 1
   br i1 %i.adw, label %bb.sx, label %bb.sy, !prof !16
 
 bb.sx:                                            ; preds = %bb.sw
   %i.adx = add nsw i32 %i.adv, -1
-  store i32 %i.adx, ptr %l_Lean_Meta_matchMatcherApp_x3f___at___00__private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_foldAndCollect_spec__12___closed__2_value., align 4, !tbaa !11
+  store i32 %i.adx, ptr %l_Lean_Meta_matchMatcherApp_x3f___at___00__private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_foldAndCollect_spec__12___closed__2_value., align 8, !tbaa !11
   br label %lean_dec.exit996
 
 bb.sy:                                            ; preds = %bb.sw
@@ -1431,13 +1431,13 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %.not.i.i235, label %bb.cv, label %lean_inc.exit.i236
 
 bb.cv:                                            ; preds = %.thread.i
-  %.val.i.i.i237 = load i32, ptr %i.ac, align 4, !tbaa !11 ; 3 uses
+  %.val.i.i.i237 = load i32, ptr %i.ac, align 512, !tbaa !11 ; 3 uses
   %i.ej = icmp sgt i32 %.val.i.i.i237, 0
   br i1 %i.ej, label %bb.cw, label %bb.cx, !prof !16
 
 bb.cw:                                            ; preds = %bb.cv
   %i.ek = add nuw i32 %.val.i.i.i237, 1
-  store i32 %i.ek, ptr %i.ac, align 4, !tbaa !11
+  store i32 %i.ek, ptr %i.ac, align 512, !tbaa !11
   br label %lean_inc.exit.i236
 
 bb.cx:                                            ; preds = %bb.cv

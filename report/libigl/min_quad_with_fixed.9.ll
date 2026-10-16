@@ -205,7 +205,7 @@ bb.a:
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader.i:       ; preds = %bb.a
   %scevgep = getelementptr i8, ptr %7, i64 %i.m
   %scevgep15 = getelementptr i8, ptr %3, i64 %i.m
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %scevgep, ptr noundef nonnull align 1 dereferenceable(3) %scevgep15, i64 3, i1 false), !tbaa !13, !noalias !352
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(3) %scevgep, ptr noundef nonnull align 1 dereferenceable(3) %scevgep15, i64 3, i1 false), !tbaa !13, !noalias !352
   br label %_ZZN3igl19min_quad_with_fixedIfLi3ELi1ELb1EEEN5Eigen6MatrixIT_XT0_ELi1EXorLNS1_14StorageOptionsE0EquaaeqT0_Li1EneLi1ELi1ELS4_1EquaaeqLi1ELi1EneT0_Li1ELS4_0ELS4_0EEXT0_ELi1EEERKNS2_IS3_XT0_EXT0_EXorLS4_0EquaaeqT0_Li1EneT0_Li1ELS4_1EquaaeqT0_Li1EneT0_Li1ELS4_0ELS4_0EEXT0_EXT0_EEERKS5_RKNS1_5ArrayIbXT0_ELi1EXorLS4_0EquaaeqT0_Li1EneLi1ELi1ELS4_1EquaaeqLi1ELi1EneT0_Li1ELS4_0ELS4_0EEXT0_ELi1EEESA_RKNS2_IS3_XT1_EXT0_EXorLS4_0EquaaeqT1_Li1EneT0_Li1ELS4_1EquaaeqT0_Li1EneT1_Li1ELS4_0ELS4_0EEXT1_EXT0_EEERKNS2_IS3_XT1_ELi1EXorLS4_0EquaaeqT1_Li1EneLi1ELi1ELS4_1EquaaeqLi1ELi1EneT1_Li1ELS4_0ELS4_0EEXT1_ELi1EEEENKUlvE1_clEv.exit
 
 _ZZN3igl19min_quad_with_fixedIfLi3ELi1ELb1EEEN5Eigen6MatrixIT_XT0_ELi1EXorLNS1_14StorageOptionsE0EquaaeqT0_Li1EneLi1ELi1ELS4_1EquaaeqLi1ELi1EneT0_Li1ELS4_0ELS4_0EEXT0_ELi1EEERKNS2_IS3_XT0_EXT0_EXorLS4_0EquaaeqT0_Li1EneT0_Li1ELS4_1EquaaeqT0_Li1EneT0_Li1ELS4_0ELS4_0EEXT0_EXT0_EEERKS5_RKNS1_5ArrayIbXT0_ELi1EXorLS4_0EquaaeqT0_Li1EneLi1ELi1ELS4_1EquaaeqLi1ELi1EneT0_Li1ELS4_0ELS4_0EEXT0_ELi1EEESA_RKNS2_IS3_XT1_EXT0_EXorLS4_0EquaaeqT1_Li1EneT0_Li1ELS4_1EquaaeqT0_Li1EneT1_Li1ELS4_0ELS4_0EEXT1_EXT0_EEERKNS2_IS3_XT1_ELi1EXorLS4_0EquaaeqT1_Li1EneLi1ELi1ELS4_1EquaaeqLi1ELi1EneT1_Li1ELS4_0ELS4_0EEXT1_ELi1EEEENKUlvE1_clEv.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader.i
@@ -608,7 +608,7 @@ _ZN5Eigen6MatrixIfLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us: ; preds = %.lr.ph
   store float %i.bu, ptr %i.bp, align 4, !tbaa !10
   store float %i.bv, ptr %i.be, align 4, !tbaa !10
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %i.bd
-  %i.bx = load float, ptr %i.bw, align 4, !tbaa !10
+  %i.bx = load float, ptr %i.bw, align 8, !tbaa !10
   %i.by = fsub float 1.000000e+00, %i.bx
   %i.bz = fmul float %i.by, %i.bv
   br label %_ZN5Eigen6MatrixIfLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit._crit_edge.sink.split
@@ -646,7 +646,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.i.i.i.i.i.i8.i.us.preheader:             ; preds = %bb.d
   %i.ck = getelementptr i8, ptr %invariant.gep, i64 12
-  %i.cl = load float, ptr %i.ck, align 4, !tbaa !10
+  %i.cl = load float, ptr %i.ck, align 8, !tbaa !10
   %i.cm = load float, ptr %i.cb, align 4, !tbaa !10
   %i.cn = fmul float %i.cl, %i.cm
   %i.co = fadd float %i.cj, %i.cn

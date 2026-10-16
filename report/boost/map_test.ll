@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.l
 
 .lr.ph.i.i.i.i.i94:                               ; preds = %bb.v
   %i.ek = inttoptr i64 %i.ej to ptr
-  %i.el = load i32, ptr %i.cv, align 8, !tbaa !182, !noalias !2772
+  %i.el = load i32, ptr %i.cv, align 16, !tbaa !182, !noalias !2772
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %.lr.ph.i.i.i.i.i94
@@ -238,7 +238,7 @@ _ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiESaIS5_ENS0_8tree_optILNS0_14
 bb.x:                                             ; preds = %_ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiESaIS5_ENS0_8tree_optILNS0_14tree_type_enumE0ELb1EEEE11upper_boundERS4_.exit
   %i.er = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #29, !noalias !2773 ; 13 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 24
-  %i.et = load <2 x i32>, ptr %i.cv, align 8, !tbaa !182, !noalias !2773
+  %i.et = load <2 x i32>, ptr %i.cv, align 16, !tbaa !182, !noalias !2773
   store <2 x i32> %i.et, ptr %i.es, align 4, !tbaa !182, !noalias !2773
   %i.eu = load ptr, ptr %i.cs, align 8, !tbaa !211, !noalias !2776 ; 6 uses
   %i.ev = load i8, ptr %7, align 8, !tbaa !210, !range !205, !noalias !2776, !noundef !200
@@ -633,7 +633,7 @@ _ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiESaIS5_ENS0_8tree_optILNS0_14
 bb.az:                                            ; preds = %_ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiESaIS5_ENS0_8tree_optILNS0_14tree_type_enumE0ELb1EEEE11upper_boundERS4_.exit157
   %i.jn = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #29, !noalias !2784 ; 13 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 24
-  %i.jp = load <2 x i32>, ptr %i.hx, align 8, !tbaa !182, !noalias !2784
+  %i.jp = load <2 x i32>, ptr %i.hx, align 16, !tbaa !182, !noalias !2784
   store <2 x i32> %i.jp, ptr %i.jo, align 4, !tbaa !182, !noalias !2784
   %i.jq = load ptr, ptr %i.hw, align 8, !tbaa !211, !noalias !2787 ; 6 uses
   %i.jr = load i8, ptr %5, align 8, !tbaa !210, !range !205, !noalias !2787, !noundef !200
@@ -1036,7 +1036,7 @@ bb.v:                                             ; preds = %bb.l
 
 .lr.ph.i.i.i.i.i94:                               ; preds = %bb.v
   %i.es = inttoptr i64 %i.er to ptr
-  %i.et = load i32, ptr %i.dd, align 8, !tbaa !182, !noalias !3872
+  %i.et = load i32, ptr %i.dd, align 16, !tbaa !182, !noalias !3872
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %.lr.ph.i.i.i.i.i94
@@ -1069,7 +1069,7 @@ _ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiENS0_13new_allocatorIS5_EENS0
 bb.x:                                             ; preds = %_ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiENS0_13new_allocatorIS5_EENS0_8tree_optILNS0_14tree_type_enumE1ELb1EEEE11upper_boundERS4_.exit
   %i.ez = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #27, !noalias !3873 ; 13 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 24
-  %i.fb = load <2 x i32>, ptr %i.dd, align 8, !tbaa !182, !noalias !3873
+  %i.fb = load <2 x i32>, ptr %i.dd, align 16, !tbaa !182, !noalias !3873
   store <2 x i32> %i.fb, ptr %i.fa, align 4, !tbaa !182, !noalias !3873
   %i.fc = load ptr, ptr %i.da, align 8, !tbaa !489, !noalias !3876 ; 6 uses
   %i.fd = load i8, ptr %7, align 8, !tbaa !488, !range !205, !noalias !3876, !noundef !200
@@ -1464,7 +1464,7 @@ _ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiENS0_13new_allocatorIS5_EENS0
 bb.az:                                            ; preds = %_ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiENS0_13new_allocatorIS5_EENS0_8tree_optILNS0_14tree_type_enumE1ELb1EEEE11upper_boundERS4_.exit157
   %i.jv = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #27, !noalias !3884 ; 13 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 24
-  %i.jx = load <2 x i32>, ptr %i.if, align 8, !tbaa !182, !noalias !3884
+  %i.jx = load <2 x i32>, ptr %i.if, align 16, !tbaa !182, !noalias !3884
   store <2 x i32> %i.jx, ptr %i.jw, align 4, !tbaa !182, !noalias !3884
   %i.jy = load ptr, ptr %i.ie, align 8, !tbaa !489, !noalias !3887 ; 6 uses
   %i.jz = load i8, ptr %5, align 8, !tbaa !488, !range !205, !noalias !3887, !noundef !200
@@ -1867,7 +1867,7 @@ bb.o:                                             ; preds = %bb.l
   br i1 %.not6.i.i.i.i.i, label %_ZN5boost9container3dtl4treeISt4pairIKiiEiSt4lessIiENS0_13adaptive_poolIS5_Lm256ELm2ELm1ELj2EEENS0_8tree_optILNS0_14tree_type_enumE2ELb1EEEE11upper_boundERS4_.exit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.o
-  %i.dt = load i32, ptr %i.dr, align 8, !tbaa !182, !noalias !5050
+  %i.dt = load i32, ptr %i.dr, align 16, !tbaa !182, !noalias !5050
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i.i.i.i
@@ -2270,7 +2270,7 @@ bb.v:                                             ; preds = %bb.j
   br i1 %.not6.i.i.i.i.i.i, label %_ZN5boost9container3dtl4treeISt4pairIKNS0_4test11movable_intES5_EiSt4lessIS5_ENS0_13new_allocatorIS7_EENS0_8tree_optILNS0_14tree_type_enumE3ELb1EEEE11upper_boundERS6_.exit, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.noexc126
-  %i.dw = load i32, ptr %i.ct, align 8, !tbaa !184, !noalias !6312
+  %i.dw = load i32, ptr %i.ct, align 16, !tbaa !184, !noalias !6312
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %.lr.ph.i.i.i.i.i.i
@@ -2673,7 +2673,7 @@ bb.bg:                                            ; preds = %bb.ax
   br i1 %.not6.i.i.i.i.i.i183, label %_ZN5boost9container3dtl4treeISt4pairIKNS0_4test11movable_intES5_EiSt4lessIS5_ENS0_13new_allocatorIS7_EENS0_8tree_optILNS0_14tree_type_enumE3ELb1EEEE11upper_boundERS6_.exit194, label %.lr.ph.i.i.i.i.i.i184
 
 .lr.ph.i.i.i.i.i.i184:                            ; preds = %.noexc193
-  %i.io = load i32, ptr %i.he, align 8, !tbaa !184, !noalias !6322
+  %i.io = load i32, ptr %i.he, align 16, !tbaa !184, !noalias !6322
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bh, %.lr.ph.i.i.i.i.i.i184
@@ -2721,8 +2721,8 @@ bb.bi:                                            ; preds = %.noexc203
 .noexc204:                                        ; preds = %bb.bi
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 24
   %i.iy = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182, !noalias !6323
-  %i.iz = load <2 x i32>, ptr %i.he, align 8, !tbaa !184, !noalias !6323
-  store i32 0, ptr %i.he, align 8, !tbaa !184, !noalias !6323
+  %i.iz = load <2 x i32>, ptr %i.he, align 16, !tbaa !184, !noalias !6323
+  store i32 0, ptr %i.he, align 16, !tbaa !184, !noalias !6323
   store <2 x i32> %i.iz, ptr %i.ix, align 4, !tbaa !184, !noalias !6323
   store i32 0, ptr %i.is, align 4, !tbaa !184, !noalias !6323
   %i.ja = add i32 %i.iy, 2
@@ -3125,7 +3125,7 @@ bb.x:                                             ; preds = %bb.l
 
 .lr.ph.i.i.i.i.i124:                              ; preds = %bb.x
   %i.fa = inttoptr i64 %i.ez to ptr
-  %i.fb = load i32, ptr %i.dh, align 8, !tbaa !612, !noalias !7254
+  %i.fb = load i32, ptr %i.dh, align 16, !tbaa !612, !noalias !7254
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.y, %.lr.ph.i.i.i.i.i124
@@ -3165,7 +3165,7 @@ bb.z:                                             ; preds = %.noexc130
 .noexc131:                                        ; preds = %bb.z
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 24
   %i.fj = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !182, !noalias !7255
-  %i.fk = load <2 x i32>, ptr %i.dh, align 8, !tbaa !612, !noalias !7255
+  %i.fk = load <2 x i32>, ptr %i.dh, align 16, !tbaa !612, !noalias !7255
   store <2 x i32> %i.fk, ptr %i.fi, align 4, !tbaa !612, !noalias !7255
   %i.fl = add i32 %i.fj, 2
   store i32 %i.fl, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !182, !noalias !7255
@@ -3568,7 +3568,7 @@ bb.bg:                                            ; preds = %.noexc198
 .noexc199:                                        ; preds = %bb.bg
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 24
   %i.kl = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !182, !noalias !7266
-  %i.km = load <2 x i32>, ptr %i.iq, align 8, !tbaa !612, !noalias !7266
+  %i.km = load <2 x i32>, ptr %i.iq, align 16, !tbaa !612, !noalias !7266
   store <2 x i32> %i.km, ptr %i.kk, align 4, !tbaa !612, !noalias !7266
   %i.kn = add i32 %i.kl, 2
   store i32 %i.kn, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !182, !noalias !7266
@@ -3971,7 +3971,7 @@ bb.x:                                             ; preds = %bb.l
 
 .lr.ph.i.i.i.i.i124:                              ; preds = %bb.x
   %i.fb = inttoptr i64 %i.fa to ptr
-  %i.fc = load i32, ptr %i.dh, align 8, !tbaa !239, !noalias !8379
+  %i.fc = load i32, ptr %i.dh, align 16, !tbaa !239, !noalias !8379
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.y, %.lr.ph.i.i.i.i.i124
@@ -4012,8 +4012,8 @@ bb.z:                                             ; preds = %.noexc130
 .noexc131:                                        ; preds = %bb.z
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 24
   %i.fl = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !182, !noalias !8380
-  %i.fm = load <2 x i32>, ptr %i.dh, align 8, !tbaa !239, !noalias !8380
-  store i32 0, ptr %i.dh, align 8, !tbaa !239, !noalias !8380
+  %i.fm = load <2 x i32>, ptr %i.dh, align 16, !tbaa !239, !noalias !8380
+  store i32 0, ptr %i.dh, align 16, !tbaa !239, !noalias !8380
   store <2 x i32> %i.fm, ptr %i.fk, align 4, !tbaa !239, !noalias !8380
   store i32 0, ptr %i.fg, align 4, !tbaa !239, !noalias !8380
   %i.fn = add i32 %i.fl, 2
@@ -4416,8 +4416,8 @@ bb.bg:                                            ; preds = %.noexc198
 .noexc199:                                        ; preds = %bb.bg
   %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 24
   %i.kp = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !182, !noalias !8391
-  %i.kq = load <2 x i32>, ptr %i.is, align 8, !tbaa !239, !noalias !8391
-  store i32 0, ptr %i.is, align 8, !tbaa !239, !noalias !8391
+  %i.kq = load <2 x i32>, ptr %i.is, align 16, !tbaa !239, !noalias !8391
+  store i32 0, ptr %i.is, align 16, !tbaa !239, !noalias !8391
   store <2 x i32> %i.kq, ptr %i.ko, align 4, !tbaa !239, !noalias !8391
   store i32 0, ptr %i.kk, align 4, !tbaa !239, !noalias !8391
   %i.kr = add i32 %i.kp, 2
@@ -4820,7 +4820,7 @@ bb.x:                                             ; preds = %bb.l
 
 .lr.ph.i.i.i.i.i124:                              ; preds = %bb.x
   %i.fb = inttoptr i64 %i.fa to ptr
-  %i.fc = load i32, ptr %i.dh, align 8, !tbaa !704, !noalias !9474
+  %i.fc = load i32, ptr %i.dh, align 16, !tbaa !704, !noalias !9474
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.y, %.lr.ph.i.i.i.i.i124
@@ -4861,8 +4861,8 @@ bb.z:                                             ; preds = %.noexc130
 .noexc131:                                        ; preds = %bb.z
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 24
   %i.fl = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !182, !noalias !9475
-  %i.fm = load <2 x i32>, ptr %i.dh, align 8, !tbaa !704, !noalias !9475
-  store i32 0, ptr %i.dh, align 8, !tbaa !704, !noalias !9475
+  %i.fm = load <2 x i32>, ptr %i.dh, align 16, !tbaa !704, !noalias !9475
+  store i32 0, ptr %i.dh, align 16, !tbaa !704, !noalias !9475
   store <2 x i32> %i.fm, ptr %i.fk, align 4, !tbaa !704, !noalias !9475
   store i32 0, ptr %i.fg, align 4, !tbaa !704, !noalias !9475
   %i.fn = add i32 %i.fl, 2
@@ -5265,8 +5265,8 @@ bb.bg:                                            ; preds = %.noexc198
 .noexc199:                                        ; preds = %bb.bg
   %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 24
   %i.kp = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !182, !noalias !9486
-  %i.kq = load <2 x i32>, ptr %i.is, align 8, !tbaa !704, !noalias !9486
-  store i32 0, ptr %i.is, align 8, !tbaa !704, !noalias !9486
+  %i.kq = load <2 x i32>, ptr %i.is, align 16, !tbaa !704, !noalias !9486
+  store i32 0, ptr %i.is, align 16, !tbaa !704, !noalias !9486
   store <2 x i32> %i.kq, ptr %i.ko, align 4, !tbaa !704, !noalias !9486
   store i32 0, ptr %i.kk, align 4, !tbaa !704, !noalias !9486
   %i.kr = add i32 %i.kp, 2
@@ -5669,7 +5669,7 @@ bb.x:                                             ; preds = %bb.l
 
 .lr.ph.i.i.i.i.i124:                              ; preds = %bb.x
   %i.fb = inttoptr i64 %i.fa to ptr
-  %i.fc = load i32, ptr %i.dh, align 8, !tbaa !239, !noalias !10356
+  %i.fc = load i32, ptr %i.dh, align 16, !tbaa !239, !noalias !10356
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.y, %.lr.ph.i.i.i.i.i124
@@ -5710,8 +5710,8 @@ bb.z:                                             ; preds = %.noexc130
 .noexc131:                                        ; preds = %bb.z
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 24
   %i.fl = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !182, !noalias !10357
-  %i.fm = load <2 x i32>, ptr %i.dh, align 8, !tbaa !239, !noalias !10357
-  store i32 0, ptr %i.dh, align 8, !tbaa !239, !noalias !10357
+  %i.fm = load <2 x i32>, ptr %i.dh, align 16, !tbaa !239, !noalias !10357
+  store i32 0, ptr %i.dh, align 16, !tbaa !239, !noalias !10357
   store <2 x i32> %i.fm, ptr %i.fk, align 4, !tbaa !239, !noalias !10357
   store i32 0, ptr %i.fg, align 4, !tbaa !239, !noalias !10357
   %i.fn = add i32 %i.fl, 2
@@ -6114,8 +6114,8 @@ bb.bg:                                            ; preds = %.noexc198
 .noexc199:                                        ; preds = %bb.bg
   %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 24
   %i.kp = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !182, !noalias !10368
-  %i.kq = load <2 x i32>, ptr %i.is, align 8, !tbaa !239, !noalias !10368
-  store i32 0, ptr %i.is, align 8, !tbaa !239, !noalias !10368
+  %i.kq = load <2 x i32>, ptr %i.is, align 16, !tbaa !239, !noalias !10368
+  store i32 0, ptr %i.is, align 16, !tbaa !239, !noalias !10368
   store <2 x i32> %i.kq, ptr %i.ko, align 4, !tbaa !239, !noalias !10368
   store i32 0, ptr %i.kk, align 4, !tbaa !239, !noalias !10368
   %i.kr = add i32 %i.kp, 2

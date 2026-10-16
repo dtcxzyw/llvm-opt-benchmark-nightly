@@ -205,7 +205,7 @@ vector.body1013:                                  ; preds = %vector.body1013, %v
   %i.ayh = shl <8 x i64> %i.ayg, splat (i64 4)
   %wide.gep1016 = getelementptr inbounds nuw i8, ptr %3, <8 x i64> %i.ayh ; 4 uses
   %i.ayi = extractelement <8 x ptr> %wide.gep1016, i64 0
-  %wide.load1017 = load <8 x float>, ptr %i.axy, align 4, !tbaa !30, !alias.scope !141 ; 2 uses
+  %wide.load1017 = load <8 x float>, ptr %i.axy, align 32, !tbaa !30, !alias.scope !141 ; 2 uses
   %wide.vec1018 = load <32 x float>, ptr %i.ayb, align 4, !tbaa !30 ; 3 uses
   %strided.vec1019 = shufflevector <32 x float> %wide.vec1018, <32 x float> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
   %strided.vec1020 = shufflevector <32 x float> %wide.vec1018, <32 x float> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
@@ -226,7 +226,7 @@ vector.body1013:                                  ; preds = %vector.body1013, %v
   %strided.vec1030 = shufflevector <32 x float> %wide.vec1027, <32 x float> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
   %i.ayo = fadd reassoc nsz arcp contract afn <8 x float> %i.ayn, %strided.vec1028
   call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %i.ayo, <8 x ptr> align 4 %wide.gep1016, <8 x i1> splat (i1 true)), !tbaa !30, !alias.scope !143, !noalias !144
-  %wide.load1031 = load <8 x float>, ptr %i.axy, align 4, !tbaa !30, !alias.scope !141 ; 2 uses
+  %wide.load1031 = load <8 x float>, ptr %i.axy, align 32, !tbaa !30, !alias.scope !141 ; 2 uses
   %i.ayp = fmul reassoc nsz arcp contract afn <8 x float> %strided.vec1020, %wide.load1031
   %wide.load1032 = load <8 x float>, ptr %i.ayc, align 32, !tbaa !30, !alias.scope !142 ; 2 uses
   %i.ayq = fmul reassoc nsz arcp contract afn <8 x float> %strided.vec1025, %wide.load1032
@@ -236,7 +236,7 @@ vector.body1013:                                  ; preds = %vector.body1013, %v
   %wide.gep1033 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep1016, i64 4
   %i.ayu = fadd reassoc nsz arcp contract afn <8 x float> %i.ayt, %strided.vec1029
   call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %i.ayu, <8 x ptr> align 4 %wide.gep1033, <8 x i1> splat (i1 true)), !tbaa !30, !alias.scope !145, !noalias !146
-  %wide.load1034 = load <8 x float>, ptr %i.axy, align 4, !tbaa !30, !alias.scope !141 ; 2 uses
+  %wide.load1034 = load <8 x float>, ptr %i.axy, align 32, !tbaa !30, !alias.scope !141 ; 2 uses
   %i.ayv = fmul reassoc nsz arcp contract afn <8 x float> %strided.vec1021, %wide.load1034
   %wide.load1035 = load <8 x float>, ptr %i.ayc, align 32, !tbaa !30, !alias.scope !142 ; 2 uses
   %i.ayw = fmul reassoc nsz arcp contract afn <8 x float> %strided.vec1026, %wide.load1035

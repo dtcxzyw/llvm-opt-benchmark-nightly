@@ -205,15 +205,15 @@ bb.ds:                                            ; preds = %bb.dr
   br i1 %i.azz, label %bb.dt, label %bb.dv
 
 bb.dt:                                            ; preds = %bb.ds
-  %i.baa = load float, ptr %i.ayv, align 4, !tbaa !80
-  %i.bab = load float, ptr %i.ayy, align 4, !tbaa !80
+  %i.baa = load float, ptr %i.ayv, align 16, !tbaa !80
+  %i.bab = load float, ptr %i.ayy, align 16, !tbaa !80
   %i.bac = fcmp nsz ult float %i.baa, %i.bab
   br i1 %i.bac, label %bb.dv, label %bb.du
 
 bb.du:                                            ; preds = %bb.dt
-  %i.bad = load i32, ptr %i.ayx, align 4, !tbaa !82
+  %i.bad = load i32, ptr %i.ayx, align 16, !tbaa !82
   %.1748 = tail call i32 @llvm.smin.i32(i32 %i.azd, i32 %i.bad)
-  store i32 %.1748, ptr %i.ayx, align 4, !tbaa !82
+  store i32 %.1748, ptr %i.ayx, align 16, !tbaa !82
   br label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du, %bb.dt, %bb.ds, %bb.dr

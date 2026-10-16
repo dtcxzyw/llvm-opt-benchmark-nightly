@@ -32,7 +32,7 @@ bb.a:
 
 __cpuid_fill_table.exit.us.i.i:                   ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.e, i8 0, i64 12, i1 false)
-  store i32 0, ptr %i.d, align 4
+  store i32 0, ptr %i.d, align 16
   store i32 0, ptr null, align 4294967296
   store i32 0, ptr %i.f, align 4
   %i.o = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid", "={ax},={bx},={cx},={dx},0,2,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 0, i32 0) #2, !srcloc !10 ; 4 uses
@@ -44,9 +44,9 @@ __cpuid_fill_table.exit.us.i.i:                   ; preds = %bb.a
   store i32 %i.q, ptr %i.e, align 4
   store i32 %i.r, ptr %i.f, align 4
   store i32 %i.s, ptr %i.g, align 4
-  %i.t = load i32, ptr %i.d, align 4
+  %i.t = load i32, ptr %i.d, align 16
   %i.u = add i32 %i.t, 1
-  store i32 %i.u, ptr %i.d, align 4
+  store i32 %i.u, ptr %i.d, align 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
   br label %__cpuid_fill_table.exit.sink.split.i.i
 

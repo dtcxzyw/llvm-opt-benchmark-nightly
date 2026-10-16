@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN3igl12circumradiusIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEENS2_
   br i1 %.not, label %_ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi5ELi1ELi0ELi5ELi1EEELin1ELi1ELb0EEEEENS5_INS_5ArrayIdLi4ELi1ELi0ELi4ELi1EEEEENS0_9assign_opIddEELi0EEEEEvRT_ll.exit.i.i.i.i.i.i.i.i.i.i.thread, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader
 
 _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi5ELi1ELi0ELi5ELi1EEELin1ELi1ELb0EEEEENS5_INS_5ArrayIdLi4ELi1ELi0ELi4ELi1EEEEENS0_9assign_opIddEELi0EEEEEvRT_ll.exit.i.i.i.i.i.i.i.i.i.i.thread: ; preds = %.lr.ph54.i.i.i.i.i.i.i.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep158, i64 %i.bq, i1 false), !tbaa !71
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %scevgep158, i64 %i.bq, i1 false), !tbaa !71
   br label %_ZNK5Eigen9DenseBaseINS_5SolveINS_19ColPivHouseholderQRINS_6MatrixIdLi5ELi5ELi0ELi5ELi5EEEEENS3_IdLi5ELi1ELi0ELi5ELi1EEEEEE4evalEv.exit
 
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader:         ; preds = %.lr.ph54.i.i.i.i.i.i.i.i.i.i.i

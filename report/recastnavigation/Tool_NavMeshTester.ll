@@ -205,9 +205,9 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ia = mul nsw i32 %i.hy, 3
   %i.ib = sext i32 %i.ia to i64
   %i.ic = getelementptr inbounds [4 x i8], ptr %i.ce, i64 %i.ib ; 2 uses
-  store <2 x float> %i.hv, ptr %i.ic, align 4, !tbaa !34
+  store <2 x float> %i.hv, ptr %i.ic, align 8, !tbaa !34
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 8
-  store float %i.hw, ptr %i.id, align 4, !tbaa !34
+  store float %i.hw, ptr %i.id, align 8, !tbaa !34
   %i.ie = add nsw i32 %i.hq, 2
   store i32 %i.ie, ptr %i.bo, align 4, !tbaa !35
   br label %bb.ac
@@ -610,9 +610,9 @@ bb.r:                                             ; preds = %bb.q
   %i.gu = mul nsw i32 %i.gs, 3
   %i.gv = sext i32 %i.gu to i64
   %i.gw = getelementptr inbounds [4 x i8], ptr %i.gk, i64 %i.gv ; 2 uses
-  store <2 x float> %i.go, ptr %i.gw, align 4, !tbaa !34
+  store <2 x float> %i.go, ptr %i.gw, align 8, !tbaa !34
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 8
-  store float %i.gq, ptr %i.gx, align 4, !tbaa !34
+  store float %i.gq, ptr %i.gx, align 8, !tbaa !34
   %i.gy = add nsw i32 %i.gi, 2
   store i32 %i.gy, ptr %i.bw, align 4, !tbaa !35
   br label %bb.s

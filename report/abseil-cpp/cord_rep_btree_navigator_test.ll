@@ -204,7 +204,7 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 14
   %i.t = load i8, ptr %i.s, align 1               ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.t, ptr %i.u, align 1, !tbaa !42
+  store i8 %i.t, ptr %i.u, align 2, !tbaa !42
   %.0.i.i.prol = zext i8 %i.t to i64              ; 2 uses
   br label %.lr.ph.i.i.prol.loopexit
 
@@ -607,7 +607,7 @@ bb.a:
   %i.y = add nsw i64 %i.x, -1                     ; 3 uses
   %i.z = trunc i64 %i.y to i8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.z, ptr %i.aa, align 1, !tbaa !42
+  store i8 %i.z, ptr %i.aa, align 2, !tbaa !42
   br label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
@@ -1010,7 +1010,7 @@ bb.a:
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 14
   %i.aa = load i8, ptr %i.z, align 1              ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.aa, ptr %i.ab, align 1, !tbaa !42
+  store i8 %i.aa, ptr %i.ab, align 2, !tbaa !42
   br label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
@@ -1111,7 +1111,7 @@ bb.d:                                             ; preds = %.lr.ph532
   %i.bt = add nsw i64 %i.bs, -1                   ; 3 uses
   %i.bu = trunc i64 %i.bt to i8
   %i.bv = getelementptr inbounds i8, ptr %i.t, i64 %indvars.iv.next41.i.i.prol
-  store i8 %i.bu, ptr %i.bv, align 1, !tbaa !42
+  store i8 %i.bu, ptr %i.bv, align 2, !tbaa !42
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %bb.d
@@ -1489,7 +1489,7 @@ bb.ae:                                            ; preds = %.lr.ph536
   %i.gp = load i8, ptr %i.go, align 1, !tbaa !42  ; 2 uses
   %i.gq = zext i8 %i.gp to i64                    ; 2 uses
   %i.gr = getelementptr inbounds i8, ptr %i.t, i64 %indvars.iv.next41.i.i132.prol
-  store i8 %i.gp, ptr %i.gr, align 1, !tbaa !42
+  store i8 %i.gp, ptr %i.gr, align 2, !tbaa !42
   br label %.prol.loopexit612
 
 .prol.loopexit612:                                ; preds = %.prol.loopexit612.unr-lcssa, %bb.ae
@@ -1874,7 +1874,7 @@ bb.bg:                                            ; preds = %.lr.ph540
   %i.lf = load i8, ptr %i.le, align 1, !tbaa !42  ; 2 uses
   %i.lg = zext i8 %i.lf to i64                    ; 2 uses
   %i.lh = getelementptr inbounds i8, ptr %i.t, i64 %indvars.iv.next41.i.i177.prol
-  store i8 %i.lf, ptr %i.lh, align 1, !tbaa !42
+  store i8 %i.lf, ptr %i.lh, align 2, !tbaa !42
   br label %.prol.loopexit618
 
 .prol.loopexit618:                                ; preds = %.prol.loopexit618.unr-lcssa, %bb.bg
@@ -2250,7 +2250,7 @@ bb.ch:                                            ; preds = %.lr.ph544
   %i.px = add nsw i64 %i.pw, -1                   ; 3 uses
   %i.py = trunc i64 %i.px to i8
   %i.pz = getelementptr inbounds i8, ptr %i.t, i64 %indvars.iv.next41.i.i218.prol
-  store i8 %i.py, ptr %i.pz, align 1, !tbaa !42
+  store i8 %i.py, ptr %i.pz, align 2, !tbaa !42
   br label %.prol.loopexit624
 
 .prol.loopexit624:                                ; preds = %.prol.loopexit624.unr-lcssa, %bb.ch
@@ -2631,7 +2631,7 @@ bb.dj:                                            ; preds = %.lr.ph548
   %i.uj = add nsw i64 %i.ui, -1                   ; 3 uses
   %i.uk = trunc i64 %i.uj to i8
   %i.ul = getelementptr inbounds i8, ptr %i.t, i64 %indvars.iv.next41.i.i264.prol
-  store i8 %i.uk, ptr %i.ul, align 1, !tbaa !42
+  store i8 %i.uk, ptr %i.ul, align 2, !tbaa !42
   br label %.prol.loopexit630
 
 .prol.loopexit630:                                ; preds = %.prol.loopexit630.unr-lcssa, %bb.dj
@@ -3034,7 +3034,7 @@ bb.a:
   %i.af = add nsw i64 %i.ae, -1                   ; 2 uses
   %i.ag = trunc i64 %i.af to i8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.w, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.ag, ptr %i.ah, align 1, !tbaa !42
+  store i8 %i.ag, ptr %i.ah, align 2, !tbaa !42
   br label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
@@ -3141,7 +3141,7 @@ bb.d:                                             ; preds = %.lr.ph526
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !42  ; 2 uses
   %i.ci = zext i8 %i.ch to i64                    ; 2 uses
   %i.cj = getelementptr inbounds i8, ptr %i.w, i64 %indvars.iv.next41.i.i.prol
-  store i8 %i.ch, ptr %i.cj, align 1, !tbaa !42
+  store i8 %i.ch, ptr %i.cj, align 2, !tbaa !42
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %bb.d
@@ -3518,7 +3518,7 @@ bb.ae:                                            ; preds = %.lr.ph530
   %i.ha = add nsw i64 %i.gz, -1                   ; 3 uses
   %i.hb = trunc i64 %i.ha to i8
   %i.hc = getelementptr inbounds i8, ptr %i.w, i64 %indvars.iv.next41.i.i132.prol
-  store i8 %i.hb, ptr %i.hc, align 1, !tbaa !42
+  store i8 %i.hb, ptr %i.hc, align 2, !tbaa !42
   br label %.prol.loopexit606
 
 .prol.loopexit606:                                ; preds = %.prol.loopexit606.unr-lcssa, %bb.ae
@@ -3899,7 +3899,7 @@ bb.bg:                                            ; preds = %.lr.ph534
   %i.lm = add nsw i64 %i.ll, -1                   ; 3 uses
   %i.ln = trunc i64 %i.lm to i8
   %i.lo = getelementptr inbounds i8, ptr %i.w, i64 %indvars.iv.next41.i.i177.prol
-  store i8 %i.ln, ptr %i.lo, align 1, !tbaa !42
+  store i8 %i.ln, ptr %i.lo, align 2, !tbaa !42
   br label %.prol.loopexit612
 
 .prol.loopexit612:                                ; preds = %.prol.loopexit612.unr-lcssa, %bb.bg
@@ -4276,7 +4276,7 @@ bb.ch:                                            ; preds = %.lr.ph538
   %i.qh = load i8, ptr %i.qg, align 1, !tbaa !42  ; 2 uses
   %i.qi = zext i8 %i.qh to i64                    ; 2 uses
   %i.qj = getelementptr inbounds i8, ptr %i.w, i64 %indvars.iv.next41.i.i218.prol
-  store i8 %i.qh, ptr %i.qj, align 1, !tbaa !42
+  store i8 %i.qh, ptr %i.qj, align 2, !tbaa !42
   br label %.prol.loopexit618
 
 .prol.loopexit618:                                ; preds = %.prol.loopexit618.unr-lcssa, %bb.ch
@@ -4661,7 +4661,7 @@ bb.dj:                                            ; preds = %.lr.ph542
   %i.ux = load i8, ptr %i.uw, align 1, !tbaa !42  ; 2 uses
   %i.uy = zext i8 %i.ux to i64                    ; 2 uses
   %i.uz = getelementptr inbounds i8, ptr %i.w, i64 %indvars.iv.next41.i.i264.prol
-  store i8 %i.ux, ptr %i.uz, align 1, !tbaa !42
+  store i8 %i.ux, ptr %i.uz, align 2, !tbaa !42
   br label %.prol.loopexit624
 
 .prol.loopexit624:                                ; preds = %.prol.loopexit624.unr-lcssa, %bb.dj
@@ -5064,7 +5064,7 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 14
   %i.t = load i8, ptr %i.s, align 1               ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.t, ptr %i.u, align 1, !tbaa !42
+  store i8 %i.t, ptr %i.u, align 2, !tbaa !42
   br label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
@@ -5467,7 +5467,7 @@ bb.ak:                                            ; preds = %.preheader, %bb.de
   %i.eo = getelementptr inbounds nuw i8, ptr %i.em, i64 14
   %i.ep = load i8, ptr %i.eo, align 1             ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.aq, i64 %indvars.iv.next.i.i182.prol
-  store i8 %i.ep, ptr %i.eq, align 1, !tbaa !42
+  store i8 %i.ep, ptr %i.eq, align 2, !tbaa !42
   br label %.lr.ph.i.i178.prol.loopexit
 
 .lr.ph.i.i178.prol.loopexit:                      ; preds = %.lr.ph.i.i178.prol, %.lr.ph.i.i178.preheader
@@ -5870,7 +5870,7 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 14
   %i.t = load i8, ptr %i.s, align 1               ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.t, ptr %i.u, align 1, !tbaa !42
+  store i8 %i.t, ptr %i.u, align 2, !tbaa !42
   br label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
@@ -6273,7 +6273,7 @@ _ZN4absl12lts_2026052613cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit.i66:
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 14
   %i.ar = load i8, ptr %i.aq, align 1             ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ak, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.ar, ptr %i.as, align 1, !tbaa !42
+  store i8 %i.ar, ptr %i.as, align 2, !tbaa !42
   br label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
@@ -6676,7 +6676,7 @@ bb.a:
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 14
   %i.ao = load i8, ptr %i.an, align 1             ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.ao, ptr %i.ap, align 1, !tbaa !42
+  store i8 %i.ao, ptr %i.ap, align 2, !tbaa !42
   br label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
@@ -7079,7 +7079,7 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 14
   %i.q = load i8, ptr %i.p, align 1               ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.q, ptr %i.r, align 1, !tbaa !42
+  store i8 %i.q, ptr %i.r, align 2, !tbaa !42
   br label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
@@ -7482,7 +7482,7 @@ _ZN4absl12lts_2026052613cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit: ; p
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 14
   %i.bn = load i8, ptr %i.bm, align 1             ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.next.i.i.prol
-  store i8 %i.bn, ptr %i.bo, align 1, !tbaa !42
+  store i8 %i.bn, ptr %i.bo, align 2, !tbaa !42
   %.0.i.i.prol = zext i8 %i.bn to i64             ; 2 uses
   br label %.lr.ph.i.i.prol.loopexit
 
@@ -7704,7 +7704,7 @@ bb.q:                                             ; preds = %.lr.ph292
   %i.ei = load i8, ptr %i.eh, align 1, !tbaa !42  ; 2 uses
   %i.ej = zext i8 %i.ei to i64                    ; 2 uses
   %i.ek = getelementptr inbounds i8, ptr %i.bg, i64 %indvars.iv.next41.i.i.prol
-  store i8 %i.ei, ptr %i.ek, align 1, !tbaa !42
+  store i8 %i.ei, ptr %i.ek, align 2, !tbaa !42
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %bb.q
@@ -7935,7 +7935,7 @@ bb.af:                                            ; preds = %.lr.ph297
   %i.hj = load i8, ptr %i.hi, align 1, !tbaa !42  ; 2 uses
   %i.hk = zext i8 %i.hj to i64                    ; 2 uses
   %i.hl = getelementptr inbounds i8, ptr %i.bg, i64 %indvars.iv.next41.i.i85.prol
-  store i8 %i.hj, ptr %i.hl, align 1, !tbaa !42
+  store i8 %i.hj, ptr %i.hl, align 2, !tbaa !42
   br label %.prol.loopexit345
 
 .prol.loopexit345:                                ; preds = %.prol.loopexit345.unr-lcssa, %bb.af
@@ -8164,7 +8164,7 @@ bb.au:                                            ; preds = %.lr.ph302
   %i.ki = add nsw i64 %i.kh, -1                   ; 3 uses
   %i.kj = trunc i64 %i.ki to i8
   %i.kk = getelementptr inbounds i8, ptr %i.bg, i64 %indvars.iv.next41.i.i111.prol
-  store i8 %i.kj, ptr %i.kk, align 1, !tbaa !42
+  store i8 %i.kj, ptr %i.kk, align 2, !tbaa !42
   br label %.prol.loopexit351
 
 .prol.loopexit351:                                ; preds = %.prol.loopexit351.unr-lcssa, %bb.au
@@ -8397,7 +8397,7 @@ bb.bj:                                            ; preds = %.lr.ph307
   %i.nl = add nsw i64 %i.nk, -1                   ; 3 uses
   %i.nm = trunc i64 %i.nl to i8
   %i.nn = getelementptr inbounds i8, ptr %i.bg, i64 %indvars.iv.next41.i.i138.prol
-  store i8 %i.nm, ptr %i.nn, align 1, !tbaa !42
+  store i8 %i.nm, ptr %i.nn, align 2, !tbaa !42
   br label %.prol.loopexit357
 
 .prol.loopexit357:                                ; preds = %.prol.loopexit357.unr-lcssa, %bb.bj

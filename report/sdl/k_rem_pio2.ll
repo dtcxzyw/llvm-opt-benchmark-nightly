@@ -202,12 +202,12 @@ bb.y:                                             ; preds = %.critedge287
 .lr.ph367.prol:                                   ; preds = %.lr.ph367.preheader
   %i.km = getelementptr [8 x i8], ptr %i.c, i64 %i.kk ; 2 uses
   %i.kn = getelementptr i8, ptr %i.km, i64 -8     ; 2 uses
-  %i.ko = load double, ptr %i.kn, align 8         ; 2 uses
+  %i.ko = load double, ptr %i.kn, align 16        ; 2 uses
   %i.kp = fadd double %i.ko, %load_initial541     ; 3 uses
   %i.kq = fsub double %i.ko, %i.kp
   %i.kr = fadd double %load_initial541, %i.kq
   store double %i.kr, ptr %i.km, align 8
-  store double %i.kp, ptr %i.kn, align 8
+  store double %i.kp, ptr %i.kn, align 16
   %indvars.iv.next468.prol = add nsw i64 %i.kk, -1
   br label %.lr.ph367.prol.loopexit
 

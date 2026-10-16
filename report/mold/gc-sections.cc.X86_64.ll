@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 60 ; 2 uses
-  %i.ao = load atomic i8, ptr %i.an monotonic, align 1, !range !65, !noundef !66
+  %i.ao = load atomic i8, ptr %i.an monotonic, align 4, !range !65, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %_ZZN4moldL16collect_root_setINS_6X86_64EEEN3tbb6detail2d117concurrent_vectorIPNS_12InputSectionIT_EENS4_23cache_aligned_allocatorIS9_EEEERNS_7ContextIS7_EEENKUlPNS_6SymbolIS1_EEE_clESI_.exit.i.i.i.i.i.i.i.i.i.i.i, label %_ZN4moldL12mark_sectionINS_6X86_64EEEbPNS_12InputSectionIT_EE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i
 
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.bi = getelementptr inbounds nuw i8, ptr %i.be, i64 60 ; 2 uses
-  %i.bj = load atomic i8, ptr %i.bi monotonic, align 1, !range !65, !noundef !66
+  %i.bj = load atomic i8, ptr %i.bi monotonic, align 4, !range !65, !noundef !66
   %i.bk = trunc nuw i8 %i.bj to i1
   br i1 %i.bk, label %_ZZN4moldL16collect_root_setINS_6X86_64EEEN3tbb6detail2d117concurrent_vectorIPNS_12InputSectionIT_EENS4_23cache_aligned_allocatorIS9_EEEERNS_7ContextIS7_EEENKUlPNS_6SymbolIS1_EEE_clESI_.exit.i.i.i.i.i.i.i.i.i.i.i, label %_ZN4moldL12mark_sectionINS_6X86_64EEEbPNS_12InputSectionIT_EE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i
 

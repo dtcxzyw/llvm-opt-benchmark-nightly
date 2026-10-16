@@ -203,12 +203,12 @@ bb.l:                                             ; preds = %bb.k
   unreachable, !nosanitize !9
 
 bb.m:                                             ; preds = %bb.k
-  %i.al = load float, ptr %i.aa, align 4, !tbaa !64
+  %i.al = load float, ptr %i.aa, align 8, !tbaa !64
   %i.am = fcmp olt float %.sroa.0.0.copyload, %i.al ; 2 uses
   br i1 %i.am, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  store float %.sroa.0.0.copyload, ptr %i.aa, align 4, !tbaa !64
+  store float %.sroa.0.0.copyload, ptr %i.aa, align 8, !tbaa !64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -224,12 +224,12 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.1.i = phi i1 [ true, %bb.p ], [ %i.am, %bb.o ]
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
-  %i.ar = load float, ptr %i.aq, align 4, !tbaa !66
+  %i.ar = load float, ptr %i.aq, align 8, !tbaa !66
   %i.as = fcmp olt float %.sroa.5.0.copyload, %i.ar
   br i1 %i.as, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  store float %.sroa.5.0.copyload, ptr %i.aq, align 4, !tbaa !66
+  store float %.sroa.5.0.copyload, ptr %i.aq, align 8, !tbaa !66
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
@@ -246,12 +246,12 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t, %bb.s
   %.3.i = phi i1 [ true, %bb.t ], [ %.2.i, %bb.s ]
   %i.aw = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
-  %i.ax = load float, ptr %i.aw, align 4, !tbaa !68
+  %i.ax = load float, ptr %i.aw, align 8, !tbaa !68
   %i.ay = fcmp olt float %i.ax, %.sroa.7.0.copyload
   br i1 %i.ay, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  store float %.sroa.7.0.copyload, ptr %i.aw, align 4, !tbaa !68
+  store float %.sroa.7.0.copyload, ptr %i.aw, align 8, !tbaa !68
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u

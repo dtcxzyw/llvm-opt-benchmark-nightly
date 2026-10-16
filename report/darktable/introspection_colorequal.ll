@@ -205,17 +205,17 @@ bb.j:                                             ; preds = %bb.bi, %bb.bj, %bb.
   br i1 %exitcond86.not.i.i.i, label %bb.i, label %.preheader76.i.i.i
 
 bb.k:                                             ; preds = %.preheader76.i.i.i
-  %i.acx = load float, ptr %i.acr, align 4, !tbaa !12, !alias.scope !519, !noalias !503 ; 2 uses
+  %i.acx = load float, ptr %i.acr, align 64, !tbaa !12, !alias.scope !519, !noalias !503 ; 2 uses
   %i.acy = fcmp reassoc nsz arcp contract afn olt float %i.acx, 0.000000e+00
   br i1 %i.acy, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  store float +qnan, ptr %i.act, align 4, !tbaa !12, !alias.scope !518, !noalias !515
+  store float +qnan, ptr %i.act, align 64, !tbaa !12, !alias.scope !518, !noalias !515
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.k
   %i.acz = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %i.acx)
-  store float %i.acz, ptr %i.act, align 4, !tbaa !12, !alias.scope !518, !noalias !515
+  store float %i.acz, ptr %i.act, align 64, !tbaa !12, !alias.scope !518, !noalias !515
   br label %bb.q
 
 bb.n:                                             ; preds = %.preheader76.i.i.i
@@ -319,18 +319,18 @@ bb.aa:                                            ; preds = %bb.y
   br label %bb.ae
 
 bb.ab:                                            ; preds = %.lr.ph.i.i.i.2
-  %i.aek = load float, ptr %i.acr, align 4, !tbaa !12, !alias.scope !519, !noalias !503
+  %i.aek = load float, ptr %i.acr, align 8, !tbaa !12, !alias.scope !519, !noalias !503
   %i.ael = fsub reassoc nsz arcp contract afn float %i.aek, %i.adz ; 2 uses
   %i.aem = fcmp reassoc nsz arcp contract afn olt float %i.ael, 0.000000e+00
   br i1 %i.aem, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.aen = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %i.ael)
-  store float %i.aen, ptr %i.act, align 4, !tbaa !12, !alias.scope !518, !noalias !515
+  store float %i.aen, ptr %i.act, align 8, !tbaa !12, !alias.scope !518, !noalias !515
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ab
-  store float +qnan, ptr %i.act, align 4, !tbaa !12, !alias.scope !518, !noalias !515
+  store float +qnan, ptr %i.act, align 8, !tbaa !12, !alias.scope !518, !noalias !515
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.aa, %bb.z
@@ -417,18 +417,18 @@ bb.ao:                                            ; preds = %bb.am
   br label %bb.as
 
 bb.ap:                                            ; preds = %.lr.ph.i.i.i.4
-  %i.afs = load float, ptr %i.acr, align 4, !tbaa !12, !alias.scope !519, !noalias !503
+  %i.afs = load float, ptr %i.acr, align 16, !tbaa !12, !alias.scope !519, !noalias !503
   %i.aft = fsub reassoc nsz arcp contract afn float %i.afs, %i.afh ; 2 uses
   %i.afu = fcmp reassoc nsz arcp contract afn olt float %i.aft, 0.000000e+00
   br i1 %i.afu, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   %i.afv = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %i.aft)
-  store float %i.afv, ptr %i.act, align 4, !tbaa !12, !alias.scope !518, !noalias !515
+  store float %i.afv, ptr %i.act, align 16, !tbaa !12, !alias.scope !518, !noalias !515
   br label %bb.as
 
 bb.ar:                                            ; preds = %bb.ap
-  store float +qnan, ptr %i.act, align 4, !tbaa !12, !alias.scope !518, !noalias !515
+  store float +qnan, ptr %i.act, align 16, !tbaa !12, !alias.scope !518, !noalias !515
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.ao, %bb.an
@@ -515,18 +515,18 @@ bb.bc:                                            ; preds = %bb.ba
   br label %bb.bg
 
 bb.bd:                                            ; preds = %.lr.ph.i.i.i.6
-  %i.aha = load float, ptr %i.acr, align 4, !tbaa !12, !alias.scope !519, !noalias !503
+  %i.aha = load float, ptr %i.acr, align 8, !tbaa !12, !alias.scope !519, !noalias !503
   %i.ahb = fsub reassoc nsz arcp contract afn float %i.aha, %i.agp ; 2 uses
   %i.ahc = fcmp reassoc nsz arcp contract afn olt float %i.ahb, 0.000000e+00
   br i1 %i.ahc, label %bb.bf, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
   %i.ahd = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %i.ahb)
-  store float %i.ahd, ptr %i.act, align 4, !tbaa !12, !alias.scope !518, !noalias !515
+  store float %i.ahd, ptr %i.act, align 8, !tbaa !12, !alias.scope !518, !noalias !515
   br label %bb.bg
 
 bb.bf:                                            ; preds = %bb.bd
-  store float +qnan, ptr %i.act, align 4, !tbaa !12, !alias.scope !518, !noalias !515
+  store float +qnan, ptr %i.act, align 8, !tbaa !12, !alias.scope !518, !noalias !515
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be, %bb.bc, %bb.bb

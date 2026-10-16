@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable, !nosanitize !33
 
 bb.e:                                             ; preds = %bb.c
-  %i.l = load i32, ptr %i.i, align 4, !tbaa !139  ; 2 uses
+  %i.l = load i32, ptr %i.i, align 8, !tbaa !139  ; 2 uses
   %i.m = icmp ne ptr %0, null, !nosanitize !33
   %i.n = ptrtoint ptr %0 to i64, !nosanitize !33  ; 2 uses
   %i.o = and i64 %i.n, 7, !nosanitize !33
@@ -255,7 +255,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ar = load i32, ptr %i.aq, align 4, !tbaa !140 ; 4 uses
+  %i.ar = load i32, ptr %i.aq, align 8, !tbaa !140 ; 4 uses
   %.not107 = icmp eq i32 %i.ar, -1
   br i1 %.not107, label %._crit_edge119, label %bb.l
 
@@ -474,14 +474,14 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.am
   %i.ep = getelementptr inbounds nuw [12 x i8], ptr %i.ej, i64 %i.el
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.er = load i32, ptr %i.eq, align 4, !tbaa !142
+  %i.er = load i32, ptr %i.eq, align 8, !tbaa !142
   %i.es = getelementptr inbounds nuw i8, ptr %i.ep, i64 8
   store i32 %i.er, ptr %i.es, align 4, !tbaa !142
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.ao, %bb.ah
   %i.et = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.eu = load i32, ptr %i.et, align 4, !tbaa !142 ; 4 uses
+  %i.eu = load i32, ptr %i.et, align 8, !tbaa !142 ; 4 uses
   %.not113 = icmp eq i32 %i.eu, -1
   br i1 %.not113, label %bb.aw, label %bb.ap
 
@@ -884,7 +884,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.ah = getelementptr inbounds nuw i8, ptr %i.z, i64 32
-  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !139
+  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !139
   %i.aj = tail call i64 @b3MakeBodyId(ptr noundef nonnull %i.c, i32 noundef %i.ai) #12
   ret i64 %i.aj
 }
@@ -1287,7 +1287,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.by = getelementptr inbounds nuw i8, ptr %phi.call, i64 32
-  %i.bz = load i32, ptr %i.by, align 4, !tbaa !139 ; 2 uses
+  %i.bz = load i32, ptr %i.by, align 8, !tbaa !139 ; 2 uses
   %i.ca = sext i32 %i.bz to i64                   ; 5 uses
   %i.cb = getelementptr inbounds [128 x i8], ptr %i.bh, i64 %i.ca ; 4 uses
   %i.cc = shl nsw i64 %i.ca, 7
@@ -1690,7 +1690,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
-  %i.az = load i32, ptr %i.ay, align 4, !tbaa !139 ; 2 uses
+  %i.az = load i32, ptr %i.ay, align 8, !tbaa !139 ; 2 uses
   %i.ba = sext i32 %i.az to i64                   ; 2 uses
   %i.bb = shl nsw i64 %i.ba, 7
   %i.bc = add i64 %i.bb, %i.an, !nosanitize !33   ; 3 uses
@@ -2093,7 +2093,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 32
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !139
+  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !139
   call void @b3GetBodyTransform(ptr dead_on_unwind nonnull writable sret(%struct.b3Transform) align 4 %2, ptr noundef nonnull %i.c, i32 noundef %i.ak) #12
   %i.al = icmp ne ptr %i.aa, null, !nosanitize !33
   %i.am = ptrtoint ptr %i.aa to i64, !nosanitize !33 ; 2 uses
@@ -2496,7 +2496,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 32
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !139
+  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !139
   call void @b3GetBodyTransform(ptr dead_on_unwind nonnull writable sret(%struct.b3Transform) align 4 %2, ptr noundef nonnull %i.c, i32 noundef %i.ak) #12
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 12
@@ -2899,7 +2899,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !139 ; 2 uses
+  %i.af = load i32, ptr %i.ae, align 8, !tbaa !139 ; 2 uses
   %i.ag = sext i32 %i.af to i64                   ; 2 uses
   %i.ah = getelementptr inbounds [128 x i8], ptr %i.i, i64 %i.ag ; 3 uses
   %i.ai = shl nsw i64 %i.ag, 7
