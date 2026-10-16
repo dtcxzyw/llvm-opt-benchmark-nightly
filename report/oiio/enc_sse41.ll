@@ -204,9 +204,9 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read, inaccessiblemem: readwrite) uwtable
 define internal i32 @Disto16x16_SSE41(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef readonly captures(none) %1, ptr noalias nofree noundef readonly captures(none) %2) #4 {
 bb.a:
-  %.val4.i = load <8 x i16>, ptr %2, align 1, !tbaa !9, !alias.scope !20, !noalias !21 ; 2 uses
+  %.val4.i = load <8 x i16>, ptr %2, align 1, !tbaa !9, !alias.scope !20 ; 2 uses
   %i.a = getelementptr i8, ptr %2, i64 16
-  %.val35.i = load <8 x i16>, ptr %i.a, align 1, !tbaa !9, !alias.scope !20, !noalias !21 ; 2 uses
+  %.val35.i = load <8 x i16>, ptr %i.a, align 1, !tbaa !9, !alias.scope !20 ; 2 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %bb.c
@@ -221,24 +221,24 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %.118 = phi i32 [ %.01320, %.preheader ], [ %i.cw, %bb.b ]
   %gep = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %indvars.iv ; 4 uses
   %gep17 = getelementptr inbounds nuw i8, ptr %invariant.gep16, i64 %indvars.iv ; 4 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !21)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !23)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20)
-  %i.b = load <4 x i32>, ptr %gep, align 1, !tbaa !9, !alias.scope !22, !noalias !24
+  %i.b = load <4 x i32>, ptr %gep, align 1, !tbaa !9, !alias.scope !21
   %i.c = getelementptr inbounds nuw i8, ptr %gep, i64 32
-  %i.d = load <4 x i32>, ptr %i.c, align 1, !tbaa !9, !alias.scope !22, !noalias !24
+  %i.d = load <4 x i32>, ptr %i.c, align 1, !tbaa !9, !alias.scope !21
   %i.e = getelementptr inbounds nuw i8, ptr %gep, i64 64
-  %i.f = load <4 x i32>, ptr %i.e, align 1, !tbaa !9, !alias.scope !22, !noalias !24
+  %i.f = load <4 x i32>, ptr %i.e, align 1, !tbaa !9, !alias.scope !21
   %i.g = getelementptr inbounds nuw i8, ptr %gep, i64 96
-  %i.h = load i64, ptr %i.g, align 1, !tbaa !9, !alias.scope !22, !noalias !24
+  %i.h = load i64, ptr %i.g, align 1, !tbaa !9, !alias.scope !21
   %i.i = insertelement <2 x i64> poison, i64 %i.h, i64 0
-  %i.j = load <4 x i32>, ptr %gep17, align 1, !tbaa !9, !alias.scope !23, !noalias !25
+  %i.j = load <4 x i32>, ptr %gep17, align 1, !tbaa !9, !alias.scope !22
   %i.k = getelementptr inbounds nuw i8, ptr %gep17, i64 32
-  %i.l = load <4 x i32>, ptr %i.k, align 1, !tbaa !9, !alias.scope !23, !noalias !25
+  %i.l = load <4 x i32>, ptr %i.k, align 1, !tbaa !9, !alias.scope !22
   %i.m = getelementptr inbounds nuw i8, ptr %gep17, i64 64
-  %i.n = load <4 x i32>, ptr %i.m, align 1, !tbaa !9, !alias.scope !23, !noalias !25
+  %i.n = load <4 x i32>, ptr %i.m, align 1, !tbaa !9, !alias.scope !22
   %i.o = getelementptr inbounds nuw i8, ptr %gep17, i64 96
-  %i.p = load i64, ptr %i.o, align 1, !tbaa !9, !alias.scope !23, !noalias !25
+  %i.p = load i64, ptr %i.o, align 1, !tbaa !9, !alias.scope !22
   %i.q = insertelement <2 x i64> poison, i64 %i.p, i64 0
   %i.r = shufflevector <4 x i32> %i.b, <4 x i32> %i.j, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
   %i.s = shufflevector <4 x i32> %i.d, <4 x i32> %i.l, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
@@ -411,16 +411,13 @@ attributes #12 = { nounwind }
 !11 = distinct !{!11, !10}
 !12 = !{!"short", !4, i64 0}
 !13 = !{!12, !12, i64 0}
-!14 = distinct !{!14, i1 false, !"Disto4x4_SSE41"}
+!14 = distinct !{!14, i1 true, !"Disto4x4_SSE41"}
 !15 = distinct !{!15, !14, !"Disto4x4_SSE41: argument 2"}
-!16 = distinct !{!16, !14, !"Disto4x4_SSE41: argument 1"}
-!17 = distinct !{!17, !14, !"Disto4x4_SSE41: argument 0"}
+!16 = distinct !{!16, !14, !"Disto4x4_SSE41: argument 0"}
+!17 = distinct !{!17, !14, !"Disto4x4_SSE41: argument 1"}
 !18 = distinct !{!18, !10}
 !19 = distinct !{!19, !10}
 !20 = !{!15}
-!21 = !{!17, !16}
+!21 = !{!16}
 !22 = !{!17}
-!23 = !{!16}
-!24 = !{!16, !15}
-!25 = !{!17, !15}
 end_hunk_0

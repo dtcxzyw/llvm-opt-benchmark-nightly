@@ -205,14 +205,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.q = trunc nuw nsw i32 %1 to i8
-  store i8 %i.q, ptr %.sroa.0, align 4, !alias.scope !80
+  store i8 %i.q, ptr %.sroa.0, align 4, !alias.scope !79
   br label %_ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE.exit
 
 bb.d:                                             ; preds = %bb.b
   %i.r = or disjoint i8 %i.g, -64
-  store i8 %i.r, ptr %.sroa.0, align 4, !alias.scope !80
+  store i8 %i.r, ptr %.sroa.0, align 4, !alias.scope !79
   %.sroa.0.1..sroa_idx11 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  store i8 %i.e, ptr %.sroa.0.1..sroa_idx11, align 1, !alias.scope !80
+  store i8 %i.e, ptr %.sroa.0.1..sroa_idx11, align 1, !alias.scope !79
   br label %_ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -221,30 +221,30 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.e
   %i.t = or disjoint i8 %i.k, -32
-  store i8 %i.t, ptr %.sroa.0, align 4, !alias.scope !80
+  store i8 %i.t, ptr %.sroa.0, align 4, !alias.scope !79
   %.sroa.0.1..sroa_idx10 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  store i8 %i.i, ptr %.sroa.0.1..sroa_idx10, align 1, !alias.scope !80
+  store i8 %i.i, ptr %.sroa.0.1..sroa_idx10, align 1, !alias.scope !79
   %.sroa.0.2..sroa_idx12 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  store i8 %i.e, ptr %.sroa.0.2..sroa_idx12, align 2, !alias.scope !80
+  store i8 %i.e, ptr %.sroa.0.2..sroa_idx12, align 2, !alias.scope !79
   br label %_ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE.exit
 
 bb.g:                                             ; preds = %bb.e
-  store i8 %i.p, ptr %.sroa.0, align 4, !alias.scope !80
+  store i8 %i.p, ptr %.sroa.0, align 4, !alias.scope !79
   %.sroa.0.1..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  store i8 %i.m, ptr %.sroa.0.1..sroa_idx, align 1, !alias.scope !80
+  store i8 %i.m, ptr %.sroa.0.1..sroa_idx, align 1, !alias.scope !79
   %.sroa.0.2..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  store i8 %i.i, ptr %.sroa.0.2..sroa_idx, align 2, !alias.scope !80
+  store i8 %i.i, ptr %.sroa.0.2..sroa_idx, align 2, !alias.scope !79
   %.sroa.0.3..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
-  store i8 %i.e, ptr %.sroa.0.3..sroa_idx, align 1, !alias.scope !80
+  store i8 %i.e, ptr %.sroa.0.3..sroa_idx, align 1, !alias.scope !79
   br label %_ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE.exit
 
 _ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE.exit: ; preds = %bb.c, %bb.d, %bb.f, %bb.g
   %.sroa.0.05.i = phi i64 [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.f ], [ 4, %bb.g ] ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !81)
-  %i.u = load ptr, ptr %0, align 8, !alias.scope !81, !noalias !82, !noundef !6 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.u, ptr noundef nonnull readonly align 4 dereferenceable(1) %.sroa.0, i64 %.sroa.0.05.i, i1 false), !noalias !81
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !80)
+  %i.u = load ptr, ptr %0, align 8, !alias.scope !80, !noundef !6 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.u, ptr noundef nonnull readonly align 4 dereferenceable(1) %.sroa.0, i64 %.sroa.0.05.i, i1 false), !noalias !80
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.sroa.0.05.i
-  store ptr %i.v, ptr %0, align 8, !alias.scope !81, !noalias !82
+  store ptr %i.v, ptr %0, align 8, !alias.scope !80
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i1 false
 }
@@ -253,10 +253,10 @@ _ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE.exit: ; preds = %bb.c
 define internal noundef zeroext i1 @_ZN4core3fmt5Write9write_fmt17h87f2ac93f1386263E(ptr noalias noundef align 8 dereferenceable(8) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 {
 "_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E.exit":
   %i.a = alloca [48 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !86
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(48) %1, i64 48, i1 false), !noalias !87
-  %i.b = call noundef zeroext i1 @_ZN4core3fmt5write17h80461e1e45e4fdd2E(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @189, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.a), !noalias !88, !inline_history !0
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !86
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !84
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(48) %1, i64 48, i1 false), !noalias !85
+  %i.b = call noundef zeroext i1 @_ZN4core3fmt5write17h80461e1e45e4fdd2E(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @189, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.a), !noalias !86, !inline_history !0
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !84
   ret i1 %i.b
 }
 
@@ -558,10 +558,10 @@ attributes #22 = { cold noreturn nounwind }
 !13 = !{i32 0, i32 8}
 !14 = !{i32 0, i32 24}
 !15 = !{i32 0, i32 18}
-!16 = distinct !{!16, i1 false, !"_ZN14unsafe_libyaml3fmt10WriteToPtr9write_fmt17h5c53879d4f6985d2E"}
+!16 = distinct !{!16, i1 true, !"_ZN14unsafe_libyaml3fmt10WriteToPtr9write_fmt17h5c53879d4f6985d2E"}
 !17 = distinct !{!17, !16, !"_ZN14unsafe_libyaml3fmt10WriteToPtr9write_fmt17h5c53879d4f6985d2E: argument 1"}
 !18 = distinct !{!18, !16, !"_ZN14unsafe_libyaml3fmt10WriteToPtr9write_fmt17h5c53879d4f6985d2E: argument 0"}
-!19 = distinct !{!19, i1 false, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E"}
+!19 = distinct !{!19, i1 true, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E"}
 !20 = distinct !{!20, !19, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E: argument 1"}
 !21 = distinct !{!21, !19, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E: argument 0"}
 !22 = distinct !{null}
@@ -569,17 +569,17 @@ attributes #22 = { cold noreturn nounwind }
 !24 = !{!21, !20, !18, !17}
 !25 = !{!21, !18}
 !26 = !{!20, !17}
-!27 = distinct !{!27, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!27 = distinct !{!27, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !28 = distinct !{!28, !27, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
-!29 = distinct !{!29, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!29 = distinct !{!29, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !30 = distinct !{!30, !29, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
-!31 = distinct !{!31, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!31 = distinct !{!31, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !32 = distinct !{!32, !31, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
-!33 = distinct !{!33, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!33 = distinct !{!33, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !34 = distinct !{!34, !33, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
-!35 = distinct !{!35, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!35 = distinct !{!35, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !36 = distinct !{!36, !35, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
-!37 = distinct !{!37, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!37 = distinct !{!37, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !38 = distinct !{!38, !37, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
 !39 = !{!28}
 !40 = !{!30}
@@ -587,48 +587,46 @@ attributes #22 = { cold noreturn nounwind }
 !42 = !{!34}
 !43 = !{!36}
 !44 = !{!38}
-!45 = distinct !{!45, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!45 = distinct !{!45, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !46 = distinct !{!46, !45, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
 !47 = !{!46}
-!48 = distinct !{!48, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!48 = distinct !{!48, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !49 = distinct !{!49, !48, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
 !50 = !{!49}
-!51 = distinct !{!51, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!51 = distinct !{!51, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !52 = distinct !{!52, !51, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
-!53 = distinct !{!53, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!53 = distinct !{!53, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !54 = distinct !{!54, !53, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
 !55 = !{!52}
 !56 = !{!54}
-!57 = distinct !{!57, i1 false, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
+!57 = distinct !{!57, i1 true, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E"}
 !58 = distinct !{!58, !57, !"_ZN14unsafe_libyaml6parser32yaml_parser_process_empty_scalar17h0ab25385781b5de7E: argument 0"}
 !59 = !{!58}
 !60 = distinct !{!60, !61}
 !61 = !{!"llvm.loop.unroll.disable"}
-!62 = distinct !{!62, i1 false, !"_ZN14unsafe_libyaml7scanner28yaml_parser_scan_uri_escapes17hd766e041e3b7f25dE"}
+!62 = distinct !{!62, i1 true, !"_ZN14unsafe_libyaml7scanner28yaml_parser_scan_uri_escapes17hd766e041e3b7f25dE"}
 !63 = distinct !{!63, !62, !"_ZN14unsafe_libyaml7scanner28yaml_parser_scan_uri_escapes17hd766e041e3b7f25dE: argument 0"}
 !64 = !{!63}
-!65 = distinct !{!65, i1 false, !"_ZN14unsafe_libyaml7scanner31yaml_parser_scan_directive_name17hc85103571f9a2e89E"}
+!65 = distinct !{!65, i1 true, !"_ZN14unsafe_libyaml7scanner31yaml_parser_scan_directive_name17hc85103571f9a2e89E"}
 !66 = distinct !{!66, !65, !"_ZN14unsafe_libyaml7scanner31yaml_parser_scan_directive_name17hc85103571f9a2e89E: argument 0"}
-!67 = distinct !{!67, i1 false, !"_ZN14unsafe_libyaml7scanner40yaml_parser_scan_version_directive_value17h58cfe3db9dd1fea3E"}
+!67 = distinct !{!67, i1 true, !"_ZN14unsafe_libyaml7scanner40yaml_parser_scan_version_directive_value17h58cfe3db9dd1fea3E"}
 !68 = distinct !{!68, !67, !"_ZN14unsafe_libyaml7scanner40yaml_parser_scan_version_directive_value17h58cfe3db9dd1fea3E: argument 0"}
-!69 = distinct !{!69, i1 false, !"_ZN14unsafe_libyaml7scanner36yaml_parser_scan_tag_directive_value17h0c4076d3ff5a7a26E"}
+!69 = distinct !{!69, i1 true, !"_ZN14unsafe_libyaml7scanner36yaml_parser_scan_tag_directive_value17h0c4076d3ff5a7a26E"}
 !70 = distinct !{!70, !69, !"_ZN14unsafe_libyaml7scanner36yaml_parser_scan_tag_directive_value17h0c4076d3ff5a7a26E: argument 0"}
 !71 = !{!66}
 !72 = !{!68}
 !73 = !{!70}
 !74 = !{i64 1}
-!75 = distinct !{!75, i1 false, !"_ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE"}
+!75 = distinct !{!75, i1 true, !"_ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE"}
 !76 = distinct !{!76, !75, !"_ZN4core4char7methods15encode_utf8_raw17h92cd9da0e8182a2cE: argument 0"}
-!77 = distinct !{!77, i1 false, !"_ZN68_$LT$unsafe_libyaml..fmt..WriteToPtr$u20$as$u20$core..fmt..Write$GT$9write_str17h823ed6ac062738fdE"}
+!77 = distinct !{!77, i1 true, !"_ZN68_$LT$unsafe_libyaml..fmt..WriteToPtr$u20$as$u20$core..fmt..Write$GT$9write_str17h823ed6ac062738fdE"}
 !78 = distinct !{!78, !77, !"_ZN68_$LT$unsafe_libyaml..fmt..WriteToPtr$u20$as$u20$core..fmt..Write$GT$9write_str17h823ed6ac062738fdE: argument 0"}
-!79 = distinct !{!79, !77, !"_ZN68_$LT$unsafe_libyaml..fmt..WriteToPtr$u20$as$u20$core..fmt..Write$GT$9write_str17h823ed6ac062738fdE: argument 1"}
-!80 = !{!76}
-!81 = !{!78}
-!82 = !{!79}
-!83 = distinct !{!83, i1 false, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E"}
-!84 = distinct !{!84, !83, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E: argument 1"}
-!85 = distinct !{!85, !83, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E: argument 0"}
-!86 = !{!85, !84}
-!87 = !{!85}
-!88 = !{!84}
+!79 = !{!76}
+!80 = !{!78}
+!81 = distinct !{!81, i1 true, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E"}
+!82 = distinct !{!82, !81, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E: argument 1"}
+!83 = distinct !{!83, !81, !"_ZN75_$LT$$RF$mut$u20$W$u20$as$u20$core..fmt..Write..write_fmt..SpecWriteFmt$GT$14spec_write_fmt17hde831491e87fd175E: argument 0"}
+!84 = !{!83, !82}
+!85 = !{!83}
+!86 = !{!82}
 end_hunk_0

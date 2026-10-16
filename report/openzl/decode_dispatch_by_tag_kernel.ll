@@ -88,10 +88,10 @@ sumArrayST.exit.i:                                ; preds = %.lr.ph.i.i, %middle
   %.01719.i = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %i.am, %.lr.ph.i ] ; 3 uses
   %niter68 = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter68.next.1, %.lr.ph.i ]
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 %.01719.i
-  %i.o = load i8, ptr %i.n, align 1, !tbaa !29, !alias.scope !22, !noalias !30
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !29, !alias.scope !22
   %i.p = zext i8 %i.o to i64                      ; 2 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.p
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !32, !noalias !25
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !31, !noalias !25
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.p ; 2 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !24, !noalias !25 ; 2 uses
   %i.u = shl i64 %i.t, 2
@@ -103,10 +103,10 @@ sumArrayST.exit.i:                                ; preds = %.lr.ph.i.i, %middle
   store i64 %i.y, ptr %i.s, align 8, !tbaa !24, !noalias !25
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 %.01719.i
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
-  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !29, !alias.scope !22, !noalias !30
+  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !29, !alias.scope !22
   %i.ac = zext i8 %i.ab to i64                    ; 2 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ac
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !32, !noalias !25
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !31, !noalias !25
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ac ; 2 uses
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !24, !noalias !25 ; 2 uses
   %i.ah = shl i64 %i.ag, 2
@@ -131,10 +131,10 @@ ZS_DispatchByTag_decode_internal.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
   %lcmp.mod66 = trunc i64 %.lcssa to i1
   tail call void @llvm.assume(i1 %lcmp.mod66)
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 %.01719.i.epil.init
-  %i.ao = load i8, ptr %i.an, align 1, !tbaa !29, !alias.scope !22, !noalias !30
+  %i.ao = load i8, ptr %i.an, align 1, !tbaa !29, !alias.scope !22
   %i.ap = zext i8 %i.ao to i64                    ; 2 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ap
-  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !32, !noalias !25
+  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !31, !noalias !25
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ap ; 2 uses
   %i.at = load i64, ptr %i.as, align 8, !tbaa !24, !noalias !25 ; 2 uses
   %i.au = shl i64 %i.at, 2
@@ -151,7 +151,7 @@ ZS_DispatchByTag_decode_internal.exit:            ; preds = %.lr.ph.i.epil.prehe
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !33)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !32)
   br i1 %.not.i.i, label %sumArrayST.exit.thread.i27, label %.lr.ph.i.i16.preheader
 
 .lr.ph.i.i16.preheader:                           ; preds = %bb.c
@@ -168,8 +168,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi37 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.bb, %vector.body ]
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %index ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %wide.load = load <2 x i64>, ptr %i.ay, align 8, !tbaa !24, !noalias !34
-  %wide.load38 = load <2 x i64>, ptr %i.az, align 8, !tbaa !24, !noalias !34
+  %wide.load = load <2 x i64>, ptr %i.ay, align 8, !tbaa !24, !noalias !33
+  %wide.load38 = load <2 x i64>, ptr %i.az, align 8, !tbaa !24, !noalias !33
   %i.ba = add <2 x i64> %wide.load, %vec.phi      ; 2 uses
   %i.bb = add <2 x i64> %wide.load38, %vec.phi37  ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -188,14 +188,14 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i.i16
 
 sumArrayST.exit.thread.i27:                       ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !34
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !33
   br label %ZS_DispatchByTag_decode_internal.exit28
 
 .lr.ph.i.i16:                                     ; preds = %.lr.ph.i.i16.preheader59, %.lr.ph.i.i16
   %.08.i.i17 = phi i64 [ %i.bh, %.lr.ph.i.i16 ], [ %.08.i.i17.ph, %.lr.ph.i.i16.preheader59 ] ; 2 uses
   %.067.i.i18 = phi i64 [ %i.bg, %.lr.ph.i.i16 ], [ %.067.i.i18.ph, %.lr.ph.i.i16.preheader59 ]
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.08.i.i17
-  %i.bf = load i64, ptr %i.be, align 8, !tbaa !24, !noalias !34
+  %i.bf = load i64, ptr %i.be, align 8, !tbaa !24, !noalias !33
   %i.bg = add i64 %i.bf, %.067.i.i18              ; 2 uses
   %i.bh = add nuw i64 %.08.i.i17, 1               ; 2 uses
   %exitcond.not.i.i19 = icmp eq i64 %i.bh, %4
@@ -203,8 +203,8 @@ sumArrayST.exit.thread.i27:                       ; preds = %bb.c
 
 sumArrayST.exit.i20:                              ; preds = %.lr.ph.i.i16, %middle.block
   %.lcssa36 = phi i64 [ %i.bd, %middle.block ], [ %i.bg, %.lr.ph.i.i16 ] ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !34
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 0, i64 128, i1 false), !noalias !34
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !33
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 0, i64 128, i1 false), !noalias !33
   %.not.i21 = icmp eq i64 %.lcssa36, 0
   br i1 %.not.i21, label %ZS_DispatchByTag_decode_internal.exit28, label %.lr.ph.i22.preheader
 
@@ -222,32 +222,32 @@ sumArrayST.exit.i20:                              ; preds = %.lr.ph.i.i16, %midd
   %.01719.i24 = phi i64 [ 0, %.lr.ph.i22.preheader.new ], [ %i.cg, %.lr.ph.i22 ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.i22.preheader.new ], [ %niter.next.1, %.lr.ph.i22 ]
   %i.bj = getelementptr inbounds nuw i8, ptr %6, i64 %.01719.i24
-  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !29, !alias.scope !33, !noalias !35
+  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !29, !alias.scope !32
   %i.bl = zext i8 %i.bk to i64                    ; 2 uses
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bl
-  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !32, !noalias !34
+  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !31, !noalias !33
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bl ; 2 uses
-  %i.bp = load i64, ptr %i.bo, align 8, !tbaa !24, !noalias !34 ; 2 uses
+  %i.bp = load i64, ptr %i.bo, align 8, !tbaa !24, !noalias !33 ; 2 uses
   %i.bq = mul i64 %i.bp, %5
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bq
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.020.i23, ptr align 1 %i.br, i64 %5, i1 false), !noalias !33
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.020.i23, ptr align 1 %i.br, i64 %5, i1 false), !noalias !32
   %i.bs = getelementptr inbounds nuw i8, ptr %.020.i23, i64 %5 ; 2 uses
   %i.bt = add i64 %i.bp, 1
-  store i64 %i.bt, ptr %i.bo, align 8, !tbaa !24, !noalias !34
+  store i64 %i.bt, ptr %i.bo, align 8, !tbaa !24, !noalias !33
   %i.bu = getelementptr inbounds nuw i8, ptr %6, i64 %.01719.i24
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 1
-  %i.bw = load i8, ptr %i.bv, align 1, !tbaa !29, !alias.scope !33, !noalias !35
+  %i.bw = load i8, ptr %i.bv, align 1, !tbaa !29, !alias.scope !32
   %i.bx = zext i8 %i.bw to i64                    ; 2 uses
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bx
-  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !32, !noalias !34
+  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !31, !noalias !33
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bx ; 2 uses
-  %i.cb = load i64, ptr %i.ca, align 8, !tbaa !24, !noalias !34 ; 2 uses
+  %i.cb = load i64, ptr %i.ca, align 8, !tbaa !24, !noalias !33 ; 2 uses
   %i.cc = mul i64 %i.cb, %5
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.cc
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bs, ptr align 1 %i.cd, i64 %5, i1 false), !noalias !33
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bs, ptr align 1 %i.cd, i64 %5, i1 false), !noalias !32
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bs, i64 %5 ; 2 uses
   %i.cf = add i64 %i.cb, 1
-  store i64 %i.cf, ptr %i.ca, align 8, !tbaa !24, !noalias !34
+  store i64 %i.cf, ptr %i.ca, align 8, !tbaa !24, !noalias !33
   %i.cg = add nuw i64 %.01719.i24, 2              ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -263,22 +263,22 @@ ZS_DispatchByTag_decode_internal.exit28.loopexit.unr-lcssa: ; preds = %.lr.ph.i2
   %lcmp.mod63 = trunc i64 %.lcssa36 to i1
   tail call void @llvm.assume(i1 %lcmp.mod63)
   %i.ch = getelementptr inbounds nuw i8, ptr %6, i64 %.01719.i24.epil.init
-  %i.ci = load i8, ptr %i.ch, align 1, !tbaa !29, !alias.scope !33, !noalias !35
+  %i.ci = load i8, ptr %i.ch, align 1, !tbaa !29, !alias.scope !32
   %i.cj = zext i8 %i.ci to i64                    ; 2 uses
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.cj
-  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !32, !noalias !34
+  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !31, !noalias !33
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.cj ; 2 uses
-  %i.cn = load i64, ptr %i.cm, align 8, !tbaa !24, !noalias !34 ; 2 uses
+  %i.cn = load i64, ptr %i.cm, align 8, !tbaa !24, !noalias !33 ; 2 uses
   %i.co = mul i64 %i.cn, %5
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.co
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.020.i23.epil.init, ptr align 1 %i.cp, i64 %5, i1 false), !noalias !33
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.020.i23.epil.init, ptr align 1 %i.cp, i64 %5, i1 false), !noalias !32
   %i.cq = add i64 %i.cn, 1
-  store i64 %i.cq, ptr %i.cm, align 8, !tbaa !24, !noalias !34
+  store i64 %i.cq, ptr %i.cm, align 8, !tbaa !24, !noalias !33
   br label %ZS_DispatchByTag_decode_internal.exit28
 
 ZS_DispatchByTag_decode_internal.exit28:          ; preds = %.lr.ph.i22.epil.preheader, %ZS_DispatchByTag_decode_internal.exit28.loopexit.unr-lcssa, %sumArrayST.exit.thread.i27, %sumArrayST.exit.i20
   %.06.lcssa.i23.i26 = phi i64 [ 0, %sumArrayST.exit.thread.i27 ], [ 0, %sumArrayST.exit.i20 ], [ %.lcssa36, %ZS_DispatchByTag_decode_internal.exit28.loopexit.unr-lcssa ], [ %.lcssa36, %.lr.ph.i22.epil.preheader ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !34
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !33
   br label %bb.d
 
 bb.d:                                             ; preds = %ZS_DispatchByTag_decode_internal.exit28, %ZS_DispatchByTag_decode_internal.exit
@@ -330,13 +330,13 @@ attributes #6 = { nounwind }
 !8 = !{!"int", !7, i64 0}
 !9 = !{!"__libc_errno", !8, i64 0}
 !10 = !{!9, !8, i64 0}
-!11 = distinct !{!11, i1 false, !"ZS_DispatchByTag_decode_internal"}
+!11 = distinct !{!11, i1 true, !"ZS_DispatchByTag_decode_internal"}
 !12 = distinct !{!12, !11, !"ZS_DispatchByTag_decode_internal: argument 1"}
 !13 = distinct !{!13, !11, !"ZS_DispatchByTag_decode_internal: argument 0"}
 !14 = distinct !{!14, !26, !27, !28}
 !15 = distinct !{!15, !26, !28, !27}
 !16 = distinct !{!16, !26}
-!17 = distinct !{!17, i1 false, !"ZS_DispatchByTag_decode_internal"}
+!17 = distinct !{!17, i1 true, !"ZS_DispatchByTag_decode_internal"}
 !18 = distinct !{!18, !17, !"ZS_DispatchByTag_decode_internal: argument 1"}
 !19 = distinct !{!19, !17, !"ZS_DispatchByTag_decode_internal: argument 0"}
 !20 = distinct !{!20, !26, !27, !28}
@@ -349,10 +349,8 @@ attributes #6 = { nounwind }
 !27 = !{!"llvm.loop.isvectorized", i32 1}
 !28 = !{!"llvm.loop.unroll.runtime.disable"}
 !29 = !{!7, !7, i64 0}
-!30 = !{!13}
-!31 = !{!"any pointer", !7, i64 0}
-!32 = !{!31, !31, i64 0}
-!33 = !{!18}
-!34 = !{!19, !18}
-!35 = !{!19}
+!30 = !{!"any pointer", !7, i64 0}
+!31 = !{!30, !30, i64 0}
+!32 = !{!18}
+!33 = !{!19, !18}
 end_hunk_0

@@ -202,21 +202,21 @@ bb.a:
   %i.i = alloca [32 x i8], align 8                ; 11 uses
   %i.j = alloca [48 x i8], align 8                ; 8 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.l = load ptr, ptr %i.k, align 8, !noalias !76, !noundef !3
+  %i.l = load ptr, ptr %i.k, align 8, !noalias !77, !noundef !3
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 168
-  %i.n = load i64, ptr %i.m, align 8, !noalias !76, !noundef !3
+  %i.n = load i64, ptr %i.m, align 8, !noalias !77, !noundef !3
   %i.o = and i64 %i.n, 536870912
   %.not.i = icmp eq i64 %i.o, 0
   br i1 %.not.i, label %bb.b, label %_RINvNvMsb_NtCs9xaRPakndqT_4pyo38instanceINtB8_8BorrowedpE4cast5innerNtNtNtBa_5types4dict6PyDictECskkCPRT7oCWw_16influxdb3_py_api.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.p = load i32, ptr @PyDict_Type, align 8, !noalias !76, !noundef !3
+  %i.p = load i32, ptr @PyDict_Type, align 8, !noalias !77, !noundef !3
   %i.q = add i32 %i.p, 1                          ; 2 uses
   %i.r = icmp eq i32 %i.q, 0
   br i1 %i.r, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i32 %i.q, ptr @PyDict_Type, align 8, !noalias !76
+  store i32 %i.q, ptr @PyDict_Type, align 8, !noalias !77
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
@@ -258,17 +258,17 @@ bb.e:                                             ; preds = %_RINvNvMsb_NtCs9xaR
   %i.ac = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
   %i.ae = icmp eq i64 %i.ab, -1
-  br i1 %i.ae, label %.invoke, label %.lr.ph129, !prof !77
+  br i1 %i.ae, label %.invoke, label %.lr.ph129, !prof !78
 
 thread-pre-split:                                 ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types3any5PyAnyEECskkCPRT7oCWw_16influxdb3_py_api.exit44
-  %.pr = load i64, ptr %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !78
+  %.pr = load i64, ptr %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !79
   %i.af = icmp eq i64 %.pr, -1
-  br i1 %i.af, label %.invoke, label %.lr.ph129, !prof !79
+  br i1 %i.af, label %.invoke, label %.lr.ph129, !prof !80
 
 .invoke:                                          ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types3any5PyAnyEECskkCPRT7oCWw_16influxdb3_py_api.exit44, %thread-pre-split, %.lr.ph
   %i.ag = phi ptr [ @5, %.lr.ph ], [ @8, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types3any5PyAnyEECskkCPRT7oCWw_16influxdb3_py_api.exit44 ], [ @5, %thread-pre-split ]
   %i.ah = phi ptr [ @7, %.lr.ph ], [ @9, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types3any5PyAnyEECskkCPRT7oCWw_16influxdb3_py_api.exit44 ], [ @7, %thread-pre-split ]
-  store i64 -1, ptr %.sroa.2.sroa.2.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !78
+  store i64 -1, ptr %.sroa.2.sroa.2.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !79
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking9panic_fmt(ptr noundef nonnull %i.ag, ptr noundef nonnull inttoptr (i64 81 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ah) #20
           to label %.cont unwind label %bb.l
 
@@ -277,20 +277,20 @@ thread-pre-split:                                 ; preds = %_RINvNtCs4NRVxsYgnA
 
 .lr.ph129:                                        ; preds = %.lr.ph, %thread-pre-split
   %.val2993128 = phi ptr [ %.val29, %thread-pre-split ], [ %1, %.lr.ph ]
-  call void @llvm.experimental.noalias.scope.decl(metadata !78)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !78
-  store ptr null, ptr %i.b, align 8, !noalias !78
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !78
-  store ptr null, ptr %i.a, align 8, !noalias !78
+  call void @llvm.experimental.noalias.scope.decl(metadata !79)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !79
+  store ptr null, ptr %i.b, align 8, !noalias !79
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !79
+  store ptr null, ptr %i.a, align 8, !noalias !79
   %i.ai = call noundef i32 @PyDict_Next(ptr noundef nonnull %.val2993128, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2.0..sroa_idx, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #18
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.n, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph129
-  %i.ak = load i64, ptr %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !78, !noundef !3
+  %i.ak = load i64, ptr %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !79, !noundef !3
   %i.al = add i64 %i.ak, -1
-  store i64 %i.al, ptr %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !78
-  %i.am = load ptr, ptr %i.b, align 8, !noalias !78, !nonnull !3, !noundef !3 ; 12 uses
+  store i64 %i.al, ptr %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !79
+  %i.am = load ptr, ptr %i.b, align 8, !noalias !79, !nonnull !3, !noundef !3 ; 12 uses
   %i.an = load i32, ptr %i.am, align 8, !noundef !3
   %i.ao = add i32 %i.an, 1                        ; 2 uses
   %i.ap = icmp eq i32 %i.ao, 0
@@ -301,7 +301,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.aq = load ptr, ptr %i.a, align 8, !noalias !78, !nonnull !3, !noundef !3 ; 12 uses
+  %i.aq = load ptr, ptr %i.a, align 8, !noalias !79, !nonnull !3, !noundef !3 ; 12 uses
   %i.ar = load i32, ptr %i.aq, align 8, !noundef !3
   %i.as = add i32 %i.ar, 1                        ; 2 uses
   %i.at = icmp eq i32 %i.as, 0
@@ -335,8 +335,8 @@ bb.l:                                             ; preds = %.invoke
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types3any5PyAnyEECskkCPRT7oCWw_16influxdb3_py_api.exit42
 
 bb.m:                                             ; preds = %bb.h, %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !78
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !78
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !79
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !79
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
@@ -346,8 +346,8 @@ bb.m:                                             ; preds = %bb.h, %bb.i
           to label %bb.t unwind label %.loopexit
 
 bb.n:                                             ; preds = %.lr.ph129
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !78
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !78
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !79
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !79
   %.val31 = load ptr, ptr %i.i, align 8, !nonnull !3, !noundef !3 ; 3 uses
   %i.az = load i64, ptr %.val31, align 8, !noundef !3 ; 2 uses
   %i.ba = and i64 %i.az, 2147483648
@@ -445,7 +445,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %i.bn = load i64, ptr %i.h, align 8, !range !80, !alias.scope !81, !noundef !3
+  %i.bn = load i64, ptr %i.h, align 8, !range !81, !alias.scope !82, !noundef !3
   %i.bo = icmp eq i64 %i.bn, -1
   br i1 %i.bo, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECskkCPRT7oCWw_16influxdb3_py_api.exit, label %bb.z
 
@@ -522,12 +522,12 @@ bb.ah:                                            ; preds = %bb.ag
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types3any5PyAnyEECskkCPRT7oCWw_16influxdb3_py_api.exit44: ; preds = %bb.ah, %bb.ag, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types3any5PyAnyEECskkCPRT7oCWw_16influxdb3_py_api.exit40
   %.val29 = load ptr, ptr %i.i, align 8, !nonnull !3, !noundef !3 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !82)
+  call void @llvm.experimental.noalias.scope.decl(metadata !83)
   %i.cd = getelementptr inbounds nuw i8, ptr %.val29, i64 16
-  %i.ce = load i64, ptr %i.cd, align 8, !noalias !82, !noundef !3
-  %i.cf = load i64, ptr %.sroa.2.sroa.2.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !82, !noundef !3
+  %i.ce = load i64, ptr %i.cd, align 8, !noalias !83, !noundef !3
+  %i.cf = load i64, ptr %.sroa.2.sroa.2.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !alias.scope !83, !noundef !3
   %.not.i33 = icmp eq i64 %i.cf, %i.ce
-  br i1 %.not.i33, label %thread-pre-split, label %.invoke, !prof !83
+  br i1 %.not.i33, label %thread-pre-split, label %.invoke, !prof !84
 
 bb.ai:                                            ; preds = %bb.w
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.512, ptr noundef nonnull align 8 dereferenceable(48) %i.ad, i64 48, i1 false)
@@ -675,13 +675,13 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_RNvXsB_NtCs9xaRPakndqT_4pyo38instanceINtB5_2PyNtNtNtB7_5types3any5PyAnyENtNtB7_10conversion12FromPyObject7extractCskkCPRT7oCWw_16influxdb3_py_api(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noundef nonnull %1) unnamed_addr #6 {
 bb.a:
-  %i.a = load i32, ptr %1, align 8, !noalias !86, !noundef !3
+  %i.a = load i32, ptr %1, align 8, !noalias !87, !noundef !3
   %i.b = add i32 %i.a, 1                          ; 2 uses
   %i.c = icmp eq i32 %i.b, 0
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store i32 %i.b, ptr %1, align 8, !noalias !86
+  store i32 %i.b, ptr %1, align 8, !noalias !87
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -948,51 +948,51 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %i.ac = load i64, ptr %i.e, align 8, !noalias !89, !noundef !3 ; 2 uses
+  %i.ac = load i64, ptr %i.e, align 8, !noalias !90, !noundef !3 ; 2 uses
   %i.ad = and i64 %i.ac, 2147483648
   %.not.i.i.i = icmp eq i64 %i.ad, 0
   br i1 %.not.i.i.i, label %bb.n, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
 
 bb.n:                                             ; preds = %bb.m
   %i.ae = add i64 %i.ac, -1                       ; 2 uses
-  store i64 %i.ae, ptr %i.e, align 8, !noalias !89
+  store i64 %i.ae, ptr %i.e, align 8, !noalias !90
   %i.af = icmp eq i64 %i.ae, 0
   br i1 %i.af, label %bb.o, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull %i.e) #18, !noalias !89
+  call void @_Py_Dealloc(ptr noundef nonnull %i.e) #18, !noalias !90
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i: ; preds = %bb.o, %bb.n, %bb.m
-  %i.ag = load i64, ptr %i.g, align 8, !noalias !89, !noundef !3 ; 2 uses
+  %i.ag = load i64, ptr %i.g, align 8, !noalias !90, !noundef !3 ; 2 uses
   %i.ah = and i64 %i.ag, 2147483648
   %.not.i.i7.i = icmp eq i64 %i.ah, 0
   br i1 %.not.i.i7.i, label %bb.p, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types8datetime10PyDateTimeEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
 
 bb.p:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
   %i.ai = add i64 %i.ag, -1                       ; 2 uses
-  store i64 %i.ai, ptr %i.g, align 8, !noalias !89
+  store i64 %i.ai, ptr %i.g, align 8, !noalias !90
   %i.aj = icmp eq i64 %i.ai, 0
   br i1 %i.aj, label %bb.q, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types8datetime10PyDateTimeEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
 
 bb.q:                                             ; preds = %bb.p
-  call void @_Py_Dealloc(ptr noundef nonnull %i.g) #18, !noalias !89
+  call void @_Py_Dealloc(ptr noundef nonnull %i.g) #18, !noalias !90
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types8datetime10PyDateTimeEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types8datetime10PyDateTimeEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i: ; preds = %bb.q, %bb.p, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
-  %i.ak = load i64, ptr %i.j, align 8, !noalias !89, !noundef !3 ; 2 uses
+  %i.ak = load i64, ptr %i.j, align 8, !noalias !90, !noundef !3 ; 2 uses
   %i.al = and i64 %i.ak, 2147483648
   %.not.i.i10.i = icmp eq i64 %i.al, 0
   br i1 %.not.i.i10.i, label %bb.r, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types8datetime10PyDateTimeEIBD_NtNtB2p_3any5PyAnyEEEB1j_.exit
 
 bb.r:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types8datetime10PyDateTimeEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
   %i.am = add i64 %i.ak, -1                       ; 2 uses
-  store i64 %i.am, ptr %i.j, align 8, !noalias !89
+  store i64 %i.am, ptr %i.j, align 8, !noalias !90
   %i.an = icmp eq i64 %i.am, 0
   br i1 %i.an, label %bb.s, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types8datetime10PyDateTimeEIBD_NtNtB2p_3any5PyAnyEEEB1j_.exit
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull %i.j) #18, !noalias !89
+  call void @_Py_Dealloc(ptr noundef nonnull %i.j) #18, !noalias !90
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types8datetime10PyDateTimeEIBD_NtNtB2p_3any5PyAnyEEEB1j_.exit
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types8datetime10PyDateTimeEIBD_NtNtB2p_3any5PyAnyEEEB1j_.exit: ; preds = %bb.s, %bb.r, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types8datetime10PyDateTimeEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
@@ -1114,51 +1114,51 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %i.ac = load i64, ptr %i.e, align 8, !noalias !92, !noundef !3 ; 2 uses
+  %i.ac = load i64, ptr %i.e, align 8, !noalias !93, !noundef !3 ; 2 uses
   %i.ad = and i64 %i.ac, 2147483648
   %.not.i.i.i = icmp eq i64 %i.ad, 0
   br i1 %.not.i.i.i, label %bb.n, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
 
 bb.n:                                             ; preds = %bb.m
   %i.ae = add i64 %i.ac, -1                       ; 2 uses
-  store i64 %i.ae, ptr %i.e, align 8, !noalias !92
+  store i64 %i.ae, ptr %i.e, align 8, !noalias !93
   %i.af = icmp eq i64 %i.ae, 0
   br i1 %i.af, label %bb.o, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull %i.e) #18, !noalias !92
+  call void @_Py_Dealloc(ptr noundef nonnull %i.e) #18, !noalias !93
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i: ; preds = %bb.o, %bb.n, %bb.m
-  %i.ag = load i64, ptr %i.g, align 8, !noalias !92, !noundef !3 ; 2 uses
+  %i.ag = load i64, ptr %i.g, align 8, !noalias !93, !noundef !3 ; 2 uses
   %i.ah = and i64 %i.ag, 2147483648
   %.not.i.i7.i = icmp eq i64 %i.ah, 0
   br i1 %.not.i.i7.i, label %bb.p, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types4list6PyListEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
 
 bb.p:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
   %i.ai = add i64 %i.ag, -1                       ; 2 uses
-  store i64 %i.ai, ptr %i.g, align 8, !noalias !92
+  store i64 %i.ai, ptr %i.g, align 8, !noalias !93
   %i.aj = icmp eq i64 %i.ai, 0
   br i1 %i.aj, label %bb.q, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types4list6PyListEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
 
 bb.q:                                             ; preds = %bb.p
-  call void @_Py_Dealloc(ptr noundef nonnull %i.g) #18, !noalias !92
+  call void @_Py_Dealloc(ptr noundef nonnull %i.g) #18, !noalias !93
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types4list6PyListEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types4list6PyListEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i: ; preds = %bb.q, %bb.p, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEEB1i_.exit.i
-  %i.ak = load i64, ptr %i.j, align 8, !noalias !92, !noundef !3 ; 2 uses
+  %i.ak = load i64, ptr %i.j, align 8, !noalias !93, !noundef !3 ; 2 uses
   %i.al = and i64 %i.ak, 2147483648
   %.not.i.i10.i = icmp eq i64 %i.al, 0
   br i1 %.not.i.i10.i, label %bb.r, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types4list6PyListEIBD_NtNtB2p_3any5PyAnyEEEB1j_.exit
 
 bb.r:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types4list6PyListEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
   %i.am = add i64 %i.ak, -1                       ; 2 uses
-  store i64 %i.am, ptr %i.j, align 8, !noalias !92
+  store i64 %i.am, ptr %i.j, align 8, !noalias !93
   %i.an = icmp eq i64 %i.am, 0
   br i1 %i.an, label %bb.s, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types4list6PyListEIBD_NtNtB2p_3any5PyAnyEEEB1j_.exit
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull %i.j) #18, !noalias !92
+  call void @_Py_Dealloc(ptr noundef nonnull %i.j) #18, !noalias !93
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types4list6PyListEIBD_NtNtB2p_3any5PyAnyEEEB1j_.exit
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types4list6PyListEIBD_NtNtB2p_3any5PyAnyEEEB1j_.exit: ; preds = %bb.s, %bb.r, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtNtBG_5types4list6PyListEECskkCPRT7oCWw_16influxdb3_py_api.exit8.i
@@ -1191,7 +1191,7 @@ define internal noundef ptr @_RNvYNCNKNvNvMNtNtCs2AWtUsOyxgP_3std4hash6randomNtB
 bb.a:
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNvMNtNtCs2AWtUsOyxgP_3std4hash6randomNtBa_11RandomState3new4KEYS0s_023___RUST_STD_INTERNAL_VAL) ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !97, !noalias !98, !noundef !3
+  %i.c = load i8, ptr %i.b, align 8, !range !98, !noalias !99, !noundef !3
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %_RNCNKNvNvMNtNtCs2AWtUsOyxgP_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CskkCPRT7oCWw_16influxdb3_py_api.exit, label %bb.b, !prof !6
 
@@ -1470,11 +1470,11 @@ attributes #20 = { noreturn }
 !4 = !{!"branch_weights", i32 4000000, i32 4001}
 !5 = !{i64 0, i64 2}
 !6 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!7 = distinct !{!7, i1 false, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs9xaRPakndqT_4pyo33err9err_state10PyErrStateECskkCPRT7oCWw_16influxdb3_py_api"}
+!7 = distinct !{!7, i1 true, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs9xaRPakndqT_4pyo33err9err_state10PyErrStateECskkCPRT7oCWw_16influxdb3_py_api"}
 !8 = distinct !{!8, !7, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs9xaRPakndqT_4pyo33err9err_state10PyErrStateECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!9 = distinct !{!9, i1 false, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellINtNtB4_6option6OptionNtNtNtCs9xaRPakndqT_4pyo33err9err_state15PyErrStateInnerEEECskkCPRT7oCWw_16influxdb3_py_api"}
+!9 = distinct !{!9, i1 true, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellINtNtB4_6option6OptionNtNtNtCs9xaRPakndqT_4pyo33err9err_state15PyErrStateInnerEEECskkCPRT7oCWw_16influxdb3_py_api"}
 !10 = distinct !{!10, !9, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellINtNtB4_6option6OptionNtNtNtCs9xaRPakndqT_4pyo33err9err_state15PyErrStateInnerEEECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!11 = distinct !{!11, i1 false, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs9xaRPakndqT_4pyo33err9err_state15PyErrStateInnerEECskkCPRT7oCWw_16influxdb3_py_api"}
+!11 = distinct !{!11, i1 true, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs9xaRPakndqT_4pyo33err9err_state15PyErrStateInnerEECskkCPRT7oCWw_16influxdb3_py_api"}
 !12 = distinct !{!12, !11, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs9xaRPakndqT_4pyo33err9err_state15PyErrStateInnerEECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
 !13 = !{!8}
 !14 = !{!10}
@@ -1482,45 +1482,45 @@ attributes #20 = { noreturn }
 !16 = !{!12, !10, !8}
 !17 = !{i64 0, i64 -9223372036854775808}
 !18 = !{i64 1, i64 536870913}
-!19 = distinct !{!19, i1 false, !"_RNCINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvNtB4_32fastcall_cfunction_with_keywords5inner0ONtNtCs6xk7itoKRsk_8pyo3_ffi6object8PyObjectE0CskkCPRT7oCWw_16influxdb3_py_api"}
+!19 = distinct !{!19, i1 true, !"_RNCINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvNtB4_32fastcall_cfunction_with_keywords5inner0ONtNtCs6xk7itoKRsk_8pyo3_ffi6object8PyObjectE0CskkCPRT7oCWw_16influxdb3_py_api"}
 !20 = distinct !{!20, !19, !"_RNCINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvNtB4_32fastcall_cfunction_with_keywords5inner0ONtNtCs6xk7itoKRsk_8pyo3_ffi6object8PyObjectE0CskkCPRT7oCWw_16influxdb3_py_api: argument 1"}
 !21 = distinct !{!21, !19, !"_RNCINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvNtB4_32fastcall_cfunction_with_keywords5inner0ONtNtCs6xk7itoKRsk_8pyo3_ffi6object8PyObjectE0CskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!22 = distinct !{!22, i1 false, !"_RNCNvNtNtNtCs9xaRPakndqT_4pyo35impl_10trampoline32fastcall_cfunction_with_keywords5inner0CskkCPRT7oCWw_16influxdb3_py_api"}
+!22 = distinct !{!22, i1 true, !"_RNCNvNtNtNtCs9xaRPakndqT_4pyo35impl_10trampoline32fastcall_cfunction_with_keywords5inner0CskkCPRT7oCWw_16influxdb3_py_api"}
 !23 = distinct !{!23, !22, !"_RNCNvNtNtNtCs9xaRPakndqT_4pyo35impl_10trampoline32fastcall_cfunction_with_keywords5inner0CskkCPRT7oCWw_16influxdb3_py_api: argument 1"}
 !24 = distinct !{!24, !22, !"_RNCNvNtNtNtCs9xaRPakndqT_4pyo35impl_10trampoline32fastcall_cfunction_with_keywords5inner0CskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
 !25 = distinct !{null}
 !26 = !{!24, !23, !21, !20}
 !27 = !{!"branch_weights", i32 1073206245, i32 1071158, i32 1073206245}
 !28 = distinct !{null}
-!29 = distinct !{!29, i1 false, !"_RNvXsh_NtCskkCPRT7oCWw_16influxdb3_py_api5cacheNtB5_7PyCacheNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter"}
+!29 = distinct !{!29, i1 true, !"_RNvXsh_NtCskkCPRT7oCWw_16influxdb3_py_api5cacheNtB5_7PyCacheNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter"}
 !30 = distinct !{!30, !29, !"_RNvXsh_NtCskkCPRT7oCWw_16influxdb3_py_api5cacheNtB5_7PyCacheNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter: argument 0"}
 !31 = !{!30}
-!32 = distinct !{!32, i1 false, !"_RNvXs9_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB5_15PyPluginCallApiNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter"}
+!32 = distinct !{!32, i1 true, !"_RNvXs9_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB5_15PyPluginCallApiNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter"}
 !33 = distinct !{!33, !32, !"_RNvXs9_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB5_15PyPluginCallApiNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter: argument 0"}
 !34 = !{!33}
-!35 = distinct !{!35, i1 false, !"_RNvXsj_NtNtCs9xaRPakndqT_4pyo35types5tupleTINtNtB9_8instance5BoundNtNtB7_3any5PyAnyEENtNtB9_4call10PyCallArgs22call_method_positionalCskkCPRT7oCWw_16influxdb3_py_api"}
+!35 = distinct !{!35, i1 true, !"_RNvXsj_NtNtCs9xaRPakndqT_4pyo35types5tupleTINtNtB9_8instance5BoundNtNtB7_3any5PyAnyEENtNtB9_4call10PyCallArgs22call_method_positionalCskkCPRT7oCWw_16influxdb3_py_api"}
 !36 = distinct !{!36, !35, !"_RNvXsj_NtNtCs9xaRPakndqT_4pyo35types5tupleTINtNtB9_8instance5BoundNtNtB7_3any5PyAnyEENtNtB9_4call10PyCallArgs22call_method_positionalCskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
 !37 = !{!36}
-!38 = distinct !{!38, i1 false, !"_RNvXsh_NtCskkCPRT7oCWw_16influxdb3_py_api5cacheNtB5_7PyCacheNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter"}
+!38 = distinct !{!38, i1 true, !"_RNvXsh_NtCskkCPRT7oCWw_16influxdb3_py_api5cacheNtB5_7PyCacheNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter"}
 !39 = distinct !{!39, !38, !"_RNvXsh_NtCskkCPRT7oCWw_16influxdb3_py_api5cacheNtB5_7PyCacheNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter: argument 0"}
 !40 = !{!39}
-!41 = distinct !{!41, i1 false, !"_RNvXs9_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB5_15PyPluginCallApiNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter"}
+!41 = distinct !{!41, i1 true, !"_RNvXs9_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB5_15PyPluginCallApiNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter"}
 !42 = distinct !{!42, !41, !"_RNvXs9_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB5_15PyPluginCallApiNtNtNtCs9xaRPakndqT_4pyo35impl_7pyclass11PyClassImpl10items_iter: argument 0"}
 !43 = !{!42}
-!44 = distinct !{!44, i1 false, !"_RINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvB2_11module_exec0lECskkCPRT7oCWw_16influxdb3_py_api"}
+!44 = distinct !{!44, i1 true, !"_RINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvB2_11module_exec0lECskkCPRT7oCWw_16influxdb3_py_api"}
 !45 = distinct !{!45, !44, !"_RINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvB2_11module_exec0lECskkCPRT7oCWw_16influxdb3_py_api: argument 1"}
 !46 = distinct !{!46, !44, !"_RINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvB2_11module_exec0lECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!47 = distinct !{!47, i1 false, !"_RNCINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvB4_11module_exec0lE0CskkCPRT7oCWw_16influxdb3_py_api"}
+!47 = distinct !{!47, i1 true, !"_RNCINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvB4_11module_exec0lE0CskkCPRT7oCWw_16influxdb3_py_api"}
 !48 = distinct !{!48, !47, !"_RNCINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline10trampolineNCNvB4_11module_exec0lE0CskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!49 = distinct !{!49, i1 false, !"_RNCNvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline11module_exec0CskkCPRT7oCWw_16influxdb3_py_api"}
+!49 = distinct !{!49, i1 true, !"_RNCNvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline11module_exec0CskkCPRT7oCWw_16influxdb3_py_api"}
 !50 = distinct !{!50, !49, !"_RNCNvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline11module_exec0CskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!51 = distinct !{!51, i1 false, !"_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionINtNtNtB5_3ptr8non_null7NonNullNtNtCs6xk7itoKRsk_8pyo3_ffi6object8PyObjectEE11map_or_elseINtNtB5_6result6ResultINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB2A_5types3any5PyAnyENtNtB2A_3err5PyErrENCNvMsd_B2y_B2v_15from_ptr_or_err0NCB3X_s_0ECskkCPRT7oCWw_16influxdb3_py_api"}
+!51 = distinct !{!51, i1 true, !"_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionINtNtNtB5_3ptr8non_null7NonNullNtNtCs6xk7itoKRsk_8pyo3_ffi6object8PyObjectEE11map_or_elseINtNtB5_6result6ResultINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB2A_5types3any5PyAnyENtNtB2A_3err5PyErrENCNvMsd_B2y_B2v_15from_ptr_or_err0NCB3X_s_0ECskkCPRT7oCWw_16influxdb3_py_api"}
 !52 = distinct !{!52, !51, !"_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionINtNtNtB5_3ptr8non_null7NonNullNtNtCs6xk7itoKRsk_8pyo3_ffi6object8PyObjectEE11map_or_elseINtNtB5_6result6ResultINtNtCs9xaRPakndqT_4pyo38instance8BorrowedNtNtNtB2A_5types3any5PyAnyENtNtB2A_3err5PyErrENCNvMsd_B2y_B2v_15from_ptr_or_err0NCB3X_s_0ECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!53 = distinct !{!53, i1 false, !"_RNCNvMsd_NtCs9xaRPakndqT_4pyo38instanceINtB7_8BorrowedNtNtNtB9_5types3any5PyAnyE15from_ptr_or_err0CskkCPRT7oCWw_16influxdb3_py_api"}
+!53 = distinct !{!53, i1 true, !"_RNCNvMsd_NtCs9xaRPakndqT_4pyo38instanceINtB7_8BorrowedNtNtNtB9_5types3any5PyAnyE15from_ptr_or_err0CskkCPRT7oCWw_16influxdb3_py_api"}
 !54 = distinct !{!54, !53, !"_RNCNvMsd_NtCs9xaRPakndqT_4pyo38instanceINtB7_8BorrowedNtNtNtB9_5types3any5PyAnyE15from_ptr_or_err0CskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!55 = distinct !{!55, i1 false, !"_RINvNvMsb_NtCs9xaRPakndqT_4pyo38instanceINtB8_8BorrowedpE4cast5innerNtNtNtBa_5types6module8PyModuleECskkCPRT7oCWw_16influxdb3_py_api"}
+!55 = distinct !{!55, i1 true, !"_RINvNvMsb_NtCs9xaRPakndqT_4pyo38instanceINtB8_8BorrowedpE4cast5innerNtNtNtBa_5types6module8PyModuleECskkCPRT7oCWw_16influxdb3_py_api"}
 !56 = distinct !{!56, !55, !"_RINvNvMsb_NtCs9xaRPakndqT_4pyo38instanceINtB8_8BorrowedpE4cast5innerNtNtNtBa_5types6module8PyModuleECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!57 = distinct !{!57, i1 false, !"_RINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline33panic_result_into_callback_outputlECskkCPRT7oCWw_16influxdb3_py_api"}
+!57 = distinct !{!57, i1 true, !"_RINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline33panic_result_into_callback_outputlECskkCPRT7oCWw_16influxdb3_py_api"}
 !58 = distinct !{!58, !57, !"_RINvNtNtCs9xaRPakndqT_4pyo35impl_10trampoline33panic_result_into_callback_outputlECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
 !59 = !{!46, !45}
 !60 = !{!48, !46, !45}
@@ -1529,37 +1529,38 @@ attributes #20 = { noreturn }
 !63 = !{!56, !50, !48, !46, !45}
 !64 = !{!"branch_weights", i32 1073206245, i32 1071157, i32 1073206245}
 !65 = !{!58}
-!66 = distinct !{!66, i1 false, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs9xaRPakndqT_4pyo37pyclass18create_type_object17PyClassTypeObjectECskkCPRT7oCWw_16influxdb3_py_api"}
+!66 = distinct !{!66, i1 true, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs9xaRPakndqT_4pyo37pyclass18create_type_object17PyClassTypeObjectECskkCPRT7oCWw_16influxdb3_py_api"}
 !67 = distinct !{!67, !66, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs9xaRPakndqT_4pyo37pyclass18create_type_object17PyClassTypeObjectECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
 !68 = !{!67}
-!69 = distinct !{!69, i1 false, !"_RINvNvMsb_NtCs9xaRPakndqT_4pyo38instanceINtB8_8BorrowedpE4cast5innerNtNtNtBa_5types4dict6PyDictECskkCPRT7oCWw_16influxdb3_py_api"}
+!69 = distinct !{!69, i1 true, !"_RINvNvMsb_NtCs9xaRPakndqT_4pyo38instanceINtB8_8BorrowedpE4cast5innerNtNtNtBa_5types4dict6PyDictECskkCPRT7oCWw_16influxdb3_py_api"}
 !70 = distinct !{!70, !69, !"_RINvNvMsb_NtCs9xaRPakndqT_4pyo38instanceINtB8_8BorrowedpE4cast5innerNtNtNtBa_5types4dict6PyDictECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!71 = distinct !{!71, i1 false, !"_RNvMs1_NtNtCs9xaRPakndqT_4pyo35types4dictNtB5_12DictIterImpl14next_unchecked"}
+!71 = distinct !{!71, i1 true, !"_RNvMs1_NtNtCs9xaRPakndqT_4pyo35types4dictNtB5_12DictIterImpl14next_unchecked"}
 !72 = distinct !{!72, !71, !"_RNvMs1_NtNtCs9xaRPakndqT_4pyo35types4dictNtB5_12DictIterImpl14next_unchecked: argument 0"}
-!73 = distinct !{!73, i1 false, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECskkCPRT7oCWw_16influxdb3_py_api"}
+!73 = distinct !{!73, i1 true, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECskkCPRT7oCWw_16influxdb3_py_api"}
 !74 = distinct !{!74, !73, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!75 = distinct !{!75, !71, !"_RNvMs1_NtNtCs9xaRPakndqT_4pyo35types4dictNtB5_12DictIterImpl14next_unchecked: argument 0:h.rot"}
-!76 = !{!70}
-!77 = !{!"branch_weights", i32 1, i32 127}
-!78 = !{!72}
-!79 = !{!"branch_weights", i32 127, i32 255873}
-!80 = !{i64 -1, i64 -9223372036854775808}
-!81 = !{!74}
-!82 = !{!75}
-!83 = !{!"branch_weights", i32 255873, i32 127}
-!84 = distinct !{!84, i1 false, !"_RNvXsC_NtCs9xaRPakndqT_4pyo38instanceINtB5_5BoundNtNtNtB7_5types3any5PyAnyENtNtB7_10conversion12FromPyObject7extractCskkCPRT7oCWw_16influxdb3_py_api"}
-!85 = distinct !{!85, !84, !"_RNvXsC_NtCs9xaRPakndqT_4pyo38instanceINtB5_5BoundNtNtNtB7_5types3any5PyAnyENtNtB7_10conversion12FromPyObject7extractCskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!86 = !{!85}
-!87 = distinct !{!87, i1 false, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types8datetime10PyDateTimeEIBD_NtNtB2p_3any5PyAnyEEEB1j_"}
-!88 = distinct !{!88, !87, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types8datetime10PyDateTimeEIBD_NtNtB2p_3any5PyAnyEEEB1j_: argument 0"}
-!89 = !{!88}
-!90 = distinct !{!90, i1 false, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types4list6PyListEIBD_NtNtB2p_3any5PyAnyEEEB1j_"}
-!91 = distinct !{!91, !90, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types4list6PyListEIBD_NtNtB2p_3any5PyAnyEEEB1j_: argument 0"}
-!92 = !{!91}
-!93 = distinct !{!93, i1 false, !"_RNCNKNvNvMNtNtCs2AWtUsOyxgP_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CskkCPRT7oCWw_16influxdb3_py_api"}
-!94 = distinct !{!94, !93, !"_RNCNKNvNvMNtNtCs2AWtUsOyxgP_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!95 = distinct !{!95, i1 false, !"_RINvMs0_NtNtNtNtCs2AWtUsOyxgP_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs4NRVxsYgnAr_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECskkCPRT7oCWw_16influxdb3_py_api"}
-!96 = distinct !{!96, !95, !"_RINvMs0_NtNtNtNtCs2AWtUsOyxgP_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs4NRVxsYgnAr_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!97 = !{i8 0, i8 2}
-!98 = !{!96, !94}
+!75 = distinct !{!75, i1 true, !"_RNvMs1_NtNtCs9xaRPakndqT_4pyo35types4dictNtB5_12DictIterImpl14next_unchecked"}
+!76 = distinct !{!76, !75, !"_RNvMs1_NtNtCs9xaRPakndqT_4pyo35types4dictNtB5_12DictIterImpl14next_unchecked: argument 0:h.rot"}
+!77 = !{!70}
+!78 = !{!"branch_weights", i32 1, i32 127}
+!79 = !{!72}
+!80 = !{!"branch_weights", i32 127, i32 255873}
+!81 = !{i64 -1, i64 -9223372036854775808}
+!82 = !{!74}
+!83 = !{!76}
+!84 = !{!"branch_weights", i32 255873, i32 127}
+!85 = distinct !{!85, i1 true, !"_RNvXsC_NtCs9xaRPakndqT_4pyo38instanceINtB5_5BoundNtNtNtB7_5types3any5PyAnyENtNtB7_10conversion12FromPyObject7extractCskkCPRT7oCWw_16influxdb3_py_api"}
+!86 = distinct !{!86, !85, !"_RNvXsC_NtCs9xaRPakndqT_4pyo38instanceINtB5_5BoundNtNtNtB7_5types3any5PyAnyENtNtB7_10conversion12FromPyObject7extractCskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!87 = !{!86}
+!88 = distinct !{!88, i1 true, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types8datetime10PyDateTimeEIBD_NtNtB2p_3any5PyAnyEEEB1j_"}
+!89 = distinct !{!89, !88, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types8datetime10PyDateTimeEIBD_NtNtB2p_3any5PyAnyEEEB1j_: argument 0"}
+!90 = !{!89}
+!91 = distinct !{!91, i1 true, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types4list6PyListEIBD_NtNtB2p_3any5PyAnyEEEB1j_"}
+!92 = distinct !{!92, !91, !"_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCs9xaRPakndqT_4pyo38instance5BoundNtNtCskkCPRT7oCWw_16influxdb3_py_api9system_py15PyPluginCallApiEIBD_NtNtNtBH_5types4list6PyListEIBD_NtNtB2p_3any5PyAnyEEEB1j_: argument 0"}
+!93 = !{!92}
+!94 = distinct !{!94, i1 true, !"_RNCNKNvNvMNtNtCs2AWtUsOyxgP_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CskkCPRT7oCWw_16influxdb3_py_api"}
+!95 = distinct !{!95, !94, !"_RNCNKNvNvMNtNtCs2AWtUsOyxgP_3std4hash6randomNtB8_11RandomState3new4KEYS0s_0CskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!96 = distinct !{!96, i1 true, !"_RINvMs0_NtNtNtNtCs2AWtUsOyxgP_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs4NRVxsYgnAr_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECskkCPRT7oCWw_16influxdb3_py_api"}
+!97 = distinct !{!97, !96, !"_RINvMs0_NtNtNtNtCs2AWtUsOyxgP_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs4NRVxsYgnAr_4core4cell4CellTyyEEzE11get_or_initNvNvNvMNtNtBe_4hash6randomNtB2d_11RandomState3new4KEYS27___rust_std_internal_init_fnECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!98 = !{i8 0, i8 2}
+!99 = !{!97, !95}
 end_hunk_0

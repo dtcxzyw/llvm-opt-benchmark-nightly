@@ -166,14 +166,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   tail call void @llvm.experimental.noalias.scope.decl(metadata !54)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !55)
   %i.an = getelementptr i8, ptr %next.gep42, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep42, align 8, !tbaa !20, !alias.scope !56, !noalias !54
-  %wide.load43 = load <2 x i64>, ptr %i.an, align 8, !tbaa !20, !alias.scope !56, !noalias !54
+  %wide.load = load <2 x i64>, ptr %next.gep42, align 8, !tbaa !20, !alias.scope !56
+  %wide.load43 = load <2 x i64>, ptr %i.an, align 8, !tbaa !20, !alias.scope !56
   %i.ao = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !20, !alias.scope !57, !noalias !56
-  store <2 x i64> %wide.load43, ptr %i.ao, align 8, !tbaa !20, !alias.scope !57, !noalias !56
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !20, !alias.scope !57, !noalias !58
+  store <2 x i64> %wide.load43, ptr %i.ao, align 8, !tbaa !20, !alias.scope !57, !noalias !58
   %i.ap = getelementptr i8, ptr %next.gep42, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep42, align 8, !tbaa !20, !alias.scope !56, !noalias !54
-  store <2 x ptr> splat (ptr null), ptr %i.ap, align 8, !tbaa !20, !alias.scope !56, !noalias !54
+  store <2 x ptr> splat (ptr null), ptr %next.gep42, align 8, !tbaa !20, !alias.scope !56
+  store <2 x ptr> splat (ptr null), ptr %i.ap, align 8, !tbaa !20, !alias.scope !56
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aq = icmp eq i64 %index.next, %n.vec
   br i1 %i.aq, label %middle.block, label %vector.body, !llvm.loop !51
@@ -192,9 +192,9 @@ middle.block:                                     ; preds = %vector.body
   %.0911.i.i.i.i = phi ptr [ %i.as, %.lr.ph.i.i.i.i ], [ %.0911.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader45 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !54)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !55)
-  %i.ar = load i64, ptr %.0911.i.i.i.i, align 8, !tbaa !20, !alias.scope !55, !noalias !54
-  store i64 %i.ar, ptr %.012.i.i.i.i, align 8, !tbaa !20, !alias.scope !54, !noalias !55
-  store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !20, !alias.scope !55, !noalias !54
+  %i.ar = load i64, ptr %.0911.i.i.i.i, align 8, !tbaa !20, !alias.scope !55
+  store i64 %i.ar, ptr %.012.i.i.i.i, align 8, !tbaa !20, !alias.scope !54
+  store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !20, !alias.scope !55
   %i.as = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.as, %i.l
@@ -368,7 +368,7 @@ _ZNKSt14default_deleteIN5draco17AttributeMetadataEEclEPS1_.exit.i.i.i.i: ; preds
 _ZSt8_DestroyISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EEEvPT_.exit.i.i: ; preds = %_ZNKSt14default_deleteIN5draco17AttributeMetadataEEclEPS1_.exit.i.i.i.i, %.lr.ph.i.i
   %i.n = getelementptr inbounds nuw i8, ptr %.05.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.n, %i.c
-  br i1 %.not.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exitthread-pre-split, label %.lr.ph.i.i, !llvm.loop !58
+  br i1 %.not.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exitthread-pre-split, label %.lr.ph.i.i, !llvm.loop !59
 
 _ZSt8_DestroyIPSt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exitthread-pre-split: ; preds = %_ZSt8_DestroyISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EEEvPT_.exit.i.i
   %.pr = load ptr, ptr %0, align 8, !tbaa !18
@@ -397,9 +397,9 @@ define noundef ptr @_ZNK5draco16GeometryMetadata33GetAttributeMetadataByStringEn
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !59   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !60   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !59   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !60   ; 2 uses
   %.not24 = icmp eq ptr %i.b, %i.d
   br i1 %.not24, label %._crit_edge, label %.lr.ph
 
@@ -412,8 +412,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16.jt3
   %.sroa.017.025 = phi ptr [ %i.b, %.lr.ph ], [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16.jt3 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
-  store ptr %i.e, ptr %3, align 8, !tbaa !60
-  store i64 0, ptr %i.f, align 8, !tbaa !61
+  store ptr %i.e, ptr %3, align 8, !tbaa !61
+  store i64 0, ptr %i.f, align 8, !tbaa !62
   store i8 0, ptr %i.e, align 8, !tbaa !30
   %i.h = load ptr, ptr %.sroa.017.025, align 8, !tbaa !20
   %i.i = invoke noundef zeroext i1 @_ZNK5draco8Metadata14GetEntryStringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS6_(ptr noundef nonnull align 8 dereferenceable(96) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %3)
@@ -440,8 +440,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   resume { ptr, i32 } %i.j
 
 bb.e:                                             ; preds = %bb.c
-  %i.o = load i64, ptr %i.f, align 8, !tbaa !61   ; 3 uses
-  %i.p = load i64, ptr %i.g, align 8, !tbaa !61
+  %i.o = load i64, ptr %i.f, align 8, !tbaa !62   ; 3 uses
+  %i.p = load i64, ptr %i.g, align 8, !tbaa !62
   %i.q = icmp eq i64 %i.o, %i.p
   br i1 %i.q, label %bb.f, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread20.jt3
 
@@ -543,7 +543,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !33   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.07, i64 32
   %i.f = getelementptr inbounds nuw i8, ptr %.07, i64 64 ; 2 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !67   ; 6 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !68   ; 6 uses
   %.not.i = icmp eq ptr %i.g, null
   br i1 %.not.i, label %_ZNSt10unique_ptrIN5draco8MetadataESt14default_deleteIS1_EED2Ev.exit, label %bb.b
 
@@ -552,34 +552,34 @@ bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 64
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !25
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EE8_M_eraseEPSt13_Rb_tree_nodeISE_E(ptr noundef nonnull align 8 dereferenceable(48) %i.h, ptr noundef %i.j)
-          to label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EED2Ev.exit.i.i unwind label %bb.c, !inline_history !62
+          to label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EED2Ev.exit.i.i unwind label %bb.c, !inline_history !63
 
 bb.c:                                             ; preds = %bb.b
   %i.k = landingpad { ptr, i32 }
           catch ptr null
   %i.l = extractvalue { ptr, i32 } %i.k, 0
-  tail call void @__clang_call_terminate(ptr %i.l) #19, !inline_history !62
+  tail call void @__clang_call_terminate(ptr %i.l) #19, !inline_history !63
   unreachable
 
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EED2Ev.exit.i.i: ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !25
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N5draco10EntryValueEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE8_M_eraseEPSt13_Rb_tree_nodeISA_E(ptr noundef nonnull align 8 dereferenceable(96) %i.g, ptr noundef %i.n)
-          to label %_ZNKSt14default_deleteIN5draco8MetadataEEclEPS1_.exit.i unwind label %bb.d, !inline_history !63
+          to label %_ZNKSt14default_deleteIN5draco8MetadataEEclEPS1_.exit.i unwind label %bb.d, !inline_history !64
 
 bb.d:                                             ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EED2Ev.exit.i.i
   %i.o = landingpad { ptr, i32 }
           catch ptr null
   %i.p = extractvalue { ptr, i32 } %i.o, 0
-  tail call void @__clang_call_terminate(ptr %i.p) #19, !inline_history !63
+  tail call void @__clang_call_terminate(ptr %i.p) #19, !inline_history !64
   unreachable
 
 _ZNKSt14default_deleteIN5draco8MetadataEEclEPS1_.exit.i: ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EED2Ev.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef 96) #18, !inline_history !64
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef 96) #18, !inline_history !65
   br label %_ZNSt10unique_ptrIN5draco8MetadataESt14default_deleteIS1_EED2Ev.exit
 
 _ZNSt10unique_ptrIN5draco8MetadataESt14default_deleteIS1_EED2Ev.exit: ; preds = %.lr.ph, %_ZNKSt14default_deleteIN5draco8MetadataEEclEPS1_.exit.i
-  store ptr null, ptr %i.f, align 8, !tbaa !67
+  store ptr null, ptr %i.f, align 8, !tbaa !68
   %i.q = load ptr, ptr %i.e, align 8, !tbaa !31   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.07, i64 48 ; 2 uses
   %i.s = icmp eq ptr %i.q, %i.r
@@ -594,7 +594,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt10unique_ptrIN5draco8MetadataESt14default_deleteIS1_EED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   tail call void @_ZdlPvm(ptr noundef nonnull %.07, i64 noundef 72) #18
   %.not = icmp eq ptr %i.d, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !65
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !66
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.a
   ret void
@@ -628,13 +628,13 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !33   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.07, i64 32
   %i.f = getelementptr inbounds nuw i8, ptr %.07, i64 64
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !70   ; 3 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !71   ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN5draco10EntryValueD2Ev.exit.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %.07, i64 80
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !71
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !72
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = ptrtoint ptr %i.g to i64
   %i.l = sub i64 %i.j, %i.k
@@ -656,7 +656,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N5draco10EntryValueEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE12_M_drop_nodeEPSt13_Rb_tree_nodeISA_E.exit: ; preds = %_ZN5draco10EntryValueD2Ev.exit.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
   tail call void @_ZdlPvm(ptr noundef nonnull %.07, i64 noundef 88) #18
   %.not = icmp eq ptr %i.d, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !68
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !69
 
 ._crit_edge:                                      ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N5draco10EntryValueEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE12_M_drop_nodeEPSt13_Rb_tree_nodeISA_E.exit, %bb.a
   ret void
@@ -669,13 +669,13 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !25
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EE8_M_eraseEPSt13_Rb_tree_nodeISE_E(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef %i.c)
-          to label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EED2Ev.exit unwind label %bb.b, !inline_history !72
+          to label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EED2Ev.exit unwind label %bb.b, !inline_history !73
 
 bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
           catch ptr null
   %i.e = extractvalue { ptr, i32 } %i.d, 0
-  tail call void @__clang_call_terminate(ptr %i.e) #19, !inline_history !72
+  tail call void @__clang_call_terminate(ptr %i.e) #19, !inline_history !73
   unreachable
 
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10unique_ptrIN5draco8MetadataESt14default_deleteISA_EEESt10_Select1stISE_ESt4lessIS5_ESaISE_EED2Ev.exit: ; preds = %bb.a
@@ -751,20 +751,20 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.z = shl i64 %index, 3                        ; 2 uses
   %next.gep = getelementptr i8, ptr %i.p, i64 %i.z ; 2 uses
   %next.gep35 = getelementptr i8, ptr %i.c, i64 %i.z ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !86)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !87)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !88)
   %i.aa = getelementptr i8, ptr %next.gep35, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep35, align 8, !tbaa !20, !alias.scope !87, !noalias !86
-  %wide.load36 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !20, !alias.scope !87, !noalias !86
+  %wide.load = load <2 x i64>, ptr %next.gep35, align 8, !tbaa !20, !alias.scope !88
+  %wide.load36 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !20, !alias.scope !88
   %i.ab = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !20, !alias.scope !86, !noalias !87
-  store <2 x i64> %wide.load36, ptr %i.ab, align 8, !tbaa !20, !alias.scope !86, !noalias !87
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !20, !alias.scope !87
+  store <2 x i64> %wide.load36, ptr %i.ab, align 8, !tbaa !20, !alias.scope !87
   %i.ac = getelementptr i8, ptr %next.gep35, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep35, align 8, !tbaa !20, !alias.scope !87, !noalias !86
-  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !20, !alias.scope !87, !noalias !86
+  store <2 x ptr> splat (ptr null), ptr %next.gep35, align 8, !tbaa !20, !alias.scope !88
+  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !20, !alias.scope !88
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !76
+  br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !77
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.v, %n.vec
@@ -778,15 +778,15 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader55, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %i.ag, %.lr.ph.i.i.i ], [ %.012.i.i.i.ph, %.lr.ph.i.i.i.preheader55 ] ; 2 uses
   %.0911.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i ], [ %.0911.i.i.i.ph, %.lr.ph.i.i.i.preheader55 ] ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !86)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !87)
-  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !20, !alias.scope !87, !noalias !86
-  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !20, !alias.scope !86, !noalias !87
-  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !20, !alias.scope !87, !noalias !86
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !88)
+  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !20, !alias.scope !88
+  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !20, !alias.scope !87
+  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !20, !alias.scope !88
   %i.af = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.af, %1
-  br i1 %.not.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i, !llvm.loop !77
+  br i1 %.not.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i, !llvm.loop !78
 
 _ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit: ; preds = %.lr.ph.i.i.i, %middle.block, %_ZNKSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit
   %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit ], [ %i.x, %middle.block ], [ %i.ag, %.lr.ph.i.i.i ] ; 2 uses
@@ -825,20 +825,20 @@ vector.body43:                                    ; preds = %vector.body43, %vec
   %i.au = shl i64 %index44, 3                     ; 2 uses
   %next.gep45 = getelementptr i8, ptr %i.ah, i64 %i.au ; 2 uses
   %next.gep46 = getelementptr i8, ptr %1, i64 %i.au ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !88)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !90)
   %i.av = getelementptr i8, ptr %next.gep46, i64 16
-  %wide.load47 = load <2 x i64>, ptr %next.gep46, align 8, !tbaa !20, !alias.scope !90, !noalias !88
-  %wide.load48 = load <2 x i64>, ptr %i.av, align 8, !tbaa !20, !alias.scope !90, !noalias !88
+  %wide.load47 = load <2 x i64>, ptr %next.gep46, align 8, !tbaa !20, !alias.scope !91
+  %wide.load48 = load <2 x i64>, ptr %i.av, align 8, !tbaa !20, !alias.scope !91
   %i.aw = getelementptr i8, ptr %next.gep45, i64 16
-  store <2 x i64> %wide.load47, ptr %next.gep45, align 8, !tbaa !20, !alias.scope !91, !noalias !90
-  store <2 x i64> %wide.load48, ptr %i.aw, align 8, !tbaa !20, !alias.scope !91, !noalias !90
+  store <2 x i64> %wide.load47, ptr %next.gep45, align 8, !tbaa !20, !alias.scope !92, !noalias !93
+  store <2 x i64> %wide.load48, ptr %i.aw, align 8, !tbaa !20, !alias.scope !92, !noalias !93
   %i.ax = getelementptr i8, ptr %next.gep46, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep46, align 8, !tbaa !20, !alias.scope !90, !noalias !88
-  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !20, !alias.scope !90, !noalias !88
+  store <2 x ptr> splat (ptr null), ptr %next.gep46, align 8, !tbaa !20, !alias.scope !91
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !20, !alias.scope !91
   %index.next49 = add nuw i64 %index44, 4         ; 2 uses
   %i.ay = icmp eq i64 %index.next49, %n.vec42
-  br i1 %i.ay, label %middle.block50, label %vector.body43, !llvm.loop !84
+  br i1 %i.ay, label %middle.block50, label %vector.body43, !llvm.loop !85
 
 middle.block50:                                   ; preds = %vector.body43
   %cmp.n51 = icmp eq i64 %i.al, %n.vec42
@@ -852,15 +852,15 @@ middle.block50:                                   ; preds = %vector.body43
 .lr.ph.i.i.i17:                                   ; preds = %.lr.ph.i.i.i17.preheader54, %.lr.ph.i.i.i17
   %.012.i.i.i18 = phi ptr [ %i.bb, %.lr.ph.i.i.i17 ], [ %.012.i.i.i18.ph, %.lr.ph.i.i.i17.preheader54 ] ; 2 uses
   %.0911.i.i.i19 = phi ptr [ %i.ba, %.lr.ph.i.i.i17 ], [ %.0911.i.i.i19.ph, %.lr.ph.i.i.i17.preheader54 ] ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !88)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89)
-  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !20, !alias.scope !89, !noalias !88
-  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !20, !alias.scope !88, !noalias !89
-  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !20, !alias.scope !89, !noalias !88
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !90)
+  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !20, !alias.scope !90
+  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !20, !alias.scope !89
+  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !20, !alias.scope !90
   %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i19, i64 8 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.012.i.i.i18, i64 8 ; 2 uses
   %.not.i.i.i20 = icmp eq ptr %i.ba, %i.b
-  br i1 %.not.i.i.i20, label %_ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22, label %.lr.ph.i.i.i17, !llvm.loop !85
+  br i1 %.not.i.i.i20, label %_ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22, label %.lr.ph.i.i.i17, !llvm.loop !86
 
 _ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22: ; preds = %.lr.ph.i.i.i17, %middle.block50, %_ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit
   %.0.lcssa.i.i.i21 = phi ptr [ %i.ah, %_ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit ], [ %i.as, %middle.block50 ], [ %i.bb, %.lr.ph.i.i.i17 ]
@@ -974,7 +974,7 @@ attributes #19 = { noreturn nounwind }
 !42 = !{!"_ZTSN5draco8MetadataE", !38, i64 0, !41, i64 48}
 !43 = !{!"_ZTSN5draco17AttributeMetadataE", !42, i64 0, !6, i64 96}
 !44 = !{!43, !6, i64 96}
-!45 = distinct !{!45, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!45 = distinct !{!45, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
 !46 = distinct !{!46, !45, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !47 = distinct !{!47, !45, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
 !48 = distinct !{!48, i1 false, !"LVerDomain"}
@@ -987,38 +987,40 @@ attributes #19 = { noreturn nounwind }
 !55 = !{!47}
 !56 = !{!47, !49}
 !57 = !{!46, !50}
-!58 = distinct !{!58, !22}
-!59 = !{!15, !15, i64 0}
-!60 = !{!28, !27, i64 0}
-!61 = !{!29, !13, i64 8}
-!62 = distinct !{null, null, null, null, ptr @_ZN5draco8MetadataD2Ev, null, null, null}
-!63 = distinct !{null, null, null, null, ptr @_ZN5draco8MetadataD2Ev, null}
-!64 = distinct !{null, null, null, null, null}
-!65 = distinct !{!65, !22}
-!66 = !{!"p1 _ZTSN5draco8MetadataE", !10, i64 0}
-!67 = !{!66, !66, i64 0}
-!68 = distinct !{!68, !22}
-!69 = !{!"_ZTSNSt12_Vector_baseIhSaIhEE17_Vector_impl_dataE", !27, i64 0, !27, i64 8, !27, i64 16}
-!70 = !{!69, !27, i64 0}
-!71 = !{!69, !27, i64 16}
-!72 = distinct !{null, null}
-!73 = distinct !{!73, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
-!74 = distinct !{!74, !73, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
-!75 = distinct !{!75, !73, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
-!76 = distinct !{!76, !22, !23, !24}
-!77 = distinct !{!77, !22, !24, !23}
-!78 = distinct !{!78, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
-!79 = distinct !{!79, !78, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
-!80 = distinct !{!80, !78, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
-!81 = distinct !{!81, i1 false, !"LVerDomain"}
-!82 = distinct !{!82, !81}
-!83 = distinct !{!83, !81}
-!84 = distinct !{!84, !22, !23, !24}
-!85 = distinct !{!85, !22, !23}
-!86 = !{!74}
+!58 = !{!49}
+!59 = distinct !{!59, !22}
+!60 = !{!15, !15, i64 0}
+!61 = !{!28, !27, i64 0}
+!62 = !{!29, !13, i64 8}
+!63 = distinct !{null, null, null, null, ptr @_ZN5draco8MetadataD2Ev, null, null, null}
+!64 = distinct !{null, null, null, null, ptr @_ZN5draco8MetadataD2Ev, null}
+!65 = distinct !{null, null, null, null, null}
+!66 = distinct !{!66, !22}
+!67 = !{!"p1 _ZTSN5draco8MetadataE", !10, i64 0}
+!68 = !{!67, !67, i64 0}
+!69 = distinct !{!69, !22}
+!70 = !{!"_ZTSNSt12_Vector_baseIhSaIhEE17_Vector_impl_dataE", !27, i64 0, !27, i64 8, !27, i64 16}
+!71 = !{!70, !27, i64 0}
+!72 = !{!70, !27, i64 16}
+!73 = distinct !{null, null}
+!74 = distinct !{!74, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!75 = distinct !{!75, !74, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
+!76 = distinct !{!76, !74, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
+!77 = distinct !{!77, !22, !23, !24}
+!78 = distinct !{!78, !22, !24, !23}
+!79 = distinct !{!79, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!80 = distinct !{!80, !79, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
+!81 = distinct !{!81, !79, !"_ZSt19__relocate_object_aISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
+!82 = distinct !{!82, i1 false, !"LVerDomain"}
+!83 = distinct !{!83, !82}
+!84 = distinct !{!84, !82}
+!85 = distinct !{!85, !22, !23, !24}
+!86 = distinct !{!86, !22, !23}
 !87 = !{!75}
-!88 = !{!79}
+!88 = !{!76}
 !89 = !{!80}
-!90 = !{!80, !82}
-!91 = !{!79, !83}
+!90 = !{!81}
+!91 = !{!81, !83}
+!92 = !{!80, !84}
+!93 = !{!83}
 end_hunk_0

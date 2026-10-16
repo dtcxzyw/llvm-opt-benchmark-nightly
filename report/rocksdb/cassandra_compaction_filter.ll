@@ -204,24 +204,24 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.ab = getelementptr i8, ptr %next.gep36, i64 32
   %i.ac = getelementptr i8, ptr %next.gep36, i64 64
   %i.ad = getelementptr i8, ptr %next.gep36, i64 96
-  %wide.load = load <4 x i64>, ptr %next.gep36, align 8, !tbaa !97, !alias.scope !184, !noalias !183
-  %wide.load37 = load <4 x i64>, ptr %i.ab, align 8, !tbaa !97, !alias.scope !184, !noalias !183
-  %wide.load38 = load <4 x i64>, ptr %i.ac, align 8, !tbaa !97, !alias.scope !184, !noalias !183
-  %wide.load39 = load <4 x i64>, ptr %i.ad, align 8, !tbaa !97, !alias.scope !184, !noalias !183
+  %wide.load = load <4 x i64>, ptr %next.gep36, align 8, !tbaa !97, !alias.scope !184
+  %wide.load37 = load <4 x i64>, ptr %i.ab, align 8, !tbaa !97, !alias.scope !184
+  %wide.load38 = load <4 x i64>, ptr %i.ac, align 8, !tbaa !97, !alias.scope !184
+  %wide.load39 = load <4 x i64>, ptr %i.ad, align 8, !tbaa !97, !alias.scope !184
   %i.ae = getelementptr i8, ptr %next.gep, i64 32
   %i.af = getelementptr i8, ptr %next.gep, i64 64
   %i.ag = getelementptr i8, ptr %next.gep, i64 96
-  store <4 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !97, !alias.scope !183, !noalias !184
-  store <4 x i64> %wide.load37, ptr %i.ae, align 8, !tbaa !97, !alias.scope !183, !noalias !184
-  store <4 x i64> %wide.load38, ptr %i.af, align 8, !tbaa !97, !alias.scope !183, !noalias !184
-  store <4 x i64> %wide.load39, ptr %i.ag, align 8, !tbaa !97, !alias.scope !183, !noalias !184
+  store <4 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !97, !alias.scope !183
+  store <4 x i64> %wide.load37, ptr %i.ae, align 8, !tbaa !97, !alias.scope !183
+  store <4 x i64> %wide.load38, ptr %i.af, align 8, !tbaa !97, !alias.scope !183
+  store <4 x i64> %wide.load39, ptr %i.ag, align 8, !tbaa !97, !alias.scope !183
   %i.ah = getelementptr i8, ptr %next.gep36, i64 32
   %i.ai = getelementptr i8, ptr %next.gep36, i64 64
   %i.aj = getelementptr i8, ptr %next.gep36, i64 96
-  store <4 x ptr> splat (ptr null), ptr %next.gep36, align 8, !tbaa !97, !alias.scope !184, !noalias !183
-  store <4 x ptr> splat (ptr null), ptr %i.ah, align 8, !tbaa !97, !alias.scope !184, !noalias !183
-  store <4 x ptr> splat (ptr null), ptr %i.ai, align 8, !tbaa !97, !alias.scope !184, !noalias !183
-  store <4 x ptr> splat (ptr null), ptr %i.aj, align 8, !tbaa !97, !alias.scope !184, !noalias !183
+  store <4 x ptr> splat (ptr null), ptr %next.gep36, align 8, !tbaa !97, !alias.scope !184
+  store <4 x ptr> splat (ptr null), ptr %i.ah, align 8, !tbaa !97, !alias.scope !184
+  store <4 x ptr> splat (ptr null), ptr %i.ai, align 8, !tbaa !97, !alias.scope !184
+  store <4 x ptr> splat (ptr null), ptr %i.aj, align 8, !tbaa !97, !alias.scope !184
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
   br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !171
@@ -249,9 +249,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %next.gep44 = getelementptr i8, ptr %i.c, i64 %i.ao ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !183)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !184)
-  %wide.load45 = load <4 x i64>, ptr %next.gep44, align 8, !tbaa !97, !alias.scope !184, !noalias !183
-  store <4 x i64> %wide.load45, ptr %next.gep43, align 8, !tbaa !97, !alias.scope !183, !noalias !184
-  store <4 x ptr> splat (ptr null), ptr %next.gep44, align 8, !tbaa !97, !alias.scope !184, !noalias !183
+  %wide.load45 = load <4 x i64>, ptr %next.gep44, align 8, !tbaa !97, !alias.scope !184
+  store <4 x i64> %wide.load45, ptr %next.gep43, align 8, !tbaa !97, !alias.scope !183
+  store <4 x ptr> splat (ptr null), ptr %next.gep44, align 8, !tbaa !97, !alias.scope !184
   %index.next46 = add nuw i64 %index42, 4         ; 2 uses
   %i.ap = icmp eq i64 %index.next46, %n.vec41
   br i1 %i.ap, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !172
@@ -270,9 +270,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.0911.i.i.i = phi ptr [ %i.ar, %.lr.ph.i.i.i ], [ %.0911.i.i.i.ph, %.lr.ph.i.i.i.preheader ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !183)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !184)
-  %i.aq = load i64, ptr %.0911.i.i.i, align 8, !tbaa !97, !alias.scope !184, !noalias !183
-  store i64 %i.aq, ptr %.012.i.i.i, align 8, !tbaa !97, !alias.scope !183, !noalias !184
-  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !97, !alias.scope !184, !noalias !183
+  %i.aq = load i64, ptr %.0911.i.i.i, align 8, !tbaa !97, !alias.scope !184
+  store i64 %i.aq, ptr %.012.i.i.i, align 8, !tbaa !97, !alias.scope !183
+  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !97, !alias.scope !184
   %i.ar = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ar, %1
@@ -327,24 +327,24 @@ vector.body56:                                    ; preds = %vector.ph54, %vecto
   %i.bk = getelementptr i8, ptr %next.gep59, i64 32
   %i.bl = getelementptr i8, ptr %next.gep59, i64 64
   %i.bm = getelementptr i8, ptr %next.gep59, i64 96
-  %wide.load60 = load <4 x i64>, ptr %next.gep59, align 8, !tbaa !97, !alias.scope !190, !noalias !188
-  %wide.load61 = load <4 x i64>, ptr %i.bk, align 8, !tbaa !97, !alias.scope !190, !noalias !188
-  %wide.load62 = load <4 x i64>, ptr %i.bl, align 8, !tbaa !97, !alias.scope !190, !noalias !188
-  %wide.load63 = load <4 x i64>, ptr %i.bm, align 8, !tbaa !97, !alias.scope !190, !noalias !188
+  %wide.load60 = load <4 x i64>, ptr %next.gep59, align 8, !tbaa !97, !alias.scope !190
+  %wide.load61 = load <4 x i64>, ptr %i.bk, align 8, !tbaa !97, !alias.scope !190
+  %wide.load62 = load <4 x i64>, ptr %i.bl, align 8, !tbaa !97, !alias.scope !190
+  %wide.load63 = load <4 x i64>, ptr %i.bm, align 8, !tbaa !97, !alias.scope !190
   %i.bn = getelementptr i8, ptr %next.gep58, i64 32
   %i.bo = getelementptr i8, ptr %next.gep58, i64 64
   %i.bp = getelementptr i8, ptr %next.gep58, i64 96
-  store <4 x i64> %wide.load60, ptr %next.gep58, align 8, !tbaa !97, !alias.scope !191, !noalias !190
-  store <4 x i64> %wide.load61, ptr %i.bn, align 8, !tbaa !97, !alias.scope !191, !noalias !190
-  store <4 x i64> %wide.load62, ptr %i.bo, align 8, !tbaa !97, !alias.scope !191, !noalias !190
-  store <4 x i64> %wide.load63, ptr %i.bp, align 8, !tbaa !97, !alias.scope !191, !noalias !190
+  store <4 x i64> %wide.load60, ptr %next.gep58, align 8, !tbaa !97, !alias.scope !191, !noalias !192
+  store <4 x i64> %wide.load61, ptr %i.bn, align 8, !tbaa !97, !alias.scope !191, !noalias !192
+  store <4 x i64> %wide.load62, ptr %i.bo, align 8, !tbaa !97, !alias.scope !191, !noalias !192
+  store <4 x i64> %wide.load63, ptr %i.bp, align 8, !tbaa !97, !alias.scope !191, !noalias !192
   %i.bq = getelementptr i8, ptr %next.gep59, i64 32
   %i.br = getelementptr i8, ptr %next.gep59, i64 64
   %i.bs = getelementptr i8, ptr %next.gep59, i64 96
-  store <4 x ptr> splat (ptr null), ptr %next.gep59, align 8, !tbaa !97, !alias.scope !190, !noalias !188
-  store <4 x ptr> splat (ptr null), ptr %i.bq, align 8, !tbaa !97, !alias.scope !190, !noalias !188
-  store <4 x ptr> splat (ptr null), ptr %i.br, align 8, !tbaa !97, !alias.scope !190, !noalias !188
-  store <4 x ptr> splat (ptr null), ptr %i.bs, align 8, !tbaa !97, !alias.scope !190, !noalias !188
+  store <4 x ptr> splat (ptr null), ptr %next.gep59, align 8, !tbaa !97, !alias.scope !190
+  store <4 x ptr> splat (ptr null), ptr %i.bq, align 8, !tbaa !97, !alias.scope !190
+  store <4 x ptr> splat (ptr null), ptr %i.br, align 8, !tbaa !97, !alias.scope !190
+  store <4 x ptr> splat (ptr null), ptr %i.bs, align 8, !tbaa !97, !alias.scope !190
   %index.next64 = add nuw i64 %index57, 16        ; 2 uses
   %i.bt = icmp eq i64 %index.next64, %n.vec55
   br i1 %i.bt, label %middle.block65, label %vector.body56, !llvm.loop !180
@@ -372,9 +372,9 @@ vec.epilog.vector.body75:                         ; preds = %vec.epilog.vector.b
   %next.gep78 = getelementptr i8, ptr %1, i64 %i.bx ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !188)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !189)
-  %wide.load79 = load <4 x i64>, ptr %next.gep78, align 8, !tbaa !97, !alias.scope !190, !noalias !188
-  store <4 x i64> %wide.load79, ptr %next.gep77, align 8, !tbaa !97, !alias.scope !191, !noalias !190
-  store <4 x ptr> splat (ptr null), ptr %next.gep78, align 8, !tbaa !97, !alias.scope !190, !noalias !188
+  %wide.load79 = load <4 x i64>, ptr %next.gep78, align 8, !tbaa !97, !alias.scope !190
+  store <4 x i64> %wide.load79, ptr %next.gep77, align 8, !tbaa !97, !alias.scope !191, !noalias !192
+  store <4 x ptr> splat (ptr null), ptr %next.gep78, align 8, !tbaa !97, !alias.scope !190
   %index.next80 = add nuw i64 %index76, 4         ; 2 uses
   %i.by = icmp eq i64 %index.next80, %n.vec74
   br i1 %i.by, label %vec.epilog.middle.block81, label %vec.epilog.vector.body75, !llvm.loop !181
@@ -393,9 +393,9 @@ vec.epilog.middle.block81:                        ; preds = %vec.epilog.vector.b
   %.0911.i.i.i19 = phi ptr [ %i.ca, %.lr.ph.i.i.i17 ], [ %.0911.i.i.i19.ph, %.lr.ph.i.i.i17.preheader ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !188)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !189)
-  %i.bz = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !97, !alias.scope !189, !noalias !188
-  store i64 %i.bz, ptr %.012.i.i.i18, align 8, !tbaa !97, !alias.scope !188, !noalias !189
-  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !97, !alias.scope !189, !noalias !188
+  %i.bz = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !97, !alias.scope !189
+  store i64 %i.bz, ptr %.012.i.i.i18, align 8, !tbaa !97, !alias.scope !188
+  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !97, !alias.scope !189
   %i.ca = getelementptr inbounds nuw i8, ptr %.0911.i.i.i19, i64 8 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.012.i.i.i18, i64 8 ; 2 uses
   %.not.i.i.i20 = icmp eq ptr %i.ca, %i.b
@@ -428,14 +428,14 @@ declare i32 @pthread_mutex_unlock(ptr noundef) local_unnamed_addr #15
 ; Function Attrs: mustprogress uwtable
 define internal noundef ptr @"_ZNSt17_Function_handlerIFPN7rocksdb13MergeOperatorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSt10unique_ptrIS1_St14default_deleteIS1_EEPS8_EZ24RegisterCassandraObjectsE3$_0E9_M_invokeERKSt9_Any_dataSA_OSF_OSG_"(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %2, ptr nofree nonnull readnone align 8 captures(none) %3) #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.val = load ptr, ptr %2, align 8, !tbaa !194   ; 3 uses
+  %.val = load ptr, ptr %2, align 8, !tbaa !195   ; 3 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #24 ; 4 uses
   invoke void @_ZN7rocksdb9cassandra27CassandraValueMergeOperatorC1Eim(ptr noundef nonnull align 8 dereferenceable(48) %i.a, i32 noundef 0, i64 noundef 0)
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load ptr, ptr %.val, align 8, !tbaa !196 ; 3 uses
-  store ptr %i.a, ptr %.val, align 8, !tbaa !196
+  %i.b = load ptr, ptr %.val, align 8, !tbaa !197 ; 3 uses
+  store ptr %i.a, ptr %.val, align 8, !tbaa !197
   %.not.i.i.i.i.i = icmp eq ptr %i.b, null
   br i1 %.not.i.i.i.i.i, label %"_ZSt10__invoke_rIPN7rocksdb13MergeOperatorERZ24RegisterCassandraObjectsE3$_0JRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSt10unique_ptrIS1_St14default_deleteIS1_EEPSA_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit", label %_ZNKSt14default_deleteIN7rocksdb13MergeOperatorEEclEPS1_.exit.i.i.i.i.i
 
@@ -443,8 +443,8 @@ _ZNKSt14default_deleteIN7rocksdb13MergeOperatorEEclEPS1_.exit.i.i.i.i.i: ; preds
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !49
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8
-  tail call void %i.e(ptr noundef nonnull align 8 dereferenceable(32) %i.b) #26, !inline_history !192
-  %.pre.i.i.i = load ptr, ptr %.val, align 8, !tbaa !196
+  tail call void %i.e(ptr noundef nonnull align 8 dereferenceable(32) %i.b) #26, !inline_history !193
+  %.pre.i.i.i = load ptr, ptr %.val, align 8, !tbaa !197
   br label %"_ZSt10__invoke_rIPN7rocksdb13MergeOperatorERZ24RegisterCassandraObjectsE3$_0JRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSt10unique_ptrIS1_St14default_deleteIS1_EEPSA_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit"
 
 bb.c:                                             ; preds = %bb.a
@@ -530,13 +530,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = invoke noundef zeroext i1 %i.b(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i32 noundef 3)
-          to label %_ZNSt14_Function_baseD2Ev.exit.i unwind label %bb.c, !inline_history !198 ; 0 uses
+          to label %_ZNSt14_Function_baseD2Ev.exit.i unwind label %bb.c, !inline_history !199 ; 0 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.e = landingpad { ptr, i32 }
           catch ptr null
   %i.f = extractvalue { ptr, i32 } %i.e, 0
-  tail call void @__clang_call_terminate(ptr %i.f) #22, !inline_history !198
+  tail call void @__clang_call_terminate(ptr %i.f) #22, !inline_history !199
   unreachable
 
 _ZNSt14_Function_baseD2Ev.exit.i:                 ; preds = %bb.b, %bb.a
@@ -549,7 +549,7 @@ _ZNKSt14default_deleteIN7rocksdb13ObjectLibrary5EntryEEclEPS2_.exit.i.i: ; preds
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !49
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8
-  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.h) #26, !inline_history !197
+  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.h) #26, !inline_history !198
   br label %_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_16CompactionFilterEED2Ev.exit
 
 _ZN7rocksdb13ObjectLibrary12FactoryEntryINS_16CompactionFilterEED2Ev.exit: ; preds = %_ZNSt14_Function_baseD2Ev.exit.i, %_ZNKSt14default_deleteIN7rocksdb13ObjectLibrary5EntryEEclEPS2_.exit.i.i
@@ -668,13 +668,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = invoke noundef zeroext i1 %i.b(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i32 noundef 3)
-          to label %_ZNSt14_Function_baseD2Ev.exit.i unwind label %bb.c, !inline_history !200 ; 0 uses
+          to label %_ZNSt14_Function_baseD2Ev.exit.i unwind label %bb.c, !inline_history !201 ; 0 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.e = landingpad { ptr, i32 }
           catch ptr null
   %i.f = extractvalue { ptr, i32 } %i.e, 0
-  tail call void @__clang_call_terminate(ptr %i.f) #22, !inline_history !200
+  tail call void @__clang_call_terminate(ptr %i.f) #22, !inline_history !201
   unreachable
 
 _ZNSt14_Function_baseD2Ev.exit.i:                 ; preds = %bb.b, %bb.a
@@ -687,7 +687,7 @@ _ZNKSt14default_deleteIN7rocksdb13ObjectLibrary5EntryEEclEPS2_.exit.i.i: ; preds
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !49
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8
-  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.h) #26, !inline_history !199
+  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.h) #26, !inline_history !200
   br label %_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_23CompactionFilterFactoryEED2Ev.exit
 
 _ZN7rocksdb13ObjectLibrary12FactoryEntryINS_23CompactionFilterFactoryEED2Ev.exit: ; preds = %_ZNSt14_Function_baseD2Ev.exit.i, %_ZNKSt14default_deleteIN7rocksdb13ObjectLibrary5EntryEEclEPS2_.exit.i.i
@@ -722,14 +722,14 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal noundef ptr @"_ZNSt17_Function_handlerIFPN7rocksdb23CompactionFilterFactoryERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSt10unique_ptrIS1_St14default_deleteIS1_EEPS8_EZ24RegisterCassandraObjectsE3$_2E9_M_invokeERKSt9_Any_dataSA_OSF_OSG_"(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %2, ptr nofree nonnull readnone align 8 captures(none) %3) #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.val = load ptr, ptr %2, align 8, !tbaa !203   ; 3 uses
+  %.val = load ptr, ptr %2, align 8, !tbaa !204   ; 3 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #24 ; 4 uses
   invoke void @_ZN7rocksdb9cassandra32CassandraCompactionFilterFactoryC1Ebi(ptr noundef nonnull align 8 dereferenceable(48) %i.a, i1 noundef zeroext false, i32 noundef 0)
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load ptr, ptr %.val, align 8, !tbaa !205 ; 3 uses
-  store ptr %i.a, ptr %.val, align 8, !tbaa !205
+  %i.b = load ptr, ptr %.val, align 8, !tbaa !206 ; 3 uses
+  store ptr %i.a, ptr %.val, align 8, !tbaa !206
   %.not.i.i.i.i.i = icmp eq ptr %i.b, null
   br i1 %.not.i.i.i.i.i, label %"_ZSt10__invoke_rIPN7rocksdb23CompactionFilterFactoryERZ24RegisterCassandraObjectsE3$_2JRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSt10unique_ptrIS1_St14default_deleteIS1_EEPSA_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit", label %_ZNKSt14default_deleteIN7rocksdb23CompactionFilterFactoryEEclEPS1_.exit.i.i.i.i.i
 
@@ -737,8 +737,8 @@ _ZNKSt14default_deleteIN7rocksdb23CompactionFilterFactoryEEclEPS1_.exit.i.i.i.i.
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !49
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8
-  tail call void %i.e(ptr noundef nonnull align 8 dereferenceable(32) %i.b) #26, !inline_history !201
-  %.pre.i.i.i = load ptr, ptr %.val, align 8, !tbaa !205
+  tail call void %i.e(ptr noundef nonnull align 8 dereferenceable(32) %i.b) #26, !inline_history !202
+  %.pre.i.i.i = load ptr, ptr %.val, align 8, !tbaa !206
   br label %"_ZSt10__invoke_rIPN7rocksdb23CompactionFilterFactoryERZ24RegisterCassandraObjectsE3$_2JRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSt10unique_ptrIS1_St14default_deleteIS1_EEPSA_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESK_E4typeEOSL_DpOSM_.exit"
 
 bb.c:                                             ; preds = %bb.a
@@ -1141,13 +1141,13 @@ attributes #26 = { nounwind }
 !165 = distinct !{!165, !45}
 !166 = distinct !{!166, !45}
 !167 = !{!116, !38, i64 48}
-!168 = distinct !{!168, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN7rocksdb13ObjectLibrary5EntryESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
+!168 = distinct !{!168, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN7rocksdb13ObjectLibrary5EntryESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
 !169 = distinct !{!169, !168, !"_ZSt19__relocate_object_aISt10unique_ptrIN7rocksdb13ObjectLibrary5EntryESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 0"}
 !170 = distinct !{!170, !168, !"_ZSt19__relocate_object_aISt10unique_ptrIN7rocksdb13ObjectLibrary5EntryESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 1"}
 !171 = distinct !{!171, !45, !185, !186}
 !172 = distinct !{!172, !45, !185, !186}
 !173 = distinct !{!173, !45, !186, !185}
-!174 = distinct !{!174, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN7rocksdb13ObjectLibrary5EntryESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
+!174 = distinct !{!174, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN7rocksdb13ObjectLibrary5EntryESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
 !175 = distinct !{!175, !174, !"_ZSt19__relocate_object_aISt10unique_ptrIN7rocksdb13ObjectLibrary5EntryESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 0"}
 !176 = distinct !{!176, !174, !"_ZSt19__relocate_object_aISt10unique_ptrIN7rocksdb13ObjectLibrary5EntryESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 1"}
 !177 = distinct !{!177, i1 false, !"LVerDomain"}
@@ -1165,18 +1165,19 @@ attributes #26 = { nounwind }
 !189 = !{!176}
 !190 = !{!176, !178}
 !191 = !{!175, !179}
-!192 = distinct !{null, null, null, null, null, null}
-!193 = !{!"p1 _ZTSSt10unique_ptrIN7rocksdb13MergeOperatorESt14default_deleteIS1_EE", !13, i64 0}
-!194 = !{!193, !193, i64 0}
-!195 = !{!"p1 _ZTSN7rocksdb13MergeOperatorE", !13, i64 0}
-!196 = !{!195, !195, i64 0}
-!197 = distinct !{ptr @_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_16CompactionFilterEED2Ev, null, null}
-!198 = !{ptr @_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_16CompactionFilterEED2Ev}
-!199 = distinct !{ptr @_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_23CompactionFilterFactoryEED2Ev, null, null}
-!200 = !{ptr @_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_23CompactionFilterFactoryEED2Ev}
-!201 = distinct !{null, null, null, null, null, null}
-!202 = !{!"p1 _ZTSSt10unique_ptrIN7rocksdb23CompactionFilterFactoryESt14default_deleteIS1_EE", !13, i64 0}
-!203 = !{!202, !202, i64 0}
-!204 = !{!"p1 _ZTSN7rocksdb23CompactionFilterFactoryE", !13, i64 0}
-!205 = !{!204, !204, i64 0}
+!192 = !{!178}
+!193 = distinct !{null, null, null, null, null, null}
+!194 = !{!"p1 _ZTSSt10unique_ptrIN7rocksdb13MergeOperatorESt14default_deleteIS1_EE", !13, i64 0}
+!195 = !{!194, !194, i64 0}
+!196 = !{!"p1 _ZTSN7rocksdb13MergeOperatorE", !13, i64 0}
+!197 = !{!196, !196, i64 0}
+!198 = distinct !{ptr @_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_16CompactionFilterEED2Ev, null, null}
+!199 = !{ptr @_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_16CompactionFilterEED2Ev}
+!200 = distinct !{ptr @_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_23CompactionFilterFactoryEED2Ev, null, null}
+!201 = !{ptr @_ZN7rocksdb13ObjectLibrary12FactoryEntryINS_23CompactionFilterFactoryEED2Ev}
+!202 = distinct !{null, null, null, null, null, null}
+!203 = !{!"p1 _ZTSSt10unique_ptrIN7rocksdb23CompactionFilterFactoryESt14default_deleteIS1_EE", !13, i64 0}
+!204 = !{!203, !203, i64 0}
+!205 = !{!"p1 _ZTSN7rocksdb23CompactionFilterFactoryE", !13, i64 0}
+!206 = !{!205, !205, i64 0}
 end_hunk_1

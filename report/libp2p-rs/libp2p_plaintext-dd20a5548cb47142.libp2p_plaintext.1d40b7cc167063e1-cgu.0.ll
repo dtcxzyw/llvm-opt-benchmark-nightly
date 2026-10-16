@@ -189,7 +189,7 @@ define internal noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRhNtB6_5De
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.c = load i32, ptr %i.b, align 8, !alias.scope !25, !noalias !26, !noundef !4 ; 2 uses
+  %i.c = load i32, ptr %i.b, align 8, !alias.scope !24, !noundef !4 ; 2 uses
   %i.d = and i32 %i.c, 33554432
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -407,23 +407,21 @@ attributes #7 = { nounwind }
 !5 = !{i64 8}
 !6 = !{i64 -1, i64 -9223372036854775808}
 !7 = !{i64 0, i64 -9223372036854775803}
-!8 = distinct !{!8, i1 false, !"_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
+!8 = distinct !{!8, i1 true, !"_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
 !9 = distinct !{!9, !8, !"_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB6_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
-!10 = distinct !{!10, i1 false, !"_RNvXsr_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtCskKLDkoKarTP_4core3fmt5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
+!10 = distinct !{!10, i1 true, !"_RNvXsr_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtCskKLDkoKarTP_4core3fmt5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
 !11 = distinct !{!11, !10, !"_RNvXsr_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtCskKLDkoKarTP_4core3fmt5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
-!12 = distinct !{!12, i1 false, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
+!12 = distinct !{!12, i1 true, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext"}
 !13 = distinct !{!13, !12, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 1"}
 !14 = distinct !{!14, !12, !"_RNvXsr_NtCskKLDkoKarTP_4core3fmtShNtB5_5Debug3fmtCs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
-!15 = distinct !{!15, i1 false, !"_RINvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB6_9DebugList7entriesRhINtNtNtBa_5slice4iter4IterhEECs2vI8TDSUWPt_16libp2p_plaintext"}
+!15 = distinct !{!15, i1 true, !"_RINvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB6_9DebugList7entriesRhINtNtNtBa_5slice4iter4IterhEECs2vI8TDSUWPt_16libp2p_plaintext"}
 !16 = distinct !{!16, !15, !"_RINvMs6_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB6_9DebugList7entriesRhINtNtNtBa_5slice4iter4IterhEECs2vI8TDSUWPt_16libp2p_plaintext: argument 0"}
 !17 = !{!9}
 !18 = !{!14, !13, !11, !9}
 !19 = !{!14}
 !20 = !{!16, !14, !13, !11, !9}
 !21 = !{!"address", !"read_provenance"}
-!22 = distinct !{!22, i1 false, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt"}
+!22 = distinct !{!22, i1 true, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt"}
 !23 = distinct !{!23, !22, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt: argument 1"}
-!24 = distinct !{!24, !22, !"_RNvXsU_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_5Debug3fmt: argument 0"}
-!25 = !{!23}
-!26 = !{!24}
+!24 = !{!23}
 end_hunk_0

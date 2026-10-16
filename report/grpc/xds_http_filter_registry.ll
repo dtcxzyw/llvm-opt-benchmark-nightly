@@ -202,14 +202,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   tail call void @llvm.experimental.noalias.scope.decl(metadata !145)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !146)
   %i.aa = getelementptr i8, ptr %next.gep35, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep35, align 8, !tbaa !57, !alias.scope !146, !noalias !145
-  %wide.load36 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !57, !alias.scope !146, !noalias !145
+  %wide.load = load <2 x i64>, ptr %next.gep35, align 8, !tbaa !57, !alias.scope !146
+  %wide.load36 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !57, !alias.scope !146
   %i.ab = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !57, !alias.scope !145, !noalias !146
-  store <2 x i64> %wide.load36, ptr %i.ab, align 8, !tbaa !57, !alias.scope !145, !noalias !146
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !57, !alias.scope !145
+  store <2 x i64> %wide.load36, ptr %i.ab, align 8, !tbaa !57, !alias.scope !145
   %i.ac = getelementptr i8, ptr %next.gep35, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep35, align 8, !tbaa !57, !alias.scope !146, !noalias !145
-  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !57, !alias.scope !146, !noalias !145
+  store <2 x ptr> splat (ptr null), ptr %next.gep35, align 8, !tbaa !57, !alias.scope !146
+  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !57, !alias.scope !146
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !135
@@ -228,9 +228,9 @@ middle.block:                                     ; preds = %vector.body
   %.0911.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i ], [ %.0911.i.i.i.ph, %.lr.ph.i.i.i.preheader55 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !145)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !146)
-  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !57, !alias.scope !146, !noalias !145
-  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !57, !alias.scope !145, !noalias !146
-  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !57, !alias.scope !146, !noalias !145
+  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !57, !alias.scope !146
+  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !57, !alias.scope !145
+  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !57, !alias.scope !146
   %i.af = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.af, %1
@@ -276,14 +276,14 @@ vector.body43:                                    ; preds = %vector.body43, %vec
   tail call void @llvm.experimental.noalias.scope.decl(metadata !149)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !150)
   %i.av = getelementptr i8, ptr %next.gep46, i64 16
-  %wide.load47 = load <2 x i64>, ptr %next.gep46, align 8, !tbaa !57, !alias.scope !151, !noalias !149
-  %wide.load48 = load <2 x i64>, ptr %i.av, align 8, !tbaa !57, !alias.scope !151, !noalias !149
+  %wide.load47 = load <2 x i64>, ptr %next.gep46, align 8, !tbaa !57, !alias.scope !151
+  %wide.load48 = load <2 x i64>, ptr %i.av, align 8, !tbaa !57, !alias.scope !151
   %i.aw = getelementptr i8, ptr %next.gep45, i64 16
-  store <2 x i64> %wide.load47, ptr %next.gep45, align 8, !tbaa !57, !alias.scope !152, !noalias !151
-  store <2 x i64> %wide.load48, ptr %i.aw, align 8, !tbaa !57, !alias.scope !152, !noalias !151
+  store <2 x i64> %wide.load47, ptr %next.gep45, align 8, !tbaa !57, !alias.scope !152, !noalias !153
+  store <2 x i64> %wide.load48, ptr %i.aw, align 8, !tbaa !57, !alias.scope !152, !noalias !153
   %i.ax = getelementptr i8, ptr %next.gep46, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep46, align 8, !tbaa !57, !alias.scope !151, !noalias !149
-  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !57, !alias.scope !151, !noalias !149
+  store <2 x ptr> splat (ptr null), ptr %next.gep46, align 8, !tbaa !57, !alias.scope !151
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !57, !alias.scope !151
   %index.next49 = add nuw i64 %index44, 4         ; 2 uses
   %i.ay = icmp eq i64 %index.next49, %n.vec42
   br i1 %i.ay, label %middle.block50, label %vector.body43, !llvm.loop !143
@@ -302,9 +302,9 @@ middle.block50:                                   ; preds = %vector.body43
   %.0911.i.i.i19 = phi ptr [ %i.ba, %.lr.ph.i.i.i17 ], [ %.0911.i.i.i19.ph, %.lr.ph.i.i.i17.preheader54 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !149)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !150)
-  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !57, !alias.scope !150, !noalias !149
-  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !57, !alias.scope !149, !noalias !150
-  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !57, !alias.scope !150, !noalias !149
+  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !57, !alias.scope !150
+  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !57, !alias.scope !149
+  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !57, !alias.scope !150
   %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i19, i64 8 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.012.i.i.i18, i64 8 ; 2 uses
   %.not.i.i.i20 = icmp eq ptr %i.ba, %i.b
@@ -335,7 +335,7 @@ _ZNSt12_Vector_baseISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_de
 define internal void @_GLOBAL__sub_I_xds_http_filter_registry.cc() #13 section ".text.startup" personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #27 ; 2 uses
-  store i64 0, ptr %i.a, align 8, !tbaa !154
+  store i64 0, ptr %i.a, align 8, !tbaa !155
   store ptr %i.a, ptr @_ZN9grpc_core12_GLOBAL__N_14g_muE, align 8, !tbaa !42
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) @_ZN9grpc_core12_GLOBAL__N_129g_http_filter_factory_factoryE, i8 0, i64 16, i1 false)
   store ptr @_ZN4absl12lts_2025051222internal_any_invocable12EmptyManagerENS1_14FunctionToCallEPNS1_15TypeErasedStateES4_, ptr getelementptr inbounds nuw (i8, ptr @_ZN9grpc_core12_GLOBAL__N_129g_http_filter_factory_factoryE, i64 16), align 16, !tbaa !44
@@ -481,18 +481,18 @@ attributes #31 = { nounwind willreturn memory(read) }
 !80 = distinct !{null, null}
 !81 = distinct !{null, null, null, null}
 !82 = distinct !{null, null, null}
-!83 = distinct !{!83, i1 false, !"_ZSt11make_uniqueIN9grpc_core19XdsHttpRouterFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!83 = distinct !{!83, i1 true, !"_ZSt11make_uniqueIN9grpc_core19XdsHttpRouterFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !84 = distinct !{!84, !83, !"_ZSt11make_uniqueIN9grpc_core19XdsHttpRouterFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
 !85 = distinct !{null, null}
-!86 = distinct !{!86, i1 false, !"_ZSt11make_uniqueIN9grpc_core18XdsHttpFaultFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!86 = distinct !{!86, i1 true, !"_ZSt11make_uniqueIN9grpc_core18XdsHttpFaultFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !87 = distinct !{!87, !86, !"_ZSt11make_uniqueIN9grpc_core18XdsHttpFaultFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!88 = distinct !{!88, i1 false, !"_ZSt11make_uniqueIN9grpc_core17XdsHttpRbacFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!88 = distinct !{!88, i1 true, !"_ZSt11make_uniqueIN9grpc_core17XdsHttpRbacFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !89 = distinct !{!89, !88, !"_ZSt11make_uniqueIN9grpc_core17XdsHttpRbacFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!90 = distinct !{!90, i1 false, !"_ZSt11make_uniqueIN9grpc_core28XdsHttpStatefulSessionFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!90 = distinct !{!90, i1 true, !"_ZSt11make_uniqueIN9grpc_core28XdsHttpStatefulSessionFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !91 = distinct !{!91, !90, !"_ZSt11make_uniqueIN9grpc_core28XdsHttpStatefulSessionFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!92 = distinct !{!92, i1 false, !"_ZSt11make_uniqueIN9grpc_core21XdsHttpGcpAuthnFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!92 = distinct !{!92, i1 true, !"_ZSt11make_uniqueIN9grpc_core21XdsHttpGcpAuthnFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !93 = distinct !{!93, !92, !"_ZSt11make_uniqueIN9grpc_core21XdsHttpGcpAuthnFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
-!94 = distinct !{!94, i1 false, !"_ZSt11make_uniqueIN9grpc_core22XdsHttpCompositeFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
+!94 = distinct !{!94, i1 true, !"_ZSt11make_uniqueIN9grpc_core22XdsHttpCompositeFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}
 !95 = distinct !{!95, !94, !"_ZSt11make_uniqueIN9grpc_core22XdsHttpCompositeFilterEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
 !96 = distinct !{null}
 !97 = !{!50, !47, i64 0}
@@ -530,12 +530,12 @@ attributes #31 = { nounwind willreturn memory(read) }
 !129 = distinct !{!129, !63}
 !130 = distinct !{!130, !63}
 !131 = distinct !{!131, !63}
-!132 = distinct !{!132, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!132 = distinct !{!132, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
 !133 = distinct !{!133, !132, !"_ZSt19__relocate_object_aISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !134 = distinct !{!134, !132, !"_ZSt19__relocate_object_aISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
 !135 = distinct !{!135, !63, !147, !148}
 !136 = distinct !{!136, !63, !148, !147}
-!137 = distinct !{!137, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!137 = distinct !{!137, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
 !138 = distinct !{!138, !137, !"_ZSt19__relocate_object_aISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !139 = distinct !{!139, !137, !"_ZSt19__relocate_object_aISt10unique_ptrIN9grpc_core17XdsHttpFilterImplESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
 !140 = distinct !{!140, i1 false, !"LVerDomain"}
@@ -551,6 +551,7 @@ attributes #31 = { nounwind willreturn memory(read) }
 !150 = !{!139}
 !151 = !{!139, !141}
 !152 = !{!138, !142}
-!153 = !{!"_ZTSSt13__atomic_baseIlE", !15, i64 0}
-!154 = !{!153, !15, i64 0}
+!153 = !{!141}
+!154 = !{!"_ZTSSt13__atomic_baseIlE", !15, i64 0}
+!155 = !{!154, !15, i64 0}
 end_hunk_0

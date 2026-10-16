@@ -204,14 +204,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90)
   %i.af = getelementptr i8, ptr %next.gep14, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep14, align 8, !tbaa !33, !alias.scope !90, !noalias !89
-  %wide.load15 = load <2 x i64>, ptr %i.af, align 8, !tbaa !33, !alias.scope !90, !noalias !89
+  %wide.load = load <2 x i64>, ptr %next.gep14, align 8, !tbaa !33, !alias.scope !90
+  %wide.load15 = load <2 x i64>, ptr %i.af, align 8, !tbaa !33, !alias.scope !90
   %i.ag = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !33, !alias.scope !89, !noalias !90
-  store <2 x i64> %wide.load15, ptr %i.ag, align 8, !tbaa !33, !alias.scope !89, !noalias !90
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !33, !alias.scope !89
+  store <2 x i64> %wide.load15, ptr %i.ag, align 8, !tbaa !33, !alias.scope !89
   %i.ah = getelementptr i8, ptr %next.gep14, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep14, align 8, !tbaa !33, !alias.scope !90, !noalias !89
-  store <2 x ptr> splat (ptr null), ptr %i.ah, align 8, !tbaa !33, !alias.scope !90, !noalias !89
+  store <2 x ptr> splat (ptr null), ptr %next.gep14, align 8, !tbaa !33, !alias.scope !90
+  store <2 x ptr> splat (ptr null), ptr %i.ah, align 8, !tbaa !33, !alias.scope !90
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !78
@@ -230,9 +230,9 @@ middle.block:                                     ; preds = %vector.body
   %.0911.i.i.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i.i ], [ %.0911.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader17 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90)
-  %i.aj = load i64, ptr %.0911.i.i.i.i, align 8, !tbaa !33, !alias.scope !90, !noalias !89
-  store i64 %i.aj, ptr %.012.i.i.i.i, align 8, !tbaa !33, !alias.scope !89, !noalias !90
-  store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !33, !alias.scope !90, !noalias !89
+  %i.aj = load i64, ptr %.0911.i.i.i.i, align 8, !tbaa !33, !alias.scope !90
+  store i64 %i.aj, ptr %.012.i.i.i.i, align 8, !tbaa !33, !alias.scope !89
+  store ptr null, ptr %.0911.i.i.i.i, align 8, !tbaa !33, !alias.scope !90
   %i.ak = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 8 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ak, %i.f
@@ -635,14 +635,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   tail call void @llvm.experimental.noalias.scope.decl(metadata !123)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !124)
   %i.aa = getelementptr i8, ptr %next.gep35, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep35, align 8, !tbaa !33, !alias.scope !124, !noalias !123
-  %wide.load36 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !33, !alias.scope !124, !noalias !123
+  %wide.load = load <2 x i64>, ptr %next.gep35, align 8, !tbaa !33, !alias.scope !124
+  %wide.load36 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !33, !alias.scope !124
   %i.ab = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !33, !alias.scope !123, !noalias !124
-  store <2 x i64> %wide.load36, ptr %i.ab, align 8, !tbaa !33, !alias.scope !123, !noalias !124
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !33, !alias.scope !123
+  store <2 x i64> %wide.load36, ptr %i.ab, align 8, !tbaa !33, !alias.scope !123
   %i.ac = getelementptr i8, ptr %next.gep35, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep35, align 8, !tbaa !33, !alias.scope !124, !noalias !123
-  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !33, !alias.scope !124, !noalias !123
+  store <2 x ptr> splat (ptr null), ptr %next.gep35, align 8, !tbaa !33, !alias.scope !124
+  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !33, !alias.scope !124
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !113
@@ -661,9 +661,9 @@ middle.block:                                     ; preds = %vector.body
   %.0911.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i ], [ %.0911.i.i.i.ph, %.lr.ph.i.i.i.preheader55 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !123)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !124)
-  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !33, !alias.scope !124, !noalias !123
-  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !33, !alias.scope !123, !noalias !124
-  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !33, !alias.scope !124, !noalias !123
+  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !33, !alias.scope !124
+  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !33, !alias.scope !123
+  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !33, !alias.scope !124
   %i.af = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.af, %1
@@ -709,14 +709,14 @@ vector.body43:                                    ; preds = %vector.body43, %vec
   tail call void @llvm.experimental.noalias.scope.decl(metadata !125)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !126)
   %i.av = getelementptr i8, ptr %next.gep46, i64 16
-  %wide.load47 = load <2 x i64>, ptr %next.gep46, align 8, !tbaa !33, !alias.scope !127, !noalias !125
-  %wide.load48 = load <2 x i64>, ptr %i.av, align 8, !tbaa !33, !alias.scope !127, !noalias !125
+  %wide.load47 = load <2 x i64>, ptr %next.gep46, align 8, !tbaa !33, !alias.scope !127
+  %wide.load48 = load <2 x i64>, ptr %i.av, align 8, !tbaa !33, !alias.scope !127
   %i.aw = getelementptr i8, ptr %next.gep45, i64 16
-  store <2 x i64> %wide.load47, ptr %next.gep45, align 8, !tbaa !33, !alias.scope !128, !noalias !127
-  store <2 x i64> %wide.load48, ptr %i.aw, align 8, !tbaa !33, !alias.scope !128, !noalias !127
+  store <2 x i64> %wide.load47, ptr %next.gep45, align 8, !tbaa !33, !alias.scope !128, !noalias !129
+  store <2 x i64> %wide.load48, ptr %i.aw, align 8, !tbaa !33, !alias.scope !128, !noalias !129
   %i.ax = getelementptr i8, ptr %next.gep46, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep46, align 8, !tbaa !33, !alias.scope !127, !noalias !125
-  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !33, !alias.scope !127, !noalias !125
+  store <2 x ptr> splat (ptr null), ptr %next.gep46, align 8, !tbaa !33, !alias.scope !127
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !33, !alias.scope !127
   %index.next49 = add nuw i64 %index44, 4         ; 2 uses
   %i.ay = icmp eq i64 %index.next49, %n.vec42
   br i1 %i.ay, label %middle.block50, label %vector.body43, !llvm.loop !121
@@ -735,9 +735,9 @@ middle.block50:                                   ; preds = %vector.body43
   %.0911.i.i.i19 = phi ptr [ %i.ba, %.lr.ph.i.i.i17 ], [ %.0911.i.i.i19.ph, %.lr.ph.i.i.i17.preheader54 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !125)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !126)
-  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !33, !alias.scope !126, !noalias !125
-  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !33, !alias.scope !125, !noalias !126
-  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !33, !alias.scope !126, !noalias !125
+  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !33, !alias.scope !126
+  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !33, !alias.scope !125
+  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !33, !alias.scope !126
   %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i19, i64 8 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.012.i.i.i18, i64 8 ; 2 uses
   %.not.i.i.i20 = icmp eq ptr %i.ba, %i.b
@@ -811,7 +811,7 @@ _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exi
   %.in = getelementptr inbounds nuw i8, ptr %.02933, i64 %.in.v
   %.029 = load ptr, ptr %.in, align 8, !tbaa !74  ; 2 uses
   %.not = icmp eq ptr %.029, null
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !129
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !130
 
 ._crit_edge:                                      ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit
   br i1 %i.m, label %._crit_edge.thread, label %bb.d
@@ -876,7 +876,7 @@ define internal void @_GLOBAL__sub_I_cmInstallRuntimeDependencySet.cxx() #16 sec
 bb.a:
   tail call void @_ZN5cmsys18SystemToolsManagerC1Ev(ptr noundef nonnull align 1 dereferenceable(1) @_ZN5cmsysL26SystemToolsManagerInstanceE)
   %i.a = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5cmsys18SystemToolsManagerD1Ev, ptr nonnull @_ZN5cmsysL26SystemToolsManagerInstanceE, ptr nonnull @__dso_handle) #23 ; 0 uses
-  store i64 7, ptr @_ZN12cmStateEnumsL16AllTargetDomainsE, align 8, !tbaa !130
+  store i64 7, ptr @_ZN12cmStateEnumsL16AllTargetDomainsE, align 8, !tbaa !131
   %i.b = tail call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12cmStateEnumsL16AllTargetDomainsE) ; 0 uses
   ret void
 }
@@ -1005,7 +1005,7 @@ attributes #25 = { noreturn nounwind }
 !72 = !{!"_ZTSSt4pairIKPK17cmGeneratorTargetSt3setIS2_St4lessIS2_ESaIS2_EEE", !64, i64 0, !71, i64 8}
 !73 = !{!72, !64, i64 0}
 !74 = !{!20, !20, i64 0}
-!75 = distinct !{!75, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!75 = distinct !{!75, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
 !76 = distinct !{!76, !75, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !77 = distinct !{!77, !75, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
 !78 = distinct !{!78, !37, !38, !39}
@@ -1040,12 +1040,12 @@ attributes #25 = { noreturn nounwind }
 !107 = distinct !{!107, !37}
 !108 = !{!21, !20, i64 24}
 !109 = !{!21, !20, i64 16}
-!110 = distinct !{!110, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!110 = distinct !{!110, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
 !111 = distinct !{!111, !110, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !112 = distinct !{!112, !110, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
 !113 = distinct !{!113, !37, !38, !39}
 !114 = distinct !{!114, !37, !39, !38}
-!115 = distinct !{!115, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!115 = distinct !{!115, i1 true, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
 !116 = distinct !{!116, !115, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !117 = distinct !{!117, !115, !"_ZSt19__relocate_object_aISt10unique_ptrIN29cmInstallRuntimeDependencySet4ItemESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
 !118 = distinct !{!118, i1 false, !"LVerDomain"}
@@ -1059,6 +1059,7 @@ attributes #25 = { noreturn nounwind }
 !126 = !{!117}
 !127 = !{!117, !119}
 !128 = !{!116, !120}
-!129 = distinct !{!129, !37}
-!130 = !{!14, !14, i64 0}
+!129 = !{!119}
+!130 = distinct !{!130, !37}
+!131 = !{!14, !14, i64 0}
 end_hunk_1

@@ -33,17 +33,17 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs7MCQ1
   %i.m = icmp samesign ule i64 %i.e, %i.i
   tail call void @llvm.assume(i1 %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8
-  store i64 %i.i, ptr %0, align 8, !alias.scope !7, !noalias !12
+  store i64 %i.i, ptr %0, align 8, !alias.scope !7
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.l, ptr %i.n, align 8, !alias.scope !7, !noalias !12
+  store ptr %i.l, ptr %i.n, align 8, !alias.scope !7
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store i64 0, ptr %i.o, align 8, !alias.scope !7, !noalias !12
+  store i64 0, ptr %i.o, align 8, !alias.scope !7
   %.not.i = icmp eq i64 %i.e, 0
   br i1 %.not.i, label %_RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs7MCQ1YhxpSY_6fs_err.exit, label %bb.c
 
 bb.c:                                             ; preds = %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs7MCQ1YhxpSY_6fs_err.exit.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.l, ptr nonnull readonly align 1 %i.d, i64 range(i64 0, -9223372036854775808) %i.e, i1 false), !noalias !7
-  store i64 %i.e, ptr %i.o, align 8, !alias.scope !7, !noalias !12
+  store i64 %i.e, ptr %i.o, align 8, !alias.scope !7
   br label %_RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs7MCQ1YhxpSY_6fs_err.exit
 
 _RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs7MCQ1YhxpSY_6fs_err.exit: ; preds = %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs7MCQ1YhxpSY_6fs_err.exit.i, %bb.c
@@ -91,7 +91,7 @@ attributes #6 = { noreturn }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.97.1 (8bab26f4f 2026-07-14)"}
-!3 = distinct !{!3, i1 false, !"_RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs7MCQ1YhxpSY_6fs_err"}
+!3 = distinct !{!3, i1 true, !"_RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs7MCQ1YhxpSY_6fs_err"}
 !4 = distinct !{!4, !3, !"_RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs7MCQ1YhxpSY_6fs_err: argument 0"}
 !5 = distinct !{!5, !3, !"_RINvXs_NvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs7MCQ1YhxpSY_6fs_err: argument 1"}
 !6 = !{}
@@ -100,5 +100,4 @@ attributes #6 = { noreturn }
 !9 = !{i64 0, i64 2}
 !10 = !{i64 0, i64 -9223372036854775807}
 !11 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!12 = !{!5}
 end_hunk_0
