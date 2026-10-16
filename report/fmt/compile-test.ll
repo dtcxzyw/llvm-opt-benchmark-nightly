@@ -205,8 +205,7 @@ bb.o:                                             ; preds = %._crit_edge.i.i.i
   br label %_ZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsE.exit
 
 bb.p:                                             ; preds = %bb.a, %bb.a
-  %5 = select i1 %1, ptr @.str.16, ptr @.str.174  ; 2 uses
-  %i.cs = select i1 %1, i64 4, i64 5              ; 2 uses
+  %i.cs = select i1 %1, i64 4, i64 5
   %i.ct = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !168
   %i.cv = zext i32 %i.cu to i64
@@ -227,48 +226,29 @@ bb.q:                                             ; preds = %bb.p
   %i.dg = tail call noundef ptr @_ZN3fmt3v126detail4fillIcPcEET0_S4_mRKNS0_11basic_specsE(ptr noundef %0, i64 noundef %i.de, ptr noundef nonnull align 4 dereferenceable(16) %2)
   br label %.lr.ph.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %bb.q, %bb.p
+.lr.ph.i.i.i.i.i:                                 ; preds = %bb.p, %bb.q
   %.0.i.i.i = phi ptr [ %i.dg, %bb.q ], [ %0, %bb.p ] ; 6 uses
-  %i.dh = getelementptr inbounds nuw i8, ptr %5, i64 %i.cs ; 4 uses
-  %6 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @.str.16, i64 1), ptr getelementptr inbounds nuw (i8, ptr @.str.174, i64 1) ; 2 uses
-  %7 = load i8, ptr %5, align 1, !tbaa !76
-  %i.di = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1 ; 2 uses
-  store i8 %7, ptr %.0.i.i.i, align 1, !tbaa !76
-  %.not.i.i.i.i.i = icmp eq ptr %6, %i.dh
-  br i1 %.not.i.i.i.i.i, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.1
+  %5 = select i1 %1, i8 116, i8 102
+  store i8 %5, ptr %.0.i.i.i, align 1, !tbaa !76
+  %i.dh = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
+  %6 = select i1 %1, i8 114, i8 97
+  store i8 %6, ptr %i.dh, align 1, !tbaa !76
+  %i.di = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 2
+  %7 = select i1 %1, i8 117, i8 108
+  store i8 %7, ptr %i.di, align 1, !tbaa !76
+  %8 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 3
+  %9 = select i1 %1, i8 101, i8 115
+  %10 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 4 ; 2 uses
+  store i8 %9, ptr %8, align 1, !tbaa !76
+  br i1 %1, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.4
 
-.lr.ph.i.i.i.i.i.1:                               ; preds = %.lr.ph.i.i.i.i.i
-  %8 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @.str.16, i64 2), ptr getelementptr inbounds nuw (i8, ptr @.str.174, i64 2) ; 2 uses
-  %9 = load i8, ptr %6, align 1, !tbaa !76
-  %10 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 2 ; 2 uses
-  store i8 %9, ptr %i.di, align 1, !tbaa !76
-  %.not.i.i.i.i.i.1 = icmp eq ptr %8, %i.dh
-  br i1 %.not.i.i.i.i.i.1, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.2
-
-.lr.ph.i.i.i.i.i.2:                               ; preds = %.lr.ph.i.i.i.i.i.1
-  %11 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @.str.16, i64 3), ptr getelementptr inbounds nuw (i8, ptr @.str.174, i64 3) ; 2 uses
-  %12 = load i8, ptr %8, align 1, !tbaa !76
-  %13 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 3 ; 2 uses
-  store i8 %12, ptr %10, align 1, !tbaa !76
-  %.not.i.i.i.i.i.2 = icmp eq ptr %11, %i.dh
-  br i1 %.not.i.i.i.i.i.2, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.3
-
-.lr.ph.i.i.i.i.i.3:                               ; preds = %.lr.ph.i.i.i.i.i.2
-  %14 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @.str.16, i64 4), ptr getelementptr inbounds nuw (i8, ptr @.str.174, i64 4) ; 2 uses
-  %15 = load i8, ptr %11, align 1, !tbaa !76
-  %16 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 4 ; 2 uses
-  store i8 %15, ptr %13, align 1, !tbaa !76
-  %.not.i.i.i.i.i.3 = icmp eq ptr %14, %i.dh
-  br i1 %.not.i.i.i.i.i.3, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.4
-
-.lr.ph.i.i.i.i.i.4:                               ; preds = %.lr.ph.i.i.i.i.i.3
-  %17 = load i8, ptr %14, align 1, !tbaa !76
+.lr.ph.i.i.i.i.i.4:                               ; preds = %.lr.ph.i.i.i.i.i
   %i.dj = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 5
-  store i8 %17, ptr %16, align 1, !tbaa !76
+  store i8 101, ptr %10, align 1, !tbaa !76
   br label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i
 
-_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.4, %.lr.ph.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i
-  %.lcssa69 = phi ptr [ %i.di, %.lr.ph.i.i.i.i.i ], [ %10, %.lr.ph.i.i.i.i.i.1 ], [ %13, %.lr.ph.i.i.i.i.i.2 ], [ %16, %.lr.ph.i.i.i.i.i.3 ], [ %i.dj, %.lr.ph.i.i.i.i.i.4 ] ; 2 uses
+_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.4, %.lr.ph.i.i.i.i.i
+  %.lcssa69 = phi ptr [ %i.dj, %.lr.ph.i.i.i.i.i.4 ], [ %10, %.lr.ph.i.i.i.i.i ] ; 2 uses
   %.not25.i.i.i = icmp eq i64 %i.cw, %i.de
   br i1 %.not25.i.i.i, label %_ZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsE.exit, label %bb.r
 

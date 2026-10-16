@@ -204,21 +204,17 @@ icl_mbus_init.exit.thread:                        ; preds = %bb.r, %icl_mbus_ini
   br i1 %or.cond.i, label %tgl_bw_buddy_init.exit, label %bb.v
 
 bb.v:                                             ; preds = %icl_mbus_init.exit.thread
-  %i.ec = tail call zeroext i1 @__intel_display_wa(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @.str.79) #7
-  %wa_1409767108_buddy_page_masks.tgl_buddy_page_masks.i = select i1 %i.ec, ptr @wa_1409767108_buddy_page_masks, ptr @tgl_buddy_page_masks ; 3 uses
-  %2 = load i32, ptr %wa_1409767108_buddy_page_masks.tgl_buddy_page_masks.i, align 16 ; 2 uses
-  %.not3651.i = icmp eq i32 %2, 0
-  br i1 %.not3651.i, label %._crit_edge.i, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.v
+  %i.ec = tail call zeroext i1 @__intel_display_wa(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @.str.79) #7 ; 2 uses
+  %wa_1409767108_buddy_page_masks.tgl_buddy_page_masks.i = select i1 %i.ec, ptr @wa_1409767108_buddy_page_masks, ptr @tgl_buddy_page_masks ; 2 uses
+  %2 = select i1 %i.ec, i32 1, i32 15
   %3 = getelementptr i8, ptr %i.dv, i64 12
   %4 = load i8, ptr %3, align 4
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.y, %.lr.ph.i
-  %i.ed = phi i32 [ %2, %.lr.ph.i ], [ %i.eq, %bb.y ]
-  %i.ee = phi ptr [ %wa_1409767108_buddy_page_masks.tgl_buddy_page_masks.i, %.lr.ph.i ], [ %i.ep, %bb.y ] ; 2 uses
-  %.03352.i = phi i32 [ 0, %.lr.ph.i ], [ %i.en, %bb.y ]
+bb.w:                                             ; preds = %bb.y, %bb.v
+  %i.ed = phi i32 [ %2, %bb.v ], [ %i.eq, %bb.y ]
+  %i.ee = phi ptr [ %wa_1409767108_buddy_page_masks.tgl_buddy_page_masks.i, %bb.v ], [ %i.ep, %bb.y ] ; 2 uses
+  %.03352.i = phi i32 [ 0, %bb.v ], [ %i.en, %bb.y ]
   %i.ef = getelementptr i8, ptr %i.ee, i64 5
   %i.eg = load i8, ptr %i.ef, align 1
   %i.eh = icmp eq i8 %i.eg, %4
@@ -240,7 +236,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %.not36.i = icmp eq i32 %i.eq, 0
   br i1 %.not36.i, label %._crit_edge.i, label %bb.w, !llvm.loop !152
 
-._crit_edge.i:                                    ; preds = %bb.y, %bb.v
+._crit_edge.i:                                    ; preds = %bb.y
   %i.er = load ptr, ptr %0, align 8               ; 2 uses
   %.not.i43.i = icmp eq ptr %i.er, null
   br i1 %.not.i43.i, label %__drm_to_dev.exit.i, label %bb.z
@@ -333,7 +329,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.gg = icmp eq i64 %i.gf, 63
   br i1 %i.gg, label %tgl_bw_buddy_init.exit, label %.preheader.i, !prof !159, !llvm.loop !157
 
-tgl_bw_buddy_init.exit:                           ; preds = %bb.ae, %find_next_bit.exit.i51, %.preheader.i, %bb.ab, %find_next_bit.exit42.i, %bb.aa, %icl_mbus_init.exit.thread, %icl_mbus_init.exit
+tgl_bw_buddy_init.exit:                           ; preds = %bb.ab, %find_next_bit.exit42.i, %bb.aa, %bb.ae, %find_next_bit.exit.i51, %.preheader.i, %icl_mbus_init.exit.thread, %icl_mbus_init.exit
   %i.gh = load i64, ptr %i.cs, align 8
   %i.gi = and i64 %i.gh, 72057594037927936
   %.not43 = icmp eq i64 %i.gi, 0

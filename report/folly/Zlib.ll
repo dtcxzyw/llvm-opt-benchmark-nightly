@@ -205,11 +205,11 @@ bb.a:
 
 .noexc:                                           ; preds = %bb.a
   %switch.selectcmp8.i.i = icmp eq i64 %.0.val, 64424509440
-  %switch.selectcmp.i.i = icmp eq i64 %.0.val, 64424509441 ; 3 uses
+  %switch.selectcmp.i.i = icmp eq i64 %.0.val, 64424509441 ; 2 uses
   %switch.select.i.i = select i1 %switch.selectcmp.i.i, i32 9, i32 0
   %switch.select9.i.i = select i1 %switch.selectcmp8.i.i, i32 4, i32 %switch.select.i.i
-  %.str..str.1.i = select i1 %switch.selectcmp.i.i, ptr @.str, ptr @.str.1
-  %6 = select i1 %switch.selectcmp.i.i, ptr getelementptr inbounds nuw (i8, ptr @.str, i64 4), ptr getelementptr inbounds nuw (i8, ptr @.str.1, i64 4)
+  %.str..str.1.i = select i1 %switch.selectcmp.i.i, ptr @.str, ptr @.str.1 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.str..str.1.i, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.c, ptr %1, align 4, !tbaa !13

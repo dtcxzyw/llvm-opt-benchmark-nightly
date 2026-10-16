@@ -202,7 +202,7 @@ lean_dec.exit47:                                  ; preds = %.lean_dec.exit47_cr
   %.pre-phi = phi i64 [ %.pre, %.lean_dec.exit47_crit_edge ], [ %i.s, %lean_inc.exit ], [ %i.s, %bb.q ], [ %i.s, %bb.r ], [ %i.s, %bb.s ]
   %.045 = phi ptr [ %.0, %.lean_dec.exit47_crit_edge ], [ inttoptr (i64 1 to ptr), %lean_inc.exit ], [ inttoptr (i64 1 to ptr), %bb.q ], [ inttoptr (i64 1 to ptr), %bb.r ], [ inttoptr (i64 1 to ptr), %bb.s ] ; 3 uses
   %.not.i = icmp eq i64 %.pre-phi67, 0
-  br i1 %.not.i, label %bb.t, label %lean_dec.exit
+  br i1 %.not.i, label %bb.t, label %lean_inc_ref.exit60
 
 bb.t:                                             ; preds = %lean_dec.exit47
   %i.aa = load i32, ptr %i.j, align 4, !tbaa !13  ; 3 uses
@@ -212,33 +212,17 @@ bb.t:                                             ; preds = %lean_dec.exit47
 bb.u:                                             ; preds = %bb.t
   %i.ac = add nsw i32 %i.aa, -1
   store i32 %i.ac, ptr %i.j, align 4, !tbaa !13
-  br label %lean_dec.exit
+  br label %lean_inc_ref.exit60
 
 bb.v:                                             ; preds = %bb.t
   %.not.i49 = icmp eq i32 %i.aa, 0
-  br i1 %.not.i49, label %lean_dec.exit, label %bb.w
+  br i1 %.not.i49, label %lean_inc_ref.exit60, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.j) #6
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %bb.w, %bb.v, %bb.u, %lean_dec.exit47
-  %2 = and i64 %.pre-phi, 510
-  %3 = icmp eq i64 %2, 0
-  %l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__0_value.l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__1_value = select i1 %3, ptr @l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__0_value, ptr @l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__1_value ; 3 uses
-  %.val.i.i58 = load i32, ptr %l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__0_value.l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__1_value, align 8, !tbaa !13 ; 2 uses
-  %4 = icmp sgt i32 %.val.i.i58, 0
-  br i1 %4, label %lean_inc_ref.exit60, label %5, !prof !14
-
-5:                                                ; preds = %lean_dec.exit
-  %.not.i.i59 = icmp eq i32 %.val.i.i58, 0
-  br i1 %.not.i.i59, label %lean_inc_ref.exit60, label %6
-
-6:                                                ; preds = %5
-  %7 = atomicrmw sub ptr %l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__0_value.l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__1_value, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit60
 
-lean_inc_ref.exit60:                              ; preds = %lean_dec.exit, %5, %6
+lean_inc_ref.exit60:                              ; preds = %bb.w, %bb.v, %bb.u, %lean_dec.exit47
   tail call void @lean_inc_heartbeat() #6
   %i.ad = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #6 ; 5 uses
   %i.ae = icmp eq ptr %i.ad, null
@@ -249,6 +233,9 @@ bb.x:                                             ; preds = %lean_inc_ref.exit60
   unreachable
 
 lean_alloc_ctor.exit:                             ; preds = %lean_inc_ref.exit60
+  %2 = and i64 %.pre-phi, 510
+  %3 = icmp eq i64 %2, 0
+  %l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__0_value.l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__1_value = select i1 %3, ptr @l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__0_value, ptr @l_List_mapTR_loop___at___00__private_Lean_Meta_Sym_Simp_CongrInfo_0__Lean_Meta_Sym_CongrInfo_toMessageData_spec__0___closed__1_value
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
   store i32 1, ptr %i.ad, align 4, !tbaa !13
   store i32 50397200, ptr %i.af, align 4

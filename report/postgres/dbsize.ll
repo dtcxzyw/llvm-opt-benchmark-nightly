@@ -204,11 +204,9 @@ bb.v:                                             ; preds = %bb.u
 
 .preheader:                                       ; preds = %bb.v
   %i.cr = call i32 @pg_strcasecmp(ptr noundef nonnull %.166.lcssa, ptr noundef nonnull @.str.29) #7
-  %i.cs = icmp eq i32 %i.cr, 0
-  %spec.select122 = select i1 %i.cs, ptr @size_pretty_units, ptr getelementptr inbounds nuw (i8, ptr @size_pretty_units, i64 96) ; 2 uses
-  %.pr86 = load ptr, ptr %spec.select122, align 16
-  %1 = icmp eq ptr %.pr86, null
-  br i1 %1, label %bb.w, label %.thread85.thread
+  %i.cs = icmp eq i32 %i.cr, 0                    ; 2 uses
+  %spec.select122 = select i1 %i.cs, ptr @size_pretty_units, ptr getelementptr inbounds nuw (i8, ptr @size_pretty_units, i64 96)
+  br i1 %i.cs, label %.thread85.thread, label %bb.w
 
 bb.w:                                             ; preds = %.preheader
   %i.ct = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #8 ; 0 uses

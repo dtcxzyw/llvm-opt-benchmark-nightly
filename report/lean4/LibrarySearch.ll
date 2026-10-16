@@ -204,34 +204,21 @@ bb.df:                                            ; preds = %bb.de
 lean_nat_eq.exit:                                 ; preds = %bb.dd, %bb.de, %bb.df
   %.mask1016 = and i64 %.val876, 9223372036854775807
   %.not1017 = icmp eq i64 %.mask1016, 0
-  %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value = select i1 %.not1017, ptr @l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value, ptr @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value ; 3 uses
+  %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value = select i1 %.not1017, ptr @l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value, ptr @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value
   %i.gn = load atomic i32, ptr @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__8_once seq_cst, align 4, !tbaa !10
   %i.go = icmp eq i32 %i.gn, 1
   br i1 %i.go, label %bb.dg, label %bb.dh, !prof !11
 
 bb.dg:                                            ; preds = %lean_nat_eq.exit
   %i.gp = load ptr, ptr @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__8, align 8, !tbaa !13
-  br label %lean_obj_once.exit
+  br label %lean_inc_ref.exit927
 
 bb.dh:                                            ; preds = %lean_nat_eq.exit
   %i.gq = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__8, ptr noundef nonnull @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__8_once, ptr noundef nonnull @_init_l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__8) #4
-  br label %lean_obj_once.exit
-
-lean_obj_once.exit:                               ; preds = %bb.dg, %bb.dh
-  %.0.i924 = phi ptr [ %i.gp, %bb.dg ], [ %i.gq, %bb.dh ]
-  %.val.i.i925 = load i32, ptr %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value, align 8, !tbaa !15 ; 2 uses
-  %15 = icmp sgt i32 %.val.i.i925, 0
-  br i1 %15, label %lean_inc_ref.exit927, label %16, !prof !11
-
-16:                                               ; preds = %lean_obj_once.exit
-  %.not.i.i926 = icmp eq i32 %.val.i.i925, 0
-  br i1 %.not.i.i926, label %lean_inc_ref.exit927, label %17
-
-17:                                               ; preds = %16
-  %18 = atomicrmw sub ptr %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit927
 
-lean_inc_ref.exit927:                             ; preds = %lean_obj_once.exit, %16, %17
+lean_inc_ref.exit927:                             ; preds = %bb.dg, %bb.dh
+  %.0.i924 = phi ptr [ %i.gp, %bb.dg ], [ %i.gq, %bb.dh ]
   %i.gr = tail call ptr @l_Lean_stringToMessageData(ptr noundef nonnull %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value) #4
   tail call void @lean_inc_heartbeat() #4
   %i.gs = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #4 ; 6 uses
@@ -634,7 +621,7 @@ bb.ka:                                            ; preds = %bb.jz
 bb.kb:                                            ; preds = %bb.lf, %bb.lg, %bb.lh
   %.mask1014 = and i64 %.val872, 9223372036854775807
   %.not1015 = icmp eq i64 %.mask1014, 0
-  %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value601 = select i1 %.not1015, ptr @l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value, ptr @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value ; 3 uses
+  %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value601 = select i1 %.not1015, ptr @l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value, ptr @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value
   %i.oz = load atomic i32, ptr @l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__8_once seq_cst, align 4, !tbaa !10
   %i.pa = icmp eq i32 %i.oz, 1
   br i1 %i.pa, label %bb.kc, label %bb.kd, !prof !11
@@ -649,23 +636,10 @@ bb.kd:                                            ; preds = %bb.kb
 
 lean_obj_once.exit984:                            ; preds = %bb.kc, %bb.kd
   %.0.i983 = phi ptr [ %i.pb, %bb.kc ], [ %i.pc, %bb.kd ] ; 2 uses
-  %.val.i.i985 = load i32, ptr %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value601, align 8, !tbaa !15 ; 2 uses
-  %19 = icmp sgt i32 %.val.i.i985, 0
-  br i1 %19, label %lean_inc_ref.exit987, label %20, !prof !11
-
-20:                                               ; preds = %lean_obj_once.exit984
-  %.not.i.i986 = icmp eq i32 %.val.i.i985, 0
-  br i1 %.not.i.i986, label %lean_inc_ref.exit987, label %21
-
-21:                                               ; preds = %20
-  %22 = atomicrmw sub ptr %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value601, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit987
-
-lean_inc_ref.exit987:                             ; preds = %lean_obj_once.exit984, %20, %21
-  %23 = tail call ptr @l_Lean_stringToMessageData(ptr noundef nonnull %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value601) #4 ; 2 uses
+  %15 = tail call ptr @l_Lean_stringToMessageData(ptr noundef nonnull %l_Lean_Elab_LibrarySearch_exact_x3f___lam__2___closed__9_value.l_Lean_logAt___at___00Lean_log___at___00Lean_logError___at___00Lean_Elab_LibrarySearch_exact_x3f_spec__9_spec__9_spec__11___redArg___closed__0_value601) #4 ; 2 uses
   br i1 %i.eq, label %bb.ke, label %bb.kf
 
-bb.ke:                                            ; preds = %lean_inc_ref.exit987
+bb.ke:                                            ; preds = %lean_obj_once.exit984
   %i.pd = getelementptr inbounds nuw i8, ptr %.0578, i64 4 ; 2 uses
   %i.pe = load i32, ptr %i.pd, align 4
   %i.pf = and i32 %i.pe, 16777215
@@ -673,16 +647,16 @@ bb.ke:                                            ; preds = %lean_inc_ref.exit98
   store i32 %i.pg, ptr %i.pd, align 4
   %i.ph = getelementptr inbounds nuw i8, ptr %.0578, i64 8
   %i.pi = getelementptr inbounds nuw i8, ptr %.0578, i64 16
-  store ptr %23, ptr %i.pi, align 8, !tbaa !13
+  store ptr %15, ptr %i.pi, align 8, !tbaa !13
   store ptr %.0.i983, ptr %i.ph, align 8, !tbaa !13
   br label %bb.kg
 
-bb.kf:                                            ; preds = %lean_inc_ref.exit987
+bb.kf:                                            ; preds = %lean_obj_once.exit984
   %i.pj = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 7, i32 noundef 2, i32 noundef 0) ; 3 uses
   %i.pk = getelementptr inbounds nuw i8, ptr %i.pj, i64 8
   store ptr %.0.i983, ptr %i.pk, align 8, !tbaa !13
   %i.pl = getelementptr inbounds nuw i8, ptr %i.pj, i64 16
-  store ptr %23, ptr %i.pl, align 8, !tbaa !13
+  store ptr %15, ptr %i.pl, align 8, !tbaa !13
   br label %bb.kg
 
 bb.kg:                                            ; preds = %bb.kf, %bb.ke

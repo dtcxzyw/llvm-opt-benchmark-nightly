@@ -205,52 +205,27 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 88 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %4, i64 92 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %5 = load <2 x float>, ptr @ff_pow_0_7, align 16 ; 2 uses
-  %6 = load <2 x float>, ptr @ff_pow_0_55, align 16
-  %7 = load <2 x float>, ptr @ff_pow_0_75, align 16
   %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.av = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ax = getelementptr inbounds nuw i8, ptr %i.c, i64 12
-  %8 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_7, i64 8), align 8 ; 2 uses
-  %9 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_55, i64 8), align 8
-  %10 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_75, i64 8), align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   %i.az = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.ba = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 20
-  %11 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_7, i64 16), align 16 ; 2 uses
-  %12 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_55, i64 16), align 16
-  %13 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_75, i64 16), align 16
   %i.bc = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   %i.bd = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.be = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.bf = getelementptr inbounds nuw i8, ptr %i.c, i64 28
-  %14 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_7, i64 24), align 8 ; 2 uses
-  %15 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_55, i64 24), align 8
-  %16 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_75, i64 24), align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.d, i64 28
   %i.bh = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.bi = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.bj = getelementptr inbounds nuw i8, ptr %i.c, i64 36
-  %17 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_7, i64 32), align 16 ; 2 uses
-  %18 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_55, i64 32), align 16
-  %19 = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @ff_pow_0_75, i64 32), align 16
   %i.bk = getelementptr inbounds nuw i8, ptr %i.d, i64 36
   %i.bl = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 160
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 6 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 44 ; 2 uses
-  %20 = shufflevector <2 x float> %5, <2 x float> %7, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %21 = shufflevector <2 x float> %6, <2 x float> %5, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %22 = shufflevector <2 x float> %8, <2 x float> %10, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %23 = shufflevector <2 x float> %9, <2 x float> %8, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %24 = shufflevector <2 x float> %11, <2 x float> %13, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %25 = shufflevector <2 x float> %12, <2 x float> %11, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %26 = shufflevector <2 x float> %14, <2 x float> %16, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %27 = shufflevector <2 x float> %15, <2 x float> %14, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %28 = shufflevector <2 x float> %17, <2 x float> %19, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %29 = shufflevector <2 x float> %18, <2 x float> %17, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ba
@@ -653,92 +628,105 @@ bb.az:                                            ; preds = %anti_sparseness.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   %i.aqp = load i32, ptr %i.el, align 4, !tbaa !48
   %i.aqq = and i32 %i.aqp, -2
-  %switch.i = icmp eq i32 %i.aqq, 6
-  %30 = load float, ptr %i.aqj, align 4, !tbaa !44 ; 2 uses
-  %31 = getelementptr inbounds nuw i8, ptr %i.aqj, i64 4
-  %32 = insertelement <4 x i1> poison, i1 %switch.i, i64 0
-  %33 = shufflevector <4 x i1> %32, <4 x i1> poison, <4 x i32> zeroinitializer ; 5 uses
-  %34 = select <4 x i1> %33, <4 x float> %20, <4 x float> %21 ; 4 uses
-  %35 = extractelement <4 x float> %34, i64 0
-  %i.aqr = fmul nsz float %30, %35
-  store float %i.aqr, ptr %i.c, align 16, !tbaa !44
-  %36 = extractelement <4 x float> %34, i64 1
-  %37 = fmul nsz float %30, %36
-  store float %37, ptr %i.d, align 16, !tbaa !44
-  %i.aqs = load float, ptr %31, align 4, !tbaa !44 ; 2 uses
-  %38 = extractelement <4 x float> %34, i64 2
-  %39 = fmul nsz float %i.aqs, %38
-  store float %39, ptr %i.at, align 4, !tbaa !44
-  %40 = extractelement <4 x float> %34, i64 3
-  %i.aqt = fmul nsz float %i.aqs, %40
+  %switch.i = icmp eq i32 %i.aqq, 6               ; 2 uses
+  %spec.select.i150 = select i1 %switch.i, ptr @ff_pow_0_7, ptr @ff_pow_0_55 ; 10 uses
+  %spec.select33.i = select i1 %switch.i, ptr @ff_pow_0_75, ptr @ff_pow_0_7 ; 10 uses
+  %5 = load float, ptr %i.aqj, align 4, !tbaa !44 ; 2 uses
+  %6 = load float, ptr %spec.select.i150, align 16, !tbaa !44
+  %7 = fmul nsz float %5, %6
+  store float %7, ptr %i.c, align 16, !tbaa !44
+  %8 = load float, ptr %spec.select33.i, align 16, !tbaa !44
+  %i.aqr = fmul nsz float %5, %8
+  store float %i.aqr, ptr %i.d, align 16, !tbaa !44
+  %9 = getelementptr inbounds nuw i8, ptr %i.aqj, i64 4
+  %10 = load float, ptr %9, align 4, !tbaa !44    ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 4
+  %i.aqs = load float, ptr %11, align 4, !tbaa !44
+  %12 = fmul nsz float %10, %i.aqs
+  store float %12, ptr %i.at, align 4, !tbaa !44
+  %13 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 4
+  %14 = load float, ptr %13, align 4, !tbaa !44
+  %i.aqt = fmul nsz float %10, %14
   store float %i.aqt, ptr %i.au, align 4, !tbaa !44
   %i.aqu = getelementptr inbounds nuw i8, ptr %i.aqj, i64 8
   %i.aqv = load float, ptr %i.aqu, align 4, !tbaa !44 ; 2 uses
-  %i.aqw = getelementptr inbounds nuw i8, ptr %i.aqj, i64 12
-  %41 = select <4 x i1> %33, <4 x float> %22, <4 x float> %23 ; 4 uses
-  %42 = extractelement <4 x float> %41, i64 0
-  %43 = fmul nsz float %i.aqv, %42
-  store float %43, ptr %i.av, align 8, !tbaa !44
-  %44 = extractelement <4 x float> %41, i64 1
-  %i.aqx = fmul nsz float %i.aqv, %44
+  %i.aqw = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 8
+  %15 = load float, ptr %i.aqw, align 8, !tbaa !44
+  %16 = fmul nsz float %i.aqv, %15
+  store float %16, ptr %i.av, align 8, !tbaa !44
+  %17 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 8
+  %18 = load float, ptr %17, align 8, !tbaa !44
+  %i.aqx = fmul nsz float %i.aqv, %18
   store float %i.aqx, ptr %i.aw, align 8, !tbaa !44
-  %i.aqy = load float, ptr %i.aqw, align 4, !tbaa !44 ; 2 uses
-  %45 = extractelement <4 x float> %41, i64 2
-  %i.aqz = fmul nsz float %i.aqy, %45
+  %19 = getelementptr inbounds nuw i8, ptr %i.aqj, i64 12
+  %i.aqy = load float, ptr %19, align 4, !tbaa !44 ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 12
+  %21 = load float, ptr %20, align 4, !tbaa !44
+  %i.aqz = fmul nsz float %i.aqy, %21
   store float %i.aqz, ptr %i.ax, align 4, !tbaa !44
-  %46 = extractelement <4 x float> %41, i64 3
-  %i.ara = fmul nsz float %i.aqy, %46
+  %22 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 12
+  %23 = load float, ptr %22, align 4, !tbaa !44
+  %i.ara = fmul nsz float %i.aqy, %23
   store float %i.ara, ptr %i.ay, align 4, !tbaa !44
   %i.arb = getelementptr inbounds nuw i8, ptr %i.aqj, i64 16
   %i.arc = load float, ptr %i.arb, align 4, !tbaa !44 ; 2 uses
-  %i.ard = getelementptr inbounds nuw i8, ptr %i.aqj, i64 20
-  %47 = select <4 x i1> %33, <4 x float> %24, <4 x float> %25 ; 4 uses
-  %48 = extractelement <4 x float> %47, i64 0
-  %49 = fmul nsz float %i.arc, %48
-  store float %49, ptr %i.az, align 16, !tbaa !44
-  %50 = extractelement <4 x float> %47, i64 1
-  %i.are = fmul nsz float %i.arc, %50
+  %i.ard = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 16
+  %24 = load float, ptr %i.ard, align 16, !tbaa !44
+  %25 = fmul nsz float %i.arc, %24
+  store float %25, ptr %i.az, align 16, !tbaa !44
+  %26 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 16
+  %27 = load float, ptr %26, align 16, !tbaa !44
+  %i.are = fmul nsz float %i.arc, %27
   store float %i.are, ptr %i.ba, align 16, !tbaa !44
-  %i.arf = load float, ptr %i.ard, align 4, !tbaa !44 ; 2 uses
-  %51 = extractelement <4 x float> %47, i64 2
-  %i.arg = fmul nsz float %i.arf, %51
+  %28 = getelementptr inbounds nuw i8, ptr %i.aqj, i64 20
+  %i.arf = load float, ptr %28, align 4, !tbaa !44 ; 2 uses
+  %29 = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 20
+  %30 = load float, ptr %29, align 4, !tbaa !44
+  %i.arg = fmul nsz float %i.arf, %30
   store float %i.arg, ptr %i.bb, align 4, !tbaa !44
-  %52 = extractelement <4 x float> %47, i64 3
-  %i.arh = fmul nsz float %i.arf, %52
+  %31 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 20
+  %32 = load float, ptr %31, align 4, !tbaa !44
+  %i.arh = fmul nsz float %i.arf, %32
   store float %i.arh, ptr %i.bc, align 4, !tbaa !44
   %i.ari = getelementptr inbounds nuw i8, ptr %i.aqj, i64 24
   %i.arj = load float, ptr %i.ari, align 4, !tbaa !44 ; 2 uses
-  %i.ark = getelementptr inbounds nuw i8, ptr %i.aqj, i64 28
-  %53 = select <4 x i1> %33, <4 x float> %26, <4 x float> %27 ; 4 uses
-  %54 = extractelement <4 x float> %53, i64 0
-  %55 = fmul nsz float %i.arj, %54
-  store float %55, ptr %i.bd, align 8, !tbaa !44
-  %56 = extractelement <4 x float> %53, i64 1
-  %i.arl = fmul nsz float %i.arj, %56
+  %i.ark = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 24
+  %33 = load float, ptr %i.ark, align 8, !tbaa !44
+  %34 = fmul nsz float %i.arj, %33
+  store float %34, ptr %i.bd, align 8, !tbaa !44
+  %35 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 24
+  %36 = load float, ptr %35, align 8, !tbaa !44
+  %i.arl = fmul nsz float %i.arj, %36
   store float %i.arl, ptr %i.be, align 8, !tbaa !44
-  %i.arm = load float, ptr %i.ark, align 4, !tbaa !44 ; 2 uses
-  %57 = extractelement <4 x float> %53, i64 2
-  %i.arn = fmul nsz float %i.arm, %57
+  %37 = getelementptr inbounds nuw i8, ptr %i.aqj, i64 28
+  %i.arm = load float, ptr %37, align 4, !tbaa !44 ; 2 uses
+  %38 = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 28
+  %39 = load float, ptr %38, align 4, !tbaa !44
+  %i.arn = fmul nsz float %i.arm, %39
   store float %i.arn, ptr %i.bf, align 4, !tbaa !44
-  %58 = extractelement <4 x float> %53, i64 3
-  %i.aro = fmul nsz float %i.arm, %58
+  %40 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 28
+  %41 = load float, ptr %40, align 4, !tbaa !44
+  %i.aro = fmul nsz float %i.arm, %41
   store float %i.aro, ptr %i.bg, align 4, !tbaa !44
   %i.arp = getelementptr inbounds nuw i8, ptr %i.aqj, i64 32
   %i.arq = load float, ptr %i.arp, align 4, !tbaa !44 ; 2 uses
-  %i.arr = getelementptr inbounds nuw i8, ptr %i.aqj, i64 36
-  %59 = select <4 x i1> %33, <4 x float> %28, <4 x float> %29 ; 4 uses
-  %60 = extractelement <4 x float> %59, i64 0
-  %61 = fmul nsz float %i.arq, %60
-  store float %61, ptr %i.bh, align 16, !tbaa !44
-  %62 = extractelement <4 x float> %59, i64 1
-  %i.ars = fmul nsz float %i.arq, %62
+  %i.arr = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 32
+  %42 = load float, ptr %i.arr, align 16, !tbaa !44
+  %43 = fmul nsz float %i.arq, %42
+  store float %43, ptr %i.bh, align 16, !tbaa !44
+  %44 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 32
+  %45 = load float, ptr %44, align 16, !tbaa !44
+  %i.ars = fmul nsz float %i.arq, %45
   store float %i.ars, ptr %i.bi, align 16, !tbaa !44
-  %i.art = load float, ptr %i.arr, align 4, !tbaa !44 ; 2 uses
-  %63 = extractelement <4 x float> %59, i64 2
-  %i.aru = fmul nsz float %i.art, %63
+  %46 = getelementptr inbounds nuw i8, ptr %i.aqj, i64 36
+  %i.art = load float, ptr %46, align 4, !tbaa !44 ; 2 uses
+  %47 = getelementptr inbounds nuw i8, ptr %spec.select.i150, i64 36
+  %48 = load float, ptr %47, align 4, !tbaa !44
+  %i.aru = fmul nsz float %i.art, %48
   store float %i.aru, ptr %i.bj, align 4, !tbaa !44
-  %64 = extractelement <4 x float> %59, i64 3
-  %i.arv = fmul nsz float %i.art, %64
+  %49 = getelementptr inbounds nuw i8, ptr %spec.select33.i, i64 36
+  %50 = load float, ptr %49, align 4, !tbaa !44
+  %i.arv = fmul nsz float %i.art, %50
   store float %i.arv, ptr %i.bk, align 4, !tbaa !44
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.b, ptr noundef nonnull align 8 dereferenceable(40) %i.oq, i64 40, i1 false)
   %i.arw = load ptr, ptr %i.or, align 8, !tbaa !52

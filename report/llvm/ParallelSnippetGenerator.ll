@@ -73,7 +73,6 @@ $_ZNSt6vectorIN4llvm8exegesis12CodeTemplateESaIS2_EE17_M_realloc_insertIJS2_EEEv
 @.str.3 = private unnamed_addr constant [49 x i8] c"instruction is parallel, repeating a random one.\00", align 1
 @.str.4 = private unnamed_addr constant [47 x i8] c"instruction is serial, repeating a random one.\00", align 1
 @.str.5 = private unnamed_addr constant [17 x i8] c"instruction has \00", align 1
-@.str.6 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.7 = private unnamed_addr constant [4 x i8] c"no \00", align 1
 @.str.8 = private unnamed_addr constant [122 x i8] c"tied variables, avoiding Read-After-Write issue, picking random def and use registers not aliasing each other, for uses, \00", align 1
 @.str.9 = private unnamed_addr constant [36 x i8] c"Failed to produce any snippet via: \00", align 1
@@ -411,7 +410,7 @@ bb.k:                                             ; preds = %bb.g
   br i1 %or.cond329, label %_ZN4llvm8exegesisL28hasVariablesWithTiedOperandsERKNS0_11InstructionE.exit, label %.lr.ph.i
 
 _ZN4llvm8exegesisL28hasVariablesWithTiedOperandsERKNS0_11InstructionE.exit: ; preds = %.lr.ph.i, %bb.k
-  %.not.lcssa.i = phi i1 [ false, %bb.k ], [ %i.be, %.lr.ph.i ] ; 2 uses
+  %.not.lcssa.i = phi i1 [ false, %bb.k ], [ %i.be, %.lr.ph.i ] ; 4 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.val29 = load ptr, ptr %i.bg, align 8, !tbaa !64 ; 2 uses
   %i.bh = getelementptr i8, ptr %i.a, i64 32
@@ -487,9 +486,6 @@ bb.p:                                             ; preds = %bb.o
   %i.cd = add nuw nsw i64 %i.cb, 1                ; 2 uses
   store i64 %i.cd, ptr %i.bu, align 8, !tbaa !137
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.cd
-  %31 = select i1 %.not.lcssa.i, ptr @.str.6, ptr @.str.7 ; 2 uses
-  %32 = load i8, ptr %31, align 1
-  %.not.i41 = icmp eq i8 %32, 0                   ; 3 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %28, i64 16
   %i.cg = getelementptr inbounds nuw i8, ptr %28, i64 32
   %i.ch = getelementptr inbounds nuw i8, ptr %28, i64 33
@@ -555,8 +551,8 @@ bb.p:                                             ; preds = %bb.o
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %24, i64 8
   %i.er = getelementptr inbounds nuw i8, ptr %24, i64 24 ; 2 uses
-  %.014.i46 = select i1 %.not.i41, i8 3, i8 2
-  %.sroa.05.0.i47 = select i1 %.not.i41, ptr @.str.5, ptr %28
+  %.014.i46 = select i1 %.not.lcssa.i, i8 3, i8 2
+  %.sroa.05.0.i47 = select i1 %.not.lcssa.i, ptr @.str.5, ptr %28
   br label %bb.r
 
 bb.q:                                             ; preds = %_ZN4llvm8exegesis12CodeTemplateD2Ev.exit
@@ -574,10 +570,10 @@ bb.r:                                             ; preds = %.lr.ph, %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #15
   store ptr @.str.5, ptr %28, align 8
-  br i1 %.not.i41, label %_ZNK4llvm5Twine6concatERKS0_.exit57, label %bb.s
+  br i1 %.not.lcssa.i, label %_ZNK4llvm5Twine6concatERKS0_.exit57, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  store ptr %31, ptr %i.cf, align 8, !alias.scope !140
+  store ptr @.str.7, ptr %i.cf, align 8, !alias.scope !140
   br label %_ZNK4llvm5Twine6concatERKS0_.exit57
 
 _ZNK4llvm5Twine6concatERKS0_.exit57:              ; preds = %bb.r, %bb.s

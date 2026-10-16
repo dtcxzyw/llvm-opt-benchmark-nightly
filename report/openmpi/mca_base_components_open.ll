@@ -202,10 +202,11 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   %i.at = load i8, ptr %i.ao, align 1, !tbaa !46
-  %i.au = icmp eq i8 %i.at, 94                    ; 5 uses
+  %i.au = icmp eq i8 %i.at, 94                    ; 3 uses
   %spec.store.select = select i1 %i.au, i32 2, i32 1
   store i32 %spec.store.select, ptr @show_load_errors, align 4, !tbaa !20
   %spec.select = zext i1 %i.au to i64
+  %spec.select57 = select i1 %i.au, ptr @show_load_errors_exclude, ptr @show_load_errors_include ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.ao, i64 %spec.select
   %i.aw = call noalias ptr @opal_argv_split(ptr noundef nonnull %i.av, i32 noundef 44) #11 ; 4 uses
   %i.ax = icmp eq ptr %i.aw, null
@@ -217,9 +218,9 @@ bb.s:                                             ; preds = %bb.q
   br i1 %.not5677, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %0 = select i1 %i.au, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 16), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 16)
-  %1 = select i1 %i.au, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 40), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 40) ; 3 uses
-  %2 = select i1 %i.au, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 56), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 56) ; 2 uses
+  %0 = getelementptr inbounds nuw i8, ptr %spec.select57, i64 16
+  %1 = getelementptr inbounds nuw i8, ptr %spec.select57, i64 40 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %spec.select57, i64 56 ; 2 uses
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -390,11 +391,12 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = icmp eq i32 %i.a, 1                      ; 5 uses
-  %i.c = select i1 %i.b, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 16), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 16) ; 2 uses
-  %2 = select i1 %i.b, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 32), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 32)
-  %i.d = load volatile ptr, ptr %2, align 8, !tbaa !37 ; 2 uses
-  %.not17 = icmp eq ptr %i.d, %i.c
+  %i.b = icmp eq i32 %i.a, 1                      ; 4 uses
+  %i.c = select i1 %i.b, ptr @show_load_errors_include, ptr @show_load_errors_exclude ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
+  %i.d = load volatile ptr, ptr %3, align 8, !tbaa !37 ; 2 uses
+  %.not17 = icmp eq ptr %i.d, %2
   br i1 %.not17, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.f
@@ -419,7 +421,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.lr.ph, %bb.e
   %i.n = getelementptr inbounds nuw i8, ptr %.018, i64 16
   %i.o = load volatile ptr, ptr %i.n, align 8, !tbaa !34 ; 2 uses
-  %.not = icmp eq ptr %i.o, %i.c
+  %.not = icmp eq ptr %i.o, %2
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !2
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.c
@@ -563,11 +565,12 @@ bb.m:                                             ; preds = %bb.j
   ]
 
 bb.n:                                             ; preds = %bb.m
-  %.not56.i = icmp eq i32 %i.aa, 1                ; 4 uses
-  %i.ab = select i1 %.not56.i, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 16), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 16) ; 2 uses
-  %2 = select i1 %.not56.i, ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_include, i64 32), ptr getelementptr inbounds nuw (i8, ptr @show_load_errors_exclude, i64 32)
-  %i.ac = load volatile ptr, ptr %2, align 8, !tbaa !37 ; 2 uses
-  %.not17.i.i = icmp eq ptr %i.ac, %i.ab
+  %.not56.i = icmp eq i32 %i.aa, 1                ; 3 uses
+  %i.ab = select i1 %.not56.i, ptr @show_load_errors_include, ptr @show_load_errors_exclude ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
+  %i.ac = load volatile ptr, ptr %3, align 8, !tbaa !37 ; 2 uses
+  %.not17.i.i = icmp eq ptr %i.ac, %2
   br i1 %.not17.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.n, %bb.q
@@ -592,7 +595,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p, %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.018.i.i, i64 16
   %i.an = load volatile ptr, ptr %i.am, align 8, !tbaa !34 ; 2 uses
-  %.not.i.i = icmp eq ptr %i.an, %i.ab
+  %.not.i.i = icmp eq ptr %i.an, %2
   br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !2
 
 ._crit_edge.i.i:                                  ; preds = %bb.q, %bb.n

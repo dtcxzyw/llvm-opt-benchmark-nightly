@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e
-  %i.ae = phi i64 [ %.pre64.a, %bb.f ], [ %i.ad, %bb.g ], [ %i.q, %bb.e ] ; 3 uses
+  %i.ae = phi i64 [ %.pre64.a, %bb.f ], [ %i.ad, %bb.g ], [ %i.q, %bb.e ] ; 2 uses
   %i.af = shl i64 %1, 34
   %i.ag = ashr i64 %i.af, 62                      ; 3 uses
   %i.ah = shl i64 %i.ae, 34
@@ -213,73 +213,58 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e
   %.not46 = icmp eq i64 %i.ag, %i.ai
   %.not47 = icmp eq i64 %i.ag, 0
   %or.cond55 = or i1 %.not47, %.not46
-  br i1 %or.cond55, label %term_bold.exit, label %2
+  br i1 %or.cond55, label %term_bold.exit, label %ic_strlen.exit.i.i
 
-2:                                                ; preds = %bb.h
-  %3 = icmp eq i64 %i.ag, 1                       ; 2 uses
-  %4 = select i1 %3, ptr @.str.419, ptr @.str.420 ; 2 uses
-  %5 = load i8, ptr %4, align 1, !tbaa !48
-  %6 = icmp eq i8 %5, 0
-  br i1 %6, label %term_bold.exit, label %ic_strlen.exit.i.i
-
-ic_strlen.exit.i.i:                               ; preds = %2
-  %i.aj = select i1 %3, i64 4, i64 5
-  tail call fastcc void @term_write_n(ptr noundef nonnull %0, ptr noundef nonnull readonly %4, i64 noundef %i.aj)
+ic_strlen.exit.i.i:                               ; preds = %bb.h
+  %2 = icmp eq i64 %i.ag, 1                       ; 2 uses
+  %3 = select i1 %2, ptr @.str.419, ptr @.str.420
+  %i.aj = select i1 %2, i64 4, i64 5
+  tail call fastcc void @term_write_n(ptr noundef nonnull %0, ptr noundef nonnull readonly %3, i64 noundef %i.aj)
   %.pre65 = load i64, ptr %i.f, align 8
   br label %term_bold.exit
 
-term_bold.exit:                                   ; preds = %ic_strlen.exit.i.i, %2, %bb.h
-  %7 = phi i64 [ %.pre65, %ic_strlen.exit.i.i ], [ %i.ae, %2 ], [ %i.ae, %bb.h ] ; 3 uses
+term_bold.exit:                                   ; preds = %ic_strlen.exit.i.i, %bb.h
+  %4 = phi i64 [ %.pre65, %ic_strlen.exit.i.i ], [ %i.ae, %bb.h ] ; 2 uses
   %i.ak = shl i64 %1, 2
   %i.al = ashr i64 %i.ak, 62                      ; 3 uses
-  %i.am = shl i64 %7, 2
+  %i.am = shl i64 %4, 2
   %i.an = ashr i64 %i.am, 62
   %.not48 = icmp eq i64 %i.al, %i.an
   %.not49 = icmp eq i64 %i.al, 0
   %or.cond56 = or i1 %.not49, %.not48
-  br i1 %or.cond56, label %term_underline.exit, label %8
+  br i1 %or.cond56, label %term_underline.exit, label %ic_strlen.exit.i.i59
 
-8:                                                ; preds = %term_bold.exit
-  %9 = icmp eq i64 %i.al, 1                       ; 2 uses
-  %10 = select i1 %9, ptr @.str.421, ptr @.str.422 ; 2 uses
-  %11 = load i8, ptr %10, align 1, !tbaa !48
-  %12 = icmp eq i8 %11, 0
-  br i1 %12, label %term_underline.exit, label %ic_strlen.exit.i.i59
-
-ic_strlen.exit.i.i59:                             ; preds = %8
-  %i.ao = select i1 %9, i64 4, i64 5
-  tail call fastcc void @term_write_n(ptr noundef nonnull %0, ptr noundef nonnull readonly %10, i64 noundef %i.ao)
+ic_strlen.exit.i.i59:                             ; preds = %term_bold.exit
+  %5 = icmp eq i64 %i.al, 1                       ; 2 uses
+  %6 = select i1 %5, ptr @.str.421, ptr @.str.422
+  %i.ao = select i1 %5, i64 4, i64 5
+  tail call fastcc void @term_write_n(ptr noundef nonnull %0, ptr noundef nonnull readonly %6, i64 noundef %i.ao)
   %.pre66 = load i64, ptr %i.f, align 8
   br label %term_underline.exit
 
-term_underline.exit:                              ; preds = %ic_strlen.exit.i.i59, %8, %term_bold.exit
-  %13 = phi i64 [ %.pre66, %ic_strlen.exit.i.i59 ], [ %7, %8 ], [ %7, %term_bold.exit ] ; 3 uses
+term_underline.exit:                              ; preds = %ic_strlen.exit.i.i59, %term_bold.exit
+  %7 = phi i64 [ %.pre66, %ic_strlen.exit.i.i59 ], [ %4, %term_bold.exit ] ; 2 uses
   %i.ap = shl i64 %1, 32
   %i.aq = ashr i64 %i.ap, 62                      ; 3 uses
-  %i.ar = shl i64 %13, 32
+  %i.ar = shl i64 %7, 32
   %i.as = ashr i64 %i.ar, 62
   %.not50 = icmp eq i64 %i.aq, %i.as
   %.not51 = icmp eq i64 %i.aq, 0
   %or.cond57 = or i1 %.not51, %.not50
-  br i1 %or.cond57, label %term_reverse.exit, label %14
+  br i1 %or.cond57, label %term_reverse.exit, label %ic_strlen.exit.i.i60
 
-14:                                               ; preds = %term_underline.exit
-  %15 = icmp eq i64 %i.aq, 1                      ; 2 uses
-  %16 = select i1 %15, ptr @.str.425, ptr @.str.426 ; 2 uses
-  %17 = load i8, ptr %16, align 1, !tbaa !48
-  %18 = icmp eq i8 %17, 0
-  br i1 %18, label %term_reverse.exit, label %ic_strlen.exit.i.i60
-
-ic_strlen.exit.i.i60:                             ; preds = %14
-  %i.at = select i1 %15, i64 4, i64 5
-  tail call fastcc void @term_write_n(ptr noundef nonnull %0, ptr noundef nonnull readonly %16, i64 noundef %i.at)
+ic_strlen.exit.i.i60:                             ; preds = %term_underline.exit
+  %8 = icmp eq i64 %i.aq, 1                       ; 2 uses
+  %9 = select i1 %8, ptr @.str.425, ptr @.str.426
+  %i.at = select i1 %8, i64 4, i64 5
+  tail call fastcc void @term_write_n(ptr noundef nonnull %0, ptr noundef nonnull readonly %9, i64 noundef %i.at)
   %.pre67 = load i64, ptr %i.f, align 8
   br label %term_reverse.exit
 
-term_reverse.exit:                                ; preds = %ic_strlen.exit.i.i60, %14, %term_underline.exit
-  %19 = phi i64 [ %.pre67, %ic_strlen.exit.i.i60 ], [ %13, %14 ], [ %13, %term_underline.exit ]
+term_reverse.exit:                                ; preds = %ic_strlen.exit.i.i60, %term_underline.exit
+  %10 = phi i64 [ %.pre67, %ic_strlen.exit.i.i60 ], [ %7, %term_underline.exit ]
   %i.au = ashr i64 %1, 62                         ; 3 uses
-  %i.av = ashr i64 %19, 62
+  %i.av = ashr i64 %10, 62
   %.not52 = icmp eq i64 %i.au, %i.av
   %.not53 = icmp eq i64 %i.au, 0
   %or.cond58 = or i1 %.not53, %.not52
@@ -287,17 +272,12 @@ term_reverse.exit:                                ; preds = %ic_strlen.exit.i.i6
 
 bb.i:                                             ; preds = %term_reverse.exit
   %i.aw = icmp eq i64 %i.au, 1                    ; 2 uses
-  %i.ax = select i1 %i.aw, ptr @.str.423, ptr @.str.424 ; 2 uses
-  %20 = load i8, ptr %i.ax, align 1, !tbaa !48
-  %21 = icmp eq i8 %20, 0
-  br i1 %21, label %term_italic.exit, label %ic_strlen.exit.i.i61
-
-ic_strlen.exit.i.i61:                             ; preds = %bb.i
-  %22 = select i1 %i.aw, i64 4, i64 5
-  tail call fastcc void @term_write_n(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.ax, i64 noundef %22)
+  %i.ax = select i1 %i.aw, ptr @.str.423, ptr @.str.424
+  %11 = select i1 %i.aw, i64 4, i64 5
+  tail call fastcc void @term_write_n(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.ax, i64 noundef %11)
   br label %term_italic.exit
 
-term_italic.exit:                                 ; preds = %ic_strlen.exit.i.i61, %bb.i, %bb.a, %term_reverse.exit
+term_italic.exit:                                 ; preds = %bb.a, %bb.i, %term_reverse.exit
   ret void
 }
 
@@ -369,20 +349,15 @@ ic_get_env.exit.thread4:                          ; preds = %bb.a, %ic_get_env.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !143  ; 2 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %term_bold.exit, label %1
+  br i1 %i.i, label %term_bold.exit, label %ic_strlen.exit.i.i
 
-1:                                                ; preds = %ic_get_env.exit.thread4
-  %2 = select i1 %0, ptr @.str.419, ptr @.str.420 ; 2 uses
-  %3 = load i8, ptr %2, align 1, !tbaa !48
-  %4 = icmp eq i8 %3, 0
-  br i1 %4, label %term_bold.exit, label %ic_strlen.exit.i.i
-
-ic_strlen.exit.i.i:                               ; preds = %1
+ic_strlen.exit.i.i:                               ; preds = %ic_get_env.exit.thread4
+  %1 = select i1 %0, ptr @.str.419, ptr @.str.420
   %i.j = select i1 %0, i64 4, i64 5
-  tail call fastcc void @term_write_n(ptr noundef nonnull %i.h, ptr noundef nonnull readonly %2, i64 noundef %i.j)
+  tail call fastcc void @term_write_n(ptr noundef nonnull %i.h, ptr noundef nonnull readonly %1, i64 noundef %i.j)
   br label %term_bold.exit
 
-term_bold.exit:                                   ; preds = %bb.b, %ic_strlen.exit.i.i, %1, %ic_get_env.exit, %ic_get_env.exit.thread4
+term_bold.exit:                                   ; preds = %bb.b, %ic_get_env.exit, %ic_get_env.exit.thread4, %ic_strlen.exit.i.i
   ret void
 }
 
@@ -410,20 +385,15 @@ ic_get_env.exit.thread4:                          ; preds = %bb.a, %ic_get_env.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !143  ; 2 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %term_underline.exit, label %1
+  br i1 %i.i, label %term_underline.exit, label %ic_strlen.exit.i.i
 
-1:                                                ; preds = %ic_get_env.exit.thread4
-  %2 = select i1 %0, ptr @.str.421, ptr @.str.422 ; 2 uses
-  %3 = load i8, ptr %2, align 1, !tbaa !48
-  %4 = icmp eq i8 %3, 0
-  br i1 %4, label %term_underline.exit, label %ic_strlen.exit.i.i
-
-ic_strlen.exit.i.i:                               ; preds = %1
+ic_strlen.exit.i.i:                               ; preds = %ic_get_env.exit.thread4
+  %1 = select i1 %0, ptr @.str.421, ptr @.str.422
   %i.j = select i1 %0, i64 4, i64 5
-  tail call fastcc void @term_write_n(ptr noundef nonnull %i.h, ptr noundef nonnull readonly %2, i64 noundef %i.j)
+  tail call fastcc void @term_write_n(ptr noundef nonnull %i.h, ptr noundef nonnull readonly %1, i64 noundef %i.j)
   br label %term_underline.exit
 
-term_underline.exit:                              ; preds = %bb.b, %ic_strlen.exit.i.i, %1, %ic_get_env.exit, %ic_get_env.exit.thread4
+term_underline.exit:                              ; preds = %bb.b, %ic_get_env.exit, %ic_get_env.exit.thread4, %ic_strlen.exit.i.i
   ret void
 }
 
@@ -451,20 +421,15 @@ ic_get_env.exit.thread4:                          ; preds = %bb.a, %ic_get_env.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !143  ; 2 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %term_italic.exit, label %1
+  br i1 %i.i, label %term_italic.exit, label %ic_strlen.exit.i.i
 
-1:                                                ; preds = %ic_get_env.exit.thread4
-  %2 = select i1 %0, ptr @.str.423, ptr @.str.424 ; 2 uses
-  %3 = load i8, ptr %2, align 1, !tbaa !48
-  %4 = icmp eq i8 %3, 0
-  br i1 %4, label %term_italic.exit, label %ic_strlen.exit.i.i
-
-ic_strlen.exit.i.i:                               ; preds = %1
+ic_strlen.exit.i.i:                               ; preds = %ic_get_env.exit.thread4
+  %1 = select i1 %0, ptr @.str.423, ptr @.str.424
   %i.j = select i1 %0, i64 4, i64 5
-  tail call fastcc void @term_write_n(ptr noundef nonnull %i.h, ptr noundef nonnull readonly %2, i64 noundef %i.j)
+  tail call fastcc void @term_write_n(ptr noundef nonnull %i.h, ptr noundef nonnull readonly %1, i64 noundef %i.j)
   br label %term_italic.exit
 
-term_italic.exit:                                 ; preds = %bb.b, %ic_strlen.exit.i.i, %1, %ic_get_env.exit, %ic_get_env.exit.thread4
+term_italic.exit:                                 ; preds = %bb.b, %ic_get_env.exit, %ic_get_env.exit.thread4, %ic_strlen.exit.i.i
   ret void
 }
 
@@ -492,20 +457,15 @@ ic_get_env.exit.thread4:                          ; preds = %bb.a, %ic_get_env.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !143  ; 2 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %term_reverse.exit, label %1
+  br i1 %i.i, label %term_reverse.exit, label %ic_strlen.exit.i.i
 
-1:                                                ; preds = %ic_get_env.exit.thread4
-  %2 = select i1 %0, ptr @.str.425, ptr @.str.426 ; 2 uses
-  %3 = load i8, ptr %2, align 1, !tbaa !48
-  %4 = icmp eq i8 %3, 0
-  br i1 %4, label %term_reverse.exit, label %ic_strlen.exit.i.i
-
-ic_strlen.exit.i.i:                               ; preds = %1
+ic_strlen.exit.i.i:                               ; preds = %ic_get_env.exit.thread4
+  %1 = select i1 %0, ptr @.str.425, ptr @.str.426
   %i.j = select i1 %0, i64 4, i64 5
-  tail call fastcc void @term_write_n(ptr noundef nonnull %i.h, ptr noundef nonnull readonly %2, i64 noundef %i.j)
+  tail call fastcc void @term_write_n(ptr noundef nonnull %i.h, ptr noundef nonnull readonly %1, i64 noundef %i.j)
   br label %term_reverse.exit
 
-term_reverse.exit:                                ; preds = %bb.b, %ic_strlen.exit.i.i, %1, %ic_get_env.exit, %ic_get_env.exit.thread4
+term_reverse.exit:                                ; preds = %bb.b, %ic_get_env.exit, %ic_get_env.exit.thread4, %ic_strlen.exit.i.i
   ret void
 }
 

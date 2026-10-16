@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ap = shl i32 %i.y, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #20
   store ptr null, ptr %i.e, align 8
-  %spec.select.i = select i1 %i.an, ptr @ru_242_tone_1_20MHz_ng4, ptr @ru_242_tone_1_20MHz_ng16 ; 2 uses
+  %spec.select.i = select i1 %i.an, ptr @ru_242_tone_1_20MHz_ng4, ptr @ru_242_tone_1_20MHz_ng16
   %i.aq = load i32, ptr @ett_eht_beamforming_rpt_ru_index, align 4
   %i.ar = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.am, ptr noundef %1, i32 noundef %i.y, i32 noundef -1, i32 noundef %i.aq, ptr noundef nonnull %i.e, ptr noundef nonnull @.str.8007, i32 noundef 1) ; 2 uses
   %narrow.i = add nuw nsw i8 %i.z, 1
@@ -213,14 +213,13 @@ bb.d:                                             ; preds = %bb.c
   %i.at = zext nneg i8 %. to i32                  ; 2 uses
   %i.au = zext nneg i8 %.108 to i32               ; 2 uses
   %i.av = getelementptr i8, ptr %2, i64 416       ; 2 uses
-  %5 = load i32, ptr %spec.select.i, align 16     ; 2 uses
   %i.aw = load i32, ptr @hf_ieee80211_eht_compressed_beamform_scidx, align 4
   %.val.peel.i = load ptr, ptr %i.av, align 8
-  %i.ax = call fastcc i32 @dissect_he_feedback_matrix(ptr noundef %i.ar, ptr noundef %1, ptr %.val.peel.i, i32 noundef %i.y, i32 noundef %i.ap, i32 noundef %5, i32 noundef %i.as, i32 noundef %i.i, i32 noundef %i.at, i32 noundef %i.au, i32 noundef %i.aw)
+  %i.ax = call fastcc i32 @dissect_he_feedback_matrix(ptr noundef %i.ar, ptr noundef %1, ptr %.val.peel.i, i32 noundef %i.y, i32 noundef %i.ap, i32 noundef -122, i32 noundef %i.as, i32 noundef %i.i, i32 noundef %i.at, i32 noundef %i.au, i32 noundef %i.aw)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.n, %bb.d
-  %.sroa.1727.0.i = phi i32 [ %5, %bb.d ], [ %.sroa.1727.2.ph.i, %bb.n ] ; 5 uses
+  %.sroa.1727.0.i = phi i32 [ -122, %bb.d ], [ %.sroa.1727.2.ph.i, %bb.n ] ; 5 uses
   %.sroa.424.1.i = phi ptr [ %spec.select.i, %bb.d ], [ %.sroa.424.3.ph.i, %bb.n ] ; 8 uses
   %.0.i = phi i32 [ %i.ax, %bb.d ], [ %i.bu, %bb.n ] ; 2 uses
   %.022.i = lshr i32 %.0.i, 3                     ; 3 uses
@@ -397,7 +396,7 @@ bb.s:                                             ; preds = %bb.c
   br i1 %i.dp, label %bb.ae, label %.peel.next.i114
 
 .peel.next110.i:                                  ; preds = %bb.s
-  %spec.select.i118 = select i1 %i.de, ptr @ru_996_tone_80MHz_ng4, ptr @ru_996_tone_80MHz_ng16 ; 2 uses
+  %spec.select.i118 = select i1 %i.de, ptr @ru_996_tone_80MHz_ng4, ptr @ru_996_tone_80MHz_ng16
   %i.dq = load i32, ptr @ett_eht_beamforming_rpt_ru_index, align 4
   %i.dr = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.am, ptr noundef %1, i32 noundef %i.y, i32 noundef -1, i32 noundef %i.dq, ptr noundef nonnull %i.c, ptr noundef nonnull @.str.8012, i32 noundef 1) ; 2 uses
   %i.ds = zext nneg i8 %i.df to i32               ; 2 uses
@@ -406,15 +405,14 @@ bb.s:                                             ; preds = %bb.c
   %i.du = zext nneg i8 %. to i32                  ; 2 uses
   %i.dv = zext nneg i8 %.108 to i32               ; 2 uses
   %i.dw = getelementptr i8, ptr %2, i64 416       ; 2 uses
-  %6 = load i32, ptr %spec.select.i118, align 16  ; 2 uses
   %i.dx = load i32, ptr @hf_ieee80211_eht_compressed_beamform_scidx, align 4
   %.val62.peel.i = load ptr, ptr %i.dw, align 8
-  %i.dy = call fastcc i32 @dissect_he_feedback_matrix(ptr noundef %i.dr, ptr noundef %1, ptr %.val62.peel.i, i32 noundef %i.y, i32 noundef %i.dg, i32 noundef %6, i32 noundef %i.dt, i32 noundef %i.i, i32 noundef %i.du, i32 noundef %i.dv, i32 noundef %i.dx)
+  %i.dy = call fastcc i32 @dissect_he_feedback_matrix(ptr noundef %i.dr, ptr noundef %1, ptr %.val62.peel.i, i32 noundef %i.y, i32 noundef %i.dg, i32 noundef -500, i32 noundef %i.dt, i32 noundef %i.i, i32 noundef %i.du, i32 noundef %i.dv, i32 noundef %i.dx)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.ac, %.peel.next110.i
   %.sroa.571.1.i = phi ptr [ %spec.select.i118, %.peel.next110.i ], [ %.sroa.571.4.ph.i, %bb.ac ] ; 8 uses
-  %.sroa.2879.0.i = phi i32 [ %6, %.peel.next110.i ], [ %.sroa.2879.5.ph.i, %bb.ac ] ; 5 uses
+  %.sroa.2879.0.i = phi i32 [ -500, %.peel.next110.i ], [ %.sroa.2879.5.ph.i, %bb.ac ] ; 5 uses
   %.0.i119 = phi i32 [ %i.dy, %.peel.next110.i ], [ %i.ev, %bb.ac ] ; 2 uses
   %.054.i = lshr i32 %.0.i119, 3                  ; 2 uses
   %i.dz = getelementptr i8, ptr %.sroa.571.1.i, i64 12
@@ -645,7 +643,7 @@ bb.al:                                            ; preds = %bb.c
   br i1 %i.hd, label %bb.ax, label %.peel.next.i125
 
 .peel.next224.i:                                  ; preds = %bb.al
-  %spec.select.i133 = select i1 %i.gr, ptr @ru_996_tone_160MHz_ng4, ptr @ru_996_tone_160MHz_ng16 ; 2 uses
+  %spec.select.i133 = select i1 %i.gr, ptr @ru_996_tone_160MHz_ng4, ptr @ru_996_tone_160MHz_ng16
   %i.he = load i32, ptr @ett_eht_beamforming_rpt_ru_index, align 4
   %i.hf = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.am, ptr noundef %1, i32 noundef %i.y, i32 noundef -1, i32 noundef %i.he, ptr noundef nonnull %i.b, ptr noundef nonnull @.str.8017, i32 noundef 1) ; 2 uses
   %i.hg = zext nneg i8 %i.gs to i32               ; 2 uses
@@ -654,15 +652,14 @@ bb.al:                                            ; preds = %bb.c
   %i.hi = zext nneg i8 %. to i32                  ; 2 uses
   %i.hj = zext nneg i8 %.108 to i32               ; 2 uses
   %i.hk = getelementptr i8, ptr %2, i64 416       ; 2 uses
-  %7 = load i32, ptr %spec.select.i133, align 16  ; 2 uses
   %i.hl = load i32, ptr @hf_ieee80211_eht_compressed_beamform_scidx, align 4
   %.val117.peel.i = load ptr, ptr %i.hk, align 8
-  %i.hm = call fastcc i32 @dissect_he_feedback_matrix(ptr noundef %i.hf, ptr noundef %1, ptr %.val117.peel.i, i32 noundef %i.y, i32 noundef %i.gt, i32 noundef %7, i32 noundef %i.hh, i32 noundef %i.i, i32 noundef %i.hi, i32 noundef %i.hj, i32 noundef %i.hl)
+  %i.hm = call fastcc i32 @dissect_he_feedback_matrix(ptr noundef %i.hf, ptr noundef %1, ptr %.val117.peel.i, i32 noundef %i.y, i32 noundef %i.gt, i32 noundef -1012, i32 noundef %i.hh, i32 noundef %i.i, i32 noundef %i.hi, i32 noundef %i.hj, i32 noundef %i.hl)
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.av, %.peel.next224.i
   %.sroa.8142.1.i = phi ptr [ %spec.select.i133, %.peel.next224.i ], [ %.sroa.8142.7.ph.i, %bb.av ] ; 8 uses
-  %.sroa.54160.0.i = phi i32 [ %7, %.peel.next224.i ], [ %.sroa.54160.10.ph.i, %bb.av ] ; 5 uses
+  %.sroa.54160.0.i = phi i32 [ -1012, %.peel.next224.i ], [ %.sroa.54160.10.ph.i, %bb.av ] ; 5 uses
   %.0.i134 = phi i32 [ %i.hm, %.peel.next224.i ], [ %i.ij, %bb.av ] ; 3 uses
   %.099.i = lshr i32 %.0.i134, 3                  ; 3 uses
   %i.hn = getelementptr i8, ptr %.sroa.8142.1.i, i64 12
@@ -876,7 +873,7 @@ next_eht_scidx.exit124.i.3:                       ; preds = %bb.bc
   br i1 %i.kk, label %bb.bo, label %.peel.next228.i
 
 .peel.next236.i:                                  ; preds = %.loopexit212.i
-  %spec.select210.i = select i1 %i.gr, ptr getelementptr inbounds nuw (i8, ptr @ru_996_tone_160MHz_ng4, i64 40), ptr getelementptr inbounds nuw (i8, ptr @ru_996_tone_160MHz_ng16, i64 100) ; 2 uses
+  %spec.select210.i = select i1 %i.gr, ptr getelementptr inbounds nuw (i8, ptr @ru_996_tone_160MHz_ng4, i64 40), ptr getelementptr inbounds nuw (i8, ptr @ru_996_tone_160MHz_ng16, i64 100)
   %i.kl = load i32, ptr @ett_eht_beamforming_rpt_ru_index, align 4
   %i.km = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.am, ptr noundef %1, i32 noundef %.4103.i, i32 noundef -1, i32 noundef %i.kl, ptr noundef nonnull %i.b, ptr noundef nonnull @.str.8017, i32 noundef 2) ; 2 uses
   %i.kn = zext nneg i8 %i.gs to i32               ; 2 uses
@@ -885,15 +882,14 @@ next_eht_scidx.exit124.i.3:                       ; preds = %bb.bc
   %i.kp = zext nneg i8 %. to i32                  ; 2 uses
   %i.kq = zext nneg i8 %.108 to i32               ; 2 uses
   %i.kr = getelementptr i8, ptr %2, i64 416       ; 2 uses
-  %8 = load i32, ptr %spec.select210.i, align 4   ; 2 uses
   %i.ks = load i32, ptr @hf_ieee80211_eht_compressed_beamform_scidx, align 4
   %.val115.peel.i = load ptr, ptr %i.kr, align 8
-  %i.kt = call fastcc i32 @dissect_he_feedback_matrix(ptr noundef %i.km, ptr noundef %1, ptr %.val115.peel.i, i32 noundef %.4103.i, i32 noundef %.4.i, i32 noundef %8, i32 noundef %i.ko, i32 noundef %i.i, i32 noundef %i.kp, i32 noundef %i.kq, i32 noundef %i.ks)
+  %i.kt = call fastcc i32 @dissect_he_feedback_matrix(ptr noundef %i.km, ptr noundef %1, ptr %.val115.peel.i, i32 noundef %.4103.i, i32 noundef %.4.i, i32 noundef 12, i32 noundef %i.ko, i32 noundef %i.i, i32 noundef %i.kp, i32 noundef %i.kq, i32 noundef %i.ks)
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bm, %.peel.next236.i
   %.sroa.8142.4.i = phi ptr [ %spec.select210.i, %.peel.next236.i ], [ %.sroa.8142.11.ph.i, %bb.bm ] ; 8 uses
-  %.sroa.54160.5.i = phi i32 [ %8, %.peel.next236.i ], [ %.sroa.54160.14.ph.i, %bb.bm ] ; 5 uses
+  %.sroa.54160.5.i = phi i32 [ 12, %.peel.next236.i ], [ %.sroa.54160.14.ph.i, %bb.bm ] ; 5 uses
   %.5.i = phi i32 [ %i.kt, %.peel.next236.i ], [ %i.lq, %bb.bm ] ; 2 uses
   %.5104.i = lshr i32 %.5.i, 3                    ; 3 uses
   %i.ku = getelementptr i8, ptr %.sroa.8142.4.i, i64 12

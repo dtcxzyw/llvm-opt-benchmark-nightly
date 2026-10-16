@@ -204,19 +204,17 @@ bb.a:
   %i.b = alloca [8 x i8], align 1                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
-  %.not.not = icmp eq i64 %1, 0                   ; 4 uses
-  %i.c = select i1 %.not.not, ptr @.str.38, ptr @.str.39 ; 3 uses
+  %.not.not = icmp eq i64 %1, 0                   ; 5 uses
+  %i.c = select i1 %.not.not, ptr @.str.38, ptr @.str.39 ; 2 uses
   %i.d = select i1 %.not.not, i64 1000, i64 1024  ; 3 uses
   %i.e = tail call i64 @llvm.abs.i64(i64 %0, i1 true) ; 3 uses
   %i.f = icmp samesign ult i64 %i.e, %i.d
   br i1 %i.f, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %.not54 = icmp eq i64 %0, 1
-  %5 = load i8, ptr %i.c, align 1
-  %.not55 = icmp eq i8 %5, 66
-  %or.cond = select i1 %.not54, i1 %.not55, i1 false
-  br i1 %or.cond, label %bb.e, label %bb.c
+  %.not54 = icmp ne i64 %0, 1
+  %brmerge = or i1 %.not54, %.not.not
+  br i1 %brmerge, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
   %i.g = icmp eq i64 %0, 0

@@ -202,15 +202,12 @@ bb.d:                                             ; preds = %_ZN4llvm25Appending
 
 _ZN4llvm5ErrorD2Ev.exit6:                         ; preds = %bb.c, %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.n = icmp eq i32 %1, 0                        ; 3 uses
-  %i.o = select i1 %i.n, ptr @_ZL15InjectFieldList, ptr @_ZL24InjectMethodOverloadList ; 2 uses
-  %6 = select i1 %i.n, i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @_ZL15InjectFieldList, i64 12) to i64), i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @_ZL24InjectMethodOverloadList, i64 12) to i64)
-  %7 = ptrtoint ptr %i.o to i64
-  %8 = sub i64 %6, %7
+  %i.n = icmp eq i32 %1, 0                        ; 2 uses
+  %i.o = select i1 %i.n, ptr @_ZL15InjectFieldList, ptr @_ZL24InjectMethodOverloadList
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 232
   store ptr %i.o, ptr %i.p, align 8, !tbaa !61
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 240
-  store i64 %8, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !62
+  store i64 12, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !62
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   %i.q = select i1 %i.n, i16 4611, i16 4614
   store i16 2, ptr %2, align 2

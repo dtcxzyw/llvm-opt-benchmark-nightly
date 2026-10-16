@@ -204,7 +204,6 @@ bb.w:                                             ; preds = %bb.t
 
 WriteStr.exit28.thread:                           ; preds = %bb.w
   %i.bw = icmp eq i64 %indvars.iv, %i.bj
-  %2 = select i1 %i.bw, ptr @.str.87, ptr @.str.102
   %i.bx = load i32, ptr %i.j, align 8, !tbaa !82
   %i.by = add i32 %i.bx, 1                        ; 2 uses
   store i32 %i.by, ptr %i.j, align 8, !tbaa !82
@@ -230,8 +229,7 @@ bb.z:                                             ; preds = %bb.x
 
 WriteStr.exit28:                                  ; preds = %bb.u, %bb.v, %bb.y, %bb.z
   %.pr = load ptr, ptr %0, align 8, !tbaa !80     ; 2 uses
-  %i.cf = icmp eq i64 %indvars.iv, %i.bj
-  %3 = select i1 %i.cf, ptr @.str.87, ptr @.str.102 ; 2 uses
+  %i.cf = icmp eq i64 %indvars.iv, %i.bj          ; 2 uses
   %i.cg = load i32, ptr %i.j, align 8, !tbaa !82
   %i.ch = add i32 %i.cg, 1                        ; 2 uses
   store i32 %i.ch, ptr %i.j, align 8, !tbaa !82
@@ -239,7 +237,8 @@ WriteStr.exit28:                                  ; preds = %bb.u, %bb.v, %bb.y,
   br i1 %.not.i30, label %bb.ac, label %bb.aa
 
 bb.aa:                                            ; preds = %WriteStr.exit28
-  %i.ci = tail call i64 @fwrite(ptr noundef nonnull %3, i64 noundef 1, i64 noundef 1, ptr noundef nonnull %.pr)
+  %2 = select i1 %i.cf, ptr @.str.87, ptr @.str.102
+  %i.ci = tail call i64 @fwrite(ptr noundef nonnull %2, i64 noundef 1, i64 noundef 1, ptr noundef nonnull %.pr)
   %.not17.i31 = icmp eq i64 %i.ci, 1
   br i1 %.not17.i31, label %WriteStr.exit33, label %bb.ab
 
@@ -249,7 +248,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %WriteStr.exit28.thread, %WriteStr.exit28
   %i.cj = phi i32 [ %i.by, %WriteStr.exit28.thread ], [ %i.ch, %WriteStr.exit28 ]
-  %4 = phi ptr [ %2, %WriteStr.exit28.thread ], [ %3, %WriteStr.exit28 ]
+  %3 = phi i1 [ %i.bw, %WriteStr.exit28.thread ], [ %i.cf, %WriteStr.exit28 ]
   %i.ck = load ptr, ptr %i.bf, align 8, !tbaa !83
   %.not16.i32 = icmp eq ptr %i.ck, null
   br i1 %.not16.i32, label %WriteStr.exit33, label %bb.ad
@@ -265,8 +264,8 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ad
   %i.cn = load ptr, ptr %i.bh, align 8, !tbaa !85
-  %5 = load i8, ptr %4, align 1
-  store i8 %5, ptr %i.cn, align 1
+  %4 = select i1 %3, i8 10, i8 9
+  store i8 %4, ptr %i.cn, align 1
   %i.co = load ptr, ptr %i.bh, align 8, !tbaa !85
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 1
   store ptr %i.cp, ptr %i.bh, align 8, !tbaa !85
@@ -523,11 +522,11 @@ bb.u:                                             ; preds = %.lr.ph
 bb.v:                                             ; preds = %bb.u
   %i.bt = tail call i64 @fwrite(ptr noundef nonnull @.str.105, i64 noundef 1, i64 noundef 2, ptr noundef nonnull %i.bs)
   %.not17.i43 = icmp eq i64 %i.bt, 2
-  br i1 %.not17.i43, label %WriteStr.exit45, label %bb.w
+  br i1 %.not17.i43, label %WriteStr.exit45thread-pre-split, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   tail call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef null, i32 noundef 7, ptr noundef nonnull @.str.98) #18
-  br label %WriteStr.exit45
+  br label %WriteStr.exit45thread-pre-split
 
 bb.x:                                             ; preds = %bb.u
   %i.bu = load ptr, ptr %i.as, align 8, !tbaa !83
@@ -541,7 +540,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   tail call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef null, i32 noundef 7, ptr noundef nonnull @.str.99) #18
-  br label %WriteStr.exit45
+  br label %WriteStr.exit45thread-pre-split
 
 bb.aa:                                            ; preds = %bb.y
   %i.bx = load ptr, ptr %i.au, align 8, !tbaa !85
@@ -549,7 +548,7 @@ bb.aa:                                            ; preds = %bb.y
   %i.by = load ptr, ptr %i.au, align 8, !tbaa !85
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 2
   store ptr %i.bz, ptr %i.au, align 8, !tbaa !85
-  br label %WriteStr.exit45
+  br label %WriteStr.exit45thread-pre-split
 
 bb.ab:                                            ; preds = %.lr.ph
   %i.ca = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.bo, i32 noundef 32) #20
@@ -653,11 +652,11 @@ WriteStr.exit53:                                  ; preds = %bb.aj, %bb.ak, %bb.
 bb.ap:                                            ; preds = %WriteStr.exit53
   %i.dc = tail call i64 @fwrite(ptr noundef nonnull @.str.106, i64 noundef 1, i64 noundef 1, ptr noundef nonnull %i.db)
   %.not17.i55 = icmp eq i64 %i.dc, 1
-  br i1 %.not17.i55, label %WriteStr.exit45, label %bb.aq
+  br i1 %.not17.i55, label %WriteStr.exit45thread-pre-split, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   tail call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef null, i32 noundef 7, ptr noundef nonnull @.str.98) #18
-  br label %WriteStr.exit45
+  br label %WriteStr.exit45thread-pre-split
 
 bb.ar:                                            ; preds = %WriteStr.exit53
   %i.dd = load ptr, ptr %i.as, align 8, !tbaa !83
@@ -671,7 +670,7 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as
   tail call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef null, i32 noundef 7, ptr noundef nonnull @.str.99) #18
-  br label %WriteStr.exit45
+  br label %WriteStr.exit45thread-pre-split
 
 bb.au:                                            ; preds = %bb.as
   %i.dg = load ptr, ptr %i.au, align 8, !tbaa !85
@@ -679,7 +678,7 @@ bb.au:                                            ; preds = %bb.as
   %i.dh = load ptr, ptr %i.au, align 8, !tbaa !85
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 1
   store ptr %i.di, ptr %i.au, align 8, !tbaa !85
-  br label %WriteStr.exit45
+  br label %WriteStr.exit45thread-pre-split
 
 bb.av:                                            ; preds = %bb.ab
   %i.dj = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bo) #20 ; 3 uses
@@ -695,11 +694,11 @@ bb.aw:                                            ; preds = %bb.av
   %i.do = and i64 %i.dj, 4294967295               ; 2 uses
   %i.dp = tail call i64 @fwrite(ptr noundef nonnull %i.bo, i64 noundef 1, i64 noundef %i.do, ptr noundef nonnull %i.dn)
   %.not17.i60 = icmp eq i64 %i.dp, %i.do
-  br i1 %.not17.i60, label %WriteStr.exit45, label %bb.ax
+  br i1 %.not17.i60, label %WriteStr.exit45thread-pre-split, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   tail call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef null, i32 noundef 7, ptr noundef nonnull @.str.98) #18
-  br label %WriteStr.exit45
+  br label %WriteStr.exit45thread-pre-split
 
 bb.ay:                                            ; preds = %bb.av
   %i.dq = load ptr, ptr %i.as, align 8, !tbaa !83
@@ -713,7 +712,7 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   tail call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef null, i32 noundef 7, ptr noundef nonnull @.str.99) #18
-  br label %WriteStr.exit45
+  br label %WriteStr.exit45thread-pre-split
 
 bb.bb:                                            ; preds = %bb.az
   %i.dt = load ptr, ptr %i.au, align 8, !tbaa !85
@@ -722,22 +721,26 @@ bb.bb:                                            ; preds = %bb.az
   %i.dv = load ptr, ptr %i.au, align 8, !tbaa !85
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 %i.du
   store ptr %i.dw, ptr %i.au, align 8, !tbaa !85
+  br label %WriteStr.exit45thread-pre-split
+
+WriteStr.exit45thread-pre-split:                  ; preds = %bb.v, %bb.w, %bb.z, %bb.aa, %bb.ap, %bb.aq, %bb.at, %bb.au, %bb.aw, %bb.ax, %bb.ba, %bb.bb
+  %.pr101 = load ptr, ptr %0, align 8, !tbaa !80
   br label %WriteStr.exit45
 
-WriteStr.exit45:                                  ; preds = %bb.bb, %bb.ba, %bb.ay, %bb.ax, %bb.aw, %bb.au, %bb.at, %bb.ar, %bb.aq, %bb.ap, %bb.aa, %bb.z, %bb.x, %bb.w, %bb.v
+WriteStr.exit45:                                  ; preds = %WriteStr.exit45thread-pre-split, %bb.ay, %bb.ar, %bb.x
+  %2 = phi ptr [ %.pr101, %WriteStr.exit45thread-pre-split ], [ null, %bb.ay ], [ null, %bb.ar ], [ null, %bb.x ] ; 2 uses
   %i.dx = load i32, ptr %i.av, align 8, !tbaa !77
   %i.dy = add nsw i32 %i.dx, -1
-  %i.dz = icmp eq i32 %.074, %i.dy
-  %2 = select i1 %i.dz, ptr @.str.87, ptr @.str.102 ; 2 uses
+  %i.dz = icmp eq i32 %.074, %i.dy                ; 2 uses
   %i.ea = load i32, ptr %i.j, align 8, !tbaa !82
   %i.eb = add i32 %i.ea, 1                        ; 2 uses
   store i32 %i.eb, ptr %i.j, align 8, !tbaa !82
-  %3 = load ptr, ptr %0, align 8, !tbaa !80       ; 2 uses
-  %.not.i64 = icmp eq ptr %3, null
+  %.not.i64 = icmp eq ptr %2, null
   br i1 %.not.i64, label %bb.be, label %bb.bc
 
 bb.bc:                                            ; preds = %WriteStr.exit45
-  %i.ec = tail call i64 @fwrite(ptr noundef nonnull %2, i64 noundef 1, i64 noundef 1, ptr noundef nonnull %3)
+  %3 = select i1 %i.dz, ptr @.str.87, ptr @.str.102
+  %i.ec = tail call i64 @fwrite(ptr noundef nonnull %3, i64 noundef 1, i64 noundef 1, ptr noundef nonnull %2)
   %.not17.i65 = icmp eq i64 %i.ec, 1
   br i1 %.not17.i65, label %WriteStr.exit67, label %bb.bd
 
@@ -761,7 +764,7 @@ bb.bg:                                            ; preds = %bb.bf
 
 bb.bh:                                            ; preds = %bb.bf
   %i.eg = load ptr, ptr %i.au, align 8, !tbaa !85
-  %4 = load i8, ptr %2, align 1
+  %4 = select i1 %i.dz, i8 10, i8 9
   store i8 %4, ptr %i.eg, align 1
   %i.eh = load ptr, ptr %i.au, align 8, !tbaa !85
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 1

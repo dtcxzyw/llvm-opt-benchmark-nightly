@@ -86,7 +86,6 @@ $_ZN4llvm23SmallVectorTemplateBaseIPNS_17GetElementPtrInstELb1EE15growAndPushBac
 
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
-@.str = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.1 = private unnamed_addr constant [36 x i8] c"Expecting ConstantInt as argument #\00", align 1
 @.str.2 = private unnamed_addr constant [5 x i8] c" of \00", align 1
 @.str.3 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
@@ -489,16 +488,13 @@ bb.co:                                            ; preds = %bb.cn
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   %i.wu = getelementptr inbounds nuw i8, ptr %i.wp, i64 48 ; 2 uses
   %i.wv = load ptr, ptr %i.wu, align 8, !tbaa !299
-  %.not.i5 = icmp eq ptr %i.wv, null
-  %16 = select i1 %.not.i5, ptr @.str.7, ptr @.str ; 2 uses
-  %17 = load i8, ptr %16, align 1, !tbaa !60
-  %.not.i.i6 = icmp eq i8 %17, 0
+  %.not.i.i6 = icmp eq ptr %i.wv, null
   store ptr @.str.6, ptr %3, align 8
-  br i1 %.not.i.i6, label %_ZL23reportNonStaticGEPChainPN4llvm11InstructionE.exit, label %bb.cp
+  br i1 %.not.i.i6, label %bb.cp, label %_ZL23reportNonStaticGEPChainPN4llvm11InstructionE.exit
 
 bb.cp:                                            ; preds = %bb.co
   %i.ww = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store ptr %16, ptr %i.ww, align 8, !alias.scope !300
+  store ptr @.str.7, ptr %i.ww, align 8, !alias.scope !300
   br label %_ZL23reportNonStaticGEPChainPN4llvm11InstructionE.exit
 
 _ZL23reportNonStaticGEPChainPN4llvm11InstructionE.exit: ; preds = %bb.co, %bb.cp
