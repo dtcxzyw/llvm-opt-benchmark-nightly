@@ -205,8 +205,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit.i194:            ; preds = %bb.by, %bb.bx
   %.0.i.i.i195 = phi ptr [ %i.od, %bb.bx ], [ %2, %bb.by ] ; 3 uses
   %i.oh = getelementptr inbounds nuw i8, ptr %i.dp, i64 1
   %i.oi = load i8, ptr %i.oh, align 1, !tbaa !260, !range !48, !noundef !49
-  %i.oj = trunc nuw i8 %i.oi to i1
-  %.str.58..str.59.i = select i1 %i.oj, ptr @.str.58, ptr @.str.59 ; 2 uses
+  %i.oj = trunc nuw i8 %i.oi to i1                ; 2 uses
   %i.ok = getelementptr inbounds nuw i8, ptr %.0.i.i.i195, i64 16
   %i.ol = load ptr, ptr %i.ok, align 8, !tbaa !22
   %i.om = ptrtoint ptr %i.ol to i64
@@ -216,12 +215,13 @@ _ZN4llvh11raw_ostreamlsEPKc.exit.i194:            ; preds = %bb.by, %bb.bx
   br i1 %i.op, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit.i194
+  %.str.58..str.59.i = select i1 %i.oj, ptr @.str.58, ptr @.str.59
   %i.oq = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %.0.i.i.i195, ptr noundef nonnull %.str.58..str.59.i, i64 noundef 2) #19 ; 0 uses
   br label %_ZN12_GLOBAL__N_115dumpInstructionEPKN6hermes5regex16WordBoundaryInsnERN4llvh11raw_ostreamE.exit
 
 bb.ca:                                            ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit.i194
   %i.or = getelementptr inbounds nuw i8, ptr %.0.i.i.i195, i64 24 ; 2 uses
-  %25 = load i16, ptr %.str.58..str.59.i, align 1
+  %25 = select i1 %i.oj, i16 16988, i16 25180
   store i16 %25, ptr %i.og, align 1
   %i.os = load ptr, ptr %i.or, align 8, !tbaa !23
   %i.ot = getelementptr inbounds nuw i8, ptr %i.os, i64 2
