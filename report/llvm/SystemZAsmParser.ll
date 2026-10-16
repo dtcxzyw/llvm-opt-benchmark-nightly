@@ -204,24 +204,15 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.sroa.015.0.copyload = load ptr, ptr %i.h, align 8, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
-  %i.ac = select i1 %i.f, ptr @.str.3, ptr @.str.2 ; 2 uses
   %9 = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.ad = getelementptr inbounds nuw i8, ptr %5, i64 33
-  store i8 1, ptr %i.ad, align 1, !tbaa !255
-  %10 = load i8, ptr %i.ac, align 1, !tbaa !240
-  %.not.i = icmp eq i8 %10, 0
-  br i1 %.not.i, label %_ZN4llvm5TwineC2EPKc.exit, label %11
-
-11:                                               ; preds = %bb.i
+  %10 = getelementptr inbounds nuw i8, ptr %5, i64 33
+  store i8 1, ptr %10, align 1, !tbaa !255
+  %i.ac = select i1 %i.f, ptr @.str.3, ptr @.str.2
   store ptr %i.ac, ptr %5, align 8, !tbaa !240
-  br label %_ZN4llvm5TwineC2EPKc.exit
-
-_ZN4llvm5TwineC2EPKc.exit:                        ; preds = %bb.i, %11
-  %storemerge.i = phi i8 [ 3, %11 ], [ 1, %bb.i ]
-  store i8 %storemerge.i, ptr %9, align 8, !tbaa !256
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %13 = load ptr, ptr %12, align 8, !tbaa !23
-  %14 = call noundef zeroext i1 @_ZN4llvm11MCAsmParser5ErrorENS_5SMLocERKNS_5TwineENS_7SMRangeE(ptr noundef nonnull align 8 dereferenceable(243) %13, ptr %.sroa.015.0.copyload, ptr noundef nonnull align 8 dereferenceable(34) %5, ptr null, ptr null) #19
+  store i8 3, ptr %9, align 8, !tbaa !256
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %11 = load ptr, ptr %i.ad, align 8, !tbaa !23
+  %12 = call noundef zeroext i1 @_ZN4llvm11MCAsmParser5ErrorENS_5SMLocERKNS_5TwineENS_7SMRangeE(ptr noundef nonnull align 8 dereferenceable(243) %11, ptr %.sroa.015.0.copyload, ptr noundef nonnull align 8 dereferenceable(34) %5, ptr null, ptr null) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   br label %bb.ac
 
@@ -375,8 +366,8 @@ bb.ab:                                            ; preds = %bb.x, %bb.w, %bb.v,
   %i.cg = call noundef nonnull align 8 dereferenceable(40) ptr %i.cf(ptr noundef nonnull align 8 dereferenceable(243) %i.cc) #19 ; 0 uses
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.m, %bb.ab, %bb.aa, %bb.r, %_ZN4llvm5TwineC2EPKc.exit, %bb.c
-  %.2 = phi i1 [ %i.o, %bb.c ], [ %14, %_ZN4llvm5TwineC2EPKc.exit ], [ %i.aq, %bb.m ], [ %i.bh, %bb.r ], [ false, %bb.ab ], [ %i.bx, %bb.aa ]
+bb.ac:                                            ; preds = %bb.m, %bb.ab, %bb.aa, %bb.r, %bb.i, %bb.c
+  %.2 = phi i1 [ %i.o, %bb.c ], [ %12, %bb.i ], [ %i.aq, %bb.m ], [ %i.bh, %bb.r ], [ false, %bb.ab ], [ %i.bx, %bb.aa ]
   ret i1 %.2
 }
 

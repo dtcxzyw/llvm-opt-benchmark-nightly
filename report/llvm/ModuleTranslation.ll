@@ -205,20 +205,11 @@ bb.df:                                            ; preds = %.critedge31, %bb.de
   %i.apq = load ptr, ptr %i.app, align 8, !tbaa !456
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #22
   %i.apr = load ptr, ptr %23, align 8, !tbaa !413
-  %.not987 = icmp eq ptr %i.apr, null
-  %.str.11..str.12 = select i1 %.not987, ptr @.str.12, ptr @.str.11 ; 2 uses
   store i8 1, ptr %i.aoa, align 1, !tbaa !40
-  %39 = load i8, ptr %.str.11..str.12, align 1, !tbaa !41
-  %.not.i472 = icmp eq i8 %39, 0
-  br i1 %.not.i472, label %_ZN4llvm5TwineC2EPKc.exit, label %40
-
-40:                                               ; preds = %bb.df
+  %.not987 = icmp eq ptr %i.apr, null
+  %.str.11..str.12 = select i1 %.not987, ptr @.str.12, ptr @.str.11
   store ptr %.str.11..str.12, ptr %29, align 8, !tbaa !41
-  br label %_ZN4llvm5TwineC2EPKc.exit
-
-_ZN4llvm5TwineC2EPKc.exit:                        ; preds = %bb.df, %40
-  %storemerge.i = phi i8 [ 3, %40 ], [ 1, %bb.df ]
-  store i8 %storemerge.i, ptr %i.anz, align 8, !tbaa !42
+  store i8 3, ptr %i.anz, align 8, !tbaa !42
   call void @_ZN4llvm14GlobalVariableC1ERNS_6ModuleEPNS_4TypeEbNS_11GlobalValue12LinkageTypesEPNS_8ConstantERKNS_5TwineEPS0_NS5_15ThreadLocalModeESt8optionalIjEb(ptr noundef nonnull align 8 dereferenceable(89) %i.apn, ptr noundef nonnull align 8 dereferenceable(1288) %i.apo, ptr noundef %i.apq, i1 noundef zeroext false, i32 noundef 6, ptr noundef nonnull %i.apm, ptr noundef nonnull align 8 dereferenceable(34) %29, ptr noundef null, i32 noundef 0, i64 0, i1 noundef zeroext false) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #22
   call void @_ZN4llvm24IRBuilderDefaultInserterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.anl) #22
@@ -329,7 +320,7 @@ _ZNK4mlir4LLVM17ModuleTranslation14lookupFunctionEN4llvm9StringRefE.exit: ; pred
   %.not3.i = select i1 %i.arf, i1 %i.arg, i1 false
   br i1 %.not3.i, label %.lr.ph1091, label %._crit_edge1092
 
-bb.dl:                                            ; preds = %_ZN4llvm5TwineC2EPKc.exit, %._crit_edge1092, %bb.dc
+bb.dl:                                            ; preds = %bb.df, %._crit_edge1092, %bb.dc
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #22
   %i.arh = getelementptr inbounds nuw i8, ptr %.sroa.0688.01095, i64 8
@@ -732,8 +723,7 @@ bb.ap:                                            ; preds = %bb.an
 
 _ZN4llvm11raw_ostreamlsEPKc.exit156:              ; preds = %bb.ao, %bb.ap
   %.0.i.i155 = phi ptr [ %i.ik, %bb.ao ], [ %14, %bb.ap ] ; 4 uses
-  %i.in = call noundef zeroext i1 @_ZNK4mlir28FunctionPointerAlignmentAttr20getFunctionDependentEv(ptr noundef nonnull align 8 dereferenceable(8) %23) #22
-  %.str.122..str.123 = select i1 %i.in, ptr @.str.122, ptr @.str.123 ; 2 uses
+  %i.in = call noundef zeroext i1 @_ZNK4mlir28FunctionPointerAlignmentAttr20getFunctionDependentEv(ptr noundef nonnull align 8 dereferenceable(8) %23) #22 ; 2 uses
   %i.io = getelementptr inbounds nuw i8, ptr %.0.i.i155, i64 24
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !662
   %i.iq = getelementptr inbounds nuw i8, ptr %.0.i.i155, i64 32 ; 3 uses
@@ -742,11 +732,12 @@ _ZN4llvm11raw_ostreamlsEPKc.exit156:              ; preds = %bb.ao, %bb.ap
   br i1 %i.is, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit156
+  %.str.122..str.123 = select i1 %i.in, ptr @.str.122, ptr @.str.123
   %i.it = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i155, ptr noundef nonnull %.str.122..str.123, i64 noundef 1) #22
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit159
 
 bb.ar:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit156
-  %29 = load i8, ptr %.str.122..str.123, align 1
+  %29 = select i1 %i.in, i8 110, i8 105
   store i8 %29, ptr %i.ir, align 1
   %i.iu = load ptr, ptr %i.iq, align 8, !tbaa !663
   %i.iv = getelementptr inbounds nuw i8, ptr %i.iu, i64 1

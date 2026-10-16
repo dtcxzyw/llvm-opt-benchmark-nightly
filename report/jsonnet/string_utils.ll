@@ -204,14 +204,12 @@ bb.a:
   br label %_ZN7jsonnet8internal13UStringStreamD2Ev.exit
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.g = select i1 %2, ptr @.str.2, ptr @.str.3   ; 2 uses
+  %i.g = select i1 %2, ptr @.str.2, ptr @.str.3
   %wcslen.i.i.i34 = select i1 %2, i64 2, i64 1    ; 4 uses
-  %7 = load i32, ptr %i.g, align 4
   %i.h = shl nuw nsw i64 %wcslen.i.i.i34, 2
-  %i.i = select i1 %2, ptr @.str, ptr @.str.1     ; 2 uses
+  %i.i = select i1 %2, ptr @.str, ptr @.str.1
   %wcslen.i.i.i = select i1 %2, i64 1, i64 2      ; 4 uses
   %i.j = shl nuw nsw i64 %wcslen.i.i.i, 2
-  %8 = load i32, ptr %i.i, align 4
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 8 uses
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 7 uses
   %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
@@ -338,7 +336,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   br i1 %2, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  store i32 %8, ptr %i.ay, align 4, !tbaa !14
+  store i32 34, ptr %i.ay, align 4, !tbaa !14
   br label %_ZN7jsonnet8internal13UStringStreamlsEPKDi.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -397,7 +395,7 @@ bb.l:                                             ; preds = %_ZNKSt7__cxx1112bas
   br i1 %2, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  store i32 %7, ptr %i.bk, align 4, !tbaa !14
+  store i32 39, ptr %i.bk, align 4, !tbaa !14
   br label %_ZN7jsonnet8internal13UStringStreamlsEPKDi.exit44
 
 bb.n:                                             ; preds = %bb.l

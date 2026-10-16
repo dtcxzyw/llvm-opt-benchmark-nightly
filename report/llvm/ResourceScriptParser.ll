@@ -204,7 +204,6 @@ $_ZTVN4llvm2rc8RCParser11ParserErrorE = comdat any
 @.str.17 = private unnamed_addr constant [7 x i8] c"string\00", align 1
 @.str.18 = private unnamed_addr constant [2 x i8] c"L\00", align 1
 @.str.19 = private unnamed_addr constant [2 x i8] c"\22\00", align 1
-@.str.20 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.21 = private unnamed_addr constant [11 x i8] c"identifier\00", align 1
 @.str.22 = private unnamed_addr constant [14 x i8] c"int or string\00", align 1
 @.str.23 = private unnamed_addr constant [18 x i8] c"int or identifier\00", align 1
@@ -607,24 +606,21 @@ _ZN4llvm9StringRef12consume_backES0_.exit23:      ; preds = %_ZN4llvm9StringRef1
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
-  %9 = select i1 %i.ay, ptr @.str.18, ptr @.str.20 ; 2 uses
-  %10 = load i8, ptr %9, align 1, !tbaa !28
-  %.not.i = icmp eq i8 %10, 0
-  br i1 %.not.i, label %bb.h, label %bb.i
+  br i1 %i.ay, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm9StringRef12consume_backES0_.exit23
   store ptr @.str.19, ptr %8, align 8
   br label %_ZN4llvmplERKNS_5TwineES2_.exit70
 
 bb.i:                                             ; preds = %_ZN4llvm9StringRef12consume_backES0_.exit23
-  store ptr %9, ptr %8, align 8, !alias.scope !795
+  store ptr @.str.18, ptr %8, align 8, !alias.scope !795
   store ptr @.str.19, ptr %i.ae, align 8, !alias.scope !795
   br label %_ZN4llvmplERKNS_5TwineES2_.exit70
 
 _ZN4llvmplERKNS_5TwineES2_.exit70:                ; preds = %bb.h, %bb.i
-  %.014.i.i28 = phi i8 [ 2, %bb.i ], [ 3, %bb.h ]
-  %.sroa.05.0.i.i29 = phi ptr [ %8, %bb.i ], [ @.str.19, %bb.h ]
-  %storemerge = phi i8 [ 3, %bb.i ], [ 1, %bb.h ]
+  %.014.i.i28 = phi i8 [ 3, %bb.h ], [ 2, %bb.i ]
+  %.sroa.05.0.i.i29 = phi ptr [ @.str.19, %bb.h ], [ %8, %bb.i ]
+  %storemerge = phi i8 [ 1, %bb.h ], [ 3, %bb.i ]
   store i8 3, ptr %i.af, align 8, !tbaa !796
   store i8 %storemerge, ptr %i.ag, align 1, !tbaa !796
   %.sroa.01.0.copyload = load ptr, ptr %3, align 8, !tbaa !75

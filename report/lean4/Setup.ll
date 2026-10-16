@@ -204,34 +204,21 @@ lean_inc.exit:                                    ; preds = %bb.e, %bb.d, %bb.c,
 bb.f:                                             ; preds = %lean_inc.exit
   %i.p = add nsw i32 %i.n, -1
   store i32 %i.p, ptr %0, align 8, !tbaa !12
-  br label %lean_dec_ref.exit42
+  br label %lean_inc_ref.exit45
 
 bb.g:                                             ; preds = %lean_inc.exit
   %.not.i41 = icmp eq i32 %i.n, 0
-  br i1 %.not.i41, label %lean_dec_ref.exit42, label %bb.h
+  br i1 %.not.i41, label %lean_inc_ref.exit45, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %0) #8
-  br label %lean_dec_ref.exit42
-
-lean_dec_ref.exit42:                              ; preds = %bb.f, %bb.g, %bb.h
-  %1 = icmp eq i8 %i.k, 0
-  %l_Lean_instToStringImport___lam__0___closed__1_value.l_Lean_instToStringImport___lam__0___closed__4_value = select i1 %1, ptr @l_Lean_instToStringImport___lam__0___closed__1_value, ptr @l_Lean_instToStringImport___lam__0___closed__4_value ; 3 uses
-  %2 = icmp eq i8 %i.m, 0
-  %.038 = select i1 %2, ptr @l_Lean_instToStringImport___lam__0___closed__1_value, ptr @l_Lean_instToStringImport___lam__0___closed__3_value
-  %.val.i.i43 = load i32, ptr %l_Lean_instToStringImport___lam__0___closed__1_value.l_Lean_instToStringImport___lam__0___closed__4_value, align 8, !tbaa !12 ; 2 uses
-  %3 = icmp sgt i32 %.val.i.i43, 0
-  br i1 %3, label %lean_inc_ref.exit45, label %4, !prof !13
-
-4:                                                ; preds = %lean_dec_ref.exit42
-  %.not.i.i44 = icmp eq i32 %.val.i.i43, 0
-  br i1 %.not.i.i44, label %lean_inc_ref.exit45, label %5
-
-5:                                                ; preds = %4
-  %6 = atomicrmw sub ptr %l_Lean_instToStringImport___lam__0___closed__1_value.l_Lean_instToStringImport___lam__0___closed__4_value, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit45
 
-lean_inc_ref.exit45:                              ; preds = %lean_dec_ref.exit42, %4, %5
+lean_inc_ref.exit45:                              ; preds = %bb.f, %bb.g, %bb.h
+  %1 = icmp eq i8 %i.k, 0
+  %l_Lean_instToStringImport___lam__0___closed__1_value.l_Lean_instToStringImport___lam__0___closed__4_value = select i1 %1, ptr @l_Lean_instToStringImport___lam__0___closed__1_value, ptr @l_Lean_instToStringImport___lam__0___closed__4_value
+  %2 = icmp eq i8 %i.m, 0
+  %.038 = select i1 %2, ptr @l_Lean_instToStringImport___lam__0___closed__1_value, ptr @l_Lean_instToStringImport___lam__0___closed__3_value
   %i.q = tail call ptr @lean_string_append(ptr noundef nonnull %l_Lean_instToStringImport___lam__0___closed__1_value.l_Lean_instToStringImport___lam__0___closed__4_value, ptr noundef nonnull %.038) #8
   %i.r = tail call ptr @lean_string_append(ptr noundef %i.q, ptr noundef nonnull @l_Lean_instToStringImport___lam__0___closed__0_value) #8
   %i.s = icmp eq i8 %i.i, 0

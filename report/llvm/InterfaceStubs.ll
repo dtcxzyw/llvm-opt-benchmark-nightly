@@ -202,21 +202,12 @@ _ZN4llvmneENS_9StringRefES0_.exit.thread:         ; preds = %_ZN4llvm11SmallStri
 
 bb.f:                                             ; preds = %_ZN4llvmneENS_9StringRefES0_.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #12
-  %i.ao = select i1 %.not, ptr @.str.5, ptr @.str.6 ; 2 uses
   %19 = getelementptr inbounds nuw i8, ptr %13, i64 32
   %20 = getelementptr inbounds nuw i8, ptr %13, i64 33
   store i8 1, ptr %20, align 1, !tbaa !22
-  %21 = load i8, ptr %i.ao, align 1, !tbaa !14
-  %.not.i30 = icmp eq i8 %21, 0
-  br i1 %.not.i30, label %_ZN4llvm5TwineC2EPKc.exit, label %22
-
-22:                                               ; preds = %bb.f
+  %i.ao = select i1 %.not, ptr @.str.5, ptr @.str.6
   store ptr %i.ao, ptr %13, align 8, !tbaa !14
-  br label %_ZN4llvm5TwineC2EPKc.exit
-
-_ZN4llvm5TwineC2EPKc.exit:                        ; preds = %bb.f, %22
-  %storemerge.i = phi i8 [ 3, %22 ], [ 1, %bb.f ]
-  store i8 %storemerge.i, ptr %19, align 8, !tbaa !23
+  store i8 3, ptr %19, align 8, !tbaa !23
   call void @_ZN4llvm3sys4path17replace_extensionERNS_15SmallVectorImplIcEERKNS_5TwineENS1_5StyleE(ptr noundef nonnull align 8 dereferenceable(24) %12, ptr noundef nonnull align 8 dereferenceable(34) %13, i32 noundef 0) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #12
   %.pre91 = load i64, ptr %i.ai, align 8, !tbaa !19
@@ -246,8 +237,8 @@ _ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i:  ; preds = %bb.g, %bb.h
   store i64 %i.ax, ptr %i.ai, align 8, !tbaa !19
   br label %_ZN4llvmneENS_9StringRefES0_.exit.thread78
 
-_ZN4llvmneENS_9StringRefES0_.exit.thread78:       ; preds = %_ZN4llvm5TwineC2EPKc.exit, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i, %_ZN4llvmneENS_9StringRefES0_.exit
-  %i.ay = phi i64 [ %.pre91, %_ZN4llvm5TwineC2EPKc.exit ], [ %i.ax, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i ], [ 1, %_ZN4llvmneENS_9StringRefES0_.exit ] ; 2 uses
+_ZN4llvmneENS_9StringRefES0_.exit.thread78:       ; preds = %bb.f, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i, %_ZN4llvmneENS_9StringRefES0_.exit
+  %i.ay = phi i64 [ %.pre91, %bb.f ], [ %i.ax, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i ], [ 1, %_ZN4llvmneENS_9StringRefES0_.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #12
   %i.az = load i64, ptr %i.ah, align 8, !tbaa !18
   %.not.i.i33 = icmp ult i64 %i.ay, %i.az

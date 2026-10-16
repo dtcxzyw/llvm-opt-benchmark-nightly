@@ -204,17 +204,13 @@ bb.c:                                             ; preds = %bb.b
   %i.o = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.n) ; 5 uses
   %i.p = add i32 %i.n, 1                          ; 6 uses
   %.not.i = icmp sgt i8 %i.o, -1                  ; 2 uses
-  %amqp_0_10_fixed_types.amqp_0_10_var_types.i = select i1 %.not.i, ptr @amqp_0_10_fixed_types, ptr @amqp_0_10_var_types ; 3 uses
-  %3 = load i8, ptr %amqp_0_10_fixed_types.amqp_0_10_var_types.i, align 16 ; 2 uses
-  %.not2024.not.i = icmp eq i8 %3, -1
-  br i1 %.not2024.not.i, label %.loopexit, label %.lr.ph.i.preheader
+  %amqp_0_10_fixed_types.amqp_0_10_var_types.i = select i1 %.not.i, ptr @amqp_0_10_fixed_types, ptr @amqp_0_10_var_types ; 2 uses
+  %3 = and i8 %i.o, 127
+  %.not2024.not.i = icmp eq i8 %3, 0
+  br i1 %.not2024.not.i, label %.lr.ph.i._crit_edge, label %.lr.ph
 
-.lr.ph.i.preheader:                               ; preds = %bb.c
-  %4 = icmp eq i8 %3, %i.o
-  br i1 %4, label %.lr.ph.i._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.01725.i101 = phi i32 [ %i.q, %.lr.ph.i ], [ 0, %.lr.ph.i.preheader ]
+.lr.ph:                                           ; preds = %bb.c, %.lr.ph.i
+  %.01725.i101 = phi i32 [ %i.q, %.lr.ph.i ], [ 0, %bb.c ]
   %i.q = add i32 %.01725.i101, 1                  ; 2 uses
   %i.r = sext i32 %i.q to i64
   %i.s = getelementptr [32 x i8], ptr %amqp_0_10_fixed_types.amqp_0_10_var_types.i, i64 %i.r ; 2 uses
@@ -226,8 +222,8 @@ bb.c:                                             ; preds = %bb.b
   %i.u = icmp eq i8 %i.t, %i.o
   br i1 %i.u, label %.lr.ph.i._crit_edge, label %.lr.ph, !llvm.loop !16
 
-.lr.ph.i._crit_edge:                              ; preds = %.lr.ph.i, %.lr.ph.i.preheader
-  %.lcssa = phi ptr [ %amqp_0_10_fixed_types.amqp_0_10_var_types.i, %.lr.ph.i.preheader ], [ %i.s, %.lr.ph.i ] ; 3 uses
+.lr.ph.i._crit_edge:                              ; preds = %.lr.ph.i, %bb.c
+  %.lcssa = phi ptr [ %amqp_0_10_fixed_types.amqp_0_10_var_types.i, %bb.c ], [ %i.s, %.lr.ph.i ] ; 3 uses
   %i.v = load ptr, ptr %i.g, align 8
   %i.w = getelementptr i8, ptr %.lcssa, i64 8
   %i.x = load ptr, ptr %i.w, align 8
@@ -245,7 +241,7 @@ bb.c:                                             ; preds = %bb.b
   %i.aj = call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_none_format(ptr noundef %i.c, i32 noundef %i.af, ptr noundef %0, i32 noundef %.077103, i32 noundef %i.ah, ptr noundef nonnull @.str.1491, ptr noundef %i.m, ptr noundef %i.y, ptr noundef %i.ai) ; 0 uses
   br label %bb.m
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.c
+.loopexit:                                        ; preds = %.lr.ph
   %i.ak = zext i8 %i.o to i32                     ; 2 uses
   %.off = add i8 %i.o, 88
   %switch = icmp ult i8 %.off, 3

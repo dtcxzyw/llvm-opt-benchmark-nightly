@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 135
 inline.NumDeleted: 23
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@dissect_gtp_mbms_time_to_data_tr:bb.a
   %i.b = add i8 %i.a, 1
   %i.c = load i32, ptr @hf_gtp_time_2_dta_tr, align 4
@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.0434 = phi ptr [ %i.ah, %bb.f ], [ null, %bb.e ] ; 19 uses
+  %.0434 = phi ptr [ %i.ah, %bb.f ], [ null, %bb.e ] ; 18 uses
   %i.ao = tail call fastcc ptr @find_or_create_gtp_conv_info(ptr noundef %1)
   %i.ap = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0) ; 3 uses
   store i8 %i.ap, ptr %i.z, align 8
@@ -259,7 +259,7 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.k, %bb.j, %bb.n, %bb.m, %bb.g
-  %.0445 = phi ptr [ %i.au, %bb.j ], [ %i.au, %bb.k ], [ %i.be, %bb.m ], [ %i.be, %bb.n ], [ null, %bb.g ] ; 19 uses
+  %.0445 = phi ptr [ %i.au, %bb.j ], [ %i.au, %bb.k ], [ %i.be, %bb.m ], [ %i.be, %bb.n ], [ null, %bb.g ] ; 18 uses
   %.0444 = phi ptr [ %i.as, %bb.j ], [ %i.as, %bb.k ], [ %i.bc, %bb.m ], [ %i.bc, %bb.n ], [ null, %bb.g ]
   %i.bl = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1) ; 3 uses
   %i.bm = getelementptr i8, ptr %i.z, i64 1       ; 8 uses
@@ -291,7 +291,7 @@ bb.p:                                             ; preds = %switch.hole_check, 
   %i.bt = load i32, ptr @hf_gtp_message_type, align 4
   %i.bu = load i8, ptr %i.bm, align 1
   %i.bv = zext i8 %i.bu to i32
-  %i.bw = tail call ptr @proto_tree_add_uint(ptr noundef %.0445, i32 noundef %i.bt, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef %i.bv) ; 4 uses
+  %i.bw = tail call ptr @proto_tree_add_uint(ptr noundef %.0445, i32 noundef %i.bt, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef %i.bv) ; 3 uses
   %i.bx = load i32, ptr @hf_gtp_length, align 4
   %i.by = getelementptr i8, ptr %i.z, i64 4       ; 16 uses
   %i.bz = tail call ptr @proto_tree_add_item_ret_uint(ptr noundef %.0445, i32 noundef %i.bx, ptr noundef %0, i32 noundef 2, i32 noundef 2, i32 noundef 0, ptr noundef %i.by) ; 8 uses
@@ -694,7 +694,7 @@ bb.cd:                                            ; preds = %.lr.ph
   br label %.thread
 
 .thread:                                          ; preds = %bb.cc, %.thread.sink.split, %bb.ao, %bb.an, %bb.am
-  %.2440 = phi i32 [ 12, %bb.ao ], [ 8, %bb.am ], [ %.2440.ph, %.thread.sink.split ], [ 12, %bb.an ], [ %i.kq, %bb.cc ] ; 5 uses
+  %.2440 = phi i32 [ 12, %bb.ao ], [ 8, %bb.am ], [ %.2440.ph, %.thread.sink.split ], [ 12, %bb.an ], [ %i.kq, %bb.cc ] ; 4 uses
   %.1436 = phi i1 [ %.not462, %bb.ao ], [ false, %bb.am ], [ true, %.thread.sink.split ], [ %.not462, %bb.an ], [ %.not462, %bb.cc ]
   %i.kt = load i8, ptr %i.bm, align 1
   %.not479 = icmp eq i8 %i.kt, -1
@@ -708,88 +708,12 @@ bb.ce:                                            ; preds = %.thread
 
 .lr.ph540:                                        ; preds = %bb.ce
   %narrow = select i1 %.not, i1 %.b, i1 false
-  %gprs_mess_items.umts_mess_items.i = select i1 %narrow, ptr @umts_mess_items, ptr @gprs_mess_items ; 3 uses
-  %6 = load i8, ptr %gprs_mess_items.umts_mess_items.i, align 16
-  %.fr = freeze i8 %6                             ; 2 uses
-  %.not41.i = icmp eq i8 %.fr, 0
-  br i1 %.not41.i, label %.lr.ph540.split.us, label %.lr.ph540.split
-
-.lr.ph540.split.us:                               ; preds = %.lr.ph540, %.split.loop.exit706
-  %.3441539.us = phi i32 [ %39, %.split.loop.exit706 ], [ %.2440, %.lr.ph540 ] ; 3 uses
-  %7 = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.3441539.us)
-  %8 = load i8, ptr @g_gtp_etsi_order, align 1, !range !10, !noundef !11
-  %9 = trunc nuw i8 %8 to i1
-  br i1 %9, label %check_field_presence_and_decoder.exit.thread.us, label %.preheader.us
-
-check_field_presence_and_decoder.exit.thread.us:  ; preds = %.lr.ph540.split.us
-  %10 = call ptr @expert_add_info(ptr noundef %1, ptr noundef %i.bw, ptr noundef nonnull @ei_gtp_message_not_found) ; 0 uses
-  br label %.preheader.us
-
-.preheader.us:                                    ; preds = %check_field_presence_and_decoder.exit.thread.us, %.lr.ph540.split.us
-  %11 = zext i8 %7 to i32                         ; 4 uses
-  br label %29
-
-12:                                               ; preds = %29
-  %.not489.us = icmp eq i64 %indvars.iv.next563654, 132
-  br i1 %.not489.us, label %.split.loop.exit706, label %13
-
-13:                                               ; preds = %12
-  %14 = getelementptr [16 x i8], ptr @gtpopt, i64 %indvars.iv.next563654 ; 2 uses
-  %15 = getelementptr i8, ptr %14, i64 16
-  %16 = load i32, ptr %15, align 16
-  %17 = icmp eq i32 %16, %11
-  br i1 %17, label %.split.loop.exit704, label %18, !llvm.loop !49
-
-18:                                               ; preds = %13
-  %19 = getelementptr [16 x i8], ptr @gtpopt, i64 %indvars.iv.next563654 ; 2 uses
-  %20 = getelementptr i8, ptr %19, i64 32
-  %21 = load i32, ptr %20, align 16
-  %22 = icmp eq i32 %21, %11
-  br i1 %22, label %.split.loop.exit702, label %23, !llvm.loop !49
-
-23:                                               ; preds = %18
-  %24 = getelementptr [16 x i8], ptr @gtpopt, i64 %indvars.iv.next563654 ; 2 uses
-  %25 = getelementptr i8, ptr %24, i64 48
-  %26 = load i32, ptr %25, align 16
-  %27 = icmp eq i32 %26, %11
-  br i1 %27, label %.split.loop.exit701, label %28, !llvm.loop !49
-
-28:                                               ; preds = %23
-  %indvars.iv.next563.3 = add nuw nsw i64 %indvars.iv.next563654, 4
-  br label %29
-
-29:                                               ; preds = %28, %.preheader.us
-  %indvars.iv.next563654 = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next563.3, %28 ] ; 6 uses
-  %30 = getelementptr [16 x i8], ptr @gtpopt, i64 %indvars.iv.next563654 ; 2 uses
-  %31 = load i32, ptr %30, align 16
-  %32 = icmp eq i32 %31, %11
-  br i1 %32, label %.split.loop.exit706, label %12, !llvm.loop !49
-
-.split.loop.exit701:                              ; preds = %23
-  %33 = getelementptr i8, ptr %24, i64 48
-  br label %.split.loop.exit706
-
-.split.loop.exit702:                              ; preds = %18
-  %34 = getelementptr i8, ptr %19, i64 32
-  br label %.split.loop.exit706
-
-.split.loop.exit704:                              ; preds = %13
-  %35 = getelementptr i8, ptr %14, i64 16
-  br label %.split.loop.exit706
-
-.split.loop.exit706:                              ; preds = %12, %29, %.split.loop.exit704, %.split.loop.exit702, %.split.loop.exit701
-  %.lcssa543 = phi ptr [ %35, %.split.loop.exit704 ], [ %30, %29 ], [ %34, %.split.loop.exit702 ], [ %33, %.split.loop.exit701 ], [ getelementptr inbounds nuw (i8, ptr @gtpopt, i64 2128), %12 ]
-  %36 = getelementptr i8, ptr %.lcssa543, i64 8
-  %37 = load ptr, ptr %36, align 8
-  %38 = call i32 %37(ptr noundef %0, i32 noundef %.3441539.us, ptr noundef %1, ptr noundef %.0445, ptr noundef %.0434)
-  %39 = add i32 %38, %.3441539.us                 ; 3 uses
-  %40 = call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %39)
-  %.not480.us = icmp eq i32 %40, 0
-  br i1 %.not480.us, label %._crit_edge, label %.lr.ph540.split.us, !llvm.loop !50
+  %gprs_mess_items.umts_mess_items.i = select i1 %narrow, ptr @umts_mess_items, ptr @gprs_mess_items ; 2 uses
+  br label %.lr.ph540.split
 
 .lr.ph540.split:                                  ; preds = %.lr.ph540, %bb.co
-  %.3441539 = phi i32 [ %i.my, %bb.co ], [ %.2440, %.lr.ph540 ] ; 3 uses
-  %.0497538 = phi i32 [ %.1498611, %bb.co ], [ 0, %.lr.ph540 ] ; 5 uses
+  %.3441539 = phi i32 [ %.2440, %.lr.ph540 ], [ %i.my, %bb.co ] ; 3 uses
+  %.0497538 = phi i32 [ 0, %.lr.ph540 ], [ %.1498611, %bb.co ] ; 5 uses
   %i.kv = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.3441539) ; 2 uses
   %i.kw = load i8, ptr @g_gtp_etsi_order, align 1, !range !10, !noundef !11
   %i.kx = trunc nuw i8 %i.kw to i1
@@ -797,7 +721,7 @@ check_field_presence_and_decoder.exit.thread.us:  ; preds = %.lr.ph540.split.us
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph540.split
   %i.ky = load i8, ptr %i.bm, align 1             ; 2 uses
-  %i.kz = icmp eq i8 %.fr, %i.ky
+  %i.kz = icmp eq i8 %i.ky, 1
   br i1 %i.kz, label %.preheader.i, label %.lr.ph535
 
 .lr.ph535:                                        ; preds = %.lr.ph.i.preheader, %.lr.ph.i
@@ -807,11 +731,11 @@ check_field_presence_and_decoder.exit.thread.us:  ; preds = %.lr.ph540.split.us
   %i.lc = getelementptr [744 x i8], ptr %gprs_mess_items.umts_mess_items.i, i64 %i.lb ; 2 uses
   %i.ld = load i8, ptr %i.lc, align 8             ; 2 uses
   %.not.i = icmp eq i8 %i.ld, 0
-  br i1 %.not.i, label %check_field_presence_and_decoder.exit.thread.loopexit, label %.lr.ph.i, !llvm.loop !51
+  br i1 %.not.i, label %check_field_presence_and_decoder.exit.thread.loopexit, label %.lr.ph.i, !llvm.loop !49
 
 .lr.ph.i:                                         ; preds = %.lr.ph535
   %i.le = icmp eq i8 %i.ld, %i.ky
-  br i1 %i.le, label %.preheader.i, label %.lr.ph535, !llvm.loop !51
+  br i1 %i.le, label %.preheader.i, label %.lr.ph535, !llvm.loop !49
 
 .preheader.i:                                     ; preds = %.lr.ph.i, %.lr.ph.i.preheader
   %.lcssa = phi ptr [ %gprs_mess_items.umts_mess_items.i, %.lr.ph.i.preheader ], [ %i.lc, %.lr.ph.i ]
@@ -841,7 +765,7 @@ bb.cg:                                            ; preds = %bb.cf
   %i.lr = getelementptr [16 x i8], ptr %i.lf, i64 %i.lq ; 2 uses
   %i.ls = load i8, ptr %i.lr, align 8             ; 2 uses
   %.not30.i = icmp eq i8 %i.ls, 0
-  br i1 %.not30.i, label %check_field_presence_and_decoder.exit.thread508, label %.lr.ph44.i, !llvm.loop !52
+  br i1 %.not30.i, label %check_field_presence_and_decoder.exit.thread508, label %.lr.ph44.i, !llvm.loop !50
 
 check_field_presence_and_decoder.exit:            ; preds = %bb.cf
   %i.lt = zext i8 %i.lj to i32
@@ -879,21 +803,21 @@ bb.cj:                                            ; preds = %bb.ci
   %i.me = getelementptr i8, ptr %i.md, i64 16
   %i.mf = load i32, ptr %i.me, align 16
   %i.mg = icmp eq i32 %i.mf, %i.mc
-  br i1 %i.mg, label %.split.loop.exit692, label %bb.ck, !llvm.loop !49
+  br i1 %i.mg, label %.split.loop.exit692, label %bb.ck, !llvm.loop !51
 
 bb.ck:                                            ; preds = %bb.cj
   %i.mh = getelementptr [16 x i8], ptr @gtpopt, i64 %indvars.iv.next653 ; 2 uses
   %i.mi = getelementptr i8, ptr %i.mh, i64 32
   %i.mj = load i32, ptr %i.mi, align 16
   %i.mk = icmp eq i32 %i.mj, %i.mc
-  br i1 %i.mk, label %.split.loop.exit690, label %bb.cl, !llvm.loop !49
+  br i1 %i.mk, label %.split.loop.exit690, label %bb.cl, !llvm.loop !51
 
 bb.cl:                                            ; preds = %bb.ck
   %i.ml = getelementptr [16 x i8], ptr @gtpopt, i64 %indvars.iv.next653 ; 2 uses
   %i.mm = getelementptr i8, ptr %i.ml, i64 48
   %i.mn = load i32, ptr %i.mm, align 16
   %i.mo = icmp eq i32 %i.mn, %i.mc
-  br i1 %i.mo, label %.split.loop.exit, label %bb.cm, !llvm.loop !49
+  br i1 %i.mo, label %.split.loop.exit, label %bb.cm, !llvm.loop !51
 
 bb.cm:                                            ; preds = %bb.cl
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv.next653, 4
@@ -904,7 +828,7 @@ bb.cn:                                            ; preds = %bb.cm, %.preheader
   %i.mp = getelementptr [16 x i8], ptr @gtpopt, i64 %indvars.iv.next653 ; 2 uses
   %i.mq = load i32, ptr %i.mp, align 16
   %i.mr = icmp eq i32 %i.mq, %i.mc
-  br i1 %i.mr, label %.split.loop.exit694, label %bb.ci, !llvm.loop !49
+  br i1 %i.mr, label %.split.loop.exit694, label %bb.ci, !llvm.loop !51
 
 .split.loop.exit:                                 ; preds = %bb.cl
   %i.ms = getelementptr i8, ptr %i.ml, i64 48
@@ -931,10 +855,10 @@ bb.co:                                            ; preds = %.split.loop.exit694
   %i.my = add i32 %i.mx, %.3441539                ; 3 uses
   %i.mz = call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.my)
   %.not480 = icmp eq i32 %i.mz, 0
-  br i1 %.not480, label %._crit_edge, label %.lr.ph540.split, !llvm.loop !50
+  br i1 %.not480, label %._crit_edge, label %.lr.ph540.split, !llvm.loop !52
 
-._crit_edge:                                      ; preds = %bb.co, %.split.loop.exit706, %bb.ce
-  %.3441.lcssa = phi i32 [ %.2440, %bb.ce ], [ %39, %.split.loop.exit706 ], [ %i.my, %bb.co ] ; 4 uses
+._crit_edge:                                      ; preds = %bb.co, %bb.ce
+  %.3441.lcssa = phi i32 [ %.2440, %bb.ce ], [ %i.my, %bb.co ] ; 4 uses
   %.not481 = icmp eq ptr %.0434, null             ; 2 uses
   br i1 %.not481, label %bb.ct, label %bb.cp
 

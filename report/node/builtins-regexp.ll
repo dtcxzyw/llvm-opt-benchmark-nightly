@@ -204,28 +204,18 @@ _ZN2v88internal24IncrementalStringBuilder6AppendIKtS3_EEvT_.exit64.i.i: ; preds 
 .thread126.i.i:                                   ; preds = %bb.cc, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit.i.i, %.split.i.i
   %.2132.i.i = phi i64 [ %.2.i.i, %bb.cc ], [ %.039151.i.i, %.split.i.i ], [ %.1125.i.i, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit.i.i ] ; 4 uses
   %.143130.i.i = phi i32 [ %.143.i.i, %bb.cc ], [ %i.ul, %.split.i.i ], [ %.042121.i.i, %_ZN2v88internal28IsWhiteSpaceOrLineTerminatorEj.exit.i.i ] ; 2 uses
-  %i.wm = icmp samesign ult i32 %.143130.i.i, 256
-  %.str.6..str.7.i.i = select i1 %i.wm, ptr @.str.6, ptr @.str.7 ; 5 uses
+  %i.wm = icmp samesign ult i32 %.143130.i.i, 256 ; 2 uses
+  %.str.6..str.7.i.i = select i1 %i.wm, ptr @.str.6, ptr @.str.7 ; 2 uses
   %i.wn = load i32, ptr %i.pv, align 8
   %i.wo = icmp eq i32 %i.wn, 0
-  br i1 %i.wo, label %bb.ch, label %.critedge136.preheader.i.i
-
-.critedge136.preheader.i.i:                       ; preds = %.thread126.i.i
-  %12 = load i8, ptr %.str.6..str.7.i.i, align 1  ; 2 uses
-  %.not.i58143.i.i = icmp eq i8 %12, 0
-  br i1 %.not.i58143.i.i, label %_ZN2v88internal24IncrementalStringBuilder20AppendCStringLiteralILi3EEEvRAT__Kc.exit.i62.i, label %.lr.ph145.i.i
+  br i1 %i.wo, label %bb.ch, label %.lr.ph145.i.i
 
 bb.ch:                                            ; preds = %.thread126.i.i
   %i.wp = load i32, ptr %i.ui, align 8
   %i.wq = load i32, ptr %i.pq, align 4            ; 2 uses
   %i.wr = sub nsw i32 %i.wp, %i.wq
   %i.ws = icmp sgt i32 %i.wr, 3
-  br i1 %i.ws, label %bb.ci, label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %bb.ch
-  %13 = load i8, ptr %.str.6..str.7.i.i, align 1  ; 2 uses
-  %.not5.i60146.i.i = icmp eq i8 %13, 0
-  br i1 %.not5.i60146.i.i, label %_ZN2v88internal24IncrementalStringBuilder20AppendCStringLiteralILi3EEEvRAT__Kc.exit.i62.i, label %.lr.ph148.i.i
+  br i1 %i.ws, label %bb.ci, label %.lr.ph148.i.i
 
 bb.ci:                                            ; preds = %bb.ch
   %i.wt = load ptr, ptr %i.pp, align 8
@@ -235,8 +225,8 @@ bb.ci:                                            ; preds = %bb.ch
   %i.wx = getelementptr inbounds nuw i8, ptr %i.ww, i64 16
   %i.wy = zext i32 %i.wq to i64
   %i.wz = getelementptr inbounds nuw i8, ptr %i.wx, i64 %i.wy
-  %14 = load i16, ptr %.str.6..str.7.i.i, align 1
-  store i16 %14, ptr %i.wz, align 1
+  %12 = select i1 %i.wm, i16 30812, i16 30044
+  store i16 %12, ptr %i.wz, align 1
   %i.xa = load i32, ptr %i.pq, align 4
   %i.xb = add nsw i32 %i.xa, 2                    ; 2 uses
   store i32 %i.xb, ptr %i.pq, align 4
@@ -248,9 +238,9 @@ bb.cj:                                            ; preds = %bb.ci
   call void @_ZN2v88internal24IncrementalStringBuilder6ExtendEv(ptr noundef nonnull align 8 dereferenceable(40) %3) #11
   br label %_ZN2v88internal24IncrementalStringBuilder20AppendCStringLiteralILi3EEEvRAT__Kc.exit.i62.i
 
-.lr.ph148.i.i:                                    ; preds = %.preheader.i.i, %_ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i
-  %i.xe = phi i8 [ %i.xs, %_ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i ], [ %13, %.preheader.i.i ]
-  %.0.i59147.i.i = phi ptr [ %i.xf, %_ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i ], [ %.str.6..str.7.i.i, %.preheader.i.i ]
+.lr.ph148.i.i:                                    ; preds = %bb.ch, %_ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i
+  %i.xe = phi i8 [ %i.xs, %_ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i ], [ 92, %bb.ch ]
+  %.0.i59147.i.i = phi ptr [ %i.xf, %_ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i ], [ %.str.6..str.7.i.i, %bb.ch ]
   %i.xf = getelementptr inbounds nuw i8, ptr %.0.i59147.i.i, i64 1 ; 2 uses
   %i.xg = load ptr, ptr %i.pp, align 8
   %i.xh = load i64, ptr %i.xg, align 8
@@ -277,9 +267,9 @@ _ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i: ; preds = %
   %.not5.i60.i.i = icmp eq i8 %i.xs, 0
   br i1 %.not5.i60.i.i, label %_ZN2v88internal24IncrementalStringBuilder20AppendCStringLiteralILi3EEEvRAT__Kc.exit.i62.i, label %.lr.ph148.i.i, !llvm.loop !63
 
-.lr.ph145.i.i:                                    ; preds = %.critedge136.preheader.i.i, %_ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i
-  %i.xt = phi i8 [ %i.yi, %_ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i ], [ %12, %.critedge136.preheader.i.i ]
-  %.1.i57144.i.i = phi ptr [ %i.xu, %_ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i ], [ %.str.6..str.7.i.i, %.critedge136.preheader.i.i ]
+.lr.ph145.i.i:                                    ; preds = %.thread126.i.i, %_ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i
+  %i.xt = phi i8 [ %i.yi, %_ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i ], [ 92, %.thread126.i.i ]
+  %.1.i57144.i.i = phi ptr [ %i.xu, %_ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i ], [ %.str.6..str.7.i.i, %.thread126.i.i ]
   %i.xu = getelementptr inbounds nuw i8, ptr %.1.i57144.i.i, i64 1 ; 2 uses
   %i.xv = load ptr, ptr %i.pp, align 8
   %i.xw = load i64, ptr %i.xv, align 8
@@ -307,7 +297,7 @@ _ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i: ; preds = %
   %.not.i58.i.i = icmp eq i8 %i.yi, 0
   br i1 %.not.i58.i.i, label %_ZN2v88internal24IncrementalStringBuilder20AppendCStringLiteralILi3EEEvRAT__Kc.exit.i62.i, label %.lr.ph145.i.i, !llvm.loop !64
 
-_ZN2v88internal24IncrementalStringBuilder20AppendCStringLiteralILi3EEEvRAT__Kc.exit.i62.i: ; preds = %_ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i, %_ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i, %bb.cj, %bb.ci, %.preheader.i.i, %.critedge136.preheader.i.i
+_ZN2v88internal24IncrementalStringBuilder20AppendCStringLiteralILi3EEEvRAT__Kc.exit.i62.i: ; preds = %_ZN2v88internal24IncrementalStringBuilder6AppendIctEEvT_.exit.i61.i, %_ZN2v88internal24IncrementalStringBuilder6AppendIchEEvT_.exit.i65.i, %bb.cj, %bb.ci
   %i.yj = uitofp nneg i32 %.143130.i.i to double
   %i.yk = call { i64, ptr } @_ZN2v88internal23DoubleToRadixStringViewEdiNS_4base6VectorIcEE(double noundef %i.yj, i32 noundef 16, ptr nonnull %i.a, i64 2200) #11 ; 2 uses
   %i.yl = extractvalue { i64, ptr } %i.yk, 0      ; 4 uses

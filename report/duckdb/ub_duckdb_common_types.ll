@@ -205,8 +205,8 @@ _ZN10duckdb_fmt2v68internal14format_decimalIcSt20back_insert_iteratorIN6duckdb6v
 define linkonce_odr void @_ZN10duckdb_fmt2v68internal18arg_formatter_baseINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEENS1_13error_handlerEE5writeEb(ptr noundef nonnull align 8 dereferenceable(24) %0, i1 noundef zeroext %1) local_unnamed_addr #3 comdat align 2 {
 bb.a:
   %2 = alloca %"struct.duckdb_fmt::v6::internal::basic_writer<duckdb_fmt::v6::internal::output_range<std::back_insert_iterator<duckdb::vector<char>>, char>>::str_writer", align 8 ; 5 uses
-  %i.a = select i1 %1, ptr @.str.398, ptr @.str.399 ; 4 uses
-  %i.b = select i1 %1, i64 4, i64 5               ; 6 uses
+  %i.a = select i1 %1, ptr @.str.398, ptr @.str.399 ; 3 uses
+  %i.b = select i1 %1, i64 4, i64 5               ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !935  ; 3 uses
   %.not = icmp eq ptr %i.d, null
@@ -214,49 +214,38 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !949  ; 3 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !949  ; 7 uses
   %i.g = icmp sgt i32 %i.f, -1
-  br i1 %i.g, label %3, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
+  %3 = zext nneg i32 %i.f to i64
+  %4 = icmp samesign ugt i64 %i.b, %3
+  %or.cond = select i1 %i.g, i1 %4, i1 false
+  br i1 %or.cond, label %bb.c, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
 
-3:                                                ; preds = %bb.b
-  %4 = zext nneg i32 %i.f to i64                  ; 5 uses
-  %5 = icmp samesign ugt i64 %i.b, %4
-  br i1 %5, label %.lr.ph.i.i, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
-
-.lr.ph.i.i:                                       ; preds = %3
-  %6 = load i8, ptr %i.a, align 1, !tbaa !273
-  %.not14.i.i = icmp slt i8 %6, -64
-  br i1 %.not14.i.i, label %.lr.ph.i.i.1, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph.i.i
+bb.c:                                             ; preds = %bb.b
   %i.h = icmp eq i32 %i.f, 0
   br i1 %i.h, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %.lr.ph.i.i.1
 
-.lr.ph.i.i.1:                                     ; preds = %bb.c, %.lr.ph.i.i
-  %.1.i.i = phi i64 [ 2, %bb.c ], [ 1, %.lr.ph.i.i ] ; 3 uses
-  %7 = icmp samesign ugt i64 %.1.i.i, %4
-  br i1 %7, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %.lr.ph.i.i.2
+.lr.ph.i.i.1:                                     ; preds = %bb.c
+  %5 = icmp ult i32 %i.f, 2
+  br i1 %5, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %.lr.ph.i.i.2
 
 .lr.ph.i.i.2:                                     ; preds = %.lr.ph.i.i.1
-  %8 = add nuw nsw i64 %.1.i.i, 1
-  %.not16 = icmp samesign ult i64 %.1.i.i, %4
-  br i1 %.not16, label %.lr.ph.i.i.3, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
+  %.not16 = icmp ult i32 %i.f, 3
+  br i1 %.not16, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %.lr.ph.i.i.3
 
 .lr.ph.i.i.3:                                     ; preds = %.lr.ph.i.i.2
-  %9 = add i64 %8, 1                              ; 2 uses
-  %10 = icmp ugt i64 %9, %4                       ; 2 uses
-  %brmerge = or i1 %10, %1
-  %.mux = select i1 %10, i64 3, i64 %i.b
+  %6 = icmp ult i32 %i.f, 4                       ; 2 uses
+  %brmerge = or i1 %6, %1
+  %.mux = select i1 %6, i64 3, i64 %i.b
   br i1 %brmerge, label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %.lr.ph.i.i.4
 
 .lr.ph.i.i.4:                                     ; preds = %.lr.ph.i.i.3
-  %11 = add i64 %9, 1
-  %12 = icmp ugt i64 %11, %4
-  %spec.select = select i1 %12, i64 4, i64 %i.b
+  %7 = icmp ult i32 %i.f, 5
+  %spec.select = select i1 %7, i64 4, i64 %i.b
   br label %_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
 
-_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit: ; preds = %.lr.ph.i.i.4, %bb.c, %.lr.ph.i.i.1, %.lr.ph.i.i.2, %.lr.ph.i.i.3, %bb.b, %3
-  %.0.i = phi i64 [ %i.b, %bb.b ], [ %i.b, %3 ], [ 0, %bb.c ], [ %.mux, %.lr.ph.i.i.3 ], [ 1, %.lr.ph.i.i.1 ], [ %spec.select, %.lr.ph.i.i.4 ], [ 2, %.lr.ph.i.i.2 ]
+_ZN10duckdb_fmt2v68internal12basic_writerINS1_12output_rangeISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit: ; preds = %.lr.ph.i.i.4, %bb.c, %.lr.ph.i.i.1, %.lr.ph.i.i.2, %.lr.ph.i.i.3, %bb.b
+  %.0.i = phi i64 [ %i.b, %bb.b ], [ 0, %bb.c ], [ %.mux, %.lr.ph.i.i.3 ], [ 1, %.lr.ph.i.i.1 ], [ %spec.select, %.lr.ph.i.i.4 ], [ 2, %.lr.ph.i.i.2 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #46
   store ptr %i.a, ptr %2, align 8, !tbaa !987
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8

@@ -204,22 +204,9 @@ bb.ag:                                            ; preds = %lean_dec_ref_known.
 l_Lake_CacheServiceScope_isRepo.exit:             ; preds = %bb.af, %bb.ag
   %.0.i.i = phi i32 [ %i.az, %bb.af ], [ %i.bb, %bb.ag ]
   %.not = icmp eq i32 %.0.i.i, 1
-  %l_Lake_CacheOutput_toJson___closed__5_value.l_Lake_CacheOutput_toJson___closed__6_value = select i1 %.not, ptr @l_Lake_CacheOutput_toJson___closed__6_value, ptr @l_Lake_CacheOutput_toJson___closed__5_value ; 3 uses
+  %l_Lake_CacheOutput_toJson___closed__5_value.l_Lake_CacheOutput_toJson___closed__6_value = select i1 %.not, ptr @l_Lake_CacheOutput_toJson___closed__6_value, ptr @l_Lake_CacheOutput_toJson___closed__5_value
   %i.bc = tail call ptr @l___private_Lake_Config_Cache_0__Lake_CacheServiceScope_toJson(ptr noundef %i.aj)
-  %.val.i.i66 = load i32, ptr %l_Lake_CacheOutput_toJson___closed__5_value.l_Lake_CacheOutput_toJson___closed__6_value, align 8, !tbaa !14 ; 2 uses
-  %1 = icmp sgt i32 %.val.i.i66, 0
-  br i1 %1, label %lean_inc_ref.exit68, label %2, !prof !15
-
-2:                                                ; preds = %l_Lake_CacheServiceScope_isRepo.exit
-  %.not.i.i67 = icmp eq i32 %.val.i.i66, 0
-  br i1 %.not.i.i67, label %lean_inc_ref.exit68, label %3
-
-3:                                                ; preds = %2
-  %4 = atomicrmw sub ptr %l_Lake_CacheOutput_toJson___closed__5_value.l_Lake_CacheOutput_toJson___closed__6_value, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit68
-
-lean_inc_ref.exit68:                              ; preds = %l_Lake_CacheServiceScope_isRepo.exit, %2, %3
-  %5 = tail call ptr @l_Lake_JsonObject_insertJson(ptr noundef %i.ad, ptr noundef nonnull %l_Lake_CacheOutput_toJson___closed__5_value.l_Lake_CacheOutput_toJson___closed__6_value, ptr noundef %i.bc) #10
+  %1 = tail call ptr @l_Lake_JsonObject_insertJson(ptr noundef %i.ad, ptr noundef nonnull %l_Lake_CacheOutput_toJson___closed__5_value.l_Lake_CacheOutput_toJson___closed__6_value, ptr noundef %i.bc) #10
   br label %lean_dec.exit
 
 bb.ah:                                            ; preds = %lean_obj_tag.exit
@@ -240,8 +227,8 @@ bb.ak:                                            ; preds = %bb.aj
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.p) #10
   br label %lean_dec.exit
 
-lean_dec.exit:                                    ; preds = %lean_obj_tag.exit.thread, %bb.ai, %bb.aj, %bb.ak, %lean_inc_ref.exit68
-  %.1 = phi ptr [ %5, %lean_inc_ref.exit68 ], [ %i.ad, %bb.ak ], [ %i.ad, %bb.aj ], [ %i.ad, %bb.ai ], [ %i.ad, %lean_obj_tag.exit.thread ]
+lean_dec.exit:                                    ; preds = %lean_obj_tag.exit.thread, %bb.ai, %bb.aj, %bb.ak, %l_Lake_CacheServiceScope_isRepo.exit
+  %.1 = phi ptr [ %1, %l_Lake_CacheServiceScope_isRepo.exit ], [ %i.ad, %bb.ak ], [ %i.ad, %bb.aj ], [ %i.ad, %bb.ai ], [ %i.ad, %lean_obj_tag.exit.thread ]
   %i.bg = tail call ptr @l_Lake_JsonObject_insertJson(ptr noundef %.1, ptr noundef nonnull @l_Lake_CacheOutput_toJson___closed__0_value, ptr noundef %i.b) #10
   tail call void @lean_inc_heartbeat() #10
   %i.bh = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #10 ; 5 uses

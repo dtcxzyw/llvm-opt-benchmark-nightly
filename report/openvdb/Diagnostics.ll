@@ -205,16 +205,15 @@ _ZNK7openvdb5v13_04tree8LeafNodeIbLj3EE14cbeginValueOffEv.exit: ; preds = %_ZN7o
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !300
   %i.ay = and i32 %i.ar, 63
   %i.az = zext nneg i32 %i.ay to i64
+  %3 = shl nuw i64 1, %i.az
+  %4 = and i64 %i.ax, %3
+  %.not.i.i.i5.not = icmp ne i64 %4, 0            ; 4 uses
   %.02022.i.i = load ptr, ptr %i.g, align 8, !tbaa !1302 ; 3 uses
   %.not23.i.i = icmp eq ptr %.02022.i.i, null
-  %3 = lshr i64 %i.ax, %i.az                      ; 3 uses
-  %4 = trunc i64 %3 to i8
-  %.pre.pre.pre = and i8 %4, 1                    ; 2 uses
   br i1 %.not23.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph
-  %5 = trunc i64 %3 to i1
-  br i1 %5, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
+  br i1 %.not.i.i.i5.not, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %.lr.ph.split.us.i.i
   %.02024.us.i.i = phi ptr [ %.020.us.i.i, %.lr.ph.split.us.i.i ], [ %.02022.i.i, %.lr.ph.i.i ] ; 3 uses
@@ -245,12 +244,10 @@ _ZNK7openvdb5v13_04tree8LeafNodeIbLj3EE14cbeginValueOffEv.exit: ; preds = %_ZN7o
 
 bb.j:                                             ; preds = %._crit_edge.thread.i.i
   %i.bg = call noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.019.lcssa33.i.i) #30
-  %6 = trunc i64 %3 to i1
   br label %._crit_edge.thread34.i.i
 
 ._crit_edge.thread34.i.i:                         ; preds = %.lr.ph.split.us.i.i, %bb.j
-  %.pre16 = phi i8 [ %.pre.pre.pre, %bb.j ], [ 1, %.lr.ph.split.us.i.i ]
-  %i.bh = phi i1 [ %6, %bb.j ], [ true, %.lr.ph.split.us.i.i ]
+  %i.bh = phi i1 [ %.not.i.i.i5.not, %bb.j ], [ true, %.lr.ph.split.us.i.i ]
   %.019.lcssa32.i.i = phi ptr [ %.019.lcssa33.i.i, %bb.j ], [ %.02024.us.i.i, %.lr.ph.split.us.i.i ]
   %.sroa.05.0.i.i = phi ptr [ %i.bg, %bb.j ], [ %.02024.us.i.i, %.lr.ph.split.us.i.i ]
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i, i64 32
@@ -261,17 +258,15 @@ bb.j:                                             ; preds = %._crit_edge.thread.
   br i1 %i.bm, label %select.unfold.i, label %_ZNSt8_Rb_treeIbbSt9_IdentityIbEKN7openvdb5v13_05tools20diagnostics_internal3cmpMUlT_T0_E_ESaIbEE16_M_insert_uniqueIRKbEESt4pairISt17_Rb_tree_iteratorIbEbEOS7_.exit
 
 select.unfold.i:                                  ; preds = %._crit_edge.thread34.i.i, %._crit_edge.thread.i.i
-  %.pre = phi i8 [ %.pre.pre.pre, %._crit_edge.thread.i.i ], [ %.pre16, %._crit_edge.thread34.i.i ] ; 2 uses
   %.sroa.4.0.i.ph.i = phi ptr [ %.019.lcssa33.i.i, %._crit_edge.thread.i.i ], [ %.019.lcssa32.i.i, %._crit_edge.thread34.i.i ] ; 3 uses
   %i.bn = icmp eq ptr %.sroa.4.0.i.ph.i, %i.h
   br i1 %i.bn, label %_ZNSt8_Rb_treeIbbSt9_IdentityIbEKN7openvdb5v13_05tools20diagnostics_internal3cmpMUlT_T0_E_ESaIbEE10_M_insert_IRKbNSC_11_Alloc_nodeEEESt17_Rb_tree_iteratorIbEPSt18_Rb_tree_node_baseSK_OS7_RS8_.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %select.unfold.i
-  %7 = trunc nuw i8 %.pre to i1
   %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph.i, i64 32
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !480, !range !448, !noundef !481
   %i.bq = trunc nuw i8 %i.bp to i1
-  %i.br = xor i1 %7, true
+  %i.br = xor i1 %.not.i.i.i5.not, true
   %i.bs = and i1 %i.br, %i.bq
   br label %_ZNSt8_Rb_treeIbbSt9_IdentityIbEKN7openvdb5v13_05tools20diagnostics_internal3cmpMUlT_T0_E_ESaIbEE10_M_insert_IRKbNSC_11_Alloc_nodeEEESt17_Rb_tree_iteratorIbEPSt18_Rb_tree_node_baseSK_OS7_RS8_.exit.i
 
@@ -279,7 +274,8 @@ _ZNSt8_Rb_treeIbbSt9_IdentityIbEKN7openvdb5v13_05tools20diagnostics_internal3cmp
   %i.bt = phi i1 [ %i.bs, %bb.k ], [ true, %select.unfold.i ]
   %i.bu = call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #31 ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 32
-  store i8 %.pre, ptr %i.bv, align 1, !tbaa !480
+  %5 = zext i1 %.not.i.i.i5.not to i8
+  store i8 %5, ptr %i.bv, align 1, !tbaa !480
   call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext %i.bt, ptr noundef nonnull %i.bu, ptr noundef nonnull %.sroa.4.0.i.ph.i, ptr noundef nonnull align 8 dereferenceable(32) %i.h) #21
   %i.bw = load i64, ptr %i.j, align 8, !tbaa !335
   %i.bx = add i64 %i.bw, 1

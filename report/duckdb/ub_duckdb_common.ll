@@ -205,52 +205,41 @@ bb.j:                                             ; preds = %bb.a
 bb.k:                                             ; preds = %bb.j
   %i.u = trunc nuw i8 %i.n to i1                  ; 3 uses
   store i8 0, ptr %i.q, align 4, !tbaa !1729
-  %i.v = select i1 %i.u, ptr @.str.2081, ptr @.str.2082 ; 2 uses
-  %i.w = select i1 %i.u, i64 4, i64 5             ; 5 uses
+  %i.v = select i1 %i.u, ptr @.str.2081, ptr @.str.2082
+  %i.w = select i1 %i.u, i64 4, i64 5             ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.p, i64 4
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !1728 ; 3 uses
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !1728 ; 7 uses
   %i.z = icmp sgt i32 %i.y, -1
-  br i1 %i.z, label %9, label %.loopexit.i
+  %9 = zext nneg i32 %i.y to i64
+  %10 = icmp samesign ugt i64 %i.w, %9
+  %or.cond = select i1 %i.z, i1 %10, i1 false
+  br i1 %or.cond, label %bb.l, label %.loopexit.i
 
-9:                                                ; preds = %bb.k
-  %10 = zext nneg i32 %i.y to i64                 ; 5 uses
-  %11 = icmp samesign ugt i64 %i.w, %10
-  br i1 %11, label %.lr.ph.i.i.i.i, label %.loopexit.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %9
-  %12 = load i8, ptr %i.v, align 1, !tbaa !254
-  %.not14.i.i.i.i = icmp slt i8 %12, -64
-  br i1 %.not14.i.i.i.i, label %.lr.ph.i.i.i.i.1, label %bb.l
-
-bb.l:                                             ; preds = %.lr.ph.i.i.i.i
+bb.l:                                             ; preds = %bb.k
   %i.aa = icmp eq i32 %i.y, 0
   br i1 %i.aa, label %.loopexit.i, label %.lr.ph.i.i.i.i.1
 
-.lr.ph.i.i.i.i.1:                                 ; preds = %bb.l, %.lr.ph.i.i.i.i
-  %.1.i.i.i.i = phi i64 [ 2, %bb.l ], [ 1, %.lr.ph.i.i.i.i ] ; 3 uses
-  %13 = icmp samesign ugt i64 %.1.i.i.i.i, %10
-  br i1 %13, label %.loopexit.i, label %.lr.ph.i.i.i.i.2
+.lr.ph.i.i.i.i.1:                                 ; preds = %bb.l
+  %11 = icmp ult i32 %i.y, 2
+  br i1 %11, label %.loopexit.i, label %.lr.ph.i.i.i.i.2
 
 .lr.ph.i.i.i.i.2:                                 ; preds = %.lr.ph.i.i.i.i.1
-  %14 = add nuw nsw i64 %.1.i.i.i.i, 1
-  %.not = icmp samesign ult i64 %.1.i.i.i.i, %10
-  br i1 %.not, label %.lr.ph.i.i.i.i.3, label %.loopexit.i
+  %.not = icmp ult i32 %i.y, 3
+  br i1 %.not, label %.loopexit.i, label %.lr.ph.i.i.i.i.3
 
 .lr.ph.i.i.i.i.3:                                 ; preds = %.lr.ph.i.i.i.i.2
-  %15 = add i64 %14, 1                            ; 2 uses
-  %16 = icmp ugt i64 %15, %10                     ; 2 uses
-  %brmerge = select i1 %16, i1 true, i1 %i.u
-  %.mux = select i1 %16, i64 3, i64 %i.w
+  %12 = icmp ult i32 %i.y, 4                      ; 2 uses
+  %brmerge = select i1 %12, i1 true, i1 %i.u
+  %.mux = select i1 %12, i64 3, i64 %i.w
   br i1 %brmerge, label %.loopexit.i, label %.lr.ph.i.i.i.i.4
 
 .lr.ph.i.i.i.i.4:                                 ; preds = %.lr.ph.i.i.i.i.3
-  %17 = add i64 %15, 1
-  %18 = icmp ugt i64 %17, %10
-  %spec.select = select i1 %18, i64 4, i64 %i.w
+  %13 = icmp ult i32 %i.y, 5
+  %spec.select = select i1 %13, i64 4, i64 %i.w
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %.lr.ph.i.i.i.i.4, %bb.l, %.lr.ph.i.i.i.i.1, %.lr.ph.i.i.i.i.2, %.lr.ph.i.i.i.i.3, %9, %bb.k
-  %.0.i.i.i = phi i64 [ %i.w, %bb.k ], [ %i.w, %9 ], [ 0, %bb.l ], [ %.mux, %.lr.ph.i.i.i.i.3 ], [ 1, %.lr.ph.i.i.i.i.1 ], [ %spec.select, %.lr.ph.i.i.i.i.4 ], [ 2, %.lr.ph.i.i.i.i.2 ]
+.loopexit.i:                                      ; preds = %.lr.ph.i.i.i.i.4, %bb.l, %.lr.ph.i.i.i.i.1, %.lr.ph.i.i.i.i.2, %.lr.ph.i.i.i.i.3, %bb.k
+  %.0.i.i.i = phi i64 [ %i.w, %bb.k ], [ 0, %bb.l ], [ %.mux, %.lr.ph.i.i.i.i.3 ], [ 1, %.lr.ph.i.i.i.i.1 ], [ %spec.select, %.lr.ph.i.i.i.i.4 ], [ 2, %.lr.ph.i.i.i.i.2 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #58
   store ptr %i.v, ptr %7, align 8, !tbaa !1757
   %i.ab = getelementptr inbounds nuw i8, ptr %7, i64 8

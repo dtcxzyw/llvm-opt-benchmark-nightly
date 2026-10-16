@@ -199,25 +199,20 @@ cat_header.exit76:                                ; preds = %cat_header.exit72, 
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 80
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !28
   %.not44 = icmp eq i32 %i.ac, 0
-  %i.ad = select i1 %.not44, ptr @.str.7, ptr @.str.6 ; 3 uses
-  %4 = load i8, ptr %i.ad, align 1, !tbaa !24
-  %.not7.i78 = icmp eq i8 %4, 0
-  br i1 %.not7.i78, label %cat_header.exit80, label %5
+  %i.ad = select i1 %.not44, ptr @.str.7, ptr @.str.6 ; 2 uses
+  %4 = call ptr @strpbrk(ptr noundef nonnull %i.ad, ptr noundef nonnull @.str.29) #6
+  %.not7.i78 = icmp eq ptr %4, null
+  br i1 %.not7.i78, label %bb.t, label %bb.s
 
-5:                                                ; preds = %cat_header.exit76
-  %6 = call ptr @strpbrk(ptr noundef nonnull %i.ad, ptr noundef nonnull @.str.29) #6
-  %.not8.i79 = icmp eq ptr %6, null
-  br i1 %.not8.i79, label %bb.t, label %bb.s
-
-bb.s:                                             ; preds = %5
+bb.s:                                             ; preds = %cat_header.exit76
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.5) #5
   br label %cat_header.exit80
 
-bb.t:                                             ; preds = %5
+bb.t:                                             ; preds = %cat_header.exit76
   call void (ptr, ptr, ...) @av_bprintf(ptr noundef nonnull %3, ptr noundef nonnull @.str.31, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.ad) #5
   br label %cat_header.exit80
 
-cat_header.exit80:                                ; preds = %cat_header.exit76, %bb.s, %bb.t
+cat_header.exit80:                                ; preds = %bb.s, %bb.t
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.val = load i32, ptr %i.ae, align 8, !tbaa !30
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 12

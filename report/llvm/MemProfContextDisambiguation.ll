@@ -205,27 +205,24 @@ _ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i:     ; preds = %bb.dc, %bb.db
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #28, !noalias !3311
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #28, !noalias !3311
   %i.zs = getelementptr inbounds nuw i8, ptr %.val.i80.i.i.i.i, i64 4
-  %i.zt = load i8, ptr %i.zs, align 4, !tbaa !667, !range !212, !noalias !3311, !noundef !213
+  %i.zt = load i8, ptr %i.zs, align 4, !tbaa !667, !range !212, !noalias !3311, !noundef !213 ; 2 uses
   %i.zu = trunc nuw i8 %i.zt to i1
-  %56 = select i1 %i.zu, ptr @.str.200, ptr @.str.1 ; 2 uses
-  %57 = load i8, ptr %56, align 1, !tbaa !207, !noalias !3311
-  %.not.i.i.i = icmp eq i8 %57, 0
   store ptr @.str.199, ptr %9, align 8, !noalias !3311
-  br i1 %.not.i.i.i, label %_ZN4llvmplERKNS_5TwineES2_.exit66.i.i, label %bb.dd
+  br i1 %i.zu, label %bb.dd, label %_ZN4llvmplERKNS_5TwineES2_.exit66.i.i
 
 bb.dd:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i
-  store ptr %56, ptr %i.op, align 8, !alias.scope !3312, !noalias !3311
+  store ptr @.str.200, ptr %i.op, align 8, !alias.scope !3312, !noalias !3311
   br label %_ZN4llvmplERKNS_5TwineES2_.exit66.i.i
 
 _ZN4llvmplERKNS_5TwineES2_.exit66.i.i:            ; preds = %bb.dd, %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i
   %.sroa.05.0.i.i25.i.i = phi ptr [ %9, %bb.dd ], [ @.str.199, %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i ]
-  %.014.i.i24.i.i = phi i8 [ 2, %bb.dd ], [ 3, %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i ]
   %.sink.i.i = phi i8 [ 3, %bb.dd ], [ 1, %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i ]
   store i8 3, ptr %.sroa.5108.0..sroa_idx.i.i, align 8, !tbaa !1105, !noalias !3311
   store i8 %.sink.i.i, ptr %.sroa.7109.0..sroa_idx.i.i, align 1, !tbaa !1105, !noalias !3311
   %i.zv = getelementptr inbounds nuw i8, ptr %.val.i80.i.i.i.i, i64 40
   %i.zw = load i64, ptr %i.zv, align 8, !tbaa !727, !noalias !3311
   %i.zx = inttoptr i64 %i.zw to ptr
+  %.014.i.i24.i.i = xor i8 %i.zt, 3
   store ptr %.sroa.05.0.i.i25.i.i, ptr %8, align 8, !alias.scope !3313, !noalias !3311
   store ptr %i.zx, ptr %i.oq, align 8, !alias.scope !3313, !noalias !3311
   store i8 %.014.i.i24.i.i, ptr %i.or, align 8, !tbaa !390, !alias.scope !3313, !noalias !3311
@@ -628,27 +625,24 @@ _ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i:     ; preds = %bb.dc, %bb.db
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28, !noalias !4700
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28, !noalias !4700
   %i.zh = getelementptr inbounds nuw i8, ptr %.val.i80.i.i.i.i, i64 4
-  %i.zi = load i8, ptr %i.zh, align 4, !tbaa !884, !range !212, !noalias !4700, !noundef !213
+  %i.zi = load i8, ptr %i.zh, align 4, !tbaa !884, !range !212, !noalias !4700, !noundef !213 ; 2 uses
   %i.zj = trunc nuw i8 %i.zi to i1
-  %52 = select i1 %i.zj, ptr @.str.200, ptr @.str.1 ; 2 uses
-  %53 = load i8, ptr %52, align 1, !tbaa !207, !noalias !4700
-  %.not.i.i.i = icmp eq i8 %53, 0
   store ptr @.str.199, ptr %5, align 8, !noalias !4700
-  br i1 %.not.i.i.i, label %_ZN4llvmplERKNS_5TwineES2_.exit67.i.i, label %bb.dd
+  br i1 %i.zj, label %bb.dd, label %_ZN4llvmplERKNS_5TwineES2_.exit67.i.i
 
 bb.dd:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i
-  store ptr %52, ptr %i.op, align 8, !alias.scope !4701, !noalias !4700
+  store ptr @.str.200, ptr %i.op, align 8, !alias.scope !4701, !noalias !4700
   br label %_ZN4llvmplERKNS_5TwineES2_.exit67.i.i
 
 _ZN4llvmplERKNS_5TwineES2_.exit67.i.i:            ; preds = %bb.dd, %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i
   %.sroa.05.0.i.i26.i.i = phi ptr [ %5, %bb.dd ], [ @.str.199, %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i ]
-  %.014.i.i25.i.i = phi i8 [ 2, %bb.dd ], [ 3, %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i ]
   %.sink.i.i = phi i8 [ 3, %bb.dd ], [ 1, %_ZN4llvm11raw_ostreamlsEPKc.exit85.i.i.i.i.i ]
   store i8 3, ptr %.sroa.5106.0..sroa_idx.i.i, align 8, !tbaa !1105, !noalias !4700
   store i8 %.sink.i.i, ptr %.sroa.7107.0..sroa_idx.i.i, align 1, !tbaa !1105, !noalias !4700
   %i.zk = getelementptr inbounds nuw i8, ptr %.val.i80.i.i.i.i, i64 40
   %i.zl = load i64, ptr %i.zk, align 8, !tbaa !949, !noalias !4700
   %i.zm = inttoptr i64 %i.zl to ptr
+  %.014.i.i25.i.i = xor i8 %i.zi, 3
   store ptr %.sroa.05.0.i.i26.i.i, ptr %4, align 8, !alias.scope !4702, !noalias !4700
   store ptr %i.zm, ptr %i.oq, align 8, !alias.scope !4702, !noalias !4700
   store i8 %.014.i.i25.i.i, ptr %i.or, align 8, !tbaa !390, !alias.scope !4702, !noalias !4700
