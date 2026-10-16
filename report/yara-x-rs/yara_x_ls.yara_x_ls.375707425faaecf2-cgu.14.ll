@@ -202,7 +202,6 @@ bb.l:                                             ; preds = %bb.k, %bb.f
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueATNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEj1_ECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(112) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(112) %0)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs4KzxGwe94yc_9yara_x_ls.exit.i.i.i unwind label %bb.b
 
@@ -229,17 +228,19 @@ bb.d:                                             ; preds = %_RINvNtCskKLDkoKarT
 
 .body.i.i:                                        ; preds = %bb.d, %bb.b
   %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.c, %bb.d ], [ %i.a, %bb.b ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 88
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef align 8 dereferenceable(24) %1) #22
           to label %common.resume.i.i unwind label %bb.g
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs6SHYdBec2sV_3url3UrlECs4KzxGwe94yc_9yara_x_ls.exit.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs4KzxGwe94yc_9yara_x_ls.exit.i.i.i
-  invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
+  invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit unwind label %bb.e
 
 bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs6SHYdBec2sV_3url3UrlECs4KzxGwe94yc_9yara_x_ls.exit.i.i
   %i.d = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtCs2w2nn1AeeqK_9lsp_types8TextEditENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtCs2w2nn1AeeqK_9lsp_types8TextEditENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2)
           to label %common.resume.i.i unwind label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -259,7 +260,7 @@ bb.g:                                             ; preds = %.body.i.i
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTNtCs6SHYdBec2sV_3url3UrlINtNtCsexYYUdYSQU6_5alloc3vec3VecNtCs2w2nn1AeeqK_9lsp_types8TextEditEEECs4KzxGwe94yc_9yara_x_ls.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs6SHYdBec2sV_3url3UrlECs4KzxGwe94yc_9yara_x_ls.exit.i.i
-  tail call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtCs2w2nn1AeeqK_9lsp_types8TextEditENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  tail call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtCs2w2nn1AeeqK_9lsp_types8TextEditENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2)
   ret void
 }
 

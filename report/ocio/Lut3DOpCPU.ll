@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.thread336.i, %._cr
   %i.hd = phi <2 x double> [ %i.hb, %.preheader361.loopexit.i ], [ %i.gn, %.loopexit364.i ] ; 2 uses
   %invariant.gep.i = getelementptr [8 x i8], ptr %i.f, i64 %i.gd ; 3 uses
   store double %i.hc, ptr %invariant.gep.i, align 8, !tbaa !142
-  %i.he = load i64, ptr %i.b, align 16, !tbaa !64 ; 2 uses
+  %i.he = load i64, ptr %i.b, align 16, !tbaa !64
   %i.hf = icmp eq i64 %i.he, %i.gd
   %spec.select.i = zext i1 %i.hf to i64
   %gep.1.i = getelementptr i8, ptr %invariant.gep.i, i64 32
@@ -263,12 +263,17 @@ bb.j:                                             ; preds = %.preheader361.i
   %i.io = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.hn
   %i.ip = load i64, ptr %i.io, align 8, !tbaa !64
   %i.iq = icmp eq i64 %i.hn, 0
-  %.lcssa.i = select i1 %i.iq, i64 %i.hh, i64 %i.he
-  store i64 %.lcssa.i, ptr %i.b, align 16
+  br i1 %i.iq, label %.critedge.i, label %4
+
+4:                                                ; preds = %.critedge.i, %bb.j
   store i64 %i.ip, ptr %i.bx, align 8, !tbaa !64
   br label %.preheader361._crit_edge.i
 
-.preheader361._crit_edge.i:                       ; preds = %bb.j, %.preheader361.i
+.critedge.i:                                      ; preds = %bb.j
+  store i64 %i.hh, ptr %i.b, align 16, !tbaa !64
+  br label %4
+
+.preheader361._crit_edge.i:                       ; preds = %4, %.preheader361.i
   %i.ir = icmp ult i64 %i.hn, 2
   br i1 %i.ir, label %.lr.ph389.preheader.i, label %._crit_edge424.i
 

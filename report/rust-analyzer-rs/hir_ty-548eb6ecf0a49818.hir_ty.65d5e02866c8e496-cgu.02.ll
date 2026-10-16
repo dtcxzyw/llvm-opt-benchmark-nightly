@@ -204,7 +204,6 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueANtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundj1_ECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #6 personality ptr @rust_eh_personality {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.a = load i8, ptr %0, align 8, !range !31, !alias.scope !7449, !noundef !11
   switch i8 %i.a, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueSNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundECs8K4cjrcxBsw_6hir_ty.exit [
     i8 1, label %bb.b
@@ -212,6 +211,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %1, align 8, !alias.scope !7450, !nonnull !11, !noundef !11
   %i.c = icmp eq ptr %i.b, @_RNvCsbdtVtHYmo6x_8thin_vec12EMPTY_HEADER
   br i1 %i.c, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueSNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundECs8K4cjrcxBsw_6hir_ty.exit, label %bb.c, !prof !18
@@ -221,12 +221,13 @@ bb.c:                                             ; preds = %bb.b
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueSNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundECs8K4cjrcxBsw_6hir_ty.exit
 
 bb.d:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %1, align 8, !alias.scope !7451, !nonnull !11, !noundef !11
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !alias.scope !7451, !nonnull !11, !noundef !11
   %i.e = icmp eq ptr %i.d, @_RNvCsbdtVtHYmo6x_8thin_vec12EMPTY_HEADER
   br i1 %i.e, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueSNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundECs8K4cjrcxBsw_6hir_ty.exit, label %bb.e, !prof !18
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_RINvNvXs6_CsbdtVtHYmo6x_8thin_vecINtB8_7ThinVecpENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4drop18drop_non_singletonNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9UseArgRefEB1T_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %1) #49
+  tail call void @_RINvNvXs6_CsbdtVtHYmo6x_8thin_vecINtB8_7ThinVecpENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4drop18drop_non_singletonNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9UseArgRefEB1T_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2) #49
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueSNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundECs8K4cjrcxBsw_6hir_ty.exit
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueSNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundECs8K4cjrcxBsw_6hir_ty.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e
@@ -629,7 +630,7 @@ bb.a:
   %i.g = alloca [32 x i8], align 8                ; 5 uses
   %i.h = alloca [32 x i8], align 8                ; 5 uses
   %i.i = alloca [16 x i8], align 4                ; 5 uses
-  %i.j = alloca [16 x i8], align 8                ; 9 uses
+  %i.j = alloca [16 x i8], align 8                ; 10 uses
   %i.k = alloca [32 x i8], align 8                ; 6 uses
   %i.l = alloca [96 x i8], align 8                ; 14 uses
   %i.m = alloca [96 x i8], align 8                ; 12 uses
@@ -1032,7 +1033,6 @@ bb.y:                                             ; preds = %bb.x
           to label %.body unwind label %bb.ae, !noalias !12299, !inline_history !12090
 
 bb.z:                                             ; preds = %bb.x
-  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
   %i.ha = load i8, ptr %i.j, align 8, !range !31, !alias.scope !12300, !noalias !12284, !noundef !11
   switch i8 %i.ha, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueANtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundj1_ECs8K4cjrcxBsw_6hir_ty.exit.i [
     i8 1, label %bb.aa
@@ -1040,6 +1040,7 @@ bb.z:                                             ; preds = %bb.x
   ]
 
 bb.aa:                                            ; preds = %bb.z
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
   %i.hb = load ptr, ptr %3, align 8, !alias.scope !12301, !noalias !12284, !nonnull !11, !noundef !11
   %i.hc = icmp eq ptr %i.hb, @_RNvCsbdtVtHYmo6x_8thin_vec12EMPTY_HEADER
   br i1 %i.hc, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueANtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundj1_ECs8K4cjrcxBsw_6hir_ty.exit.i, label %bb.ab, !prof !18
@@ -1049,12 +1050,13 @@ bb.ab:                                            ; preds = %bb.aa
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueANtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundj1_ECs8K4cjrcxBsw_6hir_ty.exit.i unwind label %bb.b, !inline_history !12090
 
 bb.ac:                                            ; preds = %bb.z
-  %i.hd = load ptr, ptr %3, align 8, !alias.scope !12302, !noalias !12284, !nonnull !11, !noundef !11
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
+  %i.hd = load ptr, ptr %4, align 8, !alias.scope !12302, !noalias !12284, !nonnull !11, !noundef !11
   %i.he = icmp eq ptr %i.hd, @_RNvCsbdtVtHYmo6x_8thin_vec12EMPTY_HEADER
   br i1 %i.he, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueANtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundj1_ECs8K4cjrcxBsw_6hir_ty.exit.i, label %bb.ad, !prof !18
 
 bb.ad:                                            ; preds = %bb.ac
-  invoke void @_RINvNvXs6_CsbdtVtHYmo6x_8thin_vecINtB8_7ThinVecpENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4drop18drop_non_singletonNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9UseArgRefEB1T_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %3) #49
+  invoke void @_RINvNvXs6_CsbdtVtHYmo6x_8thin_vecINtB8_7ThinVecpENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4drop18drop_non_singletonNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9UseArgRefEB1T_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %4) #49
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueANtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundj1_ECs8K4cjrcxBsw_6hir_ty.exit.i unwind label %bb.b, !inline_history !12090
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueANtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundj1_ECs8K4cjrcxBsw_6hir_ty.exit.i: ; preds = %bb.ad, %bb.ab, %bb.ac, %bb.aa, %bb.z

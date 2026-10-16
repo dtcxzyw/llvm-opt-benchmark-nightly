@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/AsyncDataCache?download=true
 inline.NumInlined: 5544
 inline.NumDeleted: 2717
-loop-unroll.NumCompletelyUnrolled: 15
+loop-unroll.NumCompletelyUnrolled: 12
 loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 22
+loop-unroll.NumUnrolled: 19
 begin_hunk_0_@_ZN8facebook5velox5cache10CacheShard12lookupLockedENS1_15RawFileCacheKeyEmPN5folly10SemiFutureIbEE:bb.a
   %7 = alloca %"class.google::LogMessage", align 8 ; 7 uses
   %8 = alloca %"class.folly::ReadMostlySharedPtr", align 8 ; 8 uses
@@ -205,15 +205,20 @@ bb.q:                                             ; preds = %bb.g
 .preheader166:                                    ; preds = %bb.q
   %i.ci = tail call i64 @_ZNSt6chrono3_V212system_clock3nowEv() #22
   %i.cj = sdiv i64 %i.ci, 1000000                 ; 2 uses
-  %invariant.op = add nsw i64 %i.cj, -1000
   %10 = load atomic i64, ptr @_ZZN8facebook5velox5cache10CacheShard12lookupLockedENS1_15RawFileCacheKeyEmPN5folly10SemiFutureIbEEE11FB_LEM_hist acquire, align 8 ; 2 uses
-  %11 = icmp sgt i64 %10, %invariant.op
-  br i1 %11, label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit, label %bb.r
+  %11 = sub nsw i64 %i.cj, %10
+  %12 = icmp slt i64 %11, 1000
+  br i1 %12, label %.critedge.critedge, label %bb.r
+
+.critedge.critedge:                               ; preds = %bb.r, %.preheader166, %_ZNSolsEm.exit
+  %13 = load i8, ptr @_ZN8facebook5velox17BaseStatsReporter10registeredE, align 1, !tbaa !203, !range !204, !noundef !205
+  %14 = trunc nuw i8 %13 to i1
+  br i1 %14, label %bb.w, label %bb.al
 
 bb.r:                                             ; preds = %.preheader166
   %i.ck = cmpxchg ptr @_ZZN8facebook5velox5cache10CacheShard12lookupLockedENS1_15RawFileCacheKeyEmPN5folly10SemiFutureIbEEE11FB_LEM_hist, i64 %10, i64 %i.cj seq_cst seq_cst, align 8
   %i.cl = extractvalue { i64, i1 } %i.ck, 1
-  br i1 %i.cl, label %bb.s, label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+  br i1 %i.cl, label %bb.s, label %.critedge.critedge
 
 bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
@@ -245,7 +250,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit65: ; preds = %bb.u
 _ZNSolsEm.exit:                                   ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit65
   call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %7) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
-  br label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+  br label %.critedge.critedge
 
 bb.v:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit65, %bb.u, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.t, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit64, %bb.s
   %i.ct = landingpad { ptr, i32 }
@@ -254,12 +259,7 @@ bb.v:                                             ; preds = %_ZStlsISt11char_tra
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   br label %bb.ay
 
-_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit: ; preds = %bb.r, %_ZNSolsEm.exit, %.preheader166
-  %12 = load i8, ptr @_ZN8facebook5velox17BaseStatsReporter10registeredE, align 1, !tbaa !203, !range !204, !noundef !205
-  %13 = trunc nuw i8 %12 to i1
-  br i1 %13, label %bb.w, label %bb.al
-
-bb.w:                                             ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+bb.w:                                             ; preds = %.critedge.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
   call void @llvm.experimental.noalias.scope.decl(metadata !669)
   %i.cu = load atomic ptr, ptr @_ZZN5folly6detail30StaticSingletonManagerWithRtti6globalINS0_15SingletonHolderIN8facebook5velox17BaseStatsReporterEE4ImplINS0_10DefaultTagES9_EEvNS1_9ArgCreateILb0EEEEERT1_vE3arg acquire, align 8, !noalias !669 ; 2 uses
@@ -383,7 +383,7 @@ _ZN5folly19ReadMostlySharedPtrIN8facebook5velox17BaseStatsReporterENS_10TLRefCou
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #22
   br label %bb.al
 
-bb.al:                                            ; preds = %_ZN5folly19ReadMostlySharedPtrIN8facebook5velox17BaseStatsReporterENS_10TLRefCountEED2Ev.exit, %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+bb.al:                                            ; preds = %_ZN5folly19ReadMostlySharedPtrIN8facebook5velox17BaseStatsReporterENS_10TLRefCountEED2Ev.exit, %.critedge.critedge
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 288 ; 2 uses
   %i.ej = load i64, ptr %i.ei, align 8, !tbaa !219
   %i.ek = add i64 %i.ej, 1
@@ -786,7 +786,7 @@ define void @_ZN8facebook5velox5cache14AsyncDataCache7backoffEi(ptr nofree nound
 .preheader:
   %2 = alloca %struct.timespec, align 8           ; 6 uses
   %3 = alloca %"class.google::LogMessage", align 8 ; 7 uses
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 364
   %i.b = atomicrmw add ptr %i.a, i16 1 seq_cst, align 2
   %i.c = add i16 %i.b, 1
@@ -805,16 +805,18 @@ define void @_ZN8facebook5velox5cache14AsyncDataCache7backoffEi(ptr nofree nound
   %i.p = and i32 %1, 31
   %narrow = mul nuw nsw i32 %i.o, %i.p            ; 2 uses
   %i.q = zext nneg i32 %narrow to i64             ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   %i.r = tail call i64 @_ZNSt6chrono3_V212system_clock3nowEv() #22
   %i.s = sdiv i64 %i.r, 1000000                   ; 2 uses
-  %invariant.op = add nsw i64 %i.s, -1000
-  %7 = load atomic i64, ptr @_ZZN8facebook5velox5cache14AsyncDataCache7backoffEiE11FB_LEM_hist acquire, align 8 ; 2 uses
-  %8 = icmp sgt i64 %7, %invariant.op
-  br i1 %8, label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit, label %bb.d
+  %5 = load atomic i64, ptr @_ZZN8facebook5velox5cache14AsyncDataCache7backoffEiE11FB_LEM_hist acquire, align 8 ; 2 uses
+  %6 = sub nsw i64 %i.s, %5
+  %7 = icmp slt i64 %6, 1000
+  br i1 %7, label %.critedge.critedge, label %bb.d
 
-bb.a:                                             ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+.critedge.critedge:                               ; preds = %bb.d, %.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %8 = icmp eq i32 %narrow, 0
+  br i1 %8, label %_ZNSt11this_thread9sleep_forIlSt5ratioILl1ELl1000000EEEEvRKNSt6chrono8durationIT_T0_EE.exit, label %bb.a
+
+bb.a:                                             ; preds = %.critedge.critedge
   %i.t = mul nuw nsw i64 %i.q, 1000
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   store i64 0, ptr %2, align 8, !tbaa !327
@@ -837,13 +839,13 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   br label %_ZNSt11this_thread9sleep_forIlSt5ratioILl1ELl1000000EEEEvRKNSt6chrono8durationIT_T0_EE.exit
 
-_ZNSt11this_thread9sleep_forIlSt5ratioILl1ELl1000000EEEEvRKNSt6chrono8durationIT_T0_EE.exit: ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit, %.critedge.i
+_ZNSt11this_thread9sleep_forIlSt5ratioILl1ELl1000000EEEEvRKNSt6chrono8durationIT_T0_EE.exit: ; preds = %.critedge.critedge, %.critedge.i
   ret void
 
 bb.d:                                             ; preds = %.preheader
-  %i.aa = cmpxchg ptr @_ZZN8facebook5velox5cache14AsyncDataCache7backoffEiE11FB_LEM_hist, i64 %7, i64 %i.s seq_cst seq_cst, align 8
+  %i.aa = cmpxchg ptr @_ZZN8facebook5velox5cache14AsyncDataCache7backoffEiE11FB_LEM_hist, i64 %5, i64 %i.s seq_cst seq_cst, align 8
   %i.ab = extractvalue { i64, i1 } %i.aa, 1
-  br i1 %i.ab, label %bb.e, label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+  br i1 %i.ab, label %bb.e, label %.critedge.critedge
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
@@ -866,17 +868,19 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit20: ; preds = %_ZStl
 
 bb.g:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit20
   %i.af = load ptr, ptr %4, align 8, !tbaa !130
-  %i.ag = load i64, ptr %5, align 8, !tbaa !89
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.ag = load i64, ptr %9, align 8, !tbaa !89
   %i.ah = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ac, ptr noundef %i.af, i64 noundef %i.ag)
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit unwind label %bb.j ; 0 uses
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit: ; preds = %bb.g
   %i.ai = load ptr, ptr %4, align 8, !tbaa !130   ; 2 uses
-  %i.aj = icmp eq ptr %i.ai, %6
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.aj = icmp eq ptr %i.ai, %10
   br i1 %i.aj, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit
-  %i.ak = load i64, ptr %6, align 8, !tbaa !90
+  %i.ak = load i64, ptr %10, align 8, !tbaa !90
   %i.al = add i64 %i.ak, 1
   call void @_ZdlPvm(ptr noundef %i.ai, i64 noundef %i.al) #44
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -885,7 +889,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZStl
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %3) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
-  br label %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit
+  br label %.critedge.critedge
 
 bb.h:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.f, %bb.e
   %i.am = landingpad { ptr, i32 }
@@ -901,11 +905,12 @@ bb.j:                                             ; preds = %bb.g
   %i.ao = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ap = load ptr, ptr %4, align 8, !tbaa !130   ; 2 uses
-  %i.aq = icmp eq ptr %i.ap, %6
+  %11 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.aq = icmp eq ptr %i.ap, %11
   br i1 %i.aq, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i21
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i21: ; preds = %bb.j
-  %i.ar = load i64, ptr %6, align 8, !tbaa !90
+  %i.ar = load i64, ptr %11, align 8, !tbaa !90
   %i.as = add i64 %i.ar, 1
   call void @_ZdlPvm(ptr noundef %i.ap, i64 noundef %i.as) #44
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23
@@ -920,10 +925,6 @@ bb.k:                                             ; preds = %_ZNSt7__cxx1112basi
   call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %3) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   resume { ptr, i32 } %.pn.pn
-
-_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit: ; preds = %bb.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %.preheader
-  %9 = icmp eq i32 %narrow, 0
-  br i1 %9, label %_ZNSt11this_thread9sleep_forIlSt5ratioILl1ELl1000000EEEEvRKNSt6chrono8durationIT_T0_EE.exit, label %bb.a
 }
 
 declare void @_ZN8facebook5velox6memory22setCacheFailureMessageENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef align 8) local_unnamed_addr #9

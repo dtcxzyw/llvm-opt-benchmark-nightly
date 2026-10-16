@@ -205,7 +205,7 @@ bb.a:
   %i.j = alloca [56 x i8], align 8                ; 6 uses
   %i.k = alloca [56 x i8], align 8                ; 4 uses
   %i.l = alloca [32 x i8], align 8                ; 7 uses
-  %i.m = alloca [28 x i8], align 4                ; 9 uses
+  %i.m = alloca [28 x i8], align 4                ; 6 uses
   %i.n = alloca [8 x i8], align 8                 ; 4 uses
   %i.o = alloca [16 x i8], align 8                ; 5 uses
   %i.p = alloca [16 x i8], align 8                ; 5 uses
@@ -608,15 +608,6 @@ switch.lookup:                                    ; preds = %_RINvXs2J_NtNtCshzW
   %i.iu = zext nneg i8 %i.iq to i64
   %switch.gep215 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs7_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphINtB5_11SearchGraphINtNtNtCshbspv01vNlV_29ra_ap_rustc_next_trait_solver5solve12search_graph19SearchGraphDelegateNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6solver13SolverContextENtNtB2M_8interner10DbInternerE13evaluate_goalB2O_.1312, i64 %i.iu
   %switch.load216 = load i8, ptr %switch.gep215, align 1 ; 2 uses
-  %switch.ext = zext i8 %switch.load to i32
-  %6 = insertelement <4 x i8> poison, i8 %switch.load216, i64 0
-  %7 = insertelement <4 x i8> %6, i8 %switch.load213, i64 1
-  %8 = insertelement <4 x i8> %7, i8 %switch.load210, i64 2
-  %9 = insertelement <4 x i8> %8, i8 %switch.load, i64 3 ; 2 uses
-  %10 = zext <4 x i8> %9 to <4 x i32>
-  %switch.ext211 = zext i8 %switch.load210 to i32
-  %switch.ext214 = zext i8 %switch.load213 to i32
-  %switch.ext217 = zext i8 %switch.load216 to i32
   %i.iv = shl nuw nsw i8 %i.hf, 3
   %switch.shiftamt221 = zext nneg i8 %i.iv to i32
   %switch.downshift222 = lshr i32 268960770, %switch.shiftamt221
@@ -626,13 +617,17 @@ switch.lookup:                                    ; preds = %_RINvXs2J_NtNtCshzW
   %.sroa.451.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   store i32 %i.hj, ptr %.sroa.451.0..sroa_idx.i.i, align 4, !noalias !10956
   %.sroa.552.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
-  store i32 %switch.ext217, ptr %.sroa.552.0..sroa_idx.i.i, align 4, !noalias !10956
-  %.sroa.653.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 12
-  store i32 %switch.ext214, ptr %.sroa.653.0..sroa_idx.i.i, align 4, !noalias !10956
-  %.sroa.754.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  store i32 %switch.ext211, ptr %.sroa.754.0..sroa_idx.i.i, align 4, !noalias !10956
-  %.sroa.855.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 20
-  store i32 %switch.ext, ptr %.sroa.855.0..sroa_idx.i.i, align 4, !noalias !10956
+  %switch.ext = zext i8 %switch.load to i32
+  %6 = insertelement <4 x i8> poison, i8 %switch.load216, i64 0
+  %7 = insertelement <4 x i8> %6, i8 %switch.load213, i64 1
+  %8 = insertelement <4 x i8> %7, i8 %switch.load210, i64 2
+  %9 = insertelement <4 x i8> %8, i8 %switch.load, i64 3 ; 2 uses
+  %10 = zext <4 x i8> %9 to <4 x i32>
+  %switch.ext211 = zext i8 %switch.load210 to i32
+  %switch.ext214 = zext i8 %switch.load213 to i32
+  %switch.ext217 = zext i8 %switch.load216 to i32
+  %11 = zext <4 x i8> %9 to <4 x i32>
+  store <4 x i32> %11, ptr %.sroa.552.0..sroa_idx.i.i, align 4, !noalias !10956
   %.sroa.956.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   store i8 %switch.masked223, ptr %.sroa.956.0..sroa_idx.i.i, align 4, !noalias !10956
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.bd, align 8, !alias.scope !10955, !noalias !10939 ; 4 uses
@@ -643,33 +638,16 @@ switch.lookup:                                    ; preds = %_RINvXs2J_NtNtCshzW
           to label %.noexc62 unwind label %.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc62:                                         ; preds = %switch.lookup
-  %i.ix = extractvalue { i32, ptr } %i.iw, 1      ; 11 uses
+  %12 = extractvalue { i32, ptr } %i.iw, 0
+  %i.ix = extractvalue { i32, ptr } %i.iw, 1      ; 18 uses
   %.not.i.i.i = icmp eq ptr %i.ix, null
   br i1 %.not.i.i.i, label %_RINvMs7_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphINtB6_11SearchGraphINtNtNtCshbspv01vNlV_29ra_ap_rustc_next_trait_solver5solve12search_graph19SearchGraphDelegateNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6solver13SolverContextENtNtB2N_8interner10DbInternerE18update_parent_goalINtNtNtNtCshzWfHUSfYae_4core4iter7sources4once4OnceTNtNtB6_5stack10StackDepthNtB6_9CycleHeadEEEB2P_.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.noexc62
-  %11 = extractvalue { i32, ptr } %i.iw, 0
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 208 ; 2 uses
   %i.iz = load i64, ptr %i.iy, align 8, !noalias !10958, !noundef !12
   %..i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.iz, i64 1)
   store i64 %..i.i.i.i, ptr %i.iy, align 8, !noalias !10958
-  %12 = getelementptr inbounds nuw i8, ptr %i.ix, i64 8 ; 2 uses
-  %.sroa.433.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  %.sroa.534.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %13 = call i8 @llvm.ucmp.i8.i32(i32 %i.hj, i32 %11)
-  %14 = getelementptr inbounds nuw i8, ptr %i.ix, i64 240 ; 2 uses
-  %.sroa.4.0..sroa_idx.i21.i.i.i = getelementptr inbounds nuw i8, ptr %i.ix, i64 244 ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %i.ix, i64 216
-  %16 = and i8 %switch.masked223, 14
-  %.not.i19.i.i.i = icmp eq i8 %16, 0
-  %17 = and i8 %switch.masked223, 6
-  %.not13.i.i.i.i = icmp eq i8 %17, 0
-  %18 = and i8 %switch.masked223, 16
-  %19 = or disjoint i8 %18, 8
-  %20 = and i8 %switch.masked223, 2
-  %.not14.i.i.i.i = icmp eq i8 %20, 0
-  %21 = and i8 %switch.masked223, 24
-  %22 = or disjoint i8 %21, 4
   %i.ja = load i64, ptr %i.ix, align 8, !range !17, !noalias !10958, !noundef !12
   %i.jb = trunc nuw i64 %i.ja to i1
   br i1 %i.jb, label %bb.as, label %bb.av
@@ -733,8 +711,9 @@ bb.ar:                                            ; preds = %.noexc65, %.noexc63
   br label %bb.ar
 
 bb.as:                                            ; preds = %.lr.ph.i.i.i
+  %13 = getelementptr inbounds nuw i8, ptr %i.ix, i64 8 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !10962)
-  %i.jn = load ptr, ptr %12, align 8, !alias.scope !10962, !noalias !10958, !align !18, !noundef !12 ; 2 uses
+  %i.jn = load ptr, ptr %13, align 8, !alias.scope !10962, !noalias !10958, !align !18, !noundef !12 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.jn, null
   br i1 %.not.i.i.i.i, label %bb.at, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB2g_10HeadUsagesNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit.i.i.i
 
@@ -753,7 +732,7 @@ bb.au:                                            ; preds = %bb.at
 
 _RNvYNvYINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB1D_10HeadUsagesNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEENtNtCshzWfHUSfYae_4core7default7Default7defaultINtNtNtB3P_3ops8function6FnOnceuE9call_onceCs8K4cjrcxBsw_6hir_ty.exit.i.i.i.i: ; preds = %bb.at
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.jo, ptr noundef nonnull align 8 dereferenceable(32) @7, i64 32, i1 false), !noalias !10963
-  store ptr %i.jo, ptr %12, align 8, !alias.scope !10962, !noalias !10958
+  store ptr %i.jo, ptr %13, align 8, !alias.scope !10962, !noalias !10958
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB2g_10HeadUsagesNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit.i.i.i
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB2g_10HeadUsagesNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit.i.i.i: ; preds = %_RNvYNvYINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB1D_10HeadUsagesNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEENtNtCshzWfHUSfYae_4core7default7Default7defaultINtNtNtB3P_3ops8function6FnOnceuE9call_onceCs8K4cjrcxBsw_6hir_ty.exit.i.i.i.i, %bb.as
@@ -765,17 +744,20 @@ _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionINtNtCsbSS6DM8SDEO_5alloc5boxed3B
 .noexc67:                                         ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB2g_10HeadUsagesNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit.i.i.i
   %i.jr = load ptr, ptr %i.h, align 8, !noalias !10959, !noundef !12 ; 4 uses
   %.not16.i.i.i = icmp eq ptr %i.jr, null
+  %14 = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   br i1 %.not16.i.i.i, label %bb.ay, label %bb.aw
 
 bb.av:                                            ; preds = %_RNvMs19_NtNtNtCscAsMj0W7j8b_3std11collections4hash3mapINtB6_5EntryNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB16_10HeadUsagesE10or_defaultCs8K4cjrcxBsw_6hir_ty.exit.i.i.i, %.lr.ph.i.i.i
-  switch i8 %13, label %.loopexit.i.i.i [
+  %15 = call i8 @llvm.ucmp.i8.i32(i32 %i.hj, i32 %12)
+  switch i8 %15, label %.loopexit.i.i.i [
     i8 -1, label %bb.az
     i8 0, label %bb.bd
     i8 1, label %bb.bf
   ], !prof !40
 
 bb.aw:                                            ; preds = %.noexc67
-  %.sroa.433.0.copyload.i.i.i = load i64, ptr %.sroa.433.0..sroa_idx.i.i.i, align 8, !noalias !10959 ; 2 uses
+  %.sroa.433.0.copyload.i.i.i = load i64, ptr %14, align 8, !noalias !10959 ; 2 uses
+  %.sroa.534.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %.sroa.534.0.copyload.i.i.i = load ptr, ptr %.sroa.534.0..sroa_idx.i.i.i, align 8, !noalias !10959
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !10959
   %i.js = ptrtoint ptr %.sroa.534.0.copyload.i.i.i to i64
@@ -857,7 +839,7 @@ _RNvMs6_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_8RawTableTNtNtNtCs1nWGUjlayfI_19ra_a
   br label %_RNvMs19_NtNtNtCscAsMj0W7j8b_3std11collections4hash3mapINtB6_5EntryNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB16_10HeadUsagesE10or_defaultCs8K4cjrcxBsw_6hir_ty.exit.i.i.i
 
 bb.ay:                                            ; preds = %.noexc67
-  %i.lf = load ptr, ptr %.sroa.433.0..sroa_idx.i.i.i, align 8, !noalias !10959, !nonnull !12, !noundef !12
+  %i.lf = load ptr, ptr %14, align 8, !noalias !10959, !nonnull !12, !noundef !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !10959
   br label %_RNvMs19_NtNtNtCscAsMj0W7j8b_3std11collections4hash3mapINtB6_5EntryNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtB16_10HeadUsagesE10or_defaultCs8K4cjrcxBsw_6hir_ty.exit.i.i.i
 
@@ -865,53 +847,90 @@ _RNvMs19_NtNtNtCscAsMj0W7j8b_3std11collections4hash3mapINtB6_5EntryNtNtNtCs1nWGU
   %.pn.i.i.i105.i = phi ptr [ %i.kx, %_RNvMs6_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_8RawTableTNtNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph5stack10StackDepthNtBT_10HeadUsagesEE14insert_no_growCs8K4cjrcxBsw_6hir_ty.exit.i.i.i.i ], [ %i.lf, %bb.ay ]
   %.sroa.0.0.i.i.i.i = getelementptr inbounds i8, ptr %.pn.i.i.i105.i, i64 -16 ; 2 uses
   %i.lg = load <4 x i32>, ptr %.sroa.0.0.i.i.i.i, align 4, !noalias !10958
-  %23 = zext <4 x i8> %9 to <4 x i32>
-  %i.lh = add <4 x i32> %i.lg, %23
+  %i.lh = add <4 x i32> %i.lg, %10
   store <4 x i32> %i.lh, ptr %.sroa.0.0.i.i.i.i, align 4, !noalias !10958
   br label %bb.av
 
 bb.az:                                            ; preds = %bb.av
+  %16 = getelementptr inbounds nuw i8, ptr %i.ix, i64 216
   switch i8 %i.hf, label %default.unreachable [
     i8 0, label %_RNvMs4_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB5_13PathsToNested11extend_with.exit.i.i.i
-    i8 1, label %bb.ba
-    i8 2, label %bb.bb
-    i8 3, label %bb.bc
+    i8 1, label %17
+    i8 2, label %19
+    i8 3, label %bb.ba
   ]
 
+17:                                               ; preds = %bb.az
+  %18 = and i8 %switch.masked223, 2
+  %.not14.i.i.i.i = icmp eq i8 %18, 0
+  br i1 %.not14.i.i.i.i, label %_RNvMs4_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB5_13PathsToNested11extend_with.exit.i.i.i, label %bb.bb
+
+19:                                               ; preds = %bb.az
+  %20 = and i8 %switch.masked223, 6
+  %.not13.i.i.i.i = icmp eq i8 %20, 0
+  br i1 %.not13.i.i.i.i, label %_RNvMs4_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB5_13PathsToNested11extend_with.exit.i.i.i, label %bb.bc
+
 bb.ba:                                            ; preds = %bb.az
-  %spec.select40.i.i.i = select i1 %.not14.i.i.i.i, i8 %switch.masked223, i8 %22
+  %21 = and i8 %switch.masked223, 14
+  %.not.i19.i.i.i = icmp eq i8 %21, 0
+  %spec.select40.i.i.i = select i1 %.not.i19.i.i.i, i8 %switch.masked223, i8 16
   br label %_RNvMs4_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB5_13PathsToNested11extend_with.exit.i.i.i
 
-bb.bb:                                            ; preds = %bb.az
-  %spec.select41.i.i.i = select i1 %.not13.i.i.i.i, i8 %switch.masked223, i8 %19
+bb.bb:                                            ; preds = %17
+  %22 = and i8 %switch.masked223, 24
+  %23 = or disjoint i8 %22, 4
   br label %_RNvMs4_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB5_13PathsToNested11extend_with.exit.i.i.i
 
-bb.bc:                                            ; preds = %bb.az
-  %spec.select42.i.i.i = select i1 %.not.i19.i.i.i, i8 %switch.masked223, i8 16
+bb.bc:                                            ; preds = %19
+  %24 = and i8 %switch.masked223, 16
+  %25 = or disjoint i8 %24, 8
   br label %_RNvMs4_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB5_13PathsToNested11extend_with.exit.i.i.i
 
-_RNvMs4_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB5_13PathsToNested11extend_with.exit.i.i.i: ; preds = %bb.bc, %bb.bb, %bb.ba, %bb.az
-  %.sroa.0.0.i20.i.i.i = phi i8 [ %spec.select40.i.i.i, %bb.ba ], [ %spec.select42.i.i.i, %bb.bc ], [ %spec.select41.i.i.i, %bb.bb ], [ %switch.masked223, %bb.az ]
-  invoke void @_RINvMs2_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB6_10CycleHeads6insertNtB6_13PathsToNestedECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %15, i32 noundef %i.hj, i8 noundef %.sroa.0.0.i20.i.i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %.sroa.552.0..sroa_idx.i.i)
+_RNvMs4_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB5_13PathsToNested11extend_with.exit.i.i.i: ; preds = %bb.bc, %bb.bb, %bb.ba, %19, %17, %bb.az
+  %.sroa.0.0.i20.i.i.i = phi i8 [ %switch.masked223, %bb.az ], [ %spec.select40.i.i.i, %bb.ba ], [ %23, %bb.bb ], [ %switch.masked223, %17 ], [ %25, %bb.bc ], [ %switch.masked223, %19 ]
+  invoke void @_RINvMs2_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graphNtB6_10CycleHeads6insertNtB6_13PathsToNestedECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %16, i32 noundef %i.hj, i8 noundef %.sroa.0.0.i20.i.i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %.sroa.552.0..sroa_idx.i.i)
           to label %.noexc68 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.bd:                                            ; preds = %bb.av
-  %i.li = load i32, ptr %14, align 8, !range !28, !alias.scope !10969, !noalias !10958, !noundef !12
+  %26 = getelementptr inbounds nuw i8, ptr %i.ix, i64 240 ; 2 uses
+  %i.li = load i32, ptr %26, align 8, !range !28, !alias.scope !10969, !noalias !10958, !noundef !12
   %i.lj = trunc nuw i32 %i.li to i1
   br i1 %i.lj, label %._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i, label %bb.be
 
 ._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i: ; preds = %bb.bd
-  %24 = load <4 x i32>, ptr %.sroa.4.0..sroa_idx.i21.i.i.i, align 4, !noalias !10958
+  %27 = getelementptr inbounds nuw i8, ptr %i.ix, i64 244 ; 2 uses
+  %.pre.i.i.i = load i32, ptr %27, align 4, !noalias !10958
+  %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.ix, i64 248
+  %.pre40.i.i.i = load i32, ptr %.phi.trans.insert.i.i.i, align 8, !noalias !10958
+  %.phi.trans.insert41.i.i.i = getelementptr inbounds nuw i8, ptr %i.ix, i64 252
+  %.pre42.i.i.i = load i32, ptr %.phi.trans.insert41.i.i.i, align 4, !noalias !10958
+  %.phi.trans.insert43.i.i.i = getelementptr inbounds nuw i8, ptr %i.ix, i64 256
+  %.pre44.i.i.i = load i32, ptr %.phi.trans.insert43.i.i.i, align 8, !noalias !10958
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit.i.i.i
 
 bb.be:                                            ; preds = %bb.bd
-  store i32 1, ptr %14, align 8, !alias.scope !10969, !noalias !10958
+  store i32 1, ptr %26, align 8, !alias.scope !10969, !noalias !10958
+  %.sroa.4.0..sroa_idx.i21.i.i.i = getelementptr inbounds nuw i8, ptr %i.ix, i64 244 ; 2 uses
+  store i128 0, ptr %.sroa.4.0..sroa_idx.i21.i.i.i, align 4, !alias.scope !10969, !noalias !10958
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit.i.i.i
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit.i.i.i: ; preds = %bb.be, %._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i
-  %25 = phi <4 x i32> [ %24, %._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i ], [ zeroinitializer, %bb.be ]
-  %26 = add <4 x i32> %25, %10
-  store <4 x i32> %26, ptr %.sroa.4.0..sroa_idx.i21.i.i.i, align 4, !noalias !10958
+  %28 = phi i32 [ %.pre44.i.i.i, %._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i ], [ 0, %bb.be ]
+  %29 = phi i32 [ %.pre42.i.i.i, %._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i ], [ 0, %bb.be ]
+  %30 = phi i32 [ %.pre40.i.i.i, %._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i ], [ 0, %bb.be ]
+  %31 = phi i32 [ %.pre.i.i.i, %._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i ], [ 0, %bb.be ]
+  %.sroa.0.0.i22.i.i.i = phi ptr [ %27, %._RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir12search_graph10HeadUsagesE18get_or_insert_withNvYBI_NtNtB5_7default7Default7defaultECs8K4cjrcxBsw_6hir_ty.exit_crit_edge.i.i.i ], [ %.sroa.4.0..sroa_idx.i21.i.i.i, %bb.be ]
+  %32 = add i32 %31, %switch.ext217
+  store i32 %32, ptr %.sroa.0.0.i22.i.i.i, align 4, !noalias !10958
+  %33 = getelementptr inbounds nuw i8, ptr %i.ix, i64 248
+  %34 = add i32 %30, %switch.ext214
+  store i32 %34, ptr %33, align 8, !noalias !10958
+  %35 = getelementptr inbounds nuw i8, ptr %i.ix, i64 252
+  %36 = add i32 %29, %switch.ext211
+  store i32 %36, ptr %35, align 4, !noalias !10958
+  %37 = getelementptr inbounds nuw i8, ptr %i.ix, i64 256
+  %38 = add i32 %28, %switch.ext
+  store i32 %38, ptr %37, align 8, !noalias !10958
   br label %.noexc68
 
 bb.bf:                                            ; preds = %bb.av

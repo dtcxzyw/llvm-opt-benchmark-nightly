@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph, %smaps_pte_entry.exit
   %.01926 = phi ptr [ %i.f, %.lr.ph ], [ %i.el, %smaps_pte_entry.exit ] ; 2 uses
   %.02023 = phi i64 [ %1, %.lr.ph ], [ %i.em, %smaps_pte_entry.exit ] ; 4 uses
-  %i.i = load ptr, ptr %i.g, align 8              ; 14 uses
+  %i.i = load ptr, ptr %i.g, align 8              ; 15 uses
   %i.j = load ptr, ptr %i.b, align 8              ; 5 uses
   %i.k = getelementptr i8, ptr %i.j, i64 32
   %i.l = load i64, ptr %i.k, align 32
@@ -388,23 +388,10 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.cq = load volatile i32, ptr %i.cp, align 4
   %i.cr = icmp ne i32 %i.cq, 1
   %or.cond3.i.i = and i1 %.not.i, %i.cr
-  %4 = getelementptr i8, ptr %i.i, i64 120        ; 4 uses
-  br i1 %or.cond3.i.i, label %.preheader.i.i, label %bb.u
-
-.preheader.i.i:                                   ; preds = %bb.t
-  %5 = getelementptr i8, ptr %i.i, i64 160        ; 2 uses
-  %6 = getelementptr i8, ptr %i.i, i64 152        ; 2 uses
-  %7 = getelementptr i8, ptr %.1.i, i64 48
-  %8 = load volatile i32, ptr %7, align 8         ; 2 uses
-  %9 = add i32 %8, 1
-  %10 = icmp slt i32 %8, -16777216
-  %spec.select.i.i.i = select i1 %10, i32 0, i32 %9 ; 2 uses
-  %11 = load volatile i64, ptr %i.bs, align 8
-  %12 = and i64 %11, 64
-  %.not.i52.i.i = icmp eq i64 %12, 0
-  br i1 %.not.i52.i.i, label %folio_precise_page_mapcount.exit.i.i, label %bb.ac
+  br i1 %or.cond3.i.i, label %5, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
+  %4 = getelementptr i8, ptr %i.i, i64 120        ; 2 uses
   %i.cs = load i64, ptr %4, align 8
   %i.ct = add i64 %i.cs, 16777216
   store i64 %i.ct, ptr %4, align 8
@@ -456,15 +443,26 @@ bb.ab:                                            ; preds = %bb.z
   %.34.i.i.i = select i1 %.not.i, i64 24, i64 8
   br label %smaps_pte_hole_lookup.exit.thread.sink.split.i
 
-bb.ac:                                            ; preds = %.preheader.i.i
+5:                                                ; preds = %bb.t
+  %6 = getelementptr i8, ptr %.1.i, i64 48
+  %7 = load volatile i32, ptr %6, align 8         ; 2 uses
+  %8 = add i32 %7, 1
+  %9 = icmp slt i32 %7, -16777216
+  %spec.select.i.i.i = select i1 %9, i32 0, i32 %8 ; 2 uses
+  %10 = load volatile i64, ptr %i.bs, align 8
+  %11 = and i64 %10, 64
+  %.not.i52.i.i = icmp eq i64 %11, 0
+  br i1 %.not.i52.i.i, label %folio_precise_page_mapcount.exit.i.i, label %bb.ac
+
+bb.ac:                                            ; preds = %5
   %i.dk = getelementptr i8, ptr %i.bs, i64 88
   %i.dl = load volatile i32, ptr %i.dk, align 8
   %i.dm = add i32 %spec.select.i.i.i, 1
   %i.dn = add i32 %i.dm, %i.dl
   br label %folio_precise_page_mapcount.exit.i.i
 
-folio_precise_page_mapcount.exit.i.i:             ; preds = %bb.ac, %.preheader.i.i
-  %.1.i.i.i = phi i32 [ %i.dn, %bb.ac ], [ %spec.select.i.i.i, %.preheader.i.i ] ; 3 uses
+folio_precise_page_mapcount.exit.i.i:             ; preds = %bb.ac, %5
+  %.1.i.i.i = phi i32 [ %i.dn, %bb.ac ], [ %spec.select.i.i.i, %5 ] ; 3 uses
   %i.do = icmp slt i32 %.1.i.i.i, 2               ; 2 uses
   %i.dp = icmp sgt i32 %.1.i.i.i, 1
   br i1 %i.dp, label %bb.ad, label %bb.ae
@@ -476,9 +474,10 @@ bb.ad:                                            ; preds = %folio_precise_page_
 
 bb.ae:                                            ; preds = %bb.ad, %folio_precise_page_mapcount.exit.i.i
   %.0.i.i = phi i64 [ %i.dr, %bb.ad ], [ 16777216, %folio_precise_page_mapcount.exit.i.i ] ; 4 uses
-  %i.ds = load i64, ptr %4, align 8
+  %12 = getelementptr i8, ptr %i.i, i64 120       ; 2 uses
+  %i.ds = load i64, ptr %12, align 8
   %i.dt = add i64 %i.ds, %.0.i.i
-  store i64 %i.dt, ptr %4, align 8
+  store i64 %i.dt, ptr %12, align 8
   %i.du = load ptr, ptr %i.bt, align 8
   %i.dv = ptrtoint ptr %i.du to i64
   %i.dw = trunc i64 %i.dv to i1
@@ -500,9 +499,10 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %.not55.i, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.ec = load i64, ptr %5, align 8
+  %13 = getelementptr i8, ptr %i.i, i64 160       ; 2 uses
+  %i.ec = load i64, ptr %13, align 8
   %i.ed = add i64 %i.ec, %.0.i.i
-  store i64 %i.ed, ptr %5, align 8
+  store i64 %i.ed, ptr %13, align 8
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
@@ -515,9 +515,10 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not26.i56.i.i, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %i.eg = load i64, ptr %6, align 8
+  %14 = getelementptr i8, ptr %i.i, i64 152       ; 2 uses
+  %i.eg = load i64, ptr %14, align 8
   %i.eh = add i64 %i.eg, %.0.i.i
-  store i64 %i.eh, ptr %6, align 8
+  store i64 %i.eh, ptr %14, align 8
   %.33.i57.i.i = select i1 %i.do, i64 32, i64 16
   br label %smaps_pte_hole_lookup.exit.thread.sink.split.i
 

@@ -202,17 +202,17 @@ define internal fastcc void @get_sequences_string(ptr nofree noundef nonnull rea
 bb.a:
   tail call void @resetStringInfo(ptr noundef nonnull %1) #8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp sgt i32 %i.b, 0
-  br i1 %i.c, label %.lr.ph, label %.split15.us
+  br i1 %i.c, label %.split15.us, label %.critedge
 
-.split15.us:                                      ; preds = %bb.c, %bb.a
-  ret void
+.split15.us:                                      ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  br label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.a, %bb.c
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %bb.a ] ; 2 uses
+.lr.ph:                                           ; preds = %.split15.us, %bb.c
+  %indvars.iv = phi i64 [ 0, %.split15.us ], [ %indvars.iv.next, %bb.c ] ; 2 uses
   %i.d = load ptr, ptr %2, align 8
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
   %i.f = load i32, ptr %i.e, align 8
@@ -225,6 +225,9 @@ bb.a:
   %i.l = load i32, ptr %3, align 8
   %i.m = icmp sgt i32 %i.l, 0
   br i1 %i.m, label %bb.b, label %bb.c
+
+.critedge:                                        ; preds = %bb.c, %bb.a
+  ret void
 
 bb.b:                                             ; preds = %.lr.ph
   tail call void @appendStringInfoString(ptr noundef nonnull %1, ptr noundef nonnull @.str.4) #8
@@ -239,7 +242,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   %i.q = load i32, ptr %i.a, align 4
   %i.r = sext i32 %i.q to i64
   %i.s = icmp slt i64 %indvars.iv.next, %i.r
-  br i1 %i.s, label %.lr.ph, label %.split15.us, !llvm.loop !16
+  br i1 %i.s, label %.lr.ph, label %.critedge, !llvm.loop !16
 }
 
 declare i32 @errmsg_plural(ptr noundef, ptr noundef, i64 noundef, ...) local_unnamed_addr #2

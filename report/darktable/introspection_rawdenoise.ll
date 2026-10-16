@@ -205,6 +205,10 @@ bb.i:                                             ; preds = %bb.g
   %i.gp = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.not24.i.a = icmp eq i32 %.val, 0
   %.not25.i = icmp eq i32 %.val19, 0
+  %6 = add i32 %.val19, -1
+  %7 = sext i32 %6 to i64                         ; 2 uses
+  %8 = mul nsw i64 %7, %i.fy
+  %9 = getelementptr [4 x i8], ptr %i.gg, i64 %8  ; 11 uses
   %i.gq = sub nsw i32 0, %.val                    ; 2 uses
   %i.gr = sub i32 1, %.val                        ; 2 uses
   %i.gs = sext i32 %i.gr to i64
@@ -220,17 +224,13 @@ bb.i:                                             ; preds = %bb.g
   %i.hc = extractelement <2 x i32> %i.hb, i64 0
   %i.hd = sext i32 %i.hc to i64                   ; 2 uses
   %i.he = extractelement <2 x i32> %i.hb, i64 1
-  %6 = sext i32 %i.he to i64                      ; 2 uses
-  %7 = add i32 %.val19, -1
-  %i.hf = sext i32 %7 to i64                      ; 2 uses
-  %8 = mul nsw i64 %i.hf, %i.fy
-  %9 = getelementptr [4 x i8], ptr %i.gg, i64 %8  ; 11 uses
+  %i.hf = sext i32 %i.he to i64                   ; 2 uses
   %i.hg = icmp slt i32 %.val19, 1
   %i.hh = icmp slt i32 %.val, 1
   %brmerge.i = or i1 %i.hh, %i.hg
   %wide.trip.count35.i = zext nneg i32 %.val19 to i64
   %wide.trip.count.i21 = zext i32 %.val to i64    ; 3 uses
-  %i.hi = mul nsw i64 %i.fy, %i.hf
+  %i.hi = mul nsw i64 %i.fy, %7
   %i.hj = shl i64 %i.hi, 2
   %min.iters.check97 = icmp ult i32 %.val, 4
   %i.hk = add i64 %i.hj, -1
@@ -318,7 +318,7 @@ compute_channel_noise.exit.i22:                   ; preds = %.split.preheader.i.
   %i.iu = fmul reassoc nsz arcp contract afn float %i.is, %i.is
   %i.iv = fmul reassoc nsz arcp contract afn float %i.iu, %i.it
   store float %i.iv, ptr %i.gp, align 16, !tbaa !12, !noalias !170
-  br i1 %.not24.i.a, label %.preheader4.i, label %iter.check108
+  br i1 %.not24.i.a, label %.preheader.i35, label %iter.check108
 
 iter.check108:                                    ; preds = %compute_channel_noise.exit.i22
   br i1 %or.cond, label %.lr.ph.i33.preheader, label %vector.main.loop.iter.check98
@@ -349,7 +349,7 @@ vector.body102:                                   ; preds = %vector.main.loop.it
   br i1 %i.je, label %middle.block105, label %vector.body102, !llvm.loop !154
 
 middle.block105:                                  ; preds = %vector.body102
-  br i1 %cmp.n106, label %.preheader4.i, label %vec.epilog.iter.check110
+  br i1 %cmp.n106, label %.preheader.i35, label %vec.epilog.iter.check110
 
 vec.epilog.iter.check110:                         ; preds = %middle.block105
   br i1 %min.epilog.iters.check111, label %.lr.ph.i33.preheader, label %vec.epilog.ph112, !prof !167
@@ -369,7 +369,7 @@ vec.epilog.vector.body114:                        ; preds = %vec.epilog.vector.b
   br i1 %i.jh, label %vec.epilog.middle.block117, label %vec.epilog.vector.body114, !llvm.loop !155
 
 vec.epilog.middle.block117:                       ; preds = %vec.epilog.vector.body114
-  br i1 %cmp.n118, label %.preheader4.i, label %.lr.ph.i33.preheader
+  br i1 %cmp.n118, label %.preheader.i35, label %.lr.ph.i33.preheader
 
 .lr.ph.i33.preheader:                             ; preds = %iter.check108, %vec.epilog.iter.check110, %vec.epilog.middle.block117
   %.02536.i.ph = phi i64 [ 0, %iter.check108 ], [ %n.vec101, %vec.epilog.iter.check110 ], [ %n.vec113, %vec.epilog.middle.block117 ] ; 4 uses
@@ -394,17 +394,20 @@ vec.epilog.middle.block117:                       ; preds = %vec.epilog.vector.b
   %.02536.i.unr = phi i64 [ %.02536.i.ph, %.lr.ph.i33.preheader ], [ %i.jl, %.lr.ph.i33.prol ]
   %i.jm = sub nsw i64 %.02536.i.ph, %i.fy
   %i.jn = icmp ugt i64 %i.jm, -8
-  br i1 %i.jn, label %.preheader4.i, label %.lr.ph.i33
+  br i1 %i.jn, label %.preheader.i35, label %.lr.ph.i33
 
-.preheader4.i:                                    ; preds = %.lr.ph.i33.prol.loopexit, %.lr.ph.i33, %middle.block105, %vec.epilog.middle.block117, %compute_channel_noise.exit.i22
+.preheader.i35:                                   ; preds = %.lr.ph.i33.prol.loopexit, %.lr.ph.i33, %middle.block105, %vec.epilog.middle.block117, %compute_channel_noise.exit.i22
+  br i1 %.not25.i, label %.critedge.thread.i, label %.preheader4.i
+
+.critedge.thread.i:                               ; preds = %.preheader.i35
+  call void @dwt_denoise(ptr noundef nonnull %i.gg, i32 noundef %.val, i32 noundef 0, i32 noundef 5, ptr noundef nonnull %i.a) #22, !noalias !170
+  br label %._crit_edge19.split.i
+
+.preheader4.i:                                    ; preds = %.preheader.i35
   %i.jo = icmp ne i32 %.025420.i, 1               ; 3 uses
   %i.jp = zext i1 %i.jo to i64
   %i.jq = icmp ult i64 %i.jp, %i.gv               ; 2 uses
-  br i1 %.not25.i, label %.split.thread.i, label %.preheader.i35.a
-
-.split.thread.i:                                  ; preds = %.preheader4.i
-  call void @dwt_denoise(ptr noundef nonnull %i.gg, i32 noundef %.val, i32 noundef 0, i32 noundef 5, ptr noundef nonnull %i.a) #22, !noalias !170
-  br label %._crit_edge19.split.i
+  br label %.preheader.i35.a
 
 .lr.ph.i33:                                       ; preds = %.lr.ph.i33.prol.loopexit, %.lr.ph.i33
   %.02536.i = phi i64 [ %i.ko, %.lr.ph.i33 ], [ %.02536.i.unr, %.lr.ph.i33.prol.loopexit ] ; 10 uses
@@ -449,19 +452,10 @@ vec.epilog.middle.block117:                       ; preds = %vec.epilog.vector.b
   store float 5.000000e-01, ptr %i.kn, align 4, !tbaa !12, !noalias !170
   %i.ko = add nuw i64 %.02536.i, 8                ; 2 uses
   %exitcond.not.i34.7 = icmp eq i64 %i.ko, %i.fy
-  br i1 %exitcond.not.i34.7, label %.preheader4.i, label %.lr.ph.i33, !llvm.loop !157
+  br i1 %exitcond.not.i34.7, label %.preheader.i35, label %.lr.ph.i33, !llvm.loop !157
 
-.split.i:                                         ; preds = %bb.af
-  call void @dwt_denoise(ptr noundef nonnull %i.gg, i32 noundef %.val, i32 noundef %.val19, i32 noundef 5, ptr noundef nonnull %i.a) #22, !noalias !170
-  br i1 %brmerge.i, label %._crit_edge19.split.i, label %.lr.ph15.i.preheader
-
-.lr.ph15.i.preheader:                             ; preds = %.split.i
-  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %.025420.i, i64 0
-  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
-  br label %.lr.ph15.i
-
-.preheader.i35.a:                                 ; preds = %.preheader4.i, %bb.af
-  %.025111.i = phi i64 [ %i.pd, %bb.af ], [ 0, %.preheader4.i ] ; 6 uses
+.preheader.i35.a:                                 ; preds = %bb.af, %.preheader4.i
+  %.025111.i = phi i64 [ 0, %.preheader4.i ], [ %i.pd, %bb.af ] ; 6 uses
   %i.kp = mul i64 %.025111.i, %i.fy               ; 2 uses
   %i.kq = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.kp ; 6 uses
   %i.kr = getelementptr inbounds nuw [4 x i8], ptr %i.gg, i64 %i.kp ; 12 uses
@@ -661,7 +655,7 @@ bb.ab:                                            ; preds = %bb.y
   br i1 %i.nx, label %bb.af, label %.thread64.i
 
 .thread64.i:                                      ; preds = %bb.ab, %bb.z
-  %i.og = getelementptr inbounds i8, ptr %i.lw, i64 %6
+  %i.og = getelementptr inbounds i8, ptr %i.lw, i64 %i.hf
   %i.oh = load i8, ptr %i.og, align 1, !tbaa !37, !noalias !170
   %i.oi = zext i8 %i.oh to i32
   %i.oj = icmp eq i32 %.025420.i, %i.oi
@@ -683,7 +677,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.os, label %.critedge.i.a, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.ot = getelementptr inbounds i8, ptr %i.oo, i64 %6
+  %i.ot = getelementptr inbounds i8, ptr %i.oo, i64 %i.hf
   %i.ou = load i8, ptr %i.ot, align 1, !tbaa !37, !noalias !170
   %i.ov = zext i8 %i.ou to i32
   %i.ow = icmp eq i32 %.025420.i, %i.ov
@@ -704,16 +698,25 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %.critedge.i.a, %bb.ab, %bb.aa
   %i.pd = add nuw i64 %.025111.i, 1               ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.pd, %i.fz
-  br i1 %exitcond29.not.i, label %.split.i, label %.preheader.i35.a
+  br i1 %exitcond29.not.i, label %.critedge.i, label %.preheader.i35.a
 
-._crit_edge19.split.i:                            ; preds = %._crit_edge16.i, %.split.i, %.split.thread.i
+.critedge.i:                                      ; preds = %bb.af
+  call void @dwt_denoise(ptr noundef nonnull %i.gg, i32 noundef %.val, i32 noundef %.val19, i32 noundef 5, ptr noundef nonnull %i.a) #22, !noalias !170
+  br i1 %brmerge.i, label %._crit_edge19.split.i, label %.lr.ph14.i.preheader
+
+.lr.ph14.i.preheader:                             ; preds = %.critedge.i
+  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %.025420.i, i64 0
+  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
+  br label %.lr.ph15.i
+
+._crit_edge19.split.i:                            ; preds = %._crit_edge16.i, %.critedge.i, %.critedge.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22, !noalias !170
   %i.pe = add nuw nsw i32 %.025420.i, 1           ; 2 uses
   %exitcond37.not.i = icmp eq i32 %i.pe, 3
   br i1 %exitcond37.not.i, label %bb.j, label %bb.k
 
-.lr.ph15.i:                                       ; preds = %.lr.ph15.i.preheader, %._crit_edge16.i
-  %indvars.iv32.i = phi i64 [ %indvars.iv.next33.i, %._crit_edge16.i ], [ 0, %.lr.ph15.i.preheader ] ; 3 uses
+.lr.ph15.i:                                       ; preds = %.lr.ph14.i.preheader, %._crit_edge16.i
+  %indvars.iv32.i = phi i64 [ %indvars.iv.next33.i, %._crit_edge16.i ], [ 0, %.lr.ph14.i.preheader ] ; 3 uses
   %i.pf = mul nuw nsw i64 %indvars.iv32.i, %i.fy  ; 2 uses
   %i.pg = getelementptr inbounds nuw [4 x i8], ptr %i.gg, i64 %i.pf ; 2 uses
   %i.ph = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.pf ; 2 uses

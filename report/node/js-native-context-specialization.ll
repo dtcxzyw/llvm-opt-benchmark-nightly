@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/js-native-context-specialization?download=true
 inline.NumInlined: 4584
 inline.NumDeleted: 1366
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN2v88internal8compiler14GraphAssembler10MergeStateIJEEEvPNS1_6detail29GraphAssemblerLabelForXHelperIPNS1_4NodeEvJDpT_EE4TypeES9_:bb.a
 _ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i122: ; preds = %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i120, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i125
   %i.dd = phi ptr [ %i.db, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i120 ], [ %i.cz, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i125 ]
@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %i.c = load <2 x ptr>, ptr %i.a, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %i.e = load i64, ptr %i.d, align 8              ; 6 uses
+  %i.e = load i64, ptr %i.d, align 8              ; 7 uses
   %i.f = trunc i64 %i.e to i32                    ; 3 uses
   %i.g = load ptr, ptr %2, align 8                ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -245,7 +245,6 @@ bb.a:
   %i.ag = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.ab, ptr noundef %i.ae, i32 noundef 2, ptr noundef nonnull %11, i1 noundef zeroext false) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #19
   %i.ah = call noundef ptr @_ZN2v88internal8compiler14GraphAssembler7AddNodeEPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(161) %0, ptr noundef %i.ag) #19 ; 0 uses
-  %13 = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.ai = load ptr, ptr %i.l, align 8             ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
@@ -254,6 +253,7 @@ bb.a:
   %i.an = load ptr, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #19
   store ptr %i.g, ptr %10, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %10, i64 8
   store ptr %i.an, ptr %13, align 8
   %i.ao = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.aj, ptr noundef %i.am, i32 noundef 2, ptr noundef nonnull %10, i1 noundef zeroext false) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
@@ -319,24 +319,24 @@ bb.c:                                             ; preds = %bb.b
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   %i.bz = load ptr, ptr %i.by, align 8
   call void @_ZN2v88internal8compiler14NodeProperties17MergeControlToEndEPNS1_7TFGraphEPNS1_21CommonOperatorBuilderEPNS1_4NodeE(ptr noundef %i.bx, ptr noundef %i.bz, ptr noundef %i.bv) #19
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %15 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %16 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %17 = load ptr, ptr %i.au, align 8              ; 2 uses
-  %i.cb = load ptr, ptr %17, align 8
-  %i.cc = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %18 = load ptr, ptr %i.cc, align 8
-  %i.cd = load i8, ptr %14, align 8
-  %i.ce = call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder3PhiENS0_21MachineRepresentationEi(ptr noundef nonnull align 8 dereferenceable(16) %18, i8 noundef zeroext %i.cd, i32 noundef 2) #19
+  %14 = load ptr, ptr %i.au, align 8              ; 2 uses
+  %15 = load ptr, ptr %14, align 8
+  %i.ca = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %i.cb = load ptr, ptr %i.ca, align 8
+  %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.cd = load i8, ptr %i.cc, align 8
+  %i.ce = call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder3PhiENS0_21MachineRepresentationEi(ptr noundef nonnull align 8 dereferenceable(16) %i.cb, i8 noundef zeroext %i.cd, i32 noundef 2) #19
   %i.cf = load ptr, ptr %i.bd, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
   store ptr %.sroa.0.0, ptr %6, align 8
-  store ptr %.sroa.0.0, ptr %15, align 8
-  store ptr %i.cf, ptr %16, align 8
-  %i.cg = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.cb, ptr noundef %i.ce, i32 noundef 3, ptr noundef nonnull %6, i1 noundef zeroext false) #19
+  %16 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store ptr %.sroa.0.0, ptr %16, align 8
+  %17 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  store ptr %i.cf, ptr %17, align 8
+  %i.cg = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %15, ptr noundef %i.ce, i32 noundef 3, ptr noundef nonnull %6, i1 noundef zeroext false) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
-  store ptr %i.cg, ptr %i.ca, align 8
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  store ptr %i.cg, ptr %18, align 8
   br label %.loopexit171
 
 bb.d:                                             ; preds = %bb.c
@@ -441,8 +441,6 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit123: ; preds = %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i121, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i116, %bb.i, %bb.j
   %i.dx = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %.not15.i129 = icmp eq ptr %.sroa.0.0, null
-  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
   %i.dy = load ptr, ptr %i.dx, align 8            ; 3 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 20
   %i.ea = load i32, ptr %i.dz, align 4
@@ -483,6 +481,7 @@ bb.k:                                             ; preds = %_ZN2v88internal8com
 
 bb.l:                                             ; preds = %bb.k, %_ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i127
   store ptr %.sroa.0.0, ptr %i.en, align 8
+  %.not15.i129 = icmp eq ptr %.sroa.0.0, null
   br i1 %.not15.i129, label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit132, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -490,9 +489,10 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit132
 
 _ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit132: ; preds = %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i130, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i125, %bb.l, %bb.m
+  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
   %.sroa.0.0.copyload.i.i = load i64, ptr %19, align 8
   %.not170 = icmp eq i64 %.sroa.0.0.copyload.i.i, 0
-  br i1 %.not170, label %.loopexit171, label %bb.n, !prof !258
+  br i1 %.not170, label %.loopexit171, label %bb.n, !prof !12
 
 bb.n:                                             ; preds = %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit132
   call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.39) #20
@@ -550,25 +550,25 @@ bb.o:                                             ; preds = %bb.b
   %i.fs = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.fi, ptr noundef %i.fl, i32 noundef 3, ptr noundef nonnull %4, i1 noundef zeroext false) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   store ptr %i.fs, ptr %i.fm, align 8
-  %20 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %21 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.ft = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %23 = load ptr, ptr %i.ew, align 8              ; 2 uses
-  %i.fu = load ptr, ptr %23, align 8
-  %i.fv = getelementptr inbounds nuw i8, ptr %23, i64 8
-  %24 = load ptr, ptr %i.fv, align 8
-  %25 = load i8, ptr %20, align 8
-  %26 = call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder3PhiENS0_21MachineRepresentationEi(ptr noundef nonnull align 8 dereferenceable(16) %24, i8 noundef zeroext %25, i32 noundef 2) #19
-  %i.fw = load ptr, ptr %21, align 8
+  %20 = load ptr, ptr %i.ew, align 8              ; 2 uses
+  %21 = load ptr, ptr %20, align 8
+  %i.ft = getelementptr inbounds nuw i8, ptr %20, i64 8
+  %i.fu = load ptr, ptr %i.ft, align 8
+  %i.fv = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %22 = load i8, ptr %i.fv, align 8
+  %23 = call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder3PhiENS0_21MachineRepresentationEi(ptr noundef nonnull align 8 dereferenceable(16) %i.fu, i8 noundef zeroext %22, i32 noundef 2) #19
+  %24 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.fw = load ptr, ptr %24, align 8
   %i.fx = load ptr, ptr %i.fc, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   store ptr %i.fw, ptr %3, align 8
-  store ptr %.sroa.0.0, ptr %22, align 8
-  store ptr %i.fx, ptr %i.ft, align 8
-  %i.fy = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.fu, ptr noundef %26, i32 noundef 3, ptr noundef nonnull %3, i1 noundef zeroext false) #19
+  %25 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %.sroa.0.0, ptr %25, align 8
+  %26 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  store ptr %i.fx, ptr %26, align 8
+  %i.fy = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %21, ptr noundef %23, i32 noundef 3, ptr noundef nonnull %3, i1 noundef zeroext false) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
-  store ptr %i.fy, ptr %21, align 8
+  store ptr %i.fy, ptr %24, align 8
   br label %.loopexit171
 
 bb.p:                                             ; preds = %bb.o
@@ -657,12 +657,6 @@ _ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit141: ; preds = %_ZN2v88int
   %i.hu = call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder9EffectPhiEi(ptr noundef nonnull align 8 dereferenceable(16) %i.ht, i32 noundef %i.gk) #19
   call void @_ZN2v88internal8compiler14NodeProperties8ChangeOpEPNS1_4NodeEPKNS1_8OperatorE(ptr noundef %i.hq, ptr noundef %i.hu) #19
   %i.hv = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
-  %27 = xor i64 %i.e, -1
-  %sext167 = shl i64 %27, 32
-  %28 = ashr exact i64 %sext167, 32
-  %.not15.i147 = icmp eq ptr %.sroa.0.0, null
-  %29 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %30 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
   %i.hw = load ptr, ptr %i.hv, align 8            ; 3 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 20
   %i.hy = load i32, ptr %i.hx, align 4
@@ -671,8 +665,6 @@ _ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit141: ; preds = %_ZN2v88int
   %i.ia = ptrtoint ptr %i.hw to i64
   %i.ib = add i64 %i.ia, 32
   %i.ic = inttoptr i64 %i.ib to ptr               ; 2 uses
-  %sext166 = shl i64 %i.e, 32
-  %31 = ashr exact i64 %sext166, 29               ; 2 uses
   br i1 %.not.i.i142, label %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i148, label %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i143
 
 _ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i148: ; preds = %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit141
@@ -680,13 +672,17 @@ _ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i148: ; preds = %_ZN2v88intern
   %i.ie = ptrtoint ptr %i.id to i64
   %i.if = add i64 %i.ie, 16
   %i.ig = inttoptr i64 %i.if to ptr
-  %i.ih = getelementptr inbounds i8, ptr %i.ig, i64 %31 ; 2 uses
+  %sext166 = shl i64 %i.e, 32
+  %27 = ashr exact i64 %sext166, 29
+  %i.ih = getelementptr inbounds i8, ptr %i.ig, i64 %27 ; 2 uses
   %i.ii = load ptr, ptr %i.ih, align 8            ; 2 uses
   %.not.i149 = icmp eq ptr %i.ii, %.sroa.0.0
   br i1 %.not.i149, label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit150, label %_ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i145
 
 _ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i143: ; preds = %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit141
-  %i.ij = getelementptr inbounds i8, ptr %i.ic, i64 %31 ; 2 uses
+  %sext165 = shl i64 %i.e, 32
+  %28 = ashr exact i64 %sext165, 29
+  %i.ij = getelementptr inbounds i8, ptr %i.ic, i64 %28 ; 2 uses
   %i.ik = load ptr, ptr %i.ij, align 8            ; 2 uses
   %.not18.i144 = icmp eq ptr %i.ik, %.sroa.0.0
   br i1 %.not18.i144, label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit150, label %_ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i145
@@ -695,7 +691,10 @@ _ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i145: ; preds = %_ZN2v88internal8
   %i.il = phi ptr [ %i.ij, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i143 ], [ %i.ih, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i148 ]
   %i.im = phi ptr [ %i.ik, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i143 ], [ %i.ii, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i148 ] ; 2 uses
   %i.in = phi ptr [ %i.hw, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i143 ], [ %i.id, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i148 ]
-  %i.io = getelementptr inbounds [24 x i8], ptr %i.in, i64 %28 ; 2 uses
+  %29 = xor i64 %i.e, -1
+  %sext167 = shl i64 %29, 32
+  %30 = ashr exact i64 %sext167, 32
+  %i.io = getelementptr inbounds [24 x i8], ptr %i.in, i64 %30 ; 2 uses
   %.not14.i146 = icmp eq ptr %i.im, null
   br i1 %.not14.i146, label %bb.u, label %bb.t
 
@@ -705,6 +704,7 @@ bb.t:                                             ; preds = %_ZN2v88internal8com
 
 bb.u:                                             ; preds = %bb.t, %_ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i145
   store ptr %.sroa.0.0, ptr %i.il, align 8
+  %.not15.i147 = icmp eq ptr %.sroa.0.0, null
   br i1 %.not15.i147, label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit150, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -722,7 +722,8 @@ _ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit150: ; preds = %_ZN2v88int
   %i.iv = load ptr, ptr %i.gb, align 8
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iv, i64 8
   %i.ix = load ptr, ptr %i.iw, align 8
-  %i.iy = load i8, ptr %29, align 8
+  %31 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.iy = load i8, ptr %31, align 8
   %i.iz = call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder3PhiENS0_21MachineRepresentationEi(ptr noundef nonnull align 8 dereferenceable(16) %i.ix, i8 noundef zeroext %i.iy, i32 noundef %i.gk) #19
   call void @_ZN2v88internal8compiler14NodeProperties8ChangeOpEPNS1_4NodeEPKNS1_8OperatorE(ptr noundef %i.iu, ptr noundef %i.iz) #19
   %i.ja = load ptr, ptr %i.hv, align 8
@@ -732,7 +733,8 @@ _ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit150: ; preds = %_ZN2v88int
   br i1 %.not168, label %.loopexit171, label %bb.w
 
 bb.w:                                             ; preds = %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit150
-  %.sroa.0.0.copyload.i.i152 = load i64, ptr %30, align 8 ; 2 uses
+  %32 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
+  %.sroa.0.0.copyload.i.i152 = load i64, ptr %32, align 8 ; 2 uses
   %.not169 = icmp eq i64 %.sroa.0.0.copyload.i.i152, 0
   br i1 %.not169, label %bb.x, label %bb.y, !prof !11
 
@@ -750,7 +752,7 @@ bb.y:                                             ; preds = %bb.w
   store i64 %i.jf, ptr %i.jh, align 8
   br label %.loopexit171
 
-.loopexit171:                                     ; preds = %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit132, %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit150, %bb.y, %.loopexit174, %.loopexit173, %.loopexit
+.loopexit171:                                     ; preds = %bb.y, %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit150, %.loopexit174, %.loopexit173, %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit132, %.loopexit
   %i.ji = load i64, ptr %i.d, align 8
   %i.jj = add i64 %i.ji, 1
   store i64 %i.jj, ptr %i.d, align 8
@@ -1050,5 +1052,4 @@ attributes #23 = { builtin nounwind allocsize(0) }
 !255 = distinct !{!255, !14}
 !256 = distinct !{!256, !14}
 !257 = distinct !{!257, !14}
-!258 = !{!"branch_weights", i32 -2147483648, i32 0}
 end_hunk_0

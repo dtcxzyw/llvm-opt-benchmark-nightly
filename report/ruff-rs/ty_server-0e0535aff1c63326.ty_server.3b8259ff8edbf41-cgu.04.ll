@@ -205,10 +205,9 @@ bb.d:                                             ; preds = %bb.b
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors16NotebookSelectorj1_ECsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(224) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 8 uses
   %i.a = load i64, ptr %0, align 8, !range !7, !alias.scope !59, !noundef !5
   %i.b = icmp eq i64 %i.a, 0
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   br i1 %i.b, label %bb.b, label %bb.i
 
 bb.b:                                             ; preds = %bb.a
@@ -218,22 +217,24 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
           cleanup
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 200
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageEEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(24) %2) #43
           to label %common.resume.i.i unwind label %bb.h
 
 bb.d:                                             ; preds = %bb.b
-  %i.d = load i64, ptr %2, align 8, !range !8, !alias.scope !60, !noundef !5
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 4 uses
+  %i.d = load i64, ptr %3, align 8, !range !8, !alias.scope !60, !noundef !5
   %i.e = icmp eq i64 %i.d, -1
   br i1 %i.e, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors16NotebookSelectorECsjNt1Wzngcv_9ty_server.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures34NotebookDocumentFilterWithNotebookECsjNt1Wzngcv_9ty_server.exit.sink.split.i.i unwind label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.f = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %common.resume.i.i unwind label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -264,17 +265,19 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.k = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(24) %2) #43
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 200
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(24) %4) #43
           to label %common.resume.i.i unwind label %bb.n
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors8NotebookEECsjNt1Wzngcv_9ty_server.exit.i.i.i: ; preds = %bb.j, %bb.i
-  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
+  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %5)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures34NotebookDocumentFilterWithNotebookECsjNt1Wzngcv_9ty_server.exit.sink.split.i.i unwind label %bb.l
 
 bb.l:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors8NotebookEECsjNt1Wzngcv_9ty_server.exit.i.i.i
   %i.l = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %5)
           to label %common.resume.i.i unwind label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -290,7 +293,8 @@ bb.n:                                             ; preds = %bb.k
   unreachable
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures34NotebookDocumentFilterWithNotebookECsjNt1Wzngcv_9ty_server.exit.sink.split.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors8NotebookEECsjNt1Wzngcv_9ty_server.exit.i.i.i, %bb.e
-  tail call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  %.sink.i.i = phi ptr [ %3, %bb.e ], [ %5, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors8NotebookEECsjNt1Wzngcv_9ty_server.exit.i.i.i ]
+  tail call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %.sink.i.i)
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors16NotebookSelectorECsjNt1Wzngcv_9ty_server.exit
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors16NotebookSelectorECsjNt1Wzngcv_9ty_server.exit: ; preds = %bb.d, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures34NotebookDocumentFilterWithNotebookECsjNt1Wzngcv_9ty_server.exit.sink.split.i.i
@@ -693,18 +697,18 @@ bb.em:                                            ; preds = %_RINvNtCs4NRVxsYgnA
           cleanup
   br label %.body324.i
 
-.body.i:                                          ; preds = %.body284.i
-  br i1 %.sroa.0159.4.i, label %.body.thread.i, label %.body.thread382.i
+.body.thread419.i:                                ; preds = %.body284.i, %.body.thread415.i
+  %.sroa.0159.2.i = phi i8 [ %.sroa.0159.4.i, %.body284.i ], [ %.sroa.0160.5.i, %.body.thread415.i ]
+  %.sroa.0160.4.i = phi i8 [ %.sroa.0160.6.i, %.body284.i ], [ %.sroa.0160.5.i, %.body.thread415.i ] ; 2 uses
+  %.pn262.pn.pn.pn.i = phi { ptr, i32 } [ %.pn262.pn.pn.i, %.body284.i ], [ %lpad.loopexit.split-lp.i, %.body.thread415.i ] ; 2 uses
+  %6 = trunc nuw i8 %.sroa.0159.2.i to i1
+  br i1 %6, label %.body.thread.i, label %.body.thread382.i
 
-.body.thread419.i:                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsjNt1Wzngcv_9ty_server.exit.i.i.i.i
-  %lpad.loopexit.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.thread382.i
-
-.body.thread415.i:                                ; preds = %bb.ep
+.body.thread415.i:                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsjNt1Wzngcv_9ty_server.exit.i.i.i.i, %bb.ep
+  %.sroa.0160.5.i = phi i8 [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsjNt1Wzngcv_9ty_server.exit.i.i.i.i ], [ 1, %bb.ep ] ; 2 uses
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
-  br label %.body.thread.i
+  br label %.body.thread419.i
 
 bb.en:                                            ; preds = %switch.lookup
   store i64 -9223372036854775807, ptr %i.xe, align 8, !noalias !3019
@@ -810,11 +814,11 @@ bb.ev:                                            ; preds = %bb.et
           to label %.body284.i unwind label %bb.eu, !noalias !3025
 
 .body284.i:                                       ; preds = %bb.ko, %bb.jt, %.body318.i, %bb.ew, %bb.ev
-  %.sroa.0159.4.i = phi i1 [ true, %bb.ko ], [ true, %bb.ev ], [ true, %bb.ew ], [ false, %.body318.i ], [ false, %bb.jt ]
-  %.sroa.0160.6.i = phi i8 [ 0, %bb.ko ], [ 1, %bb.ev ], [ 1, %bb.ew ], [ 0, %.body318.i ], [ 0, %bb.jt ] ; 2 uses
-  %.pn262.pn.pn.i = phi { ptr, i32 } [ %.pn262.pn.ph.i, %bb.ko ], [ %lpad.loopexit.i.i, %bb.ev ], [ %i.yb, %bb.ew ], [ %.pn255.pn.pn.pn.i, %.body318.i ], [ %i.ahk, %bb.jt ] ; 2 uses
+  %.sroa.0159.4.i = phi i8 [ 1, %bb.ko ], [ 1, %bb.ev ], [ 1, %bb.ew ], [ 0, %.body318.i ], [ 0, %bb.jt ]
+  %.sroa.0160.6.i = phi i8 [ 0, %bb.ko ], [ 1, %bb.ev ], [ 1, %bb.ew ], [ 0, %.body318.i ], [ 0, %bb.jt ]
+  %.pn262.pn.pn.i = phi { ptr, i32 } [ %.pn262.pn.ph.i, %bb.ko ], [ %lpad.loopexit.i.i, %bb.ev ], [ %i.yb, %bb.ew ], [ %.pn255.pn.pn.pn.i, %.body318.i ], [ %i.ahk, %bb.jt ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCscdodAO9FK5_5alloc6string6Stringj1_ECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(24) %i.bn) #43
-          to label %.body.i unwind label %bb.kb, !noalias !3019
+          to label %.body.thread419.i unwind label %bb.kb, !noalias !3019
 
 bb.ew:                                            ; preds = %bb.es, %bb.er
   %i.yb = landingpad { ptr, i32 }
@@ -1217,7 +1221,7 @@ bb.jx:                                            ; preds = %bb.jw
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsjNt1Wzngcv_9ty_server.exit.i.i.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecReEECsjNt1Wzngcv_9ty_server.exit.i
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.bn)
-          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCscdodAO9FK5_5alloc6string6Stringj1_ECsjNt1Wzngcv_9ty_server.exit.i unwind label %.body.thread419.i, !noalias !3019
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCscdodAO9FK5_5alloc6string6Stringj1_ECsjNt1Wzngcv_9ty_server.exit.i unwind label %.body.thread415.i, !noalias !3019
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCscdodAO9FK5_5alloc6string6Stringj1_ECsjNt1Wzngcv_9ty_server.exit.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsjNt1Wzngcv_9ty_server.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bn), !noalias !3019
@@ -1324,16 +1328,16 @@ bb.ko:                                            ; preds = %bb.kn
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures21ExecuteCommandOptionsEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(32) %i.bo) #43
           to label %.body284.i unwind label %bb.kb, !noalias !3019
 
-.body.thread382.i:                                ; preds = %.body.thread.i, %bb.jw, %.body.thread419.i, %.body.i
-  %.pn262.pn.pn.pn380.i = phi { ptr, i32 } [ %.pn262.pn.pn.pn381.i, %.body.thread.i ], [ %.pn262.pn.pn.i, %.body.i ], [ %i.ahm, %bb.jw ], [ %lpad.loopexit.i, %.body.thread419.i ]
-  %.sroa.0160.4378.i = phi i8 [ %.sroa.0160.4379.i, %.body.thread.i ], [ %.sroa.0160.6.i, %.body.i ], [ 0, %bb.jw ], [ 0, %.body.thread419.i ]
-  %.sroa.0159.2376.i = phi i8 [ 1, %.body.thread.i ], [ 0, %.body.i ], [ 0, %bb.jw ], [ 0, %.body.thread419.i ]
+.body.thread382.i:                                ; preds = %.body.thread.i, %bb.jw, %.body.thread419.i
+  %.pn262.pn.pn.pn380.i = phi { ptr, i32 } [ %.pn262.pn.pn.pn381.i, %.body.thread.i ], [ %.pn262.pn.pn.pn.i, %.body.thread419.i ], [ %i.ahm, %bb.jw ]
+  %.sroa.0160.4378.i = phi i8 [ %.sroa.0160.4379.i, %.body.thread.i ], [ %.sroa.0160.4.i, %.body.thread419.i ], [ 0, %bb.jw ]
+  %.sroa.0159.2376.i = phi i8 [ 1, %.body.thread.i ], [ 0, %.body.thread419.i ], [ 0, %bb.jw ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated12enumerations14CodeActionKindEEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(24) %i.bp) #43
           to label %.body324.i unwind label %bb.kb, !noalias !3019
 
-.body.thread.i:                                   ; preds = %bb.eo, %.body.thread415.i, %.body.i
-  %.pn262.pn.pn.pn381.i = phi { ptr, i32 } [ %.pn262.pn.pn.i, %.body.i ], [ %i.xo, %bb.eo ], [ %lpad.loopexit.split-lp.i, %.body.thread415.i ]
-  %.sroa.0160.4379.i = phi i8 [ %.sroa.0160.6.i, %.body.i ], [ 1, %bb.eo ], [ 1, %.body.thread415.i ]
+.body.thread.i:                                   ; preds = %bb.eo, %.body.thread419.i
+  %.pn262.pn.pn.pn381.i = phi { ptr, i32 } [ %.pn262.pn.pn.pn.i, %.body.thread419.i ], [ %i.xo, %bb.eo ]
+  %.sroa.0160.4379.i = phi i8 [ %.sroa.0160.4.i, %.body.thread419.i ], [ 1, %bb.eo ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors18CodeActionProviderEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(56) %i.bq) #43
           to label %.body.thread382.i unwind label %bb.kb, !noalias !3019
 

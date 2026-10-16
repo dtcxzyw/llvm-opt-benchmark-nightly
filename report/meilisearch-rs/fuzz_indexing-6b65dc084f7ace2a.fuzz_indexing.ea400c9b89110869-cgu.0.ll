@@ -205,14 +205,9 @@ bb.g:                                             ; preds = %bb.a
 .split.i:                                         ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   store ptr %5, ptr %i.j, align 8, !noalias !32652
-  %8 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %10 = getelementptr inbounds nuw i8, ptr %i.f, i64 20
-  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %12 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !32652
   store ptr %i.au, ptr %i.i, align 8, !noalias !32652
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store ptr %6, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !32653
   %.sroa.638.8..sroa.8.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store ptr %i.w, ptr %.sroa.638.8..sroa.8.0..sroa_idx.i.sroa_idx, align 8, !noalias !32653
@@ -220,8 +215,10 @@ bb.g:                                             ; preds = %bb.a
   call fastcc void @"_ZN107_$LT$milli..vector..extractor..DocumentTemplateExtractor$u20$as$u20$milli..vector..extractor..Extractor$GT$7extract17he24bacd611ad1118E"(ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.h, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.j, ptr nonnull readonly %3, i64 %4), !noalias !32654
   %i.ay = load i64, ptr %i.h, align 8, !range !59, !noalias !32652, !noundef !16 ; 2 uses
   %.not21.i = icmp eq i64 %i.ay, -9223372036854775807
-  %i.az = load ptr, ptr %12, align 8, !noalias !32652 ; 3 uses
-  %i.ba = load i64, ptr %11, align 8, !noalias !32652 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %i.az = load ptr, ptr %8, align 8, !noalias !32652 ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
+  %i.ba = load i64, ptr %9, align 8, !noalias !32652 ; 2 uses
   br i1 %.not21.i, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %.split.i
@@ -232,10 +229,13 @@ bb.h:                                             ; preds = %.split.i
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !32652
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !32652
-  store i32 %2, ptr %8, align 8, !noalias !32652
+  %10 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  store i32 %2, ptr %10, align 8, !noalias !32652
   store ptr %3, ptr %i.f, align 8, !noalias !32652
-  store i64 %4, ptr %9, align 8, !noalias !32652
-  store i8 0, ptr %10, align 4, !noalias !32652
+  %11 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  store i64 %4, ptr %11, align 8, !noalias !32652
+  %12 = getelementptr inbounds nuw i8, ptr %i.f, i64 20
+  store i8 0, ptr %12, align 4, !noalias !32652
   call fastcc void @"_ZN5milli6vector7session25EmbedSession$LT$C$C$I$GT$17request_embedding17haa9a676a18c9c6faE"(ptr noalias noundef align 8 captures(address) dereferenceable(320) %i.g, ptr noalias noundef nonnull align 8 dereferenceable(136) %i.as, ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.az, i64 noundef %i.ba, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %7), !noalias !32655
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !32652
   %i.bb = load i64, ptr %i.g, align 8, !range !40, !noalias !32652, !noundef !16 ; 2 uses
@@ -269,14 +269,9 @@ bb.l:                                             ; preds = %.split.i
 .split.i18:                                       ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store ptr %5, ptr %i.e, align 8, !noalias !32657
-  %.sink3.i.i.i.sroa.gep.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
-  %.sink3.i.i.i.sroa.gep2.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %15 = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  %.sroa.8.0..sroa_idx.i20 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !32657
   store ptr %i.au, ptr %i.d, align 8, !noalias !32657
+  %.sroa.8.0..sroa_idx.i20 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %6, ptr %.sroa.8.0..sroa_idx.i20, align 8, !noalias !32658
   %.sroa.6.8..sroa.8.0..sroa_idx.i20.sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.w, ptr %.sroa.6.8..sroa.8.0..sroa_idx.i20.sroa_idx, align 8, !noalias !32658
@@ -284,6 +279,8 @@ bb.l:                                             ; preds = %.split.i
   call fastcc void @"_ZN107_$LT$milli..vector..extractor..DocumentTemplateExtractor$u20$as$u20$milli..vector..extractor..Extractor$GT$7extract17he24bacd611ad1118E"(ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.d, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.e, ptr nonnull readonly %3, i64 %4), !noalias !32660
   %i.bc = load i64, ptr %i.a, align 8, !range !59, !noalias !32659, !noundef !16 ; 4 uses
   %.not.i.i = icmp eq i64 %i.bc, -9223372036854775807
+  %.sink3.i.i.i.sroa.gep.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
+  %.sink3.i.i.i.sroa.gep2.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   br i1 %.not.i.i, label %bb.p, label %bb.m
 
 bb.m:                                             ; preds = %.split.i18
@@ -312,21 +309,24 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.v
 
 bb.p:                                             ; preds = %.split.i18
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %17 = load ptr, ptr %.sink3.i.i.i.sroa.gep2.i.i, align 8, !noalias !32659, !align !22, !noundef !16 ; 2 uses
-  %i.bf = load i64, ptr %16, align 8, !noalias !32659
+  %13 = load ptr, ptr %.sink3.i.i.i.sroa.gep2.i.i, align 8, !noalias !32659, !align !22, !noundef !16 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.bf = load i64, ptr %14, align 8, !noalias !32659
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !32659
-  %.not9.i = icmp eq ptr %17, null
+  %.not9.i = icmp eq ptr %13, null
   br i1 %.not9.i, label %bb.v, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !32657
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !32657
-  store i32 %2, ptr %13, align 8, !noalias !32657
+  %15 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  store i32 %2, ptr %15, align 8, !noalias !32657
   store ptr %3, ptr %i.b, align 8, !noalias !32657
-  store i64 %4, ptr %14, align 8, !noalias !32657
-  store i8 0, ptr %15, align 4, !noalias !32657
-  call fastcc void @"_ZN5milli6vector7session25EmbedSession$LT$C$C$I$GT$17request_embedding17haa9a676a18c9c6faE"(ptr noalias noundef align 8 captures(address) dereferenceable(320) %i.c, ptr noalias noundef nonnull align 8 dereferenceable(136) %i.as, ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %17, i64 noundef %i.bf, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %7), !noalias !32669
+  %16 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store i64 %4, ptr %16, align 8, !noalias !32657
+  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 20
+  store i8 0, ptr %17, align 4, !noalias !32657
+  call fastcc void @"_ZN5milli6vector7session25EmbedSession$LT$C$C$I$GT$17request_embedding17haa9a676a18c9c6faE"(ptr noalias noundef align 8 captures(address) dereferenceable(320) %i.c, ptr noalias noundef nonnull align 8 dereferenceable(136) %i.as, ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %13, i64 noundef %i.bf, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %7), !noalias !32669
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !32657
   %i.bg = load i64, ptr %i.c, align 8, !range !40, !noalias !32657, !noundef !16 ; 2 uses
   %.not11.i = icmp eq i64 %i.bg, 97
@@ -482,17 +482,9 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac)
   %.sink3.i.i.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 24 ; 2 uses
   %.sink3.i.i.i.sroa.gep13.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 8 ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
-  %14 = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
-  %15 = getelementptr inbounds nuw i8, ptr %i.ac, i64 20
-  %16 = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
-  %17 = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
-  %18 = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !noalias !32783
   store ptr %i.ba, ptr %i.af, align 8, !noalias !32783
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   store ptr %7, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !32784
   %.sroa.663.8..sroa.8.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   store ptr %i.ar, ptr %.sroa.663.8..sroa.8.0..sroa_idx.i.sroa_idx, align 8, !noalias !32784
@@ -500,8 +492,10 @@ bb.c:                                             ; preds = %bb.a
   call fastcc void @"_ZN107_$LT$milli..vector..extractor..DocumentTemplateExtractor$u20$as$u20$milli..vector..extractor..Extractor$GT$7extract17h75907ae6b7ff5ba4E"(ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.ae, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.af, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.aj, ptr nonnull readonly %3, i64 %4), !noalias !32785
   %i.be = load i64, ptr %i.ae, align 8, !range !59, !noalias !32783, !noundef !16 ; 2 uses
   %.not26.i = icmp eq i64 %i.be, -9223372036854775807
-  %i.bf = load ptr, ptr %18, align 8, !noalias !32783 ; 5 uses
-  %i.bg = load i64, ptr %17, align 8, !noalias !32783 ; 4 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
+  %i.bf = load ptr, ptr %11, align 8, !noalias !32783 ; 5 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
+  %i.bg = load i64, ptr %12, align 8, !noalias !32783 ; 4 uses
   br i1 %.not26.i, label %bb.d, label %bb.s
 
 bb.d:                                             ; preds = %.split34.i
@@ -528,7 +522,8 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not28.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.bj = load i64, ptr %11, align 8, !noalias !32783
+  %13 = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
+  %i.bj = load i64, ptr %13, align 8, !noalias !32783
   %.not29.i = icmp ne ptr %i.bi, null
   %.not.i.i51.i = icmp eq i64 %i.bg, %i.bj
   %or.cond.i = select i1 %.not29.i, i1 %.not.i.i51.i, i1 false
@@ -570,14 +565,18 @@ bb.l:                                             ; preds = %bb.k
   br label %.sink.split.i
 
 bb.m:                                             ; preds = %bb.f
-  call void @_ZN5milli6update3new7extract7vectors26OnEmbeddingDocumentUpdates13clear_vectors17h84d8040ac0d2776aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %12, i32 noundef %2), !noalias !32796
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 168
+  call void @_ZN5milli6update3new7extract7vectors26OnEmbeddingDocumentUpdates13clear_vectors17h84d8040ac0d2776aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %14, i32 noundef %2), !noalias !32796
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.f
-  store i32 %2, ptr %13, align 8, !noalias !32783
+  %15 = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
+  store i32 %2, ptr %15, align 8, !noalias !32783
   store ptr %3, ptr %i.ac, align 8, !noalias !32783
-  store i64 %4, ptr %14, align 8, !noalias !32783
-  store i8 0, ptr %15, align 4, !noalias !32783
+  %16 = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
+  store i64 %4, ptr %16, align 8, !noalias !32783
+  %17 = getelementptr inbounds nuw i8, ptr %i.ac, i64 20
+  store i8 0, ptr %17, align 4, !noalias !32783
   %.not31.i = icmp eq ptr %i.bf, null
   br i1 %.not31.i, label %bb.p, label %bb.o
 
@@ -589,10 +588,12 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not33.i, label %bb.r, label %bb.q
 
 bb.p:                                             ; preds = %bb.n
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 168
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !32783
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(24) %i.ac, i64 24, i1 false), !noalias !32783
+  %19 = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %19, ptr noundef nonnull align 8 dereferenceable(24) %i.ac, i64 24, i1 false), !noalias !32783
   store i64 -9223372036854775808, ptr %i.aa, align 8, !noalias !32783
-  call void @"_ZN116_$LT$milli..update..new..extract..vectors..OnEmbeddingDocumentUpdates$u20$as$u20$milli..vector..session..OnEmbed$GT$26process_embedding_response17h240a23542517bb06E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %12, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.aa), !noalias !32798
+  call void @"_ZN116_$LT$milli..update..new..extract..vectors..OnEmbeddingDocumentUpdates$u20$as$u20$milli..vector..session..OnEmbed$GT$26process_embedding_response17h240a23542517bb06E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %18, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.aa), !noalias !32798
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !32783
   br label %_ZN5milli6update3new7extract7vectors20update_autogenerated17hb0c6e1460be16fe8E.exit
 
@@ -637,19 +638,9 @@ _ZN5milli6update3new7extract7vectors20update_autogenerated17hb0c6e1460be16fe8E.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.al, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
-  %.sink3.i.i.i.sroa.gep.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 24 ; 2 uses
-  %.sink3.i.i.i.sroa.gep2.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 3 uses
-  %.sink3.i.i.i.sroa.gep.i38.i = getelementptr inbounds nuw i8, ptr %i.u, i64 24 ; 2 uses
-  %.sink3.i.i.i.sroa.gep2.i39.i = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 3 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  %20 = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 2 uses
-  %21 = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  %22 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  %23 = getelementptr inbounds nuw i8, ptr %i.y, i64 20
-  %24 = getelementptr inbounds nuw i8, ptr %i.w, i64 24
-  %.sroa.8.0..sroa_idx.i20 = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !32800
   store ptr %i.ba, ptr %i.z, align 8, !noalias !32800
+  %.sroa.8.0..sroa_idx.i20 = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   store ptr %7, ptr %.sroa.8.0..sroa_idx.i20, align 8, !noalias !32801
   %.sroa.6.8..sroa.8.0..sroa_idx.i20.sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store ptr %i.ar, ptr %.sroa.6.8..sroa.8.0..sroa_idx.i20.sroa_idx, align 8, !noalias !32801
@@ -657,12 +648,14 @@ _ZN5milli6update3new7extract7vectors20update_autogenerated17hb0c6e1460be16fe8E.e
   call fastcc void @"_ZN107_$LT$milli..vector..extractor..DocumentTemplateExtractor$u20$as$u20$milli..vector..extractor..Extractor$GT$7extract17h75907ae6b7ff5ba4E"(ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.v, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.z, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.al, ptr nonnull readonly %3, i64 %4), !noalias !32803
   %i.bp = load i64, ptr %i.v, align 8, !range !59, !noalias !32802, !noundef !16 ; 4 uses
   %.not.i.i = icmp eq i64 %i.bp, -9223372036854775807
+  %.sink3.i.i.i.sroa.gep.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 24 ; 2 uses
+  %.sink3.i.i.i.sroa.gep2.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 3 uses
   br i1 %.not.i.i, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %.split33.i
-  %25 = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  %26 = load ptr, ptr %.sink3.i.i.i.sroa.gep2.i.i, align 8, !noalias !32802, !align !22, !noundef !16
-  %i.bq = load i64, ptr %25, align 8, !noalias !32802
+  %20 = load ptr, ptr %.sink3.i.i.i.sroa.gep2.i.i, align 8, !noalias !32802, !align !22, !noundef !16
+  %21 = getelementptr inbounds nuw i8, ptr %i.v, i64 16
+  %i.bq = load i64, ptr %21, align 8, !noalias !32802
   br label %bb.x
 
 bb.u:                                             ; preds = %.split33.i
@@ -691,7 +684,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %"_ZN4core3ptr126drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$$RF$str$GT$$C$milli..prompt..error..RenderPromptError$GT$$GT$17hefbd0e98639ba24dE.exit.i.i", %bb.t
   %.sroa.5.0.i.i = phi i64 [ %i.bq, %bb.t ], [ undef, %"_ZN4core3ptr126drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$$RF$str$GT$$C$milli..prompt..error..RenderPromptError$GT$$GT$17hefbd0e98639ba24dE.exit.i.i" ] ; 3 uses
-  %.sroa.0.0.i.i = phi ptr [ %26, %bb.t ], [ null, %"_ZN4core3ptr126drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$$RF$str$GT$$C$milli..prompt..error..RenderPromptError$GT$$GT$17hefbd0e98639ba24dE.exit.i.i" ] ; 5 uses
+  %.sroa.0.0.i.i = phi ptr [ %20, %bb.t ], [ null, %"_ZN4core3ptr126drop_in_place$LT$core..result..Result$LT$core..option..Option$LT$$RF$str$GT$$C$milli..prompt..error..RenderPromptError$GT$$GT$17hefbd0e98639ba24dE.exit.i.i" ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !32802
   br i1 %10, label %.noexc46.i, label %.thread29.i
 
@@ -700,6 +693,8 @@ bb.x:                                             ; preds = %"_ZN4core3ptr126dro
   call fastcc void @"_ZN107_$LT$milli..vector..extractor..DocumentTemplateExtractor$u20$as$u20$milli..vector..extractor..Extractor$GT$7extract17h22d56ac9748721e2E"(ptr noalias noundef align 8 captures(address) dereferenceable(40) %i.u, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.z, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.am, ptr nonnull readonly %3, i64 %4), !noalias !32813
   %i.bt = load i64, ptr %i.u, align 8, !range !59, !noalias !32812, !noundef !16 ; 4 uses
   %.not.i37.i = icmp eq i64 %i.bt, -9223372036854775807
+  %.sink3.i.i.i.sroa.gep.i38.i = getelementptr inbounds nuw i8, ptr %i.u, i64 24 ; 2 uses
+  %.sink3.i.i.i.sroa.gep2.i39.i = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 3 uses
   br i1 %.not.i37.i, label %bb.ab, label %bb.y
 
 bb.y:                                             ; preds = %.noexc46.i
@@ -733,7 +728,8 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %.noexc46.i
   %i.bw = load ptr, ptr %.sink3.i.i.i.sroa.gep2.i39.i, align 8, !noalias !32812, !align !22, !noundef !16 ; 3 uses
-  %i.bx = load i64, ptr %19, align 8, !noalias !32812
+  %22 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
+  %i.bx = load i64, ptr %22, align 8, !noalias !32812
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !32812
   %.not15.i = icmp eq ptr %.sroa.0.0.i.i, null
   br i1 %.not15.i, label %.split.i23, label %bb.ac
@@ -754,14 +750,18 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.bz, label %_ZN5milli6update3new7extract7vectors20update_autogenerated17haf627a24406186b3E.exit, label %.thread29.i
 
 bb.ae:                                            ; preds = %.thread29.i
-  call void @_ZN5milli6update3new7extract7vectors26OnEmbeddingDocumentUpdates13clear_vectors17h84d8040ac0d2776aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %20, i32 noundef %2), !noalias !32823
+  %23 = getelementptr inbounds nuw i8, ptr %1, i64 168
+  call void @_ZN5milli6update3new7extract7vectors26OnEmbeddingDocumentUpdates13clear_vectors17h84d8040ac0d2776aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %23, i32 noundef %2), !noalias !32823
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %.thread29.i
-  store i32 %2, ptr %21, align 8, !noalias !32800
+  %24 = getelementptr inbounds nuw i8, ptr %i.y, i64 16
+  store i32 %2, ptr %24, align 8, !noalias !32800
   store ptr %3, ptr %i.y, align 8, !noalias !32800
-  store i64 %4, ptr %22, align 8, !noalias !32800
-  store i8 0, ptr %23, align 4, !noalias !32800
+  %25 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
+  store i64 %4, ptr %25, align 8, !noalias !32800
+  %26 = getelementptr inbounds nuw i8, ptr %i.y, i64 20
+  store i8 0, ptr %26, align 4, !noalias !32800
   %.not17.i = icmp eq ptr %.sroa.0.0.i.i, null
   br i1 %.not17.i, label %bb.ah, label %bb.ag
 
@@ -773,10 +773,12 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %.not20.i, label %bb.aj, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.af
+  %27 = getelementptr inbounds nuw i8, ptr %1, i64 168
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !32800
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %24, ptr noundef nonnull align 8 dereferenceable(24) %i.y, i64 24, i1 false), !noalias !32800
+  %28 = getelementptr inbounds nuw i8, ptr %i.w, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %28, ptr noundef nonnull align 8 dereferenceable(24) %i.y, i64 24, i1 false), !noalias !32800
   store i64 -9223372036854775808, ptr %i.w, align 8, !noalias !32800
-  call void @"_ZN116_$LT$milli..update..new..extract..vectors..OnEmbeddingDocumentUpdates$u20$as$u20$milli..vector..session..OnEmbed$GT$26process_embedding_response17h240a23542517bb06E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %20, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.w), !noalias !32825
+  call void @"_ZN116_$LT$milli..update..new..extract..vectors..OnEmbeddingDocumentUpdates$u20$as$u20$milli..vector..session..OnEmbed$GT$26process_embedding_response17h240a23542517bb06E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %27, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.w), !noalias !32825
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !32800
   br label %_ZN5milli6update3new7extract7vectors20update_autogenerated17haf627a24406186b3E.exit
 

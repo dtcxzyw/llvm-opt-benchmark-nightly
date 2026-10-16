@@ -204,13 +204,16 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %2, align 1
   store i8 0, ptr %3, align 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp sgt i32 %i.b, 0
-  br i1 %i.c, label %.lr.ph.a, label %.loopexit
+  br i1 %i.c, label %.lr.ph, label %.loopexit
 
-.lr.ph.a:                                         ; preds = %bb.b, %bb.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %bb.b ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.i
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
   %i.d = load ptr, ptr %5, align 8
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
   %i.f = load ptr, ptr %i.e, align 8              ; 4 uses

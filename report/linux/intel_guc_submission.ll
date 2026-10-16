@@ -205,18 +205,20 @@ raw_atomic_fetch_add_unless.exit.i.i.i:           ; preds = %raw_atomic_try_cmpx
 intel_gt_pm_get.exit:                             ; preds = %.lr.ph.i.i.i, %raw_atomic_fetch_add_unless.exit.i.i.i
   %i.r = getelementptr i8, ptr %0, i64 -80        ; 4 uses
   %i.s = getelementptr i8, ptr %0, i64 -16        ; 7 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %2 = getelementptr i8, ptr %0, i64 -8           ; 2 uses
   %i.t = load volatile ptr, ptr %i.s, align 8
   %.not43.i = icmp eq ptr %i.t, %i.s
-  br i1 %.not43.i, label %deregister_destroyed_contexts.exit, label %.lr.ph.i.a
+  br i1 %.not43.i, label %deregister_destroyed_contexts.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %intel_gt_pm_get.exit
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  br label %.lr.ph.i.a
 
 .critedge28.i:                                    ; preds = %.critedge.i.i, %bb.e
   %i.u = load volatile ptr, ptr %i.s, align 8
   %.not.i = icmp eq ptr %i.u, %i.s
   br i1 %.not.i, label %deregister_destroyed_contexts.exit, label %.lr.ph.i.a
 
-.lr.ph.i.a:                                       ; preds = %intel_gt_pm_get.exit, %.critedge28.i
+.lr.ph.i.a:                                       ; preds = %.critedge28.i, %.lr.ph.i
   %i.v = call i64 @_raw_spin_lock_irqsave(ptr noundef %i.r) #21 ; 2 uses
   %i.w = load volatile ptr, ptr %i.s, align 8     ; 16 uses
   %.not22.i = icmp eq ptr %i.w, %i.s
@@ -335,6 +337,7 @@ guc_lrc_desc_unpin.exit.thread.i:                 ; preds = %bb.f
 
 guc_lrc_desc_unpin.exit.i:                        ; preds = %.lr.ph.i.i.i.i, %guc_lrc_desc_unpin.exit.thread.i, %atomic_add_unless.exit.i.i.i.i
   %i.bp = call i64 @_raw_spin_lock_irqsave(ptr noundef %i.r) #21
+  %2 = getelementptr i8, ptr %0, i64 -8           ; 2 uses
   %i.bq = load ptr, ptr %2, align 8               ; 2 uses
   store ptr %i.w, ptr %2, align 8
   store ptr %i.s, ptr %i.w, align 8
@@ -737,13 +740,13 @@ prep_context_pending_disable.exit:                ; preds = %bb.e, %.sink.split.
   br i1 %i.al, label %.loopexit, label %.lr.ph46
 
 .lr.ph46:                                         ; preds = %prep_context_pending_disable.exit
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %4 = zext i16 %i.aj to i32
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call fastcc void @__guc_context_set_preemption_timeout(ptr noundef %i.d, i16 noundef zeroext %i.aj, i32 noundef %2) #22, !srcloc !170
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store i32 4097, ptr %i.a, align 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %4 = zext i16 %i.aj to i32
   store i32 %4, ptr %3, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i32 0, ptr %5, align 4
   %i.am = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %i.d, ptr noundef nonnull %i.a, i32 noundef 3, i32 noundef 2, i1 noundef zeroext true) #22, !srcloc !54 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
@@ -767,11 +770,11 @@ bb.g:                                             ; preds = %bb.f
   tail call void @intel_runtime_pm_put_unchecked(ptr noundef %i.f) #21
   br label %.loopexit45
 
-.loopexit45:                                      ; preds = %bb.g, %.lr.ph, %bb.f
+.loopexit45:                                      ; preds = %.lr.ph, %bb.g, %bb.f
   tail call void @_raw_spin_unlock_irqrestore(ptr noundef %i.j, i64 noundef %i.k) #21
   br label %.loopexit
 
-.loopexit:                                        ; preds = %prep_context_pending_disable.exit, %.lr.ph46, %.loopexit45, %submission_disabled.exit.thread
+.loopexit:                                        ; preds = %.lr.ph46, %prep_context_pending_disable.exit, %.loopexit45, %submission_disabled.exit.thread
   ret void
 }
 
@@ -1094,13 +1097,13 @@ prep_context_pending_disable.exit.i:              ; preds = %.sink.split.i.i.i.i
   br i1 %i.aq, label %guc_context_block.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %prep_context_pending_disable.exit.i
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %4 = zext i16 %i.ao to i32
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
   store i32 4097, ptr %i.b, align 4
-  store i32 %4, ptr %3, align 4
-  store i32 0, ptr %i.ar, align 4
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %3 = zext i16 %i.ao to i32
+  store i32 %3, ptr %i.ar, align 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store i32 0, ptr %4, align 4
   %i.as = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %i.m, ptr noundef nonnull %i.b, i32 noundef 3, i32 noundef 2, i1 noundef zeroext true) #22, !srcloc !54 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @intel_runtime_pm_put_unchecked(ptr noundef %i.q) #21
@@ -1307,13 +1310,13 @@ intel_context_get.exit.i:                         ; preds = %.sink.split.i.i.i.i
   br i1 %i.dt, label %guc_context_unblock.exit, label %.lr.ph.i32
 
 .lr.ph.i32:                                       ; preds = %intel_context_get.exit.i
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.val19.i = load i16, ptr %i.dd, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store i32 4097, ptr %i.a, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.du = zext i16 %.val19.i to i32
   store i32 %i.du, ptr %5, align 4
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i32 1, ptr %6, align 4
   %i.dv = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %i.cp, ptr noundef nonnull %i.a, i32 noundef 3, i32 noundef 2, i1 noundef zeroext true) #22, !srcloc !173 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
@@ -1716,13 +1719,13 @@ prep_context_pending_disable.exit:                ; preds = %bb.b, %.sink.split.
   br i1 %i.u, label %bb.c, label %.lr.ph
 
 .lr.ph:                                           ; preds = %prep_context_pending_disable.exit
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %4 = zext i16 %i.r to i32
-  %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store i32 4097, ptr %i.a, align 4
-  store i32 %4, ptr %3, align 4
-  store i32 0, ptr %i.v, align 4
+  %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %3 = zext i16 %i.r to i32
+  store i32 %3, ptr %i.v, align 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i32 0, ptr %4, align 4
   %i.w = call fastcc i32 @guc_submission_send_busy_loop(ptr noundef %0, ptr noundef nonnull %i.a, i32 noundef 3, i32 noundef 2, i1 noundef zeroext true) #22, !srcloc !54 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   call void @intel_runtime_pm_put_unchecked(ptr noundef %i.g) #21

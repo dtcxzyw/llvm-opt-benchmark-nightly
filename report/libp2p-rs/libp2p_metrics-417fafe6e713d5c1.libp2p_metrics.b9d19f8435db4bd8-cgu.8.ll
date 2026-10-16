@@ -170,7 +170,6 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerINtNtCsBXGTqM1I
 define internal void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueATReNtNtCsexYYUdYSQU6_5alloc6string6StringEj1_ECsfX6MfzXxCho_14libp2p_metrics(ptr noalias nofree noundef align 8 dereferenceable(40) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsfX6MfzXxCho_14libp2p_metrics(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %bb.d unwind label %bb.b
 
@@ -182,6 +181,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECsfX6MfzXxCho_14libp2p_metrics.exit.i.i.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val3.i.i.i.i = load ptr, ptr %1, align 8, !alias.scope !35, !nonnull !7, !noundef !7
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.i.i.i.i, i64 noundef %.val2.i.i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #28, !noalias !36
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECsfX6MfzXxCho_14libp2p_metrics.exit.i.i.i.i
@@ -192,7 +192,8 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.d, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTReNtNtCsexYYUdYSQU6_5alloc6string6StringEECsfX6MfzXxCho_14libp2p_metrics.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.val1.i.i.i.i = load ptr, ptr %1, align 8, !alias.scope !35, !nonnull !7, !noundef !7
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %.val1.i.i.i.i = load ptr, ptr %2, align 8, !alias.scope !35, !nonnull !7, !noundef !7
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i.i.i, i64 noundef %.val.i.i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #28, !noalias !37
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTReNtNtCsexYYUdYSQU6_5alloc6string6StringEECsfX6MfzXxCho_14libp2p_metrics.exit
 

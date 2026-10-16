@@ -202,12 +202,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @appendStringInfoString(ptr noundef nonnull %2, ptr noundef nonnull @.str.34) #13
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4
   %i.d = icmp sgt i32 %i.c, 0
   br i1 %i.d, label %.lr.ph.preheader, label %.split97.us
 
 .lr.ph.preheader:                                 ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.e = load ptr, ptr %3, align 8
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = call ptr @quote_literal_cstr(ptr noundef %i.f) #13
@@ -573,7 +573,13 @@ bb.a:
   %i.e = load i32, ptr @max_repack_replication_slots, align 4 ; 2 uses
   %i.f = add i32 %i.e, %i.d
   %i.g = icmp sgt i32 %i.f, 0
-  br i1 %i.g, label %.lr.ph.preheader.i.i, label %get_local_synced_slots.exit.i
+  br i1 %i.g, label %.lr.ph.preheader.i.i, label %get_local_synced_slots.exit.thread.i
+
+get_local_synced_slots.exit.thread.i:             ; preds = %bb.a
+  %4 = load ptr, ptr @MainLWLockArray, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4736
+  tail call void @LWLockRelease(ptr noundef nonnull %5) #13
+  br label %drop_local_obsolete_slots.exit
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.a
   %.pre11.i.i = load ptr, ptr @ReplicationSlotCtl, align 8
@@ -608,47 +614,46 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.p
   %i.s = phi i32 [ %.pre13.i.i, %bb.c ], [ %i.h, %bb.b ], [ %i.h, %.lr.ph.i.i ] ; 2 uses
   %i.t = phi i32 [ %.pre12.i.i, %bb.c ], [ %i.i, %bb.b ], [ %i.i, %.lr.ph.i.i ] ; 2 uses
   %i.u = phi ptr [ %.pre.i.i, %bb.c ], [ %i.j, %bb.b ], [ %i.j, %.lr.ph.i.i ]
-  %.1.i.i = phi ptr [ %i.r, %bb.c ], [ %.078.i.i, %bb.b ], [ %.078.i.i, %.lr.ph.i.i ] ; 2 uses
+  %.1.i.i = phi ptr [ %i.r, %bb.c ], [ %.078.i.i, %bb.b ], [ %.078.i.i, %.lr.ph.i.i ] ; 4 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.v = add i32 %i.t, %i.s
   %i.w = sext i32 %i.v to i64
   %i.x = icmp slt i64 %indvars.iv.next.i.i, %i.w
   br i1 %i.x, label %.lr.ph.i.i, label %get_local_synced_slots.exit.i, !llvm.loop !17
 
-get_local_synced_slots.exit.i:                    ; preds = %bb.d, %bb.a
-  %.07.lcssa.i.i = phi ptr [ null, %bb.a ], [ %.1.i.i, %bb.d ] ; 3 uses
+get_local_synced_slots.exit.i:                    ; preds = %bb.d
   %i.y = load ptr, ptr @MainLWLockArray, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 4736
   tail call void @LWLockRelease(ptr noundef nonnull %i.z) #13
-  %4 = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 4 ; 2 uses
-  %.not18.i = icmp eq ptr %.07.lcssa.i.i, null
-  %i.aa = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 16
-  %.not17.i.i.a = icmp eq ptr %0, null            ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  br i1 %.not18.i, label %drop_local_obsolete_slots.exit, label %.preheader.i.preheader
+  %i.aa = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 4 ; 2 uses
+  %.not17.i.i.a = icmp eq ptr %.1.i.i, null
+  br i1 %.not17.i.i.a, label %drop_local_obsolete_slots.exit, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %get_local_synced_slots.exit.i
-  %i.ab = load i32, ptr %4, align 4
+  %6 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16
+  %.not17.i.i = icmp eq ptr %0, null
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.ab = load i32, ptr %i.aa, align 4
   %i.ac = icmp sgt i32 %i.ab, 0
   br i1 %i.ac, label %.lr.ph, label %drop_local_obsolete_slots.exit
 
 .lr.ph:                                           ; preds = %.preheader.i.preheader, %.preheader.i
   %indvars.iv.i14 = phi i64 [ %indvars.iv.next.i, %.preheader.i ], [ 0, %.preheader.i.preheader ] ; 2 uses
-  %i.ad = load ptr, ptr %i.aa, align 8
+  %i.ad = load ptr, ptr %6, align 8
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %indvars.iv.i14
   %i.af = load ptr, ptr %i.ae, align 8            ; 15 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 112
-  br i1 %.not17.i.i.a, label %local_sync_slot_required.exit.thread.i, label %.preheader.i.i
+  br i1 %.not17.i.i, label %local_sync_slot_required.exit.thread.i, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.lr.ph
-  %i.ai = load i32, ptr %6, align 4               ; 2 uses
+  %i.ai = load i32, ptr %8, align 4               ; 2 uses
   %i.aj = icmp sgt i32 %i.ai, 0
   br i1 %i.aj, label %.lr.ph21.i.i, label %local_sync_slot_required.exit.thread.i
 
 .lr.ph21.i.i:                                     ; preds = %.preheader.i.i
-  %i.ak = load ptr, ptr %5, align 8
+  %i.ak = load ptr, ptr %7, align 8
   %wide.trip.count.i.i = zext nneg i32 %i.ai to i64
   br label %bb.f
 
@@ -747,17 +752,20 @@ bb.m:                                             ; preds = %.critedge20.i, %bb.
 
 .preheader.i:                                     ; preds = %bb.m, %local_sync_slot_required.exit.i, %local_sync_slot_required.exit.thread24.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i14, 1 ; 2 uses
-  %i.bj = load i32, ptr %4, align 4
+  %i.bj = load i32, ptr %i.aa, align 4
   %i.bk = sext i32 %i.bj to i64
   %i.bl = icmp slt i64 %indvars.iv.next.i, %i.bk
-  br i1 %i.bl, label %.lr.ph, label %drop_local_obsolete_slots.exit, !llvm.loop !18
+  br i1 %i.bl, label %.lr.ph, label %drop_local_obsolete_slots.exit
 
-drop_local_obsolete_slots.exit:                   ; preds = %.preheader.i, %.preheader.i.preheader, %get_local_synced_slots.exit.i
+drop_local_obsolete_slots.exit:                   ; preds = %.preheader.i, %.preheader.i.preheader, %get_local_synced_slots.exit.thread.i, %get_local_synced_slots.exit.i
+  %.not16 = icmp eq ptr %0, null
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.not7.i64.i = icmp eq ptr %1, null             ; 2 uses
-  br i1 %.not17.i.i.a, label %.split.us, label %.preheader.preheader
+  br i1 %.not16, label %.split.us, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %drop_local_obsolete_slots.exit
-  %i.bm = load i32, ptr %6, align 4
+  %i.bm = load i32, ptr %9, align 4
   %i.bn = icmp sgt i32 %i.bm, 0
   br i1 %i.bn, label %.lr.ph57, label %.split.us
 
@@ -768,7 +776,7 @@ drop_local_obsolete_slots.exit:                   ; preds = %.preheader.i, %.pre
 .lr.ph57:                                         ; preds = %.preheader.preheader, %synchronize_one_slot.exit
   %.11756 = phi i1 [ %i.gh, %synchronize_one_slot.exit ], [ false, %.preheader.preheader ]
   %indvars.iv55 = phi i64 [ %indvars.iv.next, %synchronize_one_slot.exit ], [ 0, %.preheader.preheader ] ; 2 uses
-  %i.bo = load ptr, ptr %5, align 8
+  %i.bo = load ptr, ptr %10, align 8
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %indvars.iv55
   %i.bq = load ptr, ptr %i.bp, align 8            ; 19 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
@@ -1080,10 +1088,10 @@ synchronize_one_slot.exit:                        ; preds = %bb.af, %.thread79.i
   %i.gh = or i1 %.11756, %.256.i                  ; 2 uses
   call void @UnlockSharedObject(i32 noundef 1262, i32 noundef %i.bt, i16 noundef zeroext 0, i32 noundef 1) #13
   %indvars.iv.next = add nuw nsw i64 %indvars.iv55, 1 ; 2 uses
-  %i.gi = load i32, ptr %6, align 4
+  %i.gi = load i32, ptr %9, align 4
   %i.gj = sext i32 %i.gi to i64
   %i.gk = icmp slt i64 %indvars.iv.next, %i.gj
-  br i1 %i.gk, label %.lr.ph57, label %.split.us, !llvm.loop !19
+  br i1 %i.gk, label %.lr.ph57, label %.split.us, !llvm.loop !18
 }
 
 declare void @list_free_deep(ptr noundef) local_unnamed_addr #3
@@ -1269,7 +1277,7 @@ bb.i:                                             ; preds = %ReplicationSlotSetI
   %i.ag = add i32 %i.ad, %i.ae
   %i.ah = sext i32 %i.ag to i64
   %i.ai = icmp slt i64 %indvars.iv.next, %i.ah
-  br i1 %i.ai, label %.lr.ph, label %._crit_edge, !llvm.loop !20
+  br i1 %i.ai, label %.lr.ph, label %._crit_edge, !llvm.loop !19
 
 bb.j:                                             ; preds = %bb.a, %._crit_edge
   ret void
@@ -1672,5 +1680,4 @@ attributes #17 = { nounwind willreturn memory(read) }
 !17 = distinct !{!17, !10}
 !18 = distinct !{!18, !10}
 !19 = distinct !{!19, !10}
-!20 = distinct !{!20, !10}
 end_hunk_1

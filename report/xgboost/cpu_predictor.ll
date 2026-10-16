@@ -205,10 +205,13 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   call void @_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE8PopulateILi0EEEvRKS3_RKNS_7RegTree22CategoricalSplitMatrixEii(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef nonnull align 8 dereferenceable(68) %0, ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef 0, i32 noundef 0)
   %.not36.i = icmp eq i64 %3, 0
+  br i1 %.not36.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
   %7 = getelementptr inbounds nuw i8, ptr %6, i64 24
   %8 = getelementptr inbounds nuw i8, ptr %6, i64 1
   %9 = getelementptr inbounds nuw i8, ptr %6, i64 28
-  br i1 %.not36.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.preheader33.i
+  br label %.preheader33.i
 
 .lr.ph.i.a:                                       ; preds = %bb.j
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 5 uses
@@ -220,8 +223,8 @@ bb.b:                                             ; preds = %bb.a
   %unroll_iter = and i64 %3, -4
   br label %bb.k
 
-.preheader33.i:                                   ; preds = %bb.b, %bb.j
-  %.03134.i = phi i64 [ %i.ap, %bb.j ], [ 0, %bb.b ] ; 4 uses
+.preheader33.i:                                   ; preds = %bb.j, %.lr.ph.i
+  %.03134.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ap, %bb.j ] ; 4 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.03134.i ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !83   ; 2 uses
   %exitcond.not.i = icmp eq i64 %.03134.i, %1
@@ -624,19 +627,22 @@ bb.d:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.s = load i32, ptr %i.r, align 4, !tbaa !402  ; 2 uses
   %.not.i.i = icmp eq i32 %i.s, -1
-  br i1 %.not.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a, label %.sink.split.i.i
+  br i1 %.not.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit, label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.d, %bb.c
   %.sink.i.i = phi i32 [ 0, %bb.c ], [ %i.s, %bb.d ]
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i32 %.sink.i.i, ptr %i.t, align 4, !tbaa !83
-  br label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+  br label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
 
-_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a: ; preds = %bb.d, %.sink.split.i.i
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit: ; preds = %bb.d, %.sink.split.i.i
   %.not36.i = icmp eq i64 %3, 0
+  br i1 %.not36.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 8
-  br i1 %.not36.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.preheader33.i
+  br label %.preheader33.i
 
 .lr.ph.i:                                         ; preds = %bb.h
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 5 uses
@@ -648,8 +654,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2E
   %unroll_iter = and i64 %3, -4
   br label %bb.i
 
-.preheader33.i:                                   ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a, %bb.h
-  %.03134.i = phi i64 [ %i.as, %bb.h ], [ 0, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a ] ; 4 uses
+.preheader33.i:                                   ; preds = %bb.h, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+  %.03134.i = phi i64 [ 0, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a ], [ %i.as, %bb.h ] ; 4 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.03134.i ; 2 uses
   %i.z = load i32, ptr %i.y, align 4, !tbaa !83   ; 2 uses
   %exitcond.not.i = icmp eq i64 %.03134.i, %1
@@ -752,7 +758,7 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %bb.j, !llvm.loop !1017
 
-_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.loopexit.unr-lcssa, %bb.j, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.loopexit.unr-lcssa, %bb.j, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   br label %bb.l
 
@@ -1155,10 +1161,13 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   call void @_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeViewEE8PopulateILi0EEEvRKS3_RKNS_7RegTree22CategoricalSplitMatrixEii(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef 0, i32 noundef 0)
   %.not36.i = icmp eq i64 %3, 0
+  br i1 %.not36.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
   %7 = getelementptr inbounds nuw i8, ptr %6, i64 24
   %8 = getelementptr inbounds nuw i8, ptr %6, i64 1
   %9 = getelementptr inbounds nuw i8, ptr %6, i64 28
-  br i1 %.not36.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.preheader33.i
+  br label %.preheader33.i
 
 .lr.ph.i.a:                                       ; preds = %bb.j
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 5 uses
@@ -1170,8 +1179,8 @@ bb.b:                                             ; preds = %bb.a
   %unroll_iter = and i64 %3, -4
   br label %bb.k
 
-.preheader33.i:                                   ; preds = %bb.b, %bb.j
-  %.03134.i = phi i64 [ %i.ap, %bb.j ], [ 0, %bb.b ] ; 4 uses
+.preheader33.i:                                   ; preds = %bb.j, %.lr.ph.i
+  %.03134.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ap, %bb.j ] ; 4 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.03134.i ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !83   ; 2 uses
   %exitcond.not.i = icmp eq i64 %.03134.i, %1
@@ -1574,19 +1583,22 @@ bb.d:                                             ; preds = %bb.b
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !404
   %i.x = load i32, ptr %i.w, align 4, !tbaa !83   ; 2 uses
   %.not.i.i = icmp eq i32 %i.x, -1
-  br i1 %.not.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a, label %.sink.split.i.i
+  br i1 %.not.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit, label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.d, %bb.c
   %.sink.i.i = phi i32 [ 0, %bb.c ], [ %i.x, %bb.d ]
   %i.y = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i32 %.sink.i.i, ptr %i.y, align 4, !tbaa !83
-  br label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+  br label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
 
-_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a: ; preds = %bb.d, %.sink.split.i.i
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit: ; preds = %bb.d, %.sink.split.i.i
   %.not36.i = icmp eq i64 %3, 0
+  br i1 %.not36.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 8
-  br i1 %.not36.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.preheader33.i
+  br label %.preheader33.i
 
 .lr.ph.i:                                         ; preds = %bb.h
   %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 5 uses
@@ -1598,8 +1610,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeView
   %unroll_iter = and i64 %3, -4
   br label %bb.i
 
-.preheader33.i:                                   ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a, %bb.h
-  %.03134.i = phi i64 [ %i.ax, %bb.h ], [ 0, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a ] ; 4 uses
+.preheader33.i:                                   ; preds = %bb.h, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+  %.03134.i = phi i64 [ 0, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a ], [ %i.ax, %bb.h ] ; 4 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.03134.i ; 2 uses
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !83 ; 2 uses
   %exitcond.not.i = icmp eq i64 %.03134.i, %1
@@ -1702,7 +1714,7 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %bb.j, !llvm.loop !1088
 
-_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.loopexit.unr-lcssa, %bb.j, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.loopexit.unr-lcssa, %bb.j, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   br label %bb.l
 
@@ -2105,19 +2117,22 @@ bb.d:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.r = load i32, ptr %i.q, align 4, !tbaa !402  ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.r, -1
-  br i1 %.not.i.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a, label %.sink.split.i.i.i
+  br i1 %.not.i.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i, label %.sink.split.i.i.i
 
 .sink.split.i.i.i:                                ; preds = %bb.d, %bb.c
   %.sink.i.i.i = phi i32 [ 0, %bb.c ], [ %i.r, %bb.d ]
   %i.s = getelementptr inbounds nuw i8, ptr %10, i64 16
   store i32 %.sink.i.i.i, ptr %i.s, align 4, !tbaa !83
-  br label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a
+  br label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i
 
-_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a: ; preds = %.sink.split.i.i.i, %bb.d
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i: ; preds = %.sink.split.i.i.i, %bb.d
   %.not.i.i = icmp eq i64 %4, 0
+  br i1 %.not.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a
+
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i
   %i.t = getelementptr inbounds nuw i8, ptr %10, i64 4
   %i.u = getelementptr inbounds nuw i8, ptr %10, i64 8
-  br i1 %.not.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.i, label %.preheader28.i.i
+  br label %.preheader28.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i
   %i.v = getelementptr inbounds nuw i8, ptr %10, i64 12 ; 5 uses
@@ -2129,8 +2144,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2E
   %unroll_iter = and i64 %4, -4
   br label %bb.f
 
-.preheader28.i.i:                                 ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a, %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i
-  %.02729.i.i = phi i64 [ %i.an, %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i ], [ 0, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a ] ; 4 uses
+.preheader28.i.i:                                 ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a
+  %.02729.i.i = phi i64 [ 0, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a ], [ %i.an, %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i ] ; 4 uses
   %exitcond.not.i.i = icmp eq i64 %.02729.i.i, %2
   br i1 %exitcond.not.i.i, label %bb.e, label %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i, !prof !173
 
@@ -2219,7 +2234,7 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.i, label %bb.g, !llvm.loop !1106
 
-_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.i: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.i.loopexit.unr-lcssa, %bb.g, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i.a
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.i: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.i.loopexit.unr-lcssa, %bb.g, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #18
   br label %_ZN7xgboost9predictor16ProcessArrayTreeILb0ELb0ELi1ENS_4tree14ScalarTreeViewEEEvRKT2_NS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPii.exit
 
@@ -2364,10 +2379,13 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   call void @_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree14ScalarTreeViewEE8PopulateILi0EEEvRKS3_RKNS_7RegTree22CategoricalSplitMatrixEii(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef nonnull align 8 dereferenceable(68) %0, ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef 0, i32 noundef 0)
   %.not.i = icmp eq i64 %3, 0
+  br i1 %.not.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
   %7 = getelementptr inbounds nuw i8, ptr %6, i64 24
   %8 = getelementptr inbounds nuw i8, ptr %6, i64 1
   %9 = getelementptr inbounds nuw i8, ptr %6, i64 28
-  br i1 %.not.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree14ScalarTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.preheader28.i
+  br label %.preheader28.i
 
 .lr.ph.i.a:                                       ; preds = %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 5 uses
@@ -2379,8 +2397,8 @@ bb.b:                                             ; preds = %bb.a
   %unroll_iter = and i64 %3, -4
   br label %bb.h
 
-.preheader28.i:                                   ; preds = %bb.b, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i
-  %.02729.i = phi i64 [ %i.al, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i ], [ 0, %bb.b ] ; 4 uses
+.preheader28.i:                                   ; preds = %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i, %.lr.ph.i
+  %.02729.i = phi i64 [ 0, %.lr.ph.i ], [ %i.al, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i ] ; 4 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.02729.i ; 2 uses
   %exitcond.not.i = icmp eq i64 %.02729.i, %1
   br i1 %exitcond.not.i, label %bb.c, label %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i, !prof !173
@@ -2783,10 +2801,13 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   call void @_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree19MultiTargetTreeViewEE8PopulateILi0EEEvRKS3_RKNS_7RegTree22CategoricalSplitMatrixEii(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef 0, i32 noundef 0)
   %.not.i = icmp eq i64 %3, 0
+  br i1 %.not.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
   %7 = getelementptr inbounds nuw i8, ptr %6, i64 24
   %8 = getelementptr inbounds nuw i8, ptr %6, i64 1
   %9 = getelementptr inbounds nuw i8, ptr %6, i64 28
-  br i1 %.not.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.preheader28.i
+  br label %.preheader28.i
 
 .lr.ph.i.a:                                       ; preds = %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 5 uses
@@ -2798,8 +2819,8 @@ bb.b:                                             ; preds = %bb.a
   %unroll_iter = and i64 %3, -4
   br label %bb.h
 
-.preheader28.i:                                   ; preds = %bb.b, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i
-  %.02729.i = phi i64 [ %i.al, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i ], [ 0, %bb.b ] ; 4 uses
+.preheader28.i:                                   ; preds = %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i, %.lr.ph.i
+  %.02729.i = phi i64 [ 0, %.lr.ph.i ], [ %i.al, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb0ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i ] ; 4 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.02729.i ; 2 uses
   %exitcond.not.i = icmp eq i64 %.02729.i, %1
   br i1 %exitcond.not.i, label %bb.c, label %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i, !prof !173
@@ -3202,19 +3223,22 @@ bb.d:                                             ; preds = %bb.b
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !404
   %i.s = load i32, ptr %i.r, align 4, !tbaa !83   ; 2 uses
   %.not.i.i = icmp eq i32 %i.s, -1
-  br i1 %.not.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a, label %.sink.split.i.i
+  br i1 %.not.i.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit, label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.d, %bb.c
   %.sink.i.i = phi i32 [ 0, %bb.c ], [ %i.s, %bb.d ]
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i32 %.sink.i.i, ptr %i.t, align 4, !tbaa !83
-  br label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+  br label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
 
-_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a: ; preds = %bb.d, %.sink.split.i.i
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit: ; preds = %bb.d, %.sink.split.i.i
   %.not.i = icmp eq i64 %3, 0
+  br i1 %.not.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 8
-  br i1 %.not.i, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %.preheader28.i
+  br label %.preheader28.i
 
 .lr.ph.i:                                         ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 5 uses
@@ -3226,8 +3250,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeView
   %unroll_iter = and i64 %3, -4
   br label %bb.f
 
-.preheader28.i:                                   ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a, %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i
-  %.02729.i = phi i64 [ %i.ao, %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i ], [ 0, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a ] ; 4 uses
+.preheader28.i:                                   ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+  %.02729.i = phi i64 [ 0, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a ], [ %i.ao, %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i ] ; 4 uses
   %exitcond.not.i = icmp eq i64 %.02729.i, %1
   br i1 %exitcond.not.i, label %bb.e, label %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i, !prof !173
 
@@ -3316,7 +3340,7 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit, label %bb.g, !llvm.loop !1195
 
-_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.loopexit.unr-lcssa, %bb.g, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit.a
+_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit: ; preds = %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEE7ProcessENS_6common4SpanINS_7RegTree4FVecELm18446744073709551615EEEmPi.exit.loopexit.unr-lcssa, %bb.g, %_ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi1ENS_4tree19MultiTargetTreeViewEEC2ERKS3_RKNS_7RegTree22CategoricalSplitMatrixE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   br label %bb.i
 

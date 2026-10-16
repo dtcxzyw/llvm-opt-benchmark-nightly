@@ -205,7 +205,7 @@ bb.a:
   %i.h = alloca [512 x i32], align 16             ; 10 uses
   %i.i = alloca [64 x i32], align 16              ; 26 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !28   ; 224 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !28   ; 225 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 68 ; 2 uses
   %i.m = load i32, ptr %i.l, align 4, !tbaa !50
   %i.n = sext i32 %i.m to i64
@@ -608,23 +608,14 @@ bb.hm:                                            ; preds = %put_bits.exit85.i, 
   %exitcond130.not.i = icmp eq i64 %indvars.iv.next128.i144, 10
   br i1 %exitcond130.not.i, label %put_primary_audio_header.exit, label %.preheader.i142, !llvm.loop !122
 
-put_primary_audio_header.exit:                    ; preds = %._crit_edge110.i, %put_bits.exit53.i, %.preheader93.i, %.preheader92.i, %.preheader91.i, %.preheader90.i, %.preheader89.i, %.preheader88.i, %.preheader86.i
-  %i.cag = phi i32 [ %i.byt, %.preheader86.i ], [ %.0.i.i52.i, %put_bits.exit53.i ], [ %.0.i.i56.i, %.preheader93.i ], [ %.0.i.i60.i, %.preheader92.i ], [ %.0.i.i64.i, %.preheader91.i ], [ %.0.i.i68.i, %.preheader90.i ], [ %.0.i.i72.i, %.preheader89.i ], [ %.0.i.i76.i, %.preheader88.i ], [ %i.cad, %._crit_edge110.i ] ; 4 uses
-  %i.cah = phi i32 [ %i.byu, %.preheader86.i ], [ %.026.i.i51.i, %put_bits.exit53.i ], [ %.026.i.i55.i, %.preheader93.i ], [ %.026.i.i59.i, %.preheader92.i ], [ %.026.i.i63.i, %.preheader91.i ], [ %.026.i.i67.i, %.preheader90.i ], [ %.026.i.i71.i, %.preheader89.i ], [ %.026.i.i75.i, %.preheader88.i ], [ %i.cae, %._crit_edge110.i ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 144 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 36784
-  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 36808 ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 37576
-  %8 = getelementptr inbounds nuw i8, ptr %i.k, i64 34704
-  %9 = getelementptr inbounds nuw i8, ptr %i.k, i64 124
-  %10 = getelementptr inbounds nuw i8, ptr %i.k, i64 120
-  %11 = getelementptr inbounds nuw i8, ptr %i.k, i64 39880
-  %12 = getelementptr inbounds nuw i8, ptr %i.k, i64 20880
-  %i.cai = icmp sgt i32 %i.cag, 2
+put_primary_audio_header.exit:                    ; preds = %._crit_edge110.i, %.preheader88.i, %.preheader86.i, %put_bits.exit53.i, %.preheader93.i, %.preheader92.i, %.preheader91.i, %.preheader90.i, %.preheader89.i
+  %i.cag = phi i32 [ %.026.i.i71.i, %.preheader89.i ], [ %.026.i.i51.i, %put_bits.exit53.i ], [ %.026.i.i55.i, %.preheader93.i ], [ %.026.i.i59.i, %.preheader92.i ], [ %.026.i.i63.i, %.preheader91.i ], [ %.026.i.i67.i, %.preheader90.i ], [ %.026.i.i75.i, %.preheader88.i ], [ %i.byu, %.preheader86.i ], [ %i.cae, %._crit_edge110.i ] ; 2 uses
+  %i.cah = phi i32 [ %.0.i.i72.i, %.preheader89.i ], [ %.0.i.i52.i, %put_bits.exit53.i ], [ %.0.i.i56.i, %.preheader93.i ], [ %.0.i.i60.i, %.preheader92.i ], [ %.0.i.i64.i, %.preheader91.i ], [ %.0.i.i68.i, %.preheader90.i ], [ %.0.i.i76.i, %.preheader88.i ], [ %i.byt, %.preheader86.i ], [ %i.cad, %._crit_edge110.i ] ; 4 uses
+  %i.cai = icmp sgt i32 %i.cah, 2
   br i1 %i.cai, label %bb.hn, label %bb.ho
 
 bb.hn:                                            ; preds = %put_primary_audio_header.exit
-  %i.caj = shl i32 %i.cah, 2
+  %i.caj = shl i32 %i.cag, 2
   %i.cak = or disjoint i32 %i.caj, 1
   br label %put_bits.exit.i149
 
@@ -638,8 +629,8 @@ bb.ho:                                            ; preds = %put_primary_audio_h
   br i1 %i.caq, label %bb.hp, label %bb.hq
 
 bb.hp:                                            ; preds = %bb.ho
-  %i.car = shl i32 %i.cah, %i.cag
-  %i.cas = icmp eq i32 %i.cag, 2
+  %i.car = shl i32 %i.cag, %i.cah
+  %i.cas = icmp eq i32 %i.cah, 2
   %i.cat = zext i1 %i.cas to i32
   %i.cau = or i32 %i.car, %i.cat
   %i.cav = call i32 @llvm.bswap.i32(i32 %i.cau)
@@ -656,7 +647,7 @@ bb.hq:                                            ; preds = %bb.ho
 put_bits.exit.i149:                               ; preds = %bb.hq, %bb.hp, %bb.hn
   %.sink.i150 = phi i32 [ -2, %bb.hn ], [ 30, %bb.hq ], [ 30, %bb.hp ]
   %.026.i.i.i151 = phi i32 [ %i.cak, %bb.hn ], [ 1, %bb.hq ], [ 1, %bb.hp ] ; 3 uses
-  %i.cay = add nsw i32 %.sink.i150, %i.cag        ; 4 uses
+  %i.cay = add nsw i32 %.sink.i150, %i.cah        ; 4 uses
   store i32 %.026.i.i.i151, ptr %i.avo, align 8, !tbaa !156
   store i32 %i.cay, ptr %i.avz, align 4, !tbaa !155
   %i.caz = icmp sgt i32 %i.cay, 3
@@ -696,12 +687,16 @@ put_bits.exit99.i152:                             ; preds = %bb.hu, %bb.ht, %bb.
   store i32 %i.cbl, ptr %i.avz, align 4, !tbaa !155
   %i.cbm = load i32, ptr %i.r, align 4, !tbaa !38 ; 2 uses
   %i.cbn = icmp sgt i32 %i.cbm, 0
-  br i1 %i.cbn, label %.preheader157.i, label %._crit_edge.i154
+  br i1 %i.cbn, label %.preheader157.lr.ph.i, label %._crit_edge.i154
 
-.preheader157.i:                                  ; preds = %put_bits.exit99.i152, %bb.ia
-  %i.cbo = phi i32 [ %i.cco, %bb.ia ], [ %i.cbl, %put_bits.exit99.i152 ]
-  %i.cbp = phi i32 [ %.026.i.i101.i168, %bb.ia ], [ %.026.i.i97.i153, %put_bits.exit99.i152 ]
-  %indvars.iv189.i = phi i64 [ %indvars.iv.next190.i, %bb.ia ], [ 0, %put_bits.exit99.i152 ] ; 2 uses
+.preheader157.lr.ph.i:                            ; preds = %put_bits.exit99.i152
+  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 144 ; 2 uses
+  br label %.preheader157.i
+
+.preheader157.i:                                  ; preds = %bb.ia, %.preheader157.lr.ph.i
+  %i.cbo = phi i32 [ %i.cbl, %.preheader157.lr.ph.i ], [ %i.cco, %bb.ia ]
+  %i.cbp = phi i32 [ %.026.i.i97.i153, %.preheader157.lr.ph.i ], [ %.026.i.i101.i168, %bb.ia ]
+  %indvars.iv189.i = phi i64 [ 0, %.preheader157.lr.ph.i ], [ %indvars.iv.next190.i, %bb.ia ] ; 2 uses
   %i.cbq = getelementptr inbounds nuw [128 x i8], ptr %4, i64 %indvars.iv189.i
   br label %bb.hv
 
@@ -776,7 +771,12 @@ bb.ia:                                            ; preds = %put_bits.exit103.i1
 
 .preheader154.i:                                  ; preds = %bb.ii
   %i.ccv = icmp sgt i32 %i.cdu, 0
-  br i1 %i.ccv, label %.lr.ph.i171.a, label %._crit_edge.i154
+  br i1 %i.ccv, label %.lr.ph.i171, label %._crit_edge.i154
+
+.lr.ph.i171:                                      ; preds = %.preheader154.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 36784
+  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 36808 ; 3 uses
+  br label %.lr.ph.i171.a
 
 bb.ib:                                            ; preds = %bb.ih, %.preheader155.i
   %i.ccw = phi i32 [ %i.ccs, %.preheader155.i ], [ %i.cds, %bb.ih ] ; 5 uses
@@ -847,10 +847,10 @@ bb.ii:                                            ; preds = %bb.ih
   %i.cdx = icmp sgt i32 %i.cgb, 0
   br i1 %i.cdx, label %.preheader150.i, label %._crit_edge.i154
 
-.lr.ph.i171.a:                                    ; preds = %.preheader154.i, %dca_vlc_enc_alloc.exit.i
-  %.pre11.i.i = phi i32 [ %.pre11.i238.i, %dca_vlc_enc_alloc.exit.i ], [ %i.cds, %.preheader154.i ] ; 2 uses
-  %.pre.i.i = phi i32 [ %.pre.i235.i, %dca_vlc_enc_alloc.exit.i ], [ %i.cdt, %.preheader154.i ] ; 2 uses
-  %indvars.iv203.i = phi i64 [ %indvars.iv.next204.i, %dca_vlc_enc_alloc.exit.i ], [ 0, %.preheader154.i ] ; 3 uses
+.lr.ph.i171.a:                                    ; preds = %dca_vlc_enc_alloc.exit.i, %.lr.ph.i171
+  %.pre11.i.i = phi i32 [ %i.cds, %.lr.ph.i171 ], [ %.pre11.i238.i, %dca_vlc_enc_alloc.exit.i ] ; 2 uses
+  %.pre.i.i = phi i32 [ %i.cdt, %.lr.ph.i171 ], [ %.pre.i235.i, %dca_vlc_enc_alloc.exit.i ] ; 2 uses
+  %indvars.iv203.i = phi i64 [ 0, %.lr.ph.i171 ], [ %indvars.iv.next204.i, %dca_vlc_enc_alloc.exit.i ] ; 3 uses
   %i.cdy = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv203.i
   %i.cdz = load i32, ptr %i.cdy, align 4, !tbaa !29 ; 2 uses
   %i.cea = icmp eq i32 %i.cdz, 6
@@ -990,7 +990,11 @@ dca_vlc_enc_alloc.exit.i:                         ; preds = %put_bits.exit.i.i, 
 
 .preheader149.i:                                  ; preds = %bb.jb
   %i.cgh = icmp sgt i32 %i.chb, 0
-  br i1 %i.cgh, label %.preheader148.i, label %._crit_edge.i154
+  br i1 %i.cgh, label %.preheader148.lr.ph.i, label %._crit_edge.i154
+
+.preheader148.lr.ph.i:                            ; preds = %.preheader149.i
+  %7 = getelementptr inbounds nuw i8, ptr %i.k, i64 37576
+  br label %.preheader148.i
 
 bb.iu:                                            ; preds = %bb.ja, %.preheader150.i
   %i.cgi = phi i32 [ %i.cge, %.preheader150.i ], [ %i.cgz, %bb.ja ] ; 4 uses
@@ -1053,10 +1057,10 @@ bb.jb:                                            ; preds = %bb.ja
   %i.chd = icmp slt i64 %indvars.iv.next211.i, %i.chc
   br i1 %i.chd, label %.preheader150.i, label %.preheader149.i, !llvm.loop !131
 
-.preheader148.i:                                  ; preds = %.preheader149.i, %bb.jj
-  %i.che = phi i32 [ %i.cif, %bb.jj ], [ %i.cgz, %.preheader149.i ]
-  %i.chf = phi i32 [ %i.cig, %bb.jj ], [ %i.cha, %.preheader149.i ]
-  %indvars.iv217.i = phi i64 [ %indvars.iv.next218.i, %bb.jj ], [ 0, %.preheader149.i ] ; 3 uses
+.preheader148.i:                                  ; preds = %bb.jj, %.preheader148.lr.ph.i
+  %i.che = phi i32 [ %i.cgz, %.preheader148.lr.ph.i ], [ %i.cif, %bb.jj ]
+  %i.chf = phi i32 [ %i.cha, %.preheader148.lr.ph.i ], [ %i.cig, %bb.jj ]
+  %indvars.iv217.i = phi i64 [ 0, %.preheader148.lr.ph.i ], [ %indvars.iv.next218.i, %bb.jj ] ; 3 uses
   %i.chg = getelementptr inbounds nuw [128 x i8], ptr %6, i64 %indvars.iv217.i
   %i.chh = getelementptr inbounds nuw [128 x i8], ptr %7, i64 %indvars.iv217.i
   br label %bb.jc
@@ -1134,12 +1138,17 @@ bb.jj:                                            ; preds = %bb.ji
   %i.cim = phi i32 [ %.026.i.i97.i153, %put_bits.exit99.i152 ], [ %i.cha, %.preheader149.i ], [ %.pre.i235.i, %.preheader151.i ], [ %i.cdt, %.preheader154.i ], [ %.026.i.i101.i168, %.preheader156.i ], [ %i.cig, %bb.jj ] ; 2 uses
   %i.cin = load i32, ptr %i.mm, align 4, !tbaa !39
   %.not.i155 = icmp eq i32 %i.cin, 0
-  br i1 %.not.i155, label %bb.jt, label %.preheader147.i.a
+  br i1 %.not.i155, label %bb.jt, label %.preheader147.i
 
-.preheader147.i.a:                                ; preds = %._crit_edge.i154, %put_bits.exit124.i
-  %i.cio = phi i32 [ %i.cjv, %put_bits.exit124.i ], [ %i.cil, %._crit_edge.i154 ] ; 4 uses
-  %i.cip = phi i32 [ %i.cju, %put_bits.exit124.i ], [ %i.cim, %._crit_edge.i154 ] ; 2 uses
-  %indvars.iv220.i = phi i64 [ %indvars.iv.next221.i, %put_bits.exit124.i ], [ 0, %._crit_edge.i154 ] ; 2 uses
+.preheader147.i:                                  ; preds = %._crit_edge.i154
+  %8 = getelementptr inbounds nuw i8, ptr %i.k, i64 34704
+  %9 = getelementptr inbounds nuw i8, ptr %i.k, i64 124
+  br label %.preheader147.i.a
+
+.preheader147.i.a:                                ; preds = %put_bits.exit124.i, %.preheader147.i
+  %i.cio = phi i32 [ %i.cil, %.preheader147.i ], [ %i.cjv, %put_bits.exit124.i ] ; 4 uses
+  %i.cip = phi i32 [ %i.cim, %.preheader147.i ], [ %i.cju, %put_bits.exit124.i ] ; 2 uses
+  %indvars.iv220.i = phi i64 [ 0, %.preheader147.i ], [ %indvars.iv.next221.i, %put_bits.exit124.i ] ; 2 uses
   %i.ciq = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv220.i
   %i.cir = load i32, ptr %i.ciq, align 4, !tbaa !29
   %i.cis = load i64, ptr %9, align 4              ; 2 uses
@@ -1201,6 +1210,7 @@ put_bits.exit124.i:                               ; preds = %bb.jn, %bb.jm, %bb.
   br i1 %exitcond223.not.i, label %bb.jo, label %.preheader147.i.a, !llvm.loop !134
 
 bb.jo:                                            ; preds = %put_bits.exit124.i
+  %10 = getelementptr inbounds nuw i8, ptr %i.k, i64 120
   %i.cjw = load i32, ptr %10, align 8, !tbaa !148 ; 4 uses
   %i.cjx = icmp sgt i32 %i.cjv, 8
   br i1 %i.cjx, label %bb.jp, label %bb.jq
@@ -1248,6 +1258,9 @@ bb.jt:                                            ; preds = %put_bits.exit128.i,
   %.pre96.i251.i = phi i32 [ %i.ckn, %put_bits.exit128.i ], [ %i.cil, %._crit_edge.i154 ] ; 2 uses
   %.pre.i129245.i = phi i32 [ %.026.i.i126.i, %put_bits.exit128.i ], [ %i.cim, %._crit_edge.i154 ] ; 2 uses
   %i.cko = phi i32 [ %.pre.i156, %put_bits.exit128.i ], [ %i.cik, %._crit_edge.i154 ] ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.k, i64 36808
+  %12 = getelementptr inbounds nuw i8, ptr %i.k, i64 39880
+  %13 = getelementptr inbounds nuw i8, ptr %i.k, i64 20880
   %i.ckp = icmp sgt i32 %i.cko, 0
   br i1 %i.ckp, label %.preheader146.i, label %.split183.us.i
 
@@ -1261,15 +1274,15 @@ bb.jt:                                            ; preds = %put_bits.exit128.i,
   br i1 %i.cks, label %.preheader.lr.ph.i157, label %._crit_edge175.i
 
 .preheader.lr.ph.i157:                            ; preds = %.preheader146.i
-  %invariant.gep176.i158 = getelementptr inbounds nuw i8, ptr %12, i64 %indvars.iv231.i
+  %invariant.gep176.i158 = getelementptr inbounds nuw i8, ptr %13, i64 %indvars.iv231.i
   br label %.preheader.i159
 
 .preheader.i159:                                  ; preds = %bb.mg, %.preheader.lr.ph.i157
   %.pre96.i248.i = phi i32 [ %.pre96.i246.i, %.preheader.lr.ph.i157 ], [ %.pre96.i250.i, %bb.mg ]
   %.pre.i129242.i = phi i32 [ %.pre.i129240.i, %.preheader.lr.ph.i157 ], [ %.pre.i129244.i, %bb.mg ]
   %indvars.iv228.i = phi i64 [ 0, %.preheader.lr.ph.i157 ], [ %indvars.iv.next229.i, %bb.mg ] ; 4 uses
-  %i.ckt = getelementptr inbounds nuw [128 x i8], ptr %6, i64 %indvars.iv228.i
-  %i.cku = getelementptr inbounds nuw [40 x i8], ptr %11, i64 %indvars.iv228.i
+  %i.ckt = getelementptr inbounds nuw [128 x i8], ptr %11, i64 %indvars.iv228.i
+  %i.cku = getelementptr inbounds nuw [40 x i8], ptr %12, i64 %indvars.iv228.i
   %gep177.i160 = getelementptr inbounds nuw [2048 x i8], ptr %invariant.gep176.i158, i64 %indvars.iv228.i ; 3 uses
   br label %bb.ju
 

@@ -205,13 +205,13 @@ bb.es:                                            ; preds = %.critedge.i.i113
   %i.bqq = lshr i32 %i.bqp, 6                     ; 2 uses
   %i.bqr = and i32 %.sroa.12.2.i, 63
   %i.bqs = zext nneg i32 %i.bqq to i64
-  %i.bqt = getelementptr inbounds nuw [8 x i8], ptr %i.bsb, i64 %i.bqs
+  %i.bqt = getelementptr inbounds nuw [8 x i8], ptr %i.bsc, i64 %i.bqs
   %i.bqu = load i64, ptr %i.bqt, align 8, !tbaa !305
   %i.bqv = zext nneg i32 %i.bqr to i64
   %i.bqw = shl nsw i64 -1, %i.bqv
   %i.bqx = and i64 %i.bqu, %i.bqw                 ; 2 uses
   %.not.i.i588.i = icmp eq i64 %i.bqx, 0
-  br i1 %.not.i.i588.i, label %bb.eu, label %bb.et
+  br i1 %.not.i.i588.i, label %28, label %bb.et
 
 bb.et:                                            ; preds = %bb.es
   %i.bqy = and i32 %.sroa.12.2.i, 64
@@ -220,16 +220,17 @@ bb.et:                                            ; preds = %bb.es
   %i.brb = or disjoint i32 %i.bqy, %i.bra
   br label %bb.ew
 
-bb.eu:                                            ; preds = %bb.es
-  %i.brc = load i64, ptr %i.bsc, align 8
-  %.fr.i.i.i = freeze i64 %i.brc                  ; 2 uses
-  %.not22.i.i589.i = icmp ne i64 %.fr.i.i.i, 0
-  %i.brd = icmp eq i32 %i.bqq, 0
-  %or.cond.i.i590.i = and i1 %i.brd, %.not22.i.i589.i
-  br i1 %or.cond.i.i590.i, label %bb.ev, label %_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit.i.i, !llvm.loop !21
+28:                                               ; preds = %bb.es
+  %29 = icmp eq i32 %i.bqq, 0
+  br i1 %29, label %bb.eu, label %_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit.i.i
+
+bb.eu:                                            ; preds = %28
+  %i.brc = load i64, ptr %i.bsa, align 8, !tbaa !305 ; 2 uses
+  %i.brd = icmp eq i64 %i.brc, 0
+  br i1 %i.brd, label %_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit.i.i, label %bb.ev, !llvm.loop !21
 
 bb.ev:                                            ; preds = %bb.eu
-  %i.bre = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.fr.i.i.i, i1 true)
+  %i.bre = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.brc, i1 true)
   %i.brf = trunc nuw nsw i64 %i.bre to i32
   %i.brg = or disjoint i32 %i.brf, 64
   br label %bb.ew
@@ -239,7 +240,7 @@ bb.ew:                                            ; preds = %bb.ev, %bb.et
   %i.brh = icmp eq i32 %i.bqp, 0
   br i1 %i.brh, label %_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit.i.i, label %bb.ez
 
-_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit.i.i: ; preds = %bb.ew, %bb.eu
+_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit.i.i: ; preds = %bb.ew, %bb.eu, %28
   %i.bri = load ptr, ptr %.sroa.969.0218.i.ph, align 8, !tbaa !264 ; 4 uses
   %i.brj = icmp eq ptr %i.bri, %i.biz
   br i1 %i.brj, label %_ZNK4llvm15SparseBitVectorILj128EE23SparseBitVectorIteratorneERKS2_.exit.i, label %bb.ex
@@ -280,23 +281,23 @@ _ZNK4llvm22SparseBitVectorElementILj128EE10find_firstEv.exit.i.i: ; preds = %bb.
   %.sroa.969.0218.i.ph = phi ptr [ %i.bri, %_ZNK4llvm22SparseBitVectorElementILj128EE10find_firstEv.exit.i.i ], [ %i.bja, %.lr.ph219.preheader.i ] ; 4 uses
   %.sroa.12.1217.i.ph = phi i32 [ %i.brw, %_ZNK4llvm22SparseBitVectorElementILj128EE10find_firstEv.exit.i.i ], [ %i.bjo, %.lr.ph219.preheader.i ]
   %.sroa.28.1216.i.ph = phi i64 [ %i.brz, %_ZNK4llvm22SparseBitVectorElementILj128EE10find_firstEv.exit.i.i ], [ %i.bjp, %.lr.ph219.preheader.i ]
-  %i.bsa = getelementptr inbounds nuw i8, ptr %.sroa.969.0218.i.ph, i64 16
-  %i.bsb = getelementptr inbounds nuw i8, ptr %.sroa.969.0218.i.ph, i64 24 ; 2 uses
-  %i.bsc = getelementptr inbounds nuw i8, ptr %.sroa.969.0218.i.ph, i64 32
+  %i.bsa = getelementptr inbounds nuw i8, ptr %.sroa.969.0218.i.ph, i64 32
+  %i.bsb = getelementptr inbounds nuw i8, ptr %.sroa.969.0218.i.ph, i64 16
+  %i.bsc = getelementptr inbounds nuw i8, ptr %.sroa.969.0218.i.ph, i64 24 ; 2 uses
   br label %.lr.ph219.i
 
 bb.ez:                                            ; preds = %bb.ew
   %.2.i.ph.frozen.i.i = freeze i32 %.2.i.ph.i.i   ; 5 uses
   %i.bsd = lshr i32 %.2.i.ph.frozen.i.i, 6
   %i.bse = zext nneg i32 %i.bsd to i64
-  %i.bsf = getelementptr inbounds nuw [8 x i8], ptr %i.bsb, i64 %i.bse
+  %i.bsf = getelementptr inbounds nuw [8 x i8], ptr %i.bsc, i64 %i.bse
   %i.bsg = load i64, ptr %i.bsf, align 8, !tbaa !305
   %.urem12.i.i = add i32 %.2.i.ph.frozen.i.i, -64
   %.cmp13.i.i = icmp ult i32 %.2.i.ph.frozen.i.i, 64
   %i.bsh = select i1 %.cmp13.i.i, i32 %.2.i.ph.frozen.i.i, i32 %.urem12.i.i
   %i.bsi = zext nneg i32 %i.bsh to i64
   %i.bsj = lshr i64 %i.bsg, %i.bsi
-  %i.bsk = load i32, ptr %i.bsa, align 8, !tbaa !423
+  %i.bsk = load i32, ptr %i.bsb, align 8, !tbaa !423
   %i.bsl = shl i32 %i.bsk, 7
   %i.bsm = add nuw i32 %i.bsl, %.2.i.ph.frozen.i.i
   br label %.lr.ph219.i.backedge
@@ -699,7 +700,7 @@ bb.c:                                             ; preds = %.critedge
   %i.x = shl nsw i64 -1, %i.w
   %i.y = and i64 %i.x, %i.v                       ; 2 uses
   %.not.i = icmp eq i64 %i.y, 0
-  br i1 %.not.i, label %bb.e, label %bb.d
+  br i1 %.not.i, label %1, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.z = and i32 %i.o, 64
@@ -708,27 +709,28 @@ bb.d:                                             ; preds = %bb.c
   %i.ac = or disjoint i32 %i.z, %i.ab
   br label %bb.g
 
-bb.e:                                             ; preds = %bb.c
+1:                                                ; preds = %bb.c
+  %2 = icmp eq i32 %i.q, 0
+  br i1 %2, label %bb.e, label %_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit
+
+bb.e:                                             ; preds = %1
   %i.ad = getelementptr inbounds nuw i8, ptr %i.l, i64 32
-  %i.ae = load i64, ptr %i.ad, align 8
-  %.fr.i = freeze i64 %i.ae                       ; 2 uses
-  %.not22.i = icmp ne i64 %.fr.i, 0
-  %i.af = icmp eq i32 %i.q, 0
-  %or.cond.i = and i1 %i.af, %.not22.i
-  br i1 %or.cond.i, label %bb.f, label %_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit, !llvm.loop !21
+  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !305 ; 2 uses
+  %i.af = icmp eq i64 %i.ae, 0
+  br i1 %i.af, label %_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit, label %bb.f, !llvm.loop !21
 
 bb.f:                                             ; preds = %bb.e
-  %i.ag = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.fr.i, i1 true)
+  %i.ag = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ae, i1 true)
   %i.ah = trunc nuw nsw i64 %i.ag to i32
   %i.ai = or disjoint i32 %i.ah, 64
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.d, %bb.f
+bb.g:                                             ; preds = %bb.f, %bb.d
   %.2.i.ph = phi i32 [ %i.ai, %bb.f ], [ %i.ac, %bb.d ]
   %i.aj = icmp eq i32 %i.p, 0
   br i1 %i.aj, label %_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit, label %bb.k
 
-_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit: ; preds = %bb.e, %bb.g
+_ZNK4llvm22SparseBitVectorElementILj128EE9find_nextEj.exit: ; preds = %1, %bb.e, %bb.g
   %i.ak = load ptr, ptr %i.l, align 8, !tbaa !264 ; 4 uses
   store ptr %i.ak, ptr %i.k, align 8, !tbaa !2669
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
