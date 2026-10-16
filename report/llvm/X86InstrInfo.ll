@@ -205,7 +205,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.1:                              ; preds = %.lr.ph.split.us.i.preheader
   %i.fj = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 8), i64 %i.l
-  %i.fk = load i16, ptr %i.fj, align 2, !tbaa !479
+  %i.fk = load i16, ptr %i.fj, align 4, !tbaa !479
   %i.fl = zext i16 %i.fk to i32
   %i.fm = icmp eq i32 %i.j, %i.fl
   %i.fn = icmp eq i32 %i.j, 13609
@@ -214,7 +214,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.2:                              ; preds = %.lr.ph.split.us.i.1
   %i.fo = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 16), i64 %i.l
-  %i.fp = load i16, ptr %i.fo, align 2, !tbaa !479
+  %i.fp = load i16, ptr %i.fo, align 4, !tbaa !479
   %i.fq = zext i16 %i.fp to i32
   %i.fr = icmp eq i32 %i.j, %i.fq
   %i.fs = icmp eq i32 %i.j, 13612
@@ -223,7 +223,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.3:                              ; preds = %.lr.ph.split.us.i.2
   %i.ft = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 24), i64 %i.l
-  %i.fu = load i16, ptr %i.ft, align 2, !tbaa !479
+  %i.fu = load i16, ptr %i.ft, align 4, !tbaa !479
   %i.fv = zext i16 %i.fu to i32
   %i.fw = icmp eq i32 %i.j, %i.fv
   %i.fx = icmp eq i32 %i.j, 13714
@@ -232,7 +232,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.4:                              ; preds = %.lr.ph.split.us.i.3
   %i.fy = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 32), i64 %i.l
-  %i.fz = load i16, ptr %i.fy, align 2, !tbaa !479
+  %i.fz = load i16, ptr %i.fy, align 4, !tbaa !479
   %i.ga = zext i16 %i.fz to i32
   %i.gb = icmp eq i32 %i.j, %i.ga
   %i.gc = icmp eq i32 %i.j, 13716
@@ -241,7 +241,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.5:                              ; preds = %.lr.ph.split.us.i.4
   %i.gd = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 40), i64 %i.l
-  %i.ge = load i16, ptr %i.gd, align 2, !tbaa !479
+  %i.ge = load i16, ptr %i.gd, align 4, !tbaa !479
   %i.gf = zext i16 %i.ge to i32
   %i.gg = icmp eq i32 %i.j, %i.gf
   %i.gh = icmp eq i32 %i.j, 13618
@@ -250,7 +250,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.6:                              ; preds = %.lr.ph.split.us.i.5
   %i.gi = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 48), i64 %i.l
-  %i.gj = load i16, ptr %i.gi, align 2, !tbaa !479
+  %i.gj = load i16, ptr %i.gi, align 4, !tbaa !479
   %i.gk = zext i16 %i.gj to i32
   %i.gl = icmp eq i32 %i.j, %i.gk
   %i.gm = icmp eq i32 %i.j, 13620
@@ -259,7 +259,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.7:                              ; preds = %.lr.ph.split.us.i.6
   %i.gn = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 56), i64 %i.l
-  %i.go = load i16, ptr %i.gn, align 2, !tbaa !479
+  %i.go = load i16, ptr %i.gn, align 4, !tbaa !479
   %i.gp = zext i16 %i.go to i32
   %i.gq = icmp eq i32 %i.j, %i.gp
   %i.gr = icmp eq i32 %i.j, 13623
@@ -268,7 +268,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.8:                              ; preds = %.lr.ph.split.us.i.7
   %i.gs = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 64), i64 %i.l
-  %i.gt = load i16, ptr %i.gs, align 2, !tbaa !479
+  %i.gt = load i16, ptr %i.gs, align 4, !tbaa !479
   %i.gu = zext i16 %i.gt to i32
   %i.gv = icmp eq i32 %i.j, %i.gu
   %i.gw = icmp eq i32 %i.j, 13725
@@ -277,7 +277,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.9:                              ; preds = %.lr.ph.split.us.i.8
   %i.gx = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 72), i64 %i.l
-  %i.gy = load i16, ptr %i.gx, align 2, !tbaa !479
+  %i.gy = load i16, ptr %i.gx, align 4, !tbaa !479
   %i.gz = zext i16 %i.gy to i32
   %i.ha = icmp eq i32 %i.j, %i.gz
   %i.hb = icmp eq i32 %i.j, 13727
@@ -286,7 +286,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.10:                             ; preds = %.lr.ph.split.us.i.9
   %i.hc = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 80), i64 %i.l
-  %i.hd = load i16, ptr %i.hc, align 2, !tbaa !479
+  %i.hd = load i16, ptr %i.hc, align 4, !tbaa !479
   %i.he = zext i16 %i.hd to i32
   %i.hf = icmp eq i32 %i.j, %i.he
   %i.hg = icmp eq i32 %i.j, 13629
@@ -295,7 +295,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.11:                             ; preds = %.lr.ph.split.us.i.10
   %i.hh = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 88), i64 %i.l
-  %i.hi = load i16, ptr %i.hh, align 2, !tbaa !479
+  %i.hi = load i16, ptr %i.hh, align 4, !tbaa !479
   %i.hj = zext i16 %i.hi to i32
   %i.hk = icmp eq i32 %i.j, %i.hj
   %i.hl = icmp eq i32 %i.j, 13631
@@ -304,7 +304,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.12:                             ; preds = %.lr.ph.split.us.i.11
   %i.hm = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 96), i64 %i.l
-  %i.hn = load i16, ptr %i.hm, align 2, !tbaa !479
+  %i.hn = load i16, ptr %i.hm, align 4, !tbaa !479
   %i.ho = zext i16 %i.hn to i32
   %i.hp = icmp eq i32 %i.j, %i.ho
   %i.hq = icmp eq i32 %i.j, 13634
@@ -313,7 +313,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.13:                             ; preds = %.lr.ph.split.us.i.12
   %i.hr = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 104), i64 %i.l
-  %i.hs = load i16, ptr %i.hr, align 2, !tbaa !479
+  %i.hs = load i16, ptr %i.hr, align 4, !tbaa !479
   %i.ht = zext i16 %i.hs to i32
   %i.hu = icmp eq i32 %i.j, %i.ht
   %i.hv = icmp eq i32 %i.j, 13736
@@ -322,7 +322,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit72:        ; preds = %.lr.ph.i68.3
 
 .lr.ph.split.us.i.14:                             ; preds = %.lr.ph.split.us.i.13
   %i.hw = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL23ReplaceableInstrsAVX512, i64 112), i64 %i.l
-  %i.hx = load i16, ptr %i.hw, align 2, !tbaa !479
+  %i.hx = load i16, ptr %i.hw, align 4, !tbaa !479
   %i.hy = zext i16 %i.hx to i32
   %i.hz = icmp eq i32 %i.j, %i.hy
   %i.ia = icmp eq i32 %i.j, 13738
@@ -449,7 +449,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.preheader:                    ; preds = %.lr.ph.split.us.i.14
   %i.kp = getelementptr inbounds nuw [2 x i8], ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 %i.l
-  %i.kq = load i16, ptr %i.kp, align 2, !tbaa !479
+  %i.kq = load i16, ptr %i.kp, align 4, !tbaa !479
   %i.kr = zext i16 %i.kq to i32
   %i.ks = icmp eq i32 %i.j, %i.kr
   %i.kt = icmp eq i32 %i.j, 14849
@@ -458,7 +458,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.1:                            ; preds = %.lr.ph.split.us.i79.preheader
   %i.ku = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 8), i64 %i.l
-  %i.kv = load i16, ptr %i.ku, align 2, !tbaa !479
+  %i.kv = load i16, ptr %i.ku, align 4, !tbaa !479
   %i.kw = zext i16 %i.kv to i32
   %i.kx = icmp eq i32 %i.j, %i.kw
   %i.ky = icmp eq i32 %i.j, 14855
@@ -467,7 +467,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.2:                            ; preds = %.lr.ph.split.us.i79.1
   %i.kz = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 16), i64 %i.l
-  %i.la = load i16, ptr %i.kz, align 2, !tbaa !479
+  %i.la = load i16, ptr %i.kz, align 4, !tbaa !479
   %i.lb = zext i16 %i.la to i32
   %i.lc = icmp eq i32 %i.j, %i.lb
   %i.ld = icmp eq i32 %i.j, 14822
@@ -476,7 +476,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.3:                            ; preds = %.lr.ph.split.us.i79.2
   %i.le = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 24), i64 %i.l
-  %i.lf = load i16, ptr %i.le, align 2, !tbaa !479
+  %i.lf = load i16, ptr %i.le, align 4, !tbaa !479
   %i.lg = zext i16 %i.lf to i32
   %i.lh = icmp eq i32 %i.j, %i.lg
   %i.li = icmp eq i32 %i.j, 14828
@@ -485,7 +485,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.4:                            ; preds = %.lr.ph.split.us.i79.3
   %i.lj = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 32), i64 %i.l
-  %i.lk = load i16, ptr %i.lj, align 2, !tbaa !479
+  %i.lk = load i16, ptr %i.lj, align 4, !tbaa !479
   %i.ll = zext i16 %i.lk to i32
   %i.lm = icmp eq i32 %i.j, %i.ll
   %i.ln = icmp eq i32 %i.j, 18411
@@ -494,7 +494,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.5:                            ; preds = %.lr.ph.split.us.i79.4
   %i.lo = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 40), i64 %i.l
-  %i.lp = load i16, ptr %i.lo, align 2, !tbaa !479
+  %i.lp = load i16, ptr %i.lo, align 4, !tbaa !479
   %i.lq = zext i16 %i.lp to i32
   %i.lr = icmp eq i32 %i.j, %i.lq
   %i.ls = icmp eq i32 %i.j, 18417
@@ -503,7 +503,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.6:                            ; preds = %.lr.ph.split.us.i79.5
   %i.lt = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 48), i64 %i.l
-  %i.lu = load i16, ptr %i.lt, align 2, !tbaa !479
+  %i.lu = load i16, ptr %i.lt, align 4, !tbaa !479
   %i.lv = zext i16 %i.lu to i32
   %i.lw = icmp eq i32 %i.j, %i.lv
   %i.lx = icmp eq i32 %i.j, 20438
@@ -512,7 +512,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.7:                            ; preds = %.lr.ph.split.us.i79.6
   %i.ly = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 56), i64 %i.l
-  %i.lz = load i16, ptr %i.ly, align 2, !tbaa !479
+  %i.lz = load i16, ptr %i.ly, align 4, !tbaa !479
   %i.ma = zext i16 %i.lz to i32
   %i.mb = icmp eq i32 %i.j, %i.ma
   %i.mc = icmp eq i32 %i.j, 20444
@@ -521,7 +521,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.8:                            ; preds = %.lr.ph.split.us.i79.7
   %i.md = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 64), i64 %i.l
-  %i.me = load i16, ptr %i.md, align 2, !tbaa !479
+  %i.me = load i16, ptr %i.md, align 4, !tbaa !479
   %i.mf = zext i16 %i.me to i32
   %i.mg = icmp eq i32 %i.j, %i.mf
   %i.mh = icmp eq i32 %i.j, 14858
@@ -530,7 +530,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.9:                            ; preds = %.lr.ph.split.us.i79.8
   %i.mi = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 72), i64 %i.l
-  %i.mj = load i16, ptr %i.mi, align 2, !tbaa !479
+  %i.mj = load i16, ptr %i.mi, align 4, !tbaa !479
   %i.mk = zext i16 %i.mj to i32
   %i.ml = icmp eq i32 %i.j, %i.mk
   %i.mm = icmp eq i32 %i.j, 14864
@@ -539,7 +539,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.10:                           ; preds = %.lr.ph.split.us.i79.9
   %i.mn = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 80), i64 %i.l
-  %i.mo = load i16, ptr %i.mn, align 2, !tbaa !479
+  %i.mo = load i16, ptr %i.mn, align 4, !tbaa !479
   %i.mp = zext i16 %i.mo to i32
   %i.mq = icmp eq i32 %i.j, %i.mp
   %i.mr = icmp eq i32 %i.j, 14831
@@ -548,7 +548,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.11:                           ; preds = %.lr.ph.split.us.i79.10
   %i.ms = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 88), i64 %i.l
-  %i.mt = load i16, ptr %i.ms, align 2, !tbaa !479
+  %i.mt = load i16, ptr %i.ms, align 4, !tbaa !479
   %i.mu = zext i16 %i.mt to i32
   %i.mv = icmp eq i32 %i.j, %i.mu
   %i.mw = icmp eq i32 %i.j, 14837
@@ -557,7 +557,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.12:                           ; preds = %.lr.ph.split.us.i79.11
   %i.mx = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 96), i64 %i.l
-  %i.my = load i16, ptr %i.mx, align 2, !tbaa !479
+  %i.my = load i16, ptr %i.mx, align 4, !tbaa !479
   %i.mz = zext i16 %i.my to i32
   %i.na = icmp eq i32 %i.j, %i.mz
   %i.nb = icmp eq i32 %i.j, 18420
@@ -566,7 +566,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.13:                           ; preds = %.lr.ph.split.us.i79.12
   %i.nc = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 104), i64 %i.l
-  %i.nd = load i16, ptr %i.nc, align 2, !tbaa !479
+  %i.nd = load i16, ptr %i.nc, align 4, !tbaa !479
   %i.ne = zext i16 %i.nd to i32
   %i.nf = icmp eq i32 %i.j, %i.ne
   %i.ng = icmp eq i32 %i.j, 18426
@@ -575,7 +575,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.14:                           ; preds = %.lr.ph.split.us.i79.13
   %i.nh = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 112), i64 %i.l
-  %i.ni = load i16, ptr %i.nh, align 2, !tbaa !479
+  %i.ni = load i16, ptr %i.nh, align 4, !tbaa !479
   %i.nj = zext i16 %i.ni to i32
   %i.nk = icmp eq i32 %i.j, %i.nj
   %i.nl = icmp eq i32 %i.j, 20447
@@ -584,7 +584,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.15:                           ; preds = %.lr.ph.split.us.i79.14
   %i.nm = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 120), i64 %i.l
-  %i.nn = load i16, ptr %i.nm, align 2, !tbaa !479
+  %i.nn = load i16, ptr %i.nm, align 4, !tbaa !479
   %i.no = zext i16 %i.nn to i32
   %i.np = icmp eq i32 %i.j, %i.no
   %i.nq = icmp eq i32 %i.j, 20453
@@ -593,7 +593,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.16:                           ; preds = %.lr.ph.split.us.i79.15
   %i.nr = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 128), i64 %i.l
-  %i.ns = load i16, ptr %i.nr, align 2, !tbaa !479
+  %i.ns = load i16, ptr %i.nr, align 4, !tbaa !479
   %i.nt = zext i16 %i.ns to i32
   %i.nu = icmp eq i32 %i.j, %i.nt
   %i.nv = icmp eq i32 %i.j, 14867
@@ -602,7 +602,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.17:                           ; preds = %.lr.ph.split.us.i79.16
   %i.nw = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 136), i64 %i.l
-  %i.nx = load i16, ptr %i.nw, align 2, !tbaa !479
+  %i.nx = load i16, ptr %i.nw, align 4, !tbaa !479
   %i.ny = zext i16 %i.nx to i32
   %i.nz = icmp eq i32 %i.j, %i.ny
   %i.oa = icmp eq i32 %i.j, 14873
@@ -611,7 +611,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.18:                           ; preds = %.lr.ph.split.us.i79.17
   %i.ob = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 144), i64 %i.l
-  %i.oc = load i16, ptr %i.ob, align 2, !tbaa !479
+  %i.oc = load i16, ptr %i.ob, align 4, !tbaa !479
   %i.od = zext i16 %i.oc to i32
   %i.oe = icmp eq i32 %i.j, %i.od
   %i.of = icmp eq i32 %i.j, 14840
@@ -620,7 +620,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.19:                           ; preds = %.lr.ph.split.us.i79.18
   %i.og = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 152), i64 %i.l
-  %i.oh = load i16, ptr %i.og, align 2, !tbaa !479
+  %i.oh = load i16, ptr %i.og, align 4, !tbaa !479
   %i.oi = zext i16 %i.oh to i32
   %i.oj = icmp eq i32 %i.j, %i.oi
   %i.ok = icmp eq i32 %i.j, 14846
@@ -629,7 +629,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.20:                           ; preds = %.lr.ph.split.us.i79.19
   %i.ol = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 160), i64 %i.l
-  %i.om = load i16, ptr %i.ol, align 2, !tbaa !479
+  %i.om = load i16, ptr %i.ol, align 4, !tbaa !479
   %i.on = zext i16 %i.om to i32
   %i.oo = icmp eq i32 %i.j, %i.on
   %i.op = icmp eq i32 %i.j, 18429
@@ -638,7 +638,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.21:                           ; preds = %.lr.ph.split.us.i79.20
   %i.oq = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 168), i64 %i.l
-  %i.or = load i16, ptr %i.oq, align 2, !tbaa !479
+  %i.or = load i16, ptr %i.oq, align 4, !tbaa !479
   %i.os = zext i16 %i.or to i32
   %i.ot = icmp eq i32 %i.j, %i.os
   %i.ou = icmp eq i32 %i.j, 18435
@@ -647,7 +647,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.22:                           ; preds = %.lr.ph.split.us.i79.21
   %i.ov = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 176), i64 %i.l
-  %i.ow = load i16, ptr %i.ov, align 2, !tbaa !479
+  %i.ow = load i16, ptr %i.ov, align 4, !tbaa !479
   %i.ox = zext i16 %i.ow to i32
   %i.oy = icmp eq i32 %i.j, %i.ox
   %i.oz = icmp eq i32 %i.j, 20456
@@ -656,7 +656,7 @@ bb.d:                                             ; preds = %_ZL12lookupAVX512jj
 
 .lr.ph.split.us.i79.23:                           ; preds = %.lr.ph.split.us.i79.22
   %i.pa = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL25ReplaceableInstrsAVX512DQ, i64 184), i64 %i.l
-  %i.pb = load i16, ptr %i.pa, align 2, !tbaa !479
+  %i.pb = load i16, ptr %i.pa, align 4, !tbaa !479
   %i.pc = zext i16 %i.pb to i32
   %i.pd = icmp eq i32 %i.j, %i.pc
   %i.pe = icmp eq i32 %i.j, 20462
@@ -852,7 +852,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 .lr.ph.split.us.i87.preheader:                    ; preds = %.lr.ph.split.us.i79.23
   %i.te = getelementptr inbounds nuw [2 x i8], ptr @_ZL31ReplaceableInstrsAVX512DQMasked, i64 %i.l
-  %i.tf = load i16, ptr %i.te, align 2, !tbaa !479
+  %i.tf = load i16, ptr %i.te, align 4, !tbaa !479
   %i.tg = zext i16 %i.tf to i32
   %i.th = icmp eq i32 %i.j, %i.tg
   br i1 %i.th, label %_ZL12lookupAVX512jjN4llvm8ArrayRefIA4_tEE.exit90.thread, label %.lr.ph142
@@ -872,7 +872,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   tail call void @llvm.assume(i1 %.not.us.i89)
   %.01526.us.i88.ptr = getelementptr inbounds nuw i8, ptr @_ZL31ReplaceableInstrsAVX512DQMasked, i64 %.01526.us.i88.add ; 2 uses
   %i.tm = getelementptr inbounds nuw [2 x i8], ptr %.01526.us.i88.ptr, i64 %i.l
-  %i.tn = load i16, ptr %i.tm, align 2, !tbaa !479
+  %i.tn = load i16, ptr %i.tm, align 4, !tbaa !479
   %i.to = zext i16 %i.tn to i32
   %i.tp = icmp eq i32 %i.j, %i.to
   br i1 %i.tp, label %_ZL12lookupAVX512jjN4llvm8ArrayRefIA4_tEE.exit90, label %.lr.ph142

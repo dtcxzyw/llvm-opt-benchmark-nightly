@@ -204,7 +204,7 @@ bb.ee:                                            ; preds = %bb.ed
 
 .preheader.us.us.us:                              ; preds = %bb.ee
   %i.aep = getelementptr inbounds nuw i8, ptr %i.aea, i64 24
-  %.0556.us.us.us.us25773 = load i32, ptr %i.aep, align 4, !tbaa !84 ; 2 uses
+  %.0556.us.us.us.us25773 = load i32, ptr %i.aep, align 8, !tbaa !84 ; 2 uses
   %.not652.us.us.us.us25774 = icmp eq i32 %.0556.us.us.us.us25773, -1
   br i1 %.not652.us.us.us.us25774, label %.split8646.us8871.us.us, label %.lr.ph25779.preheader
 
@@ -420,9 +420,9 @@ bb.ep:                                            ; preds = %bb.eo
   br i1 %.not816.us.us.us.us.us, label %.split12058.us, label %bb.eq, !prof !78, !nosanitize !10
 
 bb.eq:                                            ; preds = %.lr.ph12055.split.us.split.us.split.us.split.us.us
-  %.sroa.043.0.copyload.us.us.us.us.us = load <2 x float>, ptr %i.aij, align 4, !tbaa !144 ; 2 uses
+  %.sroa.043.0.copyload.us.us.us.us.us = load <2 x float>, ptr %i.aij, align 8, !tbaa !144 ; 2 uses
   %.sroa.5.0..sroa_idx.us.us.us.us.us = getelementptr inbounds nuw i8, ptr %i.aij, i64 8
-  %.sroa.5.0.copyload.us.us.us.us.us = load float, ptr %.sroa.5.0..sroa_idx.us.us.us.us.us, align 4, !tbaa !144 ; 2 uses
+  %.sroa.5.0.copyload.us.us.us.us.us = load float, ptr %.sroa.5.0..sroa_idx.us.us.us.us.us, align 8, !tbaa !144 ; 2 uses
   %i.aim = load ptr, ptr %i.ahg, align 8, !tbaa !481 ; 4 uses
   %i.ain = getelementptr i8, ptr %i.aim, i64 -8
   %i.aio = load i32, ptr %i.ain, align 4, !nosanitize !10
@@ -443,7 +443,7 @@ bb.es:                                            ; preds = %bb.er, %bb.eq
   %i.aiw = getelementptr inbounds nuw i8, ptr %i.aij, i64 12
   %i.aix = getelementptr inbounds nuw i8, ptr %i.aij, i64 16
   %i.aiy = load i32, ptr %i.aiw, align 4, !tbaa !501
-  %i.aiz = load float, ptr %i.aix, align 4, !tbaa !502
+  %i.aiz = load float, ptr %i.aix, align 8, !tbaa !502
   %i.aja = fpext float %i.aiz to double
   %i.ajb = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.f, i64 noundef 32, ptr noundef nonnull @.str.9, i32 noundef %i.aiy, double noundef %i.aja) #16 ; 0 uses
   %i.ajc = fadd <2 x float> %i.ahn, %.sroa.043.0.copyload.us.us.us.us.us
@@ -518,9 +518,9 @@ bb.ex:                                            ; preds = %.lr.ph12354.split.u
   %.sroa.6.0..sroa_idx.us.us.us.us.us = getelementptr inbounds nuw i8, ptr %i.akd, i64 8
   %.sroa.6.0.copyload.us.us.us.us.us = load float, ptr %.sroa.6.0..sroa_idx.us.us.us.us.us, align 4, !tbaa !144 ; 3 uses
   %i.akg = getelementptr inbounds nuw i8, ptr %i.akd, i64 12
-  %.sroa.015.0.copyload.us.us.us.us.us = load <2 x float>, ptr %i.akg, align 4, !tbaa !144
+  %.sroa.015.0.copyload.us.us.us.us.us = load <2 x float>, ptr %i.akg, align 8, !tbaa !144
   %.sroa.416.0..sroa_idx.us.us.us.us.us = getelementptr inbounds nuw i8, ptr %i.akd, i64 20
-  %.sroa.416.0.copyload.us.us.us.us.us = load float, ptr %.sroa.416.0..sroa_idx.us.us.us.us.us, align 4, !tbaa !144
+  %.sroa.416.0.copyload.us.us.us.us.us = load float, ptr %.sroa.416.0..sroa_idx.us.us.us.us.us, align 8, !tbaa !144
   %i.akh = load ptr, ptr %i.ahj, align 8, !tbaa !494 ; 4 uses
   %i.aki = getelementptr i8, ptr %i.akh, i64 -8
   %i.akj = load i32, ptr %i.aki, align 4, !nosanitize !10
@@ -535,7 +535,7 @@ bb.ey:                                            ; preds = %bb.ex
 
 bb.ez:                                            ; preds = %bb.ey, %bb.ex
   %i.ako = getelementptr inbounds nuw i8, ptr %i.akd, i64 28 ; 3 uses
-  %i.akp = load i32, ptr %i.ako, align 4, !tbaa !504
+  %i.akp = load i32, ptr %i.ako, align 8, !tbaa !504
   %i.akq = load ptr, ptr %i.ahh, align 8, !tbaa !276
   call void %i.akh(<2 x float> %.sroa.017.0.copyload.us.us.us.us.us, float %.sroa.6.0.copyload.us.us.us.us.us, <2 x float> %.sroa.015.0.copyload.us.us.us.us.us, float %.sroa.416.0.copyload.us.us.us.us.us, i32 noundef %i.akp, ptr noundef %i.akq) #16
   %i.akr = load ptr, ptr %i.ahg, align 8, !tbaa !481 ; 4 uses
@@ -551,7 +551,7 @@ bb.fa:                                            ; preds = %bb.ez
   br i1 %i.akx, label %bb.fb, label %.split12382.us, !prof !11, !nosanitize !10
 
 bb.fb:                                            ; preds = %bb.fa, %bb.ez
-  %i.aky = load i32, ptr %i.ako, align 4, !tbaa !504
+  %i.aky = load i32, ptr %i.ako, align 8, !tbaa !504
   %i.akz = load ptr, ptr %i.ahh, align 8, !tbaa !276
   call void %i.akr(<2 x float> %.sroa.017.0.copyload.us.us.us.us.us, float %.sroa.6.0.copyload.us.us.us.us.us, float noundef 1.000000e+01, i32 noundef %i.aky, ptr noundef %i.akz) #16
   %i.ala = getelementptr inbounds nuw i8, ptr %i.akd, i64 24
@@ -572,7 +572,7 @@ bb.fc:                                            ; preds = %bb.fb
   br i1 %i.all, label %bb.fd, label %.split12391.us, !prof !11, !nosanitize !10
 
 bb.fd:                                            ; preds = %bb.fc, %bb.fb
-  %i.alm = load i32, ptr %i.ako, align 4, !tbaa !504
+  %i.alm = load i32, ptr %i.ako, align 8, !tbaa !504
   %i.aln = load ptr, ptr %i.ahh, align 8, !tbaa !276
   call void %i.alf(<2 x float> %i.ald, float %i.ale, ptr noundef nonnull %i.f, i32 noundef %i.alm, ptr noundef %i.aln) #16
   %indvars.iv.next18581 = add nuw nsw i64 %indvars.iv18580, 1 ; 2 uses

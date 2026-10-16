@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i.i108, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_12ParenTypeLocENS_9ParenTypeENS_12ParenLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %_ZNK5clang7TypeLoc12IgnoreParensEv.exit
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_12ParenTypeLocENS_9ParenTypeENS_12ParenLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %bb.i
-  %i.bo = load ptr, ptr %i.bm, align 8, !tbaa !808
+  %i.bo = load ptr, ptr %i.bm, align 16, !tbaa !808
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.bq = load i8, ptr %i.bp, align 16
   %i.br = icmp eq i8 %i.bq, 38
@@ -225,7 +225,7 @@ _ZNK5clang7TypeLoc12IgnoreParensEv.exit:          ; preds = %bb.i, %_ZN5clang15C
   br i1 %.not.i.i109, label %_ZN5clang25InheritingConcreteTypeLocINS_15FunctionTypeLocENS_20FunctionProtoTypeLocENS_17FunctionProtoTypeEE6isKindERKNS_7TypeLocE.exit.i, label %bb.af
 
 _ZN5clang25InheritingConcreteTypeLocINS_15FunctionTypeLocENS_20FunctionProtoTypeLocENS_17FunctionProtoTypeEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %_ZNK5clang7TypeLoc12IgnoreParensEv.exit
-  %i.bx = load ptr, ptr %i.bt, align 8, !tbaa !808 ; 2 uses
+  %i.bx = load ptr, ptr %i.bt, align 16, !tbaa !808 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   %i.bz = load i8, ptr %i.by, align 16
   %i.ca = icmp eq i8 %i.bz, 24
@@ -244,7 +244,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i.i115, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_12ParenTypeLocENS_9ParenTypeENS_12ParenLocInfoEE6isKindERKNS_7TypeLocE.exit.i120, label %_ZNK5clang7TypeLoc12IgnoreParensEv.exit123
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_12ParenTypeLocENS_9ParenTypeENS_12ParenLocInfoEE6isKindERKNS_7TypeLocE.exit.i120: ; preds = %bb.l
-  %i.ce = load ptr, ptr %i.cc, align 8, !tbaa !808
+  %i.ce = load ptr, ptr %i.cc, align 16, !tbaa !808
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
   %i.cg = load i8, ptr %i.cf, align 16
   %i.ch = icmp eq i8 %i.cg, 38
@@ -647,7 +647,7 @@ bb.a:
   br i1 %.not.i, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit:       ; preds = %bb.a
-  %i.c = load ptr, ptr %2, align 8, !tbaa !808
+  %i.c = load ptr, ptr %2, align 16, !tbaa !808
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load i8, ptr %i.d, align 16
   switch i8 %i.e, label %bb.bl [
@@ -735,7 +735,7 @@ _ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread: ; preds = %bb.a, %_ZNK5clang7
   br i1 %.not.i.i.i, label %_ZN5clang25InheritingConcreteTypeLocINS_15TypeSpecTypeLocENS_23TemplateTypeParmTypeLocENS_20TemplateTypeParmTypeEE6isKindERKNS_7TypeLocE.exit.i.i, label %bb.d
 
 _ZN5clang25InheritingConcreteTypeLocINS_15TypeSpecTypeLocENS_23TemplateTypeParmTypeLocENS_20TemplateTypeParmTypeEE6isKindERKNS_7TypeLocE.exit.i.i: ; preds = %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread
-  %i.x = load ptr, ptr %i.t, align 8, !tbaa !808
+  %i.x = load ptr, ptr %i.t, align 16, !tbaa !808
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.z = load i8, ptr %i.y, align 16
   switch i8 %i.z, label %bb.d [
@@ -1138,7 +1138,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.y
   br i1 %.not.i.i, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %bb.n
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %bb.c
-  %i.bb = load ptr, ptr %i.az, align 8, !tbaa !808 ; 3 uses
+  %i.bb = load ptr, ptr %i.az, align 16, !tbaa !808 ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bd = load i8, ptr %i.bc, align 16
   %i.be = icmp eq i8 %i.bd, 36
@@ -1541,7 +1541,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not.i.i, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %bb.d
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %bb.c
-  %i.af = load ptr, ptr %i.ad, align 8, !tbaa !808
+  %i.af = load ptr, ptr %i.ad, align 16, !tbaa !808
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ah = load i8, ptr %i.ag, align 16
   %i.ai = icmp eq i8 %i.ah, 36
@@ -1944,7 +1944,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i.i114, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i:     ; preds = %bb.g
-  %i.ak = load ptr, ptr %i.ai, align 8, !tbaa !808
+  %i.ak = load ptr, ptr %i.ai, align 16, !tbaa !808
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.am = load i8, ptr %i.al, align 16
   switch i8 %i.am, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i [
@@ -2093,7 +2093,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not.i.i115, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i118, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i116
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i118:  ; preds = %bb.s
-  %i.ci = load ptr, ptr %i.cg, align 8, !tbaa !808
+  %i.ci = load ptr, ptr %i.cg, align 16, !tbaa !808
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
   %i.ck = load i8, ptr %i.cj, align 16
   switch i8 %i.ck, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i116 [
@@ -2496,7 +2496,7 @@ _ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread262: ; preds = %bb.g
   br i1 %.not.i.i157, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20DependentNameTypeLocENS_17DependentNameTypeENS_20DependentNameLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %bb.am
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20DependentNameTypeLocENS_17DependentNameTypeENS_20DependentNameLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %_ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread262
-  %i.hc = load ptr, ptr %i.ha, align 8, !tbaa !808
+  %i.hc = load ptr, ptr %i.ha, align 16, !tbaa !808
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 16
   %i.he = load i8, ptr %i.hd, align 16
   %i.hf = icmp eq i8 %i.he, 20
@@ -2671,7 +2671,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %.not.i.i157, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i:     ; preds = %bb.an
-  %i.jg = load ptr, ptr %i.ha, align 8, !tbaa !808
+  %i.jg = load ptr, ptr %i.ha, align 16, !tbaa !808
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 16
   %i.ji = load i8, ptr %i.jh, align 16
   switch i8 %i.ji, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i [

@@ -204,13 +204,13 @@ lean_inc_n.exit:                                  ; preds = %bb.cs, %bb.cu, %bb.
   br i1 %.not.i595, label %bb.cx, label %lean_dec.exit695
 
 bb.cx:                                            ; preds = %lean_inc_n.exit
-  %i.et = load i32, ptr %i.dn, align 4, !tbaa !14 ; 3 uses
+  %i.et = load i32, ptr %i.dn, align 512, !tbaa !14 ; 3 uses
   %i.eu = icmp sgt i32 %i.et, 1
   br i1 %i.eu, label %bb.cy, label %bb.cz, !prof !16
 
 bb.cy:                                            ; preds = %bb.cx
   %i.ev = add nsw i32 %i.et, -1
-  store i32 %i.ev, ptr %i.dn, align 4, !tbaa !14
+  store i32 %i.ev, ptr %i.dn, align 512, !tbaa !14
   br label %lean_dec.exit695
 
 bb.cz:                                            ; preds = %bb.cx
@@ -613,13 +613,13 @@ bb.mc:                                            ; preds = %lean_obj_tag.exit88
   br i1 %.not.i595, label %bb.md, label %lean_dec.exit641
 
 bb.md:                                            ; preds = %bb.mc
-  %i.sf = load i32, ptr %i.dn, align 4, !tbaa !14 ; 3 uses
+  %i.sf = load i32, ptr %i.dn, align 512, !tbaa !14 ; 3 uses
   %i.sg = icmp sgt i32 %i.sf, 1
   br i1 %i.sg, label %bb.me, label %bb.mf, !prof !16
 
 bb.me:                                            ; preds = %bb.md
   %i.sh = add nsw i32 %i.sf, -1
-  store i32 %i.sh, ptr %i.dn, align 4, !tbaa !14
+  store i32 %i.sh, ptr %i.dn, align 512, !tbaa !14
   br label %lean_dec.exit641
 
 bb.mf:                                            ; preds = %bb.md
@@ -1022,13 +1022,13 @@ lean_inc.exit1464:                                ; preds = %bb.do, %bb.dn, %bb.
   br i1 %.not.i1461, label %bb.dp, label %lean_inc.exit1462
 
 bb.dp:                                            ; preds = %lean_inc.exit1464
-  %.val.i.i2140 = load i32, ptr %i.ep, align 4, !tbaa !14 ; 3 uses
+  %.val.i.i2140 = load i32, ptr %i.ep, align 512, !tbaa !14 ; 3 uses
   %i.gy = icmp sgt i32 %.val.i.i2140, 0
   br i1 %i.gy, label %bb.dq, label %bb.dr, !prof !16
 
 bb.dq:                                            ; preds = %bb.dp
   %i.gz = add nuw i32 %.val.i.i2140, 1
-  store i32 %i.gz, ptr %i.ep, align 4, !tbaa !14
+  store i32 %i.gz, ptr %i.ep, align 512, !tbaa !14
   br label %lean_inc.exit1462
 
 bb.dr:                                            ; preds = %bb.dp
@@ -1431,13 +1431,13 @@ lean_del_object.exit:                             ; preds = %bb.dq, %bb.dr
   br i1 %.not.i1760, label %bb.ds, label %lean_dec.exit1761
 
 bb.ds:                                            ; preds = %lean_del_object.exit
-  %i.hq = load i32, ptr %i.dy, align 4, !tbaa !14 ; 3 uses
+  %i.hq = load i32, ptr %i.dy, align 512, !tbaa !14 ; 3 uses
   %i.hr = icmp sgt i32 %i.hq, 1
   br i1 %i.hr, label %bb.dt, label %bb.du, !prof !16
 
 bb.dt:                                            ; preds = %bb.ds
   %i.hs = add nsw i32 %i.hq, -1
-  store i32 %i.hs, ptr %i.dy, align 4, !tbaa !14
+  store i32 %i.hs, ptr %i.dy, align 512, !tbaa !14
   br label %lean_dec.exit1761
 
 bb.du:                                            ; preds = %bb.ds
@@ -1519,13 +1519,13 @@ lean_del_object.exit2219:                         ; preds = %bb.ef, %bb.eg
   br i1 %.not.i1758, label %bb.eh, label %lean_dec.exit1761
 
 bb.eh:                                            ; preds = %lean_del_object.exit2219
-  %i.ig = load i32, ptr %i.dy, align 4, !tbaa !14 ; 3 uses
+  %i.ig = load i32, ptr %i.dy, align 512, !tbaa !14 ; 3 uses
   %i.ih = icmp sgt i32 %i.ig, 1
   br i1 %i.ih, label %bb.ei, label %bb.ej, !prof !16
 
 bb.ei:                                            ; preds = %bb.eh
   %i.ii = add nsw i32 %i.ig, -1
-  store i32 %i.ii, ptr %i.dy, align 4, !tbaa !14
+  store i32 %i.ii, ptr %i.dy, align 512, !tbaa !14
   br label %lean_dec.exit1761
 
 bb.ej:                                            ; preds = %bb.eh
@@ -1618,13 +1618,13 @@ lean_del_object.exit2225:                         ; preds = %bb.ev, %bb.ew
   br i1 %.not.i1754, label %bb.ex, label %lean_dec.exit1755
 
 bb.ex:                                            ; preds = %lean_del_object.exit2225
-  %i.ja = load i32, ptr %i.dy, align 4, !tbaa !14 ; 3 uses
+  %i.ja = load i32, ptr %i.dy, align 512, !tbaa !14 ; 3 uses
   %i.jb = icmp sgt i32 %i.ja, 1
   br i1 %i.jb, label %bb.ey, label %bb.ez, !prof !16
 
 bb.ey:                                            ; preds = %bb.ex
   %i.jc = add nsw i32 %i.ja, -1
-  store i32 %i.jc, ptr %i.dy, align 4, !tbaa !14
+  store i32 %i.jc, ptr %i.dy, align 512, !tbaa !14
   br label %lean_dec.exit1755
 
 bb.ez:                                            ; preds = %bb.ex
@@ -2027,13 +2027,13 @@ lean_del_object.exit2333:                         ; preds = %lean_dec.exit1737, 
   br i1 %.not.i1734, label %bb.lf, label %lean_dec.exit1735
 
 bb.lf:                                            ; preds = %lean_del_object.exit2333
-  %i.si = load i32, ptr %i.dy, align 4, !tbaa !14 ; 3 uses
+  %i.si = load i32, ptr %i.dy, align 512, !tbaa !14 ; 3 uses
   %i.sj = icmp sgt i32 %i.si, 1
   br i1 %i.sj, label %bb.lg, label %bb.lh, !prof !16
 
 bb.lg:                                            ; preds = %bb.lf
   %i.sk = add nsw i32 %i.si, -1
-  store i32 %i.sk, ptr %i.dy, align 4, !tbaa !14
+  store i32 %i.sk, ptr %i.dy, align 512, !tbaa !14
   br label %lean_dec.exit1735
 
 bb.lh:                                            ; preds = %bb.lf
@@ -2424,13 +2424,13 @@ bb.nr:                                            ; preds = %lean_obj_tag.exit23
   br i1 %.not.i1716, label %bb.ns, label %lean_dec.exit1717
 
 bb.ns:                                            ; preds = %bb.nr
-  %i.vm = load i32, ptr %i.dy, align 4, !tbaa !14 ; 3 uses
+  %i.vm = load i32, ptr %i.dy, align 512, !tbaa !14 ; 3 uses
   %i.vn = icmp sgt i32 %i.vm, 1
   br i1 %i.vn, label %bb.nt, label %bb.nu, !prof !16
 
 bb.nt:                                            ; preds = %bb.ns
   %i.vo = add nsw i32 %i.vm, -1
-  store i32 %i.vo, ptr %i.dy, align 4, !tbaa !14
+  store i32 %i.vo, ptr %i.dy, align 512, !tbaa !14
   br label %lean_dec.exit1717
 
 bb.nu:                                            ; preds = %bb.ns
@@ -2833,13 +2833,13 @@ lean_alloc_ctor.exit1768:                         ; preds = %lean_obj_once.exit1
   br i1 %.not.i1239, label %bb.is, label %lean_dec.exit1349
 
 bb.is:                                            ; preds = %lean_alloc_ctor.exit1768
-  %i.ob = load i32, ptr %i.ld, align 4, !tbaa !14 ; 3 uses
+  %i.ob = load i32, ptr %i.ld, align 512, !tbaa !14 ; 3 uses
   %i.oc = icmp sgt i32 %i.ob, 1
   br i1 %i.oc, label %bb.it, label %bb.iu, !prof !16
 
 bb.it:                                            ; preds = %bb.is
   %i.od = add nsw i32 %i.ob, -1
-  store i32 %i.od, ptr %i.ld, align 4, !tbaa !14
+  store i32 %i.od, ptr %i.ld, align 512, !tbaa !14
   br label %lean_dec.exit1349
 
 bb.iu:                                            ; preds = %bb.is
@@ -3242,13 +3242,13 @@ bb.aei:                                           ; preds = %lean_del_object.exi
   br i1 %.not.i1278, label %bb.aej, label %lean_dec.exit1279
 
 bb.aej:                                           ; preds = %bb.aei
-  %i.asv = load i32, ptr %i.asd, align 4, !tbaa !14 ; 3 uses
+  %i.asv = load i32, ptr %i.asd, align 512, !tbaa !14 ; 3 uses
   %i.asw = icmp sgt i32 %i.asv, 1
   br i1 %i.asw, label %bb.aek, label %bb.ael, !prof !16
 
 bb.aek:                                           ; preds = %bb.aej
   %i.asx = add nsw i32 %i.asv, -1
-  store i32 %i.asx, ptr %i.asd, align 4, !tbaa !14
+  store i32 %i.asx, ptr %i.asd, align 512, !tbaa !14
   br label %lean_dec.exit1279
 
 bb.ael:                                           ; preds = %bb.aej
@@ -3559,13 +3559,13 @@ bb.agd:                                           ; preds = %lean_obj_tag.exit20
   br i1 %.not.i1276, label %bb.age, label %lean_dec.exit1277
 
 bb.age:                                           ; preds = %bb.agd
-  %i.avq = load i32, ptr %i.asd, align 4, !tbaa !14 ; 3 uses
+  %i.avq = load i32, ptr %i.asd, align 512, !tbaa !14 ; 3 uses
   %i.avr = icmp sgt i32 %i.avq, 1
   br i1 %i.avr, label %bb.agf, label %bb.agg, !prof !16
 
 bb.agf:                                           ; preds = %bb.age
   %i.avs = add nsw i32 %i.avq, -1
-  store i32 %i.avs, ptr %i.asd, align 4, !tbaa !14
+  store i32 %i.avs, ptr %i.asd, align 512, !tbaa !14
   br label %lean_dec.exit1277
 
 bb.agg:                                           ; preds = %bb.age
@@ -3637,13 +3637,13 @@ lean_dec.exit1275:                                ; preds = %.thread2436, %bb.ag
   br i1 %.not.i1272, label %bb.ags, label %lean_dec.exit1279
 
 bb.ags:                                           ; preds = %lean_dec.exit1275
-  %i.awd = load i32, ptr %i.asd, align 4, !tbaa !14 ; 3 uses
+  %i.awd = load i32, ptr %i.asd, align 512, !tbaa !14 ; 3 uses
   %i.awe = icmp sgt i32 %i.awd, 1
   br i1 %i.awe, label %bb.agt, label %bb.agu, !prof !16
 
 bb.agt:                                           ; preds = %bb.ags
   %i.awf = add nsw i32 %i.awd, -1
-  store i32 %i.awf, ptr %i.asd, align 4, !tbaa !14
+  store i32 %i.awf, ptr %i.asd, align 512, !tbaa !14
   br label %lean_dec.exit1279
 
 bb.agu:                                           ; preds = %bb.ags
@@ -3660,13 +3660,13 @@ bb.agw:                                           ; preds = %lean_obj_tag.exit20
   br i1 %.not.i1270, label %bb.agx, label %lean_dec.exit1271
 
 bb.agx:                                           ; preds = %bb.agw
-  %i.awh = load i32, ptr %i.asd, align 4, !tbaa !14 ; 3 uses
+  %i.awh = load i32, ptr %i.asd, align 512, !tbaa !14 ; 3 uses
   %i.awi = icmp sgt i32 %i.awh, 1
   br i1 %i.awi, label %bb.agy, label %bb.agz, !prof !16
 
 bb.agy:                                           ; preds = %bb.agx
   %i.awj = add nsw i32 %i.awh, -1
-  store i32 %i.awj, ptr %i.asd, align 4, !tbaa !14
+  store i32 %i.awj, ptr %i.asd, align 512, !tbaa !14
   br label %lean_dec.exit1271
 
 bb.agz:                                           ; preds = %bb.agx
@@ -3737,13 +3737,13 @@ lean_dec.exit1269:                                ; preds = %lean_obj_tag.exit20
   br i1 %.not.i1266, label %bb.ahl, label %lean_dec.exit1279
 
 bb.ahl:                                           ; preds = %lean_dec.exit1269
-  %i.awu = load i32, ptr %i.asd, align 4, !tbaa !14 ; 3 uses
+  %i.awu = load i32, ptr %i.asd, align 512, !tbaa !14 ; 3 uses
   %i.awv = icmp sgt i32 %i.awu, 1
   br i1 %i.awv, label %bb.ahm, label %bb.ahn, !prof !16
 
 bb.ahm:                                           ; preds = %bb.ahl
   %i.aww = add nsw i32 %i.awu, -1
-  store i32 %i.aww, ptr %i.asd, align 4, !tbaa !14
+  store i32 %i.aww, ptr %i.asd, align 512, !tbaa !14
   br label %lean_dec.exit1279
 
 bb.ahn:                                           ; preds = %bb.ahl
@@ -3760,13 +3760,13 @@ bb.ahp:                                           ; preds = %lean_obj_tag.exit20
   br i1 %.not.i1264, label %bb.ahq, label %lean_dec.exit1265
 
 bb.ahq:                                           ; preds = %bb.ahp
-  %i.awy = load i32, ptr %i.asd, align 4, !tbaa !14 ; 3 uses
+  %i.awy = load i32, ptr %i.asd, align 512, !tbaa !14 ; 3 uses
   %i.awz = icmp sgt i32 %i.awy, 1
   br i1 %i.awz, label %bb.ahr, label %bb.ahs, !prof !16
 
 bb.ahr:                                           ; preds = %bb.ahq
   %i.axa = add nsw i32 %i.awy, -1
-  store i32 %i.axa, ptr %i.asd, align 4, !tbaa !14
+  store i32 %i.axa, ptr %i.asd, align 512, !tbaa !14
   br label %lean_dec.exit1265
 
 bb.ahs:                                           ; preds = %bb.ahq
@@ -4169,13 +4169,13 @@ bb.abt:                                           ; preds = %lean_del_object.exi
   br i1 %.not.i1278, label %bb.abu, label %lean_dec.exit1279
 
 bb.abu:                                           ; preds = %bb.abt
-  %i.app = load i32, ptr %i.aox, align 4, !tbaa !14 ; 3 uses
+  %i.app = load i32, ptr %i.aox, align 512, !tbaa !14 ; 3 uses
   %i.apq = icmp sgt i32 %i.app, 1
   br i1 %i.apq, label %bb.abv, label %bb.abw, !prof !16
 
 bb.abv:                                           ; preds = %bb.abu
   %i.apr = add nsw i32 %i.app, -1
-  store i32 %i.apr, ptr %i.aox, align 4, !tbaa !14
+  store i32 %i.apr, ptr %i.aox, align 512, !tbaa !14
   br label %lean_dec.exit1279
 
 bb.abw:                                           ; preds = %bb.abu
@@ -4384,13 +4384,13 @@ bb.acy:                                           ; preds = %lean_obj_tag.exit19
   br i1 %.not.i1276, label %bb.acz, label %lean_dec.exit1277
 
 bb.acz:                                           ; preds = %bb.acy
-  %i.arq = load i32, ptr %i.aox, align 4, !tbaa !14 ; 3 uses
+  %i.arq = load i32, ptr %i.aox, align 512, !tbaa !14 ; 3 uses
   %i.arr = icmp sgt i32 %i.arq, 1
   br i1 %i.arr, label %bb.ada, label %bb.adb, !prof !16
 
 bb.ada:                                           ; preds = %bb.acz
   %i.ars = add nsw i32 %i.arq, -1
-  store i32 %i.ars, ptr %i.aox, align 4, !tbaa !14
+  store i32 %i.ars, ptr %i.aox, align 512, !tbaa !14
   br label %lean_dec.exit1277
 
 bb.adb:                                           ; preds = %bb.acz
@@ -4462,13 +4462,13 @@ lean_dec.exit1275:                                ; preds = %.thread2289, %bb.ad
   br i1 %.not.i1272, label %bb.adn, label %lean_dec.exit1279
 
 bb.adn:                                           ; preds = %lean_dec.exit1275
-  %i.asd = load i32, ptr %i.aox, align 4, !tbaa !14 ; 3 uses
+  %i.asd = load i32, ptr %i.aox, align 512, !tbaa !14 ; 3 uses
   %i.ase = icmp sgt i32 %i.asd, 1
   br i1 %i.ase, label %bb.ado, label %bb.adp, !prof !16
 
 bb.ado:                                           ; preds = %bb.adn
   %i.asf = add nsw i32 %i.asd, -1
-  store i32 %i.asf, ptr %i.aox, align 4, !tbaa !14
+  store i32 %i.asf, ptr %i.aox, align 512, !tbaa !14
   br label %lean_dec.exit1279
 
 bb.adp:                                           ; preds = %bb.adn
@@ -4485,13 +4485,13 @@ bb.adr:                                           ; preds = %lean_obj_tag.exit19
   br i1 %.not.i1270, label %bb.ads, label %lean_dec.exit1271
 
 bb.ads:                                           ; preds = %bb.adr
-  %i.ash = load i32, ptr %i.aox, align 4, !tbaa !14 ; 3 uses
+  %i.ash = load i32, ptr %i.aox, align 512, !tbaa !14 ; 3 uses
   %i.asi = icmp sgt i32 %i.ash, 1
   br i1 %i.asi, label %bb.adt, label %bb.adu, !prof !16
 
 bb.adt:                                           ; preds = %bb.ads
   %i.asj = add nsw i32 %i.ash, -1
-  store i32 %i.asj, ptr %i.aox, align 4, !tbaa !14
+  store i32 %i.asj, ptr %i.aox, align 512, !tbaa !14
   br label %lean_dec.exit1271
 
 bb.adu:                                           ; preds = %bb.ads
@@ -4562,13 +4562,13 @@ lean_dec.exit1269:                                ; preds = %lean_obj_tag.exit19
   br i1 %.not.i1266, label %bb.aeg, label %lean_dec.exit1279
 
 bb.aeg:                                           ; preds = %lean_dec.exit1269
-  %i.asu = load i32, ptr %i.aox, align 4, !tbaa !14 ; 3 uses
+  %i.asu = load i32, ptr %i.aox, align 512, !tbaa !14 ; 3 uses
   %i.asv = icmp sgt i32 %i.asu, 1
   br i1 %i.asv, label %bb.aeh, label %bb.aei, !prof !16
 
 bb.aeh:                                           ; preds = %bb.aeg
   %i.asw = add nsw i32 %i.asu, -1
-  store i32 %i.asw, ptr %i.aox, align 4, !tbaa !14
+  store i32 %i.asw, ptr %i.aox, align 512, !tbaa !14
   br label %lean_dec.exit1279
 
 bb.aei:                                           ; preds = %bb.aeg
@@ -4585,13 +4585,13 @@ bb.aek:                                           ; preds = %lean_obj_tag.exit19
   br i1 %.not.i1264, label %bb.ael, label %lean_dec.exit1265
 
 bb.ael:                                           ; preds = %bb.aek
-  %i.asy = load i32, ptr %i.aox, align 4, !tbaa !14 ; 3 uses
+  %i.asy = load i32, ptr %i.aox, align 512, !tbaa !14 ; 3 uses
   %i.asz = icmp sgt i32 %i.asy, 1
   br i1 %i.asz, label %bb.aem, label %bb.aen, !prof !16
 
 bb.aem:                                           ; preds = %bb.ael
   %i.ata = add nsw i32 %i.asy, -1
-  store i32 %i.ata, ptr %i.aox, align 4, !tbaa !14
+  store i32 %i.ata, ptr %i.aox, align 512, !tbaa !14
   br label %lean_dec.exit1265
 
 bb.aen:                                           ; preds = %bb.ael
@@ -4994,13 +4994,13 @@ lean_inc.exit1472:                                ; preds = %bb.dn, %bb.dm, %bb.
   br i1 %.not.i1469, label %bb.do, label %lean_inc.exit1470
 
 bb.do:                                            ; preds = %lean_inc.exit1472
-  %.val.i.i2148 = load i32, ptr %i.ej, align 4, !tbaa !14 ; 3 uses
+  %.val.i.i2148 = load i32, ptr %i.ej, align 512, !tbaa !14 ; 3 uses
   %i.gw = icmp sgt i32 %.val.i.i2148, 0
   br i1 %i.gw, label %bb.dp, label %bb.dq, !prof !16
 
 bb.dp:                                            ; preds = %bb.do
   %i.gx = add nuw i32 %.val.i.i2148, 1
-  store i32 %i.gx, ptr %i.ej, align 4, !tbaa !14
+  store i32 %i.gx, ptr %i.ej, align 512, !tbaa !14
   br label %lean_inc.exit1470
 
 bb.dq:                                            ; preds = %bb.do
@@ -5403,13 +5403,13 @@ lean_inc.exit1480:                                ; preds = %bb.dn, %bb.dm, %bb.
   br i1 %.not.i1477, label %bb.do, label %lean_inc.exit1478
 
 bb.do:                                            ; preds = %lean_inc.exit1480
-  %.val.i.i2157 = load i32, ptr %i.dk, align 4, !tbaa !14 ; 3 uses
+  %.val.i.i2157 = load i32, ptr %i.dk, align 512, !tbaa !14 ; 3 uses
   %i.gq = icmp sgt i32 %.val.i.i2157, 0
   br i1 %i.gq, label %bb.dp, label %bb.dq, !prof !16
 
 bb.dp:                                            ; preds = %bb.do
   %i.gr = add nuw i32 %.val.i.i2157, 1
-  store i32 %i.gr, ptr %i.dk, align 4, !tbaa !14
+  store i32 %i.gr, ptr %i.dk, align 512, !tbaa !14
   br label %lean_inc.exit1478
 
 bb.dq:                                            ; preds = %bb.do
@@ -5812,13 +5812,13 @@ lean_dec_ref.exit2066:                            ; preds = %bb.is, %bb.it, %bb.
   br i1 %.not.i1477, label %bb.iv, label %lean_dec.exit1723
 
 bb.iv:                                            ; preds = %lean_dec_ref.exit2066
-  %i.ou = load i32, ptr %i.dk, align 4, !tbaa !14 ; 3 uses
+  %i.ou = load i32, ptr %i.dk, align 512, !tbaa !14 ; 3 uses
   %i.ov = icmp sgt i32 %i.ou, 1
   br i1 %i.ov, label %bb.iw, label %bb.ix, !prof !16
 
 bb.iw:                                            ; preds = %bb.iv
   %i.ow = add nsw i32 %i.ou, -1
-  store i32 %i.ow, ptr %i.dk, align 4, !tbaa !14
+  store i32 %i.ow, ptr %i.dk, align 512, !tbaa !14
   br label %lean_dec.exit1723
 
 bb.ix:                                            ; preds = %bb.iv
@@ -6048,13 +6048,13 @@ lean_dec_ref.exit2062:                            ; preds = %bb.ki, %bb.kj, %bb.
   br i1 %.not.i1477, label %bb.kl, label %lean_dec.exit1709
 
 bb.kl:                                            ; preds = %lean_dec_ref.exit2062
-  %i.ql = load i32, ptr %i.dk, align 4, !tbaa !14 ; 3 uses
+  %i.ql = load i32, ptr %i.dk, align 512, !tbaa !14 ; 3 uses
   %i.qm = icmp sgt i32 %i.ql, 1
   br i1 %i.qm, label %bb.km, label %bb.kn, !prof !16
 
 bb.km:                                            ; preds = %bb.kl
   %i.qn = add nsw i32 %i.ql, -1
-  store i32 %i.qn, ptr %i.dk, align 4, !tbaa !14
+  store i32 %i.qn, ptr %i.dk, align 512, !tbaa !14
   br label %lean_dec.exit1709
 
 bb.kn:                                            ; preds = %bb.kl
@@ -6369,13 +6369,13 @@ lean_dec_ref.exit2056:                            ; preds = %bb.mo, %bb.mp, %bb.
   br i1 %.not.i1477, label %bb.mr, label %lean_dec.exit1691
 
 bb.mr:                                            ; preds = %lean_dec_ref.exit2056
-  %i.sp = load i32, ptr %i.dk, align 4, !tbaa !14 ; 3 uses
+  %i.sp = load i32, ptr %i.dk, align 512, !tbaa !14 ; 3 uses
   %i.sq = icmp sgt i32 %i.sp, 1
   br i1 %i.sq, label %bb.ms, label %bb.mt, !prof !16
 
 bb.ms:                                            ; preds = %bb.mr
   %i.sr = add nsw i32 %i.sp, -1
-  store i32 %i.sr, ptr %i.dk, align 4, !tbaa !14
+  store i32 %i.sr, ptr %i.dk, align 512, !tbaa !14
   br label %lean_dec.exit1691
 
 bb.mt:                                            ; preds = %bb.mr

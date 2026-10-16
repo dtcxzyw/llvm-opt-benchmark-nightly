@@ -1,0 +1,88 @@
+diff --git a/llvm/lib/Transforms/Scalar/InferAlignment.cpp b/llvm/lib/Transforms/Scalar/InferAlignment.cpp
+index d0f952a6c29cfa..a907fa6d94d03a 100644
+--- a/llvm/lib/Transforms/Scalar/InferAlignment.cpp
++++ b/llvm/lib/Transforms/Scalar/InferAlignment.cpp
+@@ -16,6 +16,8 @@
+ #include "llvm/ADT/STLFunctionalExtras.h"
+ #include "llvm/ADT/ScopedHashTable.h"
+ #include "llvm/Analysis/AssumptionCache.h"
++#include "llvm/Analysis/DomConditionCache.h"
++#include "llvm/Analysis/SimplifyQuery.h"
+ #include "llvm/Analysis/ValueTracking.h"
+ #include "llvm/IR/Instruction.h"
+ #include "llvm/IR/Instructions.h"
+@@ -114,9 +116,12 @@ bool inferAlignment(Function &F, AssumptionCache &AC, DominatorTree &DT) {
+   const DataLayout &DL = F.getDataLayout();
+   bool Changed = false;
+ 
++  DomConditionCache DC;
+   // Enforce preferred type alignment if possible. We do this as a separate
+   // pass first, because it may improve the alignments we infer below.
+   for (BasicBlock &BB : F) {
++    if (auto *BI = dyn_cast<CondBrInst>(BB.getTerminator()))
++      DC.registerBranch(BI);
+     for (Instruction &I : BB) {
+       Changed |= tryToImproveAlign(
+           DL, &I, [&](Value *PtrOp, Align OldAlign, Align PrefAlign) {
+@@ -128,9 +133,12 @@ bool inferAlignment(Function &F, AssumptionCache &AC, DominatorTree &DT) {
+     }
+   }
+ 
++  SimplifyQuery SQ(DL, /*TLI=*/nullptr, &DT, &AC, /*CxtI=*/nullptr,
++                   /*UseInstrInfo=*/true, /*CanUseUndef=*/true, &DC);
++
+   // Compute alignment from known bits.
+   auto InferFromKnownBits = [&](Instruction &I, Value *PtrOp) {
+-    KnownBits Known = computeKnownBits(PtrOp, DL, &AC, &I, &DT);
++    KnownBits Known = computeKnownBits(PtrOp, SQ.getWithInstruction(&I));
+     unsigned TrailZ =
+         std::min(Known.countMinTrailingZeros(), +Value::MaxAlignmentExponent);
+     return Align::fromLog2(std::min(Known.getBitWidth() - 1, TrailZ));
+diff --git a/llvm/test/Transforms/InferAlignment/dom-cache.ll b/llvm/test/Transforms/InferAlignment/dom-cache.ll
+new file mode 100644
+index 00000000000000..151af951900af4
+--- /dev/null
++++ b/llvm/test/Transforms/InferAlignment/dom-cache.ll
+@@ -0,0 +1,41 @@
++; RUN: opt < %s -passes=infer-alignment -S | FileCheck %s
++
++define void @alignment_guard(ptr %p) {
++; CHECK-LABEL: define void @alignment_guard(
++; CHECK:       aligned.path:
++; CHECK-NEXT:    [[LOAD:%.*]] = load i64, ptr [[P:%.*]], align 8
++entry:
++  %p.int = ptrtoint ptr %p to i64
++  %masked = and i64 %p.int, 7
++  %aligned = icmp eq i64 %masked, 0
++  br i1 %aligned, label %aligned.path, label %exit
++
++aligned.path:
++  %load = load i64, ptr %p, align 1
++  %misaligned = getelementptr i8, ptr %p, i64 4
++  %misaligned.load = load i32, ptr %misaligned, align 1
++  ; CHECK-NEXT: [[MISALIGNED:%.*]] = getelementptr i8, ptr [[P]], i64 4
++  ; CHECK-NEXT: [[MISALIGNED_LOAD:%.*]] = load i32, ptr [[MISALIGNED]], align 4
++  br label %exit
++
++exit:
++  ret void
++}
++
++define void @unaligned_successor(ptr %p) {
++; CHECK-LABEL: define void @unaligned_successor(
++; CHECK:       unaligned:
++; CHECK-NEXT:    [[LOAD:%.*]] = load i64, ptr [[P:%.*]], align 1
++entry:
++  %p.int = ptrtoint ptr %p to i64
++  %masked = and i64 %p.int, 7
++  %aligned = icmp eq i64 %masked, 0
++  br i1 %aligned, label %exit, label %unaligned
++
++unaligned:
++  %load = load i64, ptr %p, align 1
++  br label %exit
++
++exit:
++  ret void
++}
+\ No newline at end of file

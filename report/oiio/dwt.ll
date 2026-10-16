@@ -205,7 +205,7 @@ begin_hunk_0_@opj_v8dwt_interleave_h:bb.a
   %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.fm ; 8 uses
   %i.fo = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv181
   %i.fp = load float, ptr %i.fo, align 4, !tbaa !76
-  store float %i.fp, ptr %i.fn, align 4, !tbaa !76
+  store float %i.fp, ptr %i.fn, align 16, !tbaa !76
   %i.fq = add i32 %2, %i.fk                       ; 2 uses
   %i.fr = zext i32 %i.fq to i64
   %i.fs = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.fr
@@ -217,7 +217,7 @@ begin_hunk_0_@opj_v8dwt_interleave_h:bb.a
   %i.fx = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.fw
   %i.fy = load float, ptr %i.fx, align 4, !tbaa !76
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fn, i64 8
-  store float %i.fy, ptr %i.fz, align 4, !tbaa !76
+  store float %i.fy, ptr %i.fz, align 8, !tbaa !76
   %i.ga = add i32 %i.fv, %2                       ; 2 uses
   %i.gb = zext i32 %i.ga to i64
   %i.gc = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gb
@@ -229,7 +229,7 @@ begin_hunk_0_@opj_v8dwt_interleave_h:bb.a
   %i.gh = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gg
   %i.gi = load float, ptr %i.gh, align 4, !tbaa !76
   %i.gj = getelementptr inbounds nuw i8, ptr %i.fn, i64 16
-  store float %i.gi, ptr %i.gj, align 4, !tbaa !76
+  store float %i.gi, ptr %i.gj, align 16, !tbaa !76
   %i.gk = add i32 %i.gf, %2                       ; 2 uses
   %i.gl = zext i32 %i.gk to i64
   %i.gm = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gl
@@ -241,7 +241,7 @@ begin_hunk_0_@opj_v8dwt_interleave_h:bb.a
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gq
   %i.gs = load float, ptr %i.gr, align 4, !tbaa !76
   %i.gt = getelementptr inbounds nuw i8, ptr %i.fn, i64 24
-  store float %i.gs, ptr %i.gt, align 4, !tbaa !76
+  store float %i.gs, ptr %i.gt, align 8, !tbaa !76
   %i.gu = add i32 %i.gp, %2
   %i.gv = zext i32 %i.gu to i64
   %i.gw = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gv
@@ -436,7 +436,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %i.kq = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.kp ; 8 uses
   %i.kr = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %indvars.iv181.1
   %i.ks = load float, ptr %i.kr, align 4, !tbaa !76
-  store float %i.ks, ptr %i.kq, align 4, !tbaa !76
+  store float %i.ks, ptr %i.kq, align 16, !tbaa !76
   %i.kt = add i32 %2, %i.kn                       ; 2 uses
   %i.ku = zext i32 %i.kt to i64
   %i.kv = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %i.ku
@@ -448,7 +448,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %i.la = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %i.kz
   %i.lb = load float, ptr %i.la, align 4, !tbaa !76
   %i.lc = getelementptr inbounds nuw i8, ptr %i.kq, i64 8
-  store float %i.lb, ptr %i.lc, align 4, !tbaa !76
+  store float %i.lb, ptr %i.lc, align 8, !tbaa !76
   %i.ld = add i32 %i.ky, %2                       ; 2 uses
   %i.le = zext i32 %i.ld to i64
   %i.lf = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %i.le
@@ -460,7 +460,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %i.lk = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %i.lj
   %i.ll = load float, ptr %i.lk, align 4, !tbaa !76
   %i.lm = getelementptr inbounds nuw i8, ptr %i.kq, i64 16
-  store float %i.ll, ptr %i.lm, align 4, !tbaa !76
+  store float %i.ll, ptr %i.lm, align 16, !tbaa !76
   %i.ln = add i32 %i.li, %2                       ; 2 uses
   %i.lo = zext i32 %i.ln to i64
   %i.lp = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %i.lo
@@ -472,7 +472,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %i.lu = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %i.lt
   %i.lv = load float, ptr %i.lu, align 4, !tbaa !76
   %i.lw = getelementptr inbounds nuw i8, ptr %i.kq, i64 24
-  store float %i.lv, ptr %i.lw, align 4, !tbaa !76
+  store float %i.lv, ptr %i.lw, align 8, !tbaa !76
   %i.lx = add i32 %i.ls, %2
   %i.ly = zext i32 %i.lx to i64
   %i.lz = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %i.ly

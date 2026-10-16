@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapIiiSt4lessIiENS0_6vectorISt4pairIiiEvvEEE11upper_boundERKi.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.m
-  %i.dm = load i32, ptr %i.bx, align 8, !tbaa !338, !noalias !1984
+  %i.dm = load i32, ptr %i.bx, align 16, !tbaa !338, !noalias !1984
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapIiiSt4lessIiENS0_12small_vectorISt4pairIiiELm7EvvEEE11upper_boundERKi.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.m
-  %i.dm = load i32, ptr %i.bx, align 8, !tbaa !338, !noalias !6838
+  %i.dm = load i32, ptr %i.bx, align 16, !tbaa !338, !noalias !6838
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
@@ -1011,7 +1011,7 @@ bb.l:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapIiiSt4lessIiENS0_13static_vectorISt4pairIiiELm500EvEEE11upper_boundERKi.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.l
-  %i.de = load i32, ptr %i.bw, align 8, !tbaa !338, !noalias !8902
+  %i.de = load i32, ptr %i.bw, align 16, !tbaa !338, !noalias !8902
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.m, %.lr.ph.i.i.i
@@ -1414,7 +1414,7 @@ _ZN5boost9container3dtl9flat_treeISt4pairIiiENS1_9select1stIiEESt4lessIiENS0_13s
   %i.dd = ptrtoint ptr %i.da to i64
   %i.de = sub i64 %i.dd, %i.dc
   %i.df = ashr exact i64 %i.de, 3
-  %i.dg = load i32, ptr %i.cw, align 8, !tbaa !338, !noalias !11214
+  %i.dg = load i32, ptr %i.cw, align 16, !tbaa !338, !noalias !11214
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.p, %.lr.ph.i.i.i
@@ -1817,7 +1817,7 @@ _ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEmiERKS5_.exit.i.i
   br i1 %.not15.i.i.i, label %_ZN5boost9container8flat_mapIiiSt4lessIiENS0_5dequeISt4pairIiiEvvEEE11upper_boundERKi.exit, label %.lr.ph.i.i.i96
 
 .lr.ph.i.i.i96:                                   ; preds = %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEmiERKS5_.exit.i.i.i
-  %i.ed = load i32, ptr %i.dl, align 8, !tbaa !338, !noalias !20357
+  %i.ed = load i32, ptr %i.dl, align 16, !tbaa !338, !noalias !20357
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.r, %.lr.ph.i.i.i96
@@ -2220,7 +2220,7 @@ _ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEmiERKS5_.exit.i.i
   br i1 %.not15.i.i.i127, label %_ZN5boost9container8flat_mapIiiSt4lessIiENS0_5dequeISt4pairIiiEvvEEE11upper_boundERKi.exit145, label %.lr.ph.i.i.i128
 
 .lr.ph.i.i.i128:                                  ; preds = %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEmiERKS5_.exit.i.i.i125
-  %i.mg = load i32, ptr %i.jw, align 8, !tbaa !338, !noalias !20377
+  %i.mg = load i32, ptr %i.jw, align 16, !tbaa !338, !noalias !20377
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.ba, %.lr.ph.i.i.i128
@@ -2623,7 +2623,7 @@ bb.g:                                             ; preds = %bb.d
 
 .lr.ph.i.i.i:                                     ; preds = %bb.g
   %i.cy = sub nsw i64 %i.cx, %i.cv
-  %i.cz = load i32, ptr %i.ca, align 8, !tbaa !338
+  %i.cz = load i32, ptr %i.ca, align 16, !tbaa !338
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %.lr.ph.i.i.i
@@ -2649,7 +2649,7 @@ _ZN5boost9container8flat_mapIiiSt4lessIiENS0_8devectorISt4pairIiiEvvEEE11upper_b
   br i1 %i.di, label %.critedge.i.i.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZN5boost9container8flat_mapIiiSt4lessIiENS0_8devectorISt4pairIiiEvvEEE11upper_boundERKi.exit
-  %i.dj = load i32, ptr %i.ca, align 8, !tbaa !338 ; 3 uses
+  %i.dj = load i32, ptr %i.ca, align 16, !tbaa !338 ; 3 uses
   %i.dk = load i32, ptr %.015.lcssa.i.i.i, align 4, !tbaa !338
   %i.dl = icmp slt i32 %i.dj, %i.dk
   br i1 %i.dl, label %.critedge.i.i.i, label %.lr.ph.i.i34.i.i.i
@@ -2662,7 +2662,7 @@ bb.i:                                             ; preds = %_ZN5boost9container
 bb.j:                                             ; preds = %.critedge.i.i.i
   %i.do = getelementptr inbounds i8, ptr %.015.lcssa.i.i.i, i64 -8 ; 6 uses
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !338 ; 2 uses
-  %i.dq = load i32, ptr %i.ca, align 8, !tbaa !338 ; 4 uses
+  %i.dq = load i32, ptr %i.ca, align 16, !tbaa !338 ; 4 uses
   %i.dr = icmp slt i32 %i.dp, %i.dq
   br i1 %i.dr, label %_ZN5boost9container3dtl9flat_treeISt4pairIiiENS1_9select1stIiEESt4lessIiENS0_8devectorIS4_vvEEE26priv_insert_unique_prepareIiEEbPKS4_RKT_RNSB_18insert_commit_dataE.exit.thread.i.i, label %bb.k
 
@@ -2993,7 +2993,7 @@ bb.ae:                                            ; preds = %bb.ab
 
 .lr.ph.i.i.i143:                                  ; preds = %bb.ae
   %i.ij = sub nsw i64 %i.gw, %i.gz
-  %i.ik = load i32, ptr %i.gy, align 8, !tbaa !338
+  %i.ik = load i32, ptr %i.gy, align 16, !tbaa !338
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.af, %.lr.ph.i.i.i143
@@ -3018,7 +3018,7 @@ _ZN5boost9container8flat_mapIiiSt4lessIiENS0_8devectorISt4pairIiiEvvEEE11upper_b
   br i1 %i.is, label %.critedge.i.i.i169, label %bb.ag
 
 bb.ag:                                            ; preds = %_ZN5boost9container8flat_mapIiiSt4lessIiENS0_8devectorISt4pairIiiEvvEEE11upper_boundERKi.exit151
-  %i.it = load i32, ptr %i.gy, align 8, !tbaa !338 ; 3 uses
+  %i.it = load i32, ptr %i.gy, align 16, !tbaa !338 ; 3 uses
   %i.iu = load i32, ptr %.015.lcssa.i.i.i150, align 4, !tbaa !338
   %i.iv = icmp slt i32 %i.it, %i.iu
   br i1 %i.iv, label %.critedge.i.i.i169, label %.lr.ph.i.i34.i.i.i152
@@ -3031,7 +3031,7 @@ bb.ag:                                            ; preds = %_ZN5boost9container
 bb.ah:                                            ; preds = %.critedge.i.i.i169
   %i.iy = getelementptr inbounds i8, ptr %.015.lcssa.i.i.i150, i64 -8 ; 5 uses
   %i.iz = load i32, ptr %i.iy, align 4, !tbaa !338 ; 2 uses
-  %i.ja = load i32, ptr %i.gy, align 8, !tbaa !338 ; 4 uses
+  %i.ja = load i32, ptr %i.gy, align 16, !tbaa !338 ; 4 uses
   %i.jb = icmp slt i32 %i.iz, %i.ja
   br i1 %i.jb, label %_ZN5boost9container3dtl9flat_treeISt4pairIiiENS1_9select1stIiEESt4lessIiENS0_8devectorIS4_vvEEE26priv_insert_unique_prepareIiEEbPKS4_RKT_RNSB_18insert_commit_dataE.exit.thread.i.i167, label %bb.ai
 
@@ -3434,7 +3434,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEP
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEENS_13move_iteratorIPS5_EEE31uninitialized_copy_n_and_updateIS8_EEvRS6_T_m.exit.i.thread: ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i58.thread
   %i.bo = sub nuw nsw i64 %i.d, %i.ak
   %i.bp = shl i64 %i.bo, 3
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_NS_13move_iteratorIS6_EEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit
 
 bb.aa:                                            ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i58
@@ -3837,7 +3837,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEP
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPKS5_E31uninitialized_copy_n_and_updateIPS5_EEvRS6_T_m.exit.i.thread: ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i57.thread
   %i.bo = sub nuw nsw i64 %i.d, %i.ak
   %i.bp = shl i64 %i.bo, 3
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_PKS4_EEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit
 
 bb.aa:                                            ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i57
@@ -4240,7 +4240,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEP
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPS5_E31uninitialized_copy_n_and_updateIS7_EEvRS6_T_m.exit.i.thread: ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i57.thread
   %i.bo = sub nuw nsw i64 %i.d, %i.ak
   %i.bp = shl i64 %i.bo, 3
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_S6_EEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SH_mSC_.exit
 
 bb.aa:                                            ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i57

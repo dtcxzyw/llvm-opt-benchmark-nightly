@@ -202,26 +202,26 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 bb.k:                                             ; preds = %bb.i
-  %i.z = load i64, ptr %i.v, align 1              ; 2 uses
+  %i.z = load i64, ptr %i.v, align 8              ; 2 uses
   %i.aa = icmp eq i64 %i.z, 0
   br i1 %i.aa, label %bb.l, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.k
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 1
+  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8
   %i.ab = icmp eq i64 %i.z, 5931051951143998021
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  store i64 5931051951143998021, ptr %i.v, align 1
+  store i64 5931051951143998021, ptr %i.v, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 2788 ; 2 uses
   %i.ad = load i32, ptr %i.ac, align 4            ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  store i32 %i.ad, ptr %i.ae, align 1
+  store i32 %i.ad, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  store i16 256, ptr %i.af, align 1
+  store i16 256, ptr %i.af, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.v, i64 18
-  store i16 0, ptr %i.ag, align 1
+  store i16 0, ptr %i.ag, align 2
   %i.ah = load i32, ptr %i.s, align 16
   %i.ai = load i32, ptr %i.ac, align 4            ; 3 uses
   %i.aj = udiv i32 %i.ah, %i.ai
@@ -233,7 +233,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = urem i32 %i.an, %i.ai
   %i.ap = sub nuw i32 %i.an, %i.ao
   %i.aq = getelementptr inbounds nuw i8, ptr %i.v, i64 12
-  store i32 %i.ap, ptr %i.aq, align 1
+  store i32 %i.ap, ptr %i.aq, align 4
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %._crit_edge.i
@@ -258,7 +258,7 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.p
   %i.ax = getelementptr inbounds nuw i8, ptr %i.v, i64 12
-  %i.ay = load i32, ptr %i.ax, align 1            ; 2 uses
+  %i.ay = load i32, ptr %i.ax, align 4            ; 2 uses
   %i.az = urem i32 %i.ay, %i.as
   %i.ba = udiv i32 %i.ay, %i.as
   %i.bb = icmp eq i32 %i.az, 0
@@ -266,13 +266,13 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bc = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  %i.bd = load i16, ptr %i.bc, align 1
+  %i.bd = load i16, ptr %i.bc, align 8
   %i.be = icmp eq i16 %i.bd, 256
   br i1 %i.be, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.bf = getelementptr inbounds nuw i8, ptr %i.v, i64 18
-  %i.bg = load i16, ptr %i.bf, align 1
+  %i.bg = load i16, ptr %i.bf, align 2
   %i.bh = icmp eq i16 %i.bg, 0
   br i1 %i.bh, label %bb.u, label %bb.t
 

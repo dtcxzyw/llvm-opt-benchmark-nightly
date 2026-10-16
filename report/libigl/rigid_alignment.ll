@@ -205,13 +205,13 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us: ; preds = %.lr.ph.s
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %.02899.us
   %i.dn = load double, ptr %i.dm, align 8, !tbaa !21
   %i.do = fsub double 1.000000e+00, %i.dn
-  %i.dp = load double, ptr %i.br, align 8, !tbaa !21
+  %i.dp = load double, ptr %i.br, align 16, !tbaa !21
   %i.dq = fmul double %i.do, %i.dp                ; 2 uses
-  store double %i.dq, ptr %i.br, align 8, !tbaa !21
+  store double %i.dq, ptr %i.br, align 16, !tbaa !21
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %.02899.us ; 2 uses
   %i.ds = load double, ptr %i.dr, align 8, !tbaa !21
   store double %i.dq, ptr %i.dr, align 8, !tbaa !21
-  store double %i.ds, ptr %i.br, align 8, !tbaa !21
+  store double %i.ds, ptr %i.br, align 16, !tbaa !21
   %i.dt = add nuw nsw i64 %.02899.us, 1           ; 2 uses
   %exitcond103.not = icmp eq i64 %.02899.us, %i.cs
   br i1 %exitcond103.not, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit._crit_edge.loopexit100.peel.begin, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us, !llvm.loop !1178
@@ -238,9 +238,9 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.us.pee
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %i.dv
   %i.ec = load double, ptr %i.eb, align 8, !tbaa !21
   %i.ed = fsub double 1.000000e+00, %i.ec
-  %i.ee = load double, ptr %i.br, align 8, !tbaa !21
+  %i.ee = load double, ptr %i.br, align 16, !tbaa !21
   %i.ef = fmul double %i.ed, %i.ee                ; 2 uses
-  store double %i.ef, ptr %i.br, align 8, !tbaa !21
+  store double %i.ef, ptr %i.br, align 16, !tbaa !21
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %i.dv ; 2 uses
   %i.eh = load double, ptr %i.eg, align 8, !tbaa !21
   store double %i.ef, ptr %i.eg, align 8, !tbaa !21
@@ -250,13 +250,13 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.critedge.peel: ; pre
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %i.bo
   %i.ej = load double, ptr %i.ei, align 8, !tbaa !21
   %i.ek = fsub double 1.000000e+00, %i.ej
-  %i.el = load double, ptr %i.br, align 8, !tbaa !21
+  %i.el = load double, ptr %i.br, align 16, !tbaa !21
   %i.em = fmul double %i.ek, %i.el
   br label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.peel
 
 _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.peel: ; preds = %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.critedge.peel, %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.us.peel
   %storemerge.peel = phi double [ %i.eh, %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.us.peel ], [ %i.em, %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.critedge.peel ]
-  store double %storemerge.peel, ptr %i.br, align 8, !tbaa !21
+  store double %storemerge.peel, ptr %i.br, align 16, !tbaa !21
   br label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit._crit_edge
 
 _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit._crit_edge: ; preds = %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit, %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.us, %.loopexit.thread, %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.us.peel, %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit.preheader

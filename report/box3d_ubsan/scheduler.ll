@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.h, %.lr.ph.i.us.
 
 b3AtomicLoadInt.exit25.i.us.us.us:                ; preds = %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 3 uses
-  %i.y = load atomic i32, ptr %i.x seq_cst, align 4
+  %i.y = load atomic i32, ptr %i.x seq_cst, align 8
   %.not21.i.us.us.us = icmp eq i32 %i.y, 1
   br i1 %.not21.i.us.us.us, label %b3AtomicCompareExchangeInt.exit.i.us.us.us, label %bb.e
 
@@ -230,7 +230,7 @@ bb.g:                                             ; preds = %bb.f
 
 b3AtomicLoadInt.exit25.i.us.us.us.1:              ; preds = %bb.g
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 3 uses
-  %i.af = load atomic i32, ptr %i.ae seq_cst, align 4
+  %i.af = load atomic i32, ptr %i.ae seq_cst, align 8
   %.not21.i.us.us.us.1 = icmp eq i32 %i.af, 1
   br i1 %.not21.i.us.us.us.1, label %b3AtomicCompareExchangeInt.exit.i.us.us.us.1, label %bb.h
 
@@ -316,7 +316,7 @@ bb.b:                                             ; preds = %bb.a
 
 b3AtomicStoreInt.exit:                            ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 6936
-  store atomic i32 1, ptr %i.f seq_cst, align 4
+  store atomic i32 1, ptr %i.f seq_cst, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 772 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 6928 ; 2 uses
   %i.i = load i32, ptr %i.g, align 4, !tbaa !17
@@ -397,7 +397,7 @@ bb.b:                                             ; preds = %bb.a
 
 b3AtomicStoreInt.exit:                            ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 6920
-  store atomic i32 0, ptr %i.f seq_cst, align 4
+  store atomic i32 0, ptr %i.f seq_cst, align 8
   ret void
 }
 
@@ -473,7 +473,7 @@ bb.a:
   %i.k = and i64 %i.f, 7
   %i.l = icmp eq i64 %i.k, 0
   %i.m = and i1 %i.j, %i.l
-  %i.n = load atomic i32, ptr %i.e seq_cst, align 4
+  %i.n = load atomic i32, ptr %i.e seq_cst, align 8
   %.not.us.us.us95 = icmp eq i32 %i.n, 3          ; 2 uses
   br i1 %i.m, label %.lr.ph.split.split.us.split.us.split.us, label %b3AtomicLoadInt.exit, !prof !25, !nosanitize !11
 
@@ -481,7 +481,7 @@ bb.a:
   br i1 %.not.us.us.us95, label %.loopexit6, label %b3AtomicLoadInt.exit.i.us.us.us
 
 b3AtomicLoadInt.exit.i.us.us.us:                  ; preds = %.lr.ph.split.split.us.split.us.split.us, %b3AtomicLoadInt.exit.us.us.us
-  %i.o = load atomic i32, ptr %i.g seq_cst, align 4 ; 2 uses
+  %i.o = load atomic i32, ptr %i.g seq_cst, align 8 ; 2 uses
   %.not2250.i.us.us.us = icmp sgt i32 %i.o, 0
   br i1 %.not2250.i.us.us.us, label %.lr.ph.i.us.us.us, label %.loopexit.us.us.us
 
@@ -499,7 +499,7 @@ bb.b:                                             ; preds = %bb.f, %.lr.ph.i.us.
 
 b3AtomicLoadInt.exit25.i.us.us.us:                ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 3 uses
-  %i.t = load atomic i32, ptr %i.s seq_cst, align 4
+  %i.t = load atomic i32, ptr %i.s seq_cst, align 8
   %.not21.i.us.us.us = icmp eq i32 %i.t, 1
   br i1 %.not21.i.us.us.us, label %b3AtomicCompareExchangeInt.exit.i.us.us.us, label %bb.c
 
@@ -526,7 +526,7 @@ bb.e:                                             ; preds = %bb.d
 
 b3AtomicLoadInt.exit25.i.us.us.us.1:              ; preds = %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 3 uses
-  %i.aa = load atomic i32, ptr %i.z seq_cst, align 4
+  %i.aa = load atomic i32, ptr %i.z seq_cst, align 8
   %.not21.i.us.us.us.1 = icmp eq i32 %i.aa, 1
   br i1 %.not21.i.us.us.us.1, label %b3AtomicCompareExchangeInt.exit.i.us.us.us.1, label %bb.f
 
@@ -567,7 +567,7 @@ b3SchedulerExecuteOne.exit.us.us.us:              ; preds = %bb.g, %bb.h
   br label %b3AtomicLoadInt.exit.us.us.us
 
 b3AtomicLoadInt.exit.us.us.us:                    ; preds = %b3SchedulerExecuteOne.exit.us.us.us, %.loopexit.us.us.us
-  %i.am = load atomic i32, ptr %i.e seq_cst, align 4
+  %i.am = load atomic i32, ptr %i.e seq_cst, align 8
   %.not.us.us.us = icmp eq i32 %i.am, 3
   br i1 %.not.us.us.us, label %.loopexit6, label %b3AtomicLoadInt.exit.i.us.us.us
 

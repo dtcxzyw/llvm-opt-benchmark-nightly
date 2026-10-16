@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %.thread86.i
   br i1 %.not79.i, label %bb.bm, label %bb.bg
 
 bb.bg:                                            ; preds = %.preheader.i
-  %i.jc = load i8, ptr %i.ge, align 1
+  %i.jc = load i8, ptr %i.ge, align 2
   %.not80.i = icmp eq i8 %i.jc, -1
   br i1 %.not80.i, label %bb.bm, label %bb.bh
 
@@ -259,7 +259,7 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   br i1 %.not79.2.i, label %bb.bq, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.ju = load i8, ptr %i.gh, align 1
+  %i.ju = load i8, ptr %i.gh, align 4
   %.not80.2.i = icmp eq i8 %i.ju, -1
   br i1 %.not80.2.i, label %bb.bq, label %bb.bh
 
@@ -279,7 +279,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
   br i1 %.not79.4.i, label %bb.bu, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.jy = load i8, ptr %i.gj, align 1
+  %i.jy = load i8, ptr %i.gj, align 2
   %.not80.4.i = icmp eq i8 %i.jy, -1
   br i1 %.not80.4.i, label %bb.bu, label %bb.bh
 
@@ -299,7 +299,7 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bu
   br i1 %.not79.6.i, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.kc = load i8, ptr %i.gl, align 1
+  %i.kc = load i8, ptr %i.gl, align 8
   %.not80.6.i = icmp eq i8 %i.kc, -1
   br i1 %.not80.6.i, label %bb.by, label %bb.bh
 
@@ -319,7 +319,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
   br i1 %.not79.8.i, label %bb.cc, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.kg = load i8, ptr %i.gn, align 1
+  %i.kg = load i8, ptr %i.gn, align 2
   %.not80.8.i = icmp eq i8 %i.kg, -1
   br i1 %.not80.8.i, label %bb.cc, label %bb.bh
 
@@ -339,7 +339,7 @@ bb.ce:                                            ; preds = %bb.cd, %bb.cc
   br i1 %.not79.10.i, label %bb.cg, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
-  %i.kk = load i8, ptr %i.gp, align 1
+  %i.kk = load i8, ptr %i.gp, align 4
   %.not80.10.i = icmp eq i8 %i.kk, -1
   br i1 %.not80.10.i, label %bb.cg, label %bb.bh
 
@@ -359,7 +359,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
   br i1 %.not79.12.i, label %bb.ck, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.ko = load i8, ptr %i.gr, align 1
+  %i.ko = load i8, ptr %i.gr, align 2
   %.not80.12.i = icmp eq i8 %i.ko, -1
   br i1 %.not80.12.i, label %bb.ck, label %bb.bh
 
@@ -379,7 +379,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck
   br i1 %.not79.14.i, label %bb.co, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
-  %i.ks = load i8, ptr %i.gt, align 1
+  %i.ks = load i8, ptr %i.gt, align 8
   %.not80.14.i = icmp eq i8 %i.ks, -1
   br i1 %.not80.14.i, label %bb.co, label %bb.bh
 
@@ -399,7 +399,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co
   br i1 %.not79.16.i, label %bb.cs, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.kw = load i8, ptr %i.gv, align 1
+  %i.kw = load i8, ptr %i.gv, align 2
   %.not80.16.i = icmp eq i8 %i.kw, -1
   br i1 %.not80.16.i, label %bb.cs, label %bb.bh
 
@@ -419,7 +419,7 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs
   br i1 %.not79.18.i, label %bb.cw, label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.la = load i8, ptr %i.gx, align 1
+  %i.la = load i8, ptr %i.gx, align 4
   %.not80.18.i = icmp eq i8 %i.la, -1
   br i1 %.not80.18.i, label %bb.cw, label %bb.bh
 
@@ -439,7 +439,7 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cw
   br i1 %.not79.20.i, label %bb.da, label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cy
-  %i.le = load i8, ptr %i.gz, align 1
+  %i.le = load i8, ptr %i.gz, align 2
   %.not80.20.i = icmp eq i8 %i.le, -1
   br i1 %.not80.20.i, label %bb.da, label %bb.bh
 
@@ -459,7 +459,7 @@ bb.dc:                                            ; preds = %bb.db, %bb.da
   br i1 %.not79.22.i, label %bb.de, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  %i.li = load i8, ptr %i.hb, align 1
+  %i.li = load i8, ptr %i.hb, align 8
   %.not80.22.i = icmp eq i8 %i.li, -1
   br i1 %.not80.22.i, label %bb.de, label %bb.bh
 
@@ -479,7 +479,7 @@ bb.dg:                                            ; preds = %bb.df, %bb.de
   br i1 %.not79.24.i, label %bb.di, label %bb.dh
 
 bb.dh:                                            ; preds = %bb.dg
-  %i.lm = load i8, ptr %i.hd, align 1
+  %i.lm = load i8, ptr %i.hd, align 2
   %.not80.24.i = icmp eq i8 %i.lm, -1
   br i1 %.not80.24.i, label %bb.di, label %bb.bh
 
@@ -499,7 +499,7 @@ bb.dk:                                            ; preds = %bb.dj, %bb.di
   br i1 %.not79.26.i, label %bb.dm, label %bb.dl
 
 bb.dl:                                            ; preds = %bb.dk
-  %i.lq = load i8, ptr %i.hf, align 1
+  %i.lq = load i8, ptr %i.hf, align 4
   %.not80.26.i = icmp eq i8 %i.lq, -1
   br i1 %.not80.26.i, label %bb.dm, label %bb.bh
 
@@ -519,7 +519,7 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
   br i1 %.not79.28.i, label %bb.dq, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do
-  %i.lu = load i8, ptr %i.hh, align 1
+  %i.lu = load i8, ptr %i.hh, align 2
   %.not80.28.i = icmp eq i8 %i.lu, -1
   br i1 %.not80.28.i, label %bb.dq, label %bb.bh
 
@@ -539,7 +539,7 @@ bb.ds:                                            ; preds = %bb.dr, %bb.dq
   br i1 %.not79.30.i, label %bb.du, label %bb.dt
 
 bb.dt:                                            ; preds = %bb.ds
-  %i.ly = load i8, ptr %i.hj, align 1
+  %i.ly = load i8, ptr %i.hj, align 8
   %.not80.30.i = icmp eq i8 %i.ly, -1
   br i1 %.not80.30.i, label %bb.du, label %bb.bh
 

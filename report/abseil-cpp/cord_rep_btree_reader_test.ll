@@ -204,7 +204,7 @@ _ZN4absl12lts_2026052615cordrep_testing21CordRepBtreeFromFlatsENS0_4SpanIKPNS0_1
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 14
   %i.dg = load i8, ptr %i.df, align 1             ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.t, i64 %indvars.iv.next.i.i.i.prol
-  store i8 %i.dg, ptr %i.dh, align 1, !tbaa !49
+  store i8 %i.dg, ptr %i.dh, align 2, !tbaa !49
   %.0.i.i.i.prol = zext i8 %i.dg to i64           ; 2 uses
   br label %.lr.ph.i.i.i.prol.loopexit
 
@@ -607,7 +607,7 @@ bb.i:                                             ; preds = %.lr.ph, %bb.cp
   %i.dc = getelementptr inbounds nuw i8, ptr %i.da, i64 14
   %i.dd = load i8, ptr %i.dc, align 1             ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.r, i64 %indvars.iv.next.i.i.i.prol
-  store i8 %i.dd, ptr %i.de, align 1, !tbaa !49
+  store i8 %i.dd, ptr %i.de, align 2, !tbaa !49
   %.0.i.i.i.prol = zext i8 %i.dd to i64           ; 2 uses
   br label %.lr.ph.i.i.i.prol.loopexit
 
@@ -1010,7 +1010,7 @@ _ZN4absl12lts_2026052613cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit.i:
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 14
   %i.ac = load i8, ptr %i.ab, align 1             ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.v, i64 %indvars.iv.next.i.i.i.prol
-  store i8 %i.ac, ptr %i.ad, align 1, !tbaa !49
+  store i8 %i.ac, ptr %i.ad, align 2, !tbaa !49
   %.0.i.i.i27.prol = zext i8 %i.ac to i64         ; 2 uses
   br label %.lr.ph.i.i.i.prol.loopexit
 
@@ -1413,7 +1413,7 @@ bb.i:                                             ; preds = %.lr.ph, %bb.bs
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cq, i64 14
   %i.ct = load i8, ptr %i.cs, align 1             ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv.next.i.i.i.prol
-  store i8 %i.ct, ptr %i.cu, align 1, !tbaa !49
+  store i8 %i.ct, ptr %i.cu, align 2, !tbaa !49
   br label %.lr.ph.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.i.preheader
@@ -1816,7 +1816,7 @@ _ZN4absl12lts_2026052613cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit.i:
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 14
   %i.ad = load i8, ptr %i.ac, align 1             ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.w, i64 %indvars.iv.next.i.i.i.prol
-  store i8 %i.ad, ptr %i.ae, align 1, !tbaa !49
+  store i8 %i.ad, ptr %i.ae, align 2, !tbaa !49
   br label %.lr.ph.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.i.preheader
@@ -2219,7 +2219,7 @@ _ZN4absl12lts_2026052615cordrep_testing21CordRepBtreeFromFlatsENS0_4SpanIKPNS0_1
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 14
   %i.bq = load i8, ptr %i.bp, align 1             ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bj, i64 %indvars.iv.next.i.i.i.prol
-  store i8 %i.bq, ptr %i.br, align 1, !tbaa !49
+  store i8 %i.bq, ptr %i.br, align 2, !tbaa !49
   %.0.i.i.i.prol = zext i8 %i.bq to i64           ; 2 uses
   br label %.lr.ph.i.i.i.prol.loopexit
 
@@ -2622,7 +2622,7 @@ _ZN7testing15AssertionResultD2Ev.exit428:         ; preds = %bb.bw, %_ZNKSt14def
   %i.jd = getelementptr inbounds nuw i8, ptr %i.jb, i64 14
   %i.je = load i8, ptr %i.jd, align 1             ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.bj, i64 %indvars.iv.next.i.i.i435.prol
-  store i8 %i.je, ptr %i.jf, align 1, !tbaa !49
+  store i8 %i.je, ptr %i.jf, align 2, !tbaa !49
   %.0.i.i.i436.prol = zext i8 %i.je to i64        ; 2 uses
   br label %.lr.ph.i.i.i431.prol.loopexit
 
@@ -3025,7 +3025,7 @@ _ZN4absl12lts_2026052613cord_internal7CordRep5UnrefEPS2_.exit: ; preds = %_ZN7te
   %i.ps = getelementptr inbounds nuw i8, ptr %i.pq, i64 14
   %i.pt = load i8, ptr %i.ps, align 1             ; 2 uses
   %i.pu = getelementptr inbounds nuw i8, ptr %i.bj, i64 %indvars.iv.next.i.i.i511.prol
-  store i8 %i.pt, ptr %i.pu, align 1, !tbaa !49
+  store i8 %i.pt, ptr %i.pu, align 2, !tbaa !49
   %.0.i.i.i512.prol = zext i8 %i.pt to i64        ; 2 uses
   br label %.lr.ph.i.i.i507.prol.loopexit
 
@@ -3428,7 +3428,7 @@ _ZN4absl12lts_2026052613cord_internal7CordRep5UnrefEPS2_.exit637: ; preds = %_ZN
   %i.zp = getelementptr inbounds nuw i8, ptr %i.zn, i64 14
   %i.zq = load i8, ptr %i.zp, align 1             ; 2 uses
   %i.zr = getelementptr inbounds nuw i8, ptr %i.bj, i64 %indvars.iv.next.i.i.i644.prol
-  store i8 %i.zq, ptr %i.zr, align 1, !tbaa !49
+  store i8 %i.zq, ptr %i.zr, align 2, !tbaa !49
   %.0.i.i.i645.prol = zext i8 %i.zq to i64        ; 2 uses
   br label %.lr.ph.i.i.i640.prol.loopexit
 
@@ -3831,7 +3831,7 @@ _ZN4absl12lts_2026052613cord_internal7CordRep5UnrefEPS2_.exit770: ; preds = %_ZN
   %i.ajm = getelementptr inbounds nuw i8, ptr %i.ajk, i64 14
   %i.ajn = load i8, ptr %i.ajm, align 1           ; 2 uses
   %i.ajo = getelementptr inbounds nuw i8, ptr %i.bj, i64 %indvars.iv.next.i.i.i777.prol
-  store i8 %i.ajn, ptr %i.ajo, align 1, !tbaa !49
+  store i8 %i.ajn, ptr %i.ajo, align 2, !tbaa !49
   %.0.i.i.i778.prol = zext i8 %i.ajn to i64       ; 2 uses
   br label %.lr.ph.i.i.i773.prol.loopexit
 
@@ -4234,7 +4234,7 @@ _ZN4absl12lts_2026052613cord_internal7CordRep5UnrefEPS2_.exit903: ; preds = %_ZN
   %i.ati = getelementptr inbounds nuw i8, ptr %i.atg, i64 14
   %i.atj = load i8, ptr %i.ati, align 1           ; 2 uses
   %i.atk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %indvars.iv.next.i.i.i910.prol
-  store i8 %i.atj, ptr %i.atk, align 1, !tbaa !49
+  store i8 %i.atj, ptr %i.atk, align 2, !tbaa !49
   %.0.i.i.i911.prol = zext i8 %i.atj to i64       ; 2 uses
   br label %.lr.ph.i.i.i906.prol.loopexit
 
@@ -4637,7 +4637,7 @@ _ZN4absl12lts_2026052613cord_internal7CordRep5UnrefEPS2_.exit995: ; preds = %_ZN
   %i.bae = getelementptr inbounds nuw i8, ptr %i.bac, i64 14
   %i.baf = load i8, ptr %i.bae, align 1           ; 2 uses
   %i.bag = getelementptr inbounds nuw i8, ptr %i.bj, i64 %indvars.iv.next.i.i.i1002.prol
-  store i8 %i.baf, ptr %i.bag, align 1, !tbaa !49
+  store i8 %i.baf, ptr %i.bag, align 2, !tbaa !49
   %.0.i.i.i1003.prol = zext i8 %i.baf to i64      ; 2 uses
   br label %.lr.ph.i.i.i998.prol.loopexit
 
@@ -5040,7 +5040,7 @@ bb.i:                                             ; preds = %_ZN4absl12lts_20260
   %i.dh = getelementptr inbounds nuw i8, ptr %i.df, i64 14
   %i.di = load i8, ptr %i.dh, align 1             ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.r, i64 %indvars.iv.next.i.i.i.prol
-  store i8 %i.di, ptr %i.dj, align 1, !tbaa !49
+  store i8 %i.di, ptr %i.dj, align 2, !tbaa !49
   %.0.i.i.i.prol = zext i8 %i.di to i64           ; 2 uses
   br label %.lr.ph.i.i.i.prol.loopexit
 
