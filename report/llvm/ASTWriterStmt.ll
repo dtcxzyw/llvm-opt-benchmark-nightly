@@ -205,7 +205,6 @@ _ZN5clang15ASTRecordWriter9push_backEm.exit32:    ; preds = %bb.p, %bb.q
   br i1 %.not40, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN5clang15ASTRecordWriter9push_backEm.exit32
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -221,11 +220,10 @@ bb.r:                                             ; preds = %.lr.ph, %_ZN5clang1
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN5clang15ASTRecordWriter7AddStmtEPNS_4StmtE.exit ] ; 2 uses
   %i.dt = load i16, ptr %1, align 8
   %i.du = and i16 %i.dt, 511
-  %.not.i.i.i = icmp eq i16 %i.du, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %i.dv = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %i.dv, ptr %2
-  %i.dw = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i, i64 %indvars.iv
+  %.not.i.i.i = icmp eq i16 %i.du, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i
+  %i.dw = getelementptr inbounds nuw [8 x i8], ptr %i.dv, i64 %indvars.iv
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !264 ; 2 uses
   %i.dy = load i32, ptr %i.dp, align 8, !tbaa !40 ; 2 uses
   %i.dz = load i32, ptr %i.dq, align 4, !tbaa !41

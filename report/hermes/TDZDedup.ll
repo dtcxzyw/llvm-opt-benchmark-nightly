@@ -204,30 +204,25 @@ bb.o:                                             ; preds = %bb.m, %._crit_edge.
   br label %_ZN6hermes15ScopedHashTableIPNS_5ValueEbE17setInCurrentScopeERKS2_RKb.exit89.i.i.i.i
 
 bb.p:                                             ; preds = %bb.h
-  %i.de = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.08.031.i.i.i.i, i32 noundef 1) #10 ; 2 uses
-  %6 = icmp eq ptr %i.de, null                    ; 2 uses
-  %7 = getelementptr inbounds i8, ptr %i.de, i64 -16
-  %8 = select i1 %6, ptr null, ptr %7
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %spec.select.i.i.i.i = select i1 %6, ptr null, ptr %9 ; 4 uses
-  store ptr %spec.select.i.i.i.i, ptr %i.a, align 8, !tbaa !46
+  %i.de = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.08.031.i.i.i.i, i32 noundef 1) #10 ; 4 uses
+  store ptr %i.de, ptr %i.a, align 8, !tbaa !46
   %i.df = load ptr, ptr %i.l, align 8, !tbaa !47  ; 2 uses
   %i.dg = load i32, ptr %i.al, align 8, !tbaa !48 ; 2 uses
   %i.dh = icmp eq i32 %i.dg, 0
   br i1 %i.dh, label %_ZN6hermes15ScopedHashTableIPNS_5ValueEbE17setInCurrentScopeERKS2_RKb.exit89.i.i.i.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.di = ptrtoint ptr %spec.select.i.i.i.i to i64
+  %i.di = ptrtoint ptr %i.de to i64
   %i.dj = trunc i64 %i.di to i32                  ; 2 uses
   %i.dk = lshr i32 %i.dj, 4
   %i.dl = lshr i32 %i.dj, 9
   %i.dm = xor i32 %i.dk, %i.dl
   %i.dn = add i32 %i.dg, -1                       ; 2 uses
-  %.02744.i.i.i65.i.i.i.i = and i32 %i.dm, %i.dn  ; 2 uses
+  %.02744.i.i.i65.i.i.i.i = and i32 %i.dn, %i.dm  ; 2 uses
   %i.do = zext nneg i32 %.02744.i.i.i65.i.i.i.i to i64
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %i.do
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !46 ; 2 uses
-  %i.dr = icmp eq ptr %spec.select.i.i.i.i, %i.dq
+  %i.dr = icmp eq ptr %i.de, %i.dq
   br i1 %i.dr, label %_ZNK4llvh6detail12DenseSetImplIPN6hermes5ValueENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit71.i.i.i.i, label %.lr.ph.i.i.i66.i.i.i.i, !prof !49
 
 .lr.ph.i.i.i66.i.i.i.i:                           ; preds = %bb.q, %bb.r
@@ -244,7 +239,7 @@ bb.r:                                             ; preds = %.lr.ph.i.i.i66.i.i.
   %i.dw = zext i32 %.027.i.i.i69.i.i.i.i to i64
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %i.dw
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !46 ; 2 uses
-  %i.dz = icmp eq ptr %spec.select.i.i.i.i, %i.dy
+  %i.dz = icmp eq ptr %i.de, %i.dy
   br i1 %i.dz, label %_ZNK4llvh6detail12DenseSetImplIPN6hermes5ValueENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit71.i.i.i.i, label %.lr.ph.i.i.i66.i.i.i.i, !prof !50, !llvm.loop !74
 
 _ZNK4llvh6detail12DenseSetImplIPN6hermes5ValueENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit71.i.i.i.i: ; preds = %bb.r, %bb.q

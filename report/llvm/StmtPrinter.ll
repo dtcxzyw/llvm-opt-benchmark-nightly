@@ -204,16 +204,14 @@ _ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %bb.d, %bb.c, %bb.a
   br i1 %.not35, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.o = zext i32 %i.m to i64
   %i.p = load i16, ptr %1, align 8
   %i.q = and i16 %i.p, 511
-  %.not.i.i.i.peel = icmp eq i16 %i.q, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.peel = select i1 %.not.i.i.i.peel, ptr %1, ptr null
-  %i.r = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.peel, i64 48
-  %spec.select.i.i.i.peel = select i1 %.not.i.i.i.peel, ptr %i.r, ptr %2
-  %i.s = load ptr, ptr %spec.select.i.i.i.peel, align 8, !tbaa !461 ; 3 uses
+  %.not.i.i.i.peel = icmp eq i16 %i.q, 118
+  %spec.select.v.i.i.i.peel = select i1 %.not.i.i.i.peel, i64 48, i64 40
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i.peel
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !461  ; 3 uses
   %i.t = load i16, ptr %i.s, align 8
   %i.u = and i16 %i.t, 511
   %i.v = icmp eq i16 %i.u, 116
@@ -244,11 +242,10 @@ _ZN12_GLOBAL__N_111StmtPrinter9PrintExprEPN5clang4ExprE.exit.peel: ; preds = %bb
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN12_GLOBAL__N_111StmtPrinter9PrintExprEPN5clang4ExprE.exit ], [ 1, %_ZN12_GLOBAL__N_111StmtPrinter9PrintExprEPN5clang4ExprE.exit.peel ] ; 3 uses
   %i.ac = load i16, ptr %1, align 8
   %i.ad = and i16 %i.ac, 511
-  %.not.i.i.i = icmp eq i16 %i.ad, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %i.ae = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %i.ae, ptr %2
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i, i64 %indvars.iv
+  %.not.i.i.i = icmp eq i16 %i.ad, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvars.iv
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !461
   %i.ah = load i16, ptr %i.ag, align 8
   %i.ai = and i16 %i.ah, 511
@@ -281,11 +278,10 @@ bb.h:                                             ; preds = %.split14
 .split:                                           ; preds = %bb.h, %bb.g
   %i.aw = load i16, ptr %1, align 8
   %i.ax = and i16 %i.aw, 511
-  %.not.i.i.i22 = icmp eq i16 %i.ax, 118          ; 2 uses
-  %spec.select.i.i.i.i.i23 = select i1 %.not.i.i.i22, ptr %1, ptr null
-  %i.ay = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i23, i64 48
-  %spec.select.i.i.i24 = select i1 %.not.i.i.i22, ptr %i.ay, ptr %2
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i24, i64 %indvars.iv
+  %.not.i.i.i22 = icmp eq i16 %i.ax, 118
+  %spec.select.v.i.i.i23 = select i1 %.not.i.i.i22, i64 48, i64 40
+  %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i23
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %indvars.iv
   %phi.call = load ptr, ptr %i.az, align 8, !tbaa !461 ; 3 uses
   %.not.i = icmp eq ptr %phi.call, null
   br i1 %.not.i, label %bb.l, label %bb.i
@@ -431,16 +427,14 @@ bb.h:                                             ; preds = %bb.f
 _ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %bb.h, %bb.g, %bb.e, %bb.d, %bb.a
   %i.u = load i16, ptr %1, align 8
   %i.v = and i16 %i.u, 511
-  %.not.i.i = icmp eq i16 %i.v, 118               ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %1, ptr null
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.w = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i = select i1 %.not.i.i, ptr %4, ptr %i.w ; 2 uses
+  %.not.i.i = icmp eq i16 %i.v, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.w = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.y = load i32, ptr %i.x, align 8, !tbaa !552  ; 2 uses
   %i.z = zext i32 %i.y to i64
   %.idx = shl nuw nsw i64 %i.z, 3
-  %i.aa = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 %.idx
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx
   %.not3539 = icmp eq i32 %i.y, 0
   br i1 %.not3539, label %._crit_edge, label %.lr.ph
 
@@ -449,7 +443,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %bb.h, %bb.g, %bb.e,
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZN12_GLOBAL__N_111StmtPrinter9PrintExprEPN5clang4ExprE.exit
-  %.sroa.029.040 = phi ptr [ %spec.select.i.i, %.lr.ph ], [ %i.bm, %_ZN12_GLOBAL__N_111StmtPrinter9PrintExprEPN5clang4ExprE.exit ] ; 4 uses
+  %.sroa.029.040 = phi ptr [ %i.w, %.lr.ph ], [ %i.bm, %_ZN12_GLOBAL__N_111StmtPrinter9PrintExprEPN5clang4ExprE.exit ] ; 4 uses
   %i.ac = load ptr, ptr %.sroa.029.040, align 8, !tbaa !473
   %i.ad = call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ac) #19
   br i1 %i.ad, label %._crit_edge, label %bb.j
@@ -457,11 +451,10 @@ bb.i:                                             ; preds = %.lr.ph, %_ZN12_GLOB
 bb.j:                                             ; preds = %bb.i
   %i.ae = load i16, ptr %1, align 8
   %i.af = and i16 %i.ae, 511
-  %.not.i.i12 = icmp eq i16 %i.af, 118            ; 2 uses
-  %spec.select.i.i.i.i13 = select i1 %.not.i.i12, ptr %1, ptr null
-  %i.ag = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i13, i64 48
-  %spec.select.i.i14 = select i1 %.not.i.i12, ptr %i.ag, ptr %i.w
-  %.not36 = icmp eq ptr %.sroa.029.040, %spec.select.i.i14
+  %.not.i.i12 = icmp eq i16 %i.af, 118
+  %spec.select.v.i.i13 = select i1 %.not.i.i12, i64 48, i64 40
+  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i13
+  %.not36 = icmp eq ptr %.sroa.029.040, %i.ag
   br i1 %.not36, label %_ZN4llvm11raw_ostreamlsEPKc.exit17, label %bb.k
 
 bb.k:                                             ; preds = %bb.j

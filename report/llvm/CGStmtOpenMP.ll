@@ -205,7 +205,7 @@ tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
   %i.y = and i16 %.fr4.i.i.i111, 511              ; 3 uses
   %i.z = and i16 %.fr4.i.i.i111, 506
   %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i.not = icmp eq i16 %i.z, 226
-  %.not96 = icmp eq i16 %i.y, 238                 ; 2 uses
+  %.not96 = icmp eq i16 %i.y, 238
   br i1 %or.cond5.i.i.i.i.i.i.i.i.i.i.i.i.i.not, label %.thread, label %switch.early.test.i.i.i
 
 .thread:                                          ; preds = %.lr.ph112
@@ -219,11 +219,9 @@ switch.early.test.i.i.i:                          ; preds = %.lr.ph112
   ]
 
 bb.b:                                             ; preds = %switch.early.test.i.i.i, %switch.early.test.i.i.i
-  %.not74 = icmp eq i16 %i.y, 228                 ; 2 uses
-  %spec.select.i.i.i3.i.i.i = select i1 %.not74, ptr %i.x, ptr null
-  %i.ab = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i3.i.i.i, i64 40
-  %spec.select.i.i12.i.i.i.i = select i1 %.not96, ptr %i.x, ptr null
-  %i.ac = getelementptr inbounds nuw i8, ptr %spec.select.i.i12.i.i.i.i, i64 32
+  %.not74 = icmp eq i16 %i.y, 228
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 40
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 32
   %.1.i.i.i.i = select i1 %.not96, ptr %i.ac, ptr undef
   %spec.select = select i1 %.not74, ptr %i.ab, ptr %.1.i.i.i.i
   br label %select.unfold
