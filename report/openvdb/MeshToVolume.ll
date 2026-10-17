@@ -205,8 +205,17 @@ _ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4
   br i1 %i.aoj, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136, label %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph
 
 _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph: ; preds = %.lr.ph.i127.preheader
+  %4 = load i32, ptr %i.bd, align 4, !tbaa !543   ; 2 uses
+  %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1262 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i, align 8
+  %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1261 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i, align 4
   %i.aok = icmp sge i32 %.sroa.6.0.copyload.i122, %i.aof
   %i.aol = icmp sge i32 %.sroa.7.0.copyload.i124, %i.aoh
+  %5 = and i32 %i.aof, -8
+  %6 = load i32, ptr %i.ad, align 8
+  %7 = icmp eq i32 %5, %6
+  %8 = and i32 %i.aoh, -8
+  %9 = load i32, ptr %i.an, align 4
+  %10 = icmp eq i32 %8, %9
   %i.aom = load i32, ptr %.sroa.6.0..sroa_idx.i.i, align 8
   %i.aon = and i32 %i.aof, -128
   %i.aoo = and i32 %i.aoh, -128
@@ -242,30 +251,21 @@ _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph: ; preds = %.lr
   br i1 %i.apm, label %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
 
 _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader: ; preds = %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph
-  %4 = and i32 %i.aoh, -8
-  %5 = load i32, ptr %i.an, align 4
-  %6 = icmp eq i32 %4, %5
-  %7 = and i32 %i.aof, -8
-  %8 = load i32, ptr %i.ad, align 8
-  %9 = icmp eq i32 %7, %8
-  %10 = load i32, ptr %i.bd, align 4, !tbaa !543  ; 2 uses
-  %11 = add i32 %10, 8
-  %12 = icmp sge i32 %11, %.sroa.5.0.copyload.i120 ; 2 uses
-  %brmerge1293.not1318 = select i1 %9, i1 %6, i1 false
-  %.sroa.211068.012641702 = add nsw i32 %10, 8    ; 2 uses
-  %i.apn = icmp sge i32 %.sroa.8.0.copyload.i126, %.sroa.211068.012641702
-  %or.cond.i1311703 = select i1 %12, i1 %i.apn, i1 false
-  br i1 %or.cond.i1311703, label %.lr.ph1705, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
+  %.sroa.211068.012641702 = add i32 %4, 8
+  %i.apn = icmp sge i32 %.sroa.211068.012641702, %.sroa.5.0.copyload.i120
+  %.fr1402 = freeze i1 %i.apn
+  br i1 %.fr1402, label %.lr.ph1705, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
 
 .lr.ph1705:                                       ; preds = %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader
-  %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1262 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i, align 8
-  %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1261 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i, align 4
-  br label %bb.fj
+  %brmerge1293.not1318 = select i1 %7, i1 %10, i1 false
+  %.sroa.211068.012641705 = add nsw i32 %4, 8     ; 2 uses
+  %.not1706 = icmp slt i32 %.sroa.8.0.copyload.i126, %.sroa.211068.012641705
+  br i1 %.not1706, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136, label %bb.fj
 
 bb.fj:                                            ; preds = %.lr.ph1705, %.noexc135.thread
-  %.sroa.211068.012641704 = phi i32 [ %.sroa.211068.012641702, %.lr.ph1705 ], [ %.sroa.211068.01264, %.noexc135.thread ] ; 10 uses
-  %i.apo = phi i32 [ %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1262, %.lr.ph1705 ], [ %i.awv, %.noexc135.thread ] ; 11 uses
-  %i.app = phi i32 [ %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1261, %.lr.ph1705 ], [ %i.aww, %.noexc135.thread ] ; 11 uses
+  %.sroa.211068.012641704 = phi i32 [ %.sroa.211068.01264, %.noexc135.thread ], [ %.sroa.211068.012641705, %.lr.ph1705 ] ; 10 uses
+  %i.apo = phi i32 [ %i.awv, %.noexc135.thread ], [ %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1262, %.lr.ph1705 ] ; 11 uses
+  %i.app = phi i32 [ %i.aww, %.noexc135.thread ], [ %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1261, %.lr.ph1705 ] ; 11 uses
   %i.apq = and i32 %.sroa.211068.012641704, -8    ; 4 uses
   %i.apr = icmp eq i32 %i.apq, %i.aom
   %or.cond1295 = select i1 %brmerge1293.not1318, i1 %i.apr, i1 false
@@ -668,12 +668,11 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit6.i.i777: ; pre
   %i.awv = phi i32 [ %i.arm, %bb.gk ], [ %i.apo, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i.i529 ], [ %i.apo, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIfLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i528 ], [ %i.apo, %_ZN7openvdb5v13_017typelist_internal19TSEvalFirstPredImplIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE14probeConstNodeIS9_EEPKT_RKNS0_4math5CoordEEUlSJ_E_ZNKSI_IS9_EESL_SP_EUlSJ_E0_St5tupleIJPS9_PSA_PSB_PSC_EEPKS9_Lm3ELm4EEET2_SJ_T0_RT1_S10_.exit.i219 ], [ %i.apo, %bb.gf ], [ %i.arm, %bb.gj ], [ %i.apo, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit.i530 ], [ %i.apo, %bb.gh ], [ %i.apo, %bb.fk ], [ %i.apo, %bb.ft ], [ %i.apo, %bb.fs ], [ %i.apo, %.noexc135 ]
   %i.aww = phi i32 [ %i.apw, %bb.gk ], [ %i.app, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i.i529 ], [ %i.app, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIfLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i528 ], [ %i.app, %_ZN7openvdb5v13_017typelist_internal19TSEvalFirstPredImplIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE14probeConstNodeIS9_EEPKT_RKNS0_4math5CoordEEUlSJ_E_ZNKSI_IS9_EESL_SP_EUlSJ_E0_St5tupleIJPS9_PSA_PSB_PSC_EEPKS9_Lm3ELm4EEET2_SJ_T0_RT1_S10_.exit.i219 ], [ %i.app, %bb.gf ], [ %i.app, %bb.gj ], [ %i.app, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit.i530 ], [ %i.app, %bb.gh ], [ %i.app, %bb.fk ], [ %i.apw, %bb.ft ], [ %i.app, %bb.fs ], [ %i.app, %.noexc135 ]
   %.sroa.211068.01264 = add nsw i32 %.sroa.211068.012641704, 8 ; 2 uses
-  %13 = icmp sge i32 %.sroa.8.0.copyload.i126, %.sroa.211068.01264
-  %or.cond.i131 = select i1 %12, i1 %13, i1 false
-  br i1 %or.cond.i131, label %bb.fj, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
+  %.not = icmp slt i32 %.sroa.8.0.copyload.i126, %.sroa.211068.01264
+  br i1 %.not, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136, label %bb.fj
 
-_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136: ; preds = %.noexc135.thread, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader, %.lr.ph.i127.preheader, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph, %.thread.i134, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit110
-  %.2.i132 = phi i64 [ %i.awu, %.thread.i134 ], [ -1, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit110 ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph ], [ -1, %.lr.ph.i127.preheader ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader ], [ -1, %.noexc135.thread ]
+_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136: ; preds = %.noexc135.thread, %.lr.ph1705, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader, %.lr.ph.i127.preheader, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph, %.thread.i134, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit110
+  %.2.i132 = phi i64 [ %i.awu, %.thread.i134 ], [ -1, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit110 ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph ], [ -1, %.lr.ph.i127.preheader ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader ], [ -1, %.lr.ph1705 ], [ -1, %.noexc135.thread ]
   %i.awx = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.01273
   store i64 %.2.i132, ptr %i.awx, align 8, !tbaa !791
   %i.awy = load i64, ptr %i.az, align 4           ; 7 uses
@@ -694,8 +693,17 @@ _ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4
   br i1 %i.axd, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162, label %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph
 
 _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph: ; preds = %.lr.ph.i153.preheader
+  %11 = load i32, ptr %i.bd, align 4, !tbaa !543  ; 2 uses
+  %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1268 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i, align 8
+  %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1267 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i, align 4
   %i.axe = icmp sge i32 %.sroa.6.0.copyload.i148, %i.awz
   %i.axf = icmp sge i32 %.sroa.7.0.copyload.i150, %i.axb
+  %12 = and i32 %i.awz, -8
+  %13 = load i32, ptr %i.ad, align 8
+  %14 = icmp eq i32 %12, %13
+  %15 = and i32 %i.axb, -8
+  %16 = load i32, ptr %i.an, align 4
+  %17 = icmp eq i32 %15, %16
   %i.axg = load i32, ptr %.sroa.6.0..sroa_idx.i.i, align 8
   %i.axh = and i32 %i.awz, -128
   %i.axi = and i32 %i.axb, -128
@@ -731,30 +739,21 @@ _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph: ; preds = %.lr
   br i1 %i.ayg, label %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162
 
 _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader: ; preds = %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph
-  %14 = and i32 %i.axb, -8
-  %15 = load i32, ptr %i.an, align 4
-  %16 = icmp eq i32 %14, %15
-  %17 = and i32 %i.awz, -8
-  %18 = load i32, ptr %i.ad, align 8
-  %19 = icmp eq i32 %17, %18
-  %20 = load i32, ptr %i.bd, align 4, !tbaa !543  ; 2 uses
-  %i.ayh = add i32 %20, -8
-  %i.ayi = icmp sle i32 %i.ayh, %.sroa.8.0.copyload.i152 ; 2 uses
-  %brmerge1306.not1320 = select i1 %19, i1 %16, i1 false
-  %.sroa.211114.012701706 = add nsw i32 %20, -8   ; 2 uses
-  %21 = icmp sge i32 %.sroa.211114.012701706, %.sroa.5.0.copyload.i146
-  %or.cond.i1571707 = select i1 %21, i1 %i.ayi, i1 false
-  br i1 %or.cond.i1571707, label %.lr.ph1709, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162
+  %i.ayh = add i32 %11, -8
+  %i.ayi = icmp sle i32 %i.ayh, %.sroa.8.0.copyload.i152
+  %.fr1403 = freeze i1 %i.ayi
+  br i1 %.fr1403, label %.lr.ph1709, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162
 
 .lr.ph1709:                                       ; preds = %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader
-  %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1268 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i, align 8
-  %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1267 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i, align 4
-  br label %bb.gs
+  %brmerge1306.not1320 = select i1 %14, i1 %17, i1 false
+  %.sroa.211114.012701709 = add nsw i32 %11, -8   ; 2 uses
+  %.not15451710 = icmp slt i32 %.sroa.211114.012701709, %.sroa.5.0.copyload.i146
+  br i1 %.not15451710, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162, label %bb.gs
 
 bb.gs:                                            ; preds = %.lr.ph1709, %.noexc161.thread
-  %.sroa.211114.012701708 = phi i32 [ %.sroa.211114.012701706, %.lr.ph1709 ], [ %.sroa.211114.01270, %.noexc161.thread ] ; 10 uses
-  %i.ayj = phi i32 [ %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1268, %.lr.ph1709 ], [ %i.bfq, %.noexc161.thread ] ; 11 uses
-  %i.ayk = phi i32 [ %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1267, %.lr.ph1709 ], [ %i.bfr, %.noexc161.thread ] ; 11 uses
+  %.sroa.211114.012701708 = phi i32 [ %.sroa.211114.01270, %.noexc161.thread ], [ %.sroa.211114.012701709, %.lr.ph1709 ] ; 10 uses
+  %i.ayj = phi i32 [ %i.bfq, %.noexc161.thread ], [ %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1268, %.lr.ph1709 ] ; 11 uses
+  %i.ayk = phi i32 [ %i.bfr, %.noexc161.thread ], [ %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1267, %.lr.ph1709 ] ; 11 uses
   %i.ayl = and i32 %.sroa.211114.012701708, -8    ; 4 uses
   %i.aym = icmp eq i32 %i.ayl, %i.axg
   %or.cond1308 = select i1 %brmerge1306.not1320, i1 %i.aym, i1 false
@@ -1157,12 +1156,11 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit6.i.i801: ; pre
   %i.bfq = phi i32 [ %i.bah, %bb.ht ], [ %i.ayj, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i.i605 ], [ %i.ayj, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIfLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i604 ], [ %i.ayj, %_ZN7openvdb5v13_017typelist_internal19TSEvalFirstPredImplIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE14probeConstNodeIS9_EEPKT_RKNS0_4math5CoordEEUlSJ_E_ZNKSI_IS9_EESL_SP_EUlSJ_E0_St5tupleIJPS9_PSA_PSB_PSC_EEPKS9_Lm3ELm4EEET2_SJ_T0_RT1_S10_.exit.i236 ], [ %i.ayj, %bb.ho ], [ %i.bah, %bb.hs ], [ %i.ayj, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit.i606 ], [ %i.ayj, %bb.hq ], [ %i.ayj, %bb.gt ], [ %i.ayj, %bb.hc ], [ %i.ayj, %bb.hb ], [ %i.ayj, %.noexc161 ]
   %i.bfr = phi i32 [ %i.ayr, %bb.ht ], [ %i.ayk, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i.i605 ], [ %i.ayk, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIfLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i604 ], [ %i.ayk, %_ZN7openvdb5v13_017typelist_internal19TSEvalFirstPredImplIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE14probeConstNodeIS9_EEPKT_RKNS0_4math5CoordEEUlSJ_E_ZNKSI_IS9_EESL_SP_EUlSJ_E0_St5tupleIJPS9_PSA_PSB_PSC_EEPKS9_Lm3ELm4EEET2_SJ_T0_RT1_S10_.exit.i236 ], [ %i.ayk, %bb.ho ], [ %i.ayk, %bb.hs ], [ %i.ayk, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit.i606 ], [ %i.ayk, %bb.hq ], [ %i.ayk, %bb.gt ], [ %i.ayr, %bb.hc ], [ %i.ayk, %bb.hb ], [ %i.ayk, %.noexc161 ]
   %.sroa.211114.01270 = add nsw i32 %.sroa.211114.012701708, -8 ; 2 uses
-  %22 = icmp sge i32 %.sroa.211114.01270, %.sroa.5.0.copyload.i146
-  %or.cond.i157 = select i1 %22, i1 %i.ayi, i1 false
-  br i1 %or.cond.i157, label %bb.gs, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162
+  %.not1545 = icmp slt i32 %.sroa.211114.01270, %.sroa.5.0.copyload.i146
+  br i1 %.not1545, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162, label %bb.gs
 
-_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162: ; preds = %.noexc161.thread, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader, %.lr.ph.i153.preheader, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph, %.thread.i160, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
-  %.2.i158 = phi i64 [ %i.bfp, %.thread.i160 ], [ -1, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136 ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph ], [ -1, %.lr.ph.i153.preheader ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader ], [ -1, %.noexc161.thread ]
+_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162: ; preds = %.noexc161.thread, %.lr.ph1709, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader, %.lr.ph.i153.preheader, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph, %.thread.i160, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
+  %.2.i158 = phi i64 [ %i.bfp, %.thread.i160 ], [ -1, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136 ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph ], [ -1, %.lr.ph.i153.preheader ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader ], [ -1, %.lr.ph1709 ], [ -1, %.noexc161.thread ]
   %i.bfs = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %.01273
   store i64 %.2.i158, ptr %i.bfs, align 8, !tbaa !791
   %i.bft = add nuw i64 %.01273, 1                 ; 2 uses
@@ -1565,8 +1563,17 @@ _ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4
   br i1 %i.aoj, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136, label %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph
 
 _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph: ; preds = %.lr.ph.i127.preheader
+  %4 = load i32, ptr %i.bd, align 4, !tbaa !543   ; 2 uses
+  %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1262 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i, align 8
+  %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1261 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i, align 4
   %i.aok = icmp sge i32 %.sroa.6.0.copyload.i122, %i.aof
   %i.aol = icmp sge i32 %.sroa.7.0.copyload.i124, %i.aoh
+  %5 = and i32 %i.aof, -8
+  %6 = load i32, ptr %i.ad, align 8
+  %7 = icmp eq i32 %5, %6
+  %8 = and i32 %i.aoh, -8
+  %9 = load i32, ptr %i.an, align 4
+  %10 = icmp eq i32 %8, %9
   %i.aom = load i32, ptr %.sroa.6.0..sroa_idx.i.i, align 8
   %i.aon = and i32 %i.aof, -128
   %i.aoo = and i32 %i.aoh, -128
@@ -1602,30 +1609,21 @@ _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph: ; preds = %.lr
   br i1 %i.apm, label %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
 
 _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader: ; preds = %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph
-  %4 = and i32 %i.aoh, -8
-  %5 = load i32, ptr %i.an, align 4
-  %6 = icmp eq i32 %4, %5
-  %7 = and i32 %i.aof, -8
-  %8 = load i32, ptr %i.ad, align 8
-  %9 = icmp eq i32 %7, %8
-  %10 = load i32, ptr %i.bd, align 4, !tbaa !543  ; 2 uses
-  %11 = add i32 %10, 8
-  %12 = icmp sge i32 %11, %.sroa.5.0.copyload.i120 ; 2 uses
-  %brmerge1293.not1318 = select i1 %9, i1 %6, i1 false
-  %.sroa.211068.012641702 = add nsw i32 %10, 8    ; 2 uses
-  %i.apn = icmp sge i32 %.sroa.8.0.copyload.i126, %.sroa.211068.012641702
-  %or.cond.i1311703 = select i1 %12, i1 %i.apn, i1 false
-  br i1 %or.cond.i1311703, label %.lr.ph1705, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
+  %.sroa.211068.012641702 = add i32 %4, 8
+  %i.apn = icmp sge i32 %.sroa.211068.012641702, %.sroa.5.0.copyload.i120
+  %.fr1402 = freeze i1 %i.apn
+  br i1 %.fr1402, label %.lr.ph1705, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
 
 .lr.ph1705:                                       ; preds = %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader
-  %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1262 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i, align 8
-  %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1261 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i, align 4
-  br label %bb.fj
+  %brmerge1293.not1318 = select i1 %7, i1 %10, i1 false
+  %.sroa.211068.012641705 = add nsw i32 %4, 8     ; 2 uses
+  %.not1706 = icmp slt i32 %.sroa.8.0.copyload.i126, %.sroa.211068.012641705
+  br i1 %.not1706, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136, label %bb.fj
 
 bb.fj:                                            ; preds = %.lr.ph1705, %.noexc135.thread
-  %.sroa.211068.012641704 = phi i32 [ %.sroa.211068.012641702, %.lr.ph1705 ], [ %.sroa.211068.01264, %.noexc135.thread ] ; 10 uses
-  %i.apo = phi i32 [ %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1262, %.lr.ph1705 ], [ %i.awv, %.noexc135.thread ] ; 11 uses
-  %i.app = phi i32 [ %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1261, %.lr.ph1705 ], [ %i.aww, %.noexc135.thread ] ; 11 uses
+  %.sroa.211068.012641704 = phi i32 [ %.sroa.211068.01264, %.noexc135.thread ], [ %.sroa.211068.012641705, %.lr.ph1705 ] ; 10 uses
+  %i.apo = phi i32 [ %i.awv, %.noexc135.thread ], [ %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1262, %.lr.ph1705 ] ; 11 uses
+  %i.app = phi i32 [ %i.aww, %.noexc135.thread ], [ %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1261, %.lr.ph1705 ] ; 11 uses
   %i.apq = and i32 %.sroa.211068.012641704, -8    ; 4 uses
   %i.apr = icmp eq i32 %i.apq, %i.aom
   %or.cond1295 = select i1 %brmerge1293.not1318, i1 %i.apr, i1 false
@@ -2028,12 +2026,11 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit6.i.i777: ; pre
   %i.awv = phi i32 [ %i.arm, %bb.gk ], [ %i.apo, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i.i529 ], [ %i.apo, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i528 ], [ %i.apo, %_ZN7openvdb5v13_017typelist_internal19TSEvalFirstPredImplIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE14probeConstNodeIS9_EEPKT_RKNS0_4math5CoordEEUlSJ_E_ZNKSI_IS9_EESL_SP_EUlSJ_E0_St5tupleIJPS9_PSA_PSB_PSC_EEPKS9_Lm3ELm4EEET2_SJ_T0_RT1_S10_.exit.i219 ], [ %i.apo, %bb.gf ], [ %i.arm, %bb.gj ], [ %i.apo, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit.i530 ], [ %i.apo, %bb.gh ], [ %i.apo, %bb.fk ], [ %i.apo, %bb.ft ], [ %i.apo, %bb.fs ], [ %i.apo, %.noexc135 ]
   %i.aww = phi i32 [ %i.apw, %bb.gk ], [ %i.app, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i.i529 ], [ %i.app, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i528 ], [ %i.app, %_ZN7openvdb5v13_017typelist_internal19TSEvalFirstPredImplIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE14probeConstNodeIS9_EEPKT_RKNS0_4math5CoordEEUlSJ_E_ZNKSI_IS9_EESL_SP_EUlSJ_E0_St5tupleIJPS9_PSA_PSB_PSC_EEPKS9_Lm3ELm4EEET2_SJ_T0_RT1_S10_.exit.i219 ], [ %i.app, %bb.gf ], [ %i.app, %bb.gj ], [ %i.app, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit.i530 ], [ %i.app, %bb.gh ], [ %i.app, %bb.fk ], [ %i.apw, %bb.ft ], [ %i.app, %bb.fs ], [ %i.app, %.noexc135 ]
   %.sroa.211068.01264 = add nsw i32 %.sroa.211068.012641704, 8 ; 2 uses
-  %13 = icmp sge i32 %.sroa.8.0.copyload.i126, %.sroa.211068.01264
-  %or.cond.i131 = select i1 %12, i1 %13, i1 false
-  br i1 %or.cond.i131, label %bb.fj, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
+  %.not = icmp slt i32 %.sroa.8.0.copyload.i126, %.sroa.211068.01264
+  br i1 %.not, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136, label %bb.fj
 
-_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136: ; preds = %.noexc135.thread, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader, %.lr.ph.i127.preheader, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph, %.thread.i134, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit110
-  %.2.i132 = phi i64 [ %i.awu, %.thread.i134 ], [ -1, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit110 ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph ], [ -1, %.lr.ph.i127.preheader ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader ], [ -1, %.noexc135.thread ]
+_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136: ; preds = %.noexc135.thread, %.lr.ph1705, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader, %.lr.ph.i127.preheader, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph, %.thread.i134, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit110
+  %.2.i132 = phi i64 [ %i.awu, %.thread.i134 ], [ -1, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit110 ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.lr.ph ], [ -1, %.lr.ph.i127.preheader ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i128.preheader ], [ -1, %.lr.ph1705 ], [ -1, %.noexc135.thread ]
   %i.awx = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.01273
   store i64 %.2.i132, ptr %i.awx, align 8, !tbaa !791
   %i.awy = load i64, ptr %i.az, align 4           ; 7 uses
@@ -2054,8 +2051,17 @@ _ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4
   br i1 %i.axd, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162, label %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph
 
 _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph: ; preds = %.lr.ph.i153.preheader
+  %11 = load i32, ptr %i.bd, align 4, !tbaa !543  ; 2 uses
+  %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1268 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i, align 8
+  %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1267 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i, align 4
   %i.axe = icmp sge i32 %.sroa.6.0.copyload.i148, %i.awz
   %i.axf = icmp sge i32 %.sroa.7.0.copyload.i150, %i.axb
+  %12 = and i32 %i.awz, -8
+  %13 = load i32, ptr %i.ad, align 8
+  %14 = icmp eq i32 %12, %13
+  %15 = and i32 %i.axb, -8
+  %16 = load i32, ptr %i.an, align 4
+  %17 = icmp eq i32 %15, %16
   %i.axg = load i32, ptr %.sroa.6.0..sroa_idx.i.i, align 8
   %i.axh = and i32 %i.awz, -128
   %i.axi = and i32 %i.axb, -128
@@ -2091,30 +2097,21 @@ _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph: ; preds = %.lr
   br i1 %i.ayg, label %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162
 
 _ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader: ; preds = %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph
-  %14 = and i32 %i.axb, -8
-  %15 = load i32, ptr %i.an, align 4
-  %16 = icmp eq i32 %14, %15
-  %17 = and i32 %i.awz, -8
-  %18 = load i32, ptr %i.ad, align 8
-  %19 = icmp eq i32 %17, %18
-  %20 = load i32, ptr %i.bd, align 4, !tbaa !543  ; 2 uses
-  %i.ayh = add i32 %20, -8
-  %i.ayi = icmp sle i32 %i.ayh, %.sroa.8.0.copyload.i152 ; 2 uses
-  %brmerge1306.not1320 = select i1 %19, i1 %16, i1 false
-  %.sroa.211114.012701706 = add nsw i32 %20, -8   ; 2 uses
-  %21 = icmp sge i32 %.sroa.211114.012701706, %.sroa.5.0.copyload.i146
-  %or.cond.i1571707 = select i1 %21, i1 %i.ayi, i1 false
-  br i1 %or.cond.i1571707, label %.lr.ph1709, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162
+  %i.ayh = add i32 %11, -8
+  %i.ayi = icmp sle i32 %i.ayh, %.sroa.8.0.copyload.i152
+  %.fr1403 = freeze i1 %i.ayi
+  br i1 %.fr1403, label %.lr.ph1709, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162
 
 .lr.ph1709:                                       ; preds = %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader
-  %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1268 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i, align 8
-  %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1267 = load i32, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i, align 4
-  br label %bb.gs
+  %brmerge1306.not1320 = select i1 %14, i1 %17, i1 false
+  %.sroa.211114.012701709 = add nsw i32 %11, -8   ; 2 uses
+  %.not15451710 = icmp slt i32 %.sroa.211114.012701709, %.sroa.5.0.copyload.i146
+  br i1 %.not15451710, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162, label %bb.gs
 
 bb.gs:                                            ; preds = %.lr.ph1709, %.noexc161.thread
-  %.sroa.211114.012701708 = phi i32 [ %.sroa.211114.012701706, %.lr.ph1709 ], [ %.sroa.211114.01270, %.noexc161.thread ] ; 10 uses
-  %i.ayj = phi i32 [ %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1268, %.lr.ph1709 ], [ %i.bfq, %.noexc161.thread ] ; 11 uses
-  %i.ayk = phi i32 [ %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1267, %.lr.ph1709 ], [ %i.bfr, %.noexc161.thread ] ; 11 uses
+  %.sroa.211114.012701708 = phi i32 [ %.sroa.211114.01270, %.noexc161.thread ], [ %.sroa.211114.012701709, %.lr.ph1709 ] ; 10 uses
+  %i.ayj = phi i32 [ %i.bfq, %.noexc161.thread ], [ %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i.promoted1268, %.lr.ph1709 ] ; 11 uses
+  %i.ayk = phi i32 [ %i.bfr, %.noexc161.thread ], [ %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i.promoted1267, %.lr.ph1709 ] ; 11 uses
   %i.ayl = and i32 %.sroa.211114.012701708, -8    ; 4 uses
   %i.aym = icmp eq i32 %i.ayl, %i.axg
   %or.cond1308 = select i1 %brmerge1306.not1320, i1 %i.aym, i1 false
@@ -2517,12 +2514,11 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit6.i.i801: ; pre
   %i.bfq = phi i32 [ %i.bah, %bb.ht ], [ %i.ayj, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i.i605 ], [ %i.ayj, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i604 ], [ %i.ayj, %_ZN7openvdb5v13_017typelist_internal19TSEvalFirstPredImplIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE14probeConstNodeIS9_EEPKT_RKNS0_4math5CoordEEUlSJ_E_ZNKSI_IS9_EESL_SP_EUlSJ_E0_St5tupleIJPS9_PSA_PSB_PSC_EEPKS9_Lm3ELm4EEET2_SJ_T0_RT1_S10_.exit.i236 ], [ %i.ayj, %bb.ho ], [ %i.bah, %bb.hs ], [ %i.ayj, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit.i606 ], [ %i.ayj, %bb.hq ], [ %i.ayj, %bb.gt ], [ %i.ayj, %bb.hc ], [ %i.ayj, %bb.hb ], [ %i.ayj, %.noexc161 ]
   %i.bfr = phi i32 [ %i.ayr, %bb.ht ], [ %i.ayk, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i.i605 ], [ %i.ayk, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i604 ], [ %i.ayk, %_ZN7openvdb5v13_017typelist_internal19TSEvalFirstPredImplIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE14probeConstNodeIS9_EEPKT_RKNS0_4math5CoordEEUlSJ_E_ZNKSI_IS9_EESL_SP_EUlSJ_E0_St5tupleIJPS9_PSA_PSB_PSC_EEPKS9_Lm3ELm4EEET2_SJ_T0_RT1_S10_.exit.i236 ], [ %i.ayk, %bb.ho ], [ %i.ayk, %bb.hs ], [ %i.ayk, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit.i606 ], [ %i.ayk, %bb.hq ], [ %i.ayk, %bb.gt ], [ %i.ayr, %bb.hc ], [ %i.ayk, %bb.hb ], [ %i.ayk, %.noexc161 ]
   %.sroa.211114.01270 = add nsw i32 %.sroa.211114.012701708, -8 ; 2 uses
-  %22 = icmp sge i32 %.sroa.211114.01270, %.sroa.5.0.copyload.i146
-  %or.cond.i157 = select i1 %22, i1 %i.ayi, i1 false
-  br i1 %or.cond.i157, label %bb.gs, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162
+  %.not1545 = icmp slt i32 %.sroa.211114.01270, %.sroa.5.0.copyload.i146
+  br i1 %.not1545, label %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162, label %bb.gs
 
-_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162: ; preds = %.noexc161.thread, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader, %.lr.ph.i153.preheader, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph, %.thread.i160, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
-  %.2.i158 = phi i64 [ %i.bfp, %.thread.i160 ], [ -1, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136 ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph ], [ -1, %.lr.ph.i153.preheader ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader ], [ -1, %.noexc161.thread ]
+_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit162: ; preds = %.noexc161.thread, %.lr.ph1709, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader, %.lr.ph.i153.preheader, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph, %.thread.i160, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136
+  %.2.i158 = phi i64 [ %i.bfp, %.thread.i160 ], [ -1, %_ZNK7openvdb5v13_05tools23mesh_to_volume_internal23ComputeNodeConnectivityINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE17findNeighbourNodeERNS4_17ValueAccessorImplIKSD_Lb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEERKNS0_4math5CoordESO_.exit136 ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.lr.ph ], [ -1, %.lr.ph.i153.preheader ], [ -1, %_ZN7openvdb5v13_04math5Coord8lessThanERKS2_S4_.exit.i.i154.preheader ], [ -1, %.lr.ph1709 ], [ -1, %.noexc161.thread ]
   %i.bfs = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %.01273
   store i64 %.2.i158, ptr %i.bfs, align 8, !tbaa !791
   %i.bft = add nuw i64 %.01273, 1                 ; 2 uses

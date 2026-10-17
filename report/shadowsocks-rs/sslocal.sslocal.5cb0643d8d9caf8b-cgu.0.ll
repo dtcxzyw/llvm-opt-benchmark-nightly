@@ -205,21 +205,14 @@ bb.bp:                                            ; preds = %bb.ag
 bb.bq:                                            ; preds = %bb.bp
   %.promoted17.i61 = load i32, ptr %i.h, align 8, !alias.scope !27435 ; 2 uses
   %.promoted18.i62 = load i32, ptr %i.i, align 4, !alias.scope !27435 ; 3 uses
+  %9 = icmp ult i32 %.promoted18.i62, %i.j
   %i.ke = zext i32 %.promoted18.i62 to i64        ; 2 uses
-  %i.kf = icmp eq i32 %.promoted17.i61, 0
-  br i1 %i.kf, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit64, label %bb.br
+  %.fr = freeze i1 %9
+  %i.kf = icmp eq i32 %.promoted17.i61, 0         ; 2 uses
+  br i1 %.fr, label %bb.br, label %.lr.ph.i59.split
 
 bb.br:                                            ; preds = %bb.bq
-  %9 = icmp ult i32 %.promoted18.i62, %i.j
-  br i1 %9, label %.loopexit.loopexit, label %10
-
-10:                                               ; preds = %bb.br
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.ke, i64 noundef range(i64 8, 4097) %8, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !27437
-  unreachable
-
-_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit64: ; preds = %bb.bq
-  store i8 3, ptr %i.b, align 8
-  br label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit
+  br i1 %i.kf, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit64, label %.loopexit.loopexit
 
 .loopexit.loopexit:                               ; preds = %bb.br
   %i.kg = getelementptr inbounds nuw i8, ptr %7, i64 %i.ke
@@ -229,9 +222,20 @@ _RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit64
   store i64 %i.kj, ptr %i.f, align 8, !alias.scope !27435
   %i.kk = add i32 %.promoted17.i61, -1
   store i32 %i.kk, ptr %i.h, align 8, !alias.scope !27435
-  %indvars.iv.next351 = add nuw i32 %.promoted18.i62, 1
+  %indvars.iv.next351 = add i32 %.promoted18.i62, 1
   store i32 %indvars.iv.next351, ptr %i.i, align 4, !alias.scope !27435
   br label %.loopexit
+
+.lr.ph.i59.split:                                 ; preds = %bb.bq
+  br i1 %i.kf, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit64, label %10
+
+10:                                               ; preds = %.lr.ph.i59.split
+  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.ke, i64 noundef range(i64 8, 4097) %8, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !27437
+  unreachable
+
+_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit64: ; preds = %.lr.ph.i59.split, %bb.br
+  store i8 3, ptr %i.b, align 8
+  br label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit
 
 .loopexit:                                        ; preds = %bb.bp, %.loopexit.loopexit
   %i.kl = phi i64 [ %i.kj, %.loopexit.loopexit ], [ %.promoted14.i60, %bb.bp ]
@@ -635,16 +639,32 @@ bb.o:                                             ; preds = %._crit_edge.loopexi
 bb.p:                                             ; preds = %bb.o
   %.promoted17.i.i = load i32, ptr %i.u, align 8, !alias.scope !27514 ; 2 uses
   %.promoted18.i.i = load i32, ptr %i.v, align 4, !alias.scope !27514 ; 3 uses
-  %i.bc = zext i32 %.promoted18.i.i to i64        ; 2 uses
-  %i.bd = icmp eq i32 %.promoted17.i.i, 0
-  br i1 %i.bd, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i, label %bb.q
-
-bb.q:                                             ; preds = %bb.p
   %5 = icmp ult i32 %.promoted18.i.i, %i.w
-  br i1 %5, label %.loopexit.loopexit.i, label %bb.r
+  %i.bc = zext i32 %.promoted18.i.i to i64        ; 2 uses
+  %.fr.i = freeze i1 %5
+  %i.bd = icmp eq i32 %.promoted17.i.i, 0         ; 2 uses
+  br i1 %.fr.i, label %.lr.ph.i47.split.us.i, label %.lr.ph.i47.split.i
 
-bb.r:                                             ; preds = %bb.q
-  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.bc, i64 noundef range(i64 8, 4097) %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !27515
+.lr.ph.i47.split.us.i:                            ; preds = %bb.p
+  br i1 %i.bd, label %.loopexit.loopexit.i, label %bb.q
+
+bb.q:                                             ; preds = %.lr.ph.i47.split.us.i
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 %i.bc
+  %7 = load i8, ptr %6, align 1, !alias.scope !27515, !noundef !145
+  %8 = zext i8 %7 to i64
+  %9 = call i64 @llvm.fshl.i64(i64 %8, i64 %.promoted14.i48.i, i64 56) ; 2 uses
+  store i64 %9, ptr %i.s, align 8, !alias.scope !27514
+  %10 = add i32 %.promoted17.i.i, -1
+  store i32 %10, ptr %i.u, align 8, !alias.scope !27514
+  %indvars.iv.next210.us.i = add i32 %.promoted18.i.i, 1
+  store i32 %indvars.iv.next210.us.i, ptr %i.v, align 4, !alias.scope !27514
+  br label %.loopexit.i
+
+.lr.ph.i47.split.i:                               ; preds = %bb.p
+  br i1 %i.bd, label %.loopexit.loopexit.i, label %bb.r
+
+bb.r:                                             ; preds = %.lr.ph.i47.split.i
+  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.bc, i64 noundef range(i64 8, 4097) %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !27516
   unreachable
 
 bb.s:                                             ; preds = %bb.i
@@ -655,8 +675,8 @@ bb.s:                                             ; preds = %bb.i
   br i1 %i.y, label %_RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzbB3N_15alloc_no_stdlib15stack_allocator9AllocatorhE10alloc_cellCs7XnEB7DeNXr_7sslocal.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !27516
-  %i.bg = call noundef ptr @_RNvCsh0WfaQiVYm0_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 1, 4294967296) %i.x, i64 noundef range(i64 1, 17) 1) #52, !noalias !27516 ; 2 uses
+  call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !27517
+  %i.bg = call noundef ptr @_RNvCsh0WfaQiVYm0_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 1, 4294967296) %i.x, i64 noundef range(i64 1, 17) 1) #52, !noalias !27517 ; 2 uses
   %i.bh = icmp eq ptr %i.bg, null
   br i1 %i.bh, label %bb.v, label %bb.u
 
@@ -665,7 +685,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzbB3N_15alloc_no_stdlib15stack_allocator9AllocatorhE10alloc_cellCs7XnEB7DeNXr_7sslocal.exit.i
 
 bb.v:                                             ; preds = %bb.t
-  call void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 1, i64 range(i64 -2147483582, 4294967296) %i.x) #61, !noalias !27517
+  call void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 1, i64 range(i64 -2147483582, 4294967296) %i.x) #61, !noalias !27518
   unreachable
 
 _RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzbB3N_15alloc_no_stdlib15stack_allocator9AllocatorhE10alloc_cellCs7XnEB7DeNXr_7sslocal.exit.i: ; preds = %bb.u, %bb.s
@@ -675,7 +695,7 @@ _RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzb
   br i1 %i.bk, label %bb.w, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i49.i
 
 _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i49.i: ; preds = %_RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzbB3N_15alloc_no_stdlib15stack_allocator9AllocatorhE10alloc_cellCs7XnEB7DeNXr_7sslocal.exit.i
-  call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.i, i64 noundef %i.k, i64 noundef 1) #52, !noalias !27518
+  call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.i, i64 noundef %i.k, i64 noundef 1) #52, !noalias !27519
   br label %bb.w
 
 bb.w:                                             ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i49.i, %_RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzbB3N_15alloc_no_stdlib15stack_allocator9AllocatorhE10alloc_cellCs7XnEB7DeNXr_7sslocal.exit.i
@@ -688,7 +708,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.y, label %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeContextMapInnerNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.x
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bj, i8 0, i64 range(i64 0, -9223372036854775808) %i.x, i1 false), !alias.scope !27519, !noalias !27506
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bj, i8 0, i64 range(i64 0, -9223372036854775808) %i.x, i1 false), !alias.scope !27520, !noalias !27506
   br label %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeContextMapInnerNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit
 
 .loopexit81.i:                                    ; preds = %bb.j, %.loopexit81.loopexit.i
@@ -728,16 +748,16 @@ thread-pre-split.i:                               ; preds = %.lr.ph.i
 
 bb.z:                                             ; preds = %bb.ah, %thread-pre-split.i
   %i.ca = phi i32 [ %.pr.i, %thread-pre-split.i ], [ %i.cs, %bb.ah ] ; 8 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !27520)
   call void @llvm.experimental.noalias.scope.decl(metadata !27521)
-  %.promoted.i55.i = load i32, ptr %i.t, align 8, !alias.scope !27522 ; 3 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !27522)
+  %.promoted.i55.i = load i32, ptr %i.t, align 8, !alias.scope !27523 ; 3 uses
   %i.cb = sub i32 64, %.promoted.i55.i
   %.not.i56.i = icmp ult i32 %i.cb, %i.ca
   br i1 %.not.i56.i, label %.lr.ph.i59.i, label %._crit_edge.i57.i
 
 .lr.ph.i59.i:                                     ; preds = %bb.z
-  %.promoted17.i61.i = load i32, ptr %i.u, align 8, !alias.scope !27522 ; 2 uses
-  %.promoted18.i62.i = load i32, ptr %i.v, align 4, !alias.scope !27522 ; 2 uses
+  %.promoted17.i61.i = load i32, ptr %i.u, align 8, !alias.scope !27523 ; 2 uses
+  %.promoted18.i62.i = load i32, ptr %i.v, align 4, !alias.scope !27523 ; 2 uses
   %umax.i = call i32 @llvm.umax.i32(i32 %.promoted18.i62.i, i32 %i.w)
   %wide.trip.count.i = zext i32 %umax.i to i64    ; 2 uses
   %i.cc = icmp eq i32 %.promoted17.i61.i, 0
@@ -745,7 +765,7 @@ bb.z:                                             ; preds = %bb.ah, %thread-pre-
 
 .lr.ph:                                           ; preds = %.lr.ph.i59.i
   %i.cd = zext i32 %.promoted18.i62.i to i64
-  %.promoted14.i60.i = load i64, ptr %i.s, align 8, !alias.scope !27522
+  %.promoted14.i60.i = load i64, ptr %i.s, align 8, !alias.scope !27523
   br label %bb.ac
 
 ._crit_edge.i57.i:                                ; preds = %bb.ad, %bb.z
@@ -759,7 +779,7 @@ bb.aa:                                            ; preds = %bb.ad
   br i1 %i.cg, label %.loopexit82.sink.split.i, label %bb.ac
 
 bb.ab:                                            ; preds = %._crit_edge.i57.i
-  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.ce, i64 noundef 33, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @375) #62, !noalias !27523
+  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.ce, i64 noundef 33, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @375) #62, !noalias !27524
   unreachable
 
 bb.ac:                                            ; preds = %.lr.ph, %bb.aa
@@ -772,23 +792,23 @@ bb.ac:                                            ; preds = %.lr.ph, %bb.aa
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.i142
-  %i.cl = load i8, ptr %i.ck, align 1, !alias.scope !27524, !noundef !145
+  %i.cl = load i8, ptr %i.ck, align 1, !alias.scope !27525, !noundef !145
   %i.cm = zext i8 %i.cl to i64
   %i.cn = call i64 @llvm.fshl.i64(i64 %i.cm, i64 %i.ch, i64 56) ; 2 uses
-  store i64 %i.cn, ptr %i.s, align 8, !alias.scope !27522
+  store i64 %i.cn, ptr %i.s, align 8, !alias.scope !27523
   %i.co = add i32 %i.ci, -8                       ; 3 uses
-  store i32 %i.co, ptr %i.t, align 8, !alias.scope !27522
+  store i32 %i.co, ptr %i.t, align 8, !alias.scope !27523
   %i.cp = add i32 %i.cj, -1                       ; 3 uses
-  store i32 %i.cp, ptr %i.u, align 8, !alias.scope !27522
+  store i32 %i.cp, ptr %i.u, align 8, !alias.scope !27523
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i142, 1 ; 2 uses
   %i.cq = trunc nuw nsw i64 %indvars.iv.next.i to i32
-  store i32 %i.cq, ptr %i.v, align 4, !alias.scope !27522
+  store i32 %i.cq, ptr %i.v, align 4, !alias.scope !27523
   %i.cr = sub i32 72, %i.ci
   %.not19.i63.i = icmp ult i32 %i.cr, %i.ca
   br i1 %.not19.i63.i, label %bb.aa, label %._crit_edge.i57.i
 
 bb.ae:                                            ; preds = %bb.ac
-  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %wide.trip.count.i, i64 noundef range(i64 8, 4097) %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !27523
+  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %wide.trip.count.i, i64 noundef range(i64 8, 4097) %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !27524
   unreachable
 
 bb.af:                                            ; preds = %bb.y
@@ -851,16 +871,16 @@ bb.an:                                            ; preds = %bb.al
   unreachable
 
 bb.ao:                                            ; preds = %._crit_edge.i57.i
-  %i.de = load i64, ptr %i.s, align 8, !alias.scope !27522, !noundef !145
+  %i.de = load i64, ptr %i.s, align 8, !alias.scope !27523, !noundef !145
   %i.df = and i32 %.lcssa7.i58.i, 63
   %i.dg = zext nneg i32 %i.df to i64
   %i.dh = lshr i64 %i.de, %i.dg
   %i.di = trunc i64 %i.dh to i32
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr @373, i64 %i.ce
-  %i.dk = load i32, ptr %i.dj, align 4, !noalias !27525, !noundef !145
+  %i.dk = load i32, ptr %i.dj, align 4, !noalias !27526, !noundef !145
   %i.dl = and i32 %i.dk, %i.di                    ; 3 uses
   %i.dm = add i32 %.lcssa7.i58.i, %i.ca
-  store i32 %i.dm, ptr %i.t, align 8, !alias.scope !27522
+  store i32 %i.dm, ptr %i.t, align 8, !alias.scope !27523
   %i.dn = and i32 %i.ca, 31
   %i.do = shl nuw i32 1, %i.dn                    ; 3 uses
   %i.dp = add i32 %i.dl, %i.do                    ; 4 uses
@@ -937,25 +957,13 @@ bb.aq:                                            ; preds = %.preheader.i
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.es, i64 noundef %.sroa.11.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @378) #62, !noalias !27506
   unreachable
 
-_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i: ; preds = %bb.p
+.loopexit.loopexit.i:                             ; preds = %.lr.ph.i47.split.i, %.lr.ph.i47.split.us.i
   store i8 4, ptr %i.m, align 1, !alias.scope !27503
   br label %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeContextMapInnerNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit
 
-.loopexit.loopexit.i:                             ; preds = %bb.q
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 %i.bc
-  %7 = load i8, ptr %6, align 1, !alias.scope !27526, !noundef !145
-  %8 = zext i8 %7 to i64
-  %9 = call i64 @llvm.fshl.i64(i64 %8, i64 %.promoted14.i48.i, i64 56) ; 2 uses
-  store i64 %9, ptr %i.s, align 8, !alias.scope !27514
-  %10 = add i32 %.promoted17.i.i, -1
-  store i32 %10, ptr %i.u, align 8, !alias.scope !27514
-  %indvars.iv.next210.i = add nuw nsw i32 %.promoted18.i.i, 1
-  store i32 %indvars.iv.next210.i, ptr %i.v, align 4, !alias.scope !27514
-  br label %.loopexit.i
-
-.loopexit.i:                                      ; preds = %bb.o, %.loopexit.loopexit.i
-  %i.ey = phi i64 [ %9, %.loopexit.loopexit.i ], [ %.promoted14.i48.i, %bb.o ]
-  %.lcssa7.i46.i = phi i32 [ 56, %.loopexit.loopexit.i ], [ %.promoted.i43.i, %bb.o ] ; 2 uses
+.loopexit.i:                                      ; preds = %bb.o, %bb.q
+  %i.ey = phi i64 [ %9, %bb.q ], [ %.promoted14.i48.i, %bb.o ]
+  %.lcssa7.i46.i = phi i32 [ 56, %bb.q ], [ %.promoted.i43.i, %bb.o ] ; 2 uses
   %i.ez = and i32 %.lcssa7.i46.i, 63
   %i.fa = zext nneg i32 %i.ez to i64
   %i.fb = add i32 %.lcssa7.i46.i, 1
@@ -982,10 +990,10 @@ bb.at:                                            ; preds = %bb.ar
   call void @_RNvNtCsl4v216RJbSI_19brotli_decompressor6decode27InverseMoveToFrontTransform(ptr noalias nofree noundef nonnull %.sroa.0.1, i64 noundef %.sroa.11.1, i32 noundef %i.l, ptr noalias nofree noundef nonnull dereferenceable(256) %i.fi, ptr noalias nofree noundef nonnull align 4 dereferenceable(4) %i.fj) #52, !noalias !27506
   br label %bb.as
 
-_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeContextMapInnerNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit: ; preds = %bb.i, %.lr.ph.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit.i, %bb.x, %.lr.ph.preheader.i.i, %.loopexit82.i, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i, %bb.ar, %bb.as
-  %.sroa.11.5 = phi i64 [ 0, %bb.x ], [ %i.x, %.lr.ph.preheader.i.i ], [ %.sroa.11.4, %.lr.ph.i.i ], [ %.sroa.11.2, %.loopexit82.i ], [ %.sroa.11.1, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i ], [ %.sroa.11.1, %bb.as ], [ %.sroa.11.1, %bb.ar ], [ %.sroa.11.3, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit.i ], [ %i.k, %bb.i ] ; 2 uses
-  %.sroa.0.5 = phi ptr [ %i.bj, %bb.x ], [ %i.bj, %.lr.ph.preheader.i.i ], [ %.sroa.0.4, %.lr.ph.i.i ], [ %.sroa.0.2, %.loopexit82.i ], [ %.sroa.0.1, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i ], [ %.sroa.0.1, %bb.as ], [ %.sroa.0.1, %bb.ar ], [ %.sroa.0.3, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit.i ], [ %i.i, %bb.i ] ; 2 uses
-  %.sroa.0.0.i = phi i32 [ 1, %bb.x ], [ 1, %.lr.ph.preheader.i.i ], [ 2, %.lr.ph.i.i ], [ %.sroa.0.1.i, %.loopexit82.i ], [ 2, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i ], [ 1, %bb.as ], [ -31, %bb.ar ], [ %i.ar, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit.i ], [ %i.aa, %bb.i ]
+_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeContextMapInnerNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit: ; preds = %bb.i, %.lr.ph.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit.i, %bb.x, %.lr.ph.preheader.i.i, %.loopexit82.i, %.loopexit.loopexit.i, %bb.ar, %bb.as
+  %.sroa.11.5 = phi i64 [ 0, %bb.x ], [ %i.x, %.lr.ph.preheader.i.i ], [ %.sroa.11.4, %.lr.ph.i.i ], [ %.sroa.11.2, %.loopexit82.i ], [ %.sroa.11.1, %.loopexit.loopexit.i ], [ %.sroa.11.1, %bb.as ], [ %.sroa.11.1, %bb.ar ], [ %.sroa.11.3, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit.i ], [ %i.k, %bb.i ] ; 2 uses
+  %.sroa.0.5 = phi ptr [ %i.bj, %bb.x ], [ %i.bj, %.lr.ph.preheader.i.i ], [ %.sroa.0.4, %.lr.ph.i.i ], [ %.sroa.0.2, %.loopexit82.i ], [ %.sroa.0.1, %.loopexit.loopexit.i ], [ %.sroa.0.1, %bb.as ], [ %.sroa.0.1, %bb.ar ], [ %.sroa.0.3, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit.i ], [ %i.i, %bb.i ] ; 2 uses
+  %.sroa.0.0.i = phi i32 [ 1, %bb.x ], [ 1, %.lr.ph.preheader.i.i ], [ 2, %.lr.ph.i.i ], [ %.sroa.0.1.i, %.loopexit82.i ], [ 2, %.loopexit.loopexit.i ], [ 1, %bb.as ], [ -31, %bb.ar ], [ %i.ar, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit.i ], [ %i.aa, %bb.i ]
   %i.fk = load i32, ptr %i.b, align 4, !noundef !145 ; 2 uses
   br i1 %1, label %bb.av, label %bb.au
 
@@ -1388,12 +1396,12 @@ bb.cv:                                            ; preds = %bb.ct
   br label %bb.cs
 
 _RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i: ; preds = %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, %bb.cs
-  %.sroa.017.2.i.i.i = phi i64 [ 0, %bb.cs ], [ %.sroa.017.2.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 60 uses
+  %.sroa.017.2.i.i.i = phi i64 [ 0, %bb.cs ], [ %.sroa.017.2.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 64 uses
   %.sroa.014.2.i.i.i = phi i64 [ %.sroa.014.1.i.i.i.peel, %bb.cs ], [ %.sroa.014.2.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 10 uses
   %.sroa.011.2.i.i.i = phi i64 [ %.sroa.011.1.i.i.i.peel, %bb.cs ], [ %.sroa.011.2.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 7 uses
-  %.sroa.06.1.i.i.i = phi i64 [ %.sroa.06.0.i.i.i.ph, %bb.cs ], [ %.sroa.06.1.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 60 uses
-  %.sroa.21.1.i.i.i.i = phi i64 [ %.sroa.21.0.i.i.i.i, %bb.cs ], [ %.sroa.21.1.i.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 87 uses
-  %.sroa.029.1.i.i.i.i = phi ptr [ %.sroa.029.0.i.i.i.i, %bb.cs ], [ %.sroa.029.1.i.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 87 uses
+  %.sroa.06.1.i.i.i = phi i64 [ %.sroa.06.0.i.i.i.ph, %bb.cs ], [ %.sroa.06.1.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 64 uses
+  %.sroa.21.1.i.i.i.i = phi i64 [ %.sroa.21.0.i.i.i.i, %bb.cs ], [ %.sroa.21.1.i.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 91 uses
+  %.sroa.029.1.i.i.i.i = phi ptr [ %.sroa.029.0.i.i.i.i, %bb.cs ], [ %.sroa.029.1.i.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 91 uses
   %.sroa.09.1.i.i.i.i = phi i32 [ %.sroa.09.0.i.i.i.i, %bb.cs ], [ %.sroa.09.1.i.i.i.i.be, %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge ] ; 3 uses
   switch i32 %.sroa.09.1.i.i.i.i, label %bb.mj [
     i32 1, label %.preheader214.i.i.i.i
@@ -1406,8 +1414,8 @@ _RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i
   br label %bb.cw
 
 bb.cw:                                            ; preds = %.backedge.i.i.i.i, %.preheader214.i.i.i.i
-  %.sroa.014.3.i.i.i = phi i64 [ %.sroa.014.2.i.i.i, %.preheader214.i.i.i.i ], [ %.sroa.014.4.i.i.i, %.backedge.i.i.i.i ] ; 81 uses
-  %.sroa.011.3.i.i.i = phi i64 [ %.sroa.011.2.i.i.i, %.preheader214.i.i.i.i ], [ %.sroa.011.4.i.i.i, %.backedge.i.i.i.i ] ; 81 uses
+  %.sroa.014.3.i.i.i = phi i64 [ %.sroa.014.2.i.i.i, %.preheader214.i.i.i.i ], [ %.sroa.014.4.i.i.i, %.backedge.i.i.i.i ] ; 85 uses
+  %.sroa.011.3.i.i.i = phi i64 [ %.sroa.011.2.i.i.i, %.preheader214.i.i.i.i ], [ %.sroa.011.4.i.i.i, %.backedge.i.i.i.i ] ; 85 uses
   %i.pq = phi i8 [ %.pre.i.i.i.i62, %.preheader214.i.i.i.i ], [ %.sink.i.i.i.i, %.backedge.i.i.i.i ]
   switch i8 %i.pq, label %default.unreachable2339 [
     i8 0, label %bb.cx
@@ -1770,13 +1778,14 @@ bb.dk:                                            ; preds = %bb.de
   br i1 %.not.i.i107.i.i.i, label %.lr.ph.i.preheader.i.i.i.i, label %.loopexit84.i.i.i.i
 
 .lr.ph.i.preheader.i.i.i.i:                       ; preds = %bb.dk
+  %3 = icmp ult i32 %.promoted235.i.i.i.i, %i.pp
   %i.sq = zext i32 %.promoted235.i.i.i.i to i64   ; 2 uses
-  %i.sr = icmp eq i32 %.promoted234.i.i.i.i, 0
-  br i1 %i.sr, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %bb.dl
+  %.fr594.i.i.i.i = freeze i1 %3
+  %i.sr = icmp eq i32 %.promoted234.i.i.i.i, 0    ; 2 uses
+  br i1 %.fr594.i.i.i.i, label %bb.dl, label %.lr.ph.i.preheader.split.i.i.i.i
 
 bb.dl:                                            ; preds = %.lr.ph.i.preheader.i.i.i.i
-  %3 = icmp ult i32 %.promoted235.i.i.i.i, %i.pp
-  br i1 %3, label %.loopexit84.loopexit.i.i.i.i, label %bb.dm
+  br i1 %i.sr, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %.loopexit84.loopexit.i.i.i.i
 
 .loopexit84.loopexit.i.i.i.i:                     ; preds = %bb.dl
   %i.ss = getelementptr inbounds nuw i8, ptr %.sroa.029.1.i.i.i.i, i64 %i.sq
@@ -1786,11 +1795,14 @@ bb.dl:                                            ; preds = %.lr.ph.i.preheader.
   store i64 %i.sv, ptr %i.ni, align 8, !alias.scope !39629, !noalias !39623
   %i.sw = add i32 %.promoted234.i.i.i.i, -1       ; 2 uses
   store i32 %i.sw, ptr %.sroa.33.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39629, !noalias !39623
-  %indvars.iv.next474.i.i.i.i = add nuw nsw i32 %.promoted235.i.i.i.i, 1 ; 2 uses
+  %indvars.iv.next474.i.i.i.i = add i32 %.promoted235.i.i.i.i, 1 ; 2 uses
   store i32 %indvars.iv.next474.i.i.i.i, ptr %.sroa.32.0..sroa_idx.i.i.i.i, align 4, !alias.scope !39629, !noalias !39623
   br label %.loopexit84.i.i.i.i
 
-bb.dm:                                            ; preds = %bb.dl
+.lr.ph.i.preheader.split.i.i.i.i:                 ; preds = %.lr.ph.i.preheader.i.i.i.i
+  br i1 %i.sr, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %bb.dm
+
+bb.dm:                                            ; preds = %.lr.ph.i.preheader.split.i.i.i.i
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.sq, i64 noundef range(i64 8, 4097) %.sroa.21.1.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !39630
   unreachable
 
@@ -1806,13 +1818,14 @@ bb.dn:                                            ; preds = %bb.dj, %bb.de
   br i1 %.not.i24.i.i.i.i, label %.lr.ph.i27.preheader.i.i.i.i, label %.loopexit86.i.i.i.i
 
 .lr.ph.i27.preheader.i.i.i.i:                     ; preds = %bb.dn
+  %4 = icmp ult i32 %i.ta, %i.pp
   %i.tc = zext i32 %i.ta to i64                   ; 2 uses
-  %i.td = icmp eq i32 %i.sz, 0
-  br i1 %i.td, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %bb.do
+  %.fr534.i.i.i.i = freeze i1 %4
+  %i.td = icmp eq i32 %i.sz, 0                    ; 2 uses
+  br i1 %.fr534.i.i.i.i, label %bb.do, label %.lr.ph.i27.preheader.split.i.i.i.i
 
 bb.do:                                            ; preds = %.lr.ph.i27.preheader.i.i.i.i
-  %4 = icmp ult i32 %i.ta, %i.pp
-  br i1 %4, label %.loopexit86.loopexit.i.i.i.i, label %bb.dp
+  br i1 %i.td, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %.loopexit86.loopexit.i.i.i.i
 
 .loopexit86.loopexit.i.i.i.i:                     ; preds = %bb.do
   %i.te = getelementptr inbounds nuw i8, ptr %.sroa.029.1.i.i.i.i, i64 %i.tc
@@ -1822,11 +1835,14 @@ bb.do:                                            ; preds = %.lr.ph.i27.preheade
   store i64 %i.th, ptr %i.ni, align 8, !alias.scope !39634, !noalias !39623
   %i.ti = add i32 %i.sz, -1                       ; 2 uses
   store i32 %i.ti, ptr %.sroa.33.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39634, !noalias !39623
-  %indvars.iv.next471.i.i.i.i = add nuw nsw i32 %i.ta, 1 ; 2 uses
+  %indvars.iv.next471.i.i.i.i = add i32 %i.ta, 1  ; 2 uses
   store i32 %indvars.iv.next471.i.i.i.i, ptr %.sroa.32.0..sroa_idx.i.i.i.i, align 4, !alias.scope !39634, !noalias !39623
   br label %.loopexit86.i.i.i.i
 
-bb.dp:                                            ; preds = %bb.do
+.lr.ph.i27.preheader.split.i.i.i.i:               ; preds = %.lr.ph.i27.preheader.i.i.i.i
+  br i1 %i.td, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %bb.dp
+
+bb.dp:                                            ; preds = %.lr.ph.i27.preheader.split.i.i.i.i
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.tc, i64 noundef range(i64 8, 4097) %.sroa.21.1.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !39635
   unreachable
 
@@ -1984,13 +2000,14 @@ bb.dw:                                            ; preds = %bb.di, %bb.de
   br i1 %.not.i44.i.i.i.i, label %.lr.ph.i47.preheader.i.i.i.i, label %.loopexit91.i.i.i.i
 
 .lr.ph.i47.preheader.i.i.i.i:                     ; preds = %bb.dw
+  %5 = icmp ult i32 %i.vn, %i.pp
   %i.vp = zext i32 %i.vn to i64                   ; 2 uses
-  %i.vq = icmp eq i32 %i.vm, 0
-  br i1 %i.vq, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %bb.dx
+  %.fr.i.i.i.i = freeze i1 %5
+  %i.vq = icmp eq i32 %i.vm, 0                    ; 2 uses
+  br i1 %.fr.i.i.i.i, label %bb.dx, label %.lr.ph.i47.preheader.split.i.i.i.i
 
 bb.dx:                                            ; preds = %.lr.ph.i47.preheader.i.i.i.i
-  %5 = icmp ult i32 %i.vn, %i.pp
-  br i1 %5, label %.loopexit91.loopexit.i.i.i.i, label %bb.dy
+  br i1 %i.vq, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %.loopexit91.loopexit.i.i.i.i
 
 .loopexit91.loopexit.i.i.i.i:                     ; preds = %bb.dx
   %i.vr = getelementptr inbounds nuw i8, ptr %.sroa.029.1.i.i.i.i, i64 %i.vp
@@ -2000,11 +2017,14 @@ bb.dx:                                            ; preds = %.lr.ph.i47.preheade
   store i64 %i.vu, ptr %i.ni, align 8, !alias.scope !39648, !noalias !39623
   %i.vv = add i32 %i.vm, -1                       ; 2 uses
   store i32 %i.vv, ptr %.sroa.33.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39648, !noalias !39623
-  %indvars.iv.next448.i.i.i.i = add nuw nsw i32 %i.vn, 1 ; 2 uses
+  %indvars.iv.next448.i.i.i.i = add i32 %i.vn, 1  ; 2 uses
   store i32 %indvars.iv.next448.i.i.i.i, ptr %.sroa.32.0..sroa_idx.i.i.i.i, align 4, !alias.scope !39648, !noalias !39623
   br label %.loopexit91.i.i.i.i
 
-bb.dy:                                            ; preds = %bb.dx
+.lr.ph.i47.preheader.split.i.i.i.i:               ; preds = %.lr.ph.i47.preheader.i.i.i.i
+  br i1 %i.vq, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %bb.dy
+
+bb.dy:                                            ; preds = %.lr.ph.i47.preheader.split.i.i.i.i
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.vp, i64 noundef range(i64 8, 4097) %.sroa.21.1.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !39649
   unreachable
 
@@ -2245,29 +2265,33 @@ bb.eg:                                            ; preds = %bb.dv
   br i1 %.not.i9.i.i, label %bb.eh, label %.loopexit.i.i72
 
 bb.eh:                                            ; preds = %bb.eg
+  %6 = icmp ult i32 %.promoted18.i.i.i, %i.pp
   %i.zx = zext i32 %.promoted18.i.i.i to i64      ; 2 uses
-  %i.zy = icmp eq i32 %.promoted17.i.i.i, 0
-  br i1 %i.zy, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %bb.ei
+  %.fr.i.i = freeze i1 %6
+  %i.zy = icmp eq i32 %.promoted17.i.i.i, 0       ; 2 uses
+  br i1 %.fr.i.i, label %bb.ei, label %.lr.ph.i11.split.i.i
 
 bb.ei:                                            ; preds = %bb.eh
-  %6 = icmp ult i32 %.promoted18.i.i.i, %i.pp
-  br i1 %6, label %.loopexit.loopexit.i.i, label %7
-
-7:                                                ; preds = %bb.ei
-  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.zx, i64 noundef range(i64 8, 4097) %.sroa.21.1.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !39662
-  unreachable
+  br i1 %i.zy, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %.loopexit.loopexit.i.i
 
 .loopexit.loopexit.i.i:                           ; preds = %bb.ei
   %i.zz = getelementptr inbounds nuw i8, ptr %.sroa.029.1.i.i.i.i, i64 %i.zx
   %i.aaa = load i8, ptr %i.zz, align 1, !alias.scope !39661, !noalias !39591, !noundef !145
   %i.aab = zext i8 %i.aaa to i64
   %i.aac = call i64 @llvm.fshl.i64(i64 %i.aab, i64 %.promoted14.i.i.i, i64 56) ; 2 uses
-  store i64 %i.aac, ptr %i.ni, align 8, !alias.scope !39660, !noalias !39663
+  store i64 %i.aac, ptr %i.ni, align 8, !alias.scope !39660, !noalias !39662
   %i.aad = add i32 %.promoted17.i.i.i, -1
-  store i32 %i.aad, ptr %.sroa.33.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39660, !noalias !39663
-  %indvars.iv.next.i.i = add nuw nsw i32 %.promoted18.i.i.i, 1
-  store i32 %indvars.iv.next.i.i, ptr %.sroa.32.0..sroa_idx.i.i.i.i, align 4, !alias.scope !39660, !noalias !39663
+  store i32 %i.aad, ptr %.sroa.33.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39660, !noalias !39662
+  %indvars.iv.next.i.i = add i32 %.promoted18.i.i.i, 1
+  store i32 %indvars.iv.next.i.i, ptr %.sroa.32.0..sroa_idx.i.i.i.i, align 4, !alias.scope !39660, !noalias !39662
   br label %.loopexit.i.i72
+
+.lr.ph.i11.split.i.i:                             ; preds = %bb.eh
+  br i1 %i.zy, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %7
+
+7:                                                ; preds = %.lr.ph.i11.split.i.i
+  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.zx, i64 noundef range(i64 8, 4097) %.sroa.21.1.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @379) #62, !noalias !39663
+  unreachable
 
 .loopexit.i.i72:                                  ; preds = %.loopexit.loopexit.i.i, %bb.eg
   %i.aae = phi i64 [ %i.aac, %.loopexit.loopexit.i.i ], [ %.promoted14.i.i.i, %bb.eg ] ; 2 uses
@@ -2278,7 +2302,7 @@ bb.ei:                                            ; preds = %bb.eh
   %i.aai = trunc i64 %i.aah to i8
   %i.aaj = and i8 %i.aai, 1
   %i.aak = add i32 %.lcssa7.i.i.i, 1              ; 2 uses
-  store i32 %i.aak, ptr %.sroa.30.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39660, !noalias !39663
+  store i32 %i.aak, ptr %.sroa.30.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39660, !noalias !39662
   store i8 %i.aaj, ptr %i.nz, align 1, !alias.scope !39621, !noalias !39623
   br label %bb.ej
 
@@ -2681,11 +2705,11 @@ bb.hq:                                            ; preds = %.thread.i.i.i.i
   br i1 %i.aqv, label %bb.hr, label %bb.iq
 
 bb.hr:                                            ; preds = %bb.hq
-  %i.aqw = load i8, ptr %i.nk, align 2, !alias.scope !39711, !noalias !39663, !noundef !145 ; 2 uses
-  %i.aqx = load i32, ptr %.sroa.102.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145
+  %i.aqw = load i8, ptr %i.nk, align 2, !alias.scope !39711, !noalias !39662, !noundef !145 ; 2 uses
+  %i.aqx = load i32, ptr %.sroa.102.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145
   %i.aqy = and i32 %i.aqx, 31
   %i.aqz = shl nuw i32 1, %i.aqy                  ; 2 uses
-  store i32 %i.aqz, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39663
+  store i32 %i.aqz, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39662
   br i1 %i.aqg, label %bb.ht, label %bb.hs
 
 bb.hs:                                            ; preds = %bb.hr
@@ -2695,7 +2719,7 @@ bb.hs:                                            ; preds = %bb.hr
   %i.ard = icmp eq i32 %i.arc, 3
   %or.cond.i.i.i66 = and i1 %i.arb, %i.ard
   %spec.select.i.i.i67 = select i1 %or.cond.i.i.i66, i8 1, i8 %i.aqw
-  %.pre.i.i.i68 = load i32, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39663
+  %.pre.i.i.i68 = load i32, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39662
   br label %bb.ht
 
 bb.ht:                                            ; preds = %bb.hs, %bb.hr
@@ -2703,18 +2727,18 @@ bb.ht:                                            ; preds = %bb.hs, %bb.hr
   %.sroa.07.0.i.i.i = phi i8 [ %i.aqw, %bb.hr ], [ %spec.select.i.i.i67, %bb.hs ]
   %i.are = sext i32 %.promoted.i.i.i69 to i64     ; 2 uses
   %i.arf = add nsw i64 %i.are, -16                ; 4 uses
-  %i.arg = load i64, ptr %.sroa.40.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145 ; 7 uses
+  %i.arg = load i64, ptr %.sroa.40.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145 ; 7 uses
   %i.arh = icmp ugt i64 %i.arg, %i.arf
   br i1 %i.arh, label %bb.hv, label %bb.hu
 
 bb.hu:                                            ; preds = %bb.ht
-  %.val33.i.i.i = load ptr, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !nonnull !145, !noundef !145
-  %.val34.i.i.i = load i64, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145 ; 2 uses
+  %.val33.i.i.i = load ptr, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !nonnull !145, !noundef !145
+  %.val34.i.i.i = load i64, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145 ; 2 uses
   %.not.i2.i.i = icmp ugt i64 %i.arg, %.val34.i.i.i
   br i1 %.not.i2.i.i, label %bb.hw, label %bb.hx, !prof !172
 
 bb.hv:                                            ; preds = %bb.ht
-  %.val32.i.i.i = load i64, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145 ; 2 uses
+  %.val32.i.i.i = load i64, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145 ; 2 uses
   %i.ari = sub nuw i64 %i.arg, %i.arf             ; 2 uses
   %.not24.i.i.i = icmp ugt i64 %i.arg, %.val32.i.i.i
   br i1 %.not24.i.i.i, label %bb.hz, label %bb.hy, !prof !172
@@ -2730,7 +2754,7 @@ bb.hx:                                            ; preds = %bb.hy, %bb.hu
   br i1 %i.ark, label %.loopexit.i3.i.i, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.hx
-  %i.arl = load i32, ptr %i.nm, align 8, !alias.scope !39711, !noalias !39663, !noundef !145
+  %i.arl = load i32, ptr %i.nm, align 8, !alias.scope !39711, !noalias !39662, !noundef !145
   %i.arm = sext i32 %i.arl to i64
   %i.arn = add i64 %i.arj, %i.arm
   %i.aro = shl i64 %i.arn, 1
@@ -2741,9 +2765,9 @@ bb.hx:                                            ; preds = %bb.hy, %bb.hu
   br i1 %or.cond643.i.i.i, label %.lr.ph.i.i.i71, label %.loopexit.i3.i.i
 
 bb.hy:                                            ; preds = %bb.hv
-  %.val31.i.i.i = load ptr, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !nonnull !145, !noundef !145
+  %.val31.i.i.i = load ptr, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !nonnull !145, !noundef !145
   %i.ars = getelementptr inbounds nuw i8, ptr %.val31.i.i.i, i64 %i.ari
-  store i64 %i.arf, ptr %.sroa.40.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663
+  store i64 %i.arf, ptr %.sroa.40.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662
   br label %bb.hx
 
 bb.hz:                                            ; preds = %bb.hv
@@ -2751,12 +2775,12 @@ bb.hz:                                            ; preds = %bb.hv
   unreachable
 
 ..loopexit_crit_edge.i.i.i:                       ; preds = %.lr.ph.i.i.i71
-  store i32 %i.arz, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39663
+  store i32 %i.arz, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39662
   br label %.loopexit.i3.i.i
 
 .loopexit.i3.i.i:                                 ; preds = %..loopexit_crit_edge.i.i.i, %.preheader.i.i.i, %bb.hx
   %i.art = phi i32 [ %.promoted.i.i.i69, %.preheader.i.i.i ], [ %i.arz, %..loopexit_crit_edge.i.i.i ], [ %.promoted.i.i.i69, %bb.hx ] ; 2 uses
-  %i.aru = load i32, ptr %.sroa.102.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145
+  %i.aru = load i32, ptr %.sroa.102.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145
   %i.arv = and i32 %i.aru, 31
   %i.arw = shl nuw i32 1, %i.arv                  ; 3 uses
   %i.arx = icmp sgt i32 %i.art, %i.arw
@@ -2772,13 +2796,13 @@ bb.hz:                                            ; preds = %bb.hv
   br i1 %or.cond6.i.i.i, label %.lr.ph.i.i.i71, label %..loopexit_crit_edge.i.i.i
 
 bb.ia:                                            ; preds = %.loopexit.i3.i.i
-  store i32 %i.arw, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39663
+  store i32 %i.arw, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39662
   br label %bb.ib
 
 bb.ib:                                            ; preds = %bb.ia, %.loopexit.i3.i.i
   %i.asd = phi i32 [ %i.art, %.loopexit.i3.i.i ], [ %i.arw, %bb.ia ] ; 3 uses
   %i.ase = add i32 %i.asd, -1
-  store i32 %i.ase, ptr %i.od, align 4, !alias.scope !39711, !noalias !39663
+  store i32 %i.ase, ptr %i.od, align 4, !alias.scope !39711, !noalias !39662
   %i.asf = sext i32 %i.asd to i64
   %i.asg = add nsw i64 %i.asf, 66                 ; 6 uses
   %.not.i.i.i.i4.i.i = icmp slt i32 %i.asd, -66
@@ -2806,23 +2830,23 @@ bb.if:                                            ; preds = %bb.id, %bb.ib
 _RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzbB3N_15alloc_no_stdlib15stack_allocator9AllocatorhE10alloc_cellCs7XnEB7DeNXr_7sslocal.exit.i.i.i: ; preds = %bb.ie, %bb.ic
   %.sroa.10.0.i.i.i.i.i = phi i64 [ %i.asj, %bb.ie ], [ 1, %bb.ic ]
   %i.ask = inttoptr i64 %.sroa.10.0.i.i.i.i.i to ptr ; 3 uses
-  %.val36.i.i.i = load i64, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39714, !noalias !39663, !noundef !145 ; 2 uses
+  %.val36.i.i.i = load i64, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39714, !noalias !39662, !noundef !145 ; 2 uses
   %i.asl = icmp eq i64 %.val36.i.i.i, 0
   br i1 %i.asl, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i
 
 _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i: ; preds = %_RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzbB3N_15alloc_no_stdlib15stack_allocator9AllocatorhE10alloc_cellCs7XnEB7DeNXr_7sslocal.exit.i.i.i
-  %.val35.i.i.i = load ptr, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !nonnull !145, !noundef !145
+  %.val35.i.i.i = load ptr, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !nonnull !145, !noundef !145
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val35.i.i.i, i64 noundef %.val36.i.i.i, i64 noundef 1) #52, !noalias !39715
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i: ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i, %_RNvXNtCs2D0wXkiOfwW_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs5NNYTrzbB3N_15alloc_no_stdlib15stack_allocator9AllocatorhE10alloc_cellCs7XnEB7DeNXr_7sslocal.exit.i.i.i
-  store ptr %i.ask, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663
-  store i64 %i.asg, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663
+  store ptr %i.ask, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662
+  store i64 %i.asg, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ask) ], !noalias !39716
   br i1 %.not.i.i70, label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge, label %bb.ig
 
 bb.ig:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i
-  %i.asm = load i32, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39663, !noundef !145
+  %i.asm = load i32, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39662, !noundef !145
   %i.asn = sext i32 %i.asm to i64
   %i.aso = add nsw i64 %i.asn, -1                 ; 3 uses
   %i.asp = icmp ult i64 %i.aso, %i.asg
@@ -2831,8 +2855,8 @@ bb.ig:                                            ; preds = %_RINvNtCsf3Ta7LF998
 bb.ih:                                            ; preds = %bb.ig
   %i.asq = getelementptr inbounds nuw i8, ptr %i.ask, i64 %i.aso
   store i8 0, ptr %i.asq, align 1, !noalias !39591
-  %.val40.i.i.i = load i64, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145 ; 2 uses
-  %i.asr = load i32, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39663, !noundef !145
+  %.val40.i.i.i = load i64, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145 ; 2 uses
+  %i.asr = load i32, ptr %i.nw, align 8, !alias.scope !39711, !noalias !39662, !noundef !145
   %i.ass = sext i32 %i.asr to i64
   %i.ast = add nsw i64 %i.ass, -2                 ; 3 uses
   %i.asu = icmp ult i64 %i.ast, %.val40.i.i.i
@@ -2843,7 +2867,7 @@ bb.ii:                                            ; preds = %bb.ig
   unreachable
 
 bb.ij:                                            ; preds = %bb.ih
-  %.val39.i.i.i = load ptr, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !nonnull !145, !noundef !145
+  %.val39.i.i.i = load ptr, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !nonnull !145, !noundef !145
   %i.asv = getelementptr inbounds nuw i8, ptr %.val39.i.i.i, i64 %i.ast
   store i8 0, ptr %i.asv, align 1, !noalias !39591
   %i.asw = icmp eq i64 %i.arj, 0
@@ -2854,12 +2878,12 @@ bb.ik:                                            ; preds = %bb.ih
   unreachable
 
 bb.il:                                            ; preds = %bb.ij
-  %i.asx = load i64, ptr %.sroa.40.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145 ; 4 uses
+  %i.asx = load i64, ptr %.sroa.40.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145 ; 4 uses
   %i.asy = sub i64 0, %i.asx
-  %i.asz = load i32, ptr %i.od, align 4, !alias.scope !39711, !noalias !39663, !noundef !145
+  %i.asz = load i32, ptr %i.od, align 4, !alias.scope !39711, !noalias !39662, !noundef !145
   %i.ata = sext i32 %i.asz to i64
   %i.atb = and i64 %i.ata, %i.asy                 ; 4 uses
-  %.val38.i.i.i = load i64, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145 ; 2 uses
+  %.val38.i.i.i = load i64, ptr %.sroa.13.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145 ; 2 uses
   %i.atc = add i64 %i.atb, %i.asx                 ; 3 uses
   %i.atd = icmp ult i64 %i.atc, %i.atb
   %.not25.i.i.i = icmp ugt i64 %i.atc, %.val38.i.i.i
@@ -2867,12 +2891,12 @@ bb.il:                                            ; preds = %bb.ij
   br i1 %or.cond27.i.i.i, label %bb.ip, label %bb.in, !prof !172
 
 bb.im:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core5slice20copy_from_slice_implhECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %bb.ij
-  %.val28.i.i.i = load i64, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !noundef !145 ; 2 uses
+  %.val28.i.i.i = load i64, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !noundef !145 ; 2 uses
   %i.ate = icmp eq i64 %.val28.i.i.i, 0
   br i1 %i.ate, label %._crit_edge686.i.i.i.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i6.i.i
 
 bb.in:                                            ; preds = %bb.il
-  %.val37.i.i.i = load ptr, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !nonnull !145, !noundef !145
+  %.val37.i.i.i = load ptr, ptr %.sroa.12.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !nonnull !145, !noundef !145
   call void @llvm.experimental.noalias.scope.decl(metadata !39717), !noalias !39716
   call void @llvm.experimental.noalias.scope.decl(metadata !39718), !noalias !39716
   %.not.i.i5.i.i = icmp eq i64 %i.asx, %i.arj
@@ -2892,9 +2916,9 @@ bb.ip:                                            ; preds = %bb.il
   unreachable
 
 _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i6.i.i: ; preds = %bb.im
-  %.val.i7.i.i = load ptr, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663, !nonnull !145, !noundef !145
-  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663
-  store i64 0, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39663
+  %.val.i7.i.i = load ptr, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662, !nonnull !145, !noundef !145
+  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662
+  store i64 0, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39711, !noalias !39662
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i7.i.i, i64 noundef %.val28.i.i.i, i64 noundef 1) #52, !noalias !39721
   br label %._crit_edge686.i.i.i.i
 
@@ -3297,23 +3321,23 @@ bb.lt:                                            ; preds = %bb.ls
 
 bb.lu:                                            ; preds = %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !39749)
-  %i.bco = load i32, ptr %i.np, align 4, !alias.scope !39749, !noalias !39663, !noundef !145 ; 4 uses
+  %i.bco = load i32, ptr %i.np, align 4, !alias.scope !39749, !noalias !39662, !noundef !145 ; 4 uses
   %i.bcp = zext i32 %i.bco to i64                 ; 4 uses
   %i.bcq = shl i32 %i.bco, 6
   %i.bcr = zext i32 %i.bcq to i64                 ; 4 uses
-  store i64 %i.bcr, ptr %i.nr, align 8, !alias.scope !39749, !noalias !39663
+  store i64 %i.bcr, ptr %i.nr, align 8, !alias.scope !39749, !noalias !39662
   %i.bcs = lshr i64 %i.bcp, 5                     ; 2 uses
   %i.bct = icmp ult i32 %i.bco, 256
   br i1 %i.bct, label %bb.lv, label %bb.lw
 
 bb.lv:                                            ; preds = %bb.lu
   %i.bcu = getelementptr inbounds nuw [4 x i8], ptr %.ptr36.i.i.i.i.i, i64 %i.bcs
-  %i.bcv = load i32, ptr %i.bcu, align 4, !alias.scope !39749, !noalias !39663, !noundef !145
+  %i.bcv = load i32, ptr %i.bcu, align 4, !alias.scope !39749, !noalias !39662, !noundef !145
   %i.bcw = and i32 %i.bco, 31
   %i.bcx = lshr i32 %i.bcv, %i.bcw
   %i.bcy = and i32 %i.bcx, 1
-  store i32 %i.bcy, ptr %i.oi, align 8, !alias.scope !39749, !noalias !39663
-  %.val9.i.i.i = load i64, ptr %.sroa.25.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39663, !noundef !145 ; 2 uses
+  store i32 %i.bcy, ptr %i.oi, align 8, !alias.scope !39749, !noalias !39662
+  %.val9.i.i.i = load i64, ptr %.sroa.25.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39662, !noundef !145 ; 2 uses
   %i.bcz = icmp ugt i64 %.val9.i.i.i, %i.bcr
   br i1 %i.bcz, label %bb.lx, label %bb.ly
 
@@ -3322,11 +3346,11 @@ bb.lw:                                            ; preds = %bb.lu
   unreachable
 
 bb.lx:                                            ; preds = %bb.lv
-  %.val8.i.i.i = load ptr, ptr %.sroa.24.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39663, !nonnull !145, !noundef !145
+  %.val8.i.i.i = load ptr, ptr %.sroa.24.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39662, !nonnull !145, !noundef !145
   %i.bda = getelementptr inbounds nuw i8, ptr %.val8.i.i.i, i64 %i.bcr
   %i.bdb = load i8, ptr %i.bda, align 1, !noalias !39750, !noundef !145
-  store i8 %i.bdb, ptr %.sroa.107.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39663
-  %.val7.i.i.i = load i64, ptr %.sroa.27.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39663, !noundef !145 ; 2 uses
+  store i8 %i.bdb, ptr %.sroa.107.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39662
+  %.val7.i.i.i = load i64, ptr %.sroa.27.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39662, !noundef !145 ; 2 uses
   %i.bdc = icmp ugt i64 %.val7.i.i.i, %i.bcp
   br i1 %i.bdc, label %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i, label %bb.lz
 
@@ -3339,13 +3363,13 @@ bb.lz:                                            ; preds = %bb.lx
   unreachable
 
 _RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i: ; preds = %bb.lx
-  %.val.i.i.i = load ptr, ptr %.sroa.26.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39663, !nonnull !145, !noundef !145
+  %.val.i.i.i = load ptr, ptr %.sroa.26.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39662, !nonnull !145, !noundef !145
   %i.bdd = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.bcp
   %i.bde = load i8, ptr %i.bdd, align 1, !noalias !39750, !noundef !145
   %i.bdf = and i8 %i.bde, 3
   %i.bdg = zext nneg i8 %i.bdf to i64
   %i.bdh = getelementptr inbounds nuw [512 x i8], ptr @_RNvNtCsl4v216RJbSI_19brotli_decompressor7context14kContextLookup, i64 %i.bdg
-  store ptr %i.bdh, ptr %.sroa.6251.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39663, !captures !194
+  store ptr %i.bdh, ptr %.sroa.6251.0..sroa_idx.i.i.i.i, align 8, !alias.scope !39749, !noalias !39662, !captures !194
   store i64 0, ptr %i.nv, align 8, !alias.scope !39590, !noalias !39569
   store i16 0, ptr %.sroa.105.0..sroa_idx.i.i.i.i, align 4, !alias.scope !39590, !noalias !39569
   store i8 7, ptr %i.nc, align 2, !alias.scope !39590, !noalias !39569
@@ -3633,14 +3657,14 @@ bb.ni:                                            ; preds = %bb.nf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !39710
   br label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge
 
-_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge: ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i147.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i, %bb.gh, %bb.gv, %bb.he, %bb.hf, %.loopexit211.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i, %bb.je, %bb.jy, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i, %bb.lr, %.lr.ph.i174.preheader.i.i.i.i, %bb.ey, %bb.ff, %.loopexit.i105.i.i.i, %.loopexit83.i.i.i.i, %bb.ni, %bb.my, %bb.me, %bb.ma, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i, %bb.kr, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %bb.ki, %bb.kf, %bb.jx, %bb.jv, %bb.ju, %bb.jt, %bb.jr, %bb.jq, %bb.jp, %bb.jb, %._crit_edge.i.i.i.i65, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %bb.ix, %bb.is, %bb.ir, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %bb.hp, %bb.ho, %bb.hn, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i, %bb.ga, %bb.ft, %bb.fq, %bb.ev, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i, %.loopexit91.i.i.i.i, %bb.eh, %.lr.ph.i57.preheader.i.i.i.i, %.lr.ph.i47.preheader.i.i.i.i, %.lr.ph.i37.preheader.i.i.i.i, %.lr.ph.i27.preheader.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i
-  %.sroa.017.2.i.i.i.be = phi i64 [ %.sroa.017.2.i.i.i, %.lr.ph.i27.preheader.i.i.i.i ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.ki ], [ %.sroa.017.2.i.i.i, %bb.kr ], [ %.sroa.017.2.i.i.i, %bb.hp ], [ %.sroa.017.2.i.i.i, %bb.ir ], [ %.sroa.017.2.i.i.i, %bb.is ], [ %.sroa.017.2.i.i.i, %.lr.ph.i.preheader.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.ho ], [ %.sroa.017.2.i.i.i, %bb.hn ], [ %.sroa.017.2.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.017.12.i.i.i, %bb.my ], [ %.sroa.017.2.i.i.i, %bb.ft ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.ix ], [ %.sroa.017.2.i.i.i, %bb.ev ], [ %.sroa.017.4.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.ma ], [ %.sroa.017.2.i.i.i, %bb.eh ], [ %.sroa.017.2.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.017.2.i.i.i, %bb.jb ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %i.ais, %bb.jv ], [ %i.ais, %bb.ju ], [ %i.ais, %bb.jt ], [ %i.ais, %bb.jr ], [ %i.ais, %bb.jq ], [ %i.ais, %bb.jp ], [ %.sroa.017.12.i.i.i, %bb.ni ], [ %.sroa.017.2.i.i.i, %bb.jx ], [ %.sroa.017.2.i.i.i, %bb.kf ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %i.ais, %bb.ga ], [ %i.bdx, %bb.me ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.017.4.i.i.i, %bb.fq ], [ %.sroa.017.2.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i47.preheader.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.loopexit91.i.i.i.i ], [ %i.aeq, %bb.ff ], [ %.sroa.017.4.i.i.i, %bb.ey ], [ %.sroa.017.2.i.i.i, %bb.lr ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.jy ], [ %.sroa.017.2.i.i.i, %bb.je ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.hf ], [ %.sroa.017.2.i.i.i, %bb.he ], [ %.sroa.017.2.i.i.i, %bb.gv ], [ %.sroa.017.2.i.i.i, %bb.gh ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i.i.i.i.i ]
-  %.sroa.014.2.i.i.i.be = phi i64 [ %.sroa.014.3.i.i.i, %.lr.ph.i27.preheader.i.i.i.i ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ki ], [ %.sroa.014.3.i.i.i, %bb.kr ], [ %.sroa.014.3.i.i.i, %bb.hp ], [ %.sroa.014.3.i.i.i, %bb.ir ], [ %.sroa.014.3.i.i.i, %bb.is ], [ %.sroa.014.3.i.i.i, %.lr.ph.i.preheader.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ho ], [ %.sroa.014.3.i.i.i, %bb.hn ], [ %.sroa.014.3.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.014.2.i.i.i, %bb.my ], [ %.sroa.014.3.i.i.i, %bb.ft ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ix ], [ %.sroa.014.3.i.i.i, %bb.ev ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ma ], [ %.sroa.014.3.i.i.i, %bb.eh ], [ %.sroa.014.3.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.014.3.i.i.i, %bb.jb ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.jv ], [ %.sroa.014.3.i.i.i, %bb.ju ], [ %.sroa.014.3.i.i.i, %bb.jt ], [ %.sroa.014.3.i.i.i, %bb.jr ], [ %.sroa.014.3.i.i.i, %bb.jq ], [ %.sroa.014.3.i.i.i, %bb.jp ], [ %i.bhg, %bb.ni ], [ %.sroa.014.3.i.i.i, %bb.jx ], [ %.sroa.014.3.i.i.i, %bb.kf ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ga ], [ %.sroa.014.3.i.i.i, %bb.me ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.fq ], [ %.sroa.014.3.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i47.preheader.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.loopexit91.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ey ], [ %.sroa.014.3.i.i.i, %bb.ff ], [ %.sroa.014.3.i.i.i, %bb.lr ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.jy ], [ %.sroa.014.3.i.i.i, %bb.je ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.hf ], [ %.sroa.014.3.i.i.i, %bb.he ], [ %.sroa.014.3.i.i.i, %bb.gv ], [ %.sroa.014.3.i.i.i, %bb.gh ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i.i.i.i.i ]
-  %.sroa.011.2.i.i.i.be = phi i64 [ %.sroa.011.3.i.i.i, %.lr.ph.i27.preheader.i.i.i.i ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ki ], [ %.sroa.011.3.i.i.i, %bb.kr ], [ %.sroa.011.3.i.i.i, %bb.hp ], [ %.sroa.011.3.i.i.i, %bb.ir ], [ %.sroa.011.3.i.i.i, %bb.is ], [ %.sroa.011.3.i.i.i, %.lr.ph.i.preheader.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ho ], [ %.sroa.011.3.i.i.i, %bb.hn ], [ %.sroa.011.3.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.011.2.i.i.i, %bb.my ], [ %.sroa.011.3.i.i.i, %bb.ft ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ix ], [ %.sroa.011.3.i.i.i, %bb.ev ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ma ], [ %.sroa.011.3.i.i.i, %bb.eh ], [ %.sroa.011.3.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.011.3.i.i.i, %bb.jb ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.jv ], [ %.sroa.011.3.i.i.i, %bb.ju ], [ %.sroa.011.3.i.i.i, %bb.jt ], [ %.sroa.011.3.i.i.i, %bb.jr ], [ %.sroa.011.3.i.i.i, %bb.jq ], [ %.sroa.011.3.i.i.i, %bb.jp ], [ %i.bhh, %bb.ni ], [ %.sroa.011.3.i.i.i, %bb.jx ], [ %.sroa.011.3.i.i.i, %bb.kf ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ga ], [ %.sroa.011.3.i.i.i, %bb.me ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.fq ], [ %.sroa.011.3.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i47.preheader.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.loopexit91.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ey ], [ %.sroa.011.3.i.i.i, %bb.ff ], [ %.sroa.011.3.i.i.i, %bb.lr ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.jy ], [ %.sroa.011.3.i.i.i, %bb.je ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.hf ], [ %.sroa.011.3.i.i.i, %bb.he ], [ %.sroa.011.3.i.i.i, %bb.gv ], [ %.sroa.011.3.i.i.i, %bb.gh ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i.i.i.i.i ]
-  %.sroa.06.1.i.i.i.be = phi i64 [ %.sroa.06.1.i.i.i, %.lr.ph.i27.preheader.i.i.i.i ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.ki ], [ %.sroa.06.1.i.i.i, %bb.kr ], [ %.sroa.06.1.i.i.i, %bb.hp ], [ %.sroa.06.1.i.i.i, %bb.ir ], [ %.sroa.06.1.i.i.i, %bb.is ], [ %.sroa.06.1.i.i.i, %.lr.ph.i.preheader.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.ho ], [ %.sroa.06.1.i.i.i, %bb.hn ], [ %.sroa.06.1.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.06.11.i.i.i, %bb.my ], [ %.sroa.06.1.i.i.i, %bb.ft ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.ix ], [ %.sroa.06.1.i.i.i, %bb.ev ], [ %.sroa.06.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.ma ], [ %.sroa.06.1.i.i.i, %bb.eh ], [ %.sroa.06.1.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.06.1.i.i.i, %bb.jb ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %i.aiw, %bb.jv ], [ %i.aiw, %bb.ju ], [ %i.aiw, %bb.jt ], [ %i.aiw, %bb.jr ], [ %i.aiw, %bb.jq ], [ %i.aiw, %bb.jp ], [ %.sroa.06.11.i.i.i, %bb.ni ], [ %.sroa.06.1.i.i.i, %bb.jx ], [ %.sroa.06.1.i.i.i, %bb.kf ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %i.aiw, %bb.ga ], [ %i.beb, %bb.me ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.06.3.i.i.i, %bb.fq ], [ %.sroa.06.1.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i47.preheader.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.loopexit91.i.i.i.i ], [ %i.aeu, %bb.ff ], [ %.sroa.06.3.i.i.i, %bb.ey ], [ %.sroa.06.1.i.i.i, %bb.lr ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.jy ], [ %.sroa.06.1.i.i.i, %bb.je ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.hf ], [ %.sroa.06.1.i.i.i, %bb.he ], [ %.sroa.06.1.i.i.i, %bb.gv ], [ %.sroa.06.1.i.i.i, %bb.gh ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i.i.i.i.i ]
-  %.sroa.21.1.i.i.i.i.be = phi i64 [ %.sroa.21.1.i.i.i.i, %.lr.ph.i27.preheader.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ki ], [ %.sroa.21.1.i.i.i.i, %bb.kr ], [ %.sroa.21.1.i.i.i.i, %bb.hp ], [ %.sroa.21.1.i.i.i.i, %bb.ir ], [ %.sroa.21.1.i.i.i.i, %bb.is ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ho ], [ %.sroa.21.1.i.i.i.i, %bb.hn ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ 4096, %bb.my ], [ %.sroa.21.1.i.i.i.i, %bb.ft ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ix ], [ %.sroa.21.1.i.i.i.i, %bb.ev ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ma ], [ %.sroa.21.1.i.i.i.i, %bb.eh ], [ %.sroa.21.1.i.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.21.1.i.i.i.i, %bb.jb ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.jv ], [ %.sroa.21.1.i.i.i.i, %bb.ju ], [ %.sroa.21.1.i.i.i.i, %bb.jt ], [ %.sroa.21.1.i.i.i.i, %bb.jr ], [ %.sroa.21.1.i.i.i.i, %bb.jq ], [ %.sroa.21.1.i.i.i.i, %bb.jp ], [ %.sroa.21.1.i.i.i.i, %bb.ni ], [ %.sroa.21.1.i.i.i.i, %bb.jx ], [ %.sroa.21.1.i.i.i.i, %bb.kf ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ga ], [ %.sroa.21.1.i.i.i.i, %bb.me ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.fq ], [ %.sroa.21.1.i.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i47.preheader.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.loopexit91.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ey ], [ %.sroa.21.1.i.i.i.i, %bb.ff ], [ %.sroa.21.1.i.i.i.i, %bb.lr ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.jy ], [ %.sroa.21.1.i.i.i.i, %bb.je ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.hf ], [ %.sroa.21.1.i.i.i.i, %bb.he ], [ %.sroa.21.1.i.i.i.i, %bb.gv ], [ %.sroa.21.1.i.i.i.i, %bb.gh ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i.i.i.i.i ]
-  %.sroa.029.1.i.i.i.i.be = phi ptr [ %.sroa.029.1.i.i.i.i, %.lr.ph.i27.preheader.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ki ], [ %.sroa.029.1.i.i.i.i, %bb.kr ], [ %.sroa.029.1.i.i.i.i, %bb.hp ], [ %.sroa.029.1.i.i.i.i, %bb.ir ], [ %.sroa.029.1.i.i.i.i, %bb.is ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ho ], [ %.sroa.029.1.i.i.i.i, %bb.hn ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %i.t, %bb.my ], [ %.sroa.029.1.i.i.i.i, %bb.ft ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ix ], [ %.sroa.029.1.i.i.i.i, %bb.ev ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ma ], [ %.sroa.029.1.i.i.i.i, %bb.eh ], [ %.sroa.029.1.i.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.029.1.i.i.i.i, %bb.jb ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.jv ], [ %.sroa.029.1.i.i.i.i, %bb.ju ], [ %.sroa.029.1.i.i.i.i, %bb.jt ], [ %.sroa.029.1.i.i.i.i, %bb.jr ], [ %.sroa.029.1.i.i.i.i, %bb.jq ], [ %.sroa.029.1.i.i.i.i, %bb.jp ], [ %.sroa.029.1.i.i.i.i, %bb.ni ], [ %.sroa.029.1.i.i.i.i, %bb.jx ], [ %.sroa.029.1.i.i.i.i, %bb.kf ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ga ], [ %.sroa.029.1.i.i.i.i, %bb.me ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.fq ], [ %.sroa.029.1.i.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i47.preheader.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.loopexit91.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ey ], [ %.sroa.029.1.i.i.i.i, %bb.ff ], [ %.sroa.029.1.i.i.i.i, %bb.lr ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.jy ], [ %.sroa.029.1.i.i.i.i, %bb.je ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.hf ], [ %.sroa.029.1.i.i.i.i, %bb.he ], [ %.sroa.029.1.i.i.i.i, %bb.gv ], [ %.sroa.029.1.i.i.i.i, %bb.gh ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i.i.i.i.i ]
-  %.sroa.09.1.i.i.i.i.be = phi i32 [ 2, %.lr.ph.i27.preheader.i.i.i.i ], [ 1, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ 1, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ 2, %bb.ki ], [ 1, %bb.kr ], [ 1, %bb.hp ], [ 1, %bb.ir ], [ 1, %bb.is ], [ 2, %.lr.ph.i.preheader.i.i.i.i ], [ 1, %bb.ho ], [ -15, %bb.hn ], [ 2, %.lr.ph.i57.preheader.i.i.i.i ], [ 1, %bb.my ], [ -9, %bb.ft ], [ 2, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %i.aue, %bb.ix ], [ %i.adr, %bb.ev ], [ 1, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ -9, %bb.ma ], [ 2, %bb.eh ], [ 1, %._crit_edge.i.i.i.i65 ], [ 1, %bb.jb ], [ %.sroa.0.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ 1, %bb.jv ], [ 1, %bb.ju ], [ 1, %bb.jt ], [ 1, %bb.jr ], [ 1, %bb.jq ], [ 1, %bb.jp ], [ 1, %bb.ni ], [ 1, %bb.jx ], [ 1, %bb.kf ], [ 2, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ 3, %bb.ga ], [ 3, %bb.me ], [ -31, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ 2, %bb.fq ], [ -1, %.loopexit.i105.i.i.i ], [ 2, %.lr.ph.i47.preheader.i.i.i.i ], [ 2, %.lr.ph.i37.preheader.i.i.i.i ], [ -3, %.loopexit83.i.i.i.i ], [ -27, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ 2, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ 2, %.lr.ph.i174.preheader.i.i.i.i ], [ -2, %.loopexit91.i.i.i.i ], [ 3, %bb.ff ], [ -9, %bb.ey ], [ %i.awu, %bb.jy ], [ -15, %bb.je ], [ -21, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ -13, %.loopexit211.i.i.i.i ], [ -13, %bb.hf ], [ -13, %bb.he ], [ 2, %bb.gv ], [ %i.akj, %bb.gh ], [ %i.ajw, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ 2, %.lr.ph.i147.i.i.i.i ], [ 2, %.lr.ph.i.i.i.i.i ], [ %i.axo, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %i.bcb, %bb.lr ]
+_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i.backedge: ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i147.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i, %bb.gh, %bb.gv, %bb.he, %bb.hf, %.loopexit211.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i, %bb.je, %bb.jy, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i, %bb.lr, %.lr.ph.i174.preheader.i.i.i.i, %bb.ey, %bb.ff, %.loopexit.i105.i.i.i, %.loopexit83.i.i.i.i, %bb.ni, %bb.my, %bb.me, %bb.ma, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i, %bb.kr, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %bb.ki, %bb.kf, %bb.jx, %bb.jv, %bb.ju, %bb.jt, %bb.jr, %bb.jq, %bb.jp, %bb.jb, %._crit_edge.i.i.i.i65, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %bb.ix, %bb.is, %bb.ir, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %bb.hp, %bb.ho, %bb.hn, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i, %bb.ga, %bb.ft, %bb.fq, %bb.ev, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i, %.loopexit91.i.i.i.i, %.lr.ph.i11.split.i.i, %bb.ei, %.lr.ph.i57.preheader.i.i.i.i, %.lr.ph.i47.preheader.split.i.i.i.i, %bb.dx, %.lr.ph.i37.preheader.i.i.i.i, %.lr.ph.i27.preheader.split.i.i.i.i, %bb.do, %.lr.ph.i.preheader.split.i.i.i.i, %bb.dl
+  %.sroa.017.2.i.i.i.be = phi i64 [ %.sroa.017.2.i.i.i, %.lr.ph.i.preheader.split.i.i.i.i ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.ki ], [ %.sroa.017.2.i.i.i, %bb.kr ], [ %.sroa.017.2.i.i.i, %bb.hp ], [ %.sroa.017.2.i.i.i, %bb.ir ], [ %.sroa.017.2.i.i.i, %bb.is ], [ %.sroa.017.2.i.i.i, %bb.dl ], [ %.sroa.017.2.i.i.i, %bb.ho ], [ %.sroa.017.2.i.i.i, %bb.hn ], [ %.sroa.017.2.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.017.12.i.i.i, %bb.my ], [ %.sroa.017.2.i.i.i, %bb.ft ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.ix ], [ %.sroa.017.2.i.i.i, %bb.ev ], [ %.sroa.017.4.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.ma ], [ %.sroa.017.2.i.i.i, %bb.ei ], [ %.sroa.017.2.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.017.2.i.i.i, %bb.jb ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %i.ais, %bb.jv ], [ %i.ais, %bb.ju ], [ %i.ais, %bb.jt ], [ %i.ais, %bb.jr ], [ %i.ais, %bb.jq ], [ %i.ais, %bb.jp ], [ %.sroa.017.12.i.i.i, %bb.ni ], [ %.sroa.017.2.i.i.i, %bb.jx ], [ %.sroa.017.2.i.i.i, %bb.kf ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %i.ais, %bb.ga ], [ %i.bdx, %bb.me ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.017.4.i.i.i, %bb.fq ], [ %.sroa.017.2.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.017.2.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.loopexit91.i.i.i.i ], [ %i.aeq, %bb.ff ], [ %.sroa.017.2.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i47.preheader.split.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.dx ], [ %.sroa.017.2.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i27.preheader.split.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.do ], [ %.sroa.017.2.i.i.i, %.lr.ph.i11.split.i.i ], [ %.sroa.017.4.i.i.i, %bb.ey ], [ %.sroa.017.2.i.i.i, %bb.lr ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.jy ], [ %.sroa.017.2.i.i.i, %bb.je ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.017.2.i.i.i, %bb.hf ], [ %.sroa.017.2.i.i.i, %bb.he ], [ %.sroa.017.2.i.i.i, %bb.gv ], [ %.sroa.017.2.i.i.i, %bb.gh ], [ %.sroa.017.2.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.017.2.i.i.i, %.lr.ph.i.i.i.i.i ]
+  %.sroa.014.2.i.i.i.be = phi i64 [ %.sroa.014.3.i.i.i, %.lr.ph.i.preheader.split.i.i.i.i ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ki ], [ %.sroa.014.3.i.i.i, %bb.kr ], [ %.sroa.014.3.i.i.i, %bb.hp ], [ %.sroa.014.3.i.i.i, %bb.ir ], [ %.sroa.014.3.i.i.i, %bb.is ], [ %.sroa.014.3.i.i.i, %bb.dl ], [ %.sroa.014.3.i.i.i, %bb.ho ], [ %.sroa.014.3.i.i.i, %bb.hn ], [ %.sroa.014.3.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.014.2.i.i.i, %bb.my ], [ %.sroa.014.3.i.i.i, %bb.ft ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ix ], [ %.sroa.014.3.i.i.i, %bb.ev ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ma ], [ %.sroa.014.3.i.i.i, %bb.ei ], [ %.sroa.014.3.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.014.3.i.i.i, %bb.jb ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.jv ], [ %.sroa.014.3.i.i.i, %bb.ju ], [ %.sroa.014.3.i.i.i, %bb.jt ], [ %.sroa.014.3.i.i.i, %bb.jr ], [ %.sroa.014.3.i.i.i, %bb.jq ], [ %.sroa.014.3.i.i.i, %bb.jp ], [ %i.bhg, %bb.ni ], [ %.sroa.014.3.i.i.i, %bb.jx ], [ %.sroa.014.3.i.i.i, %bb.kf ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ga ], [ %.sroa.014.3.i.i.i, %bb.me ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.fq ], [ %.sroa.014.3.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.014.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.loopexit91.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.ey ], [ %.sroa.014.3.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i47.preheader.split.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.dx ], [ %.sroa.014.3.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i27.preheader.split.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.do ], [ %.sroa.014.3.i.i.i, %.lr.ph.i11.split.i.i ], [ %.sroa.014.3.i.i.i, %bb.ff ], [ %.sroa.014.3.i.i.i, %bb.lr ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.jy ], [ %.sroa.014.3.i.i.i, %bb.je ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.014.3.i.i.i, %bb.hf ], [ %.sroa.014.3.i.i.i, %bb.he ], [ %.sroa.014.3.i.i.i, %bb.gv ], [ %.sroa.014.3.i.i.i, %bb.gh ], [ %.sroa.014.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.014.3.i.i.i, %.lr.ph.i.i.i.i.i ]
+  %.sroa.011.2.i.i.i.be = phi i64 [ %.sroa.011.3.i.i.i, %.lr.ph.i.preheader.split.i.i.i.i ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ki ], [ %.sroa.011.3.i.i.i, %bb.kr ], [ %.sroa.011.3.i.i.i, %bb.hp ], [ %.sroa.011.3.i.i.i, %bb.ir ], [ %.sroa.011.3.i.i.i, %bb.is ], [ %.sroa.011.3.i.i.i, %bb.dl ], [ %.sroa.011.3.i.i.i, %bb.ho ], [ %.sroa.011.3.i.i.i, %bb.hn ], [ %.sroa.011.3.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.011.2.i.i.i, %bb.my ], [ %.sroa.011.3.i.i.i, %bb.ft ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ix ], [ %.sroa.011.3.i.i.i, %bb.ev ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ma ], [ %.sroa.011.3.i.i.i, %bb.ei ], [ %.sroa.011.3.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.011.3.i.i.i, %bb.jb ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.jv ], [ %.sroa.011.3.i.i.i, %bb.ju ], [ %.sroa.011.3.i.i.i, %bb.jt ], [ %.sroa.011.3.i.i.i, %bb.jr ], [ %.sroa.011.3.i.i.i, %bb.jq ], [ %.sroa.011.3.i.i.i, %bb.jp ], [ %i.bhh, %bb.ni ], [ %.sroa.011.3.i.i.i, %bb.jx ], [ %.sroa.011.3.i.i.i, %bb.kf ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ga ], [ %.sroa.011.3.i.i.i, %bb.me ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.fq ], [ %.sroa.011.3.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.011.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.loopexit91.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.ey ], [ %.sroa.011.3.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i47.preheader.split.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.dx ], [ %.sroa.011.3.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i27.preheader.split.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.do ], [ %.sroa.011.3.i.i.i, %.lr.ph.i11.split.i.i ], [ %.sroa.011.3.i.i.i, %bb.ff ], [ %.sroa.011.3.i.i.i, %bb.lr ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.jy ], [ %.sroa.011.3.i.i.i, %bb.je ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.011.3.i.i.i, %bb.hf ], [ %.sroa.011.3.i.i.i, %bb.he ], [ %.sroa.011.3.i.i.i, %bb.gv ], [ %.sroa.011.3.i.i.i, %bb.gh ], [ %.sroa.011.3.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.011.3.i.i.i, %.lr.ph.i.i.i.i.i ]
+  %.sroa.06.1.i.i.i.be = phi i64 [ %.sroa.06.1.i.i.i, %.lr.ph.i.preheader.split.i.i.i.i ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.ki ], [ %.sroa.06.1.i.i.i, %bb.kr ], [ %.sroa.06.1.i.i.i, %bb.hp ], [ %.sroa.06.1.i.i.i, %bb.ir ], [ %.sroa.06.1.i.i.i, %bb.is ], [ %.sroa.06.1.i.i.i, %bb.dl ], [ %.sroa.06.1.i.i.i, %bb.ho ], [ %.sroa.06.1.i.i.i, %bb.hn ], [ %.sroa.06.1.i.i.i, %.loopexit83.i.i.i.i ], [ %.sroa.06.11.i.i.i, %bb.my ], [ %.sroa.06.1.i.i.i, %bb.ft ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.ix ], [ %.sroa.06.1.i.i.i, %bb.ev ], [ %.sroa.06.3.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.ma ], [ %.sroa.06.1.i.i.i, %bb.ei ], [ %.sroa.06.1.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.06.1.i.i.i, %bb.jb ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %i.aiw, %bb.jv ], [ %i.aiw, %bb.ju ], [ %i.aiw, %bb.jt ], [ %i.aiw, %bb.jr ], [ %i.aiw, %bb.jq ], [ %i.aiw, %bb.jp ], [ %.sroa.06.11.i.i.i, %bb.ni ], [ %.sroa.06.1.i.i.i, %bb.jx ], [ %.sroa.06.1.i.i.i, %bb.kf ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %i.aiw, %bb.ga ], [ %i.beb, %bb.me ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.06.3.i.i.i, %bb.fq ], [ %.sroa.06.1.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.06.1.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.loopexit91.i.i.i.i ], [ %i.aeu, %bb.ff ], [ %.sroa.06.1.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i47.preheader.split.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.dx ], [ %.sroa.06.1.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i27.preheader.split.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.do ], [ %.sroa.06.1.i.i.i, %.lr.ph.i11.split.i.i ], [ %.sroa.06.3.i.i.i, %bb.ey ], [ %.sroa.06.1.i.i.i, %bb.lr ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.jy ], [ %.sroa.06.1.i.i.i, %bb.je ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.06.1.i.i.i, %bb.hf ], [ %.sroa.06.1.i.i.i, %bb.he ], [ %.sroa.06.1.i.i.i, %bb.gv ], [ %.sroa.06.1.i.i.i, %bb.gh ], [ %.sroa.06.1.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.06.1.i.i.i, %.lr.ph.i.i.i.i.i ]
+  %.sroa.21.1.i.i.i.i.be = phi i64 [ %.sroa.21.1.i.i.i.i, %.lr.ph.i.preheader.split.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ki ], [ %.sroa.21.1.i.i.i.i, %bb.kr ], [ %.sroa.21.1.i.i.i.i, %bb.hp ], [ %.sroa.21.1.i.i.i.i, %bb.ir ], [ %.sroa.21.1.i.i.i.i, %bb.is ], [ %.sroa.21.1.i.i.i.i, %bb.dl ], [ %.sroa.21.1.i.i.i.i, %bb.ho ], [ %.sroa.21.1.i.i.i.i, %bb.hn ], [ %.sroa.21.1.i.i.i.i, %.loopexit83.i.i.i.i ], [ 4096, %bb.my ], [ %.sroa.21.1.i.i.i.i, %bb.ft ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ix ], [ %.sroa.21.1.i.i.i.i, %bb.ev ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ma ], [ %.sroa.21.1.i.i.i.i, %bb.ei ], [ %.sroa.21.1.i.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.21.1.i.i.i.i, %bb.jb ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.jv ], [ %.sroa.21.1.i.i.i.i, %bb.ju ], [ %.sroa.21.1.i.i.i.i, %bb.jt ], [ %.sroa.21.1.i.i.i.i, %bb.jr ], [ %.sroa.21.1.i.i.i.i, %bb.jq ], [ %.sroa.21.1.i.i.i.i, %bb.jp ], [ %.sroa.21.1.i.i.i.i, %bb.ni ], [ %.sroa.21.1.i.i.i.i, %bb.jx ], [ %.sroa.21.1.i.i.i.i, %bb.kf ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ga ], [ %.sroa.21.1.i.i.i.i, %bb.me ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.fq ], [ %.sroa.21.1.i.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.loopexit91.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ey ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i47.preheader.split.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.dx ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i27.preheader.split.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.do ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i11.split.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.ff ], [ %.sroa.21.1.i.i.i.i, %bb.lr ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.jy ], [ %.sroa.21.1.i.i.i.i, %bb.je ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %bb.hf ], [ %.sroa.21.1.i.i.i.i, %bb.he ], [ %.sroa.21.1.i.i.i.i, %bb.gv ], [ %.sroa.21.1.i.i.i.i, %bb.gh ], [ %.sroa.21.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.21.1.i.i.i.i, %.lr.ph.i.i.i.i.i ]
+  %.sroa.029.1.i.i.i.i.be = phi ptr [ %.sroa.029.1.i.i.i.i, %.lr.ph.i.preheader.split.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ki ], [ %.sroa.029.1.i.i.i.i, %bb.kr ], [ %.sroa.029.1.i.i.i.i, %bb.hp ], [ %.sroa.029.1.i.i.i.i, %bb.ir ], [ %.sroa.029.1.i.i.i.i, %bb.is ], [ %.sroa.029.1.i.i.i.i, %bb.dl ], [ %.sroa.029.1.i.i.i.i, %bb.ho ], [ %.sroa.029.1.i.i.i.i, %bb.hn ], [ %.sroa.029.1.i.i.i.i, %.loopexit83.i.i.i.i ], [ %i.t, %bb.my ], [ %.sroa.029.1.i.i.i.i, %bb.ft ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ix ], [ %.sroa.029.1.i.i.i.i, %bb.ev ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ma ], [ %.sroa.029.1.i.i.i.i, %bb.ei ], [ %.sroa.029.1.i.i.i.i, %._crit_edge.i.i.i.i65 ], [ %.sroa.029.1.i.i.i.i, %bb.jb ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.jv ], [ %.sroa.029.1.i.i.i.i, %bb.ju ], [ %.sroa.029.1.i.i.i.i, %bb.jt ], [ %.sroa.029.1.i.i.i.i, %bb.jr ], [ %.sroa.029.1.i.i.i.i, %bb.jq ], [ %.sroa.029.1.i.i.i.i, %bb.jp ], [ %.sroa.029.1.i.i.i.i, %bb.ni ], [ %.sroa.029.1.i.i.i.i, %bb.jx ], [ %.sroa.029.1.i.i.i.i, %bb.kf ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ga ], [ %.sroa.029.1.i.i.i.i, %bb.me ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.fq ], [ %.sroa.029.1.i.i.i.i, %.loopexit.i105.i.i.i ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i174.preheader.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.loopexit91.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ey ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i57.preheader.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i47.preheader.split.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.dx ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i37.preheader.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i27.preheader.split.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.do ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i11.split.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.ff ], [ %.sroa.029.1.i.i.i.i, %bb.lr ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.jy ], [ %.sroa.029.1.i.i.i.i, %bb.je ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.loopexit211.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %bb.hf ], [ %.sroa.029.1.i.i.i.i, %bb.he ], [ %.sroa.029.1.i.i.i.i, %bb.gv ], [ %.sroa.029.1.i.i.i.i, %bb.gh ], [ %.sroa.029.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i147.i.i.i.i ], [ %.sroa.029.1.i.i.i.i, %.lr.ph.i.i.i.i.i ]
+  %.sroa.09.1.i.i.i.i.be = phi i32 [ 2, %.lr.ph.i.preheader.split.i.i.i.i ], [ 1, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22PrepareLiteralDecodingNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.i.i ], [ 1, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i ], [ 2, %bb.ki ], [ 1, %bb.kr ], [ 1, %bb.hp ], [ 1, %bb.ir ], [ 1, %bb.is ], [ 2, %bb.dl ], [ 1, %bb.ho ], [ -15, %bb.hn ], [ -3, %.loopexit83.i.i.i.i ], [ 1, %bb.my ], [ -9, %bb.ft ], [ 2, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode16ReadContextModesNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB12_B12_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %i.aue, %bb.ix ], [ %i.adr, %bb.ev ], [ 1, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode29CopyUncompressedBlockToOutputNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB1f_B1f_ECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ -9, %bb.ma ], [ 2, %bb.ei ], [ 1, %._crit_edge.i.i.i.i65 ], [ 1, %bb.jb ], [ %.sroa.0.1.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxmEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ 1, %bb.jv ], [ 1, %bb.ju ], [ 1, %bb.jt ], [ 1, %bb.jr ], [ 1, %bb.jq ], [ 1, %bb.jp ], [ 1, %bb.ni ], [ 1, %bb.jx ], [ 1, %bb.kf ], [ 2, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode28SafeReadBlockLengthFromIndexNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ 3, %bb.ga ], [ 3, %bb.me ], [ -31, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode22HuffmanTreeGroupDecodeNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB18_B18_ECs7XnEB7DeNXr_7sslocal.exit.thread55.i.i.i ], [ 2, %bb.fq ], [ -1, %.loopexit.i105.i.i.i ], [ -27, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ 2, %_RINvNtCsl4v216RJbSI_19brotli_decompressor6decode21DecodeMetaBlockLengthNtNtCs2D0wXkiOfwW_12alloc_stdlib9std_alloc13StandardAllocB17_B17_ECs7XnEB7DeNXr_7sslocal.exit.thread.sink.split.i.i.i ], [ 2, %.lr.ph.i174.preheader.i.i.i.i ], [ -2, %.loopexit91.i.i.i.i ], [ 3, %bb.ff ], [ 2, %.lr.ph.i57.preheader.i.i.i.i ], [ 2, %.lr.ph.i47.preheader.split.i.i.i.i ], [ 2, %bb.dx ], [ 2, %.lr.ph.i37.preheader.i.i.i.i ], [ 2, %.lr.ph.i27.preheader.split.i.i.i.i ], [ 2, %bb.do ], [ 2, %.lr.ph.i11.split.i.i ], [ -9, %bb.ey ], [ %i.awu, %bb.jy ], [ -15, %bb.je ], [ -21, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxhEECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ -13, %.loopexit211.i.i.i.i ], [ -13, %bb.hf ], [ -13, %bb.he ], [ 2, %bb.gv ], [ %i.akj, %bb.gh ], [ %i.ajw, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit157.i.i.i.i ], [ 2, %.lr.ph.i147.i.i.i.i ], [ 2, %.lr.ph.i.i.i.i.i ], [ %i.axo, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2D0wXkiOfwW_12alloc_stdlib10heap_alloc7WrapBoxNtNtCsl4v216RJbSI_19brotli_decompressor7huffman11HuffmanCodeEECs7XnEB7DeNXr_7sslocal.exit181.i.i.i.i ], [ %i.bcb, %bb.lr ]
   br label %_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i.i.i.i
 
 bb.nj:                                            ; preds = %bb.mj
@@ -4043,18 +4067,18 @@ begin_hunk_5_@llvm.ucmp.i32.i32
 !27512 = !{!27481}
 !27513 = !{!27482}
 !27514 = !{!27481, !27473}
-!27515 = !{!27481, !27483, !27482, !27475}
-!27516 = !{!27487, !27485, !27475}
-!27517 = !{!27485, !27475}
-!27518 = !{!27489, !27475}
-!27519 = !{!27491}
-!27520 = !{!27493}
-!27521 = !{!27494}
-!27522 = !{!27493, !27473}
-!27523 = !{!27493, !27495, !27494, !27475}
-!27524 = !{!27494, !27474}
-!27525 = !{!27493, !27495, !27494, !27472, !27475, !27473, !27474}
-!27526 = !{!27482, !27474}
+!27515 = !{!27482, !27474}
+!27516 = !{!27481, !27483, !27482, !27475}
+!27517 = !{!27487, !27485, !27475}
+!27518 = !{!27485, !27475}
+!27519 = !{!27489, !27475}
+!27520 = !{!27491}
+!27521 = !{!27493}
+!27522 = !{!27494}
+!27523 = !{!27493, !27473}
+!27524 = !{!27493, !27495, !27494, !27475}
+!27525 = !{!27494, !27474}
+!27526 = !{!27493, !27495, !27494, !27472, !27475, !27473, !27474}
 !27527 = !{!27499}
 !27528 = !{!27501}
 !27529 = distinct !{!27529, i1 true, !"_RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader35BrotliFillBitWindowCompileTimeNbits"}
@@ -4457,8 +4481,8 @@ begin_hunk_6_@llvm.ucmp.i32.i32
 !39659 = !{!39146, !39159, !39147, !39131, !39132, !39085, !39084, !39082, !39081, !39080, !39079, !39053, !39049, !39046, !39048, !39044, !39043}
 !39660 = !{!39161}
 !39661 = !{!39162}
-!39662 = !{!39161, !39163, !39162, !39085, !39084, !39082, !39081, !39080, !39079, !39053, !39049, !39046, !39048, !39044, !39043}
-!39663 = !{!39085, !39084, !39082, !39081, !39080, !39079, !39053, !39049, !39046, !39047, !39048, !39044, !39043}
+!39662 = !{!39085, !39084, !39082, !39081, !39080, !39079, !39053, !39049, !39046, !39047, !39048, !39044, !39043}
+!39663 = !{!39161, !39163, !39162, !39085, !39084, !39082, !39081, !39080, !39079, !39053, !39049, !39046, !39048, !39044, !39043}
 !39664 = !{!39157, !39164, !39158, !39131, !39132, !39085, !39084, !39082, !39081, !39080, !39079, !39053, !39049, !39046, !39048, !39044, !39043}
 !39665 = !{!39166}
 !39666 = !{!39167}
