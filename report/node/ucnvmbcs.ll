@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.r, %bb.f
-  %.0144.i = phi ptr [ %i.ac, %bb.f ], [ %.pre.pre.i, %bb.r ] ; 3 uses
+  %.0144.i = phi ptr [ %i.ac, %bb.f ], [ %2, %bb.r ] ; 3 uses
   %.1140.i = phi i32 [ %spec.select.i, %bb.f ], [ %spec.select168.i, %bb.r ] ; 4 uses
   %.0135.i = phi i32 [ 0, %bb.f ], [ %i.mg, %bb.r ] ; 4 uses
   %i.bd = icmp sgt i32 %.1140.i, 15
@@ -551,13 +551,12 @@ bb.l:                                             ; preds = %.loopexit174.i
   %.3.i = phi i32 [ %.0135.i, %bb.g ], [ %.0135.i, %.loopexit174.i ], [ %.0135.i, %bb.l ], [ %i.jr, %.lr.ph.i ] ; 7 uses
   %.2141.fr.i = freeze i32 %.2141.i               ; 2 uses
   %i.jw = icmp sgt i32 %.2141.fr.i, 0
-  %.promoted.i434 = load ptr, ptr %i.d, align 8   ; 2 uses
   br i1 %i.jw, label %.outer.split.i.preheader, label %.loopexit171.split.i
 
 .outer.split.i.preheader:                         ; preds = %.loopexit173.i, %.outer.backedge.i
-  %.promoted.i436 = phi ptr [ %.promoted.i, %.outer.backedge.i ], [ %.promoted.i434, %.loopexit173.i ] ; 3 uses
-  %.3142.ph.i435 = phi i32 [ %.3142.ph.be.i, %.outer.backedge.i ], [ %.2141.fr.i, %.loopexit173.i ] ; 2 uses
-  %i.jx = icmp ult ptr %.promoted.i436, %i.ae
+  %.3142.ph192.i = phi i32 [ %.3142.ph.be.i, %.outer.backedge.i ], [ %.2141.fr.i, %.loopexit173.i ] ; 2 uses
+  %.promoted193.i = load ptr, ptr %i.d, align 8   ; 2 uses
+  %i.jx = icmp ult ptr %.promoted193.i, %i.ae
   br i1 %i.jx, label %.lr.ph781, label %.loopexit171.split.i
 
 .outer.split.i:                                   ; preds = %bb.m
@@ -565,8 +564,8 @@ bb.l:                                             ; preds = %.loopexit174.i
   br i1 %i.jy, label %.lr.ph781, label %.loopexit171.split.i
 
 .lr.ph781:                                        ; preds = %.outer.split.i.preheader, %.outer.split.i
-  %i.jz = phi ptr [ %i.ka, %.outer.split.i ], [ %.promoted.i436, %.outer.split.i.preheader ] ; 2 uses
-  %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 1 ; 6 uses
+  %i.jz = phi ptr [ %i.ka, %.outer.split.i ], [ %.promoted193.i, %.outer.split.i.preheader ] ; 2 uses
+  %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 1 ; 4 uses
   store ptr %i.ka, ptr %i.d, align 8
   %i.kb = load i8, ptr %i.jz, align 1
   %i.kc = zext i8 %i.kb to i64
@@ -581,9 +580,8 @@ bb.l:                                             ; preds = %.loopexit174.i
   %i.ki = getelementptr inbounds nuw i8, ptr %i.kh, i64 2
   store ptr %i.ki, ptr %i.e, align 8
   store i16 %i.kg, ptr %i.kh, align 2
-  %.3142.ph.be.i = add nsw i32 %.3142.ph.i435, -1
-  %i.kj = icmp sgt i32 %.3142.ph.i435, 1
-  %.promoted.i = load ptr, ptr %i.d, align 8      ; 2 uses
+  %.3142.ph.be.i = add nsw i32 %.3142.ph192.i, -1
+  %i.kj = icmp sgt i32 %.3142.ph192.i, 1
   br i1 %i.kj, label %.outer.split.i.preheader, label %.loopexit171.split.i, !llvm.loop !24
 
 bb.m:                                             ; preds = %.lr.ph781
@@ -640,7 +638,7 @@ bb.n:                                             ; preds = %bb.m
   %.4190.i.unr = phi i32 [ %.3.i, %.lr.ph192.i.preheader ], [ %i.kz, %.lr.ph192.i.prol ]
   %.lcssa800.unr = phi i32 [ poison, %.lr.ph192.i.preheader ], [ %i.kz, %.lr.ph192.i.prol ]
   %i.lc = icmp ult i32 %i.kx, 3
-  br i1 %i.lc, label %.loopexit170.loopexit.i, label %.lr.ph192.i
+  br i1 %i.lc, label %.loopexit170.i, label %.lr.ph192.i
 
 .lr.ph192.i:                                      ; preds = %.lr.ph192.i.prol.loopexit, %.lr.ph192.i
   %.0133191.i = phi i32 [ %i.lm, %.lr.ph192.i ], [ %.0133191.i.unr, %.lr.ph192.i.prol.loopexit ] ; 2 uses
@@ -667,22 +665,17 @@ bb.n:                                             ; preds = %bb.m
   store ptr %i.lp, ptr %i.f, align 8
   store i32 %i.lj, ptr %i.lo, align 4
   %i.lq = icmp sgt i32 %.0133191.i, 5
-  br i1 %i.lq, label %.lr.ph192.i, label %.loopexit170.loopexit.i, !llvm.loop !26
+  br i1 %i.lq, label %.lr.ph192.i, label %.loopexit170.i, !llvm.loop !26
 
-.loopexit170.loopexit.i:                          ; preds = %.lr.ph192.i, %.lr.ph192.i.prol.loopexit
-  %.lcssa800 = phi i32 [ %.lcssa800.unr, %.lr.ph192.i.prol.loopexit ], [ %i.ln, %.lr.ph192.i ]
-  %.pre.pre.pre.i = load ptr, ptr %i.d, align 8
-  br label %.loopexit170.i
-
-.loopexit170.i:                                   ; preds = %.loopexit170.loopexit.i, %.loopexit172.i
-  %.pre.pre.i = phi ptr [ %i.ka, %.loopexit172.i ], [ %.pre.pre.pre.i, %.loopexit170.loopexit.i ] ; 5 uses
-  %.5.i = phi i32 [ %.3.i, %.loopexit172.i ], [ %.lcssa800, %.loopexit170.loopexit.i ] ; 3 uses
+.loopexit170.i:                                   ; preds = %.lr.ph192.i.prol.loopexit, %.lr.ph192.i, %.loopexit172.i
+  %.5.i = phi i32 [ %.3.i, %.loopexit172.i ], [ %.lcssa800.unr, %.lr.ph192.i.prol.loopexit ], [ %i.ln, %.lr.ph192.i ] ; 3 uses
   %i.lr = load i32, ptr %1, align 4
   %i.ls = icmp slt i32 %i.lr, 1
   br i1 %i.ls, label %bb.o, label %.loopexit171.split.i
 
 bb.o:                                             ; preds = %.loopexit170.i
-  %i.lt = getelementptr inbounds i8, ptr %.pre.pre.i, i64 -1
+  %2 = load ptr, ptr %i.d, align 8                ; 4 uses
+  %i.lt = getelementptr inbounds i8, ptr %2, i64 -1
   %i.lu = load i8, ptr %i.lt, align 1
   store i8 %i.lu, ptr %i.ba, align 1
   %i.lv = load ptr, ptr %i.at, align 8
@@ -705,9 +698,9 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 _ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i: ; preds = %bb.q, %bb.p
   %.1.i.i = phi i8 [ 0, %bb.p ], [ 1, %bb.q ]
   store i8 %.1.i.i, ptr %i.bc, align 8
-  %i.ma = load ptr, ptr %i.d, align 8             ; 2 uses
+  %i.ma = load ptr, ptr %i.d, align 8
   %i.mb = ptrtoint ptr %i.ma to i64               ; 2 uses
-  %i.mc = ptrtoint ptr %.pre.pre.i to i64
+  %i.mc = ptrtoint ptr %2 to i64
   %i.md = sub i64 %i.mb, %i.mc
   %i.me = trunc i64 %i.md to i32
   %i.mf = add i32 %.5.i, 1
@@ -730,12 +723,12 @@ bb.r:                                             ; preds = %_ZL7_extToUP10UConv
   br label %bb.g
 
 .loopexit171.split.i:                             ; preds = %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i, %.loopexit170.i, %.loopexit173.i, %.outer.backedge.i, %.outer.split.i.preheader, %.outer.split.i
-  %2 = phi ptr [ %.promoted.i, %.outer.backedge.i ], [ %i.ka, %.outer.split.i ], [ %.promoted.i436, %.outer.split.i.preheader ], [ %i.ma, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.promoted.i434, %.loopexit173.i ], [ %.pre.pre.i, %.loopexit170.i ] ; 3 uses
-  %.3147.i = phi ptr [ %.2146.i, %.outer.backedge.i ], [ %.2146.i, %.outer.split.i ], [ %.2146.i, %.outer.split.i.preheader ], [ %.pre.pre.i, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.2146.i, %.loopexit173.i ], [ %.2146.i, %.loopexit170.i ]
-  %.6.i = phi i32 [ %.3.i, %.outer.backedge.i ], [ %.3.i, %.outer.split.i ], [ %.3.i, %.outer.split.i.preheader ], [ %i.mg, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ], [ %.3.i, %.loopexit173.i ], [ %.5.i, %.loopexit170.i ] ; 2 uses
+  %.3147.i = phi ptr [ %.2146.i, %.outer.split.i ], [ %.2146.i, %.outer.backedge.i ], [ %.2146.i, %.outer.split.i.preheader ], [ %.2146.i, %.loopexit173.i ], [ %.2146.i, %.loopexit170.i ], [ %2, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ]
+  %.6.i = phi i32 [ %.3.i, %.outer.split.i ], [ %.3.i, %.outer.backedge.i ], [ %.3.i, %.outer.split.i.preheader ], [ %.3.i, %.loopexit173.i ], [ %.5.i, %.loopexit170.i ], [ %i.mg, %_ZL7_extToUP10UConverterPK20UConverterSharedDataaPPKhS5_PPDsPKDsPPiiaP10UErrorCode.exit.i ] ; 2 uses
   %i.ms = load i32, ptr %1, align 4
   %i.mt = icmp slt i32 %i.ms, 1
-  %i.mu = icmp ult ptr %2, %i.ae
+  %3 = load ptr, ptr %i.d, align 8                ; 3 uses
+  %i.mu = icmp ult ptr %3, %i.ae
   %or.cond.i = select i1 %i.mt, i1 %i.mu, i1 false
   br i1 %or.cond.i, label %bb.s, label %bb.u
 
@@ -752,7 +745,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t, %bb.s, %.loopexit171.split.i
   %i.mx = load ptr, ptr %i.f, align 8             ; 2 uses
   %.not166.i = icmp eq ptr %i.mx, null
-  %i.my = ptrtoint ptr %2 to i64                  ; 2 uses
+  %i.my = ptrtoint ptr %3 to i64                  ; 2 uses
   %i.mz = ptrtoint ptr %.3147.i to i64            ; 2 uses
   %i.na = sub i64 %i.my, %i.mz                    ; 4 uses
   %.not167194.i = icmp eq i64 %i.na, 0
@@ -819,7 +812,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %.loop
 
 _ZL31ucnv_MBCSSingleToBMPWithOffsetsP23UConverterToUnicodeArgsP10UErrorCode.exit: ; preds = %bb.u, %.loopexit.loopexit.i
   %i.nu = phi ptr [ %.pre224.i, %.loopexit.loopexit.i ], [ %i.mx, %bb.u ]
-  %i.nv = phi ptr [ %.pre223.i, %.loopexit.loopexit.i ], [ %2, %bb.u ]
+  %i.nv = phi ptr [ %.pre223.i, %.loopexit.loopexit.i ], [ %3, %bb.u ]
   store ptr %i.nv, ptr %i.aa, align 8
   %i.nw = load ptr, ptr %i.e, align 8
   store ptr %i.nw, ptr %i.af, align 8

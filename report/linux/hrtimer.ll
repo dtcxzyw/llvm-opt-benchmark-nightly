@@ -1,9 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/hrtimer?download=true
 inline.NumInlined: 224
 inline.NumDeleted: 105
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 3
-loop-unroll.NumUnrolledNotLatch: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 @__do_trace_hrtimer_expire_entry.__UNIQUE_ID_addressable___SCK__tp_func_hrtimer_expire_entry_698 = internal global ptr @__SCK__tp_func_hrtimer_expire_entry, section ".discard.addressable", align 8
 @__SCK__tp_func_hrtimer_expire_entry = external dso_local global %struct.static_call_key, align 8
@@ -205,28 +204,28 @@ bb.f:                                             ; preds = %bb.d
 
 .preheader.i.lr.ph:                               ; preds = %bb.f
   %i.ak = getelementptr i8, ptr %i.m, i64 128
-  %i.al = getelementptr i8, ptr %i.m, i64 20
-  %2 = getelementptr i8, ptr %i.m, i64 56
-  %i.am = getelementptr i8, ptr %i.m, i64 40
-  %3 = load i64, ptr %i.am, align 8
+  %i.al = getelementptr i8, ptr %i.m, i64 40
+  %2 = load i64, ptr %i.al, align 8
+  %i.am = getelementptr i8, ptr %i.m, i64 20
+  %3 = getelementptr i8, ptr %i.m, i64 56
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.i.lr.ph, %.critedge.i
+.preheader.i:                                     ; preds = %.critedge.i, %.preheader.i.lr.ph
   %.034.i17 = phi i32 [ %i.aj, %.preheader.i.lr.ph ], [ %i.ay, %.critedge.i ] ; 2 uses
   %.037.i16 = phi i32 [ %i.ai, %.preheader.i.lr.ph ], [ %i.ax, %.critedge.i ]
   %i.an = zext i32 %.034.i17 to i64
   %i.ao = getelementptr [64 x i8], ptr %i.ak, i64 %i.an ; 3 uses
   %i.ap = getelementptr i8, ptr %i.ao, i64 48
-  %4 = getelementptr i8, ptr %i.ao, i64 56
-  %5 = shl nuw i32 1, %.034.i17
-  %6 = xor i32 %5, -1
-  %7 = load ptr, ptr %i.ap, align 8
-  %8 = getelementptr i8, ptr %7, i64 40
-  %9 = load i64, ptr %8, align 8
-  %10 = load i64, ptr %4, align 8
-  %11 = sub i64 %9, %10                           ; 2 uses
-  %12 = icmp slt i64 %11, %3
-  br i1 %12, label %update_needs_ipi.exit, label %.split.i
+  %4 = load ptr, ptr %i.ap, align 8
+  %5 = getelementptr i8, ptr %4, i64 40
+  %6 = load i64, ptr %5, align 8
+  %7 = getelementptr i8, ptr %i.ao, i64 56
+  %8 = load i64, ptr %7, align 8
+  %9 = sub i64 %6, %8                             ; 2 uses
+  %10 = icmp slt i64 %9, %2
+  %11 = shl nuw i32 1, %.034.i17
+  %12 = xor i32 %11, -1
+  br i1 %10, label %update_needs_ipi.exit, label %.split.i
 
 .split.i:                                         ; preds = %.preheader.i
   %i.aq = getelementptr i8, ptr %i.ao, i64 8
@@ -235,17 +234,17 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.as, label %.critedge.i, label %.split.split.i
 
 .split.split.i:                                   ; preds = %.split.i
-  %i.at = load i8, ptr %i.al, align 4, !range !15, !noundef !16
+  %i.at = load i8, ptr %i.am, align 4, !range !15, !noundef !16
   %i.au = trunc nuw i8 %i.at to i1
   br i1 %i.au, label %.critedge.i, label %.split.split.split.i
 
 .split.split.split.i:                             ; preds = %.split.split.i
-  %i.av = load i64, ptr %2, align 8
-  %i.aw = icmp slt i64 %11, %i.av
+  %i.av = load i64, ptr %3, align 8
+  %i.aw = icmp slt i64 %9, %i.av
   br i1 %i.aw, label %update_needs_ipi.exit, label %.critedge.i
 
 .critedge.i:                                      ; preds = %.split.split.split.i, %.split.split.i, %.split.i
-  %i.ax = and i32 %.037.i16, %6                   ; 2 uses
+  %i.ax = and i32 %.037.i16, %12                  ; 2 uses
   %i.ay = call i32 asm "bsfl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ax, i32 -1) #20, !srcloc !27 ; 2 uses
   %.not.not.i = icmp eq i32 %i.ay, -1
   br i1 %.not.not.i, label %arch_set_bit.exit, label %.preheader.i, !llvm.loop !54
