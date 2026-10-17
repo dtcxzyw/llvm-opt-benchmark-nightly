@@ -202,7 +202,7 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit260: ; preds 
   %i.fe = load ptr, ptr %i.fd, align 8, !tbaa !490, !noalias !969
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fe, i64 16
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !971, !noalias !969
-  %i.fh = call noundef ptr @_ZN5clang39extractElementInitializerFromNestedAILEEPKNS_17ArrayInitLoopExprE(ptr noundef nonnull %i.ca) #15, !noalias !969 ; 4 uses
+  %i.fh = call noundef ptr @_ZN5clang39extractElementInitializerFromNestedAILEEPKNS_17ArrayInitLoopExprE(ptr noundef nonnull %i.ca) #15, !noalias !969 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #15, !noalias !969
   %i.fi = getelementptr inbounds nuw i8, ptr %.sroa.0.4, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #15, !noalias !969
@@ -224,12 +224,10 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit260: ; preds 
   %i.fp = call noundef ptr @_ZN5clang4ento16MemRegionManager16getElementRegionENS_8QualTypeENS0_6NonLocEPKNS0_9SubRegionERKNS_10ASTContextE(ptr noundef nonnull align 8 dereferenceable(152) %i.fa, i64 %.sroa.0.0.copyload.i.i255, ptr %i.ev, i8 6, ptr noundef %i.fn, ptr noundef nonnull align 8 dereferenceable(23904) %i.fc) #15, !noalias !969
   %i.fq = load i16, ptr %i.fh, align 8, !noalias !969
   %i.fr = and i16 %i.fq, 511
-  %.not.i.i.i.i.i = icmp eq i16 %i.fr, 118        ; 2 uses
-  %spec.select.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr %i.fh, ptr null
-  %53 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i.i, i64 48
-  %i.fs = getelementptr inbounds nuw i8, ptr %i.fh, i64 40
-  %spec.select.i.i.i.i.i256 = select i1 %.not.i.i.i.i.i, ptr %53, ptr %i.fs
-  %i.ft = load ptr, ptr %spec.select.i.i.i.i.i256, align 8, !tbaa !453, !noalias !969
+  %.not.i.i.i.i.i = icmp eq i16 %i.fr, 118
+  %spec.select.v.i.i.i.i.i = select i1 %.not.i.i.i.i.i, i64 48, i64 40
+  %i.fs = getelementptr inbounds nuw i8, ptr %i.fh, i64 %spec.select.v.i.i.i.i.i
+  %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !453, !noalias !969
   call void @_ZNK5clang4ento12ProgramState8BindExprEPKNS_4ExprEPKNS_10StackFrameENS0_4SValEb(ptr dead_on_unwind nonnull writable sret(%"class.llvm::IntrusiveRefCntPtr") align 8 %35, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.4, ptr noundef %i.ft, ptr noundef %i.k, ptr %i.fp, i8 4, i1 noundef zeroext true) #15
   %i.fu = load ptr, ptr %35, align 8, !tbaa !181
   store ptr %.sroa.0.4, ptr %35, align 8, !tbaa !181
@@ -632,16 +630,14 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !184
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call noundef ptr %i.c(ptr noundef nonnull align 8 dereferenceable(72) %0) #15 ; 3 uses
+  %i.d = tail call noundef ptr %i.c(ptr noundef nonnull align 8 dereferenceable(72) %0) #15 ; 2 uses
   %i.e = load i16, ptr %i.d, align 8
   %i.f = and i16 %i.e, 511
-  %.not.i.i.i.i = icmp eq i16 %i.f, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.d, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %2, ptr %i.g
+  %.not.i.i.i.i = icmp eq i16 %i.f, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %spec.select.v.i.i.i.i
   %i.h = zext i32 %1 to i64
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.h
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !453
   ret ptr %i.j
 }
@@ -934,16 +930,14 @@ define linkonce_odr hidden noundef ptr @_ZNK5clang4ento27CXXInheritedConstructor
 bb.a:
   %i.a = tail call noundef ptr @_ZNK5clang4ento27CXXInheritedConstructorCall23getInheritingStackFrameEv(ptr noundef nonnull align 8 dereferenceable(72) %0) #15
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !431  ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !431  ; 2 uses
   %i.d = load i16, ptr %i.c, align 8
   %i.e = and i16 %i.d, 511
-  %.not.i.i.i.i = icmp eq i16 %i.e, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.c, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %2, ptr %i.f
+  %.not.i.i.i.i = icmp eq i16 %i.e, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %spec.select.v.i.i.i.i
   %i.g = zext i32 %1 to i64
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.g
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.g
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !453
   ret ptr %i.i
 }

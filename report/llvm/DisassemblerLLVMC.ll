@@ -202,9 +202,8 @@ _ZN16InstructionLLVMC17ConsumeWhitespaceEPKcS1_.exit.i: ; preds = %bb.w, %.lr.ph
 
 bb.x:                                             ; preds = %_ZN16InstructionLLVMC17ConsumeWhitespaceEPKcS1_.exit.i
   %i.fg = load i8, ptr %.07.lcssa.i.i, align 1, !tbaa !27
-  %i.fh = icmp eq i8 %i.fg, 44                    ; 2 uses
-  %spec.select.idx.i = zext i1 %i.fh to i64
-  %spec.select.i = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 %spec.select.idx.i
+  %i.fh = icmp eq i8 %i.fg, 44
+  %spec.select.i = getelementptr inbounds nuw i8, ptr %.07.lcssa.i.i, i64 1
   %i.fi = select i1 %i.fh, ptr %spec.select.i, ptr %.0143155165175182
   br label %_ZN16InstructionLLVMC11ConsumeCharEPKccS1_.exit
 

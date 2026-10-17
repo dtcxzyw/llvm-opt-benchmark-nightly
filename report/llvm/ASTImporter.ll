@@ -205,7 +205,7 @@ _ZN5clang15ASTNodeImporter13importCheckedINS_8QualTypeEEET_RN4llvm5ErrorERKS3_.e
 
 _ZN5clang15ASTNodeImporter13importCheckedINS_8QualTypeEEET_RN4llvm5ErrorERKS3_.exit.thread: ; preds = %bb.b, %_ZN5clang11ASTImporter6ImportENS_8QualTypeE.exit.i.thread72, %_ZN5clang15ASTNodeImporter13importCheckedINS_8QualTypeEEET_RN4llvm5ErrorERKS3_.exit
   %.sroa.06.1.i81 = phi i64 [ 0, %_ZN5clang15ASTNodeImporter13importCheckedINS_8QualTypeEEET_RN4llvm5ErrorERKS3_.exit ], [ %.sink.i.i39.ph, %_ZN5clang11ASTImporter6ImportENS_8QualTypeE.exit.i.thread72 ], [ 0, %bb.b ]
-  %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !9378
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22, !noalias !9379
   %i.ai = load ptr, ptr %1, align 8, !tbaa !160, !noalias !9379, !nonnull !161, !align !162
@@ -332,11 +332,10 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj8EEC2Em.exit: ; preds = %_ZN4llvm15SmallVe
   %i.bv = shl nuw nsw i64 %i.bu, 3
   %i.bw = load i16, ptr %2, align 8
   %i.bx = and i16 %i.bw, 511
-  %.not.i.i.i17 = icmp eq i16 %i.bx, 118          ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i17, ptr %2, ptr null
-  %i.by = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %spec.select.i.i.i = select i1 %.not.i.i.i17, ptr %i.by, ptr %i.ag ; 2 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 %i.bv
+  %.not.i.i.i17 = icmp eq i16 %i.bx, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i17, i64 48, i64 40
+  %i.by = getelementptr inbounds nuw i8, ptr %2, i64 %spec.select.v.i.i.i ; 2 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.bv
   %.not3841.i = icmp eq i32 %.pre, 0
   br i1 %.not3841.i, label %_ZN4llvm5ErrorD2Ev.exit19, label %.lr.ph.i
 
@@ -347,7 +346,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj8EEC2Em.exit: ; preds = %_ZN4llvm15SmallVe
 
 bb.i:                                             ; preds = %_ZN4llvm8ExpectedIPN5clang4ExprEED2Ev.exit.i, %.lr.ph.i
   %.0344.i = phi ptr [ %.pre30, %.lr.ph.i ], [ %i.ch, %_ZN4llvm8ExpectedIPN5clang4ExprEED2Ev.exit.i ] ; 2 uses
-  %.sroa.019.043.i = phi ptr [ %spec.select.i.i.i, %.lr.ph.i ], [ %i.cg, %_ZN4llvm8ExpectedIPN5clang4ExprEED2Ev.exit.i ] ; 2 uses
+  %.sroa.019.043.i = phi ptr [ %i.by, %.lr.ph.i ], [ %i.cg, %_ZN4llvm8ExpectedIPN5clang4ExprEED2Ev.exit.i ] ; 2 uses
   %i.cb = load ptr, ptr %.sroa.019.043.i, align 8, !tbaa !191, !noalias !9388
   %i.cc = load ptr, ptr %1, align 8, !tbaa !160, !noalias !9389, !nonnull !161, !align !162
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22, !noalias !9390
@@ -750,12 +749,10 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj6EEC2Em.exit: ; preds = %_ZN4llvm15SmallVe
   %i.bt = shl nuw nsw i64 %i.bs, 3
   %i.bu = load i16, ptr %2, align 8
   %i.bv = and i16 %i.bu, 511
-  %.not.i.i.i24 = icmp eq i16 %i.bv, 118          ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i24, ptr %2, ptr null
-  %11 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.bw = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i24, ptr %11, ptr %i.bw ; 2 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 %i.bt
+  %.not.i.i.i24 = icmp eq i16 %i.bv, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i24, i64 48, i64 40
+  %i.bw = getelementptr inbounds nuw i8, ptr %2, i64 %spec.select.v.i.i.i ; 2 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.bt
   %.not3841.i = icmp eq i32 %.pre, 0
   br i1 %.not3841.i, label %_ZN4llvm5ErrorD2Ev.exit26, label %.lr.ph.i
 
@@ -766,7 +763,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj6EEC2Em.exit: ; preds = %_ZN4llvm15SmallVe
 
 bb.i:                                             ; preds = %_ZN4llvm8ExpectedIPN5clang4ExprEED2Ev.exit.i, %.lr.ph.i
   %.0344.i = phi ptr [ %.pre38, %.lr.ph.i ], [ %i.cf, %_ZN4llvm8ExpectedIPN5clang4ExprEED2Ev.exit.i ] ; 2 uses
-  %.sroa.019.043.i = phi ptr [ %spec.select.i.i.i, %.lr.ph.i ], [ %i.ce, %_ZN4llvm8ExpectedIPN5clang4ExprEED2Ev.exit.i ] ; 2 uses
+  %.sroa.019.043.i = phi ptr [ %i.bw, %.lr.ph.i ], [ %i.ce, %_ZN4llvm8ExpectedIPN5clang4ExprEED2Ev.exit.i ] ; 2 uses
   %i.bz = load ptr, ptr %.sroa.019.043.i, align 8, !tbaa !191, !noalias !9705
   %i.ca = load ptr, ptr %1, align 8, !tbaa !160, !noalias !9706, !nonnull !161, !align !162
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22, !noalias !9707

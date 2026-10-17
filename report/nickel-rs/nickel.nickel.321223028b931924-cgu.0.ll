@@ -205,20 +205,15 @@ bb.ae:                                            ; preds = %bb.ad
   %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   store i32 %.sroa.6.0.copyload, ptr %i.i, align 4
-  br label %6
+  br label %bb.af
 
-6:                                                ; preds = %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i", %bb.ae
-  %.sroa.03.0.i14.i.i = phi ptr [ %.sroa.03.0.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i" ], [ %i.m, %bb.ae ] ; 3 uses
-  %.not.i.i.i = icmp eq ptr %.sroa.03.0.i14.i.i, null
-  br i1 %.not.i.i.i, label %bb.an, label %bb.af
-
-bb.af:                                            ; preds = %6
-  %i.bn = load ptr, ptr %.sroa.03.0.i14.i.i, align 8, !noalias !483, !nonnull !16, !noundef !16 ; 5 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.03.0.i14.i.i, i64 8
+bb.af:                                            ; preds = %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i", %bb.ae
+  %.sroa.03.0.i1720.i.i = phi ptr [ %i.m, %bb.ae ], [ %i.bq, %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i" ] ; 2 uses
+  %i.bn = load ptr, ptr %.sroa.03.0.i1720.i.i, align 8, !noalias !483, !nonnull !16, !noundef !16 ; 5 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.03.0.i1720.i.i, i64 8
   %i.bp = load ptr, ptr %i.bo, align 8, !noalias !483, !noundef !16 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.bp, null
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
-  %.sroa.03.0.i.i.i = select i1 %.not4.i.i.i, ptr null, ptr %i.bq
   call void @llvm.experimental.noalias.scope.decl(metadata !484)
   call void @llvm.experimental.noalias.scope.decl(metadata !485)
   call void @llvm.experimental.noalias.scope.decl(metadata !486)
@@ -267,13 +262,13 @@ bb.ah:                                            ; preds = %bb.aj, %bb.ag
   %i.cm = getelementptr inbounds i8, ptr %i.cl, i64 -16
   %.val3.i.i.i.i.i.i.i = load i32, ptr %i.cm, align 4, !noalias !494, !noundef !16
   %i.cn = icmp eq i32 %.sroa.6.0.copyload, %.val3.i.i.i.i.i.i.i
-  br i1 %i.cn, label %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find17h9774654bc593dda6E.exit.i.i.i.i.i", label %bb.ai, !prof !18
+  br i1 %i.cn, label %"_ZN18nickel_lang_parser11environment24Environment$LT$K$C$V$GT$3get17hd492230ec3954e5eE.exit", label %bb.ai, !prof !18
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.ai, %bb.ah
   %i.co = icmp eq <16 x i8> %.sroa.0.0.copyload.i26.i.i.i.i.i.i, splat (i8 -1)
   %i.cp = bitcast <16 x i1> %i.co to i16
   %i.cq = icmp eq i16 %i.cp, 0
-  br i1 %i.cq, label %bb.aj, label %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find17h9774654bc593dda6E.exit.i.i.i.i.i", !prof !22
+  br i1 %i.cq, label %bb.aj, label %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i", !prof !22
 
 bb.ai:                                            ; preds = %.lr.ph.i.i.i.i.i.i
   %i.cr = add i16 %.sroa.06.0.i33.i.i.i.i.i.i, -1
@@ -286,23 +281,12 @@ bb.aj:                                            ; preds = %._crit_edge.i.i.i.i
   %i.cu = add i64 %.sroa.01.0.i.i.i.i.i.i.i, %i.ct
   br label %bb.ah
 
-"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find17h9774654bc593dda6E.exit.i.i.i.i.i": ; preds = %._crit_edge.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
-  %7 = phi ptr [ %i.cl, %.lr.ph.i.i.i.i.i.i ], [ null, %._crit_edge.i.i.i.i.i.i ] ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %7, null
-  %8 = getelementptr inbounds i8, ptr %7, i64 -16
-  %.sroa.0.1.i.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr null, ptr %8
-  br label %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i"
+"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i": ; preds = %._crit_edge.i.i.i.i.i.i, %bb.af
+  br i1 %.not4.i.i.i, label %bb.an, label %bb.af
 
-"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i": ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find17h9774654bc593dda6E.exit.i.i.i.i.i", %bb.af
-  %.sroa.0.0.i.i.i.i.i = phi ptr [ %.sroa.0.1.i.i.i.i.i, %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find17h9774654bc593dda6E.exit.i.i.i.i.i" ], [ null, %bb.af ] ; 2 uses
-  %.not.i.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i, null
-  %9 = getelementptr i8, ptr %.sroa.0.0.i.i.i.i.i, i64 8 ; 2 uses
-  %.not711.i.i = icmp eq ptr %9, null
-  %.not7.i.i = or i1 %.not.i.i.i.i, %.not711.i.i
-  br i1 %.not7.i.i, label %6, label %"_ZN18nickel_lang_parser11environment24Environment$LT$K$C$V$GT$3get17hd492230ec3954e5eE.exit"
-
-"_ZN18nickel_lang_parser11environment24Environment$LT$K$C$V$GT$3get17hd492230ec3954e5eE.exit": ; preds = %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i"
-  %.val27 = load ptr, ptr %9, align 8, !nonnull !16, !noundef !16 ; 4 uses
+"_ZN18nickel_lang_parser11environment24Environment$LT$K$C$V$GT$3get17hd492230ec3954e5eE.exit": ; preds = %.lr.ph.i.i.i.i.i.i
+  %6 = getelementptr inbounds i8, ptr %i.cl, i64 -8
+  %.val27 = load ptr, ptr %6, align 8, !nonnull !16, !noundef !16 ; 4 uses
   %i.cv = ptrtoint ptr %.val27 to i64
   %i.cw = and i64 %i.cv, 3
   %..i = call i64 @llvm.umin.i64(i64 %i.cw, i64 2)
@@ -349,7 +333,7 @@ bb.am:                                            ; preds = %bb.al
 .noexc38:                                         ; preds = %bb.am
   unreachable
 
-bb.an:                                            ; preds = %6
+bb.an:                                            ; preds = %"_ZN4core4iter6traits8iterator8Iterator8find_map5check28_$u7b$$u7b$closure$u7d$$u7d$17he9051501e0c3e561E.exit.i.i"
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.dj = load i64, ptr %i.l, align 8, !range !15, !noundef !16
   %i.dk = load ptr, ptr %i.p, align 8

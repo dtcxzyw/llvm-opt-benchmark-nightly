@@ -202,10 +202,9 @@ bb.f:                                             ; preds = %dcm_tag_is_open.exi
   br i1 %i.as, label %bb.g, label %dcm_tag_lookup.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.at = trunc i16 %.0313358 to i1               ; 3 uses
+  %i.at = trunc i16 %.0313358 to i1               ; 2 uses
   %i.au = icmp eq i16 %.0312, 0                   ; 2 uses
-  %or.cond.i = and i1 %i.au, %i.at
-  %dcm_tag_lookup.tag_private_grp_len.mux.i = select i1 %or.cond.i, ptr @dcm_tag_lookup.tag_private_grp_len, ptr @dcm_tag_lookup.tag_private
+  %dcm_tag_lookup.tag_private_grp_len.mux.i = select i1 %i.au, ptr @dcm_tag_lookup.tag_private_grp_len, ptr @dcm_tag_lookup.tag_private
   %brmerge41.i = or i1 %i.au, %i.at
   %dcm_tag_lookup.tag_private_grp_len.mux.mux.i = select i1 %i.at, ptr %dcm_tag_lookup.tag_private_grp_len.mux.i, ptr @dcm_tag_lookup.tag_grp_length
   br i1 %brmerge41.i, label %.thread.sink.split.i, label %bb.h

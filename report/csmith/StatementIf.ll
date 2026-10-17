@@ -202,7 +202,7 @@ bb.an:                                            ; preds = %bb.am
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 48
   %i.ee = load ptr, ptr %i.ed, align 8
   %i.ef = invoke noundef zeroext i1 %i.ee(ptr noundef nonnull align 8 dereferenceable(192) %i.eb)
-          to label %bb.ao unwind label %bb.aq     ; 3 uses
+          to label %bb.ao unwind label %bb.aq     ; 2 uses
 
 bb.ao:                                            ; preds = %bb.an
   %i.eg = load ptr, ptr %i.dc, align 8, !tbaa !54, !nonnull !55, !align !56 ; 2 uses
@@ -227,8 +227,7 @@ bb.ar:                                            ; preds = %.invoke, %bb.at, %b
   br label %bb.aw
 
 .invoke:                                          ; preds = %bb.ap
-  %or.cond = and i1 %i.ef, %i.ek
-  %.mux = select i1 %or.cond, ptr %3, ptr %8
+  %.mux = select i1 %i.ek, ptr %3, ptr %8
   %.mux.mux = select i1 %i.ef, ptr %.mux, ptr %6
   %i.en = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIPK4FactSaIS2_EEaSERKS4_(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %.mux.mux)
           to label %bb.au unwind label %bb.ar     ; 0 uses
