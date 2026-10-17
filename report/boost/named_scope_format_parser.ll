@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not3853.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24find_closing_parenthesisEPKcS6_Rc.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a
-  %.0 = phi i8 [ %.248, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a ], [ 0, %bb.b ] ; 7 uses
+  %.0 = phi i8 [ %.248, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a ], [ 0, %bb.b ] ; 6 uses
   %.02456.i = phi ptr [ %.4.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a ], [ %i.i, %bb.b ] ; 5 uses
-  %.02655.i = phi i32 [ %.228.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a ], [ 1, %bb.b ] ; 6 uses
-  %.02954.i = phi i1 [ %.231.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a ], [ false, %bb.b ] ; 7 uses
+  %.02655.i = phi i32 [ %.228.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a ], [ 1, %bb.b ] ; 5 uses
+  %.02954.i = phi i1 [ %.231.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a ], [ false, %bb.b ] ; 6 uses
   %i.j = load i8, ptr %.02456.i, align 1, !tbaa !14 ; 3 uses
   switch i8 %i.j, label %bb.k [
     i8 41, label %bb.c
@@ -235,7 +235,7 @@ bb.e:                                             ; preds = %.lr.ph.i
 .outer.split.i.i:                                 ; preds = %bb.i, %.outer.split.i.preheader.i
   %.012.i.i = phi ptr [ %i.s, %bb.i ], [ %.012.ph.i52.i, %.outer.split.i.preheader.i ] ; 5 uses
   %.not20.i.i = icmp eq ptr %.012.i.i, %.02867
-  br i1 %.not20.i.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a, label %bb.f, !llvm.loop !137
+  br i1 %.not20.i.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %.outer.split.i.i
   %i.o = load i8, ptr %.012.i.i, align 1, !tbaa !14
@@ -264,7 +264,11 @@ bb.i:                                             ; preds = %bb.f
   %.114.i.i = phi i32 [ %i.q, %bb.h ], [ %i.p, %bb.g ], [ %.013.ph.i51.i, %bb.f ], [ %.013.ph.i51.i, %bb.i ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.012.i.i, i64 1 ; 2 uses
   %.not.i.i = icmp eq i32 %.114.i.i, 0
-  br i1 %.not.i.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a, label %.outer.split.i.preheader.i, !llvm.loop !1
+  br i1 %.not.i.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i, label %.outer.split.i.preheader.i, !llvm.loop !1
+
+_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i: ; preds = %.loopexit.i.i, %.outer.split.i.i
+  %.012.lcssa.split.i.i = phi ptr [ %.012.i.i, %.outer.split.i.i ], [ %i.t, %.loopexit.i.i ]
+  br label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a, !llvm.loop !137
 
 bb.j:                                             ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
@@ -288,11 +292,11 @@ bb.l:                                             ; preds = %bb.k, %bb.d, %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %.02456.i, i64 1
   br label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a
 
-_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a: ; preds = %.loopexit.i.i, %.outer.split.i.i, %bb.l, %bb.j
-  %.248 = phi i8 [ %.147, %bb.l ], [ %.0, %bb.j ], [ %.0, %.outer.split.i.i ], [ %.0, %.loopexit.i.i ] ; 2 uses
-  %.231.i = phi i1 [ %.130.i, %bb.l ], [ %.02954.i, %bb.j ], [ %.02954.i, %.outer.split.i.i ], [ %.02954.i, %.loopexit.i.i ]
-  %.228.i = phi i32 [ %.127.i, %bb.l ], [ %.02655.i, %bb.j ], [ %.02655.i, %.outer.split.i.i ], [ %.02655.i, %.loopexit.i.i ]
-  %.4.i = phi ptr [ %i.y, %bb.l ], [ %i.v, %bb.j ], [ %.012.i.i, %.outer.split.i.i ], [ %i.t, %.loopexit.i.i ] ; 3 uses
+_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i.a: ; preds = %bb.l, %bb.j, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i
+  %.248 = phi i8 [ %.147, %bb.l ], [ %.0, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i ], [ %.0, %bb.j ] ; 2 uses
+  %.231.i = phi i1 [ %.130.i, %bb.l ], [ %.02954.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i ], [ %.02954.i, %bb.j ]
+  %.228.i = phi i32 [ %.127.i, %bb.l ], [ %.02655.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i ], [ %.02655.i, %bb.j ]
+  %.4.i = phi ptr [ %i.y, %bb.l ], [ %.012.lcssa.split.i.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i ], [ %i.v, %bb.j ] ; 3 uses
   %.not38.i = icmp eq ptr %.4.i, %.02867
   br i1 %.not38.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24find_closing_parenthesisEPKcS6_Rc.exit.loopexit, label %.lr.ph.i
 
@@ -424,12 +428,12 @@ bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %.05696113, i64 1 ; 2 uses
   br label %.outer.split.i.preheader
 
-.outer.split.i.preheader:                         ; preds = %bb.d, %.loopexit.i
+.outer.split.i.preheader:                         ; preds = %.loopexit.i, %bb.d
   %.012.ph.i93 = phi ptr [ %i.h, %bb.d ], [ %i.n, %.loopexit.i ]
   %.013.ph.i92 = phi i32 [ 1, %bb.d ], [ %.114.i, %.loopexit.i ] ; 4 uses
   br label %.outer.split.i
 
-.outer.split.i:                                   ; preds = %.outer.split.i.preheader, %bb.h
+.outer.split.i:                                   ; preds = %bb.h, %.outer.split.i.preheader
   %.012.i = phi ptr [ %i.m, %bb.h ], [ %.012.ph.i93, %.outer.split.i.preheader ] ; 5 uses
   %.not20.i = icmp eq ptr %.012.i, %1
   br i1 %.not20.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit, label %bb.e

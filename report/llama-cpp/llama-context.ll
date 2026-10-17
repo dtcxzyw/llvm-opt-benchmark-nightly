@@ -205,63 +205,82 @@ bb.cg:                                            ; preds = %bb.ce, %bb.cd
   %i.mw = icmp ne ptr %i.mv, null
   %i.mx = icmp ne ptr %i.mh, null
   %or.cond = and i1 %i.mx, %i.mw
-  br i1 %or.cond, label %bb.ch, label %.loopexit.thread
+  br i1 %or.cond, label %12, label %.loopexit.thread
 
-bb.ch:                                            ; preds = %bb.cg
-  %i.my = load i32, ptr %i.fz, align 8, !tbaa !194
+12:                                               ; preds = %bb.cg
+  %13 = load i32, ptr %i.fz, align 8, !tbaa !194
+  %.not346 = icmp eq i32 %13, 0
+  br i1 %.not346, label %.loopexit.thread, label %bb.ch
+
+bb.ch:                                            ; preds = %12
+  %14 = getelementptr inbounds nuw i8, ptr %i.jn, i64 4
+  %i.my = load i32, ptr %14, align 4, !tbaa !459  ; 2 uses
   %.not346.a = icmp eq i32 %i.my, 0
   br i1 %.not346.a, label %.loopexit.thread, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
-  %12 = getelementptr inbounds nuw i8, ptr %i.jn, i64 4
-  %13 = load i32, ptr %12, align 4, !tbaa !459    ; 2 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %i.jn, i64 80
-  %i.na = load ptr, ptr %i.mz, align 8
+  %i.na = load ptr, ptr %i.mz, align 8, !tbaa !405 ; 2 uses
   %i.nb = getelementptr inbounds nuw i8, ptr %i.jn, i64 48
-  %i.nc = load ptr, ptr %i.nb, align 8
+  %i.nc = load ptr, ptr %i.nb, align 8            ; 2 uses
   %i.nd = getelementptr inbounds nuw i8, ptr %i.jn, i64 56
   %i.ne = load ptr, ptr %i.nd, align 8
-  %i.nf = load ptr, ptr %i.gc, align 8            ; 2 uses
-  %.not10.i.i.i.i = icmp eq ptr %i.nf, null
-  %14 = zext i32 %13 to i64                       ; 2 uses
-  %exitcond40.not.i665 = icmp eq i32 %13, 0
-  br i1 %exitcond40.not.i665, label %.loopexit, label %.lr.ph667.a
+  %i.nf = load ptr, ptr %i.gc, align 8
+  %.fr.i = freeze ptr %i.nf                       ; 2 uses
+  %.not10.i.i.i.i = icmp eq ptr %.fr.i, null
+  %wide.trip.count52.i = zext i32 %i.my to i64    ; 2 uses
+  br i1 %.not10.i.i.i.i, label %.lr.ph667.a, label %.lr.ph34.split.i
 
-.lr.ph667.a:                                      ; preds = %bb.ci, %.loopexit.i
-  %indvars.iv36.i666 = phi i64 [ %indvars.iv.next37.i, %.loopexit.i ], [ 0, %bb.ci ] ; 7 uses
+.lr.ph667.a:                                      ; preds = %bb.ci, %.loopexit.us.i
+  %indvars.iv36.i666 = phi i64 [ %indvars.iv.next50.i, %.loopexit.us.i ], [ 0, %bb.ci ] ; 3 uses
   %i.ng = getelementptr inbounds nuw i8, ptr %i.na, i64 %indvars.iv36.i666
   %i.nh = load i8, ptr %i.ng, align 1, !tbaa !205
   %.not.i399.a = icmp eq i8 %i.nh, 0
-  br i1 %.not.i399.a, label %.loopexit.i, label %.preheader.i.a
+  br i1 %.not.i399.a, label %.loopexit.us.i, label %.preheader.i.a
+
+.loopexit.us.i:                                   ; preds = %.preheader.i.a, %.lr.ph667.a
+  %indvars.iv.next50.i = add nuw nsw i64 %indvars.iv36.i666, 1 ; 2 uses
+  %exitcond53.not.i = icmp eq i64 %indvars.iv.next50.i, %wide.trip.count52.i
+  br i1 %exitcond53.not.i, label %.loopexit.thread, label %.lr.ph667.a, !llvm.loop !871
 
 .preheader.i.a:                                   ; preds = %.lr.ph667.a
   %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.nc, i64 %indvars.iv36.i666
-  %i.nj = load i32, ptr %i.ni, align 4, !tbaa !199 ; 2 uses
+  %i.nj = load i32, ptr %i.ni, align 4, !tbaa !199
   %.not2331.i.a = icmp sgt i32 %i.nj, 0
-  br i1 %.not2331.i.a, label %.lr.ph.i.a, label %.loopexit.i
+  br i1 %.not2331.i.a, label %bb.ck, label %.loopexit.us.i
 
-.lr.ph.i.a:                                       ; preds = %.preheader.i.a
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.ne, i64 %indvars.iv36.i666
-  %16 = load ptr, ptr %15, align 8, !tbaa !356
-  br i1 %.not10.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.preheader.preheader.i
+.lr.ph34.split.i:                                 ; preds = %bb.ci, %.loopexit.i
+  %indvars.iv44.i = phi i64 [ %indvars.iv.next37.i, %.loopexit.i ], [ 0, %bb.ci ] ; 4 uses
+  %15 = getelementptr inbounds nuw i8, ptr %i.na, i64 %indvars.iv44.i
+  %16 = load i8, ptr %15, align 1, !tbaa !205
+  %.not.i399 = icmp eq i8 %16, 0
+  br i1 %.not.i399, label %.loopexit.i, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph34.split.i
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.nc, i64 %indvars.iv44.i
+  %18 = load i32, ptr %17, align 4, !tbaa !199    ; 2 uses
+  %.not2331.i = icmp sgt i32 %18, 0
+  br i1 %.not2331.i, label %.lr.ph.i.i.i.preheader.preheader.i, label %.loopexit.i
 
 .lr.ph.i.i.i.preheader.preheader.i:               ; preds = %.lr.ph.i.a
-  %wide.trip.count.i = zext nneg i32 %i.nj to i64
+  %19 = getelementptr inbounds nuw [8 x i8], ptr %i.ne, i64 %indvars.iv44.i
+  %20 = load ptr, ptr %19, align 8, !tbaa !356
+  %wide.trip.count.i = zext nneg i32 %18 to i64
   br label %.lr.ph.i.i.i.preheader.i
 
 bb.cj:                                            ; preds = %_ZNKSt3mapIiP13llama_samplerSt4lessIiESaISt4pairIKiS1_EEE4findERS5_.exit.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i.i.i.preheader.i, !llvm.loop !871
+  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i.i.i.preheader.i, !llvm.loop !872
 
 .lr.ph.i.i.i.preheader.i:                         ; preds = %bb.cj, %.lr.ph.i.i.i.preheader.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.i.i.preheader.preheader.i ], [ %indvars.iv.next.i, %bb.cj ] ; 2 uses
-  %i.nk = getelementptr inbounds nuw [4 x i8], ptr %16, i64 %indvars.iv.i
+  %i.nk = getelementptr inbounds nuw [4 x i8], ptr %20, i64 %indvars.iv.i
   %i.nl = load i32, ptr %i.nk, align 4, !tbaa !199 ; 2 uses
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.preheader.i
-  %.012.i.i.i.i = phi ptr [ %.1.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.nf, %.lr.ph.i.i.i.preheader.i ] ; 3 uses
+  %.012.i.i.i.i = phi ptr [ %.1.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.fr.i, %.lr.ph.i.i.i.preheader.i ] ; 3 uses
   %.0811.i.i.i.i = phi ptr [ %.19.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.fy, %.lr.ph.i.i.i.preheader.i ]
   %i.nm = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.nn = load i32, ptr %i.nm, align 4, !tbaa !199
@@ -275,25 +294,20 @@ bb.cj:                                            ; preds = %_ZNKSt3mapIiP13llam
 
 _ZNKSt8_Rb_treeIiSt4pairIKiP13llama_samplerESt10_Select1stIS4_ESt4lessIiESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i
   %i.np = icmp eq ptr %.19.i.i.i.i, %i.fy
-  br i1 %i.np, label %.loopexit, label %_ZNKSt3mapIiP13llama_samplerSt4lessIiESaISt4pairIKiS1_EEE4findERS5_.exit.i
+  br i1 %i.np, label %bb.ck, label %_ZNKSt3mapIiP13llama_samplerSt4lessIiESaISt4pairIKiS1_EEE4findERS5_.exit.i
 
 _ZNKSt3mapIiP13llama_samplerSt4lessIiESaISt4pairIKiS1_EEE4findERS5_.exit.i: ; preds = %_ZNKSt8_Rb_treeIiSt4pairIKiP13llama_samplerESt10_Select1stIS4_ESt4lessIiESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i
   %i.nq = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32
   %i.nr = load i32, ptr %i.nq, align 4, !tbaa !199
   %i.ns = icmp slt i32 %i.nl, %i.nr
-  br i1 %i.ns, label %.loopexit, label %bb.cj
+  br i1 %i.ns, label %bb.ck, label %bb.cj
 
-.loopexit.i:                                      ; preds = %bb.cj, %.preheader.i.a, %.lr.ph667.a
-  %indvars.iv.next37.i = add nuw nsw i64 %indvars.iv36.i666, 1 ; 2 uses
-  %exitcond40.not.i = icmp eq i64 %indvars.iv.next37.i, %14
-  br i1 %exitcond40.not.i, label %.loopexit.thread, label %.lr.ph667.a, !llvm.loop !872
+.loopexit.i:                                      ; preds = %bb.cj, %.lr.ph.i.a, %.lr.ph34.split.i
+  %indvars.iv.next37.i = add nuw nsw i64 %indvars.iv44.i, 1 ; 2 uses
+  %exitcond40.not.i = icmp eq i64 %indvars.iv.next37.i, %wide.trip.count52.i
+  br i1 %exitcond40.not.i, label %.loopexit.thread, label %.lr.ph34.split.i, !llvm.loop !871
 
-.loopexit:                                        ; preds = %.lr.ph.i.a, %_ZNKSt3mapIiP13llama_samplerSt4lessIiESaISt4pairIKiS1_EEE4findERS5_.exit.i, %_ZNKSt8_Rb_treeIiSt4pairIKiP13llama_samplerESt10_Select1stIS4_ESt4lessIiESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i, %bb.ci
-  %indvars.iv36.i596 = phi i64 [ 0, %bb.ci ], [ %indvars.iv36.i666, %_ZNKSt3mapIiP13llama_samplerSt4lessIiESaISt4pairIKiS1_EEE4findERS5_.exit.i ], [ %indvars.iv36.i666, %_ZNKSt8_Rb_treeIiSt4pairIKiP13llama_samplerESt10_Select1stIS4_ESt4lessIiESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i ], [ %indvars.iv36.i666, %.lr.ph.i.a ]
-  %17 = icmp samesign ult i64 %indvars.iv36.i596, %14
-  br i1 %17, label %bb.ck, label %.loopexit.thread
-
-bb.ck:                                            ; preds = %.loopexit
+bb.ck:                                            ; preds = %.preheader.i.a, %_ZNKSt3mapIiP13llama_samplerSt4lessIiESaISt4pairIKiS1_EEE4findERS5_.exit.i, %_ZNKSt8_Rb_treeIiSt4pairIKiP13llama_samplerESt10_Select1stIS4_ESt4lessIiESaIS4_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS4_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i
   %i.nt = load ptr, ptr %i.gd, align 8, !tbaa !365
   %i.nu = invoke ptr @ggml_backend_sched_get_tensor_backend(ptr noundef %i.nt, ptr noundef nonnull %i.mh)
           to label %bb.cl unwind label %.loopexit559.a ; 2 uses
@@ -369,7 +383,7 @@ bb.cq:                                            ; preds = %bb.cp
   invoke void @ggml_backend_tensor_get_async(ptr noundef nonnull %i.nu, ptr noundef nonnull %i.mh, ptr noundef nonnull %i.nz, i64 noundef 0, i64 noundef %i.oh)
           to label %.loopexit.thread unwind label %.loopexit564
 
-.loopexit.thread:                                 ; preds = %.loopexit.i, %bb.cn, %bb.cq, %.loopexit, %bb.ch, %bb.cg
+.loopexit.thread:                                 ; preds = %.loopexit.i, %.loopexit.us.i, %bb.ch, %bb.cn, %bb.cq, %12, %bb.cg
   %i.oi = load ptr, ptr %i.gh, align 8, !tbaa !358
   %i.oj = icmp ne ptr %i.oi, null
   %i.ok = icmp ne ptr %.0258, null

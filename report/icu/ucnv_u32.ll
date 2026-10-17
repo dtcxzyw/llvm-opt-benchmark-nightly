@@ -204,62 +204,46 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !15   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !17   ; 8 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !17   ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !32   ; 6 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !32   ; 7 uses
   %i.i = ptrtoaddr ptr %i.h to i64
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 76 ; 2 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !45   ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 4 uses
-  %3 = icmp ne ptr %i.h, null                     ; 3 uses
   %i.l = icmp ult ptr %i.d, %i.f
-  br i1 %i.l, label %.outer.split.preheader, label %.critedge.split
+  br i1 %i.l, label %.outer.split.preheader, label %.loopexit
 
 .outer.split.preheader:                           ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
+  %3 = icmp eq ptr %i.h, null                     ; 2 uses
   %i.m = load i32, ptr %1, align 4, !tbaa !31
   %i.n = icmp sgt i32 %i.m, 0
   br label %.outer.split
 
-.outer.jt1:                                       ; preds = %bb.b, %.loopexit117
-  %.189.jt1 = phi i32 [ 5, %.loopexit117 ], [ 1, %bb.b ] ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.091.ph.ph191, i64 1 ; 4 uses
-  %5 = icmp ult ptr %4, %i.f
-  br i1 %5, label %.outer.split.jt1.a, label %.critedge.split
-
-.outer.jt9:                                       ; preds = %bb.e, %bb.m
-  %.192.jt9 = phi ptr [ %i.bb, %bb.m ], [ %i.ab, %bb.e ] ; 4 uses
-  %.1.jt9 = phi i32 [ %.0.ph.ph165, %bb.m ], [ %i.al, %bb.e ] ; 3 uses
-  %6 = icmp ult ptr %.192.jt9, %i.f
-  br i1 %6, label %.outer.split.jt9.a, label %.critedge.split
-
-.outer.jt8:                                       ; preds = %bb.g, %bb.f, %bb.j, %bb.d
-  %.0.ph.ph166 = phi i32 [ %.0.ph.ph168, %bb.j ], [ %i.ag, %bb.d ], [ 0, %bb.f ], [ 0, %bb.g ] ; 3 uses
-  %.091.ph.jt8 = phi ptr [ %i.ba, %bb.j ], [ %i.ab, %bb.d ], [ %i.am, %bb.f ], [ %i.am, %bb.g ] ; 4 uses
-  %7 = icmp ult ptr %.091.ph.jt8, %i.f
-  br i1 %7, label %.outer.split.jt8, label %.critedge.split
-
-.outer.split:                                     ; preds = %.outer.split.preheader, %.loopexit101
-  %.088.ph.ph192 = phi i32 [ %.2.a, %.loopexit101 ], [ %i.k, %.outer.split.preheader ] ; 9 uses
-  %.091.ph.ph191 = phi ptr [ %.192.a, %.loopexit101 ], [ %i.d, %.outer.split.preheader ] ; 12 uses
+.outer.split:                                     ; preds = %.outer.outer, %.outer.split.preheader
+  %.088.ph.ph192 = phi i32 [ %i.k, %.outer.split.preheader ], [ %.2, %.outer.outer ] ; 9 uses
+  %.091.ph.ph191 = phi ptr [ %i.d, %.outer.split.preheader ], [ %.192, %.outer.outer ] ; 12 uses
   br i1 %i.n, label %.critedge.split, label %.outer.split.split.preheader
 
-.outer.split.jt1.a:                               ; preds = %.outer.jt1
+.outer.split.jt1.a:                               ; preds = %.outer.outer.jt8, %.outer
+  %.0.ph.ph125175 = phi i32 [ 0, %.outer ], [ %.1.jt8, %.outer.outer.jt8 ] ; 2 uses
+  %.091.ph116.jt8 = phi ptr [ %i.am, %.outer ], [ %.192.jt8, %.outer.outer.jt8 ] ; 2 uses
   %i.o = load i32, ptr %1, align 4, !tbaa !31
   %i.p = icmp sgt i32 %i.o, 0
-  br i1 %i.p, label %.critedge.split, label %.outer.split.split.preheader.jt1
+  br i1 %i.p, label %.critedge.split, label %.loopexit138
 
-.outer.split.jt9.a:                               ; preds = %.outer.jt9
+.outer.split.jt9.a:                               ; preds = %.outer.outer.jt1
   %i.q = load i32, ptr %1, align 4, !tbaa !31
   %i.r = icmp sgt i32 %i.q, 0
-  br i1 %i.r, label %.critedge.split, label %.loopexit145
+  br i1 %i.r, label %.critedge.split, label %.outer.split.split.preheader.jt1
 
-.outer.split.jt8:                                 ; preds = %.outer.jt8
+.outer.split.jt8:                                 ; preds = %.loopexit101
   %i.s = load i32, ptr %1, align 4, !tbaa !31
   %i.t = icmp sgt i32 %i.s, 0
-  br i1 %i.t, label %.critedge.split, label %.loopexit138
+  br i1 %i.t, label %.critedge.split, label %.loopexit145
 
 .outer.split.split.preheader:                     ; preds = %.outer.split
-  switch i32 %.088.ph.ph192, label %.loopexit101 [
+  switch i32 %.088.ph.ph192, label %.outer.outer [
     i32 0, label %bb.b
     i32 1, label %.outer.split.split.preheader.jt1
     i32 2, label %.outer.split.split.preheader.jt1
@@ -274,27 +258,27 @@ bb.a:
 bb.b:                                             ; preds = %.outer.split.split.preheader
   %i.u = load i8, ptr %.091.ph.ph191, align 1, !tbaa !25
   switch i8 %i.u, label %.loopexit138.loopexit [
-    i8 0, label %.outer.jt1
+    i8 0, label %.outer.outer.jt1
     i8 -1, label %.loopexit117
   ]
 
 .loopexit117:                                     ; preds = %bb.b
-  br label %.outer.jt1
+  br label %.outer.outer.jt1
 
-.outer.split.split.preheader.jt1:                 ; preds = %.outer.split.jt1.a, %.outer.split.split.preheader, %.outer.split.split.preheader, %.outer.split.split.preheader, %.outer.split.split.preheader, %.outer.split.split.preheader, %.outer.split.split.preheader
-  %.088.ph162 = phi i32 [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.189.jt1, %.outer.split.jt1.a ] ; 4 uses
-  %.091.ph157 = phi ptr [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %4, %.outer.split.jt1.a ] ; 3 uses
-  %i.v = load i8, ptr %.091.ph157, align 1, !tbaa !25
-  %i.w = zext nneg i32 %.088.ph162 to i64
+.outer.split.split.preheader.jt1:                 ; preds = %.outer.split.jt9.a, %.outer.split.split.preheader, %.outer.split.split.preheader, %.outer.split.split.preheader, %.outer.split.split.preheader, %.outer.split.split.preheader, %.outer.split.split.preheader
+  %.091.ph116179 = phi ptr [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %.091.ph.ph191, %.outer.split.split.preheader ], [ %7, %.outer.split.jt9.a ] ; 3 uses
+  %.088.ph117178 = phi i32 [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.088.ph.ph192, %.outer.split.split.preheader ], [ %.189.jt1, %.outer.split.jt9.a ] ; 4 uses
+  %i.v = load i8, ptr %.091.ph116179, align 1, !tbaa !25
+  %i.w = zext nneg i32 %.088.ph117178 to i64
   %i.x = getelementptr inbounds nuw i8, ptr @_ZL8utf32BOM, i64 %i.w
   %i.y = load i8, ptr %i.x, align 1, !tbaa !25
   %i.z = icmp eq i8 %i.v, %i.y
   br i1 %i.z, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %.outer.split.split.preheader.jt1
-  %i.aa = add nuw nsw i32 %.088.ph162, 1          ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.091.ph157, i64 1 ; 5 uses
-  switch i32 %i.aa, label %.loopexit101 [
+  %i.aa = add nuw nsw i32 %.088.ph117178, 1       ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.091.ph116179, i64 1 ; 5 uses
+  switch i32 %i.aa, label %.outer.outer [
     i32 4, label %bb.d
     i32 8, label %bb.e
   ]
@@ -305,7 +289,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = sub i64 %i.ad, %i.ae
   %i.ag = trunc i64 %i.af to i32
-  br label %.outer.jt8
+  br label %.outer.outer.jt8
 
 bb.e:                                             ; preds = %bb.c
   %i.ah = load ptr, ptr %i.c, align 8, !tbaa !15
@@ -313,21 +297,21 @@ bb.e:                                             ; preds = %bb.c
   %i.aj = ptrtoint ptr %i.ah to i64
   %i.ak = sub i64 %i.ai, %i.aj
   %i.al = trunc i64 %i.ak to i32
-  br label %.outer.jt9
+  br label %.loopexit101
 
 bb.f:                                             ; preds = %.outer.split.split.preheader.jt1
-  %i.am = load ptr, ptr %i.c, align 8, !tbaa !15  ; 3 uses
-  %i.an = ptrtoint ptr %.091.ph157 to i64
+  %i.am = load ptr, ptr %i.c, align 8, !tbaa !15  ; 4 uses
+  %i.an = ptrtoint ptr %.091.ph116179 to i64
   %i.ao = ptrtoint ptr %i.am to i64
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = trunc i64 %i.ap to i32                  ; 2 uses
-  %i.ar = and i32 %.088.ph162, 3                  ; 2 uses
+  %i.ar = and i32 %.088.ph117178, 3               ; 2 uses
   %i.as = icmp eq i32 %i.ar, %i.aq
-  br i1 %i.as, label %.outer.jt8, label %bb.g
+  br i1 %i.as, label %.outer, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.at = load i8, ptr %2, align 2, !tbaa !55
-  %i.au = and i32 %.088.ph162, 4
+  %i.au = and i32 %.088.ph117178, 4
   %i.av = zext nneg i32 %i.au to i64
   %i.aw = getelementptr inbounds nuw i8, ptr @_ZL8utf32BOM, i64 %i.av ; 2 uses
   store ptr %i.aw, ptr %i.c, align 8, !tbaa !15
@@ -339,16 +323,20 @@ bb.g:                                             ; preds = %bb.f
   tail call void @_ZL31T_UConverter_toUnicode_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode(ptr noundef nonnull %0, ptr noundef nonnull %1)
   store ptr %i.f, ptr %i.e, align 8, !tbaa !17
   store i8 %i.at, ptr %2, align 2, !tbaa !55
-  br label %.outer.jt8
+  br label %.outer
+
+.outer:                                           ; preds = %bb.f, %bb.g
+  %4 = icmp ult ptr %i.am, %i.f
+  br i1 %4, label %.outer.split.jt1.a, label %.critedge.split
 
 .loopexit138.loopexit:                            ; preds = %.outer.split.split.preheader, %bb.b
   br label %.loopexit138
 
-.loopexit138:                                     ; preds = %.loopexit138.loopexit, %.outer.split.jt8
-  %.0.ph.ph168 = phi i32 [ %.0.ph.ph166, %.outer.split.jt8 ], [ 0, %.loopexit138.loopexit ]
-  %.091.ph160 = phi ptr [ %.091.ph.jt8, %.outer.split.jt8 ], [ %.091.ph.ph191, %.loopexit138.loopexit ]
-  store ptr %.091.ph160, ptr %i.c, align 8, !tbaa !15
-  br i1 %3, label %bb.i, label %bb.h
+.loopexit138:                                     ; preds = %.loopexit138.loopexit, %.outer.split.jt1.a
+  %.091.ph116182 = phi ptr [ %.091.ph116.jt8, %.outer.split.jt1.a ], [ %.091.ph.ph191, %.loopexit138.loopexit ]
+  %.0.ph.ph125177 = phi i32 [ %.0.ph.ph125175, %.outer.split.jt1.a ], [ 0, %.loopexit138.loopexit ]
+  store ptr %.091.ph116182, ptr %i.c, align 8, !tbaa !15
+  br i1 %3, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.loopexit138
   tail call void @_ZL31T_UConverter_toUnicode_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode(ptr noundef nonnull %0, ptr noundef nonnull %1)
@@ -360,13 +348,13 @@ bb.i:                                             ; preds = %.loopexit138
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ba = load ptr, ptr %i.c, align 8, !tbaa !15
-  br label %.outer.jt8
+  br label %.outer.outer.jt8
 
-.loopexit145:                                     ; preds = %.outer.split.split.preheader, %.outer.split.jt9.a
-  %.0.ph.ph165 = phi i32 [ %.1.jt9, %.outer.split.jt9.a ], [ 0, %.outer.split.split.preheader ]
-  %.091.ph158 = phi ptr [ %.192.jt9, %.outer.split.jt9.a ], [ %.091.ph.ph191, %.outer.split.split.preheader ]
-  store ptr %.091.ph158, ptr %i.c, align 8, !tbaa !15
-  br i1 %3, label %bb.l, label %bb.k
+.loopexit145:                                     ; preds = %.outer.split.split.preheader, %.outer.split.jt8
+  %.091.ph116180 = phi ptr [ %.192.a, %.outer.split.jt8 ], [ %.091.ph.ph191, %.outer.split.split.preheader ]
+  %.0.ph.ph125174 = phi i32 [ %.2.a, %.outer.split.jt8 ], [ 0, %.outer.split.split.preheader ]
+  store ptr %.091.ph116180, ptr %i.c, align 8, !tbaa !15
+  br i1 %3, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %.loopexit145
   tail call void @_ZL31T_UConverter_toUnicode_UTF32_LEP23UConverterToUnicodeArgsP10UErrorCode(ptr noundef nonnull %0, ptr noundef nonnull %1)
@@ -378,20 +366,39 @@ bb.l:                                             ; preds = %.loopexit145
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bb = load ptr, ptr %i.c, align 8, !tbaa !15
-  br label %.outer.jt9
+  br label %.loopexit101
 
-.loopexit101:                                     ; preds = %.outer.split.split.preheader, %bb.c
-  %.192.a = phi ptr [ %i.ab, %bb.c ], [ %.091.ph.ph191, %.outer.split.split.preheader ] ; 3 uses
-  %.2.a = phi i32 [ %i.aa, %bb.c ], [ %.088.ph.ph192, %.outer.split.split.preheader ] ; 2 uses
+.outer.outer:                                     ; preds = %.outer.split.split.preheader, %bb.c
+  %.192 = phi ptr [ %i.ab, %bb.c ], [ %.091.ph.ph191, %.outer.split.split.preheader ] ; 3 uses
+  %.2 = phi i32 [ %i.aa, %bb.c ], [ %.088.ph.ph192, %.outer.split.split.preheader ] ; 2 uses
+  %5 = icmp ult ptr %.192, %i.f
+  br i1 %5, label %.outer.split, label %.critedge.split, !llvm.loop !52
+
+.outer.outer.jt8:                                 ; preds = %bb.j, %bb.d
+  %.192.jt8 = phi ptr [ %i.ab, %bb.d ], [ %i.ba, %bb.j ] ; 3 uses
+  %.1.jt8 = phi i32 [ %i.ag, %bb.d ], [ %.0.ph.ph125177, %bb.j ] ; 2 uses
+  %6 = icmp ult ptr %.192.jt8, %i.f
+  br i1 %6, label %.outer.split.jt1.a, label %.critedge.split, !llvm.loop !52
+
+.outer.outer.jt1:                                 ; preds = %.loopexit117, %bb.b
+  %.189.jt1 = phi i32 [ 5, %.loopexit117 ], [ 1, %bb.b ] ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.091.ph.ph191, i64 1 ; 4 uses
+  %8 = icmp ult ptr %7, %i.f
+  br i1 %8, label %.outer.split.jt9.a, label %.critedge.split, !llvm.loop !52
+
+.loopexit101:                                     ; preds = %bb.e, %bb.m
+  %.192.a = phi ptr [ %i.bb, %bb.m ], [ %i.ab, %bb.e ] ; 4 uses
+  %.2.a = phi i32 [ %.0.ph.ph125174, %bb.m ], [ %i.al, %bb.e ] ; 3 uses
   %i.bc = icmp ult ptr %.192.a, %i.f
-  br i1 %i.bc, label %.outer.split, label %.critedge.split, !llvm.loop !52
+  br i1 %i.bc, label %.outer.split.jt8, label %.critedge.split, !llvm.loop !52
 
-.critedge.split:                                  ; preds = %.loopexit101, %.outer.split, %.outer.jt1, %.outer.split.jt1.a, %bb.a, %.outer.split.jt9.a, %.outer.jt9, %.outer.split.jt8, %.outer.jt8
-  %.0.ph.ph163 = phi i32 [ %.0.ph.ph166, %.outer.split.jt8 ], [ %.0.ph.ph166, %.outer.jt8 ], [ %.1.jt9, %.outer.split.jt9.a ], [ %.1.jt9, %.outer.jt9 ], [ 0, %bb.a ], [ 0, %.outer.split.jt1.a ], [ 0, %.outer.jt1 ], [ 0, %.outer.split ], [ 0, %.loopexit101 ] ; 3 uses
-  %.088.ph161 = phi i32 [ 8, %.outer.split.jt8 ], [ 8, %.outer.jt8 ], [ 9, %.outer.split.jt9.a ], [ 9, %.outer.jt9 ], [ %i.k, %bb.a ], [ %.2.a, %.loopexit101 ], [ %.088.ph.ph192, %.outer.split ], [ %.189.jt1, %.outer.jt1 ], [ %.189.jt1, %.outer.split.jt1.a ] ; 6 uses
-  %.091.ph156 = phi ptr [ %.091.ph.jt8, %.outer.split.jt8 ], [ %.091.ph.jt8, %.outer.jt8 ], [ %.192.jt9, %.outer.split.jt9.a ], [ %.192.jt9, %.outer.jt9 ], [ %i.d, %bb.a ], [ %.192.a, %.loopexit101 ], [ %.091.ph.ph191, %.outer.split ], [ %4, %.outer.jt1 ], [ %4, %.outer.split.jt1.a ] ; 3 uses
+.critedge.split:                                  ; preds = %.outer.outer, %.outer.outer.jt1, %.outer.split, %.outer.split.jt9.a, %.loopexit101, %.outer.outer.jt8, %.outer, %.outer.split.jt8, %.outer.split.jt1.a
+  %.0.ph.ph163 = phi i32 [ %.2.a, %.loopexit101 ], [ 0, %.outer ], [ %.0.ph.ph125175, %.outer.split.jt1.a ], [ %.1.jt8, %.outer.outer.jt8 ], [ %.2.a, %.outer.split.jt8 ], [ 0, %.outer.split.jt9.a ], [ 0, %.outer.split ], [ 0, %.outer.outer.jt1 ], [ 0, %.outer.outer ] ; 3 uses
+  %.091.ph.lcssa.split = phi ptr [ %.192.a, %.loopexit101 ], [ %i.am, %.outer ], [ %.091.ph116.jt8, %.outer.split.jt1.a ], [ %.192.jt8, %.outer.outer.jt8 ], [ %.192.a, %.outer.split.jt8 ], [ %.192, %.outer.outer ], [ %7, %.outer.outer.jt1 ], [ %.091.ph.ph191, %.outer.split ], [ %7, %.outer.split.jt9.a ] ; 4 uses
+  %.088.ph161 = phi i32 [ 9, %.loopexit101 ], [ 8, %.outer ], [ 8, %.outer.split.jt1.a ], [ 8, %.outer.outer.jt8 ], [ 9, %.outer.split.jt8 ], [ %.2, %.outer.outer ], [ %.189.jt1, %.outer.outer.jt1 ], [ %.088.ph.ph192, %.outer.split ], [ %.189.jt1, %.outer.split.jt9.a ] ; 4 uses
+  %9 = icmp ne ptr %i.h, null
   %i.bd = icmp ne i32 %.0.ph.ph163, 0
-  %or.cond = select i1 %3, i1 %i.bd, i1 false
+  %or.cond = select i1 %9, i1 %i.bd, i1 false
   br i1 %or.cond, label %bb.n, label %.loopexit
 
 bb.n:                                             ; preds = %.critedge.split
@@ -448,18 +455,21 @@ middle.block:                                     ; preds = %vector.body
   %i.bv = icmp ult ptr %i.bs, %i.be
   br i1 %i.bv, label %.lr.ph, label %.loopexit, !llvm.loop !54
 
-.loopexit:                                        ; preds = %.lr.ph, %middle.block, %bb.n, %.critedge.split
-  store ptr %.091.ph156, ptr %i.c, align 8, !tbaa !15
-  %i.bw = icmp eq ptr %.091.ph156, %i.f
+.loopexit:                                        ; preds = %.lr.ph, %middle.block, %bb.a, %bb.n, %.critedge.split
+  %.088.lcssa.split188 = phi i32 [ %i.k, %bb.a ], [ %.088.ph161, %.critedge.split ], [ %.088.ph161, %bb.n ], [ %.088.ph161, %middle.block ], [ %.088.ph161, %.lr.ph ] ; 6 uses
+  %.091.ph.lcssa.split187 = phi ptr [ %i.d, %bb.a ], [ %.091.ph.lcssa.split, %.critedge.split ], [ %.091.ph.lcssa.split, %bb.n ], [ %.091.ph.lcssa.split, %middle.block ], [ %.091.ph.lcssa.split, %.lr.ph ] ; 3 uses
+  store ptr %.091.ph.lcssa.split187, ptr %i.c, align 8, !tbaa !15
+  %i.bw = icmp eq ptr %.091.ph.lcssa.split187, %i.f
   br i1 %i.bw, label %bb.o, label %bb.t
 
 bb.o:                                             ; preds = %.loopexit
-  %i.bx = load i8, ptr %2, align 2, !tbaa !55
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %i.bx = load i8, ptr %10, align 2, !tbaa !55
   %.not100 = icmp eq i8 %i.bx, 0
   br i1 %.not100, label %bb.t, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  switch i32 %.088.ph161, label %bb.s [
+  switch i32 %.088.lcssa.split188, label %bb.s [
     i32 0, label %bb.t
     i32 8, label %bb.q
     i32 9, label %bb.r
@@ -474,21 +484,21 @@ bb.r:                                             ; preds = %bb.p
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.p
-  %i.by = and i32 %.088.ph161, 4
+  %i.by = and i32 %.088.lcssa.split188, 4
   %i.bz = zext nneg i32 %i.by to i64
   %i.ca = getelementptr inbounds nuw i8, ptr @_ZL8utf32BOM, i64 %i.bz ; 2 uses
   store ptr %i.ca, ptr %i.c, align 8, !tbaa !15
-  %i.cb = and i32 %.088.ph161, 3
+  %i.cb = and i32 %.088.lcssa.split188, 3
   %i.cc = zext nneg i32 %i.cb to i64
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cc
   store ptr %i.cd, ptr %i.e, align 8, !tbaa !17
   tail call void @_ZL31T_UConverter_toUnicode_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode(ptr noundef nonnull %0, ptr noundef %1)
-  store ptr %.091.ph156, ptr %i.c, align 8, !tbaa !15
+  store ptr %.091.ph.lcssa.split187, ptr %i.c, align 8, !tbaa !15
   store ptr %i.f, ptr %i.e, align 8, !tbaa !17
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.p, %bb.q, %bb.r, %bb.s, %bb.o, %.loopexit
-  %.3 = phi i32 [ 8, %bb.s ], [ %.088.ph161, %bb.p ], [ 8, %bb.q ], [ 9, %bb.r ], [ %.088.ph161, %bb.o ], [ %.088.ph161, %.loopexit ]
+  %.3 = phi i32 [ 8, %bb.s ], [ %.088.lcssa.split188, %bb.p ], [ 8, %bb.q ], [ 9, %bb.r ], [ %.088.lcssa.split188, %bb.o ], [ %.088.lcssa.split188, %.loopexit ]
   store i32 %.3, ptr %i.j, align 4, !tbaa !45
   ret void
 }

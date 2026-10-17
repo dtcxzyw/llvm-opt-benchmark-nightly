@@ -200,16 +200,20 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   %i.dp = load ptr, ptr %0, align 8, !tbaa !12    ; 2 uses
   %.not118 = icmp eq ptr %i.dp, %0
-  br i1 %.not118, label %.critedge4, label %.outer.split
+  br i1 %.not118, label %.critedge4, label %.outer.split.preheader
 
-.outer.split:                                     ; preds = %bb.o, %.outer
-  %.073.ph119 = phi ptr [ %.1, %.outer ], [ %i.dp, %bb.o ] ; 4 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !7
+.outer.split.preheader:                           ; preds = %bb.o
+  %.pre = load i32, ptr %2, align 4, !tbaa !7
+  br label %.outer.split
+
+.outer.split:                                     ; preds = %.outer.split.preheader, %.outer
+  %3 = phi i32 [ %i.dv, %.outer ], [ %.pre, %.outer.split.preheader ]
+  %.073.ph95 = phi ptr [ %.1, %.outer ], [ %i.dp, %.outer.split.preheader ] ; 4 uses
   %.not87 = icmp eq i32 %3, 0
   br i1 %.not87, label %.preheader, label %.critedge4
 
 .preheader:                                       ; preds = %.outer.split, %.preheader.backedge
-  %.073.pn = phi ptr [ %.073.pn.be, %.preheader.backedge ], [ %.073.ph119, %.outer.split ]
+  %.073.pn = phi ptr [ %.073.pn.be, %.preheader.backedge ], [ %.073.ph95, %.outer.split ]
   %.175.in = getelementptr inbounds nuw i8, ptr %.073.pn, i64 16
   %.175 = load ptr, ptr %.175.in, align 8, !tbaa !12 ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.175, i64 32
@@ -218,7 +222,7 @@ bb.o:                                             ; preds = %bb.a, %bb.a, %bb.a,
   br i1 %i.ds, label %.preheader.backedge, label %bb.p
 
 .preheader.backedge:                              ; preds = %.preheader, %bb.p
-  %.073.pn.be = phi ptr [ %.175, %.preheader ], [ %.073.ph119, %bb.p ]
+  %.073.pn.be = phi ptr [ %.175, %.preheader ], [ %.073.ph95, %bb.p ]
   br label %.preheader, !llvm.loop !11
 
 bb.p:                                             ; preds = %.preheader
@@ -228,16 +232,16 @@ bb.p:                                             ; preds = %.preheader
 
 bb.q:                                             ; preds = %bb.p
   %i.du = tail call ptr @Next(ptr noundef nonnull %.175, i32 noundef %1, ptr noundef nonnull %2) ; 0 uses
-  %i.dv = load i32, ptr %2, align 4, !tbaa !7
+  %i.dv = load i32, ptr %2, align 4, !tbaa !7     ; 2 uses
   %.not88 = icmp eq i32 %i.dv, 0
   br i1 %.not88, label %bb.r, label %.outer
 
 bb.r:                                             ; preds = %bb.q
-  %i.dw = load ptr, ptr %.073.ph119, align 8, !tbaa !12
+  %i.dw = load ptr, ptr %.073.ph95, align 8, !tbaa !12
   br label %.outer
 
 .outer:                                           ; preds = %bb.r, %bb.q
-  %.1 = phi ptr [ %.073.ph119, %bb.q ], [ %i.dw, %bb.r ] ; 2 uses
+  %.1 = phi ptr [ %.073.ph95, %bb.q ], [ %i.dw, %bb.r ] ; 2 uses
   %.not = icmp eq ptr %.1, %0
   br i1 %.not, label %.critedge4, label %.outer.split, !llvm.loop !11
 
@@ -248,7 +252,7 @@ bb.s:                                             ; preds = %bb.a
   %i.ea = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 3, ptr noundef nonnull @.str.2, i32 noundef 0, ptr noundef %i.dy, ptr noundef nonnull @.str.3, ptr noundef %i.dz) #6 ; 0 uses
   br label %.critedge4
 
-.critedge4:                                       ; preds = %.outer.split, %.outer, %bb.c, %bb.o, %bb.b, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.s, %bb.n, %bb.k
+.critedge4:                                       ; preds = %.outer.split, %.outer, %bb.c, %bb.b, %bb.o, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.s, %bb.n, %bb.k
   %.076 = phi ptr [ %0, %bb.s ], [ %0, %bb.b ], [ %i.an, %bb.k ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.a ], [ %0, %bb.n ], [ %0, %bb.o ], [ %0, %bb.c ], [ %0, %.outer ], [ %0, %.outer.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6

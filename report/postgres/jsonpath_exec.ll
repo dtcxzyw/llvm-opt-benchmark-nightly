@@ -202,18 +202,23 @@ bb.bd:                                            ; preds = %bb.bc
   %i.fj = and i32 %i.fi, 1342177280
   %or.cond.i649 = icmp eq i32 %i.fj, 1073741824
   %i.fk = and i32 %i.fi, 268435455
-  br i1 %or.cond.i649, label %JsonbArraySize.exit.a, label %bb.be
+  br i1 %or.cond.i649, label %JsonbArraySize.exit, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc
-  br label %JsonbArraySize.exit.a
+  br label %JsonbArraySize.exit
 
-JsonbArraySize.exit.a:                            ; preds = %bb.bd, %bb.be
+JsonbArraySize.exit:                              ; preds = %bb.bd, %bb.be
   %.1.i = phi i32 [ -1, %bb.be ], [ %i.fk, %bb.bd ] ; 2 uses
   %44 = icmp slt i32 %.1.i, 0                     ; 3 uses
   %45 = call zeroext i1 @jspGetNext(ptr noundef nonnull %1, ptr noundef nonnull %21) #9
   %spec.select = select i1 %44, i32 1, i32 %.1.i  ; 3 uses
   store i32 %spec.select, ptr %i.fc, align 4
   %46 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %47 = load i32, ptr %46, align 8
+  %48 = icmp sgt i32 %47, 0
+  br i1 %48, label %JsonbArraySize.exit.a, label %.thread737
+
+JsonbArraySize.exit.a:                            ; preds = %JsonbArraySize.exit
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 57
   %i.fm = add nsw i32 %spec.select, -1
   %i.fn = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -223,12 +228,10 @@ JsonbArraySize.exit.a:                            ; preds = %bb.bd, %bb.be
   %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.fq = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %47 = load i32, ptr %46, align 8
-  %48 = icmp sgt i32 %47, 0
-  br i1 %48, label %.lr.ph959, label %.thread737
+  br label %.lr.ph959
 
 .lr.ph959:                                        ; preds = %JsonbArraySize.exit.a, %.thread720.thread860.thread
-  %.0588958 = phi i32 [ %i.hu, %.thread720.thread860.thread ], [ 0, %JsonbArraySize.exit.a ] ; 2 uses
+  %.0588958 = phi i32 [ 0, %JsonbArraySize.exit.a ], [ %i.hu, %.thread720.thread860.thread ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #9
@@ -410,13 +413,13 @@ select.unfold:                                    ; preds = %.lr.ph.split.split
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #9
-  %i.hu = add nuw i32 %.0588958, 1                ; 2 uses
+  %i.hu = add nuw nsw i32 %.0588958, 1            ; 2 uses
   %i.hv = load i32, ptr %46, align 8
   %i.hw = icmp slt i32 %i.hu, %i.hv
   br i1 %i.hw, label %.lr.ph959, label %.thread737, !llvm.loop !25
 
-.thread737:                                       ; preds = %.thread720.thread860.thread, %JsonbArraySize.exit.a, %.thread726
-  %.7559 = phi i32 [ %.6558.ph, %.thread726 ], [ 1, %JsonbArraySize.exit.a ], [ %.5557862930, %.thread720.thread860.thread ]
+.thread737:                                       ; preds = %.thread720.thread860.thread, %JsonbArraySize.exit, %.thread726
+  %.7559 = phi i32 [ %.6558.ph, %.thread726 ], [ 1, %JsonbArraySize.exit ], [ %.5557862930, %.thread720.thread860.thread ]
   store i32 %i.fd, ptr %i.fc, align 4
   br label %.thread747
 

@@ -192,14 +192,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
+  %.not45113 = icmp eq i32 %2, 0
+  br i1 %.not45113, label %.loopexit.split, label %.outer.split.lr.ph
+
+.outer.split.lr.ph:                               ; preds = %bb.e
   %4 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %5 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
-  %.not45113 = icmp eq i32 %2, 0
-  br i1 %.not45113, label %.loopexit.split, label %.outer.split.preheader
+  br label %.outer.split.preheader
 
-.outer.split.preheader:                           ; preds = %bb.e, %.outer
-  %.036.ph115 = phi i32 [ %i.al, %.outer ], [ %2, %bb.e ] ; 3 uses
-  %.037.ph114 = phi ptr [ %i.ak, %.outer ], [ %1, %bb.e ] ; 3 uses
+.outer.split.preheader:                           ; preds = %.outer.split.lr.ph, %.outer
+  %.036.ph115 = phi i32 [ %2, %.outer.split.lr.ph ], [ %i.al, %.outer ] ; 3 uses
+  %.037.ph114 = phi ptr [ %1, %.outer.split.lr.ph ], [ %i.ak, %.outer ] ; 3 uses
   %.pre = load i32, ptr %i.n, align 4, !tbaa !49
   br label %.outer.split
 
@@ -348,7 +351,7 @@ bb.q:                                             ; preds = %bb.k
   br i1 %.not50, label %.loopexit.split, label %.outer.split
 
 .loopexit.split:                                  ; preds = %.outer, %bb.q, %bb.e, %.thread, %bb.b
-  %.3 = phi i32 [ %i.k, %bb.b ], [ %.2.ph, %.thread ], [ 0, %bb.e ], [ -2147467259, %bb.q ], [ 0, %.outer ]
+  %.3 = phi i32 [ %i.k, %bb.b ], [ %.2.ph, %.thread ], [ -2147467259, %bb.q ], [ 0, %bb.e ], [ 0, %.outer ]
   ret i32 %.3
 }
 

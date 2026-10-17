@@ -205,35 +205,44 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.
 
 .preheader1284:                                   ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.thread
   %i.axj = load ptr, ptr %i.awy, align 8, !tbaa !122 ; 3 uses
-  %i.axk = icmp eq ptr %i.axj, null
-  %i.axl = getelementptr inbounds i8, ptr %i.axj, i64 -4
-  %i.axm = load ptr, ptr %i.awz, align 8          ; 3 uses
-  %i.axn = icmp eq ptr %i.axm, null
-  %i.axo = getelementptr inbounds i8, ptr %i.axm, i64 -4
+  %i.axk = icmp eq ptr %i.axj, null               ; 2 uses
+  %i.axl = getelementptr inbounds i8, ptr %i.axj, i64 -4 ; 2 uses
+  %i.axm = load ptr, ptr %i.awz, align 8
+  %.fr1418 = freeze ptr %i.axm                    ; 3 uses
+  %i.axn = icmp eq ptr %.fr1418, null
+  %i.axo = getelementptr inbounds i8, ptr %.fr1418, i64 -4
+  br i1 %i.axn, label %.preheader1284.split.us, label %.preheader1284.split.preheader
+
+.preheader1284.split.preheader:                   ; preds = %.preheader1284
   br i1 %i.axk, label %.critedge508, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.preheader
 
-_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.preheader: ; preds = %.preheader1284
+_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.preheader: ; preds = %.preheader1284.split.preheader
   %i.axp = load i32, ptr %i.axl, align 4, !tbaa !45
-  br label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a
+  br label %.preheader1283.a
 
-_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.preheader, %.critedge509
-  %.02611783 = phi i32 [ %i.azk, %.critedge509 ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.preheader ] ; 3 uses
-  %47 = icmp ult i32 %.02611783, %i.axp
-  br i1 %47, label %.preheader1283.a, label %.critedge508
+.preheader1284.split.us:                          ; preds = %.preheader1284
+  br i1 %i.axk, label %.critedge508, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a
 
-.preheader1283.a:                                 ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a
-  %48 = zext i32 %.02611783 to i64
-  %49 = getelementptr inbounds nuw [8 x i8], ptr %i.axj, i64 %48
-  br i1 %i.axn, label %.critedge.split, label %.preheader1283.split
+_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a: ; preds = %.preheader1284.split.us
+  %47 = load i32, ptr %i.axl, align 4, !tbaa !45
+  %.not1747 = icmp eq i32 %47, 0
+  br i1 %.not1747, label %.critedge508, label %.critedge.split
+
+.preheader1283.a:                                 ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.preheader, %.critedge509
+  %.02611775 = phi i32 [ %i.azk, %.critedge509 ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.preheader ] ; 3 uses
+  %48 = icmp ult i32 %.02611775, %i.axp
+  br i1 %48, label %.preheader1283.split, label %.critedge508
 
 .preheader1283.split:                             ; preds = %.preheader1283.a
+  %49 = zext i32 %.02611775 to i64
+  %50 = getelementptr inbounds nuw [8 x i8], ptr %i.axj, i64 %49
   %i.axq = load i32, ptr %i.axo, align 4, !tbaa !45 ; 2 uses
   %wide.trip.count = zext i32 %i.axq to i64
   %exitcond.not1780 = icmp eq i32 %i.axq, 0
   br i1 %exitcond.not1780, label %.critedge.split, label %.lr.ph1782.preheader
 
 .lr.ph1782.preheader:                             ; preds = %.preheader1283.split
-  %i.axr = load ptr, ptr %49, align 8, !tbaa !160 ; 5 uses
+  %i.axr = load ptr, ptr %50, align 8, !tbaa !160 ; 5 uses
   %i.axs = getelementptr inbounds nuw i8, ptr %i.axr, i64 4
   %i.axt = getelementptr inbounds nuw i8, ptr %i.axr, i64 16
   %i.axu = getelementptr inbounds nuw i8, ptr %i.axr, i64 24
@@ -247,7 +256,7 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit7
 
 .lr.ph1782:                                       ; preds = %.lr.ph1782.preheader, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit779
   %indvars.iv15011781 = phi i64 [ %indvars.iv.next1502, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit779 ], [ 0, %.lr.ph1782.preheader ] ; 2 uses
-  %i.axw = getelementptr inbounds nuw [8 x i8], ptr %i.axm, i64 %indvars.iv15011781
+  %i.axw = getelementptr inbounds nuw [8 x i8], ptr %.fr1418, i64 %indvars.iv15011781
   %i.axx = load ptr, ptr %i.axw, align 8, !tbaa !160 ; 5 uses
   %i.axy = getelementptr inbounds nuw i8, ptr %i.axx, i64 4
   %i.axz = load i32, ptr %i.axy, align 4
@@ -332,7 +341,7 @@ bb.mf:                                            ; preds = %bb.mg, %.critedge.s
           cleanup
   br label %bb.mh
 
-.critedge.split:                                  ; preds = %.preheader1283.a, %.preheader1283.split, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit779
+.critedge.split:                                  ; preds = %.preheader1283.split, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit779, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a
   invoke void @_Z26notify_assertion_violationPKciS0_(ptr noundef nonnull @.str.4, i32 noundef 538, ptr noundef nonnull @.str.5)
           to label %bb.mg unwind label %bb.mf
 
@@ -341,11 +350,11 @@ bb.mg:                                            ; preds = %.critedge.split
           to label %.critedge508 unwind label %bb.mf
 
 .critedge509:                                     ; preds = %_ZNK13proof_checker9match_notEPK4exprRPS0_.exit.i, %_ZNK13proof_checker13match_negatedEPK4exprPS0_.exit
-  %i.azk = add i32 %.02611783, 1
-  br label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a, !llvm.loop !262
+  %i.azk = add i32 %.02611775, 1
+  br label %.preheader1283.a, !llvm.loop !262
 
-.critedge508:                                     ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a, %bb.mg, %.preheader1284, %bb.ly
-  %.22374 = phi i1 [ true, %bb.ly ], [ false, %bb.mg ], [ true, %.preheader1284 ], [ true, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a ]
+.critedge508:                                     ; preds = %.preheader1283.a, %.preheader1284.split.preheader, %.preheader1284.split.us, %bb.mg, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a, %bb.ly
+  %.22374 = phi i1 [ true, %bb.ly ], [ false, %bb.mg ], [ true, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit777.a ], [ true, %.preheader1284.split.us ], [ true, %.preheader1284.split.preheader ], [ true, %.preheader1283.a ]
   call void @_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %21) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #25
   call void @_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %20) #25

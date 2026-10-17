@@ -202,16 +202,19 @@ bb.a:
   %i.c = getelementptr i8, ptr %0, i64 1528       ; 4 uses
   call void @mutex_lock(ptr noundef %i.c) #12
   %i.d = getelementptr i8, ptr %1, i64 8          ; 3 uses
+  %.not111 = icmp eq i32 %2, 0
+  br i1 %.not111, label %.split, label %.outer.split.lr.ph
+
+.outer.split.lr.ph:                               ; preds = %bb.a
   %.not63 = icmp eq ptr %5, null
   %7 = getelementptr i8, ptr %5, i64 8
   %8 = getelementptr i8, ptr %5, i64 16
   %9 = getelementptr i8, ptr %5, i64 20
   %10 = getelementptr i8, ptr %5, i64 22
-  %.not111 = icmp eq i32 %2, 0
-  br i1 %.not111, label %.split, label %.outer.split.preheader
+  br label %.outer.split.preheader
 
-.outer.split.preheader:                           ; preds = %bb.a, %drm_gem_object_put.exit
-  %.055.ph110 = phi i32 [ %.2, %drm_gem_object_put.exit ], [ 0, %bb.a ] ; 5 uses
+.outer.split.preheader:                           ; preds = %.outer.split.lr.ph, %drm_gem_object_put.exit
+  %.055.ph110 = phi i32 [ 0, %.outer.split.lr.ph ], [ %.2, %drm_gem_object_put.exit ] ; 5 uses
   br label %.outer.split
 
 .outer.split:                                     ; preds = %.outer.split.preheader, %kref_get_unless_zero.exit
