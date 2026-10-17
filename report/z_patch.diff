@@ -1,0 +1,203 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index 6428a970557e22..e77b7e9d4fea0d 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -4717,11 +4717,11 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
+     return replaceInstUsesWith(SI, FalseVal);
+   }
+ 
+-  // If the type of select is not an integer type or if the condition and
+-  // the selection type are not both scalar nor both vector types, there is no
+-  // point in attempting to match these patterns.
++  // If the condition is a constant or if the condition and the selection
++  // type are not both scalar nor both vector types, there is no point in
++  // attempting to match these patterns.
+   Type *CondType = CondVal->getType();
+-  if (!isa<Constant>(CondVal) && SelType->isIntOrIntVectorTy() &&
++  if (!isa<Constant>(CondVal) &&
+       CondType->isVectorTy() == SelType->isVectorTy()) {
+     if (Value *S = simplifyWithOpReplaced(TrueVal, CondVal,
+                                           ConstantInt::getTrue(CondType), SQ,
+diff --git a/llvm/test/Transforms/InstCombine/select-gep.ll b/llvm/test/Transforms/InstCombine/select-gep.ll
+index 20b0744854d6df..9c36b4df55e0fc 100644
+--- a/llvm/test/Transforms/InstCombine/select-gep.ll
++++ b/llvm/test/Transforms/InstCombine/select-gep.ll
+@@ -317,3 +317,86 @@ define ptr @ptr_eq_replace_freeze2(ptr %p, ptr %q) {
+   %select = select i1 %cmp.fr, ptr %gep1, ptr %gep2
+   ret ptr %select
+ }
++
++; The inner select shares the condition of the outer select, so the inner
++; select can be resolved to %p when simplifying the true arm of the outer
++; select. This allows the select of two GEPs with a common base to be folded
++; into a single GEP.
++define ptr @shared_select_cond(ptr %p, i1 %c) {
++; CHECK-LABEL: @shared_select_cond(
++; CHECK-NEXT:    [[RESULT_V:%.*]] = select i1 [[C:%.*]], i64 48, i64 40
++; CHECK-NEXT:    [[RESULT:%.*]] = getelementptr inbounds nuw i8, ptr [[P:%.*]], i64 [[RESULT_V]]
++; CHECK-NEXT:    ret ptr [[RESULT]]
++;
++  %base = select i1 %c, ptr %p, ptr null
++  %left = getelementptr inbounds i8, ptr %base, i64 48
++  %right = getelementptr inbounds i8, ptr %p, i64 40
++  %result = select i1 %c, ptr %left, ptr %right
++  ret ptr %result
++}
++
++define ptr @shared_select_cond_swapped(ptr %p, i1 %c) {
++; CHECK-LABEL: @shared_select_cond_swapped(
++; CHECK-NEXT:    [[RESULT_V:%.*]] = select i1 [[C:%.*]], i64 40, i64 48
++; CHECK-NEXT:    [[RESULT:%.*]] = getelementptr inbounds nuw i8, ptr [[P:%.*]], i64 [[RESULT_V]]
++; CHECK-NEXT:    ret ptr [[RESULT]]
++;
++  %base = select i1 %c, ptr null, ptr %p
++  %left = getelementptr inbounds i8, ptr %base, i64 48
++  %right = getelementptr inbounds i8, ptr %p, i64 40
++  %result = select i1 %c, ptr %right, ptr %left
++  ret ptr %result
++}
++
++; Make sure the condition computation used in the original motivating case
++; from clang's CodeGenFunction::EmitCXXConstructorCall is handled.
++define ptr @shared_select_cond_icmp(i16 %tag, ptr %p) {
++; CHECK-LABEL: @shared_select_cond_icmp(
++; CHECK-NEXT:    [[KIND:%.*]] = and i16 [[TAG:%.*]], 511
++; CHECK-NEXT:    [[MATCH:%.*]] = icmp eq i16 [[KIND]], 118
++; CHECK-NEXT:    [[RESULT_V:%.*]] = select i1 [[MATCH]], i64 48, i64 40
++; CHECK-NEXT:    [[RESULT:%.*]] = getelementptr inbounds nuw i8, ptr [[P:%.*]], i64 [[RESULT_V]]
++; CHECK-NEXT:    ret ptr [[RESULT]]
++;
++  %kind = and i16 %tag, 511
++  %match = icmp eq i16 %kind, 118
++  %base = select i1 %match, ptr %p, ptr null
++  %left = getelementptr inbounds i8, ptr %base, i64 48
++  %right = getelementptr inbounds i8, ptr %p, i64 40
++  %result = select i1 %match, ptr %left, ptr %right
++  ret ptr %result
++}
++
++; Negative test: the inner select has another use, so it cannot be rewritten.
++define ptr @shared_select_cond_extra_use(ptr %p, ptr %q, i1 %c) {
++; CHECK-LABEL: @shared_select_cond_extra_use(
++; CHECK-NEXT:    [[BASE:%.*]] = select i1 [[C:%.*]], ptr [[P:%.*]], ptr null
++; CHECK-NEXT:    [[LEFT:%.*]] = getelementptr inbounds nuw i8, ptr [[BASE]], i64 48
++; CHECK-NEXT:    store ptr [[BASE]], ptr [[Q:%.*]], align 8
++; CHECK-NEXT:    [[RIGHT:%.*]] = getelementptr inbounds nuw i8, ptr [[P]], i64 40
++; CHECK-NEXT:    [[RESULT:%.*]] = select i1 [[C]], ptr [[LEFT]], ptr [[RIGHT]]
++; CHECK-NEXT:    ret ptr [[RESULT]]
++;
++  %base = select i1 %c, ptr %p, ptr null
++  %left = getelementptr inbounds i8, ptr %base, i64 48
++  store ptr %base, ptr %q
++  %right = getelementptr inbounds i8, ptr %p, i64 40
++  %result = select i1 %c, ptr %left, ptr %right
++  ret ptr %result
++}
++
++; Vector variant of @shared_select_cond: the shared-condition inner select is
++; resolved, but the select of two GEPs is not folded into a single GEP.
++define <2 x ptr> @shared_select_cond_vec_gep(<2 x ptr> %p, <2 x i1> %c) {
++; CHECK-LABEL: @shared_select_cond_vec_gep(
++; CHECK-NEXT:    [[LEFT:%.*]] = getelementptr i8, <2 x ptr> [[P:%.*]], i64 48
++; CHECK-NEXT:    [[RIGHT:%.*]] = getelementptr i8, <2 x ptr> [[P]], i64 40
++; CHECK-NEXT:    [[R:%.*]] = select <2 x i1> [[C:%.*]], <2 x ptr> [[LEFT]], <2 x ptr> [[RIGHT]]
++; CHECK-NEXT:    ret <2 x ptr> [[R]]
++;
++  %base = select <2 x i1> %c, <2 x ptr> %p, <2 x ptr> zeroinitializer
++  %left = getelementptr i8, <2 x ptr> %base, i64 48
++  %right = getelementptr i8, <2 x ptr> %p, i64 40
++  %r = select <2 x i1> %c, <2 x ptr> %left, <2 x ptr> %right
++  ret <2 x ptr> %r
++}
+diff --git a/llvm/test/Transforms/InstCombine/select.ll b/llvm/test/Transforms/InstCombine/select.ll
+index 203f15cd6f2fc2..d7134cfe6ca531 100644
+--- a/llvm/test/Transforms/InstCombine/select.ll
++++ b/llvm/test/Transforms/InstCombine/select.ll
+@@ -4943,8 +4943,7 @@ define i32 @sequence_select_with_same_cond_true(i1 %c1, i1 %c2){
+ define double @sequence_select_with_same_cond_double(double %a, i1 %c1, i1 %c2, double %r1, double %r2){
+ ; CHECK-LABEL: define double @sequence_select_with_same_cond_double(
+ ; CHECK-SAME: double [[A:%.*]], i1 [[C1:%.*]], i1 [[C2:%.*]], double [[R1:%.*]], double [[R2:%.*]]) {
+-; CHECK-NEXT:    [[S1:%.*]] = select i1 [[C1]], double 1.000000e+00, double 0.000000e+00
+-; CHECK-NEXT:    [[S2:%.*]] = select i1 [[C2]], double [[S1]], double 2.000000e+00
++; CHECK-NEXT:    [[S2:%.*]] = select i1 [[C2]], double 1.000000e+00, double 2.000000e+00
+ ; CHECK-NEXT:    [[S3:%.*]] = select i1 [[C1]], double [[S2]], double 3.000000e+00
+ ; CHECK-NEXT:    ret double [[S3]]
+ ;
+@@ -5800,3 +5799,77 @@ entry:
+   call void @use_v2i64(<2 x i64> %neg)
+   ret <2 x i64> %r
+ }
++
++; The inner select shares the condition of the outer select, so it can be
++; resolved while simplifying the arm of the outer select.
++define float @shared_select_cond_fneg(float %a, float %b, i1 %c) {
++; CHECK-LABEL: define float @shared_select_cond_fneg(
++; CHECK-SAME: float [[A:%.*]], float [[B:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:    [[A_NEG:%.*]] = fneg float [[A]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], float [[A_NEG]], float [[B]]
++; CHECK-NEXT:    ret float [[R]]
++;
++  %inner = select i1 %c, float %a, float 1.000000e+00
++  %arm = fneg float %inner
++  %r = select i1 %c, float %arm, float %b
++  ret float %r
++}
++
++define <2 x float> @shared_select_cond_fneg_vec(<2 x float> %a, <2 x float> %b, <2 x i1> %c) {
++; CHECK-LABEL: define <2 x float> @shared_select_cond_fneg_vec(
++; CHECK-SAME: <2 x float> [[A:%.*]], <2 x float> [[B:%.*]], <2 x i1> [[C:%.*]]) {
++; CHECK-NEXT:    [[A_NEG:%.*]] = fneg <2 x float> [[A]]
++; CHECK-NEXT:    [[R:%.*]] = select <2 x i1> [[C]], <2 x float> [[A_NEG]], <2 x float> [[B]]
++; CHECK-NEXT:    ret <2 x float> [[R]]
++;
++  %inner = select <2 x i1> %c, <2 x float> %a, <2 x float> <float 1.0, float 1.0>
++  %arm = fneg <2 x float> %inner
++  %r = select <2 x i1> %c, <2 x float> %arm, <2 x float> %b
++  ret <2 x float> %r
++}
++
++define { i32, i32 } @shared_select_cond_insertvalue(i1 %c, { i32, i32 } %a, { i32, i32 } %b, { i32, i32 } %d) {
++; CHECK-LABEL: define { i32, i32 } @shared_select_cond_insertvalue(
++; CHECK-SAME: i1 [[C:%.*]], { i32, i32 } [[A:%.*]], { i32, i32 } [[B:%.*]], { i32, i32 } [[D:%.*]]) {
++; CHECK-NEXT:    [[ARM:%.*]] = insertvalue { i32, i32 } [[A]], i32 42, 0
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], { i32, i32 } [[ARM]], { i32, i32 } [[B]]
++; CHECK-NEXT:    ret { i32, i32 } [[R]]
++;
++  %inner = select i1 %c, { i32, i32 } %a, { i32, i32 } %d
++  %arm = insertvalue { i32, i32 } %inner, i32 42, 0
++  %r = select i1 %c, { i32, i32 } %arm, { i32, i32 } %b
++  ret { i32, i32 } %r
++}
++
++define [2 x i32] @shared_select_cond_insertvalue_array(i1 %c, [2 x i32] %a, [2 x i32] %b, [2 x i32] %d) {
++; CHECK-LABEL: define [2 x i32] @shared_select_cond_insertvalue_array(
++; CHECK-SAME: i1 [[C:%.*]], [2 x i32] [[A:%.*]], [2 x i32] [[B:%.*]], [2 x i32] [[D:%.*]]) {
++; CHECK-NEXT:    [[ARM:%.*]] = insertvalue [2 x i32] [[A]], i32 42, 0
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], [2 x i32] [[ARM]], [2 x i32] [[B]]
++; CHECK-NEXT:    ret [2 x i32] [[R]]
++;
++  %inner = select i1 %c, [2 x i32] %a, [2 x i32] %d
++  %arm = insertvalue [2 x i32] %inner, i32 42, 0
++  %r = select i1 %c, [2 x i32] %arm, [2 x i32] %b
++  ret [2 x i32] %r
++}
++
++; Negative test: the inner select has another use, so the arm cannot be
++; rewritten.
++define { i32, i32 } @shared_select_cond_insertvalue_extra_use(i1 %c, { i32, i32 } %a, { i32, i32 } %b, { i32, i32 } %d) {
++; CHECK-LABEL: define { i32, i32 } @shared_select_cond_insertvalue_extra_use(
++; CHECK-SAME: i1 [[C:%.*]], { i32, i32 } [[A:%.*]], { i32, i32 } [[B:%.*]], { i32, i32 } [[D:%.*]]) {
++; CHECK-NEXT:    [[INNER:%.*]] = select i1 [[C]], { i32, i32 } [[A]], { i32, i32 } [[D]]
++; CHECK-NEXT:    [[ARM:%.*]] = insertvalue { i32, i32 } [[INNER]], i32 42, 0
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], { i32, i32 } [[ARM]], { i32, i32 } [[B]]
++; CHECK-NEXT:    call void @use_struct({ i32, i32 } [[INNER]])
++; CHECK-NEXT:    ret { i32, i32 } [[R]]
++;
++  %inner = select i1 %c, { i32, i32 } %a, { i32, i32 } %d
++  %arm = insertvalue { i32, i32 } %inner, i32 42, 0
++  %r = select i1 %c, { i32, i32 } %arm, { i32, i32 } %b
++  call void @use_struct({ i32, i32 } %inner)
++  ret { i32, i32 } %r
++}
++
++declare void @use_struct({ i32, i32 })
