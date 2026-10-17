@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !299  ; 4 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !298    ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !299  ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !298    ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 6 uses
@@ -229,8 +229,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEESaIS4_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #33 ; 3 uses
-  %2 = icmp eq ptr %i.c, %i.b
-  br i1 %2, label %_ZNSt6vectorISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEESaIS4_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEEJRKS4_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.08.i.i.i.i.i = phi ptr [ %i.z, %_ZSt10_ConstructISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEEJRKS4_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEESaIS4_EE11_M_allocateEm.exit.i ] ; 2 uses
@@ -264,7 +263,7 @@ _ZSt10_ConstructISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEEJ
   %i.aa = icmp eq ptr %i.y, %i.b
   br i1 %i.aa, label %_ZNSt6vectorISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !1091
 
-_ZNSt6vectorISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit: ; preds = %_ZSt10_ConstructISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEEJRKS4_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEESaIS4_EE11_M_allocateEm.exit.i
+_ZNSt6vectorISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit: ; preds = %_ZSt10_ConstructISt10shared_ptrIN7rocksdb12experimental20SstQueryFilterConfigEEJRKS4_EEvPT_DpOT0_.exit.i.i.i.i.i
   %i.ab = load ptr, ptr %0, align 8, !tbaa !298   ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !299 ; 2 uses

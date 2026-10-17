@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !1074 ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !1075   ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !1074
+  %i.c = load ptr, ptr %1, align 8, !tbaa !1075   ; 6 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
@@ -221,39 +221,32 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = icmp ugt i64 %i.f, 9223372036854775792
-  br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN7rocksdb18FileTemperatureAgeESaIS1_EE11_M_allocateEm.exit.i, !prof !134
+  br i1 %i.n, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !134
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #31
   unreachable
 
-_ZNSt12_Vector_baseIN7rocksdb18FileTemperatureAgeESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #30 ; 3 uses
-  %3 = icmp eq ptr %i.c, %i.b
-  br i1 %3, label %_ZNSt6vectorIN7rocksdb18FileTemperatureAgeESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN7rocksdb18FileTemperatureAgeESaIS1_EE11_M_allocateEm.exit.i
   %i.o = add i64 %i.d, -16
   %i.p = sub i64 %i.o, %i.e
   %i.q = and i64 %i.p, -16
   %i.r = add i64 %i.q, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr align 8 %i.c, i64 %i.r, i1 false)
-  br label %_ZNSt6vectorIN7rocksdb18FileTemperatureAgeESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
-
-_ZNSt6vectorIN7rocksdb18FileTemperatureAgeESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit: ; preds = %_ZNSt12_Vector_baseIN7rocksdb18FileTemperatureAgeESaIS1_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
-  %4 = load ptr, ptr %0, align 8, !tbaa !1075     ; 3 uses
-  %.not.i = icmp eq ptr %4, null
+  %3 = load ptr, ptr %0, align 8, !tbaa !1075     ; 3 uses
+  %.not.i = icmp eq ptr %3, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN7rocksdb18FileTemperatureAgeESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt6vectorIN7rocksdb18FileTemperatureAgeESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i
   %i.s = load ptr, ptr %i.g, align 8, !tbaa !1076
   %i.t = ptrtoint ptr %i.s to i64
-  %i.u = ptrtoint ptr %4 to i64
+  %i.u = ptrtoint ptr %3 to i64
   %i.v = sub i64 %i.t, %i.u
-  tail call void @_ZdlPvm(ptr noundef nonnull %4, i64 noundef %i.v) #28
+  tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef %i.v) #28
   br label %_ZNSt12_Vector_baseIN7rocksdb18FileTemperatureAgeESaIS1_EE13_M_deallocateEPS1_m.exit
 
-_ZNSt12_Vector_baseIN7rocksdb18FileTemperatureAgeESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZNSt6vectorIN7rocksdb18FileTemperatureAgeESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, %bb.e
+_ZNSt12_Vector_baseIN7rocksdb18FileTemperatureAgeESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %.lr.ph.i.i.i.i.preheader.i, %bb.e
   store ptr %2, ptr %0, align 8, !tbaa !1075
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 %i.f
   store ptr %i.w, ptr %i.g, align 8, !tbaa !1076

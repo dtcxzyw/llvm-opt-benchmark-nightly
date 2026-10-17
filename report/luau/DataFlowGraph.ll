@@ -204,8 +204,8 @@ _ZN4Luau3getINS_3PhiEEEPKT_NS_7NotNullIKNS_3DefEEE.exit: ; preds = %._crit_edge,
   br i1 %.not.i24, label %_ZNSt6vectorIN4Luau7NotNullIKNS0_3DefEEESaIS4_EEaSERKS6_.exit, label %_ZN4Luau3getINS_3PhiEEEPKT_NS_7NotNullIKNS_3DefEEE.exit.thread
 
 _ZN4Luau3getINS_3PhiEEEPKT_NS_7NotNullIKNS_3DefEEE.exit.thread: ; preds = %_ZN4Luau3getINS_3PhiEEEPKT_NS_7NotNullIKNS_3DefEEE.exit
-  %i.bg = load ptr, ptr %i.j, align 8, !tbaa !199 ; 4 uses
-  %i.bh = load ptr, ptr %1, align 8, !tbaa !200   ; 9 uses
+  %i.bg = load ptr, ptr %i.j, align 8, !tbaa !199 ; 3 uses
+  %i.bh = load ptr, ptr %1, align 8, !tbaa !200   ; 8 uses
   %i.bi = ptrtoint ptr %i.bg to i64               ; 2 uses
   %i.bj = ptrtoint ptr %i.bh to i64               ; 2 uses
   %i.bk = sub i64 %i.bi, %i.bj                    ; 9 uses
@@ -231,26 +231,19 @@ bb.j:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE11_M_allocateEm.exit.i.i: ; preds = %bb.i
   %i.bt = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bk) #28
-          to label %.noexc26 unwind label %.loopexit ; 4 uses
+          to label %.lr.ph.i.i.i.i.preheader.i.i unwind label %.loopexit ; 4 uses
 
-.noexc26:                                         ; preds = %_ZNSt12_Vector_baseIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE11_M_allocateEm.exit.i.i
-  %.not7.i.i.i.i.i.i = icmp eq ptr %i.bh, %i.bg
-  br i1 %.not7.i.i.i.i.i.i, label %_ZNSt6vectorIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit.i, label %.lr.ph.i.i.i.i.preheader.i.i
-
-.lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %.noexc26
+.lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %_ZNSt12_Vector_baseIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE11_M_allocateEm.exit.i.i
   %i.bu = add i64 %i.bi, -8
   %i.bv = sub i64 %i.bu, %i.bj
   %i.bw = and i64 %i.bv, -8
   %i.bx = add i64 %i.bw, 8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bt, ptr align 8 %i.bh, i64 %i.bx, i1 false), !tbaa !44
-  br label %_ZNSt6vectorIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit.i
-
-_ZNSt6vectorIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit.i: ; preds = %.lr.ph.i.i.i.i.preheader.i.i, %.noexc26
   %2 = load ptr, ptr %i.be, align 8, !tbaa !200   ; 3 uses
   %.not.i.i25 = icmp eq ptr %2, null
   br i1 %.not.i.i25, label %_ZNSt12_Vector_baseIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE13_M_deallocateEPS4_m.exit.i, label %bb.k
 
-bb.k:                                             ; preds = %_ZNSt6vectorIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit.i
+bb.k:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i.i
   %i.by = load ptr, ptr %i.bl, align 8, !tbaa !202
   %i.bz = ptrtoint ptr %i.by to i64
   %i.ca = ptrtoint ptr %2 to i64
@@ -258,7 +251,7 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN4Luau
   call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef %i.cb) #26
   br label %_ZNSt12_Vector_baseIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE13_M_deallocateEPS4_m.exit.i
 
-_ZNSt12_Vector_baseIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE13_M_deallocateEPS4_m.exit.i: ; preds = %bb.k, %_ZNSt6vectorIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit.i
+_ZNSt12_Vector_baseIN4Luau7NotNullIKNS0_3DefEEESaIS4_EE13_M_deallocateEPS4_m.exit.i: ; preds = %bb.k, %.lr.ph.i.i.i.i.preheader.i.i
   store ptr %i.bt, ptr %i.be, align 8, !tbaa !200
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.bk
   store ptr %i.cc, ptr %i.bl, align 8, !tbaa !202

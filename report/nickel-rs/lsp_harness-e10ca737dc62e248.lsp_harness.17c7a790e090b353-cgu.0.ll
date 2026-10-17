@@ -205,9 +205,9 @@ define internal noundef ptr @"_ZN82_$LT$std..io..buffered..bufreader..BufReader$
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !noundef !28 ; 4 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !28 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %i.e = load i64, ptr %i.d, align 8, !noundef !28 ; 4 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !28 ; 3 uses
   %i.f = sub i64 %i.c, %i.e                       ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36737)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -235,8 +235,7 @@ _ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.ex
 
 _ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit: ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36741)
-  %.not33.i = icmp eq i64 %i.c, %i.e
-  br i1 %.not33.i, label %_ZN3std2io22default_read_buf_exact17ha673f05d184fb341E.exit, label %.lr.ph.i
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit, %.backedge.i
   %i.s = phi i64 [ %i.ah, %.backedge.i ], [ %i.e, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit ]
@@ -300,8 +299,8 @@ bb.e:                                             ; preds = %bb.d, %.split30.i, 
   %.not.i1 = icmp eq i64 %i.ai, %i.ah
   br i1 %.not.i1, label %_ZN3std2io22default_read_buf_exact17ha673f05d184fb341E.exit, label %.lr.ph.i
 
-_ZN3std2io22default_read_buf_exact17ha673f05d184fb341E.exit: ; preds = %.backedge.i, %bb.d, %.split30.i, %.split31.i, %.split.i, %bb.c, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit.thread
-  %.sroa.0.0 = phi ptr [ null, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit.thread ], [ null, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit ], [ null, %.backedge.i ], [ %i.t, %bb.d ], [ %i.t, %.split.i ], [ %i.t, %.split30.i ], [ @778, %bb.c ], [ %i.t, %.split31.i ]
+_ZN3std2io22default_read_buf_exact17ha673f05d184fb341E.exit: ; preds = %.backedge.i, %bb.d, %.split30.i, %.split31.i, %.split.i, %bb.c, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit.thread
+  %.sroa.0.0 = phi ptr [ null, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17h4752434b513ce403E.exit.thread ], [ null, %.backedge.i ], [ %i.t, %bb.d ], [ %i.t, %.split.i ], [ %i.t, %.split30.i ], [ @778, %bb.c ], [ %i.t, %.split31.i ]
   ret ptr %.sroa.0.0
 }
 

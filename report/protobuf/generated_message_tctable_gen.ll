@@ -205,23 +205,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.k = icmp ugt i64 %i.c, 9223372036854775776
-  br i1 %i.k, label %bb.c, label %_ZNSt12_Vector_baseIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE11_M_allocateEm.exit.i
+  br i1 %i.k, label %bb.c, label %_ZNSt6vectorIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE20_M_allocate_and_copyIPS4_EES8_mT_S9_.exit
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.7) #16
   unreachable
 
-_ZNSt12_Vector_baseIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE11_M_allocateEm.exit.i: ; preds = %bb.b
+_ZNSt6vectorIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE20_M_allocate_and_copyIPS4_EES8_mT_S9_.exit: ; preds = %bb.b
   %3 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #17 ; 3 uses
-  %.not9.i.i.i.i.i = icmp eq ptr %1, %2
-  br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE20_M_allocate_and_copyIPS4_EES8_mT_S9_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE11_M_allocateEm.exit.i
   %4 = and i64 %i.c, 9223372036854775776
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %3, ptr align 8 %1, i64 %4, i1 false)
-  br label %_ZNSt6vectorIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE20_M_allocate_and_copyIPS4_EES8_mT_S9_.exit
-
-_ZNSt6vectorIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE20_M_allocate_and_copyIPS4_EES8_mT_S9_.exit: ; preds = %_ZNSt12_Vector_baseIN6google8protobuf8internal17TailCallTableInfo13FastFieldInfoESaIS4_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.m = load ptr, ptr %0, align 8, !tbaa !84     ; 3 uses
   %.not.i = icmp eq ptr %i.m, null

@@ -202,26 +202,24 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define hidden noundef ptr @_RNvXs1_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterhEENtNtNtB9_6traits12double_ended19DoubleEndedIterator9next_backCsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0) unnamed_addr #7 {
 bb.a:
-  %.val = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 2 uses
+  %.val = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.val10 = load ptr, ptr %i.a, align 8, !nonnull !4, !noundef !4 ; 3 uses
+  %.val10 = load ptr, ptr %i.a, align 8, !nonnull !4, !noundef !4 ; 2 uses
   %i.b = ptrtoint ptr %.val10 to i64
   %i.c = ptrtoint ptr %.val to i64
   %i.d = sub nuw i64 %i.b, %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load i64, ptr %i.e, align 8, !noundef !4
-  %.not.not = icmp ule i64 %i.d, %i.f
-  %1 = icmp eq ptr %.val, %.val10
-  %or.cond = or i1 %1, %.not.not
-  br i1 %or.cond, label %_RNvXs2K_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsbNM6vbj4kjf_9usernames.exit, label %bb.b
+  %.not.not = icmp ugt i64 %i.d, %i.f
+  br i1 %.not.not, label %bb.b, label %_RNvXs2K_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsbNM6vbj4kjf_9usernames.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds i8, ptr %.val10, i64 -1 ; 2 uses
   store ptr %i.g, ptr %i.a, align 8, !alias.scope !226
   br label %_RNvXs2K_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsbNM6vbj4kjf_9usernames.exit
 
-_RNvXs2K_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsbNM6vbj4kjf_9usernames.exit: ; preds = %bb.b, %bb.a
-  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ %i.g, %bb.b ]
+_RNvXs2K_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsbNM6vbj4kjf_9usernames.exit: ; preds = %bb.a, %bb.b
+  %.sroa.0.0 = phi ptr [ %i.g, %bb.b ], [ null, %bb.a ]
   ret ptr %.sroa.0.0
 }
 

@@ -205,8 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt12_Vector_baseIN6Rewire5MiaigESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.m = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #38 ; 3 uses
-  %.not9.i.i.i.i.i = icmp eq ptr %1, %2
-  br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN6Rewire5MiaigESaIS1_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructIN6Rewire5MiaigEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.011.i.i.i.i.i = phi ptr [ %i.s, %_ZSt10_ConstructIN6Rewire5MiaigEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.m, %_ZNSt12_Vector_baseIN6Rewire5MiaigESaIS1_EE11_M_allocateEm.exit.i ] ; 2 uses
@@ -229,7 +228,7 @@ _ZSt10_ConstructIN6Rewire5MiaigEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i: ; preds = %bb
   %.not.i.i.i.i.i = icmp eq ptr %i.r, %2
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !38
 
-_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit: ; preds = %_ZSt10_ConstructIN6Rewire5MiaigEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseIN6Rewire5MiaigESaIS1_EE11_M_allocateEm.exit.i
+_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit: ; preds = %_ZSt10_ConstructIN6Rewire5MiaigEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %i.t = load ptr, ptr %0, align 8, !tbaa !98     ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !102  ; 2 uses

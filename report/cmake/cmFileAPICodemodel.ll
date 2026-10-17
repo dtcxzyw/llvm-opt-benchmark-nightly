@@ -204,9 +204,9 @@ _ZNSt6vectorIN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESa
   br i1 %.not.i.i128.i.i.i, label %_ZN12_GLOBAL__N_14JBTsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSERKS7_.exit.i.i.i, label %bb.ard
 
 bb.ard:                                           ; preds = %.noexc130.i.i.i
-  %.val32.i.i.i.i.i = load ptr, ptr %i.dvj, align 8, !tbaa !410 ; 9 uses
+  %.val32.i.i.i.i.i = load ptr, ptr %i.dvj, align 8, !tbaa !410 ; 8 uses
   %i.dvk = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i.i.i, i64 168 ; 2 uses
-  %.val33.i.i.i.i.i = load ptr, ptr %i.dvk, align 8, !tbaa !411 ; 4 uses
+  %.val33.i.i.i.i.i = load ptr, ptr %i.dvk, align 8, !tbaa !411 ; 3 uses
   %i.dvl = ptrtoint ptr %.val33.i.i.i.i.i to i64
   %i.dvm = ptrtoint ptr %.val32.i.i.i.i.i to i64
   %i.dvn = sub i64 %i.dvl, %i.dvm                 ; 10 uses
@@ -231,18 +231,11 @@ bb.are:                                           ; preds = %bb.ard
 
 _ZNSt12_Vector_baseIN12_GLOBAL__N_18JBTIndexESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i.i: ; preds = %bb.are
   %i.dvt = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dvn) #29
-          to label %.noexc132.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.i.loopexit.i ; 4 uses
+          to label %_ZNSt6vectorIN12_GLOBAL__N_18JBTIndexESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.i.loopexit.i ; 4 uses
 
-.noexc132.i.i.i:                                  ; preds = %_ZNSt12_Vector_baseIN12_GLOBAL__N_18JBTIndexESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i.i
-  %.not8.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %.val32.i.i.i.i.i, %.val33.i.i.i.i.i
-  br i1 %.not8.i.i.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN12_GLOBAL__N_18JBTIndexESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.preheader.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.preheader.i.i.i.i.i.i:             ; preds = %.noexc132.i.i.i
+_ZNSt6vectorIN12_GLOBAL__N_18JBTIndexESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.i.i.i.i.i: ; preds = %_ZNSt12_Vector_baseIN12_GLOBAL__N_18JBTIndexESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i.i
   %218 = and i64 %i.dvn, 9223372036854775804
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.dvt, ptr readonly align 4 %.val32.i.i.i.i.i, i64 %218, i1 false), !tbaa !162
-  br label %_ZNSt6vectorIN12_GLOBAL__N_18JBTIndexESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.i.i.i.i.i
-
-_ZNSt6vectorIN12_GLOBAL__N_18JBTIndexESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.preheader.i.i.i.i.i.i, %.noexc132.i.i.i
   %i.dvu = load ptr, ptr %i.dqe, align 8, !tbaa !410, !alias.scope !1081, !noalias !1079 ; 3 uses
   %.not.i.i.i.i.i.i537 = icmp eq ptr %i.dvu, null
   br i1 %.not.i.i.i.i.i.i537, label %_ZNSt12_Vector_baseIN12_GLOBAL__N_18JBTIndexESaIS1_EE13_M_deallocateEPS1_m.exit.i.i.i.i.i, label %bb.arf

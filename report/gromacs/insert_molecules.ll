@@ -204,18 +204,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.k = sdiv exact i64 %i.c, 12
   %i.l = icmp ugt i64 %i.k, 768614336404564650
-  br i1 %i.l, label %bb.c, label %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE11_M_allocateEm.exit.i
+  br i1 %i.l, label %bb.c, label %.lr.ph.i.i.i.i.i.preheader
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.87) #27
   unreachable
 
-_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.b
+.lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.b
   %3 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #24 ; 5 uses
-  %.not13.i.i.i.i.i = icmp eq ptr %1, %2
-  br i1 %.not13.i.i.i.i.i, label %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE20_M_allocate_and_copyIPA3_fEEPS2_mT_S9_.exit, label %.lr.ph.i.i.i.i.i.preheader
-
-.lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE11_M_allocateEm.exit.i
   %i.m = add i64 %i.a, -12
   %i.n = sub i64 %i.m, %i.b                       ; 2 uses
   %i.o = udiv i64 %i.n, 12
@@ -264,7 +260,7 @@ middle.block115:                                  ; preds = %vector.body105
   %.not.i.i.i.i.i = icmp eq ptr %i.z, %2
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE20_M_allocate_and_copyIPA3_fEEPS2_mT_S9_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !300
 
-_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE20_M_allocate_and_copyIPA3_fEEPS2_mT_S9_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block115, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE11_M_allocateEm.exit.i
+_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE20_M_allocate_and_copyIPA3_fEEPS2_mT_S9_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block115
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = load ptr, ptr %0, align 8, !tbaa !108   ; 3 uses
   %.not.i = icmp eq ptr %i.ac, null

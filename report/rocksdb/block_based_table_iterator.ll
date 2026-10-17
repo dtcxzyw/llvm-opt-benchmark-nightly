@@ -204,15 +204,15 @@ bb.al:                                            ; preds = %.lr.ph
 
 .loopexit:                                        ; preds = %bb.al, %.critedge, %.critedge.preheader, %.preheader, %bb.aj, %bb.ak, %bb.ah
   %i.fx = phi i64 [ %i.fd, %.critedge.preheader ], [ %i.fd, %bb.ah ], [ 0, %.preheader ], [ %i.fd, %bb.aj ], [ %.025167, %bb.ak ], [ %i.fd, %.critedge ], [ %i.fd, %bb.al ] ; 2 uses
-  %i.fy = phi i64 [ 0, %.critedge.preheader ], [ 0, %bb.ah ], [ 0, %.preheader ], [ %.026228, %bb.aj ], [ 0, %bb.ak ], [ 0, %.critedge ], [ 0, %bb.al ] ; 2 uses
+  %i.fy = phi i64 [ 0, %.critedge.preheader ], [ 0, %bb.ah ], [ 0, %.preheader ], [ %.026228, %bb.aj ], [ 0, %bb.ak ], [ 0, %.critedge ], [ 0, %bb.al ] ; 3 uses
   %i.fz = icmp ult i64 %i.fy, %i.fx
   br i1 %i.fz, label %bb.am, label %_ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EE6assignIN9__gnu_cxx17__normal_iteratorIPS1_S3_EEvEEvT_S9_.exit
 
 bb.am:                                            ; preds = %.loopexit
-  %.idx160 = shl nsw i64 %i.fy, 4                 ; 3 uses
+  %.idx160 = shl nsw i64 %i.fy, 4
   %i.ga = getelementptr inbounds i8, ptr %i.ez, i64 %.idx160
-  %.idx = shl nsw i64 %i.fx, 4                    ; 2 uses
-  %gepdiff = sub nsw i64 %.idx, %.idx160          ; 4 uses
+  %18 = sub nuw nsw i64 %i.fx, %i.fy
+  %gepdiff = shl nsw i64 %18, 4                   ; 4 uses
   %i.gb = icmp ugt i64 %gepdiff, 9223372036854775792
   br i1 %i.gb, label %bb.an, label %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE11_M_allocateEm.exit.i.i
 
@@ -225,17 +225,10 @@ bb.an:                                            ; preds = %bb.am
 
 _ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %bb.am
   %i.gc = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %gepdiff) #25
-          to label %.noexc124 unwind label %.thread ; 3 uses
+          to label %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i unwind label %.thread ; 3 uses
 
-.noexc124:                                        ; preds = %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE11_M_allocateEm.exit.i.i
-  %18 = icmp eq i64 %.idx160, %.idx
-  br i1 %18, label %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i, label %.lr.ph.i.i.i.i.preheader.i.i
-
-.lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %.noexc124
+_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE11_M_allocateEm.exit.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.gc, ptr align 8 %i.ga, i64 %gepdiff, i1 false)
-  br label %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i
-
-_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %.noexc124, %.lr.ph.i.i.i.i.preheader.i.i
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 %gepdiff
   br label %_ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EE6assignIN9__gnu_cxx17__normal_iteratorIPS1_S3_EEvEEvT_S9_.exit
 

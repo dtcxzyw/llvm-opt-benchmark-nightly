@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !463  ; 5 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !464    ; 16 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !463  ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !464    ; 15 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 6 uses
@@ -221,18 +221,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.o = icmp ugt i64 %i.g, 2305843009213693951
-  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseIN5boost9container4test24movable_and_copyable_intESaIS3_EE11_M_allocateEm.exit.i, !prof !339
+  br i1 %i.o, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !339
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #19
   unreachable
 
-_ZNSt12_Vector_baseIN5boost9container4test24movable_and_copyable_intESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #23 ; 10 uses
-  %.not11.i.i.i.i.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not11.i.i.i.i.i, label %_ZNSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN5boost9container4test24movable_and_copyable_intESaIS3_EE11_M_allocateEm.exit.i
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !341 ; 3 uses
   %i.p = add i64 %i.d, -4
   %i.q = sub i64 %i.p, %i.e                       ; 3 uses
@@ -312,7 +308,7 @@ middle.block105:                                  ; preds = %vector.body97
   %.not.i.i.i.i.i = icmp eq ptr %i.al, %i.b
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !6399
 
-_ZNSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block105, %_ZNSt12_Vector_baseIN5boost9container4test24movable_and_copyable_intESaIS3_EE11_M_allocateEm.exit.i
+_ZNSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block105
   %i.an = load ptr, ptr %0, align 8, !tbaa !464   ; 5 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !463 ; 2 uses
@@ -715,8 +711,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !467  ; 6 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !468    ; 24 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !467  ; 5 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !468    ; 23 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 7 uses
@@ -732,18 +728,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.o = icmp ugt i64 %i.g, 1152921504606846975
-  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseIN5boost9container3dtl4pairINS1_4test24movable_and_copyable_intES5_EESaIS6_EE11_M_allocateEm.exit.i, !prof !339
+  br i1 %i.o, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !339
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #19
   unreachable
 
-_ZNSt12_Vector_baseIN5boost9container3dtl4pairINS1_4test24movable_and_copyable_intES5_EESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #23 ; 11 uses
-  %.not11.i.i.i.i.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not11.i.i.i.i.i, label %_ZNSt6vectorIN5boost9container3dtl4pairINS1_4test24movable_and_copyable_intES5_EESaIS6_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS6_S8_EEEEPS6_mT_SG_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN5boost9container3dtl4pairINS1_4test24movable_and_copyable_intES5_EESaIS6_EE11_M_allocateEm.exit.i
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !341 ; 3 uses
   %i.p = add i64 %i.d, -8
   %i.q = sub i64 %i.p, %i.e                       ; 3 uses
@@ -828,7 +820,7 @@ middle.block138:                                  ; preds = %vector.body122
   %.not.i.i.i.i.i = icmp eq ptr %i.an, %i.b
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN5boost9container3dtl4pairINS1_4test24movable_and_copyable_intES5_EESaIS6_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS6_S8_EEEEPS6_mT_SG_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !6473
 
-_ZNSt6vectorIN5boost9container3dtl4pairINS1_4test24movable_and_copyable_intES5_EESaIS6_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS6_S8_EEEEPS6_mT_SG_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block138, %_ZNSt12_Vector_baseIN5boost9container3dtl4pairINS1_4test24movable_and_copyable_intES5_EESaIS6_EE11_M_allocateEm.exit.i
+_ZNSt6vectorIN5boost9container3dtl4pairINS1_4test24movable_and_copyable_intES5_EESaIS6_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS6_S8_EEEEPS6_mT_SG_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block138
   %i.ap = load ptr, ptr %0, align 8, !tbaa !468   ; 5 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !467 ; 2 uses

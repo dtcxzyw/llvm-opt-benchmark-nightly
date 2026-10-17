@@ -202,9 +202,9 @@ define hidden noundef ptr @_RNvXs4_NtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufrea
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !noundef !6 ; 2 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !6
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
-  %i.e = load i64, ptr %i.d, align 8, !noundef !6 ; 4 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !6 ; 3 uses
   %i.f = sub i64 %i.c, %i.e                       ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -213,7 +213,7 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !95, !noundef !6
   %i.k = sub nuw i64 %i.j, %i.h
   %.not.i.not = icmp ugt i64 %i.f, %i.k
-  br i1 %.not.i.not, label %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit, label %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit.thread
+  br i1 %.not.i.not, label %.lr.ph.i, label %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit.thread
 
 _RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit.thread: ; preds = %bb.a
   %i.l = load ptr, ptr %0, align 8, !alias.scope !95, !nonnull !6, !noundef !6
@@ -227,11 +227,7 @@ _RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12con
   store i64 %i.q, ptr %i.g, align 8, !alias.scope !95
   br label %_RINvNtNtCsexYYUdYSQU6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderNtNtCsG258MDvU3F_3std2fs4FileEECs2JPny71o0qX_14pingora_rustls.exit
 
-_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit: ; preds = %bb.a
-  %.not23.i = icmp eq i64 %i.c, %i.e
-  br i1 %.not23.i, label %_RINvNtNtCsexYYUdYSQU6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderNtNtCsG258MDvU3F_3std2fs4FileEECs2JPny71o0qX_14pingora_rustls.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit
+.lr.ph.i:                                         ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br label %bb.b
 
@@ -343,8 +339,8 @@ bb.k:                                             ; preds = %bb.j
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #11
   unreachable
 
-_RINvNtNtCsexYYUdYSQU6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderNtNtCsG258MDvU3F_3std2fs4FileEECs2JPny71o0qX_14pingora_rustls.exit: ; preds = %.backedge.i, %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit.i, %bb.e, %.split.i, %.split18.i, %.split17.i, %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit, %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit.thread
-  %.sroa.0.0 = phi ptr [ null, %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit.thread ], [ null, %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit ], [ null, %.backedge.i ], [ %i.t, %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit.i ], [ %i.t, %.split.i ], [ %i.t, %.split17.i ], [ @5, %bb.e ], [ %i.t, %.split18.i ]
+_RINvNtNtCsexYYUdYSQU6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderNtNtCsG258MDvU3F_3std2fs4FileEECs2JPny71o0qX_14pingora_rustls.exit: ; preds = %.backedge.i, %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit.i, %bb.e, %.split.i, %.split18.i, %.split17.i, %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit.thread
+  %.sroa.0.0 = phi ptr [ null, %_RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsG258MDvU3F_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECs2JPny71o0qX_14pingora_rustls.exit.thread ], [ null, %.backedge.i ], [ %i.t, %_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interrupted.exit.i ], [ %i.t, %.split.i ], [ %i.t, %.split17.i ], [ @5, %bb.e ], [ %i.t, %.split18.i ]
   ret ptr %.sroa.0.0
 }
 

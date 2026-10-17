@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !413  ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !414    ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !413
+  %i.c = load ptr, ptr %1, align 8, !tbaa !414    ; 6 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
@@ -222,18 +222,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.n = sdiv exact i64 %i.f, 40
   %i.o = icmp ugt i64 %i.n, 230584300921369395
-  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE11_M_allocateEm.exit.i, !prof !302
+  br i1 %i.o, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !302
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #51
   unreachable
 
-_ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #52 ; 3 uses
-  %.not7.i.i.i.i.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS8_SA_EEEEPS8_mT_SI_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE11_M_allocateEm.exit.i
   %i.p = add i64 %i.d, -40
   %i.q = sub i64 %i.p, %i.e
   %.fr.i = freeze i64 %i.q                        ; 2 uses
@@ -241,14 +237,11 @@ _ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11c
   %i.s = add i64 %.fr.i, 40
   %i.t = sub i64 %i.s, %i.r
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr align 8 %i.c, i64 %i.t, i1 false)
-  br label %_ZNSt6vectorIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS8_SA_EEEEPS8_mT_SI_.exit
-
-_ZNSt6vectorIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS8_SA_EEEEPS8_mT_SI_.exit: ; preds = %_ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
   %3 = load ptr, ptr %0, align 8, !tbaa !414      ; 3 uses
   %.not.i = icmp eq ptr %3, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE13_M_deallocateEPS8_m.exit, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt6vectorIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS8_SA_EEEEPS8_mT_SI_.exit
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i
   %i.u = load ptr, ptr %i.g, align 8, !tbaa !415
   %i.v = ptrtoint ptr %i.u to i64
   %i.w = ptrtoint ptr %3 to i64
@@ -256,7 +249,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN5boos
   tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef %i.x) #53
   br label %_ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE13_M_deallocateEPS8_m.exit
 
-_ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE13_M_deallocateEPS8_m.exit: ; preds = %_ZNSt6vectorIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS8_SA_EEEEPS8_mT_SI_.exit, %bb.e
+_ZNSt12_Vector_baseIN5boost5redis5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEESaIS8_EE13_M_deallocateEPS8_m.exit: ; preds = %.lr.ph.i.i.i.i.preheader.i, %bb.e
   store ptr %2, ptr %0, align 8, !tbaa !414
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 %i.f
   store ptr %i.y, ptr %i.g, align 8, !tbaa !415

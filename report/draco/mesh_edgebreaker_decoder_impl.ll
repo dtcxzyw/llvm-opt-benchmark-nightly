@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !220  ; 4 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !111    ; 10 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !220  ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !111    ; 9 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 6 uses
   %i.f = sub i64 %i.d, %i.e                       ; 6 uses
@@ -222,34 +222,27 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.o = icmp ugt i64 %i.g, 2305843009213693951
-  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE11_M_allocateEm.exit.i, !prof !380
+  br i1 %i.o, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !380
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #20
   unreachable
 
-_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #19 ; 4 uses
-  %.not11.i.i.i.i.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not11.i.i.i.i.i, label %_ZNSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE11_M_allocateEm.exit.i
   %i.p = add i64 %i.d, -4
   %i.q = sub i64 %i.p, %i.e
   %i.r = and i64 %i.q, -4
   %i.s = add i64 %i.r, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %2, ptr align 4 %i.c, i64 %i.s, i1 false), !tbaa !225
-  br label %_ZNSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
-
-_ZNSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
   %.not.i = icmp eq ptr %i.j, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE13_M_deallocateEPS3_m.exit, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.m) #18
   br label %_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE13_M_deallocateEPS3_m.exit
 
-_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, %bb.e
+_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %.lr.ph.i.i.i.i.preheader.i, %bb.e
   store ptr %2, ptr %0, align 8, !tbaa !111
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 %i.f
   store ptr %i.t, ptr %i.h, align 8, !tbaa !112

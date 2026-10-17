@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !122  ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !123    ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !122
+  %i.c = load ptr, ptr %1, align 8, !tbaa !123    ; 6 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
@@ -220,34 +220,27 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = icmp ugt i64 %i.f, 9223372036854775792
-  br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN4entt8delegateIFvvEEESaIS3_EE11_M_allocateEm.exit.i, !prof !116
+  br i1 %i.n, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !116
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #25
   unreachable
 
-_ZNSt12_Vector_baseIN4entt8delegateIFvvEEESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #26 ; 3 uses
-  %3 = icmp eq ptr %i.c, %i.b
-  br i1 %3, label %_ZNSt6vectorIN4entt8delegateIFvvEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN4entt8delegateIFvvEEESaIS3_EE11_M_allocateEm.exit.i
   %i.o = add i64 %i.d, -16
   %i.p = sub i64 %i.o, %i.e
   %i.q = and i64 %i.p, -16
   %i.r = add i64 %i.q, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr align 8 %i.c, i64 %i.r, i1 false)
-  br label %_ZNSt6vectorIN4entt8delegateIFvvEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
-
-_ZNSt6vectorIN4entt8delegateIFvvEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %_ZNSt12_Vector_baseIN4entt8delegateIFvvEEESaIS3_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
   %.not.i = icmp eq ptr %i.i, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN4entt8delegateIFvvEEESaIS3_EE13_M_deallocateEPS3_m.exit, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt6vectorIN4entt8delegateIFvvEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.l) #27
   br label %_ZNSt12_Vector_baseIN4entt8delegateIFvvEEESaIS3_EE13_M_deallocateEPS3_m.exit
 
-_ZNSt12_Vector_baseIN4entt8delegateIFvvEEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorIN4entt8delegateIFvvEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, %bb.e
+_ZNSt12_Vector_baseIN4entt8delegateIFvvEEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %.lr.ph.i.i.i.i.preheader.i, %bb.e
   store ptr %2, ptr %0, align 8, !tbaa !123
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 %i.f
   store ptr %i.s, ptr %i.g, align 8, !tbaa !124
@@ -650,8 +643,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !151  ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !152    ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !151
+  %i.c = load ptr, ptr %1, align 8, !tbaa !152    ; 6 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
@@ -666,34 +659,27 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = icmp ugt i64 %i.f, 9223372036854775792
-  br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN4entt8delegateIFviEEESaIS3_EE11_M_allocateEm.exit.i, !prof !116
+  br i1 %i.n, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !116
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #25
   unreachable
 
-_ZNSt12_Vector_baseIN4entt8delegateIFviEEESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #26 ; 3 uses
-  %3 = icmp eq ptr %i.c, %i.b
-  br i1 %3, label %_ZNSt6vectorIN4entt8delegateIFviEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN4entt8delegateIFviEEESaIS3_EE11_M_allocateEm.exit.i
   %i.o = add i64 %i.d, -16
   %i.p = sub i64 %i.o, %i.e
   %i.q = and i64 %i.p, -16
   %i.r = add i64 %i.q, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr align 8 %i.c, i64 %i.r, i1 false)
-  br label %_ZNSt6vectorIN4entt8delegateIFviEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
-
-_ZNSt6vectorIN4entt8delegateIFviEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %_ZNSt12_Vector_baseIN4entt8delegateIFviEEESaIS3_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
   %.not.i = icmp eq ptr %i.i, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN4entt8delegateIFviEEESaIS3_EE13_M_deallocateEPS3_m.exit, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt6vectorIN4entt8delegateIFviEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.l) #27
   br label %_ZNSt12_Vector_baseIN4entt8delegateIFviEEESaIS3_EE13_M_deallocateEPS3_m.exit
 
-_ZNSt12_Vector_baseIN4entt8delegateIFviEEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorIN4entt8delegateIFviEEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, %bb.e
+_ZNSt12_Vector_baseIN4entt8delegateIFviEEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %.lr.ph.i.i.i.i.preheader.i, %bb.e
   store ptr %2, ptr %0, align 8, !tbaa !152
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 %i.f
   store ptr %i.s, ptr %i.g, align 8, !tbaa !157

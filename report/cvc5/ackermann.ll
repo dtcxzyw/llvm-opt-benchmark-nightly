@@ -204,8 +204,8 @@ bb.bl:                                            ; preds = %bb.bi
   br label %.body.i.i.i
 
 _ZNSt27__uninitialized_default_n_1ILb0EE18__uninit_default_nIPN4cvc58internal12NodeTemplateILb1EEEmEET_S7_T0_.exit.i: ; preds = %bb.bh, %_ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EEC2EmRKS4_.exit.i.i.i.thread.i
-  %.pr.i.i.i83.i = phi ptr [ null, %_ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EEC2EmRKS4_.exit.i.i.i.thread.i ], [ %i.iz, %bb.bh ] ; 10 uses
-  %.0.lcssa.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EEC2EmRKS4_.exit.i.i.i.thread.i ], [ %i.jl, %bb.bh ] ; 6 uses
+  %.pr.i.i.i83.i = phi ptr [ null, %_ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EEC2EmRKS4_.exit.i.i.i.thread.i ], [ %i.iz, %bb.bh ] ; 9 uses
+  %.0.lcssa.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EEC2EmRKS4_.exit.i.i.i.thread.i ], [ %i.jl, %bb.bh ] ; 5 uses
   store ptr %.0.lcssa.i.i, ptr %i.cc, align 8, !tbaa !64
   %i.jp = load ptr, ptr %53, align 8, !tbaa !22
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 8 ; 2 uses
@@ -463,10 +463,9 @@ bb.cm:                                            ; preds = %._crit_edge.i.i.i
 
 .noexc112.i.i.i:                                  ; preds = %bb.cm
   call void @llvm.lifetime.start.p0(ptr nonnull %25), !noalias !381
-  %.not6.i.i.i.i.i.i = icmp eq ptr %.0.lcssa.i.i, %.pr.i.i.i83.i
-  br i1 %.not6.i.i.i.i.i.i, label %.loopexit4.i.i.i.i, label %.lr.ph.i.i.i.i59.i.i
+  br label %.lr.ph.i.i.i.i59.i.i
 
-.lr.ph.i.i.i.i59.i.i:                             ; preds = %.noexc112.i.i.i, %.noexc.i.i.i.i
+.lr.ph.i.i.i.i59.i.i:                             ; preds = %.noexc.i.i.i.i, %.noexc112.i.i.i
   %.sroa.0.07.i.i.i.i.i.i = phi ptr [ %i.ng, %.noexc.i.i.i.i ], [ %.pr.i.i.i83.i, %.noexc112.i.i.i ] ; 2 uses
   %i.ne = load ptr, ptr %.sroa.0.07.i.i.i.i.i.i, align 8, !tbaa !48, !noalias !381
   store ptr %i.ne, ptr %25, align 8, !tbaa !22, !noalias !381
@@ -478,7 +477,7 @@ bb.cm:                                            ; preds = %._crit_edge.i.i.i
   %.not.i.i.i111.i.i.i = icmp eq ptr %i.ng, %.0.lcssa.i.i
   br i1 %.not.i.i.i111.i.i.i, label %.loopexit4.i.i.i.i, label %.lr.ph.i.i.i.i59.i.i, !llvm.loop !133
 
-.loopexit4.i.i.i.i:                               ; preds = %.noexc.i.i.i.i, %.noexc112.i.i.i
+.loopexit4.i.i.i.i:                               ; preds = %.noexc.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %25), !noalias !381
   invoke void @_ZN4cvc58internal11NodeBuilder13constructNodeEv(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate.20") align 8 %33, ptr noundef nonnull align 8 dereferenceable(124) %26)
           to label %bb.co unwind label %.loopexit.split-lp.i.i.i.i

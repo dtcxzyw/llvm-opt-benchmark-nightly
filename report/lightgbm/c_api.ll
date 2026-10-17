@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !512  ; 5 uses
-  %i.d = load ptr, ptr %1, align 8, !tbaa !484    ; 9 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !512  ; 4 uses
+  %i.d = load ptr, ptr %1, align 8, !tbaa !484    ; 8 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 8 uses
@@ -226,8 +226,7 @@ _ZNSt12_Vector_baseIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE11_M_allocat
   %i.p = load ptr, ptr %i.a, align 8
   %.0.i.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr %i.p, ptr null ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
-  %.not13.i.i = icmp eq ptr %i.d, %i.c
-  br i1 %.not13.i.i, label %_ZNSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKdS4_EEEEPdmT_SC_.exit, label %.lr.ph.i.i
+  br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt12_Vector_baseIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE11_M_allocateEm.exit.i, %.lr.ph.i.i
   %.015.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %.0.i.i.i.i.i, %_ZNSt12_Vector_baseIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE11_M_allocateEm.exit.i ] ; 2 uses
@@ -239,7 +238,7 @@ _ZNSt12_Vector_baseIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE11_M_allocat
   %.not.i11.i = icmp eq ptr %i.r, %i.c
   br i1 %.not.i11.i, label %_ZNSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKdS4_EEEEPdmT_SC_.exit, label %.lr.ph.i.i, !llvm.loop !31
 
-_ZNSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKdS4_EEEEPdmT_SC_.exit: ; preds = %.lr.ph.i.i, %_ZNSt12_Vector_baseIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE11_M_allocateEm.exit.i
+_ZNSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKdS4_EEEEPdmT_SC_.exit: ; preds = %.lr.ph.i.i
   %.not.i = icmp eq ptr %i.j, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEE13_M_deallocateEPdm.exit, label %bb.c
 

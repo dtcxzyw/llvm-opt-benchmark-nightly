@@ -202,15 +202,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !42   ; 3 uses
-  %i.f = load ptr, ptr %i.c, align 8, !tbaa !41   ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !42   ; 2 uses
+  %i.f = load ptr, ptr %i.c, align 8, !tbaa !41   ; 2 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
   %i.j = icmp ult i64 %i.i, 800
-  %.not7.i = icmp eq ptr %i.f, %i.e
-  %or.cond = or i1 %i.j, %.not7.i
-  br i1 %or.cond, label %_ZN8facebook6hermes7tracing10SynthTrace12flushRecordsEv.exit, label %.lr.ph.i
+  br i1 %i.j, label %_ZN8facebook6hermes7tracing10SynthTrace12flushRecordsEv.exit, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   %.pre.i = load ptr, ptr %i.c, align 8, !tbaa !41 ; 3 uses

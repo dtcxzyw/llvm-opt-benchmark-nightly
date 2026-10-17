@@ -204,9 +204,9 @@ bb.a:
   br i1 %.not, label %bb.o, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.val31 = load ptr, ptr %1, align 8, !tbaa !183 ; 7 uses
+  %.val31 = load ptr, ptr %1, align 8, !tbaa !183 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %.val32 = load ptr, ptr %i.a, align 8, !tbaa !184 ; 2 uses
+  %.val32 = load ptr, ptr %i.a, align 8, !tbaa !184
   %i.b = ptrtoint ptr %.val32 to i64
   %i.c = ptrtoint ptr %.val31 to i64
   %i.d = sub i64 %i.b, %i.c                       ; 10 uses
@@ -221,23 +221,16 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.j = icmp ugt i64 %i.d, 9223372036854775792
-  br i1 %i.j, label %bb.d, label %_ZNSt12_Vector_baseIN12_GLOBAL__N_110FsmSenDescESaIS1_EE11_M_allocateEm.exit.i, !prof !34
+  br i1 %i.j, label %bb.d, label %_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, !prof !34
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #30
   unreachable
 
-_ZNSt12_Vector_baseIN12_GLOBAL__N_110FsmSenDescESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit: ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #31 ; 3 uses
-  %.not7.i.i.i.i.i = icmp eq ptr %.val31, %.val32
-  br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN12_GLOBAL__N_110FsmSenDescESaIS1_EE11_M_allocateEm.exit.i
   %3 = and i64 %i.d, 9223372036854775792
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr readonly align 8 %.val31, i64 %3, i1 false)
-  br label %_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
-
-_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit: ; preds = %_ZNSt12_Vector_baseIN12_GLOBAL__N_110FsmSenDescESaIS1_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
   %i.k = load ptr, ptr %0, align 8, !tbaa !183    ; 3 uses
   %.not.i = icmp eq ptr %i.k, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN12_GLOBAL__N_110FsmSenDescESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.e

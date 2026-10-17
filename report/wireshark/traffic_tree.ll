@@ -202,8 +202,8 @@ _ZNK17QArrayDataPointerI7QStringE14freeSpaceAtEndEv.exit.i339: ; preds = %_ZNK17
   %i.eo = load ptr, ptr %i.be, align 8            ; 5 uses
   %i.ep = ptrtoint ptr %i.dp to i64
   %i.eq = add i64 %i.ep, 23
-  %i.er = and i64 %i.eq, -8                       ; 2 uses
-  %i.es = ptrtoint ptr %i.eo to i64               ; 2 uses
+  %i.er = and i64 %i.eq, -8
+  %i.es = ptrtoint ptr %i.eo to i64
   %i.et = sub i64 %i.es, %i.er                    ; 3 uses
   %.neg4.i.i = sdiv exact i64 %i.et, -24
   %.neg3.i.i340 = sub i64 %i.en, %i.do
@@ -227,11 +227,9 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %i.ej, label %_ZN9QtPrivate20q_relocate_overlap_nI7QStringxEEvPT_T0_S3_.exit.i.i.i, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
-  %52 = icmp eq i64 %i.er, %i.es
   %i.ez = icmp eq ptr %i.eo, null
-  %or.cond.i.i.i.i = or i1 %i.ez, %52
   %i.fa = icmp eq ptr %i.ey, null
-  %or.cond3.i.i.i.i = or i1 %or.cond.i.i.i.i, %i.fa
+  %or.cond3.i.i.i.i = or i1 %i.ez, %i.fa
   br i1 %or.cond3.i.i.i.i, label %_ZN9QtPrivate20q_relocate_overlap_nI7QStringxEEvPT_T0_S3_.exit.i.i.i, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk

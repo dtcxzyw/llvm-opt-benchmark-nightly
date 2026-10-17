@@ -204,9 +204,9 @@ bb.a:
   br i1 %.not, label %bb.n, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.val30 = load ptr, ptr %1, align 8, !tbaa !123 ; 9 uses
+  %.val30 = load ptr, ptr %1, align 8, !tbaa !123 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %.val31 = load ptr, ptr %i.a, align 8, !tbaa !124 ; 4 uses
+  %.val31 = load ptr, ptr %i.a, align 8, !tbaa !124 ; 3 uses
   %i.b = ptrtoint ptr %.val31 to i64
   %i.c = ptrtoint ptr %.val30 to i64
   %i.d = sub i64 %i.b, %i.c                       ; 9 uses
@@ -222,20 +222,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.j = ashr exact i64 %i.d, 2
   %i.k = tail call fastcc noundef ptr @_ZNSt12_Vector_baseIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE11_M_allocateEm(i64 noundef range(i64 -2305843009213693952, 2305843009213693952) %i.j) #29 ; 4 uses
-  %.not8.i.i.i.i.i = icmp eq ptr %.val30, %.val31
-  br i1 %.not8.i.i.i.i.i, label %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = and i64 %i.d, -4
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.k, ptr readonly align 4 %.val30, i64 %2, i1 false), !tbaa !33
-  br label %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit
-
-_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit: ; preds = %bb.c, %.lr.ph.i.i.i.i.preheader.i
   %3 = load ptr, ptr %0, align 8, !tbaa !123      ; 3 uses
-  %.not.i = icmp eq ptr %3, null
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE13_M_deallocateEPS2_m.exit, label %bb.d
+  %.not8.i.i.i.i.i = icmp eq ptr %3, null
+  br i1 %.not8.i.i.i.i.i, label %_ZNSt12_Vector_baseIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE13_M_deallocateEPS2_m.exit, label %bb.d
 
-bb.d:                                             ; preds = %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit
+bb.d:                                             ; preds = %bb.c
   %i.l = load ptr, ptr %i.e, align 8, !tbaa !122
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = ptrtoint ptr %3 to i64
@@ -243,7 +236,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorIZL43na
   tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef %i.o) #32
   br label %_ZNSt12_Vector_baseIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE13_M_deallocateEPS2_m.exit
 
-_ZNSt12_Vector_baseIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit, %bb.d
+_ZNSt12_Vector_baseIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %bb.c, %bb.d
   store ptr %i.k, ptr %0, align 8, !tbaa !123
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.d
   store ptr %i.p, ptr %i.e, align 8, !tbaa !122

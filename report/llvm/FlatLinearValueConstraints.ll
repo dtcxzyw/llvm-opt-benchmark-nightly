@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt12_Vector_baseIN4llvm11SmallVectorIlLj8EEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.m = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #18 ; 3 uses
-  %.not7.i.i.i.i.i = icmp eq ptr %1, %2
-  br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN4llvm11SmallVectorIlLj8EEESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPS2_S4_EEEES8_mT_SA_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN4llvm11SmallVectorIlLj8EEESaIS2_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructIN4llvm11SmallVectorIlLj8EEEJRS2_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.aa, %_ZSt10_ConstructIN4llvm11SmallVectorIlLj8EEEJRS2_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.m, %_ZNSt12_Vector_baseIN4llvm11SmallVectorIlLj8EEESaIS2_EE11_M_allocateEm.exit.i ] ; 8 uses
@@ -257,7 +256,7 @@ _ZSt10_ConstructIN4llvm11SmallVectorIlLj8EEEJRS2_EEvPT_DpOT0_.exit.i.i.i.i.i: ; 
   %.not.i.i.i.i.i = icmp eq ptr %i.z, %2
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN4llvm11SmallVectorIlLj8EEESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPS2_S4_EEEES8_mT_SA_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !321
 
-_ZNSt6vectorIN4llvm11SmallVectorIlLj8EEESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPS2_S4_EEEES8_mT_SA_.exit: ; preds = %_ZSt10_ConstructIN4llvm11SmallVectorIlLj8EEEJRS2_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseIN4llvm11SmallVectorIlLj8EEESaIS2_EE11_M_allocateEm.exit.i
+_ZNSt6vectorIN4llvm11SmallVectorIlLj8EEESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPS2_S4_EEEES8_mT_SA_.exit: ; preds = %_ZSt10_ConstructIN4llvm11SmallVectorIlLj8EEEJRS2_EEvPT_DpOT0_.exit.i.i.i.i.i
   %i.ab = load ptr, ptr %0, align 8, !tbaa !19    ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !27 ; 2 uses

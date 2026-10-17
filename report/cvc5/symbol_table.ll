@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !76   ; 4 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !77     ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !76   ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !77     ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
@@ -229,8 +229,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseIN4cvc54SortESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #27 ; 3 uses
-  %.not7.i.i.i.i.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN4cvc54SortESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN4cvc54SortESaIS1_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructIN4cvc54SortEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.aa, %_ZSt10_ConstructIN4cvc54SortEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseIN4cvc54SortESaIS1_EE11_M_allocateEm.exit.i ] ; 3 uses
@@ -266,7 +265,7 @@ _ZSt10_ConstructIN4cvc54SortEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i: ; preds = %bb.g,
   %.not.i.i.i.i.i = icmp eq ptr %i.z, %i.b
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN4cvc54SortESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !4
 
-_ZNSt6vectorIN4cvc54SortESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit: ; preds = %_ZSt10_ConstructIN4cvc54SortEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseIN4cvc54SortESaIS1_EE11_M_allocateEm.exit.i
+_ZNSt6vectorIN4cvc54SortESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit: ; preds = %_ZSt10_ConstructIN4cvc54SortEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %i.ab = load ptr, ptr %0, align 8, !tbaa !77    ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !76 ; 2 uses

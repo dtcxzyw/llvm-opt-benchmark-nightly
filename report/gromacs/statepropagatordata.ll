@@ -205,8 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !324  ; 3 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !117  ; 7 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !324  ; 2 uses
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !117  ; 6 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 8 uses
@@ -223,7 +223,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.p = tail call noundef ptr @_ZNK3gmx20HostAllocationPolicy6mallocEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.g) #21 ; 4 uses
   %i.q = icmp eq ptr %i.p, null
-  br i1 %i.q, label %bb.d, label %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE11_M_allocateEm.exit.i
+  br i1 %i.q, label %bb.d, label %.lr.ph.i.i
 
 bb.d:                                             ; preds = %bb.c
   %i.r = tail call ptr @__cxa_allocate_exception(i64 8) #21 ; 2 uses
@@ -231,20 +231,16 @@ bb.d:                                             ; preds = %bb.c
   tail call void @__cxa_throw(ptr nonnull %i.r, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #35
   unreachable
 
-_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE11_M_allocateEm.exit.i: ; preds = %bb.c
-  %.not8.i.i = icmp eq ptr %i.d, %i.c
-  br i1 %.not8.i.i, label %_ZNSt6vectorIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S6_EEEEPS2_mT_SE_.exit, label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE11_M_allocateEm.exit.i, %.lr.ph.i.i
-  %.010.i.i = phi ptr [ %i.t, %.lr.ph.i.i ], [ %i.p, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE11_M_allocateEm.exit.i ] ; 2 uses
-  %.sroa.05.09.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %i.d, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE11_M_allocateEm.exit.i ] ; 2 uses
+.lr.ph.i.i:                                       ; preds = %bb.c, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.t, %.lr.ph.i.i ], [ %i.p, %bb.c ] ; 2 uses
+  %.sroa.05.09.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %i.d, %bb.c ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.010.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.05.09.i.i, i64 12, i1 false), !tbaa.struct !124
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i.i, i64 12 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 12
   %.not.i6.i = icmp eq ptr %i.s, %i.c
   br i1 %.not.i6.i, label %_ZNSt6vectorIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S6_EEEEPS2_mT_SE_.exit, label %.lr.ph.i.i, !llvm.loop !526
 
-_ZNSt6vectorIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S6_EEEEPS2_mT_SE_.exit: ; preds = %.lr.ph.i.i, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE11_M_allocateEm.exit.i
+_ZNSt6vectorIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S6_EEEEPS2_mT_SE_.exit: ; preds = %.lr.ph.i.i
   %i.u = load ptr, ptr %i.h, align 8, !tbaa !117  ; 2 uses
   %.not.i = icmp eq ptr %i.u, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEENS0_9AllocatorIS2_NS0_20HostAllocationPolicyEEEE13_M_deallocateEPS2_m.exit, label %bb.e

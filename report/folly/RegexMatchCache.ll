@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20228 ; 5 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !20173  ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20228 ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !20173  ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
@@ -230,8 +230,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseIN5boost9sub_matchIPKcEESaIS4_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #43 ; 4 uses
-  %2 = icmp eq ptr %i.c, %i.b
-  br i1 %2, label %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN5boost9sub_matchIPKcEESaIS4_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.u, %.lr.ph.i.i.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseIN5boost9sub_matchIPKcEESaIS4_EE11_M_allocateEm.exit.i ] ; 3 uses
@@ -246,7 +245,7 @@ _ZNSt12_Vector_baseIN5boost9sub_matchIPKcEESaIS4_EE11_M_allocateEm.exit.i: ; pre
   %i.v = icmp eq ptr %i.t, %i.b
   br i1 %i.v, label %_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !757
 
-_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit: ; preds = %.lr.ph.i.i.i.i.i, %_ZNSt12_Vector_baseIN5boost9sub_matchIPKcEESaIS4_EE11_M_allocateEm.exit.i
+_ZNSt6vectorIN5boost9sub_matchIPKcEESaIS4_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEEPS4_mT_SE_.exit: ; preds = %.lr.ph.i.i.i.i.i
   %i.w = load ptr, ptr %0, align 8, !tbaa !20173  ; 3 uses
   %.not.i = icmp eq ptr %i.w, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN5boost9sub_matchIPKcEESaIS4_EE13_M_deallocateEPS4_m.exit, label %bb.e

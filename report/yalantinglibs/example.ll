@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !2511 ; 4 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !1435   ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !2511 ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !1435   ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
@@ -222,18 +222,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.n = sdiv exact i64 %i.f, 24
   %i.o = icmp ugt i64 %i.n, 384307168202282325
-  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE11_M_allocateEm.exit.i, !prof !300
+  br i1 %i.o, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !300
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #59
   unreachable
 
-_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #60 ; 4 uses
-  %3 = icmp eq ptr %i.c, %i.b
-  br i1 %3, label %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE20_M_allocate_and_copyINS3_IPKSC_SE_EEEEPSC_mT_SK_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE11_M_allocateEm.exit.i
   %i.p = add i64 %i.d, -24
   %i.q = sub i64 %i.p, %i.e
   %.fr.i = freeze i64 %i.q                        ; 2 uses
@@ -241,17 +237,14 @@ _ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_
   %i.s = add i64 %.fr.i, 24
   %i.t = sub i64 %i.s, %i.r
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr align 8 %i.c, i64 %i.t, i1 false)
-  br label %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE20_M_allocate_and_copyINS3_IPKSC_SE_EEEEPSC_mT_SK_.exit
-
-_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE20_M_allocate_and_copyINS3_IPKSC_SE_EEEEPSC_mT_SK_.exit: ; preds = %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
   %.not.i = icmp eq ptr %i.i, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE13_M_deallocateEPSC_m.exit, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE20_M_allocate_and_copyINS3_IPKSC_SE_EEEEPSC_mT_SK_.exit
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.l) #58
   br label %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE13_M_deallocateEPSC_m.exit
 
-_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE13_M_deallocateEPSC_m.exit: ; preds = %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE20_M_allocate_and_copyINS3_IPKSC_SE_EEEEPSC_mT_SK_.exit, %bb.e
+_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE13_M_deallocateEPSC_m.exit: ; preds = %.lr.ph.i.i.i.i.preheader.i, %bb.e
   store ptr %2, ptr %0, align 8, !tbaa !1435
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 %i.f
   store ptr %i.u, ptr %i.g, align 8, !tbaa !1436
@@ -654,15 +647,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !1046 ; 4 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !1045   ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !1046 ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !1045   ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 6 uses
   %i.g = ashr exact i64 %i.f, 4                   ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !1047
-  %i.j = load ptr, ptr %0, align 8, !tbaa !1045   ; 6 uses
+  %i.j = load ptr, ptr %0, align 8, !tbaa !1045   ; 5 uses
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = ptrtoint ptr %i.j to i64                 ; 4 uses
   %i.m = sub i64 %i.k, %i.l
@@ -679,8 +672,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #60 ; 3 uses
-  %2 = icmp eq ptr %i.c, %i.b
-  br i1 %2, label %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.08.i.i.i.i.i = phi ptr [ %i.z, %_ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i ] ; 2 uses
@@ -712,21 +704,17 @@ _ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.e
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i, i64 16 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 16
   %i.aa = icmp eq ptr %i.y, %i.b
-  br i1 %i.aa, label %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !58
+  br i1 %i.aa, label %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !58
 
-_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit.loopexit: ; preds = %_ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
-  %.pre58 = load ptr, ptr %0, align 8, !tbaa !1045
-  br label %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
-
-_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit.loopexit, %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i
-  %3 = phi ptr [ %.pre58, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit.loopexit ], [ %i.j, %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i ] ; 3 uses
+_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %_ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
+  %.pre58 = load ptr, ptr %0, align 8, !tbaa !1045 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !1046 ; 2 uses
-  %.not4.i.i = icmp eq ptr %3, %i.ac
+  %.not4.i.i = icmp eq ptr %.pre58, %i.ac
   br i1 %.not4.i.i, label %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, %_ZSt8_DestroyISt10shared_ptrIN7cinatra15radix_tree_nodeEEEvPT_.exit.i.i
-  %.05.i.i = phi ptr [ %i.au, %_ZSt8_DestroyISt10shared_ptrIN7cinatra15radix_tree_nodeEEEvPT_.exit.i.i ], [ %3, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit ] ; 2 uses
+  %.05.i.i = phi ptr [ %i.au, %_ZSt8_DestroyISt10shared_ptrIN7cinatra15radix_tree_nodeEEEvPT_.exit.i.i ], [ %.pre58, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.05.i.i, i64 8
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !491 ; 8 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ae, null
@@ -786,7 +774,7 @@ _ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exitthread-pre
   br label %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exit
 
 _ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exit: ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exitthread-pre-split, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit
-  %i.av = phi ptr [ %.pr, %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exitthread-pre-split ], [ %3, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit ] ; 3 uses
+  %i.av = phi ptr [ %.pr, %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exitthread-pre-split ], [ %.pre58, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %i.av, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE13_M_deallocateEPS3_m.exit, label %bb.n
 
@@ -1189,7 +1177,7 @@ bb.a:
   %i.d = ashr exact i64 %i.c, 4                   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !1047
-  %i.g = load ptr, ptr %0, align 8, !tbaa !1045   ; 5 uses
+  %i.g = load ptr, ptr %0, align 8, !tbaa !1045   ; 4 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
   %i.j = sub i64 %i.h, %i.i
@@ -1206,8 +1194,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.m = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #60 ; 3 uses
-  %.not9.i.i.i.i.i = icmp eq ptr %1, %2
-  br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.011.i.i.i.i.i = phi ptr [ %i.w, %_ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.m, %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i ] ; 2 uses
@@ -1239,21 +1226,17 @@ _ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.e
   %i.v = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i, i64 16 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i, i64 16
   %.not.i.i.i.i.i = icmp eq ptr %i.v, %2
-  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !8982
+  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !8982
 
-_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit.loopexit: ; preds = %_ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
-  %.pre47 = load ptr, ptr %0, align 8, !tbaa !1045
-  br label %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit
-
-_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit: ; preds = %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit.loopexit, %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i
-  %3 = phi ptr [ %.pre47, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit.loopexit ], [ %i.g, %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE11_M_allocateEm.exit.i ] ; 3 uses
+_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit: ; preds = %_ZSt10_ConstructISt10shared_ptrIN7cinatra15radix_tree_nodeEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
+  %.pre47 = load ptr, ptr %0, align 8, !tbaa !1045 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !1046 ; 2 uses
-  %.not4.i.i = icmp eq ptr %3, %i.y
+  %.not4.i.i = icmp eq ptr %.pre47, %i.y
   br i1 %.not4.i.i, label %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit, %_ZSt8_DestroyISt10shared_ptrIN7cinatra15radix_tree_nodeEEEvPT_.exit.i.i
-  %.05.i.i = phi ptr [ %i.aq, %_ZSt8_DestroyISt10shared_ptrIN7cinatra15radix_tree_nodeEEEvPT_.exit.i.i ], [ %3, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit ] ; 2 uses
+  %.05.i.i = phi ptr [ %i.aq, %_ZSt8_DestroyISt10shared_ptrIN7cinatra15radix_tree_nodeEEEvPT_.exit.i.i ], [ %.pre47, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit ] ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.05.i.i, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !491 ; 8 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.aa, null
@@ -1313,7 +1296,7 @@ _ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exitthread-pre
   br label %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exit
 
 _ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exit: ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exitthread-pre-split, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit
-  %i.ar = phi ptr [ %.pr, %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exitthread-pre-split ], [ %3, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit ] ; 3 uses
+  %i.ar = phi ptr [ %.pr, %_ZSt8_DestroyIPSt10shared_ptrIN7cinatra15radix_tree_nodeEEEvT_S5_.exitthread-pre-split ], [ %.pre47, %_ZNSt6vectorISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE20_M_allocate_and_copyIPKS3_EEPS3_mT_SA_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %i.ar, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseISt10shared_ptrIN7cinatra15radix_tree_nodeEESaIS3_EE13_M_deallocateEPS3_m.exit, label %bb.m
 

@@ -205,10 +205,8 @@ bb.a:
   %i.a = ptrtoint ptr %2 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 6 uses
-  %3 = icmp eq ptr %2, %1
   %i.d = icmp slt i64 %i.c, 1
-  %or.cond = or i1 %3, %i.d
-  br i1 %or.cond, label %char_is_identifier_start.exit.thread, label %bb.b
+  br i1 %i.d, label %char_is_identifier_start.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 699        ; 3 uses

@@ -205,15 +205,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !130  ; 4 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !128    ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !130  ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !128    ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 6 uses
   %i.g = ashr exact i64 %i.f, 5                   ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !178
-  %i.j = load ptr, ptr %0, align 8, !tbaa !128    ; 6 uses
+  %i.j = load ptr, ptr %0, align 8, !tbaa !128    ; 5 uses
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = ptrtoint ptr %i.j to i64                 ; 4 uses
   %i.m = sub i64 %i.k, %i.l
@@ -230,8 +230,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #30 ; 3 uses
-  %2 = icmp eq ptr %i.c, %i.b
-  br i1 %2, label %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.08.i.i.i.i.i = phi ptr [ %i.af, %_ZSt10_ConstructIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE11_M_allocateEm.exit.i ] ; 4 uses
@@ -271,21 +270,17 @@ _ZSt10_ConstructIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEJRKS5_EEvPT
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i, i64 32 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i, i64 32
   %i.ag = icmp eq ptr %i.ae, %i.b
-  br i1 %i.ag, label %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !17
+  br i1 %i.ag, label %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !17
 
-_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit.loopexit: ; preds = %_ZSt10_ConstructIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i
-  %.pre58 = load ptr, ptr %0, align 8, !tbaa !128
-  br label %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit
-
-_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit: ; preds = %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit.loopexit, %_ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE11_M_allocateEm.exit.i
-  %3 = phi ptr [ %.pre58, %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit.loopexit ], [ %i.j, %_ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE11_M_allocateEm.exit.i ] ; 3 uses
+_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit: ; preds = %_ZSt10_ConstructIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i
+  %.pre58 = load ptr, ptr %0, align 8, !tbaa !128 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !130 ; 2 uses
-  %.not4.i.i = icmp eq ptr %3, %i.ai
+  %.not4.i.i = icmp eq ptr %.pre58, %i.ai
   br i1 %.not4.i.i, label %_ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvT_S7_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit, %_ZSt8_DestroyIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvPT_.exit.i.i
-  %.05.i.i = phi ptr [ %i.ba, %_ZSt8_DestroyIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvPT_.exit.i.i ], [ %3, %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit ] ; 2 uses
+  %.05.i.i = phi ptr [ %i.ba, %_ZSt8_DestroyIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvPT_.exit.i.i ], [ %.pre58, %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit ] ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.05.i.i, i64 24
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !116 ; 8 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.ak, null
@@ -345,7 +340,7 @@ _ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvT_S7_.exitt
   br label %_ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvT_S7_.exit
 
 _ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvT_S7_.exit: ; preds = %_ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvT_S7_.exitthread-pre-split, %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit
-  %i.bb = phi ptr [ %.pr, %_ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvT_S7_.exitthread-pre-split ], [ %3, %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit ] ; 3 uses
+  %i.bb = phi ptr [ %.pr, %_ZSt8_DestroyIPN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEEEvT_S7_.exitthread-pre-split ], [ %.pre58, %_ZNSt6vectorIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEEEPS5_mT_SF_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %i.bb, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeIjSt10shared_ptrImEEESaIS5_EE13_M_deallocateEPS5_m.exit, label %bb.n
 

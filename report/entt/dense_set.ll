@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !139  ; 5 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !137    ; 21 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !139  ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !137    ; 20 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 8 uses
@@ -222,34 +222,27 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.o = icmp ugt i64 %i.g, 576460752303423487
-  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseISt4pairImmESaIS1_EE11_M_allocateEm.exit.i, !prof !113
+  br i1 %i.o, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !113
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #29
   unreachable
 
-_ZNSt12_Vector_baseISt4pairImmESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #30 ; 4 uses
-  %3 = icmp eq ptr %i.c, %i.b
-  br i1 %3, label %_ZNSt6vectorISt4pairImmESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseISt4pairImmESaIS1_EE11_M_allocateEm.exit.i
   %i.p = add i64 %i.d, -16
   %i.q = sub i64 %i.p, %i.e
   %i.r = and i64 %i.q, -16
   %i.s = add i64 %i.r, 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr align 8 %i.c, i64 %i.s, i1 false)
-  br label %_ZNSt6vectorISt4pairImmESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
-
-_ZNSt6vectorISt4pairImmESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit: ; preds = %_ZNSt12_Vector_baseISt4pairImmESaIS1_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
   %.not.i = icmp eq ptr %i.j, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseISt4pairImmESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt6vectorISt4pairImmESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.m) #27
   br label %_ZNSt12_Vector_baseISt4pairImmESaIS1_EE13_M_deallocateEPS1_m.exit
 
-_ZNSt12_Vector_baseISt4pairImmESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZNSt6vectorISt4pairImmESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit, %bb.e
+_ZNSt12_Vector_baseISt4pairImmESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %.lr.ph.i.i.i.i.preheader.i, %bb.e
   store ptr %2, ptr %0, align 8, !tbaa !137
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 %i.f
   store ptr %i.t, ptr %i.h, align 8, !tbaa !138

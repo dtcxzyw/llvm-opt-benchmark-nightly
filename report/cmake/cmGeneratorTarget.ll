@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !449  ; 4 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !448    ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !449  ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !448    ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 6 uses
@@ -229,8 +229,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseI19cmListFileBacktraceSaIS0_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #30 ; 3 uses
-  %.not7.i.i.i.i.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorI19cmListFileBacktraceSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseI19cmListFileBacktraceSaIS0_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructI19cmListFileBacktraceJRKS0_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.z, %_ZSt10_ConstructI19cmListFileBacktraceJRKS0_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseI19cmListFileBacktraceSaIS0_EE11_M_allocateEm.exit.i ] ; 2 uses
@@ -264,7 +263,7 @@ _ZSt10_ConstructI19cmListFileBacktraceJRKS0_EEvPT_DpOT0_.exit.i.i.i.i.i: ; preds
   %.not.i.i.i.i.i = icmp eq ptr %i.y, %i.b
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorI19cmListFileBacktraceSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !3682
 
-_ZNSt6vectorI19cmListFileBacktraceSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit: ; preds = %_ZSt10_ConstructI19cmListFileBacktraceJRKS0_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseI19cmListFileBacktraceSaIS0_EE11_M_allocateEm.exit.i
+_ZNSt6vectorI19cmListFileBacktraceSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit: ; preds = %_ZSt10_ConstructI19cmListFileBacktraceJRKS0_EEvPT_DpOT0_.exit.i.i.i.i.i
   %i.aa = load ptr, ptr %0, align 8, !tbaa !448   ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !449 ; 2 uses

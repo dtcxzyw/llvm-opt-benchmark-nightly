@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.aw
   %.sroa.053.089 = phi ptr [ %i.d, %.lr.ph ], [ %i.gj, %bb.aw ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.053.089, i64 40 ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.053.089, i64 48 ; 5 uses
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !358  ; 4 uses
-  %i.aa = load ptr, ptr %i.x, align 8, !tbaa !353 ; 5 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !358  ; 3 uses
+  %i.aa = load ptr, ptr %i.x, align 8, !tbaa !353 ; 4 uses
   %i.ab = ptrtoint ptr %i.z to i64
   %i.ac = ptrtoint ptr %i.aa to i64
   %i.ad = sub i64 %i.ab, %i.ac
@@ -213,11 +213,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.aw
   br i1 %i.ae, label %bb.aw, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %6 = icmp eq ptr %i.aa, %i.z
   %i.af = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
   %.not12.i.i.i = icmp eq ptr %i.af, %i.z
-  %or.cond.i.i.i = select i1 %6, i1 true, i1 %.not12.i.i.i
-  br i1 %or.cond.i.i.i, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor29getStrongestAssignmentOfValueERKS8_bEUlPKS2_SE_E_ET_SG_SG_T0_.exit.i, label %.lr.ph.i.i.i
+  br i1 %.not12.i.i.i, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor29getStrongestAssignmentOfValueERKS8_bEUlPKS2_SE_E_ET_SG_SG_T0_.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread
   %i.ag = phi ptr [ %i.cm, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread ], [ %i.af, %bb.c ] ; 3 uses
@@ -620,26 +618,18 @@ bb.b:                                             ; preds = %.lr.ph, %.thread
   %.sroa.027.036 = phi ptr [ %i.d, %.lr.ph ], [ %i.cr, %.thread ] ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.027.036, i64 40 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.027.036, i64 48 ; 3 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !358  ; 8 uses
-  %i.k = load ptr, ptr %i.h, align 8, !tbaa !353  ; 7 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !358  ; 7 uses
+  %i.k = load ptr, ptr %i.h, align 8, !tbaa !353  ; 5 uses
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
   %i.o = icmp ult i64 %i.n, 9
-  br i1 %i.o, label %.thread, label %2
+  br i1 %i.o, label %.thread, label %.preheader.i.i
 
-2:                                                ; preds = %bb.b
-  %3 = icmp eq ptr %i.k, %i.j
-  br i1 %3, label %._ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit_crit_edge, label %.preheader.i.i
-
-._ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit_crit_edge: ; preds = %2
-  %.pre = load i32, ptr @_ZN12VNUser4InUse12s_userCntGblE, align 4, !tbaa !31
-  br label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit
-
-.preheader.i.i:                                   ; preds = %2
+.preheader.i.i:                                   ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   %.not16.i.i = icmp eq ptr %i.p, %i.j
-  %.pre37 = load i32, ptr @_ZN12VNUser4InUse12s_userCntGblE, align 4, !tbaa !31 ; 5 uses
+  %.pre37 = load i32, ptr @_ZN12VNUser4InUse12s_userCntGblE, align 4, !tbaa !31 ; 4 uses
   br i1 %.not16.i.i, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPK10AstAssignWS5_E_EclINS_17__normal_iteratorIPPS3_St6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread12.i.i
@@ -741,13 +731,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor43removeAssignmentsNotSt
   %.not.i.i = icmp eq ptr %i.bg, %i.j
   br i1 %.not.i.i, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit, label %.lr.ph.i.i, !llvm.loop !642
 
-_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPK10AstAssignWS5_E_EclINS_17__normal_iteratorIPPS3_St6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread12.i.i, %._ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit_crit_edge, %.preheader.i.i
-  %4 = phi i32 [ %.pre, %._ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit_crit_edge ], [ %.pre37, %.preheader.i.i ], [ %.pre37, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPK10AstAssignWS5_E_EclINS_17__normal_iteratorIPPS3_St6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread12.i.i ]
-  %.sroa.02.2.i.i = phi ptr [ %i.k, %._ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit_crit_edge ], [ %i.k, %.preheader.i.i ], [ %i.bf, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPK10AstAssignWS5_E_EclINS_17__normal_iteratorIPPS3_St6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread12.i.i ]
+_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPKS2_SB_E_ET_SD_SD_T0_.exit: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPK10AstAssignWS5_E_EclINS_17__normal_iteratorIPPS3_St6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread12.i.i, %.preheader.i.i
+  %.sroa.02.2.i.i = phi ptr [ %i.k, %.preheader.i.i ], [ %i.bf, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor43removeAssignmentsNotStrongerThanNonTristateEvEUlPK10AstAssignWS5_E_EclINS_17__normal_iteratorIPPS3_St6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread12.i.i ]
   %i.bh = load ptr, ptr %.sroa.02.2.i.i, align 8, !tbaa !360 ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 140
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !221
-  %i.bk = icmp ne i32 %i.bj, %4
+  %i.bk = icmp ne i32 %i.bj, %.pre37
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bh, i64 144
   %i.bm = load i64, ptr %i.bl, align 8            ; 2 uses
   %.not3.i = icmp eq i64 %i.bm, 0
