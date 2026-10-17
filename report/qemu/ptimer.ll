@@ -101,7 +101,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %.063 = phi i32 [ %i.l, %bb.d ], [ %i.l, %bb.e ], [ 0, %bb.f ] ; 3 uses
   %.062 = phi i64 [ %i.n, %bb.d ], [ %i.n, %bb.e ], [ %i.v, %bb.f ] ; 3 uses
   %i.w = sub i64 %i.d, %i.b                       ; 2 uses
-  %i.x = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.w, i1 false)
+  %i.x = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.w, i1 true)
   %i.y = trunc nuw nsw i64 %i.x to i32
   %i.z = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.062, i1 false)
   %i.aa = trunc nuw nsw i64 %i.z to i32
@@ -116,7 +116,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ag = zext i32 %.063 to i64
   %i.ah = add nsw i32 %i.ab, -32
   %i.ai = zext nneg i32 %i.ah to i64
-  %i.aj = shl nuw i64 %i.ag, %i.ai
+  %i.aj = shl nuw nsw i64 %i.ag, %i.ai
   %i.ak = or i64 %i.aj, %i.ae
   br label %bb.j
 
