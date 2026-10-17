@@ -204,7 +204,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2oFjxwYQXCx_10libp2p_tl
   store i8 -1, ptr %i.x, align 8, !noalias !38
   call void @_RNvXs8_NtCsc4nA9ss4TM1_5yasna10serializerINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_12DEREncodable10encode_der(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.w, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !38
-  %i.y = load i64, ptr %i.d, align 8, !noalias !36, !noundef !4 ; 5 uses
+  %i.y = load i64, ptr %i.d, align 8, !noalias !36, !noundef !4 ; 6 uses
   %i.z = icmp sgt i64 %i.y, -1
   call void @llvm.assume(i1 %i.z)
   %i.aa = sub nsw i64 %i.y, %i.u                  ; 4 uses
@@ -315,31 +315,29 @@ bb.o:                                             ; preds = %bb.f
 
 .lr.ph.i.preheader:                               ; preds = %bb.o
   %i.bp = icmp samesign ult i64 %i.y, %i.u
-  br label %.lr.ph.i
+  br i1 %i.bp, label %.lr.ph.i.preheader.split.us, label %.lr.ph.i, !prof !6
+
+.lr.ph.i.preheader.split.us:                      ; preds = %.lr.ph.i.preheader
+  call void @llvm.experimental.noalias.scope.decl(metadata !42)
+  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.u, i64 noundef %i.y, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #20, !noalias !42
+  unreachable
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCs2oFjxwYQXCx_10libp2p_tls.exit.i
-  %i.bq = phi i64 [ %i.by, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCs2oFjxwYQXCx_10libp2p_tls.exit.i ], [ %i.y, %.lr.ph.i.preheader ] ; 6 uses
+  %i.bq = phi i64 [ %i.by, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCs2oFjxwYQXCx_10libp2p_tls.exit.i ], [ %i.y, %.lr.ph.i.preheader ] ; 5 uses
   %.sroa.024.012.i = phi i64 [ %i.br, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE10insert_mutCs2oFjxwYQXCx_10libp2p_tls.exit.i ], [ 0, %.lr.ph.i.preheader ]
   %i.br = add nuw i64 %.sroa.024.012.i, 1         ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !42)
   %i.bs = icmp sgt i64 %i.bq, -1
   call void @llvm.assume(i1 %i.bs)
-  br i1 %i.bp, label %5, label %2, !prof !6
+  %2 = load i64, ptr %.val, align 8, !range !37, !alias.scope !42, !noalias !36, !noundef !4
+  %3 = icmp eq i64 %i.bq, %2
+  br i1 %3, label %bb.p, label %bb.q
 
-2:                                                ; preds = %.lr.ph.i
-  %3 = load i64, ptr %.val, align 8, !range !37, !alias.scope !42, !noalias !36, !noundef !4
-  %4 = icmp eq i64 %i.bq, %3
-  br i1 %4, label %bb.p, label %bb.q
-
-5:                                                ; preds = %.lr.ph.i
-  call void @_RNvNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecppE10insert_mut13assert_failed(i64 noundef range(i64 0, -9223372036854775808) %i.u, i64 noundef %i.bq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #20, !noalias !42
-  unreachable
-
-bb.p:                                             ; preds = %2
+bb.p:                                             ; preds = %.lr.ph.i
   call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val) #19
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %2
+bb.q:                                             ; preds = %bb.p, %.lr.ph.i
   %i.bt = load ptr, ptr %i.e, align 8, !alias.scope !42, !noalias !36, !nonnull !4, !noundef !4
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.u ; 3 uses
   %i.bv = icmp samesign ult i64 %i.u, %i.bq
