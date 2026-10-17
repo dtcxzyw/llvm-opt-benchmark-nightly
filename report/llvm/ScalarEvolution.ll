@@ -205,7 +205,7 @@ bb.ha:                                            ; preds = %_ZN4llvm15ScalarEvo
 
 ._crit_edge1160:                                  ; preds = %.lr.ph.i.i.i445, %bb.hi, %_ZN4llvm16DenseMapIteratorINS_15ScalarEvolution6FoldIDEPKNS_4SCEVENS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S5_EELb1EEppEv.exit, %.lr.ph.i.i495.preheader, %.lr.ph.i.i495, %.lr.ph.i.i.i445.preheader, %._crit_edge1156, %_ZNK4llvm12DenseMapBaseINS_8DenseMapINS_15ScalarEvolution6FoldIDEPKNS_4SCEVENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_E5beginEv.exit
   %i.blw = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %i.blx = load ptr, ptr %i.blw, align 8, !tbaa !693, !noalias !3623 ; 4 uses
+  %i.blx = load ptr, ptr %i.blw, align 8, !tbaa !693, !noalias !3623
   %i.bly = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.blz = load ptr, ptr %i.bly, align 8, !tbaa !694, !noalias !3623 ; 4 uses
   %i.bma = getelementptr inbounds nuw i8, ptr %0, i64 180
@@ -213,27 +213,27 @@ bb.ha:                                            ; preds = %_ZN4llvm15ScalarEvo
   %i.bmc = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.bmd = load i32, ptr %i.bmc, align 8, !tbaa !691, !noalias !3623
   %i.bme = icmp eq i32 %i.bmd, 0
-  %i.bmf = zext i32 %i.bmb to i64                 ; 3 uses
-  %17 = getelementptr inbounds nuw [72 x i8], ptr %i.blx, i64 %i.bmf ; 8 uses
+  %i.bmf = zext i32 %i.bmb to i64                 ; 4 uses
+  %.idx1888 = mul nuw nsw i64 %i.bmf, 72          ; 2 uses
   %.not.i.not.i.i476 = icmp eq i32 %i.bmb, 0
   %or.cond864 = select i1 %i.bme, i1 true, i1 %.not.i.not.i.i476
-  %.pre1412 = add nuw nsw i64 %i.bmf, 31
-  %.pre1414 = lshr i64 %.pre1412, 5               ; 4 uses
-  br i1 %or.cond864, label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit, label %bb.hb
+  br i1 %or.cond864, label %._crit_edge2137, label %bb.hb
 
 bb.hb:                                            ; preds = %._crit_edge1160
+  %17 = add nuw nsw i64 %i.bmf, 31
+  %18 = lshr i64 %17, 5                           ; 2 uses
   %i.bmg = load i32, ptr %i.blz, align 4, !tbaa !271, !noalias !3624 ; 2 uses
   %i.bmh = icmp eq i32 %i.bmg, 0
   br i1 %i.bmh, label %.lr.ph.i.i.i481.preheader, label %._crit_edge.i.i.i477
 
 .lr.ph.i.i.i481.preheader:                        ; preds = %bb.hb
-  %i.bmi = icmp eq i64 %.pre1414, 1
-  br i1 %i.bmi, label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit, label %.lr.ph2132
+  %i.bmi = icmp eq i64 %18, 1
+  br i1 %i.bmi, label %._crit_edge2137, label %.lr.ph2132
 
 .lr.ph.i.i.i481:                                  ; preds = %.lr.ph2132
   %i.bmj = add nuw nsw i64 %i.bml, 1              ; 2 uses
-  %i.bmk = icmp eq i64 %i.bmj, %.pre1414
-  br i1 %i.bmk, label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit, label %.lr.ph2132, !llvm.loop !3530
+  %i.bmk = icmp eq i64 %i.bmj, %18
+  br i1 %i.bmk, label %._crit_edge2137, label %.lr.ph2132, !llvm.loop !3530
 
 .lr.ph2132:                                       ; preds = %.lr.ph.i.i.i481.preheader, %.lr.ph.i.i.i481
   %i.bml = phi i64 [ %i.bmj, %.lr.ph.i.i.i481 ], [ 1, %.lr.ph.i.i.i481.preheader ] ; 3 uses
@@ -246,24 +246,24 @@ bb.hb:                                            ; preds = %._crit_edge1160
   %i.bmp = mul i64 %i.bml, 2304
   br label %._crit_edge.i.i.i477
 
-._crit_edge.i.i.i477:                             ; preds = %._crit_edge.i.loopexit.i.i483, %bb.hb
+._crit_edge.i.i.i477:                             ; preds = %bb.hb, %._crit_edge.i.loopexit.i.i483
   %.012.lcssa.i.i.i478 = phi i64 [ 0, %bb.hb ], [ %i.bmp, %._crit_edge.i.loopexit.i.i483 ]
   %.0.lcssa.i.i.i479 = phi i32 [ %i.bmg, %bb.hb ], [ %i.bmn, %._crit_edge.i.loopexit.i.i483 ]
   %i.bmq = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0.lcssa.i.i.i479, i1 true)
-  %i.bmr = zext nneg i32 %i.bmq to i64
-  %18 = getelementptr i8, ptr %i.blx, i64 %.012.lcssa.i.i.i478
-  %19 = getelementptr [72 x i8], ptr %18, i64 %i.bmr
-  br label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit
+  %narrow1889 = mul nuw nsw i32 %i.bmq, 72
+  %i.bmr = zext nneg i32 %narrow1889 to i64
+  %19 = add i64 %.012.lcssa.i.i.i478, %i.bmr      ; 2 uses
+  %.not8751165 = icmp eq i64 %19, %.idx1888
+  br i1 %.not8751165, label %._crit_edge2137, label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit
 
-_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit: ; preds = %.lr.ph.i.i.i481, %.lr.ph.i.i.i481.preheader, %._crit_edge1160, %._crit_edge.i.i.i477
-  %.sroa.0643.1 = phi ptr [ %17, %._crit_edge1160 ], [ %19, %._crit_edge.i.i.i477 ], [ %17, %.lr.ph.i.i.i481.preheader ], [ %17, %.lr.ph.i.i.i481 ] ; 2 uses
+_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit: ; preds = %._crit_edge.i.i.i477
   %i.bms = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 4 uses
   %i.bmt = getelementptr inbounds nuw i8, ptr %12, i64 24 ; 4 uses
   %i.bmu = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
   %i.bmv = getelementptr inbounds nuw i8, ptr %12, i64 20
-  %20 = ptrtoint ptr %i.blx to i64
-  %.not8752134 = icmp eq ptr %.sroa.0643.1, %17
-  br i1 %.not8752134, label %._crit_edge2137, label %.lr.ph2136
+  %20 = add nuw nsw i64 %i.bmf, 31
+  %21 = lshr i64 %20, 5                           ; 2 uses
+  br label %.lr.ph2136
 
 bb.hc:                                            ; preds = %.lr.ph1159, %_ZN4llvm16DenseMapIteratorINS_15ScalarEvolution6FoldIDEPKNS_4SCEVENS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S5_EELb1EEppEv.exit
   %.pn1881 = phi i64 [ %i.bbt, %.lr.ph1159 ], [ %i.bpv, %_ZN4llvm16DenseMapIteratorINS_15ScalarEvolution6FoldIDEPKNS_4SCEVENS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S5_EELb1EEppEv.exit ] ; 2 uses
@@ -409,7 +409,7 @@ _ZN4llvm16DenseMapIteratorINS_15ScalarEvolution6FoldIDEPKNS_4SCEVENS_12DenseMapI
   %.not874 = icmp eq i64 %i.bpv, %.idx1879
   br i1 %.not874, label %._crit_edge1160, label %bb.hc
 
-._crit_edge2137:                                  ; preds = %_ZN4llvm16DenseMapIteratorIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EELb1EEppEv.exit, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit
+._crit_edge2137:                                  ; preds = %.lr.ph.i.i.i481, %_ZNSt4pairIPKN4llvm4SCEVENS0_11SmallVectorINS0_15ScalarEvolution6FoldIDELj2EEEED2Ev.exit, %._crit_edge.i.i509, %.lr.ph.i.i513.preheader, %.lr.ph.i.i513, %.lr.ph.i.i.i481.preheader, %._crit_edge1160, %._crit_edge.i.i.i477
   %i.bpw = getelementptr inbounds nuw i8, ptr %0, i64 368
   %i.bpx = load ptr, ptr %i.bpw, align 8, !tbaa !394, !noalias !3627
   %i.bpy = getelementptr inbounds nuw i8, ptr %0, i64 376
@@ -472,19 +472,20 @@ _ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_5APIntENS_12DenseMapInfoIS4_v
   %i.bra = lshr i64 %i.bqz, 5                     ; 2 uses
   br label %bb.hy
 
-.lr.ph2136:                                       ; preds = %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit, %_ZN4llvm16DenseMapIteratorIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EELb1EEppEv.exit
-  %.sroa.0643.02135 = phi ptr [ %storemerge16.i.i508, %_ZN4llvm16DenseMapIteratorIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EELb1EEppEv.exit ], [ %.sroa.0643.1, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit ] ; 5 uses
+.lr.ph2136:                                       ; preds = %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit, %._crit_edge.i.i509
+  %.pn1892 = phi i64 [ %19, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E5beginEv.exit ], [ %23, %._crit_edge.i.i509 ] ; 2 uses
+  %.sroa.0643.01166 = getelementptr i8, ptr %i.blx, i64 %.pn1892 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #29
-  %i.brb = load ptr, ptr %.sroa.0643.02135, align 8, !tbaa !3635
+  %i.brb = load ptr, ptr %.sroa.0643.01166, align 8, !tbaa !3635
   store ptr %i.brb, ptr %12, align 8, !tbaa !3635
-  %i.brc = getelementptr inbounds nuw i8, ptr %.sroa.0643.02135, i64 8
+  %i.brc = getelementptr inbounds nuw i8, ptr %.sroa.0643.01166, i64 8
   store ptr %i.bmt, ptr %i.bms, align 8, !tbaa !110
   store i32 0, ptr %i.bmu, align 8, !tbaa !137
   store i32 2, ptr %i.bmv, align 4, !tbaa !138
-  %i.brd = getelementptr inbounds nuw i8, ptr %.sroa.0643.02135, i64 16 ; 2 uses
+  %i.brd = getelementptr inbounds nuw i8, ptr %.sroa.0643.01166, i64 16 ; 2 uses
   %i.bre = load i32, ptr %i.brd, align 8, !tbaa !137 ; 6 uses
   %.not.i.i.i.i = icmp eq i32 %i.bre, 0
-  %i.brf = icmp eq ptr %12, %.sroa.0643.02135
+  %i.brf = icmp eq ptr %12, %.sroa.0643.01166
   %or.cond.i.i.i = or i1 %i.brf, %.not.i.i.i.i
   br i1 %or.cond.i.i.i, label %_ZNSt4pairIPKN4llvm4SCEVENS0_11SmallVectorINS0_15ScalarEvolution6FoldIDELj2EEEED2Ev.exit, label %bb.hl
 
@@ -541,12 +542,10 @@ bb.hn:                                            ; preds = %._crit_edge1164
 
 _ZNSt4pairIPKN4llvm4SCEVENS0_11SmallVectorINS0_15ScalarEvolution6FoldIDELj2EEEED2Ev.exit: ; preds = %.lr.ph2136, %._crit_edge1164, %bb.hn
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #29
-  %21 = getelementptr inbounds nuw i8, ptr %.sroa.0643.02135, i64 72
-  %22 = ptrtoint ptr %21 to i64
-  %23 = sub i64 %22, %20
-  %i.brw = sdiv exact i64 %23, 72                 ; 3 uses
+  %22 = add i64 %.pn1892, 72
+  %i.brw = sdiv exact i64 %22, 72                 ; 3 uses
   %.not.i.i507 = icmp ult i64 %i.brw, %i.bmf
-  br i1 %.not.i.i507, label %bb.ho, label %_ZN4llvm16DenseMapIteratorIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EELb1EEppEv.exit
+  br i1 %.not.i.i507, label %bb.ho, label %._crit_edge2137
 
 bb.ho:                                            ; preds = %_ZNSt4pairIPKN4llvm4SCEVENS0_11SmallVectorINS0_15ScalarEvolution6FoldIDELj2EEEED2Ev.exit
   %i.brx = lshr i64 %i.brw, 5                     ; 3 uses
@@ -561,13 +560,13 @@ bb.ho:                                            ; preds = %_ZNSt4pairIPKN4llvm
 
 .lr.ph.i.i513.preheader:                          ; preds = %bb.ho
   %i.bsf = add nuw nsw i64 %i.brx, 1              ; 2 uses
-  %i.bsg = icmp eq i64 %i.bsf, %.pre1414
-  br i1 %i.bsg, label %_ZN4llvm16DenseMapIteratorIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EELb1EEppEv.exit, label %.lr.ph2133
+  %i.bsg = icmp eq i64 %i.bsf, %21
+  br i1 %i.bsg, label %._crit_edge2137, label %.lr.ph2133
 
 .lr.ph.i.i513:                                    ; preds = %.lr.ph2133
   %i.bsh = add i64 %i.bsj, 1                      ; 2 uses
-  %i.bsi = icmp eq i64 %i.bsh, %.pre1414
-  br i1 %i.bsi, label %_ZN4llvm16DenseMapIteratorIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EELb1EEppEv.exit, label %.lr.ph2133, !llvm.loop !3530
+  %i.bsi = icmp eq i64 %i.bsh, %21
+  br i1 %i.bsi, label %._crit_edge2137, label %.lr.ph2133, !llvm.loop !3530
 
 .lr.ph2133:                                       ; preds = %.lr.ph.i.i513.preheader, %.lr.ph.i.i513
   %i.bsj = phi i64 [ %i.bsh, %.lr.ph.i.i513 ], [ %i.bsf, %.lr.ph.i.i513.preheader ] ; 3 uses
@@ -580,15 +579,11 @@ bb.ho:                                            ; preds = %_ZNSt4pairIPKN4llvm
   %.012.lcssa.i.i510 = phi i64 [ %i.brx, %bb.ho ], [ %i.bsj, %.lr.ph2133 ]
   %.0.lcssa.i.i511 = phi i32 [ %i.bsd, %bb.ho ], [ %i.bsl, %.lr.ph2133 ]
   %i.bsn = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0.lcssa.i.i511, i1 true)
-  %24 = zext nneg i32 %i.bsn to i64
   %.idx.i.i512 = mul i64 %.012.lcssa.i.i510, 2304
-  %25 = getelementptr i8, ptr %i.blx, i64 %.idx.i.i512
-  %26 = getelementptr [72 x i8], ptr %25, i64 %24
-  br label %_ZN4llvm16DenseMapIteratorIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EELb1EEppEv.exit
-
-_ZN4llvm16DenseMapIteratorIPKNS_4SCEVENS_11SmallVectorINS_15ScalarEvolution6FoldIDELj2EEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EELb1EEppEv.exit: ; preds = %.lr.ph.i.i513, %.lr.ph.i.i513.preheader, %_ZNSt4pairIPKN4llvm4SCEVENS0_11SmallVectorINS0_15ScalarEvolution6FoldIDELj2EEEED2Ev.exit, %._crit_edge.i.i509
-  %storemerge16.i.i508 = phi ptr [ %17, %_ZNSt4pairIPKN4llvm4SCEVENS0_11SmallVectorINS0_15ScalarEvolution6FoldIDELj2EEEED2Ev.exit ], [ %26, %._crit_edge.i.i509 ], [ %17, %.lr.ph.i.i513.preheader ], [ %17, %.lr.ph.i.i513 ] ; 2 uses
-  %.not875 = icmp eq ptr %storemerge16.i.i508, %17
+  %narrow1891 = mul nuw nsw i32 %i.bsn, 72
+  %.idx1890 = zext nneg i32 %narrow1891 to i64
+  %23 = add i64 %.idx.i.i512, %.idx1890           ; 2 uses
+  %.not875 = icmp eq i64 %23, %.idx1888
   br i1 %.not875, label %._crit_edge2137, label %.lr.ph2136
 
 .lr.ph1163.split:                                 ; preds = %.lr.ph1163, %bb.hm

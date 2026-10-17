@@ -72,7 +72,10 @@ bb.a:
 
 ; Function Attrs: nofree nounwind memory(readwrite, argmem: write, target_mem: none) uwtable
 define range(i32 -1, 1) i32 @initPostProc(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #2 {
-bb.a:
+  %.not47 = icmp eq i64 %2, 0
+  br i1 %.not47, label %.loopexit.split, label %bb.a
+
+bb.a:                                             ; preds = %3
   %i.a = add i64 %1, 2
   %i.b = lshr i64 %i.a, 16
   %i.c = mul nuw nsw i64 %i.b, 88
@@ -80,23 +83,19 @@ bb.a:
   %.not = icmp eq i64 %i.d, 0
   %i.e = mul i64 %1, 88
   %i.f = add i64 %i.e, 176                        ; 2 uses
-  %exitcond.not49 = icmp eq i64 %2, 0
-  br i1 %exitcond.not49, label %.loopexit.split, label %.preheader41
-
-.preheader41:                                     ; preds = %bb.a, %.preheader.147
-  %.03750 = phi i64 [ %i.t, %.preheader.147 ], [ 0, %bb.a ] ; 2 uses
-  %3 = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.03750 ; 3 uses
   br i1 %.not, label %.preheader41.split.preheader, label %.loopexit.split
 
-.preheader41.split.preheader:                     ; preds = %.preheader41
+.preheader41.split.preheader:                     ; preds = %bb.a, %.preheader.147
+  %.03746 = phi i64 [ %i.t, %.preheader.147 ], [ 0, %bb.a ] ; 2 uses
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.03746 ; 3 uses
   %i.g = tail call noalias ptr @malloc(i64 noundef %i.f) #12 ; 6 uses
-  store ptr %i.g, ptr %3, align 8, !tbaa !11
+  store ptr %i.g, ptr %4, align 8, !tbaa !11
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %.loopexit.split, label %.preheader
 
 .preheader:                                       ; preds = %.preheader41.split.preheader
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 88 ; 2 uses
-  store ptr %i.i, ptr %3, align 8, !tbaa !11
+  store ptr %i.i, ptr %4, align 8, !tbaa !11
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   store i8 3, ptr %i.j, align 4, !tbaa !13
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 72
@@ -104,7 +103,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.k, i8 3, i64 16, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(88) %i.l, ptr noundef nonnull align 4 dereferenceable(88) %i.g, i64 88, i1 false), !tbaa.struct !15
   %i.m = tail call noalias ptr @malloc(i64 noundef %i.f) #12 ; 6 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store ptr %i.m, ptr %i.n, align 8, !tbaa !11
   %i.o = icmp eq ptr %i.m, null
   br i1 %i.o, label %.loopexit.split, label %.preheader.147
@@ -118,12 +117,12 @@ bb.a:
   %i.s = getelementptr inbounds nuw [88 x i8], ptr %i.p, i64 %1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.r, i8 3, i64 16, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(88) %i.s, ptr noundef nonnull align 4 dereferenceable(88) %i.m, i64 88, i1 false), !tbaa.struct !15
-  %i.t = add i64 %.03750, 1                       ; 2 uses
+  %i.t = add nuw i64 %.03746, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.t, %2
-  br i1 %exitcond.not, label %.loopexit.split, label %.preheader41, !llvm.loop !18
+  br i1 %exitcond.not, label %.loopexit.split, label %.preheader41.split.preheader, !llvm.loop !18
 
-.loopexit.split:                                  ; preds = %.preheader, %.preheader41.split.preheader, %.preheader41, %.preheader.147, %bb.a
-  %.039 = phi i32 [ 0, %bb.a ], [ -1, %.preheader ], [ 0, %.preheader.147 ], [ -1, %.preheader41.split.preheader ], [ -1, %.preheader41 ]
+.loopexit.split:                                  ; preds = %.preheader.147, %.preheader41.split.preheader, %.preheader, %3, %bb.a
+  %.039 = phi i32 [ 0, %3 ], [ -1, %bb.a ], [ 0, %.preheader.147 ], [ -1, %.preheader ], [ -1, %.preheader41.split.preheader ]
   ret i32 %.039
 }
 

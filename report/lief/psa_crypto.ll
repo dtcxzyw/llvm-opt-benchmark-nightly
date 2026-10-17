@@ -204,7 +204,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %.039.ph.i143 = phi ptr [ %i.gy, %.outer.i ], [ %i.p, %.outer.split.i.preheader.preheader ] ; 2 uses
   br label %.outer.split.i
 
-.outer.split.i:                                   ; preds = %.outer.split.i.preheader, %psa_key_derivation_tls12_prf_generate_next_block.exit.i
+.outer.split.i:                                   ; preds = %psa_key_derivation_tls12_prf_generate_next_block.exit.i, %.outer.split.i.preheader
   %i.dt = load i8, ptr %i.cr, align 8, !tbaa !127 ; 4 uses
   %i.du = icmp eq i8 %i.dt, 0
   br i1 %i.du, label %bb.aj, label %.outer.i

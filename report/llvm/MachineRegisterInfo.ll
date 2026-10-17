@@ -205,19 +205,58 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.o, align 8
   %i.q = tail call noundef ptr %i.p(ptr noundef nonnull align 8 dereferenceable(344) %i.m) #23, !inline_history !0
   %i.r = tail call { ptr, i64 } @_ZNK4llvm14MCRegisterInfo18getCachedAliasesOfENS_10MCRegisterE(ptr noundef nonnull align 8 dereferenceable(240) %i.q, i32 %1) #23 ; 2 uses
-  %i.s = extractvalue { ptr, i64 } %i.r, 0        ; 2 uses
+  %i.s = extractvalue { ptr, i64 } %i.r, 0        ; 3 uses
   %i.t = extractvalue { ptr, i64 } %i.r, 1        ; 2 uses
   %.idx = shl nuw nsw i64 %i.t, 1
-  %3 = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 312
+  %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx ; 2 uses
   %.not37.not56 = icmp eq i64 %i.t, 0
-  br i1 %.not37.not56, label %.critedge, label %.lr.ph58
+  br i1 %.not37.not56, label %.critedge, label %.lr.ph45
 
-.lr.ph58:                                         ; preds = %bb.b, %.critedge18
-  %.sroa.031.057 = phi ptr [ %i.br, %.critedge18 ], [ %i.s, %bb.b ] ; 2 uses
+.lr.ph45:                                         ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
+  br i1 %2, label %.lr.ph45.split.us, label %.lr.ph58
+
+.lr.ph45.split.us:                                ; preds = %.lr.ph45
+  %4 = load ptr, ptr %3, align 8
+  br label %5
+
+5:                                                ; preds = %.critedge18.us, %.lr.ph45.split.us
+  %.sroa.031.044.us = phi ptr [ %i.s, %.lr.ph45.split.us ], [ %17, %.critedge18.us ] ; 2 uses
+  %6 = load i16, ptr %.sroa.031.044.us, align 2, !tbaa !336
+  %7 = zext i16 %6 to i64
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %7
+  %.0.i.i.us = load ptr, ptr %8, align 8, !tbaa !262 ; 3 uses
+  %.not.i.i.us = icmp eq ptr %.0.i.i.us, null
+  br i1 %.not.i.i.us, label %.critedge18.us, label %9
+
+9:                                                ; preds = %5
+  %10 = load i32, ptr %.0.i.i.us, align 8
+  %11 = and i32 %10, 16777216
+  %.not.i.i.i.us = icmp eq i32 %11, 0
+  br i1 %.not.i.i.i.us, label %12, label %.critedge
+
+12:                                               ; preds = %9
+  %13 = getelementptr inbounds nuw i8, ptr %.0.i.i.us, i64 24
+  %14 = load ptr, ptr %13, align 8, !tbaa !233    ; 2 uses
+  %.not.i4.i.i.us = icmp eq ptr %14, null
+  br i1 %.not.i4.i.i.us, label %.critedge18.us, label %_ZNK4llvm19MachineRegisterInfo9def_beginENS_8RegisterE.exit.us
+
+_ZNK4llvm19MachineRegisterInfo9def_beginENS_8RegisterE.exit.us: ; preds = %12
+  %15 = load i32, ptr %14, align 8
+  %16 = and i32 %15, 16777216
+  %.not.i.i.i.i.us = icmp eq i32 %16, 0
+  br i1 %.not.i.i.i.i.us, label %.critedge18.us, label %.critedge
+
+.critedge18.us:                                   ; preds = %12, %5, %_ZNK4llvm19MachineRegisterInfo9def_beginENS_8RegisterE.exit.us
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.031.044.us, i64 2 ; 2 uses
+  %.not37.us = icmp eq ptr %17, %i.u
+  br i1 %.not37.us, label %.critedge, label %5, !llvm.loop !434
+
+.lr.ph58:                                         ; preds = %.lr.ph45, %.critedge18
+  %.sroa.031.057 = phi ptr [ %i.br, %.critedge18 ], [ %i.s, %.lr.ph45 ] ; 2 uses
   %i.v = load i16, ptr %.sroa.031.057, align 2, !tbaa !336
   %i.w = zext i16 %i.v to i64
-  %i.x = load ptr, ptr %i.u, align 8
+  %i.x = load ptr, ptr %3, align 8
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.w
   %.0.i.i = load ptr, ptr %i.y, align 8, !tbaa !262 ; 4 uses
   %.not.i.i = icmp eq ptr %.0.i.i, null
@@ -242,8 +281,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i.i.i, label %.critedge18, label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %bb.c, %bb.e
-  %.sroa.0.0.i = phi ptr [ %.0.i.i, %bb.c ], [ %i.ac, %bb.e ]
-  br i1 %2, label %.critedge, label %.lr.ph.split
+  %.sroa.0.0.i = phi ptr [ %i.ac, %bb.e ], [ %.0.i.i, %bb.c ]
+  br label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph.a, %bb.k
   %.sroa.026.042 = phi ptr [ %i.bo, %bb.k ], [ %.sroa.0.0.i, %.lr.ph.a ] ; 2 uses
@@ -338,11 +377,11 @@ bb.k:                                             ; preds = %bb.j
 
 .critedge18:                                      ; preds = %bb.k, %bb.j, %bb.e, %bb.d, %.lr.ph58
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.031.057, i64 2 ; 2 uses
-  %.not37.not = icmp eq ptr %i.br, %3
+  %.not37.not = icmp eq ptr %i.br, %i.u
   br i1 %.not37.not, label %.critedge, label %.lr.ph58, !llvm.loop !434
 
-.critedge:                                        ; preds = %.lr.ph.a, %.critedge18, %_ZL13isNoReturnDefRKN4llvm14MachineOperandE.exit, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit.i, %bb.f, %bb.g, %_ZL17getCalledFunctionRKN4llvm12MachineInstrE.exit.i, %.split.i, %bb.h, %select.unfold.i.i, %bb.b, %bb.a
-  %.6 = phi i1 [ true, %bb.a ], [ true, %_ZL13isNoReturnDefRKN4llvm14MachineOperandE.exit ], [ true, %select.unfold.i.i ], [ false, %bb.b ], [ true, %bb.h ], [ true, %.split.i ], [ true, %_ZL17getCalledFunctionRKN4llvm12MachineInstrE.exit.i ], [ true, %bb.g ], [ true, %bb.f ], [ true, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit.i ], [ true, %.lr.ph.a ], [ false, %.critedge18 ]
+.critedge:                                        ; preds = %.critedge18, %_ZL13isNoReturnDefRKN4llvm14MachineOperandE.exit, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit.i, %bb.f, %bb.g, %_ZL17getCalledFunctionRKN4llvm12MachineInstrE.exit.i, %.split.i, %bb.h, %select.unfold.i.i, %.critedge18.us, %_ZNK4llvm19MachineRegisterInfo9def_beginENS_8RegisterE.exit.us, %9, %bb.b, %bb.a
+  %.6 = phi i1 [ true, %bb.a ], [ true, %9 ], [ true, %select.unfold.i.i ], [ true, %_ZL13isNoReturnDefRKN4llvm14MachineOperandE.exit ], [ false, %bb.b ], [ false, %.critedge18.us ], [ true, %_ZNK4llvm19MachineRegisterInfo9def_beginENS_8RegisterE.exit.us ], [ true, %bb.h ], [ true, %.split.i ], [ true, %_ZL17getCalledFunctionRKN4llvm12MachineInstrE.exit.i ], [ true, %bb.g ], [ true, %bb.f ], [ true, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit.i ], [ false, %.critedge18 ]
   ret i1 %.6
 }
 

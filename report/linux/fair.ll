@@ -204,13 +204,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.outer.split.preheader
 
 .outer.split.preheader:                           ; preds = %.outer.split.preheader.lr.ph, %.thread32
-  %i.j = phi ptr [ %i.f, %.outer.split.preheader.lr.ph ], [ %i.ai, %.thread32 ]
-  %i.k = phi ptr [ %1, %.outer.split.preheader.lr.ph ], [ %i.ah, %.thread32 ]
-  %i.l = phi ptr [ %i.g, %.outer.split.preheader.lr.ph ], [ %i.ag, %.thread32 ]
-  %i.m = phi ptr [ %i.h, %.outer.split.preheader.lr.ph ], [ %i.af, %.thread32 ] ; 2 uses
-  %i.n = phi ptr [ %i.i, %.outer.split.preheader.lr.ph ], [ %i.ae, %.thread32 ] ; 2 uses
-  %.1.ph44 = phi ptr [ %.019, %.outer.split.preheader.lr.ph ], [ %.4, %.thread32 ]
-  %.020.ph43 = phi ptr [ %i.a, %.outer.split.preheader.lr.ph ], [ %.020.val29, %.thread32 ] ; 5 uses
+  %i.j = phi ptr [ %i.ai, %.thread32 ], [ %i.f, %.outer.split.preheader.lr.ph ]
+  %i.k = phi ptr [ %i.ah, %.thread32 ], [ %1, %.outer.split.preheader.lr.ph ]
+  %i.l = phi ptr [ %i.ag, %.thread32 ], [ %i.g, %.outer.split.preheader.lr.ph ]
+  %i.m = phi ptr [ %i.af, %.thread32 ], [ %i.h, %.outer.split.preheader.lr.ph ] ; 2 uses
+  %i.n = phi ptr [ %i.ae, %.thread32 ], [ %i.i, %.outer.split.preheader.lr.ph ] ; 2 uses
+  %.1.ph44 = phi ptr [ %.4, %.thread32 ], [ %.019, %.outer.split.preheader.lr.ph ]
+  %.020.ph43 = phi ptr [ %.020.val29, %.thread32 ], [ %i.a, %.outer.split.preheader.lr.ph ] ; 5 uses
   %.020.val.pre = load ptr, ptr %i.n, align 16
   br label %.outer.split
 

@@ -202,20 +202,19 @@ _kzalloc_noprof.exit:                             ; preds = %._crit_edge
 bb.e:                                             ; preds = %_kzalloc_noprof.exit
   %i.o = trunc i32 %i.k to i16
   %i.p = udiv i16 %i.g, %i.o
-  %.mask52 = and i32 %i.k, 65535                  ; 2 uses
+  %.mask52 = and i32 %i.k, 65535
   %wide.trip.count = zext nneg i32 %.mask52 to i64
-  %exitcond.not65 = icmp eq i32 %.mask52, 0
-  br i1 %exitcond.not65, label %.critedge.split, label %.outer.split.preheader
+  br label %.outer.split.preheader
 
 .outer.split.preheader:                           ; preds = %bb.e, %.outer
-  %.021.ph68 = phi i16 [ %i.r, %.outer ], [ 0, %bb.e ]
-  %.126.ph67 = phi ptr [ %i.q, %.outer ], [ null, %bb.e ]
-  %indvars.iv66 = phi i64 [ %indvars.iv.next, %.outer ], [ 0, %bb.e ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.e ], [ %indvars.iv.next, %.outer ] ; 2 uses
+  %.021.ph44 = phi i16 [ 0, %bb.e ], [ %i.r, %.outer ]
+  %.126.ph42 = phi ptr [ null, %bb.e ], [ %i.q, %.outer ]
   br label %.outer.split
 
 .outer.split:                                     ; preds = %.outer.split.preheader, %bb.f
-  %.126 = phi ptr [ %i.q, %bb.f ], [ %.126.ph67, %.outer.split.preheader ]
-  %.021 = phi i16 [ %i.r, %bb.f ], [ %.021.ph68, %.outer.split.preheader ] ; 2 uses
+  %.126 = phi ptr [ %i.q, %bb.f ], [ %.126.ph42, %.outer.split.preheader ]
+  %.021 = phi i16 [ %i.r, %bb.f ], [ %.021.ph44, %.outer.split.preheader ] ; 2 uses
   %i.q = tail call fastcc ptr @get_next_root(ptr noundef %.126) #9, !srcloc !20 ; 4 uses
   %.not32 = icmp eq ptr %i.q, null
   br i1 %.not32, label %.critedge.split, label %bb.f
@@ -228,13 +227,13 @@ bb.f:                                             ; preds = %.outer.split
 
 .outer:                                           ; preds = %bb.f
   %i.t = load ptr, ptr @amd_roots, align 8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv66, 1 ; 2 uses
-  %i.u = getelementptr [8 x i8], ptr %i.t, i64 %indvars.iv66
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.u = getelementptr [8 x i8], ptr %i.t, i64 %indvars.iv
   store ptr %i.q, ptr %i.u, align 8
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge.split, label %.outer.split.preheader, !llvm.loop !17
 
-.critedge.split:                                  ; preds = %.outer, %.outer.split, %bb.e
+.critedge.split:                                  ; preds = %.outer, %.outer.split
   %.b = load i1, ptr @enable_dfs, align 1
   br i1 %.b, label %bb.g, label %bb.h
 

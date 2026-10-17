@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.w
   %exitcond.not = icmp eq i32 %i.du, %i.bu
   br i1 %exitcond.not, label %.lr.ph.i.preheader.i, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i86, !llvm.loop !263
 
-.lr.ph.i.preheader.i:                             ; preds = %.lr.ph, %.lr.ph.split, %.loopexit176
+.lr.ph.i.preheader.i:                             ; preds = %.lr.ph.split, %.lr.ph, %.loopexit176
   %i.dv = zext i32 %i.bu to i64
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %i.dv
   %i.dx = zext i32 %.0.i.i to i64

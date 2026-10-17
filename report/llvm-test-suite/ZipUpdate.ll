@@ -205,7 +205,7 @@ bb.a:
   %10 = alloca %"struct.NArchive::NZip::CCompressingResult", align 8 ; 6 uses
   %11 = alloca %class.CMyComPtr.0, align 8        ; 10 uses
   %i.a = alloca i64, align 8                      ; 7 uses
-  %i.b = alloca i64, align 8                      ; 9 uses
+  %i.b = alloca i64, align 8                      ; 8 uses
   %12 = alloca %"class.NArchive::NZip::CItemEx", align 8 ; 16 uses
   %13 = alloca %"class.NArchive::NZip::CAddCommon", align 8 ; 6 uses
   %14 = alloca %"struct.NArchive::NZip::CCompressionMethodMode", align 8 ; 12 uses
@@ -608,16 +608,17 @@ bb.fl:                                            ; preds = %bb.hf, %.lr.ph698.s
   br i1 %exitcond826.not.i, label %.lr.ph698.split.split.loopexit.i.a, label %.lr.ph, !llvm.loop !192
 
 .lr.ph698.split.split.loopexit.i.a:               ; preds = %.outer598.preheader.i, %.outer598.i
-  store i64 %i.akm, ptr %i.b, align 8
   %i.vw = trunc nsw i64 %smax.i to i32
   br label %.lr.ph698.split.split.i
 
 .lr.ph698.split.split.loopexit727.i:              ; preds = %.outer.split.i
-  store i64 %i.akm, ptr %i.b, align 8
+  %.pre864.i = sext i32 %i.akn to i64
   br label %.lr.ph698.split.split.i
 
 .lr.ph698.split.split.i:                          ; preds = %.lr.ph698.split.split.loopexit727.i, %.lr.ph698.split.split.loopexit.i.a
+  %.pre-phi.i = phi i64 [ %.pre864.i, %.lr.ph698.split.split.loopexit727.i ], [ %33, %.lr.ph698.split.split.loopexit.i.a ]
   %.0264.ph599.lcssa706.split.i = phi i32 [ %.0264.ph.i, %.lr.ph698.split.split.loopexit727.i ], [ %i.vw, %.lr.ph698.split.split.loopexit.i.a ]
+  store i64 %i.akm, ptr %i.b, align 8
   %i.vx = load ptr, ptr %i.st, align 8
   %i.vy = sext i32 %.0262.ph.ph.i to i64
   br label %bb.fl
@@ -923,7 +924,7 @@ bb.gh:                                            ; preds = %bb.gf
   br label %bb.gj, !llvm.loop !192
 
 bb.gi:                                            ; preds = %bb.gg, %bb.gc, %bb.gb
-  %.pn418.i = phi { ptr, i32 } [ %i.zm, %bb.gg ], [ %i.zd, %bb.gc ], [ %i.zc, %bb.gb ]
+  %.pn418.i = phi { ptr, i32 } [ %i.zd, %bb.gc ], [ %i.zc, %bb.gb ], [ %i.zm, %bb.gg ]
   %i.zs = call i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.yf) #14 ; 0 uses
   br label %bb.gv
 
@@ -1158,7 +1159,7 @@ bb.he:                                            ; preds = %bb.hd, %bb.fq
 
 bb.hf:                                            ; preds = %bb.fl
   %indvars.iv.next829.i = add nsw i64 %indvars.iv828.i, 1 ; 2 uses
-  %i.acn = icmp slt i64 %indvars.iv.next829.i, %33
+  %i.acn = icmp slt i64 %indvars.iv.next829.i, %.pre-phi.i
   br i1 %i.acn, label %bb.fl, label %.outer598._crit_edge.i, !llvm.loop !192
 
 bb.hg:                                            ; preds = %bb.fl
@@ -1561,10 +1562,10 @@ _ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i:        ; preds = %bb.jw, %_ZN8NArchiv
   br label %.outer.i
 
 .outer.i:                                         ; preds = %.outer.outer.i, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i
-  %i.akm = phi i64 [ %i.ace, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.promoted.i, %.outer.outer.i ] ; 12 uses
+  %i.akm = phi i64 [ %i.ace, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.promoted.i, %.outer.outer.i ] ; 11 uses
   %.11358.ph.i = phi i32 [ %.16363.i, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.11358.ph.ph.i, %.outer.outer.i ] ; 6 uses
   %.0264.ph.i = phi i32 [ %i.wb, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.0264.ph.ph.i, %.outer.outer.i ] ; 3 uses
-  %i.akn = load i32, ptr %i.bz, align 4, !tbaa !97 ; 3 uses
+  %i.akn = load i32, ptr %i.bz, align 4, !tbaa !97 ; 4 uses
   %i.ako = icmp slt i32 %.0262.ph.ph.i, %i.akn
   br i1 %i.ako, label %.outer.split.i, label %.outer598._crit_edge.i
 
@@ -1572,11 +1573,11 @@ _ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i:        ; preds = %bb.jw, %_ZN8NArchiv
   %i.akp = load i32, ptr %i.rz, align 4
   %i.akq = icmp ult i32 %i.akp, %.2276563.i
   %.fr.i = freeze i1 %i.akq
-  %33 = sext i32 %i.akn to i64                    ; 2 uses
   br i1 %.fr.i, label %.outer598.preheader.i, label %.lr.ph698.split.split.loopexit727.i
 
 .outer598.preheader.i:                            ; preds = %.outer.split.i
   %i.akr = sext i32 %.0264.ph.i to i64            ; 2 uses
+  %33 = sext i32 %i.akn to i64                    ; 2 uses
   %smax.i = call i64 @llvm.smax.i64(i64 %i.akr, i64 %33) ; 2 uses
   %exitcond826.not.i1061.not = icmp slt i32 %.0264.ph.i, %i.akn
   br i1 %exitcond826.not.i1061.not, label %.lr.ph.preheader, label %.lr.ph698.split.split.loopexit.i.a
@@ -1600,7 +1601,7 @@ bb.jx:                                            ; preds = %.body535.i, %bb.hm
           to label %.thread575.i unwind label %bb.fm
 
 .thread575.i:                                     ; preds = %bb.fk, %.noexc476.i, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i, %.outer598._crit_edge.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt1.i, %bb.eh
-  %.29376.i = phi i32 [ %i.qs, %bb.eh ], [ 0, %.outer598._crit_edge.i ], [ %.16363.i, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %.27374.jt1.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt1.i ], [ %i.vl, %bb.fk ], [ %i.ts, %.noexc476.i ]
+  %.29376.i = phi i32 [ %i.qs, %bb.eh ], [ 0, %.outer598._crit_edge.i ], [ %.27374.jt1.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt1.i ], [ %.16363.i, %_ZN8NArchive4NZip5CItemD2Ev.exit504.i ], [ %i.ts, %.noexc476.i ], [ %i.vl, %bb.fk ]
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %23) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #14
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %22) #14

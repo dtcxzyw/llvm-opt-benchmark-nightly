@@ -202,12 +202,12 @@ bb.i:                                             ; preds = %bb.h
   %i.v = load i32, ptr %i.e, align 4
   br label %.outer.split.i.preheader
 
-.outer.split.i.preheader:                         ; preds = %bb.i, %.outer.i
+.outer.split.i.preheader:                         ; preds = %.outer.i, %bb.i
   %.0.ph.i46 = phi ptr [ %i.b, %bb.i ], [ %i.ac, %.outer.i ] ; 2 uses
   %.011.ph.i45 = phi i64 [ 8, %bb.i ], [ %i.ab, %.outer.i ] ; 2 uses
   br label %.outer.split.i
 
-.outer.split.i:                                   ; preds = %.outer.split.i.preheader, %bb.j
+.outer.split.i:                                   ; preds = %bb.j, %.outer.split.i.preheader
   %i.w = call i64 @read(i32 noundef %i.v, ptr noundef %.0.ph.i46, i64 noundef %.011.ph.i45) #12 ; 3 uses
   switch i64 %i.w, label %.outer.i [
     i64 0, label %.loopexit
@@ -299,12 +299,12 @@ bb.v:                                             ; preds = %bb.u
   %i.at = load i32, ptr @oom_pipe, align 4
   br label %.outer.split.i31.preheader
 
-.outer.split.i31.preheader:                       ; preds = %bb.v, %.outer.i27
+.outer.split.i31.preheader:                       ; preds = %.outer.i27, %bb.v
   %.0.ph.i2948 = phi ptr [ %i.b, %bb.v ], [ %i.ba, %.outer.i27 ] ; 2 uses
   %.011.ph.i2847 = phi i64 [ 8, %bb.v ], [ %i.az, %.outer.i27 ] ; 2 uses
   br label %.outer.split.i31
 
-.outer.split.i31:                                 ; preds = %.outer.split.i31.preheader, %bb.w
+.outer.split.i31:                                 ; preds = %bb.w, %.outer.split.i31.preheader
   %i.au = call i64 @read(i32 noundef %i.at, ptr noundef %.0.ph.i2948, i64 noundef %.011.ph.i2847) #12 ; 3 uses
   switch i64 %i.au, label %.outer.i27 [
     i64 0, label %.backedge.backedge

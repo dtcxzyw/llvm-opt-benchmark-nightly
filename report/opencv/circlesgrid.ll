@@ -205,6 +205,12 @@ define hidden noundef i64 @_ZN2cv17CirclesGridFinder15findLongestPathERSt6vector
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 9 uses
   store ptr %i.c, ptr %i.h, align 8, !tbaa !182
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !156
+  %i.k = load ptr, ptr %1, align 8, !tbaa !155    ; 2 uses
+  %.not = icmp eq ptr %i.j, %i.k
+  br i1 %.not, label %.preheader, label %.lr.ph191
+
+.lr.ph191:                                        ; preds = %.noexc
   %13 = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 2 uses
   %14 = getelementptr inbounds nuw i8, ptr %9, i64 16
   %15 = getelementptr inbounds nuw i8, ptr %9, i64 20
@@ -214,20 +220,17 @@ define hidden noundef i64 @_ZN2cv17CirclesGridFinder15findLongestPathERSt6vector
   %19 = getelementptr inbounds nuw i8, ptr %10, i64 8
   %20 = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 3 uses
   %21 = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !156
-  %i.k = load ptr, ptr %1, align 8, !tbaa !155    ; 2 uses
-  %.not = icmp eq ptr %i.j, %i.k
-  br i1 %.not, label %.preheader, label %.lr.ph405
+  br label %.lr.ph405
 
 ..preheader_crit_edge:                            ; preds = %bb.aj
   %i.l = ptrtoint ptr %.sroa.12.2 to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %..preheader_crit_edge, %.noexc
-  %.sroa.0.0.lcssa = phi ptr [ %.sroa.0.1, %..preheader_crit_edge ], [ null, %.noexc ] ; 8 uses
-  %.sroa.12.0.lcssa = phi i64 [ %i.l, %..preheader_crit_edge ], [ 0, %.noexc ]
-  %.sroa.18.0.lcssa = phi ptr [ %.sroa.18.1, %..preheader_crit_edge ], [ null, %.noexc ] ; 2 uses
-  %.061.lcssa = phi i64 [ %.162, %..preheader_crit_edge ], [ 0, %.noexc ] ; 2 uses
+  %.sroa.0.0.lcssa = phi ptr [ null, %.noexc ], [ %.sroa.0.1, %..preheader_crit_edge ] ; 8 uses
+  %.sroa.12.0.lcssa = phi i64 [ 0, %.noexc ], [ %i.l, %..preheader_crit_edge ]
+  %.sroa.18.0.lcssa = phi ptr [ null, %.noexc ], [ %.sroa.18.1, %..preheader_crit_edge ] ; 2 uses
+  %.061.lcssa = phi i64 [ 0, %.noexc ], [ %.162, %..preheader_crit_edge ] ; 2 uses
   %i.m = ptrtoint ptr %.sroa.0.0.lcssa to i64     ; 2 uses
   %i.n = sub i64 %.sroa.12.0.lcssa, %i.m
   %i.o = lshr exact i64 %i.n, 2                   ; 4 uses
@@ -255,13 +258,13 @@ define hidden noundef i64 @_ZN2cv17CirclesGridFinder15findLongestPathERSt6vector
   %unroll_iter = and i64 %i.o, 2147483644
   br label %.lr.ph187
 
-.lr.ph405:                                        ; preds = %.noexc, %bb.aj
-  %i.z = phi ptr [ %i.ey, %bb.aj ], [ %i.k, %.noexc ]
-  %.060403 = phi i64 [ %i.ew, %bb.aj ], [ 0, %.noexc ] ; 5 uses
-  %.061402 = phi i64 [ %.162, %bb.aj ], [ 0, %.noexc ]
-  %.sroa.18.0401 = phi ptr [ %.sroa.18.1, %bb.aj ], [ null, %.noexc ] ; 5 uses
-  %.sroa.12.0400 = phi ptr [ %.sroa.12.2, %bb.aj ], [ null, %.noexc ] ; 3 uses
-  %.sroa.0.0399 = phi ptr [ %.sroa.0.1, %bb.aj ], [ null, %.noexc ] ; 9 uses
+.lr.ph405:                                        ; preds = %.lr.ph191, %bb.aj
+  %i.z = phi ptr [ %i.k, %.lr.ph191 ], [ %i.ey, %bb.aj ]
+  %.060403 = phi i64 [ 0, %.lr.ph191 ], [ %i.ew, %bb.aj ] ; 5 uses
+  %.061402 = phi i64 [ 0, %.lr.ph191 ], [ %.162, %bb.aj ]
+  %.sroa.18.0401 = phi ptr [ null, %.lr.ph191 ], [ %.sroa.18.1, %bb.aj ] ; 5 uses
+  %.sroa.12.0400 = phi ptr [ null, %.lr.ph191 ], [ %.sroa.12.2, %bb.aj ] ; 3 uses
+  %.sroa.0.0399 = phi ptr [ null, %.lr.ph191 ], [ %.sroa.0.1, %bb.aj ] ; 9 uses
   %i.aa = getelementptr inbounds nuw [48 x i8], ptr %i.z, i64 %.060403 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %6) #30

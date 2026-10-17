@@ -205,24 +205,24 @@ bb.jr:                                            ; preds = %bb.jq
   %i.bbh = getelementptr inbounds nuw i8, ptr %i.bbg, i64 56
   %i.bbi = load ptr, ptr %i.bbh, align 8, !tbaa !74 ; 2 uses
   %i.bbj = getelementptr inbounds nuw i8, ptr %i.bbg, i64 64
-  %45 = load ptr, ptr %i.bbj, align 8, !tbaa !74  ; 2 uses
-  %i.bbk = load ptr, ptr %i.jb, align 8           ; 4 uses
-  %.not10.i.i.i1109.a = icmp eq ptr %i.bbk, null  ; 3 uses
-  %i.bbl = load ptr, ptr %i.gd, align 8
-  %.fr = freeze ptr %i.bbl                        ; 2 uses
-  %.not10.i.i.i1121 = icmp eq ptr %.fr, null
-  %.not16433764 = icmp eq ptr %i.bbi, %45
-  br i1 %.not16433764, label %._crit_edge3768, label %.lr.ph3767.preheader
+  %i.bbk = load ptr, ptr %i.bbj, align 8, !tbaa !74 ; 2 uses
+  %.not10.i.i.i1109.a = icmp eq ptr %i.bbi, %i.bbk
+  %i.bbl = load ptr, ptr %i.jb, align 8           ; 5 uses
+  br i1 %.not10.i.i.i1109.a, label %._crit_edge3768, label %.lr.ph3767.preheader
 
 .lr.ph3767.preheader:                             ; preds = %bb.jr
   %i.bbm = load ptr, ptr %i.ak, align 8, !tbaa !47 ; 2 uses
-  %.not10.i.i.i1098.a = icmp eq ptr %i.bbm, null
-  br label %.lr.ph3767
+  %.not10.i.i.i1098 = icmp eq ptr %i.bbm, null
+  %.not10.i.i.i1109 = icmp eq ptr %i.bbl, null    ; 2 uses
+  %45 = load ptr, ptr %i.gd, align 8
+  %.fr = freeze ptr %45                           ; 2 uses
+  %.not10.i.i.i1098.a = icmp eq ptr %.fr, null
+  br i1 %.not10.i.i.i1098, label %._crit_edge3768, label %.lr.ph3767
 
 .lr.ph3767:                                       ; preds = %.lr.ph3767.preheader, %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread
   %.sroa.01342.03765 = phi ptr [ %i.bcs, %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread ], [ %i.bbi, %.lr.ph3767.preheader ] ; 2 uses
   %i.bbn = load i32, ptr %.sroa.01342.03765, align 4, !tbaa !62 ; 2 uses
-  br i1 %.not10.i.i.i1098.a, label %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread, label %.lr.ph.i.i.i1099
+  br label %.lr.ph.i.i.i1099
 
 .lr.ph.i.i.i1099:                                 ; preds = %.lr.ph3767, %.lr.ph.i.i.i1099
   %.012.i.i.i1100 = phi ptr [ %.1.i.i.i1105, %.lr.ph.i.i.i1099 ], [ %i.bbm, %.lr.ph3767 ] ; 3 uses
@@ -256,10 +256,10 @@ bb.js:                                            ; preds = %_ZNSt3mapIiSt6vecto
   br i1 %.not16442683, label %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread, label %.lr.ph2687
 
 .lr.ph2687:                                       ; preds = %bb.js
-  br i1 %.not10.i.i.i1121, label %.lr.ph2687.split.us, label %.lr.ph2687.split
+  br i1 %.not10.i.i.i1098.a, label %.lr.ph2687.split.us, label %.lr.ph2687.split
 
 .lr.ph2687.split.us:                              ; preds = %.lr.ph2687
-  br i1 %.not10.i.i.i1109.a, label %.thread1577, label %.lr.ph.i.i.i1110.preheader.us
+  br i1 %.not10.i.i.i1109, label %.thread1577, label %.lr.ph.i.i.i1110.preheader.us
 
 .lr.ph.i.i.i1110.preheader.us:                    ; preds = %.lr.ph2687.split.us, %.thread1561.us
   %.sroa.01334.02684.us = phi ptr [ %i.bcf, %.thread1561.us ], [ %i.bbw, %.lr.ph2687.split.us ] ; 2 uses
@@ -267,7 +267,7 @@ bb.js:                                            ; preds = %_ZNSt3mapIiSt6vecto
   br label %.lr.ph.i.i.i1110.us
 
 .lr.ph.i.i.i1110.us:                              ; preds = %.lr.ph.i.i.i1110.preheader.us, %.lr.ph.i.i.i1110.us
-  %.012.i.i.i1111.us = phi ptr [ %.1.i.i.i1116.us, %.lr.ph.i.i.i1110.us ], [ %i.bbk, %.lr.ph.i.i.i1110.preheader.us ] ; 4 uses
+  %.012.i.i.i1111.us = phi ptr [ %.1.i.i.i1116.us, %.lr.ph.i.i.i1110.us ], [ %i.bbl, %.lr.ph.i.i.i1110.preheader.us ] ; 4 uses
   %.0811.i.i.i1112.us = phi ptr [ %.19.i.i.i1113.us, %.lr.ph.i.i.i1110.us ], [ %i.jc, %.lr.ph.i.i.i1110.preheader.us ] ; 2 uses
   %i.bca = getelementptr inbounds nuw i8, ptr %.012.i.i.i1111.us, i64 32
   %i.bcb = load i32, ptr %i.bca, align 4, !tbaa !62
@@ -298,10 +298,10 @@ _ZNKSt3setIiSt4lessIiESaIiEE5countERKi.exit1120.us: ; preds = %_ZNKSt8_Rb_treeIi
 .lr.ph2687.split:                                 ; preds = %.lr.ph2687, %.thread1561
   %.sroa.01334.02684 = phi ptr [ %i.bcr, %.thread1561 ], [ %i.bbw, %.lr.ph2687 ] ; 2 uses
   %i.bcg = load i32, ptr %.sroa.01334.02684, align 4, !tbaa !62 ; 4 uses
-  br i1 %.not10.i.i.i1109.a, label %.lr.ph.i.i.i1122.preheader, label %.lr.ph.i.i.i1110
+  br i1 %.not10.i.i.i1109, label %.lr.ph.i.i.i1122.preheader, label %.lr.ph.i.i.i1110
 
 .lr.ph.i.i.i1110:                                 ; preds = %.lr.ph2687.split, %.lr.ph.i.i.i1110
-  %.012.i.i.i1111 = phi ptr [ %.1.i.i.i1116, %.lr.ph.i.i.i1110 ], [ %i.bbk, %.lr.ph2687.split ] ; 4 uses
+  %.012.i.i.i1111 = phi ptr [ %.1.i.i.i1116, %.lr.ph.i.i.i1110 ], [ %i.bbl, %.lr.ph2687.split ] ; 4 uses
   %.0811.i.i.i1112 = phi ptr [ %.19.i.i.i1113, %.lr.ph.i.i.i1110 ], [ %i.jc, %.lr.ph2687.split ] ; 2 uses
   %i.bch = getelementptr inbounds nuw i8, ptr %.012.i.i.i1111, i64 32
   %i.bci = load i32, ptr %i.bch, align 4, !tbaa !62
@@ -356,16 +356,17 @@ bb.jt:                                            ; preds = %_ZNKSt8_Rb_treeIiiS
   %.not1644 = icmp eq ptr %i.bcr, %i.bby
   br i1 %.not1644, label %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread, label %.lr.ph2687.split
 
-_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread: ; preds = %.thread1561, %.thread1561.us, %bb.js, %_ZNSt8_Rb_treeIiSt4pairIKiSt6vectorIiSaIiEEESt10_Select1stIS5_ESt4lessIiESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS1_.exit.i.i, %.lr.ph3767, %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit
+_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread: ; preds = %.thread1561, %.thread1561.us, %bb.js, %_ZNSt8_Rb_treeIiSt4pairIKiSt6vectorIiSaIiEEESt10_Select1stIS5_ESt4lessIiESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS1_.exit.i.i, %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit
   %i.bcs = getelementptr inbounds nuw i8, ptr %.sroa.01342.03765, i64 4 ; 2 uses
-  %.not1643 = icmp eq ptr %i.bcs, %45
+  %.not1643 = icmp eq ptr %i.bcs, %i.bbk
   br i1 %.not1643, label %._crit_edge3768, label %.lr.ph3767
 
-._crit_edge3768:                                  ; preds = %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread, %bb.jr
-  br i1 %.not10.i.i.i1109.a, label %._crit_edge.thread.i.i.i1151, label %.lr.ph.i.i.i1135
+._crit_edge3768:                                  ; preds = %_ZNSt3mapIiSt6vectorIiSaIiEESt4lessIiESaISt4pairIKiS2_EEE4findERS6_.exit.thread, %.lr.ph3767.preheader, %bb.jr
+  %.not23.i.i.i1134 = icmp eq ptr %i.bbl, null
+  br i1 %.not23.i.i.i1134, label %._crit_edge.thread.i.i.i1151, label %.lr.ph.i.i.i1135
 
 .lr.ph.i.i.i1135:                                 ; preds = %._crit_edge3768, %.lr.ph.i.i.i1135
-  %.02024.i.i.i1136 = phi ptr [ %.020.i.i.i1139, %.lr.ph.i.i.i1135 ], [ %i.bbk, %._crit_edge3768 ] ; 4 uses
+  %.02024.i.i.i1136 = phi ptr [ %.020.i.i.i1139, %.lr.ph.i.i.i1135 ], [ %i.bbl, %._crit_edge3768 ] ; 4 uses
   %i.bct = getelementptr inbounds nuw i8, ptr %.02024.i.i.i1136, i64 32
   %i.bcu = load i32, ptr %i.bct, align 4, !tbaa !62 ; 2 uses
   %i.bcv = icmp slt i32 %i.bav, %i.bcu            ; 2 uses

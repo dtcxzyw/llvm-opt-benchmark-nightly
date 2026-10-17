@@ -205,7 +205,6 @@ bb.p:                                             ; preds = %bb.o
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !38  ; 4 uses
   %i.cm = load i32, ptr %i.ca, align 8, !tbaa !39
   %.fr.i = freeze i32 %i.cm                       ; 9 uses
-  %2 = sext i32 %.fr.i to i64
   %i.cn = icmp sgt i32 %.fr.i, 7
   br i1 %i.cn, label %switch.early.test.i, label %find_es_header.exit.i
 
@@ -345,6 +344,7 @@ bb.z:                                             ; preds = %find_es_header.exit
   br i1 %i.fc, label %demux_video.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
+  %2 = sext i32 %.fr.i to i64
   %i.fd = load ptr, ptr %i.k, align 8, !tbaa !84
   %i.fe = getelementptr inbounds nuw i8, ptr %.val, i64 124
   %i.ff = getelementptr inbounds nuw i8, ptr %.val, i64 4 ; 3 uses
@@ -360,7 +360,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa, %.thread.i
   store i32 0, ptr %i.l, align 4, !tbaa !85
   switch i8 %i.cl, label %bb.af [
-    i8 2, label %demux_video.exit
+    i8 2, label %get_chunk.exit.thread
     i8 12, label %bb.ac
     i8 7, label %bb.ae
   ]
@@ -396,12 +396,12 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.fx = getelementptr inbounds nuw i8, ptr %.val, i64 96 ; 2 uses
   %i.fy = load i64, ptr %i.fx, align 8, !tbaa !35 ; 2 uses
   %.not79.i = icmp eq i64 %i.fy, -9223372036854775808
-  br i1 %.not79.i, label %demux_video.exit, label %bb.ah
+  br i1 %.not79.i, label %get_chunk.exit.thread, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   store i64 %i.fy, ptr %i.m, align 8, !tbaa !88
   store i64 -9223372036854775808, ptr %i.fx, align 8, !tbaa !35
-  br label %demux_video.exit
+  br label %get_chunk.exit.thread
 
 bb.ai:                                            ; preds = %bb.o
   %.val32 = load i32, ptr %i.ca, align 8, !tbaa !39 ; 18 uses
@@ -598,13 +598,13 @@ bb.ay:                                            ; preds = %bb.ax
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ga, i64 24
   %i.kc = load i32, ptr %i.kb, align 8, !tbaa !43
   %i.kd = icmp eq i32 %i.kc, 1
-  br i1 %i.kd, label %bb.az, label %demux_video.exit
+  br i1 %i.kd, label %bb.az, label %get_chunk.exit.thread
 
 bb.az:                                            ; preds = %bb.ay
   %i.ke = getelementptr inbounds nuw i8, ptr %i.ga, i64 20
   %i.kf = load i32, ptr %i.ke, align 4, !tbaa !41
   %i.kg = icmp eq i32 %i.kf, 2
-  br i1 %i.kg, label %bb.ba, label %demux_video.exit
+  br i1 %i.kg, label %bb.ba, label %get_chunk.exit.thread
 
 bb.ba:                                            ; preds = %bb.az
   %i.kh = getelementptr inbounds nuw i8, ptr %i.ga, i64 64 ; 3 uses
@@ -620,11 +620,11 @@ bb.bb:                                            ; preds = %bb.ba
   %i.kn = sub nsw i32 %i.kj, %spec.select.i
   store i32 %i.kn, ptr %i.n, align 8, !tbaa !86
   store i64 0, ptr %i.kh, align 8, !tbaa !90
-  br label %demux_video.exit
+  br label %get_chunk.exit.thread
 
 bb.bc:                                            ; preds = %bb.ba
   store i64 %i.kl, ptr %i.kh, align 8, !tbaa !90
-  br label %demux_video.exit
+  br label %get_chunk.exit.thread
 
 bb.bd:                                            ; preds = %bb.ai
   %i.ko = tail call i32 @av_new_packet(ptr noundef %1, i32 noundef %.val32) #6 ; 2 uses
@@ -722,8 +722,8 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
 
 .thread9.i:                                       ; preds = %find_es_header.exit165.i, %bb.bi, %bb.bh, %bb.bg, %bb.bf
   %.07.i164812.i = phi i32 [ 0, %find_es_header.exit165.i ], [ 2, %bb.bg ], [ 3, %bb.bh ], [ 1, %bb.bf ], [ 4, %bb.bi ] ; 5 uses
-  %.val13913.i = load ptr, ptr %i.a, align 8, !tbaa !29 ; 6 uses
-  %i.mp = getelementptr inbounds nuw i8, ptr %.val13913.i, i64 28 ; 2 uses
+  %.val13913.i = load ptr, ptr %i.a, align 8, !tbaa !29 ; 7 uses
+  %i.mp = getelementptr inbounds nuw i8, ptr %.val13913.i, i64 28
   %i.mq = load i32, ptr %i.mp, align 4, !tbaa !42 ; 3 uses
   %i.mr = add nsw i32 %i.mq, %.07.i164812.i
   %i.ms = icmp sgt i32 %i.mr, %.val32
@@ -752,9 +752,10 @@ bb.bn:                                            ; preds = %bb.bm
   %i.nb = load i32, ptr %i.n, align 8, !tbaa !86
   %i.nc = sub nsw i32 %i.nb, %i.my
   store i32 %i.nc, ptr %i.n, align 8, !tbaa !86
-  br label %demux_video.exit
+  br label %get_chunk.exit.thread
 
 bb.bo:                                            ; preds = %.thread9.i
+  %3 = getelementptr inbounds nuw i8, ptr %.val13913.i, i64 28
   %i.nd = getelementptr inbounds nuw i8, ptr %.val13913.i, i64 32
   %i.ne = load i32, ptr %i.nd, align 8, !tbaa !44
   %i.nf = add nsw i32 %i.ne, %.07.i164812.i
@@ -797,11 +798,11 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
   %i.oh = sub nsw i32 %.val32, %i.mq
   %i.oi = sext i32 %i.oh to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.oe, ptr nonnull align 1 %i.og, i64 %i.oi, i1 false)
-  %i.oj = load i32, ptr %i.mp, align 4, !tbaa !42
+  %i.oj = load i32, ptr %3, align 4, !tbaa !42
   %i.ok = load i32, ptr %i.n, align 8, !tbaa !86
   %i.ol = sub nsw i32 %i.ok, %i.oj
   store i32 %i.ol, ptr %i.n, align 8, !tbaa !86
-  br label %demux_video.exit
+  br label %get_chunk.exit.thread
 
 bb.br:                                            ; preds = %bb.bm, %.critedge.i.i
   tail call void @av_packet_unref(ptr noundef nonnull %1) #6
@@ -827,7 +828,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.ow = getelementptr inbounds nuw i8, ptr %i.ga, i64 88
   %i.ox = load i64, ptr %i.ow, align 8, !tbaa !34
   store i64 %i.ox, ptr %i.m, align 8, !tbaa !88
-  br label %demux_video.exit
+  br label %get_chunk.exit.thread
 
 bb.bu:                                            ; preds = %bb.ai
   %i.oy = tail call i32 @av_new_packet(ptr noundef %1, i32 noundef %.val32) #6 ; 2 uses
@@ -887,8 +888,8 @@ bb.bz:                                            ; preds = %bb.by
 
 select.unfold20.i:                                ; preds = %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv
   %.07.i178.ph.i = phi i32 [ 0, %bb.bv ], [ 2, %bb.bx ], [ 1, %bb.bw ], [ 3, %bb.by ], [ 4, %bb.bz ] ; 5 uses
-  %.val22.i = load ptr, ptr %i.a, align 8, !tbaa !29 ; 6 uses
-  %i.qc = getelementptr inbounds nuw i8, ptr %.val22.i, i64 28 ; 2 uses
+  %.val22.i = load ptr, ptr %i.a, align 8, !tbaa !29 ; 7 uses
+  %i.qc = getelementptr inbounds nuw i8, ptr %.val22.i, i64 28
   %i.qd = load i32, ptr %i.qc, align 4, !tbaa !42 ; 3 uses
   %i.qe = add nsw i32 %i.qd, %.07.i178.ph.i
   %i.qf = icmp sgt i32 %i.qe, %.val32
@@ -914,6 +915,7 @@ bb.ca:                                            ; preds = %select.unfold20.i
   br i1 %.not.i168.i, label %bb.ce, label %check_sync_pes.exit183.i
 
 bb.cb:                                            ; preds = %select.unfold20.i
+  %4 = getelementptr inbounds nuw i8, ptr %.val22.i, i64 28
   %i.qo = getelementptr inbounds nuw i8, ptr %.val22.i, i64 32
   %i.qp = load i32, ptr %i.qo, align 8, !tbaa !44
   %i.qq = add nsw i32 %i.qp, %.07.i178.ph.i
@@ -956,14 +958,14 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
   %i.rs = sub nsw i32 %.val32, %i.qd
   %i.rt = sext i32 %i.rs to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.rp, ptr nonnull align 1 %i.rr, i64 %i.rt, i1 false)
-  %i.ru = load i32, ptr %i.qc, align 4, !tbaa !42
+  %i.ru = load i32, ptr %4, align 4, !tbaa !42
   br label %check_sync_pes.exit183.i
 
 bb.ce:                                            ; preds = %bb.ca, %.critedge.i182.i
   tail call void @av_packet_unref(ptr noundef nonnull %1) #6
   br label %demux_video.exit
 
-check_sync_pes.exit183.i:                         ; preds = %bb.cd, %bb.ca
+check_sync_pes.exit183.i:                         ; preds = %bb.ca, %bb.cd
   %.sink36.i = phi i32 [ %i.ru, %bb.cd ], [ %i.ql, %bb.ca ]
   %i.rv = load i32, ptr %i.n, align 8, !tbaa !86
   %i.rw = sub nsw i32 %i.rv, %.sink36.i           ; 4 uses
@@ -971,7 +973,7 @@ check_sync_pes.exit183.i:                         ; preds = %bb.cd, %bb.ca
   %i.rx = getelementptr inbounds nuw i8, ptr %i.ga, i64 20
   %i.ry = load i32, ptr %i.rx, align 4, !tbaa !41
   %i.rz = icmp eq i32 %i.ry, 2
-  br i1 %i.rz, label %bb.cf, label %demux_video.exit
+  br i1 %i.rz, label %bb.cf, label %get_chunk.exit.thread
 
 bb.cf:                                            ; preds = %check_sync_pes.exit183.i
   %i.sa = icmp sgt i32 %i.rw, 1536
@@ -982,13 +984,13 @@ bb.cg:                                            ; preds = %bb.cf
   store i32 %i.sb, ptr %i.n, align 8, !tbaa !86
   %i.sc = getelementptr inbounds nuw i8, ptr %i.ga, i64 64
   store i64 0, ptr %i.sc, align 8, !tbaa !90
-  br label %demux_video.exit
+  br label %get_chunk.exit.thread
 
 bb.ch:                                            ; preds = %bb.cf
   %i.sd = sext i32 %i.rw to i64
   %i.se = getelementptr inbounds nuw i8, ptr %i.ga, i64 64
   store i64 %i.sd, ptr %i.se, align 8, !tbaa !90
-  br label %demux_video.exit
+  br label %get_chunk.exit.thread
 
 bb.ci:                                            ; preds = %bb.ai
   %i.sf = getelementptr inbounds nuw i8, ptr %i.ga, i64 4 ; 2 uses
@@ -1004,13 +1006,13 @@ bb.cj:                                            ; preds = %bb.o
   store i32 %i.sk, ptr %i.j, align 4, !tbaa !83
   br label %demux_video.exit
 
-demux_video.exit:                                 ; preds = %bb.ci, %bb.ch, %bb.cg, %check_sync_pes.exit183.i, %bb.ce, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bn, %bb.bl, %bb.bd, %bb.bc, %bb.bb, %bb.az, %bb.ay, %bb.ax, %bb.al, %bb.ah, %bb.ag, %bb.ab, %bb.z, %find_es_header.exit.thread4.i, %bb.y, %bb.x, %select.unfold.i, %bb.cj
-  %.1 = phi i32 [ %.0.ph95, %bb.cj ], [ 1, %bb.ag ], [ 0, %bb.y ], [ 0, %find_es_header.exit.thread4.i ], [ %i.fb, %bb.z ], [ 1, %bb.ah ], [ %i.en, %bb.x ], [ -1094995529, %select.unfold.i ], [ 1, %bb.ab ], [ %i.jr, %bb.ax ], [ %i.oy, %bb.bu ], [ 0, %bb.ci ], [ 0, %bb.bl ], [ 0, %bb.br ], [ %i.ko, %bb.bd ], [ %i.om, %bb.bs ], [ 0, %bb.ce ], [ 0, %bb.al ], [ 1, %bb.bq ], [ 1, %bb.bn ], [ 1, %bb.bt ], [ 1, %bb.cg ], [ 1, %bb.ch ], [ 1, %check_sync_pes.exit183.i ], [ 1, %bb.bb ], [ 1, %bb.bc ], [ 1, %bb.az ], [ 1, %bb.ay ] ; 2 uses
+demux_video.exit:                                 ; preds = %bb.ci, %bb.ce, %bb.bu, %bb.bs, %bb.br, %bb.bl, %bb.bd, %bb.ax, %bb.al, %bb.z, %find_es_header.exit.thread4.i, %bb.y, %bb.x, %select.unfold.i, %bb.cj
+  %.1 = phi i32 [ %.0.ph95, %bb.cj ], [ %i.om, %bb.bs ], [ 0, %bb.y ], [ 0, %find_es_header.exit.thread4.i ], [ %i.fb, %bb.z ], [ 0, %bb.ce ], [ %i.en, %bb.x ], [ -1094995529, %select.unfold.i ], [ 0, %bb.al ], [ %i.jr, %bb.ax ], [ %i.oy, %bb.bu ], [ 0, %bb.ci ], [ 0, %bb.bl ], [ 0, %bb.br ], [ %i.ko, %bb.bd ] ; 2 uses
   %i.sl = icmp slt i32 %.1, 1
   br i1 %i.sl, label %.outer.split.preheader, label %get_chunk.exit.thread, !llvm.loop !78
 
-get_chunk.exit.thread:                            ; preds = %demux_video.exit, %bb.n, %bb.m, %bb.k, %bb.f, %parse_chunk_headers.exit.i, %bb.e, %bb.d, %tailrecurse.i, %bb.a
-  %.027 = phi i32 [ -541478725, %bb.e ], [ -541478725, %bb.a ], [ -541478725, %bb.k ], [ -541478725, %tailrecurse.i ], [ -541478725, %bb.d ], [ -541478725, %parse_chunk_headers.exit.i ], [ -541478725, %bb.f ], [ 0, %demux_video.exit ], [ -1094995529, %bb.m ], [ -541478725, %bb.n ]
+get_chunk.exit.thread:                            ; preds = %demux_video.exit, %bb.n, %bb.m, %bb.k, %bb.f, %parse_chunk_headers.exit.i, %bb.e, %bb.d, %tailrecurse.i, %bb.ay, %bb.az, %bb.bc, %bb.bb, %check_sync_pes.exit183.i, %bb.ch, %bb.cg, %bb.bt, %bb.bn, %bb.bq, %bb.ab, %bb.ah, %bb.ag, %bb.a
+  %.027 = phi i32 [ 0, %check_sync_pes.exit183.i ], [ -541478725, %bb.a ], [ 0, %bb.bc ], [ 0, %bb.az ], [ 0, %bb.ay ], [ 0, %bb.bb ], [ -541478725, %bb.k ], [ 0, %bb.cg ], [ 0, %bb.ch ], [ -541478725, %bb.e ], [ 0, %bb.ag ], [ 0, %bb.ah ], [ 0, %bb.ab ], [ 0, %bb.bq ], [ 0, %bb.bn ], [ 0, %bb.bt ], [ -541478725, %tailrecurse.i ], [ -541478725, %bb.d ], [ -541478725, %parse_chunk_headers.exit.i ], [ -541478725, %bb.f ], [ -1094995529, %bb.m ], [ -541478725, %bb.n ], [ 0, %demux_video.exit ]
   ret i32 %.027
 }
 

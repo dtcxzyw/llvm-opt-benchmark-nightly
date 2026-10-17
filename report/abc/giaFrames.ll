@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.c = getelementptr i8, ptr %0, i64 24         ; 3 uses
   %.val106 = load i32, ptr %i.c, align 8, !tbaa !39
-  %i.d = tail call ptr @Gia_ManStart(i32 noundef %.val106) #26 ; 14 uses
+  %i.d = tail call ptr @Gia_ManStart(i32 noundef %.val106) #26 ; 15 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !40     ; 3 uses
   %.not.i = icmp eq ptr %i.e, null
   br i1 %.not.i, label %Abc_UtilStrsav.exit, label %bb.d
@@ -242,17 +242,20 @@ Abc_UtilStrsav.exit135:                           ; preds = %Abc_UtilStrsav.exit
   %i.t = getelementptr inbounds nuw i8, ptr %.val107, i64 8
   store i32 0, ptr %i.t, align 4, !tbaa !9
   %i.u = icmp eq i32 %1, 0
-  %.not = icmp ne i32 %2, 0                       ; 3 uses
-  %3 = getelementptr i8, ptr %0, i64 64           ; 2 uses
-  %4 = getelementptr i8, ptr %0, i64 16           ; 5 uses
-  %5 = getelementptr i8, ptr %0, i64 72           ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 64 ; 3 uses
-  %7 = getelementptr i8, ptr %i.d, i64 32         ; 2 uses
   %i.v = icmp sgt i32 %1, -1
-  br i1 %i.v, label %.lr.ph228, label %.critedge6.thread
+  br i1 %i.v, label %.lr.ph168, label %.critedge6.thread
 
-.lr.ph228:                                        ; preds = %Abc_UtilStrsav.exit135, %.critedge8
-  %.0227 = phi i32 [ %i.ik, %.critedge8 ], [ 0, %Abc_UtilStrsav.exit135 ] ; 6 uses
+.lr.ph168:                                        ; preds = %Abc_UtilStrsav.exit135
+  %.not = icmp ne i32 %2, 0
+  %3 = getelementptr i8, ptr %0, i64 64           ; 2 uses
+  %4 = getelementptr i8, ptr %0, i64 16           ; 3 uses
+  %5 = getelementptr i8, ptr %0, i64 72           ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 64 ; 2 uses
+  %7 = getelementptr i8, ptr %i.d, i64 32         ; 2 uses
+  br label %.lr.ph228
+
+.lr.ph228:                                        ; preds = %.lr.ph168, %.critedge8
+  %.0227 = phi i32 [ 0, %.lr.ph168 ], [ %i.ik, %.critedge8 ] ; 6 uses
   %i.w = urem i32 %.0227, 100
   %i.x = icmp eq i32 %i.w, 0
   %or.cond = select i1 %.not, i1 %i.x, i1 false
@@ -655,28 +658,34 @@ bb.w:                                             ; preds = %.lr.ph162.split, %b
   %i.im = select i1 %i.u, i1 true, i1 %i.il
   br i1 %i.im, label %.lr.ph228, label %.critedge6.thread, !llvm.loop !141
 
-.critedge6.thread:                                ; preds = %.lr.ph162, %.critedge8, %bb.w, %Abc_UtilStrsav.exit135
-  %.0220 = phi i32 [ %.0227, %bb.w ], [ 0, %Abc_UtilStrsav.exit135 ], [ %.0227, %.lr.ph162 ], [ %i.ik, %.critedge8 ]
-  br i1 %.not, label %bb.x, label %bb.y
+.critedge6.thread:                                ; preds = %.critedge8, %.lr.ph162, %bb.w, %Abc_UtilStrsav.exit135
+  %.0220 = phi i32 [ 0, %Abc_UtilStrsav.exit135 ], [ %.0227, %bb.w ], [ %i.ik, %.critedge8 ], [ %.0227, %.lr.ph162 ]
+  %.not100 = icmp eq i32 %2, 0                    ; 2 uses
+  br i1 %.not100, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %.critedge6.thread
   %i.in = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.10, i32 noundef %.0220) ; 0 uses
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %.critedge6.thread
-  %.val127167 = load i32, ptr %4, align 8, !tbaa !42 ; 2 uses
+  %8 = getelementptr i8, ptr %0, i64 16           ; 2 uses
+  %.val127167 = load i32, ptr %8, align 8, !tbaa !42 ; 2 uses
   %i.io = icmp sgt i32 %.val127167, 0
-  br i1 %i.io, label %.lr.ph170, label %.critedge10
+  br i1 %i.io, label %.lr.ph172, label %.critedge10
 
-.lr.ph170:                                        ; preds = %bb.y, %bb.z
-  %.val127169 = phi i32 [ %.val127, %bb.z ], [ %.val127167, %bb.y ]
-  %.5168 = phi i32 [ %i.jb, %bb.z ], [ 0, %bb.y ] ; 2 uses
+.lr.ph172:                                        ; preds = %bb.y
+  %9 = getelementptr i8, ptr %0, i64 72
+  br label %.lr.ph170
+
+.lr.ph170:                                        ; preds = %.lr.ph172, %bb.z
+  %.val127169 = phi i32 [ %.val127167, %.lr.ph172 ], [ %.val127, %bb.z ]
+  %.5168 = phi i32 [ 0, %.lr.ph172 ], [ %i.jb, %bb.z ] ; 2 uses
   %.val116 = load ptr, ptr %i.s, align 8, !tbaa !31 ; 2 uses
   %.not101 = icmp eq ptr %.val116, null
   br i1 %.not101, label %.critedge10, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph170
-  %.val109 = load ptr, ptr %5, align 8, !tbaa !37 ; 2 uses
+  %.val109 = load ptr, ptr %9, align 8, !tbaa !37 ; 2 uses
   %i.ip = getelementptr i8, ptr %.val109, i64 8
   %.val117.val = load ptr, ptr %i.ip, align 8, !tbaa !35
   %i.iq = getelementptr i8, ptr %.val109, i64 4
@@ -692,19 +701,20 @@ bb.z:                                             ; preds = %.lr.ph170
   %i.iz = load i32, ptr %i.iy, align 4, !tbaa !9
   %i.ja = tail call fastcc i32 @Gia_ManAppendCo(ptr noundef nonnull %i.d, i32 noundef %i.iz) ; 0 uses
   %i.jb = add nuw nsw i32 %.5168, 1               ; 2 uses
-  %.val127 = load i32, ptr %4, align 8, !tbaa !42 ; 2 uses
+  %.val127 = load i32, ptr %8, align 8, !tbaa !42 ; 2 uses
   %i.jc = icmp slt i32 %i.jb, %.val127
   br i1 %i.jc, label %.lr.ph170, label %.critedge10, !llvm.loop !142
 
 .critedge10:                                      ; preds = %.lr.ph170, %bb.z, %bb.y
   tail call void @Gia_ManHashStop(ptr noundef nonnull %i.d) #26
   %i.jd = tail call ptr @Gia_ManCleanup(ptr noundef nonnull %i.d) #26 ; 4 uses
-  br i1 %.not, label %bb.aa, label %bb.ab
+  br i1 %.not100, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %.critedge10
   %i.je = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.jf = load i32, ptr %i.je, align 8, !tbaa !39
-  %i.jg = load ptr, ptr %6, align 8, !tbaa !32
+  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 64
+  %i.jg = load ptr, ptr %10, align 8, !tbaa !32
   %i.jh = getelementptr i8, ptr %i.jg, i64 4
   %.val3.i = load i32, ptr %i.jh, align 4, !tbaa !33
   %i.ji = getelementptr inbounds nuw i8, ptr %i.d, i64 72

@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.pre2.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !19
   br label %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit
 
-_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit:     ; preds = %bb.b, %.noexc
+_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit:     ; preds = %.noexc, %bb.b
   %i.l = phi i32 [ %.pre2.i, %.noexc ], [ %i.h, %bb.b ] ; 2 uses
-  %i.m = phi ptr [ %.pre.i, %.noexc ], [ %i.e, %bb.b ] ; 4 uses
+  %i.m = phi ptr [ %.pre.i, %.noexc ], [ %i.e, %bb.b ] ; 3 uses
   %i.n = getelementptr inbounds i8, ptr %i.m, i64 -4
   %i.o = zext i32 %i.l to i64
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.o
@@ -214,13 +214,12 @@ _ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit:     ; preds = %bb.b, %.noexc
   %i.q = add i32 %i.l, 1
   store i32 %i.q, ptr %i.n, align 4, !tbaa !19
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1776
-  %5 = icmp eq ptr %i.m, null
-  br i1 %5, label %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit.thread.split, label %.outer.split
+  br label %.outer.split
 
 .outer.split:                                     ; preds = %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit, %.loopexit
-  %.045.ph105 = phi i32 [ %.1, %.loopexit ], [ 0, %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit ] ; 6 uses
-  %6 = phi ptr [ %.pre, %.loopexit ], [ %i.m, %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit ] ; 2 uses
-  %i.s = getelementptr inbounds i8, ptr %6, i64 -4 ; 2 uses
+  %5 = phi ptr [ %i.m, %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit ], [ %.pre, %.loopexit ] ; 2 uses
+  %.045.ph58 = phi i32 [ 0, %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit ], [ %.1, %.loopexit ] ; 6 uses
+  %i.s = getelementptr inbounds i8, ptr %5, i64 -4 ; 2 uses
   %.promoted = load i32, ptr %i.s, align 4, !tbaa !19 ; 2 uses
   %i.t = icmp eq i32 %.promoted, 0
   br i1 %i.t, label %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit.thread.split, label %.lr.ph103
@@ -236,7 +235,7 @@ _ZNK6vectorIP4exprLb0EjE5emptyEv.exit:            ; preds = %bb.d
 bb.d:                                             ; preds = %.lr.ph103, %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit
   %indvars.iv102 = phi i64 [ %i.u, %.lr.ph103 ], [ %i.w, %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit ]
   %i.w = add nsw i64 %indvars.iv102, -1           ; 4 uses
-  %i.x = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.w
+  %i.x = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.w
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !409  ; 6 uses
   %indvars = trunc nuw i64 %i.w to i32
   store i32 %indvars, ptr %i.s, align 4, !tbaa !19
@@ -412,7 +411,7 @@ _ZNK3euf6egraph4findEP4expr.exit:                 ; preds = %_ZNK6vectorIPN3euf5
 bb.i:                                             ; preds = %_ZNK3euf6egraph4findEP4expr.exit
   %i.bw = getelementptr inbounds nuw i8, ptr %.0.i.sroa.speculate.load..i, i64 40
   %i.bx = load i32, ptr %i.bw, align 8, !tbaa !624
-  %.sroa.speculated = call i32 @llvm.umax.i32(i32 %.045.ph105, i32 %i.bx)
+  %.sroa.speculated = call i32 @llvm.umax.i32(i32 %.045.ph58, i32 %i.bx)
   br label %.loopexit
 
 _ZNK3euf6egraph4findEP4expr.exit.thread:          ; preds = %bb.h, %_ZNK6vectorIPN3euf5enodeELb0EjE4sizeEv.exit.i.i, %_ZNK3euf6egraph4findEP4expr.exit
@@ -587,13 +586,13 @@ bb.w:                                             ; preds = %bb.t, %bb.l
   br label %.body
 
 .loopexit:                                        ; preds = %bb.v, %bb.j, %_ZNK3euf6egraph4findEP4expr.exit.thread, %bb.i
-  %.1 = phi i32 [ %.sroa.speculated, %bb.i ], [ %.045.ph105, %_ZNK3euf6egraph4findEP4expr.exit.thread ], [ %.045.ph105, %bb.j ], [ %.045.ph105, %bb.v ] ; 2 uses
+  %.1 = phi i32 [ %.sroa.speculated, %bb.i ], [ %.045.ph58, %_ZNK3euf6egraph4findEP4expr.exit.thread ], [ %.045.ph58, %bb.j ], [ %.045.ph58, %bb.v ] ; 2 uses
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !406 ; 2 uses
   %i.ed = icmp eq ptr %.pre, null
   br i1 %i.ed, label %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit.thread.split, label %.outer.split, !llvm.loop !618
 
-_ZNK6vectorIP4exprLb0EjE5emptyEv.exit.thread.split: ; preds = %.loopexit, %.outer.split, %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit, %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit
-  %.045.ph101 = phi i32 [ 0, %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit ], [ %.045.ph105, %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit ], [ %.1, %.loopexit ], [ %.045.ph105, %.outer.split ]
+_ZNK6vectorIP4exprLb0EjE5emptyEv.exit.thread.split: ; preds = %.loopexit, %.outer.split, %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit
+  %.045.ph.lcssa.split = phi i32 [ %.045.ph58, %_ZNK6vectorIP4exprLb0EjE5emptyEv.exit ], [ %.1, %.loopexit ], [ %.045.ph58, %.outer.split ]
   %i.ee = load ptr, ptr %4, align 8, !tbaa !515   ; 4 uses
   %i.ef = load i32, ptr %i.b, align 8, !tbaa !516 ; 2 uses
   %i.eg = zext i32 %i.ef to i64
@@ -682,7 +681,7 @@ bb.y:                                             ; preds = %bb.x
 
 _ZN13ast_fast_markILj1EED2Ev.exit:                ; preds = %.loopexit.i, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
-  ret i32 %.045.ph101
+  ret i32 %.045.ph.lcssa.split
 
 .body:                                            ; preds = %.loopexit49, %.loopexit.split-lp, %bb.w, %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i
   %.pn.pn = phi { ptr, i32 } [ %i.dm, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i ], [ %i.dr, %bb.s ], [ %i.ec, %bb.w ], [ %lpad.loopexit, %.loopexit49 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
