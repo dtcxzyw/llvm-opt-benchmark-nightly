@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %bb.r
   br label %.outer.split.i.preheader.i
 
 .outer.split.i.preheader.i:                       ; preds = %.outer.backedge.i.i, %bb.s
-  %.074.ph.i21.i = phi i32 [ 0, %bb.s ], [ %.074.ph.be.i.i, %.outer.backedge.i.i ] ; 15 uses
-  %i.cr = phi i32 [ 0, %bb.s ], [ %i.cz, %.outer.backedge.i.i ] ; 4 uses
+  %.074.ph.i21.i = phi i32 [ 0, %bb.s ], [ %i.cz, %.outer.backedge.i.i ] ; 4 uses
+  %i.cr = phi i32 [ 0, %bb.s ], [ %.074.ph.be.i.i, %.outer.backedge.i.i ] ; 15 uses
   br label %.outer.split.i.i
 
 .outer.split.i.i:                                 ; preds = %bb.w, %.outer.split.i.preheader.i
@@ -221,14 +221,14 @@ bb.t:                                             ; preds = %.outer.split.i.i
 
 bb.u:                                             ; preds = %bb.t
   %i.cv = trunc nuw i32 %i.cs to i8
-  %i.cw = zext i32 %.074.ph.i21.i to i64
+  %i.cw = zext i32 %i.cr to i64
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.cw
   store i8 %i.cv, ptr %i.cx, align 1, !tbaa !19
-  %i.cy = add nuw i32 %.074.ph.i21.i, 1
+  %i.cy = add nuw i32 %i.cr, 1
   br label %.outer.backedge.i.i
 
 .outer.backedge.i.i:                              ; preds = %.preheader.i.i.prol.loopexit, %.preheader.i.i, %middle.block, %vec.epilog.middle.block, %bb.u
-  %i.cz = phi i32 [ %i.cr, %bb.u ], [ %i.gz, %middle.block ], [ %i.gz, %vec.epilog.middle.block ], [ %i.gz, %.preheader.i.i ], [ %i.gz, %.preheader.i.i.prol.loopexit ]
+  %i.cz = phi i32 [ %.074.ph.i21.i, %bb.u ], [ %i.gz, %middle.block ], [ %i.gz, %vec.epilog.middle.block ], [ %i.gz, %.preheader.i.i ], [ %i.gz, %.preheader.i.i.prol.loopexit ]
   %.074.ph.be.i.i = phi i32 [ %i.cy, %bb.u ], [ %i.ho, %middle.block ], [ %i.hz, %vec.epilog.middle.block ], [ %.lcssa536.unr, %.preheader.i.i.prol.loopexit ], [ %i.ju, %.preheader.i.i ] ; 2 uses
   %i.da = icmp ult i32 %.074.ph.be.i.i, %i.cd
   br i1 %i.da, label %.outer.split.i.preheader.i, label %bb.al
@@ -463,13 +463,13 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %.not92.i.i, label %bb.ak, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  store i32 %i.cr, ptr %i.gv, align 4, !tbaa !18
+  store i32 %.074.ph.i21.i, ptr %i.gv, align 4, !tbaa !18
   br label %.sink.split.i.i
 
 bb.aj:                                            ; preds = %bb.ag
   %i.gx = load i32, ptr %i.br, align 4, !tbaa !18
   store i32 %i.gx, ptr %i.bs, align 8, !tbaa !18
-  store i32 %i.cr, ptr %i.br, align 4, !tbaa !18
+  store i32 %.074.ph.i21.i, ptr %i.br, align 4, !tbaa !18
   %i.gy = add i32 %.075.i.i, -3
   br label %.sink.split.i.i
 
@@ -479,11 +479,11 @@ bb.aj:                                            ; preds = %bb.ag
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.sink.split.i.i, %bb.ah
-  %i.gz = phi i32 [ %i.cr, %bb.ah ], [ %.sink.i.i, %.sink.split.i.i ] ; 4 uses
+  %i.gz = phi i32 [ %.074.ph.i21.i, %bb.ah ], [ %.sink.i.i, %.sink.split.i.i ] ; 4 uses
   %.076.i.i = phi i32 [ %i.gw, %bb.ah ], [ %.sink.i.i, %.sink.split.i.i ] ; 5 uses
   %.neg.i.i = xor i32 %.076.i.i, -1               ; 6 uses
-  %or.cond96.i.i = icmp uge i32 %.076.i.i, %.074.ph.i21.i
-  %i.ha = sub nuw i32 %i.cd, %.074.ph.i21.i
+  %or.cond96.i.i = icmp uge i32 %.076.i.i, %i.cr
+  %i.ha = sub nuw i32 %i.cd, %i.cr
   %i.hb = icmp ugt i32 %.178.i.i, %i.ha
   %or.cond98.i.i = select i1 %or.cond96.i.i, i1 true, i1 %i.hb
   br i1 %or.cond98.i.i, label %decomp_block.exit.thread214, label %iter.check
@@ -494,17 +494,17 @@ iter.check:                                       ; preds = %bb.ak
 
 vector.scevcheck:                                 ; preds = %iter.check
   %i.hc = add nsw i32 %.178.i.i, -1               ; 2 uses
-  %i.hd = xor i32 %.074.ph.i21.i, -1
+  %i.hd = xor i32 %i.cr, -1
   %i.he = icmp ugt i32 %i.hc, %i.hd
-  %i.hf = sub i32 %.076.i.i, %.074.ph.i21.i
+  %i.hf = sub i32 %.076.i.i, %i.cr
   %i.hg = icmp ult i32 %i.hf, %i.hc
   %i.hh = or i1 %i.he, %i.hg
   br i1 %i.hh, label %.preheader.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.hi = zext i32 %.074.ph.i21.i to i64
+  %i.hi = zext i32 %i.cr to i64
   %i.hj = xor i32 %.076.i.i, -1
-  %i.hk = add i32 %.074.ph.i21.i, %i.hj
+  %i.hk = add i32 %i.cr, %i.hj
   %i.hl = zext i32 %i.hk to i64
   %i.hm = sub nsw i64 %i.hl, %i.hi
   %diff.check = icmp ugt i64 %i.hm, -32
@@ -517,13 +517,13 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.hn = and i32 %.178.i.i, 28
   %n.vec = and i32 %.178.i.i, -32                 ; 4 uses
-  %i.ho = add i32 %.074.ph.i21.i, %n.vec          ; 2 uses
+  %i.ho = add i32 %i.cr, %n.vec                   ; 2 uses
   %i.hp = and i32 %.178.i.i, 31
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.hq = add i32 %.074.ph.i21.i, %index          ; 2 uses
+  %i.hq = add i32 %i.cr, %index                   ; 2 uses
   %i.hr = add i32 %i.hq, %.neg.i.i
   %i.hs = zext i32 %i.hr to i64
   %i.ht = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.hs ; 2 uses
@@ -550,13 +550,13 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec492 = and i32 %.178.i.i, -4               ; 3 uses
-  %i.hz = add i32 %.074.ph.i21.i, %n.vec492       ; 2 uses
+  %i.hz = add i32 %i.cr, %n.vec492                ; 2 uses
   %i.ia = and i32 %.178.i.i, 3
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index493 = phi i32 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next495, %vec.epilog.vector.body ] ; 2 uses
-  %i.ib = add i32 %.074.ph.i21.i, %index493       ; 2 uses
+  %i.ib = add i32 %i.cr, %index493                ; 2 uses
   %i.ic = add i32 %i.ib, %.neg.i.i
   %i.id = zext i32 %i.ic to i64
   %i.ie = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.id
@@ -573,7 +573,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n496, label %.outer.backedge.i.i, label %.preheader.i.i.preheader
 
 .preheader.i.i.preheader:                         ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.1126.i.i.ph = phi i32 [ %.074.ph.i21.i, %iter.check ], [ %.074.ph.i21.i, %vector.scevcheck ], [ %.074.ph.i21.i, %vector.memcheck ], [ %i.ho, %vec.epilog.iter.check ], [ %i.hz, %vec.epilog.middle.block ] ; 2 uses
+  %.1126.i.i.ph = phi i32 [ %i.cr, %iter.check ], [ %i.cr, %vector.scevcheck ], [ %i.cr, %vector.memcheck ], [ %i.ho, %vec.epilog.iter.check ], [ %i.hz, %vec.epilog.middle.block ] ; 2 uses
   %.2125.i.i.ph = phi i32 [ %.178.i.i, %iter.check ], [ %.178.i.i, %vector.scevcheck ], [ %.178.i.i, %vector.memcheck ], [ %i.hp, %vec.epilog.iter.check ], [ %i.ia, %vec.epilog.middle.block ] ; 4 uses
   %i.ii = add nsw i32 %.2125.i.i.ph, -1
   %xtraiter = and i32 %.2125.i.i.ph, 3            ; 2 uses
@@ -643,7 +643,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not94.i.i.3 = icmp eq i32 %i.jn, 0
   br i1 %.not94.i.i.3, label %.outer.backedge.i.i, label %.preheader.i.i, !llvm.loop !27
 
-decomp_block.exit.thread214:                      ; preds = %bb.y, %.loopexit119.i.i, %bb.ak, %.lr.ph.i.i.i, %.lr.ph.i107.i.i, %.lr.ph.i101.i.i, %.outer.split.i.i, %bb.w, %bb.aa, %bb.af, %bb.ad
+decomp_block.exit.thread214:                      ; preds = %bb.y, %bb.ak, %.loopexit119.i.i, %.lr.ph.i.i.i, %.lr.ph.i107.i.i, %.lr.ph.i101.i.i, %.outer.split.i.i, %bb.w, %bb.aa, %bb.af, %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %decomp_block.exit.thread

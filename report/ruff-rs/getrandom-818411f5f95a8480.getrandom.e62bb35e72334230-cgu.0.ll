@@ -204,11 +204,7 @@ _RNCINvMs_NtCsjLbYUzW30kK_9getrandom4lazyNtB7_8LazyBool11unsync_initNvNtB9_3imp2
 _RINvMs_NtCsjLbYUzW30kK_9getrandom4lazyNtB5_8LazyBool11unsync_initNvNtB7_3imp22is_getrandom_availableEB7_.exit: ; preds = %bb.a, %_RNCINvMs_NtCsjLbYUzW30kK_9getrandom4lazyNtB7_8LazyBool11unsync_initNvNtB9_3imp22is_getrandom_availableE0B9_.exit.i.i
   %.sroa.0.0.i.i = phi i64 [ %.sroa.0.0.i.i.i.i.i, %_RNCINvMs_NtCsjLbYUzW30kK_9getrandom4lazyNtB7_8LazyBool11unsync_initNvNtB9_3imp22is_getrandom_availableE0B9_.exit.i.i ], [ %i.b, %bb.a ]
   %.not = icmp eq i64 %.sroa.0.0.i.i, 0
-  br i1 %.not, label %bb.e, label %.outer.i.preheader
-
-.outer.i.preheader:                               ; preds = %_RINvMs_NtCsjLbYUzW30kK_9getrandom4lazyNtB5_8LazyBool11unsync_initNvNtB7_3imp22is_getrandom_availableEB7_.exit
-  %2 = icmp eq i64 %1, 0
-  br i1 %2, label %_RNvNtCsjLbYUzW30kK_9getrandom8use_file15getrandom_inner.exit, label %.outer.split.i.preheader
+  br i1 %.not, label %bb.e, label %2
 
 bb.e:                                             ; preds = %_RINvMs_NtCsjLbYUzW30kK_9getrandom4lazyNtB5_8LazyBool11unsync_initNvNtB7_3imp22is_getrandom_availableEB7_.exit
   %i.j = load atomic i64, ptr @_RNvNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd2FD.0 monotonic, align 8 ; 2 uses
@@ -353,12 +349,16 @@ _RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30
   %i.aw = icmp eq i64 %i.av, 0
   br i1 %i.aw, label %_RNvNtCsjLbYUzW30kK_9getrandom8use_file15getrandom_inner.exit, label %.outer.split.i.preheader.i
 
-.outer.split.i.preheader:                         ; preds = %.outer.i.preheader, %.outer.i
-  %.sroa.0.0.ph.i15 = phi ptr [ %i.be, %.outer.i ], [ %0, %.outer.i.preheader ] ; 2 uses
-  %.sroa.5.0.ph.i14 = phi i64 [ %i.bf, %.outer.i ], [ %1, %.outer.i.preheader ] ; 3 uses
+2:                                                ; preds = %_RINvMs_NtCsjLbYUzW30kK_9getrandom4lazyNtB5_8LazyBool11unsync_initNvNtB7_3imp22is_getrandom_availableEB7_.exit
+  %3 = icmp eq i64 %1, 0
+  br i1 %3, label %_RNvNtCsjLbYUzW30kK_9getrandom8use_file15getrandom_inner.exit, label %.outer.split.i.preheader
+
+.outer.split.i.preheader:                         ; preds = %2, %.outer.i
+  %.sroa.0.0.ph.i15 = phi ptr [ %i.be, %.outer.i ], [ %0, %2 ] ; 2 uses
+  %.sroa.5.0.ph.i14 = phi i64 [ %i.bf, %.outer.i ], [ %1, %2 ] ; 3 uses
   br label %.outer.split.i
 
-.outer.split.i:                                   ; preds = %.outer.split.i.preheader, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i
+.outer.split.i:                                   ; preds = %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i, %.outer.split.i.preheader
   %i.ax = tail call i64 (i64, ...) @syscall(i64 318, ptr %.sroa.0.0.ph.i15, i64 %.sroa.5.0.ph.i14, i32 0) #21 ; 5 uses
   %i.ay = icmp sgt i64 %i.ax, 0
   br i1 %i.ay, label %bb.t, label %bb.s
@@ -387,8 +387,8 @@ _RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30
   %i.bg = icmp eq i64 %i.bf, 0
   br i1 %i.bg, label %_RNvNtCsjLbYUzW30kK_9getrandom8use_file15getrandom_inner.exit, label %.outer.split.i.preheader
 
-_RNvNtCsjLbYUzW30kK_9getrandom8use_file15getrandom_inner.exit: ; preds = %.outer.i, %bb.t, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i, %bb.u, %bb.s, %.outer.i.i, %bb.q, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i.i, %bb.r, %bb.p, %.outer.i.preheader, %_RNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd.exit.thread.i, %_RNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd.exit.thread35.i
-  %.sroa.0.0 = phi i32 [ 0, %.outer.i.i ], [ %.sroa.6.0.ph.i.ph.i, %_RNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd.exit.thread35.i ], [ 0, %_RNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd.exit.thread.i ], [ -2147483646, %bb.s ], [ -2147483646, %bb.p ], [ 0, %.outer.i.preheader ], [ -2147483647, %bb.r ], [ %i.as, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i.i ], [ -2147483646, %bb.q ], [ -2147483647, %bb.u ], [ %i.bc, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i ], [ -2147483646, %bb.t ], [ 0, %.outer.i ]
+_RNvNtCsjLbYUzW30kK_9getrandom8use_file15getrandom_inner.exit: ; preds = %.outer.i, %bb.t, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i, %bb.u, %bb.s, %.outer.i.i, %bb.q, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i.i, %bb.r, %bb.p, %2, %_RNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd.exit.thread.i, %_RNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd.exit.thread35.i
+  %.sroa.0.0 = phi i32 [ 0, %2 ], [ %.sroa.6.0.ph.i.ph.i, %_RNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd.exit.thread35.i ], [ 0, %_RNvNtCsjLbYUzW30kK_9getrandom8use_file10get_rng_fd.exit.thread.i ], [ 0, %.outer.i.i ], [ %i.bc, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i ], [ -2147483646, %bb.p ], [ -2147483647, %bb.r ], [ %i.as, %_RNvYINtNtCs4NRVxsYgnAr_4core6option6OptionlENtNtB7_3cmp9PartialEq2neCsjLbYUzW30kK_9getrandom.exit.i.i ], [ -2147483646, %bb.q ], [ -2147483646, %bb.s ], [ -2147483647, %bb.u ], [ 0, %.outer.i ], [ -2147483646, %bb.t ]
   ret i32 %.sroa.0.0
 }
 

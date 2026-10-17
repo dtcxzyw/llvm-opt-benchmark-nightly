@@ -204,7 +204,7 @@ _RNvXs_NtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5innerNtB4_11SplitF
   %i.ek = add i64 %.sroa.0.014.i79.i, 1, !dbg !41485
   br label %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i, !dbg !41487
 
-.outer.split.i.a:                                 ; preds = %.outer.split.i.preheader, %bb.ay
+.outer.split.i.a:                                 ; preds = %bb.ay, %.outer.split.i.preheader
   %i.el = load i64, ptr %i.ba, align 8, !dbg !41488, !noalias !41315, !noundef !1321 ; 4 uses
   %i.em = icmp ugt i64 %i.ey, %i.el, !dbg !41489
   br i1 %i.em, label %bb.at, label %bb.as, !dbg !41489, !prof !1333
@@ -241,8 +241,8 @@ bb.au:                                            ; preds = %bb.as
 .outer.split.i.preheader:                         ; preds = %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i, %.outer.i
   %.sroa.020.0.ph.i254 = phi i64 [ %i.ew, %.outer.i ], [ 0, %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i ]
   %.sroa.023.0.ph.i253 = phi i64 [ %i.ex, %.outer.i ], [ 0, %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i ] ; 2 uses
-  %i.ey = add i64 %.sroa.023.0.ph.i253, 1, !dbg !41489 ; 4 uses
-  br label %.outer.split.i.a, !dbg !41489
+  %i.ey = add i64 %.sroa.023.0.ph.i253, 1, !dbg !41440 ; 4 uses
+  br label %.outer.split.i.a, !dbg !41440
 
 bb.av:                                            ; preds = %bb.au
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !dbg !41499, !noalias !41315
@@ -643,7 +643,7 @@ _RNvXs_NtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5innerNtB4_11SplitF
   %i.iq = add i64 %.sroa.0.014.i79.i34, 1, !dbg !41599
   br label %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i35, !dbg !41601
 
-.outer.split.i43:                                 ; preds = %.outer.split.i43.preheader, %bb.cs
+.outer.split.i43:                                 ; preds = %bb.cs, %.outer.split.i43.preheader
   %i.ir = load i64, ptr %i.fg, align 8, !dbg !41602, !noalias !41338, !noundef !1321 ; 4 uses
   %i.is = icmp ugt i64 %i.je, %i.ir, !dbg !41603
   br i1 %i.is, label %bb.cn, label %bb.cm, !dbg !41603, !prof !1333
@@ -680,8 +680,8 @@ bb.co:                                            ; preds = %bb.cm
 .outer.split.i43.preheader:                       ; preds = %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i35, %.outer.i37
   %.sroa.020.0.ph.i39248 = phi i64 [ %i.jc, %.outer.i37 ], [ 0, %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i35 ]
   %.sroa.023.0.ph.i38247 = phi i64 [ %i.jd, %.outer.i37 ], [ 0, %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i35 ] ; 2 uses
-  %i.je = add i64 %.sroa.023.0.ph.i38247, 1, !dbg !41603 ; 4 uses
-  br label %.outer.split.i43, !dbg !41603
+  %i.je = add i64 %.sroa.023.0.ph.i38247, 1, !dbg !41554 ; 4 uses
+  br label %.outer.split.i43, !dbg !41554
 
 bb.cp:                                            ; preds = %bb.co
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !dbg !41613, !noalias !41338
@@ -1084,7 +1084,7 @@ _RNvXs_NtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5innerNtB4_11SplitF
   %i.nn = add i64 %.sroa.0.014.i79.i89, 1, !dbg !41740
   br label %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i90, !dbg !41742
 
-.outer.split.i98:                                 ; preds = %.outer.split.i98.preheader, %bb.ew
+.outer.split.i98:                                 ; preds = %bb.ew, %.outer.split.i98.preheader
   %i.no = load i64, ptr %i.kd, align 8, !dbg !41743, !noalias !41369, !noundef !1321 ; 4 uses
   %i.np = icmp ugt i64 %i.ob, %i.no, !dbg !41744
   br i1 %i.np, label %bb.er, label %bb.eq, !dbg !41744, !prof !1333
@@ -1121,8 +1121,8 @@ bb.es:                                            ; preds = %bb.eq
 .outer.split.i98.preheader:                       ; preds = %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i90, %.outer.i92
   %.sroa.020.0.ph.i94243 = phi i64 [ %i.nz, %.outer.i92 ], [ 0, %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i90 ]
   %.sroa.023.0.ph.i93242 = phi i64 [ %i.oa, %.outer.i92 ], [ 0, %_RINvYNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B1g_5count0EBd_.exit.i90 ] ; 2 uses
-  %i.ob = add i64 %.sroa.023.0.ph.i93242, 1, !dbg !41744 ; 4 uses
-  br label %.outer.split.i98, !dbg !41744
+  %i.ob = add i64 %.sroa.023.0.ph.i93242, 1, !dbg !41695 ; 4 uses
+  br label %.outer.split.i98, !dbg !41695
 
 bb.et:                                            ; preds = %bb.es
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !41754, !noalias !41369

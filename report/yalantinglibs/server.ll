@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a, %bb.ae
   br label %.outer.split.i.preheader.i.i
 
 .outer.split.i.preheader.i.i:                     ; preds = %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i, %bb.b
-  %.sroa.6.0.ph.fr.i12.i.i = phi i64 [ %i.q, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ 8192, %bb.b ] ; 5 uses
-  %.0.ph.i11.i.i = phi ptr [ %i.k, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.c, %bb.b ]
-  %.sroa.0.0.ph.i10.i.i = phi ptr [ %i.p, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.a, %bb.b ] ; 2 uses
+  %.0.ph30.i.i.i = phi ptr [ %i.k, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.c, %bb.b ]
+  %.0.ph.i11.i.i = phi ptr [ %i.p, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.a, %bb.b ] ; 2 uses
+  %.sroa.6.0.ph28.i.i.i = phi i64 [ %i.q, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ 8192, %bb.b ] ; 5 uses
   br label %.outer.split.i.i.i
 
 .outer.split.i.i.i:                               ; preds = %bb.c, %.outer.split.i.preheader.i.i
-  %.0.i.i.i = phi ptr [ %i.k, %bb.c ], [ %.0.ph.i11.i.i, %.outer.split.i.preheader.i.i ] ; 4 uses
+  %.0.i.i.i = phi ptr [ %i.k, %bb.c ], [ %.0.ph30.i.i.i, %.outer.split.i.preheader.i.i ] ; 4 uses
   %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.j
   br i1 %.not.i.i.i, label %_ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm3EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i, label %bb.c
 
@@ -224,7 +224,7 @@ bb.c:                                             ; preds = %.outer.split.i.i.i
 
 bb.d:                                             ; preds = %bb.c
   %.sroa.020.0.copyload.le.i.i.i = load ptr, ptr %.0.i.i.i, align 8, !tbaa !306 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.6.0.ph.fr.i12.i.i, 8192
+  %i.m = icmp eq i64 %.sroa.6.0.ph28.i.i.i, 8192
   br i1 %i.m, label %bb.e, label %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i
 
 bb.e:                                             ; preds = %bb.d
@@ -234,17 +234,17 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond24.i.i.i, label %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit
 
 _ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i: ; preds = %bb.e, %bb.d
-  %i.o = call i64 @llvm.umin.i64(i64 %.sroa.6.0.ph.fr.i12.i.i, i64 %.sroa.4.0.copyload.i.i.i)
+  %i.o = call i64 @llvm.umin.i64(i64 %.sroa.6.0.ph28.i.i.i, i64 %.sroa.4.0.copyload.i.i.i)
   %.fr.i.i = freeze i64 %i.o                      ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.0.0.ph.i10.i.i, ptr align 1 %.sroa.020.0.copyload.le.i.i.i, i64 %.fr.i.i, i1 false)
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i10.i.i, i64 %.fr.i.i
-  %i.q = sub i64 %.sroa.6.0.ph.fr.i12.i.i, %.fr.i.i ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0.ph.i11.i.i, ptr align 1 %.sroa.020.0.copyload.le.i.i.i, i64 %.fr.i.i, i1 false)
+  %i.p = getelementptr inbounds nuw i8, ptr %.0.ph.i11.i.i, i64 %.fr.i.i
+  %i.q = sub i64 %.sroa.6.0.ph28.i.i.i, %.fr.i.i  ; 2 uses
   %.not12.i.i.i = icmp eq i64 %i.q, 0
   br i1 %.not12.i.i.i, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit, label %.outer.split.i.preheader.i.i, !llvm.loop !133
 
 _ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm3EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i: ; preds = %.outer.split.i.i.i
-  %i.r = sub i64 8192, %.sroa.6.0.ph.fr.i12.i.i
-  %i.s = icmp eq i64 %.sroa.6.0.ph.fr.i12.i.i, 8192
+  %i.r = sub i64 8192, %.sroa.6.0.ph28.i.i.i
+  %i.s = icmp eq i64 %.sroa.6.0.ph28.i.i.i, 8192
   br i1 %i.s, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit.thread, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit
 
 _ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit.thread: ; preds = %_ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm3EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i
@@ -647,13 +647,13 @@ bb.b:                                             ; preds = %bb.a, %bb.ae
   br label %.outer.split.i.preheader.i.i
 
 .outer.split.i.preheader.i.i:                     ; preds = %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i, %bb.b
-  %.sroa.6.0.ph.fr.i12.i.i = phi i64 [ %i.q, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ 8192, %bb.b ] ; 5 uses
-  %.0.ph.i11.i.i = phi ptr [ %i.k, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.c, %bb.b ]
-  %.sroa.0.0.ph.i10.i.i = phi ptr [ %i.p, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.a, %bb.b ] ; 2 uses
+  %.0.ph30.i.i.i = phi ptr [ %i.k, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.c, %bb.b ]
+  %.0.ph.i11.i.i = phi ptr [ %i.p, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.a, %bb.b ] ; 2 uses
+  %.sroa.6.0.ph28.i.i.i = phi i64 [ %i.q, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ 8192, %bb.b ] ; 5 uses
   br label %.outer.split.i.i.i
 
 .outer.split.i.i.i:                               ; preds = %bb.c, %.outer.split.i.preheader.i.i
-  %.0.i.i.i = phi ptr [ %i.k, %bb.c ], [ %.0.ph.i11.i.i, %.outer.split.i.preheader.i.i ] ; 4 uses
+  %.0.i.i.i = phi ptr [ %i.k, %bb.c ], [ %.0.ph30.i.i.i, %.outer.split.i.preheader.i.i ] ; 4 uses
   %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.j
   br i1 %.not.i.i.i, label %_ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm3EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i, label %bb.c
 
@@ -666,7 +666,7 @@ bb.c:                                             ; preds = %.outer.split.i.i.i
 
 bb.d:                                             ; preds = %bb.c
   %.sroa.020.0.copyload.le.i.i.i = load ptr, ptr %.0.i.i.i, align 8, !tbaa !306 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.6.0.ph.fr.i12.i.i, 8192
+  %i.m = icmp eq i64 %.sroa.6.0.ph28.i.i.i, 8192
   br i1 %i.m, label %bb.e, label %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i
 
 bb.e:                                             ; preds = %bb.d
@@ -676,17 +676,17 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond24.i.i.i, label %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit
 
 _ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i: ; preds = %bb.e, %bb.d
-  %i.o = call i64 @llvm.umin.i64(i64 %.sroa.6.0.ph.fr.i12.i.i, i64 %.sroa.4.0.copyload.i.i.i)
+  %i.o = call i64 @llvm.umin.i64(i64 %.sroa.6.0.ph28.i.i.i, i64 %.sroa.4.0.copyload.i.i.i)
   %.fr.i.i = freeze i64 %i.o                      ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.0.0.ph.i10.i.i, ptr align 1 %.sroa.020.0.copyload.le.i.i.i, i64 %.fr.i.i, i1 false)
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i10.i.i, i64 %.fr.i.i
-  %i.q = sub i64 %.sroa.6.0.ph.fr.i12.i.i, %.fr.i.i ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0.ph.i11.i.i, ptr align 1 %.sroa.020.0.copyload.le.i.i.i, i64 %.fr.i.i, i1 false)
+  %i.p = getelementptr inbounds nuw i8, ptr %.0.ph.i11.i.i, i64 %.fr.i.i
+  %i.q = sub i64 %.sroa.6.0.ph28.i.i.i, %.fr.i.i  ; 2 uses
   %.not12.i.i.i = icmp eq i64 %i.q, 0
   br i1 %.not12.i.i.i, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit, label %.outer.split.i.preheader.i.i, !llvm.loop !133
 
 _ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm3EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i: ; preds = %.outer.split.i.i.i
-  %i.r = sub i64 8192, %.sroa.6.0.ph.fr.i12.i.i
-  %i.s = icmp eq i64 %.sroa.6.0.ph.fr.i12.i.i, 8192
+  %i.r = sub i64 8192, %.sroa.6.0.ph28.i.i.i
+  %i.s = icmp eq i64 %.sroa.6.0.ph28.i.i.i, 8192
   br i1 %i.s, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit.thread, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit
 
 _ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm3EEEEclERNS1_6engineERSt10error_codeRm.exit.thread: ; preds = %_ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm3EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i
@@ -1089,13 +1089,13 @@ bb.b:                                             ; preds = %bb.a, %bb.ae
   br label %.outer.split.i.preheader.i.i
 
 .outer.split.i.preheader.i.i:                     ; preds = %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i, %bb.b
-  %.sroa.6.0.ph.fr.i12.i.i = phi i64 [ %i.q, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ 8192, %bb.b ] ; 5 uses
-  %.0.ph.i11.i.i = phi ptr [ %i.k, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.c, %bb.b ]
-  %.sroa.0.0.ph.i10.i.i = phi ptr [ %i.p, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.a, %bb.b ] ; 2 uses
+  %.0.ph30.i.i.i = phi ptr [ %i.k, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.c, %bb.b ]
+  %.0.ph.i11.i.i = phi ptr [ %i.p, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.a, %bb.b ] ; 2 uses
+  %.sroa.6.0.ph28.i.i.i = phi i64 [ %i.q, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ 8192, %bb.b ] ; 5 uses
   br label %.outer.split.i.i.i
 
 .outer.split.i.i.i:                               ; preds = %bb.c, %.outer.split.i.preheader.i.i
-  %.0.i.i.i = phi ptr [ %i.k, %bb.c ], [ %.0.ph.i11.i.i, %.outer.split.i.preheader.i.i ] ; 4 uses
+  %.0.i.i.i = phi ptr [ %i.k, %bb.c ], [ %.0.ph30.i.i.i, %.outer.split.i.preheader.i.i ] ; 4 uses
   %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.j
   br i1 %.not.i.i.i, label %_ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm64EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i, label %bb.c
 
@@ -1108,7 +1108,7 @@ bb.c:                                             ; preds = %.outer.split.i.i.i
 
 bb.d:                                             ; preds = %bb.c
   %.sroa.020.0.copyload.le.i.i.i = load ptr, ptr %.0.i.i.i, align 8, !tbaa !306 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.6.0.ph.fr.i12.i.i, 8192
+  %i.m = icmp eq i64 %.sroa.6.0.ph28.i.i.i, 8192
   br i1 %i.m, label %bb.e, label %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i
 
 bb.e:                                             ; preds = %bb.d
@@ -1118,17 +1118,17 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond24.i.i.i, label %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit
 
 _ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i: ; preds = %bb.e, %bb.d
-  %i.o = call i64 @llvm.umin.i64(i64 %.sroa.6.0.ph.fr.i12.i.i, i64 %.sroa.4.0.copyload.i.i.i)
+  %i.o = call i64 @llvm.umin.i64(i64 %.sroa.6.0.ph28.i.i.i, i64 %.sroa.4.0.copyload.i.i.i)
   %.fr.i.i = freeze i64 %i.o                      ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.0.0.ph.i10.i.i, ptr align 1 %.sroa.020.0.copyload.le.i.i.i, i64 %.fr.i.i, i1 false)
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i10.i.i, i64 %.fr.i.i
-  %i.q = sub i64 %.sroa.6.0.ph.fr.i12.i.i, %.fr.i.i ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0.ph.i11.i.i, ptr align 1 %.sroa.020.0.copyload.le.i.i.i, i64 %.fr.i.i, i1 false)
+  %i.p = getelementptr inbounds nuw i8, ptr %.0.ph.i11.i.i, i64 %.fr.i.i
+  %i.q = sub i64 %.sroa.6.0.ph28.i.i.i, %.fr.i.i  ; 2 uses
   %.not12.i.i.i = icmp eq i64 %i.q, 0
   br i1 %.not12.i.i.i, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit, label %.outer.split.i.preheader.i.i, !llvm.loop !208
 
 _ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm64EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i: ; preds = %.outer.split.i.i.i
-  %i.r = sub i64 8192, %.sroa.6.0.ph.fr.i12.i.i
-  %i.s = icmp eq i64 %.sroa.6.0.ph.fr.i12.i.i, 8192
+  %i.r = sub i64 8192, %.sroa.6.0.ph28.i.i.i
+  %i.s = icmp eq i64 %.sroa.6.0.ph28.i.i.i, 8192
   br i1 %i.s, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit.thread, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit
 
 _ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit.thread: ; preds = %_ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm64EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i
@@ -1531,13 +1531,13 @@ bb.b:                                             ; preds = %bb.a, %bb.ae
   br label %.outer.split.i.preheader.i.i
 
 .outer.split.i.preheader.i.i:                     ; preds = %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i, %bb.b
-  %.sroa.6.0.ph.fr.i12.i.i = phi i64 [ %i.q, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ 8192, %bb.b ] ; 5 uses
-  %.0.ph.i11.i.i = phi ptr [ %i.k, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.c, %bb.b ]
-  %.sroa.0.0.ph.i10.i.i = phi ptr [ %i.p, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.a, %bb.b ] ; 2 uses
+  %.0.ph30.i.i.i = phi ptr [ %i.k, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.c, %bb.b ]
+  %.0.ph.i11.i.i = phi ptr [ %i.p, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ %i.a, %bb.b ] ; 2 uses
+  %.sroa.6.0.ph28.i.i.i = phi i64 [ %i.q, %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i ], [ 8192, %bb.b ] ; 5 uses
   br label %.outer.split.i.i.i
 
 .outer.split.i.i.i:                               ; preds = %bb.c, %.outer.split.i.preheader.i.i
-  %.0.i.i.i = phi ptr [ %i.k, %bb.c ], [ %.0.ph.i11.i.i, %.outer.split.i.preheader.i.i ] ; 4 uses
+  %.0.i.i.i = phi ptr [ %i.k, %bb.c ], [ %.0.ph30.i.i.i, %.outer.split.i.preheader.i.i ] ; 4 uses
   %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.j
   br i1 %.not.i.i.i, label %_ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm64EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i, label %bb.c
 
@@ -1550,7 +1550,7 @@ bb.c:                                             ; preds = %.outer.split.i.i.i
 
 bb.d:                                             ; preds = %bb.c
   %.sroa.020.0.copyload.le.i.i.i = load ptr, ptr %.0.i.i.i, align 8, !tbaa !306 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.6.0.ph.fr.i12.i.i, 8192
+  %i.m = icmp eq i64 %.sroa.6.0.ph28.i.i.i, 8192
   br i1 %i.m, label %bb.e, label %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i
 
 bb.e:                                             ; preds = %bb.d
@@ -1560,17 +1560,17 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond24.i.i.i, label %_ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit
 
 _ZN4asio11buffer_copyINS_14mutable_bufferENS_12const_bufferEEEmRKT_RKT0_.exit.i.i.i: ; preds = %bb.e, %bb.d
-  %i.o = call i64 @llvm.umin.i64(i64 %.sroa.6.0.ph.fr.i12.i.i, i64 %.sroa.4.0.copyload.i.i.i)
+  %i.o = call i64 @llvm.umin.i64(i64 %.sroa.6.0.ph28.i.i.i, i64 %.sroa.4.0.copyload.i.i.i)
   %.fr.i.i = freeze i64 %i.o                      ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.0.0.ph.i10.i.i, ptr align 1 %.sroa.020.0.copyload.le.i.i.i, i64 %.fr.i.i, i1 false)
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i10.i.i, i64 %.fr.i.i
-  %i.q = sub i64 %.sroa.6.0.ph.fr.i12.i.i, %.fr.i.i ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0.ph.i11.i.i, ptr align 1 %.sroa.020.0.copyload.le.i.i.i, i64 %.fr.i.i, i1 false)
+  %i.p = getelementptr inbounds nuw i8, ptr %.0.ph.i11.i.i, i64 %.fr.i.i
+  %i.q = sub i64 %.sroa.6.0.ph28.i.i.i, %.fr.i.i  ; 2 uses
   %.not12.i.i.i = icmp eq i64 %i.q, 0
   br i1 %.not12.i.i.i, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit, label %.outer.split.i.preheader.i.i, !llvm.loop !208
 
 _ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm64EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i: ; preds = %.outer.split.i.i.i
-  %i.r = sub i64 8192, %.sroa.6.0.ph.fr.i12.i.i
-  %i.s = icmp eq i64 %.sroa.6.0.ph.fr.i12.i.i, 8192
+  %i.r = sub i64 8192, %.sroa.6.0.ph28.i.i.i
+  %i.s = icmp eq i64 %.sroa.6.0.ph28.i.i.i, 8192
   br i1 %i.s, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit.thread, label %_ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit
 
 _ZNK4asio3ssl6detail8write_opINS_6detail16prepared_buffersINS_12const_bufferELm64EEEEclERNS1_6engineERSt10error_codeRm.exit.thread: ; preds = %_ZN4asio6detail23buffer_sequence_adapterINS_12const_bufferENS0_16prepared_buffersIS2_Lm64EEEE9lineariseERKS4_RKNS_14mutable_bufferE.exit.i

@@ -41,27 +41,20 @@ bb.a:
   br i1 %i.e, label %.outer.split.preheader, label %.split.thread
 
 .outer.split.preheader:                           ; preds = %bb.a, %.loopexit
-  %.060.ph.fr208 = phi i64 [ %.161, %.loopexit ], [ %2, %bb.a ] ; 8 uses
-  %.053.ph207 = phi i64 [ %.154, %.loopexit ], [ %i.d, %bb.a ] ; 3 uses
-  %.056.ph206 = phi ptr [ %.157, %.loopexit ], [ %i.b, %bb.a ] ; 2 uses
+  %.060.ph.fr208 = phi i64 [ %.154, %.loopexit ], [ %i.d, %bb.a ] ; 3 uses
+  %.056.ph102 = phi ptr [ %.157, %.loopexit ], [ %i.b, %bb.a ] ; 2 uses
+  %.060.ph101 = phi i64 [ %.161, %.loopexit ], [ %2, %bb.a ] ; 8 uses
   %.062.ph205 = phi ptr [ %.264, %.loopexit ], [ %1, %bb.a ] ; 4 uses
-  %i.f = icmp sgt i64 %.053.ph207, 0
+  %i.f = icmp sgt i64 %.060.ph.fr208, 0
   br i1 %i.f, label %.lr.ph, label %.split
-
-.split.thread:                                    ; preds = %.loopexit, %bb.a
-  %.056.ph.lcssa = phi ptr [ %i.b, %bb.a ], [ %.157, %.loopexit ]
-  %.053.ph.lcssa = phi i64 [ %i.d, %bb.a ], [ %.154, %.loopexit ]
-  store ptr %.056.ph.lcssa, ptr %i.a, align 8, !tbaa !26
-  store i64 %.053.ph.lcssa, ptr %i.c, align 8, !tbaa !27
-  br label %bb.k
 
 .outer.split:                                     ; preds = %bb.b
   %i.g = icmp sgt i64 %.053197, 1
   br i1 %i.g, label %.lr.ph, label %.split
 
 .lr.ph:                                           ; preds = %.outer.split.preheader, %.outer.split
-  %.053197 = phi i64 [ %i.j, %.outer.split ], [ %.053.ph207, %.outer.split.preheader ] ; 4 uses
-  %.056196 = phi ptr [ %i.h, %.outer.split ], [ %.056.ph206, %.outer.split.preheader ] ; 3 uses
+  %.053197 = phi i64 [ %i.j, %.outer.split ], [ %.060.ph.fr208, %.outer.split.preheader ] ; 4 uses
+  %.056196 = phi ptr [ %i.h, %.outer.split ], [ %.056.ph102, %.outer.split.preheader ] ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.056196, i64 1 ; 6 uses
   %i.i = load i8, ptr %.056196, align 1, !tbaa !28 ; 4 uses
   %i.j = add nsw i64 %.053197, -1                 ; 4 uses
@@ -75,16 +68,16 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %bb.b
   %i.m = sext i8 %i.i to i64
   %i.n = sub nsw i64 1, %i.m                      ; 3 uses
-  %i.o = icmp samesign ult i64 %.060.ph.fr208, %i.n
+  %i.o = icmp samesign ult i64 %.060.ph101, %i.n
   br i1 %i.o, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.p = sub nuw nsw i64 %i.n, %.060.ph.fr208
+  %i.p = sub nuw nsw i64 %i.n, %.060.ph101
   tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str, i64 noundef %i.p) #5
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0 = phi i64 [ %.060.ph.fr208, %bb.d ], [ %i.n, %bb.c ] ; 2 uses
+  %.0 = phi i64 [ %.060.ph101, %bb.d ], [ %i.n, %bb.c ] ; 2 uses
   %i.q = icmp eq i64 %i.j, 0
   br i1 %i.q, label %.thread, label %.lr.ph.preheader
 
@@ -97,14 +90,14 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %.lr.ph
   %i.u = zext nneg i8 %i.i to i64                 ; 3 uses
-  %.not = icmp samesign ugt i64 %.060.ph.fr208, %i.u
+  %.not = icmp samesign ugt i64 %.060.ph101, %i.u
   br i1 %.not, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %reass.sub = sub nuw nsw i64 %i.u, %.060.ph.fr208
+  %reass.sub = sub nuw nsw i64 %i.u, %.060.ph101
   %i.v = add nuw nsw i64 %reass.sub, 1
   tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str, i64 noundef %i.v) #5
-  %i.w = add nsw i64 %.060.ph.fr208, -1
+  %i.w = add nsw i64 %.060.ph101, -1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -125,7 +118,7 @@ bb.i:                                             ; preds = %bb.h
   %.154 = phi i64 [ %i.z, %bb.i ], [ %i.r, %.lr.ph.preheader ] ; 2 uses
   %.0.pn.fr = freeze i64 %.0.pn                   ; 2 uses
   %.264 = getelementptr i8, ptr %.062.ph205, i64 %.0.pn.fr
-  %.161 = sub i64 %.060.ph.fr208, %.0.pn.fr       ; 2 uses
+  %.161 = sub i64 %.060.ph101, %.0.pn.fr          ; 2 uses
   %i.aa = icmp sgt i64 %.161, 0
   br i1 %i.aa, label %.outer.split.preheader, label %.split.thread
 
@@ -134,17 +127,24 @@ bb.i:                                             ; preds = %bb.h
   tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str.1) #5
   br label %bb.j
 
+.split.thread:                                    ; preds = %.loopexit, %bb.a
+  %.056.lcssa.split.ph = phi ptr [ %i.b, %bb.a ], [ %.157, %.loopexit ]
+  %.053.lcssa.split.ph = phi i64 [ %i.d, %bb.a ], [ %.154, %.loopexit ]
+  store ptr %.056.lcssa.split.ph, ptr %i.a, align 8, !tbaa !26
+  store i64 %.053.lcssa.split.ph, ptr %i.c, align 8, !tbaa !27
+  br label %bb.k
+
 .split:                                           ; preds = %.outer.split.preheader, %.outer.split
-  %.056.lcssa = phi ptr [ %i.h, %.outer.split ], [ %.056.ph206, %.outer.split.preheader ]
-  %smin.le = tail call i64 @llvm.smin.i64(i64 %.053.ph207, i64 0)
+  %.056.lcssa = phi ptr [ %i.h, %.outer.split ], [ %.056.ph102, %.outer.split.preheader ]
+  %smin.le = tail call i64 @llvm.smin.i64(i64 %.060.ph.fr208, i64 0)
   br label %bb.j
 
 bb.j:                                             ; preds = %.split, %.thread
-  %storemerge211 = phi ptr [ %i.h, %.thread ], [ %.056.lcssa, %.split ]
-  %storemerge = phi i64 [ %.255.ph, %.thread ], [ %smin.le, %.split ]
+  %storemerge211 = phi ptr [ %.056.lcssa, %.split ], [ %i.h, %.thread ]
+  %storemerge = phi i64 [ %smin.le, %.split ], [ %.255.ph, %.thread ]
   store ptr %storemerge211, ptr %i.a, align 8, !tbaa !26
   store i64 %storemerge, ptr %i.c, align 8, !tbaa !27
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.062.ph205, i8 0, i64 %.060.ph.fr208, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.062.ph205, i8 0, i64 %.060.ph101, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 844
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !39
   tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str.2, i32 noundef %i.ac) #5
