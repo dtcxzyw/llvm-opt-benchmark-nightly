@@ -205,12 +205,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = load i16, ptr %1, align 8
   %i.h = and i16 %i.g, 511
-  %.not.i.i.i = icmp eq i16 %i.h, 118             ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %5, ptr %6
-  %i.i = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 8
+  %.not.i.i.i = icmp eq i16 %i.h, 118
+  %5 = select i1 %.not.i.i.i, i64 56, i64 48
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %5
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !1514
   %i.k = tail call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.j) #30
   br i1 %i.k, label %bb.d, label %bb.m
@@ -218,12 +215,10 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.l = load i16, ptr %1, align 8
   %i.m = and i16 %i.l, 511
-  %.not.i.i.i43 = icmp eq i16 %i.m, 118           ; 2 uses
-  %spec.select.i.i.i.i.i44 = select i1 %.not.i.i.i43, ptr %1, ptr null
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i44, i64 48
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i.i45 = select i1 %.not.i.i.i43, ptr %7, ptr %i.n
-  %i.o = load ptr, ptr %spec.select.i.i.i45, align 8, !tbaa !1514
+  %.not.i.i.i43 = icmp eq i16 %i.m, 118
+  %spec.select.v.i.i.i44 = select i1 %.not.i.i.i43, i64 48, i64 40
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i44
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !1514
   %i.p = tail call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.o) #30
   br i1 %i.p, label %bb.m, label %bb.e
 
@@ -235,11 +230,10 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.s = and i32 %i.q, 511
-  %.not.i.i.i46 = icmp eq i32 %i.s, 118           ; 2 uses
-  %spec.select.i.i.i.i.i47 = select i1 %.not.i.i.i46, ptr %1, ptr null
-  %i.t = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i47, i64 48
-  %spec.select.i.i.i48 = select i1 %.not.i.i.i46, ptr %i.t, ptr %i.n
-  %i.u = load ptr, ptr %spec.select.i.i.i48, align 8, !tbaa !1514 ; 2 uses
+  %.not.i.i.i46 = icmp eq i32 %i.s, 118
+  %spec.select.v.i.i.i47 = select i1 %.not.i.i.i46, i64 48, i64 40
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i47
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !1514 ; 2 uses
   %.not.i77 = icmp eq ptr %i.u, null
   br i1 %.not.i77, label %_ZZL31RemoveNestedImmediateInvocationRN5clang4SemaERNS0_33ExpressionEvaluationContextRecordESt16reverse_iteratorIPN4llvm14PointerIntPairIPNS_12ConstantExprELj1EjNS5_21PointerLikeTypeTraitsIS8_EENS5_18PointerIntPairInfoIS8_Lj1ESA_EEEEEEN13ComplexRemove20TransformInitializerEPNS_4ExprEb.exit, label %.preheader.i
 
@@ -439,14 +433,12 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   %i.cz = phi i16 [ %i.cm, %bb.t ], [ %i.cm, %bb.u ], [ %.pre, %bb.v ], [ %i.cm, %bb.s ]
   %.sroa.6.0 = phi i1 [ false, %bb.t ], [ false, %bb.u ], [ true, %bb.v ], [ false, %bb.s ] ; 2 uses
   %i.da = and i16 %i.cz, 511
-  %.not.i.i = icmp eq i16 %i.da, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %1, ptr null
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.db = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i = select i1 %.not.i.i, ptr %8, ptr %i.db
+  %.not.i.i = icmp eq i16 %i.da, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.db = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.dd = load i32, ptr %i.dc, align 8, !tbaa !2596
-  %i.de = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIZL31RemoveNestedImmediateInvocationRNS_4SemaERNS1_33ExpressionEvaluationContextRecordESt16reverse_iteratorIPN4llvm14PointerIntPairIPNS_12ConstantExprELj1EjNS6_21PointerLikeTypeTraitsIS9_EENS6_18PointerIntPairInfoIS9_Lj1ESB_EEEEEE13ComplexRemoveE14TransformExprsEPKPNS_4ExprEjbRNS6_15SmallVectorImplISK_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i, i32 noundef %i.dd, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.a)
+  %i.de = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIZL31RemoveNestedImmediateInvocationRNS_4SemaERNS1_33ExpressionEvaluationContextRecordESt16reverse_iteratorIPN4llvm14PointerIntPairIPNS_12ConstantExprELj1EjNS6_21PointerLikeTypeTraitsIS9_EENS6_18PointerIntPairInfoIS9_Lj1ESB_EEEEEE13ComplexRemoveE14TransformExprsEPKPNS_4ExprEjbRNS6_15SmallVectorImplISK_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.db, i32 noundef %i.dd, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.a)
   br i1 %i.de, label %bb.w, label %.critedge38
 
 bb.w:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
@@ -580,7 +572,7 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
   %2 = alloca %"class.llvm::SmallVector.1861", align 8 ; 13 uses
   %3 = alloca %"class.clang::TypeLoc", align 8    ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !2598
   %i.d = tail call fastcc noundef ptr @_ZN5clang13TreeTransformIZL31RemoveNestedImmediateInvocationRNS_4SemaERNS1_33ExpressionEvaluationContextRecordESt16reverse_iteratorIPN4llvm14PointerIntPairIPNS_12ConstantExprELj1EjNS6_21PointerLikeTypeTraitsIS9_EENS6_18PointerIntPairInfoIS9_Lj1ESB_EEEEEE13ComplexRemoveE27TransformTypeWithDeducedTSTEPNS_14TypeSourceInfoE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %i.c) ; 5 uses
   %.not = icmp eq ptr %i.d, null
@@ -721,12 +713,11 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   %i.bp = phi i16 [ %i.bc, %bb.h ], [ %i.bc, %bb.i ], [ %.pre, %bb.j ], [ %i.bc, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ]
   %.sroa.4.0 = phi i1 [ false, %bb.h ], [ false, %bb.i ], [ true, %bb.j ], [ false, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ]
   %i.bq = and i16 %i.bp, 511
-  %.not.i.i = icmp eq i16 %i.bq, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %1, ptr null
-  %i.br = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %spec.select.i.i = select i1 %.not.i.i, ptr %i.br, ptr %i.b
+  %.not.i.i = icmp eq i16 %i.bq, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.br = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i
   %i.bs = load i32, ptr %i.aw, align 8, !tbaa !2596
-  %i.bt = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIZL31RemoveNestedImmediateInvocationRNS_4SemaERNS1_33ExpressionEvaluationContextRecordESt16reverse_iteratorIPN4llvm14PointerIntPairIPNS_12ConstantExprELj1EjNS6_21PointerLikeTypeTraitsIS9_EENS6_18PointerIntPairInfoIS9_Lj1ESB_EEEEEE13ComplexRemoveE14TransformExprsEPKPNS_4ExprEjbRNS6_15SmallVectorImplISK_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i, i32 noundef %i.bs, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.a)
+  %i.bt = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIZL31RemoveNestedImmediateInvocationRNS_4SemaERNS1_33ExpressionEvaluationContextRecordESt16reverse_iteratorIPN4llvm14PointerIntPairIPNS_12ConstantExprELj1EjNS6_21PointerLikeTypeTraitsIS9_EENS6_18PointerIntPairInfoIS9_Lj1ESB_EEEEEE13ComplexRemoveE14TransformExprsEPKPNS_4ExprEjbRNS6_15SmallVectorImplISK_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.br, i32 noundef %i.bs, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.a)
   br i1 %i.bt, label %bb.q, label %bb.k
 
 bb.k:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
@@ -1129,18 +1120,15 @@ bb.i:                                             ; preds = %._crit_edge
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.ae = phi i16 [ %i.ab, %._crit_edge ], [ %.pre143, %bb.i ] ; 2 uses
-  %.5 = phi ptr [ %.3.lcssa, %._crit_edge ], [ %i.ad, %bb.i ] ; 16 uses
+  %.5 = phi ptr [ %.3.lcssa, %._crit_edge ], [ %i.ad, %bb.i ] ; 13 uses
   %i.af = and i16 %i.ae, 511                      ; 3 uses
   %i.ag = icmp eq i16 %i.af, 101
-  br i1 %i.ag, label %4, label %bb.k
+  br i1 %i.ag, label %tailrecurse.backedge, label %bb.k
 
-4:                                                ; preds = %bb.j
-  %5 = getelementptr inbounds nuw i8, ptr %.5, i64 16
-  br label %tailrecurse.backedge
-
-tailrecurse.backedge:                             ; preds = %4, %bb.u
-  %.tr117.be.in = phi ptr [ %5, %4 ], [ %spec.select.i.i.i, %bb.u ]
-  %.tr117.be = load ptr, ptr %.tr117.be.in, align 8, !tbaa !100 ; 2 uses
+tailrecurse.backedge:                             ; preds = %bb.j, %bb.u
+  %.sink = phi i64 [ %spec.select.v.i.i.i, %bb.u ], [ 16, %bb.j ]
+  %4 = getelementptr inbounds nuw i8, ptr %.5, i64 %.sink
+  %.tr117.be = load ptr, ptr %4, align 8, !tbaa !100 ; 2 uses
   %.not = icmp eq ptr %.tr117.be, null
   br i1 %.not, label %.loopexit, label %.lr.ph132
 
@@ -1208,11 +1196,8 @@ bb.t:                                             ; preds = %bb.r
 
 bb.u:                                             ; preds = %bb.t
   %i.az = and i32 %i.ax, 511
-  %.not.i.i.i = icmp eq i32 %i.az, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %.5, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %7 = getelementptr inbounds nuw i8, ptr %.5, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %6, ptr %7
+  %.not.i.i.i = icmp eq i32 %i.az, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
   br label %tailrecurse.backedge
 
 bb.v:                                             ; preds = %bb.t
@@ -1277,14 +1262,12 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   store i8 0, ptr %i.a, align 1, !tbaa !840
   %i.cc = load i16, ptr %.5, align 8
   %i.cd = and i16 %i.cc, 511
-  %.not.i.i = icmp eq i16 %i.cd, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %.5, ptr null
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.ce = getelementptr inbounds nuw i8, ptr %.5, i64 40
-  %spec.select.i.i63 = select i1 %.not.i.i, ptr %8, ptr %i.ce
+  %.not.i.i = icmp eq i16 %i.cd, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.ce = getelementptr inbounds nuw i8, ptr %.5, i64 %spec.select.v.i.i
   %i.cf = getelementptr inbounds nuw i8, ptr %.5, i64 32
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !2596
-  %i.ch = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIZL31RemoveNestedImmediateInvocationRNS_4SemaERNS1_33ExpressionEvaluationContextRecordESt16reverse_iteratorIPN4llvm14PointerIntPairIPNS_12ConstantExprELj1EjNS6_21PointerLikeTypeTraitsIS9_EENS6_18PointerIntPairInfoIS9_Lj1ESB_EEEEEE13ComplexRemoveE14TransformExprsEPKPNS_4ExprEjbRNS6_15SmallVectorImplISK_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i63, i32 noundef %i.cg, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull %i.a)
+  %i.ch = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIZL31RemoveNestedImmediateInvocationRNS_4SemaERNS1_33ExpressionEvaluationContextRecordESt16reverse_iteratorIPN4llvm14PointerIntPairIPNS_12ConstantExprELj1EjNS6_21PointerLikeTypeTraitsIS9_EENS6_18PointerIntPairInfoIS9_Lj1ESB_EEEEEE13ComplexRemoveE14TransformExprsEPKPNS_4ExprEjbRNS6_15SmallVectorImplISK_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.ce, i32 noundef %i.cg, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull %i.a)
   br i1 %i.ch, label %bb.ag, label %bb.z
 
 bb.z:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
@@ -1687,18 +1670,15 @@ bb.i:                                             ; preds = %._crit_edge
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.ae = phi i16 [ %i.ab, %._crit_edge ], [ %.pre136, %bb.i ] ; 2 uses
-  %.5 = phi ptr [ %.3.lcssa, %._crit_edge ], [ %i.ad, %bb.i ] ; 16 uses
+  %.5 = phi ptr [ %.3.lcssa, %._crit_edge ], [ %i.ad, %bb.i ] ; 13 uses
   %i.af = and i16 %i.ae, 511                      ; 3 uses
   %i.ag = icmp eq i16 %i.af, 101
-  br i1 %i.ag, label %4, label %bb.k
+  br i1 %i.ag, label %tailrecurse.backedge, label %bb.k
 
-4:                                                ; preds = %bb.j
-  %5 = getelementptr inbounds nuw i8, ptr %.5, i64 16
-  br label %tailrecurse.backedge
-
-tailrecurse.backedge:                             ; preds = %4, %bb.u
-  %.tr110.be.in = phi ptr [ %5, %4 ], [ %spec.select.i.i.i, %bb.u ]
-  %.tr110.be = load ptr, ptr %.tr110.be.in, align 8, !tbaa !100 ; 2 uses
+tailrecurse.backedge:                             ; preds = %bb.j, %bb.u
+  %.sink = phi i64 [ %spec.select.v.i.i.i, %bb.u ], [ 16, %bb.j ]
+  %4 = getelementptr inbounds nuw i8, ptr %.5, i64 %.sink
+  %.tr110.be = load ptr, ptr %4, align 8, !tbaa !100 ; 2 uses
   %.not = icmp eq ptr %.tr110.be, null
   br i1 %.not, label %.loopexit, label %.lr.ph125
 
@@ -1766,11 +1746,8 @@ bb.t:                                             ; preds = %bb.r
 
 bb.u:                                             ; preds = %bb.t
   %i.bd = and i32 %i.bb, 511
-  %.not.i.i.i = icmp eq i32 %i.bd, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %.5, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %7 = getelementptr inbounds nuw i8, ptr %.5, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %6, ptr %7
+  %.not.i.i.i = icmp eq i32 %i.bd, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
   br label %tailrecurse.backedge
 
 bb.v:                                             ; preds = %bb.t
@@ -1835,14 +1812,12 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   store i8 0, ptr %i.a, align 1, !tbaa !840
   %i.ci = load i16, ptr %.5, align 8
   %i.cj = and i16 %i.ci, 511
-  %.not.i.i = icmp eq i16 %i.cj, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %.5, ptr null
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.ck = getelementptr inbounds nuw i8, ptr %.5, i64 40
-  %spec.select.i.i56 = select i1 %.not.i.i, ptr %8, ptr %i.ck
+  %.not.i.i = icmp eq i16 %i.cj, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.ck = getelementptr inbounds nuw i8, ptr %.5, i64 %spec.select.v.i.i
   %i.cl = getelementptr inbounds nuw i8, ptr %.5, i64 32
   %i.cm = load i32, ptr %i.cl, align 8, !tbaa !2596
-  %i.cn = call noundef zeroext i1 @_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS4_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i56, i32 noundef %i.cm, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull %i.a)
+  %i.cn = call noundef zeroext i1 @_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS4_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.ck, i32 noundef %i.cm, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull %i.a)
   br i1 %i.cn, label %bb.ag, label %bb.z
 
 bb.z:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
@@ -2245,12 +2220,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = load i16, ptr %1, align 8
   %i.e = and i16 %i.d, 511
-  %.not.i.i.i = icmp eq i16 %i.e, 118             ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %5, ptr %6
-  %i.f = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 8
+  %.not.i.i.i = icmp eq i16 %i.e, 118
+  %5 = select i1 %.not.i.i.i, i64 56, i64 48
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %5
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1514
   %i.h = tail call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #30
   br i1 %i.h, label %bb.c, label %bb.f
@@ -2258,12 +2230,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.i = load i16, ptr %1, align 8
   %i.j = and i16 %i.i, 511
-  %.not.i.i.i39 = icmp eq i16 %i.j, 118           ; 2 uses
-  %spec.select.i.i.i.i.i40 = select i1 %.not.i.i.i39, ptr %1, ptr null
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i40, i64 48
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i.i41 = select i1 %.not.i.i.i39, ptr %7, ptr %i.k
-  %i.l = load ptr, ptr %spec.select.i.i.i41, align 8, !tbaa !1514
+  %.not.i.i.i39 = icmp eq i16 %i.j, 118
+  %spec.select.v.i.i.i40 = select i1 %.not.i.i.i39, i64 48, i64 40
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i40
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !1514
   %i.m = tail call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.l) #30
   br i1 %i.m, label %bb.f, label %bb.d
 
@@ -2275,11 +2245,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.p = and i32 %i.n, 511
-  %.not.i.i.i42 = icmp eq i32 %i.p, 118           ; 2 uses
-  %spec.select.i.i.i.i.i43 = select i1 %.not.i.i.i42, ptr %1, ptr null
-  %i.q = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i43, i64 48
-  %spec.select.i.i.i44 = select i1 %.not.i.i.i42, ptr %i.q, ptr %i.k
-  %i.r = load ptr, ptr %spec.select.i.i.i44, align 8, !tbaa !1514
+  %.not.i.i.i42 = icmp eq i32 %i.p, 118
+  %spec.select.v.i.i.i43 = select i1 %.not.i.i.i42, i64 48, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i43
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !1514
   %i.s = tail call i64 @_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE20TransformInitializerEPNS_4ExprEb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %i.r, i1 noundef zeroext false)
   br label %_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE13TransformTypeENS_8QualTypeE.exit.thread
 
@@ -2427,13 +2396,11 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   %i.cj = phi i16 [ %i.bw, %bb.m ], [ %i.bw, %bb.n ], [ %.pre, %bb.o ], [ %i.bw, %bb.l ]
   %.sroa.6.0 = phi i1 [ false, %bb.m ], [ false, %bb.n ], [ true, %bb.o ], [ false, %bb.l ] ; 2 uses
   %i.ck = and i16 %i.cj, 511
-  %.not.i.i = icmp eq i16 %i.ck, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %1, ptr null
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i = select i1 %.not.i.i, ptr %8, ptr %i.cl
+  %.not.i.i = icmp eq i16 %i.ck, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i
   %i.cm = load i32, ptr %i.b, align 8, !tbaa !2596
-  %i.cn = call noundef zeroext i1 @_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS4_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i, i32 noundef %i.cm, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.a)
+  %i.cn = call noundef zeroext i1 @_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS4_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.cl, i32 noundef %i.cm, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.a)
   br i1 %i.cn, label %bb.p, label %.critedge38
 
 bb.p:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
@@ -2547,7 +2514,7 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   %2 = alloca %"class.llvm::SmallVector.1861", align 8 ; 13 uses
   %3 = alloca %"class.clang::TypeLoc", align 8    ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !2598
   %i.d = tail call noundef ptr @_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE27TransformTypeWithDeducedTSTEPNS_14TypeSourceInfoE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %i.c) ; 4 uses
   %.not = icmp eq ptr %i.d, null
@@ -2688,12 +2655,11 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   %i.bq = phi i16 [ %i.bd, %bb.h ], [ %i.bd, %bb.i ], [ %.pre, %bb.j ], [ %i.bd, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ]
   %.sroa.4.0 = phi i1 [ false, %bb.h ], [ false, %bb.i ], [ true, %bb.j ], [ false, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ]
   %i.br = and i16 %i.bq, 511
-  %.not.i.i = icmp eq i16 %i.br, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %1, ptr null
-  %i.bs = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %spec.select.i.i = select i1 %.not.i.i, ptr %i.bs, ptr %i.b
+  %.not.i.i = icmp eq i16 %i.br, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i
   %i.bt = load i32, ptr %i.aw, align 8, !tbaa !2596
-  %i.bu = call noundef zeroext i1 @_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS4_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i, i32 noundef %i.bt, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.a)
+  %i.bu = call noundef zeroext i1 @_ZN5clang13TreeTransformI38EnsureImmediateInvocationInDefaultArgsE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS4_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.bs, i32 noundef %i.bt, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.a)
   br i1 %i.bu, label %bb.q, label %bb.k
 
 bb.k:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
@@ -3096,12 +3062,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = load i16, ptr %1, align 8
   %i.e = and i16 %i.d, 511
-  %.not.i.i.i = icmp eq i16 %i.e, 118             ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr null
-  %5 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %5, ptr %6
-  %i.f = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 8
+  %.not.i.i.i = icmp eq i16 %i.e, 118
+  %5 = select i1 %.not.i.i.i, i64 56, i64 48
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %5
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1514
   %i.h = tail call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #30
   br i1 %i.h, label %bb.c, label %bb.f
@@ -3109,12 +3072,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.i = load i16, ptr %1, align 8
   %i.j = and i16 %i.i, 511
-  %.not.i.i.i42 = icmp eq i16 %i.j, 118           ; 2 uses
-  %spec.select.i.i.i.i.i43 = select i1 %.not.i.i.i42, ptr %1, ptr null
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i43, i64 48
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %spec.select.i.i.i44 = select i1 %.not.i.i.i42, ptr %7, ptr %i.k
-  %i.l = load ptr, ptr %spec.select.i.i.i44, align 8, !tbaa !1514
+  %.not.i.i.i42 = icmp eq i16 %i.j, 118
+  %spec.select.v.i.i.i43 = select i1 %.not.i.i.i42, i64 48, i64 40
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i43
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !1514
   %i.m = tail call noundef zeroext i1 @_ZNK5clang4Expr17isDefaultArgumentEv(ptr noundef nonnull align 8 dereferenceable(16) %i.l) #30
   br i1 %i.m, label %bb.f, label %bb.d
 
@@ -3126,11 +3087,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.p = and i32 %i.n, 511
-  %.not.i.i.i45 = icmp eq i32 %i.p, 118           ; 2 uses
-  %spec.select.i.i.i.i.i46 = select i1 %.not.i.i.i45, ptr %1, ptr null
-  %i.q = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i46, i64 48
-  %spec.select.i.i.i47 = select i1 %.not.i.i.i45, ptr %i.q, ptr %i.k
-  %i.r = load ptr, ptr %spec.select.i.i.i47, align 8, !tbaa !1514
+  %.not.i.i.i45 = icmp eq i32 %i.p, 118
+  %spec.select.v.i.i.i46 = select i1 %.not.i.i.i45, i64 48, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i.i46
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !1514
   %i.s = tail call fastcc i64 @_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE20TransformInitializerEPNS_4ExprEb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %i.r, i1 noundef zeroext false)
   br label %_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE13TransformTypeENS_8QualTypeE.exit.thread
 
@@ -3278,13 +3238,11 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   %i.ch = phi i16 [ %i.bu, %bb.m ], [ %i.bu, %bb.n ], [ %.pre, %bb.o ], [ %i.bu, %bb.l ]
   %.sroa.4.0 = phi i1 [ false, %bb.m ], [ false, %bb.n ], [ true, %bb.o ], [ false, %bb.l ]
   %i.ci = and i16 %i.ch, 511
-  %.not.i.i = icmp eq i16 %i.ci, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %1, ptr null
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %spec.select.i.i = select i1 %.not.i.i, ptr %8, ptr %i.cj
+  %.not.i.i = icmp eq i16 %i.ci, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i
   %i.ck = load i32, ptr %i.b, align 8, !tbaa !2596
-  %i.cl = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS5_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i, i32 noundef %i.ck, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.a)
+  %i.cl = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS5_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.cj, i32 noundef %i.ck, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.a)
   br i1 %.sroa.4.0, label %bb.p, label %_ZN5clang32EnterExpressionEvaluationContextD2Ev.exit
 
 bb.p:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
@@ -3391,7 +3349,7 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 3 uses
   %2 = alloca %"class.llvm::SmallVector.1861", align 8 ; 13 uses
   %3 = alloca %"class.clang::TypeLoc", align 8    ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !2598
   %i.d = tail call fastcc noundef ptr @_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE27TransformTypeWithDeducedTSTEPNS_14TypeSourceInfoE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %i.c) ; 4 uses
   %.not = icmp eq ptr %i.d, null
@@ -3531,12 +3489,11 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   %i.bp = phi i16 [ %i.bc, %bb.h ], [ %i.bc, %bb.i ], [ %.pre, %bb.j ], [ %i.bc, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ]
   %.sroa.4.0 = phi i1 [ false, %bb.h ], [ false, %bb.i ], [ true, %bb.j ], [ false, %_ZN4llvm15SmallVectorImplIPN5clang4ExprEE7reserveEm.exit ]
   %i.bq = and i16 %i.bp, 511
-  %.not.i.i = icmp eq i16 %i.bq, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %1, ptr null
-  %i.br = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %spec.select.i.i = select i1 %.not.i.i, ptr %i.br, ptr %i.b
+  %.not.i.i = icmp eq i16 %i.bq, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.br = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.v.i.i
   %i.bs = load i32, ptr %i.aw, align 8, !tbaa !2596
-  %i.bt = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS5_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i, i32 noundef %i.bs, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.a)
+  %i.bt = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS5_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.br, i32 noundef %i.bs, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.a)
   br i1 %i.bt, label %bb.q, label %bb.k
 
 bb.k:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
@@ -3939,18 +3896,15 @@ bb.i:                                             ; preds = %._crit_edge
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.ae = phi i16 [ %i.ab, %._crit_edge ], [ %.pre143, %bb.i ] ; 2 uses
-  %.5 = phi ptr [ %.3.lcssa, %._crit_edge ], [ %i.ad, %bb.i ] ; 16 uses
+  %.5 = phi ptr [ %.3.lcssa, %._crit_edge ], [ %i.ad, %bb.i ] ; 13 uses
   %i.af = and i16 %i.ae, 511                      ; 3 uses
   %i.ag = icmp eq i16 %i.af, 101
-  br i1 %i.ag, label %4, label %bb.k
+  br i1 %i.ag, label %tailrecurse.backedge, label %bb.k
 
-4:                                                ; preds = %bb.j
-  %5 = getelementptr inbounds nuw i8, ptr %.5, i64 16
-  br label %tailrecurse.backedge
-
-tailrecurse.backedge:                             ; preds = %4, %bb.u
-  %.tr117.be.in = phi ptr [ %5, %4 ], [ %spec.select.i.i.i, %bb.u ]
-  %.tr117.be = load ptr, ptr %.tr117.be.in, align 8, !tbaa !100 ; 2 uses
+tailrecurse.backedge:                             ; preds = %bb.j, %bb.u
+  %.sink = phi i64 [ %spec.select.v.i.i.i, %bb.u ], [ 16, %bb.j ]
+  %4 = getelementptr inbounds nuw i8, ptr %.5, i64 %.sink
+  %.tr117.be = load ptr, ptr %4, align 8, !tbaa !100 ; 2 uses
   %.not = icmp eq ptr %.tr117.be, null
   br i1 %.not, label %.loopexit, label %.lr.ph132
 
@@ -4018,11 +3972,8 @@ bb.t:                                             ; preds = %bb.r
 
 bb.u:                                             ; preds = %bb.t
   %i.az = and i32 %i.ax, 511
-  %.not.i.i.i = icmp eq i32 %i.az, 118            ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %.5, ptr null
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %7 = getelementptr inbounds nuw i8, ptr %.5, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %6, ptr %7
+  %.not.i.i.i = icmp eq i32 %i.az, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
   br label %tailrecurse.backedge
 
 bb.v:                                             ; preds = %bb.t
@@ -4087,14 +4038,12 @@ _ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit
   store i8 0, ptr %i.a, align 1, !tbaa !840
   %i.cc = load i16, ptr %.5, align 8
   %i.cd = and i16 %i.cc, 511
-  %.not.i.i = icmp eq i16 %i.cd, 118              ; 2 uses
-  %spec.select.i.i.i.i = select i1 %.not.i.i, ptr %.5, ptr null
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 48
-  %i.ce = getelementptr inbounds nuw i8, ptr %.5, i64 40
-  %spec.select.i.i63 = select i1 %.not.i.i, ptr %8, ptr %i.ce
+  %.not.i.i = icmp eq i16 %i.cd, 118
+  %spec.select.v.i.i = select i1 %.not.i.i, i64 48, i64 40
+  %i.ce = getelementptr inbounds nuw i8, ptr %.5, i64 %spec.select.v.i.i
   %i.cf = getelementptr inbounds nuw i8, ptr %.5, i64 32
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !2596
-  %i.ch = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS5_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %spec.select.i.i63, i32 noundef %i.cg, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull %i.a)
+  %i.ch = call fastcc noundef zeroext i1 @_ZN5clang13TreeTransformIN12_GLOBAL__N_113TransformToPEEE14TransformExprsEPKPNS_4ExprEjbRN4llvm15SmallVectorImplIS5_EEPb(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %i.ce, i32 noundef %i.cg, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull %i.a)
   br i1 %i.ch, label %bb.ag, label %bb.z
 
 bb.z:                                             ; preds = %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS0_11InitListTagEb.exit

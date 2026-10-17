@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.t = sub i64 %1, %i.s                         ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 176
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !373  ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 168 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 168 ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.v, null
   br i1 %.not10.i.i.i.i, label %_ZNK4llvm4bolt13BinarySection22getDynamicRelocationAtEm.exit, label %.lr.ph.i.i.i.i
 
@@ -215,7 +215,7 @@ bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.y = load i64, ptr %i.x, align 8, !tbaa !667
   %i.z = icmp ult i64 %i.y, %i.t                  ; 2 uses
-  %.19.i.i.i.i = select i1 %i.z, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 4 uses
+  %.19.i.i.i.i = select i1 %i.z, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i = select i1 %i.z, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !668 ; 2 uses
@@ -227,12 +227,10 @@ _ZNKSt8_Rb_treeIN4llvm4bolt10RelocationES2_St9_IdentityIS2_ESt4lessIvESaIS2_EE14
   br i1 %i.aa, label %_ZNK4llvm4bolt13BinarySection22getDynamicRelocationAtEm.exit, label %_ZNKSt8multisetIN4llvm4bolt10RelocationESt4lessIvESaIS2_EE4findERKS2_.exit.i
 
 _ZNKSt8multisetIN4llvm4bolt10RelocationESt4lessIvESaIS2_EE4findERKS2_.exit.i: ; preds = %_ZNKSt8_Rb_treeIN4llvm4bolt10RelocationES2_St9_IdentityIS2_ESt4lessIvESaIS2_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS2_EPKSt18_Rb_tree_node_baseRKS2_.exit.i.i.i
-  %i.ab = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32
+  %i.ab = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !667
-  %i.ad = icmp ult i64 %i.t, %i.ac                ; 2 uses
-  %spec.select.i.i.i = select i1 %i.ad, ptr %i.w, ptr %.19.i.i.i.i
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 32
-  %spec.select.i = select i1 %i.ad, ptr null, ptr %2
+  %i.ad = icmp ult i64 %i.t, %i.ac
+  %spec.select.i = select i1 %i.ad, ptr null, ptr %i.ab
   br label %_ZNK4llvm4bolt13BinarySection22getDynamicRelocationAtEm.exit
 
 _ZNK4llvm4bolt13BinarySection22getDynamicRelocationAtEm.exit: ; preds = %bb.b, %_ZNSt8multimapImPN4llvm4bolt13BinarySectionESt4lessImESaISt4pairIKmS3_EEE11upper_boundERS7_.exit.i.i, %_ZNKSt8multisetIN4llvm4bolt10RelocationESt4lessIvESaIS2_EE4findERKS2_.exit.i, %_ZNKSt8_Rb_treeIN4llvm4bolt10RelocationES2_St9_IdentityIS2_ESt4lessIvESaIS2_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS2_EPKSt18_Rb_tree_node_baseRKS2_.exit.i.i.i, %bb.c

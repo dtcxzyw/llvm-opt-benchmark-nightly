@@ -202,7 +202,7 @@ _ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashI
 bb.aq:                                            ; preds = %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE8FindHashENS9_9HashValueE.exit.i.i
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 24
   %i.lx = load ptr, ptr %i.lw, align 8            ; 2 uses
-  %i.ly = getelementptr inbounds nuw i8, ptr %i.lv, i64 16 ; 3 uses
+  %i.ly = getelementptr inbounds nuw i8, ptr %i.lv, i64 16 ; 2 uses
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.lx, null
   br i1 %.not10.i.i.i.i.i.i, label %_ZNK2v88internal8compiler15VariableTracker5State3GetENS1_8VariableE.exit, label %.lr.ph.i.i.i.i.i.i
 
@@ -212,7 +212,7 @@ bb.aq:                                            ; preds = %_ZNK2v88internal8co
   %i.lz = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 32
   %i.ma = load i32, ptr %i.lz, align 4
   %i.mb = icmp slt i32 %i.ma, %.sroa.0.0.i        ; 2 uses
-  %.19.i.i.i.i.i.i = select i1 %i.mb, ptr %.0811.i.i.i.i.i.i, ptr %.012.i.i.i.i.i.i ; 4 uses
+  %.19.i.i.i.i.i.i = select i1 %i.mb, ptr %.0811.i.i.i.i.i.i, ptr %.012.i.i.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i.i.i = select i1 %i.mb, i64 24, i64 16
   %.1.in.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 %.1.in.v.i.i.i.i.i.i
   %.1.i.i.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i.i.i, align 8 ; 2 uses
@@ -224,12 +224,10 @@ _ZNKSt8_Rb_treeIN2v88internal8compiler8VariableESt4pairIKS3_PNS2_4NodeEESt10_Sel
   br i1 %i.mc, label %_ZNK2v88internal8compiler15VariableTracker5State3GetENS1_8VariableE.exit, label %_ZNKSt3mapIN2v88internal8compiler8VariableEPNS2_4NodeESt4lessIS3_ENS1_13ZoneAllocatorISt4pairIKS3_S5_EEEE4findERSA_.exit.i.i.i
 
 _ZNKSt3mapIN2v88internal8compiler8VariableEPNS2_4NodeESt4lessIS3_ENS1_13ZoneAllocatorISt4pairIKS3_S5_EEEE4findERSA_.exit.i.i.i: ; preds = %_ZNKSt8_Rb_treeIN2v88internal8compiler8VariableESt4pairIKS3_PNS2_4NodeEESt10_Select1stIS8_ESt4lessIS3_ENS1_13ZoneAllocatorIS8_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i.i
-  %i.md = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i.i, i64 32
+  %i.md = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i.i, i64 32 ; 2 uses
   %.sroa.0.0.copyload.i.i.i.i.i.i = load i32, ptr %i.md, align 4
-  %i.me = icmp slt i32 %.sroa.0.0.i, %.sroa.0.0.copyload.i.i.i.i.i.i ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %i.me, ptr %i.ly, ptr %.19.i.i.i.i.i.i
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 32
-  %spec.select.i.i.i108 = select i1 %i.me, ptr %i.lf, ptr %4
+  %i.me = icmp slt i32 %.sroa.0.0.i, %.sroa.0.0.copyload.i.i.i.i.i.i
+  %spec.select.i.i.i108 = select i1 %i.me, ptr %i.lf, ptr %i.md
   br label %_ZNK2v88internal8compiler15VariableTracker5State3GetENS1_8VariableE.exit
 
 bb.ar:                                            ; preds = %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE8FindHashENS9_9HashValueE.exit.i.i
@@ -632,7 +630,7 @@ _ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashI
 bb.g:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE8FindHashENS9_9HashValueE.exit.i
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   %i.ac = load ptr, ptr %i.ab, align 8            ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 3 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
   %.not10.i.i.i.i.i = icmp eq ptr %i.ac, null
   br i1 %.not10.i.i.i.i.i, label %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE3GetERKS3_.exit, label %.lr.ph.i.i.i.i.i
 
@@ -642,7 +640,7 @@ bb.g:                                             ; preds = %_ZNK2v88internal8co
   %i.ae = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 32
   %i.af = load i32, ptr %i.ae, align 4
   %i.ag = icmp slt i32 %i.af, %1                  ; 2 uses
-  %.19.i.i.i.i.i = select i1 %i.ag, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 4 uses
+  %.19.i.i.i.i.i = select i1 %i.ag, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i.i = select i1 %i.ag, i64 24, i64 16
   %.1.in.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 %.1.in.v.i.i.i.i.i
   %.1.i.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i.i, align 8 ; 2 uses
@@ -654,12 +652,10 @@ _ZNKSt8_Rb_treeIN2v88internal8compiler8VariableESt4pairIKS3_PNS2_4NodeEESt10_Sel
   br i1 %i.ah, label %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE3GetERKS3_.exit, label %_ZNKSt3mapIN2v88internal8compiler8VariableEPNS2_4NodeESt4lessIS3_ENS1_13ZoneAllocatorISt4pairIKS3_S5_EEEE4findERSA_.exit.i.i
 
 _ZNKSt3mapIN2v88internal8compiler8VariableEPNS2_4NodeESt4lessIS3_ENS1_13ZoneAllocatorISt4pairIKS3_S5_EEEE4findERSA_.exit.i.i: ; preds = %_ZNKSt8_Rb_treeIN2v88internal8compiler8VariableESt4pairIKS3_PNS2_4NodeEESt10_Select1stIS8_ESt4lessIS3_ENS1_13ZoneAllocatorIS8_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i
-  %i.ai = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32
+  %i.ai = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32 ; 2 uses
   %.sroa.0.0.copyload.i.i.i.i.i = load i32, ptr %i.ai, align 4
-  %i.aj = icmp slt i32 %1, %.sroa.0.0.copyload.i.i.i.i.i ; 2 uses
-  %spec.select.i.i.i.i = select i1 %i.aj, ptr %i.ad, ptr %.19.i.i.i.i.i
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 32
-  %spec.select.i.i = select i1 %i.aj, ptr %0, ptr %2
+  %i.aj = icmp slt i32 %1, %.sroa.0.0.copyload.i.i.i.i.i
+  %spec.select.i.i = select i1 %i.aj, ptr %0, ptr %i.ai
   br label %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE3GetERKS3_.exit
 
 bb.h:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE8FindHashENS9_9HashValueE.exit.i
@@ -1062,7 +1058,7 @@ _ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashI
 bb.g:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE8FindHashENS9_9HashValueEPSt5arrayIPKNS9_11FocusedTreeELm32EEPi.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8            ; 2 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 16 ; 3 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 16 ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.ay, null
   br i1 %.not10.i.i.i.i, label %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE15GetFocusedValueEPKNS9_11FocusedTreeERKS3_.exit, label %.lr.ph.i.i.i.i
 
@@ -1072,7 +1068,7 @@ bb.g:                                             ; preds = %_ZNK2v88internal8co
   %i.ba = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.bb = load i32, ptr %i.ba, align 4
   %i.bc = icmp slt i32 %i.bb, %1                  ; 2 uses
-  %.19.i.i.i.i = select i1 %i.bc, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 4 uses
+  %.19.i.i.i.i = select i1 %i.bc, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i = select i1 %i.bc, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8 ; 2 uses
@@ -1084,12 +1080,10 @@ _ZNKSt8_Rb_treeIN2v88internal8compiler8VariableESt4pairIKS3_PNS2_4NodeEESt10_Sel
   br i1 %i.bd, label %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE15GetFocusedValueEPKNS9_11FocusedTreeERKS3_.exit, label %_ZNKSt3mapIN2v88internal8compiler8VariableEPNS2_4NodeESt4lessIS3_ENS1_13ZoneAllocatorISt4pairIKS3_S5_EEEE4findERSA_.exit.i
 
 _ZNKSt3mapIN2v88internal8compiler8VariableEPNS2_4NodeESt4lessIS3_ENS1_13ZoneAllocatorISt4pairIKS3_S5_EEEE4findERSA_.exit.i: ; preds = %_ZNKSt8_Rb_treeIN2v88internal8compiler8VariableESt4pairIKS3_PNS2_4NodeEESt10_Select1stIS8_ESt4lessIS3_ENS1_13ZoneAllocatorIS8_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i
-  %i.be = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32
+  %i.be = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32 ; 2 uses
   %.sroa.0.0.copyload.i.i.i.i = load i32, ptr %i.be, align 4
-  %i.bf = icmp slt i32 %1, %.sroa.0.0.copyload.i.i.i.i ; 2 uses
-  %spec.select.i.i.i = select i1 %i.bf, ptr %i.az, ptr %.19.i.i.i.i
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 32
-  %spec.select.i = select i1 %i.bf, ptr %0, ptr %6
+  %i.bf = icmp slt i32 %1, %.sroa.0.0.copyload.i.i.i.i
+  %spec.select.i = select i1 %i.bf, ptr %0, ptr %i.be
   br label %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE15GetFocusedValueEPKNS9_11FocusedTreeERKS3_.exit
 
 _ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE15GetFocusedValueEPKNS9_11FocusedTreeERKS3_.exit: ; preds = %bb.g, %_ZNKSt8_Rb_treeIN2v88internal8compiler8VariableESt4pairIKS3_PNS2_4NodeEESt10_Select1stIS8_ESt4lessIS3_ENS1_13ZoneAllocatorIS8_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %_ZNKSt3mapIN2v88internal8compiler8VariableEPNS2_4NodeESt4lessIS3_ENS1_13ZoneAllocatorISt4pairIKS3_S5_EEEE4findERSA_.exit.i

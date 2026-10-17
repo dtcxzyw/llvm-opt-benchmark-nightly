@@ -205,7 +205,7 @@ _ZN4pbrt6Tuple3INS_7Vector3EfEixEi.exit83:
   %.sroa.040.0.copyload = load <2 x float>, ptr %1, align 8
   %.sroa.241.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.241.0.copyload = load float, ptr %.sroa.241.0..sroa_idx, align 8
-  %i.h = fsub <2 x float> %.sroa.040.0.copyload, %.sroa.05.0.copyload.i ; 3 uses
+  %i.h = fsub <2 x float> %.sroa.040.0.copyload, %.sroa.05.0.copyload.i ; 4 uses
   %i.i = fsub float %.sroa.241.0.copyload, %.sroa.26.0.copyload.i ; 2 uses
   %i.j = fcmp ogt float %i.f, %.sroa.26.0.copyload.i
   %i.k = fdiv float %i.i, %i.g
@@ -215,10 +215,9 @@ _ZN4pbrt6Tuple3INS_7Vector3EfEixEi.exit83:
   %i.n = fsub <2 x float> %i.m, %.sroa.05.0.copyload.i ; 3 uses
   %foldExtExtBinop = fdiv <2 x float> %i.h, %i.n
   %i.o = fcmp ogt <2 x float> %i.m, %.sroa.05.0.copyload.i ; 2 uses
-  %sel = select <2 x i1> %i.o, <2 x float> %foldExtExtBinop, <2 x float> %i.h ; 2 uses
-  %.sroa.09.0.i = shufflevector <2 x float> %sel, <2 x float> %i.h, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %foldExtExtBinop228 = fdiv <2 x float> %.sroa.09.0.i, %i.n
-  %sel230 = select <2 x i1> %i.o, <2 x float> %foldExtExtBinop228, <2 x float> %.sroa.09.0.i
+  %sel = select <2 x i1> %i.o, <2 x float> %foldExtExtBinop, <2 x float> %i.h
+  %foldExtExtBinop228 = fdiv <2 x float> %i.h, %i.n
+  %sel230 = select <2 x i1> %i.o, <2 x float> %foldExtExtBinop228, <2 x float> %i.h
   %.sroa.01.0.vec.extract.i = extractelement <2 x float> %sel, i64 0
   %.sroa.01.4.vec.extract.i = extractelement <2 x float> %sel230, i64 1
   %i.p = load <2 x float>, ptr %i.l, align 4, !tbaa !189
