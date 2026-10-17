@@ -204,19 +204,15 @@ bb.b:                                             ; preds = %bb.a
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.d ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.b
-  %i.h = load ptr, ptr %i.c, align 8, !tbaa !409  ; 2 uses
-  %i.i = load ptr, ptr %4, align 8, !tbaa !140    ; 3 uses
+  %i.h = load ptr, ptr %i.c, align 8, !tbaa !409
+  %i.i = load ptr, ptr %4, align 8, !tbaa !140    ; 2 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
   %i.m = icmp ult i64 %i.l, 9
-  br i1 %i.m, label %bb.l, label %.preheader
+  br i1 %i.m, label %bb.l, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit23.peel
 
-.preheader:                                       ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-  %.not31 = icmp eq ptr %i.h, %i.i
-  br i1 %.not31, label %._crit_edge, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit23.peel
-
-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit23.peel: ; preds = %.preheader
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit23.peel: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #31
@@ -257,7 +253,7 @@ bb.d:                                             ; preds = %bb.b
           cleanup
   br label %bb.o
 
-._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel, %.preheader
+._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #31
   call void @llvm.experimental.noalias.scope.decl(metadata !1287)
   call void @llvm.experimental.noalias.scope.decl(metadata !1288)

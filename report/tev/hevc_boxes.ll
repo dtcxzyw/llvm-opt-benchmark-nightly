@@ -205,8 +205,8 @@ bb.z:                                             ; preds = %_ZNSt3__114__split_
 _ZNSt3__16vectorIhNS_9allocatorIhEEE9push_backB8ne180100EOh.exit67: ; preds = %bb.u, %_ZNSt3__114__split_bufferIhRNS_9allocatorIhEEE5clearB8ne180100Ev.exit.i.i.i63, %bb.z
   %.0.i66 = phi ptr [ %i.jq, %bb.u ], [ %i.kh, %_ZNSt3__114__split_bufferIhRNS_9allocatorIhEEE5clearB8ne180100Ev.exit.i.i.i63 ], [ %i.kh, %bb.z ] ; 6 uses
   store ptr %.0.i66, ptr %i.e, align 8, !tbaa !60
-  %i.mo = load ptr, ptr %.sroa.079.092, align 8, !tbaa !61 ; 4 uses
-  %i.mp = load ptr, ptr %i.l, align 8, !tbaa !60  ; 2 uses
+  %i.mo = load ptr, ptr %.sroa.079.092, align 8, !tbaa !61 ; 3 uses
+  %i.mp = load ptr, ptr %i.l, align 8, !tbaa !60
   %i.mq = ptrtoint ptr %i.mp to i64
   %i.mr = ptrtoint ptr %i.mo to i64
   %i.ms = sub i64 %i.mq, %i.mr                    ; 7 uses
@@ -223,17 +223,10 @@ bb.aa:                                            ; preds = %_ZNSt3__16vectorIhN
   %i.na = ptrtoint ptr %i.mz to i64               ; 2 uses
   %i.nb = sub i64 %i.na, %i.mu
   %.not.i = icmp sgt i64 %i.ms, %i.nb
-  br i1 %.not.i, label %bb.ab, label %2
+  br i1 %.not.i, label %bb.ab, label %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endINS_11__wrap_iterIPKhEES8_EEvT_T0_m.exit.i
 
-2:                                                ; preds = %bb.aa
-  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.mp, %i.mo
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endINS_11__wrap_iterIPKhEES8_EEvT_T0_m.exit.i, label %3
-
-3:                                                ; preds = %2
+_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endINS_11__wrap_iterIPKhEES8_EEvT_T0_m.exit.i: ; preds = %bb.aa
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.0.i66, ptr align 1 %i.mo, i64 %i.ms, i1 false)
-  br label %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endINS_11__wrap_iterIPKhEES8_EEvT_T0_m.exit.i
-
-_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endINS_11__wrap_iterIPKhEES8_EEvT_T0_m.exit.i: ; preds = %3, %2
   %i.nc = getelementptr inbounds nuw i8, ptr %.0.i66, i64 %i.ms
   store ptr %i.nc, ptr %i.e, align 8, !tbaa !60
   br label %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__insert_with_sizeB8ne180100INS_11__wrap_iterIPKhEES8_EENS5_IPhEES8_T_T0_l.exit

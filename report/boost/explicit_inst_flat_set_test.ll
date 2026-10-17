@@ -204,11 +204,11 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not.i15.i.i, label %bb.z, label %_ZN5boost7movelib13adaptive_xbufI5emptyPS2_mE16initialize_untilEmRS2_.exit.i.i.i
 
 _ZN5boost7movelib13adaptive_xbufI5emptyPS2_mE16initialize_untilEmRS2_.exit.i.i.i: ; preds = %bb.y
-  tail call void @_ZN5boost7movelib31merge_adaptive_ONlogN_recursiveIP5emptyS3_NS_9container3dtl23flat_tree_value_compareISt4lessIS2_ES2_NS_11move_detail8identityIS2_EEEEEEvT_SD_SD_NS0_9iter_sizeISD_E4typeESG_T0_SG_T1_(ptr noundef nonnull %0, ptr noundef %i.et, ptr noundef %i.eu, i64 noundef %i.es, i64 noundef %gepdiff.i, ptr noundef %i.ff, i64 noundef %i.ew)
+  tail call void @_ZN5boost7movelib31merge_adaptive_ONlogN_recursiveIP5emptyS3_NS_9container3dtl23flat_tree_value_compareISt4lessIS2_ES2_NS_11move_detail8identityIS2_EEEEEEvT_SD_SD_NS0_9iter_sizeISD_E4typeESG_T0_SG_T1_(ptr noundef nonnull %0, ptr noundef nonnull %i.et, ptr noundef %i.eu, i64 noundef %i.es, i64 noundef %gepdiff.i, ptr noundef %i.ff, i64 noundef %i.ew)
   br label %_ZN5boost7movelib14buffered_mergeIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS2_ES2_NS_11move_detail8identityIS2_EEEENS0_13adaptive_xbufIS2_S3_mEEEEvT_SF_SF_T0_RT1_.exit
 
 bb.z:                                             ; preds = %bb.y
-  tail call void @_ZN5boost7movelib33merge_bufferless_ONlogN_recursiveIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS2_ES2_NS_11move_detail8identityIS2_EEEEEEvT_SD_SD_NS0_9iter_sizeISD_E4typeESG_T0_(ptr noundef nonnull %0, ptr noundef %i.et, ptr noundef %i.eu, i64 noundef %i.es, i64 noundef %gepdiff.i)
+  tail call void @_ZN5boost7movelib33merge_bufferless_ONlogN_recursiveIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS2_ES2_NS_11move_detail8identityIS2_EEEEEEvT_SD_SD_NS0_9iter_sizeISD_E4typeESG_T0_(ptr noundef nonnull %0, ptr noundef nonnull %i.et, ptr noundef %i.eu, i64 noundef %i.es, i64 noundef %gepdiff.i)
   br label %_ZN5boost7movelib14buffered_mergeIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS2_ES2_NS_11move_detail8identityIS2_EEEENS0_13adaptive_xbufIS2_S3_mEEEEvT_SF_SF_T0_RT1_.exit
 
 _ZN5boost7movelib14buffered_mergeIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS2_ES2_NS_11move_detail8identityIS2_EEEENS0_13adaptive_xbufIS2_S3_mEEEEvT_SF_SF_T0_RT1_.exit: ; preds = %bb.f, %bb.z, %_ZN5boost7movelib13adaptive_xbufI5emptyPS2_mE16initialize_untilEmRS2_.exit.i.i.i, %bb.x, %.preheader.preheader.i.i.i.i, %_ZN5boost7movelib14buffered_mergeIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS2_ES2_NS_11move_detail8identityIS2_EEEENS0_13adaptive_xbufIS2_S3_mEEEEvT_SF_SF_T0_RT1_.exit.i.i, %bb.v, %_ZN5boost7movelib15detail_adaptive29adaptive_merge_combine_blocksIP5emptyNS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES3_NS_11move_detail8identityIS3_EEEENS0_13adaptive_xbufIS3_S4_mEEEEvT_NS0_9iter_sizeISG_E4typeESJ_SJ_SJ_SJ_bbT0_RT1_.exit, %bb.i, %.sink.split.i.i, %bb.b
@@ -611,8 +611,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !301  ; 5 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !302    ; 16 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !301  ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !302    ; 15 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 6 uses
@@ -628,18 +628,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.o = icmp ugt i64 %i.g, 2305843009213693951
-  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseIN5boost9container4test24movable_and_copyable_intESaIS3_EE11_M_allocateEm.exit.i, !prof !222
+  br i1 %i.o, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !222
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #25
   unreachable
 
-_ZNSt12_Vector_baseIN5boost9container4test24movable_and_copyable_intESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #27 ; 10 uses
-  %.not11.i.i.i.i.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not11.i.i.i.i.i, label %_ZNSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN5boost9container4test24movable_and_copyable_intESaIS3_EE11_M_allocateEm.exit.i
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !248 ; 3 uses
   %i.p = add i64 %i.d, -4
   %i.q = sub i64 %i.p, %i.e                       ; 3 uses
@@ -719,7 +715,7 @@ middle.block105:                                  ; preds = %vector.body97
   %.not.i.i.i.i.i = icmp eq ptr %i.al, %i.b
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !15039
 
-_ZNSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block105, %_ZNSt12_Vector_baseIN5boost9container4test24movable_and_copyable_intESaIS3_EE11_M_allocateEm.exit.i
+_ZNSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS3_S5_EEEEPS3_mT_SD_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block105
   %i.an = load ptr, ptr %0, align 8, !tbaa !302   ; 5 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !301 ; 2 uses

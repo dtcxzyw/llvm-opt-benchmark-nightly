@@ -202,15 +202,13 @@ bb.j:                                             ; preds = %bb.h
   %i.at = getelementptr inbounds nuw [56 x i8], ptr %i.ak, i64 %.01939 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 16 ; 2 uses
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !83 ; 5 uses
-  %i.ax = load ptr, ptr %i.au, align 8, !tbaa !34 ; 5 uses
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !83 ; 4 uses
+  %i.ax = load ptr, ptr %i.au, align 8, !tbaa !34 ; 4 uses
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = ptrtoint ptr %i.ax to i64
   %i.ba = sub i64 %i.ay, %i.az
-  %4 = icmp ult i64 %i.ba, 33
-  %.not32 = icmp eq ptr %i.ax, %i.aw
-  %or.cond = or i1 %4, %.not32
-  br i1 %or.cond, label %_ZNSt6vectorIiSaIiEE5clearEv.exit, label %.lr.ph.a
+  %4 = icmp ugt i64 %i.ba, 32
+  br i1 %4, label %.lr.ph.a, label %_ZNSt6vectorIiSaIiEE5clearEv.exit
 
 ._crit_edge:                                      ; preds = %bb.k
   br i1 %i.bf, label %.lr.ph37, label %_ZNSt6vectorIiSaIiEE5clearEv.exit
@@ -256,7 +254,7 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %.lr.ph37
   %.not29 = icmp eq ptr %i.bn, %i.aw
   br i1 %.not29, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i, label %.lr.ph37
 
-_ZNSt6vectorIiSaIiEE5clearEv.exit:                ; preds = %.thread, %._crit_edge, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i, %.lr.ph40
+_ZNSt6vectorIiSaIiEE5clearEv.exit:                ; preds = %.thread, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i, %._crit_edge, %.lr.ph40
   %i.bo = add nuw i64 %.01939, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bo, %i.ao
   br i1 %exitcond.not, label %._crit_edge41, label %.lr.ph40, !llvm.loop !145

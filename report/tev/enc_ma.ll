@@ -205,17 +205,15 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i.i: ; preds = %bb.ck, %
   br label %bb.cl
 
 bb.cl:                                            ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i.i, %bb.ci
-  %.sroa.0.4 = phi ptr [ %i.tq, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i.i ], [ %.sroa.0.0307, %bb.ci ] ; 3 uses
-  %.sroa.14.4 = phi ptr [ %i.tr, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i.i ], [ %.sroa.14.0308, %bb.ci ] ; 3 uses
+  %.sroa.0.4 = phi ptr [ %i.tq, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i.i ], [ %.sroa.0.0307, %bb.ci ] ; 2 uses
+  %.sroa.14.4 = phi ptr [ %i.tr, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i.i ], [ %.sroa.14.0308, %bb.ci ] ; 2 uses
   %.sroa.25.4 = phi ptr [ %i.ts, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i.i ], [ %.sroa.25.0309, %bb.ci ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false), !alias.scope !684, !noalias !683
-  %.not.i.i1.i.i = icmp ne ptr %.sroa.14.4, %.sroa.0.4
   %i.tt = ptrtoint ptr %.sroa.14.4 to i64
   %i.tu = ptrtoint ptr %.sroa.0.4 to i64
   %i.tv = sub i64 %i.tt, %i.tu
   %i.tw = icmp slt i64 %i.tv, 0
-  %or.cond = and i1 %.not.i.i1.i.i, %i.tw
-  br i1 %or.cond, label %bb.cm, label %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i171
+  br i1 %i.tw, label %bb.cm, label %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i171
 
 bb.cm:                                            ; preds = %bb.cl
   call void @_ZNKSt3__16vectorIiNS_9allocatorIiEEE20__throw_length_errorB8nn180100Ev(ptr noundef nonnull align 8 dereferenceable(24) %9) #34, !noalias !683
@@ -618,16 +616,14 @@ _ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i: ; preds = %bb.d, %bb.
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i, %bb.b
-  %i.ad = phi ptr [ %.pre3.i, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i ], [ %i.k, %bb.b ] ; 2 uses
-  %i.ae = phi ptr [ %.pre2.i, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i ], [ %i.i, %bb.b ] ; 2 uses
+  %i.ad = phi ptr [ %.pre3.i, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i ], [ %i.k, %bb.b ]
+  %i.ae = phi ptr [ %.pre2.i, %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit.i ], [ %i.i, %bb.b ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false), !alias.scope !693
-  %.not.i.i1.i = icmp ne ptr %i.ad, %i.ae
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag
   %i.ai = icmp slt i64 %i.ah, 0
-  %or.cond = and i1 %.not.i.i1.i, %i.ai
-  br i1 %or.cond, label %bb.f, label %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit
+  br i1 %i.ai, label %bb.f, label %_ZNSt3__16vectorIiNS_9allocatorIiEEED2B8nn180100Ev.exit
 
 bb.f:                                             ; preds = %bb.e
   call void @_ZNKSt3__16vectorIiNS_9allocatorIiEEE20__throw_length_errorB8nn180100Ev(ptr noundef nonnull align 8 dereferenceable(24) %3) #34

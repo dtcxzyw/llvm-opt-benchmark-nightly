@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseISt6vectorIjSaIjEESaIS2_EEC2EmRKS3_.exit.thread.i: ; preds = 
   %i.jo = phi ptr [ %.pre835, %.noexc271 ], [ %i.iu, %_ZNSt6vectorIS_IjSaIjEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ] ; 2 uses
   %i.jp = phi ptr [ %.pre834, %.noexc271 ], [ %i.is, %_ZNSt6vectorIS_IjSaIjEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ] ; 2 uses
   %.sink.i = phi ptr [ %i.jm, %.noexc271 ], [ null, %_ZNSt6vectorIS_IjSaIjEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ]
-  %.pre.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc271 ], [ null, %_ZNSt6vectorIS_IjSaIjEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ] ; 6 uses
+  %.pre.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc271 ], [ null, %_ZNSt6vectorIS_IjSaIjEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ] ; 5 uses
   store ptr %.sink.i, ptr %i.fg, align 8
   store ptr %.pre.i.i, ptr %i.ff, align 8
   %.not510659 = icmp eq ptr %i.jp, %i.jo
@@ -467,14 +467,12 @@ bb.bq:                                            ; preds = %._crit_edge665
   %i.mp = ptrtoint ptr %i.jn to i64
   %i.mq = sub i64 %i.mo, %i.mp
   %i.mr = getelementptr inbounds i8, ptr %i.jn, i64 %i.mq ; 5 uses
-  %i.ms = getelementptr inbounds nuw i8, ptr %i.mr, i64 24 ; 4 uses
-  %.not.i.i279 = icmp ne ptr %i.ms, %.pre.i.i
+  %i.ms = getelementptr inbounds nuw i8, ptr %i.mr, i64 24 ; 3 uses
   %i.mt = ptrtoint ptr %.pre.i.i to i64
   %i.mu = ptrtoint ptr %i.ms to i64
   %i.mv = sub i64 %i.mt, %i.mu
   %i.mw = icmp sgt i64 %i.mv, 0
-  %or.cond = and i1 %.not.i.i279, %i.mw
-  br i1 %or.cond, label %.lr.ph.preheader.i.i.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt6vectorIjSaIjEES2_IS4_SaIS4_EEEES8_ET0_T_SA_S9_.exit.i.i
+  br i1 %i.mw, label %.lr.ph.preheader.i.i.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt6vectorIjSaIjEES2_IS4_SaIS4_EEEES8_ET0_T_SA_S9_.exit.i.i
 
 .lr.ph.preheader.i.i.i.i.i.i.i:                   ; preds = %bb.bq
   %i.mx = load ptr, ptr %i.mr, align 8            ; 3 uses

@@ -205,7 +205,14 @@ bb.a:
 
 _ZN4LIEF2PE6Binary7tls_dirEv.exit:                ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 408
-  %i.d = load ptr, ptr %i.c, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 416
+  %2 = load ptr, ptr %1, align 8
+  %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
+  %3 = ptrtoint ptr %2 to i64
+  %4 = ptrtoint ptr %i.d to i64
+  %5 = sub i64 %3, %4
+  %6 = icmp ugt i64 %5, 72
+  tail call void @llvm.assume(i1 %6)
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 72
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 216

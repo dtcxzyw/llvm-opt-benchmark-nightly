@@ -202,20 +202,16 @@ _ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit: ; preds = %bb.b
 
 bb.d:                                             ; preds = %.split13, %.split, %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.n = load ptr, ptr %i.m, align 8              ; 3 uses
+  %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.p = load ptr, ptr %i.o, align 8              ; 3 uses
+  %i.p = load ptr, ptr %i.o, align 8              ; 2 uses
   %i.q = ptrtoint ptr %i.n to i64
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = sub i64 %i.q, %i.r
   %i.t = icmp ult i64 %i.s, 9
-  br i1 %i.t, label %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit.thread, label %.preheader
+  br i1 %i.t, label %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit.thread, label %.lr.ph
 
-.preheader:                                       ; preds = %bb.d
-  %3 = icmp eq ptr %i.n, %i.p
-  br i1 %3, label %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit.thread, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader
+.lr.ph:                                           ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %bb.e
 
@@ -269,8 +265,8 @@ bb.f:                                             ; preds = %.split14._crit_edge
   %.not = icmp ult i64 %i.aq, %i.au
   br i1 %.not, label %bb.e, label %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit.thread, !llvm.loop !25
 
-_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit.thread: ; preds = %.split14, %_ZN2v88internal4wasm7AsmType3IsAEPS2_.exit, %bb.f, %.preheader, %bb.c, %.split13, %.split, %bb.d, %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit
-  %.1 = phi i1 [ false, %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit ], [ false, %bb.d ], [ false, %bb.c ], [ false, %.split13 ], [ false, %.split ], [ true, %.preheader ], [ false, %_ZN2v88internal4wasm7AsmType3IsAEPS2_.exit ], [ false, %.split14 ], [ true, %bb.f ]
+_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit.thread: ; preds = %.split14, %_ZN2v88internal4wasm7AsmType3IsAEPS2_.exit, %bb.f, %bb.c, %.split13, %.split, %bb.d, %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit
+  %.1 = phi i1 [ false, %_ZN2v88internal4wasm7AsmType9IsExactlyEPS2_S3_.exit ], [ false, %bb.d ], [ false, %bb.c ], [ false, %.split13 ], [ false, %.split ], [ false, %_ZN2v88internal4wasm7AsmType3IsAEPS2_.exit ], [ false, %.split14 ], [ true, %bb.f ]
   ret i1 %.1
 }
 

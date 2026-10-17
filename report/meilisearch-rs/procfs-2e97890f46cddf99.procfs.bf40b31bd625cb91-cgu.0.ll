@@ -205,9 +205,9 @@ bb.k:                                             ; preds = %_ZN3std2io8buffered
 define internal noundef ptr @"_ZN82_$LT$std..io..buffered..bufreader..BufReader$LT$R$GT$$u20$as$u20$std..io..Read$GT$14read_buf_exact17h722b2c9d9de5e235E"(ptr noalias noundef align 8 dereferenceable(72) %0, ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !4 ; 4 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 4 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 3 uses
   %i.e = sub i64 %i.b, %i.d                       ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26639)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -235,8 +235,7 @@ _ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.ex
 
 _ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit: ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26643)
-  %.not39.i = icmp eq i64 %i.b, %i.d
-  br i1 %.not39.i, label %_ZN3std2io22default_read_buf_exact17h221b9f4dfeeb0a3eE.exit, label %.lr.ph.i
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit, %.backedge.i
   %i.r = phi i64 [ %i.x, %.backedge.i ], [ %i.d, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit ]
@@ -297,8 +296,8 @@ bb.e:                                             ; preds = %bb.d, %.split36.i, 
   %.pre.i = load i64, ptr %i.c, align 8, !alias.scope !26643
   br label %.backedge.i
 
-_ZN3std2io22default_read_buf_exact17h221b9f4dfeeb0a3eE.exit: ; preds = %bb.d, %.split36.i, %.split37.i, %.split.i, %.backedge.i, %bb.c, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit.thread
-  %.sroa.0.0 = phi ptr [ null, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit.thread ], [ null, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit ], [ null, %.backedge.i ], [ %i.s, %bb.d ], [ %i.s, %.split.i ], [ %i.s, %.split36.i ], [ @104, %bb.c ], [ %i.s, %.split37.i ]
+_ZN3std2io22default_read_buf_exact17h221b9f4dfeeb0a3eE.exit: ; preds = %bb.d, %.split36.i, %.split37.i, %.split.i, %.backedge.i, %bb.c, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit.thread
+  %.sroa.0.0 = phi ptr [ null, %_ZN3std2io8buffered9bufreader6buffer6Buffer12consume_with17he9ee51956fc467b9E.exit.thread ], [ null, %.backedge.i ], [ %i.s, %bb.d ], [ %i.s, %.split.i ], [ %i.s, %.split36.i ], [ @104, %bb.c ], [ %i.s, %.split37.i ]
   ret ptr %.sroa.0.0
 }
 

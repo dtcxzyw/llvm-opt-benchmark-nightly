@@ -204,8 +204,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !42   ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !43     ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !42
+  %i.c = load ptr, ptr %1, align 8, !tbaa !43     ; 6 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 9 uses
@@ -221,18 +221,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.n = sdiv exact i64 %i.f, 28
   %i.o = icmp ugt i64 %i.n, 329406144173384850
-  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE11_M_allocateEm.exit.i, !prof !48
+  br i1 %i.o, label %bb.d, label %.lr.ph.i.i.i.i.preheader.i, !prof !48
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #11
   unreachable
 
-_ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.c
+.lr.ph.i.i.i.i.preheader.i:                       ; preds = %bb.c
   %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #12 ; 3 uses
-  %3 = icmp eq ptr %i.c, %i.b
-  br i1 %3, label %_ZNSt6vectorIN8facebook4yoga13GridTrackSizeESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit, label %.lr.ph.i.i.i.i.preheader.i
-
-.lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE11_M_allocateEm.exit.i
   %i.p = add i64 %i.d, -28
   %i.q = sub i64 %i.p, %i.e
   %.fr.i = freeze i64 %i.q                        ; 2 uses
@@ -240,22 +236,19 @@ _ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE11_M_allocateEm.exit.
   %i.s = add i64 %.fr.i, 28
   %i.t = sub i64 %i.s, %i.r
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %2, ptr align 4 %i.c, i64 %i.t, i1 false)
-  br label %_ZNSt6vectorIN8facebook4yoga13GridTrackSizeESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit
-
-_ZNSt6vectorIN8facebook4yoga13GridTrackSizeESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit: ; preds = %_ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.preheader.i
-  %4 = load ptr, ptr %0, align 8, !tbaa !43       ; 3 uses
-  %.not.i = icmp eq ptr %4, null
+  %3 = load ptr, ptr %0, align 8, !tbaa !43       ; 3 uses
+  %.not.i = icmp eq ptr %3, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE13_M_deallocateEPS2_m.exit, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt6vectorIN8facebook4yoga13GridTrackSizeESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i
   %i.u = load ptr, ptr %i.g, align 8, !tbaa !47
   %i.v = ptrtoint ptr %i.u to i64
-  %i.w = ptrtoint ptr %4 to i64
+  %i.w = ptrtoint ptr %3 to i64
   %i.x = sub i64 %i.v, %i.w
-  tail call void @_ZdlPvm(ptr noundef nonnull %4, i64 noundef %i.x) #13
+  tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef %i.x) #13
   br label %_ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE13_M_deallocateEPS2_m.exit
 
-_ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIN8facebook4yoga13GridTrackSizeESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit, %bb.e
+_ZNSt12_Vector_baseIN8facebook4yoga13GridTrackSizeESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %.lr.ph.i.i.i.i.preheader.i, %bb.e
   store ptr %2, ptr %0, align 8, !tbaa !43
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 %i.f
   store ptr %i.y, ptr %i.g, align 8, !tbaa !47

@@ -204,23 +204,19 @@ _ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EED2Ev.exit: ; preds = %
 bb.cc:                                            ; preds = %.critedge
   %i.ms = getelementptr inbounds nuw i8, ptr %i.ke, i64 48
   %i.mt = getelementptr inbounds nuw i8, ptr %i.ke, i64 56
-  %i.mu = load ptr, ptr %i.mt, align 8, !tbaa !321 ; 4 uses
-  %i.mv = load ptr, ptr %i.ms, align 8, !tbaa !322 ; 3 uses
+  %i.mu = load ptr, ptr %i.mt, align 8, !tbaa !321 ; 3 uses
+  %i.mv = load ptr, ptr %i.ms, align 8, !tbaa !322 ; 2 uses
   %i.mw = ptrtoint ptr %i.mu to i64
   %i.mx = ptrtoint ptr %i.mv to i64
   %i.my = sub i64 %i.mw, %i.mx
   %i.mz = icmp ugt i64 %i.my, 8
-  br i1 %i.mz, label %.preheader401, label %bb.cp
+  br i1 %i.mz, label %.lr.ph441, label %bb.cp
 
-.preheader401:                                    ; preds = %bb.cc
-  %20 = icmp eq ptr %i.mv, %i.mu
-  br i1 %20, label %._crit_edge, label %.lr.ph441
-
-.lr.ph441:                                        ; preds = %.preheader401, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit
-  %.sroa.0312.0440 = phi ptr [ %i.ny, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ], [ %i.mv, %.preheader401 ] ; 2 uses
-  %.sroa.13.0439 = phi ptr [ %.sroa.13.5, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ], [ null, %.preheader401 ] ; 5 uses
-  %.sroa.8.0438 = phi ptr [ %.sroa.8.4, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ], [ null, %.preheader401 ] ; 4 uses
-  %.sroa.0315.0437 = phi ptr [ %.sroa.0315.5, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ], [ null, %.preheader401 ] ; 8 uses
+.lr.ph441:                                        ; preds = %bb.cc, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit
+  %.sroa.0312.0440 = phi ptr [ %i.ny, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ], [ %i.mv, %bb.cc ] ; 2 uses
+  %.sroa.13.0439 = phi ptr [ %.sroa.13.5, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ], [ null, %bb.cc ] ; 5 uses
+  %.sroa.8.0438 = phi ptr [ %.sroa.8.4, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ], [ null, %bb.cc ] ; 4 uses
+  %.sroa.0315.0437 = phi ptr [ %.sroa.0315.5, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ], [ null, %bb.cc ] ; 8 uses
   %i.na = load ptr, ptr %.sroa.0312.0440, align 8, !tbaa !324 ; 2 uses
   %i.nb = getelementptr inbounds nuw i8, ptr %i.na, i64 32
   %i.nc = getelementptr inbounds nuw i8, ptr %i.na, i64 40
@@ -318,10 +314,7 @@ bb.ch:                                            ; preds = %.loopexit.split-lp,
   %.not.i.i.i226 = icmp eq ptr %.sroa.0315.0437, null
   br i1 %.not.i.i.i226, label %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EED2Ev.exit227, label %.thread380
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit, %.preheader401
-  %.sroa.0315.0.lcssa = phi ptr [ null, %.preheader401 ], [ %.sroa.0315.5, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ]
-  %.sroa.8.0.lcssa = phi ptr [ null, %.preheader401 ], [ %.sroa.8.4, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ]
-  %.sroa.13.0.lcssa = phi ptr [ null, %.preheader401 ], [ %.sroa.13.5, %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit ]
+._crit_edge:                                      ; preds = %_ZNSt6vectorIN5boost9unit_test13basic_cstringIKcEESaIS4_EE9push_backEOS4_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #30
@@ -337,11 +330,11 @@ bb.ch:                                            ; preds = %.loopexit.split-lp,
   store i8 0, ptr %i.od, align 8, !tbaa !69
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5boost7runtime15ambiguous_paramE, i64 16), ptr %19, align 8, !tbaa !74
   %i.of = getelementptr inbounds nuw i8, ptr %19, i64 56
-  store ptr %.sroa.0315.0.lcssa, ptr %i.of, align 8, !tbaa !134
+  store ptr %.sroa.0315.5, ptr %i.of, align 8, !tbaa !134
   %i.og = getelementptr inbounds nuw i8, ptr %19, i64 64
-  store ptr %.sroa.8.0.lcssa, ptr %i.og, align 8, !tbaa !135
+  store ptr %.sroa.8.4, ptr %i.og, align 8, !tbaa !135
   %i.oh = getelementptr inbounds nuw i8, ptr %19, i64 72
-  store ptr %.sroa.13.0.lcssa, ptr %i.oh, align 8, !tbaa !136
+  store ptr %.sroa.13.5, ptr %i.oh, align 8, !tbaa !136
   invoke void @_ZNO5boost7runtime20specific_param_errorINS0_15ambiguous_paramENS0_11input_errorEElsEPKc(ptr dead_on_unwind nonnull writable sret(%"class.boost::runtime::ambiguous_param") align 8 %18, ptr noundef nonnull align 8 dereferenceable(56) %19, ptr noundef nonnull @.str.260)
           to label %bb.ci unwind label %bb.cl
 

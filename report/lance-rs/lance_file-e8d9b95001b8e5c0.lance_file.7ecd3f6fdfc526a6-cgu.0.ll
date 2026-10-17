@@ -205,9 +205,13 @@ _RNvMNtCs40k4W9msRzi_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCs4YAKbnGhB
   store ptr %i.l, ptr %i.v, align 8, !noalias !3462
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.n, ptr %i.w, align 8, !noalias !3462
-  %i.x = ptrtoint ptr %i.l to i64
-  %i.y = and i64 %i.x, 3
-  %i.z = icmp eq i64 %i.y, 0
+  %i.x = ptrtoint ptr %i.l to i64                 ; 3 uses
+  %4 = add i64 %i.x, 3
+  %i.y = and i64 %4, -4                           ; 2 uses
+  %5 = sub i64 %i.y, %i.x
+  %6 = icmp ult i64 %5, 4
+  tail call void @llvm.assume(i1 %6)
+  %i.z = icmp eq i64 %i.y, %i.x
   br i1 %i.z, label %bb.j, label %.invoke.i.i, !prof !67
 
 bb.g:                                             ; preds = %.invoke.i.i
@@ -369,9 +373,13 @@ _RNvMNtCs40k4W9msRzi_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCs4YAKbnGhB
   store ptr %i.l, ptr %i.v, align 8, !noalias !3500
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.n, ptr %i.w, align 8, !noalias !3500
-  %i.x = ptrtoint ptr %i.l to i64
-  %i.y = and i64 %i.x, 7
-  %i.z = icmp eq i64 %i.y, 0
+  %i.x = ptrtoint ptr %i.l to i64                 ; 3 uses
+  %4 = add i64 %i.x, 7
+  %i.y = and i64 %4, -8                           ; 2 uses
+  %5 = sub i64 %i.y, %i.x
+  %6 = icmp ult i64 %5, 8
+  tail call void @llvm.assume(i1 %6)
+  %i.z = icmp eq i64 %i.y, %i.x
   br i1 %i.z, label %bb.j, label %.invoke.i.i, !prof !67
 
 bb.g:                                             ; preds = %.invoke.i.i
@@ -774,9 +782,13 @@ bb.jx:                                            ; preds = %bb.jt
   store i64 %.sroa.7273.0.copyload.i, ptr %i.ahn, align 8, !alias.scope !23160, !noalias !23009
   call void @llvm.experimental.noalias.scope.decl(metadata !23164)
   call void @llvm.experimental.noalias.scope.decl(metadata !23165)
-  %i.aho = ptrtoint ptr %.sroa.6272.0.copyload.i to i64
-  %i.ahp = and i64 %i.aho, 3
-  %i.ahq = icmp eq i64 %i.ahp, 0
+  %i.aho = ptrtoint ptr %.sroa.6272.0.copyload.i to i64 ; 3 uses
+  %3 = add i64 %i.aho, 3
+  %i.ahp = and i64 %3, -4                         ; 2 uses
+  %4 = sub i64 %i.ahp, %i.aho
+  %5 = icmp ult i64 %4, 4
+  call void @llvm.assume(i1 %5)
+  %i.ahq = icmp eq i64 %i.ahp, %i.aho
   br i1 %i.ahq, label %bb.kb, label %.invoke.i.i, !prof !67
 
 bb.jy:                                            ; preds = %.invoke.i.i
@@ -1179,9 +1191,13 @@ bb.jx:                                            ; preds = %bb.jt
   store i64 %.sroa.7259.0.copyload.i, ptr %i.ahl, align 8, !alias.scope !23704, !noalias !23553
   call void @llvm.experimental.noalias.scope.decl(metadata !23708)
   call void @llvm.experimental.noalias.scope.decl(metadata !23709)
-  %i.ahm = ptrtoint ptr %.sroa.6258.0.copyload.i to i64
-  %i.ahn = and i64 %i.ahm, 7
-  %i.aho = icmp eq i64 %i.ahn, 0
+  %i.ahm = ptrtoint ptr %.sroa.6258.0.copyload.i to i64 ; 3 uses
+  %3 = add i64 %i.ahm, 7
+  %i.ahn = and i64 %3, -8                         ; 2 uses
+  %4 = sub i64 %i.ahn, %i.ahm
+  %5 = icmp ult i64 %4, 8
+  call void @llvm.assume(i1 %5)
+  %i.aho = icmp eq i64 %i.ahn, %i.ahm
   br i1 %i.aho, label %bb.kb, label %.invoke.i.i, !prof !67
 
 bb.jy:                                            ; preds = %.invoke.i.i
@@ -1584,9 +1600,13 @@ bb.jx:                                            ; preds = %bb.jt
   store i64 %.sroa.7273.0.copyload.i, ptr %i.ahn, align 8, !alias.scope !24255, !noalias !24104
   call void @llvm.experimental.noalias.scope.decl(metadata !24259)
   call void @llvm.experimental.noalias.scope.decl(metadata !24260)
-  %i.aho = ptrtoint ptr %.sroa.6272.0.copyload.i to i64
-  %i.ahp = and i64 %i.aho, 3
-  %i.ahq = icmp eq i64 %i.ahp, 0
+  %i.aho = ptrtoint ptr %.sroa.6272.0.copyload.i to i64 ; 3 uses
+  %3 = add i64 %i.aho, 3
+  %i.ahp = and i64 %3, -4                         ; 2 uses
+  %4 = sub i64 %i.ahp, %i.aho
+  %5 = icmp ult i64 %4, 4
+  call void @llvm.assume(i1 %5)
+  %i.ahq = icmp eq i64 %i.ahp, %i.aho
   br i1 %i.ahq, label %bb.kb, label %.invoke.i.i, !prof !67
 
 bb.jy:                                            ; preds = %.invoke.i.i
@@ -1989,9 +2009,13 @@ bb.jx:                                            ; preds = %bb.jt
   store i64 %.sroa.7259.0.copyload.i, ptr %i.ahl, align 8, !alias.scope !24799, !noalias !24648
   call void @llvm.experimental.noalias.scope.decl(metadata !24803)
   call void @llvm.experimental.noalias.scope.decl(metadata !24804)
-  %i.ahm = ptrtoint ptr %.sroa.6258.0.copyload.i to i64
-  %i.ahn = and i64 %i.ahm, 7
-  %i.aho = icmp eq i64 %i.ahn, 0
+  %i.ahm = ptrtoint ptr %.sroa.6258.0.copyload.i to i64 ; 3 uses
+  %3 = add i64 %i.ahm, 7
+  %i.ahn = and i64 %3, -8                         ; 2 uses
+  %4 = sub i64 %i.ahn, %i.ahm
+  %5 = icmp ult i64 %4, 8
+  call void @llvm.assume(i1 %5)
+  %i.aho = icmp eq i64 %i.ahn, %i.ahm
   br i1 %i.aho, label %bb.kb, label %.invoke.i.i, !prof !67
 
 bb.jy:                                            ; preds = %.invoke.i.i
@@ -2394,9 +2418,13 @@ bb.f:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !34513)
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !34513, !noundef !58
-  %i.n = ptrtoint ptr %i.m to i64
-  %i.o = and i64 %i.n, 3
-  %i.p = icmp eq i64 %i.o, 0
+  %i.n = ptrtoint ptr %i.m to i64                 ; 3 uses
+  %4 = add i64 %i.n, 3
+  %i.o = and i64 %4, -4                           ; 2 uses
+  %5 = sub i64 %i.o, %i.n
+  %6 = icmp ult i64 %5, 4
+  tail call void @llvm.assume(i1 %6)
+  %i.p = icmp eq i64 %i.o, %i.n
   br i1 %i.p, label %bb.j, label %.invoke.i, !prof !67
 
 bb.g:                                             ; preds = %.invoke.i
@@ -2512,9 +2540,13 @@ bb.f:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !34546)
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !34546, !noundef !58
-  %i.n = ptrtoint ptr %i.m to i64
-  %i.o = and i64 %i.n, 7
-  %i.p = icmp eq i64 %i.o, 0
+  %i.n = ptrtoint ptr %i.m to i64                 ; 3 uses
+  %4 = add i64 %i.n, 7
+  %i.o = and i64 %4, -8                           ; 2 uses
+  %5 = sub i64 %i.o, %i.n
+  %6 = icmp ult i64 %5, 8
+  tail call void @llvm.assume(i1 %6)
+  %i.p = icmp eq i64 %i.o, %i.n
   br i1 %i.p, label %bb.j, label %.invoke.i, !prof !67
 
 bb.g:                                             ; preds = %.invoke.i
@@ -2917,9 +2949,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !34672)
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !alias.scope !34672, !noalias !34664, !noundef !58
-  %i.ab = ptrtoint ptr %i.aa to i64
-  %i.ac = and i64 %i.ab, 3
-  %i.ad = icmp eq i64 %i.ac, 0
+  %i.ab = ptrtoint ptr %i.aa to i64               ; 3 uses
+  %4 = add i64 %i.ab, 3
+  %i.ac = and i64 %4, -4                          ; 2 uses
+  %5 = sub i64 %i.ac, %i.ab
+  %6 = icmp ult i64 %5, 4
+  call void @llvm.assume(i1 %6)
+  %i.ad = icmp eq i64 %i.ac, %i.ab
   br i1 %i.ad, label %bb.k, label %.invoke.i.i.i, !prof !67
 
 bb.h:                                             ; preds = %.invoke.i.i.i
@@ -3130,9 +3166,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !34734)
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !alias.scope !34734, !noalias !34726, !noundef !58
-  %i.ab = ptrtoint ptr %i.aa to i64
-  %i.ac = and i64 %i.ab, 7
-  %i.ad = icmp eq i64 %i.ac, 0
+  %i.ab = ptrtoint ptr %i.aa to i64               ; 3 uses
+  %4 = add i64 %i.ab, 7
+  %i.ac = and i64 %4, -8                          ; 2 uses
+  %5 = sub i64 %i.ac, %i.ab
+  %6 = icmp ult i64 %5, 8
+  call void @llvm.assume(i1 %6)
+  %i.ad = icmp eq i64 %i.ac, %i.ab
   br i1 %i.ad, label %bb.k, label %.invoke.i.i.i, !prof !67
 
 bb.h:                                             ; preds = %.invoke.i.i.i
@@ -3535,9 +3575,12 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array10byte_arrayINtB4_16GenericByteArray
   %i.ai = icmp samesign ult i64 %i.ac, %i.o
   call void @llvm.assume(i1 %i.ai)
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.ac
-  %i.ak = load i64, ptr %i.aj, align 8, !noalias !46145, !noundef !58 ; 2 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !noalias !46145, !noundef !58 ; 3 uses
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.sroa.015.0126.us.i
-  %i.am = load i64, ptr %i.al, align 8, !noalias !46145, !noundef !58 ; 2 uses
+  %i.am = load i64, ptr %i.al, align 8, !noalias !46145, !noundef !58 ; 3 uses
+  %2 = sub i64 %i.ak, %i.am
+  %3 = icmp sgt i64 %2, -1
+  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !46146
   call void @_RNvMsa_NtCscI6d9CVNmLh_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !46147
   %i.an = getelementptr inbounds i8, ptr %i.ab, i64 %i.ak
@@ -3648,9 +3691,12 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array10byte_arrayINtB4_16GenericByteArray
   %i.cb = icmp ult i64 %i.bv, %i.o
   call void @llvm.assume(i1 %i.cb)
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.bv
-  %i.cd = load i64, ptr %i.cc, align 8, !noalias !46152, !noundef !58 ; 2 uses
+  %i.cd = load i64, ptr %i.cc, align 8, !noalias !46152, !noundef !58 ; 3 uses
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.sroa.068.0127.us.i
-  %i.cf = load i64, ptr %i.ce, align 8, !noalias !46152, !noundef !58 ; 2 uses
+  %i.cf = load i64, ptr %i.ce, align 8, !noalias !46152, !noundef !58 ; 3 uses
+  %4 = sub i64 %i.cd, %i.cf
+  %5 = icmp sgt i64 %4, -1
+  call void @llvm.assume(i1 %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !46153
   call void @_RNvMsa_NtCscI6d9CVNmLh_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.d, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !46154
   %i.cg = getelementptr inbounds i8, ptr %i.ab, i64 %i.cd
@@ -3722,9 +3768,12 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array10byte_arrayINtB4_16GenericByteArray
   %i.di = icmp ult i64 %i.cs, %i.o
   call void @llvm.assume(i1 %i.di)
   %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.cs
-  %i.dk = load i64, ptr %i.dj, align 8, !noalias !46152, !noundef !58 ; 2 uses
+  %i.dk = load i64, ptr %i.dj, align 8, !noalias !46152, !noundef !58 ; 3 uses
   %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.sroa.068.0127.i
-  %i.dm = load i64, ptr %i.dl, align 8, !noalias !46152, !noundef !58 ; 2 uses
+  %i.dm = load i64, ptr %i.dl, align 8, !noalias !46152, !noundef !58 ; 3 uses
+  %6 = sub i64 %i.dk, %i.dm
+  %7 = icmp sgt i64 %6, -1
+  call void @llvm.assume(i1 %7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !46153
   call void @_RNvMsa_NtCscI6d9CVNmLh_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.d, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !46154
   %i.dn = getelementptr inbounds i8, ptr %i.ab, i64 %i.dk
@@ -3774,9 +3823,12 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array10byte_arrayINtB4_16GenericByteArray
   %i.eb = icmp samesign ult i64 %i.ba, %i.o
   call void @llvm.assume(i1 %i.eb)
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.ba
-  %i.ed = load i64, ptr %i.ec, align 8, !noalias !46145, !noundef !58 ; 2 uses
+  %i.ed = load i64, ptr %i.ec, align 8, !noalias !46145, !noundef !58 ; 3 uses
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.sroa.015.0126.i
-  %i.ef = load i64, ptr %i.ee, align 8, !noalias !46145, !noundef !58 ; 2 uses
+  %i.ef = load i64, ptr %i.ee, align 8, !noalias !46145, !noundef !58 ; 3 uses
+  %8 = sub i64 %i.ed, %i.ef
+  %9 = icmp sgt i64 %8, -1
+  call void @llvm.assume(i1 %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !46146
   call void @_RNvMsa_NtCscI6d9CVNmLh_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !46147
   %i.eg = getelementptr inbounds i8, ptr %i.ab, i64 %i.ed

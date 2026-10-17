@@ -205,8 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt12_Vector_baseImN2v88internal19StrongRootAllocatorImEEE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.n = tail call noundef ptr @_ZN2v88internal23StrongRootAllocatorBase13allocate_implEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.d) #20 ; 3 uses
-  %3 = icmp eq ptr %1, %2
-  br i1 %3, label %_ZNSt6vectorImN2v88internal19StrongRootAllocatorImEEE20_M_allocate_and_copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPmS4_EEEEES9_mT_SC_.exit, label %.lr.ph.i.i
+  br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt12_Vector_baseImN2v88internal19StrongRootAllocatorImEEE11_M_allocateEm.exit.i, %.lr.ph.i.i
   %.09.i.i = phi ptr [ %i.q, %.lr.ph.i.i ], [ %i.n, %_ZNSt12_Vector_baseImN2v88internal19StrongRootAllocatorImEEE11_M_allocateEm.exit.i ] ; 2 uses
@@ -218,7 +217,7 @@ _ZNSt12_Vector_baseImN2v88internal19StrongRootAllocatorImEEE11_M_allocateEm.exit
   %i.r = icmp eq ptr %i.p, %2
   br i1 %i.r, label %_ZNSt6vectorImN2v88internal19StrongRootAllocatorImEEE20_M_allocate_and_copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPmS4_EEEEES9_mT_SC_.exit, label %.lr.ph.i.i, !llvm.loop !127
 
-_ZNSt6vectorImN2v88internal19StrongRootAllocatorImEEE20_M_allocate_and_copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPmS4_EEEEES9_mT_SC_.exit: ; preds = %.lr.ph.i.i, %_ZNSt12_Vector_baseImN2v88internal19StrongRootAllocatorImEEE11_M_allocateEm.exit.i
+_ZNSt6vectorImN2v88internal19StrongRootAllocatorImEEE20_M_allocate_and_copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPmS4_EEEEES9_mT_SC_.exit: ; preds = %.lr.ph.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.t = load ptr, ptr %i.e, align 8              ; 3 uses
   %.not.i = icmp eq ptr %i.t, null

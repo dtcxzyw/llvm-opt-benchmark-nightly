@@ -205,15 +205,13 @@ bb.c:                                             ; preds = %_ZNK8Variable10is_v
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !138, !noalias !287 ; 2 uses
-  %i.n = load ptr, ptr %i.k, align 8, !tbaa !139, !noalias !287 ; 2 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !138, !noalias !287
+  %i.n = load ptr, ptr %i.k, align 8, !tbaa !139, !noalias !287
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = sub i64 %i.o, %i.p                       ; 2 uses
-  %.not.i.i.i.i.i = icmp ne ptr %i.m, %i.n
   %i.r = icmp ugt i64 %i.q, 9223372036854775804
-  %or.cond = and i1 %.not.i.i.i.i.i, %i.r
-  br i1 %or.cond, label %.noexc.i.i.i, label %_ZNSt6vectorIjSaIjEED2Ev.exit, !prof !288
+  br i1 %i.r, label %.noexc.i.i.i, label %_ZNSt6vectorIjSaIjEED2Ev.exit, !prof !288
 
 .noexc.i.i.i:                                     ; preds = %bb.d
   invoke void @_ZSt28__throw_bad_array_new_lengthv() #26

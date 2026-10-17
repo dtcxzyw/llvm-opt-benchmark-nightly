@@ -203,9 +203,9 @@ define hidden noundef ptr @_RNvXs4_NtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufrea
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !noundef !12 ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !12 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %i.e = load i64, ptr %i.d, align 8, !noundef !12 ; 4 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !12 ; 3 uses
   %i.f = sub i64 %i.c, %i.e                       ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1131)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -229,15 +229,11 @@ _RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12con
 
 _RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit: ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1135)
-  %.not23.i = icmp eq i64 %i.c, %i.e
-  br i1 %.not23.i, label %_RINvNtNtCs4wP2HXfJTCR_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileEECsi17nFaBu4HY_10ech_client.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit
   %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.backedge.i, %.lr.ph.i
-  %i.q = phi i64 [ %i.e, %.lr.ph.i ], [ %i.ap, %.backedge.i ]
+bb.b:                                             ; preds = %.backedge.i, %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit
+  %i.q = phi i64 [ %i.e, %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit ], [ %i.ap, %.backedge.i ]
   %i.r = call noundef ptr @_RNvXs4_NtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read8read_bufCsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) ; 11 uses
   %.not4.i = icmp eq ptr %i.r, null
   br i1 %.not4.i, label %bb.e, label %bb.c
@@ -344,8 +340,8 @@ bb.k:                                             ; preds = %bb.j
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #22
   unreachable
 
-_RINvNtNtCs4wP2HXfJTCR_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileEECsi17nFaBu4HY_10ech_client.exit: ; preds = %.backedge.i, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i, %bb.e, %.split.i, %.split18.i, %.split17.i, %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit, %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit.thread
-  %.sroa.0.0 = phi ptr [ null, %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit.thread ], [ null, %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit ], [ null, %.backedge.i ], [ %i.r, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i ], [ %i.r, %.split.i ], [ %i.r, %.split17.i ], [ @17, %bb.e ], [ %i.r, %.split18.i ]
+_RINvNtNtCs4wP2HXfJTCR_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileEECsi17nFaBu4HY_10ech_client.exit: ; preds = %.backedge.i, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i, %bb.e, %.split.i, %.split18.i, %.split17.i, %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit.thread
+  %.sroa.0.0 = phi ptr [ null, %_RINvMNtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtNtB9_4read4Read14read_buf_exact0ECsi17nFaBu4HY_10ech_client.exit.thread ], [ null, %.backedge.i ], [ %i.r, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i ], [ %i.r, %.split.i ], [ %i.r, %.split17.i ], [ @17, %bb.e ], [ %i.r, %.split18.i ]
   ret ptr %.sroa.0.0
 }
 

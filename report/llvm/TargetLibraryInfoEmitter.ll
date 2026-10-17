@@ -202,29 +202,20 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #8
 define linkonce_odr hidden void @_ZN4llvm21SequenceToOffsetTableISt6vectorINS_9StringRefESaIS2_EESt4lessIS2_EE3addERKS4_(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #1 comdat align 2 {
 bb.a:
   %2 = alloca %"struct.std::_Rb_tree<std::vector<llvm::StringRef>, std::pair<const std::vector<llvm::StringRef>, unsigned int>, std::_Select1st<std::pair<const std::vector<llvm::StringRef>, unsigned int>>, llvm::SequenceToOffsetTable<std::vector<llvm::StringRef>>::SeqLess>::_Alloc_node", align 8 ; 4 uses
-  %3 = alloca %"struct.std::pair", align 8        ; 13 uses
+  %3 = alloca %"struct.std::pair", align 8        ; 15 uses
   %i.a = tail call ptr @_ZNSt8_Rb_treeISt6vectorIN4llvm9StringRefESaIS2_EESt4pairIKS4_jESt10_Select1stIS7_ENS1_21SequenceToOffsetTableIS4_St4lessIS2_EE7SeqLessESaIS7_EE11lower_boundERS6_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.a, %i.b
-  br i1 %.not, label %..critedge_crit_edge, label %bb.b
-
-..critedge_crit_edge:                             ; preds = %bb.a
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !81 ; 2 uses
-  %.pre38 = load ptr, ptr %1, align 8, !tbaa !79  ; 2 uses
-  %.pre41 = ptrtoint ptr %.pre to i64
-  %.pre42 = ptrtoint ptr %.pre38 to i64
-  %.pre44 = sub i64 %.pre41, %.pre42
-  br label %.critedge
+  br i1 %.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !81   ; 6 uses
-  %i.f = load ptr, ptr %1, align 8, !tbaa !79     ; 6 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !81   ; 3 uses
+  %i.f = load ptr, ptr %1, align 8, !tbaa !79     ; 3 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.g, %i.h                       ; 4 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !81   ; 2 uses
   %i.l = load ptr, ptr %i.c, align 8, !tbaa !79
@@ -232,7 +223,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
   %.not.i = icmp ugt i64 %i.i, %i.o
-  br i1 %.not.i, label %.critedge, label %bb.c
+  br i1 %.not.i, label %.critedge.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.not6.i.i.i.i.i = icmp eq ptr %i.e, %i.f
@@ -250,7 +241,7 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.2.0..sroa_idx.i.i.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.i.i.i.i, i64 -8
   %.sroa.2.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !68
   %.not.i.i.i.i.i.i = icmp eq i64 %.sroa.22.0.copyload.i.i.i.i.i, %.sroa.2.0.copyload.i.i.i.i.i
-  br i1 %.not.i.i.i.i.i.i, label %bb.d, label %.critedge
+  br i1 %.not.i.i.i.i.i.i, label %bb.d, label %.critedge.thread
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.s = icmp eq i64 %.sroa.22.0.copyload.i.i.i.i.i, 0
@@ -259,32 +250,44 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
 _ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i:      ; preds = %bb.d
   %bcmp.i.i.i.i.i.i = tail call i32 @bcmp(ptr %.sroa.01.0.copyload.i.i.i.i.i, ptr %.sroa.0.0.copyload.i.i3.i.i.i, i64 %.sroa.22.0.copyload.i.i.i.i.i)
   %i.t = icmp eq i32 %bcmp.i.i.i.i.i.i, 0
-  br i1 %i.t, label %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i.i.i.i.i, label %.critedge
+  br i1 %i.t, label %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i.i.i.i.i, label %.critedge.thread
 
 _ZN4llvmeqENS_9StringRefES0_.exit.thread.i.i.i.i.i: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i, %bb.d
   %.not.i.i.i.i.i = icmp eq ptr %i.q, %i.f
   br i1 %.not.i.i.i.i.i, label %_ZN4llvm21SequenceToOffsetTableISt6vectorINS_9StringRefESaIS2_EESt4lessIS2_EE8isSuffixERKS4_S9_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !184
 
-.critedge:                                        ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i, %..critedge_crit_edge, %bb.b
-  %.pre-phi45 = phi i64 [ %.pre44, %..critedge_crit_edge ], [ %i.i, %bb.b ], [ %i.i, %.lr.ph.i.i.i.i.i ], [ %i.i, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 4 uses
-  %4 = phi ptr [ %.pre38, %..critedge_crit_edge ], [ %i.f, %bb.b ], [ %i.f, %.lr.ph.i.i.i.i.i ], [ %i.f, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ]
-  %5 = phi ptr [ %.pre, %..critedge_crit_edge ], [ %i.e, %bb.b ], [ %i.e, %.lr.ph.i.i.i.i.i ], [ %i.e, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ]
+.critedge.thread:                                 ; preds = %.lr.ph.i.i.i.i.i, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i, %bb.b
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 0, ptr %5, align 8
+  br label %bb.e
+
+.critedge:                                        ; preds = %bb.a
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !81 ; 2 uses
+  %.pre38 = load ptr, ptr %1, align 8, !tbaa !79  ; 2 uses
+  %.pre41 = ptrtoint ptr %.pre to i64
+  %.pre42 = ptrtoint ptr %.pre38 to i64
+  %.pre44 = sub i64 %.pre41, %.pre42              ; 2 uses
+  %6 = icmp eq ptr %.pre, %.pre38
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %3, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i.i9 = icmp eq ptr %5, %4
-  br i1 %.not.i.i.i.i.i9, label %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i.thread, label %bb.e
+  br i1 %6, label %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i.thread, label %bb.e
 
 _ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i.thread: ; preds = %.critedge
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.w = getelementptr inbounds nuw i8, ptr null, i64 %.pre-phi45
+  %i.w = getelementptr inbounds nuw i8, ptr null, i64 %.pre44
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   store ptr %i.w, ptr %i.x, align 8, !tbaa !80
   br label %_ZNSt4pairIKSt6vectorIN4llvm9StringRefESaIS2_EEjEC2IRS5_jTnNSt9enable_ifIXaaclsr5_PCCPE22_MoveConstructiblePairIT_T0_EEclsr5_PCCPE30_ImplicitlyMoveConvertiblePairISA_SB_EEEbE4typeELb1EEEOSA_OSB_.exit
 
-bb.e:                                             ; preds = %.critedge
-  %i.y = icmp ugt i64 %.pre-phi45, 9223372036854775792
+bb.e:                                             ; preds = %.critedge.thread, %.critedge
+  %7 = phi ptr [ %4, %.critedge.thread ], [ %i.u, %.critedge ] ; 3 uses
+  %.pre-phi4561 = phi i64 [ %i.i, %.critedge.thread ], [ %.pre44, %.critedge ] ; 3 uses
+  %i.y = icmp ugt i64 %.pre-phi4561, 9223372036854775792
   br i1 %i.y, label %bb.f, label %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i, !prof !93
 
 bb.f:                                             ; preds = %bb.e
@@ -292,12 +295,12 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i: ; preds = %bb.e
-  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.pre-phi45) #21 ; 4 uses
+  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.pre-phi4561) #21 ; 4 uses
   %.pre39 = load ptr, ptr %1, align 8, !tbaa !83  ; 2 uses
-  %.pre40 = load ptr, ptr %i.u, align 8, !tbaa !83 ; 2 uses
+  %.pre40 = load ptr, ptr %7, align 8, !tbaa !83  ; 2 uses
   store ptr %i.z, ptr %3, align 8, !tbaa !79
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %.pre-phi45
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %.pre-phi4561
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   store ptr %i.ab, ptr %i.ac, align 8, !tbaa !80
   %.not7.i.i.i.i.i.i = icmp eq ptr %.pre39, %.pre40
@@ -315,6 +318,7 @@ _ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i: ; preds = %bb.e
 _ZNSt4pairIKSt6vectorIN4llvm9StringRefESaIS2_EEjEC2IRS5_jTnNSt9enable_ifIXaaclsr5_PCCPE22_MoveConstructiblePairIT_T0_EEclsr5_PCCPE30_ImplicitlyMoveConvertiblePairISA_SB_EEEbE4typeELb1EEEOSA_OSB_.exit: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i.thread, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i
   %i.af = phi ptr [ %i.ac, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i ], [ %i.x, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i.thread ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ]
   %i.ag = phi ptr [ %i.aa, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i ], [ %i.v, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i.thread ], [ %i.aa, %.lr.ph.i.i.i.i.i.i ]
+  %8 = phi ptr [ %7, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i ], [ %i.u, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i.thread ], [ %7, %.lr.ph.i.i.i.i.i.i ]
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.z, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i ], [ null, %_ZNSt12_Vector_baseIN4llvm9StringRefESaIS1_EEC2EmRKS2_.exit.i.i.thread ], [ %i.ae, %.lr.ph.i.i.i.i.i.i ]
   store ptr %.0.lcssa.i.i.i.i.i.i, ptr %i.ag, align 8, !tbaa !81
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -362,7 +366,7 @@ bb.i:                                             ; preds = %_ZNSt4pairIKSt6vect
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = ptrtoint ptr %i.ax to i64
   %i.ba = sub i64 %i.ay, %i.az
-  %i.bb = load ptr, ptr %i.u, align 8, !tbaa !81  ; 2 uses
+  %i.bb = load ptr, ptr %8, align 8, !tbaa !81    ; 2 uses
   %i.bc = load ptr, ptr %1, align 8, !tbaa !79
   %i.bd = ptrtoint ptr %i.bb to i64
   %i.be = ptrtoint ptr %i.bc to i64

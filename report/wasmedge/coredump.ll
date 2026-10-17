@@ -202,7 +202,7 @@ bb.a:
   %i.d = ashr exact i64 %i.c, 5                   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !75
-  %i.g = load ptr, ptr %0, align 8, !tbaa !73     ; 5 uses
+  %i.g = load ptr, ptr %0, align 8, !tbaa !73     ; 4 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
   %i.j = sub i64 %i.h, %i.i
@@ -219,8 +219,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt12_Vector_baseIN8WasmEdge3AST11InstructionESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.m = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #22 ; 3 uses
-  %.not9.i.i.i.i.i = icmp eq ptr %1, %2
-  br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit, label %.lr.ph.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN8WasmEdge3AST11InstructionESaIS2_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i.i
   %.011.i.i.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.i.i ], [ %i.m, %_ZNSt12_Vector_baseIN8WasmEdge3AST11InstructionESaIS2_EE11_M_allocateEm.exit.i ] ; 2 uses
@@ -229,21 +228,17 @@ _ZNSt12_Vector_baseIN8WasmEdge3AST11InstructionESaIS2_EE11_M_allocateEm.exit.i: 
   %i.n = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i, i64 32 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i, i64 32
   %.not.i.i.i.i.i = icmp eq ptr %i.n, %2
-  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit.loopexit, label %.lr.ph.i.i.i.i.i, !llvm.loop !275
+  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !275
 
-_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i.i
-  %.pre34 = load ptr, ptr %0, align 8, !tbaa !73
-  br label %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit
-
-_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit: ; preds = %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit.loopexit, %_ZNSt12_Vector_baseIN8WasmEdge3AST11InstructionESaIS2_EE11_M_allocateEm.exit.i
-  %5 = phi ptr [ %.pre34, %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit.loopexit ], [ %i.g, %_ZNSt12_Vector_baseIN8WasmEdge3AST11InstructionESaIS2_EE11_M_allocateEm.exit.i ] ; 3 uses
+_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit: ; preds = %.lr.ph.i.i.i.i.i
+  %.pre34 = load ptr, ptr %0, align 8, !tbaa !73  ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !72   ; 2 uses
-  %.not4.i.i = icmp eq ptr %5, %i.q
+  %.not4.i.i = icmp eq ptr %.pre34, %i.q
   br i1 %.not4.i.i, label %_ZSt8_DestroyIPN8WasmEdge3AST11InstructionEEvT_S4_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit, %.lr.ph.i.i
-  %.05.i.i = phi ptr [ %i.r, %.lr.ph.i.i ], [ %5, %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit ] ; 2 uses
+  %.05.i.i = phi ptr [ %i.r, %.lr.ph.i.i ], [ %.pre34, %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit ] ; 2 uses
   tail call void @_ZN8WasmEdge3AST11Instruction5resetEv(ptr noundef nonnull align 16 dereferenceable(26) %.05.i.i) #20
   %i.r = getelementptr inbounds nuw i8, ptr %.05.i.i, i64 32 ; 2 uses
   %.not.i.i16 = icmp eq ptr %i.r, %i.q
@@ -254,7 +249,7 @@ _ZSt8_DestroyIPN8WasmEdge3AST11InstructionEEvT_S4_.exitthread-pre-split: ; preds
   br label %_ZSt8_DestroyIPN8WasmEdge3AST11InstructionEEvT_S4_.exit
 
 _ZSt8_DestroyIPN8WasmEdge3AST11InstructionEEvT_S4_.exit: ; preds = %_ZSt8_DestroyIPN8WasmEdge3AST11InstructionEEvT_S4_.exitthread-pre-split, %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit
-  %i.s = phi ptr [ %.pr, %_ZSt8_DestroyIPN8WasmEdge3AST11InstructionEEvT_S4_.exitthread-pre-split ], [ %5, %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit ] ; 3 uses
+  %i.s = phi ptr [ %.pr, %_ZSt8_DestroyIPN8WasmEdge3AST11InstructionEEvT_S4_.exitthread-pre-split ], [ %.pre34, %_ZNSt6vectorIN8WasmEdge3AST11InstructionESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %i.s, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN8WasmEdge3AST11InstructionESaIS2_EE13_M_deallocateEPS2_m.exit, label %bb.d
 

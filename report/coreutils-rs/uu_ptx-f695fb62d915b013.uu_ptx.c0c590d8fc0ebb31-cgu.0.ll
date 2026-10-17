@@ -205,9 +205,9 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !noundef !7 ; 4 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !7 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
-  %i.f = load i64, ptr %i.e, align 8, !noundef !7 ; 4 uses
+  %i.f = load i64, ptr %i.e, align 8, !noundef !7 ; 3 uses
   %i.g = sub i64 %i.d, %i.f                       ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4305)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
@@ -216,7 +216,7 @@ bb.a:
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !4305, !noundef !7 ; 2 uses
   %i.l = sub nuw i64 %i.k, %i.i
   %.not.i.not = icmp ugt i64 %i.g, %i.l
-  br i1 %.not.i.not, label %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit, label %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit.thread
+  br i1 %.not.i.not, label %.lr.ph.i, label %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit.thread
 
 _RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit.thread: ; preds = %bb.a
   %i.m = load ptr, ptr %0, align 8, !alias.scope !4305, !nonnull !7, !noundef !7
@@ -229,13 +229,9 @@ _RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12con
   store i64 %i.q, ptr %i.h, align 8, !alias.scope !4305
   br label %_RINvNtNtCs7tKScEop1B6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderINtNtB6_5boxed3BoxDNtB2_4ReadEL_EEECsgy7pbN39oAf_6uu_ptx.exit
 
-_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit: ; preds = %bb.a
+.lr.ph.i:                                         ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4309)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4310)
-  %.not11.i = icmp eq i64 %i.d, %i.f
-  br i1 %.not11.i, label %_RINvNtNtCs7tKScEop1B6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderINtNtB6_5boxed3BoxDNtB2_4ReadEL_EEECsgy7pbN39oAf_6uu_ptx.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.s = load i64, ptr %i.r, align 8, !alias.scope !4309 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -431,8 +427,8 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgy7pbN39oAf_6
   %.not.i2 = icmp eq i64 %i.ck, %i.cg
   br i1 %.not.i2, label %_RINvNtNtCs7tKScEop1B6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderINtNtB6_5boxed3BoxDNtB2_4ReadEL_EEECsgy7pbN39oAf_6uu_ptx.exit, label %bb.b
 
-_RINvNtNtCs7tKScEop1B6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderINtNtB6_5boxed3BoxDNtB2_4ReadEL_EEECsgy7pbN39oAf_6uu_ptx.exit: ; preds = %.backedge.i, %bb.h, %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error14is_interrupted.exit.i, %.split8.i, %.split9.i, %.split.i, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit.thread
-  %.sroa.0.0 = phi ptr [ null, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit.thread ], [ null, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit ], [ null, %.backedge.i ], [ %.sroa.0.0.i.i, %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error14is_interrupted.exit.i ], [ %.sroa.0.0.i.i, %.split.i ], [ %.sroa.0.0.i.i, %.split8.i ], [ @44, %bb.h ], [ %.sroa.0.0.i.i, %.split9.i ]
+_RINvNtNtCs7tKScEop1B6_5alloc2io4read22default_read_buf_exactINtNtNtB4_8buffered9bufreader9BufReaderINtNtB6_5boxed3BoxDNtB2_4ReadEL_EEECsgy7pbN39oAf_6uu_ptx.exit: ; preds = %.backedge.i, %bb.h, %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error14is_interrupted.exit.i, %.split8.i, %.split9.i, %.split.i, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit.thread
+  %.sroa.0.0 = phi ptr [ null, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12consume_withNCNvXs4_B5_INtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB28_14read_buf_exact0ECsgy7pbN39oAf_6uu_ptx.exit.thread ], [ null, %.backedge.i ], [ %.sroa.0.0.i.i, %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error14is_interrupted.exit.i ], [ %.sroa.0.0.i.i, %.split.i ], [ %.sroa.0.0.i.i, %.split8.i ], [ @44, %bb.h ], [ %.sroa.0.0.i.i, %.split9.i ]
   ret ptr %.sroa.0.0
 }
 
