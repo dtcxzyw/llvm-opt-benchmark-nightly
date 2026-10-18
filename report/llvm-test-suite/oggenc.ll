@@ -205,13 +205,12 @@ bb.a:
   %i.i = getelementptr inbounds [4 x i8], ptr %2, i64 %i.h
   %i.j = fsub double 1.000000e+00, %i.c           ; 18 uses
   %i.k = load <2 x i32>, ptr %i.i, align 4
-  %i.l = sitofp <2 x i32> %i.k to <2 x double>    ; 2 uses
-  %6 = extractelement <2 x double> %i.l, i64 0
-  %7 = fmul double %i.j, %6
-  %8 = extractelement <2 x double> %i.l, i64 1
-  %9 = fmul double %i.c, %8
-  %10 = fadd double %7, %9
-  %i.m = fptrunc double %10 to float
+  %i.l = sitofp <2 x i32> %i.k to <2 x double>
+  %6 = insertelement <2 x double> poison, double %i.j, i64 0
+  %7 = insertelement <2 x double> %6, double %i.c, i64 1
+  %8 = fmul <2 x double> %7, %i.l
+  %9 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %8)
+  %i.m = fptrunc double %9 to float
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 108
   store float %i.m, ptr %i.n, align 4
   %i.o = getelementptr inbounds nuw [12 x i8], ptr %4, i64 %i.e ; 3 uses

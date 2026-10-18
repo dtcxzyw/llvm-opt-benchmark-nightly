@@ -205,19 +205,13 @@ bb.a:
   %i.d = insertelement <2 x i16> poison, i16 %4, i64 0
   %i.e = insertelement <2 x i16> %i.d, i16 %2, i64 1
   %i.f = zext <2 x i16> %i.e to <2 x i32>
-  %9 = zext i16 %5 to i64
-  %10 = zext i16 %6 to i64
-  %11 = shl nuw nsw i64 %10, 16
-  %12 = or disjoint i64 %11, %9
-  %13 = zext i16 %7 to i64
-  %14 = shl nuw nsw i64 %13, 32
-  %15 = or disjoint i64 %12, %14
-  %16 = zext i16 %8 to i64
-  %17 = shl nuw i64 %16, 48
-  %18 = or disjoint i64 %15, %17
+  %9 = insertelement <4 x i16> poison, i16 %5, i64 0
+  %10 = insertelement <4 x i16> %9, i16 %6, i64 1
+  %11 = insertelement <4 x i16> %10, i16 %7, i64 2
+  %12 = insertelement <4 x i16> %11, i16 %8, i64 3
   store i64 0, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %18, ptr %.sroa.4.0..sroa_idx, align 8
+  store <4 x i16> %12, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.533.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 0, ptr %.sroa.533.0..sroa_idx, align 8
   %.sroa.634.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20

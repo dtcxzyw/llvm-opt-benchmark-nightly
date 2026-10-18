@@ -205,13 +205,12 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 1104
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !151
   %i.t = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %i.q ; 2 uses
-  %.sroa.0.0.copyload = load <2 x float>, ptr %i.t, align 4 ; 4 uses
+  %.sroa.0.0.copyload = load <2 x float>, ptr %i.t, align 4 ; 3 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %i.u = load <2 x float>, ptr %.sroa.8.0..sroa_idx, align 4 ; 4 uses
-  %i.v = fcmp ogt <2 x float> %.sroa.0.0.copyload, %i.u
+  %i.u = load <2 x float>, ptr %.sroa.8.0..sroa_idx, align 4 ; 3 uses
+  %i.v = fcmp ogt <2 x float> %.sroa.0.0.copyload, %i.u ; 2 uses
   %i.w = extractelement <2 x i1> %i.v, i64 0
-  %4 = fcmp ogt <2 x float> %.sroa.0.0.copyload, %i.u
-  %i.x = extractelement <2 x i1> %4, i64 1
+  %i.x = extractelement <2 x i1> %i.v, i64 1
   %i.y = select i1 %i.w, i1 true, i1 %i.x
   br i1 %i.y, label %bb.b, label %bb.c
 

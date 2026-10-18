@@ -205,10 +205,8 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w, %bb.v
   %.sroa.034.0 = phi <2 x float> [ %.sroa.02.4.vec.insert.i313, %bb.w ], [ zeroinitializer, %bb.v ]
   %i.ic = fsub <2 x float> %.sroa.034.0, %.sroa.041.0
-  %i.id = fmul <2 x float> %.sroa.065.0.copyload, %i.ic ; 2 uses
-  %shift437 = shufflevector <2 x float> %i.id, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop438 = fadd <2 x float> %i.id, %shift437
-  %4 = extractelement <2 x float> %foldExtExtBinop438, i64 0
+  %i.id = fmul <2 x float> %.sroa.065.0.copyload, %i.ic
+  %4 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.id)
   %i.ie = getelementptr inbounds nuw i8, ptr %i.gi, i64 36
   store float %4, ptr %i.ie, align 4, !tbaa !541
   %i.if = getelementptr inbounds nuw i8, ptr %i.gi, i64 46

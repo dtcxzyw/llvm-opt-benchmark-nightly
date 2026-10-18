@@ -204,7 +204,7 @@ bb.re:                                            ; preds = %bb.rd
   br label %.thread3331
 
 .thread3331:                                      ; preds = %_ZZNK4llvm20GIMatchTableExecutor17executeMatchTableIKNS_25AMDGPUInstructionSelectorENS_6BitsetILj190EEEMS2_KFSt8optionalINS_11SmallVectorISt8functionIFvRNS_19MachineInstrBuilderEEELj4EEEERNS_14MachineOperandEEMS2_KFvSA_RKNS_12MachineInstrEiEEEbRT_RNS0_12MatcherStateERKNS0_10ExecInfoTyIT0_T1_T2_EERNS_16MachineIRBuilderEPKhRKNS_15TargetInstrInfoERNS_19MachineRegisterInfoERKNS_18TargetRegisterInfoERKNS_16RegisterBankInfoERKST_PNS_15CodeGenCoverageEENKUlvE2_clEv.exit1686, %bb.re, %bb.rd
-  %.07783334 = phi i16 [ %.0.copyload.i.i1687, %bb.re ], [ %.0.copyload.i.i1687, %bb.rd ], [ 0, %_ZZNK4llvm20GIMatchTableExecutor17executeMatchTableIKNS_25AMDGPUInstructionSelectorENS_6BitsetILj190EEEMS2_KFSt8optionalINS_11SmallVectorISt8functionIFvRNS_19MachineInstrBuilderEEELj4EEEERNS_14MachineOperandEEMS2_KFvSA_RKNS_12MachineInstrEiEEEbRT_RNS0_12MatcherStateERKNS0_10ExecInfoTyIT0_T1_T2_EERNS_16MachineIRBuilderEPKhRKNS_15TargetInstrInfoERNS_19MachineRegisterInfoERKNS_18TargetRegisterInfoERKNS_16RegisterBankInfoERKST_PNS_15CodeGenCoverageEENKUlvE2_clEv.exit1686 ] ; 5 uses
+  %.07783334 = phi i16 [ %.0.copyload.i.i1687, %bb.re ], [ %.0.copyload.i.i1687, %bb.rd ], [ 0, %_ZZNK4llvm20GIMatchTableExecutor17executeMatchTableIKNS_25AMDGPUInstructionSelectorENS_6BitsetILj190EEEMS2_KFSt8optionalINS_11SmallVectorISt8functionIFvRNS_19MachineInstrBuilderEEELj4EEEERNS_14MachineOperandEEMS2_KFvSA_RKNS_12MachineInstrEiEEEbRT_RNS0_12MatcherStateERKNS0_10ExecInfoTyIT0_T1_T2_EERNS_16MachineIRBuilderEPKhRKNS_15TargetInstrInfoERNS_19MachineRegisterInfoERKNS_18TargetRegisterInfoERKNS_16RegisterBankInfoERKST_PNS_15CodeGenCoverageEENKUlvE2_clEv.exit1686 ] ; 2 uses
   %.96 = phi i64 [ %i.edb, %bb.re ], [ %i.ecy, %bb.rd ], [ %.251, %_ZZNK4llvm20GIMatchTableExecutor17executeMatchTableIKNS_25AMDGPUInstructionSelectorENS_6BitsetILj190EEEMS2_KFSt8optionalINS_11SmallVectorISt8functionIFvRNS_19MachineInstrBuilderEEELj4EEEERNS_14MachineOperandEEMS2_KFvSA_RKNS_12MachineInstrEiEEEbRT_RNS0_12MatcherStateERKNS0_10ExecInfoTyIT0_T1_T2_EERNS_16MachineIRBuilderEPKhRKNS_15TargetInstrInfoERNS_19MachineRegisterInfoERKNS_18TargetRegisterInfoERKNS_16RegisterBankInfoERKST_PNS_15CodeGenCoverageEENKUlvE2_clEv.exit1686 ]
   %.0777 = phi i32 [ %i.ede, %bb.re ], [ 0, %bb.rd ], [ 0, %_ZZNK4llvm20GIMatchTableExecutor17executeMatchTableIKNS_25AMDGPUInstructionSelectorENS_6BitsetILj190EEEMS2_KFSt8optionalINS_11SmallVectorISt8functionIFvRNS_19MachineInstrBuilderEEELj4EEEERNS_14MachineOperandEEMS2_KFvSA_RKNS_12MachineInstrEiEEEbRT_RNS0_12MatcherStateERKNS0_10ExecInfoTyIT0_T1_T2_EERNS_16MachineIRBuilderEPKhRKNS_15TargetInstrInfoERNS_19MachineRegisterInfoERKNS_18TargetRegisterInfoERKNS_16RegisterBankInfoERKST_PNS_15CodeGenCoverageEENKUlvE2_clEv.exit1686 ]
   %i.edf = load ptr, ptr %24, align 8, !tbaa !382
@@ -220,28 +220,19 @@ bb.re:                                            ; preds = %bb.rd
   %i.edl = load ptr, ptr %i.edk, align 8, !tbaa !525
   %i.edm = load ptr, ptr %i.edg, align 8, !tbaa !526
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #24
-  %29 = and i16 %.07783334, 256
-  %30 = and i16 %.07783334, 512
+  %29 = insertelement <4 x i16> poison, i16 %.07783334, i64 0
+  %30 = shufflevector <4 x i16> %29, <4 x i16> poison, <4 x i32> zeroinitializer
+  %31 = and <4 x i16> %30, <i16 38, i16 192, i16 256, i16 512>
   store ptr null, ptr %i.am, align 8, !tbaa !421, !alias.scope !1268
   %i.edn = and i16 %.07783334, 24
   %.not.i1690 = icmp eq i16 %i.edn, 0
   %i.edo = select i1 %.not.i1690, i32 0, i32 67108864
-  %31 = zext nneg i16 %30 to i32
-  %32 = shl nuw nsw i32 %31, 18
-  %33 = zext nneg i16 %29 to i32
-  %34 = shl nuw nsw i32 %33, 21
-  %35 = and i16 %.07783334, 38
-  %36 = zext nneg i16 %35 to i32
-  %37 = shl nuw nsw i32 %36, 23
-  %38 = or disjoint i32 %37, %i.edo
-  %39 = and i16 %.07783334, 192
-  %40 = zext nneg i16 %39 to i32
-  %41 = shl nuw i32 %40, 24
-  %.masked11.masked.i.i1691 = or disjoint i32 %38, %41
+  %32 = zext nneg <4 x i16> %31 to <4 x i32>
+  %33 = shl nuw <4 x i32> %32, <i32 23, i32 24, i32 21, i32 18>
   store i32 %.sroa.0146.0.copyload, ptr %i.an, align 4, !tbaa !338, !alias.scope !1268
-  %.masked.i.i1692 = or disjoint i32 %.masked11.masked.i.i1691, %34
-  %i.edp = or disjoint i32 %.masked.i.i1692, %32
-  %i.edq = or disjoint i32 %i.edp, %.0777
+  %34 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %33)
+  %i.edp = or disjoint i32 %34, %.0777
+  %i.edq = or disjoint i32 %i.edp, %i.edo
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ao, i8 0, i64 16, i1 false), !alias.scope !1268
   store i32 %i.edq, ptr %16, align 8, !alias.scope !1268
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.edl, ptr noundef nonnull align 8 dereferenceable(1065) %i.edm, ptr noundef nonnull align 8 dereferenceable(32) %16) #24
@@ -643,6 +634,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #16
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }

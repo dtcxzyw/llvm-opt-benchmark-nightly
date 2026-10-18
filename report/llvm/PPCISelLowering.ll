@@ -205,33 +205,24 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !973
   %i.c = load ptr, ptr %0, align 8, !tbaa !974
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
-  %5 = and i16 %2, 256
-  %6 = and i16 %2, 512
+  %5 = insertelement <4 x i16> poison, i16 %2, i64 0
+  %6 = shufflevector <4 x i16> %5, <4 x i16> poison, <4 x i32> zeroinitializer
+  %7 = and <4 x i16> %6, <i16 38, i16 192, i16 256, i16 512>
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr null, ptr %i.d, align 8, !tbaa !970, !alias.scope !1613
   %i.e = and i16 %2, 24
   %.not = icmp eq i16 %i.e, 0
   %i.f = select i1 %.not, i32 0, i32 67108864
-  %7 = zext nneg i16 %6 to i32
-  %8 = shl nuw nsw i32 %7, 18
-  %9 = zext nneg i16 %5 to i32
-  %10 = shl nuw nsw i32 %9, 21
-  %11 = and i16 %2, 38
-  %12 = zext nneg i16 %11 to i32
-  %13 = shl nuw nsw i32 %12, 23
-  %14 = or disjoint i32 %13, %i.f
-  %15 = and i16 %2, 192
-  %16 = zext nneg i16 %15 to i32
-  %17 = shl nuw i32 %16, 24
-  %.masked11.masked.i = or disjoint i32 %14, %17
+  %8 = zext nneg <4 x i16> %7 to <4 x i32>
+  %9 = shl nuw <4 x i32> %8, <i32 23, i32 24, i32 21, i32 18>
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 %1, ptr %i.g, align 4, !tbaa !204, !alias.scope !1613
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.i = shl i32 %3, 8
   %i.j = and i32 %i.i, 1048320
-  %.masked.i = or disjoint i32 %.masked11.masked.i, %10
-  %i.k = or disjoint i32 %.masked.i, %8
-  %i.l = or disjoint i32 %i.k, %i.j
+  %10 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %9)
+  %i.k = or disjoint i32 %10, %i.j
+  %i.l = or disjoint i32 %i.k, %i.f
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i8 0, i64 16, i1 false), !alias.scope !1613
   store i32 %i.l, ptr %4, align 8, !alias.scope !1613
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.b, ptr noundef nonnull align 8 dereferenceable(1065) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %4) #31
@@ -633,6 +624,9 @@ declare i8 @llvm.umax.i8(i8, i8) #28
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v4i1(<4 x i1>, i1 immarg) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #28
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

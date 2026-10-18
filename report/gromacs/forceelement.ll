@@ -204,15 +204,9 @@ define void @_ZN3gmx12ForceElement12scheduleTaskEldRKSt8functionIFvS1_IFvvEEEE(p
   %i.o = insertelement <4 x i64> poison, i64 %1, i64 0
   %i.p = shufflevector <4 x i64> %i.o, <4 x i64> poison, <4 x i32> zeroinitializer
   %i.q = icmp eq <4 x i64> %i.m, %i.p
-  %i.r = select <4 x i1> %i.q, <4 x i32> <i32 4, i32 512, i32 256, i32 1024>, <4 x i32> zeroinitializer ; 4 uses
-  %5 = extractelement <4 x i32> %i.r, i64 2
-  %6 = or disjoint i32 %i.l, %5
-  %7 = extractelement <4 x i32> %i.r, i64 1
-  %8 = or i32 %6, %7
-  %9 = extractelement <4 x i32> %i.r, i64 3
-  %10 = or i32 %8, %9
-  %11 = extractelement <4 x i32> %i.r, i64 0
-  %i.s = or i32 %10, %11
+  %i.r = select <4 x i1> %i.q, <4 x i32> <i32 4, i32 512, i32 256, i32 1024>, <4 x i32> zeroinitializer
+  %5 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.r)
+  %i.s = or i32 %5, %i.l
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 24
   store ptr %0, ptr %i.n, align 16, !tbaa !53
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8
@@ -614,6 +608,9 @@ declare i64 @llvm.umax.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #25
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }

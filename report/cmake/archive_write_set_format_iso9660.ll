@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 66272
   %i.g = load i64, ptr %i.f, align 8, !tbaa !50
   %i.h = sub i64 65536, %i.g
-  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h ; 29 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h ; 19 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(2047) %i.j, i8 0, i64 2047, i1 false)
   store i8 1, ptr %i.i, align 1, !tbaa !68
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 %i.l, ptr %i.j, align 1, !tbaa !68
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 3
   store i8 0, ptr %i.m, align 1, !tbaa !68
-  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 2 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 2
   store i8 0, ptr %i.n, align 1, !tbaa !68
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 66392
   %i.p = load i64, ptr %i.o, align 8, !tbaa !116
@@ -226,70 +226,29 @@ bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 4 ; 2 uses
   %i.s = load ptr, ptr %i.q, align 8, !tbaa !343
   %i.t = tail call ptr @strncpy(ptr noundef nonnull dereferenceable(1) %i.r, ptr noundef nonnull dereferenceable(1) %i.s, i64 noundef 23) #23 ; 0 uses
-  %.0.ptr.val.2.pre.i = load i16, ptr %i.r, align 1
-  %.0.ptr.3.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 6
-  %.0.ptr.val.3.pre.i = load i16, ptr %.0.ptr.3.phi.trans.insert.i, align 1
-  %.0.ptr.4.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %.0.ptr.val.4.pre.i = load i16, ptr %.0.ptr.4.phi.trans.insert.i, align 1
-  %.0.ptr.5.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 10
-  %.0.ptr.val.5.pre.i = load i16, ptr %.0.ptr.5.phi.trans.insert.i, align 1
-  %.0.ptr.6.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 12
-  %.0.ptr.val.6.pre.i = load i16, ptr %.0.ptr.6.phi.trans.insert.i, align 1
-  %.0.ptr.7.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 14
-  %.0.ptr.val.7.pre.i = load i16, ptr %.0.ptr.7.phi.trans.insert.i, align 1
-  %.0.ptr.8.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %.0.ptr.val.8.pre.i = load i16, ptr %.0.ptr.8.phi.trans.insert.i, align 1
-  %.0.ptr.9.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 18
-  %.0.ptr.val.9.pre.i = load i16, ptr %.0.ptr.9.phi.trans.insert.i, align 1
-  %.0.ptr.10.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 20
-  %.0.ptr.val.10.pre.i = load i16, ptr %.0.ptr.10.phi.trans.insert.i, align 1
-  %.0.ptr.11.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 22
-  %.0.ptr.val.11.pre.i = load i16, ptr %.0.ptr.11.phi.trans.insert.i, align 1
-  %.0.ptr.12.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  %.0.ptr.val.12.pre.i = load i16, ptr %.0.ptr.12.phi.trans.insert.i, align 1
+  %1 = load <11 x i16>, ptr %i.r, align 1
+  %2 = shufflevector <11 x i16> %1, <11 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0.ptr.val.12.i = phi i16 [ %.0.ptr.val.12.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.11.i = phi i16 [ %.0.ptr.val.11.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.10.i = phi i16 [ %.0.ptr.val.10.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.9.i = phi i16 [ %.0.ptr.val.9.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.8.i = phi i16 [ %.0.ptr.val.8.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.7.i = phi i16 [ %.0.ptr.val.7.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.6.i = phi i16 [ %.0.ptr.val.6.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.5.i = phi i16 [ %.0.ptr.val.5.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.4.i = phi i16 [ %.0.ptr.val.4.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.3.i = phi i16 [ %.0.ptr.val.3.pre.i, %bb.c ], [ 0, %bb.b ]
-  %.0.ptr.val.2.i = phi i16 [ %.0.ptr.val.2.pre.i, %bb.c ], [ 0, %bb.b ]
+  %3 = phi <16 x i16> [ %2, %bb.c ], [ <i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison>, %bb.b ]
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 27
-  %i.v = getelementptr inbounds nuw i8, ptr %i.i, i64 28 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.i, i64 28
   %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 30
   store <4 x i8> <i8 0, i8 0, i8 0, i8 85>, ptr %i.u, align 1, !tbaa !68
   %i.x = getelementptr inbounds nuw i8, ptr %i.i, i64 31
   store i8 -86, ptr %i.x, align 1, !tbaa !68
-  %.0.ptr.val.i = load i16, ptr %i.i, align 1
-  %.0.ptr.val.1.i = load i16, ptr %i.n, align 1
-  %1 = add i16 %.0.ptr.val.i, %.0.ptr.val.1.i
-  %2 = add i16 %.0.ptr.val.2.i, %1
-  %3 = add i16 %.0.ptr.val.3.i, %2
-  %4 = add i16 %.0.ptr.val.4.i, %3
-  %5 = add i16 %.0.ptr.val.5.i, %4
-  %6 = add i16 %.0.ptr.val.6.i, %5
-  %7 = add i16 %.0.ptr.val.7.i, %6
-  %8 = add i16 %.0.ptr.val.8.i, %7
-  %9 = add i16 %.0.ptr.val.9.i, %8
-  %10 = add i16 %.0.ptr.val.10.i, %9
-  %11 = add i16 %.0.ptr.val.11.i, %10
-  %12 = add i16 %.0.ptr.val.12.i, %11
   %.0.ptr.13.i = getelementptr inbounds nuw i8, ptr %i.i, i64 26
-  %.0.ptr.val.13.i = load i16, ptr %.0.ptr.13.i, align 1
-  %13 = add i16 %.0.ptr.val.13.i, %12
-  %.0.ptr.val.14.i = load i16, ptr %i.v, align 1
-  %14 = add i16 %.0.ptr.val.14.i, %13
-  %.0.ptr.val.15.i = load i16, ptr %i.w, align 1
-  %15 = add i16 %.0.ptr.val.15.i, %14
+  %4 = load <2 x i16>, ptr %i.i, align 1
+  %5 = load <2 x i16>, ptr %.0.ptr.13.i, align 1
+  %.0.ptr.val.13.i = load i16, ptr %i.w, align 1
+  %6 = shufflevector <2 x i16> %4, <2 x i16> %5, <5 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison>
+  %7 = insertelement <5 x i16> %6, i16 %.0.ptr.val.13.i, i64 4
+  %8 = shufflevector <5 x i16> %7, <5 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %9 = shufflevector <16 x i16> %3, <16 x i16> %8, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 16, i32 17, i32 18, i32 19, i32 20>
+  %10 = tail call i16 @llvm.vector.reduce.add.v16i16(<16 x i16> %9)
   %i.y = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  %i.z = sub i16 0, %15
+  %i.z = sub i16 0, %10
   store i16 %i.z, ptr %i.v, align 1
   store i8 -120, ptr %i.y, align 1, !tbaa !68
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 66408 ; 2 uses
@@ -691,6 +650,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.add.v16i16(<16 x i16>) #21
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

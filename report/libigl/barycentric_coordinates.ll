@@ -145,11 +145,9 @@ define weak_odr dso_local void @_ZN3igl23barycentric_coordinatesIN5Eigen6MatrixI
   %i.ay = fmul <2 x float> %i.aw, %i.ax
   %i.az = fsub <2 x float> %i.av, %i.ay
   %i.ba = shufflevector <2 x float> %foldExtExtBinop396, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bb = fdiv <2 x float> %i.az, %i.ba           ; 3 uses
+  %i.bb = fdiv <2 x float> %i.az, %i.ba           ; 2 uses
   store <2 x float> %i.bb, ptr %i.j, align 4, !tbaa !10
-  %shift398 = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop399 = fadd <2 x float> %i.bb, %shift398
-  %5 = extractelement <2 x float> %foldExtExtBinop399, i64 0
+  %5 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.bb)
   %i.bc = fsub float 1.000000e+00, %5
   store float %i.bc, ptr %4, align 4, !tbaa !10
   ret void
@@ -222,12 +220,10 @@ define weak_odr dso_local void @_ZN3igl23barycentric_coordinatesIN5Eigen6MatrixI
   %i.as = fmul <2 x double> %i.aq, %i.ar
   %i.at = fsub <2 x double> %i.ap, %i.as
   %i.au = shufflevector <2 x double> %foldExtExtBinop370, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.av = fdiv <2 x double> %i.at, %i.au          ; 3 uses
+  %i.av = fdiv <2 x double> %i.at, %i.au          ; 2 uses
   %i.aw = shufflevector <2 x double> %i.av, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   store <2 x double> %i.aw, ptr %i.v, align 8, !tbaa !15
-  %shift372 = shufflevector <2 x double> %i.av, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop373 = fadd <2 x double> %shift372, %i.av
-  %5 = extractelement <2 x double> %foldExtExtBinop373, i64 0
+  %5 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.av)
   %i.ax = fsub double 1.000000e+00, %5
   store double %i.ax, ptr %4, align 8, !tbaa !15
   ret void
@@ -302,12 +298,10 @@ bb.a:
   %i.az = fmul <2 x float> %i.ax, %i.ay
   %i.ba = fsub <2 x float> %i.aw, %i.az
   %i.bb = shufflevector <2 x float> %foldExtExtBinop257, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bc = fdiv <2 x float> %i.ba, %i.bb           ; 3 uses
+  %i.bc = fdiv <2 x float> %i.ba, %i.bb           ; 2 uses
   %i.bd = shufflevector <2 x float> %i.bc, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   store <2 x float> %i.bd, ptr %i.i, align 4, !tbaa !10
-  %shift259 = shufflevector <2 x float> %i.bc, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop260 = fadd <2 x float> %shift259, %i.bc
-  %5 = extractelement <2 x float> %foldExtExtBinop260, i64 0
+  %5 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.bc)
   %i.be = fsub float 1.000000e+00, %5
   store float %i.be, ptr %4, align 4, !tbaa !10
   ret void
@@ -710,11 +704,9 @@ bb.a:
   %i.at = fmul <2 x double> %i.ar, %i.as
   %i.au = fsub <2 x double> %i.aq, %i.at
   %i.av = shufflevector <2 x double> %foldExtExtBinop243, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.aw = fdiv <2 x double> %i.au, %i.av          ; 3 uses
+  %i.aw = fdiv <2 x double> %i.au, %i.av          ; 2 uses
   store <2 x double> %i.aw, ptr %i.u, align 8, !tbaa !15
-  %shift245 = shufflevector <2 x double> %i.aw, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop246 = fadd <2 x double> %i.aw, %shift245
-  %5 = extractelement <2 x double> %foldExtExtBinop246, i64 0
+  %5 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.aw)
   %i.ax = fsub double 1.000000e+00, %5
   store double %i.ax, ptr %4, align 8, !tbaa !15
   ret void
@@ -783,11 +775,9 @@ bb.a:
   %i.am = fmul <2 x double> %i.ak, %i.al
   %i.an = fsub <2 x double> %i.aj, %i.am
   %i.ao = shufflevector <2 x double> %foldExtExtBinop245, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ap = fdiv <2 x double> %i.an, %i.ao          ; 3 uses
+  %i.ap = fdiv <2 x double> %i.an, %i.ao          ; 2 uses
   store <2 x double> %i.ap, ptr %i.ac, align 8, !tbaa !15
-  %shift247 = shufflevector <2 x double> %i.ap, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop248 = fadd <2 x double> %i.ap, %shift247
-  %5 = extractelement <2 x double> %foldExtExtBinop248, i64 0
+  %5 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ap)
   %i.aq = fsub double 1.000000e+00, %5
   store double %i.aq, ptr %4, align 8, !tbaa !15
   ret void
@@ -885,11 +875,9 @@ bb.a:
   %i.bj = fmul <2 x double> %i.bh, %i.bi
   %i.bk = fsub <2 x double> %i.bg, %i.bj
   %i.bl = shufflevector <2 x double> %foldExtExtBinop261, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bm = fdiv <2 x double> %i.bk, %i.bl          ; 3 uses
+  %i.bm = fdiv <2 x double> %i.bk, %i.bl          ; 2 uses
   store <2 x double> %i.bm, ptr %i.ak, align 8, !tbaa !15
-  %shift263 = shufflevector <2 x double> %i.bm, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop264 = fadd <2 x double> %i.bm, %shift263
-  %5 = extractelement <2 x double> %foldExtExtBinop264, i64 0
+  %5 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.bm)
   %i.bn = fsub double 1.000000e+00, %5
   store double %i.bn, ptr %4, align 8, !tbaa !15
   ret void
@@ -1291,6 +1279,12 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13

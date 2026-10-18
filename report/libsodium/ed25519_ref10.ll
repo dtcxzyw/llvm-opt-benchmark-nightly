@@ -204,7 +204,6 @@ bb.a:
   %i.ao = add <2 x i64> %i.an, splat (i64 4503599627370494)
   %i.ap = getelementptr i8, ptr %0, i64 64
   %i.aq = load <2 x i64>, ptr %i.f, align 8
-  %2 = add <2 x i64> %i.aq, <i64 0, i64 4503599627370494>
   %i.ar = add i64 %i.ai, %i.y                     ; 2 uses
   %i.as = lshr i64 %i.ar, 51
   %i.at = add i64 %i.as, %i.z                     ; 2 uses
@@ -214,11 +213,11 @@ bb.a:
   %i.ax = and <2 x i64> %i.aw, splat (i64 2251799813685247)
   %.neg39.i = mul nsw i64 %i.au, -19
   %i.ay = add i64 %i.ad, %.neg39.i
-  %3 = sub <2 x i64> %2, %i.ax
-  %4 = add <2 x i64> %3, <i64 4503599627370494, i64 0>
+  %2 = add nuw nsw <2 x i64> %i.ax, splat (i64 -4503599627370494)
+  %3 = sub <2 x i64> %i.aq, %2
   store i64 %i.ay, ptr %i.u, align 8
   store <2 x i64> %i.ao, ptr %i.ae, align 8
-  store <2 x i64> %4, ptr %i.ap, align 8
+  store <2 x i64> %3, ptr %i.ap, align 8
   %i.az = getelementptr i8, ptr %0, i64 80
   %i.ba = getelementptr i8, ptr %1, i64 80
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.az, ptr noundef nonnull readonly align 8 dereferenceable(40) %i.ba, i64 noundef 40, i1 noundef false) #12
@@ -621,7 +620,6 @@ ge25519_mul_l.exit:                               ; preds = %bb.f
   store <2 x i64> %i.qo, ptr %i.qe, align 8
   %i.qp = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.qq = load <2 x i64>, ptr %i.qd, align 8
-  %8 = add <2 x i64> %i.qq, <i64 0, i64 4503599627370494>
   %i.qr = add i64 %i.qi, %i.pw                    ; 2 uses
   %i.qs = lshr i64 %i.qr, 51
   %i.qt = add i64 %i.qs, %i.py                    ; 2 uses
@@ -631,10 +629,10 @@ ge25519_mul_l.exit:                               ; preds = %bb.f
   %i.qx = and <2 x i64> %i.qw, splat (i64 2251799813685247)
   %.neg39.i = mul nsw i64 %i.qu, -19
   %i.qy = add i64 %i.qc, %.neg39.i
-  %9 = sub <2 x i64> %8, %i.qx
-  %10 = add <2 x i64> %9, <i64 4503599627370494, i64 0>
+  %8 = add nuw nsw <2 x i64> %i.qx, splat (i64 -4503599627370494)
+  %9 = sub <2 x i64> %i.qq, %8
   store i64 %i.qy, ptr %i.c, align 16
-  store <2 x i64> %10, ptr %i.qp, align 8
+  store <2 x i64> %9, ptr %i.qp, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   call void @fe25519_tobytes(ptr noundef nonnull %i.b, ptr noundef nonnull readonly %7)
   %i.qz = call i32 @sodium_is_zero(ptr noundef nonnull %i.b, i64 noundef 32) #12

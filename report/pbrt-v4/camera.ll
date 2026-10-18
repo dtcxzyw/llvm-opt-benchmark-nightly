@@ -205,42 +205,31 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !99
   %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 24
   store i32 0, ptr %i.ad, align 8, !tbaa !246
-  %12 = shl nuw nsw i64 %.sroa.8106.0.insert.ext111, 16
-  %13 = or i64 %12, %.sroa.8106.0.insert.ext111
-  %14 = and i64 %13, 281470681808895              ; 2 uses
-  %15 = shl nuw nsw i64 %14, 8
-  %16 = or i64 %15, %14
-  %17 = and i64 %16, 71777214294589695            ; 2 uses
-  %18 = shl nuw nsw i64 %17, 4
-  %19 = or i64 %18, %17
-  %20 = and i64 %19, 1085102592571150095          ; 2 uses
-  %i.ae = shl nuw nsw i64 %20, 2
-  %i.af = or i64 %i.ae, %20
-  %21 = and i64 %i.af, 3689348814741910323        ; 2 uses
-  %22 = shl nuw i64 %21, 2
-  %i.ag = shl nuw nsw i64 %21, 1
-  %i.ah = or i64 %22, %i.ag
-  %23 = and i64 %i.ah, -6148914691236517206
-  %24 = shl nuw nsw i64 %.sroa.099.0.insert.ext103, 16
-  %25 = or i64 %24, %.sroa.099.0.insert.ext103
-  %26 = and i64 %25, 281470681808895              ; 2 uses
-  %27 = shl nuw nsw i64 %26, 8
-  %28 = or i64 %27, %26
-  %29 = and i64 %28, 71777214294589695            ; 2 uses
-  %30 = shl nuw nsw i64 %29, 4
-  %31 = or i64 %30, %29
-  %32 = and i64 %31, 1085102592571150095          ; 2 uses
-  %33 = shl nuw nsw i64 %32, 2
-  %34 = or i64 %33, %32
-  %35 = and i64 %34, 3689348814741910323          ; 2 uses
-  %36 = shl nuw nsw i64 %35, 1
-  %37 = or i64 %36, %35
-  %38 = and i64 %37, 6148914691236517205
-  %39 = or disjoint i64 %23, %38
+  %i.ae = shl nuw nsw i64 %.sroa.8106.0.insert.ext111, 16
+  %i.af = or i64 %i.ae, %.sroa.8106.0.insert.ext111
+  %i.ag = shl nuw nsw i64 %.sroa.099.0.insert.ext103, 16
+  %i.ah = or i64 %i.ag, %.sroa.099.0.insert.ext103
+  %12 = insertelement <2 x i64> poison, i64 %i.af, i64 0
+  %13 = insertelement <2 x i64> %12, i64 %i.ah, i64 1
+  %14 = and <2 x i64> %13, splat (i64 281470681808895) ; 2 uses
+  %15 = shl nuw nsw <2 x i64> %14, splat (i64 8)
+  %16 = or <2 x i64> %15, %14
+  %17 = and <2 x i64> %16, splat (i64 71777214294589695) ; 2 uses
+  %18 = shl nuw nsw <2 x i64> %17, splat (i64 4)
+  %19 = or <2 x i64> %18, %17
+  %20 = and <2 x i64> %19, splat (i64 1085102592571150095) ; 2 uses
+  %21 = shl nuw nsw <2 x i64> %20, splat (i64 2)
+  %22 = or <2 x i64> %21, %20
+  %23 = and <2 x i64> %22, splat (i64 3689348814741910323) ; 2 uses
+  %24 = shl nuw nsw <2 x i64> %23, <i64 1, i64 0>
+  %25 = shl nuw <2 x i64> %23, <i64 2, i64 1>
+  %26 = or <2 x i64> %25, %24
+  %27 = and <2 x i64> %26, <i64 -6148914691236517206, i64 6148914691236517205>
+  %28 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %27)
   %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !247
   %i.ak = zext nneg i32 %i.aj to i64
-  %i.al = shl i64 %39, %i.ak
+  %i.al = shl i64 %28, %i.ak
   %i.am = sext i32 %i.ac to i64
   %i.an = or i64 %i.al, %i.am
   %i.ao = getelementptr inbounds nuw i8, ptr %9, i64 16
@@ -641,6 +630,9 @@ declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.fshr.v2i32(<2 x i32>, <2 x i32>, <2 x i32>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #19

@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5: ; preds = %_ZNS
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4llvh10TimerGroup17PrintQueuedTimersERNS_11raw_ostreamE(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(36) %1) local_unnamed_addr #1 align 2 {
 bb.a:
-  %2 = alloca %"class.llvh::TimeRecord", align 8  ; 14 uses
+  %2 = alloca %"class.llvh::TimeRecord", align 8  ; 13 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %5 = alloca %"class.llvh::format_object.28", align 8 ; 7 uses
@@ -454,18 +454,16 @@ bb.q:                                             ; preds = %.lr.ph, %bb.q
 
 bb.r:                                             ; preds = %_ZL20getDefaultTimerGroupv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %7 = load double, ptr %6, align 8, !tbaa !73
-  %i.dg = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %8 = load double, ptr %i.dg, align 8, !tbaa !72
-  %9 = fadd double %7, %8
+  %i.dg = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %6 = load <2 x double>, ptr %i.dg, align 8, !tbaa !71
+  %7 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %6)
   %i.dh = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr @.str.13, ptr %i.dh, align 8, !tbaa !75, !alias.scope !187
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvh13format_objectIJddEEE, i64 16), ptr %5, align 8, !tbaa !13, !alias.scope !187
   %i.di = getelementptr inbounds nuw i8, ptr %5, i64 16
   store double %.lcssa, ptr %i.di, align 8, !tbaa !77, !alias.scope !187
   %i.dj = getelementptr inbounds nuw i8, ptr %5, i64 24
-  store double %9, ptr %i.dj, align 8, !tbaa !79, !alias.scope !187
+  store double %7, ptr %i.dj, align 8, !tbaa !79, !alias.scope !187
   %i.dk = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsERKNS_18format_object_baseE(ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull align 8 dereferenceable(16) %5) #22 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br label %bb.s

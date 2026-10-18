@@ -153,13 +153,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %2, ptr %i.g, align 8, !tbaa !18
-  %i.h = insertelement <2 x double> poison, double %1, i64 0
-  %i.i = insertelement <2 x double> %i.h, double %0, i64 1
-  %i.j = fadd <2 x double> %i.i, <double f0x40554345B1A57F00, double 1.800000e+02>
-  %4 = fdiv <2 x double> %i.j, <double f0x40654345B1A57F00, double 3.600000e+02>
+  %i.h = insertelement <2 x double> poison, double %0, i64 0
+  %i.i = insertelement <2 x double> %i.h, double %1, i64 1
+  %i.j = fadd <2 x double> %i.i, <double 1.800000e+02, double f0x40554345B1A57F00>
   %i.k = zext nneg i8 %2 to i64
   %i.l = shl nuw nsw i64 1, %i.k
   %i.m = uitofp nneg i64 %i.l to double
+  %4 = fdiv <2 x double> %i.j, <double 3.600000e+02, double f0x40654345B1A57F00>
   %i.n = insertelement <2 x double> poison, double %i.m, i64 0
   %i.o = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> zeroinitializer
   %i.p = fmul <2 x double> %4, %i.o
@@ -175,20 +175,16 @@ bb.c:                                             ; preds = %bb.b
   %i.z = or <2 x i64> %i.y, %i.x
   %i.aa = and <2 x i64> %i.z, splat (i64 1085102592571150095) ; 2 uses
   %i.ab = shl nuw nsw <2 x i64> %i.aa, splat (i64 2)
-  %i.ac = or <2 x i64> %i.ab, %i.aa               ; 2 uses
-  %5 = extractelement <2 x i64> %i.ac, i64 0
-  %6 = and i64 %5, 3689348814741910323            ; 2 uses
-  %i.ad = extractelement <2 x i64> %i.ac, i64 1
-  %7 = and i64 %i.ad, 3689348814741910323         ; 2 uses
-  %8 = shl nuw nsw i64 %6, 1
-  %9 = or i64 %8, %6
-  %10 = and i64 %9, 6148914691236517205
-  %i.ae = shl nuw i64 %7, 2
-  %11 = shl nuw nsw i64 %7, 1
-  %12 = or i64 %i.ae, %11
-  %13 = and i64 %12, -6148914691236517206
-  %14 = or disjoint i64 %13, %10
-  store i64 %14, ptr %3, align 8, !tbaa !17
+  %i.ac = or <2 x i64> %i.ab, %i.aa
+  %5 = and <2 x i64> %i.ac, splat (i64 3689348814741910323) ; 3 uses
+  %6 = shl nuw <2 x i64> %5, <i64 2, i64 1>
+  %i.ad = extractelement <2 x i64> %5, i64 0
+  %i.ae = shl nuw nsw i64 %i.ad, 1
+  %7 = insertelement <2 x i64> %5, i64 %i.ae, i64 0
+  %8 = or <2 x i64> %6, %7
+  %9 = and <2 x i64> %8, <i64 -6148914691236517206, i64 6148914691236517205>
+  %10 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %9)
+  store i64 %10, ptr %3, align 8, !tbaa !17
   br label %geohashEncode.exit
 
 geohashEncode.exit:                               ; preds = %bb.a, %bb.b, %bb.c
@@ -216,13 +212,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %2, ptr %i.g, align 8, !tbaa !18
-  %i.h = insertelement <2 x double> poison, double %1, i64 0
-  %i.i = insertelement <2 x double> %i.h, double %0, i64 1
-  %i.j = fadd <2 x double> %i.i, <double f0x40554345B1A57F00, double 1.800000e+02>
-  %4 = fdiv <2 x double> %i.j, <double f0x40654345B1A57F00, double 3.600000e+02>
+  %i.h = insertelement <2 x double> poison, double %0, i64 0
+  %i.i = insertelement <2 x double> %i.h, double %1, i64 1
+  %i.j = fadd <2 x double> %i.i, <double 1.800000e+02, double f0x40554345B1A57F00>
   %i.k = zext nneg i8 %2 to i64
   %i.l = shl nuw nsw i64 1, %i.k
   %i.m = uitofp nneg i64 %i.l to double
+  %4 = fdiv <2 x double> %i.j, <double 3.600000e+02, double f0x40654345B1A57F00>
   %i.n = insertelement <2 x double> poison, double %i.m, i64 0
   %i.o = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> zeroinitializer
   %i.p = fmul <2 x double> %4, %i.o
@@ -238,20 +234,16 @@ bb.c:                                             ; preds = %bb.b
   %i.z = or <2 x i64> %i.y, %i.x
   %i.aa = and <2 x i64> %i.z, splat (i64 1085102592571150095) ; 2 uses
   %i.ab = shl nuw nsw <2 x i64> %i.aa, splat (i64 2)
-  %i.ac = or <2 x i64> %i.ab, %i.aa               ; 2 uses
-  %5 = extractelement <2 x i64> %i.ac, i64 0
-  %6 = and i64 %5, 3689348814741910323            ; 2 uses
-  %i.ad = extractelement <2 x i64> %i.ac, i64 1
-  %7 = and i64 %i.ad, 3689348814741910323         ; 2 uses
-  %8 = shl nuw nsw i64 %6, 1
-  %9 = or i64 %8, %6
-  %10 = and i64 %9, 6148914691236517205
-  %i.ae = shl nuw i64 %7, 2
-  %11 = shl nuw nsw i64 %7, 1
-  %12 = or i64 %i.ae, %11
-  %13 = and i64 %12, -6148914691236517206
-  %14 = or disjoint i64 %13, %10
-  store i64 %14, ptr %3, align 8, !tbaa !17
+  %i.ac = or <2 x i64> %i.ab, %i.aa
+  %5 = and <2 x i64> %i.ac, splat (i64 3689348814741910323) ; 3 uses
+  %6 = shl nuw <2 x i64> %5, <i64 2, i64 1>
+  %i.ad = extractelement <2 x i64> %5, i64 0
+  %i.ae = shl nuw nsw i64 %i.ad, 1
+  %7 = insertelement <2 x i64> %5, i64 %i.ae, i64 0
+  %8 = or <2 x i64> %6, %7
+  %9 = and <2 x i64> %8, <i64 -6148914691236517206, i64 6148914691236517205>
+  %10 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %9)
+  store i64 %10, ptr %3, align 8, !tbaa !17
   br label %geohashEncodeType.exit
 
 geohashEncodeType.exit:                           ; preds = %bb.a, %bb.b, %bb.c

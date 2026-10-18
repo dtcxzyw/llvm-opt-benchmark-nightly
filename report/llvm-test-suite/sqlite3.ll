@@ -205,24 +205,9 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.o
 
 bb.f:                                             ; preds = %bb.a
-  %3 = load i8, ptr %0, align 1, !tbaa !139
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw i32 %4, 24
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %7 = load i8, ptr %6, align 1, !tbaa !139
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 16
-  %10 = or disjoint i32 %9, %5
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %12 = load i8, ptr %11, align 1, !tbaa !139
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = or disjoint i32 %10, %14
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %17 = load i8, ptr %16, align 1, !tbaa !139
-  %18 = zext i8 %17 to i32
-  %19 = or disjoint i32 %15, %18
-  %i.ab = sext i32 %19 to i64
+  %3 = load i32, ptr %0, align 1
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
+  %i.ab = sext i32 %4 to i64
   store i64 %i.ab, ptr %2, align 8, !tbaa !139
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 36
   store i16 4, ptr %i.ac, align 4, !tbaa !197
@@ -238,25 +223,11 @@ bb.g:                                             ; preds = %bb.a
   %i.aj = or disjoint i32 %i.af, %i.ai
   %i.ak = sext i32 %i.aj to i64
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %20 = load i8, ptr %i.al, align 1, !tbaa !139
-  %21 = zext i8 %20 to i64
-  %22 = shl nuw nsw i64 %21, 24
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %24 = load i8, ptr %23, align 1, !tbaa !139
-  %25 = zext i8 %24 to i64
-  %26 = shl nuw nsw i64 %25, 16
-  %27 = or disjoint i64 %26, %22
-  %28 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %29 = load i8, ptr %28, align 1, !tbaa !139
-  %30 = zext i8 %29 to i64
-  %31 = shl nuw nsw i64 %30, 8
-  %32 = or disjoint i64 %27, %31
-  %33 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %34 = load i8, ptr %33, align 1, !tbaa !139
-  %i.am = zext i8 %34 to i64
-  %35 = or disjoint i64 %32, %i.am
+  %5 = load i32, ptr %i.al, align 1
+  %6 = tail call i32 @llvm.bswap.i32(i32 %5)
+  %i.am = zext i32 %6 to i64
   %i.an = shl nsw i64 %i.ak, 32
-  %i.ao = or disjoint i64 %35, %i.an
+  %i.ao = or disjoint i64 %i.an, %i.am
   store i64 %i.ao, ptr %2, align 8, !tbaa !139
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 36
   store i16 4, ptr %i.ap, align 4, !tbaa !197

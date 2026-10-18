@@ -202,22 +202,21 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @b3BoxInertia(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.b3Matrix3) align 4 captures(none) initializes((0, 36)) %0, float noundef %1, <2 x float> %2, float %3, <2 x float> %4, float %5) local_unnamed_addr #10 {
 bb.a:
+  %6 = fsub float %5, %3                          ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %foldExtExtBinop = fsub <2 x float> %4, %2      ; 2 uses
-  %foldExtExtBinop35 = fmul <2 x float> %foldExtExtBinop, %foldExtExtBinop
-  %6 = insertelement <2 x float> %4, float %5, i64 0
-  %i.b = insertelement <2 x float> %2, float %3, i64 0
-  %7 = fsub <2 x float> %6, %i.b                  ; 2 uses
-  %8 = fmul <2 x float> %7, %7                    ; 3 uses
-  %shift = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop37 = fadd <2 x float> %shift, %8
-  %i.c = extractelement <2 x float> %foldExtExtBinop37, i64 0
+  %foldExtExtBinop35 = fmul <2 x float> %foldExtExtBinop, %foldExtExtBinop ; 2 uses
+  %7 = fmul float %6, %6
+  %i.b = insertelement <2 x float> poison, float %7, i64 0
+  %8 = shufflevector <2 x float> %i.b, <2 x float> poison, <2 x i32> zeroinitializer
+  %foldExtExtBinop37 = fadd <2 x float> %foldExtExtBinop35, %8 ; 2 uses
+  %i.c = extractelement <2 x float> %foldExtExtBinop37, i64 1
   %i.d = fmul float %1, %i.c
   %i.e = fdiv float %i.d, 1.200000e+01
-  %9 = shufflevector <2 x float> %foldExtExtBinop35, <2 x float> poison, <2 x i32> zeroinitializer
-  %10 = fadd <2 x float> %9, %8
+  %9 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %foldExtExtBinop35)
   %i.f = insertelement <2 x float> poison, float %1, i64 0
   %i.g = shufflevector <2 x float> %i.f, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = insertelement <2 x float> %foldExtExtBinop37, float %9, i64 1
   %i.h = fmul <2 x float> %i.g, %10
   %i.i = fdiv <2 x float> %i.h, splat (float 1.200000e+01) ; 2 uses
   %i.j = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.e, i64 0

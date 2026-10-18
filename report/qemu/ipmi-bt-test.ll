@@ -204,7 +204,7 @@ declare noundef i64 @read(i32 noundef, ptr noundef captures(none), i64 noundef) 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @bt_cmd(ptr nofree noundef readonly captures(none) %0, i32 noundef range(i32 2, 4) %1, ptr nofree noundef nonnull writeonly captures(none) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [100 x i8], align 16              ; 35 uses
+  %i.a = alloca [100 x i8], align 16              ; 26 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = load ptr, ptr @global_qtest, align 8
   %i.d = tail call zeroext i8 @qtest_inb(ptr noundef %i.c, i16 noundef zeroext 228) #12
@@ -384,14 +384,14 @@ bb.k:                                             ; preds = %ipmb_checksum.exit.
   unreachable
 
 ipmb_checksum.exit.thread.i:                      ; preds = %ipmb_checksum.exit.i, %bb.j
-  %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 5 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 3 uses
   %i.aw = load i8, ptr %i.av, align 1             ; 2 uses
   %i.ax = load i8, ptr @get_dev_id_cmd, align 1
   %i.ay = icmp eq i8 %i.aw, %i.ax
   br i1 %i.ay, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %ipmb_checksum.exit.thread.i
-  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.ba = load i8, ptr %i.az, align 2
   %i.bb = load i8, ptr getelementptr inbounds nuw (i8, ptr @get_dev_id_cmd, i64 1), align 1
   %i.bc = icmp eq i8 %i.ba, %i.bb
@@ -399,47 +399,22 @@ bb.l:                                             ; preds = %ipmb_checksum.exit.
 
 .lr.ph.i10.i:                                     ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(14) %i.av, ptr noundef nonnull align 1 dereferenceable(14) @get_dev_id_rsp, i64 noundef 14, i1 noundef false) #12
-  %4 = load i8, ptr %i.a, align 16
-  %5 = load i8, ptr %i.av, align 1
-  %6 = add i8 %4, %5
-  %7 = load i8, ptr %i.az, align 2
-  %8 = add i8 %7, %6
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %10 = load i8, ptr %9, align 1
-  %11 = add i8 %10, %8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %13 = load i8, ptr %12, align 4
-  %14 = add i8 %13, %11
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  %16 = load i8, ptr %15, align 1
-  %17 = add i8 %16, %14
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %19 = load i8, ptr %18, align 2
-  %20 = add i8 %19, %17
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %22 = load i8, ptr %21, align 1
-  %23 = add i8 %22, %20
+  %4 = load <8 x i8>, ptr %i.a, align 16          ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %24 = load i8, ptr %i.bd, align 8
-  %25 = add i8 %24, %23
-  %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %i.bf = load i8, ptr %i.be, align 1
-  %26 = add i8 %i.bf, %25
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %i.bh = load i8, ptr %i.bg, align 2
-  %27 = add i8 %i.bh, %26
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  %i.bj = load i8, ptr %i.bi, align 1
-  %28 = add i8 %i.bj, %27
-  %29 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %30 = load i8, ptr %29, align 4
-  %31 = add i8 %30, %28
-  %32 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  %33 = load i8, ptr %32, align 1
-  %i.bk = add i8 %33, %31
-  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
-  %35 = load i8, ptr %34, align 2
-  %i.bl = add i8 %35, %i.bk
+  %5 = load <4 x i8>, ptr %i.bd, align 8
+  %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %i.bf = load i8, ptr %i.be, align 4
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 13
+  %i.bh = load i8, ptr %i.bg, align 1
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 14
+  %i.bj = load i8, ptr %i.bi, align 2
+  %6 = shufflevector <4 x i8> %5, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = add <8 x i8> %4, %6
+  %8 = shufflevector <8 x i8> %7, <8 x i8> %4, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
+  %9 = call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %8)
+  %i.bk = add i8 %9, %i.bf
+  %op.rdx66 = add i8 %i.bh, %i.bj
+  %i.bl = add i8 %i.bk, %op.rdx66
   %i.bm = sub i8 0, %i.bl
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 15
   store i8 %i.bm, ptr %i.bn, align 1
@@ -461,7 +436,7 @@ bb.n:                                             ; preds = %bb.l, %ipmb_checksu
   br i1 %i.bt, label %bb.o, label %bb.s
 
 bb.o:                                             ; preds = %bb.n
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.bv = load i8, ptr %i.bu, align 2
   %i.bw = load i8, ptr getelementptr inbounds nuw (i8, ptr @set_bmc_globals_cmd, i64 1), align 1
   %i.bx = icmp eq i8 %i.bv, %i.bw
@@ -480,15 +455,9 @@ bb.q:                                             ; preds = %bb.p
 
 write_emu_msg.exit17.i:                           ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.av, ptr noundef nonnull align 1 dereferenceable(3) @set_bmc_globals_rsp, i64 noundef 3, i1 noundef false) #12
-  %36 = load i8, ptr %i.a, align 16
-  %37 = load i8, ptr %i.av, align 1
-  %38 = add i8 %36, %37
-  %39 = load i8, ptr %i.bu, align 2
-  %40 = add i8 %39, %38
-  %41 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %42 = load i8, ptr %41, align 1
-  %43 = add i8 %42, %40
-  %i.cb = sub i8 0, %43
+  %10 = load <4 x i8>, ptr %i.a, align 16
+  %11 = call i8 @llvm.vector.reduce.add.v4i8(<4 x i8> %10)
+  %i.cb = sub i8 0, %11
   %i.cc = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i8 %i.cb, ptr %i.cc, align 4
   %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 5
@@ -642,6 +611,9 @@ declare i8 @llvm.vector.reduce.add.v16i8(<16 x i8>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.vector.reduce.add.v8i8(<8 x i8>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.vector.reduce.add.v4i8(<4 x i8>) #11
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

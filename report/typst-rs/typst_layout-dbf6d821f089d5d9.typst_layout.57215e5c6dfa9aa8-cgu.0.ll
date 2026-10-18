@@ -205,31 +205,28 @@ bb.as:                                            ; preds = %bb.ao
   %i.ei = insertelement <4 x float> %i.eh, float %.sroa.10.0.i, i64 1
   %i.ej = shufflevector <4 x float> %i.ei, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ek = fmul <4 x float> %i.ej, %i.ec
-  %i.el = fadd <4 x float> %i.eg, %i.ek           ; 2 uses
-  %8 = fcmp oeq <4 x float> %i.el, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00> ; 4 uses
-  %9 = extractelement <4 x i1> %8, i64 0
-  %10 = extractelement <4 x i1> %8, i64 1
-  %or.cond5 = select i1 %9, i1 %10, i1 false
-  %11 = extractelement <4 x i1> %8, i64 2
-  %or.cond8 = select i1 %or.cond5, i1 %11, i1 false
-  %12 = extractelement <4 x i1> %8, i64 3
-  %or.cond11 = select i1 %or.cond8, i1 %12, i1 false
-  store <4 x float> %i.el, ptr %i.x, align 8
+  %i.el = fadd <4 x float> %i.eg, %i.ek
+  %.fr315 = freeze <4 x float> %i.el              ; 2 uses
+  store <4 x float> %.fr315, ptr %i.x, align 8
   %i.em = load <2 x float>, ptr %.sroa.7117.0..sroa_idx, align 8
   %i.en = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> zeroinitializer
   %i.eo = fmul <2 x float> %i.en, %i.dz
   %i.ep = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.eq = fmul <2 x float> %i.ep, %i.eb
   %i.er = fadd <2 x float> %i.eo, %i.eq
-  %i.es = fadd <2 x float> %i.em, %i.er           ; 3 uses
-  %i.et = extractelement <2 x float> %i.es, i64 0
+  %i.es = fadd <2 x float> %i.em, %i.er
+  %.fr318 = freeze <2 x float> %i.es              ; 3 uses
+  %8 = extractelement <2 x float> %.fr318, i64 0
+  %9 = fcmp oeq float %8, 0.000000e+00
+  %i.et = extractelement <2 x float> %.fr318, i64 1
   %i.eu = fcmp oeq float %i.et, 0.000000e+00
-  %or.cond14 = select i1 %or.cond11, i1 %i.eu, i1 false
-  %13 = extractelement <2 x float> %i.es, i64 1
-  %14 = fcmp oeq float %13, 0.000000e+00
-  %narrow = select i1 %or.cond14, i1 %14, i1 false
-  %.sroa.046.0 = zext i1 %narrow to i8
-  store <2 x float> %i.es, ptr %.sroa.12113.0..sroa_idx, align 8
+  %10 = fcmp une <4 x float> %.fr315, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
+  %11 = bitcast <4 x i1> %10 to i4
+  %12 = icmp eq i4 %11, 0
+  %op.rdx = and i1 %12, %9
+  %op.rdx314 = and i1 %op.rdx, %i.eu
+  %.sroa.046.0 = zext i1 %op.rdx314 to i8
+  store <2 x float> %.fr318, ptr %.sroa.12113.0..sroa_idx, align 8
   store i8 %.sroa.046.0, ptr %i.y, align 4
   store i32 0, ptr %i.z, align 8
   store i32 0, ptr %i.aa, align 4
