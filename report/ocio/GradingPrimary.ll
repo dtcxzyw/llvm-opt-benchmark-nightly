@@ -202,21 +202,19 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %5 = load double, ptr %4, align 8, !tbaa !13    ; 3 uses
-  %i.be = load <2 x double>, ptr %3, align 8, !tbaa !34 ; 2 uses
-  %6 = insertelement <2 x double> %i.be, double %5, i64 1
-  %7 = insertelement <2 x double> %i.be, double %5, i64 0
+  %4 = load <2 x double>, ptr %3, align 8, !tbaa !34 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.be = load <2 x double>, ptr %5, align 8, !tbaa !34 ; 3 uses
+  %6 = shufflevector <2 x double> %4, <2 x double> %i.be, <2 x i32> <i32 0, i32 3>
+  %7 = shufflevector <2 x double> %i.be, <2 x double> %4, <2 x i32> <i32 1, i32 3>
   %i.bf = fadd <2 x double> %6, %7
   %i.bg = fmul <2 x double> %i.bf, splat (double 6.250000e+00)
   %i.bh = fdiv <2 x double> %i.bg, splat (double 1.023000e+03)
   %i.bi = fptrunc <2 x double> %i.bh to <2 x float>
   %i.bj = fneg <2 x float> %i.bi
   store <2 x float> %i.bj, ptr %0, align 8, !tbaa !33
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %9 = load double, ptr %8, align 8, !tbaa !12
-  %10 = fadd double %5, %9
-  %i.bk = fmul double %10, 6.250000e+00
+  %8 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.be)
+  %i.bk = fmul double %8, 6.250000e+00
   %i.bl = fdiv double %i.bk, 1.023000e+03
   %i.bm = fptrunc double %i.bl to float
   %i.bn = fneg float %i.bm

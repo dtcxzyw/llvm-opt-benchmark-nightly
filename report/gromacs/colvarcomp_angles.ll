@@ -202,14 +202,14 @@ bb.a:
   %i.ae = shufflevector <2 x double> %i.ad, <2 x double> %i.w, <2 x i32> <i32 0, i32 3>
   %i.af = fmul <2 x double> %i.w, %i.ae
   %i.ag = insertelement <2 x double> %i.aa, double %i.f, i64 0
-  %i.ah = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ag, <2 x double> %i.aa, <2 x double> %i.af) ; 4 uses
+  %i.ah = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ag, <2 x double> %i.aa, <2 x double> %i.af) ; 3 uses
   %i.ai = insertelement <2 x double> %i.x, double %i.g, i64 0
   %i.aj = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ak = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ai, <2 x double> %i.aj, <2 x double> %i.z) ; 4 uses
   %i.al = shufflevector <2 x double> %i.j, <2 x double> %i.ac, <2 x i32> <i32 1, i32 3>
   %i.am = fmul <2 x double> %i.j, %i.al
   %i.an = shufflevector <2 x double> %i.ac, <2 x double> %i.w, <2 x i32> <i32 0, i32 2>
-  %i.ao = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.an, <2 x double> %i.m, <2 x double> %i.am) ; 5 uses
+  %i.ao = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.an, <2 x double> %i.m, <2 x double> %i.am) ; 4 uses
   %i.ap = extractelement <2 x double> %i.ah, i64 1
   %i.aq = tail call noundef double @llvm.fmuladd.f64(double %i.k, double %i.k, double %i.ap)
   %i.ar = tail call noundef double @sqrt(double noundef %i.aq) #19 ; 2 uses
@@ -224,7 +224,7 @@ bb.a:
   %i.ay = fmul <2 x double> %i.ax, %i.ax
   %i.az = insertelement <2 x double> %i.ak, double %i.aw, i64 0 ; 2 uses
   %i.ba = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.az, <2 x double> %i.az, <2 x double> %i.ay)
-  %i.bb = shufflevector <2 x double> %i.ao, <2 x double> %i.ah, <2 x i32> <i32 1, i32 2> ; 2 uses
+  %i.bb = shufflevector <2 x double> %i.ao, <2 x double> %i.ah, <2 x i32> <i32 1, i32 2> ; 3 uses
   %i.bc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bb, <2 x double> %i.bb, <2 x double> %i.ba) ; 2 uses
   %i.bd = shufflevector <2 x double> %i.w, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.be = shufflevector <2 x double> %i.l, <2 x double> %i.t, <2 x i32> <i32 0, i32 2>
@@ -237,21 +237,17 @@ bb.a:
   %i.bl = insertelement <2 x double> poison, double %i.ar, i64 0
   %i.bm = shufflevector <2 x double> %i.bl, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bn = fmul <2 x double> %i.bm, %i.bc
-  %i.bo = fdiv <2 x double> %i.bk, %i.bn          ; 4 uses
+  %i.bo = fdiv <2 x double> %i.bk, %i.bn          ; 3 uses
   %i.bp = shufflevector <2 x double> %i.bo, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %5 = fmul <2 x double> %i.ak, %i.bp
-  %shift = shufflevector <2 x double> %i.bo, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop.a = fmul <2 x double> %i.ah, %shift
+  %foldExtExtBinop.a = fmul <2 x double> %i.ak, %i.bp
   %i.bq = insertelement <2 x double> %i.ao, double %i.aw, i64 1
   %i.br = shufflevector <2 x double> %i.bo, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bs = fmul <2 x double> %i.bq, %i.br
-  %shift46 = shufflevector <2 x double> %i.ao, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop47 = fmul <2 x double> %shift46, %i.bo
-  %6 = fadd <2 x double> %5, %i.bs
-  %foldExtExtBinop49 = fadd <2 x double> %foldExtExtBinop.a, %foldExtExtBinop47
-  %7 = extractelement <2 x double> %foldExtExtBinop49, i64 0
-  %i.bt = fmul <2 x double> %6, splat (double f0x404CA5DC1A63C1F8) ; 2 uses
-  %i.bu = fmul double %7, f0x404CA5DC1A63C1F8     ; 2 uses
+  %foldExtExtBinop47 = fmul <2 x double> %i.bb, %i.bo
+  %foldExtExtBinop49 = fadd <2 x double> %foldExtExtBinop.a, %i.bs
+  %5 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %foldExtExtBinop47)
+  %i.bt = fmul <2 x double> %foldExtExtBinop49, splat (double f0x404CA5DC1A63C1F8) ; 2 uses
+  %i.bu = fmul double %5, f0x404CA5DC1A63C1F8     ; 2 uses
   %i.bv = insertelement <2 x double> poison, double %i.as, i64 0
   %i.bw = shufflevector <2 x double> %i.bv, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bx = fdiv <2 x double> %i.bw, %i.bc          ; 4 uses
@@ -653,6 +649,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #12
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -205,17 +205,19 @@ _ZZN4pbrt7Sampler16StartPixelSampleENS_6Point2IiEEiiENKUlT_E_clIPNS_12SobolSampl
   br label %bb.z
 
 bb.s:                                             ; preds = %bb.a
-  %.sroa.2.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i.i, 32 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store i32 %i.g, ptr %3, align 8, !tbaa !648
-  %4 = shl nuw nsw i64 %.sroa.2.0.extract.shift.i.i, 16
-  %5 = or i64 %4, %.sroa.2.0.extract.shift.i.i
-  %6 = and i64 %.sroa.0.0.copyload.i.i, 4294967295 ; 2 uses
-  %7 = shl nuw nsw i64 %6, 16
-  %8 = or i64 %7, %6
-  %9 = insertelement <2 x i64> poison, i64 %5, i64 0
-  %10 = insertelement <2 x i64> %9, i64 %8, i64 1
-  %i.ej = and <2 x i64> %10, splat (i64 281470681808895) ; 2 uses
+  %3 = insertelement <2 x i64> poison, i64 %.sroa.0.0.copyload.i.i, i64 0
+  %4 = shufflevector <2 x i64> %3, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %5 = lshr <2 x i64> %4, <i64 32, i64 4294967295>
+  %6 = and <2 x i64> %4, <i64 poison, i64 4294967295>
+  %7 = shufflevector <2 x i64> %5, <2 x i64> %6, <2 x i32> <i32 0, i32 3>
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  store i32 %i.g, ptr %8, align 8, !tbaa !648
+  %9 = shl nuw nsw <2 x i64> %7, splat (i64 16)
+  %10 = bitcast i64 %.sroa.0.0.copyload.i.i to <2 x i32>
+  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
+  %12 = zext <2 x i32> %11 to <2 x i64>
+  %13 = or <2 x i64> %9, %12
+  %i.ej = and <2 x i64> %13, splat (i64 281470681808895) ; 2 uses
   %i.ek = shl nuw nsw <2 x i64> %i.ej, splat (i64 8)
   %i.el = or <2 x i64> %i.ek, %i.ej
   %i.em = and <2 x i64> %i.el, splat (i64 71777214294589695) ; 2 uses

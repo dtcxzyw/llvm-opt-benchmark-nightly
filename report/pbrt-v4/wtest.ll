@@ -204,28 +204,16 @@ scalar.ph.4:                                      ; preds = %scalar.ph.2
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   %.sroa.0.0.copyload = load i16, ptr %i.da, align 2, !tbaa !19
   %i.gu = getelementptr inbounds nuw [16 x i8], ptr @_ZZ4mainE8adjfaces, i64 %indvars.iv204
-  %i.gv = getelementptr inbounds nuw [16 x i8], ptr @_ZZ4mainE8adjedges, i64 %indvars.iv204 ; 4 uses
+  %i.gv = getelementptr inbounds nuw [16 x i8], ptr @_ZZ4mainE8adjedges, i64 %indvars.iv204
   store i16 %.sroa.0.0.copyload, ptr %3, align 4, !tbaa !19
   store i8 0, ptr %i.bn, align 1, !tbaa !64
   %i.gw = load <4 x i32>, ptr %i.gu, align 16, !tbaa !44
   store <4 x i32> %i.gw, ptr %i.bo, align 4, !tbaa !44
-  %4 = load i32, ptr %i.gv, align 16, !tbaa !44
-  %5 = getelementptr inbounds nuw i8, ptr %i.gv, i64 4
-  %6 = load i32, ptr %5, align 4, !tbaa !44
-  %7 = getelementptr inbounds nuw i8, ptr %i.gv, i64 8
-  %8 = load i32, ptr %7, align 8, !tbaa !44
-  %9 = getelementptr inbounds nuw i8, ptr %i.gv, i64 12
-  %10 = load i32, ptr %9, align 4, !tbaa !44
-  %11 = and i32 %4, 3
-  %12 = shl i32 %6, 2
-  %13 = and i32 %12, 12
-  %14 = or disjoint i32 %13, %11
-  %15 = shl i32 %8, 4
-  %16 = and i32 %15, 48
-  %17 = or disjoint i32 %14, %16
-  %18 = shl i32 %10, 6
-  %19 = or disjoint i32 %17, %18
-  %i.gx = trunc i32 %19 to i8
+  %4 = load <4 x i32>, ptr %i.gv, align 16, !tbaa !44
+  %5 = shl <4 x i32> %4, <i32 0, i32 2, i32 4, i32 6>
+  %6 = and <4 x i32> %5, <i32 3, i32 12, i32 48, i32 -1>
+  %7 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %6)
+  %i.gx = trunc i32 %7 to i8
   store i8 %i.gx, ptr %i.bp, align 2, !tbaa !65
   %i.gy = load ptr, ptr %i.h, align 8, !tbaa !11
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 96
@@ -617,6 +605,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #15
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

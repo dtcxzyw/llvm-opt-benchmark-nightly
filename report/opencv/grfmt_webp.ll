@@ -202,27 +202,12 @@ bb.r:                                             ; preds = %bb.g, %_ZNSt7__cxx1
 
 bb.s:                                             ; preds = %bb.e
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %20 = load double, ptr %i.bs, align 8, !tbaa !122
-  %21 = fptosi double %20 to i32
-  %22 = shl i32 %21, 24
-  %23 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %24 = load double, ptr %23, align 8, !tbaa !122
-  %25 = fptosi double %24 to i32
-  %26 = shl i32 %25, 16
-  %27 = and i32 %26, 16711680
-  %28 = or disjoint i32 %27, %22
-  %29 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %30 = load double, ptr %29, align 8, !tbaa !122
-  %31 = fptosi double %30 to i32
-  %32 = shl i32 %31, 8
-  %33 = and i32 %32, 65280
-  %34 = or disjoint i32 %28, %33
-  %35 = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %36 = load double, ptr %35, align 8, !tbaa !122
-  %37 = fptosi double %36 to i32
-  %38 = and i32 %37, 255
-  %39 = or disjoint i32 %34, %38
-  store i32 %39, ptr %3, align 4, !tbaa !272
+  %20 = load <4 x double>, ptr %i.bs, align 8, !tbaa !122
+  %21 = fptosi <4 x double> %20 to <4 x i32>
+  %22 = trunc <4 x i32> %21 to <4 x i8>
+  %23 = bitcast <4 x i8> %22 to i32
+  %24 = call i32 @llvm.bswap.i32(i32 %23)
+  store i32 %24, ptr %3, align 4, !tbaa !272
   %i.bt = load i32, ptr %1, align 8, !tbaa !273
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i32 %i.bt, ptr %i.bu, align 4, !tbaa !274
@@ -624,6 +609,9 @@ declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #17
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

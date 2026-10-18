@@ -204,21 +204,22 @@ bb.a:
   %i.av = fcmp ogt double %i.at, %i.au
   %..6 = select i1 %i.av, double %i.at, double %i.au
   store double %..6, ptr %8, align 8, !tbaa !17
-  %10 = insertelement <2 x double> poison, double %3, i64 0
-  %i.aw = insertelement <2 x double> %10, double %5, i64 1
-  %11 = fneg <2 x double> %i.aw
-  %12 = load double, ptr %7, align 8, !tbaa !17
-  %i.ax = insertelement <2 x double> poison, double %2, i64 0
-  %i.ay = insertelement <2 x double> %i.ax, double %3, i64 1
-  %i.az = fmul <2 x double> %i.ay, %11
+  %10 = load double, ptr %7, align 8, !tbaa !17
+  %i.aw = insertelement <2 x double> poison, double %5, i64 0
+  %11 = insertelement <2 x double> %i.aw, double %3, i64 1
+  %12 = fneg <2 x double> %11
+  %i.ax = insertelement <2 x double> poison, double %3, i64 0
+  %i.ay = insertelement <2 x double> %i.ax, double %2, i64 1
+  %i.az = fmul <2 x double> %i.ay, %12
   %i.ba = insertelement <2 x double> poison, double %1, i64 0
   %i.bb = shufflevector <2 x double> %i.ba, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bc = insertelement <2 x double> poison, double %4, i64 0
-  %i.bd = insertelement <2 x double> %i.bc, double %6, i64 1
+  %i.bc = insertelement <2 x double> poison, double %6, i64 0
+  %i.bd = insertelement <2 x double> %i.bc, double %4, i64 1
   %i.be = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bb, <2 x double> %i.bd, <2 x double> %i.az) ; 2 uses
-  %i.bf = insertelement <2 x double> %i.be, double %12, i64 0
-  %13 = shufflevector <2 x double> <double 7.000000e+00, double poison>, <2 x double> %i.be, <2 x i32> <i32 0, i32 2>
-  %i.bg = fdiv <2 x double> %i.bf, %13            ; 2 uses
+  %13 = shufflevector <2 x double> %i.be, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %i.bf = insertelement <2 x double> %13, double %10, i64 0
+  %14 = insertelement <2 x double> %i.be, double 7.000000e+00, i64 0
+  %i.bg = fdiv <2 x double> %i.bf, %14            ; 2 uses
   %i.bh = extractelement <2 x double> %i.bg, i64 0
   store double %i.bh, ptr %7, align 8, !tbaa !17
   %i.bi = extractelement <2 x double> %i.bg, i64 1

@@ -202,12 +202,11 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
-  %3 = load double, ptr %i.c, align 8, !tbaa !59
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
-  %4 = load double, ptr %i.d, align 8, !tbaa !60
-  %5 = fadd double %3, %4
-  store double %5, ptr %i.d, align 8, !tbaa !60
-  store double 0.000000e+00, ptr %i.c, align 8, !tbaa !59
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %3 = load <2 x double>, ptr %i.c, align 8, !tbaa !59
+  %4 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %3)
+  store double %4, ptr %i.d, align 8, !tbaa !60
+  store double 0.000000e+00, ptr %i.c, align 8, !tbaa !61
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d
@@ -218,14 +217,14 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.h = load <2 x double>, ptr %i.f, align 8, !tbaa !61 ; 2 uses
+  %i.h = load <2 x double>, ptr %i.f, align 8, !tbaa !59 ; 2 uses
   %i.i = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.h) ; 2 uses
   store double %i.i, ptr %i.g, align 8, !tbaa !60
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !38
   %i.l = extractelement <2 x double> %i.h, i64 0
   %i.m = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.k, ptr noundef nonnull @.str.44, double noundef %i.l, double noundef %i.i) #19 ; 0 uses
-  store double 0.000000e+00, ptr %i.f, align 8, !tbaa !59
+  store double 0.000000e+00, ptr %i.f, align 8, !tbaa !61
   br label %bb.h
 
 .loopexit:                                        ; preds = %bb.b, %bb.f
@@ -628,9 +627,9 @@ attributes #22 = { nounwind allocsize(1) }
 !56 = !{!54, !7, i64 4}
 !57 = !{!54, !11, i64 16}
 !58 = distinct !{!58, !36}
-!59 = !{!26, !17, i64 160}
+!59 = !{!17, !17, i64 0}
 !60 = !{!26, !17, i64 168}
-!61 = !{!17, !17, i64 0}
+!61 = !{!26, !17, i64 160}
 !62 = distinct !{!62, !36}
 !63 = distinct !{!63, !36}
 !64 = distinct !{!64, !36}

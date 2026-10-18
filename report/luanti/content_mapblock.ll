@@ -205,14 +205,18 @@ bb.z:                                             ; preds = %bb.y
   %i.ji = lshr <2 x i16> %i.jh, splat (i16 8)
   %i.jj = and <2 x i16> %i.je, splat (i16 255)
   %i.jk = and <2 x i16> %i.jh, splat (i16 255)
-  %11 = sub nsw <2 x i16> %i.jj, %i.jk
-  %12 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %11, i1 false)
-  %13 = sub nsw <2 x i16> %i.jf, %i.ji
-  %14 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %13, i1 false)
-  %15 = add nsw <2 x i16> %12, %14                ; 2 uses
-  %16 = extractelement <2 x i16> %15, i64 0
-  %17 = extractelement <2 x i16> %15, i64 1
-  %.not1.i = icmp ult i16 %16, %17
+  %11 = zext nneg <2 x i16> %i.jf to <2 x i32>
+  %12 = zext nneg <2 x i16> %i.ji to <2 x i32>
+  %13 = zext nneg <2 x i16> %i.jj to <2 x i32>
+  %14 = zext nneg <2 x i16> %i.jk to <2 x i32>
+  %15 = sub nsw <2 x i32> %13, %14
+  %16 = call <2 x i32> @llvm.abs.v2i32(<2 x i32> %15, i1 true)
+  %17 = sub nsw <2 x i32> %11, %12
+  %18 = call <2 x i32> @llvm.abs.v2i32(<2 x i32> %17, i1 true)
+  %19 = add nuw nsw <2 x i32> %16, %18            ; 2 uses
+  %20 = extractelement <2 x i32> %19, i64 0
+  %21 = extractelement <2 x i32> %19, i64 1
+  %.not1.i = icmp samesign ult i32 %20, %21
   %_ZL15quad_indices_13._ZL15quad_indices_02.i = select i1 %.not1.i, ptr @_ZL15quad_indices_13, ptr @_ZL15quad_indices_02
   %i.jl = load ptr, ptr %i.hm, align 8, !tbaa !32
   %i.jm = getelementptr inbounds nuw [104 x i8], ptr %6, i64 %indvars.iv.i
@@ -615,7 +619,7 @@ declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #8
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i16> @llvm.abs.v2i16(<2 x i16>, i1 immarg) #21
+declare <2 x i32> @llvm.abs.v2i32(<2 x i32>, i1 immarg) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #8

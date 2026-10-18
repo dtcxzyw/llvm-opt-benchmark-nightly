@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %ma_spatializer_get_
 .loopexit285:                                     ; preds = %.loopexit.i.i.i207, %bb.k
   %.sroa.03.0.copyload.i.i209 = load <2 x float>, ptr %i.ab, align 4, !tbaa !349 ; 4 uses
   %.sroa.24.0..sroa_idx.i.i210 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.sroa.24.0.copyload.i.i211 = load float, ptr %.sroa.24.0..sroa_idx.i.i210, align 4, !tbaa !349 ; 2 uses
+  %.sroa.24.0.copyload.i.i211 = load float, ptr %.sroa.24.0..sroa_idx.i.i210, align 4, !tbaa !349
   store atomic volatile i32 0, ptr %i.ac release, align 4
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 5 uses
@@ -361,12 +361,12 @@ ma_vec3f_normalize.exit255:                       ; preds = %ma_vec3f_normalize.
   %.sroa.0111.0 = select i1 %i.dc, <2 x float> <float 1.000000e+00, float 0.000000e+00>, <2 x float> %.fca.0.extract42 ; 2 uses
   %.sroa.11116.0 = select i1 %i.dc, float 0.000000e+00, float %.fca.1.extract43 ; 4 uses
   %.sroa.013.4.vec.extract.i256 = extractelement <2 x float> %.sroa.0111.0, i64 1 ; 4 uses
-  %i.dd = fneg float %.sroa.013.4.vec.extract.i   ; 4 uses
+  %i.dd = fneg float %.sroa.013.4.vec.extract.i   ; 3 uses
   %i.de = fmul float %.sroa.11116.0, %i.dd
   %.sroa.013.0.vec.extract.i259 = extractelement <2 x float> %.sroa.0111.0, i64 0 ; 4 uses
-  %i.df = fneg float %.fca.1.extract61            ; 4 uses
+  %i.df = fneg float %.fca.1.extract61            ; 3 uses
   %i.dg = fmul float %.sroa.013.0.vec.extract.i259, %i.df
-  %i.dh = fneg float %.sroa.013.0.vec.extract.i   ; 4 uses
+  %i.dh = fneg float %.sroa.013.0.vec.extract.i   ; 3 uses
   %i.di = fmul float %.sroa.013.4.vec.extract.i256, %i.dh
   %i.dj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dk = load i32, ptr %i.dj, align 8, !tbaa !483
@@ -383,13 +383,6 @@ ma_vec3f_normalize.exit255:                       ; preds = %ma_vec3f_normalize.
   br i1 %.not, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %ma_vec3f_normalize.exit255
-  %.sroa.01.0.vec.extract.i = extractelement <2 x float> %.sroa.03.0.copyload.i.i231, i64 0
-  %.sroa.01.4.vec.extract.i = extractelement <2 x float> %.sroa.03.0.copyload.i.i231, i64 1
-  %4 = fmul float %.sroa.01.4.vec.extract.i, %i.dd
-  %5 = tail call float @llvm.fmuladd.f32(float %i.dh, float %.sroa.01.0.vec.extract.i, float %4)
-  %6 = tail call float @llvm.fmuladd.f32(float %i.df, float %.sroa.24.0.copyload.i.i233, float %5)
-  %.sroa.0146.0.vec.extract = extractelement <2 x float> %.sroa.03.0.copyload.i.i209, i64 0
-  %.sroa.0146.4.vec.extract = extractelement <2 x float> %.sroa.03.0.copyload.i.i209, i64 1
   %i.ds = shufflevector <2 x float> %.sroa.03.0.copyload.i.i231, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.dt = insertelement <2 x float> poison, float %.sroa.0111.4.vec.extract.pre-phi, i64 0
   %i.du = insertelement <2 x float> %i.dt, float %i.dq, i64 1 ; 2 uses
@@ -407,17 +400,28 @@ bb.n:                                             ; preds = %ma_vec3f_normalize.
   %i.eg = fmul <2 x float> %i.ef, %i.du
   %i.eh = shufflevector <2 x float> %.sroa.03.0.copyload.i.i209, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ei = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dx, <2 x float> %i.eh, <2 x float> %i.eg)
-  %i.ej = insertelement <2 x float> poison, float %.sroa.24.0.copyload.i.i211, i64 0
+  %i.ej = insertelement <2 x float> poison, float %.sroa.24.0.copyload.i.i211, i64 0 ; 2 uses
   %i.ek = shufflevector <2 x float> %i.ej, <2 x float> poison, <2 x i32> zeroinitializer
   %i.el = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eb, <2 x float> %i.ek, <2 x float> %i.ei)
   %i.em = fsub <2 x float> %i.el, %i.ee
   store <2 x float> %i.em, ptr %2, align 4, !tbaa !349
-  %7 = fmul float %.sroa.0146.4.vec.extract, %i.dd
-  %8 = tail call float @llvm.fmuladd.f32(float %i.dh, float %.sroa.0146.0.vec.extract, float %7)
-  %9 = tail call float @llvm.fmuladd.f32(float %i.df, float %.sroa.24.0.copyload.i.i211, float %8)
-  %10 = fsub float %9, %6
+  %4 = shufflevector <2 x float> %.sroa.03.0.copyload.i.i209, <2 x float> %.sroa.03.0.copyload.i.i231, <2 x i32> <i32 1, i32 3>
+  %5 = insertelement <2 x float> poison, float %i.dd, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fmul <2 x float> %4, %6
+  %8 = insertelement <2 x float> poison, float %i.dh, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = shufflevector <2 x float> %.sroa.03.0.copyload.i.i209, <2 x float> %.sroa.03.0.copyload.i.i231, <2 x i32> <i32 0, i32 2>
+  %11 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> %10, <2 x float> %7)
+  %12 = insertelement <2 x float> poison, float %i.df, i64 0
+  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
+  %14 = insertelement <2 x float> %i.ej, float %.sroa.24.0.copyload.i.i233, i64 1
+  %15 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> %14, <2 x float> %11) ; 2 uses
+  %shift = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop300 = fsub <2 x float> %15, %shift
+  %16 = extractelement <2 x float> %foldExtExtBinop300, i64 0
   %i.en = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %10, ptr %i.en, align 4, !tbaa !2012
+  store float %16, ptr %i.en, align 4, !tbaa !2012
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %ma_vec3f_normalize.exit255

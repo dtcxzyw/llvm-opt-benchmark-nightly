@@ -202,29 +202,20 @@ _ZN4llvm11getRegStateERKNS_14MachineOperandE.exit57.i.i.i: ; preds = %bb.t, %_ZN
   %i.ie = or disjoint i16 %i.id, %i.ho
   %i.if = or disjoint i16 %i.ie, %i.hz
   %i.ig = or i16 %i.if, %i.hj
-  %i.ih = and i16 %i.ig, %i.hd                    ; 5 uses
+  %i.ih = and i16 %i.ig, %i.hd                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
-  %12 = and i16 %i.ih, 256
-  %13 = and i16 %i.ih, 512
   store ptr null, ptr %i.v, align 8, !tbaa !114, !alias.scope !252
   %i.ii = and i16 %i.ih, 24
   %.not.i58.i.i.i = icmp eq i16 %i.ii, 0
   %i.ij = select i1 %.not.i58.i.i.i, i32 0, i32 67108864
-  %14 = zext nneg i16 %13 to i32
-  %15 = shl nuw nsw i32 %14, 18
-  %16 = zext nneg i16 %12 to i32
-  %17 = shl nuw nsw i32 %16, 21
-  %18 = and i16 %i.ih, 38
-  %19 = zext nneg i16 %18 to i32
-  %20 = shl nuw nsw i32 %19, 23
-  %21 = or disjoint i32 %20, %i.ij
-  %22 = and i16 %i.ih, 192
-  %23 = zext nneg i16 %22 to i32
-  %24 = shl nuw i32 %23, 24
-  %.masked11.masked.i.i.i.i.i = or disjoint i32 %21, %24
+  %12 = insertelement <4 x i16> poison, i16 %i.ih, i64 0
+  %13 = shufflevector <4 x i16> %12, <4 x i16> poison, <4 x i32> zeroinitializer
+  %14 = and <4 x i16> %13, <i16 512, i16 256, i16 38, i16 192>
+  %15 = zext nneg <4 x i16> %14 to <4 x i32>
+  %16 = shl nuw <4 x i32> %15, <i32 18, i32 21, i32 23, i32 24>
   store i32 %i.ea, ptr %i.w, align 4, !tbaa !66, !alias.scope !252
-  %.masked.i.i.i.i.i = or disjoint i32 %.masked11.masked.i.i.i.i.i, %17
-  %i.ik = or disjoint i32 %.masked.i.i.i.i.i, %15
+  %17 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %16)
+  %i.ik = or disjoint i32 %17, %i.ij
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.x, i8 0, i64 16, i1 false), !alias.scope !252
   store i32 %i.ik, ptr %6, align 8, !alias.scope !252
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.ga, ptr noundef nonnull align 8 dereferenceable(1065) %i.fz, ptr noundef nonnull align 8 dereferenceable(32) %6) #14
@@ -626,6 +617,9 @@ declare i64 @llvm.umax.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #13
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

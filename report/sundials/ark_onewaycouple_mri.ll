@@ -202,13 +202,11 @@ bb.a:
   %i.d = load ptr, ptr %2, align 8, !tbaa !15
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !19   ; 2 uses
-  %i.g = load <2 x double>, ptr %i.c, align 8, !tbaa !11 ; 3 uses
+  %i.g = load <2 x double>, ptr %i.c, align 8, !tbaa !11 ; 2 uses
   %i.h = fmul <2 x double> %i.g, <double 5.000000e+01, double -5.000000e+01>
   %i.i = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   store <2 x double> %i.i, ptr %i.f, align 8, !tbaa !11
-  %shift = shufflevector <2 x double> %i.g, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.g, %shift
-  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %4 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.g)
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store double %4, ptr %i.j, align 8, !tbaa !11
   ret i32 0
@@ -294,6 +292,9 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

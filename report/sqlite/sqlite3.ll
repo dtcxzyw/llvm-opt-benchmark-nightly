@@ -206,23 +206,9 @@ bb.g:                                             ; preds = %bb.a
 
 bb.h:                                             ; preds = %bb.a
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %3 = load i8, ptr %i.aw, align 1, !tbaa !733
-  %4 = zext i8 %3 to i64
-  %5 = shl nuw nsw i64 %4, 24
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %7 = load i8, ptr %6, align 1, !tbaa !733
-  %8 = zext i8 %7 to i64
-  %9 = shl nuw nsw i64 %8, 16
-  %10 = or disjoint i64 %9, %5
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %12 = load i8, ptr %11, align 1, !tbaa !733
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 8
-  %15 = or disjoint i64 %10, %14
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %17 = load i8, ptr %16, align 1, !tbaa !733
-  %i.ax = zext i8 %17 to i64
-  %18 = or disjoint i64 %15, %i.ax
+  %3 = load i32, ptr %i.aw, align 1
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
+  %i.ax = zext i32 %4 to i64
   %i.ay = load i8, ptr %0, align 1, !tbaa !733
   %i.az = sext i8 %i.ay to i32
   %i.ba = shl nsw i32 %i.az, 8
@@ -232,7 +218,7 @@ bb.h:                                             ; preds = %bb.a
   %i.be = or disjoint i32 %i.ba, %i.bd
   %i.bf = sext i32 %i.be to i64
   %i.bg = shl nsw i64 %i.bf, 32
-  %i.bh = or disjoint i64 %i.bg, %18
+  %i.bh = or disjoint i64 %i.bg, %i.ax
   store i64 %i.bh, ptr %2, align 8, !tbaa !733
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 20
   store i16 4, ptr %i.bi, align 4, !tbaa !686

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load ptr, ptr %1, align 8
   store ptr %i.i, ptr %3, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.l = getelementptr inbounds nuw i8, ptr %.tr123, i64 88
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.j, i8 0, i64 16, i1 false)
   %i.m = load ptr, ptr %i.l, align 8              ; 2 uses
@@ -225,10 +225,9 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %i.s, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %6 = load double, ptr %i.k, align 8
-  %7 = load double, ptr %i.j, align 8
-  %8 = fadd double %6, %7
-  store double %8, ptr %i.j, align 8
+  %6 = load <2 x double>, ptr %i.j, align 8
+  %7 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %6)
+  store double %7, ptr %i.j, align 8
   store double 0.000000e+00, ptr %i.k, align 8
   br label %bb.g
 

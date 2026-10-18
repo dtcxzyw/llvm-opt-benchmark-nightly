@@ -205,81 +205,81 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   %i.aef = call float @llvm.fmuladd.f32(float %i.cm, float %i.aee, float %i.ado) ; 8 uses
   %i.aeg = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store float %i.aef, ptr %i.aeg, align 4, !tbaa !88
-  %i.aeh = fpext float %i.oc to double
-  %117 = fadd double %i.aeh, f0x400921FB54442D18
-  %118 = fpext float %i.pi to double
-  %119 = fsub double %117, %118
-  %120 = fptrunc double %119 to float             ; 2 uses
-  %121 = call noundef float @sinf(float noundef %120) #26
-  %122 = fneg float %i.di
-  %123 = call float @llvm.fmuladd.f32(float %122, float %121, float %i.aec) ; 5 uses
-  store float %123, ptr %i.a, align 16, !tbaa !88
-  %124 = call noundef float @cosf(float noundef %120) #26
-  %125 = call float @llvm.fmuladd.f32(float %i.di, float %124, float %i.aef) ; 5 uses
-  store float %125, ptr %i.b, align 16, !tbaa !88
+  %i.aeh = fpext float %i.pi to double
+  %117 = fneg float %i.di
+  %118 = fneg float %i.bq
+  %119 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %120 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %121 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %122 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %123 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
+  %124 = fneg float %i.ee
+  %125 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  %126 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %127 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.aei = fadd float %i.oc, %i.qo                ; 2 uses
-  %126 = fpext float %i.aei to double
-  %127 = fadd double %126, f0xC00921FB54442D18
-  %128 = fptrunc double %127 to float             ; 2 uses
-  %129 = call noundef float @sinf(float noundef %128) #26
-  %130 = fneg float %i.bq
-  %131 = call float @llvm.fmuladd.f32(float %130, float %129, float %i.aec) ; 3 uses
-  %132 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store float %131, ptr %132, align 8, !tbaa !88
-  %133 = call noundef float @cosf(float noundef %128) #26
-  %134 = call float @llvm.fmuladd.f32(float %i.bq, float %133, float %i.aef) ; 3 uses
-  %135 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store float %134, ptr %135, align 8, !tbaa !88
-  %i.aej = call noundef float @sinf(float noundef %i.ru) #26
-  %136 = fmul float %i.fa, %i.aej                 ; 4 uses
-  %137 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store float %136, ptr %137, align 16, !tbaa !88
-  %i.aek = call noundef float @cosf(float noundef %i.ru) #26
-  %i.ael = call float @llvm.fmuladd.f32(float %i.fa, float %i.aek, float %i.ado) ; 4 uses
-  %138 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  store float %i.ael, ptr %138, align 16, !tbaa !88
-  %i.aem = call noundef float @sinf(float noundef %i.ta) #26
-  %139 = fmul float %i.ee, %i.aem                 ; 4 uses
-  %140 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  store float %139, ptr %140, align 8, !tbaa !88
-  %i.aen = call noundef float @cosf(float noundef %i.ta) #26
-  %141 = fneg float %i.ee
-  %142 = call float @llvm.fmuladd.f32(float %141, float %i.aen, float %i.adr) ; 4 uses
-  %143 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  store float %142, ptr %143, align 8, !tbaa !88
-  %144 = fadd float %i.ru, %i.ug                  ; 2 uses
-  %145 = fpext float %144 to double
-  %146 = fadd double %145, f0xC00921FB54442D18
-  %147 = fptrunc double %146 to float             ; 2 uses
-  %i.aeo = call noundef float @sinf(float noundef %147) #26
-  %i.aep = call float @llvm.fmuladd.f32(float %i.fw, float %i.aeo, float %136) ; 3 uses
-  %148 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store float %i.aep, ptr %148, align 16, !tbaa !88
-  %i.aeq = call noundef float @cosf(float noundef %147) #26
-  %i.aer = call float @llvm.fmuladd.f32(float %i.fw, float %i.aeq, float %i.ael) ; 3 uses
-  %149 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  store float %i.aer, ptr %149, align 16, !tbaa !88
-  %150 = fadd float %i.ta, %i.ze                  ; 2 uses
-  %151 = fpext float %150 to double
-  %152 = fadd double %151, f0xC00921FB54442D18
-  %153 = fptrunc double %152 to float             ; 2 uses
+  %128 = fadd float %i.ru, %i.ug                  ; 2 uses
+  %129 = fadd float %i.ta, %i.ze                  ; 2 uses
+  %130 = insertelement <4 x float> poison, float %i.oc, i64 0
+  %131 = insertelement <4 x float> %130, float %i.aei, i64 1
+  %132 = insertelement <4 x float> %131, float %128, i64 2
+  %133 = insertelement <4 x float> %132, float %129, i64 3
+  %134 = fpext <4 x float> %133 to <4 x double>
+  %135 = fadd <4 x double> %134, <double f0x400921FB54442D18, double -0.000000e+00, double -0.000000e+00, double -0.000000e+00>
+  %136 = insertelement <4 x double> <double poison, double f0x400921FB54442D18, double f0x400921FB54442D18, double f0x400921FB54442D18>, double %i.aeh, i64 0
+  %137 = fsub <4 x double> %135, %136
+  %138 = fptrunc <4 x double> %137 to <4 x float> ; 4 uses
+  %139 = extractelement <4 x float> %138, i64 0   ; 2 uses
+  %i.aej = call noundef float @sinf(float noundef %139) #26
+  %140 = call float @llvm.fmuladd.f32(float %117, float %i.aej, float %i.aec) ; 5 uses
+  store float %140, ptr %i.a, align 16, !tbaa !88
+  %i.aek = call noundef float @cosf(float noundef %139) #26
+  %i.ael = call float @llvm.fmuladd.f32(float %i.di, float %i.aek, float %i.aef) ; 5 uses
+  store float %i.ael, ptr %i.b, align 16, !tbaa !88
+  %141 = extractelement <4 x float> %138, i64 1   ; 2 uses
+  %i.aem = call noundef float @sinf(float noundef %141) #26
+  %142 = call float @llvm.fmuladd.f32(float %118, float %i.aem, float %i.aec) ; 3 uses
+  store float %142, ptr %119, align 8, !tbaa !88
+  %143 = call noundef float @cosf(float noundef %141) #26
+  %144 = call float @llvm.fmuladd.f32(float %i.bq, float %143, float %i.aef) ; 3 uses
+  store float %144, ptr %120, align 8, !tbaa !88
+  %i.aen = call noundef float @sinf(float noundef %i.ru) #26
+  %145 = fmul float %i.fa, %i.aen                 ; 4 uses
+  store float %145, ptr %121, align 16, !tbaa !88
+  %146 = call noundef float @cosf(float noundef %i.ru) #26
+  %147 = call float @llvm.fmuladd.f32(float %i.fa, float %146, float %i.ado) ; 4 uses
+  store float %147, ptr %122, align 16, !tbaa !88
+  %148 = call noundef float @sinf(float noundef %i.ta) #26
+  %149 = fmul float %i.ee, %148                   ; 4 uses
+  store float %149, ptr %123, align 8, !tbaa !88
+  %i.aeo = call noundef float @cosf(float noundef %i.ta) #26
+  %i.aep = call float @llvm.fmuladd.f32(float %124, float %i.aeo, float %i.adr) ; 4 uses
+  store float %i.aep, ptr %125, align 8, !tbaa !88
+  %150 = extractelement <4 x float> %138, i64 2   ; 2 uses
+  %i.aeq = call noundef float @sinf(float noundef %150) #26
+  %i.aer = call float @llvm.fmuladd.f32(float %i.fw, float %i.aeq, float %145) ; 3 uses
+  store float %i.aer, ptr %126, align 16, !tbaa !88
+  %151 = call noundef float @cosf(float noundef %150) #26
+  %152 = call float @llvm.fmuladd.f32(float %i.fw, float %151, float %147) ; 3 uses
+  store float %152, ptr %127, align 16, !tbaa !88
+  %153 = extractelement <4 x float> %138, i64 3   ; 2 uses
   %i.aes = call noundef float @sinf(float noundef %153) #26
-  %i.aet = call float @llvm.fmuladd.f32(float %i.gs, float %i.aes, float %139) ; 3 uses
+  %i.aet = call float @llvm.fmuladd.f32(float %i.gs, float %i.aes, float %149) ; 3 uses
   %i.aeu = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store float %i.aet, ptr %i.aeu, align 8, !tbaa !88
   %i.aev = call noundef float @cosf(float noundef %153) #26
   %i.aew = fneg float %i.gs
-  %i.aex = call float @llvm.fmuladd.f32(float %i.aew, float %i.aev, float %142) ; 3 uses
+  %i.aex = call float @llvm.fmuladd.f32(float %i.aew, float %i.aev, float %i.aep) ; 3 uses
   %i.aey = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   store float %i.aex, ptr %i.aey, align 8, !tbaa !88
   %i.aez = fsub float %i.aei, %i.aak              ; 2 uses
   %i.afa = call noundef float @sinf(float noundef %i.aez) #26
   %i.afb = fneg float %i.ho
-  %i.afc = call float @llvm.fmuladd.f32(float %i.afb, float %i.afa, float %131) ; 2 uses
+  %i.afc = call float @llvm.fmuladd.f32(float %i.afb, float %i.afa, float %142) ; 2 uses
   %i.afd = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   store float %i.afc, ptr %i.afd, align 4, !tbaa !88
   %i.afe = call noundef float @cosf(float noundef %i.aez) #26
-  %i.aff = call float @llvm.fmuladd.f32(float %i.ho, float %i.afe, float %134) ; 2 uses
+  %i.aff = call float @llvm.fmuladd.f32(float %i.ho, float %i.afe, float %144) ; 2 uses
   %i.afg = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   store float %i.aff, ptr %i.afg, align 4, !tbaa !88
   %i.afh = fpext float %i.mw to double
@@ -302,11 +302,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   %i.afw = fsub double %i.afu, %i.afv
   %i.afx = fptrunc double %i.afw to float         ; 2 uses
   %i.afy = call noundef float @sinf(float noundef %i.afx) #26
-  %i.afz = call float @llvm.fmuladd.f32(float %i.ky, float %i.afy, float %136) ; 2 uses
+  %i.afz = call float @llvm.fmuladd.f32(float %i.ky, float %i.afy, float %145) ; 2 uses
   %i.aga = getelementptr inbounds nuw i8, ptr %i.a, i64 36
   store float %i.afz, ptr %i.aga, align 4, !tbaa !88
   %i.agb = call noundef float @cosf(float noundef %i.afx) #26
-  %i.agc = call float @llvm.fmuladd.f32(float %i.ky, float %i.agb, float %i.ael) ; 2 uses
+  %i.agc = call float @llvm.fmuladd.f32(float %i.ky, float %i.agb, float %147) ; 2 uses
   %i.agd = getelementptr inbounds nuw i8, ptr %i.b, i64 36
   store float %i.agc, ptr %i.agd, align 4, !tbaa !88
   %i.age = fpext float %i.ta to double
@@ -315,24 +315,24 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   %i.agh = fsub double %i.agf, %i.agg
   %i.agi = fptrunc double %i.agh to float         ; 2 uses
   %i.agj = call noundef float @sinf(float noundef %i.agi) #26
-  %i.agk = call float @llvm.fmuladd.f32(float %i.ik, float %i.agj, float %139) ; 2 uses
+  %i.agk = call float @llvm.fmuladd.f32(float %i.ik, float %i.agj, float %149) ; 2 uses
   %i.agl = getelementptr inbounds nuw i8, ptr %i.a, i64 44
   store float %i.agk, ptr %i.agl, align 4, !tbaa !88
   %i.agm = call noundef float @cosf(float noundef %i.agi) #26
   %i.agn = fneg float %i.ik
-  %i.ago = call float @llvm.fmuladd.f32(float %i.agn, float %i.agm, float %142) ; 2 uses
+  %i.ago = call float @llvm.fmuladd.f32(float %i.agn, float %i.agm, float %i.aep) ; 2 uses
   %i.agp = getelementptr inbounds nuw i8, ptr %i.b, i64 44
   store float %i.ago, ptr %i.agp, align 4, !tbaa !88
-  %i.agq = fsub float %150, %i.ws                 ; 2 uses
+  %i.agq = fsub float %129, %i.ws                 ; 2 uses
   %i.agr = call noundef float @sinf(float noundef %i.agq) #26
-  %i.ags = call float @llvm.fmuladd.f32(float %i.lu, float %i.agr, float %i.aep) ; 2 uses
+  %i.ags = call float @llvm.fmuladd.f32(float %i.lu, float %i.agr, float %i.aer) ; 2 uses
   %i.agt = getelementptr inbounds nuw i8, ptr %i.a, i64 52
   store float %i.ags, ptr %i.agt, align 4, !tbaa !88
   %i.agu = call noundef float @cosf(float noundef %i.agq) #26
-  %i.agv = call float @llvm.fmuladd.f32(float %i.lu, float %i.agu, float %i.aer) ; 2 uses
+  %i.agv = call float @llvm.fmuladd.f32(float %i.lu, float %i.agu, float %152) ; 2 uses
   %i.agw = getelementptr inbounds nuw i8, ptr %i.b, i64 52
   store float %i.agv, ptr %i.agw, align 4, !tbaa !88
-  %i.agx = fsub float %144, %i.vm                 ; 2 uses
+  %i.agx = fsub float %128, %i.vm                 ; 2 uses
   %i.agy = call noundef float @sinf(float noundef %i.agx) #26
   %i.agz = call float @llvm.fmuladd.f32(float %i.kc, float %i.agy, float %i.aet) ; 2 uses
   %i.aha = getelementptr inbounds nuw i8, ptr %i.a, i64 60
@@ -365,8 +365,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   %i.ahz = load float, ptr %i.ahy, align 4, !tbaa !87 ; 3 uses
   %i.aia = fadd float %i.ahz, %i.ahm
   %i.aib = call float @llvm.fmuladd.f32(float %i.ahz, float 0.000000e+00, float %i.ahn)
-  %i.aic = insertelement <4 x float> poison, float %131, i64 0
-  %i.aid = insertelement <4 x float> %i.aic, float %134, i64 1
+  %i.aic = insertelement <4 x float> poison, float %142, i64 0
+  %i.aid = insertelement <4 x float> %i.aic, float %144, i64 1
   %i.aie = shufflevector <4 x float> %i.aid, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.aif = fmul <4 x float> %i.aie, <float 1.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>
   %i.aig = insertelement <4 x float> poison, float %i.ahz, i64 0
@@ -447,8 +447,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   %i.ald = load float, ptr %i.alc, align 4, !tbaa !87 ; 3 uses
   %i.ale = call float @llvm.fmuladd.f32(float %i.ald, float 0.000000e+00, float %i.akr)
   %i.alf = fadd float %i.ald, %i.aks
-  %i.alg = insertelement <4 x float> poison, float %136, i64 0
-  %i.alh = insertelement <4 x float> %i.alg, float %i.ael, i64 1
+  %i.alg = insertelement <4 x float> poison, float %145, i64 0
+  %i.alh = insertelement <4 x float> %i.alg, float %147, i64 1
   %i.ali = shufflevector <4 x float> %i.alh, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.alj = fmul <4 x float> %i.ali, <float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.alk = insertelement <4 x float> poison, float %i.ald, i64 0
@@ -475,8 +475,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   %i.amf = load float, ptr %i.ame, align 4, !tbaa !87 ; 3 uses
   %i.amg = call float @llvm.fmuladd.f32(float %i.amf, float 0.000000e+00, float %i.als)
   %i.amh = fadd float %i.amf, %i.alt
-  %i.ami = insertelement <4 x float> poison, float %139, i64 0
-  %i.amj = insertelement <4 x float> %i.ami, float %142, i64 1
+  %i.ami = insertelement <4 x float> poison, float %149, i64 0
+  %i.amj = insertelement <4 x float> %i.ami, float %i.aep, i64 1
   %i.amk = shufflevector <4 x float> %i.amj, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.aml = fmul <4 x float> %i.amk, <float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.amm = insertelement <4 x float> poison, float %i.amf, i64 0
@@ -503,8 +503,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   %i.anh = load float, ptr %i.ang, align 4, !tbaa !87 ; 3 uses
   %i.ani = call float @llvm.fmuladd.f32(float %i.anh, float 0.000000e+00, float %i.amu)
   %i.anj = fadd float %i.anh, %i.amv
-  %i.ank = insertelement <4 x float> poison, float %i.aep, i64 0
-  %i.anl = insertelement <4 x float> %i.ank, float %i.aer, i64 1
+  %i.ank = insertelement <4 x float> poison, float %i.aer, i64 0
+  %i.anl = insertelement <4 x float> %i.ank, float %152, i64 1
   %i.anm = shufflevector <4 x float> %i.anl, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ann = fmul <4 x float> %i.anm, <float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.ano = insertelement <4 x float> poison, float %i.anh, i64 0
@@ -907,8 +907,8 @@ _ZSt8_DestroyIP16VsiteTypeAndSignS0_EvT_S2_RSaIT0_E.exit.i.i: ; preds = %bb.bu
   %i.bjr = getelementptr inbounds nuw i8, ptr %i.bjl, i64 8
   %i.bjs = load float, ptr %i.bjr, align 4, !tbaa !88
   %i.bjt = fsub float %i.bjs, %i.bjg              ; 2 uses
-  %i.bju = fsub float %123, %i.aec
-  %i.bjv = fsub float %125, %i.aef                ; 3 uses
+  %i.bju = fsub float %140, %i.aec
+  %i.bjv = fsub float %i.ael, %i.aef              ; 3 uses
   %i.bjw = fsub float 0.000000e+00, %i.aec        ; 3 uses
   %i.bjx = fsub float %i.ado, %i.aef              ; 5 uses
   %i.bjy = fsub float %i.api, %i.aec
@@ -1040,14 +1040,14 @@ _ZSt8_DestroyIP16VsiteTypeAndSignS0_EvT_S2_RSaIT0_E.exit.i.i: ; preds = %bb.bu
   %i.bnt = getelementptr inbounds [36 x i8], ptr %i.bns, i64 %i.blt
   %i.bnu = getelementptr inbounds nuw i8, ptr %i.bnt, i64 33
   store i8 0, ptr %i.bnu, align 1, !tbaa !25
-  %i.bnv = fsub float %i.api, %123
-  %i.bnw = fsub float %i.apk, %125
+  %i.bnv = fsub float %i.api, %140
+  %i.bnw = fsub float %i.apk, %i.ael
   %i.bnx = call noundef float @hypotf(float noundef %i.bnv, float noundef %i.bnw) #26
   %i.bny = fsub float %i.api, %i.apm
   %i.bnz = fsub float %i.apk, %i.apo
   %i.boa = call noundef float @hypotf(float noundef %i.bny, float noundef %i.bnz) #26
-  %i.bob = fsub float %i.apm, %123
-  %i.boc = fsub float %i.apo, %125
+  %i.bob = fsub float %i.apm, %140
+  %i.boc = fsub float %i.apo, %i.ael
   %i.bod = call noundef float @hypotf(float noundef %i.bob, float noundef %i.boc) #26
   %i.boe = getelementptr inbounds nuw i8, ptr %9, i64 14112 ; 3 uses
   %i.bof = load i32, ptr %11, align 4, !tbaa !15
@@ -1181,8 +1181,8 @@ _ZSt8_DestroyIP16VsiteTypeAndSignS0_EvT_S2_RSaIT0_E.exit.i.i: ; preds = %bb.bu
   store i64 4294967364, ptr %i.brt, align 4
   %i.bru = fsub float %i.apm, %i.api
   %i.brv = fsub float %i.apo, %i.apk              ; 2 uses
-  %i.brw = fsub float %123, %i.api                ; 2 uses
-  %i.brx = fsub float %125, %i.apk                ; 3 uses
+  %i.brw = fsub float %140, %i.api                ; 2 uses
+  %i.brx = fsub float %i.ael, %i.apk              ; 3 uses
   %i.bry = fneg float %i.brv
   %i.brz = fmul float %i.brw, %i.bry
   %i.bsa = call float @llvm.fmuladd.f32(float %i.bru, float %i.brx, float %i.brz)

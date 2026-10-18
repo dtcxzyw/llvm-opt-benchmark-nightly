@@ -202,13 +202,12 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i64 %2, ptr %i.f, align 8, !tbaa !124
   %i.g = and i32 %i.e, -63556
-  %4 = or disjoint i32 %i.g, 64
   %.sroa.0.0.insert.ext.i.i = zext i8 %3 to i32
   %narrow.i.i.i = shl nuw nsw i32 %.sroa.0.0.insert.ext.i.i, 11
   %i.h = add nuw nsw i32 %narrow.i.i.i, 2048
   %i.i = and i32 %i.h, 63488
-  %i.j = or disjoint i32 %i.i, %4
-  %i.k = or disjoint i32 %i.j, 2
+  %i.j = or disjoint i32 %i.g, %i.i
+  %i.k = or disjoint i32 %i.j, 66
   store i32 %i.k, ptr %i.d, align 8
   ret void
 }

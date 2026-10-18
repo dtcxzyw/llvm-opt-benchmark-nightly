@@ -205,12 +205,11 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS
   %i.w = getelementptr inbounds i8, ptr %i.v, i64 %i.p
   %i.x = load ptr, ptr %i.c, align 8, !tbaa !1295
   tail call void @_ZSt15__inplace_mergeIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_(ptr %i.v, ptr %i.w, ptr %i.x)
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %1 = load double, ptr %i.y, align 8, !tbaa !1288
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %2 = load double, ptr %i.z, align 8, !tbaa !1296
-  %3 = fadd double %1, %2
-  store double %3, ptr %i.z, align 8, !tbaa !1296
+  %1 = load <2 x double>, ptr %i.z, align 8, !tbaa !440
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %1)
+  store double %2, ptr %i.z, align 8, !tbaa !1296
   store double 0.000000e+00, ptr %i.y, align 8, !tbaa !1288
   %i.aa = load ptr, ptr %i.q, align 8, !tbaa !1278 ; 8 uses
   %i.ab = load ptr, ptr %i.s, align 8, !tbaa !1281 ; 2 uses
@@ -612,6 +611,9 @@ declare i64 @llvm.smin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #18
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

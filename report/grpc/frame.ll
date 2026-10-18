@@ -204,7 +204,7 @@ bb.a:
   %90 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %91 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %92 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %i.e = alloca [4 x i8], align 1                 ; 7 uses
+  %i.e = alloca [4 x i8], align 4                 ; 4 uses
   %93 = alloca %"class.std::variant", align 8     ; 6 uses
   %94 = alloca %class.anon.97, align 1            ; 3 uses
   %95 = alloca %class.anon.118, align 8           ; 4 uses
@@ -607,24 +607,10 @@ bb.du:                                            ; preds = %bb.de
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #25, !noalias !249
   call void @_Z40grpc_slice_buffer_copy_first_into_bufferPK17grpc_slice_buffermPv(ptr noundef nonnull align 8 dereferenceable(136) %2, i64 noundef 4, ptr noundef nonnull %i.e), !noalias !249
   %i.xx = load i32, ptr %i.uc, align 4, !tbaa !43, !noalias !249
-  %152 = load i8, ptr %i.e, align 1, !tbaa !37, !noalias !249
-  %153 = zext i8 %152 to i64
-  %154 = shl nuw nsw i64 %153, 24
-  %155 = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %156 = load i8, ptr %155, align 1, !tbaa !37, !noalias !249
-  %157 = zext i8 %156 to i64
-  %158 = shl nuw nsw i64 %157, 16
-  %159 = or disjoint i64 %158, %154
-  %160 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %161 = load i8, ptr %160, align 1, !tbaa !37, !noalias !249
-  %162 = zext i8 %161 to i64
-  %163 = shl nuw nsw i64 %162, 8
-  %164 = or disjoint i64 %159, %163
-  %165 = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  %166 = load i8, ptr %165, align 1, !tbaa !37, !noalias !249
-  %i.xy = zext i8 %166 to i64
-  %.sroa.4.0.insert.ext.i = or disjoint i64 %164, %i.xy
-  %.sroa.4.0.insert.shift.i = shl nuw i64 %.sroa.4.0.insert.ext.i, 32
+  %152 = load i32, ptr %i.e, align 4
+  %153 = call i32 @llvm.bswap.i32(i32 %152)
+  %i.xy = zext i32 %153 to i64
+  %.sroa.4.0.insert.shift.i = shl nuw i64 %i.xy, 32
   %.sroa.0.0.insert.ext.i = zext i32 %i.xx to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.4.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   store i64 %.sroa.0.0.insert.insert.i, ptr %93, align 8, !tbaa !17, !noalias !249
@@ -1027,7 +1013,7 @@ bb.a:
   %7 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
   %8 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 7 uses
   %9 = alloca %"class.absl::lts_20250512::log_internal::LogMessageFatal", align 8 ; 5 uses
-  %i.b = alloca [5 x i8], align 1                 ; 9 uses
+  %i.b = alloca [5 x i8], align 1                 ; 6 uses
   %10 = alloca %"class.grpc_core::http2::ValueOrHttp2Status.74", align 8 ; 19 uses
   %11 = alloca %"class.grpc_core::http2::Http2Status", align 8 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -1363,24 +1349,10 @@ _ZN9grpc_core5http211Http2StatusD2Ev.exit:        ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.cm = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %12 = load i8, ptr %i.cm, align 1, !tbaa !37
-  %13 = zext i8 %12 to i64
-  %14 = shl nuw nsw i64 %13, 24
-  %15 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %16 = load i8, ptr %15, align 1, !tbaa !37
-  %17 = zext i8 %16 to i64
-  %18 = shl nuw nsw i64 %17, 16
-  %19 = or disjoint i64 %18, %14
-  %20 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %21 = load i8, ptr %20, align 1, !tbaa !37
-  %22 = zext i8 %21 to i64
-  %23 = shl nuw nsw i64 %22, 8
-  %24 = or disjoint i64 %19, %23
-  %25 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %26 = load i8, ptr %25, align 1, !tbaa !37
-  %i.cn = zext i8 %26 to i64
-  %.sroa.6.0.insert.ext = or disjoint i64 %24, %i.cn
-  %.sroa.6.0.insert.shift = shl nuw i64 %.sroa.6.0.insert.ext, 32
+  %12 = load i32, ptr %i.cm, align 1
+  %13 = call i32 @llvm.bswap.i32(i32 %12)
+  %i.cn = zext i32 %13 to i64
+  %.sroa.6.0.insert.shift = shl nuw i64 %i.cn, 32
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.shift, %.sroa.0.0.insert.ext.ph
   store i64 %.sroa.0.0.insert.insert, ptr %0, align 8, !tbaa !17
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 40

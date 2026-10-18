@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d,
 ; Function Attrs: mustprogress uwtable
 define noundef i32 @_Z21lodepng_inspect_chunkP12LodePNGStatemPKhm(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #5 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 %1 ; 42 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 %1 ; 39 uses
   %i.b = add i64 %1, 4
   %i.c = icmp ugt i64 %i.b, %3
   br i1 %i.c, label %_ZL14readChunk_tRNSP16LodePNGColorModePKhm.exit.thread, label %bb.b
@@ -517,25 +517,10 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 408
   store i32 1, ptr %i.ew, align 8, !tbaa !120
-  %4 = load i8, ptr %i.v, align 1, !tbaa !35
-  %5 = zext i8 %4 to i32
-  %6 = shl nuw i32 %5, 24
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %8 = load i8, ptr %7, align 1, !tbaa !35
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %6
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %13 = load i8, ptr %12, align 1, !tbaa !35
-  %14 = zext i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 8
-  %16 = or disjoint i32 %11, %15
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  %18 = load i8, ptr %17, align 1, !tbaa !35
-  %19 = zext i8 %18 to i32
-  %20 = or disjoint i32 %16, %19
+  %4 = load i32, ptr %i.v, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 412
-  store i32 %20, ptr %i.ex, align 4, !tbaa !150
+  store i32 %5, ptr %i.ex, align 4, !tbaa !150
   br label %_ZL14readChunk_tRNSP16LodePNGColorModePKhm.exit.thread138
 
 bb.af:                                            ; preds = %bb.ac
@@ -938,7 +923,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %_ZL14lodepng_memcpyPvPKvm.exit.i, %bb.f
   %.0256469.i = phi i32 [ 1, %bb.f ], [ %.3.i, %_ZL14lodepng_memcpyPvPKvm.exit.i ] ; 23 uses
   %.0265468.i = phi i64 [ 0, %bb.f ], [ %.3268.i, %_ZL14lodepng_memcpyPvPKvm.exit.i ] ; 28 uses
-  %.0270467.i = phi ptr [ %i.ay, %bb.f ], [ %.2272.i, %_ZL14lodepng_memcpyPvPKvm.exit.i ] ; 65 uses
+  %.0270467.i = phi ptr [ %i.ay, %bb.f ], [ %.2272.i, %_ZL14lodepng_memcpyPvPKvm.exit.i ] ; 62 uses
   %i.cb = ptrtoint ptr %.0270467.i to i64         ; 2 uses
   %i.cc = sub i64 %i.cb, %i.az                    ; 2 uses
   %i.cd = icmp ult ptr %.0270467.i, %4
@@ -1341,24 +1326,9 @@ bb.az:                                            ; preds = %bb.ay
 
 _ZL14readChunk_gAMAP11LodePNGInfoPKhm.exit.thread.i: ; preds = %bb.az
   store i32 1, ptr %i.bb, align 8, !tbaa !120
-  %7 = load i8, ptr %i.dg, align 1, !tbaa !35
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw i32 %8, 24
-  %10 = getelementptr inbounds nuw i8, ptr %.0270467.i, i64 9
-  %11 = load i8, ptr %10, align 1, !tbaa !35
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 16
-  %14 = or disjoint i32 %13, %9
-  %15 = getelementptr inbounds nuw i8, ptr %.0270467.i, i64 10
-  %16 = load i8, ptr %15, align 1, !tbaa !35
-  %17 = zext i8 %16 to i32
-  %18 = shl nuw nsw i32 %17, 8
-  %19 = or disjoint i32 %14, %18
-  %20 = getelementptr inbounds nuw i8, ptr %.0270467.i, i64 11
-  %21 = load i8, ptr %20, align 1, !tbaa !35
-  %22 = zext i8 %21 to i32
-  %23 = or disjoint i32 %19, %22
-  store i32 %23, ptr %i.bc, align 4, !tbaa !150
+  %7 = load i32, ptr %i.dg, align 1
+  %8 = tail call i32 @llvm.bswap.i32(i32 %7)
+  store i32 %8, ptr %i.bc, align 4, !tbaa !150
   store i32 0, ptr %i.n, align 8, !tbaa !146
   br label %_ZL14lodepng_memcpyPvPKvm.exit.thread.i
 

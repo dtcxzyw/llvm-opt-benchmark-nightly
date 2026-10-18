@@ -205,7 +205,7 @@ define linkonce_odr dso_local void @_ZSt13__invoke_implISt4pairIN8coro_rpc8err_c
 bb.a:
   %3 = alloca %"struct.struct_pack::detail::memory_reader", align 8 ; 5 uses
   %4 = alloca %"class.struct_pack::detail::unpacker", align 8 ; 4 uses
-  %5 = alloca %"class.std::tuple.2253", align 8   ; 13 uses
+  %5 = alloca %"class.std::tuple.2253", align 8   ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6846)
   %.sroa.0.0.copyload.i = load i64, ptr %1, align 8, !tbaa !411, !noalias !6846
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -235,55 +235,36 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %b
   br label %_ZZZN8coro_rpc8protocol6routerINS0_17coro_rpc_protocolESt13unordered_mapE23regist_one_handler_implITnDaXadL_Z13many_argumentIJiiiiiiiiiiddddddEEDaDpT_EEEEvRKjENKUlSt17basic_string_viewIcSt11char_traitsIcEERSt10shared_ptrINS_14context_info_tIS2_EEESt7variantIJNS0_20struct_pack_protocolEEEE_clB5cxx11ESE_SJ_SM_ENUlTyRKT_E_clISL_EEDaSQ_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit10.i.i: ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 72
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 56
-  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %5, i64 40
-  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %i.g = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %9 = load double, ptr %i.g, align 8, !tbaa !473, !noalias !6848
-  %10 = load double, ptr %i.h, align 8, !tbaa !473, !noalias !6848
-  %11 = load double, ptr %i.i, align 8, !tbaa !473, !noalias !6848
-  %i.k = load double, ptr %i.j, align 8, !tbaa !473, !noalias !6848
-  %i.l = load double, ptr %8, align 8, !tbaa !473, !noalias !6848
-  %i.m = load double, ptr %5, align 8, !tbaa !473, !noalias !6848
-  %12 = load <4 x i32>, ptr %6, align 8, !tbaa !280, !noalias !6848
-  %13 = sitofp <4 x i32> %12 to <4 x double>      ; 4 uses
-  %14 = load <4 x i32>, ptr %7, align 8, !tbaa !280, !noalias !6848
-  %15 = sitofp <4 x i32> %14 to <4 x double>      ; 4 uses
-  %16 = load <2 x i32>, ptr %i.f, align 8, !tbaa !280, !noalias !6848
-  %i.n = sitofp <2 x i32> %16 to <2 x double>     ; 2 uses
-  %17 = fadd double %i.l, %i.m
-  %18 = fadd double %i.k, %17
-  %19 = fadd double %11, %18
-  %20 = fadd double %10, %19
-  %21 = fadd double %9, %20
-  %22 = extractelement <2 x double> %i.n, i64 0
-  %23 = fadd double %21, %22
-  %24 = extractelement <2 x double> %i.n, i64 1
-  %25 = fadd double %23, %24
-  %i.o = extractelement <4 x double> %15, i64 0
-  %i.p = fadd double %25, %i.o
-  %i.q = extractelement <4 x double> %15, i64 1
-  %i.r = fadd double %i.p, %i.q
-  %26 = extractelement <4 x double> %15, i64 2
-  %i.s = fadd double %i.r, %26
-  %i.t = extractelement <4 x double> %15, i64 3
-  %i.u = fadd double %i.s, %i.t
-  %27 = extractelement <4 x double> %13, i64 0
-  %i.v = fadd double %i.u, %27
-  %i.w = extractelement <4 x double> %13, i64 1
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %6 = load <8 x i32>, ptr %i.f, align 8, !tbaa !280, !noalias !6848
+  %7 = sitofp <8 x i32> %6 to <8 x double>
+  %8 = load <2 x i32>, ptr %i.g, align 8, !tbaa !280, !noalias !6848
+  %9 = load <6 x double>, ptr %5, align 8, !tbaa !473, !noalias !6848 ; 3 uses
+  %i.k = load double, ptr %i.h, align 8, !tbaa !473, !noalias !6848
+  %i.l = load double, ptr %i.i, align 8, !tbaa !473, !noalias !6848
+  %i.m = load double, ptr %i.j, align 8, !tbaa !473, !noalias !6848
+  %i.n = sitofp <2 x i32> %8 to <2 x double>      ; 2 uses
+  %i.o = extractelement <6 x double> %9, i64 0
+  %i.p = fadd double %i.m, %i.o
+  %i.q = extractelement <6 x double> %9, i64 2
+  %i.r = fadd double %i.q, %i.p
+  %i.s = fadd double %i.l, %i.r
+  %i.t = extractelement <6 x double> %9, i64 4
+  %i.u = fadd double %i.t, %i.s
+  %i.v = fadd double %i.k, %i.u
+  %i.w = extractelement <2 x double> %i.n, i64 0
   %i.x = fadd double %i.v, %i.w
-  %i.y = extractelement <4 x double> %13, i64 2
+  %i.y = extractelement <2 x double> %i.n, i64 1
   %i.z = fadd double %i.x, %i.y
-  %28 = extractelement <4 x double> %13, i64 3
-  %29 = fadd double %i.z, %28
+  %10 = call double @llvm.vector.reduce.fadd.v8f64(double %i.z, <8 x double> %7)
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store i32 -1471916520, ptr %i.aa, align 8, !alias.scope !6848
   %.sroa.4.16..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store double %29, ptr %.sroa.4.16..sroa_idx.i.i, align 4, !alias.scope !6848
+  store double %10, ptr %.sroa.4.16..sroa_idx.i.i, align 4, !alias.scope !6848
   %.sroa.5.16..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i8 0, ptr %.sroa.5.16..sroa_idx.i.i, align 4, !alias.scope !6848
   br label %_ZZZN8coro_rpc8protocol6routerINS0_17coro_rpc_protocolESt13unordered_mapE23regist_one_handler_implITnDaXadL_Z13many_argumentIJiiiiiiiiiiddddddEEDaDpT_EEEEvRKjENKUlSt17basic_string_viewIcSt11char_traitsIcEERSt10shared_ptrINS_14context_info_tIS2_EEESt7variantIJNS0_20struct_pack_protocolEEEE_clB5cxx11ESE_SJ_SM_ENUlTyRKT_E_clISL_EEDaSQ_.exit
@@ -684,6 +665,9 @@ CoroEnd:                                          ; preds = %_ZN12async_simple4c
 unreachable:                                      ; preds = %resume.entry
   unreachable
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v8f64(double, <8 x double>) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.umax.v2i16(<2 x i16>, <2 x i16>) #28

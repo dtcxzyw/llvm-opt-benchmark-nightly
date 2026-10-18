@@ -205,53 +205,24 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 288
   store ptr %1, ptr %i.t, align 8, !tbaa !626
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 1428
-  %62 = load i8, ptr %i.u, align 4, !tbaa !223, !range !45, !noundef !46
-  %63 = trunc nuw i8 %62 to i1
-  %64 = getelementptr inbounds nuw i8, ptr %2, i64 1429
-  %.val.i.i.i.i = load i8, ptr %64, align 1, !range !45
-  %65 = trunc nuw i8 %.val.i.i.i.i to i1
-  %not..i.i.i = xor i1 %63, true
-  %66 = select i1 %not..i.i.i, i1 true, i1 %65
-  %67 = getelementptr inbounds nuw i8, ptr %2, i64 1430
-  %68 = load i8, ptr %67, align 2, !tbaa !223, !range !45, !noundef !46
-  %69 = trunc nuw i8 %68 to i1
-  %70 = getelementptr inbounds nuw i8, ptr %2, i64 1431
-  %.val.i.i1.i.i = load i8, ptr %70, align 1, !range !45
-  %71 = trunc nuw i8 %.val.i.i1.i.i to i1
-  %not..i2.i.i = xor i1 %69, true
-  %72 = select i1 %not..i2.i.i, i1 true, i1 %71
-  %73 = getelementptr inbounds nuw i8, ptr %2, i64 1432
-  %74 = load i8, ptr %73, align 8, !tbaa !223, !range !45, !noundef !46
-  %75 = trunc nuw i8 %74 to i1
-  %76 = getelementptr inbounds nuw i8, ptr %2, i64 1433
-  %.val.i.i3.i.i = load i8, ptr %76, align 1, !range !45
-  %77 = trunc nuw i8 %.val.i.i3.i.i to i1
-  %not..i4.i.i = xor i1 %75, true
-  %78 = select i1 %not..i4.i.i, i1 true, i1 %77
-  %i.v = getelementptr inbounds nuw i8, ptr %2, i64 1434
-  %i.w = load i8, ptr %i.v, align 2, !tbaa !223, !range !45, !noundef !46
+  %i.v = getelementptr inbounds nuw i8, ptr %2, i64 1424
+  %i.w = load i8, ptr %i.v, align 8, !tbaa !223, !range !45, !noundef !46
   %i.x = trunc nuw i8 %i.w to i1
-  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 1435
+  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 1425
   %.val.i.i5.i.i = load i8, ptr %i.y, align 1, !range !45
   %i.z = trunc nuw i8 %.val.i.i5.i.i to i1
-  %not..i6.i.i = xor i1 %i.x, true
-  %i.aa = select i1 %not..i6.i.i, i1 true, i1 %i.z
-  %79 = getelementptr inbounds nuw i8, ptr %2, i64 1424
-  %80 = load i8, ptr %79, align 8, !tbaa !223, !range !45, !noundef !46
-  %81 = trunc nuw i8 %80 to i1
-  %82 = getelementptr inbounds nuw i8, ptr %2, i64 1425
-  %.val.i.i7.i.i = load i8, ptr %82, align 1, !range !45
-  %83 = trunc nuw i8 %.val.i.i7.i.i to i1
-  %84 = select i1 %81, i1 %83, i1 false
-  %.sroa.5.0.insert.shift.i.i = select i1 %84, i40 4294967296, i40 0
-  %.sroa.4.0.insert.shift.i.i = select i1 %i.aa, i40 16777216, i40 0
-  %.sroa.3.0.insert.shift.i.i = select i1 %66, i40 65536, i40 0
-  %.sroa.2.0.insert.shift.i.i = select i1 %72, i40 256, i40 0
-  %.sroa.0.0.insert.ext.i.i = zext i1 %78 to i40
-  %.sroa.4.0.insert.insert.i.i = or disjoint i40 %.sroa.2.0.insert.shift.i.i, %.sroa.3.0.insert.shift.i.i
-  %.sroa.3.0.insert.insert.i.i = or disjoint i40 %.sroa.4.0.insert.insert.i.i, %.sroa.0.0.insert.ext.i.i
-  %.sroa.2.0.insert.insert.i.i = or disjoint i40 %.sroa.3.0.insert.insert.i.i, %.sroa.4.0.insert.shift.i.i
-  %.sroa.0.0.insert.insert.i.i = or disjoint i40 %.sroa.2.0.insert.insert.i.i, %.sroa.5.0.insert.shift.i.i
+  %i.aa = select i1 %i.x, i1 %i.z, i1 false
+  %.sroa.5.0.insert.shift.i.i = select i1 %i.aa, i40 4294967296, i40 0
+  %62 = load <8 x i8>, ptr %i.u, align 4          ; 2 uses
+  %63 = shufflevector <8 x i8> %62, <8 x i8> poison, <4 x i32> <i32 4, i32 2, i32 0, i32 6>
+  %64 = trunc <8 x i8> %62 to <8 x i1>
+  %65 = shufflevector <8 x i1> %64, <8 x i1> poison, <4 x i32> <i32 5, i32 3, i32 1, i32 7>
+  %66 = trunc <4 x i8> %63 to <4 x i1>
+  %67 = xor <4 x i1> %66, splat (i1 true)
+  %68 = select <4 x i1> %67, <4 x i1> splat (i1 true), <4 x i1> %65
+  %69 = select <4 x i1> %68, <4 x i40> <i40 1, i40 256, i40 65536, i40 16777216>, <4 x i40> zeroinitializer
+  %70 = tail call i40 @llvm.vector.reduce.or.v4i40(<4 x i40> %69)
+  %.sroa.0.0.insert.insert.i.i = or disjoint i40 %70, %.sroa.5.0.insert.shift.i.i
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 296
   store i40 %.sroa.0.0.insert.insert.i.i, ptr %i.ab, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 10 uses
@@ -653,6 +624,9 @@ declare i64 @llvm.umax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i40 @llvm.vector.reduce.or.v4i40(<4 x i40>) #24
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

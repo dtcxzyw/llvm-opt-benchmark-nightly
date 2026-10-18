@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.v, %.lr.ph130.i
   %.091128.i = phi i32 [ 0, %.lr.ph130.i ], [ %.192.i, %bb.v ] ; 3 uses
   %.093127.i = phi i32 [ 0, %.lr.ph130.i ], [ %i.cx, %bb.v ]
   %i.cl = call i64 @binaryheap_first(ptr noundef nonnull %i.ci) #20 ; 2 uses
-  %i.cm = inttoptr i64 %i.cl to ptr               ; 5 uses
+  %i.cm = inttoptr i64 %i.cl to ptr               ; 4 uses
   %i.cn = load ptr, ptr @CkptBufferIds, align 8
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 32
   %i.cp = load i32, ptr %i.co, align 8
@@ -238,12 +238,10 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p
   %.192.i = phi i32 [ %i.df, %bb.r ], [ %.091128.i, %bb.q ], [ %.091128.i, %bb.p ] ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
-  %4 = load double, ptr %3, align 8
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cm, i64 8 ; 2 uses
-  %5 = load double, ptr %i.dg, align 8
-  %6 = fadd double %4, %5
-  store double %6, ptr %i.dg, align 8
+  %3 = load <2 x double>, ptr %i.dg, align 8
+  %4 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %3)
+  store double %4, ptr %i.dg, align 8
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cm, i64 28 ; 2 uses
   %i.di = load <2 x i32>, ptr %i.dh, align 4
   %i.dj = add <2 x i32> %i.di, splat (i32 1)      ; 2 uses
@@ -645,6 +643,9 @@ declare i64 @llvm.smin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #19
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }

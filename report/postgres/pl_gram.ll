@@ -204,30 +204,19 @@ bb.nt:                                            ; preds = %bb.ns
 
 bb.nu:                                            ; preds = %bb.ns
   %i.bai = call ptr @palloc(i64 noundef 24) #10   ; 4 uses
-  %5 = load i8, ptr %i.baf, align 1
-  %6 = add i8 %5, 16
-  %7 = and i8 %6, 63
-  %8 = zext nneg i8 %7 to i32
-  %9 = getelementptr inbounds nuw i8, ptr %i.baf, i64 1
-  %i.baj = load <4 x i8>, ptr %9, align 1
+  %i.baj = load <4 x i8>, ptr %i.baf, align 1
   %i.bak = add <4 x i8> %i.baj, splat (i8 16)
-  %i.bal = and <4 x i8> %i.bak, splat (i8 63)     ; 4 uses
-  %10 = extractelement <4 x i8> %i.bal, i64 0
-  %11 = zext nneg i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 6
-  %13 = or disjoint i32 %12, %8
-  %14 = extractelement <4 x i8> %i.bal, i64 1
-  %15 = zext nneg i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 12
-  %17 = or disjoint i32 %13, %16
-  %18 = extractelement <4 x i8> %i.bal, i64 2
-  %i.bam = zext nneg i8 %18 to i32
-  %i.ban = shl nuw nsw i32 %i.bam, 18
-  %19 = or disjoint i32 %17, %i.ban
-  %20 = extractelement <4 x i8> %i.bal, i64 3
-  %21 = zext nneg i8 %20 to i32
-  %22 = shl nuw nsw i32 %21, 24
-  %i.bao = or disjoint i32 %19, %22
+  %i.bal = and <4 x i8> %i.bak, splat (i8 63)
+  %5 = zext nneg <4 x i8> %i.bal to <4 x i32>
+  %6 = shl nuw nsw <4 x i32> %5, <i32 0, i32 6, i32 12, i32 18>
+  %7 = getelementptr inbounds nuw i8, ptr %i.baf, i64 4
+  %8 = load i8, ptr %7, align 1
+  %9 = add i8 %8, 16
+  %10 = and i8 %9, 63
+  %i.bam = zext nneg i8 %10 to i32
+  %i.ban = shl nuw nsw i32 %i.bam, 24
+  %11 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %6)
+  %i.bao = or disjoint i32 %11, %i.ban
   store i32 %i.bao, ptr %i.bai, align 8
   %i.bap = getelementptr inbounds nuw i8, ptr %i.bai, i64 8
   store ptr %i.baf, ptr %i.bap, align 8
@@ -629,6 +618,9 @@ declare i64 @llvm.smin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.m = load <8 x float>, ptr %i.k, align 4, !tbaa !52 ; 6 uses
+  %i.m = load <8 x float>, ptr %i.k, align 4, !tbaa !52 ; 5 uses
   store <8 x float> %i.m, ptr %i.l, align 8, !tbaa !52
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.o = load float, ptr %i.n, align 4, !tbaa !52 ; 2 uses
@@ -217,13 +217,13 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds [12 x i8], ptr %i.t, i64 %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.v, ptr noundef nonnull align 4 dereferenceable(12) %i.u, i64 12, i1 false), !tbaa.struct !92
-  %5 = extractelement <8 x float> %i.m, i64 2
-  %6 = fmul float %5, 5.000000e-01
-  %7 = extractelement <8 x float> %i.m, i64 5
-  %8 = fmul float %7, 5.000000e-01
-  %9 = fadd float %6, %8
+  %5 = shufflevector <8 x float> %i.m, <8 x float> poison, <2 x i32> <i32 2, i32 5>
+  %6 = fmul <2 x float> %5, splat (float 5.000000e-01) ; 2 uses
+  %shift = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x float> %6, %shift
+  %7 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.w = fmul float %i.o, 5.000000e-01
-  %i.x = fadd float %9, %i.w
+  %i.x = fadd float %7, %i.w
   %i.y = shufflevector <8 x float> %i.m, <8 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.z = fmul <2 x float> %i.y, splat (float 5.000000e-01)
   %i.aa = shufflevector <8 x float> %i.m, <8 x float> poison, <2 x i32> <i32 3, i32 4>

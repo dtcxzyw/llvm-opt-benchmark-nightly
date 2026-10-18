@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define void @_ZN4uuid7builder7Builder13from_slice_le17h634e61cf74164090E(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 4), (8, 16)) %0, ptr align 1 %1, i64 %2) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [16 x i8], align 4                ; 12 uses
+  %i.a = alloca [16 x i8], align 4                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = icmp eq i64 %2, 16
   br i1 %i.b, label %bb.c, label %bb.b
@@ -219,29 +219,16 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   call void @"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17h349328e3014a3616E"(ptr nonnull align 1 %i.a, i64 16, ptr align 1 %1, i64 16, ptr nonnull align 8 @47)
   %.sroa.59.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %.sroa.59.0.copyload.i = load i8, ptr %.sroa.59.0..sroa_idx.i, align 4
-  %.sroa.610.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  %.sroa.610.0.copyload.i = load i8, ptr %.sroa.610.0..sroa_idx.i, align 1
-  %.sroa.711.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %.sroa.711.0.copyload.i = load i8, ptr %.sroa.711.0..sroa_idx.i, align 2
-  %.sroa.812.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  %.sroa.812.0.copyload.i = load i8, ptr %.sroa.812.0..sroa_idx.i, align 1
   %.sroa.913.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.913.0.copyload.i = load i32, ptr %.sroa.913.0..sroa_idx.i, align 4
   %i.c = zext i32 %.sroa.913.0.copyload.i to i64
   %i.d = shl nuw i64 %i.c, 32
   %.sroa.1317.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %.sroa.9.sroa.6.0.insert.ext = zext i8 %.sroa.711.0.copyload.i to i64
-  %.sroa.9.sroa.6.0.insert.shift = shl nuw nsw i64 %.sroa.9.sroa.6.0.insert.ext, 24
-  %.sroa.9.sroa.5.0.insert.ext = zext i8 %.sroa.812.0.copyload.i to i64
-  %.sroa.9.sroa.5.0.insert.shift = shl nuw nsw i64 %.sroa.9.sroa.5.0.insert.ext, 16
-  %.sroa.9.sroa.4.0.insert.ext = zext i8 %.sroa.59.0.copyload.i to i64
-  %.sroa.9.sroa.4.0.insert.shift = shl nuw nsw i64 %.sroa.9.sroa.4.0.insert.ext, 8
-  %.sroa.9.sroa.0.0.insert.ext = zext i8 %.sroa.610.0.copyload.i to i64
-  %.sroa.9.sroa.6.0.insert.insert = or disjoint i64 %.sroa.9.sroa.4.0.insert.shift, %.sroa.9.sroa.0.0.insert.ext
-  %.sroa.9.sroa.4.0.insert.mask = or disjoint i64 %.sroa.9.sroa.6.0.insert.insert, %.sroa.9.sroa.6.0.insert.shift
-  %.sroa.9.sroa.0.0.insert.mask = or disjoint i64 %.sroa.9.sroa.4.0.insert.mask, %.sroa.9.sroa.5.0.insert.shift
-  %.sroa.9.sroa.0.0.insert.insert = or disjoint i64 %.sroa.9.sroa.0.0.insert.mask, %i.d
+  %3 = load <4 x i8>, ptr %.sroa.59.0..sroa_idx.i, align 4
+  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
+  %5 = bitcast <4 x i8> %4 to i32
+  %.sroa.9.sroa.0.0.insert.ext = zext i32 %5 to i64
+  %.sroa.9.sroa.0.0.insert.insert = or disjoint i64 %i.d, %.sroa.9.sroa.0.0.insert.ext
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.f = load <4 x i8>, ptr %i.a, align 4
   %i.g = shufflevector <4 x i8> %i.f, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>

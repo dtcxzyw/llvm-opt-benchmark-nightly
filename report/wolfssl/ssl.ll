@@ -205,23 +205,17 @@ bb.c:                                             ; preds = %bb.b
   br label %ModeToVerifyOptions.exit
 
 ModeToVerifyOptions.exit:                         ; preds = %bb.b, %bb.c, %.fold.split.i
-  %.sroa.0.0.i = phi i8 [ 0, %bb.b ], [ %i.h, %bb.c ], [ 2, %.fold.split.i ] ; 4 uses
-  %3 = and i8 %.sroa.0.0.i, 2
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 169 ; 2 uses
-  %5 = load i16, ptr %4, align 1
-  %6 = zext nneg i8 %3 to i16
-  %7 = and i16 %5, -16
-  %8 = or disjoint i16 %7, %6
-  %9 = and i8 %.sroa.0.0.i, 1
-  %10 = zext nneg i8 %9 to i16
-  %11 = or disjoint i16 %8, %10
-  %12 = and i8 %.sroa.0.0.i, 4
-  %13 = zext nneg i8 %12 to i16
-  %14 = or disjoint i16 %11, %13
-  %15 = and i8 %.sroa.0.0.i, 8
-  %16 = zext nneg i8 %15 to i16
-  %i.i = or disjoint i16 %14, %16
-  store i16 %i.i, ptr %4, align 1
+  %.sroa.0.0.i = phi i8 [ 0, %bb.b ], [ %i.h, %bb.c ], [ 2, %.fold.split.i ]
+  %3 = insertelement <4 x i8> poison, i8 %.sroa.0.0.i, i64 0
+  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <4 x i32> zeroinitializer
+  %5 = and <4 x i8> %4, <i8 2, i8 1, i8 4, i8 8>
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 169 ; 2 uses
+  %7 = load i16, ptr %6, align 1
+  %8 = and i16 %7, -16
+  %9 = zext nneg <4 x i8> %5 to <4 x i16>
+  %10 = tail call i16 @llvm.vector.reduce.or.v4i16(<4 x i16> %9)
+  %i.i = or disjoint i16 %10, %8
+  store i16 %i.i, ptr %6, align 1
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 208
   store ptr %2, ptr %i.j, align 8, !tbaa !31
   br label %bb.d
@@ -623,6 +617,9 @@ declare i32 @llvm.smax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.or.v4i16(<4 x i16>) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #22

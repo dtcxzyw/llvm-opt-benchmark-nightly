@@ -205,9 +205,9 @@ bb.a:
   %i.e = insertelement <2 x i32> %i.d, i32 %4, i64 1
   %i.f = sitofp <2 x i32> %i.e to <2 x float>
   %i.g = fadd nsz <2 x float> %i.c, splat (float 5.000000e-01)
-  %i.h = fdiv nsz <2 x float> %i.g, %i.f          ; 5 uses
-  %i.i = extractelement <2 x float> %i.h, i64 1   ; 27 uses
-  %i.j = extractelement <2 x float> %i.h, i64 0   ; 20 uses
+  %i.h = fdiv nsz <2 x float> %i.g, %i.f          ; 6 uses
+  %i.i = extractelement <2 x float> %i.h, i64 1   ; 26 uses
+  %i.j = extractelement <2 x float> %i.h, i64 0   ; 19 uses
   %i.k = fcmp nsz olt float %i.j, 5.000000e-01
   br i1 %i.k, label %bb.b, label %bb.c
 
@@ -367,14 +367,13 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.bw, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.s, %bb.t, %bb.v
-  %6 = fsub nsz float 1.000000e+00, %i.j
-  %i.bx = tail call nsz float @llvm.fmuladd.f32(float %i.i, float -5.000000e-01, float %6)
+  %6 = fsub nsz <2 x float> <float 1.000000e+00, float 3.750000e-01>, %i.h ; 2 uses
+  %7 = extractelement <2 x float> %6, i64 0
+  %i.bx = tail call nsz float @llvm.fmuladd.f32(float %i.i, float -5.000000e-01, float %7)
   %i.by = fsub nsz float 5.000000e-01, %i.i
   %i.bz = getelementptr inbounds nuw i8, ptr %5, i64 4
   store float -1.000000e+00, ptr %i.bz, align 4, !tbaa !29
-  %7 = fsub nnan nsz float 3.750000e-01, %i.i
-  %8 = insertelement <2 x float> poison, float %i.bx, i64 0
-  %i.ca = insertelement <2 x float> %8, float %7, i64 1
+  %i.ca = insertelement <2 x float> %6, float %i.bx, i64 0
   %i.cb = fmul nsz <2 x float> %i.ca, splat (float 2.000000e+00)
   %i.cc = insertelement <2 x float> <float poison, float 3.750000e-01>, float %i.by, i64 0
   %i.cd = fdiv nsz <2 x float> %i.cb, %i.cc

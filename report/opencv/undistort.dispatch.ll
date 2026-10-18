@@ -205,7 +205,7 @@ bb.ep:                                            ; preds = %bb.eo
   %i.nk = insertelement <2 x double> %i.mo, double %i.lv, i64 0
   %i.nl = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.lt, i64 0
   %i.nm = insertelement <2 x double> %i.nd, double %i.na, i64 0
-  %i.nn = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nk, <2 x double> %i.nl, <2 x double> %i.nm) ; 8 uses
+  %i.nn = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nk, <2 x double> %i.nl, <2 x double> %i.nm) ; 7 uses
   %i.no = shufflevector <2 x double> %i.nn, <2 x double> poison, <2 x i32> zeroinitializer
   %i.np = insertelement <2 x double> %i.nn, double 0.000000e+00, i64 1
   %i.nq = shufflevector <2 x double> %i.nn, <2 x double> poison, <2 x i32> zeroinitializer
@@ -223,9 +223,7 @@ bb.ep:                                            ; preds = %bb.eo
   %i.oc = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.no, <2 x double> %i.ng, <2 x double> %i.nd)
   %i.od = shufflevector <2 x double> %i.nb, <2 x double> %i.nn, <2 x i32> <i32 1, i32 2>
   %i.oe = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nh, <2 x double> %i.od, <2 x double> %i.oc)
-  %shift = shufflevector <2 x double> %i.nn, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.nn, %shift
-  %54 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %54 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.nn)
   store <2 x double> %i.nw, ptr %51, align 16
   store <2 x double> %i.ob, ptr %.sroa.5168.0..sroa_idx.i, align 16
   store <2 x double> %i.oe, ptr %i.lr, align 16
@@ -626,6 +624,9 @@ declare i64 @llvm.umin.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #13
