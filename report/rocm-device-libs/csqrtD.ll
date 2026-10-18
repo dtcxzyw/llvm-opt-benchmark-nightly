@@ -23,7 +23,7 @@ bb.a:
   %i.l = sub nsw i32 0, %i.k                      ; 2 uses
   %i.m = tail call double @llvm.ldexp.f64.i32(double %i.b, i32 %i.l) ; 3 uses
   %i.n = tail call double @llvm.ldexp.f64.i32(double %i.d, i32 %i.l) ; 2 uses
-  %i.o = tail call i1 @llvm.is.fpclass.f64(double %.0111, /* (nan pinf zero) */ i32 611) ; 2 uses
+  %i.o = tail call i1 @llvm.is.fpclass.f64(double %.0111, /* (nan pinf pzero) */ i32 579) ; 2 uses
   %i.p = fmul double %i.n, %i.n
   %i.q = tail call double @llvm.fma.f64(double %i.m, double %i.m, double %i.p) ; 5 uses
   %i.r = tail call double @llvm.amdgcn.rsq.f64(double %i.q) ; 2 uses

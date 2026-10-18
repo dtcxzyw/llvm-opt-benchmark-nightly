@@ -205,17 +205,18 @@ bb.l:                                             ; preds = %.lr.ph272.split.us2
 
 .preheader231.us.i:                               ; preds = %bb.l, %.lr.ph272.split.us274.i
   %i.of = getelementptr inbounds [12 x i8], ptr %i.hg, i64 %.pre431.i ; 3 uses
+  %9 = load float, ptr %i.of, align 4, !tbaa !134 ; 12 uses
+  %10 = fmul float %9, 5.000000e-01
   %i.og = load ptr, ptr %i.hb, align 8, !tbaa !328
   %i.oh = getelementptr inbounds nuw i8, ptr %i.og, i64 %i.ny ; 5 uses
   %i.oi = getelementptr inbounds nuw i8, ptr %i.oh, i64 4
   %i.oj = getelementptr inbounds nuw i8, ptr %i.oh, i64 8
   %i.ok = getelementptr inbounds nuw i8, ptr %i.oh, i64 12
   %i.ol = getelementptr inbounds nuw i8, ptr %i.oh, i64 16
+  %11 = fmul float %9, 2.500000e-01
   %i.om = load ptr, ptr %i.ha, align 8, !tbaa !328
   %scevgep.i = getelementptr nuw i8, ptr %i.om, i64 %i.nz ; 2 uses
-  %9 = load float, ptr %i.of, align 4, !tbaa !134 ; 12 uses
   %i.on = fsub float 1.000000e+00, %9             ; 5 uses
-  %10 = fmul float %9, 5.000000e-01
   %i.oo = fmul float %9, %10                      ; 2 uses
   %i.op = fadd float %9, 1.000000e+00             ; 3 uses
   %i.oq = fsub float 2.000000e+00, %9             ; 3 uses
@@ -245,7 +246,6 @@ bb.l:                                             ; preds = %.lr.ph272.split.us2
   %i.pl = fsub float %i.pf, %i.ox
   store float %i.pl, ptr %i.ok, align 4, !tbaa !134
   store float %i.ox, ptr %i.ol, align 4, !tbaa !134
-  %11 = fmul float %9, 2.500000e-01
   %i.pm = fmul float %11, %i.ox
   %i.pn = fsub float 4.000000e+00, %9
   %i.po = fmul float %i.pn, %i.ox
@@ -266,17 +266,18 @@ bb.l:                                             ; preds = %.lr.ph272.split.us2
   %.sroa.42.0.scevgep.sroa_idx.i = getelementptr inbounds nuw i8, ptr %scevgep.i, i64 16
   store float %i.pm, ptr %.sroa.42.0.scevgep.sroa_idx.i, align 4, !tbaa !134
   %i.qc = getelementptr inbounds nuw i8, ptr %i.of, i64 4
+  %12 = load float, ptr %i.qc, align 4, !tbaa !134 ; 12 uses
+  %13 = fmul float %12, 5.000000e-01
   %i.qd = load ptr, ptr %i.ib, align 8, !tbaa !328
   %i.qe = getelementptr inbounds nuw i8, ptr %i.qd, i64 %i.ny ; 5 uses
   %i.qf = getelementptr inbounds nuw i8, ptr %i.qe, i64 4
   %i.qg = getelementptr inbounds nuw i8, ptr %i.qe, i64 8
   %i.qh = getelementptr inbounds nuw i8, ptr %i.qe, i64 12
   %i.qi = getelementptr inbounds nuw i8, ptr %i.qe, i64 16
+  %14 = fmul float %12, 2.500000e-01
   %i.qj = load ptr, ptr %i.ic, align 8, !tbaa !328
   %scevgep.i.1 = getelementptr nuw i8, ptr %i.qj, i64 %i.nz ; 2 uses
-  %12 = load float, ptr %i.qc, align 4, !tbaa !134 ; 12 uses
   %i.qk = fsub float 1.000000e+00, %12            ; 5 uses
-  %13 = fmul float %12, 5.000000e-01
   %i.ql = fmul float %12, %13                     ; 2 uses
   %i.qm = fadd float %12, 1.000000e+00            ; 3 uses
   %i.qn = fsub float 2.000000e+00, %12            ; 3 uses
@@ -306,7 +307,6 @@ bb.l:                                             ; preds = %.lr.ph272.split.us2
   %i.ri = fsub float %i.rc, %i.qu
   store float %i.ri, ptr %i.qh, align 4, !tbaa !134
   store float %i.qu, ptr %i.qi, align 4, !tbaa !134
-  %14 = fmul float %12, 2.500000e-01
   %i.rj = fmul float %14, %i.qu
   %i.rk = fsub float 4.000000e+00, %12
   %i.rl = fmul float %i.rk, %i.qu
@@ -327,17 +327,18 @@ bb.l:                                             ; preds = %.lr.ph272.split.us2
   %.sroa.42.0.scevgep.sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %scevgep.i.1, i64 16
   store float %i.rj, ptr %.sroa.42.0.scevgep.sroa_idx.i.1, align 4, !tbaa !134
   %i.rz = getelementptr inbounds nuw i8, ptr %i.of, i64 8
+  %15 = load float, ptr %i.rz, align 4, !tbaa !134 ; 12 uses
+  %16 = fmul float %15, 5.000000e-01
   %i.sa = load ptr, ptr %i.id, align 8, !tbaa !328
   %i.sb = getelementptr inbounds nuw i8, ptr %i.sa, i64 %i.ny ; 5 uses
   %i.sc = getelementptr inbounds nuw i8, ptr %i.sb, i64 4
   %i.sd = getelementptr inbounds nuw i8, ptr %i.sb, i64 8
   %i.se = getelementptr inbounds nuw i8, ptr %i.sb, i64 12
   %i.sf = getelementptr inbounds nuw i8, ptr %i.sb, i64 16
+  %17 = fmul float %15, 2.500000e-01
   %i.sg = load ptr, ptr %i.ie, align 8, !tbaa !328
   %scevgep.i.2 = getelementptr nuw i8, ptr %i.sg, i64 %i.nz ; 2 uses
-  %15 = load float, ptr %i.rz, align 4, !tbaa !134 ; 12 uses
   %i.sh = fsub float 1.000000e+00, %15            ; 5 uses
-  %16 = fmul float %15, 5.000000e-01
   %i.si = fmul float %15, %16                     ; 2 uses
   %i.sj = fadd float %15, 1.000000e+00            ; 3 uses
   %i.sk = fsub float 2.000000e+00, %15            ; 3 uses
@@ -367,7 +368,6 @@ bb.l:                                             ; preds = %.lr.ph272.split.us2
   %i.tf = fsub float %i.sz, %i.sr
   store float %i.tf, ptr %i.se, align 4, !tbaa !134
   store float %i.sr, ptr %i.sf, align 4, !tbaa !134
-  %17 = fmul float %15, 2.500000e-01
   %i.tg = fmul float %17, %i.sr
   %i.th = fsub float 4.000000e+00, %15
   %i.ti = fmul float %i.th, %i.sr

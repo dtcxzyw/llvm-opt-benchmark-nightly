@@ -205,9 +205,6 @@ bb.a:
   %i.f = load i32, ptr %i.e, align 8, !tbaa !75   ; 3 uses
   %i.g = sitofp nsz i32 %i.f to double            ; 2 uses
   %i.h = fdiv nsz double f0x40B4A4141DBAF1BA, %i.g
-  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.i = tail call nsz double @llvm.tan.f64(double %i.h) ; 2 uses
   %i.j = insertelement <2 x double> poison, double %i.i, i64 0
   %i.k = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
@@ -218,7 +215,10 @@ bb.a:
   %i.p = extractelement <2 x double> %i.o, i64 0
   %i.q = extractelement <2 x double> %i.o, i64 1
   %i.r = fdiv nsz double %i.p, %i.q
+  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store double %i.r, ptr %1, align 8, !tbaa !166
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.s = fsub nsz <2 x double> <double f0x3FF95B9B16BF11C6, double 1.000000e+00>, %i.m
   %i.t = insertelement <4 x double> poison, double %i.i, i64 0
   %i.u = shufflevector <4 x double> %i.t, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses

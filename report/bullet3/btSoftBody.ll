@@ -205,17 +205,14 @@ _ZN20btAlignedObjectArrayIN10btSoftBody4NoteEE10deallocateEv.exit.i.i: ; preds =
 
 _ZN20btAlignedObjectArrayIN10btSoftBody4NoteEE9push_backERKS1_.exit: ; preds = %bb.a, %bb.b, %_ZN20btAlignedObjectArrayIN10btSoftBody4NoteEE10deallocateEv.exit.i.i
   %i.af = phi i32 [ %.pre2.i, %_ZN20btAlignedObjectArrayIN10btSoftBody4NoteEE10deallocateEv.exit.i.i ], [ %i.c, %bb.b ], [ %i.c, %bb.a ]
-  %.not = icmp ne ptr %4, null
-  %8 = zext i1 %.not to i32
-  %.not15 = icmp ne ptr %5, null
-  %9 = zext i1 %.not15 to i32
-  %10 = add nuw nsw i32 %9, %8
-  %.not16 = icmp ne ptr %6, null
-  %11 = zext i1 %.not16 to i32
-  %12 = add nuw nsw i32 %10, %11
-  %.not17 = icmp ne ptr %7, null
-  %i.ag = zext i1 %.not17 to i32
-  %13 = add nuw nsw i32 %12, %i.ag
+  %8 = insertelement <4 x ptr> poison, ptr %5, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %4, i64 1
+  %10 = insertelement <4 x ptr> %9, ptr %6, i64 2
+  %11 = insertelement <4 x ptr> %10, ptr %7, i64 3
+  %12 = icmp ne <4 x ptr> %11, splat (ptr null)
+  %13 = bitcast <4 x i1> %12 to i4
+  %14 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %13)
+  %i.ag = zext nneg i4 %14 to i32
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 912
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !166
   %i.aj = sext i32 %i.af to i64
@@ -226,7 +223,7 @@ _ZN20btAlignedObjectArrayIN10btSoftBody4NoteEE9push_backERKS1_.exit: ; preds = %
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i64 16, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
-  store i32 %13, ptr %.sroa.7.0..sroa_idx, align 8
+  store i32 %i.ag, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 36
   store i32 0, ptr %.sroa.13.0..sroa_idx, align 4
   %.sroa.1318.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
@@ -627,6 +624,9 @@ declare i32 @llvm.smin.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #20
