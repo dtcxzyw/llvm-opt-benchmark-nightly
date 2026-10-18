@@ -205,17 +205,12 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %.0 = phi ptr [ %i.dm, %bb.y ], [ %.2.i60, %bb.x ] ; 2 uses
-  %2 = icmp eq ptr %.0, null                      ; 2 uses
-  %3 = getelementptr inbounds i8, ptr %.0, i64 -32
-  %4 = select i1 %2, ptr null, ptr %3
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %spec.select = select i1 %2, ptr null, ptr %5
+  %.0 = phi ptr [ %i.dm, %bb.y ], [ %.2.i60, %bb.x ]
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.do = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_5ValueEPKNS_4SCEVENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_E24lookupOrInsertIntoBucketIRKS3_JEEESt4pairIPSB_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.dn, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
   %.fca.0.extract.i = extractvalue { ptr, i8 } %i.do, 0
   %i.dp = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i, i64 8
-  store ptr %spec.select, ptr %i.dp, align 8, !tbaa !103
+  store ptr %.0, ptr %i.dp, align 8, !tbaa !103
   br label %_ZL20getStrideFromPointerPN4llvm5ValueEPNS_15ScalarEvolutionEPNS_4LoopE.exit.thread
 
 _ZL20getStrideFromPointerPN4llvm5ValueEPNS_15ScalarEvolutionEPNS_4LoopE.exit.thread: ; preds = %bb.a, %bb.n, %bb.o, %_ZN4llvm16SCEVPatternMatch5matchINS0_20SCEVBinaryExpr_matchINS_11SCEVMulExprENS_19PatternMatchHelpers9match_isaIJKNS_12SCEVConstantEEEENS4_10match_bindIKNS_4SCEVEEELNS_15SCEVNoWrapFlagsE0ELb0EEEEEbPSB_RKT_.exit.i, %bb.q, %bb.k, %.thread.i, %bb.j, %bb.l, %_ZN4llvm16SCEVPatternMatch5matchINS0_22SCEVAffineAddRec_matchINS_19PatternMatchHelpers9match_isaIJKNS_4SCEVEEEENS3_10match_bindIS6_EENS0_15specificloop_tyEEEEEbPS6_RKT_.exit.i, %bb.b, %_ZN4llvm16SCEVPatternMatch5matchINS0_18is_undef_or_poisonEEEbPKNS_4SCEVERKT_.exit, %bb.w, %bb.z, %_ZN4llvm26getLoadStorePointerOperandEPNS_5ValueE.exit

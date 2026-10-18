@@ -204,7 +204,7 @@ _ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadEliminat
 bb.e:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueE.exit.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 2 uses
   %.not10.i.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not10.i.i.i.i.i, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit, label %.lr.ph.i.i.i.i.i
 
@@ -214,7 +214,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal8co
   %i.af = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 32
   %i.ag = load i32, ptr %i.af, align 4
   %i.ah = icmp slt i32 %i.ag, %1                  ; 2 uses
-  %.19.i.i.i.i.i = select i1 %i.ah, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 4 uses
+  %.19.i.i.i.i.i = select i1 %i.ah, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i.i = select i1 %i.ah, i64 24, i64 16
   %.1.in.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 %.1.in.v.i.i.i.i.i
   %.1.i.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i.i, align 8 ; 2 uses
@@ -226,12 +226,10 @@ _ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_
   br i1 %i.ai, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit, label %_ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i.i
 
 _ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i.i: ; preds = %_ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_19WasmLoadElimination19FieldOrElementValueENS2_4base4hashIS7_EEEEESt10_Select1stISE_ESt4lessIiENS3_13ZoneAllocatorISE_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeISE_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i
-  %i.aj = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32
+  %i.aj = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32 ; 2 uses
   %i.ak = load i32, ptr %i.aj, align 4
-  %i.al = icmp slt i32 %1, %i.ak                  ; 2 uses
-  %spec.select.i.i.i.i = select i1 %i.al, ptr %i.ae, ptr %.19.i.i.i.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 32
-  %spec.select.i.i = select i1 %i.al, ptr %i.a, ptr %3
+  %i.al = icmp slt i32 %1, %i.ak
+  %spec.select.i.i = select i1 %i.al, ptr %i.a, ptr %i.aj
   br label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit
 
 bb.f:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueE.exit.i
@@ -305,7 +303,7 @@ _ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19F
 bb.j:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE8FindHashENSA_9HashValueE.exit.i
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 24
   %i.bu = load ptr, ptr %i.bt, align 8            ; 2 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 16 ; 3 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 16 ; 2 uses
   %.not10.i.i.i.i.i13 = icmp eq ptr %i.bu, null
   br i1 %.not10.i.i.i.i.i13, label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE3GetERKS4_.exit, label %.lr.ph.i.i.i.i.i14
 
@@ -315,7 +313,7 @@ bb.j:                                             ; preds = %_ZNK2v88internal8co
   %i.bw = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i15, i64 32
   %i.bx = load ptr, ptr %i.bw, align 8
   %i.by = icmp ult ptr %i.bx, %2                  ; 2 uses
-  %.19.i.i.i.i.i17 = select i1 %i.by, ptr %.0811.i.i.i.i.i16, ptr %.012.i.i.i.i.i15 ; 4 uses
+  %.19.i.i.i.i.i17 = select i1 %i.by, ptr %.0811.i.i.i.i.i16, ptr %.012.i.i.i.i.i15 ; 3 uses
   %.1.in.v.i.i.i.i.i18 = select i1 %i.by, i64 24, i64 16
   %.1.in.i.i.i.i.i19 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i15, i64 %.1.in.v.i.i.i.i.i18
   %.1.i.i.i.i.i20 = load ptr, ptr %.1.in.i.i.i.i.i19, align 8 ; 2 uses
@@ -327,12 +325,10 @@ _ZNKSt8_Rb_treeIPN2v88internal8compiler4NodeESt4pairIKS4_NS2_19WasmLoadEliminati
   br i1 %i.bz, label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE3GetERKS4_.exit, label %_ZNKSt3mapIPN2v88internal8compiler4NodeENS2_19WasmLoadElimination19FieldOrElementValueESt4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S6_EEEE4findERSB_.exit.i.i
 
 _ZNKSt3mapIPN2v88internal8compiler4NodeENS2_19WasmLoadElimination19FieldOrElementValueESt4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S6_EEEE4findERSB_.exit.i.i: ; preds = %_ZNKSt8_Rb_treeIPN2v88internal8compiler4NodeESt4pairIKS4_NS2_19WasmLoadElimination19FieldOrElementValueEESt10_Select1stIS9_ESt4lessIS4_ENS1_13ZoneAllocatorIS9_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS6_.exit.i.i.i.i
-  %i.ca = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i17, i64 32
+  %i.ca = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i17, i64 32 ; 2 uses
   %i.cb = load ptr, ptr %i.ca, align 8
-  %i.cc = icmp ult ptr %2, %i.cb                  ; 2 uses
-  %spec.select.i.i.i.i22 = select i1 %i.cc, ptr %i.bv, ptr %.19.i.i.i.i.i17
-  %4 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i22, i64 32
-  %spec.select.i.i23 = select i1 %i.cc, ptr %i.ao, ptr %4
+  %i.cc = icmp ult ptr %2, %i.cb
+  %spec.select.i.i23 = select i1 %i.cc, ptr %i.ao, ptr %i.ca
   br label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE3GetERKS4_.exit
 
 bb.k:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE8FindHashENSA_9HashValueE.exit.i
@@ -481,7 +477,7 @@ _ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadEliminat
 bb.e:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueE.exit.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 2 uses
   %.not10.i.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not10.i.i.i.i.i, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit, label %.lr.ph.i.i.i.i.i
 
@@ -491,7 +487,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal8co
   %i.af = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 32
   %i.ag = load i32, ptr %i.af, align 4
   %i.ah = icmp slt i32 %i.ag, %1                  ; 2 uses
-  %.19.i.i.i.i.i = select i1 %i.ah, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 4 uses
+  %.19.i.i.i.i.i = select i1 %i.ah, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i.i = select i1 %i.ah, i64 24, i64 16
   %.1.in.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 %.1.in.v.i.i.i.i.i
   %.1.i.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i.i, align 8 ; 2 uses
@@ -503,12 +499,10 @@ _ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_
   br i1 %i.ai, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit, label %_ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i.i
 
 _ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i.i: ; preds = %_ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_19WasmLoadElimination19FieldOrElementValueENS2_4base4hashIS7_EEEEESt10_Select1stISE_ESt4lessIiENS3_13ZoneAllocatorISE_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeISE_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i
-  %i.aj = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32
+  %i.aj = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32 ; 2 uses
   %i.ak = load i32, ptr %i.aj, align 4
-  %i.al = icmp slt i32 %1, %i.ak                  ; 2 uses
-  %spec.select.i.i.i.i = select i1 %i.al, ptr %i.ae, ptr %.19.i.i.i.i.i
-  %9 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 32
-  %spec.select.i.i = select i1 %i.al, ptr %i.a, ptr %9
+  %i.al = icmp slt i32 %1, %i.ak
+  %spec.select.i.i = select i1 %i.al, ptr %i.a, ptr %i.aj
   br label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit
 
 bb.f:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueE.exit.i
@@ -911,7 +905,7 @@ _ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadEliminat
 bb.e:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueE.exit.i
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   %i.ac = load ptr, ptr %i.ab, align 8            ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 3 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
   %.not10.i.i.i.i.i = icmp eq ptr %i.ac, null
   br i1 %.not10.i.i.i.i.i, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit, label %.lr.ph.i.i.i.i.i
 
@@ -921,7 +915,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal8co
   %i.ae = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 32
   %i.af = load i32, ptr %i.ae, align 4
   %i.ag = icmp slt i32 %i.af, %1                  ; 2 uses
-  %.19.i.i.i.i.i = select i1 %i.ag, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 4 uses
+  %.19.i.i.i.i.i = select i1 %i.ag, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i.i = select i1 %i.ag, i64 24, i64 16
   %.1.in.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 %.1.in.v.i.i.i.i.i
   %.1.i.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i.i, align 8 ; 2 uses
@@ -933,12 +927,10 @@ _ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_
   br i1 %i.ah, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit, label %_ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i.i
 
 _ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i.i: ; preds = %_ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_19WasmLoadElimination19FieldOrElementValueENS2_4base4hashIS7_EEEEESt10_Select1stISE_ESt4lessIiENS3_13ZoneAllocatorISE_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeISE_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i
-  %i.ai = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32
+  %i.ai = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4
-  %i.ak = icmp slt i32 %1, %i.aj                  ; 2 uses
-  %spec.select.i.i.i.i = select i1 %i.ak, ptr %i.ad, ptr %.19.i.i.i.i.i
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 32
-  %spec.select.i.i = select i1 %i.ak, ptr %0, ptr %7
+  %i.ak = icmp slt i32 %1, %i.aj
+  %spec.select.i.i = select i1 %i.ak, ptr %0, ptr %i.ai
   br label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit
 
 bb.f:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueE.exit.i
@@ -1247,7 +1239,7 @@ _ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadEliminat
 bb.h:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueE.exit.i
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.ar = load ptr, ptr %i.aq, align 8            ; 2 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 16 ; 3 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 16 ; 2 uses
   %.not10.i.i.i.i.i = icmp eq ptr %i.ar, null
   br i1 %.not10.i.i.i.i.i, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit, label %.lr.ph.i.i.i.i.i
 
@@ -1257,7 +1249,7 @@ bb.h:                                             ; preds = %_ZNK2v88internal8co
   %i.at = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 32
   %i.au = load i32, ptr %i.at, align 4
   %i.av = icmp slt i32 %i.au, %.sroa.091.0        ; 2 uses
-  %.19.i.i.i.i.i = select i1 %i.av, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 4 uses
+  %.19.i.i.i.i.i = select i1 %i.av, ptr %.0811.i.i.i.i.i, ptr %.012.i.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i.i = select i1 %i.av, i64 24, i64 16
   %.1.in.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 %.1.in.v.i.i.i.i.i
   %.1.i.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i.i, align 8 ; 2 uses
@@ -1269,12 +1261,10 @@ _ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_
   br i1 %i.aw, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit, label %_ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i.i
 
 _ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i.i: ; preds = %_ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_19WasmLoadElimination19FieldOrElementValueENS2_4base4hashIS7_EEEEESt10_Select1stISE_ESt4lessIiENS3_13ZoneAllocatorISE_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeISE_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i
-  %i.ax = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32
+  %i.ax = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i, i64 32 ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 4
-  %i.az = icmp slt i32 %.sroa.091.0, %i.ay        ; 2 uses
-  %spec.select.i.i.i.i = select i1 %i.az, ptr %i.as, ptr %.19.i.i.i.i.i
-  %7 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 32
-  %spec.select.i.i = select i1 %i.az, ptr %i.e, ptr %7
+  %i.az = icmp slt i32 %.sroa.091.0, %i.ay
+  %spec.select.i.i = select i1 %i.az, ptr %i.e, ptr %i.ax
   br label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE3GetERKi.exit
 
 bb.i:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueE.exit.i
@@ -1607,7 +1597,7 @@ _ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19F
 bb.y:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE8FindHashENSA_9HashValueE.exit.i
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 24
   %i.fu = load ptr, ptr %i.ft, align 8            ; 2 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %i.fs, i64 16 ; 3 uses
+  %i.fv = getelementptr inbounds nuw i8, ptr %i.fs, i64 16 ; 2 uses
   %.not10.i.i.i.i.i34 = icmp eq ptr %i.fu, null
   br i1 %.not10.i.i.i.i.i34, label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE3GetERKS4_.exit, label %.lr.ph.i.i.i.i.i35
 
@@ -1617,7 +1607,7 @@ bb.y:                                             ; preds = %_ZNK2v88internal8co
   %i.fw = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i36, i64 32
   %i.fx = load ptr, ptr %i.fw, align 8
   %i.fy = icmp ult ptr %i.fx, %.sroa.0.0.i        ; 2 uses
-  %.19.i.i.i.i.i38 = select i1 %i.fy, ptr %.0811.i.i.i.i.i37, ptr %.012.i.i.i.i.i36 ; 4 uses
+  %.19.i.i.i.i.i38 = select i1 %i.fy, ptr %.0811.i.i.i.i.i37, ptr %.012.i.i.i.i.i36 ; 3 uses
   %.1.in.v.i.i.i.i.i39 = select i1 %i.fy, i64 24, i64 16
   %.1.in.i.i.i.i.i40 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i36, i64 %.1.in.v.i.i.i.i.i39
   %.1.i.i.i.i.i41 = load ptr, ptr %.1.in.i.i.i.i.i40, align 8 ; 2 uses
@@ -1629,12 +1619,10 @@ _ZNKSt8_Rb_treeIPN2v88internal8compiler4NodeESt4pairIKS4_NS2_19WasmLoadEliminati
   br i1 %i.fz, label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE3GetERKS4_.exit, label %_ZNKSt3mapIPN2v88internal8compiler4NodeENS2_19WasmLoadElimination19FieldOrElementValueESt4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S6_EEEE4findERSB_.exit.i.i
 
 _ZNKSt3mapIPN2v88internal8compiler4NodeENS2_19WasmLoadElimination19FieldOrElementValueESt4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S6_EEEE4findERSB_.exit.i.i: ; preds = %_ZNKSt8_Rb_treeIPN2v88internal8compiler4NodeESt4pairIKS4_NS2_19WasmLoadElimination19FieldOrElementValueEESt10_Select1stIS9_ESt4lessIS4_ENS1_13ZoneAllocatorIS9_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS6_.exit.i.i.i.i
-  %i.ga = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i38, i64 32
+  %i.ga = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i38, i64 32 ; 2 uses
   %i.gb = load ptr, ptr %i.ga, align 8
-  %i.gc = icmp ult ptr %.sroa.0.0.i, %i.gb        ; 2 uses
-  %spec.select.i.i.i.i43 = select i1 %i.gc, ptr %i.fv, ptr %.19.i.i.i.i.i38
-  %8 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i43, i64 32
-  %spec.select.i.i44 = select i1 %i.gc, ptr %i.bc, ptr %8
+  %i.gc = icmp ult ptr %.sroa.0.0.i, %i.gb
+  %spec.select.i.i44 = select i1 %i.gc, ptr %i.bc, ptr %i.ga
   br label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE3GetERKS4_.exit
 
 bb.z:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE8FindHashENSA_9HashValueE.exit.i
@@ -2037,7 +2025,7 @@ _ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19F
 bb.g:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE8FindHashENSA_9HashValueEPSt5arrayIPKNSA_11FocusedTreeELm32EEPi.exit
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 24
   %i.bb = load ptr, ptr %i.ba, align 8            ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.az, i64 16 ; 3 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.az, i64 16 ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.bb, null
   br i1 %.not10.i.i.i.i, label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE15GetFocusedValueEPKNSA_11FocusedTreeERKS4_.exit, label %.lr.ph.i.i.i.i
 
@@ -2047,7 +2035,7 @@ bb.g:                                             ; preds = %_ZNK2v88internal8co
   %i.bd = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.be = load ptr, ptr %i.bd, align 8
   %i.bf = icmp ult ptr %i.be, %1                  ; 2 uses
-  %.19.i.i.i.i = select i1 %i.bf, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 4 uses
+  %.19.i.i.i.i = select i1 %i.bf, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i = select i1 %i.bf, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8 ; 2 uses
@@ -2059,12 +2047,10 @@ _ZNKSt8_Rb_treeIPN2v88internal8compiler4NodeESt4pairIKS4_NS2_19WasmLoadEliminati
   br i1 %i.bg, label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE15GetFocusedValueEPKNSA_11FocusedTreeERKS4_.exit, label %_ZNKSt3mapIPN2v88internal8compiler4NodeENS2_19WasmLoadElimination19FieldOrElementValueESt4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S6_EEEE4findERSB_.exit.i
 
 _ZNKSt3mapIPN2v88internal8compiler4NodeENS2_19WasmLoadElimination19FieldOrElementValueESt4lessIS4_ENS1_13ZoneAllocatorISt4pairIKS4_S6_EEEE4findERSB_.exit.i: ; preds = %_ZNKSt8_Rb_treeIPN2v88internal8compiler4NodeESt4pairIKS4_NS2_19WasmLoadElimination19FieldOrElementValueEESt10_Select1stIS9_ESt4lessIS4_ENS1_13ZoneAllocatorIS9_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS6_.exit.i.i.i
-  %i.bh = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32
+  %i.bh = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32 ; 2 uses
   %i.bi = load ptr, ptr %i.bh, align 8
-  %i.bj = icmp ult ptr %1, %i.bi                  ; 2 uses
-  %spec.select.i.i.i = select i1 %i.bj, ptr %i.bc, ptr %.19.i.i.i.i
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 32
-  %spec.select.i = select i1 %i.bj, ptr %0, ptr %6
+  %i.bj = icmp ult ptr %1, %i.bi
+  %spec.select.i = select i1 %i.bj, ptr %0, ptr %i.bh
   br label %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE15GetFocusedValueEPKNSA_11FocusedTreeERKS4_.exit
 
 bb.h:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEE8FindHashENSA_9HashValueEPSt5arrayIPKNSA_11FocusedTreeELm32EEPi.exit
@@ -2467,7 +2453,7 @@ _ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadEliminat
 bb.g:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueEPSt5arrayIPKNSC_11FocusedTreeELm32EEPi.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8            ; 2 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 16 ; 3 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 16 ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.ay, null
   br i1 %.not10.i.i.i.i, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE15GetFocusedValueEPKNSC_11FocusedTreeERKi.exit, label %.lr.ph.i.i.i.i
 
@@ -2477,7 +2463,7 @@ bb.g:                                             ; preds = %_ZNK2v88internal8co
   %i.ba = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 32
   %i.bb = load i32, ptr %i.ba, align 4
   %i.bc = icmp slt i32 %i.bb, %1                  ; 2 uses
-  %.19.i.i.i.i = select i1 %i.bc, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 4 uses
+  %.19.i.i.i.i = select i1 %i.bc, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i ; 3 uses
   %.1.in.v.i.i.i.i = select i1 %i.bc, i64 24, i64 16
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8 ; 2 uses
@@ -2489,12 +2475,10 @@ _ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_
   br i1 %i.bd, label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE15GetFocusedValueEPKNSC_11FocusedTreeERKi.exit, label %_ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i
 
 _ZNKSt3mapIiN2v88internal8compiler13PersistentMapIPNS2_4NodeENS2_19WasmLoadElimination19FieldOrElementValueENS0_4base4hashIS5_EEEESt4lessIiENS1_13ZoneAllocatorISt4pairIKiSB_EEEE4findERSG_.exit.i: ; preds = %_ZNKSt8_Rb_treeIiSt4pairIKiN2v88internal8compiler13PersistentMapIPNS4_4NodeENS4_19WasmLoadElimination19FieldOrElementValueENS2_4base4hashIS7_EEEEESt10_Select1stISE_ESt4lessIiENS3_13ZoneAllocatorISE_EEE14_M_lower_boundEPKSt13_Rb_tree_nodeISE_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i
-  %i.be = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32
+  %i.be = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32 ; 2 uses
   %i.bf = load i32, ptr %i.be, align 4
-  %i.bg = icmp slt i32 %1, %i.bf                  ; 2 uses
-  %spec.select.i.i.i = select i1 %i.bg, ptr %i.az, ptr %.19.i.i.i.i
-  %6 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 32
-  %spec.select.i = select i1 %i.bg, ptr %0, ptr %6
+  %i.bg = icmp slt i32 %1, %i.bf
+  %spec.select.i = select i1 %i.bg, ptr %0, ptr %i.be
   br label %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE15GetFocusedValueEPKNSC_11FocusedTreeERKi.exit
 
 bb.h:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIiNS2_IPNS1_4NodeENS1_19WasmLoadElimination19FieldOrElementValueENS_4base4hashIS4_EEEENS8_IiEEE8FindHashENSC_9HashValueEPSt5arrayIPKNSC_11FocusedTreeELm32EEPi.exit

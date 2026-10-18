@@ -205,20 +205,18 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.f
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define { i32, i32 } @_RNvXs3_NtCskLngH8kgpZI_15ruff_python_ast10identifierNtNtB7_5nodes5AliasNtB5_10Identifier10identifier(ptr nofree noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #15 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
+define { i32, i32 } @_RNvXs3_NtCskLngH8kgpZI_15ruff_python_ast10identifierNtNtB7_5nodes5AliasNtB5_10Identifier10identifier(ptr nofree noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #13 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 23
   %i.b = load i8, ptr %i.a, align 1, !range !48, !noundef !46
-  %.not = icmp eq i8 %i.b, -1                     ; 3 uses
-  %. = select i1 %.not, ptr null, ptr %0
-  %1 = getelementptr i8, ptr %., i64 4
-  %i.c = getelementptr i8, ptr %0, i64 44
-  %.val.pn.in.i.idx.a = select i1 %.not, i64 40, i64 0
+  %.not = icmp eq i8 %i.b, -1                     ; 2 uses
+  %.val.pn.in.i.idx = select i1 %.not, i64 40, i64 0
+  %i.c = getelementptr i8, ptr %0, i64 %.val.pn.in.i.idx
+  %.val.pn.in.i.idx.a = select i1 %.not, i64 44, i64 4
   %.val.pn.in.i = getelementptr i8, ptr %0, i64 %.val.pn.in.i.idx.a
-  %.val7.pn.in.i = select i1 %.not, ptr %i.c, ptr %1
-  %.val7.pn.i = load i32, ptr %.val7.pn.in.i, align 4, !noundef !46
-  %.val.pn.i = load i32, ptr %.val.pn.in.i, align 8, !noundef !46
+  %.val7.pn.i = load i32, ptr %.val.pn.in.i, align 4, !noundef !46
+  %.val.pn.i = load i32, ptr %i.c, align 8, !noundef !46
   %.pn10.i = insertvalue { i32, i32 } poison, i32 %.val.pn.i, 0
   %.pn.i = insertvalue { i32, i32 } %.pn10.i, i32 %.val7.pn.i, 1
   ret { i32, i32 } %.pn.i

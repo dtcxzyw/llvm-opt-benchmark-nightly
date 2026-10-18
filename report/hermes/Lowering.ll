@@ -204,16 +204,11 @@ bb.g:                                             ; preds = %.lr.ph43, %._crit_e
   br i1 %.not28, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.cf = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.029.039, i32 noundef 1) #12 ; 2 uses
-  %6 = icmp eq ptr %i.cf, null                    ; 2 uses
-  %7 = getelementptr inbounds i8, ptr %i.cf, i64 -16
-  %8 = select i1 %6, ptr null, ptr %7
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %spec.select = select i1 %6, ptr null, ptr %9
+  %i.cf = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.029.039, i32 noundef 1) #12
   %i.cg = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.029.039, i32 noundef 0) #12
   call void @_ZN6hermes9IRBuilder17setInsertionPointEPNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull %.sroa.029.039) #12
   %i.ch = load ptr, ptr %i.bh, align 8, !tbaa !256, !nonnull !124, !align !131
-  %i.ci = call i32 @_ZN6hermes17RegisterAllocator11getRegisterEPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(1952) %i.ch, ptr noundef %spec.select) #12
+  %i.ci = call i32 @_ZN6hermes17RegisterAllocator11getRegisterEPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(1952) %i.ch, ptr noundef %i.cf) #12
   %i.cj = call noundef ptr @_ZN6hermes9IRBuilder13createMovInstEPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef %i.cg) #12 ; 2 uses
   %i.ck = load ptr, ptr %i.bh, align 8, !tbaa !256, !nonnull !124, !align !131
   %i.cl = icmp eq ptr %i.cj, null
