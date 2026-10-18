@@ -204,16 +204,14 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !89
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call noundef ptr %i.c(ptr noundef nonnull align 8 dereferenceable(72) %0) #21 ; 3 uses
+  %i.d = tail call noundef ptr %i.c(ptr noundef nonnull align 8 dereferenceable(72) %0) #21 ; 2 uses
   %i.e = load i16, ptr %i.d, align 8
   %i.f = and i16 %i.e, 511
-  %.not.i.i.i.i = icmp eq i16 %i.f, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.d, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %2, ptr %i.g
+  %.not.i.i.i.i = icmp eq i16 %i.f, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %spec.select.v.i.i.i.i
   %i.h = zext i32 %1 to i64
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.h
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !811
   ret ptr %i.j
 }
@@ -498,20 +496,18 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %.0.in.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 16
   %.0.i.i = load ptr, ptr %.0.in.i.i, align 8, !tbaa !823 ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 40
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !227  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !227  ; 2 uses
   %i.c = load i16, ptr %i.b, align 8
   %i.d = and i16 %i.c, 511                        ; 2 uses
   %i.e = icmp eq i16 %i.d, 110
   br i1 %i.e, label %bb.b, label %_ZNK5clang4ento27CXXInheritedConstructorCall24getInheritingConstructorEv.exit, !llvm.loop !7
 
 _ZNK5clang4ento27CXXInheritedConstructorCall24getInheritingConstructorEv.exit: ; preds = %bb.b
-  %.not.i.i.i.i = icmp eq i16 %i.d, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.b, ptr null
-  %2 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %2, ptr %i.f
+  %.not.i.i.i.i = icmp eq i16 %i.d, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 %spec.select.v.i.i.i.i
   %i.g = zext i32 %1 to i64
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i.i.i.i, i64 %i.g
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.g
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !811
   ret ptr %i.i
 }

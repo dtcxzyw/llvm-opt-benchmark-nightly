@@ -205,10 +205,8 @@ bb.h:                                             ; preds = %._crit_edge.i.i.i16
 
 _RINvMs6_NtCs3sCKvcUjPpt_9hashbrown3rawINtB6_8RawTableTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexjEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_jE0ECskcxRuJ53GpR_9rustworkx.exit.i.i17: ; preds = %._crit_edge.i.i.i16, %.lr.ph.i.i.i12
   %i.br = phi ptr [ %i.bh, %.lr.ph.i.i.i12 ], [ null, %._crit_edge.i.i.i16 ] ; 2 uses
-  %.not.i.i18 = icmp eq ptr %i.br, null           ; 3 uses
-  %0 = getelementptr inbounds i8, ptr %i.br, i64 -16
-  %.sroa.0.0.i.i19 = select i1 %.not.i.i18, ptr null, ptr %0
-  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i19, i64 8 ; 2 uses
+  %.not.i.i18 = icmp eq ptr %i.br, null           ; 2 uses
+  %i.bs = getelementptr inbounds i8, ptr %i.br, i64 -8 ; 2 uses
   %.sroa.0.0.i2217 = select i1 %.not.i.i18, ptr null, ptr %i.bs
   br i1 %.not.i.i, label %_RNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity11core_number11core_numberRINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB2t_5types3any5PyAnyEB2o_EE0CskcxRuJ53GpR_9rustworkx.exit23.thread, label %bb.i
 
@@ -366,10 +364,8 @@ bb.h:                                             ; preds = %._crit_edge.i.i.i16
 
 _RINvMs6_NtCs3sCKvcUjPpt_9hashbrown3rawINtB6_8RawTableTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexjEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_jE0ECskcxRuJ53GpR_9rustworkx.exit.i.i17: ; preds = %._crit_edge.i.i.i16, %.lr.ph.i.i.i12
   %i.br = phi ptr [ %i.bh, %.lr.ph.i.i.i12 ], [ null, %._crit_edge.i.i.i16 ] ; 2 uses
-  %.not.i.i18 = icmp eq ptr %i.br, null           ; 3 uses
-  %0 = getelementptr inbounds i8, ptr %i.br, i64 -16
-  %.sroa.0.0.i.i19 = select i1 %.not.i.i18, ptr null, ptr %0
-  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i19, i64 8 ; 2 uses
+  %.not.i.i18 = icmp eq ptr %i.br, null           ; 2 uses
+  %i.bs = getelementptr inbounds i8, ptr %i.br, i64 -8 ; 2 uses
   %.sroa.0.0.i2217 = select i1 %.not.i.i18, ptr null, ptr %i.bs
   br i1 %.not.i.i, label %_RNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity11core_number11core_numberRINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB2t_5types3any5PyAnyEB2o_NtB1o_10UndirectedEE0CskcxRuJ53GpR_9rustworkx.exit23.thread, label %bb.i
 

@@ -205,16 +205,14 @@ bb.a:
   %i.k = or disjoint i8 %i.i, %i.j                ; 3 uses
   %i.l = load i16, ptr %0, align 8
   %i.m = and i16 %i.l, 511
-  %.not.i.i.i = icmp eq i16 %i.m, 118             ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %.not.i.i.i, ptr %0, ptr null
-  %1 = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 48
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %spec.select.i.i.i = select i1 %.not.i.i.i, ptr %1, ptr %i.n ; 3 uses
+  %.not.i.i.i = icmp eq i16 %i.m, 118
+  %spec.select.v.i.i.i = select i1 %.not.i.i.i, i64 48, i64 40
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.p = load i32, ptr %i.o, align 8, !tbaa !66   ; 2 uses
   %i.q = zext i32 %i.p to i64
   %.idx = shl nuw nsw i64 %i.q, 3                 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 %.idx
+  %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 %.idx
   %.not13 = icmp eq i32 %i.p, 0
   br i1 %.not13, label %._crit_edge, label %.lr.ph.preheader
 
@@ -227,7 +225,7 @@ bb.a:
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader, %.lr.ph.prol
-  %.sroa.07.015.prol = phi ptr [ %i.ab, %.lr.ph.prol ], [ %spec.select.i.i.i, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.07.015.prol = phi ptr [ %i.ab, %.lr.ph.prol ], [ %i.n, %.lr.ph.preheader ] ; 2 uses
   %.014.prol = phi i8 [ %i.aa, %.lr.ph.prol ], [ %i.k, %.lr.ph.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
   %i.v = load ptr, ptr %.sroa.07.015.prol, align 8, !tbaa !37
@@ -243,7 +241,7 @@ bb.a:
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %.lcssa.unr = phi i8 [ poison, %.lr.ph.preheader ], [ %i.aa, %.lr.ph.prol ]
-  %.sroa.07.015.unr = phi ptr [ %spec.select.i.i.i, %.lr.ph.preheader ], [ %i.ab, %.lr.ph.prol ]
+  %.sroa.07.015.unr = phi ptr [ %i.n, %.lr.ph.preheader ], [ %i.ab, %.lr.ph.prol ]
   %.014.unr = phi i8 [ %i.k, %.lr.ph.preheader ], [ %i.aa, %.lr.ph.prol ]
   %i.ac = icmp ult i64 %i.s, 24
   br i1 %i.ac, label %._crit_edge, label %.lr.ph
@@ -281,7 +279,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext range(i8 0, 32) i8 @_ZN5clang17computeDependenceEPNS_22CXXTemporaryObjectExprE(ptr nofree noundef readonly captures(address) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !638
   %.sroa.0.0.copyload.i = load i64, ptr %i.b, align 8, !tbaa !16
   %i.c = and i64 %.sroa.0.0.copyload.i, -16
@@ -304,15 +302,14 @@ bb.a:
   %i.r = or disjoint i8 %i.p, %i.q                ; 3 uses
   %i.s = load i16, ptr %0, align 8
   %i.t = and i16 %i.s, 511
-  %.not.i.i.i.i = icmp eq i16 %i.t, 118           ; 2 uses
-  %spec.select.i.i.i.i.i.i = select i1 %.not.i.i.i.i, ptr %0, ptr null
-  %i.u = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i.i, i64 48
-  %spec.select.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.u, ptr %i.a ; 3 uses
+  %.not.i.i.i.i = icmp eq i16 %i.t, 118
+  %spec.select.v.i.i.i.i = select i1 %.not.i.i.i.i, i64 48, i64 40
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select.v.i.i.i.i ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.w = load i32, ptr %i.v, align 8, !tbaa !66   ; 2 uses
   %i.x = zext i32 %i.w to i64
   %.idx.i = shl nuw nsw i64 %i.x, 3               ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 %.idx.i
+  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx.i
   %.not13.i = icmp eq i32 %i.w, 0
   br i1 %.not13.i, label %_ZN5clang17computeDependenceEPNS_16CXXConstructExprE.exit, label %.lr.ph.i.preheader
 
@@ -325,7 +322,7 @@ bb.a:
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
-  %.sroa.07.015.i.prol = phi ptr [ %i.ai, %.lr.ph.i.prol ], [ %spec.select.i.i.i.i, %.lr.ph.i.preheader ] ; 2 uses
+  %.sroa.07.015.i.prol = phi ptr [ %i.ai, %.lr.ph.i.prol ], [ %i.u, %.lr.ph.i.preheader ] ; 2 uses
   %.014.i.prol = phi i8 [ %i.ah, %.lr.ph.i.prol ], [ %i.r, %.lr.ph.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
   %i.ac = load ptr, ptr %.sroa.07.015.i.prol, align 8, !tbaa !37
@@ -341,7 +338,7 @@ bb.a:
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
   %.lcssa.unr = phi i8 [ poison, %.lr.ph.i.preheader ], [ %i.ah, %.lr.ph.i.prol ]
-  %.sroa.07.015.i.unr = phi ptr [ %spec.select.i.i.i.i, %.lr.ph.i.preheader ], [ %i.ai, %.lr.ph.i.prol ]
+  %.sroa.07.015.i.unr = phi ptr [ %i.u, %.lr.ph.i.preheader ], [ %i.ai, %.lr.ph.i.prol ]
   %.014.i.unr = phi i8 [ %i.r, %.lr.ph.i.preheader ], [ %i.ah, %.lr.ph.i.prol ]
   %i.aj = icmp ult i64 %i.z, 24
   br i1 %i.aj, label %_ZN5clang17computeDependenceEPNS_16CXXConstructExprE.exit, label %.lr.ph.i

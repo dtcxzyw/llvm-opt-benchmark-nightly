@@ -204,12 +204,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store i64 0, ptr %i.a, align 8, !annotation !10
   %i.g = call i32 @acpi_evaluate_integer(ptr noundef %i.f, ptr noundef nonnull @.str, ptr noundef null, ptr noundef nonnull %i.a) #10
-  %.not.i.not = icmp eq i32 %i.g, 0               ; 2 uses
+  %.not.i.not = icmp eq i32 %i.g, 0
   %i.h = load i64, ptr %i.a, align 8
   %.not5 = icmp eq i64 %i.h, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  %.not = select i1 %.not.i.not, i1 %.not5, i1 false
-  %i.i = select i1 %.not, ptr @.str.29, ptr @.str.4
+  %i.i = select i1 %.not5, ptr @.str.29, ptr @.str.4
   %i.j = select i1 %.not.i.not, ptr %i.i, ptr @.str.28
   call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.27, ptr noundef nonnull %i.j) #10
   ret i32 0
