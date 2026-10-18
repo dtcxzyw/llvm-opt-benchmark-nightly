@@ -33,7 +33,8 @@ bb.a:
   %i.w = tail call double @llvm.ldexp.f64.i32(double %i.v, i32 %i.e)
   %i.x = load i8, ptr addrspace(4) @__oclc_finite_only_opt, align 1, !tbaa !10, !range !11, !noundef !12
   %i.y = trunc nuw i8 %i.x to i1
-  %i.z = fcmp une double %i.c, +inf
+  %2 = tail call double @llvm.fabs.f64(double %i.c)
+  %i.z = fcmp une double %2, +inf
   %i.aa = or i1 %i.z, %i.y
   %.0 = select i1 %i.aa, double %i.w, double +inf
   ret double %.0

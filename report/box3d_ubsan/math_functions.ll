@@ -202,29 +202,31 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @b3BoxInertia(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.b3Matrix3) align 4 captures(none) initializes((0, 36)) %0, float noundef %1, <2 x float> %2, float %3, <2 x float> %4, float %5) local_unnamed_addr #10 !func_sanitize !49 {
 bb.a:
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %7 = fsub float %5, %3                          ; 2 uses
+  %6 = fsub float %5, %3                          ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.a = fsub <2 x float> %4, %2                  ; 2 uses
-  %i.b = fmul <2 x float> %i.a, %i.a              ; 3 uses
-  %i.c = fmul float %7, %7                        ; 2 uses
-  %8 = extractelement <2 x float> %i.b, i64 0
-  %9 = fadd float %8, %i.c
-  %i.d = fmul float %1, %9
+  %i.b = fmul <2 x float> %i.a, %i.a              ; 2 uses
+  %i.c = fmul float %6, %6
+  %8 = insertelement <2 x float> poison, float %i.c, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fadd <2 x float> %i.b, %9                 ; 2 uses
+  %11 = extractelement <2 x float> %10, i64 0
+  %i.d = fmul float %1, %11
   %i.e = fdiv float %i.d, 1.200000e+01
-  %10 = shufflevector <2 x float> %i.b, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.f = insertelement <2 x float> %10, float %i.c, i64 1
-  %11 = fadd <2 x float> %i.b, %i.f
-  %12 = insertelement <2 x float> poison, float %1, i64 0
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.g = fmul <2 x float> %13, %11
+  %12 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.b)
+  %i.f = insertelement <2 x float> poison, float %1, i64 0
+  %13 = shufflevector <2 x float> %i.f, <2 x float> poison, <2 x i32> zeroinitializer
+  %14 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %15 = insertelement <2 x float> %14, float %12, i64 1
+  %i.g = fmul <2 x float> %13, %15
   %i.h = fdiv <2 x float> %i.g, splat (float 1.200000e+01) ; 2 uses
-  %14 = shufflevector <2 x float> %i.h, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %15 = shufflevector <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x float> %14, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  store <4 x float> %15, ptr %0, align 4, !tbaa !16, !alias.scope !50
+  %16 = shufflevector <2 x float> %i.h, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %17 = shufflevector <4 x float> %16, <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  store <4 x float> %17, ptr %0, align 4, !tbaa !16, !alias.scope !50
   %i.i = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.e, i64 0
-  store <4 x float> %i.i, ptr %6, align 4, !tbaa !16, !alias.scope !50
+  store <4 x float> %i.i, ptr %7, align 4, !tbaa !16, !alias.scope !50
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.k = extractelement <2 x float> %i.h, i64 0
+  %i.k = extractelement <2 x float> %i.h, i64 1
   store float %i.k, ptr %i.j, align 4, !tbaa !21, !alias.scope !50
   ret void
 }
