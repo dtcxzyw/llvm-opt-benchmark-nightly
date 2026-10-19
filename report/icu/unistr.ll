@@ -202,15 +202,15 @@ _ZN6icu_7813UnicodeString8allocateEi.exit73:      ; preds = %bb.u, %.noexc72
   %i.co = and i16 %i.cn, 1023
   %i.cp = or disjoint i16 %i.co, -9216            ; 2 uses
   %i.cq = zext nneg i32 %i.bq to i64              ; 2 uses
-  %4 = tail call i64 @llvm.usub.sat.i64(i64 %i.cq, i64 2) ; 2 uses
+  %4 = add nsw i64 %i.cq, -2                      ; 2 uses
   %i.cr = lshr exact i64 %4, 1
-  %i.cs = add nuw nsw i64 %i.cr, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 14
+  %i.cs = add nuw i64 %i.cr, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %4, 14
   br i1 %min.iters.check, label %.lr.ph.preheader125, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %i.cs, 2147483640              ; 3 uses
-  %i.ct = shl nuw nsw i64 %n.vec, 1
+  %n.vec = and i64 %i.cs, -8                      ; 3 uses
+  %i.ct = shl i64 %n.vec, 1
   %broadcast.splatinsert = insertelement <4 x i16> poison, i16 %i.cm, i64 0
   %broadcast.splatinsert103 = insertelement <4 x i16> poison, i16 %i.cp, i64 0
   %interleaved.vec = shufflevector <4 x i16> %broadcast.splatinsert, <4 x i16> %broadcast.splatinsert103, <8 x i32> <i32 0, i32 4, i32 0, i32 4, i32 0, i32 4, i32 0, i32 4> ; 2 uses
@@ -612,9 +612,6 @@ declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #21
 
 attributes #0 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

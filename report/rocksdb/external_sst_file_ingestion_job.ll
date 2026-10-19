@@ -205,7 +205,6 @@ bb.k:                                             ; preds = %_ZN7rocksdb10autove
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 8 uses
-  %umax = call i64 @llvm.umax.i64(i64 %i.j, i64 2)
   %i.bp = load ptr, ptr %i.l, align 8             ; 2 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !530 ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
@@ -608,7 +607,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 .backedge:                                        ; preds = %bb.ah, %bb.ag, %.peel.next93, %.noexc45
   %i.je = add nuw i64 %i.ia, 1                    ; 2 uses
-  %exitcond62.not = icmp eq i64 %i.je, %umax
+  %exitcond62.not = icmp eq i64 %i.je, %i.j
   br i1 %exitcond62.not, label %.critedge, label %.peel.next93, !llvm.loop !821
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ai, %_ZNKSt6vectorIPKN7rocksdb16IngestedFileInfoESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.n, %bb.q, %bb.t, %bb.w, %bb.z, %bb.ac, %bb.af, %.noexc.i, %.noexc30, %bb.h

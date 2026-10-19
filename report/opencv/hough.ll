@@ -205,8 +205,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i353.i: ; preds = %.noexc35
   br label %bb.aa
 
 .preheader564.i.loopexit:                         ; preds = %._crit_edge636.i
-  %20 = call i32 @llvm.smax.i32(i32 %.lcssa142, i32 1)
-  %i.el = zext nneg i32 %20 to i64
+  %i.el = zext nneg i32 %.lcssa142 to i64
   br label %.preheader564.i
 
 .preheader564.i:                                  ; preds = %.preheader564.i.loopexit, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i
@@ -214,7 +213,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i353.i: ; preds = %.noexc35
   %.sroa.0425.0891.i = phi ptr [ null, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %.sroa.0425.0.i, %.preheader564.i.loopexit ] ; 8 uses
   %.sroa.0432.0499884.i.a = phi ptr [ null, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %.sroa.0432.0499.i, %.preheader564.i.loopexit ] ; 8 uses
   %.sroa.10436.0507878.i.a = phi ptr [ null, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %.sroa.10436.0507.i, %.preheader564.i.loopexit ] ; 4 uses
-  %.0291.lcssa848851877.i = phi i64 [ 1, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %i.el, %.preheader564.i.loopexit ] ; 2 uses
+  %.0291.lcssa848851877.i = phi i64 [ 0, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %i.el, %.preheader564.i.loopexit ] ; 2 uses
   %.not.i.i.i.i346852876.i = phi i1 [ true, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %.not.i.i.i.i346.i, %.preheader564.i.loopexit ]
   %i.em = icmp sgt <2 x i32> %i.be, zeroinitializer ; 2 uses
   %i.en = extractelement <2 x i1> %i.em, i64 0    ; 2 uses
@@ -617,9 +616,8 @@ bb.w:                                             ; preds = %bb.w, %.lr.ph.i.new
   %i.er = getelementptr inbounds nuw i8, ptr %12, i64 12 ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 3 uses
   %i.et = getelementptr inbounds nuw i8, ptr %15, i64 16
-  %smax421.i = call i32 @llvm.smax.i32(i32 %.0.i.i, i32 1)
   %i.eu = and i64 %i.ef, 2147483647               ; 2 uses
-  %wide.trip.count422.i = zext nneg i32 %smax421.i to i64 ; 3 uses
+  %wide.trip.count422.i = zext nneg i32 %.0.i.i to i64 ; 3 uses
   br i1 %.not.i.i.i.i.i, label %._crit_edge347.thread.i.us, label %.lr.ph391.i.split
 
 ._crit_edge347.thread.i.us:                       ; preds = %.lr.ph391.i, %._crit_edge347.thread.i.us

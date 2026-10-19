@@ -205,11 +205,10 @@ bb.i:                                             ; preds = %bb.h, %strbuf_addch
   %i.bc = getelementptr i8, ptr %3, i64 48
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.be = getelementptr inbounds nuw i8, ptr %3, i64 80
-  %9 = call i32 @llvm.umax.i32(i32 %1, i32 1)     ; 6 uses
-  %wide.trip.count256 = zext nneg i32 %9 to i64
-  %wide.trip.count262 = zext nneg i32 %9 to i64
-  %wide.trip.count268 = zext nneg i32 %9 to i64
-  %wide.trip.count280 = zext nneg i32 %9 to i64   ; 3 uses
+  %wide.trip.count256 = zext nneg i32 %1 to i64
+  %wide.trip.count262 = zext nneg i32 %1 to i64
+  %wide.trip.count268 = zext nneg i32 %1 to i64
+  %wide.trip.count280 = zext nneg i32 %1 to i64   ; 3 uses
   br i1 %.not238, label %._crit_edge236, label %.lr.ph209.preheader.preheader
 
 .lr.ph209.preheader.preheader:                    ; preds = %bb.i
@@ -217,7 +216,7 @@ bb.i:                                             ; preds = %bb.h, %strbuf_addch
   %i.bf = icmp eq i32 %1, 1
   %unroll_iter364 = and i64 %wide.trip.count280, 2147483646
   %lcmp.mod359.not = icmp eq i64 %xtraiter358, 0
-  %lcmp.mod363 = trunc i32 %9 to i1
+  %lcmp.mod363 = trunc i32 %1 to i1
   br label %.lr.ph209.preheader
 
 .lr.ph209.preheader.loopexit:                     ; preds = %update_extended_entry.exit
@@ -620,7 +619,7 @@ update_extended_entry.exit:                       ; preds = %bb.bk, %bb.bj, %.lr
 
 .lr.ph235.preheader:                              ; preds = %bb.ay, %prune_traversal.exit, %bb.bf, %._crit_edge227
   %.3138.ph = phi i32 [ %.0135349, %._crit_edge227 ], [ %.0135349, %bb.ay ], [ %.0135349, %prune_traversal.exit ], [ %i.if, %bb.bf ]
-  %wide.trip.count286 = zext nneg i32 %9 to i64
+  %wide.trip.count286 = zext nneg i32 %1 to i64
   br label %.lr.ph235
 
 .lr.ph235:                                        ; preds = %.lr.ph235.preheader, %free_extended_entry.exit
@@ -1021,9 +1020,6 @@ declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #10

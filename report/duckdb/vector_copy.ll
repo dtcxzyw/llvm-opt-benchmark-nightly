@@ -204,7 +204,7 @@ _ZN6duckdb21TemplatedValidityMaskImE3SetEmb.exit.us: ; preds = %_ZN6duckdb21Temp
   %i.ga = or i64 %i.fz, %i.fx
   store i64 %i.ga, ptr %i.fy, align 8, !tbaa !56
   %i.gb = add nuw i64 %.0274504.us, 2             ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit474.loopexit.unr-lcssa, label %_ZN6duckdb21TemplatedValidityMaskImE3SetEmb.exit.us, !llvm.loop !92
 
@@ -410,7 +410,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.i.1: ; preds = %bb.ci, %_ZNK6duckd
   %i.ie = getelementptr i8, ptr %i.hk, i64 %i.hv
   store i8 %i.id, ptr %i.ie, align 1, !tbaa !39
   %i.if = add nuw i64 %.012.i, 2                  ; 2 uses
-  %niter718.next.1 = add i64 %niter718, 2         ; 2 uses
+  %niter718.next.1 = add nuw i64 %niter718, 2     ; 2 uses
   %niter718.ncmp.1 = icmp eq i64 %niter718.next.1, %unroll_iter717
   br i1 %niter718.ncmp.1, label %_ZN6duckdb12_GLOBAL__N_113TemplatedCopyIaEEvRKNS_6VectorERKNS_15SelectionVectorERS2_mmm.exit.loopexit.unr-lcssa, label %bb.cg, !llvm.loop !93
 
@@ -475,7 +475,6 @@ bb.cw:                                            ; preds = %bb.cv
 .lr.ph532.preheader:                              ; preds = %bb.cw
   %i.ii = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ij = load ptr, ptr %i.ii, align 8, !tbaa !65
-  %umax571 = call i64 @llvm.umax.i64(i64 %6, i64 1)
   br label %.lr.ph532
 
 .lr.ph532:                                        ; preds = %.lr.ph532.preheader, %bb.cz
@@ -527,7 +526,7 @@ bb.cy:                                            ; preds = %_ZNK6duckdb21Templa
 
 bb.cz:                                            ; preds = %bb.cy, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %i.jd = add nuw i64 %.0273531, 1                ; 2 uses
-  %exitcond572.not = icmp eq i64 %i.jd, %umax571
+  %exitcond572.not = icmp eq i64 %i.jd, %6
   br i1 %exitcond572.not, label %_ZN6duckdb12_GLOBAL__N_113TemplatedCopyIaEEvRKNS_6VectorERKNS_15SelectionVectorERS2_mmm.exit, label %.lr.ph532, !llvm.loop !94
 
 bb.da:                                            ; preds = %bb.ce
@@ -605,7 +604,6 @@ bb.dk:                                            ; preds = %bb.dj
   br i1 %.not534, label %._crit_edge528, label %.lr.ph527.split.us.preheader
 
 .lr.ph527.split.us.preheader:                     ; preds = %.lr.ph527
-  %umax569 = call i64 @llvm.umax.i64(i64 %6, i64 1)
   %min.iters.check = icmp ult i64 %i.jx, 8
   %n.vec = and i64 %i.jx, -8                      ; 3 uses
   %cmp.n = icmp eq i64 %i.jx, %n.vec
@@ -670,7 +668,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 ._crit_edge525.us:                                ; preds = %scalar.ph, %middle.block
   %i.kv = add nuw i64 %.0267526.us, 1             ; 2 uses
-  %exitcond570.not = icmp eq i64 %i.kv, %umax569
+  %exitcond570.not = icmp eq i64 %i.kv, %6
   br i1 %exitcond570.not, label %._crit_edge528, label %.lr.ph527.split.us, !llvm.loop !98
 
 ._crit_edge528:                                   ; preds = %._crit_edge525.us, %.lr.ph527
@@ -717,11 +715,7 @@ bb.dr:                                            ; preds = %bb.dq
 bb.ds:                                            ; preds = %bb.dr
   %i.ld = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.le = load ptr, ptr %i.ld, align 8, !tbaa !65 ; 2 uses
-  br i1 %i.fc, label %bb.dt, label %.lr.ph516.preheader
-
-.lr.ph516.preheader:                              ; preds = %bb.ds
-  %umax564 = call i64 @llvm.umax.i64(i64 %6, i64 1)
-  br label %.lr.ph516
+  br i1 %i.fc, label %bb.dt, label %.lr.ph516
 
 bb.dt:                                            ; preds = %bb.ds
   %i.lf = load ptr, ptr %i.fd, align 8, !tbaa !62 ; 2 uses
@@ -777,11 +771,11 @@ bb.dw:                                            ; preds = %bb.dv
           cleanup
   br label %.body
 
-.lr.ph516:                                        ; preds = %.lr.ph516.preheader, %.loopexit468
-  %.0264515 = phi i64 [ %i.nn, %.loopexit468 ], [ 0, %.lr.ph516.preheader ] ; 3 uses
-  %.sroa.14.0514 = phi ptr [ %.sroa.14.2, %.loopexit468 ], [ null, %.lr.ph516.preheader ] ; 3 uses
-  %.sroa.10.0513 = phi ptr [ %.sroa.10.2, %.loopexit468 ], [ null, %.lr.ph516.preheader ] ; 3 uses
-  %.sroa.0.0512 = phi ptr [ %.sroa.0.2, %.loopexit468 ], [ null, %.lr.ph516.preheader ] ; 3 uses
+.lr.ph516:                                        ; preds = %bb.ds, %.loopexit468
+  %.0264515 = phi i64 [ %i.nn, %.loopexit468 ], [ 0, %bb.ds ] ; 3 uses
+  %.sroa.14.0514 = phi ptr [ %.sroa.14.2, %.loopexit468 ], [ null, %bb.ds ] ; 3 uses
+  %.sroa.10.0513 = phi ptr [ %.sroa.10.2, %.loopexit468 ], [ null, %bb.ds ] ; 3 uses
+  %.sroa.0.0512 = phi ptr [ %.sroa.0.2, %.loopexit468 ], [ null, %bb.ds ] ; 3 uses
   %i.ma = load ptr, ptr %i.fd, align 8, !tbaa !62 ; 2 uses
   %.not.i396 = icmp eq ptr %i.ma, null
   br i1 %.not.i396, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit398.thread, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit398
@@ -904,7 +898,7 @@ _ZNSt6vectorIjSaIjEE12emplace_backIJmEEEvDpOT_.exit: ; preds = %_ZNSt6vectorIjSa
   %.sroa.10.2 = phi ptr [ %.sroa.10.0513, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit398 ], [ %.sroa.10.0513, %_ZNK6duckdb15SelectionVector9get_indexEm.exit400 ], [ %.sroa.10.3, %_ZNSt6vectorIjSaIjEE12emplace_backIJmEEEvDpOT_.exit ] ; 2 uses
   %.sroa.14.2 = phi ptr [ %.sroa.14.0514, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit398 ], [ %.sroa.14.0514, %_ZNK6duckdb15SelectionVector9get_indexEm.exit400 ], [ %.sroa.14.3, %_ZNSt6vectorIjSaIjEE12emplace_backIJmEEEvDpOT_.exit ]
   %i.nn = add nuw i64 %.0264515, 1                ; 2 uses
-  %exitcond565.not = icmp eq i64 %i.nn, %umax564
+  %exitcond565.not = icmp eq i64 %i.nn, %6
   br i1 %exitcond565.not, label %._crit_edge, label %.lr.ph516, !llvm.loop !100
 
 ._crit_edge:                                      ; preds = %.loopexit468
@@ -928,7 +922,6 @@ bb.ed:                                            ; preds = %._crit_edge
   %.not.i406 = icmp eq ptr %i.nu, null
   %i.nv = load ptr, ptr %i.fd, align 8, !tbaa !62 ; 2 uses
   %.not.i408 = icmp eq ptr %i.nv, null
-  %umax566 = call i64 @llvm.umax.i64(i64 %6, i64 1)
   br label %bb.ef
 
 ._crit_edge522:                                   ; preds = %bb.ei
@@ -989,7 +982,7 @@ bb.eh:                                            ; preds = %._crit_edge, %bb.ed
 bb.ei:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit410.thread, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit410
   %.1262 = phi i64 [ %i.on, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit410.thread ], [ %.0261519, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit410 ]
   %i.op = add nuw i64 %.0260520, 1                ; 2 uses
-  %exitcond567.not = icmp eq i64 %i.op, %umax566
+  %exitcond567.not = icmp eq i64 %i.op, %6
   br i1 %exitcond567.not, label %._crit_edge522, label %bb.ef, !llvm.loop !101
 
 bb.ej:                                            ; preds = %.loopexit.split-lp470.loopexit.split-lp, %bb.eh

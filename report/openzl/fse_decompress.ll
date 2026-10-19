@@ -27,10 +27,10 @@ bb.a:
   %i.b = zext i32 %2 to i64
   %i.c = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
-  %i.e = add i32 %2, 1                            ; 4 uses
+  %i.e = add i32 %2, 1                            ; 2 uses
   %i.f = shl nuw i32 1, %3                        ; 7 uses
   %i.g = add i32 %i.f, -1                         ; 7 uses
-  %i.h = zext i32 %i.e to i64                     ; 3 uses
+  %i.h = zext i32 %i.e to i64                     ; 5 uses
   %i.i = shl nuw nsw i64 %i.h, 1
   %i.j = zext nneg i32 %3 to i64
   %i.k = shl nuw i64 1, %i.j
@@ -173,13 +173,12 @@ bb.k:                                             ; preds = %.epil.preheader
   %i.bb = lshr i32 %i.f, 3
   %i.bc = add nuw nsw i32 %i.bb, 3
   %i.bd = add nuw nsw i32 %i.bc, %i.az
-  %6 = zext nneg i32 %i.bd to i64                 ; 2 uses
-  %wide.trip.count178 = zext nneg i32 %i.e to i64
+  %wide.trip.count178 = zext nneg i32 %i.bd to i64 ; 2 uses
   br label %.lr.ph160
 
 .preheader136:                                    ; preds = %._crit_edge155
   %i.be = zext nneg i32 %i.f to i64               ; 2 uses
-  %i.bf = shl nuw nsw i64 %6, 1
+  %i.bf = shl nuw nsw i64 %wide.trip.count178, 1
   br label %.preheader
 
 .lr.ph160:                                        ; preds = %.lr.ph160.preheader, %._crit_edge155
@@ -243,7 +242,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bz = add i64 %.0124156, %i.by
   %indvars.iv.next175 = add nuw nsw i64 %indvars.iv174, 1 ; 2 uses
   %i.ca = add i64 %.0123157, 72340172838076673
-  %exitcond179.not = icmp eq i64 %indvars.iv.next175, %wide.trip.count178
+  %exitcond179.not = icmp eq i64 %indvars.iv.next175, %i.h
   br i1 %exitcond179.not, label %.preheader136, label %.lr.ph160, !llvm.loop !34
 
 .preheader:                                       ; preds = %.preheader136, %.preheader
@@ -255,7 +254,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.cc
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 2
   store i8 %i.cd, ptr %i.cf, align 2, !tbaa !41
-  %i.cg = add nuw nsw i64 %.0120162, %6
+  %i.cg = add nuw nsw i64 %.0120162, %wide.trip.count178
   %i.ch = and i64 %i.cg, %i.ba
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cb, i64 1
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !17
@@ -272,7 +271,6 @@ middle.block:                                     ; preds = %vector.body
   %i.cq = lshr i32 %i.f, 3
   %i.cr = add nuw nsw i32 %i.cq, 3
   %i.cs = add nuw nsw i32 %i.cr, %i.az            ; 3 uses
-  %wide.trip.count169 = zext nneg i32 %i.e to i64
   br label %.preheader138
 
 .preheader138:                                    ; preds = %.preheader138.lr.ph, %._crit_edge146
@@ -353,7 +351,7 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
 ._crit_edge146:                                   ; preds = %._crit_edge146.loopexit.unr-lcssa, %bb.q, %.preheader138
   %.1116.lcssa = phi i32 [ %.0115149, %.preheader138 ], [ %.2.1, %._crit_edge146.loopexit.unr-lcssa ], [ %.2.epil, %bb.q ] ; 2 uses
   %indvars.iv.next167 = add nuw nsw i64 %indvars.iv166, 1 ; 2 uses
-  %exitcond170.not = icmp eq i64 %indvars.iv.next167, %wide.trip.count169
+  %exitcond170.not = icmp eq i64 %indvars.iv.next167, %i.h
   br i1 %exitcond170.not, label %._crit_edge150, label %.preheader138, !llvm.loop !38
 
 ._crit_edge150:                                   ; preds = %._crit_edge146

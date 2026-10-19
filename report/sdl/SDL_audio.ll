@@ -205,7 +205,7 @@ bb.a:
   br i1 %or.cond, label %.preheader74.preheader, label %.loopexit
 
 .preheader74.preheader:                           ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   br label %.preheader74
 
 .preheader74:                                     ; preds = %.preheader74.preheader, %.thread
@@ -261,10 +261,6 @@ bb.f:                                             ; preds = %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.lr.ph, label %.preheader74, !llvm.loop !21
-
-.lr.ph78.preheader:                               ; preds = %bb.o
-  %wide.trip.count88 = zext nneg i32 %1 to i64
-  br label %.lr.ph78
 
 .lr.ph:                                           ; preds = %.thread, %bb.o
   %indvars.iv80 = phi i64 [ %indvars.iv.next81, %bb.o ], [ 0, %.thread ] ; 2 uses
@@ -328,10 +324,10 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge
 bb.o:                                             ; preds = %bb.n, %bb.h, %bb.g, %.lr.ph
   %indvars.iv.next81 = add nuw nsw i64 %indvars.iv80, 1 ; 2 uses
   %exitcond84.not = icmp eq i64 %indvars.iv.next81, %wide.trip.count
-  br i1 %exitcond84.not, label %.lr.ph78.preheader, label %.lr.ph, !llvm.loop !22
+  br i1 %exitcond84.not, label %.lr.ph78, label %.lr.ph, !llvm.loop !22
 
-.lr.ph78:                                         ; preds = %.lr.ph78.preheader, %bb.r
-  %indvars.iv85 = phi i64 [ 0, %.lr.ph78.preheader ], [ %indvars.iv.next86, %bb.r ] ; 2 uses
+.lr.ph78:                                         ; preds = %bb.o, %bb.r
+  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %bb.r ], [ 0, %bb.o ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv85
   %i.al = load ptr, ptr %i.ak, align 8            ; 3 uses
   %.not = icmp eq ptr %i.al, null
@@ -357,7 +353,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p, %bb.q, %.lr.ph78
   %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 1 ; 2 uses
-  %exitcond89.not = icmp eq i64 %indvars.iv.next86, %wide.trip.count88
+  %exitcond89.not = icmp eq i64 %indvars.iv.next86, %wide.trip.count
   br i1 %exitcond89.not, label %.loopexit, label %.lr.ph78, !llvm.loop !23
 
 .loopexit:                                        ; preds = %bb.r, %bb.a

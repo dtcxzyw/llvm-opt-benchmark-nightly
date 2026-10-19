@@ -204,15 +204,13 @@ bb.f:                                             ; preds = %.loopexit209
   br i1 %.not184, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.f
-  %3 = add i32 %2, -1                             ; 2 uses
-  %wide.trip.count = zext i32 %3 to i64
-  %exitcond220 = icmp eq i32 %3, 1
+  %wide.trip.count = zext i32 %2 to i64
+  %exitcond220 = icmp eq i32 %2, 2
   br i1 %exitcond220, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader.preheader, %.lr.ph
-  %indvars.iv214221 = phi i64 [ %indvars.iv.next215, %.lr.ph ], [ 1, %.preheader.preheader ]
-  %indvars.iv.next215 = add nuw nsw i64 %indvars.iv214221, 1 ; 3 uses
-  %indvars = trunc i64 %indvars.iv.next215 to i32
+  %indvars.iv214221 = phi i64 [ %indvars.iv.next215, %.lr.ph ], [ 2, %.preheader.preheader ] ; 2 uses
+  %indvars = trunc nuw i64 %indvars.iv214221 to i32
   %i.aw = shl i32 %indvars, 3
   %i.ax = add i32 %i.aw, %1
   %i.ay = zext i32 %i.ax to i64                   ; 2 uses
@@ -225,9 +223,10 @@ bb.f:                                             ; preds = %.loopexit209
   %i.bb = getelementptr inbounds nuw i8, ptr %.val, i64 %i.ay
   store i64 %i.ba, ptr %i.bb, align 1
   %.not185 = icmp ne i64 %i.ba, 0
+  %indvars.iv.next215 = add nuw nsw i64 %indvars.iv214221, 1 ; 2 uses
   %exitcond = icmp eq i64 %indvars.iv.next215, %wide.trip.count
-  %or.cond222 = or i1 %.not185, %exitcond
-  br i1 %or.cond222, label %.loopexit, label %.lr.ph
+  %or.cond221 = select i1 %.not185, i1 true, i1 %exitcond
+  br i1 %or.cond221, label %.loopexit, label %.lr.ph
 
 .loopexit:                                        ; preds = %.lr.ph, %.preheader.preheader, %bb.f, %.loopexit209, %bb.a
   ret void
@@ -630,7 +629,7 @@ bb.an:                                            ; preds = %bb.am, %bb.aj
   %i.if = lshr i64 %i.ie, 32
   %i.ig = trunc nuw i64 %i.if to i32
   %i.ih = or i32 %.01147, %i.ig                   ; 2 uses
-  %i.ii = add i32 %.01152, 1                      ; 2 uses
+  %i.ii = add nuw i32 %.01152, 1                  ; 2 uses
   %.not1195 = icmp eq i32 %i.ii, %.0.copyload.i1365
   br i1 %.not1195, label %bb.ao, label %bb.n
 
@@ -1033,7 +1032,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.gn = trunc nuw i64 %i.gm to i32
   %i.go = or i32 %.0773, %i.gn                    ; 2 uses
   tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AGCScope0x3A0x3A0x7EGCScope0x280x29(ptr noundef nonnull %0, i32 noundef %i.di) #8
-  %i.gp = add i32 %.1779, 1                       ; 2 uses
+  %i.gp = add nuw i32 %.1779, 1                   ; 2 uses
   %.not803 = icmp eq i32 %i.gp, %.0.copyload.i908
   br i1 %.not803, label %bb.ae, label %bb.w
 

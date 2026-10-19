@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiE
   %i.qe = sub i64 %i.qc, %i.qd
   %i.qf = lshr exact i64 %i.qe, 2
   %i.qg = trunc i64 %i.qf to i32                  ; 5 uses
-  %i.qh = add nsw i32 %i.qg, -1                   ; 21 uses
+  %i.qh = add nsw i32 %i.qg, -1                   ; 20 uses
   %.not = icmp eq i32 %i.qh, 0
   br i1 %.not, label %bb.fq, label %bb.dj
 
@@ -301,8 +301,7 @@ _ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc342
   br i1 %epil.iter.cmp.not, label %.lr.ph1349.preheader, label %.lr.ph1344.epil, !llvm.loop !84
 
 .lr.ph1349.preheader:                             ; preds = %.lr.ph1344.epil, %.lr.ph1349.preheader.unr-lcssa
-  %wide.trip.count1752 = zext nneg i32 %i.qh to i64
-  %wide.trip.count1746 = zext i32 %i.qh to i64
+  %wide.trip.count1746 = zext nneg i32 %i.qh to i64 ; 2 uses
   br label %.lr.ph1349
 
 bb.dl:                                            ; preds = %bb.dj
@@ -344,7 +343,7 @@ bb.dm:                                            ; preds = %_ZNSt6vectorIPdSaIS
 
 .loopexit714:                                     ; preds = %_ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit, %.lr.ph1349
   %indvars.iv.next1742 = add nuw nsw i64 %indvars.iv1741, 1
-  %exitcond1753.not = icmp eq i64 %indvars.iv.next1749, %wide.trip.count1752
+  %exitcond1753.not = icmp eq i64 %indvars.iv.next1749, %wide.trip.count1746
   br i1 %exitcond1753.not, label %._crit_edge1350, label %.lr.ph1349, !llvm.loop !86
 
 ._crit_edge1350:                                  ; preds = %.loopexit714

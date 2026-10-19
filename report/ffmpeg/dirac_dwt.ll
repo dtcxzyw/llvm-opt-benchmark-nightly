@@ -45,7 +45,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.o, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %.075.i = add nsw i32 %3, -1                    ; 4 uses
+  %.075.i = add nsw i32 %3, -1                    ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 6 uses
   %i.q = zext i32 %.075.i to i64                  ; 10 uses
   switch i32 %2, label %.lr.ph.split.i.preheader [
@@ -63,9 +63,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.split.us86.i
 
 .lr.ph.split.us83.i.preheader:                    ; preds = %.lr.ph.i, %.lr.ph.i
-  %smin255 = tail call i32 @llvm.smin.i32(i32 %.075.i, i32 0) ; 2 uses
-  %5 = sub i32 %3, %smin255
-  %xtraiter256 = and i32 %5, 7                    ; 2 uses
+  %xtraiter256 = and i32 %3, 7                    ; 2 uses
   %lcmp.mod257.not = icmp eq i32 %xtraiter256, 0
   br i1 %lcmp.mod257.not, label %.lr.ph.split.us83.i.prol.loopexit, label %.lr.ph.split.us83.i.prol
 
@@ -82,9 +80,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.split.us83.i.prol.loopexit:                ; preds = %.lr.ph.split.us83.i.prol, %.lr.ph.split.us83.i.preheader
   %indvars.iv95.i.unr = phi i64 [ %i.q, %.lr.ph.split.us83.i.preheader ], [ %indvars.iv.next96.i.prol, %.lr.ph.split.us83.i.prol ]
-  %6 = sub i32 %smin255, %3
-  %7 = icmp ugt i32 %6, -8
-  br i1 %7, label %._crit_edge.i, label %.lr.ph.split.us83.i
+  %5 = icmp ult i32 %3, 8
+  br i1 %5, label %._crit_edge.i, label %.lr.ph.split.us83.i
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i
   %i.v = and i32 %3, 1
@@ -487,7 +484,7 @@ bb.m:                                             ; preds = %bb.a
   br i1 %i.gy, label %.lr.ph.i34, label %._crit_edge.i27
 
 .lr.ph.i34:                                       ; preds = %bb.m
-  %.075.i26 = add nsw i32 %3, -1                  ; 4 uses
+  %.075.i26 = add nsw i32 %3, -1                  ; 3 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 6 uses
   %i.ha = zext i32 %.075.i26 to i64               ; 10 uses
   switch i32 %2, label %.lr.ph.split.i101.preheader [
@@ -505,9 +502,7 @@ bb.m:                                             ; preds = %bb.a
   br label %.lr.ph.split.us86.i35
 
 .lr.ph.split.us83.i68.preheader:                  ; preds = %.lr.ph.i34, %.lr.ph.i34
-  %smin245 = tail call i32 @llvm.smin.i32(i32 %.075.i26, i32 0) ; 2 uses
-  %8 = sub i32 %3, %smin245
-  %xtraiter246 = and i32 %8, 7                    ; 2 uses
+  %xtraiter246 = and i32 %3, 7                    ; 2 uses
   %lcmp.mod247.not = icmp eq i32 %xtraiter246, 0
   br i1 %lcmp.mod247.not, label %.lr.ph.split.us83.i68.prol.loopexit, label %.lr.ph.split.us83.i68.prol
 
@@ -524,9 +519,8 @@ bb.m:                                             ; preds = %bb.a
 
 .lr.ph.split.us83.i68.prol.loopexit:              ; preds = %.lr.ph.split.us83.i68.prol, %.lr.ph.split.us83.i68.preheader
   %indvars.iv95.i69.unr = phi i64 [ %i.ha, %.lr.ph.split.us83.i68.preheader ], [ %indvars.iv.next96.i70.prol, %.lr.ph.split.us83.i68.prol ]
-  %9 = sub i32 %smin245, %3
-  %10 = icmp ugt i32 %9, -8
-  br i1 %10, label %._crit_edge.i27, label %.lr.ph.split.us83.i68
+  %6 = icmp ult i32 %3, 8
+  br i1 %6, label %._crit_edge.i27, label %.lr.ph.split.us83.i68
 
 .lr.ph.split.us.i96.preheader:                    ; preds = %.lr.ph.i34
   %i.hf = and i32 %3, 1
@@ -929,7 +923,7 @@ bb.x:                                             ; preds = %bb.a
   br i1 %i.oi, label %.lr.ph.i113, label %._crit_edge.i106
 
 .lr.ph.i113:                                      ; preds = %bb.x
-  %.075.i105 = add nsw i32 %3, -1                 ; 4 uses
+  %.075.i105 = add nsw i32 %3, -1                 ; 3 uses
   %i.oj = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 6 uses
   %i.ok = zext i32 %.075.i105 to i64              ; 10 uses
   switch i32 %2, label %.lr.ph.split.i180.preheader [
@@ -947,9 +941,7 @@ bb.x:                                             ; preds = %bb.a
   br label %.lr.ph.split.us86.i114
 
 .lr.ph.split.us83.i147.preheader:                 ; preds = %.lr.ph.i113, %.lr.ph.i113
-  %smin = tail call i32 @llvm.smin.i32(i32 %.075.i105, i32 0) ; 2 uses
-  %11 = sub i32 %3, %smin
-  %xtraiter = and i32 %11, 7                      ; 2 uses
+  %xtraiter = and i32 %3, 7                       ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.split.us83.i147.prol.loopexit, label %.lr.ph.split.us83.i147.prol
 
@@ -966,9 +958,8 @@ bb.x:                                             ; preds = %bb.a
 
 .lr.ph.split.us83.i147.prol.loopexit:             ; preds = %.lr.ph.split.us83.i147.prol, %.lr.ph.split.us83.i147.preheader
   %indvars.iv95.i148.unr = phi i64 [ %i.ok, %.lr.ph.split.us83.i147.preheader ], [ %indvars.iv.next96.i149.prol, %.lr.ph.split.us83.i147.prol ]
-  %12 = sub i32 %smin, %3
-  %13 = icmp ugt i32 %12, -8
-  br i1 %13, label %._crit_edge.i106, label %.lr.ph.split.us83.i147
+  %7 = icmp ult i32 %3, 8
+  br i1 %7, label %._crit_edge.i106, label %.lr.ph.split.us83.i147
 
 .lr.ph.split.us.i175.preheader:                   ; preds = %.lr.ph.i113
   %i.op = and i32 %3, 1

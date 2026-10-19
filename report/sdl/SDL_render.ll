@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.a, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = zext nneg i32 %2 to i64
+  %i.b = zext nneg i32 %2 to i64                  ; 4 uses
   %i.c = shl nuw nsw i64 %i.b, 4                  ; 2 uses
   %i.d = icmp samesign ult i32 %2, 8              ; 2 uses
   br i1 %i.d, label %.thread, label %bb.c
@@ -225,12 +225,11 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 144
   %i.k = load <2 x float>, ptr %i.j, align 4      ; 4 uses
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %2, 4
   br i1 %min.iters.check, label %.lr.ph.preheader45, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %i.b, 2147483644               ; 3 uses
   %broadcast.splat = shufflevector <2 x float> %i.k, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splat43 = shufflevector <2 x float> %i.k, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
   %i.l = shufflevector <4 x float> %broadcast.splat, <4 x float> %broadcast.splat43, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
@@ -253,7 +252,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !46
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %i.b
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader45
 
 .lr.ph.preheader45:                               ; preds = %.lr.ph.preheader, %middle.block
@@ -270,7 +269,7 @@ middle.block:                                     ; preds = %vector.body
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   store <2 x float> %i.k, ptr %i.w, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.b
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !47
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block
@@ -673,7 +672,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.j, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.k = zext nneg i32 %2 to i64
+  %i.k = zext nneg i32 %2 to i64                  ; 4 uses
   %i.l = shl nuw nsw i64 %i.k, 4                  ; 2 uses
   %i.m = icmp samesign ult i32 %2, 8              ; 2 uses
   br i1 %i.m, label %.thread, label %bb.h
@@ -694,12 +693,11 @@ bb.h:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 144
   %i.t = load <2 x float>, ptr %i.s, align 4      ; 3 uses
   %i.u = shufflevector <2 x float> %i.t, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %2, 4
   br i1 %min.iters.check, label %.lr.ph.preheader58, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %i.k, 2147483644               ; 3 uses
   %broadcast.splat = shufflevector <2 x float> %i.t, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splat57 = shufflevector <2 x float> %i.t, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
   br label %vector.body
@@ -771,7 +769,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cb, label %middle.block, label %vector.body, !llvm.loop !52
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %i.k
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader58
 
 .lr.ph.preheader58:                               ; preds = %.lr.ph.preheader, %middle.block
@@ -786,7 +784,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cf = fmul <4 x float> %i.u, %i.ce
   store <4 x float> %i.cf, ptr %i.cd, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.k
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !53
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block
@@ -1189,14 +1187,14 @@ declare i32 @llvm.ctpop.i32(i32) #12
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #12
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #12
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn
 declare ptr @llvm.stacksave.p0() #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn
 declare void @llvm.stackrestore.p0(ptr) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13

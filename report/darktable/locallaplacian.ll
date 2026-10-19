@@ -205,12 +205,10 @@ iter.check1370:                                   ; preds = %.critedge638
   %i.nl = zext nneg i32 %2 to i64
   %i.nm = shl nuw nsw i64 %i.nl, 2
   %i.nn = zext nneg i32 %3 to i64
-  %i.no = mul nuw i64 %i.nm, %i.nn                ; 9 uses
-  %min.iters.check1353 = icmp eq i64 %i.no, 0
+  %i.no = mul nuw i64 %i.nm, %i.nn                ; 8 uses
   %i.np = sub i64 %i.b, %i.a
   %diff.check1355 = icmp ugt i64 %i.np, -128
-  %or.cond1383 = or i1 %min.iters.check1353, %diff.check1355
-  br i1 %or.cond1383, label %.lr.ph918.preheader, label %vector.main.loop.iter.check1356
+  br i1 %diff.check1355, label %.lr.ph918.preheader, label %vector.main.loop.iter.check1356
 
 vector.main.loop.iter.check1356:                  ; preds = %iter.check1370
   %min.iters.check1357 = icmp ult i64 %i.no, 32
@@ -613,7 +611,7 @@ bb.ab:                                            ; preds = %bb.aa
   %.056.i739 = phi i32 [ %.pre1081, %.lr.ph.i737.preheader.new ], [ %i.zp, %.lr.ph.i737 ]
   %niter1639 = phi i32 [ 0, %.lr.ph.i737.preheader.new ], [ %niter1639.next.7, %.lr.ph.i737 ]
   %i.zp = sdiv i32 %.056.i739, 256                ; 3 uses
-  %niter1639.next.7 = add i32 %niter1639, 8       ; 2 uses
+  %niter1639.next.7 = add nuw nsw i32 %niter1639, 8 ; 2 uses
   %niter1639.ncmp.7 = icmp eq i32 %niter1639.next.7, %unroll_iter1638
   br i1 %niter1639.ncmp.7, label %._crit_edge.loopexit.i741.unr-lcssa, label %.lr.ph.i737
 
@@ -707,7 +705,7 @@ dl.exit750:                                       ; preds = %dl.exit742
   %.056.i755 = phi i32 [ %i.aab, %.lr.ph.preheader.i752.new ], [ %i.aag, %.lr.ph.i753 ]
   %niter1653 = phi i32 [ 0, %.lr.ph.preheader.i752.new ], [ %niter1653.next.7, %.lr.ph.i753 ]
   %i.aag = sdiv i32 %.056.i755, 256               ; 3 uses
-  %niter1653.next.7 = add i32 %niter1653, 8       ; 2 uses
+  %niter1653.next.7 = add nuw nsw i32 %niter1653, 8 ; 2 uses
   %niter1653.ncmp.7 = icmp eq i32 %niter1653.next.7, %unroll_iter1652
   br i1 %niter1653.ncmp.7, label %._crit_edge.loopexit.i757.unr-lcssa, label %.lr.ph.i753
 
@@ -795,7 +793,7 @@ dl.exit758:                                       ; preds = %dl.exit750, %._crit
   %.056.i771 = phi i32 [ %i.aap, %.lr.ph.preheader.i768.new ], [ %i.aau, %.lr.ph.i769 ]
   %niter1667 = phi i32 [ 0, %.lr.ph.preheader.i768.new ], [ %niter1667.next.7, %.lr.ph.i769 ]
   %i.aau = sdiv i32 %.056.i771, 256               ; 3 uses
-  %niter1667.next.7 = add i32 %niter1667, 8       ; 2 uses
+  %niter1667.next.7 = add nuw nsw i32 %niter1667, 8 ; 2 uses
   %niter1667.ncmp.7 = icmp eq i32 %niter1667.next.7, %unroll_iter1666
   br i1 %niter1667.ncmp.7, label %._crit_edge.loopexit.i773.unr-lcssa, label %.lr.ph.i769
 
