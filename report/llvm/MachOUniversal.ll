@@ -73,7 +73,6 @@ $_ZN4llvm6object6Binary11initContentEv = comdat any
 @.str.4 = private unnamed_addr constant [33 x i8] c"contains zero architecture types\00", align 1
 @.str.5 = private unnamed_addr constant [17 x i8] c"bad magic number\00", align 1
 @.str.6 = private unnamed_addr constant [9 x i8] c"fat_arch\00", align 1
-@.str.7 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.8 = private unnamed_addr constant [4 x i8] c"_64\00", align 1
 @.str.9 = private unnamed_addr constant [47 x i8] c" structs would extend past the end of the file\00", align 1
 @.str.10 = private unnamed_addr constant [30 x i8] c"offset plus size of cputype (\00", align 1
@@ -451,9 +450,9 @@ bb.a:
   %5 = alloca %"class.llvm::Twine", align 8       ; 4 uses
   %6 = alloca %"class.llvm::Error", align 8       ; 4 uses
   %7 = alloca %"class.llvm::Twine", align 8       ; 4 uses
-  %8 = alloca %"class.llvm::Error", align 8       ; 4 uses
+  %8 = alloca %"class.llvm::Error", align 8       ; 5 uses
   %9 = alloca %"class.llvm::Twine", align 8       ; 5 uses
-  %10 = alloca %"class.llvm::Twine", align 8      ; 7 uses
+  %10 = alloca %"class.llvm::Twine", align 8      ; 9 uses
   %11 = alloca %"class.llvm::object::MachOUniversalBinary::ObjectForArch", align 8 ; 21 uses
   %12 = alloca %"class.llvm::Error", align 8      ; 4 uses
   %13 = alloca %"class.llvm::Twine", align 8      ; 5 uses
@@ -542,7 +541,7 @@ _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %bb.a
 bb.b:                                             ; preds = %bb.a
   %i.i = tail call { ptr, i64 } @_ZNK4llvm6object6Binary7getDataEv(ptr noundef nonnull align 8 dereferenceable(48) %0) #14 ; 2 uses
   %i.j = extractvalue { ptr, i64 } %i.i, 0
-  %i.k = extractvalue { ptr, i64 } %i.i, 1        ; 2 uses
+  %i.k = extractvalue { ptr, i64 } %i.i, 1        ; 3 uses
   %.val = load i64, ptr %i.j, align 1             ; 2 uses
   %i.l = tail call i64 @llvm.fshl.i64(i64 %.val, i64 %.val, i64 32)
   %.sroa.0.0.insert.insert.i = tail call i64 @llvm.bswap.i64(i64 %i.l) ; 3 uses
@@ -568,18 +567,8 @@ _ZN4llvm5ErrorD2Ev.exit59:                        ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   switch i32 %.sroa.0.0.extract.trunc, label %_ZN4llvm5ErrorD2Ev.exit60 [
     i32 -889275714, label %72
-    i32 -889275713, label %75
+    i32 -889275713, label %bb.d
   ]
-
-72:                                               ; preds = %bb.c
-  %73 = mul nuw nsw i64 %.sroa.4.0.extract.shift, 20
-  %74 = add nuw nsw i64 %73, 8
-  br label %bb.d
-
-75:                                               ; preds = %bb.c
-  %76 = shl nuw nsw i64 %.sroa.4.0.extract.shift, 5
-  %77 = or disjoint i64 %76, 8
-  br label %bb.d
 
 _ZN4llvm5ErrorD2Ev.exit60:                        ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
@@ -594,13 +583,27 @@ _ZN4llvm5ErrorD2Ev.exit60:                        ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   br label %bb.v
 
-bb.d:                                             ; preds = %75, %72
-  %.041 = phi i64 [ %74, %72 ], [ %77, %75 ]
-  %i.t = and i64 %.041, 4294967295                ; 2 uses
-  %i.u = icmp ult i64 %i.k, %i.t
-  br i1 %i.u, label %bb.e, label %.lr.ph
+72:                                               ; preds = %bb.c
+  %73 = mul nuw nsw i64 %.sroa.4.0.extract.shift, 20
+  %74 = add nuw nsw i64 %73, 8
+  %75 = and i64 %74, 4294967292                   ; 2 uses
+  %76 = icmp ult i64 %i.k, %75
+  br i1 %76, label %bb.e, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.d
+bb.d:                                             ; preds = %bb.c
+  %77 = shl nuw nsw i64 %.sroa.4.0.extract.shift, 5
+  %i.t = and i64 %77, 4294967264
+  %78 = or disjoint i64 %i.t, 8                   ; 2 uses
+  %i.u = icmp ult i64 %i.k, %78
+  br i1 %i.u, label %.thread1248, label %.lr.ph
+
+.thread1248:                                      ; preds = %bb.d
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #14
+  br label %bb.f
+
+.lr.ph:                                           ; preds = %bb.d, %72
+  %79 = phi i64 [ %78, %bb.d ], [ %75, %72 ]
   %i.v = getelementptr inbounds nuw i8, ptr %11, i64 20 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %11, i64 40 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %11, i64 24
@@ -609,34 +612,36 @@ bb.d:                                             ; preds = %75, %72
   %.sroa.gep814 = getelementptr inbounds nuw i8, ptr %11, i64 56
   br label %bb.g
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %72
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #14
   %i.z = icmp eq i32 %.sroa.0.0.extract.trunc, -889275714
-  %78 = select i1 %i.z, ptr @.str.7, ptr @.str.8  ; 2 uses
-  %79 = load i8, ptr %78, align 1, !tbaa !38
-  %.not.i = icmp eq i8 %79, 0
-  store ptr @.str.6, ptr %10, align 8
-  br i1 %.not.i, label %_ZN4llvm5ErrorD2Ev.exit77, label %bb.f
+  br i1 %i.z, label %80, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
-  %i.aa = getelementptr inbounds nuw i8, ptr %10, i64 16
-  store ptr %78, ptr %i.aa, align 8, !alias.scope !226
+80:                                               ; preds = %bb.e
+  store ptr @.str.6, ptr %10, align 8
   br label %_ZN4llvm5ErrorD2Ev.exit77
 
-_ZN4llvm5ErrorD2Ev.exit77:                        ; preds = %bb.e, %bb.f
-  %.sroa.05.0.i.i66 = phi ptr [ %10, %bb.f ], [ @.str.6, %bb.e ]
-  %.014.i.i65.a = phi i8 [ 2, %bb.f ], [ 3, %bb.e ]
-  %.sink = phi i8 [ 3, %bb.f ], [ 1, %bb.e ]
+bb.f:                                             ; preds = %.thread1248, %bb.e
+  store ptr @.str.6, ptr %10, align 8, !alias.scope !226
+  %i.aa = getelementptr inbounds nuw i8, ptr %10, i64 16
+  store ptr @.str.8, ptr %i.aa, align 8, !alias.scope !226
+  br label %_ZN4llvm5ErrorD2Ev.exit77
+
+_ZN4llvm5ErrorD2Ev.exit77:                        ; preds = %80, %bb.f
+  %.014.i.i65.a = phi i8 [ 1, %80 ], [ 3, %bb.f ]
+  %81 = phi i1 [ true, %80 ], [ false, %bb.f ]    ; 2 uses
   %.sroa.51205.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 32
   store i8 3, ptr %.sroa.51205.0..sroa_idx, align 8, !tbaa !40
   %.sroa.71206.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 33
-  store i8 %.sink, ptr %.sroa.71206.0..sroa_idx, align 1, !tbaa !40
+  store i8 %.014.i.i65.a, ptr %.sroa.71206.0..sroa_idx, align 1, !tbaa !40
+  %.014.i.i65 = select i1 %81, i8 3, i8 2
+  %.sroa.05.0.i.i66 = select i1 %81, ptr @.str.6, ptr %10
   store ptr %.sroa.05.0.i.i66, ptr %9, align 8, !alias.scope !227
   %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 16
   store ptr @.str.9, ptr %i.ab, align 8, !alias.scope !227
   %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 32
-  store i8 %.014.i.i65.a, ptr %i.ac, align 8, !tbaa !39, !alias.scope !227
+  store i8 %.014.i.i65, ptr %i.ac, align 8, !tbaa !39, !alias.scope !227
   %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 33
   store i8 3, ptr %i.ad, align 1, !tbaa !37, !alias.scope !227
   call fastcc void @_ZL14malformedErrorN4llvm5TwineE(ptr dead_on_unwind noalias writable align 8 %8, ptr noundef nonnull byval(%"class.llvm::Twine") align 8 %9)
@@ -936,7 +941,7 @@ _ZN4llvm5ErrorD2Ev.exit424:                       ; preds = %bb.i
   br label %.critedge
 
 bb.j:                                             ; preds = %bb.i
-  %i.ea = icmp ult i64 %.0.i, %i.t
+  %i.ea = icmp ult i64 %.0.i, %79
   br i1 %i.ea, label %_ZN4llvm5ErrorD2Ev.exit437, label %bb.k
 
 _ZN4llvm5ErrorD2Ev.exit437:                       ; preds = %bb.j
