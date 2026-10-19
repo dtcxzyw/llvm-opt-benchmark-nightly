@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !80
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
+  %i.k = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T) #32, !inline_history !80
   br label %_ZN11OpenImageIO4v3_13pvt15exif_tagmap_refEv.exit
 
@@ -256,7 +256,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.z = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.z = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T) #32
   br label %_ZN11OpenImageIO4v3_13pvt14gps_tagmap_refEv.exit
 
@@ -288,7 +288,7 @@ bb.l:                                             ; preds = %bb.k
           to label %bb.m unwind label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.af = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.af = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T) #32
   br label %_ZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEv.exit
 
@@ -381,7 +381,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.e = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T) #32
   br label %bb.e
 
@@ -416,7 +416,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.e = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T) #32
   br label %bb.e
 
@@ -451,7 +451,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.e = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T) #32
   br label %bb.e
 
@@ -506,7 +506,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !80
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
+  %i.k = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T) #32, !inline_history !80
   br label %_ZN11OpenImageIO4v3_13pvt15exif_tagmap_refEv.exit
 
@@ -557,7 +557,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.z = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.z = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T) #32
   br label %_ZN11OpenImageIO4v3_13pvt14gps_tagmap_refEv.exit
 
@@ -589,7 +589,7 @@ bb.l:                                             ; preds = %bb.k
           to label %bb.m unwind label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.af = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.af = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEvE1T) #32
   br label %_ZN11OpenImageIO4v3_13pvt15tiff_tagmap_refEv.exit
 
@@ -992,7 +992,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f, !inline_history !80
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
+  %i.i = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T) #32, !inline_history !80
   br label %_ZN11OpenImageIO4v3_13pvt15exif_tagmap_refEv.exit
 
@@ -1027,7 +1027,7 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.o = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.o = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T) #32
   br label %_ZN11OpenImageIO4v3_13pvt14gps_tagmap_refEv.exit
 
@@ -1430,7 +1430,7 @@ bb.k:                                             ; preds = %bb.j
           to label %bb.l unwind label %bb.m, !inline_history !80
 
 bb.l:                                             ; preds = %bb.k
-  %i.ah = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
+  %i.ah = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T) #32, !inline_history !80
   br label %bb.n
 
@@ -1756,7 +1756,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !80
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
+  %i.o = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T) #32, !inline_history !80
   br label %_ZN11OpenImageIO4v3_13pvt15exif_tagmap_refEv.exit
 
@@ -1790,7 +1790,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.u = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
+  %i.u = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt14gps_tagmap_refEvE1T) #32
   br label %_ZN11OpenImageIO4v3_13pvt14gps_tagmap_refEv.exit
 
@@ -2193,7 +2193,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !80
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
+  %i.e = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_13pvt6TagMapD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T, ptr nonnull @__dso_handle) #32, !inline_history !80 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_13pvt15exif_tagmap_refEvE1T) #32, !inline_history !80
   br label %_ZN11OpenImageIO4v3_13pvt15exif_tagmap_refEv.exit
 

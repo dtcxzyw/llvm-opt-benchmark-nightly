@@ -202,7 +202,7 @@ bb.au:                                            ; preds = %bb.as, %bb.at
   %i.td = sub i64 %i.tc, %i.sm
   %scevgep1861 = getelementptr i8, ptr %scevgep1860, i64 %i.td ; 3 uses
   %i.te = sub nsw i64 %wide.trip.count, %i.rt     ; 3 uses
-  %min.iters.check1893 = icmp ult i64 %i.te, 12
+  %min.iters.check1893 = icmp ult i64 %i.te, 8
   %bound01874 = icmp ult ptr %scevgep1851, %scevgep1857
   %bound11875 = icmp ult ptr %scevgep1855, %scevgep1853
   %found.conflict1876 = and i1 %bound01874, %bound11875
@@ -284,15 +284,15 @@ vector.memcheck1842:                              ; preds = %.lr.ph1115
   %bound01862 = icmp ult ptr %scevgep1847, %scevgep1853
   %bound11863 = icmp ult ptr %scevgep1851, %scevgep1849
   %found.conflict1864 = and i1 %bound01862, %bound11863
+  %16 = or i1 %found.conflict1864, %stride.check1868
   %bound01865 = icmp ult ptr %scevgep1847, %scevgep1857
   %bound11866 = icmp ult ptr %scevgep1855, %scevgep1849
   %found.conflict1867 = and i1 %bound01865, %bound11866
-  %16 = or i1 %found.conflict1867, %stride.check1868
-  %conflict.rdx = or i1 %found.conflict1864, %16
+  %conflict.rdx = or i1 %16, %found.conflict1867
   %bound01869 = icmp ult ptr %scevgep1847, %scevgep1861
   %bound11870 = icmp ult ptr %scevgep1859, %scevgep1849
   %found.conflict1871 = and i1 %bound01869, %bound11870
-  %conflict.rdx1873 = or i1 %found.conflict1871, %conflict.rdx
+  %conflict.rdx1873 = or i1 %conflict.rdx, %found.conflict1871
   %conflict.rdx1891.reass = or i1 %conflict.rdx1873, %invariant.op2080
   br i1 %conflict.rdx1891.reass, label %scalar.ph1892.preheader, label %vector.ph1894
 

@@ -204,7 +204,7 @@ _ZN5boost9container3dtl23scoped_destructor_rangeINS0_4test16simple_allocatorINS0
 define internal void @_GLOBAL__sub_I_explicit_inst_string_test.cpp() #21 section ".text.startup" {
 bb.a:
   tail call void @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC1Ev(ptr noundef nonnull align 8 dereferenceable(24) @dummy) #26
-  %i.a = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvED1Ev, ptr nonnull @dummy, ptr nonnull @__dso_handle) #26 ; 0 uses
+  %i.a = tail call i32 @__cxa_atexit(ptr @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvED1Ev, ptr nonnull @dummy, ptr nonnull @__dso_handle) #26 ; 0 uses
   ret void
 }
 

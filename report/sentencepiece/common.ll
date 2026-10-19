@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %.noexc60
           to label %bb.l unwind label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  invoke void @__cxa_throw(ptr nonnull %i.ch, ptr nonnull @_ZTIN6google8protobuf14FatalExceptionE, ptr nonnull @_ZN6google8protobuf14FatalExceptionD1Ev) #21
+  invoke void @__cxa_throw(ptr nonnull %i.ch, ptr nonnull @_ZTIN6google8protobuf14FatalExceptionE, ptr @_ZN6google8protobuf14FatalExceptionD1Ev) #21
           to label %.noexc61 unwind label %bb.r
 
 .noexc61:                                         ; preds = %bb.l
@@ -553,7 +553,7 @@ bb.ae:                                            ; preds = %.noexc111
           to label %bb.af unwind label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  invoke void @__cxa_throw(ptr nonnull %i.gh, ptr nonnull @_ZTIN6google8protobuf14FatalExceptionE, ptr nonnull @_ZN6google8protobuf14FatalExceptionD1Ev) #21
+  invoke void @__cxa_throw(ptr nonnull %i.gh, ptr nonnull @_ZTIN6google8protobuf14FatalExceptionE, ptr @_ZN6google8protobuf14FatalExceptionD1Ev) #21
           to label %.noexc112 unwind label %bb.al
 
 .noexc112:                                        ; preds = %bb.af
@@ -813,7 +813,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @__cxa_throw(ptr nonnull %i.m, ptr nonnull @_ZTIN6google8protobuf14FatalExceptionE, ptr nonnull @_ZN6google8protobuf14FatalExceptionD1Ev) #21
+  tail call void @__cxa_throw(ptr nonnull %i.m, ptr nonnull @_ZTIN6google8protobuf14FatalExceptionE, ptr @_ZN6google8protobuf14FatalExceptionD1Ev) #21
   unreachable
 
 bb.f:                                             ; preds = %bb.d
@@ -1216,7 +1216,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @__cxa_throw(ptr nonnull %i.m, ptr nonnull @_ZTIN6google8protobuf14FatalExceptionE, ptr nonnull @_ZN6google8protobuf14FatalExceptionD1Ev) #21
+  tail call void @__cxa_throw(ptr nonnull %i.m, ptr nonnull @_ZTIN6google8protobuf14FatalExceptionE, ptr @_ZN6google8protobuf14FatalExceptionD1Ev) #21
   unreachable
 
 bb.f:                                             ; preds = %bb.d

@@ -106,7 +106,7 @@ common.resume:                                    ; preds = %.invoke
   resume { ptr, i32 } %i.j
 
 _Z18pj_get_default_ctxv.exit.sink.split:          ; preds = %.invoke
-  %i.k = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
+  %i.k = tail call i32 @__cxa_atexit(ptr @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZ18pj_get_default_ctxvE15default_context) #19
   br label %_Z18pj_get_default_ctxv.exit
 
@@ -132,7 +132,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZ18pj_get_default_ctxvE15default_context) #19
   br label %bb.e
 
@@ -535,7 +535,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
+  %i.f = tail call i32 @__cxa_atexit(ptr @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZ18pj_get_default_ctxvE15default_context) #19
   br label %_Z18pj_get_default_ctxv.exit
 
@@ -599,7 +599,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.e = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
+  %i.e = tail call i32 @__cxa_atexit(ptr @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZ18pj_get_default_ctxvE15default_context) #19
   br label %_Z18pj_get_default_ctxv.exit
 
@@ -689,7 +689,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.e = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
+  %i.e = tail call i32 @__cxa_atexit(ptr @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZ18pj_get_default_ctxvE15default_context) #19
   br label %_Z18pj_get_default_ctxv.exit
 
@@ -733,7 +733,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.e = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
+  %i.e = tail call i32 @__cxa_atexit(ptr @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZ18pj_get_default_ctxvE15default_context) #19
   br label %_Z18pj_get_default_ctxv.exit
 
@@ -772,7 +772,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
+  %i.f = tail call i32 @__cxa_atexit(ptr @_ZN6pj_ctxD1Ev, ptr nonnull @_ZZ18pj_get_default_ctxvE15default_context, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZ18pj_get_default_ctxvE15default_context) #19
   br label %_Z18pj_get_default_ctxv.exit
 

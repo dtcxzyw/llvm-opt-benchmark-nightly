@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !73
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 
@@ -244,7 +244,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.i, !inline_history !73
 
 bb.h:                                             ; preds = %bb.g
-  %i.p = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.p = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit6
 
@@ -347,7 +347,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53
   br label %bb.e
 
@@ -750,7 +750,7 @@ bb.e:                                             ; preds = %bb.d
           to label %bb.f unwind label %bb.g, !inline_history !73
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.u = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 
@@ -1153,7 +1153,7 @@ bb.ah:                                            ; preds = %bb.ag
           to label %bb.ai unwind label %bb.aj, !inline_history !73
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.ff = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.ff = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %bb.ak
 
@@ -1556,7 +1556,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -1826,7 +1826,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %bb.f
 
@@ -2229,7 +2229,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !73
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 
@@ -2552,7 +2552,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !73
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 
@@ -2656,7 +2656,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -3059,7 +3059,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %common.resume, !inline_history !3
 
 bb.e:                                             ; preds = %bb.d
-  %i.e = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.e = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -3101,7 +3101,7 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %common.resume, !inline_history !3
 
 bb.i:                                             ; preds = %bb.h
-  %i.r = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.r = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit.i
 
@@ -3286,7 +3286,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -3513,7 +3513,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -3649,7 +3649,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -4052,7 +4052,7 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.r unwind label %bb.s, !inline_history !3
 
 bb.r:                                             ; preds = %bb.q
-  %i.bh = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.bh = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -4455,7 +4455,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %common.resume, !inline_history !3
 
 bb.e:                                             ; preds = %bb.d
-  %i.g = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.g = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -4477,7 +4477,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %common.resume, !inline_history !73
 
 bb.h:                                             ; preds = %bb.g
-  %i.m = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.m = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 
@@ -4538,7 +4538,7 @@ bb.l:                                             ; preds = %bb.k
           to label %bb.m unwind label %common.resume, !inline_history !3
 
 bb.m:                                             ; preds = %bb.l
-  %i.al = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.al = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit.i
 
@@ -4730,7 +4730,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -5133,7 +5133,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %common.resume, !inline_history !3
 
 bb.e:                                             ; preds = %bb.d
-  %i.g = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.g = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -5155,7 +5155,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %common.resume, !inline_history !73
 
 bb.h:                                             ; preds = %bb.g
-  %i.m = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.m = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 
@@ -5315,7 +5315,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -5718,7 +5718,7 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.j, !inline_history !73
 
 bb.i:                                             ; preds = %bb.h
-  %i.ag = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.ag = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 
@@ -5972,7 +5972,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !73
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 
@@ -6375,7 +6375,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -6778,7 +6778,7 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.r unwind label %bb.s, !inline_history !3
 
 bb.r:                                             ; preds = %bb.q
-  %i.ec = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.ec = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit.i
 
@@ -7181,7 +7181,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -7584,7 +7584,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f, !inline_history !3
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.j = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -7732,7 +7732,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f, !inline_history !3
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.j = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -7988,7 +7988,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -8130,7 +8130,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.e = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -8220,7 +8220,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -8623,7 +8623,7 @@ bb.ae:                                            ; preds = %bb.ad
           to label %bb.af unwind label %bb.ag, !inline_history !1149
 
 bb.af:                                            ; preds = %bb.ae
-  %i.fk = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !1149 ; 0 uses
+  %i.fk = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !1149 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !1149
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit.i
 
@@ -9026,7 +9026,7 @@ bb.dx:                                            ; preds = %bb.dw
           to label %bb.dy unwind label %bb.dz, !inline_history !3
 
 bb.dy:                                            ; preds = %bb.dx
-  %i.ya = call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.ya = call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -9429,7 +9429,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.r = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -9832,7 +9832,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %_ZN7testing8internal15GetUnitTestImplEv.exit
 
@@ -10235,7 +10235,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %.body, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.f = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %bb.e
 
@@ -10259,7 +10259,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %.body, !inline_history !3
 
 bb.h:                                             ; preds = %bb.g
-  %i.n = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.n = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %bb.i
 
@@ -10295,7 +10295,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e, !inline_history !3
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !3 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !3
   br label %bb.f
 
@@ -10698,7 +10698,7 @@ bb.an:                                            ; preds = %bb.am
           to label %bb.ao unwind label %bb.ap, !inline_history !73
 
 bb.ao:                                            ; preds = %bb.an
-  %i.gv = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
+  %i.gv = tail call i32 @__cxa_atexit(ptr @_ZN7testing8UnitTestD1Ev, ptr nonnull @_ZZN7testing8UnitTest11GetInstanceEvE8instance, ptr nonnull @__dso_handle) #53, !inline_history !73 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN7testing8UnitTest11GetInstanceEvE8instance) #53, !inline_history !73
   br label %_ZN7testing8UnitTest11GetInstanceEv.exit
 

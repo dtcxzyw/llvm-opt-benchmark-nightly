@@ -205,7 +205,7 @@ bb.a:
   %i.w = add i64 %.idx207, -4                     ; 2 uses
   %i.x = lshr exact i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.w, 60
+  %min.iters.check = icmp ult i64 %i.w, 44
   %bound0297 = icmp ult ptr %7, %i.j
   %bound1298 = icmp ult ptr %i.h, %scevgep
   %found.conflict299 = and i1 %bound0297, %bound1298
@@ -401,7 +401,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0300 = icmp ult ptr %i.be, %i.j
   %bound1301 = icmp ult ptr %i.h, %i.bf
   %found.conflict302 = and i1 %bound0300, %bound1301
-  %conflict.rdx304 = or i1 %found.conflict302, %conflict.rdx
+  %conflict.rdx304 = or i1 %conflict.rdx, %found.conflict302
   br i1 %conflict.rdx304, label %.lr.ph.i125.preheader435, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -804,7 +804,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0305 = icmp ult ptr %i.bd, %i.h
   %bound1306 = icmp ult ptr %i.f, %i.be
   %found.conflict307 = and i1 %bound0305, %bound1306
-  %conflict.rdx309 = or i1 %found.conflict307, %conflict.rdx
+  %conflict.rdx309 = or i1 %conflict.rdx, %found.conflict307
   br i1 %conflict.rdx309, label %.lr.ph.i125.preheader466, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -1207,7 +1207,7 @@ bb.a:
   %i.w = add i64 %.idx207, -4                     ; 2 uses
   %i.x = lshr exact i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.w, 60
+  %min.iters.check = icmp ult i64 %i.w, 44
   %bound0297 = icmp ult ptr %7, %i.j
   %bound1298 = icmp ult ptr %i.h, %scevgep
   %found.conflict299 = and i1 %bound0297, %bound1298
@@ -1403,7 +1403,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0300 = icmp ult ptr %i.be, %i.j
   %bound1301 = icmp ult ptr %i.h, %i.bf
   %found.conflict302 = and i1 %bound0300, %bound1301
-  %conflict.rdx304 = or i1 %found.conflict302, %conflict.rdx
+  %conflict.rdx304 = or i1 %conflict.rdx, %found.conflict302
   br i1 %conflict.rdx304, label %.lr.ph.i125.preheader435, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -1806,7 +1806,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0305 = icmp ult ptr %i.bd, %i.h
   %bound1306 = icmp ult ptr %i.f, %i.be
   %found.conflict307 = and i1 %bound0305, %bound1306
-  %conflict.rdx309 = or i1 %found.conflict307, %conflict.rdx
+  %conflict.rdx309 = or i1 %conflict.rdx, %found.conflict307
   br i1 %conflict.rdx309, label %.lr.ph.i125.preheader456, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -2209,7 +2209,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0305 = icmp ult ptr %i.bd, %i.h
   %bound1306 = icmp ult ptr %i.f, %i.be
   %found.conflict307 = and i1 %bound0305, %bound1306
-  %conflict.rdx309 = or i1 %found.conflict307, %conflict.rdx
+  %conflict.rdx309 = or i1 %conflict.rdx, %found.conflict307
   br i1 %conflict.rdx309, label %.lr.ph.i125.preheader456, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -2612,7 +2612,7 @@ bb.a:
   %i.w = add i64 %.idx207, -4                     ; 2 uses
   %i.x = lshr exact i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.w, 60
+  %min.iters.check = icmp ult i64 %i.w, 44
   %bound0297 = icmp ult ptr %7, %i.j
   %bound1298 = icmp ult ptr %i.h, %scevgep
   %found.conflict299 = and i1 %bound0297, %bound1298
@@ -2808,7 +2808,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0300 = icmp ult ptr %i.be, %i.j
   %bound1301 = icmp ult ptr %i.h, %i.bf
   %found.conflict302 = and i1 %bound0300, %bound1301
-  %conflict.rdx304 = or i1 %found.conflict302, %conflict.rdx
+  %conflict.rdx304 = or i1 %conflict.rdx, %found.conflict302
   br i1 %conflict.rdx304, label %.lr.ph.i125.preheader435, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -3211,7 +3211,7 @@ bb.a:
   %i.w = add i64 %.idx207, -4                     ; 2 uses
   %i.x = lshr exact i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.w, 60
+  %min.iters.check = icmp ult i64 %i.w, 44
   %bound0297 = icmp ult ptr %7, %i.j
   %bound1298 = icmp ult ptr %i.h, %scevgep
   %found.conflict299 = and i1 %bound0297, %bound1298
@@ -3407,7 +3407,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0300 = icmp ult ptr %i.be, %i.j
   %bound1301 = icmp ult ptr %i.h, %i.bf
   %found.conflict302 = and i1 %bound0300, %bound1301
-  %conflict.rdx304 = or i1 %found.conflict302, %conflict.rdx
+  %conflict.rdx304 = or i1 %conflict.rdx, %found.conflict302
   br i1 %conflict.rdx304, label %.lr.ph.i125.preheader435, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -3810,7 +3810,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0305 = icmp ult ptr %i.bd, %i.h
   %bound1306 = icmp ult ptr %i.f, %i.be
   %found.conflict307 = and i1 %bound0305, %bound1306
-  %conflict.rdx309 = or i1 %found.conflict307, %conflict.rdx
+  %conflict.rdx309 = or i1 %conflict.rdx, %found.conflict307
   br i1 %conflict.rdx309, label %.lr.ph.i125.preheader456, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -4213,7 +4213,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0305 = icmp ult ptr %i.bd, %i.h
   %bound1306 = icmp ult ptr %i.f, %i.be
   %found.conflict307 = and i1 %bound0305, %bound1306
-  %conflict.rdx309 = or i1 %found.conflict307, %conflict.rdx
+  %conflict.rdx309 = or i1 %conflict.rdx, %found.conflict307
   br i1 %conflict.rdx309, label %.lr.ph.i125.preheader456, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -4616,7 +4616,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0305 = icmp ult ptr %i.bd, %i.h
   %bound1306 = icmp ult ptr %i.f, %i.be
   %found.conflict307 = and i1 %bound0305, %bound1306
-  %conflict.rdx309 = or i1 %found.conflict307, %conflict.rdx
+  %conflict.rdx309 = or i1 %conflict.rdx, %found.conflict307
   br i1 %conflict.rdx309, label %.lr.ph.i125.preheader456, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -5019,7 +5019,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i125.prehead
   %bound0305 = icmp ult ptr %i.bd, %i.h
   %bound1306 = icmp ult ptr %i.f, %i.be
   %found.conflict307 = and i1 %bound0305, %bound1306
-  %conflict.rdx309 = or i1 %found.conflict307, %conflict.rdx
+  %conflict.rdx309 = or i1 %conflict.rdx, %found.conflict307
   br i1 %conflict.rdx309, label %.lr.ph.i125.preheader456, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

@@ -205,15 +205,15 @@ _ZN6casadi12casadi_clearIdEEvPT_x.exit.thread.i:  ; preds = %bb.m
   br i1 %exitcond58.not.i, label %.lr.ph.us53.i.preheader, label %.lr.ph.us.i, !llvm.loop !1314
 
 .lr.ph.us53.i.preheader:                          ; preds = %._crit_edge.us.i
-  %min.iters.check209 = icmp ult i64 %i.jt, 6
+  %min.iters.check209 = icmp ult i64 %i.jt, 4
   %bound0201 = icmp ult ptr %scevgep196, %scevgep199
   %bound1202 = icmp ult ptr %scevgep198, %scevgep197
   %found.conflict203 = and i1 %bound0201, %bound1202
+  %8 = or i1 %found.conflict203, %stride.check207
   %bound0204 = icmp ult ptr %scevgep196, %scevgep200
   %bound1205 = icmp ult ptr %6, %scevgep197
   %found.conflict206 = and i1 %bound0204, %bound1205
-  %8 = or i1 %found.conflict206, %stride.check207
-  %conflict.rdx = or i1 %found.conflict203, %8
+  %conflict.rdx = or i1 %8, %found.conflict206
   %n.vec211 = and i64 %i.jt, -4                   ; 3 uses
   %i.lo = or disjoint i64 %n.vec211, 1
   %cmp.n222 = icmp eq i64 %i.jt, %n.vec211

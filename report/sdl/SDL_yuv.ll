@@ -204,15 +204,15 @@ vector.memcheck1963:                              ; preds = %.lr.ph1508
   %bound01976 = icmp ult ptr %.lcssa15141519, %scevgep1967
   %bound11977 = icmp ult ptr %2, %scevgep1964.a
   %found.conflict1978 = and i1 %bound01976, %bound11977
-  %conflict.rdx1980 = or i1 %found.conflict1978, %conflict.rdx1975
+  %conflict.rdx1980 = or i1 %conflict.rdx1975, %found.conflict1978
   %bound01981 = icmp ult ptr %.lcssa150615161518, %scevgep1966.a
   %bound11982 = icmp ult ptr %i.cc, %scevgep1965
   %found.conflict1983 = and i1 %bound01981, %bound11982
-  %conflict.rdx1985 = or i1 %found.conflict1983, %conflict.rdx1980
+  %conflict.rdx1985 = or i1 %conflict.rdx1980, %found.conflict1983
   %bound01986 = icmp ult ptr %.lcssa150615161518, %scevgep1967
   %bound11987 = icmp ult ptr %2, %scevgep1965
   %found.conflict1988 = and i1 %bound01986, %bound11987
-  %conflict.rdx1990 = or i1 %found.conflict1988, %conflict.rdx1985
+  %conflict.rdx1990 = or i1 %conflict.rdx1985, %found.conflict1988
   br i1 %conflict.rdx1990, label %scalar.ph1991.preheader, label %vector.ph1993
 
 vector.ph1993:                                    ; preds = %vector.memcheck1963
@@ -615,11 +615,11 @@ vector.memcheck1874:                              ; preds = %.lr.ph1488
   %bound01878 = icmp ult ptr %.013081495, %scevgep1876
   %bound11879 = icmp ult ptr %i.cc, %scevgep1875
   %found.conflict1880 = and i1 %bound01878, %bound11879
+  %8 = or i1 %found.conflict1880, %stride.check1885
   %bound01882 = icmp ult ptr %.013081495, %scevgep1877
   %bound11883 = icmp ult ptr %2, %scevgep1875
   %found.conflict1884 = and i1 %bound01882, %bound11883
-  %8 = or i1 %found.conflict1884, %stride.check1885
-  %conflict.rdx = or i1 %found.conflict1880, %8
+  %conflict.rdx = or i1 %8, %found.conflict1884
   br i1 %conflict.rdx, label %scalar.ph1886.preheader, label %vector.ph1888
 
 vector.ph1888:                                    ; preds = %vector.memcheck1874
@@ -1022,11 +1022,11 @@ vector.memcheck2147:                              ; preds = %.lr.ph1535
   %bound02151.a = icmp ult ptr %.413121542, %scevgep2149
   %bound12152.a = icmp ult ptr %i.cc, %scevgep2148
   %found.conflict2153.a = and i1 %bound02151.a, %bound12152.a
+  %9 = or i1 %found.conflict2153.a, %stride.check2158
   %bound02155 = icmp ult ptr %.413121542, %scevgep2150
   %bound12156 = icmp ult ptr %2, %scevgep2148
   %found.conflict2157 = and i1 %bound02155, %bound12156
-  %9 = or i1 %found.conflict2157, %stride.check2158
-  %conflict.rdx2159 = or i1 %found.conflict2153.a, %9
+  %conflict.rdx2159 = or i1 %9, %found.conflict2157
   br i1 %conflict.rdx2159, label %scalar.ph2160.preheader, label %vector.ph2162
 
 vector.ph2162:                                    ; preds = %vector.memcheck2147
@@ -1429,11 +1429,11 @@ vector.memcheck13:                                ; preds = %.lr.ph
   %bound017 = icmp ult ptr %.0165197, %scevgep15
   %bound118 = icmp ult ptr %i.cb, %scevgep14
   %found.conflict19 = and i1 %bound017, %bound118
+  %7 = or i1 %found.conflict19, %stride.check24
   %bound021 = icmp ult ptr %.0165197, %scevgep16
   %bound122 = icmp ult ptr %2, %scevgep14
   %found.conflict23 = and i1 %bound021, %bound122
-  %7 = or i1 %found.conflict23, %stride.check24
-  %conflict.rdx = or i1 %found.conflict19, %7
+  %conflict.rdx = or i1 %7, %found.conflict23
   br i1 %conflict.rdx, label %scalar.ph25.preheader, label %vector.ph27
 
 vector.ph27:                                      ; preds = %vector.memcheck13

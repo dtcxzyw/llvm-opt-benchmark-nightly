@@ -200,7 +200,7 @@ begin_hunk_0
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden void @registerFieldTypes(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
-  tail call void @proto_register_field_array(i32 noundef %0, ptr noundef nonnull @registerFieldTypes.hf, i32 noundef 296)
+  tail call void @proto_register_field_array(i32 noundef %0, ptr noundef @registerFieldTypes.hf, i32 noundef 296)
   ret void
 }
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @__cxa_throw(ptr nonnull %i.h, ptr nonnull @_ZTIN5osgeo4proj3crs27InvalidCompoundCRSExceptionE, ptr nonnull @_ZN5osgeo4proj3crs27InvalidCompoundCRSExceptionD1Ev) #41
+  tail call void @__cxa_throw(ptr nonnull %i.h, ptr nonnull @_ZTIN5osgeo4proj3crs27InvalidCompoundCRSExceptionE, ptr @_ZN5osgeo4proj3crs27InvalidCompoundCRSExceptionD1Ev) #41
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -427,7 +427,7 @@ bb.u:                                             ; preds = %bb.t
           to label %bb.v unwind label %bb.w
 
 bb.v:                                             ; preds = %.critedge107
-  tail call void @__cxa_throw(ptr nonnull %i.do, ptr nonnull @_ZTIN5osgeo4proj3crs27InvalidCompoundCRSExceptionE, ptr nonnull @_ZN5osgeo4proj3crs27InvalidCompoundCRSExceptionD1Ev) #41
+  tail call void @__cxa_throw(ptr nonnull %i.do, ptr nonnull @_ZTIN5osgeo4proj3crs27InvalidCompoundCRSExceptionE, ptr @_ZN5osgeo4proj3crs27InvalidCompoundCRSExceptionD1Ev) #41
   unreachable
 
 bb.w:                                             ; preds = %.critedge107
@@ -830,7 +830,7 @@ bb.ap:                                            ; preds = %_ZNSt7__cxx1112basi
           to label %bb.aq unwind label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  call void @__cxa_throw(ptr nonnull %i.dx, ptr nonnull @_ZTIN5osgeo4proj3crs27InvalidCompoundCRSExceptionE, ptr nonnull @_ZN5osgeo4proj3crs27InvalidCompoundCRSExceptionD1Ev) #41
+  call void @__cxa_throw(ptr nonnull %i.dx, ptr nonnull @_ZTIN5osgeo4proj3crs27InvalidCompoundCRSExceptionE, ptr @_ZN5osgeo4proj3crs27InvalidCompoundCRSExceptionD1Ev) #41
   unreachable
 
 bb.ar:                                            ; preds = %bb.ap
