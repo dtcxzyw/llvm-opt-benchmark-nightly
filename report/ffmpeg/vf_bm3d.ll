@@ -204,15 +204,15 @@ bb.r:                                             ; preds = %bb.r, %.epil.prehea
   %bound0578 = icmp ult ptr %i.ph, %scevgep576
   %bound1579 = icmp ult ptr %i.pk, %scevgep575
   %found.conflict580 = and i1 %bound0578, %bound1579
+  %9 = or i1 %found.conflict580, %stride.check586
   %bound0583 = icmp ult ptr %i.ph, %scevgep577
   %bound1584 = icmp ult ptr %i.z, %scevgep575
   %found.conflict585 = and i1 %bound0583, %bound1584
-  %9 = or i1 %found.conflict585, %stride.check586
-  %conflict.rdx = or i1 %found.conflict580, %9
+  %conflict.rdx = or i1 %9, %found.conflict585
   %bound0587 = icmp ult ptr %i.pk, %scevgep577
   %bound1588 = icmp ult ptr %i.z, %scevgep576
   %found.conflict589 = and i1 %bound0587, %bound1588
-  %conflict.rdx591 = or i1 %found.conflict589, %conflict.rdx
+  %conflict.rdx591 = or i1 %conflict.rdx, %found.conflict589
   br label %.lr.ph367
 
 ._crit_edge368:                                   ; preds = %._crit_edge363, %bb.q
@@ -316,7 +316,7 @@ bb.a:
   %i.b = sext i32 %8 to i64
   %i.c = getelementptr inbounds [4264 x i8], ptr %i.a, i64 %i.b ; 26 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !82   ; 12 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !82   ; 11 uses
   %i.f = mul nsw i32 %i.e, %i.e                   ; 14 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 4248
   %i.h = load i32, ptr %i.g, align 8, !tbaa !71
@@ -326,7 +326,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.l = sext i32 %7 to i64
   %i.m = getelementptr inbounds [4 x i8], ptr %i.k, i64 %i.l
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !46   ; 5 uses
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !46   ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 100
   %i.p = load i32, ptr %i.o, align 4, !tbaa !83   ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -379,7 +379,7 @@ bb.a:
   %scevgep652 = getelementptr i8, ptr %i.y, i64 %i.bc ; 2 uses
   %scevgep653 = getelementptr i8, ptr %i.ai, i64 %i.bc ; 2 uses
   %i.bd = add nsw i64 %wide.trip.count, -1        ; 2 uses
-  %min.iters.check = icmp ugt i32 %i.j, 19
+  %min.iters.check = icmp ugt i32 %i.j, 15
   %ident.check.not = icmp eq i32 %i.e, 1
   %or.cond = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   %i.be = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
@@ -782,12 +782,12 @@ bb.d:                                             ; preds = %bb.d, %.preheader32
   %cmp.n724 = icmp eq i64 %n.vec717, %wide.trip.count549
   %xtraiter777 = and i64 %wide.trip.count549, 3   ; 2 uses
   %lcmp.mod778.not = icmp eq i64 %xtraiter777, 0
-  %min.iters.check699 = icmp ult i32 %i.j, 12
-  %stride.check684 = icmp slt i32 %i.n, 0
-  %9 = or i32 %i.e, %i.n
-  %10 = icmp slt i32 %9, 0
-  %11 = or i32 %i.e, %i.n
-  %12 = icmp slt i32 %11, 0
+  %9 = insertelement <2 x ptr> poison, ptr %i.y, i64 1
+  %10 = insertelement <2 x i32> poison, i32 %i.n, i64 0
+  %11 = insertelement <2 x i32> %10, i32 %i.e, i64 1
+  %12 = insertelement <2 x ptr> poison, ptr %scevgep680, i64 1
+  %min.iters.check690 = icmp ult i32 %i.j, 8
+  %13 = icmp slt <2 x i32> %11, zeroinitializer
   %n.vec701 = and i64 %wide.trip.count549, 4294967292 ; 3 uses
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.ma, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -953,20 +953,22 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
 .preheader:                                       ; preds = %._crit_edge443.us
   %scevgep678 = getelementptr i8, ptr %i.na, i64 %i.ms ; 2 uses
   %scevgep679 = getelementptr i8, ptr %i.nd, i64 %i.ms ; 2 uses
-  %bound0681 = icmp ult ptr %i.nc, %scevgep679
-  %bound1682 = icmp ult ptr %i.nf, %scevgep678
-  %found.conflict683 = and i1 %bound0681, %bound1682
-  %13 = or i1 %found.conflict683, %stride.check684
-  %bound0686 = icmp ult ptr %i.nc, %scevgep680
-  %bound1687 = icmp ult ptr %i.y, %scevgep678
-  %found.conflict688 = and i1 %bound0686, %bound1687
-  %14 = or i1 %found.conflict688, %10
-  %conflict.rdx691 = or i1 %13, %14
+  %14 = insertelement <2 x ptr> poison, ptr %i.nf, i64 0
+  %15 = insertelement <2 x ptr> %14, ptr %i.nc, i64 1
+  %16 = insertelement <2 x ptr> %9, ptr %i.nc, i64 0
+  %17 = insertelement <2 x ptr> poison, ptr %scevgep679, i64 0
+  %18 = insertelement <2 x ptr> %17, ptr %scevgep678, i64 1
+  %19 = insertelement <2 x ptr> %12, ptr %scevgep678, i64 0
+  %20 = icmp ult <2 x ptr> %16, %18
+  %21 = icmp ult <2 x ptr> %15, %19
+  %22 = and <2 x i1> %21, %20
+  %23 = or <2 x i1> %22, %13
+  %24 = bitcast <2 x i1> %23 to i2
+  %25 = icmp ne i2 %24, 0
   %bound0692 = icmp ult ptr %i.nf, %scevgep680
   %bound1693 = icmp ult ptr %i.y, %scevgep679
   %found.conflict694 = and i1 %bound0692, %bound1693
-  %15 = or i1 %found.conflict694, %12
-  %conflict.rdx697 = or i1 %conflict.rdx691, %15
+  %conflict.rdx697 = or i1 %25, %found.conflict694
   br label %.lr.ph454
 
 ._crit_edge455:                                   ; preds = %._crit_edge450, %bb.e
@@ -984,7 +986,7 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %i.ov = getelementptr inbounds [4 x i8], ptr %i.y, i64 %i.ou ; 2 uses
   tail call void %i.os(ptr noundef %i.ot, ptr noundef %i.ov, ptr noundef %i.ov, i64 noundef 4) #14
   %invariant.gep634 = getelementptr [4 x i8], ptr %i.y, i64 %i.ou ; 4 uses
-  %brmerge793 = select i1 %min.iters.check699, i1 true, i1 %conflict.rdx697
+  %brmerge793 = select i1 %min.iters.check690, i1 true, i1 %conflict.rdx697
   br i1 %brmerge793, label %scalar.ph698.preheader, label %vector.body702
 
 vector.body702:                                   ; preds = %.lr.ph454, %vector.body702

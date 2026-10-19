@@ -203,7 +203,7 @@ bb.au:                                            ; preds = %bb.c, %bb.at
 ; Function Attrs: nounwind uwtable
 define i64 @b3DynamicTree_RayCast(ptr noundef %0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #8 !func_sanitize !79 {
 bb.a:
-  %6 = alloca %struct.b3Vec3, align 8             ; 8 uses
+  %6 = alloca %struct.b3Vec3, align 8             ; 7 uses
   %7 = alloca %struct.b3Vec3, align 8             ; 7 uses
   %i.a = alloca [1024 x i32], align 16            ; 6 uses
   %8 = alloca %struct.b3RayCastInput, align 4     ; 5 uses
@@ -243,41 +243,43 @@ _mm_load_sd.exit.i:                               ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %7, ptr noundef nonnull align 4 dereferenceable(12) %i.o, i64 12, i1 false), !tbaa.struct !48
-  %10 = ptrtoint ptr %6 to i64, !nosanitize !9    ; 2 uses
-  %11 = add i64 %10, 8, !nosanitize !9            ; 2 uses
-  %.not1226 = icmp eq i64 %11, 0, !nosanitize !9
+  %.not1226 = icmp eq ptr %6, inttoptr (i64 -8 to ptr)
   br i1 %.not1226, label %bb.f, label %b3LoadV.exit, !prof !10, !nosanitize !9
 
 bb.f:                                             ; preds = %_mm_load_sd.exit.i
+  %10 = ptrtoint ptr %6 to i64, !nosanitize !9    ; 2 uses
+  %11 = add i64 %10, 8, !nosanitize !9
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @221, i64 %10, i64 %11) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 b3LoadV.exit:                                     ; preds = %_mm_load_sd.exit.i
   %i.p = load double, ptr %6, align 8             ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.r = insertelement <2 x double> poison, double %i.p, i64 0
   %i.s = bitcast <2 x double> %i.r to <4 x float>
-  %i.t = load float, ptr %i.q, align 8, !tbaa !24 ; 6 uses
+  %i.t = load float, ptr %i.q, align 8, !tbaa !24 ; 12 uses
   %i.u = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %i.t, i64 0
   %i.v = shufflevector <4 x float> %i.s, <4 x float> %i.u, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %12 = ptrtoint ptr %7 to i64, !nosanitize !9    ; 2 uses
-  %13 = add i64 %12, 8, !nosanitize !9            ; 2 uses
-  %.not1227 = icmp eq i64 %13, 0, !nosanitize !9
-  br i1 %.not1227, label %bb.g, label %b3LoadV.exit158, !prof !10, !nosanitize !9
+  %.not1204 = icmp eq ptr %7, inttoptr (i64 -8 to ptr)
+  %12 = bitcast double %i.p to <2 x float>        ; 12 uses
+  br i1 %.not1204, label %bb.g, label %b3LoadV.exit158, !prof !10, !nosanitize !9
 
 bb.g:                                             ; preds = %b3LoadV.exit
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @221, i64 %12, i64 %13) #11, !nosanitize !9
+  %13 = ptrtoint ptr %7 to i64, !nosanitize !9    ; 2 uses
+  %14 = add i64 %13, 8, !nosanitize !9
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @221, i64 %13, i64 %14) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 b3LoadV.exit158:                                  ; preds = %b3LoadV.exit
   %i.w = load double, ptr %7, align 8             ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.y = insertelement <2 x double> poison, double %i.w, i64 0
   %i.z = bitcast <2 x double> %i.y to <4 x float>
-  %i.aa = load float, ptr %i.x, align 8, !tbaa !24 ; 2 uses
+  %i.aa = load float, ptr %i.x, align 8, !tbaa !24 ; 3 uses
   %i.ab = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %i.aa, i64 0
   %i.ac = shufflevector <4 x float> %i.z, <4 x float> %i.ab, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %15 = bitcast double %i.w to <2 x float>        ; 2 uses
   %i.ae = load float, ptr %i.ad, align 4, !tbaa !81 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -310,16 +312,17 @@ b3LoadV.exit158:                                  ; preds = %b3LoadV.exit
   %i.ay = select i1 %i.ax, float %i.t, float %i.aw
   %i.az = insertelement <2 x float> poison, float %i.ae, i64 0
   %i.ba = shufflevector <2 x float> %i.az, <2 x float> poison, <2 x i32> zeroinitializer
-  %14 = bitcast double %i.w to <2 x float>
-  %i.bb = fmul <2 x float> %i.ba, %14
-  %15 = bitcast double %i.p to <2 x float>        ; 5 uses
-  %i.bc = fadd <2 x float> %i.bb, %15             ; 4 uses
-  %i.bd = fcmp olt <2 x float> %i.bc, %15
-  %i.be = select <2 x i1> %i.bd, <2 x float> %15, <2 x float> %i.bc
-  %i.bf = fcmp ogt <2 x float> %i.bc, %15
-  %i.bg = select <2 x i1> %i.bf, <2 x float> %15, <2 x float> %i.bc
+  %i.bb = fmul <2 x float> %i.ba, %15
+  %i.bc = fadd <2 x float> %i.bb, %12             ; 4 uses
+  %i.bd = fcmp olt <2 x float> %i.bc, %12
+  %i.be = select <2 x i1> %i.bd, <2 x float> %12, <2 x float> %i.bc
+  %i.bf = fcmp ogt <2 x float> %i.bc, %12
+  %i.bg = select <2 x i1> %i.bf, <2 x float> %12, <2 x float> %i.bc
   %i.bh = fcmp olt float %i.t, %i.aw
   %i.bi = select i1 %i.bh, float %i.t, float %i.aw
+  %16 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %17 = insertelement <2 x float> %16, float %i.t, i64 0 ; 2 uses
+  %18 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   br label %.split558.preheader
 
 .split558.us.preheader:                           ; preds = %b3LoadV.exit158
@@ -338,7 +341,7 @@ bb.h:                                             ; preds = %.split558.us.prehea
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
   br label %.split575
 
-.split558.preheader:                              ; preds = %.split558.preheader.preheader, %.backedge
+.split558.preheader:                              ; preds = %.backedge, %.split558.preheader.preheader
   %.0557 = phi float [ %.6870, %.backedge ], [ %i.ae, %.split558.preheader.preheader ] ; 10 uses
   %.0126556 = phi i32 [ %.5131869, %.backedge ], [ 1, %.split558.preheader.preheader ] ; 4 uses
   %.sroa.0.0555 = phi <2 x float> [ %.sroa.0.3868, %.backedge ], [ %i.bg, %.split558.preheader.preheader ] ; 10 uses
@@ -533,24 +536,20 @@ bb.w:                                             ; preds = %bb.v
   br i1 %or.cond, label %.backedge.sink.split, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.042.0.copyload = load <2 x float>, ptr %6, align 8 ; 5 uses
-  %.sroa.243.0.copyload = load float, ptr %i.q, align 8 ; 5 uses
-  %.sroa.040.0.copyload = load <2 x float>, ptr %7, align 8
-  %.sroa.241.0.copyload = load float, ptr %i.x, align 8
-  %i.fe = fmul float %i.ew, %.sroa.241.0.copyload
-  %i.ff = fadd float %.sroa.243.0.copyload, %i.fe ; 4 uses
-  %i.fg = fcmp olt float %.sroa.243.0.copyload, %i.ff
-  %i.fh = select i1 %i.fg, float %.sroa.243.0.copyload, float %i.ff
-  %16 = insertelement <2 x float> poison, float %i.ew, i64 0
-  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
-  %18 = fmul <2 x float> %17, %.sroa.040.0.copyload
-  %i.fi = fadd <2 x float> %.sroa.042.0.copyload, %18 ; 4 uses
-  %19 = fcmp olt <2 x float> %.sroa.042.0.copyload, %i.fi
-  %i.fj = select <2 x i1> %19, <2 x float> %.sroa.042.0.copyload, <2 x float> %i.fi
-  %20 = fcmp ogt <2 x float> %.sroa.042.0.copyload, %i.fi
-  %i.fk = select <2 x i1> %20, <2 x float> %.sroa.042.0.copyload, <2 x float> %i.fi
-  %i.fl = fcmp ogt float %.sroa.243.0.copyload, %i.ff
-  %i.fm = select i1 %i.fl, float %.sroa.243.0.copyload, float %i.ff
+  %19 = insertelement <2 x float> poison, float %i.ew, i64 0
+  %20 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> zeroinitializer
+  %21 = fmul <2 x float> %20, %15
+  %i.fe = fmul float %i.ew, %i.aa
+  %i.ff = fadd float %i.t, %i.fe                  ; 4 uses
+  %i.fg = fcmp olt float %i.t, %i.ff
+  %i.fh = select i1 %i.fg, float %i.t, float %i.ff
+  %i.fi = fadd <2 x float> %21, %12               ; 4 uses
+  %22 = fcmp ogt <2 x float> %i.fi, %12
+  %i.fj = select <2 x i1> %22, <2 x float> %12, <2 x float> %i.fi
+  %23 = fcmp olt <2 x float> %i.fi, %12
+  %i.fk = select <2 x i1> %23, <2 x float> %12, <2 x float> %i.fi
+  %i.fl = fcmp ogt float %i.t, %i.ff
+  %i.fm = select i1 %i.fl, float %i.t, float %i.ff
   br label %.backedge.sink.split
 
 bb.y:                                             ; preds = %b3IsLeaf.exit
@@ -586,17 +585,21 @@ bb.ac:                                            ; preds = %bb.ab
   unreachable, !nosanitize !9
 
 bb.ad:                                            ; preds = %bb.ab
-  %.sroa.0219.0.copyload = load <2 x float>, ptr %i.fq, align 8
+  %.sroa.0219.0.copyload = load <2 x float>, ptr %i.fq, align 8 ; 2 uses
   %.sroa.4220.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fq, i64 8
   %.sroa.4220.0.copyload = load float, ptr %.sroa.4220.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fq, i64 12
-  %.sroa.5.0.copyload = load <2 x float>, ptr %.sroa.5.0..sroa_idx, align 4
+  %.sroa.5.0.copyload = load <2 x float>, ptr %.sroa.5.0..sroa_idx, align 4 ; 2 uses
   %.sroa.6221.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fq, i64 20
   %.sroa.6221.0.copyload = load float, ptr %.sroa.6221.0..sroa_idx, align 4
+  %foldExtExtBinop = fadd <2 x float> %.sroa.0219.0.copyload, %.sroa.5.0.copyload
+  %24 = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.gb = fadd <2 x float> %.sroa.0219.0.copyload, %.sroa.5.0.copyload
   %i.gc = fadd float %.sroa.4220.0.copyload, %.sroa.6221.0.copyload
-  %21 = fmul <2 x float> %i.gb, splat (float 5.000000e-01)
-  %22 = fmul float %i.gc, 5.000000e-01
+  %25 = fmul float %24, 5.000000e-01
+  %26 = insertelement <2 x float> poison, float %i.gc, i64 0
+  %27 = shufflevector <2 x float> %26, <2 x float> %i.gb, <2 x i32> <i32 0, i32 2>
+  %28 = fmul <2 x float> %27, splat (float 5.000000e-01)
   %i.gd = getelementptr inbounds nuw i8, ptr %i.bx, i64 36 ; 2 uses
   %i.ge = load i32, ptr %i.gd, align 4, !tbaa !24 ; 3 uses
   %i.gf = sext i32 %i.ge to i64                   ; 2 uses
@@ -625,33 +628,33 @@ bb.ag:                                            ; preds = %bb.af
   unreachable, !nosanitize !9
 
 bb.ah:                                            ; preds = %bb.af
-  %.sroa.0222.0.copyload = load <2 x float>, ptr %i.gg, align 8
+  %.sroa.0222.0.copyload = load <2 x float>, ptr %i.gg, align 8 ; 2 uses
   %.sroa.4223.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gg, i64 8
   %.sroa.4223.0.copyload = load float, ptr %.sroa.4223.0..sroa_idx, align 8
   %.sroa.5224.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gg, i64 12
-  %.sroa.5224.0.copyload = load <2 x float>, ptr %.sroa.5224.0..sroa_idx, align 4
+  %.sroa.5224.0.copyload = load <2 x float>, ptr %.sroa.5224.0..sroa_idx, align 4 ; 2 uses
   %.sroa.6225.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gg, i64 20
   %.sroa.6225.0.copyload = load float, ptr %.sroa.6225.0..sroa_idx, align 4
-  %23 = fadd float %.sroa.4223.0.copyload, %.sroa.6225.0.copyload
-  %24 = fmul float %23, 5.000000e-01
-  %.sroa.03.0.copyload = load <2 x float>, ptr %6, align 8 ; 2 uses
-  %.sroa.24.0.copyload = load float, ptr %i.q, align 8
-  %i.gr = fsub <2 x float> %.sroa.03.0.copyload, %21 ; 2 uses
+  %foldExtExtBinop1209 = fadd <2 x float> %.sroa.0222.0.copyload, %.sroa.5224.0.copyload
+  %29 = extractelement <2 x float> %foldExtExtBinop1209, i64 1
+  %30 = fmul float %29, 5.000000e-01
+  %i.gr = fsub <2 x float> %17, %28               ; 2 uses
   %i.gs = fmul <2 x float> %i.gr, %i.gr           ; 2 uses
   %i.gt = fadd <2 x float> %.sroa.0222.0.copyload, %.sroa.5224.0.copyload
-  %25 = fmul <2 x float> %i.gt, splat (float 5.000000e-01)
-  %26 = fsub <2 x float> %.sroa.03.0.copyload, %25 ; 2 uses
-  %i.gu = fmul <2 x float> %26, %26               ; 2 uses
-  %27 = insertelement <2 x float> poison, float %.sroa.24.0.copyload, i64 0
-  %28 = shufflevector <2 x float> %27, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.gv = insertelement <2 x float> poison, float %22, i64 0
-  %i.gw = insertelement <2 x float> %i.gv, float %24, i64 1
-  %i.gx = fsub <2 x float> %28, %i.gw             ; 2 uses
-  %29 = shufflevector <2 x float> %i.gs, <2 x float> %i.gu, <2 x i32> <i32 0, i32 2>
-  %i.gy = shufflevector <2 x float> %i.gs, <2 x float> %i.gu, <2 x i32> <i32 1, i32 3>
-  %i.gz = fadd <2 x float> %29, %i.gy
-  %30 = fmul <2 x float> %i.gx, %i.gx
-  %i.ha = fadd <2 x float> %30, %i.gz             ; 2 uses
+  %31 = fadd float %.sroa.4223.0.copyload, %.sroa.6225.0.copyload
+  %32 = insertelement <2 x float> poison, float %31, i64 0
+  %33 = shufflevector <2 x float> %32, <2 x float> %i.gt, <2 x i32> <i32 0, i32 2>
+  %i.gu = fmul <2 x float> %33, splat (float 5.000000e-01)
+  %34 = fsub <2 x float> %17, %i.gu               ; 2 uses
+  %35 = fmul <2 x float> %34, %34                 ; 2 uses
+  %i.gv = insertelement <2 x float> poison, float %25, i64 0
+  %i.gw = insertelement <2 x float> %i.gv, float %30, i64 1
+  %i.gx = fsub <2 x float> %18, %i.gw             ; 2 uses
+  %36 = fmul <2 x float> %i.gx, %i.gx
+  %i.gy = shufflevector <2 x float> %i.gs, <2 x float> %35, <2 x i32> <i32 1, i32 3>
+  %i.gz = fadd <2 x float> %i.gy, %36
+  %37 = shufflevector <2 x float> %i.gs, <2 x float> %35, <2 x i32> <i32 0, i32 2>
+  %i.ha = fadd <2 x float> %37, %i.gz             ; 2 uses
   %i.hb = extractelement <2 x float> %i.ha, i64 0
   %i.hc = extractelement <2 x float> %i.ha, i64 1
   %i.hd = fcmp olt float %i.hb, %i.hc
@@ -738,8 +741,8 @@ bb.ao:                                            ; preds = %bb.c, %.split578.us
 define i64 @b3DynamicTree_BoxCast(ptr noundef %0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #8 !func_sanitize !84 {
 bb.a:
   %6 = alloca %struct.b3Vec3, align 8             ; 6 uses
-  %7 = alloca %struct.b3Vec3, align 8             ; 5 uses
-  %8 = alloca %struct.b3Vec3, align 8             ; 6 uses
+  %7 = alloca %struct.b3Vec3, align 8             ; 6 uses
+  %8 = alloca %struct.b3Vec3, align 8             ; 7 uses
   %9 = alloca %struct.b3BoxCastInput, align 4     ; 5 uses
   %i.a = alloca [1024 x i32], align 16            ; 6 uses
   %i.b = icmp ne ptr %0, null, !nosanitize !9
@@ -782,10 +785,10 @@ _mm_load_sd.exit.i:                               ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.o = fadd float %.sroa.7.0.copyload, %.sroa.15.0.copyload
   %i.p = fadd <2 x float> %.sroa.0332.0.copyload, %.sroa.11.0.copyload
-  %i.q = fmul <2 x float> %i.p, splat (float 5.000000e-01) ; 2 uses
-  %i.r = fmul float %i.o, 5.000000e-01            ; 2 uses
+  %i.q = fmul <2 x float> %i.p, splat (float 5.000000e-01) ; 4 uses
+  %i.r = fmul float %i.o, 5.000000e-01            ; 3 uses
   store <2 x float> %i.q, ptr %6, align 8
-  %.sroa.2160.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %.sroa.2160.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store float %i.r, ptr %.sroa.2160.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
   %i.s = fsub float %.sroa.15.0.copyload, %.sroa.7.0.copyload
@@ -799,12 +802,12 @@ _mm_load_sd.exit.i:                               ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.x = bitcast <2 x float> %i.u to double
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %8, ptr noundef nonnull align 4 dereferenceable(12) %i.w, i64 12, i1 false), !tbaa.struct !48
-  %10 = ptrtoint ptr %6 to i64, !nosanitize !9    ; 2 uses
-  %11 = add i64 %10, 8, !nosanitize !9            ; 2 uses
-  %.not1520 = icmp eq i64 %11, 0, !nosanitize !9
+  %.not1520 = icmp eq ptr %6, inttoptr (i64 -8 to ptr)
   br i1 %.not1520, label %bb.f, label %b3LoadV.exit, !prof !10, !nosanitize !9
 
 bb.f:                                             ; preds = %_mm_load_sd.exit.i
+  %10 = ptrtoint ptr %6 to i64, !nosanitize !9    ; 2 uses
+  %11 = add i64 %10, 8, !nosanitize !9
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @221, i64 %10, i64 %11) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
@@ -814,12 +817,12 @@ b3LoadV.exit:                                     ; preds = %_mm_load_sd.exit.i
   %i.aa = bitcast <2 x double> %i.z to <4 x float>
   %i.ab = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %i.r, i64 0
   %i.ac = shufflevector <4 x float> %i.aa, <4 x float> %i.ab, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %12 = ptrtoint ptr %8 to i64, !nosanitize !9    ; 2 uses
-  %13 = add i64 %12, 8, !nosanitize !9            ; 2 uses
-  %.not1521 = icmp eq i64 %13, 0, !nosanitize !9
+  %.not1521 = icmp eq ptr %8, inttoptr (i64 -8 to ptr)
   br i1 %.not1521, label %bb.g, label %b3LoadV.exit225, !prof !10, !nosanitize !9
 
 bb.g:                                             ; preds = %b3LoadV.exit
+  %12 = ptrtoint ptr %8 to i64, !nosanitize !9    ; 2 uses
+  %13 = add i64 %12, 8, !nosanitize !9
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @221, i64 %12, i64 %13) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
@@ -831,12 +834,12 @@ b3LoadV.exit225:                                  ; preds = %b3LoadV.exit
   %i.ah = load float, ptr %i.ae, align 8, !tbaa !24
   %i.ai = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %i.ah, i64 0
   %i.aj = shufflevector <4 x float> %i.ag, <4 x float> %i.ai, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 4 uses
-  %14 = ptrtoint ptr %7 to i64, !nosanitize !9    ; 2 uses
-  %15 = add i64 %14, 8, !nosanitize !9            ; 2 uses
-  %.not1522 = icmp eq i64 %15, 0, !nosanitize !9
+  %.not1522 = icmp eq ptr %7, inttoptr (i64 -8 to ptr)
   br i1 %.not1522, label %bb.h, label %b3LoadV.exit227, !prof !10, !nosanitize !9
 
 bb.h:                                             ; preds = %b3LoadV.exit225
+  %14 = ptrtoint ptr %7 to i64, !nosanitize !9    ; 2 uses
+  %15 = add i64 %14, 8, !nosanitize !9
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @221, i64 %14, i64 %15) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
@@ -883,6 +886,8 @@ b3LoadV.exit227:                                  ; preds = %b3LoadV.exit225
   %i.bq = getelementptr inbounds nuw i8, ptr %9, i64 36
   %i.br = getelementptr i8, ptr %4, i64 -8
   %i.bs = getelementptr i8, ptr %4, i64 -4
+  %16 = insertelement <2 x float> poison, float %i.r, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.i
 
 bb.i:                                             ; preds = %b3AABB_Overlaps.exit.thread, %b3LoadV.exit227
@@ -1206,16 +1211,12 @@ bb.ap:                                            ; preds = %bb.an
   %.sroa.6352.0.copyload = load float, ptr %.sroa.6352.0..sroa_idx, align 4
   %i.hp = fadd float %.sroa.4350.0.copyload, %.sroa.6352.0.copyload
   %i.hq = fmul float %i.hp, 5.000000e-01
-  %.sroa.03.0.copyload = load <2 x float>, ptr %6, align 8 ; 2 uses
-  %.sroa.24.0.copyload = load float, ptr %.sroa.2160.0..sroa_idx, align 8
-  %i.hr = fsub <2 x float> %.sroa.03.0.copyload, %i.gz ; 2 uses
+  %i.hr = fsub <2 x float> %i.q, %i.gz            ; 2 uses
   %i.hs = fmul <2 x float> %i.hr, %i.hr           ; 2 uses
   %i.ht = fadd <2 x float> %.sroa.0349.0.copyload, %.sroa.5351.0.copyload
   %i.hu = fmul <2 x float> %i.ht, splat (float 5.000000e-01)
-  %i.hv = fsub <2 x float> %.sroa.03.0.copyload, %i.hu ; 2 uses
+  %i.hv = fsub <2 x float> %i.q, %i.hu            ; 2 uses
   %i.hw = fmul <2 x float> %i.hv, %i.hv           ; 2 uses
-  %16 = insertelement <2 x float> poison, float %.sroa.24.0.copyload, i64 0
-  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
   %i.hx = insertelement <2 x float> poison, float %i.ha, i64 0
   %i.hy = insertelement <2 x float> %i.hx, float %i.hq, i64 1
   %i.hz = fsub <2 x float> %17, %i.hy             ; 2 uses
