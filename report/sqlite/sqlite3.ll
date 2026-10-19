@@ -206,7 +206,7 @@ bb.aq:                                            ; preds = %sqlite3_str_append.
 bb.ar:                                            ; preds = %sqlite3_str_append.exit, %sqlite3_str_append.exit
   %i.gl = load i32, ptr %.sroa.13.0..sroa_idx.i145, align 4, !tbaa !2503
   %i.gm = icmp sgt i32 %i.gl, 11
-  %i.gn = icmp eq i8 %i.cz, 112                   ; 2 uses
+  %i.gn = icmp eq i8 %i.cz, 112                   ; 4 uses
   %i.go = load i32, ptr %i.z, align 8, !tbaa !753 ; 3 uses
   %i.gp = add i32 %i.go, 2                        ; 3 uses
   %i.gq = load i32, ptr %i.x, align 8, !tbaa !754
@@ -214,10 +214,10 @@ bb.ar:                                            ; preds = %sqlite3_str_append.
   br i1 %i.gm, label %bb.as, label %bb.av
 
 bb.as:                                            ; preds = %bb.ar
-  %5 = select i1 %i.gn, ptr @.str.1405, ptr @.str.1406 ; 2 uses
   br i1 %.not.i69, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
+  %5 = select i1 %i.gn, ptr @.str.1405, ptr @.str.1406
   call fastcc void @enlargeAndAppend(ptr noundef nonnull %4, ptr noundef nonnull readonly %5, i32 noundef 2), !inline_history !755
   br label %.loopexit
 
@@ -226,15 +226,15 @@ bb.au:                                            ; preds = %bb.as
   %i.gr = load ptr, ptr %i.w, align 8, !tbaa !756
   %i.gs = zext i32 %i.go to i64
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gr, i64 %i.gs
-  %6 = load i16, ptr %5, align 1
+  %6 = select i1 %i.gn, i16 19792, i16 28016
   store i16 %6, ptr %i.gt, align 1
   br label %.loopexit
 
 bb.av:                                            ; preds = %bb.ar
-  %7 = select i1 %i.gn, ptr @.str.1407, ptr @.str.1408 ; 2 uses
   br i1 %.not.i69, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
+  %7 = select i1 %i.gn, ptr @.str.1407, ptr @.str.1408
   call fastcc void @enlargeAndAppend(ptr noundef nonnull %4, ptr noundef nonnull readonly %7, i32 noundef 2), !inline_history !755
   br label %.loopexit
 
@@ -243,7 +243,7 @@ bb.ax:                                            ; preds = %bb.av
   %i.gu = load ptr, ptr %i.w, align 8, !tbaa !756
   %i.gv = zext i32 %i.go to i64
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gu, i64 %i.gv
-  %8 = load i16, ptr %7, align 1
+  %8 = select i1 %i.gn, i16 19777, i16 28001
   store i16 %8, ptr %i.gw, align 1
   br label %.loopexit
 

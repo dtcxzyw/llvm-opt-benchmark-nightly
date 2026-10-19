@@ -204,8 +204,8 @@ bb.a:
   %2 = alloca %struct.mbedtls_sha512_context, align 8 ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
-  %.not = icmp eq i32 %1, 0                       ; 5 uses
-  %i.b = select i1 %.not, ptr @sha512_test_sum, ptr @sha384_test_sum
+  %.not = icmp eq i32 %1, 0                       ; 4 uses
+  %i.b = select i1 %.not, ptr @sha512_test_sum, ptr @sha384_test_sum ; 3 uses
   %i.c = tail call noalias dereferenceable_or_null(1024) ptr @calloc(i64 noundef 1024, i64 noundef 1) #13 ; 6 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.b, label %bb.d
@@ -282,7 +282,6 @@ bb.j:                                             ; preds = %.thread
   br label %mbedtls_sha512_update.exit60.1
 
 mbedtls_sha512_update.exit60.1:                   ; preds = %bb.j, %.thread
-  %3 = phi ptr [ getelementptr inbounds nuw (i8, ptr @sha384_test_sum, i64 64), %bb.j ], [ getelementptr inbounds nuw (i8, ptr @sha512_test_sum, i64 64), %.thread ]
   %i.aa = phi <2 x i64> [ <i64 -3766243637369397544, i64 7105036623409894663>, %bb.j ], [ <i64 7640891576956012808, i64 -4942790177534073029>, %.thread ]
   %i.ab = phi <2 x i64> [ <i64 -7973340178411365097, i64 1526699215303891257>, %bb.j ], [ <i64 4354685564936845355, i64 -6534734903238641935>, %.thread ]
   %i.ac = phi <2 x i64> [ <i64 7436329637833083697, i64 -8163818279084223215>, %bb.j ], [ <i64 5840696475078001361, i64 -7276294671716946913>, %.thread ]
@@ -295,6 +294,7 @@ mbedtls_sha512_update.exit60.1:                   ; preds = %bb.j, %.thread
   store i64 112, ptr %2, align 8, !tbaa !11
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.m, ptr noundef nonnull align 1 dereferenceable(112) getelementptr inbounds nuw (i8, ptr @sha_test_buf, i64 113), i64 112, i1 false)
   %i.ae = call i32 @mbedtls_sha512_finish(ptr noundef nonnull %2, ptr noundef nonnull %i.a) ; 0 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %bcmp.1 = call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) %3, i64 %i.q)
   %.not45.1 = icmp eq i32 %bcmp.1, 0
   br i1 %.not45.1, label %bb.k, label %bb.w
@@ -390,7 +390,7 @@ mbedtls_sha512_update.exit.2:                     ; preds = %.thread62.i.2, %bb.
 
 mbedtls_sha512_update.exit60.2:                   ; preds = %mbedtls_sha512_update.exit.2
   %i.be = call i32 @mbedtls_sha512_finish(ptr noundef nonnull %2, ptr noundef nonnull %i.a) ; 0 uses
-  %4 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @sha512_test_sum, i64 128), ptr getelementptr inbounds nuw (i8, ptr @sha384_test_sum, i64 128)
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 128
   %bcmp.2 = call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) %4, i64 %i.q)
   %.not45.2 = icmp eq i32 %bcmp.2, 0
   br i1 %.not45.2, label %bb.u, label %bb.w
