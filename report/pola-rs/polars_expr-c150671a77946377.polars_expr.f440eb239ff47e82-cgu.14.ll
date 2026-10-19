@@ -204,7 +204,7 @@ begin_hunk_0_@_RNCNvNtCskY9G75ZWc4U_11polars_expr7planner26create_physical_expr_
   %i.hr = alloca [96 x i8], align 16              ; 5 uses
   %i.hs = alloca [240 x i8], align 16             ; 5 uses
   %i.ht = alloca [96 x i8], align 16              ; 6 uses
-  %i.hu = alloca [24 x i8], align 8               ; 7 uses
+  %i.hu = alloca [24 x i8], align 8               ; 6 uses
   %i.hv = alloca [16 x i8], align 8               ; 5 uses
   %i.hw = alloca [24 x i8], align 8               ; 2 uses
   %i.hx = alloca [24 x i8], align 8               ; 4 uses
@@ -607,9 +607,7 @@ bb.xd:                                            ; preds = %bb.xw, %bb.xu, %bb.
   %.sroa.294.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 8, !dbg !147801 ; 3 uses
   store i64 %i.sg, ptr %.sroa.294.0..sroa_idx, align 8, !dbg !147801
   %.sroa.294.sroa.2.0..sroa.294.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 16, !dbg !147801
-  store i32 1, ptr %.sroa.294.sroa.2.0..sroa.294.0..sroa_idx.sroa_idx, align 8, !dbg !147801
-  %.sroa.294.sroa.3.0..sroa.294.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 20, !dbg !147801
-  store i32 1, ptr %.sroa.294.sroa.3.0..sroa.294.0..sroa_idx.sroa_idx, align 4, !dbg !147801
+  store i64 4294967297, ptr %.sroa.294.sroa.2.0..sroa.294.0..sroa_idx.sroa_idx, align 8, !dbg !147801
   br label %.outer, !dbg !147802
 
 .outer:                                           ; preds = %bb.yj, %bb.xd

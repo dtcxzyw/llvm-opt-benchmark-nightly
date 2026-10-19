@@ -204,26 +204,25 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br label %.preheader29
 
 .preheader29:                                     ; preds = %.preheader29.lr.ph, %.preheader29
-  %.sroa.7.0 = phi i32 [ 0, %.preheader29.lr.ph ], [ %.sroa.7.1, %.preheader29 ]
-  %.sroa.0.0 = phi i32 [ 0, %.preheader29.lr.ph ], [ %i.u, %.preheader29 ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader29.lr.ph ], [ %indvars.iv.next, %.preheader29 ] ; 2 uses
-  %2 = phi i32 [ 0, %.preheader29.lr.ph ], [ %i.p, %.preheader29 ] ; 2 uses
-  %.not = icmp slt i32 %.sroa.0.0, %i.l           ; 3 uses
-  %i.o = add nsw i32 %2, 1                        ; 2 uses
-  %i.p = select i1 %.not, i32 %2, i32 %i.o
-  %3 = getelementptr [8 x i8], ptr %i.j, i64 %indvars.iv ; 2 uses
-  %i.q = getelementptr [8 x i8], ptr %3, i64 %i.h
-  %.sroa.7.1 = select i1 %.not, i32 %.sroa.7.0, i32 %i.o ; 2 uses
-  %.sroa.0.1 = select i1 %.not, i32 %.sroa.0.0, i32 0 ; 2 uses
-  %4 = insertelement <2 x i32> poison, i32 %.sroa.0.1, i64 0
-  %5 = insertelement <2 x i32> %4, i32 %.sroa.7.1, i64 1
-  %6 = sitofp <2 x i32> %5 to <2 x double>
+  %.sroa.0.0 = phi i32 [ 0, %.preheader29.lr.ph ], [ %i.u, %.preheader29 ] ; 2 uses
+  %.sroa.10.059 = phi i32 [ 0, %.preheader29.lr.ph ], [ %i.o, %.preheader29 ]
+  %.not = icmp sge i32 %.sroa.0.0, %i.l           ; 2 uses
+  %2 = zext i1 %.not to i32
+  %i.o = add nuw nsw i32 %.sroa.10.059, %2        ; 2 uses
+  %i.p = select i1 %.not, i32 0, i32 %.sroa.0.0   ; 2 uses
+  %i.q = getelementptr [8 x i8], ptr %i.j, i64 %indvars.iv ; 2 uses
+  %3 = sitofp i32 %i.p to double
+  %4 = uitofp nneg i32 %i.o to double
+  %5 = insertelement <2 x double> poison, double %3, i64 0
+  %6 = insertelement <2 x double> %5, double %4, i64 1
   %i.r = fdiv <2 x double> %6, %i.n               ; 2 uses
   %i.s = extractelement <2 x double> %i.r, i64 0
-  store double %i.s, ptr %3, align 8, !tbaa !17
+  store double %i.s, ptr %i.q, align 8, !tbaa !17
+  %7 = getelementptr [8 x i8], ptr %i.q, i64 %i.h
   %i.t = extractelement <2 x double> %i.r, i64 1
-  store double %i.t, ptr %i.q, align 8, !tbaa !17
-  %i.u = add nsw i32 %.sroa.0.1, 1
+  store double %i.t, ptr %7, align 8, !tbaa !17
+  %i.u = add nsw i32 %i.p, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.h
   br i1 %exitcond.not, label %._crit_edge, label %.preheader29, !llvm.loop !38

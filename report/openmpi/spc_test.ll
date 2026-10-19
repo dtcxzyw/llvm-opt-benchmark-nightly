@@ -13,7 +13,6 @@ target triple = "x86_64-pc-linux-gnu"
 
 @.str = private unnamed_addr constant [37 x i8] c"runtime_spc_OMPI_SPC_BYTES_SENT_USER\00", align 1
 @.str.1 = private unnamed_addr constant [41 x i8] c"runtime_spc_OMPI_SPC_BYTES_RECEIVED_USER\00", align 1
-@__const.main.counter_names = private unnamed_addr constant [2 x ptr] [ptr @.str, ptr @.str.1], align 16
 @stderr = external local_unnamed_addr global ptr, align 8
 @.str.2 = private unnamed_addr constant [36 x i8] c"Failed to initialize MPI_T thread.\0A\00", align 1
 @ompi_mpi_comm_world = external global %struct.ompi_predefined_communicator_t, align 1
@@ -135,10 +134,9 @@ bb.h:                                             ; preds = %.lr.ph
 
 bb.i:                                             ; preds = %.lr.ph, %bb.h
   %i.am = load i32, ptr %i.b, align 4, !tbaa !13  ; 2 uses
-  %3 = sext i32 %i.am to i64
-  %4 = getelementptr inbounds [8 x i8], ptr @__const.main.counter_names, i64 %3
-  %5 = load ptr, ptr %4, align 8, !tbaa !15
-  %i.an = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.q, ptr noundef nonnull dereferenceable(1) %5) #10
+  %.sroa.idx = icmp eq i32 %i.am, 1
+  %.sroa.speculated = select i1 %.sroa.idx, ptr @.str.1, ptr @.str
+  %i.an = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.q, ptr noundef nonnull dereferenceable(1) %.sroa.speculated) #10
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.k, label %bb.j
 
@@ -174,7 +172,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.ay = load ptr, ptr %i.t, align 8, !tbaa !18
+  %i.ay = load ptr, ptr %i.t, align 8, !tbaa !16
   %i.az = call i32 @MPI_T_pvar_handle_alloc(ptr noundef %i.ay, i32 noundef %.04886, ptr noundef null, ptr noundef nonnull %i.u, ptr noundef nonnull %i.n) #8 ; 2 uses
   %.not72 = icmp eq i32 %i.az, 0
   br i1 %.not72, label %bb.p, label %bb.o
@@ -186,8 +184,8 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.bc = load ptr, ptr %i.t, align 8, !tbaa !18
-  %i.bd = load ptr, ptr %i.u, align 8, !tbaa !20
+  %i.bc = load ptr, ptr %i.t, align 8, !tbaa !16
+  %i.bd = load ptr, ptr %i.u, align 8, !tbaa !18
   %i.be = call i32 @MPI_T_pvar_start(ptr noundef %i.bc, ptr noundef %i.bd) #8 ; 2 uses
   switch i32 %i.be, label %bb.q [
     i32 65, label %bb.r
@@ -355,8 +353,8 @@ message_exchange.exit.6:                          ; preds = %.preheader.i.6, %.p
   call void @free(ptr noundef %i.cl) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  %i.cq = load ptr, ptr %i.t, align 8, !tbaa !18
-  %i.cr = load ptr, ptr %i.u, align 8, !tbaa !20
+  %i.cq = load ptr, ptr %i.t, align 8, !tbaa !16
+  %i.cr = load ptr, ptr %i.u, align 8, !tbaa !18
   %i.cs = call i32 @MPI_T_pvar_read(ptr noundef %i.cq, ptr noundef %i.cr, ptr noundef nonnull %i.s) #8 ; 2 uses
   %.not75 = icmp eq i32 %i.cs, 0
   br i1 %.not75, label %bb.t, label %bb.s
@@ -373,11 +371,11 @@ bb.t:                                             ; preds = %bb.s, %message_exch
   br i1 %i.cw, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %bb.t
-  %i.cx = load i64, ptr %i.s, align 8, !tbaa !22
+  %i.cx = load i64, ptr %i.s, align 8, !tbaa !20
   %i.cy = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.12, i32 noundef 0, i64 noundef %i.cx) ; 0 uses
   %i.cz = load ptr, ptr @stdout, align 8, !tbaa !12
   %i.da = call i32 @fflush(ptr noundef %i.cz)     ; 0 uses
-  %i.db = load i64, ptr %i.s, align 8, !tbaa !22  ; 2 uses
+  %i.db = load i64, ptr %i.s, align 8, !tbaa !20  ; 2 uses
   %.not84 = icmp eq i64 %i.db, 1111111
   br i1 %.not84, label %bb.w, label %bb.v
 
@@ -394,11 +392,11 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %bb.t
   br i1 %i.dh, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
-  %i.di = load i64, ptr %i.s, align 8, !tbaa !22
+  %i.di = load i64, ptr %i.s, align 8, !tbaa !20
   %i.dj = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.12, i32 noundef 1, i64 noundef %i.di) ; 0 uses
   %i.dk = load ptr, ptr @stdout, align 8, !tbaa !12
   %i.dl = call i32 @fflush(ptr noundef %i.dk)     ; 0 uses
-  %i.dm = load i64, ptr %i.s, align 8, !tbaa !22  ; 2 uses
+  %i.dm = load i64, ptr %i.s, align 8, !tbaa !20  ; 2 uses
   %.not84.1 = icmp eq i64 %i.dm, 1111111
   br i1 %.not84.1, label %bb.z, label %bb.y
 
@@ -410,8 +408,8 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w
   %i.dq = call i32 @MPI_Barrier(ptr noundef nonnull @ompi_mpi_comm_world) #8 ; 0 uses
-  %i.dr = load ptr, ptr %i.t, align 8, !tbaa !18
-  %i.ds = load ptr, ptr %i.u, align 8, !tbaa !20
+  %i.dr = load ptr, ptr %i.t, align 8, !tbaa !16
+  %i.ds = load ptr, ptr %i.u, align 8, !tbaa !18
   %i.dt = call i32 @MPI_T_pvar_stop(ptr noundef %i.dr, ptr noundef %i.ds) #8 ; 2 uses
   switch i32 %i.dt, label %bb.aa [
     i32 65, label %bb.ab
@@ -425,7 +423,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.z, %bb.z, %bb.aa
-  %i.dw = load ptr, ptr %i.t, align 8, !tbaa !18
+  %i.dw = load ptr, ptr %i.t, align 8, !tbaa !16
   %i.dx = call i32 @MPI_T_pvar_handle_free(ptr noundef %i.dw, ptr noundef nonnull %i.u) #8 ; 2 uses
   %.not78 = icmp eq i32 %i.dx, 0
   br i1 %.not78, label %bb.ad, label %bb.ac
@@ -575,18 +573,16 @@ attributes #12 = { cold nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
-!9 = distinct !{!9, !16}
+!9 = distinct !{!9, !14}
 !10 = !{!"any pointer", !5, i64 0}
 !11 = !{!"p1 _ZTS8_IO_FILE", !10, i64 0}
 !12 = !{!11, !11, i64 0}
 !13 = !{!6, !6, i64 0}
-!14 = !{!"p1 omnipotent char", !10, i64 0}
-!15 = !{!14, !14, i64 0}
-!16 = !{!"llvm.loop.mustprogress"}
-!17 = !{!"p1 _ZTS23mca_base_pvar_session_t", !10, i64 0}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = !{!"p1 _ZTS23mca_base_pvar_session_t", !10, i64 0}
+!16 = !{!15, !15, i64 0}
+!17 = !{!"p1 _ZTS22mca_base_pvar_handle_t", !10, i64 0}
 !18 = !{!17, !17, i64 0}
-!19 = !{!"p1 _ZTS22mca_base_pvar_handle_t", !10, i64 0}
+!19 = !{!"long long", !5, i64 0}
 !20 = !{!19, !19, i64 0}
-!21 = !{!"long long", !5, i64 0}
-!22 = !{!21, !21, i64 0}
 end_hunk_0

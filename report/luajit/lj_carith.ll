@@ -14,12 +14,11 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden i32 @lj_carith_op(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca [2 x ptr], align 16                 ; 6 uses
   %i.a = alloca i64, align 8                      ; 8 uses
   %i.b = alloca i64, align 8                      ; 15 uses
   %i.c = alloca i64, align 8                      ; 14 uses
   %i.d = alloca i32, align 4                      ; 7 uses
-  %3 = alloca %struct.CDArith, align 8            ; 17 uses
+  %2 = alloca %struct.CDArith, align 8            ; 17 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !17
   %i.g = inttoptr i64 %i.f to ptr
@@ -28,18 +27,18 @@ bb.a:
   %i.j = inttoptr i64 %i.i to ptr                 ; 31 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 4 uses
   store ptr %0, ptr %i.k, align 8, !tbaa !37
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !38   ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 13 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !39
   %.not.i = icmp ult ptr %i.n, %i.p
-  %.091123.lcssa.neg.i.sroa.gep = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 8 uses
+  %.091123.lcssa.neg.i.sroa.gep = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
   br i1 %.not.i, label %.preheader115.i, label %bb.b
 
 .preheader115.i:                                  ; preds = %bb.a
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 9 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 9 uses
   %i.r = load i64, ptr %i.m, align 8, !tbaa !40   ; 4 uses
   %i.s = ashr i64 %i.r, 47                        ; 3 uses
   %i.t = icmp eq i64 %i.s, -11
@@ -129,7 +128,7 @@ ctype_rawchild.exit.i:                            ; preds = %.preheader.i, %.cty
   %i.bh = getelementptr inbounds nuw [24 x i8], ptr %i.bc, i64 %i.bg
   %.190.i = select i1 %i.be, ptr %i.bh, ptr %.089.i ; 2 uses
   store ptr %.190.i, ptr %i.q, align 8, !tbaa !54
-  store ptr %.088.i, ptr %3, align 8, !tbaa !55
+  store ptr %.088.i, ptr %2, align 8, !tbaa !55
   br label %.thread111.i
 
 bb.h:                                             ; preds = %.preheader115.i
@@ -140,7 +139,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bj = load ptr, ptr %i.j, align 8, !tbaa !42
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 384 ; 2 uses
   store ptr %i.bk, ptr %i.q, align 8, !tbaa !54
-  store ptr %i.m, ptr %3, align 8, !tbaa !55
+  store ptr %i.m, ptr %2, align 8, !tbaa !55
   br label %.thread111.i
 
 bb.j:                                             ; preds = %bb.h
@@ -151,7 +150,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bm = load ptr, ptr %i.j, align 8, !tbaa !42
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 456 ; 2 uses
   store ptr %i.bn, ptr %i.q, align 8, !tbaa !54
-  store ptr null, ptr %3, align 8, !tbaa !55
+  store ptr null, ptr %2, align 8, !tbaa !55
   br label %.thread111.i
 
 bb.l:                                             ; preds = %bb.j
@@ -182,7 +181,7 @@ ctype_raw.exit.i:                                 ; preds = %bb.n
   %i.ca = and i64 %i.r, 140737488355327
   %i.cb = inttoptr i64 %i.ca to ptr               ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 24 ; 2 uses
-  store ptr %i.cc, ptr %3, align 8, !tbaa !55
+  store ptr %i.cc, ptr %2, align 8, !tbaa !55
   %.mask.i = and i32 %i.bw, -268435456
   %i.cd = icmp eq i32 %.mask.i, 1342177280
   br i1 %i.cd, label %bb.o, label %.thread111.i
@@ -206,12 +205,12 @@ bb.q:                                             ; preds = %bb.p
   %i.ck = getelementptr inbounds nuw [24 x i8], ptr %i.ci, i64 %i.cj ; 2 uses
   store ptr %i.ck, ptr %i.q, align 8, !tbaa !54
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ce, i64 4 ; 2 uses
-  store ptr %i.cl, ptr %3, align 8, !tbaa !55
+  store ptr %i.cl, ptr %2, align 8, !tbaa !55
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
   br label %.thread111.i
 
 bb.r:                                             ; preds = %bb.aa, %bb.z, %bb.p, %bb.o
-  %.091123.lcssa.neg.i.sroa.phi = phi ptr [ %.091123.lcssa.neg.i.sroa.gep, %bb.p ], [ %.091123.lcssa.neg.i.sroa.gep, %bb.o ], [ %3, %bb.z ], [ %3, %bb.aa ]
+  %.091123.lcssa.neg.i.sroa.phi = phi ptr [ %.091123.lcssa.neg.i.sroa.gep, %bb.p ], [ %.091123.lcssa.neg.i.sroa.gep, %bb.o ], [ %2, %bb.z ], [ %2, %bb.aa ]
   %.091123.lcssa.neg.i = phi i64 [ 1, %bb.p ], [ 1, %bb.o ], [ 0, %bb.z ], [ 0, %bb.aa ]
   %.0.i.lcssa.lcssa.i = phi ptr [ %.0.i.i, %bb.p ], [ %.0.i.i, %bb.o ], [ %.0.i.1.i, %bb.z ], [ %.0.i.1.i, %bb.aa ]
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.091123.lcssa.neg.i
@@ -222,7 +221,7 @@ bb.r:                                             ; preds = %bb.aa, %bb.z, %bb.p
 
 bb.s:                                             ; preds = %bb.l
   store ptr null, ptr %i.q, align 8, !tbaa !54
-  store ptr inttoptr (i64 1 to ptr), ptr %3, align 8, !tbaa !55
+  store ptr inttoptr (i64 1 to ptr), ptr %2, align 8, !tbaa !55
   br label %.thread111.i
 
 .thread111.i:                                     ; preds = %bb.s, %bb.q, %ctype_raw.exit.i, %bb.k, %bb.i, %ctype_rawchild.exit.i
@@ -247,7 +246,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.cu, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.cv = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr null, ptr %i.cv, align 8, !tbaa !54
   store ptr inttoptr (i64 1 to ptr), ptr %.091123.lcssa.neg.i.sroa.gep, align 8, !tbaa !55
   br label %carith_checkarg.exit.thread
@@ -272,7 +271,7 @@ bb.y:                                             ; preds = %bb.y, %bb.x
   br i1 %i.de, label %bb.y, label %ctype_raw.exit.1.i, !llvm.loop !0
 
 ctype_raw.exit.1.i:                               ; preds = %bb.y
-  %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr null, ptr %i.dh, align 8, !tbaa !54
   %i.di = and i64 %i.cp, 140737488355327
   %i.dj = inttoptr i64 %i.di to ptr               ; 2 uses
@@ -409,7 +408,7 @@ carith_checkarg.exit:                             ; preds = %bb.ab, %bb.ac, %cty
   %.sink108 = phi ptr [ null, %bb.ab ], [ %i.n, %bb.ac ], [ %.088.1.i, %ctype_rawchild.exit.1.i ] ; 2 uses
   %i.ft = phi ptr [ %i.du, %bb.ab ], [ %i.dw, %bb.ac ], [ %i.fn, %ctype_rawchild.exit.1.i ]
   %i.fu = phi ptr [ %i.co, %bb.ab ], [ %i.co, %bb.ac ], [ %i.fm, %ctype_rawchild.exit.1.i ]
-  %i.fv = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.fv = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr %.sink109, ptr %i.fv, align 8, !tbaa !54
   store ptr %.sink108, ptr %.091123.lcssa.neg.i.sroa.gep, align 8, !tbaa !55
   br i1 %.not, label %carith_checkarg.exit.thread, label %switch.early.test
@@ -812,7 +811,6 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %.not78.i, label %.thread90.i, label %.thread93.i
 
 .thread90.i:                                      ; preds = %bb.cu, %bb.cr, %.thread.i27
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   %i.ol = icmp eq i32 %1, 4
   br i1 %i.ol, label %bb.cv, label %.preheader.i28
 
@@ -827,7 +825,7 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %or.cond.i29, label %bb.cw, label %.preheader._crit_edge.i
 
 bb.cv:                                            ; preds = %.thread90.i
-  %i.oo = load ptr, ptr %3, align 8, !tbaa !55
+  %i.oo = load ptr, ptr %2, align 8, !tbaa !55
   %i.op = load ptr, ptr %.091123.lcssa.neg.i.sroa.gep, align 8, !tbaa !55
   %i.oq = icmp eq ptr %i.oo, %i.op
   %i.or = select i1 %i.oq, i64 -281474976710657, i64 -140737488355329 ; 2 uses
@@ -838,7 +836,6 @@ bb.cv:                                            ; preds = %.thread90.i
   %i.ov = inttoptr i64 %i.ou to ptr
   %i.ow = getelementptr inbounds nuw i8, ptr %i.ov, i64 240
   store i64 %i.or, ptr %i.ow, align 8, !tbaa !40
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   br label %lj_carith_meta.exit
 
 bb.cw:                                            ; preds = %.preheader.i28
@@ -868,15 +865,14 @@ bb.cw:                                            ; preds = %.preheader.i28
   br label %bb.cx
 
 bb.cx:                                            ; preds = %.preheader._crit_edge.i, %bb.cw
-  %.sink = phi ptr [ %i.pg, %bb.cw ], [ %i.pm, %.preheader._crit_edge.i ] ; 2 uses
-  %.pre106.i = phi ptr [ %.pre106.pre.i, %bb.cw ], [ %.pre104.i, %.preheader._crit_edge.i ]
+  %.sink = phi ptr [ %.pre106.pre.i, %bb.cw ], [ %.pre104.i, %.preheader._crit_edge.i ]
+  %.pre106.i = phi ptr [ %i.pg, %bb.cw ], [ %i.pm, %.preheader._crit_edge.i ] ; 3 uses
   %.265.i = phi i32 [ %spec.select84.i, %bb.cw ], [ -1, %.preheader._crit_edge.i ] ; 2 uses
   %.2.i30 = phi i32 [ -1, %bb.cw ], [ %spec.select85.i, %.preheader._crit_edge.i ] ; 2 uses
-  store ptr %.sink, ptr %2, align 16, !tbaa !55
-  %i.pn = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.pn = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.po = load ptr, ptr %i.pn, align 8, !tbaa !54 ; 3 uses
   %.not79.1.i = icmp ne ptr %i.po, null
-  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre106.i, i64 8
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.sink, i64 8
   %.pre107.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !40 ; 2 uses
   %.pre109.i = and i64 %.pre107.i, -140737488355328 ; 2 uses
   %i.pp = icmp eq i64 %.pre109.i, -1548112371908608
@@ -909,23 +905,19 @@ bb.cy:                                            ; preds = %bb.cx
   br label %bb.cz
 
 bb.cz:                                            ; preds = %._crit_edge.i, %bb.cy
-  %.sink.i = phi ptr [ %i.qf, %._crit_edge.i ], [ %i.pz, %bb.cy ] ; 2 uses
-  %.265.1.i = phi i32 [ %.265.i, %._crit_edge.i ], [ %spec.select84.1.i, %bb.cy ] ; 2 uses
-  %.2.1.i = phi i32 [ %spec.select85.1.i, %._crit_edge.i ], [ %.2.i30, %bb.cy ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %.sink.i, ptr %4, align 8, !tbaa !55
+  %.sink.i = phi ptr [ %i.pz, %bb.cy ], [ %i.qf, %._crit_edge.i ] ; 3 uses
+  %.265.1.i = phi i32 [ %spec.select84.1.i, %bb.cy ], [ %.265.i, %._crit_edge.i ] ; 2 uses
+  %.2.1.i = phi i32 [ %.2.i30, %bb.cy ], [ %spec.select85.1.i, %._crit_edge.i ] ; 2 uses
   %i.qg = xor i32 %.2.1.i, %.265.1.i
   %i.qh = icmp eq i32 %i.qg, 1
   br i1 %i.qh, label %bb.da, label %bb.db
 
 bb.da:                                            ; preds = %bb.cz
-  %5 = sext i32 %.2.1.i to i64
-  %6 = getelementptr inbounds [8 x i8], ptr %2, i64 %5
-  %7 = load ptr, ptr %6, align 8, !tbaa !55
-  %8 = sext i32 %.265.1.i to i64
-  %9 = getelementptr inbounds [8 x i8], ptr %2, i64 %8
-  %10 = load ptr, ptr %9, align 8, !tbaa !55
-  call void (ptr, i32, ...) @lj_err_callerv(ptr noundef nonnull %0, i32 noundef 3388, ptr noundef %7, ptr noundef %10) #9
+  %.sroa.idx7.i = icmp eq i32 %.2.1.i, 1
+  %.sroa.speculated.i = select i1 %.sroa.idx7.i, ptr %.sink.i, ptr %.pre106.i
+  %.sroa.idx10.i = icmp eq i32 %.265.1.i, 1
+  %.sroa.speculated15.i = select i1 %.sroa.idx10.i, ptr %.sink.i, ptr %.pre106.i
+  call void (ptr, i32, ...) @lj_err_callerv(ptr noundef nonnull %0, i32 noundef 3388, ptr noundef %.sroa.speculated.i, ptr noundef %.sroa.speculated15.i) #9
   unreachable
 
 bb.db:                                            ; preds = %bb.cz
@@ -935,7 +927,7 @@ bb.db:                                            ; preds = %bb.cz
   %i.ql = select i1 %i.qk, i32 3530, i32 3483
   %i.qm = select i1 %i.qj, i32 3446, i32 %i.ql
   %i.qn = select i1 %i.qi, i32 3416, i32 %i.qm
-  call void (ptr, i32, ...) @lj_err_callerv(ptr noundef nonnull %0, i32 noundef %i.qn, ptr noundef %.sink, ptr noundef %.sink.i) #9
+  call void (ptr, i32, ...) @lj_err_callerv(ptr noundef nonnull %0, i32 noundef %i.qn, ptr noundef %.pre106.i, ptr noundef %.sink.i) #9
   unreachable
 
 .thread93.i:                                      ; preds = %bb.cu, %bb.cq
@@ -945,7 +937,7 @@ bb.db:                                            ; preds = %bb.cz
 
 lj_carith_meta.exit:                              ; preds = %.thread93.i, %bb.cv, %bb.cn
   %.0 = phi i32 [ 1, %bb.cn ], [ %i.qo, %.thread93.i ], [ 1, %bb.cv ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   ret i32 %.0
 }
 

@@ -204,7 +204,6 @@ begin_hunk_0
 @.str.292 = private unnamed_addr constant [36 x i8] c"EVP_PKEY_CTX_set1_id(sctx, NULL, 0)\00", align 1
 @.str.293 = private unnamed_addr constant [4 x i8] c"SM3\00", align 1
 @.str.294 = private unnamed_addr constant [9 x i8] c"SHA2-256\00", align 1
-@__const.test_EVP_SM2.mdnames = private unnamed_addr constant [2 x ptr] [ptr @.str.293, ptr @.str.294], align 16
 @.str.295 = private unnamed_addr constant [60 x i8] c"cctx = EVP_PKEY_CTX_new_from_pkey(testctx, pkey, testpropq)\00", align 1
 @.str.296 = private unnamed_addr constant [28 x i8] c"EVP_PKEY_encrypt_init(cctx)\00", align 1
 @.str.297 = private unnamed_addr constant [39 x i8] c"EVP_PKEY_CTX_set_params(cctx, sparams)\00", align 1
@@ -607,15 +606,13 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.am, %bb.z
-  %.not124 = phi i1 [ false, %bb.z ], [ true, %bb.am ]
-  %indvars.iv = phi i64 [ 0, %bb.z ], [ 1, %bb.am ]
+  %.not124 = phi i1 [ true, %bb.z ], [ false, %bb.am ] ; 2 uses
   %.057109 = phi ptr [ %i.ap, %bb.z ], [ %i.dt, %bb.am ] ; 9 uses
   %.058108 = phi ptr [ null, %bb.z ], [ %i.cr, %bb.am ]
   call void @EVP_PKEY_CTX_free(ptr noundef %.058108) #8
-  %3 = getelementptr inbounds nuw [8 x i8], ptr @__const.test_EVP_SM2.mdnames, i64 %indvars.iv
+  %.sroa.speculated = select i1 %.not124, ptr @.str.293, ptr @.str.294 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
-  %4 = load ptr, ptr %3, align 8, !tbaa !18       ; 3 uses
-  call void @OSSL_PARAM_construct_utf8_string(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %2, ptr noundef nonnull @.str.174, ptr noundef %4, i64 noundef 0) #8
+  call void @OSSL_PARAM_construct_utf8_string(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %2, ptr noundef nonnull @.str.174, ptr noundef nonnull %.sroa.speculated, i64 noundef 0) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false), !tbaa.struct !31
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   %i.cp = load ptr, ptr @testctx, align 8, !tbaa !12
@@ -689,7 +686,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %.not100, label %.thread, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.dv = call i32 @EVP_MD_is_a(ptr noundef %i.dt, ptr noundef %4) #8
+  %i.dv = call i32 @EVP_MD_is_a(ptr noundef %i.dt, ptr noundef nonnull %.sroa.speculated) #8
   %i.dw = icmp ne i32 %i.dv, 0
   %i.dx = zext i1 %i.dw to i32
   %i.dy = call i32 @test_true(ptr noundef nonnull @.str.18, i32 noundef 2874, ptr noundef nonnull @.str.303, i32 noundef %i.dx) #8
@@ -697,7 +694,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not101, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  call void (ptr, i32, ptr, ...) @test_info(ptr noundef nonnull @.str.18, i32 noundef 2875, ptr noundef nonnull @.str.304, ptr noundef nonnull %i.i, ptr noundef %4) #8
+  call void (ptr, i32, ptr, ...) @test_info(ptr noundef nonnull @.str.18, i32 noundef 2875, ptr noundef nonnull @.str.304, ptr noundef nonnull %i.i, ptr noundef nonnull %.sroa.speculated) #8
   br label %.thread
 
 bb.al:                                            ; preds = %bb.aj
@@ -715,24 +712,23 @@ bb.am:                                            ; preds = %bb.al
   %i.eg = icmp eq i32 %i.ef, 0
   %i.eh = zext i1 %i.eg to i32
   %i.ei = call i32 @test_true(ptr noundef nonnull @.str.18, i32 noundef 2882, ptr noundef nonnull @.str.306, i32 noundef %i.eh) #8
-  %.not103 = icmp eq i32 %i.ei, 0                 ; 2 uses
-  %brmerge = or i1 %.not103, %.not124
-  br i1 %brmerge, label %.thread.loopexit.split.loop.exit, label %bb.aa
+  %.not121 = icmp ne i32 %i.ei, 0                 ; 2 uses
+  %brmerge.not = and i1 %.not121, %.not124
+  br i1 %brmerge.not, label %bb.aa, label %.thread.loopexit.split.loop.exit
 
 .thread.loopexit.split.loop.exit:                 ; preds = %bb.am
-  %not..not103.le = xor i1 %.not103, true
-  %.mux.le = zext i1 %not..not103.le to i32
+  %.mux.le = zext i1 %.not121 to i32
   br label %.thread
 
 .thread:                                          ; preds = %.thread.loopexit.split.loop.exit, %bb.aa, %bb.al, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.ak, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.066 = phi i32 [ 0, %bb.ak ], [ 0, %bb.a ], [ 0, %bb.y ], [ 0, %bb.x ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.s ], [ 0, %bb.r ], [ 0, %bb.q ], [ 0, %bb.p ], [ 0, %bb.o ], [ 0, %bb.n ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %bb.k ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ], [ 0, %bb.ad ], [ 0, %bb.ae ], [ 0, %bb.af ], [ 0, %bb.ag ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ 0, %bb.al ], [ 0, %bb.aa ], [ 0, %bb.ac ], [ %.mux.le, %.thread.loopexit.split.loop.exit ], [ 0, %bb.ab ]
+  %.066 = phi i32 [ 0, %bb.ak ], [ 0, %bb.a ], [ 0, %bb.y ], [ 0, %bb.x ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.s ], [ 0, %bb.r ], [ 0, %bb.q ], [ 0, %bb.p ], [ 0, %bb.o ], [ 0, %bb.n ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %bb.k ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ], [ %.mux.le, %.thread.loopexit.split.loop.exit ], [ 0, %bb.ad ], [ 0, %bb.ae ], [ 0, %bb.af ], [ 0, %bb.ag ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ 0, %bb.al ], [ 0, %bb.aa ], [ 0, %bb.ac ], [ 0, %bb.ab ]
   %.065 = phi ptr [ %i.y, %bb.ak ], [ null, %bb.a ], [ %i.y, %bb.y ], [ %i.y, %bb.x ], [ %i.y, %bb.w ], [ %i.y, %bb.v ], [ %i.y, %bb.u ], [ %i.y, %bb.t ], [ %i.y, %bb.s ], [ %i.y, %bb.r ], [ %i.y, %bb.q ], [ %i.y, %bb.p ], [ %i.y, %bb.o ], [ %i.y, %bb.n ], [ %i.y, %bb.m ], [ %i.y, %bb.l ], [ %i.y, %bb.k ], [ %i.y, %bb.j ], [ %i.y, %bb.i ], [ %i.y, %bb.h ], [ %i.y, %bb.g ], [ %i.y, %bb.f ], [ %i.y, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ %i.y, %bb.ab ], [ %i.y, %bb.ac ], [ %i.y, %bb.ad ], [ %i.y, %bb.ae ], [ %i.y, %bb.af ], [ %i.y, %bb.ag ], [ %i.y, %bb.ah ], [ %i.y, %bb.ai ], [ %i.y, %bb.al ], [ %i.y, %bb.aa ], [ %i.y, %.thread.loopexit.split.loop.exit ]
   %.064 = phi ptr [ %i.am, %bb.ak ], [ null, %bb.a ], [ %i.am, %bb.y ], [ %i.am, %bb.x ], [ %i.am, %bb.w ], [ %i.am, %bb.v ], [ %i.am, %bb.u ], [ %i.am, %bb.t ], [ %i.am, %bb.s ], [ %i.am, %bb.r ], [ %i.am, %bb.q ], [ %i.am, %bb.p ], [ %i.am, %bb.o ], [ %i.am, %bb.n ], [ %i.am, %bb.m ], [ %i.am, %bb.l ], [ %i.am, %bb.k ], [ %i.am, %bb.j ], [ null, %bb.i ], [ null, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ %i.am, %bb.ab ], [ %i.am, %bb.ac ], [ %i.am, %bb.ad ], [ %i.am, %bb.ae ], [ %i.am, %bb.af ], [ %i.am, %bb.ag ], [ %i.am, %bb.ah ], [ %i.am, %bb.ai ], [ %i.am, %bb.al ], [ %i.am, %bb.aa ], [ %i.am, %.thread.loopexit.split.loop.exit ]
   %.063 = phi ptr [ %i.bh, %bb.ak ], [ null, %bb.a ], [ %i.bh, %bb.y ], [ %i.bh, %bb.x ], [ %i.bh, %bb.w ], [ %i.bh, %bb.v ], [ %i.bh, %bb.u ], [ %i.bh, %bb.t ], [ %i.bh, %bb.s ], [ %i.bh, %bb.r ], [ %i.bh, %bb.q ], [ %i.bh, %bb.p ], [ null, %bb.o ], [ null, %bb.n ], [ null, %bb.m ], [ null, %bb.l ], [ null, %bb.k ], [ null, %bb.j ], [ null, %bb.i ], [ null, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ %i.bh, %bb.ab ], [ %i.bh, %bb.ac ], [ %i.bh, %bb.ad ], [ %i.bh, %bb.ae ], [ %i.bh, %bb.af ], [ %i.bh, %bb.ag ], [ %i.bh, %bb.ah ], [ %i.bh, %bb.ai ], [ %i.bh, %bb.al ], [ %i.bh, %bb.aa ], [ %i.bh, %.thread.loopexit.split.loop.exit ]
   %.062 = phi ptr [ %i.ag, %bb.ak ], [ null, %bb.a ], [ %i.ag, %bb.y ], [ %i.ag, %bb.x ], [ %i.ag, %bb.w ], [ %i.ag, %bb.v ], [ %i.ag, %bb.u ], [ %i.ag, %bb.t ], [ %i.ag, %bb.s ], [ %i.ag, %bb.r ], [ %i.ag, %bb.q ], [ %i.ag, %bb.p ], [ %i.ag, %bb.o ], [ %i.ag, %bb.n ], [ %i.ag, %bb.m ], [ %i.ag, %bb.l ], [ %i.ag, %bb.k ], [ %i.ag, %bb.j ], [ %i.ag, %bb.i ], [ %i.ag, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ %i.ag, %bb.ab ], [ %i.ag, %bb.ac ], [ %i.ag, %bb.ad ], [ %i.ag, %bb.ae ], [ %i.ag, %bb.af ], [ %i.ag, %bb.ag ], [ %i.ag, %bb.ah ], [ %i.ag, %bb.ai ], [ %i.ag, %bb.al ], [ %i.ag, %bb.aa ], [ %i.ag, %.thread.loopexit.split.loop.exit ]
   %.061 = phi ptr [ %i.ai, %bb.ak ], [ null, %bb.a ], [ %i.ai, %bb.y ], [ %i.ai, %bb.x ], [ %i.ai, %bb.w ], [ %i.ai, %bb.v ], [ %i.ai, %bb.u ], [ %i.ai, %bb.t ], [ %i.ai, %bb.s ], [ %i.ai, %bb.r ], [ %i.ai, %bb.q ], [ %i.ai, %bb.p ], [ %i.ai, %bb.o ], [ %i.ai, %bb.n ], [ %i.ai, %bb.m ], [ %i.ai, %bb.l ], [ %i.ai, %bb.k ], [ %i.ai, %bb.j ], [ %i.ai, %bb.i ], [ null, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ %i.ai, %bb.ab ], [ %i.ai, %bb.ac ], [ %i.ai, %bb.ad ], [ %i.ai, %bb.ae ], [ %i.ai, %bb.af ], [ %i.ai, %bb.ag ], [ %i.ai, %bb.ah ], [ %i.ai, %bb.ai ], [ %i.ai, %bb.al ], [ %i.ai, %bb.aa ], [ %i.ai, %.thread.loopexit.split.loop.exit ]
   %.260 = phi ptr [ %i.cr, %bb.ak ], [ null, %bb.a ], [ null, %bb.y ], [ null, %bb.x ], [ null, %bb.w ], [ null, %bb.v ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ], [ null, %bb.r ], [ null, %bb.q ], [ null, %bb.p ], [ null, %bb.o ], [ null, %bb.n ], [ null, %bb.m ], [ null, %bb.l ], [ null, %bb.k ], [ null, %bb.j ], [ null, %bb.i ], [ null, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ %i.cr, %bb.ab ], [ %i.cr, %bb.ac ], [ %i.cr, %bb.ad ], [ %i.cr, %bb.ae ], [ %i.cr, %bb.af ], [ %i.cr, %bb.ag ], [ %i.cr, %bb.ah ], [ %i.cr, %bb.ai ], [ %i.cr, %bb.al ], [ %i.cr, %bb.aa ], [ %i.cr, %.thread.loopexit.split.loop.exit ]
-  %.2 = phi ptr [ %i.dt, %bb.ak ], [ null, %bb.a ], [ %i.ap, %bb.y ], [ %i.ap, %bb.x ], [ %i.ap, %bb.w ], [ %i.ap, %bb.v ], [ %i.ap, %bb.u ], [ %i.ap, %bb.t ], [ %i.ap, %bb.s ], [ %i.ap, %bb.r ], [ %i.ap, %bb.q ], [ %i.ap, %bb.p ], [ %i.ap, %bb.o ], [ %i.ap, %bb.n ], [ %i.ap, %bb.m ], [ %i.ap, %bb.l ], [ %i.ap, %bb.k ], [ null, %bb.j ], [ null, %bb.i ], [ null, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ %.057109, %bb.ad ], [ %.057109, %bb.ae ], [ %.057109, %bb.af ], [ %.057109, %bb.ag ], [ %.057109, %bb.ah ], [ %i.dt, %bb.ai ], [ %i.dt, %bb.al ], [ %.057109, %bb.aa ], [ %.057109, %bb.ac ], [ %i.dt, %.thread.loopexit.split.loop.exit ], [ %.057109, %bb.ab ]
+  %.2 = phi ptr [ %i.dt, %bb.ak ], [ null, %bb.a ], [ %i.ap, %bb.y ], [ %i.ap, %bb.x ], [ %i.ap, %bb.w ], [ %i.ap, %bb.v ], [ %i.ap, %bb.u ], [ %i.ap, %bb.t ], [ %i.ap, %bb.s ], [ %i.ap, %bb.r ], [ %i.ap, %bb.q ], [ %i.ap, %bb.p ], [ %i.ap, %bb.o ], [ %i.ap, %bb.n ], [ %i.ap, %bb.m ], [ %i.ap, %bb.l ], [ %i.ap, %bb.k ], [ null, %bb.j ], [ null, %bb.i ], [ null, %bb.h ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ %i.dt, %.thread.loopexit.split.loop.exit ], [ %.057109, %bb.ad ], [ %.057109, %bb.ae ], [ %.057109, %bb.af ], [ %.057109, %bb.ag ], [ %.057109, %bb.ah ], [ %i.dt, %bb.ai ], [ %i.dt, %bb.al ], [ %.057109, %bb.aa ], [ %.057109, %bb.ac ], [ %.057109, %bb.ab ]
   call void @EVP_PKEY_CTX_free(ptr noundef %i.k) #8
   call void @EVP_PKEY_CTX_free(ptr noundef %.065) #8
   call void @EVP_PKEY_CTX_free(ptr noundef %.064) #8

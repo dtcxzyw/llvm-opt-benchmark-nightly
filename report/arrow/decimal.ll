@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/decimal?download=true
 inline.NumInlined: 1554
 inline.NumDeleted: 561
-loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZN5arrow9Decimal6410FromStringEPKc:bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 1
@@ -205,13 +205,13 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not6.i, label %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i, label %.lr.ph34.split.us.i.i
 
 .lr.ph34.split.us.i.i:                            ; preds = %bb.n, %.critedge27.us.i.i
-  %.sroa.0.0.i = phi i64 [ %i.bk, %.critedge27.us.i.i ], [ 0, %bb.n ]
-  %.sroa.8.0.i = phi i64 [ %17, %.critedge27.us.i.i ], [ 0, %bb.n ]
+  %.sroa.0.0.i = phi i64 [ %16, %.critedge27.us.i.i ], [ 0, %bb.n ]
+  %.sroa.8.0.i = phi i64 [ %i.bk, %.critedge27.us.i.i ], [ 0, %bb.n ]
   %.032.us.i.i = phi i64 [ %i.bl, %.critedge27.us.i.i ], [ 0, %bb.n ] ; 3 uses
   %i.az = sub nuw i64 %i.ac, %.032.us.i.i
   %.sroa.speculated.us.i.i = call i64 @llvm.umin.i64(i64 %i.az, i64 18) ; 3 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr @_ZN5arrowL18kUInt64PowersOfTenE, i64 %.sroa.speculated.us.i.i
-  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !45, !noalias !259
+  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !45, !noalias !259 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26, !noalias !259
   store i64 0, ptr %i.b, align 8, !tbaa !45, !noalias !259
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.24.0.copyload.i, i64 %.032.us.i.i
@@ -231,17 +231,16 @@ bb.o:                                             ; preds = %.lr.ph34.split.us.i
 
 .critedge27.us.i.i:                               ; preds = %.critedge.us.i.i, %.lr.ph34.split.us.i.i
   %.promoted.us.i.i = load i64, ptr %i.b, align 8, !noalias !259
-  %i.bf = zext i64 %i.bb to i128                  ; 2 uses
-  %i.bg = zext i64 %.sroa.0.0.i to i128
+  %i.bf = zext i64 %i.bb to i128
+  %i.bg = zext i64 %.sroa.8.0.i to i128
   %i.bh = mul nuw i128 %i.bf, %i.bg
   %i.bi = zext i64 %.promoted.us.i.i to i128
   %i.bj = add nuw i128 %i.bh, %i.bi               ; 2 uses
   %i.bk = trunc i128 %i.bj to i64                 ; 2 uses
-  %13 = lshr i128 %i.bj, 64
-  %14 = zext i64 %.sroa.8.0.i to i128
-  %15 = mul nuw i128 %i.bf, %14
-  %16 = add nuw i128 %13, %15
-  %17 = trunc i128 %16 to i64                     ; 2 uses
+  %13 = mul i64 %i.bb, %.sroa.0.0.i
+  %14 = lshr i128 %i.bj, 64
+  %15 = trunc nuw i128 %14 to i64
+  %16 = add i64 %13, %15                          ; 2 uses
   %i.bl = add i64 %.sroa.speculated.us.i.i, %.032.us.i.i ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26, !noalias !259
   %i.bm = icmp ult i64 %i.bl, %i.ac
@@ -261,21 +260,21 @@ _ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.loope
 
 _ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i: ; preds = %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.loopexit.i, %bb.n
   %.sroa.01.0.copyload.i = phi i64 [ %i.ap, %bb.n ], [ %.sroa.01.0.copyload.pre.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.loopexit.i ] ; 3 uses
-  %.sroa.0.1.i = phi i64 [ 0, %bb.n ], [ %i.bk, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.loopexit.i ] ; 2 uses
-  %.sroa.8.1.i = phi i64 [ 0, %bb.n ], [ %17, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.loopexit.i ] ; 2 uses
+  %.sroa.0.1.i = phi i64 [ 0, %bb.n ], [ %16, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.loopexit.i ] ; 2 uses
+  %.sroa.8.1.i = phi i64 [ 0, %bb.n ], [ %i.bk, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.loopexit.i ] ; 2 uses
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %12, i64 24
   %.sroa.22.0.copyload.i = load ptr, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !47, !noalias !259
   %.not.i38.i = icmp eq i64 %.sroa.01.0.copyload.i, 0
   br i1 %.not.i38.i, label %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit50.i, label %.lr.ph34.split.us.i40.i
 
 .lr.ph34.split.us.i40.i:                          ; preds = %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i, %.critedge27.us.i45.i
-  %.sroa.0.2.i = phi i64 [ %i.bz, %.critedge27.us.i45.i ], [ %.sroa.0.1.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ]
-  %.sroa.8.2.i = phi i64 [ %22, %.critedge27.us.i45.i ], [ %.sroa.8.1.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ]
+  %.sroa.0.2.i = phi i64 [ %20, %.critedge27.us.i45.i ], [ %.sroa.0.1.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ]
+  %.sroa.8.2.i = phi i64 [ %i.bz, %.critedge27.us.i45.i ], [ %.sroa.8.1.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ]
   %.032.us.i41.i = phi i64 [ %i.ca, %.critedge27.us.i45.i ], [ 0, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ] ; 3 uses
   %i.bo = sub nuw i64 %.sroa.01.0.copyload.i, %.032.us.i41.i
   %.sroa.speculated.us.i42.i = call i64 @llvm.umin.i64(i64 %i.bo, i64 18) ; 3 uses
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr @_ZN5arrowL18kUInt64PowersOfTenE, i64 %.sroa.speculated.us.i42.i
-  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !45, !noalias !259
+  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !45, !noalias !259 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26, !noalias !259
   store i64 0, ptr %i.a, align 8, !tbaa !45, !noalias !259
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.22.0.copyload.i, i64 %.032.us.i41.i
@@ -295,17 +294,16 @@ bb.p:                                             ; preds = %.lr.ph34.split.us.i
 
 .critedge27.us.i45.i:                             ; preds = %.critedge.us.i44.i, %.lr.ph34.split.us.i40.i
   %.promoted.us.i46.i = load i64, ptr %i.a, align 8, !noalias !259
-  %i.bu = zext i64 %i.bq to i128                  ; 2 uses
-  %i.bv = zext i64 %.sroa.0.2.i to i128
+  %i.bu = zext i64 %i.bq to i128
+  %i.bv = zext i64 %.sroa.8.2.i to i128
   %i.bw = mul nuw i128 %i.bu, %i.bv
   %i.bx = zext i64 %.promoted.us.i46.i to i128
   %i.by = add nuw i128 %i.bw, %i.bx               ; 2 uses
   %i.bz = trunc i128 %i.by to i64                 ; 2 uses
+  %17 = mul i64 %i.bq, %.sroa.0.2.i
   %18 = lshr i128 %i.by, 64
-  %19 = zext i64 %.sroa.8.2.i to i128
-  %20 = mul nuw i128 %i.bu, %19
-  %21 = add nuw i128 %18, %20
-  %22 = trunc i128 %21 to i64                     ; 2 uses
+  %19 = trunc nuw i128 %18 to i64
+  %20 = add i64 %17, %19                          ; 2 uses
   %i.ca = add i64 %.sroa.speculated.us.i42.i, %.032.us.i41.i ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26, !noalias !259
   %i.cb = icmp ult i64 %i.ca, %.sroa.01.0.copyload.i
@@ -320,11 +318,11 @@ bb.p:                                             ; preds = %.lr.ph34.split.us.i
   br label %common.resume.i
 
 _ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit50.i: ; preds = %.critedge27.us.i45.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i
-  %.sroa.0.3.i = phi i64 [ %.sroa.0.1.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ], [ %i.bz, %.critedge27.us.i45.i ]
-  %.sroa.8.3.i = phi i64 [ %.sroa.8.1.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ], [ %22, %.critedge27.us.i45.i ]
-  store i64 %.sroa.0.3.i, ptr %3, align 8, !noalias !259
+  %.sroa.0.3.i = phi i64 [ %.sroa.0.1.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ], [ %20, %.critedge27.us.i45.i ]
+  %.sroa.8.3.i = phi i64 [ %.sroa.8.1.i, %_ZN5arrowL11ShiftAndAddESt17basic_string_viewIcSt11char_traitsIcEEPmm.exit.i ], [ %i.bz, %.critedge27.us.i45.i ]
+  store i64 %.sroa.8.3.i, ptr %3, align 8, !noalias !259
   %.sroa.43.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %.sroa.8.3.i, ptr %.sroa.43.0..sroa_idx.i, align 8, !noalias !259
+  store i64 %.sroa.0.3.i, ptr %.sroa.43.0..sroa_idx.i, align 8, !noalias !259
   %i.cd = getelementptr inbounds nuw i8, ptr %12, i64 36
   %i.ce = load i8, ptr %i.cd, align 4, !tbaa !53, !noalias !259
   %i.cf = icmp eq i8 %i.ce, 45
