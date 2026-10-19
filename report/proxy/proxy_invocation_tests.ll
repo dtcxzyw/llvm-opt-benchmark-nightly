@@ -204,31 +204,27 @@ bb.c:                                             ; preds = %_ZStlsISt11char_tra
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !156, !noalias !953 ; 3 uses
   %.not.i4.not.i.i = icmp eq ptr %i.q, null
-  br i1 %.not.i4.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i
+  br i1 %.not.i4.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i
 
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i: ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %4 = load ptr, ptr %3, align 8, !tbaa !157, !noalias !953 ; 2 uses
+_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i: ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = load ptr, ptr %i.r, align 8, !tbaa !157, !noalias !953 ; 2 uses
   %5 = icmp ugt ptr %i.q, %4
-  %.08.i9.i.i = select i1 %5, ptr %i.q, ptr %4    ; 2 uses
-  %.not.i.i = icmp eq ptr %.08.i9.i.i, null
-  br i1 %.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i
-
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %.08.i.i.i = select i1 %5, ptr %i.q, ptr %4
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !158, !noalias !953
-  %i.u = ptrtoint ptr %.08.i9.i.i to i64
+  %i.u = ptrtoint ptr %.08.i.i.i to i64
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = sub i64 %i.u, %i.v                       ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 88
   store i64 %i.w, ptr %i.x, align 8, !tbaa !32, !noalias !953
-  %i.y = load ptr, ptr %i.r, align 8, !tbaa !46, !noalias !953
+  %i.y = load ptr, ptr %3, align 8, !tbaa !46, !noalias !953
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i8 0, ptr %i.z, align 1, !tbaa !33, !noalias !953
   br label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i
 
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i, %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i, %bb.c
+_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i, %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   store ptr %i.ab, ptr %0, align 8, !tbaa !30, !alias.scope !953
@@ -384,31 +380,27 @@ bb.c:                                             ; preds = %_ZStlsISt11char_tra
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !156, !noalias !960 ; 3 uses
   %.not.i4.not.i.i = icmp eq ptr %i.q, null
-  br i1 %.not.i4.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i
+  br i1 %.not.i4.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i
 
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i: ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %4 = load ptr, ptr %3, align 8, !tbaa !157, !noalias !960 ; 2 uses
+_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i: ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = load ptr, ptr %i.r, align 8, !tbaa !157, !noalias !960 ; 2 uses
   %5 = icmp ugt ptr %i.q, %4
-  %.08.i9.i.i = select i1 %5, ptr %i.q, ptr %4    ; 2 uses
-  %.not.i.i = icmp eq ptr %.08.i9.i.i, null
-  br i1 %.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i
-
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %.08.i.i.i = select i1 %5, ptr %i.q, ptr %4
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !158, !noalias !960
-  %i.u = ptrtoint ptr %.08.i9.i.i to i64
+  %i.u = ptrtoint ptr %.08.i.i.i to i64
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = sub i64 %i.u, %i.v                       ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 88
   store i64 %i.w, ptr %i.x, align 8, !tbaa !32, !noalias !960
-  %i.y = load ptr, ptr %i.r, align 8, !tbaa !46, !noalias !960
+  %i.y = load ptr, ptr %3, align 8, !tbaa !46, !noalias !960
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i8 0, ptr %i.z, align 1, !tbaa !33, !noalias !960
   br label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i
 
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i, %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i, %bb.c
+_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i, %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   store ptr %i.ab, ptr %0, align 8, !tbaa !30, !alias.scope !960
@@ -545,31 +537,27 @@ bb.c:                                             ; preds = %_ZStlsISt11char_tra
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !156, !noalias !967 ; 3 uses
   %.not.i4.not.i.i = icmp eq ptr %i.q, null
-  br i1 %.not.i4.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i
+  br i1 %.not.i4.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i
 
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i: ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %4 = load ptr, ptr %3, align 8, !tbaa !157, !noalias !967 ; 2 uses
+_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i: ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = load ptr, ptr %i.r, align 8, !tbaa !157, !noalias !967 ; 2 uses
   %5 = icmp ugt ptr %i.q, %4
-  %.08.i9.i.i = select i1 %5, ptr %i.q, ptr %4    ; 2 uses
-  %.not.i.i = icmp eq ptr %.08.i9.i.i, null
-  br i1 %.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i
-
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %.08.i.i.i = select i1 %5, ptr %i.q, ptr %4
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !158, !noalias !967
-  %i.u = ptrtoint ptr %.08.i9.i.i to i64
+  %i.u = ptrtoint ptr %.08.i.i.i to i64
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = sub i64 %i.u, %i.v                       ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 88
   store i64 %i.w, ptr %i.x, align 8, !tbaa !32, !noalias !967
-  %i.y = load ptr, ptr %i.r, align 8, !tbaa !46, !noalias !967
+  %i.y = load ptr, ptr %3, align 8, !tbaa !46, !noalias !967
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i8 0, ptr %i.z, align 1, !tbaa !33, !noalias !967
   br label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i
 
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i, %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i, %bb.c
+_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i, %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   store ptr %i.ab, ptr %0, align 8, !tbaa !30, !alias.scope !967
@@ -706,31 +694,27 @@ bb.c:                                             ; preds = %_ZStlsISt11char_tra
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !156, !noalias !974 ; 3 uses
   %.not.i4.not.i.i = icmp eq ptr %i.q, null
-  br i1 %.not.i4.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i
+  br i1 %.not.i4.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i
 
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i: ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %4 = load ptr, ptr %3, align 8, !tbaa !157, !noalias !974 ; 2 uses
+_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i: ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = load ptr, ptr %i.r, align 8, !tbaa !157, !noalias !974 ; 2 uses
   %5 = icmp ugt ptr %i.q, %4
-  %.08.i9.i.i = select i1 %5, ptr %i.q, ptr %4    ; 2 uses
-  %.not.i.i = icmp eq ptr %.08.i9.i.i, null
-  br i1 %.not.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i, label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i
-
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %.08.i.i.i = select i1 %5, ptr %i.q, ptr %4
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !158, !noalias !974
-  %i.u = ptrtoint ptr %.08.i9.i.i to i64
+  %i.u = ptrtoint ptr %.08.i.i.i to i64
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = sub i64 %i.u, %i.v                       ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 88
   store i64 %i.w, ptr %i.x, align 8, !tbaa !32, !noalias !974
-  %i.y = load ptr, ptr %i.r, align 8, !tbaa !46, !noalias !974
+  %i.y = load ptr, ptr %3, align 8, !tbaa !46, !noalias !974
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i8 0, ptr %i.z, align 1, !tbaa !33, !noalias !974
   br label %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i
 
-_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i, %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.i.i, %bb.c
+_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit10.thread.i.i: ; preds = %_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE12_M_high_markEv.exit.i.i, %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   store ptr %i.ab, ptr %0, align 8, !tbaa !30, !alias.scope !974
