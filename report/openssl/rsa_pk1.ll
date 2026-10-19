@@ -205,10 +205,10 @@ iter.check:                                       ; preds = %._crit_edge
   %i.ch = sext i32 %5 to i64                      ; 2 uses
   %i.ci = xor i64 %i.cg, -1
   %i.cj = add nsw i64 %i.ci, %i.ch
-  %7 = call i64 @llvm.usub.sat.i64(i64 %i.cf, i64 1)
-  %umin = call i64 @llvm.umin.i64(i64 %i.cj, i64 %7) ; 3 uses
-  %i.ck = add nuw nsw i64 %umin, 1                ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %umin, 3
+  %7 = add nsw i64 %i.cf, -1
+  %umin = call i64 @llvm.umin.i64(i64 %i.cj, i64 %7)
+  %i.ck = add nsw i64 %umin, 1                    ; 7 uses
+  %min.iters.check = icmp ult i64 %i.ck, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -218,13 +218,13 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check126 = icmp samesign ult i64 %umin, 15
+  %min.iters.check126 = icmp ult i64 %i.ck, 16
   br i1 %min.iters.check126, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.cn = and i64 %i.ck, 12
-  %n.vec = and i64 %i.ck, 4294967280              ; 6 uses
-  %i.co = add nsw i64 %n.vec, %i.cg
+  %n.vec = and i64 %i.ck, -16                     ; 6 uses
+  %i.co = add i64 %n.vec, %i.cg
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %i.cc, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer
   %broadcast.splatinsert127 = insertelement <16 x i32> poison, i32 %i.ce, i64 0
@@ -260,8 +260,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec130 = and i64 %i.ck, 4294967292           ; 5 uses
-  %i.da = add nsw i64 %n.vec130, %i.cg
+  %n.vec130 = and i64 %i.ck, -4                   ; 5 uses
+  %i.da = add i64 %n.vec130, %i.cg
   %broadcast.splatinsert131 = insertelement <4 x i32> poison, i32 %i.cc, i64 0
   %broadcast.splat132 = shufflevector <4 x i32> %broadcast.splatinsert131, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert133 = insertelement <4 x i32> poison, i32 %i.ce, i64 0
@@ -662,9 +662,6 @@ declare void @EVP_MD_free(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #5

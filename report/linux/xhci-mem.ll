@@ -204,7 +204,7 @@ _kmalloc_array_node_noprof.exit:                  ; preds = %kmalloc_type.exit
   store i32 %2, ptr %i.q, align 8
   %i.r = getelementptr i8, ptr %i.p, i64 24       ; 2 uses
   store i32 %1, ptr %i.r, align 8
-  %i.s = zext i32 %2 to i64                       ; 2 uses
+  %i.s = zext i32 %2 to i64                       ; 3 uses
   %i.t = shl nuw nsw i64 %i.s, 3
   %.val101 = load i32, ptr %i.h, align 8
   %i.u = tail call noalias align 8 ptr @__kmalloc_node_noprof(i64 noundef %i.t, i32 noundef range(i32 256, 0) %i.g, i32 noundef %.val101) #23 ; 2 uses
@@ -396,12 +396,10 @@ bb.t:                                             ; preds = %trace_xhci_alloc_st
   br label %.lr.ph122.preheader
 
 .lr.ph122.preheader:                              ; preds = %xhci_ring_alloc.exit, %bb.t
-  %umax = tail call i32 @llvm.umax.i32(i32 %2, i32 2)
-  %wide.trip.count132 = zext i32 %umax to i64
   br label %.lr.ph122
 
 .lr.ph122:                                        ; preds = %.lr.ph122.preheader, %bb.v
-  %indvars.iv129 = phi i64 [ 1, %.lr.ph122.preheader ], [ %indvars.iv.next130, %bb.v ] ; 3 uses
+  %indvars.iv129 = phi i64 [ %indvars.iv.next130, %bb.v ], [ 1, %.lr.ph122.preheader ] ; 3 uses
   %i.cq = load ptr, ptr %i.p, align 8
   %i.cr = getelementptr [8 x i8], ptr %i.cq, i64 %indvars.iv129
   %i.cs = load ptr, ptr %i.cr, align 8            ; 2 uses
@@ -417,7 +415,7 @@ bb.u:                                             ; preds = %.lr.ph122
 
 bb.v:                                             ; preds = %.lr.ph122, %bb.u
   %indvars.iv.next130 = add nuw nsw i64 %indvars.iv129, 1 ; 2 uses
-  %exitcond133.not = icmp eq i64 %indvars.iv.next130, %wide.trip.count132
+  %exitcond133.not = icmp eq i64 %indvars.iv.next130, %i.s
   br i1 %exitcond133.not, label %._crit_edge, label %.lr.ph122, !llvm.loop !48
 
 ._crit_edge:                                      ; preds = %bb.v

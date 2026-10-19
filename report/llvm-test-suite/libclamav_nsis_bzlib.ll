@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 12
 inline.NumDeleted: 7
 loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 17
+loop-unroll.NumRuntimeUnrolled: 8
+loop-unroll.NumUnrolled: 18
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -184,8 +184,8 @@ bb.c:                                             ; preds = %bb.b
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 57820 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 64012 ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.d, i64 68 ; 3 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 3724 ; 41 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 7820 ; 9 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 3724 ; 45 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 7820 ; 11 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.d, i64 2124 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.d, i64 3452 ; 2 uses
   %.pre = load i32, ptr %i.g, align 8, !tbaa !19  ; 4 uses
@@ -588,9 +588,9 @@ vec.epilog.middle.block574:                       ; preds = %vec.epilog.vector.b
   br label %.loopexit1386.i
 
 bb.fy:                                            ; preds = %bb.fw
-  %i.bmw = lshr i32 %i.bii, 4
+  %i.bmw = lshr i32 %i.bii, 4                     ; 2 uses
   %i.bmx = and i32 %i.bii, 15                     ; 2 uses
-  %i.bmy = zext nneg i32 %i.bmw to i64            ; 2 uses
+  %i.bmy = zext nneg i32 %i.bmw to i64            ; 5 uses
   %i.bmz = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.bmy ; 3 uses
   %i.bna = load i32, ptr %i.bmz, align 4, !tbaa !7 ; 3 uses
   %i.bnb = add nsw i32 %i.bna, %i.bmx
@@ -598,7 +598,7 @@ bb.fy:                                            ; preds = %bb.fw
   %i.bnd = getelementptr inbounds i8, ptr %i.ai, i64 %i.bnc
   %i.bne = load i8, ptr %i.bnd, align 1, !tbaa !77 ; 3 uses
   %.not1639.i = icmp eq i32 %i.bmx, 0
-  br i1 %.not1639.i, label %.lr.ph1547.preheader.i.a, label %.lr.ph1542.preheader.i
+  br i1 %.not1639.i, label %.lr.ph1547.preheader.i, label %.lr.ph1542.preheader.i
 
 .lr.ph1542.preheader.i:                           ; preds = %bb.fy
   %i.bnf = sext i32 %i.bna to i64
@@ -618,21 +618,59 @@ bb.fy:                                            ; preds = %bb.fw
   %i.bnn = load i32, ptr %i.bmz, align 4, !tbaa !7 ; 2 uses
   %i.bno = sext i32 %i.bnn to i64
   %i.bnp = icmp sgt i64 %indvars.iv.next1736.i, %i.bno
-  br i1 %i.bnp, label %.lr.ph1542.i, label %.lr.ph1547.preheader.i.a, !llvm.loop !66
+  br i1 %i.bnp, label %.lr.ph1542.i, label %.lr.ph1547.preheader.i, !llvm.loop !66
 
-.lr.ph1547.preheader.i.a:                         ; preds = %.lr.ph1542.i, %bb.fy
+.lr.ph1547.preheader.i:                           ; preds = %.lr.ph1542.i, %bb.fy
   %.lcssa1451.i = phi i32 [ %i.bna, %bb.fy ], [ %i.bnn, %.lr.ph1542.i ]
-  %i.bnq = add nsw i32 %.lcssa1451.i, 1
-  store i32 %i.bnq, ptr %i.bmz, align 4, !tbaa !7
-  br label %.lr.ph1547.i
+  %1 = add nsw i32 %.lcssa1451.i, 1
+  store i32 %1, ptr %i.bmz, align 4, !tbaa !7
+  %xtraiter736 = and i64 %i.bmy, 1
+  %lcmp.mod737.not = icmp eq i64 %xtraiter736, 0
+  br i1 %lcmp.mod737.not, label %.lr.ph1547.i.prol.loopexit, label %.lr.ph1547.preheader.i.a
 
-.lr.ph1547.i:                                     ; preds = %.lr.ph1547.i, %.lr.ph1547.preheader.i.a
-  %indvars.iv1738.i = phi i64 [ %i.bmy, %.lr.ph1547.preheader.i.a ], [ %indvars.iv.next1739.i, %.lr.ph1547.i ] ; 3 uses
-  %i.bnr = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv1738.i ; 3 uses
-  %i.bns = load i32, ptr %i.bnr, align 4, !tbaa !7
+.lr.ph1547.preheader.i.a:                         ; preds = %.lr.ph1547.preheader.i
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.bmy ; 3 uses
+  %3 = load i32, ptr %2, align 4, !tbaa !7
+  %i.bnq = add nsw i32 %3, -1                     ; 2 uses
+  store i32 %i.bnq, ptr %2, align 4, !tbaa !7
+  %4 = getelementptr i8, ptr %2, i64 -4
+  %5 = load i32, ptr %4, align 4, !tbaa !7
+  %6 = sext i32 %5 to i64
+  %7 = getelementptr i8, ptr %i.ai, i64 %6
+  %8 = getelementptr i8, ptr %7, i64 15
+  %9 = load i8, ptr %8, align 1, !tbaa !77
+  %10 = sext i32 %i.bnq to i64
+  %11 = getelementptr inbounds i8, ptr %i.ai, i64 %10
+  store i8 %9, ptr %11, align 1, !tbaa !77
+  %indvars.iv.next1739.i.prol = add nsw i64 %i.bmy, -1
+  br label %.lr.ph1547.i.prol.loopexit
+
+.lr.ph1547.i.prol.loopexit:                       ; preds = %.lr.ph1547.preheader.i.a, %.lr.ph1547.preheader.i
+  %indvars.iv1738.i.unr = phi i64 [ %i.bmy, %.lr.ph1547.preheader.i ], [ %indvars.iv.next1739.i.prol, %.lr.ph1547.preheader.i.a ]
+  %12 = icmp eq i32 %i.bmw, 1
+  br i1 %12, label %._crit_edge1548.i, label %.lr.ph1547.i
+
+.lr.ph1547.i:                                     ; preds = %.lr.ph1547.i.prol.loopexit, %.lr.ph1547.i
+  %indvars.iv1738.i = phi i64 [ %indvars.iv.next1739.i, %.lr.ph1547.i ], [ %indvars.iv1738.i.unr, %.lr.ph1547.i.prol.loopexit ] ; 4 uses
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv1738.i ; 3 uses
+  %14 = load i32, ptr %13, align 4, !tbaa !7
+  %15 = add nsw i32 %14, -1                       ; 2 uses
+  store i32 %15, ptr %13, align 4, !tbaa !7
+  %16 = getelementptr i8, ptr %13, i64 -4
+  %17 = load i32, ptr %16, align 4, !tbaa !7
+  %18 = sext i32 %17 to i64
+  %19 = getelementptr i8, ptr %i.ai, i64 %18
+  %20 = getelementptr i8, ptr %19, i64 15
+  %21 = load i8, ptr %20, align 1, !tbaa !77
+  %22 = sext i32 %15 to i64
+  %23 = getelementptr inbounds i8, ptr %i.ai, i64 %22
+  store i8 %21, ptr %23, align 1, !tbaa !77
+  %i.bnr = getelementptr [4 x i8], ptr %i.aj, i64 %indvars.iv1738.i ; 2 uses
+  %24 = getelementptr i8, ptr %i.bnr, i64 -4      ; 2 uses
+  %i.bns = load i32, ptr %24, align 4, !tbaa !7
   %i.bnt = add nsw i32 %i.bns, -1                 ; 2 uses
-  store i32 %i.bnt, ptr %i.bnr, align 4, !tbaa !7
-  %i.bnu = getelementptr i8, ptr %i.bnr, i64 -4
+  store i32 %i.bnt, ptr %24, align 4, !tbaa !7
+  %i.bnu = getelementptr i8, ptr %i.bnr, i64 -8
   %i.bnv = load i32, ptr %i.bnu, align 4, !tbaa !7
   %i.bnw = sext i32 %i.bnv to i64
   %i.bnx = getelementptr i8, ptr %i.ai, i64 %i.bnw
@@ -641,11 +679,11 @@ bb.fy:                                            ; preds = %bb.fw
   %i.boa = sext i32 %i.bnt to i64
   %i.bob = getelementptr inbounds i8, ptr %i.ai, i64 %i.boa
   store i8 %i.bnz, ptr %i.bob, align 1, !tbaa !77
-  %indvars.iv.next1739.i = add nsw i64 %indvars.iv1738.i, -1
-  %1 = icmp samesign ugt i64 %indvars.iv1738.i, 1
-  br i1 %1, label %.lr.ph1547.i, label %._crit_edge1548.i, !llvm.loop !67
+  %indvars.iv.next1739.i = add nsw i64 %indvars.iv1738.i, -2
+  %25 = icmp sgt i64 %indvars.iv1738.i, 2
+  br i1 %25, label %.lr.ph1547.i, label %._crit_edge1548.i, !llvm.loop !67
 
-._crit_edge1548.i:                                ; preds = %.lr.ph1547.i
+._crit_edge1548.i:                                ; preds = %.lr.ph1547.i, %.lr.ph1547.i.prol.loopexit
   %i.boc = load i32, ptr %i.aj, align 4, !tbaa !7
   %i.bod = add nsw i32 %i.boc, -1                 ; 2 uses
   store i32 %i.bod, ptr %i.aj, align 4, !tbaa !7

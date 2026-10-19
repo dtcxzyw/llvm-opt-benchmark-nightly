@@ -205,7 +205,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs1Jc0oVeks7E_15datafusion_expr4e
 
 bb.u:                                             ; preds = %bb.bt, %.lr.ph.i.i.i.i.i.i.i.i.i
   %.val13.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.ca, %bb.bt ] ; 5 uses
-  %i.ca = add nuw i64 %.val13.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.ca = add nuw nsw i64 %.val13.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.cb = getelementptr inbounds nuw [24 x i8], ptr %i.av, i64 %.val13.i.i.i.i.i.i.i.i.i ; 2 uses
   %i.cc = add i64 %.val13.i.i.i.i.i.i.i.i.i, %.sroa.4.0.copyload.i.i ; 2 uses
   %i.cd = getelementptr inbounds nuw [56 x i8], ptr %.sroa.699.16.copyload.i, i64 %i.cc ; 18 uses
@@ -608,7 +608,7 @@ _RNvMs0_NtNtCs4ytUTZt2Gw9_11arrow_array7builder17primitive_builderINtB5_16Primit
 
 bb.l:                                             ; preds = %bb.bc, %.lr.ph.i
   %.sroa.068.0176.i = phi i64 [ 0, %.lr.ph.i ], [ %i.cc, %bb.bc ] ; 7 uses
-  %i.cc = add nuw i64 %.sroa.068.0176.i, 1        ; 4 uses
+  %i.cc = add nuw nsw i64 %.sroa.068.0176.i, 1    ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !89563)
   %i.cd = load ptr, ptr %i.br, align 8, !alias.scope !89564, !noalias !89550, !noundef !313
   %.not.i.i111.i = icmp eq ptr %i.cd, null
@@ -1011,7 +1011,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.cv, %.lr.ph.i
   %.sroa.068.0200.i = phi i64 [ 0, %.lr.ph.i ], [ %i.fp, %bb.cv ] ; 7 uses
-  %i.fp = add nuw i64 %.sroa.068.0200.i, 1        ; 4 uses
+  %i.fp = add nuw nsw i64 %.sroa.068.0200.i, 1    ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !89838)
   %i.fq = load ptr, ptr %i.ck, align 8, !alias.scope !89839, !noalias !89806, !noundef !313
   %.not.i.i118.i = icmp eq ptr %i.fq, null
@@ -1414,7 +1414,7 @@ _RNvMs0_NtNtCs4ytUTZt2Gw9_11arrow_array7builder17primitive_builderINtB5_16Primit
 
 bb.l:                                             ; preds = %bb.bn, %.lr.ph.i
   %.sroa.054.0191.i = phi i64 [ 0, %.lr.ph.i ], [ %i.cf, %bb.bn ] ; 7 uses
-  %i.cf = add nuw i64 %.sroa.054.0191.i, 1        ; 4 uses
+  %i.cf = add nuw nsw i64 %.sroa.054.0191.i, 1    ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !90071)
   %i.cg = load ptr, ptr %i.bs, align 8, !alias.scope !90072, !noalias !90068, !noundef !313
   %.not.i.i81.i = icmp eq ptr %i.cg, null
@@ -1817,7 +1817,7 @@ bb.q:                                             ; preds = %.loopexit250.i, %_R
 
 bb.r:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsc85D0lJ81Z_16lance_datafusion.exit171.i, %.lr.ph.i
   %.sroa.058.0318.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ek, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsc85D0lJ81Z_16lance_datafusion.exit171.i ] ; 7 uses
-  %i.ek = add nuw i64 %.sroa.058.0318.i, 1        ; 4 uses
+  %i.ek = add nuw nsw i64 %.sroa.058.0318.i, 1    ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !90472)
   %i.el = load ptr, ptr %i.da, align 8, !alias.scope !90473, !noalias !90466, !noundef !313
   %.not.i.i119.i = icmp eq ptr %i.el, null
@@ -2220,7 +2220,7 @@ bb.cy:                                            ; preds = %bb.cx
 bb.cz:                                            ; preds = %bb.cx
   call void @llvm.experimental.noalias.scope.decl(metadata !90526)
   %i.kp = load ptr, ptr %i.de, align 8, !alias.scope !90527, !noalias !90466, !noundef !313 ; 2 uses
-  %i.kq = icmp ult i64 %i.ek, %i.kj
+  %i.kq = icmp samesign ult i64 %i.ek, %i.kj
   call void @llvm.assume(i1 %i.kq)
   %i.kr = getelementptr inbounds nuw [8 x i8], ptr %i.kp, i64 %i.ek
   %i.ks = load i64, ptr %i.kr, align 8, !noalias !90528, !noundef !313
@@ -2623,7 +2623,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f
 
 bb.j:                                             ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i, %.lr.ph.i.i.i
   %i.ai = phi ptr [ %.sroa.10.0.i.i, %.lr.ph.i.i.i ], [ %i.ba, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ]
-  %i.aj = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 5 uses
+  %i.aj = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 4 uses
   %.lcssa26.i.i.i = phi ptr [ %.sroa.6.0, %.lr.ph.i.i.i ], [ %.lcssa25.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %i.ak = phi i16 [ %i.t, %.lr.ph.i.i.i ], [ %i.at, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %.val1722.i.i.i = phi i64 [ %i.w, %.lr.ph.i.i.i ], [ %i.aw, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
@@ -2665,8 +2665,6 @@ _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgcz
 bb.k:                                             ; preds = %.noexc6.i
   %.sroa.5.0.copyload.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !94065 ; 3 uses
   %.sroa.6.0.copyload.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !noalias !94065
-  %2 = icmp samesign ult i64 %i.aj, 384307168202282326
-  tail call void @llvm.assume(i1 %2)
   %i.ay = load i64, ptr %i.c, align 8, !range !320, !alias.scope !94067, !noalias !94058, !noundef !313
   %i.az = icmp eq i64 %i.aj, %i.ay
   br i1 %i.az, label %bb.n, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i
@@ -2859,7 +2857,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f
 
 bb.j:                                             ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i, %.lr.ph.i.i.i
   %i.ai = phi ptr [ %.sroa.10.0.i.i, %.lr.ph.i.i.i ], [ %i.ba, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ]
-  %i.aj = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 5 uses
+  %i.aj = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 4 uses
   %.lcssa26.i.i.i = phi ptr [ %.sroa.6.0, %.lr.ph.i.i.i ], [ %.lcssa25.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %i.ak = phi i16 [ %i.t, %.lr.ph.i.i.i ], [ %i.at, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %.val1722.i.i.i = phi i64 [ %i.w, %.lr.ph.i.i.i ], [ %i.aw, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
@@ -2901,8 +2899,6 @@ _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgcz
 bb.k:                                             ; preds = %.noexc6.i
   %.sroa.5.0.copyload.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !94119 ; 3 uses
   %.sroa.6.0.copyload.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !noalias !94119
-  %2 = icmp samesign ult i64 %i.aj, 384307168202282326
-  tail call void @llvm.assume(i1 %2)
   %i.ay = load i64, ptr %i.c, align 8, !range !320, !alias.scope !94121, !noalias !94112, !noundef !313
   %i.az = icmp eq i64 %i.aj, %i.ay
   br i1 %i.az, label %bb.n, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i
@@ -3305,7 +3301,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f
 
 bb.j:                                             ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i, %.lr.ph.i.i.i
   %i.ai = phi ptr [ %.sroa.10.0.i.i, %.lr.ph.i.i.i ], [ %i.ba, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ]
-  %i.aj = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 5 uses
+  %i.aj = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 4 uses
   %.lcssa26.i.i.i = phi ptr [ %.sroa.6.0, %.lr.ph.i.i.i ], [ %.lcssa25.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %i.ak = phi i16 [ %i.t, %.lr.ph.i.i.i ], [ %i.at, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %.val1722.i.i.i = phi i64 [ %i.w, %.lr.ph.i.i.i ], [ %i.aw, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
@@ -3347,8 +3343,6 @@ _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgcz
 bb.k:                                             ; preds = %.noexc6.i
   %.sroa.5.0.copyload.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !94303 ; 3 uses
   %.sroa.6.0.copyload.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !noalias !94303
-  %2 = icmp samesign ult i64 %i.aj, 384307168202282326
-  tail call void @llvm.assume(i1 %2)
   %i.ay = load i64, ptr %i.c, align 8, !range !320, !alias.scope !94305, !noalias !94296, !noundef !313
   %i.az = icmp eq i64 %i.aj, %i.ay
   br i1 %i.az, label %bb.n, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i
@@ -3547,7 +3541,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f
 
 bb.j:                                             ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i, %.lr.ph.i.i.i
   %i.ai = phi ptr [ %.sroa.10.0.i.i, %.lr.ph.i.i.i ], [ %i.ba, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ]
-  %i.aj = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 5 uses
+  %i.aj = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 4 uses
   %.lcssa26.i.i.i = phi ptr [ %.sroa.6.0, %.lr.ph.i.i.i ], [ %.lcssa25.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %i.ak = phi i16 [ %i.t, %.lr.ph.i.i.i ], [ %i.at, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
   %.val1722.i.i.i = phi i64 [ %i.w, %.lr.ph.i.i.i ], [ %i.aw, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i ] ; 2 uses
@@ -3589,8 +3583,6 @@ _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsgcz
 bb.k:                                             ; preds = %.noexc6.i
   %.sroa.5.0.copyload.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !94357 ; 3 uses
   %.sroa.6.0.copyload.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !noalias !94357
-  %2 = icmp samesign ult i64 %i.aj, 384307168202282326
-  tail call void @llvm.assume(i1 %2)
   %i.ay = load i64, ptr %i.c, align 8, !range !320, !alias.scope !94359, !noalias !94350, !noundef !313
   %i.az = icmp eq i64 %i.aj, %i.ay
   br i1 %i.az, label %bb.n, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i

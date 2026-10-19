@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 841
 inline.NumDeleted: 371
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZN4bssl18ssl_process_ticketEPNS_13SSL_HANDSHAKEEPSt10unique_ptrI14ssl_session_stNS_8internal7DeleterEEPbNS_4SpanIKhEESB_:bb.a
   %i.cg = call fastcc noundef i32 @_ZN4bsslL35ssl_decrypt_ticket_with_ticket_keysEPNS_13SSL_HANDSHAKEEPNS_5ArrayIhEENS_4SpanIKhEE(ptr %.val.val, ptr noundef %8, ptr %3, i64 %4)
   br label %_ZN4bssl5ArrayIhE8CopyFromENS_4SpanIKhEE.exit
@@ -204,17 +204,41 @@ bb.d:                                             ; preds = %.lr.ph.i.3
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.sroa.speculated.i
   br label %.lr.ph.i33
 
-.lr.ph.i33:                                       ; preds = %.preheader.i32, %bb.e
-  %.0723.i34 = phi ptr [ %i.ah, %bb.e ], [ %i.ab, %.preheader.i32 ] ; 2 uses
-  %.0822.i35 = phi ptr [ %i.ag, %bb.e ], [ %1, %.preheader.i32 ] ; 2 uses
+.lr.ph.i33:                                       ; preds = %bb.e, %.preheader.i32
+  %.0723.i34 = phi ptr [ %i.ab, %.preheader.i32 ], [ %i.ah, %bb.e ] ; 5 uses
+  %.0822.i35 = phi ptr [ %1, %.preheader.i32 ], [ %i.ag, %bb.e ] ; 5 uses
   %i.ae = load i8, ptr %.0822.i35, align 1, !tbaa !151
   %i.af = load i8, ptr %.0723.i34, align 1, !tbaa !151
   %.not12.i36 = icmp eq i8 %i.ae, %i.af
-  br i1 %.not12.i36, label %bb.e, label %.critedge2.thread
+  br i1 %.not12.i36, label %.lr.ph.i33.1, label %.critedge2.thread
 
-bb.e:                                             ; preds = %.lr.ph.i33
-  %i.ag = getelementptr inbounds nuw i8, ptr %.0822.i35, i64 1 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %.0723.i34, i64 1 ; 2 uses
+.lr.ph.i33.1:                                     ; preds = %.lr.ph.i33
+  %5 = getelementptr inbounds nuw i8, ptr %.0822.i35, i64 1
+  %6 = getelementptr inbounds nuw i8, ptr %.0723.i34, i64 1
+  %7 = load i8, ptr %5, align 1, !tbaa !151
+  %8 = load i8, ptr %6, align 1, !tbaa !151
+  %.not12.i36.1 = icmp eq i8 %7, %8
+  br i1 %.not12.i36.1, label %.lr.ph.i33.2, label %.critedge2.thread
+
+.lr.ph.i33.2:                                     ; preds = %.lr.ph.i33.1
+  %9 = getelementptr inbounds nuw i8, ptr %.0822.i35, i64 2
+  %10 = getelementptr inbounds nuw i8, ptr %.0723.i34, i64 2
+  %11 = load i8, ptr %9, align 1, !tbaa !151
+  %12 = load i8, ptr %10, align 1, !tbaa !151
+  %.not12.i36.2 = icmp eq i8 %11, %12
+  br i1 %.not12.i36.2, label %.lr.ph.i33.3, label %.critedge2.thread
+
+.lr.ph.i33.3:                                     ; preds = %.lr.ph.i33.2
+  %13 = getelementptr inbounds nuw i8, ptr %.0822.i35, i64 3
+  %14 = getelementptr inbounds nuw i8, ptr %.0723.i34, i64 3
+  %15 = load i8, ptr %13, align 1, !tbaa !151
+  %16 = load i8, ptr %14, align 1, !tbaa !151
+  %.not12.i36.3 = icmp eq i8 %15, %16
+  br i1 %.not12.i36.3, label %bb.e, label %.critedge2.thread
+
+bb.e:                                             ; preds = %.lr.ph.i33.3
+  %i.ag = getelementptr inbounds nuw i8, ptr %.0822.i35, i64 4 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %.0723.i34, i64 4 ; 2 uses
   %.not10.i37 = icmp eq ptr %i.ag, %i.ac
   %.not11.i38 = icmp eq ptr %i.ah, %i.ad
   %or.cond.i39 = select i1 %.not10.i37, i1 true, i1 %.not11.i38
@@ -228,8 +252,8 @@ _ZN4bssl8internaleqENS_4SpanIKhEES3_.exit:        ; preds = %bb.d, %bb.e
   %.not = icmp eq i32 %i.ak, 0
   br i1 %.not, label %.critedge2.thread, label %.critedge2
 
-.critedge2.thread:                                ; preds = %.lr.ph.i33, %_ZN4bssl8internaleqENS_4SpanIKhEES3_.exit, %.critedge
-  %.0.ph = phi i32 [ 2, %.critedge ], [ 3, %_ZN4bssl8internaleqENS_4SpanIKhEES3_.exit ], [ 2, %.lr.ph.i33 ]
+.critedge2.thread:                                ; preds = %.lr.ph.i33, %.lr.ph.i33.1, %.lr.ph.i33.2, %.lr.ph.i33.3, %_ZN4bssl8internaleqENS_4SpanIKhEES3_.exit, %.critedge
+  %.0.ph = phi i32 [ 2, %.critedge ], [ 3, %_ZN4bssl8internaleqENS_4SpanIKhEES3_.exit ], [ 2, %.lr.ph.i33.3 ], [ 2, %.lr.ph.i33.2 ], [ 2, %.lr.ph.i33.1 ], [ 2, %.lr.ph.i33 ]
   call void @CRYPTO_MUTEX_unlock_read(ptr noundef nonnull %i.f) #13
   br label %bb.g
 

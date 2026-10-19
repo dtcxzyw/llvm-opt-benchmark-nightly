@@ -206,9 +206,13 @@ shell_check_oom.exit:                             ; preds = %bb.z
   %i.bf = load ptr, ptr %i.a, align 8, !tbaa !109
   %i.bg = call i32 @sqlite3_step(ptr noundef %i.bf) #45
   %i.bh = icmp eq i32 %i.bg, 100
-  br i1 %i.bh, label %.lr.ph.us, label %._crit_edge
+  br i1 %i.bh, label %.lr.ph.us.preheader, label %._crit_edge
 
-.lr.ph.us:                                        ; preds = %.preheader, %..loopexit_crit_edge.us
+.lr.ph.us.preheader:                              ; preds = %.preheader
+  %1 = zext nneg i32 %.fr11 to i64
+  br label %.lr.ph.us
+
+.lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %..loopexit_crit_edge.us
   %i.bi = load ptr, ptr %i.a, align 8, !tbaa !109
   %i.bj = call i64 @sqlite3_column_int64(ptr noundef %i.bi, i32 noundef 0) #45 ; 2 uses
   %i.bk = load ptr, ptr %i.a, align 8, !tbaa !109
@@ -524,8 +528,7 @@ bb.as:                                            ; preds = %.critedge.thread.lo
 .critedge.us:                                     ; preds = %bb.aq, %bb.as
   %.2.us = phi i32 [ 1, %bb.as ], [ %.0789.us, %bb.aq ]
   %indvars.iv.next27 = add nuw nsw i64 %indvars.iv26, 16 ; 2 uses
-  %1 = trunc nuw i64 %indvars.iv.next27 to i32
-  %2 = icmp sgt i32 %.fr11, %1
+  %2 = icmp samesign ult i64 %indvars.iv.next27, %1
   br i1 %2, label %bb.ab, label %..loopexit_crit_edge.us, !llvm.loop !1223
 
 .critedge.thread.loopexit.us:                     ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab

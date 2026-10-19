@@ -204,7 +204,7 @@ get_ofdm_rate.exit.i:                             ; preds = %bb.h, %switch.looku
 bb.o:                                             ; preds = %get_ofdm_rate.exit.i
   %i.cr = sub nuw i16 %i.v, %i.cl                 ; 4 uses
   %i.cs = zext nneg i16 %i.cl to i64
-  %i.ct = getelementptr i8, ptr %i.c, i64 %i.cs   ; 9 uses
+  %i.ct = getelementptr i8, ptr %i.c, i64 %i.cs   ; 7 uses
   %i.cu = zext nneg i16 %i.cr to i32
   %i.cv = icmp ult i16 %i.cr, 4
   br i1 %i.cv, label %bb.q, label %bb.s
@@ -326,8 +326,8 @@ bb.t:                                             ; preds = %bb.s, %bb.q
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.ab, %.lr.ph.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ 42, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.ab ] ; 5 uses
-  %i.gi = getelementptr i8, ptr %i.ct, i64 %indvars.iv.i.i ; 3 uses
+  %indvars.iv.i.i = phi i64 [ 42, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.ab ] ; 3 uses
+  %i.gi = getelementptr i8, ptr %i.ct, i64 %indvars.iv.i.i ; 6 uses
   %i.gj = load i8, ptr %i.gi, align 1
   %i.gk = icmp eq i8 %i.gj, -35
   br i1 %i.gk, label %bb.u, label %bb.ab
@@ -346,10 +346,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.gr, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %bb.v
-  %8 = shl i64 %indvars.iv.i.i, 32
-  %sext54.i.i = add i64 %8, 17179869184
-  %9 = ashr exact i64 %sext54.i.i, 32
-  %i.gs = getelementptr i8, ptr %i.ct, i64 %9
+  %i.gs = getelementptr i8, ptr %i.gi, i64 4
   %i.gt = load i8, ptr %i.gs, align 1
   %.not43.i.i = icmp eq i8 %i.gt, %i.ad
   br i1 %.not43.i.i, label %bb.x, label %bb.ab
@@ -379,11 +376,8 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not41.i.i, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %10 = shl i64 %indvars.iv.i.i, 32
-  %sext.i.i = add i64 %10, 17179869184
-  %11 = ashr exact i64 %sext.i.i, 32
-  %i.hh = getelementptr i8, ptr %i.ct, i64 %11    ; 2 uses
-  %i.hi = getelementptr i8, ptr %i.hh, i64 1
+  %i.hh = getelementptr i8, ptr %i.gi, i64 4
+  %i.hi = getelementptr i8, ptr %i.gi, i64 5
   %i.hj = load i16, ptr %i.hi, align 1
   %i.hk = zext i16 %i.hj to i32
   %i.hl = shl nuw nsw i32 %i.hk, 8

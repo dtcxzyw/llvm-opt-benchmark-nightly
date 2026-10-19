@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/wlcWin?download=true
 inline.NumInlined: 53
 inline.NumDeleted: 17
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -179,7 +179,7 @@ bb.a:
   %i.c = icmp samesign ugt i32 %.val9, 2
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.e = getelementptr i8, ptr %0, i64 640
-  %.val = load ptr, ptr %i.e, align 8, !tbaa !22  ; 4 uses
+  %.val = load ptr, ptr %i.e, align 8, !tbaa !22  ; 5 uses
   br i1 %i.c, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
@@ -241,23 +241,17 @@ Wlc_ObjHasArithm_rec.exit.thread.us:              ; preds = %tailrecurse.i.us
   ]
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %.lr.ph.split
-  %i.q = load ptr, ptr %i.d, align 8, !tbaa !27
-  %wide.trip.count = zext nneg i32 %.val9 to i64
-  br label %Wlc_ObjHasArray.exit.thread.i.i.us18
-
-Wlc_ObjHasArray.exit.thread.i.i.us18:             ; preds = %Wlc_ObjHasArithm_rec.exit.thread.us29.a, %.lr.ph.split.split.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %Wlc_ObjHasArithm_rec.exit.thread.us29.a ], [ 0, %.lr.ph.split.split.us ] ; 2 uses
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv
+  %i.q = load ptr, ptr %i.d, align 8, !tbaa !27   ; 2 uses
   br label %tailrecurse.i.us20
 
-tailrecurse.i.us20:                               ; preds = %tailrecurse.i.us20.backedge, %Wlc_ObjHasArray.exit.thread.i.i.us18
-  %.pn.in.in.us21 = phi ptr [ %2, %Wlc_ObjHasArray.exit.thread.i.i.us18 ], [ %.pn.in.in.us21.be, %tailrecurse.i.us20.backedge ]
+tailrecurse.i.us20:                               ; preds = %tailrecurse.i.us20.backedge, %.lr.ph.split.split.us
+  %.pn.in.in.us21 = phi ptr [ %i.q, %.lr.ph.split.split.us ], [ %.pn.in.in.us21.be, %tailrecurse.i.us20.backedge ]
   %.pn.in.us22 = load i32, ptr %.pn.in.in.us21, align 4, !tbaa !23
   %.pn.us23 = sext i32 %.pn.in.us22 to i64
   %.tr13.i.us24 = getelementptr inbounds [24 x i8], ptr %.val, i64 %.pn.us23 ; 3 uses
   %i.r = load i16, ptr %.tr13.i.us24, align 8
   %i.s = and i16 %i.r, 63                         ; 2 uses
-  switch i16 %i.s, label %Wlc_ObjHasArithm_rec.exit.thread.us29.a [
+  switch i16 %i.s, label %Wlc_ObjHasArithm_rec.exit.thread.us29 [
     i16 50, label %.critedge
     i16 7, label %bb.c
     i16 15, label %bb.c
@@ -285,10 +279,48 @@ tailrecurse.i.us20.backedge:                      ; preds = %Wlc_ObjHasArray.exi
   %.pn.in.in.us21.be = phi ptr [ %i.x, %Wlc_ObjHasArray.exit.thread.i.i.i.i.us27 ], [ %i.w, %bb.c ]
   br label %tailrecurse.i.us20
 
-Wlc_ObjHasArithm_rec.exit.thread.us29.a:          ; preds = %tailrecurse.i.us20
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not.a, label %.critedge, label %Wlc_ObjHasArray.exit.thread.i.i.us18, !llvm.loop !29
+Wlc_ObjHasArithm_rec.exit.thread.us29:            ; preds = %tailrecurse.i.us20
+  %exitcond.not = icmp eq i32 %.val9, 1
+  br i1 %exitcond.not, label %.critedge.loopexit58.a, label %Wlc_ObjHasArray.exit.thread.i.i.us18.1
+
+Wlc_ObjHasArray.exit.thread.i.i.us18.1:           ; preds = %Wlc_ObjHasArithm_rec.exit.thread.us29
+  %2 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
+  br label %tailrecurse.i.us20.1
+
+tailrecurse.i.us20.1:                             ; preds = %tailrecurse.i.us20.backedge.1, %Wlc_ObjHasArray.exit.thread.i.i.us18.1
+  %.pn.in.in.us21.1 = phi ptr [ %2, %Wlc_ObjHasArray.exit.thread.i.i.us18.1 ], [ %.pn.in.in.us21.be.1, %tailrecurse.i.us20.backedge.1 ]
+  %.pn.in.us22.1 = load i32, ptr %.pn.in.in.us21.1, align 4, !tbaa !23
+  %.pn.us23.1 = sext i32 %.pn.in.us22.1 to i64
+  %.tr13.i.us24.1 = getelementptr inbounds [24 x i8], ptr %.val, i64 %.pn.us23.1 ; 3 uses
+  %3 = load i16, ptr %.tr13.i.us24.1, align 8
+  %4 = and i16 %3, 63                             ; 2 uses
+  switch i16 %4, label %.critedge.loopexit58.a [
+    i16 50, label %.critedge
+    i16 7, label %Wlc_ObjHasArithm_rec.exit.thread.us29.a
+    i16 15, label %Wlc_ObjHasArithm_rec.exit.thread.us29.a
+    i16 24, label %Wlc_ObjHasArithm_rec.exit.thread.us29.a
+    i16 25, label %Wlc_ObjHasArithm_rec.exit.thread.us29.a
+    i16 43, label %.critedge
+    i16 44, label %.critedge
+    i16 45, label %.critedge
+  ]
+
+Wlc_ObjHasArithm_rec.exit.thread.us29.a:          ; preds = %tailrecurse.i.us20.1, %tailrecurse.i.us20.1, %tailrecurse.i.us20.1, %tailrecurse.i.us20.1
+  %5 = getelementptr inbounds nuw i8, ptr %.tr13.i.us24.1, i64 4
+  %6 = load i32, ptr %5, align 4, !tbaa !26
+  %7 = icmp ugt i32 %6, 2
+  %exitcond.not.a = icmp eq i16 %4, 22
+  %or.cond.i.us26.1 = or i1 %exitcond.not.a, %7
+  %8 = getelementptr inbounds nuw i8, ptr %.tr13.i.us24.1, i64 16 ; 2 uses
+  br i1 %or.cond.i.us26.1, label %Wlc_ObjHasArray.exit.thread.i.i.i.i.us27.1, label %tailrecurse.i.us20.backedge.1
+
+Wlc_ObjHasArray.exit.thread.i.i.i.i.us27.1:       ; preds = %Wlc_ObjHasArithm_rec.exit.thread.us29.a
+  %9 = load ptr, ptr %8, align 8, !tbaa !27
+  br label %tailrecurse.i.us20.backedge.1
+
+tailrecurse.i.us20.backedge.1:                    ; preds = %Wlc_ObjHasArray.exit.thread.i.i.i.i.us27.1, %Wlc_ObjHasArithm_rec.exit.thread.us29.a
+  %.pn.in.in.us21.be.1 = phi ptr [ %9, %Wlc_ObjHasArray.exit.thread.i.i.i.i.us27.1 ], [ %8, %Wlc_ObjHasArithm_rec.exit.thread.us29.a ]
+  br label %tailrecurse.i.us20.1
 
 tailrecurse.i:                                    ; preds = %.lr.ph.split, %tailrecurse.i.backedge
   %.pn.in.in = phi ptr [ %.pn.in.in.be, %tailrecurse.i.backedge ], [ %i.d, %.lr.ph.split ]
@@ -327,7 +359,7 @@ tailrecurse.i.backedge:                           ; preds = %Wlc_ObjHasArray.exi
 
 Wlc_ObjHasArithm_rec.exit.thread:                 ; preds = %tailrecurse.i
   %exitcond40.not = icmp eq i32 %.val9, 1
-  br i1 %exitcond40.not, label %.critedge.loopexit58.a, label %Wlc_ObjFaninId.exit.1
+  br i1 %exitcond40.not, label %.critedge.loopexit58, label %Wlc_ObjFaninId.exit.1
 
 Wlc_ObjFaninId.exit.1:                            ; preds = %Wlc_ObjHasArithm_rec.exit.thread
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 20
@@ -340,7 +372,7 @@ tailrecurse.i.1:                                  ; preds = %tailrecurse.i.backe
   %.tr13.i.1 = getelementptr inbounds [24 x i8], ptr %.val, i64 %.pn.1 ; 3 uses
   %i.ag = load i16, ptr %.tr13.i.1, align 8
   %i.ah = and i16 %i.ag, 63                       ; 2 uses
-  switch i16 %i.ah, label %.critedge.loopexit58.a [
+  switch i16 %i.ah, label %.critedge.loopexit58 [
     i16 50, label %.critedge
     i16 7, label %bb.e
     i16 15, label %bb.e
@@ -368,11 +400,14 @@ tailrecurse.i.backedge.1:                         ; preds = %Wlc_ObjHasArray.exi
   %.pn.in.in.be.1 = phi ptr [ %i.am, %Wlc_ObjHasArray.exit.thread.i.i.i.i.1 ], [ %i.al, %bb.e ]
   br label %tailrecurse.i.1
 
-.critedge.loopexit58.a:                           ; preds = %tailrecurse.i.1, %Wlc_ObjHasArithm_rec.exit.thread
+.critedge.loopexit58:                             ; preds = %tailrecurse.i.1, %Wlc_ObjHasArithm_rec.exit.thread
   br label %.critedge
 
-.critedge:                                        ; preds = %Wlc_ObjHasArithm_rec.exit.thread.us29.a, %tailrecurse.i.us20, %tailrecurse.i.us20, %tailrecurse.i.us20, %tailrecurse.i.us20, %tailrecurse.i, %tailrecurse.i, %tailrecurse.i, %tailrecurse.i, %tailrecurse.i.1, %tailrecurse.i.1, %tailrecurse.i.1, %tailrecurse.i.1, %Wlc_ObjHasArithm_rec.exit.thread.us, %tailrecurse.i.us, %tailrecurse.i.us, %tailrecurse.i.us, %tailrecurse.i.us, %.critedge.loopexit58.a, %bb.a
-  %.08 = phi i32 [ 1, %tailrecurse.i.us20 ], [ 1, %tailrecurse.i ], [ 0, %bb.a ], [ 0, %.critedge.loopexit58.a ], [ 0, %Wlc_ObjHasArithm_rec.exit.thread.us ], [ 1, %tailrecurse.i.us ], [ 1, %tailrecurse.i.us ], [ 1, %tailrecurse.i.us ], [ 1, %tailrecurse.i.us ], [ 1, %tailrecurse.i.1 ], [ 1, %tailrecurse.i.1 ], [ 1, %tailrecurse.i.1 ], [ 1, %tailrecurse.i.1 ], [ 1, %tailrecurse.i ], [ 1, %tailrecurse.i ], [ 1, %tailrecurse.i ], [ 1, %tailrecurse.i.us20 ], [ 1, %tailrecurse.i.us20 ], [ 1, %tailrecurse.i.us20 ], [ 0, %Wlc_ObjHasArithm_rec.exit.thread.us29.a ]
+.critedge.loopexit58.a:                           ; preds = %tailrecurse.i.us20.1, %Wlc_ObjHasArithm_rec.exit.thread.us29
+  br label %.critedge
+
+.critedge:                                        ; preds = %tailrecurse.i.us20, %tailrecurse.i.us20, %tailrecurse.i.us20, %tailrecurse.i.us20, %tailrecurse.i.us20.1, %tailrecurse.i.us20.1, %tailrecurse.i.us20.1, %tailrecurse.i.us20.1, %tailrecurse.i, %tailrecurse.i, %tailrecurse.i, %tailrecurse.i, %tailrecurse.i.1, %tailrecurse.i.1, %tailrecurse.i.1, %tailrecurse.i.1, %Wlc_ObjHasArithm_rec.exit.thread.us, %tailrecurse.i.us, %tailrecurse.i.us, %tailrecurse.i.us, %tailrecurse.i.us, %.critedge.loopexit58.a, %.critedge.loopexit58, %bb.a
+  %.08 = phi i32 [ 0, %.critedge.loopexit58.a ], [ 1, %tailrecurse.i ], [ 0, %bb.a ], [ 0, %.critedge.loopexit58 ], [ 0, %Wlc_ObjHasArithm_rec.exit.thread.us ], [ 1, %tailrecurse.i.us ], [ 1, %tailrecurse.i.us ], [ 1, %tailrecurse.i.us ], [ 1, %tailrecurse.i.us ], [ 1, %tailrecurse.i.1 ], [ 1, %tailrecurse.i.1 ], [ 1, %tailrecurse.i.1 ], [ 1, %tailrecurse.i.1 ], [ 1, %tailrecurse.i ], [ 1, %tailrecurse.i ], [ 1, %tailrecurse.i ], [ 1, %tailrecurse.i.us20.1 ], [ 1, %tailrecurse.i.us20.1 ], [ 1, %tailrecurse.i.us20.1 ], [ 1, %tailrecurse.i.us20.1 ], [ 1, %tailrecurse.i.us20 ], [ 1, %tailrecurse.i.us20 ], [ 1, %tailrecurse.i.us20 ], [ 1, %tailrecurse.i.us20 ]
   ret i32 %.08
 }
 

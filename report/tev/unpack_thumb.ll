@@ -204,9 +204,9 @@ bb.dc:                                            ; preds = %bb.db
   %i.ps = mul i32 %i.pr, %i.pq                    ; 4 uses
   %i.pt = lshr i32 %i.pk, 5
   %.lobit = and i32 %i.pt, 1
-  %i.pu = shl nuw i32 %i.ps, %.lobit              ; 5 uses
+  %i.pu = shl nuw i32 %i.ps, %.lobit              ; 4 uses
   %i.pv = shl nuw nsw i32 %i.ps, 1                ; 3 uses
-  %i.pw = zext nneg i32 %i.pu to i64
+  %i.pw = zext i32 %i.pu to i64                   ; 3 uses
   %i.px = icmp ugt i32 %i.pu, 536870912
   br i1 %i.px, label %bb.ea, label %bb.dd
 
@@ -270,9 +270,8 @@ bb.do:                                            ; preds = %bb.dm
 
 .lr.ph.preheader:                                 ; preds = %bb.do
   store ptr %i.qn, ptr %i.qj, align 8, !tbaa !99
-  %wide.trip.count = zext nneg i32 %i.pu to i64   ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %unroll_iter = and i64 %wide.trip.count, 1073741820
+  %xtraiter = and i64 %i.pw, 3                    ; 3 uses
+  %unroll_iter = and i64 %i.pw, 1073741820
   br label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
@@ -338,7 +337,7 @@ bb.do:                                            ; preds = %bb.dm
   %i.rr = getelementptr inbounds nuw i8, ptr %i.rq, i64 %indvars.iv.next.2
   store i8 %i.rp, ptr %i.rr, align 1, !tbaa !100
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !92
 

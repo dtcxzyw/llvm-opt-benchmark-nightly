@@ -205,10 +205,12 @@ bb.v:                                             ; preds = %.lr.ph, %bb.v
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !128
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 1528
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !129
-  %i.bd = zext nneg i32 %1 to i64
-  %i.be = shl nuw nsw i64 %i.bd, 3                ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ba, i8 0, i64 %i.be, i1 false), !tbaa !59
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.bc, i8 0, i64 %i.be, i1 false), !tbaa !59
+  %5 = add nsw i32 %1, -1
+  %i.bd = zext nneg i32 %5 to i64
+  %i.be = shl nuw nsw i64 %i.bd, 3
+  %6 = add nuw nsw i64 %i.be, 8                   ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ba, i8 0, i64 %6, i1 false), !tbaa !59
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bc, i8 0, i64 %6, i1 false), !tbaa !59
   br label %.lr.ph102
 
 .lr.ph102:                                        ; preds = %._crit_edge, %.lr.ph99

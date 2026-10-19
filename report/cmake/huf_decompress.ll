@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 435
 inline.NumDeleted: 38
 loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumRuntimeUnrolled: 30
-loop-unroll.NumUnrolled: 34
+loop-unroll.NumRuntimeUnrolled: 31
+loop-unroll.NumUnrolled: 35
 begin_hunk_0_@HUF_decompress4X1_usingDTable_internal:bb.a
   %i.ji = lshr i32 %.sroa.12.144.i, 3             ; 2 uses
   %i.jj = zext nneg i32 %i.ji to i64
@@ -205,7 +205,7 @@ HUF_decompress4X1_usingDTable_internal_fast.exit: ; preds = %bb.e, %bb.b
   br i1 %.not17, label %bb.r, label %HUF_decompress4X1_usingDTable_internal_default.exit
 
 bb.r:                                             ; preds = %HUF_decompress4X1_usingDTable_internal_fast.exit, %bb.a
-  %i.nt = ptrtoaddr ptr %0 to i64                 ; 5 uses
+  %i.nt = ptrtoaddr ptr %0 to i64                 ; 7 uses
   %i.nu = icmp ult i64 %3, 10
   %i.nv = icmp ult i64 %1, 6
   %or.cond.i.i = or i1 %i.nv, %i.nu
@@ -214,7 +214,7 @@ bb.r:                                             ; preds = %HUF_decompress4X1_u
 bb.s:                                             ; preds = %bb.r
   %i.nw = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 3 uses
   %i.nx = getelementptr inbounds i8, ptr %i.nw, i64 -3 ; 3 uses
-  %i.ny = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 42 uses
+  %i.ny = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 44 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
   %.val86.i = load i16, ptr %2, align 1, !tbaa !41 ; 5 uses
   %i.nz = zext i16 %.val86.i to i64               ; 2 uses
@@ -236,11 +236,11 @@ bb.s:                                             ; preds = %bb.r
   %i.on = lshr i64 %i.om, 2                       ; 8 uses
   %i.oo = getelementptr inbounds nuw i8, ptr %0, i64 %i.on ; 7 uses
   %i.op = getelementptr inbounds nuw i8, ptr %i.oo, i64 %i.on ; 8 uses
-  %i.oq = getelementptr inbounds nuw i8, ptr %i.op, i64 %i.on ; 8 uses
+  %i.oq = getelementptr inbounds nuw i8, ptr %i.op, i64 %i.on ; 7 uses
   %.val.i = load i32, ptr %4, align 4
   %.sroa.3.0.extract.shift.i.i = lshr i32 %.val.i, 16 ; 9 uses
   %i.or = icmp ugt i64 %i.og, %3
-  %i.os = mul nuw nsw i64 %i.on, 3
+  %i.os = mul nuw i64 %i.on, 3                    ; 3 uses
   %i.ot = icmp samesign ugt i64 %i.os, %1
   %or.cond181.i.i = select i1 %i.or, i1 true, i1 %i.ot
   br i1 %or.cond181.i.i, label %BIT_initDStream.exit.thread.i, label %bb.t
@@ -643,23 +643,65 @@ bb.cn:                                            ; preds = %bb.cm
   br label %BIT_reloadDStream.exit.i185.i.i
 
 BIT_reloadDStream.exit.i185.i.i:                  ; preds = %bb.ci, %BIT_reloadDStream.exit43.i195.i.i, %bb.cg, %bb.cn, %bb.cm, %bb.cl, %bb.cj, %.preheader375.i
-  %.sroa.0.2.i18 = phi i64 [ %.val9.i, %bb.cn ], [ %.sroa.0.0.i, %bb.cj ], [ %.val.i114.i, %bb.cl ], [ %.sroa.0.0.i, %bb.cm ], [ %.sroa.0.0.i, %.preheader375.i ], [ %.sroa.0.3456.i, %bb.cg ], [ %.sroa.0.4.i22, %bb.ci ], [ %.sroa.0.4.i22, %BIT_reloadDStream.exit43.i195.i.i ]
-  %.sroa.25.2.i = phi i32 [ %i.aqv, %bb.cn ], [ %.sroa.25.0.i, %bb.cj ], [ %i.aqg, %bb.cl ], [ %.sroa.25.0.i, %bb.cm ], [ %.sroa.25.0.i, %.preheader375.i ], [ %.sroa.25.4457.i, %bb.cg ], [ %i.apz, %bb.ci ], [ %.sroa.25.5.i, %BIT_reloadDStream.exit43.i195.i.i ] ; 2 uses
+  %.sroa.0.2.i18 = phi i64 [ %.val9.i, %bb.cn ], [ %.sroa.0.0.i, %bb.cj ], [ %.val.i114.i, %bb.cl ], [ %.sroa.0.0.i, %bb.cm ], [ %.sroa.0.0.i, %.preheader375.i ], [ %.sroa.0.3456.i, %bb.cg ], [ %.sroa.0.4.i22, %bb.ci ], [ %.sroa.0.4.i22, %BIT_reloadDStream.exit43.i195.i.i ] ; 3 uses
+  %.sroa.25.2.i = phi i32 [ %i.aqv, %bb.cn ], [ %.sroa.25.0.i, %bb.cj ], [ %i.aqg, %bb.cl ], [ %.sroa.25.0.i, %bb.cm ], [ %.sroa.25.0.i, %.preheader375.i ], [ %.sroa.25.4457.i, %bb.cg ], [ %i.apz, %bb.ci ], [ %.sroa.25.5.i, %BIT_reloadDStream.exit43.i195.i.i ] ; 4 uses
   %.sroa.69136.2.i = phi ptr [ %i.aqt, %bb.cn ], [ @BIT_reloadDStream.zeroFilled, %bb.cj ], [ %i.aqf, %bb.cl ], [ %i.ok, %bb.cm ], [ @BIT_reloadDStream.zeroFilled, %.preheader375.i ], [ %i.ok, %bb.cg ], [ @BIT_reloadDStream.zeroFilled, %bb.ci ], [ %.sroa.69136.4.i, %BIT_reloadDStream.exit43.i195.i.i ]
-  %.3.i187.i.i = phi ptr [ %.3153.i.i, %bb.cn ], [ %.3153.i.i, %bb.cj ], [ %.3153.i.i, %bb.cl ], [ %.3153.i.i, %bb.cm ], [ %.3153.i.i, %.preheader375.i ], [ %.0.i193.i459.i, %bb.cg ], [ %i.aqa, %bb.ci ], [ %.0.i193.i459.i, %BIT_reloadDStream.exit43.i195.i.i ] ; 2 uses
+  %.3.i187.i.i = phi ptr [ %.3153.i.i, %bb.cn ], [ %.3153.i.i, %bb.cj ], [ %.3153.i.i, %bb.cl ], [ %.3153.i.i, %bb.cm ], [ %.3153.i.i, %.preheader375.i ], [ %.0.i193.i459.i, %bb.cg ], [ %i.aqa, %bb.ci ], [ %.0.i193.i459.i, %BIT_reloadDStream.exit43.i195.i.i ] ; 6 uses
   %i.aqw = icmp ult ptr %.3.i187.i.i, %i.oq
   br i1 %i.aqw, label %.lr.ph476.i, label %HUF_decodeStreamX1.exit201.i.i
 
 .lr.ph476.i:                                      ; preds = %BIT_reloadDStream.exit.i185.i.i
+  %.3.i187.i495.i = ptrtoaddr ptr %.3.i187.i.i to i64 ; 2 uses
   %i.aqx = sub nsw i32 0, %.sroa.3.0.extract.shift.i.i
   %i.aqy = and i32 %i.aqx, 63
-  %i.aqz = zext nneg i32 %i.aqy to i64
-  br label %bb.co
+  %i.aqz = zext nneg i32 %i.aqy to i64            ; 3 uses
+  %8 = add i64 %i.os, %i.nt
+  %9 = sub i64 %8, %.3.i187.i495.i                ; 2 uses
+  %scevgep496.i = getelementptr i8, ptr %.3.i187.i.i, i64 %9
+  %10 = add i64 %i.os, %i.nt
+  %.neg218 = add i64 %.3.i187.i495.i, 1
+  %xtraiter211 = and i64 %9, 1
+  %lcmp.mod212.not = icmp eq i64 %xtraiter211, 0
+  br i1 %lcmp.mod212.not, label %.prol.loopexit210, label %.prol.loopexit210.unr-lcssa
 
-bb.co:                                            ; preds = %bb.co, %.lr.ph476.i
-  %.6.i188.i475.i = phi ptr [ %.3.i187.i.i, %.lr.ph476.i ], [ %i.ark, %bb.co ] ; 2 uses
-  %.sroa.25.3474.i = phi i32 [ %.sroa.25.2.i, %.lr.ph476.i ], [ %i.arj, %bb.co ] ; 2 uses
-  %i.ara = and i32 %.sroa.25.3474.i, 63
+.prol.loopexit210.unr-lcssa:                      ; preds = %.lr.ph476.i
+  %11 = and i32 %.sroa.25.2.i, 63
+  %12 = zext nneg i32 %11 to i64
+  %13 = shl i64 %.sroa.0.2.i18, %12
+  %14 = lshr i64 %13, %i.aqz
+  %15 = getelementptr inbounds nuw [2 x i8], ptr %i.ny, i64 %14 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 1
+  %17 = load i8, ptr %16, align 1, !tbaa !33
+  %18 = load i8, ptr %15, align 1, !tbaa !34
+  %19 = zext i8 %18 to i32
+  %20 = add i32 %.sroa.25.2.i, %19                ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %.3.i187.i.i, i64 1
+  store i8 %17, ptr %.3.i187.i.i, align 1, !tbaa !16
+  br label %.prol.loopexit210
+
+.prol.loopexit210:                                ; preds = %.prol.loopexit210.unr-lcssa, %.lr.ph476.i
+  %.lcssa182.unr = phi i32 [ poison, %.lr.ph476.i ], [ %20, %.prol.loopexit210.unr-lcssa ]
+  %.6.i188.i475.i.unr = phi ptr [ %.3.i187.i.i, %.lr.ph476.i ], [ %21, %.prol.loopexit210.unr-lcssa ]
+  %.sroa.25.3474.i.unr = phi i32 [ %.sroa.25.2.i, %.lr.ph476.i ], [ %20, %.prol.loopexit210.unr-lcssa ]
+  %22 = icmp eq i64 %10, %.neg218
+  br i1 %22, label %HUF_decodeStreamX1.exit201.i.i, label %bb.co
+
+bb.co:                                            ; preds = %.prol.loopexit210, %bb.co
+  %.6.i188.i475.i = phi ptr [ %i.ark, %bb.co ], [ %.6.i188.i475.i.unr, %.prol.loopexit210 ] ; 3 uses
+  %.sroa.25.3474.i = phi i32 [ %i.arj, %bb.co ], [ %.sroa.25.3474.i.unr, %.prol.loopexit210 ] ; 2 uses
+  %23 = and i32 %.sroa.25.3474.i, 63
+  %24 = zext nneg i32 %23 to i64
+  %25 = shl i64 %.sroa.0.2.i18, %24
+  %26 = lshr i64 %25, %i.aqz
+  %27 = getelementptr inbounds nuw [2 x i8], ptr %i.ny, i64 %26 ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %27, i64 1
+  %29 = load i8, ptr %28, align 1, !tbaa !33
+  %30 = load i8, ptr %27, align 1, !tbaa !34
+  %31 = zext i8 %30 to i32
+  %32 = add i32 %.sroa.25.3474.i, %31             ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %.6.i188.i475.i, i64 1
+  store i8 %29, ptr %.6.i188.i475.i, align 1, !tbaa !16
+  %i.ara = and i32 %32, 63
   %i.arb = zext nneg i32 %i.ara to i64
   %i.arc = shl i64 %.sroa.0.2.i18, %i.arb
   %i.ard = lshr i64 %i.arc, %i.aqz
@@ -668,14 +710,14 @@ bb.co:                                            ; preds = %bb.co, %.lr.ph476.i
   %i.arg = load i8, ptr %i.arf, align 1, !tbaa !33
   %i.arh = load i8, ptr %i.are, align 1, !tbaa !34
   %i.ari = zext i8 %i.arh to i32
-  %i.arj = add i32 %.sroa.25.3474.i, %i.ari       ; 2 uses
-  %i.ark = getelementptr inbounds nuw i8, ptr %.6.i188.i475.i, i64 1 ; 2 uses
-  store i8 %i.arg, ptr %.6.i188.i475.i, align 1, !tbaa !16
-  %8 = icmp ult ptr %i.ark, %i.oq
-  br i1 %8, label %bb.co, label %HUF_decodeStreamX1.exit201.i.i, !llvm.loop !5
+  %i.arj = add i32 %32, %i.ari                    ; 2 uses
+  %i.ark = getelementptr inbounds nuw i8, ptr %.6.i188.i475.i, i64 2 ; 2 uses
+  store i8 %i.arg, ptr %33, align 1, !tbaa !16
+  %exitcond497.not.i.1 = icmp eq ptr %i.ark, %scevgep496.i
+  br i1 %exitcond497.not.i.1, label %HUF_decodeStreamX1.exit201.i.i, label %bb.co, !llvm.loop !5
 
-HUF_decodeStreamX1.exit201.i.i:                   ; preds = %bb.co, %BIT_reloadDStream.exit.i185.i.i
-  %.sroa.25.3.lcssa.i = phi i32 [ %.sroa.25.2.i, %BIT_reloadDStream.exit.i185.i.i ], [ %i.arj, %bb.co ]
+HUF_decodeStreamX1.exit201.i.i:                   ; preds = %.prol.loopexit210, %bb.co, %BIT_reloadDStream.exit.i185.i.i
+  %.sroa.25.3.lcssa.i = phi i32 [ %.sroa.25.2.i, %BIT_reloadDStream.exit.i185.i.i ], [ %.lcssa182.unr, %.prol.loopexit210 ], [ %i.arj, %bb.co ]
   %i.arl = ptrtoint ptr %i.nw to i64
   %i.arm = ptrtoint ptr %.3149.i.i to i64
   %i.arn = sub i64 %i.arl, %i.arm

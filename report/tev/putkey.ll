@@ -203,7 +203,7 @@ ffpkyj.exit236.thread:                            ; preds = %ffpkyj.exit233.thre
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab) #17
-  br label %ffpkyj.exit239
+  br label %ffpkyj.exit236.ffpkyj.exit239_crit_edge
 
 ffpkyj.exit236:                                   ; preds = %bb.af, %bb.ag
   %i.dv = call i32 @ffmkky(ptr noundef nonnull @.str.99, ptr noundef nonnull %i.ac, ptr noundef nonnull @.str.122, ptr noundef nonnull %i.ad, ptr noundef nonnull %8) #17 ; 0 uses
@@ -214,10 +214,14 @@ ffpkyj.exit236:                                   ; preds = %bb.af, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab) #17
-  br i1 %i.dx, label %ffpkyj.exit239, label %bb.ah
+  br i1 %i.dx, label %ffpkyj.exit236.ffpkyj.exit239_crit_edge, label %bb.ah
+
+ffpkyj.exit236.ffpkyj.exit239_crit_edge:          ; preds = %ffpkyj.exit236.thread, %ffpkyj.exit236
+  %.pre421 = zext nneg i32 %2 to i64
+  br label %ffpkyj.exit239
 
 bb.ah:                                            ; preds = %ffpkyj.exit236
-  %i.dy = zext nneg i32 %2 to i64
+  %i.dy = zext nneg i32 %2 to i64                 ; 2 uses
   store i8 0, ptr %i.aa, align 16, !tbaa !31
   %i.dz = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.aa, ptr noundef nonnull dereferenceable(1) @.str.169, i64 noundef %i.dy) #17
   %i.ea = icmp slt i32 %i.dz, 0
@@ -233,7 +237,8 @@ ffi2c.exit.i237:                                  ; preds = %bb.ai, %bb.ah
   %i.ec = call i32 @ffprec(ptr noundef nonnull %0, ptr noundef nonnull %i.ab, ptr noundef nonnull %8) ; 0 uses
   br label %ffpkyj.exit239
 
-ffpkyj.exit239:                                   ; preds = %ffpkyj.exit236.thread, %ffpkyj.exit236, %ffi2c.exit.i237
+ffpkyj.exit239:                                   ; preds = %ffpkyj.exit236.ffpkyj.exit239_crit_edge, %ffi2c.exit.i237
+  %wide.trip.count407.pre-phi = phi i64 [ %.pre421, %ffpkyj.exit236.ffpkyj.exit239_crit_edge ], [ %i.dy, %ffi2c.exit.i237 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa) #17
   %i.ed = getelementptr inbounds nuw i8, ptr %i.g, i64 69
@@ -243,12 +248,11 @@ ffpkyj.exit239:                                   ; preds = %ffpkyj.exit236.thre
   %i.eh = getelementptr inbounds nuw i8, ptr %i.y, i64 69
   %i.ei = getelementptr inbounds nuw i8, ptr %i.c, i64 69
   %.not215 = icmp eq ptr %5, null
-  %wide.trip.count408 = zext nneg i32 %2 to i64
-  %exitcond409.not478 = icmp eq i32 %2, 0
+  %exitcond409.not478 = icmp eq i64 %wide.trip.count407.pre-phi, 0
   br i1 %exitcond409.not478, label %..loopexit.loopexit_crit_edge, label %.lr.ph480
 
 bb.aj:                                            ; preds = %bb.eg
-  %exitcond409.not = icmp eq i64 %indvars.iv.next405, %wide.trip.count408
+  %exitcond409.not = icmp eq i64 %indvars.iv.next405, %wide.trip.count407.pre-phi
   br i1 %exitcond409.not, label %..loopexit.loopexit_crit_edge, label %.lr.ph480, !llvm.loop !50
 
 ..loopexit.loopexit_crit_edge:                    ; preds = %bb.aj, %ffpkyj.exit239

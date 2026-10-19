@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/ubidiln?download=true
 inline.NumInlined: 22
 inline.NumDeleted: 6
-loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@ubidi_getVisualMap_78:bb.a
     i16 8234, label %bb.y
   ]
@@ -204,7 +204,7 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.d = zext nneg i32 %2 to i64
   %.idx = shl nuw nsw i64 %i.d, 2
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 3 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -222,38 +222,72 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %.not = icmp sgt i32 %.1, %spec.select
-  br i1 %.not, label %.lr.ph46.preheader.a, label %bb.b
+  br i1 %.not, label %.lr.ph46.preheader, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
   %i.k = add nsw i32 %spec.select, 1
   %i.l = zext nneg i32 %i.k to i64
   %i.m = shl nuw nsw i64 %i.l, 2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %1, i8 -1, i64 %i.m, i1 false)
-  br label %.lr.ph46.preheader.a
+  br label %.lr.ph46.preheader
 
-.lr.ph46.preheader.a:                             ; preds = %._crit_edge, %bb.b
-  br label %.lr.ph46
+.lr.ph46.preheader:                               ; preds = %._crit_edge, %bb.b
+  %xtraiter = and i32 %2, 1
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph46.prol.loopexit, label %.lr.ph46.prol
 
-.lr.ph46:                                         ; preds = %.lr.ph46.preheader.a, %bb.d
-  %.13044 = phi ptr [ %i.n, %bb.d ], [ %i.e, %.lr.ph46.preheader.a ]
-  %.03143 = phi i32 [ %3, %bb.d ], [ %2, %.lr.ph46.preheader.a ] ; 2 uses
-  %i.n = getelementptr inbounds i8, ptr %.13044, i64 -4 ; 2 uses
+.lr.ph46.prol:                                    ; preds = %.lr.ph46.preheader
+  %3 = getelementptr inbounds i8, ptr %i.e, i64 -4 ; 3 uses
+  %4 = load i32, ptr %3, align 4, !tbaa !46       ; 2 uses
+  %5 = icmp sgt i32 %4, -1
+  %6 = add nsw i32 %2, -1                         ; 3 uses
+  br i1 %5, label %.lr.ph46.preheader.a, label %.lr.ph46.prol.loopexit
+
+.lr.ph46.preheader.a:                             ; preds = %.lr.ph46.prol
+  %7 = zext nneg i32 %4 to i64
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %7
+  store i32 %6, ptr %8, align 4, !tbaa !46
+  br label %.lr.ph46.prol.loopexit
+
+.lr.ph46.prol.loopexit:                           ; preds = %.lr.ph46.prol, %.lr.ph46.preheader.a, %.lr.ph46.preheader
+  %.13044.unr = phi ptr [ %i.e, %.lr.ph46.preheader ], [ %3, %.lr.ph46.preheader.a ], [ %3, %.lr.ph46.prol ]
+  %.03143.unr = phi i32 [ %2, %.lr.ph46.preheader ], [ %6, %.lr.ph46.preheader.a ], [ %6, %.lr.ph46.prol ]
+  %9 = icmp eq i32 %2, 1
+  br i1 %9, label %.loopexit, label %.lr.ph46
+
+.lr.ph46:                                         ; preds = %.lr.ph46.prol.loopexit, %bb.d
+  %.13044 = phi ptr [ %14, %bb.d ], [ %.13044.unr, %.lr.ph46.prol.loopexit ] ; 2 uses
+  %.03143 = phi i32 [ %17, %bb.d ], [ %.03143.unr, %.lr.ph46.prol.loopexit ] ; 3 uses
+  %i.n = getelementptr inbounds i8, ptr %.13044, i64 -4
   %i.o = load i32, ptr %i.n, align 4, !tbaa !46   ; 2 uses
   %i.p = icmp sgt i32 %i.o, -1
-  %3 = add nsw i32 %.03143, -1                    ; 2 uses
-  br i1 %i.p, label %bb.c, label %bb.d
+  br i1 %i.p, label %10, label %.lr.ph46.1
 
-bb.c:                                             ; preds = %.lr.ph46
-  %i.q = zext nneg i32 %i.o to i64
+10:                                               ; preds = %.lr.ph46
+  %11 = add nsw i32 %.03143, -1
+  %12 = zext nneg i32 %i.o to i64
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %12
+  store i32 %11, ptr %13, align 4, !tbaa !46
+  br label %.lr.ph46.1
+
+.lr.ph46.1:                                       ; preds = %.lr.ph46, %10
+  %14 = getelementptr inbounds i8, ptr %.13044, i64 -8 ; 2 uses
+  %15 = load i32, ptr %14, align 4, !tbaa !46     ; 2 uses
+  %16 = icmp sgt i32 %15, -1
+  %17 = add nsw i32 %.03143, -2                   ; 2 uses
+  br i1 %16, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %.lr.ph46.1
+  %i.q = zext nneg i32 %15 to i64
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.q
-  store i32 %3, ptr %i.r, align 4, !tbaa !46
+  store i32 %17, ptr %i.r, align 4, !tbaa !46
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph46, %bb.c
-  %i.s = icmp sgt i32 %.03143, 1
+bb.d:                                             ; preds = %bb.c, %.lr.ph46.1
+  %i.s = icmp sgt i32 %.03143, 2
   br i1 %i.s, label %.lr.ph46, label %.loopexit, !llvm.loop !137
 
-.loopexit:                                        ; preds = %bb.d, %bb.a
+.loopexit:                                        ; preds = %.lr.ph46.prol.loopexit, %bb.d, %bb.a
   ret void
 }
 

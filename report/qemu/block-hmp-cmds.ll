@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br label %glib_autoptr_cleanup_GraphLockableMainloop.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = call i32 @bdrv_snapshot_list(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a) #9 ; 5 uses
+  %i.h = call i32 @bdrv_snapshot_list(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a) #9 ; 4 uses
   %i.i = icmp slt i32 %i.h, 0
   br i1 %i.i, label %bb.d, label %bb.e
 
@@ -283,22 +283,18 @@ bb.i:                                             ; preds = %.loopexit163, %.lr.
   br label %glib_autoptr_cleanup_GraphLockableMainloop.exit
 
 bb.j:                                             ; preds = %._crit_edge
-  %i.ae = zext nneg i32 %i.h to i64
+  %i.ae = zext nneg i32 %i.h to i64               ; 2 uses
   %i.af = call noalias ptr @g_malloc0_n(i64 noundef %i.ae, i64 noundef 4) #13 ; 3 uses
   %.not204 = icmp eq i32 %i.h, 0
-  br i1 %.not204, label %._crit_edge181.thread, label %.lr.ph180.preheader
+  br i1 %.not204, label %._crit_edge181.thread, label %.lr.ph180
 
 ._crit_edge181.thread:                            ; preds = %bb.j
   %i.ag = call i32 (ptr, ptr, ...) @monitor_printf(ptr noundef %0, ptr noundef nonnull @.str.56) #9 ; 0 uses
   br label %bb.t
 
-.lr.ph180.preheader:                              ; preds = %bb.j
-  %wide.trip.count209 = zext nneg i32 %i.h to i64
-  br label %.lr.ph180
-
-.lr.ph180:                                        ; preds = %.lr.ph180.preheader, %.loopexit162
-  %indvars.iv206 = phi i64 [ 0, %.lr.ph180.preheader ], [ %indvars.iv.next207, %.loopexit162 ] ; 4 uses
-  %.0141178 = phi i32 [ 0, %.lr.ph180.preheader ], [ %.1142, %.loopexit162 ] ; 3 uses
+.lr.ph180:                                        ; preds = %bb.j, %.loopexit162
+  %indvars.iv206 = phi i64 [ %indvars.iv.next207, %.loopexit162 ], [ 0, %bb.j ] ; 4 uses
+  %.0141178 = phi i32 [ %.1142, %.loopexit162 ], [ 0, %bb.j ] ; 3 uses
   %i.ah = load ptr, ptr %i.a, align 8
   %i.ai = getelementptr inbounds nuw [416 x i8], ptr %i.ah, i64 %indvars.iv206
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 128
@@ -377,7 +373,7 @@ bb.q:                                             ; preds = %bb.l, %bb.p
 .loopexit162:                                     ; preds = %.critedge, %bb.k, %.lr.ph180
   %.1142 = phi i32 [ %.0141178, %.lr.ph180 ], [ %i.ap, %bb.k ], [ %i.ap, %.critedge ] ; 3 uses
   %indvars.iv.next207 = add nuw nsw i64 %indvars.iv206, 1 ; 2 uses
-  %exitcond210.not = icmp eq i64 %indvars.iv.next207, %wide.trip.count209
+  %exitcond210.not = icmp eq i64 %indvars.iv.next207, %i.ae
   br i1 %exitcond210.not, label %._crit_edge181, label %.lr.ph180, !llvm.loop !20
 
 ._crit_edge181:                                   ; preds = %.loopexit162

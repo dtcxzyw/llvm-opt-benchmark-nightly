@@ -202,8 +202,7 @@ bb.v:                                             ; preds = %._crit_edge200
 
 .lr.ph217.preheader:                              ; preds = %bb.v
   %i.bv = zext nneg i32 %i.br to i64
-  %smax264 = tail call i32 @llvm.smax.i32(i32 %.0113, i32 1)
-  %wide.trip.count265 = zext nneg i32 %smax264 to i64
+  %wide.trip.count265 = zext nneg i32 %.0113 to i64
   br label %.lr.ph217
 
 .lr.ph217:                                        ; preds = %.lr.ph217.preheader, %.lr.ph217

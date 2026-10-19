@@ -202,7 +202,6 @@ bb.af:                                            ; preds = %bb.z
   %i.dk = sext i32 %i.l to i64                    ; 6 uses
   %i.dl = and i64 %i.bg, -4
   %scevgep.i = getelementptr i8, ptr %i.cx, i64 %i.dl
-  %31 = call i64 @llvm.umax.i64(i64 %i.az, i64 1)
   %.pre589.i.a = load ptr, ptr %17, align 8, !tbaa !40, !noalias !170
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 64
   br label %bb.ag
@@ -530,7 +529,7 @@ _ZN5arrow6StatusD2Ev.exit279.i:                   ; preds = %_ZN5arrow6StatusD2E
   %i.hl = phi ptr [ %.pre590.i, %_ZN5arrow6StatusD2Ev.exit279.i ], [ %i.fk, %bb.au ]
   %i.hm = phi i1 [ true, %_ZN5arrow6StatusD2Ev.exit279.i ], [ false, %bb.au ]
   %i.hn = add nuw nsw i64 %.0114554.i, 1          ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.hn, %31
+  %exitcond.not.i = icmp eq i64 %i.hn, %i.az
   br i1 %exitcond.not.i, label %.critedge215.i, label %.lr.ph.i, !llvm.loop !136
 
 .critedge215.i:                                   ; preds = %.critedge.i, %_ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.i
@@ -931,9 +930,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #19

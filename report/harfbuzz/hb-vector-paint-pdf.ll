@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %.lr.ph.i.i
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.bb = load i32, ptr @_hb_NullPool, align 16
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.b, i32 2)
-  %i.bc = add i32 %umax, -1
+  %i.bc = add i32 %i.b, -1
   %wide.trip.count = zext i32 %i.bc to i64
   br label %bb.v
 
