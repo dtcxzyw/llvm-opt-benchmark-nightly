@@ -202,13 +202,13 @@ bb.a:
   %.78 = select i1 %.not, i64 744, i64 1200
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %.78
   %.sroa.0.0 = load ptr, ptr %i.e, align 8, !tbaa !131 ; 2 uses
+  %.not5373 = icmp eq ptr %.sroa.0.0, null
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4600
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4627 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 417
   %i.i = icmp samesign ugt i32 %1, 19
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.not5374 = icmp eq ptr %.sroa.0.0, null
-  br i1 %.not5374, label %.loopexit72, label %.lr.ph
+  br i1 %.not5373, label %.loopexit72, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %select.unfold
   %.04775 = phi ptr [ %.047, %select.unfold ], [ %.sroa.0.0, %bb.a ] ; 2 uses
@@ -333,7 +333,7 @@ select.unfold:                                    ; preds = %bb.t, %bb.e, %bb.f,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   %i.al = getelementptr inbounds nuw i8, ptr %.04775, i64 8
-  %.047 = load ptr, ptr %i.al, align 8, !tbaa !131 ; 2 uses
+  %.047 = load ptr, ptr %i.al, align 8, !tbaa !139 ; 2 uses
   %.not53 = icmp eq ptr %.047, null
   br i1 %.not53, label %.loopexit72, label %.lr.ph, !llvm.loop !130
 
@@ -516,4 +516,5 @@ attributes #6 = { nounwind willreturn memory(read) }
 !136 = !{!"Curl_str", !18, i64 0, !17, i64 8}
 !137 = !{!136, !18, i64 0}
 !138 = !{!136, !17, i64 8}
+!139 = !{!132, !49, i64 8}
 end_hunk_0

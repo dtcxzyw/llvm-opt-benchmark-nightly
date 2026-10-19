@@ -91,7 +91,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.66 = private unnamed_addr constant [16 x i8] c"SELECT json(?1)\00", align 1
 @.str.67 = private unnamed_addr constant [31 x i8] c"\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\00", align 1
 @.str.68 = private unnamed_addr constant [31 x i8] c"\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\00", align 1
-@__const.qrfBoxLine.azDash = private unnamed_addr constant [2 x ptr] [ptr @.str.67, ptr @.str.68], align 16
 @.str.69 = private unnamed_addr constant [35 x i8] c"Failed to write %d bytes of output\00", align 1
 @.str.70 = private unnamed_addr constant [5 x i8] c"Next\00", align 1
 @.str.71 = private unnamed_addr constant [5 x i8] c"Prev\00", align 1
@@ -494,21 +493,25 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.n = add nsw i32 %i.j, %i.m                   ; 2 uses
   %i.o = mul nsw i32 %i.n, 3                      ; 2 uses
   %i.p = icmp sgt i32 %i.n, 10
-  %6 = zext nneg i32 %5 to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr @__const.qrfBoxLine.azDash, i64 %6
-  %8 = load ptr, ptr %7, align 8, !tbaa !66       ; 4 uses
-  br i1 %i.p, label %.lr.ph.i.a, label %qrfBoxLine.exit
+  br i1 %i.p, label %.lr.ph.i, label %qrfBoxLine.exit
 
-.lr.ph.i.a:                                       ; preds = %bb.d, %.lr.ph.i.a
-  %.07.i = phi i32 [ %i.q, %.lr.ph.i.a ], [ %i.o, %bb.d ] ; 2 uses
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %8, i32 noundef 30) #20
+.lr.ph.i:                                         ; preds = %bb.d
+  %.sroa.idx.not.i = icmp eq i32 %5, 0
+  %.sroa.speculated.i = select i1 %.sroa.idx.not.i, ptr @.str.67, ptr @.str.68
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.i
+  %.07.i = phi i32 [ %i.o, %.lr.ph.i ], [ %i.q, %.lr.ph.i.a ] ; 2 uses
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef nonnull %.sroa.speculated.i, i32 noundef 30) #20
   %i.q = add nsw i32 %.07.i, -30                  ; 2 uses
   %i.r = icmp sgt i32 %.07.i, 60
   br i1 %i.r, label %.lr.ph.i.a, label %qrfBoxLine.exit, !llvm.loop !325
 
 qrfBoxLine.exit:                                  ; preds = %.lr.ph.i.a, %bb.d
   %.0.lcssa.i = phi i32 [ %i.o, %bb.d ], [ %i.q, %.lr.ph.i.a ]
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %8, i32 noundef %.0.lcssa.i) #20
+  %.sroa.idx1.not.i = icmp eq i32 %5, 0
+  %.sroa.speculated6.i = select i1 %.sroa.idx1.not.i, ptr @.str.67, ptr @.str.68 ; 3 uses
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef nonnull %.sroa.speculated6.i, i32 noundef %.0.lcssa.i) #20
   %i.s = load i32, ptr %i.a, align 8, !tbaa !62
   %i.t = icmp sgt i32 %i.s, 1
   br i1 %i.t, label %.lr.ph, label %._crit_edge
@@ -529,14 +532,14 @@ qrfBoxLine.exit:                                  ; preds = %.lr.ph.i.a, %bb.d
 
 .lr.ph.i23:                                       ; preds = %.lr.ph, %.lr.ph.i23
   %.07.i24 = phi i32 [ %i.ad, %.lr.ph.i23 ], [ %i.ab, %.lr.ph ] ; 2 uses
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %8, i32 noundef 30) #20
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef nonnull %.sroa.speculated6.i, i32 noundef 30) #20
   %i.ad = add nsw i32 %.07.i24, -30               ; 2 uses
   %i.ae = icmp sgt i32 %.07.i24, 60
   br i1 %i.ae, label %.lr.ph.i23, label %qrfBoxLine.exit25, !llvm.loop !325
 
 qrfBoxLine.exit25:                                ; preds = %.lr.ph.i23, %.lr.ph
   %.0.lcssa.i22 = phi i32 [ %i.ab, %.lr.ph ], [ %i.ad, %.lr.ph.i23 ]
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %8, i32 noundef %.0.lcssa.i22) #20
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef nonnull %.sroa.speculated6.i, i32 noundef %.0.lcssa.i22) #20
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.af = load i32, ptr %i.a, align 8, !tbaa !62
   %i.ag = sext i32 %i.af to i64

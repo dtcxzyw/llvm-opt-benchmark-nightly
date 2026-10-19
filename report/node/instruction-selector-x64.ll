@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/instruction-selector-x64?download=true
 inline.NumInlined: 9610
 inline.NumDeleted: 1506
-loop-unroll.NumCompletelyUnrolled: 16
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumCompletelyUnrolled: 15
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_ZN2v88internal8compiler19InstructionSelector23VisitI32x4UConvertF32x4ENS1_10turboshaft7OpIndexE:bb.a
   %i.a = load ptr, ptr %0, align 8, !nonnull !5, !align !6
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -204,7 +204,7 @@ bb.a:
 define hidden void @_ZN2v88internal8compiler19InstructionSelector17VisitI8x16ShuffleENS1_10turboshaft7OpIndexE(ptr noundef nonnull align 8 dereferenceable(752) %0, i32 %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
-  %i.b = alloca [16 x i8], align 16               ; 43 uses
+  %i.b = alloca [16 x i8], align 16               ; 46 uses
   %i.c = alloca i8, align 1                       ; 13 uses
   %2 = alloca %"class.v8::internal::compiler::InstructionSelector::SimdShuffleView", align 8 ; 14 uses
   %i.d = alloca [6 x i32], align 16               ; 18 uses
@@ -220,28 +220,28 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !201)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !202)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !noalias !201
-  store i32 %1, ptr %2, align 8, !alias.scope !201
+  %i.k = load ptr, ptr %i.j, align 8, !noalias !202
+  store i32 %1, ptr %2, align 8, !alias.scope !202
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 10 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  store ptr %i.m, ptr %i.l, align 8, !alias.scope !201
+  store ptr %i.m, ptr %i.l, align 8, !alias.scope !202
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 10 uses
-  store ptr %i.p, ptr %i.o, align 8, !alias.scope !201
+  store ptr %i.p, ptr %i.o, align 8, !alias.scope !202
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = ptrtoint ptr %i.r to i64
   %i.t = zext i32 %1 to i64
   %i.u = add i64 %i.s, %i.t
   %i.v = inttoptr i64 %i.u to ptr                 ; 3 uses
-  store ptr %i.v, ptr %i.p, align 8, !alias.scope !201
+  store ptr %i.v, ptr %i.p, align 8, !alias.scope !202
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 36
-  store i32 0, ptr %i.m, align 8, !alias.scope !201
-  store ptr %i.p, ptr %i.n, align 8, !alias.scope !201
-  store i32 1, ptr %i.w, align 4, !alias.scope !201
+  store i32 0, ptr %i.m, align 8, !alias.scope !202
+  store ptr %i.p, ptr %i.n, align 8, !alias.scope !202
+  store i32 1, ptr %i.w, align 4, !alias.scope !202
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(16) %i.x, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
@@ -438,47 +438,57 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.ab
 
 bb.w:                                             ; preds = %bb.u
-  %i.dc = load i8, ptr %i.b, align 16             ; 5 uses
+  %i.dc = load i8, ptr %i.b, align 16             ; 7 uses
   %i.dd = and i8 %i.dc, 1
   %.not.i = icmp eq i8 %i.dd, 0
   br i1 %.not.i, label %.preheader34.i, label %bb.y
 
 .preheader34.i:                                   ; preds = %bb.w
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %7 = insertelement <2 x i8> poison, i8 %i.dc, i64 0 ; 2 uses
-  %8 = shufflevector <2 x i8> %7, <2 x i8> poison, <8 x i32> zeroinitializer
-  %9 = or disjoint <8 x i8> %8, <i8 1, i8 0, i8 1, i8 0, i8 1, i8 0, i8 1, i8 0>
-  %10 = load <8 x i8>, ptr %i.de, align 1
-  %11 = icmp eq <8 x i8> %9, %10
-  %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 9
-  %12 = or disjoint i8 %i.dc, 1                   ; 2 uses
-  %13 = shufflevector <2 x i8> %7, <2 x i8> poison, <4 x i32> zeroinitializer
-  %14 = or disjoint <4 x i8> %13, <i8 1, i8 0, i8 1, i8 0>
-  %15 = load <4 x i8>, ptr %i.df, align 1
-  %16 = icmp eq <4 x i8> %14, %15
+  %7 = load i8, ptr %i.de, align 1                ; 5 uses
+  %8 = or disjoint i8 %i.dc, 1
+  %.not42.i = icmp eq i8 %7, %8
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %10 = load i8, ptr %9, align 2
+  %.not43.i = icmp eq i8 %i.dc, %10
+  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
+  %12 = load i8, ptr %11, align 1
+  %.not43.1.i = icmp eq i8 %7, %12
+  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %14 = load i8, ptr %13, align 4
+  %.not43.156.i = icmp eq i8 %i.dc, %14
+  %i.df = getelementptr inbounds nuw i8, ptr %i.b, i64 5
+  %15 = load <8 x i8>, ptr %i.df, align 1
+  %16 = insertelement <8 x i8> poison, i8 %7, i64 0
+  %17 = insertelement <8 x i8> %16, i8 %i.dc, i64 1
+  %18 = shufflevector <8 x i8> %17, <8 x i8> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
+  %19 = icmp eq <8 x i8> %18, %15
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 13
   %i.dh = load i8, ptr %i.dg, align 1
-  %.not29.1.5.i = icmp eq i8 %12, %i.dh
+  %.not29.1.5.i = icmp eq i8 %7, %i.dh
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 14
   %i.dj = load i8, ptr %i.di, align 2
   %.not29.6.i = icmp eq i8 %i.dc, %i.dj
   %i.dk = getelementptr inbounds nuw i8, ptr %i.b, i64 15
   %i.dl = load i8, ptr %i.dk, align 1
-  %.not29.1.6.i = icmp eq i8 %12, %i.dl
-  %i.dm = freeze <8 x i1> %11                     ; 2 uses
-  %17 = freeze <4 x i1> %16
-  %18 = shufflevector <8 x i1> %i.dm, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %rdx.op = and <4 x i1> %18, %17
-  %19 = shufflevector <4 x i1> %rdx.op, <4 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %20 = shufflevector <8 x i1> %19, <8 x i1> %i.dm, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
-  %21 = bitcast <8 x i1> %20 to i8
-  %22 = icmp eq i8 %21, -1
-  %op.rdx = select i1 %22, i1 %.not29.1.5.i, i1 false
+  %.not29.1.6.i = icmp eq i8 %7, %i.dl
+  %i.dm = freeze <8 x i1> %19
+  %20 = bitcast <8 x i1> %i.dm to i8
+  %21 = icmp eq i8 %20, -1
+  %.not42.i.fr = freeze i1 %.not42.i
+  %op.rdx = and i1 %21, %.not42.i.fr
+  %22 = freeze i1 %.not43.i
+  %23 = freeze i1 %.not43.156.i
+  %.not43.1.5.i.fr = freeze i1 %.not29.1.5.i
+  %op.rdx259 = and i1 %23, %.not43.1.5.i.fr
   %i.dn = freeze i1 %.not29.6.i
-  %i.do = freeze i1 %op.rdx
-  %i.dp = and i1 %i.do, %i.dn
+  %24 = and i1 %op.rdx, %22
+  %i.do = freeze i1 %.not43.1.i
+  %op.rdx261 = and i1 %24, %i.do
+  %25 = and i1 %op.rdx259, %i.dn
+  %i.dp = and i1 %op.rdx261, %25
   %op.rdx252 = select i1 %i.dp, i1 %.not29.1.6.i, i1 false
-  br i1 %op.rdx252, label %bb.x, label %bb.y
+  br i1 %op.rdx252, label %bb.x, label %bb.y, !llvm.loop !200
 
 bb.x:                                             ; preds = %.preheader34.i
   %i.dq = lshr exact i8 %i.dc, 1
@@ -881,7 +891,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   store i64 %i.ld, ptr %i.le, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !200
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !201
 
 bb.bc:                                            ; preds = %bb.s, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #25
@@ -1095,7 +1105,7 @@ bb.r:                                             ; preds = %bb.q
 .critedge:                                        ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   %i.dh = add nuw nsw i64 %.02131, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.dh, 17
-  br i1 %exitcond.not, label %.critedge26, label %bb.b, !llvm.loop !202
+  br i1 %exitcond.not, label %.critedge26, label %bb.b, !llvm.loop !203
 
 .critedge26:                                      ; preds = %.critedge, %bb.r
   %.not33 = phi i1 [ true, %bb.r ], [ false, %.critedge ]
@@ -1498,18 +1508,18 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.k = load ptr, ptr %i.j, align 8, !noalias !207
+  %i.k = load ptr, ptr %i.j, align 8, !noalias !208
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %i.m = load ptr, ptr %i.l, align 8, !noalias !207
+  %i.m = load ptr, ptr %i.l, align 8, !noalias !208
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = add i64 %i.n, %i.e
   %i.p = inttoptr i64 %i.o to ptr                 ; 2 uses
-  %i.q = load i8, ptr %i.p, align 4, !noalias !207
+  %i.q = load i8, ptr %i.p, align 4, !noalias !208
   %cond = icmp eq i8 %i.q, 77
   br i1 %cond, label %_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #24, !noalias !207
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #24, !noalias !208
   unreachable
 
 _ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE.exit: ; preds = %bb.b
@@ -1610,18 +1620,18 @@ _ZNK2v88internal8compiler10turboshaft16OperationMatcher27MatchSignedIntegralCons
 
 bb.p:                                             ; preds = %_ZNK2v88internal8compiler10turboshaft16OperationMatcher27MatchSignedIntegralConstantENS2_1VINS2_3AnyEEEPl.exit.thread
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.ay = load ptr, ptr %i.ax, align 8, !noalias !208
+  %i.ay = load ptr, ptr %i.ax, align 8, !noalias !209
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
-  %i.ba = load ptr, ptr %i.az, align 8, !noalias !208
+  %i.ba = load ptr, ptr %i.az, align 8, !noalias !209
   %i.bb = ptrtoint ptr %i.ba to i64
   %i.bc = add i64 %.pre-phi77, %i.bb
   %i.bd = inttoptr i64 %i.bc to ptr               ; 2 uses
-  %i.be = load i8, ptr %i.bd, align 4, !noalias !208
+  %i.be = load i8, ptr %i.bd, align 4, !noalias !209
   %cond76 = icmp eq i8 %i.be, 77
   br i1 %cond76, label %_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE.exit31, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #24, !noalias !208
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #24, !noalias !209
   unreachable
 
 _ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE.exit31: ; preds = %bb.p
@@ -1884,7 +1894,7 @@ bb.e:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i, i64 8 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 8
   %i.v = icmp eq ptr %i.t, %i.q
-  br i1 %i.v, label %_ZSt18uninitialized_moveIPN2v88internal8compiler18InstructionOperandES4_ET0_T_S6_S5_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !209
+  br i1 %i.v, label %_ZSt18uninitialized_moveIPN2v88internal8compiler18InstructionOperandES4_ET0_T_S6_S5_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !210
 
 _ZSt18uninitialized_moveIPN2v88internal8compiler18InstructionOperandES4_ET0_T_S6_S5_.exit: ; preds = %.lr.ph.i.i.i.i, %bb.e
   %i.w = shl nuw i64 1, %i.j
@@ -2287,13 +2297,14 @@ begin_hunk_3_@llvm.usub.sat.i64
 !198 = distinct !{!198, i1 true, !"_ZN2v88internal8compiler19InstructionSelector17simd_shuffle_viewENS1_10turboshaft7OpIndexE"}
 !199 = distinct !{!199, !198, !"_ZN2v88internal8compiler19InstructionSelector17simd_shuffle_viewENS1_10turboshaft7OpIndexE: argument 0"}
 !200 = distinct !{!200, !10}
-!201 = !{!199}
-!202 = distinct !{!202, !10}
-!203 = distinct !{!203, i1 true, !"_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE"}
-!204 = distinct !{!204, !203, !"_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE: argument 0"}
-!205 = distinct !{!205, i1 true, !"_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE"}
-!206 = distinct !{!206, !205, !"_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE: argument 0"}
-!207 = !{!204}
-!208 = !{!206}
-!209 = distinct !{!209, !10}
+!201 = distinct !{!201, !10}
+!202 = !{!199}
+!203 = distinct !{!203, !10}
+!204 = distinct !{!204, i1 true, !"_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE"}
+!205 = distinct !{!205, !204, !"_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE: argument 0"}
+!206 = distinct !{!206, i1 true, !"_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE"}
+!207 = distinct !{!207, !206, !"_ZN2v88internal8compiler19InstructionSelector9load_viewENS1_10turboshaft7OpIndexE: argument 0"}
+!208 = !{!205}
+!209 = !{!207}
+!210 = distinct !{!210, !10}
 end_hunk_3

@@ -17,7 +17,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::_Vector_base.55" = type { %"struct.std::_Vector_base<unsigned char, std::allocator<unsigned char>>::_Vector_impl" }
 %"struct.std::_Vector_base<unsigned char, std::allocator<unsigned char>>::_Vector_impl" = type { %"struct.std::_Vector_base<unsigned char, std::allocator<unsigned char>>::_Vector_impl_data" }
 %"struct.std::_Vector_base<unsigned char, std::allocator<unsigned char>>::_Vector_impl_data" = type { ptr, ptr, ptr }
-%"struct.std::array.73" = type { [2 x i32] }
 %"class.std::vector.24" = type { %"struct.std::_Vector_base.25" }
 %"struct.std::_Vector_base.25" = type { %"struct.std::_Vector_base<unsigned int, std::allocator<unsigned int>>::_Vector_impl" }
 %"struct.std::_Vector_base<unsigned int, std::allocator<unsigned int>>::_Vector_impl" = type { %"struct.std::_Vector_base<unsigned int, std::allocator<unsigned int>>::_Vector_impl_data" }
@@ -420,8 +419,6 @@ declare void @_ZSt9terminatev() local_unnamed_addr #7
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNK8rawspeed23PanasonicV4Decompressor18processPixelPacketERNS0_11ProxyStreamEiiPSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(60) %1, i32 noundef %2, i32 noundef %3, ptr noundef %4) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %5 = alloca %"struct.std::array.73", align 4    ; 7 uses
-  %6 = alloca %"struct.std::array.73", align 4    ; 5 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !18     ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 568
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !184, !noalias !185
@@ -437,14 +434,6 @@ bb.a:
   %i.m = ashr i32 %i.l, 1                         ; 2 uses
   %i.n = icmp sge i32 %i.m, %i.h
   tail call void @llvm.assume(i1 %i.n)
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
-  store i32 0, ptr %5, align 4, !tbaa !112
-  %.06.i.i.i.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store i32 0, ptr %.06.i.i.i.i.ptr.1.i, align 4, !tbaa !112
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
-  store i32 0, ptr %6, align 4, !tbaa !112
-  %.06.i.i.i.i.ptr.1.i43 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  store i32 0, ptr %.06.i.i.i.i.ptr.1.i43, align 4, !tbaa !112
   %i.o = icmp samesign ult i32 %2, %i.j
   tail call void @llvm.assume(i1 %i.o)
   %i.p = mul nuw nsw i32 %i.m, %2
@@ -461,17 +450,19 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %_ZNSt6vectorIjSaIjEE9push_backEOj.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   ret void
 
 bb.c:                                             ; preds = %bb.a, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit
   %indvars.iv = phi i64 [ %i.y, %bb.a ], [ %indvars.iv.next, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 4 uses
-  %.069 = phi i32 [ 0, %bb.a ], [ %i.dc, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 3 uses
-  %.03668 = phi i32 [ 0, %bb.a ], [ %i.db, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 2 uses
-  %.03767 = phi i32 [ 0, %bb.a ], [ %.138, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ]
-  %i.aa = and i32 %.069, 1
-  %i.ab = icmp eq i32 %.03668, 2
+  %.0171 = phi i32 [ 0, %bb.a ], [ %i.dc, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 3 uses
+  %.036170 = phi i32 [ 0, %bb.a ], [ %i.db, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 2 uses
+  %.037169 = phi i32 [ 0, %bb.a ], [ %.138, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ]
+  %.sroa.0.0167 = phi i32 [ 0, %bb.a ], [ %.sroa.0.1, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 5 uses
+  %.069 = phi i32 [ 0, %bb.a ], [ %.sroa.7.1, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 5 uses
+  %.03668 = phi i32 [ 0, %bb.a ], [ %.sroa.0118.2, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 6 uses
+  %.03767 = phi i32 [ 0, %bb.a ], [ %.sroa.13.2, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 6 uses
+  %i.aa = and i32 %.0171, 1
+  %i.ab = icmp eq i32 %.036170, 2
   br i1 %i.ab, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -494,12 +485,11 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.138 = phi i32 [ %i.aq, %bb.d ], [ %.03767, %bb.c ] ; 5 uses
-  %.1 = phi i32 [ -1, %bb.d ], [ %.03668, %bb.c ]
-  %7 = zext nneg i32 %i.aa to i64                 ; 4 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %7 ; 2 uses
-  %9 = load i32, ptr %8, align 4, !tbaa !112
-  %.not = icmp eq i32 %9, 0
+  %.138 = phi i32 [ %i.aq, %bb.d ], [ %.037169, %bb.c ] ; 6 uses
+  %.1 = phi i32 [ -1, %bb.d ], [ %.036170, %bb.c ]
+  %.sroa.idx87.not = icmp eq i32 %i.aa, 0         ; 11 uses
+  %.sroa.speculated92 = select i1 %.sroa.idx87.not, i32 %.sroa.0.0167, i32 %.069
+  %.not = icmp eq i32 %.sroa.speculated92, 0
   %i.ar = load i32, ptr %i.t, align 8, !tbaa !189 ; 2 uses
   %i.as = add i32 %i.ar, 131064
   %i.at = and i32 %i.as, 131071                   ; 3 uses
@@ -513,34 +503,44 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ba = zext i16 %i.az to i32
   %i.bb = and i32 %i.ar, 7
   %i.bc = lshr i32 %i.ba, %i.bb
-  %i.bd = and i32 %i.bc, 255                      ; 5 uses
-  br i1 %.not, label %bb.h, label %bb.f
+  %i.bd = and i32 %i.bc, 255                      ; 7 uses
+  br i1 %.not, label %bb.h, label %5
 
-bb.f:                                             ; preds = %bb.e
-  %.not41.a = icmp eq i32 %i.bd, 0
-  br i1 %.not41.a, label %bb.j, label %bb.g
+5:                                                ; preds = %bb.e
+  %.not41 = icmp eq i32 %i.bd, 0
+  br i1 %.not41, label %bb.j, label %bb.f
+
+bb.f:                                             ; preds = %5
+  %.neg = shl nsw i32 -128, %.138
+  %.sroa.speculated = select i1 %.sroa.idx87.not, i32 %.03668, i32 %.03767 ; 2 uses
+  %6 = add i32 %.neg, %.sroa.speculated           ; 2 uses
+  %7 = icmp slt i32 %6, 0
+  %.not41.a = icmp eq i32 %.138, 4
+  %or.cond = select i1 %7, i1 true, i1 %.not41.a
+  br i1 %or.cond, label %bb.g, label %.cont54
 
 bb.g:                                             ; preds = %bb.f
-  %.neg = shl nsw i32 -128, %.138
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %7 ; 2 uses
-  %11 = load i32, ptr %10, align 4, !tbaa !112    ; 2 uses
-  %12 = add i32 %11, %.neg                        ; 2 uses
-  %13 = icmp slt i32 %12, 0
-  %14 = icmp eq i32 %.138, 4
-  %or.cond = select i1 %13, i1 true, i1 %14
   %.neg42 = shl nsw i32 -1, %.138
   %i.be = xor i32 %.neg42, -1
-  %i.bf = and i32 %11, %i.be
-  %storemerge = select i1 %or.cond, i32 %i.bf, i32 %12
+  %i.bf = and i32 %.sroa.speculated, %i.be
   %i.bg = shl nuw nsw i32 %i.bd, %.138
-  %i.bh = add nsw i32 %storemerge, %i.bg
-  store i32 %i.bh, ptr %10, align 4, !tbaa !112
+  %i.bh = add nuw nsw i32 %i.bg, %i.bf            ; 2 uses
+  %.sroa.13.0164. = select i1 %.sroa.idx87.not, i32 %.03767, i32 %i.bh
+  %..sroa.0118.0165 = select i1 %.sroa.idx87.not, i32 %i.bh, i32 %.03668
+  br label %bb.j
+
+.cont54:                                          ; preds = %bb.f
+  %8 = shl nuw nsw i32 %i.bd, %.138
+  %9 = add nuw nsw i32 %8, %6                     ; 2 uses
+  %spec.select157 = select i1 %.sroa.idx87.not, i32 %.03767, i32 %9
+  %spec.select158 = select i1 %.sroa.idx87.not, i32 %9, i32 %.03668
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.e
-  store i32 %i.bd, ptr %8, align 4, !tbaa !112
+  %spec.select159 = select i1 %.sroa.idx87.not, i32 %.069, i32 %i.bd ; 2 uses
+  %spec.select160 = select i1 %.sroa.idx87.not, i32 %i.bd, i32 %.sroa.0.0167 ; 2 uses
   %i.bi = icmp ne i32 %i.bd, 0
-  %i.bj = icmp samesign ugt i32 %.069, 11
+  %i.bj = icmp samesign ugt i32 %.0171, 11
   %or.cond3 = select i1 %i.bi, i1 true, i1 %i.bj
   br i1 %or.cond3, label %bb.i, label %bb.j
 
@@ -558,22 +558,25 @@ bb.i:                                             ; preds = %bb.h
   %i.bt = and i32 %i.bl, 7
   %i.bu = lshr i32 %i.bs, %i.bt
   %i.bv = and i32 %i.bu, 15
-  %i.bw = or disjoint i32 %i.bv, %i.bk
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %7
-  store i32 %i.bw, ptr %15, align 4, !tbaa !112
+  %i.bw = or disjoint i32 %i.bv, %i.bk            ; 2 uses
+  %spec.select161 = select i1 %.sroa.idx87.not, i32 %.03767, i32 %i.bw
+  %spec.select162 = select i1 %.sroa.idx87.not, i32 %i.bw, i32 %.03668
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.f, %bb.g, %bb.i, %bb.h
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %7
-  %17 = load i32, ptr %16, align 4, !tbaa !112    ; 2 uses
+bb.j:                                             ; preds = %bb.g, %bb.i, %.cont54, %5, %bb.h
+  %.sroa.13.2 = phi i32 [ %spec.select157, %.cont54 ], [ %.03767, %bb.h ], [ %.03767, %5 ], [ %spec.select161, %bb.i ], [ %.sroa.13.0164., %bb.g ] ; 2 uses
+  %.sroa.0118.2 = phi i32 [ %spec.select158, %.cont54 ], [ %.03668, %bb.h ], [ %.03668, %5 ], [ %spec.select162, %bb.i ], [ %..sroa.0118.0165, %bb.g ] ; 2 uses
+  %.sroa.7.1 = phi i32 [ %.069, %.cont54 ], [ %spec.select159, %bb.h ], [ %.069, %5 ], [ %spec.select159, %bb.i ], [ %.069, %bb.g ]
+  %.sroa.0.1 = phi i32 [ %.sroa.0.0167, %.cont54 ], [ %spec.select160, %bb.h ], [ %.sroa.0.0167, %5 ], [ %spec.select160, %bb.i ], [ %.sroa.0.0167, %bb.g ]
+  %.sroa.speculated80 = select i1 %.sroa.idx87.not, i32 %.sroa.0118.2, i32 %.sroa.13.2 ; 2 uses
   %i.bx = icmp samesign ult i64 %indvars.iv, %i.z
   tail call void @llvm.assume(i1 %i.bx)
   %i.by = getelementptr inbounds nuw [2 x i8], ptr %i.r, i64 %indvars.iv
-  %i.bz = trunc i32 %17 to i16
+  %i.bz = trunc i32 %.sroa.speculated80 to i16
   store i16 %i.bz, ptr %i.by, align 2, !tbaa !191
   %i.ca = load i8, ptr %i.s, align 8, !tbaa !37, !range !133, !noundef !134
   %i.cb = trunc nuw i8 %i.ca to i1
-  %i.cc = icmp eq i32 %17, 0
+  %i.cc = icmp eq i32 %.sroa.speculated80, 0
   %or.cond65 = select i1 %i.cb, i1 %i.cc, i1 false
   br i1 %or.cond65, label %bb.k, label %_ZNSt6vectorIjSaIjEE9push_backEOj.exit
 
@@ -650,7 +653,7 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS
 
 _ZNSt6vectorIjSaIjEE9push_backEOj.exit:           ; preds = %bb.l, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i, %bb.j
   %i.db = add nsw i32 %.1, 1
-  %i.dc = add nuw nsw i32 %.069, 1                ; 2 uses
+  %i.dc = add nuw nsw i32 %.0171, 1               ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond.not = icmp eq i32 %i.dc, 14
   br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !183
