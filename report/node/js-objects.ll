@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   %i.u = add nsw i64 %i.i, -1
   %i.v = inttoptr i64 %i.u to ptr
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %.0.copyload.i.i.i.i.i = load double, ptr %i.w, align 1
+  %.0.copyload.i.i.i.i.i = load double, ptr %i.w, align 2
   br label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit
 
 _ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit: ; preds = %bb.d, %bb.e
@@ -608,7 +608,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.p, label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %.0.copyload.i.i.i.i.i = load double, ptr %i.ai, align 1
+  %.0.copyload.i.i.i.i.i = load double, ptr %i.ai, align 2
   br label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit
 
 _ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit: ; preds = %bb.n, %bb.o
@@ -1011,7 +1011,7 @@ bb.e:                                             ; preds = %_ZN2v88internal8IsN
   %i.x = add nsw i64 %i.a, -1
   %i.y = inttoptr i64 %i.x to ptr
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  %.0.copyload.i.i.i.i.i.i = load double, ptr %i.z, align 1
+  %.0.copyload.i.i.i.i.i.i = load double, ptr %i.z, align 2
   br label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit.i
 
 _ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit.i: ; preds = %bb.e, %bb.d
@@ -1028,7 +1028,7 @@ bb.g:                                             ; preds = %_ZN2v88internal6Obj
   %i.ae = add nsw i64 %.sroa.011.0.i, -1
   %i.af = inttoptr i64 %i.ae to ptr
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %.0.copyload.i.i.i.i.i22.i = load double, ptr %i.ag, align 1
+  %.0.copyload.i.i.i.i.i22.i = load double, ptr %i.ag, align 2
   br label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit23.i
 
 _ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit23.i: ; preds = %bb.g, %bb.f
@@ -1431,7 +1431,7 @@ bb.i:                                             ; preds = %bb.h
   %i.az = add nsw i64 %3, -1
   %i.ba = inttoptr i64 %i.az to ptr
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
-  %.0.copyload.i.i.i.i = load i64, ptr %i.bb, align 1
+  %.0.copyload.i.i.i.i = load i64, ptr %i.bb, align 2
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g

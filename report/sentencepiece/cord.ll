@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %_ZN4absl12lts_20260
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 14
   %i.cm = load i8, ptr %i.cl, align 1, !noalias !159 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cf, i64 %indvars.iv.next.i.i.i.i.i.i.i.prol
-  store i8 %i.cm, ptr %i.cn, align 1, !tbaa !23, !alias.scope !159
+  store i8 %i.cm, ptr %i.cn, align 2, !tbaa !23, !alias.scope !159
   %.0.i.i.i.i.i.i.i.prol = zext i8 %i.cm to i64   ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
 
@@ -607,7 +607,7 @@ bb.ac:                                            ; preds = %_ZN4absl12lts_20260
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 14
   %i.cl = load i8, ptr %i.ck, align 1, !noalias !166 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ce, i64 %indvars.iv.next.i.i.i.i.i.i.i.prol
-  store i8 %i.cl, ptr %i.cm, align 1, !tbaa !23, !alias.scope !166
+  store i8 %i.cl, ptr %i.cm, align 2, !tbaa !23, !alias.scope !166
   %.0.i.i.i.i.i.i.i.prol = zext i8 %i.cl to i64   ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
 
@@ -1010,7 +1010,7 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20260
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 14
   %i.bu = load i8, ptr %i.bt, align 1, !noalias !169 ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bn, i64 %indvars.iv.next.i.i.i.i.i.i.prol
-  store i8 %i.bu, ptr %i.bv, align 1, !tbaa !23, !alias.scope !169
+  store i8 %i.bu, ptr %i.bv, align 2, !tbaa !23, !alias.scope !169
   %.0.i.i.i.i.i.i.prol = zext i8 %i.bu to i64     ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i.prol.loopexit
 
@@ -1413,7 +1413,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20260
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 14
   %i.an = load i8, ptr %i.am, align 1, !noalias !182 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ag, i64 %indvars.iv.next.i.i.i.i.i.i.i.prol
-  store i8 %i.an, ptr %i.ao, align 1, !tbaa !23, !alias.scope !182
+  store i8 %i.an, ptr %i.ao, align 2, !tbaa !23, !alias.scope !182
   %.0.i.i.i.i.i.i.i.prol = zext i8 %i.an to i64   ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
 
@@ -1816,7 +1816,7 @@ bb.l:                                             ; preds = %_ZN4absl12lts_20260
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 14
   %i.bi = load i8, ptr %i.bh, align 1, !noalias !193 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bb, i64 %indvars.iv.next.i.i.i.i.i.i.i.prol
-  store i8 %i.bi, ptr %i.bj, align 1, !tbaa !23, !alias.scope !193
+  store i8 %i.bi, ptr %i.bj, align 2, !tbaa !23, !alias.scope !193
   %.0.i.i.i.i.i.i.i.prol = zext i8 %i.bi to i64   ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
 
@@ -2219,7 +2219,7 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20260
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 14
   %i.ab = load i8, ptr %i.aa, align 1             ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.u, i64 %indvars.iv.next.i.i.i.i.i.prol
-  store i8 %i.ab, ptr %i.ac, align 1, !tbaa !23
+  store i8 %i.ab, ptr %i.ac, align 2, !tbaa !23
   %.0.i.i.i.i.i.prol = zext i8 %i.ab to i64       ; 2 uses
   br label %.lr.ph.i.i.i.i.i.prol.loopexit
 
@@ -2564,7 +2564,7 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 14
   %i.ae = load i8, ptr %i.ad, align 1, !noalias !226 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 %indvars.iv.next.i.i.i.i.i.i.i.prol
-  store i8 %i.ae, ptr %i.af, align 1, !tbaa !23, !alias.scope !226
+  store i8 %i.ae, ptr %i.af, align 2, !tbaa !23, !alias.scope !226
   %.0.i.i.i.i.i.i.i.prol = zext i8 %i.ae to i64   ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
 
@@ -2967,7 +2967,7 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 14
   %i.af = load i8, ptr %i.ae, align 1             ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 %indvars.iv.next.i.i.i.i.i.prol
-  store i8 %i.af, ptr %i.ag, align 1, !tbaa !23
+  store i8 %i.af, ptr %i.ag, align 2, !tbaa !23
   %.0.i.i.i.i.i.prol = zext i8 %i.af to i64       ; 2 uses
   br label %.lr.ph.i.i.i.i.i.prol.loopexit
 
@@ -3274,7 +3274,7 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 14
   %i.ae = load i8, ptr %i.ad, align 1, !noalias !488 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 %indvars.iv.next.i.i.i.i.i.i.prol
-  store i8 %i.ae, ptr %i.af, align 1, !tbaa !23, !alias.scope !488
+  store i8 %i.ae, ptr %i.af, align 2, !tbaa !23, !alias.scope !488
   %.0.i.i.i.i.i.i.prol = zext i8 %i.ae to i64     ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i.prol.loopexit
 
@@ -3677,7 +3677,7 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 14
   %i.af = load i8, ptr %i.ae, align 1, !noalias !494 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 %indvars.iv.next.i.i.i.i.i.i.prol
-  store i8 %i.af, ptr %i.ag, align 1, !tbaa !23, !alias.scope !494
+  store i8 %i.af, ptr %i.ag, align 2, !tbaa !23, !alias.scope !494
   %.0.i.i.i.i.i.i.prol = zext i8 %i.af to i64     ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i.prol.loopexit
 
@@ -3888,7 +3888,7 @@ bb.t:                                             ; preds = %_ZN4absl12lts_20260
   %i.di = getelementptr inbounds nuw i8, ptr %i.dg, i64 14
   %i.dj = load i8, ptr %i.di, align 1, !noalias !495 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dc, i64 %indvars.iv.next.i.i.i.i.i.i36.prol
-  store i8 %i.dj, ptr %i.dk, align 1, !tbaa !23, !alias.scope !495
+  store i8 %i.dj, ptr %i.dk, align 2, !tbaa !23, !alias.scope !495
   %.0.i.i.i.i.i.i37.prol = zext i8 %i.dj to i64   ; 2 uses
   br label %.lr.ph.i.i.i.i.i.i32.prol.loopexit
 

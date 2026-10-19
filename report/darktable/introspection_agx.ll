@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.i
   br label %_adjust_pivot.exit
 
 _adjust_pivot.exit:                               ; preds = %bb.k, %bb.l, %bb.m
-  %.sroa.5.0 = phi nsz float [ %i.et, %bb.m ], [ %i.ep, %bb.k ], [ %i.er, %bb.l ]
+  %.sroa.5.0 = phi float [ %i.et, %bb.m ], [ %i.ep, %bb.k ], [ %i.er, %bb.l ]
   %i.eu = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !139
   tail call void @dt_bauhaus_slider_set(ptr noundef %i.ev, float noundef %.sroa.5.0) #22
@@ -607,7 +607,7 @@ bb.aa:                                            ; preds = %bb.w
   br label %_adjust_pivot.exit
 
 _adjust_pivot.exit:                               ; preds = %bb.y, %bb.z, %bb.aa
-  %.sroa.5.0 = phi nsz float [ %i.kt, %bb.aa ], [ %i.kp, %bb.y ], [ %i.kr, %bb.z ]
+  %.sroa.5.0 = phi float [ %i.kt, %bb.aa ], [ %i.kp, %bb.y ], [ %i.kr, %bb.z ]
   %i.ku = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.kv = load ptr, ptr %i.ku, align 8, !tbaa !139
   tail call void @dt_bauhaus_slider_set(ptr noundef %i.kv, float noundef %.sroa.5.0) #22

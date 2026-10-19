@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store i64 %i.dr, ptr %i.m, align 8
   store ptr %i.m, ptr %i.n, align 8
-  %i.eq = load i64, ptr %.sroa.465.0.copyload, align 8, !noundef !4
+  %i.eq = load i64, ptr %.sroa.465.0.copyload, align 512, !noundef !4
   %i.er = icmp eq i64 %i.eq, %i.dr
   br i1 %i.er, label %bb.ab, label %bb.aa, !prof !10
 
@@ -608,7 +608,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store i64 %i.dr, ptr %i.m, align 8
   store ptr %i.m, ptr %i.n, align 8
-  %i.eq = load i64, ptr %.sroa.465.0.copyload, align 8, !noundef !4
+  %i.eq = load i64, ptr %.sroa.465.0.copyload, align 512, !noundef !4
   %i.er = icmp eq i64 %i.eq, %i.dr
   br i1 %i.er, label %bb.ab, label %bb.aa, !prof !10
 
@@ -1011,7 +1011,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store i64 %i.dt, ptr %i.m, align 8
   store ptr %i.m, ptr %i.n, align 8
-  %i.es = load i64, ptr %.sroa.465.0.copyload, align 8, !noundef !4
+  %i.es = load i64, ptr %.sroa.465.0.copyload, align 512, !noundef !4
   %i.et = icmp eq i64 %i.es, %i.dt
   br i1 %i.et, label %bb.ab, label %bb.aa, !prof !10
 
@@ -1414,7 +1414,7 @@ bb.y:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store i64 %i.dt, ptr %i.m, align 8
   store ptr %i.m, ptr %i.n, align 8
-  %i.es = load i64, ptr %.sroa.465.0.copyload, align 8, !noundef !4
+  %i.es = load i64, ptr %.sroa.465.0.copyload, align 512, !noundef !4
   %i.et = icmp eq i64 %i.es, %i.dt
   br i1 %i.et, label %bb.ab, label %bb.aa, !prof !10
 

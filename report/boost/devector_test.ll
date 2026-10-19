@@ -205,7 +205,7 @@ _ZN5boost9container24uninitialized_move_allocISaIiEPiS3_EENS0_3dtl40enable_if_me
 _ZN5boost9container3dtl18insert_range_proxyISaIiENS_13move_iteratorIPiEEE31uninitialized_copy_n_and_updateIS5_EEvRS3_T_m.exit.i.thread: ; preds = %_ZN5boost9container24uninitialized_move_allocISaIiEPiS3_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S7_E4typeERT_S6_S6_S7_.exit.i58.thread
   %i.bo = sub nuw nsw i64 %i.d, %i.ak
   %i.bp = shl i64 %i.bo, 2
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocISaIiEPiNS0_3dtl18insert_range_proxyIS2_NS_13move_iteratorIS3_EEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SG_mSB_.exit
 
 bb.aa:                                            ; preds = %_ZN5boost9container24uninitialized_move_allocISaIiEPiS3_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S7_E4typeERT_S6_S6_S7_.exit.i58
@@ -608,7 +608,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EEN
 _ZN5boost9container3dtl18insert_range_proxyINS0_9allocatorIiLj2ELj0EEENS_13move_iteratorIPiEEE31uninitialized_copy_n_and_updateIS6_EEvRS4_T_m.exit.i.thread: ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit.i58.thread
   %i.bo = sub nuw nsw i64 %i.d, %i.ak
   %i.bp = shl i64 %i.bo, 2
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_9allocatorIiLj2ELj0EEEPiNS0_3dtl18insert_range_proxyIS3_NS_13move_iteratorIS4_EEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SH_mSC_.exit
 
 bb.aa:                                            ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_9allocatorIiLj2ELj0EEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit.i58
@@ -1011,7 +1011,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorIiEEPiS4_EENS0_
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEEPKiE31uninitialized_copy_n_and_updateIPiEEvRS4_T_m.exit.i.thread: ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorIiEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit.i57.thread
   %i.bo = sub nuw nsw i64 %i.d, %i.ak
   %i.bp = shl i64 %i.bo, 2
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bj, ptr nonnull align 1 %2, i64 %i.bp, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorIiEEPiNS0_3dtl18insert_range_proxyIS3_PKiEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SH_mSC_.exit
 
 bb.aa:                                            ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorIiEEPiS4_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_S8_E4typeERT_S7_S7_S8_.exit.i57

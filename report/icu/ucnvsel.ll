@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.o = load i8, ptr %i.n, align 2, !tbaa !24
+  %i.o = load i8, ptr %i.n, align 4, !tbaa !24
   %i.p = icmp eq i8 %i.o, 67
   br i1 %i.p, label %bb.i, label %bb.l
 
@@ -233,7 +233,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
 
 bb.m:                                             ; preds = %bb.k
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.aa = load i8, ptr %i.z, align 2, !tbaa !24
+  %i.aa = load i8, ptr %i.z, align 4, !tbaa !24
   %.not122 = icmp eq i8 %i.aa, 1
   br i1 %.not122, label %bb.o, label %bb.n
 
@@ -243,7 +243,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ac = load i8, ptr %i.ab, align 2, !tbaa !61
+  %i.ac = load i8, ptr %i.ab, align 4, !tbaa !61
   %.not123 = icmp eq i8 %i.ac, 0
   br i1 %.not123, label %bb.p, label %bb.q
 

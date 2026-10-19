@@ -204,9 +204,9 @@ bb.a:
   %cos = extractvalue { float, float } %sincos, 1
   %i.d = fneg reassoc nsz arcp contract afn float %sin
   %i.e = fcmp reassoc nsz arcp contract afn oeq float %i.c, 0.000000e+00 ; 3 uses
-  %.sroa.9344.0 = select nsz i1 %i.e, float 1.000000e+00, float %cos ; 9 uses
-  %.sroa.7.0 = select nsz i1 %i.e, float 0.000000e+00, float %i.d ; 5 uses
-  %.sroa.5343.0 = select nsz i1 %i.e, float 0.000000e+00, float %sin ; 5 uses
+  %.sroa.9344.0 = select i1 %i.e, float 1.000000e+00, float %cos ; 9 uses
+  %.sroa.7.0 = select i1 %i.e, float 0.000000e+00, float %i.d ; 5 uses
+  %.sroa.5343.0 = select i1 %i.e, float 0.000000e+00, float %sin ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store float %.sroa.9344.0, ptr %i.f, align 4, !tbaa !13
   %.sroa.5343.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 12

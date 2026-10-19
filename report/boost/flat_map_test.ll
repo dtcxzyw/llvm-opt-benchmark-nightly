@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapIiiSt4lessIiEvE11upper_boundERKi.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.m
-  %i.dm = load i32, ptr %i.bx, align 8, !tbaa !501, !noalias !5632
+  %i.dm = load i32, ptr %i.bx, align 16, !tbaa !501, !noalias !5632
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapIiiSt4lessIiESaISt4pairIiiEEE11upper_boundERKi.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.m
-  %i.dm = load i32, ptr %i.bx, align 8, !tbaa !501, !noalias !9007
+  %i.dm = load i32, ptr %i.bx, align 16, !tbaa !501, !noalias !9007
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
@@ -1011,7 +1011,7 @@ bb.m:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapIiiSt4lessIiENS0_13new_allocatorISt4pairIiiEEEE11upper_boundERKi.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.m
-  %i.dm = load i32, ptr %i.bx, align 8, !tbaa !501, !noalias !11572
+  %i.dm = load i32, ptr %i.bx, align 16, !tbaa !501, !noalias !11572
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
@@ -1414,7 +1414,7 @@ bb.h:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapINS0_4test11movable_intES3_St4lessIS3_ENS0_13new_allocatorISt4pairIS3_S3_EEEE11upper_boundERKS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.h
-  %i.cp = load i32, ptr %i.cm, align 8, !tbaa !565, !noalias !13901
+  %i.cp = load i32, ptr %i.cm, align 16, !tbaa !565, !noalias !13901
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i.i
@@ -1817,7 +1817,7 @@ bb.h:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapINS0_4test12copyable_intES3_St4lessIS3_ENS0_13new_allocatorISt4pairIS3_S3_EEEE11upper_boundERKS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.h
-  %i.cp = load i32, ptr %i.cm, align 8, !tbaa !792, !noalias !17943
+  %i.cp = load i32, ptr %i.cm, align 16, !tbaa !792, !noalias !17943
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i.i
@@ -2220,7 +2220,7 @@ bb.h:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapINS0_4test24movable_and_copyable_intES3_St4lessIS3_ENS0_13new_allocatorISt4pairIS3_S3_EEEE11upper_boundERKS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.h
-  %i.cp = load i32, ptr %i.cm, align 8, !tbaa !838, !noalias !22767
+  %i.cp = load i32, ptr %i.cm, align 16, !tbaa !838, !noalias !22767
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i.i
@@ -2623,7 +2623,7 @@ bb.h:                                             ; preds = %bb.d
   br i1 %.not12.i.i.i, label %_ZN5boost9container8flat_mapINS0_4test24movable_and_copyable_intES3_NS2_16less_transparentENS0_13new_allocatorISt4pairIS3_S3_EEEE11upper_boundERKS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.h
-  %i.cp = load i32, ptr %i.cm, align 8, !tbaa !838, !noalias !27193
+  %i.cp = load i32, ptr %i.cm, align 16, !tbaa !838, !noalias !27193
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i.i

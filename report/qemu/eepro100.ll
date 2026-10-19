@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 eepro100_read_eeprom.exit.i:                      ; preds = %bb.e
-  %.val.i.i.i = load i16, ptr %i.g, align 1
+  %.val.i.i.i = load i16, ptr %i.g, align 2
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 11896
   %i.k = load ptr, ptr %i.j, align 8
   %i.l = tail call zeroext i16 @eeprom93xx_read(ptr noundef %i.k) #10
@@ -227,7 +227,7 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 eepro100_read_mdi.exit.i:                         ; preds = %bb.g
-  %.val.i.i9.i = load i32, ptr %i.o, align 1
+  %.val.i.i9.i = load i32, ptr %i.o, align 4
   %i.r = or i32 %.val.i.i9.i, 268435456
   %i.s = shl nuw nsw i32 %i.a, 3
   %i.t = and i32 %i.s, 24
@@ -270,7 +270,7 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 e100_read_reg2.exit.i:                            ; preds = %bb.m
-  %.val.i.i = load i16, ptr %i.ad, align 1
+  %.val.i.i = load i16, ptr %i.ad, align 2
   br label %bb.o
 
 bb.o:                                             ; preds = %e100_read_reg2.exit.i, %bb.l
@@ -295,7 +295,7 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 eepro100_read_eeprom.exit.i14:                    ; preds = %bb.p
-  %.val.i.i.i15 = load i16, ptr %i.ag, align 1
+  %.val.i.i.i15 = load i16, ptr %i.ag, align 2
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 11896
   %i.ak = load ptr, ptr %i.aj, align 8
   %i.al = tail call zeroext i16 @eeprom93xx_read(ptr noundef %i.ak) #10
@@ -317,7 +317,7 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 eepro100_read_mdi.exit.i10:                       ; preds = %bb.r
-  %.val.i.i9.i11 = load i32, ptr %i.an, align 1
+  %.val.i.i9.i11 = load i32, ptr %i.an, align 4
   %i.aq = or i32 %.val.i.i9.i11, 268435456
   %i.ar = shl nuw nsw i32 %i.z, 3
   %i.as = and i32 %i.ar, 24
@@ -354,7 +354,7 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 e100_read_reg4.exit.i:                            ; preds = %bb.v
-  %.val.i.i31 = load i32, ptr %i.bc, align 1
+  %.val.i.i31 = load i32, ptr %i.bc, align 4
   br label %bb.x
 
 bb.x:                                             ; preds = %e100_read_reg4.exit.i, %bb.u
@@ -382,7 +382,7 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 eepro100_read_eeprom.exit.i25:                    ; preds = %bb.z
-  %.val.i.i.i26 = load i16, ptr %i.bf, align 1
+  %.val.i.i.i26 = load i16, ptr %i.bf, align 2
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 11896
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = tail call zeroext i16 @eeprom93xx_read(ptr noundef %i.bj) #10
@@ -405,7 +405,7 @@ bb.ac:                                            ; preds = %bb.ab
   unreachable
 
 eepro100_read_mdi.exit.i21:                       ; preds = %bb.ab
-  %.val.i.i9.i22 = load i32, ptr %i.bn, align 1
+  %.val.i.i9.i22 = load i32, ptr %i.bn, align 4
   %i.bq = or i32 %.val.i.i9.i22, 268435456
   br label %eepro100_read4.exit
 
@@ -621,7 +621,7 @@ bb.u:                                             ; preds = %bb.t
   unreachable
 
 e100_write_reg2.exit.i:                           ; preds = %bb.t
-  store i16 %i.au, ptr %i.ay, align 1
+  store i16 %i.au, ptr %i.ay, align 2
   br label %bb.v
 
 bb.v:                                             ; preds = %e100_write_reg2.exit.i, %bb.s
@@ -782,7 +782,7 @@ bb.al:                                            ; preds = %bb.ak
   unreachable
 
 e100_write_reg4.exit.i:                           ; preds = %bb.ak
-  store i32 %i.cr, ptr %i.cv, align 1
+  store i32 %i.cr, ptr %i.cv, align 4
   br label %bb.am
 
 bb.am:                                            ; preds = %e100_write_reg4.exit.i, %bb.aj
@@ -931,7 +931,7 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 e100_read_reg4.exit16.i:                          ; preds = %bb.g
-  %.val.i15.i = load i32, ptr %i.af, align 1
+  %.val.i15.i = load i32, ptr %i.af, align 4
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 11916
   store i32 %.val.i15.i, ptr %i.ai, align 4
   br label %eepro100_ru_command.exit
@@ -988,7 +988,7 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 e100_read_reg4.exit34.i:                          ; preds = %bb.k
-  %.val.i33.i = load i32, ptr %i.au, align 1      ; 3 uses
+  %.val.i33.i = load i32, ptr %i.au, align 4      ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 11924 ; 2 uses
   store i32 %.val.i33.i, ptr %i.ax, align 4
   %i.ay = and i32 %.val.i33.i, 3
@@ -1030,7 +1030,7 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 e100_read_reg4.exit37.i:                          ; preds = %bb.o
-  %.val.i36.i = load i32, ptr %i.bj, align 1
+  %.val.i36.i = load i32, ptr %i.bj, align 4
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 11908
   store i32 %.val.i36.i, ptr %i.bm, align 4
   br label %eepro100_cu_command.exit
@@ -1086,7 +1086,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 e100_read_reg4.exit:                              ; preds = %bb.a
-  %.val.i = load i32, ptr %i.a, align 1           ; 2 uses
+  %.val.i = load i32, ptr %i.a, align 4           ; 2 uses
   %i.d = and i32 %.val.i, 3
   switch i32 %i.d, label %default.unreachable [
     i32 0, label %bb.c
@@ -1097,7 +1097,7 @@ e100_read_reg4.exit:                              ; preds = %bb.a
 
 bb.c:                                             ; preds = %e100_read_reg4.exit
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2768
-  store i64 0, ptr %i.e, align 1
+  store i64 0, ptr %i.e, align 4
   tail call fastcc void @nic_selective_reset(ptr noundef nonnull %0)
   br label %bb.g
 
@@ -1147,7 +1147,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 e100_read_reg4.exit:                              ; preds = %bb.a
-  %.val.i = load i32, ptr %i.a, align 1           ; 11 uses
+  %.val.i = load i32, ptr %i.a, align 4           ; 11 uses
   %i.d = lshr i32 %.val.i, 16                     ; 2 uses
   %i.e = trunc i32 %i.d to i8
   %i.f = and i8 %i.e, 31                          ; 6 uses
@@ -1191,7 +1191,7 @@ bb.h:                                             ; preds = %bb.g
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 11826 ; 2 uses
   store i16 12288, ptr %i.p, align 2
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 11828
-  store i16 30733, ptr %i.q, align 2
+  store i16 30733, ptr %i.q, align 4
   %i.r = zext nneg i8 %i.f to i64
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.p, i64 %i.r
   %i.t = load i16, ptr %i.s, align 2
@@ -1248,7 +1248,7 @@ bb.p:                                             ; preds = %bb.o
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 11826
   store i16 12288, ptr %i.am, align 2
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 11828
-  store i16 30733, ptr %i.an, align 2
+  store i16 30733, ptr %i.an, align 4
   br label %bb.t
 
 bb.q:                                             ; preds = %bb.n
@@ -1323,7 +1323,7 @@ e100_write_reg4.exit:                             ; preds = %bb.u, %e100_read_re
   %i.bo = and i32 %.047, -65536
   %i.bp = zext i16 %.2 to i32
   %i.bq = or disjoint i32 %i.bo, %i.bp
-  store i32 %i.bq, ptr %i.a, align 1
+  store i32 %i.bq, ptr %i.a, align 4
   ret void
 }
 

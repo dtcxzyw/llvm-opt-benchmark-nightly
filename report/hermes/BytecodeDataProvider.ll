@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.g
   %i.ai = icmp eq i32 %2, 1
   %i.aj = select i1 %i.ai, i64 -2240826417119764423, i64 2240826417119764422
-  %i.ak = load i64, ptr %0, align 1, !tbaa !146
+  %i.ak = load i64, ptr %0, align 4, !tbaa !146
   %.not22 = icmp eq i64 %i.ak, %i.aj
   br i1 %.not22, label %bb.m, label %bb.k
 
@@ -218,7 +218,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.j
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ap = load i32, ptr %i.ao, align 1, !tbaa !147
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !147
   %.not23 = icmp eq i32 %i.ap, 96
   br i1 %.not23, label %bb.q, label %bb.n
 
@@ -260,7 +260,7 @@ bb.p:                                             ; preds = %_ZN4llvh11raw_ostre
 
 _ZN4llvh11raw_ostreamlsEPKc.exit41:               ; preds = %bb.o, %bb.p
   %.0.i.i40 = phi ptr [ %i.bd, %bb.o ], [ %i.au, %bb.p ]
-  %i.bg = load i32, ptr %i.ao, align 1, !tbaa !147
+  %i.bg = load i32, ptr %i.ao, align 4, !tbaa !147
   %i.bh = zext i32 %i.bg to i64
   %i.bi = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(36) %.0.i.i40, i64 noundef %i.bh) #20 ; 0 uses
   call void @_ZN4llvh18raw_string_ostreamD1Ev(ptr noundef nonnull align 8 dereferenceable(48) %5) #20
@@ -269,7 +269,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit41:               ; preds = %bb.o, %bb.p
 
 bb.q:                                             ; preds = %bb.m
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.bk = load i32, ptr %i.bj, align 1, !tbaa !46
+  %i.bk = load i32, ptr %i.bj, align 4, !tbaa !46
   %i.bl = icmp eq i32 %i.bk, 0
   br i1 %i.bl, label %bb.r, label %bb.t
 
@@ -283,7 +283,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.q
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.bo = load i32, ptr %i.bn, align 1, !tbaa !47
+  %i.bo = load i32, ptr %i.bn, align 4, !tbaa !47
   %i.bp = zext i32 %i.bo to i64
   %i.bq = icmp ult i64 %1, %i.bp
   br i1 %i.bq, label %bb.u, label %bb.w
@@ -302,7 +302,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bt = getelementptr inbounds nuw i8, ptr %6, i64 40
   store ptr %3, ptr %i.bt, align 8, !tbaa !145
   %i.bu = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(36) %6, ptr noundef nonnull @.str.8)
-  %i.bv = load i32, ptr %i.bn, align 1, !tbaa !47
+  %i.bv = load i32, ptr %i.bn, align 4, !tbaa !47
   %i.bw = zext i32 %i.bv to i64
   %i.bx = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(36) %i.bu, i64 noundef %i.bw) #20
   %i.by = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(36) %i.bx, ptr noundef nonnull @.str.1)

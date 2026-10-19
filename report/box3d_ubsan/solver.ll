@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
 
 b3AtomicStoreInt.exit:                            ; preds = %bb.k
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 3 uses
-  store atomic i32 0, ptr %i.ar seq_cst, align 4
+  store atomic i32 0, ptr %i.ar seq_cst, align 8
   %i.as = shl i32 %i.ai, 2
   %i.at = tail call ptr @b3StackAlloc(ptr noundef nonnull %0, i32 noundef %i.as, ptr noundef nonnull @.str) #13
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 4 uses
@@ -607,7 +607,7 @@ bb.me:                                            ; preds = %bb.md
 
 .preheader:                                       ; preds = %bb.md
   %i.bfw = getelementptr inbounds nuw i8, ptr %i.bfj, i64 24
-  %.07438765 = load i32, ptr %i.bfw, align 4, !tbaa !103 ; 4 uses
+  %.07438765 = load i32, ptr %i.bfw, align 8, !tbaa !103 ; 4 uses
   %.not9418766 = icmp eq i32 %.07438765, -1
   br i1 %.not9418766, label %.loopexit, label %.lr.ph8768
 
@@ -1010,9 +1010,9 @@ bb.q:                                             ; preds = %bb.ak, %.lr.ph836.s
   %i.ci = or disjoint i32 %i.ch, 3
   call fastcc void @b3ExecuteMainStage(ptr noundef nonnull %i.bx, ptr noundef %i.i, i32 noundef %i.ci)
   %i.cj = call float @b3GetMillisecondsAndReset(ptr noundef nonnull %i.a) #13
-  %i.ck = load float, ptr %i.by, align 4, !tbaa !330
+  %i.ck = load float, ptr %i.by, align 8, !tbaa !330
   %i.cl = fadd float %i.cj, %i.ck
-  store float %i.cl, ptr %i.by, align 4, !tbaa !330
+  store float %i.cl, ptr %i.by, align 8, !tbaa !330
   call void @b3WarmStartJoints_Overflow(ptr noundef nonnull %i.i) #13
   call void @b3WarmStartContacts_Overflow(ptr noundef nonnull %i.i) #13
   br i1 %i.bz, label %.lr.ph.us839.us, label %._crit_edge717.us.us
@@ -1207,9 +1207,9 @@ bb.ab:                                            ; preds = %b3ExecuteMainStage.
   %.us-phi765.us.us = phi i32 [ %.us-phi727.us.us.us, %.split764.us843.us.loopexit ], [ %.0173.lcssa.us.us, %.split764.us843.us.loopexit1113 ] ; 5 uses
   %.us-phi766.us.us = phi i32 [ %i.ex, %.split764.us843.us.loopexit ], [ %.1177.us842.us.1, %.split764.us843.us.loopexit1113 ] ; 4 uses
   %i.ey = call float @b3GetMillisecondsAndReset(ptr noundef nonnull %i.a) #13
-  %i.ez = load float, ptr %i.cc, align 4, !tbaa !333
+  %i.ez = load float, ptr %i.cc, align 8, !tbaa !333
   %i.fa = fadd float %i.ey, %i.ez
-  store float %i.fa, ptr %i.cc, align 4, !tbaa !333
+  store float %i.fa, ptr %i.cc, align 8, !tbaa !333
   %.not194.us.us = icmp eq i32 %.0181832.us.us, 32767
   br i1 %.not194.us.us, label %.split907.us, label %bb.ac, !prof !97, !nosanitize !9
 
@@ -1336,9 +1336,9 @@ bb.aj:                                            ; preds = %b3ExecuteMainStage.
 bb.ak:                                            ; preds = %._crit_edge797.us.us
   %i.hc = extractvalue { i32, i1 } %i.ha, 0, !nosanitize !9 ; 2 uses
   %i.hd = call float @b3GetMillisecondsAndReset(ptr noundef nonnull %i.a) #13
-  %i.he = load float, ptr %i.ce, align 4, !tbaa !335
+  %i.he = load float, ptr %i.ce, align 8, !tbaa !335
   %i.hf = fadd float %i.hd, %i.he
-  store float %i.hf, ptr %i.ce, align 4, !tbaa !335
+  store float %i.hf, ptr %i.ce, align 8, !tbaa !335
   %i.hg = add nuw nsw i32 %.0175834.us.us, 1      ; 2 uses
   %exitcond1652.not = icmp eq i32 %i.hg, %i.br
   br i1 %exitcond1652.not, label %._crit_edge837, label %bb.q, !llvm.loop !325
@@ -1706,9 +1706,9 @@ bb.bg:                                            ; preds = %bb.bf
 b3AtomicStoreU32.exit:                            ; preds = %bb.bf
   %i.lh = call float @b3GetMillisecondsAndReset(ptr noundef nonnull %i.a) #13
   %i.li = getelementptr inbounds nuw i8, ptr %i.t, i64 4544 ; 2 uses
-  %i.lj = load float, ptr %i.li, align 4, !tbaa !337
+  %i.lj = load float, ptr %i.li, align 8, !tbaa !337
   %i.lk = fadd float %i.lh, %i.lj
-  store float %i.lk, ptr %i.li, align 4, !tbaa !337
+  store float %i.lk, ptr %i.li, align 8, !tbaa !337
   store atomic i32 -1, ptr %i.ip seq_cst, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %.thread
@@ -2111,7 +2111,7 @@ bb.h:                                             ; preds = %bb.g
 
 b3AtomicStoreU32.exit:                            ; preds = %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 280
-  store atomic i32 %2, ptr %i.r seq_cst, align 4
+  store atomic i32 %2, ptr %i.r seq_cst, align 8
   %i.s = lshr i32 %2, 16                          ; 2 uses
   %i.t = add nsw i32 %i.s, -1
   tail call fastcc void @b3ExecuteStage(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %i.t, i32 noundef %i.s, i32 noundef 0)
@@ -2514,7 +2514,7 @@ bb.at:                                            ; preds = %bb.ar
   %i.fo = getelementptr inbounds nuw [8 x i8], ptr %i.fk, i64 %i.fi ; 2 uses
   store i32 %i.fg, ptr %i.fo, align 4, !tbaa !103
   %.sroa.421.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fo, i64 4
-  store i32 %i.fh, ptr %.sroa.421.0..sroa_idx, align 4, !tbaa !103
+  store i32 %i.fh, ptr %.sroa.421.0..sroa_idx, align 8, !tbaa !103
   %i.fp = getelementptr inbounds nuw i8, ptr %2, i64 196 ; 2 uses
   %i.fq = shl nuw nsw i64 %i.fi, 2
   %i.fr = ptrtoint ptr %i.fp to i64, !nosanitize !9 ; 3 uses

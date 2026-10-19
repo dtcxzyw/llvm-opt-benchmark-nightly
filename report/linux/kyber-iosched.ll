@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.dn = add nuw i32 %.1, 1
   %i.do = mul i32 %i.dm, %i.dn
   %i.dp = lshr i32 %i.do, 2
-  %i.dq = tail call i32 @llvm.umax.i32(i32 range(i32 0, 1073741824) %i.dp, i32 1)
+  %i.dq = tail call i32 @llvm.umax.i32(i32 %i.dp, i32 1)
   %i.dr = tail call i32 @llvm.umin.i32(i32 %i.dq, i32 256) ; 3 uses
   %.not24.i = icmp eq i32 %i.dr, %i.dm
   br i1 %.not24.i, label %kyber_resize_domain.exit, label %bb.k
@@ -283,7 +283,7 @@ bb.s:                                             ; preds = %bb.r
   %i.eq = add nuw i32 %.1.1, 1
   %i.er = mul i32 %i.ep, %i.eq
   %i.es = lshr i32 %i.er, 2
-  %i.et = tail call i32 @llvm.umax.i32(i32 range(i32 0, 1073741824) %i.es, i32 1)
+  %i.et = tail call i32 @llvm.umax.i32(i32 %i.es, i32 1)
   %i.eu = tail call i32 @llvm.umin.i32(i32 %i.et, i32 128) ; 3 uses
   %.not24.i.1 = icmp eq i32 %i.eu, %i.ep
   br i1 %.not24.i.1, label %kyber_resize_domain.exit.1, label %bb.t
@@ -358,7 +358,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.fs = add nuw i32 %.1.2, 1
   %i.ft = mul i32 %i.fr, %i.fs
   %i.fu = lshr i32 %i.ft, 2
-  %i.fv = tail call i32 @llvm.umax.i32(i32 range(i32 0, 1073741824) %i.fu, i32 1)
+  %i.fv = tail call i32 @llvm.umax.i32(i32 %i.fu, i32 1)
   %i.fw = tail call i32 @llvm.umin.i32(i32 %i.fv, i32 64) ; 3 uses
   %.not24.i.2 = icmp eq i32 %i.fw, %i.fr
   br i1 %.not24.i.2, label %kyber_resize_domain.exit.2, label %bb.ac

@@ -205,7 +205,7 @@ bb.pu:                                            ; preds = %bb.pt, %bb.ps
 
 .preheader71.split.us.preheader.i:                ; preds = %.preheader71.i
   call void @_ZN5ImGui6PushIDEi(i32 noundef 0)
-  %i.bjr = load i8, ptr %i.bjo, align 4, !tbaa !120
+  %i.bjr = load i8, ptr %i.bjo, align 16, !tbaa !120
   %i.bjs = icmp ne i8 %i.bjr, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #30
   store <2 x float> %i.bjn, ptr %37, align 8, !tbaa !46
@@ -214,9 +214,9 @@ bb.pu:                                            ; preds = %bb.pt, %bb.ps
   br i1 %i.bjt, label %bb.pv, label %bb.pw
 
 bb.pv:                                            ; preds = %.preheader71.split.us.preheader.i
-  %i.bju = load i8, ptr %i.bjo, align 4, !tbaa !120
+  %i.bju = load i8, ptr %i.bjo, align 16, !tbaa !120
   %i.bjv = xor i8 %i.bju, 1
-  store i8 %i.bjv, ptr %i.bjo, align 4, !tbaa !120
+  store i8 %i.bjv, ptr %i.bjo, align 16, !tbaa !120
   %i.bjw = getelementptr inbounds nuw i8, ptr %i.bjo, i64 1 ; 2 uses
   %i.bjx = load i8, ptr %i.bjw, align 1, !tbaa !120
   %i.bjy = xor i8 %i.bjx, 1
@@ -243,9 +243,9 @@ bb.px:                                            ; preds = %bb.pw
   %i.bkf = load i8, ptr %i.bkb, align 1, !tbaa !120
   %i.bkg = xor i8 %i.bkf, 1
   store i8 %i.bkg, ptr %i.bkb, align 1, !tbaa !120
-  %i.bkh = load i8, ptr %i.bjo, align 4, !tbaa !120
+  %i.bkh = load i8, ptr %i.bjo, align 16, !tbaa !120
   %i.bki = xor i8 %i.bkh, 1
-  store i8 %i.bki, ptr %i.bjo, align 4, !tbaa !120
+  store i8 %i.bki, ptr %i.bjo, align 16, !tbaa !120
   %i.bkj = getelementptr inbounds nuw i8, ptr %i.bjo, i64 2 ; 2 uses
   %i.bkk = load i8, ptr %i.bkj, align 2, !tbaa !120
   %i.bkl = xor i8 %i.bkk, 1

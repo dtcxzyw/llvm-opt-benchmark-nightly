@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = and i8 %i.s, 1
   %i.u = or disjoint i8 %i.t, 48
   %i.v = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.r
-  store i8 %i.u, ptr %i.v, align 1, !tbaa !74
+  store i8 %i.u, ptr %i.v, align 2, !tbaa !74
   %i.w = lshr i32 %.045, 1
   %indvars.iv.next.i.i.prol = add nsw i64 %i.r, -1
   br label %.lr.ph.i42.i.prol.loopexit
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.e
   %i.s = and i8 %i.r, 1
   %i.t = or disjoint i8 %i.s, 48
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.q
-  store i8 %i.t, ptr %i.u, align 1, !tbaa !74
+  store i8 %i.t, ptr %i.u, align 2, !tbaa !74
   %i.v = lshr i32 %1, 1
   %indvars.iv.next.i.i.prol = add nsw i64 %i.q, -1
   br label %.lr.ph.i42.i.prol.loopexit
