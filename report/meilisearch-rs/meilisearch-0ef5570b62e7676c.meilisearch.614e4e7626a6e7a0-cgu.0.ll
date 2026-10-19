@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/meilisearch-0ef5570b62e7676c.meilisearch.614e4e7626a6e7a0-cgu.0?download=true
 inline.NumInlined: 17146
 inline.NumDeleted: 6832
-loop-unroll.NumCompletelyUnrolled: 149
+loop-unroll.NumCompletelyUnrolled: 148
 loop-unroll.NumRuntimeUnrolled: 76
-loop-unroll.NumUnrolled: 284
+loop-unroll.NumUnrolled: 283
 begin_hunk_0_@_ZN6brotli3enc9metablock31ContextBlockSplitterFinishBlock17h66fa7f7da5e00ab8E:bb.a
   %i.ag = icmp ugt i64 %i.ad, %3
   br i1 %i.ag, label %bb.o, label %bb.l, !prof !47
@@ -205,17 +205,17 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph, %.loopexit
-  %.sroa.0.0 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.nc, %.loopexit ]
-  %.sroa.7.0 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.pl, %.loopexit ]
-  %.sroa.030.175 = phi i64 [ 1, %.lr.ph ], [ %.sroa.030.1, %.loopexit ] ; 3 uses
-  %.sroa.030.074 = phi i64 [ 0, %.lr.ph ], [ %.sroa.030.175, %.loopexit ] ; 12 uses
+  %.sroa.042.1102 = phi i64 [ 1, %.lr.ph ], [ %.sroa.030.1, %.loopexit ] ; 3 uses
+  %.sroa.7.0 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.nc, %.loopexit ]
+  %.sroa.7.1100 = phi float [ 0.000000e+00, %.lr.ph ], [ %i.pl, %.loopexit ]
+  %.sroa.030.074 = phi i64 [ 0, %.lr.ph ], [ %.sroa.042.1102, %.loopexit ] ; 12 uses
   %i.by = add nuw i64 %i.bq, %.sroa.030.074       ; 3 uses
   %i.bz = icmp ult i64 %i.by, %3
   br i1 %i.bz, label %bb.cf, label %.invoke293
 
 ._crit_edge:                                      ; preds = %.loopexit, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$10alloc_cell17h88530c57ef19323aE.exit"
-  %.sroa.0.1 = phi float [ 0.000000e+00, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$10alloc_cell17h88530c57ef19323aE.exit" ], [ %i.nc, %.loopexit ] ; 2 uses
-  %.sroa.7.1 = phi float [ 0.000000e+00, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$10alloc_cell17h88530c57ef19323aE.exit" ], [ %i.pl, %.loopexit ] ; 2 uses
+  %.sroa.0.1 = phi float [ 0.000000e+00, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$10alloc_cell17h88530c57ef19323aE.exit" ], [ %i.pl, %.loopexit ] ; 2 uses
+  %.sroa.7.1 = phi float [ 0.000000e+00, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$10alloc_cell17h88530c57ef19323aE.exit" ], [ %i.nc, %.loopexit ] ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.cb = load i64, ptr %i.ca, align 8, !noundef !45 ; 5 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -226,14 +226,14 @@ bb.z:                                             ; preds = %.lr.ph, %.loopexit
 bb.aa:                                            ; preds = %._crit_edge
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.cg = load float, ptr %i.cf, align 8, !noundef !45 ; 2 uses
-  %i.ch = fcmp ogt float %.sroa.0.1, %i.cg
-  %i.ci = fcmp ogt float %.sroa.7.1, %i.cg
+  %i.ch = fcmp ogt float %.sroa.7.1, %i.cg
+  %i.ci = fcmp ogt float %.sroa.0.1, %i.cg
   %or.cond = select i1 %i.ch, i1 %i.ci, i1 false
   br i1 %or.cond, label %bb.aw, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %._crit_edge
-  %i.cj = fadd float %.sroa.0.1, -2.000000e+01
-  %i.ck = fcmp olt float %.sroa.7.1, %i.cj
+  %i.cj = fadd float %.sroa.7.1, -2.000000e+01
+  %i.ck = fcmp olt float %.sroa.0.1, %i.cj
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val116 = load i64, ptr %i.cl, align 8, !noundef !45 ; 4 uses
   %i.cm = load i64, ptr %i.k, align 8, !noundef !45 ; 9 uses
@@ -636,7 +636,7 @@ bb.cj:                                            ; preds = %middle.block340
   %i.mz = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %.sroa.030.074
   %i.na = load float, ptr %i.mz, align 4, !noundef !45
   %i.nb = fsub float %i.my, %i.na
-  %i.nc = fadd float %.sroa.0.0, %i.nb            ; 2 uses
+  %i.nc = fadd float %.sroa.7.0, %i.nb            ; 2 uses
   %i.nd = add i64 %i.d, %.sroa.030.074            ; 7 uses
   %i.ne = load i64, ptr %i.bu, align 8, !noundef !45
   %i.nf = add i64 %i.ne, %.sroa.030.074           ; 3 uses
@@ -746,10 +746,10 @@ bb.cl:                                            ; preds = %middle.block
   %i.pi = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %i.nd
   %i.pj = load float, ptr %i.pi, align 4, !noundef !45
   %i.pk = fsub float %i.ph, %i.pj
-  %i.pl = fadd float %.sroa.7.0, %i.pk            ; 2 uses
-  %i.pm = icmp ult i64 %.sroa.030.175, %i.d       ; 2 uses
+  %i.pl = fadd float %.sroa.7.1100, %i.pk         ; 2 uses
+  %i.pm = icmp ult i64 %.sroa.042.1102, %i.d      ; 2 uses
   %i.pn = zext i1 %i.pm to i64
-  %.sroa.030.1 = add nuw i64 %.sroa.030.175, %i.pn
+  %.sroa.030.1 = add nuw i64 %.sroa.042.1102, %i.pn
   br i1 %i.pm, label %bb.z, label %._crit_edge
 
 bb.cm:                                            ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i.i.i", %.loopexit.split-lp

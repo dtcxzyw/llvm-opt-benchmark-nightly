@@ -205,9 +205,7 @@ scalar.ph:                                        ; preds = %vector.memcheck, %s
 HistogramAddHistogramLiteral.exit:                ; preds = %vector.body, %scalar.ph
   %i.cj = load i64, ptr %0, align 8, !tbaa !87
   %i.ck = tail call double @BrotliBitsEntropy(ptr noundef nonnull %i.ao, i64 noundef %i.cj) #8 ; 3 uses
-  %2 = fsub double %i.ck, %i.am
   %i.cl = load double, ptr %i.c, align 8, !tbaa !108
-  %3 = fsub double %2, %i.cl                      ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 2168
   %i.cn = load i64, ptr %i.cm, align 8, !tbaa !24
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 1096 ; 9 uses
@@ -291,6 +289,8 @@ scalar.ph141:                                     ; preds = %HistogramAddHistogr
   br i1 %exitcond.1.not.3, label %HistogramAddHistogramLiteral.exit.1, label %scalar.ph141, !llvm.loop !180
 
 HistogramAddHistogramLiteral.exit.1:              ; preds = %vector.body147, %scalar.ph141
+  %2 = fsub double %i.ck, %i.am
+  %3 = fsub double %2, %i.cl                      ; 2 uses
   %i.ei = load i64, ptr %0, align 8, !tbaa !87
   %i.ej = tail call double @BrotliBitsEntropy(ptr noundef nonnull %i.co, i64 noundef %i.ei) #8 ; 2 uses
   %i.ek = fsub double %i.ej, %i.am
@@ -648,19 +648,19 @@ bb.i:                                             ; preds = %bb.h
   br label %vector.memcheck263
 
 vector.memcheck263:                               ; preds = %.lr.ph, %HistogramAddHistogramLiteral.exit.1
-  %.sroa.0.0 = phi double [ 0.000000e+00, %.lr.ph ], [ %5, %HistogramAddHistogramLiteral.exit.1 ]
+  %.0186208 = phi i64 [ 0, %.lr.ph ], [ %i.fw, %HistogramAddHistogramLiteral.exit.1 ] ; 8 uses
   %.sroa.7.0 = phi double [ 0.000000e+00, %.lr.ph ], [ %i.fv, %HistogramAddHistogramLiteral.exit.1 ]
-  %.0184204 = phi i64 [ 0, %.lr.ph ], [ %i.fw, %HistogramAddHistogramLiteral.exit.1 ] ; 8 uses
+  %.sroa.0.0206 = phi double [ 0.000000e+00, %.lr.ph ], [ %5, %HistogramAddHistogramLiteral.exit.1 ]
   %i.bs = load i64, ptr %i.bl, align 8, !tbaa !85
   %i.bt = getelementptr [1040 x i8], ptr %i.i, i64 %i.bs
-  %i.bu = getelementptr [1040 x i8], ptr %i.bt, i64 %.0184204 ; 3 uses
+  %i.bu = getelementptr [1040 x i8], ptr %i.bt, i64 %.0186208 ; 3 uses
   %i.bv = load i64, ptr %0, align 8, !tbaa !68
   %i.bw = tail call double @BrotliBitsEntropy(ptr noundef %i.bu, i64 noundef %i.bv) #8 ; 3 uses
-  %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0184204
+  %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0186208
   store double %i.bw, ptr %i.bx, align 8, !tbaa !108
-  %invariant.gep = getelementptr [1040 x i8], ptr %i.i, i64 %.0184204 ; 2 uses
+  %invariant.gep = getelementptr [1040 x i8], ptr %i.i, i64 %.0186208 ; 2 uses
   %i.by = load i64, ptr %i.bm, align 8, !tbaa !24
-  %i.bz = getelementptr inbounds nuw [1040 x i8], ptr %i.bk, i64 %.0184204 ; 9 uses
+  %i.bz = getelementptr inbounds nuw [1040 x i8], ptr %i.bk, i64 %.0186208 ; 9 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1040) %i.bz, ptr noundef nonnull align 8 dereferenceable(1040) %i.bu, i64 1040, i1 false), !tbaa.struct !110
   %gep = getelementptr [1040 x i8], ptr %invariant.gep, i64 %i.by ; 8 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %gep, i64 1024 ; 2 uses
@@ -741,14 +741,11 @@ scalar.ph268:                                     ; preds = %vector.memcheck263,
 HistogramAddHistogramLiteral.exit:                ; preds = %vector.body270, %scalar.ph268
   %i.dq = load i64, ptr %0, align 8, !tbaa !68
   %i.dr = tail call double @BrotliBitsEntropy(ptr noundef nonnull %i.bz, i64 noundef %i.dq) #8 ; 2 uses
-  %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0184204
+  %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0186208
   store double %i.dr, ptr %i.ds, align 8, !tbaa !108
-  %3 = fsub double %i.dr, %i.bw
-  %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.0184204
+  %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.0186208
   %i.du = load double, ptr %i.dt, align 8, !tbaa !108
-  %4 = fsub double %3, %i.du
-  %5 = fadd double %.sroa.0.0, %4                 ; 2 uses
-  %i.dv = add i64 %i.f, %.0184204                 ; 3 uses
+  %i.dv = add i64 %i.f, %.0186208                 ; 3 uses
   %i.dw = load i64, ptr %i.bn, align 8, !tbaa !24
   %i.dx = getelementptr inbounds nuw [1040 x i8], ptr %i.bk, i64 %i.dv ; 9 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1040) %i.dx, ptr noundef nonnull align 8 dereferenceable(1040) %i.bu, i64 1040, i1 false), !tbaa.struct !110
@@ -829,6 +826,9 @@ scalar.ph:                                        ; preds = %HistogramAddHistogr
   br i1 %exitcond.1.not.3, label %HistogramAddHistogramLiteral.exit.1, label %scalar.ph, !llvm.loop !196
 
 HistogramAddHistogramLiteral.exit.1:              ; preds = %vector.body, %scalar.ph
+  %3 = fsub double %i.dr, %i.bw
+  %4 = fsub double %3, %i.du
+  %5 = fadd double %.sroa.0.0206, %4              ; 2 uses
   %i.fo = load i64, ptr %0, align 8, !tbaa !68
   %i.fp = tail call double @BrotliBitsEntropy(ptr noundef nonnull %i.dx, i64 noundef %i.fo) #8 ; 2 uses
   %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.dv
@@ -838,7 +838,7 @@ HistogramAddHistogramLiteral.exit.1:              ; preds = %vector.body, %scala
   %i.ft = load double, ptr %i.fs, align 8, !tbaa !108
   %i.fu = fsub double %i.fr, %i.ft
   %i.fv = fadd double %.sroa.7.0, %i.fu           ; 2 uses
-  %i.fw = add nuw i64 %.0184204, 1                ; 2 uses
+  %i.fw = add nuw i64 %.0186208, 1                ; 2 uses
   %exitcond234.not = icmp eq i64 %i.fw, %i.f
   br i1 %exitcond234.not, label %._crit_edge, label %vector.memcheck263, !llvm.loop !197
 
@@ -1241,9 +1241,7 @@ scalar.ph:                                        ; preds = %vector.memcheck, %s
 HistogramAddHistogramCommand.exit:                ; preds = %vector.body, %scalar.ph
   %i.cj = load i64, ptr %0, align 8, !tbaa !94
   %i.ck = tail call double @BrotliBitsEntropy(ptr noundef nonnull %i.ao, i64 noundef %i.cj) #8 ; 3 uses
-  %2 = fsub double %i.ck, %i.am
   %i.cl = load double, ptr %i.c, align 8, !tbaa !108
-  %3 = fsub double %2, %i.cl                      ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 5752
   %i.cn = load i64, ptr %i.cm, align 8, !tbaa !24
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 2888 ; 9 uses
@@ -1327,6 +1325,8 @@ scalar.ph141:                                     ; preds = %HistogramAddHistogr
   br i1 %exitcond.1.not.3, label %HistogramAddHistogramCommand.exit.1, label %scalar.ph141, !llvm.loop !216
 
 HistogramAddHistogramCommand.exit.1:              ; preds = %vector.body147, %scalar.ph141
+  %2 = fsub double %i.ck, %i.am
+  %3 = fsub double %2, %i.cl                      ; 2 uses
   %i.ei = load i64, ptr %0, align 8, !tbaa !94
   %i.ej = tail call double @BrotliBitsEntropy(ptr noundef nonnull %i.co, i64 noundef %i.ei) #8 ; 2 uses
   %i.ek = fsub double %i.ej, %i.am
@@ -1658,9 +1658,7 @@ scalar.ph:                                        ; preds = %vector.memcheck, %s
 HistogramAddHistogramDistance.exit:               ; preds = %vector.body, %scalar.ph
   %i.cj = load i64, ptr %0, align 8, !tbaa !101
   %i.ck = tail call double @BrotliBitsEntropy(ptr noundef nonnull %i.ao, i64 noundef %i.cj) #8 ; 3 uses
-  %2 = fsub double %i.ck, %i.am
   %i.cl = load double, ptr %i.c, align 8, !tbaa !108
-  %3 = fsub double %2, %i.cl                      ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 4472
   %i.cn = load i64, ptr %i.cm, align 8, !tbaa !24
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 2248 ; 9 uses
@@ -1744,6 +1742,8 @@ scalar.ph141:                                     ; preds = %HistogramAddHistogr
   br i1 %exitcond.1.not.3, label %HistogramAddHistogramDistance.exit.1, label %scalar.ph141, !llvm.loop !231
 
 HistogramAddHistogramDistance.exit.1:             ; preds = %vector.body147, %scalar.ph141
+  %2 = fsub double %i.ck, %i.am
+  %3 = fsub double %2, %i.cl                      ; 2 uses
   %i.ei = load i64, ptr %0, align 8, !tbaa !101
   %i.ej = tail call double @BrotliBitsEntropy(ptr noundef nonnull %i.co, i64 noundef %i.ei) #8 ; 2 uses
   %i.ek = fsub double %i.ej, %i.am

@@ -205,8 +205,8 @@ bb.v:                                             ; preds = %bb.s
   br label %bb.w
 
 ._crit_edge:                                      ; preds = %bb.cm, %.preheader
-  %.sroa.0.0 = phi float [ 0.000000e+00, %.preheader ], [ %i.lt, %bb.cm ] ; 2 uses
-  %.sroa.7.0 = phi float [ 0.000000e+00, %.preheader ], [ %i.nz, %bb.cm ] ; 2 uses
+  %.sroa.0.0 = phi float [ 0.000000e+00, %.preheader ], [ %i.nz, %bb.cm ] ; 2 uses
+  %.sroa.7.0 = phi float [ 0.000000e+00, %.preheader ], [ %i.lt, %bb.cm ] ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.bp = load i64, ptr %i.bo, align 8, !noundef !10 ; 5 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -225,14 +225,14 @@ bb.w:                                             ; preds = %.lr.ph, %bb.cm
 bb.x:                                             ; preds = %._crit_edge
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.bv = load float, ptr %i.bu, align 8, !noundef !10 ; 2 uses
-  %i.bw = fcmp ogt float %.sroa.0.0, %i.bv
-  %i.bx = fcmp ogt float %.sroa.7.0, %i.bv
+  %i.bw = fcmp ogt float %.sroa.7.0, %i.bv
+  %i.bx = fcmp ogt float %.sroa.0.0, %i.bv
   %or.cond = select i1 %i.bw, i1 %i.bx, i1 false
   br i1 %or.cond, label %bb.au, label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %._crit_edge
-  %i.by = fadd float %.sroa.0.0, -2.000000e+01
-  %i.bz = fcmp olt float %.sroa.7.0, %i.by
+  %i.by = fadd float %.sroa.7.0, -2.000000e+01
+  %i.bz = fcmp olt float %.sroa.0.0, %i.by
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 24
   %.val150 = load i64, ptr %i.ca, align 8, !noundef !10 ; 4 uses
   br i1 %i.bz, label %bb.ak, label %bb.z

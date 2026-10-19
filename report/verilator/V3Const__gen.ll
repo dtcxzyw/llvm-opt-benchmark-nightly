@@ -205,7 +205,8 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_ZNSt6vectorIN21ConstBitOpTreeVisitor16BitPolarityEntryESaIS1_EE12emplace_backIJRNS0_8LeafInfoEbiEEERS1_DpOT_.exit
-  %.not103 = phi i1 [ false, %bb.m ], [ true, %_ZNSt6vectorIN21ConstBitOpTreeVisitor16BitPolarityEntryESaIS1_EE12emplace_backIJRNS0_8LeafInfoEbiEEERS1_DpOT_.exit ] ; 2 uses
+  %.066.ptr.sroa.idx = phi i64 [ 24, %bb.m ], [ 32, %_ZNSt6vectorIN21ConstBitOpTreeVisitor16BitPolarityEntryESaIS1_EE12emplace_backIJRNS0_8LeafInfoEbiEEERS1_DpOT_.exit ]
+  %.not103 = phi i1 [ false, %bb.m ], [ true, %_ZNSt6vectorIN21ConstBitOpTreeVisitor16BitPolarityEntryESaIS1_EE12emplace_backIJRNS0_8LeafInfoEbiEEERS1_DpOT_.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   store ptr %0, ptr %3, align 8, !tbaa !342
   %i.cg = load ptr, ptr %i.bp, align 8, !tbaa !373
@@ -235,8 +236,7 @@ bb.n:                                             ; preds = %bb.m, %_ZNSt6vector
   store i32 -1, ptr %i.ca, align 4, !tbaa !368
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cb, i8 0, i64 16, i1 false)
   store ptr %4, ptr %i.bm, align 8, !tbaa !352
-  %.in.v = select i1 %.not103, i64 32, i64 24
-  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
+  %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.066.ptr.sroa.idx
   %i.cv = load ptr, ptr %.in, align 8, !tbaa !192 ; 5 uses
   %i.cw = load i8, ptr %i.cc, align 1, !tbaa !316, !range !115, !noundef !116
   %i.cx = load ptr, ptr %i.cv, align 8, !tbaa !52
