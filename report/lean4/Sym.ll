@@ -204,7 +204,7 @@ lean_obj_tag.exit590.thread:                      ; preds = %lean_inc.exit520.th
   %i.cx = icmp eq i64 %i.cw, 0
   %.0311.in.v813 = select i1 %i.cx, i64 9, i64 25
   %.0311.in814 = getelementptr inbounds nuw i8, ptr %i.ci, i64 %.0311.in.v813
-  %.0311815 = load i8, ptr %.0311.in814, align 1, !tbaa !16
+  %.0311815 = load i8, ptr %.0311.in814, align 2, !tbaa !16
   %i.cy = icmp eq i8 %.0311815, 0
   br i1 %i.cy, label %bb.br, label %lean_dec.exit376
 
@@ -607,7 +607,7 @@ lean_obj_tag.exit541.thread:                      ; preds = %lean_inc.exit508.th
   %i.bm = icmp eq i64 %i.bl, 0
   %.0299.in.v764 = select i1 %i.bm, i64 9, i64 25
   %.0299.in765 = getelementptr inbounds nuw i8, ptr %i.ax, i64 %.0299.in.v764
-  %.0299766 = load i8, ptr %.0299.in765, align 1, !tbaa !16
+  %.0299766 = load i8, ptr %.0299.in765, align 2, !tbaa !16
   %i.bn = icmp eq i8 %.0299766, 0
   br i1 %i.bn, label %bb.al, label %lean_dec.exit364
 
@@ -1010,7 +1010,7 @@ lean_obj_tag.exit543.thread:                      ; preds = %lean_inc.exit510.th
   %i.bm = icmp eq i64 %i.bl, 0
   %.0301.in.v766 = select i1 %i.bm, i64 9, i64 25
   %.0301.in767 = getelementptr inbounds nuw i8, ptr %i.ax, i64 %.0301.in.v766
-  %.0301768 = load i8, ptr %.0301.in767, align 1, !tbaa !16
+  %.0301768 = load i8, ptr %.0301.in767, align 2, !tbaa !16
   %i.bn = icmp eq i8 %.0301768, 0
   br i1 %i.bn, label %bb.al, label %lean_dec.exit366
 
@@ -1413,13 +1413,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i91, label %bb.e, label %bb.q
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = load i32, ptr %i.k, align 4, !tbaa !12   ; 3 uses
+  %i.s = load i32, ptr %i.k, align 512, !tbaa !12 ; 3 uses
   %i.t = icmp sgt i32 %i.s, 1
   br i1 %i.t, label %bb.f, label %bb.g, !prof !13
 
 bb.f:                                             ; preds = %bb.e
   %i.u = add nsw i32 %i.s, -1
-  store i32 %i.u, ptr %i.k, align 4, !tbaa !12
+  store i32 %i.u, ptr %i.k, align 512, !tbaa !12
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e

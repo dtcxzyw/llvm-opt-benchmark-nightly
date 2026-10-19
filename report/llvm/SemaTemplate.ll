@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %_ZNK5clang7TypeLoc5getAsINS_20PackExpansionTypeLocEEET_v.exit.thread
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %bb.d
-  %i.m = load ptr, ptr %i.k, align 8, !tbaa !888
+  %i.m = load ptr, ptr %i.k, align 16, !tbaa !888
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.o = load i8, ptr %i.n, align 16
   %i.p = icmp eq i8 %i.o, 36
@@ -239,7 +239,7 @@ _ZNK5clang7TypeLoc5getAsINS_20PackExpansionTypeLocEEET_v.exit.thread: ; preds = 
   br i1 %.not.i.i17, label %_ZN5clang15ConcreteTypeLocINS_14DeducedTypeLocENS_36DeducedTemplateSpecializationTypeLocENS_33DeducedTemplateSpecializationTypeENS_36DeducedTemplateSpecializationLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %.critedge
 
 _ZN5clang15ConcreteTypeLocINS_14DeducedTypeLocENS_36DeducedTemplateSpecializationTypeLocENS_33DeducedTemplateSpecializationTypeENS_36DeducedTemplateSpecializationLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %_ZNK5clang7TypeLoc5getAsINS_20PackExpansionTypeLocEEET_v.exit.thread
-  %i.af = load ptr, ptr %.sroa.044.0, align 8, !tbaa !888
+  %i.af = load ptr, ptr %.sroa.044.0, align 16, !tbaa !888
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ah = load i8, ptr %i.ag, align 16
   %i.ai = icmp eq i8 %i.ah, 17
@@ -642,7 +642,7 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %.not.i.i.i186, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_10TagTypeLocENS_7TagTypeENS_14TagTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i.i, label %_ZL37convertTypeTemplateArgumentToTemplateRN5clang10ASTContextENS_7TypeLocE.exit.thread
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_10TagTypeLocENS_7TagTypeENS_14TagTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i.i: ; preds = %bb.bj
-  %i.lf = load ptr, ptr %i.ld, align 8, !tbaa !888, !noalias !2515
+  %i.lf = load ptr, ptr %i.ld, align 16, !tbaa !888, !noalias !2515
   %i.lg = getelementptr inbounds nuw i8, ptr %i.lf, i64 16
   %i.lh = load i8, ptr %i.lg, align 16, !noalias !2515
   %i.li = add i8 %i.lh, -47
@@ -1045,7 +1045,7 @@ _ZNK5clang19NestedNameSpecifier7getKindEv.exit.i: ; preds = %_ZNK5clang14Identif
   br i1 %.not.i.i.i, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_29TemplateSpecializationTypeLocENS_26TemplateSpecializationTypeENS_29TemplateSpecializationLocInfoEE6isKindERKNS_7TypeLocE.exit.i.i, label %_ZL10isEnableIfN5clang22NestedNameSpecifierLocERKNS_14IdentifierInfoERNS_11SourceRangeERPNS_4ExprE.exit.thread
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_29TemplateSpecializationTypeLocENS_26TemplateSpecializationTypeENS_29TemplateSpecializationLocInfoEE6isKindERKNS_7TypeLocE.exit.i.i: ; preds = %_ZNK5clang19NestedNameSpecifier7getKindEv.exit.i
-  %i.ax = load ptr, ptr %i.av, align 8, !tbaa !888
+  %i.ax = load ptr, ptr %i.av, align 16, !tbaa !888
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   %i.az = load i8, ptr %i.ay, align 16
   %i.ba = icmp eq i8 %i.az, 50
@@ -1448,7 +1448,7 @@ _ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread263: ; preds = %bb.g
   br i1 %.not.i.i157, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20DependentNameTypeLocENS_17DependentNameTypeENS_20DependentNameLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %bb.am
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20DependentNameTypeLocENS_17DependentNameTypeENS_20DependentNameLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %_ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread263
-  %i.hc = load ptr, ptr %i.ha, align 8, !tbaa !888
+  %i.hc = load ptr, ptr %i.ha, align 16, !tbaa !888
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 16
   %i.he = load i8, ptr %i.hd, align 16
   %i.hf = icmp eq i8 %i.he, 20
@@ -1633,7 +1633,7 @@ bb.an:                                            ; preds = %_ZN12_GLOBAL__N_129
   br i1 %.not.i.i157, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i:     ; preds = %bb.an
-  %i.jm = load ptr, ptr %i.ha, align 8, !tbaa !888
+  %i.jm = load ptr, ptr %i.ha, align 16, !tbaa !888
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jm, i64 16
   %i.jo = load i8, ptr %i.jn, align 16
   switch i8 %i.jo, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i [
@@ -2036,7 +2036,7 @@ bb.a:
   br i1 %.not.i, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit:       ; preds = %bb.a
-  %i.c = load ptr, ptr %2, align 8, !tbaa !888
+  %i.c = load ptr, ptr %2, align 16, !tbaa !888
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load i8, ptr %i.d, align 16
   switch i8 %i.e, label %bb.bl [
@@ -2124,7 +2124,7 @@ _ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread: ; preds = %bb.a, %_ZNK5clang7
   br i1 %.not.i.i.i, label %_ZN5clang25InheritingConcreteTypeLocINS_15TypeSpecTypeLocENS_23TemplateTypeParmTypeLocENS_20TemplateTypeParmTypeEE6isKindERKNS_7TypeLocE.exit.i.i, label %bb.d
 
 _ZN5clang25InheritingConcreteTypeLocINS_15TypeSpecTypeLocENS_23TemplateTypeParmTypeLocENS_20TemplateTypeParmTypeEE6isKindERKNS_7TypeLocE.exit.i.i: ; preds = %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread
-  %i.x = load ptr, ptr %i.t, align 8, !tbaa !888
+  %i.x = load ptr, ptr %i.t, align 16, !tbaa !888
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.z = load i8, ptr %i.y, align 16
   switch i8 %i.z, label %bb.d [
@@ -2527,7 +2527,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.y
   br i1 %.not.i.i, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %bb.n
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %bb.c
-  %i.bb = load ptr, ptr %i.az, align 8, !tbaa !888 ; 3 uses
+  %i.bb = load ptr, ptr %i.az, align 16, !tbaa !888 ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bd = load i8, ptr %i.bc, align 16
   %i.be = icmp eq i8 %i.bd, 36
@@ -2930,7 +2930,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not.i.i, label %_ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i, label %bb.d
 
 _ZN5clang15ConcreteTypeLocINS_13UnqualTypeLocENS_20PackExpansionTypeLocENS_17PackExpansionTypeENS_24PackExpansionTypeLocInfoEE6isKindERKNS_7TypeLocE.exit.i: ; preds = %bb.c
-  %i.af = load ptr, ptr %i.ad, align 8, !tbaa !888
+  %i.af = load ptr, ptr %i.ad, align 16, !tbaa !888
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ah = load i8, ptr %i.ag, align 16
   %i.ai = icmp eq i8 %i.ah, 36
@@ -3333,7 +3333,7 @@ bb.g:                                             ; preds = %_ZN12_GLOBAL__N_129
   br i1 %.not.i.i116, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i:     ; preds = %bb.g
-  %i.aq = load ptr, ptr %i.ao, align 8, !tbaa !888
+  %i.aq = load ptr, ptr %i.ao, align 16, !tbaa !888
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
   %i.as = load i8, ptr %i.ar, align 16
   switch i8 %i.as, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i [
@@ -3492,7 +3492,7 @@ bb.s:                                             ; preds = %_ZN12_GLOBAL__N_129
   br i1 %.not.i.i117, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i120, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i118
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit.i120:  ; preds = %bb.s
-  %i.cu = load ptr, ptr %i.cs, align 8, !tbaa !888
+  %i.cu = load ptr, ptr %i.cs, align 16, !tbaa !888
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
   %i.cw = load i8, ptr %i.cv, align 16
   switch i8 %i.cw, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread.i118 [

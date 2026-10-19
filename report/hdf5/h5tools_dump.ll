@@ -204,10 +204,10 @@ bb.ag:                                            ; preds = %bb.af
   %spec.store.select.i.prol = select i1 %i.ec, i64 1, i64 %i.eb
   %i.ed = add nsw i64 %i.dz, -1                   ; 3 uses
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.ed
-  %i.ef = load i64, ptr %i.ee, align 8, !tbaa !22
+  %i.ef = load i64, ptr %i.ee, align 16, !tbaa !22
   %.spec.store.select.i.prol = call i64 @llvm.umin.i64(i64 %i.ef, i64 %spec.store.select.i.prol) ; 2 uses
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.ed
-  store i64 %.spec.store.select.i.prol, ptr %i.eg, align 8, !tbaa !22
+  store i64 %.spec.store.select.i.prol, ptr %i.eg, align 16, !tbaa !22
   %i.eh = mul i64 %.spec.store.select.i.prol, %i.dx ; 2 uses
   br label %.prol.loopexit302
 
@@ -610,10 +610,10 @@ bb.dt:                                            ; preds = %bb.ds
   %spec.store.select.i.i.i.prol = select i1 %i.uv, i64 1, i64 %i.uu
   %i.uw = add nsw i64 %i.us, -1                   ; 3 uses
   %i.ux = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.uw
-  %i.uy = load i64, ptr %i.ux, align 8, !tbaa !22
+  %i.uy = load i64, ptr %i.ux, align 16, !tbaa !22
   %.spec.store.select.i.i.i.prol = call i64 @llvm.umin.i64(i64 %i.uy, i64 %spec.store.select.i.i.i.prol) ; 2 uses
   %i.uz = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.uw
-  store i64 %.spec.store.select.i.i.i.prol, ptr %i.uz, align 8, !tbaa !22
+  store i64 %.spec.store.select.i.i.i.prol, ptr %i.uz, align 16, !tbaa !22
   %i.va = mul i64 %.spec.store.select.i.i.i.prol, %i.ue
   br label %.prol.loopexit
 

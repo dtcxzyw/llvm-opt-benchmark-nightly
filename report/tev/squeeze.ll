@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.wu = load i32, ptr %i.wt, align 4, !tbaa !43
   %i.wv = getelementptr [4 x i8], ptr %i.uq, i64 %i.ug
   %i.ww = getelementptr i8, ptr %i.wv, i64 -4
-  store i32 %i.wu, ptr %i.ww, align 4, !tbaa !43
+  store i32 %i.wu, ptr %i.ww, align 8, !tbaa !43
   br label %"_ZZN3jxl6N_SSE411InvHSqueezeERNS_5ImageEjjPNS_10ThreadPoolEENK3$_0clEmm.exit.us"
 
 "_ZZN3jxl6N_SSE411InvHSqueezeERNS_5ImageEjjPNS_10ThreadPoolEENK3$_0clEmm.exit.us": ; preds = %bb.j, %._crit_edge.i.loopexit.us
@@ -254,7 +254,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.xh = load i32, ptr %i.xg, align 4, !tbaa !43
   %i.xi = getelementptr [4 x i8], ptr %i.xe, i64 %i.ug
   %i.xj = getelementptr i8, ptr %i.xi, i64 -4
-  store i32 %i.xh, ptr %i.xj, align 4, !tbaa !43
+  store i32 %i.xh, ptr %i.xj, align 8, !tbaa !43
   %i.xk = add nuw nsw i64 %.0154.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -282,7 +282,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.xs = load i32, ptr %i.xr, align 4, !tbaa !43
   %i.xt = getelementptr [4 x i8], ptr %i.xp, i64 %i.ug
   %i.xu = getelementptr i8, ptr %i.xt, i64 -4
-  store i32 %i.xs, ptr %i.xu, align 4, !tbaa !43
+  store i32 %i.xs, ptr %i.xu, align 8, !tbaa !43
   %i.xv = or disjoint i64 %.0154, 1
   %i.xw = add nuw nsw i64 %i.xv, %i.f             ; 2 uses
   %i.xx = mul i64 %i.tv, %i.xw
@@ -296,7 +296,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.yd = load i32, ptr %i.yc, align 4, !tbaa !43
   %i.ye = getelementptr [4 x i8], ptr %i.ya, i64 %i.ug
   %i.yf = getelementptr i8, ptr %i.ye, i64 -4
-  store i32 %i.yd, ptr %i.yf, align 4, !tbaa !43
+  store i32 %i.yd, ptr %i.yf, align 8, !tbaa !43
   %i.yg = or disjoint i64 %.0154, 2
   %i.yh = add nuw nsw i64 %i.yg, %i.f             ; 2 uses
   %i.yi = mul i64 %i.tv, %i.yh
@@ -310,7 +310,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.yo = load i32, ptr %i.yn, align 4, !tbaa !43
   %i.yp = getelementptr [4 x i8], ptr %i.yl, i64 %i.ug
   %i.yq = getelementptr i8, ptr %i.yp, i64 -4
-  store i32 %i.yo, ptr %i.yq, align 4, !tbaa !43
+  store i32 %i.yo, ptr %i.yq, align 8, !tbaa !43
   %i.yr = or disjoint i64 %.0154, 3
   %i.ys = add nuw nsw i64 %i.yr, %i.f             ; 2 uses
   %i.yt = mul i64 %i.tv, %i.ys
@@ -324,7 +324,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.yz = load i32, ptr %i.yy, align 4, !tbaa !43
   %i.za = getelementptr [4 x i8], ptr %i.yw, i64 %i.ug
   %i.zb = getelementptr i8, ptr %i.za, i64 -4
-  store i32 %i.yz, ptr %i.zb, align 4, !tbaa !43
+  store i32 %i.yz, ptr %i.zb, align 8, !tbaa !43
   %i.zc = add nuw nsw i64 %.0154, 4               ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -727,7 +727,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.pl = load i32, ptr %i.pk, align 4, !tbaa !43
   %i.pm = getelementptr [4 x i8], ptr %i.nh, i64 %i.mx
   %i.pn = getelementptr i8, ptr %i.pm, i64 -4
-  store i32 %i.pl, ptr %i.pn, align 4, !tbaa !43
+  store i32 %i.pl, ptr %i.pn, align 8, !tbaa !43
   br label %"_ZZN3jxl6N_AVX211InvHSqueezeERNS_5ImageEjjPNS_10ThreadPoolEENK3$_0clEmm.exit.us"
 
 "_ZZN3jxl6N_AVX211InvHSqueezeERNS_5ImageEjjPNS_10ThreadPoolEENK3$_0clEmm.exit.us": ; preds = %bb.j, %._crit_edge.i.loopexit.us
@@ -776,7 +776,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.py = load i32, ptr %i.px, align 4, !tbaa !43
   %i.pz = getelementptr [4 x i8], ptr %i.pv, i64 %i.mx
   %i.qa = getelementptr i8, ptr %i.pz, i64 -4
-  store i32 %i.py, ptr %i.qa, align 4, !tbaa !43
+  store i32 %i.py, ptr %i.qa, align 8, !tbaa !43
   %i.qb = add nuw nsw i64 %.0211.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -804,7 +804,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.qj = load i32, ptr %i.qi, align 4, !tbaa !43
   %i.qk = getelementptr [4 x i8], ptr %i.qg, i64 %i.mx
   %i.ql = getelementptr i8, ptr %i.qk, i64 -4
-  store i32 %i.qj, ptr %i.ql, align 4, !tbaa !43
+  store i32 %i.qj, ptr %i.ql, align 8, !tbaa !43
   %i.qm = or disjoint i64 %.0211, 1
   %i.qn = add nuw nsw i64 %i.qm, %i.f             ; 2 uses
   %i.qo = mul i64 %i.mm, %i.qn
@@ -818,7 +818,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.qu = load i32, ptr %i.qt, align 4, !tbaa !43
   %i.qv = getelementptr [4 x i8], ptr %i.qr, i64 %i.mx
   %i.qw = getelementptr i8, ptr %i.qv, i64 -4
-  store i32 %i.qu, ptr %i.qw, align 4, !tbaa !43
+  store i32 %i.qu, ptr %i.qw, align 8, !tbaa !43
   %i.qx = or disjoint i64 %.0211, 2
   %i.qy = add nuw nsw i64 %i.qx, %i.f             ; 2 uses
   %i.qz = mul i64 %i.mm, %i.qy
@@ -832,7 +832,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.rf = load i32, ptr %i.re, align 4, !tbaa !43
   %i.rg = getelementptr [4 x i8], ptr %i.rc, i64 %i.mx
   %i.rh = getelementptr i8, ptr %i.rg, i64 -4
-  store i32 %i.rf, ptr %i.rh, align 4, !tbaa !43
+  store i32 %i.rf, ptr %i.rh, align 8, !tbaa !43
   %i.ri = or disjoint i64 %.0211, 3
   %i.rj = add nuw nsw i64 %i.ri, %i.f             ; 2 uses
   %i.rk = mul i64 %i.mm, %i.rj
@@ -846,7 +846,7 @@ bb.j:                                             ; preds = %._crit_edge.i.loope
   %i.rq = load i32, ptr %i.rp, align 4, !tbaa !43
   %i.rr = getelementptr [4 x i8], ptr %i.rn, i64 %i.mx
   %i.rs = getelementptr i8, ptr %i.rr, i64 -4
-  store i32 %i.rq, ptr %i.rs, align 4, !tbaa !43
+  store i32 %i.rq, ptr %i.rs, align 8, !tbaa !43
   %i.rt = add nuw nsw i64 %.0211, 4               ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -1249,7 +1249,7 @@ bb.k:                                             ; preds = %._crit_edge.i.loope
   %i.xf = load i32, ptr %i.xe, align 4, !tbaa !43
   %i.xg = getelementptr [4 x i8], ptr %i.vb, i64 %i.ur
   %i.xh = getelementptr i8, ptr %i.xg, i64 -4
-  store i32 %i.xf, ptr %i.xh, align 4, !tbaa !43
+  store i32 %i.xf, ptr %i.xh, align 8, !tbaa !43
   br label %"_ZZN3jxl6N_SSE211InvHSqueezeERNS_5ImageEjjPNS_10ThreadPoolEENK3$_0clEmm.exit.us.i"
 
 "_ZZN3jxl6N_SSE211InvHSqueezeERNS_5ImageEjjPNS_10ThreadPoolEENK3$_0clEmm.exit.us.i": ; preds = %._crit_edge.i.loopexit.us.i, %bb.k
@@ -1288,7 +1288,7 @@ bb.k:                                             ; preds = %._crit_edge.i.loope
   %i.xs = load i32, ptr %i.xr, align 4, !tbaa !43
   %i.xt = getelementptr [4 x i8], ptr %i.xp, i64 %i.ur
   %i.xu = getelementptr i8, ptr %i.xt, i64 -4
-  store i32 %i.xs, ptr %i.xu, align 4, !tbaa !43
+  store i32 %i.xs, ptr %i.xu, align 8, !tbaa !43
   %i.xv = or disjoint i64 %.0230.i, 1
   %i.xw = add nuw nsw i64 %i.xv, %i.j             ; 2 uses
   %i.xx = mul i64 %i.xw, %i.ug
@@ -1302,7 +1302,7 @@ bb.k:                                             ; preds = %._crit_edge.i.loope
   %i.yd = load i32, ptr %i.yc, align 4, !tbaa !43
   %i.ye = getelementptr [4 x i8], ptr %i.ya, i64 %i.ur
   %i.yf = getelementptr i8, ptr %i.ye, i64 -4
-  store i32 %i.yd, ptr %i.yf, align 4, !tbaa !43
+  store i32 %i.yd, ptr %i.yf, align 8, !tbaa !43
   %i.yg = or disjoint i64 %.0230.i, 2
   %i.yh = add nuw nsw i64 %i.yg, %i.j             ; 2 uses
   %i.yi = mul i64 %i.yh, %i.ug
@@ -1316,7 +1316,7 @@ bb.k:                                             ; preds = %._crit_edge.i.loope
   %i.yo = load i32, ptr %i.yn, align 4, !tbaa !43
   %i.yp = getelementptr [4 x i8], ptr %i.yl, i64 %i.ur
   %i.yq = getelementptr i8, ptr %i.yp, i64 -4
-  store i32 %i.yo, ptr %i.yq, align 4, !tbaa !43
+  store i32 %i.yo, ptr %i.yq, align 8, !tbaa !43
   %i.yr = or disjoint i64 %.0230.i, 3
   %i.ys = add nuw nsw i64 %i.yr, %i.j             ; 2 uses
   %i.yt = mul i64 %i.ys, %i.ug
@@ -1330,7 +1330,7 @@ bb.k:                                             ; preds = %._crit_edge.i.loope
   %i.yz = load i32, ptr %i.yy, align 4, !tbaa !43
   %i.za = getelementptr [4 x i8], ptr %i.yw, i64 %i.ur
   %i.zb = getelementptr i8, ptr %i.za, i64 -4
-  store i32 %i.yz, ptr %i.zb, align 4, !tbaa !43
+  store i32 %i.yz, ptr %i.zb, align 8, !tbaa !43
   %i.zc = add nuw nsw i64 %.0230.i, 4             ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -1361,7 +1361,7 @@ bb.k:                                             ; preds = %._crit_edge.i.loope
   %i.zk = load i32, ptr %i.zj, align 4, !tbaa !43
   %i.zl = getelementptr [4 x i8], ptr %i.zh, i64 %i.ur
   %i.zm = getelementptr i8, ptr %i.zl, i64 -4
-  store i32 %i.zk, ptr %i.zm, align 4, !tbaa !43
+  store i32 %i.zk, ptr %i.zm, align 8, !tbaa !43
   %i.zn = add nuw nsw i64 %.0230.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter

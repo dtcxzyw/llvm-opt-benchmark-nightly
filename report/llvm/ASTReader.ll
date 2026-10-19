@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not.i, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit, label %_ZNK5clang7TypeLoc15getTypeLocClassEv.exit.thread
 
 _ZNK5clang7TypeLoc15getTypeLocClassEv.exit:       ; preds = %bb.a
-  %i.c = load ptr, ptr %1, align 8, !tbaa !2040
+  %i.c = load ptr, ptr %1, align 16, !tbaa !2040
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load i8, ptr %i.d, align 16
   switch i8 %i.e, label %bb.bb [

@@ -60,7 +60,7 @@ bb.a:
   br i1 %or.cond7.i, label %bb.b, label %LZ4_initStream.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16416) %0, i8 0, i64 16416, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16416) %0, i8 0, i64 16416, i1 false)
   br label %LZ4_initStream.exit
 
 LZ4_initStream.exit:                              ; preds = %bb.a, %bb.b
@@ -463,7 +463,7 @@ bb.a:
   br i1 %or.cond7, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16416) %0, i8 0, i64 16416, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16416) %0, i8 0, i64 16416, i1 false)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -866,7 +866,7 @@ bb.a:
   br i1 %or.cond7.i, label %bb.b, label %LZ4_initStream.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16416) %0, i8 0, i64 16416, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16416) %0, i8 0, i64 16416, i1 false)
   br label %LZ4_initStream.exit
 
 LZ4_initStream.exit:                              ; preds = %bb.a, %bb.b
@@ -884,7 +884,7 @@ bb.a:
   br i1 %or.cond7.i, label %bb.b, label %LZ4_initStream.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16416) %0, i8 0, i64 16416, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16416) %0, i8 0, i64 16416, i1 false)
   br label %LZ4_initStream.exit
 
 LZ4_initStream.exit:                              ; preds = %bb.a, %bb.b
@@ -1287,7 +1287,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %LZ4_initStream.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16416) %i.a, i8 0, i64 16416, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16416) %i.a, i8 0, i64 16416, i1 false)
   br label %LZ4_initStream.exit
 
 LZ4_initStream.exit:                              ; preds = %bb.b, %bb.a
@@ -1690,7 +1690,7 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %LZ4_createStream.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16416) %i.a, i8 0, i64 16416, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16416) %i.a, i8 0, i64 16416, i1 false)
   br label %LZ4_createStream.exit
 
 LZ4_createStream.exit:                            ; preds = %bb.a, %bb.b

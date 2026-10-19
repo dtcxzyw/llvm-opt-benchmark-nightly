@@ -205,8 +205,8 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond20.not.i476, label %.thread587, label %bb.ac
 
 .thread587:                                       ; preds = %bb.ab
-  %i.ww = load float, ptr %i.uq, align 4, !tbaa !13
-  %i.wx = load float, ptr %i.ur, align 4, !tbaa !13
+  %i.ww = load float, ptr %i.uq, align 16, !tbaa !13
+  %i.wx = load float, ptr %i.ur, align 16, !tbaa !13
   br label %to_log.exit485
 
 to_log.exit481:                                   ; preds = %bb.aa
@@ -221,14 +221,14 @@ bb.ac:                                            ; preds = %bb.ab
   %i.xd = fadd reassoc nsz arcp contract afn float %i.wt, 1.000000e+00
   %i.xe = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.xd) ; 3 uses
   %i.xf = fdiv reassoc nsz arcp contract afn float %i.xc, %i.xe ; 2 uses
-  store float %i.xf, ptr %i.up, align 4, !tbaa !13
-  %i.xg = load float, ptr %i.uq, align 4, !tbaa !13
+  store float %i.xf, ptr %i.up, align 16, !tbaa !13
+  %i.xg = load float, ptr %i.uq, align 16, !tbaa !13
   %i.xh = fmul reassoc nsz arcp contract afn float %i.xg, %i.wt
   %i.xi = fadd reassoc nsz arcp contract afn float %i.xh, 1.000000e+00
   %i.xj = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.xi)
   %i.xk = fdiv reassoc nsz arcp contract afn float %i.xj, %i.xe ; 2 uses
-  store float %i.xk, ptr %i.uq, align 4, !tbaa !13
-  %i.xl = load float, ptr %i.ur, align 4, !tbaa !13
+  store float %i.xk, ptr %i.uq, align 16, !tbaa !13
+  %i.xl = load float, ptr %i.ur, align 16, !tbaa !13
   %i.xm = fmul reassoc nsz arcp contract afn float %i.xl, %i.wt
   %i.xn = fadd reassoc nsz arcp contract afn float %i.xm, 1.000000e+00
   %i.xo = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.xn)
@@ -345,9 +345,9 @@ bb.ae:                                            ; preds = %bb.ad
 
 .thread604:                                       ; preds = %bb.ae
   %i.aaf = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.p
-  %i.aag = load float, ptr %i.aaf, align 4, !tbaa !13
+  %i.aag = load float, ptr %i.aaf, align 16, !tbaa !13
   %i.aah = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.p ; 2 uses
-  %i.aai = load float, ptr %i.aah, align 4, !tbaa !13
+  %i.aai = load float, ptr %i.aah, align 16, !tbaa !13
   br label %to_log.exit506
 
 to_log.exit502:                                   ; preds = %bb.ad
@@ -365,13 +365,13 @@ bb.af:                                            ; preds = %bb.ae
   %i.aar = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.aaq) ; 3 uses
   %i.aas = fdiv reassoc nsz arcp contract afn float %i.aap, %i.aar
   %i.aat = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.p
-  %i.aau = load float, ptr %i.aat, align 4, !tbaa !13
+  %i.aau = load float, ptr %i.aat, align 16, !tbaa !13
   %i.aav = fmul reassoc nsz arcp contract afn float %i.aau, %i.aab
   %i.aaw = fadd reassoc nsz arcp contract afn float %i.aav, 1.000000e+00
   %i.aax = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.aaw)
   %i.aay = fdiv reassoc nsz arcp contract afn float %i.aax, %i.aar
   %i.aaz = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.p ; 2 uses
-  %i.aba = load float, ptr %i.aaz, align 4, !tbaa !13
+  %i.aba = load float, ptr %i.aaz, align 16, !tbaa !13
   %i.abb = fmul reassoc nsz arcp contract afn float %i.aba, %i.aab
   %i.abc = fadd reassoc nsz arcp contract afn float %i.abb, 1.000000e+00
   %i.abd = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.abc)

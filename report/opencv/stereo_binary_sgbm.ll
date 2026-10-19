@@ -205,7 +205,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.ij, label %.loopexit227.i, label %.lr.ph268.preheader.i
 
 .lr.ph268.preheader.i:                            ; preds = %.preheader226.i
-  call void @llvm.memset.p0.i64(ptr align 2 %i.pa, i8 0, i64 %i.jx, i1 false), !tbaa !59
+  call void @llvm.memset.p0.i64(ptr align 16 %i.pa, i8 0, i64 %i.jx, i1 false), !tbaa !59
   br label %.loopexit227.i
 
 bb.bm:                                            ; preds = %.loopexit217.i, %.lr.ph266.i
@@ -608,8 +608,8 @@ vector.body584:                                   ; preds = %vector.ph580, %vect
   %index585 = phi i64 [ 0, %vector.ph580 ], [ %index.next590, %vector.body584 ] ; 3 uses
   %i.zd = getelementptr inbounds nuw [2 x i8], ptr %i.oz, i64 %index585 ; 3 uses
   %i.ze = getelementptr inbounds nuw i8, ptr %i.zd, i64 16 ; 2 uses
-  %wide.load586 = load <8 x i16>, ptr %i.zd, align 2, !tbaa !59, !alias.scope !191, !noalias !192
-  %wide.load587 = load <8 x i16>, ptr %i.ze, align 2, !tbaa !59, !alias.scope !191, !noalias !192
+  %wide.load586 = load <8 x i16>, ptr %i.zd, align 16, !tbaa !59, !alias.scope !191, !noalias !192
+  %wide.load587 = load <8 x i16>, ptr %i.ze, align 16, !tbaa !59, !alias.scope !191, !noalias !192
   %i.zf = getelementptr inbounds nuw [2 x i8], ptr %i.pv, i64 %index585 ; 2 uses
   %i.zg = getelementptr inbounds nuw i8, ptr %i.zf, i64 16
   %wide.load588 = load <8 x i16>, ptr %i.zf, align 2, !tbaa !59, !alias.scope !192
@@ -618,8 +618,8 @@ vector.body584:                                   ; preds = %vector.ph580, %vect
   %i.zi = mul <8 x i16> %wide.load589, %broadcast.splat583
   %i.zj = add <8 x i16> %i.zh, %wide.load586
   %i.zk = add <8 x i16> %i.zi, %wide.load587
-  store <8 x i16> %i.zj, ptr %i.zd, align 2, !tbaa !59, !alias.scope !191, !noalias !192
-  store <8 x i16> %i.zk, ptr %i.ze, align 2, !tbaa !59, !alias.scope !191, !noalias !192
+  store <8 x i16> %i.zj, ptr %i.zd, align 16, !tbaa !59, !alias.scope !191, !noalias !192
+  store <8 x i16> %i.zk, ptr %i.ze, align 16, !tbaa !59, !alias.scope !191, !noalias !192
   %index.next590 = add nuw i64 %index585, 16      ; 2 uses
   %i.zl = icmp eq i64 %index.next590, %n.vec581
   br i1 %i.zl, label %middle.block591, label %vector.body584, !llvm.loop !136
@@ -639,12 +639,12 @@ vec.epilog.ph598:                                 ; preds = %vector.main.loop.it
 vec.epilog.vector.body602:                        ; preds = %vec.epilog.vector.body602, %vec.epilog.ph598
   %index603 = phi i64 [ %vec.epilog.resume.val593, %vec.epilog.ph598 ], [ %index.next606, %vec.epilog.vector.body602 ] ; 3 uses
   %i.zm = getelementptr inbounds nuw [2 x i8], ptr %i.oz, i64 %index603 ; 2 uses
-  %wide.load604 = load <4 x i16>, ptr %i.zm, align 2, !tbaa !59, !alias.scope !191, !noalias !192
+  %wide.load604 = load <4 x i16>, ptr %i.zm, align 8, !tbaa !59, !alias.scope !191, !noalias !192
   %i.zn = getelementptr inbounds nuw [2 x i8], ptr %i.pv, i64 %index603
   %wide.load605 = load <4 x i16>, ptr %i.zn, align 2, !tbaa !59, !alias.scope !192
   %i.zo = mul <4 x i16> %wide.load605, %broadcast.splat601
   %i.zp = add <4 x i16> %i.zo, %wide.load604
-  store <4 x i16> %i.zp, ptr %i.zm, align 2, !tbaa !59, !alias.scope !191, !noalias !192
+  store <4 x i16> %i.zp, ptr %i.zm, align 8, !tbaa !59, !alias.scope !191, !noalias !192
   %index.next606 = add nuw i64 %index603, 4       ; 2 uses
   %i.zq = icmp eq i64 %index.next606, %n.vec599
   br i1 %i.zq, label %vec.epilog.middle.block607, label %vec.epilog.vector.body602, !llvm.loop !137
@@ -659,12 +659,12 @@ vec.epilog.scalar.ph595.preheader:                ; preds = %iter.check594, %vec
 
 vec.epilog.scalar.ph595.prol:                     ; preds = %vec.epilog.scalar.ph595.preheader
   %i.zr = getelementptr inbounds nuw [2 x i8], ptr %i.oz, i64 %indvars.iv377.i.ph ; 2 uses
-  %i.zs = load i16, ptr %i.zr, align 2, !tbaa !59
+  %i.zs = load i16, ptr %i.zr, align 8, !tbaa !59
   %i.zt = getelementptr inbounds nuw [2 x i8], ptr %i.pv, i64 %indvars.iv377.i.ph
   %i.zu = load i16, ptr %i.zt, align 2, !tbaa !59
   %i.zv = mul i16 %i.zu, %i.yz
   %i.zw = add i16 %i.zv, %i.zs
-  store i16 %i.zw, ptr %i.zr, align 2, !tbaa !59
+  store i16 %i.zw, ptr %i.zr, align 8, !tbaa !59
   %indvars.iv.next378.i.prol = or disjoint i64 %indvars.iv377.i.ph, 1
   br label %vec.epilog.scalar.ph595.prol.loopexit
 

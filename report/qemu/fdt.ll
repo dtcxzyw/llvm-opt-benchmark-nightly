@@ -32,7 +32,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.u = load i32, ptr %0, align 1
+  %i.u = load i32, ptr %0, align 8
   %i.v = tail call i32 @llvm.bswap.i32(i32 %i.u)
   switch i32 %i.v, label %bb.g [
     i32 -804389139, label %bb.c
@@ -41,25 +41,25 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.x = load i32, ptr %i.w, align 1
+  %i.x = load i32, ptr %i.w, align 4
   %i.y = tail call i32 @llvm.bswap.i32(i32 %i.x)
   %i.z = icmp ult i32 %i.y, 2
   br i1 %i.z, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.ab = load i32, ptr %i.aa, align 1
+  %i.ab = load i32, ptr %i.aa, align 8
   %i.ac = tail call i32 @llvm.bswap.i32(i32 %i.ab)
   %i.ad = icmp ugt i32 %i.ac, 17
   br i1 %i.ad, label %bb.g, label %bb.f
 
 bb.e:                                             ; preds = %bb.b
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.af = load i8, ptr %i.ae, align 1, !tbaa !14
+  %i.af = load i8, ptr %i.ae, align 4, !tbaa !14
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 37
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !14
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 38
-  %i.aj = load i8, ptr %i.ai, align 1, !tbaa !14
+  %i.aj = load i8, ptr %i.ai, align 2, !tbaa !14
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 39
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !14
   %i.am = or i8 %i.ah, %i.af
@@ -144,20 +144,20 @@ bb.a:
   br i1 %.not, label %bb.b, label %check_block_.exit.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i32, ptr %0, align 1
+  %i.c = load i32, ptr %0, align 8
   %.not26 = icmp eq i32 %i.c, -302117424
   br i1 %.not26, label %bb.c, label %check_block_.exit.thread
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.e = load i32, ptr %i.d, align 1              ; 2 uses
+  %i.e = load i32, ptr %i.d, align 4              ; 2 uses
   %i.f = tail call i32 @llvm.bswap.i32(i32 %i.e)  ; 5 uses
   %i.g = icmp ult i32 %i.f, 2
   br i1 %i.g, label %check_block_.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.i = load i32, ptr %i.h, align 1
+  %i.i = load i32, ptr %i.h, align 8
   %i.j = tail call i32 @llvm.bswap.i32(i32 %i.i)  ; 2 uses
   %i.k = icmp ugt i32 %i.j, 17
   %i.l = icmp ult i32 %i.f, %i.j
@@ -180,7 +180,7 @@ bb.g:                                             ; preds = %bb.f
 fdt_header_size.exit:                             ; preds = %bb.e, %bb.f, %bb.g
   %.0.i.i = phi i64 [ 36, %bb.f ], [ %..i.i, %bb.g ], [ 32, %bb.e ] ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !14
+  %i.q = load i8, ptr %i.p, align 4, !tbaa !14
   %i.r = zext i8 %i.q to i32
   %i.s = shl nuw i32 %i.r, 24                     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 5
@@ -188,7 +188,7 @@ fdt_header_size.exit:                             ; preds = %bb.e, %bb.f, %bb.g
   %i.v = zext i8 %i.u to i32
   %i.w = shl nuw nsw i32 %i.v, 16
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %i.y = load i8, ptr %i.x, align 1, !tbaa !14
+  %i.y = load i8, ptr %i.x, align 2, !tbaa !14
   %i.z = zext i8 %i.y to i32
   %i.aa = shl nuw nsw i32 %i.z, 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 7
@@ -206,7 +206,7 @@ fdt_header_size.exit:                             ; preds = %bb.e, %bb.f, %bb.g
 bb.h:                                             ; preds = %fdt_header_size.exit
   %i.ak = trunc nuw nsw i64 %.0.i.i to i32        ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.am = load i32, ptr %i.al, align 1
+  %i.am = load i32, ptr %i.al, align 8
   %i.an = tail call i32 @llvm.bswap.i32(i32 %i.am) ; 2 uses
   %i.ao = icmp ult i32 %i.an, %i.ak
   %i.ap = icmp ugt i32 %i.an, %i.ag
@@ -216,7 +216,7 @@ bb.h:                                             ; preds = %fdt_header_size.exi
 bb.i:                                             ; preds = %bb.h
   %i.aq = icmp ult i32 %i.f, 17
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.as = load i32, ptr %i.ar, align 1
+  %i.as = load i32, ptr %i.ar, align 8
   %i.at = tail call i32 @llvm.bswap.i32(i32 %i.as) ; 4 uses
   %i.au = icmp ult i32 %i.at, %i.ak
   %i.av = icmp ugt i32 %i.at, %i.ag
@@ -231,7 +231,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.ax = load i32, ptr %i.aw, align 1
+  %i.ax = load i32, ptr %i.aw, align 4
   %i.ay = tail call i32 @llvm.bswap.i32(i32 %i.ax)
   %i.az = add i32 %i.ay, %i.at                    ; 2 uses
   %i.ba = icmp ult i32 %i.az, %i.at
@@ -241,7 +241,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l, %bb.j
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.bc = load i32, ptr %i.bb, align 1
+  %i.bc = load i32, ptr %i.bb, align 4
   %i.bd = tail call i32 @llvm.bswap.i32(i32 %i.bc) ; 4 uses
   %i.be = icmp ult i32 %i.bd, %i.ak
   %i.bf = icmp ugt i32 %i.bd, %i.ag
@@ -250,7 +250,7 @@ bb.m:                                             ; preds = %bb.l, %bb.j
 
 bb.n:                                             ; preds = %bb.m
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.bh = load i32, ptr %i.bg, align 1
+  %i.bh = load i32, ptr %i.bg, align 8
   %i.bi = tail call i32 @llvm.bswap.i32(i32 %i.bh)
   %i.bj = add i32 %i.bi, %i.bd                    ; 2 uses
   %i.bk = icmp ult i32 %i.bj, %i.bd
