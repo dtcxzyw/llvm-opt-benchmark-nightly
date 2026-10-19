@@ -204,33 +204,23 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define internal { double, double } @_ZL22pj_axisswap_forward_2d5PJ_LPP8PJconsts(double %0, double %1, ptr nofree noundef readonly captures(none) %2) #8 {
 bb.a:
-  %3 = alloca [2 x double], align 16              ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !39   ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  store double %0, ptr %3, align 16, !tbaa !42
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store double %1, ptr %4, align 8, !tbaa !42
-  %5 = load i32, ptr %i.b, align 4, !tbaa !40
-  %6 = zext i32 %5 to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %6
-  %8 = load double, ptr %7, align 8, !tbaa !42
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !39   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %9 = load i32, ptr %i.c, align 4, !tbaa !40
-  %10 = sitofp i32 %9 to double
-  %11 = fmul double %8, %10
-  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %13 = load i32, ptr %12, align 4, !tbaa !40
-  %14 = zext i32 %13 to i64
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %14
-  %16 = load double, ptr %15, align 8, !tbaa !42
-  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  %18 = load i32, ptr %17, align 4, !tbaa !40
-  %19 = sitofp i32 %18 to double
-  %20 = fmul double %16, %19
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
-  %.fca.0.insert = insertvalue { double, double } poison, double %11, 0
-  %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %20, 1
+  %3 = load <2 x i32>, ptr %i.b, align 4, !tbaa !40
+  %4 = icmp eq <2 x i32> %3, splat (i32 1)
+  %5 = insertelement <2 x double> poison, double %1, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x double> poison, double %0, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = select <2 x i1> %4, <2 x double> %6, <2 x double> %8
+  %10 = load <2 x i32>, ptr %i.c, align 4, !tbaa !40
+  %11 = sitofp <2 x i32> %10 to <2 x double>
+  %12 = fmul <2 x double> %9, %11                 ; 2 uses
+  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x double> %12, i64 0
+  %13 = insertvalue { double, double } poison, double %vec2struct.slot.sroa.0.0.vec.extract, 0
+  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x double> %12, i64 1
+  %.fca.1.insert = insertvalue { double, double } %13, double %vec2struct.slot.sroa.0.8.vec.extract, 1
   ret { double, double } %.fca.1.insert
 }
 

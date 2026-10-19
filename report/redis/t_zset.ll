@@ -102,7 +102,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.64 = private unnamed_addr constant [18 x i8] c"zsetDel(zobj,ele)\00", align 1
 @.str.65 = private unnamed_addr constant [8 x i8] c"zpopmin\00", align 1
 @.str.66 = private unnamed_addr constant [8 x i8] c"zpopmax\00", align 1
-@__const.genericZpopCommand.events = private unnamed_addr constant [2 x ptr] [ptr @.str.65, ptr @.str.66], align 16
 @.str.67 = private unnamed_addr constant [65 x i8] c"lpRandomPairsUnique(zsetobj->ptr, count, keys, vals, 2) == count\00", align 1
 @sdsReplyDictType = external global %struct.dictType, align 8
 @.str.68 = private unnamed_addr constant [3 x i8] c"de\00", align 1
@@ -505,10 +504,9 @@ bb.v:                                             ; preds = %bb.u
 
 .peel.begin:                                      ; preds = %bb.r, %bb.u, %bb.v, %bb.t, %bb.p
   %i.an = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 6 uses
-  %i.ao = icmp eq i32 %3, 1                       ; 4 uses
+  %i.ao = icmp eq i32 %3, 1                       ; 5 uses
   %i.ap = select i1 %i.ao, i64 -2, i64 0          ; 2 uses
-  %9 = sext i32 %3 to i64
-  %10 = getelementptr inbounds [8 x i8], ptr @__const.genericZpopCommand.events, i64 %9
+  %.sroa.speculated = select i1 %i.ao, ptr @.str.66, ptr @.str.65
   %i.aq = load i64, ptr %i.j, align 8
   %i.ar = trunc i64 %i.aq to i32
   %i.as = lshr i32 %i.ar, 4
@@ -621,11 +619,10 @@ bb.ak:                                            ; preds = %bb.aj
   %i.bz = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6888), align 8, !tbaa !124
   %i.ca = add nsw i64 %i.bz, 1
   store i64 %i.ca, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6888), align 8, !tbaa !124
-  %11 = load ptr, ptr %10, align 8, !tbaa !61
   %i.cb = load ptr, ptr %i.f, align 8, !tbaa !122
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 72
   %i.cd = load i32, ptr %i.cc, align 8, !tbaa !127
-  call void @notifyKeyspaceEvent(i32 noundef 128, ptr noundef %11, ptr noundef %i.h, i32 noundef %i.cd) #17
+  call void @notifyKeyspaceEvent(i32 noundef 128, ptr noundef nonnull %.sroa.speculated, ptr noundef %i.h, i32 noundef %i.cd) #17
   br i1 %i.ah, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak

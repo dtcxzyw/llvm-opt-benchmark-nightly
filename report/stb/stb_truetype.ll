@@ -204,22 +204,22 @@ bb.a:
   %i.l = load i32, ptr %i.d, align 8
   %i.m = load i32, ptr %i.j, align 4
   %i.n = icmp slt i32 %i.l, %i.m
-  br i1 %i.n, label %stbtt__dict_get_ints.exit, label %stbtt__dict_get_ints.exit.thread
-
-stbtt__dict_get_ints.exit.thread:                 ; preds = %bb.a, %.lr.ph.i.preheader
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
-  br label %bb.m
+  br i1 %i.n, label %stbtt__dict_get_ints.exit, label %stbtt__dict_get_ints.exit.thread, !llvm.loop !2
 
 stbtt__dict_get_ints.exit:                        ; preds = %.lr.ph.i.preheader
   %i.o = call i32 @stbtt__cff_int(ptr noundef nonnull %5) ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   %i.p = icmp ne i32 %i.o, 0
   %i.q = icmp ne i32 %i.k, 0
-  %or.cond = select i1 %i.p, i1 %i.q, i1 false
+  %or.cond = and i1 %i.q, %i.p
   br i1 %or.cond, label %bb.b, label %bb.m
 
+stbtt__dict_get_ints.exit.thread:                 ; preds = %.lr.ph.i.preheader, %bb.a
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
+  br label %bb.m
+
 bb.b:                                             ; preds = %stbtt__dict_get_ints.exit
-  %i.r = or i32 %i.k, %i.o
+  %i.r = or i32 %i.o, %i.k
   %or.cond.not.i = icmp sgt i32 %i.r, -1
   br i1 %or.cond.not.i, label %bb.c, label %stbtt__buf_range.exit
 
@@ -430,8 +430,8 @@ stbtt__cff_get_index.exit:                        ; preds = %stbtt__buf_get.exit
   %.fca.1.insert.i.i = insertvalue { ptr, i64 } %.fca.0.insert.i.i, i64 %.sroa.5.0.i.i, 1
   br label %bb.m
 
-bb.m:                                             ; preds = %stbtt__dict_get_ints.exit.thread, %stbtt__dict_get_ints.exit12, %stbtt__dict_get_ints.exit12.thread, %stbtt__dict_get_ints.exit, %stbtt__cff_get_index.exit
-  %.pn = phi { ptr, i64 } [ %.fca.1.insert.i.i, %stbtt__cff_get_index.exit ], [ zeroinitializer, %stbtt__dict_get_ints.exit ], [ zeroinitializer, %stbtt__dict_get_ints.exit12.thread ], [ zeroinitializer, %stbtt__dict_get_ints.exit12 ], [ zeroinitializer, %stbtt__dict_get_ints.exit.thread ]
+bb.m:                                             ; preds = %stbtt__dict_get_ints.exit12, %stbtt__dict_get_ints.exit12.thread, %stbtt__dict_get_ints.exit, %stbtt__dict_get_ints.exit.thread, %stbtt__cff_get_index.exit
+  %.pn = phi { ptr, i64 } [ %.fca.1.insert.i.i, %stbtt__cff_get_index.exit ], [ zeroinitializer, %stbtt__dict_get_ints.exit ], [ zeroinitializer, %stbtt__dict_get_ints.exit.thread ], [ zeroinitializer, %stbtt__dict_get_ints.exit12.thread ], [ zeroinitializer, %stbtt__dict_get_ints.exit12 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
   ret { ptr, i64 } %.pn
 }

@@ -158,7 +158,6 @@ bb.a:
   %i.a = alloca [3 x i32], align 4                ; 7 uses
   %i.b = alloca [3 x i32], align 4                ; 6 uses
   %i.c = alloca [4 x double], align 16            ; 8 uses
-  %1 = alloca [2 x double], align 16              ; 5 uses
   %i.d = alloca [9 x double], align 16            ; 13 uses
   %i.e = alloca [3 x double], align 16            ; 13 uses
   %i.f = alloca [16 x double], align 16           ; 20 uses
@@ -167,7 +166,7 @@ bb.a:
   %i.i = alloca ptr, align 8                      ; 10 uses
   %i.j = alloca ptr, align 8                      ; 4 uses
   %i.k = alloca ptr, align 8                      ; 4 uses
-  %2 = alloca %struct.ThreadData, align 8         ; 5 uses
+  %1 = alloca %struct.ThreadData, align 8         ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !85   ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -178,7 +177,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 4196
   %i.t = load i32, ptr %i.s, align 4, !tbaa !88
   switch i32 %i.t, label %bb.an [
@@ -363,7 +362,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.dv = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.dy = getelementptr i8, ptr %.val52, i64 4304 ; 17 uses
   %i.dz = getelementptr i8, ptr %.val52, i64 41296 ; 23 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %.val52, i64 41840 ; 2 uses
@@ -502,15 +500,10 @@ bb.l:                                             ; preds = %.preheader15.i
   %i.fp = load float, ptr %i.fo, align 4, !tbaa !40
   %i.fq = fpext nsz float %i.fp to double
   store double %i.fq, ptr %i.dx, align 8, !tbaa !44
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
   %i.fr = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %indvars.iv129.i
   %i.fs = load float, ptr %i.fr, align 4, !tbaa !40
-  %4 = fpext nsz float %i.fs to double            ; 2 uses
-  store double %4, ptr %1, align 16, !tbaa !44
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.dd, i64 %indvars.iv129.i
   %i.fu = load float, ptr %i.ft, align 4, !tbaa !40
-  %5 = fpext nsz float %i.fu to double
-  store double %5, ptr %3, align 8, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.b, i8 0, i64 12, i1 false)
   %i.fv = call fastcc i32 @gauss_make_triangular(ptr noundef nonnull %i.c, ptr noundef nonnull %i.b, i32 noundef 2)
@@ -518,19 +511,19 @@ bb.l:                                             ; preds = %.preheader15.i
   br i1 %.not.i.i, label %gauss_solve.exit.i, label %.lr.ph.preheader.i.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.l
-  %6 = load i32, ptr %i.b, align 4, !tbaa !31
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr inbounds [8 x i8], ptr %1, i64 %7 ; 2 uses
-  %9 = load double, ptr %8, align 8, !tbaa !44    ; 2 uses
-  store double %4, ptr %8, align 8, !tbaa !44
-  %10 = load double, ptr %i.dw, align 16, !tbaa !44
-  %i.fw = load double, ptr %3, align 8, !tbaa !44
-  %i.fx = call nsz double @llvm.fmuladd.f64(double %10, double %9, double %i.fw)
+  %2 = fpext nsz float %i.fu to double            ; 2 uses
+  %3 = fpext nsz float %i.fs to double            ; 2 uses
+  %4 = load i32, ptr %i.b, align 4, !tbaa !31
+  %.sroa.idx.i = icmp eq i32 %4, 1                ; 2 uses
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, double %2, double %3 ; 2 uses
+  %.sroa.16.5.i = select nsz i1 %.sroa.idx.i, double %3, double %2
+  %i.fw = load double, ptr %i.dw, align 16, !tbaa !44
+  %i.fx = call nsz double @llvm.fmuladd.f64(double %i.fw, double %.sroa.speculated.i, double %.sroa.16.5.i)
   %i.fy = load double, ptr %i.dx, align 8, !tbaa !44
   %i.fz = fdiv nsz double %i.fx, %i.fy            ; 2 uses
   %i.ga = load double, ptr %i.dv, align 8, !tbaa !44
   %i.gb = fneg nsz double %i.ga
-  %i.gc = call nsz double @llvm.fmuladd.f64(double %i.gb, double %i.fz, double %9)
+  %i.gc = call nsz double @llvm.fmuladd.f64(double %i.gb, double %i.fz, double %.sroa.speculated.i)
   %i.gd = load double, ptr %i.c, align 16, !tbaa !44
   %i.ge = fdiv nsz double %i.gc, %i.gd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
@@ -545,7 +538,6 @@ gauss_solve.exit.i:                               ; preds = %bb.l
   br label %bb.m
 
 bb.m:                                             ; preds = %gauss_solve.exit.i, %.lr.ph.preheader.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   br label %.loopexit.i
 
@@ -948,14 +940,14 @@ bb.aj:                                            ; preds = %bb.ah
 bb.ak:                                            ; preds = %bb.aj, %bb.ag
   %i.xm = phi ptr [ %i.xe, %bb.ag ], [ %.pre, %bb.aj ] ; 2 uses
   %.034 = phi ptr [ %i.xe, %bb.ag ], [ %i.xj, %bb.aj ] ; 4 uses
-  store ptr %i.xm, ptr %2, align 8, !tbaa !48
-  %i.xn = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store ptr %i.xm, ptr %1, align 8, !tbaa !48
+  %i.xn = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %.034, ptr %i.xn, align 8, !tbaa !49
   %i.xo = getelementptr inbounds nuw i8, ptr %i.xm, i64 108
   %i.xp = load i32, ptr %i.xo, align 4, !tbaa !54
   %i.xq = call i32 @ff_filter_get_nb_threads(ptr noundef nonnull %i.m) #13
   %. = call i32 @llvm.smin.i32(i32 %i.xp, i32 %i.xq)
-  %i.xr = call i32 @ff_filter_execute(ptr noundef nonnull %i.m, ptr noundef nonnull @colormap_slice, ptr noundef nonnull %2, ptr noundef null, i32 noundef %.) #12 ; 0 uses
+  %i.xr = call i32 @ff_filter_execute(ptr noundef nonnull %i.m, ptr noundef nonnull @colormap_slice, ptr noundef nonnull %1, ptr noundef null, i32 noundef %.) #12 ; 0 uses
   %i.xs = load ptr, ptr %i.i, align 8, !tbaa !89
   %.not46 = icmp eq ptr %.034, %i.xs
   br i1 %.not46, label %bb.am, label %bb.al
@@ -980,7 +972,7 @@ bb.am:                                            ; preds = %bb.ae, %bb.ak, %bb.
 
 bb.an:                                            ; preds = %bb.c, %bb.d, %bb.e, %bb.a, %bb.am, %bb.ai
   %.035 = phi i32 [ -12, %bb.ai ], [ -558323010, %bb.a ], [ %i.yb, %bb.am ], [ %i.w, %bb.c ], [ %i.y, %bb.d ], [ %i.aa, %bb.e ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12

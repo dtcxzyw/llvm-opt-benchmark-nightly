@@ -53,7 +53,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.26 = private unnamed_addr constant [9 x i8] c"encoding\00", align 1
 @.str.27 = private unnamed_addr constant [6 x i8] c"dense\00", align 1
 @.str.28 = private unnamed_addr constant [7 x i8] c"sparse\00", align 1
-@__const.pfdebugCommand.encodingstr = private unnamed_addr constant [2 x ptr] [ptr @.str.27, ptr @.str.28], align 16
 @.str.29 = private unnamed_addr constant [8 x i8] c"todense\00", align 1
 @.str.30 = private unnamed_addr constant [32 x i8] c"Unknown PFDEBUG subcommand '%s'\00", align 1
 @.str.31 = private unnamed_addr constant [50 x i8] c"Wrong number of arguments for the '%s' subcommand\00", align 1
@@ -456,10 +455,9 @@ bb.ag:                                            ; preds = %bb.af
 .thread149:                                       ; preds = %bb.ag
   %i.dj = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   %i.dk = load i8, ptr %i.dj, align 1, !tbaa !23
-  %1 = zext i8 %i.dk to i64
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const.pfdebugCommand.encodingstr, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !113
-  tail call void @addReplyStatus(ptr noundef nonnull %0, ptr noundef %3) #19
+  %.sroa.idx = icmp eq i8 %i.dk, 1
+  %.sroa.speculated = select i1 %.sroa.idx, ptr @.str.28, ptr @.str.27
+  tail call void @addReplyStatus(ptr noundef nonnull %0, ptr noundef nonnull %.sroa.speculated) #19
   br label %.thread156
 
 bb.ah:                                            ; preds = %bb.af
@@ -720,5 +718,4 @@ attributes #21 = { nounwind willreturn memory(read) }
 !110 = distinct !{!110, !22}
 !111 = distinct !{!111, !22}
 !112 = distinct !{!112, !22}
-!113 = !{!29, !29, i64 0}
 end_hunk_1

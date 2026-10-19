@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hdf5/original/H5Dchunk?download=true
 inline.NumInlined: 65
 inline.NumDeleted: 14
-loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 13
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@H5D__chunk_lock:bb.a
 .thread66:                                        ; preds = %bb.br
   %i.hu = load i64, ptr @H5E_DATASET_g, align 8, !tbaa !25
@@ -205,10 +205,10 @@ bb.cc:                                            ; preds = %.critedge262
   br label %.lr.ph.i288
 
 .lr.ph.i288:                                      ; preds = %.critedge4.i, %.lr.ph.preheader.i287
-  %.sroa.12.0.i = phi ptr [ null, %.lr.ph.preheader.i287 ], [ %.sroa.8.1.i, %.critedge4.i ]
-  %.sroa.0100.0.i = phi ptr [ %i.ky, %.lr.ph.preheader.i287 ], [ %.sroa.0.2.i, %.critedge4.i ] ; 17 uses
-  %.06190.i = phi i32 [ 0, %.lr.ph.preheader.i287 ], [ %.162.lcssa.i, %.critedge4.i ] ; 7 uses
-  %.sroa.0.089.i = phi i32 [ %i.lg, %.lr.ph.preheader.i287 ], [ %i.qd, %.critedge4.i ] ; 2 uses
+  %.0125169.i = phi i32 [ %.162.lcssa.i, %.critedge4.i ], [ 0, %.lr.ph.preheader.i287 ] ; 7 uses
+  %.sroa.0100.0.i = phi ptr [ %.sroa.0.2.i, %.critedge4.i ], [ %i.ky, %.lr.ph.preheader.i287 ] ; 17 uses
+  %.sroa.19.0165.i = phi ptr [ %.sroa.8.1.i, %.critedge4.i ], [ null, %.lr.ph.preheader.i287 ]
+  %.sroa.0.089.i = phi i32 [ %i.qd, %.critedge4.i ], [ %i.lg, %.lr.ph.preheader.i287 ] ; 2 uses
   %i.lh = load i64, ptr %i.kz, align 8, !tbaa !203
   %i.li = add i64 %i.lh, %i.s                     ; 6 uses
   %i.lj = icmp ugt i64 %i.li, %i.kv
@@ -223,7 +223,7 @@ bb.cc:                                            ; preds = %.critedge262
   br label %.preheader80.i
 
 .preheader80.i:                                   ; preds = %.preheader80.split.us.i, %.preheader81.i
-  %.us-phi.i = phi ptr [ %i.ll, %.preheader80.split.us.i ], [ %.sroa.12.0.i, %.preheader81.i ] ; 8 uses
+  %.us-phi.i = phi ptr [ %i.ll, %.preheader80.split.us.i ], [ %.sroa.19.0165.i, %.preheader81.i ] ; 8 uses
   %.not71.not.i = icmp eq ptr %.sroa.0100.0.i, null ; 2 uses
   br i1 %.not71.not.i, label %bb.ce, label %bb.cd
 
@@ -411,7 +411,7 @@ H5D__chunk_cache_evict.exit.i:                    ; preds = %bb.dd, %bb.dc
   store i32 %i.od, ptr %i.ob, align 8, !tbaa !204
   %i.oe = call ptr @H5FL_reg_free(ptr noundef nonnull @H5_H5D_rdcc_ent_t_reg_free_list, ptr noundef nonnull %.sroa.0100.0.i) #15 ; 0 uses
   %.lobit.i = lshr i32 %i.mw, 31
-  %spec.select.i = add nsw i32 %.lobit.i, %.06190.i
+  %spec.select.i = add nsw i32 %.lobit.i, %.0125169.i
   %.pre113.i = load i64, ptr %i.kz, align 8, !tbaa !203
   %.pre119.i = add i64 %.pre113.i, %i.s
   br label %.thread75.i
@@ -421,7 +421,7 @@ H5D__chunk_cache_evict.exit.i:                    ; preds = %bb.dd, %bb.dc
   %.sroa.12.1.i = phi ptr [ %.us-phi.i, %bb.cl ], [ %spec.store.select.1.i, %H5D__chunk_cache_evict.exit.i ], [ %spec.store.select.1.i, %bb.cq ], [ %.us-phi.i, %bb.cg ], [ %.us-phi.i, %bb.ck ], [ %.us-phi.i, %.preheader79.preheader.i ] ; 12 uses
   %.sroa.8.0.i = phi ptr [ %i.lr, %bb.cl ], [ %.sroa.8.2.i, %H5D__chunk_cache_evict.exit.i ], [ %.sroa.8.2.i, %bb.cq ], [ %i.lr, %bb.cg ], [ %i.lr, %bb.ck ], [ %i.lr, %.preheader79.preheader.i ] ; 4 uses
   %.sroa.0.1.i = phi ptr [ %i.lo, %bb.cl ], [ %.sroa.0.0.i, %H5D__chunk_cache_evict.exit.i ], [ %.sroa.0.0.i, %bb.cq ], [ %i.lo, %bb.cg ], [ %i.lo, %bb.ck ], [ %i.lo, %.preheader79.preheader.i ] ; 4 uses
-  %.364.i = phi i32 [ %.06190.i, %bb.cl ], [ %spec.select.i, %H5D__chunk_cache_evict.exit.i ], [ %.06190.i, %bb.cq ], [ %.06190.i, %bb.cg ], [ %.06190.i, %bb.ck ], [ %.06190.i, %.preheader79.preheader.i ] ; 4 uses
+  %.364.i = phi i32 [ %.0125169.i, %bb.cl ], [ %spec.select.i, %H5D__chunk_cache_evict.exit.i ], [ %.0125169.i, %bb.cq ], [ %.0125169.i, %bb.cg ], [ %.0125169.i, %bb.ck ], [ %.0125169.i, %.preheader79.preheader.i ] ; 4 uses
   %i.of = icmp ule i64 %.pre-phi.i, %i.kv
   %.not134.i = icmp eq ptr %.sroa.12.1.i, null
   %or.cond136.i = select i1 %i.of, i1 true, i1 %.not134.i
@@ -558,9 +558,9 @@ H5D__chunk_cache_evict.exit.1.i:                  ; preds = %bb.dw, %bb.dv
   br label %.critedge4.i
 
 .critedge4.i:                                     ; preds = %H5D__chunk_cache_evict.exit.1.i, %bb.dj, %bb.de, %.thread75.i
-  %.sroa.8.1.i = phi ptr [ %.sroa.8.0.i, %.thread75.i ], [ %.sroa.8.0.i, %bb.de ], [ %.sroa.8.3.i, %H5D__chunk_cache_evict.exit.1.i ], [ %.sroa.8.3.i, %bb.dj ] ; 2 uses
-  %.sroa.0.2.i = phi ptr [ %.sroa.0.1.i, %.thread75.i ], [ %.sroa.0.1.i, %bb.de ], [ %.sroa.0.3.i, %H5D__chunk_cache_evict.exit.1.i ], [ %.sroa.0.3.i, %bb.dj ] ; 2 uses
-  %.162.lcssa.i = phi i32 [ %.364.i, %.thread75.i ], [ %.364.i, %bb.de ], [ %spec.select.1.i, %H5D__chunk_cache_evict.exit.1.i ], [ %.364.i, %bb.dj ] ; 2 uses
+  %.sroa.8.1.i = phi ptr [ %.sroa.8.0.i, %.thread75.i ], [ %.sroa.8.3.i, %bb.dj ], [ %.sroa.8.0.i, %bb.de ], [ %.sroa.8.3.i, %H5D__chunk_cache_evict.exit.1.i ] ; 2 uses
+  %.sroa.0.2.i = phi ptr [ %.sroa.0.1.i, %.thread75.i ], [ %.sroa.0.3.i, %bb.dj ], [ %.sroa.0.1.i, %bb.de ], [ %.sroa.0.3.i, %H5D__chunk_cache_evict.exit.1.i ] ; 2 uses
+  %.162.lcssa.i = phi i32 [ %.364.i, %.thread75.i ], [ %.364.i, %bb.dj ], [ %.364.i, %bb.de ], [ %spec.select.1.i, %H5D__chunk_cache_evict.exit.1.i ] ; 2 uses
   %i.qd = add i32 %.sroa.0.089.i, -1
   %i.qe = icmp ne ptr %.sroa.0.2.i, null
   %i.qf = icmp ne ptr %.sroa.8.1.i, null
@@ -568,7 +568,7 @@ H5D__chunk_cache_evict.exit.1.i:                  ; preds = %bb.dw, %bb.dv
   br i1 %or.cond.i289, label %.lr.ph.i288, label %.critedge.i, !llvm.loop !352
 
 .critedge.i:                                      ; preds = %.critedge4.i, %.lr.ph.i288
-  %.061.lcssa.ph.i = phi i32 [ %.06190.i, %.lr.ph.i288 ], [ %.162.lcssa.i, %.critedge4.i ]
+  %.061.lcssa.ph.i = phi i32 [ %.0125169.i, %.lr.ph.i288 ], [ %.162.lcssa.i, %.critedge4.i ]
   %i.qg = icmp eq i32 %.061.lcssa.ph.i, 0
   br i1 %i.qg, label %bb.dx, label %.split103
 

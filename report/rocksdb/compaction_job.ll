@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.aj
           to label %bb.al unwind label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  br i1 %i.ey, label %bb.an, label %.thread
+  br i1 %i.ey, label %bb.an, label %bb.bo
 
 bb.am:                                            ; preds = %bb.ak
   %i.ez = landingpad { ptr, i32 }
@@ -608,7 +608,7 @@ bb.bm:                                            ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #37
   br i1 %i.fi, label %.thread, label %bb.bp
 
-.thread:                                          ; preds = %bb.bm, %bb.al
+.thread:                                          ; preds = %bb.bm
   br i1 %.not, label %bb.bo, label %bb.aj
 
 bb.bn:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit158, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit152, %bb.aw, %bb.av
@@ -627,7 +627,7 @@ _ZN7rocksdb6StatusD2Ev.exit164:                   ; preds = %bb.bn, %_ZNKSt14def
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #37
   br label %bb.bs
 
-bb.bo:                                            ; preds = %.thread
+bb.bo:                                            ; preds = %bb.al, %.thread
   %i.la = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr null, ptr %i.la, align 8, !tbaa !95, !alias.scope !1682
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false), !alias.scope !1682
