@@ -204,7 +204,7 @@ bb.a:
   %i.d = ptrtoaddr ptr %18 to i64
   %i.e = getelementptr inbounds i8, ptr %9, i64 -4 ; 2 uses
   %i.f = getelementptr inbounds i8, ptr %11, i64 -8
-  %i.g = load i32, ptr %12, align 4, !tbaa !10    ; 7 uses
+  %i.g = load i32, ptr %12, align 4, !tbaa !10    ; 5 uses
   %narrow = xor i32 %i.g, -1
   %i.h = sext i32 %narrow to i64                  ; 5 uses
   %i.i = getelementptr inbounds [8 x i8], ptr %21, i64 %i.h ; 6 uses
@@ -331,7 +331,6 @@ bb.b:                                             ; preds = %._crit_edge277, %bb
   %i.av = shufflevector <4 x ptr> %i.au, <4 x ptr> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %i.aw = insertelement <4 x ptr> <ptr poison, ptr @dchk3_.alpha, ptr poison, ptr @dchk3_.alpha>, ptr %17, i64 0
   %i.ax = insertelement <4 x ptr> %i.aw, ptr %scevgep453, i64 2
-  %24 = insertelement <4 x i32> poison, i32 %i.g, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph353, %._crit_edge349
@@ -734,7 +733,7 @@ bb.ad:                                            ; preds = %.tail266
   br i1 %.not206291, label %._crit_edge301, label %.lr.ph294.preheader
 
 .lr.ph294.preheader:                              ; preds = %.lr.ph300
-  %i.li = load i32, ptr @dchk3_.ldb, align 4      ; 4 uses
+  %i.li = load i32, ptr @dchk3_.ldb, align 4      ; 2 uses
   %i.lj = add nuw i32 %i.lh, 1                    ; 2 uses
   %i.lk = sext i32 %i.li to i64                   ; 2 uses
   %i.ll = add nuw i32 %i.lg, 1
@@ -760,23 +759,19 @@ bb.ad:                                            ; preds = %.tail266
   %i.ma = shufflevector <2 x ptr> %i.lz, <2 x ptr> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %i.mb = zext nneg i32 %i.lh to i64
   %i.mc = zext nneg i32 %i.lh to i64              ; 2 uses
-  %min.iters.check = icmp ult i32 %i.lh, 20
+  %min.iters.check = icmp ult i32 %i.lh, 16
   %i.md = icmp ult <4 x ptr> %i.av, %i.lx
   %i.me = icmp ult <4 x ptr> %i.ax, %i.ma
   %i.mf = or i32 %i.li, %i.g
+  %24 = icmp slt i32 %i.mf, 0
   %i.mg = and <4 x i1> %i.md, %i.me
   %bound0472 = icmp ult ptr %17, %scevgep455
   %bound1473 = icmp ult ptr %scevgep453, %scevgep452
   %found.conflict474 = and i1 %bound0472, %bound1473
-  %25 = or i32 %i.g, %i.li
-  %26 = insertelement <4 x i32> %24, i32 %i.mf, i64 0
-  %27 = insertelement <4 x i32> %26, i32 %i.li, i64 2
-  %28 = insertelement <4 x i32> %27, i32 %25, i64 3
-  %29 = icmp slt <4 x i32> %28, zeroinitializer
-  %rdx.op = or <4 x i1> %i.mg, %29
-  %30 = bitcast <4 x i1> %rdx.op to i4
-  %31 = icmp ne i4 %30, 0
-  %op.rdx.a = or i1 %31, %found.conflict474
+  %25 = bitcast <4 x i1> %i.mg to i4
+  %26 = icmp ne i4 %25, 0
+  %op.rdx = or i1 %26, %found.conflict474
+  %op.rdx.a = or i1 %op.rdx, %24
   %n.vec = and i64 %i.mc, 2147483640              ; 3 uses
   %i.mh = or disjoint i64 %n.vec, 1
   %cmp.n = icmp eq i64 %n.vec, %i.mc

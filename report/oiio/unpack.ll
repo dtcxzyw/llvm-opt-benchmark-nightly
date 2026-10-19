@@ -204,9 +204,9 @@ bb.a:
   br i1 %i.l, label %.lr.ph45, label %._crit_edge46.split
 
 .lr.ph45:                                         ; preds = %bb.a
-  %i.m = mul i32 %i.d, 6                          ; 4 uses
+  %i.m = mul i32 %i.d, 6                          ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !31   ; 3 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !31   ; 2 uses
   %i.p = sext i32 %i.d to i64                     ; 4 uses
   %i.q = sext i32 %i.m to i64                     ; 2 uses
   %i.r = icmp sgt i32 %i.d, 0
@@ -215,7 +215,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph45
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !7    ; 4 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !7    ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !22   ; 6 uses
   %i.x = mul i32 %i.m, %i.k
@@ -229,7 +229,7 @@ bb.a:
   %i.ae = mul nsw i64 %i.s, %i.ad
   %i.af = mul nuw nsw i64 %wide.trip.count, 6
   %i.ag = getelementptr i8, ptr %i.u, i64 %i.ae
-  %scevgep = getelementptr i8, ptr %i.ag, i64 %i.af ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.ag, i64 %i.af ; 3 uses
   %i.ah = shl nuw nsw i64 %i.p, 2                 ; 2 uses
   %i.ai = getelementptr i8, ptr %i.w, i64 %i.ah
   %scevgep51 = getelementptr i8, ptr %i.ai, i64 %i.y
@@ -249,33 +249,21 @@ bb.a:
   %i.at = getelementptr i8, ptr %i.w, i64 %i.aj
   %i.au = getelementptr i8, ptr %i.at, i64 %i.ak
   %scevgep55 = getelementptr i8, ptr %i.au, i64 %i.y
-  %1 = insertelement <2 x ptr> poison, ptr %i.u, i64 0
-  %2 = shufflevector <2 x ptr> %1, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %3 = insertelement <2 x ptr> poison, ptr %scevgep52, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %scevgep54, i64 1
-  %5 = insertelement <2 x ptr> poison, ptr %scevgep51, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %scevgep53, i64 1
-  %7 = insertelement <2 x ptr> poison, ptr %scevgep, i64 0
-  %8 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %9 = insertelement <2 x i32> poison, i32 %i.m, i64 0
-  %10 = insertelement <2 x i32> poison, i32 %i.o, i64 0
-  %min.iters.check.a = icmp ult i32 %i.d, 16
-  %11 = icmp ult <2 x ptr> %2, %4
-  %12 = icmp ult <2 x ptr> %6, %8
-  %13 = or <2 x i32> %9, %10
-  %14 = and <2 x i1> %11, %12
-  %15 = icmp slt <2 x i32> %13, zeroinitializer
-  %16 = shufflevector <2 x i1> %15, <2 x i1> poison, <2 x i32> zeroinitializer
-  %17 = or <2 x i1> %14, %16
-  %18 = bitcast <2 x i1> %17 to i2
-  %19 = icmp ne i2 %18, 0
+  %min.iters.check = icmp ult i32 %i.d, 16
+  %min.iters.check.a = icmp ult ptr %i.u, %scevgep52
+  %bound1 = icmp ult ptr %scevgep51, %scevgep
+  %found.conflict = and i1 %min.iters.check.a, %bound1
+  %1 = or i32 %i.m, %i.o
+  %2 = icmp slt i32 %1, 0
+  %3 = or i1 %found.conflict, %2
+  %bound057 = icmp ult ptr %i.u, %scevgep54
+  %bound158 = icmp ult ptr %scevgep53, %scevgep
+  %found.conflict59 = and i1 %bound057, %bound158
+  %conflict.rdx = or i1 %3, %found.conflict59
   %bound062 = icmp ult ptr %i.u, %scevgep55
   %bound163 = icmp ult ptr %i.z, %scevgep
   %found.conflict64 = and i1 %bound062, %bound163
-  %20 = or i32 %i.m, %i.o
-  %21 = icmp slt i32 %20, 0
-  %22 = or i1 %found.conflict64, %21
-  %conflict.rdx67 = or i1 %19, %22
+  %conflict.rdx67 = or i1 %conflict.rdx, %found.conflict64
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 4 uses
   %i.av = mul nuw nsw i64 %n.vec, 6
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -293,7 +281,7 @@ bb.a:
   %.03841 = phi ptr [ %i.br, %._crit_edge ], [ %i.z, %.lr.ph.preheader ] ; 6 uses
   %i.ax = getelementptr inbounds nuw [2 x i8], ptr %.03841, i64 %i.p ; 5 uses
   %i.ay = getelementptr inbounds nuw [2 x i8], ptr %i.ax, i64 %i.p ; 4 uses
-  %brmerge = select i1 %min.iters.check.a, i1 true, i1 %conflict.rdx67
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx67
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -526,9 +514,9 @@ bb.a:
   br i1 %i.l, label %.lr.ph45, label %._crit_edge46.split
 
 .lr.ph45:                                         ; preds = %bb.a
-  %i.m = mul i32 %i.d, 6                          ; 4 uses
+  %i.m = mul i32 %i.d, 6                          ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !31   ; 3 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !31   ; 2 uses
   %i.p = sext i32 %i.d to i64                     ; 4 uses
   %i.q = sext i32 %i.m to i64                     ; 2 uses
   %i.r = icmp sgt i32 %i.d, 0
@@ -537,7 +525,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph45
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 136
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !7    ; 4 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !7    ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !22   ; 6 uses
   %i.x = mul i32 %i.m, %i.k
@@ -551,7 +539,7 @@ bb.a:
   %i.ae = mul nsw i64 %i.s, %i.ad
   %i.af = mul nuw nsw i64 %wide.trip.count, 6
   %i.ag = getelementptr i8, ptr %i.u, i64 %i.ae
-  %scevgep = getelementptr i8, ptr %i.ag, i64 %i.af ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.ag, i64 %i.af ; 3 uses
   %i.ah = mul nsw i64 %i.q, %i.ad                 ; 3 uses
   %i.ai = shl nuw nsw i64 %wide.trip.count, 1     ; 3 uses
   %i.aj = getelementptr i8, ptr %i.w, i64 %i.ah
@@ -571,33 +559,21 @@ bb.a:
   %i.at = getelementptr i8, ptr %i.as, i64 %i.aq
   %i.au = getelementptr i8, ptr %i.at, i64 %i.ai
   %scevgep55 = getelementptr i8, ptr %i.au, i64 %i.y
-  %1 = insertelement <2 x ptr> poison, ptr %i.u, i64 0
-  %2 = shufflevector <2 x ptr> %1, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %3 = insertelement <2 x ptr> poison, ptr %scevgep51, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %scevgep53, i64 1
-  %5 = insertelement <2 x ptr> poison, ptr %i.z, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %scevgep52, i64 1
-  %7 = insertelement <2 x ptr> poison, ptr %scevgep, i64 0
-  %8 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <2 x i32> zeroinitializer
-  %9 = insertelement <2 x i32> poison, i32 %i.m, i64 0
-  %10 = insertelement <2 x i32> poison, i32 %i.o, i64 0
-  %min.iters.check.a = icmp ult i32 %i.d, 16
-  %11 = icmp ult <2 x ptr> %2, %4
-  %12 = icmp ult <2 x ptr> %6, %8
-  %13 = or <2 x i32> %9, %10
-  %14 = and <2 x i1> %11, %12
-  %15 = icmp slt <2 x i32> %13, zeroinitializer
-  %16 = shufflevector <2 x i1> %15, <2 x i1> poison, <2 x i32> zeroinitializer
-  %17 = or <2 x i1> %14, %16
-  %18 = bitcast <2 x i1> %17 to i2
-  %19 = icmp ne i2 %18, 0
+  %min.iters.check = icmp ult i32 %i.d, 16
+  %min.iters.check.a = icmp ult ptr %i.u, %scevgep51
+  %bound1 = icmp ult ptr %i.z, %scevgep
+  %found.conflict = and i1 %min.iters.check.a, %bound1
+  %1 = or i32 %i.m, %i.o
+  %2 = icmp slt i32 %1, 0
+  %3 = or i1 %found.conflict, %2
+  %bound057 = icmp ult ptr %i.u, %scevgep53
+  %bound158 = icmp ult ptr %scevgep52, %scevgep
+  %found.conflict59 = and i1 %bound057, %bound158
+  %conflict.rdx = or i1 %3, %found.conflict59
   %bound062 = icmp ult ptr %i.u, %scevgep55
   %bound163 = icmp ult ptr %scevgep54, %scevgep
   %found.conflict64 = and i1 %bound062, %bound163
-  %20 = or i32 %i.m, %i.o
-  %21 = icmp slt i32 %20, 0
-  %22 = or i1 %found.conflict64, %21
-  %conflict.rdx67 = or i1 %19, %22
+  %conflict.rdx67 = or i1 %conflict.rdx, %found.conflict64
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 4 uses
   %i.av = mul nuw nsw i64 %n.vec, 6
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -615,7 +591,7 @@ bb.a:
   %.03841 = phi ptr [ %i.br, %._crit_edge ], [ %i.z, %.lr.ph.preheader ] ; 6 uses
   %i.ax = getelementptr inbounds nuw [2 x i8], ptr %.03841, i64 %i.p ; 5 uses
   %i.ay = getelementptr inbounds nuw [2 x i8], ptr %i.ax, i64 %i.p ; 4 uses
-  %brmerge = select i1 %min.iters.check.a, i1 true, i1 %conflict.rdx67
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx67
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph

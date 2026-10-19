@@ -202,7 +202,7 @@ bb.a:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !44 ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 128
-  %i.ao = load i64, ptr %i.an, align 8, !tbaa !41 ; 7 uses
+  %i.ao = load i64, ptr %i.an, align 8, !tbaa !41 ; 4 uses
   %i.ap = icmp sgt i32 %i.i, 0
   br i1 %i.ap, label %.lr.ph.preheader, label %._crit_edge36.split
 
@@ -255,22 +255,19 @@ bb.a:
   %bound055 = icmp ult ptr %scevgep, %scevgep49
   %bound156 = icmp ult ptr %scevgep48, %scevgep45
   %found.conflict57 = and i1 %bound055, %bound156
-  %2 = or i64 %i.ai, %i.ao
-  %i.bs = icmp slt i64 %2, 0
+  %i.bs = icmp slt i64 %i.ai, 0
   %i.bt = or i1 %found.conflict57, %i.bs
   %conflict.rdx = or i1 %i.br, %i.bt
   %bound060 = icmp ult ptr %scevgep, %scevgep51
   %bound161 = icmp ult ptr %scevgep50, %scevgep45
   %found.conflict62 = and i1 %bound060, %bound161
-  %3 = or i64 %i.s, %i.ao
-  %i.bu = icmp slt i64 %3, 0
+  %i.bu = icmp slt i64 %i.s, 0
   %i.bv = or i1 %found.conflict62, %i.bu
   %conflict.rdx65 = or i1 %conflict.rdx, %i.bv
   %bound066 = icmp ult ptr %scevgep, %scevgep53
   %bound167 = icmp ult ptr %scevgep52, %scevgep45
   %found.conflict68 = and i1 %bound066, %bound167
-  %4 = or i64 %i.y, %i.ao
-  %i.bw = icmp slt i64 %4, 0
+  %i.bw = icmp slt i64 %i.y, 0
   %i.bx = or i1 %found.conflict68, %i.bw
   %conflict.rdx71 = or i1 %conflict.rdx65, %i.bx
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses

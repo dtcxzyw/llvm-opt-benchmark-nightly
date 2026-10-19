@@ -204,7 +204,6 @@ bb.a:
   %i.ac = add i64 %i.u, %i.r
   %i.ad = shl i64 %i.ac, 4                        ; 2 uses
   %i.ae = add i64 %i.ab, -16
-  %3 = shl i64 %i.h, 3                            ; 3 uses
   %i.af = add i64 %i.h, %i.r
   %i.ag = shl i64 %i.af, 3
   %i.ah = shl i64 %i.n, 3
@@ -218,7 +217,7 @@ bb.a:
   %i.ap = shl i64 %i.ao, 4
   %i.aq = getelementptr i8, ptr %i.q, i64 %i.ap
   %scevgep26 = getelementptr i8, ptr %i.aq, i64 -32 ; 2 uses
-  %i.ar = add i64 %i.an, -16                      ; 3 uses
+  %i.ar = add i64 %i.an, -16                      ; 2 uses
   %i.as = mul i64 %i.ai, %i.ar
   %i.at = add i64 %i.u, %i.j
   %i.au = shl i64 %i.at, 4
@@ -226,7 +225,7 @@ bb.a:
   %i.aw = getelementptr i8, ptr %i.av, i64 %i.au
   %scevgep27 = getelementptr i8, ptr %i.aw, i64 -32 ; 2 uses
   %i.ax = sub i64 %i.j, %i.r                      ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ax, 12
+  %min.iters.check = icmp ult i64 %i.ax, 10
   %i.ay = getelementptr i8, ptr %i.q, i64 %i.ad
   %i.az = getelementptr i8, ptr %i.ay, i64 -24
   %i.ba = getelementptr i8, ptr %i.q, i64 %i.ad
@@ -234,11 +233,9 @@ bb.a:
   %ident.check = icmp ne i64 %i.b, 1
   %mul.result = shl i64 %i.aa, 4                  ; 2 uses
   %mul.overflow = icmp ugt i64 %i.aa, 1152921504606846975
-  %stride.check = icmp slt i64 %3, 0
-  %4 = or i64 %i.ar, %3
-  %5 = icmp slt i64 %4, 0
-  %6 = or i64 %i.ar, %3
-  %i.bc = icmp slt i64 %6, 0
+  %.mask = and i64 %i.h, 1152921504606846976
+  %stride.check = icmp ne i64 %.mask, 0
+  %i.bc = icmp slt i64 %i.ar, 0
   %n.vec = and i64 %i.ax, -2                      ; 3 uses
   %i.bd = add i64 %i.r, %n.vec
   %cmp.n = icmp eq i64 %i.ax, %n.vec
@@ -262,13 +259,12 @@ bb.a:
   %bound029 = icmp ult ptr %scevgep22, %scevgep27
   %bound130 = icmp ult ptr %scevgep26, %scevgep23
   %found.conflict31 = and i1 %bound029, %bound130
-  %i.bi = or i1 %found.conflict31, %5
+  %i.bi = or i1 %found.conflict31, %i.bc
   %conflict.rdx = or i1 %i.bh, %i.bi
   %bound034 = icmp ult ptr %scevgep24, %scevgep27
   %bound135 = icmp ult ptr %scevgep26, %scevgep25
   %found.conflict36 = and i1 %bound034, %bound135
-  %7 = or i1 %found.conflict36, %i.bc
-  %conflict.rdx39 = or i1 %conflict.rdx, %7
+  %conflict.rdx39 = or i1 %conflict.rdx, %found.conflict36
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader58.i
@@ -500,7 +496,6 @@ bb.a:
   %i.al = add i64 %i.ad, %i.aa
   %i.am = shl i64 %i.al, 4                        ; 2 uses
   %i.an = add i64 %i.ak, -16
-  %3 = shl i64 %i.o, 3                            ; 3 uses
   %i.ao = add i64 %i.o, %i.aa
   %i.ap = shl i64 %i.ao, 3
   %i.aq = shl i64 %i.w, 3
@@ -514,7 +509,7 @@ bb.a:
   %i.ay = shl i64 %i.ax, 4
   %i.az = getelementptr i8, ptr %i.z, i64 %i.ay
   %scevgep26 = getelementptr i8, ptr %i.az, i64 -32 ; 2 uses
-  %i.ba = add i64 %i.aw, -16                      ; 3 uses
+  %i.ba = add i64 %i.aw, -16                      ; 2 uses
   %i.bb = mul i64 %i.ar, %i.ba
   %i.bc = add i64 %i.ad, %i.r
   %i.bd = shl i64 %i.bc, 4
@@ -522,7 +517,7 @@ bb.a:
   %i.bf = getelementptr i8, ptr %i.be, i64 %i.bd
   %scevgep27 = getelementptr i8, ptr %i.bf, i64 -32 ; 2 uses
   %i.bg = sub i64 %i.r, %i.aa                     ; 3 uses
-  %min.iters.check = icmp ult i64 %i.bg, 12
+  %min.iters.check = icmp ult i64 %i.bg, 10
   %i.bh = getelementptr i8, ptr %i.z, i64 %i.am
   %i.bi = getelementptr i8, ptr %i.bh, i64 -24
   %i.bj = getelementptr i8, ptr %i.z, i64 %i.am
@@ -530,11 +525,9 @@ bb.a:
   %ident.check = icmp ne i64 %i.s, 1
   %mul.result = shl i64 %i.aj, 4                  ; 2 uses
   %mul.overflow = icmp ugt i64 %i.aj, 1152921504606846975
-  %stride.check = icmp slt i64 %3, 0
-  %4 = or i64 %i.ba, %3
-  %5 = icmp slt i64 %4, 0
-  %6 = or i64 %i.ba, %3
-  %i.bl = icmp slt i64 %6, 0
+  %.mask = and i64 %i.o, 1152921504606846976
+  %stride.check = icmp ne i64 %.mask, 0
+  %i.bl = icmp slt i64 %i.ba, 0
   %n.vec = and i64 %i.bg, -2                      ; 3 uses
   %i.bm = add i64 %i.aa, %n.vec
   %cmp.n = icmp eq i64 %i.bg, %n.vec
@@ -558,13 +551,12 @@ bb.a:
   %bound029 = icmp ult ptr %scevgep22, %scevgep27
   %bound130 = icmp ult ptr %scevgep26, %scevgep23
   %found.conflict31 = and i1 %bound029, %bound130
-  %i.br = or i1 %found.conflict31, %5
+  %i.br = or i1 %found.conflict31, %i.bl
   %conflict.rdx = or i1 %i.bq, %i.br
   %bound034 = icmp ult ptr %scevgep24, %scevgep27
   %bound135 = icmp ult ptr %scevgep26, %scevgep25
   %found.conflict36 = and i1 %bound034, %bound135
-  %7 = or i1 %found.conflict36, %i.bl
-  %conflict.rdx39 = or i1 %conflict.rdx, %7
+  %conflict.rdx39 = or i1 %conflict.rdx, %found.conflict36
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader58.i

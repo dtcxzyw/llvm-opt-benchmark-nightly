@@ -25,7 +25,7 @@ bb.a:
 .lr.ph26:                                         ; preds = %bb.a
   %i.b = add i32 %6, -1                           ; 3 uses
   %i.c = icmp sgt i32 %6, 2
-  %.idx = shl i64 %1, 2                           ; 3 uses
+  %.idx = shl i64 %1, 2                           ; 2 uses
   %wide.trip.count = zext i32 %i.b to i64         ; 5 uses
   %scevgep = getelementptr i8, ptr %0, i64 4      ; 2 uses
   %i.d = add nsw i32 %7, -1
@@ -57,11 +57,9 @@ bb.a:
   %bound037 = icmp ult ptr %scevgep, %scevgep35
   %bound138 = icmp ult ptr %scevgep34, %scevgep32
   %found.conflict39 = and i1 %bound037, %bound138
-  %stride.check40 = icmp slt i64 %.idx, 0
-  %8 = or i1 %found.conflict39, %stride.check40
   %.mask45 = and i64 %5, 4611686018427387904
   %stride.check41 = icmp ne i64 %.mask45, 0
-  %i.s = or i1 %8, %stride.check41
+  %i.s = or i1 %found.conflict39, %stride.check41
   %conflict.rdx = or i1 %i.r, %i.s
   %n.vec = and i64 %i.p, -4                       ; 3 uses
   %i.t = or disjoint i64 %n.vec, 1

@@ -205,7 +205,7 @@ _ZN2cv11xfeatures2d12KAZEFeatures30Compute_Multiscale_DerivativesEv.exit: ; pred
   %wide.trip.count = zext nneg i32 %i.w to i64    ; 6 uses
   %i.y = shl nuw nsw i64 %wide.trip.count, 2      ; 4 uses
   %i.z = add nsw i64 %wide.trip.count35, -1       ; 4 uses
-  %min.iters.check = icmp ult i32 %i.w, 12
+  %min.iters.check = icmp ult i32 %i.w, 8
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   %xtraiter = and i64 %wide.trip.count, 1
@@ -231,7 +231,7 @@ _ZN2cv11xfeatures2d12KAZEFeatures30Compute_Multiscale_DerivativesEv.exit: ; pred
   %i.ao = load ptr, ptr %i.ag, align 8, !tbaa !113 ; 3 uses
   %i.ap = load i64, ptr %i.ah, align 8, !tbaa !105 ; 3 uses
   %i.aq = load ptr, ptr %i.ai, align 8, !tbaa !113 ; 5 uses
-  %i.ar = load i64, ptr %i.aj, align 8, !tbaa !105 ; 5 uses
+  %i.ar = load i64, ptr %i.aj, align 8, !tbaa !105 ; 3 uses
   %scevgep = getelementptr i8, ptr %i.aq, i64 %i.y
   %i.as = mul i64 %i.z, %i.ar
   %scevgep41 = getelementptr i8, ptr %scevgep, i64 %i.as ; 3 uses
@@ -253,15 +253,13 @@ _ZN2cv11xfeatures2d12KAZEFeatures30Compute_Multiscale_DerivativesEv.exit: ; pred
   %bound049 = icmp ult ptr %i.aq, %scevgep45
   %bound150 = icmp ult ptr %i.am, %scevgep41
   %found.conflict51 = and i1 %bound049, %bound150
-  %3 = or i64 %i.an, %i.ar
-  %i.az = icmp slt i64 %3, 0
+  %i.az = icmp slt i64 %i.an, 0
   %i.ba = or i1 %found.conflict51, %i.az
   %conflict.rdx = or i1 %i.ay, %i.ba
   %bound054 = icmp ult ptr %i.aq, %scevgep47
   %bound155 = icmp ult ptr %i.ao, %scevgep41
   %found.conflict56 = and i1 %bound054, %bound155
-  %4 = or i64 %i.ap, %i.ar
-  %i.bb = icmp slt i64 %4, 0
+  %i.bb = icmp slt i64 %i.ap, 0
   %i.bc = or i1 %found.conflict56, %i.bb
   %conflict.rdx59 = or i1 %conflict.rdx, %i.bc
   br label %.preheader

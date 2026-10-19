@@ -205,11 +205,11 @@ bb.a:
 
 .lr.ph53.split.us.preheader:                      ; preds = %.lr.ph53
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !49   ; 3 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !49   ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.y = load i32, ptr %i.x, align 8, !tbaa !49   ; 3 uses
+  %i.y = load i32, ptr %i.x, align 8, !tbaa !49   ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.aa = load i32, ptr %i.z, align 8, !tbaa !49  ; 3 uses
+  %i.aa = load i32, ptr %i.z, align 8, !tbaa !49  ; 2 uses
   %i.ab = sext i32 %i.aa to i64                   ; 2 uses
   %i.ac = sext i32 %i.y to i64                    ; 2 uses
   %i.ad = sext i32 %i.w to i64                    ; 2 uses
@@ -236,17 +236,13 @@ bb.a:
   %bound069 = icmp ult ptr %i.m, %scevgep67
   %bound170 = icmp ult ptr %i.p, %scevgep
   %found.conflict71 = and i1 %bound069, %bound170
-  %2 = or i32 %i.w, %i.aa
-  %i.ap = icmp slt i32 %2, 0
+  %i.ap = icmp slt i32 %i.w, 0
   %i.aq = or i1 %found.conflict71, %i.ap
   %conflict.rdx = or i1 %i.ao, %i.aq
   %bound074 = icmp ult ptr %i.n, %scevgep67
   %bound175 = icmp ult ptr %i.p, %scevgep66
   %found.conflict76 = and i1 %bound074, %bound175
-  %3 = or i32 %i.w, %i.y
-  %4 = icmp slt i32 %3, 0
-  %5 = or i1 %found.conflict76, %4
-  %conflict.rdx79 = or i1 %conflict.rdx, %5
+  %conflict.rdx79 = or i1 %conflict.rdx, %found.conflict76
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
   %broadcast.splatinsert84 = insertelement <4 x float> poison, float %i.d, i64 0
   %broadcast.splat85 = shufflevector <4 x float> %broadcast.splatinsert84, <4 x float> poison, <4 x i32> zeroinitializer

@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
 
 intel_uc_fw_type_repr.exit.i:                     ; preds = %bb.g, %bb.f
   %i.o = phi ptr [ %i.n, %bb.g ], [ null, %bb.f ]
-  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.o, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.57) #9
+  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.o, ptr noundef @.str.16, ptr noundef nonnull @.str.57) #9
   br label %validate_fw_table_type.exit
 
 bb.h:                                             ; preds = %bb.e
@@ -283,7 +283,7 @@ __drm_to_dev.exit143.us.i:                        ; preds = %bb.j
   %i.bl = load i8, ptr %i.ae, align 1
   %i.bm = zext i8 %i.bl to i32
   %i.bn = load ptr, ptr %i.aa, align 1
-  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef null, ptr noundef nonnull @.str.17, ptr noundef nonnull %spec.select.i, ptr noundef %i.am, i32 noundef %i.ap, ptr noundef nonnull %i.at, i32 noundef %i.aw, i32 noundef %i.az, i32 noundef %i.bc, ptr noundef %i.bd, ptr noundef nonnull %i.bg, i32 noundef %i.bi, i32 noundef %i.bk, i32 noundef %i.bm, ptr noundef %i.bn) #9
+  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef null, ptr noundef @.str.17, ptr noundef nonnull %spec.select.i, ptr noundef %i.am, i32 noundef %i.ap, ptr noundef nonnull %i.at, i32 noundef %i.aw, i32 noundef %i.az, i32 noundef %i.bc, ptr noundef %i.bd, ptr noundef nonnull %i.bg, i32 noundef %i.bi, i32 noundef %i.bk, i32 noundef %i.bm, ptr noundef %i.bn) #9
   br label %bb.k
 
 bb.k:                                             ; preds = %__drm_to_dev.exit143.us.i, %bb.j, %.lr.ph.split.us.i
@@ -337,7 +337,7 @@ __drm_to_dev.exit143.i:                           ; preds = %bb.l
   %i.cw = load i8, ptr %i.ae, align 1
   %i.cx = zext i8 %i.cw to i32
   %i.cy = load ptr, ptr %i.aa, align 1
-  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.bw, ptr noundef nonnull @.str.17, ptr noundef nonnull %spec.select.i, ptr noundef %i.bx, i32 noundef %i.ca, ptr noundef nonnull %i.ce, i32 noundef %i.ch, i32 noundef %i.ck, i32 noundef %i.cn, ptr noundef %i.co, ptr noundef nonnull %i.cr, i32 noundef %i.ct, i32 noundef %i.cv, i32 noundef %i.cx, ptr noundef %i.cy) #9
+  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.bw, ptr noundef @.str.17, ptr noundef nonnull %spec.select.i, ptr noundef %i.bx, i32 noundef %i.ca, ptr noundef nonnull %i.ce, i32 noundef %i.ch, i32 noundef %i.ck, i32 noundef %i.cn, ptr noundef %i.co, ptr noundef nonnull %i.cr, i32 noundef %i.ct, i32 noundef %i.cv, i32 noundef %i.cx, ptr noundef %i.cy) #9
   br label %bb.m
 
 bb.m:                                             ; preds = %__drm_to_dev.exit143.i, %bb.l, %.lr.ph.split.i
@@ -471,7 +471,7 @@ __drm_to_dev.exit147.i:                           ; preds = %bb.aa, %bb.z
   %i.fr = getelementptr i8, ptr %i.da, i64 16
   %i.fs = load i8, ptr %i.fr, align 1
   %i.ft = zext i8 %i.fs to i32
-  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.ek, ptr noundef nonnull @.str.20, ptr noundef nonnull %spec.select.i, ptr noundef %i.el, i32 noundef %i.eo, ptr noundef nonnull %i.es, i32 noundef %i.ev, i32 noundef %i.ey, i32 noundef %i.fb, ptr noundef %i.fd, i32 noundef %i.fg, ptr noundef nonnull %i.fk, i32 noundef %i.fn, i32 noundef %i.fq, i32 noundef %i.ft) #9
+  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.ek, ptr noundef @.str.20, ptr noundef nonnull %spec.select.i, ptr noundef %i.el, i32 noundef %i.eo, ptr noundef nonnull %i.es, i32 noundef %i.ev, i32 noundef %i.ey, i32 noundef %i.fb, ptr noundef %i.fd, i32 noundef %i.fg, ptr noundef nonnull %i.fk, i32 noundef %i.fn, i32 noundef %i.fq, i32 noundef %i.ft) #9
   br label %validate_fw_table_type.exit
 
 bb.ab:                                            ; preds = %bb.y, %bb.w, %bb.u, %bb.q, %bb.o, %._crit_edge.i
@@ -616,21 +616,20 @@ __override_guc_firmware_path.exit.i:              ; preds = %bb.al, %bb.ak, %__u
   %.not.i26 = icmp eq ptr %.0.i25, null
   br i1 %.not.i26, label %__uc_fw_user_override.exit, label %__uc_fw_user_override.exit.thread, !prof !19
 
-__uc_fw_user_override.exit.thread:                ; preds = %bb.ak, %bb.al, %__override_guc_firmware_path.exit.i
+__uc_fw_user_override.exit.thread:                ; preds = %__override_guc_firmware_path.exit.i, %bb.al, %bb.ak
   %.012.i = phi ptr [ %.0.i25, %__override_guc_firmware_path.exit.i ], [ @.str.51, %bb.ak ], [ @.str.51, %bb.al ] ; 2 uses
   store ptr %.012.i, ptr %i.gk, align 8
   %i.hw = getelementptr i8, ptr %0, i64 56
   store i8 1, ptr %i.hw, align 8
-  br label %bb.am
+  br label %__uc_fw_user_override.exit
 
-__uc_fw_user_override.exit:                       ; preds = %____uc_fw_to_gt.exit.__uc_fw_user_override.exit_crit_edge, %__override_guc_firmware_path.exit.i, %__uc_fw_auto_select.exit
-  %3 = phi ptr [ %.pre49, %____uc_fw_to_gt.exit.__uc_fw_user_override.exit_crit_edge ], [ %i.ho, %__uc_fw_auto_select.exit ], [ %i.ho, %__override_guc_firmware_path.exit.i ] ; 2 uses
+__uc_fw_user_override.exit:                       ; preds = %____uc_fw_to_gt.exit.__uc_fw_user_override.exit_crit_edge, %__uc_fw_user_override.exit.thread, %__override_guc_firmware_path.exit.i, %__uc_fw_auto_select.exit
+  %3 = phi ptr [ %.pre49, %____uc_fw_to_gt.exit.__uc_fw_user_override.exit_crit_edge ], [ %.012.i, %__uc_fw_user_override.exit.thread ], [ %i.ho, %__override_guc_firmware_path.exit.i ], [ %i.ho, %__uc_fw_auto_select.exit ] ; 2 uses
   %.not18 = icmp eq ptr %3, null
   br i1 %.not18, label %bb.an, label %bb.am
 
-bb.am:                                            ; preds = %__uc_fw_user_override.exit.thread, %__uc_fw_user_override.exit
-  %4 = phi ptr [ %.012.i, %__uc_fw_user_override.exit.thread ], [ %3, %__uc_fw_user_override.exit ]
-  %i.hx = load i8, ptr %4, align 1
+bb.am:                                            ; preds = %__uc_fw_user_override.exit
+  %i.hx = load i8, ptr %3, align 1
   %.not19 = icmp eq i8 %i.hx, 0
   %i.hy = select i1 %.not19, i32 1, i32 2
   br label %bb.an
@@ -745,7 +744,7 @@ __drm_to_dev.exit.i:                              ; preds = %bb.m, %bb.l
   %i.ap = load i32, ptr %i.ao, align 4
   %i.aq = getelementptr i8, ptr %0, i64 -1720
   %i.ar = load i32, ptr %i.aq, align 8
-  tail call void (ptr, ptr, ...) @_dev_notice(ptr noundef %i.ah, ptr noundef nonnull @.str.52, i32 noundef %i.aj, i32 noundef %i.l, i32 noundef %i.al, i32 noundef %i.an, i32 noundef %i.x, i32 noundef %i.ap, i32 noundef %i.ar) #9
+  tail call void (ptr, ptr, ...) @_dev_notice(ptr noundef %i.ah, ptr noundef @.str.52, i32 noundef %i.aj, i32 noundef %i.l, i32 noundef %i.al, i32 noundef %i.an, i32 noundef %i.x, i32 noundef %i.ap, i32 noundef %i.ar) #9
   %i.as = load ptr, ptr %i.e, align 8             ; 2 uses
   %.not.i26.i = icmp eq ptr %i.as, null
   br i1 %.not.i26.i, label %check_mtl_huc_guc_compatibility.exit, label %bb.n
@@ -758,7 +757,7 @@ bb.n:                                             ; preds = %__drm_to_dev.exit.i
 check_mtl_huc_guc_compatibility.exit:             ; preds = %__drm_to_dev.exit.i, %bb.n
   %i.av = phi ptr [ %i.au, %bb.n ], [ null, %__drm_to_dev.exit.i ]
   %i.aw = load i32, ptr %i.ai, align 8
-  tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.av, ptr noundef nonnull @.str.53, i32 noundef %i.aw) #9
+  tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.av, ptr noundef @.str.53, i32 noundef %i.aw) #9
   br label %bb.aa
 
 check_mtl_huc_guc_compatibility.exit.thread:      ; preds = %__uc_fw_to_gt.exit, %bb.k, %__uc_fw_to_gt.exit.thread
@@ -815,7 +814,7 @@ intel_uc_fw_type_repr.exit:                       ; preds = %__drm_to_dev.exit, 
   %i.bk = load i32, ptr %i.bj, align 4
   %i.bl = getelementptr i8, ptr %0, i64 20
   %i.bm = load i32, ptr %i.bl, align 4
-  tail call void (ptr, ptr, ...) @_dev_notice(ptr noundef %i.bf, ptr noundef nonnull @.str, i32 noundef %i.bh, ptr noundef nonnull %.0.i42, ptr noundef %i.bi, i32 noundef %i.bc, i32 noundef %i.bk, i32 noundef %i.ba, i32 noundef %i.bm) #9
+  tail call void (ptr, ptr, ...) @_dev_notice(ptr noundef %i.bf, ptr noundef @.str, i32 noundef %i.bh, ptr noundef nonnull %.0.i42, ptr noundef %i.bi, i32 noundef %i.bc, i32 noundef %i.bk, i32 noundef %i.ba, i32 noundef %i.bm) #9
   %i.bn = getelementptr i8, ptr %0, i64 56
   %.val = load i8, ptr %i.bn, align 8, !range !12, !noundef !13
   %i.bo = trunc nuw i8 %.val to i1
@@ -1046,10 +1045,10 @@ bb.s:                                             ; preds = %bb.q
   br i1 %.not.i.i, label %bb.t, label %check_fw_header.exit.thread
 
 check_fw_header.exit.thread.thread:               ; preds = %bb.q
-  %i.bt = call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.59, ptr nonnull @.str.61, i32 678, i32 2321, i64 16) #11, !srcloc !23
+  %i.bt = call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str.59, ptr @.str.61, i32 678, i32 2321, i64 16) #11, !srcloc !23
   %i.bu = load i32, ptr %0, align 8
   %i.bv = zext i32 %i.bu to i64
-  call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.bt, ptr noundef nonnull @.str.60, i64 noundef %i.bv) #10
+  call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.bt, ptr noundef @.str.60, i64 noundef %i.bv) #10
   call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #11, !srcloc !24
   br label %.thread
 
@@ -1119,7 +1118,7 @@ intel_uc_fw_type_repr.exit.i:                     ; preds = %is_ver_8bit.exit.th
   %i.da = load i32, ptr %i.cz, align 4
   %i.db = getelementptr i8, ptr %0, i64 48
   %i.dc = load i32, ptr %i.db, align 8
-  call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.cw, ptr noundef nonnull @.str.65, i32 noundef %i.cy, ptr noundef nonnull @.str.54, i32 noundef %i.cl, i32 noundef %i.da, i32 noundef %i.dc) #9
+  call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.cw, ptr noundef @.str.65, i32 noundef %i.cy, ptr noundef nonnull @.str.54, i32 noundef %i.cl, i32 noundef %i.da, i32 noundef %i.dc) #9
   br label %.thread
 
 bb.x:                                             ; preds = %is_ver_8bit.exit.i
@@ -1158,7 +1157,7 @@ intel_uc_fw_type_repr.exit22.i:                   ; preds = %is_ver_8bit.exit18.
   %i.dt = load i32, ptr %i.ds, align 8
   %i.du = getelementptr i8, ptr %0, i64 1292
   %i.dv = load i32, ptr %i.du, align 4
-  call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.dp, ptr noundef nonnull @.str.66, i32 noundef %i.dr, ptr noundef nonnull @.str.54, i32 noundef %i.de, i32 noundef %i.dt, i32 noundef %i.dv) #9
+  call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.dp, ptr noundef @.str.66, i32 noundef %i.dr, ptr noundef nonnull @.str.54, i32 noundef %i.de, i32 noundef %i.dt, i32 noundef %i.dv) #9
   br label %.thread
 
 guc_check_version_range.exit:                     ; preds = %is_ver_8bit.exit18.i, %check_fw_header.exit.thread95
@@ -1219,7 +1218,7 @@ intel_uc_fw_type_repr.exit:                       ; preds = %__drm_to_dev.exit, 
   %i.en = load i32, ptr %i.em, align 4
   %i.eo = getelementptr i8, ptr %0, i64 48
   %i.ep = load i32, ptr %i.eo, align 8
-  call void (ptr, ptr, ...) @_dev_notice(ptr noundef %i.ee, ptr noundef nonnull @.str.1, i32 noundef %i.eg, ptr noundef nonnull %.0.i80, ptr noundef %.sroa.0.0.copyload, i32 noundef %i.ei, i32 noundef %i.ej, i32 noundef %i.ek, ptr noundef %i.el, i32 noundef %i.ea, i32 noundef %i.en, i32 noundef %i.ep) #9
+  call void (ptr, ptr, ...) @_dev_notice(ptr noundef %i.ee, ptr noundef @.str.1, i32 noundef %i.eg, ptr noundef nonnull %.0.i80, ptr noundef %.sroa.0.0.copyload, i32 noundef %i.ei, i32 noundef %i.ej, i32 noundef %i.ek, ptr noundef %i.el, i32 noundef %i.ea, i32 noundef %i.en, i32 noundef %i.ep) #9
   %i.eq = load ptr, ptr %.0.i.i, align 8          ; 2 uses
   %.not.i81 = icmp eq ptr %i.eq, null
   br i1 %.not.i81, label %__drm_to_dev.exit82, label %bb.ah
@@ -1232,7 +1231,7 @@ bb.ah:                                            ; preds = %intel_uc_fw_type_re
 __drm_to_dev.exit82:                              ; preds = %intel_uc_fw_type_repr.exit, %bb.ah
   %i.et = phi ptr [ %i.es, %bb.ah ], [ null, %intel_uc_fw_type_repr.exit ]
   %i.eu = load i32, ptr %i.ef, align 8
-  call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.et, ptr noundef nonnull @.str.2, i32 noundef %i.eu, ptr noundef nonnull @.str.3) #9
+  call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.et, ptr noundef @.str.2, i32 noundef %i.eu, ptr noundef @.str.3) #9
   br label %bb.ai
 
 bb.ai:                                            ; preds = %__drm_to_dev.exit82, %bb.ab, %bb.aa
@@ -1335,7 +1334,7 @@ intel_uc_fw_type_repr.exit86:                     ; preds = %__drm_to_dev.exit84
   %i.gc = load ptr, ptr %i.gb, align 8
   %i.gd = sext i32 %.1102 to i64
   %i.ge = inttoptr i64 %i.gd to ptr
-  call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.fx, ptr noundef nonnull @.str.4, i32 noundef %i.fz, ptr noundef nonnull %.0.i85, ptr noundef %i.gc, ptr noundef %i.ge) #9
+  call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.fx, ptr noundef @.str.4, i32 noundef %i.fz, ptr noundef nonnull %.0.i85, ptr noundef %i.gc, ptr noundef %i.ge) #9
   %i.gf = load ptr, ptr %.0.i.i, align 8          ; 2 uses
   %.not.i87 = icmp eq ptr %i.gf, null
   br i1 %.not.i87, label %__drm_to_dev.exit88, label %bb.at
@@ -1366,7 +1365,7 @@ bb.aw:                                            ; preds = %__drm_to_dev.exit88
 
 intel_uc_fw_type_repr.exit90:                     ; preds = %__drm_to_dev.exit88, %bb.au, %bb.av, %bb.aw
   %.0.i89 = phi ptr [ @.str.57, %bb.aw ], [ @.str.56, %bb.av ], [ @.str.55, %bb.au ], [ @.str.54, %__drm_to_dev.exit88 ]
-  call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.gi, ptr noundef nonnull @.str.5, i32 noundef %i.gj, ptr noundef nonnull %.0.i89, ptr noundef nonnull @.str.3) #9
+  call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.gi, ptr noundef @.str.5, i32 noundef %i.gj, ptr noundef nonnull %.0.i89, ptr noundef @.str.3) #9
   %i.gl = load ptr, ptr %i.a, align 8
   br label %bb.ax
 
@@ -1458,7 +1457,7 @@ intel_uc_fw_type_repr.exit:                       ; preds = %__drm_to_dev.exit, 
   %.0.i = phi ptr [ @.str.57, %bb.k ], [ @.str.56, %bb.j ], [ @.str.55, %bb.i ], [ @.str.54, %__drm_to_dev.exit ]
   %i.x = load ptr, ptr %i.h, align 8
   %i.y = lshr i64 %i.o, 10
-  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.t, ptr noundef nonnull @.str.58, i32 noundef %i.v, ptr noundef nonnull %.0.i, ptr noundef %i.x, i64 noundef %i.y, i32 noundef 2048) #9
+  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.t, ptr noundef @.str.58, i32 noundef %i.v, ptr noundef nonnull %.0.i, ptr noundef %i.x, i64 noundef %i.y, i32 noundef 2048) #9
   %i.z = load ptr, ptr %1, align 8
   tail call void @release_firmware(ptr noundef %i.z) #10
   store ptr null, ptr %1, align 8
@@ -1545,7 +1544,7 @@ intel_uc_fw_type_repr.exit:                       ; preds = %__drm_to_dev.exit, 
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = sext i32 %1 to i64
   %i.n = inttoptr i64 %i.m to ptr
-  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.h, ptr noundef nonnull @.str.6, i32 noundef %i.j, ptr noundef nonnull %.0.i, ptr noundef %i.l, ptr noundef %i.n) #9
+  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.h, ptr noundef @.str.6, i32 noundef %i.j, ptr noundef nonnull %.0.i, ptr noundef %i.l, ptr noundef %i.n) #9
   %i.o = getelementptr i8, ptr %0, i64 4
   store i32 8, ptr %i.o, align 4
   ret i32 %1
@@ -1678,7 +1677,7 @@ intel_uc_fw_type_repr.exit.i:                     ; preds = %bb.j, %bb.i, %bb.h,
   %i.az = zext i32 %i.ay to i64
   %i.ba = getelementptr i8, ptr %.val49.i, i64 %i.az
   %i.bb = tail call i32 asm sideeffect "movl $1,$0", "=r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ba) #11, !srcloc !28
-  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.au, ptr noundef nonnull @.str.67, i32 noundef %i.aw, ptr noundef nonnull %.0.i.i, i32 noundef %i.bb) #9
+  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.au, ptr noundef @.str.67, i32 noundef %i.aw, ptr noundef nonnull %.0.i.i, i32 noundef %i.bb) #9
   %i.bc = shl i32 %2, 16
   %.val.i = load ptr, ptr %i.h, align 8
   %.val36.i = load i32, ptr %i.p, align 4
@@ -1753,7 +1752,7 @@ intel_uc_fw_mark_load_failed.exit:                ; preds = %__drm_to_dev.exit.i
   %i.bv = load ptr, ptr %i.bu, align 8
   %i.bw = sext i32 %i.aq to i64
   %i.bx = inttoptr i64 %i.bw to ptr
-  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.br, ptr noundef nonnull @.str.6, i32 noundef %i.bt, ptr noundef nonnull %.0.i.i14, ptr noundef %i.bv, ptr noundef nonnull %i.bx) #9
+  tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.br, ptr noundef @.str.6, i32 noundef %i.bt, ptr noundef nonnull %.0.i.i14, ptr noundef %i.bv, ptr noundef nonnull %i.bx) #9
   br label %.sink.split
 
 .sink.split:                                      ; preds = %.critedge, %intel_uc_fw_mark_load_failed.exit
@@ -1840,7 +1839,7 @@ intel_uc_fw_type_repr.exit:                       ; preds = %__drm_to_dev.exit, 
   %i.r = load i32, ptr %.in, align 8
   %i.s = sext i32 %i.f to i64
   %i.t = inttoptr i64 %i.s to ptr
-  tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.n, i32 noundef 1, ptr noundef nonnull @.str.7, i32 noundef %i.r, ptr noundef nonnull %.0.i, ptr noundef nonnull %i.t) #10
+  tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.n, i32 noundef 1, ptr noundef @.str.7, i32 noundef %i.r, ptr noundef nonnull %.0.i, ptr noundef nonnull %i.t) #10
   br label %bb.x
 
 bb.h:                                             ; preds = %bb.b
@@ -1989,7 +1988,7 @@ intel_uc_fw_type_repr.exit30:                     ; preds = %__drm_to_dev.exit26
   %i.bi = load i32, ptr %.in43, align 8
   %i.bj = sext i32 %.012.i to i64
   %i.bk = inttoptr i64 %i.bj to ptr
-  call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.be, i32 noundef 1, ptr noundef nonnull @.str.8, i32 noundef %i.bi, ptr noundef nonnull %.0.i29, ptr noundef nonnull %i.bk) #10
+  call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.be, i32 noundef 1, ptr noundef @.str.8, i32 noundef %i.bi, ptr noundef nonnull %.0.i29, ptr noundef nonnull %i.bk) #10
   %i.bl = load ptr, ptr %i.d, align 8
   %i.bm = getelementptr i8, ptr %i.bl, i64 688    ; 2 uses
   call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bm, ptr elementtype(i32) %i.bm) #11, !srcloc !15
@@ -2392,9 +2391,9 @@ bb.n:                                             ; preds = %bb.l
   %i.co = zext nneg i32 %.2103211 to i64
   %i.cp = load i64, ptr %i.ch, align 8
   %i.cq = sub i64 %i.cj, %i.cp
-  tail call void asm "incl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @__preempt_count, ptr nonnull elementtype(i32) @__preempt_count) #11, !srcloc !47
+  tail call void asm "incl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @__preempt_count, ptr elementtype(i32) @__preempt_count) #11, !srcloc !47
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #11, !srcloc !48
-  %i.cr = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #13, !srcloc !49
+  %i.cr = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr @current_task) #13, !srcloc !49
   %i.cs = inttoptr i64 %i.cr to ptr
   %i.ct = getelementptr i8, ptr %i.cs, i64 2900   ; 4 uses
   %i.cu = load i32, ptr %i.ct, align 4
@@ -2411,7 +2410,7 @@ bb.n:                                             ; preds = %bb.l
   %i.da = add i32 %i.cz, -1
   store i32 %i.da, ptr %i.ct, align 4
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #11, !srcloc !52
-  %i.db = tail call i8 asm sideeffect "decl %gs:$0", "=*m,={@cce},*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @__preempt_count, ptr nonnull elementtype(i32) @__preempt_count) #11, !srcloc !53 ; 2 uses
+  %i.db = tail call i8 asm sideeffect "decl %gs:$0", "=*m,={@cce},*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) @__preempt_count, ptr elementtype(i32) @__preempt_count) #11, !srcloc !53 ; 2 uses
   %i.dc = icmp ult i8 %i.db, 2
   tail call void @llvm.assume(i1 %i.dc)
   %i.dd = trunc nuw i8 %i.db to i1
@@ -2519,7 +2518,7 @@ intel_uc_fw_type_repr.exit:                       ; preds = %bb.a, %bb.b, %bb.c,
   %.0.i = phi ptr [ @.str.57, %bb.d ], [ @.str.56, %bb.c ], [ @.str.55, %bb.b ], [ @.str.54, %bb.a ]
   %i.b = getelementptr i8, ptr %0, i64 32         ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef nonnull @.str.9, ptr noundef nonnull %.0.i, ptr noundef %i.c) #10
+  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef @.str.9, ptr noundef nonnull %.0.i, ptr noundef %i.c) #10
   %i.d = load ptr, ptr %i.b, align 8
   %i.e = getelementptr i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
@@ -2545,7 +2544,7 @@ bb.h:                                             ; preds = %bb.e
 
 intel_uc_fw_type_repr.exit40:                     ; preds = %bb.e, %bb.f, %bb.g, %bb.h
   %.0.i39 = phi ptr [ @.str.57, %bb.h ], [ @.str.56, %bb.g ], [ @.str.55, %bb.f ], [ @.str.54, %bb.e ]
-  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef nonnull @.str.10, ptr noundef nonnull %.0.i39, ptr noundef %i.f) #10
+  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef @.str.10, ptr noundef nonnull %.0.i39, ptr noundef %i.f) #10
   br label %bb.i
 
 bb.i:                                             ; preds = %intel_uc_fw_type_repr.exit40, %intel_uc_fw_type_repr.exit
@@ -2604,7 +2603,7 @@ bb.u:                                             ; preds = %bb.i
 
 intel_uc_fw_status_repr.exit:                     ; preds = %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u
   %.0.i41 = phi ptr [ @.str.80, %bb.u ], [ @.str.79, %bb.t ], [ @.str.69, %bb.j ], [ @.str.70, %bb.k ], [ @.str.71, %bb.l ], [ @.str.72, %bb.m ], [ @.str.73, %bb.n ], [ @.str.74, %bb.o ], [ @.str.75, %bb.p ], [ @.str.76, %bb.q ], [ @.str.77, %bb.r ], [ @.str.78, %bb.s ], [ @.str.68, %bb.i ]
-  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef nonnull @.str.11, ptr noundef nonnull %.0.i41) #10
+  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef @.str.11, ptr noundef nonnull %.0.i41) #10
   %i.j = getelementptr i8, ptr %0, i64 40
   %i.k = load i32, ptr %i.j, align 8              ; 4 uses
   %i.l = getelementptr i8, ptr %0, i64 16
@@ -2646,7 +2645,7 @@ bb.y:                                             ; preds = %bb.x
 .critedge:                                        ; preds = %bb.v, %bb.y, %bb.x
   %i.aa = getelementptr i8, ptr %0, i64 48
   %i.ab = load i32, ptr %i.aa, align 8
-  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef nonnull @.str.13, i32 noundef %i.k, i32 noundef %i.q, i32 noundef %i.ab) #10
+  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef @.str.13, i32 noundef %i.k, i32 noundef %i.q, i32 noundef %i.ab) #10
   br label %bb.aa
 
 bb.z:                                             ; preds = %intel_uc_fw_status_repr.exit._crit_edge, %bb.w, %bb.y
@@ -2656,16 +2655,16 @@ bb.z:                                             ; preds = %intel_uc_fw_status_
   %i.af = load i32, ptr %i.ae, align 8
   %i.ag = getelementptr i8, ptr %0, i64 48
   %i.ah = load i32, ptr %i.ag, align 8
-  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef nonnull @.str.12, i32 noundef %i.m, i32 noundef %i.ad, i32 noundef %i.af, i32 noundef %i.k, i32 noundef %i.ac, i32 noundef %i.ah) #10
+  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef @.str.12, i32 noundef %i.m, i32 noundef %i.ad, i32 noundef %i.af, i32 noundef %i.k, i32 noundef %i.ac, i32 noundef %i.ah) #10
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.critedge, %bb.z
   %i.ai = getelementptr i8, ptr %0, i64 396
   %i.aj = load i32, ptr %i.ai, align 4
-  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef nonnull @.str.14, i32 noundef %i.aj) #10
+  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef @.str.14, i32 noundef %i.aj) #10
   %i.ak = getelementptr i8, ptr %0, i64 392
   %i.al = load i32, ptr %i.ak, align 8
-  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef nonnull @.str.15, i32 noundef %i.al) #10
+  tail call void (ptr, ptr, ...) @drm_printf(ptr noundef %1, ptr noundef @.str.15, i32 noundef %i.al) #10
   ret void
 }
 
@@ -2727,7 +2726,7 @@ intel_uc_fw_type_repr.exit:                       ; preds = %__drm_to_dev.exit, 
   %.0.i = phi ptr [ @.str.57, %bb.f ], [ @.str.56, %bb.e ], [ @.str.55, %bb.d ], [ @.str.54, %__drm_to_dev.exit ]
   %i.i = getelementptr i8, ptr %3, i64 32
   %i.j = load ptr, ptr %i.i, align 8
-  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.e, ptr noundef nonnull @.str.62, i32 noundef %i.g, ptr noundef nonnull %.0.i, ptr noundef %i.j, i64 noundef %2, i64 noundef 128) #9
+  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.e, ptr noundef @.str.62, i32 noundef %i.g, ptr noundef nonnull %.0.i, ptr noundef %i.j, i64 noundef %2, i64 noundef 128) #9
   br label %bb.ai
 
 bb.g:                                             ; preds = %bb.a
@@ -2779,7 +2778,7 @@ intel_uc_fw_type_repr.exit53:                     ; preds = %__drm_to_dev.exit51
   %.0.i52 = phi ptr [ @.str.57, %bb.l ], [ @.str.56, %bb.k ], [ @.str.55, %bb.j ], [ @.str.54, %__drm_to_dev.exit51 ]
   %i.ac = getelementptr i8, ptr %3, i64 32
   %i.ad = load ptr, ptr %i.ac, align 8
-  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.y, ptr noundef nonnull @.str.63, i32 noundef %i.aa, ptr noundef nonnull %.0.i52, ptr noundef %i.ad, i64 noundef %2, i64 noundef 128) #9
+  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.y, ptr noundef @.str.63, i32 noundef %i.aa, ptr noundef nonnull %.0.i52, ptr noundef %i.ad, i64 noundef %2, i64 noundef 128) #9
   br label %bb.ai
 
 bb.m:                                             ; preds = %bb.g
@@ -2834,7 +2833,7 @@ intel_uc_fw_type_repr.exit57:                     ; preds = %__drm_to_dev.exit55
   %.0.i56 = phi ptr [ @.str.57, %bb.r ], [ @.str.56, %bb.q ], [ @.str.55, %bb.p ], [ @.str.54, %__drm_to_dev.exit55 ]
   %i.ay = getelementptr i8, ptr %3, i64 32
   %i.az = load ptr, ptr %i.ay, align 8
-  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.au, ptr noundef nonnull @.str.62, i32 noundef %i.aw, ptr noundef nonnull %.0.i56, ptr noundef %i.az, i64 noundef %2, i64 noundef %i.ap) #9
+  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.au, ptr noundef @.str.62, i32 noundef %i.aw, ptr noundef nonnull %.0.i56, ptr noundef %i.az, i64 noundef %2, i64 noundef %i.ap) #9
   br label %bb.ai
 
 bb.s:                                             ; preds = %bb.m
@@ -2880,7 +2879,7 @@ intel_uc_fw_type_repr.exit61:                     ; preds = %__drm_to_dev.exit59
   %i.bl = getelementptr i8, ptr %3, i64 32
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = zext i32 %i.bc to i64
-  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.bh, ptr noundef nonnull @.str.64, i32 noundef %i.bj, ptr noundef nonnull %.0.i60, ptr noundef %i.bm, i64 noundef %i.bd, i64 noundef %i.bn) #9
+  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.bh, ptr noundef @.str.64, i32 noundef %i.bj, ptr noundef nonnull %.0.i60, ptr noundef %i.bm, i64 noundef %i.bd, i64 noundef %i.bn) #9
   br label %bb.ai
 
 bb.y:                                             ; preds = %bb.s

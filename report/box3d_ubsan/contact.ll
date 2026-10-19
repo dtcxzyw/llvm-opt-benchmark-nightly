@@ -204,22 +204,14 @@ b3AddType.exit24:                                 ; preds = %bb.m
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @s_registers, i64 43), align 1, !tbaa !91
   tail call fastcc void @b3AddType(i32 noundef 4, i32 noundef 5)
   %.not18.i26 = icmp ult i64 add (i64 ptrtoint (ptr @s_registers to i64), i64 48), ptrtoint (ptr @s_registers to i64), !nosanitize !9
-  br i1 %.not18.i26, label %0, label %1, !prof !10, !nosanitize !9
+  br i1 %.not18.i26, label %bb.o, label %bb.p, !prof !10, !nosanitize !9
 
-0:                                                ; preds = %b3AddType.exit24
+bb.o:                                             ; preds = %b3AddType.exit24
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @136, i64 ptrtoint (ptr @s_registers to i64), i64 add (i64 ptrtoint (ptr @s_registers to i64), i64 48)) #8, !nosanitize !9
   unreachable, !nosanitize !9
 
-1:                                                ; preds = %b3AddType.exit24
-  %.not.i25 = icmp eq i64 add (i64 ptrtoint (ptr @s_registers to i64), i64 48), 0, !nosanitize !9
+bb.p:                                             ; preds = %b3AddType.exit24
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @s_registers, i64 48), align 16, !tbaa !90
-  br i1 %.not.i25, label %bb.o, label %bb.p, !prof !10, !nosanitize !9
-
-bb.o:                                             ; preds = %1
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @138, i64 ptrtoint (ptr @s_registers to i64), i64 0) #8, !nosanitize !9
-  unreachable, !nosanitize !9
-
-bb.p:                                             ; preds = %1
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @s_registers, i64 49), align 1, !tbaa !91
   %.not26.i29 = icmp ult i64 add (i64 ptrtoint (ptr @s_registers to i64), i64 8), ptrtoint (ptr @s_registers to i64), !nosanitize !9
   br i1 %.not26.i29, label %bb.q, label %b3AddType.exit31, !prof !10, !nosanitize !9

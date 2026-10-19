@@ -205,8 +205,7 @@ bb.a:
   %bound046 = icmp ult ptr %scevgep, %scevgep41
   %bound147 = icmp ult ptr %.fr, %scevgep32
   %found.conflict48 = and i1 %bound046, %bound147
-  %1 = or i64 %i.g, %.16.val
-  %i.r = icmp slt i64 %1, 0
+  %i.r = icmp slt i64 %i.g, 0
   %i.s = or i1 %found.conflict48, %i.r
   %n.vec = and i64 %i.q, -4                       ; 3 uses
   %i.t = or disjoint i64 %n.vec, 1
@@ -299,11 +298,11 @@ vector.memcheck:                                  ; preds = %_ZN3jxl12_GLOBAL__N
   %bound0 = icmp ult ptr %scevgep, %scevgep36
   %bound1 = icmp ult ptr %scevgep34, %scevgep32
   %found.conflict = and i1 %bound0, %bound1
-  %bound042 = icmp ult ptr %scevgep, %scevgep40
-  %bound143.a = icmp ult ptr %scevgep38, %scevgep32
-  %found.conflict44 = and i1 %bound042, %bound143.a
-  %2 = or i1 %found.conflict44, %stride.check45
-  %conflict.rdx = or i1 %found.conflict, %2
+  %1 = or i1 %found.conflict, %stride.check45
+  %bound143.a = icmp ult ptr %scevgep, %scevgep40
+  %bound143 = icmp ult ptr %scevgep38, %scevgep32
+  %found.conflict44 = and i1 %bound143.a, %bound143
+  %conflict.rdx = or i1 %1, %found.conflict44
   %conflict.rdx51 = or i1 %conflict.rdx, %i.s
   br i1 %conflict.rdx51, label %_ZN3jxl12_GLOBAL__N_19StoreMin2EfRfS1_.exit.us.preheader63, label %vector.body
 
@@ -706,7 +705,7 @@ _ZN3jxl5PlaneIfE6CreateEP22JxlMemoryManagerStructmmm.exit: ; preds = %bb.f, %.cr
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 40
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !91 ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !92 ; 4 uses
+  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !92 ; 3 uses
   %.not48 = icmp eq i32 %i.a, 0
   br i1 %.not48, label %._crit_edge47, label %.lr.ph.us.preheader
 
@@ -732,8 +731,7 @@ _ZN3jxl5PlaneIfE6CreateEP22JxlMemoryManagerStructmmm.exit: ; preds = %bb.f, %.cr
   %bound059 = icmp ult ptr %i.ao, %scevgep57
   %bound160 = icmp ult ptr %i.ak, %scevgep
   %found.conflict61 = and i1 %bound059, %bound160
-  %8 = or i64 %i.am, %i.aq
-  %i.bc = icmp slt i64 %8, 0
+  %i.bc = icmp slt i64 %i.am, 0
   %i.bd = or i1 %found.conflict61, %i.bc
   %conflict.rdx = or i1 %i.bb, %i.bd
   %n.vec = and i64 %i.b, 4294967288               ; 3 uses
@@ -905,7 +903,7 @@ bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !91   ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !92  ; 4 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !92  ; 3 uses
   %.not43 = icmp eq i32 %i.a, 0
   br i1 %.not43, label %.loopexit, label %.lr.ph.us.preheader
 
@@ -931,8 +929,7 @@ bb.c:                                             ; preds = %bb.b
   %bound052 = icmp ult ptr %i.y, %scevgep50
   %bound153 = icmp ult ptr %i.u, %scevgep
   %found.conflict54 = and i1 %bound052, %bound153
-  %3 = or i64 %i.w, %i.aa
-  %i.am = icmp slt i64 %3, 0
+  %i.am = icmp slt i64 %i.w, 0
   %i.an = or i1 %found.conflict54, %i.am
   %conflict.rdx = or i1 %i.al, %i.an
   %n.vec = and i64 %i.b, 4294967288               ; 3 uses
@@ -1093,7 +1090,7 @@ bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !91   ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !92  ; 4 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !92  ; 3 uses
   %.not43 = icmp eq i32 %i.a, 0
   br i1 %.not43, label %.loopexit, label %.lr.ph.us.preheader
 
@@ -1119,8 +1116,7 @@ bb.c:                                             ; preds = %bb.b
   %bound052 = icmp ult ptr %i.y, %scevgep50
   %bound153 = icmp ult ptr %i.u, %scevgep
   %found.conflict54 = and i1 %bound052, %bound153
-  %3 = or i64 %i.w, %i.aa
-  %i.am = icmp slt i64 %3, 0
+  %i.am = icmp slt i64 %i.w, 0
   %i.an = or i1 %found.conflict54, %i.am
   %conflict.rdx = or i1 %i.al, %i.an
   %n.vec = and i64 %i.b, 4294967292               ; 3 uses

@@ -205,7 +205,7 @@ bb.gg:                                            ; preds = %bb.gf, %bb.gg
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.acl, ptr align 1 %.1254420, i64 %i.acn, i1 false)
   %i.aco = load ptr, ptr %i.z, align 8, !tbaa !37 ; 2 uses
   %i.acp = getelementptr inbounds nuw i8, ptr %i.aco, i64 64
-  %i.acq = load i32, ptr %i.acp, align 8, !tbaa !34 ; 6 uses
+  %i.acq = load i32, ptr %i.acp, align 8, !tbaa !34 ; 5 uses
   %i.acr = sext i32 %i.acq to i64                 ; 7 uses
   %i.acs = getelementptr inbounds i8, ptr %.1254420, i64 %i.acr
   %i.act = add nuw nsw i32 %.0421, 1              ; 2 uses
@@ -213,7 +213,7 @@ bb.gg:                                            ; preds = %bb.gf, %bb.gg
   br i1 %i.acu, label %bb.gg, label %bb.gh, !llvm.loop !67
 
 bb.gh:                                            ; preds = %bb.gg
-  %i.acv = load i32, ptr %i.aax, align 8, !tbaa !38 ; 5 uses
+  %i.acv = load i32, ptr %i.aax, align 8, !tbaa !38 ; 4 uses
   %i.acw = load i32, ptr %i.aaz, align 4, !tbaa !106 ; 2 uses
   %i.acx = load i32, ptr %i.abb, align 8, !tbaa !107 ; 4 uses
   %i.acy = add nsw i32 %i.acx, %i.acv
@@ -294,11 +294,11 @@ vector.memcheck880:                               ; preds = %iter.check913
   %bound0886 = icmp ult ptr %i.adr, %scevgep884
   %bound1887 = icmp ult ptr %.0102142.i, %scevgep883
   %found.conflict888 = and i1 %bound0886, %bound1887
+  %4 = or i1 %found.conflict888, %stride.check893
   %bound0890 = icmp ult ptr %i.adr, %scevgep885
   %bound1891 = icmp ult ptr %.0101143.i, %scevgep883
   %found.conflict892 = and i1 %bound0890, %bound1891
-  %4 = or i1 %found.conflict892, %stride.check893
-  %conflict.rdx894 = or i1 %found.conflict888, %4
+  %conflict.rdx894 = or i1 %4, %found.conflict892
   br i1 %conflict.rdx894, label %vec.epilog.scalar.ph914.preheader, label %vector.main.loop.iter.check897
 
 vector.main.loop.iter.check897:                   ; preds = %vector.memcheck880
@@ -445,10 +445,7 @@ vec.epilog.scalar.ph914:                          ; preds = %vec.epilog.scalar.p
   %bound0841 = icmp ult ptr %i.adr, %scevgep835
   %bound1842 = icmp ult ptr %i.agg, %scevgep833.a
   %found.conflict843 = and i1 %bound0841, %bound1842
-  %5 = or i32 %i.acv, %i.acq
-  %6 = icmp slt i32 %5, 0
-  %7 = or i1 %found.conflict843, %6
-  %conflict.rdx846 = or i1 %i.agu, %7
+  %conflict.rdx846 = or i1 %i.agu, %found.conflict843
   %min.iters.check850 = icmp ult i32 %.1107.i, 16
   %i.agv = and i64 %i.agh, 12
   %n.vec852 = and i64 %i.agh, 2147483632          ; 4 uses
@@ -617,11 +614,11 @@ vector.memcheck:                                  ; preds = %.preheader125.i
   %bound0 = icmp ult ptr %i.adr, %scevgep809
   %bound1 = icmp ult ptr %.098130.i, %scevgep808
   %found.conflict = and i1 %bound0, %bound1
+  %5 = or i1 %found.conflict, %stride.check814
   %bound0811 = icmp ult ptr %i.adr, %scevgep810
   %bound1812 = icmp ult ptr %.0131.i, %scevgep808
   %found.conflict813 = and i1 %bound0811, %bound1812
-  %8 = or i1 %found.conflict813, %stride.check814
-  %conflict.rdx = or i1 %found.conflict, %8
+  %conflict.rdx = or i1 %5, %found.conflict813
   br i1 %conflict.rdx, label %scalar.ph815.preheader, label %vector.body819
 
 vector.body819:                                   ; preds = %vector.memcheck, %vector.body819

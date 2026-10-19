@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %_ZNK3jxl11ImageBund
   %i.kl = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.km = load ptr, ptr %i.kl, align 8, !tbaa !110 ; 4 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.ko = load i64, ptr %i.kn, align 8, !tbaa !111 ; 4 uses
+  %i.ko = load i64, ptr %i.kn, align 8, !tbaa !111 ; 3 uses
   %.not183 = icmp eq i64 %.0.i172, 0
   br i1 %.not183, label %._crit_edge181, label %.lr.ph.us.preheader
 
@@ -221,7 +221,7 @@ bb.ag:                                            ; preds = %_ZNK3jxl11ImageBund
   %i.kv = mul i64 %i.kk, %i.kp
   %i.kw = getelementptr i8, ptr %i.ki, i64 %i.kv
   %scevgep221 = getelementptr i8, ptr %i.kw, i64 %i.kr
-  %min.iters.check = icmp ult i64 %.0.i172, 12
+  %min.iters.check = icmp ult i64 %.0.i172, 8
   %bound0 = icmp ult ptr %i.km, %scevgep220
   %bound1 = icmp ult ptr %i.ke, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -231,8 +231,7 @@ bb.ag:                                            ; preds = %_ZNK3jxl11ImageBund
   %bound0223 = icmp ult ptr %i.km, %scevgep221
   %bound1224 = icmp ult ptr %i.ki, %scevgep
   %found.conflict225 = and i1 %bound0223, %bound1224
-  %20 = or i64 %i.kk, %i.ko
-  %i.la = icmp slt i64 %20, 0
+  %i.la = icmp slt i64 %i.kk, 0
   %i.lb = or i1 %found.conflict225, %i.la
   %conflict.rdx = or i1 %i.kz, %i.lb
   %n.vec = and i64 %.0.i172, -8                   ; 3 uses

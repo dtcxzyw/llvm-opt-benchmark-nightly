@@ -204,7 +204,7 @@ bb.hy:                                            ; preds = %bb.hs
   %i.xp = load ptr, ptr %i.lj, align 8, !tbaa !99 ; 3 uses
   %i.xq = load i64, ptr %i.lk, align 8, !tbaa !47 ; 3 uses
   %i.xr = load ptr, ptr %i.ll, align 8, !tbaa !99 ; 4 uses
-  %i.xs = load i64, ptr %i.lm, align 8, !tbaa !47 ; 4 uses
+  %i.xs = load i64, ptr %i.lm, align 8, !tbaa !47 ; 3 uses
   %i.xt = icmp sgt i32 %i.xh, 0
   br i1 %i.xt, label %.lr.ph.preheader.i, label %_ZN2cv3dnnL11gruComputeHIfEEvRKNS_3MatES4_RS2_.exit
 
@@ -232,8 +232,7 @@ bb.hy:                                            ; preds = %bb.hs
   %bound01525 = icmp ult ptr %i.xr, %scevgep1523
   %bound11526 = icmp ult ptr %i.xp, %scevgep
   %found.conflict1527 = and i1 %bound01525, %bound11526
-  %159 = or i64 %i.xq, %i.xs
-  %i.yf = icmp slt i64 %159, 0
+  %i.yf = icmp slt i64 %i.xq, 0
   %i.yg = or i1 %found.conflict1527, %i.yf
   %conflict.rdx = or i1 %i.ye, %i.yg
   %n.vec = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
@@ -441,7 +440,7 @@ bb.ik:                                            ; preds = %bb.ie
   %i.aaz = load ptr, ptr %i.lj, align 8, !tbaa !99 ; 3 uses
   %i.aba = load i64, ptr %i.lk, align 8, !tbaa !47 ; 3 uses
   %i.abb = load ptr, ptr %i.ll, align 8, !tbaa !99 ; 4 uses
-  %i.abc = load i64, ptr %i.lm, align 8, !tbaa !47 ; 4 uses
+  %i.abc = load i64, ptr %i.lm, align 8, !tbaa !47 ; 3 uses
   %i.abd = icmp sgt i32 %i.aar, 0
   br i1 %i.abd, label %.lr.ph.preheader.i525, label %_ZN2cv3dnnL11gruComputeHIfEEvRKNS_3MatES4_RS2_.exit
 
@@ -469,8 +468,7 @@ bb.ik:                                            ; preds = %bb.ie
   %bound01544 = icmp ult ptr %i.abb, %scevgep1538
   %bound11545 = icmp ult ptr %i.aaz, %scevgep1536.a
   %found.conflict1546 = and i1 %bound01544, %bound11545
-  %160 = or i64 %i.aba, %i.abc
-  %i.abp = icmp slt i64 %160, 0
+  %i.abp = icmp slt i64 %i.aba, 0
   %i.abq = or i1 %found.conflict1546, %i.abp
   %conflict.rdx1549 = or i1 %i.abo, %i.abq
   %n.vec1553 = and i64 %wide.trip.count.i527, 2147483644 ; 3 uses
