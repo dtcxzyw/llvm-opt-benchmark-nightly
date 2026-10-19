@@ -202,7 +202,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit8: ; pre
 
 _ZNK9ImageItem12get_propertyI8Box_vvcCEENSt3__110shared_ptrIT_EEv.exit.thread: ; preds = %_ZNK9ImageItem12get_propertyI8Box_vvcCEENSt3__110shared_ptrIT_EEv.exit, %bb.d
   %i.ab = invoke noalias noundef nonnull dereferenceable(152) ptr @_Znwm(i64 noundef 152) #21
-          to label %.noexc9 unwind label %4       ; 11 uses
+          to label %.noexc9 unwind label %bb.p    ; 11 uses
 
 .noexc9:                                          ; preds = %_ZNK9ImageItem12get_propertyI8Box_vvcCEENSt3__110shared_ptrIT_EEv.exit.thread
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
@@ -290,12 +290,7 @@ bb.o:                                             ; preds = %_ZNSt3__110shared_p
   invoke void @_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcm(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef %i.bh, i64 noundef %i.bi)
           to label %_ZN5ErrorC2ERKS_.exit unwind label %bb.p
 
-4:                                                ; preds = %_ZNK9ImageItem12get_propertyI8Box_vvcCEENSt3__110shared_ptrIT_EEv.exit.thread
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.s
-
-bb.p:                                             ; preds = %bb.o
+bb.p:                                             ; preds = %_ZNK9ImageItem12get_propertyI8Box_vvcCEENSt3__110shared_ptrIT_EEv.exit.thread, %bb.o
   %i.bj = landingpad { ptr, i32 }
           cleanup
   br label %bb.s
@@ -324,8 +319,8 @@ _ZNSt3__110shared_ptrI8Box_vvcCED2B8ne180100Ev.exit: ; preds = %_ZN5ErrorC2ERKS_
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   ret void
 
-bb.s:                                             ; preds = %bb.p, %4, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit8
-  %.pn5 = phi { ptr, i32 } [ %i.bj, %bb.p ], [ %5, %4 ], [ %i.u, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit8 ]
+bb.s:                                             ; preds = %bb.p, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit8
+  %.pn5 = phi { ptr, i32 } [ %i.bj, %bb.p ], [ %i.u, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit8 ]
   call void @_ZNSt3__110shared_ptrI8Box_vvcCED2B8ne180100Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   resume { ptr, i32 } %.pn5

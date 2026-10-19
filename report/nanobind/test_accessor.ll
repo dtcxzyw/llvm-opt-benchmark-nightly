@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_Py_Dealloc(ptr noundef nonnull %i.h) #18
-          to label %_ZL9Py_DECREFP7_object.exit.i unwind label %.loopexit.i
+          to label %_ZL9Py_DECREFP7_object.exit.i unwind label %bb.f
 
 _ZL9Py_DECREFP7_object.exit.i:                    ; preds = %bb.d, %bb.c, %bb.b
   %i.m = add nuw nsw i64 %.04.i, 1                ; 2 uses
@@ -217,21 +217,12 @@ bb.e:                                             ; preds = %._crit_edge.i
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !47
   invoke void @PyMem_Free(ptr noundef %i.r) #18
-          to label %_ZN8nanobind6detail12cleanup_list7releaseEv.exit unwind label %.loopexit.split-lp.i
+          to label %_ZN8nanobind6detail12cleanup_list7releaseEv.exit unwind label %bb.f
 
-.loopexit.i:                                      ; preds = %bb.d
-  %lpad.loopexit.i = landingpad { ptr, i32 }
+bb.f:                                             ; preds = %bb.d, %bb.e
+  %lpad.loopexit.split-lp2 = landingpad { ptr, i32 }
           catch ptr null
-  br label %bb.f
-
-.loopexit.split-lp.i:                             ; preds = %bb.e
-  %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
-          catch ptr null
-  br label %bb.f
-
-bb.f:                                             ; preds = %.loopexit.split-lp.i, %.loopexit.i
-  %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  %i.s = extractvalue { ptr, i32 } %lpad.phi.i, 0
+  %i.s = extractvalue { ptr, i32 } %lpad.loopexit.split-lp2, 0
   tail call void @__clang_call_terminate(ptr %i.s) #17
   unreachable
 

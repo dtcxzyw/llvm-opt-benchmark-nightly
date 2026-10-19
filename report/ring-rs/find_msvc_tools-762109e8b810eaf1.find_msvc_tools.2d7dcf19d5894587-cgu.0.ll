@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %_RINvXs2J_NtNtCs3oU
   invoke void %i.db(ptr nonnull sret([24 x i8]) align 8 %i.i, ptr %5, ptr nonnull @28, i64 12)
           to label %bb.f unwind label %bb.e, !noalias !80
 
-.body.i:                                          ; preds = %bb.o, %7, %bb.e
-  %.pn.i = phi { ptr, i32 } [ %lpad.phi.i, %7 ], [ %i.dd, %bb.e ], [ %i.dm, %bb.o ]
+.body.i:                                          ; preds = %bb.o, %.loopexit.split-lp.i, %bb.e
+  %.pn.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ], [ %i.dd, %bb.e ], [ %i.dm, %bb.o ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools3EnvEBF_(ptr nonnull align 8 %i.l) #35
           to label %common.resume.i unwind label %bb.x, !noalias !80
 
@@ -220,18 +220,9 @@ bb.f:                                             ; preds = %bb.d
   %.not.i2.i = icmp eq i64 %i.de, -2
   br i1 %.not.i2.i, label %bb.y, label %bb.g
 
-.loopexit.i:                                      ; preds = %bb.h, %_RNvXNtNtCs3oUPovFnLWP_4core3ops12control_flowINtB2_11ControlFlowNtNtCsaL1QbXo9JQH_3std4path7PathBufENtNtB4_9try_trait3Try6branchCs3U9i7nQCKwt_15find_msvc_tools.exit.i.i.i.i.i
-  %lpad.loopexit.i = landingpad { ptr, i32 }
-          cleanup
-  br label %7
-
-.loopexit.split-lp.i:                             ; preds = %bb.l, %bb.k
+.loopexit.split-lp.i:                             ; preds = %bb.h, %_RNvXNtNtCs3oUPovFnLWP_4core3ops12control_flowINtB2_11ControlFlowNtNtCsaL1QbXo9JQH_3std4path7PathBufENtNtB4_9try_trait3Try6branchCs3U9i7nQCKwt_15find_msvc_tools.exit.i.i.i.i.i, %bb.l, %bb.k
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
-  br label %7
-
-7:                                                ; preds = %.loopexit.split-lp.i, %.loopexit.i
-  %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools3EnvEBF_(ptr nonnull align 8 %i.j) #35
           to label %.body.i unwind label %bb.x, !noalias !80
 
@@ -266,7 +257,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXNtNtCs3oUPovFnLWP_4core3ops12control_flowINtB2_11ControlFlowNtNtCsaL1QbXo9JQH_3std4path7PathBufENtNtB4_9try_trait3Try6branchCs3U9i7nQCKwt_15find_msvc_tools.exit.i.i.i.i.i: ; preds = %.noexc4.i, %bb.g
   invoke void @_RNvXs6_NtCsaL1QbXo9JQH_3std3envNtB5_10SplitPathsNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4next(ptr nonnull sret([24 x i8]) align 8 %i.c, ptr nonnull align 8 %i.di)
-          to label %.noexc.i unwind label %.loopexit.i, !noalias !80
+          to label %.noexc.i unwind label %.loopexit.split-lp.i, !noalias !80
 
 .noexc.i:                                         ; preds = %_RNvXNtNtCs3oUPovFnLWP_4core3ops12control_flowINtB2_11ControlFlowNtNtCsaL1QbXo9JQH_3std4path7PathBufENtNtB4_9try_trait3Try6branchCs3U9i7nQCKwt_15find_msvc_tools.exit.i.i.i.i.i
   %i.dj = load i64, ptr %i.c, align 8, !noalias !82
@@ -276,7 +267,7 @@ _RNvXNtNtCs3oUPovFnLWP_4core3ops12control_flowINtB2_11ControlFlowNtNtCsaL1QbXo9J
 bb.h:                                             ; preds = %.noexc.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !82
   invoke void @_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldNtNtCsaL1QbXo9JQH_3std4path7PathBufBZ_uINtNtNtBa_3ops12control_flow11ControlFlowBZ_ENCNCNvNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools5impl_21find_msvc_environment00NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkBZ_NCB2n_s_0E0E0B2v_(ptr nonnull sret([24 x i8]) align 8 %i.b, ptr nonnull align 8 %i.d, ptr nonnull align 8 %i.a) #32
-          to label %.noexc4.i unwind label %.loopexit.i, !noalias !80
+          to label %.noexc4.i unwind label %.loopexit.split-lp.i, !noalias !80
 
 .noexc4.i:                                        ; preds = %bb.h
   %i.dk = load i64, ptr %i.b, align 8, !noalias !82 ; 2 uses
@@ -395,7 +386,7 @@ bb.w:                                             ; preds = %bb.v
   call void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str5OsStrE9drop_slowCs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull readonly align 8 %.sroa.2.0..sroa_idx.i) #36, !noalias !80
   br label %_RNvNtNtCs3U9i7nQCKwt_15find_msvc_tools10find_tools5impl_21find_msvc_environment.exit
 
-bb.x:                                             ; preds = %7, %.body.i
+bb.x:                                             ; preds = %.loopexit.split-lp.i, %.body.i
   %i.dx = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #34, !noalias !80

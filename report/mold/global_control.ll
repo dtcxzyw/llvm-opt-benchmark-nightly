@@ -205,12 +205,7 @@ bb.e:                                             ; preds = %_ZN3tbb6detail2d118
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.s = load ptr, ptr %i.r, align 8
   %i.t = invoke noundef i64 %i.s(ptr noundef nonnull align 128 dereferenceable(65) %0)
-          to label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit unwind label %1
-
-1:                                                ; preds = %bb.e
-  %2 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit10
+          to label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit unwind label %bb.j
 
 bb.f:                                             ; preds = %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEEC2ERS3_.exit
   %i.u = invoke noundef i32 @_ZN3tbb6detail2r117threading_control15max_num_workersEv()
@@ -233,20 +228,16 @@ bb.i:                                             ; preds = %bb.g
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !39
   br label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit
 
-bb.j:                                             ; preds = %bb.f
+bb.j:                                             ; preds = %bb.e, %bb.f
   %i.ab = landingpad { ptr, i32 }
           cleanup
-  br label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit10
+  store atomic i8 0, ptr %i.a release, align 64
+  resume { ptr, i32 } %i.ab
 
 _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit: ; preds = %bb.h, %bb.i, %bb.e
   %.06 = phi i64 [ %i.t, %bb.e ], [ %..i, %bb.h ], [ %i.aa, %bb.i ]
   store atomic i8 0, ptr %i.a release, align 64
   ret i64 %.06
-
-_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit10: ; preds = %bb.j, %1
-  %.pn = phi { ptr, i32 } [ %2, %1 ], [ %i.ab, %bb.j ]
-  store atomic i8 0, ptr %i.a release, align 64
-  resume { ptr, i32 } %.pn
 }
 
 ; Function Attrs: mustprogress nounwind sspstrong uwtable

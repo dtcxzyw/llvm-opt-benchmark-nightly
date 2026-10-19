@@ -202,12 +202,7 @@ bb.a:
   %i.l = load i64, ptr %i.k, align 8, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RINvNtCscdodAO9FK5_5alloc3str17join_generic_copyehNtNtB4_6string6StringECslT7UmUwa3wv_9ruff_wasm(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %i.j, i64 noundef %i.l, ptr noalias noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 1)
-          to label %bb.b unwind label %2
-
-2:                                                ; preds = %bb.a
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
+          to label %bb.b unwind label %bb.g
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
@@ -241,12 +236,12 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECslT7
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCslT7UmUwa3wv_9ruff_wasm(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECslT7UmUwa3wv_9ruff_wasm.exit unwind label %bb.g
 
-.body:                                            ; preds = %bb.g, %bb.e, %bb.c, %2
-  %.pn = phi { ptr, i32 } [ %3, %2 ], [ %i.n, %bb.c ], [ %i.q, %bb.g ], [ %i.o, %bb.e ]
+.body:                                            ; preds = %bb.g, %bb.e, %bb.c
+  %.pn = phi { ptr, i32 } [ %i.n, %bb.c ], [ %i.q, %bb.g ], [ %i.o, %bb.e ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBG_6string6StringEECslT7UmUwa3wv_9ruff_wasm(ptr noalias noundef align 8 dereferenceable(24) %i.b) #13
           to label %common.resume unwind label %bb.j
 
-bb.g:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECslT7UmUwa3wv_9ruff_wasm.exit.i
+bb.g:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECslT7UmUwa3wv_9ruff_wasm.exit.i, %bb.a
   %i.q = landingpad { ptr, i32 }
           cleanup
   br label %.body

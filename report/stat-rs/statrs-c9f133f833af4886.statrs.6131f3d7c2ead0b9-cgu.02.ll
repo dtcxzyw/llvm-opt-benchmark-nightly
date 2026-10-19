@@ -204,12 +204,7 @@ _RNvXsh_NtNtCsbADZB03g5jP_8nalgebra4base4iterINtB5_7RawIterPddNtNtB7_9dimension3
 
 bb.z:                                             ; preds = %_RNvXsh_NtNtCsbADZB03g5jP_8nalgebra4base4iterINtB5_7RawIterPddNtNtB7_9dimension3DynINtBZ_5ConstKj1_EB1i_BX_ENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs8lmMd0ZksV9_6statrs.exit.i.i.i._crit_edge
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 135 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #11
-          to label %bb.aa unwind label %3, !noalias !154
-
-3:                                                ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra4base11vec_storage10VecStoragedNtNtBG_9dimension3DynB1A_EECs8lmMd0ZksV9_6statrs.exit.i109.i.i, %bb.z
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body127.i.i
+          to label %bb.aa unwind label %bb.cb, !noalias !154
 
 bb.aa:                                            ; preds = %bb.z
   unreachable
@@ -612,7 +607,7 @@ bb.bu:                                            ; preds = %bb.bt
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra4base11vec_storage10VecStoragedNtNtBG_9dimension3DynB1A_EECs8lmMd0ZksV9_6statrs.exit.i109.i.i: ; preds = %_RINvNtNtCs8lmMd0ZksV9_6statrs12distribution19multivariate_normal9check_covNtNtNtCsbADZB03g5jP_8nalgebra4base9dimension3DynEB6_.exit.thread
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecdENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8lmMd0ZksV9_6statrs(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.v)
-          to label %bb.bv unwind label %3, !noalias !154
+          to label %bb.bv unwind label %bb.cb, !noalias !154
 
 bb.bv:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra4base11vec_storage10VecStoragedNtNtBG_9dimension3DynB1A_EECs8lmMd0ZksV9_6statrs.exit.i109.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !153
@@ -667,12 +662,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra4base6matr
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecdENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8lmMd0ZksV9_6statrs(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.ab)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsbADZB03g5jP_8nalgebra4base6matrix6MatrixdNtNtB12_9dimension3DynB1L_INtNtB12_11vec_storage10VecStoragedB1L_B1L_EEEECs8lmMd0ZksV9_6statrs.exit.i.i unwind label %bb.cb, !noalias !157
 
-.body127.i.i:                                     ; preds = %bb.cd, %bb.cb, %bb.bz, %bb.bt, %.body29, %3
-  %.pn66.i.i = phi { ptr, i32 } [ %i.im, %bb.bz ], [ %i.ip, %bb.cd ], [ %eh.lpad-body30, %.body29 ], [ %i.io, %bb.cb ], [ %i.ig, %bb.bt ], [ %4, %3 ]
+.body127.i.i:                                     ; preds = %bb.cd, %bb.cb, %bb.bz, %bb.bt, %.body29
+  %.pn66.i.i = phi { ptr, i32 } [ %i.im, %bb.bz ], [ %i.ip, %bb.cd ], [ %eh.lpad-body30, %.body29 ], [ %i.io, %bb.cb ], [ %i.ig, %bb.bt ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra4base6matrix6MatrixdNtNtBG_9dimension3DynINtB1r_5ConstKj1_EINtNtBG_11vec_storage10VecStoragedB1p_B1K_EEECs8lmMd0ZksV9_6statrs(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ai) #10
           to label %.thread unwind label %bb.ab, !noalias !157
 
-bb.cb:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra4base6matrix6MatrixdNtNtBG_9dimension3DynB1p_INtNtBG_11vec_storage10VecStoragedB1p_B1p_EEECs8lmMd0ZksV9_6statrs.exit.i126.i.i
+bb.cb:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra4base6matrix6MatrixdNtNtBG_9dimension3DynB1p_INtNtBG_11vec_storage10VecStoragedB1p_B1p_EEECs8lmMd0ZksV9_6statrs.exit.i126.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra4base11vec_storage10VecStoragedNtNtBG_9dimension3DynB1A_EECs8lmMd0ZksV9_6statrs.exit.i109.i.i, %bb.z
   %i.io = landingpad { ptr, i32 }
           cleanup
   br label %.body127.i.i

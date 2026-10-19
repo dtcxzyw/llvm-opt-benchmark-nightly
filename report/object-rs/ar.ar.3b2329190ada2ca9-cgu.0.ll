@@ -204,17 +204,12 @@ bb.dd:                                            ; preds = %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !194
   br label %.thread251
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs54MM5Fk6r0b_2ar.exit: ; preds = %.loopexit, %.loopexit.split-lp, %bb.eh, %bb.eg
-  %.pn = phi { ptr, i32 } [ %i.of, %bb.eh ], [ %i.of, %bb.eg ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs54MM5Fk6r0b_2ar.exit: ; preds = %.loopexit.split-lp, %bb.eh, %bb.eg
+  %.pn = phi { ptr, i32 } [ %i.of, %bb.eh ], [ %i.of, %bb.eg ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke void @_RNvXs_NtCsgQ7e0lqRvgo_7memmap22osNtB4_9MmapInnerNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.aa)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsgQ7e0lqRvgo_7memmap24MmapECs54MM5Fk6r0b_2ar.exit unwind label %bb.ek
 
-.loopexit:                                        ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtCseHTIzroA4w0_6object4read7archive13ArchiveMemberNtBL_5ErrorE6unwrapCs54MM5Fk6r0b_2ar.exit, %bb.dp, %bb.ds, %bb.du, %bb.dz, %bb.ea
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs54MM5Fk6r0b_2ar.exit
-
-.loopexit.split-lp:                               ; preds = %.thread237, %bb.di, %bb.dk, %.loopexit300, %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef4readNtNtBc_7archive13AixFileHeaderECs54MM5Fk6r0b_2ar.exit.i.i, %bb.ag, %bb.ai, %bb.am, %bb.ap, %bb.at, %bb.au, %bb.ax, %bb.bb, %bb.bf, %bb.bi, %bb.bn, %bb.br, %bb.ca, %bb.ci, %bb.cn
+.loopexit.split-lp:                               ; preds = %bb.ea, %bb.dz, %bb.du, %bb.ds, %bb.dp, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtCseHTIzroA4w0_6object4read7archive13ArchiveMemberNtBL_5ErrorE6unwrapCs54MM5Fk6r0b_2ar.exit, %bb.cn, %bb.ci, %bb.ca, %bb.br, %bb.bn, %bb.bi, %bb.bf, %bb.bb, %bb.ax, %bb.au, %bb.at, %bb.ap, %bb.am, %bb.ai, %bb.ag, %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef4readNtNtBc_7archive13AixFileHeaderECs54MM5Fk6r0b_2ar.exit.i.i, %.loopexit300, %bb.dk, %bb.di, %.thread237
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs54MM5Fk6r0b_2ar.exit
@@ -404,7 +399,7 @@ bb.dp:                                            ; preds = %bb.dm
   %i.mp = load i8, ptr %.sroa.6.0..sroa_idx, align 8, !range !10, !alias.scope !209, !noundef !6
   %i.mq = trunc nuw i8 %i.mp to i1
   invoke fastcc void @_RINvMs0_NtNtCseHTIzroA4w0_6object4read7archiveNtB6_13ArchiveMember5parseRShECs54MM5Fk6r0b_2ar(ptr noalias nofree noundef align 8 captures(none) dereferenceable(48) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ml, i64 noundef %i.mm, ptr noalias nofree noundef align 8 dereferenceable(8) %.sroa.01.sroa.2.0..sroa_idx, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.mn, i64 noundef %i.mo, i1 noundef zeroext %i.mq)
-          to label %.noexc138 unwind label %.loopexit
+          to label %.noexc138 unwind label %.loopexit.split-lp
 
 .noexc138:                                        ; preds = %bb.dp
   %i.mr = load i64, ptr %i.d, align 8, !range !11, !noalias !210, !noundef !6 ; 2 uses
@@ -432,7 +427,7 @@ bb.ds:                                            ; preds = %bb.dn
   %i.mw = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !209, !nonnull !6, !noundef !6 ; 3 uses
   %i.mx = load i64, ptr %.sroa.3.0..sroa_idx, align 8, !alias.scope !209, !noundef !6 ; 5 uses
   %i.my = invoke { i64, i64 } @_RNvNtNtCseHTIzroA4w0_6object4read7archive16parse_u64_digits(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(20) %i.mt, i64 noundef 20, i32 noundef 10)
-          to label %.noexc139 unwind label %.loopexit ; 2 uses
+          to label %.noexc139 unwind label %.loopexit.split-lp ; 2 uses
 
 .noexc139:                                        ; preds = %bb.ds
   %i.mz = extractvalue { i64, i64 } %i.my, 0
@@ -452,7 +447,7 @@ bb.du:                                            ; preds = %bb.dt
   %i.nf = add nuw i64 %i.nb, 112                  ; 3 uses
   %i.ng = getelementptr inbounds nuw i8, ptr %i.ne, i64 108
   %i.nh = invoke { i64, i64 } @_RNvNtNtCseHTIzroA4w0_6object4read7archive16parse_u64_digits(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ng, i64 noundef 4, i32 noundef 10)
-          to label %.noexc140 unwind label %.loopexit ; 2 uses
+          to label %.noexc140 unwind label %.loopexit.split-lp ; 2 uses
 
 .noexc140:                                        ; preds = %bb.du
   %i.ni = extractvalue { i64, i64 } %i.nh, 0
@@ -489,7 +484,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 bb.dz:                                            ; preds = %bb.dy
   %i.nu = invoke { i64, i64 } @_RNvNtNtCseHTIzroA4w0_6object4read7archive16parse_u64_digits(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ne, i64 noundef 20, i32 noundef 10)
-          to label %.noexc141 unwind label %.loopexit
+          to label %.noexc141 unwind label %.loopexit.split-lp
 
 .noexc141:                                        ; preds = %bb.dz
   %i.nv = extractvalue { i64, i64 } %i.nu, 0
@@ -505,7 +500,7 @@ bb.ea:                                            ; preds = %bb.do
   %i.ny = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !209, !nonnull !6, !noundef !6
   %i.nz = load i64, ptr %.sroa.3.0..sroa_idx, align 8, !alias.scope !209, !noundef !6
   invoke fastcc void @_RINvMs0_NtNtCseHTIzroA4w0_6object4read7archiveNtB6_13ArchiveMember9parse_zosRShECs54MM5Fk6r0b_2ar(ptr noalias nofree noundef align 8 captures(none) dereferenceable(48) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ny, i64 noundef %i.nz, ptr noalias nofree noundef align 8 dereferenceable(8) %.sroa.01.sroa.2.0..sroa_idx)
-          to label %.noexc142 unwind label %.loopexit
+          to label %.noexc142 unwind label %.loopexit.split-lp
 
 .noexc142:                                        ; preds = %bb.ea
   %i.oa = load i64, ptr %i.c, align 8, !range !11, !noalias !210, !noundef !6 ; 2 uses
@@ -560,7 +555,7 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtCseHTIzroA4w0_6object4read7a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   %i.oe = inttoptr i64 %.sroa.12.0.ph299 to ptr
   invoke void @_RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String15from_utf8_lossy(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.u, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.oe, i64 noundef %.sroa.13.0.ph298)
-          to label %bb.ef unwind label %.loopexit
+          to label %bb.ef unwind label %.loopexit.split-lp
 
 bb.ef:                                            ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtCseHTIzroA4w0_6object4read7archive13ArchiveMemberNtBL_5ErrorE6unwrapCs54MM5Fk6r0b_2ar.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)

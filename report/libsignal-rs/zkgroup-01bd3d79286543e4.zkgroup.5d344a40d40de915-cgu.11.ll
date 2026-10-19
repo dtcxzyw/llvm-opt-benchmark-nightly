@@ -205,7 +205,7 @@ _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.am = add nuw i64 %i.al, 1
   store i64 %i.am, ptr %i.af, align 8, !alias.scope !363, !noalias !348
   %i.an = invoke { ptr, i64 } @_RNvXs1y_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator24___iterator_get_uncheckedCs807GXlIGG3x_7zkgroup(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.j, i64 noundef %i.al)
-          to label %.noexc2.i unwind label %.loopexit.i, !noalias !362 ; 2 uses
+          to label %.noexc2.i unwind label %.loopexit.split-lp.i, !noalias !362 ; 2 uses
 
 .noexc2.i:                                        ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter14ChunksExactMuthEINtBZ_4ItermEEINtB5_7ZipImplBW_B1z_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i.i
   %i.ao = extractvalue { ptr, i64 } %i.an, 0      ; 2 uses
@@ -221,7 +221,7 @@ bb.g:                                             ; preds = %.noexc2.i
   %i.as = call i32 @llvm.bswap.i32(i32 %i.ar)
   store i32 %i.as, ptr %i.i, align 4, !noalias !348
   invoke void @_RINvNtCsgxBkk5gSRhY_4core5slice20copy_from_slice_implhECs807GXlIGG3x_7zkgroup(ptr noalias nofree noundef nonnull %i.ao, i64 noundef %i.ap, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.i, i64 noundef 4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @79)
-          to label %.noexc3.i unwind label %.loopexit.i, !noalias !362
+          to label %.noexc3.i unwind label %.loopexit.split-lp.i, !noalias !362
 
 .noexc3.i:                                        ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !348
@@ -235,18 +235,13 @@ _RNvXs3_NtCsj2Wav7G13rI_4sha29block_apiNtB5_13Sha256VarCoreNtNtCs2KKWnYNkHVH_6di
   invoke void @_RINvNtCsgxBkk5gSRhY_4core5slice20copy_from_slice_implhECs807GXlIGG3x_7zkgroup(ptr noalias nofree noundef nonnull dereferenceable(32) %i.m, i64 noundef 32, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef 32, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @82)
           to label %_RNvXs4_Csj2Wav7G13rI_4sha2NtB5_6Sha256NtCs2KKWnYNkHVH_6digest11FixedOutput13finalize_into.exit unwind label %.loopexit.split-lp.i
 
-.loopexit.i:                                      ; preds = %bb.g, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter14ChunksExactMuthEINtBZ_4ItermEEINtB5_7ZipImplBW_B1z_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i.i
-  %lpad.loopexit.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i
-
-.loopexit.split-lp.i:                             ; preds = %_RNvXs3_NtCsj2Wav7G13rI_4sha29block_apiNtB5_13Sha256VarCoreNtNtCs2KKWnYNkHVH_6digest9block_api18VariableOutputCore22finalize_variable_core.exit.i.i, %_RINvMs7_CsjsLMAtnDKjw_12block_bufferINtB6_11BlockBufferINtNtCsgAO26H8IC1Y_7typenum4uint4UIntIBS_IBS_IBS_IBS_IBS_IBS_NtBU_5UTermNtNtBW_3bit2B1ENtB23_2B0EB2g_EB2g_EB2g_EB2g_EB2g_ENtB6_5EagerE10digest_padNCNvXs3_NtCsj2Wav7G13rI_4sha29block_apiNtB3l_13Sha256VarCoreNtNtCs2KKWnYNkHVH_6digest9block_api18VariableOutputCore22finalize_variable_core0ECs807GXlIGG3x_7zkgroup.exit.i.i.i, %_RINvMNtCs5DMeLc8gTfG_12hybrid_array7from_fnINtB5_5ArrayhINtNtCsgAO26H8IC1Y_7typenum4uint4UIntIBT_IBT_IBT_IBT_IBT_NtBV_5UTermNtNtBX_3bit2B1ENtB20_2B0EB2d_EB2d_EB2d_EB2d_EE7from_fnNCNvXsg_B5_BF_NtNtCsgxBkk5gSRhY_4core7default7Default7default0ECs807GXlIGG3x_7zkgroup.exit
+.loopexit.split-lp.i:                             ; preds = %bb.g, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter14ChunksExactMuthEINtBZ_4ItermEEINtB5_7ZipImplBW_B1z_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i.i, %_RNvXs3_NtCsj2Wav7G13rI_4sha29block_apiNtB5_13Sha256VarCoreNtNtCs2KKWnYNkHVH_6digest9block_api18VariableOutputCore22finalize_variable_core.exit.i.i, %_RINvMs7_CsjsLMAtnDKjw_12block_bufferINtB6_11BlockBufferINtNtCsgAO26H8IC1Y_7typenum4uint4UIntIBS_IBS_IBS_IBS_IBS_IBS_NtBU_5UTermNtNtBW_3bit2B1ENtB23_2B0EB2g_EB2g_EB2g_EB2g_EB2g_ENtB6_5EagerE10digest_padNCNvXs3_NtCsj2Wav7G13rI_4sha29block_apiNtB3l_13Sha256VarCoreNtNtCs2KKWnYNkHVH_6digest9block_api18VariableOutputCore22finalize_variable_core0ECs807GXlIGG3x_7zkgroup.exit.i.i.i, %_RINvMNtCs5DMeLc8gTfG_12hybrid_array7from_fnINtB5_5ArrayhINtNtCsgAO26H8IC1Y_7typenum4uint4UIntIBT_IBT_IBT_IBT_IBT_NtBV_5UTermNtNtBX_3bit2B1ENtB20_2B0EB2d_EB2d_EB2d_EB2d_EE7from_fnNCNvXsg_B5_BF_NtNtCsgxBkk5gSRhY_4core7default7Default7default0ECs807GXlIGG3x_7zkgroup.exit
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-.body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.b
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.ac, %bb.b ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
+.body.i:                                          ; preds = %.loopexit.split-lp.i, %bb.b
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.ac, %bb.b ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.d, i8 0, i64 64, i1 false), !noalias !365
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(104) %i.l, ptr nonnull align 1 %i.d, i64 64, i1 true)

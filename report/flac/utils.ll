@@ -202,19 +202,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %.lr.ph, label %local__find_closest_cue_.exit
 
 .lr.ph:                                           ; preds = %bb.b
-  %5 = zext nneg i32 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 152
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !40
+  %5 = zext nneg i32 %i.i to i64
   br label %bb.c
 
 .loopexit.i:                                      ; preds = %bb.e, %.lr.ph66.split.i, %bb.c
-  %6 = trunc nuw i64 %i.n to i32
-  %i.m = icmp sgt i32 %6, 0
+  %i.m = icmp sgt i64 %.in, 1
   br i1 %i.m, label %bb.c, label %local__find_closest_cue_.exit, !llvm.loop !31
 
-bb.c:                                             ; preds = %.lr.ph, %.loopexit.i
-  %.in = phi i64 [ %5, %.lr.ph ], [ %i.n, %.loopexit.i ]
-  %i.n = add nsw i64 %.in, -1                     ; 3 uses
+bb.c:                                             ; preds = %.loopexit.i, %.lr.ph
+  %.in = phi i64 [ %5, %.lr.ph ], [ %i.n, %.loopexit.i ] ; 2 uses
+  %i.n = add nsw i64 %.in, -1                     ; 2 uses
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %i.n ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 23
   %i.q = load i8, ptr %i.p, align 1, !tbaa !42    ; 2 uses
@@ -284,17 +283,16 @@ bb.f:                                             ; preds = %local__find_closest
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !50
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 148
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !39 ; 2 uses
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.as, i32 0)
-  %wide.trip.count83.i = zext nneg i32 %smax.i to i64
-  %exitcond84.not.i34 = icmp slt i32 %i.as, 1
-  br i1 %exitcond84.not.i34, label %local__find_closest_cue_.exit20, label %.preheader.i.lr.ph
+  %6 = icmp sgt i32 %i.as, 0
+  br i1 %6, label %.preheader.i.lr.ph, label %local__find_closest_cue_.exit20
 
 .preheader.i.lr.ph:                               ; preds = %bb.f
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 152
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !40
+  %wide.trip.count91.i = zext nneg i32 %i.as to i64
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.i.lr.ph, %._crit_edge.split.i
+.preheader.i:                                     ; preds = %._crit_edge.split.i, %.preheader.i.lr.ph
   %indvars.iv80.i35 = phi i64 [ 0, %.preheader.i.lr.ph ], [ %indvars.iv.next81.i, %._crit_edge.split.i ] ; 2 uses
   %i.av = getelementptr inbounds nuw [32 x i8], ptr %i.au, i64 %indvars.iv80.i35 ; 4 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 23
@@ -348,7 +346,7 @@ bb.h:                                             ; preds = %bb.g
 
 ._crit_edge.split.i:                              ; preds = %bb.h, %.lr.ph.split.i, %.preheader.i
   %indvars.iv.next81.i = add nuw nsw i64 %indvars.iv80.i35, 1 ; 2 uses
-  %exitcond84.not.i = icmp eq i64 %indvars.iv.next81.i, %wide.trip.count83.i
+  %exitcond84.not.i = icmp eq i64 %indvars.iv.next81.i, %wide.trip.count91.i
   br i1 %exitcond84.not.i, label %local__find_closest_cue_.exit20, label %.preheader.i, !llvm.loop !34
 
 local__find_closest_cue_.exit20:                  ; preds = %._crit_edge.split.i, %local__find_closest_cue_.exit, %.split.i, %bb.f
@@ -454,9 +452,6 @@ declare double @strtod(ptr noundef readonly, ptr noundef captures(none)) local_u
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #10
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

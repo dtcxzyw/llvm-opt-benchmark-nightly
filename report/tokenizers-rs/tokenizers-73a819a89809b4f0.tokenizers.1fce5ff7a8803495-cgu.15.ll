@@ -204,38 +204,29 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.h = add i64 %i.c, -1                         ; 2 uses
   store i64 %i.h, ptr %i.b, align 8
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc5boxed3BoxINtNtNtB12_11collections11linked_list4NodeINtNtB12_3vec3VecTTTmmElEjEEERNtNtB12_5alloc6GlobalEEECs2JiOgHzbbc7_10tokenizers(ptr nonnull %i.d)
-          to label %bb.b unwind label %.loopexit
+          to label %bb.b unwind label %.loopexit.split-lp
 
 bb.g:                                             ; preds = %bb.b
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc5boxed3BoxINtNtNtB12_11collections11linked_list4NodeINtNtB12_3vec3VecTTTmmElEjEEERNtNtB12_5alloc6GlobalEEECs2JiOgHzbbc7_10tokenizers(ptr null)
           to label %bb.h unwind label %.loopexit.split-lp
 
-.loopexit:                                        ; preds = %bb.f
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %1
-
-.loopexit.split-lp:                               ; preds = %bb.g
+.loopexit.split-lp:                               ; preds = %bb.f, %bb.g
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %1
-
-1:                                                ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNvXs7_NtNtCscdodAO9FK5_5alloc11collections11linked_listINtBK_10LinkedListppENtNtNtB4_3ops4drop4Drop4drop9DropGuardINtNtBO_3vec3VecTTTmmElEjEENtNtBO_5alloc6GlobalEECs2JiOgHzbbc7_10tokenizers(ptr nonnull %0) #33
           to label %bb.j unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   ret void
 
-bb.i:                                             ; preds = %1
+bb.i:                                             ; preds = %.loopexit.split-lp
   %i.i = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #34
   unreachable
 
-bb.j:                                             ; preds = %1
-  resume { ptr, i32 } %lpad.phi
+bb.j:                                             ; preds = %.loopexit.split-lp
+  resume { ptr, i32 } %lpad.loopexit.split-lp
 }
 
 ; Function Attrs: nonlazybind uwtable

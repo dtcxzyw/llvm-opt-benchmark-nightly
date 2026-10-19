@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %bb.ag
 bb.az:                                            ; preds = %bb.ah, %bb.bj
   %.0342 = phi i32 [ 0, %bb.ah ], [ %i.hb, %bb.bj ]
   %i.fg = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str, i64 noundef 16)
-          to label %bb.ba unwind label %20        ; 0 uses
+          to label %bb.ba unwind label %.loopexit.split-lp ; 0 uses
 
 bb.ba:                                            ; preds = %bb.az
   %i.fh = load ptr, ptr %i.ed, align 8, !tbaa !21, !noalias !56
@@ -226,7 +226,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.fu = extractelement <2 x double> %foldExtExtBinop, i64 0
   %.scalar.i = call noundef double @llvm.sqrt.f64(double %i.fu)
   %i.fv = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, double noundef %.scalar.i)
-          to label %_ZNSolsEd.exit unwind label %.loopexit ; 3 uses
+          to label %_ZNSolsEd.exit unwind label %.loopexit.split-lp ; 3 uses
 
 _ZNSolsEd.exit:                                   ; preds = %bb.ba
   %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !10
@@ -258,23 +258,23 @@ bb.bc:                                            ; preds = %_ZSt13__check_facet
 
 bb.bd:                                            ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i
   invoke void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570) %i.gb)
-          to label %.noexc188 unwind label %.loopexit
+          to label %.noexc188 unwind label %.loopexit.split-lp
 
 .noexc188:                                        ; preds = %bb.bd
   %i.gg = load ptr, ptr %i.gb, align 8, !tbaa !10
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 48
   %i.gi = load ptr, ptr %i.gh, align 8
   %i.gj = invoke noundef signext i8 %i.gi(ptr noundef nonnull align 8 dereferenceable(570) %i.gb, i8 noundef signext 10)
-          to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i unwind label %.loopexit, !inline_history !44
+          to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i unwind label %.loopexit.split-lp, !inline_history !44
 
 _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i: ; preds = %.noexc188, %bb.bc
   %.0.i.i.i = phi i8 [ %i.gf, %bb.bc ], [ %i.gj, %.noexc188 ]
   %i.gk = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.fv, i8 noundef signext %.0.i.i.i)
-          to label %.noexc190 unwind label %.loopexit
+          to label %.noexc190 unwind label %.loopexit.split-lp
 
 .noexc190:                                        ; preds = %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i
   %i.gl = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.gk)
-          to label %_ZNSolsEPFRSoS_E.exit unwind label %.loopexit ; 0 uses
+          to label %_ZNSolsEPFRSoS_E.exit unwind label %.loopexit.split-lp ; 0 uses
 
 _ZNSolsEPFRSoS_E.exit:                            ; preds = %.noexc190
   %i.gm = load ptr, ptr %i.a, align 8, !tbaa !48
@@ -315,7 +315,7 @@ bb.bh:                                            ; preds = %bb.bg
   call void @free(ptr noundef %i.gw) #16
   %i.gx = load ptr, ptr %i.a, align 8, !tbaa !48
   %i.gy = invoke i32 @tiny_solve(ptr noundef %i.gx)
-          to label %bb.bi unwind label %20        ; 0 uses
+          to label %bb.bi unwind label %.loopexit.split-lp ; 0 uses
 
 bb.bi:                                            ; preds = %bb.bh
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #16
@@ -340,17 +340,7 @@ bb.bj:                                            ; preds = %bb.bi
   %exitcond.not = icmp eq i32 %i.hb, 390
   br i1 %exitcond.not, label %bb.ai, label %bb.az, !llvm.loop !47
 
-20:                                               ; preds = %bb.az, %bb.bh
-  %21 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body134
-
-.loopexit:                                        ; preds = %bb.ba, %bb.bd, %.noexc188, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i, %.noexc190
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body134
-
-.loopexit.split-lp:                               ; preds = %bb.bb
+.loopexit.split-lp:                               ; preds = %bb.bh, %bb.az, %.noexc190, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i, %.noexc188, %bb.bd, %bb.ba, %bb.bb
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body134
@@ -368,8 +358,8 @@ bb.bl:                                            ; preds = %bb.bi
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #16
   br label %.body134
 
-.body134:                                         ; preds = %.loopexit, %.loopexit.split-lp, %20, %bb.bf, %bb.bk, %bb.bl, %bb.ay
-  %.pn53.pn.pn = phi { ptr, i32 } [ %i.gq, %bb.bf ], [ %i.ff, %bb.ay ], [ %21, %20 ], [ %i.he, %bb.bl ], [ %i.hc, %bb.bk ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body134:                                         ; preds = %.loopexit.split-lp, %bb.bf, %bb.bk, %bb.bl, %bb.ay
+  %.pn53.pn.pn = phi { ptr, i32 } [ %i.hc, %bb.bk ], [ %i.ff, %bb.ay ], [ %i.gq, %bb.bf ], [ %i.he, %bb.bl ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #16
   br label %bb.bm

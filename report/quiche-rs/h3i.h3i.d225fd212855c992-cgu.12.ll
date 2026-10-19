@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
     #dbg_value(ptr %i.o, !11244, !DIExpression(), !10979)
     #dbg_declare(ptr poison, !11243, !DIExpression(), !10978)
   invoke void @_RINvXs6_NtNtCs9xKKqPmwf7Y_10serde_core2de5implsNtNtCsexYYUdYSQU6_5alloc6string6StringNtB8_11Deserialize11deserializeINtNtNtNtCsbmN5fM2HLz5_5serde7private2de7content22ContentRefDeserializerNtNtCsenfyI6F4F2A_10serde_json5error5ErrorEECsi2C7WdEh0SA_3h3i(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.o)
-          to label %.noexc.i unwind label %.loopexit.i, !dbg !11310, !noalias !11225
+          to label %.noexc.i unwind label %.loopexit.split-lp.i, !dbg !11310, !noalias !11225
 
 .noexc.i:                                         ; preds = %bb.d
   %i.t = load i64, ptr %i.a, align 8, !dbg !11311, !range !1758, !noalias !11236, !noundef !1368 ; 2 uses
@@ -280,18 +280,13 @@ bb.j:                                             ; preds = %bb.g
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #18, !dbg !11327, !noalias !11263
   unreachable, !dbg !11327
 
-.loopexit.i:                                      ; preds = %bb.n, %bb.l, %bb.d
-  %lpad.loopexit.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i
-
-.loopexit.split-lp.i:                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsi2C7WdEh0SA_3h3i.exit.i.i.i
+.loopexit.split-lp.i:                             ; preds = %bb.n, %bb.l, %bb.d, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsi2C7WdEh0SA_3h3i.exit.i.i.i
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-.body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.h, %bb.g
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.w, %bb.g ], [ %i.y, %bb.h ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
+.body.i:                                          ; preds = %.loopexit.split-lp.i, %bb.h, %bb.g
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.w, %bb.g ], [ %i.y, %bb.h ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
     #dbg_value(ptr %i.g, !3709, !DIExpression(), !11002)
   invoke void @_RNvXNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB2_8BTreeMapNtNtB8_6string6StringNtNtCsenfyI6F4F2A_10serde_json5value5ValueENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsi2C7WdEh0SA_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map8BTreeMapNtNtBK_6string6StringNtNtCsenfyI6F4F2A_10serde_json5value5ValueEECsi2C7WdEh0SA_3h3i.exit.i unwind label %bb.o, !dbg !11328, !noalias !11225
@@ -328,7 +323,7 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.e, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.13.sroa.7.i, i64 72, i1 false), !dbg !11336, !noalias !11225
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !11337, !noalias !11225
   invoke void @_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringNtNtCsenfyI6F4F2A_10serde_json5value5ValueE6insertCsi2C7WdEh0SA_3h3i(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(72) %i.e)
-          to label %bb.m unwind label %.loopexit.i, !dbg !11338, !noalias !11225
+          to label %bb.m unwind label %.loopexit.split-lp.i, !dbg !11338, !noalias !11225
 
 .loopexit22.i:                                    ; preds = %bb.k, %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !11339
@@ -344,7 +339,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsenfyI6F4F2A_10serde_json5value5ValueECsi2C7WdEh0SA_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsenfyI6F4F2A_10serde_json5value5ValueEECsi2C7WdEh0SA_3h3i.exit.i unwind label %.loopexit.i, !dbg !11341, !noalias !11225
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsenfyI6F4F2A_10serde_json5value5ValueEECsi2C7WdEh0SA_3h3i.exit.i unwind label %.loopexit.split-lp.i, !dbg !11341, !noalias !11225
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsenfyI6F4F2A_10serde_json5value5ValueEECsi2C7WdEh0SA_3h3i.exit.i: ; preds = %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !11342, !noalias !11225

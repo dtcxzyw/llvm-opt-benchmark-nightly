@@ -204,7 +204,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #30
   %i.v = invoke noundef ptr @_Z17enumValueToString16PressureCoupling(i32 noundef %i.e)
-          to label %bb.b unwind label %13         ; 4 uses
+          to label %bb.b unwind label %bb.m       ; 4 uses
 
 bb.b:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 7 uses
@@ -340,12 +340,7 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.j, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #30
   ret void
 
-13:                                               ; preds = %bb.a
-  %14 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26
-
-bb.m:                                             ; preds = %.noexc.i, %bb.c
+bb.m:                                             ; preds = %bb.a, %.noexc.i, %bb.c
   %i.bh = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26
@@ -363,8 +358,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24
   call void @_ZdlPvm(ptr noundef %i.bj, i64 noundef %i.bm) #29
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26: ; preds = %bb.n, %bb.m, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24, %13
-  %.pn.pn = phi { ptr, i32 } [ %14, %13 ], [ %i.bh, %bb.m ], [ %i.bi, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24 ], [ %i.bi, %bb.n ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26: ; preds = %bb.n, %bb.m, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24
+  %.pn.pn = phi { ptr, i32 } [ %i.bi, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24 ], [ %i.bh, %bb.m ], [ %i.bi, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #30
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31
 

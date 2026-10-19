@@ -169,7 +169,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds i8, ptr %i.n, i64 -920 ; 3 uses
   %i.p = getelementptr inbounds i8, ptr %i.m, i64 -920 ; 3 uses
   %i.q = invoke zeroext i1 @_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCse52LceO7DeS_12typst_macros4elem5Field11sort_by_keybNCNvBA_5parses_0E0BC_(ptr align 8 %5, ptr nonnull align 8 %i.p, ptr nonnull align 8 %i.o) #20
-          to label %.noexc unwind label %.loopexit ; 3 uses
+          to label %.noexc unwind label %.loopexit.split-lp ; 3 uses
 
 .noexc:                                           ; preds = %.preheader
   %i.r = getelementptr inbounds i8, ptr %.sroa.0.0.i, i64 -920 ; 2 uses
@@ -212,18 +212,9 @@ bb.b:                                             ; preds = %bb.a
   %or.cond.i17 = select i1 %i.ak, i1 %i.al, i1 false
   br i1 %or.cond.i17, label %.lr.ph.i, label %_RINvMNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5mergeINtB3_10MergeStateNtNtCse52LceO7DeS_12typst_macros4elem5FieldE10merge_downNCINvMNtCs1xwejQucwHj_5alloc5sliceSB1a_11sort_by_keybNCNvB1c_5parses_0E0EB1e_.exit
 
-.loopexit:                                        ; preds = %.preheader
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %6
-
-.loopexit.split-lp:                               ; preds = %.lr.ph.i
+.loopexit.split-lp:                               ; preds = %.preheader, %.lr.ph.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %6
-
-6:                                                ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtNtB4_5slice4sort6stable5merge10MergeStateNtNtCse52LceO7DeS_12typst_macros4elem5FieldEEB1t_(ptr nonnull align 8 %i.a) #18
           to label %bb.e unwind label %bb.d
 
@@ -234,14 +225,14 @@ _RINvMNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5mergeINtB3_10MergeStateNtNtC
 bb.c:                                             ; preds = %bb.b, %bb.a, %_RINvMNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5mergeINtB3_10MergeStateNtNtCse52LceO7DeS_12typst_macros4elem5FieldE10merge_downNCINvMNtCs1xwejQucwHj_5alloc5sliceSB1a_11sort_by_keybNCNvB1c_5parses_0E0EB1e_.exit
   ret void
 
-bb.d:                                             ; preds = %6
+bb.d:                                             ; preds = %.loopexit.split-lp
   %i.am = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #19
   unreachable
 
-bb.e:                                             ; preds = %6
-  resume { ptr, i32 } %lpad.phi
+bb.e:                                             ; preds = %.loopexit.split-lp
+  resume { ptr, i32 } %lpad.loopexit.split-lp
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable

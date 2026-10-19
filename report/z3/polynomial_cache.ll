@@ -205,7 +205,7 @@ _ZNK10polynomial7manager7factors16distinct_factorsEv.exit: ; preds = %bb.i, %bb.
   %i.cn = zext i32 %.0.i.i to i64                 ; 2 uses
   %i.co = shl nuw nsw i64 %i.cn, 3
   %i.cp = invoke noundef ptr @_ZN22small_object_allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(520) %i.cm, i64 noundef %i.co)
-          to label %bb.j unwind label %6
+          to label %bb.j unwind label %bb.w
 
 bb.j:                                             ; preds = %_ZNK10polynomial7manager7factors16distinct_factorsEv.exit
   %i.cq = load ptr, ptr %i.a, align 8, !tbaa !88
@@ -227,11 +227,6 @@ bb.k:                                             ; preds = %bb.g, %bb.f
   %i.ct = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
-  br label %bb.x
-
-6:                                                ; preds = %_ZNK10polynomial7manager7factors16distinct_factorsEv.exit
-  %7 = landingpad { ptr, i32 }
-          cleanup
   br label %bb.x
 
 bb.l:                                             ; preds = %.lr.ph56, %bb.s
@@ -326,13 +321,13 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   br label %bb.x
 
-bb.w:                                             ; preds = %bb.r, %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEED2Ev.exit
+bb.w:                                             ; preds = %bb.r, %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEED2Ev.exit, %_ZNK10polynomial7manager7factors16distinct_factorsEv.exit
   %i.dv = landingpad { ptr, i32 }
           cleanup
   br label %bb.x
 
-bb.x:                                             ; preds = %6, %bb.w, %bb.v, %bb.k
-  %.pn35.pn.pn = phi { ptr, i32 } [ %i.ct, %bb.k ], [ %7, %6 ], [ %i.dv, %bb.w ], [ %.pn, %bb.v ]
+bb.x:                                             ; preds = %bb.w, %bb.v, %bb.k
+  %.pn35.pn.pn = phi { ptr, i32 } [ %i.ct, %bb.k ], [ %.pn, %bb.v ], [ %i.dv, %bb.w ]
   call void @_ZN10polynomial7manager7factorsD1Ev(ptr noundef nonnull align 8 dead_on_return(44) dereferenceable(44) %3) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16

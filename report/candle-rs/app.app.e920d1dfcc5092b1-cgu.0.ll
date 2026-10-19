@@ -204,8 +204,8 @@ bb.aw:                                            ; preds = %bb.av
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #22, !noalias !775
   unreachable
 
-.body.i37.i.i:                                    ; preds = %bb.bh, %.body27.i.i.i, %0, %bb.av
-  %.pn.i38.i.i = phi { ptr, i32 } [ %i.cu, %bb.av ], [ %i.df, %bb.bh ], [ %i.dk, %.body27.i.i.i ], [ %1, %0 ] ; 2 uses
+.body.i37.i.i:                                    ; preds = %bb.bh, %.body27.i.i.i, %bb.av
+  %.pn.i38.i.i = phi { ptr, i32 } [ %i.cu, %bb.av ], [ %i.df, %bb.bh ], [ %i.dk, %.body27.i.i.i ] ; 2 uses
   %i.cw = load i64, ptr %i.cd, align 8, !noalias !779, !noundef !8
   %i.cx = add i64 %i.cw, -1                       ; 2 uses
   store i64 %i.cx, ptr %i.cd, align 8, !noalias !779
@@ -215,11 +215,6 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %.body.i37.i.i
   invoke void @_RNvMs6_NtCsgCecv3eZDcN_5alloc2rcINtB5_2RcINtNtCsf3Ta7LF998c_4core4cell7RefCellNtNtNtCs9OLX912zl7o_3yew10dom_bundle8position7DomSlotEE9drop_slowB1k_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.c) #20
           to label %.body40.i.i unwind label %bb.bi, !noalias !775
-
-0:                                                ; preds = %bb.bg
-  %1 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i37.i.i
 
 bb.ay:                                            ; preds = %_RNvXs2_NtNtNtCs9OLX912zl7o_3yew4html9component5scopeINtB5_5ScopeNtNtCseiMiKruFR5A_24candle_wasm_example_yolo3app3AppENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsk0W1NmP9EBN_3app.exit.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.cs, ptr noundef nonnull align 8 dereferenceable(136) %i.b, i64 136, i1 false), !noalias !775
@@ -270,7 +265,7 @@ bb.be:                                            ; preds = %bb.bd
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #22, !noalias !775
   unreachable
 
-.body27.i.i.i:                                    ; preds = %bb.bf
+.body27.i.i.i:                                    ; preds = %bb.bg, %bb.bf
   %i.dk = landingpad { ptr, i32 }
           cleanup
   br label %.body.i37.i.i
@@ -283,7 +278,7 @@ bb.bf:                                            ; preds = %bb.ba
 
 bb.bg:                                            ; preds = %bb.bf
   invoke void @_RNvNtNtCs9OLX912zl7o_3yew9scheduler4arch5start()
-          to label %bb.bs unwind label %0, !noalias !775
+          to label %bb.bs unwind label %.body27.i.i.i, !noalias !775
 
 bb.bh:                                            ; preds = %bb.bd, %bb.bc
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtCs9OLX912zl7o_3yew9scheduler8RunnableEL_EECsk0W1NmP9EBN_3app(ptr nonnull %i.cs, ptr nonnull @15) #23

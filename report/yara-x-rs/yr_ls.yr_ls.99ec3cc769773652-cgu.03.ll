@@ -202,7 +202,7 @@ common.resume.i:                                  ; preds = %.body.i, %bb.n, %bb
   br label %.body.i
 
 .body.i:                                          ; preds = %.body.sink.split.i, %bb.k, %bb.g, %bb.f
-  %.pn.i = phi { ptr, i32 } [ %i.r, %bb.f ], [ %i.x, %bb.k ], [ %i.s, %bb.g ], [ %.pn.ph.i, %.body.sink.split.i ]
+  %.pn.i = phi { ptr, i32 } [ %i.r, %bb.f ], [ %i.s, %bb.g ], [ %i.x, %bb.k ], [ %.pn.ph.i, %.body.sink.split.i ]
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsddkiMbsmfqo_5yr_ls(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ai) #19
           to label %common.resume.i unwind label %bb.q
@@ -428,7 +428,7 @@ bb.n:                                             ; preds = %bb.f
 
 bb.o:                                             ; preds = %bb.n
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs6m2LFPinx2P_9async_lsp7MessageECsddkiMbsmfqo_5yr_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %i.aa)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs9j2PgAuXC7p_12futures_util4sink4feed4FeedINtNtB4_3pin3PinQINtNtBG_6unfold6UnfoldIB1q_QNtNtNtCs6m2LFPinx2P_9async_lsp5stdio10tokio_impl15TokioPipeStdoutENCNCINvMs3_B2e_INtB2e_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB2e_6server9LifecycleINtNtB2e_5panic11CatchUnwindINtNtB2e_11concurrency11ConcurrencyINtNtB2e_6router6RouterNtNtB3M_6server18YARALanguageServerEEEEEE3runINtNtNtBI_2io10buf_reader9BufReaderNtB2a_14TokioPipeStdinEB28_E0s_0NCNCB3e_s_00EENtB2e_7MessageEECsddkiMbsmfqo_5yr_ls.exit.i.i.i unwind label %1
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs9j2PgAuXC7p_12futures_util4sink4feed4FeedINtNtB4_3pin3PinQINtNtBG_6unfold6UnfoldIB1q_QNtNtNtCs6m2LFPinx2P_9async_lsp5stdio10tokio_impl15TokioPipeStdoutENCNCINvMs3_B2e_INtB2e_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB2e_6server9LifecycleINtNtB2e_5panic11CatchUnwindINtNtB2e_11concurrency11ConcurrencyINtNtB2e_6router6RouterNtNtB3M_6server18YARALanguageServerEEEEEE3runINtNtNtBI_2io10buf_reader9BufReaderNtB2a_14TokioPipeStdinEB28_E0s_0NCNCB3e_s_00EENtB2e_7MessageEECsddkiMbsmfqo_5yr_ls.exit.i.i.i unwind label %bb.at
 
 bb.p:                                             ; preds = %bb.f
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 2296 ; 2 uses
@@ -688,11 +688,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6fu
   store i8 0, ptr %i.cf, align 2
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs9j2PgAuXC7p_12futures_util4sink4feed4FeedINtNtB4_3pin3PinQINtNtBG_6unfold6UnfoldIB1q_QNtNtNtCs6m2LFPinx2P_9async_lsp5stdio10tokio_impl15TokioPipeStdoutENCNCINvMs3_B2e_INtB2e_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB2e_6server9LifecycleINtNtB2e_5panic11CatchUnwindINtNtB2e_11concurrency11ConcurrencyINtNtB2e_6router6RouterNtNtB3M_6server18YARALanguageServerEEEEEE3runINtNtNtBI_2io10buf_reader9BufReaderNtB2a_14TokioPipeStdinEB28_E0s_0NCNCB3e_s_00EENtB2e_7MessageEECsddkiMbsmfqo_5yr_ls.exit.i.i.i
 
-1:                                                ; preds = %bb.o
-  %2 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body18.i.i.i
-
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs9j2PgAuXC7p_12futures_util4sink4feed4FeedINtNtB4_3pin3PinQINtNtBG_6unfold6UnfoldIB1q_QNtNtNtCs6m2LFPinx2P_9async_lsp5stdio10tokio_impl15TokioPipeStdoutENCNCINvMs3_B2e_INtB2e_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB2e_6server9LifecycleINtNtB2e_5panic11CatchUnwindINtNtB2e_11concurrency11ConcurrencyINtNtB2e_6router6RouterNtNtB3M_6server18YARALanguageServerEEEEEE3runINtNtNtBI_2io10buf_reader9BufReaderNtB2a_14TokioPipeStdinEB28_E0s_0NCNCB3e_s_00EENtB2e_7MessageEECsddkiMbsmfqo_5yr_ls.exit.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6future6future4fuse4FuseNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB1I_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1I_6server9LifecycleINtNtB1I_5panic11CatchUnwindINtNtB1I_11concurrency11ConcurrencyINtNtB1I_6router6RouterNtNtB2r_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsddkiMbsmfqo_5yr_ls.exit.i.i.i.i.i, %bb.ah, %bb.ag, %bb.ac, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsbbTh99npV2h_10serde_json5error5ErrorECsddkiMbsmfqo_5yr_ls.exit.i.i.i.i.i, %bb.v, %bb.u, %bb.q, %bb.q, %bb.p, %bb.o, %bb.n, %bb.f
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 2289
   store i8 0, ptr %i.cg, align 1
@@ -706,8 +701,8 @@ bb.ar:                                            ; preds = %_RINvNtCskKLDkoKarT
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNCNCINvMs3_Cs6m2LFPinx2P_9async_lspINtBO_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtBO_6server9LifecycleINtNtBO_5panic11CatchUnwindINtNtBO_11concurrency11ConcurrencyINtNtBO_6router6RouterNtNtB1w_6server18YARALanguageServerEEEEEE3runINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtBO_5stdio10tokio_impl14TokioPipeStdinENtB5L_15TokioPipeStdoutE0s_00ECsddkiMbsmfqo_5yr_ls(ptr noundef nonnull align 8 %i.ck)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs9j2PgAuXC7p_12futures_util4sink6unfold6UnfoldINtNtB4_3pin3PinQNtNtNtCs6m2LFPinx2P_9async_lsp5stdio10tokio_impl15TokioPipeStdoutENCNCINvMs3_B1Q_INtB1Q_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1Q_6server9LifecycleINtNtB1Q_5panic11CatchUnwindINtNtB1Q_11concurrency11ConcurrencyINtNtB1Q_6router6RouterNtNtB3o_6server18YARALanguageServerEEEEEE3runINtNtNtBI_2io10buf_reader9BufReaderNtB1M_14TokioPipeStdinEB1K_E0s_0NCNCB2Q_s_00EECsddkiMbsmfqo_5yr_ls.exit.i.i.i unwind label %bb.av
 
-.body18.i.i.i:                                    ; preds = %bb.at, %1, %.body.i.i.i, %bb.af, %bb.ae, %bb.ab, %bb.t, %bb.s
-  %.pn.i.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i.i, %.body.i.i.i ], [ %2, %1 ], [ %i.cq, %bb.at ], [ %i.al, %bb.s ], [ %i.bd, %bb.ab ], [ %i.al, %bb.t ], [ %i.bf, %bb.af ], [ %i.bf, %bb.ae ] ; 2 uses
+.body18.i.i.i:                                    ; preds = %bb.at, %.body.i.i.i, %bb.af, %bb.ae, %bb.ab, %bb.t, %bb.s
+  %.pn.i.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i.i, %.body.i.i.i ], [ %i.cq, %bb.at ], [ %i.al, %bb.s ], [ %i.bd, %bb.ab ], [ %i.al, %bb.t ], [ %i.bf, %bb.af ], [ %i.bf, %bb.ae ] ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 2289
   store i8 0, ptr %i.cl, align 1
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 1744
@@ -720,7 +715,7 @@ bb.as:                                            ; preds = %.body18.i.i.i
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNCNCINvMs3_Cs6m2LFPinx2P_9async_lspINtBO_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtBO_6server9LifecycleINtNtBO_5panic11CatchUnwindINtNtBO_11concurrency11ConcurrencyINtNtBO_6router6RouterNtNtB1w_6server18YARALanguageServerEEEEEE3runINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtBO_5stdio10tokio_impl14TokioPipeStdinENtB5L_15TokioPipeStdoutE0s_00ECsddkiMbsmfqo_5yr_ls(ptr noundef nonnull align 8 %i.cp)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs9j2PgAuXC7p_12futures_util4sink6unfold6UnfoldINtNtB4_3pin3PinQNtNtNtCs6m2LFPinx2P_9async_lsp5stdio10tokio_impl15TokioPipeStdoutENCNCINvMs3_B1Q_INtB1Q_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1Q_6server9LifecycleINtNtB1Q_5panic11CatchUnwindINtNtB1Q_11concurrency11ConcurrencyINtNtB1Q_6router6RouterNtNtB3o_6server18YARALanguageServerEEEEEE3runINtNtNtBI_2io10buf_reader9BufReaderNtB1M_14TokioPipeStdinEB1K_E0s_0NCNCB2Q_s_00EECsddkiMbsmfqo_5yr_ls.exit26.i.i.i unwind label %bb.ap
 
-bb.at:                                            ; preds = %bb.ak, %bb.ac
+bb.at:                                            ; preds = %bb.ak, %bb.ac, %bb.o
   %i.cq = landingpad { ptr, i32 }
           cleanup
   br label %.body18.i.i.i

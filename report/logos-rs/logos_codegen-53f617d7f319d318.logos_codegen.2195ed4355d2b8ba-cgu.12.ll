@@ -202,25 +202,16 @@ bb.a:
   %i.m = add i64 %i.l, -1
   store i64 %i.m, ptr %.sroa.2.0..sroa_idx, align 8
   %i.n = invoke { i64, ptr } @_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterINtNtNtBa_3ops5range14RangeInclusivehEEENtNtNtB8_6traits8iterator8Iterator4nextCs2SM5xCHwwDm_13logos_codegen(ptr nonnull align 8 %i.a)
-          to label %bb.b unwind label %.loopexit  ; 2 uses
+          to label %bb.b unwind label %.loopexit.split-lp ; 2 uses
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.f, %bb.a
   store i64 %2, ptr %i.h, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   ret void
 
-.loopexit:                                        ; preds = %.lr.ph
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %3
-
-.loopexit.split-lp:                               ; preds = %bb.d
+.loopexit.split-lp:                               ; preds = %.lr.ph, %bb.d
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %3
-
-3:                                                ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inpNtBH_10ConvertVec6to_vec9DropGuardINtNtNtB4_3ops5range14RangeInclusivehENtNtBM_5alloc6GlobalEECs2SM5xCHwwDm_13logos_codegen(ptr nonnull align 8 %i.b) #18
           to label %bb.h unwind label %bb.g
 
@@ -256,18 +247,18 @@ bb.f:                                             ; preds = %bb.c
   %i.x = icmp eq i64 %.pr, 0
   br i1 %i.x, label %._crit_edge, label %.lr.ph
 
-bb.g:                                             ; preds = %bb.h, %3
+bb.g:                                             ; preds = %bb.h, %.loopexit.split-lp
   %i.y = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19
   unreachable
 
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %.loopexit.split-lp
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtNtB4_3ops5range14RangeInclusivehEEECs2SM5xCHwwDm_13logos_codegen(ptr nonnull align 8 %i.c) #18
           to label %bb.i unwind label %bb.g
 
 bb.i:                                             ; preds = %bb.h
-  resume { ptr, i32 } %lpad.phi
+  resume { ptr, i32 } %lpad.loopexit.split-lp
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable

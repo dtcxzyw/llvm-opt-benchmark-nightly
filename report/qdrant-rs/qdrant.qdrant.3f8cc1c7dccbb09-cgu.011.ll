@@ -205,18 +205,13 @@ bb.b:                                             ; preds = %._crit_edge, %.oute
   %i.aa = invoke noundef zeroext i1 @_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapyRNtNtNtCsl8OoimOLbh_6qdrant6common9telemetry13TelemetryDataNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE12contains_keyyEBW_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val.i.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.y)
           to label %bb.c unwind label %.loopexit.split-lp.i.i.i, !noalias !3127
 
-.loopexit.i.i.i:                                  ; preds = %.lr.ph.i.i.i.i.i
-  %lpad.loopexit.i.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i.i.i
-
-.loopexit.split-lp.i.i.i:                         ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i.i.i.i, %bb.k, %bb.g, %bb.b
+.loopexit.split-lp.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i.i.i.i, %bb.k, %bb.g, %bb.b
   %lpad.loopexit.split-lp.i.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i.i
 
-.body.i.i.i:                                      ; preds = %bb.u, %bb.n, %.loopexit.split-lp.i.i.i, %.loopexit.i.i.i
-  %eh.lpad-body.i.i.i = phi { ptr, i32 } [ %i.dh, %bb.u ], [ %i.cr, %bb.n ], [ %lpad.loopexit.i.i.i, %.loopexit.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
+.body.i.i.i:                                      ; preds = %.loopexit.split-lp.i.i.i, %bb.u, %bb.n
+  %eh.lpad-body.i.i.i = phi { ptr, i32 } [ %i.dh, %bb.u ], [ %i.cr, %bb.n ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #36
           to label %common.resume.i.i unwind label %bb.x, !noalias !3127
 
@@ -334,7 +329,7 @@ bb.h:                                             ; preds = %bb.j, %.noexc.i.i.i
   %i.bz = getelementptr inbounds [16 x i8], ptr %i.bo, i64 %i.by ; 2 uses
   %i.ca = getelementptr inbounds i8, ptr %i.bz, i64 -16
   %i.cb = invoke noundef zeroext i1 @_RNvXCsjqcU1oJFKXj_9hashbrownyINtB2_10EquivalentyE10equivalentCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.y, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ca)
-          to label %.noexc9.i.i.i unwind label %.loopexit.i.i.i, !noalias !3127
+          to label %.noexc9.i.i.i unwind label %.loopexit.split-lp.i.i.i, !noalias !3127
 
 .noexc9.i.i.i:                                    ; preds = %.lr.ph.i.i.i.i.i
   br i1 %i.cb, label %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapyRNtNtNtCsl8OoimOLbh_6qdrant6common9telemetry13TelemetryDataNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getyEBW_.exit.i.i.i, label %bb.i, !prof !18

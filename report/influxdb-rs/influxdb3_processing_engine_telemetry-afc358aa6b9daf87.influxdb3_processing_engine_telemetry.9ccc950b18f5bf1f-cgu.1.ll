@@ -205,7 +205,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtCsdsDzd1zQknb_37influxdb3_processing
   %i.aa = add nuw nsw i64 %i.u, 1                 ; 2 uses
   store i64 %i.aa, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !210
   invoke fastcc void @_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtCsc96bKABWO34_9hashbrown3map4IterNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry26PluginTriggerInvocationKeyyENCNvMs0_B1A_NtB1A_31PluginTriggerInvocationRegistry8snapshot0ENtNtNtB9_6traits8iterator8Iterator4nextB1A_(ptr noalias noundef align 8 captures(none) dereferenceable(96) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(40) %i.b)
-          to label %.noexc7 unwind label %.loopexit
+          to label %.noexc7 unwind label %.loopexit.split-lp
 
 .noexc7:                                          ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotE7reserveBF_.exit.i.i
   %i.ab = load i64, ptr %i.a, align 8, !range !202, !noalias !209, !noundef !3
@@ -228,18 +228,13 @@ bb.l:                                             ; preds = %bb.j
   %.pre = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !210
   br label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotE7reserveBF_.exit.i.i
 
-.loopexit:                                        ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotE7reserveBF_.exit.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %bb.i
+.loopexit.split-lp:                               ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotE7reserveBF_.exit.i.i, %bb.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.k
-  %eh.lpad-body = phi { ptr, i32 } [ %i.ac, %bb.k ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.k
+  %eh.lpad-body = phi { ptr, i32 } [ %i.ac, %bb.k ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotEEB19_(ptr noalias noundef align 8 dereferenceable(24) %i.d) #29
   br label %bb.m
 

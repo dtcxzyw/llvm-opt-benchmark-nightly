@@ -202,23 +202,18 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   %i.b = alloca [32 x i8], align 8                ; 3 uses
   invoke void @_ZN5quote9to_tokens8ToTokens17into_token_stream17hb62b671ba84cbe1dE(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr align 8 %1)
-          to label %bb.c unwind label %3
+          to label %bb.c unwind label %bb.d
 
-bb.b:                                             ; preds = %bb.d, %bb.g, %3
-  %.pn = phi { ptr, i32 } [ %i.d, %bb.g ], [ %i.c, %bb.d ], [ %4, %3 ]
+bb.b:                                             ; preds = %bb.d, %bb.g
+  %.pn = phi { ptr, i32 } [ %i.d, %bb.g ], [ %i.c, %bb.d ]
   invoke void @"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h9bfb39dbff728262E"(ptr align 8 %2) #23
           to label %bb.i unwind label %bb.h
-
-3:                                                ; preds = %bb.a
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.b
 
 bb.c:                                             ; preds = %bb.a
   invoke void @"_ZN45_$LT$T$u20$as$u20$alloc..string..ToString$GT$9to_string17h51c5471d01e97b53E"(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr align 8 %2)
           to label %bb.e unwind label %bb.g
 
-bb.d:                                             ; preds = %bb.e
+bb.d:                                             ; preds = %bb.a, %bb.e
   %i.c = landingpad { ptr, i32 }
           cleanup
   br label %bb.b
@@ -286,23 +281,18 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   %i.b = alloca [32 x i8], align 8                ; 3 uses
   invoke void @_ZN5quote9to_tokens8ToTokens17into_token_stream17hfea44990017e1a46E(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr align 8 %1)
-          to label %bb.c unwind label %3
+          to label %bb.c unwind label %bb.d
 
-bb.b:                                             ; preds = %bb.d, %bb.g, %3
-  %.pn = phi { ptr, i32 } [ %i.d, %bb.g ], [ %i.c, %bb.d ], [ %4, %3 ]
+bb.b:                                             ; preds = %bb.d, %bb.g
+  %.pn = phi { ptr, i32 } [ %i.d, %bb.g ], [ %i.c, %bb.d ]
   invoke void @"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h9bfb39dbff728262E"(ptr align 8 %2) #23
           to label %bb.i unwind label %bb.h
-
-3:                                                ; preds = %bb.a
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.b
 
 bb.c:                                             ; preds = %bb.a
   invoke void @"_ZN45_$LT$T$u20$as$u20$alloc..string..ToString$GT$9to_string17h51c5471d01e97b53E"(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr align 8 %2)
           to label %bb.e unwind label %bb.g
 
-bb.d:                                             ; preds = %bb.e
+bb.d:                                             ; preds = %bb.a, %bb.e
   %i.c = landingpad { ptr, i32 }
           cleanup
   br label %bb.b

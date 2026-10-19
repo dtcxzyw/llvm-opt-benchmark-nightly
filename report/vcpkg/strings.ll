@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %.sroa.022.033 = phi ptr [ %.sroa.022.031, %.lr.ph ], [ %.sroa.022.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13 ] ; 2 uses
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !78
   %i.q = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.p, ptr noundef nonnull @.str.64, i64 noundef 2)
-          to label %_ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit8 unwind label %.loopexit30 ; 0 uses
+          to label %_ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit8 unwind label %.loopexit.split-lp.a ; 0 uses
 
 _ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit8: ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
@@ -235,12 +235,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit13: ; preds = %_ZN
   %.not29 = icmp eq ptr %.sroa.022.0, %2
   br i1 %.not29, label %.loopexit, label %bb.c, !llvm.loop !531
 
-.loopexit30:                                      ; preds = %bb.c
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.i
-
-.loopexit.split-lp.a:                             ; preds = %_ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit20, %bb.a, %.loopexit
+.loopexit.split-lp.a:                             ; preds = %bb.c, %.loopexit, %bb.a, %_ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit20
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.i
@@ -306,8 +301,8 @@ bb.h:                                             ; preds = %_ZN5Catch20Reusable
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   ret void
 
-bb.i:                                             ; preds = %.loopexit30, %.loopexit.split-lp.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit19, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16
-  %.pn5.pn = phi { ptr, i32 } [ %.pn5, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit19 ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16 ], [ %lpad.loopexit, %.loopexit30 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.a ]
+bb.i:                                             ; preds = %.loopexit.split-lp.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit19, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16
+  %.pn5.pn = phi { ptr, i32 } [ %.pn5, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit19 ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.a ]
   call void @_ZN5Catch20ReusableStringStreamD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %3) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   resume { ptr, i32 } %.pn5.pn

@@ -205,8 +205,8 @@ bb.a:                                             ; preds = %.loopexit.i
   %.not.i.i.i.i = icmp eq ptr %.sroa.068.0, null
   br i1 %.not.i.i.i.i, label %common.resume, label %common.resume.sink.split
 
-common.resume.sink.split:                         ; preds = %bb.a, %_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit, %_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit.split-lp
-  %common.resume.op.ph = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit.split-lp ], [ %lpad.loopexit, %_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit ], [ %i.bu, %bb.a ]
+common.resume.sink.split:                         ; preds = %bb.a, %_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit.split-lp
+  %common.resume.op.ph = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit.split-lp ], [ %i.bu, %bb.a ]
   %i.bv = ptrtoint ptr %.sroa.068.0 to i64
   %i.bw = sub i64 %.sroa.10.0, %i.bv
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.068.0, i64 noundef %i.bw) #25
@@ -309,7 +309,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.di = load ptr, ptr %i.cd, align 8, !tbaa !201
   %i.dj = invoke noundef i32 %i.di(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
-          to label %bb.f unwind label %_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit, !inline_history !165 ; 0 uses
+          to label %bb.f unwind label %_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit.split-lp, !inline_history !165 ; 0 uses
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -358,12 +358,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.el = icmp slt i64 %indvars.iv.next87, %i.ek
   br i1 %i.el, label %bb.c, label %._crit_edge81.thread, !llvm.loop !166
 
-_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit:         ; preds = %bb.e
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume.sink.split
-
-_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit.split-lp: ; preds = %bb.d
+_ZNSt6vectorIdSaIdEED2Ev.exit54.loopexit.split-lp: ; preds = %bb.e, %bb.d
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %common.resume.sink.split

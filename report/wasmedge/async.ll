@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %_ZNSt8functionIFvvE
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store i64 0, ptr %i.an, align 8, !tbaa !178
   %i.ap = invoke noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #26
-          to label %.noexc unwind label %.loopexit ; 9 uses
+          to label %.noexc unwind label %.loopexit.split-lp ; 9 uses
 
 .noexc:                                           ; preds = %bb.r
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @"_ZTVNSt6thread11_State_implINS_8_InvokerISt5tupleIJZN6spdlog7details11thread_poolC1EmmSt8functionIFvvEES8_E3$_0EEEEEE", i64 16), ptr %i.ap, align 8, !tbaa !32
@@ -306,7 +306,7 @@ _ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.w
   call void @llvm.assume(i1 %.not.i.i3.i)
   %i.bv = shl nuw nsw i64 %i.bu, 3                ; 2 uses
   %i.bw = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bv) #26
-          to label %.noexc27 unwind label %.loopexit ; 6 uses
+          to label %.noexc27 unwind label %.loopexit.split-lp ; 6 uses
 
 .noexc27:                                         ; preds = %_ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit.i.i
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.bo ; 2 uses
@@ -503,18 +503,13 @@ bb.ao:                                            ; preds = %bb.an
   call void @__clang_call_terminate(ptr %i.ds) #25
   unreachable
 
-.loopexit:                                        ; preds = %bb.r, %_ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body24
-
-.loopexit.split-lp:                               ; preds = %bb.x
+.loopexit.split-lp:                               ; preds = %_ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit.i.i, %bb.r, %bb.x
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body24
 
-.body24:                                          ; preds = %.loopexit, %.loopexit.split-lp, %bb.v, %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i6.i.i, %bb.af
-  %eh.lpad-body25 = phi { ptr, i32 } [ %i.da, %bb.af ], [ %i.be, %bb.v ], [ %i.be, %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i6.i.i ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body24:                                          ; preds = %.loopexit.split-lp, %bb.v, %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i6.i.i, %bb.af
+  %eh.lpad-body25 = phi { ptr, i32 } [ %i.da, %bb.af ], [ %i.be, %bb.v ], [ %i.be, %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i6.i.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call fastcc void @"_ZZN6spdlog7details11thread_poolC1EmmSt8functionIFvvEES4_EN3$_0D2Ev"(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %9) #23
   br label %.body
 

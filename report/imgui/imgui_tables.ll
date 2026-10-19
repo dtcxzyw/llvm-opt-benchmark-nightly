@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %select.unfold._crit
 bb.e:                                             ; preds = %bb.d
   %i.y = zext nneg i32 %.1 to i64
   %i.z = invoke noundef ptr @_ZN5ImGui8MemAllocEm(i64 noundef %i.y)
-          to label %.noexc39 unwind label %1      ; 2 uses
+          to label %.noexc39 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc39:                                         ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -272,16 +272,6 @@ select.unfold47._crit_edge:                       ; preds = %_ZN8ImVectorIcE7res
   %unroll_iter = and i64 %wide.trip.count, 2147483646
   br label %bb.n
 
-1:                                                ; preds = %bb.e
-  %2 = landingpad { ptr, i32 }
-          cleanup
-  br label %5
-
-3:                                                ; preds = %bb.j, %_ZNK8ImVectorIcE14_grow_capacityEi.exit.i.i
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %5
-
 bb.f:                                             ; preds = %.lr.ph56, %select.unfold47
   %i.aw = phi ptr [ %i.ac, %.lr.ph56 ], [ %i.by, %select.unfold47 ]
   %.pre.i = phi ptr [ %.pre.i64.a, %.lr.ph56 ], [ %.pre.i62, %select.unfold47 ] ; 2 uses
@@ -316,7 +306,7 @@ _ZNK8ImVectorIcE14_grow_capacityEi.exit.i.i:      ; preds = %bb.i, %bb.h
   %i.bk = tail call noundef i32 @llvm.smax.i32(i32 %i.bj, i32 %i.bf) ; 3 uses
   %i.bl = sext i32 %i.bk to i64
   %i.bm = invoke noundef ptr @_ZN5ImGui8MemAllocEm(i64 noundef %i.bl)
-          to label %.noexc42 unwind label %3      ; 3 uses
+          to label %.noexc42 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 .noexc42:                                         ; preds = %_ZNK8ImVectorIcE14_grow_capacityEi.exit.i.i
   %i.bn = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !319 ; 3 uses
@@ -328,7 +318,7 @@ bb.j:                                             ; preds = %.noexc42
   %i.bp = sext i32 %i.bo to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bm, ptr nonnull align 1 %i.bn, i64 %i.bp, i1 false)
   invoke void @_ZN5ImGui7MemFreeEPv(ptr noundef nonnull %i.bn)
-          to label %.noexc43 unwind label %3
+          to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc43:                                         ; preds = %bb.j, %.noexc42
   store ptr %i.bm, ptr %.phi.trans.insert.i, align 8, !tbaa !319
@@ -431,6 +421,13 @@ bb.o:                                             ; preds = %bb.n
   %.pre69 = load ptr, ptr %i.au, align 8
   br label %bb.p
 
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.j, %_ZNK8ImVectorIcE14_grow_capacityEi.exit.i.i, %bb.e
+  %lpad.loopexit.split-lp92 = landingpad { ptr, i32 }
+          cleanup
+  call void @_ZN13ImChunkStreamI18ImGuiTableSettingsED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #4
+  resume { ptr, i32 } %lpad.loopexit.split-lp92
+
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.db = phi ptr [ %.pre69, %bb.o ], [ %i.ct, %bb.n ] ; 3 uses
   %i.dc = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %indvars.iv
@@ -458,12 +455,6 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 bb.s:                                             ; preds = %select.unfold._crit_edge.thread, %select.unfold._crit_edge, %_ZN13ImChunkStreamI18ImGuiTableSettingsED2Ev.exit
   ret void
-
-5:                                                ; preds = %3, %1
-  %.pn = phi { ptr, i32 } [ %4, %3 ], [ %2, %1 ]
-  call void @_ZN13ImChunkStreamI18ImGuiTableSettingsED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #4
-  resume { ptr, i32 } %.pn
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable

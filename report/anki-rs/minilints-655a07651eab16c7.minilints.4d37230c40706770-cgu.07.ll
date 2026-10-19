@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
 
 "_ZN4core3ptr147drop_in_place$LT$anyhow..error..ContextError$LT$alloc..string..String$C$core..mem..manually_drop..ManuallyDrop$LT$std..io..error..Error$GT$$GT$$GT$17hd966c5302097d699E.exit.i.i": ; preds = %"_ZN4core3ptr74drop_in_place$LT$core..option..Option$LT$std..backtrace..Backtrace$GT$$GT$17h64a86009d8e52553E.exit.i.i"
   invoke void @"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h95bcb76995369695E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.i)
-          to label %"_ZN4core3ptr204drop_in_place$LT$alloc..boxed..Box$LT$anyhow..error..ErrorImpl$LT$anyhow..error..ContextError$LT$alloc..string..String$C$core..mem..manually_drop..ManuallyDrop$LT$std..io..error..Error$GT$$GT$$GT$$GT$$GT$17h534446ebc3a9ef3bE.exit" unwind label %2
+          to label %"_ZN4core3ptr204drop_in_place$LT$alloc..boxed..Box$LT$anyhow..error..ErrorImpl$LT$anyhow..error..ContextError$LT$alloc..string..String$C$core..mem..manually_drop..ManuallyDrop$LT$std..io..error..Error$GT$$GT$$GT$$GT$$GT$17h534446ebc3a9ef3bE.exit" unwind label %bb.l
 
 bb.g:                                             ; preds = %bb.d
   %i.l = landingpad { ptr, i32 }
@@ -210,13 +210,8 @@ bb.g:                                             ; preds = %bb.d
   tail call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #13
   unreachable
 
-2:                                                ; preds = %"_ZN4core3ptr147drop_in_place$LT$anyhow..error..ContextError$LT$alloc..string..String$C$core..mem..manually_drop..ManuallyDrop$LT$std..io..error..Error$GT$$GT$$GT$17hd966c5302097d699E.exit.i.i"
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume
-
-common.resume:                                    ; preds = %bb.j, %bb.l, %bb.d, %bb.e, %2
-  %common.resume.op = phi { ptr, i32 } [ %i.g, %bb.d ], [ %3, %2 ], [ %i.j, %bb.e ], [ %i.r, %bb.l ], [ %i.n, %bb.j ]
+common.resume:                                    ; preds = %bb.j, %bb.l, %bb.d, %bb.e
+  %common.resume.op = phi { ptr, i32 } [ %i.g, %bb.d ], [ %i.n, %bb.j ], [ %i.j, %bb.e ], [ %i.r, %bb.l ]
   tail call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %0, i64 noundef 88, i64 noundef 8) #15
   resume { ptr, i32 } %common.resume.op
 
@@ -246,7 +241,7 @@ bb.k:                                             ; preds = %bb.j
   tail call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #13
   unreachable
 
-bb.l:                                             ; preds = %"_ZN4core3ptr74drop_in_place$LT$core..option..Option$LT$std..backtrace..Backtrace$GT$$GT$17h64a86009d8e52553E.exit.i.i2"
+bb.l:                                             ; preds = %"_ZN4core3ptr147drop_in_place$LT$anyhow..error..ContextError$LT$alloc..string..String$C$core..mem..manually_drop..ManuallyDrop$LT$std..io..error..Error$GT$$GT$$GT$17hd966c5302097d699E.exit.i.i", %"_ZN4core3ptr74drop_in_place$LT$core..option..Option$LT$std..backtrace..Backtrace$GT$$GT$17h64a86009d8e52553E.exit.i.i2"
   %i.r = landingpad { ptr, i32 }
           cleanup
   br label %common.resume

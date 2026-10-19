@@ -204,20 +204,15 @@ bb.az:                                            ; preds = %.noexc.i
   store i64 %.sroa.0.0.copyload.i, ptr %i.c, align 8, !noalias !110
   store <2 x i64> %i.ep, ptr %.sroa.636.0..sroa_idx37.i.i, align 8, !noalias !110
   invoke void @_RNvMs5_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB5_12Abbreviation3new(ptr noalias nofree noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %i.f, i64 noundef %i.z, i16 noundef %.sroa.13.0.i.i.i, i8 noundef %i.bh, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(96) %i.c)
-          to label %bb.ba unwind label %.loopexit43.split.i, !noalias !107
+          to label %bb.ba unwind label %.loopexit.split-lp.i, !noalias !107
 
-.loopexit43.split.i:                              ; preds = %bb.bc, %bb.az
-  %lpad.loopexit.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i
-
-.loopexit.split-lp.i:                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsi68uqYEhoRA_5gimli4read6abbrev22AttributeSpecificationEECslKoDbeUmNq5_14dwarf_validate.exit.i.i.i
+.loopexit.split-lp.i:                             ; preds = %bb.bc, %bb.az, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsi68uqYEhoRA_5gimli4read6abbrev22AttributeSpecificationEECslKoDbeUmNq5_14dwarf_validate.exit.i.i.i
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-.body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit43.split.i, %bb.au, %bb.as
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.eh, %bb.as ], [ %i.ek, %bb.au ], [ %lpad.loopexit.i, %.loopexit43.split.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
+.body.i:                                          ; preds = %.loopexit.split-lp.i, %bb.au, %bb.as
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.eh, %bb.as ], [ %i.ek, %bb.au ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsi68uqYEhoRA_5gimli4read6abbrev13AbbreviationsECslKoDbeUmNq5_14dwarf_validate(ptr noalias nofree noundef align 8 dereferenceable(48) %i.g) #20
           to label %common.resume.i unwind label %bb.bk, !noalias !107
 
@@ -260,7 +255,7 @@ bb.bc:                                            ; preds = %bb.bb
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.4.i, i64 88, i1 false), !noalias !107
   %i.ev = load i64, ptr %i.w, align 8, !noalias !107, !noundef !5
   %i.ew = invoke noundef zeroext i1 @_RNvMs4_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB5_13Abbreviations6insert(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.g, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(112) %i.e)
-          to label %bb.bd unwind label %.loopexit43.split.i, !noalias !107
+          to label %bb.bd unwind label %.loopexit.split-lp.i, !noalias !107
 
 .split214.i.sink.split:                           ; preds = %.thread37.us.i, %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !107

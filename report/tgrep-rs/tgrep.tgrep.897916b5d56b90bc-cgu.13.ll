@@ -204,11 +204,11 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable14driftsort_mainTRNtNtCsbzNSmZPCnTx_10tgrep_core5query12TrigramQueryINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtB15_6ondisk12PostingEntryEENCINvMNtB1U_5sliceSBZ_11sort_by_keyjNCINvB13_23execute_plan_with_masksNCNvNtCsbNLsQi0JuJ4_5tgrep6search18search_local_indexs_0Es_0E0IB1Q_BZ_EEB45_(ptr noalias nofree noundef nonnull align 8 %i.ak, i64 noundef range(i64 0, 288230376151711744) %i.am, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b) #32
-          to label %bb.l unwind label %.thread
+          to label %bb.l unwind label %bb.n
 
 bb.i:                                             ; preds = %bb.g
   invoke void @_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort25insertion_sort_shift_leftTRNtNtCsbzNSmZPCnTx_10tgrep_core5query12TrigramQueryINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtB1s_6ondisk12PostingEntryEENCINvMNtB2h_5sliceSB1m_11sort_by_keyjNCINvB1q_23execute_plan_with_masksNCNvNtCsbNLsQi0JuJ4_5tgrep6search18search_local_indexs_0Es_0E0EB4t_(ptr noalias nofree noundef nonnull align 8 %i.ak, i64 noundef range(i64 0, 288230376151711744) %i.am, i64 noundef 1, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b)
-          to label %bb.l unwind label %.thread
+          to label %bb.l unwind label %bb.n
 
 bb.j:                                             ; preds = %bb.c
   store i64 0, ptr %0, align 8
@@ -221,16 +221,11 @@ bb.j:                                             ; preds = %bb.c
 bb.k:                                             ; preds = %.thread72
   br i1 %.sroa.027.277, label %.thread93, label %bb.ay
 
-.thread:                                          ; preds = %bb.l, %bb.h, %bb.i
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread93
-
 bb.l:                                             ; preds = %bb.f, %bb.h, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !737
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   invoke void @_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecTRNtNtCsbzNSmZPCnTx_10tgrep_core5query12TrigramQueryIBv_NtNtBK_6ondisk12PostingEntryEEE6removeCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.m, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.p, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6)
-          to label %bb.m unwind label %.thread
+          to label %bb.m unwind label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.ar = load ptr, ptr %i.m, align 8, !nonnull !7, !align !739, !noundef !7 ; 2 uses
@@ -241,7 +236,7 @@ bb.m:                                             ; preds = %bb.l
   invoke void @_RNvNtCsbzNSmZPCnTx_10tgrep_core5query30sort_dedup_postings_by_file_id(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.n)
           to label %bb.o unwind label %bb.ax
 
-bb.n:                                             ; preds = %bb.o
+bb.n:                                             ; preds = %bb.i, %bb.h, %bb.l, %bb.o
   %i.at = landingpad { ptr, i32 }
           cleanup
   br label %.thread93
@@ -641,8 +636,8 @@ bb.ay:                                            ; preds = %.thread93, %bb.k
   %.pn.pn.pn.pn.pn.pn64 = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn.pn65, %.thread93 ], [ %.pn.pn.pn.pn79, %bb.k ]
   resume { ptr, i32 } %.pn.pn.pn.pn.pn.pn64
 
-.thread93:                                        ; preds = %bb.n, %bb.ax, %.thread, %bb.k
-  %.pn.pn.pn.pn.pn.pn65 = phi { ptr, i32 } [ %3, %.thread ], [ %.pn.pn.pn.pn79, %bb.k ], [ %i.at, %bb.n ], [ %i.ep, %bb.ax ]
+.thread93:                                        ; preds = %bb.n, %bb.ax, %bb.k
+  %.pn.pn.pn.pn.pn.pn65 = phi { ptr, i32 } [ %i.ep, %bb.ax ], [ %.pn.pn.pn.pn79, %bb.k ], [ %i.at, %bb.n ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecTRNtNtCsbzNSmZPCnTx_10tgrep_core5query12TrigramQueryIBC_NtNtB1e_6ondisk12PostingEntryEEEECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef align 8 dereferenceable(24) %i.p) #35
           to label %bb.ay unwind label %bb.aw
 }

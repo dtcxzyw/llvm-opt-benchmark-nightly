@@ -202,7 +202,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-24, 16) (i8, ptr @_ZTCN7openvdb5v13_02io8TempFileE0_So, i64 24), ptr %0, align 8, !tbaa !14
   store ptr getelementptr inbounds nuw inrange(-24, 16) (i8, ptr @_ZTCN7openvdb5v13_02io8TempFileE0_So, i64 64), ptr %i.a, align 8, !tbaa !14
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.a, ptr noundef null)
-          to label %_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE.exit unwind label %1
+          to label %_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE.exit unwind label %bb.d
 
 _ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE.exit: ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-24, 16) (i8, ptr @_ZTVN7openvdb5v13_02io8TempFileE, i64 24), ptr %0, align 8, !tbaa !14
@@ -219,12 +219,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.f, ptr %i.g, align 8, !tbaa !17
   ret void
 
-1:                                                ; preds = %bb.a
-  %2 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.f
-
-bb.d:                                             ; preds = %_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE.exit
+bb.d:                                             ; preds = %bb.a, %_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE.exit
   %i.h = landingpad { ptr, i32 }
           cleanup
   br label %bb.f
@@ -235,8 +230,8 @@ bb.e:                                             ; preds = %bb.b
   tail call void @_ZdlPvm(ptr noundef nonnull %i.f, i64 noundef 192) #28
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %bb.e, %1
-  %.pn.pn = phi { ptr, i32 } [ %2, %1 ], [ %i.i, %bb.e ], [ %i.h, %bb.d ]
+bb.f:                                             ; preds = %bb.d, %bb.e
+  %.pn.pn = phi { ptr, i32 } [ %i.h, %bb.d ], [ %i.i, %bb.e ]
   tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.a) #29
   resume { ptr, i32 } %.pn.pn
 }

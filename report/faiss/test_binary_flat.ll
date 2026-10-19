@@ -157,7 +157,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.e
   invoke void @_ZN5faiss15IndexBinaryFlat3addElPKh(ptr noundef nonnull align 8 dereferenceable(132) %1, i64 noundef 1000, ptr noundef nonnull %i.b)
-          to label %bb.f unwind label %5
+          to label %bb.f unwind label %bb.i
 
 bb.d:                                             ; preds = %bb.a
   %i.c = landingpad { ptr, i32 }
@@ -186,12 +186,7 @@ bb.h:                                             ; preds = %bb.j
   %i.i = invoke noalias noundef nonnull dereferenceable(8000) ptr @_Znwm(i64 noundef 8000) #19
           to label %bb.k unwind label %bb.t       ; 4 uses
 
-5:                                                ; preds = %bb.c
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt6vectorIhSaIhEED2Ev.exit84
-
-bb.i:                                             ; preds = %bb.f
+bb.i:                                             ; preds = %bb.c, %bb.f
   %i.j = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit84
@@ -498,8 +493,8 @@ _ZNSt6vectorIhSaIhEED2Ev.exit82:                  ; preds = %_ZNSt6vectorIlSaIlE
   call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 1600) #18
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit84
 
-_ZNSt6vectorIhSaIhEED2Ev.exit84:                  ; preds = %bb.i, %_ZNSt6vectorIhSaIhEED2Ev.exit82, %5
-  %.pn57.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %6, %5 ], [ %.pn57.pn.pn.pn.pn, %_ZNSt6vectorIhSaIhEED2Ev.exit82 ], [ %i.j, %bb.i ]
+_ZNSt6vectorIhSaIhEED2Ev.exit84:                  ; preds = %bb.i, %_ZNSt6vectorIhSaIhEED2Ev.exit82
+  %.pn57.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.j, %bb.i ], [ %.pn57.pn.pn.pn.pn, %_ZNSt6vectorIhSaIhEED2Ev.exit82 ]
   call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 8000) #18
   br label %bb.aq
 

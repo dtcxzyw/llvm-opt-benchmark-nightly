@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.b
   %i.p = invoke fastcc i64 @_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser18parse_posix_offset(ptr noundef nonnull align 8 %1)
           to label %bb.h unwind label %bb.g       ; 3 uses
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix3DstEEB13_.exit: ; preds = %2, %bb.q, %bb.p, %bb.g
-  %.pn113 = phi { ptr, i32 } [ %i.r, %bb.g ], [ %i.ah, %bb.p ], [ %3, %2 ], [ %i.ah, %bb.q ]
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix3DstEEB13_.exit: ; preds = %bb.q, %bb.p, %bb.g
+  %.pn113 = phi { ptr, i32 } [ %i.r, %bb.g ], [ %i.ah, %bb.p ], [ %i.ah, %bb.q ]
   %switch.i.i = icmp samesign ult i8 %i.h, 2
   %i.q = icmp eq i64 %.sroa.557.sroa.5.0.copyload, 0
   %or.cond181 = select i1 %switch.i.i, i1 true, i1 %i.q
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %_RINvNtCs3oUPovFnLW
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.557.sroa.4.0.copyload, i64 noundef range(i64 1, 0) %.sroa.557.sroa.5.0.copyload, i64 noundef 1) #17, !noalias !223
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util8SmallStrKj6_EEBG_.exit
 
-bb.g:                                             ; preds = %bb.e
+bb.g:                                             ; preds = %bb.k, %bb.n, %bb.e
   %i.r = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix3DstEEB13_.exit
@@ -226,11 +226,6 @@ bb.h:                                             ; preds = %bb.e
   %.sroa.7101.0.extract.trunc = trunc nuw i64 %.sroa.7101.0.extract.shift to i32 ; 2 uses
   %i.s = trunc i64 %i.p to i1
   br i1 %i.s, label %bb.aq, label %bb.i
-
-2:                                                ; preds = %bb.n, %bb.k
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix3DstEEB13_.exit
 
 bb.i:                                             ; preds = %bb.h
   %.val = load i64, ptr %i.e, align 8, !noundef !5 ; 3 uses
@@ -244,7 +239,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %.val116, i64 noundef %.val, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #18
-          to label %.noexc unwind label %2
+          to label %.noexc unwind label %bb.g
 
 .noexc:                                           ; preds = %bb.k
   unreachable
@@ -312,7 +307,7 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8165.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !224
   invoke fastcc void @_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser18parse_abbreviation(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.b, ptr noundef nonnull align 8 %1)
-          to label %.noexc121 unwind label %2
+          to label %.noexc121 unwind label %bb.g
 
 .noexc121:                                        ; preds = %bb.n
   %i.ab = load i8, ptr %i.b, align 8, !range !6, !noalias !224, !noundef !5 ; 4 uses

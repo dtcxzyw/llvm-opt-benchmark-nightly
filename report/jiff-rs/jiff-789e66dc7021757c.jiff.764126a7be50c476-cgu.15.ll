@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !361
   store ptr %i.al, ptr %i.a, align 8, !noalias !361, !captures !5
   %i.an = invoke noundef zeroext i1 @_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCNvMs3_NtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5innerNtBW_18ZoneInfoNamesInner9available0INtB7_5FnMutTRRNtBW_12ZoneInfoNameEE8call_mutB14_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a)
-          to label %.noexc7 unwind label %.loopexit
+          to label %.noexc7 unwind label %.loopexit.split-lp
 
 .noexc7:                                          ; preds = %.lr.ph.i.i.i.i.i
   br i1 %i.an, label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameENCNvMs3_B1u_NtB1u_18ZoneInfoNamesInner9available0ENtNtNtB9_6traits8iterator8Iterator4nextB1C_.exit.i.i.i, label %bb.i
@@ -279,18 +279,13 @@ bb.m:                                             ; preds = %bb.k
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #22
   unreachable
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %_RNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB5_3MapINtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameENCNvMs3_B1K_NtB1K_18ZoneInfoNamesInner9available0ENCB2N_s_0ENtNtNtB9_6traits8iterator8Iterator4nextB1S_.exit.i.i
+.loopexit.split-lp:                               ; preds = %.lr.ph.i.i.i.i.i, %_RNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB5_3MapINtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameENCNvMs3_B1K_NtB1K_18ZoneInfoNamesInner9available0ENCB2N_s_0ENtNtNtB9_6traits8iterator8Iterator4nextB1S_.exit.i.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.k
-  %eh.lpad-body = phi { ptr, i32 } [ %i.az, %bb.k ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.k
+  %eh.lpad-body = phi { ptr, i32 } [ %i.az, %bb.k ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtBG_6string6StringEECsa9sSWSfjDbm_4jiff(ptr noalias nofree noundef align 8 dereferenceable(24) %i.k) #26
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECsa9sSWSfjDbm_4jiff.exit unwind label %bb.n
 

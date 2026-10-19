@@ -204,12 +204,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !4304
   ret void, !dbg !4305
 
-.loopexit:                                        ; preds = %bb.b, %bb.e
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread
-
-.loopexit.split-lp:                               ; preds = %bb.g
+.loopexit.split-lp:                               ; preds = %bb.e, %bb.b, %bb.g
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.thread
@@ -226,7 +221,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.o = getelementptr i8, ptr %.sroa.0.071, i64 16, !dbg !4307 ; 2 uses
   %.val1.i = load i64, ptr %i.o, align 8, !dbg !4307, !noundef !989
   %i.p = invoke noundef double @_RNvCskBLNexOrPOX_6strsim4jaro(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i, i64 noundef %.val1.i)
-          to label %bb.c unwind label %.loopexit, !dbg !4308 ; 4 uses
+          to label %bb.c unwind label %.loopexit.split-lp, !dbg !4308 ; 4 uses
 
 bb.c:                                             ; preds = %bb.b
     #dbg_value(double %i.p, !3846, !DIExpression(), !4126)
@@ -272,7 +267,7 @@ bb.e:                                             ; preds = %bb.c
     #dbg_value(i64 1, !4057, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4060)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !4311
   invoke void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7OITKvp9Irj_4perf(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %.val1.i61, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
-          to label %bb.f unwind label %.loopexit, !dbg !4311
+          to label %bb.f unwind label %.loopexit.split-lp, !dbg !4311
 
 bb.f:                                             ; preds = %bb.e
   %i.s = load i64, ptr %i.a, align 8, !dbg !4311, !range !1645, !noundef !989
@@ -482,8 +477,8 @@ bb.s:                                             ; preds = %bb.g
 bb.t:                                             ; preds = %.thread
   resume { ptr, i32 } %.pn.ph, !dbg !4364
 
-.thread:                                          ; preds = %.loopexit, %.loopexit.split-lp, %bb.n
-  %.pn.ph = phi { ptr, i32 } [ %i.at, %bb.n ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.thread:                                          ; preds = %.loopexit.split-lp, %bb.n
+  %.pn.ph = phi { ptr, i32 } [ %i.at, %bb.n ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTdNtNtBG_6string6StringEEECs7OITKvp9Irj_4perf(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #23
           to label %bb.t unwind label %bb.r, !dbg !4304
 }
@@ -886,7 +881,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal { ptr, ptr } @_RNvXsc_NtNtCs172jLVBUT4Z_12clap_builder7builder12value_parserINtB5_15EnumValueParserNtCs7OITKvp9Irj_4perf19CongestionAlgorithmENtB5_14AnyValueParser9clone_anyB1m_(ptr noalias nofree nonnull readonly captures(none) %0) unnamed_addr #8 personality ptr @rust_eh_personality !dbg !7208 {
+define internal noundef { ptr, ptr } @_RNvXsc_NtNtCs172jLVBUT4Z_12clap_builder7builder12value_parserINtB5_15EnumValueParserNtCs7OITKvp9Irj_4perf19CongestionAlgorithmENtB5_14AnyValueParser9clone_anyB1m_(ptr noalias nofree nonnull readonly captures(none) %0) unnamed_addr #8 personality ptr @rust_eh_personality !dbg !7208 {
 bb.a:
     #dbg_value(ptr poison, !7211, !DIExpression(), !7213)
   ret { ptr, ptr } { ptr inttoptr (i64 1 to ptr), ptr @25 }, !dbg !7214

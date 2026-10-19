@@ -204,11 +204,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   invoke void @_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EE13_M_insert_auxIS3_EEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEOT_(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr %i.b, ptr noundef nonnull align 8 dereferenceable(16) %3)
-          to label %bb.f unwind label %11
+          to label %bb.f unwind label %bb.av
 
 bb.e:                                             ; preds = %bb.a
   invoke void @_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr %i.b, ptr noundef nonnull align 8 dereferenceable(16) %3)
-          to label %bb.f unwind label %11
+          to label %bb.f unwind label %bb.av
 
 bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
   %i.l = load ptr, ptr %4, align 8, !tbaa !81     ; 3 uses
@@ -577,12 +577,7 @@ bb.au:                                            ; preds = %_ZN9__gnu_cxx27__ex
 _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EED2Ev.exit, %bb.aq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i21, %bb.au
   ret void
 
-11:                                               ; preds = %bb.e, %bb.d
-  %12 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ax
-
-bb.av:                                            ; preds = %bb.j, %bb.i
+bb.av:                                            ; preds = %bb.d, %bb.e, %bb.j, %bb.i
   %i.ed = landingpad { ptr, i32 }
           cleanup
   br label %bb.ax
@@ -594,8 +589,8 @@ bb.aw:                                            ; preds = %bb.k
   call void @_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %9) #16
   br label %bb.ax
 
-bb.ax:                                            ; preds = %bb.aw, %bb.av, %11
-  %.pn.pn = phi { ptr, i32 } [ %i.ee, %bb.aw ], [ %i.ed, %bb.av ], [ %12, %11 ]
+bb.ax:                                            ; preds = %bb.aw, %bb.av
+  %.pn.pn = phi { ptr, i32 } [ %i.ee, %bb.aw ], [ %i.ed, %bb.av ]
   call void @_ZN5arrow5ArrayD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %0) #16
   resume { ptr, i32 } %.pn.pn
 }

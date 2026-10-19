@@ -202,16 +202,11 @@ define internal void @_GLOBAL__sub_I_enum.cpp() #15 section ".text.startup" pers
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false), !alias.scope !116
   invoke void @_ZN7testing8internal24GenerateNamesRecursivelyINS0_20DefaultNameGeneratorENS0_5TypesIN4test15enum_is_bitmaskEJNS4_15enum_as_bitmaskEEEEEEvT0_PSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISF_EEi(ptr noundef nonnull align 8 %1, i32 noundef 0)
-          to label %_ZN7testing8internal13GenerateNamesINS0_20DefaultNameGeneratorENS0_5TypesIN4test15enum_is_bitmaskEJNS4_15enum_as_bitmaskEEEEEESt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEv.exit.i unwind label %2
-
-2:                                                ; preds = %.noexc11.i
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i
+          to label %_ZN7testing8internal13GenerateNamesINS0_20DefaultNameGeneratorENS0_5TypesIN4test15enum_is_bitmaskEJNS4_15enum_as_bitmaskEEEEEESt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEv.exit.i unwind label %.body.i
 
 _ZN7testing8internal13GenerateNamesINS0_20DefaultNameGeneratorENS0_5TypesIN4test15enum_is_bitmaskEJNS4_15enum_as_bitmaskEEEEEESt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEv.exit.i: ; preds = %.noexc11.i
   %i.f = invoke noundef zeroext i1 @_ZN7testing8internal21TypeParameterizedTestI4EnumNS0_11TemplateSelI25Enum_Functionalities_TestEENS0_5TypesIN4test15enum_is_bitmaskEJNS7_15enum_as_bitmaskEEEEE8RegisterEPKcRKNS0_12CodeLocationESD_SD_iRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISN_EE(ptr noundef nonnull @.str, ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(24) %1)
-          to label %bb.a unwind label %4          ; 0 uses
+          to label %bb.a unwind label %.body.i    ; 0 uses
 
 bb.a:                                             ; preds = %_ZN7testing8internal13GenerateNamesINS0_20DefaultNameGeneratorENS0_5TypesIN4test15enum_is_bitmaskEJNS4_15enum_as_bitmaskEEEEEESt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEv.exit.i
   %i.g = load ptr, ptr %1, align 8, !tbaa !23     ; 3 uses
@@ -268,13 +263,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.v, i64 noundef %i.y) #24
   br label %__cxx_global_var_init.exit
 
-4:                                                ; preds = %_ZN7testing8internal13GenerateNamesINS0_20DefaultNameGeneratorENS0_5TypesIN4test15enum_is_bitmaskEJNS4_15enum_as_bitmaskEEEEEESt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEv.exit.i
-  %5 = landingpad { ptr, i32 }
+.body.i:                                          ; preds = %_ZN7testing8internal13GenerateNamesINS0_20DefaultNameGeneratorENS0_5TypesIN4test15enum_is_bitmaskEJNS4_15enum_as_bitmaskEEEEEESt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEv.exit.i, %.noexc11.i
+  %2 = landingpad { ptr, i32 }
           cleanup
-  br label %.body.i
-
-.body.i:                                          ; preds = %4, %2
-  %.pn.i = phi { ptr, i32 } [ %5, %4 ], [ %3, %2 ]
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %1) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   %i.z = load ptr, ptr %0, align 8, !tbaa !18     ; 2 uses
@@ -289,7 +280,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN7testing8internal12CodeLocationD2Ev.exit14.i:  ; preds = %.body.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i12.i
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #20
-  resume { ptr, i32 } %.pn.i
+  resume { ptr, i32 } %2
 
 __cxx_global_var_init.exit:                       ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #20

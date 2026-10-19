@@ -202,12 +202,7 @@ bb.ao:                                            ; preds = %_RINvNtCskKLDkoKarT
 
 bb.ap:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdq8xsXUia3c_10grep_regex7literal13InnerLiteralsEBF_.exit112.i
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7HirKindECsdq8xsXUia3c_10grep_regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %i.s)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdq8xsXUia3c_10grep_regex6config13ConfiguredHIREBF_.exit.i unwind label %4, !dbg !3243, !noalias !3088, !inline_history !240
-
-4:                                                ; preds = %bb.ap
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume.sink.split.i
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdq8xsXUia3c_10grep_regex6config13ConfiguredHIREBF_.exit.i unwind label %bb.ax, !dbg !3243, !noalias !3088, !inline_history !240
 
 bb.aq:                                            ; preds = %bb.ao
   %i.cp = landingpad { ptr, i32 }
@@ -215,8 +210,8 @@ bb.aq:                                            ; preds = %bb.ao
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #24, !dbg !3243, !noalias !3088, !inline_history !240
   unreachable, !dbg !3243
 
-common.resume.sink.split.i:                       ; preds = %bb.ax, %bb.av, %4, %bb.ao
-  %common.resume.op.ph.i = phi { ptr, i32 } [ %i.co, %bb.ao ], [ %5, %4 ], [ %i.cx, %bb.ax ], [ %i.cw, %bb.av ]
+common.resume.sink.split.i:                       ; preds = %bb.ax, %bb.av, %bb.ao
+  %common.resume.op.ph.i = phi { ptr, i32 } [ %i.co, %bb.ao ], [ %i.cw, %bb.av ], [ %i.cx, %bb.ax ]
   %.val2.i.i118.i = load ptr, ptr %.sroa.5.0..sroa_idx.i, align 8, !dbg !3244, !noalias !3082, !nonnull !212, !noundef !212
   call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2.i.i118.i, i64 noundef 80, i64 noundef 8) #23, !dbg !3245, !noalias !3088
   br label %common.resume.i, !dbg !3246
@@ -286,7 +281,7 @@ bb.aw:                                            ; preds = %_RINvNtCskKLDkoKarT
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7HirKindECsdq8xsXUia3c_10grep_regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %i.s)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdq8xsXUia3c_10grep_regex6config13ConfiguredHIREBF_.exit120.i unwind label %bb.ax, !dbg !3257, !noalias !3088, !inline_history !240
 
-bb.ax:                                            ; preds = %bb.aw
+bb.ax:                                            ; preds = %bb.aw, %bb.ap
   %i.cx = landingpad { ptr, i32 }
           cleanup
   br label %common.resume.sink.split.i
@@ -445,7 +440,7 @@ bb.f:                                             ; preds = %bb.c
   unreachable, !dbg !3837
 
 common.resume:                                    ; preds = %bb.bq, %bb.bf, %bb.bc, %bb.ar, %bb.cn, %bb.da, %.body105.thread, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i108, %bb.bz, %.body.i113, %bb.cw, %.body.i96, %bb.ad, %bb.ae, %bb.ai, %.body.i, %bb.u, %bb.v, %bb.z, %bb.g
-  %common.resume.op = phi { ptr, i32 } [ %.pn.i, %bb.g ], [ %i.cv, %bb.ad ], [ %i.cc, %bb.u ], [ %i.bz, %.body.i ], [ %i.bz, %bb.z ], [ %i.cc, %bb.v ], [ %i.cs, %.body.i96 ], [ %i.cs, %bb.ai ], [ %i.cv, %bb.ae ], [ %i.fm, %bb.bz ], [ %i.dj, %.body105.thread ], [ %i.gp, %bb.cw ], [ %.pn74186, %bb.bq ], [ %i.ek, %bb.bf ], [ %.pn182, %bb.bc ], [ %i.eb, %bb.ar ], [ %eh.lpad-body80.ph, %bb.cn ], [ %i.dn, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i108 ], [ %.pn.i.i, %.body.i113 ], [ %eh.lpad-body.ph, %bb.da ]
+  %common.resume.op = phi { ptr, i32 } [ %.pn.i, %bb.g ], [ %i.cv, %bb.ad ], [ %i.cc, %bb.u ], [ %i.bz, %.body.i ], [ %i.bz, %bb.z ], [ %i.cc, %bb.v ], [ %i.cs, %.body.i96 ], [ %i.cs, %bb.ai ], [ %i.cv, %bb.ae ], [ %i.fm, %bb.bz ], [ %i.dj, %.body105.thread ], [ %i.dn, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i108 ], [ %.pn74186, %bb.bq ], [ %i.ek, %bb.bf ], [ %.pn182, %bb.bc ], [ %i.eb, %bb.ar ], [ %eh.lpad-body80.ph, %bb.cn ], [ %i.gp, %bb.cw ], [ %.pn.i.i, %.body.i113 ], [ %eh.lpad-body.ph, %bb.da ]
   resume { ptr, i32 } %common.resume.op, !dbg !3838
 
 bb.g:                                             ; preds = %bb.e, %bb.c

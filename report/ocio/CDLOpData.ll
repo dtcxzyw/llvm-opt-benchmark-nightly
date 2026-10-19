@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %bb.a
   %i.c = invoke noalias noundef nonnull dereferenceable(248) ptr @_Znwm(i64 noundef 248) #22
-          to label %.noexc unwind label %2        ; 6 uses
+          to label %.noexc unwind label %bb.d     ; 6 uses
 
 .noexc:                                           ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -220,11 +220,6 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_511Range
   %i.g = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef 248) #21, !noalias !88
-  br label %.body
-
-2:                                                ; preds = %bb.b
-  %3 = landingpad { ptr, i32 }
-          cleanup
   br label %.body
 
 bb.c:                                             ; preds = %bb.a, %bb.a
@@ -247,7 +242,7 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512Matri
   tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 280) #21, !noalias !89
   br label %.body
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %bb.b, %bb.c
   %i.m = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -263,8 +258,8 @@ _ZNSt12__shared_ptrIN16OpenColorIO_v2_511RangeOpDataELN9__gnu_cxx12_Lock_policyE
 _ZNSt12__shared_ptrIN16OpenColorIO_v2_511RangeOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511RangeOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.sink.split, %bb.a
   ret void
 
-.body:                                            ; preds = %bb.d, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512MatrixOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit9.i.i.i.i, %2, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_511RangeOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i
-  %.pn = phi { ptr, i32 } [ %i.g, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_511RangeOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i ], [ %3, %2 ], [ %i.m, %bb.d ], [ %i.l, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512MatrixOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit9.i.i.i.i ]
+.body:                                            ; preds = %bb.d, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512MatrixOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit9.i.i.i.i, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_511RangeOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i
+  %.pn = phi { ptr, i32 } [ %i.g, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_511RangeOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i ], [ %i.l, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512MatrixOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit9.i.i.i.i ], [ %i.m, %bb.d ]
   tail call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_56OpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #19
   resume { ptr, i32 } %.pn
 }

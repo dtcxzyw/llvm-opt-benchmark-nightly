@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %i.ba = load ptr, ptr @_ZN4pbrt14intBufferCacheE, align 8, !tbaa !61
   %i.bb = invoke noundef ptr @_ZN4pbrt11BufferCacheIiE11LookupOrAddEN4pstd4spanIKiEENS2_3pmr21polymorphic_allocatorISt4byteEE(ptr noundef nonnull align 8 dereferenceable(7176) %i.ba, ptr nonnull %i.av, i64 5, ptr %i.az)
-          to label %bb.w unwind label %26
+          to label %bb.w unwind label %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135
 
 bb.w:                                             ; preds = %bb.v
   store ptr %i.bb, ptr %i.a, align 8, !tbaa !26
@@ -224,11 +224,6 @@ bb.x:                                             ; preds = %_ZN7testing15Assert
   store i64 %i.bg, ptr %i.c, align 8, !tbaa !27
   invoke void @_ZN7testing8internal11CmpHelperEQImmEENS_15AssertionResultEPKcS4_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8, ptr noundef nonnull @.str.10, ptr noundef nonnull @.str.11, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c)
           to label %_ZN7testing8internal8EqHelperILb0EE7CompareImmEENS_15AssertionResultEPKcS6_RKT_RKT0_.exit unwind label %bb.au
-
-26:                                               ; preds = %bb.v
-  %27 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt6vectorIiSaIiEED2Ev.exit184
 
 bb.y:                                             ; preds = %bb.w, %_ZN7testing15AssertionResultD2Ev.exit99
   %.049215 = phi i64 [ 0, %bb.w ], [ %i.cn, %_ZN7testing15AssertionResultD2Ev.exit99 ] ; 3 uses
@@ -632,7 +627,7 @@ _ZN7testing15AssertionResultD2Ev.exit133:         ; preds = %bb.da, %.noexc.i.i1
   %i.gj = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #21
           to label %bb.df unwind label %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135 ; 8 uses
 
-_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135:        ; preds = %_ZN7testing15AssertionResultD2Ev.exit133
+_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135:        ; preds = %bb.v, %_ZN7testing15AssertionResultD2Ev.exit133
   %i.gk = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit184
@@ -1035,8 +1030,8 @@ _ZNSt6vectorIiSaIiEED2Ev.exit181:                 ; preds = %bb.hf, %bb.gj, %bb.
   call void @_ZdlPvm(ptr noundef nonnull %i.gj, i64 noundef 16) #19
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit184
 
-_ZNSt6vectorIiSaIiEED2Ev.exit184:                 ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit181, %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135, %bb.di, %bb.ck, %bb.bp, %bb.at, %26
-  %.pn79.pn.pn.pn = phi { ptr, i32 } [ %.pn79.pn.pn, %bb.at ], [ %27, %26 ], [ %.pn61.pn.pn, %bb.di ], [ %.pn57.pn.pn, %bb.ck ], [ %.pn53.pn.pn, %bb.bp ], [ %.pn73.pn.pn.pn, %_ZNSt6vectorIiSaIiEED2Ev.exit181 ], [ %i.gk, %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135 ]
+_ZNSt6vectorIiSaIiEED2Ev.exit184:                 ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit181, %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135, %bb.di, %bb.ck, %bb.bp, %bb.at
+  %.pn79.pn.pn.pn = phi { ptr, i32 } [ %.pn79.pn.pn, %bb.at ], [ %i.gk, %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i135 ], [ %.pn61.pn.pn, %bb.di ], [ %.pn57.pn.pn, %bb.ck ], [ %.pn53.pn.pn, %bb.bp ], [ %.pn73.pn.pn.pn, %_ZNSt6vectorIiSaIiEED2Ev.exit181 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef 20) #19
   br label %bb.hg

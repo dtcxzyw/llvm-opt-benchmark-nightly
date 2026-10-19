@@ -202,15 +202,10 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtNtCsgCLBQfCopcP_18tracing_subscrib
 _RNvCsglDVE6xSTcO_5fontc17create_env_filter.exit.i.i: ; preds = %.noexc45.i, %.noexc44.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !1128
   invoke void @_RNvMNtCsglDVE6xSTcO_5fontc4argsNtB2_4Args10trace_path(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.ak, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(168) %i.bn)
-          to label %bb.u unwind label %0, !noalias !1131
+          to label %bb.u unwind label %bb.w, !noalias !1131
 
 bb.t:                                             ; preds = %bb.ax, %bb.aw
   br i1 %.sroa.023.1.i.i, label %.thread.i.i, label %.body.thread.i
-
-0:                                                ; preds = %_RNvCsglDVE6xSTcO_5fontc17create_env_filter.exit.i.i
-  %1 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread.i.i
 
 bb.u:                                             ; preds = %_RNvCsglDVE6xSTcO_5fontc17create_env_filter.exit.i.i
   %i.cy = load i64, ptr %i.ak, align 8, !range !10, !noalias !1128, !noundef !5
@@ -227,7 +222,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dd = invoke { ptr, i64 } @_RNvMs16_NtCs5Xr050g3D4S_3std4pathNtB6_4Path6parent(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.da, i64 noundef %i.dc)
           to label %bb.x unwind label %bb.ak, !noalias !1131 ; 2 uses
 
-bb.w:                                             ; preds = %bb.ad, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECsglDVE6xSTcO_5fontc.exit.i.i
+bb.w:                                             ; preds = %bb.ad, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECsglDVE6xSTcO_5fontc.exit.i.i, %_RNvCsglDVE6xSTcO_5fontc17create_env_filter.exit.i.i
   %lpad.thr_comm.split-lp.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.thread.i.i
@@ -479,8 +474,8 @@ bb.ax:                                            ; preds = %bb.aw
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter13layer_filters8FilteredINtCs5MxzpKags6U_14tracing_chrome11ChromeLayerINtNtNtB14_5layer7layered7LayeredIBY_INtNtNtB14_3fmt9fmt_layer5LayerNtNtNtB14_8registry7sharded8RegistryNtNtB3x_6format13DefaultFieldsNtCsglDVE6xSTcO_5fontc12LogFormatterENtNtB12_3env9EnvFilterB3X_EB3X_EENtB53_12ChromeFilterB2R_EEEB53_(ptr noalias nofree noundef align 8 dereferenceable(1864) %i.am) #19
           to label %bb.t unwind label %bb.ai, !noalias !1131
 
-.thread.i.i:                                      ; preds = %bb.ak, %bb.aj, %bb.w, %0, %bb.t
-  %.pn28.pn35.i.i = phi { ptr, i32 } [ %.pn28.i.i, %bb.t ], [ %1, %0 ], [ %lpad.thr_comm.split-lp.i.i, %bb.w ], [ %lpad.thr_comm.i.i, %bb.ak ], [ %i.dw, %bb.aj ]
+.thread.i.i:                                      ; preds = %bb.ak, %bb.aj, %bb.w, %bb.t
+  %.pn28.pn35.i.i = phi { ptr, i32 } [ %.pn28.i.i, %bb.t ], [ %i.dw, %bb.aj ], [ %lpad.thr_comm.split-lp.i.i, %bb.w ], [ %lpad.thr_comm.i.i, %bb.ak ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsgCLBQfCopcP_18tracing_subscriber6filter3env9EnvFilterECsglDVE6xSTcO_5fontc(ptr noalias nofree noundef align 8 dereferenceable(1784) %i.an) #19
           to label %.body.thread.i unwind label %bb.ai, !noalias !1131
 

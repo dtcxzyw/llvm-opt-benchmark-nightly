@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit:
   store i8 127, ptr %i.f, align 1, !tbaa !38
   %i.g = load ptr, ptr %3, align 8, !tbaa !36
   %i.h = invoke noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal26DemangleRustSymbolEncodingEPKcPcm(ptr noundef %1, ptr noundef nonnull %i.g, i64 noundef %2)
-          to label %bb.a unwind label %6
+          to label %bb.a unwind label %bb.s
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit
   br i1 %i.h, label %bb.b, label %._crit_edge.i.i
@@ -216,11 +216,6 @@ bb.a:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i8 0, ptr %i.k, align 4, !tbaa !38
   br label %bb.t
-
-6:                                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.u
 
 bb.b:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %3, align 8, !tbaa !36     ; 6 uses
@@ -475,7 +470,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   br label %bb.t
 
-bb.s:                                             ; preds = %.noexc.i33
+bb.s:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit, %.noexc.i33
   %i.ch = landingpad { ptr, i32 }
           cleanup
   br label %bb.u
@@ -495,8 +490,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   ret void
 
-bb.u:                                             ; preds = %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31, %6
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31 ], [ %i.ch, %bb.s ], [ %7, %6 ]
+bb.u:                                             ; preds = %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31
+  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31 ], [ %i.ch, %bb.s ]
   %i.cm = load ptr, ptr %3, align 8, !tbaa !36    ; 2 uses
   %i.cn = icmp eq ptr %i.cm, %i.d
   br i1 %i.cn, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit42, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i40

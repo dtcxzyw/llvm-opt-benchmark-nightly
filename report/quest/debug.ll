@@ -204,11 +204,11 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   invoke void @_Z18validate_envIsInitPKc(ptr noundef nonnull @__func__.getNumSeeds)
-          to label %.noexc unwind label %3
+          to label %.noexc unwind label %bb.k
 
 .noexc:                                           ; preds = %bb.a
   %i.b = invoke noundef i32 @_Z16rand_getNumSeedsv()
-          to label %getNumSeeds.exit unwind label %3 ; 2 uses
+          to label %getNumSeeds.exit unwind label %bb.k ; 2 uses
 
 getNumSeeds.exit:                                 ; preds = %.noexc
   store i32 %i.b, ptr %i.a, align 4, !tbaa !14
@@ -378,11 +378,6 @@ bb.g:                                             ; preds = %._crit_edge.thread.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   ret void
 
-3:                                                ; preds = %.noexc, %bb.a
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt14_Function_baseD2Ev.exit10
-
 bb.h:                                             ; preds = %getNumSeeds.exit
   %i.ay = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
@@ -401,13 +396,13 @@ bb.j:                                             ; preds = %bb.i
   call void @__clang_call_terminate(ptr %i.bc) #15
   unreachable
 
-bb.k:                                             ; preds = %.noexc7, %_ZNSt14_Function_baseD2Ev.exit
+bb.k:                                             ; preds = %bb.a, %.noexc, %.noexc7, %_ZNSt14_Function_baseD2Ev.exit
   %i.bd = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt14_Function_baseD2Ev.exit10
 
-_ZNSt14_Function_baseD2Ev.exit10:                 ; preds = %bb.h, %bb.i, %_ZNSt6vectorIjSaIjEED2Ev.exit8.i, %bb.k, %3
-  %.pn.pn = phi { ptr, i32 } [ %4, %3 ], [ %i.ay, %bb.i ], [ %i.ay, %bb.h ], [ %i.bd, %bb.k ], [ %i.af, %_ZNSt6vectorIjSaIjEED2Ev.exit8.i ]
+_ZNSt14_Function_baseD2Ev.exit10:                 ; preds = %bb.h, %bb.i, %_ZNSt6vectorIjSaIjEED2Ev.exit8.i, %bb.k
+  %.pn.pn = phi { ptr, i32 } [ %i.af, %_ZNSt6vectorIjSaIjEED2Ev.exit8.i ], [ %i.ay, %bb.i ], [ %i.ay, %bb.h ], [ %i.bd, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %i.be = load ptr, ptr %0, align 8, !tbaa !13    ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.be, null

@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   fence acquire
   invoke void @_RNvMsn_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcSNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesE9drop_slowCs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.c) #24
-          to label %_RINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters7flatten17and_then_or_clearNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesNvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECscZimOjL3zu7_21opendal_layer_timeout.exit.thread28.i.peel.i unwind label %.loopexit.split-lp.i, !noalias !467
+          to label %_RINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters7flatten17and_then_or_clearNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesNvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECscZimOjL3zu7_21opendal_layer_timeout.exit.thread28.i.peel.i unwind label %bb.n, !noalias !467
 
 bb.g:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !474)
@@ -214,7 +214,7 @@ bb.g:                                             ; preds = %bb.d
   %i.w = load ptr, ptr %i.f, align 8, !alias.scope !476, !noundef !5
   %i.x = load i64, ptr %i.g, align 8, !alias.scope !476, !noundef !5
   invoke void %i.v(ptr noundef %i.s, ptr noundef %i.w, i64 noundef %i.x)
-          to label %_RINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters7flatten17and_then_or_clearNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesNvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECscZimOjL3zu7_21opendal_layer_timeout.exit.thread28.i.peel.i unwind label %.loopexit.split-lp.i, !noalias !467, !inline_history !16
+          to label %_RINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters7flatten17and_then_or_clearNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesNvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECscZimOjL3zu7_21opendal_layer_timeout.exit.thread28.i.peel.i unwind label %bb.n, !noalias !467, !inline_history !16
 
 _RINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters7flatten17and_then_or_clearNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesNvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECscZimOjL3zu7_21opendal_layer_timeout.exit.thread28.i.peel.i: ; preds = %bb.g, %bb.f, %bb.e, %bb.c
   store i64 0, ptr %1, align 8, !alias.scope !478
@@ -271,7 +271,7 @@ bb.k:                                             ; preds = %bb.j
   %i.am = load ptr, ptr %i.f, align 8, !alias.scope !492, !noundef !5
   %i.an = load i64, ptr %i.g, align 8, !alias.scope !492, !noundef !5
   invoke void %i.al(ptr noundef %i.ai, ptr noundef %i.am, i64 noundef %i.an)
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEECscZimOjL3zu7_21opendal_layer_timeout.exit.i.i unwind label %.loopexit4.i, !noalias !467, !inline_history !16
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEECscZimOjL3zu7_21opendal_layer_timeout.exit.i.i unwind label %bb.n, !noalias !467, !inline_history !16
 
 bb.l:                                             ; preds = %bb.j
   %i.ao = atomicrmw sub ptr %i.ag, i64 1 release, align 8, !noalias !494
@@ -281,24 +281,15 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l
   fence acquire
   invoke void @_RNvMsn_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcSNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesE9drop_slowCs5XgW7KoffLW_12opendal_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.c) #24
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEECscZimOjL3zu7_21opendal_layer_timeout.exit.i.i unwind label %.loopexit4.i, !noalias !467
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEECscZimOjL3zu7_21opendal_layer_timeout.exit.i.i unwind label %bb.n, !noalias !467
 
 common.resume.i.i:                                ; preds = %bb.v, %bb.n
-  %common.resume.op.i.i = phi { ptr, i32 } [ %lpad.phi.i, %bb.n ], [ %i.bo, %bb.v ]
+  %common.resume.op.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp55, %bb.n ], [ %i.bo, %bb.v ]
   resume { ptr, i32 } %common.resume.op.i.i
 
-.loopexit4.i:                                     ; preds = %bb.m, %bb.k
-  %lpad.loopexit.i = landingpad { ptr, i32 }
+bb.n:                                             ; preds = %bb.m, %bb.k, %bb.g, %bb.f
+  %lpad.loopexit.split-lp55 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.n
-
-.loopexit.split-lp.i:                             ; preds = %bb.g, %bb.f
-  %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.n
-
-bb.n:                                             ; preds = %.loopexit.split-lp.i, %.loopexit4.i
-  %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i, %.loopexit4.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   store i64 0, ptr %1, align 8, !alias.scope !464
   br label %common.resume.i.i
 

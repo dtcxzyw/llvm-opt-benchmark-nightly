@@ -58,17 +58,12 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   br label %bb.b
 
-.body110:                                         ; preds = %.loopexit, %.loopexit.split-lp, %bb.ae, %bb.w, %bb.ah
-  %.pn = phi { ptr, i32 } [ %i.an, %bb.w ], [ %i.be, %bb.ah ], [ %i.bc, %bb.ae ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body110:                                         ; preds = %.loopexit.split-lp, %bb.ae, %bb.w, %bb.ah
+  %.pn = phi { ptr, i32 } [ %i.an, %bb.w ], [ %i.be, %bb.ah ], [ %i.bc, %bb.ae ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsi68uqYEhoRA_5gimli4read5names16NameAbbreviationEECsdr9GKMNitvw_5names(ptr noalias nofree noundef align 8 dereferenceable(24) %i.g) #13
           to label %common.resume unwind label %bb.ai
 
-.loopexit:                                        ; preds = %bb.b, %bb.f
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body110
-
-.loopexit.split-lp:                               ; preds = %bb.af
+.loopexit.split-lp:                               ; preds = %bb.f, %bb.b, %bb.af
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body110
@@ -76,7 +71,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   invoke void @_RNvYINtNtNtCsi68uqYEhoRA_5gimli4read8relocate14RelocateReaderINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianERNtCsdr9GKMNitvw_5names13RelocationMapENtNtB7_6reader6Reader12read_uleb128B26_(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1)
-          to label %bb.c unwind label %.loopexit
+          to label %bb.c unwind label %.loopexit.split-lp
 
 bb.c:                                             ; preds = %bb.b
   %i.t = load i8, ptr %i.f, align 8, !range !6, !noundef !5 ; 2 uses
@@ -105,7 +100,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   invoke void @_RNvYINtNtNtCsi68uqYEhoRA_5gimli4read8relocate14RelocateReaderINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianERNtCsdr9GKMNitvw_5names13RelocationMapENtNtB7_6reader6Reader16read_uleb128_u16B26_(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1)
-          to label %bb.g unwind label %.loopexit
+          to label %bb.g unwind label %.loopexit.split-lp
 
 ._crit_edge:                                      ; preds = %bb.z, %bb.e, %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)

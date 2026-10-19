@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %_RNvXs0_NtNtNtCs3oU
 
 _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE7reserveCsdcxgzuWc7wi_10fish_color.exit.i: ; preds = %bb.g
   invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsdcxgzuWc7wi_10fish_color(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %i.g, i64 noundef range(i64 1, 0) 1)
-          to label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE7reserveCsdcxgzuWc7wi_10fish_color.exit.i..noexc_crit_edge unwind label %.loopexit
+          to label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE7reserveCsdcxgzuWc7wi_10fish_color.exit.i..noexc_crit_edge unwind label %bb.h
 
 _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE7reserveCsdcxgzuWc7wi_10fish_color.exit.i..noexc_crit_edge: ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE7reserveCsdcxgzuWc7wi_10fish_color.exit.i
   %.pre = load ptr, ptr %i.d, align 8, !alias.scope !127
@@ -220,18 +220,9 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCslLGyqsphxMB_10widestring6utfst
   store i64 %i.y, ptr %i.e, align 8, !alias.scope !127
   br label %bb.d
 
-.loopexit:                                        ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE7reserveCsdcxgzuWc7wi_10fish_color.exit.i
-  %lpad.loopexit = landingpad { ptr, i32 }
+bb.h:                                             ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE7reserveCsdcxgzuWc7wi_10fish_color.exit.i, %bb.j
+  %lpad.loopexit.split-lp9 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.h
-
-.loopexit.split-lp:                               ; preds = %bb.j
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.h
-
-bb.h:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.val = load i64, ptr %i.a, align 8             ; 2 uses
   %i.z = icmp eq i64 %.val, 0
   br i1 %i.z, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEECsdcxgzuWc7wi_10fish_color.exit, label %bb.i
@@ -250,7 +241,7 @@ _RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecRNtNtCslLGyqsphxMB_10widestring6utf
 
 bb.j:                                             ; preds = %_RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE16extend_desugaredINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtB1T_5slice4iter4IterNtCsdcxgzuWc7wi_10fish_color10NamedColorENCNvMs_B3f_NtB3f_5Color17named_color_names0EEB3f_.exit
   invoke void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8grow_oneCsdcxgzuWc7wi_10fish_color(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #22
-          to label %bb.k unwind label %.loopexit.split-lp
+          to label %bb.k unwind label %bb.h
 
 bb.k:                                             ; preds = %_RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE16extend_desugaredINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtB1T_5slice4iter4IterNtCsdcxgzuWc7wi_10fish_color10NamedColorENCNvMs_B3f_NtB3f_5Color17named_color_names0EEB3f_.exit, %bb.j
   %i.ad = load ptr, ptr %i.d, align 8, !alias.scope !132, !nonnull !5, !noundef !5
@@ -265,7 +256,7 @@ bb.k:                                             ; preds = %_RINvMsk_NtCs1xwejQ
   ret void
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEECsdcxgzuWc7wi_10fish_color.exit: ; preds = %bb.i, %bb.h
-  resume { ptr, i32 } %lpad.phi
+  resume { ptr, i32 } %lpad.loopexit.split-lp9
 }
 
 ; Function Attrs: nonlazybind uwtable

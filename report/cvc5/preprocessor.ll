@@ -167,7 +167,7 @@ bb.a:
   tail call void @_ZN4cvc58internal6theory8booleans17CircuitPropagatorC1ERNS0_3EnvEbb(ptr noundef nonnull align 8 dereferenceable(528) %i.b, ptr noundef nonnull align 8 dereferenceable(696) %1, i1 noundef zeroext true, i1 noundef zeroext true)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 552 ; 4 uses
   %i.d = invoke noundef ptr @_ZN4cvc58internal3Env14getUserContextEv(ptr noundef nonnull align 8 dereferenceable(696) %1)
-          to label %bb.b unwind label %3
+          to label %bb.b unwind label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZN4cvc57context10ContextObjC2EPNS0_7ContextE(ptr noundef nonnull align 8 dereferenceable(41) %i.c, ptr noundef %i.d)
@@ -202,12 +202,7 @@ bb.d:                                             ; preds = %.noexc, %bb.c
 bb.e:                                             ; preds = %bb.d
   ret void
 
-3:                                                ; preds = %bb.a
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.h
-
-bb.f:                                             ; preds = %bb.c, %bb.b
+bb.f:                                             ; preds = %bb.a, %bb.c, %bb.b
   %i.p = landingpad { ptr, i32 }
           cleanup
   br label %bb.h
@@ -230,8 +225,8 @@ _ZNSt10unique_ptrIN4cvc58internal13preprocessing24PreprocessingPassContextESt14d
   tail call void @_ZN4cvc57context3CDOIbED2Ev(ptr noundef nonnull align 8 dead_on_return(41) dereferenceable(41) %i.c) #15
   br label %bb.h
 
-bb.h:                                             ; preds = %_ZNSt10unique_ptrIN4cvc58internal13preprocessing24PreprocessingPassContextESt14default_deleteIS3_EED2Ev.exit, %bb.f, %3
-  %.pn = phi { ptr, i32 } [ %i.q, %_ZNSt10unique_ptrIN4cvc58internal13preprocessing24PreprocessingPassContextESt14default_deleteIS3_EED2Ev.exit ], [ %i.p, %bb.f ], [ %4, %3 ]
+bb.h:                                             ; preds = %_ZNSt10unique_ptrIN4cvc58internal13preprocessing24PreprocessingPassContextESt14default_deleteIS3_EED2Ev.exit, %bb.f
+  %.pn = phi { ptr, i32 } [ %i.q, %_ZNSt10unique_ptrIN4cvc58internal13preprocessing24PreprocessingPassContextESt14default_deleteIS3_EED2Ev.exit ], [ %i.p, %bb.f ]
   tail call void @_ZN4cvc58internal6theory8booleans17CircuitPropagatorD2Ev(ptr noundef nonnull align 8 dead_on_return(528) dereferenceable(528) %i.b) #15
   resume { ptr, i32 } %.pn
 }

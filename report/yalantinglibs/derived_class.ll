@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.a = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #19
-          to label %_ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i unwind label %6 ; 5 uses
+          to label %_ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i unwind label %bb.j ; 5 uses
 
 _ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.a, i8 0, i64 40, i1 false), !noalias !141
@@ -222,7 +222,7 @@ _ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit: 
   store ptr %i.e, ptr %i.c, align 8, !tbaa !34
   %i.f = ptrtoint ptr %i.a to i64
   %i.g = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #19
-          to label %_ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i56 unwind label %8 ; 6 uses
+          to label %_ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i56 unwind label %bb.j ; 6 uses
 
 _ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i56: ; preds = %_ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.g, i8 0, i64 48, i1 false), !noalias !142
@@ -430,20 +430,10 @@ _ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EES
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   ret void
 
-6:                                                ; preds = %bb.a
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.k
-
 _ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit41: ; preds = %_ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
   %i.br = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(36) %i.a, i64 noundef 40) #20
-  br label %bb.k
-
-8:                                                ; preds = %_ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit
-  %9 = landingpad { ptr, i32 }
-          cleanup
   br label %bb.k
 
 _ZNSt10unique_ptrIN18virtual_base_class4obj1ESt14default_deleteIS1_EED2Ev.exit44: ; preds = %_ZNKSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i56
@@ -452,7 +442,7 @@ _ZNSt10unique_ptrIN18virtual_base_class4obj1ESt14default_deleteIS1_EED2Ev.exit44
   tail call void @_ZN18virtual_base_class4obj1D0Ev(ptr noundef nonnull align 8 dereferenceable(48) %i.g) #18, !inline_history !139
   br label %bb.k
 
-bb.j:                                             ; preds = %.lr.ph.i.i.i.i60.preheader
+bb.j:                                             ; preds = %_ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit, %bb.a, %.lr.ph.i.i.i.i60.preheader
   %i.bt = landingpad { ptr, i32 }
           cleanup
   br label %bb.k
@@ -479,8 +469,8 @@ _ZNSt6vectorIPKcSaIS1_EED2Ev.exit51:              ; preds = %_ZNSt6vectorIPKcSaI
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   br label %bb.k
 
-bb.k:                                             ; preds = %_ZNSt6vectorIPKcSaIS1_EED2Ev.exit51, %bb.j, %_ZNSt10unique_ptrIN18virtual_base_class4obj3ESt14default_deleteIS1_EED2Ev.exit47, %8, %_ZNSt10unique_ptrIN18virtual_base_class4obj1ESt14default_deleteIS1_EED2Ev.exit44, %6, %_ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit41
-  %.pn16.pn.pn.pn = phi { ptr, i32 } [ %i.bt, %bb.j ], [ %9, %8 ], [ %7, %6 ], [ %i.br, %_ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit41 ], [ %i.bs, %_ZNSt10unique_ptrIN18virtual_base_class4obj1ESt14default_deleteIS1_EED2Ev.exit44 ], [ %i.bu, %_ZNSt10unique_ptrIN18virtual_base_class4obj3ESt14default_deleteIS1_EED2Ev.exit47 ], [ %.pn16.pn, %_ZNSt6vectorIPKcSaIS1_EED2Ev.exit51 ]
+bb.k:                                             ; preds = %_ZNSt6vectorIPKcSaIS1_EED2Ev.exit51, %bb.j, %_ZNSt10unique_ptrIN18virtual_base_class4obj3ESt14default_deleteIS1_EED2Ev.exit47, %_ZNSt10unique_ptrIN18virtual_base_class4obj1ESt14default_deleteIS1_EED2Ev.exit44, %_ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit41
+  %.pn16.pn.pn.pn = phi { ptr, i32 } [ %i.bt, %bb.j ], [ %.pn16.pn, %_ZNSt6vectorIPKcSaIS1_EED2Ev.exit51 ], [ %i.bu, %_ZNSt10unique_ptrIN18virtual_base_class4obj3ESt14default_deleteIS1_EED2Ev.exit47 ], [ %i.br, %_ZNSt10unique_ptrIN18virtual_base_class4obj2ESt14default_deleteIS1_EED2Ev.exit41 ], [ %i.bs, %_ZNSt10unique_ptrIN18virtual_base_class4obj1ESt14default_deleteIS1_EED2Ev.exit44 ]
   call void @_ZNSt6vectorISt10unique_ptrIN18virtual_base_class4baseESt14default_deleteIS2_EESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   resume { ptr, i32 } %.pn16.pn.pn.pn
@@ -673,7 +663,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.a = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #19
-          to label %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i unwind label %6 ; 5 uses
+          to label %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i unwind label %bb.j ; 5 uses
 
 _ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.a, i8 0, i64 40, i1 false), !noalias !168
@@ -691,7 +681,7 @@ _ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit: ; preds 
   store ptr %i.e, ptr %i.c, align 8, !tbaa !64
   %i.f = ptrtoint ptr %i.a to i64
   %i.g = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #19
-          to label %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i67 unwind label %8 ; 6 uses
+          to label %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i67 unwind label %bb.j ; 6 uses
 
 _ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i67: ; preds = %_ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.g, i8 0, i64 48, i1 false), !noalias !169
@@ -712,7 +702,7 @@ _ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE
   store ptr %i.l, ptr %i.b, align 8, !tbaa !63
   store ptr %i.l, ptr %i.c, align 8, !tbaa !64
   %i.m = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #19
-          to label %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i87 unwind label %10 ; 6 uses
+          to label %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i87 unwind label %bb.j ; 6 uses
 
 _ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i87: ; preds = %.lr.ph.i.i.i.i71.preheader
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.m, i8 0, i64 48, i1 false), !noalias !171
@@ -909,20 +899,10 @@ _ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EED
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   ret void
 
-6:                                                ; preds = %bb.a
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.k
-
 _ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit49: ; preds = %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
   %i.bu = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(36) %i.a, i64 noundef 40) #20
-  br label %bb.k
-
-8:                                                ; preds = %_ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit
-  %9 = landingpad { ptr, i32 }
-          cleanup
   br label %bb.k
 
 _ZNSt10unique_ptrIN10base_class4obj1ESt14default_deleteIS1_EED2Ev.exit52: ; preds = %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i67
@@ -931,18 +911,13 @@ _ZNSt10unique_ptrIN10base_class4obj1ESt14default_deleteIS1_EED2Ev.exit52: ; pred
   tail call void @_ZN10base_class4obj1D0Ev(ptr noundef nonnull align 8 dereferenceable(48) %i.g) #18, !inline_history !166
   br label %bb.k
 
-10:                                               ; preds = %.lr.ph.i.i.i.i71.preheader
-  %11 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.k
-
 _ZNSt10unique_ptrIN10base_class4obj3ESt14default_deleteIS1_EED2Ev.exit55: ; preds = %_ZNKSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i87
   %i.bw = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZN10base_class4obj3D0Ev(ptr noundef nonnull align 8 dereferenceable(48) %i.m) #18, !inline_history !167
   br label %bb.k
 
-bb.j:                                             ; preds = %_ZNSt10unique_ptrIN10base_class4obj3ESt14default_deleteIS1_EED2Ev.exit
+bb.j:                                             ; preds = %.lr.ph.i.i.i.i71.preheader, %_ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit, %bb.a, %_ZNSt10unique_ptrIN10base_class4obj3ESt14default_deleteIS1_EED2Ev.exit
   %i.bx = landingpad { ptr, i32 }
           cleanup
   br label %bb.k
@@ -963,8 +938,8 @@ bb.j:                                             ; preds = %_ZNSt10unique_ptrIN
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %10, %_ZNSt10unique_ptrIN10base_class4obj3ESt14default_deleteIS1_EED2Ev.exit55, %8, %_ZNSt10unique_ptrIN10base_class4obj1ESt14default_deleteIS1_EED2Ev.exit52, %6, %_ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit49, %.body
-  %.pn19.pn.pn.pn = phi { ptr, i32 } [ %.pn19.pn.pn, %.body ], [ %11, %10 ], [ %9, %8 ], [ %7, %6 ], [ %i.bu, %_ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit49 ], [ %i.bv, %_ZNSt10unique_ptrIN10base_class4obj1ESt14default_deleteIS1_EED2Ev.exit52 ], [ %i.bw, %_ZNSt10unique_ptrIN10base_class4obj3ESt14default_deleteIS1_EED2Ev.exit55 ], [ %i.bx, %bb.j ]
+bb.k:                                             ; preds = %bb.j, %_ZNSt10unique_ptrIN10base_class4obj3ESt14default_deleteIS1_EED2Ev.exit55, %_ZNSt10unique_ptrIN10base_class4obj1ESt14default_deleteIS1_EED2Ev.exit52, %_ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit49, %.body
+  %.pn19.pn.pn.pn = phi { ptr, i32 } [ %.pn19.pn.pn, %.body ], [ %i.bw, %_ZNSt10unique_ptrIN10base_class4obj3ESt14default_deleteIS1_EED2Ev.exit55 ], [ %i.bv, %_ZNSt10unique_ptrIN10base_class4obj1ESt14default_deleteIS1_EED2Ev.exit52 ], [ %i.bx, %bb.j ], [ %i.bu, %_ZNSt10unique_ptrIN10base_class4obj2ESt14default_deleteIS1_EED2Ev.exit49 ]
   call void @_ZNSt6vectorISt10unique_ptrIN10base_class4baseESt14default_deleteIS2_EESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   resume { ptr, i32 } %.pn19.pn.pn.pn

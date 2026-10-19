@@ -202,18 +202,13 @@ bb.aa:                                            ; preds = %bb.z
   call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #16, !dbg !9959
   unreachable, !dbg !9959
 
-.loopexit:                                        ; preds = %.lr.ph
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body42
-
-.loopexit.split-lp:                               ; preds = %bb.ad
+.loopexit.split-lp:                               ; preds = %.lr.ph, %bb.ad
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body42
 
-.body42:                                          ; preds = %.loopexit, %.loopexit.split-lp, %bb.ah, %bb.z
-  %eh.lpad-body43 = phi { ptr, i32 } [ %i.bx, %bb.z ], [ %i.cl, %bb.ah ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body42:                                          ; preds = %.loopexit.split-lp, %bb.ah, %bb.z
+  %eh.lpad-body43 = phi { ptr, i32 } [ %i.bx, %bb.z ], [ %i.cl, %bb.ah ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4plan7DslPlanEECs7Ga9Brpi21q_11polars_lazy(ptr noalias noundef align 8 dereferenceable(24) %i.i) #18
           to label %bb.s unwind label %bb.am, !dbg !9960
 
@@ -245,7 +240,7 @@ bb.ad:                                            ; preds = %bb.ab
   %.sroa.014.058 = phi ptr [ %.sroa.014.0, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4plan7DslPlanE8push_mutCs7Ga9Brpi21q_11polars_lazy.exit48 ], [ %.sroa.014.057, %.lr.ph.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !9970
   invoke void @_RNvXs_NtNtCsfcROwRM8ZtH_11polars_plan3dsl4planNtB4_7DslPlanNtNtCscgRAwXFJnXP_4core7default7Default7default(ptr noalias noundef nonnull sret([368 x i8]) align 16 captures(none) dereferenceable(368) %i.e)
-          to label %bb.af unwind label %.loopexit, !dbg !9970
+          to label %bb.af unwind label %.loopexit.split-lp, !dbg !9970
 
 ._crit_edge:                                      ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4plan7DslPlanE8push_mutCs7Ga9Brpi21q_11polars_lazy.exit48, %bb.ac
   %.sroa.422.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !9972

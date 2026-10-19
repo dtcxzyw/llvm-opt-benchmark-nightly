@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %.split.us
 
 bb.ac:                                            ; preds = %.lr.ph
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.39, ptr noundef nonnull @.str.37, i64 noundef %.064, i64 noundef %i.abn) #18
-          to label %.noexc unwind label %.loopexit.split-lp
+          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.ac
   unreachable
@@ -215,7 +215,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE7replaceE
   %i.abr = icmp ne i64 %i.abn, %.064
   %spec.select.i.i.i = zext i1 %i.abr to i64
   %i.abs = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %.064, i64 noundef %spec.select.i.i.i, ptr noundef %i.abq, i64 noundef %i.abp)
-          to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE7replaceEmmRKS6_.exit unwind label %.loopexit ; 0 uses
+          to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE7replaceEmmRKS6_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE7replaceEmmRKS6_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE7replaceEmmPKcm.exit.i
   %i.abt = load i64, ptr %i.abf, align 8, !tbaa !51 ; 3 uses
@@ -232,16 +232,6 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i30:     ; preds = %_ZNSt7__cxx1112basi
   %.not22 = icmp eq i64 %i.aby, -1
   %or.cond118 = or i1 %.not.i31, %.not22
   br i1 %or.cond118, label %._crit_edge, label %.lr.ph, !llvm.loop !77
-
-.loopexit:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE7replaceEmmPKcm.exit.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.an
-
-.loopexit.split-lp:                               ; preds = %bb.ac
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.an
 
 ._crit_edge:                                      ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE7replaceEmmRKS6_.exit
   %i.abz = load i64, ptr %i.p, align 8, !tbaa !51 ; 3 uses
@@ -341,6 +331,11 @@ _ZNSolsEPFRSoS_E.exit:                            ; preds = %.noexc47
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
   br label %_ZStneIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit.thread53
 
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEE7replaceEmmPKcm.exit.i, %bb.ac
+  %lpad.loopexit.split-lp1263 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.an
+
 bb.ai:                                            ; preds = %_ZStneIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS7_.exit.thread
   %i.add = landingpad { ptr, i32 }
           cleanup
@@ -384,8 +379,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   ret void
 
-bb.an:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.ak
-  %.pn24 = phi { ptr, i32 } [ %.pn, %bb.ak ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.an:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ak
+  %.pn24 = phi { ptr, i32 } [ %.pn, %bb.ak ], [ %lpad.loopexit.split-lp1263, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcEN3ozz12StdAllocatorIcEEED2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #17
   br label %bb.ao
 

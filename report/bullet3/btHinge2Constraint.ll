@@ -71,7 +71,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = invoke noundef nonnull align 4 dereferenceable(48) ptr @_ZN11btMatrix3x311getIdentityEv()
-          to label %bb.d unwind label %6          ; 3 uses
+          to label %bb.d unwind label %bb.h       ; 3 uses
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) @_ZZN11btTransform11getIdentityEvE17identityTransform, ptr noundef nonnull align 4 dereferenceable(48) %i.d, i64 16, i1 false), !tbaa.struct !21
@@ -83,16 +83,6 @@ bb.d:                                             ; preds = %bb.c
   %i.g = tail call ptr @llvm.invariant.start.p0(i64 64, ptr nonnull @_ZZN11btTransform11getIdentityEvE17identityTransform) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN11btTransform11getIdentityEvE17identityTransform) #13
   br label %_ZN11btTransform11getIdentityEv.exit
-
-common.resume:                                    ; preds = %bb.h, %6
-  %common.resume.op = phi { ptr, i32 } [ %7, %6 ], [ %i.o, %bb.h ]
-  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN11btTransform11getIdentityEvE17identityTransform) #13
-  resume { ptr, i32 } %common.resume.op
-
-6:                                                ; preds = %bb.c
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume
 
 _ZN11btTransform11getIdentityEv.exit:             ; preds = %bb.a, %bb.b, %bb.d
   %i.h = load atomic i8, ptr @_ZGVZN11btTransform11getIdentityEvE17identityTransform acquire, align 8
@@ -119,10 +109,11 @@ bb.g:                                             ; preds = %bb.f
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN11btTransform11getIdentityEvE17identityTransform) #13
   br label %bb.i
 
-bb.h:                                             ; preds = %bb.f
+bb.h:                                             ; preds = %bb.c, %bb.f
   %i.o = landingpad { ptr, i32 }
           cleanup
-  br label %common.resume
+  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN11btTransform11getIdentityEvE17identityTransform) #13
+  resume { ptr, i32 } %i.o
 
 bb.i:                                             ; preds = %bb.g, %bb.e, %_ZN11btTransform11getIdentityEv.exit
   tail call void @_ZN30btGeneric6DofSpring2ConstraintC2ER11btRigidBodyS1_RK11btTransformS4_11RotateOrder(ptr noundef nonnull align 8 dereferenceable(1484) %0, ptr noundef nonnull align 8 dereferenceable(744) %1, ptr noundef nonnull align 8 dereferenceable(744) %2, ptr noundef nonnull align 4 dereferenceable(64) @_ZZN11btTransform11getIdentityEvE17identityTransform, ptr noundef nonnull align 4 dereferenceable(64) @_ZZN11btTransform11getIdentityEvE17identityTransform, i32 noundef 0)

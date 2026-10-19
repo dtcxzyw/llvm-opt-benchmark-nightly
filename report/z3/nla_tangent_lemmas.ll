@@ -205,7 +205,7 @@ _ZN8rationalD2Ev.exit80:                          ; preds = %.noexc.i79
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #12
   %i.fm = load i32, ptr %i.e, align 8, !tbaa !216
   invoke void @_ZN2lp8lar_term7add_varEj(ptr noundef nonnull align 8 dereferenceable(28) %9, i32 noundef %i.fm)
-          to label %bb.ah unwind label %19
+          to label %bb.ah unwind label %bb.ca
 
 bb.ah:                                            ; preds = %_ZN8rationalD2Ev.exit80
   %i.fn = load i8, ptr %i.k, align 8, !tbaa !214, !range !230, !noundef !43
@@ -546,11 +546,6 @@ bb.bt:                                            ; preds = %.body72, %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #12
   br label %bb.cb
 
-19:                                               ; preds = %_ZN8rationalD2Ev.exit80
-  %20 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.cb
-
 bb.bu:                                            ; preds = %bb.al, %bb.aj
   %i.io = landingpad { ptr, i32 }
           cleanup
@@ -589,13 +584,13 @@ bb.bz:                                            ; preds = %bb.by, %bb.bv
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #12
   br label %bb.cb
 
-bb.ca:                                            ; preds = %.noexc93, %.noexc92, %bb.as
+bb.ca:                                            ; preds = %.noexc93, %.noexc92, %bb.as, %_ZN8rationalD2Ev.exit80
   %i.is = landingpad { ptr, i32 }
           cleanup
   br label %bb.cb
 
-bb.cb:                                            ; preds = %.body85, %bb.ca, %19, %bb.bt, %bb.bn
-  %.pn43.pn = phi { ptr, i32 } [ %.pn31.pn.pn, %bb.bn ], [ %20, %19 ], [ %.pn35.pn.pn, %bb.bt ], [ %i.is, %bb.ca ], [ %.pn39.pn.pn, %.body85 ]
+bb.cb:                                            ; preds = %.body85, %bb.ca, %bb.bt, %bb.bn
+  %.pn43.pn = phi { ptr, i32 } [ %.pn31.pn.pn, %bb.bn ], [ %.pn39.pn.pn, %.body85 ], [ %.pn35.pn.pn, %bb.bt ], [ %i.is, %bb.ca ]
   call void @_ZN2lp8lar_termD2Ev(ptr noundef nonnull align 8 dead_on_return(28) dereferenceable(28) %9) #12
   br label %bb.cc
 

@@ -204,14 +204,14 @@ bb.b:                                             ; preds = %.lr.ph
 
 .noexc.i.i.i:                                     ; preds = %bb.b
   invoke void @_ZSt28__throw_bad_array_new_lengthv() #14
-          to label %.noexc unwind label %.loopexit.split-lp
+          to label %.noexc unwind label %bb.c
 
 .noexc:                                           ; preds = %.noexc.i.i.i
   unreachable
 
 _ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.b
   %i.h = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #15
-          to label %.noexc8 unwind label %.loopexit12
+          to label %.noexc8 unwind label %bb.c
 
 .noexc8:                                          ; preds = %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i.i, %.lr.ph
   %i.i = phi ptr [ null, %.lr.ph ], [ %i.h, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i.i ] ; 5 uses
@@ -243,19 +243,10 @@ _ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %b
   %.not = icmp eq ptr %i.q, %1
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !76
 
-.loopexit12:                                      ; preds = %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
+bb.c:                                             ; preds = %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i.i, %.noexc.i.i.i
+  %lpad.loopexit.split-lp36 = landingpad { ptr, i32 }
           catch ptr null
-  br label %bb.c
-
-.loopexit.split-lp:                               ; preds = %.noexc.i.i.i
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          catch ptr null
-  br label %bb.c
-
-bb.c:                                             ; preds = %.loopexit.split-lp, %.loopexit12
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit12 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  %i.s = extractvalue { ptr, i32 } %lpad.phi, 0
+  %i.s = extractvalue { ptr, i32 } %lpad.loopexit.split-lp36, 0
   %i.t = tail call ptr @__cxa_begin_catch(ptr %i.s) #13 ; 0 uses
   invoke void @_ZSt8_DestroyIPSt6vectorISt7complexIdESaIS2_EEEvT_S6_(ptr noundef %2, ptr noundef nonnull %.018)
           to label %bb.d unwind label %bb.e

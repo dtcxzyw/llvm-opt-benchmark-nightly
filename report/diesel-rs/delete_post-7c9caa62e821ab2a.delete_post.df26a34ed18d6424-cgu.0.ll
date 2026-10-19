@@ -202,8 +202,8 @@ bb.j:                                             ; preds = %bb.d, %bb.f
   invoke void @_RNvNtCscI6d9CVNmLh_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 34, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #19
           to label %bb.cw unwind label %bb.c
 
-.thread117:                                       ; preds = %bb.cv, %bb.cu, %.body, %bb.l, %0
-  %.pn.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.bl, %bb.l ], [ %1, %0 ], [ %i.hw, %bb.cu ], [ %i.hw, %bb.cv ] ; 2 uses
+.thread117:                                       ; preds = %bb.cv, %bb.cu, %.body, %bb.l
+  %.pn.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.bl, %bb.l ], [ %i.hw, %bb.cv ], [ %i.hw, %bb.cu ] ; 2 uses
   %.val18 = load i64, ptr %i.ao, align 8          ; 2 uses
   %i.bj = icmp eq i64 %.val18, 0
   br i1 %i.bj, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsj9PhBAIfT7c_11delete_post.exit, label %bb.k
@@ -214,11 +214,6 @@ bb.k:                                             ; preds = %.thread117
   call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val19, i64 noundef %.val18, i64 noundef range(i64 1, -9223372036854775807) 1) #16
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsj9PhBAIfT7c_11delete_post.exit
 
-0:                                                ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsgczF5crJ4sT_3std3env4ArgsECsj9PhBAIfT7c_11delete_post.exit
-  %1 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread117
-
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsgczF5crJ4sT_3std3env4ArgsECsj9PhBAIfT7c_11delete_post.exit: ; preds = %bb.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueSNtNtNtCsgczF5crJ4sT_3std3ffi6os_str8OsStringECsj9PhBAIfT7c_11delete_post.exit.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
@@ -227,7 +222,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsgczF5crJ4sT_3std3env4ArgsECsj9PhBA
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   store ptr @_RNvXsq_NtCs40k4W9msRzi_5alloc6stringNtB5_6StringNtNtCscI6d9CVNmLh_4core3fmt7Display3fmt, ptr %.sroa.43.0..sroa_idx, align 8
   invoke void @_RNvNvNtCs40k4W9msRzi_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.al, ptr noundef nonnull @7, ptr noundef nonnull %i.ak)
-          to label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsj9PhBAIfT7c_11delete_post.exit unwind label %0
+          to label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsj9PhBAIfT7c_11delete_post.exit unwind label %bb.l
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsj9PhBAIfT7c_11delete_post.exit: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsgczF5crJ4sT_3std3env4ArgsECsj9PhBAIfT7c_11delete_post.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
@@ -241,7 +236,7 @@ _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi
   invoke void @_RNvCs5j5LbXaSBog_29getting_started_step_3_sqlite20establish_connection(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(address) dereferenceable(80) %i.aj)
           to label %bb.n unwind label %bb.cu
 
-bb.l:                                             ; preds = %bb.cq
+bb.l:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsgczF5crJ4sT_3std3env4ArgsECsj9PhBAIfT7c_11delete_post.exit, %bb.cq
   %i.bl = landingpad { ptr, i32 }
           cleanup
   br label %.thread117

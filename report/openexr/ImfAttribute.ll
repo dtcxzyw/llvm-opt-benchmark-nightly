@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %_ZNSt8_Rb_treeIPKcS
 
 _ZNSt3mapIPKcPFPN7Imf_3_49AttributeEvENS2_12_GLOBAL__N_111NameCompareESaISt4pairIKS1_S6_EEE4findERSA_.exit: ; preds = %bb.e
   invoke void @_Z13iex_debugTrapv()
-          to label %bb.f unwind label %3
+          to label %bb.f unwind label %bb.s
 
 bb.f:                                             ; preds = %_ZNSt3mapIPKcPFPN7Imf_3_49AttributeEvENS2_12_GLOBAL__N_111NameCompareESaISt4pairIKS1_S6_EEE4findERSA_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
@@ -230,11 +230,6 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit11: ; preds = %bb.h
 bb.i:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit11
   invoke void @__cxa_throw(ptr nonnull %i.s, ptr nonnull @_ZTIN7Iex_3_46ArgExcE, ptr nonnull @_ZN7Iex_3_46ArgExcD1Ev) #20
           to label %bb.u unwind label %bb.k
-
-3:                                                ; preds = %_ZNSt3mapIPKcPFPN7Imf_3_49AttributeEvENS2_12_GLOBAL__N_111NameCompareESaISt4pairIKS1_S6_EEE4findERSA_.exit
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.t
 
 bb.j:                                             ; preds = %bb.f
   %i.t = landingpad { ptr, i32 }
@@ -328,13 +323,13 @@ bb.r:                                             ; preds = %.noexc, %bb.p
   %i.aq = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_ZZN7Imf_3_412_GLOBAL__N_17typeMapEvE4tMap, i64 48)) #19 ; 0 uses
   ret void
 
-bb.s:                                             ; preds = %_ZNSt8_Rb_treeIPKcSt4pairIKS1_PFPN7Imf_3_49AttributeEvEESt10_Select1stIS9_ENS4_12_GLOBAL__N_111NameCompareESaIS9_EE10_M_insert_IS9_NSF_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS9_EPSt18_Rb_tree_node_baseSL_OT_RT0_.exit.i.i
+bb.s:                                             ; preds = %_ZNSt3mapIPKcPFPN7Imf_3_49AttributeEvENS2_12_GLOBAL__N_111NameCompareESaISt4pairIKS1_S6_EEE4findERSA_.exit, %_ZNSt8_Rb_treeIPKcSt4pairIKS1_PFPN7Imf_3_49AttributeEvEESt10_Select1stIS9_ENS4_12_GLOBAL__N_111NameCompareESaIS9_EE10_M_insert_IS9_NSF_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS9_EPSt18_Rb_tree_node_baseSL_OT_RT0_.exit.i.i
   %i.ar = landingpad { ptr, i32 }
           cleanup
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.s, %bb.n, %3
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.n ], [ %4, %3 ], [ %i.ar, %bb.s ]
+bb.t:                                             ; preds = %bb.s, %bb.n
+  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.n ], [ %i.ar, %bb.s ]
   %i.as = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_ZZN7Imf_3_412_GLOBAL__N_17typeMapEvE4tMap, i64 48)) #19 ; 0 uses
   resume { ptr, i32 } %.pn.pn.pn
 

@@ -202,18 +202,13 @@ _ZNSt12__shared_ptrIN5osgeo4proj2io15DatabaseContextELN9__gnu_cxx12_Lock_policyE
 bb.i:                                             ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj2io15DatabaseContextELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.t = load ptr, ptr %9, align 8, !tbaa !57
   invoke void @_ZN5osgeo4proj2io19PROJStringFormatter14startInversionEv(ptr noundef nonnull align 8 dereferenceable(8) %i.t)
-          to label %bb.k unwind label %18
+          to label %bb.k unwind label %bb.av
 
 bb.j:                                             ; preds = %bb.a
   %i.u = landingpad { ptr, i32 }
           cleanup
   call void @_ZNSt12__shared_ptrIN5osgeo4proj2io15DatabaseContextELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %10) #23
   br label %bb.bt
-
-18:                                               ; preds = %bb.m, %bb.k, %bb.i
-  %19 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bs
 
 bb.k:                                             ; preds = %bb.i, %_ZNSt12__shared_ptrIN5osgeo4proj2io15DatabaseContextELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.v = load ptr, ptr %2, align 8, !tbaa !62     ; 2 uses
@@ -222,7 +217,7 @@ bb.k:                                             ; preds = %bb.i, %_ZNSt12__sha
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.z = load ptr, ptr %i.y, align 8
   invoke void %i.z(ptr noundef nonnull align 8 dereferenceable(8) %i.v, ptr noundef %i.w)
-          to label %bb.l unwind label %18
+          to label %bb.l unwind label %bb.av
 
 bb.l:                                             ; preds = %bb.k
   br i1 %3, label %bb.m, label %bb.n
@@ -230,7 +225,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.aa = load ptr, ptr %9, align 8, !tbaa !57
   invoke void @_ZN5osgeo4proj2io19PROJStringFormatter13stopInversionEv(ptr noundef nonnull align 8 dereferenceable(8) %i.aa)
-          to label %bb.n unwind label %18
+          to label %bb.n unwind label %bb.av
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %i.ab = load ptr, ptr %9, align 8, !tbaa !57
@@ -626,7 +621,7 @@ bb.au:                                            ; preds = %bb.at
   invoke void @_ZN5osgeo4proj9operation19CoordinateOperation33setRequiresPerCoordinateInputTimeEb(ptr noundef nonnull align 8 dereferenceable(72) %i.fg, i1 noundef zeroext %i.ff)
           to label %bb.bi unwind label %bb.bc
 
-bb.av:                                            ; preds = %bb.n
+bb.av:                                            ; preds = %bb.i, %bb.k, %bb.m, %bb.n
   %i.fh = landingpad { ptr, i32 }
           cleanup
   br label %bb.bs
@@ -804,8 +799,8 @@ bb.br:                                            ; preds = %bb.bq, %bb.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23
   br label %bb.bs
 
-bb.bs:                                            ; preds = %bb.av, %bb.br, %18
-  %.pn35.pn.pn.pn.pn = phi { ptr, i32 } [ %19, %18 ], [ %.pn35.pn.pn, %bb.br ], [ %i.fh, %bb.av ]
+bb.bs:                                            ; preds = %bb.av, %bb.br
+  %.pn35.pn.pn.pn.pn = phi { ptr, i32 } [ %i.fh, %bb.av ], [ %.pn35.pn.pn, %bb.br ]
   call void @_ZN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io19PROJStringFormatterESt14default_deleteIS6_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %9) #23
   br label %bb.bt
 

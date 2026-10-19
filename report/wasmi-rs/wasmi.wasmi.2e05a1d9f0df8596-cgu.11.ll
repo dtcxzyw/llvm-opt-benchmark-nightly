@@ -202,17 +202,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   invoke void @_RNvXs0_NtNtCsG258MDvU3F_3std4sync9lazy_lockINtB5_8LazyLockNtNtB9_9backtrace7CaptureNCNvNtBW_6helper12lazy_resolve0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.f)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtCscK5W4trzgIe_6anyhow5error9ErrorImplINtB1d_12ContextErrorReINtNtNtB4_3mem13manually_drop12ManuallyDropNtNtCsefoF4u9kbII_5wasmi5error5ErrorEEEEECs3WYoaQ2jqaU_5wasmi.exit unwind label %2
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtCscK5W4trzgIe_6anyhow5error9ErrorImplINtB1d_12ContextErrorReINtNtNtB4_3mem13manually_drop12ManuallyDropNtNtCsefoF4u9kbII_5wasmi5error5ErrorEEEEECs3WYoaQ2jqaU_5wasmi.exit unwind label %bb.h
 
-common.resume:                                    ; preds = %bb.f, %bb.h, %2
-  %common.resume.op = phi { ptr, i32 } [ %3, %2 ], [ %i.l, %bb.h ], [ %i.h, %bb.f ]
+common.resume:                                    ; preds = %bb.f, %bb.h
+  %common.resume.op = phi { ptr, i32 } [ %i.h, %bb.f ], [ %i.l, %bb.h ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %0, i64 noundef 80, i64 noundef 8) #23
   resume { ptr, i32 } %common.resume.op
-
-2:                                                ; preds = %bb.c
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume
 
 bb.d:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsG258MDvU3F_3std9backtrace9BacktraceEECs3WYoaQ2jqaU_5wasmi.exit.i.i
@@ -240,7 +235,7 @@ bb.g:                                             ; preds = %bb.f
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #26
   unreachable
 
-bb.h:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsG258MDvU3F_3std9backtrace9BacktraceEECs3WYoaQ2jqaU_5wasmi.exit.i.i
+bb.h:                                             ; preds = %bb.c, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsG258MDvU3F_3std9backtrace9BacktraceEECs3WYoaQ2jqaU_5wasmi.exit.i.i
   %i.l = landingpad { ptr, i32 }
           cleanup
   br label %common.resume

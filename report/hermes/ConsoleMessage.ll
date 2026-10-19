@@ -202,7 +202,7 @@ bb.a:
   %i.o = load ptr, ptr %.07.i.i.i, align 8, !tbaa !47 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 512
   invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN8facebook6hermes3cdp14ConsoleMessageEEEvT_S7_(ptr noundef nonnull %i.o, ptr noundef nonnull %i.p)
-          to label %.noexc unwind label %.loopexit4
+          to label %.noexc unwind label %bb.c
 
 .noexc:                                           ; preds = %.lr.ph.i.i.i
   %.0.i.i.i = getelementptr inbounds nuw i8, ptr %.07.i.i.i, i64 8 ; 2 uses
@@ -211,12 +211,12 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.i.i.i
   invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN8facebook6hermes3cdp14ConsoleMessageEEEvT_S7_(ptr noundef %i.c, ptr noundef %i.e)
-          to label %_ZNSt5dequeIN8facebook6hermes3cdp14ConsoleMessageESaIS3_EE15_M_destroy_dataESt15_Deque_iteratorIS3_RS3_PS3_ES9_RKS4_.exit.i unwind label %.loopexit.split-lp
+          to label %_ZNSt5dequeIN8facebook6hermes3cdp14ConsoleMessageESaIS3_EE15_M_destroy_dataESt15_Deque_iteratorIS3_RS3_PS3_ES9_RKS4_.exit.i unwind label %bb.c
 
 _ZNSt5dequeIN8facebook6hermes3cdp14ConsoleMessageESaIS3_EE15_M_destroy_dataESt15_Deque_iteratorIS3_RS3_PS3_ES9_RKS4_.exit.i: ; preds = %bb.b, %._crit_edge.i.i.i
   %.sink.i.i.i = phi ptr [ %i.c, %._crit_edge.i.i.i ], [ %i.k, %bb.b ]
   invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN8facebook6hermes3cdp14ConsoleMessageEEEvT_S7_(ptr noundef %.sink.i.i.i, ptr noundef %i.i)
-          to label %.noexc2 unwind label %.loopexit.split-lp
+          to label %.noexc2 unwind label %bb.c
 
 .noexc2:                                          ; preds = %_ZNSt5dequeIN8facebook6hermes3cdp14ConsoleMessageESaIS3_EE15_M_destroy_dataESt15_Deque_iteratorIS3_RS3_PS3_ES9_RKS4_.exit.i
   %i.r = load ptr, ptr %i.l, align 8, !tbaa !48   ; 2 uses
@@ -238,19 +238,10 @@ _ZNSt5dequeIN8facebook6hermes3cdp14ConsoleMessageESaIS3_EE15_M_destroy_dataESt15
   store ptr %i.g, ptr %i.l, align 8, !tbaa !62
   ret void
 
-.loopexit4:                                       ; preds = %.lr.ph.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
+bb.c:                                             ; preds = %.lr.ph.i.i.i, %_ZNSt5dequeIN8facebook6hermes3cdp14ConsoleMessageESaIS3_EE15_M_destroy_dataESt15_Deque_iteratorIS3_RS3_PS3_ES9_RKS4_.exit.i, %bb.b
+  %lpad.loopexit.split-lp8 = landingpad { ptr, i32 }
           catch ptr null
-  br label %bb.c
-
-.loopexit.split-lp:                               ; preds = %bb.b, %_ZNSt5dequeIN8facebook6hermes3cdp14ConsoleMessageESaIS3_EE15_M_destroy_dataESt15_Deque_iteratorIS3_RS3_PS3_ES9_RKS4_.exit.i
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          catch ptr null
-  br label %bb.c
-
-bb.c:                                             ; preds = %.loopexit.split-lp, %.loopexit4
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit4 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  %i.v = extractvalue { ptr, i32 } %lpad.phi, 0
+  %i.v = extractvalue { ptr, i32 } %lpad.loopexit.split-lp8, 0
   tail call void @__clang_call_terminate(ptr %i.v) #16
   unreachable
 }

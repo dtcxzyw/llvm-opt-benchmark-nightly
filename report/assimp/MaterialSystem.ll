@@ -204,7 +204,7 @@ bb.a:
   store i32 %2, ptr %i.i, align 4
   %i.j = zext i32 %2 to i64                       ; 2 uses
   %i.k = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.j) #28
-          to label %bb.h unwind label %8          ; 2 uses
+          to label %bb.h unwind label %bb.o       ; 2 uses
 
 .lr.ph:                                           ; preds = %.preheader, %bb.g
   %i.l = phi i32 [ %i.ab, %bb.g ], [ %i.c, %.preheader ] ; 4 uses
@@ -276,11 +276,6 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.d, ptr %i.ak, align 8
   br label %_ZNSt10unique_ptrI18aiMaterialPropertySt14default_deleteIS0_EED2Ev.exit
 
-8:                                                ; preds = %._crit_edge
-  %9 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.t
-
 bb.j:                                             ; preds = %bb.h
   %i.al = load i32, ptr %i.b, align 8             ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
@@ -323,7 +318,7 @@ bb.n:                                             ; preds = %bb.m
   invoke void @__cxa_end_catch()
           to label %bb.r unwind label %bb.o
 
-bb.o:                                             ; preds = %bb.n
+bb.o:                                             ; preds = %._crit_edge, %bb.n
   %i.bd = landingpad { ptr, i32 }
           cleanup
   br label %bb.t
@@ -366,8 +361,8 @@ _ZNSt10unique_ptrI18aiMaterialPropertySt14default_deleteIS0_EED2Ev.exit: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   br label %bb.u
 
-bb.t:                                             ; preds = %bb.m, %bb.o, %8
-  %.merged = phi { ptr, i32 } [ %9, %8 ], [ %i.bd, %bb.o ], [ %i.ax, %bb.m ]
+bb.t:                                             ; preds = %bb.m, %bb.o
+  %.merged = phi { ptr, i32 } [ %i.ax, %bb.m ], [ %i.bd, %bb.o ]
   call void @_ZNSt10unique_ptrI18aiMaterialPropertySt14default_deleteIS0_EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   resume { ptr, i32 } %.merged

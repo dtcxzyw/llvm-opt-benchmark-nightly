@@ -202,7 +202,7 @@ _ZN2v88internal6torque12_GLOBAL__N_117MakeKythePositionERKNS1_14SourcePositionE.
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8
   %i.ay = invoke noundef ptr %i.ax(ptr noundef nonnull align 8 dereferenceable(81) %0)
-          to label %bb.n unwind label %5          ; 4 uses
+          to label %bb.n unwind label %bb.ab      ; 4 uses
 
 bb.n:                                             ; preds = %_ZN2v88internal6torque12_GLOBAL__N_117MakeKythePositionERKNS1_14SourcePositionE.exit
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
@@ -389,12 +389,7 @@ _ZN2v88internal6torque13KythePositionD2Ev.exit24: ; preds = %_ZNSt13unordered_ma
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   br label %bb.af
 
-5:                                                ; preds = %_ZN2v88internal6torque12_GLOBAL__N_117MakeKythePositionERKNS1_14SourcePositionE.exit
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit30
-
-bb.ab:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i, %.noexc11.i, %.noexc.i, %bb.o
+bb.ab:                                            ; preds = %_ZN2v88internal6torque12_GLOBAL__N_117MakeKythePositionERKNS1_14SourcePositionE.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i, %.noexc11.i, %.noexc.i, %bb.o
   %i.cq = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit30
@@ -435,8 +430,8 @@ bb.ae:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit30
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit30: ; preds = %_ZN2v88internal6torque13KythePositionD2Ev.exit27, %bb.ab, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i28, %bb.ae, %5
-  %.pn12 = phi { ptr, i32 } [ %i.db, %bb.ae ], [ %6, %5 ], [ %i.cq, %bb.ab ], [ %.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i28 ], [ %.pn, %_ZN2v88internal6torque13KythePositionD2Ev.exit27 ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit30: ; preds = %_ZN2v88internal6torque13KythePositionD2Ev.exit27, %bb.ab, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i28, %bb.ae
+  %.pn12 = phi { ptr, i32 } [ %i.db, %bb.ae ], [ %.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i28 ], [ %i.cq, %bb.ab ], [ %.pn, %_ZN2v88internal6torque13KythePositionD2Ev.exit27 ]
   %i.dc = load ptr, ptr %1, align 8               ; 2 uses
   %i.dd = icmp eq ptr %i.dc, %i.ah
   br i1 %i.dd, label %_ZN2v88internal6torque13KythePositionD2Ev.exit33, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i31

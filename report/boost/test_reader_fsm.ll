@@ -204,7 +204,7 @@ _ZNSt14_Function_baseD2Ev.exit40.i:               ; preds = %bb.ey, %_ZN5boost5r
   %i.aft = getelementptr inbounds nuw i8, ptr %77, i64 24 ; 2 uses
   %i.afu = getelementptr inbounds nuw i8, ptr %77, i64 712 ; 4 uses
   invoke void @_ZN5boost5redis6detail11multiplexer3addERKSt10shared_ptrINS2_4elemEE(ptr noundef nonnull align 8 dereferenceable(352) %i.afu, ptr noundef nonnull align 8 dereferenceable(16) %80)
-          to label %bb.fa unwind label %185
+          to label %bb.fa unwind label %bb.gb
 
 bb.fa:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit40.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u) #27
@@ -546,11 +546,6 @@ _ZNSt14_Function_baseD2Ev.exit62.i:               ; preds = %bb.fw, %_ZN5boost5r
   call void @llvm.lifetime.end.p0(ptr nonnull %81) #27
   br label %bb.gp
 
-185:                                              ; preds = %_ZNSt14_Function_baseD2Ev.exit40.i
-  %186 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.go
-
 bb.fy:                                            ; preds = %bb.fa
   %i.ajs = landingpad { ptr, i32 }
           cleanup
@@ -567,7 +562,7 @@ bb.ga:                                            ; preds = %bb.fz, %bb.fy
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u) #27
   br label %bb.go
 
-bb.gb:                                            ; preds = %bb.ff, %_ZNK5boost5redis6detail11multiplexer16get_write_bufferEv.exit.i
+bb.gb:                                            ; preds = %bb.ff, %_ZNK5boost5redis6detail11multiplexer16get_write_bufferEv.exit.i, %_ZNSt14_Function_baseD2Ev.exit40.i
   %i.aju = landingpad { ptr, i32 }
           cleanup
   br label %bb.go
@@ -695,8 +690,8 @@ bb.gn:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %84) #27
   br label %bb.go
 
-bb.go:                                            ; preds = %bb.gn, %bb.gb, %bb.ga, %185
-  %.pn25.pn.pn.pn.pn.pn.pn.i = phi { ptr, i32 } [ %.pn25.pn.pn.pn.pn.pn.i, %bb.gn ], [ %i.aju, %bb.gb ], [ %.pn.i, %bb.ga ], [ %186, %185 ]
+bb.go:                                            ; preds = %bb.gn, %bb.gb, %bb.ga
+  %.pn25.pn.pn.pn.pn.pn.pn.i = phi { ptr, i32 } [ %.pn25.pn.pn.pn.pn.pn.i, %bb.gn ], [ %i.aju, %bb.gb ], [ %.pn.i, %bb.ga ]
   call void @_ZNSt12__shared_ptrIN5boost5redis6detail11multiplexer4elemELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %80) #27
   br label %bb.gp
 

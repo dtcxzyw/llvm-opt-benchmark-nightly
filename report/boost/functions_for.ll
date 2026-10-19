@@ -202,7 +202,7 @@ bb.a:
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %0)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
   %i.d = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIbEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.c, i1 noundef zeroext true)
-          to label %_ZNSolsEb.exit unwind label %4 ; 0 uses
+          to label %_ZNSolsEb.exit unwind label %bb.q ; 0 uses
 
 _ZNSolsEb.exit:                                   ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
@@ -434,11 +434,6 @@ _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #22
   ret void
 
-4:                                                ; preds = %bb.a
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.s
-
 bb.o:                                             ; preds = %_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit
   %i.cs = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
@@ -476,7 +471,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   br label %bb.s
 
-bb.q:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f
+bb.q:                                             ; preds = %bb.a, %bb.i, %bb.h, %bb.g, %bb.f
   %i.dc = landingpad { ptr, i32 }
           cleanup
   br label %bb.s
@@ -501,8 +496,8 @@ bb.r:                                             ; preds = %_ZNKSt7__cxx1118bas
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   br label %bb.s
 
-bb.s:                                             ; preds = %.body28, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39, %.body, %4
-  %.pn8.pn = phi { ptr, i32 } [ %.pn8, %.body28 ], [ %i.dc, %bb.q ], [ %i.cx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39 ], [ %.pn, %.body ], [ %5, %4 ]
+bb.s:                                             ; preds = %.body28, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39, %.body
+  %.pn8.pn = phi { ptr, i32 } [ %.pn8, %.body28 ], [ %i.dc, %bb.q ], [ %i.cx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39 ], [ %.pn, %.body ]
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(128) %0) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #22
   resume { ptr, i32 } %.pn8.pn

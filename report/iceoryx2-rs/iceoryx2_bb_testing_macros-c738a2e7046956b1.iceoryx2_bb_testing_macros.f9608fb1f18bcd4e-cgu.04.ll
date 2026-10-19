@@ -202,11 +202,11 @@ bb.d:                                             ; preds = %.noexc5.i.i
   %i.z = phi ptr [ %i.aa, %bb.d ], [ %i.w, %bb.c ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 256 ; 2 uses
   %i.ab = invoke noundef nonnull align 8 ptr @_RNvMNtCs2TChw36tfyQ_3syn4attrNtB2_9Attribute4path(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(256) %i.z)
-          to label %.noexc.i.i unwind label %.thread8.loopexit.i.i, !noalias !1604
+          to label %.noexc.i.i unwind label %.thread8.loopexit.split-lp.i.i, !noalias !1604
 
 .noexc.i.i:                                       ; preds = %.lr.ph26
   %i.ac = invoke noundef zeroext i1 @_RINvMs_NtCs2TChw36tfyQ_3syn4pathNtB5_4Path8is_identeECslpqARw9yB40_26iceoryx2_bb_testing_macros(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ab, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 4)
-          to label %.noexc5.i.i unwind label %.thread8.loopexit.i.i, !noalias !1604
+          to label %.noexc5.i.i unwind label %.thread8.loopexit.split-lp.i.i, !noalias !1604
 
 .noexc5.i.i:                                      ; preds = %.noexc.i.i
   br i1 %i.ac, label %bb.e, label %bb.d
@@ -218,12 +218,7 @@ _RINvXs2J_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB7_4IterNtNtCs2TChw36tfyQ_3syn4at
   invoke void @_RNvMCslhcIeXEYQBj_11proc_macro2NtB2_11TokenStream3new(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.c)
           to label %bb.s unwind label %bb.r, !noalias !1604
 
-.thread8.loopexit.i.i:                            ; preds = %.noexc.i.i, %.lr.ph26
-  %lpad.loopexit.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread4.i.i
-
-.thread8.loopexit.split-lp.i.i:                   ; preds = %bb.o, %bb.n, %bb.j, %bb.h, %bb.e
+.thread8.loopexit.split-lp.i.i:                   ; preds = %.noexc.i.i, %.lr.ph26, %bb.o, %bb.n, %bb.j, %bb.h, %bb.e
   %lpad.loopexit.split-lp.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.thread4.i.i
@@ -349,8 +344,8 @@ bb.v:                                             ; preds = %.thread4.i.i, %bb.t
   call void @_RNvNtCs8Chj7Szqq0n_4core9panicking16panic_in_cleanup() #10, !noalias !1605
   unreachable
 
-.thread4.i.i:                                     ; preds = %bb.l, %bb.k, %.thread8.loopexit.split-lp.i.i, %.thread8.loopexit.i.i
-  %eh.lpad-body7.i.i = phi { ptr, i32 } [ %i.ak, %bb.l ], [ %i.ak, %bb.k ], [ %lpad.loopexit.i.i, %.thread8.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.thread8.loopexit.split-lp.i.i ]
+.thread4.i.i:                                     ; preds = %.thread8.loopexit.split-lp.i.i, %bb.l, %bb.k
+  %eh.lpad-body7.i.i = phi { ptr, i32 } [ %i.ak, %bb.l ], [ %i.ak, %bb.k ], [ %lpad.loopexit.split-lp.i.i, %.thread8.loopexit.split-lp.i.i ]
   invoke fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCs2TChw36tfyQ_3syn4item4ItemECslpqARw9yB40_26iceoryx2_bb_testing_macros(ptr noalias nofree noundef nonnull align 8 dereferenceable(352) %i.f) #11
           to label %.body.i unwind label %bb.v, !noalias !1605
 

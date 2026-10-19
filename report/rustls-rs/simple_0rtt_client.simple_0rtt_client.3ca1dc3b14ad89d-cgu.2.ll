@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvXNtCseO5Jl7W60Eg_16rustls_pki_types3pemNtB4_14CertificateDerNtB2_9PemObject8from_pemCskaDheoimX9_18simple_0rtt_client.exit.thread.i.i: ; preds = %bb.c
   invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCskaDheoimX9_18simple_0rtt_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b)
-          to label %.noexc19 unwind label %.loopexit
+          to label %.noexc19 unwind label %.loopexit.split-lp
 
 _RNvXNtCseO5Jl7W60Eg_16rustls_pki_types3pemNtB4_14CertificateDerNtB2_9PemObject8from_pemCskaDheoimX9_18simple_0rtt_client.exit.i.i: ; preds = %bb.b
   %.sroa.0.0.copyload12.i.i = load i64, ptr %i.b, align 8, !alias.scope !67, !noalias !63 ; 2 uses
@@ -221,7 +221,7 @@ bb.f:                                             ; preds = %._crit_edge.i.i
   store i64 0, ptr %i.w, align 8, !alias.scope !62
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !63
   invoke void @_RNvNtCseO5Jl7W60Eg_16rustls_pki_types3pem14from_buf_inner(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.c, ptr noundef nonnull %i.x, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(136) @25, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.p, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.v)
-          to label %.noexc20 unwind label %.loopexit
+          to label %.noexc20 unwind label %.loopexit.split-lp
 
 .noexc20:                                         ; preds = %.noexc19
   %i.bb = load i64, ptr %i.c, align 8, !range !9, !noalias !63, !noundef !8
@@ -264,17 +264,12 @@ bb.k:                                             ; preds = %bb.i
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #15, !noalias !72
   unreachable
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.ab, %bb.i, %bb.d, %bb.o
-  %.pn17 = phi { ptr, i32 } [ %.pn, %bb.o ], [ %i.bd, %bb.i ], [ %i.ax, %bb.d ], [ %i.cj, %bb.ab ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.ab, %bb.i, %bb.d, %bb.o
+  %.pn17 = phi { ptr, i32 } [ %.pn, %bb.o ], [ %i.bd, %bb.i ], [ %i.ax, %bb.d ], [ %i.cj, %bb.ab ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtCseO5Jl7W60Eg_16rustls_pki_types3pem8ReadIterINtNtNtNtCs4wP2HXfJTCR_5alloc2io8buffered9bufreader9BufReaderNtNtCsaKJjC64KgbL_3std2fs4FileENtB1e_14CertificateDerENCNvCskaDheoimX9_18simple_0rtt_client4mains_0EEB3S_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.p) #14
           to label %bb.an unwind label %bb.ad
 
-.loopexit:                                        ; preds = %_RNvXNtCseO5Jl7W60Eg_16rustls_pki_types3pemNtB4_14CertificateDerNtB2_9PemObject8from_pemCskaDheoimX9_18simple_0rtt_client.exit.thread.i.i, %.noexc19
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %.preheader.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskaDheoimX9_18simple_0rtt_client.exit.i.i.i
+.loopexit.split-lp:                               ; preds = %.noexc19, %_RNvXNtCseO5Jl7W60Eg_16rustls_pki_types3pemNtB4_14CertificateDerNtB2_9PemObject8from_pemCskaDheoimX9_18simple_0rtt_client.exit.thread.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECskaDheoimX9_18simple_0rtt_client.exit.i.i.i, %.preheader.i.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body

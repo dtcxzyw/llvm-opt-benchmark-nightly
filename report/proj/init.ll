@@ -202,12 +202,7 @@ bb.al:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %bb.as
 
-.loopexit.i.i:                                    ; preds = %bb.am
-  %lpad.loopexit.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.as
-
-.loopexit.split-lp.i.i.a:                         ; preds = %bb.ak, %bb.aj
+.loopexit.split-lp.i.i.a:                         ; preds = %bb.am, %bb.ak, %bb.aj
   %lpad.loopexit.split-lp.i.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.as
@@ -215,7 +210,7 @@ bb.al:                                            ; preds = %bb.ac
 bb.am:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
   %i.ch = load ptr, ptr %4, align 8, !tbaa !55
   %i.ci = invoke noundef ptr @_Z8pj_chompPc(ptr noundef nonnull %i.ch)
-          to label %bb.an unwind label %.loopexit.i.i ; 0 uses
+          to label %bb.an unwind label %.loopexit.split-lp.i.i.a ; 0 uses
 
 bb.an:                                            ; preds = %bb.am
   %i.cj = load ptr, ptr %4, align 8, !tbaa !55    ; 5 uses
@@ -247,8 +242,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %.pre.i.i = load ptr, ptr %3, align 8, !tbaa !51
   br label %bb.ac
 
-bb.as:                                            ; preds = %.loopexit.split-lp.i.i.a, %.loopexit.i.i, %bb.al
-  %.pn.i.i = phi { ptr, i32 } [ %i.cg, %bb.al ], [ %lpad.loopexit.i.i, %.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i.a ]
+bb.as:                                            ; preds = %.loopexit.split-lp.i.i.a, %bb.al
+  %.pn.i.i = phi { ptr, i32 } [ %i.cg, %bb.al ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   br label %bb.bq

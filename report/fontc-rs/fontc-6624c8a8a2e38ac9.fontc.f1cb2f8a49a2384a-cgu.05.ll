@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i, %bb.e
 bb.k:                                             ; preds = %bb.j
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   invoke void @_RNvMs2_NtCs6CpVowoi7NE_12tracing_core10dispatcherNtB5_8Dispatch5enter(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.t)
-          to label %bb.c unwind label %3
+          to label %bb.c unwind label %bb.o
 
 bb.l:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -222,12 +222,7 @@ bb.n:                                             ; preds = %bb.m
   invoke void @_RNvMs2_NtCs6CpVowoi7NE_12tracing_core10dispatcherNtB5_8Dispatch4exit(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.x)
           to label %.thread66 unwind label %bb.o
 
-3:                                                ; preds = %bb.k
-  %lpad.thr_comm.split-lp77 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread68
-
-bb.o:                                             ; preds = %bb.n
+bb.o:                                             ; preds = %bb.k, %bb.n
   %i.y = landingpad { ptr, i32 }
           cleanup
   br label %.thread68
@@ -464,8 +459,8 @@ bb.av:                                            ; preds = %bb.au
   invoke void @_RNvMs2_NtCs6CpVowoi7NE_12tracing_core10dispatcherNtB5_8Dispatch4exit(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.bk)
           to label %.thread68 unwind label %bb.as
 
-.thread68:                                        ; preds = %bb.au, %bb.av, %bb.o, %3
-  %.pn71 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp77, %3 ], [ %i.y, %bb.o ], [ %lpad.thr_comm.split-lp, %bb.av ], [ %lpad.thr_comm.split-lp, %bb.au ]
+.thread68:                                        ; preds = %bb.au, %bb.av, %bb.o
+  %.pn71 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.au ], [ %i.y, %bb.o ], [ %lpad.thr_comm.split-lp, %bb.av ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCseSYDGaa5U8h_7tracing4span4SpanECskL3QWxtyvYA_5fontc(ptr noalias nofree noundef align 8 dereferenceable(40) %i.e) #18
           to label %common.resume unwind label %bb.as
 }

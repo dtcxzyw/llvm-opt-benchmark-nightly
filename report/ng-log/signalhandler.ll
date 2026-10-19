@@ -204,11 +204,11 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cu, %bb.
 
 bb.cx:                                            ; preds = %bb.cw
   %i.ht = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull @.str.19, i64 noundef 36)
-          to label %_ZStlsIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_NSt6thread2idE.exit.i.i unwind label %7 ; 0 uses
+          to label %_ZStlsIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_NSt6thread2idE.exit.i.i unwind label %bb.ep ; 0 uses
 
 bb.cy:                                            ; preds = %bb.cw
   %i.hu = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef %i.hr)
-          to label %_ZStlsIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_NSt6thread2idE.exit.i.i unwind label %7 ; 0 uses
+          to label %_ZStlsIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_NSt6thread2idE.exit.i.i unwind label %bb.ep ; 0 uses
 
 _ZStlsIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_NSt6thread2idE.exit.i.i: ; preds = %bb.cy, %bb.cx
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
@@ -611,22 +611,17 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.lt, i64 noundef %i.lx) #22
   br label %_ZN5nglog12_GLOBAL__N_114DumpSignalInfoEiP9siginfo_t.exit.i
 
-7:                                                ; preds = %bb.cy, %bb.cx
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.eq
-
 .body.i.i:                                        ; preds = %bb.da, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   br label %bb.eq
 
-bb.ep:                                            ; preds = %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit149.i.i
+bb.ep:                                            ; preds = %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit149.i.i, %bb.cy, %bb.cx
   %i.ly = landingpad { ptr, i32 }
           cleanup
   br label %bb.eq
 
-bb.eq:                                            ; preds = %bb.ep, %.body.i.i, %7
-  %.pn.i.i = phi { ptr, i32 } [ %i.ly, %bb.ep ], [ %i.ii, %.body.i.i ], [ %8, %7 ]
+bb.eq:                                            ; preds = %bb.ep, %.body.i.i
+  %.pn.i.i = phi { ptr, i32 } [ %i.ly, %bb.ep ], [ %i.ii, %.body.i.i ]
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %4) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20

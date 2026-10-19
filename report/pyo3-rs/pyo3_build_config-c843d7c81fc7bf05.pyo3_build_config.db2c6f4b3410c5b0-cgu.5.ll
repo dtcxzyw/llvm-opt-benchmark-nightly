@@ -204,18 +204,13 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.bu = invoke { i64, i64 } @_RNvMs8_NtNtNtCskKLDkoKarTP_4core5array4iter10iter_innerINtB5_15PolymorphicIterSINtNtNtBb_3mem12maybe_uninit11MaybeUninitjEE4nextCsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull align 8 %i.d, i64 2)
           to label %bb.h unwind label %.loopexit.split-lp ; 2 uses
 
-.loopexit30:                                      ; preds = %.lr.ph, %._crit_edge
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %.loopexit
+.loopexit.split-lp:                               ; preds = %._crit_edge, %.lr.ph, %.loopexit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit30, %.loopexit.split-lp, %bb.q
-  %eh.lpad-body = phi { ptr, i32 } [ %i.cq, %bb.q ], [ %lpad.loopexit, %.loopexit30 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.q
+  %eh.lpad-body = phi { ptr, i32 } [ %i.cq, %bb.q ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_5array4iter8IntoIterjKj2_EECsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull align 8 %i.d) #23
           to label %bb.n unwind label %bb.m
 
@@ -276,7 +271,7 @@ bb.n:                                             ; preds = %bb.k, %.body
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.cj = getelementptr inbounds i8, ptr %i.ci, i64 -24 ; 4 uses
   %i.ck = invoke zeroext i1 @_RNvYNvYNtNtCsG258MDvU3F_3std4path7PathBufNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBH_3ops8function5FnMutTRB5_B1N_EE8call_mutCsiOEEQt9hBE2_17pyo3_build_config(ptr %4, ptr nonnull align 8 %i.ci, ptr nonnull align 8 %i.cj) #22
-          to label %.noexc unwind label %.loopexit30
+          to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %.lr.ph
   br i1 %i.ck, label %bb.o, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailNtNtCsG258MDvU3F_3std4path7PathBufNvYB18_NtNtBa_3cmp10PartialOrd2ltECsiOEEQt9hBE2_17pyo3_build_config.exit
@@ -315,7 +310,7 @@ bb.r:                                             ; preds = %.lr.ph34
 
 ._crit_edge:                                      ; preds = %bb.p, %bb.r, %bb.o
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtNtB4_5slice4sort6shared9smallsort10CopyOnDropNtNtCsG258MDvU3F_3std4path7PathBufEECsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull align 8 %i.a)
-          to label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailNtNtCsG258MDvU3F_3std4path7PathBufNvYB18_NtNtBa_3cmp10PartialOrd2ltECsiOEEQt9hBE2_17pyo3_build_config.exit unwind label %.loopexit30
+          to label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailNtNtCsG258MDvU3F_3std4path7PathBufNvYB18_NtNtBa_3cmp10PartialOrd2ltECsiOEEQt9hBE2_17pyo3_build_config.exit unwind label %.loopexit.split-lp
 
 bb.s:                                             ; preds = %bb.q
   %i.cr = landingpad { ptr, i32 }

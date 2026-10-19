@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %_ZN7rocksdb6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 248 ; 6 uses
   invoke void @_ZN7rocksdb4port7RWMutex8ReadLockEv(ptr noundef nonnull align 8 dereferenceable(56) %i.l)
-          to label %_ZN7rocksdb8ReadLockC2EPNS_4port7RWMutexE.exit unwind label %16
+          to label %_ZN7rocksdb8ReadLockC2EPNS_4port7RWMutexE.exit unwind label %bb.ab
 
 _ZN7rocksdb8ReadLockC2EPNS_4port7RWMutexE.exit:   ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 232 ; 4 uses
@@ -305,11 +305,6 @@ bb.o:                                             ; preds = %_ZNSt10shared_ptrIN
   %i.ao = extractvalue { ptr, i32 } %i.an, 0
   call void @__clang_call_terminate(ptr %i.ao) #27
   unreachable
-
-16:                                               ; preds = %bb.c
-  %17 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZN7rocksdb9WriteLockD2Ev.exit
 
 .critedge:                                        ; preds = %_ZN7rocksdb8ReadLockC2EPNS_4port7RWMutexE.exit
   invoke void @_ZN7rocksdb4port7RWMutex10ReadUnlockEv(ptr noundef nonnull align 8 dereferenceable(56) %i.l)
@@ -414,7 +409,7 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i5
   store ptr %i.au, ptr %i.as, align 8, !tbaa !86
   br label %_ZNSt10shared_ptrIN7rocksdb22RandomAccessFileReaderEEaSERKS2_.exit58
 
-bb.ab:                                            ; preds = %_ZN7rocksdb8ReadLockD2Ev.exit47
+bb.ab:                                            ; preds = %bb.c, %_ZN7rocksdb8ReadLockD2Ev.exit47
   %i.br = landingpad { ptr, i32 }
           cleanup
   br label %_ZN7rocksdb9WriteLockD2Ev.exit
@@ -817,8 +812,8 @@ _ZN7rocksdb8ReadLockD2Ev.exit:                    ; preds = %_ZNSt10shared_ptrIN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   ret void
 
-_ZN7rocksdb9WriteLockD2Ev.exit:                   ; preds = %bb.ab, %_ZNSt10unique_ptrIN7rocksdb18FSRandomAccessFileESt14default_deleteIS1_EED2Ev.exit122, %16
-  %.pn38.pn.pn.pn = phi { ptr, i32 } [ %17, %16 ], [ %i.br, %bb.ab ], [ %.pn38.pn, %_ZNSt10unique_ptrIN7rocksdb18FSRandomAccessFileESt14default_deleteIS1_EED2Ev.exit122 ]
+_ZN7rocksdb9WriteLockD2Ev.exit:                   ; preds = %bb.ab, %_ZNSt10unique_ptrIN7rocksdb18FSRandomAccessFileESt14default_deleteIS1_EED2Ev.exit122
+  %.pn38.pn.pn.pn = phi { ptr, i32 } [ %.pn38.pn, %_ZNSt10unique_ptrIN7rocksdb18FSRandomAccessFileESt14default_deleteIS1_EED2Ev.exit122 ], [ %i.br, %bb.ab ]
   %i.id = load ptr, ptr %i.k, align 8, !tbaa !85  ; 2 uses
   %.not.i.i124 = icmp eq ptr %i.id, null
   br i1 %.not.i.i124, label %_ZN7rocksdb6StatusD2Ev.exit126, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i125

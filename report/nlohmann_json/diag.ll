@@ -102,7 +102,7 @@ bb.b:                                             ; preds = %bb.a
   call void @_ZN7doctest6StringD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %1) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
   %i.d = invoke noundef zeroext i1 @_ZNK7doctest6detail7SubcasecvbEv(ptr noundef nonnull align 8 dereferenceable(41) %0)
-          to label %bb.c unwind label %17
+          to label %bb.c unwind label %bb.u
 
 bb.c:                                             ; preds = %bb.b
   br i1 %i.d, label %bb.d, label %bb.ak
@@ -112,7 +112,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   invoke void @_ZN7doctest6detail20ExpressionDecomposerC1ENS_10assertType4EnumE(ptr noundef nonnull align 4 dereferenceable(4) %4, i32 noundef 10)
-          to label %bb.e unwind label %bb.u
+          to label %bb.e unwind label %bb.v
 
 bb.e:                                             ; preds = %bb.d
   %i.e = invoke noundef i64 @_Z19json_sizeof_diag_onv()
@@ -147,7 +147,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   invoke void @_ZN7doctest6detail20ExpressionDecomposerC1ENS_10assertType4EnumE(ptr noundef nonnull align 4 dereferenceable(4) %7, i32 noundef 10)
-          to label %bb.j unwind label %19
+          to label %bb.j unwind label %bb.aa
 
 bb.j:                                             ; preds = %bb.i
   %i.j = invoke noundef i64 @_Z20json_sizeof_diag_offv()
@@ -182,7 +182,7 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #11
   invoke void @_ZN7doctest6detail20ExpressionDecomposerC1ENS_10assertType4EnumE(ptr noundef nonnull align 4 dereferenceable(4) %10, i32 noundef 10)
-          to label %bb.o unwind label %21
+          to label %bb.o unwind label %bb.af
 
 bb.o:                                             ; preds = %bb.n
   %i.o = invoke noundef i64 @_Z19json_sizeof_diag_onv()
@@ -222,17 +222,12 @@ bb.t:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
   br label %bb.ce
 
-17:                                               ; preds = %bb.b
-  %18 = landingpad { ptr, i32 }
+bb.u:                                             ; preds = %bb.b
+  %i.u = landingpad { ptr, i32 }
           cleanup
   br label %bb.as
 
-bb.u:                                             ; preds = %bb.d
-  %i.u = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.z
-
-bb.v:                                             ; preds = %bb.e
+bb.v:                                             ; preds = %bb.d, %bb.e
   %i.v = landingpad { ptr, i32 }
           cleanup
   br label %bb.z
@@ -254,19 +249,14 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.v, %bb.y, %bb.u
-  %.pn.pn.pn = phi { ptr, i32 } [ %i.u, %bb.u ], [ %.pn, %bb.y ], [ %i.v, %bb.v ]
+bb.z:                                             ; preds = %bb.v, %bb.y
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.v, %bb.v ], [ %.pn, %bb.y ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   br label %bb.as
 
-19:                                               ; preds = %bb.i
-  %20 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ae
-
-bb.aa:                                            ; preds = %bb.j
+bb.aa:                                            ; preds = %bb.i, %bb.j
   %i.z = landingpad { ptr, i32 }
           cleanup
   br label %bb.ae
@@ -288,19 +278,14 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.aa, %bb.ad, %19
-  %.pn36.pn.pn = phi { ptr, i32 } [ %20, %19 ], [ %.pn36, %bb.ad ], [ %i.z, %bb.aa ]
+bb.ae:                                            ; preds = %bb.aa, %bb.ad
+  %.pn36.pn.pn = phi { ptr, i32 } [ %i.z, %bb.aa ], [ %.pn36, %bb.ad ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
   br label %bb.as
 
-21:                                               ; preds = %bb.n
-  %22 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.aj
-
-bb.af:                                            ; preds = %bb.o
+bb.af:                                            ; preds = %bb.n, %bb.o
   %i.ad = landingpad { ptr, i32 }
           cleanup
   br label %bb.aj
@@ -322,8 +307,8 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   br label %bb.aj
 
-bb.aj:                                            ; preds = %bb.af, %bb.ai, %21
-  %.pn40.pn.pn = phi { ptr, i32 } [ %22, %21 ], [ %.pn40, %bb.ai ], [ %i.ad, %bb.af ]
+bb.aj:                                            ; preds = %bb.af, %bb.ai
+  %.pn40.pn.pn = phi { ptr, i32 } [ %i.ad, %bb.af ], [ %.pn40, %bb.ai ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #11
@@ -373,8 +358,8 @@ bb.ar:                                            ; preds = %bb.aq
   invoke void @_Z15json_at_diag_onv()
           to label %bb.ba unwind label %bb.ay
 
-bb.as:                                            ; preds = %bb.aj, %bb.ae, %bb.z, %17
-  %.pn40.pn.pn.pn = phi { ptr, i32 } [ %.pn40.pn.pn, %bb.aj ], [ %.pn36.pn.pn, %bb.ae ], [ %.pn.pn.pn, %bb.z ], [ %18, %17 ]
+bb.as:                                            ; preds = %bb.aj, %bb.ae, %bb.z, %bb.u
+  %.pn40.pn.pn.pn = phi { ptr, i32 } [ %.pn40.pn.pn, %bb.aj ], [ %.pn36.pn.pn, %bb.ae ], [ %.pn.pn.pn, %bb.z ], [ %i.u, %bb.u ]
   call void @_ZN7doctest6detail7SubcaseD1Ev(ptr noundef nonnull align 8 dead_on_return(41) dereferenceable(41) %0) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #11
   br label %bb.ce

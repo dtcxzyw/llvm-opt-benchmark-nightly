@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.l
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 104
   %i.ei = load ptr, ptr %i.eh, align 8
   invoke void %i.ei(ptr noundef nonnull align 8 dereferenceable(36) %i.ef, i64 noundef %1, ptr noundef %2, ptr noundef nonnull %i.ed, i64 noundef 1)
-          to label %bb.w unwind label %6
+          to label %bb.w unwind label %bb.z
 
 bb.w:                                             ; preds = %bb.v
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
@@ -261,12 +261,7 @@ _ZNSt6vectorImSaImEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPmmmET_
   %unroll_iter = and i64 %i.et, -4
   br label %.lr.ph182
 
-6:                                                ; preds = %bb.v
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt10unique_ptrIA_lSt14default_deleteIS0_EED2Ev.exit145
-
-bb.z:                                             ; preds = %bb.y, %bb.x
+bb.z:                                             ; preds = %bb.v, %bb.y, %bb.x
   %i.ev = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt10unique_ptrIA_lSt14default_deleteIS0_EED2Ev.exit145
@@ -669,8 +664,8 @@ bb.at:                                            ; preds = %_ZNSt10unique_ptrIA
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0153.0, i64 noundef %i.oj) #26
   br label %_ZNSt10unique_ptrIA_lSt14default_deleteIS0_EED2Ev.exit145
 
-_ZNSt10unique_ptrIA_lSt14default_deleteIS0_EED2Ev.exit145: ; preds = %bb.z, %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit140, %bb.at, %6
-  %.pn100.pn.pn.pn = phi { ptr, i32 } [ %7, %6 ], [ %i.ev, %bb.z ], [ %.pn100.pn, %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit140 ], [ %.pn100.pn, %bb.at ]
+_ZNSt10unique_ptrIA_lSt14default_deleteIS0_EED2Ev.exit145: ; preds = %bb.z, %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit140, %bb.at
+  %.pn100.pn.pn.pn = phi { ptr, i32 } [ %.pn100.pn, %bb.at ], [ %i.ev, %bb.z ], [ %.pn100.pn, %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit140 ]
   call void @_ZdaPv(ptr noundef nonnull %i.ed) #26
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit
 

@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
     #dbg_value(ptr %i.b, !4028, !DIExpression(), !6109)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !6289, !noalias !6249
   invoke fastcc void @_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIteryyE10dying_nextCsB8MOEg02Qk_5quinn(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.b)
-          to label %.noexc.i.i.i unwind label %.loopexit.split-lp.i.i.i, !dbg !6290, !noalias !6250
+          to label %.noexc.i.i.i unwind label %bb.e, !dbg !6290, !noalias !6250
 
 .noexc.i.i.i:                                     ; preds = %bb.d
   %i.i = load ptr, ptr %i.a, align 8, !dbg !6289, !noalias !6249, !noundef !1061
@@ -216,7 +216,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !6292, !noalias !6249
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !6289, !noalias !6249
   invoke fastcc void @_RNvMsz_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8IntoIteryyE10dying_nextCsB8MOEg02Qk_5quinn(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.b)
-          to label %.noexc2.i.i.i unwind label %.loopexit.i.i.i, !dbg !6290, !noalias !6250
+          to label %.noexc2.i.i.i unwind label %bb.e, !dbg !6290, !noalias !6250
 
 .noexc2.i.i.i:                                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
   %i.j = load ptr, ptr %i.a, align 8, !dbg !6289, !noalias !6249, !noundef !1061
@@ -228,18 +228,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCshovLROGBtMy_11quinn_proto9range_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !6293, !noalias !6248
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCshovLROGBtMy_11quinn_proto10connection9assembler5StateECsB8MOEg02Qk_5quinn.exit.i.i.i, !dbg !6279
 
-.loopexit.i.i.i:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
-  %lpad.loopexit.i.i.i = landingpad { ptr, i32 }
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %bb.d
+  %lpad.loopexit.split-lp6 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.e
-
-.loopexit.split-lp.i.i.i:                         ; preds = %bb.d
-  %lpad.loopexit.split-lp.i.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.e
-
-bb.e:                                             ; preds = %.loopexit.split-lp.i.i.i, %.loopexit.i.i.i
-  %lpad.phi.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i.i, %.loopexit.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
   %i.k = getelementptr inbounds nuw i8, ptr %.8.val, i64 56, !dbg !6278
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections11binary_heap10BinaryHeapNtNtNtCshovLROGBtMy_11quinn_proto10connection9assembler6BufferEECsB8MOEg02Qk_5quinn(ptr noalias nofree noundef align 8 dereferenceable(24) %i.k) #19
           to label %bb.k unwind label %bb.i, !dbg !6278
@@ -356,7 +347,7 @@ bb.j:                                             ; preds = %_RINvNtCskKLDkoKarT
   br label %bb.k, !dbg !6276
 
 bb.k:                                             ; preds = %bb.j, %.body.i.i.i.i.i, %bb.e
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.as, %bb.j ], [ %i.ae, %.body.i.i.i.i.i ], [ %lpad.phi.i.i.i, %bb.e ]
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.as, %bb.j ], [ %i.ae, %.body.i.i.i.i.i ], [ %lpad.loopexit.split-lp6, %bb.e ]
     #dbg_value(ptr poison, !6265, !DIExpression(), !6175)
     #dbg_value(ptr %.8.val, !6266, !DIExpression(), !6176)
     #dbg_value(i64 8, !6267, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6177)

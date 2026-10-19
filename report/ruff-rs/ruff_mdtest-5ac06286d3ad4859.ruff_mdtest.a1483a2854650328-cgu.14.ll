@@ -204,12 +204,7 @@ bb.ap:                                            ; preds = %bb.an
   %i.dn = icmp ult i16 %i.dm, 11
   br i1 %i.dn, label %bb.as, label %bb.ar
 
-.loopexit77:                                      ; preds = %bb.az
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bu
-
-.loopexit.split-lp:                               ; preds = %bb.ao
+.loopexit.split-lp:                               ; preds = %bb.az, %bb.ao
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.bu
@@ -361,7 +356,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax, %bb.
   %.sroa.5.0.i = phi i64 [ 0, %bb.ay ], [ %i.fy, %bb.ax ], [ %i.dk, %bb.ar ], [ 5, %bb.aw ] ; 9 uses
   %.sroa.03.0.i = phi i1 [ true, %bb.ay ], [ true, %bb.ax ], [ false, %bb.ar ], [ false, %bb.aw ]
   %i.fz = invoke noundef nonnull align 8 ptr @_RNvMs_NtCscdodAO9FK5_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtCs2AWtUsOyxgP_3std4path7PathBufINtNtB6_3vec3VecNtNtB6_6string6StringEEE13new_uninit_inCsdQv3Ybs94uW_11ruff_mdtest()
-          to label %.noexc.i29 unwind label %.loopexit77, !noalias !182 ; 10 uses
+          to label %.noexc.i29 unwind label %.loopexit.split-lp, !noalias !182 ; 10 uses
 
 .noexc.i29:                                       ; preds = %bb.az
   store ptr null, ptr %i.fz, align 8, !noalias !188
@@ -616,8 +611,8 @@ bb.bt:                                            ; preds = %bb.bv, %bb.bu
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #31, !noalias !203
   unreachable
 
-bb.bu:                                            ; preds = %.loopexit77, %.loopexit.split-lp, %bb.bo
-  %.pn.ph.i27 = phi { ptr, i32 } [ %.pn.i.i, %bb.bo ], [ %lpad.loopexit, %.loopexit77 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.bu:                                            ; preds = %.loopexit.split-lp, %bb.bo
+  %.pn.ph.i27 = phi { ptr, i32 } [ %.pn.i.i, %bb.bo ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBG_6string6StringEECsdQv3Ybs94uW_11ruff_mdtest(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k) #30
           to label %bb.bv unwind label %bb.bt, !noalias !204
 

@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.noexc10, %.lr.ph.i
   %i.ak = load i64, ptr %i.aj, align 8, !noalias !1772, !noundef !7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1773
   invoke void @_RNvMNtNtCsQbU2fm3lSD_3xet11xet_session20file_download_handleNtB2_15XetFileDownload9file_path(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ah)
-          to label %.noexc9 unwind label %.loopexit
+          to label %.noexc9 unwind label %.loopexit.split-lp
 
 .noexc9:                                          ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1773
@@ -256,7 +256,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecTNtNtNtCsarFSTFZzLuM_11xet_runtime5ut
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i.i)
   %i.at = invoke { ptr, ptr } @_RNvXsG_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_4IterNtNtNtCsarFSTFZzLuM_11xet_runtime5utils9unique_id8UniqueIdNtNtNtCsQbU2fm3lSD_3xet11xet_session20file_download_handle15XetFileDownloadENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB1M_(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.f)
-          to label %.noexc10 unwind label %.loopexit ; 2 uses
+          to label %.noexc10 unwind label %.loopexit.split-lp ; 2 uses
 
 .noexc10:                                         ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecTNtNtNtCsarFSTFZzLuM_11xet_runtime5utils9unique_id8UniqueIdNtNtCsG258MDvU3F_3std4path7PathBufINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsjHtSR7YjKD4_8xet_data17progress_tracking14progress_types18ItemProgressReportEEE7reserveCsQbU2fm3lSD_3xet.exit.i.i
   %i.au = extractvalue { ptr, ptr } %i.at, 0
@@ -282,18 +282,13 @@ bb.q:                                             ; preds = %bb.o
   %.pre = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1778
   br label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecTNtNtNtCsarFSTFZzLuM_11xet_runtime5utils9unique_id8UniqueIdNtNtCsG258MDvU3F_3std4path7PathBufINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsjHtSR7YjKD4_8xet_data17progress_tracking14progress_types18ItemProgressReportEEE7reserveCsQbU2fm3lSD_3xet.exit.i.i
 
-.loopexit:                                        ; preds = %bb.l, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecTNtNtNtCsarFSTFZzLuM_11xet_runtime5utils9unique_id8UniqueIdNtNtCsG258MDvU3F_3std4path7PathBufINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsjHtSR7YjKD4_8xet_data17progress_tracking14progress_types18ItemProgressReportEEE7reserveCsQbU2fm3lSD_3xet.exit.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %bb.k
+.loopexit.split-lp:                               ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecTNtNtNtCsarFSTFZzLuM_11xet_runtime5utils9unique_id8UniqueIdNtNtCsG258MDvU3F_3std4path7PathBufINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsjHtSR7YjKD4_8xet_data17progress_tracking14progress_types18ItemProgressReportEEE7reserveCsQbU2fm3lSD_3xet.exit.i.i, %bb.l, %bb.k
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.m, %bb.n, %bb.p
-  %eh.lpad-body = phi { ptr, i32 } [ %i.al, %bb.m ], [ %i.aw, %bb.p ], [ %i.al, %bb.n ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.m, %bb.n, %bb.p
+  %eh.lpad-body = phi { ptr, i32 } [ %i.al, %bb.m ], [ %i.aw, %bb.p ], [ %i.al, %bb.n ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCsarFSTFZzLuM_11xet_runtime5utils9unique_id8UniqueIdNtNtCsG258MDvU3F_3std4path7PathBufINtNtB4_6option6OptionNtNtNtCsjHtSR7YjKD4_8xet_data17progress_tracking14progress_types18ItemProgressReportEEEECsQbU2fm3lSD_3xet(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h) #31
   br label %common.resume
 
