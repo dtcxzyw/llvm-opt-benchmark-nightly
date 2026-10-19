@@ -121,15 +121,13 @@ bb.a:
   %7 = alloca %struct.Elf64_Shdr, align 8         ; 5 uses
   %i.a = alloca [128 x i8], align 16              ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  %.not.i.a = icmp eq i32 %1, 0                   ; 2 uses
-  %sym_regex_kernel.sym_regex_realmode.i = select i1 %.not.i.a, ptr @sym_regex_kernel, ptr @sym_regex_realmode ; 3 uses
+  %.not.i.a = icmp eq i32 %1, 0                   ; 3 uses
+  %sym_regex_kernel.sym_regex_realmode.i = select i1 %.not.i.a, ptr @sym_regex_kernel, ptr @sym_regex_realmode
   store ptr %sym_regex_kernel.sym_regex_realmode.i, ptr @sym_regex, align 8, !tbaa !12
-  %8 = load ptr, ptr %sym_regex_kernel.sym_regex_realmode.i, align 16, !tbaa !14 ; 2 uses
-  %.not11.i = icmp eq ptr %8, null
-  br i1 %.not11.i, label %bb.d, label %bb.b
+  br i1 %.not.i.a, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i32 @regcomp(ptr noundef nonnull @sym_regex_c, ptr noundef nonnull %8, i32 noundef 9) #16 ; 2 uses
+  %i.b = tail call i32 @regcomp(ptr noundef nonnull @sym_regex_c, ptr noundef nonnull @.str.3, i32 noundef 9) #16 ; 2 uses
   %.not12.i = icmp eq i32 %i.b, 0
   br i1 %.not12.i, label %._crit_edge.i, label %bb.c
 
@@ -145,7 +143,7 @@ bb.c:                                             ; preds = %bb.i, %bb.g, %bb.e,
   unreachable
 
 bb.d:                                             ; preds = %._crit_edge.i, %bb.a
-  %i.d = phi ptr [ %.pre.i, %._crit_edge.i ], [ %sym_regex_kernel.sym_regex_realmode.i, %bb.a ] ; 2 uses
+  %i.d = phi ptr [ %.pre.i, %._crit_edge.i ], [ @sym_regex_realmode, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !14   ; 2 uses
   %.not11.1.i = icmp eq ptr %i.f, null

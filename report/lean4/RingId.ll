@@ -204,23 +204,10 @@ bb.jb:                                            ; preds = %lean_inc.exit1640, 
 bb.jc:                                            ; preds = %bb.mw, %bb.mx
   %.0.i1839 = phi i32 [ %i.to, %bb.mw ], [ %i.tq, %bb.mx ]
   %i.ob = icmp eq i32 %.0.i1839, 0
-  %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value = select i1 %i.ob, ptr @l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value, ptr @l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value ; 3 uses
-  %.val.i.i1785 = load i32, ptr %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value, align 8, !tbaa !15 ; 2 uses
-  %11 = icmp sgt i32 %.val.i.i1785, 0
-  br i1 %11, label %lean_inc_ref.exit1787, label %12, !prof !11
-
-12:                                               ; preds = %bb.jc
-  %.not.i.i1786 = icmp eq i32 %.val.i.i1785, 0
-  br i1 %.not.i.i1786, label %lean_inc_ref.exit1787, label %13
-
-13:                                               ; preds = %12
-  %14 = atomicrmw sub ptr %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit1787
-
-lean_inc_ref.exit1787:                            ; preds = %bb.jc, %12, %13
+  %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value = select i1 %i.ob, ptr @l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value, ptr @l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value
   br i1 %i.by, label %bb.jd, label %bb.je
 
-bb.jd:                                            ; preds = %lean_inc_ref.exit1787
+bb.jd:                                            ; preds = %bb.jc
   %i.oc = getelementptr inbounds nuw i8, ptr %.0926, i64 4 ; 2 uses
   %i.od = load i32, ptr %i.oc, align 4
   %i.oe = and i32 %i.od, 16777215
@@ -228,7 +215,7 @@ bb.jd:                                            ; preds = %lean_inc_ref.exit17
   store i32 %i.of, ptr %i.oc, align 4
   br label %bb.jf
 
-bb.je:                                            ; preds = %lean_inc_ref.exit1787
+bb.je:                                            ; preds = %bb.jc
   %i.og = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 3, i32 noundef 1, i32 noundef 0)
   br label %bb.jf
 
@@ -631,23 +618,10 @@ bb.sc:                                            ; preds = %lean_inc.exit1624, 
   %i.yp = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 1, i32 noundef 1, i32 noundef 0)
   br label %lean_dec.exit1340.sink.split
 
-15:                                               ; preds = %bb.vu, %bb.vv
+lean_inc_ref.exit1865:                            ; preds = %bb.vu, %bb.vv
   %.0.i1919 = phi i32 [ %i.ads, %bb.vu ], [ %i.adu, %bb.vv ]
-  %16 = icmp eq i32 %.0.i1919, 0
-  %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value1230 = select i1 %16, ptr @l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value, ptr @l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value ; 3 uses
-  %.val.i.i1863 = load i32, ptr %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value1230, align 8, !tbaa !15 ; 2 uses
-  %17 = icmp sgt i32 %.val.i.i1863, 0
-  br i1 %17, label %lean_inc_ref.exit1865, label %18, !prof !11
-
-18:                                               ; preds = %15
-  %.not.i.i1864 = icmp eq i32 %.val.i.i1863, 0
-  br i1 %.not.i.i1864, label %lean_inc_ref.exit1865, label %19
-
-19:                                               ; preds = %18
-  %20 = atomicrmw sub ptr %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value1230, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit1865
-
-lean_inc_ref.exit1865:                            ; preds = %15, %18, %19
+  %11 = icmp eq i32 %.0.i1919, 0
+  %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value1230 = select i1 %11, ptr @l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value, ptr @l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value
   %i.yq = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 3, i32 noundef 1, i32 noundef 0) ; 2 uses
   %i.yr = getelementptr inbounds nuw i8, ptr %i.yq, i64 8
   store ptr %l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__24_value.l___private_Lean_Meta_Tactic_Grind_Arith_CommRing_RingId_0__Lean_Meta_Grind_Arith_CommRing_getCommRingId_x3f_go_x3f___closed__25_value1230, ptr %i.yr, align 8, !tbaa !13
@@ -1050,13 +1024,13 @@ lean_obj_once.exit1917:                           ; preds = %bb.vs, %bb.vt
 bb.vu:                                            ; preds = %lean_obj_once.exit1917
   %i.adr = lshr i64 %i.acj, 1
   %i.ads = trunc i64 %i.adr to i32
-  br label %15
+  br label %lean_inc_ref.exit1865
 
 bb.vv:                                            ; preds = %lean_obj_once.exit1917
   %i.adt = getelementptr i8, ptr %i.aci, i64 4
   %.val.i1920 = load i32, ptr %i.adt, align 4
   %i.adu = lshr i32 %.val.i1920, 24
-  br label %15
+  br label %lean_inc_ref.exit1865
 
 bb.vw:                                            ; preds = %lean_obj_tag.exit1915
   br i1 %.not.i1613, label %bb.vx, label %lean_dec.exit1262

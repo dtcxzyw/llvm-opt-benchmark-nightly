@@ -205,27 +205,18 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #27
   %i.iw = load i32, ptr %i.ei, align 8, !tbaa !163
-  %17 = icmp eq i32 %i.iw, 0
-  %18 = select i1 %17, ptr @.str.129, ptr @.str.130 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %11, i64 32
-  %20 = getelementptr inbounds nuw i8, ptr %11, i64 33
-  store i8 1, ptr %20, align 1, !tbaa !341
-  %21 = load i8, ptr %18, align 1, !tbaa !295
-  %.not.i207 = icmp eq i8 %21, 0
-  br i1 %.not.i207, label %_ZN4llvm5TwineC2EPKc.exit, label %22
-
-22:                                               ; preds = %bb.ak
-  store ptr %18, ptr %11, align 8, !tbaa !295
-  br label %_ZN4llvm5TwineC2EPKc.exit
-
-_ZN4llvm5TwineC2EPKc.exit:                        ; preds = %bb.ak, %22
-  %storemerge.i = phi i8 [ 3, %22 ], [ 1, %bb.ak ]
-  store i8 %storemerge.i, ptr %19, align 8, !tbaa !340
+  %17 = getelementptr inbounds nuw i8, ptr %11, i64 32
+  %18 = getelementptr inbounds nuw i8, ptr %11, i64 33
+  store i8 1, ptr %18, align 1, !tbaa !341
+  %19 = icmp eq i32 %i.iw, 0
+  %20 = select i1 %19, ptr @.str.129, ptr @.str.130
+  store ptr %20, ptr %11, align 8, !tbaa !295
+  store i8 3, ptr %17, align 8, !tbaa !340
   call void @_ZN4llvm5Value7setNameERKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(24) %.0166, ptr noundef nonnull align 8 dereferenceable(34) %11) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #27
   br label %bb.al
 
-bb.al:                                            ; preds = %_ZN4llvm5TwineC2EPKc.exit, %bb.aj
+bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.ix = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 2 uses
   %i.iy = load i8, ptr %i.ix, align 8, !tbaa !170, !range !71, !noundef !72
   %i.iz = trunc nuw i8 %i.iy to i1

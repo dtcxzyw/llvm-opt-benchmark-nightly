@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 lean_dec.exit66:                                  ; preds = %bb.e, %bb.d, %bb.c, %bb.a
   %i.i = icmp eq i8 %i.c, 0
-  %l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__19_value.l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__21_value = select i1 %i.i, ptr @l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__19_value, ptr @l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__21_value ; 3 uses
+  %l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__19_value.l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__21_value = select i1 %i.i, ptr @l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__19_value, ptr @l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__21_value
   %i.j = load atomic i32, ptr @l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__11_once seq_cst, align 4, !tbaa !17
   %i.k = icmp eq i32 %i.j, 1
   br i1 %i.k, label %bb.f, label %bb.g, !prof !13
@@ -225,29 +225,16 @@ lean_obj_once.exit:                               ; preds = %bb.f, %bb.g
 
 bb.h:                                             ; preds = %lean_obj_once.exit
   %i.p = load ptr, ptr @l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__15, align 8, !tbaa !10
-  br label %lean_obj_once.exit77
+  br label %lean_inc.exit57
 
 bb.i:                                             ; preds = %lean_obj_once.exit
   %i.q = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__15, ptr noundef nonnull @l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__15_once, ptr noundef nonnull @_init_l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__15) #6
-  br label %lean_obj_once.exit77
+  br label %lean_inc.exit57
 
-lean_obj_once.exit77:                             ; preds = %bb.h, %bb.i
+lean_inc.exit57:                                  ; preds = %bb.h, %bb.i
   %.0.i76 = phi ptr [ %i.p, %bb.h ], [ %i.q, %bb.i ]
   %4 = tail call ptr @lean_st_mk_ref(ptr noundef %.0.i76) #6 ; 10 uses
   %5 = tail call ptr @l_Lean_Syntax_getArg(ptr noundef %1, ptr noundef nonnull inttoptr (i64 5 to ptr)) #6
-  %.val.i.i = load i32, ptr %l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__19_value.l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__21_value, align 8, !tbaa !12 ; 2 uses
-  %6 = icmp sgt i32 %.val.i.i, 0
-  br i1 %6, label %lean_inc.exit57, label %7, !prof !13
-
-7:                                                ; preds = %lean_obj_once.exit77
-  %.not.i.i = icmp eq i32 %.val.i.i, 0
-  br i1 %.not.i.i, label %lean_inc.exit57, label %8
-
-8:                                                ; preds = %7
-  %9 = atomicrmw sub ptr %l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__19_value.l___private_Lean_Meta_Tactic_Grind_PropagatorAttr_0__Lean_Meta_Grind_addBuiltin___closed__21_value, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc.exit57
-
-lean_inc.exit57:                                  ; preds = %lean_obj_once.exit77, %8, %7
   %i.r = tail call ptr @lean_alloc_object(i64 noundef 56) #6 ; 10 uses
   store i32 1, ptr %i.r, align 4, !tbaa !12
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4 ; 2 uses

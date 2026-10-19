@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %lean_dec.exit178
 lean_obj_tag.exit210:                             ; preds = %bb.z, %bb.aa
   %.0.i208 = phi i32 [ %i.ao, %bb.z ], [ %i.aq, %bb.aa ]
   %i.ar = icmp eq i32 %.0.i208, 0
-  %l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__9_value.l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__10_value = select i1 %i.ar, ptr @l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__9_value, ptr @l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__10_value ; 3 uses
+  %l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__9_value.l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__10_value = select i1 %i.ar, ptr @l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__9_value, ptr @l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__10_value
   %i.as = ptrtoint ptr %i.w to i64
   %i.at = and i64 %i.as, 1
   %.not.i160 = icmp eq i64 %i.at, 0               ; 2 uses
@@ -519,27 +519,14 @@ lean_dec_ref_known.exit:                          ; preds = %lean_dec.exit.i, %b
 
 bb.bm:                                            ; preds = %lean_dec_ref_known.exit
   %i.dx = load ptr, ptr @l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__3, align 8, !tbaa !16
-  br label %lean_obj_once.exit234
+  br label %lean_inc_ref.exit237
 
 bb.bn:                                            ; preds = %lean_dec_ref_known.exit
   %i.dy = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__3, ptr noundef nonnull @l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__3_once, ptr noundef nonnull @_init_l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__3) #7
-  br label %lean_obj_once.exit234
-
-lean_obj_once.exit234:                            ; preds = %bb.bm, %bb.bn
-  %.0.i233 = phi ptr [ %i.dx, %bb.bm ], [ %i.dy, %bb.bn ]
-  %.val.i.i235 = load i32, ptr %l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__9_value.l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__10_value, align 8, !tbaa !11 ; 2 uses
-  %9 = icmp sgt i32 %.val.i.i235, 0
-  br i1 %9, label %lean_inc_ref.exit237, label %10, !prof !14
-
-10:                                               ; preds = %lean_obj_once.exit234
-  %.not.i.i236 = icmp eq i32 %.val.i.i235, 0
-  br i1 %.not.i.i236, label %lean_inc_ref.exit237, label %11
-
-11:                                               ; preds = %10
-  %12 = atomicrmw sub ptr %l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__9_value.l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__10_value, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit237
 
-lean_inc_ref.exit237:                             ; preds = %lean_obj_once.exit234, %10, %11
+lean_inc_ref.exit237:                             ; preds = %bb.bm, %bb.bn
+  %.0.i233 = phi ptr [ %i.dx, %bb.bm ], [ %i.dy, %bb.bn ]
   %i.dz = tail call ptr @l_Lean_stringToMessageData(ptr noundef nonnull %l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__9_value.l___private_Lean_Meta_Tactic_Apply_0__Lean_Meta_throwApplyError___redArg___lam__0___closed__10_value) #7
   tail call void @lean_inc_heartbeat() #7
   %i.ea = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #7 ; 6 uses

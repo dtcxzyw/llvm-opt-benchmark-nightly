@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.y = load i32, ptr %i.x, align 8, !tbaa !698  ; 2 uses
   %i.z = icmp sgt i32 %i.y, 0                     ; 3 uses
-  %i.aa = icmp slt i32 %i.y, 0                    ; 5 uses
+  %i.aa = icmp slt i32 %i.y, 0                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !771, !nonnull !564, !align !565 ; 3 uses
@@ -608,7 +608,7 @@ bb.ba:                                            ; preds = %bb.az
 bb.bb:                                            ; preds = %bb.ba
   %spec.store.select = zext i1 %i.z to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #26
-  %spec.select = select i1 %i.aa, ptr @_ZN8rational11m_minus_oneE, ptr @_ZN8rational6m_zeroE ; 2 uses
+  %spec.select = select i1 %i.aa, ptr @_ZN8rational11m_minus_oneE, ptr @_ZN8rational6m_zeroE ; 5 uses
   store i32 0, ptr %17, align 8, !tbaa !698
   %i.hq = getelementptr inbounds nuw i8, ptr %17, i64 4 ; 3 uses
   %i.hr = load i8, ptr %i.hq, align 4
@@ -625,10 +625,9 @@ bb.bb:                                            ; preds = %bb.ba
   %i.hy = getelementptr inbounds nuw i8, ptr %17, i64 24
   store ptr null, ptr %i.hy, align 8, !tbaa !697
   %i.hz = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !700 ; 2 uses
-  %.val = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 4), align 4
-  %.val123 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational6m_zeroE, i64 4), align 4
-  %18 = select i1 %i.aa, i8 %.val, i8 %.val123
-  %i.ia = and i8 %18, 1
+  %18 = getelementptr inbounds nuw i8, ptr %spec.select, i64 4
+  %.val123 = load i8, ptr %18, align 4
+  %i.ia = and i8 %.val123, 1
   %i.ib = icmp eq i8 %i.ia, 0
   br i1 %i.ib, label %bb.bd, label %bb.be
 
@@ -648,11 +647,10 @@ bb.be:                                            ; preds = %bb.bb
           to label %_ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i93 unwind label %bb.bt
 
 _ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i93: ; preds = %bb.be, %bb.bd
-  %19 = select i1 %i.aa, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational6m_zeroE, i64 16) ; 2 uses
-  %.val124 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 20), align 4
-  %.val125 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational6m_zeroE, i64 20), align 4
-  %20 = select i1 %i.aa, i8 %.val124, i8 %.val125
-  %i.ie = and i8 %20, 1
+  %19 = getelementptr inbounds nuw i8, ptr %spec.select, i64 16 ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %spec.select, i64 20
+  %.val125 = load i8, ptr %20, align 4
+  %i.ie = and i8 %.val125, 1
   %i.if = icmp eq i8 %i.ie, 0
   br i1 %i.if, label %bb.bf, label %bb.bg
 
@@ -1055,7 +1053,7 @@ bb.e:                                             ; preds = %_ZN11mpq_managerILb
 
 _ZN8rationalC2ERKS_.exit:                         ; preds = %bb.d, %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %spec.select = select i1 %2, ptr @_ZN8rational5m_oneE, ptr @_ZN8rational11m_minus_oneE ; 2 uses
+  %spec.select = select i1 %2, ptr @_ZN8rational5m_oneE, ptr @_ZN8rational11m_minus_oneE ; 5 uses
   store i32 0, ptr %i.x, align 8, !tbaa !698
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 3 uses
   %i.z = load i8, ptr %i.y, align 4
@@ -1072,10 +1070,9 @@ _ZN8rationalC2ERKS_.exit:                         ; preds = %bb.d, %bb.e
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr null, ptr %i.ag, align 8, !tbaa !697
   %i.ah = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !700 ; 2 uses
-  %.val = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 4), align 4
-  %.val7 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 4), align 4
-  %3 = select i1 %2, i8 %.val, i8 %.val7
-  %i.ai = and i8 %3, 1
+  %3 = getelementptr inbounds nuw i8, ptr %spec.select, i64 4
+  %.val7 = load i8, ptr %3, align 4
+  %i.ai = and i8 %.val7, 1
   %i.aj = icmp eq i8 %i.ai, 0
   br i1 %i.aj, label %bb.f, label %bb.g
 
@@ -1090,11 +1087,10 @@ bb.g:                                             ; preds = %_ZN8rationalC2ERKS_
           to label %_ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i4 unwind label %bb.j
 
 _ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i4:  ; preds = %bb.g, %bb.f
-  %4 = select i1 %2, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 16) ; 2 uses
-  %.val8 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 20), align 4
-  %.val9 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 20), align 4
-  %5 = select i1 %2, i8 %.val8, i8 %.val9
-  %i.al = and i8 %5, 1
+  %4 = getelementptr inbounds nuw i8, ptr %spec.select, i64 16 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %spec.select, i64 20
+  %.val9 = load i8, ptr %5, align 4
+  %i.al = and i8 %.val9, 1
   %i.am = icmp eq i8 %i.al, 0
   br i1 %i.am, label %bb.h, label %bb.i
 

@@ -204,7 +204,7 @@ lean_dec.exit52:                                  ; preds = %.lean_dec.exit52_cr
   %.pre-phi = phi i64 [ %.pre, %.lean_dec.exit52_crit_edge ], [ %i.s, %lean_inc.exit ], [ %i.s, %bb.s ], [ %i.s, %bb.r ], [ %i.s, %bb.q ]
   %.045 = phi ptr [ %.0, %.lean_dec.exit52_crit_edge ], [ inttoptr (i64 1 to ptr), %lean_inc.exit ], [ inttoptr (i64 1 to ptr), %bb.s ], [ inttoptr (i64 1 to ptr), %bb.r ], [ inttoptr (i64 1 to ptr), %bb.q ] ; 3 uses
   %.not.i48 = icmp eq i64 %.pre-phi67, 0
-  br i1 %.not.i48, label %bb.t, label %lean_dec.exit
+  br i1 %.not.i48, label %bb.t, label %lean_inc_ref.exit60
 
 bb.t:                                             ; preds = %lean_dec.exit52
   %i.aa = load i32, ptr %i.j, align 4, !tbaa !11  ; 3 uses
@@ -214,33 +214,17 @@ bb.t:                                             ; preds = %lean_dec.exit52
 bb.u:                                             ; preds = %bb.t
   %i.ac = add nsw i32 %i.aa, -1
   store i32 %i.ac, ptr %i.j, align 4, !tbaa !11
-  br label %lean_dec.exit
+  br label %lean_inc_ref.exit60
 
 bb.v:                                             ; preds = %bb.t
   %.not.i.i = icmp eq i32 %i.aa, 0
-  br i1 %.not.i.i, label %lean_dec.exit, label %bb.w
+  br i1 %.not.i.i, label %lean_inc_ref.exit60, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.j) #9
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %bb.u, %bb.v, %bb.w, %lean_dec.exit52
-  %2 = and i64 %.pre-phi, 510
-  %3 = icmp eq i64 %2, 0
-  %l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__13_value.l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__10_value = select i1 %3, ptr @l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__13_value, ptr @l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__10_value ; 3 uses
-  %.val.i.i58 = load i32, ptr %l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__13_value.l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__10_value, align 8, !tbaa !11 ; 2 uses
-  %4 = icmp sgt i32 %.val.i.i58, 0
-  br i1 %4, label %lean_inc_ref.exit60, label %5, !prof !16
-
-5:                                                ; preds = %lean_dec.exit
-  %.not.i.i59 = icmp eq i32 %.val.i.i58, 0
-  br i1 %.not.i.i59, label %lean_inc_ref.exit60, label %6
-
-6:                                                ; preds = %5
-  %7 = atomicrmw sub ptr %l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__13_value.l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__10_value, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit60
 
-lean_inc_ref.exit60:                              ; preds = %lean_dec.exit, %5, %6
+lean_inc_ref.exit60:                              ; preds = %bb.u, %bb.v, %bb.w, %lean_dec.exit52
   tail call void @lean_inc_heartbeat() #9
   %i.ad = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #9 ; 5 uses
   %i.ae = icmp eq ptr %i.ad, null
@@ -251,6 +235,9 @@ bb.x:                                             ; preds = %lean_inc_ref.exit60
   unreachable
 
 lean_alloc_ctor.exit:                             ; preds = %lean_inc_ref.exit60
+  %2 = and i64 %.pre-phi, 510
+  %3 = icmp eq i64 %2, 0
+  %l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__13_value.l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__10_value = select i1 %3, ptr @l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__13_value, ptr @l___private_Lean_Meta_Tactic_FunInd_0__Lean_Tactic_FunInd_buildInductionBody___closed__10_value
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
   store i32 1, ptr %i.ad, align 4, !tbaa !11
   store i32 50397200, ptr %i.af, align 4
