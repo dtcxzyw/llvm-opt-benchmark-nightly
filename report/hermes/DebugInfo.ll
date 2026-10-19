@@ -205,8 +205,7 @@ bb.n:                                             ; preds = %_ZN4llvh11raw_ostre
 
 _ZN4llvh11raw_ostreamlsEPKc.exit43:               ; preds = %bb.m, %bb.n
   %i.cp = phi ptr [ %.pre, %bb.m ], [ %i.co, %bb.n ] ; 2 uses
-  %i.cq = trunc i64 %i.be to i1
-  %.str.24..str.1 = select i1 %i.cq, ptr @.str.24, ptr @.str.1 ; 2 uses
+  %i.cq = trunc i64 %i.be to i1                   ; 2 uses
   %i.cr = load ptr, ptr %i.p, align 8, !tbaa !84
   %i.cs = ptrtoint ptr %i.cr to i64
   %i.ct = ptrtoint ptr %i.cp to i64
@@ -215,12 +214,13 @@ _ZN4llvh11raw_ostreamlsEPKc.exit43:               ; preds = %bb.m, %bb.n
   br i1 %i.cv, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit43
+  %.str.24..str.1 = select i1 %i.cq, ptr @.str.24, ptr @.str.1
   %i.cw = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull %.str.24..str.1, i64 noundef 2) #14 ; 0 uses
   %.pre91 = load ptr, ptr %i.r, align 8, !tbaa !85
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit46
 
 bb.p:                                             ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit43
-  %5 = load i16, ptr %.str.24..str.1, align 1
+  %5 = select i1 %i.cq, i16 29513, i16 8224
   store i16 %5, ptr %i.cp, align 1
   %i.cx = load ptr, ptr %i.r, align 8, !tbaa !85
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 2 ; 2 uses
@@ -230,19 +230,19 @@ bb.p:                                             ; preds = %_ZN4llvh11raw_ostre
 _ZN4llvh11raw_ostreamlsEPKc.exit46:               ; preds = %bb.o, %bb.p
   %i.cz = phi ptr [ %.pre91, %bb.o ], [ %i.cy, %bb.p ] ; 2 uses
   %i.da = and i64 %i.be, 2
-  %.not = icmp eq i64 %i.da, 0
-  %6 = select i1 %.not, ptr @.str.26, ptr @.str.25 ; 2 uses
+  %.not = icmp eq i64 %i.da, 0                    ; 2 uses
   %i.db = load ptr, ptr %i.p, align 8, !tbaa !84
   %i.dc = icmp eq ptr %i.db, %i.cz
   br i1 %i.dc, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit46
+  %6 = select i1 %.not, ptr @.str.26, ptr @.str.25
   %i.dd = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull %6, i64 noundef 1) #14 ; 0 uses
   %.pre92 = load ptr, ptr %i.r, align 8, !tbaa !85
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit49
 
 bb.r:                                             ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit46
-  %7 = load i8, ptr %6, align 1
+  %7 = select i1 %.not, i8 32, i8 68
   store i8 %7, ptr %i.cz, align 1
   %i.de = load ptr, ptr %i.r, align 8, !tbaa !85
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 1 ; 2 uses

@@ -204,37 +204,24 @@ lean_alloc_ctor.exit:                             ; preds = %lean_obj_once.exit
   store ptr %i.r, ptr %i.z, align 8, !tbaa !17
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   store ptr %.0.i, ptr %i.aa, align 8, !tbaa !17
-  %2 = icmp eq i8 %i.n, 0
-  %l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__4_value.l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__5_value = select i1 %2, ptr @l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__4_value, ptr @l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__5_value ; 3 uses
-  %.val.i.i44 = load i32, ptr %l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__4_value.l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__5_value, align 8, !tbaa !10 ; 2 uses
-  %3 = icmp sgt i32 %.val.i.i44, 0
-  br i1 %3, label %lean_inc_ref.exit46, label %4, !prof !11
-
-4:                                                ; preds = %lean_alloc_ctor.exit
-  %.not.i.i45 = icmp eq i32 %.val.i.i44, 0
-  br i1 %.not.i.i45, label %lean_inc_ref.exit46, label %5
-
-5:                                                ; preds = %4
-  %6 = atomicrmw sub ptr %l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__4_value.l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__5_value, i32 1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit46
-
-lean_inc_ref.exit46:                              ; preds = %lean_alloc_ctor.exit, %4, %5
   tail call void @lean_inc_heartbeat() #7
-  %7 = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #7 ; 5 uses
-  %8 = icmp eq ptr %7, null
-  br i1 %8, label %bb.o, label %lean_alloc_ctor.exit47
+  %2 = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #7 ; 5 uses
+  %3 = icmp eq ptr %2, null
+  br i1 %3, label %bb.o, label %lean_alloc_ctor.exit47
 
-bb.o:                                             ; preds = %lean_inc_ref.exit46
+bb.o:                                             ; preds = %lean_alloc_ctor.exit
   tail call void @lean_internal_panic_out_of_memory() #8
   unreachable
 
-lean_alloc_ctor.exit47:                           ; preds = %lean_inc_ref.exit46
-  %i.ab = getelementptr inbounds nuw i8, ptr %7, i64 4
-  store i32 1, ptr %7, align 4, !tbaa !10
+lean_alloc_ctor.exit47:                           ; preds = %lean_alloc_ctor.exit
+  %4 = icmp eq i8 %i.n, 0
+  %l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__4_value.l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__5_value = select i1 %4, ptr @l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__4_value, ptr @l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__5_value
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 4
+  store i32 1, ptr %2, align 4, !tbaa !10
   store i32 50397200, ptr %i.ab, align 4
-  %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__4_value.l_Lean_Compiler_LCNF_instToMessageDataSpecEntry___lam__1___closed__5_value, ptr %i.ac, align 8, !tbaa !17
-  %i.ad = tail call ptr @l_Lean_MessageData_ofFormat(ptr noundef nonnull %7) #7
+  %i.ad = tail call ptr @l_Lean_MessageData_ofFormat(ptr noundef nonnull %2) #7
   tail call void @lean_inc_heartbeat() #7
   %i.ae = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #7 ; 6 uses
   %i.af = icmp eq ptr %i.ae, null

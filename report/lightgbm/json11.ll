@@ -204,20 +204,16 @@ bb.e:                                             ; preds = %bb.c
   resume { ptr, i32 } %i.e
 
 _ZN24json11_internal_lightgbmL7staticsEv.exit:    ; preds = %bb.a, %bb.b, %bb.d
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN24json11_internal_lightgbmL7staticsEvE1s, i64 16), align 16
-  %.val1 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN24json11_internal_lightgbmL7staticsEvE1s, i64 32), align 16
-  %i.f = select i1 %1, ptr %.val, ptr %.val1
-  store ptr %i.f, ptr %0, align 8, !tbaa !27
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val2 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN24json11_internal_lightgbmL7staticsEvE1s, i64 24), align 8
-  %.val3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN24json11_internal_lightgbmL7staticsEvE1s, i64 40), align 8
-  %2 = select i1 %1, ptr %.val2, ptr %.val3       ; 3 uses
-  store ptr %2, ptr %i.g, align 8, !tbaa !38
-  %.not.i.i.i = icmp eq ptr %2, null
+  %i.f = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @_ZZN24json11_internal_lightgbmL7staticsEvE1s, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZZN24json11_internal_lightgbmL7staticsEvE1s, i64 32) ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %.val3 = load ptr, ptr %i.g, align 8, !tbaa !38 ; 2 uses
+  %2 = load <2 x ptr>, ptr %i.f, align 16, !tbaa !57
+  store <2 x ptr> %2, ptr %0, align 8, !tbaa !57
+  %.not.i.i.i = icmp eq ptr %.val3, null
   br i1 %.not.i.i.i, label %_ZNSt10shared_ptrIN24json11_internal_lightgbm9JsonValueEEC2ERKS2_.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN24json11_internal_lightgbmL7staticsEv.exit
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.val3, i64 8 ; 3 uses
   %i.i = load i8, ptr @__libc_single_threaded, align 1, !tbaa !42
   %.not.i.i.i.i = icmp eq i8 %i.i, 0
   br i1 %.not.i.i.i.i, label %bb.h, label %bb.g

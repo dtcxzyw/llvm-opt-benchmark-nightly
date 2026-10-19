@@ -205,8 +205,8 @@ bb.bh:                                            ; preds = %bb.bg
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #21
   %i.jr = load i32, ptr %i.co, align 8, !tbaa !176
   %i.js = add i32 %i.jr, -3000
-  %or.cond.i131 = icmp ult i32 %i.js, -1000       ; 2 uses
-  %.str.58..str.28.i133 = select i1 %or.cond.i131, ptr @.str.58, ptr @.str.28 ; 3 uses
+  %or.cond.i131 = icmp ult i32 %i.js, -1000       ; 3 uses
+  %.str.58..str.28.i133 = select i1 %or.cond.i131, ptr @.str.58, ptr @.str.28 ; 2 uses
   %i.jt = select i1 %or.cond.i131, i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @.str.58, i64 4) to i64), i64 ptrtoint (ptr @.str.28 to i64)
   %i.ju = ptrtoint ptr %.str.58..str.28.i133 to i64
   %i.jv = sub i64 %i.jt, %i.ju                    ; 8 uses
@@ -255,7 +255,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i
   ]
 
 bb.bk:                                            ; preds = %._crit_edge.i.i.i.i137
-  %16 = load i8, ptr %.str.58..str.28.i133, align 1, !tbaa !28
+  %16 = select i1 %or.cond.i131, i8 27, i8 0
   store i8 %16, ptr %i.kc, align 1, !tbaa !28
   br label %bb.bm
 

@@ -202,7 +202,6 @@ $_ZN4llvm14ImutAVLFactoryINS_16ImutKeyValueInfoIPKN5clang4ento7SymExprEPKNS2_13S
 @_ZZN5clang4ento17ProgramStateTraitIN12_GLOBAL__N_114DenotedSymbolsEE8GDMIndexEvE5Index = internal global i32 0, align 4
 @.str.100 = private unnamed_addr constant [18 x i8] c"Unable to express\00", align 1
 @.str.101 = private unnamed_addr constant [2 x i8] c"U\00", align 1
-@.str.102 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits = private unnamed_addr constant [201 x i8] c"00010203040506070809101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899\00", align 16
 @.str.103 = private unnamed_addr constant [57 x i8] c"clang_analyzer_isTainted() requires exactly one argument\00", align 1
 @.str.104 = private unnamed_addr constant [4 x i8] c"YES\00", align 1
@@ -605,8 +604,7 @@ _ZN4llvm6APSIntC2ERKS0_.exit:                     ; preds = %bb.i, %bb.j
   %i.bn = zext i32 %i.bm to i64
   %i.bo = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(56) %4, i64 noundef %i.bn) #21 ; 3 uses
   %i.bp = load i8, ptr %i.bb, align 4, !tbaa !285, !range !39, !noundef !40
-  %i.bq = trunc nuw i8 %i.bp to i1
-  %.str.94..str.95.i.i = select i1 %i.bq, ptr @.str.94, ptr @.str.95 ; 2 uses
+  %i.bq = trunc nuw i8 %i.bp to i1                ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bo, i64 24
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !286
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bo, i64 32 ; 3 uses
@@ -618,11 +616,12 @@ _ZN4llvm6APSIntC2ERKS0_.exit:                     ; preds = %bb.i, %bb.j
   br i1 %i.by, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %_ZN4llvm6APSIntC2ERKS0_.exit
+  %.str.94..str.95.i.i = select i1 %i.bq, ptr @.str.94, ptr @.str.95
   %i.bz = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.bo, ptr noundef nonnull %.str.94..str.95.i.i, i64 noundef 2) #21 ; 0 uses
   br label %_ZL11printHelperRN4llvm19raw_svector_ostreamERN5clang4ento14CheckerContextERKNS_6APSIntE.exit.i
 
 bb.l:                                             ; preds = %_ZN4llvm6APSIntC2ERKS0_.exit
-  %15 = load i16, ptr %.str.94..str.95.i.i, align 1
+  %15 = select i1 %i.bq, i16 14965, i16 14963
   store i16 %15, ptr %i.bu, align 1
   %i.ca = load ptr, ptr %i.bt, align 8, !tbaa !287
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 2
@@ -1025,11 +1024,8 @@ _ZN4llvmplERKNS_5TwineES2_.exit166:               ; preds = %_ZNSt7__cxx119to_st
   %.sroa.0.0.copyload.i = load ptr, ptr %i.du, align 8, !tbaa !800
   %i.fw = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i, i64 12
   %i.fx = load i8, ptr %i.fw, align 4, !tbaa !285, !range !39, !noundef !40
-  %i.fy = trunc nuw i8 %i.fx to i1
-  %34 = select i1 %i.fy, ptr @.str.101, ptr @.str.102 ; 2 uses
-  %35 = load i8, ptr %34, align 1, !tbaa !35
-  %.not.i = icmp eq i8 %35, 0                     ; 2 uses
-  %storemerge.i = select i1 %.not.i, i8 1, i8 3
+  %i.fy = trunc nuw i8 %i.fx to i1                ; 2 uses
+  %storemerge.i = select i1 %i.fy, i8 3, i8 1
   call void @llvm.experimental.noalias.scope.decl(metadata !1365)
   call void @llvm.experimental.noalias.scope.decl(metadata !1366)
   %cond352 = icmp eq i8 %.sink350, 0
@@ -1043,7 +1039,7 @@ bb.ai:                                            ; preds = %_ZN4llvmplERKNS_5Tw
   br label %_ZN4llvmplERKNS_5TwineES2_.exit181
 
 bb.aj:                                            ; preds = %_ZN4llvmplERKNS_5TwineES2_.exit166
-  br i1 %.not.i, label %bb.ak, label %bb.al
+  br i1 %i.fy, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %24, ptr noundef nonnull align 8 dereferenceable(40) %25, i64 40, i1 false), !tbaa.struct !839
@@ -1057,7 +1053,7 @@ bb.al:                                            ; preds = %bb.aj
   %.sroa.23.0..sroa_idx.i.i.i179 = getelementptr inbounds nuw i8, ptr %24, i64 8
   store i64 %.sroa.56.0.i.i172, ptr %.sroa.23.0..sroa_idx.i.i.i179, align 8, !tbaa !35, !alias.scope !1367
   %i.gb = getelementptr inbounds nuw i8, ptr %24, i64 16
-  store ptr %34, ptr %i.gb, align 8, !alias.scope !1367
+  store ptr @.str.101, ptr %i.gb, align 8, !alias.scope !1367
   %i.gc = getelementptr inbounds nuw i8, ptr %24, i64 32
   store i8 %.014.i.i170, ptr %i.gc, align 8, !tbaa !730, !alias.scope !1367
   %i.gd = getelementptr inbounds nuw i8, ptr %24, i64 33

@@ -204,65 +204,57 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.bu = phi ptr [ %i.bt, %bb.ae ], [ null, %bb.ad ]
   %i.bv = getelementptr i8, ptr %i.bu, i64 4408
   %i.bw = load i32, ptr %i.bv, align 8
-  %i.bx = icmp eq i32 %i.bw, 24000                ; 8 uses
-  %i.by = select i1 %i.bx, ptr @icl_dp_combo_pll_24MHz_values, ptr @icl_dp_combo_pll_19_2MHz_values ; 2 uses
+  %i.bx = icmp eq i32 %i.bw, 24000
+  %i.by = select i1 %i.bx, ptr @icl_dp_combo_pll_24MHz_values, ptr @icl_dp_combo_pll_19_2MHz_values ; 8 uses
   %i.bz = getelementptr i8, ptr %i.k, i64 1320
-  %3 = load i32, ptr %i.bz, align 8               ; 9 uses
-  %i.ca = load i32, ptr %i.by, align 16
-  %i.cb = icmp eq i32 %3, %i.ca
+  %i.ca = load i32, ptr %i.bz, align 8            ; 9 uses
+  %i.cb = icmp eq i32 %i.ca, 540000
   br i1 %i.cb, label %bb.ao, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %4 = select i1 %i.bx, ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_24MHz_values, i64 32), ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_19_2MHz_values, i64 32) ; 2 uses
-  %5 = load i32, ptr %4, align 16
-  %i.cc = icmp eq i32 %3, %5
+  %3 = getelementptr i8, ptr %i.by, i64 32
+  %i.cc = icmp eq i32 %i.ca, 270000
   br i1 %i.cc, label %bb.ao, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %6 = select i1 %i.bx, ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_24MHz_values, i64 64), ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_19_2MHz_values, i64 64) ; 2 uses
-  %7 = load i32, ptr %6, align 16
-  %i.cd = icmp eq i32 %3, %7
+  %4 = getelementptr i8, ptr %i.by, i64 64
+  %i.cd = icmp eq i32 %i.ca, 162000
   br i1 %i.cd, label %bb.ao, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %8 = select i1 %i.bx, ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_24MHz_values, i64 96), ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_19_2MHz_values, i64 96) ; 2 uses
-  %9 = load i32, ptr %8, align 16
-  %i.ce = icmp eq i32 %3, %9
+  %5 = getelementptr i8, ptr %i.by, i64 96
+  %i.ce = icmp eq i32 %i.ca, 324000
   br i1 %i.ce, label %bb.ao, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %10 = select i1 %i.bx, ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_24MHz_values, i64 128), ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_19_2MHz_values, i64 128) ; 2 uses
-  %11 = load i32, ptr %10, align 16
-  %i.cf = icmp eq i32 %3, %11
+  %6 = getelementptr i8, ptr %i.by, i64 128
+  %i.cf = icmp eq i32 %i.ca, 216000
   br i1 %i.cf, label %bb.ao, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %12 = select i1 %i.bx, ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_24MHz_values, i64 160), ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_19_2MHz_values, i64 160) ; 2 uses
-  %13 = load i32, ptr %12, align 16
-  %i.cg = icmp eq i32 %3, %13
+  %7 = getelementptr i8, ptr %i.by, i64 160
+  %i.cg = icmp eq i32 %i.ca, 432000
   br i1 %i.cg, label %bb.ao, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %14 = select i1 %i.bx, ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_24MHz_values, i64 192), ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_19_2MHz_values, i64 192) ; 2 uses
-  %15 = load i32, ptr %14, align 16
-  %i.ch = icmp eq i32 %3, %15
+  %8 = getelementptr i8, ptr %i.by, i64 192
+  %i.ch = icmp eq i32 %i.ca, 648000
   br i1 %i.ch, label %bb.ao, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %16 = select i1 %i.bx, ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_24MHz_values, i64 224), ptr getelementptr inbounds nuw (i8, ptr @icl_dp_combo_pll_19_2MHz_values, i64 224) ; 2 uses
-  %17 = load i32, ptr %16, align 16
-  %i.ci = icmp eq i32 %3, %17
+  %9 = getelementptr i8, ptr %i.by, i64 224
+  %i.ci = icmp eq i32 %i.ca, 810000
   br i1 %i.ci, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.cj = sext i32 %3 to i64
+  %i.cj = sext i32 %i.ca to i64
   %i.ck = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str, ptr nonnull @.str.2, i32 2741, i32 2321, i64 16) #13, !srcloc !145
   tail call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.ck, ptr noundef nonnull @.str.64, i64 noundef %i.cj) #14
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #13, !srcloc !146
   br label %icl_compute_combo_phy_dpll.exit
 
 bb.ao:                                            ; preds = %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af
-  %.lcssa.i.i = phi ptr [ %i.by, %bb.af ], [ %4, %bb.ag ], [ %6, %bb.ah ], [ %8, %bb.ai ], [ %10, %bb.aj ], [ %12, %bb.ak ], [ %14, %bb.al ], [ %16, %bb.am ] ; 6 uses
+  %.lcssa.i.i = phi ptr [ %i.by, %bb.af ], [ %3, %bb.ag ], [ %4, %bb.ah ], [ %5, %bb.ai ], [ %6, %bb.aj ], [ %7, %bb.ak ], [ %8, %bb.al ], [ %9, %bb.am ] ; 6 uses
   %i.cl = getelementptr i8, ptr %.lcssa.i.i, i64 4
   %.sroa.0.0.copyload.i = load i32, ptr %i.cl, align 4
   %.sroa.6.0..sroa_idx.i = getelementptr i8, ptr %.lcssa.i.i, i64 8

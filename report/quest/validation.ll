@@ -206,20 +206,18 @@ bb.a:
   %7 = alloca [2 x %"struct.std::pair"], align 8  ; 22 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %9 = alloca %"class.std::map", align 8          ; 10 uses
-  %i.c = icmp ne i32 %1, 0                        ; 3 uses
+  %i.c = icmp ne i32 %1, 0                        ; 2 uses
   %i.d = tail call noundef i32 @_Z43mem_getMaxNumQuregQubitsBeforeIndexOverflowb(i1 noundef zeroext %i.c) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
+  %_ZN6report47NEW_DENSMATR_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E = select i1 %i.c, ptr @_ZN6report47NEW_DENSMATR_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E, ptr @_ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E ; 2 uses
   %10 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %10, ptr %5, align 8, !tbaa !24
-  %_ZN6report47NEW_DENSMATR_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr @_ZN6report47NEW_DENSMATR_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E, align 8
-  %_ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr @_ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E, align 8
-  %11 = select i1 %i.c, ptr %_ZN6report47NEW_DENSMATR_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E.val, ptr %_ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report47NEW_DENSMATR_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8), align 8
-  %.val48 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8), align 8
-  %12 = select i1 %i.c, i64 %.val, i64 %.val48    ; 4 uses
+  %_ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr %_ZN6report47NEW_DENSMATR_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %_ZN6report47NEW_DENSMATR_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8
+  %.val48 = load i64, ptr %11, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %12, ptr %i.b, align 8, !tbaa !30
-  %i.e = icmp ugt i64 %12, 15
+  store i64 %.val48, ptr %i.b, align 8, !tbaa !30
+  %i.e = icmp ugt i64 %.val48, 15
   br i1 %i.e, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.a
@@ -231,18 +229,18 @@ bb.a:
 
 ._crit_edge.i.i:                                  ; preds = %.noexc.i, %bb.a
   %i.h = phi ptr [ %i.f, %.noexc.i ], [ %10, %bb.a ] ; 2 uses
-  switch i64 %12, label %bb.c [
+  switch i64 %.val48, label %bb.c [
     i64 1, label %bb.b
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   ]
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  %i.i = load i8, ptr %11, align 1, !tbaa !26
+  %i.i = load i8, ptr %_ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.i, ptr %i.h, align 1, !tbaa !26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.h, ptr align 1 %11, i64 %12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.h, ptr align 1 %_ZN6report47NEW_STATEVEC_QUREG_NUM_AMPS_WOULD_EXCEED_QINDEXB5cxx11E.val, i64 %.val48, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %._crit_edge.i.i, %bb.b, %bb.c
@@ -573,7 +571,7 @@ define void @_Z40assertQuregLocalMemDoesntExceedMaxSizeofiii8QuESTEnvPKc(i32 nou
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.h = load i32, ptr %i.g, align 8
   %i.i = select i1 %or.cond, i32 %i.h, i32 1      ; 2 uses
-  %i.j = icmp ne i32 %1, 0                        ; 3 uses
+  %i.j = icmp ne i32 %1, 0                        ; 2 uses
   %i.k = tail call noundef i32 @_Z53mem_getMaxNumQuregQubitsBeforeGlobalMemSizeofOverflowbi(i1 noundef zeroext %i.j, i32 noundef %i.i) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #27
@@ -684,17 +682,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2: ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.2
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #27
+  %_ZN6report48NEW_DENSMATR_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E._ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E = select i1 %i.j, ptr @_ZN6report48NEW_DENSMATR_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, ptr @_ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E ; 2 uses
   %12 = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
   store ptr %12, ptr %9, align 8, !tbaa !24
-  %_ZN6report48NEW_DENSMATR_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val = load ptr, ptr @_ZN6report48NEW_DENSMATR_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, align 8
-  %_ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val = load ptr, ptr @_ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, align 8
-  %13 = select i1 %i.j, ptr %_ZN6report48NEW_DENSMATR_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val, ptr %_ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report48NEW_DENSMATR_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, i64 8), align 8
-  %.val58 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, i64 8), align 8
-  %14 = select i1 %i.j, i64 %.val, i64 %.val58    ; 4 uses
+  %_ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val = load ptr, ptr %_ZN6report48NEW_DENSMATR_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E._ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %_ZN6report48NEW_DENSMATR_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E._ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, i64 8
+  %.val58 = load i64, ptr %13, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %14, ptr %i.b, align 8, !tbaa !30
-  %i.bg = icmp ugt i64 %14, 15
+  store i64 %.val58, ptr %i.b, align 8, !tbaa !30
+  %i.bg = icmp ugt i64 %.val58, 15
   br i1 %i.bg, label %.noexc.i27, label %._crit_edge.i.i
 
 .noexc.i27:                                       ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2
@@ -709,18 +705,18 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2: ;
 
 ._crit_edge.i.i:                                  ; preds = %.noexc28, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2
   %i.bj = phi ptr [ %i.bh, %.noexc28 ], [ %12, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2 ] ; 2 uses
-  switch i64 %14, label %bb.b [
+  switch i64 %.val58, label %bb.b [
     i64 1, label %bb.a
     i64 0, label %bb.c
   ]
 
 bb.a:                                             ; preds = %._crit_edge.i.i
-  %i.bk = load i8, ptr %13, align 1, !tbaa !26
+  %i.bk = load i8, ptr %_ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.bk, ptr %i.bj, align 1, !tbaa !26
   br label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bj, ptr align 1 %13, i64 %14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bj, ptr align 1 %_ZN6report48NEW_STATEVEC_QUREG_LOCAL_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val, i64 %.val58, i1 false)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a, %._crit_edge.i.i
@@ -987,18 +983,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
-  %.not18 = icmp eq i32 %1, 0                     ; 2 uses
+  %.not18 = icmp eq i32 %1, 0
+  %_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E._ZN6report43NEW_DISTRIB_STATEVEC_QUREG_HAS_TOO_FEW_AMPSB5cxx11E = select i1 %.not18, ptr @_ZN6report43NEW_DISTRIB_STATEVEC_QUREG_HAS_TOO_FEW_AMPSB5cxx11E, ptr @_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E ; 2 uses
   %12 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
   store ptr %12, ptr %7, align 8, !tbaa !24
-  %_ZN6report43NEW_DISTRIB_STATEVEC_QUREG_HAS_TOO_FEW_AMPSB5cxx11E.val = load ptr, ptr @_ZN6report43NEW_DISTRIB_STATEVEC_QUREG_HAS_TOO_FEW_AMPSB5cxx11E, align 8
-  %_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E.val = load ptr, ptr @_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E, align 8
-  %13 = select i1 %.not18, ptr %_ZN6report43NEW_DISTRIB_STATEVEC_QUREG_HAS_TOO_FEW_AMPSB5cxx11E.val, ptr %_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report43NEW_DISTRIB_STATEVEC_QUREG_HAS_TOO_FEW_AMPSB5cxx11E, i64 8), align 8
-  %.val62 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E, i64 8), align 8
-  %14 = select i1 %.not18, i64 %.val, i64 %.val62 ; 4 uses
+  %_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E.val = load ptr, ptr %_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E._ZN6report43NEW_DISTRIB_STATEVEC_QUREG_HAS_TOO_FEW_AMPSB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E._ZN6report43NEW_DISTRIB_STATEVEC_QUREG_HAS_TOO_FEW_AMPSB5cxx11E, i64 8
+  %.val62 = load i64, ptr %13, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %14, ptr %i.b, align 8, !tbaa !30
-  %i.c = icmp ugt i64 %14, 15
+  store i64 %.val62, ptr %i.b, align 8, !tbaa !30
+  %i.c = icmp ugt i64 %.val62, 15
   br i1 %i.c, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.b
@@ -1010,18 +1004,18 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge.i.i:                                  ; preds = %.noexc.i, %bb.b
   %i.f = phi ptr [ %i.d, %.noexc.i ], [ %12, %bb.b ] ; 2 uses
-  switch i64 %14, label %bb.d [
+  switch i64 %.val62, label %bb.d [
     i64 1, label %bb.c
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   ]
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  %i.g = load i8, ptr %13, align 1, !tbaa !26
+  %i.g = load i8, ptr %_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.g, ptr %i.f, align 1, !tbaa !26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 bb.d:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.f, ptr align 1 %13, i64 %14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.f, ptr align 1 %_ZN6report43NEW_DISTRIB_DENSMATR_QUREG_HAS_TOO_FEW_AMPSB5cxx11E.val, i64 %.val62, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %._crit_edge.i.i, %bb.c, %bb.d
@@ -1419,41 +1413,39 @@ bb.b:                                             ; preds = %bb.a
   %i.k = icmp ne i32 %1, 0                        ; 2 uses
   %i.l = tail call noundef zeroext i1 @_Z23mem_canQuregFitInMemoryibix(i32 noundef %0, i1 noundef zeroext %i.k, i32 noundef %i.j, i64 noundef %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
-  %i.m = icmp eq i32 %i.j, 1                      ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
-  store ptr %13, ptr %7, align 8, !tbaa !24
-  %_ZN6report45NEW_QUREG_CANNOT_FIT_INTO_NON_DISTRIB_CPU_MEMB5cxx11E.val = load ptr, ptr @_ZN6report45NEW_QUREG_CANNOT_FIT_INTO_NON_DISTRIB_CPU_MEMB5cxx11E, align 8
-  %_ZN6report53NEW_QUREG_CANNOT_FIT_INTO_POTENTIALLY_DISTRIB_CPU_MEMB5cxx11E.val = load ptr, ptr @_ZN6report53NEW_QUREG_CANNOT_FIT_INTO_POTENTIALLY_DISTRIB_CPU_MEMB5cxx11E, align 8
-  %14 = select i1 %i.m, ptr %_ZN6report45NEW_QUREG_CANNOT_FIT_INTO_NON_DISTRIB_CPU_MEMB5cxx11E.val, ptr %_ZN6report53NEW_QUREG_CANNOT_FIT_INTO_POTENTIALLY_DISTRIB_CPU_MEMB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report45NEW_QUREG_CANNOT_FIT_INTO_NON_DISTRIB_CPU_MEMB5cxx11E, i64 8), align 8
-  %.val103 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report53NEW_QUREG_CANNOT_FIT_INTO_POTENTIALLY_DISTRIB_CPU_MEMB5cxx11E, i64 8), align 8
-  %15 = select i1 %i.m, i64 %.val, i64 %.val103   ; 4 uses
+  %i.m = icmp eq i32 %i.j, 1
+  %13 = select i1 %i.m, ptr @_ZN6report45NEW_QUREG_CANNOT_FIT_INTO_NON_DISTRIB_CPU_MEMB5cxx11E, ptr @_ZN6report53NEW_QUREG_CANNOT_FIT_INTO_POTENTIALLY_DISTRIB_CPU_MEMB5cxx11E ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
+  store ptr %14, ptr %7, align 8, !tbaa !24
+  %_ZN6report53NEW_QUREG_CANNOT_FIT_INTO_POTENTIALLY_DISTRIB_CPU_MEMB5cxx11E.val = load ptr, ptr %13, align 8, !tbaa !25 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %.val103 = load i64, ptr %15, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %15, ptr %i.b, align 8, !tbaa !30
-  %i.n = icmp ugt i64 %15, 15
+  store i64 %.val103, ptr %i.b, align 8, !tbaa !30
+  %i.n = icmp ugt i64 %.val103, 15
   br i1 %i.n, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.b
   %i.o = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 0) ; 2 uses
   store ptr %i.o, ptr %7, align 8, !tbaa !25
   %i.p = load i64, ptr %i.b, align 8, !tbaa !30
-  store i64 %i.p, ptr %13, align 8, !tbaa !26
+  store i64 %i.p, ptr %14, align 8, !tbaa !26
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.noexc.i, %bb.b
-  %i.q = phi ptr [ %i.o, %.noexc.i ], [ %13, %bb.b ] ; 2 uses
-  switch i64 %15, label %bb.d [
+  %i.q = phi ptr [ %i.o, %.noexc.i ], [ %14, %bb.b ] ; 2 uses
+  switch i64 %.val103, label %bb.d [
     i64 1, label %bb.c
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   ]
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  %i.r = load i8, ptr %14, align 1, !tbaa !26
+  %i.r = load i8, ptr %_ZN6report53NEW_QUREG_CANNOT_FIT_INTO_POTENTIALLY_DISTRIB_CPU_MEMB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.r, ptr %i.q, align 1, !tbaa !26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 bb.d:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.q, ptr align 1 %14, i64 %15, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.q, ptr align 1 %_ZN6report53NEW_QUREG_CANNOT_FIT_INTO_POTENTIALLY_DISTRIB_CPU_MEMB5cxx11E.val, i64 %.val103, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %._crit_edge.i.i, %bb.c, %bb.d
@@ -1856,11 +1848,11 @@ bb.r:                                             ; preds = %_ZNSt7__cxx1112basi
 _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExSt4lessIS5_ESaISt4pairIKS5_xEEED2Ev.exit79: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit78
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #27
   %i.fr = load ptr, ptr %7, align 8, !tbaa !25    ; 2 uses
-  %i.fs = icmp eq ptr %i.fr, %13
+  %i.fs = icmp eq ptr %i.fr, %14
   br i1 %i.fs, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit82, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i80
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i80: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExSt4lessIS5_ESaISt4pairIKS5_xEEED2Ev.exit79
-  %i.ft = load i64, ptr %13, align 8, !tbaa !26
+  %i.ft = load i64, ptr %14, align 8, !tbaa !26
   %i.fu = add i64 %i.ft, 1
   call void @_ZdlPvm(ptr noundef %i.fr, i64 noundef %i.fu) #30
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit82
@@ -1909,11 +1901,11 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
   %.pn40.pn.pn = phi { ptr, i32 } [ %.pn40.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85 ], [ %i.br, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit62.4 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #27
   %i.gc = load ptr, ptr %7, align 8, !tbaa !25    ; 2 uses
-  %i.gd = icmp eq ptr %i.gc, %13
+  %i.gd = icmp eq ptr %i.gc, %14
   br i1 %i.gd, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i86
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i86: ; preds = %bb.x
-  %i.ge = load i64, ptr %13, align 8, !tbaa !26
+  %i.ge = load i64, ptr %14, align 8, !tbaa !26
   %i.gf = add i64 %i.ge, 1
   call void @_ZdlPvm(ptr noundef %i.gc, i64 noundef %i.gf) #30
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88
@@ -2316,17 +2308,15 @@ bb.a:
   %9 = alloca %"class.std::map", align 8          ; 10 uses
   %i.c = tail call noundef i32 @_Z44mem_getMaxNumMatrixQubitsBeforeIndexOverflowb(i1 noundef zeroext %1) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
+  %_ZN6report43NEW_COMP_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E = select i1 %1, ptr @_ZN6report43NEW_COMP_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, ptr @_ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E ; 2 uses
   %10 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %10, ptr %5, align 8, !tbaa !24
-  %_ZN6report43NEW_COMP_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr @_ZN6report43NEW_COMP_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, align 8
-  %_ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr @_ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, align 8
-  %11 = select i1 %1, ptr %_ZN6report43NEW_COMP_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val, ptr %_ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report43NEW_COMP_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8), align 8
-  %.val48 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8), align 8
-  %12 = select i1 %1, i64 %.val, i64 %.val48      ; 4 uses
+  %_ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr %_ZN6report43NEW_COMP_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %_ZN6report43NEW_COMP_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8
+  %.val48 = load i64, ptr %11, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %12, ptr %i.b, align 8, !tbaa !30
-  %i.d = icmp ugt i64 %12, 15
+  store i64 %.val48, ptr %i.b, align 8, !tbaa !30
+  %i.d = icmp ugt i64 %.val48, 15
   br i1 %i.d, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.a
@@ -2338,18 +2328,18 @@ bb.a:
 
 ._crit_edge.i.i:                                  ; preds = %.noexc.i, %bb.a
   %i.g = phi ptr [ %i.e, %.noexc.i ], [ %10, %bb.a ] ; 2 uses
-  switch i64 %12, label %bb.c [
+  switch i64 %.val48, label %bb.c [
     i64 1, label %bb.b
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   ]
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  %i.h = load i8, ptr %11, align 1, !tbaa !26
+  %i.h = load i8, ptr %_ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.h, ptr %i.g, align 1, !tbaa !26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.g, ptr align 1 %11, i64 %12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.g, ptr align 1 %_ZN6report43NEW_DIAG_MATR_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val, i64 %.val48, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %._crit_edge.i.i, %bb.b, %bb.c
@@ -2752,17 +2742,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1: ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.1
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
+  %_ZN6report53NEW_KRAUS_MAPS_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E = select i1 %1, ptr @_ZN6report53NEW_KRAUS_MAPS_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, ptr @_ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E ; 2 uses
   %10 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
   store ptr %10, ptr %7, align 8, !tbaa !24
-  %_ZN6report53NEW_KRAUS_MAPS_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr @_ZN6report53NEW_KRAUS_MAPS_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, align 8
-  %_ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr @_ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, align 8
-  %11 = select i1 %1, ptr %_ZN6report53NEW_KRAUS_MAPS_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val, ptr %_ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report53NEW_KRAUS_MAPS_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8), align 8
-  %.val50 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8), align 8
-  %12 = select i1 %1, i64 %.val, i64 %.val50      ; 4 uses
+  %_ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val = load ptr, ptr %_ZN6report53NEW_KRAUS_MAPS_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %_ZN6report53NEW_KRAUS_MAPS_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E._ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E, i64 8
+  %.val50 = load i64, ptr %11, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %12, ptr %i.b, align 8, !tbaa !30
-  %i.al = icmp ugt i64 %12, 15
+  store i64 %.val50, ptr %i.b, align 8, !tbaa !30
+  %i.al = icmp ugt i64 %.val50, 15
   br i1 %i.al, label %.noexc.i20, label %._crit_edge.i.i
 
 .noexc.i20:                                       ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1
@@ -2777,18 +2765,18 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1: ;
 
 ._crit_edge.i.i:                                  ; preds = %.noexc21, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1
   %i.ao = phi ptr [ %i.am, %.noexc21 ], [ %10, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1 ] ; 2 uses
-  switch i64 %12, label %bb.b [
+  switch i64 %.val50, label %bb.b [
     i64 1, label %bb.a
     i64 0, label %bb.c
   ]
 
 bb.a:                                             ; preds = %._crit_edge.i.i
-  %i.ap = load i8, ptr %11, align 1, !tbaa !26
+  %i.ap = load i8, ptr %_ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.ap, ptr %i.ao, align 1, !tbaa !26
   br label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ao, ptr align 1 %11, i64 %12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ao, ptr align 1 %_ZN6report42NEW_SUPER_OP_NUM_ELEMS_WOULD_EXCEED_QINDEXB5cxx11E.val, i64 %.val50, i1 false)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a, %._crit_edge.i.i
@@ -3146,17 +3134,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2: ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.2
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
+  %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E._ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E = select i1 %1, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, ptr @_ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E ; 2 uses
   %10 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
   store ptr %10, ptr %7, align 8, !tbaa !24
-  %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val = load ptr, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, align 8
-  %_ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val = load ptr, ptr @_ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, align 8
-  %11 = select i1 %1, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val, ptr %_ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, i64 8), align 8
-  %.val65 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, i64 8), align 8
-  %12 = select i1 %1, i64 %.val, i64 %.val65      ; 4 uses
+  %_ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val = load ptr, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E._ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E._ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E, i64 8
+  %.val65 = load i64, ptr %11, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %12, ptr %i.b, align 8, !tbaa !30
-  %i.ax = icmp ugt i64 %12, 15
+  store i64 %.val65, ptr %i.b, align 8, !tbaa !30
+  %i.ax = icmp ugt i64 %.val65, 15
   br i1 %i.ax, label %.noexc.i30, label %._crit_edge.i.i
 
 .noexc.i30:                                       ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2
@@ -3171,18 +3157,18 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2: ;
 
 ._crit_edge.i.i:                                  ; preds = %.noexc31, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2
   %i.ba = phi ptr [ %i.ay, %.noexc31 ], [ %10, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2 ] ; 2 uses
-  switch i64 %12, label %bb.b [
+  switch i64 %.val65, label %bb.b [
     i64 1, label %bb.a
     i64 0, label %bb.c
   ]
 
 bb.a:                                             ; preds = %._crit_edge.i.i
-  %i.bb = load i8, ptr %11, align 1, !tbaa !26
+  %i.bb = load i8, ptr %_ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.bb, ptr %i.ba, align 1, !tbaa !26
   br label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr align 1 %11, i64 %12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr align 1 %_ZN6report36NEW_SUPER_OP_MEM_WOULD_EXCEED_SIZEOFB5cxx11E.val, i64 %.val65, i1 false)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a, %._crit_edge.i.i
@@ -3571,17 +3557,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2: ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.2
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
+  %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E._ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E = select i1 %1, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E, ptr @_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E ; 2 uses
   %10 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
   store ptr %10, ptr %7, align 8, !tbaa !24
-  %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E.val = load ptr, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E, align 8
-  %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E.val = load ptr, ptr @_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E, align 8
-  %11 = select i1 %1, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E.val, ptr %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E, i64 8), align 8
-  %.val69 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E, i64 8), align 8
-  %12 = select i1 %1, i64 %.val, i64 %.val69      ; 4 uses
+  %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E.val = load ptr, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E._ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E._ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E, i64 8
+  %.val69 = load i64, ptr %11, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %12, ptr %i.b, align 8, !tbaa !30
-  %i.bd = icmp ugt i64 %12, 15
+  store i64 %.val69, ptr %i.b, align 8, !tbaa !30
+  %i.bd = icmp ugt i64 %.val69, 15
   br i1 %i.bd, label %.noexc.i35, label %._crit_edge.i.i
 
 .noexc.i35:                                       ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2
@@ -3596,18 +3580,18 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2: ;
 
 ._crit_edge.i.i:                                  ; preds = %.noexc36, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2
   %i.bg = phi ptr [ %i.be, %.noexc36 ], [ %10, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2 ] ; 2 uses
-  switch i64 %12, label %bb.e [
+  switch i64 %.val69, label %bb.e [
     i64 1, label %bb.d
     i64 0, label %bb.f
   ]
 
 bb.d:                                             ; preds = %._crit_edge.i.i
-  %i.bh = load i8, ptr %11, align 1, !tbaa !26
+  %i.bh = load i8, ptr %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.bh, ptr %i.bg, align 1, !tbaa !26
   br label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bg, ptr align 1 %11, i64 %12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bg, ptr align 1 %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_CPU_MEMB5cxx11E.val, i64 %.val69, i1 false)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %._crit_edge.i.i
@@ -3988,17 +3972,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2: ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.2
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #27
+  %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E._ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E = select i1 %2, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E, ptr @_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E ; 2 uses
   %11 = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 7 uses
   store ptr %11, ptr %8, align 8, !tbaa !24
-  %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E.val = load ptr, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E, align 8
-  %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E.val = load ptr, ptr @_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E, align 8
-  %12 = select i1 %2, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E.val, ptr %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E, i64 8), align 8
-  %.val67 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E, i64 8), align 8
-  %13 = select i1 %2, i64 %.val, i64 %.val67      ; 4 uses
+  %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E.val = load ptr, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E._ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %_ZN6report47NEW_KRAUS_MAPS_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E._ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E, i64 8
+  %.val67 = load i64, ptr %12, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %13, ptr %i.b, align 8, !tbaa !30
-  %i.ax = icmp ugt i64 %13, 15
+  store i64 %.val67, ptr %i.b, align 8, !tbaa !30
+  %i.ax = icmp ugt i64 %.val67, 15
   br i1 %i.ax, label %.noexc.i33, label %._crit_edge.i.i
 
 .noexc.i33:                                       ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2
@@ -4013,18 +3995,18 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2: ;
 
 ._crit_edge.i.i:                                  ; preds = %.noexc34, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2
   %i.ba = phi ptr [ %i.ay, %.noexc34 ], [ %11, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.2 ] ; 2 uses
-  switch i64 %13, label %bb.c [
+  switch i64 %.val67, label %bb.c [
     i64 1, label %bb.b
     i64 0, label %bb.d
   ]
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  %i.bb = load i8, ptr %12, align 1, !tbaa !26
+  %i.bb = load i8, ptr %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.bb, ptr %i.ba, align 1, !tbaa !26
   br label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr align 1 %12, i64 %13, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr align 1 %_ZN6report36NEW_SUPER_OP_CANNOT_FIT_INTO_GPU_MEMB5cxx11E.val, i64 %.val67, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %._crit_edge.i.i
@@ -4397,17 +4379,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 bb.c:                                             ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #27
+  %_ZN6report46NEW_KRAUS_MAPS_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E._ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E = select i1 %1, ptr @_ZN6report46NEW_KRAUS_MAPS_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E, ptr @_ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E ; 2 uses
   %18 = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
   store ptr %18, ptr %9, align 8, !tbaa !24
-  %_ZN6report46NEW_KRAUS_MAPS_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E.val = load ptr, ptr @_ZN6report46NEW_KRAUS_MAPS_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E, align 8
-  %_ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E.val = load ptr, ptr @_ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E, align 8
-  %19 = select i1 %1, ptr %_ZN6report46NEW_KRAUS_MAPS_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E.val, ptr %_ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report46NEW_KRAUS_MAPS_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E, i64 8), align 8
-  %.val108 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E, i64 8), align 8
-  %20 = select i1 %1, i64 %.val, i64 %.val108     ; 4 uses
+  %_ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E.val = load ptr, ptr %_ZN6report46NEW_KRAUS_MAPS_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E._ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %_ZN6report46NEW_KRAUS_MAPS_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E._ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E, i64 8
+  %.val108 = load i64, ptr %19, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #27
-  store i64 %20, ptr %i.d, align 8, !tbaa !30
-  %i.ac = icmp ugt i64 %20, 15
+  store i64 %.val108, ptr %i.d, align 8, !tbaa !30
+  %i.ac = icmp ugt i64 %.val108, 15
   br i1 %i.ac, label %.noexc.i34, label %._crit_edge.i.i
 
 .noexc.i34:                                       ; preds = %bb.c
@@ -4422,18 +4402,18 @@ bb.c:                                             ; preds = %_ZNSt4pairIKNSt7__c
 
 ._crit_edge.i.i:                                  ; preds = %.noexc35, %bb.c
   %i.af = phi ptr [ %i.ad, %.noexc35 ], [ %18, %bb.c ] ; 2 uses
-  switch i64 %20, label %bb.e [
+  switch i64 %.val108, label %bb.e [
     i64 1, label %bb.d
     i64 0, label %bb.f
   ]
 
 bb.d:                                             ; preds = %._crit_edge.i.i
-  %i.ag = load i8, ptr %19, align 1, !tbaa !26
+  %i.ag = load i8, ptr %_ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.ag, ptr %i.af, align 1, !tbaa !26
   br label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.af, ptr align 1 %19, i64 %20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.af, ptr align 1 %_ZN6report35NEW_SUPER_OP_CPU_ELEMS_ALLOC_FAILEDB5cxx11E.val, i64 %.val108, i1 false)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %._crit_edge.i.i
@@ -4836,17 +4816,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1: ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.1
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #27
+  %_ZN6report34INVALID_KRAUS_MAPS_SUPER_OP_FIELDSB5cxx11E._ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E = select i1 %1, ptr @_ZN6report34INVALID_KRAUS_MAPS_SUPER_OP_FIELDSB5cxx11E, ptr @_ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E ; 2 uses
   %23 = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 7 uses
   store ptr %23, ptr %10, align 8, !tbaa !24
-  %_ZN6report34INVALID_KRAUS_MAPS_SUPER_OP_FIELDSB5cxx11E.val = load ptr, ptr @_ZN6report34INVALID_KRAUS_MAPS_SUPER_OP_FIELDSB5cxx11E, align 8
-  %_ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E.val = load ptr, ptr @_ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E, align 8
-  %24 = select i1 %1, ptr %_ZN6report34INVALID_KRAUS_MAPS_SUPER_OP_FIELDSB5cxx11E.val, ptr %_ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report34INVALID_KRAUS_MAPS_SUPER_OP_FIELDSB5cxx11E, i64 8), align 8
-  %.val184 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E, i64 8), align 8
-  %25 = select i1 %1, i64 %.val, i64 %.val184     ; 4 uses
+  %_ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E.val = load ptr, ptr %_ZN6report34INVALID_KRAUS_MAPS_SUPER_OP_FIELDSB5cxx11E._ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %24 = getelementptr inbounds nuw i8, ptr %_ZN6report34INVALID_KRAUS_MAPS_SUPER_OP_FIELDSB5cxx11E._ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E, i64 8
+  %.val184 = load i64, ptr %24, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #27
-  store i64 %25, ptr %i.g, align 8, !tbaa !30
-  %i.ar = icmp ugt i64 %25, 15
+  store i64 %.val184, ptr %i.g, align 8, !tbaa !30
+  %i.ar = icmp ugt i64 %.val184, 15
   br i1 %i.ar, label %.noexc.i44, label %._crit_edge.i.i
 
 .noexc.i44:                                       ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1
@@ -4861,18 +4839,18 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1: ;
 
 ._crit_edge.i.i:                                  ; preds = %.noexc45, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1
   %i.au = phi ptr [ %i.as, %.noexc45 ], [ %23, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.1 ] ; 2 uses
-  switch i64 %25, label %bb.b [
+  switch i64 %.val184, label %bb.b [
     i64 1, label %bb.a
     i64 0, label %bb.c
   ]
 
 bb.a:                                             ; preds = %._crit_edge.i.i
-  %i.av = load i8, ptr %24, align 1, !tbaa !26
+  %i.av = load i8, ptr %_ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.av, ptr %i.au, align 1, !tbaa !26
   br label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.au, ptr align 1 %24, i64 %25, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.au, ptr align 1 %_ZN6report23INVALID_SUPER_OP_FIELDSB5cxx11E.val, i64 %.val184, i1 false)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a, %._crit_edge.i.i
@@ -5275,18 +5253,16 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.4: ;
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cs = load i32, ptr %i.cr, align 8, !tbaa !71
-  %.not10 = icmp eq i32 %i.cs, 0                  ; 2 uses
+  %.not10 = icmp eq i32 %i.cs, 0
+  %_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E._ZN6report47CANNOT_FIT_MIXED_STATEVEC_AMPS_INTO_SINGLE_NODEB5cxx11E = select i1 %.not10, ptr @_ZN6report47CANNOT_FIT_MIXED_STATEVEC_AMPS_INTO_SINGLE_NODEB5cxx11E, ptr @_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E ; 2 uses
   %10 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
   store ptr %10, ptr %7, align 8, !tbaa !24
-  %_ZN6report47CANNOT_FIT_MIXED_STATEVEC_AMPS_INTO_SINGLE_NODEB5cxx11E.val = load ptr, ptr @_ZN6report47CANNOT_FIT_MIXED_STATEVEC_AMPS_INTO_SINGLE_NODEB5cxx11E, align 8
-  %_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E.val = load ptr, ptr @_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E, align 8
-  %11 = select i1 %.not10, ptr %_ZN6report47CANNOT_FIT_MIXED_STATEVEC_AMPS_INTO_SINGLE_NODEB5cxx11E.val, ptr %_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report47CANNOT_FIT_MIXED_STATEVEC_AMPS_INTO_SINGLE_NODEB5cxx11E, i64 8), align 8
-  %.val59 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E, i64 8), align 8
-  %12 = select i1 %.not10, i64 %.val, i64 %.val59 ; 4 uses
+  %_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E.val = load ptr, ptr %_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E._ZN6report47CANNOT_FIT_MIXED_STATEVEC_AMPS_INTO_SINGLE_NODEB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E._ZN6report47CANNOT_FIT_MIXED_STATEVEC_AMPS_INTO_SINGLE_NODEB5cxx11E, i64 8
+  %.val59 = load i64, ptr %11, align 8, !tbaa !23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %12, ptr %i.b, align 8, !tbaa !30
-  %i.ct = icmp ugt i64 %12, 15
+  store i64 %.val59, ptr %i.b, align 8, !tbaa !30
+  %i.ct = icmp ugt i64 %.val59, 15
   br i1 %i.ct, label %.noexc.i29, label %._crit_edge.i.i
 
 .noexc.i29:                                       ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.4
@@ -5301,18 +5277,18 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.4: ;
 
 ._crit_edge.i.i:                                  ; preds = %.noexc30, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.4
   %i.cw = phi ptr [ %i.cu, %.noexc30 ], [ %10, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExED2Ev.exit.4 ] ; 2 uses
-  switch i64 %12, label %bb.c [
+  switch i64 %.val59, label %bb.c [
     i64 1, label %bb.b
     i64 0, label %bb.d
   ]
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  %i.cx = load i8, ptr %11, align 1, !tbaa !26
+  %i.cx = load i8, ptr %_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.cx, ptr %i.cw, align 1, !tbaa !26
   br label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cw, ptr align 1 %11, i64 %12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cw, ptr align 1 %_ZN6report47CANNOT_FIT_MIXED_DENSMATR_AMPS_INTO_SINGLE_NODEB5cxx11E.val, i64 %.val59, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %._crit_edge.i.i
@@ -5715,17 +5691,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
+  %_ZN6report58CALC_DENSMATR_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E = select i1 %2, ptr @_ZN6report58CALC_DENSMATR_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, ptr @_ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E ; 2 uses
   %6 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
   store ptr %6, ptr %4, align 8, !tbaa !24
-  %_ZN6report58CALC_DENSMATR_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr @_ZN6report58CALC_DENSMATR_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8
-  %_ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr @_ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8
-  %7 = select i1 %2, ptr %_ZN6report58CALC_DENSMATR_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, ptr %_ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report58CALC_DENSMATR_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8), align 8
-  %.val22 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8), align 8
-  %8 = select i1 %2, i64 %.val, i64 %.val22       ; 4 uses
+  %_ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr %_ZN6report58CALC_DENSMATR_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %_ZN6report58CALC_DENSMATR_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8
+  %.val22 = load i64, ptr %7, align 8, !tbaa !23  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %8, ptr %i.b, align 8, !tbaa !30
-  %i.f = icmp ugt i64 %8, 15
+  store i64 %.val22, ptr %i.b, align 8, !tbaa !30
+  %i.f = icmp ugt i64 %.val22, 15
   br i1 %i.f, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.b
@@ -5737,18 +5711,18 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge.i.i:                                  ; preds = %.noexc.i, %bb.b
   %i.i = phi ptr [ %i.g, %.noexc.i ], [ %6, %bb.b ] ; 2 uses
-  switch i64 %8, label %bb.d [
+  switch i64 %.val22, label %bb.d [
     i64 1, label %bb.c
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   ]
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  %i.j = load i8, ptr %7, align 1, !tbaa !26
+  %i.j = load i8, ptr %_ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.j, ptr %i.i, align 1, !tbaa !26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 bb.d:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.i, ptr align 1 %7, i64 %8, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.i, ptr align 1 %_ZN6report58CALC_STATEVEC_EXPECTED_PAULI_STR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, i64 %.val22, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %._crit_edge.i.i, %bb.c, %bb.d
@@ -5898,17 +5872,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
+  %_ZN6report62CALC_DENSMATR_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E = select i1 %2, ptr @_ZN6report62CALC_DENSMATR_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E, ptr @_ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E ; 2 uses
   %6 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
   store ptr %6, ptr %4, align 8, !tbaa !24
-  %_ZN6report62CALC_DENSMATR_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr @_ZN6report62CALC_DENSMATR_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8
-  %_ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr @_ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8
-  %7 = select i1 %2, ptr %_ZN6report62CALC_DENSMATR_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, ptr %_ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report62CALC_DENSMATR_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8), align 8
-  %.val22 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8), align 8
-  %8 = select i1 %2, i64 %.val, i64 %.val22       ; 4 uses
+  %_ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr %_ZN6report62CALC_DENSMATR_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %_ZN6report62CALC_DENSMATR_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8
+  %.val22 = load i64, ptr %7, align 8, !tbaa !23  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %8, ptr %i.b, align 8, !tbaa !30
-  %i.f = icmp ugt i64 %8, 15
+  store i64 %.val22, ptr %i.b, align 8, !tbaa !30
+  %i.f = icmp ugt i64 %.val22, 15
   br i1 %i.f, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.b
@@ -5920,18 +5892,18 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge.i.i:                                  ; preds = %.noexc.i, %bb.b
   %i.i = phi ptr [ %i.g, %.noexc.i ], [ %6, %bb.b ] ; 2 uses
-  switch i64 %8, label %bb.d [
+  switch i64 %.val22, label %bb.d [
     i64 1, label %bb.c
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   ]
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  %i.j = load i8, ptr %7, align 1, !tbaa !26
+  %i.j = load i8, ptr %_ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.j, ptr %i.i, align 1, !tbaa !26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 bb.d:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.i, ptr align 1 %7, i64 %8, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.i, ptr align 1 %_ZN6report62CALC_STATEVEC_EXPECTED_PAULI_STR_SUM_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, i64 %.val22, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %._crit_edge.i.i, %bb.c, %bb.d
@@ -6083,18 +6055,16 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
   %i.f = fcmp oeq double %2, 1.000000e+00
   %i.g = fcmp oeq double %3, 0.000000e+00
-  %i.h = select i1 %i.f, i1 %i.g, i1 false        ; 2 uses
+  %i.h = select i1 %i.f, i1 %i.g, i1 false
+  %_ZN6report58CALC_DENSMATR_EXPECTED_DIAG_MATR_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E = select i1 %i.h, ptr @_ZN6report58CALC_DENSMATR_EXPECTED_DIAG_MATR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, ptr @_ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E ; 2 uses
   %7 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %7, ptr %5, align 8, !tbaa !24
-  %_ZN6report58CALC_DENSMATR_EXPECTED_DIAG_MATR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr @_ZN6report58CALC_DENSMATR_EXPECTED_DIAG_MATR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8
-  %_ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr @_ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8
-  %8 = select i1 %i.h, ptr %_ZN6report58CALC_DENSMATR_EXPECTED_DIAG_MATR_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, ptr %_ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val ; 2 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report58CALC_DENSMATR_EXPECTED_DIAG_MATR_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8), align 8
-  %.val22 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8), align 8
-  %9 = select i1 %i.h, i64 %.val, i64 %.val22     ; 4 uses
+  %_ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val = load ptr, ptr %_ZN6report58CALC_DENSMATR_EXPECTED_DIAG_MATR_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E, align 8, !tbaa !25 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %_ZN6report58CALC_DENSMATR_EXPECTED_DIAG_MATR_VALUE_WAS_NOT_APPROX_REALB5cxx11E._ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E, i64 8
+  %.val22 = load i64, ptr %8, align 8, !tbaa !23  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  store i64 %9, ptr %i.b, align 8, !tbaa !30
-  %i.i = icmp ugt i64 %9, 15
+  store i64 %.val22, ptr %i.b, align 8, !tbaa !30
+  %i.i = icmp ugt i64 %.val22, 15
   br i1 %i.i, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.b
@@ -6106,18 +6076,18 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge.i.i:                                  ; preds = %.noexc.i, %bb.b
   %i.l = phi ptr [ %i.j, %.noexc.i ], [ %7, %bb.b ] ; 2 uses
-  switch i64 %9, label %bb.d [
+  switch i64 %.val22, label %bb.d [
     i64 1, label %bb.c
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   ]
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  %i.m = load i8, ptr %8, align 1, !tbaa !26
+  %i.m = load i8, ptr %_ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, align 1, !tbaa !26
   store i8 %i.m, ptr %i.l, align 1, !tbaa !26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 bb.d:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.l, ptr align 1 %8, i64 %9, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.l, ptr align 1 %_ZN6report64CALC_DENSMATR_EXPECTED_DIAG_MATR_POWER_VALUE_WAS_NOT_APPROX_REALB5cxx11E.val, i64 %.val22, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %._crit_edge.i.i, %bb.c, %bb.d

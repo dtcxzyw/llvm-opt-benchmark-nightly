@@ -176,7 +176,6 @@ bb.l:                                             ; preds = %bb.k
   br label %resolveLevel.exit
 
 resolveLevel.exit:                                ; preds = %bb.k, %bb.l
-  %11 = icmp samesign ugt i32 %spec.store.select1.i, 3 ; 2 uses
   %i.ae = trunc i64 %3 to i32                     ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %8, i64 76
   store i32 %i.ae, ptr %i.af, align 4, !tbaa !25
@@ -205,12 +204,13 @@ bb.m:                                             ; preds = %resolveLevel.exit
   br label %bb.ai
 
 bb.n:                                             ; preds = %resolveLevel.exit
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ZS_greedyTokenLzMatchFinder, i64 8), align 8
-  %.val44 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ZS_tokenLzMatchFinder, i64 8), align 8
-  %12 = select i1 %11, ptr %.val, ptr %.val44
-  %i.au = call ptr %12(ptr noundef nonnull %10, ptr noundef nonnull %8) #8 ; 2 uses
+  %11 = icmp samesign ugt i32 %spec.store.select1.i, 3
+  %12 = select i1 %11, ptr @ZS_greedyTokenLzMatchFinder, ptr @ZS_tokenLzMatchFinder ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %14 = load ptr, ptr %13, align 8, !tbaa !30
+  %i.au = call ptr %14(ptr noundef nonnull %10, ptr noundef nonnull %8) #8 ; 2 uses
   %.not45 = icmp eq ptr %i.au, null
-  br i1 %.not45, label %.thread52, label %bb.o, !prof !29
+  br i1 %.not45, label %.thread52, label %bb.o, !prof !31
 
 .thread52:                                        ; preds = %bb.n
   %i.av = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @ZS2_FieldLz_compress.__zl_static_error_info.11, ptr noundef nonnull %7, ptr noundef nonnull @.str, ptr noundef nonnull @__func__.ZS2_FieldLz_compress, i32 noundef 180, i32 noundef 70, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15, ptr noundef nonnull @.str.16, ptr noundef null, ptr noundef null) #8 ; 2 uses
@@ -222,10 +222,9 @@ bb.n:                                             ; preds = %resolveLevel.exit
 
 bb.o:                                             ; preds = %bb.n
   %i.az = call i32 @ZS_window_update(ptr noundef nonnull %10, ptr noundef %1, i64 noundef %i.l) #8 ; 0 uses
-  %.val46 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ZS_greedyTokenLzMatchFinder, i64 16), align 8
-  %.val47 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ZS_tokenLzMatchFinder, i64 16), align 8
-  %13 = select i1 %11, ptr %.val46, ptr %.val47
-  call void %13(ptr noundef nonnull %i.au, ptr noundef nonnull %9, ptr noundef %1, i64 noundef %i.l) #8
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %.val47 = load ptr, ptr %15, align 8, !tbaa !32
+  call void %.val47(ptr noundef nonnull %i.au, ptr noundef nonnull %9, ptr noundef %1, i64 noundef %i.l) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ba, i8 0, i64 24, i1 false)
@@ -233,43 +232,43 @@ bb.o:                                             ; preds = %bb.n
   %i.bb = call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.ae, i1 true)
   %i.bc = xor i32 %i.bb, 31                       ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !34
-  %i.bf = load ptr, ptr %9, align 8, !tbaa !35    ; 2 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !37
+  %i.bf = load ptr, ptr %9, align 8, !tbaa !38    ; 2 uses
   %i.bg = ptrtoint ptr %i.be to i64
   %i.bh = ptrtoint ptr %i.bf to i64
   %i.bi = sub i64 %i.bg, %i.bh                    ; 2 uses
   %i.bj = zext nneg i32 %i.bc to i64
   %i.bk = lshr i64 %i.bi, %i.bj                   ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !39 ; 2 uses
+  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !42 ; 2 uses
   %.not.not.i = icmp ugt i64 %i.bk, %i.bm
-  br i1 %.not.not.i, label %.thread.i, label %bb.p, !prof !29
+  br i1 %.not.not.i, label %.thread.i, label %bb.p, !prof !31
 
 .thread.i:                                        ; preds = %bb.o
   %i.bn = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @writeOutSequences.__zl_static_error_info, ptr noundef nonnull %6, ptr noundef nonnull @.str, ptr noundef nonnull @.str.18, i32 noundef 69, i32 noundef 71, ptr noundef nonnull @.str.19, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.21, ptr noundef nonnull @.str.22, i64 noundef %i.bk, i64 noundef %i.bm) #8
   br label %.critedge.sink.split.i
 
 bb.p:                                             ; preds = %bb.o
-  %i.bo = load ptr, ptr %0, align 8, !tbaa !40
+  %i.bo = load ptr, ptr %0, align 8, !tbaa !43
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bo, ptr align 1 %i.bf, i64 %i.bi, i1 false)
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.bk, ptr %i.bp, align 8, !tbaa !41
+  store i64 %i.bk, ptr %i.bp, align 8, !tbaa !44
   %i.bq = getelementptr inbounds nuw i8, ptr %9, i64 24
   %i.br = getelementptr inbounds nuw i8, ptr %9, i64 32
-  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !42 ; 2 uses
-  %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !43 ; 3 uses
+  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !45 ; 2 uses
+  %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !46 ; 3 uses
   %i.bu = icmp eq i64 %3, 1
   %i.bv = icmp eq i64 %3, 2
   %.neg.i = select i1 %i.bv, i32 -2, i32 -1
   %.neg140.i = select i1 %i.bu, i32 -4, i32 %.neg.i
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  store i64 0, ptr %i.bw, align 8, !tbaa !44
+  store i64 0, ptr %i.bw, align 8, !tbaa !47
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  store i64 0, ptr %i.bx, align 8, !tbaa !45
+  store i64 0, ptr %i.bx, align 8, !tbaa !48
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  store i64 0, ptr %i.by, align 8, !tbaa !46
+  store i64 0, ptr %i.by, align 8, !tbaa !49
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  store i64 0, ptr %i.bz, align 8, !tbaa !47
+  store i64 0, ptr %i.bz, align 8, !tbaa !50
   %.not144182.not.i = icmp eq ptr %i.bs, %i.bt
   br i1 %.not144182.not.i, label %writeOutSequences.exit, label %.lr.ph.i
 
@@ -292,7 +291,7 @@ bb.q:                                             ; preds = %bb.ah, %.lr.ph.i
   %i.cm = phi i64 [ 0, %.lr.ph.i ], [ %i.cz, %bb.ah ] ; 6 uses
   %i.cn = getelementptr inbounds nuw [16 x i8], ptr %i.bt, i64 %i.cj ; 5 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 12
-  %i.cp = load i32, ptr %i.co, align 4, !tbaa !49
+  %i.cp = load i32, ptr %i.co, align 4, !tbaa !52
   switch i32 %i.cp, label %bb.v [
     i32 1, label %bb.r
     i32 0, label %bb.s
@@ -300,11 +299,11 @@ bb.q:                                             ; preds = %bb.ah, %.lr.ph.i
 
 bb.r:                                             ; preds = %bb.q
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cn, i64 4
-  %i.cr = load i32, ptr %i.cq, align 4, !tbaa !50
+  %i.cr = load i32, ptr %i.cq, align 4, !tbaa !53
   br label %bb.v
 
 bb.s:                                             ; preds = %bb.q
-  %i.cs = load i64, ptr %i.ce, align 8, !tbaa !51 ; 2 uses
+  %i.cs = load i64, ptr %i.ce, align 8, !tbaa !54 ; 2 uses
   %.not.i = icmp ult i64 %i.cm, %i.cs
   br i1 %.not.i, label %bb.u, label %bb.t, !prof !28
 
@@ -314,10 +313,10 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cn, i64 4
-  %i.cv = load i32, ptr %i.cu, align 4, !tbaa !50
-  %i.cw = load ptr, ptr %i.cf, align 8, !tbaa !52
+  %i.cv = load i32, ptr %i.cu, align 4, !tbaa !53
+  %i.cw = load ptr, ptr %i.cf, align 8, !tbaa !55
   %i.cx = add nuw i64 %i.cm, 1                    ; 2 uses
-  store i64 %i.cx, ptr %i.bx, align 8, !tbaa !45
+  store i64 %i.cx, ptr %i.bx, align 8, !tbaa !48
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.cw, i64 %i.cm
   store i32 %i.cv, ptr %i.cy, align 4, !tbaa !19
   br label %bb.v
@@ -325,10 +324,10 @@ bb.u:                                             ; preds = %bb.s
 bb.v:                                             ; preds = %bb.u, %bb.r, %bb.q
   %i.cz = phi i64 [ %i.cm, %bb.r ], [ %i.cx, %bb.u ], [ %i.cm, %bb.q ]
   %.0121.i = phi i32 [ %i.cr, %bb.r ], [ 3, %bb.u ], [ 0, %bb.q ]
-  %i.da = load i32, ptr %i.cn, align 4, !tbaa !53
+  %i.da = load i32, ptr %i.cn, align 4, !tbaa !56
   %i.db = lshr i32 %i.da, %i.bc                   ; 3 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
-  %i.dd = load i32, ptr %i.dc, align 4, !tbaa !54
+  %i.dd = load i32, ptr %i.dc, align 4, !tbaa !57
   %i.de = lshr i32 %i.dd, %i.bc
   %i.df = add i32 %i.de, %.neg140.i               ; 3 uses
   %i.dg = icmp ult i32 %i.db, 15
@@ -339,7 +338,7 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.aa
 
 bb.x:                                             ; preds = %bb.v
-  %i.di = load i64, ptr %i.ce, align 8, !tbaa !51 ; 2 uses
+  %i.di = load i64, ptr %i.ce, align 8, !tbaa !54 ; 2 uses
   %.not141.i = icmp ult i64 %i.cl, %i.di
   br i1 %.not141.i, label %bb.z, label %bb.y, !prof !28
 
@@ -349,9 +348,9 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x
   %i.dk = add i32 %i.db, -15
-  %i.dl = load ptr, ptr %i.cg, align 8, !tbaa !55
+  %i.dl = load ptr, ptr %i.cg, align 8, !tbaa !58
   %i.dm = add nuw i64 %i.cl, 1                    ; 2 uses
-  store i64 %i.dm, ptr %i.by, align 8, !tbaa !46
+  store i64 %i.dm, ptr %i.by, align 8, !tbaa !49
   %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.dl, i64 %i.cl
   store i32 %i.dk, ptr %i.dn, align 4, !tbaa !19
   br label %bb.aa
@@ -367,11 +366,11 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dq = shl nuw nsw i32 %i.df, 6
   %i.dr = or i32 %.1122.i, %i.dq
   %i.ds = trunc i32 %i.dr to i16
-  %.pre.i = load i64, ptr %i.ce, align 8, !tbaa !51
+  %.pre.i = load i64, ptr %i.ce, align 8, !tbaa !54
   br label %bb.af
 
 bb.ac:                                            ; preds = %bb.aa
-  %i.dt = load i64, ptr %i.ce, align 8, !tbaa !51 ; 3 uses
+  %i.dt = load i64, ptr %i.ce, align 8, !tbaa !54 ; 3 uses
   %.not142.i = icmp ult i64 %i.ck, %i.dt
   br i1 %.not142.i, label %bb.ae, label %bb.ad, !prof !28
 
@@ -383,9 +382,9 @@ bb.ae:                                            ; preds = %bb.ac
   %i.dv = trunc i32 %.1122.i to i16
   %i.dw = or i16 %i.dv, 960
   %i.dx = add i32 %i.df, -15
-  %i.dy = load ptr, ptr %i.ch, align 8, !tbaa !56
+  %i.dy = load ptr, ptr %i.ch, align 8, !tbaa !59
   %i.dz = add nuw i64 %i.ck, 1                    ; 2 uses
-  store i64 %i.dz, ptr %i.bz, align 8, !tbaa !47
+  store i64 %i.dz, ptr %i.bz, align 8, !tbaa !50
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.dy, i64 %i.ck
   store i32 %i.dx, ptr %i.ea, align 4, !tbaa !19
   br label %bb.af
@@ -402,11 +401,11 @@ bb.ag:                                            ; preds = %bb.af
   br label %.critedge.sink.split.i
 
 bb.ah:                                            ; preds = %bb.af
-  %i.ee = load ptr, ptr %i.ci, align 8, !tbaa !57
+  %i.ee = load ptr, ptr %i.ci, align 8, !tbaa !60
   %i.ef = add nuw i64 %i.cj, 1                    ; 3 uses
-  store i64 %i.ef, ptr %i.bw, align 8, !tbaa !44
+  store i64 %i.ef, ptr %i.bw, align 8, !tbaa !47
   %i.eg = getelementptr inbounds nuw [2 x i8], ptr %i.ee, i64 %i.cj
-  store i16 %.2123.i, ptr %i.eg, align 2, !tbaa !59
+  store i16 %.2123.i, ptr %i.eg, align 2, !tbaa !62
   %exitcond.not.i = icmp eq i64 %i.ef, %i.cd
   br i1 %exitcond.not.i, label %writeOutSequences.exit, label %bb.q, !llvm.loop !11
 
@@ -503,7 +502,7 @@ attributes #9 = { nounwind willreturn memory(none) }
 !8 = !{!"int", !7, i64 0}
 !9 = !{!"__libc_errno", !8, i64 0}
 !10 = !{!9, !8, i64 0}
-!11 = distinct !{!11, !60}
+!11 = distinct !{!11, !63}
 !12 = !{!"any pointer", !7, i64 0}
 !13 = !{!"p1 _ZTS21ZL_OperationContext_s", !12, i64 0}
 !14 = !{!"", !8, i64 0}
@@ -521,36 +520,39 @@ attributes #9 = { nounwind willreturn memory(none) }
 !26 = !{!12, !12, i64 0}
 !27 = !{i64 0, i64 8, !26, i64 8, i64 8, !26}
 !28 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!29 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!30 = !{!"", !15, i64 0, !15, i64 8, !15, i64 16}
-!31 = !{!"", !12, i64 0, !12, i64 8, !12, i64 16}
-!32 = !{!"long", !7, i64 0}
-!33 = !{!"", !30, i64 0, !31, i64 24, !32, i64 48}
-!34 = !{!33, !15, i64 8}
-!35 = !{!33, !15, i64 0}
-!36 = !{!"p1 short", !12, i64 0}
-!37 = !{!"p1 int", !12, i64 0}
-!38 = !{!"", !12, i64 0, !32, i64 8, !32, i64 16, !36, i64 24, !32, i64 32, !37, i64 40, !32, i64 48, !37, i64 56, !32, i64 64, !37, i64 72, !32, i64 80, !32, i64 88}
-!39 = !{!38, !32, i64 16}
-!40 = !{!38, !12, i64 0}
-!41 = !{!38, !32, i64 8}
-!42 = !{!33, !12, i64 32}
-!43 = !{!33, !12, i64 24}
-!44 = !{!38, !32, i64 32}
-!45 = !{!38, !32, i64 48}
-!46 = !{!38, !32, i64 64}
-!47 = !{!38, !32, i64 80}
-!48 = !{!"", !8, i64 0, !8, i64 4, !8, i64 8, !8, i64 12}
-!49 = !{!48, !8, i64 12}
-!50 = !{!48, !8, i64 4}
-!51 = !{!38, !32, i64 88}
-!52 = !{!38, !37, i64 40}
-!53 = !{!48, !8, i64 0}
-!54 = !{!48, !8, i64 8}
-!55 = !{!38, !37, i64 56}
-!56 = !{!38, !37, i64 72}
-!57 = !{!38, !36, i64 24}
-!58 = !{!"short", !7, i64 0}
-!59 = !{!58, !58, i64 0}
-!60 = !{!"llvm.loop.mustprogress"}
+!29 = !{!"", !15, i64 0, !12, i64 8, !12, i64 16}
+!30 = !{!29, !12, i64 8}
+!31 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!32 = !{!29, !12, i64 16}
+!33 = !{!"", !15, i64 0, !15, i64 8, !15, i64 16}
+!34 = !{!"", !12, i64 0, !12, i64 8, !12, i64 16}
+!35 = !{!"long", !7, i64 0}
+!36 = !{!"", !33, i64 0, !34, i64 24, !35, i64 48}
+!37 = !{!36, !15, i64 8}
+!38 = !{!36, !15, i64 0}
+!39 = !{!"p1 short", !12, i64 0}
+!40 = !{!"p1 int", !12, i64 0}
+!41 = !{!"", !12, i64 0, !35, i64 8, !35, i64 16, !39, i64 24, !35, i64 32, !40, i64 40, !35, i64 48, !40, i64 56, !35, i64 64, !40, i64 72, !35, i64 80, !35, i64 88}
+!42 = !{!41, !35, i64 16}
+!43 = !{!41, !12, i64 0}
+!44 = !{!41, !35, i64 8}
+!45 = !{!36, !12, i64 32}
+!46 = !{!36, !12, i64 24}
+!47 = !{!41, !35, i64 32}
+!48 = !{!41, !35, i64 48}
+!49 = !{!41, !35, i64 64}
+!50 = !{!41, !35, i64 80}
+!51 = !{!"", !8, i64 0, !8, i64 4, !8, i64 8, !8, i64 12}
+!52 = !{!51, !8, i64 12}
+!53 = !{!51, !8, i64 4}
+!54 = !{!41, !35, i64 88}
+!55 = !{!41, !40, i64 40}
+!56 = !{!51, !8, i64 0}
+!57 = !{!51, !8, i64 8}
+!58 = !{!41, !40, i64 56}
+!59 = !{!41, !40, i64 72}
+!60 = !{!41, !39, i64 24}
+!61 = !{!"short", !7, i64 0}
+!62 = !{!61, !61, i64 0}
+!63 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

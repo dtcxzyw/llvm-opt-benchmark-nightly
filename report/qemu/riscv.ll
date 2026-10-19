@@ -202,11 +202,11 @@ bb.sq:                                            ; preds = %bb.b
   %i.yl = shl nuw nsw i32 8, %i.yk
   %i.ym = and i32 %i.yi, 3                        ; 2 uses
   %i.yn = and i32 %i.yi, 64
-  %.not187 = icmp eq i32 %i.yn, 0
-  %i.yo = select i1 %.not187, ptr @.str.1085, ptr @.str.1084 ; 3 uses
+  %.not187 = icmp eq i32 %i.yn, 0                 ; 2 uses
+  %i.yo = select i1 %.not187, ptr @.str.1085, ptr @.str.1084 ; 2 uses
   %i.yp = and i32 %i.yi, 128
-  %.not188 = icmp eq i32 %i.yp, 0
-  %i.yq = select i1 %.not188, ptr @.str.1087, ptr @.str.1086 ; 3 uses
+  %.not188 = icmp eq i32 %i.yp, 0                 ; 2 uses
+  %i.yq = select i1 %.not188, ptr @.str.1087, ptr @.str.1086 ; 2 uses
   tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.1088, i32 noundef %i.yl) #10
   %i.yr = and i32 %i.yi, 4
   %.not189 = icmp eq i32 %i.yr, 0
@@ -346,8 +346,8 @@ bb.tf:                                            ; preds = %g_string_append_c_i
 bb.tg:                                            ; preds = %bb.tf
   %i.aal = load ptr, ptr %i.c, align 8
   %i.aam = getelementptr inbounds nuw i8, ptr %i.aal, i64 %i.aai
-  %storemerge = load i16, ptr %i.yo, align 1
-  store i16 %storemerge, ptr %i.aam, align 1
+  %1 = select i1 %.not187, i16 30068, i16 24948
+  store i16 %1, ptr %i.aam, align 1
   %i.aan = load i64, ptr %i.k, align 8
   %i.aao = add i64 %i.aan, 2                      ; 2 uses
   store i64 %i.aao, ptr %i.k, align 8
@@ -400,8 +400,8 @@ bb.tj:                                            ; preds = %g_string_append_c_i
 bb.tk:                                            ; preds = %bb.tj
   %i.abj = load ptr, ptr %i.c, align 8
   %i.abk = getelementptr inbounds nuw i8, ptr %i.abj, i64 %i.abg
-  %storemerge1 = load i16, ptr %i.yq, align 1
-  store i16 %storemerge1, ptr %i.abk, align 1
+  %2 = select i1 %.not188, i16 30061, i16 24941
+  store i16 %2, ptr %i.abk, align 1
   %i.abl = load i64, ptr %i.k, align 8
   %i.abm = add i64 %i.abl, 2                      ; 2 uses
   store i64 %i.abm, ptr %i.k, align 8

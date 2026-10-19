@@ -205,28 +205,19 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread:         ; preds = %_ZN4llvmeqENS_9Stri
   call void @_ZN4llvmplERKNS_5TwineES2_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Twine") align 8 %4, ptr noundef nonnull align 8 dereferenceable(34) %5, ptr noundef nonnull align 8 dereferenceable(34) %8)
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #27
   %i.p = call noundef zeroext i1 @_ZN4llvmeqENS_9StringRefES0_(ptr nonnull %0, i64 2, ptr nonnull @.str.743, i64 2)
-  %.str.747..str.748 = select i1 %i.p, ptr @.str.747, ptr @.str.748 ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %9, i64 33
-  store i8 1, ptr %i.q, align 1, !tbaa !200
-  %11 = load i8, ptr %.str.747..str.748, align 1, !tbaa !196
-  %.not.i19 = icmp eq i8 %11, 0
-  br i1 %.not.i19, label %_ZN4llvm5TwineC2EPKc.exit, label %12
-
-12:                                               ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.thread
+  %11 = getelementptr inbounds nuw i8, ptr %9, i64 32
+  %12 = getelementptr inbounds nuw i8, ptr %9, i64 33
+  store i8 1, ptr %12, align 1, !tbaa !200
+  %.str.747..str.748 = select i1 %i.p, ptr @.str.747, ptr @.str.748
   store ptr %.str.747..str.748, ptr %9, align 8, !tbaa !196
-  br label %_ZN4llvm5TwineC2EPKc.exit
-
-_ZN4llvm5TwineC2EPKc.exit:                        ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.thread, %12
-  %storemerge.i = phi i8 [ 3, %12 ], [ 1, %_ZN4llvmeqENS_9StringRefES0_.exit.thread ]
-  %13 = getelementptr inbounds nuw i8, ptr %9, i64 32
-  store i8 %storemerge.i, ptr %13, align 8, !tbaa !199
+  store i8 3, ptr %11, align 8, !tbaa !199
   call void @_ZN4llvmplERKNS_5TwineES2_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Twine") align 8 %3, ptr noundef nonnull align 8 dereferenceable(34) %4, ptr noundef nonnull align 8 dereferenceable(34) %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #27
-  %14 = getelementptr inbounds nuw i8, ptr %10, i64 32
-  %15 = getelementptr inbounds nuw i8, ptr %10, i64 33
-  store i8 1, ptr %15, align 1, !tbaa !200
+  %13 = getelementptr inbounds nuw i8, ptr %10, i64 32
+  %i.q = getelementptr inbounds nuw i8, ptr %10, i64 33
+  store i8 1, ptr %i.q, align 1, !tbaa !200
   store ptr @.str.749, ptr %10, align 8, !tbaa !196
-  store i8 3, ptr %14, align 8, !tbaa !199
+  store i8 3, ptr %13, align 8, !tbaa !199
   call void @_ZN4llvmplERKNS_5TwineES2_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Twine") align 8 %2, ptr noundef nonnull align 8 dereferenceable(34) %3, ptr noundef nonnull align 8 dereferenceable(34) %10)
   call void @_ZN4llvm21reportFatalUsageErrorERKNS_5TwineE(ptr noundef nonnull align 8 dereferenceable(34) %2) #29
   unreachable

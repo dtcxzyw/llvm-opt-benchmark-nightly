@@ -75,7 +75,7 @@ bb.c:                                             ; preds = %.backedge, %bb.b
   %.0468 = phi i16 [ %.4472, %bb.ag ], [ 0, %bb.b ] ; 27 uses
   %.0455 = phi i32 [ %.1456, %bb.ag ], [ 0, %bb.b ] ; 21 uses
   %.0447 = phi i32 [ %.1448, %bb.ag ], [ 0, %bb.b ] ; 17 uses
-  %.3433 = phi ptr [ %i.bm, %bb.ag ], [ %i.k, %bb.b ] ; 12 uses
+  %.3433 = phi ptr [ %i.bm, %bb.ag ], [ %i.k, %bb.b ] ; 11 uses
   %i.p = zext i16 %.0468 to i32                   ; 2 uses
   %i.q = icmp ult i16 %.0468, 64
   br i1 %i.q, label %bb.d, label %bb.j
@@ -384,7 +384,7 @@ bb.ax:                                            ; preds = %bb.aw
   br label %.loopexit62
 
 .loopexit62:                                      ; preds = %.loopexit62.loopexit, %bb.aw, %bb.ax
-  %.4459 = phi i32 [ 0, %bb.aw ], [ %i.dc, %bb.ax ], [ 0, %.loopexit62.loopexit ] ; 2 uses
+  %.4459 = phi i32 [ 0, %bb.aw ], [ %i.dc, %bb.ax ], [ 0, %.loopexit62.loopexit ]
   %.3438 = phi i32 [ %.1436, %bb.aw ], [ %.1436, %bb.ax ], [ %i.di, %.loopexit62.loopexit ] ; 2 uses
   br i1 %.not572, label %bb.az, label %bb.ay
 
@@ -394,27 +394,23 @@ bb.ay:                                            ; preds = %.loopexit62
   call void %i.dk(ptr noundef %0, i32 noundef %.0424) #11
   br label %bb.az
 
-bb.az:                                            ; preds = %bb.ay, %.loopexit62
-  %.4439 = phi i32 [ %i.dj, %bb.ay ], [ %.3438, %.loopexit62 ] ; 2 uses
+bb.az:                                            ; preds = %.loopexit62, %bb.ay
+  %.4439 = phi i32 [ %i.dj, %bb.ay ], [ %.3438, %.loopexit62 ]
   %i.dl = load i8, ptr %i.g, align 4
   %i.dm = and i8 %i.dl, 8
-  %.not586 = icmp eq i8 %i.dm, 0
-  %spec.store.select16 = select i1 %.not586, ptr @.str, ptr @.str.1 ; 2 uses
-  %4 = load i8, ptr %spec.store.select16, align 1 ; 2 uses
-  %.not58789 = icmp eq i8 %4, 0
-  br i1 %.not58789, label %.loopexit51, label %.lr.ph92
-
-.lr.ph92:                                         ; preds = %bb.az
+  %.not586 = icmp eq i8 %i.dm, 0                  ; 2 uses
+  %4 = select i1 %.not586, i8 105, i8 110
+  %spec.store.select16 = select i1 %.not586, ptr @.str, ptr @.str.1
   %5 = and i16 %.8476, 8192
-  %.not589 = icmp eq i16 %5, 0
+  %.not58789 = icmp eq i16 %5, 0
   br label %bb.ba
 
-bb.ba:                                            ; preds = %.lr.ph92, %bb.ba
-  %i.dn = phi i8 [ %4, %.lr.ph92 ], [ %i.dt, %bb.ba ] ; 2 uses
-  %.042091 = phi ptr [ %spec.store.select16, %.lr.ph92 ], [ %i.ds, %bb.ba ]
-  %.590 = phi i32 [ %.4439, %.lr.ph92 ], [ %i.dp, %bb.ba ]
+bb.ba:                                            ; preds = %bb.az, %bb.ba
+  %i.dn = phi i8 [ %4, %bb.az ], [ %i.dt, %bb.ba ] ; 2 uses
+  %.042091 = phi ptr [ %spec.store.select16, %bb.az ], [ %i.ds, %bb.ba ]
+  %.590 = phi i32 [ %.4439, %bb.az ], [ %i.dp, %bb.ba ]
   %i.do = add i8 %i.dn, -32
-  %spec.select593 = select i1 %.not589, i8 %i.dn, i8 %i.do
+  %spec.select593 = select i1 %.not58789, i8 %i.dn, i8 %i.do
   %i.dp = add nsw i32 %.590, 1                    ; 2 uses
   %i.dq = load ptr, ptr %i.a, align 8
   %i.dr = zext i8 %spec.select593 to i32
@@ -817,10 +813,10 @@ bb.fe:                                            ; preds = %bb.fc, %bb.fd, %bb.
   %.not565.wide = icmp eq i64 %i.qg, 0
   br i1 %.not565.wide, label %.loopexit51, label %.lr.ph122, !llvm.loop !16
 
-.loopexit51:                                      ; preds = %bb.ba, %.lr.ph108, %.lr.ph122, %bb.az, %bb.cl, %.preheader, %bb.bv, %bb.bw, %.loopexit64
-  %.443414 = phi ptr [ %.3433, %.loopexit64 ], [ %.4434162641224, %.preheader ], [ %.3433, %bb.cl ], [ %.3433, %bb.bv ], [ %.3433, %bb.bw ], [ %.3433, %bb.az ], [ %.3433, %.lr.ph108 ], [ %.4434162641224, %.lr.ph122 ], [ %.3433, %bb.ba ] ; 2 uses
-  %.11466 = phi i32 [ %i.js, %.loopexit64 ], [ %i.pg, %.preheader ], [ %.8463, %bb.cl ], [ %.8463, %bb.bv ], [ %.8463, %bb.bw ], [ %.4459, %bb.az ], [ %.8463, %.lr.ph108 ], [ %i.pg, %.lr.ph122 ], [ %.4459, %bb.ba ] ; 3 uses
-  %.27 = phi i32 [ %i.jo, %.loopexit64 ], [ %.25.lcssa, %.preheader ], [ %.16, %bb.cl ], [ %i.gd, %bb.bv ], [ %i.gj, %bb.bw ], [ %.4439, %bb.az ], [ %i.hz, %.lr.ph108 ], [ %i.qe, %.lr.ph122 ], [ %i.dp, %bb.ba ] ; 2 uses
+.loopexit51:                                      ; preds = %bb.ba, %.lr.ph108, %.lr.ph122, %bb.cl, %.preheader, %bb.bv, %bb.bw, %.loopexit64
+  %.443414 = phi ptr [ %.3433, %.loopexit64 ], [ %.4434162641224, %.preheader ], [ %.3433, %bb.cl ], [ %.3433, %bb.bv ], [ %.3433, %bb.bw ], [ %.3433, %.lr.ph108 ], [ %.4434162641224, %.lr.ph122 ], [ %.3433, %bb.ba ] ; 2 uses
+  %.11466 = phi i32 [ %i.js, %.loopexit64 ], [ %i.pg, %.preheader ], [ %.8463, %bb.cl ], [ %.8463, %bb.bv ], [ %.8463, %bb.bw ], [ %.8463, %.lr.ph108 ], [ %i.pg, %.lr.ph122 ], [ %.4459, %bb.ba ] ; 3 uses
+  %.27 = phi i32 [ %i.jo, %.loopexit64 ], [ %.25.lcssa, %.preheader ], [ %.16, %bb.cl ], [ %i.gd, %bb.bv ], [ %i.gj, %bb.bw ], [ %i.hz, %.lr.ph108 ], [ %i.qe, %.lr.ph122 ], [ %i.dp, %bb.ba ] ; 2 uses
   %.not588124 = icmp eq i32 %.11466, 0
   br i1 %.not588124, label %.backedge.backedge, label %.lr.ph127
 

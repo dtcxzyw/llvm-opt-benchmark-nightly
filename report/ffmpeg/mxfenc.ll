@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.cx = phi ptr [ %i.cv, %bb.n ], [ %i.cw, %bb.o ] ; 4 uses
-  %i.cy = select i1 %.not45.i, ptr @.str.68, ptr @.str.67 ; 3 uses
+  %i.cy = select i1 %.not45.i, ptr @.str.68, ptr @.str.67 ; 2 uses
   call void @avio_write(ptr noundef %i.cc, ptr noundef nonnull @header_metadata_key, i32 noundef 13) #13, !inline_history !245
   call void @avio_wb24(ptr noundef %i.cc, i32 noundef 77824) #13, !inline_history !245
   %.not.i.i41 = icmp eq ptr %i.cl, null
@@ -374,13 +374,10 @@ mxf_utf16len.exit.thread.i81.i:                   ; preds = %mxf_utf16len.exit.i
 
 mxf_utf16_local_tag_length.exit88.i:              ; preds = %mxf_utf16len.exit.thread.i81.i, %bb.x, %mxf_utf16_local_tag_length.exit.i
   %.0.i84.i = phi i32 [ 0, %bb.x ], [ %i.ey, %mxf_utf16len.exit.thread.i81.i ], [ 0, %mxf_utf16_local_tag_length.exit.i ]
-  %2 = add nuw nsw i32 %.0.i84.i, %.0.i.i
-  %3 = load i8, ptr %i.cy, align 1, !tbaa !61     ; 2 uses
-  %.not50.i.i90.i = icmp eq i8 %3, 0
-  br i1 %.not50.i.i90.i, label %mxf_utf16len.exit.thread.i108.i, label %.lr.ph.i.i91.i
+  br label %.lr.ph.i.i91.i
 
-.lr.ph.i.i91.i:                                   ; preds = %mxf_utf16_local_tag_length.exit88.i, %bb.z
-  %i.ez = phi i8 [ %i.ft, %bb.z ], [ %3, %mxf_utf16_local_tag_length.exit88.i ] ; 2 uses
+.lr.ph.i.i91.i:                                   ; preds = %bb.z, %mxf_utf16_local_tag_length.exit88.i
+  %i.ez = phi i8 [ %i.ft, %bb.z ], [ 76, %mxf_utf16_local_tag_length.exit88.i ] ; 2 uses
   %.02652.i.i92.i = phi i64 [ %.228.i.i105.i, %bb.z ], [ 0, %mxf_utf16_local_tag_length.exit88.i ] ; 2 uses
   %.02951.i.i93.i = phi ptr [ %.23139.i.i104.i, %bb.z ], [ %i.cy, %mxf_utf16_local_tag_length.exit88.i ]
   %i.fa = getelementptr inbounds nuw i8, ptr %.02951.i.i93.i, i64 1 ; 2 uses
@@ -437,6 +434,7 @@ bb.z:                                             ; preds = %.thread42.i.i102.i,
   br i1 %.not.i.i106.i, label %mxf_utf16len.exit.i107.i, label %.lr.ph.i.i91.i
 
 mxf_utf16len.exit.i107.i:                         ; preds = %bb.z
+  %2 = add nuw nsw i32 %.0.i84.i, %.0.i.i
   %i.fu = add i64 %.228.i.i105.i, 1               ; 3 uses
   %i.fv = icmp ugt i64 %i.fu, 32766
   br i1 %i.fv, label %bb.aa, label %mxf_utf16len.exit.thread.i108.i
@@ -445,9 +443,8 @@ bb.aa:                                            ; preds = %mxf_utf16len.exit.i
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.71, i64 noundef %i.fu) #13, !inline_history !245
   br label %mxf_utf16_local_tag_length.exit115.i
 
-mxf_utf16len.exit.thread.i108.i:                  ; preds = %mxf_utf16len.exit.i107.i, %mxf_utf16_local_tag_length.exit88.i
-  %.026.lcssa.i8.i109.i = phi i64 [ %i.fu, %mxf_utf16len.exit.i107.i ], [ 1, %mxf_utf16_local_tag_length.exit88.i ]
-  %.tr.i110.i = trunc nuw nsw i64 %.026.lcssa.i8.i109.i to i32
+mxf_utf16len.exit.thread.i108.i:                  ; preds = %mxf_utf16len.exit.i107.i
+  %.tr.i110.i = trunc nuw nsw i64 %i.fu to i32
   %i.fw = shl nuw nsw i32 %.tr.i110.i, 1
   %i.fx = add nuw nsw i32 %i.fw, 4
   br label %mxf_utf16_local_tag_length.exit115.i

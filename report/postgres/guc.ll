@@ -204,10 +204,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.ah = and i32 %2, 251658240
   %.not45 = icmp eq i32 %i.ah, 0
-  %time_unit_conversion_table.memory_unit_conversion_table = select i1 %.not45, ptr @time_unit_conversion_table, ptr @memory_unit_conversion_table ; 4 uses
-  %4 = load i8, ptr %time_unit_conversion_table.memory_unit_conversion_table, align 16
-  %.not4658.not = icmp eq i8 %4, 0
-  br i1 %.not4658.not, label %.loopexit, label %.lr.ph60
+  %time_unit_conversion_table.memory_unit_conversion_table = select i1 %.not45, ptr @time_unit_conversion_table, ptr @memory_unit_conversion_table ; 3 uses
+  br label %.lr.ph60
 
 .lr.ph60:                                         ; preds = %bb.i, %bb.o
   %i.ai = phi ptr [ %i.bf, %bb.o ], [ %time_unit_conversion_table.memory_unit_conversion_table, %bb.i ] ; 3 uses
@@ -260,8 +258,8 @@ bb.o:                                             ; preds = %.lr.ph60, %bb.j
   %.not46.not = icmp eq i8 %i.bg, 0
   br i1 %.not46.not, label %.loopexit, label %.lr.ph60, !llvm.loop !32
 
-.loopexit:                                        ; preds = %bb.o, %bb.i, %bb.n, %bb.h
-  %.1 = phi i1 [ false, %bb.h ], [ true, %bb.n ], [ false, %bb.i ], [ false, %bb.o ]
+.loopexit:                                        ; preds = %bb.o, %bb.n, %bb.h
+  %.1 = phi i1 [ false, %bb.h ], [ true, %bb.n ], [ false, %bb.o ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   ret i1 %.1
 }
@@ -664,10 +662,8 @@ bb.a:
   store ptr null, ptr %3, align 8
   %i.a = and i32 %1, 251658240
   %.not = icmp eq i32 %i.a, 0
-  %time_unit_conversion_table.memory_unit_conversion_table = select i1 %.not, ptr @time_unit_conversion_table, ptr @memory_unit_conversion_table ; 3 uses
-  %4 = load i8, ptr %time_unit_conversion_table.memory_unit_conversion_table, align 16
-  %.not2124 = icmp eq i8 %4, 0
-  br i1 %.not2124, label %.loopexit, label %.lr.ph
+  %time_unit_conversion_table.memory_unit_conversion_table = select i1 %.not, ptr @time_unit_conversion_table, ptr @memory_unit_conversion_table ; 2 uses
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.e
   %i.b = phi ptr [ %i.r, %bb.e ], [ %time_unit_conversion_table.memory_unit_conversion_table, %bb.a ] ; 3 uses
@@ -706,7 +702,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.c
   %.not21 = icmp eq i8 %i.s, 0
   br i1 %.not21, label %.loopexit, label %.lr.ph, !llvm.loop !43
 
-.loopexit:                                        ; preds = %bb.e, %bb.a, %bb.d
+.loopexit:                                        ; preds = %bb.e, %bb.d
   ret void
 }
 
@@ -716,10 +712,8 @@ bb.a:
   store ptr null, ptr %3, align 8
   %i.a = and i32 %1, 251658240
   %.not = icmp eq i32 %i.a, 0
-  %time_unit_conversion_table.memory_unit_conversion_table = select i1 %.not, ptr @time_unit_conversion_table, ptr @memory_unit_conversion_table ; 3 uses
-  %4 = load i8, ptr %time_unit_conversion_table.memory_unit_conversion_table, align 16
-  %.not1920 = icmp eq i8 %4, 0
-  br i1 %.not1920, label %._crit_edge, label %.lr.ph
+  %time_unit_conversion_table.memory_unit_conversion_table = select i1 %.not, ptr @time_unit_conversion_table, ptr @memory_unit_conversion_table ; 2 uses
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.d
   %i.b = phi ptr [ %i.r, %bb.d ], [ %time_unit_conversion_table.memory_unit_conversion_table, %bb.a ] ; 3 uses
@@ -755,7 +749,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c, %bb.
   %.not19 = icmp eq i8 %i.s, 0
   br i1 %.not19, label %._crit_edge, label %.lr.ph, !llvm.loop !44
 
-._crit_edge:                                      ; preds = %bb.d, %bb.c, %bb.a
+._crit_edge:                                      ; preds = %bb.d, %bb.c
   ret void
 }
 
