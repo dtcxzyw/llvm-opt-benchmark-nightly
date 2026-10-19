@@ -204,12 +204,7 @@ bb.am:                                            ; preds = %bb.ak
   %i.dm = icmp ult i16 %i.dl, 11
   br i1 %i.dm, label %bb.ap, label %bb.ao
 
-.loopexit73:                                      ; preds = %bb.aw
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.br
-
-.loopexit.split-lp:                               ; preds = %bb.al
+.loopexit.split-lp:                               ; preds = %bb.aw, %bb.al
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.br
@@ -362,7 +357,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au, %bb.
   %.sroa.5.0.i = phi i64 [ 0, %bb.av ], [ %i.fy, %bb.au ], [ %i.dj, %bb.ao ], [ 5, %bb.at ] ; 9 uses
   %.sroa.03.0.i = phi i1 [ true, %bb.av ], [ true, %bb.au ], [ false, %bb.ao ], [ false, %bb.at ]
   %i.fz = invoke noundef nonnull align 8 ptr @_RNvMs_NtCsexYYUdYSQU6_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB1v_IB27_NtB2P_18NamespaceStaticSetEEEE13new_uninit_inCsj1ugBVjDER0_8xml5ever()
-          to label %.noexc.i31 unwind label %.loopexit73, !noalias !109 ; 14 uses
+          to label %.noexc.i31 unwind label %.loopexit.split-lp, !noalias !109 ; 14 uses
 
 .noexc.i31:                                       ; preds = %bb.aw
   store ptr null, ptr %i.fz, align 8, !noalias !114
@@ -663,8 +658,8 @@ bb.bq:                                            ; preds = %bb.bs, %bb.br
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !noalias !109
   unreachable
 
-bb.br:                                            ; preds = %.loopexit73, %.loopexit.split-lp, %bb.bl
-  %.pn.ph.i29 = phi { ptr, i32 } [ %.pn.i.i, %bb.bl ], [ %lpad.loopexit, %.loopexit73 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.br:                                            ; preds = %.loopexit.split-lp, %bb.bl
+  %.pn.ph.i29 = phi { ptr, i32 } [ %.pn.i.i, %bb.bl ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEECsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef align 8 dereferenceable(8) %i.d) #19
           to label %bb.bs unwind label %bb.bq, !noalias !109
 

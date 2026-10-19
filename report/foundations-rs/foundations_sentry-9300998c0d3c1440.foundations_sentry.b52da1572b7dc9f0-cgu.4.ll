@@ -202,8 +202,8 @@ bb.f:                                             ; preds = %bb.c
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtBG_6string6StringEECsfypgzpEsCtg_18foundations_sentry(ptr noalias nofree noundef align 8 dereferenceable(24) %i.c) #14
           to label %common.resume unwind label %bb.e, !dbg !1275, !noalias !1175
 
-common.resume:                                    ; preds = %.body.thread, %bb.v, %4, %bb.f
-  %common.resume.op = phi { ptr, i32 } [ %lpad.loopexit.i, %bb.f ], [ %eh.lpad-body12, %.body.thread ], [ %lpad.phi.i, %4 ], [ %i.ck, %bb.v ]
+common.resume:                                    ; preds = %.body.thread, %bb.v, %.loopexit.split-lp.i, %bb.f
+  %common.resume.op = phi { ptr, i32 } [ %lpad.loopexit.i, %bb.f ], [ %eh.lpad-body12, %.body.thread ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ], [ %i.ck, %bb.v ]
   resume { ptr, i32 } %common.resume.op, !dbg !1276
 
 _RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsfypgzpEsCtg_18foundations_sentry.exit: ; preds = %.lr.ph.i, %bb.d, %_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfypgzpEsCtg_18foundations_sentry.exit.i
@@ -319,7 +319,7 @@ bb.o:                                             ; preds = %bb.r, %.noexc.i
   %i.bj = getelementptr inbounds [40 x i8], ptr %i.bh, i64 %i.bi, !dbg !1324
   %i.bk = getelementptr inbounds i8, ptr %i.bj, i64 -40, !dbg !1325
   %i.bl = invoke noundef zeroext i1 @_RNvXCskt5MLIAl8nl_9hashbrownINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtBv_6string6StringEINtB2_10EquivalentBq_E10equivalentCsfypgzpEsCtg_18foundations_sentry(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.bk)
-          to label %.noexc7.i unwind label %.loopexit.i, !dbg !1326
+          to label %.noexc7.i unwind label %.loopexit.split-lp.i, !dbg !1326
 
 .noexc7.i:                                        ; preds = %.lr.ph.i.i.i
   br i1 %i.bl, label %bb.u, label %bb.p, !dbg !1327, !prof !82
@@ -436,22 +436,13 @@ bb.x:                                             ; preds = %bb.t, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i), !dbg !1378
   br label %bb.z, !dbg !1379
 
-.loopexit.i:                                      ; preds = %.lr.ph.i.i.i
-  %lpad.loopexit.i5 = landingpad { ptr, i32 }
-          cleanup
-  br label %4
-
-.loopexit.split-lp.i:                             ; preds = %bb.n, %bb.m
+.loopexit.split-lp.i:                             ; preds = %.lr.ph.i.i.i, %bb.n, %bb.m
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
-  br label %4
-
-4:                                                ; preds = %.loopexit.split-lp.i, %.loopexit.i
-  %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i5, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtBG_6string6StringEECsfypgzpEsCtg_18foundations_sentry(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e) #14
           to label %common.resume unwind label %bb.y, !dbg !1379
 
-bb.y:                                             ; preds = %4
+bb.y:                                             ; preds = %.loopexit.split-lp.i
   %i.dd = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #12, !dbg !1380

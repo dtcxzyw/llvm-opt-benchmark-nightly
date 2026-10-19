@@ -25,35 +25,41 @@ bb.a:
   %i.d = sub i64 %i.b, %i.c                       ; 2 uses
   %i.e = ashr exact i64 %i.d, 3                   ; 2 uses
   %i.f = icmp ugt i64 %i.e, 576460752303423487
-  br i1 %i.f, label %.noexc, label %bb.b
+  br i1 %i.f, label %4, label %bb.b
 
-.noexc:                                           ; preds = %bb.a
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #9
+4:                                                ; preds = %bb.a
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #9
+          to label %.noexc unwind label %.loopexit.split-lp
+
+.noexc:                                           ; preds = %4
   unreachable
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %.not52 = icmp eq ptr %3, %2
-  br i1 %.not52, label %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit, label %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i.a
+  br i1 %.not52, label %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit, label %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i
 
-_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i.a: ; preds = %bb.b
+_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.b
+  %5 = shl nuw nsw i64 %i.d, 1
+  %6 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %5) #10
+          to label %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i.a unwind label %.loopexit.split-lp ; 4 uses
+
+_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i.a: ; preds = %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %4 = shl nuw nsw i64 %i.d, 1
-  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #10 ; 4 uses
-  store ptr %5, ptr %i.a, align 8, !tbaa !19
-  store ptr %5, ptr %i.h, align 8, !tbaa !20
-  %i.i = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %i.e ; 2 uses
+  store ptr %6, ptr %i.a, align 8, !tbaa !19
+  store ptr %6, ptr %i.h, align 8, !tbaa !20
+  %i.i = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %i.e ; 2 uses
   store ptr %i.i, ptr %i.g, align 8, !tbaa !21
   br label %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit
 
 _ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit:  ; preds = %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i.a, %bb.b
-  %.promoted26 = phi ptr [ %5, %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i.a ], [ null, %bb.b ] ; 3 uses
+  %.promoted26 = phi ptr [ %6, %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i.a ], [ null, %bb.b ] ; 3 uses
   %.promoted = phi ptr [ %i.i, %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i.a ], [ null, %bb.b ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.k = load <2 x double>, ptr %i.j, align 8, !tbaa !23
   store <2 x double> %i.k, ptr %0, align 8, !tbaa !23
   %.not30 = icmp eq ptr %2, %3
-  br i1 %.not30, label %._crit_edge.a, label %.lr.ph
+  br i1 %.not30, label %bb.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -63,7 +69,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.m = phi ptr [ %.promoted26, %.lr.ph ], [ %i.am, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 8 uses
   %.031 = phi ptr [ %2, %.lr.ph ], [ %i.ap, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 4 uses
   %i.n = phi ptr [ %.promoted, %.lr.ph ], [ %i.ao, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 5 uses
-  %i.o = phi ptr [ %.promoted26, %.lr.ph ], [ %i.an, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 11 uses
+  %i.o = phi ptr [ %.promoted26, %.lr.ph ], [ %i.an, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 10 uses
   %i.p = load double, ptr %.031, align 8, !tbaa !23
   %i.q = invoke noundef double @_ZNK5folly7TDigest16estimateQuantileEd(ptr noundef nonnull align 8 dereferenceable(64) %1, double noundef %i.p)
           to label %bb.d unwind label %.loopexit  ; 2 uses
@@ -149,42 +155,45 @@ _ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit: ; preds =
   %i.ao = phi ptr [ %i.al, %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.n, %bb.e ] ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.031, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ap, %3
-  br i1 %.not, label %._crit_edge.a, label %bb.c
+  br i1 %.not, label %bb.i, label %bb.c
 
 .loopexit:                                        ; preds = %bb.c, %_ZNKSt6vectorISt4pairIddESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   store ptr %i.n, ptr %i.g, align 8
   store ptr %i.o, ptr %i.a, align 8
-  br label %bb.i
+  br label %._crit_edge.a
 
-.loopexit.split-lp:                               ; preds = %bb.g
+.loopexit.split-lp:                               ; preds = %bb.g, %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i, %4
+  %7 = phi ptr [ %i.m, %bb.g ], [ null, %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i ], [ null, %4 ]
+  %8 = phi ptr [ %i.o, %bb.g ], [ null, %_ZNSt12_Vector_baseISt4pairIddESaIS1_EE11_M_allocateEm.exit.i ], [ null, %4 ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %bb.i
+  br label %._crit_edge.a
 
-._crit_edge.a:                                    ; preds = %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit
-  %.lcssa27.a = phi ptr [ %.promoted26, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit ], [ %i.an, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ]
-  %.lcssa23.a = phi ptr [ %.promoted, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit ], [ %i.ao, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ]
-  store ptr %.lcssa23.a, ptr %i.g, align 8
-  store ptr %.lcssa27.a, ptr %i.a, align 8
-  ret void
-
-bb.i:                                             ; preds = %.loopexit, %.loopexit.split-lp
-  %i.aq = phi ptr [ %i.m, %.loopexit.split-lp ], [ %i.n, %.loopexit ]
-  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit ]
-  %.not.i.i.i.i19 = icmp eq ptr %i.o, null
+._crit_edge.a:                                    ; preds = %.loopexit.split-lp, %.loopexit
+  %.lcssa27.a = phi ptr [ %i.n, %.loopexit ], [ %7, %.loopexit.split-lp ]
+  %.lcssa23.a = phi ptr [ %i.o, %.loopexit ], [ %8, %.loopexit.split-lp ] ; 3 uses
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+  %.not.i.i.i.i19 = icmp eq ptr %.lcssa23.a, null
   br i1 %.not.i.i.i.i19, label %_ZN5folly17QuantileEstimatesD2Ev.exit, label %bb.j
 
-bb.j:                                             ; preds = %bb.i
-  %i.ar = ptrtoint ptr %i.aq to i64
-  %i.as = ptrtoint ptr %i.o to i64
+bb.i:                                             ; preds = %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit
+  %.lcssa27 = phi ptr [ %.promoted26, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit ], [ %i.an, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ]
+  %i.aq = phi ptr [ %.promoted, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit ], [ %i.ao, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ]
+  store ptr %i.aq, ptr %i.g, align 8
+  store ptr %.lcssa27, ptr %i.a, align 8
+  ret void
+
+bb.j:                                             ; preds = %._crit_edge.a
+  %i.ar = ptrtoint ptr %.lcssa27.a to i64
+  %i.as = ptrtoint ptr %.lcssa23.a to i64
   %i.at = sub i64 %i.ar, %i.as
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef %i.at) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.lcssa23.a, i64 noundef %i.at) #11
   br label %_ZN5folly17QuantileEstimatesD2Ev.exit
 
-_ZN5folly17QuantileEstimatesD2Ev.exit:            ; preds = %bb.i, %bb.j
-  resume { ptr, i32 } %.pn
+_ZN5folly17QuantileEstimatesD2Ev.exit:            ; preds = %._crit_edge.a, %bb.j
+  resume { ptr, i32 } %lpad.phi
 }
 
 declare i32 @__gxx_personality_v0(...)

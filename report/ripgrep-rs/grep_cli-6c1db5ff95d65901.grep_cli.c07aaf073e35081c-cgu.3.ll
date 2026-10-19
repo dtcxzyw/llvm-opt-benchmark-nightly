@@ -202,18 +202,13 @@ _RNvNtCsgwyS1EwTFAS_8grep_cli10decompress30default_decompression_commands.exit: 
   %.pre152 = load i64, ptr %.phi.trans.insert151, align 8, !dbg !2115
   br label %bb.q, !dbg !2116
 
-.loopexit:                                        ; preds = %bb.t, %bb.ak, %bb.al
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body118
-
-.loopexit.split-lp:                               ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtCsgwyS1EwTFAS_8grep_cli10decompress20DecompressionCommandE7or_elseNCNvXs_NtNtNtB5_4iter8adapters5chainINtB1Y_5ChainINtNtNtB5_5slice4iter4IterBJ_EB2E_ENtNtNtB22_6traits8iterator8Iterator4next0EBN_.exit, %bb.v, %bb.aj
+.loopexit.split-lp:                               ; preds = %bb.al, %bb.ak, %bb.t, %bb.aj, %bb.v, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtCsgwyS1EwTFAS_8grep_cli10decompress20DecompressionCommandE7or_elseNCNvXs_NtNtNtB5_4iter8adapters5chainINtB1Y_5ChainINtNtNtB5_5slice4iter4IterBJ_EB2E_ENtNtNtB22_6traits8iterator8Iterator4next0EBN_.exit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body118
 
-.body118:                                         ; preds = %.loopexit, %.loopexit.split-lp, %bb.at, %bb.am
-  %eh.lpad-body119 = phi { ptr, i32 } [ %.pn.i, %bb.am ], [ %i.bw, %bb.at ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body118:                                         ; preds = %.loopexit.split-lp, %bb.at, %bb.am
+  %eh.lpad-body119 = phi { ptr, i32 } [ %.pn.i, %bb.am ], [ %i.bw, %bb.at ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCsgwyS1EwTFAS_8grep_cli10decompress20DecompressionCommandEEB1c_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #21
           to label %.body115 unwind label %bb.bc, !dbg !2117
 
@@ -281,7 +276,7 @@ bb.t:                                             ; preds = %_RINvNtNtNtCskKLDko
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i109.ph, i64 16, !dbg !2134
   %i.aq = load i64, ptr %i.ap, align 8, !dbg !2134, !noundef !95
   invoke void @_RNvMs9_NtCs8XVSHBVmna6_7globset4globNtB5_4Glob3new(ptr noalias nofree noundef nonnull sret([80 x i8]) align 8 captures(address) dereferenceable(80) %i.k, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ao, i64 noundef %i.aq)
-          to label %bb.ai unwind label %.loopexit, !dbg !2132
+          to label %bb.ai unwind label %.loopexit.split-lp, !dbg !2132
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtCsgwyS1EwTFAS_8grep_cli10decompress20DecompressionCommandE7or_elseNCNvXs_NtNtNtB5_4iter8adapters5chainINtB1Y_5ChainINtNtNtB5_5slice4iter4IterBJ_EB2E_ENtNtNtB22_6traits8iterator8Iterator4next0EBN_.exit: ; preds = %select.unfold
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !dbg !2135
@@ -438,13 +433,13 @@ bb.ak:                                            ; preds = %bb.ai
   store ptr %.sroa.426.sroa.4.0.copyload, ptr %.sroa.6.sroa.7.0..sroa.6.0..sroa_idx4.sroa_idx, align 8, !dbg !2132
   store i64 %.sroa.426.sroa.5.0.copyload, ptr %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx4.sroa_idx, align 8, !dbg !2132
   %i.bn = invoke noundef nonnull align 8 ptr @_RNvMs5_Cs8XVSHBVmna6_7globsetNtB5_14GlobSetBuilder3add(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(80) %i.j)
-          to label %bb.al unwind label %.loopexit, !dbg !2175 ; 0 uses
+          to label %bb.al unwind label %.loopexit.split-lp, !dbg !2175 ; 0 uses
 
 bb.al:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !2176
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !2177, !noalias !2072
   invoke void @_RNvXs4_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %.sroa.0.0.i109.ph)
-          to label %.noexc unwind label %.loopexit, !dbg !2177
+          to label %.noexc unwind label %.loopexit.split-lp, !dbg !2177
 
 .noexc:                                           ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !2178, !noalias !2072

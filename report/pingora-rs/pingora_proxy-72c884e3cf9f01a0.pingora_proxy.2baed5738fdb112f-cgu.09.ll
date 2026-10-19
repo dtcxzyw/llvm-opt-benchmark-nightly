@@ -202,17 +202,12 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http6serverNtB2_7Session9new_http1(ptr noalias nofree noundef nonnull sret([536 x i8]) align 8 captures(none) dereferenceable(536) %i.a, ptr noundef nonnull %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(200) %2)
-          to label %bb.b unwind label %3
+          to label %bb.b unwind label %bb.h
 
-.body:                                            ; preds = %bb.h, %bb.d, %3, %bb.k
-  %.pn = phi { ptr, i32 } [ %i.j, %bb.k ], [ %i.i, %bb.h ], [ %4, %3 ], [ %i.e, %bb.d ]
+.body:                                            ; preds = %bb.h, %bb.d, %bb.k
+  %.pn = phi { ptr, i32 } [ %i.j, %bb.k ], [ %i.i, %bb.h ], [ %i.e, %bb.d ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCskeugdADtBsi_12pingora_core7modules4http11HttpModulesECs3Kwrwkha1e5_13pingora_proxy(ptr noalias nofree noundef align 8 dereferenceable(40) %i.b) #17
           to label %bb.m unwind label %bb.l
-
-3:                                                ; preds = %bb.a
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #18, !noalias !857
@@ -254,7 +249,7 @@ bb.g:                                             ; preds = %bb.f
 .noexc13:                                         ; preds = %bb.g
   unreachable
 
-bb.h:                                             ; preds = %bb.i
+bb.h:                                             ; preds = %bb.a, %bb.i
   %i.i = landingpad { ptr, i32 }
           cleanup
   br label %.body

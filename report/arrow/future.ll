@@ -202,15 +202,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZSt20__throw_system_errori(i32 noundef %i.b) #25
-          to label %.noexc unwind label %4
+          to label %.noexc unwind label %bb.n
 
 .noexc:                                           ; preds = %bb.b
   unreachable
-
-4:                                                ; preds = %bb.b
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.v
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
@@ -342,7 +337,7 @@ bb.m:                                             ; preds = %.preheader
   %i.aw = icmp eq ptr %i.av, %i.at
   br i1 %i.aw, label %.loopexit, label %.preheader
 
-bb.n:                                             ; preds = %.preheader
+bb.n:                                             ; preds = %.preheader, %bb.b
   %i.ax = landingpad { ptr, i32 }
           cleanup
   br label %bb.v
@@ -439,8 +434,8 @@ _ZNSt6vectorIN5arrow10FutureImpl14CallbackRecordESaIS2_EED2Ev.exit: ; preds = %_
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   ret void
 
-bb.v:                                             ; preds = %4, %_ZNSt11unique_lockISt5mutexED2Ev.exit, %bb.n
-  %.pn9 = phi { ptr, i32 } [ %i.ax, %bb.n ], [ %i.am, %_ZNSt11unique_lockISt5mutexED2Ev.exit ], [ %5, %4 ]
+bb.v:                                             ; preds = %bb.n, %_ZNSt11unique_lockISt5mutexED2Ev.exit
+  %.pn9 = phi { ptr, i32 } [ %i.am, %_ZNSt11unique_lockISt5mutexED2Ev.exit ], [ %i.ax, %bb.n ]
   call void @_ZNSt12__shared_ptrIN5arrow10FutureImplELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %3) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
   call void @_ZNSt6vectorIN5arrow10FutureImpl14CallbackRecordESaIS2_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %2) #24

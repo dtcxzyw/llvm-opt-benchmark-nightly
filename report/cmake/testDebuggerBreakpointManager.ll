@@ -204,7 +204,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.a
 
 .lr.ph.i:                                         ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %.noexc
   invoke void @_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE(ptr noundef nonnull align 8 dereferenceable(48) %i.g, ptr noundef nonnull align 8 dereferenceable(9) %2)
-          to label %.noexc unwind label %.loopexit
+          to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %.lr.ph.i
   %i.k = load ptr, ptr %1, align 8, !tbaa !188    ; 2 uses
@@ -288,18 +288,13 @@ _ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %bb.f, %bb.g, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   ret void
 
-.loopexit:                                        ; preds = %.lr.ph.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %_ZNSt18condition_variable4waitIZN3dap6futureINS1_15ResponseOrErrorINS1_22SetBreakpointsResponseEEEE3getEvEUlvE_EEvRSt11unique_lockISt5mutexET_.exit
+.loopexit.split-lp:                               ; preds = %.lr.ph.i, %_ZNSt18condition_variable4waitIZN3dap6futureINS1_15ResponseOrErrorINS1_22SetBreakpointsResponseEEEE3getEvEUlvE_EEvRSt11unique_lockISt5mutexET_.exit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.e
-  %eh.lpad-body = phi { ptr, i32 } [ %i.aa, %bb.e ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.e
+  %eh.lpad-body = phi { ptr, i32 } [ %i.aa, %bb.e ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.aj = load i8, ptr %i.d, align 8, !tbaa !272, !range !94, !noundef !95
   %i.ak = trunc nuw i8 %i.aj to i1
   br i1 %i.ak, label %bb.i, label %_ZNSt11unique_lockISt5mutexED2Ev.exit4

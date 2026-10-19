@@ -205,12 +205,7 @@ bb.ai:                                            ; preds = %bb.ag
   %i.du = icmp ult i16 %i.dt, 11
   br i1 %i.du, label %bb.al, label %bb.ak
 
-.loopexit73:                                      ; preds = %bb.as
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bm
-
-.loopexit.split-lp:                               ; preds = %bb.ah
+.loopexit.split-lp:                               ; preds = %bb.as, %bb.ah
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.bm
@@ -371,7 +366,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.
   %.sroa.5.0.i = phi i64 [ 0, %bb.ar ], [ %i.gm, %bb.aq ], [ %i.dr, %bb.ak ], [ 5, %bb.ap ] ; 9 uses
   %.sroa.03.0.i = phi i1 [ true, %bb.ar ], [ true, %bb.aq ], [ false, %bb.ak ], [ false, %bb.ap ]
   %i.gn = invoke noundef nonnull align 16 ptr @_RNvMs_NtCsexYYUdYSQU6_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtCsih3NV0yzdTo_15pingora_timeout5timer4TimeNtB1w_5TimerEE13new_uninit_inB1y_()
-          to label %.noexc.i25 unwind label %.loopexit73, !noalias !163 ; 14 uses
+          to label %.noexc.i25 unwind label %.loopexit.split-lp, !noalias !163 ; 14 uses
 
 .noexc.i25:                                       ; preds = %bb.as
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 352
@@ -683,8 +678,8 @@ bb.bl:                                            ; preds = %bb.bm
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !noalias !163
   unreachable
 
-bb.bm:                                            ; preds = %.loopexit73, %.loopexit.split-lp, %bb.bg
-  %.pn.ph.i23 = phi { ptr, i32 } [ %.pn.i.i, %bb.bg ], [ %lpad.loopexit, %.loopexit73 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.bm:                                            ; preds = %.loopexit.split-lp, %bb.bg
+  %.pn.ph.i23 = phi { ptr, i32 } [ %.pn.i.i, %bb.bg ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsih3NV0yzdTo_15pingora_timeout5timer5TimerEBF_(ptr noalias nofree noundef align 8 dereferenceable(16) %i.c) #19
           to label %.body unwind label %bb.bl, !noalias !163
 

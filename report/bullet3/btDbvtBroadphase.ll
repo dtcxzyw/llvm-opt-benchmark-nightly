@@ -154,7 +154,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef 120, i32 noundef 16)
-          to label %bb.d unwind label %3          ; 2 uses
+          to label %bb.d unwind label %bb.f       ; 2 uses
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN28btHashedOverlappingPairCacheC1Ev(ptr noundef nonnull align 8 dereferenceable(120) %i.n)
@@ -191,12 +191,7 @@ bb.e:                                             ; preds = %bb.b, %bb.d
   tail call void @_ZN6btDbvtD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.ptr25) #19
   br label %.loopexit
 
-3:                                                ; preds = %bb.c
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.loopexit.loopexit
-
-bb.f:                                             ; preds = %bb.d
+bb.f:                                             ; preds = %bb.c, %bb.d
   %i.z = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.loopexit
@@ -231,8 +226,8 @@ bb.j:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
   br label %.loopexit.loopexit
 
-.loopexit.loopexit:                               ; preds = %bb.f, %bb.j, %3
-  %.pn.pn = phi { ptr, i32 } [ %i.af, %bb.j ], [ %i.z, %bb.f ], [ %4, %3 ]
+.loopexit.loopexit:                               ; preds = %bb.f, %bb.j
+  %.pn.pn = phi { ptr, i32 } [ %i.af, %bb.j ], [ %i.z, %bb.f ]
   call void @_ZN20btAlignedObjectArrayIS_IPK10btDbvtNodeEED2Ev(ptr noundef nonnull align 8 dead_on_return(25) dereferenceable(25) %i.a) #19
   call void @_ZN6btDbvtD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.ptr.ptr.1) #19
   call void @_ZN6btDbvtD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.ptr.ptr) #19

@@ -202,7 +202,7 @@ _RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtCs4dcH4YgJDq_2tt4iter9TtElementE7
   %i.s = add nuw nsw i64 %i.m, 1                  ; 2 uses
   store i64 %i.s, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !375
   invoke void @_RNvXs3_NtCs4dcH4YgJDq_2tt4iterNtB5_6TtIterNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([88 x i8]) align 8 captures(none) dereferenceable(88) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.b)
-          to label %.noexc7 unwind label %.loopexit
+          to label %.noexc7 unwind label %.loopexit.split-lp
 
 .noexc7:                                          ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtCs4dcH4YgJDq_2tt4iter9TtElementE7reserveCscAFBYSOo4Yh_12test_fixture.exit.i.i
   %i.t = load i64, ptr %i.a, align 8, !range !369, !noalias !374, !noundef !5
@@ -229,18 +229,13 @@ bb.j:                                             ; preds = %bb.h
   call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #19, !noalias !375
   unreachable
 
-.loopexit:                                        ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtCs4dcH4YgJDq_2tt4iter9TtElementE7reserveCscAFBYSOo4Yh_12test_fixture.exit.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %bb.g
+.loopexit.split-lp:                               ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtCs4dcH4YgJDq_2tt4iter9TtElementE7reserveCscAFBYSOo4Yh_12test_fixture.exit.i.i, %bb.g
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.h
-  %eh.lpad-body = phi { ptr, i32 } [ %i.u, %bb.h ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.h
+  %eh.lpad-body = phi { ptr, i32 } [ %i.u, %bb.h ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtCs4dcH4YgJDq_2tt4iter9TtElementEECscAFBYSOo4Yh_12test_fixture(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #18
           to label %bb.l unwind label %bb.k
 

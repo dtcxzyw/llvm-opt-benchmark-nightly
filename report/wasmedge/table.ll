@@ -205,17 +205,7 @@ bb.d:                                             ; preds = %.critedge
 _ZNSt11unique_lockISt12shared_mutexEC2ERS0_.exit.i: ; preds = %.critedge
   %i.v = getelementptr inbounds nuw i8, ptr %.052, i64 24
   invoke void @_ZN8WasmEdge7Runtime8Instance14ModuleInstance17unsafeAddInstanceINS1_13TableInstanceEJRKNS_3AST9TableTypeERNS_10RefVariantEEEENSt9enable_ifIX11IsInstanceVIT_EEvE4typeERSt6vectorISt10unique_ptrISC_St14default_deleteISC_EESaISJ_EERSF_IPSC_SaISN_EEDpOT0_(ptr noundef nonnull align 8 dereferenceable(952) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %i.v, ptr noundef nonnull align 16 dereferenceable(16) %8)
-          to label %_ZN8WasmEdge7Runtime8Instance14ModuleInstance8addTableIJRKNS_3AST9TableTypeERNS_10RefVariantEEEEvDpOT_.exit unwind label %_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i
-
-common.resume:                                    ; preds = %_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i32, %_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i
-  %common.resume.op = phi { ptr, i32 } [ %11, %_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i ], [ %i.ab, %_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i32 ]
-  %10 = call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.f) #18 ; 0 uses
-  resume { ptr, i32 } %common.resume.op
-
-_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i: ; preds = %_ZNSt11unique_lockISt12shared_mutexEC2ERS0_.exit.i
-  %11 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume
+          to label %_ZN8WasmEdge7Runtime8Instance14ModuleInstance8addTableIJRKNS_3AST9TableTypeERNS_10RefVariantEEEEvDpOT_.exit unwind label %_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i32
 
 _ZN8WasmEdge7Runtime8Instance14ModuleInstance8addTableIJRKNS_3AST9TableTypeERNS_10RefVariantEEEEvDpOT_.exit: ; preds = %_ZNSt11unique_lockISt12shared_mutexEC2ERS0_.exit.i
   %i.w = call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.f) #18 ; 0 uses
@@ -246,10 +236,11 @@ _ZNSt11unique_lockISt12shared_mutexEC2ERS0_.exit.i31: ; preds = %bb.e
   invoke void @_ZN8WasmEdge7Runtime8Instance14ModuleInstance17unsafeAddInstanceINS1_13TableInstanceEJRKNS_3AST9TableTypeERNS_10RefVariantEEEENSt9enable_ifIX11IsInstanceVIT_EEvE4typeERSt6vectorISt10unique_ptrISC_St14default_deleteISC_EESaISJ_EERSF_IPSC_SaISN_EEDpOT0_(ptr noundef nonnull align 8 dereferenceable(952) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %i.x, ptr noundef nonnull align 16 dereferenceable(16) %9)
           to label %_ZN8WasmEdge7Runtime8Instance14ModuleInstance8addTableIJRKNS_3AST9TableTypeERNS_10RefVariantEEEEvDpOT_.exit33 unwind label %_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i32
 
-_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i32: ; preds = %_ZNSt11unique_lockISt12shared_mutexEC2ERS0_.exit.i31
+_ZNSt11unique_lockISt12shared_mutexED2Ev.exit5.i32: ; preds = %_ZNSt11unique_lockISt12shared_mutexEC2ERS0_.exit.i, %_ZNSt11unique_lockISt12shared_mutexEC2ERS0_.exit.i31
   %i.ab = landingpad { ptr, i32 }
           cleanup
-  br label %common.resume
+  %10 = call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.f) #18 ; 0 uses
+  resume { ptr, i32 } %i.ab
 
 _ZN8WasmEdge7Runtime8Instance14ModuleInstance8addTableIJRKNS_3AST9TableTypeERNS_10RefVariantEEEEvDpOT_.exit33: ; preds = %_ZNSt11unique_lockISt12shared_mutexEC2ERS0_.exit.i31
   %i.ac = call noundef i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(56) %i.f) #18 ; 0 uses

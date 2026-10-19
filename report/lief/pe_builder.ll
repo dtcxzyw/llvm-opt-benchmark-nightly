@@ -202,12 +202,12 @@ bb.z:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.cb = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.bz, ptr %i.cb, align 8, !tbaa !66
   invoke void @_ZN4LIEF2PE7Section7contentERKSt6vectorIhSaIhEE(ptr noundef nonnull align 8 dereferenceable(144) %4, ptr noundef nonnull align 8 dereferenceable(24) %6)
-          to label %bb.aa unwind label %10
+          to label %bb.aa unwind label %bb.ae
 
 bb.aa:                                            ; preds = %bb.z
   %i.cc = load ptr, ptr %2, align 8, !tbaa !54
   %i.cd = invoke noundef ptr @_ZN4LIEF2PE6Binary11add_sectionERKNS0_7SectionE(ptr noundef nonnull align 8 dereferenceable(736) %i.cc, ptr noundef nonnull align 8 dereferenceable(144) %4)
-          to label %bb.ab unwind label %10        ; 0 uses
+          to label %bb.ab unwind label %bb.ae     ; 0 uses
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ce = load ptr, ptr %2, align 8, !tbaa !54
@@ -238,12 +238,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i65
   call void @_ZdlPv(ptr noundef %i.cl) #17
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67
 
-10:                                               ; preds = %bb.aa, %bb.z
-  %11 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ax
-
-bb.ae:                                            ; preds = %bb.ag, %bb.ac
+bb.ae:                                            ; preds = %bb.ag, %bb.ac, %bb.z, %bb.aa
   %i.cn = landingpad { ptr, i32 }
           cleanup
   br label %bb.ax
@@ -505,8 +500,8 @@ bb.aw:                                            ; preds = %bb.av, %_ZNSt7__cxx
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
   br label %bb.ax
 
-bb.ax:                                            ; preds = %bb.ae, %bb.aw, %10
-  %.pn30.pn.pn.pn = phi { ptr, i32 } [ %11, %10 ], [ %.pn30, %bb.aw ], [ %i.cn, %bb.ae ] ; 2 uses
+bb.ax:                                            ; preds = %bb.ae, %bb.aw
+  %.pn30.pn.pn.pn = phi { ptr, i32 } [ %i.cn, %bb.ae ], [ %.pn30, %bb.aw ] ; 2 uses
   %i.fi = load ptr, ptr %6, align 8, !tbaa !18    ; 2 uses
   %.not.i.i.i91 = icmp eq ptr %i.fi, null
   br i1 %.not.i.i.i91, label %.body, label %.body.sink.split

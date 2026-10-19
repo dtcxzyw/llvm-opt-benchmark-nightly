@@ -191,26 +191,16 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ba = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt6locale7classicEv()
-          to label %bb.o unwind label %5
+          to label %bb.o unwind label %bb.ad
 
 bb.o:                                             ; preds = %bb.n
   %i.bb = invoke noundef nonnull align 8 dereferenceable(570) ptr @_ZSt9use_facetISt5ctypeIcEERKT_RKSt6locale(ptr noundef nonnull align 8 dereferenceable(8) %i.ba)
-          to label %bb.p unwind label %5
+          to label %bb.p unwind label %bb.ad
 
 bb.p:                                             ; preds = %bb.o
   store ptr %i.bb, ptr @_ZZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType, align 8, !tbaa !29
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType) #8
   br label %_ZN17double_conversion12_GLOBAL__N_17ToLowerEc.exit.i
-
-common.resume:                                    ; preds = %bb.ad, %5
-  %common.resume.op = phi { ptr, i32 } [ %6, %5 ], [ %i.cr, %bb.ad ]
-  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType) #8
-  resume { ptr, i32 } %common.resume.op
-
-5:                                                ; preds = %bb.o, %bb.n
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume
 
 _ZN17double_conversion12_GLOBAL__N_17ToLowerEc.exit.i: ; preds = %bb.p, %bb.m, %bb.l
   %i.bc = load ptr, ptr @_ZZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType, align 8, !tbaa !29, !nonnull !30, !align !31 ; 2 uses
@@ -341,10 +331,11 @@ bb.ac:                                            ; preds = %bb.ab
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType) #8
   br label %_ZN17double_conversion12_GLOBAL__N_17ToLowerEc.exit.i254
 
-bb.ad:                                            ; preds = %bb.ab, %bb.aa
+bb.ad:                                            ; preds = %bb.n, %bb.o, %bb.ab, %bb.aa
   %i.cr = landingpad { ptr, i32 }
           cleanup
-  br label %common.resume
+  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType) #8
+  resume { ptr, i32 } %i.cr
 
 _ZN17double_conversion12_GLOBAL__N_17ToLowerEc.exit.i254: ; preds = %bb.ac, %bb.z, %bb.y
   %i.cs = load ptr, ptr @_ZZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType, align 8, !tbaa !29, !nonnull !30, !align !31 ; 2 uses
@@ -747,26 +738,16 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ax = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt6locale7classicEv()
-          to label %bb.o unwind label %5
+          to label %bb.o unwind label %bb.ad
 
 bb.o:                                             ; preds = %bb.n
   %i.ay = invoke noundef nonnull align 8 dereferenceable(570) ptr @_ZSt9use_facetISt5ctypeIcEERKT_RKSt6locale(ptr noundef nonnull align 8 dereferenceable(8) %i.ax)
-          to label %bb.p unwind label %5
+          to label %bb.p unwind label %bb.ad
 
 bb.p:                                             ; preds = %bb.o
   store ptr %i.ay, ptr @_ZZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType, align 8, !tbaa !29
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType) #8
   br label %_ZN17double_conversion12_GLOBAL__N_17ToLowerEc.exit.i
-
-common.resume:                                    ; preds = %bb.ad, %5
-  %common.resume.op = phi { ptr, i32 } [ %6, %5 ], [ %i.cn, %bb.ad ]
-  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType) #8
-  resume { ptr, i32 } %common.resume.op
-
-5:                                                ; preds = %bb.o, %bb.n
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume
 
 _ZN17double_conversion12_GLOBAL__N_17ToLowerEc.exit.i: ; preds = %bb.p, %bb.m, %bb.l
   %i.az = load ptr, ptr @_ZZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType, align 8, !tbaa !29, !nonnull !30, !align !31 ; 2 uses
@@ -884,10 +865,11 @@ bb.ac:                                            ; preds = %bb.ab
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType) #8
   br label %_ZN17double_conversion12_GLOBAL__N_17ToLowerEc.exit.i254
 
-bb.ad:                                            ; preds = %bb.ab, %bb.aa
+bb.ad:                                            ; preds = %bb.n, %bb.o, %bb.ab, %bb.aa
   %i.cn = landingpad { ptr, i32 }
           cleanup
-  br label %common.resume
+  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType) #8
+  resume { ptr, i32 } %i.cn
 
 _ZN17double_conversion12_GLOBAL__N_17ToLowerEc.exit.i254: ; preds = %bb.ac, %bb.z, %bb.y
   %i.co = load ptr, ptr @_ZZN17double_conversion12_GLOBAL__N_17ToLowerEcE5cType, align 8, !tbaa !29, !nonnull !30, !align !31 ; 2 uses

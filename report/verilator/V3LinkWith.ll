@@ -202,11 +202,6 @@ bb.c:                                             ; preds = %bb.b
   store i8 1, ptr %i.f, align 8, !tbaa !174
   br label %bb.d
 
-3:                                                ; preds = %bb.s
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.g = load ptr, ptr %1, align 8, !tbaa !20
@@ -312,7 +307,7 @@ bb.p:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   br label %.body
 
-bb.q:                                             ; preds = %bb.o, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.i
+bb.q:                                             ; preds = %bb.s, %bb.o, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.i
   %i.ap = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -325,14 +320,14 @@ bb.r:                                             ; preds = %_ZStlsISt11char_tra
 
 bb.s:                                             ; preds = %bb.g, %bb.r, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   invoke void @_ZN7AstNode15iterateChildrenER9VNVisitor(ptr noundef nonnull align 8 dereferenceable(152) %1, ptr noundef nonnull align 8 dereferenceable(32) %0)
-          to label %_ZN9VNVisitor15iterateChildrenEP7AstNode.exit unwind label %3
+          to label %_ZN9VNVisitor15iterateChildrenEP7AstNode.exit unwind label %bb.q
 
 _ZN9VNVisitor15iterateChildrenEP7AstNode.exit:    ; preds = %bb.s
   store ptr %i.b, ptr %i.a, align 8, !tbaa !165
   ret void
 
-.body:                                            ; preds = %bb.q, %bb.n, %bb.p, %3
-  %.pn19 = phi { ptr, i32 } [ %4, %3 ], [ %i.al, %bb.n ], [ %i.ao, %bb.p ], [ %i.ap, %bb.q ]
+.body:                                            ; preds = %bb.q, %bb.n, %bb.p
+  %.pn19 = phi { ptr, i32 } [ %i.ao, %bb.p ], [ %i.ap, %bb.q ], [ %i.al, %bb.n ]
   store ptr %i.b, ptr %i.a, align 8, !tbaa !165
   resume { ptr, i32 } %.pn19
 }

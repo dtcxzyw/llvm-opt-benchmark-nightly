@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(376) %1)
   %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(376) %1, ptr noundef nonnull @.str.1, i64 noundef 28)
-          to label %_ZN4lean7sstreamlsIA29_cEERS0_RKT_.exit unwind label %4 ; 0 uses
+          to label %_ZN4lean7sstreamlsIA29_cEERS0_RKT_.exit unwind label %bb.f ; 0 uses
 
 _ZN4lean7sstreamlsIA29_cEERS0_RKT_.exit:          ; preds = %bb.b
   %i.f = load ptr, ptr @_ZN4leanL11g_cum_timesB5cxx11E, align 8, !tbaa !21 ; 2 uses
@@ -254,11 +254,6 @@ bb.e:                                             ; preds = %._crit_edge
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %i.aa)
           to label %_ZNK4lean7sstream3strB5cxx11Ev.exit unwind label %bb.d
 
-4:                                                ; preds = %bb.b
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.j
-
 .lr.ph:                                           ; preds = %_ZN4lean7sstreamlsIA29_cEERS0_RKT_.exit, %_ZN4lean7sstreamlsIA2_cEERS0_RKT_.exit14
   %.sroa.018.021 = phi ptr [ %i.am, %_ZN4lean7sstreamlsIA2_cEERS0_RKT_.exit14 ], [ %i.h, %_ZN4lean7sstreamlsIA29_cEERS0_RKT_.exit ] ; 4 uses
   %i.ab = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(376) %1, ptr noundef nonnull @.str.2, i64 noundef 1)
@@ -294,7 +289,7 @@ _ZN4lean7sstreamlsIA2_cEERS0_RKT_.exit14:         ; preds = %_ZN4lean7sstreamlsI
   %i.an = icmp eq ptr %i.am, %i.i
   br i1 %i.an, label %._crit_edge, label %.lr.ph
 
-bb.f:                                             ; preds = %_ZN4lean7sstreamlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS0_RKT_.exit, %_ZN4lean7sstreamlsIA2_cEERS0_RKT_.exit, %.lr.ph
+bb.f:                                             ; preds = %_ZN4lean7sstreamlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS0_RKT_.exit, %_ZN4lean7sstreamlsIA2_cEERS0_RKT_.exit, %.lr.ph, %bb.b
   %i.ao = landingpad { ptr, i32 }
           cleanup
   br label %bb.j
@@ -377,8 +372,8 @@ bb.i:                                             ; preds = %_ZNK4lean7sstream3s
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.f, %bb.g, %.body, %4
-  %.pn10.pn = phi { ptr, i32 } [ %5, %4 ], [ %.pn, %.body ], [ %i.ap, %bb.g ], [ %i.ao, %bb.f ]
+bb.j:                                             ; preds = %bb.f, %bb.g, %.body
+  %.pn10.pn = phi { ptr, i32 } [ %i.ap, %bb.g ], [ %.pn, %.body ], [ %i.ao, %bb.f ]
   call void @_ZN4lean7sstreamD2Ev(ptr noundef nonnull align 8 dead_on_return(376) dereferenceable(376) %1) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #21
   resume { ptr, i32 } %.pn10.pn

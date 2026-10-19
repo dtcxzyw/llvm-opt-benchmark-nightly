@@ -204,7 +204,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecINtNtB6_5boxed3BoxDNtNtCs8774dFTUdNv_
   %i.ai = add nuw nsw i64 %i.ab, 1, !dbg !72058
   store i64 %i.ai, ptr %.sroa.64.0..sroa_idx.i, align 8, !dbg !72059, !alias.scope !72013, !noalias !72010
   %i.aj = invoke { ptr, ptr } @_RNvXNtNtCscgRAwXFJnXP_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_3map3MapINtNtB2_3zip3ZipINtNtNtB6_5slice4iter4IterINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEIB1u_NtNtNtB2x_9datatypes5field5FieldEENCNvNtCslFlrwjHoTci_14polars_compute4cast11cast_struct0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEENtNtNtB4_6traits8iterator8Iterator4nextB3Z_(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.c)
-          to label %.noexc12.i unwind label %.loopexit.i, !dbg !72045, !noalias !72009 ; 2 uses
+          to label %.noexc12.i unwind label %.loopexit.split-lp.i, !dbg !72045, !noalias !72009 ; 2 uses
 
 .noexc12.i:                                       ; preds = %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecINtNtB6_5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EE7reserveCslFlrwjHoTci_14polars_compute.exit.i.i.i
   %i.ak = extractvalue { ptr, ptr } %i.aj, 0, !dbg !72046 ; 2 uses
@@ -237,18 +237,13 @@ bb.l:                                             ; preds = %bb.i
   call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #24, !dbg !72070, !noalias !72009
   unreachable, !dbg !72070
 
-.loopexit.i:                                      ; preds = %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecINtNtB6_5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EE7reserveCslFlrwjHoTci_14polars_compute.exit.i.i.i
-  %lpad.loopexit.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i
-
-.loopexit.split-lp.i:                             ; preds = %bb.g
+.loopexit.split-lp.i:                             ; preds = %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecINtNtB6_5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EE7reserveCslFlrwjHoTci_14polars_compute.exit.i.i.i, %bb.g
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-.body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.i
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.al, %bb.i ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
+.body.i:                                          ; preds = %.loopexit.split-lp.i, %bb.i
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.al, %bb.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtBL_5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEECslFlrwjHoTci_14polars_compute(ptr noalias noundef align 8 dereferenceable(24) %i.e) #25
           to label %bb.n unwind label %bb.m, !dbg !72025, !noalias !72009
 

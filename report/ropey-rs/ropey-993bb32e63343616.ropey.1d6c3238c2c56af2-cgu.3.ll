@@ -204,20 +204,15 @@ bb.d:                                             ; preds = %.lr.ph, %bb.m
   %i.j = add nuw i64 %.sroa.01.05, 1              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren6remove(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(968) %1, i64 noundef %2)
-          to label %bb.e unwind label %.loopexit
+          to label %bb.e unwind label %.loopexit.split-lp
 
-.loopexit:                                        ; preds = %bb.d
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %bb.i
+.loopexit.split-lp:                               ; preds = %bb.d, %bb.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.j, %bb.k
-  %eh.lpad-body = phi { ptr, i32 } [ %lpad.thr_comm.i, %bb.j ], [ %lpad.thr_comm.i, %bb.k ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.j, %bb.k
+  %eh.lpad-body = phi { ptr, i32 } [ %lpad.thr_comm.i, %bb.j ], [ %lpad.thr_comm.i, %bb.k ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke void @_RNvXs_NtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children5innerNtB4_20NodeChildrenInternalNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(968) %i.b)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit unwind label %bb.n
 

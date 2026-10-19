@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.e, %.noexc
   %i.ca = getelementptr inbounds [24 x i8], ptr %i.by, i64 %i.bz
   %i.cb = getelementptr inbounds i8, ptr %i.ca, i64 -24
   %i.cc = invoke noundef zeroext i1 @_RNvXCs3gpiEk3WpjL_9hashbrownNtNtCs7JU2D1aBbVY_15deltalake_mount6config14MountConfigKeyINtB2_10EquivalentBq_E10equivalentBu_(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cb)
-          to label %.noexc7 unwind label %.loopexit
+          to label %.noexc7 unwind label %.loopexit.split-lp
 
 .noexc7:                                          ; preds = %.lr.ph.i.i
   br i1 %i.cc, label %bb.h, label %bb.c, !prof !6
@@ -298,29 +298,20 @@ bb.j:                                             ; preds = %bb.g, %bb.f
   store i64 -9223372036854775808, ptr %0, align 8
   br label %bb.i
 
-.loopexit:                                        ; preds = %.lr.ph.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %3
-
-.loopexit.split-lp:                               ; preds = %bb.a
+.loopexit.split-lp:                               ; preds = %.lr.ph.i.i, %bb.a
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %3
-
-3:                                                ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs7JU2D1aBbVY_15deltalake_mount(ptr noalias noundef align 8 dereferenceable(24) %2) #16
           to label %bb.l unwind label %bb.k
 
-bb.k:                                             ; preds = %3
+bb.k:                                             ; preds = %.loopexit.split-lp
   %i.dr = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #15
   unreachable
 
-bb.l:                                             ; preds = %3
-  resume { ptr, i32 } %lpad.phi
+bb.l:                                             ; preds = %.loopexit.split-lp
+  resume { ptr, i32 } %lpad.loopexit.split-lp
 }
 
 ; Function Attrs: nonlazybind uwtable

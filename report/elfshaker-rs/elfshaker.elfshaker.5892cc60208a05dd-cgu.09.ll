@@ -202,12 +202,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsSt
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.u)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit unwind label %.thread170.loopexit.split-lp
 
-.thread170.loopexit:                              ; preds = %.noexc138, %bb.bq
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread167
-
-.thread170.loopexit.split-lp:                     ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs7BtpbLEd5q3_9elfshaker.exit.i
+.thread170.loopexit.split-lp:                     ; preds = %bb.bq, %.noexc138, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs7BtpbLEd5q3_9elfshaker.exit.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.thread167
@@ -283,13 +278,13 @@ bb.bq:                                            ; preds = %.thread27.i, %.lr.p
   %i.fm = load ptr, ptr %i.fh, align 8, !noalias !490, !nonnull !5, !noundef !5
   %i.fn = load i64, ptr %i.fi, align 8, !noalias !490, !noundef !5
   invoke void @_RINvMs16_NtCsaL1QbXo9JQH_3std4pathNtB7_4Path4joinRNtNtNtB9_3ffi6os_str8OsStringECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.fm, i64 noundef %i.fn, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.02.040.i)
-          to label %.noexc138 unwind label %.thread170.loopexit
+          to label %.noexc138 unwind label %.thread170.loopexit.split-lp
 
 .noexc138:                                        ; preds = %bb.bq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !490
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !490
   invoke void @_RINvNtNtCskuiImRAV2ip_9elfshaker4repo2fs9open_fileNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.h)
-          to label %.noexc139 unwind label %.thread170.loopexit
+          to label %.noexc139 unwind label %.thread170.loopexit.split-lp
 
 .noexc139:                                        ; preds = %.noexc138
   %i.fo = load i32, ptr %i.f, align 8, !range !492, !noalias !490, !noundef !5
@@ -608,8 +603,8 @@ bb.df:                                            ; preds = %bb.bd, %.body121, %
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #25
   unreachable
 
-.thread167:                                       ; preds = %.thread170.loopexit, %.thread170.loopexit.split-lp, %bb.bj, %bb.ch, %bb.bt, %bb.bn
-  %eh.lpad-body132166 = phi { ptr, i32 } [ %i.fu, %bb.bt ], [ %i.es, %bb.bj ], [ %eh.lpad-body.i, %bb.ch ], [ %i.fb, %bb.bn ], [ %lpad.loopexit, %.thread170.loopexit ], [ %lpad.loopexit.split-lp, %.thread170.loopexit.split-lp ]
+.thread167:                                       ; preds = %.thread170.loopexit.split-lp, %bb.bj, %bb.ch, %bb.bt, %bb.bn
+  %eh.lpad-body132166 = phi { ptr, i32 } [ %i.fu, %bb.bt ], [ %i.es, %bb.bj ], [ %eh.lpad-body.i, %bb.ch ], [ %i.fb, %bb.bn ], [ %lpad.loopexit.split-lp, %.thread170.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef align 8 dereferenceable(24) %i.v) #26
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs3SRGcsf4wgR_4rand4rngs6thread9ThreadRngECs7BtpbLEd5q3_9elfshaker.exit unwind label %bb.df
 

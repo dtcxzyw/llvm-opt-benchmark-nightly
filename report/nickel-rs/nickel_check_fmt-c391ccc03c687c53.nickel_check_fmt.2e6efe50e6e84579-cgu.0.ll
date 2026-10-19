@@ -202,7 +202,7 @@ bb.aq:                                            ; preds = %_ZN3std2fs4read17h4
   call void @llvm.experimental.noalias.scope.decl(metadata !253)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !254
   invoke void @_ZN12topiary_core10read_input17h8bdcce40ba853731E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(16) %i.ab, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(88) @10)
-          to label %.noexc99 unwind label %.loopexit
+          to label %.noexc99 unwind label %.loopexit.split-lp
 
 .noexc99:                                         ; preds = %bb.aq
   %i.fx = load i64, ptr %i.t, align 8, !range !7, !noalias !254, !noundef !4 ; 5 uses
@@ -605,20 +605,11 @@ bb.ch:                                            ; preds = %.loopexit.i.i.i
   store ptr %i.ac, ptr %i.c, align 8, !noalias !282
   store ptr null, ptr %i.er, align 8, !noalias !282
   %i.ls = invoke noundef zeroext i1 @_ZN4core3fmt5write17h80461e1e45e4fdd2E(ptr noundef nonnull align 1 %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @25, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.d)
-          to label %bb.ck unwind label %.loopexit254, !noalias !283
+          to label %bb.ck unwind label %bb.ci, !noalias !283
 
-.loopexit254:                                     ; preds = %bb.ch
-  %lpad.loopexit256 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ci
-
-.loopexit.split-lp255:                            ; preds = %bb.co
-  %lpad.loopexit.split-lp257 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ci
-
-bb.ci:                                            ; preds = %.loopexit.split-lp255, %.loopexit254
-  %lpad.phi258 = phi { ptr, i32 } [ %lpad.loopexit256, %.loopexit254 ], [ %lpad.loopexit.split-lp257, %.loopexit.split-lp255 ] ; 2 uses
+bb.ci:                                            ; preds = %bb.ch, %bb.co
+  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
   %i.lt = load ptr, ptr %i.er, align 8, !alias.scope !284, !noalias !282, !noundef !4
   %i.lu = icmp eq ptr %i.lt, null
   br i1 %i.lu, label %.body.i.i.i, label %bb.cj
@@ -654,7 +645,7 @@ bb.co:                                            ; preds = %bb.cl
   %i.lz = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 0, ptr %i.lz, align 8, !noalias !282
   invoke void @_ZN4core9panicking9panic_fmt17h92c8e5abe71dd8d1E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #28
-          to label %bb.cp unwind label %.loopexit.split-lp255, !noalias !285
+          to label %bb.cp unwind label %bb.ci, !noalias !285
 
 bb.cp:                                            ; preds = %bb.co
   unreachable
@@ -671,7 +662,7 @@ bb.cr:                                            ; preds = %bb.ct, %bb.cn
   br label %.body.i.i.i
 
 .body.i.i.i:                                      ; preds = %bb.cr, %bb.cj, %bb.ci
-  %eh.lpad-body.i.i.i = phi { ptr, i32 } [ %i.mb, %bb.cr ], [ %lpad.phi258, %bb.cj ], [ %lpad.phi258, %bb.ci ] ; 2 uses
+  %eh.lpad-body.i.i.i = phi { ptr, i32 } [ %i.mb, %bb.cr ], [ %lpad.loopexit.split-lp, %bb.cj ], [ %lpad.loopexit.split-lp, %bb.ci ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !286)
   %.val.i113.i.i.i = load i64, ptr %i.m, align 8, !alias.scope !286, !noalias !265 ; 2 uses
   %i.mc = icmp eq i64 %.val.i113.i.i.i, 0
@@ -821,18 +812,13 @@ bb.dg:                                            ; preds = %_ZN12topiary_core13
   call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %i.gg, i64 noundef %i.fx, i64 noundef range(i64 1, -9223372036854775807) 1) #27, !noalias !295
   br label %_ZN12topiary_core9formatter17h3ab68f9718082438E.exit
 
-.loopexit:                                        ; preds = %bb.aq
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body61
-
-.loopexit.split-lp:                               ; preds = %"_ZN5alloc3vec10partial_eq117_$LT$impl$u20$core..cmp..PartialEq$LT$alloc..vec..Vec$LT$U$C$A2$GT$$GT$$u20$for$u20$alloc..vec..Vec$LT$T$C$A1$GT$$GT$2ne17h5bc36a6058eae1c4E.exit.thread"
+.loopexit.split-lp:                               ; preds = %bb.aq, %"_ZN5alloc3vec10partial_eq117_$LT$impl$u20$core..cmp..PartialEq$LT$alloc..vec..Vec$LT$U$C$A2$GT$$GT$$u20$for$u20$alloc..vec..Vec$LT$T$C$A1$GT$$GT$2ne17h5bc36a6058eae1c4E.exit.thread"
   %lpad.loopexit.split-lp.a = landingpad { ptr, i32 }
           cleanup
   br label %.body61
 
-.body61:                                          ; preds = %.loopexit, %.loopexit.split-lp, %bb.dj, %bb.df, %.body.i, %bb.at
-  %eh.lpad-body62 = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %i.mo, %bb.dj ], [ %i.gc, %bb.at ], [ %eh.lpad-body.i, %bb.df ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp.a, %.loopexit.split-lp ] ; 2 uses
+.body61:                                          ; preds = %.loopexit.split-lp, %bb.dj, %bb.df, %.body.i, %bb.at
+  %eh.lpad-body62 = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %i.mo, %bb.dj ], [ %i.gc, %bb.at ], [ %eh.lpad-body.i, %bb.df ], [ %lpad.loopexit.split-lp.a, %.loopexit.split-lp ] ; 2 uses
   %.val75 = load i64, ptr %i.ac, align 8          ; 2 uses
   %i.ml = icmp eq i64 %.val75, 0
   br i1 %i.ml, label %"_ZN4core3ptr46drop_in_place$LT$alloc..vec..Vec$LT$u8$GT$$GT$17h08fdb159384bcc81E.exit", label %bb.dh

@@ -204,17 +204,12 @@ bb.u:                                             ; preds = %bb.r
   invoke void @_RNvNtCs36YJ3mR2EUy_5quote9___private10push_ident(ptr nonnull align 8 %i.e, ptr nonnull @3, i64 7)
           to label %bb.w unwind label %.loopexit.split-lp
 
-bb.v:                                             ; preds = %.loopexit, %.loopexit.split-lp, %bb.z
-  %.pn = phi { ptr, i32 } [ %i.ad, %bb.z ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.v:                                             ; preds = %.loopexit.split-lp, %bb.z
+  %.pn = phi { ptr, i32 } [ %i.ad, %bb.z ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsgSMwPvzVUxY_11proc_macro211TokenStreamECs36YJ3mR2EUy_5quote(ptr nonnull align 8 %i.e) #18
           to label %bb.s unwind label %bb.ao
 
-.loopexit:                                        ; preds = %_RNvXs4_NtCs36YJ3mR2EUy_5quote9___privateINtB5_9RepInterpRNtCsgSMwPvzVUxY_11proc_macro211TokenStreamENtNtB7_9to_tokens8ToTokens9to_tokensCs2SM5xCHwwDm_13logos_codegen.exit, %bb.ai
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.v
-
-.loopexit.split-lp:                               ; preds = %bb.u, %bb.w, %bb.x, %bb.ae, %bb.af, %bb.ag
+.loopexit.split-lp:                               ; preds = %bb.ai, %_RNvXs4_NtCs36YJ3mR2EUy_5quote9___privateINtB5_9RepInterpRNtCsgSMwPvzVUxY_11proc_macro211TokenStreamENtNtB7_9to_tokens8ToTokens9to_tokensCs2SM5xCHwwDm_13logos_codegen.exit, %bb.ag, %bb.af, %bb.ae, %bb.x, %bb.w, %bb.u
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.v
@@ -273,7 +268,7 @@ bb.ag:                                            ; preds = %bb.af
 
 _RNvXs4_NtCs36YJ3mR2EUy_5quote9___privateINtB5_9RepInterpRNtCsgSMwPvzVUxY_11proc_macro211TokenStreamENtNtB7_9to_tokens8ToTokens9to_tokensCs2SM5xCHwwDm_13logos_codegen.exit: ; preds = %bb.ag, %bb.ai
   %i.ai = invoke align 8 ptr @_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterNtCsgSMwPvzVUxY_11proc_macro211TokenStreamENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2SM5xCHwwDm_13logos_codegen(ptr nonnull align 8 %i.b)
-          to label %bb.ah unwind label %.loopexit ; 2 uses
+          to label %bb.ah unwind label %.loopexit.split-lp ; 2 uses
 
 bb.ah:                                            ; preds = %_RNvXs4_NtCs36YJ3mR2EUy_5quote9___privateINtB5_9RepInterpRNtCsgSMwPvzVUxY_11proc_macro211TokenStreamENtNtB7_9to_tokens8ToTokens9to_tokensCs2SM5xCHwwDm_13logos_codegen.exit
   %.not = icmp eq ptr %i.ai, null
@@ -282,7 +277,7 @@ bb.ah:                                            ; preds = %_RNvXs4_NtCs36YJ3mR
 bb.ai:                                            ; preds = %bb.ah
   store ptr %i.ai, ptr %i.a, align 8
   invoke void @_RNvXNtCs36YJ3mR2EUy_5quote9to_tokensRNtCsgSMwPvzVUxY_11proc_macro211TokenStreamNtB2_8ToTokens9to_tokensCs2SM5xCHwwDm_13logos_codegen(ptr nonnull align 8 %i.a, ptr nonnull align 8 %i.e)
-          to label %_RNvXs4_NtCs36YJ3mR2EUy_5quote9___privateINtB5_9RepInterpRNtCsgSMwPvzVUxY_11proc_macro211TokenStreamENtNtB7_9to_tokens8ToTokens9to_tokensCs2SM5xCHwwDm_13logos_codegen.exit unwind label %.loopexit
+          to label %_RNvXs4_NtCs36YJ3mR2EUy_5quote9___privateINtB5_9RepInterpRNtCsgSMwPvzVUxY_11proc_macro211TokenStreamENtNtB7_9to_tokens8ToTokens9to_tokensCs2SM5xCHwwDm_13logos_codegen.exit unwind label %.loopexit.split-lp
 
 bb.aj:                                            ; preds = %bb.ah
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef nonnull align 8 dereferenceable(32) %i.e, i64 32, i1 false)

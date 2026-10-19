@@ -130,7 +130,7 @@ bb.b:                                             ; preds = %bb.a
   %i.a = mul i64 %5, %4                           ; 2 uses
   %i.b = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !22
   %i.c = invoke noundef ptr %i.b(i64 noundef %i.a)
-          to label %bb.c unwind label %7, !inline_history !19 ; 3 uses
+          to label %bb.c unwind label %bb.h, !inline_history !19 ; 3 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %6, i64 192
@@ -138,11 +138,6 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.c, ptr %6, align 8, !tbaa !16
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.c, ptr align 1 %3, i64 %i.a, i1 false)
   br label %bb.d
-
-7:                                                ; preds = %bb.b
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %9
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   %.sroa.phi = phi ptr [ %.sroa.gep, %bb.c ], [ %6, %bb.a ]
@@ -172,7 +167,7 @@ bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr i8, ptr %i.m, i64 -8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !16
   invoke void %i.l(ptr noundef %i.o)
-          to label %bb.f unwind label %.loopexit.split-lp
+          to label %bb.f unwind label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph.i.peel
   br i1 %.not50, label %.lr.ph.i, label %_ZN17meshopt_AllocatorD2Ev.exit
@@ -181,21 +176,12 @@ bb.f:                                             ; preds = %.lr.ph.i.peel
   %i.p = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN17meshopt_Allocator7storageEvE1s, i64 8), align 8, !tbaa !17
   %i.q = load ptr, ptr %6, align 8, !tbaa !16
   invoke void %i.p(ptr noundef %i.q)
-          to label %_ZN17meshopt_AllocatorD2Ev.exit unwind label %.loopexit
+          to label %_ZN17meshopt_AllocatorD2Ev.exit unwind label %bb.g
 
-.loopexit:                                        ; preds = %.lr.ph.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          catch ptr null
-  br label %bb.g
-
-.loopexit.split-lp:                               ; preds = %.lr.ph.i.peel
+bb.g:                                             ; preds = %.lr.ph.i, %.lr.ph.i.peel
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           catch ptr null
-  br label %bb.g
-
-bb.g:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  %i.r = extractvalue { ptr, i32 } %lpad.phi, 0
+  %i.r = extractvalue { ptr, i32 } %lpad.loopexit.split-lp, 0
   tail call void @__clang_call_terminate(ptr %i.r) #11
   unreachable
 
@@ -203,10 +189,12 @@ _ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %.lr.ph.i, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   ret i64 %.034.lcssa
 
-bb.h:                                             ; preds = %bb.d
+bb.h:                                             ; preds = %bb.d, %bb.b
   %i.s = landingpad { ptr, i32 }
           cleanup
-  br label %9
+  call void @_ZN17meshopt_AllocatorD2Ev(ptr noundef nonnull align 8 dead_on_return(200) dereferenceable(200) %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  resume { ptr, i32 } %i.s
 
 .lr.ph:                                           ; preds = %bb.e, %bb.j
   %.042 = phi i64 [ %i.ag, %bb.j ], [ 0, %bb.e ]  ; 2 uses
@@ -237,12 +225,6 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph
   %i.ag = add nuw i64 %.042, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ag, %2
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !21
-
-9:                                                ; preds = %bb.h, %7
-  %.pn = phi { ptr, i32 } [ %i.s, %bb.h ], [ %8, %7 ]
-  call void @_ZN17meshopt_AllocatorD2Ev(ptr noundef nonnull align 8 dead_on_return(200) dereferenceable(200) %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  resume { ptr, i32 } %.pn
 }
 
 declare i32 @__gxx_personality_v0(...)

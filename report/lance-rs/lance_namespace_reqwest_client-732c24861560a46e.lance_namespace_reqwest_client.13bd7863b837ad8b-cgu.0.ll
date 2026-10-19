@@ -205,17 +205,12 @@ bb.j:                                             ; preds = %bb.f
   call void @llvm.trap()
   unreachable
 
-.body:                                            ; preds = %.loopexit193, %.loopexit.split-lp.loopexit, %bb.ao, %.body139, %bb.ad, %bb.ac, %bb.v, %bb.u, %bb.p, %bb.o, %bb.s, %bb.ar
-  %.pn89 = phi { ptr, i32 } [ %.pn87, %bb.v ], [ %.pn, %bb.ad ], [ %i.fn, %bb.ar ], [ %i.dc, %bb.p ], [ %i.dg, %bb.s ], [ %lpad.phi201, %bb.ao ], [ %i.dc, %bb.o ], [ %.pn87, %bb.u ], [ %.pn, %bb.ac ], [ %lpad.phi201, %.body139 ], [ %lpad.loopexit, %.loopexit193 ], [ %lpad.loopexit195, %.loopexit.split-lp.loopexit ]
+.body:                                            ; preds = %.loopexit.split-lp.loopexit, %bb.ao, %.body139, %bb.ad, %bb.ac, %bb.v, %bb.u, %bb.p, %bb.o, %bb.s, %bb.ar
+  %.pn89 = phi { ptr, i32 } [ %.pn87, %bb.v ], [ %.pn, %bb.ad ], [ %i.fn, %bb.ar ], [ %i.dc, %bb.p ], [ %i.dg, %bb.s ], [ %lpad.loopexit.split-lp315, %bb.ao ], [ %i.dc, %bb.o ], [ %.pn87, %bb.u ], [ %.pn, %bb.ac ], [ %lpad.loopexit.split-lp315, %.body139 ], [ %lpad.loopexit195, %.loopexit.split-lp.loopexit ]
   call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecTNtNtBG_6string6StringB19_EEECs1H4IRjoHvx7_30lance_namespace_reqwest_client(ptr noalias noundef align 8 dereferenceable(24) %i.s) #27
   resume { ptr, i32 } %.pn89
 
-.loopexit193:                                     ; preds = %.lr.ph
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp.loopexit:                      ; preds = %bb.n, %bb.l, %bb.k
+.loopexit.split-lp.loopexit:                      ; preds = %.lr.ph, %bb.n, %bb.l, %bb.k
   %lpad.loopexit195 = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -364,7 +359,7 @@ bb.t:                                             ; preds = %bb.r, %bb.q
   store ptr %i.n, ptr %i.al, align 8
   store ptr @_RNvXsi_NtNtNtCscI6d9CVNmLh_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.468.0..sroa_idx, align 8
   invoke void @_RNvNvNtCs40k4W9msRzi_5alloc3fmt6format12format_inner(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.l, ptr noundef nonnull @6, ptr noundef nonnull %i.k)
-          to label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit105 unwind label %.loopexit193
+          to label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit105 unwind label %.loopexit.split-lp.loopexit
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit105: ; preds = %.lr.ph
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
@@ -564,20 +559,11 @@ _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi
   store ptr %i.c, ptr %i.b, align 8, !noalias !738
   store ptr @160, ptr %i.as, align 8, !noalias !738
   %i.fi = invoke noundef zeroext i1 @_RNvXs_NtCs5QD3CVEMyfH_10serde_json5valueNtB4_5ValueNtNtCscI6d9CVNmLh_4core3fmt7Display3fmt(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ct, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b)
-          to label %bb.am unwind label %.loopexit198, !noalias !739
+          to label %bb.am unwind label %bb.ak, !noalias !739
 
-.loopexit198:                                     ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit
-  %lpad.loopexit200 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ak
-
-.loopexit.split-lp199:                            ; preds = %bb.an
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ak
-
-bb.ak:                                            ; preds = %.loopexit.split-lp199, %.loopexit198
-  %lpad.phi201 = phi { ptr, i32 } [ %lpad.loopexit200, %.loopexit198 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp199 ] ; 2 uses
+bb.ak:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit, %bb.an
+  %lpad.loopexit.split-lp315 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !740)
   %.val.i.i = load i64, ptr %i.c, align 8, !alias.scope !740, !noalias !738 ; 2 uses
   %i.fj = icmp eq i64 %.val.i.i, 0
@@ -593,7 +579,7 @@ bb.am:                                            ; preds = %_RINvMNtCscI6d9CVNm
 
 bb.an:                                            ; preds = %bb.am
   invoke void @_RNvNtCscI6d9CVNmLh_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @161, i64 noundef 55, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @4, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @163) #29
-          to label %.noexc.i unwind label %.loopexit.split-lp199, !noalias !739
+          to label %.noexc.i unwind label %bb.ak, !noalias !739
 
 .noexc.i:                                         ; preds = %bb.an
   unreachable

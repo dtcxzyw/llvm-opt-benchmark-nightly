@@ -202,7 +202,7 @@ bb.ac:                                            ; preds = %bb.aa
   %i.bj = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ac) #19 ; 4 uses
   %i.bk = load i64, ptr %i.a, align 8, !tbaa !17
   %i.bl = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.bj, i64 noundef %i.bk)
-          to label %bb.ad unwind label %12        ; 0 uses
+          to label %bb.ad unwind label %bb.af     ; 0 uses
 
 bb.ad:                                            ; preds = %bb.ac
   %i.bm = invoke i32 @blosc_decompress_ctx(ptr noundef nonnull %i.bj, ptr noundef nonnull %1, i64 noundef %2, i32 noundef 1)
@@ -213,12 +213,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.not = icmp eq i64 %2, %i.bn
   br i1 %.not, label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit, label %bb.ag
 
-12:                                               ; preds = %bb.ac
-  %13 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit69
-
-bb.af:                                            ; preds = %bb.ad
+bb.af:                                            ; preds = %bb.ac, %bb.ad
   %i.bo = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit69
@@ -353,8 +348,8 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit: ; preds = %bb.ae
   call void @_ZdaPv(ptr noundef nonnull %i.bj) #16
   br label %bb.ar
 
-_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit69: ; preds = %bb.af, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66, %12
-  %.pn35.pn = phi { ptr, i32 } [ %13, %12 ], [ %i.cq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66 ], [ %i.bo, %bb.af ]
+_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit69: ; preds = %bb.af, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66
+  %.pn35.pn = phi { ptr, i32 } [ %i.bo, %bb.af ], [ %i.cq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66 ]
   call void @_ZdaPv(ptr noundef nonnull %i.bj) #16
   br label %bb.as
 

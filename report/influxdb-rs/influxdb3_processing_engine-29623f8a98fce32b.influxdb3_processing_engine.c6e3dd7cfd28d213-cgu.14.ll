@@ -205,17 +205,12 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCskk
   call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtCskkCPRT7oCWw_16influxdb3_py_api3wal15WalFlushElementENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsh4GC5dvIChH_27influxdb3_processing_engine(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.l)
   br label %bb.g
 
-.body32:                                          ; preds = %.loopexit71, %.loopexit.split-lp, %bb.y, %bb.u, %bb.v
-  %.pn = phi { ptr, i32 } [ %i.cx, %bb.u ], [ %i.dd, %bb.y ], [ %i.cx, %bb.v ], [ %lpad.loopexit, %.loopexit71 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body32:                                          ; preds = %.loopexit.split-lp, %bb.y, %bb.u, %bb.v
+  %.pn = phi { ptr, i32 } [ %i.cx, %bb.u ], [ %i.dd, %bb.y ], [ %i.cx, %bb.v ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_buffer11TableBufferECsh4GC5dvIChH_27influxdb3_processing_engine(ptr noalias noundef align 8 dereferenceable(48) %i.j) #26
           to label %.body34 unwind label %bb.ai
 
-.loopexit71:                                      ; preds = %.loopexit
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body32
-
-.loopexit.split-lp:                               ; preds = %bb.p
+.loopexit.split-lp:                               ; preds = %.loopexit, %bb.p
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body32
@@ -290,7 +285,7 @@ bb.o:                                             ; preds = %.lr.ph139, %bb.n
   %i.cg = getelementptr inbounds i8, ptr %i.cb, i64 -8
   %i.ch = load i64, ptr %i.cg, align 8, !noundef !4
   invoke void @_RNvMNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_bufferNtB2_11TableBuffer12buffer_chunk(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.j, i64 noundef %i.cd, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %i.cf, i64 noundef %i.ch)
-          to label %bb.n unwind label %.loopexit71
+          to label %bb.n unwind label %.loopexit.split-lp
 
 bb.p:                                             ; preds = %._crit_edge
   %i.ci = load ptr, ptr %i.k, align 8, !nonnull !4, !noundef !4

@@ -202,7 +202,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.e = load ptr, ptr %i.d, align 8
   invoke void %i.e(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %2)
-          to label %bb.b unwind label %3
+          to label %bb.b unwind label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = sub i64 %i.l, %i.m
   %i.o = getelementptr inbounds i8, ptr %i.k, i64 %i.n
   invoke void @_ZNSt6vectorIPK10ExpressionSaIS2_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPS2_S4_EEEEvS9_T_SA_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr %i.o, ptr %i.h, ptr %i.j)
-          to label %bb.c unwind label %5
+          to label %bb.c unwind label %bb.e
 
 bb.c:                                             ; preds = %bb.b
   %i.p = load ptr, ptr %2, align 8, !tbaa !32     ; 3 uses
@@ -236,18 +236,9 @@ _ZNSt6vectorIPK10ExpressionSaIS2_EED2Ev.exit:     ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   ret void
 
-3:                                                ; preds = %bb.a
-  %4 = landingpad { ptr, i32 }
+bb.e:                                             ; preds = %bb.a, %bb.b
+  %3 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.e
-
-5:                                                ; preds = %bb.b
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.e
-
-bb.e:                                             ; preds = %5, %3
-  %.pn = phi { ptr, i32 } [ %6, %5 ], [ %4, %3 ]
   %i.v = load ptr, ptr %2, align 8, !tbaa !32     ; 3 uses
   %.not.i.i.i8 = icmp eq ptr %i.v, null
   br i1 %.not.i.i.i8, label %_ZNSt6vectorIPK10ExpressionSaIS2_EED2Ev.exit9, label %bb.f
@@ -263,7 +254,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZNSt6vectorIPK10ExpressionSaIS2_EED2Ev.exit9:    ; preds = %bb.e, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
-  resume { ptr, i32 } %.pn
+  resume { ptr, i32 } %3
 }
 
 ; Function Attrs: mustprogress uwtable

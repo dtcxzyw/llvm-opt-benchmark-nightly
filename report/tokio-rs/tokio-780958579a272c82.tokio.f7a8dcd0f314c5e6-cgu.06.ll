@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bd = invoke noundef zeroext i1 @_RNvMs_NtCslISFVBvEzZQ_5bytes9bytes_mutNtB4_8BytesMut13reserve_inner(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %0, i64 noundef range(i64 0, -9223372036854775808) %..i.i, i1 noundef zeroext true)
-          to label %.noexc19 unwind label %.loopexit ; 0 uses
+          to label %.noexc19 unwind label %.loopexit.split-lp ; 0 uses
 
 .noexc19:                                         ; preds = %bb.k
   %.pre.i.i = load i64, ptr %i.x, align 8, !alias.scope !652
@@ -248,18 +248,13 @@ bb.n:                                             ; preds = %._crit_edge.i
   %i.bs = inttoptr i64 %i.br to ptr
   br label %bb.q
 
-.loopexit:                                        ; preds = %bb.k
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %bb.e, %bb.m, %bb.n
+.loopexit.split-lp:                               ; preds = %bb.k, %bb.n, %bb.m, %bb.e
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.h
-  %eh.lpad-body = phi { ptr, i32 } [ %i.aq, %bb.h ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.h
+  %eh.lpad-body = phi { ptr, i32 } [ %i.aq, %bb.h ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke void @_RNvXs4_NtNtCslghKHtsL3a4_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.c)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio4task4coop16RestoreOnPendingEBH_.exit unwind label %bb.s
 

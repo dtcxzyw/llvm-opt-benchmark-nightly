@@ -205,7 +205,7 @@ _RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm1
 
 bb.i:                                             ; preds = %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E10triple_mutCsl1M2c05oz72_14autonat_client.exit.i.i.i.i
   invoke void @_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E21reserve_one_uncheckedCsl1M2c05oz72_14autonat_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.d)
-          to label %.noexc8.i.i unwind label %.loopexit.i.i, !noalias !766
+          to label %.noexc8.i.i unwind label %.loopexit.split-lp.i.i, !noalias !766
 
 .noexc8.i.i:                                      ; preds = %bb.i
   %i.ai = load ptr, ptr %i.z, align 8, !alias.scope !774, !noalias !766, !nonnull !7, !noundef !7
@@ -222,7 +222,7 @@ _RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm1
   %i.am = add i64 %i.al, 1
   store i64 %i.am, ptr %.sroa.0.0.i14.i.i.i, align 8, !alias.scope !774, !noalias !766
   %i.an = invoke { i64, i64 } @_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters6copiedINtB4_6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdINtNtB1U_4pool21EstablishedConnectionINtCscu2bAJ62uie_6either6EitherNtNtCsfY02lUNHLPc_15libp2p_identify7handler7InEventINtNtCsfoiTdJnOWBy_23libp2p_request_response7handler15OutboundMessageNtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v18protocol12AutoNatCodecEEEEENtNtNtB8_6traits8iterator8Iterator4nextCsl1M2c05oz72_14autonat_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.a)
-          to label %.noexc9.i.i unwind label %.loopexit.i.i, !noalias !766 ; 2 uses
+          to label %.noexc9.i.i unwind label %.loopexit.split-lp.i.i, !noalias !766 ; 2 uses
 
 .noexc9.i.i:                                      ; preds = %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E4pushCsl1M2c05oz72_14autonat_client.exit.i.i.i
   %i.ao = extractvalue { i64, i64 } %i.an, 0
@@ -256,18 +256,13 @@ bb.m:                                             ; preds = %.lr.ph.i.i.i
   store i64 %storemerge27.i.i.i, ptr %.sink11.i.i.i.i, align 8, !alias.scope !767, !noalias !766
   br label %.body.i.i
 
-.loopexit.i.i:                                    ; preds = %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E4pushCsl1M2c05oz72_14autonat_client.exit.i.i.i, %bb.i
-  %lpad.loopexit.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i.i
-
-.loopexit.split-lp.i.i:                           ; preds = %._crit_edge.i.i.i, %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E11try_reserveCsl1M2c05oz72_14autonat_client.exit.thread.i.i.i, %bb.e, %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E11try_reserveCsl1M2c05oz72_14autonat_client.exit.i.i.i, %bb.c
+.loopexit.split-lp.i.i:                           ; preds = %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E4pushCsl1M2c05oz72_14autonat_client.exit.i.i.i, %bb.i, %._crit_edge.i.i.i, %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E11try_reserveCsl1M2c05oz72_14autonat_client.exit.thread.i.i.i, %bb.e, %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_E11try_reserveCsl1M2c05oz72_14autonat_client.exit.i.i.i, %bb.c
   %lpad.loopexit.split-lp.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i
 
-.body.i.i:                                        ; preds = %.loopexit.split-lp.i.i, %.loopexit.i.i, %bb.m
-  %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.av, %bb.m ], [ %lpad.loopexit.i.i, %.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ]
+.body.i.i:                                        ; preds = %.loopexit.split-lp.i.i, %bb.m
+  %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.av, %bb.m ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCsczYENlYh6wI_8smallvec8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_EECsl1M2c05oz72_14autonat_client(ptr noalias nofree noundef align 8 dereferenceable(96) %i.d) #35
           to label %bb.o unwind label %bb.n, !noalias !766
 

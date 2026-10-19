@@ -196,11 +196,11 @@ _ZN3tbb6detail2r123concurrent_monitor_baseImE11commit_waitERNS1_9wait_nodeImEE.e
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN3tbb6detail2r123concurrent_monitor_baseImE11cancel_waitERNS1_9wait_nodeImEE(ptr noundef nonnull align 8 dereferenceable(36) %i.a, ptr noundef nonnull align 8 dereferenceable(44) %5)
-          to label %.noexc7 unwind label %.loopexit
+          to label %.noexc7 unwind label %.loopexit.split-lp
 
 .noexc7:                                          ; preds = %bb.d
   invoke void @_ZN3tbb6detail2r123concurrent_monitor_baseImE12prepare_waitERNS1_9wait_nodeImEE(ptr noundef nonnull align 8 dereferenceable(36) %i.a, ptr noundef nonnull align 8 dereferenceable(44) %5)
-          to label %.noexc8 unwind label %.loopexit, !llvm.loop !57
+          to label %.noexc8 unwind label %.loopexit.split-lp, !llvm.loop !57
 
 bb.e:                                             ; preds = %"_ZN3tbb6detail2r123concurrent_monitor_baseImE12guarded_callINS1_10sleep_nodeImEEZNS1_26wait_bounded_queue_monitorEPNS1_18concurrent_monitorEmlRNS0_2d113delegate_baseEE3$_0EEbOT0_RT_.exit.i"
   invoke void @_ZN3tbb6detail2r123concurrent_monitor_baseImE11cancel_waitERNS1_9wait_nodeImEE(ptr noundef nonnull align 8 dereferenceable(36) %i.a, ptr noundef nonnull align 8 dereferenceable(44) %5)
@@ -246,18 +246,13 @@ _ZN3tbb6detail2r110sleep_nodeImED2Ev.exit:        ; preds = %.lr.ph.i.i, %"_ZN3t
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   ret void
 
-.loopexit:                                        ; preds = %bb.d, %.noexc7
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %bb.a, %_ZN3tbb6detail2r123concurrent_monitor_baseImE11commit_waitERNS1_9wait_nodeImEE.exit.thread.i, %bb.e
+.loopexit.split-lp:                               ; preds = %.noexc7, %bb.d, %bb.e, %_ZN3tbb6detail2r123concurrent_monitor_baseImE11commit_waitERNS1_9wait_nodeImEE.exit.thread.i, %bb.a
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.b
-  %eh.lpad-body = phi { ptr, i32 } [ %i.l, %bb.b ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.b
+  %eh.lpad-body = phi { ptr, i32 } [ %i.l, %bb.b ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call void @_ZN3tbb6detail2r110sleep_nodeImED2Ev(ptr noundef nonnull align 8 dead_on_return(44) dereferenceable(44) %5) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   resume { ptr, i32 } %eh.lpad-body

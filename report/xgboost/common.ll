@@ -204,18 +204,18 @@ bb.b:                                             ; preds = %.critedge.2, %.crit
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.h = fdiv double %i.a, %exp2.lcssa
   %i.i = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.g, double noundef %i.h)
-          to label %.lr.ph.i unwind label %.loopexit.split-lp ; 2 uses
+          to label %.lr.ph.i unwind label %bb.i   ; 2 uses
 
 .lr.ph.i:                                         ; preds = %bb.b
   %i.j = load i8, ptr %.sroa.752.0.copyload.lcssa, align 1, !tbaa !15
   %i.k = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.i, i8 noundef signext %i.j)
-          to label %.noexc unwind label %.loopexit ; 0 uses
+          to label %.noexc unwind label %bb.i     ; 0 uses
 
 .noexc:                                           ; preds = %.lr.ph.i
   %.010.i.ptr.1 = getelementptr inbounds nuw i8, ptr %.sroa.752.0.copyload.lcssa, i64 1
   %i.l = load i8, ptr %.010.i.ptr.1, align 1, !tbaa !15
   %i.m = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.i, i8 noundef signext %i.l)
-          to label %.noexc.1 unwind label %.loopexit ; 0 uses
+          to label %.noexc.1 unwind label %bb.i   ; 0 uses
 
 .noexc.1:                                         ; preds = %.noexc
   call void @llvm.experimental.noalias.scope.decl(metadata !26)
@@ -262,16 +262,6 @@ bb.e:                                             ; preds = %.noexc.1
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 96
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.af)
           to label %_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit47 unwind label %bb.d
-
-.loopexit:                                        ; preds = %.noexc, %.lr.ph.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body45
-
-.loopexit.split-lp:                               ; preds = %bb.b
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %.body45
 
 _ZNSolsEd.exit36:                                 ; preds = %bb.a
   %i.ag = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull @.str.12, i64 noundef 1)
@@ -323,7 +313,7 @@ bb.h:                                             ; preds = %_ZStlsISt11char_tra
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.az)
           to label %_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit47 unwind label %bb.g
 
-bb.i:                                             ; preds = %_ZNSolsEd.exit36, %bb.a
+bb.i:                                             ; preds = %.lr.ph.i, %.noexc, %bb.b, %_ZNSolsEd.exit36, %bb.a
   %i.ba = landingpad { ptr, i32 }
           cleanup
   br label %.body45
@@ -371,8 +361,8 @@ _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   ret void
 
-.body45:                                          ; preds = %bb.g, %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %.loopexit.split-lp, %.loopexit, %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i42
-  %.pn31 = phi { ptr, i32 } [ %i.aa, %bb.d ], [ %i.au, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i42 ], [ %i.ba, %bb.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %i.aa, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %lpad.loopexit, %.loopexit ], [ %i.au, %bb.g ]
+.body45:                                          ; preds = %bb.g, %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i42
+  %.pn31 = phi { ptr, i32 } [ %i.aa, %bb.d ], [ %i.au, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i42 ], [ %i.ba, %bb.i ], [ %i.aa, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %i.au, %bb.g ]
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(128) %2) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   resume { ptr, i32 } %.pn31

@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZNK6duckdb12optional_ptrINS_14StorageManagerELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %2)
-          to label %bb.c unwind label %5
+          to label %bb.c unwind label %bb.l
 
 bb.c:                                             ; preds = %bb.b
   %i.b = load ptr, ptr %2, align 8, !tbaa !35
@@ -234,11 +234,6 @@ bb.f:                                             ; preds = %_ZNK6duckdb14Storag
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
   %i.i = icmp eq i64 %i.h, -1
   br label %.critedge
-
-5:                                                ; preds = %bb.b
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt6vectorIN6duckdb12_GLOBAL__N_129CompressionMethodRequirementsESaIS2_EED2Ev.exit38
 
 bb.g:                                             ; preds = %bb.e, %bb.d, %_ZNK6duckdb14StorageManager17GetStorageVersionEv.exit
   %i.j = landingpad { ptr, i32 }
@@ -294,7 +289,7 @@ bb.k:                                             ; preds = %bb.j
   %i.u = icmp ugt i64 %i.t, %i.s
   br i1 %i.u, label %_ZNSt6vectorIN6duckdb12_GLOBAL__N_129CompressionMethodRequirementsESaIS2_EED2Ev.exit, label %bb.m
 
-bb.l:                                             ; preds = %bb.n, %bb.j, %bb.i
+bb.l:                                             ; preds = %bb.b, %bb.n, %bb.j, %bb.i
   %i.v = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorIN6duckdb12_GLOBAL__N_129CompressionMethodRequirementsESaIS2_EED2Ev.exit38
@@ -321,8 +316,8 @@ _ZNSt6vectorIN6duckdb12_GLOBAL__N_129CompressionMethodRequirementsESaIS2_EED2Ev.
   call void @_ZdlPv(ptr noundef nonnull %i.a) #23
   ret i8 %.sroa.050.1
 
-_ZNSt6vectorIN6duckdb12_GLOBAL__N_129CompressionMethodRequirementsESaIS2_EED2Ev.exit38: ; preds = %bb.l, %bb.g, %5
-  %.pn.pn = phi { ptr, i32 } [ %6, %5 ], [ %i.j, %bb.g ], [ %i.v, %bb.l ]
+_ZNSt6vectorIN6duckdb12_GLOBAL__N_129CompressionMethodRequirementsESaIS2_EED2Ev.exit38: ; preds = %bb.l, %bb.g
+  %.pn.pn = phi { ptr, i32 } [ %i.v, %bb.l ], [ %i.j, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   call void @_ZdlPv(ptr noundef nonnull %i.a) #23
   resume { ptr, i32 } %.pn.pn

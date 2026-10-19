@@ -202,12 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.aa = load i64, ptr getelementptr inbounds nuw inrange(0, 40) (i8, ptr @_ZTVSo, i64 0), align 8
   %i.ab = getelementptr inbounds i8, ptr %5, i64 %i.aa
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.ab, ptr noundef nonnull %4)
-          to label %bb.e unwind label %8
-
-8:                                                ; preds = %bb.d
-  %9 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
+          to label %bb.e unwind label %bb.r
 
 bb.e:                                             ; preds = %bb.d
   %i.ac = load ptr, ptr %5, align 8, !tbaa !9
@@ -307,7 +302,7 @@ bb.q:                                             ; preds = %bb.p
   store ptr %i.bk, ptr %i.b, align 8, !tbaa !41
   br label %bb.u
 
-bb.r:                                             ; preds = %bb.g, %bb.f
+bb.r:                                             ; preds = %bb.d, %bb.g, %bb.f
   %i.bl = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -386,8 +381,8 @@ bb.ac:                                            ; preds = %bb.ab, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   br label %.body
 
-.body:                                            ; preds = %bb.r, %bb.ac, %8
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %9, %8 ], [ %.pn.pn, %bb.ac ], [ %i.bl, %bb.r ]
+.body:                                            ; preds = %bb.r, %bb.ac
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bl, %bb.r ], [ %.pn.pn, %bb.ac ]
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.v) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %4, align 8, !tbaa !9

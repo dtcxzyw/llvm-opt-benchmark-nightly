@@ -202,7 +202,7 @@ bb.cz:                                            ; preds = %bb.dl, %.lr.ph.i
   %i.me = add nsw i64 %.sroa.5131.0219.i, -1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !9035
   invoke void @_RINvXsh_NtCs974quTetXso_9rmp_serde6decodeQINtB6_12DeserializerINtB6_10ReadReaderRShEENtNtCs6LlcditsbhK_5serde2de12Deserializer15deserialize_anyNtNvXNvNtNtCskuiImRAV2ip_9elfshaker4repo4packs3_1__NtB2o_10PackHeaderNtB1n_11Deserialize11deserialize14___FieldVisitorEB2s_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1) #15
-          to label %.noexc.i unwind label %.loopexit.i, !noalias !9033
+          to label %.noexc.i unwind label %.loopexit.split-lp.i, !noalias !9033
 
 .noexc.i:                                         ; preds = %bb.cz
   %i.mf = load i8, ptr %i.h, align 8, !range !13, !noalias !9035, !noundef !7 ; 2 uses
@@ -210,18 +210,13 @@ bb.cz:                                            ; preds = %bb.dl, %.lr.ph.i
   %i.mg = load i8, ptr %i.mb, align 1, !noalias !9035 ; 2 uses
   br i1 %.not15.i.i.i, label %bb.dc, label %bb.db
 
-bb.da:                                            ; preds = %.body.i, %.loopexit.split-lp.i, %.loopexit.i
-  %.pn.i = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ] ; 2 uses
+bb.da:                                            ; preds = %.loopexit.split-lp.i, %.body.i
+  %.pn.i = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ] ; 2 uses
   %i.mh = load i64, ptr %i.n, align 8, !range !6, !noalias !9034, !noundef !7
   %.not116.i = icmp eq i64 %i.mh, -1
   br i1 %.not116.i, label %common.resume.i, label %bb.el
 
-.loopexit.i:                                      ; preds = %bb.dn, %bb.dh, %bb.dg, %bb.cz
-  %lpad.loopexit.i = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.da
-
-.loopexit.split-lp.i:                             ; preds = %bb.ec, %.loopexit169.i.thread, %bb.do, %bb.di
+.loopexit.split-lp.i:                             ; preds = %bb.dn, %bb.dh, %bb.dg, %bb.cz, %bb.ec, %.loopexit169.i.thread, %bb.do, %bb.di
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.da
@@ -268,7 +263,7 @@ bb.df:                                            ; preds = %bb.dc
 bb.dg:                                            ; preds = %bb.dc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !9037
   invoke void @_RINvXsh_NtCs974quTetXso_9rmp_serde6decodeQINtB6_12DeserializerINtB6_10ReadReaderRShEENtNtCs6LlcditsbhK_5serde2de12Deserializer15deserialize_anyNtNtB1n_11ignored_any10IgnoredAnyECskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1) #15
-          to label %.noexc121.i unwind label %.loopexit.i, !noalias !9033
+          to label %.noexc121.i unwind label %.loopexit.split-lp.i, !noalias !9033
 
 .noexc121.i:                                      ; preds = %bb.dg
   %i.mm = load i8, ptr %i.g, align 8, !range !13, !noalias !9037, !noundef !7 ; 2 uses
@@ -278,7 +273,7 @@ bb.dg:                                            ; preds = %bb.dc
 bb.dh:                                            ; preds = %bb.de
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !9038
   invoke void @_RINvXsh_NtCs974quTetXso_9rmp_serde6decodeQINtB6_12DeserializerINtB6_10ReadReaderRShEENtNtCs6LlcditsbhK_5serde2de12Deserializer15deserialize_anyNtNvXs19_NtB1n_5implsyNtB1n_11Deserialize11deserialize16PrimitiveVisitorECskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1) #15
-          to label %.noexc123.i unwind label %.loopexit.i, !noalias !9033
+          to label %.noexc123.i unwind label %.loopexit.split-lp.i, !noalias !9033
 
 .noexc123.i:                                      ; preds = %bb.dh
   %i.mn = load i8, ptr %i.f, align 8, !range !13, !noalias !9038, !noundef !7 ; 2 uses
@@ -339,7 +334,7 @@ bb.dn:                                            ; preds = %bb.df
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6143.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !9040
   invoke void @_RINvXsh_NtNtCs6LlcditsbhK_5serde2de5implsINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack9PackFrameENtB8_11Deserialize11deserializeQINtNtCs974quTetXso_9rmp_serde6decode12DeserializerINtB2y_10ReadReaderRShEEEB1g_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1)
-          to label %.noexc126.i unwind label %.loopexit.i, !noalias !9033
+          to label %.noexc126.i unwind label %.loopexit.split-lp.i, !noalias !9033
 
 .noexc126.i:                                      ; preds = %bb.dn
   %i.ms = load i8, ptr %i.c, align 8, !range !13, !noalias !9041, !noundef !7 ; 2 uses

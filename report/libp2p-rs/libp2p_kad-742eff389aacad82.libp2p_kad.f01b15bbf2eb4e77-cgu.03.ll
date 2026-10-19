@@ -202,12 +202,7 @@ bb.a:
   invoke void %i.s(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.i, ptr noundef nonnull align 8 %i.t, ptr noundef %i.v, i64 noundef %i.x)
           to label %bb.b unwind label %.loopexit.split-lp
 
-.loopexit:                                        ; preds = %.lr.ph
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread95
-
-.loopexit.split-lp:                               ; preds = %bb.a, %bb.b, %bb.l, %bb.s, %bb.w, %bb.aa, %bb.al, %bb.e, %bb.f, %bb.t, %bb.ai
+.loopexit.split-lp:                               ; preds = %.lr.ph, %bb.ai, %bb.t, %bb.f, %bb.e, %bb.al, %bb.aa, %bb.w, %bb.s, %bb.l, %bb.b, %bb.a
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.thread95
@@ -308,7 +303,7 @@ bb.i:                                             ; preds = %bb.k
   %.sroa.01.0119 = phi ptr [ %i.at, %bb.i ], [ %.sink12.i, %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordj14_E10triple_mutBM_.exit ] ; 13 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.01.0119, i64 72
   %i.aw = invoke noundef zeroext i1 @_RNvXs2_NtCsgW4lhAJgVdS_9multihash9multihashINtB5_9MultihashKj40_ENtNtCskKLDkoKarTP_4core3cmp9PartialEq2eqCskC4O4hr3vz7_10libp2p_kad(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.av, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.ar)
-          to label %bb.k unwind label %.loopexit
+          to label %bb.k unwind label %.loopexit.split-lp
 
 ._crit_edge:                                      ; preds = %bb.i, %_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordj14_E10triple_mutBM_.exit
   %i.ax = load i64, ptr %i.aj, align 8, !noalias !165, !noundef !8 ; 2 uses
@@ -668,8 +663,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCskC4O4hr3vz7_10libp2p_kad6record14P
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtCsbli3iz7XG76_9multiaddr9MultiaddrENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCskC4O4hr3vz7_10libp2p_kad(ptr noalias nofree noundef nonnull align 8 dereferenceable(152) %1)
   br label %bb.z
 
-.thread95:                                        ; preds = %.loopexit, %.loopexit.split-lp, %bb.aj, %bb.u
-  %eh.lpad-body2094 = phi { ptr, i32 } [ %i.cb, %bb.u ], [ %i.dl, %bb.aj ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.thread95:                                        ; preds = %.loopexit.split-lp, %bb.aj, %bb.u
+  %eh.lpad-body2094 = phi { ptr, i32 } [ %i.cb, %bb.u ], [ %i.dl, %bb.aj ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordEBF_(ptr noalias nofree noundef align 8 dereferenceable(152) %1) #18
           to label %common.resume unwind label %bb.as
 

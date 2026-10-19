@@ -15,11 +15,11 @@ bb.a:
   br i1 %i.c, label %_ZN7CBufferIhE11SetCapacityEm.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %5 = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.b) #6
-  br label %_ZN7CBufferIhE11SetCapacityEm.exit
+  %5 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.b) #6
+          to label %_ZN7CBufferIhE11SetCapacityEm.exit unwind label %bb.d
 
-_ZN7CBufferIhE11SetCapacityEm.exit:               ; preds = %bb.b, %bb.a
-  %.sroa.10107.1.a = phi ptr [ null, %bb.a ], [ %5, %bb.b ] ; 7 uses
+_ZN7CBufferIhE11SetCapacityEm.exit:               ; preds = %bb.a, %bb.b
+  %.sroa.10107.1.a = phi ptr [ null, %bb.a ], [ %5, %bb.b ] ; 8 uses
   %i.d = invoke noundef i32 @_Z16ReadStream_FALSEP19ISequentialInStreamPvm(ptr noundef %0, ptr noundef %.sroa.10107.1.a, i64 noundef %i.b)
           to label %bb.c unwind label %bb.d       ; 2 uses
 
@@ -27,7 +27,8 @@ bb.c:                                             ; preds = %_ZN7CBufferIhE11Set
   %.not = icmp eq i32 %i.d, 0
   br i1 %.not, label %bb.e, label %bb.t
 
-bb.d:                                             ; preds = %_ZN7CBufferIhE11SetCapacityEm.exit
+bb.d:                                             ; preds = %bb.b, %_ZN7CBufferIhE11SetCapacityEm.exit
+  %.sroa.10107.0 = phi ptr [ %.sroa.10107.1.a, %_ZN7CBufferIhE11SetCapacityEm.exit ], [ null, %bb.b ]
   %i.e = landingpad { ptr, i32 }
           cleanup
   br label %_ZN7CBufferIhED2Ev.exit95
@@ -183,12 +184,13 @@ _ZN7CBufferIhED2Ev.exit96:                        ; preds = %bb.t, %bb.u
   ret i32 %.9
 
 _ZN7CBufferIhED2Ev.exit95:                        ; preds = %bb.s, %.thread137, %bb.d
-  %.pn.pn = phi { ptr, i32 } [ %i.at, %bb.s ], [ %i.e, %bb.d ], [ %i.n, %.thread137 ]
-  %i.av = icmp eq ptr %.sroa.10107.1.a, null
+  %.sroa.10107.1 = phi ptr [ %.sroa.10107.0, %bb.d ], [ %.sroa.10107.1.a, %.thread137 ], [ %.sroa.10107.1.a, %bb.s ] ; 2 uses
+  %.pn.pn = phi { ptr, i32 } [ %i.e, %bb.d ], [ %i.n, %.thread137 ], [ %i.at, %bb.s ]
+  %i.av = icmp eq ptr %.sroa.10107.1, null
   br i1 %i.av, label %_ZN7CBufferIhED2Ev.exit97, label %bb.v
 
 bb.v:                                             ; preds = %_ZN7CBufferIhED2Ev.exit95
-  call void @_ZdaPv(ptr noundef nonnull %.sroa.10107.1.a) #8, !inline_history !12
+  call void @_ZdaPv(ptr noundef nonnull %.sroa.10107.1) #8, !inline_history !12
   br label %_ZN7CBufferIhED2Ev.exit97
 
 _ZN7CBufferIhED2Ev.exit97:                        ; preds = %_ZN7CBufferIhED2Ev.exit95, %bb.v

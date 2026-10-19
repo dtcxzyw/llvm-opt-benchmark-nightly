@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %.01245 = phi ptr [ %.01243, %.lr.ph ], [ %.012, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33 ] ; 2 uses
   %i.v = load ptr, ptr %i.a, align 8, !tbaa !72
   %i.w = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.v, ptr noundef nonnull @.str.79, i64 noundef 2)
-          to label %_ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit23 unwind label %.loopexit42 ; 0 uses
+          to label %_ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit23 unwind label %.loopexit.split-lp.a ; 0 uses
 
 _ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit23: ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
@@ -253,12 +253,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33: ; preds = %_ZN
   %.not16 = icmp eq ptr %.012, %2
   br i1 %.not16, label %.loopexit, label %bb.e, !llvm.loop !312
 
-.loopexit42:                                      ; preds = %bb.e
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.m
-
-.loopexit.split-lp.a:                             ; preds = %_ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit41, %bb.a, %.loopexit
+.loopexit.split-lp.a:                             ; preds = %bb.e, %.loopexit, %bb.a, %_ZN5Catch20ReusableStringStreamlsIA3_cEERS0_RKT_.exit41
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.m
@@ -324,8 +319,8 @@ bb.l:                                             ; preds = %_ZN5Catch20Reusable
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   ret void
 
-bb.m:                                             ; preds = %.loopexit42, %.loopexit.split-lp.a, %.body26, %.body
-  %.pn17.pn = phi { ptr, i32 } [ %.pn17, %.body26 ], [ %.pn, %.body ], [ %lpad.loopexit, %.loopexit42 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.a ]
+bb.m:                                             ; preds = %.loopexit.split-lp.a, %.body26, %.body
+  %.pn17.pn = phi { ptr, i32 } [ %.pn17, %.body26 ], [ %.pn, %.body ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.a ]
   call void @_ZN5Catch20ReusableStringStreamD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %5) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   resume { ptr, i32 } %.pn17.pn

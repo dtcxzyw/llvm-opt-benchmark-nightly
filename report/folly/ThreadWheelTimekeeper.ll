@@ -205,7 +205,7 @@ _ZSt11make_sharedIN5folly10WTCallbackINS0_16HHWheelTimerBaseINSt6chrono8duration
   store ptr %i.d, ptr %2, align 16, !tbaa !642, !alias.scope !638
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.j = invoke noalias noundef nonnull dereferenceable(160) ptr @_Znwm(i64 noundef 160) #24
-          to label %bb.b unwind label %4          ; 11 uses
+          to label %bb.b unwind label %bb.t       ; 11 uses
 
 bb.b:                                             ; preds = %_ZSt11make_sharedIN5folly10WTCallbackINS0_16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEEEJNS9_21PrivateConstructorTagEEESt10shared_ptrIT_EDpOT0_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
@@ -381,11 +381,6 @@ _ZN5folly10SemiFutureINS_4UnitEED2Ev.exit:        ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   ret void
 
-4:                                                ; preds = %_ZSt11make_sharedIN5folly10WTCallbackINS0_16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEEEJNS9_21PrivateConstructorTagEEESt10shared_ptrIT_EDpOT0_.exit
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.u
-
 bb.s:                                             ; preds = %_ZN5folly7PromiseINS_4UnitEE7getCoreEv.exit.i, %bb.i
   %i.bf = landingpad { ptr, i32 }
           cleanup
@@ -393,13 +388,13 @@ bb.s:                                             ; preds = %_ZN5folly7PromiseIN
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   br label %bb.u
 
-bb.t:                                             ; preds = %bb.r, %bb.p
+bb.t:                                             ; preds = %_ZSt11make_sharedIN5folly10WTCallbackINS0_16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEEEJNS9_21PrivateConstructorTagEEESt10shared_ptrIT_EDpOT0_.exit, %bb.r, %bb.p
   %i.bg = landingpad { ptr, i32 }
           cleanup
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.t, %bb.s, %4
-  %.pn = phi { ptr, i32 } [ %i.bg, %bb.t ], [ %i.bf, %bb.s ], [ %5, %4 ]
+bb.u:                                             ; preds = %bb.t, %bb.s
+  %.pn = phi { ptr, i32 } [ %i.bg, %bb.t ], [ %i.bf, %bb.s ]
   call void @_ZNSt12__shared_ptrIN5folly10WTCallbackINS0_16HHWheelTimerBaseINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEEELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   br label %common.resume

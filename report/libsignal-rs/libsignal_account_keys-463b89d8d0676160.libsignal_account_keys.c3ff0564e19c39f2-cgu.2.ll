@@ -204,7 +204,7 @@ vector.ph:
           to label %_RINvMNtCs5DMeLc8gTfG_12hybrid_array7from_fnINtB5_5ArrayhINtNtCsgAO26H8IC1Y_7typenum4uint4UIntIBT_IBT_IBT_IBT_IBT_NtBV_5UTermNtNtBX_3bit2B1ENtB20_2B0EB2d_EB2d_EB2d_EB2d_EE7from_fnNCNvXsg_B5_BF_NtNtCsgxBkk5gSRhY_4core7default7Default7default0ECsgPhy1OgDtny_22libsignal_account_keys.exit.i unwind label %bb.b, !noalias !202
 
 common.resume:                                    ; preds = %.body.i.i, %bb.b
-  %common.resume.op = phi { ptr, i32 } [ %i.al, %bb.b ], [ %i.aj, %.body.i.i ]
+  %common.resume.op = phi { ptr, i32 } [ %i.aj, %.body.i.i ], [ %i.al, %bb.b ]
   resume { ptr, i32 } %common.resume.op
 
 _RINvMNtCs5DMeLc8gTfG_12hybrid_array7from_fnINtB5_5ArrayhINtNtCsgAO26H8IC1Y_7typenum4uint4UIntIBT_IBT_IBT_IBT_IBT_NtBV_5UTermNtNtBX_3bit2B1ENtB20_2B0EB2d_EB2d_EB2d_EB2d_EE7from_fnNCNvXsg_B5_BF_NtNtCsgxBkk5gSRhY_4core7default7Default7default0ECsgPhy1OgDtny_22libsignal_account_keys.exit.i: ; preds = %vector.ph
@@ -607,11 +607,6 @@ bb.g:                                             ; preds = %.noexc17, %bb.e
   %i.ac = invoke noundef align 8 ptr @_RNvMNtCsh1373Z0TDxr_8protobuf19coded_output_streamNtB2_17CodedOutputStream20write_unknown_fields(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ab)
           to label %_RNvXs0_NtNtCsgPhy1OgDtny_22libsignal_account_keys5proto12mfa_metadataNtB5_23MfaKeyMetadataPlaintextNtNtCsh1373Z0TDxr_8protobuf7message7Message26write_to_with_cached_sizes.exit unwind label %bb.aa ; 2 uses
 
-.body:                                            ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECsgPhy1OgDtny_22libsignal_account_keys.exit.i.i
-  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.thread
-
 _RNvXs0_NtNtCsgPhy1OgDtny_22libsignal_account_keys5proto12mfa_metadataNtB5_23MfaKeyMetadataPlaintextNtNtCsh1373Z0TDxr_8protobuf7message7Message26write_to_with_cached_sizes.exit: ; preds = %bb.g
   %.not = icmp eq ptr %i.ac, null
   br i1 %.not, label %bb.h, label %_RNvXs0_NtNtCsgPhy1OgDtny_22libsignal_account_keys5proto12mfa_metadataNtB5_23MfaKeyMetadataPlaintextNtNtCsh1373Z0TDxr_8protobuf7message7Message26write_to_with_cached_sizes.exit.thread
@@ -659,7 +654,7 @@ bb.o:                                             ; preds = %bb.n
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECsgPhy1OgDtny_22libsignal_account_keys.exit.i.i: ; preds = %bb.m
   invoke void @_RNvXs1_NtCs6i54tJFfzR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCsgPhy1OgDtny_22libsignal_account_keys(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.b)
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCsh1373Z0TDxr_8protobuf19coded_output_stream17CodedOutputStreamECsgPhy1OgDtny_22libsignal_account_keys.exit unwind label %.body
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCsh1373Z0TDxr_8protobuf19coded_output_stream17CodedOutputStreamECsgPhy1OgDtny_22libsignal_account_keys.exit unwind label %bb.x
 
 bb.p:                                             ; preds = %bb.k
   %i.aj = landingpad { ptr, i32 }
@@ -722,12 +717,12 @@ bb.w:                                             ; preds = %bb.r
   call void @_RNvNtCsgxBkk5gSRhY_4core9panicking16panic_in_cleanup() #15
   unreachable
 
-.body.thread:                                     ; preds = %bb.x, %bb.u, %bb.r, %bb.n, %bb.k, %.body, %bb.aa
-  %.pn = phi { ptr, i32 } [ %i.ae, %bb.k ], [ %lpad.thr_comm, %bb.aa ], [ %lpad.thr_comm.split-lp, %.body ], [ %i.ah, %bb.n ], [ %i.ar, %bb.x ], [ %i.ao, %bb.u ], [ %i.al, %bb.r ]
+.body.thread:                                     ; preds = %bb.x, %bb.u, %bb.r, %bb.n, %bb.k, %bb.aa
+  %.pn = phi { ptr, i32 } [ %i.ae, %bb.k ], [ %lpad.thr_comm, %bb.aa ], [ %i.al, %bb.r ], [ %i.ah, %bb.n ], [ %i.ar, %bb.x ], [ %i.ao, %bb.u ]
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECsgPhy1OgDtny_22libsignal_account_keys(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #16
           to label %common.resume unwind label %bb.ab
 
-bb.x:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECsgPhy1OgDtny_22libsignal_account_keys.exit.i.i22
+bb.x:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECsgPhy1OgDtny_22libsignal_account_keys.exit.i.i, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECsgPhy1OgDtny_22libsignal_account_keys.exit.i.i22
   %i.ar = landingpad { ptr, i32 }
           cleanup
   br label %.body.thread

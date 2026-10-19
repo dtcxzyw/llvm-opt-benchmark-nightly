@@ -21,10 +21,13 @@ $_ZN3igl11circulationIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELi1EL
 
 ; Function Attrs: mustprogress uwtable
 define weak_odr dso_local void @_ZN3igl11circulationIN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEES4_EESt6vectorIiSaIiEEibRKNS1_10MatrixBaseIT_EERKNS8_IT0_EERKNS8_IT1_EE(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 %0, i32 noundef %1, i1 noundef zeroext %2, ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 1 dereferenceable(1) %5) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
-_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a:
+_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %6 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %7 = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #9 ; 5 uses
+  %7 = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #9
+          to label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a unwind label %.loopexit.split-lp ; 5 uses
+
+_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a: ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   store ptr %7, ptr %0, align 8, !tbaa !12
   store ptr %7, ptr %i.a, align 8, !tbaa !13
@@ -44,8 +47,8 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a:
   br label %bb.a
 
 bb.a:                                             ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
-  %i.n = phi ptr [ %7, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a ], [ %i.bb, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 9 uses
-  %i.o = phi ptr [ %i.b, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a ], [ %i.bc, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 6 uses
+  %i.n = phi ptr [ %7, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a ], [ %i.bb, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 8 uses
+  %i.o = phi ptr [ %i.b, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a ], [ %i.bc, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 7 uses
   %i.p = phi ptr [ %7, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a ], [ %i.bd, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 5 uses
   %.023 = phi i32 [ %i.k, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a ], [ %i.ae, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
   %.0 = phi i32 [ %1, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.a ], [ %i.am, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
@@ -130,7 +133,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %_ZNSt6vectorIiSaIiE
   %.pn = phi ptr [ %i.ay, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %i.p, %bb.b ]
   %i.bd = getelementptr inbounds nuw i8, ptr %.pn, i64 4 ; 2 uses
   %i.be = icmp eq i32 %i.ae, %i.k
-  br i1 %i.be, label %bb.f, label %bb.a, !llvm.loop !23
+  br i1 %i.be, label %bb.g, label %bb.a, !llvm.loop !23
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -138,33 +141,37 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %_ZNSt6vectorIiSaIiE
   store ptr %i.p, ptr %i.a, align 8
   store ptr %i.o, ptr %6, align 8
   store ptr %i.n, ptr %0, align 8
-  br label %bb.g
+  br label %bb.f
 
-.loopexit.split-lp:                               ; preds = %bb.d
+.loopexit.split-lp:                               ; preds = %bb.d, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i
+  %8 = phi ptr [ %i.o, %bb.d ], [ null, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ]
+  %9 = phi ptr [ %i.n, %bb.d ], [ null, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %bb.g
+  br label %bb.f
 
-bb.f:                                             ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
+bb.f:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %10 = phi ptr [ %i.o, %.loopexit ], [ %8, %.loopexit.split-lp ]
+  %11 = phi ptr [ %i.n, %.loopexit ], [ %9, %.loopexit.split-lp ] ; 3 uses
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+  %.not.i.i.i18 = icmp eq ptr %11, null
+  br i1 %.not.i.i.i18, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.h
+
+bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
   store ptr %i.bd, ptr %i.a, align 8
   store ptr %i.bc, ptr %6, align 8
   store ptr %i.bb, ptr %0, align 8
   ret void
 
-bb.g:                                             ; preds = %.loopexit, %.loopexit.split-lp
-  %.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit ]
-  %.not.i.i.i18 = icmp eq ptr %i.n, null
-  br i1 %.not.i.i.i18, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.h
-
-bb.h:                                             ; preds = %bb.g
-  %i.bf = ptrtoint ptr %i.o to i64
-  %i.bg = ptrtoint ptr %i.n to i64
+bb.h:                                             ; preds = %bb.f
+  %i.bf = ptrtoint ptr %10 to i64
+  %i.bg = ptrtoint ptr %11 to i64
   %i.bh = sub i64 %i.bf, %i.bg
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.bh) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %11, i64 noundef %i.bh) #11
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
-_ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.g, %bb.h
-  resume { ptr, i32 } %.pn.pn
+_ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.f, %bb.h
+  resume { ptr, i32 } %lpad.phi
 }
 
 declare i32 @__gxx_personality_v0(...)

@@ -202,12 +202,7 @@ bb.f:                                             ; preds = %bb.d
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i16 2, ptr %i.f, align 8, !tbaa !18
   %i.g = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString5setToEPDsii(ptr noundef nonnull align 8 dereferenceable(64) %5, ptr noundef nonnull %2, i32 noundef 0, i32 noundef %3)
-          to label %bb.g unwind label %7          ; 0 uses
-
-7:                                                ; preds = %bb.f
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.r
+          to label %bb.g unwind label %bb.k       ; 0 uses
 
 bb.g:                                             ; preds = %.thread, %bb.f
   %i.h = icmp eq ptr %0, null
@@ -227,7 +222,7 @@ bb.j:                                             ; preds = %bb.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 248
   br label %.invoke
 
-bb.k:                                             ; preds = %.invoke, %bb.l
+bb.k:                                             ; preds = %.invoke, %bb.f, %bb.l
   %i.l = landingpad { ptr, i32 }
           cleanup
   br label %bb.r
@@ -285,8 +280,8 @@ bb.q:                                             ; preds = %bb.o, %.thread47
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   br label %bb.s
 
-bb.r:                                             ; preds = %bb.k, %bb.p, %7
-  %.pn.pn = phi { ptr, i32 } [ %8, %7 ], [ %i.x, %bb.p ], [ %i.l, %bb.k ]
+bb.r:                                             ; preds = %bb.k, %bb.p
+  %.pn.pn = phi { ptr, i32 } [ %i.l, %bb.k ], [ %i.x, %bb.p ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %5) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   resume { ptr, i32 } %.pn.pn

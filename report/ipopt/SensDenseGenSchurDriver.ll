@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i48
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i48
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   invoke void @_ZN5Ipopt6Vector4ScalEd(ptr noundef nonnull align 8 dereferenceable(205) %i.g, double noundef -1.000000e+00)
-          to label %bb.h unwind label %18
+          to label %bb.h unwind label %bb.p
 
 bb.h:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50
   %i.ap = load ptr, ptr %3, align 8, !tbaa !71
@@ -210,11 +210,11 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
   %i.as = load ptr, ptr %i.ar, align 8
   invoke void %i.as(ptr noundef nonnull align 8 dereferenceable(205) %i.g, double noundef 1.000000e+00, ptr noundef nonnull align 8 dereferenceable(205) %i.ap)
-          to label %.noexc51 unwind label %18, !inline_history !59
+          to label %.noexc51 unwind label %bb.p, !inline_history !59
 
 .noexc51:                                         ; preds = %bb.h
   invoke void @_ZN5Ipopt12TaggedObject13ObjectChangedEv(ptr noundef nonnull align 8 dereferenceable(205) %i.g)
-          to label %._crit_edge.i.i53 unwind label %18
+          to label %._crit_edge.i.i53 unwind label %bb.p
 
 ._crit_edge.i.i53:                                ; preds = %.noexc51
   %i.at = load ptr, ptr %i.aa, align 8, !tbaa !32
@@ -299,11 +299,6 @@ bb.m:                                             ; preds = %bb.l
   call void %i.bu(ptr noundef nonnull align 8 dereferenceable(20) %i.bn) #12, !inline_history !2
   br label %.body.thread174
 
-18:                                               ; preds = %.noexc51, %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50
-  %19 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.thread
-
 bb.n:                                             ; preds = %._crit_edge.i.i
   %i.bv = landingpad { ptr, i32 }
           cleanup
@@ -362,7 +357,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit81: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   br label %.body.thread
 
-bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66
+bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50, %bb.h, %.noexc51, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66
   %i.cn = landingpad { ptr, i32 }
           cleanup
   br label %.body.thread
@@ -765,8 +760,8 @@ bb.bq:                                            ; preds = %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br i1 %.not.i.i, label %_ZN5Ipopt8SmartPtrINS_6VectorEED2Ev.exit147, label %.body.thread
 
-.body.thread:                                     ; preds = %18, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit81, %bb.bq, %bb.bp, %bb.p, %bb.j, %.body.thread174, %.body
-  %.pn36.pn.pn.pn.pn.pn171 = phi { ptr, i32 } [ %i.bm, %.body.thread174 ], [ %i.ls, %.body ], [ %.pn36.pn.pn.pn, %bb.bq ], [ %.pn36.pn.pn.pn, %bb.bp ], [ %i.cn, %bb.p ], [ %i.bl, %bb.j ], [ %i.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75 ], [ %19, %18 ], [ %i.ce, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit81 ] ; 2 uses
+.body.thread:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit81, %bb.bq, %bb.bp, %bb.p, %bb.j, %.body.thread174, %.body
+  %.pn36.pn.pn.pn.pn.pn171 = phi { ptr, i32 } [ %i.bm, %.body.thread174 ], [ %i.ls, %.body ], [ %.pn36.pn.pn.pn, %bb.bq ], [ %.pn36.pn.pn.pn, %bb.bp ], [ %i.cn, %bb.p ], [ %i.bl, %bb.j ], [ %i.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75 ], [ %i.ce, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit81 ] ; 2 uses
   %i.lt = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   %i.lu = load i32, ptr %i.lt, align 8, !tbaa !16
   %i.lv = add nsw i32 %i.lu, -1                   ; 2 uses

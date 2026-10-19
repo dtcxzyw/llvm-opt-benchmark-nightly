@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %.split
   %i.fh = load ptr, ptr %1, align 8, !tbaa !1227
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 144
   invoke void @_ZN4ncnn7flattenERKNS_3MatERS0_RKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %i.fi, ptr noundef nonnull align 8 dereferenceable(72) %7, ptr noundef nonnull align 8 dereferenceable(64) %3)
-          to label %bb.ae unwind label %12
+          to label %bb.ae unwind label %bb.ct
 
 bb.ae:                                            ; preds = %bb.ad
   %i.fj = load ptr, ptr %7, align 16, !tbaa !20
@@ -219,11 +219,6 @@ _ZNK4ncnn3Mat5emptyEv.exit:                       ; preds = %bb.ae
   %i.fo = mul i64 %i.fl, %i.fn
   %i.fp = icmp eq i64 %i.fo, 0
   br i1 %i.fp, label %.critedge, label %bb.af
-
-12:                                               ; preds = %bb.ad
-  %13 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ef
 
 bb.af:                                            ; preds = %_ZNK4ncnn3Mat5emptyEv.exit
   %i.fq = load i32, ptr %i.dx, align 8, !tbaa !62 ; 3 uses
@@ -627,7 +622,7 @@ bb.cs:                                            ; preds = %bb.cr
   %.not.i130 = icmp eq ptr %i.lu, null
   br i1 %.not.i130, label %_ZN4ncnn3MatD2Ev.exit113, label %bb.da
 
-bb.ct:                                            ; preds = %bb.bd
+bb.ct:                                            ; preds = %bb.ad, %bb.bd
   %i.lv = landingpad { ptr, i32 }
           cleanup
   br label %bb.ef
@@ -878,8 +873,8 @@ _ZN4ncnn3MatD2Ev.exit111:                         ; preds = %bb.dz, %.critedge, 
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
   br label %_ZNK4ncnn3Mat5emptyEv.exit212.thread
 
-bb.ef:                                            ; preds = %bb.ct, %bb.dy, %12, %_ZN4ncnn3MatD2Ev.exit114
-  %.pn99.pn.pn.pn.pn = phi { ptr, i32 } [ %13, %12 ], [ %i.hc, %_ZN4ncnn3MatD2Ev.exit114 ], [ %.pn99.pn.pn, %bb.dy ], [ %i.lv, %bb.ct ]
+bb.ef:                                            ; preds = %bb.ct, %bb.dy, %_ZN4ncnn3MatD2Ev.exit114
+  %.pn99.pn.pn.pn.pn = phi { ptr, i32 } [ %i.lv, %bb.ct ], [ %i.hc, %_ZN4ncnn3MatD2Ev.exit114 ], [ %.pn99.pn.pn, %bb.dy ]
   %i.og = load ptr, ptr %i.dv, align 8, !tbaa !18 ; 2 uses
   %.not.i142 = icmp eq ptr %i.og, null
   br i1 %.not.i142, label %_ZN4ncnn3MatD2Ev.exit110, label %bb.eg

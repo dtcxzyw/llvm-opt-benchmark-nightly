@@ -202,12 +202,7 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 20
   store i8 0, ptr %i.s, align 4, !tbaa !72
   invoke void @_ZN6icu_785units21getAllConversionRatesERNS_16MaybeStackVectorINS0_18ConversionRateInfoELi8EEER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(88) %6, ptr noundef nonnull align 4 dereferenceable(4) %3)
-          to label %_ZN6icu_785units15ConversionRatesC2ER10UErrorCode.exit unwind label %7
-
-7:                                                ; preds = %bb.a
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
+          to label %_ZN6icu_785units15ConversionRatesC2ER10UErrorCode.exit unwind label %bb.o
 
 _ZN6icu_785units15ConversionRatesC2ER10UErrorCode.exit: ; preds = %bb.a
   %i.t = load i32, ptr %3, align 4, !tbaa !48
@@ -328,7 +323,7 @@ _ZN6icu_7815MeasureUnitImplD2Ev.exit32:           ; preds = %._crit_edge.i.i26, 
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   ret void
 
-bb.o:                                             ; preds = %bb.e, %bb.b
+bb.o:                                             ; preds = %bb.a, %bb.e, %bb.b
   %i.bc = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -339,8 +334,8 @@ bb.p:                                             ; preds = %bb.d
   call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.w) #14
   br label %.body
 
-.body:                                            ; preds = %bb.o, %bb.p, %7
-  %.pn.pn = phi { ptr, i32 } [ %8, %7 ], [ %i.bc, %bb.o ], [ %i.bd, %bb.p ]
+.body:                                            ; preds = %bb.o, %bb.p
+  %.pn.pn = phi { ptr, i32 } [ %i.bd, %bb.p ], [ %i.bc, %bb.o ]
   call void @_ZN6icu_7810MemoryPoolINS_5units18ConversionRateInfoELi8EED2Ev(ptr noundef nonnull align 8 dead_on_return(88) dereferenceable(88) %6) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   call void @_ZN6icu_7815MeasureUnitImplD2Ev(ptr noundef nonnull align 8 dead_on_return(112) dereferenceable(112) %5) #14

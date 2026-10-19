@@ -202,18 +202,9 @@ bb.c:                                             ; preds = %bb.o, %bb.b
   invoke void @_RNvXsE_NtCsgQfI1edjipl_9hashbrown3rawINtB5_11RawIntoIterTNtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexINtNtCscdodAO9FK5_5alloc3vec3VecjEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBX_(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.d, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.e)
           to label %bb.d unwind label %.loopexit.split-lp.i.i.i.i.i, !noalias !163
 
-.loopexit.i.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
-  %lpad.loopexit.i.i.i.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %2
-
-.loopexit.split-lp.i.i.i.i.i:                     ; preds = %.noexc2.i.i.i.i.i, %bb.f, %bb.e, %bb.c
+.loopexit.split-lp.i.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %.noexc2.i.i.i.i.i, %bb.f, %bb.e, %bb.c
   %lpad.loopexit.split-lp.i.i.i.i.i = landingpad { ptr, i32 }
           cleanup
-  br label %2
-
-2:                                                ; preds = %.loopexit.split-lp.i.i.i.i.i, %.loopexit.i.i.i.i.i
-  %lpad.phi.i.i.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i.i.i.i, %.loopexit.i.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i ]
   invoke void @_RNvXsC_NtCsgQfI1edjipl_9hashbrown3rawINtB5_11RawIntoIterTNtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexINtNtCscdodAO9FK5_5alloc3vec3VecjEEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBX_(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.e)
           to label %.body unwind label %bb.p, !noalias !163
 
@@ -288,7 +279,7 @@ bb.g:                                             ; preds = %bb.j, %.noexc3.i.i.
   %i.ae = getelementptr inbounds [72 x i8], ptr %i.ac, i64 %i.ad
   %i.af = getelementptr inbounds i8, ptr %i.ae, i64 -72
   %i.ag = invoke noundef zeroext i1 @_RNvXCsgQfI1edjipl_9hashbrownNtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexINtB2_10EquivalentBq_E10equivalentBu_(ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.af)
-          to label %.noexc4.i.i.i.i.i unwind label %.loopexit.i.i.i.i.i, !noalias !163
+          to label %.noexc4.i.i.i.i.i unwind label %.loopexit.split-lp.i.i.i.i.i, !noalias !163
 
 .noexc4.i.i.i.i.i:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
   br i1 %i.ag, label %bb.n, label %bb.h, !prof !4
@@ -391,7 +382,7 @@ bb.o:                                             ; preds = %_RNCINvNvNtNtNtNtCs
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i.i.i.i.i)
   br label %bb.c
 
-bb.p:                                             ; preds = %2
+bb.p:                                             ; preds = %.loopexit.split-lp.i.i.i.i.i
   %i.bu = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #11, !noalias !163
@@ -418,8 +409,8 @@ bb.s:                                             ; preds = %_RINvXs0_NtNtNtCs4N
           cleanup
   br label %.body
 
-.body:                                            ; preds = %2, %bb.q, %bb.s
-  %eh.lpad-body = phi { ptr, i32 } [ %i.bx, %bb.s ], [ %i.bv, %bb.q ], [ %lpad.phi.i.i.i.i.i, %2 ]
+.body:                                            ; preds = %.loopexit.split-lp.i.i.i.i.i, %bb.q, %bb.s
+  %eh.lpad-body = phi { ptr, i32 } [ %i.bx, %bb.s ], [ %i.bv, %bb.q ], [ %lpad.loopexit.split-lp.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i ]
   invoke void @_RNvXsg_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexNtNtNtBT_8database12memory_usage8PageInfoEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBT_(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.g)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters10filter_map9FilterMapINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map8IntoIterNtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexINtNtCscdodAO9FK5_5alloc3vec3VecjEENCNvMs4_NtB2n_5tableNtB3K_5Table10page_infos0EEB2n_.exit unwind label %bb.u
 

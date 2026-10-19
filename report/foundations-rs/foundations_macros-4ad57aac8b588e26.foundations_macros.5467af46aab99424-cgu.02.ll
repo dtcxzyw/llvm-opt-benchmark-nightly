@@ -202,7 +202,7 @@ _RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs7fhJ
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !15214, !noalias !15173
   store ptr %i.ad, ptr %i.a, align 8, !dbg !15214, !noalias !15173, !captures !15160
   %i.af = invoke noundef zeroext i1 @_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCNvNtCs7fhJ7v7hOxk_18foundations_macros8settings29impl_settings_trait_for_field0INtB7_5FnMutTRRNtNtCs6bAnw1I7Lci_3syn4attr9AttributeEE8call_mutBU_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a)
-          to label %.noexc unwind label %.loopexit, !dbg !15212
+          to label %.noexc unwind label %.loopexit.split-lp, !dbg !15212
 
 .noexc:                                           ; preds = %.lr.ph.i.i.i.i
   br i1 %i.af, label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCs6bAnw1I7Lci_3syn4attr9AttributeENCNvNtCs7fhJ7v7hOxk_18foundations_macros8settings29impl_settings_trait_for_field0ENtNtNtB9_6traits8iterator8Iterator4nextB2a_.exit.i.i, label %bb.e, !dbg !15212
@@ -263,18 +263,9 @@ bb.g:                                             ; preds = %.loopexit12, %.loop
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !15232
   ret void, !dbg !15233
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %3
-
-.loopexit.split-lp:                               ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCs6bAnw1I7Lci_3syn4attr9AttributeE7reserveCs7fhJ7v7hOxk_18foundations_macros.exit.i.i
+.loopexit.split-lp:                               ; preds = %.lr.ph.i.i.i.i, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecRNtNtCs6bAnw1I7Lci_3syn4attr9AttributeE7reserveCs7fhJ7v7hOxk_18foundations_macros.exit.i.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %3
-
-3:                                                ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRNtNtCs6bAnw1I7Lci_3syn4attr9AttributeENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs7fhJ7v7hOxk_18foundations_macros(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtCs6bAnw1I7Lci_3syn4attr9AttributeEECs7fhJ7v7hOxk_18foundations_macros.exit unwind label %bb.h, !dbg !15234
 
@@ -283,14 +274,14 @@ bb.g:                                             ; preds = %.loopexit12, %.loop
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !dbg !15236
   br label %bb.g, !dbg !15232
 
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %.loopexit.split-lp
   %i.as = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #14, !dbg !15237
   unreachable, !dbg !15237
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtCs6bAnw1I7Lci_3syn4attr9AttributeEECs7fhJ7v7hOxk_18foundations_macros.exit: ; preds = %3
-  resume { ptr, i32 } %lpad.phi, !dbg !15237
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRNtNtCs6bAnw1I7Lci_3syn4attr9AttributeEECs7fhJ7v7hOxk_18foundations_macros.exit: ; preds = %.loopexit.split-lp
+  resume { ptr, i32 } %lpad.loopexit.split-lp, !dbg !15237
 }
 
 ; Function Attrs: nonlazybind uwtable

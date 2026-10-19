@@ -202,24 +202,19 @@ bb.a:
   %i.i = alloca [40 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_RNvXs0_NtCs6et67aoV1xO_11proc_macro212token_streamNtB7_11TokenStreamNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect12IntoIterator9into_iter(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.i, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1)
-          to label %bb.b unwind label %3
+          to label %bb.b unwind label %.thread39
 
-.thread36:                                        ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit.i, %.thread39, %.thread, %bb.af, %3
-  %.pn.pn = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.af ], [ %lpad.thr_comm, %.thread39 ], [ %4, %3 ], [ %i.bk, %.thread ], [ %i.an, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit.i ]
+.thread36:                                        ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit.i, %.thread39, %.thread, %bb.af
+  %.pn.pn = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.af ], [ %lpad.thr_comm, %.thread39 ], [ %i.an, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit.i ], [ %i.bk, %.thread ]
   invoke void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2) #15
           to label %bb.ag unwind label %bb.ae
-
-3:                                                ; preds = %bb.a
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread36
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RNvXNtCs6et67aoV1xO_11proc_macro212token_streamNtB2_8IntoIterNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.i)
           to label %bb.c unwind label %bb.af
 
-.thread39:                                        ; preds = %bb.ab, %_RNCNvNvMNtCsgbWeKYPjk8w_3syn5errorNtB6_5Error11new_spanned11new_spanneds_0B8_.exit.i, %bb.q, %bb.p
+.thread39:                                        ; preds = %bb.a, %bb.ab, %_RNCNvNvMNtCsgbWeKYPjk8w_3syn5errorNtB6_5Error11new_spanned11new_spanneds_0B8_.exit.i, %bb.q, %bb.p
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.thread36

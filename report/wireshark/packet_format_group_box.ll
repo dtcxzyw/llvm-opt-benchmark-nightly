@@ -196,7 +196,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTV25PacketFormatBlankGroupBox, i64 472), ptr %i.a, align 8
   %i.b = invoke noalias noundef dereferenceable_or_null(32) ptr @_Znwm(i64 noundef 32) #10
-          to label %bb.b unwind label %3          ; 5 uses
+          to label %bb.b unwind label %bb.l       ; 5 uses
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZN11QVBoxLayoutC1Ev(ptr noundef align 8 dereferenceable_or_null(28) %i.b)
@@ -250,18 +250,13 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   ret void
 
-3:                                                ; preds = %bb.a
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.p
-
 bb.k:                                             ; preds = %bb.b
   %i.g = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZdlPvm(ptr noundef %i.b, i64 noundef 32) #11
   br label %bb.p
 
-bb.l:                                             ; preds = %bb.i, %bb.h, %bb.g, %_ZN7QStringD2Ev.exit, %bb.c
+bb.l:                                             ; preds = %bb.a, %bb.i, %bb.h, %bb.g, %_ZN7QStringD2Ev.exit, %bb.c
   %i.h = landingpad { ptr, i32 }
           cleanup
   br label %bb.p
@@ -294,8 +289,8 @@ _ZN7QStringD2Ev.exit19:                           ; preds = %bb.o, %_ZN17QArrayD
   call void @_ZdlPvm(ptr noundef %i.c, i64 noundef 40) #11
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.l, %_ZN7QStringD2Ev.exit19, %bb.k, %3
-  %.pn13.pn = phi { ptr, i32 } [ %4, %3 ], [ %i.g, %bb.k ], [ %i.h, %bb.l ], [ %.pn, %_ZN7QStringD2Ev.exit19 ]
+bb.p:                                             ; preds = %bb.l, %_ZN7QStringD2Ev.exit19, %bb.k
+  %.pn13.pn = phi { ptr, i32 } [ %.pn, %_ZN7QStringD2Ev.exit19 ], [ %i.g, %bb.k ], [ %i.h, %bb.l ]
   call void @_ZN9QGroupBoxD2Ev(ptr noundef align 8 dead_on_return(40) dereferenceable_or_null(40) %0) #9
   resume { ptr, i32 } %.pn13.pn
 }

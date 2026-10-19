@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %_ZSt8_DestroyIPN4bz
 _ZNSt6vectorIN4bzla4NodeESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exit.i, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #8
   %i.ba = invoke noundef i32 @_ZN4bzla14SolvingContext5solveEv(ptr noundef nonnull align 8 dereferenceable(12744) %5)
-          to label %bb.v unwind label %8
+          to label %bb.v unwind label %bb.s
 
 bb.n:                                             ; preds = %bb.d
   %i.bb = landingpad { ptr, i32 }
@@ -247,7 +247,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
   br label %bb.x
 
-bb.s:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+bb.s:                                             ; preds = %_ZNSt6vectorIN4bzla4NodeESaIS1_EED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.bk = landingpad { ptr, i32 }
           cleanup
   br label %bb.w
@@ -277,13 +277,8 @@ bb.v:                                             ; preds = %_ZNSt6vectorIN4bzla
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   br label %bb.y
 
-8:                                                ; preds = %_ZNSt6vectorIN4bzla4NodeESaIS1_EED2Ev.exit
-  %9 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.w
-
-bb.w:                                             ; preds = %bb.s, %bb.u, %8
-  %.pn31.pn = phi { ptr, i32 } [ %9, %8 ], [ %i.bm, %bb.u ], [ %i.bk, %bb.s ]
+bb.w:                                             ; preds = %bb.s, %bb.u
+  %.pn31.pn = phi { ptr, i32 } [ %i.bk, %bb.s ], [ %i.bm, %bb.u ]
   call void @_ZN4bzla14SolvingContextD1Ev(ptr noundef nonnull align 8 dead_on_return(12744) dereferenceable(12744) %5) #8
   br label %bb.x
 

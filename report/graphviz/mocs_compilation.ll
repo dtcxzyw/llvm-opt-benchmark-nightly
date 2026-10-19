@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.speculated.i = tail call i32 @llvm.umax.i32(i32 %i.l, i32 %i.e)
   %i.m = add i32 %.sroa.speculated.i, 1
   invoke void @_ZN10QByteArray11reallocDataEj6QFlagsIN10QArrayData16AllocationOptionEE(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %i.m, i32 1)
-          to label %_ZN10QByteArray7reserveEi.exit unwind label %1
+          to label %_ZN10QByteArray7reserveEi.exit unwind label %bb.h
 
 bb.e:                                             ; preds = %bb.c
   %i.n = or i32 %i.i, -2147483648
@@ -211,15 +211,15 @@ bb.e:                                             ; preds = %bb.c
 
 _ZN10QByteArray7reserveEi.exit:                   ; preds = %bb.e, %bb.d
   %i.o = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN10QByteArray6appendEPKc(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.b)
-          to label %bb.f unwind label %1
+          to label %bb.f unwind label %bb.h
 
 bb.f:                                             ; preds = %_ZN10QByteArray7reserveEi.exit
   %i.p = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN10QByteArray6appendEc(ptr noundef nonnull align 8 dereferenceable(8) %i.o, i8 noundef signext 42)
-          to label %bb.g unwind label %1          ; 0 uses
+          to label %bb.g unwind label %bb.h       ; 0 uses
 
 bb.g:                                             ; preds = %bb.f
   %i.q = invoke noundef i32 @_ZN9QMetaType22registerNormalizedTypeERK10QByteArrayPFvPvEPFS3_S3_PKvEi6QFlagsINS_8TypeFlagEEPK11QMetaObject(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperIP7QWidgetLb1EE8DestructEPv, ptr noundef nonnull @_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperIP7QWidgetLb1EE9ConstructEPvPKv, i32 noundef 8, i32 268, ptr noundef nonnull @_ZN7QWidget16staticMetaObjectE)
-          to label %_Z27qRegisterNormalizedMetaTypeIP7QWidgetEiRK10QByteArrayPT_N9QtPrivate21MetaTypeDefinedHelperIS5_Xaasr12QMetaTypeId2IS5_EE7Definedntsr12QMetaTypeId2IS5_EE9IsBuiltInEE11DefinedTypeE.exit unwind label %3, !inline_history !41 ; 2 uses
+          to label %_Z27qRegisterNormalizedMetaTypeIP7QWidgetEiRK10QByteArrayPT_N9QtPrivate21MetaTypeDefinedHelperIS5_Xaasr12QMetaTypeId2IS5_EE7Definedntsr12QMetaTypeId2IS5_EE9IsBuiltInEE11DefinedTypeE.exit unwind label %bb.h, !inline_history !41 ; 2 uses
 
 _Z27qRegisterNormalizedMetaTypeIP7QWidgetEiRK10QByteArrayPT_N9QtPrivate21MetaTypeDefinedHelperIS5_Xaasr12QMetaTypeId2IS5_EE7Definedntsr12QMetaTypeId2IS5_EE9IsBuiltInEE11DefinedTypeE.exit: ; preds = %bb.g
   store atomic i32 %i.q, ptr @_ZZN18QMetaTypeIdQObjectIP7QWidgetLi8EE14qt_metatype_idEvE11metatype_id release, align 4
@@ -248,21 +248,12 @@ _ZN10QByteArrayD2Ev.exit:                         ; preds = %_Z27qRegisterNormal
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #12
   br label %bb.i
 
-1:                                                ; preds = %bb.d, %bb.f, %_ZN10QByteArray7reserveEi.exit
-  %2 = landingpad { ptr, i32 }
+bb.h:                                             ; preds = %bb.g, %bb.d, %_ZN10QByteArray7reserveEi.exit, %bb.f
+  %1 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.h
-
-3:                                                ; preds = %bb.g
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.h
-
-bb.h:                                             ; preds = %3, %1
-  %.pn = phi { ptr, i32 } [ %4, %3 ], [ %2, %1 ]
   call void @_ZN10QByteArrayD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #12
-  resume { ptr, i32 } %.pn
+  resume { ptr, i32 } %1
 
 bb.i:                                             ; preds = %bb.a, %_ZN10QByteArrayD2Ev.exit
   %.1 = phi i32 [ %i.q, %_ZN10QByteArrayD2Ev.exit ], [ %i.a, %bb.a ]

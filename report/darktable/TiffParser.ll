@@ -204,7 +204,7 @@ _ZSt11make_uniqueIN8rawspeed11TiffRootIFDEJRPNS0_7TiffIFDEDnRNS0_10ByteStreamEjE
 
 bb.f:                                             ; preds = %_ZSt11make_uniqueIN8rawspeed11TiffRootIFDEJRPNS0_7TiffIFDEDnRNS0_10ByteStreamEjEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
   invoke void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_11IOExceptionEEEvPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK8rawspeed6Buffer10getSubViewEjj) #13
-          to label %.noexc unwind label %6
+          to label %.noexc unwind label %bb.j
 
 .noexc:                                           ; preds = %bb.f
   unreachable
@@ -220,11 +220,6 @@ _ZN8rawspeed10ByteStream6getU32Ev.exit:           ; preds = %_ZSt11make_uniqueIN
 .lr.ph.preheader:                                 ; preds = %_ZN8rawspeed10ByteStream6getU32Ev.exit
   %i.s = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   br label %.lr.ph
-
-6:                                                ; preds = %bb.f
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt10unique_ptrIN8rawspeed7TiffIFDESt14default_deleteIS1_EED2Ev.exit47
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt10unique_ptrIN8rawspeed7TiffIFDESt14default_deleteIS1_EED2Ev.exit38
   %storemerge98 = phi i32 [ %i.al, %_ZNSt10unique_ptrIN8rawspeed7TiffIFDESt14default_deleteIS1_EED2Ev.exit38 ], [ %spec.select.i.i.i.i.i.i28, %.lr.ph.preheader ]
@@ -267,7 +262,7 @@ bb.i:                                             ; preds = %.body
   invoke void @__cxa_end_catch()
           to label %_ZNSt10unique_ptrIN8rawspeed7TiffIFDESt14default_deleteIS1_EED2Ev.exit41 unwind label %bb.j
 
-bb.j:                                             ; preds = %bb.i
+bb.j:                                             ; preds = %bb.f, %bb.i
   %i.ac = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt10unique_ptrIN8rawspeed7TiffIFDESt14default_deleteIS1_EED2Ev.exit47
@@ -323,8 +318,8 @@ _ZN8rawspeed11NORangesSetINS_6BufferEED2Ev.exit:  ; preds = %_ZNSt10unique_ptrIN
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   ret void
 
-_ZNSt10unique_ptrIN8rawspeed7TiffIFDESt14default_deleteIS1_EED2Ev.exit47: ; preds = %_ZNKSt14default_deleteIN8rawspeed7TiffIFDEEclEPS1_.exit.i43, %bb.k, %bb.j, %.body, %6
-  %.merged = phi { ptr, i32 } [ %7, %6 ], [ %eh.lpad-body, %.body ], [ %i.ac, %bb.j ], [ %i.am, %bb.k ], [ %i.am, %_ZNKSt14default_deleteIN8rawspeed7TiffIFDEEclEPS1_.exit.i43 ]
+_ZNSt10unique_ptrIN8rawspeed7TiffIFDESt14default_deleteIS1_EED2Ev.exit47: ; preds = %_ZNKSt14default_deleteIN8rawspeed7TiffIFDEEclEPS1_.exit.i43, %bb.k, %bb.j, %.body
+  %.merged = phi { ptr, i32 } [ %i.am, %_ZNKSt14default_deleteIN8rawspeed7TiffIFDEEclEPS1_.exit.i43 ], [ %eh.lpad-body, %.body ], [ %i.ac, %bb.j ], [ %i.am, %bb.k ]
   call void @_ZN8rawspeed11NORangesSetINS_6BufferEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %4) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   call void @_ZNSt10unique_ptrIN8rawspeed11TiffRootIFDESt14default_deleteIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #23

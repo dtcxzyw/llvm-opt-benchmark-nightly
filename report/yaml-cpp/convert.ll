@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i64 93, ptr %i.a, align 8, !tbaa !17
   %i.f = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
-          to label %.noexc unwind label %3        ; 3 uses
+          to label %.noexc unwind label %bb.f     ; 3 uses
 
 .noexc:                                           ; preds = %.noexc.i
   store ptr %i.f, ptr %0, align 8, !tbaa !18
@@ -215,11 +215,6 @@ bb.a:
   store i8 0, ptr %i.i, align 1, !tbaa !15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit
-
-3:                                                ; preds = %.noexc.i
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -280,7 +275,7 @@ bb.e:                                             ; preds = %_ZStlsISt11char_tra
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.af)
           to label %_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit unwind label %bb.d
 
-bb.f:                                             ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.b
+bb.f:                                             ; preds = %.noexc.i, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.b
   %i.ag = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -326,8 +321,8 @@ _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   ret void
 
-.body:                                            ; preds = %bb.d, %bb.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %3
-  %.pn = phi { ptr, i32 } [ %4, %3 ], [ %i.ag, %bb.f ], [ %i.ac, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %i.ac, %bb.d ]
+.body:                                            ; preds = %bb.d, %bb.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
+  %.pn = phi { ptr, i32 } [ %i.ac, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %i.ag, %bb.f ], [ %i.ac, %bb.d ]
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(128) %2) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   resume { ptr, i32 } %.pn

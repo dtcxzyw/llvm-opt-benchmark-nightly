@@ -205,7 +205,7 @@ bb.cq:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.rr = load i8, ptr %i.rq, align 2, !tbaa !186
   %i.rs = zext i8 %i.rr to i32
   %i.rt = invoke { i64, ptr } @_ZN6google8protobuf8compiler4java13FieldTypeNameENS0_8internal19FieldDescriptorLite4TypeE(i32 noundef %i.rs)
-          to label %bb.cr unwind label %51        ; 2 uses
+          to label %bb.cr unwind label %bb.dy     ; 2 uses
 
 bb.cr:                                            ; preds = %bb.cq
   %i.ru = extractvalue { i64, ptr } %i.rt, 0      ; 5 uses
@@ -593,12 +593,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit332: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %38) #20
   br label %bb.fu
 
-51:                                               ; preds = %bb.cq
-  %52 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit335
-
-bb.dy:                                            ; preds = %.noexc.i.i.i285, %bb.cs
+bb.dy:                                            ; preds = %bb.cq, %.noexc.i.i.i285, %bb.cs
   %i.vq = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit335
@@ -616,8 +611,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i33
   call void @_ZdlPvm(ptr noundef %i.vs, i64 noundef %i.vv) #21
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit335
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit335: ; preds = %bb.dz, %bb.dy, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i333, %51
-  %.pn84.pn = phi { ptr, i32 } [ %52, %51 ], [ %i.vq, %bb.dy ], [ %i.vr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i333 ], [ %i.vr, %bb.dz ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit335: ; preds = %bb.dz, %bb.dy, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i333
+  %.pn84.pn = phi { ptr, i32 } [ %i.vr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i333 ], [ %i.vq, %bb.dy ], [ %i.vr, %bb.dz ]
   call void @llvm.lifetime.end.p0(ptr nonnull %39) #20
   br label %bb.fu
 

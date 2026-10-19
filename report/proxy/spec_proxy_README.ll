@@ -202,7 +202,7 @@ _ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i: ; preds = %_ZNSt4pairIK
   store ptr %i.o, ptr %i.n, align 8, !tbaa !25, !alias.scope !78
   store ptr %i.r, ptr %5, align 8, !tbaa !80, !alias.scope !78
   %i.s = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #21
-          to label %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15 unwind label %8 ; 6 uses
+          to label %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15 unwind label %bb.u ; 6 uses
 
 _ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15: ; preds = %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 32 ; 3 uses
@@ -453,12 +453,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @__cxa_guard_abort(ptr nonnull @_ZGVZ4mainE10container1B5cxx11) #19
   br label %bb.y
 
-8:                                                ; preds = %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i
-  %9 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZN3pro2v45proxyI10DictionaryED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS4_15destructibilityLS5_2E.exit47
-
-bb.u:                                             ; preds = %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15
+bb.u:                                             ; preds = %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i, %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15
   %i.cs = landingpad { ptr, i32 }
           cleanup
   br label %_ZN3pro2v45proxyI10DictionaryED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS4_15destructibilityLS5_2E.exit47
@@ -495,8 +490,8 @@ bb.x:                                             ; preds = %.body37.thread, %.b
   call void %i.cw(ptr noundef nonnull align 8 dereferenceable(32) %7) #19, !inline_history !67
   br label %_ZN3pro2v45proxyI10DictionaryED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS4_15destructibilityLS5_2E.exit47
 
-_ZN3pro2v45proxyI10DictionaryED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS4_15destructibilityLS5_2E.exit47: ; preds = %bb.x, %.body37, %bb.w, %.body, %bb.u, %8
-  %.pn10 = phi { ptr, i32 } [ %eh.lpad-body, %bb.w ], [ %9, %8 ], [ %i.cs, %bb.u ], [ %eh.lpad-body, %.body ], [ %i.bn, %.body37 ], [ %eh.lpad-body3889, %bb.x ]
+_ZN3pro2v45proxyI10DictionaryED2EvQooeqsrT_15destructibilityLNS0_16constraint_levelE1EeqsrS4_15destructibilityLS5_2E.exit47: ; preds = %bb.x, %.body37, %bb.w, %.body, %bb.u
+  %.pn10 = phi { ptr, i32 } [ %eh.lpad-body, %bb.w ], [ %eh.lpad-body3889, %bb.x ], [ %i.cs, %bb.u ], [ %eh.lpad-body, %.body ], [ %i.bn, %.body37 ]
   call void @_ZNSt12__shared_ptrISt6vectorIPKcSaIS2_EELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %5) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   br label %bb.y

@@ -202,11 +202,11 @@ bb.a:
   %i.a = tail call noundef i32 @_ZN7Imf_3_417globalThreadCountEv()
   call void @_ZN7Imf_3_49InputFileC1EPKci(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef %0, i32 noundef %i.a)
   %i.b = invoke noundef nonnull align 8 dereferenceable(49) ptr @_ZNK7Imf_3_49InputFile6headerEv(ptr noundef nonnull align 8 dereferenceable(32) %4)
-          to label %bb.b unwind label %8
+          to label %bb.b unwind label %bb.y
 
 bb.b:                                             ; preds = %bb.a
   %i.c = invoke noundef nonnull align 4 dereferenceable(16) ptr @_ZNK7Imf_3_46Header10dataWindowEv(ptr noundef nonnull align 8 dereferenceable(49) %i.b)
-          to label %bb.c unwind label %8          ; 4 uses
+          to label %bb.c unwind label %bb.y       ; 4 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load i32, ptr %i.c, align 4, !tbaa !26   ; 2 uses
@@ -421,12 +421,7 @@ _ZN7Imf_3_49InputFileD2Ev.exit:                   ; preds = %_ZNSt12__shared_ptr
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   ret void
 
-8:                                                ; preds = %bb.b, %bb.a
-  %9 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ad
-
-bb.y:                                             ; preds = %bb.c
+bb.y:                                             ; preds = %bb.c, %bb.a, %bb.b
   %i.ci = landingpad { ptr, i32 }
           cleanup
   br label %bb.ad
@@ -454,8 +449,8 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.y, %bb.ac, %8
-  %.pn.pn.pn = phi { ptr, i32 } [ %9, %8 ], [ %.pn, %bb.ac ], [ %i.ci, %bb.y ]
+bb.ad:                                            ; preds = %bb.y, %bb.ac
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.ci, %bb.y ], [ %.pn, %bb.ac ]
   call void @_ZN7Imf_3_49InputFileD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %4) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   resume { ptr, i32 } %.pn.pn.pn

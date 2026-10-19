@@ -202,19 +202,14 @@ bb.a:
   %i.d = extractvalue { i64, i1 } %i.b, 0
   br label %.preheader.outer
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i, %bb.i
-  %.sroa.8.0 = phi ptr [ %i.q, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i ], [ %i.q, %bb.i ], [ %.sroa.8.2.ph, %.loopexit ], [ %.sroa.8.2.ph, %.loopexit.split-lp ]
-  %.sroa.0.0 = phi ptr [ %i.o, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i ], [ %i.o, %bb.i ], [ %.sroa.0.2.ph, %.loopexit ], [ %.sroa.0.2.ph, %.loopexit.split-lp ]
-  %.pn = phi { ptr, i32 } [ %i.y, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i ], [ %i.y, %bb.i ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i, %bb.i
+  %.sroa.8.0 = phi ptr [ %i.q, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i ], [ %i.q, %bb.i ], [ %.sroa.8.2.ph, %.loopexit.split-lp ]
+  %.sroa.0.0 = phi ptr [ %i.o, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i ], [ %i.o, %bb.i ], [ %.sroa.0.2.ph, %.loopexit.split-lp ]
+  %.pn = phi { ptr, i32 } [ %i.y, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i ], [ %i.y, %bb.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultzINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEEECsbDLrNlwBX3H_4smol(ptr %.sroa.0.0, ptr %.sroa.8.0) #25
           to label %bb.p unwind label %bb.o
 
-.loopexit:                                        ; preds = %bb.d
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %bb.m, %bb.n
+.loopexit.split-lp:                               ; preds = %bb.d, %bb.n, %bb.m
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -243,7 +238,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !nonnull !4, !noundef !4
   %i.n = invoke noundef ptr %i.m(ptr noundef nonnull %.0.val)
-          to label %bb.e unwind label %.loopexit  ; 2 uses
+          to label %bb.e unwind label %.loopexit.split-lp ; 2 uses
 
 bb.e:                                             ; preds = %bb.d
   %i.o = load ptr, ptr %i.n, align 8, !nonnull !4, !noundef !4 ; 3 uses
@@ -256,8 +251,8 @@ bb.e:                                             ; preds = %bb.d
   br label %.preheader.outer
 
 .preheader.outer:                                 ; preds = %.preheader.outer.backedge, %.preheader.preheader
-  %.sroa.8.2.ph = phi ptr [ undef, %.preheader.preheader ], [ %i.q, %.preheader.outer.backedge ] ; 11 uses
-  %.sroa.0.2.ph = phi ptr [ null, %.preheader.preheader ], [ %i.o, %.preheader.outer.backedge ] ; 9 uses
+  %.sroa.8.2.ph = phi ptr [ undef, %.preheader.preheader ], [ %i.q, %.preheader.outer.backedge ] ; 10 uses
+  %.sroa.0.2.ph = phi ptr [ null, %.preheader.preheader ], [ %i.o, %.preheader.outer.backedge ] ; 8 uses
   %.sroa.08.0.ph = phi i64 [ %i.d, %.preheader.preheader ], [ %i.h, %.preheader.outer.backedge ]
   br label %.preheader
 

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_RNvXNtCshqfBqtY9aGF_8indexmap3mapINtB2_8IndexMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCs8O45qwFIwQX_10serde_json5value5ValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs5QaNqjAn6vc_5shard(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.ac)
-          to label %.noexc unwind label %.thread21.loopexit
+          to label %.noexc unwind label %.thread21.loopexit.split-lp
 
 bb.e:                                             ; preds = %bb.c
   store i64 -1, ptr %i.d, align 8, !noalias !1203
@@ -420,12 +420,7 @@ bb.y:                                             ; preds = %.thread16
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #18
   unreachable
 
-.thread21.loopexit:                               ; preds = %bb.d
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread16
-
-.thread21.loopexit.split-lp:                      ; preds = %bb.w
+.thread21.loopexit.split-lp:                      ; preds = %bb.d, %bb.w
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.thread16
@@ -443,8 +438,8 @@ bb.z:                                             ; preds = %._crit_edge
   %.pn15 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.z ], [ %eh.lpad-body20, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterjEECs5QaNqjAn6vc_5shard.exit ]
   resume { ptr, i32 } %.pn15
 
-.thread16:                                        ; preds = %.thread21.loopexit, %.thread21.loopexit.split-lp, %bb.l
-  %eh.lpad-body20 = phi { ptr, i32 } [ %.pn.i.i.i, %bb.l ], [ %lpad.loopexit, %.thread21.loopexit ], [ %lpad.loopexit.split-lp, %.thread21.loopexit.split-lp ]
+.thread16:                                        ; preds = %.thread21.loopexit.split-lp, %bb.l
+  %eh.lpad-body20 = phi { ptr, i32 } [ %.pn.i.i.i, %bb.l ], [ %lpad.loopexit.split-lp, %.thread21.loopexit.split-lp ]
   %.val623 = load ptr, ptr %1, align 8, !nonnull !9, !align !10, !noundef !9
   store i64 %.val719, ptr %.val623, align 8
   %.val8 = load ptr, ptr %0, align 8, !alias.scope !28, !nonnull !9, !noundef !9

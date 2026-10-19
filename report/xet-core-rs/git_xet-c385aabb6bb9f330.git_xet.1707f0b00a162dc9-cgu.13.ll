@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.g, %_RINvMs6_NtC
   %i.w = getelementptr inbounds [48 x i8], ptr %i.u, i64 %i.v
   %i.x = getelementptr inbounds i8, ptr %i.w, i64 -48
   %i.y = invoke noundef zeroext i1 @_RNvXCsjqcU1oJFKXj_9hashbrownNtNtCsexYYUdYSQU6_5alloc6string6StringINtB2_10EquivalentBq_E10equivalentCs1YANDSn9Kib_7git_xet(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.x)
-          to label %.noexc6 unwind label %.loopexit
+          to label %.noexc6 unwind label %.loopexit.split-lp
 
 .noexc6:                                          ; preds = %.lr.ph.i.i
   br i1 %i.y, label %bb.j, label %bb.e, !prof !7
@@ -284,7 +284,7 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 common.resume:                                    ; preds = %bb.p, %bb.k
-  %common.resume.op = phi { ptr, i32 } [ %i.aw, %bb.k ], [ %lpad.phi, %bb.p ]
+  %common.resume.op = phi { ptr, i32 } [ %i.aw, %bb.k ], [ %lpad.loopexit.split-lp, %bb.p ]
   resume { ptr, i32 } %common.resume.op
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs1YANDSn9Kib_7git_xet.exit: ; preds = %bb.j
@@ -325,28 +325,19 @@ bb.n:                                             ; preds = %bb.i, %bb.h
   store i64 -1, ptr %0, align 8
   br label %bb.m
 
-.loopexit:                                        ; preds = %.lr.ph.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %4
-
-.loopexit.split-lp:                               ; preds = %bb.c, %bb.a
+.loopexit.split-lp:                               ; preds = %.lr.ph.i.i, %bb.a, %bb.c
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %4
-
-4:                                                ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs1YANDSn9Kib_7git_xet(ptr noalias nofree noundef align 8 dereferenceable(24) %3) #22
           to label %bb.p unwind label %bb.o
 
-bb.o:                                             ; preds = %bb.p, %4
+bb.o:                                             ; preds = %bb.p, %.loopexit.split-lp
   %i.bp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-bb.p:                                             ; preds = %4
+bb.p:                                             ; preds = %.loopexit.split-lp
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs1YANDSn9Kib_7git_xet(ptr noalias nofree noundef align 8 dereferenceable(24) %2) #22
           to label %common.resume unwind label %bb.o
 }

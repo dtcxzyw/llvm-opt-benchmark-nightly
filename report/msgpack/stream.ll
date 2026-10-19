@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %_ZN7msgpack2v26pars
 bb.l:                                             ; preds = %bb.n, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   %i.ab = invoke noundef zeroext i1 @_ZN7msgpack2v28unpacker4nextERNS_2v113object_handleERb(ptr noundef nonnull align 8 dereferenceable(256) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
-          to label %bb.m unwind label %.loopexit
+          to label %bb.m unwind label %bb.o
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
@@ -212,17 +212,7 @@ bb.n:                                             ; preds = %bb.m
   invoke void @_ZN6Server15process_messageEN7msgpack2v26objectERSt10unique_ptrINS0_2v14zoneESt14default_deleteIS5_EE(ptr noundef nonnull align 8 dereferenceable(264) %0, ptr noundef nonnull byval(%"struct.msgpack::v2::object") align 8 %1, ptr noundef nonnull align 8 dereferenceable(8) %i.aa)
           to label %bb.l unwind label %bb.o, !llvm.loop !178
 
-.loopexit:                                        ; preds = %bb.l
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.x
-
-.loopexit.split-lp:                               ; preds = %bb.r
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.x
-
-bb.o:                                             ; preds = %bb.n
+bb.o:                                             ; preds = %bb.n, %bb.l, %bb.r
   %i.ac = landingpad { ptr, i32 }
           cleanup
   br label %bb.x
@@ -245,7 +235,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   invoke void @__cxa_throw(ptr nonnull %i.al, ptr nonnull @_ZTISt13runtime_error, ptr nonnull @_ZNSt13runtime_errorD1Ev) #28
-          to label %bb.z unwind label %.loopexit.split-lp
+          to label %bb.z unwind label %bb.o
 
 bb.s:                                             ; preds = %bb.q
   %i.am = landingpad { ptr, i32 }
@@ -313,8 +303,8 @@ _ZN7msgpack2v113object_handleD2Ev.exit:           ; preds = %bb.t, %_ZNKSt14defa
 bb.w:                                             ; preds = %bb.g, %bb.g, %_ZN7msgpack2v113object_handleD2Ev.exit
   ret void
 
-bb.x:                                             ; preds = %.loopexit, %.loopexit.split-lp, %bb.s, %bb.o
-  %.pn = phi { ptr, i32 } [ %i.ac, %bb.o ], [ %i.am, %bb.s ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.x:                                             ; preds = %bb.o, %bb.s
+  %.pn = phi { ptr, i32 } [ %i.ac, %bb.o ], [ %i.am, %bb.s ]
   call void @_ZN7msgpack2v113object_handleD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %1) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #26
   br label %bb.y

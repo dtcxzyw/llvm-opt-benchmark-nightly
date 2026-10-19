@@ -205,7 +205,7 @@ switch.lookup:                                    ; preds = %_ZNSt7__cxx1112basi
   store ptr %i.el, ptr %i.eg, align 8, !tbaa !96, !alias.scope !333
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ek, i8 0, i64 24, i1 false), !noalias !333
   %i.em = invoke noalias noundef nonnull dereferenceable(176) ptr @_Znwm(i64 noundef 176) #27
-          to label %bb.o unwind label %6          ; 14 uses
+          to label %bb.o unwind label %bb.r       ; 14 uses
 
 bb.o:                                             ; preds = %switch.lookup
   %i.en = invoke noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #27
@@ -292,18 +292,13 @@ bb.q:                                             ; preds = %bb.p
   invoke void @_ZN4pbrt8AsyncJobIiE6DoWorkEv(ptr noundef nonnull align 8 dereferenceable(176) %i.em)
           to label %bb.w unwind label %bb.r
 
-6:                                                ; preds = %switch.lookup
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt11unique_lockISt5mutexED2Ev.exit19.i
-
 .body.i:                                          ; preds = %bb.o
   %i.gc = landingpad { ptr, i32 }
           cleanup
   call void @_ZdlPvm(ptr noundef nonnull %i.em, i64 noundef 176) #28
   br label %_ZNSt11unique_lockISt5mutexED2Ev.exit19.i
 
-bb.r:                                             ; preds = %bb.q, %_ZNSt14_Function_baseD2Ev.exit.i
+bb.r:                                             ; preds = %bb.q, %_ZNSt14_Function_baseD2Ev.exit.i, %switch.lookup
   %i.gd = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt11unique_lockISt5mutexED2Ev.exit19.i
@@ -334,8 +329,8 @@ bb.v:                                             ; preds = %bb.u
   %i.gk = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.gg) #25 ; 0 uses
   br label %bb.w
 
-_ZNSt11unique_lockISt5mutexED2Ev.exit19.i:        ; preds = %bb.t, %bb.r, %.body.i, %6
-  %.pn.pn.i = phi { ptr, i32 } [ %7, %6 ], [ %i.gc, %.body.i ], [ %i.gd, %bb.r ], [ %i.gf, %bb.t ]
+_ZNSt11unique_lockISt5mutexED2Ev.exit19.i:        ; preds = %bb.t, %bb.r, %.body.i
+  %.pn.pn.i = phi { ptr, i32 } [ %i.gf, %bb.t ], [ %i.gc, %.body.i ], [ %i.gd, %bb.r ]
   call void @_ZN4pbrt5ImageD2Ev(ptr noundef nonnull align 8 dead_on_return(152) dereferenceable(152) %i.cy) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #25
   br label %.body

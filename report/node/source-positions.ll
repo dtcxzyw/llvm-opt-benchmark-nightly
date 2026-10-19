@@ -202,24 +202,30 @@ bb.a:
   %i.i = shl i64 %i.h, 27                         ; 3 uses
   %i.j = ashr exact i64 %i.i, 32                  ; 2 uses
   %i.k = icmp ugt i64 %i.j, 2305843009213693951
-  br i1 %i.k, label %.noexc, label %bb.b
+  br i1 %i.k, label %1, label %bb.b
 
-.noexc:                                           ; preds = %bb.a
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.14) #22
+1:                                                ; preds = %bb.a
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.14) #22
+          to label %.noexc unwind label %.loopexit.split-lp
+
+.noexc:                                           ; preds = %1
   unreachable
 
 bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %.not = icmp eq i64 %i.i, 0
-  br i1 %.not, label %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a
+  br i1 %.not, label %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i
 
-_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a: ; preds = %bb.b
+_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.b
+  %2 = ashr exact i64 %i.i, 30
+  %3 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %2) #25
+          to label %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a unwind label %.loopexit.split-lp ; 4 uses
+
+_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a: ; preds = %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = ashr exact i64 %i.i, 30
-  %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %1) #25 ; 4 uses
-  store ptr %2, ptr %0, align 8
-  store ptr %2, ptr %i.m, align 8
-  %i.n = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.j ; 2 uses
+  store ptr %3, ptr %0, align 8
+  store ptr %3, ptr %i.m, align 8
+  %i.n = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.j ; 2 uses
   store ptr %i.n, ptr %i.l, align 8
   %.pre = load ptr, ptr %i.c, align 8
   %.pre34 = load ptr, ptr %i.b, align 8
@@ -230,22 +236,22 @@ _ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i
 
 _ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit: ; preds = %bb.b, %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a
   %.pre-phi39 = phi i64 [ %i.h, %bb.b ], [ %.pre38, %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a ]
-  %.promoted18 = phi ptr [ null, %bb.b ], [ %2, %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a ] ; 3 uses
+  %.promoted18 = phi ptr [ null, %bb.b ], [ %3, %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a ] ; 3 uses
   %.promoted = phi ptr [ null, %bb.b ], [ %i.n, %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i.a ] ; 2 uses
   %i.o = lshr exact i64 %.pre-phi39, 5
   %i.p = trunc i64 %i.o to i32
   %i.q = icmp sgt i32 %i.p, 0
-  br i1 %i.q, label %.lr.ph, label %._crit_edge.a
+  br i1 %i.q, label %.lr.ph, label %bb.h
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit
-  %i.s = phi ptr [ %.promoted18, %.lr.ph ], [ %i.ba, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ] ; 7 uses
+  %i.s = phi ptr [ %.promoted18, %.lr.ph ], [ %i.ba, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ] ; 8 uses
   %.022 = phi i32 [ 0, %.lr.ph ], [ %i.bd, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ] ; 3 uses
   %i.t = phi ptr [ %.promoted, %.lr.ph ], [ %i.bc, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ] ; 4 uses
-  %i.u = phi ptr [ %.promoted18, %.lr.ph ], [ %i.bb, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ] ; 13 uses
+  %i.u = phi ptr [ %.promoted18, %.lr.ph ], [ %i.bb, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ] ; 12 uses
   %.not.i.i = icmp eq ptr %i.s, %i.t
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
@@ -375,41 +381,45 @@ _ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit: ; preds
   %i.bj = lshr exact i64 %i.bi, 5
   %i.bk = trunc i64 %i.bj to i32
   %i.bl = icmp slt i32 %i.bd, %i.bk
-  br i1 %i.bl, label %bb.c, label %._crit_edge.a, !llvm.loop !29
+  br i1 %i.bl, label %bb.c, label %bb.h, !llvm.loop !29
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   store ptr %i.t, ptr %i.l, align 8
   store ptr %i.u, ptr %0, align 8
-  br label %bb.h
+  br label %._crit_edge.a
 
-.loopexit.split-lp:                               ; preds = %bb.f
+.loopexit.split-lp:                               ; preds = %bb.f, %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i, %1
+  %4 = phi ptr [ %i.s, %bb.f ], [ null, %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i ], [ null, %1 ]
+  %5 = phi ptr [ %i.u, %bb.f ], [ null, %_ZNSt12_Vector_baseIN2v88internal6torque8SourceIdESaIS3_EE11_M_allocateEm.exit.i ], [ null, %1 ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %bb.h
+  br label %._crit_edge.a
 
-._crit_edge.a:                                    ; preds = %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit
-  %.lcssa19.a = phi ptr [ %.promoted18, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit ], [ %i.bb, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ]
-  %.lcssa15.a = phi ptr [ %.promoted, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit ], [ %i.bc, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ]
-  store ptr %.lcssa15.a, ptr %i.l, align 8
-  store ptr %.lcssa19.a, ptr %0, align 8
-  ret void
-
-bb.h:                                             ; preds = %.loopexit, %.loopexit.split-lp
-  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit ]
-  %.not.i.i.i = icmp eq ptr %i.u, null
+._crit_edge.a:                                    ; preds = %.loopexit.split-lp, %.loopexit
+  %.lcssa19.a = phi ptr [ %i.s, %.loopexit ], [ %4, %.loopexit.split-lp ]
+  %.lcssa15.a = phi ptr [ %i.u, %.loopexit ], [ %5, %.loopexit.split-lp ] ; 3 uses
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+  %.not.i.i.i = icmp eq ptr %.lcssa15.a, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EED2Ev.exit, label %bb.i
 
-bb.i:                                             ; preds = %bb.h
-  %i.bm = ptrtoint ptr %i.s to i64
-  %i.bn = ptrtoint ptr %i.u to i64
+bb.h:                                             ; preds = %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit
+  %.lcssa19 = phi ptr [ %.promoted18, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit ], [ %i.bb, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ]
+  %.lcssa15 = phi ptr [ %.promoted, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE7reserveEm.exit ], [ %i.bc, %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EE9push_backEOS3_.exit ]
+  store ptr %.lcssa15, ptr %i.l, align 8
+  store ptr %.lcssa19, ptr %0, align 8
+  ret void
+
+bb.i:                                             ; preds = %._crit_edge.a
+  %i.bm = ptrtoint ptr %.lcssa19.a to i64
+  %i.bn = ptrtoint ptr %.lcssa15.a to i64
   %i.bo = sub i64 %i.bm, %i.bn
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %i.bo) #24
+  tail call void @_ZdlPvm(ptr noundef nonnull %.lcssa15.a, i64 noundef %i.bo) #24
   br label %_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EED2Ev.exit
 
-_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EED2Ev.exit: ; preds = %bb.h, %bb.i
-  resume { ptr, i32 } %.pn
+_ZNSt6vectorIN2v88internal6torque8SourceIdESaIS3_EED2Ev.exit: ; preds = %._crit_edge.a, %bb.i
+  resume { ptr, i32 } %lpad.phi
 }
 
 ; Function Attrs: mustprogress uwtable

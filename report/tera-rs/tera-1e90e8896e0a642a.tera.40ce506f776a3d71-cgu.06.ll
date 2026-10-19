@@ -204,8 +204,8 @@ bb.v:                                             ; preds = %bb.u, %_RINvNtCsf3T
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #26, !dbg !21410, !noalias !21231
   unreachable, !dbg !21410
 
-common.resume.i.i:                                ; preds = %bb.ah, %3, %.body.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map8BTreeMapNtNtBK_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ComponentArgumentEEB21_.exit.i.i.i.i.i
-  %common.resume.op.i.i = phi { ptr, i32 } [ %lpad.phi, %3 ], [ %eh.lpad-body.i.i.i.i, %.body.i.i.i.i ], [ %.pn.pn.pn.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map8BTreeMapNtNtBK_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ComponentArgumentEEB21_.exit.i.i.i.i.i ], [ %i.du, %bb.ah ]
+common.resume.i.i:                                ; preds = %bb.ah, %.loopexit.split-lp, %.body.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map8BTreeMapNtNtBK_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ComponentArgumentEEB21_.exit.i.i.i.i.i
+  %common.resume.op.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %eh.lpad-body.i.i.i.i, %.body.i.i.i.i ], [ %.pn.pn.pn.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map8BTreeMapNtNtBK_6string6StringNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast17ComponentArgumentEEB21_.exit.i.i.i.i.i ], [ %i.du, %bb.ah ]
   resume { ptr, i32 } %common.resume.op.i.i, !dbg !21411
 
 _RNvXs2d_NtNtCs5yXxDE1DkoT_4tera7parsing3astNtB6_19ComponentDefinitionNtNtCsf3Ta7LF998c_4core5clone5Clone5clone.exit.i.i.i.i: ; preds = %bb.t
@@ -291,25 +291,16 @@ _RNvYTNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast19ComponentDefinitionNtNtB7_12instruc
     #dbg_value(i64 1, !21009, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !20349)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !dbg !21416, !noalias !21044
   invoke void @_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5yXxDE1DkoT_4tera(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.l, i64 noundef %.val11.i, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
-          to label %bb.aa unwind label %.loopexit, !dbg !21416, !noalias !21044
+          to label %bb.aa unwind label %.loopexit.split-lp, !dbg !21416, !noalias !21044
 
 select.unfold9.i.i.i:                             ; preds = %_RINvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB6_7HashMapNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCs5yXxDE1DkoT_4tera8template8TemplateNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE3geteEB1u_.exit.i.i.i, %._crit_edge.i.i54.i.i.i
     #dbg_value(ptr null, !20923, !DIExpression(), !20309)
   call void @_RNvNtCsf3Ta7LF998c_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 22, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #29, !dbg !21417, !noalias !21044
   unreachable, !dbg !21417
 
-.loopexit:                                        ; preds = %_RNvYTNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast19ComponentDefinitionNtNtB7_12instructions5ChunkENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneB9_.exit.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %3
-
-.loopexit.split-lp:                               ; preds = %bb.ab
+.loopexit.split-lp:                               ; preds = %_RNvYTNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast19ComponentDefinitionNtNtB7_12instructions5ChunkENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneB9_.exit.i.i.i, %bb.ab
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %3
-
-3:                                                ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast19ComponentDefinitionNtNtBG_12instructions5ChunkEEBI_(ptr noalias nofree noundef align 8 dereferenceable(168) %i.m) #25
           to label %common.resume.i.i unwind label %bb.af, !dbg !21418, !noalias !21044
 
@@ -353,7 +344,7 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ab
   unreachable
 
-bb.af:                                            ; preds = %3
+bb.af:                                            ; preds = %.loopexit.split-lp
   %i.dr = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #26, !dbg !21430, !noalias !21044

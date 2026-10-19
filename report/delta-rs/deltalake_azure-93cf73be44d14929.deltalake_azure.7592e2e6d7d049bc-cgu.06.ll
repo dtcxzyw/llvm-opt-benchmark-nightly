@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.f, %.noexc
   %i.s = getelementptr inbounds [32 x i8], ptr %i.q, i64 %i.r
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -32
   %i.u = invoke noundef zeroext i1 @_RNvXCs3gpiEk3WpjL_9hashbrownNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyINtB2_10EquivalentBq_E10equivalentCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.t)
-          to label %.noexc6 unwind label %.loopexit
+          to label %.noexc6 unwind label %.loopexit.split-lp
 
 .noexc6:                                          ; preds = %.lr.ph.i.i
   br i1 %i.u, label %bb.i, label %bb.d, !prof !4
@@ -304,29 +304,20 @@ bb.k:                                             ; preds = %bb.h, %bb.g
   store i64 -9223372036854775808, ptr %0, align 8
   br label %bb.j
 
-.loopexit:                                        ; preds = %.lr.ph.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %4
-
-.loopexit.split-lp:                               ; preds = %bb.b, %bb.a
+.loopexit.split-lp:                               ; preds = %.lr.ph.i.i, %bb.a, %bb.b
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %4
-
-4:                                                ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef align 8 dereferenceable(24) %3) #14
           to label %bb.m unwind label %bb.l
 
-bb.l:                                             ; preds = %4
+bb.l:                                             ; preds = %.loopexit.split-lp
   %i.bj = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #13
   unreachable
 
-bb.m:                                             ; preds = %4
-  resume { ptr, i32 } %lpad.phi
+bb.m:                                             ; preds = %.loopexit.split-lp
+  resume { ptr, i32 } %lpad.loopexit.split-lp
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable

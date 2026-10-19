@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %_ZSteqIcSt11char_tr
   %.0915.i = phi i64 [ 0, %bb.g ], [ %i.at, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread11.i ] ; 3 uses
   %i.al = trunc nuw nsw i64 %.0915.i to i32
   %i.am = invoke noundef ptr @_ZN4cvc58internal6theory8toStringENS1_11InferenceIdE(i32 noundef %i.al)
-          to label %.noexc unwind label %.loopexit ; 2 uses
+          to label %.noexc unwind label %.loopexit.split-lp ; 2 uses
 
 .noexc:                                           ; preds = %bb.h
   %i.an = load i64, ptr %i.ag, align 8, !tbaa !19 ; 3 uses
@@ -233,12 +233,7 @@ _ZN4cvc58internal9setWeightINS0_6theory11InferenceIdESt5arrayImLm413EEEEbRKNSt7_
   store i64 %i.ak, ptr %i.au, align 8, !tbaa !11
   br label %bb.o
 
-.loopexit:                                        ; preds = %bb.h
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.p
-
-.loopexit.split-lp:                               ; preds = %bb.e
+.loopexit.split-lp:                               ; preds = %bb.h, %bb.e
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.p
@@ -310,8 +305,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23: ; preds = %bb.
   %.not = icmp eq ptr %i.bi, %i.ae
   br i1 %.not, label %._crit_edge, label %bb.e
 
-bb.p:                                             ; preds = %.loopexit, %.loopexit.split-lp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.n
-  %.pn.pn = phi { ptr, i32 } [ %.pn33, %bb.n ], [ %i.ay, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ay, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.p:                                             ; preds = %.loopexit.split-lp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.n
+  %.pn.pn = phi { ptr, i32 } [ %.pn33, %bb.n ], [ %i.ay, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ay, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   %i.bj = load ptr, ptr %3, align 8, !tbaa !17    ; 2 uses
   %i.bk = icmp eq ptr %i.bj, %i.af

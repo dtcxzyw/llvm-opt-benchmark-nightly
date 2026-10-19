@@ -202,17 +202,12 @@ bb.be:                                            ; preds = %bb.an
   invoke void @_RNvNtCs2umgazJ8nt4_5quote9___private10push_pound(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ac)
           to label %bb.bg unwind label %.loopexit.split-lp
 
-bb.bf:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.cb, %bb.bv, %bb.bi
-  %.pn31 = phi { ptr, i32 } [ %.pn19, %bb.bi ], [ %.pn29, %bb.cb ], [ %i.dh, %bb.bv ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.bf:                                            ; preds = %.loopexit.split-lp, %bb.cb, %bb.bv, %bb.bi
+  %.pn31 = phi { ptr, i32 } [ %.pn19, %bb.bi ], [ %.pn29, %bb.cb ], [ %i.dh, %bb.bv ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtCslhcIeXEYQBj_11proc_macro211TokenStreamECslpqARw9yB40_26iceoryx2_bb_testing_macros(ptr noalias nofree noundef align 8 dereferenceable(32) %i.ac) #14
           to label %bb.bc unwind label %bb.ag
 
-.loopexit:                                        ; preds = %.lr.ph
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bf
-
-.loopexit.split-lp:                               ; preds = %bb.be, %bb.bg, %bb.bo, %bb.bp, %.preheader._crit_edge, %bb.bq, %bb.br, %bb.bs, %bb.bt, %bb.bx, %bb.by, %bb.bz, %bb.du
+.loopexit.split-lp:                               ; preds = %.lr.ph, %bb.du, %bb.bz, %bb.by, %bb.bx, %bb.bt, %bb.bs, %bb.br, %bb.bq, %.preheader._crit_edge, %bb.bp, %bb.bo, %bb.bg, %bb.be
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.bf
@@ -289,7 +284,7 @@ bb.bp:                                            ; preds = %bb.bo
 .lr.ph:                                           ; preds = %.preheader.preheader, %.preheader
   %.sroa.011.062 = phi ptr [ %i.df, %.preheader ], [ %i.da, %.preheader.preheader ] ; 2 uses
   invoke void @_RNvXNtNtCs2TChw36tfyQ_3syn4attr8printingNtB4_9AttributeNtNtCs2umgazJ8nt4_5quote9to_tokens8ToTokens9to_tokens(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(256) %.sroa.011.062, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ac)
-          to label %.preheader unwind label %.loopexit
+          to label %.preheader unwind label %.loopexit.split-lp
 
 .preheader._crit_edge:                            ; preds = %.preheader, %.preheader.preheader
   invoke void @_RNvXNtNtCs2TChw36tfyQ_3syn11restriction8printingNtB4_10VisibilityNtNtCs2umgazJ8nt4_5quote9to_tokens8ToTokens9to_tokens(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.bc, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ac)

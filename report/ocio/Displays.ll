@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   call void @_ZN16OpenColorIO_v2_536build_conversion_matrix_from_XYZ_D65ERKNS_9PrimariesENS_16AdaptationMethodE(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %3, ptr noundef nonnull align 8 dereferenceable(64) @_ZN16OpenColorIO_v2_57REC20209primariesE, i32 noundef 0)
   invoke void @_ZN16OpenColorIO_v2_514CreateMatrixOpERNS_10OpRcPtrVecERSt10shared_ptrINS_12MatrixOpData11MatrixArrayEENS_18TransformDirectionE(ptr noundef nonnull align 8 dereferenceable(144) %1, ptr noundef nonnull align 8 dereferenceable(16) %3, i32 noundef 0)
-          to label %bb.b unwind label %5
+          to label %bb.b unwind label %bb.v
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZN16OpenColorIO_v2_513CreateScaleOpERNS_10OpRcPtrVecEPKdNS_18TransformDirectionE(ptr noundef nonnull align 8 dereferenceable(144) %1, ptr noundef nonnull @"_ZZZN16OpenColorIO_v2_57DISPLAY11RegisterAllERNS_28BuiltinTransformRegistryImplEENK4$_21clERNS_10OpRcPtrVecEE6scale4", i32 noundef 0)
@@ -347,12 +347,7 @@ bb.u:                                             ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.y) #20
   br label %"_ZSt10__invoke_rIvRZN16OpenColorIO_v2_57DISPLAY11RegisterAllERNS0_28BuiltinTransformRegistryImplEE4$_21JRNS0_10OpRcPtrVecEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES9_E4typeEOSA_DpOSB_.exit"
 
-5:                                                ; preds = %bb.a
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body19.i.i.i
-
-bb.v:                                             ; preds = %bb.b
+bb.v:                                             ; preds = %bb.b, %bb.a
   %i.ao = landingpad { ptr, i32 }
           cleanup
   br label %.body19.i.i.i
@@ -383,8 +378,8 @@ bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %.body19.i.i.i
 
-.body19.i.i.i:                                    ; preds = %.body.i.i.i, %bb.w, %bb.v, %5, %bb.m, %bb.l
-  %.pn15.pn.i.i.i = phi { ptr, i32 } [ %6, %5 ], [ %i.ap, %bb.w ], [ %.pn.i.i.i, %.body.i.i.i ], [ %i.ao, %bb.v ], [ %i.s, %bb.m ], [ %i.s, %bb.l ]
+.body19.i.i.i:                                    ; preds = %.body.i.i.i, %bb.w, %bb.v, %bb.m, %bb.l
+  %.pn15.pn.i.i.i = phi { ptr, i32 } [ %i.ap, %bb.w ], [ %.pn.i.i.i, %.body.i.i.i ], [ %i.ao, %bb.v ], [ %i.s, %bb.m ], [ %i.s, %bb.l ]
   call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_512MatrixOpData11MatrixArrayELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   resume { ptr, i32 } %.pn15.pn.i.i.i

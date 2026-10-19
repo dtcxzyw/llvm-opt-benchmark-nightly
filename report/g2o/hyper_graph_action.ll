@@ -202,7 +202,7 @@ _ZN3g2o33HyperGraphElementActionCollection16unregisterActionERKSt10shared_ptrINS
 
 bb.g:                                             ; preds = %_ZN3g2o33HyperGraphElementActionCollection16unregisterActionERKSt10shared_ptrINS_23HyperGraphElementActionEE.exit
   %i.y = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #30
-          to label %_ZNSt7__cxx114listIPN3g2o33HyperGraphElementActionCollectionESaIS3_EE9push_backERKS3_.exit unwind label %3 ; 2 uses
+          to label %_ZNSt7__cxx114listIPN3g2o33HyperGraphElementActionCollectionESaIS3_EE9push_backERKS3_.exit unwind label %bb.q ; 2 uses
 
 _ZNSt7__cxx114listIPN3g2o33HyperGraphElementActionCollectionESaIS3_EE9push_backERKS3_.exit: ; preds = %bb.g
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
@@ -212,11 +212,6 @@ _ZNSt7__cxx114listIPN3g2o33HyperGraphElementActionCollectionESaIS3_EE9push_backE
   %i.ab = add i64 %i.aa, 1
   store i64 %i.ab, ptr %i.b, align 8, !tbaa !104
   br label %.thread
-
-3:                                                ; preds = %bb.g
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.q
 
 .thread:                                          ; preds = %.lr.ph, %_ZNSt7__cxx114listIPN3g2o33HyperGraphElementActionCollectionESaIS3_EE9push_backERKS3_.exit, %_ZN3g2o33HyperGraphElementActionCollection16unregisterActionERKSt10shared_ptrINS_23HyperGraphElementActionEE.exit, %bb.b
   %i.ac = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.017.026) #29 ; 2 uses
@@ -249,7 +244,7 @@ bb.h:                                             ; preds = %.lr.ph30, %_ZNSt3ma
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !101
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
   %i.ai = invoke { ptr, ptr } @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St10shared_ptrIN3g2o23HyperGraphElementActionEEESt10_Select1stISC_ESt4lessIS5_ESaISC_EE11equal_rangeERS7_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.ah)
-          to label %.noexc unwind label %5        ; 2 uses
+          to label %.noexc unwind label %bb.q     ; 2 uses
 
 .noexc:                                           ; preds = %bb.h
   %i.aj = extractvalue { ptr, ptr } %i.ai, 0      ; 3 uses
@@ -362,13 +357,9 @@ _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN3g
   %.not22 = icmp eq ptr %.sroa.012.0, %2
   br i1 %.not22, label %._crit_edge.loopexit, label %bb.h, !llvm.loop !94
 
-5:                                                ; preds = %bb.h
-  %6 = landingpad { ptr, i32 }
+bb.q:                                             ; preds = %bb.h, %bb.g
+  %lpad.loopexit.split-lp56 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.q
-
-bb.q:                                             ; preds = %5, %3
-  %.pn = phi { ptr, i32 } [ %4, %3 ], [ %6, %5 ]
   %i.bs = load ptr, ptr %2, align 8, !tbaa !98    ; 2 uses
   %.not8.i.i7 = icmp eq ptr %i.bs, %2
   br i1 %.not8.i.i7, label %_ZNSt7__cxx1110_List_baseIPN3g2o33HyperGraphElementActionCollectionESaIS3_EED2Ev.exit11, label %.lr.ph.i.i8
@@ -382,7 +373,7 @@ bb.q:                                             ; preds = %5, %3
 
 _ZNSt7__cxx1110_List_baseIPN3g2o33HyperGraphElementActionCollectionESaIS3_EED2Ev.exit11: ; preds = %.lr.ph.i.i8, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
-  resume { ptr, i32 } %.pn
+  resume { ptr, i32 } %lpad.loopexit.split-lp56
 }
 
 ; Function Attrs: mustprogress uwtable

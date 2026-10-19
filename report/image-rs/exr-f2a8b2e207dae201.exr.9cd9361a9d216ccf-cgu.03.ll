@@ -205,18 +205,9 @@ _RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i
   %i.ao = icmp eq i8 %i.an, 1
   br label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i
 
-.loopexit.i.i.i:                                  ; preds = %bb.n, %bb.m, %bb.j, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i
-  %lpad.loopexit.i.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %2
-
-.loopexit.split-lp.i.i.i:                         ; preds = %bb.g
+.loopexit.split-lp.i.i.i:                         ; preds = %bb.n, %bb.m, %bb.j, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i, %bb.g
   %lpad.loopexit.split-lp.i.i.i = landingpad { ptr, i32 }
           cleanup
-  br label %2
-
-2:                                                ; preds = %.loopexit.split-lp.i.i.i, %.loopexit.i.i.i
-  %lpad.phi.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i.i, %.loopexit.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtCs4wP2HXfJTCR_5alloc6string6StringAINtNtB4_6option6OptionjEj3_EECsdsTQD3x2eOp_3exr(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.a) #24
           to label %bb.w unwind label %bb.u, !noalias !237
 
@@ -225,12 +216,12 @@ _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i.i.i.i) ]
   %i.ap = load ptr, ptr %.val4.i.i.i.i, align 8, !noalias !240, !nonnull !4, !align !9, !noundef !4
   %i.aq = invoke noundef nonnull align 8 ptr @_RNvXso_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecANtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionj5_EINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexBO_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(336) %i.ap, i64 noundef %.sroa.5.0.copyload.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3)
-          to label %bb.j unwind label %.loopexit.i.i.i, !noalias !240 ; 2 uses
+          to label %bb.j unwind label %.loopexit.split-lp.i.i.i, !noalias !240 ; 2 uses
 
 bb.j:                                             ; preds = %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i
   %i.ar = load ptr, ptr %.val4.i.i.i.i, align 8, !noalias !240, !nonnull !4, !align !9, !noundef !4
   %i.as = invoke noundef nonnull align 8 ptr @_RNvXso_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecANtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionj5_EINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexBO_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(336) %i.ar, i64 noundef %.sroa.8.0.copyload.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4)
-          to label %bb.k unwind label %.loopexit.i.i.i, !noalias !240 ; 2 uses
+          to label %bb.k unwind label %.loopexit.split-lp.i.i.i, !noalias !240 ; 2 uses
 
 bb.k:                                             ; preds = %bb.j
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
@@ -251,12 +242,12 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.bd = load ptr, ptr %.val4.i.i.i.i, align 8, !noalias !240, !nonnull !4, !align !9, !noundef !4
   %i.be = invoke noundef nonnull align 8 ptr @_RNvXso_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecANtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionj5_EINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexBO_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(336) %i.bd, i64 noundef %.sroa.5.0.copyload.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5)
-          to label %bb.n unwind label %.loopexit.i.i.i, !noalias !240 ; 2 uses
+          to label %bb.n unwind label %.loopexit.split-lp.i.i.i, !noalias !240 ; 2 uses
 
 bb.n:                                             ; preds = %bb.m
   %i.bf = load ptr, ptr %.val4.i.i.i.i, align 8, !noalias !240, !nonnull !4, !align !9, !noundef !4
   %i.bg = invoke noundef nonnull align 8 ptr @_RNvXso_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecANtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionj5_EINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexBO_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(336) %i.bf, i64 noundef %.sroa.11.0.copyload.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6)
-          to label %bb.o unwind label %.loopexit.i.i.i, !noalias !240 ; 2 uses
+          to label %bb.o unwind label %.loopexit.split-lp.i.i.i, !noalias !240 ; 2 uses
 
 bb.o:                                             ; preds = %bb.n
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 40
@@ -303,7 +294,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtCs4wP2HXfJTCR_5alloc6string6StringA
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !234
   br i1 %storemerge.i.i.i.i.i, label %bb.v, label %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map19filter_map_try_foldTNtNtCs4wP2HXfJTCR_5alloc6string6StringAINtNtBa_6option6OptionjEj3_EAjB2g_INtNtNtB1j_3vec13in_place_drop11InPlaceDropB2k_EINtNtBa_6result6ResultB2q_zENCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_0NCINvNtB2v_16in_place_collect24write_in_place_with_dropB2k_E0E0B3M_.exit.i.i.i
 
-bb.u:                                             ; preds = %2
+bb.u:                                             ; preds = %.loopexit.split-lp.i.i.i
   %i.bu = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #25, !noalias !237
@@ -322,8 +313,8 @@ bb.v:                                             ; preds = %_RNCNvNtNtCsdsTQD3x
   %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.4.018.i.i.i, i64 24
   br label %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map19filter_map_try_foldTNtNtCs4wP2HXfJTCR_5alloc6string6StringAINtNtBa_6option6OptionjEj3_EAjB2g_INtNtNtB1j_3vec13in_place_drop11InPlaceDropB2k_EINtNtBa_6result6ResultB2q_zENCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_0NCINvNtB2v_16in_place_collect24write_in_place_with_dropB2k_E0E0B3M_.exit.i.i.i
 
-bb.w:                                             ; preds = %bb.s, %2, %common.resume.sink.split.i.i.i.i.i, %bb.d
-  %eh.lpad-body.ph.i.i.i.i = phi { ptr, i32 } [ %common.resume.op.ph.i.i.i.i.i, %common.resume.sink.split.i.i.i.i.i ], [ %lpad.phi.i.i.i, %2 ], [ %i.v, %bb.d ], [ %i.br, %bb.s ]
+bb.w:                                             ; preds = %bb.s, %.loopexit.split-lp.i.i.i, %common.resume.sink.split.i.i.i.i.i, %bb.d
+  %eh.lpad-body.ph.i.i.i.i = phi { ptr, i32 } [ %common.resume.op.ph.i.i.i.i.i, %common.resume.sink.split.i.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ], [ %i.v, %bb.d ], [ %i.br, %bb.s ]
   %i.bw = invoke noundef i64 @_RNvMNtNtCs4wP2HXfJTCR_5alloc3vec13in_place_dropINtB2_11InPlaceDropAjj3_E3lenCsdsTQD3x2eOp_3exr(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.b)
           to label %.body unwind label %bb.x, !noalias !234 ; 0 uses
 

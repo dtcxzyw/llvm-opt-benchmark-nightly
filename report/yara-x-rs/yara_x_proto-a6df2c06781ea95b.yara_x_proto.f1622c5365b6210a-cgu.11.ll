@@ -202,8 +202,8 @@ bb.l:                                             ; preds = %bb.i
   %i.an = invoke noundef zeroext i1 @_RNvMNtCskKLDkoKarTP_4core5sliceSh11starts_withCskIStwd7HrDO_12yara_x_proto(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.al, i64 noundef %i.ak, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 6)
           to label %bb.o unwind label %.loopexit.split-lp
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.aj, %bb.ak, %bb.al, %bb.au, %bb.y
-  %.pn = phi { ptr, i32 } [ %i.dk, %bb.au ], [ %i.bo, %bb.y ], [ %i.cu, %bb.aj ], [ %i.cu, %bb.al ], [ %i.cu, %bb.ak ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 3 uses
+.body:                                            ; preds = %.loopexit.split-lp, %bb.aj, %bb.ak, %bb.al, %bb.au, %bb.y
+  %.pn = phi { ptr, i32 } [ %i.dk, %bb.au ], [ %i.bo, %bb.y ], [ %i.cu, %bb.aj ], [ %i.cu, %bb.al ], [ %i.cu, %bb.ak ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !106)
   call void @llvm.experimental.noalias.scope.decl(metadata !107)
   call void @llvm.experimental.noalias.scope.decl(metadata !108)
@@ -225,12 +225,7 @@ bb.n:                                             ; preds = %bb.m
   invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtNtCsg2CeFYmfPbl_8protobuf7reflect4file7dynamic21DynamicFileDescriptorE9drop_slowBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.aq) #20
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect7message17MessageDescriptorECskIStwd7HrDO_12yara_x_proto.exit unwind label %bb.aa
 
-.loopexit:                                        ; preds = %bb.an
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %bb.l, %bb.t, %.loopexit64
+.loopexit.split-lp:                               ; preds = %bb.an, %.loopexit64, %bb.t, %bb.l
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -449,7 +444,7 @@ bb.am:                                            ; preds = %_RNCNvCskIStwd7HrDO
 bb.an:                                            ; preds = %bb.am
   fence acquire
   invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtNtCsg2CeFYmfPbl_8protobuf7reflect4file7dynamic21DynamicFileDescriptorE9drop_slowBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %.sroa.4.0..sroa_idx.i.i.i) #20
-          to label %.noexc45 unwind label %.loopexit
+          to label %.noexc45 unwind label %.loopexit.split-lp
 
 bb.ao:                                            ; preds = %bb.al
   %i.db = landingpad { ptr, i32 }

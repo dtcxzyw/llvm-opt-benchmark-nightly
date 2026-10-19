@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1257
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1257
   invoke fastcc void @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hbca03a2b6ddced5fE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef align 8 dereferenceable(16) %i.c)
-          to label %.noexc8.i unwind label %.loopexit.i, !noalias !1253
+          to label %.noexc8.i unwind label %.loopexit.split-lp.i, !noalias !1253
 
 .noexc8.i:                                        ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h3391ff29f6be33cbE.exit.i.i.i"
   %i.ae = load i64, ptr %i.b, align 8, !range !11, !noalias !1257, !noundef !7
@@ -225,18 +225,13 @@ bb.i:                                             ; preds = %bb.g
   call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #19, !noalias !1253
   unreachable
 
-.loopexit.i:                                      ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h3391ff29f6be33cbE.exit.i.i.i"
-  %lpad.loopexit.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i
-
-.loopexit.split-lp.i:                             ; preds = %bb.f
+.loopexit.split-lp.i:                             ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h3391ff29f6be33cbE.exit.i.i.i", %bb.f
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-.body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.g
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.af, %bb.g ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
+.body.i:                                          ; preds = %.loopexit.split-lp.i, %bb.g
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.af, %bb.g ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   invoke fastcc void @"_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17hca35f8ea3fc77352E"(ptr noalias noundef align 8 dereferenceable(24) %i.g) #18
           to label %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h4ee3a52d4d76c90eE.exit.i" unwind label %bb.j, !noalias !1253
 

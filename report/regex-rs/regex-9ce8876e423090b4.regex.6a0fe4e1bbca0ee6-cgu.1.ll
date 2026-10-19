@@ -184,12 +184,13 @@ bb.b:                                             ; preds = %bb.a
   br label %.body, !dbg !4860
 
 .body:                                            ; preds = %.body.i.i, %bb.b
-  %eh.lpad-body = phi { ptr, i32 } [ %i.e, %bb.b ], [ %lpad.phi.i.i.i.i.i.i, %.body.i.i ]
+  %eh.lpad-body = phi { ptr, i32 } [ %i.e, %bb.b ], [ %lpad.loopexit.split-lp.i.i.i.i.i, %.body.i.i ]
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs96z5GJ9HwjO_5regex8builders7BuilderEBF_(ptr noalias nofree noundef align 8 dereferenceable(184) %i.b) #19
           to label %bb.g unwind label %bb.f, !dbg !4860
 
-.body.i.i:                                        ; preds = %.loopexit.split-lp.i.i.i.i.i.i, %.loopexit.i.split.us.i.i.i.i.i
-  %lpad.phi.i.i.i.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp.i.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i.i ], [ %lpad.loopexit.i.us.i.i.i.i.i, %.loopexit.i.split.us.i.i.i.i.i ]
+.body.i.i:                                        ; preds = %.split.us.i.i.i.i.i, %.lr.ph.i.split.us.i.i.i.i.i
+  %lpad.loopexit.split-lp.i.i.i.i.i = landingpad { ptr, i32 }
+          cleanup
     #dbg_value(ptr poison, !4580, !DIExpression(), !4271)
     #dbg_value(ptr poison, !4683, !DIExpression(), !4274)
     #dbg_value(ptr poison, !4690, !DIExpression(), !4277)
@@ -308,7 +309,7 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(i64 1, !4822, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4381)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !4865, !noalias !4834
   invoke void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs96z5GJ9HwjO_5regex(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %.sroa.8.16.copyload, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
-          to label %.noexc.i.us.i.i.i.i.i unwind label %.loopexit.i.split.us.i.i.i.i.i, !dbg !4865, !noalias !4835
+          to label %.noexc.i.us.i.i.i.i.i unwind label %.body.i.i, !dbg !4865, !noalias !4835
 
 .noexc.i.us.i.i.i.i.i:                            ; preds = %.lr.ph.i.split.us.i.i.i.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -341,25 +342,15 @@ bb.d:                                             ; preds = %bb.c
     #dbg_value(i64 %.sroa.8.16.copyload, !4799, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !4419)
   br label %bb.e, !dbg !4874
 
-.loopexit.i.split.us.i.i.i.i.i:                   ; preds = %.lr.ph.i.split.us.i.i.i.i.i
-  %lpad.loopexit.i.us.i.i.i.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i.i
-
 .split.us.i.i.i.i.i:                              ; preds = %.noexc.i.us.i.i.i.i.i
   %i.m = load i64, ptr %i.f, align 8, !dbg !4875, !noalias !4834
     #dbg_value(i64 %i.j, !4817, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4420)
     #dbg_value(i64 %i.m, !4817, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4420)
   invoke void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef %i.j, i64 %i.m) #20
-          to label %.noexc9.i.i.i.i.i.i unwind label %.loopexit.split-lp.i.i.i.i.i.i, !dbg !4876, !noalias !4835
+          to label %.noexc9.i.i.i.i.i.i unwind label %.body.i.i, !dbg !4876, !noalias !4835
 
 .noexc9.i.i.i.i.i.i:                              ; preds = %.split.us.i.i.i.i.i
   unreachable, !dbg !4876
-
-.loopexit.split-lp.i.i.i.i.i.i:                   ; preds = %.split.us.i.i.i.i.i
-  %lpad.loopexit.split-lp.i.i.i.i.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i.i
 
 bb.e:                                             ; preds = %bb.d, %bb.c
     #dbg_value(i64 %.sroa.8.16.copyload, !4799, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !4419)

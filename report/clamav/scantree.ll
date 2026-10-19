@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.thread, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   call void @_ZN8FindFileC1Ev(ptr noundef nonnull align 8 dereferenceable(8208) %1)
   invoke void @_ZN8FindFile7SetMaskEPKw(ptr noundef nonnull align 8 dereferenceable(8208) %1, ptr noundef nonnull %i.a)
-          to label %bb.f unwind label %3
+          to label %bb.f unwind label %.loopexit.split-lp
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.backedge, %bb.f
   %i.k = invoke noundef zeroext i1 @_ZN8FindFile4NextEP8FindDatab(ptr noundef nonnull align 8 dereferenceable(8208) %1, ptr noundef nonnull %2, i1 noundef zeroext false)
-          to label %bb.h unwind label %.loopexit
+          to label %bb.h unwind label %bb.o
 
 bb.h:                                             ; preds = %bb.g
   br i1 %i.k, label %bb.i, label %bb.q
@@ -228,7 +228,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   invoke void @_Z8wcsncatzPwPKwm(ptr noundef nonnull %2, ptr noundef nonnull %i.j, i64 noundef 2048)
-          to label %bb.k unwind label %.loopexit
+          to label %bb.k unwind label %bb.o
 
 bb.k:                                             ; preds = %bb.j
   %i.n = invoke noundef ptr @_Z11PointToNamePKw(ptr noundef nonnull %2)
@@ -248,25 +248,16 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   invoke void @_Z18RemoveNameFromPathPw(ptr noundef nonnull %2)
           to label %bb.p unwind label %bb.o
 
-3:                                                ; preds = %bb.e
-  %4 = landingpad { ptr, i32 }
+.loopexit.split-lp:                               ; preds = %bb.e
+  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.t
 
-.loopexit:                                        ; preds = %bb.g, %bb.j
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %5
-
-.loopexit.split-lp:                               ; preds = %bb.r
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %5
-
-bb.o:                                             ; preds = %bb.p, %bb.n, %bb.k
+bb.o:                                             ; preds = %bb.g, %bb.j, %bb.p, %bb.n, %bb.k, %bb.r
   %i.s = landingpad { ptr, i32 }
           cleanup
-  br label %5
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
+  br label %bb.t
 
 bb.p:                                             ; preds = %bb.n, %bb.m
   invoke void @_ZN10StringList9AddStringEPKw(ptr noundef nonnull align 8 dereferenceable(184) %i.g, ptr noundef nonnull %2)
@@ -283,7 +274,7 @@ bb.q:                                             ; preds = %bb.h
 
 bb.r:                                             ; preds = %bb.q
   %i.w = invoke noundef zeroext i1 @_ZN10StringList9GetStringEPwm(ptr noundef nonnull align 8 dereferenceable(184) %i.g, ptr noundef nonnull %i.b, i64 noundef 2048)
-          to label %bb.s unwind label %.loopexit.split-lp ; 0 uses
+          to label %bb.s unwind label %bb.o       ; 0 uses
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
@@ -292,13 +283,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   ret i1 %i.v
 
-5:                                                ; preds = %.loopexit, %.loopexit.split-lp, %bb.o
-  %.pn = phi { ptr, i32 } [ %i.s, %bb.o ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
-  br label %bb.t
-
-bb.t:                                             ; preds = %5, %3
-  %.pn.pn = phi { ptr, i32 } [ %.pn, %5 ], [ %4, %3 ]
+bb.t:                                             ; preds = %bb.o, %.loopexit.split-lp
+  %.pn.pn = phi { ptr, i32 } [ %i.s, %bb.o ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call void @_ZN8FindFileD1Ev(ptr noundef nonnull align 8 dead_on_return(8208) dereferenceable(8208) %1) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13

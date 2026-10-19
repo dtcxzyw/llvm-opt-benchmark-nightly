@@ -106,7 +106,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #17
-          to label %.noexc12 unwind label %.loopexit.split-lp
+          to label %.noexc12 unwind label %bb.j
 
 .noexc12:                                         ; preds = %bb.f
   unreachable
@@ -122,7 +122,7 @@ _ZNKSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EE
   tail call void @llvm.assume(i1 %.not.i.i11)
   %i.z = shl nuw nsw i64 %i.y, 3
   %i.aa = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.z) #16
-          to label %.noexc13 unwind label %.loopexit ; 10 uses
+          to label %.noexc13 unwind label %bb.j   ; 10 uses
 
 .noexc13:                                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.s
@@ -240,23 +240,14 @@ bb.i:                                             ; preds = %bb.c
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 104) #18
   br label %bb.k
 
-.loopexit:                                        ; preds = %_ZNKSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
-  %lpad.loopexit = landingpad { ptr, i32 }
+bb.j:                                             ; preds = %_ZNKSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i, %bb.f
+  %lpad.loopexit.split-lp47 = landingpad { ptr, i32 }
           cleanup
-  br label %bb.j
-
-.loopexit.split-lp:                               ; preds = %bb.f
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.j
-
-bb.j:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call void @_ZNSt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %2) #15
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
-  %.pn = phi { ptr, i32 } [ %lpad.phi, %bb.j ], [ %i.bf, %bb.i ], [ %i.be, %bb.h ]
+  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp47, %bb.j ], [ %i.bf, %bb.i ], [ %i.be, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   call void @_ZNSt6vectorISt10unique_ptrIN5draco17AttributeMetadataESt14default_deleteIS2_EESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.a) #15
   call void @_ZN5draco8MetadataD2Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %0) #15

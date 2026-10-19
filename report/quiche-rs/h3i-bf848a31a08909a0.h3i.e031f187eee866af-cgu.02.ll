@@ -205,16 +205,7 @@ bb.ap:                                            ; preds = %bb.an
   %i.dq = icmp ult i16 %i.dp, 11, !dbg !8921
   br i1 %i.dq, label %bb.as, label %bb.ar, !dbg !8921
 
-.loopexit94:                                      ; preds = %bb.az
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-    #dbg_value(ptr poison, !7782, !DIExpression(DW_OP_LLVM_fragment, 768, 64), !8287)
-    #dbg_value(i64 poison, !7782, !DIExpression(DW_OP_LLVM_fragment, 832, 64), !8287)
-    #dbg_value(ptr poison, !7782, !DIExpression(DW_OP_LLVM_fragment, 896, 64), !8287)
-    #dbg_value(i64 poison, !7782, !DIExpression(DW_OP_LLVM_fragment, 960, 64), !8287)
-  br label %bb.bu
-
-.loopexit.split-lp:                               ; preds = %bb.ao
+.loopexit.split-lp:                               ; preds = %bb.az, %bb.ao
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.bu
@@ -617,7 +608,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax, %bb.
     #dbg_value(ptr undef, !8466, !DIExpression(), !7202)
     #dbg_value(i16 %i.dp, !8459, !DIExpression(DW_OP_LLVM_convert, 16, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !7359)
   %i.gd = invoke noundef nonnull align 8 ptr @_RNvMs_NtCsexYYUdYSQU6_5alloc5boxedINtB4_3BoxINtNtNtNtB6_11collections5btree4node12InternalNodeNtNtB6_6string6StringNtNtCsenfyI6F4F2A_10serde_json5value5ValueEE13new_uninit_inCsjfnSKV9Rz3v_3h3i()
-          to label %.noexc.i46 unwind label %.loopexit94, !dbg !8965, !noalias !8468 ; 14 uses
+          to label %.noexc.i46 unwind label %.loopexit.split-lp, !dbg !8965, !noalias !8468 ; 14 uses
 
 .noexc.i46:                                       ; preds = %bb.az
     #dbg_value(ptr %i.gd, !8528, !DIExpression(), !7360)
@@ -1020,8 +1011,8 @@ bb.bt:                                            ; preds = %bb.bv, %bb.bu
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23, !dbg !9061, !noalias !8762
   unreachable, !dbg !9061
 
-bb.bu:                                            ; preds = %.loopexit94, %.loopexit.split-lp, %bb.bo
-  %.pn.ph.i44 = phi { ptr, i32 } [ %.pn.i.i, %bb.bo ], [ %lpad.loopexit, %.loopexit94 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.bu:                                            ; preds = %.loopexit.split-lp, %bb.bo
+  %.pn.ph.i44 = phi { ptr, i32 } [ %.pn.i.i, %bb.bo ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsenfyI6F4F2A_10serde_json5value5ValueECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.k) #22
           to label %bb.bv unwind label %bb.bt, !dbg !9062, !noalias !8763
 

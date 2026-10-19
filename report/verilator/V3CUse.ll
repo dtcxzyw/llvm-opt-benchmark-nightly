@@ -202,7 +202,7 @@ _ZN12VNUser1InUseC2Ev.exit:
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 312
   %i.j = load ptr, ptr %i.i, align 8
   invoke void %i.j(ptr noundef nonnull align 8 dereferenceable(152) %1, ptr noundef nonnull align 8 dereferenceable(8) %0)
-          to label %_ZN14VNVisitorConst12iterateConstEP7AstNode.exit unwind label %7, !inline_history !0
+          to label %_ZN14VNVisitorConst12iterateConstEP7AstNode.exit unwind label %bb.n, !inline_history !0
 
 _ZN14VNVisitorConst12iterateConstEP7AstNode.exit: ; preds = %_ZN12VNUser1InUseC2Ev.exit
   %i.k = load ptr, ptr %i.e, align 8, !tbaa !109  ; 2 uses
@@ -221,11 +221,6 @@ _ZN14VNVisitorConst12iterateConstEP7AstNode.exit: ; preds = %_ZN12VNUser1InUseC2
 
 ._crit_edge:                                      ; preds = %bb.ab, %_ZN14VNVisitorConst12iterateConstEP7AstNode.exit
   ret void
-
-7:                                                ; preds = %_ZN12VNUser1InUseC2Ev.exit
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ac
 
 bb.a:                                             ; preds = %.lr.ph, %bb.ab
   %.sroa.055.074 = phi ptr [ %i.k, %.lr.ph ], [ %i.cr, %bb.ab ] ; 5 uses
@@ -395,7 +390,7 @@ bb.m:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.bn = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c(ptr noundef nonnull align 8 dereferenceable(8) %2, i8 noundef signext 10)
           to label %bb.v unwind label %bb.q       ; 0 uses
 
-bb.n:                                             ; preds = %bb.e, %_ZN13AstNodeModule9addStmtspEP7AstNode.exit, %bb.a
+bb.n:                                             ; preds = %bb.e, %_ZN13AstNodeModule9addStmtspEP7AstNode.exit, %bb.a, %_ZN12VNUser1InUseC2Ev.exit
   %i.bo = landingpad { ptr, i32 }
           cleanup
   br label %bb.ac
@@ -529,8 +524,8 @@ bb.ab:                                            ; preds = %_ZNSt7__cxx1112basi
   %.not58 = icmp eq ptr %i.cr, %i.c
   br i1 %.not58, label %._crit_edge, label %bb.a
 
-bb.ac:                                            ; preds = %bb.n, %bb.o, %bb.aa, %7
-  %.pn22.pn.pn.pn.pn = phi { ptr, i32 } [ %8, %7 ], [ %.pn22.pn.pn, %bb.aa ], [ %i.bo, %bb.n ], [ %i.bp, %bb.o ]
+bb.ac:                                            ; preds = %bb.n, %bb.o, %bb.aa
+  %.pn22.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bp, %bb.o ], [ %.pn22.pn.pn, %bb.aa ], [ %i.bo, %bb.n ]
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIP8FileLine8VUseTypeESt4lessIS5_ESaIS6_IKS5_SA_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %i.cs) #19

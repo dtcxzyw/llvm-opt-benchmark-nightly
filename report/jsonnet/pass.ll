@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %bb.b
   %i.j = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #22
-          to label %.noexc8 unwind label %.loopexit
+          to label %.noexc8 unwind label %.loopexit.split-lp
 
 .noexc8:                                          ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i.i, %.lr.ph
   %i.k = phi ptr [ null, %.lr.ph ], [ %i.j, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i.i ] ; 4 uses
@@ -240,18 +240,13 @@ bb.e:                                             ; preds = %.noexc8
   %.not = icmp eq ptr %i.y, %1
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !234
 
-.loopexit:                                        ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          catch ptr null
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %.noexc.i.i.i.i
+.loopexit.split-lp:                               ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i.i, %.noexc.i.i.i.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           catch ptr null
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.c, %bb.d
-  %eh.lpad-body = phi { ptr, i32 } [ %i.r, %bb.c ], [ %i.r, %bb.d ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.c, %bb.d
+  %eh.lpad-body = phi { ptr, i32 } [ %i.r, %bb.c ], [ %i.r, %bb.d ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.aa = extractvalue { ptr, i32 } %eh.lpad-body, 0
   %i.ab = tail call ptr @__cxa_begin_catch(ptr %i.aa) #21 ; 0 uses
   invoke void @_ZSt8_DestroyIPN7jsonnet8internal13FodderElementEEvT_S4_(ptr noundef %2, ptr noundef nonnull %.023)
@@ -654,7 +649,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 _ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %bb.b
   %i.l = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #22
-          to label %.noexc8 unwind label %.loopexit
+          to label %.noexc8 unwind label %.loopexit.split-lp
 
 .noexc8:                                          ; preds = %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i.i, %.lr.ph
   %i.m = phi ptr [ null, %.lr.ph ], [ %i.l, %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i.i ] ; 4 uses
@@ -692,18 +687,13 @@ bb.e:                                             ; preds = %.noexc8
   %.not = icmp eq ptr %i.aa, %1
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !243
 
-.loopexit:                                        ; preds = %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          catch ptr null
-  br label %.body
-
-.loopexit.split-lp:                               ; preds = %.noexc.i.i.i.i
+.loopexit.split-lp:                               ; preds = %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i.i, %.noexc.i.i.i.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           catch ptr null
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.c, %bb.d
-  %eh.lpad-body = phi { ptr, i32 } [ %i.t, %bb.c ], [ %i.t, %bb.d ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.c, %bb.d
+  %eh.lpad-body = phi { ptr, i32 } [ %i.t, %bb.c ], [ %i.t, %bb.d ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.ac = extractvalue { ptr, i32 } %eh.lpad-body, 0
   %i.ad = tail call ptr @__cxa_begin_catch(ptr %i.ac) #21 ; 0 uses
   invoke void @_ZSt8_DestroyIPN7jsonnet8internal5Array7ElementEEvT_S5_(ptr noundef %2, ptr noundef nonnull %.023)

@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %15 = alloca %"class.llvm::SmallPtrSet.295", align 8 ; 10 uses
   %16 = alloca %"class.llvm::SmallVector.298", align 8 ; 12 uses
-  %17 = alloca %"class.llvm::SetVector", align 16 ; 17 uses
+  %17 = alloca %"class.llvm::SetVector", align 16 ; 20 uses
   %i.b = alloca ptr, align 8                      ; 10 uses
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm13CodeExtractorE, i64 16), ptr %0, align 8, !tbaa !19
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -276,7 +276,7 @@ _ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EEC2IS2_vEENS_8ArrayRefIT_EE.exit: ; p
   %.idx.i16 = shl nuw nsw i64 %2, 3
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i16 ; 2 uses
   %.not72.i = icmp eq i64 %2, 0
-  br i1 %.not72.i, label %._crit_edge.i.a, label %.lr.ph.i
+  br i1 %.not72.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EEC2IS2_vEENS_8ArrayRefIT_EE.exit
   %.not35.i = icmp eq ptr %3, null
@@ -320,14 +320,18 @@ _ZN4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21, !noalias !400
   %i.ap = getelementptr inbounds nuw i8, ptr %.02973.us.i, i64 8 ; 2 uses
   %.not.us.i = icmp eq ptr %i.ap, %i.ab
-  br i1 %.not.us.i, label %._crit_edge.i.a, label %.lr.ph.split.us.i
+  br i1 %.not.us.i, label %._crit_edge.i, label %.lr.ph.split.us.i
 
-._crit_edge.i.a:                                  ; preds = %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit.thread.i, %_ZN4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EE6insertERKS2_.exit.us.i, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EEC2IS2_vEENS_8ArrayRefIT_EE.exit
+._crit_edge.i:                                    ; preds = %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit.thread.i, %_ZN4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EE6insertERKS2_.exit.us.i, %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj6EEC2IS2_vEENS_8ArrayRefIT_EE.exit
   %18 = load ptr, ptr %i.x, align 8, !tbaa !29, !noalias !400 ; 2 uses
   %19 = load i32, ptr %i.z, align 16, !tbaa !69, !noalias !400 ; 2 uses
   %20 = zext i32 %19 to i64
-  %.idx = shl nuw nsw i64 %20, 3
-  %21 = getelementptr inbounds nuw i8, ptr %18, i64 %.idx
+  %.idx83.i = shl nuw nsw i64 %20, 3
+  %21 = getelementptr inbounds nuw i8, ptr %18, i64 %.idx83.i
+  %.not3379.i = icmp eq i32 %19, 0
+  br i1 %.not3379.i, label %.critedge37.i, label %._crit_edge.i.a
+
+._crit_edge.i.a:                                  ; preds = %._crit_edge.i
   %i.aq = getelementptr inbounds nuw i8, ptr %15, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %15, i64 12 ; 3 uses
@@ -335,10 +339,9 @@ _ZN4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS
   %i.au = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 8 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %16, i64 12 ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 3 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %17, i64 20 ; 4 uses
-  %.not33.i36 = icmp eq i32 %19, 0
-  br i1 %.not33.i36, label %.critedge37.i, label %.lr.ph
+  %i.ax = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %17, i64 20 ; 2 uses
+  br label %.lr.ph
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit.thread.i
   %.02973.i = phi ptr [ %i.bt, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit.thread.i ], [ %1, %.lr.ph.i ] ; 2 uses
@@ -395,10 +398,10 @@ _ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21, !noalias !400
   %i.bt = getelementptr inbounds nuw i8, ptr %.02973.i, i64 8 ; 2 uses
   %.not.i = icmp eq ptr %i.bt, %i.ab
-  br i1 %.not.i, label %._crit_edge.i.a, label %.lr.ph.split.i
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.split.i
 
-.lr.ph:                                           ; preds = %._crit_edge.i.a, %_ZNK4llvm10BasicBlock7isEHPadEv.exit.i
-  %.0.i37 = phi ptr [ %i.pf, %_ZNK4llvm10BasicBlock7isEHPadEv.exit.i ], [ %18, %._crit_edge.i.a ] ; 2 uses
+.lr.ph:                                           ; preds = %_ZNK4llvm10BasicBlock7isEHPadEv.exit.i, %._crit_edge.i.a
+  %.0.i37 = phi ptr [ %18, %._crit_edge.i.a ], [ %i.pf, %_ZNK4llvm10BasicBlock7isEHPadEv.exit.i ] ; 2 uses
   %i.bu = load ptr, ptr %.0.i37, align 8, !tbaa !72, !noalias !400 ; 7 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 1
   %i.bw = load i8, ptr %i.bv, align 1, !noalias !400
@@ -801,7 +804,7 @@ _ZNK4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_N
   br i1 %.not309.i.i, label %_ZNK4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EE5countEPKS1_.exit.thread261.i.i, label %bb.v, !llvm.loop !393
 
 _ZNK4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EE5countEPKS1_.exit.thread261.i.i: ; preds = %bb.m, %_ZNK4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EE5countEPKS1_.exit.thread259.i.i, %bb.av, %_ZNK4llvm8CallBase17getCalledFunctionEv.exit.i.i, %bb.as, %bb.aq, %bb.ap, %.lr.ph352.preheader.i.i, %bb.ad, %bb.ac, %bb.z, %bb.y, %bb.w, %bb.ar, %bb.am, %bb.al, %bb.ai, %bb.ah, %bb.ae, %.lr.ph352.i.i, %bb.aa, %bb.an, %bb.aj, %bb.af, %.preheader.i.i
-  %.27.i.i = phi i1 [ false, %.lr.ph352.i.i ], [ false, %bb.af ], [ false, %bb.ar ], [ false, %bb.ai ], [ false, %bb.ae ], [ false, %bb.an ], [ false, %bb.aa ], [ true, %.preheader.i.i ], [ false, %bb.z ], [ false, %bb.aj ], [ false, %bb.am ], [ false, %bb.ah ], [ false, %bb.al ], [ false, %bb.y ], [ false, %bb.ac ], [ false, %bb.ad ], [ false, %bb.aq ], [ false, %bb.ap ], [ false, %bb.as ], [ false, %bb.av ], [ false, %_ZNK4llvm8CallBase17getCalledFunctionEv.exit.i.i ], [ false, %bb.w ], [ true, %_ZNK4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EE5countEPKS1_.exit.thread259.i.i ], [ false, %.lr.ph352.preheader.i.i ], [ false, %bb.m ]
+  %.27.i.i = phi i1 [ false, %.lr.ph352.i.i ], [ false, %bb.af ], [ false, %bb.ar ], [ false, %bb.ai ], [ true, %_ZNK4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EE5countEPKS1_.exit.thread259.i.i ], [ false, %bb.ae ], [ false, %bb.an ], [ true, %.preheader.i.i ], [ false, %bb.aj ], [ false, %bb.aa ], [ false, %bb.am ], [ false, %bb.ah ], [ false, %bb.al ], [ false, %.lr.ph352.preheader.i.i ], [ false, %bb.ac ], [ false, %bb.ad ], [ false, %bb.aq ], [ false, %bb.ap ], [ false, %bb.as ], [ false, %bb.av ], [ false, %_ZNK4llvm8CallBase17getCalledFunctionEv.exit.i.i ], [ false, %bb.w ], [ false, %bb.y ], [ false, %bb.z ], [ false, %bb.m ]
   %i.mx = load ptr, ptr %16, align 8, !tbaa !29, !noalias !400 ; 2 uses
   %i.my = icmp eq ptr %i.mx, %i.au
   br i1 %i.my, label %_ZN4llvm11SmallVectorIPKNS_4UserELj16EED2Ev.exit.i.i, label %bb.aw
@@ -947,18 +950,20 @@ _ZNK4llvm10BasicBlock7isEHPadEv.exit.i:           ; preds = %.critedge.i, %bb.bb
   %i.pg = icmp eq i32 %.pre56, 0
   br label %.critedge37.i
 
-.critedge37.i:                                    ; preds = %.critedge37.i.loopexit, %._crit_edge.i.a
-  %.not.i.i.i40.i = phi i1 [ %i.pg, %.critedge37.i.loopexit ], [ true, %._crit_edge.i.a ]
+.critedge37.i:                                    ; preds = %.critedge37.i.loopexit, %._crit_edge.i
+  %.not.i.i.i40.i = phi i1 [ %i.pg, %.critedge37.i.loopexit ], [ true, %._crit_edge.i ]
+  %22 = getelementptr inbounds nuw i8, ptr %17, i64 8
   %i.ph = load <2 x ptr>, ptr %17, align 16, !tbaa !104, !noalias !400
   store ptr null, ptr %17, align 16, !tbaa !136, !noalias !400
   store <2 x ptr> %i.ph, ptr %i.w, align 8, !tbaa !104, !alias.scope !400
-  store ptr null, ptr %i.ax, align 8, !tbaa !137, !noalias !400
+  store ptr null, ptr %22, align 8, !tbaa !137, !noalias !400
   %i.pi = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.pj = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
-  %i.pk = load <2 x i32>, ptr %i.pj, align 16, !tbaa !111, !noalias !400
-  store i32 0, ptr %i.pj, align 16, !tbaa !111, !noalias !400
+  %23 = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
+  %i.pj = getelementptr inbounds nuw i8, ptr %17, i64 20
+  %i.pk = load <2 x i32>, ptr %23, align 16, !tbaa !111, !noalias !400
+  store i32 0, ptr %23, align 16, !tbaa !111, !noalias !400
   store <2 x i32> %i.pk, ptr %i.pi, align 8, !tbaa !111, !alias.scope !400
-  store i32 0, ptr %i.ay, align 4, !tbaa !111, !noalias !400
+  store i32 0, ptr %i.pj, align 4, !tbaa !111, !noalias !400
   %i.pl = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %0, i64 168
   store ptr %i.pm, ptr %i.pl, align 8, !tbaa !29, !alias.scope !400
@@ -982,7 +987,8 @@ bb.be:                                            ; preds = %_ZN4llvm9SetVectorI
   br label %_ZN4llvm11SmallVectorIPNS_10BasicBlockELj0EED2Ev.exit.i.i
 
 _ZN4llvm11SmallVectorIPNS_10BasicBlockELj0EED2Ev.exit.i.i: ; preds = %bb.be, %_ZN4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EEC2EOS9_.exit.i
-  %i.ps = load i32, ptr %i.ay, align 4, !tbaa !135, !noalias !400 ; 2 uses
+  %24 = getelementptr inbounds nuw i8, ptr %17, i64 20
+  %i.ps = load i32, ptr %24, align 4, !tbaa !135, !noalias !400 ; 2 uses
   %i.pt = icmp eq i32 %i.ps, 0
   br i1 %i.pt, label %_ZL23buildExtractionBlockSetN4llvm8ArrayRefIPNS_10BasicBlockEEEPNS_13DominatorTreeEbb.exit, label %bb.bf
 

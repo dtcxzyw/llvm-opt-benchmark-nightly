@@ -204,11 +204,14 @@ _ZNSt6vectorIN4geos4geom8EnvelopeESaIS2_EEC2ERKS4_.exit: ; preds = %.lr.ph.i.i.i
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos11triangulate7polygon25VertexSequencePackedRtree19computeLevelOffsetsEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector.0") align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(104) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
-_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i.a:
+_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %4 = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #14 ; 4 uses
+  %4 = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #14
+          to label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i.a unwind label %.loopexit.split-lp ; 4 uses
+
+_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i.a: ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i
   store i64 0, ptr %4, align 8, !tbaa !51
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   store ptr %4, ptr %0, align 8, !tbaa !41
@@ -312,18 +315,20 @@ bb.f:                                             ; preds = %_ZNSt6vectorImSaImE
   store ptr %i.k, ptr %0, align 8
   br label %bb.g
 
-.loopexit.split-lp:                               ; preds = %bb.d
+.loopexit.split-lp:                               ; preds = %bb.d, %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i
+  %5 = phi ptr [ %i.k, %bb.d ], [ null, %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.g
 
-bb.g:                                             ; preds = %.loopexit, %.loopexit.split-lp
-  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit ]
-  %.not.i.i.i14 = icmp eq ptr %i.k, null
+bb.g:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %6 = phi ptr [ %i.k, %.loopexit ], [ %5, %.loopexit.split-lp ] ; 2 uses
+  %.pn = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+  %.not.i.i.i14 = icmp eq ptr %6, null
   br i1 %.not.i.i.i14, label %_ZNSt6vectorImSaImEED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_ZdlPv(ptr noundef nonnull %i.k) #16
+  tail call void @_ZdlPv(ptr noundef nonnull %6) #16
   br label %_ZNSt6vectorImSaImEED2Ev.exit
 
 _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %bb.g, %bb.h

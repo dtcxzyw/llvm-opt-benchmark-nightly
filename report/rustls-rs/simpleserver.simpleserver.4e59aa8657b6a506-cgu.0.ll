@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z, %_RINvNtCsj6e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !144
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !144
   invoke fastcc void @_RNvMsz_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB5_8IntoItertNtNtB7_7set_val9SetValZSTE10dying_nextCs6J3vw4sPBu4_12simpleserver(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.b)
-          to label %.noexc2 unwind label %.loopexit
+          to label %.noexc2 unwind label %.loopexit.split-lp.a
 
 .noexc2:                                          ; preds = %.lr.ph.i.i.i.i.i.i
   %i.at = load ptr, ptr %i.a, align 8, !noalias !144, !noundef !7
@@ -217,12 +217,7 @@ bb.ab:                                            ; preds = %.body27.i, %.body23
   tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #14
   unreachable
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.ac
-
-.loopexit.split-lp.a:                             ; preds = %bb.aa
+.loopexit.split-lp.a:                             ; preds = %.lr.ph.i.i.i.i.i.i, %bb.aa
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.ac
@@ -233,8 +228,8 @@ bb.ab:                                            ; preds = %.body27.i, %.body23
   call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef 200, i64 noundef 8) #15
   ret void
 
-bb.ac:                                            ; preds = %.loopexit, %.loopexit.split-lp.a, %.body27.i
-  %eh.lpad-body = phi { ptr, i32 } [ %.pn8.i, %.body27.i ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.a ]
+bb.ac:                                            ; preds = %.loopexit.split-lp.a, %.body27.i
+  %eh.lpad-body = phi { ptr, i32 } [ %.pn8.i, %.body27.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.a ]
   call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef 200, i64 noundef 8) #15
   resume { ptr, i32 } %eh.lpad-body
 }

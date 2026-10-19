@@ -99,17 +99,12 @@ bb.d:                                             ; preds = %_RINvNtCsG258MDvU3F
   tail call void @llvm.experimental.noalias.scope.decl(metadata !33)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !34
   invoke void @_RNvCskzEliSS7R8U_14slog_envlogger18parse_logging_spec(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.v, i64 noundef %i.x)
-          to label %bb.e unwind label %2, !noalias !35
+          to label %bb.e unwind label %bb.k, !noalias !35
 
-.thread.i:                                        ; preds = %bb.n, %bb.k, %.body.i, %2
-  %.pn.pn.i = phi { ptr, i32 } [ %i.at, %bb.n ], [ %3, %2 ], [ %i.an, %bb.k ], [ %i.ak, %.body.i ]
+.thread.i:                                        ; preds = %bb.n, %bb.k, %.body.i
+  %.pn.pn.i = phi { ptr, i32 } [ %i.at, %bb.n ], [ %i.ak, %.body.i ], [ %i.an, %bb.k ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCskzEliSS7R8U_14slog_envlogger10LogBuilderINtCseia3OTXDmOe_9slog_term13CompactFormatNtB1n_13TermDecoratorEEECsfG1pxJcRFT5_4raft(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.j) #12
           to label %.body unwind label %bb.m, !noalias !36
-
-2:                                                ; preds = %bb.d
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread.i
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !34
@@ -195,7 +190,7 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCskzEliSS7R8U_14s
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtCskzEliSS7R8U_14slog_envlogger12LogDirectiveEECsfG1pxJcRFT5_4raft(ptr noalias nofree noundef align 8 dereferenceable(32) %i.e)
           to label %bb.o unwind label %bb.k, !noalias !36
 
-bb.k:                                             ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCskzEliSS7R8U_14slog_envlogger12LogDirectiveENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfG1pxJcRFT5_4raft.exit.thread.i
+bb.k:                                             ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtCskzEliSS7R8U_14slog_envlogger12LogDirectiveENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsfG1pxJcRFT5_4raft.exit.thread.i, %bb.d
   %i.an = landingpad { ptr, i32 }
           cleanup
   br label %.thread.i

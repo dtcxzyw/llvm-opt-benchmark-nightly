@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   invoke void @_ZN7QObject18installEventFilterEPS_(ptr noundef nonnull align 8 dereferenceable_or_null(16) %i.r, ptr noundef %0)
-          to label %bb.n unwind label %7
+          to label %bb.n unwind label %bb.y
 
 bb.h:                                             ; preds = %bb.a
   %i.s = landingpad { ptr, i32 }
@@ -235,11 +235,6 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pn = phi { ptr, i32 } [ %i.w, %bb.l ], [ %i.v, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
-  br label %.body
-
-7:                                                ; preds = %bb.g
-  %8 = landingpad { ptr, i32 }
-          cleanup
   br label %.body
 
 bb.n:                                             ; preds = %bb.g, %bb.f
@@ -328,7 +323,7 @@ bb.x:                                             ; preds = %.noexc14, %bb.r, %b
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.z
 
-bb.y:                                             ; preds = %.noexc, %bb.w
+bb.y:                                             ; preds = %bb.g, %.noexc, %bb.w
   %i.ar = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -336,8 +331,8 @@ bb.y:                                             ; preds = %.noexc, %bb.w
 bb.z:                                             ; preds = %bb.x, %bb.n
   ret void
 
-.body:                                            ; preds = %bb.y, %bb.u, %bb.t, %7, %bb.m, %bb.j
-  %.pn10 = phi { ptr, i32 } [ %i.u, %bb.j ], [ %8, %7 ], [ %.pn, %bb.m ], [ %i.ar, %bb.y ], [ %i.aj, %bb.u ], [ %i.aj, %bb.t ]
+.body:                                            ; preds = %bb.y, %bb.u, %bb.t, %bb.m, %bb.j
+  %.pn10 = phi { ptr, i32 } [ %i.u, %bb.j ], [ %i.aj, %bb.t ], [ %.pn, %bb.m ], [ %i.ar, %bb.y ], [ %i.aj, %bb.u ]
   call void @_ZN5QFontD1Ev(ptr noundef nonnull align 8 dead_on_return(12) dereferenceable_or_null(12) %i.c) #25
   br label %bb.aa
 

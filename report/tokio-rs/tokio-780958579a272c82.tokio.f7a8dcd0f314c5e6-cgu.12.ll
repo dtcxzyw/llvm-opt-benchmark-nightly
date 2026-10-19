@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %1, ptr %i.c, align 4
   %i.d = invoke noundef i32 @_RNvXs_NtCskSTaaYajini_7socket27sockrefNtB4_7SockRefINtNtCs3oUPovFnLWP_4core7convert4FromRNtNtNtCsaL1QbXo9JQH_3std3net3udp9UdpSocketE4fromCslghKHtsL3a4_5tokio(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.c)
-          to label %bb.b unwind label %3          ; 0 uses
+          to label %bb.b unwind label %bb.e       ; 0 uses
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.experimental.noalias.scope.decl(metadata !218)
@@ -233,7 +233,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load ptr, ptr %i.k, align 8, !noalias !220 ; 2 uses
   br i1 %i.j, label %bb.f, label %bb.g
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %bb.a, %bb.b
   %i.m = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -264,16 +264,11 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store i64 %i.i, ptr %0, align 8, !alias.scope !218
   ret void
 
-.body:                                            ; preds = %bb.e, %.body.i.i, %3
-  %.sink = phi i32 [ %1, %bb.e ], [ %.val15.i.i.i, %.body.i.i ], [ %1, %3 ]
-  %eh.lpad-body4 = phi { ptr, i32 } [ %i.m, %bb.e ], [ %i.f, %.body.i.i ], [ %4, %3 ]
+.body:                                            ; preds = %bb.e, %.body.i.i
+  %.sink = phi i32 [ %1, %bb.e ], [ %.val15.i.i.i, %.body.i.i ]
+  %eh.lpad-body4 = phi { ptr, i32 } [ %i.m, %bb.e ], [ %i.f, %.body.i.i ]
   %i.q = call noundef i32 @close(i32 noundef %.sink) #18 ; 0 uses
   resume { ptr, i32 } %eh.lpad-body4
-
-3:                                                ; preds = %bb.a
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
 }
 
 ; Function Attrs: nonlazybind uwtable

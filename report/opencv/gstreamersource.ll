@@ -202,16 +202,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 bb.h:                                             ; preds = %bb.b
   %i.r = invoke ptr @gst_sample_get_caps(ptr noundef nonnull %i.j)
-          to label %bb.i unwind label %13         ; 3 uses
+          to label %bb.i unwind label %bb.w       ; 3 uses
 
 bb.i:                                             ; preds = %bb.h
   %.not = icmp eq ptr %i.r, null
   br i1 %.not, label %bb.j, label %bb.o
-
-13:                                               ; preds = %bb.h
-  %14 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bh
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
@@ -287,7 +282,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u
   unreachable
 
-bb.w:                                             ; preds = %bb.o
+bb.w:                                             ; preds = %bb.h, %bb.o
   %i.ac = landingpad { ptr, i32 }
           cleanup
   br label %bb.bh
@@ -567,8 +562,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #23
   br label %_ZNSt10unique_ptrI10_GstSamplePFvPS0_EED2Ev.exit52
 
-bb.bh:                                            ; preds = %bb.w, %bb.bg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit41, %13
-  %.pn33.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.ac, %bb.w ], [ %.pn33.pn, %bb.bg ], [ %.pn20, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit41 ], [ %14, %13 ]
+bb.bh:                                            ; preds = %bb.w, %bb.bg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit41
+  %.pn33.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %.pn33.pn, %bb.bg ], [ %.pn20, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit41 ], [ %i.ac, %bb.w ]
   invoke void @gst_mini_object_unref(ptr noundef nonnull %i.j)
           to label %_ZNSt10unique_ptrI10_GstSamplePFvPS0_EED2Ev.exit52 unwind label %bb.bi
 

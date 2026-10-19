@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.m
 
 bb.c:                                             ; preds = %bb.b
   %i.i = invoke zeroext i1 @_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interruptedCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.c)
-          to label %bb.j unwind label %.loopexit9
+          to label %bb.j unwind label %bb.h
 
 bb.d:                                             ; preds = %bb.b
   %i.j = icmp eq ptr %i.f, null
@@ -221,25 +221,16 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 %i.h, i64 %.sroa.6.016, i64 %.sroa.6.016, ptr nonnull align 8 @7) #16
-          to label %bb.i unwind label %.loopexit.split-lp
+          to label %bb.i unwind label %bb.h
 
 bb.g:                                             ; preds = %bb.j
   %.pre = load i64, ptr %i.a, align 8
   %i.n = trunc nuw i64 %.pre to i1
   br i1 %i.n, label %bb.l, label %bb.m
 
-.loopexit9:                                       ; preds = %bb.c
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.h
-
-.loopexit.split-lp:                               ; preds = %bb.f
+bb.h:                                             ; preds = %bb.c, %bb.f
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %bb.h
-
-bb.h:                                             ; preds = %.loopexit.split-lp, %.loopexit9
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit9 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.o = load i64, ptr %i.a, align 8
   %i.p = icmp eq i64 %i.o, 1
   br i1 %i.p, label %bb.n, label %bb.o
@@ -273,7 +264,7 @@ bb.n:                                             ; preds = %bb.h
           to label %bb.o unwind label %bb.p
 
 bb.o:                                             ; preds = %bb.n, %bb.h
-  resume { ptr, i32 } %lpad.phi
+  resume { ptr, i32 } %lpad.loopexit.split-lp
 
 bb.p:                                             ; preds = %bb.n
   %i.s = landingpad { ptr, i32 }

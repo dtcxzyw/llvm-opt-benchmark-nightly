@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
   %.031 = phi i64 [ %i.j, %bb.f ], [ 0, %bb.d ]   ; 2 uses
   %.01530 = phi i64 [ %i.i, %bb.f ], [ 0, %bb.d ]
   %i.f = invoke noundef nonnull align 8 dereferenceable(91) ptr @_ZNK6duckdb6vectorIN14duckdb_parquet8RowGroupELb1ESaIS2_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef %.031)
-          to label %bb.f unwind label %10
+          to label %bb.f unwind label %bb.t
 
 bb.f:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 40
@@ -211,11 +211,6 @@ bb.f:                                             ; preds = %.lr.ph
   %i.j = add nuw i64 %.031, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.j, %4
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !72
-
-10:                                               ; preds = %.lr.ph
-  %11 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.u
 
 bb.g:                                             ; preds = %._crit_edge
   invoke void @_ZN6duckdb12NumericStats6SetMinERNS_14BaseStatisticsERKNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(128) %6, ptr noundef nonnull align 8 dereferenceable(64) %8)
@@ -286,13 +281,13 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   br label %bb.u
 
-bb.t:                                             ; preds = %bb.l, %bb.k
+bb.t:                                             ; preds = %.lr.ph, %bb.l, %bb.k
   %i.s = landingpad { ptr, i32 }
           cleanup
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.t, %bb.s, %bb.p, %10
-  %.pn26 = phi { ptr, i32 } [ %11, %10 ], [ %i.s, %bb.t ], [ %.pn24, %bb.s ], [ %.pn, %bb.p ]
+bb.u:                                             ; preds = %bb.t, %bb.s, %bb.p
+  %.pn26 = phi { ptr, i32 } [ %.pn, %bb.p ], [ %.pn24, %bb.s ], [ %i.s, %bb.t ]
   call void @_ZN6duckdb14BaseStatisticsD1Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %6) #18
   br label %bb.v
 
