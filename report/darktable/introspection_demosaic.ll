@@ -205,7 +205,7 @@ bb.qo:                                            ; preds = %.thread1.i
   %bound02008 = icmp ult ptr %i.pvm, %scevgep1996
   %bound12009 = icmp ult ptr %i.anw, %scevgep1994
   %found.conflict2010 = and i1 %bound02008, %bound12009
-  %conflict.rdx2013 = or i1 %found.conflict2010, %conflict.rdx2007
+  %conflict.rdx2013 = or i1 %conflict.rdx2007, %found.conflict2010
   %bound01962 = icmp ult ptr %scevgep1955, %scevgep1958
   %bound11963 = icmp ult ptr %scevgep1957, %scevgep1956
   %found.conflict1964 = and i1 %bound01962, %bound11963
@@ -217,7 +217,7 @@ bb.qo:                                            ; preds = %.thread1.i
   %bound01973 = icmp ult ptr %scevgep1957, %scevgep1961
   %bound11974 = icmp ult ptr %scevgep1959, %scevgep1958
   %found.conflict1975 = and i1 %bound01973, %bound11974
-  %conflict.rdx1978 = or i1 %found.conflict1975, %conflict.rdx1972
+  %conflict.rdx1978 = or i1 %conflict.rdx1972, %found.conflict1975
   br label %.preheader.i.i583
 
 .preheader.i.i583:                                ; preds = %.preheader.i.i583.preheader, %._crit_edge.i.i585

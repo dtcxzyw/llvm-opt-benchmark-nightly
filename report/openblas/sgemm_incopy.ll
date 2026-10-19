@@ -147,8 +147,8 @@ bb.a:
   %scevgep714 = getelementptr i8, ptr %2, i64 %i.cg
   %i.cl = getelementptr i8, ptr %2, i64 %i.ck
   %scevgep715 = getelementptr i8, ptr %i.cl, i64 -4
-  %i.cm = insertelement <16 x ptr> poison, ptr %scevgep672, i64 0
-  %i.cn = insertelement <16 x ptr> %i.cm, ptr %scevgep670, i64 1
+  %i.cm = insertelement <16 x ptr> poison, ptr %scevgep670, i64 0
+  %i.cn = insertelement <16 x ptr> %i.cm, ptr %scevgep672, i64 1
   %i.co = insertelement <16 x ptr> %i.cn, ptr %scevgep674, i64 2
   %i.cp = insertelement <16 x ptr> %i.co, ptr %scevgep676, i64 3
   %i.cq = insertelement <16 x ptr> %i.cp, ptr %scevgep678, i64 4
@@ -163,8 +163,8 @@ bb.a:
   %i.cz = insertelement <16 x ptr> %i.cy, ptr %scevgep695, i64 13
   %i.da = insertelement <16 x ptr> %i.cz, ptr %scevgep697, i64 14
   %i.db = insertelement <16 x ptr> %i.da, ptr %scevgep699, i64 15
-  %i.dc = insertelement <16 x ptr> poison, ptr %scevgep671, i64 0
-  %i.dd = insertelement <16 x ptr> %i.dc, ptr %scevgep669, i64 1
+  %i.dc = insertelement <16 x ptr> poison, ptr %scevgep669, i64 0
+  %i.dd = insertelement <16 x ptr> %i.dc, ptr %scevgep671, i64 1
   %i.de = insertelement <16 x ptr> %i.dd, ptr %scevgep673, i64 2
   %i.df = insertelement <16 x ptr> %i.de, ptr %scevgep675, i64 3
   %i.dg = insertelement <16 x ptr> %i.df, ptr %scevgep677, i64 4
@@ -194,7 +194,7 @@ bb.a:
   %i.ee = insertelement <8 x ptr> %i.ed, ptr %scevgep714, i64 7
   %i.ef = shufflevector <2 x ptr> %i.bj, <2 x ptr> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.eg = shufflevector <16 x ptr> %i.do, <16 x ptr> %i.ef, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 16, i32 17, i32 poison>
-  %min.iters.check = icmp ult i64 %i.c, 48
+  %min.iters.check = icmp ult i64 %i.c, 32
   %stride.check719 = icmp slt i64 %.idx, 0
   %i.eh = insertelement <16 x ptr> %i.eg, ptr %scevgep698, i64 15
   %n.vec = and i64 %i.c, 9223372036854775800      ; 4 uses

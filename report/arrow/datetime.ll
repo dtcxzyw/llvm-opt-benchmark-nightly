@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN14arrow_vendored4date13get_tzdb_listEvE5tz_db) #30
   br label %bb.e
 
@@ -607,7 +607,7 @@ bb.aa:                                            ; preds = %bb.z
           to label %bb.ab unwind label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ea = call i32 @__cxa_atexit(ptr nonnull @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.ea = call i32 @__cxa_atexit(ptr @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN14arrow_vendored4date13get_tzdb_listEvE5tz_db) #30
   br label %_ZN14arrow_vendored4date13get_tzdb_listEv.exit
 
@@ -1010,7 +1010,7 @@ bb.l:                                             ; preds = %bb.k
           to label %bb.m unwind label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.bp = call i32 @__cxa_atexit(ptr nonnull @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.bp = call i32 @__cxa_atexit(ptr @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN14arrow_vendored4date13get_tzdb_listEvE5tz_db) #30
   br label %_ZN14arrow_vendored4date13get_tzdb_listEv.exit
 
@@ -1413,7 +1413,7 @@ bb.n:                                             ; preds = %bb.m
           to label %bb.o unwind label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.bo = call i32 @__cxa_atexit(ptr nonnull @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.bo = call i32 @__cxa_atexit(ptr @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN14arrow_vendored4date13get_tzdb_listEvE5tz_db) #30
   br label %_ZN14arrow_vendored4date13get_tzdb_listEv.exit
 
@@ -1816,7 +1816,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN14arrow_vendored4date13get_tzdb_listEvE5tz_db) #30
   br label %_ZN14arrow_vendored4date13get_tzdb_listEv.exit
 
@@ -2219,7 +2219,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN14arrow_vendored4date13get_tzdb_listEvE5tz_db) #30
   br label %_ZN14arrow_vendored4date8get_tzdbEv.exit
 
@@ -2622,7 +2622,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN14arrow_vendored4date9tzdb_listD1Ev, ptr nonnull @_ZZN14arrow_vendored4date13get_tzdb_listEvE5tz_db, ptr nonnull @__dso_handle) #30 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN14arrow_vendored4date13get_tzdb_listEvE5tz_db) #30
   br label %_ZN14arrow_vendored4date8get_tzdbEv.exit
 

@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
 
 __cxx_global_var_init.12.exit:                    ; preds = %bb.a, %bb.b, %bb.d
   tail call void @_ZN6casadi6SXElemC1EPNS_6SXNodeEb(ptr noundef nonnull align 8 dereferenceable(8) @_ZN6casadi13casadi_limitsINS_6SXElemEE4zeroE, ptr noundef nonnull @_ZZN6casadi6ZeroSX9singletonEvE8instance, i1 noundef zeroext false)
-  %i.j = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE4zeroE, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.j = tail call i32 @__cxa_atexit(ptr @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE4zeroE, ptr nonnull @__dso_handle) #30 ; 0 uses
   %i.k = load atomic i8, ptr @_ZGVZN6casadi5OneSX9singletonEvE8instance acquire, align 8
   %i.l = icmp eq i8 %i.k, 0
   br i1 %i.l, label %bb.f, label %__cxx_global_var_init.13.exit, !prof !387
@@ -233,7 +233,7 @@ bb.i:                                             ; preds = %bb.g
 
 __cxx_global_var_init.13.exit:                    ; preds = %__cxx_global_var_init.12.exit, %bb.f, %bb.h
   tail call void @_ZN6casadi6SXElemC1EPNS_6SXNodeEb(ptr noundef nonnull align 8 dereferenceable(8) @_ZN6casadi13casadi_limitsINS_6SXElemEE3oneE, ptr noundef nonnull @_ZZN6casadi5OneSX9singletonEvE8instance, i1 noundef zeroext false)
-  %i.r = tail call i32 @__cxa_atexit(ptr nonnull @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE3oneE, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.r = tail call i32 @__cxa_atexit(ptr @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE3oneE, ptr nonnull @__dso_handle) #30 ; 0 uses
   %i.s = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN6casadi9IntegerSX17cached_constants_E, i64 24), align 8, !tbaa !40
   %.not.not.i.i.i.i = icmp eq i64 %i.s, 0
   br i1 %.not.not.i.i.i.i, label %.preheader.i.i, label %bb.k
@@ -318,7 +318,7 @@ _ZNSt13unordered_mapIxPN6casadi9IntegerSXESt4hashIxESt8equal_toIxESaISt4pairIKxS
 __cxx_global_var_init.14.exit:                    ; preds = %bb.o, %_ZNSt13unordered_mapIxPN6casadi9IntegerSXESt4hashIxESt8equal_toIxESaISt4pairIKxS2_EEE4findERS8_.exit.i.i
   %.0.i.i = phi ptr [ %i.ak, %bb.o ], [ %i.aq, %_ZNSt13unordered_mapIxPN6casadi9IntegerSXESt4hashIxESt8equal_toIxESaISt4pairIKxS2_EEE4findERS8_.exit.i.i ]
   call void @_ZN6casadi6SXElemC1EPNS_6SXNodeEb(ptr noundef nonnull align 8 dereferenceable(8) @_ZN6casadi13casadi_limitsINS_6SXElemEE3twoE, ptr noundef %.0.i.i, i1 noundef zeroext false)
-  %i.ar = call i32 @__cxa_atexit(ptr nonnull @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE3twoE, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.ar = call i32 @__cxa_atexit(ptr @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE3twoE, ptr nonnull @__dso_handle) #30 ; 0 uses
   %i.as = load atomic i8, ptr @_ZGVZN6casadi10MinusOneSX9singletonEvE8instance acquire, align 8
   %i.at = icmp eq i8 %i.as, 0
   br i1 %i.at, label %bb.q, label %__cxx_global_var_init.15.exit, !prof !387
@@ -349,7 +349,7 @@ bb.t:                                             ; preds = %bb.r
 
 __cxx_global_var_init.15.exit:                    ; preds = %__cxx_global_var_init.14.exit, %bb.q, %bb.s
   call void @_ZN6casadi6SXElemC1EPNS_6SXNodeEb(ptr noundef nonnull align 8 dereferenceable(8) @_ZN6casadi13casadi_limitsINS_6SXElemEE9minus_oneE, ptr noundef nonnull @_ZZN6casadi10MinusOneSX9singletonEvE8instance, i1 noundef zeroext false)
-  %i.az = call i32 @__cxa_atexit(ptr nonnull @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE9minus_oneE, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.az = call i32 @__cxa_atexit(ptr @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE9minus_oneE, ptr nonnull @__dso_handle) #30 ; 0 uses
   %i.ba = load atomic i8, ptr @_ZGVZN6casadi5NanSX9singletonEvE8instance acquire, align 8
   %i.bb = icmp eq i8 %i.ba, 0
   br i1 %i.bb, label %bb.u, label %__cxx_global_var_init.16.exit, !prof !387
@@ -380,7 +380,7 @@ bb.x:                                             ; preds = %bb.v
 
 __cxx_global_var_init.16.exit:                    ; preds = %__cxx_global_var_init.15.exit, %bb.u, %bb.w
   call void @_ZN6casadi6SXElemC1EPNS_6SXNodeEb(ptr noundef nonnull align 8 dereferenceable(8) @_ZN6casadi13casadi_limitsINS_6SXElemEE3nanE, ptr noundef nonnull @_ZZN6casadi5NanSX9singletonEvE8instance, i1 noundef zeroext false)
-  %i.bh = call i32 @__cxa_atexit(ptr nonnull @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE3nanE, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.bh = call i32 @__cxa_atexit(ptr @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE3nanE, ptr nonnull @__dso_handle) #30 ; 0 uses
   %i.bi = load atomic i8, ptr @_ZGVZN6casadi5InfSX9singletonEvE8instance acquire, align 8
   %i.bj = icmp eq i8 %i.bi, 0
   br i1 %i.bj, label %bb.y, label %__cxx_global_var_init.17.exit, !prof !387
@@ -411,7 +411,7 @@ bb.ab:                                            ; preds = %bb.z
 
 __cxx_global_var_init.17.exit:                    ; preds = %__cxx_global_var_init.16.exit, %bb.y, %bb.aa
   call void @_ZN6casadi6SXElemC1EPNS_6SXNodeEb(ptr noundef nonnull align 8 dereferenceable(8) @_ZN6casadi13casadi_limitsINS_6SXElemEE3infE, ptr noundef nonnull @_ZZN6casadi5InfSX9singletonEvE8instance, i1 noundef zeroext false)
-  %i.bp = call i32 @__cxa_atexit(ptr nonnull @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE3infE, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.bp = call i32 @__cxa_atexit(ptr @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE3infE, ptr nonnull @__dso_handle) #30 ; 0 uses
   %i.bq = load atomic i8, ptr @_ZGVZN6casadi10MinusInfSX9singletonEvE8instance acquire, align 8
   %i.br = icmp eq i8 %i.bq, 0
   br i1 %i.br, label %bb.ac, label %__cxx_global_var_init.18.exit, !prof !387
@@ -442,7 +442,7 @@ bb.af:                                            ; preds = %bb.ad
 
 __cxx_global_var_init.18.exit:                    ; preds = %__cxx_global_var_init.17.exit, %bb.ac, %bb.ae
   call void @_ZN6casadi6SXElemC1EPNS_6SXNodeEb(ptr noundef nonnull align 8 dereferenceable(8) @_ZN6casadi13casadi_limitsINS_6SXElemEE9minus_infE, ptr noundef nonnull @_ZZN6casadi10MinusInfSX9singletonEvE8instance, i1 noundef zeroext false)
-  %i.bx = call i32 @__cxa_atexit(ptr nonnull @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE9minus_infE, ptr nonnull @__dso_handle) #30 ; 0 uses
+  %i.bx = call i32 @__cxa_atexit(ptr @_ZN6casadi6SXElemD1Ev, ptr nonnull @_ZN6casadi13casadi_limitsINS_6SXElemEE9minus_infE, ptr nonnull @__dso_handle) #30 ; 0 uses
   ret void
 }
 

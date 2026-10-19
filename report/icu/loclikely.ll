@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.j unwind label %bb.r
 
 bb.j:                                             ; preds = %bb.i
-  %i.u = call i32 @__cxa_atexit(ptr nonnull @_ZN6icu_7817RegionValidateMapD1Ev, ptr nonnull @_ZZN12_GLOBAL__N_116GetRegionFromKeyEPKcSt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeE5valid, ptr nonnull @__dso_handle) #14 ; 0 uses
+  %i.u = call i32 @__cxa_atexit(ptr @_ZN6icu_7817RegionValidateMapD1Ev, ptr nonnull @_ZZN12_GLOBAL__N_116GetRegionFromKeyEPKcSt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeE5valid, ptr nonnull @__dso_handle) #14 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN12_GLOBAL__N_116GetRegionFromKeyEPKcSt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeE5valid) #14
   br label %bb.k
 

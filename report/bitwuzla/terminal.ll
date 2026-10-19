@@ -174,10 +174,10 @@ define internal void @_GLOBAL__sub_I_terminal.cpp() #6 section ".text.startup" {
 bb.a:
   %i.a = load ptr, ptr @stdout, align 8, !tbaa !18
   tail call void @_ZN7CaDiCaL8TerminalC1EP8_IO_FILE(ptr noundef nonnull align 8 dereferenceable(11) @_ZN7CaDiCaL4toutE, ptr noundef %i.a)
-  %i.b = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7CaDiCaL8TerminalD1Ev, ptr nonnull @_ZN7CaDiCaL4toutE, ptr nonnull @__dso_handle) #7 ; 0 uses
+  %i.b = tail call i32 @__cxa_atexit(ptr @_ZN7CaDiCaL8TerminalD1Ev, ptr nonnull @_ZN7CaDiCaL4toutE, ptr nonnull @__dso_handle) #7 ; 0 uses
   %i.c = load ptr, ptr @stderr, align 8, !tbaa !18
   tail call void @_ZN7CaDiCaL8TerminalC1EP8_IO_FILE(ptr noundef nonnull align 8 dereferenceable(11) @_ZN7CaDiCaL4terrE, ptr noundef %i.c)
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN7CaDiCaL8TerminalD1Ev, ptr nonnull @_ZN7CaDiCaL4terrE, ptr nonnull @__dso_handle) #7 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN7CaDiCaL8TerminalD1Ev, ptr nonnull @_ZN7CaDiCaL4terrE, ptr nonnull @__dso_handle) #7 ; 0 uses
   ret void
 }
 

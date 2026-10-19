@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.e = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %bb.e
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.e = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %_ZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEv.exit
 
@@ -1011,7 +1011,7 @@ bb.j:                                             ; preds = %bb.i
           to label %bb.k unwind label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ab = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.ab = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %_ZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEv.exit
 
@@ -1414,7 +1414,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.f = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %bb.f
 
@@ -1817,7 +1817,7 @@ bb.t:                                             ; preds = %bb.s
           to label %bb.u unwind label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  %i.ba = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.ba = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %_ZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEv.exit
 
@@ -2220,7 +2220,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.h = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.h = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %_ZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEv.exit
 
@@ -2623,7 +2623,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.j = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.j = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %_ZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEv.exit
 
@@ -3026,7 +3026,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.f = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %_ZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEv.exit
 
@@ -3429,7 +3429,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.e = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %_ZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEv.exit
 
@@ -3473,7 +3473,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = call i32 @__cxa_atexit(ptr nonnull @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
+  %i.e = call i32 @__cxa_atexit(ptr @_ZN11OpenImageIO4v3_111ColorConfigD1Ev, ptr nonnull @_ZZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config, ptr nonnull @__dso_handle) #38 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEvE6config) #38
   br label %_ZN11OpenImageIO4v3_111ColorConfig19default_colorconfigEv.exit
 

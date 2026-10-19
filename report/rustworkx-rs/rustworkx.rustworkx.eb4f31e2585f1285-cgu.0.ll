@@ -205,7 +205,7 @@ _RNvXsg_NtCshByAT0BfsDP_7ndarray9iteratorsINtB5_7IterMutdINtNtNtB7_9dimension3di
   %i.gj = add i64 %i.r, -1
   %i.gk = tail call i64 @llvm.umin.i64(i64 %.val4.i200, i64 %i.gj)
   %i.gl = add i64 %i.gk, 1                        ; 3 uses
-  %min.iters.check58 = icmp ugt i64 %i.gl, 12
+  %min.iters.check58 = icmp ugt i64 %i.gl, 8
   %ident.check.not = icmp eq i64 %.val6.i202, 1
   %or.cond75 = select i1 %min.iters.check58, i1 %ident.check.not, i1 false
   %i.gm = insertelement <2 x ptr> poison, ptr %i.cg, i64 0
@@ -515,11 +515,11 @@ bb.be:                                            ; preds = %.lr.ph605, %.loopex
   br i1 %.not67, label %.split557.split.us.split.us.preheader, label %.split557.split.us.split
 
 .split557.split.us.split.us.preheader:            ; preds = %.split557.split.us
-  %i.il = insertelement <2 x ptr> poison, ptr %scevgep46, i64 0
-  %i.im = insertelement <2 x ptr> %i.il, ptr %scevgep44, i64 1
+  %i.il = insertelement <2 x ptr> poison, ptr %scevgep44, i64 0
+  %i.im = insertelement <2 x ptr> %i.il, ptr %scevgep46, i64 1
   %i.in = icmp ult <2 x ptr> %i.gn, %i.im
-  %i.io = insertelement <2 x ptr> poison, ptr %scevgep45, i64 0
-  %i.ip = insertelement <2 x ptr> %i.io, ptr %scevgep43, i64 1
+  %i.io = insertelement <2 x ptr> poison, ptr %scevgep43, i64 0
+  %i.ip = insertelement <2 x ptr> %i.io, ptr %scevgep45, i64 1
   %i.iq = icmp ult <2 x ptr> %i.ip, %i.gp
   %i.ir = and <2 x i1> %i.in, %i.iq
   %i.is = bitcast <2 x i1> %i.ir to i2
@@ -922,7 +922,7 @@ _RNvXsg_NtCshByAT0BfsDP_7ndarray9iteratorsINtB5_7IterMutdINtNtNtB7_9dimension3di
   %i.gj = add i64 %i.r, -1
   %i.gk = tail call i64 @llvm.umin.i64(i64 %.val4.i198, i64 %i.gj)
   %i.gl = add i64 %i.gk, 1                        ; 3 uses
-  %min.iters.check803 = icmp ugt i64 %i.gl, 12
+  %min.iters.check803 = icmp ugt i64 %i.gl, 8
   %ident.check.not = icmp eq i64 %.val6.i200, 1
   %or.cond820 = select i1 %min.iters.check803, i1 %ident.check.not, i1 false
   %i.gm = insertelement <2 x ptr> poison, ptr %i.cg, i64 0
@@ -1232,11 +1232,11 @@ bb.be:                                            ; preds = %.lr.ph603, %.loopex
   br i1 %.not67, label %.split555.split.us.split.us.preheader, label %.split555.split.us.split
 
 .split555.split.us.split.us.preheader:            ; preds = %.split555.split.us
-  %i.il = insertelement <2 x ptr> poison, ptr %scevgep791, i64 0
-  %i.im = insertelement <2 x ptr> %i.il, ptr %scevgep789, i64 1
+  %i.il = insertelement <2 x ptr> poison, ptr %scevgep789, i64 0
+  %i.im = insertelement <2 x ptr> %i.il, ptr %scevgep791, i64 1
   %i.in = icmp ult <2 x ptr> %i.gn, %i.im
-  %i.io = insertelement <2 x ptr> poison, ptr %scevgep790, i64 0
-  %i.ip = insertelement <2 x ptr> %i.io, ptr %scevgep788, i64 1
+  %i.io = insertelement <2 x ptr> poison, ptr %scevgep788, i64 0
+  %i.ip = insertelement <2 x ptr> %i.io, ptr %scevgep790, i64 1
   %i.iq = icmp ult <2 x ptr> %i.ip, %i.gp
   %i.ir = and <2 x i1> %i.in, %i.iq
   %i.is = bitcast <2 x i1> %i.ir to i2

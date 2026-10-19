@@ -202,7 +202,7 @@ bb.a:
   %bound1 = icmp ult ptr %5, %scevgep57
   %found.conflict = and i1 %bound0, %bound1
   %stride.check70 = icmp slt i32 %i.a, 0
-  %invariant.op = or i1 %stride.check70, %found.conflict
+  %invariant.op = or i1 %found.conflict, %stride.check70
   %n.vec = and i64 %i.ah, -8                      ; 3 uses
   %i.ao = shl i64 %n.vec, 1
   %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %i.h, i64 0
@@ -268,11 +268,11 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %bound067 = icmp ult ptr %5, %scevgep61
   %bound168 = icmp ult ptr %umin, %scevgep58
   %found.conflict69 = and i1 %bound067, %bound168
-  %conflict.rdx.reass = or i1 %found.conflict69, %invariant.op
+  %conflict.rdx.reass = or i1 %invariant.op, %found.conflict69
   %bound071 = icmp ult ptr %5, %scevgep66
   %bound172 = icmp ult ptr %umin64, %scevgep58
   %found.conflict73 = and i1 %bound071, %bound172
-  %conflict.rdx75 = or i1 %found.conflict73, %conflict.rdx.reass
+  %conflict.rdx75 = or i1 %conflict.rdx.reass, %found.conflict73
   br i1 %conflict.rdx75, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -425,7 +425,7 @@ bb.a:
   %bound1 = icmp ult ptr %5, %scevgep57
   %found.conflict = and i1 %bound0, %bound1
   %stride.check70 = icmp slt i32 %i.a, 0
-  %invariant.op = or i1 %stride.check70, %found.conflict
+  %invariant.op = or i1 %found.conflict, %stride.check70
   %n.vec = and i64 %i.ah, -4                      ; 3 uses
   %i.ao = shl i64 %n.vec, 1
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %i.h, i64 0
@@ -491,11 +491,11 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %bound067 = icmp ult ptr %5, %scevgep61
   %bound168 = icmp ult ptr %umin, %scevgep58
   %found.conflict69 = and i1 %bound067, %bound168
-  %conflict.rdx.reass = or i1 %found.conflict69, %invariant.op
+  %conflict.rdx.reass = or i1 %invariant.op, %found.conflict69
   %bound071 = icmp ult ptr %5, %scevgep66
   %bound172 = icmp ult ptr %umin64, %scevgep58
   %found.conflict73 = and i1 %bound071, %bound172
-  %conflict.rdx75 = or i1 %found.conflict73, %conflict.rdx.reass
+  %conflict.rdx75 = or i1 %conflict.rdx.reass, %found.conflict73
   br i1 %conflict.rdx75, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -898,7 +898,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @my_ccopy(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, ptr nofree noundef writeonly captures(none) %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #4 {
 bb.a:
-  %i.a = shl i32 %6, 1                            ; 3 uses
+  %i.a = shl i32 %6, 1                            ; 2 uses
   %i.b = shl i32 %4, 1                            ; 2 uses
   %.not41 = icmp eq i32 %0, 0
   br i1 %.not41, label %._crit_edge43.split, label %.preheader.lr.ph
@@ -945,8 +945,7 @@ bb.a:
   %bound054 = icmp ult ptr %5, %scevgep53
   %bound155 = icmp ult ptr %3, %scevgep52
   %found.conflict56 = and i1 %bound054, %bound155
-  %8 = or i32 %i.b, %i.a
-  %i.aa = icmp slt i32 %8, 0
+  %i.aa = icmp slt i32 %i.b, 0
   %i.ab = or i1 %found.conflict56, %i.aa
   %conflict.rdx = or i1 %i.z, %i.ab
   %n.vec = and i64 %i.y, -8                       ; 3 uses
@@ -1063,7 +1062,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @my_zcopy(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, ptr nofree noundef writeonly captures(none) %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #4 {
 bb.a:
-  %i.a = shl i32 %6, 1                            ; 3 uses
+  %i.a = shl i32 %6, 1                            ; 2 uses
   %i.b = shl i32 %4, 1                            ; 2 uses
   %.not41 = icmp eq i32 %0, 0
   br i1 %.not41, label %._crit_edge43.split, label %.preheader.lr.ph
@@ -1110,8 +1109,7 @@ bb.a:
   %bound054 = icmp ult ptr %5, %scevgep53
   %bound155 = icmp ult ptr %3, %scevgep52
   %found.conflict56 = and i1 %bound054, %bound155
-  %8 = or i32 %i.b, %i.a
-  %i.aa = icmp slt i32 %8, 0
+  %i.aa = icmp slt i32 %i.b, 0
   %i.ab = or i1 %found.conflict56, %i.aa
   %conflict.rdx = or i1 %i.z, %i.ab
   %n.vec = and i64 %i.y, -4                       ; 3 uses

@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   call void @_ZN4llvm14raw_fd_ostreamC1ENS_9StringRefERSt10error_codeNS_3sys2fs9OpenFlagsE(ptr noundef nonnull align 8 dereferenceable(96) @_ZZN4llvm4outsEvE1S, ptr nonnull @.str.1, i64 1, ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef 0) #27
-  %i.i = call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm14raw_fd_ostreamD1Ev, ptr nonnull @_ZZN4llvm4outsEvE1S, ptr nonnull @__dso_handle) #27 ; 0 uses
+  %i.i = call i32 @__cxa_atexit(ptr @_ZN4llvm14raw_fd_ostreamD1Ev, ptr nonnull @_ZZN4llvm4outsEvE1S, ptr nonnull @__dso_handle) #27 ; 0 uses
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN4llvm4outsEvE1S) #27
   br label %bb.g
 
@@ -248,7 +248,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   tail call void @_ZN4llvm14raw_fd_ostreamC1EibbNS_11raw_ostream11OStreamKindE(ptr noundef nonnull align 8 dereferenceable(96) @_ZZN4llvm4errsEvE1S, i32 noundef 2, i1 noundef zeroext false, i1 noundef zeroext true, i32 noundef 0) #27
-  %i.g = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm14raw_fd_ostreamD1Ev, ptr nonnull @_ZZN4llvm4errsEvE1S, ptr nonnull @__dso_handle) #27 ; 0 uses
+  %i.g = tail call i32 @__cxa_atexit(ptr @_ZN4llvm14raw_fd_ostreamD1Ev, ptr nonnull @_ZZN4llvm4errsEvE1S, ptr nonnull @__dso_handle) #27 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4llvm4errsEvE1S) #27
   br label %bb.g
 
@@ -273,7 +273,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4llvm5nullsEvE1S, i64 44), align 4, !tbaa !28
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(25) getelementptr inbounds nuw (i8, ptr @_ZZN4llvm5nullsEvE1S, i64 16), i8 0, i64 25, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN4llvm16raw_null_ostreamE, i64 16), ptr @_ZZN4llvm5nullsEvE1S, align 8, !tbaa !19
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm16raw_null_ostreamD1Ev, ptr nonnull @_ZZN4llvm5nullsEvE1S, ptr nonnull @__dso_handle) #27 ; 0 uses
+  %i.d = tail call i32 @__cxa_atexit(ptr @_ZN4llvm16raw_null_ostreamD1Ev, ptr nonnull @_ZZN4llvm5nullsEvE1S, ptr nonnull @__dso_handle) #27 ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4llvm5nullsEvE1S) #27
   br label %bb.d
 

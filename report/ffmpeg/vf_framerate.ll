@@ -98,8 +98,7 @@ bb.a:
   %bound051 = icmp ult ptr %4, %scevgep49
   %bound152 = icmp ult ptr %2, %scevgep
   %found.conflict53 = and i1 %bound051, %bound152
-  %11 = or i64 %3, %5
-  %i.m = icmp slt i64 %11, 0
+  %i.m = icmp slt i64 %3, 0
   %i.n = or i1 %found.conflict53, %i.m
   %conflict.rdx = or i1 %i.l, %i.n
   %min.iters.check56 = icmp ult i64 %6, 16
@@ -301,10 +300,8 @@ bb.a:
   %bound050 = icmp ult ptr %4, %scevgep48
   %bound151 = icmp ult ptr %2, %scevgep
   %found.conflict52 = and i1 %bound050, %bound151
-  %stride.check53 = icmp slt i64 %5, -1
-  %11 = or i1 %found.conflict52, %stride.check53
   %stride.check54 = icmp slt i64 %3, -1
-  %i.s = or i1 %11, %stride.check54
+  %i.s = or i1 %found.conflict52, %stride.check54
   %conflict.rdx = or i1 %i.r, %i.s
   %n.vec = and i64 %i.a, 4611686018427387896      ; 3 uses
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %8, i64 0

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @__cxa_throw(ptr nonnull %i.v, ptr nonnull @_ZTIN5osgeo4proj9operation16InvalidOperationE, ptr nonnull @_ZN5osgeo4proj9operation16InvalidOperationD1Ev) #48
+  tail call void @__cxa_throw(ptr nonnull %i.v, ptr nonnull @_ZTIN5osgeo4proj9operation16InvalidOperationE, ptr @_ZN5osgeo4proj9operation16InvalidOperationD1Ev) #48
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5osgeo4proj9operation16InvalidOperationE, i64 16), ptr %i.m, align 8, !tbaa !46
-  invoke void @__cxa_throw(ptr nonnull %i.m, ptr nonnull @_ZTIN5osgeo4proj9operation16InvalidOperationE, ptr nonnull @_ZN5osgeo4proj9operation16InvalidOperationD1Ev) #48
+  invoke void @__cxa_throw(ptr nonnull %i.m, ptr nonnull @_ZTIN5osgeo4proj9operation16InvalidOperationE, ptr @_ZN5osgeo4proj9operation16InvalidOperationD1Ev) #48
           to label %bb.at unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.b

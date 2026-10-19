@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
 
 _ZNK8QVariant9constDataEv.exit:                   ; preds = %bb.i, %bb.h
   %i.t = phi ptr [ %i.s, %bb.i ], [ %1, %bb.h ]
-  %i.u = invoke noundef zeroext i1 @_ZN9QMetaType7convertES_PKvS_Pv(ptr %i.l, ptr noundef %i.t, ptr nonnull @_ZN9QtPrivate25QMetaTypeInterfaceWrapperI5QFontE8metaTypeE, ptr noundef %0)
+  %i.u = invoke noundef zeroext i1 @_ZN9QMetaType7convertES_PKvS_Pv(ptr %i.l, ptr noundef %i.t, ptr @_ZN9QtPrivate25QMetaTypeInterfaceWrapperI5QFontE8metaTypeE, ptr noundef %0)
           to label %bb.k unwind label %bb.j       ; 0 uses
 
 bb.j:                                             ; preds = %_ZNK8QVariant9constDataEv.exit, %bb.g

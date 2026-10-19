@@ -205,11 +205,11 @@ bb.a:
   store i32 0, ptr %i.z, align 4, !tbaa !165
   %i.ac = tail call i32 @__cxa_atexit(ptr nonnull @_ZN12TagGeneratorD2Ev, ptr nonnull @tagGenerator_g, ptr nonnull @__dso_handle) #47 ; 0 uses
   tail call void @_ZN18CanonicalCenteringILi1EEC1Ev(ptr noundef nonnull align 1 dereferenceable(1) @canonicalCenteringOne_g) #47
-  %i.ad = tail call i32 @__cxa_atexit(ptr nonnull @_ZN18CanonicalCenteringILi1EED1Ev, ptr nonnull @canonicalCenteringOne_g, ptr nonnull @__dso_handle) #47 ; 0 uses
+  %i.ad = tail call i32 @__cxa_atexit(ptr @_ZN18CanonicalCenteringILi1EED1Ev, ptr nonnull @canonicalCenteringOne_g, ptr nonnull @__dso_handle) #47 ; 0 uses
   tail call void @_ZN18CanonicalCenteringILi2EEC1Ev(ptr noundef nonnull align 1 dereferenceable(1) @canonicalCenteringTwo_g) #47
-  %i.ae = tail call i32 @__cxa_atexit(ptr nonnull @_ZN18CanonicalCenteringILi2EED1Ev, ptr nonnull @canonicalCenteringTwo_g, ptr nonnull @__dso_handle) #47 ; 0 uses
+  %i.ae = tail call i32 @__cxa_atexit(ptr @_ZN18CanonicalCenteringILi2EED1Ev, ptr nonnull @canonicalCenteringTwo_g, ptr nonnull @__dso_handle) #47 ; 0 uses
   tail call void @_ZN18CanonicalCenteringILi3EEC1Ev(ptr noundef nonnull align 1 dereferenceable(1) @canonicalCenteringThree_g) #47
-  %i.af = tail call i32 @__cxa_atexit(ptr nonnull @_ZN18CanonicalCenteringILi3EED1Ev, ptr nonnull @canonicalCenteringThree_g, ptr nonnull @__dso_handle) #47 ; 0 uses
+  %i.af = tail call i32 @__cxa_atexit(ptr @_ZN18CanonicalCenteringILi3EED1Ev, ptr nonnull @canonicalCenteringThree_g, ptr nonnull @__dso_handle) #47 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) @corr_v, i8 0, i64 72, i1 false), !tbaa !165
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) @vertexDomain, i8 0, i64 24, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) @origin, i8 0, i64 24, i1 false), !tbaa !350

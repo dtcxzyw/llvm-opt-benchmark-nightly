@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #13
-  %i.f = call i32 @__cxa_thread_atexit(ptr nonnull @_ZN8facebook5velox9TimerTreeD1Ev, ptr nonnull @_ZZN8facebook5velox9TimerTree14threadInstanceEvE8instance, ptr nonnull @__dso_handle) #13 ; 0 uses
+  %i.f = call i32 @__cxa_thread_atexit(ptr @_ZN8facebook5velox9TimerTreeD1Ev, ptr nonnull @_ZZN8facebook5velox9TimerTree14threadInstanceEvE8instance, ptr nonnull @__dso_handle) #13 ; 0 uses
   store i1 true, ptr @_ZGVZN8facebook5velox9TimerTree14threadInstanceEvE8instance, align 1
   br label %bb.d
 
@@ -267,7 +267,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
-  %i.f = call i32 @__cxa_thread_atexit(ptr nonnull @_ZN8facebook5velox9TimerTreeD1Ev, ptr nonnull @_ZZN8facebook5velox9TimerTree14threadInstanceEvE8instance, ptr nonnull @__dso_handle) #13 ; 0 uses
+  %i.f = call i32 @__cxa_thread_atexit(ptr @_ZN8facebook5velox9TimerTreeD1Ev, ptr nonnull @_ZZN8facebook5velox9TimerTree14threadInstanceEvE8instance, ptr nonnull @__dso_handle) #13 ; 0 uses
   store i1 true, ptr @_ZGVZN8facebook5velox9TimerTree14threadInstanceEvE8instance, align 1
   br label %_ZN8facebook5velox9TimerTree14threadInstanceEv.exit
 

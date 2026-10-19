@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
           to label %bb.m unwind label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  invoke void @__cxa_throw(ptr nonnull %i.z, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.z, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.ao unwind label %bb.o
 
 bb.n:                                             ; preds = %bb.i
@@ -345,7 +345,7 @@ bb.aa:                                            ; preds = %bb.z
           to label %bb.ab unwind label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  invoke void @__cxa_throw(ptr nonnull %i.bk, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bk, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.ao unwind label %bb.ac
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.thread: ; preds = %bb.y
@@ -748,7 +748,7 @@ bb.v:                                             ; preds = %bb.u
           to label %bb.w unwind label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  invoke void @__cxa_throw(ptr nonnull %i.ex, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ex, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.cq unwind label %bb.x
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit232.thread: ; preds = %bb.u
@@ -880,7 +880,7 @@ bb.ae:                                            ; preds = %bb.ad
           to label %bb.af unwind label %bb.al
 
 bb.af:                                            ; preds = %bb.ae
-  invoke void @__cxa_throw(ptr nonnull %i.gl, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.gl, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.cq unwind label %bb.al
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit255.thread: ; preds = %._crit_edge.thread
@@ -1094,7 +1094,7 @@ bb.au:                                            ; preds = %bb.at
           to label %bb.av unwind label %bb.bb
 
 bb.av:                                            ; preds = %bb.au
-  invoke void @__cxa_throw(ptr nonnull %i.ij, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ij, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.cq unwind label %bb.bb
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit276.thread: ; preds = %bb.an
@@ -1370,7 +1370,7 @@ bb.bv:                                            ; preds = %bb.bu
           to label %bb.bw unwind label %bb.ck
 
 bb.bw:                                            ; preds = %bb.bv
-  invoke void @__cxa_throw(ptr nonnull %i.kn, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.kn, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.cq unwind label %bb.ck
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit321.thread: ; preds = %bb.bg
@@ -1773,7 +1773,7 @@ bb.am:                                            ; preds = %bb.al
           to label %bb.an unwind label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  invoke void @__cxa_throw(ptr nonnull %i.ev, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ev, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.ar unwind label %bb.ao
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit86.thread: ; preds = %.split.us
@@ -2139,7 +2139,7 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  invoke void @__cxa_throw(ptr nonnull %i.i, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.i, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.x unwind label %bb.k
 
 bb.j:                                             ; preds = %bb.m, %bb.a
@@ -2542,7 +2542,7 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.r unwind label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  invoke void @__cxa_throw(ptr nonnull %i.bd, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bd, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.ak unwind label %bb.s
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.l
@@ -2945,7 +2945,7 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
           to label %bb.i unwind label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  invoke void @__cxa_throw(ptr nonnull %i.z, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.z, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.ad unwind label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj2io12SQLiteHandleELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.g, %bb.f, %bb.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit
@@ -3348,7 +3348,7 @@ bb.at:                                            ; preds = %bb.as
           to label %bb.au unwind label %bb.aw
 
 bb.au:                                            ; preds = %bb.at
-  invoke void @__cxa_throw(ptr nonnull %i.mw, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.mw, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.ei unwind label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.ar
@@ -3751,7 +3751,7 @@ bb.k:                                             ; preds = %bb.j
           to label %bb.l unwind label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  invoke void @__cxa_throw(ptr nonnull %i.ah, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ah, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.p unwind label %bb.i
 
 bb.m:                                             ; preds = %bb.k
@@ -4154,7 +4154,7 @@ bb.ba:                                            ; preds = %bb.az
           to label %bb.bb unwind label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  invoke void @__cxa_throw(ptr nonnull %i.px, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.px, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bf unwind label %bb.bc
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit207.thread: ; preds = %.critedge
@@ -4557,7 +4557,7 @@ bb.ac:                                            ; preds = %bb.ab
           to label %bb.ad unwind label %bb.ag
 
 bb.ad:                                            ; preds = %bb.ac
-  invoke void @__cxa_throw(ptr nonnull %i.em, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.em, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.az unwind label %bb.ag
 
 bb.ae:                                            ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj6common13UnitOfMeasureELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit56
@@ -4905,7 +4905,7 @@ bb.ap:                                            ; preds = %.body91
           to label %bb.aq unwind label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  invoke void @__cxa_throw(ptr %i.jl, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.jl, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.az unwind label %bb.as
 
 bb.ar:                                            ; preds = %bb.ap
@@ -5125,7 +5125,7 @@ _ZN5osgeo4proj2ioL19getUnitDatabaseTypeERKNS0_6common13UnitOfMeasureE.exit: ; pr
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %_ZN5osgeo4proj2ioL19getUnitDatabaseTypeERKNS0_6common13UnitOfMeasureE.exit
-  tail call void @__cxa_throw(ptr nonnull %i.i, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  tail call void @__cxa_throw(ptr nonnull %i.i, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
   unreachable
 
 bb.e:                                             ; preds = %_ZN5osgeo4proj2ioL19getUnitDatabaseTypeERKNS0_6common13UnitOfMeasureE.exit
@@ -5528,7 +5528,7 @@ bb.ax:                                            ; preds = %bb.d
           to label %bb.ay unwind label %bb.az
 
 bb.ay:                                            ; preds = %bb.ax
-  invoke void @__cxa_throw(ptr nonnull %i.go, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.go, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.az:                                            ; preds = %bb.ax
@@ -5931,7 +5931,7 @@ bb.x:                                             ; preds = %bb.w
           to label %bb.y unwind label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  invoke void @__cxa_throw(ptr nonnull %i.bv, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bv, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.jz unwind label %bb.aa
 
 bb.z:                                             ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj2cs16CoordinateSystemELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit153
@@ -6033,7 +6033,7 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
           to label %bb.ag unwind label %bb.ai
 
 bb.ag:                                            ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  invoke void @__cxa_throw(ptr nonnull %i.dm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.dm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.jz unwind label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
@@ -6436,7 +6436,7 @@ bb.cd:                                            ; preds = %_ZN5osgeo4proj8inte
           to label %bb.ce unwind label %bb.cf
 
 bb.ce:                                            ; preds = %bb.cd
-  invoke void @__cxa_throw(ptr nonnull %i.jo, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.jo, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.jz unwind label %bb.cf
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit199.thread: ; preds = %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc.exit174.thread
@@ -6839,7 +6839,7 @@ bb.im:                                            ; preds = %_ZSteqIcSt11char_tr
 
 .invoke:                                          ; preds = %bb.im, %bb.hs, %bb.gg, %bb.eu
   %i.zr = phi ptr [ %i.xq, %bb.hs ], [ %i.tn, %bb.gg ], [ %i.pt, %bb.eu ], [ %i.zq, %bb.im ]
-  invoke void @__cxa_throw(ptr nonnull %i.zr, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.zr, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %.cont unwind label %bb.dy
 
 .cont:                                            ; preds = %.invoke
@@ -7032,7 +7032,7 @@ bb.jf:                                            ; preds = %_ZSteqIcSt11char_tr
           to label %bb.jg unwind label %bb.jh
 
 bb.jg:                                            ; preds = %bb.jf
-  invoke void @__cxa_throw(ptr nonnull %i.abl, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.abl, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.jz unwind label %bb.jh
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit324.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit308.thread367
@@ -7435,7 +7435,7 @@ _ZN5osgeo4proj2ioL17getCSDatabaseTypeERKN7dropbox6oxygen2nnISt10shared_ptrINS0_2
           to label %bb.f unwind label %bb.g
 
 bb.f:                                             ; preds = %_ZN5osgeo4proj2ioL17getCSDatabaseTypeERKN7dropbox6oxygen2nnISt10shared_ptrINS0_2cs16CoordinateSystemEEEE.exit
-  tail call void @__cxa_throw(ptr nonnull %i.j, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  tail call void @__cxa_throw(ptr nonnull %i.j, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
   unreachable
 
 bb.g:                                             ; preds = %_ZN5osgeo4proj2ioL17getCSDatabaseTypeERKN7dropbox6oxygen2nnISt10shared_ptrINS0_2cs16CoordinateSystemEEEE.exit
@@ -7838,7 +7838,7 @@ bb.u:                                             ; preds = %bb.h
           to label %bb.v unwind label %bb.w
 
 bb.v:                                             ; preds = %.critedge111
-  tail call void @__cxa_throw(ptr nonnull %i.bc, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  tail call void @__cxa_throw(ptr nonnull %i.bc, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
   unreachable
 
 bb.w:                                             ; preds = %.critedge111
@@ -8241,7 +8241,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @__cxa_throw(ptr nonnull %i.e, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  tail call void @__cxa_throw(ptr nonnull %i.e, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -8644,7 +8644,7 @@ bb.fw:                                            ; preds = %_ZSt20dynamic_point
           to label %bb.fx unwind label %bb.fy
 
 bb.fx:                                            ; preds = %bb.fw
-  invoke void @__cxa_throw(ptr nonnull %i.qt, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.qt, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.im unwind label %bb.fz
 
 bb.fy:                                            ; preds = %bb.fw
@@ -9047,7 +9047,7 @@ bb.bf:                                            ; preds = %_ZN7dropbox6oxygen2
           to label %bb.bg unwind label %bb.bh
 
 bb.bg:                                            ; preds = %.loopexit
-  invoke void @__cxa_throw(ptr nonnull %i.gb, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.gb, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bs unwind label %bb.bi
 
 bb.bh:                                            ; preds = %.loopexit
@@ -9450,7 +9450,7 @@ bb.cv:                                            ; preds = %._crit_edge621
           to label %bb.cw unwind label %bb.cx
 
 bb.cw:                                            ; preds = %._crit_edge621.thread
-  invoke void @__cxa_throw(ptr nonnull %i.nx, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.nx, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.hq unwind label %bb.cu
 
 bb.cx:                                            ; preds = %._crit_edge621.thread
@@ -9607,7 +9607,7 @@ bb.dj:                                            ; preds = %bb.di
           to label %bb.dk unwind label %bb.dn
 
 bb.dk:                                            ; preds = %bb.dj
-  invoke void @__cxa_throw(ptr nonnull %i.qb, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.qb, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.hq unwind label %bb.dn
 
 bb.dl:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit293
@@ -9805,7 +9805,7 @@ bb.du:                                            ; preds = %.lr.ph623, %bb.dt
 
 .invoke:                                          ; preds = %bb.du, %bb.em
   %i.sm = phi ptr [ %i.wn, %bb.em ], [ %i.sl, %bb.du ]
-  invoke void @__cxa_throw(ptr nonnull %i.sm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.sm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -10101,7 +10101,7 @@ bb.eq:                                            ; preds = %bb.ep
           to label %bb.er unwind label %bb.es
 
 bb.er:                                            ; preds = %bb.eq
-  invoke void @__cxa_throw(ptr nonnull %i.wz, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.wz, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.hq unwind label %.loopexit.split-lp550.loopexit.split-lp.loopexit.split-lp
 
 .loopexit.split-lp550.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit323, %bb.fb, %bb.et, %bb.er
@@ -10504,7 +10504,7 @@ bb.f:                                             ; preds = %_ZNSt12__shared_ptr
           to label %bb.g unwind label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  invoke void @__cxa_throw(ptr nonnull %i.v, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.v, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.dz unwind label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -10907,7 +10907,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @__cxa_throw(ptr nonnull %i.g, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  tail call void @__cxa_throw(ptr nonnull %i.g, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -11096,7 +11096,7 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.r unwind label %bb.v
 
 bb.r:                                             ; preds = %bb.q
-  invoke void @__cxa_throw(ptr nonnull %i.bm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bl unwind label %bb.u
 
 bb.s:                                             ; preds = %bb.e
@@ -11333,7 +11333,7 @@ bb.al:                                            ; preds = %_ZNSt7__cxx1112basi
           to label %bb.am unwind label %bb.as
 
 bb.am:                                            ; preds = %bb.al
-  invoke void @__cxa_throw(ptr nonnull %i.ef, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ef, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bl unwind label %bb.ar
 
 bb.an:                                            ; preds = %bb.au, %.lr.ph
@@ -11736,7 +11736,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.gs unwind label %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.b
@@ -11857,7 +11857,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; pre
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !llvm.loop !1349 ; 0 uses
 
 bb.k:                                             ; preds = %.loopexit
-  invoke void @__cxa_throw(ptr nonnull %i.v, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.v, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.gs unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.l:                                             ; preds = %.loopexit
@@ -12260,7 +12260,7 @@ bb.gl:                                            ; preds = %bb.gk
           to label %bb.gm unwind label %bb.gn
 
 bb.gm:                                            ; preds = %bb.gl
-  invoke void @__cxa_throw(ptr nonnull %i.rx, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.rx, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.gs unwind label %bb.gn
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit228.thread: ; preds = %bb.gk
@@ -12614,7 +12614,7 @@ bb.x:                                             ; preds = %bb.w
           to label %bb.y unwind label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  invoke void @__cxa_throw(ptr nonnull %i.bv, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bv, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.ea unwind label %bb.aa
 
 bb.z:                                             ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj8metadata6ExtentELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit70
@@ -13017,7 +13017,7 @@ bb.dq:                                            ; preds = %bb.dp
           to label %bb.dr unwind label %bb.ds
 
 bb.dr:                                            ; preds = %bb.dq
-  invoke void @__cxa_throw(ptr %i.oj, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.oj, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.ea unwind label %bb.dt
 
 bb.ds:                                            ; preds = %bb.dq
@@ -13332,7 +13332,7 @@ bb.x:                                             ; preds = %bb.w
           to label %bb.y unwind label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  invoke void @__cxa_throw(ptr nonnull %i.bu, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bu, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.bj unwind label %bb.aa
 
 bb.z:                                             ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj5datum13PrimeMeridianELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit56
@@ -13648,7 +13648,7 @@ bb.az:                                            ; preds = %_ZNSt7__cxx1112basi
           to label %bb.ba unwind label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
-  invoke void @__cxa_throw(ptr %i.eu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.eu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bj unwind label %bb.bc
 
 bb.bb:                                            ; preds = %bb.az
@@ -13965,7 +13965,7 @@ bb.x:                                             ; preds = %bb.w
           to label %bb.y unwind label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  invoke void @__cxa_throw(ptr nonnull %i.bt, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bt, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.cc unwind label %bb.aa
 
 bb.z:                                             ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj5datum9EllipsoidELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit78
@@ -14366,7 +14366,7 @@ bb.bs:                                            ; preds = %bb.br
           to label %bb.bt unwind label %bb.bu
 
 bb.bt:                                            ; preds = %bb.bs
-  invoke void @__cxa_throw(ptr %i.fb, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.fb, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.cc unwind label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bs
@@ -14769,7 +14769,7 @@ bb.n:                                             ; preds = %bb.m
           to label %bb.o unwind label %bb.s
 
 bb.o:                                             ; preds = %bb.n
-  invoke void @__cxa_throw(ptr nonnull %i.eh, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.eh, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.cl unwind label %bb.s
 
 bb.p:                                             ; preds = %.noexc.i
@@ -15172,7 +15172,7 @@ bb.ce:                                            ; preds = %.critedge85
           to label %bb.cf unwind label %bb.cg
 
 bb.cf:                                            ; preds = %bb.ce
-  invoke void @__cxa_throw(ptr nonnull %i.rf, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.rf, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.cl unwind label %bb.cg
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit188.thread: ; preds = %.critedge85
@@ -15318,7 +15318,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @__cxa_throw(ptr nonnull %i.f, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.f, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.af unwind label %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.b
@@ -15694,7 +15694,7 @@ bb.y:                                             ; preds = %bb.x
           to label %bb.z unwind label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  invoke void @__cxa_throw(ptr %i.dm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.dm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.af unwind label %bb.ab
 
 bb.aa:                                            ; preds = %bb.y
@@ -16026,7 +16026,7 @@ bb.r:                                             ; preds = %bb.q
           to label %bb.s unwind label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  invoke void @__cxa_throw(ptr nonnull %i.bk, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bk, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.eo unwind label %bb.t
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.q
@@ -16094,7 +16094,7 @@ bb.z:                                             ; preds = %bb.y
           to label %bb.aa unwind label %bb.ac
 
 bb.aa:                                            ; preds = %bb.z
-  invoke void @__cxa_throw(ptr nonnull %i.bx, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bx, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.eo unwind label %bb.ac
 
 bb.ab:                                            ; preds = %bb.w
@@ -16497,7 +16497,7 @@ bb.dp:                                            ; preds = %bb.do
           to label %bb.dq unwind label %bb.dr
 
 bb.dq:                                            ; preds = %bb.dp
-  invoke void @__cxa_throw(ptr nonnull %i.mu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.mu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.eo unwind label %bb.dr
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit145.thread: ; preds = %bb.dn
@@ -16606,7 +16606,7 @@ bb.dx:                                            ; preds = %bb.dw
           to label %bb.dy unwind label %bb.dz
 
 bb.dy:                                            ; preds = %bb.dx
-  invoke void @__cxa_throw(ptr %i.nu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.nu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.eo unwind label %bb.ea
 
 bb.dz:                                            ; preds = %bb.dx
@@ -16954,7 +16954,7 @@ bb.r:                                             ; preds = %bb.q
           to label %bb.s unwind label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  invoke void @__cxa_throw(ptr nonnull %i.bm, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bm, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.al unwind label %bb.t
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.q
@@ -17210,7 +17210,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.cp unwind label %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.b
@@ -17613,7 +17613,7 @@ bb.ci:                                            ; preds = %bb.ch
           to label %bb.cj unwind label %bb.ck
 
 bb.cj:                                            ; preds = %bb.ci
-  invoke void @__cxa_throw(ptr %i.jx, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.jx, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.cp unwind label %bb.cl
 
 bb.ck:                                            ; preds = %bb.ci
@@ -17877,7 +17877,7 @@ bb.r:                                             ; preds = %bb.q
           to label %bb.s unwind label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  invoke void @__cxa_throw(ptr nonnull %i.bk, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bk, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.dj unwind label %bb.t
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.q
@@ -17945,7 +17945,7 @@ bb.z:                                             ; preds = %bb.y
           to label %bb.aa unwind label %bb.ac
 
 bb.aa:                                            ; preds = %bb.z
-  invoke void @__cxa_throw(ptr nonnull %i.bx, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bx, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.dj unwind label %bb.ac
 
 bb.ab:                                            ; preds = %bb.w
@@ -18348,7 +18348,7 @@ bb.cs:                                            ; preds = %bb.cr
           to label %bb.ct unwind label %bb.cu
 
 bb.ct:                                            ; preds = %bb.cs
-  invoke void @__cxa_throw(ptr %i.kf, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.kf, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.dj unwind label %bb.cv
 
 bb.cu:                                            ; preds = %bb.cs
@@ -18751,7 +18751,7 @@ bb.x:                                             ; preds = %bb.w
           to label %bb.y unwind label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  invoke void @__cxa_throw(ptr nonnull %i.by, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.by, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.do unwind label %bb.aa
 
 bb.z:                                             ; preds = %bb.v
@@ -19154,7 +19154,7 @@ bb.df:                                            ; preds = %bb.de
           to label %bb.dg unwind label %bb.dh
 
 bb.dg:                                            ; preds = %bb.df
-  invoke void @__cxa_throw(ptr %i.jq, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.jq, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.do unwind label %bb.di
 
 bb.dh:                                            ; preds = %bb.df
@@ -19557,7 +19557,7 @@ bb.a:                                             ; preds = %_ZNSt7__cxx1112basi
 
 .invoke:                                          ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %bb.a
   %i.az = phi ptr [ %i.ay, %bb.a ], [ %i.dj, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread ]
-  invoke void @__cxa_throw(ptr nonnull %i.az, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.az, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %.cont unwind label %bb.k
 
 .cont:                                            ; preds = %.invoke
@@ -19960,7 +19960,7 @@ bb.aq:                                            ; preds = %bb.ap
           to label %bb.ar unwind label %bb.at
 
 bb.ar:                                            ; preds = %bb.aq
-  invoke void @__cxa_throw(ptr nonnull %i.dx, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.dx, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.if unwind label %bb.at
 
 bb.as:                                            ; preds = %bb.an
@@ -20363,7 +20363,7 @@ bb.hv:                                            ; preds = %_ZNSt7__cxx1112basi
           to label %bb.hw unwind label %bb.hx
 
 bb.hw:                                            ; preds = %bb.hv
-  invoke void @__cxa_throw(ptr %i.aco, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.aco, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.if unwind label %bb.hy
 
 bb.hx:                                            ; preds = %bb.hv
@@ -20766,7 +20766,7 @@ bb.s:                                             ; preds = %bb.r
           to label %bb.t unwind label %bb.x
 
 bb.t:                                             ; preds = %bb.s
-  invoke void @__cxa_throw(ptr nonnull %i.fr, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.fr, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.ah unwind label %bb.x
 
 bb.u:                                             ; preds = %.noexc.i
@@ -21169,7 +21169,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @__cxa_throw(ptr nonnull %i.h, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.h, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.eo unwind label %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.b
@@ -21572,7 +21572,7 @@ bb.eh:                                            ; preds = %bb.eg
           to label %bb.ei unwind label %bb.ej
 
 bb.ei:                                            ; preds = %bb.eh
-  invoke void @__cxa_throw(ptr %i.tu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.tu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.eo unwind label %bb.ek
 
 bb.ej:                                            ; preds = %bb.eh
@@ -21975,7 +21975,7 @@ bb.r:                                             ; preds = %bb.q
           to label %bb.s unwind label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  invoke void @__cxa_throw(ptr nonnull %i.bl, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bl, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.mw unwind label %bb.t
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.q
@@ -22091,7 +22091,7 @@ bb.ac:                                            ; preds = %bb.ab
           to label %bb.ad unwind label %bb.af
 
 bb.ad:                                            ; preds = %bb.ac
-  invoke void @__cxa_throw(ptr nonnull %i.cj, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.cj, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.mw unwind label %bb.af
 
 bb.ae:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit
@@ -22248,7 +22248,7 @@ bb.ap:                                            ; preds = %_ZN7dropbox6oxygen2
           to label %bb.aq unwind label %bb.as
 
 bb.aq:                                            ; preds = %bb.ap
-  invoke void @__cxa_throw(ptr nonnull %i.ep, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ep, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.au unwind label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
@@ -22651,7 +22651,7 @@ bb.en:                                            ; preds = %bb.em, %bb.el
           to label %bb.eo unwind label %bb.ep
 
 bb.eo:                                            ; preds = %.thread
-  invoke void @__cxa_throw(ptr nonnull %i.nz, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.nz, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.mw unwind label %bb.cf
 
 bb.ep:                                            ; preds = %.thread
@@ -23054,7 +23054,7 @@ bb.kj:                                            ; preds = %bb.ki
           to label %bb.kk unwind label %bb.kn
 
 bb.kk:                                            ; preds = %bb.kj
-  invoke void @__cxa_throw(ptr nonnull %i.adu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.adu, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.mw unwind label %bb.kn
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit339.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit309.thread399
@@ -23457,7 +23457,7 @@ bb.me:                                            ; preds = %bb.md
           to label %bb.mf unwind label %bb.mg
 
 bb.mf:                                            ; preds = %bb.me
-  invoke void @__cxa_throw(ptr %i.ajj, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.ajj, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.mw unwind label %bb.mh
 
 bb.mg:                                            ; preds = %bb.me
@@ -23721,7 +23721,7 @@ bb.n:                                             ; preds = %bb.m
           to label %bb.o unwind label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  invoke void @__cxa_throw(ptr nonnull %i.ad, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ad, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.aa unwind label %bb.p
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.m
@@ -24124,7 +24124,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.j
 
 bb.h:                                             ; preds = %bb.g
-  invoke void @__cxa_throw(ptr nonnull %i.v, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.v, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.j
 
 bb.i:                                             ; preds = %bb.d
@@ -24342,7 +24342,7 @@ bb.w:                                             ; preds = %bb.v
           to label %bb.x unwind label %bb.z
 
 bb.x:                                             ; preds = %bb.w
-  invoke void @__cxa_throw(ptr nonnull %i.ck, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ck, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.z
 
 bb.y:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1015.thread
@@ -24745,7 +24745,7 @@ bb.xx:                                            ; preds = %bb.xw
           to label %bb.xy unwind label %bb.xz
 
 bb.xy:                                            ; preds = %bb.xx
-  invoke void @__cxa_throw(ptr %i.bdy, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.bdy, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.ya
 
 bb.xz:                                            ; preds = %bb.xx
@@ -24812,7 +24812,7 @@ bb.yg:                                            ; preds = %bb.yf
           to label %bb.yh unwind label %bb.yj
 
 bb.yh:                                            ; preds = %bb.yg
-  invoke void @__cxa_throw(ptr nonnull %i.bep, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bep, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.yj
 
 bb.yi:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1522.thread
@@ -25215,7 +25215,7 @@ bb.ajp:                                           ; preds = %bb.ajo
           to label %bb.ajq unwind label %bb.ajr
 
 bb.ajq:                                           ; preds = %bb.ajp
-  invoke void @__cxa_throw(ptr %i.chq, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.chq, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.ajs
 
 bb.ajr:                                           ; preds = %bb.ajp
@@ -25445,7 +25445,7 @@ bb.akg:                                           ; preds = %bb.akf
           to label %bb.akh unwind label %bb.akj
 
 bb.akh:                                           ; preds = %bb.akg
-  invoke void @__cxa_throw(ptr nonnull %i.cke, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.cke, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.akj
 
 .loopexit.split-lp2323.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSolsEm.exit1827, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1825, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1823, %_ZNSolsEm.exit1821, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1819, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1817, %_ZNSolsEm.exit1815, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1813, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1811, %_ZNSolsEm.exit1809, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1807, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1805, %_ZNSolsEm.exit1803, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1801, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1799, %_ZNSolsEm.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1796, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.preheader, %bb.ajz, %bb.ajy, %bb.ajw, %bb.ajx
@@ -25848,7 +25848,7 @@ bb.aqe:                                           ; preds = %bb.aqd
           to label %bb.aqf unwind label %bb.aqj
 
 bb.aqf:                                           ; preds = %bb.aqe
-  invoke void @__cxa_throw(ptr nonnull %i.dao, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.dao, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.aqk
 
 bb.aqg:                                           ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit2849.thread
@@ -26251,7 +26251,7 @@ bb.aug:                                           ; preds = %bb.auf
           to label %bb.auh unwind label %bb.aui
 
 bb.auh:                                           ; preds = %bb.aug
-  invoke void @__cxa_throw(ptr %i.dlc, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.dlc, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.auj
 
 bb.aui:                                           ; preds = %bb.aug
@@ -26333,7 +26333,7 @@ bb.auq:                                           ; preds = %bb.aup
           to label %bb.aur unwind label %bb.aut
 
 bb.aur:                                           ; preds = %bb.auq
-  invoke void @__cxa_throw(ptr nonnull %i.dlv, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.dlv, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.aut
 
 bb.aus:                                           ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit2057.thread
@@ -26736,7 +26736,7 @@ bb.awp:                                           ; preds = %bb.awo
           to label %bb.awq unwind label %bb.awr
 
 bb.awq:                                           ; preds = %bb.awp
-  invoke void @__cxa_throw(ptr nonnull %i.dsj, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.dsj, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.awr
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2111.thread: ; preds = %bb.awo
@@ -27139,7 +27139,7 @@ bb.bbk:                                           ; preds = %bb.bbj
           to label %bb.bbl unwind label %bb.bbm
 
 bb.bbl:                                           ; preds = %bb.bbk
-  invoke void @__cxa_throw(ptr %i.ehr, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.ehr, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.bbn
 
 bb.bbm:                                           ; preds = %bb.bbk
@@ -27197,7 +27197,7 @@ bb.bbu:                                           ; preds = %_ZSteqIcSt11char_tr
           to label %bb.bbv unwind label %bb.bbw
 
 bb.bbv:                                           ; preds = %bb.bbu
-  invoke void @__cxa_throw(ptr nonnull %i.ehy, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.ehy, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.bcb unwind label %bb.bbw
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2259.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit2057.thread2295
@@ -27600,7 +27600,7 @@ bb.e:                                             ; preds = %bb.d
           to label %bb.f unwind label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  invoke void @__cxa_throw(ptr nonnull %i.z, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.z, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.jd unwind label %bb.g
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.d
@@ -27733,7 +27733,7 @@ bb.p:                                             ; preds = %_ZN7dropbox6oxygen2
           to label %bb.q unwind label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  invoke void @__cxa_throw(ptr nonnull %i.bv, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.bv, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.u unwind label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -28136,7 +28136,7 @@ bb.dl:                                            ; preds = %bb.dk, %bb.dj
           to label %bb.dm unwind label %bb.dn
 
 bb.dm:                                            ; preds = %.thread302
-  invoke void @__cxa_throw(ptr nonnull %i.lc, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.lc, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.jd unwind label %bb.bo
 
 bb.dn:                                            ; preds = %.thread302
@@ -28539,7 +28539,7 @@ bb.ik:                                            ; preds = %bb.ij
           to label %bb.il unwind label %bb.im
 
 bb.il:                                            ; preds = %bb.ik
-  invoke void @__cxa_throw(ptr nonnull %i.yi, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.yi, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.jd unwind label %bb.im
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit286.thread: ; preds = %bb.ii
@@ -28675,7 +28675,7 @@ bb.iw:                                            ; preds = %bb.iv
           to label %bb.ix unwind label %bb.iy
 
 bb.ix:                                            ; preds = %bb.iw
-  invoke void @__cxa_throw(ptr %i.zm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.zm, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.jd unwind label %bb.iz
 
 bb.iy:                                            ; preds = %bb.iw
@@ -29078,7 +29078,7 @@ bb.hq:                                            ; preds = %bb.hp
           to label %bb.hr unwind label %bb.ht
 
 bb.hr:                                            ; preds = %bb.hq
-  invoke void @__cxa_throw(ptr nonnull %i.vd, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.vd, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.iw unwind label %bb.ht
 
 bb.hs:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread381
@@ -29367,7 +29367,7 @@ bb.ig:                                            ; preds = %_ZSteqIcSt11char_tr
           to label %bb.ih unwind label %bb.ii
 
 bb.ih:                                            ; preds = %bb.ig
-  invoke void @__cxa_throw(ptr nonnull %i.zd, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.zd, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.iw unwind label %bb.ii
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit361.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit513.thread521
@@ -29770,7 +29770,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.d, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.dc unwind label %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.b
@@ -29891,7 +29891,7 @@ bb.l:                                             ; preds = %_ZN7dropbox6oxygen2
           to label %bb.m unwind label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  invoke void @__cxa_throw(ptr nonnull %i.aq, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.aq, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.q unwind label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -30147,7 +30147,7 @@ bb.aq:                                            ; preds = %bb.ap
           to label %bb.ar unwind label %bb.ay
 
 bb.ar:                                            ; preds = %bb.aq
-  invoke void @__cxa_throw(ptr nonnull %i.cz, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.cz, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.dc unwind label %bb.ay
 
 bb.as:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread5.i
@@ -30550,7 +30550,7 @@ bb.cv:                                            ; preds = %.body
           to label %bb.cw unwind label %bb.cx
 
 bb.cw:                                            ; preds = %bb.cv
-  invoke void @__cxa_throw(ptr %i.jn, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr nonnull @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr %i.jn, ptr nonnull @_ZTIN5osgeo4proj2io16FactoryExceptionE, ptr @_ZN5osgeo4proj2io16FactoryExceptionD1Ev) #36
           to label %bb.dc unwind label %bb.cy
 
 bb.cx:                                            ; preds = %bb.cv
@@ -30953,7 +30953,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @__cxa_throw(ptr nonnull %i.e, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr nonnull @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
+  invoke void @__cxa_throw(ptr nonnull %i.e, ptr nonnull @_ZTIN5osgeo4proj2io28NoSuchAuthorityCodeExceptionE, ptr @_ZN5osgeo4proj2io28NoSuchAuthorityCodeExceptionD1Ev) #36
           to label %bb.p unwind label %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds = %bb.b

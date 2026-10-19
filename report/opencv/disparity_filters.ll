@@ -205,7 +205,7 @@ bb.a:
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !114 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 128
-  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !109 ; 5 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !109 ; 4 uses
   %i.al = icmp sgt i32 %i.f, 0
   %i.am = fneg float %i.u
   %i.an = fdiv float %i.am, %i.s                  ; 2 uses
@@ -248,8 +248,7 @@ bb.a:
   %bound053 = icmp ult ptr %scevgep, %scevgep51
   %bound154 = icmp ult ptr %scevgep50, %scevgep47
   %found.conflict55 = and i1 %bound053, %bound154
-  %2 = or i64 %i.y, %i.ak
-  %i.bi = icmp slt i64 %2, 0
+  %i.bi = icmp slt i64 %i.y, 0
   %i.bj = or i1 %found.conflict55, %i.bi
   %conflict.rdx = or i1 %i.bh, %i.bj
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
