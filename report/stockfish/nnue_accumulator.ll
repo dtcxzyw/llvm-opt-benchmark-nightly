@@ -174,6 +174,7 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   br i1 %i.bb, label %bb.f, label %.lr.ph197.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.i
+  %tcphi = phi i64 [ %tcdec, %.lr.ph.i ], [ %i.aw, %bb.e ]
   %i.bc = phi i64 [ %i.bk, %.lr.ph.i ], [ 0, %bb.e ] ; 2 uses
   %.0193.i = phi i64 [ %i.bg, %.lr.ph.i ], [ %i.as, %bb.e ] ; 3 uses
   %i.bd = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0193.i, i1 true) ; 2 uses
@@ -183,13 +184,15 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.bd
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !30
   %i.bj = tail call noundef i32 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm10make_indexENS_5ColorENS_6SquareENS_5PieceES5_(i8 noundef zeroext %1, i8 noundef zeroext %i.be, i8 noundef zeroext %i.bi, i8 noundef zeroext %i.z) #11
-  %i.bk = add nuw nsw i64 %i.bc, 1                ; 2 uses
+  %i.bk = add nuw nsw i64 %i.bc, 1
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.bc
   store i32 %i.bj, ptr %i.bl, align 4, !tbaa !31
-  %exitcond = icmp eq i64 %i.bk, %i.aw
+  %tcdec = add nsw i64 %tcphi, -1                 ; 2 uses
+  %exitcond = icmp eq i64 %tcdec, 0
   br i1 %exitcond, label %..preheader185_crit_edge.i, label %.lr.ph.i, !llvm.loop !50
 
 .lr.ph197.i:                                      ; preds = %.preheader185.i, %.lr.ph197.i
+  %tcphi137 = phi i64 [ %tcdec138, %.lr.ph197.i ], [ %i.ba, %.preheader185.i ]
   %i.bm = phi i64 [ %i.bu, %.lr.ph197.i ], [ 0, %.preheader185.i ] ; 2 uses
   %.0173196.i = phi i64 [ %i.bq, %.lr.ph197.i ], [ %i.av, %.preheader185.i ] ; 3 uses
   %i.bn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0173196.i, i1 true) ; 2 uses
@@ -199,10 +202,11 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 %i.bn
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !30
   %i.bt = tail call noundef i32 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm10make_indexENS_5ColorENS_6SquareENS_5PieceES5_(i8 noundef zeroext %1, i8 noundef zeroext %i.bo, i8 noundef zeroext %i.bs, i8 noundef zeroext %i.z) #11
-  %i.bu = add nuw nsw i64 %i.bm, 1                ; 2 uses
+  %i.bu = add nuw nsw i64 %i.bm, 1
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.bm
   store i32 %i.bt, ptr %i.bv, align 4, !tbaa !31
-  %exitcond137 = icmp eq i64 %i.bu, %i.ba
+  %tcdec138 = add nsw i64 %tcphi137, -1           ; 2 uses
+  %exitcond137 = icmp eq i64 %tcdec138, 0
   br i1 %exitcond137, label %._crit_edge.i, label %.lr.ph197.i, !llvm.loop !51
 
 ._crit_edge.i:                                    ; preds = %.lr.ph197.i
@@ -605,6 +609,7 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   br i1 %i.ba, label %.preheader185.i, label %.lr.ph198.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.i
+  %tcphi = phi i64 [ %tcdec, %.lr.ph.i ], [ %i.av, %bb.e ]
   %i.bb = phi i64 [ %i.bj, %.lr.ph.i ], [ 0, %bb.e ] ; 2 uses
   %.0194.i = phi i64 [ %i.bf, %.lr.ph.i ], [ %i.ar, %bb.e ] ; 3 uses
   %i.bc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0194.i, i1 true) ; 2 uses
@@ -614,13 +619,15 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.bc
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !30
   %i.bi = tail call noundef i32 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm10make_indexENS_5ColorENS_6SquareENS_5PieceES5_(i8 noundef zeroext %1, i8 noundef zeroext %i.bd, i8 noundef zeroext %i.bh, i8 noundef zeroext %i.y) #11
-  %i.bj = add nuw nsw i64 %i.bb, 1                ; 2 uses
+  %i.bj = add nuw nsw i64 %i.bb, 1
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.bb
   store i32 %i.bi, ptr %i.bk, align 4, !tbaa !31
-  %exitcond = icmp eq i64 %i.bj, %i.av
+  %tcdec = add nsw i64 %tcphi, -1                 ; 2 uses
+  %exitcond = icmp eq i64 %tcdec, 0
   br i1 %exitcond, label %..preheader186_crit_edge.i, label %.lr.ph.i, !llvm.loop !73
 
 .lr.ph198.i:                                      ; preds = %.preheader186.i, %.lr.ph198.i
+  %tcphi53 = phi i64 [ %tcdec54, %.lr.ph198.i ], [ %i.az, %.preheader186.i ]
   %i.bl = phi i64 [ %i.bt, %.lr.ph198.i ], [ 0, %.preheader186.i ] ; 2 uses
   %.0173197.i = phi i64 [ %i.bp, %.lr.ph198.i ], [ %i.au, %.preheader186.i ] ; 3 uses
   %i.bm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0173197.i, i1 true) ; 2 uses
@@ -630,10 +637,11 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 %i.bm
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !30
   %i.bs = tail call noundef i32 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm10make_indexENS_5ColorENS_6SquareENS_5PieceES5_(i8 noundef zeroext %1, i8 noundef zeroext %i.bn, i8 noundef zeroext %i.br, i8 noundef zeroext %i.y) #11
-  %i.bt = add nuw nsw i64 %i.bl, 1                ; 2 uses
+  %i.bt = add nuw nsw i64 %i.bl, 1
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.bl
   store i32 %i.bs, ptr %i.bu, align 4, !tbaa !31
-  %exitcond53 = icmp eq i64 %i.bt, %i.az
+  %tcdec54 = add nsw i64 %tcphi53, -1             ; 2 uses
+  %exitcond53 = icmp eq i64 %tcdec54, 0
   br i1 %exitcond53, label %._crit_edge.i, label %.lr.ph198.i, !llvm.loop !74
 
 ._crit_edge.i:                                    ; preds = %.lr.ph198.i
