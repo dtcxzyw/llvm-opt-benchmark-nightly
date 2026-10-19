@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RegisterFile?download=true
 inline.NumInlined: 762
 inline.NumDeleted: 331
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm3mca12RegisterFile19removeRegisterWriteERKNS0_10WriteStateENS_15MutableArrayRefIjEE:bb.a
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !117, !noalias !270
   %i.be = getelementptr inbounds nuw [24 x i8], ptr %i.bd, i64 %.pre-phi ; 2 uses
@@ -204,10 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.f = load i16, ptr %i.e, align 4, !tbaa !36
   %i.g = zext i16 %i.f to i64
-  %i.h = load ptr, ptr %i.d, align 8, !tbaa !71   ; 4 uses
+  %i.h = load ptr, ptr %i.d, align 8, !tbaa !71   ; 7 uses
   %i.i = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %i.g
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !124  ; 3 uses
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !124  ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.m = zext i32 %i.k to i64
   %i.n = load ptr, ptr %i.l, align 8, !tbaa !50
@@ -227,17 +228,78 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.w, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 16
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 6 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
   %cond = icmp eq i64 %2, 0
   br i1 %cond, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread, label %.lr.ph118
 
-bb.e:                                             ; preds = %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit
-  %exitcond.not.a = icmp eq i64 %11, %2
-  br i1 %exitcond.not.a, label %.lr.ph90, label %.lr.ph118, !llvm.loop !272
+10:                                               ; preds = %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit
+  %exitcond.not = icmp eq i64 %2, 1
+  br i1 %exitcond.not, label %.lr.ph90, label %.lr.ph118.1
 
-.lr.ph90:                                         ; preds = %bb.e
+.lr.ph118.1:                                      ; preds = %10
+  %11 = getelementptr [136 x i8], ptr %1, i64 %2  ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 56
+  %13 = load i16, ptr %12, align 8, !tbaa !147    ; 2 uses
+  %14 = zext i16 %13 to i64
+  %15 = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %14
+  %16 = getelementptr i8, ptr %11, i64 -260
+  %17 = load i16, ptr %16, align 4, !tbaa !36     ; 2 uses
+  %18 = zext i16 %17 to i64
+  %19 = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %18 ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %15, i64 24
+  %21 = load i32, ptr %20, align 4, !tbaa !124
+  %.not.i.1 = icmp eq i32 %21, %i.k
+  br i1 %.not.i.1, label %22, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread
+
+22:                                               ; preds = %.lr.ph118.1
+  %23 = getelementptr inbounds nuw i8, ptr %19, i64 24
+  %24 = load i32, ptr %23, align 4, !tbaa !124
+  %.not20.i.1 = icmp eq i32 %24, %i.k
+  br i1 %.not20.i.1, label %25, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread
+
+25:                                               ; preds = %22
+  %26 = getelementptr inbounds nuw i8, ptr %19, i64 32
+  %27 = load i16, ptr %26, align 4, !tbaa !121    ; 3 uses
+  %28 = zext i16 %27 to i64
+  %29 = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %28
+  %30 = getelementptr inbounds nuw i8, ptr %29, i64 36
+  %31 = load i8, ptr %30, align 4, !tbaa !148, !range !42, !noundef !43
+  %32 = trunc nuw i8 %31 to i1
+  br i1 %32, label %33, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread
+
+33:                                               ; preds = %25
+  %.not21.i.1 = icmp eq i16 %27, 0
+  %.not22.i.1 = icmp eq i16 %27, %17
+  %or.cond.i.1 = select i1 %.not21.i.1, i1 true, i1 %.not22.i.1
+  %34 = getelementptr i8, ptr %11, i64 -252
+  %35 = load i8, ptr %34, align 4, !range !42
+  %36 = trunc nuw i8 %35 to i1
+  %or.cond25.i.1 = select i1 %or.cond.i.1, i1 true, i1 %36
+  br i1 %or.cond25.i.1, label %bb.e, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread
+
+bb.e:                                             ; preds = %33
+  %37 = zext i16 %13 to i32                       ; 2 uses
+  %38 = and i32 %37, 63
+  %39 = zext nneg i32 %38 to i64
+  %40 = shl nuw i64 1, %39
+  %41 = load i32, ptr %i.y, align 8, !tbaa !75
+  %42 = icmp ult i32 %41, 65
+  %43 = load ptr, ptr %i.x, align 8
+  %44 = lshr i32 %37, 6
+  %45 = zext nneg i32 %44 to i64
+  %46 = getelementptr inbounds nuw [8 x i8], ptr %43, i64 %45
+  %.in.i.i.i.1 = select i1 %42, ptr %i.x, ptr %46
+  %47 = load i64, ptr %.in.i.i.i.1, align 8, !tbaa !76
+  %48 = and i64 %47, %40
+  %exitcond.not.a = icmp eq i64 %48, 0
+  %49 = load i8, ptr %i.z, align 4, !tbaa !111, !range !42, !noundef !43
+  %50 = trunc nuw i8 %49 to i1
+  %.not86.1 = and i1 %exitcond.not.a, %50
+  br i1 %.not86.1, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread, label %.lr.ph90, !llvm.loop !272
+
+.lr.ph90:                                         ; preds = %10, %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.sroa.68.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -265,17 +327,13 @@ bb.e:                                             ; preds = %_ZNK4llvm3mca12Regi
   %i.aw = getelementptr inbounds nuw i8, ptr %i.o, i64 12 ; 2 uses
   br label %bb.i
 
-.lr.ph118:                                        ; preds = %bb.d, %bb.e
-  %.051116 = phi i64 [ %11, %bb.e ], [ 0, %bb.d ] ; 2 uses
-  %10 = getelementptr inbounds nuw [48 x i8], ptr %3, i64 %.051116
-  %11 = add i64 %.051116, 1                       ; 3 uses
-  %12 = sub nuw i64 %2, %11
-  %i.ax = getelementptr inbounds nuw [136 x i8], ptr %1, i64 %12 ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %10, i64 8
+.lr.ph118:                                        ; preds = %bb.d
+  %i.ax = getelementptr [136 x i8], ptr %1, i64 %2 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.az = load i16, ptr %i.ay, align 8, !tbaa !147 ; 2 uses
   %i.ba = zext i16 %i.az to i64
   %i.bb = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %i.ba
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 12
+  %i.bc = getelementptr i8, ptr %i.ax, i64 -124
   %i.bd = load i16, ptr %i.bc, align 4, !tbaa !36 ; 2 uses
   %i.be = zext i16 %i.bd to i64
   %i.bf = getelementptr inbounds nuw [40 x i8], ptr %i.h, i64 %i.be ; 2 uses
@@ -304,7 +362,7 @@ bb.h:                                             ; preds = %bb.g
   %.not21.i = icmp eq i16 %i.bl, 0
   %.not22.i = icmp eq i16 %i.bl, %i.bd
   %or.cond.i = select i1 %.not21.i, i1 true, i1 %.not22.i
-  %i.br = getelementptr inbounds nuw i8, ptr %i.ax, i64 20
+  %i.br = getelementptr i8, ptr %i.ax, i64 -116
   %i.bs = load i8, ptr %i.br, align 4, !range !42
   %i.bt = trunc nuw i8 %i.bs to i1
   %or.cond25.i = select i1 %or.cond.i, i1 true, i1 %i.bt
@@ -328,7 +386,7 @@ _ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStat
   %i.ch = load i8, ptr %i.z, align 4, !tbaa !111, !range !42, !noundef !43
   %i.ci = trunc nuw i8 %i.ch to i1
   %.not86 = and i1 %i.cg, %i.ci
-  br i1 %.not86, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread, label %bb.e, !llvm.loop !272
+  br i1 %.not86, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread, label %10, !llvm.loop !272
 
 bb.i:                                             ; preds = %.lr.ph90, %.critedge
   %.05089 = phi i64 [ 0, %.lr.ph90 ], [ %i.ck, %.critedge ] ; 2 uses
@@ -605,8 +663,8 @@ bb.u:                                             ; preds = %_ZN4llvm14iterator_
   %exitcond93.not = icmp eq i64 %i.ck, %2
   br i1 %exitcond93.not, label %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread, label %bb.i, !llvm.loop !281
 
-_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread: ; preds = %bb.h, %bb.g, %bb.f, %.lr.ph118, %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit, %.critedge, %bb.d, %bb.c, %bb.a
-  %.4 = phi i1 [ true, %.critedge ], [ false, %bb.a ], [ false, %bb.c ], [ true, %bb.d ], [ false, %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit ], [ false, %.lr.ph118 ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ]
+_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit.thread: ; preds = %bb.h, %bb.g, %bb.f, %.lr.ph118, %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit, %.lr.ph118.1, %22, %25, %33, %bb.e, %.critedge, %bb.d, %bb.c, %bb.a
+  %.4 = phi i1 [ true, %.critedge ], [ false, %bb.a ], [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.e ], [ false, %33 ], [ false, %25 ], [ false, %22 ], [ false, %.lr.ph118.1 ], [ false, %_ZNK4llvm3mca12RegisterFile16canEliminateMoveERKNS0_10WriteStateERKNS0_9ReadStateEj.exit ], [ false, %.lr.ph118 ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ]
   ret i1 %.4
 }
 

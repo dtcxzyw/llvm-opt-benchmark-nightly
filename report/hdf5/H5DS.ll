@@ -201,12 +201,12 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ao, label %bb.eb, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ap = call i32 @H5Sget_simple_extent_ndims(i64 noundef %i.an) #10 ; 2 uses
+  %i.ap = call i32 @H5Sget_simple_extent_ndims(i64 noundef %i.an) #10 ; 3 uses
   %i.aq = icmp slt i32 %i.ap, 0
   br i1 %i.aq, label %.thread464, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %spec.store.select = call i32 @llvm.umax.i32(i32 %i.ap, i32 1) ; 4 uses
+  %spec.store.select = call i32 @llvm.umax.i32(i32 %i.ap, i32 1) ; 3 uses
   %i.ar = call i32 @H5Sclose(i64 noundef %i.an) #10
   %i.as = icmp slt i32 %i.ar, 0
   %i.at = add nsw i32 %spec.store.select, -1
@@ -301,7 +301,8 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.cb, label %.thread464, label %._crit_edge489
 
 ._crit_edge489:                                   ; preds = %bb.ae
-  %i.cc = zext nneg i32 %spec.store.select to i64
+  %10 = call i32 @llvm.umax.i32(i32 %i.ap, i32 1)
+  %i.cc = zext nneg i32 %10 to i64
   %i.cd = shl nuw nsw i64 %i.cc, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ca, i8 0, i64 %i.cd, i1 false), !tbaa !18
   %i.ce = zext nneg i32 %2 to i64

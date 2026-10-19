@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/cnfCut?download=true
 inline.NumInlined: 37
 inline.NumDeleted: 16
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@Cnf_CutRef:bb.a
   %i.r = load i8, ptr %1, align 8, !tbaa !22
   %i.s = sext i8 %i.r to i64
@@ -204,10 +204,10 @@ bb.a:
 define noundef ptr @Cnf_CutCompose(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !65   ; 11 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !65   ; 13 uses
   %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !65   ; 9 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !65   ; 11 uses
   %i.f = ptrtoaddr ptr %i.e to i64
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !65   ; 3 uses
@@ -514,7 +514,7 @@ bb.k:                                             ; preds = %Cnf_CutMergeLeaves.
   %i.dk = sext i8 %i.dj to i64
   %i.dl = getelementptr inbounds [4 x i8], ptr %i.di, i64 %i.dk ; 5 uses
   %i.dm = sext i8 %i.cy to i64                    ; 2 uses
-  %i.dn = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %i.dm ; 9 uses
+  %i.dn = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %i.dm ; 11 uses
   %sext = shl i32 %i.cq, 16                       ; 2 uses
   %i.do = ashr exact i32 %sext, 16                ; 2 uses
   %i.dp = icmp sgt i16 %i.cz, 0
@@ -775,23 +775,46 @@ Cnf_TruthPhase.exit133:                           ; preds = %bb.r, %bb.s, %Cnf_T
   tail call void @Kit_TruthStretch(ptr noundef %i.h, ptr noundef %i.e, i32 noundef %i.ia, i32 noundef %i.ic, i32 noundef %.013.lcssa.i123, i32 noundef 1) #13
   %i.id = load i16, ptr %i.da, align 2, !tbaa !23
   %i.ie = sext i16 %i.id to i64                   ; 2 uses
-  %i.if = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.ie ; 2 uses
+  %i.if = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.ie ; 4 uses
   %i.ig = load i8, ptr %i.cw, align 8, !tbaa !22  ; 2 uses
   %i.ih = sext i8 %i.ig to i32
   %i.ii = icmp slt i8 %i.ig, 6
   %i.ij = add nsw i32 %i.ih, -5
   %i.ik = shl nuw i32 1, %i.ij
-  %spec.select.i = select i1 %i.ii, i32 1, i32 %i.ik ; 3 uses
+  %spec.select.i = select i1 %i.ii, i32 1, i32 %i.ik ; 4 uses
   %i.il = icmp sgt i32 %spec.select.i, 0
   br i1 %i.il, label %select.unfold.preheader.i, label %Kit_TruthMux.exit
 
 select.unfold.preheader.i:                        ; preds = %Cnf_TruthPhase.exit133
-  %i.im = zext nneg i32 %spec.select.i to i64     ; 3 uses
+  %i.im = zext nneg i32 %spec.select.i to i64     ; 5 uses
   %min.iters.check218 = icmp ult i32 %spec.select.i, 20
-  br i1 %min.iters.check218, label %select.unfold.i.preheader.a, label %vector.memcheck
+  br i1 %min.iters.check218, label %select.unfold.i.preheader, label %vector.memcheck
 
-select.unfold.i.preheader.a:                      ; preds = %vector.memcheck, %select.unfold.preheader.i
-  br label %select.unfold.i
+select.unfold.i.preheader:                        ; preds = %vector.memcheck, %select.unfold.preheader.i
+  %xtraiter281 = and i64 %i.im, 1
+  %lcmp.mod282.not = icmp eq i64 %xtraiter281, 0
+  br i1 %lcmp.mod282.not, label %select.unfold.i.prol.loopexit, label %select.unfold.i.preheader.a
+
+select.unfold.i.preheader.a:                      ; preds = %select.unfold.i.preheader
+  %indvars.iv.next.i135.prol = add nsw i64 %i.im, -1 ; 5 uses
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next.i135.prol
+  %5 = load i32, ptr %4, align 4, !tbaa !30
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next.i135.prol
+  %7 = load i32, ptr %6, align 4, !tbaa !30       ; 2 uses
+  %8 = xor i32 %7, -1
+  %9 = and i32 %5, %8
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.if, i64 %indvars.iv.next.i135.prol
+  %11 = load i32, ptr %10, align 4, !tbaa !30
+  %12 = and i32 %11, %7
+  %13 = or i32 %12, %9
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.dn, i64 %indvars.iv.next.i135.prol
+  store i32 %13, ptr %14, align 4, !tbaa !30
+  br label %select.unfold.i.prol.loopexit
+
+select.unfold.i.prol.loopexit:                    ; preds = %select.unfold.i.preheader.a, %select.unfold.i.preheader
+  %indvars.iv.i134.unr = phi i64 [ %i.im, %select.unfold.i.preheader ], [ %indvars.iv.next.i135.prol, %select.unfold.i.preheader.a ]
+  %15 = icmp eq i32 %spec.select.i, 1
+  br i1 %15, label %Kit_TruthMux.exit, label %select.unfold.i
 
 vector.memcheck:                                  ; preds = %select.unfold.preheader.i
   %i.in = shl nsw i64 %i.ie, 2
@@ -811,7 +834,7 @@ vector.memcheck:                                  ; preds = %select.unfold.prehe
   %i.iy = add i64 %i.ix, -25
   %diff.check220 = icmp ult i64 %i.iy, 31
   %conflict.rdx221 = or i1 %conflict.rdx, %diff.check220
-  br i1 %conflict.rdx221, label %select.unfold.i.preheader.a, label %vector.ph222
+  br i1 %conflict.rdx221, label %select.unfold.i.preheader, label %vector.ph222
 
 vector.ph222:                                     ; preds = %vector.memcheck
   %n.vec223 = and i64 %i.im, 2147483640
@@ -853,9 +876,22 @@ vector.body224:                                   ; preds = %vector.body224, %ve
   %i.jv = icmp eq i64 %index.next239, %n.vec223
   br i1 %i.jv, label %Kit_TruthMux.exit, label %vector.body224, !llvm.loop !59
 
-select.unfold.i:                                  ; preds = %select.unfold.i.preheader.a, %select.unfold.i
-  %indvars.iv.i134 = phi i64 [ %indvars.iv.next.i135.a, %select.unfold.i ], [ %i.im, %select.unfold.i.preheader.a ] ; 2 uses
-  %indvars.iv.next.i135.a = add nsw i64 %indvars.iv.i134, -1 ; 5 uses
+select.unfold.i:                                  ; preds = %select.unfold.i.prol.loopexit, %select.unfold.i
+  %indvars.iv.i134 = phi i64 [ %indvars.iv.next.i135.a, %select.unfold.i ], [ %indvars.iv.i134.unr, %select.unfold.i.prol.loopexit ] ; 3 uses
+  %indvars.iv.next.i135 = add nsw i64 %indvars.iv.i134, -1 ; 4 uses
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next.i135
+  %17 = load i32, ptr %16, align 4, !tbaa !30
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next.i135
+  %19 = load i32, ptr %18, align 4, !tbaa !30     ; 2 uses
+  %20 = xor i32 %19, -1
+  %21 = and i32 %17, %20
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.if, i64 %indvars.iv.next.i135
+  %23 = load i32, ptr %22, align 4, !tbaa !30
+  %24 = and i32 %23, %19
+  %25 = or i32 %24, %21
+  %26 = getelementptr inbounds nuw [4 x i8], ptr %i.dn, i64 %indvars.iv.next.i135
+  store i32 %25, ptr %26, align 4, !tbaa !30
+  %indvars.iv.next.i135.a = add nsw i64 %indvars.iv.i134, -2 ; 5 uses
   %i.jw = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next.i135.a
   %i.jx = load i32, ptr %i.jw, align 4, !tbaa !30
   %i.jy = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.next.i135.a
@@ -868,10 +904,10 @@ select.unfold.i:                                  ; preds = %select.unfold.i.pre
   %i.kf = or i32 %i.ke, %i.kb
   %i.kg = getelementptr inbounds nuw [4 x i8], ptr %i.dn, i64 %indvars.iv.next.i135.a
   store i32 %i.kf, ptr %i.kg, align 4, !tbaa !30
-  %4 = icmp samesign ugt i64 %indvars.iv.i134, 1
-  br i1 %4, label %select.unfold.i, label %Kit_TruthMux.exit, !llvm.loop !60
+  %27 = icmp sgt i64 %indvars.iv.i134, 2
+  br i1 %27, label %select.unfold.i, label %Kit_TruthMux.exit, !llvm.loop !60
 
-Kit_TruthMux.exit:                                ; preds = %vector.body224, %select.unfold.i, %Cnf_TruthPhase.exit133
+Kit_TruthMux.exit:                                ; preds = %vector.body224, %select.unfold.i.prol.loopexit, %select.unfold.i, %Cnf_TruthPhase.exit133
   %i.kh = load i8, ptr %1, align 8, !tbaa !22     ; 3 uses
   %i.ki = sext i8 %i.kh to i32                    ; 2 uses
   %i.kj = icmp slt i32 %.0.lcssa, %i.ki

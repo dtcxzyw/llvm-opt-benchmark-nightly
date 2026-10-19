@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 678
 inline.NumDeleted: 90
 loop-unroll.NumCompletelyUnrolled: 71
-loop-unroll.NumRuntimeUnrolled: 123
-loop-unroll.NumUnrolled: 194
+loop-unroll.NumRuntimeUnrolled: 124
+loop-unroll.NumUnrolled: 195
 begin_hunk_0_@vorbis_lpc_to_lsp:bb.a
   %i.hk = load float, ptr %i.hj, align 4
   %i.hl = fpext float %i.hk to double
@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.d, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 5 uses
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 6 uses
   %min.iters.check = icmp ult i32 %1, 4
   br i1 %min.iters.check, label %.lr.ph.preheader20, label %vector.ph
 
@@ -240,9 +240,15 @@ middle.block:                                     ; preds = %vector.body
 .preheader52.split.us:                            ; preds = %.lr.ph, %middle.block
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.a
   %i.m = load float, ptr %i.l, align 4
-  %i.n = fpext float %i.m to double
-  %i.o = zext nneg i32 %1 to i64                  ; 2 uses
-  %i.p = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.n, i64 1
+  %i.n = fpext float %i.m to double               ; 2 uses
+  %i.o = zext nneg i32 %1 to i64                  ; 3 uses
+  %3 = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.n, i64 1 ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %indvars.iv.next73.prol = add nsw i64 %i.o, -1  ; 2 uses
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next73.prol
+  %i.p = insertelement <2 x double> poison, double %i.n, i64 0
+  %5 = icmp eq i32 %1, 1
   br label %.preheader51.us
 
 .preheader51.us:                                  ; preds = %bb.b, %.preheader52.split.us
@@ -260,26 +266,49 @@ bb.b:                                             ; preds = %._crit_edge63.split
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv75 ; 2 uses
   %i.t = load double, ptr %i.s, align 8           ; 2 uses
   %i.u = insertelement <2 x double> poison, double %i.t, i64 0
-  %i.v = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> zeroinitializer
-  br label %bb.c
+  %i.v = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.c:                                             ; preds = %bb.c, %.lr.ph58.us.us
-  %indvars.iv72 = phi i64 [ %indvars.iv.next73, %bb.c ], [ %i.o, %.lr.ph58.us.us ] ; 2 uses
-  %i.w = phi <2 x double> [ %i.ad, %bb.c ], [ %i.p, %.lr.ph58.us.us ] ; 2 uses
-  %indvars.iv.next73 = add nsw i64 %indvars.iv72, -1 ; 2 uses
-  %i.x = fmul <2 x double> %i.v, %i.w
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph58.us.us
+  %6 = fmul <2 x double> %i.v, %3
+  %7 = load float, ptr %4, align 4
+  %8 = fpext float %7 to double
+  %9 = insertelement <2 x double> %i.p, double %8, i64 1
+  %10 = fadd <2 x double> %6, %9                  ; 2 uses
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph58.us.us
+  %indvars.iv72.unr = phi i64 [ %i.o, %.lr.ph58.us.us ], [ %indvars.iv.next73.prol, %.prol.loopexit.unr-lcssa ]
+  %.unr = phi <2 x double> [ %3, %.lr.ph58.us.us ], [ %10, %.prol.loopexit.unr-lcssa ]
+  %.lcssa.unr = phi <2 x double> [ poison, %.lr.ph58.us.us ], [ %10, %.prol.loopexit.unr-lcssa ]
+  br i1 %5, label %._crit_edge.us.us, label %bb.c
+
+bb.c:                                             ; preds = %.prol.loopexit, %bb.c
+  %indvars.iv72 = phi i64 [ %indvars.iv.next73, %bb.c ], [ %indvars.iv72.unr, %.prol.loopexit ] ; 3 uses
+  %i.w = phi <2 x double> [ %i.ad, %bb.c ], [ %.unr, %.prol.loopexit ] ; 2 uses
+  %11 = fmul <2 x double> %i.v, %i.w
+  %12 = getelementptr [4 x i8], ptr %0, i64 %indvars.iv72
+  %13 = getelementptr i8, ptr %12, i64 -4
+  %14 = load float, ptr %13, align 4
+  %15 = fpext float %14 to double
+  %16 = shufflevector <2 x double> %i.w, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %17 = insertelement <2 x double> %16, double %15, i64 1
+  %18 = fadd <2 x double> %11, %17                ; 2 uses
+  %indvars.iv.next73 = add nsw i64 %indvars.iv72, -2 ; 2 uses
+  %i.x = fmul <2 x double> %i.v, %18
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next73
   %i.z = load float, ptr %i.y, align 4
   %i.aa = fpext float %i.z to double
-  %i.ab = shufflevector <2 x double> %i.w, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.ab = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.ac = insertelement <2 x double> %i.ab, double %i.aa, i64 1
-  %i.ad = fadd <2 x double> %i.x, %i.ac           ; 3 uses
-  %i.ae = icmp sgt i64 %indvars.iv72, 1
+  %i.ad = fadd <2 x double> %i.x, %i.ac           ; 2 uses
+  %i.ae = icmp sgt i64 %indvars.iv72, 2
   br i1 %i.ae, label %bb.c, label %._crit_edge.us.us, !llvm.loop !681
 
-._crit_edge.us.us:                                ; preds = %bb.c
-  %i.af = extractelement <2 x double> %i.ad, i64 0
-  %i.ag = extractelement <2 x double> %i.ad, i64 1
+._crit_edge.us.us:                                ; preds = %bb.c, %.prol.loopexit
+  %.lcssa = phi <2 x double> [ %.lcssa.unr, %.prol.loopexit ], [ %i.ad, %bb.c ] ; 2 uses
+  %i.af = extractelement <2 x double> %.lcssa, i64 0
+  %i.ag = extractelement <2 x double> %.lcssa, i64 1
   %i.ah = fdiv double %i.ag, %i.af                ; 3 uses
   %i.ai = fsub double %i.t, %i.ah
   store double %i.ai, ptr %i.s, align 8

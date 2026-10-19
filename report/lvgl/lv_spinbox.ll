@@ -201,12 +201,12 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   %i.k = tail call i32 @llvm.abs.i32(i32 %i.g, i1 true)
   %i.l = call i32 (ptr, i64, ptr, ...) @lv_snprintf(ptr noundef nonnull %i.b, i64 noundef 14, ptr noundef nonnull @.str.1, i32 noundef %i.k) #8 ; 0 uses
-  %i.m = call i64 @lv_strlen(ptr noundef nonnull %i.b) #8 ; 3 uses
+  %i.m = call i64 @lv_strlen(ptr noundef nonnull %i.b) #8 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  %i.o = load i16, ptr %i.n, align 8              ; 3 uses
+  %i.o = load i16, ptr %i.n, align 8              ; 4 uses
   %i.p = and i16 %i.o, 15                         ; 4 uses
   %i.q = zext nneg i16 %i.p to i64
-  %i.r = sub i64 %i.q, %i.m                       ; 3 uses
+  %i.r = sub i64 %i.q, %i.m                       ; 2 uses
   %i.s = trunc i64 %i.r to i32
   %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %bb.c, label %.loopexit
@@ -287,8 +287,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph
 
 .lr.ph71.preheader:                               ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.c
-  %i.aq = and i64 %i.r, 2147483647
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.b, i8 48, i64 %i.aq, i1 false), !tbaa !22
+  %1 = and i16 %i.o, 15
+  %2 = zext nneg i16 %1 to i64
+  %3 = xor i64 %i.m, -1
+  %4 = add i64 %3, %2
+  %i.aq = and i64 %4, 4294967295
+  %5 = add nuw nsw i64 %i.aq, 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.b, i8 48, i64 %5, i1 false), !tbaa !22
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

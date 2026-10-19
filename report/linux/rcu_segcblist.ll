@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/rcu_segcblist?download=true
 inline.NumInlined: 54
 inline.NumDeleted: 13
-loop-unroll.NumCompletelyUnrolled: 11
-loop-unroll.NumUnrolled: 11
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumUnrolled: 12
 begin_hunk_0_@rcu_segcblist_insert_done_cbs:bb.a
   %i.m = icmp eq ptr %0, %i.l
   br i1 %i.m, label %bb.c, label %bb.g
@@ -204,14 +204,14 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.d = getelementptr i8, ptr %0, i64 8          ; 3 uses
+  %i.d = getelementptr i8, ptr %0, i64 8          ; 4 uses
   %i.e = load volatile ptr, ptr %i.d, align 8     ; 2 uses
   %i.f = load volatile ptr, ptr %i.e, align 8
   %.not.i = icmp eq ptr %i.f, null
   br i1 %.not.i, label %.loopexit, label %.preheader34
 
 .preheader34:                                     ; preds = %bb.c
-  %i.g = getelementptr i8, ptr %0, i64 40
+  %i.g = getelementptr i8, ptr %0, i64 40         ; 2 uses
   %i.h = getelementptr i8, ptr %0, i64 24
   %i.i = getelementptr i8, ptr %0, i64 16
   %i.j = load ptr, ptr %i.i, align 8              ; 2 uses
@@ -241,8 +241,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.v = phi i1 [ false, %bb.f ], [ true, %bb.g ]
-  %.029.lcssa = phi i64 [ 1, %bb.f ], [ 0, %bb.g ] ; 5 uses
+  %i.v = phi i1 [ true, %bb.f ], [ false, %bb.g ]
+  %.029.lcssa = phi i64 [ 1, %bb.f ], [ 0, %bb.g ] ; 6 uses
   %i.w = getelementptr [8 x i8], ptr %i.d, i64 %.029.lcssa
   %i.x = load volatile ptr, ptr %i.w, align 8
   %i.y = load volatile ptr, ptr %i.x, align 8
@@ -273,15 +273,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store volatile ptr %i.aj, ptr %i.ak, align 8
   %i.al = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv41.peel
   store i64 %1, ptr %i.al, align 8
-  br i1 %i.v, label %.lr.ph38.peel.newph, label %.loopexit
-
-.lr.ph38.peel.newph:                              ; preds = %.lr.ph38
-  %2 = load ptr, ptr %i.ai, align 8
-  %3 = getelementptr i8, ptr %0, i64 24
-  %4 = getelementptr i8, ptr %0, i64 56
-  store volatile ptr %2, ptr %3, align 8
-  store i64 %1, ptr %4, align 8
-  br label %.loopexit
+  br i1 %i.v, label %.loopexit, label %2
 
 bb.i:                                             ; preds = %.lr.ph
   %i.am = load i64, ptr %i.ae, align 8
@@ -308,8 +300,17 @@ bb.k:                                             ; preds = %bb.j
   store volatile i64 0, ptr %i.ao, align 8
   br label %.lr.ph38
 
-.loopexit:                                        ; preds = %.lr.ph38, %.lr.ph38.peel.newph, %.thread, %bb.h, %bb.c
-  %.0 = phi i1 [ false, %bb.h ], [ false, %bb.c ], [ false, %.thread ], [ true, %.lr.ph38.peel.newph ], [ true, %.lr.ph38 ]
+2:                                                ; preds = %.lr.ph38
+  %indvars.iv.next42 = or disjoint i64 %.029.lcssa, 2 ; 2 uses
+  %3 = load ptr, ptr %i.ai, align 8
+  %4 = getelementptr [8 x i8], ptr %i.d, i64 %indvars.iv.next42
+  store volatile ptr %3, ptr %4, align 8
+  %5 = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv.next42
+  store i64 %1, ptr %5, align 8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.lr.ph38, %2, %.thread, %bb.h, %bb.c
+  %.0 = phi i1 [ false, %bb.h ], [ false, %bb.c ], [ false, %.thread ], [ true, %2 ], [ true, %.lr.ph38 ]
   ret i1 %.0
 }
 

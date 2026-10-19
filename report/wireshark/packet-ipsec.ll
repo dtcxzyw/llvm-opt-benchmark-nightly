@@ -205,7 +205,7 @@ declare void @gcry_cipher_close(ptr noundef) local_unnamed_addr #4
 define internal fastcc i32 @compute_ascii_key(ptr nofree noundef captures(none) initializes((0, 8)) %0, ptr noundef nonnull %1, ptr nofree noundef writeonly captures(none) %2) unnamed_addr #0 {
 bb.a:
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #21
-  %i.b = trunc i64 %i.a to i32                    ; 6 uses
+  %i.b = trunc i64 %i.a to i32                    ; 7 uses
   %i.c = icmp ugt i32 %i.b, 2
   br i1 %i.c, label %bb.b, label %bb.n
 
@@ -265,20 +265,26 @@ bb.h:                                             ; preds = %bb.d
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ %i.m, %bb.g ], [ %i.y, %bb.h ]
   %.069 = phi i32 [ %i.u, %bb.g ], [ %i.j, %bb.h ]
-  %.067 = phi i32 [ 3, %bb.g ], [ 2, %bb.h ]      ; 2 uses
+  %.067 = phi i32 [ 3, %bb.g ], [ 2, %bb.h ]      ; 3 uses
   %.0 = phi i32 [ 1, %bb.g ], [ 0, %bb.h ]        ; 2 uses
-  %i.aa = add i32 %i.b, -1                        ; 2 uses
+  %i.aa = add i32 %i.b, -1
   %i.ab = icmp ult i32 %.067, %i.aa
+  %3 = zext nneg i32 %.0 to i64                   ; 2 uses
   br i1 %i.ab, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.i
   %i.ac = zext nneg i32 %.067 to i64
-  %i.ad = zext i32 %i.aa to i64
+  %4 = add i32 %i.b, -2
+  %5 = sub i32 %4, %.067
+  %6 = lshr i32 %5, 1
+  %7 = add nuw i32 %.0, %6
+  %8 = add nuw i32 %7, 1
+  %i.ad = zext i32 %8 to i64                      ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.m
   %indvars.iv.a = phi i64 [ %i.ac, %.lr.ph.preheader ], [ %indvars.iv.next.a, %bb.m ] ; 3 uses
-  %.186 = phi i32 [ %.0, %.lr.ph.preheader ], [ %4, %bb.m ] ; 2 uses
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.m ] ; 2 uses
   %i.ae = getelementptr i8, ptr %1, i64 %indvars.iv.a
   %i.af = load i8, ptr %i.ae, align 1
   %i.ag = tail call i32 @g_ascii_xdigit_value(i8 noundef signext %i.af) #24 ; 2 uses
@@ -315,27 +321,25 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.r
 
 bb.m:                                             ; preds = %bb.k
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 2 ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 2
   %i.aw = shl i32 %i.ag, 4
   %i.ax = or i32 %i.ap, %i.aw
   %i.ay = trunc i32 %i.ax to i8
   %i.az = load ptr, ptr %0, align 8
-  %3 = zext i32 %.186 to i64
-  %i.ba = getelementptr i8, ptr %i.az, i64 %3
+  %i.ba = getelementptr i8, ptr %i.az, i64 %indvars.iv
   store i8 %i.ay, ptr %i.ba, align 1
-  %4 = add i32 %.186, 1                           ; 2 uses
-  %5 = icmp samesign ult i64 %indvars.iv.next.a, %i.ad
-  br i1 %5, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !47
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ad
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !47
 
 ._crit_edge.loopexit:                             ; preds = %bb.m
   %.pre = load ptr, ptr %0, align 8
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.i
-  %6 = phi ptr [ %i.z, %bb.i ], [ %.pre, %._crit_edge.loopexit ]
-  %.1.lcssa = phi i32 [ %.0, %bb.i ], [ %4, %._crit_edge.loopexit ]
-  %7 = zext i32 %.1.lcssa to i64
-  %i.bb = getelementptr i8, ptr %6, i64 %7
+._crit_edge:                                      ; preds = %bb.i, %._crit_edge.loopexit
+  %.pre-phi = phi i64 [ %i.ad, %._crit_edge.loopexit ], [ %3, %bb.i ]
+  %9 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.z, %bb.i ]
+  %i.bb = getelementptr i8, ptr %9, i64 %.pre-phi
   store i8 0, ptr %i.bb, align 1
   br label %bb.r
 

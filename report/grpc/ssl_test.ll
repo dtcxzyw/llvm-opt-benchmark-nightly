@@ -205,42 +205,48 @@ _ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %bb.c, %bb.d, %bb.e,
   %i.o = icmp eq ptr %i.n, %i.m
   br i1 %i.o, label %.loopexit, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit, %.critedge
-  %3 = phi ptr [ %i.ab, %.critedge ], [ %i.m, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ]
-  %.04154 = phi i64 [ %i.z, %.critedge ], [ 0, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ] ; 3 uses
-  %4 = shl i64 %.04154, 1                         ; 3 uses
-  %.not.i = icmp ult i64 %4, %2
-  br i1 %.not.i, label %_ZNK4bssl4SpanIKcEixEm.exit, label %bb.f
+.lr.ph.a:                                         ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit
+  %3 = lshr exact i64 %2, 1
+  %4 = lshr exact i64 %2, 1
+  %exitcond.not72 = icmp eq i64 %2, 0
+  br i1 %exitcond.not72, label %bb.f, label %_ZNK4bssl4SpanIKcEixEm.exit
 
-bb.f:                                             ; preds = %.lr.ph.a
+.lr.ph:                                           ; preds = %.critedge
+  %exitcond.not = icmp eq i64 %i.z, %3
+  br i1 %exitcond.not, label %bb.f, label %_ZNK4bssl4SpanIKcEixEm.exit, !llvm.loop !12656
+
+bb.f:                                             ; preds = %.lr.ph, %.lr.ph.a
   tail call void @abort() #46
   unreachable
 
-_ZNK4bssl4SpanIKcEixEm.exit:                      ; preds = %.lr.ph.a
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 %4
-  %6 = load i8, ptr %5, align 1, !tbaa !1106      ; 3 uses
-  %7 = or disjoint i64 %4, 1                      ; 2 uses
-  %.not.i48 = icmp ult i64 %7, %2
-  br i1 %.not.i48, label %_ZNK4bssl4SpanIKcEixEm.exit49, label %bb.g
+_ZNK4bssl4SpanIKcEixEm.exit:                      ; preds = %.lr.ph.a, %.lr.ph
+  %.0415473 = phi i64 [ %i.z, %.lr.ph ], [ 0, %.lr.ph.a ] ; 4 uses
+  %5 = phi ptr [ %i.ab, %.lr.ph ], [ %i.m, %.lr.ph.a ]
+  %6 = shl nuw i64 %.0415473, 1                   ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 %6
+  %8 = load i8, ptr %7, align 1, !tbaa !1106      ; 3 uses
+  %exitcond60.not = icmp eq i64 %.0415473, %4
+  br i1 %exitcond60.not, label %bb.g, label %_ZNK4bssl4SpanIKcEixEm.exit49
 
 bb.g:                                             ; preds = %_ZNK4bssl4SpanIKcEixEm.exit
   tail call void @abort() #46
   unreachable
 
 _ZNK4bssl4SpanIKcEixEm.exit49:                    ; preds = %_ZNK4bssl4SpanIKcEixEm.exit
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 %6
+  %i.p = getelementptr inbounds nuw i8, ptr %9, i64 1
   %i.q = load i8, ptr %i.p, align 1, !tbaa !1106  ; 3 uses
-  %i.r = add i8 %6, -48                           ; 2 uses
+  %i.r = add i8 %8, -48                           ; 2 uses
   %or.cond = icmp ult i8 %i.r, 10
   br i1 %or.cond, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %_ZNK4bssl4SpanIKcEixEm.exit49
-  %i.s = add i8 %6, -97
+  %i.s = add i8 %8, -97
   %or.cond5 = icmp ult i8 %i.s, 6
   br i1 %or.cond5, label %bb.i, label %.loopexit
 
 bb.i:                                             ; preds = %bb.h
-  %i.t = add nsw i8 %6, -87
+  %i.t = add nsw i8 %8, -87
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK4bssl4SpanIKcEixEm.exit49, %bb.i
@@ -262,16 +268,16 @@ bb.l:                                             ; preds = %bb.k
 .critedge:                                        ; preds = %bb.j, %bb.l
   %.pn = phi i8 [ %i.x, %bb.l ], [ %i.v, %bb.j ]
   %.1 = or i8 %.pn, %i.u
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 %.04154
+  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 %.0415473
   store i8 %.1, ptr %i.y, align 1, !tbaa !1106
-  %i.z = add nuw i64 %.04154, 1                   ; 2 uses
+  %i.z = add nuw i64 %.0415473, 1                 ; 3 uses
   %i.aa = load ptr, ptr %i.c, align 8, !tbaa !1597
   %i.ab = load ptr, ptr %0, align 8, !tbaa !1596  ; 2 uses
   %i.ac = ptrtoint ptr %i.aa to i64
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = sub i64 %i.ac, %i.ad
   %.not59 = icmp ult i64 %i.z, %i.ae
-  br i1 %.not59, label %.lr.ph.a, label %.loopexit, !llvm.loop !12656
+  br i1 %.not59, label %.lr.ph, label %.loopexit, !llvm.loop !12656
 
 .loopexit:                                        ; preds = %bb.h, %bb.k, %.critedge, %_ZNSt6vectorIhSaIhEE6resizeEm.exit, %bb.a
   %.3 = phi i1 [ false, %bb.a ], [ true, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ], [ false, %bb.k ], [ false, %bb.h ], [ true, %.critedge ]

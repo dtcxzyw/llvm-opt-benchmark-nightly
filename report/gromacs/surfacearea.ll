@@ -205,15 +205,15 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.3 = phi i32 [ %i.l, %bb.k ], [ %.2, %bb.l ]   ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
-  %i.n = load ptr, ptr %i.a, align 8, !tbaa !12   ; 15 uses
+  %i.n = load ptr, ptr %i.a, align 8, !tbaa !12   ; 19 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !21
   %i.q = ptrtoint ptr %i.p to i64
   %i.r = ptrtoint ptr %i.n to i64
   %i.s = sub i64 %i.q, %i.r
   %i.t = ashr exact i64 %i.s, 2
-  %i.u = udiv i64 %i.t, 3                         ; 2 uses
-  %i.v = trunc i64 %i.u to i32                    ; 12 uses
+  %i.u = udiv i64 %i.t, 3                         ; 9 uses
+  %i.v = trunc i64 %i.u to i32                    ; 8 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.x = sitofp i32 %i.v to float
   %i.y = fpext float %i.x to double
@@ -438,10 +438,12 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i:             ; preds = %_ZSt6fill_nIPimiET_
   %i.dw = getelementptr inbounds nuw i8, ptr %15, i64 20
   %i.dx = mul nuw nsw i32 %i.v, 3
   %i.dy = getelementptr inbounds nuw i8, ptr %13, i64 8
-  %16 = call i32 @llvm.umax.i32(i32 %i.v, i32 1)
   %wide.trip.count349.i = zext nneg i32 %3 to i64
-  %wide.trip.count332.i = zext nneg i32 %16 to i64 ; 13 uses
+  %wide.trip.count332.i = and i64 %i.u, 2147483647 ; 10 uses
   %brmerge.i = or i1 %.not203.i, %.not.i.i.i.i.i
+  %16 = add nsw i64 %wide.trip.count332.i, -1     ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.n, i64 4    ; 2 uses
+  %scevgep56 = getelementptr i8, ptr %i.n, i64 8  ; 2 uses
   %i.dz = shl nuw nsw i64 %wide.trip.count332.i, 2
   %scevgep.a = getelementptr i8, ptr %.sroa.0236.0.i, i64 %i.dz
   %i.ea = mul nuw nsw i64 %wide.trip.count332.i, 12
@@ -449,36 +451,47 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i:             ; preds = %_ZSt6fill_nIPimiET_
   %i.eb = add i64 %.0.i.i.i.i.i.i103, -4
   %i.ec = sub i64 %i.eb, %.sroa.0236.0.i104       ; 3 uses
   %i.ed = lshr i64 %i.ec, 2
-  %17 = add nuw nsw i64 %i.ed, 1                  ; 5 uses
-  %i.ee = add nsw i64 %wide.trip.count332.i, -1
+  %i.ee = add nuw nsw i64 %i.ed, 1                ; 5 uses
   %min.iters.check105 = icmp ult i64 %i.ec, 28
   %min.iters.check107 = icmp ult i64 %i.ec, 124
-  %i.ef = and i64 %17, 24
-  %n.vec109 = and i64 %17, 9223372036854775776    ; 4 uses
+  %i.ef = and i64 %i.ee, 24
+  %n.vec109 = and i64 %i.ee, 9223372036854775776  ; 4 uses
   %i.eg = shl i64 %n.vec109, 2
   %i.eh = getelementptr i8, ptr %.sroa.0236.0.i, i64 %i.eg
-  %cmp.n114 = icmp eq i64 %17, %n.vec109
+  %cmp.n114 = icmp eq i64 %i.ee, %n.vec109
   %min.epilog.iters.check120 = icmp eq i64 %i.ef, 0
-  %n.vec122 = and i64 %17, 9223372036854775800    ; 3 uses
+  %n.vec122 = and i64 %i.ee, 9223372036854775800  ; 3 uses
   %i.ei = shl i64 %n.vec122, 2
   %i.ej = getelementptr i8, ptr %.sroa.0236.0.i, i64 %i.ei
-  %cmp.n128 = icmp eq i64 %17, %n.vec122
-  %min.iters.check.a = icmp ult i32 %i.v, 8
+  %cmp.n128 = icmp eq i64 %i.ee, %n.vec122
+  %min.iters.check = icmp samesign ult i64 %wide.trip.count332.i, 8
+  %mul = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %16, i64 12) ; 2 uses
+  %mul.result = extractvalue { i64, i1 } %mul, 0  ; 3 uses
+  %mul.overflow = extractvalue { i64, i1 } %mul, 1
+  %17 = getelementptr i8, ptr %i.n, i64 %mul.result
+  %18 = icmp ult ptr %17, %i.n
+  %19 = getelementptr i8, ptr %scevgep, i64 %mul.result
+  %20 = icmp ult ptr %19, %scevgep
+  %21 = getelementptr i8, ptr %scevgep56, i64 %mul.result
+  %min.iters.check.a = icmp ult ptr %21, %scevgep56
+  %22 = or i1 %min.iters.check.a, %mul.overflow
+  %23 = or i1 %20, %18
+  %24 = or i1 %23, %22
   %bound0 = icmp ult ptr %.sroa.0236.0.i, %scevgep56.a
   %bound1 = icmp ult ptr %i.n, %scevgep.a
   %found.conflict = and i1 %bound0, %bound1
-  %min.iters.check57 = icmp ult i32 %i.v, 16
-  %i.ek = and i64 %wide.trip.count332.i, 8
-  %n.vec = and i64 %wide.trip.count332.i, 2147483632 ; 4 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count332.i
+  %min.iters.check57 = icmp samesign ult i64 %wide.trip.count332.i, 16
+  %i.ek = and i64 %i.u, 8
+  %n.vec = and i64 %i.u, 2147483632               ; 4 uses
+  %cmp.n = icmp eq i64 %wide.trip.count332.i, %n.vec
   %min.epilog.iters.check.not.not = icmp eq i64 %i.ek, 0
-  %n.vec77 = and i64 %wide.trip.count332.i, 2147483640 ; 3 uses
-  %cmp.n101 = icmp eq i64 %n.vec77, %wide.trip.count332.i
-  %xtraiter139 = and i64 %wide.trip.count332.i, 1
+  %n.vec77 = and i64 %i.u, 2147483640             ; 3 uses
+  %cmp.n101 = icmp eq i64 %wide.trip.count332.i, %n.vec77
+  %xtraiter139 = and i64 %i.u, 1
   %lcmp.mod140.not = icmp eq i64 %xtraiter139, 0
-  %xtraiter141 = and i64 %wide.trip.count332.i, 3 ; 3 uses
-  %i.el = icmp ult i32 %i.v, 4
-  %unroll_iter149 = and i64 %wide.trip.count332.i, 2147483644
+  %xtraiter141 = and i64 %i.u, 3                  ; 3 uses
+  %i.el = icmp ult i64 %16, 3
+  %unroll_iter149 = and i64 %i.u, 2147483644
   %lcmp.mod145.not = icmp eq i64 %xtraiter141, 0
   %lcmp.mod148 = icmp ne i64 %xtraiter141, 0
   br label %bb.x
@@ -635,7 +648,8 @@ iter.check:                                       ; preds = %bb.ac
   %i.gb = load float, ptr %i.du, align 4          ; 5 uses
   %i.gc = load float, ptr %i.dv, align 4          ; 5 uses
   %i.gd = load float, ptr %i.dw, align 4          ; 5 uses
-  %brmerge.a = select i1 %min.iters.check.a, i1 true, i1 %found.conflict
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %24
+  %brmerge.a = select i1 %brmerge, i1 true, i1 %found.conflict
   br i1 %brmerge.a, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -759,6 +773,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv329.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec77, %vec.epilog.middle.block ], [ %n.vec, %vec.epilog.iter.check ] ; 5 uses
   %.1168281.i.ph = phi i32 [ %.0167286.i, %iter.check ], [ %i.hl, %vec.epilog.middle.block ], [ %i.gz, %vec.epilog.iter.check ] ; 4 uses
+  %.neg = or disjoint i64 %indvars.iv329.i.ph, 1
   br i1 %lcmp.mod140.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
@@ -795,7 +810,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %.2.i.lcssa.unr = phi i32 [ poison, %vec.epilog.scalar.ph.preheader ], [ %.2.i.prol, %vec.epilog.scalar.ph.prol.loopexit.unr-lcssa ]
   %indvars.iv329.i.unr = phi i64 [ %indvars.iv329.i.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next330.i.prol, %vec.epilog.scalar.ph.prol.loopexit.unr-lcssa ]
   %.1168281.i.unr = phi i32 [ %.1168281.i.ph, %vec.epilog.scalar.ph.preheader ], [ %.2.i.prol, %vec.epilog.scalar.ph.prol.loopexit.unr-lcssa ]
-  %i.hz = icmp eq i64 %i.ee, %indvars.iv329.i.ph
+  %i.hz = icmp eq i64 %wide.trip.count332.i, %.neg
   br i1 %i.hz, label %.loopexit.i, label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %bb.ak
@@ -1198,9 +1213,6 @@ declare i64 @llvm.umin.i64(i64, i64) #7
 declare i32 @llvm.umin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1211,6 +1223,9 @@ declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x float>) #16

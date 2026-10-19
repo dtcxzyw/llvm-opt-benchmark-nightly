@@ -204,7 +204,7 @@ _ZN13duckdb_yyjsonL18write_string_noescEPhPKhm.exit85: ; preds = %.lr.ph3179.pro
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit540
 
 bb.ec:                                            ; preds = %_ZN13duckdb_yyjsonL23get_enc_table_with_flagEj.exit59
-  %i.adn = tail call noundef ptr %.sroa.01324.0.copyload(ptr noundef %.sroa.8.0.copyload, i64 noundef 34), !inline_history !292 ; 30 uses
+  %i.adn = tail call noundef ptr %.sroa.01324.0.copyload(ptr noundef %.sroa.8.0.copyload, i64 noundef 34), !inline_history !292 ; 29 uses
   %.not102.i = icmp eq ptr %i.adn, null
   br i1 %.not102.i, label %bb.ii, label %bb.ed
 
@@ -258,7 +258,7 @@ bb.ek:                                            ; preds = %bb.ei
 
 bb.el:                                            ; preds = %bb.ee
   store i8 45, ptr %i.adn, align 1, !tbaa !99
-  %.lobit.i624 = lshr i64 %i.adr, 63              ; 2 uses
+  %.lobit.i624 = lshr i64 %i.adr, 63
   %i.aee = getelementptr i8, ptr %i.adn, i64 %.lobit.i624 ; 38 uses
   %.mask.i = and i64 %i.adr, 9223372036854775807
   %i.aef = icmp eq i64 %.mask.i, 0
@@ -661,13 +661,13 @@ bb.fk:                                            ; preds = %bb.fj, %bb.fi
 
 _ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit706: ; preds = %bb.fh, %bb.fk
   %.11609 = phi i64 [ %i.aqd, %bb.fk ], [ %i.app, %bb.fh ] ; 4 uses
-  %storemerge.i704 = phi i32 [ %i.and, %bb.fk ], [ %i.apq, %bb.fh ]
+  %storemerge.i704 = phi i32 [ %i.and, %bb.fk ], [ %i.apq, %bb.fh ] ; 2 uses
   %i.aqe = icmp samesign ult i64 %.11609, 10000000000000000
-  %i.aqf = select i1 %i.aqe, i32 16, i32 17
+  %i.aqf = select i1 %i.aqe, i32 16, i32 17       ; 2 uses
   %i.aqg = icmp samesign ult i64 %.11609, 1000000000000000
-  %.neg129.i = sext i1 %i.aqg to i32
+  %.neg129.i = sext i1 %i.aqg to i32              ; 2 uses
   %i.aqh = add nsw i32 %i.aqf, %.neg129.i
-  %i.aqi = add nsw i32 %i.aqh, %storemerge.i704   ; 8 uses
+  %i.aqi = add nsw i32 %i.aqh, %storemerge.i704   ; 7 uses
   %i.aqj = add nsw i32 %i.aqi, 5
   %or.cond3.i = icmp ult i32 %i.aqj, 27
   %i.aqk = udiv i64 %.11609, 100000000            ; 2 uses
@@ -872,7 +872,7 @@ _ZN13duckdb_yyjsonL27write_u64_len_15_to_17_trimEPhm.exit848: ; preds = %bb.fp, 
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit540
 
 bb.ft:                                            ; preds = %bb.fl
-  %i.avl = getelementptr inbounds nuw i8, ptr %i.aee, i64 1 ; 2 uses
+  %i.avl = getelementptr inbounds nuw i8, ptr %i.aee, i64 1 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.aee, i8 48, i64 24, i1 false)
   store i8 %i.aqz, ptr %i.avl, align 1, !tbaa !99
   %i.avm = icmp ne i32 %i.aqv, 0                  ; 2 uses
@@ -1032,10 +1032,12 @@ bb.fz:                                            ; preds = %bb.fx
   %.sink5230 = phi i64 [ %i.ayf, %bb.fw ], [ %i.azd, %bb.fy ], [ %i.azo, %bb.fz ]
   %.pn.i862 = and i64 %.sink5230, 4294967295
   %.0.i863 = getelementptr inbounds nuw i8, ptr %i.avx, i64 %.pn.i862 ; 2 uses
-  %6 = getelementptr i8, ptr %i.adn, i64 %.lobit.i624
-  %scevgep3718 = getelementptr i8, ptr %6, i64 1
-  %i.azp = zext nneg i32 %i.aqi to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aee, ptr align 1 %scevgep3718, i64 %i.azp, i1 false), !tbaa !99
+  %6 = add nsw i32 %i.aqf, %storemerge.i704
+  %7 = add nsw i32 %6, %.neg129.i
+  %8 = add nsw i32 %7, -1
+  %i.azp = zext i32 %8 to i64
+  %9 = add nuw nsw i64 %i.azp, 1
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aee, ptr noundef nonnull align 1 dereferenceable(1) %i.avl, i64 %9, i1 false), !tbaa !99
   %i.azq = zext nneg i32 %i.aqi to i64
   %i.azr = getelementptr inbounds nuw i8, ptr %i.aee, i64 %i.azq ; 2 uses
   store i8 46, ptr %i.azr, align 1, !tbaa !99
@@ -1438,7 +1440,7 @@ _ZN13duckdb_yyjsonL18write_string_noescEPhPKhm.exit.i: ; preds = %.lr.ph2360.pro
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit98.i
 
 bb.ec:                                            ; preds = %_ZN13duckdb_yyjsonL23get_enc_table_with_flagEj.exit.i
-  %i.adn = tail call noundef ptr %.sroa.0491.0.copyload(ptr noundef %.sroa.8.0.copyload, i64 noundef 34), !inline_history !329 ; 30 uses
+  %i.adn = tail call noundef ptr %.sroa.0491.0.copyload(ptr noundef %.sroa.8.0.copyload, i64 noundef 34), !inline_history !329 ; 29 uses
   %.not102.i.i = icmp eq ptr %i.adn, null
   br i1 %.not102.i.i, label %bb.ii, label %bb.ed
 
@@ -1492,7 +1494,7 @@ bb.ek:                                            ; preds = %bb.ei
 
 bb.el:                                            ; preds = %bb.ee
   store i8 45, ptr %i.adn, align 1, !tbaa !99
-  %.lobit.i120.i = lshr i64 %i.adr, 63            ; 2 uses
+  %.lobit.i120.i = lshr i64 %i.adr, 63
   %i.aee = getelementptr i8, ptr %i.adn, i64 %.lobit.i120.i ; 38 uses
   %.mask.i.i = and i64 %i.adr, 9223372036854775807
   %i.aef = icmp eq i64 %.mask.i.i, 0
@@ -1895,13 +1897,13 @@ bb.fk:                                            ; preds = %bb.fj, %bb.fi
 
 _ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit136.i: ; preds = %bb.fk, %bb.fh
   %.0775 = phi i64 [ %i.aqd, %bb.fk ], [ %i.app, %bb.fh ] ; 4 uses
-  %storemerge.i134.i = phi i32 [ %i.and, %bb.fk ], [ %i.apq, %bb.fh ]
+  %storemerge.i134.i = phi i32 [ %i.and, %bb.fk ], [ %i.apq, %bb.fh ] ; 2 uses
   %i.aqe = icmp samesign ult i64 %.0775, 10000000000000000
-  %i.aqf = select i1 %i.aqe, i32 16, i32 17
+  %i.aqf = select i1 %i.aqe, i32 16, i32 17       ; 2 uses
   %i.aqg = icmp samesign ult i64 %.0775, 1000000000000000
-  %.neg129.i.i = sext i1 %i.aqg to i32
+  %.neg129.i.i = sext i1 %i.aqg to i32            ; 2 uses
   %i.aqh = add nsw i32 %i.aqf, %.neg129.i.i
-  %i.aqi = add nsw i32 %i.aqh, %storemerge.i134.i ; 8 uses
+  %i.aqi = add nsw i32 %i.aqh, %storemerge.i134.i ; 7 uses
   %i.aqj = add nsw i32 %i.aqi, 5
   %or.cond3.i.i = icmp ult i32 %i.aqj, 27
   %i.aqk = udiv i64 %.0775, 100000000             ; 2 uses
@@ -2106,7 +2108,7 @@ _ZN13duckdb_yyjsonL27write_u64_len_15_to_17_trimEPhm.exit.i: ; preds = %bb.fs, %
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit98.i
 
 bb.ft:                                            ; preds = %bb.fl
-  %i.avn = getelementptr inbounds nuw i8, ptr %i.aee, i64 1 ; 2 uses
+  %i.avn = getelementptr inbounds nuw i8, ptr %i.aee, i64 1 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.aee, i8 48, i64 24, i1 false)
   store i8 %i.aqz, ptr %i.avn, align 1, !tbaa !99
   %i.avo = icmp ne i32 %i.aqv, 0                  ; 2 uses
@@ -2266,10 +2268,12 @@ bb.fz:                                            ; preds = %bb.fx
   %.sink4421 = phi i64 [ %i.azq, %bb.fz ], [ %i.azf, %bb.fy ], [ %i.ayh, %bb.fw ]
   %i.azr = and i64 %.sink4421, 4294967295
   %i.azs = getelementptr inbounds nuw i8, ptr %i.avz, i64 %i.azr ; 2 uses
-  %7 = getelementptr i8, ptr %i.adn, i64 %.lobit.i120.i
-  %scevgep2901 = getelementptr i8, ptr %7, i64 1
-  %i.azt = zext nneg i32 %i.aqi to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aee, ptr align 1 %scevgep2901, i64 %i.azt, i1 false), !tbaa !99
+  %7 = add nsw i32 %i.aqf, %storemerge.i134.i
+  %8 = add nsw i32 %7, %.neg129.i.i
+  %9 = add nsw i32 %8, -1
+  %i.azt = zext i32 %9 to i64
+  %10 = add nuw nsw i64 %i.azt, 1
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aee, ptr noundef nonnull align 1 dereferenceable(1) %i.avn, i64 %10, i1 false), !tbaa !99
   %i.azu = zext nneg i32 %i.aqi to i64
   %i.azv = getelementptr inbounds nuw i8, ptr %i.aee, i64 %i.azu ; 2 uses
   store i8 46, ptr %i.azv, align 1, !tbaa !99

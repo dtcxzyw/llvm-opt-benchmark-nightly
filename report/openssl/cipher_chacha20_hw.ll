@@ -203,13 +203,20 @@ vector.ph157:                                     ; preds = %vector.main.loop.it
 
 vector.body159:                                   ; preds = %vector.ph157, %vector.body159
   %index160 = phi i64 [ 0, %vector.ph157 ], [ %index.next163, %vector.body159 ] ; 4 uses
-  %i.cb = getelementptr inbounds nuw i8, ptr %.270.lcssa, i64 %index160
-  %wide.load161 = load <16 x i8>, ptr %i.cb, align 1, !tbaa !8
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.bp, i64 %index160
-  %wide.load162 = load <16 x i8>, ptr %i.cc, align 1, !tbaa !8
-  %4 = xor <16 x i8> %wide.load162, %wide.load161
-  %i.cd = getelementptr inbounds nuw i8, ptr %.273.lcssa, i64 %index160
-  store <16 x i8> %4, ptr %i.cd, align 1, !tbaa !8
+  %4 = getelementptr inbounds nuw i8, ptr %.270.lcssa, i64 %index160 ; 2 uses
+  %i.cb = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %wide.load161 = load <8 x i8>, ptr %4, align 1, !tbaa !8
+  %wide.load162 = load <8 x i8>, ptr %i.cb, align 1, !tbaa !8
+  %5 = getelementptr inbounds nuw i8, ptr %i.bp, i64 %index160 ; 2 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %wide.load163 = load <8 x i8>, ptr %5, align 1, !tbaa !8
+  %wide.load164 = load <8 x i8>, ptr %i.cc, align 1, !tbaa !8
+  %6 = xor <8 x i8> %wide.load163, %wide.load161
+  %7 = xor <8 x i8> %wide.load164, %wide.load162
+  %8 = getelementptr inbounds nuw i8, ptr %.273.lcssa, i64 %index160 ; 2 uses
+  %i.cd = getelementptr inbounds nuw i8, ptr %8, i64 8
+  store <8 x i8> %6, ptr %8, align 1, !tbaa !8
+  store <8 x i8> %7, ptr %i.cd, align 1, !tbaa !8
   %index.next163 = add nuw i64 %index160, 16      ; 2 uses
   %i.ce = icmp eq i64 %index.next163, %n.vec158
   br i1 %i.ce, label %middle.block164, label %vector.body159, !llvm.loop !22
