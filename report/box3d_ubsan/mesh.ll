@@ -204,16 +204,14 @@ bb.i:                                             ; preds = %bb.g
   br i1 %exitcond.not.i, label %bb.f, label %bb.g, !llvm.loop !174
 
 .preheader311.i:                                  ; preds = %bb.f, %.critedge182.i
-  %.0160520.i = phi i32 [ %.2.i, %.critedge182.i ], [ %1, %bb.f ] ; 3 uses
-  %.0161519.i = phi i32 [ %.2163.i, %.critedge182.i ], [ 0, %bb.f ] ; 2 uses
+  %.0160520.i = phi i32 [ %.2.i, %.critedge182.i ], [ %1, %bb.f ] ; 2 uses
+  %.0161519.i = phi i32 [ %.2163.i, %.critedge182.i ], [ 0, %bb.f ]
   %i.aq = sext i32 %.0161519.i to i64
-  %i.ar = sext i32 %.0160520.i to i64             ; 3 uses
-  %11 = add nsw i32 %.0161519.i, 1
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %.0160520.i, i32 %11)
+  %i.ar = sext i32 %.0160520.i to i64             ; 5 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.m, %.preheader311.i
-  %indvars.iv712.i = phi i64 [ %i.aq, %.preheader311.i ], [ %indvars.iv.next713.i, %bb.m ] ; 5 uses
+  %indvars.iv712.i = phi i64 [ %i.aq, %.preheader311.i ], [ %indvars.iv.next713.i, %bb.m ] ; 6 uses
   %i.as = mul nsw i64 %indvars.iv712.i, 40
   %i.at = add i64 %i.as, %i.n, !nosanitize !9     ; 3 uses
   %i.au = icmp ne i64 %i.at, 0, !nosanitize !9
@@ -244,14 +242,14 @@ bb.m:                                             ; preds = %bb.l
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.m, %.critedge.split.loop.exit912.i
-  %.1162.lcssa.i = phi i32 [ %i.be, %.critedge.split.loop.exit912.i ], [ %smax.i, %bb.m ] ; 7 uses
-  %12 = sext i32 %.1162.lcssa.i to i64            ; 4 uses
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.ar, i64 %12) ; 2 uses
-  %13 = icmp sgt i32 %.0160520.i, %.1162.lcssa.i
-  br i1 %13, label %.lr.ph2358, label %.critedge182.i
+  %.pre-phi1513 = phi i64 [ %indvars.iv712.i, %.critedge.split.loop.exit912.i ], [ %i.ar, %bb.m ] ; 5 uses
+  %.1162.lcssa.i = phi i32 [ %i.be, %.critedge.split.loop.exit912.i ], [ %.0160520.i, %bb.m ] ; 5 uses
+  %smin = tail call i64 @llvm.smin.i64(i64 %i.ar, i64 %.pre-phi1513) ; 2 uses
+  %11 = icmp slt i64 %.pre-phi1513, %i.ar
+  br i1 %11, label %.lr.ph2358, label %.critedge182.i
 
 bb.n:                                             ; preds = %bb.p
-  %i.bf = icmp sgt i64 %indvars.iv.next716.i, %12
+  %i.bf = icmp sgt i64 %indvars.iv.next716.i, %.pre-phi1513
   br i1 %i.bf, label %.lr.ph2358, label %.critedge182.i, !llvm.loop !176
 
 .lr.ph2358:                                       ; preds = %.critedge.i, %bb.n
@@ -279,7 +277,7 @@ bb.p:                                             ; preds = %.lr.ph2358
 
 .critedge2.i:                                     ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  %i.br = mul nsw i64 %12, 40
+  %i.br = mul nsw i64 %.pre-phi1513, 40
   %i.bs = add i64 %i.br, %i.n, !nosanitize !9     ; 3 uses
   %i.bt = icmp ne i64 %i.bs, 0, !nosanitize !9
   %i.bu = icmp uge i64 %i.bs, %i.n, !nosanitize !9
@@ -293,7 +291,7 @@ bb.q:                                             ; preds = %.critedge2.i
   unreachable, !nosanitize !9
 
 bb.r:                                             ; preds = %.critedge2.i
-  %i.by = getelementptr inbounds [40 x i8], ptr %2, i64 %12 ; 2 uses
+  %i.by = getelementptr inbounds [40 x i8], ptr %2, i64 %.pre-phi1513 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %8, ptr noundef nonnull align 4 dereferenceable(40) %i.by, i64 40, i1 false), !tbaa.struct !202, !noalias !199
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.by, ptr noundef nonnull align 4 dereferenceable(40) %i.bn, i64 40, i1 false), !tbaa.struct !202, !noalias !199
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.bn, ptr noundef nonnull align 4 dereferenceable(40) %8, i64 40, i1 false), !tbaa.struct !202, !noalias !199
@@ -323,16 +321,14 @@ bb.u:                                             ; preds = %bb.f
   br i1 %i.ce, label %.preheader308.i, label %.preheader309.i
 
 .preheader309.i:                                  ; preds = %bb.u, %.critedge183.i
-  %.3523.i = phi i32 [ %.5.i, %.critedge183.i ], [ %1, %bb.u ] ; 3 uses
-  %.3164522.i = phi i32 [ %.5166.i, %.critedge183.i ], [ 0, %bb.u ] ; 2 uses
+  %.3523.i = phi i32 [ %.5.i, %.critedge183.i ], [ %1, %bb.u ] ; 2 uses
+  %.3164522.i = phi i32 [ %.5166.i, %.critedge183.i ], [ 0, %bb.u ]
   %i.cf = sext i32 %.3164522.i to i64
-  %i.cg = sext i32 %.3523.i to i64                ; 3 uses
-  %14 = add nsw i32 %.3164522.i, 1
-  %smax720.i = tail call i32 @llvm.smax.i32(i32 %.3523.i, i32 %14)
+  %i.cg = sext i32 %.3523.i to i64                ; 5 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.y, %.preheader309.i
-  %indvars.iv718.i = phi i64 [ %i.cf, %.preheader309.i ], [ %indvars.iv.next719.i, %bb.y ] ; 5 uses
+  %indvars.iv718.i = phi i64 [ %i.cf, %.preheader309.i ], [ %indvars.iv.next719.i, %bb.y ] ; 6 uses
   %i.ch = mul nsw i64 %indvars.iv718.i, 40
   %i.ci = add i64 %i.ch, %i.n, !nosanitize !9     ; 3 uses
   %i.cj = icmp ne i64 %i.ci, 0, !nosanitize !9
@@ -363,14 +359,14 @@ bb.y:                                             ; preds = %bb.x
   br label %.critedge4.i
 
 .critedge4.i:                                     ; preds = %bb.y, %.critedge4.split.loop.exit914.i
-  %.4165.lcssa.i = phi i32 [ %i.ct, %.critedge4.split.loop.exit914.i ], [ %smax720.i, %bb.y ] ; 7 uses
-  %15 = sext i32 %.4165.lcssa.i to i64            ; 4 uses
-  %smin1499 = tail call i64 @llvm.smin.i64(i64 %i.cg, i64 %15) ; 2 uses
-  %16 = icmp sgt i32 %.3523.i, %.4165.lcssa.i
-  br i1 %16, label %.lr.ph2360, label %.critedge183.i
+  %.pre-phi1511 = phi i64 [ %indvars.iv718.i, %.critedge4.split.loop.exit914.i ], [ %i.cg, %bb.y ] ; 5 uses
+  %.4165.lcssa.i = phi i32 [ %i.ct, %.critedge4.split.loop.exit914.i ], [ %.3523.i, %bb.y ] ; 5 uses
+  %smin1499 = tail call i64 @llvm.smin.i64(i64 %i.cg, i64 %.pre-phi1511) ; 2 uses
+  %12 = icmp slt i64 %.pre-phi1511, %i.cg
+  br i1 %12, label %.lr.ph2360, label %.critedge183.i
 
 bb.z:                                             ; preds = %bb.ab
-  %i.cu = icmp sgt i64 %indvars.iv.next723.i, %15
+  %i.cu = icmp sgt i64 %indvars.iv.next723.i, %.pre-phi1511
   br i1 %i.cu, label %.lr.ph2360, label %.critedge183.i, !llvm.loop !179
 
 .lr.ph2360:                                       ; preds = %.critedge4.i, %bb.z
@@ -398,7 +394,7 @@ bb.ab:                                            ; preds = %.lr.ph2360
 
 .critedge6.i:                                     ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  %i.dg = mul nsw i64 %15, 40
+  %i.dg = mul nsw i64 %.pre-phi1511, 40
   %i.dh = add i64 %i.dg, %i.n, !nosanitize !9     ; 3 uses
   %i.di = icmp ne i64 %i.dh, 0, !nosanitize !9
   %i.dj = icmp uge i64 %i.dh, %i.n, !nosanitize !9
@@ -412,7 +408,7 @@ bb.ac:                                            ; preds = %.critedge6.i
   unreachable, !nosanitize !9
 
 bb.ad:                                            ; preds = %.critedge6.i
-  %i.dn = getelementptr inbounds [40 x i8], ptr %2, i64 %15 ; 2 uses
+  %i.dn = getelementptr inbounds [40 x i8], ptr %2, i64 %.pre-phi1511 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %9, ptr noundef nonnull align 4 dereferenceable(40) %i.dn, i64 40, i1 false), !tbaa.struct !202, !noalias !199
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.dn, ptr noundef nonnull align 4 dereferenceable(40) %i.dc, i64 40, i1 false), !tbaa.struct !202, !noalias !199
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.dc, ptr noundef nonnull align 4 dereferenceable(40) %9, i64 40, i1 false), !tbaa.struct !202, !noalias !199
@@ -438,16 +434,14 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %i.ds, label %.preheader309.i, label %.loopexit.i, !llvm.loop !180
 
 .preheader308.i:                                  ; preds = %bb.u, %.critedge184.i
-  %.6526.i = phi i32 [ %.8.i, %.critedge184.i ], [ %1, %bb.u ] ; 3 uses
-  %.6167525.i = phi i32 [ %.8169.i, %.critedge184.i ], [ 0, %bb.u ] ; 2 uses
+  %.6526.i = phi i32 [ %.8.i, %.critedge184.i ], [ %1, %bb.u ] ; 2 uses
+  %.6167525.i = phi i32 [ %.8169.i, %.critedge184.i ], [ 0, %bb.u ]
   %i.dt = sext i32 %.6167525.i to i64
-  %i.du = sext i32 %.6526.i to i64                ; 3 uses
-  %17 = add nsw i32 %.6167525.i, 1
-  %smax727.i = tail call i32 @llvm.smax.i32(i32 %.6526.i, i32 %17)
+  %i.du = sext i32 %.6526.i to i64                ; 5 uses
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.aj, %.preheader308.i
-  %indvars.iv725.i = phi i64 [ %i.dt, %.preheader308.i ], [ %indvars.iv.next726.i, %bb.aj ] ; 5 uses
+  %indvars.iv725.i = phi i64 [ %i.dt, %.preheader308.i ], [ %indvars.iv.next726.i, %bb.aj ] ; 6 uses
   %i.dv = mul nsw i64 %indvars.iv725.i, 40
   %i.dw = add i64 %i.dv, %i.n, !nosanitize !9     ; 3 uses
   %i.dx = icmp ne i64 %i.dw, 0, !nosanitize !9
@@ -478,14 +472,14 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.critedge8.i
 
 .critedge8.i:                                     ; preds = %bb.aj, %.critedge8.split.loop.exit916.i
-  %.7168.lcssa.i = phi i32 [ %i.eh, %.critedge8.split.loop.exit916.i ], [ %smax727.i, %bb.aj ] ; 6 uses
-  %18 = sext i32 %.7168.lcssa.i to i64            ; 4 uses
-  %smin1500 = tail call i64 @llvm.smin.i64(i64 %i.du, i64 %18) ; 2 uses
-  %19 = icmp sgt i32 %.6526.i, %.7168.lcssa.i
-  br i1 %19, label %.lr.ph2362, label %.critedge184.i
+  %.pre-phi = phi i64 [ %indvars.iv725.i, %.critedge8.split.loop.exit916.i ], [ %i.du, %bb.aj ] ; 5 uses
+  %.7168.lcssa.i = phi i32 [ %i.eh, %.critedge8.split.loop.exit916.i ], [ %.6526.i, %bb.aj ] ; 4 uses
+  %smin1500 = tail call i64 @llvm.smin.i64(i64 %i.du, i64 %.pre-phi) ; 2 uses
+  %13 = icmp slt i64 %.pre-phi, %i.du
+  br i1 %13, label %.lr.ph2362, label %.critedge184.i
 
 bb.ak:                                            ; preds = %bb.am
-  %i.ei = icmp sgt i64 %indvars.iv.next730.i, %18
+  %i.ei = icmp sgt i64 %indvars.iv.next730.i, %.pre-phi
   br i1 %i.ei, label %.lr.ph2362, label %.critedge184.i, !llvm.loop !182
 
 .lr.ph2362:                                       ; preds = %.critedge8.i, %bb.ak
@@ -513,7 +507,7 @@ bb.am:                                            ; preds = %.lr.ph2362
 
 .critedge10.i:                                    ; preds = %bb.am
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
-  %i.eu = mul nsw i64 %18, 40
+  %i.eu = mul nsw i64 %.pre-phi, 40
   %i.ev = add i64 %i.eu, %i.n, !nosanitize !9     ; 3 uses
   %i.ew = icmp ne i64 %i.ev, 0, !nosanitize !9
   %i.ex = icmp uge i64 %i.ev, %i.n, !nosanitize !9
@@ -527,7 +521,7 @@ bb.an:                                            ; preds = %.critedge10.i
   unreachable, !nosanitize !9
 
 bb.ao:                                            ; preds = %.critedge10.i
-  %i.fb = getelementptr inbounds [40 x i8], ptr %2, i64 %18 ; 2 uses
+  %i.fb = getelementptr inbounds [40 x i8], ptr %2, i64 %.pre-phi ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %10, ptr noundef nonnull align 4 dereferenceable(40) %i.fb, i64 40, i1 false), !tbaa.struct !202, !noalias !199
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.fb, ptr noundef nonnull align 4 dereferenceable(40) %i.eq, i64 40, i1 false), !tbaa.struct !202, !noalias !199
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.eq, ptr noundef nonnull align 4 dereferenceable(40) %10, i64 40, i1 false), !tbaa.struct !202, !noalias !199

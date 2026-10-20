@@ -205,23 +205,19 @@ trace_iommu_testdev_dma_read.exit.i:              ; preds = %bb.p, %bb.q, %bb.r,
 .preheader.i:                                     ; preds = %trace_iommu_testdev_dma_read.exit.i
   %.pre = load i32, ptr %i.m, align 16            ; 2 uses
   %.not140.i = icmp eq i32 %.pre, 0
-  br i1 %.not140.i, label %._crit_edge138.i, label %.lr.ph137.i
+  br i1 %.not140.i, label %._crit_edge138.i, label %.lr.ph132.preheader.i
 
 bb.t:                                             ; preds = %trace_iommu_testdev_dma_verify.exit.i
   %i.cj = add i32 %.081136.i, 4                   ; 2 uses
   %i.ck = load i32, ptr %i.m, align 16            ; 2 uses
   %i.cl = icmp ult i32 %i.cj, %i.ck
   %indvars.iv.next = add i32 %indvars.iv, -4
-  br i1 %i.cl, label %.lr.ph137.i, label %._crit_edge138.i, !llvm.loop !11
+  br i1 %i.cl, label %.lr.ph132.preheader.i, label %._crit_edge138.i, !llvm.loop !11
 
-.lr.ph137.i:                                      ; preds = %.preheader.i, %bb.t
+.lr.ph132.preheader.i:                            ; preds = %.preheader.i, %bb.t
   %indvars.iv = phi i32 [ %indvars.iv.next, %bb.t ], [ 0, %.preheader.i ] ; 2 uses
-  %3 = phi i32 [ %i.ck, %bb.t ], [ %.pre, %.preheader.i ] ; 2 uses
-  %.081136.i = phi i32 [ %i.cj, %bb.t ], [ 0, %.preheader.i ] ; 3 uses
-  %.not141.i = icmp eq i32 %3, %.081136.i
-  br i1 %.not141.i, label %._crit_edge133.i, label %.lr.ph132.preheader.i
-
-.lr.ph132.preheader.i:                            ; preds = %.lr.ph137.i
+  %3 = phi i32 [ %i.ck, %bb.t ], [ %.pre, %.preheader.i ]
+  %.081136.i = phi i32 [ %i.cj, %bb.t ], [ 0, %.preheader.i ] ; 2 uses
   %i.cm = sext i32 %.081136.i to i64              ; 5 uses
   %i.cn = add i32 %3, %indvars.iv                 ; 3 uses
   %i.co = getelementptr inbounds i8, ptr %i.p, i64 %i.cm
@@ -233,9 +229,9 @@ bb.t:                                             ; preds = %trace_iommu_testdev
   %exitcond.not = icmp ult i32 %i.cn, 2
   br i1 %exitcond.not, label %._crit_edge133.i, label %.lr.ph132.i.1
 
-._crit_edge133.i:                                 ; preds = %.lr.ph132.preheader.i, %.lr.ph132.i.1, %.lr.ph132.i.2, %.lr.ph132.i.3, %.lr.ph137.i
-  %.080.lcssa.i = phi i32 [ 0, %.lr.ph137.i ], [ %i.ct, %.lr.ph132.preheader.i ], [ %i.di, %.lr.ph132.i.1 ], [ %i.dt, %.lr.ph132.i.2 ], [ %i.ee, %.lr.ph132.i.3 ] ; 2 uses
-  %.079.lcssa.i = phi i32 [ 0, %.lr.ph137.i ], [ %i.cq, %.lr.ph132.preheader.i ], [ %i.dd, %.lr.ph132.i.1 ], [ %i.do, %.lr.ph132.i.2 ], [ %i.dz, %.lr.ph132.i.3 ] ; 2 uses
+._crit_edge133.i:                                 ; preds = %.lr.ph132.i.3, %.lr.ph132.i.2, %.lr.ph132.i.1, %.lr.ph132.preheader.i
+  %.lcssa34 = phi i32 [ %i.cq, %.lr.ph132.preheader.i ], [ %i.dd, %.lr.ph132.i.1 ], [ %i.do, %.lr.ph132.i.2 ], [ %i.dz, %.lr.ph132.i.3 ] ; 2 uses
+  %.lcssa = phi i32 [ %i.ct, %.lr.ph132.preheader.i ], [ %i.di, %.lr.ph132.i.1 ], [ %i.dt, %.lr.ph132.i.2 ], [ %i.ee, %.lr.ph132.i.3 ] ; 2 uses
   %i.cu = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i104.i = icmp eq i32 %i.cu, 0
   br i1 %.not.i104.i, label %trace_iommu_testdev_dma_verify.exit.i, label %bb.u, !prof !7
@@ -252,11 +248,11 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not3.i106.i, label %trace_iommu_testdev_dma_verify.exit.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.17, i32 noundef %.079.lcssa.i, i32 noundef %.080.lcssa.i) #4
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.17, i32 noundef %.lcssa34, i32 noundef %.lcssa) #4
   br label %trace_iommu_testdev_dma_verify.exit.i
 
 trace_iommu_testdev_dma_verify.exit.i:            ; preds = %bb.w, %bb.v, %bb.u, %._crit_edge133.i
-  %.not90.i = icmp eq i32 %.079.lcssa.i, %.080.lcssa.i
+  %.not90.i = icmp eq i32 %.lcssa34, %.lcssa
   br i1 %.not90.i, label %bb.t, label %._crit_edge138.i
 
 .lr.ph132.i.1:                                    ; preds = %.lr.ph132.preheader.i

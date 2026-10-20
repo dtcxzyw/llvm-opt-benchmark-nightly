@@ -205,9 +205,9 @@ XXH3_accumulate_sse2.exit47.i9:                   ; preds = %XXH3_accumulate_512
   %i.eo = mul nuw <2 x i64> %i.en, splat (i64 2654435761)
   %i.ep = mul <2 x i64> %i.em, splat (i64 -7046029290881679360)
   %i.eq = add <2 x i64> %i.ep, %i.eo              ; 3 uses
-  %i.er = shl i64 %.0.i7, 6
+  %i.er = shl nuw nsw i64 %.0.i7, 6
   %i.es = getelementptr inbounds nuw i8, ptr %.036.i5, i64 %i.er ; 2 uses
-  %i.et = sub i64 %.038.i4, %.0.i7                ; 4 uses
+  %i.et = sub nuw nsw i64 %.038.i4, %.0.i7        ; 4 uses
   %.not44.i12 = icmp ult i64 %i.et, %i.ac
   br i1 %.not44.i12, label %bb.h, label %bb.g, !llvm.loop !6
 
@@ -501,9 +501,9 @@ XXH3_accumulate_sse2.exit47.i:                    ; preds = %XXH3_accumulate_512
   %i.mb = mul nuw <2 x i64> %i.ma, splat (i64 2654435761)
   %i.mc = mul <2 x i64> %i.lz, splat (i64 -7046029290881679360)
   %i.md = add <2 x i64> %i.mc, %i.mb              ; 2 uses
-  %i.me = shl i64 %.0.i, 6
+  %i.me = shl nuw i64 %.0.i, 6
   %i.mf = getelementptr inbounds nuw i8, ptr %.036.i, i64 %i.me ; 2 uses
-  %i.mg = sub i64 %.038.i, %.0.i                  ; 3 uses
+  %i.mg = sub nuw nsw i64 %.038.i, %.0.i          ; 3 uses
   %.not44.i = icmp ult i64 %i.mg, %i.hp
   br i1 %.not44.i, label %bb.l, label %bb.k, !llvm.loop !6
 
@@ -610,7 +610,7 @@ XXH3_accumulate_sse2.exit.i:                      ; preds = %XXH3_accumulate_512
   store <2 x i64> %i.no, ptr %.phi.trans.insert93, align 16, !tbaa !18, !alias.scope !142
   store <2 x i64> %i.ob, ptr %.phi.trans.insert95, align 32, !tbaa !18, !alias.scope !142
   store <2 x i64> %i.oo, ptr %.phi.trans.insert97, align 16, !tbaa !18, !alias.scope !142
-  %i.oq = shl i64 %.139.i, 6
+  %i.oq = shl nuw i64 %.139.i, 6
   %i.or = getelementptr inbounds nuw i8, ptr %.137.i, i64 %i.oq
   %i.os = add i64 %i.mh, %.139.i
   store i64 %i.os, ptr %i.hn, align 8, !tbaa !24, !alias.scope !135
@@ -831,9 +831,9 @@ XXH3_accumulate_sse2.exit47.i:                    ; preds = %.lr.ph, %bb.d
   %i.dw = mul nuw <2 x i64> %i.dv, splat (i64 2654435761)
   %i.dx = mul <2 x i64> %i.du, splat (i64 -7046029290881679360)
   %i.dy = add <2 x i64> %i.dx, %i.dw              ; 2 uses
-  %i.dz = shl i64 %.0.i19, 6
+  %i.dz = shl nuw nsw i64 %.0.i19, 6
   %i.ea = getelementptr inbounds nuw i8, ptr %.036.i, i64 %i.dz ; 2 uses
-  %i.eb = sub i64 %.038.i, %.0.i19                ; 3 uses
+  %i.eb = sub nuw nsw i64 %.038.i, %.0.i19        ; 3 uses
   %.not44.i = icmp ult i64 %i.eb, %i.s
   br i1 %.not44.i, label %.loopexit, label %bb.d, !llvm.loop !6
 
@@ -1236,9 +1236,9 @@ XXH3_accumulate_sse2.exit47.i:                    ; preds = %.lr.ph, %bb.d
   %i.dw = mul nuw <2 x i64> %i.dv, splat (i64 2654435761)
   %i.dx = mul <2 x i64> %i.du, splat (i64 -7046029290881679360)
   %i.dy = add <2 x i64> %i.dx, %i.dw              ; 2 uses
-  %i.dz = shl i64 %.0.i22, 6
+  %i.dz = shl nuw nsw i64 %.0.i22, 6
   %i.ea = getelementptr inbounds nuw i8, ptr %.036.i, i64 %i.dz ; 2 uses
-  %i.eb = sub i64 %.038.i, %.0.i22                ; 3 uses
+  %i.eb = sub nuw nsw i64 %.038.i, %.0.i22        ; 3 uses
   %.not44.i = icmp ult i64 %i.eb, %i.s
   br i1 %.not44.i, label %.loopexit, label %bb.d, !llvm.loop !6
 

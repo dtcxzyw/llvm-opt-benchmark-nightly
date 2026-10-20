@@ -205,17 +205,15 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   br label %bb.t
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %bb.s
-  %i.ba = phi i32 [ %i.cq, %bb.s ], [ %i.b, %._crit_edge.i ] ; 2 uses
+  %i.ba = phi i32 [ %i.cq, %bb.s ], [ %i.b, %._crit_edge.i ] ; 3 uses
   %i.bb = phi ptr [ %i.cr, %bb.s ], [ %i.h, %._crit_edge.i ] ; 3 uses
-  %.04772.i = phi i32 [ %i.cs, %bb.s ], [ 1, %._crit_edge.i ] ; 4 uses
+  %.04772.i = phi i32 [ %i.cs, %bb.s ], [ 1, %._crit_edge.i ] ; 3 uses
   %i.bc = add i32 %.04772.i, -1
   %i.bd = zext i32 %i.bc to i64
   %i.be = getelementptr inbounds nuw [16 x i8], ptr %i.bb, i64 %i.bd
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !128 ; 3 uses
-  %6 = add nuw i32 %.04772.i, 1
-  %umax81.i = call i32 @llvm.umax.i32(i32 %i.ba, i32 %6) ; 2 uses
-  %reass.sub = sub i32 %umax81.i, %.04772.i       ; 2 uses
+  %reass.sub = sub i32 %i.ba, %.04772.i           ; 2 uses
   %i.bh = add i32 %reass.sub, 1
   br label %bb.k
 
@@ -236,7 +234,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %exitcond.not.i, label %.critedge2.i, label %bb.k, !llvm.loop !592
 
 .critedge2.i:                                     ; preds = %bb.l, %bb.k
-  %.1.lcssa.i = phi i32 [ %umax81.i, %bb.l ], [ %.169.i, %bb.k ] ; 2 uses
+  %.1.lcssa.i = phi i32 [ %i.ba, %bb.l ], [ %.169.i, %bb.k ] ; 2 uses
   %.0.lcssa.i = phi i32 [ %i.bh, %bb.l ], [ %.070.i, %bb.k ] ; 2 uses
   %i.bp = icmp eq i32 %.0.lcssa.i, 1
   br i1 %i.bp, label %bb.s, label %bb.m

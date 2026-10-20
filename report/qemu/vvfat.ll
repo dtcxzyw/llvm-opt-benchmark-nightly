@@ -205,29 +205,21 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.m, %.lr.ph.i
-  %i.az = phi i32 [ %i.aw, %.lr.ph.i ], [ %i.bi, %bb.m ] ; 2 uses
-  %.022.i = phi i32 [ 0, %.lr.ph.i ], [ %i.bj, %bb.m ] ; 3 uses
-  %1 = icmp ult i32 %.022.i, %i.az
-  br i1 %1, label %3, label %2
-
-2:                                                ; preds = %bb.g
-  tail call void @__assert_fail(ptr noundef nonnull @.str.51, ptr noundef nonnull @.str.14, i32 noundef 105, ptr noundef nonnull @__PRETTY_FUNCTION__.array_get) #24
-  unreachable
-
-3:                                                ; preds = %bb.g
-  %4 = load ptr, ptr %i.ax, align 8               ; 2 uses
-  %.not.i.i = icmp eq ptr %4, null
+  %i.az = phi i32 [ %i.aw, %.lr.ph.i ], [ %i.bi, %bb.m ]
+  %.022.i = phi i32 [ 0, %.lr.ph.i ], [ %i.bj, %bb.m ] ; 2 uses
+  %1 = load ptr, ptr %i.ax, align 8               ; 2 uses
+  %.not.i.i = icmp eq ptr %1, null
   br i1 %.not.i.i, label %bb.h, label %array_get.exit.i
 
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %bb.g
   tail call void @__assert_fail(ptr noundef nonnull @.str.50, ptr noundef nonnull @.str.14, i32 noundef 106, ptr noundef nonnull @__PRETTY_FUNCTION__.array_get) #24
   unreachable
 
-array_get.exit.i:                                 ; preds = %3
+array_get.exit.i:                                 ; preds = %bb.g
   %i.ba = load i32, ptr %i.ay, align 8
   %i.bb = mul i32 %i.ba, %.022.i
   %i.bc = zext i32 %i.bb to i64
-  %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 %i.bc ; 2 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 %i.bc ; 2 uses
   %i.be = load ptr, ptr %i.bd, align 8            ; 2 uses
   %.not.i = icmp eq ptr %i.be, null
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
@@ -501,29 +493,21 @@ vvfat_close_current_file.exit:                    ; preds = %bb.c
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.ba, %.lr.ph207.i
-  %i.z = phi i32 [ %i.k, %.lr.ph207.i ], [ %i.hu, %bb.ba ] ; 2 uses
-  %.0111205.i = phi i32 [ 0, %.lr.ph207.i ], [ %.1112.i, %bb.ba ] ; 13 uses
-  %1 = icmp ult i32 %.0111205.i, %i.z
-  br i1 %1, label %3, label %2
-
-2:                                                ; preds = %bb.d
-  tail call void @__assert_fail(ptr noundef nonnull @.str.51, ptr noundef nonnull @.str.14, i32 noundef 105, ptr noundef nonnull @__PRETTY_FUNCTION__.array_get) #24
-  unreachable
-
-3:                                                ; preds = %bb.d
-  %4 = load ptr, ptr %i.l, align 8                ; 2 uses
-  %.not.i.i = icmp eq ptr %4, null
+  %i.z = phi i32 [ %i.k, %.lr.ph207.i ], [ %i.hu, %bb.ba ]
+  %.0111205.i = phi i32 [ 0, %.lr.ph207.i ], [ %.1112.i, %bb.ba ] ; 12 uses
+  %1 = load ptr, ptr %i.l, align 8                ; 2 uses
+  %.not.i.i = icmp eq ptr %1, null
   br i1 %.not.i.i, label %bb.e, label %array_get.exit.i
 
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.d
   tail call void @__assert_fail(ptr noundef nonnull @.str.50, ptr noundef nonnull @.str.14, i32 noundef 106, ptr noundef nonnull @__PRETTY_FUNCTION__.array_get) #24
   unreachable
 
-array_get.exit.i:                                 ; preds = %3
+array_get.exit.i:                                 ; preds = %bb.d
   %i.aa = load i32, ptr %i.m, align 8
   %i.ab = mul i32 %i.aa, %.0111205.i
   %i.ac = zext i32 %i.ab to i64
-  %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 %i.ac ; 7 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 %i.ac ; 7 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %i.af = load i32, ptr %i.ae, align 8
   switch i32 %i.af, label %bb.az [

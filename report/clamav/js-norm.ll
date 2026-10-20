@@ -206,8 +206,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   br label %bb.h
 
 bb.h:                                             ; preds = %.backedge.i, %.lr.ph142.i
-  %i.as = phi i64 [ %i.al, %.lr.ph142.i ], [ %i.bm, %.backedge.i ] ; 6 uses
-  %i.at = phi i64 [ %i.ak, %.lr.ph142.i ], [ %i.bn, %.backedge.i ] ; 6 uses
+  %i.as = phi i64 [ %i.al, %.lr.ph142.i ], [ %i.bm, %.backedge.i ] ; 4 uses
+  %i.at = phi i64 [ %i.ak, %.lr.ph142.i ], [ %i.bn, %.backedge.i ] ; 5 uses
   %i.au = load i32, ptr %i.am, align 8, !tbaa !20
   switch i32 %i.au, label %bb.ao [
     i32 0, label %bb.i
@@ -216,12 +216,8 @@ bb.h:                                             ; preds = %.backedge.i, %.lr.p
     i32 6, label %bb.ai
     i32 1, label %.preheader.i
     i32 3, label %bb.am
-    i32 2, label %.preheader113.i
+    i32 2, label %.lr.ph.i
   ]
-
-.preheader113.i:                                  ; preds = %bb.h
-  %4 = icmp ult i64 %i.as, %i.at
-  br i1 %4, label %.lr.ph.i, label %._crit_edge.i
 
 .preheader.i:                                     ; preds = %bb.h
   %i.av = add nuw i64 %i.as, 1                    ; 3 uses
@@ -295,7 +291,7 @@ bb.o:                                             ; preds = %bb.n
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %._crit_edge.i, %.loopexit.i, %bb.p, %bb.o, %textbuf_clean.exit.i
-  %i.bm = phi i64 [ %.pre-phi.i, %.loopexit.i ], [ %5, %._crit_edge.i ], [ %i.bc, %textbuf_clean.exit.i ], [ %i.bl, %bb.o ], [ %i.bp, %bb.p ] ; 2 uses
+  %i.bm = phi i64 [ %.pre-phi.i, %.loopexit.i ], [ %.ph, %._crit_edge.i ], [ %i.bc, %textbuf_clean.exit.i ], [ %i.bl, %bb.o ], [ %i.bp, %bb.p ] ; 2 uses
   %i.bn = load i64, ptr %i.x, align 8, !tbaa !39  ; 2 uses
   %i.bo = icmp ult i64 %i.bm, %i.bn
   br i1 %i.bo, label %bb.h, label %yylex.exit.thread138
@@ -580,8 +576,8 @@ bb.am:                                            ; preds = %bb.h
   %i.fe = call fastcc i32 @parseNumber(ptr noundef nonnull %3, ptr noundef nonnull %i.w)
   br label %yylex.exit
 
-.lr.ph.i:                                         ; preds = %.preheader113.i, %bb.an
-  %i.ff = phi i64 [ %i.fi, %bb.an ], [ %i.as, %.preheader113.i ] ; 4 uses
+.lr.ph.i:                                         ; preds = %bb.h, %bb.an
+  %i.ff = phi i64 [ %i.fi, %bb.an ], [ %i.as, %bb.h ] ; 4 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.ff
   %i.fh = load i8, ptr %i.fg, align 1, !tbaa !8
   switch i8 %i.fh, label %bb.an [
@@ -595,8 +591,8 @@ bb.an:                                            ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %i.fi, %i.at
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %bb.an, %.lr.ph.i, %.lr.ph.i, %.preheader113.i
-  %5 = phi i64 [ %i.as, %.preheader113.i ], [ %i.ff, %.lr.ph.i ], [ %i.ff, %.lr.ph.i ], [ %i.at, %bb.an ]
+._crit_edge.i:                                    ; preds = %.lr.ph.i, %.lr.ph.i, %bb.an
+  %.ph = phi i64 [ %i.ff, %.lr.ph.i ], [ %i.ff, %.lr.ph.i ], [ %i.at, %bb.an ]
   store i32 0, ptr %i.am, align 8, !tbaa !20
   br label %.backedge.i
 

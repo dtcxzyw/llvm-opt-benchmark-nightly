@@ -205,7 +205,7 @@ bb.ie:                                            ; preds = %_ZN4llvm9BitVectorD
 .lr.ph268.i.i:                                    ; preds = %bb.ie, %bb.iy
   %.val5.i.i132.i = phi ptr [ %.val5.i.i132489.i, %bb.iy ], [ %.val71.i.i, %bb.ie ] ; 5 uses
   %.val.i131.i = phi ptr [ %.val86328.i.i, %bb.iy ], [ %.val70.i.i, %bb.ie ] ; 3 uses
-  %.053266.i.i = phi i32 [ %.1.i.i, %bb.iy ], [ %i.axs, %bb.ie ] ; 3 uses
+  %.053266.i.i = phi i32 [ %.1.i.i, %bb.iy ], [ %i.axs, %bb.ie ] ; 2 uses
   %.054264.i.i = phi i32 [ %.155.i.i, %bb.iy ], [ 0, %bb.ie ] ; 3 uses
   %i.axt = zext i32 %.054264.i.i to i64           ; 2 uses
   %i.axu = getelementptr inbounds nuw [88 x i8], ptr %.val.i131.i, i64 %i.axt ; 4 uses
@@ -215,7 +215,7 @@ bb.ie:                                            ; preds = %_ZN4llvm9BitVectorD
   br label %bb.if
 
 bb.if:                                            ; preds = %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.i.i, %.lr.ph268.i.i
-  %indvars.iv323.i.i = phi i64 [ 0, %.lr.ph268.i.i ], [ %indvars.iv.next324.i.i, %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.i.i ] ; 4 uses
+  %indvars.iv323.i.i = phi i64 [ 0, %.lr.ph268.i.i ], [ %indvars.iv.next324.i.i, %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.i.i ] ; 3 uses
   %.not67.i.i = icmp eq i64 %indvars.iv323.i.i, %i.axt
   br i1 %.not67.i.i, label %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.i.i, label %bb.ig
 
@@ -274,22 +274,17 @@ _ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.i.i: ; preds = %bb.ih, %.lr.
   br i1 %exitcond327.not.i.i, label %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.thread.i.i, label %bb.if, !llvm.loop !399
 
 _ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.i.i: ; preds = %.preheader.i.i.i.i.i138, %bb.ij
-  %45 = trunc nuw i64 %indvars.iv323.i.i to i32
-  %i.ayl = icmp eq i32 %.053266.i.i, %45
-  br i1 %i.ayl, label %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.thread.i.i, label %46
+  %45 = getelementptr inbounds nuw i8, ptr %i.axu, i64 88 ; 3 uses
+  %i.ayl = icmp eq ptr %45, %.val5.i.i132.i
+  br i1 %i.ayl, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i.i.i, label %bb.ik
 
-_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.thread.i.i: ; preds = %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.i.i, %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.i.i
+_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.thread.i.i: ; preds = %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.i.i
   %i.aym = add i32 %.054264.i.i, 1
   br label %bb.iy, !llvm.loop !400
 
-46:                                               ; preds = %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.i.i
-  %47 = getelementptr inbounds nuw i8, ptr %i.axu, i64 88 ; 3 uses
-  %.not.i.i133.i = icmp eq ptr %47, %.val5.i.i132.i
-  br i1 %.not.i.i133.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i.i.i, label %bb.ik
-
-bb.ik:                                            ; preds = %46
+bb.ik:                                            ; preds = %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.i.i
   %i.ayn = ptrtoint ptr %.val5.i.i132.i to i64
-  %i.ayo = ptrtoint ptr %47 to i64
+  %i.ayo = ptrtoint ptr %45 to i64
   %i.ayp = sub i64 %i.ayn, %i.ayo                 ; 2 uses
   %i.ayq = icmp sgt i64 %i.ayp, 0
   br i1 %i.ayq, label %.lr.ph.preheader.i.i.i.i.i.i.i134.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i.i.i
@@ -301,7 +296,7 @@ bb.ik:                                            ; preds = %46
 bb.il:                                            ; preds = %_ZNSt4pairIN12_GLOBAL__N_18IFRecordENS0_11RegisterSetEEaSEOS3_.exit.i.i.i.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i.i134.i
   %.014.i.i.i.i.i.i.i.i = phi i64 [ %i.azw, %_ZNSt4pairIN12_GLOBAL__N_18IFRecordENS0_11RegisterSetEEaSEOS3_.exit.i.i.i.i.i.i.i.i ], [ %i.ayr, %.lr.ph.preheader.i.i.i.i.i.i.i134.i ] ; 2 uses
   %.0811.i.i.i.i.i.i.i.i139 = phi ptr [ %i.azv, %_ZNSt4pairIN12_GLOBAL__N_18IFRecordENS0_11RegisterSetEEaSEOS3_.exit.i.i.i.i.i.i.i.i ], [ %i.axu, %.lr.ph.preheader.i.i.i.i.i.i.i134.i ] ; 7 uses
-  %.0910.i.i.i.i.i.i.i.i = phi ptr [ %i.azu, %_ZNSt4pairIN12_GLOBAL__N_18IFRecordENS0_11RegisterSetEEaSEOS3_.exit.i.i.i.i.i.i.i.i ], [ %47, %.lr.ph.preheader.i.i.i.i.i.i.i134.i ] ; 5 uses
+  %.0910.i.i.i.i.i.i.i.i = phi ptr [ %i.azu, %_ZNSt4pairIN12_GLOBAL__N_18IFRecordENS0_11RegisterSetEEaSEOS3_.exit.i.i.i.i.i.i.i.i ], [ %45, %.lr.ph.preheader.i.i.i.i.i.i.i134.i ] ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.0811.i.i.i.i.i.i.i.i139, ptr noundef nonnull readonly align 8 dereferenceable(88) %.0910.i.i.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !221
   %i.ays = getelementptr inbounds nuw i8, ptr %.0910.i.i.i.i.i.i.i.i, i64 16 ; 3 uses
   %i.ayt = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i.i.i.i139, i64 16 ; 4 uses
@@ -400,8 +395,8 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_1
   %.pre.i.i136.i = load ptr, ptr %i.aey, align 8, !tbaa !89
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i.i.i
 
-_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i.i.i: ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.loopexit.i.i.i, %bb.ik, %46
-  %i.azy = phi ptr [ %.pre.i.i136.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.loopexit.i.i.i ], [ %.val5.i.i132.i, %bb.ik ], [ %.val5.i.i132.i, %46 ] ; 3 uses
+_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i.i.i: ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.loopexit.i.i.i, %bb.ik, %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.i.i
+  %i.azy = phi ptr [ %.pre.i.i136.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt4pairIN12_GLOBAL__N_18IFRecordENS3_11RegisterSetEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.loopexit.i.i.i ], [ %.val5.i.i132.i, %bb.ik ], [ %.val5.i.i132.i, %_ZNK12_GLOBAL__N_111RegisterSet8includesERKS0_.exit.thread.i.i ] ; 3 uses
   %i.azz = getelementptr inbounds i8, ptr %i.azy, i64 -88 ; 2 uses
   store ptr %i.azz, ptr %i.aey, align 8, !tbaa !89
   %i.baa = getelementptr inbounds i8, ptr %i.azy, i64 -72

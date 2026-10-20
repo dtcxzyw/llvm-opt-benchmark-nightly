@@ -205,9 +205,9 @@ _ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105: ; preds = %.lr.ph.i97,
   %.012.i110 = phi i64 [ %i.bb, %.lr.ph.i109 ], [ %.sroa.044.0.lcssa, %._crit_edge ] ; 4 uses
   %.0911.i = phi i64 [ %i.bc, %.lr.ph.i109 ], [ %.lcssa155, %._crit_edge ]
   %i.bb = add i64 %.012.i110, 1                   ; 5 uses
-  %i.bc = sub nuw i64 %.0911.i, %i.ba             ; 6 uses
+  %i.bc = sub nuw i64 %.0911.i, %i.ba             ; 5 uses
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.bb
-  %i.be = load ptr, ptr %i.bd, align 8            ; 8 uses
+  %i.be = load ptr, ptr %i.bd, align 8            ; 7 uses
   %i.bf = load i64, ptr %i.be, align 8            ; 2 uses
   %i.bg = icmp ugt i64 %i.bc, %i.bf
   br i1 %i.bg, label %.lr.ph.i109, label %_ZNK4absl13cord_internal12CordRepBtree11IndexBeforeENS1_8PositionEm.exit, !llvm.loop !51
@@ -347,44 +347,21 @@ bb.o:                                             ; preds = %_ZN4absl13cord_inte
   br label %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119
 
 _ZN4absl13cord_internal7CordRep3RefEPS1_.exit119: ; preds = %bb.o, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit116
-  %.0.i117 = phi ptr [ %i.dg, %bb.o ], [ %i.aw, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit116 ] ; 4 uses
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.be, i64 8 ; 2 uses
+  %.0.i117 = phi ptr [ %i.dg, %bb.o ], [ %i.aw, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit116 ] ; 2 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   %i.di = atomicrmw add ptr %i.dh, i32 2 monotonic, align 4 ; 0 uses
   %i.dj = load i64, ptr %i.be, align 8
   %i.dk = icmp eq i64 %i.bc, %i.dj
-  br i1 %i.dk, label %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123, label %3
+  br i1 %i.dk, label %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123, label %bb.p
 
-3:                                                ; preds = %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119
-  %4 = icmp eq i64 %i.bc, 0
-  br i1 %4, label %5, label %bb.p
-
-5:                                                ; preds = %3
-  %6 = atomicrmw sub ptr %i.dh, i32 2 acq_rel, align 4 ; 3 uses
-  %7 = icmp sgt i32 %6, 0
-  %8 = trunc i32 %6 to i1
-  %9 = or i1 %7, %8
-  br i1 %9, label %_ZN4absl13cord_internal16RefcountAndFlags27DecrementExpectHighRefcountEv.exit.i.i121, label %10
-
-10:                                               ; preds = %5
-  tail call void @__assert_fail(ptr noundef nonnull @.str.66, ptr noundef nonnull @.str.60, i32 noundef 171, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4absl13cord_internal16RefcountAndFlags27DecrementExpectHighRefcountEv) #14
-  unreachable
-
-_ZN4absl13cord_internal16RefcountAndFlags27DecrementExpectHighRefcountEv.exit.i.i121: ; preds = %5
-  %.not3.i.i122 = icmp eq i32 %6, 2
-  br i1 %.not3.i.i122, label %11, label %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123, !prof !20
-
-11:                                               ; preds = %_ZN4absl13cord_internal16RefcountAndFlags27DecrementExpectHighRefcountEv.exit.i.i121
-  tail call void @_ZN4absl13cord_internal7CordRep7DestroyEPS1_(ptr noundef nonnull %i.be) #13
-  br label %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123
-
-bb.p:                                             ; preds = %3
+bb.p:                                             ; preds = %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119
   %i.dl = tail call fastcc noundef ptr @_ZN4absl13cord_internal12_GLOBAL__N_115CreateSubstringEPNS0_7CordRepEmm(ptr noundef nonnull %i.be, i64 noundef 0, i64 noundef %i.bc)
   br label %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123
 
-_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123: ; preds = %_ZN4absl13cord_internal12CordRepBtree3NewEPNS0_7CordRepE.exit114, %.preheader, %bb.p, %11, %_ZN4absl13cord_internal16RefcountAndFlags27DecrementExpectHighRefcountEv.exit.i.i121, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119
-  %.sroa.0135.1 = phi ptr [ %.0.i117, %bb.p ], [ %.0.i117, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119 ], [ %.0.i117, %_ZN4absl13cord_internal16RefcountAndFlags27DecrementExpectHighRefcountEv.exit.i.i121 ], [ %.0.i117, %11 ], [ %.sroa.0135.0.lcssa, %.preheader ], [ %.sroa.0135.0.lcssa, %_ZN4absl13cord_internal12CordRepBtree3NewEPNS0_7CordRepE.exit114 ]
-  %.sroa.0130.1 = phi ptr [ %i.dl, %bb.p ], [ %i.be, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119 ], [ null, %_ZN4absl13cord_internal16RefcountAndFlags27DecrementExpectHighRefcountEv.exit.i.i121 ], [ null, %11 ], [ %i.bs, %.preheader ], [ %i.cn, %_ZN4absl13cord_internal12CordRepBtree3NewEPNS0_7CordRepE.exit114 ]
-  %.2 = phi i32 [ 0, %bb.p ], [ 0, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119 ], [ 0, %_ZN4absl13cord_internal16RefcountAndFlags27DecrementExpectHighRefcountEv.exit.i.i121 ], [ 0, %11 ], [ %.183, %.preheader ], [ %.183, %_ZN4absl13cord_internal12CordRepBtree3NewEPNS0_7CordRepE.exit114 ]
+_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123: ; preds = %_ZN4absl13cord_internal12CordRepBtree3NewEPNS0_7CordRepE.exit114, %.preheader, %bb.p, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119
+  %.sroa.0135.1 = phi ptr [ %.0.i117, %bb.p ], [ %.0.i117, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119 ], [ %.sroa.0135.0.lcssa, %.preheader ], [ %.sroa.0135.0.lcssa, %_ZN4absl13cord_internal12CordRepBtree3NewEPNS0_7CordRepE.exit114 ]
+  %.sroa.0130.1 = phi ptr [ %i.dl, %bb.p ], [ %i.be, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119 ], [ %i.bs, %.preheader ], [ %i.cn, %_ZN4absl13cord_internal12CordRepBtree3NewEPNS0_7CordRepE.exit114 ]
+  %.2 = phi i32 [ 0, %bb.p ], [ 0, %_ZN4absl13cord_internal7CordRep3RefEPS1_.exit119 ], [ %.183, %.preheader ], [ %.183, %_ZN4absl13cord_internal12CordRepBtree3NewEPNS0_7CordRepE.exit114 ]
   %i.dm = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #15 ; 11 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
   store i32 2, ptr %i.dn, align 4

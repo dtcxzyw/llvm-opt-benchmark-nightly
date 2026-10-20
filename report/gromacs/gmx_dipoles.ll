@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %.lr.ph, %_ZL15neutr
 .preheader.i:                                     ; preds = %bb.ak, %._crit_edge.i
   %indvars.iv69.i = phi i64 [ %indvars.iv.next70.i, %._crit_edge.i ], [ 0, %bb.ak ] ; 2 uses
   %i.id = phi i32 [ %i.ji, %._crit_edge.i ], [ %i.ib, %bb.ak ]
-  %.03656.i = phi i32 [ %.1.lcssa.i, %._crit_edge.i ], [ 0, %bb.ak ] ; 6 uses
+  %.03656.i = phi i32 [ %.1.lcssa.i, %._crit_edge.i ], [ 0, %bb.ak ] ; 5 uses
   %i.ie = load i32, ptr %i.hv, align 8, !tbaa !85 ; 3 uses
   %i.if = icmp sgt i32 %i.ie, 0
   br i1 %i.if, label %.lr.ph.i, label %.critedge.i
@@ -275,8 +275,7 @@ bb.ap:                                            ; preds = %.critedge.i
 
 .lr.ph53.preheader.i:                             ; preds = %bb.ap
   %i.jb = sext i32 %.03656.i to i64
-  %smax.i = call i32 @llvm.smax.i32(i32 %i.id, i32 %.03656.i)
-  %wide.trip.count66.i = sext i32 %smax.i to i64
+  %wide.trip.count66.i = sext i32 %i.id to i64
   br label %.lr.ph53.i
 
 .lr.ph53.i:                                       ; preds = %bb.au, %.lr.ph53.preheader.i

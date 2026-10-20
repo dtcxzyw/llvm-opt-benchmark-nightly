@@ -205,7 +205,7 @@ Cec_SeedSimTxnBegin.exit:                         ; preds = %bb.cw, %bb.cx
 bb.cy:                                            ; preds = %Cec_SeedSimRefineFrame.exit.i, %.lr.ph67.i
   %.val3765.i = phi i32 [ %.val3763.i, %.lr.ph67.i ], [ %.val37.i, %Cec_SeedSimRefineFrame.exit.i ] ; 2 uses
   %i.th = phi ptr [ %i.su, %.lr.ph67.i ], [ %i.aqa, %Cec_SeedSimRefineFrame.exit.i ]
-  %.03564.i = phi i32 [ 0, %.lr.ph67.i ], [ %.034.lcssa.i, %Cec_SeedSimRefineFrame.exit.i ] ; 3 uses
+  %.03564.i = phi i32 [ 0, %.lr.ph67.i ], [ %.034.lcssa.i, %Cec_SeedSimRefineFrame.exit.i ] ; 2 uses
   %i.ti = getelementptr i8, ptr %i.th, i64 8
   %.val40.i = load ptr, ptr %i.ti, align 8, !tbaa !25 ; 2 uses
   %i.tj = sext i32 %.03564.i to i64               ; 3 uses
@@ -214,8 +214,6 @@ bb.cy:                                            ; preds = %Cec_SeedSimRefineFr
   %i.tm = load i32, ptr %i.d, align 8, !tbaa !24  ; 3 uses
   %i.tn = sdiv i32 %i.tl, %i.tm                   ; 9 uses
   %i.to = sext i32 %.val3765.i to i64
-  %6 = add nsw i32 %.03564.i, 1
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %.val3765.i, i32 %6)
   br label %bb.cz
 
 bb.cz:                                            ; preds = %bb.da, %bb.cy
@@ -236,7 +234,7 @@ bb.da:                                            ; preds = %bb.cz
   br label %.critedge.i111
 
 .critedge.i111:                                   ; preds = %bb.da, %.critedge.split.loop.exit131.i
-  %.034.lcssa.i = phi i32 [ %i.tu, %.critedge.split.loop.exit131.i ], [ %smax.i, %bb.da ] ; 4 uses
+  %.034.lcssa.i = phi i32 [ %i.tu, %.critedge.split.loop.exit131.i ], [ %.val3765.i, %bb.da ] ; 4 uses
   %i.tv = load i32, ptr %i.sx, align 8, !tbaa !209
   %i.tw = add nsw i32 %i.tv, 1                    ; 2 uses
   store i32 %i.tw, ptr %i.sx, align 8, !tbaa !209

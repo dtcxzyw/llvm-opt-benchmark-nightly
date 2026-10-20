@@ -204,8 +204,8 @@ _ZNSt6vectorIN2cv2ml6KDTree4NodeESaIS3_EE9push_backEOS3_.exit204: ; preds = %_ZN
   br i1 %i.kz, label %.lr.ph130.i, label %.thread.i
 
 .lr.ph130.i:                                      ; preds = %_ZNSt6vectorIN2cv2ml6KDTree4NodeESaIS3_EE9push_backEOS3_.exit204, %bb.bt
-  %.0100128.i = phi i32 [ %.1101.i, %bb.bt ], [ %i.fz, %_ZNSt6vectorIN2cv2ml6KDTree4NodeESaIS3_EE9push_backEOS3_.exit204 ] ; 11 uses
-  %.0103127.i = phi i32 [ %.1104.i, %bb.bt ], [ %i.gb, %_ZNSt6vectorIN2cv2ml6KDTree4NodeESaIS3_EE9push_backEOS3_.exit204 ] ; 10 uses
+  %.0100128.i = phi i32 [ %.1101.i, %bb.bt ], [ %i.fz, %_ZNSt6vectorIN2cv2ml6KDTree4NodeESaIS3_EE9push_backEOS3_.exit204 ] ; 10 uses
+  %.0103127.i = phi i32 [ %.1104.i, %bb.bt ], [ %i.gb, %_ZNSt6vectorIN2cv2ml6KDTree4NodeESaIS3_EE9push_backEOS3_.exit204 ] ; 9 uses
   %i.la = add nsw i32 %.0103127.i, %.0100128.i
   %i.lb = sdiv i32 %i.la, 2                       ; 3 uses
   %i.lc = sext i32 %.0100128.i to i64             ; 4 uses
@@ -263,18 +263,14 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.
   %i.mk = getelementptr inbounds [8 x i8], ptr %.sroa.0282.0398, i64 %i.mj
   store i64 %i.lo, ptr %i.mk, align 8, !tbaa !47
   store i64 %i.mh, ptr %i.ln, align 8, !tbaa !47
-  %i.ml = add nsw i32 %.0100128.i, -1             ; 3 uses
-  %.not124.i = icmp sgt i32 %.0100128.i, %.0103127.i
-  br i1 %.not124.i, label %._crit_edge.i213, label %.lr.ph.preheader.i
-
-.lr.ph.preheader.i:                               ; preds = %bb.bo
+  %i.ml = add nsw i32 %.0100128.i, -1             ; 2 uses
   %18 = add i32 %.0103127.i, 1                    ; 2 uses
   %19 = sub i32 %18, %.0100128.i
   %xtraiter457 = and i32 %19, 1
   %lcmp.mod458.not = icmp eq i32 %xtraiter457, 0
   br i1 %lcmp.mod458.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.preheader.i
+.lr.ph.i.prol:                                    ; preds = %bb.bo
   %i.mm = getelementptr inbounds [8 x i8], ptr %.sroa.0282.0398, i64 %i.lc ; 2 uses
   %i.mn = load i64, ptr %i.mm, align 8, !tbaa !47 ; 2 uses
   %i.mo = getelementptr inbounds nuw [4 x i8], ptr %i.kw, i64 %i.mn
@@ -295,10 +291,10 @@ bb.bp:                                            ; preds = %.lr.ph.i.prol
   %indvars.iv.next.i210.prol = add nsw i64 %i.lc, 1
   br label %.lr.ph.i.prol.loopexit
 
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol.loopexit.unr-lcssa, %.lr.ph.preheader.i
-  %.197.i.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader.i ], [ %.197.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %indvars.iv.i209.unr = phi i64 [ %i.lc, %.lr.ph.preheader.i ], [ %indvars.iv.next.i210.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %.096125.i.unr = phi i32 [ %i.ml, %.lr.ph.preheader.i ], [ %.197.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
+.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol.loopexit.unr-lcssa, %bb.bo
+  %.197.i.lcssa.unr = phi i32 [ poison, %bb.bo ], [ %.197.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
+  %indvars.iv.i209.unr = phi i64 [ %i.lc, %bb.bo ], [ %indvars.iv.next.i210.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
+  %.096125.i.unr = phi i32 [ %i.ml, %bb.bo ], [ %.197.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %i.mu = icmp eq i32 %.0103127.i, %.0100128.i
   br i1 %i.mu, label %._crit_edge.i213, label %.lr.ph.i
 
@@ -347,18 +343,18 @@ bb.bs:                                            ; preds = %bb.br, %.lr.ph.i.1
   %exitcond.not.i212.1 = icmp eq i32 %18, %lftr.wideiv.i211.1
   br i1 %exitcond.not.i212.1, label %._crit_edge.i213, label %.lr.ph.i, !llvm.loop !85
 
-._crit_edge.i213:                                 ; preds = %.lr.ph.i.prol.loopexit, %bb.bs, %bb.bo
-  %.096.lcssa.i = phi i32 [ %i.ml, %bb.bo ], [ %.197.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.197.i.1, %bb.bs ] ; 5 uses
-  %i.no = icmp eq i32 %.096.lcssa.i, %i.ky
+._crit_edge.i213:                                 ; preds = %bb.bs, %.lr.ph.i.prol.loopexit
+  %.197.i.lcssa = phi i32 [ %.197.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.197.i.1, %bb.bs ] ; 5 uses
+  %i.no = icmp eq i32 %.197.i.lcssa, %i.ky
   br i1 %i.no, label %.thread.i, label %bb.bt
 
 bb.bt:                                            ; preds = %._crit_edge.i213
-  %i.np = icmp sgt i32 %.096.lcssa.i, %i.ky       ; 2 uses
-  %i.nq = icmp eq i32 %.0103127.i, %.096.lcssa.i
+  %i.np = icmp sgt i32 %.197.i.lcssa, %i.ky       ; 2 uses
+  %i.nq = icmp eq i32 %.0103127.i, %.197.i.lcssa
   %.neg.i = sext i1 %i.nq to i32
-  %i.nr = add i32 %.096.lcssa.i, %.neg.i
+  %i.nr = add i32 %.197.i.lcssa, %.neg.i
   %.1104.i = select i1 %i.np, i32 %i.nr, i32 %.0103127.i ; 2 uses
-  %.1101.i = select i1 %i.np, i32 %.0100128.i, i32 %.096.lcssa.i ; 2 uses
+  %.1101.i = select i1 %i.np, i32 %.0100128.i, i32 %.197.i.lcssa ; 2 uses
   %i.ns = icmp sgt i32 %.1104.i, %.1101.i
   br i1 %i.ns, label %.lr.ph130.i, label %.thread.i
 
