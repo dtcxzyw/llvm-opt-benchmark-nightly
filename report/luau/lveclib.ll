@@ -202,30 +202,31 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal noundef i32 @_ZL11vector_lerpP9lua_State(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 2 uses
-  %i.b = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 2) ; 2 uses
+  %i.a = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 3 uses
+  %i.b = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 2) ; 3 uses
   %i.c = tail call noundef double @_Z16luaL_checknumberP9lua_Statei(ptr noundef %0, i32 noundef 3)
-  %i.d = fptrunc double %i.c to float             ; 3 uses
+  %i.d = fptrunc double %i.c to float             ; 4 uses
   %i.e = load float, ptr %i.a, align 4, !tbaa !10 ; 2 uses
   %i.f = load float, ptr %i.b, align 4, !tbaa !10 ; 2 uses
-  %i.g = fcmp oeq float %i.d, 1.000000e+00        ; 2 uses
+  %i.g = fcmp oeq float %i.d, 1.000000e+00        ; 3 uses
   %i.h = fsub float %i.f, %i.e
   %i.i = tail call float @llvm.fmuladd.f32(float %i.h, float %i.d, float %i.e)
   %i.j = select i1 %i.g, float %i.f, float %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %1 = load float, ptr %i.k, align 4, !tbaa !10   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %1 = load <2 x float>, ptr %i.k, align 4, !tbaa !10 ; 2 uses
-  %2 = load <2 x float>, ptr %i.l, align 4, !tbaa !10 ; 2 uses
-  %3 = fsub <2 x float> %2, %1
-  %4 = insertelement <2 x float> poison, float %i.d, i64 0
-  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
-  %6 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %3, <2 x float> %5, <2 x float> %1)
-  %7 = insertelement <2 x i1> poison, i1 %i.g, i64 0
-  %8 = shufflevector <2 x i1> %7, <2 x i1> poison, <2 x i32> zeroinitializer
-  %9 = select <2 x i1> %8, <2 x float> %2, <2 x float> %6 ; 2 uses
-  %10 = extractelement <2 x float> %9, i64 0
-  %11 = extractelement <2 x float> %9, i64 1
-  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %i.j, float noundef %10, float noundef %11)
+  %2 = load float, ptr %i.l, align 4, !tbaa !10   ; 2 uses
+  %3 = fsub float %2, %1
+  %4 = tail call float @llvm.fmuladd.f32(float %3, float %i.d, float %1)
+  %5 = select i1 %i.g, float %2, float %4
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %7 = load float, ptr %6, align 4, !tbaa !10     ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %9 = load float, ptr %8, align 4, !tbaa !10     ; 2 uses
+  %10 = fsub float %9, %7
+  %11 = tail call float @llvm.fmuladd.f32(float %10, float %i.d, float %7)
+  %12 = select i1 %i.g, float %9, float %11
+  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %i.j, float noundef %5, float noundef %12)
   ret i32 1
 }
 

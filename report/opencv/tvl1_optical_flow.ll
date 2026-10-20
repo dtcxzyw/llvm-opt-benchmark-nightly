@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %.lr.ph
   br i1 %i.cq, label %bb.o, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit45.thread
 
 bb.o:                                             ; preds = %bb.n
-  %i.cr = fdiv <2 x float> %.sroa.01.0.copyload, %i.bv ; 2 uses
+  %i.cr = fdiv <2 x float> %.sroa.01.0.copyload, %i.bv ; 4 uses
   %i.cs = load atomic i8, ptr @_ZGVZL12computeColorffE10colorWheel acquire, align 8, !noalias !93
   %i.ct = icmp eq i8 %i.cs, 0
   br i1 %i.ct, label %bb.p, label %bb.q, !prof !94
@@ -270,14 +270,10 @@ bb.q:                                             ; preds = %.preheader91.prehea
   br label %_ZL12computeColorff.exit
 
 _ZL12computeColorff.exit:                         ; preds = %bb.q, %.preheader90.preheader.i
-  %6 = extractelement <2 x float> %i.cr, i64 1    ; 3 uses
-  %7 = fmul float %6, %6
-  %i.cv = extractelement <2 x float> %i.cr, i64 0 ; 3 uses
-  %8 = call float @llvm.fmuladd.f32(float %i.cv, float %i.cv, float %7)
-  %sqrt.i = call float @llvm.sqrt.f32(float %8)   ; 2 uses
-  %9 = fneg float %6
-  %10 = fneg float %i.cv
-  %i.cw = call noundef float @atan2f(float noundef %9, float noundef %10) #16, !noalias !93
+  %6 = fneg <2 x float> %i.cr                     ; 2 uses
+  %i.cv = extractelement <2 x float> %6, i64 0
+  %7 = extractelement <2 x float> %6, i64 1
+  %i.cw = call noundef float @atan2f(float noundef %7, float noundef %i.cv) #16, !noalias !93
   %i.cx = fdiv float %i.cw, f0x40490FDB
   %i.cy = fadd float %i.cx, 1.000000e+00
   %i.cz = fmul float %i.cy, 5.000000e-01
@@ -286,59 +282,66 @@ _ZL12computeColorff.exit:                         ; preds = %bb.q, %.preheader90
   %i.dc = add nsw i32 %i.db, 1
   %i.dd = srem i32 %i.dc, 55
   %i.de = sitofp i32 %i.db to float
-  %i.df = fsub float %i.da, %i.de                 ; 3 uses
+  %i.df = fsub float %i.da, %i.de                 ; 2 uses
   %i.dg = sext i32 %i.db to i64
   %i.dh = getelementptr inbounds [12 x i8], ptr @_ZZL12computeColorffE10colorWheel, i64 %i.dg ; 3 uses
   %i.di = sext i32 %i.dd to i64
   %i.dj = getelementptr inbounds [12 x i8], ptr @_ZZL12computeColorffE10colorWheel, i64 %i.di ; 3 uses
-  %11 = fsub float 1.000000e+00, %i.df            ; 2 uses
-  %12 = fcmp ugt float %sqrt.i, 1.000000e+00      ; 2 uses
-  %13 = fneg float %sqrt.i                        ; 2 uses
-  %i.dk = load i32, ptr %i.dh, align 4, !tbaa !34, !noalias !93
+  %8 = load i32, ptr %i.dh, align 4, !tbaa !34, !noalias !93
+  %9 = sitofp i32 %8 to float
+  %10 = fdiv float %9, 2.550000e+02
+  %11 = load i32, ptr %i.dj, align 4, !tbaa !34, !noalias !93
+  %12 = sitofp i32 %11 to float
+  %13 = fdiv nnan float %12, 2.550000e+02
+  %14 = getelementptr inbounds nuw i8, ptr %i.dh, i64 4
+  %i.dk = load i32, ptr %14, align 4, !tbaa !34, !noalias !93
   %i.dl = sitofp i32 %i.dk to float
   %i.dm = fdiv float %i.dl, 2.550000e+02
-  %i.dn = load i32, ptr %i.dj, align 4, !tbaa !34, !noalias !93
+  %15 = getelementptr inbounds nuw i8, ptr %i.dj, i64 4
+  %i.dn = load i32, ptr %15, align 4, !tbaa !34, !noalias !93
   %i.do = sitofp i32 %i.dn to float
   %i.dp = fdiv nnan float %i.do, 2.550000e+02
-  %14 = fmul float %i.dp, %i.df
-  %15 = call float @llvm.fmuladd.f32(float %11, float %i.dm, float %14) ; 2 uses
-  %16 = fsub float 1.000000e+00, %15
-  %17 = call float @llvm.fmuladd.f32(float %13, float %16, float 1.000000e+00)
-  %18 = fmul float %15, 7.500000e-01
-  %.0.i = select i1 %12, float %18, float %17
-  %19 = fmul float %.0.i, 2.550000e+02
-  %20 = fptoui float %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.dh, i64 4
-  %22 = load i32, ptr %21, align 4, !tbaa !34, !noalias !93
-  %23 = sitofp i32 %22 to float
-  %24 = fdiv float %23, 2.550000e+02
-  %25 = getelementptr inbounds nuw i8, ptr %i.dj, i64 4
-  %26 = load i32, ptr %25, align 4, !tbaa !34, !noalias !93
-  %27 = sitofp i32 %26 to float
-  %28 = fdiv nnan float %27, 2.550000e+02
-  %29 = getelementptr inbounds nuw i8, ptr %i.dh, i64 8
-  %30 = load i32, ptr %29, align 4, !tbaa !34, !noalias !93
-  %31 = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
-  %32 = load i32, ptr %31, align 4, !tbaa !34, !noalias !93
-  %33 = insertelement <2 x i32> poison, i32 %30, i64 0
-  %34 = insertelement <2 x i32> %33, i32 %32, i64 1
-  %35 = sitofp <2 x i32> %34 to <2 x float>
-  %36 = fdiv <2 x float> %35, splat (float 2.550000e+02) ; 2 uses
-  %37 = insertelement <2 x float> poison, float %i.df, i64 0
-  %38 = shufflevector <2 x float> %37, <2 x float> poison, <2 x i32> zeroinitializer
-  %39 = insertelement <2 x float> %36, float %28, i64 0
-  %40 = fmul <2 x float> %38, %39
-  %41 = insertelement <2 x float> poison, float %11, i64 0
-  %42 = shufflevector <2 x float> %41, <2 x float> poison, <2 x i32> zeroinitializer
-  %43 = shufflevector <2 x float> %36, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %44 = insertelement <2 x float> %43, float %24, i64 0
-  %45 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %42, <2 x float> %44, <2 x float> %40) ; 2 uses
-  %i.dq = fsub <2 x float> splat (float 1.000000e+00), %45
-  %i.dr = insertelement <2 x float> poison, float %13, i64 0
+  %16 = getelementptr inbounds nuw i8, ptr %i.dh, i64 8
+  %17 = load i32, ptr %16, align 4, !tbaa !34, !noalias !93
+  %18 = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
+  %19 = load i32, ptr %18, align 4, !tbaa !34, !noalias !93
+  %20 = insertelement <2 x i32> poison, i32 %17, i64 0
+  %21 = insertelement <2 x i32> %20, i32 %19, i64 1
+  %22 = sitofp <2 x i32> %21 to <2 x float>
+  %23 = fdiv <2 x float> %22, splat (float 2.550000e+02) ; 2 uses
+  %24 = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.df, i64 1
+  %25 = shufflevector <2 x float> <float poison, float 1.000000e+00>, <2 x float> %i.cr, <4 x i32> <i32 2, i32 1, i32 1, i32 1>
+  %26 = shufflevector <2 x float> %24, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %27 = fsub <4 x float> %25, %26
+  %28 = shufflevector <2 x float> %i.cr, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
+  %29 = insertelement <4 x float> %28, float %13, i64 1
+  %30 = insertelement <4 x float> %29, float %i.dp, i64 2
+  %31 = insertelement <4 x float> %30, float %i.df, i64 3 ; 2 uses
+  %32 = shufflevector <2 x float> %23, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %33 = shufflevector <4 x float> %32, <4 x float> %31, <4 x i32> <i32 4, i32 7, i32 7, i32 1>
+  %34 = fmul <4 x float> %31, %33
+  %35 = shufflevector <2 x float> %23, <2 x float> %i.cr, <4 x i32> <i32 2, i32 poison, i32 poison, i32 0>
+  %36 = insertelement <4 x float> %35, float %10, i64 1
+  %37 = insertelement <4 x float> %36, float %i.dm, i64 2
+  %38 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %27, <4 x float> %37, <4 x float> %34) ; 3 uses
+  %39 = extractelement <4 x float> %38, i64 0
+  %sqrt.i = call float @llvm.sqrt.f32(float %39)  ; 2 uses
+  %40 = fcmp ugt float %sqrt.i, 1.000000e+00      ; 2 uses
+  %41 = fneg float %sqrt.i                        ; 2 uses
+  %42 = extractelement <4 x float> %38, i64 1     ; 2 uses
+  %43 = fsub float 1.000000e+00, %42
+  %44 = call float @llvm.fmuladd.f32(float %41, float %43, float 1.000000e+00)
+  %45 = fmul float %42, 7.500000e-01
+  %.0.i = select i1 %40, float %45, float %44
+  %46 = fmul float %.0.i, 2.550000e+02
+  %47 = fptoui float %46 to i8
+  %48 = shufflevector <4 x float> %38, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.dq = fsub <2 x float> splat (float 1.000000e+00), %48
+  %i.dr = insertelement <2 x float> poison, float %41, i64 0
   %i.ds = shufflevector <2 x float> %i.dr, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dt = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ds, <2 x float> %i.dq, <2 x float> splat (float 1.000000e+00))
-  %i.du = fmul <2 x float> %45, splat (float 7.500000e-01)
-  %i.dv = insertelement <2 x i1> poison, i1 %12, i64 0
+  %i.du = fmul <2 x float> %48, splat (float 7.500000e-01)
+  %i.dv = insertelement <2 x i1> poison, i1 %40, i64 0
   %i.dw = shufflevector <2 x i1> %i.dv, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.dx = select <2 x i1> %i.dw, <2 x float> %i.du, <2 x float> %i.dt ; 2 uses
   %i.dy = extractelement <2 x float> %i.dx, i64 0
@@ -359,7 +362,7 @@ _ZL12computeColorff.exit:                         ; preds = %bb.q, %.preheader90
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ej, i64 1
   store i8 %i.ea, ptr %.sroa.4.0..sroa_idx, align 1
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ej, i64 2
-  store i8 %20, ptr %.sroa.5.0..sroa_idx, align 1
+  store i8 %47, ptr %.sroa.5.0..sroa_idx, align 1
   %.pre = load i32, ptr %i.bl, align 4, !tbaa !36
   br label %_Z13isFlowCorrectN2cv6Point_IfEE.exit45.thread
 
@@ -653,6 +656,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #9
