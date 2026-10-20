@@ -204,18 +204,18 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.a, i8 0, i64 6, i1 false)
-  %3 = zext i1 %2 to i8
   %i.e = getelementptr i8, ptr %1, i64 3          ; 4 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %bb.b
-  %indvars.iv.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.next.i, %bb.h ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.next.i, %bb.h ] ; 3 uses
   %.01219.i = phi i32 [ 0, %bb.b ], [ %.1.i, %bb.h ] ; 4 uses
-  %i.f = getelementptr [16 x i8], ptr @dpcd_quirk_list, i64 %indvars.iv.i ; 5 uses
-  %4 = getelementptr i8, ptr %i.f, i64 9
-  %5 = load i8, ptr %4, align 1, !range !17, !noundef !18
-  %.not.i = icmp eq i8 %5, %3
-  br i1 %.not.i, label %bb.d, label %bb.h
+  %i.f = getelementptr [16 x i8], ptr @dpcd_quirk_list, i64 %indvars.iv.i ; 4 uses
+  %3 = trunc nuw nsw i64 %indvars.iv.i to i32
+  %4 = lshr i32 3697, %3
+  %5 = trunc i32 %4 to i1
+  %6 = xor i1 %2, %5
+  br i1 %6, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load i16, ptr %i.f, align 1

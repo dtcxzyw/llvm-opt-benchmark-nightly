@@ -205,8 +205,6 @@ $_ZZN8FileLine9singletonEvE1s = comdat any
 
 $_ZGVZN8FileLine9singletonEvE1s = comdat any
 
-$_ZZNK9VEdgeType11clockedStmtEvE7clocked = comdat any
-
 $_ZZN13V3MutexConfig1sEvE1s = comdat any
 
 @_ZN12ConstVisitor15s_globalPassNumE = dso_local local_unnamed_addr global i32 0, align 4
@@ -609,7 +607,6 @@ begin_hunk_1
 @.str.1011 = private unnamed_addr constant [77 x i8] c" TREEOPV( AstSel $fromp.castOr,$lsbp.castConst , replaceSelIntoBiop(nodep) )\00", align 1
 @.str.1012 = private unnamed_addr constant [78 x i8] c" TREEOPV( AstSel $fromp.castXor,$lsbp.castConst , replaceSelIntoBiop(nodep) )\00", align 1
 @.str.1013 = private unnamed_addr constant [17 x i8] c"senItem(NOT...) \00", align 1
-@_ZZNK9VEdgeType11clockedStmtEvE7clocked = linkonce_odr dso_local local_unnamed_addr constant [14 x i8] c"\01\01\01\01\01\01\01\00\00\00\00\00\00\00", comdat, align 1
 @_ZTV10AstSenItem = external constant { [42 x ptr] }, align 8
 @.str.1014 = private unnamed_addr constant [52 x i8] c"/opt-bench/work/verilator/verilator/src/V3AstAttr.h\00", align 1
 @.str.1015 = private unnamed_addr constant [25 x i8] c"Inverting bad edgeType()\00", align 1
@@ -1012,12 +1009,9 @@ _ZNK10AstSenItem7varrefpEv.exit56:                ; preds = %bb.d
 
 .critedge2:                                       ; preds = %_ZN7AstNode2isI8AstConst11AstNodeExprEEbPKT0_.exit, %_ZN7AstNode2isI8AstConst11AstNodeExprEEbPKT0_.exit, %_ZNK10AstSenItem7varrefpEv.exit56
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 152
-  %.sroa.0.0.copyload.i.i58 = load i8, ptr %i.k, align 8, !tbaa !245 ; 2 uses
-  %8 = zext i8 %.sroa.0.0.copyload.i.i58 to i64
-  %9 = getelementptr inbounds nuw i8, ptr @_ZZNK9VEdgeType11clockedStmtEvE7clocked, i64 %8
-  %i.l = load i8, ptr %9, align 1, !tbaa !199, !range !115, !noundef !116
-  %10 = trunc nuw i8 %i.l to i1
-  br i1 %10, label %bb.e, label %bb.q
+  %i.l = load i8, ptr %i.k, align 8, !tbaa !245   ; 2 uses
+  %8 = icmp ult i8 %i.l, 7
+  br i1 %8, label %bb.e, label %bb.q
 
 bb.e:                                             ; preds = %.critedge2
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1034,7 +1028,7 @@ _ZN12ConstVisitor20onlySenItemInSenTreeEPK10AstSenItem.exit: ; preds = %bb.e
   br i1 %.not, label %_ZN12ConstVisitor20onlySenItemInSenTreeEPK10AstSenItem.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %_ZN12ConstVisitor20onlySenItemInSenTreeEPK10AstSenItem.exit
-  %i.s = icmp eq i8 %.sroa.0.0.copyload.i.i58, 0
+  %i.s = icmp eq i8 %i.l, 0
   %i.t = tail call noalias noundef nonnull dereferenceable(160) ptr @_Znwm(i64 noundef 160) #30 ; 7 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !197  ; 2 uses

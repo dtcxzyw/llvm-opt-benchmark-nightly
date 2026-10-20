@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.ai
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.ai
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.ai ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.ai ] ; 4 uses
   %i.e = phi ptr [ @.str.606, %bb.a ], [ %i.cu, %bb.ai ] ; 6 uses
   %i.f = getelementptr inbounds nuw [24 x i8], ptr @_ZZN4absl12lts_2026052616strings_internal22strtouint32_test_casesEvE10test_cases, i64 %indvars.iv ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %bb.a, %bb.ai
   %i.k = call noundef zeroext i1 @_ZN4absl12lts_2026052616numbers_internal18safe_strtou32_baseESt17basic_string_viewIcSt11char_traitsIcEEPji(i64 %i.h, ptr nonnull %i.e, ptr noundef nonnull %i.a, i32 noundef %i.j)
   %i.l = zext i1 %i.k to i8                       ; 2 uses
   store i8 %i.l, ptr %i.b, align 1, !tbaa !136
-  %i.m = load i8, ptr %i.g, align 8, !tbaa !136, !range !55, !noalias !2241, !noundef !56 ; 2 uses
+  %i.m = load i8, ptr %i.g, align 8, !tbaa !136, !range !55, !noalias !2241, !noundef !56
   %i.n = icmp eq i8 %i.m, %i.l
   br i1 %i.n, label %bb.d, label %bb.e
 
@@ -371,8 +371,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.q, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #31
-  %7 = trunc nuw i8 %i.m to i1
-  br i1 %7, label %bb.s, label %bb.ai
+  %7 = shl nuw i64 1, %indvars.iv
+  %8 = and i64 %7, 65279
+  %.not61 = icmp eq i64 %8, 0
+  br i1 %.not61, label %bb.ai, label %bb.s
 
 bb.s:                                             ; preds = %_ZN7testing15AssertionResultD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
@@ -775,7 +777,7 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
   ret void
 
 bb.c:                                             ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 4 uses
   %i.h = phi ptr [ @.str.606, %bb.a ], [ %i.dr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 8 uses
   %i.i = getelementptr inbounds nuw [24 x i8], ptr @_ZZN4absl12lts_2026052616strings_internal22strtouint32_test_casesEvE10test_cases, i64 %indvars.iv ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #31
@@ -847,7 +849,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit: ; preds =
 bb.h:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit
   %i.ac = zext i1 %i.ab to i8                     ; 2 uses
   store i8 %i.ac, ptr %i.c, align 1, !tbaa !136
-  %i.ad = load i8, ptr %i.w, align 8, !tbaa !136, !range !55, !noalias !2259, !noundef !56 ; 2 uses
+  %i.ad = load i8, ptr %i.w, align 8, !tbaa !136, !range !55, !noalias !2259, !noundef !56
   %i.ae = icmp eq i8 %i.ad, %i.ac
   br i1 %i.ae, label %bb.i, label %bb.j
 
@@ -1011,8 +1013,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.w, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
-  %8 = trunc nuw i8 %i.ad to i1
-  br i1 %8, label %bb.y, label %bb.ar
+  %8 = shl nuw i64 1, %indvars.iv
+  %9 = and i64 %8, 65279
+  %.not83 = icmp eq i64 %9, 0
+  br i1 %.not83, label %bb.ar, label %bb.y
 
 bb.y:                                             ; preds = %_ZN7testing15AssertionResultD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
@@ -1294,7 +1298,7 @@ bb.b:                                             ; preds = %bb.ai
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.ai
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.ai ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.ai ] ; 3 uses
   %i.e = phi ptr [ @.str.497, %bb.a ], [ %i.cn, %bb.ai ] ; 6 uses
   %i.f = getelementptr inbounds nuw [24 x i8], ptr @_ZZN4absl12lts_2026052616strings_internal22strtouint64_test_casesEvE10test_cases, i64 %indvars.iv ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
@@ -1307,7 +1311,7 @@ bb.c:                                             ; preds = %bb.a, %bb.ai
   %i.k = call noundef zeroext i1 @_ZN4absl12lts_2026052616numbers_internal18safe_strtou64_baseESt17basic_string_viewIcSt11char_traitsIcEEPmi(i64 %i.h, ptr nonnull %i.e, ptr noundef nonnull %i.a, i32 noundef %i.j)
   %i.l = zext i1 %i.k to i8                       ; 2 uses
   store i8 %i.l, ptr %i.b, align 1, !tbaa !136
-  %i.m = load i8, ptr %i.g, align 8, !tbaa !136, !range !55, !noalias !2270, !noundef !56 ; 2 uses
+  %i.m = load i8, ptr %i.g, align 8, !tbaa !136, !range !55, !noalias !2270, !noundef !56
   %i.n = icmp eq i8 %i.m, %i.l
   br i1 %i.n, label %bb.d, label %bb.e
 
@@ -1461,8 +1465,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.q, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #31
-  %7 = trunc nuw i8 %i.m to i1
-  br i1 %7, label %bb.s, label %bb.ai
+  %7 = shl nuw i64 1, %indvars.iv
+  %8 = and i64 %7, 6442581759
+  %.not58 = icmp eq i64 %8, 0
+  br i1 %.not58, label %bb.ai, label %bb.s
 
 bb.s:                                             ; preds = %_ZN7testing15AssertionResultD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
@@ -1693,7 +1699,7 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
   ret void
 
 bb.c:                                             ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
   %i.h = phi ptr [ @.str.497, %bb.a ], [ %i.dk, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 8 uses
   %i.i = getelementptr inbounds nuw [24 x i8], ptr @_ZZN4absl12lts_2026052616strings_internal22strtouint64_test_casesEvE10test_cases, i64 %indvars.iv ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #31
@@ -1765,7 +1771,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit: ; preds =
 bb.h:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit
   %i.ac = zext i1 %i.ab to i8                     ; 2 uses
   store i8 %i.ac, ptr %i.c, align 1, !tbaa !136
-  %i.ad = load i8, ptr %i.w, align 8, !tbaa !136, !range !55, !noalias !2281, !noundef !56 ; 2 uses
+  %i.ad = load i8, ptr %i.w, align 8, !tbaa !136, !range !55, !noalias !2281, !noundef !56
   %i.ae = icmp eq i8 %i.ad, %i.ac
   br i1 %i.ae, label %bb.i, label %bb.j
 
@@ -1929,8 +1935,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.w, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
-  %8 = trunc nuw i8 %i.ad to i1
-  br i1 %8, label %bb.y, label %bb.ar
+  %8 = shl nuw i64 1, %indvars.iv
+  %9 = and i64 %8, 6442581759
+  %.not82 = icmp eq i64 %9, 0
+  br i1 %.not82, label %bb.ar, label %bb.y
 
 bb.y:                                             ; preds = %_ZN7testing15AssertionResultD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31

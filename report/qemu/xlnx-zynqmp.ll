@@ -204,14 +204,14 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br label %bb.t
 
 bb.r:                                             ; preds = %.preheader504, %.loopexit
-  %indvars.iv558 = phi i64 [ 0, %.preheader504 ], [ %indvars.iv.next559, %.loopexit ] ; 3 uses
+  %indvars.iv558 = phi i64 [ 0, %.preheader504 ], [ %indvars.iv.next559, %.loopexit ] ; 4 uses
   %i.cv = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.az, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, i32 noundef 20, ptr noundef nonnull @__func__.SYS_BUS_DEVICE) #7
-  %i.cw = getelementptr inbounds nuw [16 x i8], ptr @xlnx_zynqmp_gic_regions, i64 %indvars.iv558 ; 4 uses
+  %i.cw = getelementptr inbounds nuw [16 x i8], ptr @xlnx_zynqmp_gic_regions, i64 %indvars.iv558 ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 4
   %i.cy = load i32, ptr %i.cx, align 4            ; 16 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.cw, i64 12
-  %3 = load i8, ptr %2, align 4, !range !20, !noundef !21
-  %4 = trunc nuw i8 %3 to i1
+  %2 = trunc i64 %indvars.iv558 to i8
+  %3 = add i8 %2, -3
+  %4 = icmp ult i8 %3, 3
   br i1 %4, label %bb.s, label %.loopexit.loopexit
 
 bb.s:                                             ; preds = %bb.r

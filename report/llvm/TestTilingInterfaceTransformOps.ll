@@ -205,26 +205,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %7, %vector.body ]
-  %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
-  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
-  %4 = xor <4 x i8> %2, splat (i8 -1)
-  %5 = xor <4 x i8> %3, splat (i8 -1)
-  %6 = zext nneg <4 x i8> %4 to <4 x i32>
-  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
-  %7 = add <4 x i32> %vec.phi, %6                 ; 2 uses
-  %i.b = add <4 x i32> %vec.phi17, %i.a           ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %vec.phi17 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi17, splat (i32 1)
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.phi17, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !875
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %i.b, %7
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
@@ -242,22 +234,19 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %8 = and i32 %1, 255
-  %.not16 = icmp eq i32 %8, 0
-  %i.l = zext i32 %i.h to i64
+  %3 = icmp eq i32 %1, 1
+  %4 = select i1 %3, i32 %i.h, i32 1
+  %i.l = zext i32 %4 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.m
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
   %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
   %.01013 = phi i32 [ %i.o, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %9 = trunc i32 %.01013 to i8
-  %notmask = shl nsw i8 -1, %9
-  %10 = xor i8 %notmask, -1
-  %i.n = zext nneg i8 %10 to i32
+  %5 = icmp eq i32 %.01013, 1
+  %i.n = zext i1 %5 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
   %i.o = add nuw i32 %.01013, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.o, %1
@@ -660,26 +649,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %8, %vector.body ]
-  %vec.phi18 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %3 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
-  %4 = shl nsw <4 x i8> splat (i8 -1), %step.add
-  %5 = xor <4 x i8> %3, splat (i8 -1)
-  %6 = xor <4 x i8> %4, splat (i8 -1)
-  %7 = zext nneg <4 x i8> %5 to <4 x i32>
-  %i.a = zext nneg <4 x i8> %6 to <4 x i32>
-  %8 = add <4 x i32> %vec.phi, %7                 ; 2 uses
-  %i.b = add <4 x i32> %vec.phi18, %i.a           ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %vec.phi18 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %3 = icmp eq <4 x i32> %vec.phi18, splat (i32 1)
+  %i.a = zext <4 x i1> %3 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.phi18, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !892
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %i.b, %8
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader19
 
@@ -694,22 +675,19 @@ middle.block:                                     ; preds = %vector.body
   %i.f = add i32 %2, -2
   %i.g = mul nsw i32 %.0.lcssa, %i.f
   %i.h = add i32 %i.g, %1
-  %9 = and i32 %1, 255
-  %.not17 = icmp eq i32 %9, 0
-  %i.i = zext i32 %i.e to i64
+  %4 = icmp eq i32 %1, 1
+  %5 = select i1 %4, i32 %i.e, i32 1
+  %i.i = zext i32 %5 to i64
   %i.j = shl nuw i64 %i.i, 32
-  %.sroa.2.0.insert.shift = select i1 %.not17, i64 4294967296, i64 %i.j
   %.sroa.0.0.insert.ext = zext i32 %i.h to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.j, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader19, %.lr.ph
   %.015 = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph, %.lr.ph.preheader19 ]
   %.01114 = phi i32 [ %i.l, %.lr.ph ], [ %.01114.ph, %.lr.ph.preheader19 ] ; 2 uses
-  %10 = trunc i32 %.01114 to i8
-  %notmask = shl nsw i8 -1, %10
-  %11 = xor i8 %notmask, -1
-  %i.k = zext nneg i8 %11 to i32
+  %6 = icmp eq i32 %.01114, 1
+  %i.k = zext i1 %6 to i32
   %spec.select = add nuw nsw i32 %.015, %i.k      ; 2 uses
   %i.l = add nuw i32 %.01114, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.l, %1
@@ -914,26 +892,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %7, %vector.body ]
-  %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
-  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
-  %4 = xor <4 x i8> %2, splat (i8 -1)
-  %5 = xor <4 x i8> %3, splat (i8 -1)
-  %6 = zext nneg <4 x i8> %4 to <4 x i32>
-  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
-  %7 = add <4 x i32> %vec.phi, %6                 ; 2 uses
-  %i.b = add <4 x i32> %vec.phi17, %i.a           ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %vec.phi17 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi17, splat (i32 1)
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.phi17, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !894
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %i.b, %7
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
@@ -962,22 +932,19 @@ _ZN4mlir9Operation14getNumOperandsEv.exit:        ; preds = %._crit_edge, %bb.b
   %i.m = add i32 %i.k, -2
   %i.n = mul nsw i32 %i.m, %.0.lcssa
   %i.o = add i32 %i.n, %1
-  %8 = and i32 %1, 255
-  %.not16 = icmp eq i32 %8, 0
-  %i.p = zext i32 %i.l to i64
+  %3 = icmp eq i32 %1, 1
+  %4 = select i1 %3, i32 %i.l, i32 1
+  %i.p = zext i32 %4 to i64
   %i.q = shl nuw i64 %i.p, 32
-  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.q
   %.sroa.0.0.insert.ext = zext i32 %i.o to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.q, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
   %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
   %.01013 = phi i32 [ %i.s, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %9 = trunc i32 %.01013 to i8
-  %notmask = shl nsw i8 -1, %9
-  %10 = xor i8 %notmask, -1
-  %i.r = zext nneg i8 %10 to i32
+  %5 = icmp eq i32 %.01013, 1
+  %i.r = zext i1 %5 to i32
   %spec.select = add nuw nsw i32 %.014, %i.r      ; 2 uses
   %i.s = add nuw i32 %.01013, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.s, %1
@@ -1002,26 +969,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %7, %vector.body ]
-  %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
-  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
-  %4 = xor <4 x i8> %2, splat (i8 -1)
-  %5 = xor <4 x i8> %3, splat (i8 -1)
-  %6 = zext nneg <4 x i8> %4 to <4 x i32>
-  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
-  %7 = add <4 x i32> %vec.phi, %6                 ; 2 uses
-  %i.b = add <4 x i32> %vec.phi17, %i.a           ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %vec.phi17 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi17, splat (i32 1)
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.phi17, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !896
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %i.b, %7
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
@@ -1039,22 +998,19 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %8 = and i32 %1, 255
-  %.not16 = icmp eq i32 %8, 0
-  %i.l = zext i32 %i.h to i64
+  %3 = icmp eq i32 %1, 1
+  %4 = select i1 %3, i32 %i.h, i32 1
+  %i.l = zext i32 %4 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.m
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
   %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
   %.01013 = phi i32 [ %i.o, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %9 = trunc i32 %.01013 to i8
-  %notmask = shl nsw i8 -1, %9
-  %10 = xor i8 %notmask, -1
-  %i.n = zext nneg i8 %10 to i32
+  %5 = icmp eq i32 %.01013, 1
+  %i.n = zext i1 %5 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
   %i.o = add nuw i32 %.01013, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.o, %1
@@ -1457,26 +1413,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %7, %vector.body ]
-  %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
-  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
-  %4 = xor <4 x i8> %2, splat (i8 -1)
-  %5 = xor <4 x i8> %3, splat (i8 -1)
-  %6 = zext nneg <4 x i8> %4 to <4 x i32>
-  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
-  %7 = add <4 x i32> %vec.phi, %6                 ; 2 uses
-  %i.b = add <4 x i32> %vec.phi17, %i.a           ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %vec.phi17 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi17, splat (i32 1)
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.phi17, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !968
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %i.b, %7
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
@@ -1494,22 +1442,19 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %8 = and i32 %1, 255
-  %.not16 = icmp eq i32 %8, 0
-  %i.l = zext i32 %i.h to i64
+  %3 = icmp eq i32 %1, 1
+  %4 = select i1 %3, i32 %i.h, i32 1
+  %i.l = zext i32 %4 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.m
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
   %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
   %.01013 = phi i32 [ %i.o, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %9 = trunc i32 %.01013 to i8
-  %notmask = shl nsw i8 -1, %9
-  %10 = xor i8 %notmask, -1
-  %i.n = zext nneg i8 %10 to i32
+  %5 = icmp eq i32 %.01013, 1
+  %i.n = zext i1 %5 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
   %i.o = add nuw i32 %.01013, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.o, %1
@@ -1912,26 +1857,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %7, %vector.body ]
-  %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
-  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
-  %4 = xor <4 x i8> %2, splat (i8 -1)
-  %5 = xor <4 x i8> %3, splat (i8 -1)
-  %6 = zext nneg <4 x i8> %4 to <4 x i32>
-  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
-  %7 = add <4 x i32> %vec.phi, %6                 ; 2 uses
-  %i.b = add <4 x i32> %vec.phi17, %i.a           ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %vec.phi17 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi17, splat (i32 1)
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.phi17, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !982
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %i.b, %7
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
@@ -1949,22 +1886,19 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %8 = and i32 %1, 255
-  %.not16 = icmp eq i32 %8, 0
-  %i.l = zext i32 %i.h to i64
+  %3 = icmp eq i32 %1, 1
+  %4 = select i1 %3, i32 %i.h, i32 1
+  %i.l = zext i32 %4 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.m
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
   %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
   %.01013 = phi i32 [ %i.o, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %9 = trunc i32 %.01013 to i8
-  %notmask = shl nsw i8 -1, %9
-  %10 = xor i8 %notmask, -1
-  %i.n = zext nneg i8 %10 to i32
+  %5 = icmp eq i32 %.01013, 1
+  %i.n = zext i1 %5 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
   %i.o = add nuw i32 %.01013, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.o, %1
@@ -2367,26 +2301,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %7, %vector.body ]
-  %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
-  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
-  %4 = xor <4 x i8> %2, splat (i8 -1)
-  %5 = xor <4 x i8> %3, splat (i8 -1)
-  %6 = zext nneg <4 x i8> %4 to <4 x i32>
-  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
-  %7 = add <4 x i32> %vec.phi, %6                 ; 2 uses
-  %i.b = add <4 x i32> %vec.phi17, %i.a           ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %vec.phi17 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi17, splat (i32 1)
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.phi17, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !992
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %i.b, %7
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
@@ -2404,22 +2330,19 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %8 = and i32 %1, 255
-  %.not16 = icmp eq i32 %8, 0
-  %i.l = zext i32 %i.h to i64
+  %3 = icmp eq i32 %1, 1
+  %4 = select i1 %3, i32 %i.h, i32 1
+  %i.l = zext i32 %4 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.m
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
   %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
   %.01013 = phi i32 [ %i.o, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %9 = trunc i32 %.01013 to i8
-  %notmask = shl nsw i8 -1, %9
-  %10 = xor i8 %notmask, -1
-  %i.n = zext nneg i8 %10 to i32
+  %5 = icmp eq i32 %.01013, 1
+  %i.n = zext i1 %5 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
   %i.o = add nuw i32 %.01013, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.o, %1
@@ -2822,26 +2745,18 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %7, %vector.body ]
-  %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
-  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
-  %4 = xor <4 x i8> %2, splat (i8 -1)
-  %5 = xor <4 x i8> %3, splat (i8 -1)
-  %6 = zext nneg <4 x i8> %4 to <4 x i32>
-  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
-  %7 = add <4 x i32> %vec.phi, %6                 ; 2 uses
-  %i.b = add <4 x i32> %vec.phi17, %i.a           ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
+  %vec.phi17 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi17, splat (i32 1)
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %vec.ind.next = add nuw <4 x i32> %vec.phi17, splat (i32 8)
   %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !1003
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %i.b, %7
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
   %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
@@ -2859,22 +2774,19 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %8 = and i32 %1, 255
-  %.not16 = icmp eq i32 %8, 0
-  %i.l = zext i32 %i.h to i64
+  %3 = icmp eq i32 %1, 1
+  %4 = select i1 %3, i32 %i.h, i32 1
+  %i.l = zext i32 %4 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.m
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
   %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
   %.01013 = phi i32 [ %i.o, %.lr.ph ], [ %.01013.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %9 = trunc i32 %.01013 to i8
-  %notmask = shl nsw i8 -1, %9
-  %10 = xor i8 %notmask, -1
-  %i.n = zext nneg i8 %10 to i32
+  %5 = icmp eq i32 %.01013, 1
+  %i.n = zext i1 %5 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
   %i.o = add nuw i32 %.01013, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.o, %1

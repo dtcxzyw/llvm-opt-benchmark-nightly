@@ -204,8 +204,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %bb.a
-  %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i, %bb.f ] ; 2 uses
-  %i.g = getelementptr [24 x i8], ptr @deprecated_heur_dissector_pref.heur_prefs, i64 %indvars.iv.i ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i, %bb.f ] ; 3 uses
+  %i.g = getelementptr [24 x i8], ptr @deprecated_heur_dissector_pref.heur_prefs, i64 %indvars.iv.i ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = tail call i32 @strcmp(ptr noundef readonly %0, ptr noundef %i.h) #26
   %i.j = icmp eq i32 %i.i, 0
@@ -227,10 +227,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %8 = getelementptr i8, ptr %i.g, i64 16
-  %9 = load i8, ptr %8, align 8, !range !10, !noundef !11
-  %10 = trunc nuw i8 %9 to i1
-  br i1 %10, label %bb.f, label %deprecated_heur_dissector_pref.exit.thread
+  %8 = shl nuw nsw i64 1, %indvars.iv.i
+  %9 = and i64 %8, 52881850626
+  %.not12.i = icmp eq i64 %9, 0
+  br i1 %.not12.i, label %deprecated_heur_dissector_pref.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.b
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses

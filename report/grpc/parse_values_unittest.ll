@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.aj
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.aj
-  %storemerge42 = phi i64 [ 0, %bb.a ], [ %i.bm, %bb.aj ]
+  %storemerge42 = phi i64 [ 0, %bb.a ], [ %i.bm, %bb.aj ] ; 2 uses
   %i.f = getelementptr inbounds nuw [32 x i8], ptr @_ZN4bssl3der4testL15kUint64TestDataE, i64 %storemerge42 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   call void @_ZN7testing11ScopedTraceC2ImEEPKciRKT_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull @.str.2, i32 noundef 228, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.a, %bb.aj
 bb.d:                                             ; preds = %bb.c
   %i.k = zext i1 %i.j to i8                       ; 2 uses
   store i8 %i.k, ptr %i.c, align 1, !tbaa !54
-  %i.l = load i8, ptr %i.f, align 16, !tbaa !54, !range !55, !noalias !99, !noundef !56 ; 2 uses
+  %i.l = load i8, ptr %i.f, align 16, !tbaa !54, !range !55, !noalias !99, !noundef !56
   %i.m = icmp eq i8 %i.l, %i.k
   br i1 %i.m, label %bb.e, label %bb.f
 
@@ -343,8 +343,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.q, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
-  %8 = trunc nuw i8 %i.l to i1
-  br i1 %8, label %bb.s, label %bb.aj
+  %8 = shl nuw nsw i64 1, %storemerge42
+  %9 = and i64 %8, 53
+  %.not = icmp eq i64 %9, 0
+  br i1 %.not, label %bb.aj, label %bb.s
 
 bb.s:                                             ; preds = %_ZN7testing15AssertionResultD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
@@ -619,7 +621,7 @@ bb.b:                                             ; preds = %bb.aj
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.aj
-  %storemerge42 = phi i64 [ 0, %bb.a ], [ %i.bm, %bb.aj ]
+  %storemerge42 = phi i64 [ 0, %bb.a ], [ %i.bm, %bb.aj ] ; 2 uses
   %i.f = getelementptr inbounds nuw [32 x i8], ptr @_ZN4bssl3der4testL14kUint8TestDataE, i64 %storemerge42 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   call void @_ZN7testing11ScopedTraceC2ImEEPKciRKT_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull @.str.2, i32 noundef 265, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
@@ -635,7 +637,7 @@ bb.c:                                             ; preds = %bb.a, %bb.aj
 bb.d:                                             ; preds = %bb.c
   %i.k = zext i1 %i.j to i8                       ; 2 uses
   store i8 %i.k, ptr %i.c, align 1, !tbaa !54
-  %i.l = load i8, ptr %i.f, align 16, !tbaa !54, !range !55, !noalias !112, !noundef !56 ; 2 uses
+  %i.l = load i8, ptr %i.f, align 16, !tbaa !54, !range !55, !noalias !112, !noundef !56
   %i.m = icmp eq i8 %i.l, %i.k
   br i1 %i.m, label %bb.e, label %bb.f
 
@@ -760,8 +762,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.q, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
-  %8 = trunc nuw i8 %i.l to i1
-  br i1 %8, label %bb.s, label %bb.aj
+  %8 = shl nuw nsw i64 1, %storemerge42
+  %9 = and i64 %8, 101
+  %.not = icmp eq i64 %9, 0
+  br i1 %.not, label %bb.aj, label %bb.s
 
 bb.s:                                             ; preds = %_ZN7testing15AssertionResultD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
@@ -947,7 +951,7 @@ bb.b:                                             ; preds = %bb.aj
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.aj
-  %storemerge43 = phi i64 [ 0, %bb.a ], [ %i.bm, %bb.aj ]
+  %storemerge43 = phi i64 [ 0, %bb.a ], [ %i.bm, %bb.aj ] ; 2 uses
   %i.f = getelementptr inbounds nuw [24 x i8], ptr @_ZN4bssl3der4testL23kIsValidIntegerTestDataE, i64 %storemerge43 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   call void @_ZN7testing11ScopedTraceC2ImEEPKciRKT_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull @.str.2, i32 noundef 311, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
@@ -963,7 +967,7 @@ bb.c:                                             ; preds = %bb.a, %bb.aj
 bb.d:                                             ; preds = %bb.c
   %i.k = zext i1 %i.j to i8                       ; 2 uses
   store i8 %i.k, ptr %i.c, align 1, !tbaa !54
-  %i.l = load i8, ptr %i.f, align 8, !tbaa !54, !range !55, !noalias !125, !noundef !56 ; 2 uses
+  %i.l = load i8, ptr %i.f, align 8, !tbaa !54, !range !55, !noalias !125, !noundef !56
   %i.m = icmp eq i8 %i.l, %i.k
   br i1 %i.m, label %bb.e, label %bb.f
 
@@ -1088,8 +1092,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.q, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
-  %8 = trunc nuw i8 %i.l to i1
-  br i1 %8, label %bb.s, label %bb.aj
+  %8 = shl nuw nsw i64 1, %storemerge43
+  %9 = and i64 %8, 218
+  %.not = icmp eq i64 %9, 0
+  br i1 %.not, label %bb.aj, label %bb.s
 
 bb.s:                                             ; preds = %_ZN7testing15AssertionResultD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13

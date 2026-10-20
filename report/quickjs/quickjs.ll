@@ -205,8 +205,6 @@ js_limb_to_a.exit.loopexit.unr-lcssa:             ; preds = %.lr.ph30.i
   br i1 %lcmp.mod331.not, label %js_limb_to_a.exit.backedge, label %.lr.ph30.i.epil.preheader
 
 .lr.ph30.i.epil.preheader:                        ; preds = %js_limb_to_a.exit.loopexit.unr-lcssa
-  %lcmp.mod333 = trunc i8 %i.kq to i1
-  tail call void @llvm.assume(i1 %lcmp.mod333)
   %i.if = urem i32 %i.la, 10
   %i.ig = trunc nuw nsw i32 %i.if to i8
   %i.ih = or disjoint i8 %i.ig, 48
@@ -388,7 +386,7 @@ bb.bb:                                            ; preds = %bb.bb, %.preheader1
 js_mp_div1.exit:                                  ; preds = %.critedge, %._crit_edge.loopexit.i, %.split.preheader
   %.1229 = phi i32 [ 1, %.split.preheader ], [ %.0105, %.critedge ], [ %.1230, %._crit_edge.loopexit.i ]
   %phi.call = phi i32 [ %i.kd, %.split.preheader ], [ 0, %.critedge ], [ %i.jz, %._crit_edge.loopexit.i ] ; 3 uses
-  %i.kq = load i8, ptr %i.id, align 1, !tbaa !218 ; 3 uses
+  %i.kq = load i8, ptr %i.id, align 1, !tbaa !218 ; 2 uses
   %i.kr = zext i8 %i.kq to i32                    ; 4 uses
   br i1 %i.ie, label %.lr.ph30.i.preheader, label %.lr.ph.i141.preheader
 

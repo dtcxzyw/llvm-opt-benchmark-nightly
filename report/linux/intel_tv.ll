@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.f = load ptr, ptr %1, align 8
   %i.g = getelementptr i8, ptr %2, i64 72
   %.val = load i32, ptr %i.g, align 8
-  %i.h = sext i32 %.val to i64
-  %i.i = getelementptr [112 x i8], ptr @tv_modes, i64 %i.h ; 4 uses
+  %i.h = sext i32 %.val to i64                    ; 2 uses
+  %i.i = getelementptr [112 x i8], ptr @tv_modes, i64 %i.h ; 3 uses
   %i.j = getelementptr i8, ptr %1, i64 616        ; 10 uses
   %i.k = getelementptr i8, ptr %1, i64 648
   %i.l = load i16, ptr %i.k, align 8              ; 5 uses
@@ -324,10 +324,11 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   store i16 %i.bf, ptr %i.bg, align 2
   %i.bh = getelementptr i8, ptr %2, i64 444
   store i8 1, ptr %i.bh, align 4
-  %3 = getelementptr i8, ptr %i.i, i64 22
-  %4 = load i8, ptr %3, align 2
-  %5 = trunc i8 %4 to i1
-  br i1 %5, label %.thread, label %bb.p
+  %3 = and i64 %i.h, 1152921504606846975
+  %4 = shl nuw i64 1, %3
+  %5 = and i64 %4, 29632
+  %.not114 = icmp eq i64 %5, 0
+  br i1 %.not114, label %bb.p, label %.thread
 
 bb.p:                                             ; preds = %bb.o
   %i.bi = load i32, ptr %i.j, align 8
@@ -730,8 +731,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.d = load ptr, ptr %2, align 8
   %i.e = getelementptr i8, ptr %3, i64 72
   %.val = load i32, ptr %i.e, align 8             ; 2 uses
-  %i.f = sext i32 %.val to i64                    ; 2 uses
-  %i.g = getelementptr [112 x i8], ptr @tv_modes, i64 %i.f ; 41 uses
+  %i.f = sext i32 %.val to i64                    ; 3 uses
+  %i.g = getelementptr [112 x i8], ptr @tv_modes, i64 %i.f ; 38 uses
   tail call void @intel_dmc_wl_get(ptr noundef %i.c, i32 425984) #10
   %.val.i = load ptr, ptr %i.c, align 8
   %i.h = tail call ptr @to_intel_uncore(ptr noundef %.val.i) #10 ; 2 uses
@@ -759,10 +760,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.v = or disjoint i32 %i.l, 536870912
-  %4 = getelementptr i8, ptr %i.g, i64 34
-  %5 = load i8, ptr %4, align 2
-  %6 = trunc i8 %5 to i1
-  %sdtv_csc_yprpb.hdtv_csc_yprpb = select i1 %6, ptr @sdtv_csc_yprpb, ptr @hdtv_csc_yprpb
+  %4 = and i64 %i.f, 1152921504606846974
+  %5 = icmp samesign ult i64 %4, 6
+  %sdtv_csc_yprpb.hdtv_csc_yprpb = select i1 %5, ptr @sdtv_csc_yprpb, ptr @hdtv_csc_yprpb
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.c
@@ -807,23 +807,20 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.g, %bb.j, %bb.i, %bb.h
   %.1 = phi i32 [ %i.am, %bb.j ], [ %i.ak, %bb.h ], [ %i.al, %bb.i ], [ %i.ah, %bb.g ] ; 2 uses
-  %7 = getelementptr i8, ptr %i.g, i64 22
-  %8 = load i8, ptr %7, align 2
-  %9 = trunc i8 %8 to i1                          ; 2 uses
-  %10 = getelementptr i8, ptr %i.g, i64 68
-  %11 = load i8, ptr %10, align 4
+  %6 = and i64 %i.f, 1152921504606846975          ; 3 uses
+  %7 = shl nuw i64 1, %6                          ; 2 uses
+  %8 = and i64 %7, 29632
+  %.not183 = icmp eq i64 %8, 0                    ; 2 uses
   %i.an = getelementptr i8, ptr %i.g, i64 56
   %i.ao = load i8, ptr %i.an, align 8
-  %12 = and i64 %i.f, 1152921504606846975         ; 2 uses
-  %i.ap = add nsw i64 %12, -6
+  %i.ap = add nsw i64 %6, -6
   %.not159 = icmp ult i64 %i.ap, 9
   %i.aq = getelementptr i8, ptr %i.g, i64 58
   %i.ar = load i16, ptr %i.aq, align 2
   %.1141 = select i1 %.not159, i32 0, i32 -1073741824 ; 2 uses
   %i.as = getelementptr i8, ptr %i.g, i64 60
   %i.at = load i16, ptr %i.as, align 4
-  %13 = shl nuw i64 1, %12
-  %i.au = and i64 %13, 32717
+  %i.au = and i64 %7, 32717
   %.not161.not = icmp eq i64 %i.au, 0
   %i.av = or disjoint i32 %.1141, 536870912
   %.2142 = select i1 %.not161.not, i32 %i.av, i32 %.1141
@@ -1183,7 +1180,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ki = add nuw nsw i32 %i.du, 1
   %i.kj = shl nuw nsw i32 %i.du, 1
   %i.kk = add nuw nsw i32 %i.kj, 2
-  %.0.i = select i1 %9, i32 %i.ki, i32 %i.kk
+  %.0.i = select i1 %.not183, i32 %i.kk, i32 %i.ki
   %i.kl = getelementptr i8, ptr %3, i64 60
   %i.km = load i32, ptr %i.kl, align 4            ; 2 uses
   %i.kn = getelementptr i8, ptr %3, i64 440
@@ -1299,14 +1296,15 @@ bb.p:                                             ; preds = %bb.o, %bb.p
 bb.q:                                             ; preds = %.preheader
   %i.mr = and i64 %i.bt, 256
   %.not163 = icmp eq i64 %i.mr, 0
-  %14 = trunc i8 %11 to i1
+  %9 = add nsw i64 %6, -3
+  %10 = icmp ult i64 %9, 3
   %.not158 = icmp ult i32 %.val, 8
   %i.ms = or i32 %.1, 131072
-  %spec.select = select i1 %9, i32 %i.ms, i32 %.1 ; 2 uses
+  %spec.select = select i1 %.not183, i32 %.1, i32 %i.ms ; 2 uses
   %i.mt = or i32 %spec.select, 2097152
   %.3 = select i1 %.not158, i32 %spec.select, i32 %i.mt ; 2 uses
   %i.mu = or i32 %.3, 65536
-  %.4 = select i1 %14, i32 %i.mu, i32 %.3         ; 2 uses
+  %.4 = select i1 %10, i32 %i.mu, i32 %.3         ; 2 uses
   %i.mv = or i32 %.4, 3072
   %spec.select164 = select i1 %.not163, i32 %.4, i32 %i.mv
   tail call void @intel_dmc_wl_get(ptr noundef %i.c, i32 425988) #10
@@ -1639,11 +1637,15 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = getelementptr i8, ptr %i.e, i64 72
   %.val = load i32, ptr %i.f, align 8
-  %i.g = sext i32 %.val to i64                    ; 2 uses
-  %i.h = getelementptr [112 x i8], ptr @tv_modes, i64 %i.g ; 4 uses
-  %1 = getelementptr i8, ptr %i.h, i64 22         ; 2 uses
+  %i.g = sext i32 %.val to i64                    ; 3 uses
+  %i.h = getelementptr [112 x i8], ptr @tv_modes, i64 %i.g ; 3 uses
+  %1 = and i64 %i.g, 1152921504606846975
+  %2 = shl nuw i64 1, %1
+  %3 = and i64 %2, 29632
+  %.not53 = icmp eq i64 %3, 0                     ; 3 uses
   %i.i = and i64 %i.g, 1152921504606846974
-  %.not48 = icmp samesign ugt i64 %i.i, 5
+  %.not48 = icmp samesign ult i64 %i.i, 6
+  %or.cond = and i1 %.not48, %.not53
   %i.j = getelementptr i8, ptr %i.c, i64 1168
   %i.k = getelementptr i8, ptr %i.h, i64 32       ; 2 uses
   %i.l = getelementptr i8, ptr %i.h, i64 8
@@ -1659,10 +1661,7 @@ bb.d:                                             ; preds = %bb.c, %bb.m
   br i1 %.not47, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %2 = load i8, ptr %1, align 2
-  %3 = trunc i8 %2 to i1                          ; 2 uses
-  %or.cond.not = or i1 %.not48, %3
-  br i1 %or.cond.not, label %.thread, label %bb.m
+  br i1 %or.cond, label %bb.m, label %.thread
 
 .thread:                                          ; preds = %bb.e
   %i.p = load i16, ptr %i.j, align 8
@@ -1678,7 +1677,7 @@ bb.f:                                             ; preds = %.thread
   %i.w = add nuw nsw i32 %i.v, 1
   %i.x = shl nuw nsw i32 %i.v, 1
   %i.y = add nuw nsw i32 %i.x, 2
-  %.0.i = select i1 %3, i32 %i.w, i32 %i.y
+  %.0.i = select i1 %.not53, i32 %i.y, i32 %i.w
   %i.z = icmp samesign ult i32 %.0.i, %i.t
   br i1 %i.z, label %bb.m, label %bb.g
 
@@ -1813,14 +1812,12 @@ bb.k:                                             ; preds = %__drm_to_dev.exit, 
   store i16 %i.dv, ptr %i.dg, align 4
   %i.dw = getelementptr i8, ptr %i.ab, i64 62     ; 2 uses
   store i8 64, ptr %i.dw, align 2
-  %.val4.i = load i8, ptr %1, align 2
   %.val5.i = load i16, ptr %i.k, align 16
-  %4 = trunc i8 %.val4.i to i1
   %i.dx = zext i16 %.val5.i to i32                ; 2 uses
   %i.dy = add nuw nsw i32 %i.dx, 1
   %i.dz = shl nuw nsw i32 %i.dx, 1
   %i.ea = add nuw nsw i32 %i.dz, 2
-  %.0.i.i.i = select i1 %4, i32 %i.dy, i32 %i.ea  ; 2 uses
+  %.0.i.i.i = select i1 %.not53, i32 %i.ea, i32 %i.dy ; 2 uses
   %i.eb = icmp samesign ult i32 %.0.i.i.i, 577
   %spec.store.select.i.i = select i1 %i.eb, i32 480, i32 %.0.i.i.i
   %i.ec = icmp eq i32 %spec.store.select.i.i, %i.cu

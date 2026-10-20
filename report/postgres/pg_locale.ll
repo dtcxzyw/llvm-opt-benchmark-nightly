@@ -204,17 +204,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = icmp eq ptr %i.b, null
-  br i1 %i.c, label %2, label %bb.c
+  br i1 %i.c, label %bb.b, label %bb.c
 
-2:                                                ; preds = %bb.a
-  %3 = icmp ult i32 %0, 128
-  br i1 %3, label %bb.b, label %bb.d
-
-bb.b:                                             ; preds = %2
-  %4 = zext nneg i32 %0 to i64
-  %5 = getelementptr inbounds nuw i8, ptr @pg_char_properties, i64 %4
-  %6 = load i8, ptr %5, align 1
-  %7 = trunc i8 %6 to i1
+bb.b:                                             ; preds = %bb.a
+  %2 = add i32 %0, -48
+  %3 = icmp ult i32 %2, 10
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -223,8 +217,8 @@ bb.c:                                             ; preds = %bb.a
   %i.f = tail call zeroext i1 %i.e(i32 noundef %0, ptr noundef nonnull %1) #19
   br label %bb.d
 
-bb.d:                                             ; preds = %2, %bb.b, %bb.c
-  %.0 = phi i1 [ %i.f, %bb.c ], [ false, %2 ], [ %7, %bb.b ]
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.0 = phi i1 [ %3, %bb.b ], [ %i.f, %bb.c ]
   ret i1 %.0
 }
 
