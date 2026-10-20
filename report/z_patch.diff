@@ -1,0 +1,84 @@
+diff --git a/llvm/include/llvm/Analysis/AliasAnalysis.h b/llvm/include/llvm/Analysis/AliasAnalysis.h
+index b6cae7c1cba85f..51e18475f44b23 100644
+--- a/llvm/include/llvm/Analysis/AliasAnalysis.h
++++ b/llvm/include/llvm/Analysis/AliasAnalysis.h
+@@ -306,6 +306,9 @@ class AAQueryInfo {
+   /// passes that lazily update the DT while performing AA queries.
+   bool UseDominatorTree = true;
+ 
++  /// Whether ephemeral values should be allowed when checking assumes.
++  bool AllowEphemerals = true;
++
+   AAQueryInfo(AAResults &AAR, CaptureAnalysis *CA) : AAR(AAR), CA(CA) {}
+ };
+ 
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index 7a79b0d6e24f11..0e4dd212616bae 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -1669,8 +1669,9 @@ AliasResult BasicAAResult::aliasCheck(const Value *V1, LocationSize V1Size,
+           // ValidAssumeForPtrContext checks; they're dominated by O1 and O2,
+           // so strictly more assumptions are valid for them.
+           if ((CtxI && isValidAssumeForContext(Assume, CtxI, DT,
+-                                               /* AllowEphemerals */ true)) ||
+-              ValidAssumeForPtrContext(V1) || ValidAssumeForPtrContext(V2)) {
++                                               AAQI.AllowEphemerals)) ||
++              (AAQI.AllowEphemerals && (ValidAssumeForPtrContext(V1) ||
++                                        ValidAssumeForPtrContext(V2)))) {
+             return AliasResult::NoAlias;
+           }
+         }
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index fb4d5b711315f5..c37295f7754f1b 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -4013,6 +4013,13 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+         };
+         MaybeSimplifyHint(Ptr1);
+         MaybeSimplifyHint(Ptr2);
++        SimpleAAQueryInfo AAQI(*AA);
++        AAQI.AllowEphemerals = false;
++        if (AA->alias(MemoryLocation::getBeforeOrAfter(Ptr1),
++                      MemoryLocation::getBeforeOrAfter(Ptr2), AAQI,
++                      II) == AliasResult::NoAlias) {
++          return RemoveBundle();
++        }
+       } break;
+ 
+       // TODO: Drop these assumes when they are redundant
+diff --git a/llvm/test/Transforms/InstCombine/assume-separate_storage.ll b/llvm/test/Transforms/InstCombine/assume-separate_storage.ll
+index b94c303e5a70c5..797455a1f419ff 100644
+--- a/llvm/test/Transforms/InstCombine/assume-separate_storage.ll
++++ b/llvm/test/Transforms/InstCombine/assume-separate_storage.ll
+@@ -48,3 +48,31 @@ define void @handles_globals(ptr %a) {
+   call void @llvm.assume(i1 1) ["separate_storage"(ptr %a, ptr %derived)]
+   ret void
+ }
++
++define void @remove_simple_redundant_assumes(ptr %a, ptr %b) {
++; CHECK-LABEL: @remove_simple_redundant_assumes(
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "separate_storage"(ptr [[A:%.*]], ptr [[B:%.*]]) ]
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.assume(i1 true) ["separate_storage"(ptr %a, ptr %b)]
++  call void @llvm.assume(i1 true) ["separate_storage"(ptr %a, ptr %b)]
++  ret void
++}
++
++define void @remove_simple_redundant_assumes_inverse_args(ptr %a, ptr %b) {
++; CHECK-LABEL: @remove_simple_redundant_assumes_inverse_args(
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "separate_storage"(ptr [[B:%.*]], ptr [[A:%.*]]) ]
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.assume(i1 true) ["separate_storage"(ptr %a, ptr %b)]
++  call void @llvm.assume(i1 true) ["separate_storage"(ptr %b, ptr %a)]
++  ret void
++}
++
++define void @arguments_with_noalias(ptr noalias %a, ptr noalias %b) {
++; CHECK-LABEL: @arguments_with_noalias(
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.assume(i1 true) ["separate_storage"(ptr %a, ptr %b)]
++  ret void
++}
