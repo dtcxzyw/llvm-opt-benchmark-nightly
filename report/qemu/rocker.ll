@@ -205,8 +205,8 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br label %bb.v
 
 .lr.ph:                                           ; preds = %bb.o, %bb.u
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.u ], [ 0, %bb.o ] ; 5 uses
-  %i.bx = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.u ], [ 0, %bb.o ] ; 4 uses
+  %i.bx = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
   %i.by = tail call ptr @desc_ring_alloc(ptr noundef nonnull %i.a, i32 noundef %i.bx) #10 ; 5 uses
   switch i32 %i.bx, label %bb.r [
     i32 0, label %bb.p
@@ -222,10 +222,11 @@ bb.q:                                             ; preds = %.lr.ph
   br label %bb.u
 
 bb.r:                                             ; preds = %.lr.ph
-  %trunc = trunc i64 %indvars.iv to i1
+  %3 = and i32 %i.bx, 1
+  %4 = icmp eq i32 %3, 0
   %i.bz = trunc i64 %indvars.iv to i32
   %i.ca = add i32 %i.bz, 2                        ; 2 uses
-  br i1 %trunc, label %bb.t, label %bb.s
+  br i1 %4, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   tail call void @desc_ring_set_consume(ptr noundef %i.by, ptr noundef nonnull @tx_consume, i32 noundef %i.ca) #10

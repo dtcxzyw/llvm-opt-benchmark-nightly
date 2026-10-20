@@ -205,14 +205,15 @@ bb.e:                                             ; preds = %._crit_edge, %bb.d
   %i.s = getelementptr i8, ptr %0, i64 92         ; 2 uses
   %i.t = getelementptr i8, ptr %0, i64 96         ; 2 uses
   %i.u = icmp eq i32 %.0121, 0
+  %1 = zext i32 %i.d to i64
   %invariant.op = sub i32 -10, %i.b
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.aq, %bb.e
-  %.0129.a = phi i64 [ %i.q, %bb.e ], [ %.1130.lcssa, %bb.aq ] ; 2 uses
-  %.0124.a = phi i64 [ %i.r, %bb.e ], [ %.1125.lcssa, %bb.aq ] ; 3 uses
-  %.0122 = phi i32 [ 0, %bb.e ], [ %.1123.lcssa, %bb.aq ] ; 2 uses
-  %.0 = phi i32 [ %i.d, %bb.e ], [ %2, %bb.aq ]   ; 4 uses
+  %.0129.a = phi i64 [ %indvars.iv.next, %bb.aq ], [ %1, %bb.e ] ; 4 uses
+  %.0124.a = phi i64 [ %.1130.lcssa, %bb.aq ], [ %i.q, %bb.e ] ; 2 uses
+  %.0124 = phi i64 [ %.1125.lcssa, %bb.aq ], [ %i.r, %bb.e ] ; 3 uses
+  %.0 = phi i32 [ %.1123.lcssa, %bb.aq ], [ 0, %bb.e ] ; 2 uses
   tail call void @__rcu_read_lock() #18
   br label %bb.g
 
@@ -233,7 +234,7 @@ bb.g:                                             ; preds = %._crit_edge.i, %bb.
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.g
   %.lcssa.i = phi i32 [ %i.v, %bb.g ], [ %i.x, %.lr.ph.i ]
-  %i.z = load i32, ptr @nf_conntrack_htable_size, align 4 ; 2 uses
+  %i.z = load i32, ptr @nf_conntrack_htable_size, align 4
   %i.aa = load ptr, ptr @nf_conntrack_hash, align 8
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !37
   %i.ab = load volatile i32, ptr @nf_conntrack_generation, align 4
@@ -241,13 +242,13 @@ bb.g:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %.not8.i, label %nf_conntrack_get_ht.exit, label %bb.g, !llvm.loop !1
 
 nf_conntrack_get_ht.exit:                         ; preds = %._crit_edge.i
-  %.not = icmp ult i32 %.0, %i.z
+  %2 = zext i32 %i.z to i64                       ; 2 uses
+  %.not = icmp samesign ult i64 %.0129.a, %2
   br i1 %.not, label %bb.h, label %bb.ap
 
 bb.h:                                             ; preds = %nf_conntrack_get_ht.exit
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !138
-  %1 = zext i32 %.0 to i64
-  %i.ac = getelementptr [8 x i8], ptr %i.aa, i64 %1
+  %i.ac = getelementptr [8 x i8], ptr %i.aa, i64 %.0129.a
   %i.ad = load volatile ptr, ptr %i.ac, align 8   ; 2 uses
   %i.ae = ptrtoint ptr %i.ad to i64
   %i.af = and i64 %i.ae, 1
@@ -255,9 +256,9 @@ bb.h:                                             ; preds = %nf_conntrack_get_ht
   br i1 %.not142217, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.h, %gc_worker_skip_ct.exit.thread
-  %.1123221 = phi i32 [ %.3.ph, %gc_worker_skip_ct.exit.thread ], [ %.0122, %bb.h ] ; 14 uses
-  %.1125220 = phi i64 [ %.2126.ph, %gc_worker_skip_ct.exit.thread ], [ %.0124.a, %bb.h ] ; 4 uses
-  %.1130219 = phi i64 [ %.2131.ph, %gc_worker_skip_ct.exit.thread ], [ %.0129.a, %bb.h ] ; 3 uses
+  %.1123221 = phi i32 [ %.3.ph, %gc_worker_skip_ct.exit.thread ], [ %.0, %bb.h ] ; 14 uses
+  %.1125220 = phi i64 [ %.2126.ph, %gc_worker_skip_ct.exit.thread ], [ %.0124, %bb.h ] ; 4 uses
+  %.1130219 = phi i64 [ %.2131.ph, %gc_worker_skip_ct.exit.thread ], [ %.0124.a, %bb.h ] ; 3 uses
   %.0133218 = phi ptr [ %i.eg, %gc_worker_skip_ct.exit.thread ], [ %i.ad, %bb.h ] ; 3 uses
   %i.ag = getelementptr i8, ptr %.0133218, i64 55
   %i.ah = load i8, ptr %i.ag, align 1
@@ -567,8 +568,9 @@ bb.ao:                                            ; preds = %bb.al
   br label %gc_worker_skip_ct.exit.thread
 
 nf_ct_put.exit:                                   ; preds = %.lr.ph
+  %3 = trunc nuw i64 %.0129.a to i32
   tail call void @__rcu_read_unlock() #18
-  store i32 %.0, ptr %i.c, align 8
+  store i32 %3, ptr %i.c, align 8
   %i.dx = trunc i64 %.1125220 to i32
   store i32 %i.dx, ptr %i.s, align 4
   %i.dy = trunc i64 %.1130219 to i32
@@ -593,17 +595,17 @@ gc_worker_skip_ct.exit.thread:                    ; preds = %nf_ct_is_confirmed.
   br i1 %.not142, label %.lr.ph, label %.critedge, !llvm.loop !136
 
 .critedge:                                        ; preds = %gc_worker_skip_ct.exit.thread, %bb.h
-  %.1130.lcssa = phi i64 [ %.0129.a, %bb.h ], [ %.2131.ph, %gc_worker_skip_ct.exit.thread ] ; 2 uses
-  %.1125.lcssa = phi i64 [ %.0124.a, %bb.h ], [ %.2126.ph, %gc_worker_skip_ct.exit.thread ] ; 3 uses
-  %.1123.lcssa = phi i32 [ %.0122, %bb.h ], [ %.3.ph, %gc_worker_skip_ct.exit.thread ]
+  %.1130.lcssa = phi i64 [ %.0124.a, %bb.h ], [ %.2131.ph, %gc_worker_skip_ct.exit.thread ] ; 2 uses
+  %.1125.lcssa = phi i64 [ %.0124, %bb.h ], [ %.2126.ph, %gc_worker_skip_ct.exit.thread ] ; 3 uses
+  %.1123.lcssa = phi i32 [ %.0, %bb.h ], [ %.3.ph, %gc_worker_skip_ct.exit.thread ]
   tail call void @__rcu_read_unlock() #18
   %i.ej = tail call i32 @__SCT__cond_resched() #18 ; 0 uses
-  %2 = add i32 %.0, 1                             ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %.0129.a, 1  ; 3 uses
   %i.ek = load volatile i64, ptr @jiffies, align 64
   %i.el = trunc i64 %i.ek to i32
   %.reass.reass = add i32 %i.el, %invariant.op
   %i.em = icmp sgt i32 %.reass.reass, 0
-  %i.en = icmp ult i32 %2, %i.z                   ; 2 uses
+  %i.en = icmp samesign ult i64 %indvars.iv.next, %2 ; 2 uses
   %or.cond145 = select i1 %i.em, i1 %i.en, i1 false
   br i1 %or.cond145, label %.thread.thread, label %bb.aq
 
@@ -615,7 +617,7 @@ bb.aq:                                            ; preds = %.critedge
   br i1 %i.en, label %bb.f, label %.loopexit, !llvm.loop !137
 
 .loopexit:                                        ; preds = %bb.aq, %bb.ap
-  %.3127188 = phi i64 [ %.0124.a, %bb.ap ], [ %.1125.lcssa, %bb.aq ]
+  %.3127188 = phi i64 [ %.0124, %bb.ap ], [ %.1125.lcssa, %bb.aq ]
   store i32 0, ptr %i.c, align 8
   %i.eo = tail call i64 @llvm.umax.i64(i64 %.3127188, i64 1000)
   %i.ep = tail call i64 @llvm.umin.i64(i64 %i.eo, i64 60000) ; 2 uses
@@ -639,11 +641,12 @@ bb.aq:                                            ; preds = %.critedge
   br i1 %i.fb, label %bb.as, label %bb.ar
 
 .thread.thread:                                   ; preds = %.critedge
+  %4 = trunc nuw i64 %indvars.iv.next to i32
   %i.fc = trunc i64 %.1125.lcssa to i32
   store i32 %i.fc, ptr %i.s, align 4
   %i.fd = trunc i64 %.1130.lcssa to i32
   store i32 %i.fd, ptr %i.t, align 8
-  store i32 %2, ptr %i.c, align 8
+  store i32 %4, ptr %i.c, align 8
   %i.fe = getelementptr i8, ptr %0, i64 104
   %i.ff = load i8, ptr %i.fe, align 8, !range !15, !noundef !16
   %i.fg = trunc nuw i8 %i.ff to i1

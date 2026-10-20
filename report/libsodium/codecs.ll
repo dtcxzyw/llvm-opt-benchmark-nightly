@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %.183.ph = phi i64 [ %.08299242, %bb.n ], [ %.08299242, %bb.m ], [ %i.fb, %bb.t ] ; 3 uses
   %.not64 = icmp ne ptr %4, null
   %i.fe = icmp ult i64 %.183.ph, %3
-  %or.cond = and i1 %.not64, %i.fe
+  %or.cond = select i1 %.not64, i1 %i.fe, i1 false
   br i1 %or.cond, label %.lr.ph167, label %.critedge
 
 .lr.ph167:                                        ; preds = %.loopexit, %bb.u

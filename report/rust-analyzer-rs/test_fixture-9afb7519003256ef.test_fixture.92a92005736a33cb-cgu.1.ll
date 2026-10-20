@@ -1,8 +1,10 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/test_fixture-9afb7519003256ef.test_fixture.92a92005736a33cb-cgu.1?download=true
 inline.NumInlined: 324
 inline.NumDeleted: 215
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0
 @24 = private unnamed_addr constant [11 x i8] c"PosOverflow", align 1
 @25 = private unnamed_addr constant [11 x i8] c"NegOverflow", align 1
@@ -204,7 +206,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.k = add i64 %.sroa.0.1.i.i.i.i.i.i4, 1       ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i4, 1 ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.f
   br i1 %i.l, label %._crit_edge, label %.lr.ph5
 
@@ -607,7 +609,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e, !noalias !396
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.h = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.h = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.i = icmp eq i64 %i.h, %i.b
   br i1 %i.i, label %._crit_edge, label %.lr.ph5
 
@@ -710,7 +712,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VechEECscA
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECscAFBYSOo4Yh_12test_fixture.exit.i unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph18
-  %i.s = add i64 %.sroa.0.1.i17, 1                ; 2 uses
+  %i.s = add nuw nsw i64 %.sroa.0.1.i17, 1        ; 2 uses
   %i.t = icmp eq i64 %i.s, %i.h
   br i1 %i.t, label %.body, label %.lr.ph18
 
@@ -816,7 +818,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph14.i:                                       ; preds = %bb.c, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECscAFBYSOo4Yh_12test_fixture.exit10.i
   %.sroa.0.112.i = phi i64 [ %i.x, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECscAFBYSOo4Yh_12test_fixture.exit10.i ], [ %i.o, %bb.c ] ; 2 uses
   %i.w = getelementptr inbounds nuw [88 x i8], ptr %.val, i64 %.sroa.0.112.i ; 3 uses
-  %i.x = add i64 %.sroa.0.112.i, 1                ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.0.112.i, 1        ; 2 uses
   %i.y = load i64, ptr %i.w, align 8, !range !404, !alias.scope !406, !noundef !6
   %i.z = icmp eq i64 %i.y, -1
   br i1 %i.z, label %bb.d, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECscAFBYSOo4Yh_12test_fixture.exit10.i
@@ -901,7 +903,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph6
-  %i.q = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i5, 1         ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.h
   br i1 %i.r, label %.body, label %.lr.ph6
 
@@ -985,7 +987,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph6
-  %i.q = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i5, 1         ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.h
   br i1 %i.r, label %.body, label %.lr.ph6
 
@@ -1107,7 +1109,7 @@ bb.e:                                             ; preds = %.body.i.i
   unreachable
 
 bb.f:                                             ; preds = %.lr.ph26
-  %i.w = add i64 %.sroa.0.1.i25, 1                ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.0.1.i25, 1        ; 2 uses
   %i.x = icmp eq i64 %i.w, %i.h
   br i1 %i.x, label %.body, label %.lr.ph26
 
@@ -1195,7 +1197,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph6
-  %i.q = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i5, 1         ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.h
   br i1 %i.r, label %.body, label %.lr.ph6
 

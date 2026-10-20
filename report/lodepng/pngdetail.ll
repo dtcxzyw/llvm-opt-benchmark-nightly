@@ -205,7 +205,7 @@ bb.a:
   store ptr %i.f, ptr %i.i, align 8, !tbaa !94
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 40
   store i64 0, ptr %i.j, align 8, !tbaa !95
-  %i.k = trunc i64 %1 to i32                      ; 34 uses
+  %i.k = trunc i64 %1 to i32                      ; 30 uses
   br label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
 
 _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i: ; preds = %_ZNSt6vectorImSaImEED2Ev.exit, %bb.a
@@ -608,12 +608,10 @@ _Z14readExifUint32PKhmmb.exit367.thread600:       ; preds = %bb.cd
   %i.my = load i32, ptr %i.ms, align 1
   %i.mz = call i32 @llvm.bswap.i32(i32 %i.my)
   %i.na = uitofp i32 %i.mz to double              ; 2 uses
-  %i.nb = add i32 %spec.select593, 4              ; 3 uses
-  %5 = icmp ugt i32 %i.nb, %i.k
+  %i.nb = add nuw i32 %spec.select593, 4          ; 2 uses
   %i.nc = sub nuw i32 %i.k, %i.nb
   %i.nd = icmp ult i32 %i.nc, 4
-  %6 = select i1 %5, i1 true, i1 %i.nd
-  br i1 %6, label %_Z14readExifUint32PKhmmb.exit369, label %.thread602
+  br i1 %i.nd, label %_Z14readExifUint32PKhmmb.exit369, label %.thread602
 
 .thread602:                                       ; preds = %_Z14readExifUint32PKhmmb.exit367.thread600
   %i.ne = zext i32 %i.nb to i64
@@ -623,12 +621,10 @@ _Z14readExifUint32PKhmmb.exit367.thread600:       ; preds = %bb.cd
 _Z14readExifUint32PKhmmb.exit367.thread:          ; preds = %bb.cd
   %i.ng = load i32, ptr %i.ms, align 1
   %i.nh = uitofp i32 %i.ng to double              ; 2 uses
-  %i.ni = add i32 %spec.select593, 4              ; 3 uses
-  %7 = icmp ugt i32 %i.ni, %i.k
+  %i.ni = add nuw i32 %spec.select593, 4          ; 2 uses
   %i.nj = sub nuw i32 %i.k, %i.ni
   %i.nk = icmp ult i32 %i.nj, 4
-  %8 = select i1 %7, i1 true, i1 %i.nk
-  br i1 %8, label %_Z14readExifUint32PKhmmb.exit369, label %.thread599
+  br i1 %i.nk, label %_Z14readExifUint32PKhmmb.exit369, label %.thread599
 
 .thread599:                                       ; preds = %_Z14readExifUint32PKhmmb.exit367.thread
   %i.nl = zext i32 %i.ni to i64
@@ -924,12 +920,10 @@ _Z14readExifUint32PKhmmb.exit386.thread609:       ; preds = %bb.dm
   %i.sg = load i32, ptr %i.sa, align 1
   %i.sh = call i32 @llvm.bswap.i32(i32 %i.sg)
   %i.si = sitofp i32 %i.sh to double              ; 2 uses
-  %i.sj = add i32 %spec.select593, 4              ; 3 uses
-  %9 = icmp ugt i32 %i.sj, %i.k
+  %i.sj = add nuw i32 %spec.select593, 4          ; 2 uses
   %i.sk = sub nuw i32 %i.k, %i.sj
   %i.sl = icmp ult i32 %i.sk, 4
-  %10 = select i1 %9, i1 true, i1 %i.sl
-  br i1 %10, label %_Z14readExifUint32PKhmmb.exit388, label %.thread611
+  br i1 %i.sl, label %_Z14readExifUint32PKhmmb.exit388, label %.thread611
 
 .thread611:                                       ; preds = %_Z14readExifUint32PKhmmb.exit386.thread609
   %i.sm = zext i32 %i.sj to i64
@@ -939,12 +933,10 @@ _Z14readExifUint32PKhmmb.exit386.thread609:       ; preds = %bb.dm
 _Z14readExifUint32PKhmmb.exit386.thread:          ; preds = %bb.dm
   %i.so = load i32, ptr %i.sa, align 1
   %i.sp = sitofp i32 %i.so to double              ; 2 uses
-  %i.sq = add i32 %spec.select593, 4              ; 3 uses
-  %11 = icmp ugt i32 %i.sq, %i.k
+  %i.sq = add nuw i32 %spec.select593, 4          ; 2 uses
   %i.sr = sub nuw i32 %i.k, %i.sq
   %i.ss = icmp ult i32 %i.sr, 4
-  %12 = select i1 %11, i1 true, i1 %i.ss
-  br i1 %12, label %_Z14readExifUint32PKhmmb.exit388, label %.thread608
+  br i1 %i.ss, label %_Z14readExifUint32PKhmmb.exit388, label %.thread608
 
 .thread608:                                       ; preds = %_Z14readExifUint32PKhmmb.exit386.thread
   %i.st = zext i32 %i.sq to i64

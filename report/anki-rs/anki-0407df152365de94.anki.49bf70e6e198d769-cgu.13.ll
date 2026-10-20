@@ -205,7 +205,7 @@ bb.lc:                                            ; preds = %bb.la
   br i1 %i.abm, label %bb.ld, label %.thread174.i.i
 
 bb.ld:                                            ; preds = %bb.lc
-  %i.abn = add i64 %.sroa.021.0244.i.i, 1         ; 3 uses
+  %i.abn = add nuw i64 %.sroa.021.0244.i.i, 1     ; 3 uses
   %i.abo = icmp ult i64 %i.abn, %i.bt
   br i1 %i.abo, label %bb.le, label %.invoke325.i.i
 
@@ -608,7 +608,7 @@ bb.a:
   br label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4next17h4b77c0ead2b38d38E.exit.i.us"
 
 bb.b:                                             ; preds = %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4next17h4b77c0ead2b38d38E.exit.i.us"
-  %i.p = add i64 %.sroa.616.0.i.us25, 1           ; 2 uses
+  %i.p = add nuw i64 %.sroa.616.0.i.us25, 1       ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %i.p, %umax.i.us
   br i1 %exitcond.not.i.us, label %_ZN4core3str7pattern14small_slice_eq17h716c89b270afae6eE.exit.thread12, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4next17h4b77c0ead2b38d38E.exit.i.us"
 
@@ -1011,7 +1011,7 @@ bb.n:                                             ; preds = %bb.g
 
 "_ZN71_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$GT$2eq17hf984946c8803f90bE.exit.thread": ; preds = %bb.r, %bb.p, %.split, %"_ZN71_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$GT$2eq17hf984946c8803f90bE.exit", %bb.m
   %i.ba = add nuw nsw i64 %.sroa.012.0.ph, 1
-  %i.bb = add i64 %.sroa.04.0.ph.mux, 1
+  %i.bb = add nuw i64 %.sroa.04.0.ph.mux, 1
   br label %.outer130
 
 bb.o:                                             ; preds = %bb.m
@@ -1414,7 +1414,7 @@ bb.f:                                             ; preds = %bb.e
 
 "_ZN106_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$LT$http..header..name..HdrName$GT$$GT$2eq17h278b1a74ec4be54bE.exit.thread.i.i": ; preds = %"_ZN106_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$LT$http..header..name..HdrName$GT$$GT$2eq17h278b1a74ec4be54bE.exit.i.i", %bb.n, %_ZN4core4iter6traits8iterator8Iterator8try_fold17h52fee6c4043f99d8E.exit.i.i.i.i, %bb.k, %.split.i.i, %bb.j, %bb.i, %bb.f
   %i.au = add nuw nsw i64 %.sroa.05.0.i.i.ph, 1
-  %i.av = add i64 %.sroa.0.0.i.i.ph.mux, 1
+  %i.av = add nuw i64 %.sroa.0.0.i.i.ph.mux, 1
   br label %.outer
 
 bb.g:                                             ; preds = %bb.f
@@ -1465,7 +1465,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %exitcond.not.i3.not.i.i.i.i, label %.lr.ph.i.i.i.i, label %.loopexit.sink.split.i.i
 
 bb.m:                                             ; preds = %.lr.ph.i.i.i.i
-  %i.bj = add i64 %i.bk, 1                        ; 2 uses
+  %i.bj = add nuw i64 %i.bk, 1                    ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.bj, %umax.i.i.i.i.i
   br i1 %exitcond.not.i.i.i.i.i, label %.loopexit.sink.split.i.i, label %.lr.ph.i.i.i.i
 
@@ -1868,7 +1868,7 @@ bb.p:                                             ; preds = %bb.m
   br i1 %i.bq, label %bb.q, label %bb.r
 
 .preheader.i:                                     ; preds = %.lr.ph535
-  %i.br = add i16 %.sroa.055.0.i533, 1            ; 2 uses
+  %i.br = add nuw i16 %.sroa.055.0.i533, 1        ; 2 uses
   %exitcond137.not.i = icmp eq i16 %i.br, %umax136.i
   br i1 %exitcond137.not.i, label %.outer.i, label %.lr.ph535
 
@@ -1912,13 +1912,12 @@ bb.v:                                             ; preds = %bb.n
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.sroa.030.0.i = phi i16 [ %i.az, %bb.u ], [ 1, %bb.v ] ; 2 uses
-  %umax.i = call i16 @llvm.umax.i16(i16 %.sroa.030.0.i, i16 1)
   %exitcond.not.i528 = icmp ult i16 %.sroa.030.0.i, 2
   br i1 %exitcond.not.i528, label %._crit_edge, label %.lr.ph531
 
 bb.x:                                             ; preds = %.lr.ph531
-  %i.cb = add i16 %.sroa.057.0.i529, 1            ; 2 uses
-  %exitcond.not.i = icmp eq i16 %i.cb, %umax.i
+  %i.cb = add nuw i16 %.sroa.057.0.i529, 1        ; 2 uses
+  %exitcond.not.i = icmp eq i16 %.sroa.030.0.i, %i.cb
   br i1 %exitcond.not.i, label %._crit_edge, label %.lr.ph531
 
 .lr.ph531:                                        ; preds = %bb.w, %bb.x

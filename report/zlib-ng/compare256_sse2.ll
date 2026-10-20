@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %compare256_sse2_static.exit
 
 compare256_sse2_static.exit:                      ; preds = %bb.s, %bb.ai, %bb.aj, %bb.ak, %bb.al
-  %.2.i = phi i32 [ %i.er, %bb.s ], [ %i.ib, %bb.al ], [ %i.hs, %bb.aj ], [ 256, %bb.ak ], [ 256, %bb.ai ] ; 7 uses
+  %.2.i = phi i32 [ %i.er, %bb.s ], [ %i.ib, %bb.al ], [ %i.hs, %bb.aj ], [ 256, %bb.ak ], [ 256, %bb.ai ] ; 6 uses
   %i.ic = add nuw nsw i32 %.2.i, 2                ; 10 uses
   %i.id = icmp ugt i32 %i.ic, %.0188409
   br i1 %i.id, label %bb.am, label %bb.ay
@@ -222,14 +222,12 @@ bb.an:                                            ; preds = %bb.am
   br i1 %.not261, label %bb.ao, label %.thread323
 
 bb.ao:                                            ; preds = %bb.an
-  %2 = add nuw nsw i32 %.2.i, 1
   %i.ih = zext nneg i32 %i.ic to i64
   %i.ii = icmp ugt i32 %.2.i, 1                   ; 2 uses
-  %3 = add nsw i32 %.2.i, -1                      ; 2 uses
   %i.ij = icmp ugt i32 %.2.i, 5
-  %4 = add nsw i32 %.2.i, -5
-  %spec.select268 = select i1 %i.ij, i32 %4, i32 %3
-  %.1187 = select i1 %i.ii, i32 %spec.select268, i32 %2
+  %spec.select268.v = select i1 %i.ij, i32 -5, i32 -1
+  %spec.select268 = select i1 %i.ii, i32 %spec.select268.v, i32 1
+  %.1187 = add nsw i32 %.2.i, %spec.select268
   %i.ik = zext i32 %.1187 to i64                  ; 3 uses
   %i.il = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ik
   %.val = load i64, ptr %i.il, align 1, !tbaa !8  ; 3 uses
@@ -274,8 +272,8 @@ bb.at:                                            ; preds = %bb.aq, %bb.as
   %.5 = phi i16 [ %i.iz, %bb.as ], [ %.4397, %bb.aq ] ; 2 uses
   %.1 = phi i16 [ %i.iv, %bb.as ], [ %.0177398, %bb.aq ] ; 3 uses
   %i.ja = add i32 %.0399, 1                       ; 2 uses
-  %.not262 = icmp ugt i32 %i.ja, %3
-  br i1 %.not262, label %bb.au, label %bb.aq, !llvm.loop !37
+  %exitcond.not = icmp eq i32 %i.ja, %.2.i
+  br i1 %exitcond.not, label %bb.au, label %bb.aq, !llvm.loop !37
 
 bb.au:                                            ; preds = %bb.at
   %i.jb = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ih ; 3 uses

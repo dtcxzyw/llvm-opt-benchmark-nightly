@@ -205,12 +205,13 @@ _ZN3CFF12cs_command_tD2Ev.exit161.i.i.i:          ; preds = %bb.ef, %_ZN11hb_vec
   br i1 %i.afg, label %.preheader.i95.i.i.i, label %_ZN3CFF12cs_command_tD2Ev.exit.i.i.i, !llvm.loop !662
 
 .preheader.i164.i.i.i:                            ; preds = %_ZN3CFF12cs_command_tD2Ev.exit218.i.i.i, %.preheader.i164.lr.ph.i.i.i
-  %.047974.i.i.i = phi i32 [ 0, %.preheader.i164.lr.ph.i.i.i ], [ %23, %_ZN3CFF12cs_command_tD2Ev.exit218.i.i.i ] ; 4 uses
-  %20 = or disjoint i32 %.047974.i.i.i, 1         ; 2 uses
+  %indvars.iv996.i.i.i = phi i64 [ 0, %.preheader.i164.lr.ph.i.i.i ], [ %indvars.iv.next997.i.i.i, %_ZN3CFF12cs_command_tD2Ev.exit218.i.i.i ] ; 4 uses
+  %20 = or disjoint i64 %indvars.iv996.i.i.i, 1   ; 2 uses
   %i.afh = call ptr @hb_realloc(ptr noundef null, i64 noundef 64) #16 ; 5 uses
   %.not22.i169.not.i.i.i = icmp eq ptr %i.afh, null ; 2 uses
   %i.afi = load i32, ptr %i.abb, align 4, !tbaa !137
-  %.not.i182.i.i.i = icmp ult i32 %.047974.i.i.i, %i.afi
+  %21 = zext i32 %i.afi to i64
+  %.not.i182.i.i.i = icmp samesign ult i64 %indvars.iv996.i.i.i, %21
   br i1 %.not.i182.i.i.i, label %bb.eh, label %bb.eg, !prof !97
 
 bb.eg:                                            ; preds = %.preheader.i164.i.i.i
@@ -219,8 +220,7 @@ bb.eg:                                            ; preds = %.preheader.i164.i.i
 
 bb.eh:                                            ; preds = %.preheader.i164.i.i.i
   %i.afj = load ptr, ptr %i.abe, align 8, !tbaa !138
-  %21 = zext i32 %.047974.i.i.i to i64
-  %i.afk = getelementptr inbounds nuw [8 x i8], ptr %i.afj, i64 %21
+  %i.afk = getelementptr inbounds nuw [8 x i8], ptr %i.afj, i64 %indvars.iv996.i.i.i
   br label %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit184.i.i.i
 
 _ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit184.i.i.i: ; preds = %bb.eh, %bb.eg
@@ -240,7 +240,8 @@ _ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit190.i.i.i: ; pr
   %.sroa.0684.2.i.i.i = phi i32 [ 8, %.critedge.i189.i.i.i ], [ -1, %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit509.i.i.i ] ; 4 uses
   %.sroa.15.0.i.i.i = phi i32 [ 1, %.critedge.i189.i.i.i ], [ 0, %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit509.i.i.i ] ; 4 uses
   %i.afm = load i32, ptr %i.abb, align 4, !tbaa !137
-  %.not.i191.i.i.i = icmp ult i32 %20, %i.afm
+  %22 = zext i32 %i.afm to i64
+  %.not.i191.i.i.i = icmp samesign ult i64 %20, %22
   br i1 %.not.i191.i.i.i, label %bb.ej, label %bb.ei, !prof !97
 
 bb.ei:                                            ; preds = %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit190.i.i.i
@@ -249,8 +250,7 @@ bb.ei:                                            ; preds = %_ZN11hb_vector_tIN3
 
 bb.ej:                                            ; preds = %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit190.i.i.i
   %i.afn = load ptr, ptr %i.abe, align 8, !tbaa !138
-  %22 = zext i32 %20 to i64
-  %i.afo = getelementptr inbounds nuw [8 x i8], ptr %i.afn, i64 %22
+  %i.afo = getelementptr inbounds nuw [8 x i8], ptr %i.afn, i64 %20
   br label %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit193.i.i.i
 
 _ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit193.i.i.i: ; preds = %bb.ej, %bb.ei
@@ -422,10 +422,11 @@ bb.er:                                            ; preds = %_ZN11hb_vector_tIhL
   br label %_ZN3CFF12cs_command_tD2Ev.exit218.i.i.i
 
 _ZN3CFF12cs_command_tD2Ev.exit218.i.i.i:          ; preds = %bb.er, %_ZN11hb_vector_tIhLb0EED2Ev.exit.i216.i.i.i
-  %23 = add i32 %.047974.i.i.i, 2                 ; 2 uses
-  %24 = or disjoint i32 %23, 1
+  %indvars.iv.next997.i.i.i = add nuw nsw i64 %indvars.iv996.i.i.i, 2 ; 2 uses
+  %23 = or disjoint i64 %indvars.iv.next997.i.i.i, 1
   %i.ahh = load i32, ptr %i.abb, align 4, !tbaa !764
-  %i.ahi = icmp ult i32 %24, %i.ahh
+  %24 = zext i32 %i.ahh to i64
+  %i.ahi = icmp samesign ult i64 %23, %24
   br i1 %i.ahi, label %.preheader.i164.i.i.i, label %_ZN3CFF12cs_command_tD2Ev.exit.i.i.i, !llvm.loop !666
 
 .preheader.i221.i.i.i:                            ; preds = %_ZN3CFF12cs_command_tD2Ev.exit257.i.i.i, %.preheader.i221.lr.ph.i.i.i
@@ -828,7 +829,7 @@ bb.h:                                             ; preds = %.lr.ph, %.thread
   br i1 %.not.i.i, label %_ZNK12hb_hashmap_tIjjLb1EE3getERKj.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.av = trunc nuw i64 %indvars.iv to i32
+  %i.av = trunc nuw nsw i64 %indvars.iv to i32
   %i.aw = mul i32 %i.av, 506952113
   %i.ax = and i32 %i.aw, 1073741823
   %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 32

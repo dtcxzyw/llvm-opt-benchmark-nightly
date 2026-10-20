@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br label %.lr.ph.i
 
 bb.g:                                             ; preds = %.lr.ph.i
-  %i.dw = add i64 %.0811.i, 1                     ; 2 uses
+  %i.dw = add nuw i64 %.0811.i, 1                 ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.dw, %i.dq
   br i1 %exitcond.not.i, label %_ZN11flatbuffers12_GLOBAL__N_115IsNonZeroRegionEmmPKh.exit, label %.lr.ph.i, !llvm.loop !7
 
@@ -608,7 +608,7 @@ bb.a:
   br i1 %i.c, label %.lr.ph.i, label %.loopexit
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %i.d = add i64 %.0811.i, 1                      ; 2 uses
+  %i.d = add nuw i64 %.0811.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.d, %i.b
   br i1 %exitcond.not.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !7
 

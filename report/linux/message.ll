@@ -205,13 +205,17 @@ bb.e:                                             ; preds = %.thread27
   %.not20 = icmp eq i8 %i.p, 0
   %i.q = icmp samesign ugt i32 %.029, 3
   %or.cond = select i1 %.not20, i1 %i.q, i1 false
-  br i1 %or.cond, label %.lr.ph.i, label %usb_try_string_workarounds.exit
+  br i1 %or.cond, label %.lr.ph.preheader.i, label %usb_try_string_workarounds.exit
 
-.lr.ph.i:                                         ; preds = %bb.e, %bb.g
-  %4 = phi i32 [ %8, %bb.g ], [ 3, %bb.e ]
-  %.014.i = phi i32 [ %7, %bb.g ], [ 2, %bb.e ]   ; 4 uses
-  %5 = sext i32 %.014.i to i64
-  %i.r = getelementptr i8, ptr %3, i64 %5
+.lr.ph.preheader.i:                               ; preds = %bb.e
+  %4 = zext nneg i32 %.029 to i64                 ; 2 uses
+  %5 = and i64 %4, 2147483646
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.g, %.lr.ph.preheader.i
+  %indvars.iv19.i = phi i64 [ 2, %.lr.ph.preheader.i ], [ %indvars.iv.next20.i, %bb.g ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.g ] ; 2 uses
+  %i.r = getelementptr i8, ptr %3, i64 %indvars.iv19.i
   %i.s = load i8, ptr %i.r, align 1
   %i.t = zext i8 %i.s to i64
   %i.u = getelementptr i8, ptr @_ctype, i64 %i.t
@@ -221,31 +225,32 @@ bb.e:                                             ; preds = %.thread27
   br i1 %.not.i, label %._crit_edge.i, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.i
-  %6 = sext i32 %4 to i64
-  %i.x = getelementptr i8, ptr %3, i64 %6
+  %i.x = getelementptr i8, ptr %3, i64 %indvars.iv.i
   %i.y = load i8, ptr %i.x, align 1
   %.not13.i = icmp eq i8 %i.y, 0
   br i1 %.not13.i, label %bb.g, label %._crit_edge.i
 
 bb.g:                                             ; preds = %bb.f
-  %7 = add i32 %.014.i, 2                         ; 3 uses
-  %8 = or disjoint i32 %7, 1                      ; 2 uses
-  %9 = icmp slt i32 %8, %.029
-  br i1 %9, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !31
+  %indvars.iv.next20.i = add nuw nsw i64 %indvars.iv19.i, 2 ; 2 uses
+  %6 = or disjoint i64 %indvars.iv.next20.i, 1
+  %7 = icmp samesign ult i64 %6, %4
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2
+  br i1 %7, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !31
 
 ._crit_edge.i:                                    ; preds = %bb.g, %bb.f, %.lr.ph.i
-  %.0.lcssa.i = phi i32 [ %.014.i, %.lr.ph.i ], [ %7, %bb.g ], [ %.014.i, %bb.f ] ; 3 uses
-  %i.z = icmp sgt i32 %.0.lcssa.i, 2
+  %.0.lcssa.ph.in.i = phi i64 [ %5, %bb.g ], [ %indvars.iv19.i, %bb.f ], [ %indvars.iv19.i, %.lr.ph.i ] ; 2 uses
+  %.0.lcssa.ph.i = trunc i64 %.0.lcssa.ph.in.i to i32 ; 2 uses
+  %i.z = icmp sgt i32 %.0.lcssa.ph.i, 2
   br i1 %i.z, label %bb.h, label %usb_try_string_workarounds.exit
 
 bb.h:                                             ; preds = %._crit_edge.i
-  %i.aa = trunc i32 %.0.lcssa.i to i8             ; 2 uses
+  %i.aa = trunc i64 %.0.lcssa.ph.in.i to i8       ; 2 uses
   store i8 %i.aa, ptr %3, align 1
   br label %usb_try_string_workarounds.exit
 
 usb_try_string_workarounds.exit:                  ; preds = %bb.h, %._crit_edge.i, %bb.e, %.thread27
   %i.ab = phi i8 [ %i.n, %.thread27 ], [ 0, %bb.e ], [ %i.aa, %bb.h ], [ 0, %._crit_edge.i ]
-  %.1 = phi i32 [ %.029, %.thread27 ], [ %.029, %bb.e ], [ %.0.lcssa.i, %bb.h ], [ %.029, %._crit_edge.i ]
+  %.1 = phi i32 [ %.029, %.thread27 ], [ %.029, %bb.e ], [ %.0.lcssa.ph.i, %bb.h ], [ %.029, %._crit_edge.i ]
   %i.ac = zext i8 %i.ab to i32
   %spec.select = tail call i32 @llvm.smin.i32(i32 %.1, i32 %i.ac) ; 2 uses
   %i.ad = and i32 %spec.select, -2                ; 2 uses

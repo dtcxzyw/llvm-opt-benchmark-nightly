@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 4
   store i32 %i.b, ptr %i.g, align 4, !tbaa !34
-  %.sroa.speculated133 = tail call i32 @llvm.umin.i32(i32 %5, i32 8)
   %.not172 = icmp eq i32 %i.b, 0
   br i1 %.not172, label %.thread, label %.lr.ph171
 
 .lr.ph171:                                        ; preds = %bb.d
+  %.sroa.speculated133 = tail call i32 @llvm.umin.i32(i32 %5, i32 8)
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -225,7 +225,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph171, %.loopexit
-  %indvars.iv = phi i64 [ 0, %.lr.ph171 ], [ %indvars.iv.next, %.loopexit ] ; 11 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph171 ], [ %indvars.iv.next, %.loopexit ] ; 13 uses
   %i.s = icmp eq i64 %indvars.iv, 0
   %i.t = load ptr, ptr %i.h, align 8, !tbaa !30   ; 3 uses
   br i1 %i.s, label %.thread140, label %bb.f
@@ -237,23 +237,23 @@ bb.e:                                             ; preds = %.lr.ph171, %.loopex
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %10 = getelementptr [4 x i8], ptr %i.t, i64 %indvars.iv
-  %11 = getelementptr i8, ptr %10, i64 -4
-  %i.v = load i32, ptr %11, align 4, !tbaa !31
+  %10 = trunc i64 %indvars.iv to i32
+  %11 = add i32 %10, -1                           ; 4 uses
+  %12 = zext i32 %11 to i64
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %12
+  %i.v = load i32, ptr %13, align 4, !tbaa !31
   %i.w = add i32 %i.v, 1                          ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %indvars.iv
   store i32 %i.w, ptr %i.x, align 4, !tbaa !31
-  %12 = trunc nuw i64 %indvars.iv to i32          ; 2 uses
-  %13 = add nsw i32 %12, -1                       ; 3 uses
   %i.y = load ptr, ptr %i.i, align 8, !tbaa !33
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv
-  store i32 %13, ptr %i.z, align 4, !tbaa !31
-  %i.aa = lshr i32 %13, 6
+  store i32 %11, ptr %i.z, align 4, !tbaa !31
+  %i.aa = lshr i32 %11, 6
   %i.ab = and i32 %i.aa, 7
   %i.ac = zext nneg i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.ac
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !37
-  %i.af = and i32 %13, 63
+  %i.af = and i32 %11, 63
   %i.ag = zext nneg i32 %i.af to i64
   %i.ah = shl nuw i64 1, %i.ag
   %i.ai = and i64 %i.ae, %i.ah
@@ -261,24 +261,30 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %.thread140, %bb.f
-  %.pre-phi = phi i32 [ 0, %.thread140 ], [ %12, %bb.f ] ; 3 uses
-  %14 = phi i32 [ 1, %.thread140 ], [ %i.w, %bb.f ]
-  %i.aj = sub nsw i32 %.pre-phi, %.sroa.speculated133
+  %.pre-phi = phi i32 [ 1, %.thread140 ], [ %i.w, %bb.f ]
+  %14 = trunc i64 %indvars.iv to i32
+  %i.aj = sub i32 %14, %.sroa.speculated133
   %i.ak = tail call i32 @llvm.smax.i32(i32 %i.aj, i32 -2) ; 3 uses
-  %15 = add nsw i32 %.pre-phi, -2                 ; 2 uses
-  %.not81.not165 = icmp sgt i32 %15, %i.ak
-  br i1 %.not81.not165, label %.lr.ph, label %.loopexit
+  %15 = add nsw i64 %indvars.iv, -2               ; 2 uses
+  %16 = sext i32 %i.ak to i64
+  %.not81.not165 = icmp sgt i64 %15, %16
+  br i1 %.not81.not165, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.g, %.lr.ph.backedge
-  %.077167 = phi i32 [ %.1, %.lr.ph.backedge ], [ %14, %bb.g ] ; 10 uses
-  %.078166 = phi i32 [ %.078166.be, %.lr.ph.backedge ], [ %15, %bb.g ] ; 11 uses
+.lr.ph.preheader:                                 ; preds = %bb.g
+  %17 = trunc nsw i64 %15 to i32
+  %18 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.backedge, %.lr.ph.preheader
+  %.077167 = phi i32 [ %.pre-phi, %.lr.ph.preheader ], [ %.1, %.lr.ph.backedge ] ; 10 uses
+  %.078166 = phi i32 [ %17, %.lr.ph.preheader ], [ %.078166.be, %.lr.ph.backedge ] ; 11 uses
   %i.al = icmp eq i32 %.078166, -1                ; 2 uses
   br i1 %i.al, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph
   %i.am = load ptr, ptr %i.h, align 8, !tbaa !30
-  %16 = zext nneg i32 %.078166 to i64
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %16
+  %19 = sext i32 %.078166 to i64
+  %i.an = getelementptr inbounds [4 x i8], ptr %i.am, i64 %19
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !31
   %i.ap = add i32 %i.ao, 1
   br label %bb.i
@@ -291,13 +297,13 @@ bb.i:                                             ; preds = %.lr.ph, %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.as = select i1 %i.al, i32 %i.k, i32 %.078166
   %i.at = xor i32 %.078166, -1
-  %i.au = add i32 %.pre-phi, %i.at
+  %i.au = add i32 %18, %i.at
   %i.av = load ptr, ptr %i.l, align 8, !tbaa !28  ; 3 uses
   %i.aw = load i32, ptr %i.a, align 4, !tbaa !15
   %i.ax = add nsw i32 %.078166, 1                 ; 2 uses
   %storemerge.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.aw, i32 %i.ax)
   %.sroa.speculated.i.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 %i.au)
-  %i.ay = zext nneg i32 %i.ax to i64              ; 3 uses
+  %i.ay = zext i32 %i.ax to i64                   ; 3 uses
   %i.az = getelementptr inbounds nuw [12 x i8], ptr %i.av, i64 %i.ay ; 2 uses
   %.sroa.speculated.i.i.fr = freeze i32 %.sroa.speculated.i.i ; 12 uses
   %.sroa.3.8.insert.ext.i.i = zext i32 %.sroa.speculated.i.i.fr to i64 ; 10 uses
@@ -700,7 +706,7 @@ bb.ap:                                            ; preds = %.critedge
   br i1 %.not81.not.old, label %.lr.ph.backedge, label %.loopexit
 
 .lr.ph.backedge:                                  ; preds = %.critedge83, %bb.ap
-  %.078166.be = phi i32 [ %i.ge, %bb.ap ], [ -1, %.critedge83 ]
+  %.078166.be = phi i32 [ -1, %.critedge83 ], [ %i.ge, %bb.ap ]
   br label %.lr.ph, !llvm.loop !141
 
 .loopexit:                                        ; preds = %bb.ap, %.critedge83, %bb.g, %bb.f

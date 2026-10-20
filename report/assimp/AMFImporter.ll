@@ -204,22 +204,21 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIP
   %i.fw = add i8 %i.fv, %i.fl
   %i.fx = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i8 %i.fw, ptr %i.fx, align 1
-  %4 = zext i8 %.043.lcssa to i32
-  %5 = add nsw i32 %4, -1
   %.not93 = icmp eq i8 %.043.lcssa, 1
   br i1 %.not93, label %.loopexit, label %.lr.ph92.preheader
 
 .lr.ph92.preheader:                               ; preds = %.preheader
+  %4 = zext i8 %.043.lcssa to i64
   %.pre104 = load ptr, ptr %i.o, align 8
   %.pre106.a = load ptr, ptr %i.u, align 8
+  %5 = add nsw i64 %4, -2
   br label %.lr.ph92
 
 .lr.ph92:                                         ; preds = %.lr.ph92.preheader, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67
-  %i.fy = phi ptr [ %i.gx, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ %.pre106.a, %.lr.ph92.preheader ] ; 2 uses
-  %i.fz = phi ptr [ %i.gy, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ %.pre104, %.lr.ph92.preheader ] ; 2 uses
-  %.091 = phi i8 [ %7, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ 0, %.lr.ph92.preheader ] ; 2 uses
-  %6 = zext i8 %.091 to i64
-  %i.ga = getelementptr inbounds nuw i8, ptr %i.c, i64 %6 ; 2 uses
+  %i.fy = phi ptr [ %.pre106.a, %.lr.ph92.preheader ], [ %i.gx, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ] ; 2 uses
+  %i.fz = phi ptr [ %.pre104, %.lr.ph92.preheader ], [ %i.gy, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph92.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ] ; 3 uses
+  %i.ga = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv ; 2 uses
   %.not.i58 = icmp eq ptr %i.fz, %i.fy
   br i1 %.not.i58, label %bb.y, label %bb.x
 
@@ -292,10 +291,9 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIP
 _ZNSt6vectorIhSaIhEE9push_backERKh.exit67:        ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64, %bb.x
   %i.gx = phi ptr [ %i.gw, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64 ], [ %.pre105, %bb.x ]
   %i.gy = phi ptr [ %i.gs, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64 ], [ %i.gd, %bb.x ]
-  %7 = add nuw i8 %.091, 1                        ; 2 uses
-  %8 = zext i8 %7 to i32
-  %9 = icmp samesign ugt i32 %5, %8
-  br i1 %9, label %.lr.ph92, label %.loopexit, !llvm.loop !65
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %exitcond.not = icmp eq i64 %indvars.iv, %5
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph92, !llvm.loop !65
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit: ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.2, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.1, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit94 = landingpad { ptr, i32 }

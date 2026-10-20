@@ -19,9 +19,10 @@ bb.a:
   br i1 %i.d, label %bb.b, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %2 = add i16 %i.c, -2
+  %2 = zext i16 %i.c to i64
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !22
+  %3 = add nsw i64 %2, -3
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -31,9 +32,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.k
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
-  %.07087 = phi i16 [ 0, %.lr.ph ], [ %4, %bb.f ] ; 5 uses
-  %3 = zext i16 %.07087 to i64
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %3 ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 5 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv ; 5 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !24
   %i.k = zext i8 %i.j to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 1
@@ -52,23 +52,24 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
   br i1 %.not, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %.not80 = icmp eq i16 %.07087, 0
+  %.not80 = icmp eq i64 %indvars.iv, 0
   br i1 %.not80, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  %4 = trunc nuw i64 %indvars.iv to i16           ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %i.a, ptr %i.v, align 8, !tbaa !26
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 18
-  store i16 %.07087, ptr %i.w, align 2, !tbaa !27
+  store i16 %4, ptr %i.w, align 2, !tbaa !27
   store ptr %i.i, ptr %1, align 8, !tbaa !13
-  %i.x = sub nuw i16 %i.c, %.07087
+  %i.x = sub nuw i16 %i.c, %4
   store i16 %i.x, ptr %i.b, align 8, !tbaa !14
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.c
-  %4 = add nuw i16 %.07087, 1                     ; 2 uses
-  %5 = icmp ugt i16 %2, %4
-  br i1 %5, label %bb.c, label %.loopexit, !llvm.loop !32
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %exitcond.not = icmp eq i64 %indvars.iv, %3
+  br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !32
 
 .loopexit:                                        ; preds = %bb.f, %bb.d, %bb.e
   %.069 = phi ptr [ %i.i, %bb.e ], [ %i.a, %bb.d ], [ %i.a, %bb.f ] ; 4 uses

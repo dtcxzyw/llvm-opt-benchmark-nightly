@@ -205,7 +205,7 @@ _ZN14llama_kv_cache9slot_info6resizeEm.exit:      ; preds = %_ZNKSt6vectorIS_IjS
   %i.ov = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.ow = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.ox = shl i32 %.0129.fr, 1
-  %i.oy = select i1 %3, i32 %.0129.fr, i32 1      ; 5 uses
+  %i.oy = select i1 %3, i32 %.0129.fr, i32 1      ; 4 uses
   %.not424 = icmp eq i32 %i.oy, 0
   %i.oz = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.pa = getelementptr inbounds nuw i8, ptr %1, i64 116
@@ -362,7 +362,7 @@ bb.bu:                                            ; preds = %_ZNSt6vectorIjSaIjE
   %i.sc = lshr exact i64 %i.sb, 2
   %i.sd = trunc i64 %i.sc to i32                  ; 2 uses
   %i.se = icmp ugt i32 %i.ry, %i.sd
-  br i1 %i.se, label %.split.us.peel.next, label %.preheader.us.preheader
+  br i1 %i.se, label %.split.us.peel.next, label %.preheader.us.outer
 
 .split.us.peel.next:                              ; preds = %.split.us.outer
   %i.sf = sub i32 %.0121.us.ph, %.1125.us.ph
@@ -377,28 +377,22 @@ bb.bu:                                            ; preds = %_ZNSt6vectorIjSaIjE
 
 .split.us:                                        ; preds = %.split.us.peel.next, %bb.ch
   %.0121.us = phi i32 [ %i.vj, %bb.ch ], [ %i.sg, %.split.us.peel.next ] ; 2 uses
-  br i1 %i.sm, label %bb.ch, label %.preheader.us.preheader
+  br i1 %i.sm, label %bb.ch, label %.preheader.us.outer
 
-.preheader.us.preheader:                          ; preds = %.split.us, %.split.us.outer
-  %.1125.us.lcssa = phi i32 [ %.1125.us.ph, %.split.us.outer ], [ 0, %.split.us ]
-  %.0121.us.lcssa = phi i32 [ %.0121.us.ph, %.split.us.outer ], [ %.0121.us, %.split.us ]
-  br label %.preheader.us.outer
-
-.preheader.us.outer:                              ; preds = %.preheader.us.preheader, %.critedge.us..preheader.us.backedge_crit_edge
-  %.pre474475.ph = phi ptr [ %.ph, %.preheader.us.preheader ], [ %.pre474.pre, %.critedge.us..preheader.us.backedge_crit_edge ]
-  %.0120405.us.ph = phi i32 [ 0, %.preheader.us.preheader ], [ %.old, %.critedge.us..preheader.us.backedge_crit_edge ]
-  %.1122404.us.ph = phi i32 [ %.0121.us.lcssa, %.preheader.us.preheader ], [ %i.so, %.critedge.us..preheader.us.backedge_crit_edge ]
-  %.2126403.us.ph = phi i32 [ %.1125.us.lcssa, %.preheader.us.preheader ], [ %i.sn, %.critedge.us..preheader.us.backedge_crit_edge ]
+.preheader.us.outer:                              ; preds = %.split.us, %.split.us.outer
+  %.1122404.us.ph = phi i32 [ %.1125.us.ph, %.split.us.outer ], [ 0, %.split.us ]
+  %.2126403.us.ph = phi i32 [ %.0121.us.ph, %.split.us.outer ], [ %.0121.us, %.split.us ]
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %.preheader.us.outer, %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us
-  %.0120405.us = phi i32 [ %10, %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us ], [ %.0120405.us.ph, %.preheader.us.outer ] ; 2 uses
-  %.1122404.us = phi i32 [ %i.so, %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us ], [ %.1122404.us.ph, %.preheader.us.outer ]
-  %.2126403.us = phi i32 [ %i.sn, %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us ], [ %.2126403.us.ph, %.preheader.us.outer ] ; 4 uses
-  %i.sn = add i32 %.2126403.us, 1                 ; 3 uses
-  %i.so = add i32 %.1122404.us, 1                 ; 4 uses
+.preheader.us:                                    ; preds = %.preheader.us.outer, %.critedge.us..preheader.us.backedge_crit_edge
+  %.pre474475 = phi ptr [ %.pre474.pre, %.critedge.us..preheader.us.backedge_crit_edge ], [ %.ph, %.preheader.us.outer ]
+  %.0120405.us = phi i32 [ %.old, %.critedge.us..preheader.us.backedge_crit_edge ], [ 0, %.preheader.us.outer ]
+  %.1122404.us = phi i32 [ %i.so, %.critedge.us..preheader.us.backedge_crit_edge ], [ %.2126403.us.ph, %.preheader.us.outer ]
+  %.2126403.us = phi i32 [ %i.sn, %.critedge.us..preheader.us.backedge_crit_edge ], [ %.1122404.us.ph, %.preheader.us.outer ] ; 4 uses
+  %i.sn = add i32 %.2126403.us, 1                 ; 2 uses
+  %i.so = add i32 %.1122404.us, 1                 ; 3 uses
   %i.sp = zext i32 %.2126403.us to i64            ; 2 uses
-  %i.sq = getelementptr inbounds nuw [4 x i8], ptr %.pre474475.ph, i64 %i.sp
+  %i.sq = getelementptr inbounds nuw [4 x i8], ptr %.pre474475, i64 %i.sp
   %i.sr = load i32, ptr %i.sq, align 4, !tbaa !110 ; 4 uses
   %i.ss = icmp eq i32 %i.sr, -1
   br i1 %i.ss, label %bb.cb, label %bb.bv
@@ -410,7 +404,7 @@ bb.bv:                                            ; preds = %.preheader.us
   %i.sw = call range(i64 0, 65) <4 x i64> @llvm.ctpop.v4i64(<4 x i64> %i.sv)
   %i.sx = call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %i.sw)
   %i.sy = icmp eq i64 %i.sx, 1
-  br i1 %i.sy, label %_ZNKSt6bitsetILm256EE4testEm.exit.i264.us, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us
+  br i1 %i.sy, label %_ZNKSt6bitsetILm256EE4testEm.exit.i264.us, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us
 
 _ZNKSt6bitsetILm256EE4testEm.exit.i264.us:        ; preds = %bb.bv, %bb.bw
   %indvars.iv.i265.us = phi i64 [ %indvars.iv.next.i268.us.1, %bb.bw ], [ 0, %bb.bv ] ; 5 uses
@@ -456,7 +450,7 @@ bb.bx:                                            ; preds = %_ZNK14llama_kv_cell
 
 _ZNK14llama_kv_cells11seq_pos_maxEi.exit272.us:   ; preds = %bb.bx, %_ZNK14llama_kv_cells7seq_getEj.exit270.us
   %.0.i271.us = phi i32 [ %i.tt, %bb.bx ], [ 0, %_ZNK14llama_kv_cells7seq_getEj.exit270.us ] ; 4 uses
-  switch i32 %i.tk, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us [
+  switch i32 %i.tk, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us [
     i32 3, label %bb.ca
     i32 1, label %bb.bz
     i32 2, label %bb.by
@@ -466,12 +460,12 @@ bb.by:                                            ; preds = %_ZNK14llama_kv_cell
   %i.tu = urem i32 %.0.i271.us, %i.tj
   %i.tv = sub nuw i32 %.0.i271.us, %i.tu
   %.not21.i.us = icmp slt i32 %i.sr, %i.tv
-  br i1 %.not21.i.us, label %bb.cb, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us
+  br i1 %.not21.i.us, label %bb.cb, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us
 
 bb.bz:                                            ; preds = %_ZNK14llama_kv_cells11seq_pos_maxEi.exit272.us
   %i.tw = sub nsw i32 %.0.i271.us, %i.sr
   %.not.i273.us = icmp slt i32 %i.tw, %i.tj
-  br i1 %.not.i273.us, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us, label %bb.cb
+  br i1 %.not.i273.us, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us, label %bb.cb
 
 bb.ca:                                            ; preds = %_ZNK14llama_kv_cells11seq_pos_maxEi.exit272.us
   %i.tx = sdiv i32 %i.tj, 2                       ; 2 uses
@@ -480,13 +474,7 @@ bb.ca:                                            ; preds = %_ZNK14llama_kv_cell
   %i.ua = icmp slt i32 %i.ty, %i.tz
   %i.ub = icmp sgt i32 %i.ty, %i.tx
   %or.cond.i.us = or i1 %i.ua, %i.ub
-  br i1 %or.cond.i.us, label %bb.cb, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us
-
-_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us: ; preds = %bb.ca, %bb.bz, %bb.by, %_ZNK14llama_kv_cells11seq_pos_maxEi.exit272.us, %bb.bv
-  %10 = add i32 %.0120405.us, 1                   ; 2 uses
-  %11 = icmp uge i32 %10, %i.oy
-  %or.cond.not426 = select i1 %3, i1 true, i1 %11
-  br i1 %or.cond.not426, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us, label %.preheader.us, !llvm.loop !554
+  br i1 %or.cond.i.us, label %bb.cb, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us
 
 bb.cb:                                            ; preds = %bb.ca, %bb.bz, %bb.by, %.preheader.us
   %i.uc = load ptr, ptr %i.rv, align 8, !tbaa !152 ; 4 uses
@@ -548,15 +536,15 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %.critedge.us
 
 .critedge.us:                                     ; preds = %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.us, %bb.cc
-  %.old = add i32 %.0120405.us, 1                 ; 2 uses
+  %.old = add nuw i32 %.0120405.us, 1             ; 2 uses
   %.old419 = icmp ult i32 %.old, %i.oy
   br i1 %.old419, label %.critedge.us..preheader.us.backedge_crit_edge, label %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us
 
 .critedge.us..preheader.us.backedge_crit_edge:    ; preds = %.critedge.us
   %.pre474.pre = load ptr, ptr %i.ra, align 8, !tbaa !126
-  br label %.preheader.us.outer, !llvm.loop !554
+  br label %.preheader.us, !llvm.loop !554
 
-_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us: ; preds = %.critedge.us, %_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit.us
+_ZN13llama_hparams13is_masked_swaEj14llama_swa_typeii.exit._crit_edge.us: ; preds = %bb.bv, %_ZNK14llama_kv_cells11seq_pos_maxEi.exit272.us, %bb.by, %bb.bz, %bb.ca, %.critedge.us
   %i.uv = load ptr, ptr %i.rx, align 8, !tbaa !152 ; 2 uses
   %i.uw = load ptr, ptr %i.qe, align 8, !tbaa !120 ; 3 uses
   %i.ux = ptrtoint ptr %i.uv to i64
