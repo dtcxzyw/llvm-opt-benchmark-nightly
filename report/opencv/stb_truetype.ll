@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %._crit_edge55.i.i, 
   %.sroa.11.058.i.i = phi i32 [ 0, %.lr.ph63.i.i ], [ %.sroa.11.1.lcssa.i.i, %._crit_edge55.i.i ] ; 2 uses
   %.sroa.7.057.i.i = phi ptr [ null, %.lr.ph63.i.i ], [ %.sroa.7.3.lcssa.i.i, %._crit_edge55.i.i ] ; 2 uses
   %.sroa.0.056.i.i = phi ptr [ null, %.lr.ph63.i.i ], [ %.sroa.0.1.lcssa.i.i, %._crit_edge55.i.i ] ; 2 uses
-  %i.jn = sitofp i32 %.07560.i.i to float         ; 39 uses
+  %i.jn = sitofp i32 %.07560.i.i to float         ; 40 uses
   %i.jo = fadd float %i.jn, 1.000000e+00          ; 53 uses
   %i.jp = sext i32 %i.jm to i64
   %i.jq = shl nsw i64 %i.jp, 2
@@ -371,17 +371,15 @@ bb.al:                                            ; preds = %._crit_edge.i.i
   %i.lv = fcmp oeq float %i.jo, %i.jn             ; 3 uses
   %i.lw = fsub float %i.jo, %i.jn                 ; 4 uses
   %wide.trip.count.i.i91.i = zext nneg i32 %i.jm to i64
-  %12 = insertelement <2 x float> poison, float %i.jn, i64 0
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.am
 
 bb.am:                                            ; preds = %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit351.i.i.i, %bb.al
-  %.0293468.i.i.i = phi ptr [ %.0..0..0..0..0..0..0..0.82.i.i, %bb.al ], [ %i.aoo, %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit351.i.i.i ] ; 18 uses
+  %.0293468.i.i.i = phi ptr [ %.0..0..0..0..0..0..0..0.82.i.i, %bb.al ], [ %i.aoo, %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit351.i.i.i ] ; 19 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i, i64 12
   %i.ly = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i, i64 8
-  %i.lz = load float, ptr %i.lx, align 4, !tbaa !191 ; 3 uses
+  %i.lz = load float, ptr %i.lx, align 4, !tbaa !191 ; 5 uses
   %i.ma = fcmp oeq float %i.lz, 0.000000e+00
-  %i.mb = load float, ptr %i.ly, align 8, !tbaa !193 ; 47 uses
+  %i.mb = load float, ptr %i.ly, align 8, !tbaa !193 ; 49 uses
   br i1 %i.ma, label %bb.an, label %bb.bt
 
 bb.an:                                            ; preds = %bb.am
@@ -635,23 +633,19 @@ bb.bt:                                            ; preds = %bb.am
   %i.qx = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i, i64 16
   %i.qy = load float, ptr %i.qx, align 8, !tbaa !192 ; 2 uses
   %i.qz = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i, i64 24
-  %14 = load <2 x float>, ptr %i.qz, align 8, !tbaa !64 ; 3 uses
-  %15 = extractelement <2 x float> %14, i64 1     ; 42 uses
-  %16 = extractelement <2 x float> %14, i64 0     ; 27 uses
-  %i.ra = fcmp ogt float %16, %i.jn               ; 9 uses
-  %17 = fsub <2 x float> %14, %13                 ; 8 uses
-  %18 = insertelement <2 x float> poison, float %i.lz, i64 0
-  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %20 = insertelement <2 x float> poison, float %i.mb, i64 0
-  %21 = shufflevector <2 x float> %20, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %22 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> %17, <2 x float> %21) ; 2 uses
-  %23 = extractelement <2 x float> %22, i64 0
-  %.0305.i.i.i = select i1 %i.ra, float %23, float %i.mb ; 7 uses
-  %.0301.i.i.i = select i1 %i.ra, float %16, float %i.jn ; 23 uses
-  %24 = fcmp olt float %15, %i.jo                 ; 9 uses
-  %25 = extractelement <2 x float> %22, i64 1
-  %.0303.i.i.i = select i1 %24, float %25, float %i.qw ; 7 uses
-  %.0299.i.i.i = select i1 %24, float %15, float %i.jo ; 4 uses
+  %12 = load float, ptr %i.qz, align 8, !tbaa !194 ; 28 uses
+  %i.ra = fcmp ogt float %12, %i.jn               ; 9 uses
+  %13 = fsub float %12, %i.jn                     ; 8 uses
+  %14 = tail call float @llvm.fmuladd.f32(float %i.lz, float %13, float %i.mb)
+  %.0305.i.i.i = select i1 %i.ra, float %14, float %i.mb ; 7 uses
+  %.0301.i.i.i = select i1 %i.ra, float %12, float %i.jn ; 23 uses
+  %15 = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i, i64 28
+  %16 = load float, ptr %15, align 4, !tbaa !182  ; 43 uses
+  %17 = fcmp olt float %16, %i.jo                 ; 9 uses
+  %18 = fsub float %16, %i.jn
+  %19 = tail call float @llvm.fmuladd.f32(float %i.lz, float %18, float %i.mb)
+  %.0303.i.i.i = select i1 %17, float %19, float %i.qw ; 7 uses
+  %.0299.i.i.i = select i1 %17, float %16, float %i.jo ; 4 uses
   %i.rb = fcmp oge float %.0305.i.i.i, 0.000000e+00
   %i.rc = fcmp oge float %.0303.i.i.i, 0.000000e+00
   %or.cond.i.i.i = select i1 %i.rb, i1 %i.rc, i1 false
@@ -820,23 +814,26 @@ bb.ca:                                            ; preds = %bb.bu, %bb.bt
 .lr.ph.i.i93.i:                                   ; preds = %bb.ca
   %i.uu = fsub float %i.qw, %i.mb
   %i.uv = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i, i64 20 ; 30 uses
-  %i.uw = fcmp olt float %15, %i.jn               ; 7 uses
+  %i.uw = fcmp olt float %16, %i.jn               ; 7 uses
   %or.cond35.i.i = select i1 %i.lv, i1 true, i1 %i.uw
-  %i.ux = fcmp olt float %i.jo, %16               ; 7 uses
+  %i.ux = fcmp olt float %i.jo, %12               ; 7 uses
   %or.cond36.i.i = or i1 %i.ux, %or.cond35.i.i
-  %26 = extractelement <2 x float> %17, i64 0
-  %i.uy = fmul float %i.uu, %26
+  %i.uy = fmul float %i.uu, %13
   %i.uz = fdiv float %i.uy, %i.lw
   %i.va = fadd float %i.mb, %i.uz
   %.055.i457.i.i.i = select i1 %i.ra, float %i.va, float %i.mb ; 4 uses
   %i.vb = fsub float %i.qw, %.055.i457.i.i.i
-  %i.vc = fsub float %15, %i.jo                   ; 7 uses
+  %i.vc = fsub float %16, %i.jo                   ; 7 uses
   %i.vd = fmul float %i.vc, %i.vb
   %i.ve = fsub float %i.jo, %.0301.i.i.i
   %i.vf = fdiv float %i.vd, %i.ve
   %i.vg = fadd float %i.qw, %i.vf
-  %.053.i459.i.i.i = select i1 %24, float %i.vg, float %i.qw ; 3 uses
+  %.053.i459.i.i.i = select i1 %17, float %i.vg, float %i.qw ; 3 uses
   %i.vh = fsub float %.0299.i.i.i, %.0301.i.i.i   ; 2 uses
+  %20 = insertelement <2 x float> poison, float %i.mb, i64 0
+  %21 = shufflevector <2 x float> %20, <2 x float> poison, <2 x i32> zeroinitializer
+  %22 = insertelement <2 x float> poison, float %i.lz, i64 0
+  %23 = shufflevector <2 x float> %22, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.cb
 
 bb.cb:                                            ; preds = %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit379.i.i.i, %.lr.ph.i.i93.i
@@ -849,7 +846,7 @@ bb.cb:                                            ; preds = %_ZN2cvL26stbtt__han
   %i.vm = insertelement <2 x float> poison, float %i.vj, i64 0
   %i.vn = insertelement <2 x float> %i.vm, float %i.vl, i64 1
   %i.vo = fsub <2 x float> %i.vn, %21             ; 7 uses
-  %i.vp = fdiv <2 x float> %i.vo, %19             ; 2 uses
+  %i.vp = fdiv <2 x float> %i.vo, %23             ; 2 uses
   %i.vq = extractelement <2 x float> %i.vp, i64 0
   %i.vr = fadd float %i.vq, %i.jn                 ; 48 uses
   %i.vs = extractelement <2 x float> %i.vp, i64 1
@@ -862,23 +859,23 @@ bb.cb:                                            ; preds = %_ZN2cvL26stbtt__han
 bb.cc:                                            ; preds = %bb.cb
   %i.vw = fcmp oeq float %i.vr, %i.jn
   %or.cond7.i.i = select i1 %i.vw, i1 true, i1 %i.uw
-  %i.vx = fcmp olt float %i.vr, %16               ; 2 uses
+  %i.vx = fcmp olt float %i.vr, %12               ; 2 uses
   %or.cond8.i.i = or i1 %i.vx, %or.cond7.i.i
   br i1 %or.cond8.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit365.i.i.i, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  %foldExtExtBinop = fmul <2 x float> %17, %i.vo
-  %27 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %24 = extractelement <2 x float> %i.vo, i64 0
+  %25 = fmul float %13, %24
   %i.vy = fsub float %i.vr, %i.jn
-  %i.vz = fdiv float %27, %i.vy
+  %i.vz = fdiv float %25, %i.vy
   %i.wa = fadd float %i.mb, %i.vz
   %.055.i359.i.i.i = select i1 %i.ra, float %i.wa, float %i.mb ; 4 uses
-  %i.wb = fcmp ogt float %i.vr, %15
+  %i.wb = fcmp ogt float %i.vr, %16
   br i1 %i.wb, label %bb.ce, label %bb.cf
 
 bb.ce:                                            ; preds = %bb.cd
   %i.wc = fsub float %i.vj, %.055.i359.i.i.i
-  %i.wd = fsub float %15, %i.vr
+  %i.wd = fsub float %16, %i.vr
   %i.we = fmul float %i.wd, %i.wc
   %i.wf = fsub float %i.vr, %.0301.i.i.i
   %i.wg = fdiv float %i.we, %i.wf
@@ -887,7 +884,7 @@ bb.ce:                                            ; preds = %bb.cd
 
 bb.cf:                                            ; preds = %bb.ce, %bb.cd
   %.053.i361.i.i.i = phi float [ %i.wh, %bb.ce ], [ %i.vj, %bb.cd ] ; 3 uses
-  %.0.i362.i.i.i = phi float [ %15, %bb.ce ], [ %i.vr, %bb.cd ] ; 2 uses
+  %.0.i362.i.i.i = phi float [ %16, %bb.ce ], [ %i.vr, %bb.cd ] ; 2 uses
   %i.wi = fcmp ugt float %.055.i359.i.i.i, %i.vj
   %i.wj = fcmp ugt float %.053.i361.i.i.i, %i.vj
   %or.cond.i363.i.i.i = select i1 %i.wi, i1 true, i1 %i.wj
@@ -925,9 +922,9 @@ bb.ci:                                            ; preds = %bb.ch
 
 _ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit365.i.i.i: ; preds = %bb.ci, %bb.ch, %bb.cg, %bb.cc
   %i.xc = fcmp oeq float %i.vr, %i.vt
-  %i.xd = fcmp ogt float %i.vr, %15
+  %i.xd = fcmp ogt float %i.vr, %16
   %or.cond9.i.i = select i1 %i.xc, i1 true, i1 %i.xd
-  %i.xe = fcmp olt float %i.vt, %16               ; 2 uses
+  %i.xe = fcmp olt float %i.vt, %12               ; 2 uses
   %or.cond10.i.i = or i1 %i.xe, %or.cond9.i.i
   br i1 %or.cond10.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit372.i.i.i, label %bb.cj
 
@@ -936,7 +933,7 @@ bb.cj:                                            ; preds = %_ZN2cvL26stbtt__han
 
 bb.ck:                                            ; preds = %bb.cj
   %i.xf = fsub nnan float %i.vl, %i.vj
-  %i.xg = fsub float %16, %i.vr
+  %i.xg = fsub float %12, %i.vr
   %i.xh = fmul float %i.xf, %i.xg
   %i.xi = fsub float %i.vt, %i.vr
   %i.xj = fdiv float %i.xh, %i.xi
@@ -945,13 +942,13 @@ bb.ck:                                            ; preds = %bb.cj
 
 bb.cl:                                            ; preds = %bb.ck, %bb.cj
   %.055.i366.i.i.i = phi float [ %i.xk, %bb.ck ], [ %i.vj, %bb.cj ] ; 4 uses
-  %.054.i367.i.i.i = phi float [ %16, %bb.ck ], [ %i.vr, %bb.cj ] ; 3 uses
-  %i.xl = fcmp ogt float %i.vt, %15
+  %.054.i367.i.i.i = phi float [ %12, %bb.ck ], [ %i.vr, %bb.cj ] ; 3 uses
+  %i.xl = fcmp ogt float %i.vt, %16
   br i1 %i.xl, label %bb.cm, label %bb.cn
 
 bb.cm:                                            ; preds = %bb.cl
   %i.xm = fsub float %i.vl, %.055.i366.i.i.i
-  %i.xn = fsub float %15, %i.vt
+  %i.xn = fsub float %16, %i.vt
   %i.xo = fmul float %i.xn, %i.xm
   %i.xp = fsub float %i.vt, %.054.i367.i.i.i
   %i.xq = fdiv float %i.xo, %i.xp
@@ -960,7 +957,7 @@ bb.cm:                                            ; preds = %bb.cl
 
 bb.cn:                                            ; preds = %bb.cm, %bb.cl
   %.053.i368.i.i.i = phi float [ %i.xr, %bb.cm ], [ %i.vl, %bb.cl ] ; 3 uses
-  %.0.i369.i.i.i = phi float [ %15, %bb.cm ], [ %i.vt, %bb.cl ] ; 2 uses
+  %.0.i369.i.i.i = phi float [ %16, %bb.cm ], [ %i.vt, %bb.cl ] ; 2 uses
   %i.xs = fcmp ugt float %.055.i366.i.i.i, %i.vj
   %i.xt = fcmp ugt float %.053.i368.i.i.i, %i.vj
   %or.cond.i370.i.i.i = select i1 %i.xs, i1 true, i1 %i.xt
@@ -998,7 +995,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 _ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit372.i.i.i: ; preds = %bb.cq, %bb.cp, %bb.co, %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit365.i.i.i
   %i.ym = fcmp oeq float %i.vt, %i.jo
-  %i.yn = fcmp ogt float %i.vt, %15
+  %i.yn = fcmp ogt float %i.vt, %16
   %or.cond11.i.i = select i1 %i.ym, i1 true, i1 %i.yn
   %or.cond12.i.i = or i1 %i.ux, %or.cond11.i.i
   br i1 %or.cond12.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit379.i.i.i, label %bb.cr
@@ -1008,7 +1005,7 @@ bb.cr:                                            ; preds = %_ZN2cvL26stbtt__han
 
 bb.cs:                                            ; preds = %bb.cr
   %i.yo = fsub float %i.qw, %i.vl
-  %i.yp = fsub float %16, %i.vt
+  %i.yp = fsub float %12, %i.vt
   %i.yq = fmul float %i.yo, %i.yp
   %i.yr = fsub float %i.jo, %i.vt
   %i.ys = fdiv float %i.yq, %i.yr
@@ -1017,8 +1014,8 @@ bb.cs:                                            ; preds = %bb.cr
 
 bb.ct:                                            ; preds = %bb.cs, %bb.cr
   %.055.i373.i.i.i = phi float [ %i.yt, %bb.cs ], [ %i.vl, %bb.cr ] ; 4 uses
-  %.054.i374.i.i.i = phi float [ %16, %bb.cs ], [ %i.vt, %bb.cr ] ; 3 uses
-  br i1 %24, label %bb.cu, label %bb.cv
+  %.054.i374.i.i.i = phi float [ %12, %bb.cs ], [ %i.vt, %bb.cr ] ; 3 uses
+  br i1 %17, label %bb.cu, label %bb.cv
 
 bb.cu:                                            ; preds = %bb.ct
   %i.yu = fsub float %i.qw, %.055.i373.i.i.i
@@ -1030,7 +1027,7 @@ bb.cu:                                            ; preds = %bb.ct
 
 bb.cv:                                            ; preds = %bb.cu, %bb.ct
   %.053.i375.i.i.i = phi float [ %i.yy, %bb.cu ], [ %i.qw, %bb.ct ] ; 3 uses
-  %.0.i376.i.i.i = phi float [ %15, %bb.cu ], [ %i.jo, %bb.ct ] ; 2 uses
+  %.0.i376.i.i.i = phi float [ %16, %bb.cu ], [ %i.jo, %bb.ct ] ; 2 uses
   %i.yz = fcmp ugt float %.055.i373.i.i.i, %i.vj
   %i.za = fcmp ugt float %.053.i375.i.i.i, %i.vj
   %or.cond.i377.i.i.i = select i1 %i.yz, i1 true, i1 %i.za
@@ -1075,24 +1072,23 @@ bb.cz:                                            ; preds = %bb.cb
 bb.da:                                            ; preds = %bb.cz
   %i.zv = fcmp oeq float %i.vt, %i.jn
   %or.cond13.i.i = select i1 %i.zv, i1 true, i1 %i.uw
-  %i.zw = fcmp olt float %i.vt, %16               ; 2 uses
+  %i.zw = fcmp olt float %i.vt, %12               ; 2 uses
   %or.cond14.i.i = or i1 %i.zw, %or.cond13.i.i
   br i1 %or.cond14.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit386.i.i.i, label %bb.db
 
 bb.db:                                            ; preds = %bb.da
-  %shift = shufflevector <2 x float> %i.vo, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop160 = fmul <2 x float> %17, %shift
-  %28 = extractelement <2 x float> %foldExtExtBinop160, i64 0
+  %26 = extractelement <2 x float> %i.vo, i64 1
+  %27 = fmul float %13, %26
   %i.zx = fsub float %i.vt, %i.jn
-  %i.zy = fdiv float %28, %i.zx
+  %i.zy = fdiv float %27, %i.zx
   %i.zz = fadd float %i.mb, %i.zy
   %.055.i380.i.i.i = select i1 %i.ra, float %i.zz, float %i.mb ; 4 uses
-  %i.aaa = fcmp ogt float %i.vt, %15
+  %i.aaa = fcmp ogt float %i.vt, %16
   br i1 %i.aaa, label %bb.dc, label %bb.dd
 
 bb.dc:                                            ; preds = %bb.db
   %i.aab = fsub float %i.vl, %.055.i380.i.i.i
-  %i.aac = fsub float %15, %i.vt
+  %i.aac = fsub float %16, %i.vt
   %i.aad = fmul float %i.aac, %i.aab
   %i.aae = fsub float %i.vt, %.0301.i.i.i
   %i.aaf = fdiv float %i.aad, %i.aae
@@ -1101,7 +1097,7 @@ bb.dc:                                            ; preds = %bb.db
 
 bb.dd:                                            ; preds = %bb.dc, %bb.db
   %.053.i382.i.i.i = phi float [ %i.aag, %bb.dc ], [ %i.vl, %bb.db ] ; 3 uses
-  %.0.i383.i.i.i = phi float [ %15, %bb.dc ], [ %i.vt, %bb.db ] ; 2 uses
+  %.0.i383.i.i.i = phi float [ %16, %bb.dc ], [ %i.vt, %bb.db ] ; 2 uses
   %i.aah = fcmp ugt float %.055.i380.i.i.i, %i.vj
   %i.aai = fcmp ugt float %.053.i382.i.i.i, %i.vj
   %or.cond.i384.i.i.i = select i1 %i.aah, i1 true, i1 %i.aai
@@ -1139,9 +1135,9 @@ bb.dg:                                            ; preds = %bb.df
 
 _ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit386.i.i.i: ; preds = %bb.dg, %bb.df, %bb.de, %bb.da
   %i.abb = fcmp oeq float %i.vt, %i.vr
-  %i.abc = fcmp ogt float %i.vt, %15
+  %i.abc = fcmp ogt float %i.vt, %16
   %or.cond15.i.i = select i1 %i.abb, i1 true, i1 %i.abc
-  %i.abd = fcmp olt float %i.vr, %16              ; 2 uses
+  %i.abd = fcmp olt float %i.vr, %12              ; 2 uses
   %or.cond16.i.i = or i1 %i.abd, %or.cond15.i.i
   br i1 %or.cond16.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit393.i.i.i, label %bb.dh
 
@@ -1150,7 +1146,7 @@ bb.dh:                                            ; preds = %_ZN2cvL26stbtt__han
 
 bb.di:                                            ; preds = %bb.dh
   %i.abe = fsub nnan float %i.vj, %i.vl
-  %i.abf = fsub float %16, %i.vt
+  %i.abf = fsub float %12, %i.vt
   %i.abg = fmul float %i.abe, %i.abf
   %i.abh = fsub float %i.vr, %i.vt
   %i.abi = fdiv float %i.abg, %i.abh
@@ -1159,13 +1155,13 @@ bb.di:                                            ; preds = %bb.dh
 
 bb.dj:                                            ; preds = %bb.di, %bb.dh
   %.055.i387.i.i.i = phi float [ %i.abj, %bb.di ], [ %i.vl, %bb.dh ] ; 4 uses
-  %.054.i388.i.i.i = phi float [ %16, %bb.di ], [ %i.vt, %bb.dh ] ; 3 uses
-  %i.abk = fcmp ogt float %i.vr, %15
+  %.054.i388.i.i.i = phi float [ %12, %bb.di ], [ %i.vt, %bb.dh ] ; 3 uses
+  %i.abk = fcmp ogt float %i.vr, %16
   br i1 %i.abk, label %bb.dk, label %bb.dl
 
 bb.dk:                                            ; preds = %bb.dj
   %i.abl = fsub float %i.vj, %.055.i387.i.i.i
-  %i.abm = fsub float %15, %i.vr
+  %i.abm = fsub float %16, %i.vr
   %i.abn = fmul float %i.abm, %i.abl
   %i.abo = fsub float %i.vr, %.054.i388.i.i.i
   %i.abp = fdiv float %i.abn, %i.abo
@@ -1174,7 +1170,7 @@ bb.dk:                                            ; preds = %bb.dj
 
 bb.dl:                                            ; preds = %bb.dk, %bb.dj
   %.053.i389.i.i.i = phi float [ %i.abq, %bb.dk ], [ %i.vj, %bb.dj ] ; 3 uses
-  %.0.i390.i.i.i = phi float [ %15, %bb.dk ], [ %i.vr, %bb.dj ] ; 2 uses
+  %.0.i390.i.i.i = phi float [ %16, %bb.dk ], [ %i.vr, %bb.dj ] ; 2 uses
   %i.abr = fcmp ugt float %.055.i387.i.i.i, %i.vj
   %i.abs = fcmp ugt float %.053.i389.i.i.i, %i.vj
   %or.cond.i391.i.i.i = select i1 %i.abr, i1 true, i1 %i.abs
@@ -1212,7 +1208,7 @@ bb.do:                                            ; preds = %bb.dn
 
 _ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit393.i.i.i: ; preds = %bb.do, %bb.dn, %bb.dm, %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit386.i.i.i
   %i.acl = fcmp oeq float %i.vr, %i.jo
-  %i.acm = fcmp ogt float %i.vr, %15
+  %i.acm = fcmp ogt float %i.vr, %16
   %or.cond17.i.i = select i1 %i.acl, i1 true, i1 %i.acm
   %or.cond18.i.i = or i1 %i.ux, %or.cond17.i.i
   br i1 %or.cond18.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit379.i.i.i, label %bb.dp
@@ -1222,7 +1218,7 @@ bb.dp:                                            ; preds = %_ZN2cvL26stbtt__han
 
 bb.dq:                                            ; preds = %bb.dp
   %i.acn = fsub float %i.qw, %i.vj
-  %i.aco = fsub float %16, %i.vr
+  %i.aco = fsub float %12, %i.vr
   %i.acp = fmul float %i.acn, %i.aco
   %i.acq = fsub float %i.jo, %i.vr
   %i.acr = fdiv float %i.acp, %i.acq
@@ -1231,8 +1227,8 @@ bb.dq:                                            ; preds = %bb.dp
 
 bb.dr:                                            ; preds = %bb.dq, %bb.dp
   %.055.i394.i.i.i = phi float [ %i.acs, %bb.dq ], [ %i.vj, %bb.dp ] ; 4 uses
-  %.054.i395.i.i.i = phi float [ %16, %bb.dq ], [ %i.vr, %bb.dp ] ; 3 uses
-  br i1 %24, label %bb.ds, label %bb.dt
+  %.054.i395.i.i.i = phi float [ %12, %bb.dq ], [ %i.vr, %bb.dp ] ; 3 uses
+  br i1 %17, label %bb.ds, label %bb.dt
 
 bb.ds:                                            ; preds = %bb.dr
   %i.act = fsub float %i.qw, %.055.i394.i.i.i
@@ -1244,7 +1240,7 @@ bb.ds:                                            ; preds = %bb.dr
 
 bb.dt:                                            ; preds = %bb.ds, %bb.dr
   %.053.i396.i.i.i = phi float [ %i.acx, %bb.ds ], [ %i.qw, %bb.dr ] ; 3 uses
-  %.0.i397.i.i.i = phi float [ %15, %bb.ds ], [ %i.jo, %bb.dr ] ; 2 uses
+  %.0.i397.i.i.i = phi float [ %16, %bb.ds ], [ %i.jo, %bb.dr ] ; 2 uses
   %i.acy = fcmp ugt float %.055.i394.i.i.i, %i.vj
   %i.acz = fcmp ugt float %.053.i396.i.i.i, %i.vj
   %or.cond.i398.i.i.i = select i1 %i.acy, i1 true, i1 %i.acz
@@ -1288,23 +1284,23 @@ bb.dx:                                            ; preds = %bb.cz
 bb.dy:                                            ; preds = %bb.dx
   %i.adt = fcmp oeq float %i.vr, %i.jn
   %or.cond19.i.i = select i1 %i.adt, i1 true, i1 %i.uw
-  %i.adu = fcmp olt float %i.vr, %16              ; 2 uses
+  %i.adu = fcmp olt float %i.vr, %12              ; 2 uses
   %or.cond20.i.i = or i1 %i.adu, %or.cond19.i.i
   br i1 %or.cond20.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit407.i.i.i, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
-  %foldExtExtBinop162 = fmul <2 x float> %17, %i.vo
-  %29 = extractelement <2 x float> %foldExtExtBinop162, i64 0
+  %28 = extractelement <2 x float> %i.vo, i64 0
+  %29 = fmul float %13, %28
   %i.adv = fsub float %i.vr, %i.jn
   %i.adw = fdiv float %29, %i.adv
   %i.adx = fadd float %i.mb, %i.adw
   %.055.i401.i.i.i = select i1 %i.ra, float %i.adx, float %i.mb ; 4 uses
-  %i.ady = fcmp ogt float %i.vr, %15
+  %i.ady = fcmp ogt float %i.vr, %16
   br i1 %i.ady, label %bb.ea, label %bb.eb
 
 bb.ea:                                            ; preds = %bb.dz
   %i.adz = fsub float %i.vj, %.055.i401.i.i.i
-  %i.aea = fsub float %15, %i.vr
+  %i.aea = fsub float %16, %i.vr
   %i.aeb = fmul float %i.aea, %i.adz
   %i.aec = fsub float %i.vr, %.0301.i.i.i
   %i.aed = fdiv float %i.aeb, %i.aec
@@ -1313,7 +1309,7 @@ bb.ea:                                            ; preds = %bb.dz
 
 bb.eb:                                            ; preds = %bb.ea, %bb.dz
   %.053.i403.i.i.i = phi float [ %i.aee, %bb.ea ], [ %i.vj, %bb.dz ] ; 3 uses
-  %.0.i404.i.i.i = phi float [ %15, %bb.ea ], [ %i.vr, %bb.dz ] ; 2 uses
+  %.0.i404.i.i.i = phi float [ %16, %bb.ea ], [ %i.vr, %bb.dz ] ; 2 uses
   %i.aef = fcmp ugt float %.055.i401.i.i.i, %i.vj
   %i.aeg = fcmp ugt float %.053.i403.i.i.i, %i.vj
   %or.cond.i405.i.i.i = select i1 %i.aef, i1 true, i1 %i.aeg
@@ -1351,7 +1347,7 @@ bb.ee:                                            ; preds = %bb.ed
 
 _ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit407.i.i.i: ; preds = %bb.ee, %bb.ed, %bb.ec, %bb.dy
   %i.aez = fcmp oeq float %i.vr, %i.jo
-  %i.afa = fcmp ogt float %i.vr, %15
+  %i.afa = fcmp ogt float %i.vr, %16
   %or.cond21.i.i = select i1 %i.aez, i1 true, i1 %i.afa
   %or.cond22.i.i = or i1 %i.ux, %or.cond21.i.i
   br i1 %or.cond22.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit379.i.i.i, label %bb.ef
@@ -1361,7 +1357,7 @@ bb.ef:                                            ; preds = %_ZN2cvL26stbtt__han
 
 bb.eg:                                            ; preds = %bb.ef
   %i.afb = fsub float %i.qw, %i.vj
-  %i.afc = fsub float %16, %i.vr
+  %i.afc = fsub float %12, %i.vr
   %i.afd = fmul float %i.afb, %i.afc
   %i.afe = fsub float %i.jo, %i.vr
   %i.aff = fdiv float %i.afd, %i.afe
@@ -1370,8 +1366,8 @@ bb.eg:                                            ; preds = %bb.ef
 
 bb.eh:                                            ; preds = %bb.eg, %bb.ef
   %.055.i408.i.i.i = phi float [ %i.afg, %bb.eg ], [ %i.vj, %bb.ef ] ; 4 uses
-  %.054.i409.i.i.i = phi float [ %16, %bb.eg ], [ %i.vr, %bb.ef ] ; 3 uses
-  br i1 %24, label %bb.ei, label %bb.ej
+  %.054.i409.i.i.i = phi float [ %12, %bb.eg ], [ %i.vr, %bb.ef ] ; 3 uses
+  br i1 %17, label %bb.ei, label %bb.ej
 
 bb.ei:                                            ; preds = %bb.eh
   %i.afh = fsub float %i.qw, %.055.i408.i.i.i
@@ -1383,7 +1379,7 @@ bb.ei:                                            ; preds = %bb.eh
 
 bb.ej:                                            ; preds = %bb.ei, %bb.eh
   %.053.i410.i.i.i = phi float [ %i.afl, %bb.ei ], [ %i.qw, %bb.eh ] ; 3 uses
-  %.0.i411.i.i.i = phi float [ %15, %bb.ei ], [ %i.jo, %bb.eh ] ; 2 uses
+  %.0.i411.i.i.i = phi float [ %16, %bb.ei ], [ %i.jo, %bb.eh ] ; 2 uses
   %i.afm = fcmp ugt float %.055.i408.i.i.i, %i.vj
   %i.afn = fcmp ugt float %.053.i410.i.i.i, %i.vj
   %or.cond.i412.i.i.i = select i1 %i.afm, i1 true, i1 %i.afn
@@ -1427,23 +1423,23 @@ bb.en:                                            ; preds = %bb.dx
 bb.eo:                                            ; preds = %bb.en
   %i.agh = fcmp oeq float %i.vr, %i.jn
   %or.cond23.i.i = select i1 %i.agh, i1 true, i1 %i.uw
-  %i.agi = fcmp olt float %i.vr, %16              ; 2 uses
+  %i.agi = fcmp olt float %i.vr, %12              ; 2 uses
   %or.cond24.i.i = or i1 %i.agi, %or.cond23.i.i
   br i1 %or.cond24.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit421.i.i.i, label %bb.ep
 
 bb.ep:                                            ; preds = %bb.eo
-  %foldExtExtBinop164 = fmul <2 x float> %17, %i.vo
-  %30 = extractelement <2 x float> %foldExtExtBinop164, i64 0
+  %30 = extractelement <2 x float> %i.vo, i64 0
+  %31 = fmul float %13, %30
   %i.agj = fsub float %i.vr, %i.jn
-  %i.agk = fdiv float %30, %i.agj
+  %i.agk = fdiv float %31, %i.agj
   %i.agl = fadd float %i.mb, %i.agk
   %.055.i415.i.i.i = select i1 %i.ra, float %i.agl, float %i.mb ; 4 uses
-  %i.agm = fcmp ogt float %i.vr, %15
+  %i.agm = fcmp ogt float %i.vr, %16
   br i1 %i.agm, label %bb.eq, label %bb.er
 
 bb.eq:                                            ; preds = %bb.ep
   %i.agn = fsub float %i.vj, %.055.i415.i.i.i
-  %i.ago = fsub float %15, %i.vr
+  %i.ago = fsub float %16, %i.vr
   %i.agp = fmul float %i.ago, %i.agn
   %i.agq = fsub float %i.vr, %.0301.i.i.i
   %i.agr = fdiv float %i.agp, %i.agq
@@ -1452,7 +1448,7 @@ bb.eq:                                            ; preds = %bb.ep
 
 bb.er:                                            ; preds = %bb.eq, %bb.ep
   %.053.i417.i.i.i = phi float [ %i.ags, %bb.eq ], [ %i.vj, %bb.ep ] ; 3 uses
-  %.0.i418.i.i.i = phi float [ %15, %bb.eq ], [ %i.vr, %bb.ep ] ; 2 uses
+  %.0.i418.i.i.i = phi float [ %16, %bb.eq ], [ %i.vr, %bb.ep ] ; 2 uses
   %i.agt = fcmp ugt float %.055.i415.i.i.i, %i.vj
   %i.agu = fcmp ugt float %.053.i417.i.i.i, %i.vj
   %or.cond.i419.i.i.i = select i1 %i.agt, i1 true, i1 %i.agu
@@ -1490,7 +1486,7 @@ bb.eu:                                            ; preds = %bb.et
 
 _ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit421.i.i.i: ; preds = %bb.eu, %bb.et, %bb.es, %bb.eo
   %i.ahn = fcmp oeq float %i.vr, %i.jo
-  %i.aho = fcmp ogt float %i.vr, %15
+  %i.aho = fcmp ogt float %i.vr, %16
   %or.cond25.i.i = select i1 %i.ahn, i1 true, i1 %i.aho
   %or.cond26.i.i = or i1 %i.ux, %or.cond25.i.i
   br i1 %or.cond26.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit379.i.i.i, label %bb.ev
@@ -1500,7 +1496,7 @@ bb.ev:                                            ; preds = %_ZN2cvL26stbtt__han
 
 bb.ew:                                            ; preds = %bb.ev
   %i.ahp = fsub float %i.qw, %i.vj
-  %i.ahq = fsub float %16, %i.vr
+  %i.ahq = fsub float %12, %i.vr
   %i.ahr = fmul float %i.ahp, %i.ahq
   %i.ahs = fsub float %i.jo, %i.vr
   %i.aht = fdiv float %i.ahr, %i.ahs
@@ -1509,8 +1505,8 @@ bb.ew:                                            ; preds = %bb.ev
 
 bb.ex:                                            ; preds = %bb.ew, %bb.ev
   %.055.i422.i.i.i = phi float [ %i.ahu, %bb.ew ], [ %i.vj, %bb.ev ] ; 4 uses
-  %.054.i423.i.i.i = phi float [ %16, %bb.ew ], [ %i.vr, %bb.ev ] ; 3 uses
-  br i1 %24, label %bb.ey, label %bb.ez
+  %.054.i423.i.i.i = phi float [ %12, %bb.ew ], [ %i.vr, %bb.ev ] ; 3 uses
+  br i1 %17, label %bb.ey, label %bb.ez
 
 bb.ey:                                            ; preds = %bb.ex
   %i.ahv = fsub float %i.qw, %.055.i422.i.i.i
@@ -1522,7 +1518,7 @@ bb.ey:                                            ; preds = %bb.ex
 
 bb.ez:                                            ; preds = %bb.ey, %bb.ex
   %.053.i424.i.i.i = phi float [ %i.ahz, %bb.ey ], [ %i.qw, %bb.ex ] ; 3 uses
-  %.0.i425.i.i.i = phi float [ %15, %bb.ey ], [ %i.jo, %bb.ex ] ; 2 uses
+  %.0.i425.i.i.i = phi float [ %16, %bb.ey ], [ %i.jo, %bb.ex ] ; 2 uses
   %i.aia = fcmp ugt float %.055.i422.i.i.i, %i.vj
   %i.aib = fcmp ugt float %.053.i424.i.i.i, %i.vj
   %or.cond.i426.i.i.i = select i1 %i.aia, i1 true, i1 %i.aib
@@ -1566,24 +1562,23 @@ bb.fd:                                            ; preds = %bb.en
 bb.fe:                                            ; preds = %bb.fd
   %i.aiv = fcmp oeq float %i.vt, %i.jn
   %or.cond27.i.i = select i1 %i.aiv, i1 true, i1 %i.uw
-  %i.aiw = fcmp olt float %i.vt, %16              ; 2 uses
+  %i.aiw = fcmp olt float %i.vt, %12              ; 2 uses
   %or.cond28.i.i = or i1 %i.aiw, %or.cond27.i.i
   br i1 %or.cond28.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit435.i.i.i, label %bb.ff
 
 bb.ff:                                            ; preds = %bb.fe
-  %shift166 = shufflevector <2 x float> %i.vo, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop167 = fmul <2 x float> %17, %shift166
-  %31 = extractelement <2 x float> %foldExtExtBinop167, i64 0
+  %32 = extractelement <2 x float> %i.vo, i64 1
+  %33 = fmul float %13, %32
   %i.aix = fsub float %i.vt, %i.jn
-  %i.aiy = fdiv float %31, %i.aix
+  %i.aiy = fdiv float %33, %i.aix
   %i.aiz = fadd float %i.mb, %i.aiy
   %.055.i429.i.i.i = select i1 %i.ra, float %i.aiz, float %i.mb ; 4 uses
-  %i.aja = fcmp ogt float %i.vt, %15
+  %i.aja = fcmp ogt float %i.vt, %16
   br i1 %i.aja, label %bb.fg, label %bb.fh
 
 bb.fg:                                            ; preds = %bb.ff
   %i.ajb = fsub float %i.vl, %.055.i429.i.i.i
-  %i.ajc = fsub float %15, %i.vt
+  %i.ajc = fsub float %16, %i.vt
   %i.ajd = fmul float %i.ajc, %i.ajb
   %i.aje = fsub float %i.vt, %.0301.i.i.i
   %i.ajf = fdiv float %i.ajd, %i.aje
@@ -1592,7 +1587,7 @@ bb.fg:                                            ; preds = %bb.ff
 
 bb.fh:                                            ; preds = %bb.fg, %bb.ff
   %.053.i431.i.i.i = phi float [ %i.ajg, %bb.fg ], [ %i.vl, %bb.ff ] ; 3 uses
-  %.0.i432.i.i.i = phi float [ %15, %bb.fg ], [ %i.vt, %bb.ff ] ; 2 uses
+  %.0.i432.i.i.i = phi float [ %16, %bb.fg ], [ %i.vt, %bb.ff ] ; 2 uses
   %i.ajh = fcmp ugt float %.055.i429.i.i.i, %i.vj
   %i.aji = fcmp ugt float %.053.i431.i.i.i, %i.vj
   %or.cond.i433.i.i.i = select i1 %i.ajh, i1 true, i1 %i.aji
@@ -1630,7 +1625,7 @@ bb.fk:                                            ; preds = %bb.fj
 
 _ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit435.i.i.i: ; preds = %bb.fk, %bb.fj, %bb.fi, %bb.fe
   %i.akb = fcmp oeq float %i.vt, %i.jo
-  %i.akc = fcmp ogt float %i.vt, %15
+  %i.akc = fcmp ogt float %i.vt, %16
   %or.cond29.i.i = select i1 %i.akb, i1 true, i1 %i.akc
   %or.cond30.i.i = or i1 %i.ux, %or.cond29.i.i
   br i1 %or.cond30.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit379.i.i.i, label %bb.fl
@@ -1640,7 +1635,7 @@ bb.fl:                                            ; preds = %_ZN2cvL26stbtt__han
 
 bb.fm:                                            ; preds = %bb.fl
   %i.akd = fsub float %i.qw, %i.vl
-  %i.ake = fsub float %16, %i.vt
+  %i.ake = fsub float %12, %i.vt
   %i.akf = fmul float %i.akd, %i.ake
   %i.akg = fsub float %i.jo, %i.vt
   %i.akh = fdiv float %i.akf, %i.akg
@@ -1649,8 +1644,8 @@ bb.fm:                                            ; preds = %bb.fl
 
 bb.fn:                                            ; preds = %bb.fm, %bb.fl
   %.055.i436.i.i.i = phi float [ %i.aki, %bb.fm ], [ %i.vl, %bb.fl ] ; 4 uses
-  %.054.i437.i.i.i = phi float [ %16, %bb.fm ], [ %i.vt, %bb.fl ] ; 3 uses
-  br i1 %24, label %bb.fo, label %bb.fp
+  %.054.i437.i.i.i = phi float [ %12, %bb.fm ], [ %i.vt, %bb.fl ] ; 3 uses
+  br i1 %17, label %bb.fo, label %bb.fp
 
 bb.fo:                                            ; preds = %bb.fn
   %i.akj = fsub float %i.qw, %.055.i436.i.i.i
@@ -1662,7 +1657,7 @@ bb.fo:                                            ; preds = %bb.fn
 
 bb.fp:                                            ; preds = %bb.fo, %bb.fn
   %.053.i438.i.i.i = phi float [ %i.akn, %bb.fo ], [ %i.qw, %bb.fn ] ; 3 uses
-  %.0.i439.i.i.i = phi float [ %15, %bb.fo ], [ %i.jo, %bb.fn ] ; 2 uses
+  %.0.i439.i.i.i = phi float [ %16, %bb.fo ], [ %i.jo, %bb.fn ] ; 2 uses
   %i.ako = fcmp ugt float %.055.i436.i.i.i, %i.vj
   %i.akp = fcmp ugt float %.053.i438.i.i.i, %i.vj
   %or.cond.i440.i.i.i = select i1 %i.ako, i1 true, i1 %i.akp
@@ -1706,24 +1701,23 @@ bb.ft:                                            ; preds = %bb.fd
 bb.fu:                                            ; preds = %bb.ft
   %i.alj = fcmp oeq float %i.vt, %i.jn
   %or.cond31.i.i = select i1 %i.alj, i1 true, i1 %i.uw
-  %i.alk = fcmp olt float %i.vt, %16              ; 2 uses
+  %i.alk = fcmp olt float %i.vt, %12              ; 2 uses
   %or.cond32.i.i = or i1 %i.alk, %or.cond31.i.i
   br i1 %or.cond32.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit449.i.i.i, label %bb.fv
 
 bb.fv:                                            ; preds = %bb.fu
-  %shift169 = shufflevector <2 x float> %i.vo, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop170 = fmul <2 x float> %17, %shift169
-  %32 = extractelement <2 x float> %foldExtExtBinop170, i64 0
+  %34 = extractelement <2 x float> %i.vo, i64 1
+  %35 = fmul float %13, %34
   %i.all = fsub float %i.vt, %i.jn
-  %i.alm = fdiv float %32, %i.all
+  %i.alm = fdiv float %35, %i.all
   %i.aln = fadd float %i.mb, %i.alm
   %.055.i443.i.i.i = select i1 %i.ra, float %i.aln, float %i.mb ; 4 uses
-  %i.alo = fcmp ogt float %i.vt, %15
+  %i.alo = fcmp ogt float %i.vt, %16
   br i1 %i.alo, label %bb.fw, label %bb.fx
 
 bb.fw:                                            ; preds = %bb.fv
   %i.alp = fsub float %i.vl, %.055.i443.i.i.i
-  %i.alq = fsub float %15, %i.vt
+  %i.alq = fsub float %16, %i.vt
   %i.alr = fmul float %i.alq, %i.alp
   %i.als = fsub float %i.vt, %.0301.i.i.i
   %i.alt = fdiv float %i.alr, %i.als
@@ -1732,7 +1726,7 @@ bb.fw:                                            ; preds = %bb.fv
 
 bb.fx:                                            ; preds = %bb.fw, %bb.fv
   %.053.i445.i.i.i = phi float [ %i.alu, %bb.fw ], [ %i.vl, %bb.fv ] ; 3 uses
-  %.0.i446.i.i.i = phi float [ %15, %bb.fw ], [ %i.vt, %bb.fv ] ; 2 uses
+  %.0.i446.i.i.i = phi float [ %16, %bb.fw ], [ %i.vt, %bb.fv ] ; 2 uses
   %i.alv = fcmp ugt float %.055.i443.i.i.i, %i.vj
   %i.alw = fcmp ugt float %.053.i445.i.i.i, %i.vj
   %or.cond.i447.i.i.i = select i1 %i.alv, i1 true, i1 %i.alw
@@ -1770,7 +1764,7 @@ bb.ga:                                            ; preds = %bb.fz
 
 _ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit449.i.i.i: ; preds = %bb.ga, %bb.fz, %bb.fy, %bb.fu
   %i.amp = fcmp oeq float %i.vt, %i.jo
-  %i.amq = fcmp ogt float %i.vt, %15
+  %i.amq = fcmp ogt float %i.vt, %16
   %or.cond33.i.i = select i1 %i.amp, i1 true, i1 %i.amq
   %or.cond34.i.i = or i1 %i.ux, %or.cond33.i.i
   br i1 %or.cond34.i.i, label %_ZN2cvL26stbtt__handle_clipped_edgeEPfiPNS_18stbtt__active_edgeEffff.exit379.i.i.i, label %bb.gb
@@ -1780,7 +1774,7 @@ bb.gb:                                            ; preds = %_ZN2cvL26stbtt__han
 
 bb.gc:                                            ; preds = %bb.gb
   %i.amr = fsub float %i.qw, %i.vl
-  %i.ams = fsub float %16, %i.vt
+  %i.ams = fsub float %12, %i.vt
   %i.amt = fmul float %i.amr, %i.ams
   %i.amu = fsub float %i.jo, %i.vt
   %i.amv = fdiv float %i.amt, %i.amu
@@ -1789,8 +1783,8 @@ bb.gc:                                            ; preds = %bb.gb
 
 bb.gd:                                            ; preds = %bb.gc, %bb.gb
   %.055.i450.i.i.i = phi float [ %i.amw, %bb.gc ], [ %i.vl, %bb.gb ] ; 4 uses
-  %.054.i451.i.i.i = phi float [ %16, %bb.gc ], [ %i.vt, %bb.gb ] ; 3 uses
-  br i1 %24, label %bb.ge, label %bb.gf
+  %.054.i451.i.i.i = phi float [ %12, %bb.gc ], [ %i.vt, %bb.gb ] ; 3 uses
+  br i1 %17, label %bb.ge, label %bb.gf
 
 bb.ge:                                            ; preds = %bb.gd
   %i.amx = fsub float %i.qw, %.055.i450.i.i.i
@@ -1802,7 +1796,7 @@ bb.ge:                                            ; preds = %bb.gd
 
 bb.gf:                                            ; preds = %bb.ge, %bb.gd
   %.053.i452.i.i.i = phi float [ %i.anb, %bb.ge ], [ %i.qw, %bb.gd ] ; 3 uses
-  %.0.i453.i.i.i = phi float [ %15, %bb.ge ], [ %i.jo, %bb.gd ] ; 2 uses
+  %.0.i453.i.i.i = phi float [ %16, %bb.ge ], [ %i.jo, %bb.gd ] ; 2 uses
   %i.anc = fcmp ugt float %.055.i450.i.i.i, %i.vj
   %i.and = fcmp ugt float %.053.i452.i.i.i, %i.vj
   %or.cond.i454.i.i.i = select i1 %i.anc, i1 true, i1 %i.and

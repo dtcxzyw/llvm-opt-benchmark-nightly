@@ -205,7 +205,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind uwtable
 define noundef i32 @_ZN24dtObstacleAvoidanceQuery22sampleVelocityAdaptiveEPKfffS1_S1_PfPK25dtObstacleAvoidanceParamsP28dtObstacleAvoidanceDebugData(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(76) %0, ptr noundef %1, float noundef %2, float noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %6, ptr nofree noundef readonly captures(none) %7, ptr nofree noundef captures(address_is_null) %8) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [258 x float], align 16           ; 35 uses
+  %i.a = alloca [258 x float], align 16           ; 42 uses
   %i.b = alloca [3 x float], align 4              ; 6 uses
   tail call void @_ZN24dtObstacleAvoidanceQuery7prepareEPKfS1_(ptr noundef nonnull align 8 dereferenceable(76) %0, ptr noundef %1, ptr noundef %5)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %0, ptr noundef nonnull align 4 dereferenceable(28) %7, i64 28, i1 false)
@@ -256,34 +256,26 @@ _Z13dtNormalize2DPf.exit:                         ; preds = %bb.b, %bb.a
   %i.ae = fmul nnan float %i.ad, 2.000000e+00     ; 3 uses
   %i.af = tail call float @cosf(float noundef %i.ae) #10 ; 20 uses
   %i.ag = tail call float @sinf(float noundef %i.ae) #10 ; 12 uses
-  %i.ah = load float, ptr %5, align 4, !tbaa !24  ; 3 uses
+  %i.ah = load float, ptr %5, align 4, !tbaa !24  ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.aj = load float, ptr %i.ai, align 4, !tbaa !24 ; 3 uses
+  %i.aj = load float, ptr %i.ai, align 4, !tbaa !24 ; 5 uses
   %i.ak = fmul float %i.aj, %i.aj
   %i.al = tail call float @llvm.fmuladd.f32(float %i.ah, float %i.ah, float %i.ak)
   %i.am = tail call noundef float @sqrtf(float noundef %i.al) #10 ; 2 uses
-  %i.an = fcmp oeq float %i.am, 0.000000e+00
-  %i.ao = fdiv float 1.000000e+00, %i.am
+  %i.an = fcmp oeq float %i.am, 0.000000e+00      ; 2 uses
+  %i.ao = fdiv float 1.000000e+00, %i.am          ; 2 uses
   %i.ap = fmul nnan float %i.ae, 5.000000e-01     ; 2 uses
   %i.aq = tail call float @cosf(float noundef %i.ap) #10 ; 2 uses
   %i.ar = tail call float @sinf(float noundef %i.ap) #10 ; 2 uses
   %i.as = fneg float %i.ar
-  %9 = insertelement <2 x float> poison, float %i.ah, i64 0
-  %10 = insertelement <2 x float> %9, float %i.aj, i64 1 ; 3 uses
-  %11 = insertelement <2 x float> poison, float %i.ao, i64 0
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
-  %13 = fmul <2 x float> %10, %12
-  %14 = insertelement <2 x i1> poison, i1 %i.an, i64 0
-  %15 = shufflevector <2 x i1> %14, <2 x i1> poison, <2 x i32> zeroinitializer
-  %16 = select <2 x i1> %15, <2 x float> %10, <2 x float> %13 ; 16 uses
-  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %18 = insertelement <2 x float> poison, float %i.as, i64 0
-  %19 = insertelement <2 x float> %18, float %i.aq, i64 1
-  %20 = fmul <2 x float> %17, %19
-  %21 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
-  %22 = insertelement <2 x float> poison, float %i.aq, i64 0
-  %23 = insertelement <2 x float> %22, float %i.ar, i64 1
-  %24 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %21, <2 x float> %23, <2 x float> %20) ; 11 uses
+  %9 = fmul float %i.ah, %i.ao
+  %10 = fmul float %i.aj, %i.ao
+  %.sroa.0.0 = select i1 %i.an, float %i.ah, float %9 ; 11 uses
+  %.sroa.8.0 = select i1 %i.an, float %i.aj, float %10 ; 11 uses
+  %11 = fmul float %.sroa.8.0, %i.as
+  %12 = tail call float @llvm.fmuladd.f32(float %.sroa.0.0, float %i.aq, float %11) ; 7 uses
+  %13 = fmul float %.sroa.8.0, %i.aq
+  %14 = tail call float @llvm.fmuladd.f32(float %.sroa.0.0, float %i.ar, float %13) ; 7 uses
   store <2 x float> zeroinitializer, ptr %i.a, align 16, !tbaa !24
   %.not157 = icmp eq i8 %narrow119, 0
   br i1 %.not157, label %._crit_edge128, label %.lr.ph127
@@ -296,29 +288,22 @@ _Z13dtNormalize2DPf.exit:                         ; preds = %bb.b, %bb.a
   %i.ax = fneg float %i.ag                        ; 9 uses
   %i.ay = and i32 %i.at, 1
   %i.az = icmp eq i32 %i.ay, 0                    ; 2 uses
-  br i1 %i.aw, label %.lr.ph.us.preheader, label %.lr.ph127.split
+  br i1 %i.aw, label %.lr.ph.us, label %.lr.ph127.split
 
-.lr.ph.us.preheader:                              ; preds = %.lr.ph127
-  %25 = extractelement <2 x float> %24, i64 0
-  %26 = extractelement <2 x float> %16, i64 0
-  %27 = extractelement <2 x float> %24, i64 1
-  %28 = extractelement <2 x float> %16, i64 1
-  br label %.lr.ph.us
-
-.lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %bb.e
-  %.0109126.us = phi i32 [ %i.cx, %bb.e ], [ 0, %.lr.ph.us.preheader ] ; 3 uses
-  %.0110125.us = phi i32 [ %.2112.us, %bb.e ], [ 1, %.lr.ph.us.preheader ] ; 2 uses
+.lr.ph.us:                                        ; preds = %.lr.ph127, %bb.e
+  %.0109126.us = phi i32 [ %i.cx, %bb.e ], [ 0, %.lr.ph127 ] ; 3 uses
+  %.0110125.us = phi i32 [ %.2112.us, %bb.e ], [ 1, %.lr.ph127 ] ; 2 uses
   %i.ba = sub nuw nsw i32 %i.aa, %.0109126.us
   %i.bb = uitofp nneg i32 %i.ba to float
   %i.bc = fdiv float %i.bb, %i.au                 ; 2 uses
   %i.bd = trunc i32 %.0109126.us to i1            ; 2 uses
-  %.sroa.speculated198 = select i1 %i.bd, float %25, float %26
+  %.sroa.speculated198 = select i1 %i.bd, float %12, float %.sroa.0.0
   %i.be = fmul float %i.bc, %.sroa.speculated198  ; 2 uses
   %i.bf = shl nsw i32 %.0110125.us, 1
   %i.bg = sext i32 %i.bf to i64
   %i.bh = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.bg ; 4 uses
   store float %i.be, ptr %i.bh, align 8, !tbaa !24
-  %.sroa.speculated189 = select i1 %i.bd, float %27, float %28
+  %.sroa.speculated189 = select i1 %i.bd, float %14, float %.sroa.8.0
   %i.bi = fmul float %i.bc, %.sroa.speculated189  ; 2 uses
   %i.bj = getelementptr i8, ptr %i.bh, i64 4
   store float %i.bi, ptr %i.bj, align 4, !tbaa !24
@@ -400,11 +385,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.dc = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.dd = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %29 = extractelement <2 x float> %16, i64 0
-  %i.de = fmul float %i.da, %29                   ; 2 uses
+  %i.de = fmul float %i.da, %.sroa.0.0            ; 2 uses
   store float %i.de, ptr %i.db, align 8, !tbaa !24
-  %30 = extractelement <2 x float> %16, i64 1
-  %i.df = fmul float %i.da, %30                   ; 2 uses
+  %i.df = fmul float %i.da, %.sroa.8.0            ; 2 uses
   store float %i.df, ptr %i.dc, align 4, !tbaa !24
   %i.dg = insertelement <2 x float> poison, float %i.df, i64 0
   %i.dh = shufflevector <2 x float> %i.dg, <2 x float> poison, <2 x i32> zeroinitializer
@@ -427,11 +410,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.dt = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.du = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   %i.dv = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %31 = extractelement <2 x float> %24, i64 0
-  %i.dw = fmul float %i.ds, %31                   ; 2 uses
+  %i.dw = fmul float %i.ds, %12                   ; 2 uses
   store float %i.dw, ptr %i.dt, align 8, !tbaa !24
-  %32 = extractelement <2 x float> %24, i64 1
-  %i.dx = fmul float %i.ds, %32                   ; 2 uses
+  %i.dx = fmul float %i.ds, %14                   ; 2 uses
   store float %i.dx, ptr %i.du, align 4, !tbaa !24
   %i.dy = insertelement <2 x float> poison, float %i.dx, i64 0
   %i.dz = shufflevector <2 x float> %i.dy, <2 x float> poison, <2 x i32> zeroinitializer
@@ -454,11 +435,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.el = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.em = getelementptr inbounds nuw i8, ptr %i.a, i64 44
   %i.en = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %33 = extractelement <2 x float> %16, i64 0
-  %i.eo = fmul float %i.ek, %33                   ; 2 uses
+  %i.eo = fmul float %i.ek, %.sroa.0.0            ; 2 uses
   store float %i.eo, ptr %i.el, align 8, !tbaa !24
-  %34 = extractelement <2 x float> %16, i64 1
-  %i.ep = fmul float %i.ek, %34                   ; 2 uses
+  %i.ep = fmul float %i.ek, %.sroa.8.0            ; 2 uses
   store float %i.ep, ptr %i.em, align 4, !tbaa !24
   %i.eq = insertelement <2 x float> poison, float %i.ep, i64 0
   %i.er = shufflevector <2 x float> %i.eq, <2 x float> poison, <2 x i32> zeroinitializer
@@ -481,11 +460,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.fd = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.fe = getelementptr inbounds nuw i8, ptr %i.a, i64 60
   %i.ff = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  %35 = extractelement <2 x float> %24, i64 0
-  %i.fg = fmul float %i.fc, %35                   ; 2 uses
+  %i.fg = fmul float %i.fc, %12                   ; 2 uses
   store float %i.fg, ptr %i.fd, align 8, !tbaa !24
-  %36 = extractelement <2 x float> %24, i64 1
-  %i.fh = fmul float %i.fc, %36                   ; 2 uses
+  %i.fh = fmul float %i.fc, %14                   ; 2 uses
   store float %i.fh, ptr %i.fe, align 4, !tbaa !24
   %i.fi = insertelement <2 x float> poison, float %i.fh, i64 0
   %i.fj = shufflevector <2 x float> %i.fi, <2 x float> poison, <2 x i32> zeroinitializer
@@ -508,11 +485,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.fv = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   %i.fw = getelementptr inbounds nuw i8, ptr %i.a, i64 76
   %i.fx = getelementptr inbounds nuw i8, ptr %i.a, i64 88
-  %37 = extractelement <2 x float> %16, i64 0
-  %i.fy = fmul float %i.fu, %37                   ; 2 uses
+  %i.fy = fmul float %i.fu, %.sroa.0.0            ; 2 uses
   store float %i.fy, ptr %i.fv, align 8, !tbaa !24
-  %38 = extractelement <2 x float> %16, i64 1
-  %i.fz = fmul float %i.fu, %38                   ; 2 uses
+  %i.fz = fmul float %i.fu, %.sroa.8.0            ; 2 uses
   store float %i.fz, ptr %i.fw, align 4, !tbaa !24
   %i.ga = insertelement <2 x float> poison, float %i.fz, i64 0
   %i.gb = shufflevector <2 x float> %i.ga, <2 x float> poison, <2 x i32> zeroinitializer
@@ -531,11 +506,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.gn = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %i.go = getelementptr inbounds nuw i8, ptr %i.a, i64 92
   %i.gp = getelementptr inbounds nuw i8, ptr %i.a, i64 104
-  %39 = extractelement <2 x float> %24, i64 0
-  %i.gq = fmul float %i.gm, %39                   ; 2 uses
+  %i.gq = fmul float %i.gm, %12                   ; 2 uses
   store float %i.gq, ptr %i.gn, align 8, !tbaa !24
-  %40 = extractelement <2 x float> %24, i64 1
-  %i.gr = fmul float %i.gm, %40                   ; 2 uses
+  %i.gr = fmul float %i.gm, %14                   ; 2 uses
   store float %i.gr, ptr %i.go, align 4, !tbaa !24
   %i.gs = insertelement <2 x float> poison, float %i.gr, i64 0
   %i.gt = shufflevector <2 x float> %i.gs, <2 x float> poison, <2 x i32> zeroinitializer
@@ -554,11 +527,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.hf = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   %i.hg = getelementptr inbounds nuw i8, ptr %i.a, i64 108
   %i.hh = getelementptr inbounds nuw i8, ptr %i.a, i64 120
-  %41 = extractelement <2 x float> %16, i64 0
-  %i.hi = fmul float %i.he, %41                   ; 2 uses
+  %i.hi = fmul float %i.he, %.sroa.0.0            ; 2 uses
   store float %i.hi, ptr %i.hf, align 8, !tbaa !24
-  %42 = extractelement <2 x float> %16, i64 1
-  %i.hj = fmul float %i.he, %42                   ; 2 uses
+  %i.hj = fmul float %i.he, %.sroa.8.0            ; 2 uses
   store float %i.hj, ptr %i.hg, align 4, !tbaa !24
   %i.hk = insertelement <2 x float> poison, float %i.hj, i64 0
   %i.hl = shufflevector <2 x float> %i.hk, <2 x float> poison, <2 x i32> zeroinitializer
@@ -576,9 +547,11 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
 ._crit_edge128:                                   ; preds = %bb.e, %.lr.ph127.split.split, %.lr.ph127.split.split.1, %.lr.ph127.split.split.2, %.lr.ph127.split.split.3, %.lr.ph127.split.split.4, %.lr.ph127.split.split.us, %.lr.ph127.split.split.us.1, %.lr.ph127.split.split.us.2, %.lr.ph127.split.split.us.3, %.lr.ph127.split.split.us.4, %_Z13dtNormalize2DPf.exit
   %.0110.lcssa = phi i32 [ 1, %_Z13dtNormalize2DPf.exit ], [ 8, %.lr.ph127.split.split.4 ], [ 15, %.lr.ph127.split.split.us.4 ], [ 3, %.lr.ph127.split.split.us ], [ 5, %.lr.ph127.split.split.us.1 ], [ 7, %.lr.ph127.split.split.us.2 ], [ 9, %.lr.ph127.split.split.us.3 ], [ 2, %.lr.ph127.split.split ], [ 3, %.lr.ph127.split.split.1 ], [ 4, %.lr.ph127.split.split.2 ], [ 5, %.lr.ph127.split.split.3 ], [ %.2112.us, %bb.e ] ; 2 uses
   %i.hu = load float, ptr %0, align 8, !tbaa !44  ; 2 uses
+  %15 = insertelement <2 x float> poison, float %i.ah, i64 0
+  %16 = insertelement <2 x float> %15, float %i.aj, i64 1
   %i.hv = insertelement <2 x float> poison, float %i.hu, i64 0
   %i.hw = shufflevector <2 x float> %i.hv, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.hx = fmul <2 x float> %10, %i.hw             ; 2 uses
+  %i.hx = fmul <2 x float> %16, %i.hw             ; 2 uses
   %.not158 = icmp eq i8 %i.u, 0
   br i1 %.not158, label %._crit_edge147, label %.preheader.lr.ph
 
@@ -652,76 +625,83 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
 
 .lr.ph127.split.split:                            ; preds = %.lr.ph127.split
   %i.iy = uitofp nneg i8 %narrow119 to float
-  %i.iz = fdiv float %i.iy, %i.au
+  %i.iz = fdiv float %i.iy, %i.au                 ; 2 uses
+  %17 = fmul float %i.iz, %.sroa.0.0
   %i.ja = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %43 = insertelement <2 x float> poison, float %i.iz, i64 0
-  %44 = shufflevector <2 x float> %43, <2 x float> poison, <2 x i32> zeroinitializer
-  %45 = fmul <2 x float> %44, %16
-  store <2 x float> %45, ptr %i.ja, align 8, !tbaa !24
+  store float %17, ptr %i.ja, align 8, !tbaa !24
+  %18 = fmul float %i.iz, %.sroa.8.0
+  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  store float %18, ptr %19, align 4, !tbaa !24
   %exitcond.not = icmp eq i8 %narrow119, 1
   br i1 %exitcond.not, label %._crit_edge128, label %.lr.ph127.split.split.1
 
 .lr.ph127.split.split.1:                          ; preds = %.lr.ph127.split.split
   %i.jb = add nsw i32 %i.aa, -1
   %i.jc = uitofp nneg i32 %i.jb to float
-  %i.jd = fdiv float %i.jc, %i.au
+  %i.jd = fdiv float %i.jc, %i.au                 ; 2 uses
+  %20 = fmul float %i.jd, %12
   %i.je = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %46 = insertelement <2 x float> poison, float %i.jd, i64 0
-  %47 = shufflevector <2 x float> %46, <2 x float> poison, <2 x i32> zeroinitializer
-  %48 = fmul <2 x float> %47, %24
-  store <2 x float> %48, ptr %i.je, align 16, !tbaa !24
+  store float %20, ptr %i.je, align 16, !tbaa !24
+  %21 = fmul float %i.jd, %14
+  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  store float %21, ptr %22, align 4, !tbaa !24
   %exitcond.not.1 = icmp eq i8 %narrow119, 2
   br i1 %exitcond.not.1, label %._crit_edge128, label %.lr.ph127.split.split.2
 
 .lr.ph127.split.split.2:                          ; preds = %.lr.ph127.split.split.1
   %i.jf = add nsw i32 %i.aa, -2
   %i.jg = uitofp nneg i32 %i.jf to float
-  %i.jh = fdiv float %i.jg, %i.au
+  %i.jh = fdiv float %i.jg, %i.au                 ; 2 uses
+  %23 = fmul float %i.jh, %.sroa.0.0
   %i.ji = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %49 = insertelement <2 x float> poison, float %i.jh, i64 0
-  %50 = shufflevector <2 x float> %49, <2 x float> poison, <2 x i32> zeroinitializer
-  %51 = fmul <2 x float> %50, %16
-  store <2 x float> %51, ptr %i.ji, align 8, !tbaa !24
+  store float %23, ptr %i.ji, align 8, !tbaa !24
+  %24 = fmul float %i.jh, %.sroa.8.0
+  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 28
+  store float %24, ptr %25, align 4, !tbaa !24
   %exitcond.not.2 = icmp eq i8 %narrow119, 3
   br i1 %exitcond.not.2, label %._crit_edge128, label %.lr.ph127.split.split.3
 
 .lr.ph127.split.split.3:                          ; preds = %.lr.ph127.split.split.2
   %i.jj = add nsw i32 %i.aa, -3
   %i.jk = uitofp nneg i32 %i.jj to float
-  %i.jl = fdiv float %i.jk, %i.au
+  %i.jl = fdiv float %i.jk, %i.au                 ; 2 uses
+  %26 = fmul float %i.jl, %12
   %i.jm = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %52 = insertelement <2 x float> poison, float %i.jl, i64 0
-  %53 = shufflevector <2 x float> %52, <2 x float> poison, <2 x i32> zeroinitializer
-  %54 = fmul <2 x float> %53, %24
-  store <2 x float> %54, ptr %i.jm, align 16, !tbaa !24
+  store float %26, ptr %i.jm, align 16, !tbaa !24
+  %27 = fmul float %i.jl, %14
+  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 36
+  store float %27, ptr %28, align 4, !tbaa !24
   %exitcond.not.3 = icmp eq i8 %narrow119, 4
   br i1 %exitcond.not.3, label %._crit_edge128, label %.lr.ph127.split.split.4
 
 .lr.ph127.split.split.4:                          ; preds = %.lr.ph127.split.split.3
   %i.jn = add nsw i32 %i.aa, -4
   %i.jo = uitofp nneg i32 %i.jn to float
-  %i.jp = fdiv float %i.jo, %i.au
+  %i.jp = fdiv float %i.jo, %i.au                 ; 2 uses
+  %29 = fmul float %i.jp, %.sroa.0.0
   %i.jq = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %55 = insertelement <2 x float> poison, float %i.jp, i64 0
-  %56 = shufflevector <2 x float> %55, <2 x float> poison, <2 x i32> zeroinitializer
-  %57 = fmul <2 x float> %56, %16
-  store <2 x float> %57, ptr %i.jq, align 8, !tbaa !24
+  store float %29, ptr %i.jq, align 8, !tbaa !24
+  %30 = fmul float %i.jp, %.sroa.8.0
+  %31 = getelementptr inbounds nuw i8, ptr %i.a, i64 44
+  store float %30, ptr %31, align 4, !tbaa !24
   %i.jr = add nuw nsw i32 %i.aa, -5
   %i.js = uitofp nneg i32 %i.jr to float
-  %i.jt = fdiv float %i.js, %i.au
+  %i.jt = fdiv float %i.js, %i.au                 ; 2 uses
+  %32 = fmul float %i.jt, %12
   %i.ju = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %58 = insertelement <2 x float> poison, float %i.jt, i64 0
-  %59 = shufflevector <2 x float> %58, <2 x float> poison, <2 x i32> zeroinitializer
-  %60 = fmul <2 x float> %59, %24
-  store <2 x float> %60, ptr %i.ju, align 16, !tbaa !24
+  store float %32, ptr %i.ju, align 16, !tbaa !24
+  %33 = fmul float %i.jt, %14
+  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 52
+  store float %33, ptr %34, align 4, !tbaa !24
   %i.jv = add nuw nsw i32 %i.aa, -6
   %i.jw = uitofp nneg i32 %i.jv to float
-  %i.jx = fdiv float %i.jw, %i.au
+  %i.jx = fdiv float %i.jw, %i.au                 ; 2 uses
+  %35 = fmul float %i.jx, %.sroa.0.0
   %i.jy = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %61 = insertelement <2 x float> poison, float %i.jx, i64 0
-  %62 = shufflevector <2 x float> %61, <2 x float> poison, <2 x i32> zeroinitializer
-  %63 = fmul <2 x float> %62, %16
-  store <2 x float> %63, ptr %i.jy, align 8, !tbaa !24
+  store float %35, ptr %i.jy, align 8, !tbaa !24
+  %36 = fmul float %i.jx, %.sroa.8.0
+  %37 = getelementptr inbounds nuw i8, ptr %i.a, i64 60
+  store float %36, ptr %37, align 4, !tbaa !24
   br label %._crit_edge128
 
 ._crit_edge147:                                   ; preds = %._crit_edge.us152, %.preheader.lr.ph, %._crit_edge128

@@ -204,15 +204,12 @@ bb.dl:                                            ; preds = %.noexc137.i
   %i.pj = load ptr, ptr %i.oq, align 8, !tbaa !45 ; 6 uses
   %i.pk = getelementptr inbounds nuw i8, ptr %i.pj, i64 176
   %i.pl = load ptr, ptr %i.pk, align 8, !tbaa !140 ; 2 uses
-  %i.pm = load double, ptr %i.pl, align 8, !tbaa !29 ; 2 uses
+  %i.pm = load double, ptr %i.pl, align 8, !tbaa !29 ; 3 uses
   %i.pn = fmul double %i.pm, 7.200000e+01
   %i.po = fcmp ult double %i.pn, 0.000000e+00
-  %14 = insertelement <2 x double> poison, double %i.pm, i64 0
-  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
-  %16 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %15, <2 x double> splat (double 7.200000e+01), <2 x double> <double 5.000000e-01, double -5.000000e-01>) ; 2 uses
-  %17 = extractelement <2 x double> %16, i64 0
-  %18 = extractelement <2 x double> %16, i64 1
-  %.in.i.i = select i1 %i.po, double %18, double %17
+  %14 = call double @llvm.fmuladd.f64(double %i.pm, double 7.200000e+01, double 5.000000e-01)
+  %15 = call double @llvm.fmuladd.f64(double %i.pm, double 7.200000e+01, double -5.000000e-01)
+  %.in.i.i = select i1 %i.po, double %15, double %14
   %i.pp = fptosi double %.in.i.i to i32
   %i.pq = sitofp i32 %i.pp to double
   %i.pr = getelementptr inbounds nuw i8, ptr %i.ok, i64 16
@@ -220,15 +217,12 @@ bb.dl:                                            ; preds = %.noexc137.i
   %i.pt = getelementptr inbounds nuw i8, ptr %i.ps, i64 32
   store double %i.pq, ptr %i.pt, align 8, !tbaa !141
   %i.pu = getelementptr inbounds nuw i8, ptr %i.pl, i64 8
-  %i.pv = load double, ptr %i.pu, align 8, !tbaa !29 ; 2 uses
+  %i.pv = load double, ptr %i.pu, align 8, !tbaa !29 ; 3 uses
   %i.pw = fmul double %i.pv, 7.200000e+01
   %i.px = fcmp ult double %i.pw, 0.000000e+00
-  %19 = insertelement <2 x double> poison, double %i.pv, i64 0
-  %20 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
-  %21 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> splat (double 7.200000e+01), <2 x double> <double 5.000000e-01, double -5.000000e-01>) ; 2 uses
-  %22 = extractelement <2 x double> %21, i64 0
-  %23 = extractelement <2 x double> %21, i64 1
-  %.in26.i.i = select i1 %i.px, double %23, double %22
+  %16 = call double @llvm.fmuladd.f64(double %i.pv, double 7.200000e+01, double 5.000000e-01)
+  %17 = call double @llvm.fmuladd.f64(double %i.pv, double 7.200000e+01, double -5.000000e-01)
+  %.in26.i.i = select i1 %i.px, double %17, double %16
   %i.py = fptosi double %.in26.i.i to i32
   %i.pz = sitofp i32 %i.py to double
   %i.qa = getelementptr inbounds nuw i8, ptr %i.ps, i64 40
@@ -631,6 +625,9 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !0
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fmuladd.f64(double, double, double) #23
+
 declare ptr @agroot(ptr noundef) local_unnamed_addr #4
 
 declare ptr @agxget(ptr noundef, ptr noundef) local_unnamed_addr #4
@@ -656,7 +653,7 @@ declare ptr @agedge(ptr noundef, ptr noundef, ptr noundef, ptr noundef, i32 noun
 declare ptr @agattr_html(ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
-declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #23
+declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #24
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %1) local_unnamed_addr #18 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -695,7 +692,7 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_Identi
 declare void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264), i32 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nofree nounwind uwtable
-define internal void @_GLOBAL__sub_I_gvpack.cpp() #24 section ".text.startup" {
+define internal void @_GLOBAL__sub_I_gvpack.cpp() #25 section ".text.startup" {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZL6G_args, i8 0, i64 24, i1 false)
   %i.a = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorI6attr_tSaIS0_EED2Ev, ptr nonnull @_ZL6G_args, ptr nonnull @__dso_handle) #30 ; 0 uses
@@ -703,28 +700,25 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #25
+declare void @llvm.assume(i1 noundef) #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #26
+declare void @llvm.experimental.noalias.scope.decl(metadata) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #27
+declare i64 @llvm.umax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #27
+declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #27
+declare i64 @llvm.smax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #27
+declare i64 @llvm.smin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #28
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #27
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind }
@@ -749,11 +743,11 @@ attributes #19 = { nocallback nofree nosync nounwind willreturn memory(argmem: w
 attributes #20 = { mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #21 = { inlinehint mustprogress norecurse nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #22 = { mustprogress nofree nounwind willreturn memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #23 = { mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #24 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #25 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #26 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #27 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #23 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #24 = { mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #25 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #26 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #27 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #28 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #29 = { builtin nounwind }
 attributes #30 = { nounwind }

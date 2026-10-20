@@ -205,17 +205,12 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.n = load ptr, ptr %3, align 8, !tbaa !35
   %i.o = getelementptr inbounds [4 x i8], ptr %i.n, i64 %indvars.iv
   %i.p = load float, ptr %i.o, align 4, !tbaa !37 ; 2 uses
-  %i.q = fpext float %i.p to double
+  %i.q = fpext float %i.p to double               ; 2 uses
   %i.r = fcmp ult float %i.p, 0.000000e+00
-  %i.s = load double, ptr %i.l, align 8, !tbaa !86
-  %6 = insertelement <2 x double> poison, double %i.q, i64 0
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
-  %8 = insertelement <2 x double> poison, double %i.s, i64 0
-  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
-  %10 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %9, <2 x double> <double 5.000000e-01, double -5.000000e-01>) ; 2 uses
-  %11 = extractelement <2 x double> %10, i64 0
-  %12 = extractelement <2 x double> %10, i64 1
-  %.in = select i1 %i.r, double %12, double %11
+  %i.s = load double, ptr %i.l, align 8, !tbaa !86 ; 2 uses
+  %6 = call double @llvm.fmuladd.f64(double %i.q, double %i.s, double 5.000000e-01)
+  %7 = call double @llvm.fmuladd.f64(double %i.q, double %i.s, double -5.000000e-01)
+  %.in = select i1 %i.r, double %7, double %6
   %i.t = fptosi double %.in to i8
   %i.u = load ptr, ptr %4, align 8, !tbaa !66
   %i.v = shl nsw i64 %indvars.iv, 1               ; 2 uses
@@ -284,17 +279,12 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.o = load ptr, ptr %3, align 8, !tbaa !35
   %i.p = getelementptr inbounds [4 x i8], ptr %i.o, i64 %indvars.iv
   %i.q = load float, ptr %i.p, align 4, !tbaa !37 ; 2 uses
-  %i.r = fpext float %i.q to double
+  %i.r = fpext float %i.q to double               ; 2 uses
   %i.s = fcmp ult float %i.q, 0.000000e+00
-  %i.t = load double, ptr %i.l, align 8, !tbaa !86
-  %7 = insertelement <2 x double> poison, double %i.r, i64 0
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
-  %9 = insertelement <2 x double> poison, double %i.t, i64 0
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
-  %11 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %10, <2 x double> <double 5.000000e-01, double -5.000000e-01>) ; 2 uses
-  %12 = extractelement <2 x double> %11, i64 0
-  %13 = extractelement <2 x double> %11, i64 1
-  %.in = select i1 %i.s, double %13, double %12
+  %i.t = load double, ptr %i.l, align 8, !tbaa !86 ; 2 uses
+  %7 = call double @llvm.fmuladd.f64(double %i.r, double %i.t, double 5.000000e-01)
+  %8 = call double @llvm.fmuladd.f64(double %i.r, double %i.t, double -5.000000e-01)
+  %.in = select i1 %i.s, double %8, double %7
   %i.u = fptosi double %.in to i8
   %i.v = load ptr, ptr %4, align 8, !tbaa !66
   %i.w = shl nsw i64 %indvars.iv, 1               ; 2 uses
@@ -696,9 +686,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare x86_fp80 @llvm.log.f80(x86_fp80) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #12
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

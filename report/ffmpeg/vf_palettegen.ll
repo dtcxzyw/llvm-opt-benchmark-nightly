@@ -204,10 +204,10 @@ declare ptr @av_malloc_array(i64 noundef, i64 noundef) local_unnamed_addr #3
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define internal range(i32 -1, 2) i32 @cmp_Lab(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #8 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !58     ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !58     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !68   ; 2 uses
-  %i.d = load ptr, ptr %1, align 8, !tbaa !58     ; 2 uses
+  %i.d = load ptr, ptr %1, align 8, !tbaa !58     ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !68   ; 2 uses
   %.not = icmp eq i32 %i.c, %i.f
@@ -218,17 +218,18 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %i.j = load i32, ptr %i.h, align 4, !tbaa !69
-  %2 = load <2 x i32>, ptr %i.h, align 4, !tbaa !42
-  %3 = load i32, ptr %i.i, align 4, !tbaa !69
-  %4 = load <2 x i32>, ptr %i.i, align 4, !tbaa !42
-  %5 = tail call <2 x i32> @llvm.scmp.v2i32.v2i32(<2 x i32> %4, <2 x i32> %2) ; 2 uses
-  %.not18 = icmp eq i32 %3, %i.j
-  %6 = extractelement <2 x i32> %5, i64 0
-  %7 = extractelement <2 x i32> %5, i64 1
-  %i.k = select i1 %.not18, i32 %7, i32 %6
+  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 12
+  %2 = load i32, ptr %i.h, align 4, !tbaa !70
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !70
+  %3 = tail call i32 @llvm.scmp.i32.i32(i32 %i.j, i32 %2)
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %5 = load i32, ptr %4, align 4, !tbaa !69       ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %7 = load i32, ptr %6, align 4, !tbaa !69       ; 2 uses
+  %8 = tail call i32 @llvm.scmp.i32.i32(i32 %7, i32 %5)
+  %.not18 = icmp eq i32 %7, %5
+  %i.k = select i1 %.not18, i32 %3, i32 %8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -254,18 +255,17 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.j = load i32, ptr %3, align 4, !tbaa !70
-  %4 = load <2 x i32>, ptr %i.h, align 4, !tbaa !42
-  %5 = load i32, ptr %i.i, align 4, !tbaa !70
-  %6 = load <2 x i32>, ptr %2, align 4, !tbaa !42
-  %7 = tail call <2 x i32> @llvm.scmp.v2i32.v2i32(<2 x i32> %6, <2 x i32> %4) ; 2 uses
-  %.not18 = icmp eq i32 %5, %i.j
-  %8 = extractelement <2 x i32> %7, i64 0
-  %9 = extractelement <2 x i32> %7, i64 1
-  %i.k = select i1 %.not18, i32 %8, i32 %9
+  %2 = load i32, ptr %i.h, align 4, !tbaa !69
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !69
+  %3 = tail call i32 @llvm.scmp.i32.i32(i32 %i.j, i32 %2)
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 12
+  %5 = load i32, ptr %4, align 4, !tbaa !70       ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %7 = load i32, ptr %6, align 4, !tbaa !70       ; 2 uses
+  %8 = tail call i32 @llvm.scmp.i32.i32(i32 %7, i32 %5)
+  %.not18 = icmp eq i32 %7, %5
+  %i.k = select i1 %.not18, i32 %3, i32 %8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -276,10 +276,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define internal range(i32 -1, 2) i32 @cmp_bLa(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #8 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !58     ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !58     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.c = load i32, ptr %i.b, align 4, !tbaa !70   ; 2 uses
-  %i.d = load ptr, ptr %1, align 8, !tbaa !58     ; 2 uses
+  %i.d = load ptr, ptr %1, align 8, !tbaa !58     ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !70   ; 2 uses
   %.not = icmp eq i32 %i.c, %i.f
@@ -290,17 +290,18 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
-  %i.j = load i32, ptr %i.h, align 4, !tbaa !68
-  %2 = load <2 x i32>, ptr %i.h, align 4, !tbaa !42
-  %3 = load i32, ptr %i.i, align 4, !tbaa !68
-  %4 = load <2 x i32>, ptr %i.i, align 4, !tbaa !42
-  %5 = tail call <2 x i32> @llvm.scmp.v2i32.v2i32(<2 x i32> %4, <2 x i32> %2) ; 2 uses
-  %.not18 = icmp eq i32 %3, %i.j
-  %6 = extractelement <2 x i32> %5, i64 0
-  %7 = extractelement <2 x i32> %5, i64 1
-  %i.k = select i1 %.not18, i32 %7, i32 %6
+  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %2 = load i32, ptr %i.h, align 4, !tbaa !69
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !69
+  %3 = tail call i32 @llvm.scmp.i32.i32(i32 %i.j, i32 %2)
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %6 = load i32, ptr %4, align 4, !tbaa !68       ; 2 uses
+  %7 = load i32, ptr %5, align 4, !tbaa !68       ; 2 uses
+  %8 = tail call i32 @llvm.scmp.i32.i32(i32 %7, i32 %6)
+  %.not18 = icmp eq i32 %7, %6
+  %i.k = select i1 %.not18, i32 %3, i32 %8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -362,18 +363,17 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.j = load i32, ptr %3, align 4, !tbaa !69
-  %4 = load <2 x i32>, ptr %i.h, align 4, !tbaa !42
-  %5 = load i32, ptr %i.i, align 4, !tbaa !69
-  %6 = load <2 x i32>, ptr %2, align 4, !tbaa !42
-  %7 = tail call <2 x i32> @llvm.scmp.v2i32.v2i32(<2 x i32> %6, <2 x i32> %4) ; 2 uses
-  %.not18 = icmp eq i32 %5, %i.j
-  %8 = extractelement <2 x i32> %7, i64 0
-  %9 = extractelement <2 x i32> %7, i64 1
-  %i.k = select i1 %.not18, i32 %8, i32 %9
+  %2 = load i32, ptr %i.h, align 4, !tbaa !68
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !68
+  %3 = tail call i32 @llvm.scmp.i32.i32(i32 %i.j, i32 %2)
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %5 = load i32, ptr %4, align 4, !tbaa !69       ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %7 = load i32, ptr %6, align 4, !tbaa !69       ; 2 uses
+  %8 = tail call i32 @llvm.scmp.i32.i32(i32 %7, i32 %5)
+  %.not18 = icmp eq i32 %7, %5
+  %i.k = select i1 %.not18, i32 %3, i32 %8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -504,9 +504,6 @@ declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) <2 x i32> @llvm.scmp.v2i32.v2i32(<2 x i32>, <2 x i32>) #12
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
