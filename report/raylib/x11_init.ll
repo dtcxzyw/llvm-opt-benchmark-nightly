@@ -204,11 +204,11 @@ bb.bl:                                            ; preds = %bb.bk, %._crit_edge
   %i.rw = icmp sgt i32 %i.rv, 1
   %i.rx = sext i32 %i.rt to i64                   ; 2 uses
   %i.ry = sext i32 %i.rv to i64
-  %3 = add i32 %i.ru, 1
+  %3 = sext i32 %i.ru to i64
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.gg, %.lr.ph64.i.i
-  %indvars.iv81.i.i = phi i64 [ %i.rx, %.lr.ph64.i.i ], [ %indvars.iv.next82.i.i, %bb.gg ] ; 4 uses
+  %indvars.iv81.i.i = phi i64 [ %i.rx, %.lr.ph64.i.i ], [ %indvars.iv.next82.i.i, %bb.gg ] ; 5 uses
   %i.rz = getelementptr inbounds [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 135730), i64 %indvars.iv81.i.i ; 2 uses
   %i.sa = load i16, ptr %i.rz, align 2            ; 2 uses
   %i.sb = icmp slt i16 %i.sa, 0
@@ -611,9 +611,8 @@ bb.gf:                                            ; preds = %bb.ge
   br label %bb.gg
 
 bb.gg:                                            ; preds = %bb.gf, %bb.ge
-  %indvars.iv.next82.i.i = add nsw i64 %indvars.iv81.i.i, 1 ; 2 uses
-  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next82.i.i to i32
-  %exitcond84.not.i.i = icmp eq i32 %3, %lftr.wideiv.i.i
+  %indvars.iv.next82.i.i = add nsw i64 %indvars.iv81.i.i, 1
+  %exitcond84.not.i.i = icmp eq i64 %indvars.iv81.i.i, %3
   br i1 %exitcond84.not.i.i, label %createKeyTablesX11.exit.i, label %bb.bm
 
 createKeyTablesX11.exit.i:                        ; preds = %bb.gg, %bb.bl

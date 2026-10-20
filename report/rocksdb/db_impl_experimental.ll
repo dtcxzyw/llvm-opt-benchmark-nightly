@@ -205,8 +205,6 @@ _ZNK7rocksdb21InternalKeyComparator7CompareERKNS_11InternalKeyES3_.exit.thread19
 
 .lr.ph235:                                        ; preds = %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_11InternalKeyES3_.exit.thread193, %bb.q, %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_11InternalKeyES3_.exit.thread193.peel
   %i.dx = load ptr, ptr %i.cn, align 8, !tbaa !594
-  %28 = add nuw i32 %3, 1
-  %wide.trip.count = zext i32 %28 to i64
   br label %bb.ai
 
 bb.u:                                             ; preds = %bb.f, %bb.g, %_ZN7rocksdb21InstrumentedMutexLockC2EPNS_17InstrumentedMutexE.exit, %_ZNSt15__new_allocatorIPN7rocksdb12FileMetaDataEE8allocateEmPKv.exit.i.i.i.i, %.noexc.i.i
@@ -549,8 +547,9 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.ai
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond257.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond257.not, label %._crit_edge, label %bb.ai, !llvm.loop !542
+  %28 = trunc nuw i64 %indvars.iv.next to i32
+  %.not100.not = icmp slt i32 %3, %28
+  br i1 %.not100.not, label %._crit_edge, label %bb.ai, !llvm.loop !542
 
 bb.ap:                                            ; preds = %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i148, %_ZN7rocksdb6StatusaSEOS0_.exit146
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #24

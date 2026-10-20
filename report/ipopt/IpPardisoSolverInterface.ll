@@ -202,12 +202,7 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i89.i: ; preds = %.noexc92.i,
 
 _ZNSolsEPFRSoS_E.exit60.preheader.i:              ; preds = %.noexc94.i
   %.not56172.i = icmp slt i32 %i.y, 0
-  br i1 %.not56172.i, label %.preheader163.i, label %.lr.ph.preheader.i
-
-.lr.ph.preheader.i:                               ; preds = %_ZNSolsEPFRSoS_E.exit60.preheader.i
-  %8 = add nuw i32 %i.y, 1
-  %wide.trip.count.i = zext i32 %8 to i64
-  br label %.lr.ph.i
+  br i1 %.not56172.i, label %.preheader163.i, label %.lr.ph.i
 
 .preheader163.i:                                  ; preds = %_ZNSolsEPFRSoS_E.exit61.i, %_ZNSolsEPFRSoS_E.exit60.preheader.i
   %i.cr = icmp sgt i32 %i.az, 1
@@ -217,8 +212,8 @@ _ZNSolsEPFRSoS_E.exit60.preheader.i:              ; preds = %.noexc94.i
   %wide.trip.count202.i = zext nneg i32 %i.ba to i64 ; 2 uses
   br label %.lr.ph175.i
 
-.lr.ph.i:                                         ; preds = %_ZNSolsEPFRSoS_E.exit61.i, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %_ZNSolsEPFRSoS_E.exit61.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %_ZNSolsEPFRSoS_E.exit60.preheader.i, %_ZNSolsEPFRSoS_E.exit61.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %_ZNSolsEPFRSoS_E.exit61.i ], [ 0, %_ZNSolsEPFRSoS_E.exit60.preheader.i ] ; 2 uses
   %i.cs = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.i
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !43
   %i.cu = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %5, i32 noundef %i.ct)
@@ -267,8 +262,9 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i100.i: ; preds = %.noexc103.
 
 _ZNSolsEPFRSoS_E.exit61.i:                        ; preds = %.noexc105.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.preheader163.i, label %.lr.ph.i, !llvm.loop !108
+  %8 = trunc nuw i64 %indvars.iv.next.i to i32
+  %.not56.i = icmp slt i32 %i.y, %8
+  br i1 %.not56.i, label %.preheader163.i, label %.lr.ph.i, !llvm.loop !108
 
 .loopexit.split-lp155.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph175.i, %bb.r, %.noexc114.i, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i111.i, %.noexc116.i, %.lr.ph177.i, %bb.t, %.noexc125.i, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i122.i, %.noexc127.i, %.lr.ph179.i, %bb.v, %.noexc136.i, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i133.i, %.noexc138.i, %.noexc105.i, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i100.i, %.noexc103.i, %bb.o, %.lr.ph.i, %.invoke.i, %.noexc94.i, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i89.i, %.noexc92.i, %bb.l, %_ZNSolsEPFRSoS_E.exit.i, %.noexc84.i, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i.i, %.noexc82.i, %bb.i, %bb.f
   %lpad.loopexit.split-lp143 = landingpad { ptr, i32 }

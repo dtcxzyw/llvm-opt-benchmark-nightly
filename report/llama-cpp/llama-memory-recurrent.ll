@@ -204,7 +204,7 @@ bb.au:                                            ; preds = %.epil.preheader
 
 .lr.ph354.preheader:                              ; preds = %._crit_edge350
   %i.lq = sext i32 %.0182.lcssa450453 to i64
-  %2 = add nuw i32 %.0189.lcssa449454, 1
+  %2 = zext nneg i32 %.0189.lcssa449454 to i64
   br label %.lr.ph354
 
 bb.av:                                            ; preds = %bb.az, %.lr.ph349.new
@@ -259,16 +259,15 @@ bb.ba:                                            ; preds = %.lr.ph354
 
 bb.bb:                                            ; preds = %.lr.ph354
   %indvars.iv.next401 = add nsw i64 %indvars.iv400, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next401 to i32
-  %exitcond403.not = icmp eq i32 %2, %lftr.wideiv
-  br i1 %exitcond403.not, label %.lr.ph358, label %.lr.ph354, !llvm.loop !210
+  %.not231 = icmp sgt i64 %indvars.iv.next401, %2
+  br i1 %.not231, label %.lr.ph358, label %.lr.ph354, !llvm.loop !210
 
 .lr.ph358:                                        ; preds = %bb.bb, %bb.ba
   %i.mm = phi i32 [ %i.ml, %bb.ba ], [ -1, %bb.bb ] ; 2 uses
   %i.mn = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !53
   %i.mp = sext i32 %.0182.lcssa450453 to i64
-  %3 = add nuw i32 %.0189.lcssa449454, 1
+  %3 = zext nneg i32 %.0189.lcssa449454 to i64
   %i.mq = icmp sgt i32 %i.mm, -1
   br label %bb.bc
 
@@ -348,9 +347,8 @@ bb.bh:                                            ; preds = %bb.bc
   %i.nm = trunc nsw i64 %indvars.iv404 to i32
   store i32 %i.nm, ptr %i.nf, align 4, !tbaa !99
   %indvars.iv.next405 = add nsw i64 %indvars.iv404, 1 ; 2 uses
-  %lftr.wideiv407 = trunc i64 %indvars.iv.next405 to i32
-  %exitcond408.not = icmp eq i32 %3, %lftr.wideiv407
-  br i1 %exitcond408.not, label %._crit_edge359, label %bb.bc, !llvm.loop !212
+  %.not232 = icmp sgt i64 %indvars.iv.next405, %3
+  br i1 %.not232, label %._crit_edge359, label %bb.bc, !llvm.loop !212
 
 _ZNSt6vectorIiSaIiEED2Ev.exit273:                 ; preds = %bb.bg, %bb.bf
   resume { ptr, i32 } %i.ni

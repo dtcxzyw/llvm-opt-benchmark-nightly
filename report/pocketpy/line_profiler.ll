@@ -202,12 +202,7 @@ bb.a:
   call void @c11_sbuf__write_cstr(ptr noundef nonnull %1, ptr noundef nonnull @.str.2) #8
   %i.n = inttoptr i64 %.sroa.415.0.copyload to ptr
   %.not25 = icmp slt i32 %i.h, 1
-  br i1 %.not25, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.lr.ph30
-  %2 = add nuw i32 %i.h, 1
-  %wide.trip.count = zext i32 %2 to i64
-  br label %.lr.ph
+  br i1 %.not25, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.f, %.lr.ph30
   call void @c11_sbuf__write_cstr(ptr noundef nonnull %1, ptr noundef nonnull @.str.4) #8
@@ -217,9 +212,9 @@ bb.a:
   %i.r = icmp slt i64 %indvars.iv32, %i.q
   br i1 %i.r, label %bb.g, label %bb.h
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 3 uses
-  %.02326 = phi i1 [ true, %.lr.ph.preheader ], [ %.1, %bb.f ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph30, %bb.f
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.f ], [ 1, %.lr.ph30 ] ; 3 uses
+  %.02326 = phi i1 [ %.1, %bb.f ], [ true, %.lr.ph30 ] ; 2 uses
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %indvars.iv ; 4 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !37
   %i.u = icmp eq i64 %i.t, 0
@@ -255,8 +250,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.b, %bb.e
   %.1 = phi i1 [ %.02326, %bb.b ], [ false, %bb.e ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !63
+  %2 = trunc nuw i64 %indvars.iv.next to i32
+  %.not = icmp slt i32 %i.h, %2
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !63
 
 bb.g:                                             ; preds = %._crit_edge
   call void @c11_sbuf__write_cstr(ptr noundef nonnull %1, ptr noundef nonnull @.str.3) #8

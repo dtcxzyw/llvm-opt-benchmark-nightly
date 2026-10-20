@@ -202,20 +202,17 @@ bb.b:                                             ; preds = %._crit_edge, %bb.d
   %.not.i.not.i.i.i.i11.i = icmp sge i64 %i.g, %.promoted.i, !dbg !8714
   %i.h = icmp slt i64 %i.g, %i.d
   %or.cond.i.i.i.i12.i = select i1 %.not.i.not.i.i.i.i11.i, i1 %i.h, i1 false, !dbg !8715
-  br i1 %or.cond.i.i.i.i12.i, label %.lr.ph.i.preheader, label %.loopexit, !dbg !8716
+  br i1 %or.cond.i.i.i.i12.i, label %.lr.ph.i, label %.loopexit, !dbg !8716
 
-.lr.ph.i.preheader:                               ; preds = %bb.b
-  %storemerge.i.i.i.i14.i = add i64 %i.f, 1
-  br label %.lr.ph.i, !dbg !8716
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %i.i = phi i64 [ %i.l, %.lr.ph.i ], [ %.sroa.4.0.copyload, %.lr.ph.i.preheader ], !dbg !8717 ; 2 uses
-  %i.j = phi i64 [ %i.m, %.lr.ph.i ], [ %i.g, %.lr.ph.i.preheader ] ; 3 uses
+.lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.i
+  %i.i = phi i64 [ %i.l, %.lr.ph.i ], [ %.sroa.4.0.copyload, %bb.b ], !dbg !8717 ; 2 uses
+  %i.j = phi i64 [ %i.m, %.lr.ph.i ], [ %i.g, %bb.b ] ; 2 uses
+  %storemerge.i.i.i.i14.i = add nsw i64 %i.j, 1, !dbg !8715 ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %.sroa.6.0.copyload, i64 %i.i, !dbg !8718
   store i64 %i.j, ptr %i.k, align 8, !dbg !8719, !noalias !8699
   %i.l = add i64 %i.i, 1, !dbg !8720              ; 2 uses
-  %i.m = add i64 %storemerge.i.i.i.i14.i, %i.j, !dbg !8713 ; 3 uses
-  %.not.i.not.i.i.i.i.i = icmp sgt i64 %i.m, %i.j, !dbg !8714
+  %i.m = add i64 %storemerge.i.i.i.i14.i, %i.f, !dbg !8713 ; 3 uses
+  %.not.i.not.i.i.i.i.i = icmp sge i64 %i.m, %storemerge.i.i.i.i14.i, !dbg !8714
   %i.n = icmp slt i64 %i.m, %i.d
   %or.cond.i.i.i.i.i = select i1 %.not.i.not.i.i.i.i.i, i1 %i.n, i1 false, !dbg !8715
   br i1 %or.cond.i.i.i.i.i, label %.lr.ph.i, label %.loopexit, !dbg !8716
