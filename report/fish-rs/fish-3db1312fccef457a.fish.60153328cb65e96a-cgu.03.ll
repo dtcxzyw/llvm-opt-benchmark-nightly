@@ -205,18 +205,15 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.bb = or i32 %i.ad, %.pre.i.i.i.fr
   %or.cond.i.i.i = icmp eq i32 %i.bb, 0
   %i.bc = trunc nuw i32 %.pre.i.i.i.fr to i1      ; 2 uses
-  %i.bd = load i32, ptr %i.ar, align 4            ; 6 uses
+  %i.bd = load i32, ptr %i.ar, align 4            ; 4 uses
   %i.be = and i32 %i.bd, 8
   %.not69.i.i.i.i = icmp eq i32 %i.be, 0
-  %5 = and i32 %i.bd, 4
-  %6 = icmp ne i32 %5, 0
-  %i.bf = and i32 %i.bd, 2
+  %i.bf = and i32 %i.bd, 4
   %i.bg = icmp ne i32 %i.bf, 0
-  %7 = trunc i32 %i.bd to i1
-  %8 = insertelement <2 x i32> poison, i32 %i.bd, i64 0
-  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
-  %10 = and <2 x i32> %9, <i32 16, i32 32>
-  %11 = icmp ne <2 x i32> %10, zeroinitializer
+  %5 = insertelement <4 x i32> poison, i32 %i.bd, i64 0
+  %6 = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> zeroinitializer
+  %7 = and <4 x i32> %6, <i32 2, i32 1, i32 16, i32 32>
+  %8 = icmp ne <4 x i32> %7, zeroinitializer
   %i.bh = and i32 %i.bd, 64
   %i.bi = icmp ne i32 %i.bh, 0
   %.not70.i.i.i.i = trunc i32 %i.af to i1
@@ -245,10 +242,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.bx = and i32 %i.af, 3
   %brmerge117.not = icmp eq i32 %i.bx, 0
   %spec.select.i.i.i.i.mux = select i1 %.not70.i.i.i.i, i32 %spec.select.i.i.i.i, i32 2 ; 2 uses
-  %12 = insertelement <4 x i1> poison, i1 %i.bg, i64 0
-  %13 = insertelement <4 x i1> %12, i1 %7, i64 1
-  %14 = shufflevector <2 x i1> %11, <2 x i1> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %15 = shufflevector <4 x i1> %13, <4 x i1> %14, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %.backedge.outer
 
 .backedge.outer:                                  ; preds = %.backedge.outer.backedge, %bb.h
@@ -365,14 +358,14 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_
 bb.p:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit109.i.i.i.i
   %i.cp = and i32 %.sroa.519.0.copyload.i.i.i.i, 61440 ; 3 uses
   %i.cq = icmp eq i32 %i.cp, 32768
-  %or.cond.i.i.i.i = and i1 %6, %i.cq
+  %or.cond.i.i.i.i = and i1 %i.bg, %i.cq
   br i1 %or.cond.i.i.i.i, label %bb.k, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.cr = insertelement <4 x i32> poison, i32 %i.cp, i64 0
   %i.cs = shufflevector <4 x i32> %i.cr, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ct = icmp eq <4 x i32> %i.cs, <i32 16384, i32 24576, i32 8192, i32 4096>
-  %i.cu = and <4 x i1> %i.ct, %15
+  %i.cu = and <4 x i1> %i.ct, %8
   %i.cv = icmp eq i32 %i.cp, 49152
   %or.cond11.i.i.i.i = and i1 %i.bi, %i.cv
   %i.cw = freeze <4 x i1> %i.cu
