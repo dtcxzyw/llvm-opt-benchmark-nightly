@@ -205,8 +205,8 @@ bytestream2_init.exit.i36:                        ; preds = %bb.ca
   br i1 %i.uk, label %.lr.ph90.i, label %._crit_edge91.i
 
 .lr.ph90.i:                                       ; preds = %.preheader29.i, %.critedge.thread.i
-  %i.ul = phi i32 [ %i.aac, %.critedge.thread.i ], [ %i.uj, %.preheader29.i ] ; 6 uses
-  %.013389.i = phi i32 [ %.3136.i, %.critedge.thread.i ], [ 0, %.preheader29.i ] ; 14 uses
+  %i.ul = phi i32 [ %i.aac, %.critedge.thread.i ], [ %i.uj, %.preheader29.i ] ; 5 uses
+  %.013389.i = phi i32 [ %.3136.i, %.critedge.thread.i ], [ 0, %.preheader29.i ] ; 12 uses
   %.sroa.0.188.i = phi ptr [ %.sroa.0.8.i, %.critedge.thread.i ], [ %.sroa.0.094.i, %.preheader29.i ] ; 4 uses
   %i.um = ptrtoint ptr %.sroa.0.188.i to i64
   %i.un = sub i64 %i.uc, %i.um                    ; 2 uses
@@ -303,22 +303,18 @@ bytestream2_get_byte.exit175.thread.i:            ; preds = %bb.cf
   br i1 %.not15763.i, label %.critedge.thread.i, label %.lr.ph68.i
 
 .lr.ph68.i:                                       ; preds = %.preheader.i37, %bytestream2_get_byte.exit175.thread.i
-  %i.wb = phi i32 [ %i.wa, %.preheader.i37 ], [ 0, %bytestream2_get_byte.exit175.thread.i ] ; 11 uses
-  %.sroa.0.4198208.i = phi ptr [ %.sroa.0.4.i, %.preheader.i37 ], [ %i.ur, %bytestream2_get_byte.exit175.thread.i ] ; 9 uses
+  %i.wb = phi i32 [ %i.wa, %.preheader.i37 ], [ 0, %bytestream2_get_byte.exit175.thread.i ] ; 10 uses
+  %.sroa.0.4198208.i = phi ptr [ %.sroa.0.4.i, %.preheader.i37 ], [ %i.ur, %bytestream2_get_byte.exit175.thread.i ] ; 8 uses
   %.0129199207.i = phi i32 [ %.0129.i, %.preheader.i37 ], [ %i.vv, %bytestream2_get_byte.exit175.thread.i ] ; 2 uses
-  %.0127201206.i = phi i32 [ %.0127.i, %.preheader.i37 ], [ 1, %bytestream2_get_byte.exit175.thread.i ] ; 3 uses
+  %.0127201206.i = phi i32 [ %.0127.i, %.preheader.i37 ], [ 1, %bytestream2_get_byte.exit175.thread.i ] ; 2 uses
   %i.wc = icmp eq i32 %i.uu, 2
-  br i1 %i.wc, label %.lr.ph68.split.preheader.i, label %.lr.ph68.split.us.i
+  br i1 %i.wc, label %.lr.ph68.split.preheader.i, label %.lr.ph77.i
 
 .lr.ph68.split.preheader.i:                       ; preds = %.lr.ph68.i
   %i.wd = sext i32 %.013389.i to i64
   br label %.lr.ph68.split.i
 
-.lr.ph68.split.us.i:                              ; preds = %.lr.ph68.i
-  %4 = icmp slt i32 %.013389.i, %i.ul
-  br i1 %4, label %.lr.ph77.i, label %.critedge.i
-
-.lr.ph77.i:                                       ; preds = %.lr.ph68.split.us.i
+.lr.ph77.i:                                       ; preds = %.lr.ph68.i
   %i.we = shl nuw nsw i32 %.0129199207.i, 3
   %i.wf = load i32, ptr %i.ue, align 4, !tbaa !40 ; 2 uses
   %i.wg = icmp sgt i32 %i.wf, 0
@@ -545,11 +541,11 @@ bytestream2_get_byte.exit.i:                      ; preds = %bb.co, %bb.cn, %._c
   %i.zx = trunc nsw i64 %indvars.iv.next.i39 to i32
   br label %.critedge.i
 
-.critedge.i:                                      ; preds = %scalar.ph, %vector.early.exit, %.critedge.loopexit99.i, %.critedge.loopexit.i, %.lr.ph68.split.us.i
-  %.us-phi.i = phi ptr [ %.sroa.0.4198208.i, %.lr.ph68.split.us.i ], [ %.sroa.0.4198208.i, %.critedge.loopexit99.i ], [ %.sroa.0.564.i, %.critedge.loopexit.i ], [ %.sroa.0.4198208.i, %vector.early.exit ], [ %.sroa.0.4198208.i, %scalar.ph ]
-  %.us-phi71.i = phi i32 [ %.013389.i, %.lr.ph68.split.us.i ], [ %i.zx, %.critedge.loopexit99.i ], [ %i.zw, %.critedge.loopexit.i ], [ %i.ws, %vector.early.exit ], [ %i.xa, %scalar.ph ]
-  %.us-phi72.i = phi i32 [ %.0127201206.i, %.lr.ph68.split.us.i ], [ %i.xj, %.critedge.loopexit99.i ], [ %.112867.i, %.critedge.loopexit.i ], [ %i.wx, %vector.early.exit ], [ %i.wz, %scalar.ph ]
-  %.us-phi73.i = phi i32 [ %i.wb, %.lr.ph68.split.us.i ], [ %i.xd, %.critedge.loopexit99.i ], [ %i.yk, %.critedge.loopexit.i ], [ %i.wu, %vector.early.exit ], [ %i.xb, %scalar.ph ]
+.critedge.i:                                      ; preds = %scalar.ph, %vector.early.exit, %.critedge.loopexit99.i, %.critedge.loopexit.i
+  %.us-phi.i = phi ptr [ %.sroa.0.564.i, %.critedge.loopexit.i ], [ %.sroa.0.4198208.i, %.critedge.loopexit99.i ], [ %.sroa.0.4198208.i, %vector.early.exit ], [ %.sroa.0.4198208.i, %scalar.ph ]
+  %.us-phi71.i = phi i32 [ %i.zw, %.critedge.loopexit.i ], [ %i.zx, %.critedge.loopexit99.i ], [ %i.ws, %vector.early.exit ], [ %i.xa, %scalar.ph ]
+  %.us-phi72.i = phi i32 [ %.112867.i, %.critedge.loopexit.i ], [ %i.xj, %.critedge.loopexit99.i ], [ %i.wx, %vector.early.exit ], [ %i.wz, %scalar.ph ]
+  %.us-phi73.i = phi i32 [ %i.yk, %.critedge.loopexit.i ], [ %i.xd, %.critedge.loopexit99.i ], [ %i.wu, %vector.early.exit ], [ %i.xb, %scalar.ph ]
   %i.zy = icmp sgt i32 %.us-phi72.i, 1
   br i1 %i.zy, label %bb.cp, label %.critedge.thread.i
 

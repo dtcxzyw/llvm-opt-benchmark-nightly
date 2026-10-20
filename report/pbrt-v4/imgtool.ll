@@ -205,8 +205,8 @@ _ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i:     ; preds = %.lr.ph.i.i.i.i.i, %
 
 .preheader101.i.i.i:                              ; preds = %.preheader101.loopexit.i.i.i, %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i
   %i.dk = phi i64 [ %i.aq, %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i ], [ %.pre175.i.i.i, %.preheader101.loopexit.i.i.i ] ; 9 uses
-  %.sroa.095.2.lcssa.i.i.i = phi i64 [ %.sroa.095.1151.i.i.i, %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i ], [ %.sroa.095.3.lcssa.i.i.i, %.preheader101.loopexit.i.i.i ] ; 2 uses
-  %.057.lcssa.i.i.i = phi float [ 0.000000e+00, %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i ], [ %.1.lcssa.i.i.i, %.preheader101.loopexit.i.i.i ] ; 3 uses
+  %.sroa.095.2.lcssa.i.i.i = phi i64 [ %.sroa.095.1151.i.i.i, %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i ], [ %i.er, %.preheader101.loopexit.i.i.i ] ; 2 uses
+  %.057.lcssa.i.i.i = phi float [ 0.000000e+00, %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i ], [ %i.mm, %.preheader101.loopexit.i.i.i ] ; 3 uses
   %.not159.i.i.i = icmp eq i64 %i.dk, 0
   br i1 %.not159.i.i.i, label %._crit_edge150.i.i.i, label %iter.check
 
@@ -294,35 +294,28 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph
 
 .preheader100.i.i.i:                              ; preds = %._crit_edge140.i.i.i, %.preheader100.preheader.i.i.i
-  %i.ek = phi i32 [ %8, %._crit_edge140.i.i.i ], [ %i.de, %.preheader100.preheader.i.i.i ] ; 3 uses
-  %.057144.i.i.i = phi float [ %.1.lcssa.i.i.i, %._crit_edge140.i.i.i ], [ 0.000000e+00, %.preheader100.preheader.i.i.i ] ; 2 uses
+  %i.ek = phi i32 [ %i.mx, %._crit_edge140.i.i.i ], [ %i.de, %.preheader100.preheader.i.i.i ]
+  %.057144.i.i.i = phi float [ %i.mm, %._crit_edge140.i.i.i ], [ 0.000000e+00, %.preheader100.preheader.i.i.i ]
   %.058143.i.i.i = phi i32 [ %i.el, %._crit_edge140.i.i.i ], [ 0, %.preheader100.preheader.i.i.i ] ; 2 uses
-  %.sroa.095.2142.i.i.i = phi i64 [ %.sroa.095.3.lcssa.i.i.i, %._crit_edge140.i.i.i ], [ %.sroa.095.1151.i.i.i, %.preheader100.preheader.i.i.i ] ; 2 uses
-  %5 = icmp sgt i32 %i.ek, 0
-  br i1 %5, label %.lr.ph139.i.i.i, label %._crit_edge140.i.i.i
-
-.lr.ph139.i.i.i:                                  ; preds = %.preheader100.i.i.i
-  %6 = uitofp nneg i32 %.058143.i.i.i to float
-  %7 = insertelement <2 x float> poison, float %6, i64 0
+  %.sroa.095.2142.i.i.i = phi i64 [ %i.er, %._crit_edge140.i.i.i ], [ %.sroa.095.1151.i.i.i, %.preheader100.preheader.i.i.i ]
+  %5 = uitofp nneg i32 %.058143.i.i.i to float
+  %6 = insertelement <2 x float> poison, float %5, i64 0
   br label %bb.e
 
-._crit_edge140.i.i.i:                             ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i, %.preheader100.i.i.i
-  %8 = phi i32 [ %i.ek, %.preheader100.i.i.i ], [ %i.mx, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 2 uses
-  %.sroa.095.3.lcssa.i.i.i = phi i64 [ %.sroa.095.2142.i.i.i, %.preheader100.i.i.i ], [ %i.er, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 2 uses
-  %.1.lcssa.i.i.i = phi float [ %.057144.i.i.i, %.preheader100.i.i.i ], [ %i.mm, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 2 uses
+._crit_edge140.i.i.i:                             ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i
   %i.el = add nuw nsw i32 %.058143.i.i.i, 1       ; 2 uses
-  %i.em = icmp slt i32 %i.el, %8
+  %i.em = icmp slt i32 %i.el, %i.mx
   br i1 %i.em, label %.preheader100.i.i.i, label %.preheader101.loopexit.i.i.i, !llvm.loop !2863
 
-bb.e:                                             ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i, %.lr.ph139.i.i.i
-  %i.en = phi i32 [ %i.ek, %.lr.ph139.i.i.i ], [ %i.mx, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ]
-  %.1138.i.i.i = phi float [ %.057144.i.i.i, %.lr.ph139.i.i.i ], [ %i.mm, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ]
-  %.059137.i.i.i = phi i32 [ 0, %.lr.ph139.i.i.i ], [ %i.mv, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 2 uses
-  %.sroa.095.3136.i.i.i = phi i64 [ %.sroa.095.2142.i.i.i, %.lr.ph139.i.i.i ], [ %i.er, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 2 uses
+bb.e:                                             ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i, %.preheader100.i.i.i
+  %i.en = phi i32 [ %i.ek, %.preheader100.i.i.i ], [ %i.mx, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ]
+  %.1138.i.i.i = phi float [ %.057144.i.i.i, %.preheader100.i.i.i ], [ %i.mm, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ]
+  %.059137.i.i.i = phi i32 [ 0, %.preheader100.i.i.i ], [ %i.mv, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 2 uses
+  %.sroa.095.3136.i.i.i = phi i64 [ %.sroa.095.2142.i.i.i, %.preheader100.i.i.i ], [ %i.er, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 2 uses
   %i.eo = mul i64 %.sroa.095.3136.i.i.i, 6364136223846793005
   %i.ep = add i64 %i.eo, %i.b                     ; 2 uses
   %i.eq = mul i64 %i.ep, 6364136223846793005
-  %i.er = add i64 %i.eq, %i.b                     ; 2 uses
+  %i.er = add i64 %i.eq, %i.b                     ; 3 uses
   %i.es = insertelement <2 x i64> poison, i64 %i.ep, i64 0
   %i.et = insertelement <2 x i64> %i.es, i64 %.sroa.095.3136.i.i.i, i64 1 ; 3 uses
   %i.eu = lshr <2 x i64> %i.et, splat (i64 45)
@@ -338,7 +331,7 @@ bb.e:                                             ; preds = %_ZN4pbrt13InlinedVe
   %i.fe = uitofp nneg i32 %.059137.i.i.i to float
   %i.ff = sitofp i32 %i.en to float
   %i.fg = select <2 x i1> %i.fd, <2 x float> %i.fc, <2 x float> splat (float f0x3F7FFFFF)
-  %i.fh = insertelement <2 x float> %7, float %i.fe, i64 1
+  %i.fh = insertelement <2 x float> %6, float %i.fe, i64 1
   %i.fi = fadd <2 x float> %i.fg, %i.fh
   %i.fj = insertelement <2 x float> poison, float %i.ff, i64 0
   %i.fk = shufflevector <2 x float> %i.fj, <2 x float> poison, <2 x i32> zeroinitializer
@@ -686,7 +679,7 @@ vec.epilog.scalar.ph89.prol.loopexit:             ; preds = %vec.epilog.scalar.p
   br i1 %i.ml, label %._crit_edge.i.i.i, label %vec.epilog.scalar.ph89
 
 ._crit_edge.i.i.i:                                ; preds = %vec.epilog.scalar.ph89.prol.loopexit, %vec.epilog.scalar.ph89, %middle.block85, %vec.epilog.middle.block101, %.preheader.i.i.i
-  %i.mm = fadd float %.1138.i.i.i, %i.jr          ; 2 uses
+  %i.mm = fadd float %.1138.i.i.i, %i.jr          ; 3 uses
   store i64 0, ptr %i.m, align 8, !tbaa !193
   %.not.i.i.i.i.i.i.i = icmp eq ptr %.pre.i.i.i, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i, label %bb.k
@@ -712,7 +705,7 @@ _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
   %i.mv = add nuw nsw i32 %.059137.i.i.i, 1       ; 2 uses
   %i.mw = load ptr, ptr %i.j, align 8, !tbaa !2878, !nonnull !162, !align !343
-  %i.mx = load i32, ptr %i.mw, align 4, !tbaa !67 ; 3 uses
+  %i.mx = load i32, ptr %i.mw, align 4, !tbaa !67 ; 4 uses
   %i.my = icmp slt i32 %i.mv, %i.mx
   br i1 %i.my, label %bb.e, label %._crit_edge140.i.i.i, !llvm.loop !2871
 

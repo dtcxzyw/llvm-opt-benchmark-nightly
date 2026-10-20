@@ -204,18 +204,14 @@ _ZNSt10filesystem7__cxx114pathD2Ev.exit:          ; preds = %_ZNSt10filesystem7_
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.loopexit.i, %.preheader.lr.ph.i
-  %i.w = phi i32 [ %i.o, %.preheader.lr.ph.i ], [ %i.fy, %.loopexit.i ] ; 10 uses
-  %.01426.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %i.am, %.loopexit.i ] ; 2 uses
+  %i.w = phi i32 [ %i.o, %.preheader.lr.ph.i ], [ %i.fy, %.loopexit.i ] ; 9 uses
+  %.01426.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %i.am, %.loopexit.i ]
   %i.x = load ptr, ptr %i.q, align 8, !tbaa !57   ; 5 uses
-  %10 = icmp slt i32 %.01426.i, %i.w
-  br i1 %10, label %.lr.ph.preheader.i.i, label %_ZL7get_dihP7t_xramaPK7t_atoms.exit
-
-.lr.ph.preheader.i.i:                             ; preds = %.preheader.i
-  %11 = sext i32 %.01426.i to i64
+  %10 = sext i32 %.01426.i to i64
   br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %bb.d, %.lr.ph.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %11, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.d ] ; 4 uses
+.lr.ph.i.i:                                       ; preds = %bb.d, %.preheader.i
+  %indvars.iv.i.i = phi i64 [ %10, %.preheader.i ], [ %indvars.iv.next.i.i, %bb.d ] ; 4 uses
   %i.y = getelementptr inbounds [8 x i8], ptr %i.x, i64 %indvars.iv.i.i
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !59
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !27  ; 2 uses
@@ -520,7 +516,7 @@ _ZL9find_atomPKcPPPcii.exit.4.i:                  ; preds = %.lr.ph.i.4.i.tail
   %i.fz = icmp slt i32 %i.am, %i.fy
   br i1 %i.fz, label %.preheader.i, label %_ZL7get_dihP7t_xramaPK7t_atoms.exit, !llvm.loop !43
 
-_ZL7get_dihP7t_xramaPK7t_atoms.exit:              ; preds = %.preheader.i, %_ZL9find_atomPKcPPPcii.exit.i, %bb.e, %_ZL9find_atomPKcPPPcii.exit.1.i, %bb.g, %_ZL9find_atomPKcPPPcii.exit.2.i, %bb.i, %_ZL9find_atomPKcPPPcii.exit.3.i, %bb.k, %_ZL9find_atomPKcPPPcii.exit.4.i, %.loopexit.i, %bb.d, %bb.f, %bb.h, %bb.j, %bb.l, %_ZNSt10filesystem7__cxx114pathD2Ev.exit
+_ZL7get_dihP7t_xramaPK7t_atoms.exit:              ; preds = %_ZL9find_atomPKcPPPcii.exit.i, %bb.e, %_ZL9find_atomPKcPPPcii.exit.1.i, %bb.g, %_ZL9find_atomPKcPPPcii.exit.2.i, %bb.i, %_ZL9find_atomPKcPPPcii.exit.3.i, %bb.k, %_ZL9find_atomPKcPPPcii.exit.4.i, %.loopexit.i, %bb.d, %bb.f, %bb.h, %bb.j, %bb.l, %_ZNSt10filesystem7__cxx114pathD2Ev.exit
   %i.ga = load ptr, ptr @stderr, align 8, !tbaa !76
   %i.gb = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.gc = load i32, ptr %i.gb, align 8, !tbaa !61

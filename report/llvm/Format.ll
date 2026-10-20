@@ -205,13 +205,11 @@ _ZSt4copyISt23_Rb_tree_const_iteratorIPN5clang6format11FormatTokenEESt20back_ins
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %_ZN4llvm5ErrorD2Ev.exit21.i, %.preheader.lr.ph.i
-  %i.cc = phi i32 [ %.pre.i11, %.preheader.lr.ph.i ], [ %i.et, %_ZN4llvm5ErrorD2Ev.exit21.i ]
+  %i.cc = phi i32 [ %.pre.i11, %.preheader.lr.ph.i ], [ %i.et, %_ZN4llvm5ErrorD2Ev.exit21.i ] ; 2 uses
   %i.cd = phi i64 [ 0, %.preheader.lr.ph.i ], [ %i.es, %_ZN4llvm5ErrorD2Ev.exit21.i ]
-  %.022.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %.lcssa.i, %_ZN4llvm5ErrorD2Ev.exit21.i ] ; 3 uses
+  %.022.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %.lcssa.i, %_ZN4llvm5ErrorD2Ev.exit21.i ] ; 2 uses
   %i.ce = load ptr, ptr %5, align 8, !noalias !1331 ; 4 uses
-  %14 = add nuw i32 %.022.i, 1
-  %umax.i = call i32 @llvm.umax.i32(i32 %i.cc, i32 %14) ; 2 uses
-  %i.cf = add i32 %umax.i, -1                     ; 3 uses
+  %i.cf = add i32 %i.cc, -1                       ; 3 uses
   %exitcond.not.i45 = icmp eq i32 %.022.i, %i.cf
   br i1 %exitcond.not.i45, label %..critedge_crit_edge.i, label %.lr.ph47
 
@@ -239,7 +237,7 @@ bb.j:                                             ; preds = %.lr.ph47
 
 .critedge.i:                                      ; preds = %.lr.ph47, %..critedge_crit_edge.i
   %.pre-phi.i = phi i64 [ %.pre24.i, %..critedge_crit_edge.i ], [ %i.ci, %.lr.ph47 ]
-  %.lcssa.i = phi i32 [ %umax.i, %..critedge_crit_edge.i ], [ %i.cg, %.lr.ph47 ] ; 3 uses
+  %.lcssa.i = phi i32 [ %i.cc, %..critedge_crit_edge.i ], [ %i.cg, %.lr.ph47 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28, !noalias !1331
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %i.cd
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !593
@@ -641,9 +639,6 @@ declare i32 @llvm.umin.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #27
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #27
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind }

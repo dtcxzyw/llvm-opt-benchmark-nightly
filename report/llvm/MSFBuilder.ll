@@ -205,7 +205,7 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i: ; p
 bb.b:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %13, align 8, !tbaa !99
   store ptr %i.m, ptr %4, align 8, !tbaa !99
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 9 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.p = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvm15SmallVectorImplImEaSEOS1_(ptr noundef nonnull align 8 dereferenceable(68) %i.n, ptr noundef nonnull align 8 dereferenceable(68) %i.o) ; 0 uses
   %i.q = getelementptr inbounds nuw i8, ptr %13, i64 72
@@ -595,187 +595,102 @@ _ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinarySt
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 40
   %.0.copyload.i.i.i31.i = load i32, ptr %i.ex, align 1 ; 2 uses
   %.not.i80 = icmp eq i32 %.0.copyload.i.i.i31.i, 0
-  br i1 %.not.i80, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not.i80, label %._crit_edge.i, label %bb.y
 
-.lr.ph.i:                                         ; preds = %_ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEED2Ev.exit22.i, %_ZN4llvm5ErrorD2Ev.exit.i
-  %.0.copyload.i.i.i24.i = phi i32 [ %.0.copyload.i.i.i.i, %_ZN4llvm5ErrorD2Ev.exit.i ], [ %.0.copyload.i.i.i31.i, %_ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEED2Ev.exit22.i ] ; 8 uses
-  %.032.i = phi i32 [ %146, %_ZN4llvm5ErrorD2Ev.exit.i ], [ 0, %_ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEED2Ev.exit22.i ] ; 18 uses
+bb.y:                                             ; preds = %_ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEED2Ev.exit22.i, %bb.y
+  %.0.copyload.i.i.i24.i = phi i32 [ %.0.copyload.i.i.i.i, %bb.y ], [ %.0.copyload.i.i.i31.i, %_ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEED2Ev.exit22.i ] ; 7 uses
+  %.032.i = phi i32 [ %95, %bb.y ], [ 0, %_ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEED2Ev.exit22.i ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  %27 = icmp ult i32 %.032.i, %.0.copyload.i.i.i24.i
-  br i1 %27, label %28, label %39
-
-28:                                               ; preds = %.lr.ph.i
-  %29 = and i32 %.032.i, 56
-  %30 = zext nneg i32 %29 to i64
-  %31 = lshr i32 %.032.i, 6
-  %32 = zext nneg i32 %31 to i64
-  %33 = load ptr, ptr %i.n, align 8, !tbaa !38
-  %34 = getelementptr inbounds nuw [8 x i8], ptr %33, i64 %32
-  %35 = load i64, ptr %34, align 8, !tbaa !42
-  %36 = lshr i64 %35, %30
-  %37 = trunc i64 %36 to i8
-  %38 = and i8 %37, 1
-  br label %39
-
-39:                                               ; preds = %28, %.lr.ph.i
-  %40 = phi i8 [ %38, %28 ], [ 1, %.lr.ph.i ]
-  %41 = or disjoint i32 %.032.i, 1                ; 2 uses
-  %42 = icmp ult i32 %41, %.0.copyload.i.i.i24.i
-  br i1 %42, label %43, label %55
-
-43:                                               ; preds = %39
-  %44 = and i32 %41, 57
-  %45 = zext nneg i32 %44 to i64
-  %46 = lshr i32 %.032.i, 6
-  %47 = zext nneg i32 %46 to i64
-  %48 = load ptr, ptr %i.n, align 8, !tbaa !38
-  %49 = getelementptr inbounds nuw [8 x i8], ptr %48, i64 %47
-  %50 = load i64, ptr %49, align 8, !tbaa !42
-  %51 = lshr i64 %50, %45
-  %52 = trunc i64 %51 to i8
-  %53 = shl i8 %52, 1
-  %54 = and i8 %53, 2
-  br label %55
-
-55:                                               ; preds = %43, %39
-  %56 = phi i8 [ %54, %43 ], [ 2, %39 ]
-  %57 = or disjoint i8 %56, %40
-  %58 = or disjoint i32 %.032.i, 2                ; 2 uses
-  %59 = icmp ult i32 %58, %.0.copyload.i.i.i24.i
-  br i1 %59, label %60, label %72
-
-60:                                               ; preds = %55
-  %61 = and i32 %58, 58
-  %62 = zext nneg i32 %61 to i64
-  %63 = lshr i32 %.032.i, 6
-  %64 = zext nneg i32 %63 to i64
-  %65 = load ptr, ptr %i.n, align 8, !tbaa !38
-  %66 = getelementptr inbounds nuw [8 x i8], ptr %65, i64 %64
-  %67 = load i64, ptr %66, align 8, !tbaa !42
-  %68 = lshr i64 %67, %62
-  %69 = trunc i64 %68 to i8
-  %70 = shl i8 %69, 2
-  %71 = and i8 %70, 4
-  br label %72
-
-72:                                               ; preds = %60, %55
-  %73 = phi i8 [ %71, %60 ], [ 4, %55 ]
-  %74 = or disjoint i8 %57, %73
-  %75 = or disjoint i32 %.032.i, 3                ; 2 uses
-  %76 = icmp ult i32 %75, %.0.copyload.i.i.i24.i
-  br i1 %76, label %77, label %89
-
-77:                                               ; preds = %72
-  %78 = and i32 %75, 59
-  %79 = zext nneg i32 %78 to i64
-  %80 = lshr i32 %.032.i, 6
-  %81 = zext nneg i32 %80 to i64
-  %82 = load ptr, ptr %i.n, align 8, !tbaa !38
-  %83 = getelementptr inbounds nuw [8 x i8], ptr %82, i64 %81
-  %84 = load i64, ptr %83, align 8, !tbaa !42
-  %85 = lshr i64 %84, %79
-  %86 = trunc i64 %85 to i8
-  %87 = shl i8 %86, 3
-  %88 = and i8 %87, 8
-  br label %89
-
-89:                                               ; preds = %77, %72
-  %90 = phi i8 [ %88, %77 ], [ 8, %72 ]
-  %91 = or disjoint i8 %74, %90
-  %92 = or disjoint i32 %.032.i, 4                ; 2 uses
-  %93 = icmp ult i32 %92, %.0.copyload.i.i.i24.i
-  br i1 %93, label %94, label %106
-
-94:                                               ; preds = %89
-  %95 = and i32 %92, 60
-  %96 = zext nneg i32 %95 to i64
-  %97 = lshr i32 %.032.i, 6
-  %98 = zext nneg i32 %97 to i64
-  %99 = load ptr, ptr %i.n, align 8, !tbaa !38
-  %100 = getelementptr inbounds nuw [8 x i8], ptr %99, i64 %98
-  %101 = load i64, ptr %100, align 8, !tbaa !42
-  %102 = lshr i64 %101, %96
-  %103 = trunc i64 %102 to i8
-  %104 = shl i8 %103, 4
-  %105 = and i8 %104, 16
-  br label %106
-
-106:                                              ; preds = %94, %89
-  %107 = phi i8 [ %105, %94 ], [ 16, %89 ]
-  %108 = or disjoint i8 %91, %107
-  %109 = or disjoint i32 %.032.i, 5               ; 2 uses
-  %110 = icmp ult i32 %109, %.0.copyload.i.i.i24.i
-  br i1 %110, label %111, label %123
-
-111:                                              ; preds = %106
-  %112 = and i32 %109, 61
-  %113 = zext nneg i32 %112 to i64
-  %114 = lshr i32 %.032.i, 6
-  %115 = zext nneg i32 %114 to i64
-  %116 = load ptr, ptr %i.n, align 8, !tbaa !38
-  %117 = getelementptr inbounds nuw [8 x i8], ptr %116, i64 %115
-  %118 = load i64, ptr %117, align 8, !tbaa !42
-  %119 = lshr i64 %118, %113
-  %120 = trunc i64 %119 to i8
-  %121 = shl i8 %120, 5
-  %122 = and i8 %121, 32
-  br label %123
-
-123:                                              ; preds = %111, %106
-  %124 = phi i8 [ %122, %111 ], [ 32, %106 ]
-  %125 = or i8 %108, %124
-  %126 = or disjoint i32 %.032.i, 6               ; 2 uses
-  %127 = icmp ult i32 %126, %.0.copyload.i.i.i24.i
-  br i1 %127, label %bb.y, label %128
-
-bb.y:                                             ; preds = %123
-  %i.ey = and i32 %126, 62
+  %i.ey = and i32 %.032.i, 56
   %i.ez = zext nneg i32 %i.ey to i64
   %i.fa = lshr i32 %.032.i, 6
   %i.fb = zext nneg i32 %i.fa to i64
   %i.fc = load ptr, ptr %i.n, align 8, !tbaa !38
   %i.fd = getelementptr inbounds nuw [8 x i8], ptr %i.fc, i64 %i.fb
-  %i.fe = load i64, ptr %i.fd, align 8, !tbaa !42
-  %i.ff = lshr i64 %i.fe, %i.ez
+  %i.fe = load i64, ptr %i.fd, align 8, !tbaa !42 ; 8 uses
+  %27 = lshr i64 %i.fe, %i.ez
+  %28 = trunc i64 %27 to i8
+  %29 = and i8 %28, 1
+  %30 = or disjoint i32 %.032.i, 1                ; 2 uses
+  %31 = icmp ult i32 %30, %.0.copyload.i.i.i24.i
+  %32 = and i32 %30, 57
+  %33 = zext nneg i32 %32 to i64
+  %34 = lshr i64 %i.fe, %33
+  %35 = trunc i64 %34 to i8
+  %36 = shl i8 %35, 1
+  %37 = and i8 %36, 2
+  %38 = select i1 %31, i8 %37, i8 2
+  %39 = or disjoint i8 %38, %29
+  %40 = or disjoint i32 %.032.i, 2                ; 2 uses
+  %41 = icmp ult i32 %40, %.0.copyload.i.i.i24.i
+  %42 = and i32 %40, 58
+  %43 = zext nneg i32 %42 to i64
+  %44 = lshr i64 %i.fe, %43
+  %45 = trunc i64 %44 to i8
+  %46 = shl i8 %45, 2
+  %47 = and i8 %46, 4
+  %48 = select i1 %41, i8 %47, i8 4
+  %49 = or disjoint i8 %39, %48
+  %50 = or disjoint i32 %.032.i, 3                ; 2 uses
+  %51 = icmp ult i32 %50, %.0.copyload.i.i.i24.i
+  %52 = and i32 %50, 59
+  %53 = zext nneg i32 %52 to i64
+  %54 = lshr i64 %i.fe, %53
+  %55 = trunc i64 %54 to i8
+  %56 = shl i8 %55, 3
+  %57 = and i8 %56, 8
+  %58 = select i1 %51, i8 %57, i8 8
+  %59 = or disjoint i8 %49, %58
+  %60 = or disjoint i32 %.032.i, 4                ; 2 uses
+  %61 = icmp ult i32 %60, %.0.copyload.i.i.i24.i
+  %62 = and i32 %60, 60
+  %63 = zext nneg i32 %62 to i64
+  %64 = lshr i64 %i.fe, %63
+  %65 = trunc i64 %64 to i8
+  %66 = shl i8 %65, 4
+  %67 = and i8 %66, 16
+  %68 = select i1 %61, i8 %67, i8 16
+  %69 = or disjoint i8 %59, %68
+  %70 = or disjoint i32 %.032.i, 5                ; 2 uses
+  %71 = icmp ult i32 %70, %.0.copyload.i.i.i24.i
+  %72 = and i32 %70, 61
+  %73 = zext nneg i32 %72 to i64
+  %74 = lshr i64 %i.fe, %73
+  %75 = trunc i64 %74 to i8
+  %76 = shl i8 %75, 5
+  %77 = and i8 %76, 32
+  %78 = select i1 %71, i8 %77, i8 32
+  %79 = or i8 %69, %78
+  %80 = or disjoint i32 %.032.i, 6                ; 2 uses
+  %81 = icmp ult i32 %80, %.0.copyload.i.i.i24.i
+  %82 = and i32 %80, 62
+  %83 = zext nneg i32 %82 to i64
+  %i.ff = lshr i64 %i.fe, %83
   %i.fg = trunc i64 %i.ff to i8
   %i.fh = shl i8 %i.fg, 6
   %i.fi = and i8 %i.fh, 64
-  br label %128
-
-128:                                              ; preds = %bb.y, %123
-  %129 = phi i8 [ %i.fi, %bb.y ], [ 64, %123 ]
-  %130 = or i8 %125, %129
-  %131 = or disjoint i32 %.032.i, 7               ; 2 uses
-  %132 = icmp ult i32 %131, %.0.copyload.i.i.i24.i
-  br i1 %132, label %133, label %_ZN4llvm5ErrorD2Ev.exit.i
-
-133:                                              ; preds = %128
-  %134 = and i32 %131, 63
-  %135 = zext nneg i32 %134 to i64
-  %136 = lshr i32 %.032.i, 6
-  %137 = zext nneg i32 %136 to i64
-  %138 = load ptr, ptr %i.n, align 8, !tbaa !38
-  %139 = getelementptr inbounds nuw [8 x i8], ptr %138, i64 %137
-  %140 = load i64, ptr %139, align 8, !tbaa !42
-  %141 = lshr i64 %140, %135
-  %142 = trunc i64 %141 to i8
-  %143 = shl i8 %142, 7
-  br label %_ZN4llvm5ErrorD2Ev.exit.i
-
-_ZN4llvm5ErrorD2Ev.exit.i:                        ; preds = %133, %128
-  %144 = phi i8 [ %143, %133 ], [ -128, %128 ]
-  %145 = or i8 %130, %144
-  %146 = add i32 %.032.i, 8                       ; 2 uses
-  store i8 %145, ptr %i.a, align 1, !tbaa !47
+  %84 = select i1 %81, i8 %i.fi, i8 64
+  %85 = or i8 %79, %84
+  %86 = or disjoint i32 %.032.i, 7                ; 2 uses
+  %87 = icmp ult i32 %86, %.0.copyload.i.i.i24.i
+  %88 = and i32 %86, 63
+  %89 = zext nneg i32 %88 to i64
+  %90 = lshr i64 %i.fe, %89
+  %91 = trunc i64 %90 to i8
+  %92 = shl i8 %91, 7
+  %93 = select i1 %87, i8 %92, i8 -128
+  %94 = or i8 %85, %93
+  %95 = add i32 %.032.i, 8                        ; 2 uses
+  store i8 %94, ptr %i.a, align 1, !tbaa !47
   call void @_ZN4llvm18BinaryStreamWriter10writeBytesENS_8ArrayRefIhEE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Error") align 8 %10, ptr noundef nonnull align 8 dereferenceable(64) %9, ptr nonnull align 1 dereferenceable(1) %i.a, i64 1) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  %147 = load ptr, ptr %4, align 8, !tbaa !99
-  %148 = getelementptr inbounds nuw i8, ptr %147, i64 40
-  %.0.copyload.i.i.i.i = load i32, ptr %148, align 1 ; 2 uses
-  %149 = icmp ult i32 %146, %.0.copyload.i.i.i.i
-  br i1 %149, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !256
+  %96 = load ptr, ptr %4, align 8, !tbaa !99
+  %97 = getelementptr inbounds nuw i8, ptr %96, i64 40
+  %.0.copyload.i.i.i.i = load i32, ptr %97, align 1 ; 2 uses
+  %98 = icmp ult i32 %95, %.0.copyload.i.i.i.i
+  br i1 %98, label %bb.y, label %._crit_edge.i, !llvm.loop !256
 
-._crit_edge.i:                                    ; preds = %_ZN4llvm5ErrorD2Ev.exit.i, %_ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEED2Ev.exit22.i
+._crit_edge.i:                                    ; preds = %bb.y, %_ZN4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEED2Ev.exit22.i
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm18BinaryStreamWriterE, i64 16), ptr %9, align 8, !tbaa !50
   %i.fj = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !118 ; 8 uses

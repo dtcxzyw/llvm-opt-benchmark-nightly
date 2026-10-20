@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %._crit_edge168.i.i,
 
 .lr.ph167.i.i:                                    ; preds = %bb.l
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.cn, i64 48 ; 4 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.cn, i64 48 ; 3 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cn, i64 136
   br label %bb.m
 
@@ -210,7 +210,7 @@ bb.m:                                             ; preds = %bb.ao, %.lr.ph167.i
   %i.cs = phi i32 [ %i.co, %.lr.ph167.i.i ], [ %i.ir, %bb.ao ]
   %.0113165.i.i = phi i32 [ 0, %.lr.ph167.i.i ], [ %i.is, %bb.ao ] ; 2 uses
   %i.ct = load ptr, ptr %i.cp, align 8
-  %i.cu = sext i32 %.0113165.i.i to i64           ; 5 uses
+  %i.cu = sext i32 %.0113165.i.i to i64           ; 4 uses
   %i.cv = getelementptr inbounds [8 x i8], ptr %i.ct, i64 %i.cu
   %i.cw = load ptr, ptr %i.cv, align 8            ; 14 uses
   %i.cx = load i16, ptr %i.ai, align 4            ; 2 uses
@@ -232,8 +232,8 @@ bb.m:                                             ; preds = %bb.ao, %.lr.ph167.i
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.af, %.lr.ph162.i.i
-  %.0106161.i.i = phi i16 [ %i.cy, %.lr.ph162.i.i ], [ %.2.i.i, %bb.af ] ; 5 uses
-  %.0108160.i.i = phi i16 [ %i.cx, %.lr.ph162.i.i ], [ %.2110.i.i, %bb.af ] ; 5 uses
+  %.0106161.i.i = phi i16 [ %i.cy, %.lr.ph162.i.i ], [ %.2.i.i, %bb.af ] ; 3 uses
+  %.0108160.i.i = phi i16 [ %i.cx, %.lr.ph162.i.i ], [ %.2110.i.i, %bb.af ] ; 4 uses
   %narrow.i.i = sub nuw i16 %.0106161.i.i, %.0108160.i.i
   %i.dg = lshr i16 %narrow.i.i, 1
   %i.dh = add i16 %i.dg, %.0108160.i.i            ; 6 uses
@@ -321,7 +321,7 @@ ginCompareEntries.exit.thread.i.i:                ; preds = %ginCompareEntries.e
   %i.ew = getelementptr inbounds nuw i8, ptr %i.cw, i64 9
   %i.ex = load i8, ptr %i.ew, align 1, !range !5, !noundef !6
   %i.ey = trunc nuw i8 %i.ex to i1
-  br i1 %i.ey, label %bb.y, label %.thread.i.i
+  br i1 %i.ey, label %bb.y, label %matchPartialInPendingList.exit138.i.i
 
 bb.y:                                             ; preds = %ginCompareEntries.exit.thread.i.i
   %i.ez = load i16, ptr %i.ap, align 2            ; 2 uses
@@ -329,7 +329,7 @@ bb.y:                                             ; preds = %ginCompareEntries.e
   %.not.i124.i.i = icmp eq i8 %i.fa, 0
   %i.fb = icmp ult i16 %i.dh, %i.ez
   %or.cond.i.i = select i1 %.not.i124.i.i, i1 %i.fb, i1 false
-  br i1 %or.cond.i.i, label %.lr.ph.i.i.i, label %.thread.i.i
+  br i1 %or.cond.i.i, label %.lr.ph.i.i.i, label %matchPartialInPendingList.exit138.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.y
   %i.fc = getelementptr inbounds nuw i8, ptr %i.cw, i64 24
@@ -347,7 +347,7 @@ bb.z:                                             ; preds = %bb.ae, %.lr.ph.i.i.
   %i.fi = call zeroext i16 @gintuple_get_attrnum(ptr noundef nonnull %i.bl, ptr noundef %i.fh) #7
   %i.fj = load i16, ptr %i.de, align 8
   %.not36.i.i.i = icmp eq i16 %i.fi, %i.fj
-  br i1 %.not36.i.i.i, label %bb.aa, label %.thread.i.i
+  br i1 %.not36.i.i.i, label %bb.aa, label %matchPartialInPendingList.exit138.i.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.fk = add nsw i64 %indvars.iv.i.i.i, -1       ; 5 uses
@@ -368,7 +368,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.fr = getelementptr inbounds i8, ptr %i.e, i64 %i.fk
   %i.fs = load i8, ptr %i.fr, align 1
   %.not37.i.i.i = icmp eq i8 %i.fs, 0
-  br i1 %.not37.i.i.i, label %bb.ad, label %.thread.i.i
+  br i1 %.not37.i.i.i, label %bb.ad, label %matchPartialInPendingList.exit138.i.i
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ft = load i16, ptr %i.de, align 8
@@ -387,14 +387,14 @@ bb.ad:                                            ; preds = %bb.ac
   %i.gg = call i64 @FunctionCall4Coll(ptr noundef nonnull %i.fw, i32 noundef %i.fy, i64 noundef %i.fz, i64 noundef %i.gb, i64 noundef %i.gd, i64 noundef %i.gf) #7
   %i.gh = trunc i64 %i.gg to i32                  ; 2 uses
   %i.gi = icmp eq i32 %i.gh, 0
-  br i1 %i.gi, label %.thread.i.i, label %bb.ae
+  br i1 %i.gi, label %matchPartialInPendingList.exit138.i.i, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.gj = icmp sgt i32 %i.gh, 0
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
   %or.cond.i.i.i = select i1 %i.gj, i1 true, i1 %exitcond.not.i.i.i
-  br i1 %or.cond.i.i.i, label %.thread.i.i, label %bb.z, !llvm.loop !11
+  br i1 %or.cond.i.i.i, label %matchPartialInPendingList.exit138.i.i, label %bb.z, !llvm.loop !11
 
 ginCompareEntries.exit.thread141.i.i:             ; preds = %ginCompareEntries.exit.i.i, %bb.w, %bb.u
   %.0143.i.i = phi i32 [ %i.eu, %ginCompareEntries.exit.i.i ], [ %i.en, %bb.w ], [ -1, %bb.u ]
@@ -410,16 +410,8 @@ bb.af:                                            ; preds = %ginCompareEntries.e
   %i.gm = icmp ult i16 %.2110.i.i, %.2.i.i
   br i1 %i.gm, label %bb.n, label %.thread.i.thread.i
 
-.thread.i.i:                                      ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.z, %bb.y, %ginCompareEntries.exit.thread.i.i
-  %.0.i125.sink.i.i = phi i8 [ 1, %ginCompareEntries.exit.thread.i.i ], [ 0, %bb.y ], [ 0, %bb.ae ], [ 1, %bb.ad ], [ 0, %bb.z ], [ 0, %bb.ac ]
-  %7 = load ptr, ptr %i.cq, align 8
-  %8 = getelementptr inbounds i8, ptr %7, i64 %i.cu
-  store i8 %.0.i125.sink.i.i, ptr %8, align 1
-  %9 = icmp ult i16 %.0108160.i.i, %.0106161.i.i
-  br i1 %9, label %bb.an, label %.thread.i.thread.i
-
-.thread.i.thread.i:                               ; preds = %bb.af, %.thread.i.i, %.preheader147.i.i
-  %.0106149.i46.i = phi i16 [ %.0106161.i.i, %.thread.i.i ], [ %i.cy, %.preheader147.i.i ], [ %.2.i.i, %bb.af ] ; 2 uses
+.thread.i.thread.i:                               ; preds = %bb.af, %.preheader147.i.i
+  %.0106149.i46.i = phi i16 [ %i.cy, %.preheader147.i.i ], [ %.2.i.i, %bb.af ] ; 2 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %i.cw, i64 9
   %i.go = load i8, ptr %i.gn, align 1, !range !5, !noundef !6
   %i.gp = trunc nuw i8 %i.go to i1
@@ -501,14 +493,14 @@ bb.am:                                            ; preds = %bb.al
   %or.cond.i137.i.i = select i1 %i.id, i1 true, i1 %exitcond.not.i136.i.i
   br i1 %or.cond.i137.i.i, label %matchPartialInPendingList.exit138.i.i, label %bb.ah, !llvm.loop !11
 
-matchPartialInPendingList.exit138.i.i:            ; preds = %bb.am, %bb.al, %bb.ak, %bb.ah, %bb.ag
-  %.0.i127.i.i = phi i8 [ 0, %bb.ag ], [ 1, %bb.al ], [ 0, %bb.ah ], [ 0, %bb.ak ], [ 0, %bb.am ]
+matchPartialInPendingList.exit138.i.i:            ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.z, %bb.am, %bb.al, %bb.ak, %bb.ah, %bb.ag, %bb.y, %ginCompareEntries.exit.thread.i.i
+  %.0.i125.sink.i.sink.i = phi i8 [ 0, %bb.ag ], [ 1, %ginCompareEntries.exit.thread.i.i ], [ 0, %bb.y ], [ 0, %bb.am ], [ 1, %bb.al ], [ 0, %bb.ah ], [ 0, %bb.ak ], [ 1, %bb.ad ], [ 0, %bb.z ], [ 0, %bb.ac ], [ 0, %bb.ae ]
   %i.ie = load ptr, ptr %i.cq, align 8
   %i.if = getelementptr inbounds i8, ptr %i.ie, i64 %i.cu
-  store i8 %.0.i127.i.i, ptr %i.if, align 1
+  store i8 %.0.i125.sink.i.sink.i, ptr %i.if, align 1
   br label %bb.an
 
-bb.an:                                            ; preds = %matchPartialInPendingList.exit138.i.i, %.thread.i.thread.i, %.thread.i.i
+bb.an:                                            ; preds = %matchPartialInPendingList.exit138.i.i, %.thread.i.thread.i
   %i.ig = load ptr, ptr %i.cq, align 8
   %i.ih = getelementptr inbounds i8, ptr %i.ig, i64 %i.cu
   %i.ii = load i8, ptr %i.ih, align 1

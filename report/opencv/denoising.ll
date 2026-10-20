@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %.lr.ph176, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !140 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !140
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge168
 
@@ -216,23 +216,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.gm, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.gm
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi2EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !649
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -246,7 +240,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !211 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !212 ; 3 uses
@@ -385,7 +379,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.gk, i64 %indvars.iv.i
   store i32 %i.gg, ptr %i.gl, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.gm = load i32, ptr %i.d, align 8, !tbaa !140 ; 2 uses
+  %i.gm = load i32, ptr %i.d, align 8, !tbaa !140 ; 3 uses
   %i.gn = sext i32 %i.gm to i64
   %i.go = icmp slt i64 %indvars.iv.next.i, %i.gn
   br i1 %i.go, label %bb.m, label %._crit_edge83.i, !llvm.loop !661
@@ -717,7 +711,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi2EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi2EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.od = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 4 uses
+  %i.od = phi i32 [ %.pre, %.loopexit ], [ %i.gm, %._crit_edge83.i ] ; 4 uses
   %.2 = phi i32 [ %i.oc, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.oe = icmp sgt i32 %i.od, 0
   br i1 %i.oe, label %.lr.ph167, label %._crit_edge168
@@ -1120,7 +1114,7 @@ bb.k:                                             ; preds = %.lr.ph186, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !158 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !158
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge175
 
@@ -1131,23 +1125,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.gv, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.gv
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi3EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !769
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -1161,7 +1149,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !215 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !216 ; 3 uses
@@ -1309,7 +1297,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %indvars.iv.i
   store i32 %i.gp, ptr %i.gu, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.gv = load i32, ptr %i.d, align 8, !tbaa !158 ; 2 uses
+  %i.gv = load i32, ptr %i.d, align 8, !tbaa !158 ; 3 uses
   %i.gw = sext i32 %i.gv to i64
   %i.gx = icmp slt i64 %indvars.iv.next.i, %i.gw
   br i1 %i.gx, label %bb.m, label %._crit_edge83.i, !llvm.loop !781
@@ -1695,7 +1683,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi3EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi3EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.qi = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 2 uses
+  %i.qi = phi i32 [ %.pre, %.loopexit ], [ %i.gv, %._crit_edge83.i ] ; 2 uses
   %.2 = phi i32 [ %i.qh, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.qj = icmp sgt i32 %i.qi, 0
   br i1 %i.qj, label %.lr.ph174, label %._crit_edge175
@@ -2098,7 +2086,7 @@ bb.k:                                             ; preds = %.lr.ph201, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !176 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !176
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge187
 
@@ -2109,23 +2097,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.ge, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.ge
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi4EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !888
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -2139,7 +2121,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !219 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !220 ; 3 uses
@@ -2270,7 +2252,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.gd = getelementptr inbounds nuw [4 x i8], ptr %i.gc, i64 %indvars.iv.i
   store i32 %i.fy, ptr %i.gd, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.ge = load i32, ptr %i.d, align 8, !tbaa !176 ; 2 uses
+  %i.ge = load i32, ptr %i.d, align 8, !tbaa !176 ; 3 uses
   %i.gf = sext i32 %i.ge to i64
   %i.gg = icmp slt i64 %indvars.iv.next.i, %i.gf
   br i1 %i.gg, label %bb.m, label %._crit_edge83.i, !llvm.loop !900
@@ -2469,7 +2451,7 @@ bb.r:                                             ; preds = %.lr.ph, %bb.r
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi4EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi4EEEij11DistSquarediE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.lt = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 2 uses
+  %i.lt = phi i32 [ %.pre, %.loopexit ], [ %i.ge, %._crit_edge83.i ] ; 2 uses
   %.2 = phi i32 [ %i.ls, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.lu = icmp sgt i32 %i.lt, 0
   br i1 %i.lu, label %.lr.ph186, label %._crit_edge187
@@ -2872,7 +2854,7 @@ bb.k:                                             ; preds = %.lr.ph179, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !233 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !233
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge171
 
@@ -2883,23 +2865,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.gm, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.gm
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi2EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !1057
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -2913,7 +2889,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !272 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !273 ; 3 uses
@@ -3052,7 +3028,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.gk, i64 %indvars.iv.i
   store i32 %i.gg, ptr %i.gl, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.gm = load i32, ptr %i.d, align 8, !tbaa !233 ; 2 uses
+  %i.gm = load i32, ptr %i.d, align 8, !tbaa !233 ; 3 uses
   %i.gn = sext i32 %i.gm to i64
   %i.go = icmp slt i64 %indvars.iv.next.i, %i.gn
   br i1 %i.go, label %bb.m, label %._crit_edge83.i, !llvm.loop !1069
@@ -3384,7 +3360,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi2EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi2EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.of = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 4 uses
+  %i.of = phi i32 [ %.pre, %.loopexit ], [ %i.gm, %._crit_edge83.i ] ; 4 uses
   %.2 = phi i32 [ %i.oe, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.og = icmp sgt i32 %i.of, 0
   br i1 %i.og, label %.lr.ph170, label %._crit_edge171
@@ -3787,7 +3763,7 @@ bb.k:                                             ; preds = %.lr.ph190, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !247 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !247
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge179
 
@@ -3798,23 +3774,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.gv, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.gv
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi3EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !1175
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -3828,7 +3798,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !276 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !277 ; 3 uses
@@ -3976,7 +3946,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %indvars.iv.i
   store i32 %i.gp, ptr %i.gu, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.gv = load i32, ptr %i.d, align 8, !tbaa !247 ; 2 uses
+  %i.gv = load i32, ptr %i.d, align 8, !tbaa !247 ; 3 uses
   %i.gw = sext i32 %i.gv to i64
   %i.gx = icmp slt i64 %indvars.iv.next.i, %i.gw
   br i1 %i.gx, label %bb.m, label %._crit_edge83.i, !llvm.loop !1187
@@ -4362,7 +4332,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi3EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi3EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.ql = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 2 uses
+  %i.ql = phi i32 [ %.pre, %.loopexit ], [ %i.gv, %._crit_edge83.i ] ; 2 uses
   %.2 = phi i32 [ %i.qk, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.qm = icmp sgt i32 %i.ql, 0
   br i1 %i.qm, label %.lr.ph178, label %._crit_edge179
@@ -4765,7 +4735,7 @@ bb.k:                                             ; preds = %.lr.ph206, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !261 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !261
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge192
 
@@ -4776,23 +4746,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.gf, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.gf
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi4EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !1293
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -4806,7 +4770,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !280 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !281 ; 3 uses
@@ -4938,7 +4902,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.ge = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %indvars.iv.i
   store i32 %i.fz, ptr %i.ge, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.gf = load i32, ptr %i.d, align 8, !tbaa !261 ; 2 uses
+  %i.gf = load i32, ptr %i.d, align 8, !tbaa !261 ; 3 uses
   %i.gg = sext i32 %i.gf to i64
   %i.gh = icmp slt i64 %indvars.iv.next.i, %i.gg
   br i1 %i.gh, label %bb.m, label %._crit_edge83.i, !llvm.loop !1305
@@ -5341,7 +5305,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi4EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecIhLi4EEEij7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.rr = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 2 uses
+  %i.rr = phi i32 [ %.pre, %.loopexit ], [ %i.gf, %._crit_edge83.i ] ; 2 uses
   %.2 = phi i32 [ %i.rq, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.rs = icmp sgt i32 %i.rr, 0
   br i1 %i.rs, label %.lr.ph191, label %._crit_edge192
@@ -5744,7 +5708,7 @@ bb.k:                                             ; preds = %.lr.ph179, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !294 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !294
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge171
 
@@ -5755,23 +5719,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.gm, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.gm
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi2EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !1464
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -5785,7 +5743,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !335 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !336 ; 3 uses
@@ -5924,7 +5882,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.gk, i64 %indvars.iv.i
   store i32 %i.gg, ptr %i.gl, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.gm = load i32, ptr %i.d, align 8, !tbaa !294 ; 2 uses
+  %i.gm = load i32, ptr %i.d, align 8, !tbaa !294 ; 3 uses
   %i.gn = sext i32 %i.gm to i64
   %i.go = icmp slt i64 %indvars.iv.next.i, %i.gn
   br i1 %i.go, label %bb.m, label %._crit_edge83.i, !llvm.loop !1476
@@ -6177,7 +6135,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi2EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi2EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.mi = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 4 uses
+  %i.mi = phi i32 [ %.pre, %.loopexit ], [ %i.gm, %._crit_edge83.i ] ; 4 uses
   %.2 = phi i32 [ %i.mh, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.mj = icmp sgt i32 %i.mi, 0
   br i1 %i.mj, label %.lr.ph170, label %._crit_edge171
@@ -6580,7 +6538,7 @@ bb.k:                                             ; preds = %.lr.ph190, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !308 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !308
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge179
 
@@ -6591,23 +6549,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.gv, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.gv
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi3EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !1570
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -6621,7 +6573,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !339 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !340 ; 3 uses
@@ -6769,7 +6721,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %indvars.iv.i
   store i32 %i.gp, ptr %i.gu, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.gv = load i32, ptr %i.d, align 8, !tbaa !308 ; 2 uses
+  %i.gv = load i32, ptr %i.d, align 8, !tbaa !308 ; 3 uses
   %i.gw = sext i32 %i.gv to i64
   %i.gx = icmp slt i64 %indvars.iv.next.i, %i.gw
   br i1 %i.gx, label %bb.m, label %._crit_edge83.i, !llvm.loop !1582
@@ -7120,7 +7072,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi3EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi3EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.qi = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 2 uses
+  %i.qi = phi i32 [ %.pre, %.loopexit ], [ %i.gv, %._crit_edge83.i ] ; 2 uses
   %.2 = phi i32 [ %i.qh, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.qj = icmp sgt i32 %i.qi, 0
   br i1 %i.qj, label %.lr.ph178, label %._crit_edge179
@@ -7523,7 +7475,7 @@ bb.k:                                             ; preds = %.lr.ph206, %._crit_
   br i1 %i.cd, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %i.ce = load i32, ptr %i.d, align 8, !tbaa !322 ; 2 uses
+  %i.ce = load i32, ptr %i.d, align 8, !tbaa !322
   %i.cf = icmp sgt i32 %i.ce, 0
   br i1 %i.cf, label %.preheader.preheader.i, label %._crit_edge192
 
@@ -7534,23 +7486,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge83.i, %.preheader.preheader.i
-  %5 = phi i32 [ %8, %._crit_edge83.i ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
   %.084.i = phi i32 [ %i.cj, %._crit_edge83.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph82.i, label %._crit_edge83.i
-
-.lr.ph82.i:                                       ; preds = %.preheader.i
-  %7 = add nsw i32 %.084.i, %i.bj
+  %5 = add nsw i32 %.084.i, %i.bj
   br label %bb.m
 
-._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
-  %8 = phi i32 [ %5, %.preheader.i ], [ %i.ge, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 3 uses
+._crit_edge83.i:                                  ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i
   %i.cj = add nuw nsw i32 %.084.i, 1              ; 2 uses
-  %i.ck = icmp slt i32 %i.cj, %8
+  %i.ck = icmp slt i32 %i.cj, %i.ge
   br i1 %i.ck, label %.preheader.i, label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi4EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit, !llvm.loop !1676
 
-bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.lr.ph82.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
+bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2Ev.exit55.i, %.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %_ZN2cv7Array2dIiED2Ev.exit55.i ] ; 8 uses
   %i.cl = load i32, ptr %i.g, align 4, !tbaa !201
   %i.cm = mul nsw i32 %i.cl, %.084.i
   %i.cn = sext i32 %i.cm to i64
@@ -7564,7 +7510,7 @@ bb.m:                                             ; preds = %_ZN2cv7Array2dIiED2
 ._crit_edge.i:                                    ; preds = %_ZN2cv7Array2dIiED2Ev.exit.i, %bb.m
   %i.cs = phi i32 [ %i.cq, %bb.m ], [ %i.dk, %_ZN2cv7Array2dIiED2Ev.exit.i ]
   %i.ct = load i32, ptr %i.aq, align 8, !tbaa !343 ; 2 uses
-  %i.cu = sub i32 %7, %i.ct
+  %i.cu = sub i32 %5, %i.ct
   %i.cv = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.cw = sub i32 %i.cv, %i.ct
   %i.cx = load i32, ptr %i.as, align 4, !tbaa !344 ; 3 uses
@@ -7695,7 +7641,7 @@ _ZN2cv7Array2dIiED2Ev.exit55.i:                   ; preds = %_ZN2cv7Array2dIiED2
   %i.gd = getelementptr inbounds nuw [4 x i8], ptr %i.gc, i64 %indvars.iv.i
   store i32 %i.fy, ptr %i.gd, align 4, !tbaa !91
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.ge = load i32, ptr %i.d, align 8, !tbaa !322 ; 2 uses
+  %i.ge = load i32, ptr %i.d, align 8, !tbaa !322 ; 3 uses
   %i.gf = sext i32 %i.ge to i64
   %i.gg = icmp slt i64 %indvars.iv.next.i, %i.gf
   br i1 %i.gg, label %bb.m, label %._crit_edge83.i, !llvm.loop !1688
@@ -8050,7 +7996,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br label %_ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi4EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit
 
 _ZNK27FastNlMeansDenoisingInvokerIN2cv3VecItLi4EEElm7DistAbsiE32calcDistSumsForFirstElementInRowEiRNS0_7Array2dIiEERNS0_7Array3dIiEESA_.exit: ; preds = %._crit_edge83.i, %.loopexit
-  %i.ps = phi i32 [ %.pre, %.loopexit ], [ %8, %._crit_edge83.i ] ; 2 uses
+  %i.ps = phi i32 [ %.pre, %.loopexit ], [ %i.ge, %._crit_edge83.i ] ; 2 uses
   %.2 = phi i32 [ %i.pr, %.loopexit ], [ 0, %._crit_edge83.i ] ; 2 uses
   %i.pt = icmp sgt i32 %i.ps, 0
   br i1 %i.pt, label %.lr.ph191, label %._crit_edge192

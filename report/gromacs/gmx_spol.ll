@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader.lr.ph.i
   %indvars.iv69.i = phi i64 [ 0, %.preheader.lr.ph.i ], [ %indvars.iv.next70.i, %._crit_edge.i ] ; 2 uses
   %i.bi = phi i32 [ %i.bc, %.preheader.lr.ph.i ], [ %i.cn, %._crit_edge.i ]
-  %.03656.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %.1.lcssa.i, %._crit_edge.i ] ; 6 uses
+  %.03656.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %.1.lcssa.i, %._crit_edge.i ] ; 5 uses
   %i.bj = load i32, ptr %i.bb, align 8, !tbaa !55 ; 3 uses
   %i.bk = icmp sgt i32 %i.bj, 0
   br i1 %i.bk, label %.lr.ph.i, label %.critedge.i
@@ -275,8 +275,7 @@ bb.t:                                             ; preds = %.critedge.i
 
 .lr.ph53.preheader.i:                             ; preds = %bb.t
   %i.cg = sext i32 %.03656.i to i64
-  %smax.i = call i32 @llvm.smax.i32(i32 %i.bi, i32 %.03656.i)
-  %wide.trip.count66.i = sext i32 %smax.i to i64
+  %wide.trip.count66.i = sext i32 %i.bi to i64
   br label %.lr.ph53.i
 
 .lr.ph53.i:                                       ; preds = %bb.y, %.lr.ph53.preheader.i
@@ -677,9 +676,6 @@ declare void @llvm.assume(i1 noundef) #12
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #6

@@ -205,13 +205,11 @@ bb.o:                                             ; preds = %.lr.ph.split.i.i
   br i1 %i.gx, label %.lr.ph.split.i.i, label %.preheader86.i.i, !llvm.loop !137
 
 .preheader.i.i:                                   ; preds = %.critedge.i.i, %.preheader.i.preheader.i
-  %i.gy = phi i32 [ %i.fw, %.critedge.i.i ], [ %i.fy, %.preheader.i.preheader.i ] ; 2 uses
-  %.191.i.i = phi i32 [ %.075.lcssa.i.i, %.critedge.i.i ], [ 0, %.preheader.i.preheader.i ] ; 3 uses
+  %i.gy = phi i32 [ %i.fw, %.critedge.i.i ], [ %i.fy, %.preheader.i.preheader.i ] ; 4 uses
+  %.191.i.i = phi i32 [ %.075.lcssa.i.i, %.critedge.i.i ], [ 0, %.preheader.i.preheader.i ] ; 2 uses
   %i.gz = zext nneg i32 %.191.i.i to i64          ; 3 uses
   %i.ha = zext nneg i32 %i.gy to i64              ; 2 uses
-  %5 = add nuw nsw i32 %.191.i.i, 1
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.gy, i32 %5) ; 3 uses
-  %i.hb = add nsw i32 %smax.i.i, -1               ; 2 uses
+  %i.hb = add nsw i32 %i.gy, -1                   ; 2 uses
   %indvars.iv.next106.i.i405 = add nuw nsw i64 %i.gz, 1 ; 2 uses
   %i.hc = icmp samesign ult i64 %indvars.iv.next106.i.i405, %i.ha
   br i1 %i.hc, label %.lr.ph, label %.critedge.i.i
@@ -236,7 +234,7 @@ bb.p:                                             ; preds = %.lr.ph
 
 .critedge.i.i:                                    ; preds = %bb.p, %.preheader.i.i, %.critedge.split.loop.exit123.i.i
   %.075.in.lcssa.i.i = phi i32 [ %i.hh, %.critedge.split.loop.exit123.i.i ], [ %i.hb, %.preheader.i.i ], [ %i.hb, %bb.p ]
-  %.075.lcssa.i.i = phi i32 [ %i.hi, %.critedge.split.loop.exit123.i.i ], [ %smax.i.i, %.preheader.i.i ], [ %smax.i.i, %bb.p ] ; 2 uses
+  %.075.lcssa.i.i = phi i32 [ %i.hi, %.critedge.split.loop.exit123.i.i ], [ %i.gy, %.preheader.i.i ], [ %i.gy, %bb.p ] ; 2 uses
   %i.hj = sub nsw i32 %.075.in.lcssa.i.i, %.191.i.i
   %i.hk = sext i32 %i.hj to i64
   %i.hl = getelementptr inbounds i8, ptr %i.gc, i64 %i.hk

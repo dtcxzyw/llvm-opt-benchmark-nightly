@@ -205,7 +205,7 @@ bb.av:                                            ; preds = %bb.au
 .lr.ph34.i:                                       ; preds = %.outer.i, %.lr.ph34.lr.ph.i
   %indvar = phi i64 [ %indvar.next, %.outer.i ], [ 0, %.lr.ph34.lr.ph.i ] ; 4 uses
   %.0.ph39.i = phi ptr [ %i.hk, %.outer.i ], [ %i.gr, %.lr.ph34.lr.ph.i ] ; 4 uses
-  %.026.ph38.i = phi i32 [ %.02633.i, %.outer.i ], [ %i.gs, %.lr.ph34.lr.ph.i ] ; 2 uses
+  %.026.ph38.i = phi i32 [ %.02633.i, %.outer.i ], [ %i.gs, %.lr.ph34.lr.ph.i ]
   %indvars195 = trunc i64 %indvar to i32          ; 2 uses
   %i.gt = shl i64 %indvar, 3
   %i.gu = getelementptr i8, ptr %0, i64 %i.gt
@@ -250,20 +250,15 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
 ._crit_edge.i:                                    ; preds = %.lr.ph.preheader.i, %bb.az
   %i.hi = add nsw i32 %.02633.i, -1               ; 2 uses
   %i.hj = icmp sgt i32 %i.hi, %indvars195
-  br i1 %i.hj, label %bb.aw, label %.outer._crit_edge.loopexit.i
+  br i1 %i.hj, label %bb.aw, label %.outer._crit_edge.i
 
 .outer.i:                                         ; preds = %bb.aw
   %i.hk = getelementptr i8, ptr %.0.ph39.i, i64 8
   %i.hl = icmp sgt i32 %.02633.i, %indvars
   br i1 %i.hl, label %.lr.ph34.i, label %.outer._crit_edge.i, !llvm.loop !181
 
-.outer._crit_edge.loopexit.i:                     ; preds = %._crit_edge.i
-  %2 = add nsw i32 %.026.ph38.i, -1
-  %smin.le.i = call i32 @llvm.smin.i32(i32 %indvars195, i32 %2)
-  br label %.outer._crit_edge.i
-
-.outer._crit_edge.i:                              ; preds = %.outer.i, %.outer._crit_edge.loopexit.i
-  %.026.lcssa.i = phi i32 [ %smin.le.i, %.outer._crit_edge.loopexit.i ], [ %.02633.i, %.outer.i ]
+.outer._crit_edge.i:                              ; preds = %.outer.i, %._crit_edge.i
+  %.026.lcssa.i = phi i32 [ %indvars195, %._crit_edge.i ], [ %.02633.i, %.outer.i ]
   %i.hm = trunc i32 %.026.lcssa.i to i8
   br label %tcp_sack_remove.exit
 
