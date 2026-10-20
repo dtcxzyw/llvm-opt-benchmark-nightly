@@ -137,7 +137,6 @@ target triple = "x86_64-pc-linux-gnu"
 @rb_cInteger = external local_unnamed_addr global i64, align 8
 @rb_cSymbol = external local_unnamed_addr global i64, align 8
 @rb_cFloat = external local_unnamed_addr global i64, align 8
-@wb_protected_types = internal unnamed_addr constant <{ [16 x i8], [15 x i8] }> <{ [16 x i8] c"\00\01\00\00\01\01\01\01\01\01\00\00\00\01\01\01", [15 x i8] zeroinitializer }>, align 16
 @ruby_current_ec = external thread_local local_unnamed_addr global ptr, align 8
 @cancel_single_ractor_mode.rbimpl_id = internal unnamed_addr global i64 0, align 8
 @.str.97 = private unnamed_addr constant [11 x i8] c"_activated\00", align 1
@@ -540,12 +539,12 @@ rb_ractor_shareable_p.exit:                       ; preds = %bb.d
 
 bb.e:                                             ; preds = %rb_ractor_shareable_p.exit.thread19, %rb_ractor_shareable_p.exit
   %i.s = load i64, ptr %i.f, align 8, !tbaa !117
-  %i.t = and i64 %i.s, 31                         ; 4 uses
+  %i.t = and i64 %i.s, 31                         ; 3 uses
   %i.u = call i64 @rb_gc_obj_slot_size(i64 noundef %0) #21 ; 3 uses
   %i.v = shl nuw nsw i64 1, %i.t
-  %i.w = and i64 %i.v, 2147425293
+  %i.w = and i64 %i.v, 58354
   %.not.not = icmp eq i64 %i.w, 0
-  br i1 %.not.not, label %bb.f, label %bb.g
+  br i1 %.not.not, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -558,12 +557,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %4 = getelementptr i8, ptr @wb_protected_types, i64 %i.t
-  %5 = load i8, ptr %4, align 1, !tbaa !277, !range !77, !noundef !30
-  %6 = shl nuw nsw i8 %5, 5
-  %7 = zext nneg i8 %6 to i64
-  %8 = or disjoint i64 %i.t, %7
-  %i.aa = call i64 @rb_wb_unprotected_newobj_of(i64 noundef 0, i64 noundef %8, i32 noundef 0, i64 noundef %i.u) #21
+  %i.aa = call i64 @rb_wb_unprotected_newobj_of(i64 noundef 0, i64 noundef %i.t, i32 noundef 0, i64 noundef %i.u) #21
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -688,17 +682,17 @@ bb.e:                                             ; preds = %bb.c
   %i.l = load i64, ptr %i.k, align 8, !tbaa !163
   store i64 %i.l, ptr %i.b, align 8, !tbaa !62
   %i.m = getelementptr i8, ptr %1, i64 16         ; 4 uses
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !282  ; 2 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !281  ; 2 uses
   %.not.i = icmp eq ptr %i.n, null
   br i1 %.not.i, label %bb.f, label %obj_traverse_replace_rec.exit, !prof !125
 
 bb.f:                                             ; preds = %bb.e
   %i.o = tail call i64 @rb_ident_hash_new() #21   ; 2 uses
   %i.p = getelementptr i8, ptr %1, i64 24
-  store i64 %i.o, ptr %i.p, align 8, !tbaa !283
+  store i64 %i.o, ptr %i.p, align 8, !tbaa !282
   %i.q = add i64 %i.o, 24
   %i.r = inttoptr i64 %i.q to ptr                 ; 2 uses
-  store ptr %i.r, ptr %i.m, align 8, !tbaa !282
+  store ptr %i.r, ptr %i.m, align 8, !tbaa !281
   br label %obj_traverse_replace_rec.exit
 
 obj_traverse_replace_rec.exit:                    ; preds = %bb.e, %bb.f
@@ -713,17 +707,17 @@ bb.g:                                             ; preds = %obj_traverse_replac
   br label %.critedge210
 
 bb.h:                                             ; preds = %obj_traverse_replace_rec.exit
-  %i.v = load ptr, ptr %i.m, align 8, !tbaa !282  ; 2 uses
+  %i.v = load ptr, ptr %i.m, align 8, !tbaa !281  ; 2 uses
   %.not.i219 = icmp eq ptr %i.v, null
   br i1 %.not.i219, label %bb.i, label %rb_obj_written.exit, !prof !125
 
 bb.i:                                             ; preds = %bb.h
   %i.w = call i64 @rb_ident_hash_new() #21        ; 2 uses
   %i.x = getelementptr i8, ptr %1, i64 24
-  store i64 %i.w, ptr %i.x, align 8, !tbaa !283
+  store i64 %i.w, ptr %i.x, align 8, !tbaa !282
   %i.y = add i64 %i.w, 24
   %i.z = inttoptr i64 %i.y to ptr                 ; 2 uses
-  store ptr %i.z, ptr %i.m, align 8, !tbaa !282
+  store ptr %i.z, ptr %i.m, align 8, !tbaa !281
   br label %rb_obj_written.exit
 
 rb_obj_written.exit:                              ; preds = %bb.h, %bb.i
@@ -731,7 +725,7 @@ rb_obj_written.exit:                              ; preds = %bb.h, %bb.i
   %i.ab = load i64, ptr %i.b, align 8, !tbaa !62
   %i.ac = call i32 @rb_st_insert(ptr noundef %i.aa, i64 noundef %0, i64 noundef %i.ab) #21 ; 0 uses
   %i.ad = getelementptr i8, ptr %1, i64 24        ; 2 uses
-  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !283
+  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !282
   call void @rb_gc_writebarrier(i64 noundef %i.ae, i64 noundef %0) #21
   %i.af = load i64, ptr %i.b, align 8, !tbaa !62  ; 3 uses
   %i.ag = icmp eq i64 %i.af, 0
@@ -741,7 +735,7 @@ rb_obj_written.exit:                              ; preds = %bb.h, %bb.i
   br i1 %i.aj, label %rb_obj_written.exit221, label %bb.j
 
 bb.j:                                             ; preds = %rb_obj_written.exit
-  %i.ak = load i64, ptr %i.ad, align 8, !tbaa !283
+  %i.ak = load i64, ptr %i.ad, align 8, !tbaa !282
   call void @rb_gc_writebarrier(i64 noundef %i.ak, i64 noundef %i.af) #21
   br label %rb_obj_written.exit221
 
@@ -787,9 +781,9 @@ bb.m:                                             ; preds = %rb_obj_gen_fields_p
   %.pre284 = load i64, ptr %.pre.i, align 8, !tbaa !117 ; 2 uses
   %i.ay = and i64 %.pre284, 576460752303423488
   %.not250 = icmp eq i64 %i.ay, 0
-  %or.cond = select i1 %i.at, i1 true, i1 %.not250, !prof !284
+  %or.cond = select i1 %i.at, i1 true, i1 %.not250, !prof !283
   %.not.i224 = icmp eq i64 %i.ax, 0               ; 2 uses
-  br i1 %or.cond, label %rb_shape_obj_too_complex_p.exit.thread, label %bb.n, !prof !284
+  br i1 %or.cond, label %rb_shape_obj_too_complex_p.exit.thread, label %bb.n, !prof !283
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
@@ -873,7 +867,7 @@ bb.t:                                             ; preds = %bb.s
 rb_obj_write.exit:                                ; preds = %bb.r, %bb.s, %bb.t
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %rb_obj_gen_fields_p.exit.thread, label %.lr.ph, !llvm.loop !278
+  br i1 %exitcond.not, label %rb_obj_gen_fields_p.exit.thread, label %.lr.ph, !llvm.loop !277
 
 rb_obj_gen_fields_p.exit.thread:                  ; preds = %rb_obj_write.exit, %rb_imemo_fields_ptr.exit, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_imemo_fields_complex_tbl.exit, %rb_obj_gen_fields_p.exit
   %i.cb = load i64, ptr %.pre.i, align 8, !tbaa !117 ; 6 uses
@@ -977,7 +971,7 @@ bb.aa:                                            ; preds = %bb.z
 rb_obj_write.exit229:                             ; preds = %bb.y, %bb.z, %bb.aa
   %indvars.iv.next280 = add nuw nsw i64 %indvars.iv279, 1 ; 2 uses
   %exitcond283.not = icmp eq i64 %indvars.iv.next280, %wide.trip.count282
-  br i1 %exitcond283.not, label %.critedge198, label %.lr.ph267, !llvm.loop !279
+  br i1 %exitcond283.not, label %.critedge198, label %.lr.ph267, !llvm.loop !278
 
 bb.ab:                                            ; preds = %rb_obj_gen_fields_p.exit.thread
   call void @rb_ary_cancel_sharing(i64 noundef %i.ap) #21
@@ -1046,12 +1040,12 @@ RARRAY_ASET.exit:                                 ; preds = %bb.ai, %bb.aj
 
 bb.ak:                                            ; preds = %bb.ah, %RARRAY_ASET.exit
   %indvars.iv.next277 = add nuw nsw i64 %indvars.iv276, 1
-  br label %bb.ac, !llvm.loop !280
+  br label %bb.ac, !llvm.loop !279
 
 .critedge201:                                     ; preds = %RARRAY_LENINT.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
   store ptr %i.a, ptr %i.c, align 8, !tbaa !119
-  call void asm sideeffect "", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(ptr) %i.c) #21, !srcloc !285
+  call void asm sideeffect "", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(ptr) %i.c) #21, !srcloc !284
   %i.dx = load ptr, ptr %i.c, align 8, !tbaa !119
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #21
   %i.dy = load volatile i64, ptr %i.dx, align 8, !tbaa !62 ; 0 uses
@@ -1143,7 +1137,7 @@ bb.av:                                            ; preds = %bb.au
 rb_obj_write.exit234:                             ; preds = %bb.at, %bb.au, %bb.av
   %i.fa = add nuw nsw i64 %.0263, 1               ; 2 uses
   %exitcond275.not = icmp eq i64 %i.fa, %.0.i231245
-  br i1 %exitcond275.not, label %.critedge198, label %.lr.ph264, !llvm.loop !281
+  br i1 %exitcond275.not, label %.critedge198, label %.lr.ph264, !llvm.loop !280
 
 bb.aw:                                            ; preds = %rb_obj_gen_fields_p.exit.thread
   %i.fb = getelementptr i8, ptr %.pre.i, i64 16   ; 2 uses
@@ -1546,9 +1540,9 @@ bb.b:                                             ; preds = %bb.a
 
 rb_obj_written.exit:                              ; preds = %bb.a, %bb.b
   %i.i = getelementptr i8, ptr %1, i64 136        ; 2 uses
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !286  ; 3 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !285  ; 3 uses
   %i.k = add i64 %i.j, 1
-  store i64 %i.k, ptr %i.i, align 8, !tbaa !286
+  store i64 %i.k, ptr %i.i, align 8, !tbaa !285
   %i.l = getelementptr i8, ptr %i.c, i64 8
   store i64 %i.j, ptr %i.l, align 8, !tbaa !128
   %i.m = tail call noalias nonnull dereferenceable(24) ptr @ruby_xmalloc(i64 noundef 24) #24 ; 6 uses
@@ -1622,17 +1616,17 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.h = getelementptr i8, ptr %1, i64 16         ; 2 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !289  ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !288  ; 2 uses
   %.not.i = icmp eq ptr %i.i, null
   br i1 %.not.i, label %bb.e, label %obj_traverse_rec.exit, !prof !125
 
 bb.e:                                             ; preds = %bb.d
   %i.j = tail call i64 @rb_ident_hash_new() #21   ; 2 uses
   %i.k = getelementptr i8, ptr %1, i64 24
-  store i64 %i.j, ptr %i.k, align 8, !tbaa !290
+  store i64 %i.j, ptr %i.k, align 8, !tbaa !289
   %i.l = add i64 %i.j, 24
   %i.m = inttoptr i64 %i.l to ptr                 ; 2 uses
-  store ptr %i.m, ptr %i.h, align 8, !tbaa !289
+  store ptr %i.m, ptr %i.h, align 8, !tbaa !288
   br label %obj_traverse_rec.exit
 
 obj_traverse_rec.exit:                            ; preds = %bb.d, %bb.e
@@ -1643,7 +1637,7 @@ obj_traverse_rec.exit:                            ; preds = %bb.d, %bb.e
 
 rb_obj_written.exit:                              ; preds = %obj_traverse_rec.exit
   %i.p = getelementptr i8, ptr %1, i64 24
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !290
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !289
   tail call void @rb_gc_writebarrier(i64 noundef %i.q, i64 noundef %0) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1718,7 +1712,7 @@ bb.l:                                             ; preds = %RARRAY_LENINT.exit
   %i.ah = call fastcc i32 @obj_traverse_i(i64 noundef %i.ag, ptr noundef nonnull %1)
   %.not74 = icmp eq i32 %i.ah, 0
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  br i1 %.not74, label %bb.h, label %.loopexit, !llvm.loop !287
+  br i1 %.not74, label %bb.h, label %.loopexit, !llvm.loop !286
 
 bb.m:                                             ; preds = %bb.f
   %i.ai = getelementptr i8, ptr %i.v, i64 16
@@ -1766,7 +1760,7 @@ RSTRUCT_CONST_PTR.exit:                           ; preds = %bb.p, %bb.q
 bb.r:                                             ; preds = %.lr.ph
   %i.ax = add nuw nsw i64 %.05791, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.ax, %.0.i84
-  br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !288
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !287
 
 .lr.ph:                                           ; preds = %RSTRUCT_CONST_PTR.exit, %bb.r
   %.05791 = phi i64 [ %i.ax, %bb.r ], [ 0, %RSTRUCT_CONST_PTR.exit ] ; 2 uses
@@ -2129,7 +2123,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.ar = tail call i64 (ptr, i64, ptr, i64, ...) @rb_rescue2(ptr noundef nonnull @require_result_send_body, i64 noundef %i.ao, ptr noundef nonnull @require_result_send_resuce, i64 noundef %i.ap, i64 noundef %i.aq) #21 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   store ptr %i.a, ptr %i.b, align 8, !tbaa !119
-  call void asm sideeffect "", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(ptr) %i.b) #21, !srcloc !291
+  call void asm sideeffect "", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(ptr) %i.b) #21, !srcloc !290
   %i.as = load ptr, ptr %i.b, align 8, !tbaa !119
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   %i.at = load volatile i64, ptr %i.as, align 8, !tbaa !62 ; 0 uses
@@ -2532,19 +2526,18 @@ begin_hunk_3_@llvm.umax.i16
 !274 = !{!131, !14, i64 0}
 !275 = !{!"llvm.loop.peeled.count", i32 1}
 !276 = !{i64 2155840508}
-!277 = !{!40, !40, i64 0}
+!277 = distinct !{!277, !69}
 !278 = distinct !{!278, !69}
 !279 = distinct !{!279, !69}
 !280 = distinct !{!280, !69}
-!281 = distinct !{!281, !69}
-!282 = !{!160, !54, i64 16}
-!283 = !{!160, !18, i64 24}
-!284 = !{!"branch_weights", i32 -2146410, i32 2146410}
-!285 = !{i64 2156849240}
-!286 = !{!60, !18, i64 136}
+!281 = !{!160, !54, i64 16}
+!282 = !{!160, !18, i64 24}
+!283 = !{!"branch_weights", i32 -2146410, i32 2146410}
+!284 = !{i64 2156849240}
+!285 = !{!60, !18, i64 136}
+!286 = distinct !{!286, !69}
 !287 = distinct !{!287, !69}
-!288 = distinct !{!288, !69}
-!289 = !{!142, !54, i64 16}
-!290 = !{!142, !18, i64 24}
-!291 = !{i64 2156859591}
+!288 = !{!142, !54, i64 16}
+!289 = !{!142, !18, i64 24}
+!290 = !{i64 2156859591}
 end_hunk_3

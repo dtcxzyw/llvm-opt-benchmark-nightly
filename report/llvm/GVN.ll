@@ -205,8 +205,6 @@ $_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_10BasicBlockENS_6detail13DenseSetEmptyE
 
 $_ZZNSt9once_flag18_Prepare_executionC1IZSt9call_onceIRFvRN4llvm12PassRegistryEEJSt17reference_wrapperIS4_EEEvRS_OT_DpOT0_EUlvE_EERSB_ENUlvE_8__invokeEv = comdat any
 
-$_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 $_ZTVN4llvm29InstructionPrecedenceTrackingE = comdat any
 
 $_ZTVN4llvm3gvn13GVNLegacyPassE = comdat any
@@ -279,7 +277,6 @@ $_ZSt19piecewise_construct = comdat any
 @.str.45 = private unnamed_addr constant [12 x i8] c" eliminated\00", align 1
 @.str.46 = private unnamed_addr constant [15 x i8] c"InfavorOfValue\00", align 1
 @_ZTVN4llvm18OptimizationRemarkE = external unnamed_addr constant { [7 x ptr] }, align 8
-@_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] zeroinitializer, [8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\01\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00"], comdat, align 16
 @_ZTVN4llvm22EarliestEscapeAnalysisE = external unnamed_addr constant { [5 x ptr] }, align 8
 @_ZTVN4llvm27ImplicitControlFlowTrackingE = external unnamed_addr constant { [5 x ptr] }, align 8
 @_ZTVN4llvm29InstructionPrecedenceTrackingE = linkonce_odr unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @__cxa_pure_virtual, ptr @_ZN4llvm29InstructionPrecedenceTrackingD2Ev, ptr @_ZN4llvm29InstructionPrecedenceTrackingD0Ev] }, comdat, align 8
@@ -682,14 +679,9 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %.1.in.in.in.in.i = getelementptr inbounds nuw i8, ptr %i.v, i64 2
   %.1.in.in.in.i = load i16, ptr %.1.in.in.in.in.i, align 2, !tbaa !85
-  %.1.in.in.i = lshr i16 %.1.in.in.in.i, 7
-  %.1.in.i = and i16 %.1.in.in.i, 7
-  %11 = zext nneg i16 %.1.in.i to i64
-  %12 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %11
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 2
-  %14 = load i8, ptr %13, align 2, !tbaa !382, !range !47, !noundef !48
-  %15 = trunc nuw i8 %14 to i1
-  br i1 %15, label %bb.m, label %bb.s
+  %.1.in.i = and i16 %.1.in.in.in.i, 896
+  %11 = icmp samesign ugt i16 %.1.in.i, 256
+  br i1 %11, label %bb.m, label %bb.s
 
 bb.m:                                             ; preds = %bb.l
   %i.af = load i8, ptr %i.v, align 8, !tbaa !70

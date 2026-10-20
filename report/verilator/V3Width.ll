@@ -205,8 +205,6 @@ $_ZZN8FileLine9singletonEvE1s = comdat any
 
 $_ZGVZN8FileLine9singletonEvE1s = comdat any
 
-$_ZZNK9VEdgeType11clockedStmtEvE7clocked = comdat any
-
 $_ZZNK10VTimescale10multiplierEvE6values = comdat any
 
 $_ZTV18WidthRemoveVisitor = comdat any
@@ -609,7 +607,6 @@ begin_hunk_1
 @.str.1304 = private unnamed_addr constant [13 x i8] c"Invalid edge\00", align 1
 @.str.1305 = private unnamed_addr constant [66 x i8] c"Edge event control not legal on real type (IEEE 1800-2023 6.12.1)\00", align 1
 @.str.1306 = private unnamed_addr constant [73 x i8] c"Edge event control not legal on non-integral type (IEEE 1800-2023 9.4.2)\00", align 1
-@_ZZNK9VEdgeType11clockedStmtEvE7clocked = linkonce_odr dso_local local_unnamed_addr constant [14 x i8] c"\01\01\01\01\01\01\01\00\00\00\00\00\00\00", comdat, align 1
 @_ZTV10AstSenItem = external constant { [42 x ptr] }, align 8
 @.str.1307 = private unnamed_addr constant [8 x i8] c"SeqBody\00", align 1
 @.str.1308 = private unnamed_addr constant [36 x i8] c"Invalid statement under AstSequence\00", align 1
@@ -1012,11 +1009,8 @@ bb.a:
   br i1 %i.b, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = zext i8 %.sroa.0.0.copyload.i.i to i64
-  %4 = getelementptr inbounds nuw i8, ptr @_ZZNK9VEdgeType11clockedStmtEvE7clocked, i64 %3
-  %5 = load i8, ptr %4, align 1, !tbaa !400, !range !170, !noundef !171
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %bb.d, label %bb.c, !prof !258
+  %3 = icmp ult i8 %.sroa.0.0.copyload.i.i, 7
+  br i1 %3, label %bb.d, label %bb.c, !prof !258
 
 bb.c:                                             ; preds = %bb.b
   %i.c = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.5, i32 noundef 7662) ; 0 uses

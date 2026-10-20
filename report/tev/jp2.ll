@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %._crit_edge185
 switch.lookup:                                    ; preds = %bb.w
   %i.fe = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.opj_jp2_setup_encoder, i64 %i.fe
-  %switch.load = load i8, ptr %switch.gep, align 1 ; 3 uses
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
   %switch.ext = zext i8 %switch.load to i32       ; 3 uses
   %.not164 = icmp ugt i32 %i.da, %switch.ext
   br i1 %.not164, label %bb.x, label %.critedge.sink.split
@@ -258,11 +258,9 @@ bb.ac:                                            ; preds = %bb.aa
   %lcmp.mod251.not = icmp eq i64 %xtraiter250, 0
   br i1 %lcmp.mod251.not, label %.preheader, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %.preheader.unr-lcssa, %bb.ac
+.epil.preheader:                                  ; preds = %bb.ac, %.preheader.unr-lcssa
   %indvars.iv210.epil.init = phi i64 [ 1, %bb.ac ], [ %indvars.iv.next211.1, %.preheader.unr-lcssa ]
   %indvars.iv205.epil.init = phi i64 [ 0, %bb.ac ], [ %indvars.iv.next206.1, %.preheader.unr-lcssa ] ; 3 uses
-  %lcmp.mod253 = trunc i8 %switch.load to i1
-  tail call void @llvm.assume(i1 %lcmp.mod253)
   %i.ft = trunc i64 %indvars.iv205.epil.init to i16
   %i.fu = getelementptr inbounds nuw [6 x i8], ptr %i.fm, i64 %indvars.iv205.epil.init ; 3 uses
   store i16 %i.ft, ptr %i.fu, align 2, !tbaa !38

@@ -89,14 +89,13 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.critedge.i, %.peel.next36.i
-  %indvars.iv.i = phi i64 [ 3, %.peel.next36.i ], [ %indvars.iv.next.i, %.critedge.i ] ; 2 uses
-  %i.n = getelementptr inbounds nuw [24 x i8], ptr @table, i64 %indvars.iv.i ; 4 uses
-  %3 = load i8, ptr %i.n, align 8, !range !4, !noundef !5
-  %4 = trunc nuw i8 %3 to i1
+  %indvars.iv.i = phi i64 [ 3, %.peel.next36.i ], [ %indvars.iv.next.i, %.critedge.i ] ; 3 uses
+  %i.n = getelementptr inbounds nuw [24 x i8], ptr @table, i64 %indvars.iv.i ; 3 uses
+  %3 = icmp samesign ult i64 %indvars.iv.i, 10
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.p = load i32, ptr %i.o, align 8
   %i.q = tail call ptr @nl_langinfo_l(i32 noundef %i.p, ptr noundef nonnull %i.b) #8 ; 2 uses
-  br i1 %4, label %bb.g, label %bb.i
+  br i1 %3, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
   %i.r = tail call noalias ptr @strdup(ptr noundef %i.q) #8 ; 2 uses
@@ -206,9 +205,7 @@ attributes #9 = { nounwind willreturn memory(none) }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
-!3 = distinct !{!3, !6, !7}
-!4 = !{i8 0, i8 2}
-!5 = !{}
-!6 = !{!"llvm.loop.mustprogress"}
-!7 = !{!"llvm.loop.peeled.count", i32 3}
+!3 = distinct !{!3, !4, !5}
+!4 = !{!"llvm.loop.mustprogress"}
+!5 = !{!"llvm.loop.peeled.count", i32 3}
 end_hunk_0

@@ -205,8 +205,6 @@ $_ZZNK4llvm3MVT20getVectorElementTypeEvE10EltTyTable = comdat any
 
 $_ZZNK4llvm3MVT13getSizeInBitsEvE9SizeTable = comdat any
 
-$_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
@@ -319,7 +317,6 @@ $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 @_ZTVN4llvm18OptimizationRemarkE = external unnamed_addr constant { [7 x ptr] }, align 8
 @_ZTVN4llvm30DiagnosticInfoOptimizationBaseE = external unnamed_addr constant { [7 x ptr] }, align 8
 @.str.122 = private unnamed_addr constant [15 x i8] c"scratch.ascast\00", align 1
-@_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\01\01\00\00\00", [8 x i8] c"\01\01\01\00\00\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00", [8 x i8] c"\01\01\01\01\01\01\01\01"], comdat, align 16
 @.str.123 = private unnamed_addr constant [15 x i8] c"no-jump-tables\00", align 1
 @.str.124 = private unnamed_addr constant [46 x i8] c"Funclet EH is not implemented for this target\00", align 1
 @_ZTVN4llvm2cl11OptionValueIbEE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZNK4llvm2cl15OptionValueCopyIbE7compareERKNS0_18GenericOptionValueE, ptr @_ZN4llvm2cl18GenericOptionValue6anchorEv] }, comdat, align 8
@@ -722,12 +719,8 @@ bb.a:
   %i.w = load i16, ptr %i.v, align 2, !tbaa !554  ; 2 uses
   %i.x = lshr i16 %i.w, 1
   %i.y = and i16 %i.x, 7                          ; 2 uses
-  %4 = zext nneg i16 %i.y to i64
-  %5 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %4
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 5
-  %7 = load i8, ptr %6, align 1, !tbaa !820, !range !30, !noundef !31
-  %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %bb.c, label %bb.b
+  %4 = icmp samesign ugt i16 %i.y, 4
+  br i1 %4, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.z = load ptr, ptr %i.a, align 8, !tbaa !451

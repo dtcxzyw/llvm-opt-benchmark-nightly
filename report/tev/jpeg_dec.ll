@@ -89,7 +89,6 @@ $_ZNSt3__126__throw_bad_variant_accessB8ne180100Ev = comdat any
 
 @_ZN5Error2OkE = external local_unnamed_addr global %class.Error, align 8
 @.str = private unnamed_addr constant [24 x i8] c"Invalid JPEG SOF header\00", align 1
-@_ZL5isSOF = internal unnamed_addr constant [16 x i8] c"\01\01\01\01\00\01\01\01\00\01\01\01\00\01\01\01", align 16
 @_ZTV12Decoder_JPEG = hidden constant { [14 x ptr] } { [14 x ptr] [ptr null, ptr @_ZTI12Decoder_JPEG, ptr @_ZN12Decoder_JPEGD2Ev, ptr @_ZN12Decoder_JPEGD0Ev, ptr @_ZNK12Decoder_JPEG22get_compression_formatEv, ptr @_ZNK12Decoder_JPEG23get_luma_bits_per_pixelEv, ptr @_ZNK12Decoder_JPEG25get_chroma_bits_per_pixelEv, ptr @_ZNK12Decoder_JPEG26get_coded_image_colorspaceEP15heif_colorspaceP11heif_chroma, ptr @_ZNK12Decoder_JPEG33read_bitstream_configuration_dataEv, ptr @_ZNK7Decoder32get_coded_image_size_from_configEv, ptr @_ZN7Decoder40decode_single_frame_from_compressed_dataERK21heif_decoding_optionsPK20heif_security_limits, ptr @_ZN7Decoder42decode_sequence_frame_from_compressed_dataEbRK21heif_decoding_optionsmPK20heif_security_limits, ptr @_ZN7Decoder13flush_decoderEv, ptr @_ZN7Decoder17get_decoded_frameERK21heif_decoding_optionsPmPK20heif_security_limits] }, align 8
 @_ZTI12Decoder_JPEG = hidden constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTS12Decoder_JPEG, ptr @_ZTI7Decoder }, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
@@ -345,10 +344,10 @@ bb.o:                                             ; preds = %.lr.ph
 bb.p:                                             ; preds = %bb.o
   %i.aw = and i8 %i.at, 15
   %i.ax = zext nneg i8 %i.aw to i64
-  %6 = getelementptr inbounds nuw i8, ptr @_ZL5isSOF, i64 %i.ax
-  %7 = load i8, ptr %6, align 1, !tbaa !46, !range !44, !noundef !45
-  %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %bb.q, label %bb.ar
+  %6 = shl nuw nsw i64 1, %i.ax
+  %7 = and i64 %6, 61167
+  %.not = icmp eq i64 %7, 0
+  br i1 %.not, label %bb.ar, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ay = add i64 %.074135, 9                     ; 2 uses
@@ -751,7 +750,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.c = load i8, ptr %i.b, align 8, !tbaa !48
+  %i.c = load i8, ptr %i.b, align 8, !tbaa !47
   %i.d = zext i8 %i.c to i32
   br label %bb.c
 
@@ -826,11 +825,11 @@ _ZN5ErrorD2Ev.exit:                               ; preds = %bb.c, %bb.d
 
 bb.e:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 132
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !49   ; 2 uses
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !48   ; 2 uses
   store i32 %i.n, ptr %3, align 4, !tbaa !25
   %i.o = icmp eq i32 %i.n, 0
   %. = select i1 %i.o, i32 2, i32 0
-  store i32 %., ptr %2, align 4, !tbaa !51
+  store i32 %., ptr %2, align 4, !tbaa !50
   %i.p = load i64, ptr @_ZN5Error2OkE, align 8
   store i64 %i.p, ptr %0, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -886,7 +885,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !37
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8
-  tail call void %i.h(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #18, !inline_history !52
+  tail call void %i.h(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #18, !inline_history !51
   tail call void @_ZNSt3__119__shared_weak_count14__release_weakEv(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #18
   br label %_ZNSt3__110shared_ptrIK8Box_jpgCED2B8ne180100Ev.exit
 
@@ -914,12 +913,12 @@ bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !37
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8
-  tail call void %i.h(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #18, !inline_history !53
-  tail call void @_ZNSt3__119__shared_weak_count14__release_weakEv(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #18, !inline_history !54
+  tail call void %i.h(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #18, !inline_history !52
+  tail call void @_ZNSt3__119__shared_weak_count14__release_weakEv(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #18, !inline_history !53
   br label %_ZN12Decoder_JPEGD2Ev.exit
 
 _ZN12Decoder_JPEGD2Ev.exit:                       ; preds = %bb.a, %bb.b, %bb.c
-  tail call void @_ZN7DecoderD2Ev(ptr noundef nonnull align 8 dead_on_return(112) dereferenceable(148) %0) #18, !inline_history !54
+  tail call void @_ZN7DecoderD2Ev(ptr noundef nonnull align 8 dead_on_return(112) dereferenceable(148) %0) #18, !inline_history !53
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 152) #17
   ret void
 }
@@ -938,7 +937,7 @@ bb.a:
   %.sroa.2.0..sroa_idx1.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 0, ptr %.sroa.2.0..sroa_idx1.i, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i32 0, ptr %i.b, align 8, !tbaa !56
+  store i32 0, ptr %i.b, align 8, !tbaa !55
   ret void
 }
 
@@ -1197,21 +1196,20 @@ attributes #19 = { noreturn nounwind }
 !37 = !{!36, !36, i64 0}
 !38 = !{!12, !11, i64 8}
 !39 = !{!12, !10, i64 0}
-!40 = distinct !{!40, !47}
+!40 = distinct !{!40, !46}
 !41 = !{!"bool", !5, i64 0}
 !42 = !{!"_ZTSNSt3__124__optional_destruct_baseIN12Decoder_JPEG10ConfigInfoELb1EEE", !5, i64 0, !41, i64 16}
 !43 = !{!42, !41, i64 16}
 !44 = !{i8 0, i8 2}
 !45 = !{}
-!46 = !{!41, !41, i64 0}
-!47 = !{!"llvm.loop.mustprogress"}
-!48 = !{!35, !5, i64 0}
-!49 = !{!35, !24, i64 4}
-!50 = !{!"_ZTS15heif_colorspace", !5, i64 0}
-!51 = !{!50, !50, i64 0}
-!52 = distinct !{null, null, null}
-!53 = distinct !{ptr @_ZN12Decoder_JPEGD2Ev, null, null, null}
-!54 = !{ptr @_ZN12Decoder_JPEGD2Ev}
-!55 = !{!"_ZTSNSt3__116__variant_detail6__baseILNS0_6_TraitE1EJNS_8optionalI9ImageSizeEE5ErrorEEE", !5, i64 0, !6, i64 32}
-!56 = !{!55, !6, i64 32}
+!46 = !{!"llvm.loop.mustprogress"}
+!47 = !{!35, !5, i64 0}
+!48 = !{!35, !24, i64 4}
+!49 = !{!"_ZTS15heif_colorspace", !5, i64 0}
+!50 = !{!49, !49, i64 0}
+!51 = distinct !{null, null, null}
+!52 = distinct !{ptr @_ZN12Decoder_JPEGD2Ev, null, null, null}
+!53 = !{ptr @_ZN12Decoder_JPEGD2Ev}
+!54 = !{!"_ZTSNSt3__116__variant_detail6__baseILNS0_6_TraitE1EJNS_8optionalI9ImageSizeEE5ErrorEEE", !5, i64 0, !6, i64 32}
+!55 = !{!54, !6, i64 32}
 end_hunk_1

@@ -205,7 +205,6 @@ $_ZZN6ImPlot11GetTimeStepEiiE4step_3 = comdat any
 @.str.171 = private unnamed_addr constant [66 x i8] c"DragLineY() needs to be called between BeginPlot() and EndPlot()!\00", align 1
 @.str.172 = private unnamed_addr constant [18 x i8] c"#IMPLOT_DRAG_RECT\00", align 1
 @.str.173 = private unnamed_addr constant [65 x i8] c"DragRect() needs to be called between BeginPlot() and EndPlot()!\00", align 1
-@__const._ZN6ImPlot8DragRectEiPdS0_S0_S0_RK6ImVec4iPbS4_S4_.h = private unnamed_addr constant [4 x i8] c"\01\00\01\00", align 1
 @.str.174 = private unnamed_addr constant [69 x i8] c"IsPlotItemHighlight() needs to be called within an itemized context!\00", align 1
 @.str.175 = private unnamed_addr constant [66 x i8] c"BeginLegendPopup() needs to be called within an itemized context!\00", align 1
 @.str.176 = private unnamed_addr constant [73 x i8] c"BeginDragDropSourceItem() needs to be called within an itemized context!\00", align 1
@@ -608,14 +607,14 @@ _ZNK6ImRect8ContainsERK6ImVec2.exit:              ; preds = %bb.am, %bb.al
   br i1 %or.cond13, label %bb.cr, label %bb.cx
 
 bb.an:                                            ; preds = %.loopexit361, %bb.cq
-  %indvars.iv = phi i64 [ 0, %.loopexit361 ], [ %indvars.iv.next, %bb.cq ] ; 10 uses
+  %indvars.iv = phi i64 [ 0, %.loopexit361 ], [ %indvars.iv.next, %bb.cq ] ; 9 uses
   %.1366 = phi i1 [ %.0190, %.loopexit361 ], [ %.4, %bb.cq ] ; 2 uses
   %i.jb = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %indvars.iv
   %i.jc = load <2 x float>, ptr %i.jb, align 8, !tbaa !41
   %i.jd = shufflevector <2 x float> %i.jc, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
   %i.je = fadd <4 x float> %i.jd, <float -4.000000e+00, float -4.000000e+00, float 4.000000e+00, float 4.000000e+00>
   store <4 x float> %i.je, ptr %15, align 16, !tbaa !41
-  %i.jf = trunc nuw nsw i64 %indvars.iv to i32
+  %i.jf = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
   %i.jg = add i32 %i.gr, %i.jf                    ; 2 uses
   %i.jh = add i32 %i.jg, 1                        ; 2 uses
   call void @_ZN5ImGui11KeepAliveIDEj(i32 noundef %i.jh) #32
@@ -769,16 +768,15 @@ bb.bf:                                            ; preds = %_ZN6ImPlot15GetPlot
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.lk = and i64 %indvars.iv.next, 3
   %i.ll = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.lk
-  %16 = getelementptr inbounds nuw i8, ptr @__const._ZN6ImPlot8DragRectEiPdS0_S0_S0_RK6ImVec4iPbS4_S4_.h, i64 %indvars.iv
-  %17 = load i8, ptr %16, align 1, !tbaa !262, !range !263, !noundef !264
-  %18 = trunc nuw i8 %17 to i1                    ; 4 uses
+  %16 = and i32 %i.jf, 1                          ; 2 uses
+  %17 = icmp eq i32 %16, 0                        ; 3 uses
   %i.lm = load <2 x float>, ptr %i.ll, align 8, !tbaa !41
   %i.ln = shufflevector <2 x float> %i.lm, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 3 uses
   %i.lo = fcmp olt <4 x float> %i.jd, %i.ln
   %i.lp = fcmp oge <4 x float> %i.jd, %i.ln
   %i.lq = shufflevector <4 x i1> %i.lo, <4 x i1> %i.lp, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.lr = select <4 x i1> %i.lq, <4 x float> %i.jd, <4 x float> %i.ln
-  %i.ls = insertelement <4 x i1> poison, i1 %18, i64 0
+  %i.ls = insertelement <4 x i1> poison, i1 %17, i64 0
   %i.lt = shufflevector <4 x i1> %i.ls, <4 x i1> poison, <4 x i32> zeroinitializer
   %i.lu = select <4 x i1> %i.lt, <4 x float> <float 4.000000e+00, float -4.000000e+00, float -4.000000e+00, float 4.000000e+00>, <4 x float> <float -4.000000e+00, float 4.000000e+00, float 4.000000e+00, float -4.000000e+00>
   %i.lv = fadd <4 x float> %i.lr, %i.lu
@@ -834,7 +832,7 @@ bb.bm:                                            ; preds = %._crit_edge387, %bb
   br i1 %or.cond11, label %.sink.split, label %bb.bn
 
 .sink.split:                                      ; preds = %bb.bm
-  %.454 = select i1 %18, i32 3, i32 4
+  %.454 = add nuw nsw i32 %16, 3
   call void @_ZN5ImGui14SetMouseCursorEi(i32 noundef %.454) #32
   br label %bb.bn
 
@@ -852,7 +850,7 @@ bb.bp:                                            ; preds = %bb.bo
   %i.mq = getelementptr inbounds nuw i8, ptr %i.mp, i64 80
   %i.mr = load ptr, ptr %i.mq, align 8, !tbaa !217 ; 3 uses
   %.not.i292 = icmp eq ptr %i.mr, null            ; 2 uses
-  br i1 %18, label %bb.bq, label %bb.bu
+  br i1 %17, label %bb.bq, label %bb.bu
 
 bb.bq:                                            ; preds = %bb.bp
   br i1 %.not.i292, label %bb.br, label %bb.bs
@@ -991,7 +989,7 @@ _ZN6ImPlot13GetPlotLimitsEii.exit:                ; preds = %bb.cc, %bb.cd
   %.sroa.5.16.copyload = load double, ptr %i.or, align 8, !tbaa !266 ; 2 uses
   %.sroa.7.16..sroa_idx = getelementptr i8, ptr %i.op, i64 48
   %.sroa.7.16.copyload = load double, ptr %.sroa.7.16..sroa_idx, align 8, !tbaa !266
-  br i1 %18, label %bb.ce, label %bb.ck
+  br i1 %17, label %bb.ce, label %bb.ck
 
 bb.ce:                                            ; preds = %_ZN6ImPlot13GetPlotLimitsEii.exit
   %i.os = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv

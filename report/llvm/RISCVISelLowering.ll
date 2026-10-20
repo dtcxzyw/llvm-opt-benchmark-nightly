@@ -205,10 +205,6 @@ $_ZZNK4llvm3MVT28getRISCVVectorTupleNumFieldsEvE7NFTable = comdat any
 
 $_ZZNK4llvm3MVT23getVectorMinNumElementsEvE10NElemTable = comdat any
 
-$_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
-$_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
 
 $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
@@ -320,10 +316,8 @@ $_ZTVN4llvm2cl11OptionValueIiEE = comdat any
 @_ZZL33lowerFixedVectorSegLoadIntrinsicsjN4llvm7SDValueERKNS_14RISCVSubtargetERNS_12SelectionDAGEE10VlssegInts = internal unnamed_addr constant [7 x i32] [i32 12606, i32 12608, i32 12610, i32 12612, i32 12614, i32 12616, i32 12618], align 16
 @_ZZL34lowerFixedVectorSegStoreIntrinsicsjN4llvm7SDValueERKNS_14RISCVSubtargetERNS_12SelectionDAGEE9VssegInts = internal unnamed_addr constant [7 x i32] [i32 12819, i32 12821, i32 12823, i32 12825, i32 12827, i32 12829, i32 12831], align 16
 @_ZZL34lowerFixedVectorSegStoreIntrinsicsjN4llvm7SDValueERKNS_14RISCVSubtargetERNS_12SelectionDAGEE10VsssegInts = internal unnamed_addr constant [7 x i32] [i32 12837, i32 12839, i32 12841, i32 12843, i32 12845, i32 12847, i32 12849], align 16
-@_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] zeroinitializer, [8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\01\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00"], comdat, align 16
 @.str.294 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @_ZTVN4llvm25DiagnosticInfoUnsupportedE = external unnamed_addr constant { [6 x ptr] }, align 8
-@_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\01\01\00\00\00", [8 x i8] c"\01\01\01\00\00\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00", [8 x i8] c"\01\01\01\01\01\01\01\01"], comdat, align 16
 @.str.310 = private unnamed_addr constant [15 x i8] c"no-jump-tables\00", align 1
 @.str.311 = private unnamed_addr constant [46 x i8] c"Funclet EH is not implemented for this target\00", align 1
 @_ZTVN4llvm2cl11OptionValueIjEE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZNK4llvm2cl15OptionValueCopyIjE7compareERKNS0_18GenericOptionValueE, ptr @_ZN4llvm2cl18GenericOptionValue6anchorEv] }, comdat, align 8
@@ -726,12 +720,9 @@ bb.br:                                            ; preds = %_ZNK4llvm7SDValue9h
   %i.lk = load i16, ptr %i.lj, align 4
   %i.ll = lshr i16 %i.lk, 8
   %i.lm = and i16 %i.ll, 15
-  %47 = zext nneg i16 %i.lm to i64
-  %48 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %47
-  %49 = getelementptr inbounds nuw i8, ptr %48, i64 2
-  %50 = load i8, ptr %49, align 2, !tbaa !380, !range !50, !noundef !51
-  %51 = trunc nuw i8 %50 to i1
-  br i1 %51, label %_ZL21reduceANDOfAtomicLoadPN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.exit.thread, label %bb.bs
+  %47 = add nsw i16 %i.lm, -3
+  %48 = icmp ult i16 %47, 5
+  br i1 %48, label %_ZL21reduceANDOfAtomicLoadPN4llvm6SDNodeERNS_14TargetLowering15DAGCombinerInfoE.exit.thread, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
@@ -1134,7 +1125,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.h
 
 bb.d:                                             ; preds = %bb.a
-  br i1 %or.cond, label %bb.e, label %7
+  br i1 %or.cond, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
@@ -1158,17 +1149,12 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   br label %bb.h
 
-7:                                                ; preds = %bb.d
-  %8 = icmp eq i8 %i.f, 64
-  br i1 %8, label %bb.f, label %bb.h
-
-bb.f:                                             ; preds = %7
-  %9 = zext i32 %3 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 5
-  %12 = load i8, ptr %11, align 1, !tbaa !380, !range !50, !noundef !51
-  %13 = trunc nuw i8 %12 to i1
-  br i1 %13, label %bb.g, label %bb.h
+bb.f:                                             ; preds = %bb.d
+  %7 = icmp eq i8 %i.f, 64
+  %8 = add i32 %3, -5
+  %9 = icmp ult i32 %8, 3
+  %or.cond22 = and i1 %9, %7
+  br i1 %or.cond22, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
@@ -1192,8 +1178,8 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
   br label %bb.h
 
-bb.h:                                             ; preds = %7, %bb.f, %bb.b, %bb.g, %bb.e, %bb.c
-  %.0 = phi ptr [ %i.j, %bb.c ], [ null, %bb.b ], [ %i.t, %bb.e ], [ %i.ad, %bb.g ], [ null, %bb.f ], [ null, %7 ]
+bb.h:                                             ; preds = %bb.f, %bb.b, %bb.g, %bb.e, %bb.c
+  %.0 = phi ptr [ %i.j, %bb.c ], [ null, %bb.b ], [ %i.t, %bb.e ], [ %i.ad, %bb.g ], [ null, %bb.f ]
   ret ptr %.0
 }
 
@@ -1209,7 +1195,7 @@ bb.a:
   %i.d = load i8, ptr %i.c, align 1, !tbaa !521, !range !50, !noundef !51
   %i.e = trunc nuw i8 %i.d to i1
   %i.f = load i8, ptr %2, align 8, !tbaa !364     ; 3 uses
-  br i1 %i.e, label %bb.b, label %7
+  br i1 %i.e, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.g = icmp eq i8 %i.f, 64
@@ -1239,17 +1225,13 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
   br label %bb.i
 
-7:                                                ; preds = %bb.a
-  %8 = icmp eq i8 %i.f, 63
-  br i1 %8, label %bb.d, label %bb.f
-
-bb.d:                                             ; preds = %7
-  %9 = zext i32 %3 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %12 = load i8, ptr %11, align 4, !tbaa !380, !range !50, !noundef !51
-  %13 = trunc nuw i8 %12 to i1
-  br i1 %13, label %bb.e, label %bb.f
+bb.d:                                             ; preds = %bb.a
+  %7 = icmp eq i8 %i.f, 63
+  %8 = zext nneg i32 %3 to i64
+  %9 = lshr i64 208, %8
+  %10 = trunc i64 %9 to i1
+  %or.cond22 = select i1 %7, i1 %10, i1 false
+  br i1 %or.cond22, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
@@ -1273,7 +1255,7 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   br label %bb.i
 
-bb.f:                                             ; preds = %bb.d, %7
+bb.f:                                             ; preds = %bb.d
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 360
   %i.ad = load i8, ptr %i.ac, align 8, !tbaa !2346, !range !50, !noundef !51
   %i.ae = trunc nuw i8 %i.ad to i1

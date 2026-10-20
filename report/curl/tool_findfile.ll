@@ -27,9 +27,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %.thread83
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %.thread83 ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %.thread83 ] ; 4 uses
   %.043102 = phi i32 [ %1, %.preheader ], [ %.44788, %.thread83 ] ; 4 uses
-  %i.c = getelementptr inbounds nuw [24 x i8], ptr @conf_list, i64 %indvars.iv ; 3 uses
+  %i.c = getelementptr inbounds nuw [24 x i8], ptr @conf_list, i64 %indvars.iv ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !15
   %i.e = tail call ptr @curl_getenv(ptr noundef %i.d) #5 ; 6 uses
   %.not64 = icmp eq ptr %i.e, null
@@ -54,10 +54,10 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.1 = phi ptr [ %i.i, %bb.e ], [ %i.e, %bb.d ]  ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %3 = load i8, ptr %2, align 8, !tbaa !17, !range !18, !noundef !19
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %bb.g, label %bb.h
+  %2 = shl nuw i64 1, %indvars.iv
+  %3 = and i64 %2, 26
+  %.not68 = icmp eq i64 %3, 0
+  br i1 %.not68, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %.not68.a = icmp eq i32 %.043102, 0
@@ -93,7 +93,7 @@ bb.i:                                             ; preds = %.thread83
 
 bb.j:                                             ; preds = %bb.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !21   ; 3 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !18   ; 3 uses
   %.not62 = icmp eq ptr %i.o, null
   br i1 %.not62, label %checkhome.exit, label %bb.k
 
@@ -194,7 +194,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.split, %bb.g
   %i.n = add nuw nsw i32 %.02328, 1               ; 2 uses
   %exitcond.not = icmp eq i32 %i.n, %i.a
-  br i1 %exitcond.not, label %.loopexit, label %.split, !llvm.loop !22
+  br i1 %exitcond.not, label %.loopexit, label %.split, !llvm.loop !19
 
 .loopexit:                                        ; preds = %bb.h, %.split.us.1, %bb.e, %.split30.us
   %.4 = phi ptr [ %i.l, %.split30.us ], [ null, %.split.us.1 ], [ null, %bb.e ], [ null, %bb.h ]
@@ -242,10 +242,7 @@ attributes #5 = { nounwind }
 !14 = !{!"finder", !12, i64 0, !12, i64 8, !13, i64 16}
 !15 = !{!14, !12, i64 0}
 !16 = !{!14, !12, i64 8}
-!17 = !{!14, !13, i64 16}
-!18 = !{i8 0, i8 2}
-!19 = !{}
-!20 = !{!"passwd", !12, i64 0, !12, i64 8, !5, i64 16, !5, i64 20, !12, i64 24, !12, i64 32, !12, i64 40}
-!21 = !{!20, !12, i64 32}
-!22 = distinct !{!22, !8}
+!17 = !{!"passwd", !12, i64 0, !12, i64 8, !5, i64 16, !5, i64 20, !12, i64 24, !12, i64 32, !12, i64 40}
+!18 = !{!17, !12, i64 32}
+!19 = distinct !{!19, !8}
 end_hunk_0

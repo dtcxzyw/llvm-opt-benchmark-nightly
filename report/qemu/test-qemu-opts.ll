@@ -202,32 +202,31 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.h
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.h ] ; 2 uses
-  %i.a = getelementptr inbounds nuw [16 x i8], ptr @test_has_help_option.test, i64 %indvars.iv ; 3 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.h ] ; 4 uses
+  %i.a = getelementptr inbounds nuw [16 x i8], ptr @test_has_help_option.test, i64 %indvars.iv
   %i.b = load ptr, ptr %i.a, align 16             ; 3 uses
   %i.c = tail call zeroext i1 @has_help_option(ptr noundef %i.b) #7 ; 2 uses
-  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %1 = load i8, ptr %0, align 8, !range !10, !noundef !11 ; 4 uses
-  %2 = zext i1 %i.c to i8
-  %3 = icmp eq i8 %1, %2
-  br i1 %3, label %bb.d, label %bb.c
+  %0 = trunc i64 %indvars.iv to i32
+  %1 = add i32 %0, -4
+  %2 = icmp ult i32 %1, -2                        ; 4 uses
+  %3 = xor i1 %2, %i.c
+  br i1 %3, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.d = uitofp i1 %i.c to x86_fp80
-  %i.e = uitofp nneg i8 %1 to x86_fp80
+  %i.e = uitofp i1 %2 to x86_fp80
   tail call void @g_assertion_message_cmpnum(ptr noundef null, ptr noundef nonnull @.str.42, i32 noundef 739, ptr noundef nonnull @__func__.test_has_help_option, ptr noundef nonnull @.str.179, x86_fp80 noundef %i.d, ptr noundef nonnull @.str.46, x86_fp80 noundef %i.e, i8 noundef signext 105) #7
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.f = tail call ptr @qemu_opts_parse(ptr noundef nonnull @opts_list_03, ptr noundef %i.b, i1 noundef zeroext false, ptr noundef nonnull @error_abort) #7 ; 2 uses
   %i.g = tail call zeroext i1 @qemu_opt_has_help_opt(ptr noundef %i.f) #7 ; 2 uses
-  %4 = zext i1 %i.g to i8
-  %5 = icmp eq i8 %1, %4
-  br i1 %5, label %bb.f, label %bb.e
+  %4 = xor i1 %2, %i.g
+  br i1 %4, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.h = uitofp i1 %i.g to x86_fp80
-  %i.i = uitofp nneg i8 %1 to x86_fp80
+  %i.i = uitofp i1 %2 to x86_fp80
   tail call void @g_assertion_message_cmpnum(ptr noundef null, ptr noundef nonnull @.str.42, i32 noundef 743, ptr noundef nonnull @__func__.test_has_help_option, ptr noundef nonnull @.str.180, x86_fp80 noundef %i.h, ptr noundef nonnull @.str.46, x86_fp80 noundef %i.i, i8 noundef signext 105) #7
   br label %bb.f
 
@@ -235,15 +234,15 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   tail call void @qemu_opts_del(ptr noundef %i.f) #7
   %i.j = tail call ptr @qemu_opts_parse(ptr noundef nonnull @opts_list_03, ptr noundef %i.b, i1 noundef zeroext true, ptr noundef nonnull @error_abort) #7 ; 2 uses
   %i.k = tail call zeroext i1 @qemu_opt_has_help_opt(ptr noundef %i.j) #7 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %7 = load i8, ptr %6, align 1, !range !10, !noundef !11 ; 2 uses
-  %8 = zext i1 %i.k to i8
-  %9 = icmp eq i8 %7, %8
-  br i1 %9, label %bb.h, label %bb.g
+  %5 = lshr i64 3312, %indvars.iv                 ; 2 uses
+  %6 = trunc i64 %5 to i1
+  %7 = xor i1 %i.k, %6
+  br i1 %7, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
+  %8 = and i64 %5, 1
   %i.l = uitofp i1 %i.k to x86_fp80
-  %i.m = uitofp nneg i8 %7 to x86_fp80
+  %i.m = uitofp nneg i64 %8 to x86_fp80
   tail call void @g_assertion_message_cmpnum(ptr noundef null, ptr noundef nonnull @.str.42, i32 noundef 748, ptr noundef nonnull @__func__.test_has_help_option, ptr noundef nonnull @.str.181, x86_fp80 noundef %i.l, ptr noundef nonnull @.str.46, x86_fp80 noundef %i.m, i8 noundef signext 105) #7
   br label %bb.h
 

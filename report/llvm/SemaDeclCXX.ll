@@ -205,7 +205,6 @@ $_ZTVN5clang4Sema18BoundTypeDiagnoserIJNS_15DeclarationNameEEEE = comdat any
 @.str.32 = private unnamed_addr constant [8 x i8] c"typedef\00", align 1
 @.str.33 = private unnamed_addr constant [7 x i8] c"auto &\00", align 1
 @.str.34 = private unnamed_addr constant [16 x i8] c"constexpr auto \00", align 1
-@_ZZN5clang4Sema34CheckOverloadedOperatorDeclarationEPNS_12FunctionDeclEE12OperatorUses = internal unnamed_addr constant [46 x [3 x i8]] [[3 x i8] zeroinitializer, [3 x i8] c"\01\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\01\00\00", [3 x i8] c"\01\00\00", [3 x i8] c"\00\01\01", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\01\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\00\01\00", [3 x i8] c"\01\00\01", [3 x i8] c"\01\01\01", [3 x i8] c"\00\01\01", [3 x i8] c"\00\01\00", [3 x i8] c"\01\00\00"], align 16
 @.str.35 = private unnamed_addr constant [15 x i8] c"'const char *'\00", align 1
 @.str.36 = private unnamed_addr constant [2 x i8] c"C\00", align 1
 @.str.37 = private unnamed_addr constant [4 x i8] c"C++\00", align 1
@@ -608,7 +607,7 @@ bb.a:
   %13 = alloca %"class.clang::DeclarationName", align 8 ; 4 uses
   %14 = alloca %"class.clang::SourceRange", align 8 ; 4 uses
   %i.d = alloca i32, align 4                      ; 4 uses
-  %i.e = alloca i32, align 4                      ; 5 uses
+  %i.e = alloca i32, align 4                      ; 4 uses
   %15 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
   %16 = alloca %"class.clang::DeclarationName", align 8 ; 4 uses
   %17 = alloca %"class.clang::SemaBase::SemaDiagnosticBuilder", align 8 ; 5 uses
@@ -1011,16 +1010,14 @@ bb.al:                                            ; preds = %._crit_edge206
   br label %_ZL27CheckOperatorNewDeclarationRN5clang4SemaEPNS_12FunctionDeclE.exit
 
 .thread176:                                       ; preds = %bb.aj, %bb.ai, %bb.ak, %.thread168
-  %i.ho = sext i32 %i.h to i64
-  %25 = getelementptr inbounds [3 x i8], ptr @_ZZN5clang4Sema34CheckOverloadedOperatorDeclarationEPNS_12FunctionDeclEE12OperatorUses, i64 %i.ho ; 3 uses
-  %26 = load i8, ptr %25, align 1, !tbaa !1283, !range !106, !noundef !107 ; 2 uses
-  %i.hp = trunc nuw i8 %26 to i1                  ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %25, i64 1
-  %28 = load i8, ptr %27, align 1, !tbaa !1283, !range !106, !noundef !107 ; 2 uses
-  %i.hq = trunc nuw i8 %28 to i1
-  %29 = getelementptr inbounds nuw i8, ptr %25, i64 2
-  %30 = load i8, ptr %29, align 1, !tbaa !1283, !range !106, !noundef !107
-  %31 = trunc nuw i8 %30 to i1
+  %i.ho = sext i32 %i.h to i64                    ; 3 uses
+  %25 = lshr i64 42193758742782, %i.ho
+  %i.hp = trunc i64 %25 to i1                     ; 3 uses
+  %26 = lshr i64 32985348808702, %i.ho
+  %i.hq = trunc i64 %26 to i1                     ; 2 uses
+  %27 = shl nuw i64 1, %i.ho
+  %28 = and i64 %27, 15393162821632
+  %.not116 = icmp eq i64 %28, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #26
   %i.hr = load ptr, ptr %i.b, align 8, !tbaa !1246
   %i.hs = call noundef i32 @_ZNK5clang12FunctionDecl12getNumParamsEv(ptr noundef nonnull align 8 dereferenceable(168) %i.hr) #26
@@ -1047,33 +1044,23 @@ bb.an:                                            ; preds = %bb.am, %.thread176
 
 bb.ao:                                            ; preds = %bb.an
   %i.ie = icmp ne i32 %i.ic, 1
-  %or.cond15 = or i1 %i.ie, %i.hp
-  br i1 %or.cond15, label %bb.ap, label %.thread179
+  %or.cond15 = select i1 %i.ie, i1 true, i1 %i.hp
+  br i1 %or.cond15, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
   %i.if = icmp ne i32 %i.ic, 2
-  %or.cond17 = or i1 %i.if, %i.hq
+  %or.cond17 = select i1 %i.if, i1 true, i1 %i.hq
   %i.ig = add i32 %i.ic, -1
   %i.ih = icmp ult i32 %i.ig, 2
   %or.cond21.not = and i1 %i.ih, %or.cond17
-  br i1 %or.cond21.not, label %.thread185, label %32
+  br i1 %or.cond21.not, label %.thread185, label %bb.aq
 
-32:                                               ; preds = %bb.ap
+bb.aq:                                            ; preds = %bb.ap, %bb.ao
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
-  %33 = and i8 %28, %26
-  %or.cond23.not.not = icmp eq i8 %33, 0
-  %.mux = select i1 %or.cond23.not.not, i32 0, i32 2
-  br i1 %i.hp, label %bb.aq, label %.thread181
-
-.thread179:                                       ; preds = %bb.ao
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
-  br label %.thread181
-
-.thread181:                                       ; preds = %32, %.thread179
-  br label %bb.aq
-
-bb.aq:                                            ; preds = %32, %.thread181
-  %.sink = phi i32 [ %.mux, %32 ], [ 1, %.thread181 ]
+  %or.cond23 = select i1 %i.hp, i1 %i.hq, i1 false
+  %not. = xor i1 %i.hp, true
+  %. = zext i1 %not. to i32
+  %.sink = select i1 %or.cond23, i32 2, i32 %.
   store i32 %.sink, ptr %i.e, align 4, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #26
   %i.ii = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1183,7 +1170,7 @@ bb.av:                                            ; preds = %_ZNK5clang4Type6cas
   br label %.thread188
 
 .critedge:                                        ; preds = %bb.at, %_ZNK5clang4Type6castAsINS_17FunctionProtoTypeEEEPKT_v.exit
-  br i1 %31, label %bb.aw, label %bb.ay
+  br i1 %.not116, label %bb.ay, label %bb.aw
 
 bb.aw:                                            ; preds = %.critedge
   %i.kd = load ptr, ptr %i.b, align 8, !tbaa !1246 ; 2 uses
