@@ -205,10 +205,9 @@ _ZN4llvm11SmallVectorIjLj16EED2Ev.exit:           ; preds = %._crit_edge31, %bb.
   ret { i32, ptr } %.fca.1.insert
 
 bb.d:                                             ; preds = %.lr.ph30, %bb.d
-  %.01228 = phi i32 [ 0, %.lr.ph30 ], [ %3, %bb.d ] ; 3 uses
-  %2 = zext i32 %.01228 to i64
+  %indvars.iv35 = phi i64 [ 0, %.lr.ph30 ], [ %indvars.iv.next36, %bb.d ] ; 3 uses
   %i.af = load ptr, ptr %1, align 8, !tbaa !41
-  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %2
+  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %indvars.iv35
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !169
   %i.ai = zext i32 %i.ah to i64
   %i.aj = load ptr, ptr %i.a, align 8, !tbaa !158
@@ -222,7 +221,8 @@ bb.d:                                             ; preds = %.lr.ph30, %bb.d
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !157
   %i.al = zext i32 %.sroa.0.0.copyload to i64
   %i.am = load i64, ptr %i.u, align 8, !tbaa !170
-  %i.an = shl i32 %.01228, 2                      ; 4 uses
+  %2 = trunc nuw i64 %indvars.iv35 to i32
+  %i.an = shl i32 %2, 2                           ; 4 uses
   %i.ao = zext i32 %i.an to i64
   %i.ap = shl nuw nsw i64 %i.ao, 3
   %i.aq = add i64 %i.am, %i.ap
@@ -245,9 +245,10 @@ bb.d:                                             ; preds = %.lr.ph30, %bb.d
   %i.be = shl nuw nsw i64 %i.bd, 3
   %i.bf = add i64 %i.bb, %i.be
   call fastcc void @_ZN4llvm7support6endian12_GLOBAL__N_114SeekableWriter6pwriteImEEvT_m(ptr %i.r, i32 1, i64 noundef %.sroa.6.0.copyload, i64 noundef %i.bf)
-  %3 = add nuw i32 %.01228, 1                     ; 2 uses
+  %indvars.iv.next36 = add nuw nsw i64 %indvars.iv35, 1 ; 2 uses
   %i.bg = load i32, ptr %i.s, align 8, !tbaa !162
-  %4 = icmp ugt i32 %i.bg, %3
+  %3 = zext i32 %i.bg to i64
+  %4 = icmp samesign ult i64 %indvars.iv.next36, %3
   br i1 %4, label %bb.d, label %._crit_edge31, !llvm.loop !352
 }
 

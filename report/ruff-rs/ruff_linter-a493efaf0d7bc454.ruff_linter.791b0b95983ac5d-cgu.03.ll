@@ -1,9 +1,10 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ruff_linter-a493efaf0d7bc454.ruff_linter.791b0b95983ac5d-cgu.03?download=true
 inline.NumInlined: 4272
 inline.NumDeleted: 1863
-loop-unroll.NumCompletelyUnrolled: 23
+loop-unroll.NumCompletelyUnrolled: 24
 loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 28
+loop-unroll.NumUnrolled: 29
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvMNtCs4NRVxsYgnAr_4core3stre16trim_end_matchesNvNtCskVZVgnzM3Oh_18ruff_python_trivia10whitespace20is_python_whitespaceECsEhZmuQNqkz_11ruff_linter:bb.a
   %i.p = load i8, ptr %i.o, align 1, !noalias !154, !noundef !6 ; 3 uses
   %i.q = and i8 %i.p, 15
@@ -205,7 +206,7 @@ bb.g:                                             ; preds = %bb.i
 
 .lr.ph289:                                        ; preds = %.split50.us.i.us.i, %bb.g
   %.sroa.07.0.i.i.us.i288 = phi i64 [ %i.bd, %bb.g ], [ %i.e, %.split50.us.i.us.i ] ; 4 uses
-  %i.bd = add i64 %.sroa.07.0.i.i.us.i288, 1      ; 2 uses
+  %i.bd = add nuw i64 %.sroa.07.0.i.i.us.i288, 1  ; 2 uses
   %exitcond74.not.i.i.us.i = icmp eq i64 %.sroa.07.0.i.i.us.i288, %umax.i.i.i
   br i1 %exitcond74.not.i.i.us.i, label %.split115.us.i, label %bb.h
 
@@ -608,12 +609,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i5 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [72 x i8], ptr %i.a, i64 %.sroa.0.0.i5
-  %i.f = add i64 %.sroa.0.0.i5, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i5, 1             ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(72) %i.e)
           to label %bb.b unwind label %bb.d, !inline_history !608
 
 bb.c:                                             ; preds = %.lr.ph7
-  %i.g = add i64 %.sroa.0.1.i6, 1                 ; 2 uses
+  %i.g = add nuw i64 %.sroa.0.1.i6, 1             ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.c
   br i1 %i.h, label %.body, label %.lr.ph7
 
@@ -1016,12 +1017,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i5 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [72 x i8], ptr %i.a, i64 %.sroa.0.0.i5
-  %i.f = add i64 %.sroa.0.0.i5, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i5, 1             ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(72) %i.e)
           to label %bb.b unwind label %bb.d, !noalias !754, !inline_history !745
 
 bb.c:                                             ; preds = %.lr.ph7
-  %i.g = add i64 %.sroa.0.1.i6, 1                 ; 2 uses
+  %i.g = add nuw i64 %.sroa.0.1.i6, 1             ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.c
   br i1 %i.h, label %.body3, label %.lr.ph7
 
@@ -1140,12 +1141,12 @@ bb.e:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtNtCskLngH8kgpZI_15ruff_python_ast5nodes5CmpOpEECsEhZmuQNqkz_11ruff_linter.exit5, %bb.e
   %.sroa.0.0.i.i6 = phi i64 [ %i.p, %bb.e ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtNtCskLngH8kgpZI_15ruff_python_ast5nodes5CmpOpEECsEhZmuQNqkz_11ruff_linter.exit5 ] ; 2 uses
   %i.o = getelementptr inbounds nuw [72 x i8], ptr %i.k, i64 %.sroa.0.0.i.i6
-  %i.p = add i64 %.sroa.0.0.i.i6, 1               ; 4 uses
+  %i.p = add nuw i64 %.sroa.0.0.i.i6, 1           ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(72) %i.o) #59
           to label %bb.e unwind label %bb.g, !noalias !763, !inline_history !761
 
 bb.f:                                             ; preds = %.lr.ph8
-  %i.q = add i64 %.sroa.0.1.i.i7, 1               ; 2 uses
+  %i.q = add nuw i64 %.sroa.0.1.i.i7, 1           ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.m
   br i1 %i.r, label %.body.i, label %.lr.ph8
 
@@ -1548,12 +1549,12 @@ bb.bh:                                            ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated11ExprCompareECsEhZmuQNqkz_11ruff_linter.exit, %bb.bh
   %.sroa.0.0.i.i154 = phi i64 [ %i.di, %bb.bh ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated11ExprCompareECsEhZmuQNqkz_11ruff_linter.exit ] ; 2 uses
   %i.dh = getelementptr inbounds nuw [72 x i8], ptr %i.dd, i64 %.sroa.0.0.i.i154
-  %i.di = add i64 %.sroa.0.0.i.i154, 1            ; 4 uses
+  %i.di = add nuw i64 %.sroa.0.0.i.i154, 1        ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(72) %i.dh)
           to label %bb.bh unwind label %bb.bj, !noalias !995, !inline_history !866
 
 bb.bi:                                            ; preds = %.lr.ph156
-  %i.dj = add i64 %.sroa.0.1.i.i155, 1            ; 2 uses
+  %i.dj = add nuw i64 %.sroa.0.1.i.i155, 1        ; 2 uses
   %i.dk = icmp eq i64 %i.dj, %i.df
   br i1 %i.dk, label %.body.i, label %.lr.ph156
 
@@ -1956,7 +1957,7 @@ _RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br label %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.us
 
 bb.b:                                             ; preds = %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.us
-  %i.p = add i64 %.sroa.623.0.i.us19, 1           ; 2 uses
+  %i.p = add nuw i64 %.sroa.623.0.i.us19, 1       ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %i.p, %umax.i.us
   br i1 %exitcond.not.i.us, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern14small_slice_eq.exit.thread6, label %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.us
 
@@ -2359,7 +2360,7 @@ bb.aa:                                            ; preds = %bb.ai, %bb.af, %bb.
   br i1 %i.dy, label %bb.y, label %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 .preheader96:                                     ; preds = %bb.ag
-  %i.dz = add i64 %.sroa.02.0.i24279, 1           ; 2 uses
+  %i.dz = add nuw i64 %.sroa.02.0.i24279, 1       ; 2 uses
   %exitcond.not.i25 = icmp eq i64 %i.dz, %umax49.i23
   br i1 %exitcond.not.i25, label %.preheader.preheader, label %.lr.ph280
 
@@ -2475,7 +2476,7 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %i.fk, label %bb.ak, label %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 bb.an:                                            ; preds = %bb.at
-  %i.fl = add i64 %.sroa.02.0.i274, 1             ; 2 uses
+  %i.fl = add nuw i64 %.sroa.02.0.i274, 1         ; 2 uses
   %exitcond.not.i15 = icmp eq i64 %i.fl, %umax49.i
   br i1 %exitcond.not.i15, label %.preheader35.preheader, label %.lr.ph275
 

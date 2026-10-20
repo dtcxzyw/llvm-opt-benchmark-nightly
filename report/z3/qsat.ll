@@ -205,23 +205,27 @@ _ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit: 
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !37   ; 2 uses
   %i.w = icmp eq ptr %i.v, null
-  br i1 %i.w, label %.critedge, label %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit
+  br i1 %i.w, label %.critedge, label %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit.preheader
 
-_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit: ; preds = %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit
-  %i.x = phi ptr [ %i.cn, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ], [ %i.v, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ] ; 3 uses
-  %i.y = phi ptr [ %i.co, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ], [ %i.t, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ] ; 2 uses
-  %.08 = phi i32 [ %5, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ], [ %1, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ] ; 3 uses
+_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit.preheader: ; preds = %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit
+  %4 = zext i32 %1 to i64
+  br label %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit
+
+_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit: ; preds = %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit.preheader, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit
+  %i.x = phi ptr [ %i.v, %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit.preheader ], [ %i.cn, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ] ; 3 uses
+  %i.y = phi ptr [ %i.t, %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit.preheader ], [ %i.co, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ %4, %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit.preheader ], [ %indvars.iv.next, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ] ; 3 uses
   %i.z = getelementptr inbounds i8, ptr %i.x, i64 -4
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !100
-  %i.ab = icmp ult i32 %.08, %i.aa
+  %5 = zext i32 %i.aa to i64
+  %i.ab = icmp samesign ult i64 %indvars.iv, %5
   br i1 %i.ab, label %bb.d, label %.critedge
 
 .critedge:                                        ; preds = %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit
   ret void
 
 bb.d:                                             ; preds = %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit
-  %4 = zext i32 %.08 to i64
-  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %4
+  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %indvars.iv
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !143 ; 2 uses
   %i.af = icmp eq ptr %i.ae, null
@@ -401,7 +405,7 @@ _ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.e
 _ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit: ; preds = %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit.loopexit, %bb.d
   %i.cn = phi ptr [ %.pre, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit.loopexit ], [ %i.x, %bb.d ] ; 2 uses
   %i.co = phi ptr [ %i.cm, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit.loopexit ], [ %i.y, %bb.d ]
-  %5 = add i32 %.08, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.cp = icmp eq ptr %i.cn, null
   br i1 %i.cp, label %.critedge, label %_ZNK6vectorI10ref_vectorI3app11ast_managerELb1EjE4sizeEv.exit, !llvm.loop !488
 }

@@ -1,8 +1,10 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_wasm_example_llama2-b5d2d67ec215b578.candle_wasm_example_llama2.2b2abf3c15bdb95-cgu.05?download=true
 inline.NumInlined: 810
 inline.NumDeleted: 439
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 6
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvMsj_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB8_4node6HandleINtB11_7NodeRefNtNtB11_6marker5DyingNtNtBc_6string6StringNtNtCsaPlfBUY5LAj_10serde_json5value5ValueNtB1z_4LeafENtB1z_4EdgeE17deallocating_nextNtNtBc_5alloc6GlobalECsemnSGAKhbl_26candle_wasm_example_llama2:bb.a
   %.not.i33 = icmp eq i64 %.sroa.5.038, 0
   %..i34 = select i1 %.not.i33, i64 632, i64 728
@@ -204,7 +206,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers9tokenizer
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers9tokenizer5TokenECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i.i unwind label %bb.d, !noalias !247
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers9tokenizer5TokenECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i.i: ; preds = %.lr.ph3
-  %i.k = add i64 %.sroa.0.1.i.i.i2, 1             ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.1.i.i.i2, 1     ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.f
   br i1 %i.l, label %.body.i, label %.lr.ph3
 
@@ -607,7 +609,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i unwind label %bb.b, !noalias !422
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph3
 
@@ -670,7 +672,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !noalias !425
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph3
 
@@ -834,7 +836,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers14pre_toke
   br i1 %i.t, label %_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtCshBhMCGs0DAb_10tokenizers14pre_tokenizers19PreTokenizerWrapperENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsemnSGAKhbl_26candle_wasm_example_llama2.exit, label %.lr.ph
 
 bb.g:                                             ; preds = %.lr.ph24
-  %i.u = add i64 %.sroa.0.1.i23, 1                ; 2 uses
+  %i.u = add nuw i64 %.sroa.0.1.i23, 1            ; 2 uses
   %i.v = icmp eq i64 %i.u, %i.d
   br i1 %i.v, label %.body, label %.lr.ph24
 
@@ -895,12 +897,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i1 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [64 x i8], ptr %i.b, i64 %.sroa.0.0.i1
-  %i.h = add i64 %.sroa.0.0.i1, 1                 ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i1, 1             ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers8decoders14DecoderWrapperECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(64) %i.g)
           to label %bb.b unwind label %bb.d, !inline_history !446
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.1.i2, 1             ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph3
 
@@ -981,7 +983,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.o, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i.i ], [ %i.g, %bb.c ] ; 2 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.o = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !470)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !471)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !472)
@@ -1046,7 +1048,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !noalias !477
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph3
 
@@ -1122,7 +1124,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template5PieceECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.n, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template5PieceECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i.i ], [ %i.g, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.n = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   %i.o = load i64, ptr %i.m, align 8, !range !11, !alias.scope !488, !noalias !486, !noundef !4
   %i.p = icmp eq i64 %i.o, -1
   br i1 %i.p, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template5PieceECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i.i, label %bb.d
@@ -1208,7 +1210,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokeniz
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary16AddedTokenWithIdECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i unwind label %bb.b, !noalias !491
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary16AddedTokenWithIdECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph3
 
@@ -1266,12 +1268,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i1 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [256 x i8], ptr %i.b, i64 %.sroa.0.0.i.i1
-  %i.h = add i64 %.sroa.0.0.i.i1, 1               ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i.i1, 1           ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer8encoding8EncodingECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(256) %i.g)
           to label %bb.b unwind label %bb.d, !noalias !495, !inline_history !494
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.1.i.i2, 1           ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph3
 
@@ -1352,7 +1354,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %.lr.ph15
-  %i.m = add i64 %.sroa.0.1.i.i14, 1              ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.1.i.i14, 1      ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.d
   br i1 %i.n, label %.body, label %.lr.ph15
 
@@ -1419,7 +1421,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6Stringd
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i unwind label %bb.b, !noalias !501
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph3
 
@@ -1677,7 +1679,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std9backtrace15Backtr
   br i1 %i.p, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs5Xr050g3D4S_3std9backtrace15BacktraceSymbolEECsemnSGAKhbl_26candle_wasm_example_llama2.exit, label %.lr.ph.i.i.i
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.q = add i64 %.sroa.0.1.i.i.i22, 1            ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i.i.i22, 1    ; 2 uses
   %i.r = icmp eq i64 %i.q, %.val1.i
   br i1 %i.r, label %.body.i, label %.lr.ph
 
@@ -1861,7 +1863,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs9OLX912zl7o_
   br i1 %i.z, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSINtNtB4_6option6OptionNtNtCs9OLX912zl7o_3yew11virtual_dom19AttributeOrPropertyEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i, label %.lr.ph.i.i
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.aa = add i64 %.sroa.0.1.i.i7, 1              ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.0.1.i.i7, 1      ; 2 uses
   %i.ab = icmp eq i64 %i.aa, %.val1
   br i1 %i.ab, label %._crit_edge, label %.lr.ph
 
@@ -1936,12 +1938,12 @@ bb.f:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.e, %bb.f
   %.sroa.0.0.i.i1 = phi i64 [ %i.l, %bb.f ], [ 0, %bb.e ] ; 2 uses
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.0.0.i.i1
-  %i.l = add i64 %.sroa.0.0.i.i1, 1               ; 4 uses
+  %i.l = add nuw i64 %.sroa.0.0.i.i1, 1           ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaPlfBUY5LAj_10serde_json5value5ValueECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(32) %i.k)
           to label %bb.f unwind label %bb.h, !noalias !630, !inline_history !627
 
 bb.g:                                             ; preds = %.lr.ph3
-  %i.m = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.m = add nuw i64 %.sroa.0.1.i.i2, 1           ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.h
   br i1 %i.n, label %.body, label %.lr.ph3
 
@@ -2344,12 +2346,12 @@ bb.j:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.i, %bb.j
   %.sroa.0.0.i.i1 = phi i64 [ %i.v, %bb.j ], [ 0, %bb.i ] ; 2 uses
   %i.u = getelementptr inbounds nuw [64 x i8], ptr %i.p, i64 %.sroa.0.0.i.i1
-  %i.v = add i64 %.sroa.0.0.i.i1, 1               ; 4 uses
+  %i.v = add nuw i64 %.sroa.0.0.i.i1, 1           ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers8decoders14DecoderWrapperECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(64) %i.u)
           to label %bb.j unwind label %bb.l, !noalias !1035, !inline_history !1032
 
 bb.k:                                             ; preds = %.lr.ph3
-  %i.w = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.w = add nuw i64 %.sroa.0.1.i.i2, 1           ; 2 uses
   %i.x = icmp eq i64 %i.w, %i.r
   br i1 %i.x, label %._crit_edge, label %.lr.ph3
 
@@ -2622,7 +2624,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph12.i.i:                                     ; preds = %bb.d, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc2rc2RcDNtNtNtCs9OLX912zl7o_3yew11virtual_dom9listeners8ListenerEL_EEECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.n, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc2rc2RcDNtNtNtCs9OLX912zl7o_3yew11virtual_dom9listeners8ListenerEL_EEECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i.i ], [ %i.d, %bb.d ] ; 2 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %.0.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.n = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1118)
   %i.o = load ptr, ptr %i.m, align 8, !alias.scope !1119, !noundef !4 ; 3 uses
   %i.p = icmp eq ptr %i.o, null
@@ -2705,7 +2707,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private
 .lr.ph31:                                         ; preds = %bb.b, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECsemnSGAKhbl_26candle_wasm_example_llama2.exit
   %.sroa.0.0.i.i30 = phi i64 [ %i.j, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECsemnSGAKhbl_26candle_wasm_example_llama2.exit ], [ 0, %bb.b ] ; 2 uses
   %i.i = getelementptr inbounds nuw [64 x i8], ptr %i.d, i64 %.sroa.0.0.i.i30 ; 3 uses
-  %i.j = add i64 %.sroa.0.0.i.i30, 1              ; 4 uses
+  %i.j = add nuw i64 %.sroa.0.0.i.i30, 1          ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.i)
           to label %bb.d unwind label %bb.c, !noalias !1136, !inline_history !1123
 
@@ -2728,7 +2730,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %.lr.ph33
-  %i.o = add i64 %.sroa.0.1.i.i32, 1              ; 2 uses
+  %i.o = add nuw i64 %.sroa.0.1.i.i32, 1          ; 2 uses
   %i.p = icmp eq i64 %i.o, %i.f
   br i1 %i.p, label %.body, label %.lr.ph33
 
@@ -2840,12 +2842,12 @@ bb.r:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.q, %bb.r
   %.sroa.0.0.i.i427 = phi i64 [ %i.al, %bb.r ], [ 0, %bb.q ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [32 x i8], ptr %i.af, i64 %.sroa.0.0.i.i427
-  %i.al = add i64 %.sroa.0.0.i.i427, 1            ; 4 uses
+  %i.al = add nuw i64 %.sroa.0.0.i.i427, 1        ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(32) %i.ak)
           to label %bb.r unwind label %bb.t, !noalias !1139, !inline_history !1133
 
 bb.s:                                             ; preds = %.lr.ph29
-  %i.am = add i64 %.sroa.0.1.i.i528, 1            ; 2 uses
+  %i.am = add nuw i64 %.sroa.0.1.i.i528, 1        ; 2 uses
   %i.an = icmp eq i64 %i.am, %i.ah
   br i1 %i.an, label %.body6, label %.lr.ph29
 
@@ -3137,7 +3139,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i.i unwind label %bb.d, !noalias !1166
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i.i: ; preds = %.lr.ph27
-  %i.o = add i64 %.sroa.0.1.i.i.i26, 1            ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.1.i.i.i26, 1    ; 2 uses
   %i.p = icmp eq i64 %i.o, %i.j
   br i1 %i.p, label %.body.i, label %.lr.ph27
 
@@ -3436,7 +3438,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers10processo
   ret void
 
 bb.m:                                             ; preds = %.lr.ph64
-  %i.aa = add i64 %.sroa.0.163, 1                 ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.0.163, 1         ; 2 uses
   %i.ab = icmp eq i64 %i.aa, %1
   br i1 %i.ab, label %._crit_edge65, label %.lr.ph64
 
@@ -3584,7 +3586,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers11normaliz
   ret void
 
 bb.l:                                             ; preds = %.lr.ph63
-  %i.aa = add i64 %.sroa.0.162, 1                 ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.0.162, 1         ; 2 uses
   %i.ab = icmp eq i64 %i.aa, %1
   br i1 %i.ab, label %._crit_edge64, label %.lr.ph63
 
@@ -3677,7 +3679,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers14pre_toke
   ret void
 
 bb.g:                                             ; preds = %.lr.ph32
-  %i.q = add i64 %.sroa.0.131, 1                  ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.131, 1          ; 2 uses
   %i.r = icmp eq i64 %i.q, %1
   br i1 %i.r, label %._crit_edge33, label %.lr.ph32
 
@@ -3880,7 +3882,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i.i unwind label %bb.g, !noalias !1196
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i.i: ; preds = %.lr.ph15
-  %i.ae = add i64 %.sroa.0.1.i.i.i14, 1           ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.0.1.i.i.i14, 1   ; 2 uses
   %i.af = icmp eq i64 %i.ae, %i.z
   br i1 %i.af, label %.body.i, label %.lr.ph15
 
@@ -4283,12 +4285,12 @@ bb.g:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.f, %bb.g
   %.sroa.0.0.i.i13 = phi i64 [ %i.ac, %bb.g ], [ 0, %bb.f ] ; 2 uses
   %i.ab = getelementptr inbounds nuw [64 x i8], ptr %i.x, i64 %.sroa.0.0.i.i13
-  %i.ac = add i64 %.sroa.0.0.i.i13, 1             ; 4 uses
+  %i.ac = add nuw i64 %.sroa.0.0.i.i13, 1         ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers8decoders14DecoderWrapperECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(64) %i.ab)
           to label %bb.g unwind label %bb.i, !noalias !1248, !inline_history !1243
 
 bb.h:                                             ; preds = %.lr.ph15
-  %i.ad = add i64 %.sroa.0.1.i.i14, 1             ; 2 uses
+  %i.ad = add nuw i64 %.sroa.0.1.i.i14, 1         ; 2 uses
   %i.ae = icmp eq i64 %i.ad, %i.y
   br i1 %i.ae, label %.body.i, label %.lr.ph15
 
@@ -4590,7 +4592,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokeniz
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary16AddedTokenWithIdECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i.i unwind label %bb.g, !noalias !1268
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary16AddedTokenWithIdECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i.i: ; preds = %.lr.ph14
-  %i.aa = add i64 %.sroa.0.1.i.i.i13, 1           ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.0.1.i.i.i13, 1   ; 2 uses
   %i.ab = icmp eq i64 %i.aa, %i.v
   br i1 %i.ab, label %.body.i, label %.lr.ph14
 
@@ -4893,7 +4895,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6Stringd
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i.i unwind label %bb.g, !noalias !1285
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i.i: ; preds = %.lr.ph15
-  %i.ae = add i64 %.sroa.0.1.i.i.i14, 1           ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.0.1.i.i.i14, 1   ; 2 uses
   %i.af = icmp eq i64 %i.ae, %i.z
   br i1 %i.af, label %.body.i, label %.lr.ph15
 
@@ -5069,7 +5071,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6Stringd
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i.i.i unwind label %bb.g, !noalias !1297
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i.i.i: ; preds = %.lr.ph15
-  %i.ad = add i64 %.sroa.0.1.i.i.i14, 1           ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.0.1.i.i.i14, 1   ; 2 uses
   %i.ae = icmp eq i64 %i.ad, %i.y
   br i1 %i.ae, label %.body.i, label %.lr.ph15
 
@@ -5472,7 +5474,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtC
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtCskNPKTEkpOem_12aho_corasick4util10primitives9PatternIDEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i unwind label %bb.b
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtCskNPKTEkpOem_12aho_corasick4util10primitives9PatternIDEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtCskNPKTEkpOem_12aho_corasick4util10primitives9PatternIDEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i._crit_edge, label %.lr.ph3
 
@@ -5523,7 +5525,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsem
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i unwind label %bb.b
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i._crit_edge, label %.lr.ph3
 
@@ -5594,7 +5596,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtCsl6Ztq2JS0CE_4slab5EntryINtNtB4_6opt
   br i1 %i.p, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSINtCsl6Ztq2JS0CE_4slab5EntryINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc2rc2RcDINtNtNtB4_3ops8function2FnTINtNtB4_6result6ResultNtNtCsemnSGAKhbl_26candle_wasm_example_llama26worker12WorkerOutputNtNtB1v_6string6StringEEEp6OutputuEL_EEEEB2N_.exit, label %.lr.ph.i
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.q = add i64 %.sroa.0.1.i7, 1                 ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i7, 1         ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.d
   br i1 %i.r, label %._crit_edge, label %.lr.ph
 
@@ -5658,7 +5660,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i:                                       ; preds = %bb.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i
   %.sroa.0.110.i = phi i64 [ %i.n, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i ], [ %i.g, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.b, i64 %.sroa.0.110.i ; 2 uses
-  %i.n = add i64 %.sroa.0.110.i, 1                ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.110.i, 1        ; 2 uses
   %i.o = load i64, ptr %i.m, align 8, !range !11, !alias.scope !1815, !noundef !4
   %i.p = icmp eq i64 %i.o, -1
   br i1 %i.p, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i, label %bb.d
@@ -5757,7 +5759,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCsltEA4u8Pgfu
   br i1 %i.v, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSINtNtB4_6option6OptionTNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorBZ_EEECsemnSGAKhbl_26candle_wasm_example_llama2.exit, label %.lr.ph.i
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.w = add i64 %.sroa.0.1.i23, 1                ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.0.1.i23, 1        ; 2 uses
   %i.x = icmp eq i64 %i.w, %i.d
   br i1 %i.x, label %._crit_edge, label %.lr.ph
 
@@ -5835,7 +5837,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCseZbltJ5Yq
   br i1 %i.n, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSINtNtB4_6option6OptionTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBZ_EEECsemnSGAKhbl_26candle_wasm_example_llama2.exit, label %.lr.ph.i
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.o = add i64 %.sroa.0.1.i22, 1                ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.1.i22, 1        ; 2 uses
   %i.p = icmp eq i64 %i.o, %i.d
   br i1 %i.p, label %._crit_edge, label %.lr.ph
 
@@ -5902,7 +5904,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i unwind label %bb.b
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i._crit_edge, label %.lr.ph3
 
@@ -5953,7 +5955,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -5999,12 +6001,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i1 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %.sroa.0.0.i1
-  %i.h = add i64 %.sroa.0.0.i1, 1                 ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i1, 1             ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaPlfBUY5LAj_10serde_json5value5ValueECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(32) %i.g)
           to label %bb.b unwind label %bb.d, !inline_history !1859
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.1.i2, 1             ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -6067,7 +6069,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -6118,7 +6120,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -6202,7 +6204,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !inline_history !1860
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -6253,7 +6255,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers9tokenizer
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers9tokenizer5TokenECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i unwind label %bb.b
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers9tokenizer5TokenECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshBhMCGs0DAb_10tokenizers9tokenizer5TokenECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i._crit_edge, label %.lr.ph3
 
@@ -6322,7 +6324,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i:                                       ; preds = %bb.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i
   %.sroa.0.110.i = phi i64 [ %i.o, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i ], [ %i.g, %bb.c ] ; 2 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.0.110.i ; 2 uses
-  %i.o = add i64 %.sroa.0.110.i, 1                ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.110.i, 1        ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1880)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1881)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1882)
@@ -6375,7 +6377,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -6421,12 +6423,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i1 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %.sroa.0.0.i1
-  %i.h = add i64 %.sroa.0.0.i1, 1                 ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i1, 1             ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(32) %i.g)
           to label %bb.b unwind label %bb.d, !inline_history !1885
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.1.i2, 1             ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -6490,7 +6492,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i:                                       ; preds = %bb.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template5PieceECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i
   %.sroa.0.110.i = phi i64 [ %i.n, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template5PieceECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i ], [ %i.g, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %.sroa.0.110.i ; 2 uses
-  %i.n = add i64 %.sroa.0.110.i, 1                ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.110.i, 1        ; 2 uses
   %i.o = load i64, ptr %i.m, align 8, !range !11, !alias.scope !1893, !noundef !4
   %i.p = icmp eq i64 %i.o, -1
   br i1 %i.p, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers10processors8template5PieceECsemnSGAKhbl_26candle_wasm_example_llama2.exit8.i, label %bb.d
@@ -6572,7 +6574,7 @@ bb.d:                                             ; preds = %_RINvNtCsf3Ta7LF998
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph23
-  %i.p = add i64 %.sroa.0.1.i22, 1                ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.1.i22, 1        ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.d
   br i1 %i.q, label %._crit_edge, label %.lr.ph23
 
@@ -6627,7 +6629,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -6678,7 +6680,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokeniz
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary10AddedTokenECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i unwind label %bb.b
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary10AddedTokenECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary10AddedTokenECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i._crit_edge, label %.lr.ph3
 
@@ -6729,7 +6731,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokeniz
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary16AddedTokenWithIdECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i unwind label %bb.b
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary16AddedTokenWithIdECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer16added_vocabulary16AddedTokenWithIdECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i._crit_edge, label %.lr.ph3
 
@@ -6775,12 +6777,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i1 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [256 x i8], ptr %i.b, i64 %.sroa.0.0.i1
-  %i.h = add i64 %.sroa.0.0.i1, 1                 ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i1, 1             ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCshBhMCGs0DAb_10tokenizers9tokenizer8encoding8EncodingECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef align 8 dereferenceable(256) %i.g)
           to label %bb.b unwind label %bb.d, !inline_history !1894
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.1.i2, 1             ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -6903,7 +6905,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %.lr.ph15
-  %i.m = add i64 %.sroa.0.1.i14, 1                ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.1.i14, 1        ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.d
   br i1 %i.n, label %._crit_edge, label %.lr.ph15
 
@@ -6958,7 +6960,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6Stringd
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i unwind label %bb.b
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i: ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCsgCecv3eZDcN_5alloc6string6StringdEECsemnSGAKhbl_26candle_wasm_example_llama2.exit7.i._crit_edge, label %.lr.ph3
 
@@ -7004,7 +7006,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECsemnSGAKhbl_26candle_wasm_example_llama2.exit
   %.sroa.0.0.i13 = phi i64 [ %i.h, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentBC_EECsemnSGAKhbl_26candle_wasm_example_llama2.exit ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [64 x i8], ptr %i.b, i64 %.sroa.0.0.i13 ; 3 uses
-  %i.h = add i64 %.sroa.0.0.i13, 1                ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i13, 1            ; 4 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCseZbltJ5Yqe_10serde_core7private7content7ContentECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.g) #33
           to label %bb.c unwind label %bb.b, !inline_history !1895
 
@@ -7027,7 +7029,7 @@ bb.d:                                             ; preds = %bb.b
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph15
-  %i.m = add i64 %.sroa.0.1.i14, 1                ; 2 uses
+  %i.m = add nuw i64 %.sroa.0.1.i14, 1            ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.d
   br i1 %i.n, label %._crit_edge, label %.lr.ph15
 

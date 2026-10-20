@@ -205,6 +205,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
 _ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread.lr.ph: ; preds = %.preheader
   %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 64 ; 4 uses
+  %7 = zext i32 %.0.i to i64
   br label %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread
 
 bb.e:                                             ; preds = %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit
@@ -367,15 +368,15 @@ _ZN14core_hashtableIN7obj_mapI9func_declP13obj_hashtableIS1_EE13obj_map_entryE8o
 
 _ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread: ; preds = %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread.lr.ph, %._crit_edge
   %i.cc = phi ptr [ %i.aa, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread.lr.ph ], [ %i.dt, %._crit_edge ] ; 6 uses
-  %.035117 = phi i32 [ %.0.i, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread.lr.ph ], [ %8, %._crit_edge ] ; 3 uses
+  %indvars.iv = phi i64 [ %7, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread.lr.ph ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
   %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 -4
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !111 ; 2 uses
-  %i.cf = icmp ult i32 %.035117, %i.ce
+  %8 = zext i32 %i.ce to i64
+  %i.cf = icmp samesign ult i64 %indvars.iv, %8
   br i1 %i.cf, label %bb.s, label %.thread89
 
 bb.s:                                             ; preds = %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread
-  %7 = zext i32 %.035117 to i64
-  %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %7
+  %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %indvars.iv
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !95 ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 12
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !98 ; 3 uses
@@ -484,7 +485,7 @@ bb.z:                                             ; preds = %.lr.ph.i.i.i55
 
 ._crit_edge:                                      ; preds = %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE8iteratorppEv.exit, %.loopexit96
   %i.dt = phi ptr [ %i.cc, %.loopexit96 ], [ %i.gt, %_ZN14core_hashtableI14obj_hash_entryI9func_declE12obj_ptr_hashIS1_E6ptr_eqIS1_EE8iteratorppEv.exit ] ; 2 uses
-  %8 = add i32 %.035117, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.du = icmp eq ptr %i.dt, null
   br i1 %i.du, label %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52, label %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit52.thread, !llvm.loop !375
 

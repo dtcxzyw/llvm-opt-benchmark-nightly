@@ -204,31 +204,34 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.split
 .preheader.i.i:                                   ; preds = %.preheader25.i.i, %bb.m
   %.031.i.i = phi i32 [ %i.bd, %bb.m ], [ 1, %.preheader25.i.i ] ; 3 uses
   %.02030.i.i = phi i32 [ %i.be, %bb.m ], [ 1, %.preheader25.i.i ]
+  %3 = sext i32 %.02030.i.i to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.l, %.preheader.i.i
-  %.1.i.i = phi i32 [ %9, %bb.l ], [ %.02030.i.i, %.preheader.i.i ] ; 4 uses
-  %3 = sext i32 %.1.i.i to i64
-  %4 = getelementptr [4 x i8], ptr %i.ac, i64 %3
+  %indvars.iv.i.i = phi i64 [ %3, %.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.l ] ; 4 uses
+  %4 = getelementptr [4 x i8], ptr %i.ac, i64 %indvars.iv.i.i
   %5 = load i32, ptr %4, align 4                  ; 2 uses
-  %6 = add i32 %.1.i.i, -1
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr [4 x i8], ptr %i.ac, i64 %7
+  %6 = shl i64 %indvars.iv.i.i, 32
+  %sext.i.i = add i64 %6, -4294967296
+  %7 = ashr exact i64 %sext.i.i, 30
+  %8 = getelementptr i8, ptr %i.ac, i64 %7
   %i.ay = load i32, ptr %8, align 4
   %i.az = icmp eq i32 %5, %i.ay
   br i1 %i.az, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %9 = add i32 %.1.i.i, 1                         ; 2 uses
-  %i.ba = icmp eq i32 %9, %.037.lcssa.i
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next.i.i to i32
+  %i.ba = icmp eq i32 %.037.lcssa.i, %lftr.wideiv
   br i1 %i.ba, label %pidlist_uniq.exit.i, label %bb.k, !llvm.loop !43
 
 bb.m:                                             ; preds = %bb.k
+  %9 = trunc nsw i64 %indvars.iv.i.i to i32
   %i.bb = sext i32 %.031.i.i to i64
   %i.bc = getelementptr [4 x i8], ptr %i.ac, i64 %i.bb
   store i32 %5, ptr %i.bc, align 4
   %i.bd = add i32 %.031.i.i, 1                    ; 2 uses
-  %i.be = add i32 %.1.i.i, 1                      ; 2 uses
+  %i.be = add nsw i32 %9, 1                       ; 2 uses
   %i.bf = icmp slt i32 %i.be, %.037.lcssa.i
   br i1 %i.bf, label %.preheader.i.i, label %pidlist_uniq.exit.i, !llvm.loop !44
 

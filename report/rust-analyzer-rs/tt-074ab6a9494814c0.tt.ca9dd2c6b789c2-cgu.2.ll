@@ -1,6 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/tt-074ab6a9494814c0.tt.ca9dd2c6b789c2-cgu.2?download=true
 inline.NumInlined: 252
 inline.NumDeleted: 107
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtNtCs4dcH4YgJDq_2tt7storage9TokenTreeNtB1b_13SpanStorage96EEEB1d_:bb.a
 bb.a:
   invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecINtNtCs4dcH4YgJDq_2tt7storage9TokenTreeNtBI_13SpanStorage96EENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBK_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0)
@@ -202,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph37
           to label %bb.c unwind label %bb.e, !noalias !25
 
 bb.d:                                             ; preds = %.lr.ph39
-  %i.i = add i64 %.sroa.0.1.i.i38, 1              ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i38, 1      ; 2 uses
   %i.j = icmp eq i64 %i.i, %.val1
   br i1 %i.j, label %.body.i, label %.lr.ph39
 
@@ -264,7 +267,7 @@ bb.i:                                             ; preds = %.lr.ph33
           to label %bb.i unwind label %bb.k, !noalias !26
 
 bb.j:                                             ; preds = %.lr.ph35
-  %i.w = add i64 %.sroa.0.1.i.i934, 1             ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.0.1.i.i934, 1     ; 2 uses
   %i.x = icmp eq i64 %i.w, %.val1
   br i1 %i.x, label %.body.i12, label %.lr.ph35
 
@@ -320,7 +323,7 @@ bb.o:                                             ; preds = %.lr.ph
           to label %bb.o unwind label %bb.q, !noalias !27
 
 bb.p:                                             ; preds = %.lr.ph31
-  %i.ak = add i64 %.sroa.0.1.i.i1630, 1           ; 2 uses
+  %i.ak = add nuw nsw i64 %.sroa.0.1.i.i1630, 1   ; 2 uses
   %i.al = icmp eq i64 %i.ak, %.val1
   br i1 %i.al, label %.body.i19, label %.lr.ph31
 
@@ -723,8 +726,8 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #17
   unreachable
 
-common.resume:                                    ; preds = %bb.c, %bb.f
-  %common.resume.op = phi { ptr, i32 } [ %i.x, %bb.f ], [ %i.l, %bb.c ]
+common.resume:                                    ; preds = %bb.f, %bb.c
+  %common.resume.op = phi { ptr, i32 } [ %i.l, %bb.c ], [ %i.x, %bb.f ]
   resume { ptr, i32 } %common.resume.op
 
 _RNvMNtCsbSS6DM8SDEO_5alloc5boxedINtB2_3BoxAINtNtCs4dcH4YgJDq_2tt7storage9TokenTreeNtBI_13SpanStorage96Ej1_E3newBK_.exit: ; preds = %bb.a
