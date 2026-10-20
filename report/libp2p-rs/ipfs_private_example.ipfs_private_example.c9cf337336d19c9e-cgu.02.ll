@@ -18,7 +18,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !48, !noundef !7 ; 4 uses
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !48, !noundef !7 ; 3 uses
+  %2 = add nuw i64 %i.e, 1                        ; 2 uses
   %i.f = icmp eq i64 %i.e, -1
   br i1 %i.f, label %bb.c, label %bb.b, !prof !8
 
@@ -31,8 +32,8 @@ bb.b:                                             ; preds = %bb.a
   %i.l = mul nuw i64 %i.k, 7
   %.sroa.03.0.i = select i1 %i.i, i64 %i.h, i64 %i.l ; 2 uses
   %i.m = lshr i64 %.sroa.03.0.i, 1
-  %.not.i.not = icmp ult i64 %i.e, %i.m
-  br i1 %.not.i.not, label %bb.n, label %bb.d
+  %.not.i = icmp ugt i64 %2, %i.m
+  br i1 %.not.i, label %bb.d, label %bb.n
 
 bb.c:                                             ; preds = %bb.a
   %i.n = tail call { i64, i64 } @_RNvMNtCsiHO4aZxHxup_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 noundef zeroext true), !noalias !49
@@ -40,19 +41,19 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtNtB8_5alloc5inner6GlobalECshke30g4Hb4g_20ipfs_private_example.exit
 
 bb.d:                                             ; preds = %bb.b
-  %2 = tail call i64 @llvm.umax.i64(i64 %.sroa.03.0.i, i64 %i.e) ; 4 uses
-  %..i = add nuw nsw i64 %2, 1                    ; 2 uses
+  %3 = add nuw i64 %.sroa.03.0.i, 1
+  %..i = tail call noundef i64 @llvm.umax.i64(i64 %3, i64 %2) ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !51
-  %i.p = icmp ult i64 %2, 14
+  %i.p = icmp ult i64 %..i, 15
   br i1 %i.p, label %.thread.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = icmp ugt i64 %2, 2305843009213693950
+  %i.q = icmp ugt i64 %..i, 2305843009213693951
   br i1 %i.q, label %bb.j, label %bb.f, !prof !8
 
 .thread.i:                                        ; preds = %bb.d
-  %i.r = icmp samesign ult i64 %2, 3
+  %i.r = icmp samesign ult i64 %..i, 4
   %i.s = and i64 %..i, 8
   %..i.i = add nuw nsw i64 %i.s, 8
   %.sroa.03.0.i.i = select i1 %i.r, i64 4, i64 %..i.i

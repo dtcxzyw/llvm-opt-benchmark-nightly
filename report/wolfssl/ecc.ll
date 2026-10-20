@@ -204,6 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = shl i32 %i.d, 1
+  %4 = or disjoint i32 %i.i, 1
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
@@ -214,9 +215,10 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.k = load i32, ptr %3, align 4, !tbaa !44
-  %i.l = shl i32 %i.d, 1                          ; 3 uses
-  %.not = icmp ugt i32 %i.k, %i.l
-  br i1 %.not, label %bb.f, label %.sink.split
+  %i.l = shl i32 %i.d, 1
+  %5 = or disjoint i32 %i.l, 1                    ; 3 uses
+  %6 = icmp ult i32 %i.k, %5
+  br i1 %6, label %.sink.split, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.m = tail call i32 @sp_unsigned_bin_size(ptr noundef nonnull %1) #15
@@ -259,10 +261,9 @@ bb.j:                                             ; preds = %bb.i
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.e, %bb.c, %bb.j
-  %.sink.in = phi i32 [ %i.l, %bb.j ], [ %i.i, %bb.c ], [ %i.l, %bb.e ]
+  %.sink.in = phi i32 [ %5, %bb.j ], [ %4, %bb.c ], [ %5, %bb.e ]
   %.043.ph = phi i32 [ 0, %bb.j ], [ -202, %bb.c ], [ -132, %bb.e ]
-  %.sink = or disjoint i32 %.sink.in, 1
-  store i32 %.sink, ptr %3, align 4, !tbaa !44
+  store i32 %.sink.in, ptr %3, align 4, !tbaa !44
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split, %bb.i, %bb.h, %bb.f, %bb.g, %bb.d, %bb.a
@@ -330,10 +331,10 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.s = load i32, ptr %i.q, align 8, !tbaa !27   ; 6 uses
   %i.t = load i32, ptr %2, align 4, !tbaa !44
-  %i.u = shl i32 %i.s, 1                          ; 2 uses
-  %i.v = or disjoint i32 %i.u, 1
-  %.not.i = icmp ugt i32 %i.t, %i.u
-  br i1 %.not.i, label %bb.k, label %_ecc_export_x963.exit.sink.split
+  %i.u = shl i32 %i.s, 1
+  %i.v = or disjoint i32 %i.u, 1                  ; 2 uses
+  %3 = icmp ult i32 %i.t, %i.v
+  br i1 %3, label %_ecc_export_x963.exit.sink.split, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses

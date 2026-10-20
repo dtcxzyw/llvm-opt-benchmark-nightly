@@ -200,18 +200,18 @@ bb.z:                                             ; preds = %bb.bb, %bb.y
   %i.ci = add i32 %i.ch, -1
   %or.cond7 = icmp ult i32 %i.ci, 2
   store i32 1, ptr %i.c, align 4, !tbaa !8
-  %16 = load i32, ptr %2, align 4, !tbaa !8       ; 2 uses
   br i1 %or.cond7, label %bb.aa, label %bb.ai
 
 bb.aa:                                            ; preds = %bb.z
-  %i.cj = add nsw i32 %i.cg, %i.ch                ; 3 uses
-  %.not403.not = icmp slt i32 %i.cj, %16
-  br i1 %.not403.not, label %bb.ab, label %bb.ad
+  %i.cj = add nsw i32 %i.cg, %i.ch                ; 2 uses
+  %16 = add nsw i32 %i.cj, 1                      ; 2 uses
+  %17 = load i32, ptr %2, align 4, !tbaa !8
+  %.not403 = icmp sgt i32 %16, %17
+  br i1 %.not403, label %bb.ad, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %17 = add nsw i32 %i.cj, 1
   %i.ck = mul nsw i32 %i.cj, %i.e
-  %i.cl = add nsw i32 %17, %i.ck
+  %i.cl = add nsw i32 %16, %i.ck
   %i.cm = sext i32 %i.cl to i64
   %i.cn = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.cm
   %i.co = load double, ptr %i.cn, align 8, !tbaa !10
@@ -258,7 +258,8 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.z
   %i.de = add nsw i32 %i.cg, 3                    ; 2 uses
-  %.not397 = icmp sgt i32 %i.de, %16
+  %18 = load i32, ptr %2, align 4, !tbaa !8
+  %.not397 = icmp sgt i32 %i.de, %18
   br i1 %.not397, label %bb.al, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai

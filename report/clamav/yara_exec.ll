@@ -202,7 +202,7 @@ bb.eg:                                            ; preds = %bb.b
   %i.tn = sext i32 %.0519 to i64
   %i.to = getelementptr [8 x i8], ptr %i.b, i64 %i.tn
   %i.tp = getelementptr i8, ptr %i.to, i64 -16    ; 3 uses
-  %i.tq = load i64, ptr %i.tp, align 8, !tbaa !33 ; 4 uses
+  %i.tq = load i64, ptr %i.tp, align 8, !tbaa !33 ; 3 uses
   %i.tr = icmp eq i64 %i.tq, -1483400188077313
   br i1 %i.tr, label %bb.eh, label %bb.ei
 
@@ -211,6 +211,7 @@ bb.eh:                                            ; preds = %bb.eg
   br i1 %i.ts, label %bb.ge, label %.loopexit634
 
 bb.ei:                                            ; preds = %bb.eg
+  %5 = add nsw i64 %i.tq, -1                      ; 2 uses
   %i.tt = load ptr, ptr %i.l, align 8, !tbaa !70
   %i.tu = load i32, ptr %0, align 8, !tbaa !31
   %i.tv = zext i32 %i.tu to i64
@@ -231,23 +232,24 @@ bb.ej:                                            ; preds = %bb.ei
   %i.ug = load i32, ptr %i.uf, align 8, !tbaa !69
   %i.uh = sext i32 %i.ug to i64
   %i.ui = getelementptr inbounds [8 x i8], ptr %i.ue, i64 %i.uh
-  %i.uj = load ptr, ptr %i.ui, align 8, !tbaa !74 ; 2 uses
+  %i.uj = load ptr, ptr %i.ui, align 8, !tbaa !74 ; 3 uses
   %.not565 = icmp eq ptr %i.uj, null
   br i1 %.not565, label %bb.en, label %bb.ek
 
 bb.ek:                                            ; preds = %bb.ej
-  %i.uk = getelementptr inbounds nuw i8, ptr %i.uj, i64 4 ; 2 uses
+  %i.uk = getelementptr inbounds nuw i8, ptr %i.uj, i64 4
   %i.ul = load i32, ptr %i.uk, align 4, !tbaa !76
   %i.um = zext i32 %i.ul to i64
-  %.not566 = icmp samesign ugt i64 %i.tq, %i.um
-  br i1 %.not566, label %bb.en, label %bb.el
+  %6 = icmp samesign ult i64 %5, %i.um
+  br i1 %6, label %bb.el, label %bb.en
 
 bb.el:                                            ; preds = %bb.ek
   %i.un = icmp slt i32 %.0519, 16386
   br i1 %i.un, label %bb.em, label %.loopexit634
 
 bb.em:                                            ; preds = %bb.el
-  %i.uo = getelementptr [4 x i8], ptr %i.uk, i64 %i.tq
+  %7 = getelementptr inbounds nuw i8, ptr %i.uj, i64 8
+  %i.uo = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %5
   %i.up = load i32, ptr %i.uo, align 4, !tbaa !20
   %i.uq = zext i32 %i.up to i64
   store i64 %i.uq, ptr %i.tp, align 8, !tbaa !33
@@ -264,7 +266,7 @@ bb.eo:                                            ; preds = %bb.en
 bb.ep:                                            ; preds = %.lr.ph, %bb.ep
   %indvars.iv = phi i64 [ %.pn644, %.lr.ph ], [ %indvars.iv.next, %bb.ep ] ; 2 uses
   %.1525651 = phi i64 [ %.1525646, %.lr.ph ], [ %.1525, %bb.ep ]
-  %.0510649 = phi i32 [ 0, %.lr.ph ], [ %i.uz, %bb.ep ] ; 2 uses
+  %.0510649 = phi i32 [ 0, %.lr.ph ], [ %i.uz, %bb.ep ]
   %.3648 = phi i32 [ 0, %.lr.ph ], [ %spec.select, %bb.ep ]
   %i.us = inttoptr i64 %.1525651 to ptr
   %i.ut = getelementptr inbounds nuw i8, ptr %i.us, i64 40
@@ -275,7 +277,7 @@ bb.ep:                                            ; preds = %.lr.ph, %bb.ep
   %.not564 = icmp ne i32 %i.ux, -2
   %i.uy = zext i1 %.not564 to i32
   %spec.select = add nuw nsw i32 %.3648, %i.uy    ; 3 uses
-  %i.uz = add nuw nsw i32 %.0510649, 1
+  %i.uz = add nuw nsw i32 %.0510649, 1            ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %.1525.in = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv.next
   %.1525 = load i64, ptr %.1525.in, align 8, !tbaa !33 ; 2 uses
@@ -285,9 +287,9 @@ bb.ep:                                            ; preds = %.lr.ph, %bb.ep
 ._crit_edge.loopexit:                             ; preds = %bb.ep
   %i.va = trunc nsw i64 %indvars.iv to i32
   %i.vb = trunc nsw i64 %indvars.iv.next to i32
-  %5 = icmp samesign ugt i32 %spec.select, %.0510649
+  %8 = icmp samesign uge i32 %spec.select, %i.uz
   %i.vc = zext nneg i32 %spec.select to i64
-  %i.vd = zext i1 %5 to i64
+  %i.vd = zext i1 %8 to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader

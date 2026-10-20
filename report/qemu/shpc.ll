@@ -204,12 +204,13 @@ bb.a:
   %i.e = getelementptr i8, ptr %i.d, i64 208
   %.val20 = load i32, ptr %i.e, align 16
   %i.f = lshr i32 %.val20, 3
-  %i.g = and i32 %i.f, 31                         ; 4 uses
+  %i.g = and i32 %i.f, 31                         ; 3 uses
+  %3 = add nsw i32 %i.g, -1                       ; 2 uses
   %i.h = icmp ne i32 %i.g, 0
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %.pre.i = load i32, ptr %.phi.trans.insert.i, align 4 ; 2 uses
-  %.not.not.i = icmp sle i32 %i.g, %.pre.i
-  %or.cond.not.i = select i1 %i.h, i1 %.not.not.i, i1 false
+  %.not.i = icmp slt i32 %3, %.pre.i
+  %or.cond.not.i = select i1 %i.h, i1 %.not.i, i1 false
   br i1 %or.cond.not.i, label %bb.b, label %shpc_device_get_slot.exit
 
 shpc_device_get_slot.exit:                        ; preds = %bb.a
@@ -222,8 +223,8 @@ bb.b:                                             ; preds = %bb.a
   %.not = icmp eq i32 %i.j, 0
   %i.k = getelementptr i8, ptr %i.c, i64 8        ; 5 uses
   %.val19 = load ptr, ptr %i.k, align 8           ; 2 uses
-  %i.l = shl nuw nsw i32 %i.g, 2                  ; 2 uses
-  %i.m = add nuw nsw i32 %i.l, 32
+  %i.l = shl nuw nsw i32 %3, 2                    ; 2 uses
+  %i.m = add nuw nsw i32 %i.l, 36
   %i.n = zext nneg i32 %i.m to i64                ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.val19, i64 %i.n ; 3 uses
   %.val.i.i = load i16, ptr %i.o, align 1         ; 3 uses
@@ -259,8 +260,8 @@ bb.e:                                             ; preds = %shpc_get_status.exi
   %.val19.sink = phi ptr [ %i.w, %bb.d ], [ %.val19, %shpc_get_status.exit ]
   %.sink35 = phi i8 [ 13, %bb.d ], [ 4, %shpc_get_status.exit ]
   %i.x = zext nneg i32 %i.l to i64
-  %i.y = getelementptr i8, ptr %.val19.sink, i64 %i.x
-  %i.z = getelementptr i8, ptr %i.y, i64 34       ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.val19.sink, i64 %i.x
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 38 ; 2 uses
   %i.aa = load i8, ptr %i.z, align 1
   %i.ab = or i8 %i.aa, %.sink35
   store i8 %i.ab, ptr %i.z, align 1
@@ -295,13 +296,13 @@ bb.a:
   %i.e = getelementptr i8, ptr %i.d, i64 208
   %.val21 = load i32, ptr %i.e, align 16
   %i.f = lshr i32 %.val21, 3
-  %i.g = and i32 %i.f, 31                         ; 4 uses
-  %i.h = add nsw i32 %i.g, -1                     ; 2 uses
+  %i.g = and i32 %i.f, 31                         ; 3 uses
+  %i.h = add nsw i32 %i.g, -1                     ; 3 uses
   %i.i = icmp ne i32 %i.g, 0
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %.pre.i = load i32, ptr %.phi.trans.insert.i, align 4 ; 2 uses
-  %.not.not.i = icmp sle i32 %i.g, %.pre.i
-  %or.cond.not.i = select i1 %i.i, i1 %.not.not.i, i1 false
+  %.not.i = icmp slt i32 %i.h, %.pre.i
+  %or.cond.not.i = select i1 %i.i, i1 %.not.i, i1 false
   br i1 %or.cond.not.i, label %shpc_get_status.exit, label %shpc_device_get_slot.exit
 
 shpc_device_get_slot.exit:                        ; preds = %bb.a
@@ -704,8 +705,8 @@ define internal fastcc void @shpc_slot_command(ptr noundef %0, i8 noundef zeroex
 shpc_get_status.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2328
   %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
-  %i.c = zext i8 %1 to i32                        ; 4 uses
-  %i.d = add nsw i32 %i.c, -1                     ; 2 uses
+  %i.c = zext i8 %1 to i32                        ; 3 uses
+  %i.d = add nsw i32 %i.c, -1                     ; 3 uses
   %i.e = getelementptr i8, ptr %i.b, i64 8        ; 6 uses
   %.val72 = load ptr, ptr %i.e, align 8           ; 3 uses
   %i.f = shl nsw i32 %i.d, 2                      ; 2 uses
@@ -725,8 +726,8 @@ shpc_get_status.exit:
 bb.a:                                             ; preds = %shpc_get_status.exit
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.r = load i32, ptr %i.q, align 4
-  %.not.not = icmp slt i32 %i.r, %i.c
-  br i1 %.not.not, label %bb.b, label %bb.c
+  %.not.not = icmp slt i32 %i.d, %i.r
+  br i1 %.not.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %shpc_get_status.exit
   %i.s = getelementptr inbounds nuw i8, ptr %.val72, i64 22 ; 2 uses

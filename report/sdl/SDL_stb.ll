@@ -205,7 +205,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %bb.cw
 
 bb.cw:                                            ; preds = %stbi__jpeg_get_bit.exit.thread.i.i.i.i, %.lr.ph.i.i.i.i
-  %indvars.iv.i.i.i.i = phi i64 [ %i.vk, %.lr.ph.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %stbi__jpeg_get_bit.exit.thread.i.i.i.i ] ; 3 uses
+  %indvars.iv.i.i.i.i = phi i64 [ %i.vk, %.lr.ph.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %stbi__jpeg_get_bit.exit.thread.i.i.i.i ] ; 2 uses
   %i.vm = getelementptr inbounds i8, ptr @stbi__jpeg_dezigzag, i64 %indvars.iv.i.i.i.i
   %i.vn = load i8, ptr %i.vm, align 1
   %i.vo = zext i8 %i.vn to i64
@@ -250,11 +250,11 @@ stbi__jpeg_get_bit.exit.thread.sink.split.i.i.i.i: ; preds = %bb.cz
   br label %stbi__jpeg_get_bit.exit.thread.i.i.i.i
 
 stbi__jpeg_get_bit.exit.thread.i.i.i.i:           ; preds = %stbi__jpeg_get_bit.exit.thread.sink.split.i.i.i.i, %bb.cz, %stbi__jpeg_get_bit.exit.i.i.i.i, %bb.cy, %bb.cw
-  %indvars.iv.next.i.i.i.i = add nsw i64 %indvars.iv.i.i.i.i, 1
+  %indvars.iv.next.i.i.i.i = add nsw i64 %indvars.iv.i.i.i.i, 1 ; 2 uses
   %i.wd = load i32, ptr %i.v, align 8
   %i.we = sext i32 %i.wd to i64
-  %.not162.not.i.i.i.i = icmp slt i64 %indvars.iv.i.i.i.i, %i.we
-  br i1 %.not162.not.i.i.i.i, label %bb.cw, label %stbi__jpeg_decode_block_prog_ac.exit.thread.i.i.i, !llvm.loop !48
+  %.not162.i.i.i.i = icmp sgt i64 %indvars.iv.next.i.i.i.i, %i.we
+  br i1 %.not162.i.i.i.i, label %stbi__jpeg_decode_block_prog_ac.exit.thread.i.i.i, label %bb.cw, !llvm.loop !48
 
 bb.da:                                            ; preds = %.loopexit225.i.i.i.i, %.preheader226.i.i.i.i
   %.6.i.i.i.i = phi i32 [ %.9.i.i.i.i, %.loopexit225.i.i.i.i ], [ %i.qj, %.preheader226.i.i.i.i ] ; 3 uses
@@ -433,9 +433,9 @@ bb.du:                                            ; preds = %stbi__jpeg_get_bit.
   br label %.lr.ph256.i.i.i.i
 
 .lr.ph256.i.i.i.i:                                ; preds = %stbi__jpeg_get_bit.exit193.thread.i.i.i.i, %.lr.ph256.preheader.i.i.i.i
-  %indvars.iv266.i.i.i.i = phi i64 [ %i.yk, %.lr.ph256.preheader.i.i.i.i ], [ %indvars.iv.next267.i.i.i.i, %stbi__jpeg_get_bit.exit193.thread.i.i.i.i ] ; 3 uses
+  %indvars.iv266.i.i.i.i = phi i64 [ %i.yk, %.lr.ph256.preheader.i.i.i.i ], [ %indvars.iv.next267.i.i.i.i, %stbi__jpeg_get_bit.exit193.thread.i.i.i.i ] ; 2 uses
   %.1255.i.i.i.i = phi i32 [ %.0115.i.i.i.i, %.lr.ph256.preheader.i.i.i.i ], [ %.3.i.i.i.i, %stbi__jpeg_get_bit.exit193.thread.i.i.i.i ] ; 7 uses
-  %indvars.iv.next267.i.i.i.i = add nsw i64 %indvars.iv266.i.i.i.i, 1 ; 3 uses
+  %indvars.iv.next267.i.i.i.i = add nsw i64 %indvars.iv266.i.i.i.i, 1 ; 4 uses
   %i.yl = getelementptr inbounds i8, ptr @stbi__jpeg_dezigzag, i64 %indvars.iv266.i.i.i.i
   %i.ym = load i8, ptr %i.yl, align 1
   %i.yn = zext i8 %i.ym to i64
@@ -505,8 +505,8 @@ stbi__jpeg_get_bit.exit193.thread.i.i.i.i:        ; preds = %bb.ec, %bb.ea, %bb.
   %.3.i.i.i.i = phi i32 [ %i.zh, %bb.ec ], [ %.1255.i.i.i.i, %bb.dz ], [ %.1255.i.i.i.i, %bb.ea ], [ %.1255.i.i.i.i, %bb.dx ], [ %.1255.i.i.i.i, %stbi__jpeg_get_bit.exit193.i.i.i.i ], [ %.1255.i.i.i.i, %bb.dw ]
   %i.zi = load i32, ptr %i.v, align 8             ; 2 uses
   %i.zj = sext i32 %i.zi to i64
-  %.not157.not.i.i.i.i = icmp slt i64 %indvars.iv266.i.i.i.i, %i.zj
-  br i1 %.not157.not.i.i.i.i, label %.lr.ph256.i.i.i.i, label %.loopexit225.loopexit.i.i.i.i
+  %.not157.i.i.i.i = icmp sgt i64 %indvars.iv.next267.i.i.i.i, %i.zj
+  br i1 %.not157.i.i.i.i, label %.loopexit225.loopexit.i.i.i.i, label %.lr.ph256.i.i.i.i
 
 .loopexit225.loopexit.i.i.i.i:                    ; preds = %stbi__jpeg_get_bit.exit193.thread.i.i.i.i
   %i.zk = trunc nsw i64 %indvars.iv.next267.i.i.i.i to i32
@@ -909,7 +909,7 @@ bb.kd:                                            ; preds = %bb.kb
   %i.apn = ptrtoint ptr %.063.i.i.i.i.i.i.i to i64
   %i.apo = ptrtoint ptr %i.apm to i64             ; 2 uses
   %i.app = sub i64 %i.apn, %i.apo                 ; 2 uses
-  %i.apq = trunc i64 %i.app to i32                ; 3 uses
+  %i.apq = trunc i64 %i.app to i32                ; 2 uses
   %i.apr = icmp eq i32 %i.apq, -1
   br i1 %i.apr, label %bb.ke, label %.preheader.i13.i.i.i.i
 
@@ -917,8 +917,9 @@ bb.kd:                                            ; preds = %bb.kb
   %i.aps = ptrtoint ptr %i.apj to i64
   %i.apt = sub i64 %i.aps, %i.apo
   %i.apu = trunc i64 %i.apt to i32                ; 3 uses
-  %.not.i372.i.i.i = icmp ult i32 %i.apq, %i.apu
-  br i1 %.not.i372.i.i.i, label %._crit_edge.i14.i.i.i.i, label %.lr.ph.i17.i.i.i.i
+  %11 = add nuw i32 %i.apq, 1                     ; 2 uses
+  %12 = icmp ugt i32 %11, %i.apu
+  br i1 %12, label %.lr.ph.i17.i.i.i.i, label %._crit_edge.i14.i.i.i.i
 
 bb.ke:                                            ; preds = %bb.kd
   %i.apv = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.10) #13 ; 0 uses
@@ -935,8 +936,8 @@ bb.kf:                                            ; preds = %.lr.ph.i17.i.i.i.i
 
 bb.kg:                                            ; preds = %.lr.ph.i17.i.i.i.i
   %i.apy = shl nuw i32 %.028.i18.i.i.i.i, 1       ; 3 uses
-  %.not338.i.i.i.i = icmp ugt i32 %i.apy, %i.apq
-  br i1 %.not338.i.i.i.i, label %._crit_edge.i14.i.i.i.i, label %.lr.ph.i17.i.i.i.i, !llvm.loop !156
+  %.not338.i.i.i.i = icmp ugt i32 %11, %i.apy
+  br i1 %.not338.i.i.i.i, label %.lr.ph.i17.i.i.i.i, label %._crit_edge.i14.i.i.i.i, !llvm.loop !156
 
 ._crit_edge.i14.i.i.i.i:                          ; preds = %bb.kg, %.preheader.i13.i.i.i.i
   %.0.lcssa.i15.i.i.i.i = phi i32 [ %i.apu, %.preheader.i13.i.i.i.i ], [ %i.apy, %bb.kg ]

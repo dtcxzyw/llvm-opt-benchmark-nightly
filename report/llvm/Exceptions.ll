@@ -202,11 +202,12 @@ bb.a:
   br i1 %.not, label %_ZN4llvm15SmallVectorImplIPNS_8MCSymbolEE6resizeEm.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = add nuw nsw i64 %i.a, 1                  ; 4 uses
+  %i.e = add nuw nsw i64 %i.a, 1                  ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1348
   %i.g = load i32, ptr %i.f, align 4, !tbaa !487
-  %.not11 = icmp ult i32 %1, %i.g
-  br i1 %.not11, label %_ZN4llvm15SmallVectorImplIPNS_8MCSymbolEE7reserveEm.exit.i.i, label %bb.c
+  %5 = zext i32 %i.g to i64
+  %6 = icmp samesign ugt i64 %i.e, %5
+  br i1 %6, label %bb.c, label %_ZN4llvm15SmallVectorImplIPNS_8MCSymbolEE7reserveEm.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1352

@@ -205,17 +205,27 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXsd_NtNtCscI6d9CVNmLh_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator9size_hintCs63DIHKhvmTb_10lance_core.exit.thread.i: ; preds = %bb.e
   %i.t = add nuw nsw i64 %i.m, 1                  ; 6 uses
-  %i.u = shl i64 %i.t, 3                          ; 5 uses
+  %i.u = shl i64 %i.t, 3                          ; 6 uses
   %i.v = icmp eq i64 %i.m, 2305843009213693951
   %.not.i.i.i = icmp ugt i64 %i.u, 9223372036854775800
   %or.cond.i.i.i = or i1 %i.v, %.not.i.i.i
-  br i1 %or.cond.i.i.i, label %4, label %bb.h, !prof !24
+  br i1 %or.cond.i.i.i, label %5, label %bb.h, !prof !24
 
 bb.h:                                             ; preds = %_RNvXsd_NtNtCscI6d9CVNmLh_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator9size_hintCs63DIHKhvmTb_10lance_core.exit.thread.i
+  %4 = icmp ne i64 %i.u, 0
+  tail call void @llvm.assume(i1 %4)
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #65, !noalias !20619
   %i.w = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.u, i64 noundef range(i64 1, 9) 8) #65, !noalias !20619 ; 6 uses
   %i.x = icmp eq ptr %i.w, null
-  br i1 %i.x, label %4, label %.thread
+  br i1 %i.x, label %5, label %.thread
+
+5:                                                ; preds = %bb.h, %_RNvXsd_NtNtCscI6d9CVNmLh_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator9size_hintCs63DIHKhvmTb_10lance_core.exit.thread.i
+  %.sroa.4.0.ph.i.i = phi i64 [ 8, %bb.h ], [ 0, %_RNvXsd_NtNtCscI6d9CVNmLh_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator9size_hintCs63DIHKhvmTb_10lance_core.exit.thread.i ]
+  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %i.u) #68
+          to label %.noexc unwind label %bb.k
+
+.noexc:                                           ; preds = %5
+  unreachable
 
 .thread:                                          ; preds = %bb.h
   %i.y = ptrtoint ptr %i.w to i64
@@ -247,14 +257,6 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.thread, %middle.block
   %.ph = phi i64 [ 0, %.thread ], [ %n.vec, %middle.block ]
   br label %.lr.ph.i.i.i.i.i.i
-
-4:                                                ; preds = %bb.h, %_RNvXsd_NtNtCscI6d9CVNmLh_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator9size_hintCs63DIHKhvmTb_10lance_core.exit.thread.i
-  %.sroa.4.0.ph.i.i = phi i64 [ 8, %bb.h ], [ 0, %_RNvXsd_NtNtCscI6d9CVNmLh_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator9size_hintCs63DIHKhvmTb_10lance_core.exit.thread.i ]
-  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %i.u) #68
-          to label %.noexc unwind label %bb.k
-
-.noexc:                                           ; preds = %4
-  unreachable
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i
   %i.ac = phi i64 [ %i.ad, %.lr.ph.i.i.i.i.i.i ], [ %.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 4 uses
@@ -301,7 +303,7 @@ bb.j:                                             ; preds = %.body
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val41, i64 noundef %i.ak, i64 noundef range(i64 1, -9223372036854775807) 4) #65
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VeccEECs63DIHKhvmTb_10lance_core.exit59
 
-bb.k:                                             ; preds = %4
+bb.k:                                             ; preds = %5
   %i.al = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -704,8 +706,8 @@ bb.d:                                             ; preds = %bb.c, %_RNvXs2J_NtN
   %.not.i10 = icmp ne i64 %i.an, 0
   %i.ao = zext i1 %.not.i10 to i64
   %.sroa.0.0.i = add nuw nsw i64 %i.am, %i.ao     ; 2 uses
-  %i.ap = tail call i64 @llvm.umax.i64(i64 %.sroa.0.0.i, i64 3) ; 2 uses
-  %.sroa.0.0.i11 = add nuw nsw i64 %i.ap, 1       ; 2 uses
+  %i.ap = tail call i64 @llvm.umax.i64(i64 %.sroa.0.0.i, i64 3)
+  %.sroa.0.0.i11 = add nuw nsw i64 %i.ap, 1       ; 3 uses
   %i.aq = shl i64 %.sroa.0.0.i11, 2               ; 4 uses
   %i.ar = icmp samesign ugt i64 %.sroa.0.0.i, 4611686018427387902
   %.not.i.i = icmp ugt i64 %i.aq, 9223372036854775804
@@ -731,7 +733,7 @@ bb.g:                                             ; preds = %bb.f, %bb.d
 _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs63DIHKhvmTb_10lance_core.exit: ; preds = %bb.f, %bb.e
   %.sroa.10.0.i = phi ptr [ inttoptr (i64 4 to ptr), %bb.e ], [ %i.at, %bb.f ] ; 3 uses
   %.sroa.4.0.i = phi i64 [ 0, %bb.e ], [ %.sroa.0.0.i11, %bb.f ] ; 2 uses
-  %3 = icmp samesign ult i64 %i.ap, %.sroa.4.0.i
+  %3 = icmp samesign ule i64 %.sroa.0.0.i11, %.sroa.4.0.i
   tail call void @llvm.assume(i1 %3)
   store i32 %spec.select.i.ph, ptr %.sroa.10.0.i, align 4
   store i64 %.sroa.4.0.i, ptr %i.a, align 8

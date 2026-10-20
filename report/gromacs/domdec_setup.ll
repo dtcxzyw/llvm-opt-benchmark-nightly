@@ -205,7 +205,12 @@ bb.u:                                             ; preds = %bb.t
 
 .preheader.i.i:                                   ; preds = %bb.w, %bb.u
   %.not4666.i.i = icmp slt i32 %4, 2
-  br i1 %.not4666.i.i, label %.thread.i.i, label %.lr.ph68.i.i
+  br i1 %.not4666.i.i, label %.thread.i.i, label %.lr.ph68.preheader.i.i
+
+.lr.ph68.preheader.i.i:                           ; preds = %.preheader.i.i
+  %35 = call i32 @llvm.smax.i32(i32 %i.cm, i32 1) ; 2 uses
+  %smax.i.i = add nuw nsw i32 %35, 1
+  br label %.lr.ph68.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.u, %bb.w
   %.065.i.i = phi i32 [ %i.cy, %bb.w ], [ %i.ct, %bb.u ] ; 5 uses
@@ -225,8 +230,8 @@ bb.w:                                             ; preds = %.noexc54.i, %.lr.ph
   %exitcond.not.i.i = icmp eq i32 %.065.i.i, %i.cu
   br i1 %exitcond.not.i.i, label %.preheader.i.i, label %.lr.ph.i.i, !llvm.loop !177
 
-.lr.ph68.i.i:                                     ; preds = %.preheader.i.i, %bb.x
-  %.167.i.i = phi i32 [ %i.da, %bb.x ], [ 1, %.preheader.i.i ] ; 4 uses
+.lr.ph68.i.i:                                     ; preds = %bb.x, %.lr.ph68.preheader.i.i
+  %.167.i.i = phi i32 [ %i.da, %bb.x ], [ 1, %.lr.ph68.preheader.i.i ] ; 4 uses
   %i.cz = invoke fastcc noundef zeroext i1 @_ZL16fits_pp_pme_perfiif(i32 noundef %4, i32 noundef %.167.i.i, float noundef %i.bs)
           to label %.noexc55.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -235,15 +240,15 @@ bb.w:                                             ; preds = %.noexc54.i, %.lr.ph
 
 bb.x:                                             ; preds = %.noexc55.i
   %i.da = add nuw nsw i32 %.167.i.i, 1
-  %exitcond73.not.i.i = icmp eq i32 %.167.i.i, %i.cm
-  br i1 %exitcond73.not.i.i, label %.thread.thread.i.i, label %.lr.ph68.i.i, !llvm.loop !178
+  %exitcond73.not.i.i = icmp eq i32 %.167.i.i, %35
+  br i1 %exitcond73.not.i.i, label %.thread.i.i, label %.lr.ph68.i.i, !llvm.loop !178
 
-.thread.i.i:                                      ; preds = %.noexc54.i, %.noexc55.i, %.preheader.i.i
-  %.2.i.i = phi i32 [ %.167.i.i, %.noexc55.i ], [ 1, %.preheader.i.i ], [ %.065.i.i, %.noexc54.i ] ; 5 uses
+.thread.i.i:                                      ; preds = %.noexc54.i, %bb.x, %.noexc55.i, %.preheader.i.i
+  %.2.i.i = phi i32 [ %smax.i.i, %bb.x ], [ 1, %.preheader.i.i ], [ %.167.i.i, %.noexc55.i ], [ %.065.i.i, %.noexc54.i ] ; 5 uses
   %i.db = icmp sgt i32 %.2.i.i, %i.cm
   br i1 %i.db, label %.thread.thread.i.i, label %bb.aa
 
-.thread.thread.i.i:                               ; preds = %bb.x, %.thread.i.i
+.thread.thread.i.i:                               ; preds = %.thread.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #18
   invoke void @_ZNSt10filesystem7__cxx114pathC2IA68_cS1_EERKT_NS1_6formatE(ptr noundef nonnull align 8 dereferenceable(40) %25, ptr noundef nonnull align 1 dereferenceable(68) @.str, i8 noundef zeroext 2)
           to label %.noexc56.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

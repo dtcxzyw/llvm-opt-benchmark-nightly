@@ -202,23 +202,25 @@ bb.b:                                             ; preds = %bb.a
   %i.k = urem i64 %i.e, %i.h
   %i.l = mul nuw nsw i64 %i.k, 1000000
   %i.m = udiv i64 %i.l, %i.h
-  %i.n = add i64 %i.m, %i.j                       ; 2 uses
-  %i.o = icmp sgt i64 %i.n, -1
-  %1 = select i1 %i.o, i64 %i.n, i64 9223372036854775807 ; 2 uses
+  %i.n = add i64 %i.m, %i.j                       ; 3 uses
+  %i.o = icmp sgt i64 %i.n, -1                    ; 2 uses
   %.promoted = load i64, ptr %0, align 8
-  %i.p = shl i64 %.promoted, 1                    ; 2 uses
-  %.not68 = icmp slt i64 %i.p, %1
-  br i1 %.not68, label %.lr.ph, label %.loopexit
+  %i.p = shl i64 %.promoted, 1
+  %1 = or disjoint i64 %i.p, 1                    ; 2 uses
+  %.not68 = icmp slt i64 %i.n, %1
+  %2 = select i1 %i.o, i1 %.not68, i1 false
+  br i1 %2, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %i.q = phi i64 [ %2, %.lr.ph ], [ %i.p, %bb.b ]
-  %i.r = or disjoint i64 %i.q, 1                  ; 2 uses
-  %2 = shl i64 %i.r, 1                            ; 2 uses
-  %.not6 = icmp slt i64 %2, %1
-  br i1 %.not6, label %.lr.ph, label %..loopexit_crit_edge
+  %i.q = phi i64 [ %i.r, %.lr.ph ], [ %1, %bb.b ] ; 2 uses
+  %3 = shl i64 %i.q, 1
+  %i.r = or disjoint i64 %3, 1                    ; 2 uses
+  %4 = icmp slt i64 %i.n, %i.r
+  %5 = select i1 %i.o, i1 %4, i1 false
+  br i1 %5, label %..loopexit_crit_edge, label %.lr.ph
 
 ..loopexit_crit_edge:                             ; preds = %.lr.ph
-  store i64 %i.r, ptr %0, align 8
+  store i64 %i.q, ptr %0, align 8
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %..loopexit_crit_edge, %bb.a

@@ -204,6 +204,7 @@ Abc_Base10Log.exit379:                            ; preds = %.lr.ph.i374, %.crit
   %i.pz = shl nuw i32 1, %i.py
   %i.qa = sub nsw i32 32, %i.pw
   %i.qb = lshr i32 -1, %i.qa
+  %.6587 = add nsw i32 %2, -1                     ; 2 uses
   br label %bb.au
 
 .lr.ph586:                                        ; preds = %.preheader536, %bb.at
@@ -606,8 +607,8 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %i.ach = add nsw i32 %.4598, 1
   %i.aci = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.40, i32 noundef %.09.i378, i32 noundef %.4598) #11 ; 0 uses
   %.val222587 = load i32, ptr %i.abx, align 4, !tbaa !54 ; 2 uses
-  %.not174.not588 = icmp sgt i32 %2, %.val222587
-  br i1 %.not174.not588, label %.lr.ph591, label %.preheader
+  %.not174589 = icmp slt i32 %.6587, %.val222587
+  br i1 %.not174589, label %.preheader, label %.lr.ph591
 
 .preheader:                                       ; preds = %.lr.ph591, %bb.az
   %.val222.lcssa = phi i32 [ %.val222587, %bb.az ], [ %.val222, %.lr.ph591 ] ; 2 uses
@@ -620,12 +621,12 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   br label %bb.ba
 
 .lr.ph591:                                        ; preds = %bb.az, %.lr.ph591
-  %.6.in589 = phi i32 [ %.6, %.lr.ph591 ], [ %2, %bb.az ]
-  %.6 = add nsw i32 %.6.in589, -1                 ; 2 uses
+  %.6.in589 = phi i32 [ %.6, %.lr.ph591 ], [ %.6587, %bb.az ]
   %4 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.41, i32 noundef %.0.lcssa, ptr noundef nonnull @.str.37) #11 ; 0 uses
+  %.6 = add nsw i32 %.6.in589, -1                 ; 2 uses
   %.val222 = load i32, ptr %i.abx, align 4, !tbaa !54 ; 2 uses
-  %.not174.not = icmp sgt i32 %.6, %.val222
-  br i1 %.not174.not, label %.lr.ph591, label %.preheader, !llvm.loop !187
+  %.not174 = icmp slt i32 %.6, %.val222
+  br i1 %.not174, label %.preheader, label %.lr.ph591, !llvm.loop !187
 
 bb.ba:                                            ; preds = %.lr.ph594, %Io_WriteVerilogGetName.exit504
   %indvars.iv639 = phi i64 [ %i.acl, %.lr.ph594 ], [ %indvars.iv.next640, %Io_WriteVerilogGetName.exit504 ] ; 2 uses

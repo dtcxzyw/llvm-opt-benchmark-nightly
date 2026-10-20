@@ -202,7 +202,7 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
-  %i.es = trunc nsw i64 %i.ec to i32              ; 4 uses
+  %i.es = trunc nsw i64 %i.ec to i32              ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   %i.et = load ptr, ptr %9, align 8, !tbaa !20    ; 2 uses
   %i.eu = icmp eq ptr %i.et, %i.cm
@@ -605,7 +605,6 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
   br i1 %.not52402, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit214
-  %smax = call i32 @llvm.smax.i32(i32 %i.jy, i32 %i.es)
   %.pre475 = load ptr, ptr %i.n, align 8, !tbaa !12
   %.pre476 = load ptr, ptr %i.cq, align 8, !tbaa !39
   br label %.lr.ph
@@ -627,7 +626,7 @@ bb.cz:                                            ; preds = %bb.cw, %bb.ct
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit224
   %i.ld = phi ptr [ %i.lz, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit224 ], [ %.pre476, %.lr.ph.preheader ] ; 3 uses
   %i.le = phi ptr [ %i.ma, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit224 ], [ %.pre475, %.lr.ph.preheader ] ; 3 uses
-  %storemerge403 = phi i32 [ %i.mb, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit224 ], [ %i.es, %.lr.ph.preheader ] ; 4 uses
+  %storemerge403 = phi i32 [ %i.mb, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit224 ], [ %i.es, %.lr.ph.preheader ] ; 3 uses
   %.not.i215 = icmp eq ptr %i.le, %i.ld
   br i1 %.not.i215, label %bb.db, label %bb.da
 
@@ -690,9 +689,9 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIP
 _ZNSt6vectorIiSaIiEE9push_backERKi.exit224:       ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i221, %bb.da
   %i.lz = phi ptr [ %i.ly, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i221 ], [ %i.ld, %bb.da ]
   %i.ma = phi ptr [ %i.lu, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i221 ], [ %i.lf, %bb.da ]
-  %i.mb = add i32 %storemerge403, 1
-  %exitcond.not = icmp eq i32 %storemerge403, %smax
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !60
+  %i.mb = add nsw i32 %storemerge403, 1           ; 2 uses
+  %.not52 = icmp sgt i32 %i.mb, %i.jy
+  br i1 %.not52, label %._crit_edge, label %.lr.ph, !llvm.loop !60
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i216, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i, %.invoke
   %lpad.loopexit.split-lp656 = landingpad { ptr, i32 }

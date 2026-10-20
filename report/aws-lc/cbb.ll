@@ -204,16 +204,18 @@ CBB_add_u8.exit.thread:                           ; preds = %bb.c
   br i1 %.not.i.2, label %.lr.ph39.i.preheader, label %.lr.ph.i.3
 
 .lr.ph.i.3:                                       ; preds = %.lr.ph.i.2
-  %.not.i.3 = icmp samesign ult i32 %i.f, 268435456
-  %spec.select.a = select i1 %.not.i.3, i32 3, i32 4
+  %.not.i.3 = icmp samesign ult i32 %i.f, 268435456 ; 2 uses
+  %spec.select = select i1 %.not.i.3, i32 3, i32 4
+  %spec.select.a = select i1 %.not.i.3, i32 4, i32 5
   br label %.lr.ph39.i.preheader
 
 .lr.ph39.i.preheader:                             ; preds = %.lr.ph.i.3, %.lr.ph.i.2, %.lr.ph.i.1, %.lr.ph.i
-  %.02132.i.lcssa.a = phi i32 [ 0, %.lr.ph.i ], [ 1, %.lr.ph.i.1 ], [ 2, %.lr.ph.i.2 ], [ %spec.select.a, %.lr.ph.i.3 ] ; 2 uses
+  %.02132.i.lcssa = phi i32 [ 0, %.lr.ph.i ], [ 1, %.lr.ph.i.1 ], [ 2, %.lr.ph.i.2 ], [ %spec.select, %.lr.ph.i.3 ]
+  %.02132.i.lcssa.a = phi i32 [ 1, %.lr.ph.i ], [ 2, %.lr.ph.i.1 ], [ 3, %.lr.ph.i.2 ], [ %spec.select.a, %.lr.ph.i.3 ]
   br label %.lr.ph39.i
 
 .lr.ph39.i:                                       ; preds = %.lr.ph39.i.preheader, %CBB_add_u8.exit.i
-  %.01936.i = phi i32 [ %.019.i, %CBB_add_u8.exit.i ], [ %.02132.i.lcssa.a, %.lr.ph39.i.preheader ] ; 3 uses
+  %.01936.i = phi i32 [ %.019.i, %CBB_add_u8.exit.i ], [ %.02132.i.lcssa, %.lr.ph39.i.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.m = call i32 @CBB_add_space(ptr noundef %0, ptr noundef nonnull %i.b, i64 noundef 1)
   %.not.i.i.i = icmp eq i32 %i.m, 0
@@ -236,8 +238,8 @@ CBB_add_u8.exit.i:                                ; preds = %.lr.ph39.i
   store i8 %.0.i, ptr %i.s, align 1, !tbaa !14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   %.019.i = add nsw i32 %.01936.i, -1             ; 2 uses
-  %.not26.not.i.not = icmp ugt i32 %.019.i, %.02132.i.lcssa.a
-  br i1 %.not26.not.i.not, label %add_base128_integer.exit, label %.lr.ph39.i, !llvm.loop !0
+  %.not26.not.i = icmp ult i32 %.019.i, %.02132.i.lcssa.a
+  br i1 %.not26.not.i, label %.lr.ph39.i, label %add_base128_integer.exit, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9

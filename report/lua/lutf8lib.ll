@@ -82,7 +82,7 @@ u_posrelat.exit:                                  ; preds = %bb.a, %bb.c
   %i.q = icmp sle i64 %i.p, %i.i
   %.0 = select i1 %i.o, i64 %i.p, i64 %.0.i       ; 2 uses
   %i.r = select i1 %i.o, i1 %i.q, i1 false
-  br i1 %i.r, label %bb.d, label %u_posrelat.exit.thread, !prof !16
+  br i1 %i.r, label %bb.d, label %u_posrelat.exit.thread, !prof !15
 
 u_posrelat.exit.thread:                           ; preds = %bb.b, %u_posrelat.exit
   %.058 = phi i64 [ %.0, %u_posrelat.exit ], [ 0, %bb.b ]
@@ -281,7 +281,7 @@ bb.f:                                             ; preds = %u_posrelat.exit42
 bb.g:                                             ; preds = %bb.f, %u_posrelat.exit42
   %i.t = load i64, ptr %i.a, align 8, !tbaa !11
   %.not = icmp sgt i64 %.0.i41, %i.t
-  br i1 %.not, label %bb.h, label %bb.i, !prof !14
+  br i1 %.not, label %bb.h, label %bb.i, !prof !16
 
 bb.h:                                             ; preds = %bb.g
   %i.u = call i32 @luaL_argerror(ptr noundef %0, i32 noundef 3, ptr noundef nonnull @.str.9) #3 ; 0 uses
@@ -367,7 +367,7 @@ bb.m:                                             ; preds = %.lr.ph.i.us
 bb.n:                                             ; preds = %._crit_edge.i.us
   %i.az = zext nneg i32 %.0.lcssa.i.us to i64     ; 2 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr @utf8_decode.limits, i64 %i.az
-  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !15
+  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !14
   %i.bc = icmp ult i32 %i.ax, %i.bb
   br i1 %i.bc, label %.loopexit.sink.split, label %bb.o
 
@@ -448,7 +448,7 @@ bb.s:                                             ; preds = %.lr.ph.i
 bb.t:                                             ; preds = %._crit_edge.i
   %i.cf = zext nneg i32 %.0.lcssa.i to i64        ; 2 uses
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr @utf8_decode.limits, i64 %i.cf
-  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !15
+  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !14
   %i.ci = icmp ult i32 %i.cd, %i.ch
   br i1 %i.ci, label %.loopexit.sink.split, label %bb.u
 
@@ -505,7 +505,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not10, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %pushutfchar.exit9
-  %.011 = phi i32 [ %i.k, %pushutfchar.exit9 ], [ 1, %bb.d ] ; 4 uses
+  %.011 = phi i32 [ %i.k, %pushutfchar.exit9 ], [ 1, %bb.d ] ; 3 uses
   %i.g = call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef %.011) #3 ; 2 uses
   %i.h = icmp ult i64 %i.g, 2147483648
   br i1 %i.h, label %pushutfchar.exit9, label %bb.e, !prof !13
@@ -517,9 +517,9 @@ bb.e:                                             ; preds = %.lr.ph
 pushutfchar.exit9:                                ; preds = %.lr.ph, %bb.e
   %i.j = call ptr (ptr, ptr, ...) @lua_pushfstring(ptr noundef %0, ptr noundef nonnull @.str.13, i64 noundef %i.g) #3 ; 0 uses
   call void @luaL_addvalue(ptr noundef nonnull %1) #3
-  %i.k = add nuw i32 %.011, 1
-  %exitcond.not = icmp eq i32 %.011, %i.a
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
+  %i.k = add nuw nsw i32 %.011, 1                 ; 2 uses
+  %.not = icmp sgt i32 %i.k, %i.a
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %pushutfchar.exit9, %bb.d
   call void @luaL_pushresult(ptr noundef nonnull %1) #3
@@ -569,7 +569,7 @@ bb.e:                                             ; preds = %bb.d
   br label %u_posrelat.exit37
 
 u_posrelat.exit37:                                ; preds = %u_posrelat.exit, %bb.d, %bb.e
-  %.0.i36 = phi i64 [ %i.p, %bb.e ], [ %i.j, %u_posrelat.exit ], [ 0, %bb.d ] ; 4 uses
+  %.0.i36 = phi i64 [ %i.p, %bb.e ], [ %i.j, %u_posrelat.exit ], [ 0, %bb.d ]
   %i.q = call i32 @lua_toboolean(ptr noundef %0, i32 noundef 4) #3
   %i.r = icmp sgt i64 %.0.i, 0                    ; 2 uses
   %i.s = add nsw i64 %.0.i, -1                    ; 2 uses
@@ -586,16 +586,17 @@ bb.f:                                             ; preds = %u_posrelat.exit37
 
 bb.g:                                             ; preds = %bb.f, %u_posrelat.exit37
   %i.x = phi i64 [ %.pre, %bb.f ], [ %i.t, %u_posrelat.exit37 ]
-  %.not = icmp sgt i64 %.0.i36, %i.x
-  br i1 %.not, label %bb.h, label %bb.i, !prof !14
+  %1 = add nsw i64 %.0.i36, -1                    ; 4 uses
+  %2 = icmp slt i64 %1, %i.x
+  br i1 %2, label %bb.i, label %bb.h, !prof !13
 
 bb.h:                                             ; preds = %bb.g
   %i.y = call i32 @luaL_argerror(ptr noundef %0, i32 noundef 3, ptr noundef nonnull @.str.15) #3 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.not33.not53 = icmp slt i64 %.024, %.0.i36
-  br i1 %.not33.not53, label %.lr.ph, label %._crit_edge
+  %.not52 = icmp sgt i64 %.024, %1
+  br i1 %.not52, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.i
   %.fr = freeze i32 %i.q
@@ -660,7 +661,7 @@ bb.k:                                             ; preds = %.lr.ph.i.us
 bb.l:                                             ; preds = %._crit_edge.i.us
   %i.aw = zext nneg i32 %.0.lcssa.i.us to i64     ; 2 uses
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr @utf8_decode.limits, i64 %i.aw
-  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !15
+  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !14
   %i.az = icmp ult i32 %i.au, %i.ay
   br i1 %i.az, label %.thread, label %bb.m
 
@@ -682,8 +683,8 @@ bb.o:                                             ; preds = %bb.n
   %i.be = ptrtoint ptr %i.bd to i64
   %i.bf = sub i64 %i.be, %i.z                     ; 2 uses
   %i.bg = add nuw nsw i64 %.02554.us, 1           ; 2 uses
-  %.not33.not.us = icmp slt i64 %i.bf, %.0.i36
-  br i1 %.not33.not.us, label %.lr.ph.split.us, label %._crit_edge
+  %.not.us = icmp sgt i64 %i.bf, %1
+  br i1 %.not.us, label %._crit_edge, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.t
   %.155 = phi i64 [ %i.ck, %bb.t ], [ %.024, %.lr.ph ] ; 5 uses
@@ -742,7 +743,7 @@ bb.q:                                             ; preds = %.lr.ph.i
 bb.r:                                             ; preds = %._crit_edge.i
   %i.cd = zext nneg i32 %.0.lcssa.i to i64        ; 2 uses
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr @utf8_decode.limits, i64 %i.cd
-  %i.cf = load i32, ptr %i.ce, align 4, !tbaa !15
+  %i.cf = load i32, ptr %i.ce, align 4, !tbaa !14
   %i.cg = icmp ult i32 %i.cb, %i.cf
   br i1 %i.cg, label %.thread, label %bb.s
 
@@ -756,8 +757,8 @@ bb.t:                                             ; preds = %bb.s, %.lr.ph.split
   %i.cj = ptrtoint ptr %i.ci to i64
   %i.ck = sub i64 %i.cj, %i.z                     ; 2 uses
   %i.cl = add nuw nsw i64 %.02554, 1              ; 2 uses
-  %.not33.not = icmp slt i64 %i.ck, %.0.i36
-  br i1 %.not33.not, label %.lr.ph.split, label %._crit_edge
+  %.not = icmp sgt i64 %i.ck, %1
+  br i1 %.not, label %._crit_edge, label %.lr.ph.split
 
 .thread:                                          ; preds = %bb.p, %._crit_edge.i, %bb.r, %.lr.ph.i, %bb.n, %bb.l, %._crit_edge.i.us, %bb.j, %.lr.ph.i.us
   %.150 = phi i64 [ %.155.us, %.lr.ph.i.us ], [ %.155.us, %bb.n ], [ %.155, %.lr.ph.i ], [ %.155.us, %bb.j ], [ %.155.us, %._crit_edge.i.us ], [ %.155.us, %bb.l ], [ %.155, %bb.r ], [ %.155, %._crit_edge.i ], [ %.155, %bb.p ]
@@ -926,7 +927,7 @@ bb.d:                                             ; preds = %.lr.ph.i
 bb.e:                                             ; preds = %._crit_edge.i
   %i.af = zext nneg i32 %.0.lcssa.i to i64        ; 2 uses
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr @utf8_decode.limits, i64 %i.af
-  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !15
+  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !14
   %i.ai = icmp ult i32 %i.ad, %i.ah
   br i1 %i.ai, label %utf8_decode.exit.thread, label %bb.f
 
@@ -995,7 +996,7 @@ attributes #3 = { nounwind }
 !11 = !{!10, !10, i64 0}
 !12 = !{!6, !6, i64 0}
 !13 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!15 = !{!7, !7, i64 0}
-!16 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!14 = !{!7, !7, i64 0}
+!15 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!16 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_0

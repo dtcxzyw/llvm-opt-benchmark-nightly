@@ -205,7 +205,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co, %._c
 bb.cr:                                            ; preds = %bb.cq
   %i.mo = trunc i64 %.pre343.i.i.a to i1          ; 2 uses
   %i.mp = load i64, ptr %i.jk, align 8, !noalias !393
-  %.sink2.i.i.i.i = select i1 %i.mo, ptr %.pre345.i.i, ptr %i.jl ; 12 uses
+  %.sink2.i.i.i.i = select i1 %i.mo, ptr %.pre345.i.i, ptr %i.jl ; 13 uses
   %.sink.i.i.i.i = select i1 %i.mo, i64 %i.mp, i64 196 ; 2 uses
   %.sink1.i.i.i.i = lshr i64 %.pre343.i.i.a, 1    ; 7 uses
   %i.mq = ptrtoint ptr %.sink2.i.i.i.i to i64     ; 5 uses
@@ -422,7 +422,7 @@ _ZN4absl12lts_2025051223inlined_vector_internal21AllocationTransactionISaIcEED2E
 
 bb.cu:                                            ; preds = %bb.cr
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.ms, i64 %.sink1.i.i.i.i) ; 11 uses
-  %i.on = getelementptr i8, ptr %.sink2.i.i.i.i, i64 %.sroa.speculated.i.i.i ; 4 uses
+  %i.on = getelementptr inbounds nuw i8, ptr %.sink2.i.i.i.i, i64 %.sroa.speculated.i.i.i ; 3 uses
   %i.oo = sub i64 %i.mt, %.sroa.speculated.i.i.i  ; 19 uses
   %i.op = getelementptr inbounds nuw i8, ptr %.sink2.i.i.i.i, i64 %i.mr ; 5 uses
   %i.oq = getelementptr inbounds nuw i8, ptr %.sink2.i.i.i.i, i64 %i.ms
@@ -509,11 +509,12 @@ vec.epilog.middle.block763:                       ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not.i.i66.i.i.i, label %_ZN4absl12lts_2025051223inlined_vector_internal23ConstructionTransactionISaIcEE9ConstructINS1_20IteratorValueAdapterIS3_St13move_iteratorIPcEEEEEvS8_RT_m.exit67.i.i.i, label %.lr.ph.i.i64.i.i.i, !llvm.loop !332
 
 _ZN4absl12lts_2025051223inlined_vector_internal23ConstructionTransactionISaIcEE9ConstructINS1_20IteratorValueAdapterIS3_St13move_iteratorIPcEEEEEvS8_RT_m.exit67.i.i.i: ; preds = %.lr.ph.i.i64.i.i.i, %middle.block749, %vec.epilog.middle.block763, %bb.cu
-  %.not.i158.i.i = icmp sgt i64 %.sroa.speculated.i.i.i, %i.ms
-  br i1 %.not.i158.i.i, label %iter.check720, label %._crit_edge.i.i.i
+  %40 = add nsw i64 %.sroa.speculated.i.i.i, -1   ; 2 uses
+  %41 = icmp slt i64 %40, %i.ms
+  br i1 %41, label %._crit_edge.i.i.i, label %iter.check720
 
 iter.check720:                                    ; preds = %_ZN4absl12lts_2025051223inlined_vector_internal23ConstructionTransactionISaIcEE9ConstructINS1_20IteratorValueAdapterIS3_St13move_iteratorIPcEEEEEvS8_RT_m.exit67.i.i.i
-  %i.pj = getelementptr i8, ptr %i.on, i64 -1     ; 5 uses
+  %i.pj = getelementptr inbounds i8, ptr %.sink2.i.i.i.i, i64 %40 ; 5 uses
   %i.pk = getelementptr inbounds nuw i8, ptr %i.op, i64 %i.or ; 5 uses
   %i.pl = add i64 %i.mq, -1
   %i.pm = add i64 %i.pl, %.sroa.speculated.i.i.i

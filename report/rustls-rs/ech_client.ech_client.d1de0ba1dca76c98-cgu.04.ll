@@ -205,7 +205,8 @@ bb.a:
   store ptr %i.c, ptr %i.b, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !142)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !142, !noundef !8 ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !142, !noundef !8 ; 2 uses
+  %2 = add nuw i64 %i.f, 1                        ; 2 uses
   %i.g = icmp eq i64 %i.f, -1
   br i1 %i.g, label %bb.c, label %bb.b, !prof !14
 
@@ -218,8 +219,8 @@ bb.b:                                             ; preds = %bb.a
   %i.m = mul nuw i64 %i.l, 7
   %.sroa.03.0.i = select i1 %i.j, i64 %i.i, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
-  %.not.i.not = icmp ult i64 %i.f, %i.n
-  br i1 %.not.i.not, label %bb.s, label %bb.d
+  %.not.i = icmp ugt i64 %2, %i.n
+  br i1 %.not.i, label %bb.d, label %bb.s
 
 bb.c:                                             ; preds = %bb.a
   %i.o = call { i64, i64 } @_RNvMNtCs37Y8JGf013z_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 noundef zeroext true), !noalias !143
@@ -227,15 +228,15 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs4wP2HXfJTCR_5alloc5alloc6GlobalECsi17nFaBu4HY_10ech_client.exit
 
 bb.d:                                             ; preds = %bb.b
-  %2 = call i64 @llvm.umax.i64(i64 %.sroa.03.0.i, i64 %i.f) ; 4 uses
-  %..i = add nuw nsw i64 %2, 1                    ; 2 uses
+  %3 = add nuw i64 %.sroa.03.0.i, 1
+  %..i = call noundef range(i64 1, 0) i64 @llvm.umax.i64(i64 range(i64 1, -2305843009213693957) %3, i64 range(i64 1, 0) %2) ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !144)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !145
-  %i.q = icmp ult i64 %2, 14
+  %i.q = icmp ult i64 %..i, 15
   br i1 %i.q, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = icmp ugt i64 %2, 2305843009213693950
+  %i.r = icmp ugt i64 %..i, 2305843009213693951
   br i1 %i.r, label %bb.l, label %bb.f, !prof !14
 
 bb.f:                                             ; preds = %bb.e
@@ -248,7 +249,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
-  %i.y = icmp samesign ult i64 %2, 3
+  %i.y = icmp samesign ult i64 %..i, 4
   %i.z = and i64 %..i, 8
   %..i.i = add nuw nsw i64 %i.z, 8
   %.sroa.03.0.i.i = select i1 %i.y, i64 4, i64 %..i.i
@@ -527,7 +528,8 @@ bb.a:
   store ptr %i.c, ptr %i.b, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !179)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !179, !noundef !8 ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !179, !noundef !8 ; 2 uses
+  %2 = add nuw i64 %i.f, 1                        ; 2 uses
   %i.g = icmp eq i64 %i.f, -1
   br i1 %i.g, label %bb.c, label %bb.b, !prof !14
 
@@ -540,8 +542,8 @@ bb.b:                                             ; preds = %bb.a
   %i.m = mul nuw i64 %i.l, 7
   %.sroa.03.0.i = select i1 %i.j, i64 %i.i, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
-  %.not.i.not = icmp ult i64 %i.f, %i.n
-  br i1 %.not.i.not, label %bb.s, label %bb.d
+  %.not.i = icmp ugt i64 %2, %i.n
+  br i1 %.not.i, label %bb.d, label %bb.s
 
 bb.c:                                             ; preds = %bb.a
   %i.o = call { i64, i64 } @_RNvMNtCs37Y8JGf013z_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 noundef zeroext true), !noalias !180
@@ -549,15 +551,15 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs4wP2HXfJTCR_5alloc5alloc6GlobalECsi17nFaBu4HY_10ech_client.exit
 
 bb.d:                                             ; preds = %bb.b
-  %2 = call i64 @llvm.umax.i64(i64 %.sroa.03.0.i, i64 %i.f) ; 4 uses
-  %..i = add nuw nsw i64 %2, 1                    ; 2 uses
+  %3 = add nuw i64 %.sroa.03.0.i, 1
+  %..i = call noundef range(i64 1, 0) i64 @llvm.umax.i64(i64 range(i64 1, -2305843009213693957) %3, i64 range(i64 1, 0) %2) ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !181)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !182
-  %i.q = icmp ult i64 %2, 14
+  %i.q = icmp ult i64 %..i, 15
   br i1 %i.q, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = icmp ugt i64 %2, 2305843009213693950
+  %i.r = icmp ugt i64 %..i, 2305843009213693951
   br i1 %i.r, label %bb.l, label %bb.f, !prof !14
 
 bb.f:                                             ; preds = %bb.e
@@ -570,7 +572,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
-  %i.y = icmp samesign ult i64 %2, 3
+  %i.y = icmp samesign ult i64 %..i, 4
   %i.z = and i64 %..i, 8
   %..i.i = add nuw nsw i64 %i.z, 8
   %.sroa.03.0.i.i = select i1 %i.y, i64 4, i64 %..i.i
@@ -847,7 +849,8 @@ bb.a:
   store ptr %i.c, ptr %i.b, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !216)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !216, !noundef !8 ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !216, !noundef !8 ; 2 uses
+  %2 = add nuw i64 %i.f, 1                        ; 2 uses
   %i.g = icmp eq i64 %i.f, -1
   br i1 %i.g, label %bb.c, label %bb.b, !prof !14
 
@@ -860,8 +863,8 @@ bb.b:                                             ; preds = %bb.a
   %i.m = mul nuw i64 %i.l, 7
   %.sroa.03.0.i = select i1 %i.j, i64 %i.i, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
-  %.not.i.not = icmp ult i64 %i.f, %i.n
-  br i1 %.not.i.not, label %bb.s, label %bb.d
+  %.not.i = icmp ugt i64 %2, %i.n
+  br i1 %.not.i, label %bb.d, label %bb.s
 
 bb.c:                                             ; preds = %bb.a
   %i.o = call { i64, i64 } @_RNvMNtCs37Y8JGf013z_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 noundef zeroext true), !noalias !217
@@ -869,15 +872,15 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs4wP2HXfJTCR_5alloc5alloc6GlobalECsi17nFaBu4HY_10ech_client.exit
 
 bb.d:                                             ; preds = %bb.b
-  %2 = call i64 @llvm.umax.i64(i64 %.sroa.03.0.i, i64 %i.f) ; 4 uses
-  %..i = add nuw nsw i64 %2, 1                    ; 2 uses
+  %3 = add nuw i64 %.sroa.03.0.i, 1
+  %..i = call noundef range(i64 1, 0) i64 @llvm.umax.i64(i64 range(i64 1, -2305843009213693957) %3, i64 range(i64 1, 0) %2) ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !218)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !219
-  %i.q = icmp ult i64 %2, 14
+  %i.q = icmp ult i64 %..i, 15
   br i1 %i.q, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = icmp ugt i64 %2, 2305843009213693950
+  %i.r = icmp ugt i64 %..i, 2305843009213693951
   br i1 %i.r, label %bb.l, label %bb.f, !prof !14
 
 bb.f:                                             ; preds = %bb.e
@@ -890,7 +893,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
-  %i.y = icmp samesign ult i64 %2, 3
+  %i.y = icmp samesign ult i64 %..i, 4
   %i.z = and i64 %..i, 8
   %..i.i = add nuw nsw i64 %i.z, 8
   %.sroa.03.0.i.i = select i1 %i.y, i64 4, i64 %..i.i
@@ -1293,7 +1296,7 @@ _RNvMsg_NtCsdaVh6l1oWST_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsj
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.u, %_RNvMsg_NtCsdaVh6l1oWST_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsj6eKBz9Db1c_4core6result6ResultNtNtNtCsjXdHNeFfodD_13hickory_proto2op12dns_response11DnsResponseNtNtCs5MfxasYgTEl_11hickory_net5error8NetErrorEE13poll_unparkedCsi17nFaBu4HY_10ech_client.exit.thread
-  %.sroa.05.0.i.i = phi i64 [ %i.az, %_RNvMsg_NtCsdaVh6l1oWST_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsj6eKBz9Db1c_4core6result6ResultNtNtNtCsjXdHNeFfodD_13hickory_proto2op12dns_response11DnsResponseNtNtCs5MfxasYgTEl_11hickory_net5error8NetErrorEE13poll_unparkedCsi17nFaBu4HY_10ech_client.exit.thread ], [ %.sroa.01.0.i.i.i, %bb.u ] ; 4 uses
+  %.sroa.05.0.i.i = phi i64 [ %i.az, %_RNvMsg_NtCsdaVh6l1oWST_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsj6eKBz9Db1c_4core6result6ResultNtNtNtCsjXdHNeFfodD_13hickory_proto2op12dns_response11DnsResponseNtNtCs5MfxasYgTEl_11hickory_net5error8NetErrorEE13poll_unparkedCsi17nFaBu4HY_10ech_client.exit.thread ], [ %.sroa.01.0.i.i.i, %bb.u ] ; 3 uses
   %.not.i.i = icmp sgt i64 %.sroa.05.0.i.i, -1
   %i.ba = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 2 uses
   br i1 %.not.i.i, label %bb.w, label %bb.s
@@ -1310,8 +1313,8 @@ bb.t:                                             ; preds = %bb.s
   unreachable
 
 bb.u:                                             ; preds = %bb.s
-  %i.bb = add nsw i64 %.sroa.05.0.i.i, 1
-  %i.bc = or i64 %i.bb, -9223372036854775808
+  %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
+  %i.bc = or disjoint i64 %i.bb, -9223372036854775808
   %i.bd = cmpxchg ptr %i.ay, i64 %.sroa.05.0.i.i, i64 %i.bc seq_cst seq_cst, align 8, !noalias !1234 ; 2 uses
   %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.bd, 1
   %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.bd, 0
@@ -1326,8 +1329,8 @@ bb.v:                                             ; preds = %bb.u
   %i.be = load ptr, ptr %1, align 8, !alias.scope !1230, !nonnull !8, !noundef !8 ; 4 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 48
   %i.bg = load i64, ptr %i.bf, align 8, !noalias !1235, !noundef !8
-  %.not.i = icmp ult i64 %i.ba, %i.bg
-  br i1 %.not.i, label %.noexc7.i, label %bb.x
+  %3 = icmp ugt i64 %i.bb, %i.bg
+  br i1 %3, label %bb.x, label %.noexc7.i
 
 bb.w:                                             ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull align 8 dereferenceable(176) %i.e, i64 176, i1 false), !alias.scope !1236
@@ -1688,7 +1691,7 @@ _RNvMsg_NtCsdaVh6l1oWST_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCs5M
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.u, %_RNvMsg_NtCsdaVh6l1oWST_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCs5MfxasYgTEl_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsi17nFaBu4HY_10ech_client.exit.thread
-  %.sroa.05.0.i.i = phi i64 [ %i.az, %_RNvMsg_NtCsdaVh6l1oWST_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCs5MfxasYgTEl_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsi17nFaBu4HY_10ech_client.exit.thread ], [ %.sroa.01.0.i.i.i, %bb.u ] ; 4 uses
+  %.sroa.05.0.i.i = phi i64 [ %i.az, %_RNvMsg_NtCsdaVh6l1oWST_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCs5MfxasYgTEl_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsi17nFaBu4HY_10ech_client.exit.thread ], [ %.sroa.01.0.i.i.i, %bb.u ] ; 3 uses
   %.not.i.i = icmp sgt i64 %.sroa.05.0.i.i, -1
   %i.ba = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 2 uses
   br i1 %.not.i.i, label %bb.w, label %bb.s
@@ -1705,8 +1708,8 @@ bb.t:                                             ; preds = %bb.s
   unreachable
 
 bb.u:                                             ; preds = %bb.s
-  %i.bb = add nsw i64 %.sroa.05.0.i.i, 1
-  %i.bc = or i64 %i.bb, -9223372036854775808
+  %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
+  %i.bc = or disjoint i64 %i.bb, -9223372036854775808
   %i.bd = cmpxchg ptr %i.ay, i64 %.sroa.05.0.i.i, i64 %i.bc seq_cst seq_cst, align 8, !noalias !1269 ; 2 uses
   %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.bd, 1
   %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.bd, 0
@@ -1721,8 +1724,8 @@ bb.v:                                             ; preds = %bb.u
   %i.be = load ptr, ptr %1, align 8, !alias.scope !1265, !nonnull !8, !noundef !8 ; 4 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 48
   %i.bg = load i64, ptr %i.bf, align 8, !noalias !1270, !noundef !8
-  %.not.i = icmp ult i64 %i.ba, %i.bg
-  br i1 %.not.i, label %.noexc7.i, label %bb.x
+  %3 = icmp ugt i64 %i.bb, %i.bg
+  br i1 %3, label %bb.x, label %.noexc7.i
 
 bb.w:                                             ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef nonnull align 8 dereferenceable(280) %i.e, i64 280, i1 false), !alias.scope !1271

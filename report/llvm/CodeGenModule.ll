@@ -205,14 +205,15 @@ define linkonce_odr hidden void @_ZN4llvm23SmallVectorTemplateBaseIN5clang9FixIt
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !1016 ; 2 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !1016
   %i.d = zext i32 %i.c to i64                     ; 2 uses
-  %i.e = add nuw nsw i64 %i.d, 1                  ; 2 uses
+  %i.e = add nuw nsw i64 %i.d, 1                  ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.g = load i32, ptr %i.f, align 4, !tbaa !1017
-  %.not.i.i.not = icmp ult i32 %i.c, %i.g
+  %2 = zext i32 %i.g to i64
+  %.not.i.i = icmp samesign ugt i64 %i.e, %2
   %.pre3 = load ptr, ptr %0, align 8, !tbaa !140  ; 4 uses
-  br i1 %.not.i.i.not, label %_ZN4llvm23SmallVectorTemplateBaseIN5clang9FixItHintELb0EE28reserveForParamAndGetAddressERKS2_m.exit, label %bb.b, !prof !1174
+  br i1 %.not.i.i, label %bb.b, label %_ZN4llvm23SmallVectorTemplateBaseIN5clang9FixItHintELb0EE28reserveForParamAndGetAddressERKS2_m.exit, !prof !1371
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw [64 x i8], ptr %.pre3, i64 %i.d

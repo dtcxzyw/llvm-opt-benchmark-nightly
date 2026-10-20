@@ -205,8 +205,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.loop
   %i.dn = or disjoint i8 %i.dm, %i.dj
   %i.do = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   store i8 %i.dn, ptr %i.do, align 1, !tbaa !75
-  %3 = add nuw nsw i32 %.2, 1
-  %wide.trip.count = zext nneg i32 %3 to i64
   br label %.lr.ph57
 
 .lr.ph59.preheader:                               ; preds = %bb.m
@@ -293,8 +291,9 @@ bb.m:                                             ; preds = %.noexc32, %_ZNKSt7_
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 %i.ei
   store i8 0, ptr %i.es, align 1, !tbaa !75
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.lr.ph59.preheader, label %.lr.ph57, !llvm.loop !786
+  %3 = trunc nuw i64 %indvars.iv.next to i32
+  %.not27 = icmp slt i32 %.2, %3
+  br i1 %.not27, label %.lr.ph59.preheader, label %.lr.ph57, !llvm.loop !786
 
 .lr.ph59:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit39.peel
   %i.et = load i64, ptr %i.d, align 8, !tbaa !129 ; 4 uses
@@ -697,17 +696,17 @@ define internal fastcc void @_ZN8tinygltfL15GetBaseFilenameERKNSt7__cxx1112basic
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %i.c = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.143, i64 noundef -1, i64 noundef 2) #41 ; 3 uses
+  %i.c = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.143, i64 noundef -1, i64 noundef 2) #41 ; 2 uses
   %.not = icmp eq i64 %i.c, -1
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add nuw i64 %i.c, 1                      ; 3 uses
+  %i.d = add nuw i64 %i.c, 1                      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3584)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load i64, ptr %i.e, align 8, !tbaa !129, !noalias !3584 ; 3 uses
-  %.not4 = icmp ult i64 %i.c, %i.f
-  br i1 %.not4, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.c
+  %2 = icmp ugt i64 %i.d, %i.f
+  br i1 %2, label %bb.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.286, ptr noundef nonnull @.str.287, i64 noundef %i.d, i64 noundef %i.f) #44, !noalias !3584

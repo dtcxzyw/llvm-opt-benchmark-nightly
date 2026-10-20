@@ -205,8 +205,9 @@ _ZN6casadi12casadi_qr_mvIdEEvPKxPKT_S5_PS3_x.exit65.us: ; preds = %._crit_edge46
   %.15170.i.us = add nsw i64 %.151.in69.i.us, -1  ; 4 uses
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.15170.i.us
   %i.dy = load i64, ptr %i.dx, align 8, !tbaa !167 ; 3 uses
-  %.not55.not64.i.us = icmp sgt i64 %i.dw, %i.dy
-  br i1 %.not55.not64.i.us, label %.lr.ph67.i.us, label %.loopexit.i.us
+  %.163.i.us = add nsw i64 %i.dw, -1              ; 2 uses
+  %.not5564.i.us = icmp slt i64 %.163.i.us, %i.dy
+  br i1 %.not5564.i.us, label %.loopexit.i.us, label %.lr.ph67.i.us
 
 .lr.ph67.i.us:                                    ; preds = %.lr.ph71.i.us
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %.15170.i.us ; 3 uses
@@ -215,12 +216,12 @@ _ZN6casadi12casadi_qr_mvIdEEvPKxPKT_S5_PS3_x.exit65.us: ; preds = %._crit_edge46
 
 bb.b:                                             ; preds = %bb.e, %.lr.ph67.i.us
   %i.ea = phi double [ %.pre94, %.lr.ph67.i.us ], [ %i.el, %bb.e ] ; 2 uses
-  %.1.in65.i.us.a = phi i64 [ %i.dw, %.lr.ph67.i.us ], [ %.166.i.us, %bb.e ] ; 2 uses
-  %.166.i.us = add nsw i64 %.1.in65.i.us.a, -1    ; 3 uses
-  %i.eb = getelementptr [8 x i8], ptr %i.m, i64 %.1.in65.i.us.a
+  %.1.in65.i.us.a = phi i64 [ %.163.i.us, %.lr.ph67.i.us ], [ %.1.i.us, %bb.e ] ; 3 uses
+  %.1.in65.i.us = phi i64 [ %i.dw, %.lr.ph67.i.us ], [ %.1.in65.i.us.a, %bb.e ]
+  %i.eb = getelementptr [8 x i8], ptr %i.m, i64 %.1.in65.i.us
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !167 ; 2 uses
   %i.ed = icmp eq i64 %i.ec, %.15170.i.us
-  %i.ee = getelementptr inbounds [8 x i8], ptr %6, i64 %.166.i.us
+  %i.ee = getelementptr inbounds [8 x i8], ptr %6, i64 %.1.in65.i.us.a
   %i.ef = load double, ptr %i.ee, align 8, !tbaa !119 ; 2 uses
   br i1 %i.ed, label %bb.d, label %bb.c
 
@@ -240,8 +241,9 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.el = phi double [ %i.ek, %bb.d ], [ %.pre, %bb.c ]
-  %.not55.not.i.us = icmp sgt i64 %.166.i.us, %i.dy
-  br i1 %.not55.not.i.us, label %bb.b, label %.loopexit.i.us, !llvm.loop !465
+  %.1.i.us = add nsw i64 %.1.in65.i.us.a, -1      ; 2 uses
+  %.not55.i.us = icmp slt i64 %.1.i.us, %i.dy
+  br i1 %.not55.i.us, label %.loopexit.i.us, label %bb.b, !llvm.loop !465
 
 .loopexit.i.us:                                   ; preds = %bb.e, %.lr.ph71.i.us
   %i.em = icmp sgt i64 %.151.in69.i.us, 1

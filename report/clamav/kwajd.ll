@@ -204,12 +204,14 @@ bb.p:                                             ; preds = %._crit_edge498, %.p
   %.3232.lcssa = phi ptr [ %i.bn, %._crit_edge498 ], [ %.2231565, %.preheader349 ] ; 4 uses
   %.3218.lcssa = phi ptr [ %.4219, %._crit_edge498 ], [ %.2217566, %.preheader349 ] ; 4 uses
   %.2203.lcssa = phi i32 [ %i.br, %._crit_edge498 ], [ %.1202567, %.preheader349 ] ; 2 uses
-  %.2199.lcssa = phi i32 [ 8, %._crit_edge498 ], [ %.1198568, %.preheader349 ] ; 2 uses
+  %.2199.lcssa = phi i32 [ 8, %._crit_edge498 ], [ %.1198568, %.preheader349 ]
   %i.bs = shl i32 %.2203.lcssa, 1                 ; 3 uses
-  %i.bt = add nsw i32 %.2199.lcssa, -1            ; 3 uses
+  %i.bt = add nsw i32 %.2199.lcssa, -1            ; 4 uses
   %i.bu = load i32, ptr %i.at, align 8, !tbaa !44 ; 5 uses
-  %.not284 = icmp sgt i32 %.2199.lcssa, %i.bu
-  br i1 %.not284, label %bb.q, label %lzh_read_input.exit
+  %.not283 = icmp ne i32 %i.bu, 0                 ; 2 uses
+  %4 = icmp slt i32 %i.bt, %i.bu
+  %or.cond294 = select i1 %.not283, i1 %4, i1 false
+  br i1 %or.cond294, label %lzh_read_input.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.bv = icmp sgt i32 %.2203.lcssa, -1
@@ -224,8 +226,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not290, label %._crit_edge532, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph531
-  %.not.i307 = icmp eq i32 %i.bu, 0
-  br i1 %.not.i307, label %bb.t, label %bb.s
+  br i1 %.not283, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.bx = add nsw i32 %i.bu, 8                    ; 2 uses
@@ -280,11 +281,13 @@ bb.x:                                             ; preds = %._crit_edge532, %.p
   %.5234.lcssa = phi ptr [ %i.ch, %._crit_edge532 ], [ %.3232.lcssa, %.preheader347 ] ; 4 uses
   %.5220.lcssa = phi ptr [ %.6221, %._crit_edge532 ], [ %.3218.lcssa, %.preheader347 ] ; 4 uses
   %.3204.lcssa = phi i32 [ %i.cl, %._crit_edge532 ], [ %i.bs, %.preheader347 ] ; 2 uses
-  %.3200.lcssa = phi i32 [ 8, %._crit_edge532 ], [ %i.bt, %.preheader347 ] ; 5 uses
+  %.3200.lcssa = phi i32 [ 8, %._crit_edge532 ], [ %i.bt, %.preheader347 ] ; 4 uses
   %i.cn = shl i32 %.3204.lcssa, 1                 ; 3 uses
-  %i.co = add nsw i32 %.3200.lcssa, -1            ; 2 uses
-  %.not286 = icmp sgt i32 %.3200.lcssa, %i.cm
-  br i1 %.not286, label %bb.y, label %lzh_read_input.exit
+  %i.co = add nsw i32 %.3200.lcssa, -1            ; 3 uses
+  %.not284 = icmp ne i32 %i.cm, 0                 ; 2 uses
+  %5 = icmp slt i32 %i.co, %i.cm
+  %or.cond295 = select i1 %.not284, i1 %5, i1 false
+  br i1 %or.cond295, label %lzh_read_input.exit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.cp = icmp sgt i32 %.3204.lcssa, -1
@@ -304,8 +307,7 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.ah
 
 bb.aa:                                            ; preds = %.lr.ph559.preheader
-  %.not.i311 = icmp eq i32 %i.cm, 0
-  br i1 %.not.i311, label %bb.ac, label %bb.ab
+  br i1 %.not284, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ct = add nsw i32 %i.cm, 8                    ; 2 uses

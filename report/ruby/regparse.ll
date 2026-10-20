@@ -205,7 +205,6 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 16
   %i.e = getelementptr i8, ptr %0, i64 180        ; 2 uses
-  %invariant.smin = tail call i32 @llvm.smin.i32(i32 %3, i32 255)
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %CC_DUP_WARN.exit
@@ -254,9 +253,11 @@ CC_DUP_WARN.exit:                                 ; preds = %bb.f, %bb.e, %bb.d,
   %i.y = load i32, ptr %i.h, align 4, !tbaa !18
   %i.z = or i32 %i.y, %i.k
   store i32 %i.z, ptr %i.h, align 4, !tbaa !18
-  %i.aa = add nsw i32 %.014, 1
-  %i.ab = icmp slt i32 %.014, %invariant.smin
-  br i1 %i.ab, label %bb.b, label %._crit_edge, !llvm.loop !4
+  %i.aa = add nsw i32 %.014, 1                    ; 2 uses
+  %4 = icmp sle i32 %i.aa, %3
+  %i.ab = icmp slt i32 %.014, 255
+  %5 = and i1 %4, %i.ab
+  br i1 %5, label %bb.b, label %._crit_edge, !llvm.loop !4
 
 ._crit_edge:                                      ; preds = %CC_DUP_WARN.exit, %bb.a
   ret void
@@ -659,7 +660,6 @@ bb.b:                                             ; preds = %.lr.ph171, %._crit_
   br i1 %exitcond199.not14.not, label %.lr.ph16, label %.lr.ph167.preheader._crit_edge
 
 .lr.ph167:                                        ; preds = %CC_DUP_WARN.exit
-  %5 = add nuw i32 %.010216515, 1                 ; 2 uses
   %exitcond199.not = icmp eq i32 %5, %umax198
   br i1 %exitcond199.not, label %.lr.ph167.preheader._crit_edge, label %.lr.ph16, !llvm.loop !197
 
@@ -682,7 +682,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.loopexit
 
 .lr.ph16:                                         ; preds = %.lr.ph167.preheader, %.lr.ph167
-  %.010216515 = phi i32 [ %5, %.lr.ph167 ], [ %i.n, %.lr.ph167.preheader ] ; 4 uses
+  %.010216515 = phi i32 [ %5, %.lr.ph167 ], [ %i.n, %.lr.ph167.preheader ] ; 3 uses
   %i.aa = sdiv i32 %.010216515, 32
   %i.ab = sext i32 %i.aa to i64
   %i.ac = getelementptr [4 x i8], ptr %i.g, i64 %i.ab ; 3 uses
@@ -727,9 +727,10 @@ CC_DUP_WARN.exit:                                 ; preds = %bb.h, %bb.g, %bb.f,
   %i.at = load i32, ptr %i.ac, align 4, !tbaa !18
   %i.au = or i32 %i.at, %i.af
   store i32 %i.au, ptr %i.ac, align 4, !tbaa !18
+  %5 = add i32 %.010216515, 1                     ; 3 uses
   %i.av = load i32, ptr %i.r, align 4, !tbaa !18  ; 2 uses
-  %.not119.not = icmp ult i32 %.010216515, %i.av
-  br i1 %.not119.not, label %.lr.ph167, label %._crit_edge168, !llvm.loop !197
+  %.not119 = icmp ugt i32 %5, %i.av
+  br i1 %.not119, label %._crit_edge168, label %.lr.ph167, !llvm.loop !197
 
 ._crit_edge168:                                   ; preds = %CC_DUP_WARN.exit, %bb.b
   %indvars.iv.next201 = add nuw nsw i64 %indvars.iv200, 1 ; 2 uses
@@ -1131,9 +1132,6 @@ declare i32 @llvm.umin.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #24

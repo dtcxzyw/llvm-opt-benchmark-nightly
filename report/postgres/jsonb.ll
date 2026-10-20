@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.e
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph118, %bb.ad
-  %indvars.iv = phi i64 [ 0, %.lr.ph118 ], [ %indvars.iv.next.pre-phi, %bb.ad ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph118 ], [ %indvars.iv.next.pre-phi, %bb.ad ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
@@ -232,14 +232,14 @@ bb.k:                                             ; preds = %bb.j
   store i32 %i.bh, ptr %i.au, align 8
   store ptr %i.bf, ptr %i.av, align 8
   call void @pushJsonbValue(ptr noundef %2, i32 noundef 1, ptr noundef nonnull %7) #10, !inline_history !14
-  %i.bi = add nuw nsw i64 %indvars.iv, 1          ; 5 uses
+  %i.bi = add nuw nsw i64 %indvars.iv, 1          ; 6 uses
   %i.bj = load ptr, ptr %i.ar, align 8            ; 5 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 18
   %i.bl = load i16, ptr %i.bk, align 2
   %i.bm = and i16 %i.bl, 2047
   %i.bn = zext nneg i16 %i.bm to i64
-  %.not130 = icmp ult i64 %indvars.iv, %i.bn
-  br i1 %.not130, label %bb.m, label %bb.l
+  %12 = icmp samesign ugt i64 %i.bi, %i.bn
+  br i1 %12, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.bo = trunc nuw nsw i64 %i.bi to i32
@@ -327,7 +327,8 @@ bb.x:                                             ; preds = %bb.m
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bj, i64 23
   %i.cy = trunc nuw nsw i64 %indvars.iv to i32
   %i.cz = lshr i64 %indvars.iv, 3
-  %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.cz
+  %13 = and i64 %i.cz, 536870911
+  %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 %13
   %i.db = load i8, ptr %i.da, align 1
   %i.dc = zext i8 %i.db to i32
   %i.dd = and i32 %i.cy, 7

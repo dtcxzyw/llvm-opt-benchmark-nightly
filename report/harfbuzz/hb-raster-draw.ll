@@ -205,7 +205,7 @@ bb.bj:                                            ; preds = %_ZN11hb_vector_tIjL
 
 .lr.ph95.i.preheader:                             ; preds = %.preheader.i
   %i.nk = zext nneg i32 %.082.lcssa.i to i64
-  %2 = add nuw nsw i32 %.0.lcssa725, 1
+  %2 = zext nneg i32 %.0.lcssa725 to i64
   br label %.lr.ph95.i
 
 .lr.ph.i:                                         ; preds = %bb.bj, %.lr.ph.i
@@ -319,9 +319,8 @@ bb.bj:                                            ; preds = %_ZN11hb_vector_tIjL
   store i32 0, ptr %i.qs, align 4, !tbaa !50, !alias.scope !121
   store i16 0, ptr %i.qn, align 2, !tbaa !114, !alias.scope !122
   %indvars.iv.next666 = add nuw nsw i64 %indvars.iv665, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next666 to i32
-  %exitcond668.not = icmp eq i32 %2, %lftr.wideiv
-  br i1 %exitcond668.not, label %_ZL18sweep_row_to_alphaPhPiPsjj.exit, label %.lr.ph95.i, !llvm.loop !97
+  %.not85.i = icmp samesign ugt i64 %indvars.iv.next666, %2
+  br i1 %.not85.i, label %_ZL18sweep_row_to_alphaPhPiPsjj.exit, label %.lr.ph95.i, !llvm.loop !97
 
 _ZL18sweep_row_to_alphaPhPiPsjj.exit:             ; preds = %.lr.ph95.i, %.preheader.i
   %.2.lcssa.i = phi i32 [ %.0.lcssa.i, %.preheader.i ], [ %i.qq, %.lr.ph95.i ] ; 2 uses

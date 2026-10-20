@@ -205,9 +205,10 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %or.cond8 = or i1 %.1424, %.not                 ; 2 uses
   %i.bx = icmp samesign ult i32 %15, 2            ; 4 uses
   %i.by = zext nneg i32 %i.o to i64               ; 5 uses
-  %i.bz = add nuw nsw i32 %15, 1                  ; 2 uses
+  %i.bz = add nuw nsw i32 %15, 1                  ; 3 uses
   %i.ca = call i32 @llvm.umax.i32(i32 %15, i32 2)
-  %wide.trip.count1078 = zext nneg i32 %i.bz to i64 ; 2 uses
+  %wide.trip.count1056 = zext nneg i32 %i.bz to i64
+  %wide.trip.count1078 = zext nneg i32 %i.bz to i64
   %i.cb = zext nneg i32 %i.bv to i64              ; 3 uses
   %i.cc = zext nneg i32 %i.bw to i64              ; 3 uses
   %wide.trip.count = zext nneg i32 %i.bz to i64   ; 7 uses
@@ -610,7 +611,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.aja = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.next1075
   store double %i.sy, ptr %i.aja, align 8, !tbaa !14
   %indvars.iv.next1075.1 = add nuw nsw i64 %indvars.iv1074, 2 ; 2 uses
-  %exitcond1079.not.1 = icmp eq i64 %indvars.iv.next1075.1, %wide.trip.count1078
+  %exitcond1079.not.1 = icmp eq i64 %indvars.iv.next1075.1, %wide.trip.count1056
   br i1 %exitcond1079.not.1, label %._crit_edge997, label %scalar.ph, !llvm.loop !79
 
 ._crit_edge1001:                                  ; preds = %bb.ce

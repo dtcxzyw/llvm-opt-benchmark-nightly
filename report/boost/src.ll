@@ -206,14 +206,15 @@ _ZN5boost4json14key_value_pairC2IJDnRNS0_11storage_ptrEEEENS_4core17basic_string
   %i.ab = load ptr, ptr %i.a, align 8, !tbaa !167 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !169 ; 3 uses
-  %i.ae = load i32, ptr %i.ab, align 8, !tbaa !170 ; 2 uses
-  %.not.i.not = icmp ult i32 %i.ae, %i.ad
-  br i1 %.not.i.not, label %_ZN5boost4json6object7reserveEm.exit, label %bb.i
+  %6 = zext i32 %i.ad to i64
+  %i.ae = load i32, ptr %i.ab, align 8, !tbaa !170
+  %7 = zext i32 %i.ae to i64
+  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
+  %.not.i = icmp samesign ugt i64 %8, %6
+  br i1 %.not.i, label %bb.i, label %_ZN5boost4json6object7reserveEm.exit
 
 bb.i:                                             ; preds = %_ZN5boost4json14key_value_pairC2IJDnRNS0_11storage_ptrEEEENS_4core17basic_string_viewIcEEDpOT_.exit
-  %6 = zext i32 %i.ae to i64
-  %7 = add nuw nsw i64 %6, 1
-  %i.af = invoke noundef ptr @_ZN5boost4json6object12reserve_implEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %7)
+  %i.af = invoke noundef ptr @_ZN5boost4json6object12reserve_implEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %8)
           to label %.noexc unwind label %bb.u     ; 2 uses
 
 .noexc:                                           ; preds = %bb.i
@@ -616,14 +617,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.m = load ptr, ptr %i.a, align 8, !tbaa !167  ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   %i.o = load i32, ptr %i.n, align 4, !tbaa !169  ; 3 uses
-  %i.p = load i32, ptr %i.m, align 8, !tbaa !170  ; 2 uses
-  %.not.i.not = icmp ult i32 %i.p, %i.o
-  br i1 %.not.i.not, label %_ZN5boost4json6object7reserveEm.exit, label %bb.d
+  %6 = zext i32 %i.o to i64
+  %i.p = load i32, ptr %i.m, align 8, !tbaa !170
+  %7 = zext i32 %i.p to i64
+  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
+  %.not.i = icmp samesign ugt i64 %8, %6
+  br i1 %.not.i, label %bb.d, label %_ZN5boost4json6object7reserveEm.exit
 
 bb.d:                                             ; preds = %bb.c
-  %6 = zext i32 %i.p to i64
-  %7 = add nuw nsw i64 %6, 1
-  %i.q = invoke noundef ptr @_ZN5boost4json6object12reserve_implEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %7)
+  %i.q = invoke noundef ptr @_ZN5boost4json6object12reserve_implEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %8)
           to label %.noexc unwind label %bb.p     ; 2 uses
 
 .noexc:                                           ; preds = %bb.d

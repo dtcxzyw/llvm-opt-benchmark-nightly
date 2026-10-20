@@ -205,23 +205,22 @@ bb.c:                                             ; preds = %_ZSteqIcSt11char_tr
 .lr.ph:                                           ; preds = %.preheader
   %i.s = load ptr, ptr %2, align 8, !tbaa !19672
   %i.t = load ptr, ptr %3, align 8, !tbaa !19672
-  %5 = add nuw i32 %invariant.smin, 1             ; 2 uses
-  %wide.trip.count = zext i32 %5 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.e
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 %indvars.iv
   %i.v = load i8, ptr %i.u, align 1, !tbaa !19682
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 %indvars.iv
   %i.x = load i8, ptr %i.w, align 1, !tbaa !19682
   %i.y = icmp eq i8 %i.v, %i.x
-  br i1 %i.y, label %bb.e, label %.critedge
+  br i1 %i.y, label %bb.e, label %.critedge.split.loop.exit
 
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge.thread97, label %bb.d, !llvm.loop !20564
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %or.cond = icmp slt i32 %invariant.smin, %indvars
+  br i1 %or.cond, label %.critedge, label %bb.d, !llvm.loop !20564
 
 bb.f:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread68
   %i.z = landingpad { ptr, i32 }
@@ -244,14 +243,17 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   call void @_ZdlPvm(ptr noundef %i.ab, i64 noundef %i.af) #40
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
-.critedge:                                        ; preds = %bb.d
-  %6 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.ag = icmp eq i64 %indvars.iv, 0
+.critedge.split.loop.exit:                        ; preds = %bb.d
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.e, %.critedge.split.loop.exit
+  %.0.lcssa = phi i32 [ %5, %.critedge.split.loop.exit ], [ %indvars, %bb.e ] ; 3 uses
+  %i.ag = icmp eq i32 %.0.lcssa, 0
   br i1 %i.ag, label %.critedge.thread, label %.critedge.thread97
 
-.critedge.thread97:                               ; preds = %bb.e, %.critedge
-  %.0.lcssa99 = phi i32 [ %6, %.critedge ], [ %5, %bb.e ] ; 2 uses
-  %i.ah = add nsw i32 %.0.lcssa99, -1             ; 2 uses
+.critedge.thread97:                               ; preds = %.critedge
+  %i.ah = add nsw i32 %.0.lcssa, -1               ; 2 uses
   %i.ai = zext nneg i32 %i.ah to i64
   %i.aj = load ptr, ptr %2, align 8, !tbaa !19672 ; 5 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
@@ -536,7 +538,7 @@ bb.j:                                             ; preds = %_ZN5boost13re_detai
   %i.ea = load i64, ptr %i.dz, align 8
   %i.eb = icmp eq i64 %i.n, %i.ea
   %or.cond73 = select i1 %i.dy, i1 %i.eb, i1 false ; 2 uses
-  %i.ec = trunc i32 %.0.lcssa99 to i8
+  %i.ec = trunc i32 %.0.lcssa to i8
   %spec.select = select i1 %or.cond73, i8 %i.ec, i8 0
   %spec.select101 = select i1 %or.cond73, i32 1, i32 3
   br label %.critedge.thread

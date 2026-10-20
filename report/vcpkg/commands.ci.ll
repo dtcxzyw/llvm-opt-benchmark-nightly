@@ -205,15 +205,14 @@ bb.a:
   br i1 %i.a, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = add nsw i32 %1, -1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = tail call noundef i32 @_ZNSt13random_device9_M_getvalEv(ptr noundef nonnull align 8 dereferenceable(5000) %i.b)
   %i.d = zext i32 %i.c to i64
   %i.e = zext nneg i32 %1 to i64                  ; 2 uses
   %i.f = mul nuw nsw i64 %i.d, %i.e               ; 3 uses
   %i.g = trunc i64 %i.f to i32                    ; 2 uses
-  %.not21.i.i = icmp ult i32 %2, %i.g
-  br i1 %.not21.i.i, label %_ZNSt24uniform_int_distributionIiEclISt13random_deviceEEiRT_.exit, label %bb.c
+  %2 = icmp ugt i32 %1, %i.g
+  br i1 %2, label %bb.c, label %_ZNSt24uniform_int_distributionIiEclISt13random_deviceEEiRT_.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.h = sub nsw i32 0, %1

@@ -86,7 +86,7 @@ _ZN5ArrayIhEC2Em.exit.outer:                      ; preds = %_ZN5ArrayIhEC2Em.ex
 _ZN5ArrayIhEC2Em.exit:                            ; preds = %_ZN5ArrayIhEC2Em.exit.outer, %bb.n
   %.sroa.30.0 = phi i64 [ %i.l, %bb.n ], [ %.sroa.30.0.ph, %_ZN5ArrayIhEC2Em.exit.outer ]
   %.094 = phi i32 [ %i.j, %bb.n ], [ %.094.ph, %_ZN5ArrayIhEC2Em.exit.outer ] ; 6 uses
-  %i.g = zext i32 %.094 to i64                    ; 13 uses
+  %i.g = zext i32 %.094 to i64                    ; 12 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0227.0.ph, i64 %i.g
   %i.i = invoke noundef i32 @_ZN4File4ReadEPvm(ptr noundef nonnull align 8 dereferenceable(8256) %8, ptr noundef nonnull %i.h, i64 noundef 4096)
           to label %bb.m unwind label %_ZN5ArrayIwED2Ev.exit.thread.loopexit.loopexit.split-lp ; 3 uses
@@ -288,6 +288,7 @@ switch.early.test.i:                              ; preds = %.lr.ph.i
   %spec.select373 = select i1 %or.cond5372, i64 %i.au, i64 1
   %spec.select139374 = select i1 %or.cond5372, i64 2, i64 0
   %i.bw = lshr i64 %i.g, 1
+  %9 = add nuw nsw i64 %i.bw, 1
   br label %bb.an
 
 bb.ah:                                            ; preds = %switch.early.test.i, %switch.early.test.i, %.lr.ph.i
@@ -320,9 +321,9 @@ _Z18DetectTextEncodingPKhm.exit.thread:           ; preds = %bb.ah, %.thread280,
   %i.ce = phi i1 [ %i.ca, %_Z18DetectTextEncodingPKhm.exit ], [ %i.at, %.thread34.thread.i ], [ %.ph450, %.thread280 ], [ %i.at, %.thread.i ], [ %i.at, %bb.af ], [ %i.at, %bb.ah ]
   %i.cf = phi i64 [ %i.bz, %_Z18DetectTextEncodingPKhm.exit ], [ %i.au, %.thread34.thread.i ], [ %i.ai, %.thread280 ], [ %i.au, %.thread.i ], [ %i.au, %bb.af ], [ %i.au, %bb.ah ]
   %i.cg = phi i64 [ %i.by, %_Z18DetectTextEncodingPKhm.exit ], [ %i.av, %.thread34.thread.i ], [ 0, %.thread280 ], [ %i.av, %.thread.i ], [ %i.av, %bb.af ], [ %i.av, %bb.ah ]
-  %i.ch = add nuw nsw i64 %i.g, 1                 ; 4 uses
-  %.not390 = icmp ugt i64 %.sroa.48.3, %i.g
-  br i1 %.not390, label %bb.ak, label %bb.ai
+  %i.ch = add nuw nsw i64 %i.g, 1                 ; 5 uses
+  %.not390 = icmp ugt i64 %i.ch, %.sroa.48.3
+  br i1 %.not390, label %bb.ai, label %bb.ak
 
 bb.ai:                                            ; preds = %_Z18DetectTextEncodingPKhm.exit.thread
   %i.ci = lshr i64 %.sroa.48.3, 2
@@ -376,12 +377,13 @@ bb.am:                                            ; preds = %_Z18DetectTextEncod
   %or.cond5 = select i1 %i.cs, i1 true, i1 %i.cr  ; 2 uses
   %spec.select = select i1 %or.cond5, i64 %i.ct, i64 1 ; 2 uses
   %spec.select139 = select i1 %or.cond5, i64 2, i64 0 ; 2 uses
-  %i.cv = lshr i64 %.sroa.30.1, 1                 ; 2 uses
-  %.not391 = icmp ult i64 %i.cv, %.sroa.25.0
-  br i1 %.not391, label %_ZN5ArrayIwE5AllocEm.exit174, label %bb.an
+  %i.cv = lshr i64 %.sroa.30.1, 1
+  %10 = add nuw nsw i64 %i.cv, 1                  ; 2 uses
+  %11 = icmp ugt i64 %10, %.sroa.25.0
+  br i1 %11, label %bb.an, label %_ZN5ArrayIwE5AllocEm.exit174
 
 bb.an:                                            ; preds = %.thread365, %bb.am
-  %.in = phi i64 [ %i.bw, %.thread365 ], [ %i.cv, %bb.am ]
+  %.in = phi i64 [ %9, %.thread365 ], [ %10, %bb.am ]
   %spec.select139388 = phi i64 [ %spec.select139374, %.thread365 ], [ %spec.select139, %bb.am ] ; 2 uses
   %spec.select386 = phi i64 [ %spec.select373, %.thread365 ], [ %spec.select, %bb.am ] ; 2 uses
   %i.cw = phi i1 [ %i.as, %.thread365 ], [ %i.cr, %bb.am ] ; 2 uses
@@ -389,11 +391,10 @@ bb.an:                                            ; preds = %.thread365, %bb.am
   %.sroa.30.1352380 = phi i64 [ %i.g, %.thread365 ], [ %.sroa.30.1, %bb.am ] ; 2 uses
   %.sroa.0.0356376 = phi ptr [ null, %.thread365 ], [ %.sroa.0.0, %bb.am ] ; 2 uses
   %.sroa.25.0357375 = phi i64 [ 0, %.thread365 ], [ %.sroa.25.0, %bb.am ] ; 2 uses
-  %9 = add nuw nsw i64 %.in, 1
   %i.cx = lshr i64 %.sroa.25.0357375, 2
   %i.cy = add nuw nsw i64 %.sroa.25.0357375, 32
   %i.cz = add nuw nsw i64 %i.cy, %i.cx
-  %..i.i167 = call i64 @llvm.umax.i64(i64 %9, i64 %i.cz)
+  %..i.i167 = call i64 @llvm.umax.i64(i64 %.in, i64 %i.cz)
   %i.da = shl nuw nsw i64 %..i.i167, 2
   %i.db = call ptr @realloc(ptr noundef %.sroa.0.0356376, i64 noundef %i.da) #10 ; 2 uses
   %i.dc = icmp eq ptr %i.db, null

@@ -205,9 +205,9 @@ _ZNSt6vectorIPN10ClipperLib8PolyNodeESaIS2_EE7reserveEm.exit55: ; preds = %.thre
   br i1 %.not.i56, label %.loopexit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.lr.ph99, %.preheader.i
-  %.07.i = phi i32 [ %i.cr, %.preheader.i ], [ 0, %.lr.ph99 ] ; 3 uses
+  %.07.i = phi i32 [ %i.cr, %.preheader.i ], [ 0, %.lr.ph99 ] ; 2 uses
   %.0.i = phi ptr [ %i.ct, %.preheader.i ], [ %i.cq, %.lr.ph99 ]
-  %i.cr = add nuw nsw i32 %.07.i, 1               ; 2 uses
+  %i.cr = add nuw nsw i32 %.07.i, 1               ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.0.i, i64 24
   %i.ct = load ptr, ptr %i.cs, align 8            ; 2 uses
   %.not10.i = icmp eq ptr %i.ct, %i.cq
@@ -218,8 +218,8 @@ _ZN10ClipperLib10PointCountEPNS_5OutPtE.exit:     ; preds = %.preheader.i
   %i.cv = load i8, ptr %i.cu, align 1, !range !47, !noundef !48
   %i.cw = trunc nuw i8 %i.cv to i1
   %or.cond50.v = select i1 %i.cw, i32 1, i32 2
-  %or.cond50.not = icmp samesign ult i32 %.07.i, %or.cond50.v
-  br i1 %or.cond50.not, label %.loopexit, label %bb.l
+  %or.cond50 = icmp samesign ugt i32 %i.cr, %or.cond50.v
+  br i1 %or.cond50, label %bb.l, label %.loopexit
 
 bb.l:                                             ; preds = %_ZN10ClipperLib10PointCountEPNS_5OutPtE.exit
   %i.cx = getelementptr inbounds nuw i8, ptr %i.co, i64 8 ; 2 uses
@@ -622,9 +622,9 @@ _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit.loopexit.split
   br label %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit
 
 _ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit: ; preds = %bb.d, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit.loopexit.split.loop.exit123, %bb.b
-  %.167 = phi i32 [ %i.j, %bb.b ], [ %i.ac, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit.loopexit.split.loop.exit123 ], [ 0, %bb.d ] ; 2 uses
+  %.167 = phi i32 [ %i.j, %bb.b ], [ %i.ac, %_ZNSt6vectorIN10ClipperLib8IntPointESaIS1_EE9push_backERKS1_.exit.loopexit.split.loop.exit123 ], [ 0, %bb.d ] ; 3 uses
   %i.ad = add nuw nsw i32 %.167, 1
-  %i.ae = zext i32 %i.ad to i64                   ; 3 uses
+  %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 3 uses
   %i.ag = shl nuw nsw i64 %i.ae, 4
   %i.ah = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #33 ; 5 uses
@@ -770,8 +770,9 @@ bb.l:                                             ; preds = %.lr.ph, %bb.k, %bb.
   %.165 = phi i32 [ %i.bc, %bb.k ], [ %i.bc, %bb.j ], [ %i.bc, %bb.i ], [ %.064100, %.lr.ph ] ; 2 uses
   %.1 = phi i32 [ %i.bc, %bb.k ], [ %.063101, %bb.j ], [ %.063101, %bb.i ], [ %.063101, %.lr.ph ] ; 2 uses
   %indvars.iv.next107 = add nuw nsw i64 %indvars.iv106, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next107, %i.ae
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !177
+  %4 = trunc nuw i64 %indvars.iv.next107 to i32
+  %.not = icmp slt i32 %.167, %4
+  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !177
 
 bb.m:                                             ; preds = %._crit_edge
   %i.co = load ptr, ptr %i.k, align 8

@@ -23,12 +23,12 @@ bb.a:
   %i.f = getelementptr inbounds [8 x i8], ptr %2, i64 %i.e ; 4 uses
   %i.g = getelementptr inbounds i8, ptr %4, i64 -8
   store i32 0, ptr %5, align 4, !tbaa !9
-  %i.h = load i32, ptr %0, align 4, !tbaa !9      ; 9 uses
+  %i.h = load i32, ptr %0, align 4, !tbaa !9      ; 8 uses
   %i.i = icmp slt i32 %i.h, 0
   br i1 %i.i, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = load i32, ptr %1, align 4, !tbaa !9      ; 4 uses
+  %i.j = load i32, ptr %1, align 4, !tbaa !9      ; 3 uses
   %i.k = icmp slt i32 %i.j, %i.h
   br i1 %i.k, label %.thread, label %bb.c
 
@@ -62,9 +62,8 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e
   %i.s = add nuw nsw i32 %i.h, 1
-  %.not94.not = icmp samesign ult i32 %i.h, %i.j
-  %. = select i1 %.not94.not, i32 %i.s, i32 %i.j
-  %i.t = mul nsw i32 %., %i.d
+  %6 = tail call i32 @llvm.umin.i32(i32 %i.s, i32 %i.j)
+  %i.t = mul nsw i32 %6, %i.d
   %i.u = sext i32 %i.t to i64                     ; 2 uses
   %i.v = getelementptr [8 x i8], ptr %i.f, i64 %i.u
   %i.w = getelementptr i8, ptr %i.v, i64 8        ; 2 uses
@@ -163,6 +162,9 @@ declare i32 @llvm.umax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

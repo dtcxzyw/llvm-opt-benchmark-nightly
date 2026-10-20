@@ -204,7 +204,8 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !83, !noundef !9 ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !83, !noundef !9 ; 2 uses
+  %3 = add nuw i64 %i.f, 1                        ; 2 uses
   %i.g = icmp eq i64 %i.f, -1
   br i1 %i.g, label %bb.u, label %bb.b, !prof !10
 
@@ -217,12 +218,12 @@ bb.b:                                             ; preds = %bb.a
   %i.m = mul nuw i64 %i.l, 7
   %.sroa.03.0.i = select i1 %i.j, i64 %i.i, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
-  %.not.i.not = icmp ult i64 %i.f, %i.n
-  br i1 %.not.i.not, label %bb.j, label %bb.c
+  %.not.i = icmp ugt i64 %3, %i.n
+  br i1 %.not.i, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %3 = tail call i64 @llvm.umax.i64(i64 %.sroa.03.0.i, i64 %i.f)
-  %.sroa.0.0.i13 = add nuw i64 %3, 1
+  %4 = add nuw i64 %.sroa.03.0.i, 1
+  %.sroa.0.0.i13 = tail call noundef i64 @llvm.umax.i64(i64 %4, i64 %3)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !84)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !85
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !85

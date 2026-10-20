@@ -205,25 +205,27 @@ bb.fv:                                            ; preds = %bb.fu
   %i.aik = getelementptr inbounds nuw i8, ptr %i.aij, i64 8 ; 2 uses
   %.not907 = icmp eq i64 %indvars.iv1373, %i.afn
   %i.ail = getelementptr inbounds nuw i8, ptr %i.aij, i64 4 ; 2 uses
-  %i.aim = load i32, ptr %i.ail, align 4, !tbaa !2413 ; 3 uses
-  %i.ain = load i32, ptr %i.aij, align 4, !tbaa !2412 ; 2 uses
-  %i.aio = sext i32 %i.aim to i64                 ; 2 uses
-  %i.aip = sext i32 %i.ain to i64
-  %.not231.not.not2077 = icmp sgt i32 %i.aim, %i.ain
-  br i1 %.not231.not.not2077, label %.lr.ph2080.preheader, label %._crit_edge2081
+  %i.aim = load i32, ptr %i.ail, align 4, !tbaa !2413 ; 2 uses
+  %i.ain = load i32, ptr %i.aij, align 4, !tbaa !2412
+  %i.aio = sext i32 %i.aim to i64                 ; 3 uses
+  %i.aip = sext i32 %i.ain to i64                 ; 2 uses
+  %indvars.iv.next13662078 = add nsw i64 %i.aio, -1 ; 2 uses
+  %.not2312079 = icmp slt i64 %indvars.iv.next13662078, %i.aip
+  br i1 %.not2312079, label %._crit_edge2081, label %.lr.ph2080.preheader
 
 .lr.ph2080.preheader:                             ; preds = %bb.fv
   %i.aiq = load ptr, ptr %i.i, align 8, !tbaa !164
   br label %.lr.ph2080
 
 bb.fw:                                            ; preds = %.lr.ph2080
-  %.not231.not.not = icmp sgt i64 %indvars.iv.next1365, %i.aip
-  br i1 %.not231.not.not, label %.lr.ph2080, label %._crit_edge2081, !llvm.loop !2408
+  %indvars.iv.next1366 = add nsw i64 %indvars.iv13642078, -1 ; 2 uses
+  %.not231 = icmp slt i64 %indvars.iv.next1366, %i.aip
+  br i1 %.not231, label %._crit_edge2081, label %.lr.ph2080, !llvm.loop !2408
 
 .lr.ph2080:                                       ; preds = %.lr.ph2080.preheader, %bb.fw
-  %indvars.iv13642078 = phi i64 [ %indvars.iv.next1365, %bb.fw ], [ %i.aio, %.lr.ph2080.preheader ] ; 2 uses
-  %indvars.iv.next1365 = add nsw i64 %indvars.iv13642078, -1 ; 4 uses
-  %i.air = getelementptr inbounds nuw i8, ptr %i.aiq, i64 %indvars.iv.next1365
+  %indvars.iv13642078 = phi i64 [ %indvars.iv.next1366, %bb.fw ], [ %indvars.iv.next13662078, %.lr.ph2080.preheader ] ; 4 uses
+  %indvars.iv13652080 = phi i64 [ %indvars.iv13642078, %bb.fw ], [ %i.aio, %.lr.ph2080.preheader ]
+  %i.air = getelementptr inbounds nuw i8, ptr %i.aiq, i64 %indvars.iv13642078
   %i.ais = load i8, ptr %i.air, align 1, !tbaa !165
   switch i8 %i.ais, label %.loopexit [
     i8 32, label %bb.fw
@@ -231,12 +233,12 @@ bb.fw:                                            ; preds = %.lr.ph2080
   ]
 
 ._crit_edge2081:                                  ; preds = %bb.fw, %bb.fv
-  %indvars.iv1364.lcssa = phi i64 [ %i.aio, %bb.fv ], [ %indvars.iv.next1365, %bb.fw ]
+  %indvars.iv1364.lcssa = phi i64 [ %i.aio, %bb.fv ], [ %indvars.iv13642078, %bb.fw ]
   %.not906 = icmp eq i64 %indvars.iv1373, 0
   br i1 %.not906, label %.thread886, label %.loopexit
 
 .thread886:                                       ; preds = %.lr.ph2080, %._crit_edge2081
-  %indvars.iv13641827 = phi i64 [ %indvars.iv1364.lcssa, %._crit_edge2081 ], [ %indvars.iv13642078, %.lr.ph2080 ]
+  %indvars.iv13641827 = phi i64 [ %indvars.iv1364.lcssa, %._crit_edge2081 ], [ %indvars.iv13652080, %.lr.ph2080 ]
   %.089.in1196 = trunc i64 %indvars.iv13641827 to i32 ; 2 uses
   %i.ait = load i32, ptr %i.aik, align 4, !tbaa !2412 ; 4 uses
   %i.aiu = load i64, ptr %i.o, align 8, !tbaa !166

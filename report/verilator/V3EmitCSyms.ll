@@ -205,6 +205,7 @@ $_ZSt19piecewise_construct = comdat any
 @.str.141 = private unnamed_addr constant [13 x i8] c" = nullptr);\00", align 1
 @.str.142 = private unnamed_addr constant [34 x i8] c"// Tear down sub module instances\00", align 1
 @.str.143 = private unnamed_addr constant [9 x i8] c".dtor();\00", align 1
+@.str.144 = private unnamed_addr constant [12 x i8] c"Empty split\00", align 1
 @.str.145 = private unnamed_addr constant [38 x i8] c"Symbol table implementation internals\00", align 1
 @.str.146 = private unnamed_addr constant [3 x i8] c"::\00", align 1
 @.str.147 = private unnamed_addr constant [6 x i8] c"() {\0A\00", align 1
@@ -607,7 +608,7 @@ bb.d:                                             ; preds = %.lr.ph
   br label %bb.e
 
 bb.e:                                             ; preds = %.critedge2, %.critedge
-  %.124 = phi i64 [ %.02343, %.critedge ], [ %spec.select, %.critedge2 ] ; 4 uses
+  %.124 = phi i64 [ %.02343, %.critedge ], [ %spec.select, %.critedge2 ] ; 3 uses
   %.3 = phi i64 [ %i.n, %.critedge ], [ %spec.select27, %.critedge2 ] ; 2 uses
   %i.r = icmp ult i64 %.3, %i.d
   br i1 %i.r, label %bb.b, label %._crit_edge, !llvm.loop !784
@@ -617,10 +618,10 @@ bb.e:                                             ; preds = %.critedge2, %.crite
   br i1 %.not, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.s = add nuw i64 %.124, 1                     ; 3 uses
+  %i.s = add nuw i64 %.124, 1                     ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !787)
-  %.not28 = icmp ult i64 %.124, %i.d
-  br i1 %.not28, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.g
+  %2 = icmp ugt i64 %i.s, %i.d
+  br i1 %2, label %bb.g, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.g:                                             ; preds = %bb.f
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.249, ptr noundef nonnull @.str.992, i64 noundef %i.s, i64 noundef %i.d) #25, !noalias !787
@@ -1023,7 +1024,7 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader235, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221
-  %.047660 = phi i64 [ 0, %.preheader235 ], [ %i.bu, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ] ; 4 uses
+  %.047660 = phi i64 [ 0, %.preheader235 ], [ %i.bu, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ] ; 5 uses
   %.050659 = phi i64 [ 0, %.preheader235 ], [ %i.nx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ] ; 2 uses
   %.152658 = phi i64 [ %.051661, %.preheader235 ], [ %i.cg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ] ; 6 uses
   br label %bb.f
@@ -1090,7 +1091,7 @@ bb.f:                                             ; preds = %.preheader, %_ZN9Em
   %.046656 = phi i64 [ 0, %.preheader ], [ %i.cb, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
   %.148655 = phi i64 [ %.047660, %.preheader ], [ %i.bu, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ] ; 2 uses
   %indvars.iv = add i64 %indvars.iv.in, 1
-  %i.bu = add nuw i64 %.148655, 1                 ; 4 uses
+  %i.bu = add nuw i64 %.148655, 1                 ; 5 uses
   %i.bv = load ptr, ptr %1, align 8, !tbaa !120
   %i.bw = getelementptr inbounds nuw [32 x i8], ptr %i.bv, i64 %.148655 ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
@@ -1113,9 +1114,20 @@ _ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.ex
   %or.cond = select i1 %i.cc, i1 true, i1 %i.ce
   %i.cf = icmp ult i64 %i.bu, %i.aw               ; 2 uses
   %or.cond74 = select i1 %or.cond, i1 %i.cf, i1 false
-  br i1 %or.cond74, label %bb.f, label %.critedge.a, !llvm.loop !969
+  br i1 %or.cond74, label %bb.f, label %.critedge, !llvm.loop !969
 
-.critedge.a:                                      ; preds = %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+.critedge:                                        ; preds = %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+  %.not = icmp ult i64 %.047660, %i.bu
+  br i1 %.not, label %.critedge.a, label %19, !prof !237
+
+19:                                               ; preds = %.critedge
+  %20 = call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.1, i32 noundef 1245) ; 0 uses
+  %21 = call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error10v3errorStrB5cxx11Ev()
+  %22 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %21, ptr noundef nonnull @.str.144)
+  call void @_Z15v3errorEndFatalRNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(112) %22) #25
+  unreachable
+
+.critedge.a:                                      ; preds = %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %i.cg = add i64 %.152658, 1                     ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !994)

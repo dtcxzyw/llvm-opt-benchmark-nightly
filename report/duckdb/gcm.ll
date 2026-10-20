@@ -205,15 +205,6 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
   br label %bb.d
 
-.preheader68:                                     ; preds = %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 384
-  %.0.copyload.i52.1.pre = load i64, ptr %.phi.trans.insert, align 8
-  %4 = xor i64 %i.j, %.0.copyload.i52.1.pre       ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 384
-  store i64 %4, ptr %5, align 8
-  %cond.i53 = icmp eq i8 %i.bj, 0
-  br i1 %cond.i53, label %bb.f, label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67
-
 bb.d:                                             ; preds = %.lr.ph80, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit
   %.079 = phi ptr [ %2, %.lr.ph80 ], [ %i.dm, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit ] ; 11 uses
   %.04078 = phi i64 [ %3, %.lr.ph80 ], [ %i.dl, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit ] ; 4 uses
@@ -341,7 +332,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not.3, label %_ZL11mbedtls_xorPhPKhS1_m.exit49, label %.lr.ph76, !llvm.loop !31
 
 _ZL11mbedtls_xorPhPKhS1_m.exit49:                 ; preds = %.lr.ph76.prol.loopexit, %.lr.ph76, %vec.epilog.middle.block, %.preheader69
-  %i.bj = load i8, ptr %i.k, align 1, !tbaa !15   ; 2 uses
+  %i.bj = load i8, ptr %i.k, align 1, !tbaa !15
   %cond.i = icmp eq i8 %i.bj, 0
   br i1 %cond.i, label %bb.e, label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit
 
@@ -424,9 +415,20 @@ _ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit:     ; preds = %_ZL11mbedtls_xorPhP
   %i.dl = sub nuw i64 %.04078, %i.p               ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %.079, i64 %i.p
   %.not44 = icmp eq i64 %i.dl, 0
-  br i1 %.not44, label %.preheader68, label %bb.d, !llvm.loop !32
+  br i1 %.not44, label %_ZL11mbedtls_xorPhPKhS1_m.exit, label %bb.d, !llvm.loop !32
 
-bb.f:                                             ; preds = %.preheader68
+_ZL11mbedtls_xorPhPKhS1_m.exit:                   ; preds = %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %.0.copyload.i52.1.pre = load i64, ptr %.phi.trans.insert, align 8
+  %4 = xor i64 %i.j, %.0.copyload.i52.1.pre       ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 384
+  store i64 %4, ptr %5, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 409
+  %7 = load i8, ptr %6, align 1, !tbaa !15
+  %cond.i53 = icmp eq i8 %7, 0
+  br i1 %cond.i53, label %bb.f, label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67
+
+bb.f:                                             ; preds = %_ZL11mbedtls_xorPhPKhS1_m.exit
   %i.dn = lshr i64 %4, 56
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
   %i.dp = lshr i64 %4, 60
@@ -501,7 +503,7 @@ _ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i66:      ; preds = %_ZL19mbedtls_xor_no
   store i64 %i.fn, ptr %i.fm, align 8
   br label %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67
 
-_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67:   ; preds = %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i66, %.preheader68, %bb.c
+_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit67:   ; preds = %_ZL19gcm_mult_smalltablePhPKhPA2_m.exit.i66, %_ZL11mbedtls_xorPhPKhS1_m.exit, %bb.c
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.fp = call i32 @mbedtls_cipher_update(ptr noundef nonnull %0, ptr noundef nonnull %i.c, i64 noundef 16, ptr noundef nonnull %i.fo, ptr noundef nonnull %i.a)
   br label %bb.g
@@ -863,7 +865,7 @@ bb.f:                                             ; preds = %_ZL8gcm_multP19mbed
   %cond.i69 = icmp eq i8 %.pre, 0
   br label %.preheader84
 
-.preheader84:                                     ; preds = %.lr.ph98, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit83
+.preheader84:                                     ; preds = %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit83, %.lr.ph98
   %.0.copyload.i66.1 = phi i64 [ %.0.copyload.i66.1.pre, %.lr.ph98 ], [ %.0.copyload.i66.1118, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit83 ]
   %.0.copyload.i66 = phi i64 [ %.0.copyload.i66.pre, %.lr.ph98 ], [ %.0.copyload.i66116, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit83 ]
   %.197 = phi ptr [ %.045, %.lr.ph98 ], [ %i.fz, %_ZL8gcm_multP19mbedtls_gcm_contextPKhPh.exit83 ] ; 3 uses

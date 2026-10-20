@@ -206,13 +206,13 @@ bb.hw:                                            ; preds = %bb.hv, %.loopexit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #20
   call fastcc void @qrfWrapLine(ptr noundef nonnull %spec.store.select1.i, i32 noundef %i.agx, i32 noundef %i.aha, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c)
   %.pre.i21 = load i32, ptr %i.dv, align 8, !tbaa !268
-  %.not199.peel.i = icmp sgt i32 %.pre.i21, 0     ; 3 uses
+  %5 = icmp slt i32 %.pre.i21, 1                  ; 3 uses
   %.pre286.i.a = load i32, ptr %i.a, align 4
   %.pre287.i = load i32, ptr %i.c, align 4
-  %narrow.i22 = select i1 %.not199.peel.i, i32 %.pre287.i, i32 3
+  %narrow.i22 = select i1 %5, i32 3, i32 %.pre287.i
   %i.aho = sext i32 %narrow.i22 to i64
-  %i.ahp = select i1 %.not199.peel.i, i32 %.pre286.i.a, i32 3
-  %.1.peel.i = select i1 %.not199.peel.i, ptr %spec.store.select1.i, ptr @.str.29 ; 2 uses
+  %i.ahp = select i1 %5, i32 3, i32 %.pre286.i.a
+  %.1.peel.i = select i1 %5, ptr @.str.29, ptr %spec.store.select1.i ; 2 uses
   %i.ahq = load ptr, ptr %i.dq, align 8, !tbaa !47
   call void @sqlite3_str_append(ptr noundef %i.ahq, ptr noundef nonnull %.1.peel.i, i32 noundef %i.ahp) #20
   %i.ahr = load ptr, ptr %i.dq, align 8, !tbaa !47
@@ -227,7 +227,7 @@ bb.hw:                                            ; preds = %bb.hv, %.loopexit.i
 
 .peel.next.i:                                     ; preds = %.lr.ph248.i, %.peel.next.i
   %.0192.i = phi ptr [ %i.aid, %.peel.next.i ], [ %i.ahs, %.lr.ph248.i ] ; 2 uses
-  %.0.i = phi i32 [ %i.ahx, %.peel.next.i ], [ 1, %.lr.ph248.i ] ; 2 uses
+  %.0.i = phi i32 [ %i.ahx, %.peel.next.i ], [ 1, %.lr.ph248.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #20
@@ -236,15 +236,15 @@ bb.hw:                                            ; preds = %bb.hv, %.loopexit.i
   %i.ahv = load i32, ptr %i.dl, align 8, !tbaa !29
   %i.ahw = add nsw i32 %i.ahv, %i.agt
   call void @sqlite3_str_appendchar(ptr noundef %i.ahu, i32 noundef %i.ahw, i8 noundef signext 32) #20
-  %i.ahx = add nuw nsw i32 %.0.i, 1
+  %i.ahx = add nuw nsw i32 %.0.i, 1               ; 2 uses
   %i.ahy = load i32, ptr %i.dv, align 8, !tbaa !268
-  %.not199.i = icmp slt i32 %.0.i, %i.ahy         ; 3 uses
+  %6 = icmp sgt i32 %i.ahx, %i.ahy                ; 3 uses
   %.pre290.i.a = load i32, ptr %i.a, align 4
   %.pre291.i = load i32, ptr %i.c, align 4
-  %narrow328.i = select i1 %.not199.i, i32 %.pre291.i, i32 3
+  %narrow328.i = select i1 %6, i32 3, i32 %.pre291.i
   %i.ahz = sext i32 %narrow328.i to i64
-  %i.aia = select i1 %.not199.i, i32 %.pre290.i.a, i32 3
-  %.1.i = select i1 %.not199.i, ptr %.0192.i, ptr @.str.29 ; 2 uses
+  %i.aia = select i1 %6, i32 3, i32 %.pre290.i.a
+  %.1.i = select i1 %6, ptr @.str.29, ptr %.0192.i ; 2 uses
   %i.aib = load ptr, ptr %i.dq, align 8, !tbaa !47
   call void @sqlite3_str_append(ptr noundef %i.aib, ptr noundef nonnull %.1.i, i32 noundef %i.aia) #20
   %i.aic = load ptr, ptr %i.dq, align 8, !tbaa !47
@@ -647,7 +647,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %.thread213, %bb.aj
   %.0171 = phi i32 [ 0, %bb.aj ], [ %.4, %.thread213 ] ; 3 uses
-  %.0 = phi i32 [ 0, %bb.aj ], [ %.1, %.thread213 ] ; 7 uses
+  %.0 = phi i32 [ 0, %bb.aj ], [ %.1, %.thread213 ] ; 6 uses
   %i.if = sext i32 %.0171 to i64
   %i.ig = getelementptr inbounds i8, ptr %i.ie, i64 %i.if ; 10 uses
   %i.ih = load i8, ptr %i.ig, align 1, !tbaa !29  ; 4 uses
@@ -699,9 +699,9 @@ bb.an:                                            ; preds = %bb.ak
   br i1 %i.iu, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  %i.iv = add nsw i32 %.0, 1                      ; 2 uses
-  %.not198 = icmp slt i32 %.0, %spec.store.select
-  br i1 %.not198, label %.thread213, label %bb.bh
+  %i.iv = add nsw i32 %.0, 1                      ; 3 uses
+  %3 = icmp sgt i32 %i.iv, %spec.store.select
+  br i1 %3, label %bb.bh, label %.thread213
 
 bb.ap:                                            ; preds = %bb.an
   %i.iw = zext i8 %i.ih to i32                    ; 6 uses
@@ -1104,7 +1104,7 @@ sqlite3_qrf_wcwidth.exit._crit_edge.thread:       ; preds = %.preheader159.a, %s
   br label %bb.am
 
 .thread:                                          ; preds = %bb.z, %sqlite3_qrf_wcwidth.exit._crit_edge
-  %.0115170 = phi i32 [ %.0115.lcssa, %sqlite3_qrf_wcwidth.exit._crit_edge ], [ %.0115172, %bb.z ] ; 10 uses
+  %.0115170 = phi i32 [ %.0115.lcssa, %sqlite3_qrf_wcwidth.exit._crit_edge ], [ %.0115172, %bb.z ] ; 9 uses
   %.0110167 = phi i32 [ %.0110.lcssa, %sqlite3_qrf_wcwidth.exit._crit_edge ], [ %.0110173, %bb.z ] ; 5 uses
   %.not129 = icmp eq i32 %2, 0
   %.pre = sext i32 %.0115170 to i64               ; 8 uses
@@ -1136,44 +1136,41 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %i.dy, label %.preheader158, label %.thread._crit_edge
 
 .preheader158:                                    ; preds = %bb.ag
-  %i.dz = sdiv i32 %.0115170, 2                   ; 4 uses
-  %i.ea = sext i32 %i.dz to i64                   ; 2 uses
-  %smin = tail call i32 @llvm.smin.i32(i32 %.0115170, i32 %i.dz)
-  %6 = add i32 %smin, -1                          ; 3 uses
-  %.not132.not254 = icmp sgt i32 %.0115170, 0
-  br i1 %.not132.not254, label %.lr.ph256, label %.split.loop.exit237
+  %i.dz = sdiv i32 %.0115170, 2                   ; 3 uses
+  %i.ea = sext i32 %i.dz to i64                   ; 3 uses
+  %indvars.iv.next259 = add nsw i64 %.pre, -1     ; 3 uses
+  %.not132260 = icmp slt i64 %indvars.iv.next259, %i.ea
+  br i1 %.not132260, label %.split.loop.exit, label %.lr.ph256
 
 bb.ah:                                            ; preds = %.lr.ph256
-  %.not132.not = icmp sgt i64 %indvars.iv.next, %i.ea
-  br i1 %.not132.not, label %.lr.ph256, label %.split.loop.exit237, !llvm.loop !329
+  %indvars.iv.next = add nsw i64 %indvars.iv255, -1 ; 3 uses
+  %.not132 = icmp slt i64 %indvars.iv.next, %i.ea
+  br i1 %.not132, label %.split.loop.exit, label %.lr.ph256, !llvm.loop !329
 
 .lr.ph256:                                        ; preds = %.preheader158, %bb.ah
-  %indvars.iv255 = phi i64 [ %indvars.iv.next, %bb.ah ], [ %.pre, %.preheader158 ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv255, -1 ; 4 uses
-  %i.eb = getelementptr inbounds i8, ptr %0, i64 %indvars.iv.next
+  %indvars.iv255 = phi i64 [ %indvars.iv.next, %bb.ah ], [ %indvars.iv.next259, %.preheader158 ] ; 3 uses
+  %i.eb = getelementptr inbounds i8, ptr %0, i64 %indvars.iv255
   %i.ec = load i8, ptr %i.eb, align 1, !tbaa !29
   %i.ed = zext i8 %i.ec to i64
   %i.ee = getelementptr inbounds nuw i8, ptr @qrfCType, i64 %i.ed
   %i.ef = load i8, ptr %i.ee, align 1, !tbaa !29
   %i.eg = and i8 %i.ef, 1
   %.not133 = icmp eq i8 %i.eg, 0
-  br i1 %.not133, label %bb.ah, label %.split.loop.exit, !llvm.loop !329
+  br i1 %.not133, label %bb.ah, label %.thread156.loopexit204, !llvm.loop !329
 
-.split.loop.exit:                                 ; preds = %.lr.ph256
-  %7 = trunc nsw i64 %indvars.iv255 to i32
-  %i.eh = trunc nsw i64 %indvars.iv.next to i32
-  %8 = icmp sge i32 %i.dz, %7
-  br label %.split.loop.exit237
+.split.loop.exit:                                 ; preds = %bb.ah, %.preheader158
+  %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next259, %.preheader158 ], [ %indvars.iv.next, %bb.ah ]
+  %i.eh = trunc nsw i64 %indvars.iv.next.lcssa to i32
+  %6 = icmp sgt i32 %.0115170, 1
+  br i1 %6, label %.split.loop.exit237, label %.loopexit
 
-.split.loop.exit237:                              ; preds = %bb.ah, %.preheader158, %.split.loop.exit
-  %.0112.in.lcssa = phi i1 [ %8, %.split.loop.exit ], [ true, %.preheader158 ], [ true, %bb.ah ]
-  %.0112.lcssa = phi i32 [ %i.eh, %.split.loop.exit ], [ %6, %.preheader158 ], [ %6, %bb.ah ]
-  %9 = icmp sgt i32 %.0115170, 1
-  %or.cond = and i1 %9, %.0112.in.lcssa
-  br i1 %or.cond, label %.lr.ph196, label %.loopexit
+.split.loop.exit237:                              ; preds = %.split.loop.exit
+  %7 = tail call i32 @llvm.smin.i32(i32 %.0115170, i32 %i.dz)
+  %smin = add nsw i32 %7, -1
+  br label %.lr.ph196
 
 .lr.ph196:                                        ; preds = %.split.loop.exit237, %bb.ai
-  %indvars.iv211 = phi i64 [ %indvars.iv.next212, %bb.ai ], [ %.pre, %.split.loop.exit237 ] ; 4 uses
+  %indvars.iv211 = phi i64 [ %.pre, %.split.loop.exit237 ], [ %indvars.iv.next212, %bb.ai ] ; 3 uses
   %i.ei = getelementptr i8, ptr %0, i64 %indvars.iv211 ; 2 uses
   %i.ej = getelementptr i8, ptr %i.ei, i64 -1
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !29
@@ -1194,16 +1191,20 @@ bb.ah:                                            ; preds = %.lr.ph256
   br i1 %or.cond139, label %bb.ai, label %.loopexit.loopexit.split.loop.exit
 
 bb.ai:                                            ; preds = %.lr.ph196
-  %indvars.iv.next212 = add nsw i64 %indvars.iv211, -1
-  %.not135.not = icmp sgt i64 %indvars.iv211, %i.ea
-  br i1 %.not135.not, label %.lr.ph196, label %.loopexit, !llvm.loop !330
+  %indvars.iv.next212 = add nsw i64 %indvars.iv211, -1 ; 2 uses
+  %.not134 = icmp slt i64 %indvars.iv.next212, %i.ea
+  br i1 %.not134, label %.loopexit, label %.lr.ph196, !llvm.loop !330
+
+.thread156.loopexit204:                           ; preds = %.lr.ph256
+  %8 = trunc nsw i64 %indvars.iv255 to i32
+  br label %.loopexit
 
 .loopexit.loopexit.split.loop.exit:               ; preds = %.lr.ph196
   %i.ew = trunc nsw i64 %indvars.iv211 to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.ai, %.loopexit.loopexit.split.loop.exit, %.split.loop.exit237
-  %.2114 = phi i32 [ %.0112.lcssa, %.split.loop.exit237 ], [ %i.ew, %.loopexit.loopexit.split.loop.exit ], [ %6, %bb.ai ] ; 3 uses
+.loopexit:                                        ; preds = %bb.ai, %.loopexit.loopexit.split.loop.exit, %.thread156.loopexit204, %.split.loop.exit
+  %.2114 = phi i32 [ %i.eh, %.split.loop.exit ], [ %8, %.thread156.loopexit204 ], [ %i.ew, %.loopexit.loopexit.split.loop.exit ], [ %smin, %bb.ai ] ; 3 uses
   %.not138 = icmp slt i32 %.2114, %i.dz
   br i1 %.not138, label %.thread._crit_edge, label %bb.aj
 
@@ -1606,8 +1607,8 @@ bb.t:                                             ; preds = %bb.s, %bb.n
 
 bb.u:                                             ; preds = %.backedge, %.lr.ph278
   %.0161276 = phi i32 [ 0, %.lr.ph278 ], [ %.0161276.be, %.backedge ] ; 5 uses
-  %.0167273 = phi i32 [ 1, %.lr.ph278 ], [ %.0167273.be, %.backedge ] ; 10 uses
-  %.0168272 = phi i32 [ 0, %.lr.ph278 ], [ %.0168272.be.a, %.backedge ] ; 11 uses
+  %.0167273 = phi i32 [ 1, %.lr.ph278 ], [ %.0168272.be.a, %.backedge ] ; 9 uses
+  %.0168272 = phi i32 [ 0, %.lr.ph278 ], [ %.0168272.be, %.backedge ] ; 11 uses
   %i.cd = load ptr, ptr %i.a, align 8, !tbaa !87
   %i.ce = call ptr @sqlite3_bind_parameter_name(ptr noundef %i.cd, i32 noundef %.0167273) #20 ; 5 uses
   %.not203 = icmp eq ptr %i.ce, null
@@ -1858,13 +1859,14 @@ bb.au:                                            ; preds = %.thread228, %bb.at
 .thread244:                                       ; preds = %bb.au, %bb.u, %bb.v
   %.4165250 = phi i32 [ %.0161276, %bb.u ], [ %.0161276, %bb.v ], [ 0, %bb.au ] ; 2 uses
   %.5173249 = phi i32 [ %.0168272, %bb.u ], [ %.0168272, %bb.v ], [ %.2170, %bb.au ] ; 2 uses
-  %exitcond.not = icmp eq i32 %.0167273, %.4179
-  br i1 %exitcond.not, label %._crit_edge279, label %.backedge
+  %4 = add nuw nsw i32 %.0167273, 1               ; 2 uses
+  %.not202 = icmp sgt i32 %4, %.4179
+  br i1 %.not202, label %._crit_edge279, label %.backedge
 
 .backedge:                                        ; preds = %.thread244, %.thread244.thread
   %.0161276.be = phi i32 [ %.4165250, %.thread244 ], [ 1, %.thread244.thread ]
-  %.0168272.be.a = phi i32 [ %.5173249, %.thread244 ], [ %.2170, %.thread244.thread ]
-  %.0167273.be = add nuw i32 %.0167273, 1
+  %.0168272.be.a = phi i32 [ %4, %.thread244 ], [ %5, %.thread244.thread ]
+  %.0168272.be = phi i32 [ %.5173249, %.thread244 ], [ %.2170, %.thread244.thread ]
   br label %bb.u, !llvm.loop !428
 
 .thread244.thread:                                ; preds = %bb.au
@@ -1873,8 +1875,9 @@ bb.au:                                            ; preds = %.thread228, %bb.at
   %i.go = load ptr, ptr %i.gn, align 8, !tbaa !163
   %i.gp = load ptr, ptr %i.f, align 8, !tbaa !122
   call void %i.go(ptr noundef %i.gp) #20
-  %exitcond.not298 = icmp eq i32 %.0167273, %.4179
-  br i1 %exitcond.not298, label %._crit_edge279.thread301, label %.backedge
+  %5 = add nuw nsw i32 %.0167273, 1               ; 2 uses
+  %.not202298 = icmp sgt i32 %5, %.4179
+  br i1 %.not202298, label %._crit_edge279.thread301, label %.backedge
 
 ._crit_edge279.thread301:                         ; preds = %.thread244.thread
   %i.gq = getelementptr inbounds nuw i8, ptr %.2182, i64 40
@@ -1990,11 +1993,11 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h, %bb.i
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 188 ; 4 uses
-  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !191 ; 2 uses
-  %i.ak = add nsw i32 %i.aj, 1                    ; 2 uses
+  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !191
+  %i.ak = add nsw i32 %i.aj, 1                    ; 3 uses
   store i32 %i.ak, ptr %i.ai, align 4, !tbaa !191
-  %.not35 = icmp slt i32 %i.aj, %i.s
-  br i1 %.not35, label %.loopexit, label %.lr.ph34
+  %3 = icmp sgt i32 %i.ak, %i.s
+  br i1 %3, label %.lr.ph34, label %.loopexit
 
 .lr.ph34:                                         ; preds = %bb.j, %.lr.ph34
   %i.al = phi i32 [ %i.aw, %.lr.ph34 ], [ %i.ak, %bb.j ]

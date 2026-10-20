@@ -204,9 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = and i32 %i.i, 63                         ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 192434
   %i.l = load i8, ptr %i.k, align 2               ; 3 uses
-  %i.m = zext i8 %i.l to i32                      ; 2 uses
-  %.not85 = icmp samesign ult i32 %i.j, %i.m
-  br i1 %.not85, label %bb.f, label %bb.c
+  %i.m = zext i8 %i.l to i32
+  %2 = add nsw i32 %i.m, -1                       ; 2 uses
+  %3 = icmp sgt i32 %i.j, %2
+  br i1 %3, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %i.n = load i32, ptr @qemu_loglevel, align 4
@@ -229,8 +230,8 @@ bb.f:                                             ; preds = %bb.b
   %i.s = and i32 %i.h, 31
   %i.t = add nuw nsw i32 %i.j, %i.s               ; 2 uses
   %i.u = trunc nuw nsw i32 %i.t to i8
-  %.not86 = icmp samesign ult i32 %i.t, %i.m
-  %i.v = select i1 %.not86, i8 0, i8 %i.l
+  %4 = icmp samesign ugt i32 %i.t, %2
+  %i.v = select i1 %4, i8 %i.l, i8 0
   %.0 = sub i8 %i.u, %i.v                         ; 2 uses
   %i.w = icmp ult i8 %.0, %i.l
   br i1 %i.w, label %bb.h, label %bb.g

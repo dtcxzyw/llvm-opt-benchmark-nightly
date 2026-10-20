@@ -202,11 +202,12 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %i.fq = sub nsw i32 %.0140.in, %i.az
   %i.fr = sub nsw i32 %i.ay, %i.ba
   %.not152 = icmp ult i32 %i.fq, %i.fr
-  %i.fs = add nuw nsw i32 %.0140.in, %i.az
-  %i.ft = add nuw nsw i32 %i.ba, %i.ay
-  %.0.in.in = select i1 %.not152, i32 %i.ft, i32 %i.fs
-  %.0.in.a = add nuw nsw i32 %.0.in.in, 2
-  %.0 = lshr i32 %.0.in.a, 1
+  %i.fs = add nuw nsw i32 %i.az, 2
+  %i.ft = add nuw nsw i32 %i.fs, %.0140.in
+  %1 = add nuw nsw i32 %i.ay, 2
+  %.0.in.a = add nuw nsw i32 %1, %i.ba
+  %.0.in = select i1 %.not152, i32 %.0.in.a, i32 %i.ft
+  %.0 = lshr i32 %.0.in, 1
   br label %.preheader17
 
 .preheader17:                                     ; preds = %.preheader17.preheader, %.preheader17

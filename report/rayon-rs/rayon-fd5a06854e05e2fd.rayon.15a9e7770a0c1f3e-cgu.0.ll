@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %reass.sub = sub i64 %i.d, %i.b
-  %1 = add i64 %reass.sub, 1
+  %1 = add nuw i64 %i.d, 1
+  %.sroa.02.0 = sub nuw i64 %1, %i.b
   br label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IteryE6boundsB4_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -216,7 +216,7 @@ bb.d:                                             ; preds = %bb.b
   br label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IteryE6boundsB4_.exit
 
 _RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IteryE6boundsB4_.exit: ; preds = %bb.a, %bb.d, %bb.c
-  %.sroa.4.1 = phi i64 [ %1, %bb.c ], [ %i.k, %bb.d ], [ 0, %bb.a ]
+  %.sroa.4.1 = phi i64 [ %.sroa.02.0, %bb.c ], [ %i.k, %bb.d ], [ 0, %bb.a ]
   %.sroa.0.1 = phi i64 [ 1, %bb.c ], [ %i.j, %bb.d ], [ 1, %bb.a ]
   %i.l = insertvalue { i64, i64 } poison, i64 %.sroa.0.1, 0
   %i.m = insertvalue { i64, i64 } %i.l, i64 %.sroa.4.1, 1
@@ -285,10 +285,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %reass.sub = sub i128 %i.d, %i.b
-  %1 = add i128 %reass.sub, 1                     ; 2 uses
-  %i.i = icmp ult i128 %1, 18446744073709551616   ; 2 uses
-  %i.j = trunc nuw i128 %1 to i64
+  %1 = add nuw i128 %i.d, 1
+  %.sroa.02.0 = tail call i128 @llvm.usub.sat.i128(i128 %1, i128 %i.b) ; 2 uses
+  %i.i = icmp ult i128 %.sroa.02.0, 18446744073709551616 ; 2 uses
+  %i.j = trunc nuw i128 %.sroa.02.0 to i64
   %spec.select = select i1 %i.i, i64 %i.j, i64 undef
   %spec.select6 = zext i1 %i.i to i64
   br label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IteroE6boundsB4_.exit
@@ -690,6 +690,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i128 @llvm.usub.sat.i128(i128, i128) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #18

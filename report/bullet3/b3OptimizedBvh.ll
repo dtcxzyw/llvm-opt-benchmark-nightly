@@ -205,16 +205,17 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.q = sext i32 %3 to i64
+  %i.q = sext i32 %3 to i64                       ; 2 uses
+  %5 = add nsw i64 %i.q, -1
   %i.r = sext i32 %2 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
-  %indvars.iv.a = phi i64 [ %i.q, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
-  %.080143 = phi i32 [ -1, %.lr.ph ], [ %.2, %.loopexit ] ; 5 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv.a, -1 ; 3 uses
+  %indvars.iv.a = phi i64 [ %i.q, %.lr.ph ], [ %indvars.iv.next151, %.loopexit ] ; 3 uses
+  %indvars.iv = phi i64 [ %5, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
+  %.080144 = phi i32 [ -1, %.lr.ph ], [ %.2, %.loopexit ] ; 5 uses
   %i.s = load ptr, ptr %i.j, align 16, !tbaa !35  ; 3 uses
-  %i.t = getelementptr inbounds [16 x i8], ptr %i.s, i64 %indvars.iv.next ; 12 uses
+  %i.t = getelementptr inbounds [16 x i8], ptr %i.s, i64 %indvars.iv ; 12 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 12
   %i.v = load i32, ptr %i.u, align 4, !tbaa !55   ; 3 uses
   %i.w = icmp sgt i32 %i.v, -1
@@ -223,18 +224,18 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit
 bb.c:                                             ; preds = %bb.b
   %i.x = lshr i32 %i.v, 21                        ; 3 uses
   %i.y = and i32 %i.v, 2097151
-  %.not.a = icmp eq i32 %i.x, %.080143
+  %.not.a = icmp eq i32 %i.x, %.080144
   br i1 %.not.a, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.z = icmp sgt i32 %.080143, -1
+  %i.z = icmp sgt i32 %.080144, -1
   br i1 %i.z, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.aa = load ptr, ptr %1, align 16, !tbaa !12
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 48
   %i.ac = load ptr, ptr %i.ab, align 8
-  call void %i.ac(ptr noundef nonnull align 16 dereferenceable(32) %1, i32 noundef %.080143)
+  call void %i.ac(ptr noundef nonnull align 16 dereferenceable(32) %1, i32 noundef %.080144)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -245,7 +246,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c
-  %.1 = phi i32 [ %i.x, %bb.f ], [ %.080143, %bb.c ]
+  %.1 = phi i32 [ %i.x, %bb.f ], [ %.080144, %bb.c ]
   %i.ag = load ptr, ptr %i.e, align 8, !tbaa !75
   %i.ah = load i32, ptr %i.f, align 4, !tbaa !45
   %i.ai = mul nsw i32 %i.ah, %i.y
@@ -630,9 +631,11 @@ _Z8b3SetMinIfEvRT_RKS0_.exit.i.loopexit145:       ; preds = %bb.s, %bb.r, %bb.q,
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %_Z8b3SetMinIfEvRT_RKS0_.exit.i
-  %.2 = phi i32 [ %.1, %_Z8b3SetMinIfEvRT_RKS0_.exit.i ], [ %.080143, %.loopexit.loopexit ] ; 3 uses
-  %.not.not = icmp sgt i64 %indvars.iv.next, %i.r
-  br i1 %.not.not, label %bb.b, label %._crit_edge, !llvm.loop !73
+  %.2 = phi i32 [ %.1, %_Z8b3SetMinIfEvRT_RKS0_.exit.i ], [ %.080144, %.loopexit.loopexit ] ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %.not = icmp slt i64 %indvars.iv.next, %i.r
+  %indvars.iv.next151 = add nsw i64 %indvars.iv.a, -1
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !73
 
 ._crit_edge:                                      ; preds = %.loopexit
   %i.jv = icmp sgt i32 %.2, -1

@@ -158,8 +158,8 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind uwtable
 define hidden void @luaK_nil(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #6 {
 bb.a:
-  %i.a = add nsw i32 %2, %1                       ; 3 uses
-  %i.b = add i32 %i.a, 255
+  %i.a = add nsw i32 %2, %1                       ; 2 uses
+  %i.b = add nsw i32 %i.a, -1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load i32, ptr %i.c, align 8, !tbaa !45   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -188,7 +188,7 @@ bb.c:                                             ; preds = %previousinstruction
   %i.r = and i32 %i.q, 255                        ; 5 uses
   %i.s = lshr i32 %i.n, 16
   %i.t = and i32 %i.s, 255
-  %i.u = add nuw nsw i32 %i.r, %i.t               ; 3 uses
+  %i.u = add nuw nsw i32 %i.r, %i.t               ; 2 uses
   %.not = icmp sgt i32 %i.r, %1
   %i.v = add nuw nsw i32 %i.u, 1
   %.not39 = icmp sgt i32 %1, %i.v
@@ -203,13 +203,12 @@ bb.d:                                             ; preds = %bb.c
 
 .critedge:                                        ; preds = %bb.d, %bb.c
   %spec.select = tail call i32 @llvm.smin.i32(i32 %i.r, i32 %1) ; 2 uses
-  %.not42 = icmp slt i32 %i.u, %i.a
-  %.031 = select i1 %.not42, i32 %i.b, i32 %i.u
+  %.031 = tail call i32 @llvm.smax.i32(i32 %i.u, i32 %i.b)
   %i.w = and i32 %i.n, -16744440
   %i.x = shl i32 %spec.select, 7
   %i.y = and i32 %i.x, 32640
   %i.z = or disjoint i32 %i.y, %i.w
-  %i.aa = sub i32 %.031, %spec.select
+  %i.aa = sub nsw i32 %.031, %spec.select
   %i.ab = shl i32 %i.aa, 16
   %i.ac = and i32 %i.ab, 16711680
   %i.ad = or disjoint i32 %i.z, %i.ac
@@ -612,16 +611,17 @@ bb.g:                                             ; preds = %bb.f
 
 freeexp.exit.i:                                   ; preds = %bb.g, %bb.f, %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 77 ; 3 uses
-  %i.v = load i8, ptr %i.u, align 1, !tbaa !66    ; 3 uses
+  %i.v = load i8, ptr %i.u, align 1, !tbaa !66    ; 2 uses
+  %2 = zext i8 %i.v to i32
+  %3 = add nuw nsw i32 %2, 1                      ; 3 uses
   %i.w = load ptr, ptr %0, align 8, !tbaa !47
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 12
   %i.y = load i8, ptr %i.x, align 4, !tbaa !67
-  %.not.i = icmp ult i8 %i.v, %i.y
-  br i1 %.not.i, label %luaK_exp2nextreg.exit, label %bb.h
+  %4 = zext i8 %i.y to i32
+  %5 = icmp samesign ugt i32 %3, %4
+  br i1 %5, label %bb.h, label %luaK_exp2nextreg.exit
 
 bb.h:                                             ; preds = %freeexp.exit.i
-  %2 = zext i8 %i.v to i32
-  %3 = add nuw nsw i32 %2, 1                      ; 2 uses
   tail call void @luaY_checklimit(ptr noundef nonnull %0, i32 noundef %3, i32 noundef 255, ptr noundef nonnull @.str.2) #11
   %i.z = trunc i32 %3 to i8
   %i.aa = load ptr, ptr %0, align 8, !tbaa !47
@@ -771,19 +771,20 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.o = and i32 %i.n, -32641
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 77 ; 3 uses
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !66    ; 3 uses
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !66    ; 2 uses
   %i.r = zext i8 %i.q to i32                      ; 2 uses
   %i.s = shl nuw nsw i32 %i.r, 7
   %i.t = or disjoint i32 %i.s, %i.o
   store i32 %i.t, ptr %i.g, align 4, !tbaa !57
+  %3 = add nuw nsw i32 %i.r, 1                    ; 3 uses
   %i.u = load ptr, ptr %0, align 8, !tbaa !47
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 12
   %i.w = load i8, ptr %i.v, align 4, !tbaa !67
-  %.not = icmp ult i8 %i.q, %i.w
-  br i1 %.not, label %luaK_reserveregs.exit, label %bb.d
+  %4 = zext i8 %i.w to i32
+  %5 = icmp samesign ugt i32 %3, %4
+  br i1 %5, label %bb.d, label %luaK_reserveregs.exit
 
 bb.d:                                             ; preds = %bb.c
-  %3 = add nuw nsw i32 %i.r, 1                    ; 2 uses
   tail call void @luaY_checklimit(ptr noundef nonnull %0, i32 noundef %3, i32 noundef 255, ptr noundef nonnull @.str.2) #11
   %i.x = trunc i32 %3 to i8
   %i.y = load ptr, ptr %0, align 8, !tbaa !47
@@ -1186,16 +1187,17 @@ bb.c:                                             ; preds = %bb.b
 
 freeexp.exit:                                     ; preds = %bb.a, %bb.b, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 77 ; 3 uses
-  %i.k = load i8, ptr %i.j, align 1, !tbaa !66    ; 3 uses
+  %i.k = load i8, ptr %i.j, align 1, !tbaa !66    ; 2 uses
+  %2 = zext i8 %i.k to i32
+  %3 = add nuw nsw i32 %2, 1                      ; 3 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !47
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 12
   %i.n = load i8, ptr %i.m, align 4, !tbaa !67
-  %.not = icmp ult i8 %i.k, %i.n
-  br i1 %.not, label %luaK_reserveregs.exit, label %bb.d
+  %4 = zext i8 %i.n to i32
+  %5 = icmp samesign ugt i32 %3, %4
+  br i1 %5, label %bb.d, label %luaK_reserveregs.exit
 
 bb.d:                                             ; preds = %freeexp.exit
-  %2 = zext i8 %i.k to i32
-  %3 = add nuw nsw i32 %2, 1                      ; 2 uses
   tail call void @luaY_checklimit(ptr noundef nonnull %0, i32 noundef %3, i32 noundef 255, ptr noundef nonnull @.str.2) #11
   %i.o = trunc i32 %3 to i8
   %i.p = load ptr, ptr %0, align 8, !tbaa !47
@@ -1598,16 +1600,17 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .thread.thread:                                   ; preds = %bb.a, %bb.b
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 77 ; 3 uses
-  %i.al = load i8, ptr %i.ak, align 1, !tbaa !66  ; 3 uses
+  %i.al = load i8, ptr %i.ak, align 1, !tbaa !66  ; 2 uses
+  %3 = zext i8 %i.al to i32
+  %4 = add nuw nsw i32 %3, 1                      ; 3 uses
   %i.am = load ptr, ptr %0, align 8, !tbaa !47
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 12
   %i.ao = load i8, ptr %i.an, align 4, !tbaa !67
-  %.not5.i = icmp ult i8 %i.al, %i.ao
-  br i1 %.not5.i, label %discharge2anyreg.exit, label %bb.g
+  %5 = zext i8 %i.ao to i32
+  %6 = icmp samesign ugt i32 %4, %5
+  br i1 %6, label %bb.g, label %discharge2anyreg.exit
 
 bb.g:                                             ; preds = %.thread.thread
-  %3 = zext i8 %i.al to i32
-  %4 = add nuw nsw i32 %3, 1                      ; 2 uses
   tail call void @luaY_checklimit(ptr noundef nonnull %0, i32 noundef %4, i32 noundef 255, ptr noundef nonnull @.str.2) #11
   %i.ap = trunc i32 %4 to i8
   %i.aq = load ptr, ptr %0, align 8, !tbaa !47
@@ -2010,16 +2013,17 @@ negatecondition.exit.i:                           ; preds = %bb.k, %bb.j
 
 bb.l:                                             ; preds = %bb.f
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 77 ; 3 uses
-  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !66  ; 3 uses
+  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !66  ; 2 uses
+  %4 = zext i8 %i.ah to i32
+  %5 = add nuw nsw i32 %4, 1                      ; 3 uses
   %i.ai = load ptr, ptr %0, align 8, !tbaa !47
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 12
   %i.ak = load i8, ptr %i.aj, align 4, !tbaa !67
-  %.not5.i.i = icmp ult i8 %i.ah, %i.ak
-  br i1 %.not5.i.i, label %discharge2anyreg.exit.i, label %bb.m
+  %6 = zext i8 %i.ak to i32
+  %7 = icmp samesign ugt i32 %5, %6
+  br i1 %7, label %bb.m, label %discharge2anyreg.exit.i
 
 bb.m:                                             ; preds = %bb.l
-  %4 = zext i8 %i.ah to i32
-  %5 = add nuw nsw i32 %4, 1                      ; 2 uses
   tail call void @luaY_checklimit(ptr noundef nonnull %0, i32 noundef %5, i32 noundef 255, ptr noundef nonnull @.str.2) #11
   %i.al = trunc i32 %5 to i8
   %i.am = load ptr, ptr %0, align 8, !tbaa !47
@@ -2422,16 +2426,17 @@ bb.n:                                             ; preds = %bb.m
 
 freeexp.exit.i:                                   ; preds = %bb.n, %bb.m, %bb.l
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 77 ; 3 uses
-  %i.aq = load i8, ptr %i.ap, align 1, !tbaa !66  ; 3 uses
+  %i.aq = load i8, ptr %i.ap, align 1, !tbaa !66  ; 2 uses
+  %3 = zext i8 %i.aq to i32
+  %4 = add nuw nsw i32 %3, 1                      ; 3 uses
   %i.ar = load ptr, ptr %0, align 8, !tbaa !47
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 12
   %i.at = load i8, ptr %i.as, align 4, !tbaa !67
-  %.not.i = icmp ult i8 %i.aq, %i.at
-  br i1 %.not.i, label %luaK_exp2nextreg.exit, label %bb.o
+  %5 = zext i8 %i.at to i32
+  %6 = icmp samesign ugt i32 %4, %5
+  br i1 %6, label %bb.o, label %luaK_exp2nextreg.exit
 
 bb.o:                                             ; preds = %freeexp.exit.i
-  %3 = zext i8 %i.aq to i32
-  %4 = add nuw nsw i32 %3, 1                      ; 2 uses
   tail call void @luaY_checklimit(ptr noundef nonnull %0, i32 noundef %4, i32 noundef 255, ptr noundef nonnull @.str.2) #11
   %i.au = trunc i32 %4 to i8
   %i.av = load ptr, ptr %0, align 8, !tbaa !47
@@ -2731,16 +2736,17 @@ bb.r:                                             ; preds = %bb.q
 
 freeexp.exit.i:                                   ; preds = %bb.r, %bb.q, %bb.p
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 77 ; 7 uses
-  %i.bl = load i8, ptr %i.bk, align 1, !tbaa !66  ; 3 uses
+  %i.bl = load i8, ptr %i.bk, align 1, !tbaa !66  ; 2 uses
+  %11 = zext i8 %i.bl to i32
+  %12 = add nuw nsw i32 %11, 1                    ; 3 uses
   %i.bm = load ptr, ptr %0, align 8, !tbaa !47
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 12
   %i.bo = load i8, ptr %i.bn, align 4, !tbaa !67
-  %.not.i94 = icmp ult i8 %i.bl, %i.bo
-  br i1 %.not.i94, label %luaK_exp2nextreg.exit, label %bb.s
+  %13 = zext i8 %i.bo to i32
+  %14 = icmp samesign ugt i32 %12, %13
+  br i1 %14, label %bb.s, label %luaK_exp2nextreg.exit
 
 bb.s:                                             ; preds = %freeexp.exit.i
-  %11 = zext i8 %i.bl to i32
-  %12 = add nuw nsw i32 %11, 1                    ; 2 uses
   tail call void @luaY_checklimit(ptr noundef nonnull %0, i32 noundef %12, i32 noundef 255, ptr noundef nonnull @.str.2) #11
   %i.bp = trunc i32 %12 to i8
   %i.bq = load ptr, ptr %0, align 8, !tbaa !47

@@ -202,8 +202,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35: ; preds = %bb.
   br label %bb.w
 
 bb.s:                                             ; preds = %bb.j
-  %i.aj = add nuw i32 %1, 1
-  %i.ak = zext i32 %i.aj to i64                   ; 3 uses
+  %i.aj = add nuw nsw i32 %1, 1
+  %i.ak = zext nneg i32 %i.aj to i64              ; 2 uses
   %i.al = shl nuw nsw i64 %i.ak, 2                ; 2 uses
   %i.am = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.al) #18 ; 6 uses
   store ptr %i.am, ptr %0, align 8, !tbaa !24
@@ -234,8 +234,9 @@ bb.u:                                             ; preds = %bb.t
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %indvars.iv
   store float %i.ay, ptr %i.az, align 4, !tbaa !27
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ak
-  br i1 %exitcond.not, label %bb.v, label %bb.t, !llvm.loop !21
+  %5 = trunc nuw i64 %indvars.iv.next to i32
+  %.not = icmp slt i32 %1, %5
+  br i1 %.not, label %bb.v, label %bb.t, !llvm.loop !21
 
 _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %bb.t
   %i.ba = landingpad { ptr, i32 }

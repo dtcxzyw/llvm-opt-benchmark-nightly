@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.loopexit
   br label %.lr.ph78.i
 
 .lr.ph78.i:                                       ; preds = %unicode_get_cc.exit.thread.i, %.lr.ph78.preheader.i
-  %.03076.i = phi i32 [ %i.ga, %unicode_get_cc.exit.thread.i ], [ 0, %.lr.ph78.preheader.i ] ; 6 uses
+  %.03076.i = phi i32 [ %i.ga, %unicode_get_cc.exit.thread.i ], [ 0, %.lr.ph78.preheader.i ] ; 5 uses
   %i.z = sext i32 %.03076.i to i64                ; 2 uses
   %i.aa = getelementptr inbounds [4 x i8], ptr %i.t, i64 %i.z
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !14
@@ -219,9 +219,7 @@ bb.d:                                             ; preds = %.loopexit
   br i1 %i.ad, label %.lr.ph68.preheader.i, label %unicode_get_cc.exit.thread.i
 
 .lr.ph68.preheader.i:                             ; preds = %.preheader57.i
-  %7 = add nsw i32 %.03076.i, -1
   %i.ae = sext i32 %.02965.i to i64
-  %8 = sext i32 %7 to i64
   br label %.lr.ph68.i
 
 .lr.ph68.i:                                       ; preds = %unicode_get_cc.exit55._crit_edge.i, %.lr.ph68.preheader.i
@@ -374,7 +372,7 @@ unicode_get_cc.exit.i:                            ; preds = %bb.m, %bb.l
   br i1 %.not3362.i, label %unicode_get_cc.exit55._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.x
-  %indvars.iv81.i = phi i64 [ %indvars.iv.next82.i, %bb.x ], [ %i.af, %.preheader.i ] ; 4 uses
+  %indvars.iv81.i = phi i64 [ %indvars.iv.next82.i, %bb.x ], [ %i.af, %.preheader.i ] ; 3 uses
   %i.da = getelementptr inbounds [4 x i8], ptr %i.t, i64 %indvars.iv81.i ; 2 uses
   %i.db = load i32, ptr %i.da, align 4, !tbaa !14 ; 6 uses
   %i.dc = icmp ult i32 %i.db, 845
@@ -510,17 +508,23 @@ bb.w:                                             ; preds = %bb.t
 unicode_get_cc.exit55.i:                          ; preds = %bb.w, %bb.v, %bb.u, %bb.t, %get_index_pos.exit.i43.i, %bb.n
   %.031.i36.i = phi i32 [ 0, %get_index_pos.exit.i43.i ], [ 230, %bb.w ], [ %i.fn, %bb.u ], [ %i.fs, %bb.v ], [ 0, %bb.t ], [ 0, %bb.n ]
   %.not34.i = icmp sgt i32 %.031.i36.i, %.031.i100.i
-  br i1 %.not34.i, label %bb.x, label %unicode_get_cc.exit55._crit_edge.i
+  br i1 %.not34.i, label %bb.x, label %unicode_get_cc.exit55._crit_edge.loopexit.i
 
 bb.x:                                             ; preds = %unicode_get_cc.exit55.i
   %i.ft = getelementptr i8, ptr %i.da, i64 4
   store i32 %i.db, ptr %i.ft, align 4, !tbaa !14
-  %indvars.iv.next82.i = add nsw i64 %indvars.iv81.i, -1
-  %.not33.not.i = icmp sgt i64 %indvars.iv81.i, %i.z
-  br i1 %.not33.not.i, label %.lr.ph.i, label %unicode_get_cc.exit55._crit_edge.i, !llvm.loop !56
+  %indvars.iv.next82.i = add nsw i64 %indvars.iv81.i, -1 ; 3 uses
+  %.not33.i = icmp slt i64 %indvars.iv.next82.i, %i.z
+  br i1 %.not33.i, label %unicode_get_cc.exit55._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !56
 
-unicode_get_cc.exit55._crit_edge.i:               ; preds = %unicode_get_cc.exit55.i, %bb.x, %.preheader.i
-  %.pre-phi.i = phi i64 [ %i.af, %.preheader.i ], [ %8, %bb.x ], [ %indvars.iv81.i, %unicode_get_cc.exit55.i ]
+unicode_get_cc.exit55._crit_edge.loopexit.i:      ; preds = %bb.x, %unicode_get_cc.exit55.i
+  %.0.lcssa.ph.in.i = phi i64 [ %indvars.iv.next82.i, %bb.x ], [ %indvars.iv81.i, %unicode_get_cc.exit55.i ]
+  %7 = shl i64 %.0.lcssa.ph.in.i, 32
+  %.pre.i = ashr exact i64 %7, 32
+  br label %unicode_get_cc.exit55._crit_edge.i
+
+unicode_get_cc.exit55._crit_edge.i:               ; preds = %unicode_get_cc.exit55._crit_edge.loopexit.i, %.preheader.i
+  %.pre-phi.i = phi i64 [ %.pre.i, %unicode_get_cc.exit55._crit_edge.loopexit.i ], [ %i.af, %.preheader.i ]
   %i.fu = getelementptr [4 x i8], ptr %i.t, i64 %.pre-phi.i
   %i.fv = getelementptr i8, ptr %i.fu, i64 4
   store i32 %i.ah, ptr %i.fv, align 4, !tbaa !14

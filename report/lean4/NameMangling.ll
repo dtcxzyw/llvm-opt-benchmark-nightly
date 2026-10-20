@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %lean_string_utf8_ge
   br label %lean_string_utf8_next_fast.exit
 
 lean_string_utf8_next_fast.exit:                  ; preds = %bb.c, %bb.d
-  %.0.i115118 = phi i32 [ %.0.i115119, %bb.c ], [ %i.n, %bb.d ] ; 10 uses
+  %.0.i115118 = phi i32 [ %.0.i115119, %bb.c ], [ %i.n, %bb.d ] ; 9 uses
   %.0.i116 = phi ptr [ %i.r, %bb.c ], [ %i.s, %bb.d ]
   br i1 %.not.i107, label %bb.e, label %lean_dec.exit99
 
@@ -244,11 +244,14 @@ lean_dec.exit.backedge:                           ; preds = %bb.i, %lean_dec.exi
   br i1 %.not126, label %bb.l, label %lean_nat_lt.exit
 
 lean_nat_lt.exit:                                 ; preds = %.critedge
-  %i.y = icmp ugt i32 %.0.i115118, 255
+  %3 = zext i32 %.0.i115118 to i64
+  %4 = shl nuw nsw i64 %3, 1
+  %5 = or disjoint i64 %4, 1                      ; 2 uses
+  %i.y = icmp samesign ugt i64 %5, 512
   br i1 %i.y, label %lean_dec.exit97, label %lean_dec.exit95
 
 lean_dec.exit97:                                  ; preds = %lean_nat_lt.exit
-  %i.z = icmp ugt i32 %.0.i115118, 65535
+  %i.z = icmp samesign ugt i64 %5, 131072
   br i1 %i.z, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %lean_dec.exit97

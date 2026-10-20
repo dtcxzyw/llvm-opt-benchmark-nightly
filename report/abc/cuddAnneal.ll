@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @cuddAnnealing(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = sub i32 %2, %1
+  %i.a = sub i32 %2, %1                           ; 3 uses
   %i.b = add i32 %i.a, 1                          ; 5 uses
   %i.c = tail call i32 @cuddSifting(ptr noundef %0, i32 noundef %1, i32 noundef %2) #8
   %i.d = icmp eq i32 %i.c, 0
@@ -34,7 +34,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.n = sub i32 %i.f, %i.h                       ; 7 uses
-  %.not9.i = icmp slt i32 %2, %1                  ; 3 uses
+  %.not9.i = icmp slt i32 %2, %1                  ; 2 uses
   br i1 %.not9.i, label %.copyOrder.exit_crit_edge, label %.lr.ph.i
 
 .copyOrder.exit_crit_edge:                        ; preds = %bb.d
@@ -63,7 +63,7 @@ copyOrder.exit:                                   ; preds = %.copyOrder.exit_cri
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.aa = add i32 %2, 1
   %i.ab = sub i32 %i.aa, %1
-  %wide.trip.count.i133 = zext i32 %i.ab to i64   ; 2 uses
+  %wide.trip.count.i133 = zext i32 %i.ab to i64
   %i.ac = shl nuw nsw i64 %wide.trip.count.i133, 2
   br label %.outer
 
@@ -451,7 +451,8 @@ bb.ap:                                            ; preds = %.critedge._crit_edg
   br label %.outer, !llvm.loop !44
 
 bb.aq:                                            ; preds = %stopping_criterion.exit
-  br i1 %.not9.i, label %restoreOrder.exit.thread, label %.lr.ph31.i
+  %.not28.i = icmp slt i32 %i.a, 0
+  br i1 %.not28.i, label %restoreOrder.exit.thread, label %.lr.ph31.i
 
 .lr.ph31.i:                                       ; preds = %bb.aq
   %i.fb = getelementptr inbounds nuw i8, ptr %0, i64 320
@@ -486,8 +487,9 @@ bb.as:                                            ; preds = %.lr.ph.i142
 
 ._crit_edge.i:                                    ; preds = %bb.as, %bb.ar
   %indvars.iv.next.i143 = add nuw nsw i64 %indvars.iv.i141, 1 ; 2 uses
-  %exitcond.not.i144 = icmp eq i64 %indvars.iv.next.i143, %wide.trip.count.i133
-  br i1 %exitcond.not.i144, label %restoreOrder.exit.thread, label %bb.ar, !llvm.loop !46
+  %3 = trunc nuw i64 %indvars.iv.next.i143 to i32
+  %.not.i143 = icmp slt i32 %i.a, %3
+  br i1 %.not.i143, label %restoreOrder.exit.thread, label %bb.ar, !llvm.loop !46
 
 restoreOrder.exit.thread:                         ; preds = %._crit_edge.i, %bb.aq
   tail call void @free(ptr noundef %i.k) #8

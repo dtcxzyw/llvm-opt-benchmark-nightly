@@ -204,11 +204,12 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   store ptr %i.p, ptr %i.g, align 8, !tbaa !158
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 152 ; 3 uses
-  %i.u = load i32, ptr %i.t, align 8, !tbaa !155  ; 3 uses
+  %i.u = load i32, ptr %i.t, align 8, !tbaa !155  ; 2 uses
+  %4 = add nsw i32 %i.u, 1                        ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 156 ; 2 uses
   %i.w = load i32, ptr %i.v, align 4, !tbaa !260  ; 2 uses
-  %.not43 = icmp slt i32 %i.u, %i.w
-  br i1 %.not43, label %._crit_edge, label %bb.j
+  %5 = icmp sgt i32 %4, %i.w
+  br i1 %5, label %bb.j, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.i
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 144
@@ -216,7 +217,6 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.i
-  %4 = add nsw i32 %i.u, 1
   %i.x = mul i32 %i.w, 3
   %i.y = add i32 %i.x, 48
   %i.z = sdiv i32 %i.y, 2
@@ -236,17 +236,18 @@ st_mult.exit:                                     ; preds = %bb.j
   %i.ae = shl nuw nsw i64 %i.aa, 3
   %i.af = tail call ptr @xrealloc(ptr noundef %i.ad, i64 noundef %i.ae) #18 ; 2 uses
   store ptr %i.af, ptr %i.ac, align 8, !tbaa !146
-  %.pre45 = load i32, ptr %i.t, align 8, !tbaa !155
+  %.pre45 = load i32, ptr %i.t, align 8, !tbaa !155 ; 2 uses
+  %.pre44 = add nsw i32 %.pre45, 1
   br label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge, %st_mult.exit
-  %i.ag = phi i32 [ %i.u, %._crit_edge ], [ %.pre45, %st_mult.exit ] ; 2 uses
+  %.pre-phi = phi i32 [ %4, %._crit_edge ], [ %.pre44, %st_mult.exit ]
+  %i.ag = phi i32 [ %i.u, %._crit_edge ], [ %.pre45, %st_mult.exit ]
   %i.ah = phi ptr [ %.pre, %._crit_edge ], [ %i.af, %st_mult.exit ]
   %i.ai = sext i32 %i.ag to i64
   %i.aj = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.ai
   store ptr %3, ptr %i.aj, align 8, !tbaa !157
-  %5 = add nsw i32 %i.ag, 1
-  store i32 %5, ptr %i.t, align 8, !tbaa !155
+  store i32 %.pre-phi, ptr %i.t, align 8, !tbaa !155
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.h, %bb.g, %bb.f

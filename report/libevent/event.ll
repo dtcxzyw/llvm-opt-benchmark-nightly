@@ -204,18 +204,18 @@ insert_common_timeout_inorder.exit.i:             ; preds = %bb.bm, %bb.bi
 is_common_timeout.exit.thread.i:                  ; preds = %is_common_timeout.exit.i, %bb.ba
   %i.il = getelementptr inbounds nuw i8, ptr %i.b, i64 328 ; 4 uses
   %i.im = getelementptr inbounds nuw i8, ptr %i.b, i64 336 ; 3 uses
-  %i.in = load i32, ptr %i.im, align 8            ; 4 uses
+  %i.in = load i32, ptr %i.im, align 8            ; 3 uses
   %i.io = icmp eq i32 %i.in, -1
   br i1 %i.io, label %event_queue_insert_timeout.exit, label %bb.bn
 
 bb.bn:                                            ; preds = %is_common_timeout.exit.thread.i
+  %6 = add nuw i32 %i.in, 1                       ; 3 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %i.b, i64 340 ; 2 uses
   %i.iq = load i32, ptr %i.ip, align 4            ; 3 uses
-  %.not.i24.i = icmp ugt i32 %i.iq, %i.in
-  br i1 %.not.i24.i, label %bb.br, label %bb.bo
+  %7 = icmp ult i32 %i.iq, %6
+  br i1 %7, label %bb.bo, label %bb.br
 
 bb.bo:                                            ; preds = %bb.bn
-  %6 = add nuw i32 %i.in, 1
   %.not.i.i.i164 = icmp eq i32 %i.iq, 0
   %i.ir = shl i32 %i.iq, 1
   %spec.select.i.i.i = select i1 %.not.i.i.i164, i32 8, i32 %i.ir
@@ -243,18 +243,19 @@ event_mm_realloc_.exit.i.i.i:                     ; preds = %bb.bq, %bb.bp
 .thread.i.i.i:                                    ; preds = %event_mm_realloc_.exit.i.i.i
   store ptr %.0.i.i.i.i, ptr %i.il, align 8
   store i32 %.014.i.i.i, ptr %i.ip, align 4
-  %.pre.i.i = load i32, ptr %i.im, align 8
+  %.pre.i.i = load i32, ptr %i.im, align 8        ; 2 uses
+  %.pre10.i.i = add i32 %.pre.i.i, 1
   br label %bb.br
 
 bb.br:                                            ; preds = %.thread.i.i.i, %bb.bn
-  %i.iy = phi i32 [ %.pre.i.i, %.thread.i.i.i ], [ %i.in, %bb.bn ] ; 3 uses
-  %7 = add i32 %i.iy, 1
-  store i32 %7, ptr %i.im, align 8
-  %.not26.i.i.i = icmp eq i32 %i.iy, 0
+  %i.iy = phi i32 [ %.pre10.i.i, %.thread.i.i.i ], [ %6, %bb.bn ]
+  %8 = phi i32 [ %.pre.i.i, %.thread.i.i.i ], [ %i.in, %bb.bn ] ; 2 uses
+  store i32 %i.iy, ptr %i.im, align 8
+  %.not26.i.i.i = icmp eq i32 %8, 0
   br i1 %.not26.i.i.i, label %min_heap_shift_up_.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.br, %bb.bt
-  %.02127.i.i.i = phi i32 [ %.028.i.i.i, %bb.bt ], [ %i.iy, %bb.br ] ; 5 uses
+  %.02127.i.i.i = phi i32 [ %.028.i.i.i, %bb.bt ], [ %8, %bb.br ] ; 5 uses
   %.028.in.i.i.i = add i32 %.02127.i.i.i, -1
   %.028.i.i.i = lshr i32 %.028.in.i.i.i, 1        ; 3 uses
   %i.iz = load ptr, ptr %i.il, align 8            ; 2 uses

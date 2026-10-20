@@ -202,14 +202,14 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca i32, align 4                      ; 4 uses
-  %.not.not109 = icmp sgt i32 %2, 0
-  br i1 %.not.not109, label %.lr.ph, label %._crit_edge
+  %4 = add nsw i32 %2, -1                         ; 3 uses
+  %.not109 = icmp slt i32 %2, 1
+  br i1 %.not109, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %4 = add nsw i32 %2, -1
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 12 uses
   %i.e = zext nneg i32 %4 to i64                  ; 2 uses
-  %i.f = zext nneg i32 %2 to i64                  ; 2 uses
+  %i.f = zext nneg i32 %2 to i64
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.ai, %bb.a
@@ -242,7 +242,7 @@ bb.f:                                             ; preds = %bb.e
   %i.l = load i16, ptr %i.k, align 2, !tbaa !24
   %i.m = icmp eq i16 %i.l, 108
   %i.n = icmp samesign ult i64 %indvars.iv, %i.e
-  %or.cond103 = select i1 %i.m, i1 %i.n, i1 false
+  %or.cond103 = and i1 %i.n, %i.m
   br i1 %or.cond103, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -392,8 +392,8 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ah, %bb.ab
   %.0 = phi i32 [ 0, %bb.ab ], [ %.2, %bb.ah ]    ; 4 uses
-  %.not = icmp slt i32 %.0, %2
-  br i1 %.not, label %bb.ae, label %bb.ad
+  %5 = icmp sgt i32 %.0, %4
+  br i1 %5, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
   %i.bo = load i32, ptr %i.d, align 4, !tbaa !25
@@ -446,8 +446,9 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag, %bb.
 bb.ai:                                            ; preds = %bb.y, %bb.z, %bb.v, %bb.w, %bb.s, %.critedge105, %bb.m, %.critedge, %bb.t, %bb.x, %bb.g, %bb.h, %.loopexit, %bb.aa, %bb.b
   %.188 = phi i32 [ %.087110, %bb.b ], [ %.087110, %bb.g ], [ %.087110, %bb.h ], [ %.087110, %bb.aa ], [ %.087110, %bb.m ], [ %.087110, %bb.s ], [ -1, %bb.v ], [ %.087110, %bb.x ], [ %.087110, %bb.t ], [ %.087110, %.loopexit ], [ %.087110, %.critedge ], [ %.087110, %.critedge105 ], [ -1, %bb.w ], [ 1, %bb.z ], [ 1, %bb.y ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.f
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !65
+  %6 = trunc nuw i64 %indvars.iv.next to i32
+  %.not = icmp slt i32 %4, %6
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !65
 }
 
 declare i32 @u_strToPunycode_78(ptr noundef, i32 noundef, ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #6

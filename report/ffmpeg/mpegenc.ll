@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %.1 = phi i64 [ %.0139252, %bb.k ], [ %spec.select193, %bb.l ] ; 5 uses
+  %.1 = phi i64 [ %.0139252, %bb.k ], [ %spec.select193, %bb.l ] ; 4 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 40
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !73
   %i.bt = icmp ne ptr %i.bs, null
@@ -225,8 +225,8 @@ bb.n:                                             ; preds = %._crit_edge255
   %i.cb = extractelement <2 x double> %i.ca, i64 0
   %i.cc = extractelement <2 x double> %i.ca, i64 1
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 56, ptr noundef nonnull @.str.38, double noundef %i.cb, double noundef %i.cc) #9
-  %i.cd = add nsw i64 %.1, 1
-  %2 = icmp sle i64 %.0144388, %.1                ; 2 uses
+  %i.cd = add nsw i64 %.1, 1                      ; 2 uses
+  %2 = icmp slt i64 %.0144388, %i.cd
   %i.ce = icmp ne i32 %.0149386, 0
   %or.cond7 = select i1 %2, i1 true, i1 %i.ce
   br i1 %or.cond7, label %bb.p, label %bb.o
@@ -237,7 +237,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.1150 = phi i32 [ %.0149386, %bb.n ], [ 1, %bb.o ] ; 2 uses
-  %3 = select i1 %2, i64 %i.cd, i64 %.0144388     ; 3 uses
+  %3 = call i64 @llvm.smax.i64(i64 %.0144388, i64 %i.cd) ; 3 uses
   %i.cf = load i32, ptr %i.j, align 4, !tbaa !35
   %.not27.i = icmp eq i32 %i.cf, 0
   br i1 %.not27.i, label %remove_decoded_packets.exit, label %.lr.ph26.i
@@ -638,6 +638,9 @@ declare void @avio_write_marker(ptr noundef, i64 noundef, i32 noundef) local_unn
 declare void @av_free(ptr noundef) local_unnamed_addr #2
 
 declare void @av_fifo_freep2(ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #7

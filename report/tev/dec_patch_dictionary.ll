@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.lr.ph200
   br i1 %exitcond227.not, label %.critedge, label %.lr.ph200, !llvm.loop !293
 
 .critedge:                                        ; preds = %.lr.ph200, %bb.n, %bb.m
-  %.075.lcssa = phi i64 [ %i.fb, %bb.m ], [ %i.eq, %bb.n ], [ %.075198, %.lr.ph200 ] ; 14 uses
+  %.075.lcssa = phi i64 [ %i.fb, %bb.m ], [ %i.eq, %bb.n ], [ %.075198, %.lr.ph200 ] ; 13 uses
   %.lcssa = phi i1 [ false, %bb.m ], [ %.not304.not, %bb.n ], [ %.not304.not, %.lr.ph200 ]
   %.idx.i105 = mul nuw nsw i64 %.075.lcssa, 24    ; 3 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx.i105 ; 2 uses
@@ -253,8 +253,9 @@ bb.o:                                             ; preds = %.lr.ph312
   %i.gf = sub i64 %i.gd, %i.ge
   %i.gg = ashr exact i64 %i.gf, 4
   store i64 %i.gg, ptr %i.em, align 8, !tbaa !103
-  %.not.not205 = icmp sgt i64 %.075.lcssa, %.074.lcssa
-  br i1 %.not.not205, label %.lr.ph207.preheader, label %._crit_edge208
+  %.073206 = add nsw i64 %.075.lcssa, -1          ; 2 uses
+  %.not207 = icmp slt i64 %.073206, %.074.lcssa
+  br i1 %.not207, label %._crit_edge208, label %.lr.ph207.preheader
 
 .lr.ph207.preheader:                              ; preds = %.critedge2
   %.pre = load ptr, ptr %i.k, align 8, !tbaa !316
@@ -280,9 +281,8 @@ bb.o:                                             ; preds = %.lr.ph312
 
 .lr.ph207:                                        ; preds = %.lr.ph207.preheader, %_ZNSt3__16vectorINS_4pairImmEENS_9allocatorIS2_EEE12emplace_backIJRmS7_EEERS2_DpOT_.exit
   %i.gp = phi ptr [ %.0.i113, %_ZNSt3__16vectorINS_4pairImmEENS_9allocatorIS2_EEE12emplace_backIJRmS7_EEERS2_DpOT_.exit ], [ %.pre, %.lr.ph207.preheader ] ; 5 uses
-  %.073.in206 = phi i64 [ %.073, %_ZNSt3__16vectorINS_4pairImmEENS_9allocatorIS2_EEE12emplace_backIJRmS7_EEERS2_DpOT_.exit ], [ %.075.lcssa, %.lr.ph207.preheader ]
-  %.073 = add nsw i64 %.073.in206, -1             ; 3 uses
-  %i.gq = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %.073 ; 3 uses
+  %.073.in206 = phi i64 [ %.073, %_ZNSt3__16vectorINS_4pairImmEENS_9allocatorIS2_EEE12emplace_backIJRmS7_EEERS2_DpOT_.exit ], [ %.073206, %.lr.ph207.preheader ] ; 2 uses
+  %i.gq = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %.073.in206 ; 3 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 16 ; 2 uses
   %i.gs = load ptr, ptr %i.dt, align 8, !tbaa !322 ; 2 uses
   %i.gt = icmp ult ptr %i.gp, %i.gs
@@ -371,8 +371,9 @@ bb.t:                                             ; preds = %_ZNSt3__114__split_
 _ZNSt3__16vectorINS_4pairImmEENS_9allocatorIS2_EEE12emplace_backIJRmS7_EEERS2_DpOT_.exit: ; preds = %bb.p, %_ZNSt3__114__split_bufferINS_4pairImmEERNS_9allocatorIS2_EEE5clearB8nn180100Ev.exit.i.i.i, %bb.t
   %.0.i113 = phi ptr [ %i.gx, %bb.p ], [ %i.hr, %_ZNSt3__114__split_bufferINS_4pairImmEERNS_9allocatorIS2_EEE5clearB8nn180100Ev.exit.i.i.i ], [ %i.hr, %bb.t ] ; 2 uses
   store ptr %.0.i113, ptr %i.k, align 8, !tbaa !316
-  %.not.not = icmp sgt i64 %.073, %.074.lcssa
-  br i1 %.not.not, label %.lr.ph207, label %._crit_edge208, !llvm.loop !296
+  %.073 = add nsw i64 %.073.in206, -1             ; 2 uses
+  %.not = icmp slt i64 %.073, %.074.lcssa
+  br i1 %.not, label %._crit_edge208, label %.lr.ph207, !llvm.loop !296
 
 ._crit_edge212:                                   ; preds = %_ZNSt3__16vectorINS_4pairImmEENS_9allocatorIS2_EEE12emplace_backIJRmS7_EEERS2_DpOT_.exit127, %._crit_edge208
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.el, i8 -1, i64 16, i1 false)

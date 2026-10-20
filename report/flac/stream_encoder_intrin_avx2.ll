@@ -204,8 +204,9 @@ begin_hunk_0_@FLAC__precompute_partition_info_sums_intrin_avx2:bb.a
   br i1 %exitcond194.not, label %.loopexit114, label %.preheader116, !llvm.loop !15
 
 .loopexit114:                                     ; preds = %._crit_edge130, %._crit_edge151
-  %.not.not165 = icmp sgt i32 %5, %4
-  br i1 %.not.not165, label %.lr.ph171, label %._crit_edge172
+  %.093164 = add nsw i32 %5, -1                   ; 2 uses
+  %.not165 = icmp slt i32 %.093164, %4
+  br i1 %.not165, label %._crit_edge172, label %.lr.ph171
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph161
   %i.db = and i32 %.097166, 2
@@ -235,15 +236,15 @@ begin_hunk_0_@FLAC__precompute_partition_info_sums_intrin_avx2:bb.a
 .loopexit:                                        ; preds = %.lr.ph171, %.lr.ph161.epil.preheader, %.loopexit.loopexit.unr-lcssa
   %.196.lcssa = phi i32 [ %.095167, %.lr.ph171 ], [ %i.em, %.loopexit.loopexit.unr-lcssa ], [ %i.dn, %.lr.ph161.epil.preheader ]
   %.1.lcssa = phi i32 [ %.094168, %.lr.ph171 ], [ %i.ej, %.loopexit.loopexit.unr-lcssa ], [ %i.dk, %.lr.ph161.epil.preheader ]
-  %.not.not = icmp sgt i32 %.093169, %4
-  br i1 %.not.not, label %.lr.ph171, label %._crit_edge172, !llvm.loop !16
+  %.093 = add nsw i32 %.093169.in, -1             ; 2 uses
+  %.not = icmp slt i32 %.093, %4
+  br i1 %.not, label %._crit_edge172, label %.lr.ph171, !llvm.loop !16
 
 .lr.ph171:                                        ; preds = %.loopexit114, %.loopexit
-  %.093169.in = phi i32 [ %.093169, %.loopexit ], [ %5, %.loopexit114 ]
+  %.093169.in = phi i32 [ %.093, %.loopexit ], [ %.093164, %.loopexit114 ]
   %.094168 = phi i32 [ %.1.lcssa, %.loopexit ], [ %i.c, %.loopexit114 ] ; 3 uses
   %.095167 = phi i32 [ %.196.lcssa, %.loopexit ], [ 0, %.loopexit114 ] ; 3 uses
   %.097166 = phi i32 [ %i.do, %.loopexit ], [ %i.c, %.loopexit114 ] ; 2 uses
-  %.093169 = add nsw i32 %.093169.in, -1          ; 2 uses
   %i.do = lshr i32 %.097166, 1                    ; 4 uses
   switch i32 %i.do, label %.lr.ph161.preheader.new [
     i32 0, label %.loopexit

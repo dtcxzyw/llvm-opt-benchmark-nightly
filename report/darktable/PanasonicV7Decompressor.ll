@@ -204,7 +204,7 @@ bb.a:
   %i.v = shl nuw nsw i32 %i.u, 4                  ; 3 uses
   %i.w = mul nuw nsw i32 %i.v, %1                 ; 2 uses
   %i.x = zext nneg i32 %i.w to i64                ; 3 uses
-  %i.y = zext nneg i32 %i.v to i64
+  %i.y = zext nneg i32 %i.v to i64                ; 2 uses
   %i.z = add nuw nsw i64 %i.x, %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !22, !noalias !140 ; 3 uses
@@ -546,7 +546,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   unreachable
 
 _ZN8rawspeed14BitStreamerLSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.8: ; preds = %.lr.ph
-  %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 16
+  %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 16 ; 2 uses
+  %2 = icmp samesign ule i64 %indvars.iv.next65, %i.y
+  tail call void @llvm.assume(i1 %2)
   %i.ib = getelementptr i8, ptr %i.ai, i64 %indvars.iv64 ; 4 uses
   %i.ic = icmp samesign ule i64 %indvars.iv, %i.aj
   tail call void @llvm.assume(i1 %i.ic)

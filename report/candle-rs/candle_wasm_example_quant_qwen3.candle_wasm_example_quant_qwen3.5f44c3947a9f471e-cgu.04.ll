@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.m, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.426.i)
   %i.an = getelementptr inbounds nuw i8, ptr %i.r, i64 626 ; 4 uses
-  %i.ao = load i16, ptr %i.an, align 2, !noalias !556, !noundef !5 ; 3 uses
+  %i.ao = load i16, ptr %i.an, align 2, !noalias !556, !noundef !5 ; 2 uses
   %i.ap = icmp ugt i16 %i.ao, 10
   br i1 %i.ap, label %bb.l, label %bb.m
 
@@ -214,11 +214,12 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.ar = zext nneg i16 %i.ao to i64              ; 2 uses
+  %3 = add nuw nsw i64 %i.ar, 1                   ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.r, i64 360 ; 2 uses
   %i.at = add i64 %.sroa.6.0.copyload, 1          ; 3 uses
-  %.not.i.i.i = icmp ugt i64 %i.at, %i.ar
+  %.not.i.i.i = icmp ugt i64 %3, %i.at
   %i.au = getelementptr inbounds nuw [24 x i8], ptr %i.as, i64 %.sroa.6.0.copyload ; 3 uses
-  br i1 %.not.i.i.i, label %bb.n, label %bb.o
+  br i1 %.not.i.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.au, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -338,6 +339,7 @@ bb.z:                                             ; preds = %.noexc.i.i
   %i.by = getelementptr inbounds nuw i8, ptr %spec.select31.i.i, i64 626 ; 2 uses
   %i.bz = load i16, ptr %i.by, align 2, !noalias !568, !noundef !5 ; 2 uses
   %i.ca = zext i16 %i.bz to i64                   ; 2 uses
+  %4 = add i16 %i.bz, 1
   %i.cb = getelementptr inbounds nuw i8, ptr %spec.select31.i.i, i64 360 ; 2 uses
   %.not.i16.not.i.i = icmp ult i64 %.sroa.510.0.i.i, %i.ca
   %i.cc = getelementptr inbounds nuw [24 x i8], ptr %i.cb, i64 %.sroa.510.0.i.i ; 3 uses
@@ -372,11 +374,11 @@ bb.ac:                                            ; preds = %bb.ae, %bb.ad
   unreachable
 
 .thread.i:                                        ; preds = %bb.o, %bb.n
-  %3 = add nuw nsw i16 %i.ao, 1
   %i.cl = getelementptr inbounds nuw [32 x i8], ptr %i.r, i64 %.sroa.6.0.copyload
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cl, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.i, i64 32, i1 false), !alias.scope !573, !noalias !559
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
-  store i16 %3, ptr %i.an, align 2, !noalias !559
+  %5 = trunc nuw nsw i64 %3 to i16
+  store i16 %5, ptr %i.an, align 2, !noalias !559
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.426.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !555
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !555
@@ -392,7 +394,6 @@ bb.ae:                                            ; preds = %bb.ad
           to label %.critedge9 unwind label %bb.ac, !noalias !572
 
 bb.af:                                            ; preds = %bb.ab, %bb.aa
-  %4 = add i16 %i.bz, 1
   %i.cm = getelementptr inbounds nuw [32 x i8], ptr %spec.select31.i.i, i64 %.sroa.510.0.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cm, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.f, i64 32, i1 false), !alias.scope !575, !noalias !568
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
@@ -608,9 +609,9 @@ bb.bc:                                            ; preds = %bb.az
   %i.ed = add nuw nsw i16 %i.dz, 1
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dp, i64 360 ; 2 uses
   %i.ef = add nuw nsw i64 %i.dx, 1                ; 7 uses
-  %.not.i.i32.not.i = icmp ult i16 %i.dw, %i.dz
+  %6 = icmp ugt i16 %i.dz, %i.dw
   %i.eg = getelementptr inbounds nuw [24 x i8], ptr %i.ee, i64 %i.dx ; 3 uses
-  br i1 %.not.i.i32.not.i, label %bb.be, label %bb.bd
+  br i1 %6, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.eg, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false), !noalias !586

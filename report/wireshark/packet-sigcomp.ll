@@ -205,13 +205,17 @@ bb.a:
   store i16 0, ptr %i.b, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   %i.d = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef 0)
-  %i.e = and i32 %i.d, 65535                      ; 4 uses
+  %i.e = and i32 %i.d, 65535                      ; 3 uses
   %.not878 = icmp eq i32 %i.e, 0
-  br i1 %.not878, label %.loopexit862, label %.lr.ph877
+  br i1 %.not878, label %.loopexit862, label %.lr.ph875
 
-.lr.ph877:                                        ; preds = %bb.a, %.loopexit
-  %.0876 = phi i32 [ %i.g, %.loopexit ], [ 0, %bb.a ]
-  %.0826875 = phi i32 [ %.5, %.loopexit ], [ 0, %bb.a ] ; 5 uses
+.lr.ph875:                                        ; preds = %bb.a
+  %4 = add nsw i32 %i.e, -1                       ; 2 uses
+  br label %.lr.ph877
+
+.lr.ph877:                                        ; preds = %.lr.ph875, %.loopexit
+  %.0876 = phi i32 [ 0, %.lr.ph875 ], [ %i.g, %.loopexit ]
+  %.0826875 = phi i32 [ 0, %.lr.ph875 ], [ %.5, %.loopexit ] ; 5 uses
   %i.f = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.0826875)
   %i.g = add i32 %.0876, 1                        ; 3 uses
   %i.h = add nsw i32 %.0826875, %3                ; 10 uses
@@ -614,8 +618,8 @@ bb.bi:                                            ; preds = %bb.bg
   br label %.loopexit
 
 bb.bj:                                            ; preds = %proto_item_set_generated.exit
-  %.not = icmp sgt i32 %i.e, %i.r
-  br i1 %.not, label %bb.bl, label %bb.bk
+  %5 = icmp slt i32 %4, %i.r
+  br i1 %5, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
   %i.aae = tail call ptr @proto_tree_add_expert(ptr noundef %2, ptr noundef %1, ptr noundef @ei_sigcomp_all_remaining_parameters_zero, ptr noundef %0, i32 noundef 0, i32 noundef -1) ; 0 uses
@@ -629,8 +633,8 @@ bb.bl:                                            ; preds = %bb.bj
   %i.aaj = load i16, ptr %i.b, align 2
   %i.aak = zext i16 %i.aaj to i32
   %i.aal = tail call ptr @proto_tree_add_uint(ptr noundef %2, i32 noundef %i.aai, ptr noundef %0, i32 noundef %i.aag, i32 noundef %i.aah, i32 noundef %i.aak) ; 0 uses
-  %.not834 = icmp sgt i32 %i.e, %i.aaf
-  br i1 %.not834, label %bb.bn, label %bb.bm
+  %6 = icmp slt i32 %4, %i.aaf
+  br i1 %6, label %bb.bm, label %bb.bn
 
 bb.bm:                                            ; preds = %bb.bl
   %i.aam = add nsw i32 %i.aaf, -1

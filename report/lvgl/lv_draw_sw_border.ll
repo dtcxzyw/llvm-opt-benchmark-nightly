@@ -202,11 +202,12 @@ bb.ak:                                            ; preds = %bb.ak, %.lr.ph.i
   br i1 %or.cond19.i, label %bb.al, label %.loopexit200.i
 
 bb.al:                                            ; preds = %.loopexit201.i
-  %i.gd = load i32, ptr %i.cl, align 4, !tbaa !32 ; 2 uses
+  %i.gd = load i32, ptr %i.cl, align 4, !tbaa !32
   %i.ge = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
+  %.2203.i = add nsw i32 %i.gd, 1                 ; 2 uses
   %i.gf = load i32, ptr %i.ge, align 4, !tbaa !32
-  %.not192.not203.i = icmp slt i32 %i.gd, %i.gf
-  br i1 %.not192.not203.i, label %.lr.ph205.i, label %.loopexit200.i
+  %.not192204.i = icmp sgt i32 %.2203.i, %i.gf
+  br i1 %.not192204.i, label %.loopexit200.i, label %.lr.ph205.i
 
 .lr.ph205.i:                                      ; preds = %bb.al
   %i.gg = getelementptr inbounds nuw i8, ptr %7, i64 4
@@ -215,18 +216,18 @@ bb.al:                                            ; preds = %.loopexit201.i
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.am, %.lr.ph205.i
-  %.2.in204.i = phi i32 [ %i.gd, %.lr.ph205.i ], [ %.2.i, %bb.am ]
-  %.2.i = add nsw i32 %.2.in204.i, 1              ; 5 uses
-  store i32 %.2.i, ptr %i.gg, align 4, !tbaa !31
-  store i32 %.2.i, ptr %i.gh, align 4, !tbaa !32
+  %.2.in204.i = phi i32 [ %.2203.i, %.lr.ph205.i ], [ %.2.i, %bb.am ] ; 4 uses
+  store i32 %.2.in204.i, ptr %i.gg, align 4, !tbaa !31
+  store i32 %.2.in204.i, ptr %i.gh, align 4, !tbaa !32
   call void @lv_memset(ptr noundef %i.bw, i8 noundef zeroext -1, i64 noundef %i.gi) #5
   %i.gj = load i32, ptr %7, align 4, !tbaa !33
-  %i.gk = call i32 @lv_draw_sw_mask_apply(ptr noundef nonnull %i.a, ptr noundef %i.bw, i32 noundef %i.gj, i32 noundef %.2.i, i32 noundef %i.fp) #5
+  %i.gk = call i32 @lv_draw_sw_mask_apply(ptr noundef nonnull %i.a, ptr noundef %i.bw, i32 noundef %i.gj, i32 noundef %.2.in204.i, i32 noundef %i.fp) #5
   store i32 %i.gk, ptr %i.de, align 8, !tbaa !38
   call void @lv_draw_sw_blend(ptr noundef nonnull %0, ptr noundef nonnull %4) #5
+  %.2.i = add nsw i32 %.2.in204.i, 1              ; 2 uses
   %i.gl = load i32, ptr %i.ge, align 4, !tbaa !32
-  %.not192.not.i = icmp slt i32 %.2.i, %i.gl
-  br i1 %.not192.not.i, label %bb.am, label %.loopexit200.i, !llvm.loop !10
+  %.not192.i = icmp sgt i32 %.2.i, %i.gl
+  br i1 %.not192.i, label %.loopexit200.i, label %bb.am, !llvm.loop !10
 
 .loopexit200.i:                                   ; preds = %bb.am, %bb.al, %.loopexit201.i, %bb.ah
   %i.gm = load i32, ptr %3, align 4, !tbaa !33
@@ -276,11 +277,12 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph207.i
   br i1 %or.cond23.i, label %bb.aq, label %.loopexit.i
 
 bb.aq:                                            ; preds = %.loopexit199.i
-  %i.hf = load i32, ptr %i.cl, align 4, !tbaa !32 ; 2 uses
+  %i.hf = load i32, ptr %i.cl, align 4, !tbaa !32
   %i.hg = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
+  %.4209.i = add nsw i32 %i.hf, 1                 ; 2 uses
   %i.hh = load i32, ptr %i.hg, align 4, !tbaa !32
-  %.not193.not208.i = icmp slt i32 %i.hf, %i.hh
-  br i1 %.not193.not208.i, label %.lr.ph210.i, label %.loopexit.i
+  %.not193210.i = icmp sgt i32 %.4209.i, %i.hh
+  br i1 %.not193210.i, label %.loopexit.i, label %.lr.ph210.i
 
 .lr.ph210.i:                                      ; preds = %bb.aq
   %i.hi = getelementptr inbounds nuw i8, ptr %7, i64 4
@@ -289,18 +291,18 @@ bb.aq:                                            ; preds = %.loopexit199.i
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.ar, %.lr.ph210.i
-  %.4.in209.i = phi i32 [ %i.hf, %.lr.ph210.i ], [ %.4.i, %bb.ar ]
-  %.4.i = add nsw i32 %.4.in209.i, 1              ; 5 uses
-  store i32 %.4.i, ptr %i.hi, align 4, !tbaa !31
-  store i32 %.4.i, ptr %i.hj, align 4, !tbaa !32
+  %.4.in209.i = phi i32 [ %.4209.i, %.lr.ph210.i ], [ %.4.i, %bb.ar ] ; 4 uses
+  store i32 %.4.in209.i, ptr %i.hi, align 4, !tbaa !31
+  store i32 %.4.in209.i, ptr %i.hj, align 4, !tbaa !32
   call void @lv_memset(ptr noundef %i.bw, i8 noundef zeroext -1, i64 noundef %i.hk) #5
   %i.hl = load i32, ptr %7, align 4, !tbaa !33
-  %i.hm = call i32 @lv_draw_sw_mask_apply(ptr noundef nonnull %i.a, ptr noundef %i.bw, i32 noundef %i.hl, i32 noundef %.4.i, i32 noundef %i.gr) #5
+  %i.hm = call i32 @lv_draw_sw_mask_apply(ptr noundef nonnull %i.a, ptr noundef %i.bw, i32 noundef %i.hl, i32 noundef %.4.in209.i, i32 noundef %i.gr) #5
   store i32 %i.hm, ptr %i.de, align 8, !tbaa !38
   call void @lv_draw_sw_blend(ptr noundef nonnull %0, ptr noundef nonnull %4) #5
+  %.4.i = add nsw i32 %.4.in209.i, 1              ; 2 uses
   %i.hn = load i32, ptr %i.hg, align 4, !tbaa !32
-  %.not193.not.i = icmp slt i32 %.4.i, %i.hn
-  br i1 %.not193.not.i, label %bb.ar, label %.loopexit.i, !llvm.loop !12
+  %.not193.i = icmp sgt i32 %.4.i, %i.hn
+  br i1 %.not193.i, label %.loopexit.i, label %bb.ar, !llvm.loop !12
 
 .loopexit.i:                                      ; preds = %bb.ar, %bb.ag, %bb.aq, %.loopexit199.i, %.loopexit200.i, %bb.aa
   call void @lv_draw_sw_mask_free_param(ptr noundef nonnull %5) #5

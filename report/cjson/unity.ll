@@ -204,7 +204,6 @@ bb.j:                                             ; preds = %bb.h
 .critedge.preheader119:                           ; preds = %.lr.ph106, %.critedge.preheader
   %.1.lcssa153 = phi i32 [ %spec.select77, %.critedge.preheader ], [ %i.as, %.lr.ph106 ]
   %.062.lcssa151 = phi i32 [ %i.ak, %.critedge.preheader ], [ %i.at, %.lr.ph106 ] ; 2 uses
-  %1 = sext i32 %.062.lcssa151 to i64
   br label %.critedge
 
 .lr.ph106:                                        ; preds = %._crit_edge, %.lr.ph106
@@ -219,8 +218,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %or.cond79, label %.lr.ph106, label %.critedge.preheader119
 
 .preheader80:                                     ; preds = %.critedge
-  %2 = trunc nuw i64 %indvars.iv.next to i32
-  %i.ax = icmp sgt i32 %2, 0
+  %i.ax = icmp sgt i32 %1, 0
   br i1 %i.ax, label %.lr.ph114.preheader, label %._crit_edge115
 
 .lr.ph114.preheader:                              ; preds = %.preheader80
@@ -228,7 +226,7 @@ bb.j:                                             ; preds = %bb.h
   br label %.lr.ph114
 
 .critedge:                                        ; preds = %.critedge.preheader119, %.critedge
-  %indvars.iv = phi i64 [ 0, %.critedge.preheader119 ], [ %indvars.iv.next, %.critedge ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.critedge.preheader119 ], [ %indvars.iv.next, %.critedge ] ; 2 uses
   %.2110 = phi i32 [ %.1.lcssa153, %.critedge.preheader119 ], [ %i.bd, %.critedge ] ; 3 uses
   %i.az = srem i32 %.2110, 10
   %i.ba = trunc nsw i32 %i.az to i8
@@ -239,8 +237,9 @@ bb.j:                                             ; preds = %bb.h
   %i.bd = sdiv i32 %.2110, 10
   %i.be = add nsw i32 %.2110, -10
   %i.bf = icmp ult i32 %i.be, -19
-  %3 = icmp slt i64 %indvars.iv, %1
-  %i.bg = select i1 %i.bf, i1 true, i1 %3
+  %1 = trunc nuw i64 %indvars.iv.next to i32      ; 2 uses
+  %2 = icmp sge i32 %.062.lcssa151, %1
+  %i.bg = select i1 %i.bf, i1 true, i1 %2
   br i1 %i.bg, label %.critedge, label %.preheader80
 
 .lr.ph114:                                        ; preds = %.lr.ph114.preheader, %bb.l

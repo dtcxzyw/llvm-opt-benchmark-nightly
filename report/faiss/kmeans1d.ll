@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %.lr.ph107, %._crit_
   %i.bk = phi i64 [ %i.s, %.lr.ph107 ], [ %i.di, %._crit_edge ]
   %i.bl = phi ptr [ %i.o, %.lr.ph107 ], [ %i.de, %._crit_edge ]
   %.044106 = phi i64 [ 0, %.lr.ph107 ], [ %i.dc, %._crit_edge ] ; 3 uses
-  %.045105 = phi i64 [ 0, %.lr.ph107 ], [ %.043, %._crit_edge ] ; 3 uses
+  %.045105 = phi i64 [ 0, %.lr.ph107 ], [ %.043, %._crit_edge ] ; 2 uses
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %.044106 ; 2 uses
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !17 ; 3 uses
   %i.bo = load ptr, ptr %i.j, align 8, !tbaa !24
@@ -307,8 +307,9 @@ bb.l:                                             ; preds = %bb.k
 _ZNKSt8functionIFfllEEclEll.exit:                 ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %.not.not100 = icmp slt i64 %.045105, %.043
-  br i1 %.not.not100, label %.lr.ph104, label %._crit_edge
+  %.099 = add nsw i64 %.045105, 1                 ; 2 uses
+  %.not100 = icmp sgt i64 %.099, %.043
+  br i1 %.not100, label %._crit_edge, label %.lr.ph104
 
 ._crit_edge:                                      ; preds = %bb.p, %_ZNKSt8functionIFfllEEclEll.exit
   %.041.lcssa = phi i64 [ %i.cx, %_ZNKSt8functionIFfllEEclEll.exit ], [ %.142, %bb.p ]
@@ -325,12 +326,11 @@ _ZNKSt8functionIFfllEEclEll.exit:                 ; preds = %bb.l
   br i1 %i.dj, label %bb.f, label %._crit_edge108, !llvm.loop !73
 
 .lr.ph104:                                        ; preds = %_ZNKSt8functionIFfllEEclEll.exit, %bb.p
-  %.0103.in = phi i64 [ %.0103, %bb.p ], [ %.045105, %_ZNKSt8functionIFfllEEclEll.exit ]
+  %.0103.in = phi i64 [ %.0, %bb.p ], [ %.099, %_ZNKSt8functionIFfllEEclEll.exit ] ; 3 uses
   %.040102 = phi float [ %.1, %bb.p ], [ %i.da, %_ZNKSt8functionIFfllEEclEll.exit ] ; 2 uses
   %.041101 = phi i64 [ %.142, %bb.p ], [ %i.cx, %_ZNKSt8functionIFfllEEclEll.exit ]
-  %.0103 = add nsw i64 %.0103.in, 1               ; 4 uses
   %i.dk = load ptr, ptr %1, align 8, !tbaa !19
-  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %.0103
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %.0103.in
   %i.dm = load i64, ptr %i.dl, align 8, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -360,7 +360,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.dr = load ptr, ptr %1, align 8, !tbaa !19
-  %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %.0103
+  %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %.0103.in
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !17
   br label %bb.p
 
@@ -372,8 +372,9 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.142 = phi i64 [ %i.dt, %bb.o ], [ %.041101, %bb.n ] ; 2 uses
   %.1 = phi float [ %i.dp, %bb.o ], [ %.040102, %bb.n ]
-  %exitcond.not = icmp eq i64 %.0103, %.043
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph104, !llvm.loop !74
+  %.0 = add nsw i64 %.0103.in, 1                  ; 2 uses
+  %.not = icmp sgt i64 %.0, %.043
+  br i1 %.not, label %._crit_edge, label %.lr.ph104, !llvm.loop !74
 
 .body70:                                          ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNSt10_HashtableIlSt4pairIKllESaIS2_ENSt8__detail10_Select1stESt8equal_toIlESt4hashIlENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit22.i.i, %_ZNSt10_HashtableIlSt4pairIKllESaIS2_ENSt8__detail10_Select1stESt8equal_toIlESt4hashIlENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit22.i.i66
   %.pn55 = phi { ptr, i32 } [ %i.ct, %_ZNSt10_HashtableIlSt4pairIKllESaIS2_ENSt8__detail10_Select1stESt8equal_toIlESt4hashIlENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit22.i.i66 ], [ %i.as, %_ZNSt10_HashtableIlSt4pairIKllESaIS2_ENSt8__detail10_Select1stESt8equal_toIlESt4hashIlENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit22.i.i ], [ %lpad.loopexit.split-lp165, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]

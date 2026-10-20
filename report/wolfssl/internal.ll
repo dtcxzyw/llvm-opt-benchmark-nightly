@@ -205,11 +205,10 @@ bb.a:
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
   %unroll_iter = and i64 %wide.trip.count.i, 254
-  %invariant.gep = getelementptr i8, ptr %1, i64 %i.h
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.1, %.lr.ph.i ] ; 5 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.1, %.lr.ph.i ] ; 4 uses
   %.020.i = phi i8 [ %i.p, %.lr.ph.preheader.i.new ], [ %i.ag, %.lr.ph.i ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -224,13 +223,14 @@ bb.a:
   %i.aa = and i8 %i.z, %.0..0..0..0..0..0..i
   %i.ab = or i8 %i.aa, %.020.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %indvars.iv.next.i.neg = xor i64 %indvars.iv.i, -1
+  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %6 = icmp samesign ult i64 %indvars.iv.i, %i.s
+  %6 = icmp samesign ule i64 %indvars.iv.next.i, %i.s
   %i.ac = sext i1 %6 to i8
   store volatile i8 %i.ac, ptr %i.e, align 1, !tbaa !52
   %.0..0..0..0..0..0..i.1 = load volatile i8, ptr %i.e, align 1, !tbaa !52
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv.next.i.neg
+  %7 = sub nsw i64 %i.h, %indvars.iv.next.i
+  %gep = getelementptr inbounds i8, ptr %1, i64 %7
   %i.ad = load i8, ptr %gep, align 1, !tbaa !52
   %i.ae = xor i8 %i.ad, %i.j
   %i.af = and i8 %i.ae, %.0..0..0..0..0..0..i.1
@@ -633,7 +633,9 @@ bb.bc:                                            ; preds = %bb.bb
 .lr.ph.i.i:                                       ; preds = %bb.bc
   %i.iq = xor i32 %i.ip, -1
   %i.ir = zext i8 %i.io to i64
-  %invariant.umin.i.i = call i64 @llvm.umin.i64(i64 %i.im, i64 255)
+  %2 = add nsw i64 %i.im, -1
+  %invariant.umin.i.i = call i64 @llvm.umin.i64(i64 %2, i64 254)
+  %3 = add nuw nsw i64 %invariant.umin.i.i, 1
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bd, %.lr.ph.i.i
@@ -664,7 +666,7 @@ bb.bd:                                            ; preds = %bb.bd, %.lr.ph.i.i
   %i.jk = or i8 %i.jj, %.05968.i.i                ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
-  %exitcond.not.i = icmp eq i64 %indvars.iv.i.i, %invariant.umin.i.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.i.i, %3
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i.i, label %bb.bd, !llvm.loop !438
 
 ._crit_edge.loopexit.i.i:                         ; preds = %bb.bd

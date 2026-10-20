@@ -204,7 +204,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.d = load i64, ptr %i.c, align 8, !tbaa !25   ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !19   ; 7 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !19   ; 5 uses
   %i.g = sdiv i64 %i.f, 2                         ; 11 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.i = load i64, ptr %i.h, align 8, !tbaa !23   ; 3 uses
@@ -222,16 +222,19 @@ bb.a:
   br i1 %i.t, label %.preheader.lr.ph, label %._crit_edge154
 
 .preheader.lr.ph:                                 ; preds = %bb.a
+  %3 = add i64 %i.f, 1                            ; 3 uses
   %factor.op.mul = mul i64 %i.d, %i.g
-  %.not136 = icmp slt i64 %i.f, 1
-  %i.u = shl i64 %i.f, 1
+  %4 = icmp sgt i64 %i.f, 0
+  %i.u = shl nsw i64 %3, 1
+  %5 = add nsw i64 %i.u, -2
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 64
   %.reass = shl i64 %factor.op.mul, 4
   %i.x = add nsw i64 %i.g, -1                     ; 4 uses
   %i.y = icmp sgt i64 %i.f, 5
   %i.z = shl nuw nsw i64 %i.g, 1                  ; 3 uses
-  %i.aa = add i64 %i.f, -1
+  %smax = tail call i64 @llvm.smax.i64(i64 %3, i64 5)
+  %i.aa = add nsw i64 %smax, -2
   %i.ab = lshr i64 %i.aa, 2                       ; 2 uses
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %i.ad = add nuw i64 %i.i, 2305843009213693951
@@ -316,7 +319,7 @@ bb.a:
   %i.ct = shufflevector <2 x ptr> %i.bc, <2 x ptr> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %i.cu = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %xtraiter = and i64 %i.cu, 7                    ; 3 uses
-  %3 = icmp ult i64 %i.f, 29
+  %6 = icmp slt i64 %3, 30
   %unroll_iter = and i64 %i.cu, 9223372036854775800
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod282 = icmp ne i64 %xtraiter, 0
@@ -399,10 +402,10 @@ bb.a:
   %.0153 = phi ptr [ %1, %.preheader.lr.ph ], [ %i.ld, %bb.c ] ; 12 uses
   %.0126152 = phi ptr [ %2, %.preheader.lr.ph ], [ %i.le, %bb.c ] ; 15 uses
   %.0130151 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.lc, %bb.c ]
-  br i1 %.not136, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %4, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  br i1 %3, label %.lr.ph.epil.preheader, label %.lr.ph
+  br i1 %6, label %.lr.ph.epil.preheader, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.0127138 = phi i64 [ %i.gz, %.lr.ph ], [ 1, %.lr.ph.preheader ] ; 9 uses
@@ -495,7 +498,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %.preheader
   %.0128.lcssa = phi i64 [ 0, %.preheader ], [ %i.ac, %.lr.ph.epil ], [ %i.ac, %._crit_edge.loopexit.unr-lcssa ]
   %.0127.lcssa = phi i64 [ 1, %.preheader ], [ %i.gz, %._crit_edge.loopexit.unr-lcssa ], [ %i.hf, %.lr.ph.epil ]
-  %i.hg = sub nsw i64 %i.u, %.0127.lcssa          ; 2 uses
+  %i.hg = sub i64 %5, %.0127.lcssa                ; 2 uses
   %i.hh = icmp sgt i64 %i.hg, 0
   br i1 %i.hh, label %.lr.ph143, label %._crit_edge144
 

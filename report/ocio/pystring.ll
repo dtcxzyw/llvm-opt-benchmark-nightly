@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !23   ; 12 uses
-  %i.e = trunc i64 %i.d to i32                    ; 9 uses
+  %i.e = trunc i64 %i.d to i32                    ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.g = load i64, ptr %i.f, align 8, !tbaa !23   ; 3 uses
   %i.h = and i64 %i.g, 4294967295
@@ -242,35 +242,36 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %.critedge.loopexit.split.loop.exit, %bb.b
-  %.150 = phi i32 [ 0, %bb.b ], [ %i.p, %.critedge.loopexit.split.loop.exit ], [ %i.e, %bb.d ] ; 6 uses
+  %.150 = phi i32 [ 0, %bb.b ], [ %i.p, %.critedge.loopexit.split.loop.exit ], [ %i.e, %bb.d ] ; 3 uses
   %.not63 = icmp eq i32 %2, 0
   br i1 %.not63, label %.critedge2, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.critedge
   %sext99 = shl i64 %i.d, 32
-  %i.q = ashr exact i64 %sext99, 32               ; 2 uses
+  %i.q = ashr exact i64 %sext99, 32               ; 3 uses
   %i.r = sext i32 %.150 to i64                    ; 2 uses
-  %smin92 = tail call i32 @llvm.smin.i32(i32 %.150, i32 %i.e) ; 2 uses
-  %.not64.not118 = icmp sgt i64 %i.q, %i.r
-  br i1 %.not64.not118, label %.lr.ph120.preheader, label %.critedge2
+  %indvars.iv.next91114 = add nsw i64 %i.q, -1    ; 2 uses
+  %.not64115 = icmp slt i64 %indvars.iv.next91114, %i.r
+  br i1 %.not64115, label %.critedge2.loopexit.split.loop.exit108, label %.lr.ph120.preheader
 
 .lr.ph120.preheader:                              ; preds = %.preheader.preheader
   %i.s = load ptr, ptr %1, align 8, !tbaa !20
   br label %.lr.ph120
 
 .preheader:                                       ; preds = %.lr.ph120
-  %.not64.not = icmp sgt i64 %indvars.iv.next91, %i.r
-  br i1 %.not64.not, label %.lr.ph120, label %.critedge2, !llvm.loop !73
+  %indvars.iv.next91 = add nsw i64 %indvars.iv90119, -1 ; 2 uses
+  %.not64 = icmp slt i64 %indvars.iv.next91, %i.r
+  br i1 %.not64, label %.critedge2.loopexit.split.loop.exit108, label %.lr.ph120, !llvm.loop !73
 
 .lr.ph120:                                        ; preds = %.lr.ph120.preheader, %.preheader
-  %indvars.iv90119 = phi i64 [ %indvars.iv.next91, %.preheader ], [ %i.q, %.lr.ph120.preheader ] ; 2 uses
-  %indvars.iv.next91 = add nsw i64 %indvars.iv90119, -1 ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %indvars.iv.next91
+  %indvars.iv90119 = phi i64 [ %indvars.iv.next91, %.preheader ], [ %indvars.iv.next91114, %.lr.ph120.preheader ] ; 4 uses
+  %indvars.iv90116 = phi i64 [ %indvars.iv90119, %.preheader ], [ %i.q, %.lr.ph120.preheader ]
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %indvars.iv90119
   %i.u = load i8, ptr %i.t, align 1, !tbaa !21
   %i.v = sext i8 %i.u to i32
   %i.w = tail call i32 @isspace(i32 noundef %i.v) #23
   %.not65 = icmp eq i32 %i.w, 0
-  br i1 %.not65, label %.critedge2.loopexit.split.loop.exit108, label %.preheader, !llvm.loop !73
+  br i1 %.not65, label %..critedge2.loopexit_crit_edge, label %.preheader, !llvm.loop !73
 
 bb.e:                                             ; preds = %bb.a
   %i.x = load ptr, ptr %3, align 8, !tbaa !20     ; 2 uses
@@ -305,7 +306,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.critedge4
 
 .critedge4:                                       ; preds = %bb.g, %.critedge4.loopexit.split.loop.exit, %bb.e
-  %.352 = phi i32 [ 0, %bb.e ], [ %i.af, %.critedge4.loopexit.split.loop.exit ], [ %i.e, %bb.g ] ; 6 uses
+  %.352 = phi i32 [ 0, %bb.e ], [ %i.af, %.critedge4.loopexit.split.loop.exit ], [ %i.e, %bb.g ] ; 3 uses
   %.not57 = icmp eq i32 %2, 0
   br i1 %.not57, label %.critedge2, label %.preheader67
 
@@ -313,41 +314,50 @@ bb.g:                                             ; preds = %bb.f
   %sext59 = shl i64 %i.g, 32
   %i.ag = ashr exact i64 %sext59, 32
   %sext98 = shl i64 %i.d, 32
-  %i.ah = ashr exact i64 %sext98, 32              ; 2 uses
+  %i.ah = ashr exact i64 %sext98, 32              ; 3 uses
   %i.ai = sext i32 %.352 to i64                   ; 2 uses
-  %smin = tail call i32 @llvm.smin.i32(i32 %.352, i32 %i.e) ; 2 uses
-  %.not58.not115 = icmp sgt i64 %i.ah, %i.ai
-  br i1 %.not58.not115, label %.lr.ph117.preheader, label %.critedge2
+  %indvars.iv.next83107 = add nsw i64 %i.ah, -1   ; 2 uses
+  %.not58108 = icmp slt i64 %indvars.iv.next83107, %i.ai
+  br i1 %.not58108, label %.critedge2.loopexit100.split.loop.exit, label %.lr.ph117.preheader
 
 .lr.ph117.preheader:                              ; preds = %.preheader67
   %i.aj = load ptr, ptr %1, align 8, !tbaa !20
   br label %.lr.ph117
 
 bb.h:                                             ; preds = %.lr.ph117
-  %.not58.not = icmp sgt i64 %indvars.iv.next83, %i.ai
-  br i1 %.not58.not, label %.lr.ph117, label %.critedge2, !llvm.loop !75
+  %indvars.iv.next83 = add nsw i64 %indvars.iv82116, -1 ; 2 uses
+  %.not58 = icmp slt i64 %indvars.iv.next83, %i.ai
+  br i1 %.not58, label %.critedge2.loopexit100.split.loop.exit, label %.lr.ph117, !llvm.loop !75
 
 .lr.ph117:                                        ; preds = %.lr.ph117.preheader, %bb.h
-  %indvars.iv82116 = phi i64 [ %indvars.iv.next83, %bb.h ], [ %i.ah, %.lr.ph117.preheader ] ; 2 uses
-  %indvars.iv.next83 = add nsw i64 %indvars.iv82116, -1 ; 3 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %indvars.iv.next83
+  %indvars.iv82116 = phi i64 [ %indvars.iv.next83, %bb.h ], [ %indvars.iv.next83107, %.lr.ph117.preheader ] ; 4 uses
+  %indvars.iv82109 = phi i64 [ %indvars.iv82116, %bb.h ], [ %i.ah, %.lr.ph117.preheader ]
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %indvars.iv82116
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !21
   %i.am = sext i8 %i.al to i32
   %i.an = tail call noundef ptr @memchr(ptr noundef %i.x, i32 noundef %i.am, i64 noundef %i.ag) #23
   %.not60 = icmp eq ptr %i.an, null
-  br i1 %.not60, label %.critedge2.loopexit100.split.loop.exit, label %bb.h, !llvm.loop !75
+  br i1 %.not60, label %..critedge2.loopexit99_crit_edge, label %bb.h, !llvm.loop !75
 
-.critedge2.loopexit.split.loop.exit108:           ; preds = %.lr.ph120
-  %i.ao = trunc nsw i64 %indvars.iv90119 to i32
+..critedge2.loopexit_crit_edge:                   ; preds = %.lr.ph120
+  br label %.critedge2.loopexit.split.loop.exit108, !llvm.loop !73
+
+.critedge2.loopexit.split.loop.exit108:           ; preds = %.preheader, %..critedge2.loopexit_crit_edge, %.preheader.preheader
+  %indvars.iv90.lcssa = phi i64 [ %i.q, %.preheader.preheader ], [ %indvars.iv90116, %..critedge2.loopexit_crit_edge ], [ %indvars.iv90119, %.preheader ]
+  %i.ao = trunc nsw i64 %indvars.iv90.lcssa to i32
   br label %.critedge2
 
-.critedge2.loopexit100.split.loop.exit:           ; preds = %.lr.ph117
-  %i.ap = trunc nsw i64 %indvars.iv82116 to i32
+..critedge2.loopexit99_crit_edge:                 ; preds = %.lr.ph117
+  br label %.critedge2.loopexit100.split.loop.exit, !llvm.loop !75
+
+.critedge2.loopexit100.split.loop.exit:           ; preds = %bb.h, %..critedge2.loopexit99_crit_edge, %.preheader67
+  %indvars.iv82.lcssa = phi i64 [ %indvars.iv82109, %..critedge2.loopexit99_crit_edge ], [ %i.ah, %.preheader67 ], [ %indvars.iv82116, %bb.h ]
+  %i.ap = trunc nsw i64 %indvars.iv82.lcssa to i32
   br label %.critedge2
 
-.critedge2:                                       ; preds = %bb.h, %.preheader, %.preheader67, %.preheader.preheader, %.critedge2.loopexit100.split.loop.exit, %.critedge2.loopexit.split.loop.exit108, %.critedge4, %.critedge
-  %.4 = phi i32 [ %.150, %.critedge2.loopexit.split.loop.exit108 ], [ %.150, %.critedge ], [ %.352, %.critedge4 ], [ %.352, %.critedge2.loopexit100.split.loop.exit ], [ %.150, %.preheader.preheader ], [ %.352, %.preheader67 ], [ %.150, %.preheader ], [ %.352, %bb.h ] ; 3 uses
-  %.3 = phi i32 [ %i.ao, %.critedge2.loopexit.split.loop.exit108 ], [ %i.e, %.critedge ], [ %i.e, %.critedge4 ], [ %i.ap, %.critedge2.loopexit100.split.loop.exit ], [ %smin92, %.preheader.preheader ], [ %smin, %.preheader67 ], [ %smin92, %.preheader ], [ %smin, %bb.h ] ; 2 uses
+.critedge2:                                       ; preds = %.critedge2.loopexit100.split.loop.exit, %.critedge2.loopexit.split.loop.exit108, %.critedge4, %.critedge
+  %.4 = phi i32 [ %.150, %.critedge2.loopexit.split.loop.exit108 ], [ %.150, %.critedge ], [ %.352, %.critedge4 ], [ %.352, %.critedge2.loopexit100.split.loop.exit ] ; 3 uses
+  %.3 = phi i32 [ %i.ao, %.critedge2.loopexit.split.loop.exit108 ], [ %i.e, %.critedge ], [ %i.e, %.critedge4 ], [ %i.ap, %.critedge2.loopexit100.split.loop.exit ] ; 2 uses
   %i.aq = icmp eq i32 %.4, 0
   %i.ar = icmp eq i32 %.3, %i.e
   %or.cond = and i1 %i.aq, %i.ar

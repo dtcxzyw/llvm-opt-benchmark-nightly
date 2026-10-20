@@ -205,6 +205,7 @@ _ZNSt5dequeIN4cvc58internal6theory2eq14MergeCandidateESaIS4_EE9pop_frontEv.exit:
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 712
   %sext = shl i64 %.pre-phi236, 32
   %i.ao = ashr exact i64 %sext, 32
+  %3 = add nsw i64 %i.ao, -1
   %i.ap = sext i32 %i.ah to i64
   br label %bb.h
 
@@ -238,9 +239,8 @@ _ZSt8_DestroyIPN4cvc58internal6theory2eq14EqualityEngine8EqualityES5_EvT_S7_RSaI
   br label %_ZNSt6vectorIN4cvc58internal6theory2eq14EqualityEngine8EqualityESaIS5_EE6resizeEm.exit
 
 bb.h:                                             ; preds = %.lr.ph160, %_ZN4cvc58internal6theory2eq14EqualityEngine9undoMergeERNS2_12EqualityNodeES5_j.exit
-  %indvars.iv = phi i64 [ %i.ao, %.lr.ph160 ], [ %indvars.iv.next, %_ZN4cvc58internal6theory2eq14EqualityEngine9undoMergeERNS2_12EqualityNodeES5_j.exit ]
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv.next ; 2 uses
+  %indvars.iv = phi i64 [ %3, %.lr.ph160 ], [ %indvars.iv.next, %_ZN4cvc58internal6theory2eq14EqualityEngine9undoMergeERNS2_12EqualityNodeES5_j.exit ] ; 2 uses
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv ; 2 uses
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !719 ; 2 uses
   %.not66.a = icmp eq i32 %i.ax, -1
   br i1 %.not66.a, label %_ZN4cvc58internal6theory2eq14EqualityEngine9undoMergeERNS2_12EqualityNodeES5_j.exit, label %bb.i
@@ -295,8 +295,9 @@ bb.j:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %.not15.i, label %_ZN4cvc58internal6theory2eq14EqualityEngine9undoMergeERNS2_12EqualityNodeES5_j.exit, label %bb.j, !llvm.loop !21
 
 _ZN4cvc58internal6theory2eq14EqualityEngine9undoMergeERNS2_12EqualityNodeES5_j.exit: ; preds = %._crit_edge.i, %bb.h
-  %.not.not = icmp sgt i64 %indvars.iv.next, %i.ap
-  br i1 %.not.not, label %bb.h, label %._crit_edge161.loopexit, !llvm.loop !710
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %.not = icmp slt i64 %indvars.iv.next, %i.ap
+  br i1 %.not, label %._crit_edge161.loopexit, label %bb.h, !llvm.loop !710
 
 _ZNSt6vectorIN4cvc58internal6theory2eq14EqualityEngine8EqualityESaIS5_EE6resizeEm.exit: ; preds = %bb.e, %bb.f, %bb.g, %_ZSt8_DestroyIPN4cvc58internal6theory2eq14EqualityEngine8EqualityES5_EvT_S7_RSaIT0_E.exit.i.i
   %i.bx = phi i32 [ %.pre210, %bb.e ], [ %i.aq, %bb.f ], [ %i.aq, %bb.g ], [ %i.aq, %_ZSt8_DestroyIPN4cvc58internal6theory2eq14EqualityEngine8EqualityES5_EvT_S7_RSaIT0_E.exit.i.i ]

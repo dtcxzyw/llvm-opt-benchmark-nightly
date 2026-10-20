@@ -204,7 +204,7 @@ _RNvMs7_NtCs50pZefIA5Ye_8triomphe3arcINtB5_3ArcINtNtB7_6header11HeaderSliceINtBL
 define hidden { ptr, i64 } @_RNvMNtCs50pZefIA5Ye_8triomphe6headerINtNtB4_3arc3ArcINtB2_11HeaderSliceINtB2_16HeaderWithLengthuESINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB1D_9predicate20ExistentialPredicateB2q_EEEE21from_header_and_sliceCsiU5vK8fN4ZC_11ide_assists(i64 noundef %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) %1, i64 noundef range(i64 0, 230584300921369396) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %.not.i.i = icmp eq i64 %2, 230584300921369395
+  %.not.i.i = icmp samesign ugt i64 %2, 230584300921369394
   br i1 %.not.i.i, label %bb.b, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultTNtNtNtB4_5alloc6layout6LayoutjENtBK_11LayoutErrorE6unwrapCsiU5vK8fN4ZC_11ide_assists.exit.i.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -307,7 +307,7 @@ _RNvMs7_NtCs50pZefIA5Ye_8triomphe3arcINtB5_3ArcINtNtB7_6header11HeaderSliceINtBL
 define hidden { ptr, i64 } @_RNvMNtCs50pZefIA5Ye_8triomphe6headerINtNtB4_3arc3ArcINtB2_11HeaderSliceINtB2_16HeaderWithLengthuESINtNtCs8K4cjrcxBsw_6hir_ty3mir14ProjectionElemINtCsbq3eHDLgq0Z_8la_arena3IdxNtB1B_5LocalEEEE21from_header_and_sliceCsiU5vK8fN4ZC_11ide_assists(i64 noundef %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) %1, i64 noundef range(i64 0, 384307168202282326) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %.not.i.i = icmp eq i64 %2, 384307168202282325
+  %.not.i.i = icmp samesign ugt i64 %2, 384307168202282324
   br i1 %.not.i.i, label %bb.b, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultTNtNtNtB4_5alloc6layout6LayoutjENtBK_11LayoutErrorE6unwrapCsiU5vK8fN4ZC_11ide_assists.exit.i.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -349,7 +349,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultTNtNtNtB4_5alloc6layout6LayoutjENtBK_11LayoutErrorE6unwrapCsiU5vK8fN4ZC_11ide_assists.exit.i: ; preds = %bb.a
-  %.not.i.i.i = icmp samesign ugt i64 %2, 9223372036854775784
+  %3 = add nuw nsw i64 %2, 15
+  %4 = and i64 %3, 9223372036854775800
+  %.not.i.i.i = icmp samesign ugt i64 %4, 9223372036854775792
   br i1 %.not.i.i.i, label %bb.c, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultTNtNtNtB4_5alloc6layout6LayoutjENtBK_11LayoutErrorE6unwrapCsiU5vK8fN4ZC_11ide_assists.exit.i.i.i
 
 bb.c:                                             ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultTNtNtNtB4_5alloc6layout6LayoutjENtBK_11LayoutErrorE6unwrapCsiU5vK8fN4ZC_11ide_assists.exit.i
@@ -357,8 +359,8 @@ bb.c:                                             ; preds = %_RNvMNtCshzWfHUSfYa
   unreachable
 
 _RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultTNtNtNtB4_5alloc6layout6LayoutjENtBK_11LayoutErrorE6unwrapCsiU5vK8fN4ZC_11ide_assists.exit.i.i.i: ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultTNtNtNtB4_5alloc6layout6LayoutjENtBK_11LayoutErrorE6unwrapCsiU5vK8fN4ZC_11ide_assists.exit.i
-  %i.b = add nuw nsw i64 %2, 23
-  %i.c = and i64 %i.b, 9223372036854775800        ; 2 uses
+  %i.b = add nuw i64 %2, 23
+  %i.c = and i64 %i.b, -8                         ; 2 uses
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34
   %i.d = tail call noundef align 8 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef %i.c, i64 noundef 8) #34 ; 5 uses
   %i.e = icmp eq ptr %i.d, null
@@ -585,7 +587,7 @@ _RNvMs7_NtCs50pZefIA5Ye_8triomphe3arcINtB5_3ArcINtNtB7_6header11HeaderSliceINtBL
 define hidden { ptr, i64 } @_RNvMNtCs50pZefIA5Ye_8triomphe6headerINtNtB4_3arc3ArcINtB2_11HeaderSliceINtB2_16HeaderWithLengthuESTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtB2G_2ty2TyEEE21from_header_and_sliceCsiU5vK8fN4ZC_11ide_assists(i64 noundef %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) %1, i64 noundef range(i64 0, 384307168202282326) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %.not.i.i = icmp eq i64 %2, 384307168202282325
+  %.not.i.i = icmp samesign ugt i64 %2, 384307168202282324
   br i1 %.not.i.i, label %bb.b, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultTNtNtNtB4_5alloc6layout6LayoutjENtBK_11LayoutErrorE6unwrapCsiU5vK8fN4ZC_11ide_assists.exit.i.i.i
 
 bb.b:                                             ; preds = %bb.a

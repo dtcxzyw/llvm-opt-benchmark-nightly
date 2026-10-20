@@ -202,7 +202,7 @@ bb.a:
   %i.e = shl nsw i32 %i.d, 4                      ; 3 uses
   %i.f = mul nsw i32 %i.e, %1                     ; 2 uses
   %i.g = zext i32 %i.f to i64                     ; 2 uses
-  %i.h = zext i32 %i.e to i64
+  %i.h = zext i32 %i.e to i64                     ; 2 uses
   %i.i = add nuw nsw i64 %i.g, %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load i32, ptr %i.j, align 8, !tbaa !22, !noalias !150 ; 3 uses
@@ -276,6 +276,9 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN8rawspeed12_GLOBAL__N_121pana_cs6_page_decoderILi12EEC2ENS_10ByteStreamE.exit: ; preds = %bb.c
+  %indvars.iv.next75 = add nuw nsw i64 %indvars.iv74, 16 ; 2 uses
+  %5 = icmp samesign ule i64 %indvars.iv.next75, %i.h
+  tail call void @llvm.assume(i1 %5)
   %i.ap = getelementptr inbounds nuw i8, ptr %i.r, i64 %indvars.iv74 ; 2 uses
   %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i = load i32, ptr %i.ap, align 1
   %i.aq = load <4 x i32>, ptr %i.ap, align 1      ; 2 uses
@@ -408,7 +411,6 @@ bb.p:                                             ; preds = %bb.d
   unreachable
 
 _ZNK8rawspeed23PanasonicV6Decompressor15decompressBlockIL_ZNS0_14TwelveBitBlockEEEEvRNS_10ByteStreamEii.exit: ; preds = %bb.o
-  %indvars.iv.next75 = add nuw nsw i64 %indvars.iv74, 16
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
@@ -438,7 +440,7 @@ bb.a:
   %i.e = shl nsw i32 %i.d, 4                      ; 3 uses
   %i.f = mul nsw i32 %i.e, %1                     ; 2 uses
   %i.g = zext i32 %i.f to i64                     ; 2 uses
-  %i.h = zext i32 %i.e to i64
+  %i.h = zext i32 %i.e to i64                     ; 2 uses
   %i.i = add nuw nsw i64 %i.g, %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load i32, ptr %i.j, align 8, !tbaa !22, !noalias !158 ; 3 uses
@@ -513,6 +515,9 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN8rawspeed12_GLOBAL__N_121pana_cs6_page_decoderILi14EEC2ENS_10ByteStreamE.exit: ; preds = %bb.c
+  %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 16 ; 2 uses
+  %5 = icmp samesign ule i64 %indvars.iv.next70, %i.h
+  tail call void @llvm.assume(i1 %5)
   %i.aq = getelementptr inbounds nuw i8, ptr %i.r, i64 %indvars.iv69 ; 3 uses
   %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i = load i32, ptr %i.aq, align 1 ; 3 uses
   %i.ar = lshr i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i, 14
@@ -672,7 +677,6 @@ bb.o:                                             ; preds = %bb.d
   unreachable
 
 _ZNK8rawspeed23PanasonicV6Decompressor15decompressBlockIL_ZNS0_16FourteenBitBlockEEEEvRNS_10ByteStreamEii.exit: ; preds = %_ZNK8rawspeed10Array2DRefItEclEii.exit.i
-  %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 16
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18

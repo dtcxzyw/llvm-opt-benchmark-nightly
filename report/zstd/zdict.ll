@@ -205,19 +205,20 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   store i32 0, ptr %i.ft, align 4, !tbaa !8
-  %7 = add i32 %indvars.iv376.i.i.i, -7           ; 3 uses
-  %xtraiter180 = and i32 %7, 1
+  %wide.trip.count378.i.i.i = zext i32 %indvars.iv376.i.i.i to i64
+  %7 = add nsw i64 %wide.trip.count378.i.i.i, -7  ; 3 uses
+  %xtraiter180 = and i64 %7, 1
   %i.qa = icmp eq i32 %indvars.iv376.i.i.i, 8
   br i1 %i.qa, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.ak
-  %unroll_iter184 = and i32 %7, -2
+  %unroll_iter184 = and i64 %7, -2
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.al, %.new
   %i.qb = phi i32 [ 0, %.new ], [ %i.qo, %bb.al ]
   %indvars.iv373.i.i.i = phi i64 [ 7, %.new ], [ %indvars.iv.next374.i.i.i.1, %bb.al ] ; 5 uses
-  %niter185 = phi i32 [ 0, %.new ], [ %niter185.next.1, %bb.al ]
+  %niter185 = phi i64 [ 0, %.new ], [ %niter185.next.1, %bb.al ]
   %i.qc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv373.i.i.i
   %i.qd = load i32, ptr %i.qc, align 4, !tbaa !8
   %i.qe = trunc i64 %indvars.iv373.i.i.i to i32
@@ -236,18 +237,18 @@ bb.al:                                            ; preds = %bb.al, %.new
   %i.qp = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next374.i.i.i
   store i32 %i.qo, ptr %i.qp, align 4, !tbaa !8
   %indvars.iv.next374.i.i.i.1 = add nuw nsw i64 %indvars.iv373.i.i.i, 2 ; 2 uses
-  %niter185.next.1 = add i32 %niter185, 2         ; 2 uses
-  %niter185.ncmp.1 = icmp eq i32 %niter185.next.1, %unroll_iter184
+  %niter185.next.1 = add i64 %niter185, 2         ; 2 uses
+  %niter185.ncmp.1 = icmp eq i64 %niter185.next.1, %unroll_iter184
   br i1 %niter185.ncmp.1, label %.unr-lcssa, label %bb.al, !llvm.loop !74
 
 .unr-lcssa:                                       ; preds = %bb.al
-  %lcmp.mod182.not = icmp eq i32 %xtraiter180, 0
+  %lcmp.mod182.not = icmp eq i64 %xtraiter180, 0
   br i1 %lcmp.mod182.not, label %bb.am, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %bb.ak
   %.epil.init = phi i32 [ 0, %bb.ak ], [ %i.qo, %.unr-lcssa ]
   %indvars.iv373.i.i.i.epil.init = phi i64 [ 7, %bb.ak ], [ %indvars.iv.next374.i.i.i.1, %.unr-lcssa ] ; 3 uses
-  %lcmp.mod183 = trunc i32 %7 to i1
+  %lcmp.mod183 = trunc i64 %7 to i1
   tail call void @llvm.assume(i1 %lcmp.mod183)
   %i.qq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv373.i.i.i.epil.init
   %i.qr = load i32, ptr %i.qq, align 4, !tbaa !8

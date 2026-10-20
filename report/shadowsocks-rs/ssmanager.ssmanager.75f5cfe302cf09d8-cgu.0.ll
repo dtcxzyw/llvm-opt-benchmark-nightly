@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cz, i64 16 ; 2 uses
   %i.dr = load i64, ptr %i.dq, align 8, !alias.scope !737, !noundef !80 ; 4 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.dt = load i64, ptr %i.ds, align 8, !alias.scope !738, !noundef !80 ; 7 uses
+  %i.dt = load i64, ptr %i.ds, align 8, !alias.scope !738, !noundef !80 ; 6 uses
   %i.du = icmp ult i64 %i.dt, 128102389400760776
   tail call void @llvm.assume(i1 %i.du)
   %i.dv = load i64, ptr %i.dn, align 8, !range !82, !alias.scope !739, !noundef !80
@@ -229,10 +229,10 @@ _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecINtNtNtCs7ewmRfXve8r_4http6header3ma
   store i64 %i.as, ptr %.sroa.6.0..sroa_idx.i26, align 8, !noalias !741
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dz, i64 32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx.i, ptr noundef nonnull readonly align 8 dereferenceable(40) %2, i64 40, i1 false), !noalias !737
-  %i.ea = add nuw nsw i64 %i.dt, 1                ; 2 uses
+  %i.ea = add nuw nsw i64 %i.dt, 1                ; 3 uses
   store i64 %i.ea, ptr %i.ds, align 8, !alias.scope !739
-  %.not.i = icmp ugt i64 %i.dr, %i.dt
-  br i1 %.not.i, label %bb.ai, label %bb.ah
+  %3 = icmp ult i64 %i.dr, %i.ea
+  br i1 %3, label %bb.ah, label %bb.ai
 
 bb.af:                                            ; preds = %bb.ac
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -635,7 +635,7 @@ bb.ae:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.111.i.i.i.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.051.i.i.i.i.i)
   %i.ey = getelementptr inbounds nuw i8, ptr %.sroa.12.40.copyload.i.i.i, i64 714 ; 4 uses
-  %i.ez = load i16, ptr %i.ey, align 2, !noalias !28750, !noundef !80 ; 3 uses
+  %i.ez = load i16, ptr %i.ey, align 2, !noalias !28750, !noundef !80 ; 2 uses
   %i.fa = icmp ult i16 %i.ez, 11
   br i1 %i.fa, label %bb.ag, label %bb.af
 
@@ -645,11 +645,12 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.ae
   %i.fc = zext nneg i16 %i.ez to i64              ; 2 uses
+  %1 = add nuw nsw i64 %i.fc, 1                   ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !28751)
   %i.fd = add i64 %.sroa.14.sroa.4.0.copyload.i.i.i, 1 ; 3 uses
-  %.not.i.i.i.i.i6.i.i = icmp ugt i64 %i.fd, %i.fc
+  %.not.i.i.i.i.i6.i.i = icmp ugt i64 %1, %i.fd
   %i.fe = getelementptr inbounds nuw [32 x i8], ptr %.sroa.12.40.copyload.i.i.i, i64 %.sroa.14.sroa.4.0.copyload.i.i.i ; 7 uses
-  br i1 %.not.i.i.i.i.i6.i.i, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i, label %bb.ah
+  br i1 %.not.i.i.i.i.i6.i.i, label %bb.ah, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i
 
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertNtNtNtCsf3Ta7LF998c_4core3net11socket_addr10SocketAddrECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i: ; preds = %bb.ag
   %.sroa.8.0..sroa_idx27.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.fe, i64 2
@@ -679,7 +680,6 @@ _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fe, i64 24
   store i64 %.sroa.7.sroa.8.0.copyload18.i.i.i, ptr %i.fn, align 4, !alias.scope !28757, !noalias !28758
   %i.fo = getelementptr inbounds nuw i8, ptr %.sroa.12.40.copyload.i.i.i, i64 352
-  %1 = add nuw nsw i16 %i.ez, 1
   %i.fp = getelementptr inbounds nuw [32 x i8], ptr %i.fo, i64 %.sroa.14.sroa.4.0.copyload.i.i.i ; 4 uses
   store ptr %i.cq, ptr %i.fp, align 8, !alias.scope !28759, !noalias !28755
   %.sroa.667.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
@@ -688,7 +688,8 @@ _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   store i64 %i.ct, ptr %.sroa.868.0..sroa_idx.i.i, align 8, !alias.scope !28759, !noalias !28755
   %.sroa.1069.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.fp, i64 24
   store i32 %i.cu, ptr %.sroa.1069.0..sroa_idx.i.i, align 8, !alias.scope !28759, !noalias !28755
-  store i16 %1, ptr %i.ey, align 2, !noalias !28755
+  %2 = trunc nuw nsw i64 %1 to i16
+  store i16 %2, ptr %i.ey, align 2, !noalias !28755
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.051.i.i.i.i.i)
   br label %bb.aq
 
@@ -760,6 +761,7 @@ _RINvMsV_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   %i.gk = getelementptr inbounds nuw i8, ptr %spec.select37.i.i.i.i.i.i.a, i64 714 ; 2 uses
   %i.gl = load i16, ptr %i.gk, align 2, !noalias !28766, !noundef !80 ; 2 uses
   %i.gm = zext i16 %i.gl to i64                   ; 2 uses
+  %3 = add i16 %i.gl, 1
   call void @llvm.experimental.noalias.scope.decl(metadata !28767)
   %.not.i14.not.i.i.i.i.i.i = icmp ult i64 %.sroa.510.0.i.i.i.i.i.i, %i.gm
   %i.gn = getelementptr inbounds nuw [32 x i8], ptr %spec.select37.i.i.i.i.i.i.a, i64 %.sroa.510.0.i.i.i.i.i.i ; 7 uses
@@ -794,7 +796,6 @@ _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gn, i64 24
   store i64 %.sroa.7.sroa.8.0.copyload18.i.i.i, ptr %i.gx, align 4, !alias.scope !28771, !noalias !28772
   %i.gy = getelementptr inbounds nuw i8, ptr %spec.select37.i.i.i.i.i.i.a, i64 352
-  %2 = add i16 %i.gl, 1
   %i.gz = getelementptr inbounds nuw [32 x i8], ptr %i.gy, i64 %.sroa.510.0.i.i.i.i.i.i ; 4 uses
   store ptr %i.cq, ptr %i.gz, align 8, !alias.scope !28773, !noalias !28766
   %.sroa.672.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.gz, i64 8
@@ -803,7 +804,7 @@ _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   store i64 %i.ct, ptr %.sroa.873.0..sroa_idx.i.i, align 8, !alias.scope !28773, !noalias !28766
   %.sroa.1074.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.gz, i64 24
   store i32 %i.cu, ptr %.sroa.1074.0..sroa_idx.i.i, align 8, !alias.scope !28773, !noalias !28766
-  store i16 %2, ptr %i.gk, align 2, !noalias !28766
+  store i16 %3, ptr %i.gk, align 2, !noalias !28766
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.111.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.051.i.i.i.i.i, i64 56, i1 false), !noalias !28774
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.051.i.i.i.i.i)
   %.not.i.i.i5.i.i = icmp eq i32 %.sroa.552.32.copyload.i.i.i.i.i, -1
@@ -923,9 +924,9 @@ bb.ay:                                            ; preds = %bb.aw
   %i.ia = zext nneg i16 %i.hx to i64              ; 4 uses
   %i.ib = add nuw nsw i16 %i.hx, 1
   %i.ic = add nuw nsw i64 %i.hv, 1                ; 7 uses
-  %.not.i.i30.not.i.i.i.i.i = icmp ult i16 %i.hu, %i.hx
+  %4 = icmp ugt i16 %i.hx, %i.hu
   %i.id = getelementptr inbounds nuw [32 x i8], ptr %i.hr, i64 %i.hv ; 3 uses
-  br i1 %.not.i.i30.not.i.i.i.i.i, label %bb.az, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i
+  br i1 %4, label %bb.az, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i
 
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i: ; preds = %bb.ay
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.id, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.11.sroa.0.i.i.i.i.i, i64 32, i1 false), !noalias !28784
@@ -1328,6 +1329,7 @@ bb.dg:                                            ; preds = %bb.df
   br i1 %i.wb, label %bb.dm, label %bb.dj
 
 bb.dh:                                            ; preds = %bb.df
+  %5 = add nuw nsw i16 %i.vl, 1
   %.not.i.i.i.i.not.i.i.i = icmp samesign ult i64 %.sroa.4.0.i.ph.i.i.i.i.i83, %i.vm
   %i.wc = getelementptr inbounds nuw [8 x i8], ptr %i.vj, i64 %.sroa.4.0.i.ph.i.i.i.i.i83 ; 3 uses
   br i1 %.not.i.i.i.i.not.i.i.i, label %bb.di, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i
@@ -1351,7 +1353,6 @@ bb.di:                                            ; preds = %bb.dh
   br label %_RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalECsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i.i
 
 _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalECsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i.i: ; preds = %bb.di, %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i
-  %3 = add nuw nsw i16 %i.vl, 1
   %i.wk = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0.i.i.i.i.i67, i64 %.sroa.4.0.i.ph.i.i.i.i.i83 ; 4 uses
   store ptr %i.so, ptr %i.wk, align 8, !alias.scope !28860, !noalias !28857
   %.sroa.6.0..sroa_idx.i.i114 = getelementptr inbounds nuw i8, ptr %i.wk, i64 8
@@ -1360,7 +1361,7 @@ _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   store i64 %i.sr, ptr %.sroa.8.0..sroa_idx.i.i115, align 8, !alias.scope !28860, !noalias !28857
   %.sroa.1057.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.wk, i64 24
   store i32 %i.ss, ptr %.sroa.1057.0..sroa_idx.i.i, align 8, !alias.scope !28860, !noalias !28857
-  store i16 %3, ptr %i.vz, align 2, !noalias !28857
+  store i16 %5, ptr %i.vz, align 2, !noalias !28857
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.i.sroa.0.i.i.i.i.i)
   br label %bb.dr
 
@@ -1431,6 +1432,7 @@ _RINvMsV_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   %i.xg = getelementptr inbounds nuw i8, ptr %spec.select38.i.i.i.i.i.i, i64 450 ; 2 uses
   %i.xh = load i16, ptr %i.xg, align 2, !noalias !28868, !noundef !80 ; 2 uses
   %i.xi = zext i16 %i.xh to i64                   ; 2 uses
+  %6 = add i16 %i.xh, 1
   %i.xj = getelementptr inbounds nuw i8, ptr %spec.select38.i.i.i.i.i.i, i64 360 ; 2 uses
   %.not.i14.not.i.i.i.i.i.i87 = icmp ult i64 %.sroa.510.0.i.i.i.i.i.i85, %i.xi
   %i.xk = getelementptr inbounds nuw [8 x i8], ptr %i.xj, i64 %.sroa.510.0.i.i.i.i.i.i85 ; 3 uses
@@ -1455,7 +1457,6 @@ bb.dp:                                            ; preds = %_RINvMsV_NtNtNtCsgC
   br label %_RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i
 
 _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantENtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i: ; preds = %bb.dp, %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i15.i.i.i.i.i.i
-  %4 = add i16 %i.xh, 1
   %i.xs = getelementptr inbounds nuw [32 x i8], ptr %spec.select38.i.i.i.i.i.i, i64 %.sroa.510.0.i.i.i.i.i.i85 ; 4 uses
   store ptr %i.so, ptr %i.xs, align 8, !alias.scope !28872, !noalias !28868
   %.sroa.660.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.xs, i64 8
@@ -1464,7 +1465,7 @@ _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   store i64 %i.sr, ptr %.sroa.861.0..sroa_idx.i.i, align 8, !alias.scope !28872, !noalias !28868
   %.sroa.1062.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.xs, i64 24
   store i32 %i.ss, ptr %.sroa.1062.0..sroa_idx.i.i, align 8, !alias.scope !28872, !noalias !28868
-  store i16 %4, ptr %i.xg, align 2, !noalias !28868
+  store i16 %6, ptr %i.xg, align 2, !noalias !28868
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.131.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.i.sroa.0.i.i.i.i.i, i64 24, i1 false), !noalias !28873
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.i.sroa.0.i.i.i.i.i)
   %.not.i.i.i7.i.i = icmp eq i32 %.sroa.12.i.sroa.4.0.copyload.i.i.i.i.i, -1
@@ -1572,9 +1573,9 @@ bb.dw:                                            ; preds = %.lr.ph.i.i.i.i.i88
   %i.ys = add nuw nsw i16 %i.yo, 1
   %i.yt = getelementptr inbounds nuw i8, ptr %i.yi, i64 360 ; 2 uses
   %i.yu = add nuw nsw i64 %i.ym, 1                ; 7 uses
-  %.not.i.i39.not.i.i.i.i.i = icmp ult i16 %i.yl, %i.yo
+  %7 = icmp ugt i16 %i.yo, %i.yl
   %i.yv = getelementptr inbounds nuw [8 x i8], ptr %i.yt, i64 %i.ym ; 3 uses
-  br i1 %.not.i.i39.not.i.i.i.i.i, label %bb.dx, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i110
+  br i1 %7, label %bb.dx, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i110
 
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i.i110: ; preds = %bb.dw
   store i64 %.sroa.11.0152.i.i.i.i.i, ptr %i.yv, align 8, !alias.scope !28885, !noalias !28886
@@ -1977,8 +1978,8 @@ bb.a:                                             ; preds = %_RNvXsi_NtCs5Xr050g
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = sub nuw i64 %i.ax, %i.ay                ; 2 uses
   %i.ba = udiv exact i64 %i.az, 24
-  %i.bb = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 3) ; 2 uses
-  %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
+  %i.bb = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 3)
+  %i.bc = add nuw nsw i64 %i.bb, 1                ; 3 uses
   %i.bd = mul i64 %i.bc, 24                       ; 3 uses
   %or.cond.i.i.i.i.i.i.i = icmp ugt i64 %i.az, 9223372036854775776
   br i1 %or.cond.i.i.i.i.i.i.i, label %bb.d, label %bb.b, !prof !177
@@ -2002,7 +2003,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i: ; preds = %bb.c, %bb.b
   %.sroa.10.0.i.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.b ], [ %i.bf, %bb.c ] ; 4 uses
   %.sroa.4.0.i.i.i.i.i.i = phi i64 [ 0, %bb.b ], [ %i.bc, %bb.c ] ; 2 uses
-  %0 = icmp samesign ult i64 %i.bb, %.sroa.4.0.i.i.i.i.i.i
+  %0 = icmp samesign ule i64 %i.bc, %.sroa.4.0.i.i.i.i.i.i
   tail call void @llvm.assume(i1 %0)
   %.sroa.49.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i.i.i.i.i, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.49.0..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i.i.i.i, i64 16, i1 false), !noalias !32342
@@ -2265,10 +2266,6 @@ bb.u:                                             ; preds = %_RINvMsk_NtCsgCecv3
   call fastcc void @_RNvXs_NtNtCsgCecv3eZDcN_5alloc3vec11spec_extendINtB6_3VecNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringEINtB4_10SpecExtendBT_QINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtB27_5array4iter8IntoIterRNtNtB8_6string6StringKj1_ENvYB3h_INtNtB27_7convert4IntoBT_E4intoEE11spec_extendCsa7TLgTh0CeG_9ssmanager(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ak, ptr noalias nofree noundef align 8 dereferenceable(24) %i.dq) #45, !noalias !32338
   br label %_RNvXs1_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtB5_6SpliceINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtB10_5array4iter8IntoIterRNtNtB9_6string6StringKj1_ENvYB2a_INtNtB10_7convert4IntoNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE4intoEENtNtNtB10_3ops4drop4Drop4dropCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i
 
-1:                                                ; preds = %_RNvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5array4iter8IntoIterRNtNtCsgCecv3eZDcN_5alloc6string6StringKj1_ENvYB1q_INtNtBb_7convert4IntoNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE4intoENtNtNtB9_6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.thread6.peel.i33.i.i.i.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !32375
-  br label %bb.y
-
 bb.v:                                             ; preds = %_RNvMs2_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtNtB7_5drain5DrainNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE9move_tailCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !32375
   call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #45, !noalias !32376
@@ -2304,8 +2301,8 @@ _RNvMs2_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtNtB7_5drain5DrainNtNtNtCs5Xr050g3D
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ea, ptr nonnull align 8 %i.dz, i64 %i.eb, i1 false), !noalias !32379
   store i64 2, ptr %.sroa.6.0..sroa_idx.i.i.i.i, align 8, !alias.scope !32380, !noalias !32364
   call void @llvm.experimental.noalias.scope.decl(metadata !32382)
-  %.not19.i24.i.i.not.not.i.i.i = icmp ugt i64 %.pre.i.i, 1
-  br i1 %.not19.i24.i.i.not.not.i.i.i, label %bb.v, label %_RNvMs2_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtNtB7_5drain5DrainNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE9move_tailCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i..lr.ph.i26.i.i.i.i_crit_edge.i
+  %.not19.i24.i.i.i.i.i = icmp ult i64 %.pre.i.i, 2
+  br i1 %.not19.i24.i.i.i.i.i, label %_RNvMs2_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtNtB7_5drain5DrainNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE9move_tailCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i..lr.ph.i26.i.i.i.i_crit_edge.i, label %bb.v
 
 _RNvMs2_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtNtB7_5drain5DrainNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE9move_tailCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i..lr.ph.i26.i.i.i.i_crit_edge.i: ; preds = %_RNvMs2_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtNtB7_5drain5DrainNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE9move_tailCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i
   %.val.i.peel.i29.i.i.i.i.pre.i = load ptr, ptr %.sroa.423.0..sroa_idx.i.i, align 8, !alias.scope !32383, !noalias !32384
@@ -2350,15 +2347,19 @@ _RNvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5array4it
   %i.ek = add i64 %i.ej, 1
   store i64 %i.ek, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !alias.scope !32363, !noalias !32381
   %exitcond.peel.not.i37.i.i.i.not.i.i = icmp eq i64 %i.ed, 0
-  br i1 %exitcond.peel.not.i37.i.i.i.not.i.i, label %_RNvXs1_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtB5_6SpliceINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtB10_5array4iter8IntoIterRNtNtB9_6string6StringKj1_ENvYB2a_INtNtB10_7convert4IntoNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE4intoEENtNtNtB10_3ops4drop4Drop4dropCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i, label %1
+  br i1 %exitcond.peel.not.i37.i.i.i.not.i.i, label %_RNvXs1_NtNtCsgCecv3eZDcN_5alloc3vec6spliceINtB5_6SpliceINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtB10_5array4iter8IntoIterRNtNtB9_6string6StringKj1_ENvYB2a_INtNtB10_7convert4IntoNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE4intoEENtNtNtB10_3ops4drop4Drop4dropCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i, label %.thread.i.i.i
+
+.thread.i.i.i:                                    ; preds = %_RNvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5array4iter8IntoIterRNtNtCsgCecv3eZDcN_5alloc6string6StringKj1_ENvYB1q_INtNtBb_7convert4IntoNtNtNtCs5Xr050g3D4S_3std3ffi6os_str8OsStringE4intoENtNtNtB9_6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.thread6.peel.i33.i.i.i.i.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !32375
+  br label %bb.y
 
 .loopexit.i40.i.i.i.i.i:                          ; preds = %bb.x
   call void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 1, i64 range(i64 0, -9223372036854775808) %.val2.i.peel.i30.i.i.i.i.i) #54, !noalias !32389
   unreachable
 
-bb.y:                                             ; preds = %bb.v, %1
-  %.val.i.i.i.i.i.neg25.i.i.i = phi i64 [ 0, %1 ], [ 1, %bb.v ]
-  %.sroa.10.0.i.i.i.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %1 ], [ %i.ds, %bb.v ]
+bb.y:                                             ; preds = %.thread.i.i.i, %bb.v
+  %.val.i.i.i.i.i.neg25.i.i.i = phi i64 [ 0, %.thread.i.i.i ], [ 1, %bb.v ]
+  %.sroa.10.0.i.i.i.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %.thread.i.i.i ], [ %i.ds, %bb.v ]
   store i64 %.val.i.i.i.i.i.neg25.i.i.i, ptr %i.ae, align 8, !noalias !32375
   %i.el = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
   store ptr %.sroa.10.0.i.i.i.i.i.i.i.i, ptr %i.el, align 8, !noalias !32375
@@ -2761,8 +2762,8 @@ bb.j:                                             ; preds = %_RNvXs3_NtNtNtCsgCe
   %gepdiff = add nsw i64 %.idx, -16
   %i.ax = lshr exact i64 %gepdiff, 4
   %i.ay = call i64 @llvm.umin.i64(i64 %i.ar, i64 %i.ax) ; 2 uses
-  %i.az = call i64 @llvm.umax.i64(i64 %i.ay, i64 3) ; 2 uses
-  %i.ba = add nuw nsw i64 %i.az, 1                ; 2 uses
+  %i.az = call i64 @llvm.umax.i64(i64 %i.ay, i64 3)
+  %i.ba = add nuw nsw i64 %i.az, 1                ; 3 uses
   %i.bb = mul i64 %i.ba, 48                       ; 3 uses
   %or.cond.i.i.i.i = icmp samesign ugt i64 %i.ay, 192153584101141161
   br i1 %or.cond.i.i.i.i, label %bb.m, label %bb.k, !prof !177
@@ -2786,7 +2787,7 @@ bb.m:                                             ; preds = %bb.l, %bb.j
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa7TLgTh0CeG_9ssmanager.exit.i.i: ; preds = %bb.l, %bb.k
   %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.k ], [ %i.bd, %bb.l ] ; 5 uses
   %.sroa.4.0.i.i.i = phi i64 [ 0, %bb.k ], [ %i.ba, %bb.l ] ; 2 uses
-  %4 = icmp samesign ult i64 %i.az, %.sroa.4.0.i.i.i
+  %4 = icmp samesign ule i64 %i.ba, %.sroa.4.0.i.i.i
   call void @llvm.assume(i1 %4)
   %.sroa.411.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i.i, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.411.0..sroa_idx.i.i, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.4.i.i, i64 30, i1 false), !noalias !32695
@@ -3189,6 +3190,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cq, label %bb.ad, label %bb.aa
 
 bb.y:                                             ; preds = %bb.w
+  %3 = add nuw nsw i16 %i.ca, 1
   %.not.i.i.i.i.not.i.i = icmp samesign ult i64 %.sroa.4.0.i.ph.i.i.i.i, %i.cb
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %.sroa.4.0.i.ph.i.i.i.i ; 2 uses
   br i1 %.not.i.i.i.i.not.i.i, label %bb.z, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i
@@ -3213,7 +3215,6 @@ bb.z:                                             ; preds = %bb.y
 _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalECsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i: ; preds = %bb.z, %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i
   store i64 %1, ptr %i.cr, align 8, !alias.scope !34267, !noalias !34268
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 96
-  %3 = add nuw nsw i16 %i.ca, 1
   %i.db = getelementptr inbounds nuw [1048 x i8], ptr %i.da, i64 %.sroa.4.0.i.ph.i.i.i.i ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.db, ptr noundef nonnull readonly align 8 dereferenceable(1032) %2, i64 1032, i1 false), !alias.scope !34270, !noalias !34271
   %.sroa.7.0..sroa_idx12.i = getelementptr inbounds nuw i8, ptr %i.db, i64 1032
@@ -3292,6 +3293,7 @@ _RINvMsV_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   %i.dy = getelementptr inbounds nuw i8, ptr %spec.select38.i.i.i.i.i, i64 11626 ; 2 uses
   %i.dz = load i16, ptr %i.dy, align 2, !noalias !34280, !noundef !80 ; 2 uses
   %i.ea = zext i16 %i.dz to i64                   ; 2 uses
+  %4 = add i16 %i.dz, 1
   %i.eb = getelementptr inbounds nuw i8, ptr %spec.select38.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i14.not.i.i.i.i.i = icmp ult i64 %.sroa.510.0.i.i.i.i.i, %i.ea
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.eb, i64 %.sroa.510.0.i.i.i.i.i ; 2 uses
@@ -3317,7 +3319,6 @@ bb.ag:                                            ; preds = %_RINvMsV_NtNtNtCsgC
 _RINvMsK_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantENtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i: ; preds = %bb.ag, %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i15.i.i.i.i.i
   store i64 %1, ptr %i.ec, align 8, !alias.scope !34282, !noalias !34280
   %i.el = getelementptr inbounds nuw i8, ptr %spec.select38.i.i.i.i.i, i64 96
-  %4 = add i16 %i.dz, 1
   %i.em = getelementptr inbounds nuw [1048 x i8], ptr %i.el, i64 %.sroa.510.0.i.i.i.i.i ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.em, ptr noundef nonnull readonly align 8 dereferenceable(1032) %2, i64 1032, i1 false), !alias.scope !34284, !noalias !34285
   %.sroa.7.0..sroa_idx10.i = getelementptr inbounds nuw i8, ptr %i.em, i64 1032
@@ -3429,9 +3430,9 @@ bb.an:                                            ; preds = %.lr.ph.i.i.i.i
   %i.fj = add nuw nsw i16 %i.ff, 1
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ez, i64 8 ; 2 uses
   %i.fl = add nuw nsw i64 %i.fd, 1                ; 7 uses
-  %.not.i.i39.not.i.i.i.i = icmp ult i16 %i.fc, %i.ff ; 2 uses
+  %5 = icmp ugt i16 %i.ff, %i.fc                  ; 2 uses
   %i.fm = getelementptr inbounds nuw [8 x i8], ptr %i.fk, i64 %i.fd ; 2 uses
-  br i1 %.not.i.i39.not.i.i.i.i, label %bb.ao, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i.i40.i.i.i.i
+  br i1 %5, label %bb.ao, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i.i40.i.i.i.i
 
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertyECsa7TLgTh0CeG_9ssmanager.exit.i.i40.i.i.i.i: ; preds = %bb.an
   tail call void @llvm.experimental.noalias.scope.decl(metadata !34299)
@@ -3460,7 +3461,7 @@ _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertTNtNtNtCs8U
   store i32 %.sroa.13.sroa.8.0143.i.i.i.i, ptr %.sroa.737.0..sroa_idx40.i.i.i.i, align 4, !alias.scope !34303, !noalias !34304
   %i.fw = add nuw nsw i64 %i.fi, 2                ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.ez, i64 11632 ; 8 uses
-  br i1 %.not.i.i39.not.i.i.i.i, label %bb.ap, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertINtNtNtCsf3Ta7LF998c_4core3ptr8non_null7NonNullINtB2_8LeafNodeyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantEEEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i
+  br i1 %5, label %bb.ap, label %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertINtNtNtCsf3Ta7LF998c_4core3ptr8non_null7NonNullINtB2_8LeafNodeyTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantEEEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i
 
 bb.ap:                                            ; preds = %_RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node12slice_insertTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net13packet_window18PacketWindowFilterNtNtCs5Xr050g3D4S_3std4time7InstantEECsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i
   %i.fy = getelementptr inbounds nuw [8 x i8], ptr %i.fx, i64 %i.fl
@@ -3863,7 +3864,7 @@ _RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsf
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.s, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsf3Ta7LF998c_4core6result6ResultNtNtNtCs2Z77Vc7pSLS_13hickory_proto2op12dns_response11DnsResponseNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorEE13poll_unparkedCsa7TLgTh0CeG_9ssmanager.exit.thread
-  %.sroa.05.0.i.i = phi i64 [ %i.aq, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsf3Ta7LF998c_4core6result6ResultNtNtNtCs2Z77Vc7pSLS_13hickory_proto2op12dns_response11DnsResponseNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorEE13poll_unparkedCsa7TLgTh0CeG_9ssmanager.exit.thread ], [ %.sroa.01.0.i.i.i1, %bb.s ] ; 4 uses
+  %.sroa.05.0.i.i = phi i64 [ %i.aq, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerINtNtCsf3Ta7LF998c_4core6result6ResultNtNtNtCs2Z77Vc7pSLS_13hickory_proto2op12dns_response11DnsResponseNtNtCsi1FNhPBS7PW_11hickory_net5error8NetErrorEE13poll_unparkedCsa7TLgTh0CeG_9ssmanager.exit.thread ], [ %.sroa.01.0.i.i.i1, %bb.s ] ; 3 uses
   %.not.i.i = icmp sgt i64 %.sroa.05.0.i.i, -1
   %i.ar = and i64 %.sroa.05.0.i.i, 9223372036854775807 ; 2 uses
   br i1 %.not.i.i, label %bb.u, label %bb.q
@@ -3877,8 +3878,8 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 bb.s:                                             ; preds = %bb.q
-  %i.as = add nsw i64 %.sroa.05.0.i.i, 1
-  %i.at = or i64 %i.as, -9223372036854775808
+  %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
+  %i.at = or disjoint i64 %i.as, -9223372036854775808
   %i.au = cmpxchg ptr %i.ap, i64 %.sroa.05.0.i.i, i64 %i.at seq_cst seq_cst, align 8, !noalias !38716 ; 2 uses
   %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.au, 1
   %.sroa.01.0.i.i.i1 = extractvalue { i64, i1 } %i.au, 0
@@ -3888,8 +3889,8 @@ bb.t:                                             ; preds = %bb.s
   %i.av = load ptr, ptr %1, align 8, !alias.scope !38712, !nonnull !80, !noundef !80 ; 4 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 48
   %i.ax = load i64, ptr %i.aw, align 8, !noalias !38717, !noundef !80
-  %.not.i = icmp ult i64 %i.ar, %i.ax
-  br i1 %.not.i, label %bb.v, label %bb.x
+  %3 = icmp ugt i64 %i.as, %i.ax
+  br i1 %3, label %bb.x, label %bb.v
 
 bb.u:                                             ; preds = %bb.p
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull readonly align 8 dereferenceable(176) %2, i64 176, i1 false), !alias.scope !38718
@@ -4292,7 +4293,7 @@ _RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.r, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i
-  %.sroa.05.0.i.i.i.i = phi i64 [ %i.ar, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i ], [ %.sroa.01.0.i.i.i1.i.i, %bb.r ] ; 4 uses
+  %.sroa.05.0.i.i.i.i = phi i64 [ %i.ar, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE13poll_unparkedCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i ], [ %.sroa.01.0.i.i.i1.i.i, %bb.r ] ; 3 uses
   %.not.i.i.i.i = icmp sgt i64 %.sroa.05.0.i.i.i.i, -1
   %i.as = and i64 %.sroa.05.0.i.i.i.i, 9223372036854775807 ; 2 uses
   br i1 %.not.i.i.i.i, label %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE8try_sendCsa7TLgTh0CeG_9ssmanager.exit.i, label %bb.p
@@ -4306,8 +4307,8 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 bb.r:                                             ; preds = %bb.p
-  %i.at = add nsw i64 %.sroa.05.0.i.i.i.i, 1
-  %i.au = or i64 %i.at, -9223372036854775808
+  %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
+  %i.au = or disjoint i64 %i.at, -9223372036854775808
   %i.av = cmpxchg ptr %i.aq, i64 %.sroa.05.0.i.i.i.i, i64 %i.au seq_cst seq_cst, align 8, !noalias !39102 ; 2 uses
   %.sroa.18.0.in.i.i.i.i.i = extractvalue { i64, i1 } %i.av, 1
   %.sroa.01.0.i.i.i1.i.i = extractvalue { i64, i1 } %i.av, 0
@@ -4317,8 +4318,8 @@ bb.s:                                             ; preds = %bb.r
   %i.aw = load ptr, ptr %i.g, align 8, !alias.scope !39103, !noalias !39090, !nonnull !80, !noundef !80 ; 4 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
   %i.ay = load i64, ptr %i.ax, align 8, !noalias !39104, !noundef !80
-  %.not.i.i.i = icmp ult i64 %i.as, %i.ay
-  br i1 %.not.i.i.i, label %bb.t, label %bb.v
+  %3 = icmp ugt i64 %i.at, %i.ay
+  br i1 %3, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE4parkCsa7TLgTh0CeG_9ssmanager.exit.i.i.i, %bb.s
   %.val.i2.i.i = phi ptr [ %.val.pre.i.i.i, %_RNvMsg_NtCslXgxf2tUV4p_15futures_channel4mpscINtB5_18BoundedSenderInnerNtNtCsi1FNhPBS7PW_11hickory_net4xfer17OneshotDnsRequestE4parkCsa7TLgTh0CeG_9ssmanager.exit.i.i.i ], [ %i.aw, %bb.s ] ; 2 uses

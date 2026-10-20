@@ -202,11 +202,12 @@ bb.f:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !61
   %i.y = tail call i32 @OPENSSL_sk_num(ptr noundef %i.x) #11 ; 2 uses
+  %1 = add nsw i32 %i.y, -1
   %.not7398 = icmp slt i32 %i.y, 1
   br i1 %.not7398, label %.loopexit95, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e, %bb.d, %bb.f
-  %.0122 = phi i32 [ %i.y, %bb.f ], [ 1, %bb.d ], [ 1, %bb.e ]
+  %.0122 = phi i32 [ %1, %bb.f ], [ 0, %bb.d ], [ 0, %bb.e ]
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 180 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
@@ -229,12 +230,12 @@ bb.g:                                             ; preds = %.lr.ph, %bb.ac
   br i1 %.not77, label %bb.h, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.g
-  %.pre = add nuw i32 %.06599, 1
+  %.pre = add nuw nsw i32 %.06599, 1
   br label %bb.ac
 
 bb.h:                                             ; preds = %bb.g
   %i.al = load ptr, ptr %i.aa, align 8, !tbaa !61
-  %i.am = add nuw i32 %.06599, 1                  ; 5 uses
+  %i.am = add nuw nsw i32 %.06599, 1              ; 5 uses
   %i.an = call ptr @OPENSSL_sk_value(ptr noundef %i.al, i32 noundef %i.am) #11 ; 2 uses
   store ptr %i.an, ptr %i.ac, align 8, !tbaa !115
   %i.ao = icmp eq ptr %i.an, null
@@ -413,8 +414,8 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %._crit_edge, %check_cert_ocsp_resp.exit.thread88, %bb.aa, %bb.ab, %bb.i
   %.pre-phi = phi i32 [ %.pre, %._crit_edge ], [ %i.am, %check_cert_ocsp_resp.exit.thread88 ], [ %i.am, %bb.aa ], [ %i.am, %bb.ab ], [ %i.am, %bb.i ] ; 2 uses
-  %exitcond.not = icmp eq i32 %.pre-phi, %.0122
-  br i1 %exitcond.not, label %.loopexit95, label %bb.g, !llvm.loop !180
+  %.not73 = icmp sgt i32 %.pre-phi, %.0122
+  br i1 %.not73, label %.loopexit95, label %bb.g, !llvm.loop !180
 
 .loopexit95:                                      ; preds = %bb.ac, %bb.f, %bb.b
   %or.cond5.not = and i1 %i.r, %i.l
@@ -446,12 +447,12 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %.not75100, label %.loopexit, label %.lr.ph102
 
 bb.ah:                                            ; preds = %.lr.ph102
-  %i.cq = add nuw i32 %.2101, 1
-  %exitcond107.not = icmp eq i32 %.2101, %.1
-  br i1 %exitcond107.not, label %.loopexit, label %.lr.ph102, !llvm.loop !181
+  %i.cq = add nuw nsw i32 %.2101, 1               ; 2 uses
+  %.not75 = icmp sgt i32 %i.cq, %.1
+  br i1 %.not75, label %.loopexit, label %.lr.ph102, !llvm.loop !181
 
 .lr.ph102:                                        ; preds = %bb.ag, %bb.ah
-  %.2101 = phi i32 [ %i.cq, %bb.ah ], [ %., %bb.ag ] ; 3 uses
+  %.2101 = phi i32 [ %i.cq, %bb.ah ], [ %., %bb.ag ] ; 2 uses
   store i32 %.2101, ptr %i.cp, align 4, !tbaa !60
   %i.cr = call fastcc i32 @check_cert_crl(ptr noundef nonnull %0)
   %.not76 = icmp eq i32 %i.cr, 0

@@ -204,6 +204,7 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %sext = shl i64 %i.g, 29
   %i.j = ashr i64 %sext, 32
+  %4 = add nsw i64 %i.j, -1
   %i.k = sext i32 %2 to i64
   br label %.lr.ph
 
@@ -216,14 +217,13 @@ bb.a:
   br label %.lr.ph28
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit
-  %indvars.iv = phi i64 [ %i.j, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit ]
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 4 uses
-  %i.l = trunc nsw i64 %indvars.iv.next to i32
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit ] ; 3 uses
+  %i.l = trunc nsw i64 %indvars.iv to i32
   %i.m = sub i32 %i.l, %2
   %i.n = zext i32 %i.m to i64
   %i.o = load ptr, ptr %1, align 8, !tbaa !83     ; 2 uses
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.n ; 2 uses
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.next ; 2 uses
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !67   ; 4 uses
   %i.s = load ptr, ptr %i.p, align 8, !tbaa !67
   %.not.i = icmp eq ptr %i.r, %i.s
@@ -278,8 +278,9 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit
 
 _ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit: ; preds = %.lr.ph, %bb.e, %bb.f, %bb.g
-  %.not.not = icmp sgt i64 %indvars.iv.next, %i.k
-  br i1 %.not.not, label %.lr.ph, label %.preheader, !llvm.loop !796
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %.not = icmp slt i64 %indvars.iv.next, %i.k
+  br i1 %.not, label %.preheader, label %.lr.ph, !llvm.loop !796
 
 ._crit_edge:                                      ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit, %.preheader
   ret void

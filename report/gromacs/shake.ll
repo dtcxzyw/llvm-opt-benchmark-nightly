@@ -205,14 +205,16 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS
 .peel.next.preheader:                             ; preds = %.loopexit.peel
   %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.an = load i32, ptr %i.am, align 4, !tbaa !17
-  %smax.peel = tail call i32 @llvm.smax.i32(i32 %i.an, i32 0)
+  %2 = add i32 %i.an, 1
+  %smax.peel = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %3 = add nsw i32 %smax.peel, -1
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %.loopexit
   %i.ao = phi ptr [ %i.br, %.loopexit ], [ %i.ak, %.peel.next.preheader ] ; 6 uses
   %i.ap = phi ptr [ %i.bs, %.loopexit ], [ %i.al, %.peel.next.preheader ] ; 5 uses
   %.pn = phi ptr [ %.037, %.loopexit ], [ %i.c, %.peel.next.preheader ] ; 3 uses
-  %.01836 = phi i32 [ %.2, %.loopexit ], [ %smax.peel, %.peel.next.preheader ] ; 3 uses
+  %.01836 = phi i32 [ %.2, %.loopexit ], [ %3, %.peel.next.preheader ] ; 3 uses
   %.01935 = phi i32 [ %i.bt, %.loopexit ], [ 1, %.peel.next.preheader ] ; 2 uses
   %.037 = getelementptr inbounds nuw i8, ptr %.pn, i64 12
   %i.aq = getelementptr inbounds nuw i8, ptr %.pn, i64 16
@@ -287,13 +289,16 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %bb.h, %_ZNSt6vector
   %i.bo = phi ptr [ %i.au, %bb.h ], [ %i.bi, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ]
   %i.bp = getelementptr inbounds nuw i8, ptr %.pn, i64 16
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !17
-  %smax = tail call i32 @llvm.smax.i32(i32 %.01836, i32 %i.bq)
+  %4 = add nuw nsw i32 %.01836, 1
+  %5 = add i32 %i.bq, 1
+  %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 %5)
+  %6 = add nsw i32 %smax, -1
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit, %.peel.next
   %i.br = phi ptr [ %i.ao, %.peel.next ], [ %i.bn, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 2 uses
   %i.bs = phi ptr [ %i.ap, %.peel.next ], [ %i.bo, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 2 uses
-  %.2 = phi i32 [ %.01836, %.peel.next ], [ %smax, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ]
+  %.2 = phi i32 [ %.01836, %.peel.next ], [ %6, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ]
   %i.bt = add nuw nsw i32 %.01935, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.bt, %i.i
   br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !61

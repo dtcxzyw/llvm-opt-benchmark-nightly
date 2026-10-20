@@ -205,7 +205,7 @@ define internal fastcc i64 @stringlib_adaptive_find(ptr noundef %0, i64 noundef 
   %i.b = add nsw i64 %3, -1                       ; 11 uses
   %i.c = getelementptr i8, ptr %2, i64 %i.b
   %i.d = load i8, ptr %i.c, align 1, !tbaa !22    ; 4 uses
-  %i.e = getelementptr i8, ptr %0, i64 %i.b
+  %i.e = getelementptr i8, ptr %0, i64 %i.b       ; 3 uses
   %n.vec = and i64 %i.b, -4                       ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -274,17 +274,18 @@ middle.block:                                     ; preds = %vector.body
   %.092148.us = phi i64 [ %i.bj, %bb.l ], [ 0, %.lr.ph151.split.us.preheader ] ; 13 uses
   %.096147.us = phi i64 [ %.298.us, %bb.l ], [ 0, %.lr.ph151.split.us.preheader ] ; 4 uses
   %.0101146.us = phi i64 [ %.2103.us, %bb.l ], [ 0, %.lr.ph151.split.us.preheader ] ; 6 uses
-  %i.af = getelementptr i8, ptr %i.e, i64 %.092148.us ; 3 uses
+  %i.af = getelementptr i8, ptr %i.e, i64 %.092148.us
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !22
   %i.ah = icmp eq i8 %i.ag, %i.d
   br i1 %i.ah, label %.preheader.us, label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph151.split.us
-  %.not118.not.us = icmp slt i64 %.092148.us, %i.a
-  br i1 %.not118.not.us, label %bb.b, label %bb.l
+  %8 = add nsw i64 %.092148.us, 1                 ; 2 uses
+  %.not118.us = icmp sgt i64 %8, %i.a
+  br i1 %.not118.us, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.ai = getelementptr i8, ptr %i.af, i64 1
+  %i.ai = getelementptr i8, ptr %i.e, i64 %8
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !22
   %i.ak = and i8 %i.aj, 63
   %i.al = zext nneg i8 %i.ak to i64
@@ -323,11 +324,12 @@ bb.e:                                             ; preds = %._crit_edge141.us
   br i1 %or.cond.us, label %.split.us, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %.not121.not.us = icmp slt i64 %.092148.us, %i.a
-  br i1 %.not121.not.us, label %bb.g, label %bb.h
+  %9 = add nsw i64 %.092148.us, 1                 ; 2 uses
+  %.not121.us = icmp sgt i64 %9, %i.a
+  br i1 %.not121.us, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ba = getelementptr i8, ptr %i.af, i64 1
+  %i.ba = getelementptr i8, ptr %i.e, i64 %9
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !22
   %i.bc = and i8 %i.bb, 63
   %i.bd = zext nneg i8 %i.bc to i64

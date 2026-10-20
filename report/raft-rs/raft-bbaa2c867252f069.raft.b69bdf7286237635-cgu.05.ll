@@ -133,21 +133,23 @@ _RNCNvMs0_NtCsfG1pxJcRFT5_4raft7trackerNtB7_15ProgressTracker10has_quorum0B9_.ex
   %.sroa.04.0.lcssa.ph = phi i64 [ 0, %bb.b ], [ %.sroa.04.1.us, %_RNCNvMs0_NtCsfG1pxJcRFT5_4raft7trackerNtB7_15ProgressTracker10has_quorum0B9_.exit.us ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.at = lshr i64 %i.d, 1
+  %2 = add nuw i64 %i.at, 1
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %_RNCNvMs0_NtCsfG1pxJcRFT5_4raft7trackerNtB7_15ProgressTracker10has_quorum0B9_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.au = lshr i64 %i.d, 1                        ; 2 uses
-  %.not11.not = icmp ugt i64 %.sroa.01.1, %i.au
-  br i1 %.not11.not, label %bb.g, label %bb.f
+  %i.au = lshr i64 %i.d, 1
+  %3 = add nuw i64 %i.au, 1                       ; 2 uses
+  %.not11 = icmp ult i64 %.sroa.01.1, %3
+  br i1 %.not11, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %i.av = phi i64 [ %i.at, %._crit_edge.thread ], [ %i.au, %._crit_edge ]
+  %i.av = phi i64 [ %2, %._crit_edge.thread ], [ %3, %._crit_edge ]
   %.sroa.01.0.lcssa31 = phi i64 [ 0, %._crit_edge.thread ], [ %.sroa.01.1, %._crit_edge ]
   %.sroa.04.0.lcssa30 = phi i64 [ %.sroa.04.0.lcssa.ph, %._crit_edge.thread ], [ %.sroa.04.1, %._crit_edge ]
   %i.aw = add i64 %.sroa.01.0.lcssa31, %.sroa.04.0.lcssa30
-  %.not12.not = icmp ule i64 %i.aw, %i.av
-  %. = zext i1 %.not12.not to i8
+  %.not12 = icmp ult i64 %i.aw, %i.av
+  %. = zext i1 %.not12 to i8
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge, %bb.f, %bb.a
@@ -262,21 +264,23 @@ _RNCNvMs0_NtCsfG1pxJcRFT5_4raft7trackerNtB7_15ProgressTracker11vote_result0B9_.e
   %.sroa.04.0.lcssa.ph = phi i64 [ 0, %bb.b ], [ %i.o, %_RNCNvMs0_NtCsfG1pxJcRFT5_4raft7trackerNtB7_15ProgressTracker11vote_result0B9_.exit.thread.us ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.au = lshr i64 %i.d, 1
+  %2 = add nuw i64 %i.au, 1
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.av = lshr i64 %i.d, 1                        ; 2 uses
-  %.not11.not = icmp ugt i64 %.sroa.01.1, %i.av
-  br i1 %.not11.not, label %bb.g, label %bb.f
+  %i.av = lshr i64 %i.d, 1
+  %3 = add nuw i64 %i.av, 1                       ; 2 uses
+  %.not11 = icmp ult i64 %.sroa.01.1, %3
+  br i1 %.not11, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %i.aw = phi i64 [ %i.au, %._crit_edge.thread ], [ %i.av, %._crit_edge ]
+  %i.aw = phi i64 [ %2, %._crit_edge.thread ], [ %3, %._crit_edge ]
   %.sroa.01.0.lcssa33 = phi i64 [ 0, %._crit_edge.thread ], [ %.sroa.01.1, %._crit_edge ]
   %.sroa.04.0.lcssa32 = phi i64 [ %.sroa.04.0.lcssa.ph, %._crit_edge.thread ], [ %.sroa.04.1, %._crit_edge ]
   %i.ax = add i64 %.sroa.01.0.lcssa33, %.sroa.04.0.lcssa32
-  %.not12.not = icmp ule i64 %i.ax, %i.aw
-  %. = zext i1 %.not12.not to i8
+  %.not12 = icmp ult i64 %i.ax, %i.aw
+  %. = zext i1 %.not12 to i8
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge, %bb.f, %bb.a
@@ -314,6 +318,7 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge.thread:                               ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.h = lshr i64 %i.d, 1
+  %2 = add nuw i64 %i.h, 1
   br label %bb.c
 
 .lr.ph:                                           ; preds = %bb.b, %bb.f
@@ -329,17 +334,18 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge:                                      ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.l = lshr i64 %i.d, 1                         ; 2 uses
-  %.not11.not = icmp ugt i64 %.sroa.01.1, %i.l
-  br i1 %.not11.not, label %bb.d, label %bb.c
+  %i.l = lshr i64 %i.d, 1
+  %3 = add nuw i64 %i.l, 1                        ; 2 uses
+  %.not11 = icmp ult i64 %.sroa.01.1, %3
+  br i1 %.not11, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %i.m = phi i64 [ %i.h, %._crit_edge.thread ], [ %i.l, %._crit_edge ]
+  %i.m = phi i64 [ %2, %._crit_edge.thread ], [ %3, %._crit_edge ]
   %.sroa.01.0.lcssa25 = phi i64 [ 0, %._crit_edge.thread ], [ %.sroa.01.1, %._crit_edge ]
   %.sroa.04.0.lcssa24 = phi i64 [ 0, %._crit_edge.thread ], [ %.sroa.04.1, %._crit_edge ]
   %i.n = add i64 %.sroa.01.0.lcssa25, %.sroa.04.0.lcssa24
-  %.not12.not = icmp ule i64 %i.n, %i.m
-  %. = zext i1 %.not12.not to i8
+  %.not12 = icmp ult i64 %i.n, %i.m
+  %. = zext i1 %.not12 to i8
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c, %bb.a
@@ -385,6 +391,7 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge.thread:                               ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.h = lshr i64 %i.d, 1
+  %2 = add nuw i64 %i.h, 1
   br label %bb.c
 
 .lr.ph:                                           ; preds = %bb.b, %bb.f
@@ -400,17 +407,18 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge:                                      ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.l = lshr i64 %i.d, 1                         ; 2 uses
-  %.not11.not = icmp ugt i64 %.sroa.01.1, %i.l
-  br i1 %.not11.not, label %bb.d, label %bb.c
+  %i.l = lshr i64 %i.d, 1
+  %3 = add nuw i64 %i.l, 1                        ; 2 uses
+  %.not11 = icmp ult i64 %.sroa.01.1, %3
+  br i1 %.not11, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %i.m = phi i64 [ %i.h, %._crit_edge.thread ], [ %i.l, %._crit_edge ]
+  %i.m = phi i64 [ %2, %._crit_edge.thread ], [ %3, %._crit_edge ]
   %.sroa.01.0.lcssa25 = phi i64 [ 0, %._crit_edge.thread ], [ %.sroa.01.1, %._crit_edge ]
   %.sroa.04.0.lcssa24 = phi i64 [ 0, %._crit_edge.thread ], [ %.sroa.04.1, %._crit_edge ]
   %i.n = add i64 %.sroa.01.0.lcssa25, %.sroa.04.0.lcssa24
-  %.not12.not = icmp ule i64 %i.n, %i.m
-  %. = zext i1 %.not12.not to i8
+  %.not12 = icmp ult i64 %i.n, %i.m
+  %. = zext i1 %.not12 to i8
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c, %bb.a

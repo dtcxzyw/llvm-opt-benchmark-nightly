@@ -204,14 +204,17 @@ bb.h:                                             ; preds = %get_cg_rpool_locked
   %i.be = getelementptr i8, ptr %.0.i, i64 8
   %i.bf = getelementptr [12 x i8], ptr %i.be, i64 %i.ah ; 2 uses
   %i.bg = getelementptr i8, ptr %i.bf, i64 4      ; 2 uses
-  %i.bh = load i32, ptr %i.bg, align 4            ; 2 uses
+  %i.bh = load i32, ptr %i.bg, align 4
+  %3 = sext i32 %i.bh to i64
+  %4 = add nsw i64 %3, 1                          ; 2 uses
   %i.bi = load i32, ptr %i.bf, align 4
-  %.not51 = icmp slt i32 %i.bh, %i.bi
-  br i1 %.not51, label %bb.i, label %.thread
+  %5 = sext i32 %i.bi to i64
+  %6 = icmp sgt i64 %4, %5
+  br i1 %6, label %.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %3 = add nsw i32 %i.bh, 1
-  store i32 %3, ptr %i.bg, align 4
+  %7 = trunc nsw i64 %4 to i32
+  store i32 %7, ptr %i.bg, align 4
   %i.bj = getelementptr i8, ptr %.0.i, i64 64     ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8
   %i.bl = add i64 %i.bk, 1

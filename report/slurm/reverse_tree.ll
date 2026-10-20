@@ -170,12 +170,14 @@ geometric_series.exit.thread:                     ; preds = %bb.g
 .preheader.i.preheader:                           ; preds = %geometric_series.exit.thread, %.preheader.lr.ph.i
   %.ph = phi i32 [ %.07.lcssa.i, %geometric_series.exit.thread ], [ %i.ab, %.preheader.lr.ph.i ]
   %.ph114 = phi i32 [ %i.ad, %geometric_series.exit.thread ], [ %i.aa, %.preheader.lr.ph.i ]
-  %min.iters.check94 = icmp ult i32 %2, 16
-  %n.vec96 = and i32 %2, -16                      ; 4 uses
+  %7 = tail call i32 @llvm.smax.i32(i32 %2, i32 1) ; 2 uses
+  %8 = add i32 %2, -2147483647
+  %min.iters.check94 = icmp ult i32 %8, -2147483631
+  %n.vec96 = and i32 %7, 2147483632               ; 4 uses
   %i.af = or disjoint i32 %n.vec96, 1
   %broadcast.splatinsert97 = insertelement <16 x i32> poison, i32 %0, i64 0
   %broadcast.splat98 = shufflevector <16 x i32> %broadcast.splatinsert97, <16 x i32> poison, <16 x i32> zeroinitializer ; 3 uses
-  %cmp.n109 = icmp eq i32 %2, %n.vec96
+  %cmp.n109 = icmp eq i32 %7, %n.vec96
   br label %.preheader.i
 
 tailrecurse.loopexit.i:                           ; preds = %bb.j, %vector.early.exit.1
@@ -250,12 +252,12 @@ vector.early.exit.1:                              ; preds = %vector.early.exit.c
   br label %tailrecurse.loopexit.i
 
 bb.i:                                             ; preds = %bb.j
-  %i.bh = add nuw i32 %.056.i, 1
-  %exitcond.not.i = icmp eq i32 %.056.i, %2
-  br i1 %exitcond.not.i, label %search_tree.exit, label %scalar.ph93, !llvm.loop !18
+  %i.bh = add nuw nsw i32 %.056.i, 1              ; 2 uses
+  %.not.i = icmp sgt i32 %i.bh, %2
+  br i1 %.not.i, label %search_tree.exit, label %scalar.ph93, !llvm.loop !18
 
 scalar.ph93:                                      ; preds = %scalar.ph93.preheader, %bb.i
-  %.056.i = phi i32 [ %i.bh, %bb.i ], [ %.056.i.ph, %scalar.ph93.preheader ] ; 2 uses
+  %.056.i = phi i32 [ %i.bh, %bb.i ], [ %.056.i.ph, %scalar.ph93.preheader ]
   %.03655.i = phi i32 [ %i.bi, %bb.i ], [ %.03655.i.ph, %scalar.ph93.preheader ] ; 3 uses
   %i.bi = add i32 %.03655.i, %i.am                ; 3 uses
   %i.bj = icmp eq i32 %0, %i.bi
@@ -463,6 +465,9 @@ declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v16i1(<16 x i1>, i1 immarg) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #1
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
