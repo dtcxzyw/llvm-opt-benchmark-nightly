@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sdl/original/SDL_video?download=true
 inline.NumInlined: 254
 inline.NumDeleted: 25
-loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumCompletelyUnrolled: 11
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumUnrolled: 14
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -199,7 +199,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.160 = private unnamed_addr constant [26 x i8] c"SDL.window.create.tooltip\00", align 1
 @.str.161 = private unnamed_addr constant [26 x i8] c"SDL.window.create.utility\00", align 1
 @.str.162 = private unnamed_addr constant [25 x i8] c"SDL.window.create.vulkan\00", align 1
-@SDL_WindowFlagProperties = internal unnamed_addr constant [18 x { ptr, i64, i8, [7 x i8] }] [{ ptr, i64, i8, [7 x i8] } { ptr @.str.145, i64 65536, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.146, i64 16, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.147, i64 2147483648, i8 1, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.148, i64 1, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.149, i64 8, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.150, i64 8192, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.151, i64 128, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.152, i64 524288, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.153, i64 536870912, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.154, i64 64, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.155, i64 4096, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.156, i64 256, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.157, i64 2, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.158, i64 32, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.159, i64 1073741824, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.160, i64 262144, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.161, i64 131072, i8 0, [7 x i8] zeroinitializer }, { ptr, i64, i8, [7 x i8] } { ptr @.str.162, i64 268435456, i8 0, [7 x i8] zeroinitializer }], align 16
 @.str.164 = private unnamed_addr constant [105 x i8] c"%s support is either not configured in SDL or not available in current SDL video driver (%s) or platform\00", align 1
 @.str.165 = private unnamed_addr constant [41 x i8] c"Window framebuffer support not available\00", align 1
 @.str.166 = private unnamed_addr constant [29 x i8] c"SDL_FRAMEBUFFER_ACCELERATION\00", align 1
@@ -602,60 +601,81 @@ bb.a:
   %i.d = tail call i64 @SDL_GetNumberProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.29, i64 noundef 0) #19
   %i.e = tail call i64 @SDL_GetNumberProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.30, i64 noundef 0) #19
   %i.f = tail call ptr @SDL_GetPointerProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.31, ptr noundef null) #19 ; 5 uses
-  %i.g = tail call i64 @SDL_GetNumberProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.42, i64 noundef 0) #19
-  br label %3
-
-3:                                                ; preds = %16, %bb.a
-  %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i, %16 ] ; 2 uses
-  %.016.i = phi i64 [ %i.g, %bb.a ], [ %.1.i, %16 ] ; 3 uses
-  %4 = getelementptr inbounds nuw [24 x i8], ptr @SDL_WindowFlagProperties, i64 %indvars.iv.i ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %6 = load i8, ptr %5, align 8, !range !10, !noundef !11
-  %7 = trunc nuw i8 %6 to i1
-  %8 = load ptr, ptr %4, align 8                  ; 2 uses
-  br i1 %7, label %9, label %11
-
-9:                                                ; preds = %3
-  %10 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef %8, i1 noundef zeroext true) #19
-  br i1 %10, label %16, label %.sink.split.i
-
-11:                                               ; preds = %3
-  %12 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef %8, i1 noundef zeroext false) #19
-  br i1 %12, label %.sink.split.i, label %16
-
-.sink.split.i:                                    ; preds = %11, %9
-  %13 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %14 = load i64, ptr %13, align 8
-  %15 = or i64 %14, %.016.i
-  br label %16
-
-16:                                               ; preds = %.sink.split.i, %11, %9
-  %.1.i = phi i64 [ %.016.i, %9 ], [ %.016.i, %11 ], [ %15, %.sink.split.i ] ; 5 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 18
-  br i1 %exitcond.not.i, label %SDL_GetWindowFlagProperties.exit, label %3, !llvm.loop !50
-
-SDL_GetWindowFlagProperties.exit:                 ; preds = %16
+  %i.g = tail call i64 @SDL_GetNumberProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.42, i64 noundef 0) #19 ; 2 uses
+  %3 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.145, i1 noundef zeroext false) #19
+  %4 = or i64 %i.g, 65536
+  %spec.select.i = select i1 %3, i64 %4, i64 %i.g ; 2 uses
+  %5 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.146, i1 noundef zeroext false) #19
+  %6 = or i64 %spec.select.i, 16
+  %.1.peel19.i = select i1 %5, i64 %6, i64 %spec.select.i ; 2 uses
+  %7 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.147, i1 noundef zeroext true) #19
+  %8 = or i64 %.1.peel19.i, 2147483648
+  %.1.peel23.i = select i1 %7, i64 %.1.peel19.i, i64 %8
+  %9 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.148, i1 noundef zeroext false) #19
+  %10 = zext i1 %9 to i64
+  %spec.select = or i64 %.1.peel23.i, %10         ; 2 uses
+  %11 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.149, i1 noundef zeroext false) #19
+  %12 = or i64 %spec.select, 8
+  %.1.i.1 = select i1 %11, i64 %12, i64 %spec.select ; 2 uses
+  %13 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.150, i1 noundef zeroext false) #19
+  %14 = or i64 %.1.i.1, 8192
+  %.1.i.2 = select i1 %13, i64 %14, i64 %.1.i.1   ; 2 uses
+  %15 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.151, i1 noundef zeroext false) #19
+  %16 = or i64 %.1.i.2, 128
+  %.1.i.3 = select i1 %15, i64 %16, i64 %.1.i.2   ; 2 uses
+  %17 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.152, i1 noundef zeroext false) #19
+  %18 = or i64 %.1.i.3, 524288
+  %.1.i.4 = select i1 %17, i64 %18, i64 %.1.i.3   ; 2 uses
+  %19 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.153, i1 noundef zeroext false) #19
+  %20 = or i64 %.1.i.4, 536870912
+  %.1.i.5 = select i1 %19, i64 %20, i64 %.1.i.4   ; 2 uses
+  %21 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.154, i1 noundef zeroext false) #19
+  %22 = or i64 %.1.i.5, 64
+  %.1.i.6 = select i1 %21, i64 %22, i64 %.1.i.5   ; 2 uses
+  %23 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.155, i1 noundef zeroext false) #19
+  %24 = or i64 %.1.i.6, 4096
+  %.1.i.7 = select i1 %23, i64 %24, i64 %.1.i.6   ; 2 uses
+  %25 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.156, i1 noundef zeroext false) #19
+  %26 = or i64 %.1.i.7, 256
+  %.1.i.8 = select i1 %25, i64 %26, i64 %.1.i.7   ; 2 uses
+  %27 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.157, i1 noundef zeroext false) #19
+  %28 = or i64 %.1.i.8, 2
+  %.1.i.9 = select i1 %27, i64 %28, i64 %.1.i.8   ; 2 uses
+  %29 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.158, i1 noundef zeroext false) #19
+  %30 = or i64 %.1.i.9, 32
+  %.1.i.10 = select i1 %29, i64 %30, i64 %.1.i.9  ; 2 uses
+  %31 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.159, i1 noundef zeroext false) #19
+  %32 = or i64 %.1.i.10, 1073741824
+  %.1.i.11 = select i1 %31, i64 %32, i64 %.1.i.10 ; 2 uses
+  %33 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.160, i1 noundef zeroext false) #19
+  %34 = or i64 %.1.i.11, 262144
+  %.1.i.12 = select i1 %33, i64 %34, i64 %.1.i.11 ; 2 uses
+  %35 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.161, i1 noundef zeroext false) #19
+  %36 = or i64 %.1.i.12, 131072
+  %.1.i.13 = select i1 %35, i64 %36, i64 %.1.i.12 ; 2 uses
+  %37 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.162, i1 noundef zeroext false) #19
+  %38 = or i64 %.1.i.13, 268435456
+  %.1.i.14 = select i1 %37, i64 %38, i64 %.1.i.13 ; 4 uses
   %.fr = freeze i64 %i.b
-  %17 = trunc i64 %.fr to i32                     ; 4 uses
-  %18 = trunc i64 %i.c to i32                     ; 6 uses
-  %19 = trunc i64 %i.d to i32
-  %20 = trunc i64 %i.e to i32
-  %21 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.32, i1 noundef zeroext false) #19
-  %22 = zext i1 %21 to i8
-  %23 = load ptr, ptr @_this, align 8
-  %.not = icmp eq ptr %23, null
+  %39 = trunc i64 %.fr to i32                     ; 4 uses
+  %40 = trunc i64 %i.c to i32                     ; 6 uses
+  %41 = trunc i64 %i.d to i32
+  %42 = trunc i64 %i.e to i32
+  %43 = tail call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.32, i1 noundef zeroext false) #19
+  %44 = zext i1 %43 to i8
+  %45 = load ptr, ptr @_this, align 8
+  %.not = icmp eq ptr %45, null
   br i1 %.not, label %bb.b, label %bb.c
 
-bb.b:                                             ; preds = %SDL_GetWindowFlagProperties.exit
+bb.b:                                             ; preds = %bb.a
   %i.h = tail call zeroext i1 @SDL_Init_REAL(i32 noundef 32) #19
   %i.i = load ptr, ptr @_this, align 8
   %.not155 = icmp ne ptr %i.i, null
   %or.cond185.not = select i1 %i.h, i1 %.not155, i1 false
   br i1 %or.cond185.not, label %bb.c, label %SDL_GL_LoadLibrary_REAL.exit.thread
 
-bb.c:                                             ; preds = %bb.b, %SDL_GetWindowFlagProperties.exit
-  %i.j = and i64 %.1.i, 4096
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %i.j = and i64 %.1.i.14, 4096
   %.not156 = icmp eq i64 %i.j, 0
   br i1 %.not156, label %SDL_ObjectValid.exit188.thread, label %bb.d
 
@@ -677,7 +697,7 @@ SDL_ObjectValid.exit188.thread197:                ; preds = %bb.d, %SDL_ObjectVa
   br label %SDL_GL_LoadLibrary_REAL.exit.thread
 
 SDL_ObjectValid.exit188.thread:                   ; preds = %bb.e, %SDL_ObjectValid.exit188, %bb.c
-  %i.o = and i64 %.1.i, 786432
+  %i.o = and i64 %.1.i.14, 786432
   %.not157 = icmp eq i64 %i.o, 0
   br i1 %.not157, label %bb.j, label %bb.f
 
@@ -711,11 +731,11 @@ SDL_ObjectValid.exit.thread200:                   ; preds = %bb.h, %SDL_ObjectVa
   br label %SDL_GL_LoadLibrary_REAL.exit.thread
 
 SDL_ObjectValid.exit.thread:                      ; preds = %bb.i, %SDL_ObjectValid.exit
-  %i.y = and i64 %.1.i, -210
+  %i.y = and i64 %.1.i.14, -210
   br label %bb.j
 
 bb.j:                                             ; preds = %SDL_ObjectValid.exit.thread, %SDL_ObjectValid.exit188.thread
-  %.0134 = phi i64 [ %i.y, %SDL_ObjectValid.exit.thread ], [ %.1.i, %SDL_ObjectValid.exit188.thread ] ; 8 uses
+  %.0134 = phi i64 [ %i.y, %SDL_ObjectValid.exit.thread ], [ %.1.i.14, %SDL_ObjectValid.exit188.thread ] ; 8 uses
   %i.z = and i64 %.0134, 921600                   ; 2 uses
   %i.aa = tail call range(i64 0, 5) i64 @llvm.ctpop.i64(i64 %i.z)
   %.not159 = icmp samesign ult i64 %i.aa, 2
@@ -738,9 +758,9 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %19, i32 1) ; 5 uses
-  %spec.store.select2 = tail call i32 @llvm.smax.i32(i32 %20, i32 1) ; 5 uses
-  %i.ag = and i32 %17, -65536                     ; 4 uses
+  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %41, i32 1) ; 5 uses
+  %spec.store.select2 = tail call i32 @llvm.smax.i32(i32 %42, i32 1) ; 5 uses
+  %i.ag = and i32 %39, -65536                     ; 4 uses
   %i.ah = icmp eq i32 %i.ag, 536805376
   switch i32 %i.ag, label %switch.early.test [
     i32 805240832, label %.sink.split
@@ -748,7 +768,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   ]
 
 switch.early.test:                                ; preds = %bb.n
-  %i.ai = and i32 %18, -65536
+  %i.ai = and i32 %40, -65536
   switch i32 %i.ai, label %bb.ad [
     i32 805240832, label %bb.o
     i32 536805376, label %bb.o
@@ -766,19 +786,19 @@ bb.o:                                             ; preds = %switch.early.test, 
   br label %bb.p
 
 bb.p:                                             ; preds = %.sink.split, %bb.o, %bb.o
-  %i.aj = and i32 %17, 65535                      ; 2 uses
+  %i.aj = and i32 %39, 65535                      ; 2 uses
   %.not161 = icmp eq i32 %i.aj, 0
   br i1 %.not161, label %bb.q, label %.thread203
 
 bb.q:                                             ; preds = %bb.o, %bb.p
-  %i.ak = and i32 %18, -65536
+  %i.ak = and i32 %40, -65536
   switch i32 %i.ak, label %.thread [
     i32 536805376, label %bb.r
     i32 805240832, label %bb.r
   ]
 
 bb.r:                                             ; preds = %bb.q, %bb.q
-  %i.al = and i32 %18, 65535                      ; 2 uses
+  %i.al = and i32 %40, 65535                      ; 2 uses
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %.thread, label %.thread203
 
@@ -873,9 +893,9 @@ bb.z:                                             ; preds = %bb.y, %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.y, %bb.z
-  %.0139 = phi i32 [ %i.bt, %bb.z ], [ %17, %bb.y ]
+  %.0139 = phi i32 [ %i.bt, %bb.z ], [ %39, %bb.y ]
   %.1129 = phi i8 [ %i.bu, %bb.z ], [ 0, %bb.y ]
-  %i.bv = and i32 %18, -65536                     ; 2 uses
+  %i.bv = and i32 %40, -65536                     ; 2 uses
   switch i32 %i.bv, label %bb.ac [
     i32 805240832, label %bb.ab
     i32 536805376, label %bb.ab
@@ -893,14 +913,14 @@ bb.ab:                                            ; preds = %bb.aa, %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.aa, %bb.ab
-  %.0137 = phi i32 [ %i.cc, %bb.ab ], [ %18, %bb.aa ]
+  %.0137 = phi i32 [ %i.cc, %bb.ab ], [ %40, %bb.aa ]
   %.1127 = phi i8 [ %i.cd, %bb.ab ], [ 0, %bb.aa ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   br label %bb.ad
 
 bb.ad:                                            ; preds = %switch.early.test, %bb.ac
-  %.1140 = phi i32 [ %.0139, %bb.ac ], [ %17, %switch.early.test ] ; 3 uses
-  %.1138 = phi i32 [ %.0137, %bb.ac ], [ %18, %switch.early.test ] ; 3 uses
+  %.1140 = phi i32 [ %.0139, %bb.ac ], [ %39, %switch.early.test ] ; 3 uses
+  %.1138 = phi i32 [ %.0137, %bb.ac ], [ %40, %switch.early.test ] ; 3 uses
   %.2133 = phi i32 [ %.1132, %bb.ac ], [ 0, %switch.early.test ]
   %.2130 = phi i8 [ %.1129, %bb.ac ], [ 0, %switch.early.test ]
   %.2 = phi i8 [ %.1127, %bb.ac ], [ 0, %switch.early.test ]
@@ -1122,7 +1142,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.ay
   %i.ff = getelementptr inbounds nuw i8, ptr %i.do, i64 100
   store i32 %i.fe, ptr %i.ff, align 4
   %i.fg = getelementptr inbounds nuw i8, ptr %i.do, i64 92
-  store i8 %22, ptr %i.fg, align 4
+  store i8 %44, ptr %i.fg, align 4
   %i.fh = call zeroext i1 @SDL_GetBooleanProperty_REAL(i32 noundef %0, ptr noundef nonnull @.str.40, i1 noundef zeroext true) #19
   %i.fi = getelementptr inbounds nuw i8, ptr %i.do, i64 270
   %i.fj = zext i1 %i.fh to i8
@@ -1457,7 +1477,7 @@ SDL_ObjectValid.exit.thread:                      ; preds = %bb.d, %SDL_ObjectVa
   tail call void @SDL_DestroyWindow_REAL(ptr noundef nonnull %i.j)
   %i.k = load ptr, ptr %i.h, align 8              ; 2 uses
   %.not53 = icmp eq ptr %i.k, null
-  br i1 %.not53, label %._crit_edge, label %.lr.ph, !llvm.loop !51
+  br i1 %.not53, label %._crit_edge, label %.lr.ph, !llvm.loop !50
 
 ._crit_edge:                                      ; preds = %.lr.ph, %SDL_ObjectValid.exit.thread
   %i.l = tail call zeroext i1 @SDL_SendWindowEvent(ptr noundef nonnull %0, i32 noundef 537, i32 noundef 0, i32 noundef 0) #19 ; 0 uses
@@ -1603,7 +1623,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bl = sext i32 %i.bj to i64
   %i.bm = icmp slt i64 %indvars.iv.next, %i.bl
-  br i1 %i.bm, label %bb.r, label %._crit_edge79, !llvm.loop !52
+  br i1 %i.bm, label %bb.r, label %._crit_edge79, !llvm.loop !51
 
 bb.u:                                             ; preds = %._crit_edge79
   %i.bn = tail call zeroext i1 @SDL_SetKeyboardFocus(ptr noundef null) #19 ; 0 uses
@@ -1940,7 +1960,7 @@ bb.c:                                             ; preds = %bb.b
 
 IsAcceptingDragAndDrop.exit.i:                    ; preds = %bb.c, %bb.b
   %.0.i.i = phi i1 [ true, %bb.b ], [ %i.e, %bb.c ]
-  tail call void %i.c(ptr noundef %0, i1 noundef zeroext %.0.i.i) #19, !inline_history !53
+  tail call void %i.c(ptr noundef %0, i1 noundef zeroext %.0.i.i) #19, !inline_history !52
   br label %PrepareDragAndDropSupport.exit
 
 PrepareDragAndDropSupport.exit:                   ; preds = %bb.a, %IsAcceptingDragAndDrop.exit.i
@@ -2012,7 +2032,7 @@ bb.k:                                             ; preds = %SDL_ObjectValid.exi
   br i1 %.not11.i, label %SDL_SetWindowProgressState_REAL.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.z = tail call zeroext i1 %i.y(ptr noundef nonnull %i.w, ptr noundef nonnull %0) #19, !inline_history !54 ; 0 uses
+  %i.z = tail call zeroext i1 %i.y(ptr noundef nonnull %i.w, ptr noundef nonnull %0) #19, !inline_history !53 ; 0 uses
   br label %SDL_SetWindowProgressState_REAL.exit
 
 SDL_SetWindowProgressState_REAL.exit:             ; preds = %bb.h, %SDL_ObjectValid.exit.thread13.i, %bb.j, %bb.l
@@ -2057,7 +2077,7 @@ bb.o:                                             ; preds = %SDL_ObjectValid.exi
   br i1 %.not12.i, label %SDL_SetWindowProgressValue_REAL.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.am = tail call zeroext i1 %i.al(ptr noundef nonnull %i.aj, ptr noundef nonnull %0) #19, !inline_history !55 ; 0 uses
+  %i.am = tail call zeroext i1 %i.al(ptr noundef nonnull %i.aj, ptr noundef nonnull %0) #19, !inline_history !54 ; 0 uses
   br label %SDL_SetWindowProgressValue_REAL.exit
 
 SDL_SetWindowProgressValue_REAL.exit:             ; preds = %bb.p, %bb.n, %SDL_ObjectValid.exit.thread14.i, %bb.m, %bb.o, %bb.f
@@ -2460,7 +2480,7 @@ bb.g:                                             ; preds = %.lr.ph
   %i.q = getelementptr inbounds nuw i8, ptr %.027, i64 448
   %.0 = load ptr, ptr %i.q, align 8               ; 2 uses
   %.not19 = icmp eq ptr %.0, null
-  br i1 %.not19, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !56
+  br i1 %.not19, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !55
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %bb.g
   %.pre = load i64, ptr %i.g, align 8
@@ -2754,7 +2774,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not11.i.i, label %SDL_DestroyWindowSurface_REAL.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  tail call void %i.am(ptr noundef nonnull %i.ah, ptr noundef nonnull %0) #19, !inline_history !57
+  tail call void %i.am(ptr noundef nonnull %i.ah, ptr noundef nonnull %0) #19, !inline_history !56
   br label %SDL_DestroyWindowSurface_REAL.exit.i
 
 SDL_DestroyWindowSurface_REAL.exit.i:             ; preds = %bb.n, %bb.m, %bb.l, %SDL_ObjectValid.exit.thread13.i.i
@@ -2783,7 +2803,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.at, label %bb.w, label %SDL_ReconfigureWindowInternal.exit.thread
 
 bb.r:                                             ; preds = %bb.q
-  %i.au = tail call zeroext i1 %i.ar(ptr noundef nonnull %i.an, ptr noundef null) #19, !inline_history !58
+  %i.au = tail call zeroext i1 %i.ar(ptr noundef nonnull %i.an, ptr noundef null) #19, !inline_history !57
   %.pre17.i.i = load ptr, ptr @_this, align 8     ; 4 uses
   br i1 %i.au, label %..thread_crit_edge.i, label %bb.s
 
@@ -2799,7 +2819,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not14.i.i, label %SDL_ReconfigureWindowInternal.exit.thread, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  tail call void %i.aw(ptr noundef nonnull %.pre17.i.i) #19, !inline_history !58
+  tail call void %i.aw(ptr noundef nonnull %.pre17.i.i) #19, !inline_history !57
   br label %SDL_ReconfigureWindowInternal.exit.thread
 
 SDL_GL_LoadLibrary_REAL.exit.i:                   ; preds = %bb.o
@@ -2818,7 +2838,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %SDL_G
   %i.az = load ptr, ptr @_this, align 8           ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 408
   %i.bb = load ptr, ptr %i.ba, align 8
-  %i.bc = tail call zeroext i1 %i.bb(ptr noundef %i.az, ptr noundef nonnull %0, i64 noundef %i.g) #19, !inline_history !59
+  %i.bc = tail call zeroext i1 %i.bb(ptr noundef %i.az, ptr noundef nonnull %0, i64 noundef %i.g) #19, !inline_history !58
   br i1 %i.bc, label %SDL_ReconfigureWindowInternal.exit.thread5, label %bb.x
 
 .thread.i:                                        ; preds = %..thread_crit_edge.i, %bb.p
@@ -2829,7 +2849,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %SDL_G
   store i32 %i.bg, ptr %i.bf, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 408
   %i.bi = load ptr, ptr %i.bh, align 8
-  %i.bj = tail call zeroext i1 %i.bi(ptr noundef nonnull %i.be, ptr noundef nonnull %0, i64 noundef %i.g) #19, !inline_history !59
+  %i.bj = tail call zeroext i1 %i.bi(ptr noundef nonnull %i.be, ptr noundef nonnull %0, i64 noundef %i.g) #19, !inline_history !58
   br i1 %i.bj, label %SDL_ReconfigureWindowInternal.exit.thread5, label %.split45.thread.i
 
 .split45.thread.i:                                ; preds = %.thread.i
@@ -2952,7 +2972,7 @@ bb.d:                                             ; preds = %.lr.ph
   %i.e = getelementptr inbounds nuw i8, ptr %.015, i64 416
   %.0 = load ptr, ptr %i.e, align 8               ; 2 uses
   %.not10 = icmp eq ptr %.0, null
-  br i1 %.not10, label %.loopexit11.sink.split, label %.lr.ph, !llvm.loop !60
+  br i1 %.not10, label %.loopexit11.sink.split, label %.lr.ph, !llvm.loop !59
 
 .loopexit11.sink.split:                           ; preds = %bb.d, %bb.b, %bb.c, %bb.a
   %.str.45.sink = phi ptr [ @.str.1, %bb.a ], [ @.str.45, %bb.b ], [ @.str.45, %bb.c ], [ @.str.45, %bb.d ]
@@ -3355,7 +3375,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph
   %i.ac = getelementptr inbounds nuw i8, ptr %.031, i64 448
   %.0 = load ptr, ptr %i.ac, align 8              ; 2 uses
   %.not24 = icmp eq ptr %.0, null
-  br i1 %.not24, label %.loopexit, label %.lr.ph, !llvm.loop !61
+  br i1 %.not24, label %.loopexit, label %.lr.ph, !llvm.loop !60
 
 .loopexit:                                        ; preds = %bb.l, %bb.m, %bb.k, %SDL_ObjectValid.exit.thread, %bb.g, %SDL_ObjectValid.exit.thread27, %bb.b
   %.017 = phi i1 [ true, %bb.g ], [ true, %SDL_ObjectValid.exit.thread ], [ false, %bb.b ], [ false, %SDL_ObjectValid.exit.thread27 ], [ true, %bb.k ], [ true, %bb.m ], [ true, %bb.l ]
@@ -3758,7 +3778,7 @@ bb.q:                                             ; preds = %bb.p, %.critedge.i
   br label %SDL_CreateWindowFramebuffer.exit.thread
 
 bb.r:                                             ; preds = %bb.p
-  %i.bh = call zeroext i1 %i.bd(ptr noundef nonnull %i.bb, ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #19, !inline_history !62
+  %i.bh = call zeroext i1 %i.bd(ptr noundef nonnull %i.bb, ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #19, !inline_history !61
   br i1 %i.bh, label %bb.s, label %SDL_CreateWindowFramebuffer.exit.thread
 
 bb.s:                                             ; preds = %bb.r, %.critedge12.i
@@ -3995,7 +4015,7 @@ bb.h:                                             ; preds = %SDL_ObjectValid.exi
   %i.u = load ptr, ptr @_this, align 8            ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 336
   %i.w = load ptr, ptr %i.v, align 8
-  %i.x = call zeroext i1 %i.w(ptr noundef %i.u, ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef 1) #19, !inline_history !63
+  %i.x = call zeroext i1 %i.w(ptr noundef %i.u, ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef 1) #19, !inline_history !62
   br label %SDL_UpdateWindowSurfaceRects_REAL.exit
 
 SDL_UpdateWindowSurfaceRects_REAL.exit:           ; preds = %bb.h, %bb.g, %SDL_ObjectValid.exit.thread6.i, %bb.e, %SDL_ObjectValid.exit.thread7, %bb.b
@@ -4321,7 +4341,7 @@ bb.c:                                             ; preds = %bb.b
   %.1 = select i1 %i.t, i8 1, i8 %i.v             ; 2 uses
   %i.w = and i64 %.pre, 786432
   %.not = icmp eq i64 %i.w, 0
-  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !64
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !63
 
 .critedge:                                        ; preds = %bb.c, %.critedge2, %bb.a
   %.013.lcssa = phi ptr [ %i.b, %bb.a ], [ %i.s, %.critedge2 ], [ %.01316, %bb.c ]
@@ -4344,7 +4364,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.b = load i64, ptr %i.a, align 8
   %i.c = and i64 %i.b, 786432
   %.not = icmp eq i64 %i.c, 0
-  br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !65
+  br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !64
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %.013, i64 400
@@ -4357,7 +4377,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %i.e = icmp eq ptr %.0, %0
   %or.cond = or i1 %.not14.not, %i.e
   %i.f = getelementptr inbounds nuw i8, ptr %.0, i64 424
-  br i1 %or.cond, label %bb.e, label %bb.d, !llvm.loop !66
+  br i1 %or.cond, label %bb.e, label %bb.d, !llvm.loop !65
 
 bb.e:                                             ; preds = %bb.d
   ret i1 %.not14.not
@@ -4760,7 +4780,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.0, i64 424
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
   %.not7 = icmp eq ptr %i.c, null
-  br i1 %.not7, label %.loopexit, label %.preheader, !llvm.loop !67
+  br i1 %.not7, label %.loopexit, label %.preheader, !llvm.loop !66
 
 .loopexit:                                        ; preds = %.preheader, %bb.a
   %.1 = phi ptr [ null, %bb.a ], [ %.0, %.preheader ]
@@ -4844,7 +4864,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !68
+  br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !67
 
 .loopexit:                                        ; preds = %bb.f, %bb.a, %bb.e
   ret void
@@ -5247,7 +5267,7 @@ bb.y:                                             ; preds = %.lr.ph
   %i.as = add nuw nsw i32 %.063, 1                ; 2 uses
   %i.at = load i32, ptr %i.a, align 4
   %i.au = icmp slt i32 %i.as, %i.at
-  br i1 %i.au, label %.lr.ph, label %SDL_GL_GetProcAddress_REAL.exit58.thread, !llvm.loop !69
+  br i1 %i.au, label %.lr.ph, label %SDL_GL_GetProcAddress_REAL.exit58.thread, !llvm.loop !68
 
 .lr.ph:                                           ; preds = %bb.x, %bb.y
   %.063 = phi i32 [ %i.as, %bb.y ], [ 0, %bb.x ]  ; 2 uses
@@ -5650,7 +5670,7 @@ bb.bk:                                            ; preds = %SDL_ObjectValid.exi
   br i1 %.not6.i, label %SDL_RaiseWindow_REAL.exit, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
-  call void %i.eb(ptr noundef nonnull %i.dz, ptr noundef nonnull %i.z) #19, !inline_history !70
+  call void %i.eb(ptr noundef nonnull %i.dz, ptr noundef nonnull %i.z) #19, !inline_history !69
   br label %SDL_RaiseWindow_REAL.exit
 
 SDL_RaiseWindow_REAL.exit:                        ; preds = %bb.bl, %bb.bk, %SDL_ObjectValid.exit.thread.i, %SDL_ObjectValid.exit.thread8.i, %bb.bi, %bb.bg
@@ -5992,7 +6012,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.07, i64 416
   %.0 = load ptr, ptr %i.d, align 8               ; 2 uses
   %.not4 = icmp eq ptr %.0, null
-  br i1 %.not4, label %._crit_edge, label %.lr.ph, !llvm.loop !71
+  br i1 %.not4, label %._crit_edge, label %.lr.ph, !llvm.loop !70
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
   %i.e = tail call zeroext i1 @SDL_SetKeyboardFocus(ptr noundef null) #19 ; 0 uses
@@ -6038,7 +6058,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %.08, i64 416
   %.0 = load ptr, ptr %i.e, align 8               ; 2 uses
   %.not5 = icmp eq ptr %.0, null
-  br i1 %.not5, label %.loopexit, label %.lr.ph, !llvm.loop !72
+  br i1 %.not5, label %.loopexit, label %.lr.ph, !llvm.loop !71
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.b, %bb.a
   ret void
@@ -6441,7 +6461,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.1141 = phi ptr [ %.0140280, %bb.m ], [ %i.ah, %bb.n ] ; 3 uses
   %i.ai = call ptr @SDL_strchr_REAL(ptr noundef %.1141, i32 noundef 44) #19 ; 2 uses
   %.not199 = icmp eq ptr %i.ai, null
-  br i1 %.not199, label %._crit_edge, label %.lr.ph, !llvm.loop !73
+  br i1 %.not199, label %._crit_edge, label %.lr.ph, !llvm.loop !72
 
 ._crit_edge:                                      ; preds = %bb.o, %.preheader
   %.0140.lcssa = phi ptr [ %i.ab, %.preheader ], [ %.1141, %bb.o ] ; 2 uses
@@ -6486,7 +6506,7 @@ bb.r:                                             ; preds = %bb.q
 select.unfold250:                                 ; preds = %bb.r, %bb.q, %.lr.ph282
   %i.as = add nuw nsw i32 %.0154281, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.as, %i.an
-  br i1 %exitcond.not, label %._crit_edge283, label %.lr.ph282, !llvm.loop !74
+  br i1 %exitcond.not, label %._crit_edge283, label %.lr.ph282, !llvm.loop !73
 
 ._crit_edge283:                                   ; preds = %select.unfold250, %.thread240
   %i.at = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.173) #19
@@ -6574,7 +6594,7 @@ bb.aa:                                            ; preds = %.lr.ph287.split.us
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv.next299
   %i.bk = load i32, ptr %i.bj, align 4            ; 2 uses
   %.not209.us = icmp eq i32 %i.bk, 0
-  br i1 %.not209.us, label %.loopexit, label %.lr.ph287.split.us, !llvm.loop !75
+  br i1 %.not209.us, label %.loopexit, label %.lr.ph287.split.us, !llvm.loop !74
 
 .lr.ph287.split:                                  ; preds = %.lr.ph287, %.thread271
   %indvars.iv = phi i64 [ %indvars.iv.next, %.thread271 ], [ 0, %.lr.ph287 ]
@@ -6641,7 +6661,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv.next
   %i.bv = load i32, ptr %i.bu, align 4            ; 2 uses
   %.not209 = icmp eq i32 %i.bv, 0
-  br i1 %.not209, label %.loopexit, label %.lr.ph287.split, !llvm.loop !75
+  br i1 %.not209, label %.loopexit, label %.lr.ph287.split, !llvm.loop !74
 
 .loopexit:                                        ; preds = %.thread271, %.thread271.us, %bb.z, %.split.us
   %i.bw = phi i32 [ %i.bd, %.thread271.us ], [ %.us-phi, %.split.us ], [ 0, %bb.z ], [ %i.bd, %.thread271 ]
@@ -7019,28 +7039,27 @@ attributes #21 = { nounwind allocsize(0,1) }
 !49 = distinct !{!49, !12}
 !50 = distinct !{!50, !12}
 !51 = distinct !{!51, !12}
-!52 = distinct !{!52, !12}
-!53 = distinct !{null}
-!54 = !{ptr @SDL_SetWindowProgressState_REAL}
-!55 = !{ptr @SDL_SetWindowProgressValue_REAL}
-!56 = distinct !{!56, !12}
-!57 = distinct !{null, ptr @SDL_DestroyWindowSurface_REAL}
-!58 = distinct !{null, ptr @SDL_GL_LoadLibrary_REAL}
-!59 = distinct !{null}
+!52 = distinct !{null}
+!53 = !{ptr @SDL_SetWindowProgressState_REAL}
+!54 = !{ptr @SDL_SetWindowProgressValue_REAL}
+!55 = distinct !{!55, !12}
+!56 = distinct !{null, ptr @SDL_DestroyWindowSurface_REAL}
+!57 = distinct !{null, ptr @SDL_GL_LoadLibrary_REAL}
+!58 = distinct !{null}
+!59 = distinct !{!59, !12}
 !60 = distinct !{!60, !12}
-!61 = distinct !{!61, !12}
-!62 = distinct !{null}
-!63 = !{ptr @SDL_UpdateWindowSurfaceRects_REAL}
+!61 = distinct !{null}
+!62 = !{ptr @SDL_UpdateWindowSurfaceRects_REAL}
+!63 = distinct !{!63, !12}
 !64 = distinct !{!64, !12}
 !65 = distinct !{!65, !12}
 !66 = distinct !{!66, !12}
 !67 = distinct !{!67, !12}
 !68 = distinct !{!68, !12}
-!69 = distinct !{!69, !12}
-!70 = !{ptr @SDL_RaiseWindow_REAL}
+!69 = !{ptr @SDL_RaiseWindow_REAL}
+!70 = distinct !{!70, !12}
 !71 = distinct !{!71, !12}
 !72 = distinct !{!72, !12}
 !73 = distinct !{!73, !12}
 !74 = distinct !{!74, !12}
-!75 = distinct !{!75, !12}
 end_hunk_8

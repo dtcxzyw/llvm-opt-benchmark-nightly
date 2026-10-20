@@ -204,12 +204,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i: ; preds = %bb.a, %bb.ad
-  %i.c = phi i64 [ %i.g, %bb.ad ], [ 0, %bb.a ]   ; 3 uses
-  %i.d = getelementptr inbounds nuw [2 x i8], ptr @16, i64 %i.c ; 2 uses
-  %.val13.i.i.i.i.i.i = load i8, ptr %i.d, align 1, !range !10, !noalias !58, !noundef !4
-  %1 = getelementptr i8, ptr %i.d, i64 1
-  %.val14.i.i.i.i.i.i = load i8, ptr %1, align 1, !noalias !58 ; 10 uses
-  switch i8 %.val13.i.i.i.i.i.i, label %default.unreachable [
+  %i.c = phi i64 [ %i.g, %bb.ad ], [ 0, %bb.a ]   ; 13 uses
+  %i.d = getelementptr inbounds nuw [2 x i8], ptr @16, i64 %i.c
+  %.val14.i.i.i.i.i.i = load i8, ptr %i.d, align 1, !range !10, !noalias !58, !noundef !4
+  switch i8 %.val14.i.i.i.i.i.i, label %default.unreachable [
     i8 0, label %bb.c
     i8 1, label %bb.d
     i8 2, label %bb.ad
@@ -244,15 +242,19 @@ default.unreachable:                              ; preds = %_RNvMs_NtCsbSS6DM8S
   unreachable
 
 bb.c:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %2 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1     ; 2 uses
-  %..i.i.i.i.i.i.i.i.i = select i1 %2, i64 8, i64 1
-  %.1.i.i.i.i.i.i.i.i.i = select i1 %2, ptr @18, ptr @17
+  %1 = shl nuw i64 1, %i.c
+  %2 = and i64 %1, 88751489298
+  %.not9.i.i.i.i.i.i = icmp eq i64 %2, 0          ; 2 uses
+  %..i.i.i.i.i.i.i.i.i = select i1 %.not9.i.i.i.i.i.i, i64 1, i64 8
+  %.1.i.i.i.i.i.i.i.i.i = select i1 %.not9.i.i.i.i.i.i, ptr @17, ptr @18
   br label %bb.ad
 
 bb.d:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %3 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1     ; 2 uses
-  %.2.i.i.i.i.i.i.i.i.i = select i1 %3, i64 13, i64 6
-  %.3.i.i.i.i.i.i.i.i.i = select i1 %3, ptr @20, ptr @19
+  %3 = shl nuw i64 1, %i.c
+  %4 = and i64 %3, 88751489298
+  %.not8.i.i.i.i.i.i = icmp eq i64 %4, 0          ; 2 uses
+  %.2.i.i.i.i.i.i.i.i.i = select i1 %.not8.i.i.i.i.i.i, i64 6, i64 13
+  %.3.i.i.i.i.i.i.i.i.i = select i1 %.not8.i.i.i.i.i.i, ptr @19, ptr @20
   br label %bb.ad
 
 bb.e:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
@@ -277,9 +279,11 @@ bb.k:                                             ; preds = %_RNvMs_NtCsbSS6DM8S
   br label %bb.ad
 
 bb.l:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %4 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1     ; 2 uses
-  %.4.i.i.i.i.i.i.i.i.i = select i1 %4, i64 12, i64 5
-  %.5.i.i.i.i.i.i.i.i.i = select i1 %4, ptr @30, ptr @29
+  %5 = shl nuw i64 1, %i.c
+  %6 = and i64 %5, 88751489298
+  %.not7.i.i.i.i.i.i = icmp eq i64 %6, 0          ; 2 uses
+  %.4.i.i.i.i.i.i.i.i.i = select i1 %.not7.i.i.i.i.i.i, i64 5, i64 12
+  %.5.i.i.i.i.i.i.i.i.i = select i1 %.not7.i.i.i.i.i.i, ptr @29, ptr @30
   br label %bb.ad
 
 bb.m:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
@@ -313,45 +317,59 @@ bb.v:                                             ; preds = %_RNvMs_NtCsbSS6DM8S
   br label %bb.ad
 
 bb.w:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %5 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1     ; 2 uses
-  %.6.i.i.i.i.i.i.i.i.i = select i1 %5, i64 12, i64 5
-  %.7.i.i.i.i.i.i.i.i.i = select i1 %5, ptr @42, ptr @41
+  %7 = shl nuw i64 1, %i.c
+  %8 = and i64 %7, 88751489298
+  %.not6.i.i.i.i.i.i = icmp eq i64 %8, 0          ; 2 uses
+  %.6.i.i.i.i.i.i.i.i.i = select i1 %.not6.i.i.i.i.i.i, i64 5, i64 12
+  %.7.i.i.i.i.i.i.i.i.i = select i1 %.not6.i.i.i.i.i.i, ptr @41, ptr @42
   br label %bb.ad
 
 bb.x:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %6 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1     ; 2 uses
-  %.8.i.i.i.i.i.i.i.i.i = select i1 %6, i64 14, i64 7
-  %.9.i.i.i.i.i.i.i.i.i = select i1 %6, ptr @44, ptr @43
+  %9 = shl nuw i64 1, %i.c
+  %10 = and i64 %9, 88751489298
+  %.not5.i.i.i.i.i.i = icmp eq i64 %10, 0         ; 2 uses
+  %.8.i.i.i.i.i.i.i.i.i = select i1 %.not5.i.i.i.i.i.i, i64 7, i64 14
+  %.9.i.i.i.i.i.i.i.i.i = select i1 %.not5.i.i.i.i.i.i, ptr @43, ptr @44
   br label %bb.ad
 
 bb.y:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %7 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1     ; 2 uses
-  %.10.i.i.i.i.i.i.i.i.i = select i1 %7, i64 15, i64 8
-  %.11.i.i.i.i.i.i.i.i.i = select i1 %7, ptr @46, ptr @45
+  %11 = shl nuw i64 1, %i.c
+  %12 = and i64 %11, 88751489298
+  %.not4.i.i.i.i.i.i = icmp eq i64 %12, 0         ; 2 uses
+  %.10.i.i.i.i.i.i.i.i.i = select i1 %.not4.i.i.i.i.i.i, i64 8, i64 15
+  %.11.i.i.i.i.i.i.i.i.i = select i1 %.not4.i.i.i.i.i.i, ptr @45, ptr @46
   br label %bb.ad
 
 bb.z:                                             ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %8 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1     ; 2 uses
-  %.12.i.i.i.i.i.i.i.i.i = select i1 %8, i64 15, i64 8
-  %.13.i.i.i.i.i.i.i.i.i = select i1 %8, ptr @48, ptr @47
+  %13 = shl nuw i64 1, %i.c
+  %14 = and i64 %13, 88751489298
+  %.not3.i.i.i.i.i.i = icmp eq i64 %14, 0         ; 2 uses
+  %.12.i.i.i.i.i.i.i.i.i = select i1 %.not3.i.i.i.i.i.i, i64 8, i64 15
+  %.13.i.i.i.i.i.i.i.i.i = select i1 %.not3.i.i.i.i.i.i, ptr @47, ptr @48
   br label %bb.ad
 
 bb.aa:                                            ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %9 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1     ; 2 uses
-  %.14.i.i.i.i.i.i.i.i.i = select i1 %9, i64 17, i64 10
-  %.15.i.i.i.i.i.i.i.i.i = select i1 %9, ptr @50, ptr @49
+  %15 = shl nuw i64 1, %i.c
+  %16 = and i64 %15, 88751489298
+  %.not2.i.i.i.i.i.i = icmp eq i64 %16, 0         ; 2 uses
+  %.14.i.i.i.i.i.i.i.i.i = select i1 %.not2.i.i.i.i.i.i, i64 10, i64 17
+  %.15.i.i.i.i.i.i.i.i.i = select i1 %.not2.i.i.i.i.i.i, ptr @49, ptr @50
   br label %bb.ad
 
 bb.ab:                                            ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %10 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1    ; 2 uses
-  %.16.i.i.i.i.i.i.i.i.i = select i1 %10, i64 13, i64 6
-  %.17.i.i.i.i.i.i.i.i.i = select i1 %10, ptr @52, ptr @51
+  %17 = shl nuw i64 1, %i.c
+  %18 = and i64 %17, 88751489298
+  %.not1.i.i.i.i.i.i = icmp eq i64 %18, 0         ; 2 uses
+  %.16.i.i.i.i.i.i.i.i.i = select i1 %.not1.i.i.i.i.i.i, i64 6, i64 13
+  %.17.i.i.i.i.i.i.i.i.i = select i1 %.not1.i.i.i.i.i.i, ptr @51, ptr @52
   br label %bb.ad
 
 bb.ac:                                            ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
-  %11 = trunc nuw i8 %.val14.i.i.i.i.i.i to i1    ; 2 uses
-  %.18.i.i.i.i.i.i.i.i.i = select i1 %11, i64 12, i64 5
-  %.19.i.i.i.i.i.i.i.i.i = select i1 %11, ptr @54, ptr @53
+  %19 = shl nuw i64 1, %i.c
+  %20 = and i64 %19, 88751489298
+  %.not.i.i.i.i.i.i = icmp eq i64 %20, 0          ; 2 uses
+  %.18.i.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i64 5, i64 12
+  %.19.i.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr @53, ptr @54
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecReE7reserveCskVLyBV5N46_15ra_ap_rustc_abi.exit.i.i.i
