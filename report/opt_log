@@ -1,0 +1,127 @@
+lance-rs/lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0.bc?download=true
+anki-rs/anki-0407df152365de94.anki.49bf70e6e198d769-cgu.06.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/anki-rs/original/anki-0407df152365de94.anki.49bf70e6e198d769-cgu.06.bc?download=true
+lance-rs/lance_file-e8d9b95001b8e5c0.lance_file.7ecd3f6fdfc526a6-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_file-e8d9b95001b8e5c0.lance_file.7ecd3f6fdfc526a6-cgu.0.bc?download=true
+typst-rs/typst_layout-dbf6d821f089d5d9.typst_layout.57215e5c6dfa9aa8-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/typst-rs/original/typst_layout-dbf6d821f089d5d9.typst_layout.57215e5c6dfa9aa8-cgu.0.bc?download=true
+duckdb/ub_duckdb_main.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/ub_duckdb_main.bc?download=true
+llvm/ASTWriter.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ASTWriter.bc?download=true
+lance-rs/lance_core-8fbb0e4f7848fcc4.lance_core.4691d5757a72bccf-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_core-8fbb0e4f7848fcc4.lance_core.4691d5757a72bccf-cgu.0.bc?download=true
+pola-rs/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.14.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.14.bc?download=true
+pola-rs/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.12.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.12.bc?download=true
+pola-rs/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.05.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.05.bc?download=true
+llvm/PtrDialect.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PtrDialect.bc?download=true
+pola-rs/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.06.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.06.bc?download=true
+node/maglev-code-generator.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/maglev-code-generator.bc?download=true
+pola-rs/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.09.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.09.bc?download=true
+coreutils-rs/uu_sort-67924ef9ea112bf2.uu_sort.bca978c67578681b-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/coreutils-rs/original/uu_sort-67924ef9ea112bf2.uu_sort.bca978c67578681b-cgu.0.bc?download=true
+pola-rs/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.13.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_parquet-d174a6a0d1de3d93.polars_parquet.b72545e931dce2ac-cgu.13.bc?download=true
+casadi/function_internal.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/function_internal.bc?download=true
+qemu/sve_helper.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/sve_helper.bc?download=true
+luau/AutocompleteCore.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luau/original/AutocompleteCore.bc?download=true
+llvm/IntrinsicEmitter.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/IntrinsicEmitter.bc?download=true
+fish-rs/fish-3db1312fccef457a.fish.60153328cb65e96a-cgu.13.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish-3db1312fccef457a.fish.60153328cb65e96a-cgu.13.bc?download=true
+fish-rs/fish-3db1312fccef457a.fish.60153328cb65e96a-cgu.14.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish-3db1312fccef457a.fish.60153328cb65e96a-cgu.14.bc?download=true
+image-rs/image-8036e6f222cb5171.image.759311b8532bf42b-cgu.08.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/image-rs/original/image-8036e6f222cb5171.image.759311b8532bf42b-cgu.08.bc?download=true
+llvm/StructuredDataDarwinLog.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/StructuredDataDarwinLog.bc?download=true
+vcpkg/vcpkgpaths.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/vcpkg/original/vcpkgpaths.bc?download=true
+meilisearch-rs/routes_macros-930ad21b5d8f1140.routes_macros.fdfe8b3bb0265034-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/routes_macros-930ad21b5d8f1140.routes_macros.fdfe8b3bb0265034-cgu.0.bc?download=true
+llama-cpp/ggml-backend-meta.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llama-cpp/original/ggml-backend-meta.bc?download=true
+arrow/cast.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/cast.bc?download=true
+velox/cast.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/cast.bc?download=true
+ripgrep-rs/rg.rg.209bb3de479c597c-cgu.07.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ripgrep-rs/original/rg.rg.209bb3de479c597c-cgu.07.bc?download=true
+fontc-rs/ufo2fontir-46da0edc7bce67f1.ufo2fontir.1df759023741b243-cgu.01.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fontc-rs/original/ufo2fontir-46da0edc7bce67f1.ufo2fontir.1df759023741b243-cgu.01.bc?download=true
+tokenizers-rs/tokenizers-73a819a89809b4f0.tokenizers.1fce5ff7a8803495-cgu.11.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tokenizers-rs/original/tokenizers-73a819a89809b4f0.tokenizers.1fce5ff7a8803495-cgu.11.bc?download=true
+pingora-rs/pingora_core-a5e7685b4b87ec55.pingora_core.ebac96924b791bb8-cgu.05.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pingora-rs/original/pingora_core-a5e7685b4b87ec55.pingora_core.ebac96924b791bb8-cgu.05.bc?download=true
+vcpkg/commands.export.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/vcpkg/original/commands.export.bc?download=true
+llvm/RISCVInsertVSETVLI.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RISCVInsertVSETVLI.bc?download=true
+recastnavigation/imgui_draw.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/recastnavigation/original/imgui_draw.bc?download=true
+rocksdb/version_edit.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rocksdb/original/version_edit.bc?download=true
+tgrep-rs/tgrep.tgrep.897916b5d56b90bc-cgu.02.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tgrep-rs/original/tgrep.tgrep.897916b5d56b90bc-cgu.02.bc?download=true
+luanti/content_mapblock.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/content_mapblock.bc?download=true
+wireshark/packet-h265.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-h265.bc?download=true
+ffmpeg/input.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/input.bc?download=true
+meilisearch-rs/routes_macros-c4247d182ac9f1d4.routes_macros.62c72d2400f6d6e4-cgu.01.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/routes_macros-c4247d182ac9f1d4.routes_macros.62c72d2400f6d6e4-cgu.01.bc?download=true
+bullet3/btGeneric6DofSpringConstraint.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btGeneric6DofSpringConstraint.bc?download=true
+sdl/SDL_keyboard.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sdl/original/SDL_keyboard.bc?download=true
+llvm-test-suite/ShrinkDecoder.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/ShrinkDecoder.bc?download=true
+graphviz/randomkit.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/randomkit.bc?download=true
+
+Reproduce first opt error with backtrace: lance-rs/lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0.bc: failed to run opt
+Command: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/lance-rs/original/lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/lance-rs-s-lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0.bc
+Exit code: -6
+Stderr:
+opt: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-project/llvm/include/llvm/Support/Casting.h:572: decltype(auto) llvm::cast(From *) [To = llvm::ConstantInt, From = llvm::Constant]: Assertion `isa<To>(Val) && "cast<Ty>() argument of incompatible type!"' failed.
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and instructions to reproduce the bug.
+Stack dump:
+0.	Program arguments: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/lance-rs/original/lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/lance-rs-s-lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0.bc
+1.	Running pass "function<eager-inv>(drop-unnecessary-assumes,float2int,lower-constant-intrinsics,chr,loop(loop-rotate<header-duplication;no-prepare-for-lto;check-exit-count>,loop-deletion,loop-interchange),loop-distribute,inject-tli-mappings,loop-vectorize<no-interleave-forced-only;no-vectorize-forced-only;>,drop-unnecessary-assumes<drop-deref>,infer-alignment,loop-load-elim,instcombine<max-iterations=1;no-verify-fixpoint>,simplifycfg<bonus-inst-threshold=1;forward-switch-cond;switch-range-to-icmp;switch-to-arithmetic;switch-to-lookup;no-keep-loops;hoist-common-insts;no-hoist-loads-stores-with-cond-faulting;sink-common-insts;speculate-blocks;simplify-cond-branch;no-speculate-unpredictables>,slp-vectorizer,vector-combine,instcombine<max-iterations=1;no-verify-fixpoint>,loop-unroll<O3>,transform-warning,sroa<preserve-cfg;aggregate-to-vector>,infer-alignment,instcombine<max-iterations=1;no-verify-fixpoint>,loop-mssa(licm<allowspeculation>),alignment-from-assumptions,loop-sink,instsimplify,div-rem-pairs,mergeicmps,expand-memcmp,tailcallelim,simplifycfg<bonus-inst-threshold=1;no-forward-switch-cond;switch-range-to-icmp;switch-to-arithmetic;no-switch-to-lookup;keep-loops;no-hoist-common-insts;hoist-loads-stores-with-cond-faulting;no-sink-common-insts;speculate-blocks;simplify-cond-branch;speculate-unpredictables>)" on module "/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/lance-rs/original/lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0.bc"
+2.	Running pass "instcombine<max-iterations=1;no-verify-fixpoint>" on function "_RNvXs1_NtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_doneINtB5_9MaybeDoneNCNvMs3_NtNtCshkPeWWG1flk_5lance7dataset8fragmentNtB1i_12FileFragment4open0ENtNtNtCscI6d9CVNmLh_4core6future6future6Future4pollCsfR8GmIBoxTX_21lance_namespace_impls"
+ #0 0x00005555559558bb llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4018bb)
+ #1 0x0000555555952691 llvm::sys::RunSignalHandlers() (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3fe691)
+ #2 0x000055555595661b SignalHandler(int, siginfo_t*, void*) Signals.cpp:0:0
+ #3 0x00007ffff7a3a330 (/lib/x86_64-linux-gnu/libc.so.6+0x45330)
+ #4 0x00007ffff7a93c0c pthread_kill (/lib/x86_64-linux-gnu/libc.so.6+0x9ec0c)
+ #5 0x00007ffff7a3a27e raise (/lib/x86_64-linux-gnu/libc.so.6+0x4527e)
+ #6 0x00007ffff7a1d8ff abort (/lib/x86_64-linux-gnu/libc.so.6+0x288ff)
+ #7 0x00007ffff7a1d81b (/lib/x86_64-linux-gnu/libc.so.6+0x2881b)
+ #8 0x00007ffff7a30517 (/lib/x86_64-linux-gnu/libc.so.6+0x3b517)
+ #9 0x00005555560622de (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0xb0e2de)
+#10 0x000055555769065b llvm::InstCombinerImpl::visitTrunc(llvm::TruncInst&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x213c65b)
+#11 0x0000555557618e7b llvm::InstCombinerImpl::run() (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x20c4e7b)
+#12 0x000055555761c00b combineInstructionsOverFunction(llvm::Function&, llvm::InstructionWorklist&, llvm::AAResults*, llvm::AssumptionCache&, llvm::TargetLibraryInfo&, llvm::TargetTransformInfo&, llvm::DominatorTree&, llvm::OptimizationRemarkEmitter&, llvm::BlockFrequencyInfo*, llvm::BranchProbabilityInfo*, llvm::ProfileSummaryInfo*, llvm::InstCombineOptions const&) InstructionCombining.cpp:0:0
+#13 0x000055555761b93f llvm::InstCombinePass::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x20c793f)
+#14 0x0000555558275b43 llvm::PassManager<llvm::Function, llvm::AnalysisManager<llvm::Function>>::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d21b43)
+#15 0x00005555582790ed llvm::ModuleToFunctionPassAdaptor::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d250ed)
+#16 0x0000555558274e9d llvm::PassManager<llvm::Module, llvm::AnalysisManager<llvm::Module>>::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d20e9d)
+#17 0x0000555555a07508 llvm::runPassPipeline(llvm::StringRef, llvm::Module&, llvm::TargetMachine*, llvm::TargetLibraryInfoImpl*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::StringRef, llvm::ArrayRef<llvm::PassPluginLibraryInfo>, llvm::ArrayRef<std::function<void (llvm::PassBuilder&)>>, llvm::opt_tool::OutputKind, llvm::opt_tool::VerifierKind, bool, bool, bool, bool, bool, bool, bool, bool) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4b3508)
+#18 0x00005555559fe1e4 optMain (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4aa1e4)
+#19 0x000055555593ba23 main (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3e7a23)
+#20 0x00007ffff7a1f1ca (/lib/x86_64-linux-gnu/libc.so.6+0x2a1ca)
+#21 0x00007ffff7a1f28b __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28b)
+#22 0x000055555593b915 _start (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3e7915)
+
