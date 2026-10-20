@@ -63,7 +63,7 @@ bb.b:                                             ; preds = %bb.a, %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp ult i32 %0, %i.f                    ; 2 uses
-  %i.i = add nuw i32 %i.c, 1
+  %i.i = add i32 %i.c, 1
   %.119 = select i1 %i.h, i32 %.01826, i32 %i.i   ; 3 uses
   %.1 = select i1 %i.h, i32 %i.c, i32 %.027       ; 3 uses
   %i.j = icmp ult i32 %.119, %.1
@@ -112,7 +112,7 @@ bb.b:                                             ; preds = %bb.a, %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp ult i32 %0, %i.f                    ; 2 uses
-  %i.i = add nuw i32 %i.c, 1
+  %i.i = add i32 %i.c, 1
   %.119 = select i1 %i.h, i32 %.01826, i32 %i.i   ; 3 uses
   %.1 = select i1 %i.h, i32 %i.c, i32 %.027       ; 3 uses
   %i.j = icmp ult i32 %.119, %.1
@@ -155,7 +155,7 @@ bb.b:                                             ; preds = %bb.a, %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp ult i32 %0, %i.f                    ; 2 uses
-  %i.i = add nuw i32 %i.c, 1
+  %i.i = add i32 %i.c, 1
   %.119 = select i1 %i.h, i32 %.01826, i32 %i.i   ; 3 uses
   %.1 = select i1 %i.h, i32 %i.c, i32 %.027       ; 3 uses
   %i.j = icmp ult i32 %.119, %.1
@@ -198,7 +198,7 @@ bb.b:                                             ; preds = %bb.a, %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp ult i32 %0, %i.f                    ; 2 uses
-  %i.i = add nuw i32 %i.c, 1
+  %i.i = add i32 %i.c, 1
   %.119 = select i1 %i.h, i32 %.01826, i32 %i.i   ; 3 uses
   %.1 = select i1 %i.h, i32 %i.c, i32 %.027       ; 3 uses
   %i.j = icmp ult i32 %.119, %.1
@@ -527,7 +527,7 @@ bb.i:                                             ; preds = %_ZL15LowerLargeShif
 
 bb.j:                                             ; preds = %.preheader117
   %i.bh = icmp ult i32 %i.av, %i.bf               ; 2 uses
-  %i.bi = add nuw i32 %i.bc, 1
+  %i.bi = add i32 %i.bc, 1
   %.119.i = select i1 %i.bh, i32 %.01826.i, i32 %i.bi ; 3 uses
   %.1.i = select i1 %i.bh, i32 %i.bc, i32 %.027.i ; 3 uses
   %i.bj = icmp ult i32 %.119.i, %.1.i
@@ -553,7 +553,7 @@ _ZN4llvm4Mips18MipsR62MicroMipsR6EjNS0_4ArchE.exit.thread: ; preds = %bb.k, %bb.
 
 bb.l:                                             ; preds = %_ZN4llvm4Mips18MipsR62MicroMipsR6EjNS0_4ArchE.exit.thread
   %i.bs = icmp ult i32 %i.av, %i.bq               ; 2 uses
-  %i.bt = add nuw i32 %i.bn, 1
+  %i.bt = add i32 %i.bn, 1
   %.119.i65 = select i1 %i.bs, i32 %.01826.i64, i32 %i.bt ; 3 uses
   %.1.i66 = select i1 %i.bs, i32 %i.bn, i32 %.027.i63 ; 3 uses
   %i.bu = icmp ult i32 %.119.i65, %.1.i66
@@ -579,7 +579,7 @@ bb.m:                                             ; preds = %bb.l, %_ZN4llvm4Mip
 
 bb.n:                                             ; preds = %.preheader
   %i.cd = icmp ult i32 %i.av, %i.cb               ; 2 uses
-  %i.ce = add nuw i32 %i.by, 1
+  %i.ce = add i32 %i.by, 1
   %.119.i73 = select i1 %i.cd, i32 %.01826.i72, i32 %i.ce ; 3 uses
   %.1.i74 = select i1 %i.cd, i32 %i.by, i32 %.027.i71 ; 3 uses
   %i.cf = icmp ult i32 %.119.i73, %.1.i74
@@ -615,7 +615,7 @@ _ZN4llvm4Mips15Std2MicroMipsR6EjNS0_4ArchE.exit.thread: ; preds = %_ZN4llvm4Mips
 
 bb.p:                                             ; preds = %_ZN4llvm4Mips15Std2MicroMipsR6EjNS0_4ArchE.exit.thread
   %i.cp = icmp ult i32 %i.av, %i.cn               ; 2 uses
-  %i.cq = add nuw i32 %i.ck, 1
+  %i.cq = add i32 %i.ck, 1
   %.119.i81 = select i1 %i.cp, i32 %.01826.i80, i32 %i.cq ; 3 uses
   %.1.i82 = select i1 %i.cp, i32 %i.ck, i32 %.027.i79 ; 3 uses
   %i.cr = icmp ult i32 %.119.i81, %.1.i82

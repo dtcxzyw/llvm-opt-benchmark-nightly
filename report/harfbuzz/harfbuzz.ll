@@ -205,7 +205,7 @@ bb.ke:                                            ; preds = %_ZNK17hb_sorted_arr
   br i1 %i.ahy, label %bb.kf, label %.critedge106
 
 bb.kf:                                            ; preds = %bb.ke
-  %i.ahz = add nuw i32 %i.aht, 1
+  %i.ahz = add i32 %i.aht, 1
   br label %bb.kg
 
 bb.kg:                                            ; preds = %bb.kf, %_ZNK17hb_sorted_array_tIK12LangTagRangeE5bfindIjEEbRKT_Pj14hb_not_found_tj.exit

@@ -103,7 +103,7 @@ bb.b:                                             ; preds = %bb.a, %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp ult i32 %0, %i.f                    ; 2 uses
-  %i.i = add nuw i32 %i.c, 1
+  %i.i = add i32 %i.c, 1
   %.116 = select i1 %i.h, i32 %.01522, i32 %i.i   ; 3 uses
   %.1 = select i1 %i.h, i32 %i.c, i32 %.023       ; 3 uses
   %i.j = icmp ult i32 %.116, %.1
@@ -506,7 +506,7 @@ bb.l:                                             ; preds = %bb.m, %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bz = icmp ugt i32 %i.bx, %i.bn               ; 2 uses
-  %i.ca = add nuw i32 %i.bu, 1
+  %i.ca = add i32 %i.bu, 1
   %.116.i.i.i.i = select i1 %i.bz, i32 %.01522.i.i.i.i, i32 %i.ca ; 3 uses
   %.1.i.i.i.i = select i1 %i.bz, i32 %i.bu, i32 %.023.i.i.i.i ; 3 uses
   %i.cb = icmp ult i32 %.116.i.i.i.i, %.1.i.i.i.i
