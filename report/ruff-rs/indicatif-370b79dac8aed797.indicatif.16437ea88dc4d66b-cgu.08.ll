@@ -202,7 +202,7 @@ bb.a:
   %.sroa.7.0107 = phi i64 [ 0, %bb.a ], [ %i.j, %.backedge.backedge ] ; 5 uses
   %.sroa.0.0.ptr = getelementptr inbounds nuw i8, ptr @20, i64 %.sroa.0.0.idx108 ; 2 uses
   %.sroa.0.0.add = add nuw nsw i64 %.sroa.0.0.idx108, 48 ; 3 uses
-  %i.j = add i64 %.sroa.7.0107, 1                 ; 3 uses
+  %i.j = add i64 %.sroa.7.0107, 1                 ; 4 uses
   %i.k = load i64, ptr %.sroa.0.0.ptr, align 8, !noundef !3 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ptr, i64 8
   %i.m = load i32, ptr %i.l, align 8, !range !34, !noundef !3 ; 2 uses
@@ -215,14 +215,14 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
 
 bb.b:                                             ; preds = %.backedge
   %i.p = getelementptr inbounds nuw [48 x i8], ptr @20, i64 %i.j
-  %i.q = load i64, ptr %i.p, align 8, !noundef !3 ; 2 uses
+  %i.q = load i64, ptr %i.p, align 8, !noundef !3
   %i.r = lshr i64 %i.q, 1
   %i.s = add i64 %i.r, %i.g                       ; 4 uses
   %i.t = icmp ult i64 %i.s, %i.g
   br i1 %i.t, label %_RNvMNtCs4NRVxsYgnAr_4core4timeNtB2_8Duration11checked_add.exit, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %2 = trunc i64 %i.q to i1
+  %2 = icmp eq i64 %i.j, 5
   %i.u = select i1 %2, i32 500000000, i32 0
   %i.v = add nuw nsw i32 %i.i, %i.u               ; 3 uses
   %i.w = icmp samesign ugt i32 %i.v, 999999999
