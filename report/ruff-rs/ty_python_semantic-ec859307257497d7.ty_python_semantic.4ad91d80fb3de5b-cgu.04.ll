@@ -205,15 +205,16 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
 define hidden noundef range(i8 -1, 2) i8 @_RNvXs2_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator10min_by_key7compareTjllETllEEINtB7_6FnOnceTRTB1X_B1S_EB2g_EE9call_onceCsoTR8nlGN3X_18ty_python_semantic(ptr noalias nofree noundef nonnull readnone captures(none) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %1, ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %2) unnamed_addr #12 {
 bb.a:
-  %3 = load <2 x i32>, ptr %1, align 8
-  %.val = load i32, ptr %1, align 8, !noundef !12
-  %4 = load <2 x i32>, ptr %2, align 8
-  %.val2 = load i32, ptr %2, align 8, !noundef !12
-  %5 = icmp eq i32 %.val, %.val2
-  %6 = tail call <2 x i8> @llvm.scmp.v2i8.v2i32(<2 x i32> %3, <2 x i32> %4) ; 2 uses
-  %7 = extractelement <2 x i8> %6, i64 0
-  %8 = extractelement <2 x i8> %6, i64 1
-  %.sroa.0.0.i.i.i = select i1 %5, i8 %8, i8 %7
+  %.val = load i32, ptr %1, align 8, !noundef !12 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %.val1 = load i32, ptr %3, align 4
+  %.val2 = load i32, ptr %2, align 8, !noundef !12 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %.val3 = load i32, ptr %4, align 4
+  %5 = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %.val, i32 %.val2)
+  %6 = icmp eq i32 %.val, %.val2
+  %7 = tail call range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %.val1, i32 %.val3)
+  %.sroa.0.0.i.i.i = select i1 %6, i8 %7, i8 %5
   ret i8 %.sroa.0.0.i.i.i
 }
 
@@ -616,6 +617,9 @@ declare hidden noundef zeroext i1 @_RNvXs1_NtCs45bxiIjzMqg_5salsa8functionINtB5_
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef zeroext i1 @_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types8callable12CallableTypeINtB5_14SlicePartialEqBC_E17equal_same_lengthBI_(ptr noundef, ptr noundef, i64 noundef) unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #50
+
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef zeroext i1 @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures14ParametersDataENtB6_5Debug3fmtB19_(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias noundef align 8 dereferenceable(24)) unnamed_addr #2
 
@@ -1017,9 +1021,6 @@ declare i32 @llvm.usub.sat.i32(i32, i32) #50
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #50
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) <2 x i8> @llvm.scmp.v2i8.v2i32(<2 x i32>, <2 x i32>) #50
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

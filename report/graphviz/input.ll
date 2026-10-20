@@ -204,16 +204,13 @@ sub_2173:                                         ; preds = %sub_1172
   %.sink = select i1 %1, i32 %i.cb, i32 %i.ca
   store i32 %.sink, ptr %i.bz, align 4, !tbaa !74
   %i.cc = call ptr @agattr_text(ptr noundef nonnull %0, i32 noundef 0, ptr noundef nonnull @.str.59, ptr noundef null) #23
-  %i.cd = call double @late_double(ptr noundef nonnull %0, ptr noundef %i.cc, double noundef 2.500000e-01, double noundef 2.000000e-02) #23 ; 3 uses
+  %i.cd = call double @late_double(ptr noundef nonnull %0, ptr noundef %i.cc, double noundef 2.500000e-01, double noundef 2.000000e-02) #23 ; 4 uses
   store double %i.cd, ptr %i.a, align 8, !tbaa !51
   %i.ce = fmul double %i.cd, 7.200000e+01
   %i.cf = fcmp ult double %i.ce, 0.000000e+00
-  %3 = insertelement <2 x double> poison, double %i.cd, i64 0
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
-  %5 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> splat (double 7.200000e+01), <2 x double> <double 5.000000e-01, double -5.000000e-01>) ; 2 uses
-  %6 = extractelement <2 x double> %5, i64 0
-  %7 = extractelement <2 x double> %5, i64 1
-  %.in = select i1 %i.cf, double %7, double %6
+  %3 = call double @llvm.fmuladd.f64(double %i.cd, double 7.200000e+01, double 5.000000e-01)
+  %4 = call double @llvm.fmuladd.f64(double %i.cd, double 7.200000e+01, double -5.000000e-01)
+  %.in = select i1 %i.cf, double %4, double %3
   %i.cg = fptosi double %.in to i32
   %i.ch = load ptr, ptr %i.f, align 8, !tbaa !58
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 352
@@ -257,15 +254,12 @@ bb.ag:                                            ; preds = %.tail170
 
 bb.ah:                                            ; preds = %bb.ae, %bb.af, %bb.ag
   %i.cs = phi ptr [ %.pre181, %bb.ae ], [ %.pre181, %bb.af ], [ %.pre, %bb.ag ]
-  %i.ct = phi double [ %i.cp, %bb.ae ], [ %i.cp, %bb.af ], [ 5.000000e-01, %bb.ag ] ; 2 uses
+  %i.ct = phi double [ %i.cp, %bb.ae ], [ %i.cp, %bb.af ], [ 5.000000e-01, %bb.ag ] ; 3 uses
   %i.cu = fmul double %i.ct, 7.200000e+01
   %i.cv = fcmp ult double %i.cu, 0.000000e+00
-  %8 = insertelement <2 x double> poison, double %i.ct, i64 0
-  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
-  %10 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> splat (double 7.200000e+01), <2 x double> <double 5.000000e-01, double -5.000000e-01>) ; 2 uses
-  %11 = extractelement <2 x double> %10, i64 0
-  %12 = extractelement <2 x double> %10, i64 1
-  %.in156 = select i1 %i.cv, double %12, double %11
+  %5 = call double @llvm.fmuladd.f64(double %i.ct, double 7.200000e+01, double 5.000000e-01)
+  %6 = call double @llvm.fmuladd.f64(double %i.ct, double 7.200000e+01, double -5.000000e-01)
+  %.in156 = select i1 %i.cv, double %6, double %5
   %i.cw = fptosi double %.in156 to i32
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cs, i64 356
   store i32 %i.cw, ptr %i.cx, align 4, !tbaa !117

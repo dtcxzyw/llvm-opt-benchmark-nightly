@@ -205,19 +205,20 @@ bb.k:                                             ; preds = %bb.j
   %i.bu = select i1 %i.bq, float 5.000000e-01, float %i.bt
   %i.bv = fptosi float %i.bu to i32               ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %7 = load <2 x float>, ptr %i.bw, align 4, !tbaa !190 ; 5 uses
-  %8 = extractelement <2 x float> %7, i64 0
-  %9 = fcmp olt float %8, 0.000000e+00
-  %10 = fcmp ogt <2 x float> %7, splat (float 1.000000e+00)
-  %11 = select <2 x i1> %10, <2 x float> splat (float 1.000000e+00), <2 x float> %7
-  %12 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> splat (float 2.550000e+02), <2 x float> splat (float 5.000000e-01)) ; 2 uses
-  %13 = extractelement <2 x float> %12, i64 0
-  %14 = select i1 %9, float 5.000000e-01, float %13
-  %15 = fptosi float %14 to i32                   ; 3 uses
-  %16 = extractelement <2 x float> %7, i64 1
-  %17 = fcmp olt float %16, 0.000000e+00
-  %18 = extractelement <2 x float> %12, i64 1
-  %i.bx = select i1 %17, float 5.000000e-01, float %18
+  %7 = load float, ptr %i.bw, align 4, !tbaa !190 ; 4 uses
+  %8 = fcmp olt float %7, 0.000000e+00
+  %9 = fcmp ogt float %7, 1.000000e+00
+  %10 = select i1 %9, float 1.000000e+00, float %7
+  %11 = tail call float @llvm.fmuladd.f32(float %10, float 2.550000e+02, float 5.000000e-01)
+  %12 = select i1 %8, float 5.000000e-01, float %11
+  %13 = fptosi float %12 to i32                   ; 3 uses
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %15 = load float, ptr %14, align 4, !tbaa !190  ; 4 uses
+  %16 = fcmp olt float %15, 0.000000e+00
+  %17 = fcmp ogt float %15, 1.000000e+00
+  %18 = select i1 %17, float 1.000000e+00, float %15
+  %19 = tail call float @llvm.fmuladd.f32(float %18, float 2.550000e+02, float 5.000000e-01)
+  %i.bx = select i1 %16, float 5.000000e-01, float %19
   %i.by = fptosi float %i.bx to i32               ; 3 uses
   %i.bz = and i32 %1, 2
   %.not47 = icmp eq i32 %i.bz, 0                  ; 2 uses
@@ -244,9 +245,8 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.cj = phi i32 [ %i.ch, %bb.m ], [ 255, %bb.l ] ; 2 uses
   %i.ck = phi double [ %i.ci, %bb.m ], [ 1.000000e+00, %bb.l ]
   %i.cl = fpext float %i.bp to double
-  %19 = fpext <2 x float> %7 to <2 x double>      ; 2 uses
-  %20 = extractelement <2 x double> %19, i64 0
-  %21 = extractelement <2 x double> %19, i64 1
+  %20 = fpext float %7 to double
+  %21 = fpext float %15 to double
   %i.cm = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull @.str.95, double noundef %i.cl, double noundef %20, double noundef %21, double noundef %i.ck) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
   store <2 x float> zeroinitializer, ptr %3, align 8, !tbaa !190
@@ -259,7 +259,7 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.co = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull @.str.96, i32 noundef %i.bv, i32 noundef %15, i32 noundef %i.by, i32 noundef %i.cj) ; 0 uses
+  %i.co = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull @.str.96, i32 noundef %i.bv, i32 noundef %13, i32 noundef %i.by, i32 noundef %i.cj) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
   store <2 x float> zeroinitializer, ptr %4, align 8, !tbaa !190
   %i.cp = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.a, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %4)
@@ -271,7 +271,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %i.cq = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull @.str.62, i32 noundef %i.bv, i32 noundef %15, i32 noundef %i.by) ; 0 uses
+  %i.cq = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull @.str.62, i32 noundef %i.bv, i32 noundef %13, i32 noundef %i.by) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #41
   store <2 x float> zeroinitializer, ptr %5, align 8, !tbaa !190
   %i.cr = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.a, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %5)
@@ -286,7 +286,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br i1 %.not47, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %bb.t
-  %i.cs = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull @.str.61, i32 noundef %i.bv, i32 noundef %15, i32 noundef %i.by, i32 noundef %i.cj) ; 0 uses
+  %i.cs = call noundef i32 (ptr, i64, ptr, ...) @_Z14ImFormatStringPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 64, ptr noundef nonnull @.str.61, i32 noundef %i.bv, i32 noundef %13, i32 noundef %i.by, i32 noundef %i.cj) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #41
   store <2 x float> zeroinitializer, ptr %6, align 8, !tbaa !190
   %i.ct = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull %i.a, i1 noundef zeroext false, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %6)
@@ -689,6 +689,7 @@ bb.dn:                                            ; preds = %bb.dl, %bb.dm, %bb.
 bb.do:                                            ; preds = %bb.dn
   %i.aas = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.aat = load float, ptr %i.aas, align 4, !tbaa !190 ; 3 uses
+  %41 = fcmp olt float %i.aat, 0.000000e+00
   %i.aau = fcmp ogt float %i.aat, 1.000000e+00
   %i.aav = select i1 %i.aau, float 1.000000e+00, float %i.aat
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #41
@@ -712,51 +713,46 @@ bb.do:                                            ; preds = %bb.dn
   call void @_ZN10ImDrawList23AddRectFilledMultiColorERK6ImVec2S2_jjjj(ptr noundef nonnull align 8 dereferenceable(224) %i.ae, ptr noundef nonnull align 4 dereferenceable(8) %40, ptr noundef nonnull align 4 dereferenceable(8) %i.aba, i32 noundef %i.su, i32 noundef %i.su, i32 noundef %i.abf, i32 noundef %i.abf)
   %i.abg = load float, ptr %i.cm, align 4, !tbaa !197
   %i.abh = fsub float 1.000000e+00, %i.aav
+  %42 = select i1 %41, float 1.000000e+00, float %i.abh
+  %43 = call float @llvm.fmuladd.f32(float %42, float %i.cd, float %i.abg)
+  %i.abi = fadd float %43, 5.000000e-01
+  %44 = fptosi float %i.abi to i32
+  %45 = sitofp i32 %44 to float
   %.sroa.012.0.copyload = load <2 x float>, ptr %40, align 8, !tbaa !190
   %.sroa.0.0.copyload = load <2 x float>, ptr %i.aba, align 8, !tbaa !190
   call void @_ZN5ImGui17RenderFrameBorderE6ImVec2S0_f(<2 x float> %.sroa.012.0.copyload, <2 x float> %.sroa.0.0.copyload, float noundef 0.000000e+00)
-  %41 = fadd float %i.cu, -1.000000e+00           ; 3 uses
-  %.sroa.0550.0.vec.insert = insertelement <2 x float> poison, float %41, i64 0
-  %i.abi = fadd float %i.cg, 1.000000e+00         ; 5 uses
-  %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %i.abi, i64 0
-  %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %i.cg, i64 1 ; 2 uses
-  %42 = fadd float %i.bw, 2.000000e+00
-  %43 = load float, ptr %i.rl, align 4, !tbaa !771 ; 2 uses
-  %44 = fcmp olt float %43, 0.000000e+00
-  %45 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.aat, i64 0
-  %i.abj = insertelement <2 x float> <float 0.000000e+00, float poison>, float %43, i64 1 ; 2 uses
-  %46 = fcmp olt <2 x float> %45, %i.abj
-  %i.abk = insertelement <2 x float> %i.abj, float %i.abh, i64 0
-  %47 = select <2 x i1> %46, <2 x float> splat (float 1.000000e+00), <2 x float> %i.abk
-  %i.abl = insertelement <2 x float> <float poison, float 2.550000e+02>, float %i.cd, i64 0
-  %i.abm = insertelement <2 x float> <float poison, float 5.000000e-01>, float %i.abg, i64 0
-  %48 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %47, <2 x float> %i.abl, <2 x float> %i.abm) ; 2 uses
-  %49 = extractelement <2 x float> %48, i64 0
-  %50 = fadd float %49, 5.000000e-01
-  %51 = fptosi float %50 to i32
-  %52 = sitofp i32 %51 to float
-  %.sroa.0550.4.vec.insert = insertelement <2 x float> %.sroa.0550.0.vec.insert, float %52, i64 1 ; 4 uses
-  %53 = extractelement <2 x float> %48, i64 1
-  %i.abn = select i1 %44, float 5.000000e-01, float %53
+  %46 = fadd float %i.cu, -1.000000e+00           ; 3 uses
+  %i.abj = insertelement <2 x float> poison, float %46, i64 0
+  %i.abk = insertelement <2 x float> %i.abj, float %45, i64 1 ; 4 uses
+  %47 = fadd float %i.cg, 1.000000e+00            ; 5 uses
+  %i.abl = insertelement <2 x float> poison, float %47, i64 0
+  %i.abm = insertelement <2 x float> %i.abl, float %i.cg, i64 1 ; 2 uses
+  %48 = fadd float %i.bw, 2.000000e+00
+  %49 = load float, ptr %i.rl, align 4, !tbaa !771 ; 3 uses
+  %50 = fcmp olt float %49, 0.000000e+00
+  %51 = fcmp ogt float %49, 1.000000e+00
+  %52 = select i1 %51, float 1.000000e+00, float %49
+  %53 = call float @llvm.fmuladd.f32(float %52, float 2.550000e+02, float 5.000000e-01)
+  %i.abn = select i1 %50, float 5.000000e-01, float %53
   %i.abo = fptosi float %i.abn to i32
-  %i.abp = fadd float %i.abi, %41                 ; 2 uses
+  %i.abp = fadd float %47, %46                    ; 2 uses
   %i.abq = fadd float %i.abp, 1.000000e+00
-  %.sroa.048.4.vec.insert.i542 = insertelement <2 x float> %.sroa.0550.4.vec.insert, float %i.abq, i64 0
-  %i.abr = fadd float %i.abi, 2.000000e+00
+  %.sroa.048.4.vec.insert.i542 = insertelement <2 x float> %i.abk, float %i.abq, i64 0
+  %i.abr = fadd float %47, 2.000000e+00
   %.sroa.046.0.vec.insert.i544 = insertelement <2 x float> poison, float %i.abr, i64 0
-  %.sroa.046.4.vec.insert.i545 = insertelement <2 x float> %.sroa.046.0.vec.insert.i544, float %i.abi, i64 1 ; 2 uses
+  %.sroa.046.4.vec.insert.i545 = insertelement <2 x float> %.sroa.046.0.vec.insert.i544, float %47, i64 1 ; 2 uses
   %i.abs = shl i32 %i.abo, 24                     ; 3 uses
   call void @_ZN5ImGui21RenderArrowPointingAtEP10ImDrawList6ImVec2S2_8ImGuiDirj(ptr noundef nonnull %i.ae, <2 x float> %.sroa.048.4.vec.insert.i542, <2 x float> %.sroa.046.4.vec.insert.i545, i32 noundef 1, i32 noundef %i.abs)
-  %.sroa.044.4.vec.insert.i546 = insertelement <2 x float> %.sroa.0550.4.vec.insert, float %i.abp, i64 0
+  %.sroa.044.4.vec.insert.i546 = insertelement <2 x float> %i.abk, float %i.abp, i64 0
   %i.abt = or disjoint i32 %i.abs, 16777215       ; 2 uses
-  call void @_ZN5ImGui21RenderArrowPointingAtEP10ImDrawList6ImVec2S2_8ImGuiDirj(ptr noundef nonnull %i.ae, <2 x float> %.sroa.044.4.vec.insert.i546, <2 x float> %.sroa.0.4.vec.insert, i32 noundef 1, i32 noundef %i.abt)
-  %i.abu = fadd float %42, %41
-  %i.abv = fsub float %i.abu, %i.abi              ; 2 uses
+  call void @_ZN5ImGui21RenderArrowPointingAtEP10ImDrawList6ImVec2S2_8ImGuiDirj(ptr noundef nonnull %i.ae, <2 x float> %.sroa.044.4.vec.insert.i546, <2 x float> %i.abm, i32 noundef 1, i32 noundef %i.abt)
+  %i.abu = fadd float %48, %46
+  %i.abv = fsub float %i.abu, %47                 ; 2 uses
   %i.abw = fadd float %i.abv, -1.000000e+00
-  %.sroa.042.4.vec.insert.i547 = insertelement <2 x float> %.sroa.0550.4.vec.insert, float %i.abw, i64 0
+  %.sroa.042.4.vec.insert.i547 = insertelement <2 x float> %i.abk, float %i.abw, i64 0
   call void @_ZN5ImGui21RenderArrowPointingAtEP10ImDrawList6ImVec2S2_8ImGuiDirj(ptr noundef nonnull %i.ae, <2 x float> %.sroa.042.4.vec.insert.i547, <2 x float> %.sroa.046.4.vec.insert.i545, i32 noundef 0, i32 noundef %i.abs)
-  %.sroa.0.4.vec.insert.i548 = insertelement <2 x float> %.sroa.0550.4.vec.insert, float %i.abv, i64 0
-  call void @_ZN5ImGui21RenderArrowPointingAtEP10ImDrawList6ImVec2S2_8ImGuiDirj(ptr noundef nonnull %i.ae, <2 x float> %.sroa.0.4.vec.insert.i548, <2 x float> %.sroa.0.4.vec.insert, i32 noundef 0, i32 noundef %i.abt)
+  %.sroa.0.4.vec.insert.i548 = insertelement <2 x float> %i.abk, float %i.abv, i64 0
+  call void @_ZN5ImGui21RenderArrowPointingAtEP10ImDrawList6ImVec2S2_8ImGuiDirj(ptr noundef nonnull %i.ae, <2 x float> %.sroa.0.4.vec.insert.i548, <2 x float> %i.abm, i32 noundef 0, i32 noundef %i.abt)
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #41
   br label %bb.dp
 
@@ -1136,9 +1132,9 @@ _ZN5ImGui9SeparatorEv.exit:                       ; preds = %bb.b, %bb.e, %bb.d,
   store float %i.aa, ptr %i.ab, align 4, !tbaa !197
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.ad = load <2 x float>, ptr %1, align 4, !tbaa !190 ; 4 uses
+  %i.ad = load <2 x float>, ptr %1, align 4, !tbaa !190 ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.af = load float, ptr %i.ae, align 4, !tbaa !190 ; 3 uses
+  %i.af = load float, ptr %i.ae, align 4, !tbaa !190 ; 4 uses
   %i.ag = and i32 %2, 2
   %.not56 = icmp eq i32 %i.ag, 0                  ; 4 uses
   br i1 %.not56, label %bb.f, label %bb.g
@@ -1162,19 +1158,18 @@ bb.g:                                             ; preds = %_ZN5ImGui9Separator
   %i.aq = tail call float @llvm.fmuladd.f32(float %i.ap, float 2.550000e+02, float 5.000000e-01)
   %i.ar = select i1 %i.an, float 5.000000e-01, float %i.aq
   %i.as = fptosi float %i.ar to i32               ; 4 uses
-  %i.at = extractelement <2 x float> %i.ad, i64 1
+  %i.at = extractelement <2 x float> %i.ad, i64 1 ; 3 uses
   %i.au = fcmp olt float %i.at, 0.000000e+00
-  %5 = fcmp olt float %i.af, 0.000000e+00
-  %6 = shufflevector <2 x float> %i.ad, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %7 = insertelement <2 x float> %6, float %i.af, i64 1 ; 2 uses
-  %8 = fcmp ogt <2 x float> %7, splat (float 1.000000e+00)
-  %9 = select <2 x i1> %8, <2 x float> splat (float 1.000000e+00), <2 x float> %7
-  %10 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> splat (float 2.550000e+02), <2 x float> splat (float 5.000000e-01)) ; 2 uses
-  %11 = extractelement <2 x float> %10, i64 0
-  %i.av = select i1 %i.au, float 5.000000e-01, float %11
-  %12 = fptosi float %i.av to i32                 ; 4 uses
-  %13 = extractelement <2 x float> %10, i64 1
-  %i.aw = select i1 %5, float 5.000000e-01, float %13
+  %5 = fcmp ogt float %i.at, 1.000000e+00
+  %6 = select i1 %5, float 1.000000e+00, float %i.at
+  %7 = tail call float @llvm.fmuladd.f32(float %6, float 2.550000e+02, float 5.000000e-01)
+  %8 = select i1 %i.au, float 5.000000e-01, float %7
+  %9 = fptosi float %8 to i32                     ; 4 uses
+  %10 = fcmp olt float %i.af, 0.000000e+00
+  %11 = fcmp ogt float %i.af, 1.000000e+00
+  %i.av = select i1 %11, float 1.000000e+00, float %i.af
+  %12 = tail call float @llvm.fmuladd.f32(float %i.av, float 2.550000e+02, float 5.000000e-01)
+  %i.aw = select i1 %10, float 5.000000e-01, float %12
   %i.ax = fptosi float %i.aw to i32               ; 4 uses
   br i1 %.not56, label %bb.h, label %bb.i
 
@@ -1209,14 +1204,14 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not56, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  tail call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.84, i32 noundef %i.as, i32 noundef %12, i32 noundef %i.ax, i32 noundef %i.as, i32 noundef %12, i32 noundef %i.ax, double noundef %i.bm, double noundef %i.bo, double noundef %i.bq)
+  tail call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.84, i32 noundef %i.as, i32 noundef %9, i32 noundef %i.ax, i32 noundef %i.as, i32 noundef %9, i32 noundef %i.ax, double noundef %i.bm, double noundef %i.bo, double noundef %i.bq)
   br label %bb.p
 
 bb.l:                                             ; preds = %bb.j
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.bs = load float, ptr %i.br, align 4, !tbaa !190
   %i.bt = fpext float %i.bs to double
-  tail call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.85, i32 noundef %i.as, i32 noundef %12, i32 noundef %i.ax, i32 noundef %i.bg, i32 noundef %i.as, i32 noundef %12, i32 noundef %i.ax, i32 noundef %i.bg, double noundef %i.bm, double noundef %i.bo, double noundef %i.bq, double noundef %i.bt)
+  tail call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.85, i32 noundef %i.as, i32 noundef %9, i32 noundef %i.ax, i32 noundef %i.bg, i32 noundef %i.as, i32 noundef %9, i32 noundef %i.ax, i32 noundef %i.bg, double noundef %i.bm, double noundef %i.bo, double noundef %i.bq, double noundef %i.bt)
   br label %bb.p
 
 bb.m:                                             ; preds = %bb.i

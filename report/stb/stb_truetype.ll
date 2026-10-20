@@ -204,17 +204,15 @@ bb.a:
   %i.e = fsub float %i.a, %4                      ; 4 uses
   %i.f = getelementptr inbounds i8, ptr %1, i64 -4 ; 6 uses
   %wide.trip.count = zext nneg i32 %2 to i64
-  %5 = insertelement <2 x float> poison, float %4, i64 0
-  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph472, %stbtt__handle_clipped_edge.exit351
   %.0293469 = phi ptr [ %3, %.lr.ph472 ], [ %i.afr, %stbtt__handle_clipped_edge.exit351 ] ; 20 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.0293469, i64 12
   %i.h = getelementptr inbounds nuw i8, ptr %.0293469, i64 8
-  %i.i = load float, ptr %i.g, align 4, !tbaa !96 ; 3 uses
+  %i.i = load float, ptr %i.g, align 4, !tbaa !96 ; 5 uses
   %i.j = fcmp oeq float %i.i, 0.000000e+00
-  %i.k = load float, ptr %i.h, align 8, !tbaa !98 ; 47 uses
+  %i.k = load float, ptr %i.h, align 8, !tbaa !98 ; 49 uses
   br i1 %i.j, label %bb.c, label %bb.ak
 
 bb.c:                                             ; preds = %bb.b
@@ -480,24 +478,19 @@ bb.ak:                                            ; preds = %bb.b
   %i.eo = getelementptr inbounds nuw i8, ptr %.0293469, i64 16
   %i.ep = load float, ptr %i.eo, align 8, !tbaa !97 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.0293469, i64 24 ; 16 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.0293469, i64 28 ; 15 uses
-  %8 = load <2 x float>, ptr %i.eq, align 8, !tbaa !80 ; 3 uses
-  %9 = extractelement <2 x float> %8, i64 0       ; 2 uses
-  %i.er = fcmp ogt float %9, %4                   ; 2 uses
-  %10 = fsub <2 x float> %8, %6
-  %11 = insertelement <2 x float> poison, float %i.i, i64 0
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %13 = insertelement <2 x float> poison, float %i.k, i64 0
-  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %15 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %12, <2 x float> %10, <2 x float> %14) ; 2 uses
-  %16 = extractelement <2 x float> %15, i64 0
-  %.0305 = select i1 %i.er, float %16, float %i.k ; 7 uses
-  %.0301 = select i1 %i.er, float %9, float %4    ; 3 uses
-  %17 = extractelement <2 x float> %8, i64 1      ; 2 uses
-  %18 = fcmp olt float %17, %i.a                  ; 2 uses
-  %19 = extractelement <2 x float> %15, i64 1
-  %.0303 = select i1 %18, float %19, float %i.en  ; 7 uses
-  %.0299 = select i1 %18, float %17, float %i.a   ; 3 uses
+  %5 = load float, ptr %i.eq, align 8, !tbaa !101 ; 3 uses
+  %i.er = fcmp ogt float %5, %4                   ; 2 uses
+  %6 = fsub float %5, %4
+  %7 = tail call float @llvm.fmuladd.f32(float %i.i, float %6, float %i.k)
+  %.0305 = select i1 %i.er, float %7, float %i.k  ; 7 uses
+  %.0301 = select i1 %i.er, float %5, float %4    ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.0293469, i64 28 ; 16 uses
+  %9 = load float, ptr %8, align 4, !tbaa !102    ; 3 uses
+  %10 = fcmp olt float %9, %i.a                   ; 2 uses
+  %11 = fsub float %9, %4
+  %12 = tail call float @llvm.fmuladd.f32(float %i.i, float %11, float %i.k)
+  %.0303 = select i1 %10, float %12, float %i.en  ; 7 uses
+  %.0299 = select i1 %10, float %9, float %i.a    ; 3 uses
   %i.es = fcmp oge float %.0305, 0.000000e+00
   %i.et = fcmp oge float %.0303, 0.000000e+00
   %or.cond = select i1 %i.es, i1 %i.et, i1 false
@@ -666,6 +659,10 @@ bb.ar:                                            ; preds = %bb.al, %bb.ak
 .lr.ph:                                           ; preds = %bb.ar
   %i.il = fsub float %i.en, %i.k
   %i.im = getelementptr inbounds nuw i8, ptr %.0293469, i64 20 ; 30 uses
+  %13 = insertelement <2 x float> poison, float %i.k, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %15 = insertelement <2 x float> poison, float %i.i, i64 0
+  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.as
 
 bb.as:                                            ; preds = %.lr.ph, %stbtt__handle_clipped_edge.exit379
@@ -678,7 +675,7 @@ bb.as:                                            ; preds = %.lr.ph, %stbtt__han
   %i.ir = insertelement <2 x float> poison, float %i.io, i64 0
   %i.is = insertelement <2 x float> %i.ir, float %i.iq, i64 1
   %i.it = fsub <2 x float> %i.is, %14             ; 7 uses
-  %i.iu = fdiv <2 x float> %i.it, %12             ; 2 uses
+  %i.iu = fdiv <2 x float> %i.it, %16             ; 2 uses
   %i.iv = extractelement <2 x float> %i.iu, i64 0
   %i.iw = fadd float %4, %i.iv                    ; 52 uses
   %i.ix = extractelement <2 x float> %i.iu, i64 1
@@ -693,7 +690,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.jb, label %stbtt__handle_clipped_edge.exit365, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.jc = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.jc = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.jd = fcmp ogt float %4, %i.jc
   br i1 %i.jd, label %stbtt__handle_clipped_edge.exit365, label %bb.av
 
@@ -773,7 +770,7 @@ stbtt__handle_clipped_edge.exit365:               ; preds = %bb.at, %bb.au, %bb.
   br i1 %i.ko, label %stbtt__handle_clipped_edge.exit372, label %bb.be
 
 bb.be:                                            ; preds = %stbtt__handle_clipped_edge.exit365
-  %i.kp = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.kp = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.kq = fcmp ogt float %i.iw, %i.kp
   br i1 %i.kq, label %stbtt__handle_clipped_edge.exit372, label %bb.bf
 
@@ -853,7 +850,7 @@ stbtt__handle_clipped_edge.exit372:               ; preds = %stbtt__handle_clipp
   br i1 %i.mb, label %stbtt__handle_clipped_edge.exit379, label %bb.bo
 
 bb.bo:                                            ; preds = %stbtt__handle_clipped_edge.exit372
-  %i.mc = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.mc = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.md = fcmp ogt float %i.iy, %i.mc
   br i1 %i.md, label %stbtt__handle_clipped_edge.exit379, label %bb.bp
 
@@ -939,7 +936,7 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.nq, label %stbtt__handle_clipped_edge.exit386, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.nr = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.nr = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.ns = fcmp ogt float %4, %i.nr
   br i1 %i.ns, label %stbtt__handle_clipped_edge.exit386, label %bb.cb
 
@@ -1019,7 +1016,7 @@ stbtt__handle_clipped_edge.exit386:               ; preds = %bb.bz, %bb.ca, %bb.
   br i1 %i.pd, label %stbtt__handle_clipped_edge.exit393, label %bb.ck
 
 bb.ck:                                            ; preds = %stbtt__handle_clipped_edge.exit386
-  %i.pe = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.pe = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.pf = fcmp ogt float %i.iy, %i.pe
   br i1 %i.pf, label %stbtt__handle_clipped_edge.exit393, label %bb.cl
 
@@ -1099,7 +1096,7 @@ stbtt__handle_clipped_edge.exit393:               ; preds = %stbtt__handle_clipp
   br i1 %i.qq, label %stbtt__handle_clipped_edge.exit379, label %bb.cu
 
 bb.cu:                                            ; preds = %stbtt__handle_clipped_edge.exit393
-  %i.qr = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.qr = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.qs = fcmp ogt float %i.iw, %i.qr
   br i1 %i.qs, label %stbtt__handle_clipped_edge.exit379, label %bb.cv
 
@@ -1184,7 +1181,7 @@ bb.df:                                            ; preds = %bb.de
   br i1 %i.se, label %stbtt__handle_clipped_edge.exit407, label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df
-  %i.sf = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.sf = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.sg = fcmp ogt float %4, %i.sf
   br i1 %i.sg, label %stbtt__handle_clipped_edge.exit407, label %bb.dh
 
@@ -1264,7 +1261,7 @@ stbtt__handle_clipped_edge.exit407:               ; preds = %bb.df, %bb.dg, %bb.
   br i1 %i.tr, label %stbtt__handle_clipped_edge.exit379, label %bb.dq
 
 bb.dq:                                            ; preds = %stbtt__handle_clipped_edge.exit407
-  %i.ts = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.ts = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.tt = fcmp ogt float %i.iw, %i.ts
   br i1 %i.tt, label %stbtt__handle_clipped_edge.exit379, label %bb.dr
 
@@ -1349,7 +1346,7 @@ bb.eb:                                            ; preds = %bb.ea
   br i1 %i.vf, label %stbtt__handle_clipped_edge.exit421, label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb
-  %i.vg = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.vg = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.vh = fcmp ogt float %4, %i.vg
   br i1 %i.vh, label %stbtt__handle_clipped_edge.exit421, label %bb.ed
 
@@ -1429,7 +1426,7 @@ stbtt__handle_clipped_edge.exit421:               ; preds = %bb.eb, %bb.ec, %bb.
   br i1 %i.ws, label %stbtt__handle_clipped_edge.exit379, label %bb.em
 
 bb.em:                                            ; preds = %stbtt__handle_clipped_edge.exit421
-  %i.wt = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.wt = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.wu = fcmp ogt float %i.iw, %i.wt
   br i1 %i.wu, label %stbtt__handle_clipped_edge.exit379, label %bb.en
 
@@ -1514,7 +1511,7 @@ bb.ex:                                            ; preds = %bb.ew
   br i1 %i.yg, label %stbtt__handle_clipped_edge.exit435, label %bb.ey
 
 bb.ey:                                            ; preds = %bb.ex
-  %i.yh = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.yh = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.yi = fcmp ogt float %4, %i.yh
   br i1 %i.yi, label %stbtt__handle_clipped_edge.exit435, label %bb.ez
 
@@ -1594,7 +1591,7 @@ stbtt__handle_clipped_edge.exit435:               ; preds = %bb.ex, %bb.ey, %bb.
   br i1 %i.zt, label %stbtt__handle_clipped_edge.exit379, label %bb.fi
 
 bb.fi:                                            ; preds = %stbtt__handle_clipped_edge.exit435
-  %i.zu = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.zu = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.zv = fcmp ogt float %i.iy, %i.zu
   br i1 %i.zv, label %stbtt__handle_clipped_edge.exit379, label %bb.fj
 
@@ -1679,7 +1676,7 @@ bb.ft:                                            ; preds = %bb.fs
   br i1 %i.abh, label %stbtt__handle_clipped_edge.exit449, label %bb.fu
 
 bb.fu:                                            ; preds = %bb.ft
-  %i.abi = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.abi = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.abj = fcmp ogt float %4, %i.abi
   br i1 %i.abj, label %stbtt__handle_clipped_edge.exit449, label %bb.fv
 
@@ -1759,7 +1756,7 @@ stbtt__handle_clipped_edge.exit449:               ; preds = %bb.ft, %bb.fu, %bb.
   br i1 %i.acu, label %stbtt__handle_clipped_edge.exit379, label %bb.ge
 
 bb.ge:                                            ; preds = %stbtt__handle_clipped_edge.exit449
-  %i.acv = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.acv = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.acw = fcmp ogt float %i.iy, %i.acv
   br i1 %i.acw, label %stbtt__handle_clipped_edge.exit379, label %bb.gf
 
@@ -1838,7 +1835,7 @@ bb.go:                                            ; preds = %bb.fs
   br i1 %i.d, label %stbtt__handle_clipped_edge.exit379, label %bb.gp
 
 bb.gp:                                            ; preds = %bb.go
-  %i.aeh = load float, ptr %7, align 4, !tbaa !102 ; 4 uses
+  %i.aeh = load float, ptr %8, align 4, !tbaa !102 ; 4 uses
   %i.aei = fcmp ogt float %4, %i.aeh
   br i1 %i.aei, label %stbtt__handle_clipped_edge.exit379, label %bb.gq
 

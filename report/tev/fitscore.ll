@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ad = load i32, ptr %i.a, align 4, !tbaa !27
   %.not79 = icmp eq i32 %i.ad, 0
   %.pr = load double, ptr %i.c, align 8
-  %i.ae = select i1 %.not79, double %.pr, double 0.000000e+00 ; 7 uses
-  %i.af = load double, ptr %i.b, align 8, !tbaa !57 ; 6 uses
+  %i.ae = select i1 %.not79, double %.pr, double 0.000000e+00 ; 8 uses
+  %i.af = load double, ptr %i.b, align 8, !tbaa !57 ; 7 uses
   %i.ag = fcmp oeq double %i.af, 1.000000e+00
   %i.ah = fcmp oeq double %i.ae, 0.000000e+00
   %or.cond = select i1 %i.ag, i1 %i.ah, i1 false
@@ -234,18 +234,14 @@ bb.q:                                             ; preds = %bb.n
   br label %bb.aa
 
 bb.r:                                             ; preds = %bb.n, %bb.p, %bb.o
-  %3 = phi <2 x double> [ <double f0xC1E0000000000000, double f0x41DFFFFFFFC00000>, %bb.p ], [ <double -3.276800e+04, double 3.276700e+04>, %bb.o ], [ <double 0.000000e+00, double 2.550000e+02>, %bb.n ]
-  %4 = fcmp ult double %i.af, 0.000000e+00        ; 2 uses
-  %5 = insertelement <2 x double> poison, double %i.af, i64 0
-  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
-  %7 = insertelement <2 x double> poison, double %i.ae, i64 0
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
-  %9 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %3, <2 x double> %8) ; 2 uses
-  %10 = extractelement <2 x double> %9, i64 0     ; 3 uses
-  %i.al = call double @llvm.fmuladd.f64(double %i.af, double %10, double %i.ae)
-  %.167 = select i1 %4, double %i.al, double %10  ; 4 uses
-  %11 = extractelement <2 x double> %9, i64 1
-  %.1 = select i1 %4, double %10, double %11      ; 5 uses
+  %.066 = phi double [ f0xC1E0000000000000, %bb.p ], [ -3.276800e+04, %bb.o ], [ 0.000000e+00, %bb.n ]
+  %.0 = phi double [ f0x41DFFFFFFFC00000, %bb.p ], [ 3.276700e+04, %bb.o ], [ 2.550000e+02, %bb.n ]
+  %3 = fcmp ult double %i.af, 0.000000e+00        ; 2 uses
+  %4 = call double @llvm.fmuladd.f64(double %i.af, double %.066, double %i.ae) ; 3 uses
+  %5 = call double @llvm.fmuladd.f64(double %i.af, double %.0, double %i.ae)
+  %i.al = call double @llvm.fmuladd.f64(double %i.af, double %4, double %i.ae)
+  %.167 = select i1 %3, double %i.al, double %4   ; 4 uses
+  %.1 = select i1 %3, double %4, double %5        ; 5 uses
   %i.am = fcmp une double %i.ae, f0x41E0000000000000
   br i1 %i.am, label %bb.s, label %bb.u
 
@@ -647,9 +643,6 @@ declare void @llvm.assume(i1 noundef) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #18
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -205,12 +205,9 @@ bb.a:
   br i1 %i.e, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %6 = insertelement <2 x float> poison, float %1, i64 0
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
-  %8 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> <float f0x3C23D70A, float 2.000000e-02>, <2 x float> splat (float 5.000000e-01)) ; 2 uses
-  %9 = extractelement <2 x float> %8, i64 0
-  %10 = extractelement <2 x float> %8, i64 1
-  %.sink31 = select i1 %2, float %10, float %9
+  %6 = tail call float @llvm.fmuladd.f32(float %1, float f0x3C23D70A, float 5.000000e-01)
+  %7 = tail call float @llvm.fmuladd.f32(float %1, float 2.000000e-02, float 5.000000e-01)
+  %.sink31 = select i1 %2, float %7, float %6
   %i.f = fptosi float %.sink31 to i32
   %i.g = tail call noundef i32 @llvm.smax.i32(i32 %i.f, i32 2)
   %i.h = tail call noundef double @llvm.fabs.f64(double %i.a)
@@ -490,12 +487,9 @@ bb.a:
   br i1 %i.e, label %bb.b, label %_ZN6ImPlot24CalcLogarithmicExponentsERK11ImPlotRangefbRiS3_S3_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %6 = insertelement <2 x float> poison, float %2, i64 0
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
-  %8 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> <float f0x3C23D70A, float 2.000000e-02>, <2 x float> splat (float 5.000000e-01)) ; 2 uses
-  %9 = extractelement <2 x float> %8, i64 0
-  %10 = extractelement <2 x float> %8, i64 1
-  %.sink31.i = select i1 %3, float %10, float %9
+  %6 = tail call float @llvm.fmuladd.f32(float %2, float f0x3C23D70A, float 5.000000e-01)
+  %7 = tail call float @llvm.fmuladd.f32(float %2, float 2.000000e-02, float 5.000000e-01)
+  %.sink31.i = select i1 %3, float %7, float %6
   %i.f = fptosi float %.sink31.i to i32
   %i.g = tail call noundef i32 @llvm.smax.i32(i32 %i.f, i32 2)
   %i.h = tail call noundef double @llvm.fabs.f64(double %i.a)
@@ -659,13 +653,10 @@ bb.e:                                             ; preds = %bb.d
   %i.as = tail call double @llvm.fmuladd.f64(double %i.ag, double %i.ar, double 0.000000e+00)
   %i.at = fptrunc double %i.as to float
   %i.au = fsub float %2, %i.at
-  %i.av = tail call noundef float @llvm.fabs.f32(float %i.au)
-  %8 = insertelement <2 x float> poison, float %i.av, i64 0
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
-  %10 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> <float f0x3C23D70A, float 2.000000e-02>, <2 x float> splat (float 5.000000e-01)) ; 2 uses
-  %11 = extractelement <2 x float> %10, i64 0
-  %12 = extractelement <2 x float> %10, i64 1
-  %.sink31.i = select i1 %3, float %12, float %11
+  %i.av = tail call noundef float @llvm.fabs.f32(float %i.au) ; 2 uses
+  %8 = tail call float @llvm.fmuladd.f32(float %i.av, float f0x3C23D70A, float 5.000000e-01)
+  %9 = tail call float @llvm.fmuladd.f32(float %i.av, float 2.000000e-02, float 5.000000e-01)
+  %.sink31.i = select i1 %3, float %9, float %8
   %i.aw = fptosi float %.sink31.i to i32
   %i.ax = tail call noundef i32 @llvm.smax.i32(i32 %i.aw, i32 2)
   %i.ay = tail call double @llvm.log10.f64(double %i.d) ; 4 uses
@@ -714,13 +705,10 @@ _ZN6ImPlot24CalcLogarithmicExponentsERK11ImPlotRangefbRiS3_S3_.exit: ; preds = %
   br i1 %i.bq, label %bb.f, label %_ZN6ImPlot24CalcLogarithmicExponentsERK11ImPlotRangefbRiS3_S3_.exit53
 
 bb.f:                                             ; preds = %_ZN6ImPlot24CalcLogarithmicExponentsERK11ImPlotRangefbRiS3_S3_.exit
-  %i.br = tail call noundef float @llvm.fabs.f32(float %i.ai)
-  %13 = insertelement <2 x float> poison, float %i.br, i64 0
-  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
-  %15 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %14, <2 x float> <float f0x3C23D70A, float 2.000000e-02>, <2 x float> splat (float 5.000000e-01)) ; 2 uses
-  %16 = extractelement <2 x float> %15, i64 0
-  %17 = extractelement <2 x float> %15, i64 1
-  %.sink31.i42 = select i1 %3, float %17, float %16
+  %i.br = tail call noundef float @llvm.fabs.f32(float %i.ai) ; 2 uses
+  %10 = tail call float @llvm.fmuladd.f32(float %i.br, float f0x3C23D70A, float 5.000000e-01)
+  %11 = tail call float @llvm.fmuladd.f32(float %i.br, float 2.000000e-02, float 5.000000e-01)
+  %.sink31.i42 = select i1 %3, float %11, float %10
   %i.bs = fptosi float %.sink31.i42 to i32
   %i.bt = tail call noundef i32 @llvm.smax.i32(i32 %i.bs, i32 2)
   %i.bu = tail call noundef double @llvm.fabs.f64(double %i.c)

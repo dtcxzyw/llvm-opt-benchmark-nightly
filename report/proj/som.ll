@@ -205,13 +205,10 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.s = uitofp nneg i32 %.sroa.0.0.extract.trunc to double
-  %1 = insertelement <2 x double> poison, double %i.s, i64 0
-  %2 = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> zeroinitializer
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %2, <2 x double> <double f0xBF99A22612A153BB, double f0xBF9B9D1888886F13>, <2 x double> <double f0x4001FE5F9D39DB0D, double f0x40020DBE59F8A739>) ; 2 uses
-  %4 = extractelement <2 x double> %3, i64 0
-  %5 = extractelement <2 x double> %3, i64 1
-  %.sink37 = select i1 %i.n, double %4, double %5
+  %i.s = uitofp nneg i32 %.sroa.0.0.extract.trunc to double ; 2 uses
+  %1 = tail call double @llvm.fmuladd.f64(double %i.s, double f0xBF99A22612A153BB, double f0x4001FE5F9D39DB0D)
+  %2 = tail call double @llvm.fmuladd.f64(double %i.s, double f0xBF9B9D1888886F13, double f0x40020DBE59F8A739)
+  %.sink37 = select i1 %i.n, double %1, double %2
   %.sink = select i1 %i.n, double f0x3FFBABF4F6AFB043, double f0x3FFB6C3061105C70
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 440
   store double %.sink37, ptr %i.t, align 8, !tbaa !45
