@@ -204,7 +204,7 @@ bb.cb:                                            ; preds = %.lr.ph.i.i.i186.i
   %i.qb = add i64 %i.po, 1
   %i.qc = add i64 %i.qb, %.sroa.5.0.i.i.i185.i    ; 2 uses
   %.not12.i.i.i156 = icmp ugt i64 %i.qc, %i.pn    ; 2 uses
-  %i.qd = add i64 %.sroa.5.0.i.i.i185.i, %i.po    ; 12 uses
+  %i.qd = add i64 %.sroa.5.0.i.i.i185.i, %i.po    ; 10 uses
   %or.cond.i.not.i.i = icmp ult i64 %i.qd, %i.pn
   br i1 %or.cond.i.not.i.i, label %bb.cd, label %bb.cc
 
@@ -242,7 +242,7 @@ bb.cf:                                            ; preds = %.thread303.i
 
 _RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit249.i: ; preds = %.preheader56.i232.i, %bb.dd, %.preheader.i240.i, %bb.df, %bb.de, %bb.cp, %bb.cf
   %.sroa.21.0 = phi i64 [ %.sroa.21.16.copyload, %bb.cf ], [ %.sroa.21.16.copyload219, %bb.cp ], [ %.sroa.21.16.copyload220, %bb.df ], [ %.sroa.21.16.copyload221, %bb.de ], [ 0, %.preheader.i240.i ], [ %i.tj, %bb.dd ], [ %i.sz, %.preheader56.i232.i ] ; 2 uses
-  %.sroa.12.0233 = phi i64 [ %.sroa.635.0.copyload.i, %bb.cf ], [ %.sroa.655.0.copyload.i, %bb.cp ], [ %.sroa.675.0.copyload.i, %bb.df ], [ %.sroa.692.0.copyload.i, %bb.de ], [ %.sroa.12285.0334483.i, %.preheader.i240.i ], [ %.sroa.12285.0334483.i, %bb.dd ], [ %.sroa.12285.0334483.i, %.preheader56.i232.i ] ; 2 uses
+  %.sroa.12.0233 = phi i64 [ %.sroa.635.0.copyload.i, %bb.cf ], [ %.sroa.655.0.copyload.i, %bb.cp ], [ %.sroa.675.0.copyload.i, %bb.df ], [ %.sroa.692.0.copyload.i, %bb.de ], [ %.sroa.12285.0335.i, %.preheader.i240.i ], [ %.sroa.12285.0335.i, %bb.dd ], [ %.sroa.12285.0335.i, %.preheader56.i232.i ] ; 2 uses
   %.not122 = phi i1 [ false, %bb.cf ], [ false, %bb.cp ], [ false, %bb.df ], [ false, %bb.de ], [ true, %.preheader.i240.i ], [ true, %bb.dd ], [ true, %.preheader56.i232.i ]
   %.sroa.0216.0 = phi i64 [ 29, %bb.cf ], [ 29, %bb.cp ], [ 29, %bb.df ], [ 29, %bb.de ], [ -1, %.preheader.i240.i ], [ -1, %bb.dd ], [ -1, %.preheader56.i232.i ]
   %i.qh = phi <2 x i64> [ %i.qg, %bb.cf ], [ %i.rc, %bb.cp ], [ %i.tl, %bb.df ], [ %i.tk, %bb.de ], [ undef, %.preheader.i240.i ], [ undef, %bb.dd ], [ undef, %.preheader56.i232.i ]
@@ -305,7 +305,7 @@ bb.cj:                                            ; preds = %.lr.ph.i.i.i207.i
   %i.qx = add i64 %i.qk, 1
   %i.qy = add i64 %i.qx, %.sroa.5.0.i.i.i197.i    ; 2 uses
   %.not12.i.i198.i = icmp ugt i64 %i.qy, %i.qd    ; 2 uses
-  %i.qz = add i64 %.sroa.5.0.i.i.i197.i, %i.qk    ; 6 uses
+  %i.qz = add i64 %.sroa.5.0.i.i.i197.i, %i.qk    ; 5 uses
   %or.cond.i.not.i199.i = icmp ult i64 %i.qz, %i.qd
   br i1 %or.cond.i.not.i199.i, label %bb.cl, label %bb.ck
 
@@ -373,15 +373,11 @@ bb.cr:                                            ; preds = %thread-pre-split.i.
 
 .preheader.i.i:                                   ; preds = %bb.cr
   %.not5366.i.i = icmp eq i64 %.sroa.15.0.i.i, 0
-  br i1 %.not5366.i.i, label %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.thread329.i, label %.lr.ph.i.i
-
-_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.thread329.i: ; preds = %.preheader.i.i
-  %4 = add nuw i64 %i.qz, 1
-  br label %bb.cw
+  br i1 %.not5366.i.i, label %bb.cw, label %.lr.ph.i.i
 
 .preheader56.i.i:                                 ; preds = %bb.cu
   %.not52.i.i = icmp eq i64 %i.ri, 0
-  br i1 %.not52.i.i, label %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i, label %.preheader56.i.i.preheader
+  br i1 %.not52.i.i, label %bb.cw, label %.preheader56.i.i.preheader
 
 .preheader56.i.i.preheader:                       ; preds = %bb.cr, %.preheader56.i.i
   %.sroa.0.1.i220.i1265 = phi ptr [ %i.rh, %.preheader56.i.i ], [ %.sroa.0.0.i219.i, %bb.cr ] ; 2 uses
@@ -430,7 +426,7 @@ bb.cv:                                            ; preds = %.lr.ph.i.i
   %i.sc = zext nneg i32 %i.rx to i64
   %i.sd = add i64 %i.rz, %i.sc                    ; 2 uses
   %.not53.i.i = icmp eq i64 %i.sa, 0
-  br i1 %.not53.i.i, label %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i, label %.lr.ph.i.i
+  br i1 %.not53.i.i, label %bb.cw, label %.lr.ph.i.i
 
 .thread324.i:                                     ; preds = %bb.cu, %bb.cs, %.lr.ph.i.i, %bb.ct, %bb.cq, %bb.cq, %bb.co
   %.sroa.5283.0.ph.i = phi i8 [ 0, %bb.co ], [ %spec.select.i, %bb.ct ], [ 1, %bb.cq ], [ 1, %.lr.ph.i.i ], [ 1, %bb.cq ], [ 1, %bb.cs ], [ 2, %bb.cu ]
@@ -443,39 +439,25 @@ bb.cv:                                            ; preds = %.lr.ph.i.i
   invoke void @_RNvNvNtCsexYYUdYSQU6_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.gt, ptr noundef nonnull @60, ptr noundef nonnull %i.d)
           to label %bb.df unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !723
 
-_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i: ; preds = %.preheader56.i.i, %bb.cv
-  %.sroa.12285.0.i = phi i64 [ %i.sd, %bb.cv ], [ %i.rt, %.preheader56.i.i ] ; 2 uses
-  %5 = add i64 %i.qz, 1                           ; 2 uses
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %9, label %bb.cw
-
-bb.cw:                                            ; preds = %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.thread329.i
-  %7 = phi i64 [ %4, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.thread329.i ], [ %5, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i ] ; 5 uses
-  %.sroa.12285.0335.i = phi i64 [ 0, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.thread329.i ], [ %.sroa.12285.0.i, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i ] ; 2 uses
-  %.not.i224.i = icmp ult i64 %7, %i.qd
+bb.cw:                                            ; preds = %.preheader56.i.i, %bb.cv, %.preheader.i.i
+  %.sroa.12285.0335.i = phi i64 [ 0, %.preheader.i.i ], [ %i.sd, %bb.cv ], [ %i.rt, %.preheader56.i.i ] ; 3 uses
+  %4 = add nuw i64 %i.qz, 1                       ; 5 uses
+  %.not.i224.i = icmp ult i64 %4, %i.qd
   br i1 %.not.i224.i, label %bb.cx, label %.split.i225.i
 
 .split.i225.i:                                    ; preds = %bb.cw
-  %8 = icmp eq i64 %7, %i.qd
-  br i1 %8, label %9, label %.thread337.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pm) ]
+  br label %.thread.i
 
 bb.cx:                                            ; preds = %bb.cw
-  %i.se = getelementptr inbounds nuw i8, ptr %i.pm, i64 %7
+  %i.se = getelementptr inbounds nuw i8, ptr %i.pm, i64 %4
   %i.sf = load i8, ptr %i.se, align 1, !alias.scope !734, !noalias !723, !noundef !4
   %i.sg = icmp sgt i8 %i.sf, -65
   br i1 %i.sg, label %.thread.i, label %.thread337.i
 
-9:                                                ; preds = %.split.i225.i, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i
-  %10 = phi i64 [ 0, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i ], [ %i.qd, %.split.i225.i ]
-  %.sroa.12285.0334.i = phi i64 [ %.sroa.12285.0.i, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit.i ], [ %.sroa.12285.0335.i, %.split.i225.i ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pm) ]
-  br label %.thread.i
-
-.thread.i:                                        ; preds = %9, %bb.cx
-  %.pn523.i = phi i64 [ %10, %9 ], [ %7, %bb.cx ] ; 2 uses
-  %.sroa.12285.0334483.i = phi i64 [ %.sroa.12285.0334.i, %9 ], [ %.sroa.12285.0335.i, %bb.cx ] ; 3 uses
-  %i.sh = sub nuw i64 %i.qd, %.pn523.i            ; 2 uses
-  %i.si = getelementptr inbounds nuw i8, ptr %i.pm, i64 %.pn523.i ; 3 uses
+.thread.i:                                        ; preds = %.split.i225.i, %bb.cx
+  %i.sh = sub nuw i64 %i.qd, %4                   ; 2 uses
+  %i.si = getelementptr inbounds nuw i8, ptr %i.pm, i64 %4 ; 3 uses
   switch i64 %i.sh, label %thread-pre-split.i247.i [
     i64 0, label %.loopexit.i
     i64 1, label %bb.cy
@@ -559,8 +541,8 @@ bb.dd:                                            ; preds = %.lr.ph.i242.i
   %.not53.i246.i = icmp eq i64 %i.tg, 0
   br i1 %.not53.i246.i, label %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit249.i, label %.lr.ph.i242.i
 
-.thread337.i:                                     ; preds = %bb.cx, %.split.i225.i
-  invoke void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.pm, i64 noundef %i.qd, i64 noundef %7, i64 noundef %i.qd, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @103) #26
+.thread337.i:                                     ; preds = %bb.cx
+  invoke void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.pm, i64 noundef %i.qd, i64 noundef %4, i64 noundef %i.qd, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @103) #26
           to label %bb.cm unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !723
 
 .loopexit.i:                                      ; preds = %bb.dc, %bb.da, %.lr.ph.i242.i, %bb.db, %bb.cy, %bb.cy, %.thread.i
