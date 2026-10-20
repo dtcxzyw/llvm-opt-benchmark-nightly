@@ -205,8 +205,8 @@ _RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit27.i.i: ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ac
   %i.dr = add i64 %i.dm, %i.bx                    ; 2 uses
-  %i.ds = udiv i64 %i.dr, %i.dh                   ; 2 uses
-  %..i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 %i.bu) ; 4 uses
+  %i.ds = udiv i64 %i.dr, %i.dh
+  %..i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.ds, i64 %i.bu) ; 5 uses
   %i.dt = icmp ugt i64 %i.dh, %i.dr
   br i1 %i.dt, label %bb.ai, label %bb.ah
 
@@ -226,8 +226,9 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %i.dx, label %bb.aj, label %.preheader36.i.i
 
 .preheader36.i.i:                                 ; preds = %bb.ah
-  %.not.i.not38.i.i = icmp ult i64 %i.ds, %i.bu
-  br i1 %.not.i.not38.i.i, label %.lr.ph.i.i, label %_RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE16width_dimensionsCs5EcwQX7phGK_5uu_ls.exit.thread46.i
+  %.sroa.0.037.i.i = add nuw nsw i64 %..i.i.i, 1  ; 2 uses
+  %.not.i38.i.i = icmp samesign ugt i64 %.sroa.0.037.i.i, %i.bu
+  br i1 %.not.i38.i.i, label %_RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE16width_dimensionsCs5EcwQX7phGK_5uu_ls.exit.thread46.i, label %.lr.ph.i.i
 
 _RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE16width_dimensionsCs5EcwQX7phGK_5uu_ls.exit.thread46.i: ; preds = %.preheader36.i.i
   %.sroa.09.0.copyload1048.i = load i64, ptr %i.d, align 8, !noalias !692
@@ -259,21 +260,21 @@ bb.aj:                                            ; preds = %bb.ah
   br label %_RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE16width_dimensionsCs5EcwQX7phGK_5uu_ls.exit.thread.i
 
 bb.ak:                                            ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs7snenZ3AQk_9term_grid10DimensionsECs5EcwQX7phGK_5uu_ls.exit.i.i, %.lr.ph.i.i
-  %.sroa.0.0.in39.i.i.a = phi i64 [ %..i.i.i, %.lr.ph.i.i ], [ %.sroa.0.040.i.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs7snenZ3AQk_9term_grid10DimensionsECs5EcwQX7phGK_5uu_ls.exit.i.i ] ; 2 uses
-  %.sroa.0.040.i.i = add nuw nsw i64 %.sroa.0.0.in39.i.i.a, 1 ; 5 uses
+  %.sroa.0.0.in39.i.i.a = phi i64 [ %.sroa.0.037.i.i, %.lr.ph.i.i ], [ %.sroa.0.0.i9.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs7snenZ3AQk_9term_grid10DimensionsECs5EcwQX7phGK_5uu_ls.exit.i.i ] ; 5 uses
+  %.sroa.0.0.in39.i.i = phi i64 [ %..i.i.i, %.lr.ph.i.i ], [ %.sroa.0.0.in39.i.i.a, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs7snenZ3AQk_9term_grid10DimensionsECs5EcwQX7phGK_5uu_ls.exit.i.i ]
   %i.ed = call noundef i64 @_RNvMCs7snenZ3AQk_9term_gridNtB2_7Filling5width(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.da) #37, !noalias !690
-  %i.ee = mul i64 %i.ed, %.sroa.0.0.in39.i.i.a    ; 2 uses
+  %i.ee = mul i64 %i.ed, %.sroa.0.0.in39.i.i      ; 2 uses
   %i.ef = icmp ugt i64 %i.ee, %i.bx
   br i1 %i.ef, label %_RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE16width_dimensionsCs5EcwQX7phGK_5uu_ls.exit.i, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.eg = sub nuw nsw i64 %i.bx, %i.ee
-  %i.eh = udiv i64 %i.bu, %.sroa.0.040.i.i
-  %i.ei = urem i64 %i.bu, %.sroa.0.040.i.i
+  %i.eh = udiv i64 %i.bu, %.sroa.0.0.in39.i.i.a
+  %i.ei = urem i64 %i.bu, %.sroa.0.0.in39.i.i.a
   %.not21.i.i = icmp ne i64 %i.ei, 0
   %i.ej = zext i1 %.not21.i.i to i64
   %.sroa.014.0.i.i = add nuw nsw i64 %i.eh, %i.ej
-  call fastcc void @_RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE18compute_dimensionsCs5EcwQX7phGK_5uu_ls(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(128) %i.e, i64 noundef %.sroa.014.0.i.i, i64 noundef %.sroa.0.040.i.i) #37, !noalias !690
+  call fastcc void @_RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE18compute_dimensionsCs5EcwQX7phGK_5uu_ls(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(128) %i.e, i64 noundef %.sroa.014.0.i.i, i64 noundef %.sroa.0.0.in39.i.i.a) #37, !noalias !690
   %i.ek = load ptr, ptr %i.dz, align 8, !noalias !691, !nonnull !4, !noundef !4 ; 3 uses
   %i.el = load i64, ptr %i.ea, align 8, !noalias !691, !noundef !4 ; 5 uses
   %i.em = icmp eq i64 %i.el, 0
@@ -353,8 +354,9 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs7snenZ3AQk_9term_grid10DimensionsECs
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs7snenZ3AQk_9term_grid10DimensionsECs5EcwQX7phGK_5uu_ls.exit.i.i
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs7snenZ3AQk_9term_grid10DimensionsECs5EcwQX7phGK_5uu_ls.exit.i.i: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs7snenZ3AQk_9term_grid10DimensionsECs5EcwQX7phGK_5uu_ls.exit29.i.i, %bb.an, %bb.am
-  %.not.i.not.i.i = icmp samesign ult i64 %.sroa.0.040.i.i, %i.bu
-  br i1 %.not.i.not.i.i, label %bb.ak, label %_RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE16width_dimensionsCs5EcwQX7phGK_5uu_ls.exit.i
+  %.sroa.0.0.i9.i = add nuw nsw i64 %.sroa.0.0.in39.i.i.a, 1 ; 2 uses
+  %.not.i.i.i29 = icmp samesign ugt i64 %.sroa.0.0.i9.i, %i.bu
+  br i1 %.not.i.i.i29, label %_RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE16width_dimensionsCs5EcwQX7phGK_5uu_ls.exit.i, label %bb.ak
 
 _RNvMs0_Cs7snenZ3AQk_9term_gridINtB5_4GridNtNtCs7tKScEop1B6_5alloc6string6StringE16width_dimensionsCs5EcwQX7phGK_5uu_ls.exit.thread.i: ; preds = %bb.aj, %_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit27.i.i, %_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit.i.i
   %.sroa.7.0.ph.i = phi ptr [ %.sroa.7.0.copyload15.i, %bb.aj ], [ %i.do, %_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit27.i.i ], [ %i.dk, %_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit.i.i ]

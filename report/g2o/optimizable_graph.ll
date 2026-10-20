@@ -205,11 +205,9 @@ bb.a:
 
 .preheader96.lr.ph:                               ; preds = %bb.a
   %i.e = load ptr, ptr %1, align 8                ; 5 uses
-  %i.f = mul i64 %i.b, %2                         ; 2 uses
+  %i.f = mul nsw i64 %i.b, %2                     ; 2 uses
   %i.g = load ptr, ptr %0, align 8                ; 5 uses
   %i.h = load ptr, ptr %4, align 8
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.f, i64 0) ; 2 uses
-  %5 = add nuw i64 %smax, 1
   %spec.select = select i1 %3, ptr %i.h, ptr null ; 3 uses
   %.not.i = icmp eq ptr %spec.select, null
   %i.i = load ptr, ptr %1, align 8                ; 2 uses
@@ -219,7 +217,7 @@ bb.a:
   br label %.preheader96
 
 .preheader96:                                     ; preds = %.preheader96.backedge, %.preheader96.lr.ph
-  %.065103 = phi i64 [ 0, %.preheader96.lr.ph ], [ %i.ae, %.preheader96.backedge ] ; 4 uses
+  %.065103 = phi i64 [ 0, %.preheader96.lr.ph ], [ %i.ae, %.preheader96.backedge ] ; 2 uses
   %.066102 = phi i64 [ 0, %.preheader96.lr.ph ], [ %.167.lcssa, %.preheader96.backedge ] ; 2 uses
   %.068101 = phi i64 [ %i.c, %.preheader96.lr.ph ], [ %.169142, %.preheader96.backedge ] ; 4 uses
   %i.k = icmp slt i64 %.066102, %.068101
@@ -227,7 +225,7 @@ bb.a:
 
 .preheader95:                                     ; preds = %bb.c, %.preheader96
   %i.l = icmp sgt i64 %.068101, 0
-  br i1 %i.l, label %.lr.ph143, label %.critedge.thread
+  br i1 %i.l, label %.lr.ph143, label %.critedge.thread.loopexit
 
 .lr.ph:                                           ; preds = %.preheader96, %bb.c
   %.064100 = phi i64 [ %i.y, %bb.c ], [ %.066102, %.preheader96 ] ; 3 uses
@@ -261,7 +259,7 @@ bb.c:                                             ; preds = %.sink.split, %bb.b
 
 bb.d:                                             ; preds = %.lr.ph143
   %i.z = icmp sgt i64 %.169142, 1
-  br i1 %i.z, label %.lr.ph143, label %.critedge.thread, !llvm.loop !415
+  br i1 %i.z, label %.lr.ph143, label %.critedge.thread.loopexit, !llvm.loop !415
 
 .lr.ph143:                                        ; preds = %.preheader95, %bb.d
   %.169142 = phi i64 [ %i.aa, %bb.d ], [ %.068101, %.preheader95 ] ; 7 uses
@@ -272,9 +270,9 @@ bb.d:                                             ; preds = %.lr.ph143
   br i1 %i.ad, label %bb.d, label %.critedge, !llvm.loop !415
 
 .critedge:                                        ; preds = %.lr.ph143
-  %i.ae = add nuw i64 %.065103, 1
-  %exitcond110.not = icmp eq i64 %.065103, %smax
-  br i1 %exitcond110.not, label %.critedge.thread, label %.preheader94.preheader
+  %i.ae = add nuw nsw i64 %.065103, 1             ; 2 uses
+  %5 = icmp sgt i64 %i.ae, %i.f
+  br i1 %5, label %.critedge.thread, label %.preheader94.preheader
 
 .preheader94.preheader:                           ; preds = %.critedge
   %i.af = icmp samesign ugt i64 %.169142, 1
@@ -541,11 +539,14 @@ _ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0ENS_6Stri
   %i.ff = select i1 %i.fd, i1 %i.fe, i1 false
   br i1 %i.ff, label %bb.k, label %.preheader96.backedge, !llvm.loop !419
 
-.critedge.thread:                                 ; preds = %.critedge, %.preheader95, %bb.d
-  %.1 = phi i64 [ %.065103, %bb.d ], [ %5, %.critedge ], [ %.065103, %.preheader95 ]
-  %.not73.not = icmp sgt i64 %.1, %i.f            ; 2 uses
-  %.mux = select i1 %.not73.not, i32 2, i32 0
-  br i1 %.not73.not, label %.loopexit, label %.lr.ph.i.i.i.i74.preheader.lr.ph
+.critedge.thread.loopexit:                        ; preds = %.preheader95, %bb.d
+  %6 = icmp sgt i64 %.065103, %i.f
+  br label %.critedge.thread
+
+.critedge.thread:                                 ; preds = %.critedge, %.critedge.thread.loopexit
+  %.1 = phi i1 [ %6, %.critedge.thread.loopexit ], [ true, %.critedge ] ; 2 uses
+  %.mux = select i1 %.1, i32 2, i32 0
+  br i1 %.1, label %.loopexit, label %.lr.ph.i.i.i.i74.preheader.lr.ph
 
 .critedge.thread.thread:                          ; preds = %bb.a
   %.pre = mul nsw i64 %i.b, %2

@@ -202,8 +202,8 @@ ff_cbs_delete_unit.exit.us:                       ; preds = %.lr.ph.split.us
   br i1 %i.q, label %.lr.ph.split.us, label %.loopexit, !llvm.loop !124
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %ff_cbs_delete_unit.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %ff_cbs_delete_unit.exit ], [ %i.j, %.lr.ph ] ; 6 uses
-  %.0.in17 = phi i32 [ %i.bb, %ff_cbs_delete_unit.exit ], [ %i.f, %.lr.ph ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %ff_cbs_delete_unit.exit ], [ %i.j, %.lr.ph ] ; 7 uses
+  %.0.in17 = phi i32 [ %i.bb, %ff_cbs_delete_unit.exit ], [ %i.f, %.lr.ph ]
   %i.r = load ptr, ptr %i.a, align 8, !tbaa !26
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 56
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !125
@@ -215,8 +215,9 @@ ff_cbs_delete_unit.exit.us:                       ; preds = %.lr.ph.split.us
 
 bb.c:                                             ; preds = %.lr.ph.split
   %i.x = load i32, ptr %i.e, align 8, !tbaa !35
-  %.not14 = icmp sgt i32 %.0.in17, %i.x
-  br i1 %.not14, label %bb.d, label %bb.e
+  %4 = sext i32 %i.x to i64
+  %5 = icmp slt i64 %indvars.iv, %4
+  br i1 %5, label %bb.e, label %bb.d
 
 .split.us:                                        ; preds = %.lr.ph.split.us
   %i.y = load i32, ptr %i.e, align 8, !tbaa !35

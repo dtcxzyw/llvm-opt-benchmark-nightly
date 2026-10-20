@@ -138,7 +138,7 @@ bb.a:
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = add nsw i32 %i.e, -1                     ; 2 uses
+  %i.g = add nsw i32 %i.e, -1                     ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 0, ptr %i.a, align 4, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
@@ -149,8 +149,8 @@ bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.d, align 4, !tbaa !30
   %i.h = load i32, ptr %0, align 4, !tbaa !30     ; 2 uses
   call void @__kmpc_for_static_init_4(ptr nonnull @1, i32 %i.h, i32 34, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c, i32 1, i32 1)
-  %i.i = load i32, ptr %i.b, align 4, !tbaa !30
-  %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 4 uses
+  %i.i = load i32, ptr %i.b, align 4, !tbaa !30   ; 2 uses
+  %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 3 uses
   store i32 %i.j, ptr %i.b, align 4, !tbaa !30
   %i.k = load i32, ptr %i.a, align 4, !tbaa !30   ; 3 uses
   %.not36 = icmp sgt i32 %i.k, %i.j
@@ -172,16 +172,22 @@ bb.b:                                             ; preds = %bb.a
 .noexc.preheader:                                 ; preds = %.noexc.lr.ph
   %i.u = shl nsw i64 %i.t, 2
   %scevgep = getelementptr i8, ptr %i.s, i64 %i.u
-  %6 = sub i32 %i.j, %i.k
-  %i.v = zext i32 %6 to i64
-  %7 = shl nuw nsw i64 %i.v, 2
-  %i.w = add nuw nsw i64 %7, 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.w, i1 false), !tbaa !35
+  %6 = sext i32 %i.i to i64
+  %i.v = zext nneg i32 %i.g to i64
+  %smin = call i64 @llvm.smin.i64(i64 %6, i64 %i.v)
+  %7 = add nsw i64 %smin, 1
+  %8 = add nsw i32 %i.k, 1
+  %9 = sext i32 %8 to i64                         ; 2 uses
+  %smax = call i64 @llvm.smax.i64(i64 %7, i64 %9)
+  %i.w = add nsw i64 %smax, 1
+  %10 = sub nsw i64 %i.w, %9
+  %11 = shl nuw nsw i64 %10, 2
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %11, i1 false), !tbaa !35
   br label %._crit_edge38
 
 .noexc.us.preheader:                              ; preds = %.noexc.lr.ph
   %i.x = sitofp fast i32 %i.q to float
-  %8 = add nsw i32 %i.j, 1
+  %12 = sext i32 %i.j to i64
   %wide.trip.count = zext nneg i32 %i.q to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.q, 8
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
@@ -235,9 +241,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv42
   store float %i.aj, ptr %i.ak, align 4, !tbaa !35
   %indvars.iv.next43 = add nsw i64 %indvars.iv42, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next43 to i32
-  %exitcond45.not = icmp eq i32 %8, %lftr.wideiv
-  br i1 %exitcond45.not, label %._crit_edge38, label %.noexc.us
+  %.not.us = icmp sgt i64 %indvars.iv.next43, %12
+  br i1 %.not.us, label %._crit_edge38, label %.noexc.us
 
 ._crit_edge38:                                    ; preds = %._crit_edge.us, %.noexc.preheader, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
@@ -507,6 +512,12 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9

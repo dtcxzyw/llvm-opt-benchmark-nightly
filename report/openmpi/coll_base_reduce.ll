@@ -168,7 +168,7 @@ bb.a:
   %i.h = add nsw i64 %i.f, -1                     ; 2 uses
   %i.i = add nsw i64 %i.h, %i.g
   %i.j = udiv i64 %i.i, %i.g                      ; 4 uses
-  %i.k = trunc i64 %i.j to i32                    ; 3 uses
+  %i.k = trunc i64 %i.j to i32                    ; 4 uses
   %i.l = mul nsw i64 %i.e, %i.g                   ; 5 uses
   %i.m = icmp eq ptr %0, inttoptr (i64 1 to ptr)  ; 6 uses
   %spec.select = select i1 %i.m, ptr %1, ptr %0   ; 3 uses
@@ -311,11 +311,11 @@ bb.m:                                             ; preds = %bb.l, %bb.j
   %i.bt = add i64 %i.j, 4294967295
   %i.bu = and i64 %i.j, 2147483647
   %i.bv = and i64 %i.bt, 4294967295
-  %i.bw = and i64 %i.j, 2147483647                ; 2 uses
+  %i.bw = and i64 %i.j, 2147483647
   br label %.lr.ph407.split
 
 .lr.ph407.split:                                  ; preds = %.lr.ph407.split.preheader, %._crit_edge398
-  %indvars.iv438 = phi i64 [ 0, %.lr.ph407.split.preheader ], [ %indvars.iv.next439, %._crit_edge398 ] ; 9 uses
+  %indvars.iv438 = phi i64 [ 0, %.lr.ph407.split.preheader ], [ %indvars.iv.next439, %._crit_edge398 ] ; 8 uses
   %.0215405 = phi i32 [ 0, %.lr.ph407.split.preheader ], [ %.1216.lcssa, %._crit_edge398 ] ; 4 uses
   %.0217404 = phi i32 [ 0, %.lr.ph407.split.preheader ], [ %.1218, %._crit_edge398 ]
   %i.bx = icmp eq i64 %indvars.iv438, %i.bv
@@ -536,9 +536,10 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
 
 ._crit_edge398:                                   ; preds = %.thread329, %bb.as, %bb.ab, %.thread329.peel, %.lr.ph407.split
   %.1216.lcssa = phi i32 [ %.0215405, %.lr.ph407.split ], [ %.0215405, %bb.ab ], [ %i.cz, %.thread329.peel ], [ %i.dy, %.thread329 ], [ %.1216395, %bb.as ]
-  %indvars.iv.next439 = add nuw nsw i64 %indvars.iv438, 1
-  %.not.not = icmp samesign ult i64 %indvars.iv438, %i.bw
-  br i1 %.not.not, label %.lr.ph407.split, label %._crit_edge408, !llvm.loop !77
+  %indvars.iv.next439 = add nuw nsw i64 %indvars.iv438, 1 ; 2 uses
+  %11 = trunc nuw i64 %indvars.iv.next439 to i32
+  %.not = icmp sgt i32 %11, %i.k
+  br i1 %.not, label %._crit_edge408, label %.lr.ph407.split, !llvm.loop !77
 
 ._crit_edge408:                                   ; preds = %._crit_edge398, %.lr.ph407, %bb.m
   call void @free(ptr noundef %i.be) #9

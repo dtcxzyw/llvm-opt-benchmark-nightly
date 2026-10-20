@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_RNvXNtNtCsf8MNnN4I
   %.not = icmp eq i8 %i.ae, -1
   br i1 %.not, label %.split28, label %bb.e
 
-bb.d:                                             ; preds = %.split28, %bb.h, %bb.f, %.split
+bb.d:                                             ; preds = %.split28, %9, %bb.f, %.split
   ret void
 
 bb.e:                                             ; preds = %bb.c
@@ -238,29 +238,47 @@ bb.f:                                             ; preds = %bb.g, %bb.e
   br label %bb.d
 
 bb.g:                                             ; preds = %bb.e
-  %i.ak = add nuw i64 %i.s, 1
+  %i.ak = add nuw i64 %i.s, 1                     ; 2 uses
+  %3 = load ptr, ptr %i.p, align 8, !nonnull !21, !noundef !21
   %i.al = load i64, ptr %i.q, align 8, !noundef !21
   %i.am = icmp eq i64 %i.ak, %i.al
-  br i1 %i.am, label %bb.h, label %bb.f
+  br i1 %i.am, label %4, label %bb.f
 
-bb.h:                                             ; preds = %bb.g
-  %3 = load ptr, ptr %i.p, align 8, !nonnull !21, !noundef !21
-  %i.an = getelementptr [16 x i8], ptr %3, i64 %i.s ; 2 uses
-  %4 = getelementptr i8, ptr %i.an, i64 -16
-  %i.ao = load ptr, ptr %4, align 8, !nonnull !21, !noundef !21
-  %i.ap = getelementptr i8, ptr %i.an, i64 -8
+4:                                                ; preds = %bb.g
+  %5 = add i64 %i.s, -1                           ; 2 uses
+  %6 = icmp ult i64 %5, %i.ak
+  br i1 %6, label %bb.h, label %7
+
+7:                                                ; preds = %4
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 6, ptr %8, align 8
+  br label %9
+
+bb.h:                                             ; preds = %4
+  %i.an = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %5 ; 2 uses
+  %i.ao = load ptr, ptr %i.an, align 8, !nonnull !21, !noundef !21
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8, !nonnull !21, !align !25, !noundef !21
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
   %i.as = load ptr, ptr %i.ar, align 8, !invariant.load !21, !nonnull !21
   %i.at = call noundef i8 %i.as(ptr noundef nonnull %i.ao) #45
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = add i8 %i.at, -6
-  %switch.and = and i8 %5, -3
-  %switch.selectcmp = icmp eq i8 %switch.and, 0
-  %6 = select i1 %switch.selectcmp, i8 7, i8 6
-  store i8 %6, ptr %i.au, align 8
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  switch i8 %i.at, label %10 [
+    i8 8, label %11
+    i8 6, label %11
+  ]
+
+9:                                                ; preds = %10, %11, %7
   store i64 -2, ptr %0, align 8
   br label %bb.d
+
+10:                                               ; preds = %bb.h
+  store i8 6, ptr %i.au, align 8
+  br label %9
+
+11:                                               ; preds = %bb.h, %bb.h
+  store i8 7, ptr %i.au, align 8
+  br label %9
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable

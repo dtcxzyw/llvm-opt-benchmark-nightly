@@ -204,33 +204,34 @@ bb.b:                                             ; preds = %bb.a
   %.val30.val.i = load i32, ptr %i.aw, align 4, !tbaa !36 ; 2 uses
   %spec.select.i.i = tail call i32 @llvm.smax.i32(i32 %.val.val.i, i32 %.val30.val.i) ; 2 uses
   %spec.select14.i.i = tail call i32 @llvm.smin.i32(i32 %.val.val.i, i32 %.val30.val.i) ; 2 uses
-  %.not.not.i80 = icmp sgt i32 %i.am, 0
-  br i1 %.not.not.i80, label %.lr.ph.preheader, label %flat_limits.exit
+  %.not.i80 = icmp slt i32 %i.am, 1
+  br i1 %.not.i80, label %flat_limits.exit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.ax = zext nneg i32 %i.am to i64
+  %indvars.iv.next5.i79 = add nsw i64 %i.ax, -1
   br label %.lr.ph
 
 bb.c:                                             ; preds = %bb.e
-  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i81, 1 ; 2 uses
-  %.not.not.i = icmp slt i64 %indvars.iv.next.i.a, %indvars.iv.next5.i82
-  br i1 %.not.not.i, label %.lr.ph, label %flat_limits.exit, !llvm.loop !98
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i81, 1 ; 2 uses
+  %indvars.iv.next.i.a = add nsw i64 %indvars.iv.next5.i82.in, -1 ; 2 uses
+  %.not.i = icmp sgt i64 %indvars.iv.next.i, %indvars.iv.next.i.a
+  br i1 %.not.i, label %flat_limits.exit, label %.lr.ph, !llvm.loop !98
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv.next5.i82.in = phi i64 [ %indvars.iv.next5.i82, %bb.c ], [ %i.ax, %.lr.ph.preheader ]
-  %indvars.iv.i81 = phi i64 [ %indvars.iv.next.i.a, %bb.c ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %indvars.iv.next5.i82 = add nsw i64 %indvars.iv.next5.i82.in, -1 ; 4 uses
+  %indvars.iv.next5.i82.in = phi i64 [ %indvars.iv.next.i.a, %bb.c ], [ %indvars.iv.next5.i79, %.lr.ph.preheader ] ; 3 uses
+  %indvars.iv.i81 = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv.i81
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !15
   %i.ba = getelementptr i8, ptr %i.az, i64 16
   %.val32.i.a = load ptr, ptr %i.ba, align 8, !tbaa !13
   call fastcc void @setbounds(ptr %.val32.i.a, ptr noundef %i.a, i32 noundef %spec.select14.i.i, i32 noundef %spec.select.i.i)
-  %i.bb = and i64 %indvars.iv.next5.i82, 4294967295
+  %i.bb = and i64 %indvars.iv.next5.i82.in, 4294967295
   %.not.i.a = icmp eq i64 %indvars.iv.i81, %i.bb
   br i1 %.not.i.a, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.bc = getelementptr inbounds [8 x i8], ptr %i.al, i64 %indvars.iv.next5.i82
+  %i.bc = getelementptr inbounds [8 x i8], ptr %i.al, i64 %indvars.iv.next5.i82.in
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !15
   %i.be = getelementptr i8, ptr %i.bd, i64 16
   %.val31.i = load ptr, ptr %i.be, align 8, !tbaa !13

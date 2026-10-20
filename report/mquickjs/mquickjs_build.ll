@@ -204,7 +204,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define internal fastcc void @add_atom(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !21   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !21   ; 4 uses
   %i.c = icmp sgt i32 %i.b, 0
   %.pre.pre = load ptr, ptr %0, align 8, !tbaa !22 ; 3 uses
   br i1 %i.c, label %.lr.ph.i, label %find_atom.exit.thread
@@ -227,13 +227,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %exitcond.not.i, label %find_atom.exit.thread, label %bb.b, !llvm.loop !0
 
 find_atom.exit.thread:                            ; preds = %bb.c, %bb.a
+  %2 = add nsw i32 %i.b, 1                        ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !86   ; 2 uses
-  %.not = icmp slt i32 %i.b, %i.h
-  br i1 %.not, label %bb.e, label %bb.d
+  %3 = icmp sgt i32 %2, %i.h
+  br i1 %3, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %find_atom.exit.thread
-  %2 = add nsw i32 %i.b, 1
   %i.i = mul nsw i32 %i.h, 3
   %i.j = sdiv i32 %i.i, 2
   %..i = tail call range(i32 -1073741824, -2147483648) i32 @llvm.smax.i32(i32 range(i32 -2147483647, -2147483648) %2, i32 range(i32 -1073741824, 1073741824) %i.j) ; 2 uses
@@ -242,14 +242,15 @@ bb.d:                                             ; preds = %find_atom.exit.thre
   %i.l = shl nsw i64 %i.k, 4
   %i.m = tail call ptr @realloc(ptr noundef %.pre.pre, i64 noundef %i.l) #30 ; 2 uses
   store ptr %i.m, ptr %0, align 8, !tbaa !22
-  %.pre28 = load i32, ptr %i.a, align 8, !tbaa !21
+  %.pre28 = load i32, ptr %i.a, align 8, !tbaa !21 ; 2 uses
+  %.pre = add nsw i32 %.pre28, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %find_atom.exit.thread
-  %i.n = phi i32 [ %.pre28, %bb.d ], [ %i.b, %find_atom.exit.thread ] ; 2 uses
+  %.pre-phi = phi i32 [ %.pre, %bb.d ], [ %2, %find_atom.exit.thread ]
+  %i.n = phi i32 [ %.pre28, %bb.d ], [ %i.b, %find_atom.exit.thread ]
   %i.o = phi ptr [ %i.m, %bb.d ], [ %.pre.pre, %find_atom.exit.thread ]
-  %3 = add nsw i32 %i.n, 1
-  store i32 %3, ptr %i.a, align 8, !tbaa !21
+  store i32 %.pre-phi, ptr %i.a, align 8, !tbaa !21
   %i.p = sext i32 %i.n to i64
   %i.q = getelementptr inbounds [16 x i8], ptr %i.o, i64 %i.p ; 2 uses
   %i.r = tail call noalias ptr @strdup(ptr noundef %1) #23
@@ -280,7 +281,7 @@ declare void @exit(i32 noundef) local_unnamed_addr #7
 define internal fastcc i32 @add_cfunc(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !88   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !88   ; 4 uses
   %i.c = icmp sgt i32 %i.b, 0
   %.pre.pre = load ptr, ptr %0, align 8, !tbaa !89 ; 3 uses
   br i1 %i.c, label %.lr.ph, label %._crit_edge
@@ -330,13 +331,13 @@ bb.g:                                             ; preds = %bb.b, %bb.c, %bb.d,
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !87
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
+  %6 = add nsw i32 %i.b, 1                        ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.t = load i32, ptr %i.s, align 4, !tbaa !90   ; 2 uses
-  %.not = icmp slt i32 %i.b, %i.t
-  br i1 %.not, label %bb.i, label %bb.h
+  %7 = icmp sgt i32 %6, %i.t
+  br i1 %7, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %._crit_edge
-  %6 = add nsw i32 %i.b, 1
   %i.u = mul nsw i32 %i.t, 3
   %i.v = sdiv i32 %i.u, 2
   %..i = tail call range(i32 -1073741824, -2147483648) i32 @llvm.smax.i32(i32 range(i32 -2147483647, -2147483648) %6, i32 range(i32 -1073741824, 1073741824) %i.v) ; 2 uses
@@ -345,14 +346,15 @@ bb.h:                                             ; preds = %._crit_edge
   %i.x = mul nsw i64 %i.w, 40
   %i.y = tail call ptr @realloc(ptr noundef %.pre.pre, i64 noundef %i.x) #30 ; 2 uses
   store ptr %i.y, ptr %0, align 8, !tbaa !89
-  %.pre52 = load i32, ptr %i.a, align 8, !tbaa !88
+  %.pre52 = load i32, ptr %i.a, align 8, !tbaa !88 ; 2 uses
+  %.pre = add nsw i32 %.pre52, 1
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %._crit_edge
-  %i.z = phi i32 [ %.pre52, %bb.h ], [ %i.b, %._crit_edge ] ; 3 uses
+  %.pre-phi = phi i32 [ %.pre, %bb.h ], [ %6, %._crit_edge ]
+  %i.z = phi i32 [ %.pre52, %bb.h ], [ %i.b, %._crit_edge ] ; 2 uses
   %i.aa = phi ptr [ %i.y, %bb.h ], [ %.pre.pre, %._crit_edge ]
-  %7 = add nsw i32 %i.z, 1
-  store i32 %7, ptr %i.a, align 8, !tbaa !88
+  store i32 %.pre-phi, ptr %i.a, align 8, !tbaa !88
   %i.ab = sext i32 %i.z to i64
   %i.ac = getelementptr inbounds [40 x i8], ptr %i.aa, i64 %i.ab ; 5 uses
   %i.ad = tail call noalias ptr @strdup(ptr noundef %1) #23

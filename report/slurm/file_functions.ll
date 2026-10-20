@@ -202,16 +202,16 @@ _strip_continuation.exit.thread.i:                ; preds = %bb.ai, %_strip_cont
   %i.fn = load i8, ptr %i.fm, align 1
   %i.fo = icmp eq i8 %i.fn, 92
   %i.fp = zext i1 %i.fo to i32
-  %spec.select.i.i = add nsw i32 %.01113.i.i, %i.fp ; 3 uses
+  %spec.select.i.i = add nsw i32 %.01113.i.i, %i.fp ; 2 uses
   %i.fq = sext i32 %spec.select.i.i to i64
   %i.fr = getelementptr inbounds i8, ptr %i.p, i64 %i.fq
   %i.fs = load i8, ptr %i.fr, align 1
   %i.ft = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv.i24.i
   store i8 %i.fs, ptr %i.ft, align 1
-  %i.fu = add nsw i32 %spec.select.i.i, 1
+  %i.fu = add nsw i32 %spec.select.i.i, 1         ; 2 uses
   %indvars.iv.next.i25.i = add nuw nsw i64 %indvars.iv.i24.i, 1
-  %.not.not.i.i = icmp slt i32 %spec.select.i.i, %i.fk
-  br i1 %.not.not.i.i, label %.lr.ph.i23.i, label %_get_next_line.exit, !llvm.loop !21
+  %.not.i26.i = icmp sgt i32 %i.fu, %i.fk
+  br i1 %.not.i26.i, label %_get_next_line.exit, label %.lr.ph.i23.i, !llvm.loop !21
 
 _get_next_line.exit:                              ; preds = %.lr.ph.i23.i, %_strip_continuation.exit.thread.i
   %i.fv = icmp sgt i32 %.1.i, 0
@@ -614,7 +614,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_is_colon_typed_tres.exit.thread, %bb.a
   %.promoted66 = phi i32 [ %i.h, %_is_colon_typed_tres.exit.thread ], [ %i.a, %bb.a ] ; 3 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_is_colon_typed_tres.exit.thread ], [ %i.b, %bb.a ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_is_colon_typed_tres.exit.thread ], [ %i.b, %bb.a ] ; 3 uses
   %.048 = phi i8 [ %.149, %_is_colon_typed_tres.exit.thread ], [ 0, %bb.a ] ; 6 uses
   %.0 = phi i32 [ %.1, %_is_colon_typed_tres.exit.thread ], [ 0, %bb.a ] ; 4 uses
   %i.c = getelementptr inbounds i8, ptr %0, i64 %indvars.iv
@@ -628,17 +628,18 @@ bb.b:                                             ; preds = %_is_colon_typed_tre
   ]
 
 .preheader71.preheader:                           ; preds = %bb.b
-  %.not.not.i102 = icmp sgt i64 %indvars.iv, %i.b
-  br i1 %.not.not.i102, label %.lr.ph104, label %.critedge
+  %indvars.iv.next.i102 = add nsw i64 %indvars.iv, -1 ; 2 uses
+  %.not.i103 = icmp slt i64 %indvars.iv.next.i102, %i.b
+  br i1 %.not.i103, label %.critedge, label %.lr.ph104
 
 .preheader71:                                     ; preds = %.lr.ph104
-  %.not.not.i = icmp sgt i64 %indvars.iv.next.i, %i.b
-  br i1 %.not.not.i, label %.lr.ph104, label %.critedge, !llvm.loop !43
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i103, -1 ; 2 uses
+  %.not.i = icmp slt i64 %indvars.iv.next.i, %i.b
+  br i1 %.not.i, label %.critedge, label %.lr.ph104, !llvm.loop !43
 
 .lr.ph104:                                        ; preds = %.preheader71.preheader, %.preheader71
-  %indvars.iv.i103 = phi i64 [ %indvars.iv.next.i, %.preheader71 ], [ %indvars.iv, %.preheader71.preheader ]
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i103, -1 ; 3 uses
-  %i.e = getelementptr inbounds i8, ptr %0, i64 %indvars.iv.next.i
+  %indvars.iv.i103 = phi i64 [ %indvars.iv.next.i, %.preheader71 ], [ %indvars.iv.next.i102, %.preheader71.preheader ] ; 2 uses
+  %i.e = getelementptr inbounds i8, ptr %0, i64 %indvars.iv.i103
   %i.f = load i8, ptr %i.e, align 1
   switch i8 %i.f, label %.preheader71 [
     i8 61, label %..critedge.loopexit_crit_edge

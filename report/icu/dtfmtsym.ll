@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.i, ptr %8, align 8, !tbaa !121
   %i.j = load i32, ptr %i.a, align 4, !tbaa !15
   %i.k = icmp sgt i32 %i.j, 0
-  %i.l = add i32 %5, 1                            ; 5 uses
+  %i.l = add i32 %5, 1                            ; 4 uses
   %i.m = sext i32 %i.l to i64                     ; 2 uses
   %i.n = icmp slt i32 %5, -1
   %i.o = shl nsw i64 %i.m, 6                      ; 2 uses
@@ -312,7 +312,6 @@ bb.h:                                             ; preds = %bb.c
   %.not641 = icmp eq ptr %i.i, null
   %.not64 = select i1 %i.k, i1 true, i1 %.not641
   %.not64.fr = freeze i1 %.not64
-  %wide.trip.count22 = zext i32 %i.l to i64       ; 2 uses
   br i1 %.not64.fr, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.m
@@ -356,8 +355,9 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   %indvars.iv.next20 = add nuw nsw i64 %indvars.iv19, 1 ; 2 uses
-  %exitcond23.not = icmp eq i64 %indvars.iv.next20, %wide.trip.count22
-  br i1 %exitcond23.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !274
+  %12 = trunc nuw i64 %indvars.iv.next20 to i32
+  %.not62.us = icmp slt i32 %5, %12
+  br i1 %.not62.us, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !274
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.ag
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ag ], [ 0, %.lr.ph ] ; 5 uses
@@ -504,8 +504,9 @@ bb.ag:                                            ; preds = %_ZN6icu_788internal
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count22
-  br i1 %exitcond.not, label %.loopexit.loopexit17, label %.lr.ph.split, !llvm.loop !274
+  %13 = trunc nuw i64 %indvars.iv.next to i32
+  %.not62 = icmp slt i32 %5, %13
+  br i1 %.not62, label %.loopexit.loopexit17, label %.lr.ph.split, !llvm.loop !274
 
 .split9:                                          ; preds = %.split9.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.af
   %.pn69 = phi { ptr, i32 } [ %.pn.pn, %bb.af ], [ %lpad.loopexit.split-lp, %.split9.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]

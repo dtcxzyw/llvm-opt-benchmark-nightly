@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %.loopexit.i, %.lr.p
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.aq, %.lr.ph.i38
-  %indvars.iv.i = phi i64 [ %i.hi, %.lr.ph.i38 ], [ %indvars.iv.next.i, %bb.aq ] ; 17 uses
+  %indvars.iv.i = phi i64 [ %i.hi, %.lr.ph.i38 ], [ %indvars.iv.next.i, %bb.aq ] ; 16 uses
   %indvars62.i = trunc i64 %indvars.iv.i to i32   ; 3 uses
   %i.hk = sub nuw nsw i64 %indvars.iv.i, %i.hi
   %i.hl = trunc nuw nsw i64 %i.hk to i32
@@ -230,7 +230,7 @@ bb.aa:                                            ; preds = %bb.z
 
 _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i.i42: ; preds = %bb.aa
   %i.hu = zext i32 %i.hr to i64                   ; 3 uses
-  %i.hv = add nuw nsw i64 %indvars.iv.i, 1        ; 2 uses
+  %i.hv = add nuw nsw i64 %indvars.iv.i, 1        ; 5 uses
   br label %_ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i43
 
 _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i43: ; preds = %bb.ad, %_ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i.i42
@@ -241,8 +241,8 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %i.hx = getelementptr inbounds nuw i8, ptr %.067.i.i45, i64 %.idx220 ; 3 uses
   %.sroa.01.0.copyload.i.i.i48 = load i64, ptr %i.hx, align 4, !tbaa !11 ; 3 uses
   %.sroa.47.0.extract.shift.i.i.i.i49 = lshr i64 %.sroa.01.0.copyload.i.i.i48, 32
-  %i.hy = and i64 %.sroa.01.0.copyload.i.i.i48, 4294967295 ; 3 uses
-  %6 = icmp samesign uge i64 %indvars.iv.i, %i.hy ; 3 uses
+  %i.hy = and i64 %.sroa.01.0.copyload.i.i.i48, 4294967295 ; 4 uses
+  %6 = icmp samesign ugt i64 %i.hv, %i.hy         ; 2 uses
   %i.hz = add i64 %.sroa.47.0.extract.shift.i.i.i.i49, %.sroa.01.0.copyload.i.i.i48
   %i.ia = and i64 %i.hz, 4294967295               ; 3 uses
   %i.ib = icmp samesign ugt i64 %i.ia, %indvars.iv.i ; 2 uses
@@ -266,11 +266,12 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN6hermes12CodePointSet3addENS2_14CodePointR
   br i1 %i.ii, label %.critedge.i.i59, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIKS4_PS4_EEbRT_T0_.exit.i.i53
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIKS4_PS4_EEbRT_T0_.exit.i.i53: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIPS4_KS4_EEbT_RT0_.exit.thread.i.i52
-  %7 = icmp eq i64 %i.ia, %indvars.iv.i
-  %8 = icmp eq i64 %i.hv, %i.hy
-  %.not10.i.i22.i.not74.i = or i1 %8, %7
-  %spec.select.i.i23.i.not.i = or i1 %6, %.not10.i.i22.i.not74.i
-  br i1 %spec.select.i.i23.i.not.i, label %.critedge.i.i59, label %bb.ad
+  %7 = icmp ne i64 %i.ia, %indvars.iv.i
+  %8 = icmp ne i64 %i.hv, %i.hy
+  %.not10.i.i22.i.i54 = and i1 %8, %7
+  %9 = icmp samesign ult i64 %indvars.iv.i, %i.hy
+  %spec.select.i.i23.i.i55 = and i1 %9, %.not10.i.i22.i.i54
+  br i1 %spec.select.i.i23.i.i55, label %bb.ad, label %.critedge.i.i59
 
 .critedge.i.i59:                                  ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIKS4_PS4_EEbRT_T0_.exit.i.i53, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIPS4_KS4_EEbT_RT0_.exit.thread.i.i52
   %.not218 = icmp eq i64 %i.hw, 0
@@ -284,11 +285,11 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %.sroa.01.0.copyload.i.i.i.i88 = load i64, ptr %i.ik, align 4, !tbaa !11 ; 3 uses
   %.sroa.47.0.extract.shift.i.i.i.i.i89 = lshr i64 %.sroa.01.0.copyload.i.i.i.i88, 32
   %i.il = and i64 %.sroa.01.0.copyload.i.i.i.i88, 4294967295 ; 2 uses
-  %9 = icmp samesign uge i64 %indvars.iv.i, %i.il
+  %10 = icmp samesign ugt i64 %i.hv, %i.il
   %i.im = add i64 %.sroa.47.0.extract.shift.i.i.i.i.i89, %.sroa.01.0.copyload.i.i.i.i88
   %i.in = and i64 %i.im, 4294967295               ; 2 uses
   %i.io = icmp samesign ugt i64 %i.in, %indvars.iv.i
-  %i.ip = select i1 %9, i1 %i.io, i1 false
+  %i.ip = select i1 %10, i1 %i.io, i1 false
   br i1 %i.ip, label %.thread.i.i.i95, label %_ZN9__gnu_cxx5__ops14_Iter_comp_valIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIPS4_KS4_EEbT_RT0_.exit.i.i.i90
 
 _ZN9__gnu_cxx5__ops14_Iter_comp_valIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIPS4_KS4_EEbT_RT0_.exit.i.i.i90: ; preds = %_ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i83
@@ -329,9 +330,9 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %i.je = add i64 %.sroa.4.0.extract.shift.i.i.i39.i.i76, %.sroa.0.0.copyload.i.i37.i.i75
   %i.jf = and i64 %i.je, 4294967295               ; 2 uses
   %i.jg = icmp samesign ugt i64 %i.jf, %indvars.iv.i
-  %i.jh = and i64 %.sroa.0.0.copyload.i.i37.i.i75, 4294967295 ; 2 uses
-  %10 = icmp samesign uge i64 %indvars.iv.i, %i.jh ; 2 uses
-  %i.ji = and i1 %10, %i.jg
+  %i.jh = and i64 %.sroa.0.0.copyload.i.i37.i.i75, 4294967295 ; 3 uses
+  %11 = icmp samesign ugt i64 %i.hv, %i.jh
+  %i.ji = and i1 %11, %i.jg
   br i1 %i.ji, label %.thread.i44.i.i82, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIKS4_PS4_EEbRT_T0_.exit.i.i.i77
 
 .thread.i44.i.i82:                                ; preds = %_ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.i34.i.i70
@@ -344,8 +345,8 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes12CodePointSet3addENS2_14CodePointR
   %i.jm = icmp ne i64 %i.jf, %indvars.iv.i
   %i.jn = icmp ne i64 %i.hv, %i.jh
   %.not10.i.i.i41.i.i78 = and i1 %i.jn, %i.jm
-  %.not64.i = xor i1 %10, true
-  %spec.select.i.i.i42.i.i79 = and i1 %.not10.i.i.i41.i.i78, %.not64.i
+  %12 = icmp samesign ult i64 %indvars.iv.i, %i.jh
+  %spec.select.i.i.i42.i.i79 = and i1 %12, %.not10.i.i.i41.i.i78
   %cond.fr.i43.i.i80 = freeze i1 %spec.select.i.i.i42.i.i79
   br i1 %cond.fr.i43.i.i80, label %.split.i.i.i81, label %bb.ac
 

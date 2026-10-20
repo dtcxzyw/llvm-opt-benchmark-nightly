@@ -31,12 +31,12 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.h = add nuw i32 %i.d, 3
-  %i.i = and i32 %i.h, 3                          ; 3 uses
+  %i.i = and i32 %i.h, 3                          ; 2 uses
   %.not115 = icmp eq i32 %i.i, 0
   br i1 %.not115, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %i.j = add nuw nsw i32 %i.i, 1                  ; 2 uses
+  %i.j = add nuw nsw i32 %i.i, 1                  ; 5 uses
   %.pre = load double, ptr %1, align 8, !tbaa !11 ; 2 uses
   %i.k = fcmp ugt double %.pre, 0.000000e+00
   br i1 %i.k, label %bb.f, label %bb.e
@@ -92,9 +92,10 @@ bb.h:                                             ; preds = %.lr.ph.2
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.g, %bb.h, %bb.d
+  %.pre-phi = phi i32 [ 1, %bb.d ], [ %i.j, %bb.h ], [ %i.j, %bb.g ], [ %i.j, %bb.f ]
   %i.ah = add nsw i32 %i.d, -4                    ; 2 uses
-  %.not104117.not = icmp slt i32 %i.i, %i.ah
-  br i1 %.not104117.not, label %.lr.ph120.preheader, label %._crit_edge121
+  %.not104117 = icmp sgt i32 %.pre-phi, %i.ah
+  br i1 %.not104117, label %._crit_edge121, label %.lr.ph120.preheader
 
 .lr.ph120.preheader:                              ; preds = %._crit_edge
   %narrow = add nuw i32 %i.d, 3

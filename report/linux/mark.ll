@@ -204,7 +204,9 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph:                                           ; preds = %.thread58
   %i.v = getelementptr i8, ptr %i.b, i64 32
   %i.w = zext i8 %i.t to i64
-  %wide.trip.count = zext nneg i32 %i.n to i64
+  %2 = add nuw nsw i64 %i.w, 1
+  %3 = add nuw nsw i32 %i.n, 1
+  %wide.trip.count = zext nneg i32 %3 to i64
   br label %bb.e
 
 ._crit_edge.loopexit:                             ; preds = %bb.e
@@ -227,10 +229,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph, %bb.e
-  %indvars.iv = phi i64 [ %i.w, %.lr.ph ], [ %indvars.iv.next, %bb.e ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %2 = getelementptr [8 x i8], ptr %i.v, i64 %indvars.iv.next ; 2 uses
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock incq $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %2, ptr elementtype(i64) %2) #8, !srcloc !17
+  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 2 uses
+  %4 = getelementptr [8 x i8], ptr %i.v, i64 %indvars.iv ; 2 uses
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock incq $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %4, ptr elementtype(i64) %4) #8, !srcloc !17
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.e, !llvm.loop !53
 

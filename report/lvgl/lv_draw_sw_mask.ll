@@ -205,7 +205,7 @@ bb.bd:                                            ; preds = %bb.bb
   %i.fk = lshr i32 %i.fj, 10
   %i.fl = ashr i32 %i.fj, 18                      ; 2 uses
   %i.fm = and i32 %i.fk, 255
-  %i.fn = sub nsw i32 %i.fg, %i.f                 ; 16 uses
+  %i.fn = sub nsw i32 %i.fg, %i.f                 ; 15 uses
   %.not.i = icmp eq i32 %i.fg, %i.fl
   br i1 %.not.i, label %.thread248.i, label %bb.be
 
@@ -224,7 +224,7 @@ bb.be:                                            ; preds = %bb.bd
   %.0162230.i = phi i32 [ %i.fl, %.thread.i ], [ %i.fg, %bb.bd ]
   %.0167229.i = phi i32 [ %i.fq, %.thread.i ], [ %i.fn, %bb.bd ] ; 4 uses
   %i.fr = icmp sgt i32 %.0167229.i, -1
-  %i.fs = icmp slt i32 %.0167229.i, %3            ; 2 uses
+  %i.fs = icmp slt i32 %.0167229.i, %3
   %or.cond206.i.a = and i1 %i.fr, %i.fs
   br i1 %or.cond206.i.a, label %bb.bf, label %bb.bi
 
@@ -282,25 +282,25 @@ bb.bl:                                            ; preds = %bb.bk
 
 bb.bm:                                            ; preds = %bb.bi
   %i.gn = add nsw i32 %.0167229.i, 1
-  %spec.select207.i = select i1 %i.fs, i32 %i.gn, i32 %3 ; 4 uses
-  %i.go = icmp eq i32 %spec.select207.i, 0
+  %spec.select204.i = tail call i32 @llvm.smin.i32(i32 %i.gn, i32 %3) ; 4 uses
+  %i.go = icmp eq i32 %spec.select204.i, 0
   br i1 %i.go, label %line_mask_flat.exit, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.gp = icmp sgt i32 %spec.select207.i, 0
+  %i.gp = icmp sgt i32 %spec.select204.i, 0
   br i1 %i.gp, label %bb.bo, label %line_mask_flat.exit
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.gq = zext nneg i32 %spec.select207.i to i64
+  %i.gq = zext nneg i32 %spec.select204.i to i64
   %i.gr = getelementptr inbounds nuw i8, ptr %0, i64 %i.gq
-  %i.gs = sub nsw i32 %3, %spec.select207.i
-  %5 = sext i32 %i.gs to i64
+  %i.gs = sub nsw i32 %3, %spec.select204.i
+  %5 = zext nneg i32 %i.gs to i64
   tail call void @lv_memset(ptr noundef nonnull %i.gr, i8 noundef zeroext 0, i64 noundef range(i64 -2147483648, 2147483648) %5) #9
   br label %line_mask_flat.exit
 
 bb.bp:                                            ; preds = %bb.be
   %i.gt = icmp sgt i32 %i.fn, -1                  ; 2 uses
-  %i.gu = icmp slt i32 %i.fn, %3                  ; 2 uses
+  %i.gu = icmp slt i32 %i.fn, %3
   %or.cond208.i.a = and i1 %i.gt, %i.gu           ; 2 uses
   br i1 %i.fo, label %bb.bq, label %bb.ce
 
@@ -346,10 +346,11 @@ mask_mix.exit219.i:                               ; preds = %bb.bt, %bb.bs, %bb.
 
 bb.bu:                                            ; preds = %mask_mix.exit219.i, %bb.bq
   %.pre77 = phi i8 [ %.pre77.pre, %mask_mix.exit219.i ], [ %i.k, %bb.bq ] ; 2 uses
-  %6 = icmp slt i32 %i.fn, 1
-  %.not195.i = icmp sgt i32 %i.fn, %3
-  %or.cond209.i = or i1 %6, %.not195.i
-  br i1 %or.cond209.i, label %bb.by, label %bb.bv
+  %6 = add nsw i32 %i.fn, -1                      ; 2 uses
+  %.not195.i = icmp sgt i32 %i.fn, 0
+  %7 = icmp slt i32 %6, %3
+  %or.cond206.i = select i1 %.not195.i, i1 %7, i1 false
+  br i1 %or.cond206.i, label %bb.bv, label %bb.by
 
 bb.bv:                                            ; preds = %bb.bu
   %.neg.i = add nsw i32 %i.gz, 134217473
@@ -364,9 +365,8 @@ bb.bv:                                            ; preds = %bb.bu
   %i.hw = and i8 %i.hv, 1
   %sext236.i = add nsw i8 %i.hw, -1
   %spec.select210.i.a = xor i8 %sext236.i, %i.hu  ; 3 uses
-  %i.hx = zext nneg i32 %i.fn to i64
-  %7 = getelementptr i8, ptr %0, i64 %i.hx
-  %i.hy = getelementptr i8, ptr %7, i64 -1        ; 2 uses
+  %i.hx = zext nneg i32 %6 to i64
+  %i.hy = getelementptr inbounds nuw i8, ptr %0, i64 %i.hx ; 2 uses
   %i.hz = load i8, ptr %i.hy, align 1, !tbaa !29  ; 2 uses
   %i.ia = zext i8 %spec.select210.i.a to i32
   %i.ib = icmp ugt i8 %spec.select210.i.a, -4
@@ -392,7 +392,7 @@ mask_mix.exit221.i:                               ; preds = %bb.bx, %bb.bw, %bb.
 
 bb.by:                                            ; preds = %mask_mix.exit221.i, %bb.bu
   %i.ii = phi i8 [ %.pre76, %mask_mix.exit221.i ], [ %.pre77, %bb.bu ]
-  %i.ij = add nsw i32 %i.fn, 1                    ; 2 uses
+  %i.ij = add nsw i32 %i.fn, 1                    ; 3 uses
   %i.ik = and i8 %i.ii, 2
   %.not197.i = icmp eq i8 %i.ik, 0
   br i1 %.not197.i, label %bb.cb, label %bb.bz
@@ -411,7 +411,8 @@ bb.ca:                                            ; preds = %bb.bz
   br label %line_mask_flat.exit
 
 bb.cb:                                            ; preds = %bb.by
-  br i1 %i.gu, label %bb.cc, label %line_mask_flat.exit
+  %8 = icmp sgt i32 %i.ij, %3
+  br i1 %8, label %line_mask_flat.exit, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
   %i.iq = icmp sgt i32 %i.fn, -2
@@ -814,9 +815,8 @@ bb.p:                                             ; preds = %bb.o
   %.0183239.i = phi i32 [ 0, %bb.p ], [ %i.gz, %bb.ai ] ; 7 uses
   %.0213238.i = phi i32 [ %i.cp, %bb.p ], [ %.3216.3.i, %bb.ai ] ; 3 uses
   %.sroa.0.0237.i = phi i32 [ %i.bz, %bb.p ], [ %.sroa.0.3.3.i, %bb.ai ] ; 3 uses
-  %.sroa.10.0236.i = phi i32 [ 0, %bb.p ], [ %i.cq, %bb.ai ] ; 7 uses
-  %i.cq = add i32 %.sroa.10.0236.i, 4
-  %4 = or disjoint i32 %.sroa.10.0236.i, 3        ; 3 uses
+  %.sroa.10.0236.i = phi i32 [ 0, %bb.p ], [ %i.cq, %bb.ai ] ; 6 uses
+  %i.cq = add i32 %.sroa.10.0236.i, 4             ; 2 uses
   %i.cr = icmp slt i32 %.0213238.i, 1
   br i1 %i.cr, label %bb.q, label %bb.r
 
@@ -837,18 +837,18 @@ bb.r:                                             ; preds = %.preheader224.i
 circ_next.exit.i:                                 ; preds = %bb.r, %bb.q
   %.sroa.0.3.i = phi i32 [ %.sroa.0.0237.i, %bb.q ], [ %i.cz, %bb.r ] ; 6 uses
   %.3216.i = phi i32 [ %i.cu, %bb.q ], [ %i.cy, %bb.r ] ; 3 uses
-  %.not222.not.i = icmp slt i32 %.sroa.10.0236.i, %.sroa.0.3.i
-  br i1 %.not222.not.i, label %bb.s, label %.thread.i
+  %4 = or disjoint i32 %.sroa.10.0236.i, 1        ; 3 uses
+  %.not222.i = icmp sgt i32 %4, %.sroa.0.3.i
+  br i1 %.not222.i, label %.thread.i, label %bb.s
 
 bb.s:                                             ; preds = %circ_next.exit.i
-  %5 = or disjoint i32 %.sroa.10.0236.i, 1        ; 3 uses
   %i.da = ashr i32 %.sroa.0.3.i, 2                ; 9 uses
   %i.db = and i32 %.sroa.0.3.i, 3                 ; 3 uses
   %i.dc = icmp slt i32 %.3216.i, 1
   br i1 %i.dc, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.dd = sub nsw i32 %5, %.sroa.0.3.i
+  %i.dd = sub nsw i32 %4, %.sroa.0.3.i
   %i.de = shl nsw i32 %i.dd, 1
   %i.df = add nuw i32 %.3216.i, 5
   %i.dg = add i32 %i.df, %i.de
@@ -856,7 +856,7 @@ bb.t:                                             ; preds = %bb.s
   br label %circ_next.exit.1.i
 
 bb.u:                                             ; preds = %bb.s
-  %i.di = shl nsw i32 %5, 1
+  %i.di = shl nsw i32 %4, 1
   %i.dj = add nuw nsw i32 %i.di, 3
   %i.dk = add i32 %i.dj, %.3216.i
   br label %circ_next.exit.1.i
@@ -864,18 +864,18 @@ bb.u:                                             ; preds = %bb.s
 circ_next.exit.1.i:                               ; preds = %bb.u, %bb.t
   %.sroa.0.3.1.i = phi i32 [ %.sroa.0.3.i, %bb.u ], [ %i.dh, %bb.t ] ; 6 uses
   %.3216.1.i = phi i32 [ %i.dk, %bb.u ], [ %i.dg, %bb.t ] ; 3 uses
-  %.not222.not.1.i = icmp slt i32 %5, %.sroa.0.3.1.i
-  br i1 %.not222.not.1.i, label %bb.v, label %.thread.i
+  %5 = or disjoint i32 %.sroa.10.0236.i, 2        ; 3 uses
+  %.not222.1.i = icmp sgt i32 %5, %.sroa.0.3.1.i
+  br i1 %.not222.1.i, label %.thread.i, label %bb.v
 
 bb.v:                                             ; preds = %circ_next.exit.1.i
-  %6 = or disjoint i32 %.sroa.10.0236.i, 2        ; 3 uses
   %i.dl = ashr i32 %.sroa.0.3.1.i, 2
   %i.dm = and i32 %.sroa.0.3.1.i, 3               ; 3 uses
   %i.dn = icmp slt i32 %.3216.1.i, 1
   br i1 %i.dn, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.do = sub nsw i32 %6, %.sroa.0.3.1.i
+  %i.do = sub nsw i32 %5, %.sroa.0.3.1.i
   %i.dp = shl nsw i32 %i.do, 1
   %i.dq = add nuw i32 %.3216.1.i, 5
   %i.dr = add i32 %i.dq, %i.dp
@@ -883,7 +883,7 @@ bb.w:                                             ; preds = %bb.v
   br label %circ_next.exit.2.i
 
 bb.x:                                             ; preds = %bb.v
-  %i.dt = shl nsw i32 %6, 1
+  %i.dt = shl nsw i32 %5, 1
   %i.du = or disjoint i32 %i.dt, 3
   %i.dv = add i32 %i.du, %.3216.1.i
   br label %circ_next.exit.2.i
@@ -891,8 +891,9 @@ bb.x:                                             ; preds = %bb.v
 circ_next.exit.2.i:                               ; preds = %bb.x, %bb.w
   %.sroa.0.3.2.i = phi i32 [ %.sroa.0.3.1.i, %bb.x ], [ %i.ds, %bb.w ] ; 6 uses
   %.3216.2.i = phi i32 [ %i.dv, %bb.x ], [ %i.dr, %bb.w ] ; 3 uses
-  %.not222.not.2.i = icmp slt i32 %6, %.sroa.0.3.2.i
-  br i1 %.not222.not.2.i, label %bb.y, label %.thread.i
+  %6 = or disjoint i32 %.sroa.10.0236.i, 3        ; 3 uses
+  %.not222.2.i = icmp sgt i32 %6, %.sroa.0.3.2.i
+  br i1 %.not222.2.i, label %.thread.i, label %bb.y
 
 bb.y:                                             ; preds = %circ_next.exit.2.i
   %i.dw = ashr i32 %.sroa.0.3.2.i, 2
@@ -901,7 +902,7 @@ bb.y:                                             ; preds = %circ_next.exit.2.i
   br i1 %i.dy, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.dz = sub nsw i32 %4, %.sroa.0.3.2.i
+  %i.dz = sub nsw i32 %6, %.sroa.0.3.2.i
   %i.ea = shl nsw i32 %i.dz, 1
   %i.eb = add nuw i32 %.3216.2.i, 5
   %i.ec = add i32 %i.eb, %i.ea
@@ -909,7 +910,7 @@ bb.z:                                             ; preds = %bb.y
   br label %circ_next.exit.3.i
 
 bb.aa:                                            ; preds = %bb.y
-  %i.ee = shl nsw i32 %4, 1
+  %i.ee = shl nsw i32 %6, 1
   %i.ef = add i32 %i.ee, 3
   %i.eg = add i32 %i.ef, %.3216.2.i
   br label %circ_next.exit.3.i
@@ -917,8 +918,8 @@ bb.aa:                                            ; preds = %bb.y
 circ_next.exit.3.i:                               ; preds = %bb.aa, %bb.z
   %.sroa.0.3.3.i = phi i32 [ %.sroa.0.3.2.i, %bb.aa ], [ %i.ed, %bb.z ] ; 4 uses
   %.3216.3.i = phi i32 [ %i.eg, %bb.aa ], [ %i.ec, %bb.z ]
-  %.not222.not.3.i = icmp slt i32 %4, %.sroa.0.3.3.i
-  br i1 %.not222.not.3.i, label %bb.ab, label %.thread.i
+  %.not222.3.i = icmp sgt i32 %i.cq, %.sroa.0.3.3.i
+  br i1 %.not222.3.i, label %.thread.i, label %bb.ab
 
 bb.ab:                                            ; preds = %circ_next.exit.3.i
   %i.eh = ashr i32 %.sroa.0.3.3.i, 2

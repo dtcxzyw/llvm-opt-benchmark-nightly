@@ -204,13 +204,14 @@ bb.cb:                                            ; preds = %bb.cb, %.preheader
   br i1 %i.sr, label %bb.cb, label %bb.cc, !llvm.loop !106
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.ss = trunc nsw i64 %indvars.iv260 to i32     ; 3 uses
+  %i.ss = trunc nsw i64 %indvars.iv260 to i32     ; 2 uses
   %i.st = sub nsw i32 %i.ss, %.0125220            ; 3 uses
   %i.su = icmp sgt i32 %i.st, 15
   br i1 %i.su, label %.lr.ph218.preheader, label %bb.cf
 
 .lr.ph218.preheader:                              ; preds = %bb.cc
   %i.sv = lshr i32 %indvars.iv263, 4
+  %9 = call i32 @llvm.umax.i32(i32 %i.sv, i32 1)
   br label %.lr.ph218
 
 .lr.ph218:                                        ; preds = %.lr.ph218.preheader, %stbiw__jpg_writeBits.exit157
@@ -260,7 +261,7 @@ stbiw__jpg_writeBits.exit157:                     ; preds = %bb.ce, %.lr.ph218
   store i32 %.018.lcssa.i152, ptr %1, align 4, !tbaa !12
   store i32 %.0.lcssa.i153, ptr %2, align 4, !tbaa !12
   %i.to = add nuw nsw i32 %.0217, 1
-  %exitcond265.not = icmp eq i32 %.0217, %i.sv
+  %exitcond265.not = icmp eq i32 %.0217, %9
   br i1 %exitcond265.not, label %._crit_edge, label %.lr.ph218, !llvm.loop !107
 
 ._crit_edge:                                      ; preds = %stbiw__jpg_writeBits.exit157
@@ -375,9 +376,9 @@ stbiw__jpg_writeBits.exit171:                     ; preds = %bb.cj, %stbiw__jpg_
   %.0.lcssa.i167 = phi i32 [ %i.uy, %stbiw__jpg_writeBits.exit165 ], [ %i.vo, %bb.cj ] ; 3 uses
   store i32 %.018.lcssa.i166, ptr %1, align 4, !tbaa !12
   store i32 %.0.lcssa.i167, ptr %2, align 4, !tbaa !12
-  %i.vq = add nsw i32 %i.ss, 1
-  %.not.not = icmp sgt i32 %.0123.lcssa.ph, %i.ss
-  br i1 %.not.not, label %.preheader, label %._crit_edge221, !llvm.loop !108
+  %i.vq = add nsw i32 %i.ss, 1                    ; 2 uses
+  %.not.not = icmp sgt i32 %i.vq, %.0123.lcssa.ph
+  br i1 %.not.not, label %._crit_edge221, label %.preheader, !llvm.loop !108
 
 ._crit_edge221:                                   ; preds = %stbiw__jpg_writeBits.exit171
   br i1 %.not.a, label %bb.ck, label %bb.co
@@ -778,6 +779,9 @@ declare i8 @llvm.bitreverse.i8(i8) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #22

@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %.lr.ph.i.preheader.i.lr.ph, %bb.aa
-  %i.aa = phi ptr [ %i.q, %.lr.ph.i.preheader.i.lr.ph ], [ %i.gz, %bb.aa ] ; 4 uses
+  %i.aa = phi ptr [ %i.q, %.lr.ph.i.preheader.i.lr.ph ], [ %i.gz, %bb.aa ] ; 6 uses
   %i.ab = phi ptr [ %i.p, %.lr.ph.i.preheader.i.lr.ph ], [ %i.gy, %bb.aa ]
   %i.ac = phi ptr [ %i.o, %.lr.ph.i.preheader.i.lr.ph ], [ %i.gx, %bb.aa ] ; 2 uses
   %i.ad = phi i64 [ %i.m, %.lr.ph.i.preheader.i.lr.ph ], [ %i.gv, %bb.aa ] ; 2 uses
   %.0109 = phi i32 [ 12, %.lr.ph.i.preheader.i.lr.ph ], [ %.1, %bb.aa ] ; 3 uses
-  %.038108 = phi i32 [ %3, %.lr.ph.i.preheader.i.lr.ph ], [ %.2, %bb.aa ] ; 6 uses
-  %i.ae = add nsw i32 %.038108, 1                 ; 2 uses
+  %.038108 = phi i32 [ %3, %.lr.ph.i.preheader.i.lr.ph ], [ %.2, %bb.aa ] ; 5 uses
+  %i.ae = add nsw i32 %.038108, 1                 ; 3 uses
   %i.af = getelementptr inbounds i8, ptr %i.ab, i64 -16 ; 2 uses
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !23
   %i.ah = and i64 %i.ag, 140737488355327
@@ -283,18 +283,19 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.bu = trunc i64 %i.bt to i32
   %i.bv = add nsw i32 %i.br, %i.bu
   store i32 %i.bv, ptr %i.s, align 4, !tbaa !52
-  %.not48 = icmp slt i32 %.038108, %.0109
-  br i1 %.not48, label %bb.m, label %.lr.ph.i58.preheader
+  %5 = icmp sgt i32 %i.ae, %.0109
+  br i1 %5, label %.lr.ph.i58.preheader, label %bb.m
 
 .lr.ph.i58.preheader:                             ; preds = %.loopexit95
-  %i.bw = add nuw nsw i32 %.038108, 11            ; 2 uses
+  %i.bw = add nsw i32 %.038108, 11                ; 2 uses
   %i.bx = load i64, ptr %i.af, align 8, !tbaa !23
   %i.by = and i64 %i.bx, 140737488355327
   %i.bz = inttoptr i64 %i.by to ptr
   %i.ca = icmp eq ptr %1, %i.bz
   %i.cb = zext i1 %i.ca to i32
-  %spec.select.i16.i57 = add nuw nsw i32 %i.bw, %i.cb
-  br label %.lr.ph.i58
+  %spec.select.i16.i57 = add nsw i32 %i.bw, %i.cb ; 2 uses
+  %6 = icmp eq i32 %spec.select.i16.i57, 0
+  br i1 %6, label %.loopexit, label %.lr.ph.i58
 
 .lr.ph.i.i64:                                     ; preds = %bb.i
   %i.cc = getelementptr inbounds i8, ptr %.1.i.i63, i64 -8
@@ -348,9 +349,11 @@ lua_getstack.exit69.thread:                       ; preds = %bb.i
   store i32 %i.dc, ptr %i.s, align 4, !tbaa !52
   br label %bb.aa
 
-.loopexit:                                        ; preds = %.lr.ph.i.i64
-  %i.dd = ptrtoint ptr %.02231.i17.i60 to i64
-  %i.de = ptrtoint ptr %.1.i.i63 to i64           ; 2 uses
+.loopexit:                                        ; preds = %.lr.ph.i.i64, %.lr.ph.i58.preheader
+  %.032.i.lcssa.i66 = phi ptr [ %i.aa, %.lr.ph.i58.preheader ], [ %.02231.i17.i60, %.lr.ph.i.i64 ]
+  %.02231.i.lcssa.i67 = phi ptr [ %i.aa, %.lr.ph.i58.preheader ], [ %.1.i.i63, %.lr.ph.i.i64 ]
+  %i.dd = ptrtoint ptr %.032.i.lcssa.i66 to i64
+  %i.de = ptrtoint ptr %.02231.i.lcssa.i67 to i64 ; 2 uses
   %i.df = sub i64 %i.dd, %i.de
   %i.dg = trunc i64 %i.df to i32
   %i.dh = shl i32 %i.dg, 13

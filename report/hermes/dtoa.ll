@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.bv = add nsw i32 %i.bo, %.0472.i             ; 3 uses
-  %.not596897.i = icmp slt i32 %.1468.i, 1
-  br i1 %.not596897.i, label %._crit_edge904.i, label %.lr.ph903.i.preheader
+  %4 = icmp sgt i32 %.1468.i, 0
+  br i1 %4, label %.lr.ph903.i.preheader, label %._crit_edge904.i
 
 .lr.ph903.i.preheader:                            ; preds = %bb.l
   %xtraiter660 = and i32 %.1468.i, 1
@@ -609,15 +609,16 @@ bb.cc:                                            ; preds = %bb.cb
   %i.kd = icmp slt i32 %spec.select597.i.a, 18
   %i.ke = add nsw i32 %.sroa.12.0.i, 18
   %.2488.i = select i1 %i.kd, i32 %i.ke, i32 18
+  %5 = add nsw i32 %.sroa.0.2.i, -1
   br label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cd, %bb.cc
   %.1494.i = phi i32 [ 18, %bb.cc ], [ %i.ki, %bb.cd ] ; 12 uses
-  %.3489.i = phi i32 [ %.2488.i, %bb.cc ], [ %.4490.i, %bb.cd ] ; 3 uses
-  %.not568.i = icmp sgt i32 %.3489.i, %.sroa.6.2.i
-  %spec.select598.i = call i32 @llvm.smin.i32(i32 %.3489.i, i32 %.sroa.0.2.i)
-  %.4490.in.i = select i1 %.not568.i, i32 %.3489.i, i32 %spec.select598.i
-  %.4490.i = add nsw i32 %.4490.in.i, -1          ; 2 uses
+  %.3489.i = phi i32 [ %.2488.i, %bb.cc ], [ %.4490.i, %bb.cd ]
+  %6 = add nsw i32 %.3489.i, -1                   ; 3 uses
+  %7 = icmp slt i32 %6, %.sroa.6.2.i
+  %spec.select596.i = call i32 @llvm.smin.i32(i32 %6, i32 %5)
+  %.4490.i = select i1 %7, i32 %spec.select596.i, i32 %6 ; 2 uses
   %i.kf = sext i32 %.4490.i to i64
   %i.kg = getelementptr inbounds i8, ptr %.2445.i, i64 %i.kf
   %i.kh = load i8, ptr %i.kg, align 1, !tbaa !19

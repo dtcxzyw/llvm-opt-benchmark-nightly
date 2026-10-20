@@ -204,7 +204,8 @@ select.unfold94.i:                                ; preds = %bb.be, %bb.bd
   %i.iq = load i8, ptr %i.ip, align 1, !tbaa !178 ; 2 uses
   %i.ir = zext i8 %i.iq to i32                    ; 2 uses
   %i.is = getelementptr inbounds nuw i8, ptr %.sroa.089.0110.i, i64 8
-  %i.it = load i32, ptr %i.is, align 4, !tbaa !179 ; 4 uses
+  %i.it = load i32, ptr %i.is, align 4, !tbaa !179 ; 3 uses
+  %12 = add nsw i32 %i.it, -1                     ; 2 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %i.io, i64 144
   %i.iv = load i32, ptr %i.iu, align 8, !tbaa !29 ; 2 uses
   %i.iw = icmp sgt i32 %i.iv, 0
@@ -227,14 +228,14 @@ bb.bf:                                            ; preds = %bb.bi, %.lr.ph.i.i7
 bb.bg:                                            ; preds = %bb.bf
   %i.jd = getelementptr inbounds nuw i8, ptr %i.iz, i64 8
   %i.je = load i32, ptr %i.jd, align 8, !tbaa !33
-  %.not.i.i84.not.i = icmp sgt i32 %i.it, %i.je
-  br i1 %.not.i.i84.not.i, label %bb.bh, label %bb.bi
+  %.not.i.i84.i = icmp slt i32 %12, %i.je
+  br i1 %.not.i.i84.i, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.jf = getelementptr inbounds nuw i8, ptr %i.iz, i64 12
   %i.jg = load i32, ptr %i.jf, align 4, !tbaa !34
-  %.not101.i = icmp sgt i32 %i.it, %i.jg
-  br i1 %.not101.i, label %bb.bi, label %_ZN4Luau7CodeGenL12tryFindLocalEPK5Protoii.exit.i85.i
+  %13 = icmp slt i32 %12, %i.jg
+  br i1 %13, label %_ZN4Luau7CodeGenL12tryFindLocalEPK5Protoii.exit.i85.i, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg, %bb.bf
   %indvars.iv.next.i.i82.i = add nuw nsw i64 %indvars.iv.i.i81.i, 1 ; 2 uses
@@ -637,7 +638,8 @@ select.unfold94.i:                                ; preds = %bb.be, %bb.bd
   %i.is = load i8, ptr %i.ir, align 1, !tbaa !178 ; 2 uses
   %i.it = zext i8 %i.is to i32                    ; 2 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %.sroa.089.0110.i, i64 8
-  %i.iv = load i32, ptr %i.iu, align 4, !tbaa !179 ; 4 uses
+  %i.iv = load i32, ptr %i.iu, align 4, !tbaa !179 ; 3 uses
+  %12 = add nsw i32 %i.iv, -1                     ; 2 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iq, i64 144
   %i.ix = load i32, ptr %i.iw, align 8, !tbaa !29 ; 2 uses
   %i.iy = icmp sgt i32 %i.ix, 0
@@ -660,14 +662,14 @@ bb.bf:                                            ; preds = %bb.bi, %.lr.ph.i.i7
 bb.bg:                                            ; preds = %bb.bf
   %i.jf = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   %i.jg = load i32, ptr %i.jf, align 8, !tbaa !33
-  %.not.i.i84.not.i = icmp sgt i32 %i.iv, %i.jg
-  br i1 %.not.i.i84.not.i, label %bb.bh, label %bb.bi
+  %.not.i.i84.i = icmp slt i32 %12, %i.jg
+  br i1 %.not.i.i84.i, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jb, i64 12
   %i.ji = load i32, ptr %i.jh, align 4, !tbaa !34
-  %.not101.i = icmp sgt i32 %i.iv, %i.ji
-  br i1 %.not101.i, label %bb.bi, label %_ZN4Luau7CodeGenL12tryFindLocalEPK5Protoii.exit.i85.i
+  %13 = icmp slt i32 %12, %i.ji
+  br i1 %13, label %_ZN4Luau7CodeGenL12tryFindLocalEPK5Protoii.exit.i85.i, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg, %bb.bf
   %indvars.iv.next.i.i82.i = add nuw nsw i64 %indvars.iv.i.i81.i, 1 ; 2 uses
@@ -1070,7 +1072,8 @@ bb.m:                                             ; preds = %.lr.ph112, %bb.r
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !178 ; 2 uses
   %i.bv = zext i8 %i.bu to i32                    ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.089.0110, i64 8
-  %i.bx = load i32, ptr %i.bw, align 4, !tbaa !179 ; 4 uses
+  %i.bx = load i32, ptr %i.bw, align 4, !tbaa !179 ; 3 uses
+  %3 = add nsw i32 %i.bx, -1                      ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bs, i64 144
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !29 ; 2 uses
   %i.ca = icmp sgt i32 %i.bz, 0
@@ -1093,14 +1096,14 @@ bb.n:                                             ; preds = %bb.q, %.lr.ph.i.i79
 bb.o:                                             ; preds = %bb.n
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
   %i.ci = load i32, ptr %i.ch, align 8, !tbaa !33
-  %.not.i.i84.not = icmp sgt i32 %i.bx, %i.ci
-  br i1 %.not.i.i84.not, label %bb.p, label %bb.q
+  %.not.i.i84 = icmp slt i32 %3, %i.ci
+  br i1 %.not.i.i84, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cd, i64 12
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !34
-  %.not101 = icmp sgt i32 %i.bx, %i.ck
-  br i1 %.not101, label %bb.q, label %_ZN4Luau7CodeGenL12tryFindLocalEPK5Protoii.exit.i85
+  %4 = icmp slt i32 %3, %i.ck
+  br i1 %4, label %_ZN4Luau7CodeGenL12tryFindLocalEPK5Protoii.exit.i85, label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %indvars.iv.next.i.i82 = add nuw nsw i64 %indvars.iv.i.i81, 1 ; 2 uses

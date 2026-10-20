@@ -204,8 +204,9 @@ bb.a:
   %.idx = shl nuw nsw i64 %i.g, 3                 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx
   %i.i = lshr i64 %i.f, 18                        ; 2 uses
-  %.idx59 = shl nuw nsw i64 %i.i, 3               ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx59
+  %.idx59 = shl nuw nsw i64 %i.i, 3
+  %6 = add nuw nsw i64 %.idx59, 8                 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 %6
   %i.k = and i64 %i.e, -262144
   %i.l = icmp ult i64 %i.f, %i.e
   br i1 %i.l, label %.loopexit52, label %bb.b
@@ -225,8 +226,8 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.p, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %bb.d
-  %.not60 = icmp samesign ugt i64 %.idx, %.idx59
-  br i1 %.not60, label %.loopexit52, label %.lr.ph58
+  %7 = icmp samesign ult i64 %.idx, %6
+  br i1 %7, label %.lr.ph58, label %.loopexit52
 
 .lr.ph58:                                         ; preds = %.preheader
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -239,7 +240,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %.lr.ph58, %.loopexit
-  %.057 = phi ptr [ %i.h, %.lr.ph58 ], [ %i.ag, %.loopexit ] ; 4 uses
+  %.057 = phi ptr [ %i.h, %.lr.ph58 ], [ %i.ag, %.loopexit ] ; 3 uses
   %.04855 = phi i64 [ %i.k, %.lr.ph58 ], [ %.1, %.loopexit ] ; 2 uses
   %i.t = load i64, ptr %.057, align 8
   %.not = icmp eq i64 %i.t, 0
@@ -269,8 +270,8 @@ bb.g:                                             ; preds = %bb.f
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.g, %bb.f
   %.1 = add i64 %.04855, 262144
-  %i.ag = getelementptr inbounds nuw i8, ptr %.057, i64 8
-  %i.ah = icmp ult ptr %.057, %i.j
+  %i.ag = getelementptr inbounds nuw i8, ptr %.057, i64 8 ; 2 uses
+  %i.ah = icmp ult ptr %i.ag, %i.j
   br i1 %i.ah, label %bb.f, label %.loopexit52, !llvm.loop !61
 
 .loopexit52:                                      ; preds = %.loopexit, %.preheader, %bb.a

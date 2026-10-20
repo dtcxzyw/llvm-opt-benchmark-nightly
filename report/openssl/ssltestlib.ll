@@ -204,22 +204,27 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !17
   %i.m = tail call i32 @OPENSSL_sk_insert(ptr noundef %i.l, ptr noundef nonnull %i.e, i32 noundef %1) #14
   %i.n = icmp slt i32 %i.m, 1
-  br i1 %i.n, label %.loopexit, label %.lr.ph
+  br i1 %i.n, label %.loopexit, label %.preheader
 
-.lr.ph:                                           ; preds = %bb.d, %.lr.ph
-  %.0.in34 = phi i32 [ %.0, %.lr.ph ], [ %1, %bb.d ]
-  %.0 = add nsw i32 %.0.in34, 1                   ; 3 uses
+.preheader:                                       ; preds = %bb.d
+  %.033 = add nsw i32 %1, 1                       ; 2 uses
+  %.not3134 = icmp sgt i32 %.033, %2
+  br i1 %.not3134, label %.loopexit, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.preheader, %.lr.ph
+  %.0.in34 = phi i32 [ %.0, %.lr.ph ], [ %.033, %.preheader ] ; 2 uses
   %i.o = load ptr, ptr %i.a, align 8, !tbaa !17
-  %i.p = tail call ptr @OPENSSL_sk_value(ptr noundef %i.o, i32 noundef %.0) #14
+  %i.p = tail call ptr @OPENSSL_sk_value(ptr noundef %i.o, i32 noundef %.0.in34) #14
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 12 ; 2 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !20
   %i.s = add i32 %i.r, 1
   store i32 %i.s, ptr %i.q, align 4, !tbaa !20
-  %exitcond.not = icmp eq i32 %.0, %2
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !44
+  %.0 = add nsw i32 %.0.in34, 1                   ; 2 uses
+  %.not31 = icmp sgt i32 %.0, %2
+  br i1 %.not31, label %.loopexit, label %.lr.ph, !llvm.loop !44
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.d, %bb.c, %bb.b, %bb.a
-  %.025 = phi i32 [ 0, %bb.d ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.b ], [ 1, %.lr.ph ]
+.loopexit:                                        ; preds = %.lr.ph, %.preheader, %bb.d, %bb.c, %bb.b, %bb.a
+  %.025 = phi i32 [ 0, %bb.d ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.b ], [ 1, %.preheader ], [ 1, %.lr.ph ]
   ret i32 %.025
 }
 

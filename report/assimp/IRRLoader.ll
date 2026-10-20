@@ -205,7 +205,7 @@ bb.ba:                                            ; preds = %_ZN8aiString3SetERK
   %i.oz = ptrtoint ptr %i.ox to i64
   %i.pa = sub i64 %i.oy, %i.oz
   %i.pb = sdiv exact i64 %i.pa, 24
-  %i.pc = trunc i64 %i.pb to i32                  ; 11 uses
+  %i.pc = trunc i64 %i.pb to i32                  ; 13 uses
   switch i32 %i.pc, label %bb.bi [
     i32 0, label %bb.bb
     i32 1, label %bb.bh
@@ -292,7 +292,7 @@ bb.bk:                                            ; preds = %bb.bk, %bb.bj
 .lr.ph593:                                        ; preds = %.loopexit583
   %i.qh = getelementptr inbounds nuw i8, ptr %.sroa.0545.0610, i64 20
   %i.qi = tail call i32 @llvm.smin.i32(i32 %i.pc, i32 0)
-  %i.qj = sub i32 0, %i.qi                        ; 2 uses
+  %i.qj = sub i32 0, %i.qi
   %i.qk = getelementptr inbounds nuw i8, ptr %.sroa.0545.0610, i64 52
   br label %bb.bl
 
@@ -309,10 +309,13 @@ bb.bl:                                            ; preds = %.lr.ph593, %bb.bl
   %i.qt = fsub float %i.qr, %i.qs                 ; 2 uses
   %i.qu = fptosi float %i.qs to i32
   %i.qv = srem i32 %i.qu, %i.pc                   ; 8 uses
-  %i.qw = add nsw i32 %i.qv, -1
-  %i.qx = icmp slt i32 %i.qv, 1
-  %.p.i = select i1 %i.qx, i32 %i.pc, i32 %i.qj
-  %i.qy = add i32 %i.qw, %.p.i
+  %i.qw = add nsw i32 %i.qv, -1                   ; 2 uses
+  %4 = icmp slt i32 %i.qv, 1
+  %i.qx = icmp slt i32 %i.qw, %i.pc
+  %5 = select i1 %i.qx, i32 0, i32 %i.pc
+  %6 = sub i32 0, %5
+  %.p.i = select i1 %4, i32 %i.pc, i32 %6
+  %i.qy = add i32 %.p.i, %i.qw
   %i.qz = sext i32 %i.qy to i64
   %i.ra = load ptr, ptr %i.ou, align 8            ; 4 uses
   %i.rb = getelementptr inbounds nuw [24 x i8], ptr %i.ra, i64 %i.qz ; 2 uses

@@ -202,20 +202,20 @@ bb.a:
   br i1 %.not239, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 1, %bb.a ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 1, %bb.a ] ; 2 uses
   %i.g = phi ptr [ %i.l, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 240
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !71
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !72
   tail call void @build_skeleton(ptr noundef nonnull %0, ptr noundef %i.k) #9
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !19   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 236
   %i.n = load i32, ptr %i.m, align 4, !tbaa !70
-  %1 = sext i32 %i.n to i64
-  %.not.not = icmp slt i64 %indvars.iv, %1
-  br i1 %.not.not, label %.lr.ph, label %._crit_edge, !llvm.loop !62
+  %1 = trunc nuw i64 %indvars.iv.next to i32
+  %.not.not = icmp slt i32 %i.n, %1
+  br i1 %.not.not, label %._crit_edge, label %.lr.ph, !llvm.loop !62
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %i.o = tail call ptr @agfstnode(ptr noundef nonnull %0) #9 ; 2 uses
@@ -618,7 +618,7 @@ bb.a:
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !19
   %.phi.trans.insert32 = getelementptr inbounds nuw i8, ptr %.pre, i64 360
-  %.pre33 = load i32, ptr %.phi.trans.insert32, align 8, !tbaa !35 ; 3 uses
+  %.pre33 = load i32, ptr %.phi.trans.insert32, align 8, !tbaa !35 ; 2 uses
   %.phi.trans.insert34 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.pre35 = load ptr, ptr %.phi.trans.insert34, align 8, !tbaa !19
   %.phi.trans.insert36 = getelementptr inbounds nuw i8, ptr %.pre35, i64 360
@@ -633,8 +633,9 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge31:                                    ; preds = %bb.a, %bb.b
   %.023 = phi i32 [ %i.f, %bb.b ], [ -1, %bb.a ]
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.not26.not28 = icmp slt i32 %.pre33, %.pre37
-  br i1 %.not26.not28, label %.lr.ph, label %._crit_edge
+  %.02427 = add nsw i32 %.pre33, 1                ; 2 uses
+  %.not2628 = icmp sgt i32 %.02427, %.pre37
+  br i1 %.not2628, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %._crit_edge31
   %i.h = getelementptr i8, ptr %0, i64 16
@@ -642,14 +643,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %bb.g
   %i.i = phi i32 [ %.pre37, %.lr.ph ], [ %i.bf, %bb.g ]
-  %.02430.in = phi i32 [ %.pre33, %.lr.ph ], [ %.02430, %bb.g ]
+  %.02430.in = phi i32 [ %.02427, %.lr.ph ], [ %.024, %bb.g ] ; 4 uses
   %.02229 = phi ptr [ %1, %.lr.ph ], [ %.1, %bb.g ]
-  %.02430 = add nsw i32 %.02430.in, 1             ; 5 uses
-  %i.j = icmp slt i32 %.02430, %i.i
+  %i.j = icmp slt i32 %.02430.in, %i.i
   br i1 %i.j, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = icmp eq i32 %.02430, %.023
+  %i.k = icmp eq i32 %.02430.in, %.023
   br i1 %i.k, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
@@ -721,18 +721,19 @@ label_vnode.exit:                                 ; preds = %.sink.split.i, %bb.
   %i.ba = phi ptr [ %.val4.i, %bb.f ], [ %i.ac, %bb.e ], [ %i.an, %.sink.split.i ]
   %.0 = phi ptr [ %i.aq, %bb.f ], [ %i.p, %bb.e ], [ %i.p, %.sink.split.i ]
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 360
-  store i32 %.02430, ptr %i.bb, align 8, !tbaa !35
+  store i32 %.02430.in, ptr %i.bb, align 8, !tbaa !35
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.c, %label_vnode.exit
   %.1 = phi ptr [ %.0, %label_vnode.exit ], [ %2, %bb.c ] ; 2 uses
   %i.bc = tail call ptr @virtual_edge(ptr noundef nonnull %.02229, ptr noundef nonnull %.1, ptr noundef nonnull %3) #9
   tail call void @virtual_weight(ptr noundef %i.bc) #9
+  %.024 = add nsw i32 %.02430.in, 1               ; 2 uses
   %i.bd = load ptr, ptr %i.g, align 8, !tbaa !19
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 360
   %i.bf = load i32, ptr %i.be, align 8, !tbaa !35 ; 2 uses
-  %.not26.not = icmp slt i32 %.02430, %i.bf
-  br i1 %.not26.not, label %bb.c, label %._crit_edge, !llvm.loop !86
+  %.not26 = icmp sgt i32 %.024, %i.bf
+  br i1 %.not26, label %._crit_edge, label %bb.c, !llvm.loop !86
 
 ._crit_edge:                                      ; preds = %bb.g, %._crit_edge31
   ret void

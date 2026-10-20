@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.h
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b, %bb.h
-  %.044 = phi i32 [ 0, %bb.b ], [ %6, %bb.h ]     ; 3 uses
+  %.044 = phi i32 [ 0, %bb.b ], [ %.pre-phi, %bb.h ] ; 2 uses
   %.03943 = phi i32 [ 0, %bb.b ], [ %i.dl, %bb.h ] ; 3 uses
   %i.ca = sitofp reassoc nsz arcp contract afn i32 %.03943 to double
   %i.cb = fadd reassoc nsz arcp contract afn double %i.bz, %i.ca
@@ -256,12 +256,12 @@ bb.e:                                             ; preds = %bb.d
   call void @cairo_set_source_rgba(ptr noundef %i.aa, double noundef %i.db, double noundef %i.dc, double noundef %i.dd, double noundef %i.df) #6
   call void @cairo_stroke(ptr noundef %i.aa) #6
   call void @gdk_cairo_set_source_rgba(ptr noundef %i.aa, ptr noundef nonnull %4) #6
+  %5 = add nuw nsw i32 %.044, 1                   ; 5 uses
   %i.dg = load i32, ptr %i.b, align 4, !tbaa !66
-  %.not42 = icmp slt i32 %.044, %i.dg
-  br i1 %.not42, label %bb.h, label %bb.f
+  %6 = icmp sgt i32 %5, %i.dg
+  br i1 %6, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  %5 = add nuw nsw i32 %.044, 1                   ; 2 uses
   %i.dh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 88), align 8, !tbaa !63
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 580
   store i32 %5, ptr %i.di, align 4, !tbaa !96
@@ -270,14 +270,15 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.d
   call void @cairo_stroke(ptr noundef %i.aa) #6
+  %.pre = add nuw nsw i32 %.044, 1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.f, %bb.g
+  %.pre-phi = phi i32 [ %5, %bb.e ], [ %5, %bb.f ], [ %.pre, %bb.g ] ; 2 uses
   %i.dj = sitofp reassoc nsz arcp contract afn i32 %.03943 to float
   %i.dk = fadd reassoc nsz arcp contract afn float %i.by, %i.dj
   %i.dl = fptosi float %i.dk to i32
-  %6 = add nuw nsw i32 %.044, 1                   ; 2 uses
-  %exitcond.not = icmp eq i32 %6, 5
+  %exitcond.not = icmp eq i32 %.pre-phi, 5
   br i1 %exitcond.not, label %bb.c, label %bb.d
 
 bb.i:                                             ; preds = %bb.a, %bb.c

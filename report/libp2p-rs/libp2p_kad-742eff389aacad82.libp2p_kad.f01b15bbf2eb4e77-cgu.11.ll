@@ -196,7 +196,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.080)
   %i.c = load ptr, ptr %1, align 8, !alias.scope !109, !nonnull !4, !noundef !4 ; 12 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 1770 ; 4 uses
-  %i.e = load i16, ptr %i.d, align 2, !noalias !110, !noundef !4 ; 3 uses
+  %i.e = load i16, ptr %i.d, align 2, !noalias !110, !noundef !4 ; 2 uses
   %i.f = icmp ult i16 %i.e, 11
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -209,14 +209,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !111)
   %i.j = zext nneg i16 %i.e to i64                ; 2 uses
+  %6 = add nuw nsw i64 %i.j, 1                    ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 1408 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.m = load i64, ptr %i.l, align 8, !alias.scope !112, !noundef !4 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !113)
   %i.n = add i64 %i.m, 1                          ; 3 uses
-  %.not.i.i = icmp ugt i64 %i.n, %i.j
+  %.not.i.i = icmp ugt i64 %6, %i.n
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.k, i64 %i.m ; 3 uses
-  br i1 %.not.i.i, label %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree4node12slice_insertNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceEB1a_.exit.i.i, label %bb.d
+  br i1 %.not.i.i, label %bb.d, label %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree4node12slice_insertNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceEB1a_.exit.i.i
 
 _RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree4node12slice_insertNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceEB1a_.exit.i.i: ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.o, ptr noundef nonnull readonly align 8 dereferenceable(32) %2, i64 32, i1 false), !alias.scope !114, !noalias !115
@@ -236,10 +237,10 @@ bb.d:                                             ; preds = %bb.c
   br label %_RINvMsK_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB1J_5query5peers7closest4PeerNtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalEB1J_.exit.thread
 
 _RINvMsK_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB1J_5query5peers7closest4PeerNtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalEB1J_.exit.thread: ; preds = %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree4node12slice_insertNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceEB1a_.exit.i.i, %bb.d
-  %6 = add nuw nsw i16 %i.e, 1
   %i.v = getelementptr inbounds nuw [128 x i8], ptr %i.c, i64 %i.m
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.v, ptr noundef nonnull readonly align 8 dereferenceable(128) %3, i64 128, i1 false), !alias.scope !120, !noalias !121
-  store i16 %6, ptr %i.d, align 2, !noalias !118
+  %7 = trunc nuw nsw i64 %6 to i16
+  store i16 %7, ptr %i.d, align 2, !noalias !118
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.x = load i64, ptr %i.w, align 8, !alias.scope !112, !noundef !4
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.080)
@@ -328,6 +329,7 @@ _RINvMsV_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7N
   %i.av = getelementptr inbounds nuw i8, ptr %spec.select37.i, i64 1770 ; 2 uses
   %i.aw = load i16, ptr %i.av, align 2, !noalias !129, !noundef !4 ; 2 uses
   %i.ax = zext i16 %i.aw to i64                   ; 2 uses
+  %8 = add i16 %i.aw, 1
   %i.ay = getelementptr inbounds nuw i8, ptr %spec.select37.i, i64 1408 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !130)
   %.not.i14.not.i = icmp ult i64 %.sroa.510.0.i, %i.ax
@@ -353,10 +355,9 @@ bb.k:                                             ; preds = %_RINvMsV_NtNtNtCsex
   br label %_RINvMsK_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB1J_5query5peers7closest4PeerNtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalEB1J_.exit
 
 _RINvMsK_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB1J_5query5peers7closest4PeerNtB1n_4LeafENtB1n_4EdgeE6insertNtNtBc_5alloc6GlobalEB1J_.exit: ; preds = %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree4node12slice_insertNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceEB1a_.exit.i15.i, %bb.k
-  %7 = add i16 %i.aw, 1
   %i.bh = getelementptr inbounds nuw [128 x i8], ptr %spec.select37.i, i64 %.sroa.510.0.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.bh, ptr noundef nonnull readonly align 8 dereferenceable(128) %3, i64 128, i1 false), !alias.scope !136, !noalias !137
-  store i16 %7, ptr %i.av, align 2, !noalias !129
+  store i16 %8, ptr %i.av, align 2, !noalias !129
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(152) %.sroa.1134, ptr noundef nonnull align 8 dereferenceable(152) %.sroa.080, i64 152, i1 false), !noalias !138
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.080)
   %.not = icmp eq i32 %.sroa.484.0.copyload, -1
@@ -529,9 +530,9 @@ bb.aa:                                            ; preds = %bb.y
   %i.cz = add nuw nsw i16 %i.cv, 1
   %i.da = getelementptr inbounds nuw i8, ptr %i.cp, i64 1408 ; 2 uses
   %i.db = add nuw nsw i64 %i.ct, 1                ; 7 uses
-  %.not.i.i32.not = icmp ult i16 %i.cs, %i.cv
+  %9 = icmp ugt i16 %i.cv, %i.cs
   %i.dc = getelementptr inbounds nuw [32 x i8], ptr %i.da, i64 %i.ct ; 3 uses
-  br i1 %.not.i.i32.not, label %bb.ab, label %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree4node12slice_insertNtNtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closest4PeerEB1c_.exit.i.i
+  br i1 %9, label %bb.ab, label %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree4node12slice_insertNtNtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closest4PeerEB1c_.exit.i.i
 
 _RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree4node12slice_insertNtNtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closest4PeerEB1c_.exit.i.i: ; preds = %bb.aa
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dc, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.11.sroa.0, i64 32, i1 false)

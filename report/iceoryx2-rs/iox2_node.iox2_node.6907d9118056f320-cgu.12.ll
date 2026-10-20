@@ -204,7 +204,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !alias.scope !65, !noundef !5 ; 6 uses
+  %i.d = load i64, ptr %i.c, align 8, !alias.scope !65, !noundef !5 ; 5 uses
+  %2 = add nuw i64 %i.d, 1                        ; 2 uses
   %i.e = icmp eq i64 %i.d, -1
   br i1 %i.e, label %bb.c, label %bb.b, !prof !9
 
@@ -217,8 +218,8 @@ bb.b:                                             ; preds = %bb.a
   %i.k = mul nuw i64 %i.j, 7
   %.sroa.03.0.i = select i1 %i.h, i64 %i.g, i64 %i.k ; 3 uses
   %i.l = lshr i64 %.sroa.03.0.i, 1
-  %.not.i.not = icmp ult i64 %i.d, %i.l
-  br i1 %.not.i.not, label %bb.o, label %bb.d
+  %.not.i = icmp ugt i64 %2, %i.l
+  br i1 %.not.i, label %bb.d, label %bb.o
 
 bb.c:                                             ; preds = %bb.a
   %i.m = tail call { i64, i64 } @_RNvMNtCscPfSGRvVnao_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 noundef zeroext true) #21, !noalias !66
@@ -226,19 +227,19 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvMsa_NtCscPfSGRvVnao_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCsbqH9stoieM8_5alloc5alloc6GlobalECs914H3uZQmS2_9iox2_node.exit
 
 bb.d:                                             ; preds = %bb.b
-  %2 = tail call i64 @llvm.umax.i64(i64 %i.d, i64 %.sroa.03.0.i) ; 4 uses
-  %3 = add nuw nsw i64 %2, 1                      ; 2 uses
+  %3 = add nuw i64 %.sroa.03.0.i, 1
+  %4 = tail call i64 @llvm.umax.i64(i64 %2, i64 %3) ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !67)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !68
-  %i.o = icmp ult i64 %2, 14
+  %i.o = icmp ult i64 %4, 15
   br i1 %i.o, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = icmp ugt i64 %2, 2305843009213693950
+  %i.p = icmp ugt i64 %4, 2305843009213693951
   br i1 %i.p, label %bb.l, label %bb.f, !prof !9
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = shl nuw i64 %3, 3
+  %i.q = shl nuw i64 %4, 3
   %i.r = udiv i64 %i.q, 7
   %i.s = add nsw i64 %i.r, -1
   %i.t = tail call range(i64 2, 65) i64 @llvm.ctlz.i64(i64 %i.s, i1 false)
@@ -247,8 +248,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
-  %i.w = icmp samesign ult i64 %2, 3
-  %i.x = and i64 %3, 8
+  %i.w = icmp samesign ult i64 %4, 4
+  %i.x = and i64 %4, 8
   %..i.i = add nuw nsw i64 %i.x, 8
   %.sroa.03.0.i.i = select i1 %i.w, i64 4, i64 %..i.i
   br label %bb.h

@@ -204,7 +204,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(8) ptr @_ZN5Eigen8internal17CompressedStorageIdiE15atWithInsertionElRKd(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !35   ; 7 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !35   ; 6 uses
   %i.c = icmp sgt i64 %i.b, 0
   br i1 %i.c, label %.lr.ph.i, label %_ZNK5Eigen8internal17CompressedStorageIdiE16searchLowerIndexElll.exit
 
@@ -249,22 +249,24 @@ bb.c:                                             ; preds = %_ZNK5Eigen8internal
 bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !38
-  %.not26 = icmp sgt i64 %i.t, %i.b
-  br i1 %.not26, label %_ZN5Eigen8internal13smart_memmoveIdEEvPKT_S4_PS2_.exit, label %bb.e
+  %3 = add nuw nsw i64 %i.b, 1                    ; 2 uses
+  %4 = icmp slt i64 %i.t, %3
+  br i1 %4, label %bb.e, label %_ZN5Eigen8internal13smart_memmoveIdEEvPKT_S4_PS2_.exit
 
 .thread:                                          ; preds = %_ZNK5Eigen8internal17CompressedStorageIdiE16searchLowerIndexElll.exit
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.v = load i64, ptr %i.u, align 8, !tbaa !38
-  %.not2642 = icmp sgt i64 %i.v, %i.b
-  br i1 %.not2642, label %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit, label %bb.e
+  %5 = add nsw i64 %i.b, 1                        ; 2 uses
+  %6 = icmp slt i64 %i.v, %5
+  br i1 %6, label %bb.e, label %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit
 
 bb.e:                                             ; preds = %.thread, %bb.d
+  %7 = phi i64 [ %5, %.thread ], [ %3, %bb.d ]    ; 2 uses
   %i.w = phi ptr [ %i.u, %.thread ], [ %i.s, %bb.d ] ; 2 uses
-  %i.x = shl i64 %i.b, 1
-  %3 = add i64 %i.x, 2                            ; 3 uses
-  store i64 %3, ptr %i.w, align 8, !tbaa !38
-  %i.y = icmp ugt i64 %3, 2305843009213693951
-  %i.z = shl nuw i64 %3, 3
+  %i.x = shl nsw i64 %7, 1                        ; 2 uses
+  store i64 %i.x, ptr %i.w, align 8, !tbaa !38
+  %i.y = icmp ugt i64 %i.x, 2305843009213693951
+  %i.z = shl i64 %7, 4
   %i.aa = select i1 %i.y, i64 -1, i64 %i.z
   %i.ab = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.aa) #16 ; 4 uses
   %i.ac = load i64, ptr %i.w, align 8, !tbaa !38  ; 2 uses

@@ -196,7 +196,7 @@ bb.s:                                             ; preds = %bb.r
   %i.bz = phi ptr [ %i.bs, %.thread218 ], [ %i.by, %bb.s ]
   %i.ca = phi ptr [ %i.br, %.thread218 ], [ %i.bx, %bb.s ]
   %i.cb = phi ptr [ %i.bq, %.thread218 ], [ %i.bw, %bb.s ] ; 4 uses
-  %.0109222 = phi i32 [ 1, %.thread218 ], [ %i.bv, %bb.s ]
+  %.0109222 = phi i32 [ 1, %.thread218 ], [ %i.bv, %bb.s ] ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -261,7 +261,7 @@ bb.t:                                             ; preds = %.preheader.us.1
   %exitcond.not = phi i1 [ true, %bb.be ], [ false, %.preheader.preheader ]
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.bd, %.preheader
+bb.u:                                             ; preds = %.preheader, %bb.bd
   %.3172 = phi double [ %.2175, %.preheader ], [ %i.kp, %bb.bd ] ; 6 uses
   %.0110171 = phi i32 [ 1, %.preheader ], [ %i.kr, %bb.bd ] ; 2 uses
   %i.ds = load ptr, ptr %i.y, align 8, !tbaa !26
@@ -293,7 +293,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not4259.i, label %IDANlsIC.exit.thread130, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.w, %bb.ba
-  %.060.i = phi i32 [ %i.ke, %bb.ba ], [ 1, %bb.w ] ; 2 uses
+  %.060.i = phi i32 [ %i.ke, %bb.ba ], [ 1, %bb.w ]
   %i.ei = load ptr, ptr %i.ck, align 8, !tbaa !51 ; 2 uses
   %.not43.i = icmp eq ptr %i.ei, null
   br i1 %.not43.i, label %bb.z, label %bb.x
@@ -603,10 +603,10 @@ bb.ba:                                            ; preds = %select.unfold.i
   %i.kc = load ptr, ptr %i.ci, align 8, !tbaa !49
   %i.kd = load ptr, ptr %i.cf, align 8, !tbaa !46
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %i.kc, ptr noundef %i.kd) #3
-  %i.ke = add nuw nsw i32 %.060.i, 1
+  %i.ke = add nuw nsw i32 %.060.i, 1              ; 2 uses
   %i.kf = load i32, ptr %i.cj, align 4, !tbaa !50
-  %.not42.not.i = icmp slt i32 %.060.i, %i.kf
-  br i1 %.not42.not.i, label %.lr.ph.i, label %.loopexit
+  %.not42.i = icmp sgt i32 %i.ke, %i.kf
+  br i1 %.not42.i, label %.loopexit, label %.lr.ph.i
 
 .thread:                                          ; preds = %bb.v, %bb.u, %bb.x, %bb.z, %IDANewyyp.exit.i.i.i, %bb.ap
   %.038.i.ph.ph = phi i32 [ -7, %bb.z ], [ -7, %bb.ap ], [ -8, %IDANewyyp.exit.i.i.i ], [ -6, %bb.x ], [ -12, %bb.v ], [ -8, %bb.u ]
@@ -617,7 +617,7 @@ bb.ba:                                            ; preds = %select.unfold.i
 
 .loopexit:                                        ; preds = %bb.ba, %select.unfold.i, %bb.y, %bb.az, %bb.aa, %bb.ah, %bb.al, %bb.ao, %bb.av, %bb.au, %bb.aq
   %.not120 = phi i1 [ false, %bb.ao ], [ false, %bb.ah ], [ false, %bb.aq ], [ false, %bb.au ], [ false, %bb.av ], [ false, %bb.al ], [ true, %bb.ba ], [ true, %select.unfold.i ], [ false, %bb.y ], [ false, %bb.az ], [ false, %bb.aa ]
-  %.038.i.ph = phi i32 [ 1, %bb.ao ], [ 2, %bb.ah ], [ 3, %bb.av ], [ 3, %bb.au ], [ 1, %bb.aq ], [ 3, %bb.al ], [ 5, %bb.ba ], [ 5, %select.unfold.i ], [ 1, %bb.y ], [ 4, %bb.az ], [ 1, %bb.aa ]
+  %.038.i.ph = phi i32 [ 1, %bb.ao ], [ 2, %bb.ah ], [ 3, %bb.av ], [ 3, %bb.au ], [ 1, %bb.aq ], [ 3, %bb.al ], [ 5, %bb.ba ], [ 5, %select.unfold.i ], [ 1, %bb.y ], [ 4, %bb.az ], [ 1, %bb.aa ] ; 2 uses
   %i.ki = load i64, ptr %i.cz, align 8, !tbaa !64
   %i.kj = add nsw i64 %i.ki, 1
   store i64 %i.kj, ptr %i.cz, align 8, !tbaa !64
@@ -637,12 +637,13 @@ bb.bc:                                            ; preds = %bb.bb
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb
-  %i.kp = fmul double %.3172, 1.000000e-01        ; 3 uses
+  %i.kp = fmul double %.3172, 1.000000e-01        ; 4 uses
   %i.kq = fdiv double 1.000000e+00, %i.kp
   store double %i.kq, ptr %i.cb, align 8, !tbaa !40
   store double %i.kp, ptr %i.bp, align 8, !tbaa !39
-  %i.kr = add nuw nsw i32 %.0110171, 1
-  br label %bb.u
+  %i.kr = add nuw nsw i32 %.0110171, 1            ; 2 uses
+  %.not119 = icmp samesign ugt i32 %i.kr, %.0109222
+  br i1 %.not119, label %IDANlsIC.exit.thread134, label %bb.u
 
 IDANlsIC.exit.thread130:                          ; preds = %bb.w, %bb.ad, %IDALineSrch.exit.i.i
   %i.ks = load ptr, ptr %i.ca, align 8, !tbaa !42
@@ -662,9 +663,9 @@ bb.be:                                            ; preds = %IDANlsIC.exit.threa
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %i.kz, ptr noundef %i.la) #3
   br i1 %exitcond.not, label %IDANlsIC.exit.thread134, label %.preheader
 
-IDANlsIC.exit.thread134:                          ; preds = %bb.be, %IDANlsIC.exit.thread130, %.loopexit, %.preheader.us.preheader, %.preheader.us.1, %bb.t, %.thread
-  %.3108 = phi i32 [ %.038.i.ph, %.loopexit ], [ %.038.i.ph.ph, %.thread ], [ -24, %.preheader.us.1 ], [ -24, %.preheader.us.preheader ], [ 0, %bb.t ], [ 0, %bb.be ], [ -24, %IDANlsIC.exit.thread130 ] ; 2 uses
-  %.4 = phi double [ %.3172, %.loopexit ], [ %.3172, %.thread ], [ %.1, %.preheader.us.1 ], [ %.1, %.preheader.us.preheader ], [ %.1, %bb.t ], [ %.3172, %IDANlsIC.exit.thread130 ], [ %.3172, %bb.be ]
+IDANlsIC.exit.thread134:                          ; preds = %bb.be, %IDANlsIC.exit.thread130, %bb.bd, %.loopexit, %.preheader.us.preheader, %.preheader.us.1, %bb.t, %.thread
+  %.3108 = phi i32 [ %.038.i.ph, %bb.bd ], [ %.038.i.ph.ph, %.thread ], [ -24, %.preheader.us.1 ], [ -24, %.preheader.us.preheader ], [ 0, %bb.t ], [ %.038.i.ph, %.loopexit ], [ -24, %IDANlsIC.exit.thread130 ], [ 0, %bb.be ] ; 2 uses
+  %.4 = phi double [ %i.kp, %bb.bd ], [ %.3172, %.thread ], [ %.1, %.preheader.us.1 ], [ %.1, %.preheader.us.preheader ], [ %.1, %bb.t ], [ %.3172, %.loopexit ], [ %.3172, %IDANlsIC.exit.thread130 ], [ %.3172, %bb.be ]
   %i.lb = load ptr, ptr %i.ab, align 8, !tbaa !27
   tail call void @N_VDestroy(ptr noundef %i.lb) #3
   %i.lc = load ptr, ptr %i.ae, align 8, !tbaa !28

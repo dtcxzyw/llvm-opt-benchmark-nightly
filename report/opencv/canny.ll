@@ -204,7 +204,6 @@ bb.ax:                                            ; preds = %bb.aw, %bb.au
   %i.ew = getelementptr inbounds nuw i8, ptr %18, i64 64 ; 3 uses
   %i.ex = zext nneg i32 %i.w to i64
   %i.ey = add nsw i64 %i.ex, -1
-  %32 = zext nneg i32 %i.w to i64
   %i.ez = zext nneg i32 %.sroa.speculated392 to i64
   %i.fa = sext i32 %.sroa.speculated to i64
   br label %bb.ay
@@ -223,7 +222,7 @@ bb.ay:                                            ; preds = %.lr.ph455, %.loopex
   %i.fh = phi ptr [ %i.ed, %.lr.ph455 ], [ %i.ob, %.loopexit ] ; 4 uses
   %i.fi = phi ptr [ %i.ed, %.lr.ph455 ], [ %i.oc, %.loopexit ] ; 5 uses
   %i.fj = phi ptr [ %i.ed, %.lr.ph455 ], [ %i.od, %.loopexit ] ; 4 uses
-  %indvars.iv480 = phi i64 [ %i.ey, %.lr.ph455 ], [ %indvars.iv.next481, %.loopexit ] ; 7 uses
+  %indvars.iv480 = phi i64 [ %i.ey, %.lr.ph455 ], [ %indvars.iv.next481, %.loopexit ] ; 6 uses
   %.0397451 = phi ptr [ %i.dq, %.lr.ph455 ], [ %.0398450, %.loopexit ] ; 15 uses
   %.0398450 = phi ptr [ %i.dr, %.lr.ph455 ], [ %.0399449, %.loopexit ] ; 3 uses
   %.0399449 = phi ptr [ %i.ds, %.lr.ph455 ], [ %.0397451, %.loopexit ] ; 2 uses
@@ -550,14 +549,16 @@ bb.bf:                                            ; preds = %bb.bd, %bb.be, %bb.
   br i1 %i.kw, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
-  %33 = sub nsw i64 %indvars.iv480, %32           ; 2 uses
+  %32 = trunc nuw nsw i64 %indvars.iv480 to i32
+  %33 = sub nsw i32 %32, %i.w
   %i.kx = load ptr, ptr %i.en, align 8, !tbaa !27
   %i.ky = load i64, ptr %i.eo, align 8, !tbaa !28
-  %i.kz = mul i64 %i.ky, %33
+  %34 = sext i32 %33 to i64                       ; 2 uses
+  %i.kz = mul i64 %i.ky, %34
   %i.la = getelementptr inbounds nuw i8, ptr %i.kx, i64 %i.kz
   %i.lb = load ptr, ptr %i.ep, align 8, !tbaa !27
   %i.lc = load i64, ptr %i.eq, align 8, !tbaa !28
-  %i.ld = mul i64 %i.lc, %33
+  %i.ld = mul i64 %i.lc, %34
   %i.le = getelementptr inbounds nuw i8, ptr %i.lb, i64 %i.ld
   br label %bb.bh
 
@@ -783,11 +784,11 @@ bb.ch:                                            ; preds = %bb.cc
   %.4410 = phi ptr [ %.2408, %bb.bc ], [ %.3409, %bb.bh ], [ %.3409, %.critedge ]
   %.4405 = phi ptr [ %.2403, %bb.bc ], [ %.3404, %bb.bh ], [ %.3404, %.critedge ]
   %.4 = phi ptr [ %.2, %bb.bc ], [ %.3, %bb.bh ], [ %.3, %.critedge ]
-  %indvars.iv.next481 = add nuw nsw i64 %indvars.iv480, 1
+  %indvars.iv.next481 = add nuw nsw i64 %indvars.iv480, 1 ; 2 uses
   %i.oe = load i32, ptr %i.aa, align 4, !tbaa !32 ; 2 uses
   %i.of = sext i32 %i.oe to i64
-  %.not.not = icmp slt i64 %indvars.iv480, %i.of
-  br i1 %.not.not, label %bb.ay, label %._crit_edge456, !llvm.loop !145
+  %.not = icmp sgt i64 %indvars.iv.next481, %i.of
+  br i1 %.not, label %._crit_edge456, label %bb.ay, !llvm.loop !145
 
 bb.ci:                                            ; preds = %._crit_edge456
   %i.og = load i32, ptr %1, align 4, !tbaa !31

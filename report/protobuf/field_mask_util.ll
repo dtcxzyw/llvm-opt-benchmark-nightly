@@ -204,8 +204,8 @@ bb.br:                                            ; preds = %bb.bq
   br label %bb.bs
 
 bb.bs:                                            ; preds = %.backedge, %._crit_edge.i.i.i.i.i
-  %.246.i.i.i.i.i = phi i64 [ %.04442.i.i.i.i.i, %._crit_edge.i.i.i.i.i ], [ %i.oj, %.backedge ] ; 2 uses
-  %.142.i.i.i.i.i = phi i64 [ %i.nt, %._crit_edge.i.i.i.i.i ], [ %.142.i.i.i.i.i.be, %.backedge ] ; 2 uses
+  %.246.i.i.i.i.i = phi i64 [ %.04442.i.i.i.i.i, %._crit_edge.i.i.i.i.i ], [ %10, %.backedge ] ; 2 uses
+  %.142.i.i.i.i.i = phi i64 [ %i.nt, %._crit_edge.i.i.i.i.i ], [ %.142.i.i.i.i.i.be.in, %.backedge ] ; 2 uses
   %.1.i.i.i.i.i = phi ptr [ %.148.val66.i.i.i.i.i, %._crit_edge.i.i.i.i.i ], [ %.1.i.i.i.i.i.be, %.backedge ] ; 2 uses
   %i.nv = getelementptr inbounds nuw i8, ptr %.1.i.i.i.i.i, i64 256
   %i.nw = getelementptr inbounds nuw [8 x i8], ptr %i.nv, i64 %.142.i.i.i.i.i
@@ -233,7 +233,7 @@ bb.bs:                                            ; preds = %.backedge, %._crit_
 
 bb.bt:                                            ; preds = %._crit_edge25.i.i.i.i.i, %bb.bs
   %.350.i.i.i.i.i = phi ptr [ %.249.val71.i.i.i.i.i, %._crit_edge25.i.i.i.i.i ], [ %i.nx, %bb.bs ] ; 2 uses
-  %.243.i.i.i.i.i = phi i64 [ %i.oc, %._crit_edge25.i.i.i.i.i ], [ %.142.i.i.i.i.i, %bb.bs ] ; 3 uses
+  %.243.i.i.i.i.i = phi i64 [ %i.oc, %._crit_edge25.i.i.i.i.i ], [ %.142.i.i.i.i.i, %bb.bs ] ; 2 uses
   %.2.i.i.i.i.i = phi ptr [ %.249.val65.i.i.i.i.i, %._crit_edge25.i.i.i.i.i ], [ %.1.i.i.i.i.i, %bb.bs ] ; 4 uses
   %i.od = icmp eq ptr %.350.i.i.i.i.i, %.sroa.024.0.sink.i.i7.i.i
   br i1 %i.od, label %_ZNK4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISH_EESt4lessISA_ESaISt4pairIKSA_SK_EELi256ELb0EEEEERSP_PSP_E13distance_slowENS2_IKSS_RKSP_PSX_EE.exit.i.i.i.i, label %bb.bu
@@ -249,23 +249,23 @@ bb.bu:                                            ; preds = %bb.bt
 
 bb.bv:                                            ; preds = %bb.bu
   %i.oi = add i64 %.246.i.i.i.i.i, 1
-  %i.oj = add i64 %i.oi, %i.oh
+  %10 = add i64 %i.oi, %i.oh
+  %i.oj = add nuw nsw i64 %.243.i.i.i.i.i, 1      ; 2 uses
   %i.ok = getelementptr i8, ptr %.2.i.i.i.i.i, i64 10
   %.2.val.i.i.i.i.i = load i8, ptr %i.ok, align 1, !tbaa !27, !noalias !189
   %i.ol = zext i8 %.2.val.i.i.i.i.i to i64
-  %.not.not.i.i.i.i.i = icmp samesign ult i64 %.243.i.i.i.i.i, %i.ol
-  br i1 %.not.not.i.i.i.i.i, label %.backedge, label %.preheader5.i.i.i.i.i
+  %.not.i.i.i.i123.i = icmp samesign ugt i64 %i.oj, %i.ol
+  br i1 %.not.i.i.i.i123.i, label %.preheader5.i.i.i.i.i, label %.backedge
 
 .backedge:                                        ; preds = %bb.bw, %bb.bv
-  %.142.i.i.i.i.i.be.in = phi i64 [ %.243.i.i.i.i.i, %bb.bv ], [ %i.on, %bb.bw ]
+  %.142.i.i.i.i.i.be.in = phi i64 [ %i.oj, %bb.bv ], [ %11, %bb.bw ]
   %.1.i.i.i.i.i.be = phi ptr [ %.2.i.i.i.i.i, %bb.bv ], [ %.3.val.i.i.i.i.i, %bb.bw ]
-  %.142.i.i.i.i.i.be = add nuw nsw i64 %.142.i.i.i.i.i.be.in, 1
   br label %bb.bs, !llvm.loop !172
 
 .preheader5.i.i.i.i.i:                            ; preds = %bb.bv, %bb.bw
   %.3.i.i.i.i.i = phi ptr [ %.3.val.i.i.i.i.i, %bb.bw ], [ %.2.i.i.i.i.i, %bb.bv ] ; 2 uses
   %i.om = getelementptr i8, ptr %.3.i.i.i.i.i, i64 8
-  %.3.val67.i.i.i.i.i = load i8, ptr %i.om, align 1, !tbaa !27, !noalias !189 ; 2 uses
+  %.3.val67.i.i.i.i.i = load i8, ptr %i.om, align 1, !tbaa !27, !noalias !189
   %i.on = zext i8 %.3.val67.i.i.i.i.i to i64      ; 2 uses
   %.3.val.i.i.i.i.i = load ptr, ptr %.3.i.i.i.i.i, align 8, !tbaa !84, !noalias !189 ; 4 uses
   %i.oo = icmp eq ptr %.3.val.i.i.i.i.i, %.sroa.024.0.sink.i.i7.i.i
@@ -274,10 +274,12 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %or.cond61.i.i.i.i.i, label %_ZNK4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISH_EESt4lessISA_ESaISt4pairIKSA_SK_EELi256ELb0EEEEERSP_PSP_E13distance_slowENS2_IKSS_RKSP_PSX_EE.exit.i.i.i.i, label %bb.bw
 
 bb.bw:                                            ; preds = %.preheader5.i.i.i.i.i
+  %11 = add nuw nsw i64 %i.on, 1                  ; 2 uses
   %i.oq = getelementptr i8, ptr %.3.val.i.i.i.i.i, i64 10
   %.val.i.i.i.i123.i = load i8, ptr %i.oq, align 1, !tbaa !27, !noalias !189
-  %.not.i.i.i.i124.i = icmp ult i8 %.3.val67.i.i.i.i.i, %.val.i.i.i.i123.i
-  br i1 %.not.i.i.i.i124.i, label %.backedge, label %.preheader5.i.i.i.i.i, !llvm.loop !173
+  %12 = zext i8 %.val.i.i.i.i123.i to i64
+  %13 = icmp samesign ugt i64 %11, %12
+  br i1 %13, label %.preheader5.i.i.i.i.i, label %.backedge, !llvm.loop !173
 
 _ZNK4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISH_EESt4lessISA_ESaISt4pairIKSA_SK_EELi256ELb0EEEEERSP_PSP_E13distance_slowENS2_IKSS_RKSP_PSX_EE.exit.i.i.i.i: ; preds = %bb.bt, %bb.bu, %.preheader5.i.i.i.i.i
   %.pn.i.i.i.i.i = phi i64 [ %i.oh, %.preheader5.i.i.i.i.i ], [ %i.nu, %bb.bt ], [ %i.oh, %bb.bu ]
@@ -680,7 +682,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.backedge, %._crit_edge
-  %.147 = phi i64 [ %i.v, %._crit_edge ], [ %.147.be, %.backedge ] ; 2 uses
+  %.147 = phi i64 [ %i.v, %._crit_edge ], [ %.147.be.in, %.backedge ] ; 2 uses
   %.1 = phi ptr [ %.049.val58, %._crit_edge ], [ %.1.be, %.backedge ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.1, i64 256
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %.147
@@ -708,7 +710,7 @@ bb.d:                                             ; preds = %.backedge, %._crit_
 
 bb.e:                                             ; preds = %._crit_edge15, %bb.d
   %.251 = phi ptr [ %.150.val68, %._crit_edge15 ], [ %i.y, %bb.d ] ; 4 uses
-  %.248 = phi i64 [ %i.ad, %._crit_edge15 ], [ %.147, %bb.d ] ; 2 uses
+  %.248 = phi i64 [ %i.ad, %._crit_edge15 ], [ %.147, %bb.d ]
   %.2 = phi ptr [ %.150.val57, %._crit_edge15 ], [ %.1, %bb.d ] ; 3 uses
   %i.ae = getelementptr i8, ptr %.251, i64 10
   %.251.val65 = load i8, ptr %i.ae, align 1, !tbaa !27 ; 2 uses
@@ -768,23 +770,23 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cx
   %i.aw = mul nuw nsw i64 %i.av, 40
   %i.ax = add nuw nsw i64 %i.aw, 16
   tail call void @_ZdlPvm(ptr noundef nonnull %.251, i64 noundef %i.ax) #20
+  %1 = add nuw nsw i64 %.248, 1                   ; 2 uses
   %i.ay = getelementptr i8, ptr %.2, i64 10
   %.2.val = load i8, ptr %i.ay, align 1, !tbaa !27 ; 2 uses
   %i.az = zext i8 %.2.val to i64
-  %.not.not = icmp ult i64 %.248, %i.az
-  br i1 %.not.not, label %.backedge, label %.preheader2
+  %.not = icmp ugt i64 %1, %i.az
+  br i1 %.not, label %.preheader2, label %.backedge
 
-.backedge:                                        ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75, %1
-  %.147.be.in = phi i64 [ %.248, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75 ], [ %2, %1 ]
-  %.1.be = phi ptr [ %.2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75 ], [ %.3.val, %1 ]
-  %.147.be = add nuw nsw i64 %.147.be.in, 1
+.backedge:                                        ; preds = %bb.j, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75
+  %.147.be.in = phi i64 [ %1, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75 ], [ %3, %bb.j ]
+  %.1.be = phi ptr [ %.2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75 ], [ %.3.val, %bb.j ]
   br label %bb.d, !llvm.loop !221
 
 .preheader2:                                      ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75, %bb.j
   %.3.val64 = phi i8 [ %.val, %bb.j ], [ %.2.val, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75 ] ; 2 uses
   %.3 = phi ptr [ %.3.val, %bb.j ], [ %.2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit75 ] ; 4 uses
   %i.ba = getelementptr i8, ptr %.3, i64 8
-  %.3.val60 = load i8, ptr %i.ba, align 1, !tbaa !27 ; 2 uses
+  %.3.val60 = load i8, ptr %i.ba, align 1, !tbaa !27
   %.3.val = load ptr, ptr %.3, align 8, !tbaa !84 ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.3, i64 16 ; 2 uses
   %i.bc = zext i8 %.3.val64 to i64
@@ -839,14 +841,13 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cx
   br i1 %i.bo, label %.loopexit, label %bb.j
 
 bb.j:                                             ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit78
+  %2 = zext i8 %.3.val60 to i64
+  %3 = add nuw nsw i64 %2, 1                      ; 2 uses
   %i.bp = getelementptr i8, ptr %.3.val, i64 10
   %.val = load i8, ptr %i.bp, align 1, !tbaa !27  ; 2 uses
-  %.not = icmp ult i8 %.3.val60, %.val
-  br i1 %.not, label %1, label %.preheader2, !llvm.loop !222
-
-1:                                                ; preds = %bb.j
-  %2 = zext i8 %.3.val60 to i64
-  br label %.backedge
+  %4 = zext i8 %.val to i64
+  %5 = icmp samesign ugt i64 %3, %4
+  br i1 %5, label %.preheader2, label %.backedge, !llvm.loop !222
 
 .loopexit.sink.split:                             ; preds = %bb.c, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit
   %.sink = phi i64 [ %i.q, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE15value_destroy_nEhhPSP_.exit ], [ 312, %bb.c ]

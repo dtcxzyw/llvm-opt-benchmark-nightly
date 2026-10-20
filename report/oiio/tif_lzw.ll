@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %bb.c, %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 132
-  %i.z = load i16, ptr %i.y, align 4, !tbaa !67   ; 2 uses
+  %i.z = load i16, ptr %i.y, align 4, !tbaa !67
+  %1 = zext i16 %i.z to i32
   %i.aa = shl i64 %i.h, %i.k
   %i.ab = sext i32 %i.x to i64
   %i.ac = or i64 %i.aa, %i.ab                     ; 4 uses
@@ -229,7 +230,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.181 = phi ptr [ %i.am, %bb.f ], [ %i.ah, %bb.e ] ; 4 uses
   %.078 = phi i64 [ %i.aj, %bb.f ], [ %i.ae, %bb.e ] ; 2 uses
   store i32 65535, ptr %i.w, align 4, !tbaa !72
-  %i.an = icmp eq i16 %i.z, 4093
+  %2 = add nuw nsw i32 %1, 1                      ; 2 uses
+  %i.an = icmp eq i32 %2, 4094
   br i1 %i.an, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -255,8 +257,9 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.g
   %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 130
   %i.bb = load i16, ptr %i.ba, align 2, !tbaa !49
-  %.not96 = icmp uge i16 %i.z, %i.bb
-  %i.bc = zext i1 %.not96 to i64
+  %3 = zext i16 %i.bb to i32
+  %4 = icmp samesign ugt i32 %2, %3
+  %i.bc = zext i1 %4 to i64
   %spec.select = add nuw nsw i64 %i.bc, %i.k
   br label %bb.k
 
@@ -410,7 +413,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b
   %.2.ph289 = phi ptr [ %.1, %.lr.ph.lr.ph ], [ %.8, %.outer ] ; 5 uses
   %.0161.ph288 = phi i32 [ %i.v, %.lr.ph.lr.ph ], [ %.2163, %.outer ] ; 7 uses
   %.0164.ph287 = phi i32 [ %i.s, %.lr.ph.lr.ph ], [ %.2166, %.outer ] ; 5 uses
-  %.0167.ph286 = phi i32 [ %i.p, %.lr.ph.lr.ph ], [ %.2169, %.outer ] ; 5 uses
+  %.0167.ph286 = phi i32 [ %i.p, %.lr.ph.lr.ph ], [ %.2169, %.outer ] ; 4 uses
   %.2172.ph285 = phi i64 [ %.1171, %.lr.ph.lr.ph ], [ %.7177, %.outer ] ; 3 uses
   %.1179.ph284 = phi i64 [ %.0178, %.lr.ph.lr.ph ], [ %.3181, %.outer ] ; 3 uses
   %.0182.ph283 = phi i64 [ %i.i, %.lr.ph.lr.ph ], [ %.1183, %.outer ] ; 7 uses
@@ -529,7 +532,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.4 = phi ptr [ %i.dd, %bb.q ], [ %i.cy, %bb.p ] ; 9 uses
   %i.de = add nsw i64 %.1185.ph282, %i.ct         ; 5 uses
   %i.df = zext i8 %i.bg to i16                    ; 7 uses
-  %i.dg = add nsw i32 %.0167.ph286, 1             ; 4 uses
+  %i.dg = add nsw i32 %.0167.ph286, 1             ; 5 uses
   %i.dh = trunc i32 %.0167.ph286 to i16
   %i.di = getelementptr inbounds nuw i8, ptr %.0197, i64 8
   store i16 %i.dh, ptr %i.di, align 8, !tbaa !89
@@ -607,8 +610,8 @@ bb.v:                                             ; preds = %cl_hash.exit
   br label %.outer
 
 bb.w:                                             ; preds = %bb.r
-  %.not223 = icmp slt i32 %.0167.ph286, %.0164.ph287
-  br i1 %.not223, label %bb.y, label %bb.x
+  %4 = icmp sgt i32 %i.dg, %.0164.ph287
+  br i1 %4, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
   %i.ep = add nsw i32 %.0161.ph288, 1             ; 2 uses

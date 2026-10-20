@@ -204,7 +204,8 @@ Vec_PtrPush.exit:                                 ; preds = %bb.l, %bb.i, %bb.e,
 
 .lr.ph125:                                        ; preds = %Vec_PtrPush.exit
   %i.cb = or disjoint i32 %i.al, 1
-  %wide.trip.count156 = zext nneg i32 %i.cb to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.cb, i32 2)
+  %wide.trip.count156 = zext nneg i32 %smax to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph125, %Vec_PtrPush.exit112

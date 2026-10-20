@@ -204,14 +204,14 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph111.preheader:                              ; preds = %bb.m
   %i.fa = sext i32 %i.ez to i64
+  %20 = add nsw i64 %i.fa, -1
   %i.fb = sext i32 %i.ey to i64
   br label %.lr.ph111
 
 .lr.ph111:                                        ; preds = %.lr.ph111.preheader, %bb.o
-  %indvars.iv132 = phi i64 [ %i.fa, %.lr.ph111.preheader ], [ %indvars.iv.next133, %bb.o ]
+  %indvars.iv132 = phi i64 [ %20, %.lr.ph111.preheader ], [ %indvars.iv.next133, %bb.o ] ; 3 uses
   %.076108 = phi i32 [ 0, %.lr.ph111.preheader ], [ %.1, %bb.o ] ; 3 uses
-  %indvars.iv.next133 = add nsw i64 %indvars.iv132, -1 ; 4 uses
-  %i.fc = getelementptr inbounds [4 x i8], ptr %i.ex, i64 %indvars.iv.next133
+  %i.fc = getelementptr inbounds [4 x i8], ptr %i.ex, i64 %indvars.iv132
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !50
   %i.fe = icmp sgt i32 %i.fd, -1
   br i1 %i.fe, label %bb.n, label %bb.o
@@ -228,15 +228,16 @@ bb.n:                                             ; preds = %.lr.ph111
   %i.fn = load i32, ptr %0, align 8, !tbaa !29    ; 2 uses
   %i.fo = xor i32 %.076108, -1
   %i.fp = add i32 %i.fn, %i.fo
-  %i.fq = trunc nsw i64 %indvars.iv.next133 to i32
+  %i.fq = trunc nsw i64 %indvars.iv132 to i32
   tail call fastcc void @_ZL13btSwapProblemPPfS_S_S_S_S_PiPbS1_iiiii(ptr noundef %i.ff, ptr noundef %i.fg, ptr noundef %i.fh, ptr noundef %i.fi, ptr noundef %i.fj, ptr noundef %i.fk, ptr noundef %i.fl, ptr noundef %i.fm, ptr noundef nonnull %i.ex, i32 noundef %i.fn, i32 noundef %i.fq, i32 noundef %i.fp, i32 noundef 1)
   %i.fr = add nsw i32 %.076108, 1
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph111, %bb.n
   %.1 = phi i32 [ %i.fr, %bb.n ], [ %.076108, %.lr.ph111 ]
-  %.not88.not = icmp sgt i64 %indvars.iv.next133, %i.fb
-  br i1 %.not88.not, label %.lr.ph111, label %.loopexit, !llvm.loop !115
+  %indvars.iv.next133 = add nsw i64 %indvars.iv132, -1 ; 2 uses
+  %.not88 = icmp slt i64 %indvars.iv.next133, %i.fb
+  br i1 %.not88, label %.loopexit, label %.lr.ph111, !llvm.loop !115
 
 .loopexit:                                        ; preds = %bb.o, %bb.m, %bb.l
   ret void

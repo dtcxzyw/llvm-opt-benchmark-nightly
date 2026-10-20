@@ -202,7 +202,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %exitcond572.not, label %get_issuer.exit280.thread.thread, label %.lr.ph487
 
 get_issuer.exit280.thread.thread:                 ; preds = %bb.an, %.lr.ph719, %get_issuer.exit280.thread, %bb.am, %bb.ai, %bb.ag
-  %.5165.lcssa = phi i32 [ %.4164, %bb.ag ], [ %.5165485718, %bb.ai ], [ %.5165485718, %bb.am ], [ %.5165485718, %get_issuer.exit280.thread ], [ %.5165485718, %.lr.ph719 ], [ %spec.select, %bb.an ] ; 7 uses
+  %.5165.lcssa = phi i32 [ %.4164, %bb.ag ], [ %.5165485718, %bb.ai ], [ %.5165485718, %bb.am ], [ %.5165485718, %get_issuer.exit280.thread ], [ %.5165485718, %.lr.ph719 ], [ %spec.select, %bb.an ] ; 8 uses
   %.4 = phi ptr [ %.2, %bb.ag ], [ %.3486717, %bb.ai ], [ %i.ea, %bb.am ], [ %.3486717, %get_issuer.exit280.thread ], [ %.3486717, %.lr.ph719 ], [ %i.ea, %bb.an ] ; 2 uses
   %i.eg = call fastcc i32 @check_trust(ptr noundef nonnull %0) ; 2 uses
   switch i32 %i.eg, label %bb.ao [
@@ -230,7 +230,7 @@ bb.ao:                                            ; preds = %get_issuer.exit280.
   br i1 %i.eo, label %bb.ap, label %.loopexit, !llvm.loop !68
 
 bb.ap:                                            ; preds = %.lr.ph726, %.preheader
-  %i.ep = phi i32 [ %.1177, %.lr.ph726 ], [ %i.en, %.preheader ] ; 3 uses
+  %i.ep = phi i32 [ %.1177, %.lr.ph726 ], [ %i.en, %.preheader ] ; 2 uses
   %indvars.iv724 = phi i64 [ %i.em, %.lr.ph726 ], [ %indvars.iv.next725, %.preheader ] ; 2 uses
   %indvars.iv.next725 = add nsw i64 %indvars.iv724, -1 ; 3 uses
   %i.eq = load ptr, ptr %i.g, align 8, !tbaa !23
@@ -262,11 +262,11 @@ get_issuer.exit284.thread:                        ; preds = %bb.aq, %get_issuer.
 
 .loopexit393:                                     ; preds = %get_issuer.exit284.thread, %get_issuer.exit284.thread.thread
   %.0.i283326385 = phi i32 [ 1, %get_issuer.exit284.thread.thread ], [ %.0.i283326, %get_issuer.exit284.thread ] ; 2 uses
-  %indvars618 = trunc i64 %indvars.iv.next725 to i32
+  %indvars618 = trunc i64 %indvars.iv.next725 to i32 ; 2 uses
   %i.ey = load ptr, ptr %i.a, align 8, !tbaa !43
   call void @X509_free(ptr noundef %i.ey) #12
-  %.not249501 = icmp slt i32 %.5165.lcssa, %i.ep
-  br i1 %.not249501, label %._crit_edge, label %.lr.ph503
+  %1 = icmp sgt i32 %.5165.lcssa, %indvars618
+  br i1 %1, label %.lr.ph503, label %._crit_edge
 
 .lr.ph503:                                        ; preds = %.loopexit393, %.lr.ph503
   %.6502 = phi i32 [ %i.fb, %.lr.ph503 ], [ %.5165.lcssa, %.loopexit393 ] ; 2 uses
@@ -275,11 +275,12 @@ get_issuer.exit284.thread:                        ; preds = %bb.aq, %get_issuer.
   store ptr %i.fa, ptr %i.a, align 8, !tbaa !43
   call void @X509_free(ptr noundef %i.fa) #12
   %i.fb = add nsw i32 %.6502, -1
-  %.not249.not = icmp samesign ugt i32 %.6502, %i.ep
-  br i1 %.not249.not, label %.lr.ph503, label %._crit_edge.loopexit, !llvm.loop !69
+  %2 = icmp sgt i32 %.6502, %i.ep
+  br i1 %2, label %.lr.ph503, label %._crit_edge.loopexit, !llvm.loop !69
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph503
-  %i.fc = add nsw i32 %i.ep, -1
+  %smin = call i32 @llvm.smin.i32(i32 %.5165.lcssa, i32 %i.ep)
+  %i.fc = add nsw i32 %smin, -1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.loopexit393
@@ -682,13 +683,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !23
-  %i.k = tail call i64 @OPENSSL_sk_num(ptr noundef %i.j) #12 ; 2 uses
-  %i.l = trunc i64 %i.k to i32
+  %i.k = tail call i64 @OPENSSL_sk_num(ptr noundef %i.j) #12
+  %i.l = trunc i64 %i.k to i32                    ; 2 uses
+  %1 = add nsw i32 %i.l, -1
   %.not2025 = icmp slt i32 %i.l, 1
   br i1 %.not2025, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.01534 = phi i64 [ %i.k, %bb.c ], [ 1, %bb.b ]
+  %.01534 = phi i32 [ %1, %bb.c ], [ 0, %bb.b ]
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -699,13 +701,13 @@ bb.c:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %wide.trip.count = and i64 %.01534, 4294967295
   br label %bb.e
 
 bb.d:                                             ; preds = %check_cert.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !92
+  %2 = trunc nuw i64 %indvars.iv.next to i32
+  %.not20 = icmp slt i32 %.01534, %2
+  br i1 %.not20, label %._crit_edge, label %bb.e, !llvm.loop !92
 
 bb.e:                                             ; preds = %.lr.ph, %bb.d
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
@@ -1107,6 +1109,9 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.sadd.sat.i32(i32, i32) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #11
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

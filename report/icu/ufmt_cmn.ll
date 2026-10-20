@@ -204,14 +204,15 @@ bb.d:                                             ; preds = %_Z15ufmt_isdigit_78
   %i.x = add nsw i32 %.133.lcssa, -16
   %spec.select = select i1 %i.w, i32 %i.x, i32 %indvars56.le ; 3 uses
   store i32 %.133.lcssa, ptr %1, align 4, !tbaa !11
-  %.not37.not50 = icmp sgt i32 %.133.lcssa, %spec.select
-  br i1 %.not37.not50, label %.lr.ph53, label %._crit_edge
+  %3 = add nsw i32 %.133.lcssa, -1                ; 2 uses
+  %.not3750 = icmp slt i32 %3, %spec.select
+  br i1 %.not3750, label %._crit_edge, label %.lr.ph53
 
 .lr.ph53:                                         ; preds = %.critedge2, %bb.f
   %indvars.iv60 = phi i64 [ %indvars.iv.next61, %bb.f ], [ 0, %.critedge2 ] ; 2 uses
-  %.251.a = phi i32 [ %.3, %bb.f ], [ %.133.lcssa, %.critedge2 ] ; 2 uses
-  %3 = add nsw i32 %.251.a, -1                    ; 3 uses
-  %i.y = sext i32 %3 to i64
+  %.251.a = phi i32 [ %4, %bb.f ], [ %3, %.critedge2 ] ; 3 uses
+  %.251 = phi i32 [ %.3, %bb.f ], [ %.133.lcssa, %.critedge2 ]
+  %i.y = sext i32 %.251.a to i64
   %i.z = getelementptr inbounds [2 x i8], ptr %0, i64 %i.y
   %i.aa = load i16, ptr %i.z, align 2, !tbaa !9   ; 5 uses
   %i.ab = add i16 %i.aa, -48
@@ -234,11 +235,11 @@ bb.e:                                             ; preds = %.lr.ph53
 
 _Z18ufmt_digitvalue_78Ds.exit:                    ; preds = %.lr.ph53, %bb.e
   %.0.i = phi i8 [ %i.aj, %bb.e ], [ -1, %.lr.ph53 ] ; 2 uses
-  %i.ak = icmp sgt i32 %3, %spec.select
+  %i.ak = icmp sgt i32 %.251.a, %spec.select
   br i1 %i.ak, label %_Z18ufmt_digitvalue_78Ds.exit43, label %bb.f
 
 _Z18ufmt_digitvalue_78Ds.exit43:                  ; preds = %_Z18ufmt_digitvalue_78Ds.exit
-  %i.al = add nsw i32 %.251.a, -2                 ; 2 uses
+  %i.al = add nsw i32 %.251, -2                   ; 2 uses
   %i.am = sext i32 %i.al to i64
   %i.an = getelementptr inbounds [2 x i8], ptr %0, i64 %i.am
   %i.ao = load i16, ptr %i.an, align 2, !tbaa !9  ; 4 uses
@@ -258,13 +259,14 @@ _Z18ufmt_digitvalue_78Ds.exit43:                  ; preds = %_Z18ufmt_digitvalue
   br label %bb.f
 
 bb.f:                                             ; preds = %_Z18ufmt_digitvalue_78Ds.exit43, %_Z18ufmt_digitvalue_78Ds.exit
-  %.3 = phi i32 [ %i.al, %_Z18ufmt_digitvalue_78Ds.exit43 ], [ %3, %_Z18ufmt_digitvalue_78Ds.exit ] ; 2 uses
+  %.3 = phi i32 [ %i.al, %_Z18ufmt_digitvalue_78Ds.exit43 ], [ %.251.a, %_Z18ufmt_digitvalue_78Ds.exit ] ; 2 uses
   %.0.in = phi i8 [ %i.ax, %_Z18ufmt_digitvalue_78Ds.exit43 ], [ %.0.i, %_Z18ufmt_digitvalue_78Ds.exit ]
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv60
   store i8 %.0.in, ptr %i.ay, align 1, !tbaa !22
   %indvars.iv.next61 = add nuw nsw i64 %indvars.iv60, 1
-  %.not37.not = icmp sgt i32 %.3, %spec.select
-  br i1 %.not37.not, label %.lr.ph53, label %._crit_edge.loopexit, !llvm.loop !21
+  %4 = add nsw i32 %.3, -1                        ; 2 uses
+  %.not37 = icmp slt i32 %4, %spec.select
+  br i1 %.not37, label %._crit_edge.loopexit, label %.lr.ph53, !llvm.loop !21
 
 ._crit_edge.loopexit:                             ; preds = %bb.f
   %.pre = load ptr, ptr %2, align 8, !tbaa !22

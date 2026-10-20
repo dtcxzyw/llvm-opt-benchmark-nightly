@@ -205,8 +205,9 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #26
 define linkonce_odr dso_local noundef i32 @_ZN5Eigen8internal27computeFromTridiagonal_implINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEENS2_IdLi2ELi1ELi0ELi2ELi1EEENS2_IdLi1ELi1ELi0ELi1ELi1EEEEENS_15ComputationInfoERT0_RT1_lbRT_(ptr noundef nonnull align 16 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef %2, i1 noundef zeroext %3, ptr noundef nonnull align 16 dereferenceable(32) %4) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = shl i64 %2, 1                            ; 2 uses
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.a, i64 0) ; 2 uses
-  %5 = or disjoint i64 %smax, 1
+  %5 = or disjoint i64 %i.a, 1
+  %smax = tail call i64 @llvm.smax.i64(i64 %5, i64 1) ; 2 uses
+  %6 = add nsw i64 %smax, -1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
@@ -239,7 +240,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %.preheader96
   %i.p = add nuw nsw i64 %.065, 1
-  %exitcond117.not = icmp eq i64 %.065, %smax
+  %exitcond117.not = icmp eq i64 %.065, %6
   br i1 %exitcond117.not, label %.critedge.thread, label %.critedge2
 
 .critedge2:                                       ; preds = %.critedge
@@ -405,7 +406,7 @@ bb.n:                                             ; preds = %bb.m
   br label %.lr.ph, !llvm.loop !1682
 
 .critedge.thread:                                 ; preds = %.preheader96, %.critedge
-  %.1 = phi i64 [ %5, %.critedge ], [ %.065, %.preheader96 ]
+  %.1 = phi i64 [ %smax, %.critedge ], [ %.065, %.preheader96 ]
   %.not73.not = icmp sgt i64 %.1, %i.a
   br i1 %.not73.not, label %.loopexit, label %.preheader
 

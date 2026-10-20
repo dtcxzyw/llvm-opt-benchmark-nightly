@@ -204,7 +204,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !13     ; 21 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !22   ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !29   ; 2 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !29   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.f = load i32, ptr %i.e, align 8, !tbaa !24
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 96
@@ -360,7 +360,7 @@ bb.q:                                             ; preds = %bb.o
   %conflict.rdx = or i1 %diff.check, %diff.check531
   br label %.preheader381
 
-.preheader381:                                    ; preds = %._crit_edge429, %.preheader381.lr.ph
+.preheader381:                                    ; preds = %.preheader381.lr.ph, %._crit_edge429
   %.0434 = phi i32 [ 0, %.preheader381.lr.ph ], [ %i.is, %._crit_edge429 ] ; 2 uses
   %.0320433 = phi i32 [ 0, %.preheader381.lr.ph ], [ %.2, %._crit_edge429 ]
   %.0330432 = phi double [ %i.bf, %.preheader381.lr.ph ], [ %.2332, %._crit_edge429 ]
@@ -763,10 +763,11 @@ middle.block:                                     ; preds = %vector.body
   %i.ip = phi double [ %i.hb, %._crit_edge424.thread ], [ %i.hl, %middle.block ], [ %i.hl, %.lr.ph428 ], [ %i.hl, %.lr.ph428.prol.loopexit ]
   %i.iq = load ptr, ptr %i.h, align 8, !tbaa !71
   %i.ir = tail call i32 @N_VLinearCombination(i32 noundef %i.fu, ptr noundef nonnull %i.ak, ptr noundef nonnull %i.an, ptr noundef %i.iq) #15 ; 0 uses
-  %i.is = add nuw nsw i32 %.0434, 1
-  br label %.preheader381
+  %i.is = add nuw nsw i32 %.0434, 1               ; 2 uses
+  %.not364 = icmp sgt i32 %i.is, %i.d
+  br i1 %.not364, label %._crit_edge435, label %.preheader381
 
-._crit_edge435:                                   ; preds = %bb.ay
+._crit_edge435:                                   ; preds = %._crit_edge429, %bb.ay
   %i.it = fcmp olt double %.2332, %i.bf
   br i1 %i.it, label %bb.az, label %._crit_edge435.thread
 
@@ -970,7 +971,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 .lr.ph:                                           ; preds = %.preheader, %bb.j
   %i.v = phi i32 [ %i.af, %bb.j ], [ %i.u, %.preheader ]
   %i.w = phi ptr [ %i.ag, %bb.j ], [ %i.r, %.preheader ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %.preheader ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %.preheader ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 104
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !36
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv
@@ -991,10 +992,10 @@ bb.i:                                             ; preds = %.lr.ph
 bb.j:                                             ; preds = %.lr.ph, %bb.i
   %i.af = phi i32 [ %i.v, %.lr.ph ], [ %.pre, %bb.i ] ; 2 uses
   %i.ag = phi ptr [ %i.w, %.lr.ph ], [ %i.ab, %bb.i ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ah = sext i32 %i.af to i64
-  %.not54.not = icmp slt i64 %indvars.iv, %i.ah
-  br i1 %.not54.not, label %.lr.ph, label %._crit_edge.loopexit
+  %.not54 = icmp sgt i64 %indvars.iv.next, %i.ah
+  br i1 %.not54, label %._crit_edge.loopexit, label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.j
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ag, i64 104

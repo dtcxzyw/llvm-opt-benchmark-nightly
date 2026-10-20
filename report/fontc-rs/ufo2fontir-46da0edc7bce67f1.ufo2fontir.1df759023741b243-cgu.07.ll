@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECs2zvA5OmMqFb_10ufo2fontir.exit, %.outer
   %.lcssa = phi ptr [ %i.p, %.outer ], [ %i.dx, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRShNtNtNtB4_2io5error5ErrorEECs2zvA5OmMqFb_10ufo2fontir.exit ] ; 12 uses
-  %i.ag = load i64, ptr %i.l, align 8, !noundef !6 ; 12 uses
+  %i.ag = load i64, ptr %i.l, align 8, !noundef !6 ; 14 uses
   %i.ah = icmp eq i64 %i.ag, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br i1 %i.ah, label %bb.p, label %bb.g
@@ -278,7 +278,7 @@ bb.m:                                             ; preds = %bb.i, %bb.h
   %i.bn = phi ptr [ %i.bc, %bb.i ], [ %i.az, %bb.h ] ; 3 uses
   %i.bo = phi i64 [ %i.ar, %bb.i ], [ %i.ao, %bb.h ]
   switch i8 %i.bm, label %.backedge.jt0.i [
-    i8 62, label %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCs2zvA5OmMqFb_10ufo2fontir.exit31
+    i8 62, label %4
     i8 39, label %.backedge.jt1.i
     i8 34, label %.backedge.jt2.i
   ]
@@ -327,6 +327,11 @@ bb.p:                                             ; preds = %._crit_edge
   %i.cn = icmp ugt i64 %i.d, %i.cm
   br i1 %i.cn, label %bb.t, label %bb.s, !prof !11
 
+4:                                                ; preds = %bb.m
+  %5 = add nuw i64 %i.bo, 1                       ; 7 uses
+  %.not = icmp ugt i64 %5, %i.ag
+  br i1 %.not, label %6, label %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCs2zvA5OmMqFb_10ufo2fontir.exit31, !prof !14
+
 _RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCs2zvA5OmMqFb_10ufo2fontir.exit: ; preds = %bb.g, %.backedge.jt0.i, %.backedge.jt2.i, %.backedge.jt1.i
   %.sroa.0.7.ph = phi i8 [ %.sroa.0.035.ph, %bb.g ], [ 2, %.backedge.jt2.i ], [ 1, %.backedge.jt1.i ], [ 0, %.backedge.jt0.i ]
   call void @_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE7reserveCs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %i.ag)
@@ -347,29 +352,32 @@ _RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCs2zvA5OmMqFb_10uf
   %i.cx = add i64 %i.ag, %.sroa.0.0.ph
   br label %.outer
 
-_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCs2zvA5OmMqFb_10ufo2fontir.exit31: ; preds = %bb.m
-  %4 = add nuw i64 %i.bo, 1                       ; 5 uses
-  call void @_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE7reserveCs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %4)
+_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCs2zvA5OmMqFb_10ufo2fontir.exit31: ; preds = %4
+  call void @_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE7reserveCs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %5)
   %i.cy = load i64, ptr %i.c, align 8, !alias.scope !806, !noundef !6 ; 2 uses
   %i.cz = icmp sgt i64 %i.cy, -1
   call void @llvm.assume(i1 %i.cz)
   %i.da = load ptr, ptr %i.h, align 8, !alias.scope !806, !nonnull !6, !noundef !6
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.cy
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.db, ptr noundef nonnull readonly align 1 dereferenceable(1) %.lcssa, i64 %4, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.db, ptr noundef nonnull readonly align 1 dereferenceable(1) %.lcssa, i64 %5, i1 false)
   %.pre.i30 = load i64, ptr %i.c, align 8, !alias.scope !806
-  %i.dc = add i64 %.pre.i30, %4                   ; 5 uses
+  %i.dc = add i64 %.pre.i30, %5                   ; 5 uses
   store i64 %i.dc, ptr %i.c, align 8, !alias.scope !806
   %i.dd = load i64, ptr %i.n, align 8, !alias.scope !807, !noundef !6
-  %i.de = add i64 %i.dd, %4
+  %i.de = add i64 %i.dd, %5
   %i.df = load i64, ptr %i.o, align 8, !alias.scope !807, !noundef !6
   %i.dg = call i64 @llvm.umin.i64(i64 %i.de, i64 %i.df)
   store i64 %i.dg, ptr %i.n, align 8, !alias.scope !807
-  %i.dh = add i64 %4, %.sroa.0.0.ph
+  %i.dh = add i64 %5, %.sroa.0.0.ph
   %i.di = load i64, ptr %3, align 8, !noundef !6
   %i.dj = add i64 %i.dh, %i.di
   store i64 %i.dj, ptr %3, align 8
   %i.dk = icmp ugt i64 %i.d, %i.dc
   br i1 %i.dk, label %bb.r, label %bb.q, !prof !11
+
+6:                                                ; preds = %4
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %5, i64 noundef %i.ag, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #21
+  unreachable
 
 bb.q:                                             ; preds = %_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE15append_elementsCs2zvA5OmMqFb_10ufo2fontir.exit31
   %i.dl = load ptr, ptr %i.h, align 8, !nonnull !6, !noundef !6

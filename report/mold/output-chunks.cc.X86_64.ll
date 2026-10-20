@@ -205,10 +205,10 @@ _ZNSt6vectorIlSaIlEEC2ERKS1_.exit:                ; preds = %bb.d, %bb.e, %bb.f
 bb.g:                                             ; preds = %_ZNSt6vectorIlSaIlEEC2ERKS1_.exit
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !480
-  %.not = icmp ne i64 %i.aa, 0
-  %.not8.not9 = icmp sgt i64 %i.i, 0
-  %or.cond = select i1 %.not, i1 %.not8.not9, i1 false
-  br i1 %or.cond, label %.lr.ph, label %.loopexit
+  %.not = icmp eq i64 %i.aa, 0
+  %.not89 = icmp slt i64 %i.i, 1
+  %or.cond = select i1 %.not, i1 true, i1 %.not89
+  br i1 %or.cond, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 288
@@ -611,7 +611,7 @@ _ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt4spanIN4mold6ElfRelINS3_
   %.sroa.0102.0 = phi ptr [ %.sroa.0102.4.a, %._crit_edge.i ], [ %.sroa.0102.15, %.lr.ph68.i.preheader ]
   %.sroa.20.0 = phi ptr [ %.sroa.20.4.a, %._crit_edge.i ], [ %.sroa.20.15, %.lr.ph68.i.preheader ]
   %.sroa.50.0 = phi ptr [ %.sroa.50.4.a, %._crit_edge.i ], [ %.sroa.50.15, %.lr.ph68.i.preheader ]
-  %.03267.i = phi i64 [ %.031.lcssa.i, %._crit_edge.i ], [ 0, %.lr.ph68.i.preheader ] ; 7 uses
+  %.03267.i = phi i64 [ %.031.lcssa.i, %._crit_edge.i ], [ 0, %.lr.ph68.i.preheader ] ; 8 uses
   %.03366.i = phi i64 [ %.1.lcssa.i, %._crit_edge.i ], [ 0, %.lr.ph68.i.preheader ] ; 2 uses
   %.03465.i = phi i64 [ %.0.copyload.i43.i, %._crit_edge.i ], [ 0, %.lr.ph68.i.preheader ]
   %i.gz = getelementptr inbounds nuw [24 x i8], ptr %i.bb, i64 %.03267.i ; 2 uses
@@ -649,8 +649,8 @@ bb.aj:                                            ; preds = %.lr.ph207
   br label %.critedge.i, !llvm.loop !1405
 
 .critedge.i:                                      ; preds = %bb.ai, %.lr.ph207, %..critedge.i_crit_edge, %.lr.ph68.i
-  %.031.in.lcssa.i = phi i64 [ %i.hd, %.lr.ph68.i ], [ %.031.in.i205, %..critedge.i_crit_edge ], [ %i.hd, %bb.ai ], [ %.031.in.i205, %.lr.ph207 ] ; 3 uses
-  %.031.lcssa.i = phi i64 [ %smax.i, %.lr.ph68.i ], [ %.031.i206, %..critedge.i_crit_edge ], [ %smax.i, %bb.ai ], [ %.031.i206, %.lr.ph207 ] ; 3 uses
+  %.031.in.lcssa.i = phi i64 [ %i.hd, %.lr.ph68.i ], [ %.031.in.i205, %..critedge.i_crit_edge ], [ %i.hd, %bb.ai ], [ %.031.in.i205, %.lr.ph207 ] ; 2 uses
+  %.031.lcssa.i = phi i64 [ %smax.i, %.lr.ph68.i ], [ %.031.i206, %..critedge.i_crit_edge ], [ %smax.i, %bb.ai ], [ %.031.i206, %.lr.ph207 ] ; 4 uses
   %i.hj = sub nsw i64 %.031.lcssa.i, %.03267.i    ; 2 uses
   %i.hk = icmp sgt i64 %i.hj, 1
   br label %bb.ak
@@ -899,8 +899,12 @@ _ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit: ; preds = %_ZNSt6vectorIhSaIh
   %i.kg = load i8, ptr %.pn133, align 1, !tbaa !348
   %i.kh = and i8 %i.kg, 127
   store i8 %i.kh, ptr %.pn133, align 1, !tbaa !348
-  %.not62.i = icmp sgt i64 %.03267.i, %.031.in.lcssa.i
-  br i1 %.not62.i, label %._crit_edge.i, label %.lr.ph.i23
+  %5 = icmp slt i64 %.03267.i, %.031.lcssa.i
+  br i1 %5, label %.lr.ph.preheader.i, label %._crit_edge.i
+
+.lr.ph.preheader.i:                               ; preds = %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit
+  %smax70.i = call i64 @llvm.smax.i64(i64 %.031.in.lcssa.i, i64 %.03267.i)
+  br label %.lr.ph.i23
 
 ._crit_edge.i:                                    ; preds = %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit
   %.sroa.0102.4.a = phi ptr [ %.sroa.0102.7, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit ], [ %.sroa.0102.3, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ] ; 2 uses
@@ -912,12 +916,12 @@ _ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit: ; preds = %_ZNSt6vectorIhSaIh
   %i.kj = icmp slt i64 %.031.lcssa.i, %i.bg
   br i1 %i.kj, label %.lr.ph68.i, label %_ZN4moldL14encode_androidINS_6X86_64EEESt6vectorIhSaIhEESt4spanINS_6ElfRelIT_EELm18446744073709551615EE.exit, !llvm.loop !1406
 
-.lr.ph.i23:                                       ; preds = %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i
-  %.sroa.0102.1 = phi ptr [ %.sroa.0102.3, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ], [ %.sroa.0102.7, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit ]
-  %.sroa.50.1 = phi ptr [ %.sroa.50.3, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ], [ %.sroa.50.7, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit ]
-  %.pre.i.i = phi ptr [ %.sroa.20.3, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ], [ %.sroa.20.7, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit ]
-  %.064.i = phi i64 [ %i.lg, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ], [ %.03267.i, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit ] ; 3 uses
-  %.163.i = phi i64 [ %.0.copyload.i44.i, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ], [ %.03366.i, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit ]
+.lr.ph.i23:                                       ; preds = %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i, %.lr.ph.preheader.i
+  %.sroa.0102.1 = phi ptr [ %.sroa.0102.7, %.lr.ph.preheader.i ], [ %.sroa.0102.3, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ]
+  %.sroa.50.1 = phi ptr [ %.sroa.50.7, %.lr.ph.preheader.i ], [ %.sroa.50.3, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ]
+  %.pre.i.i = phi ptr [ %.sroa.20.7, %.lr.ph.preheader.i ], [ %.sroa.20.3, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ]
+  %.064.i = phi i64 [ %.03267.i, %.lr.ph.preheader.i ], [ %i.lg, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ] ; 3 uses
+  %.163.i = phi i64 [ %.03366.i, %.lr.ph.preheader.i ], [ %.0.copyload.i44.i, %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i ]
   %i.kk = getelementptr inbounds nuw [24 x i8], ptr %i.bb, i64 %.064.i
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kk, i64 16
   %.0.copyload.i44.i = load i64, ptr %i.kl, align 1, !noalias !1408 ; 3 uses
@@ -988,7 +992,7 @@ _ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i: ; preds = %_ZNSt6vectorIhSa
   %i.lf = and i8 %i.le, 127
   store i8 %i.lf, ptr %.pn134, align 1, !tbaa !348, !noalias !1408
   %i.lg = add i64 %.064.i, 1
-  %exitcond71.not.i = icmp eq i64 %.064.i, %.031.in.lcssa.i
+  %exitcond71.not.i = icmp eq i64 %.064.i, %smax70.i
   br i1 %exitcond71.not.i, label %._crit_edge.i, label %.lr.ph.i23, !llvm.loop !1407
 
 _ZN4moldL14encode_androidINS_6X86_64EEESt6vectorIhSaIhEESt4spanINS_6ElfRelIT_EELm18446744073709551615EE.exit: ; preds = %._crit_edge.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77, %_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt4spanIN4mold6ElfRelINS3_6X86_64EEELm18446744073709551615EENS_4lessEZNS3_L14encode_androidIS5_EESt6vectorIhSaIhEES2_INS4_IT_EELm18446744073709551615EEEUlRKS6_E0_Q8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRSE_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISE_EEE4typeISL_NS_8danglingEEEOSE_SM_SN_.exit.i

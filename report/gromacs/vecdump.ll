@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %5, label %.preheader45.us, label %.preheader45
 
 .preheader45.us:                                  ; preds = %.preheader45.lr.ph, %.loopexit.us
-  %.04349.us = phi i32 [ %.2.us, %.loopexit.us ], [ 0, %.preheader45.lr.ph ] ; 6 uses
+  %.04349.us = phi i32 [ %.2.us, %.loopexit.us ], [ 0, %.preheader45.lr.ph ] ; 7 uses
   %i.e = zext nneg i32 %.04349.us to i64          ; 4 uses
   %i.f = add nuw nsw i32 %.04349.us, 1
   %smax58 = tail call i32 @llvm.smax.i32(i32 %4, i32 %i.f) ; 3 uses
@@ -235,8 +235,8 @@ bb.c:                                             ; preds = %.lr.ph86
   br label %.critedge.us
 
 .critedge.us:                                     ; preds = %bb.c, %.preheader45.us, %.critedge.us.split.loop.exit
-  %.0.in.us.lcssa = phi i32 [ %i.p, %.critedge.us.split.loop.exit ], [ %i.g, %.preheader45.us ], [ %i.g, %bb.c ] ; 4 uses
-  %.0.us.lcssa = phi i32 [ %i.q, %.critedge.us.split.loop.exit ], [ %smax58, %.preheader45.us ], [ %smax58, %bb.c ] ; 2 uses
+  %.0.in.us.lcssa = phi i32 [ %i.p, %.critedge.us.split.loop.exit ], [ %i.g, %.preheader45.us ], [ %i.g, %bb.c ] ; 3 uses
+  %.0.us.lcssa = phi i32 [ %i.q, %.critedge.us.split.loop.exit ], [ %smax58, %.preheader45.us ], [ %smax58, %bb.c ] ; 3 uses
   %i.r = sub nsw i32 %.0.us.lcssa, %.04349.us
   %i.s = icmp slt i32 %i.r, 3
   br i1 %i.s, label %.preheader.us, label %bb.d
@@ -252,11 +252,12 @@ bb.d:                                             ; preds = %.critedge.us
   br label %.loopexit.us
 
 .preheader.us:                                    ; preds = %.critedge.us
-  %.not47.us = icmp sgt i32 %.04349.us, %.0.in.us.lcssa
-  br i1 %.not47.us, label %.loopexit.us, label %.lr.ph.us.preheader
+  %6 = icmp slt i32 %.04349.us, %.0.us.lcssa
+  br i1 %6, label %.lr.ph.us.preheader, label %.loopexit.us
 
 .lr.ph.us.preheader:                              ; preds = %.preheader.us
-  %i.aa = add nuw nsw i32 %.0.in.us.lcssa, 1      ; 2 uses
+  %smax63 = tail call i32 @llvm.smax.i32(i32 %.04349.us, i32 %.0.in.us.lcssa)
+  %i.aa = add nuw nsw i32 %smax63, 1              ; 2 uses
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %.lr.ph.us
@@ -277,7 +278,7 @@ bb.d:                                             ; preds = %.critedge.us
   br i1 %i.ag, label %.preheader45.us, label %.loopexit46, !llvm.loop !22
 
 .preheader45:                                     ; preds = %.preheader45.lr.ph, %.loopexit
-  %.04349 = phi i32 [ %.2, %.loopexit ], [ 0, %.preheader45.lr.ph ] ; 5 uses
+  %.04349 = phi i32 [ %.2, %.loopexit ], [ 0, %.preheader45.lr.ph ] ; 6 uses
   %i.ah = zext nneg i32 %.04349 to i64            ; 4 uses
   %i.ai = add nuw nsw i32 %.04349, 1
   %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 %i.ai) ; 3 uses
@@ -308,18 +309,19 @@ bb.e:                                             ; preds = %.lr.ph82
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.e, %.preheader45, %.critedge.split.loop.exit68
-  %.0.in.lcssa = phi i32 [ %i.as, %.critedge.split.loop.exit68 ], [ %i.aj, %.preheader45 ], [ %i.aj, %bb.e ] ; 3 uses
-  %.0.lcssa = phi i32 [ %i.at, %.critedge.split.loop.exit68 ], [ %smax, %.preheader45 ], [ %smax, %bb.e ] ; 2 uses
+  %.0.in.lcssa = phi i32 [ %i.as, %.critedge.split.loop.exit68 ], [ %i.aj, %.preheader45 ], [ %i.aj, %bb.e ] ; 2 uses
+  %.0.lcssa = phi i32 [ %i.at, %.critedge.split.loop.exit68 ], [ %smax, %.preheader45 ], [ %smax, %bb.e ] ; 3 uses
   %i.au = sub nsw i32 %.0.lcssa, %.04349
   %i.av = icmp slt i32 %i.au, 3
   br i1 %i.av, label %.preheader, label %bb.f
 
 .preheader:                                       ; preds = %.critedge
-  %.not47 = icmp sgt i32 %.04349, %.0.in.lcssa
-  br i1 %.not47, label %.loopexit, label %.lr.ph.preheader
+  %7 = icmp slt i32 %.04349, %.0.lcssa
+  br i1 %7, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %i.aw = add nuw nsw i32 %.0.in.lcssa, 1         ; 2 uses
+  %smax55 = tail call i32 @llvm.smax.i32(i32 %.04349, i32 %.0.in.lcssa)
+  %i.aw = add nuw nsw i32 %smax55, 1              ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

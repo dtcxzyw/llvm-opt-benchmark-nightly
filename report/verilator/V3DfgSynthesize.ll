@@ -205,26 +205,29 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_ZNK9DfgVertex15v3errorEndFatalERNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(96) %i.h, ptr noundef nonnull align 8 dereferenceable(112) %i.t) #29
   unreachable
 
-._crit_edge:                                      ; preds = %bb.ap, %.preheader
-  %.0.lcssa = phi i64 [ 0, %.preheader ], [ %.1, %bb.ap ] ; 2 uses
-  %.lcssa73 = phi ptr [ %i.c, %.preheader ], [ %i.dz, %bb.ap ]
-  %.lcssa68 = phi ptr [ %i.a, %.preheader ], [ %i.ea, %bb.ap ]
-  %.lcssa = phi i64 [ %i.p, %.preheader ], [ %i.ee, %bb.ap ] ; 3 uses
-  %2 = add nuw i64 %.0.lcssa, 1                   ; 3 uses
-  %.not61 = icmp ult i64 %.0.lcssa, %.lcssa
-  br i1 %.not61, label %bb.f, label %bb.e
+._crit_edge.loopexit:                             ; preds = %bb.ap
+  %2 = add nuw i64 %.1, 1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
+  %.0.lcssa = phi i64 [ 1, %.preheader ], [ %2, %._crit_edge.loopexit ] ; 4 uses
+  %.lcssa73 = phi ptr [ %i.c, %.preheader ], [ %i.dz, %._crit_edge.loopexit ]
+  %.lcssa68 = phi ptr [ %i.a, %.preheader ], [ %i.ea, %._crit_edge.loopexit ]
+  %.lcssa = phi i64 [ %i.p, %.preheader ], [ %i.ee, %._crit_edge.loopexit ] ; 3 uses
+  %3 = icmp ugt i64 %.0.lcssa, %.lcssa
+  br i1 %3, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge
-  %i.u = sub nuw i64 %2, %.lcssa
+  %i.u = sub nuw i64 %.0.lcssa, %.lcssa
   tail call void @_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.u)
   br label %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE6resizeEm.exit
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.v = icmp ult i64 %2, %.lcssa
+  %i.v = icmp ult i64 %.0.lcssa, %.lcssa
   br i1 %i.v, label %bb.g, label %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE6resizeEm.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.w = getelementptr inbounds nuw [24 x i8], ptr %.lcssa68, i64 %2 ; 2 uses
+  %i.w = getelementptr inbounds nuw [24 x i8], ptr %.lcssa68, i64 %.0.lcssa ; 2 uses
   %.not.i.i = icmp eq ptr %.lcssa73, %i.w
   br i1 %.not.i.i, label %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE6resizeEm.exit, label %_ZSt8_DestroyIPN18AstToDfgSynthesize6DriverES1_EvT_S3_RSaIT0_E.exit.i.i
 
@@ -551,7 +554,7 @@ bb.ap:                                            ; preds = %bb.i, %_ZN9DfgConca
   %i.ed = sub i64 %i.eb, %i.ec
   %i.ee = sdiv exact i64 %i.ed, 24                ; 2 uses
   %i.ef = icmp ult i64 %.2, %i.ee
-  br i1 %i.ef, label %.lr.ph, label %._crit_edge
+  br i1 %i.ef, label %.lr.ph, label %._crit_edge.loopexit
 }
 
 ; Function Attrs: mustprogress uwtable

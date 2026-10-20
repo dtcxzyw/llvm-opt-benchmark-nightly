@@ -202,16 +202,18 @@ bb.b:                                             ; preds = %bb.a
   %i.j = mul nsw i32 %., %4                       ; 2 uses
   %i.k = sext i32 %1 to i64                       ; 4 uses
   %i.l = getelementptr inbounds [4 x i8], ptr %0, i64 %i.k ; 3 uses
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !11   ; 2 uses
-  %.not = icmp sgt i32 %i.m, %i.j
-  br i1 %.not, label %bb.c, label %bb.d
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !11
+  %11 = add nsw i32 %i.m, -1                      ; 2 uses
+  %12 = icmp slt i32 %11, %i.j
+  br i1 %12, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = sub i32 %i.m, %i.j                       ; 2 uses
+  %i.n = sub nsw i32 %11, %i.j
+  %13 = add nuw nsw i32 %i.n, 1                   ; 2 uses
   %i.o = mul nsw i32 %., %3                       ; 2 uses
-  %i.p = sdiv i32 %i.n, %i.o
+  %i.p = sdiv i32 %13, %i.o
   %i.q = mul nsw i32 %i.p, %.
-  %i.r = srem i32 %i.n, %i.o
+  %i.r = srem i32 %13, %i.o
   %i.s = tail call i32 @llvm.smin.i32(i32 %i.r, i32 %.)
   %i.t = add nsw i32 %i.s, %i.q
   br label %bb.d

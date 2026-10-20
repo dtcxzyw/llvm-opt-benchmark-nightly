@@ -205,7 +205,7 @@ bb.a:
   %narrow.i85 = tail call i32 @llvm.smax.i32(i32 %i.h, i32 0)
   %spec.select.i86 = zext nneg i32 %narrow.i85 to i64 ; 2 uses
   %i.i = load i32, ptr %5, align 4, !tbaa !71     ; 4 uses
-  %narrow.i87 = tail call i32 @llvm.smax.i32(i32 %i.i, i32 0) ; 5 uses
+  %narrow.i87 = tail call i32 @llvm.smax.i32(i32 %i.i, i32 0) ; 4 uses
   %spec.select.i88 = zext nneg i32 %narrow.i87 to i64 ; 6 uses
   %i.j = add nsw i64 %spec.select.i, -2           ; 2 uses
   %narrow.i89 = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1)
@@ -608,9 +608,10 @@ _ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit123:         ; preds = %.lr.ph.i.i.i.i.i.i.
 .lr.ph:                                           ; preds = %_ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit123
   %i.fs = load i32, ptr %20, align 4, !tbaa !71
   %i.ft = load i32, ptr %21, align 4
+  %22 = add nsw i32 %narrow.i87, -1               ; 2 uses
   %i.fu = zext i32 %i.bb to i64
-  %.not301 = icmp sgt i32 %narrow.i87, %i.fs
-  %.not302 = icmp sgt i32 %narrow.i87, %i.ft
+  %23 = icmp slt i32 %22, %i.fs
+  %24 = icmp slt i32 %22, %i.ft
   br label %bb.af
 
 .preheader:                                       ; preds = %bb.an, %_ZNSt6vectorImSaImEE6resizeEmRKm.exit111, %_ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit123
@@ -644,7 +645,7 @@ _ZNSt6vectorImSaImEED2Ev.exit179.thread:          ; preds = %_ZNSt6vectorImSaImE
 bb.af:                                            ; preds = %.lr.ph, %bb.an
   %indvars.iv = phi i64 [ %i.fu, %.lr.ph ], [ %indvars.iv.next, %bb.an ] ; 5 uses
   %i.ge = add nuw nsw i64 %indvars.iv, 1          ; 4 uses
-  br i1 %.not301, label %bb.ag, label %bb.aj
+  br i1 %23, label %bb.aj, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #23
@@ -687,7 +688,7 @@ bb.aj:                                            ; preds = %bb.af
   %i.gq = mul i64 %i.gm, %i.gp
   %i.gr = getelementptr inbounds nuw [8 x i8], ptr %i.eo, i64 %indvars.iv
   store i64 %i.gq, ptr %i.gr, align 8, !tbaa !20
-  br i1 %.not302, label %bb.ak, label %bb.an
+  br i1 %24, label %bb.an, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23

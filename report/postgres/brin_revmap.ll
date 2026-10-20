@@ -113,11 +113,12 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8
   %i.c = udiv i32 %1, %i.b
-  %i.d = udiv i32 %i.c, 1360                      ; 2 uses
+  %i.d = udiv i32 %i.c, 1360
+  %narrow.i = add nuw nsw i32 %i.d, 1             ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
   %i.f = load i32, ptr %i.e, align 4
-  %.not8.i = icmp ult i32 %i.d, %i.f
-  br i1 %.not8.i, label %revmap_extend_and_get_blkno.exit, label %.lr.ph.i
+  %4 = icmp ugt i32 %narrow.i, %i.f
+  br i1 %4, label %.lr.ph.i, label %revmap_extend_and_get_blkno.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
@@ -343,8 +344,8 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w,
 revmap_physical_extend.exit.i:                    ; preds = %bb.z, %bb.t, %bb.m, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.db = load i32, ptr %i.e, align 4
-  %.not.i = icmp ult i32 %i.d, %i.db
-  br i1 %.not.i, label %revmap_extend_and_get_blkno.exit, label %bb.b, !llvm.loop !5
+  %5 = icmp ugt i32 %narrow.i, %i.db
+  br i1 %5, label %bb.b, label %revmap_extend_and_get_blkno.exit, !llvm.loop !5
 
 revmap_extend_and_get_blkno.exit:                 ; preds = %revmap_physical_extend.exit.i, %bb.a
   ret void
@@ -358,10 +359,10 @@ bb.a:
   %i.b = getelementptr i8, ptr %0, i64 12
   %.val15.i = load i32, ptr %i.b, align 4
   %i.c = udiv i32 %1, %.val.i
-  %i.d = udiv i32 %i.c, 1360                      ; 2 uses
-  %.not.not.i.not.i = icmp ult i32 %i.d, %.val15.i
-  %narrow.i.i = add nuw nsw i32 %i.d, 1           ; 2 uses
-  br i1 %.not.not.i.not.i, label %bb.c, label %bb.b
+  %i.d = udiv i32 %i.c, 1360
+  %narrow.i.i = add nuw nsw i32 %i.d, 1           ; 3 uses
+  %.not.i.i = icmp ugt i32 %narrow.i.i, %.val15.i
+  br i1 %.not.i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.e = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #8 ; 0 uses
@@ -459,11 +460,11 @@ bb.a:
   %i.f = getelementptr i8, ptr %0, i64 12
   %.val68 = load i32, ptr %i.f, align 4
   %i.g = udiv i32 %1, %i.c
-  %i.h = udiv i32 %i.g, 1360                      ; 2 uses
-  %.not.not.i.not = icmp ult i32 %i.h, %.val68    ; 2 uses
-  %narrow.i = add nuw nsw i32 %i.h, 1
-  %.0.i.a = select i1 %.not.not.i.not, i32 %narrow.i, i32 -1 ; 2 uses
-  br i1 %.not.not.i.not, label %bb.c, label %bb.b
+  %i.h = udiv i32 %i.g, 1360
+  %narrow.i = add nuw nsw i32 %i.h, 1             ; 2 uses
+  %.not.i = icmp ugt i32 %narrow.i, %.val68       ; 2 uses
+  %.0.i.a = select i1 %.not.i, i32 -1, i32 %narrow.i ; 2 uses
+  br i1 %.not.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   store i16 0, ptr %3, align 2

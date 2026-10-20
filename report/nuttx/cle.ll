@@ -202,10 +202,9 @@ bb.c:                                             ; preds = %.sink.split, %._cri
 define internal fastcc void @cle_insertch(ptr nofree noundef nonnull captures(none) %0, i8 noundef signext %1) unnamed_addr #3 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
-  %2 = load i16, ptr %0, align 8                  ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.c = load i16, ptr %i.b, align 8              ; 4 uses
-  %i.d = zext i16 %i.c to i32
+  %i.c = load i16, ptr %i.b, align 8              ; 2 uses
+  %i.d = zext i16 %i.c to i32                     ; 3 uses
   %i.e = add nuw nsw i32 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 6
   %i.g = load i16, ptr %i.f, align 2
@@ -214,25 +213,29 @@ bb.a:
   br i1 %.not.i, label %.preheader.i, label %cle_opentext.exit
 
 .preheader.i:                                     ; preds = %bb.a
-  %.not16.not17.i = icmp ugt i16 %i.c, %2
-  br i1 %.not16.not17.i, label %.lr.ph.i, label %bb.c
+  %2 = load i16, ptr %0, align 8                  ; 2 uses
+  %3 = zext i16 %2 to i32                         ; 2 uses
+  %.017.i = add nsw i32 %i.d, -1                  ; 2 uses
+  %.not1618.i = icmp slt i32 %.017.i, %3
+  br i1 %.not1618.i, label %bb.c, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %3 = zext i16 %i.c to i64
-  %4 = zext i16 %2 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %3, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 3 uses
+  %.020.i = phi i32 [ %.017.i, %.lr.ph.i ], [ %.0.i, %bb.b ] ; 3 uses
+  %.0.in19.i = phi i32 [ %i.d, %.lr.ph.i ], [ %.020.i, %bb.b ]
   %i.j = load ptr, ptr %i.i, align 8              ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv.next.i
+  %4 = zext nneg i32 %.020.i to i64
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %4
   %i.l = load i8, ptr %i.k, align 1
-  %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv.i
+  %5 = zext nneg i32 %.0.in19.i to i64
+  %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 %5
   store i8 %i.l, ptr %i.m, align 1
-  %.not16.not.i = icmp samesign ugt i64 %indvars.iv.next.i, %4
-  br i1 %.not16.not.i, label %bb.b, label %._crit_edge.loopexit.i, !llvm.loop !13
+  %.0.i = add nsw i32 %.020.i, -1                 ; 2 uses
+  %.not16.i = icmp slt i32 %.0.i, %3
+  br i1 %.not16.i, label %._crit_edge.loopexit.i, label %bb.b, !llvm.loop !13
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.b
   %.pre.i = load i16, ptr %i.b, align 8

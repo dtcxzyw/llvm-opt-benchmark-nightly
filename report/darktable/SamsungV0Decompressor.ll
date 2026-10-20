@@ -204,7 +204,7 @@ _ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequ
   %i.ay = zext nneg i32 %i.av to i64
   %i.az = getelementptr inbounds nuw [2 x i8], ptr %i.ac, i64 %i.ay ; 14 uses
   %i.ba = zext nneg i32 %i.f to i64               ; 27 uses
-  %i.bb = zext nneg i32 %i.f to i64
+  %i.bb = zext nneg i32 %i.f to i64               ; 2 uses
   br label %bb.d
 
 bb.c:                                             ; preds = %.loopexit
@@ -607,10 +607,12 @@ bb.fh:                                            ; preds = %bb.fg, %_ZN8rawspee
   br i1 %.not96, label %bb.fj, label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh
+  %3 = add nsw i64 %indvars.iv, -1                ; 2 uses
+  %4 = icmp slt i64 %3, %i.bb
+  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.assume(i1 %i.an)
-  %3 = getelementptr [2 x i8], ptr %i.as, i64 %indvars.iv
-  %4 = getelementptr i8, ptr %3, i64 -2
-  %i.ake = load i16, ptr %4, align 2, !tbaa !121
+  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.as, i64 %3
+  %i.ake = load i16, ptr %5, align 2, !tbaa !121
   br label %bb.fj
 
 bb.fj:                                            ; preds = %bb.fh, %bb.fi

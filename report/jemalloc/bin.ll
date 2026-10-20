@@ -51,7 +51,7 @@ bb.c:                                             ; preds = %bb.b
   br label %sz_size2index_compute.exit
 
 sz_size2index_compute.exit:                       ; preds = %bb.b, %bb.c
-  %.0.i.i = phi i32 [ %i.u, %bb.c ], [ 0, %bb.b ] ; 5 uses
+  %.0.i.i = phi i32 [ %i.u, %bb.c ], [ 0, %bb.b ] ; 6 uses
   %i.v = icmp ult i64 %2, 9
   br i1 %i.v, label %sz_size2index_compute.exit19, label %bb.d
 
@@ -83,8 +83,10 @@ sz_size2index_compute.exit19:                     ; preds = %sz_size2index_compu
 
 .lr.ph:                                           ; preds = %sz_size2index_compute.exit19
   %i.ao = trunc nuw nsw i64 %3 to i32             ; 2 uses
-  %i.ap = add i32 %.0.i.i18, 1
-  %i.aq = sub i32 %i.ap, %.0.i.i                  ; 3 uses
+  %i.ap = add nsw i32 %.0.i.i18, 1
+  %4 = add nsw i32 %.0.i.i, 1
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.ap, i32 %4)
+  %i.aq = sub i32 %5, %.0.i.i                     ; 3 uses
   %min.iters.check = icmp ult i32 %i.aq, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -116,13 +118,13 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %.021 = phi i32 [ %i.az, %scalar.ph ], [ %.021.ph, %scalar.ph.preheader ] ; 3 uses
+  %.021 = phi i32 [ %i.az, %scalar.ph ], [ %.021.ph, %scalar.ph.preheader ] ; 2 uses
   %i.ax = zext nneg i32 %.021 to i64
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ax
   store i32 %i.ao, ptr %i.ay, align 4, !tbaa !13
-  %i.az = add nuw nsw i32 %.021, 1
-  %.not.not = icmp ult i32 %.021, %.0.i.i18
-  br i1 %.not.not, label %scalar.ph, label %.loopexit, !llvm.loop !42
+  %i.az = add nuw nsw i32 %.021, 1                ; 2 uses
+  %.not = icmp samesign ugt i32 %i.az, %.0.i.i18
+  br i1 %.not, label %.loopexit, label %scalar.ph, !llvm.loop !42
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %sz_size2index_compute.exit19, %bb.a
   ret i1 %or.cond

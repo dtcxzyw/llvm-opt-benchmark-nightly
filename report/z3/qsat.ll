@@ -205,7 +205,9 @@ bb.j:                                             ; preds = %bb.i
   store ptr null, ptr %5, align 8, !tbaa !151
   %i.ar = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store ptr %i.aq, ptr %i.ar, align 8, !tbaa !34
+  %6 = add i32 %.067, -1
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
+  %7 = zext i32 %6 to i64
   %.pre = load ptr, ptr %i.l, align 8, !tbaa !37
   br label %.preheader159
 
@@ -358,9 +360,8 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0
 .critedge81:                                      ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.preheader, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit..critedge81.loopexit_crit_edge, %.preheader159
   %i.cu = phi ptr [ %i.at, %.preheader159 ], [ %i.cp, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit..critedge81.loopexit_crit_edge ], [ %i.at, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.preheader ], [ %i.cp, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ] ; 2 uses
   %indvars.iv.next175 = add nuw nsw i64 %indvars.iv174, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next175 to i32
-  %exitcond.not = icmp eq i32 %.067, %lftr.wideiv
-  br i1 %exitcond.not, label %.critedge83, label %.preheader159, !llvm.loop !349
+  %.not70 = icmp samesign ugt i64 %indvars.iv.next175, %7
+  br i1 %.not70, label %.critedge83, label %.preheader159, !llvm.loop !349
 
 .critedge83:                                      ; preds = %.critedge81
   %i.cv = load ptr, ptr %i.as, align 8, !tbaa !59 ; 2 uses
@@ -763,8 +764,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i: ; 
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i: ; preds = %._crit_edge.i.i
   %i.ca = add nuw nsw i64 %i.by, 1                ; 2 uses
-  %.not.i.i.i.i.not = icmp samesign ult i64 %i.by, 15
-  br i1 %.not.i.i.i.i.not, label %bb.n, label %bb.r
+  %.not.i.i.i.i = icmp samesign ugt i64 %i.by, 14
+  br i1 %.not.i.i.i.i, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i
   %.not8.i.i.i.i = icmp eq i64 %i.by, 0

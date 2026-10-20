@@ -200,18 +200,18 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.w = extractvalue { i32, i1 } %i.t, 0, !nosanitize !9
   store i32 %i.w, ptr %i.r, align 4, !tbaa !16
-  %i.x = ashr i32 %i.s, 8                         ; 6 uses
-  %i.y = add nsw i32 %i.x, 1                      ; 3 uses
+  %i.x = ashr i32 %i.s, 8                         ; 3 uses
+  %i.y = add nsw i32 %i.x, 1                      ; 6 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !17  ; 2 uses
-  %.not45 = icmp slt i32 %i.x, %i.aa
-  br i1 %.not45, label %.loopexit, label %bb.l
+  %1 = icmp sgt i32 %i.y, %i.aa
+  br i1 %1, label %bb.l, label %.loopexit
 
 bb.l:                                             ; preds = %bb.k
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !19 ; 2 uses
-  %.not46 = icmp sgt i32 %i.ac, %i.x
-  br i1 %.not46, label %.lr.ph, label %bb.m
+  %2 = icmp slt i32 %i.ac, %i.y
+  br i1 %2, label %bb.m, label %.lr.ph
 
 bb.m:                                             ; preds = %bb.l
   %i.ad = shl i32 %i.ac, 3
@@ -225,10 +225,11 @@ bb.m:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.m, %bb.l
   store i32 %i.y, ptr %i.z, align 8, !tbaa !17
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %3 = sext i32 %i.aa to i64
   br label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.s
-  %.060 = phi i32 [ %2, %bb.s ], [ %i.aa, %.lr.ph ] ; 4 uses
+  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 4 uses
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !15 ; 3 uses
   %i.aj = add i32 %i.ai, 8388608
   %i.ak = icmp ult i32 %i.aj, 16777216
@@ -244,16 +245,15 @@ bb.o:                                             ; preds = %.lr.ph.split
   %i.an = sext i32 %i.am to i64
   %i.ao = tail call ptr @b3Alloc(i64 noundef %i.an) #6
   %i.ap = load ptr, ptr %0, align 8, !tbaa !18    ; 3 uses
-  %1 = sext i32 %.060 to i64                      ; 2 uses
-  %i.aq = getelementptr inbounds [8 x i8], ptr %i.ap, i64 %1 ; 2 uses
-  %i.ar = shl nsw i64 %1, 3
+  %i.aq = getelementptr inbounds [8 x i8], ptr %i.ap, i64 %indvars.iv ; 2 uses
+  %i.ar = shl nsw i64 %indvars.iv, 3
   %i.as = ptrtoint ptr %i.ap to i64, !nosanitize !9 ; 3 uses
   %i.at = add i64 %i.ar, %i.as, !nosanitize !9    ; 3 uses
   %i.au = icmp ne ptr %i.ap, null, !nosanitize !9 ; 2 uses
   %i.av = icmp eq i64 %i.at, 0
   %i.aw = xor i1 %i.au, %i.av
   %i.ax = icmp uge i64 %i.at, %i.as, !nosanitize !9
-  %i.ay = icmp slt i32 %.060, 0
+  %i.ay = icmp slt i64 %indvars.iv, 0
   %i.az = xor i1 %i.ay, %i.ax
   %i.ba = and i1 %i.aw, %i.az, !nosanitize !9
   br i1 %i.ba, label %bb.q, label %bb.p, !prof !20, !nosanitize !9
@@ -275,8 +275,9 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   store ptr %i.ao, ptr %i.aq, align 8, !tbaa !23
-  %2 = add nsw i32 %.060, 1
-  %exitcond = icmp eq i32 %.060, %i.x
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond = icmp eq i32 %i.y, %lftr.wideiv
   br i1 %exitcond, label %.loopexit, label %.lr.ph.split, !llvm.loop !32
 
 .loopexit:                                        ; preds = %bb.s, %bb.k

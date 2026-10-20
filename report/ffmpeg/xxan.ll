@@ -205,8 +205,9 @@ bb.g:                                             ; preds = %bytestream2_get_le1
 bytestream2_get_le16.exit:                        ; preds = %bb.f, %bb.g
   %.pre-phi234 = phi i64 [ %i.h, %bb.f ], [ %.pre233, %bb.g ]
   %i.af = phi ptr [ %i.f, %bb.f ], [ %i.ac, %bb.g ]
-  %.0.i = phi i32 [ 0, %bb.f ], [ %i.ae, %bb.g ]  ; 3 uses
+  %.0.i = phi i32 [ 0, %bb.f ], [ %i.ae, %bb.g ]  ; 2 uses
   %i.ag = shl nuw nsw i32 %.0.i, 1                ; 2 uses
+  %2 = add nuw nsw i32 %.0.i, 1                   ; 2 uses
   %i.ah = sub i64 %i.h, %.pre-phi234              ; 2 uses
   %i.ai = trunc i64 %i.ah to i32
   %.not154 = icmp slt i32 %i.ag, %i.ai
@@ -296,8 +297,8 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not161, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph281
-  %.not162.not = icmp samesign ult i32 %.0.i, %i.bw
-  br i1 %.not162.not, label %.thread, label %bb.m
+  %.not162 = icmp samesign ugt i32 %2, %i.bw
+  br i1 %.not162, label %bb.m, label %.thread
 
 bb.m:                                             ; preds = %bb.l
   %i.bx = shl nuw nsw i32 %i.bw, 1
@@ -441,8 +442,8 @@ bb.p:                                             ; preds = %bb.k
   br i1 %.not157, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph286
-  %.not158.not = icmp samesign ult i32 %.0.i, %i.ez
-  br i1 %.not158.not, label %.thread, label %bb.r
+  %.not158 = icmp samesign ugt i32 %2, %i.ez
+  br i1 %.not158, label %bb.r, label %.thread
 
 bb.r:                                             ; preds = %bb.q
   %i.fa = shl nuw nsw i32 %i.ez, 1

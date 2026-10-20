@@ -47,7 +47,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull %0) #6 ; 3 uses
+  %i.c = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull %0) #6 ; 2 uses
+  %1 = add nsw i32 %i.c, -1                       ; 2 uses
   %i.d = tail call ptr @SDL_SYS_GetTLSData() #6   ; 3 uses
   %i.e = icmp eq ptr %i.d, null
   %i.f = icmp slt i32 %i.c, 1
@@ -56,14 +57,14 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load i32, ptr %i.d, align 8
-  %.not.not = icmp sgt i32 %i.c, %i.g
-  br i1 %.not.not, label %bb.f, label %bb.e
+  %.not = icmp slt i32 %1, %i.g
+  br i1 %.not, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %1 = zext nneg i32 %i.c to i64
-  %2 = getelementptr [16 x i8], ptr %i.d, i64 %1
-  %3 = getelementptr i8, ptr %2, i64 -8
-  %i.h = load ptr, ptr %3, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %3 = zext nneg i32 %1 to i64
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %3
+  %i.h = load ptr, ptr %4, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e, %bb.b
@@ -95,7 +96,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   tail call void @SDL_SYS_InitTLSData() #6
-  %i.c = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull %0) #6 ; 7 uses
+  %i.c = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull %0) #6 ; 3 uses
+  %3 = add nsw i32 %i.c, -1                       ; 5 uses
   %i.d = icmp slt i32 %i.c, 1
   br i1 %i.d, label %bb.d, label %bb.e
 
@@ -104,12 +106,13 @@ bb.d:                                             ; preds = %bb.c
   %i.f = add nsw i32 %i.e, 1
   %i.g = tail call zeroext i1 @SDL_CompareAndSwapAtomicInt_REAL(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %i.f) #6 ; 0 uses
   %i.h = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull %0) #6
+  %4 = add nsw i32 %i.h, -1
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
   %i.i = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull @SDL_tls_id) #6 ; 2 uses
-  %.not.not54 = icmp sgt i32 %i.c, %i.i
-  br i1 %.not.not54, label %.lr.ph, label %.loopexit
+  %.not55 = icmp slt i32 %3, %i.i
+  br i1 %.not55, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e, %bb.f
   %.03955 = phi i32 [ %i.k, %bb.f ], [ %i.i, %bb.e ]
@@ -118,23 +121,23 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %.lr.ph
   %i.k = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull @SDL_tls_id) #6 ; 2 uses
-  %.not.not = icmp sgt i32 %i.c, %i.k
-  br i1 %.not.not, label %.lr.ph, label %.loopexit, !llvm.loop !8
+  %.not = icmp slt i32 %3, %i.k
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !8
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.f, %bb.e, %bb.d
-  %.042.in = phi i32 [ %i.h, %bb.d ], [ %i.c, %bb.e ], [ %i.c, %bb.f ], [ %i.c, %.lr.ph ] ; 4 uses
+  %.042.in = phi i32 [ %4, %bb.d ], [ %3, %bb.e ], [ %3, %bb.f ], [ %3, %.lr.ph ] ; 4 uses
   %i.l = tail call ptr @SDL_SYS_GetTLSData() #6   ; 4 uses
   %.not.a = icmp eq ptr %i.l, null
   br i1 %.not.a, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %.loopexit
   %i.m = load i32, ptr %i.l, align 8              ; 2 uses
-  %.not50.not = icmp sgt i32 %.042.in, %i.m
-  br i1 %.not50.not, label %.critedge, label %bb.k
+  %.not51 = icmp slt i32 %.042.in, %i.m
+  br i1 %.not51, label %bb.k, label %.critedge
 
 .critedge:                                        ; preds = %bb.g, %.loopexit
   %i.n = phi i32 [ 0, %.loopexit ], [ %i.m, %bb.g ] ; 3 uses
-  %i.o = add nsw i32 %.042.in, 3                  ; 3 uses
+  %i.o = add nsw i32 %.042.in, 4                  ; 3 uses
   %i.p = zext i32 %i.o to i64
   %i.q = shl nuw nsw i64 %i.p, 4
   %i.r = or disjoint i64 %i.q, 8
@@ -152,7 +155,7 @@ bb.h:                                             ; preds = %.critedge
   %i.v = shl nuw nsw i64 %i.u, 4
   %i.w = getelementptr i8, ptr %i.s, i64 %i.v
   %scevgep = getelementptr i8, ptr %i.w, i64 8
-  %i.x = add i32 %.042.in, 2
+  %i.x = add i32 %.042.in, 3
   %i.y = sub i32 %i.x, %i.n
   %i.z = zext i32 %i.y to i64
   %i.aa = shl nuw nsw i64 %i.z, 4
@@ -174,11 +177,12 @@ bb.j:                                             ; preds = %._crit_edge
 
 bb.k:                                             ; preds = %bb.j, %bb.g
   %.144 = phi ptr [ %i.s, %bb.j ], [ %i.l, %bb.g ]
+  %5 = getelementptr inbounds nuw i8, ptr %.144, i64 8
   %i.ae = sext i32 %.042.in to i64
-  %i.af = getelementptr [16 x i8], ptr %.144, i64 %i.ae ; 2 uses
-  %3 = getelementptr i8, ptr %i.af, i64 -8
-  store ptr %1, ptr %3, align 8
-  store ptr %2, ptr %i.af, align 8
+  %i.af = getelementptr inbounds [16 x i8], ptr %5, i64 %i.ae ; 2 uses
+  store ptr %1, ptr %i.af, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
+  store ptr %2, ptr %6, align 8
   br label %.critedge53
 
 .critedge53:                                      ; preds = %bb.i, %.critedge, %bb.k, %bb.b
@@ -499,7 +503,8 @@ define hidden ptr @SDL_GetErrBuf(i1 noundef zeroext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
-  %i.c = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull @SDL_GetErrBuf.tls_errbuf) #6 ; 3 uses
+  %i.c = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull @SDL_GetErrBuf.tls_errbuf) #6 ; 2 uses
+  %1 = add nsw i32 %i.c, -1                       ; 2 uses
   %i.d = tail call ptr @SDL_SYS_GetTLSData() #6   ; 3 uses
   %i.e = icmp eq ptr %i.d, null
   %i.f = icmp slt i32 %i.c, 1
@@ -508,14 +513,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load i32, ptr %i.d, align 8
-  %.not.not.i = icmp sgt i32 %i.c, %i.g
-  br i1 %.not.not.i, label %SDL_GetTLS_REAL.exit, label %bb.c
+  %.not.i = icmp slt i32 %1, %i.g
+  br i1 %.not.i, label %bb.c, label %SDL_GetTLS_REAL.exit
 
 bb.c:                                             ; preds = %bb.b
-  %1 = zext nneg i32 %i.c to i64
-  %2 = getelementptr [16 x i8], ptr %i.d, i64 %1
-  %3 = getelementptr i8, ptr %2, i64 -8
-  %i.h = load ptr, ptr %3, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %3 = zext nneg i32 %1 to i64
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %3
+  %i.h = load ptr, ptr %4, align 8
   br label %SDL_GetTLS_REAL.exit
 
 SDL_GetTLS_REAL.exit:                             ; preds = %bb.a, %bb.b, %bb.c

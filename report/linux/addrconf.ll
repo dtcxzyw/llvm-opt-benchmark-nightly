@@ -204,8 +204,9 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %2, i8 0, i64 16, i1 false), !annotation !25
   %i.y = getelementptr i8, ptr %1, i64 49
-  %i.z = load i8, ptr %i.y, align 1               ; 2 uses
+  %i.z = load i8, ptr %i.y, align 1
   %i.aa = zext i8 %i.z to i32
+  %4 = add nuw nsw i32 %i.aa, 1                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   store ptr %2, ptr %3, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -232,8 +233,8 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %i.ap, i8 0, i64 6, i1 false)
   %i.aq = getelementptr i8, ptr %.val, i64 2244
   %i.ar = load i32, ptr %i.aq, align 4
-  %.not52.a = icmp sgt i32 %i.ar, %i.aa
-  br i1 %.not52.a, label %bb.l, label %bb.j
+  %.not52.a = icmp sgt i32 %4, %i.ar
+  br i1 %.not52.a, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i
   %i.as = call i32 @net_ratelimit() #18
@@ -248,9 +249,9 @@ bb.k:                                             ; preds = %bb.j
   br label %in6_ifa_put.exit61.thread
 
 bb.l:                                             ; preds = %bb.i
-  %4 = add i8 %i.z, 1                             ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef align 8 dereferenceable(16) %1, i64 16, i1 false)
-  %i.ax = call fastcc i32 @ipv6_generate_stable_address(ptr noundef nonnull %2, i8 noundef zeroext %4, ptr noundef %i.b) #19, !srcloc !62
+  %5 = trunc i32 %4 to i8                         ; 2 uses
+  %i.ax = call fastcc i32 @ipv6_generate_stable_address(ptr noundef nonnull %2, i8 noundef zeroext %5, ptr noundef %i.b) #19, !srcloc !62
   %.not53.a = icmp eq i32 %i.ax, 0
   br i1 %.not53.a, label %bb.m, label %in6_ifa_put.exit61.thread
 
@@ -303,7 +304,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bl = getelementptr i8, ptr %i.bj, i64 36     ; 2 uses
   call void @_raw_spin_lock_bh(ptr noundef %i.bl) #18
   %i.bm = getelementptr i8, ptr %i.bj, i64 49
-  store i8 %4, ptr %i.bm, align 1
+  store i8 %5, ptr %i.bm, align 1
   %i.bn = getelementptr i8, ptr %i.bj, i64 40
   store i32 0, ptr %i.bn, align 8
   call void @_raw_spin_unlock_bh(ptr noundef %i.bl) #18

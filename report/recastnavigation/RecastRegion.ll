@@ -205,28 +205,30 @@ bb.v:                                             ; preds = %.lr.ph337, %._crit_
   %.1176335 = phi i16 [ %.0175, %.lr.ph337 ], [ %.2177.lcssa400, %._crit_edge331 ] ; 5 uses
   %.sroa.11.0334 = phi ptr [ %i.oj, %.lr.ph337 ], [ %.sroa.11.2, %._crit_edge331 ] ; 11 uses
   %.sroa.8.0333 = phi i64 [ 256, %.lr.ph337 ], [ %.sroa.8.2, %._crit_edge331 ] ; 5 uses
-  %.sroa.0256.0332 = phi i64 [ 256, %.lr.ph337 ], [ %.sroa.0256.1, %._crit_edge331 ] ; 9 uses
+  %.sroa.0256.0332 = phi i64 [ 256, %.lr.ph337 ], [ %.sroa.0256.1, %._crit_edge331 ] ; 10 uses
   %.sroa.11.0334685 = ptrtoaddr ptr %.sroa.11.0334 to i64
-  %i.pm = zext i16 %.1176335 to i64               ; 4 uses
-  %i.pn = add nuw nsw i64 %i.pm, 1                ; 5 uses
+  %i.pm = zext i16 %.1176335 to i64               ; 2 uses
+  %i.pn = add nuw nsw i64 %i.pm, 1                ; 7 uses
   %i.po = icmp slt i64 %i.pn, %.sroa.0256.0332
   br i1 %i.po, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %.not311 = icmp sgt i64 %.sroa.0256.0332, %i.pm
-  br i1 %.not311, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit, label %bb.x
+  %.not311 = icmp sgt i64 %i.pn, %.sroa.0256.0332
+  br i1 %.not311, label %bb.x, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit
 
 bb.x:                                             ; preds = %bb.w
-  %.not.i.i.not = icmp sgt i64 %.sroa.8.0333, %i.pm
-  br i1 %.not.i.i.not, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit, label %bb.y
+  %.not.i.i.not = icmp sgt i64 %i.pn, %.sroa.8.0333
+  br i1 %.not.i.i.not, label %bb.y, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit
 
 bb.y:                                             ; preds = %bb.x
   %i.pp = shl nsw i64 %.sroa.8.0333, 1
   %..i.i.i = tail call i64 @llvm.smax.i64(i64 %i.pp, i64 %i.pn) ; 2 uses
   %i.pq = shl nuw nsw i64 %..i.i.i, 2
   %i.pr = tail call noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef %i.pq, i32 noundef 1) #8 ; 9 uses
-  %.not.i.i.i.not = icmp eq ptr %i.pr, null
-  br i1 %.not.i.i.i.not, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i, label %.lr.ph.i.i.i.i.preheader
+  %.not.i.i.i = icmp ne ptr %i.pr, null
+  %6 = icmp sgt i64 %.sroa.0256.0332, 0
+  %or.cond = and i1 %.not.i.i.i, %6
+  br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.y
   %i.ps = ptrtoaddr ptr %i.pr to i64
@@ -237,7 +239,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %or.cond.a, label %.lr.ph.i.i.i.i.preheader696, label %vector.ph687
 
 vector.ph687:                                     ; preds = %.lr.ph.i.i.i.i.preheader
-  %n.vec688 = and i64 %.sroa.0256.0332, -8        ; 3 uses
+  %n.vec688 = and i64 %.sroa.0256.0332, 9223372036854775800 ; 3 uses
   br label %vector.body689
 
 vector.body689:                                   ; preds = %vector.body689, %vector.ph687
@@ -278,7 +280,7 @@ middle.block694:                                  ; preds = %vector.body689
 
 .lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader696
   %.07.i.i.i.i.unr = phi i64 [ %.07.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader696 ], [ %i.qc, %.lr.ph.i.i.i.i.prol ]
-  %i.qd = sub i64 %.07.i.i.i.i.ph, %.sroa.0256.0332
+  %i.qd = sub nsw i64 %.07.i.i.i.i.ph, %.sroa.0256.0332
   %i.qe = icmp ugt i64 %i.qd, -4
   br i1 %i.qe, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i, label %.lr.ph.i.i.i.i
 
@@ -681,10 +683,9 @@ bb.a:
   %i.a = load i32, ptr %4, align 8, !tbaa !69     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !70   ; 2 uses
-  %i.d = load i16, ptr %3, align 2, !tbaa !71
-  %10 = freeze i16 %i.d                           ; 5 uses
-  %i.e = zext i16 %10 to i32                      ; 2 uses
-  %i.f = add nuw nsw i32 %i.e, 1                  ; 2 uses
+  %i.d = load i16, ptr %3, align 2, !tbaa !71     ; 3 uses
+  %i.e = zext i16 %i.d to i32                     ; 2 uses
+  %i.f = add nuw nsw i32 %i.e, 1                  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
   %i.g = zext nneg i32 %i.f to i64                ; 11 uses
@@ -894,10 +895,12 @@ bb.d:                                             ; preds = %.preheader453, %._c
 .lr.ph464:                                        ; preds = %.lr.ph464.preheader, %_ZL11walkContouriiiiR20rcCompactHeightfieldPKtR12rcTempVectorIiE.exit
   %indvars.iv529 = phi i64 [ %i.by, %.lr.ph464.preheader ], [ %indvars.iv.next530, %_ZL11walkContouriiiiR20rcCompactHeightfieldPKtR12rcTempVectorIiE.exit ] ; 7 uses
   %i.cd = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %indvars.iv529 ; 2 uses
-  %i.ce = load i16, ptr %i.cd, align 2, !tbaa !71 ; 3 uses
-  %11 = add i16 %i.ce, -1
-  %or.cond254.not = icmp ult i16 %11, %10
-  br i1 %or.cond254.not, label %bb.e, label %_ZL11walkContouriiiiR20rcCompactHeightfieldPKtR12rcTempVectorIiE.exit
+  %i.ce = load i16, ptr %i.cd, align 2, !tbaa !71 ; 4 uses
+  %10 = icmp ne i16 %i.ce, 0
+  %11 = zext i16 %i.ce to i32
+  %.not243 = icmp samesign ugt i32 %i.f, %11
+  %or.cond246 = select i1 %10, i1 %.not243, i1 false
+  br i1 %or.cond246, label %bb.e, label %_ZL11walkContouriiiiR20rcCompactHeightfieldPKtR12rcTempVectorIiE.exit
 
 bb.e:                                             ; preds = %.lr.ph464
   %i.cf = zext i16 %i.ce to i64
@@ -934,10 +937,11 @@ bb.f:                                             ; preds = %.lr.ph, %_ZL20addUn
 bb.g:                                             ; preds = %bb.f
   %i.cx = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %indvars.iv
   %i.cy = load i16, ptr %i.cx, align 2, !tbaa !71 ; 3 uses
-  %i.cz = zext i16 %i.cy to i32                   ; 3 uses
-  %12 = add i16 %i.cy, -1
-  %or.cond255.not = icmp ult i16 %12, %10
-  br i1 %or.cond255.not, label %bb.h, label %_ZL20addUniqueFloorRegionR8rcRegioni.exit
+  %i.cz = zext i16 %i.cy to i32                   ; 4 uses
+  %12 = icmp ne i16 %i.cy, 0
+  %.not245 = icmp samesign ugt i32 %i.f, %i.cz
+  %or.cond247 = select i1 %12, i1 %.not245, i1 false
+  br i1 %or.cond247, label %bb.h, label %_ZL20addUniqueFloorRegionR8rcRegioni.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.da = icmp eq i16 %i.cy, %i.ce
@@ -1340,9 +1344,9 @@ bb.av:                                            ; preds = %_ZL25isRegionConnec
 
 .preheader444:                                    ; preds = %bb.av
   %i.un = load ptr, ptr %i.k, align 8, !tbaa !98  ; 9 uses
-  %i.uo = zext i16 %10 to i64
+  %i.uo = zext i16 %i.d to i64
   %xtraiter1028 = and i64 %i.g, 3                 ; 3 uses
-  %i.up = icmp ult i16 %10, 3
+  %i.up = icmp ult i16 %i.d, 3
   br i1 %i.up, label %.epil.preheader1027, label %.preheader444.new
 
 .preheader444.new:                                ; preds = %.preheader444
@@ -1745,7 +1749,7 @@ bb.au:                                            ; preds = %.loopexit.i244, %.l
   %i.wg = phi ptr [ %i.vv, %.lr.ph.i242 ], [ %i.air, %.loopexit.i244 ] ; 6 uses
   %i.wh = phi ptr [ %i.vv, %.lr.ph.i242 ], [ %i.ais, %.loopexit.i244 ] ; 8 uses
   %.val134.i = phi ptr [ %i.vv, %.lr.ph.i242 ], [ %.val134176.i, %.loopexit.i244 ] ; 6 uses
-  %.val168.i = phi i64 [ 1, %.lr.ph.i242 ], [ %.val.i245, %.loopexit.i244 ] ; 7 uses
+  %.val168.i = phi i64 [ 1, %.lr.ph.i242 ], [ %.val.i245, %.loopexit.i244 ] ; 6 uses
   %.0115167.i = phi i32 [ 0, %.lr.ph.i242 ], [ %.1116.i, %.loopexit.i244 ] ; 2 uses
   %i.wi = getelementptr [12 x i8], ptr %.val134.i, i64 %.val168.i ; 3 uses
   %i.wj = getelementptr i8, ptr %i.wi, i64 -12
@@ -1754,7 +1758,7 @@ bb.au:                                            ; preds = %.loopexit.i244, %.l
   %i.wm = load i32, ptr %i.wl, align 4, !tbaa !121 ; 14 uses
   %i.wn = getelementptr i8, ptr %i.wi, i64 -4
   %i.wo = load i32, ptr %i.wn, align 4, !tbaa !119
-  %i.wp = add nsw i64 %.val168.i, -1              ; 8 uses
+  %i.wp = add nsw i64 %.val168.i, -1              ; 9 uses
   store i64 %i.wp, ptr %6, align 8, !tbaa !116
   %i.wq = load ptr, ptr %i.qf, align 8, !tbaa !72 ; 5 uses
   %i.wr = sext i32 %i.wo to i64                   ; 2 uses
@@ -2066,8 +2070,8 @@ bb.bw:                                            ; preds = %bb.bv
   store i16 %.2122283, ptr %i.acs, align 2, !tbaa !71
   %i.acv = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %i.acm
   store i16 0, ptr %i.acv, align 2, !tbaa !71
-  %.not205.i = icmp sgt i64 %.val168.i, %i.wb
-  br i1 %.not205.i, label %bb.by, label %bb.bx, !prof !109
+  %8 = icmp slt i64 %i.wp, %i.wb
+  br i1 %8, label %bb.bx, label %bb.by, !prof !107
 
 bb.bx:                                            ; preds = %bb.bw
   store i64 %.val168.i, ptr %6, align 8, !tbaa !116
@@ -2470,7 +2474,7 @@ _ZL15paintRectRegioniiiitR20rcCompactHeightfieldPt.exit252: ; preds = %._crit_ed
 
 ._crit_edge346:                                   ; preds = %._crit_edge339, %_ZL15paintRectRegioniiiitR20rcCompactHeightfieldPt.exit252
   %.sroa.11.0.lcssa = phi ptr [ %i.oj, %_ZL15paintRectRegioniiiitR20rcCompactHeightfieldPt.exit252 ], [ %.sroa.11.2, %._crit_edge339 ]
-  %.1175.lcssa = phi i16 [ %.0174, %_ZL15paintRectRegioniiiitR20rcCompactHeightfieldPt.exit252 ], [ %.2176.lcssa443, %._crit_edge339 ] ; 9 uses
+  %.1175.lcssa = phi i16 [ %.0174, %_ZL15paintRectRegioniiiitR20rcCompactHeightfieldPt.exit252 ], [ %.2176.lcssa443, %._crit_edge339 ] ; 7 uses
   %i.ot = load i8, ptr %i.a, align 1, !tbaa !17, !range !18, !noundef !19
   %i.ou = trunc nuw i8 %i.ot to i1
   br i1 %i.ou, label %bb.t, label %_ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit253
@@ -2488,7 +2492,7 @@ _ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit253: ; preds = %._crit_edge34
   %i.oz = load i32, ptr %1, align 8, !tbaa !69    ; 3 uses
   %i.pa = load i32, ptr %i.h, align 4, !tbaa !70  ; 2 uses
   %i.pb = zext i16 %.1175.lcssa to i32            ; 2 uses
-  %i.pc = add nuw nsw i32 %i.pb, 1                ; 2 uses
+  %i.pc = add nuw nsw i32 %i.pb, 1                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.pd = zext nneg i32 %i.pc to i64              ; 14 uses
@@ -2571,10 +2575,11 @@ bb.u:                                             ; preds = %._crit_edge.us.i, %
   %i.qi = getelementptr inbounds nuw [8 x i8], ptr %i.qh, i64 %indvars.iv399.i.a ; 2 uses
   %i.qj = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %indvars.iv399.i.a
   %i.qk = load i16, ptr %i.qj, align 2, !tbaa !71 ; 4 uses
-  %i.ql = zext i16 %i.qk to i32                   ; 2 uses
-  %7 = add i16 %i.qk, -1
-  %or.cond.not.us.i = icmp ult i16 %7, %.1175.lcssa
-  br i1 %or.cond.not.us.i, label %bb.v, label %.loopexit338.us.i
+  %i.ql = zext i16 %i.qk to i32                   ; 3 uses
+  %7 = icmp ne i16 %i.qk, 0
+  %.not215.us.i = icmp samesign ugt i32 %i.pc, %i.ql
+  %or.cond.us.i = select i1 %7, i1 %.not215.us.i, i1 false
+  br i1 %or.cond.us.i, label %bb.v, label %.loopexit338.us.i
 
 bb.v:                                             ; preds = %.lr.ph.us.i
   %i.qm = load ptr, ptr %i.pt, align 8, !tbaa !73
@@ -2742,11 +2747,12 @@ bb.z:                                             ; preds = %bb.y
   %i.tn = zext nneg i32 %i.tm to i64
   %i.to = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.tn
   %i.tp = load i16, ptr %i.to, align 2, !tbaa !71 ; 4 uses
-  %i.tq = zext i16 %i.tp to i32                   ; 3 uses
-  %8 = add i16 %i.tp, -1
-  %or.cond229.us.i = icmp uge i16 %8, %.1175.lcssa
+  %i.tq = zext i16 %i.tp to i32                   ; 4 uses
+  %.not217.us.i = icmp eq i16 %i.tp, 0
+  %8 = icmp samesign ule i32 %i.pc, %i.tq
+  %or.cond220.not321.us.i = select i1 %.not217.us.i, i1 true, i1 %8
   %.not227.us.i = icmp eq i16 %i.tp, %i.qk
-  %or.cond230.us.i = or i1 %.not227.us.i, %or.cond229.us.i
+  %or.cond230.us.i = or i1 %.not227.us.i, %or.cond220.not321.us.i
   br i1 %or.cond230.us.i, label %_ZL19addUniqueConnectionR8rcRegioni.exit.us.i, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
@@ -3149,28 +3155,30 @@ bb.cc:                                            ; preds = %.lr.ph345, %._crit_
   %.1175343 = phi i16 [ %.0174, %.lr.ph345 ], [ %.2176.lcssa443, %._crit_edge339 ] ; 5 uses
   %.sroa.11.0342 = phi ptr [ %i.oj, %.lr.ph345 ], [ %.sroa.11.2, %._crit_edge339 ] ; 11 uses
   %.sroa.8.0341 = phi i64 [ 256, %.lr.ph345 ], [ %.sroa.8.2, %._crit_edge339 ] ; 5 uses
-  %.sroa.0264.0340 = phi i64 [ 256, %.lr.ph345 ], [ %.sroa.0264.1, %._crit_edge339 ] ; 9 uses
+  %.sroa.0264.0340 = phi i64 [ 256, %.lr.ph345 ], [ %.sroa.0264.1, %._crit_edge339 ] ; 10 uses
   %.sroa.11.0342728 = ptrtoaddr ptr %.sroa.11.0342 to i64
-  %i.aon = zext i16 %.1175343 to i64              ; 4 uses
-  %i.aoo = add nuw nsw i64 %i.aon, 1              ; 5 uses
+  %i.aon = zext i16 %.1175343 to i64              ; 2 uses
+  %i.aoo = add nuw nsw i64 %i.aon, 1              ; 7 uses
   %i.aop = icmp slt i64 %i.aoo, %.sroa.0264.0340
   br i1 %i.aop, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  %.not319 = icmp sgt i64 %.sroa.0264.0340, %i.aon
-  br i1 %.not319, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit, label %bb.ce
+  %.not319 = icmp sgt i64 %i.aoo, %.sroa.0264.0340
+  br i1 %.not319, label %bb.ce, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit
 
 bb.ce:                                            ; preds = %bb.cd
-  %.not.i.i.not = icmp sgt i64 %.sroa.8.0341, %i.aon
-  br i1 %.not.i.i.not, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit, label %bb.cf
+  %.not.i.i.not = icmp sgt i64 %i.aoo, %.sroa.8.0341
+  br i1 %.not.i.i.not, label %bb.cf, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit
 
 bb.cf:                                            ; preds = %bb.ce
   %i.aoq = shl nsw i64 %.sroa.8.0341, 1
   %..i.i.i = tail call i64 @llvm.smax.i64(i64 %i.aoq, i64 %i.aoo) ; 2 uses
   %i.aor = shl nuw nsw i64 %..i.i.i, 2
   %i.aos = tail call noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef %i.aor, i32 noundef 1) #8 ; 9 uses
-  %.not.i.i.i260.not = icmp eq ptr %i.aos, null
-  br i1 %.not.i.i.i260.not, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i, label %.lr.ph.i.i.i.i.preheader
+  %.not.i.i.i260 = icmp ne ptr %i.aos, null
+  %9 = icmp sgt i64 %.sroa.0264.0340, 0
+  %or.cond = and i1 %.not.i.i.i260, %9
+  br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.cf
   %i.aot = ptrtoaddr ptr %i.aos to i64
@@ -3181,7 +3189,7 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %or.cond879, label %.lr.ph.i.i.i.i.preheader887, label %vector.ph730
 
 vector.ph730:                                     ; preds = %.lr.ph.i.i.i.i.preheader
-  %n.vec731 = and i64 %.sroa.0264.0340, -8        ; 3 uses
+  %n.vec731 = and i64 %.sroa.0264.0340, 9223372036854775800 ; 3 uses
   br label %vector.body732
 
 vector.body732:                                   ; preds = %vector.body732, %vector.ph730
@@ -3222,7 +3230,7 @@ middle.block737:                                  ; preds = %vector.body732
 
 .lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader887
   %.07.i.i.i.i.unr = phi i64 [ %.07.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader887 ], [ %i.apd, %.lr.ph.i.i.i.i.prol ]
-  %i.ape = sub i64 %.07.i.i.i.i.ph, %.sroa.0264.0340
+  %i.ape = sub nsw i64 %.07.i.i.i.i.ph, %.sroa.0264.0340
   %i.apf = icmp ugt i64 %i.ape, -4
   br i1 %i.apf, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i.i, label %.lr.ph.i.i.i.i
 

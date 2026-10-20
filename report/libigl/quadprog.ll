@@ -205,24 +205,25 @@ bb.a:
   %i.d = icmp sgt i32 %i.a, 0
   %sext = shl i64 %.8.val, 32
   %i.e = ashr exact i64 %sext, 32                 ; 3 uses
+  %4 = add nsw i64 %i.e, -1                       ; 2 uses
   %i.f = sext i32 %i.c to i64                     ; 2 uses
   %wide.trip.count = and i64 %.8.val, 2147483647  ; 5 uses
-  %i.g = add nsw i64 %i.e, 2305843009213693950
+  %i.g = add nsw i64 %i.e, -2                     ; 2 uses
   %i.h = mul i64 %.8.val, %i.g
   %i.i = shl i64 %i.h, 3
   %scevgep = getelementptr i8, ptr %.0.val, i64 %i.i
-  %i.j = sext i32 %i.b to i64                     ; 2 uses
-  %i.k = mul i64 %.8.val, %i.j
+  %i.j = sext i32 %i.b to i64
+  %smin = tail call i64 @llvm.smin.i64(i64 %i.g, i64 %i.j) ; 2 uses
+  %i.k = mul i64 %.8.val, %smin
   %i.l = shl nuw nsw i64 %wide.trip.count, 3
   %i.m = add i64 %i.k, %wide.trip.count
   %i.n = shl i64 %i.m, 3
   %scevgep41 = getelementptr i8, ptr %.0.val, i64 %i.n
   %i.o = mul i64 %.8.val, -8
-  %4 = add nsw i64 %i.e, 2305843009213693951
   %i.p = mul i64 %.8.val, %4
   %i.q = shl i64 %i.p, 3
   %scevgep42 = getelementptr i8, ptr %.0.val, i64 %i.q
-  %i.r = shl nsw i64 %i.j, 3
+  %i.r = shl nsw i64 %smin, 3
   %i.s = add nsw i64 %i.r, 8
   %i.t = mul i64 %.8.val, %i.s
   %i.u = getelementptr i8, ptr %.0.val, i64 %i.t
@@ -238,11 +239,11 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph22, %.loopexit
-  %indvars.iv25.a = phi i64 [ %i.e, %.lr.ph22 ], [ %indvars.iv.next26, %.loopexit ] ; 2 uses
-  %indvars.iv.next26 = add nsw i64 %indvars.iv25.a, -1 ; 4 uses
+  %indvars.iv25.a = phi i64 [ %i.e, %.lr.ph22 ], [ %indvars.iv.next28, %.loopexit ] ; 2 uses
+  %indvars.iv25 = phi i64 [ %4, %.lr.ph22 ], [ %indvars.iv.next26, %.loopexit ] ; 3 uses
   %i.w = add nsw i64 %indvars.iv25.a, -2          ; 2 uses
   %i.x = getelementptr inbounds [8 x i8], ptr %.pre30, i64 %i.w ; 2 uses
-  %i.y = getelementptr inbounds [8 x i8], ptr %.pre30, i64 %indvars.iv.next26
+  %i.y = getelementptr inbounds [8 x i8], ptr %.pre30, i64 %indvars.iv25
   %i.z = load <2 x double>, ptr %i.x, align 8, !tbaa !34 ; 2 uses
   %i.aa = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.z) ; 2 uses
   %i.ab = extractelement <2 x double> %i.aa, i64 1 ; 5 uses
@@ -298,7 +299,7 @@ bb.g:                                             ; preds = %"_ZZN3igl8copyleft8
 
 .lr.ph:                                           ; preds = %bb.g
   %i.ay = mul nsw i64 %.8.val, %i.w               ; 2 uses
-  %i.az = mul nsw i64 %.8.val, %indvars.iv.next26 ; 2 uses
+  %i.az = mul nsw i64 %.8.val, %indvars.iv25      ; 2 uses
   %brmerge = select i1 %min.iters.check, i1 true, i1 %i.v
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
 
@@ -355,8 +356,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not, label %.loopexit, label %scalar.ph, !llvm.loop !290
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %bb.g, %"_ZZN3igl8copyleft8quadprogERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS2_IdLin1ELi1ELi0ELin1ELi1EEES5_S8_S5_S8_RS6_ENK3$_0clEdd.exit"
-  %.not.not = icmp sgt i64 %indvars.iv.next26, %i.f
-  br i1 %.not.not, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !291
+  %indvars.iv.next26 = add nsw i64 %indvars.iv25, -1 ; 2 uses
+  %.not = icmp slt i64 %indvars.iv.next26, %i.f
+  %indvars.iv.next28 = add nsw i64 %indvars.iv25.a, -1
+  br i1 %.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !291
 
 ._crit_edge.loopexit:                             ; preds = %.loopexit
   %.pre = load ptr, ptr %1, align 8, !tbaa !30, !noalias !305

@@ -27,16 +27,17 @@ bb.a:
   %5 = alloca %struct.PackageMergerList, align 4  ; 5 uses
   %i.a = alloca [257 x i32], align 16             ; 8 uses
   %i.b = alloca [64 x [2 x ptr]], align 16        ; 7 uses
-  %6 = alloca [257 x %struct.PTable], align 16    ; 13 uses
+  %6 = alloca [257 x %struct.PTable], align 16    ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
   br label %bb.ai
 
 bb.b:                                             ; preds = %bb.am
   %i.c = sext i32 %.1.1 to i64
-  %i.d = getelementptr [8 x i8], ptr %6, i64 %i.c ; 3 uses
+  %i.d = getelementptr inbounds [8 x i8], ptr %6, i64 %i.c ; 2 uses
   store i32 256, ptr %i.d, align 8, !tbaa !23
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   store i32 0, ptr %i.e, align 4, !tbaa !24
+  %7 = add nsw i32 %.1.1, 1                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -49,8 +50,11 @@ bb.b:                                             ; preds = %bb.am
   store i32 0, ptr %i.g, align 4, !tbaa !27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store ptr %6, ptr %i.b, align 16, !tbaa !29
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr inbounds [8 x i8], ptr %6, i64 %8
+  %10 = getelementptr inbounds i8, ptr %9, i64 -8
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %i.d, ptr %i.h, align 8, !tbaa !29
+  store ptr %10, ptr %i.h, align 8, !tbaa !29
   br label %bb.c
 
 bb.c:                                             ; preds = %.thread.i, %bb.b
@@ -331,7 +335,7 @@ bb.z:                                             ; preds = %bb.af, %bb.y
 .outer:                                           ; preds = %._crit_edge315.i, %bb.z
   %.2208.i.ph = phi i32 [ %i.ee, %._crit_edge315.i ], [ %spec.select.i, %bb.z ] ; 4 uses
   %.0204.i.ph = phi i32 [ %.0204.i, %._crit_edge315.i ], [ 0, %bb.z ]
-  %.not22 = icmp sgt i32 %.2208.i.ph, %.1.1
+  %11 = icmp slt i32 %.2208.i.ph, %7
   %i.ck = sext i32 %.2208.i.ph to i64             ; 2 uses
   %i.cl = getelementptr inbounds [8 x i8], ptr %6, i64 %i.ck
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 4
@@ -339,7 +343,7 @@ bb.z:                                             ; preds = %bb.af, %bb.y
 
 bb.aa:                                            ; preds = %.outer, %._crit_edge279.i
   %.0204.i = phi i32 [ %i.eh, %._crit_edge279.i ], [ %.0204.i.ph, %.outer ] ; 6 uses
-  br i1 %.not22, label %bb.ab, label %bb.ac
+  br i1 %11, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cn = add nsw i32 %.0204.i, 1
@@ -498,7 +502,7 @@ bb.af:                                            ; preds = %bb.ab
 
 bb.ag:                                            ; preds = %bb.af
   %i.gc = load i32, ptr %.0213281.i, align 4, !tbaa !26
-  %i.gd = call i32 @llvm.smin.i32(i32 %i.gc, i32 %.1.1)
+  %i.gd = call i32 @llvm.smin.i32(i32 %.1.1, i32 %i.gc)
   %i.ge = sext i32 %i.gd to i64
   %i.gf = getelementptr inbounds [4 x i8], ptr %i.cf, i64 %i.ge ; 2 uses
   %i.gg = load i32, ptr %i.gf, align 4, !tbaa !27

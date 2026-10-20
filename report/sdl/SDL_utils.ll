@@ -204,6 +204,7 @@ bb.l:                                             ; preds = %.thread51
   %.075100.i = phi i8 [ 0, %.lr.ph101.preheader.i ], [ %.2.i, %.loopexit.i ] ; 3 uses
   %.07699.i = phi i32 [ 0, %.lr.ph101.preheader.i ], [ %.3.i, %.loopexit.i ] ; 4 uses
   %.07998.i = phi i32 [ 0, %.lr.ph101.preheader.i ], [ %.4.i, %.loopexit.i ] ; 7 uses
+  %2 = add nuw i64 %indvars.iv110.i, 1
   %i.am = icmp eq i32 %.07699.i, 0
   br i1 %i.am, label %bb.m, label %bb.o
 
@@ -254,9 +255,9 @@ iter.check:                                       ; preds = %switch.early.test.i
   %i.bc = sub i32 %i.bb, %.07699.i
   %i.bd = sext i32 %i.bc to i64                   ; 9 uses
   %i.be = sext i32 %.07998.i to i64               ; 7 uses
-  %smax = call i64 @llvm.smax.i64(i64 %indvars.iv110.i, i64 %i.bd)
-  %2 = add nuw i64 %smax, 1
-  %i.bf = sub i64 %2, %i.bd                       ; 7 uses
+  %3 = add nsw i64 %i.bd, 1
+  %smax = call i64 @llvm.smax.i64(i64 %2, i64 %3)
+  %i.bf = sub i64 %smax, %i.bd                    ; 7 uses
   %min.iters.check = icmp ult i64 %i.bf, 8
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
@@ -332,15 +333,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %indvars.iv105.i = phi i64 [ %indvars.iv.next106.i, %.lr.ph.i ], [ %indvars.iv105.i.ph, %.lr.ph.i.preheader ] ; 2 uses
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %i.bs = getelementptr inbounds i8, ptr %.5, i64 %indvars.iv.i
   %i.bt = load i8, ptr %i.bs, align 1
   %i.bu = getelementptr inbounds i8, ptr %1, i64 %indvars.iv105.i
   store i8 %i.bt, ptr %i.bu, align 1
   %indvars.iv.next106.i = add nsw i64 %indvars.iv105.i, 1 ; 2 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1
-  %.not.not.i = icmp slt i64 %indvars.iv.i, %indvars.iv110.i
-  br i1 %.not.not.i, label %.lr.ph.i, label %.loopexit.loopexit.i, !llvm.loop !6
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %.not.i = icmp sgt i64 %indvars.iv.next.i, %indvars.iv110.i
+  br i1 %.not.i, label %.loopexit.loopexit.i, label %.lr.ph.i, !llvm.loop !6
 
 bb.p:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %bb.o
   %i.bv = icmp samesign ult i8 %.fr103.i, 58

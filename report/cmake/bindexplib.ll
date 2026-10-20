@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %_ZNKSt9basic_iosIcS
 bb.p:                                             ; preds = %bb.o
   %i.bw = load i64, ptr %i.ay, align 8, !tbaa !19
   %i.bx = icmp eq i64 %i.bw, 0
-  br i1 %i.bx, label %.backedge.i.i, label %bb.r
+  br i1 %i.bx, label %.backedge.i.i, label %7
 
 .backedge.i.i:                                    ; preds = %.invoke.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i, %bb.p
   %i.by = load ptr, ptr %5, align 8, !tbaa !31
@@ -219,20 +219,22 @@ bb.q:                                             ; preds = %bb.k
           cleanup
   br label %bb.u
 
-bb.r:                                             ; preds = %bb.p
-  %7 = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i8 noundef signext 32, i64 noundef 0) #21 ; 4 uses
-  %8 = icmp ne i64 %7, -1
-  %i.cf = load i64, ptr %i.ay, align 8
-  %.not25.i.i = icmp ugt i64 %i.cf, %7
-  %or.cond.i.i = select i1 %8, i1 %.not25.i.i, i1 false
-  br i1 %or.cond.i.i, label %bb.s, label %.critedge.sink.split.i.i
+7:                                                ; preds = %bb.p
+  %8 = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i8 noundef signext 32, i64 noundef 0) #21 ; 3 uses
+  %9 = icmp eq i64 %8, -1
+  br i1 %9, label %.critedge.sink.split.i.i, label %bb.r
+
+bb.r:                                             ; preds = %7
+  %i.cf = load i64, ptr %i.ay, align 8, !tbaa !19
+  %10 = add nuw i64 %8, 1                         ; 2 uses
+  %11 = icmp ult i64 %i.cf, %10
+  br i1 %11, label %.critedge.sink.split.i.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.cg = load ptr, ptr %6, align 8, !tbaa !26
-  %9 = getelementptr inbounds nuw i8, ptr %i.cg, i64 %7
-  %i.ch = getelementptr inbounds nuw i8, ptr %9, i64 1
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 %10
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !20
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef %7, i8 noundef signext 0)
+  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef %8, i8 noundef signext 0)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i unwind label %.loopexit.split-lp.loopexit.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i: ; preds = %bb.s
@@ -267,7 +269,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %.
 bb.t:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i
   br label %.invoke.i.i
 
-.critedge.sink.split.i.i:                         ; preds = %bb.r
+.critedge.sink.split.i.i:                         ; preds = %bb.r, %7
   %i.cp = load ptr, ptr @stderr, align 8, !tbaa !29
   %i.cq = load ptr, ptr %6, align 8, !tbaa !26
   %i.cr = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.cp, ptr noundef nonnull @.str.12, ptr noundef %i.cq) #23 ; 0 uses

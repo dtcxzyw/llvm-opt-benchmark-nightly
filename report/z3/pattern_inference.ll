@@ -205,6 +205,7 @@ bb.c:                                             ; preds = %bb.b
 _ZNK6vectorIjLb0EjE4sizeEv.exit.i.i:              ; preds = %bb.c
   %i.i = sub nuw i32 %i.d, %2                     ; 2 uses
   %i.j = lshr i32 %i.i, 5                         ; 2 uses
+  %27 = add nuw nsw i32 %i.j, 1                   ; 2 uses
   br label %bb.d
 
 thread-pre-split.i.i:                             ; preds = %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i
@@ -219,8 +220,8 @@ bb.d:                                             ; preds = %thread-pre-split.i.
 _ZNK6vectorIjLb0EjE8capacityEv.exit.i.i:          ; preds = %bb.d
   %i.m = getelementptr inbounds i8, ptr %i.k, i64 -8
   %i.n = load i32, ptr %i.m, align 4, !tbaa !30
-  %.not301 = icmp ult i32 %i.j, %i.n
-  br i1 %.not301, label %.sink.split, label %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i
+  %28 = icmp ugt i32 %27, %i.n
+  br i1 %28, label %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i, label %.sink.split
 
 _ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i:   ; preds = %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i, %bb.d
   invoke void @_ZN6vectorIjLb0EjE13expand_vectorEv(ptr noundef nonnull align 8 dereferenceable(8) %17)
@@ -228,6 +229,7 @@ _ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i:   ; preds = %_ZNK6vectorIjLb0EjE
 
 _ZNK6vectorIjLb0EjE4sizeEv.exit.i.i136:           ; preds = %bb.b
   %i.o = lshr i32 %i.d, 5                         ; 2 uses
+  %29 = add nuw nsw i32 %i.o, 1                   ; 2 uses
   br label %bb.e
 
 thread-pre-split.i.i127:                          ; preds = %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i134
@@ -242,8 +244,8 @@ bb.e:                                             ; preds = %thread-pre-split.i.
 _ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131:       ; preds = %bb.e
   %i.r = getelementptr inbounds i8, ptr %i.p, i64 -8
   %i.s = load i32, ptr %i.r, align 4, !tbaa !30
-  %.not302 = icmp ult i32 %i.o, %i.s
-  br i1 %.not302, label %.sink.split, label %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i134
+  %30 = icmp ugt i32 %29, %i.s
+  br i1 %30, label %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i134, label %.sink.split
 
 _ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i134: ; preds = %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131, %bb.e
   invoke void @_ZN6vectorIjLb0EjE13expand_vectorEv(ptr noundef nonnull align 8 dereferenceable(8) %18)
@@ -251,17 +253,17 @@ _ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i134: ; preds = %_ZNK6vectorIjLb0Ej
 
 .sink.split:                                      ; preds = %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131
   %.lcssa.sink430 = phi ptr [ %i.p, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131 ], [ %i.k, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i ] ; 3 uses
-  %.sink423 = phi i32 [ %i.d, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131 ], [ %i.i, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i ]
-  %.sink.a = phi i32 [ %i.o, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131 ], [ %i.j, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i ] ; 2 uses
-  %.sink428 = add nuw nsw i32 %.sink.a, 1         ; 2 uses
+  %.sink423 = phi i32 [ %29, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131 ], [ %27, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i ] ; 2 uses
+  %.sink.a = phi i32 [ %i.d, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131 ], [ %i.i, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i ]
+  %.sink = phi i32 [ %i.o, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i131 ], [ %i.j, %_ZNK6vectorIjLb0EjE8capacityEv.exit.i.i ]
   %i.t = getelementptr inbounds i8, ptr %.lcssa.sink430, i64 -4
-  store i32 %.sink428, ptr %i.t, align 4, !tbaa !30
-  %i.u = shl nuw nsw i32 %.sink428, 2
+  store i32 %.sink423, ptr %i.t, align 4, !tbaa !30
+  %i.u = shl nuw nsw i32 %.sink423, 2
   %i.v = zext nneg i32 %i.u to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.lcssa.sink430, i8 0, i64 %i.v, i1 false), !tbaa !30
-  %i.w = and i32 %.sink423, 31
+  %i.w = and i32 %.sink.a, 31
   %i.x = shl nuw i32 1, %i.w
-  %i.y = zext nneg i32 %.sink.a to i64
+  %i.y = zext nneg i32 %.sink to i64
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %.lcssa.sink430, i64 %i.y ; 2 uses
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !30
   %i.ab = or i32 %i.aa, %i.x
@@ -664,7 +666,7 @@ bb.bn:                                            ; preds = %_ZN8uint_set8iterat
 
 bb.bo:                                            ; preds = %bb.bn
   %i.ky = sub nuw i32 %i.kw, %i.jy                ; 2 uses
-  %i.kz = lshr i32 %i.ky, 5                       ; 4 uses
+  %i.kz = lshr i32 %i.ky, 5                       ; 3 uses
   %i.la = load ptr, ptr %25, align 8, !tbaa !147  ; 4 uses
   %i.lb = icmp eq ptr %i.la, null
   br i1 %i.lb, label %thread-pre-split.i.i245.preheader, label %_ZNK6vectorIjLb0EjE4sizeEv.exit.i242
@@ -678,7 +680,7 @@ _ZNK6vectorIjLb0EjE4sizeEv.exit.i242:             ; preds = %bb.bo
 thread-pre-split.i.i245.preheader:                ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit.i242, %bb.bo
   %.ph500 = phi ptr [ null, %bb.bo ], [ %i.la, %_ZNK6vectorIjLb0EjE4sizeEv.exit.i242 ]
   %.0.i16.i.i248.ph = phi i32 [ 0, %bb.bo ], [ %i.ld, %_ZNK6vectorIjLb0EjE4sizeEv.exit.i242 ] ; 2 uses
-  %.ph501 = add nuw nsw i32 %i.kz, 1              ; 3 uses
+  %.ph501 = add nuw nsw i32 %i.kz, 1              ; 4 uses
   br label %thread-pre-split.i.i245
 
 thread-pre-split.i.i245:                          ; preds = %thread-pre-split.i.i245.backedge, %thread-pre-split.i.i245.preheader
@@ -689,8 +691,8 @@ thread-pre-split.i.i245:                          ; preds = %thread-pre-split.i.
 _ZNK6vectorIjLb0EjE8capacityEv.exit.i.i249:       ; preds = %thread-pre-split.i.i245
   %i.lg = getelementptr inbounds i8, ptr %i.le, i64 -8
   %i.lh = load i32, ptr %i.lg, align 4, !tbaa !30
-  %.not514 = icmp ult i32 %i.kz, %i.lh
-  br i1 %.not514, label %bb.by, label %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i253
+  %31 = icmp ugt i32 %.ph501, %i.lh
+  br i1 %31, label %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i253, label %bb.by
 
 bb.bp:                                            ; preds = %thread-pre-split.i.i245
   %i.li = invoke noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef 16)

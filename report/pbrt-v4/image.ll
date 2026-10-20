@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = shl nuw i32 %3, 1                        ; 3 uses
-  %i.e = or disjoint i32 %i.d, 1
+  %i.e = or disjoint i32 %i.d, 1                  ; 2 uses
   %i.f = zext nneg i32 %i.e to i64                ; 6 uses
   %i.g = shl nuw nsw i64 %i.f, 2                  ; 3 uses
   %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #35 ; 12 uses
@@ -223,10 +223,10 @@ bb.a:
   %i.p = fmul float %4, 2.000000e+00
   %i.q = fmul float %4, %i.p                      ; 2 uses
   %i.r = fdiv float 1.000000e+00, %i.o            ; 2 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.d, i32 0) ; 2 uses
-  %13 = or disjoint i32 %smax, 1
-  %wide.trip.count = zext nneg i32 %13 to i64
-  %min.iters.check = icmp slt i32 %i.d, 8
+  %13 = or disjoint i32 %i.d, 1
+  %smax = tail call i32 @llvm.smax.i32(i32 %13, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
+  %min.iters.check = icmp slt i32 %i.e, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph
@@ -234,7 +234,7 @@ scalar.ph.preheader:                              ; preds = %vector.body, %.lr.p
   br label %scalar.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %i.s = and i32 %smax, 2147483640
+  %i.s = and i32 %i.d, 2147483640
   %n.vec = zext nneg i32 %i.s to i64              ; 2 uses
   %broadcast.splatinsert = insertelement <8 x float> poison, float %i.q, i64 0
   %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
@@ -637,7 +637,7 @@ bb.g:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.aq = phi ptr [ null, %.lr.ph ], [ %i.cn, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit38 ] ; 5 uses
   %i.ar = phi ptr [ null, %.lr.ph ], [ %i.co, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit38 ] ; 3 uses
   %i.as = phi ptr [ null, %.lr.ph ], [ %i.cp, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit38 ] ; 3 uses
-  %.055 = phi i32 [ 0, %.lr.ph ], [ %i.ek, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit38 ] ; 3 uses
+  %.055 = phi i32 [ 0, %.lr.ph ], [ %i.ek, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit38 ] ; 2 uses
   %i.at = uitofp nneg i32 %.055 to float          ; 2 uses
   %i.au = load float, ptr %4, align 4, !tbaa !79  ; 4 uses
   %i.av = fmul float %i.au, f0x40C90FDB
@@ -840,10 +840,10 @@ _ZNSt6vectorIfSaIfEE17_M_realloc_insertIJfEEEvN9__gnu_cxx17__normal_iteratorIPfS
   br label %_ZNSt6vectorIfSaIfEE9push_backEOf.exit38
 
 _ZNSt6vectorIfSaIfEE9push_backEOf.exit38:         ; preds = %_ZNSt6vectorIfSaIfEE17_M_realloc_insertIJfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.i35, %bb.r
-  %i.ek = add nuw nsw i32 %.055, 1
+  %i.ek = add nuw nsw i32 %.055, 1                ; 2 uses
   %i.el = load i32, ptr %i.a, align 4, !tbaa !38
-  %.not.not = icmp slt i32 %.055, %i.el
-  br i1 %.not.not, label %bb.g, label %._crit_edge, !llvm.loop !566
+  %.not = icmp sgt i32 %i.ek, %i.el
+  br i1 %.not, label %._crit_edge, label %bb.g, !llvm.loop !566
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i, %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i30, %.invoke, %._crit_edge
   %lpad.loopexit.split-lp79 = landingpad { ptr, i32 }
@@ -1246,7 +1246,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.cc, label %.loopexit114, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.cd = load i32, ptr %i.bx, align 8, !tbaa !73 ; 3 uses
+  %i.cd = load i32, ptr %i.bx, align 8, !tbaa !73 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
@@ -1259,15 +1259,14 @@ bb.r:                                             ; preds = %bb.q
   br label %.preheader
 
 bb.s:                                             ; preds = %._crit_edge
-  %i.ck = trunc nuw i64 %indvars.iv.next128232 to i32 ; 2 uses
+  %i.ck = trunc nuw i64 %indvars.iv.next128232 to i32
   %i.cl = icmp sgt i32 %i.ck, 0
   br i1 %i.cl, label %.preheader, label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit, !llvm.loop !836
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.s
-  %7 = phi i32 [ %i.cd, %.preheader.lr.ph ], [ %i.ck, %bb.s ] ; 7 uses
   %indvars.iv.next128232.in = phi i64 [ %i.cj, %.preheader.lr.ph ], [ %indvars.iv.next128232, %bb.s ]
   %indvars.iv.next128232 = add nsw i64 %indvars.iv.next128232.in, -1 ; 4 uses
-  %indvars233 = trunc i64 %indvars.iv.next128232 to i32 ; 7 uses
+  %indvars233 = trunc i64 %indvars.iv.next128232 to i32 ; 17 uses
   %i.cm = load i32, ptr %i.bm, align 4, !tbaa !74 ; 2 uses
   %i.cn = icmp sgt i32 %i.cm, 0
   br i1 %i.cn, label %.lr.ph, label %._crit_edge
@@ -1346,9 +1345,10 @@ bb.z:                                             ; preds = %bb.x
   %i.di = trunc nuw nsw i64 %indvars.iv to i32    ; 10 uses
   %..i.i = call i32 @llvm.smin.i32(i32 %i.di, i32 %i.dh) ; 5 uses
   %.sroa.090.0 = select i1 %i.dg, i32 %i.di, i32 %..i.i ; 3 uses
-  %.not109 = icmp sgt i32 %7, %.sroa.9.0.extract.trunc.i
-  %i.dj = add nsw i32 %.sroa.9.0.extract.trunc.i, -1 ; 5 uses
-  %spec.select = select i1 %.not109, i32 %i.dj, i32 %indvars233 ; 3 uses
+  %7 = icmp slt i32 %indvars233, %.sroa.9.0.extract.trunc.i
+  %i.dj = add nsw i32 %.sroa.9.0.extract.trunc.i, -1
+  %..i.1.i = call i32 @llvm.smin.i32(i32 %indvars233, i32 %i.dj) ; 5 uses
+  %spec.select = select i1 %7, i32 %indvars233, i32 %..i.1.i ; 3 uses
   %i.dk = load i32, ptr %0, align 8, !tbaa !72
   switch i32 %i.dk, label %bb.ah [
     i32 0, label %bb.aa
@@ -1429,8 +1429,8 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread: ; preds
   store i32 %i.et, ptr %i.eu, align 4, !tbaa !79
   %i.ev = icmp slt i64 %indvars.iv, %i.df
   %.sroa.090.0.1183 = select i1 %i.ev, i32 %i.di, i32 %..i.i
-  %.not109.1184 = icmp sgt i32 %7, %.sroa.9.0.extract.trunc.i
-  %spec.select.1185 = select i1 %.not109.1184, i32 %i.dj, i32 %indvars233
+  %.not109.1184 = icmp sgt i32 %.sroa.9.0.extract.trunc.i, %indvars233
+  %spec.select.1185 = select i1 %.not109.1184, i32 %indvars233, i32 %..i.1.i
   br label %bb.ai
 
 _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread192: ; preds = %.preheader.preheader.i
@@ -1445,8 +1445,8 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread192: ; pr
   store float %i.fc, ptr %i.fd, align 4, !tbaa !79
   %i.fe = icmp slt i64 %indvars.iv, %i.df
   %.sroa.090.0.1198 = select i1 %i.fe, i32 %i.di, i32 %..i.i
-  %.not109.1199 = icmp sgt i32 %7, %.sroa.9.0.extract.trunc.i
-  %spec.select.1200 = select i1 %.not109.1199, i32 %i.dj, i32 %indvars233
+  %.not109.1199 = icmp sgt i32 %.sroa.9.0.extract.trunc.i, %indvars233
+  %spec.select.1200 = select i1 %.not109.1199, i32 %indvars233, i32 %..i.1.i
   br label %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.1.thread217
 
 bb.ah:                                            ; preds = %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.1, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit, %.preheader.preheader.i
@@ -1468,13 +1468,14 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit: ; preds = %.lr
   %.pre135.a = ashr exact i64 %sext176, 32        ; 3 uses
   %.pre136 = add nsw i32 %i.fg, -1
   %.pre138.a = call i32 @llvm.smin.i32(i32 %i.di, i32 %.pre136) ; 3 uses
-  %.pre139 = add nsw i32 %.pre134.a, -1           ; 3 uses
+  %.pre139 = add nsw i32 %.pre134.a, -1
+  %.pre140 = call i32 @llvm.smin.i32(i32 %indvars233, i32 %.pre139) ; 3 uses
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %i.de
   store float %i.ff, ptr %i.fh, align 4, !tbaa !79
   %i.fi = icmp slt i64 %indvars.iv, %.pre135.a
   %.sroa.090.0.1 = select i1 %i.fi, i32 %i.di, i32 %.pre138.a ; 3 uses
-  %.not109.1 = icmp sgt i32 %7, %.pre134.a
-  %spec.select.1 = select i1 %.not109.1, i32 %.pre139, i32 %indvars233 ; 3 uses
+  %.not109.1 = icmp sgt i32 %.pre134.a, %indvars233
+  %spec.select.1 = select i1 %.not109.1, i32 %indvars233, i32 %.pre140 ; 3 uses
   switch i32 %.pre, label %bb.ah [
     i32 0, label %bb.am
     i32 1, label %bb.ai
@@ -1488,7 +1489,7 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.1.thread217: ; 
   %.sroa.9.0.extract.trunc.i.1.pre-phi204 = phi i32 [ %.sroa.9.0.extract.trunc.i, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread192 ], [ %.pre134.a, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
   %.pre-phi203 = phi i64 [ %i.df, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread192 ], [ %.pre135.a, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
   %..i.i.1.pre-phi202 = phi i32 [ %..i.i, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread192 ], [ %.pre138.a, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
-  %.pre-phi140201 = phi i32 [ %i.dj, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread192 ], [ %.pre139, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
+  %.pre-phi140201 = phi i32 [ %..i.1.i, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread192 ], [ %.pre140, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
   %i.fk = load i64, ptr %i.as, align 8, !tbaa !75
   %i.fl = trunc i64 %i.fk to i32
   %i.fm = mul nsw i32 %i.fj, %spec.select.1206
@@ -1504,8 +1505,8 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.1.thread217: ; 
   store float %i.ft, ptr %i.fv, align 4, !tbaa !79
   %i.fw = icmp slt i64 %indvars.iv, %.pre-phi203
   %.sroa.090.0.2223 = select i1 %i.fw, i32 %i.di, i32 %..i.i.1.pre-phi202
-  %.not109.2224 = icmp slt i32 %.sroa.9.0.extract.trunc.i.1.pre-phi204, %7
-  %spec.select.2225 = select i1 %.not109.2224, i32 %.pre-phi140201, i32 %indvars233
+  %8 = icmp sgt i32 %.sroa.9.0.extract.trunc.i.1.pre-phi204, %indvars233
+  %spec.select.2225 = select i1 %8, i32 %indvars233, i32 %.pre-phi140201
   br label %bb.ap
 
 bb.ai:                                            ; preds = %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit
@@ -1515,7 +1516,7 @@ bb.ai:                                            ; preds = %_ZNK4pbrt5Image10Ge
   %.sroa.9.0.extract.trunc.i.1.pre-phi189 = phi i32 [ %.sroa.9.0.extract.trunc.i, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread ], [ %.pre134.a, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
   %.pre-phi188 = phi i64 [ %i.df, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread ], [ %.pre135.a, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
   %..i.i.1.pre-phi187 = phi i32 [ %..i.i, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread ], [ %.pre138.a, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
-  %.pre-phi140186 = phi i32 [ %i.dj, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread ], [ %.pre139, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
+  %.pre-phi140186 = phi i32 [ %..i.1.i, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.thread ], [ %.pre140, %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit ]
   %i.fy = load i64, ptr %i.as, align 8, !tbaa !75
   %i.fz = trunc i64 %i.fy to i32
   %i.ga = mul nsw i32 %i.fx, %spec.select.1191
@@ -1559,8 +1560,8 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.1.thread: ; pre
   store i32 %i.gv, ptr %i.gx, align 4, !tbaa !79
   %i.gy = icmp slt i64 %indvars.iv, %.pre-phi188
   %.sroa.090.0.2212.a = select i1 %i.gy, i32 %i.di, i32 %..i.i.1.pre-phi187
-  %.not109.2213 = icmp slt i32 %.sroa.9.0.extract.trunc.i.1.pre-phi189, %7
-  %spec.select.2214 = select i1 %.not109.2213, i32 %.pre-phi140186, i32 %indvars233
+  %9 = icmp sgt i32 %.sroa.9.0.extract.trunc.i.1.pre-phi189, %indvars233
+  %spec.select.2214 = select i1 %9, i32 %indvars233, i32 %.pre-phi140186
   br label %bb.aq
 
 bb.am:                                            ; preds = %_ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit
@@ -1612,13 +1613,14 @@ _ZNK4pbrt5Image10GetChannelENS_6Point2IiEEiNS_10WrapMode2DE.exit.1: ; preds = %b
   %.pre145 = add nsw i32 %i.hr, -1
   %.pre147 = call i32 @llvm.smin.i32(i32 %i.di, i32 %.pre145)
   %.pre148 = add nsw i32 %.pre142, -1
+  %.pre150 = call i32 @llvm.smin.i32(i32 %indvars233, i32 %.pre148)
   %i.hs = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %i.de
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hs, i64 4
   store float %i.hq, ptr %i.ht, align 4, !tbaa !79
   %i.hu = icmp slt i64 %indvars.iv, %.pre143
   %.sroa.090.0.2 = select i1 %i.hu, i32 %i.di, i32 %.pre147 ; 3 uses
-  %.not109.2 = icmp sgt i32 %7, %.pre142
-  %spec.select.2 = select i1 %.not109.2, i32 %.pre148, i32 %indvars233 ; 3 uses
+  %.not109.2 = icmp sgt i32 %.pre142, %indvars233
+  %spec.select.2 = select i1 %.not109.2, i32 %indvars233, i32 %.pre150 ; 3 uses
   switch i32 %.pre132, label %bb.ah [
     i32 0, label %bb.au
     i32 1, label %bb.aq
@@ -2021,7 +2023,7 @@ _ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i:     ; preds = %.lr.ph.i.i.i.i.i, %
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i, %.lr.ph57.i.i.i
-  %.02256.i.i.i = phi i32 [ %i.aq, %.lr.ph57.i.i.i ], [ %i.cz, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 4 uses
+  %.02256.i.i.i = phi i32 [ %i.aq, %.lr.ph57.i.i.i ], [ %i.cz, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   %i.au = add nsw i32 %.02256.i.i.i, %i.at
   %i.av = load ptr, ptr %i.g, align 8, !tbaa !1586, !nonnull !53, !align !214
@@ -2198,11 +2200,11 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i: ; preds = %bb.e, %._crit_edge.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
-  %i.cz = add nsw i32 %.02256.i.i.i, 1
+  %i.cz = add nsw i32 %.02256.i.i.i, 1            ; 2 uses
   %i.da = load ptr, ptr %i.l, align 8, !tbaa !1587, !nonnull !53, !align !244
   %i.db = load i32, ptr %i.da, align 4, !tbaa !38
-  %.not.not.i.i.i = icmp slt i32 %.02256.i.i.i, %i.db
-  br i1 %.not.not.i.i.i, label %bb.d, label %._crit_edge58.i.i.i, !llvm.loop !1581
+  %.not.i.i.i = icmp sgt i32 %i.cz, %i.db
+  br i1 %.not.i.i.i, label %._crit_edge58.i.i.i, label %bb.d, !llvm.loop !1581
 
 bb.g:                                             ; preds = %bb.d
   %i.dc = landingpad { ptr, i32 }
@@ -2522,7 +2524,7 @@ _ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i:     ; preds = %.lr.ph.i.i.i.i.i, %
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i, %.lr.ph57.i.i.i
-  %.02256.i.i.i = phi i32 [ %i.as, %.lr.ph57.i.i.i ], [ %i.da, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 4 uses
+  %.02256.i.i.i = phi i32 [ %i.as, %.lr.ph57.i.i.i ], [ %i.da, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   %i.av = load ptr, ptr %i.m, align 8, !tbaa !1612, !nonnull !53, !align !214
   %i.aw = add nsw i32 %.02256.i.i.i, %i.y
@@ -2700,11 +2702,11 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit.i.i.i: ; preds = %bb.e, %._crit_edge.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
-  %i.da = add nsw i32 %.02256.i.i.i, 1
+  %i.da = add nsw i32 %.02256.i.i.i, 1            ; 2 uses
   %i.db = load ptr, ptr %i.l, align 8, !tbaa !1611, !nonnull !53, !align !244
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !38
-  %.not.not.i.i.i = icmp slt i32 %.02256.i.i.i, %i.dc
-  br i1 %.not.not.i.i.i, label %bb.d, label %._crit_edge58.i.i.i, !llvm.loop !1605
+  %.not.i.i.i = icmp sgt i32 %i.da, %i.dc
+  br i1 %.not.i.i.i, label %._crit_edge58.i.i.i, label %bb.d, !llvm.loop !1605
 
 bb.g:                                             ; preds = %bb.d
   %i.dd = landingpad { ptr, i32 }

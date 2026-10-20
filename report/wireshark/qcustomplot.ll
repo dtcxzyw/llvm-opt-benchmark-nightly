@@ -204,7 +204,7 @@ _ZNK8QPointerI20QCPAbstractPlottableEptEv.exit76: ; preds = %bb.x, %bb.y, %bb.z
   %i.ei = tail call noundef i32 %i.eh(ptr noundef align 8 dereferenceable_or_null(8) %i.ee)
   %i.ej = sext i32 %i.ei to i64
   %i.ek = tail call noundef i64 @llvm.smin.i64(i64 %i.dt, i64 %i.ej)
-  %i.el = trunc i64 %i.ek to i32                  ; 3 uses
+  %i.el = trunc i64 %i.ek to i32                  ; 4 uses
   %i.em = load ptr, ptr %i.bf, align 8            ; 2 uses
   %i.en = icmp eq ptr %i.em, null
   br i1 %i.en, label %_ZNK8QPointerI20QCPAbstractPlottableEptEv.exit77, label %bb.aa
@@ -272,9 +272,11 @@ _ZNK8QPointerI20QCPAbstractPlottableEptEv.exit78: ; preds = %_ZNK8QPointerI20QCP
 bb.ae:                                            ; preds = %.lr.ph
   %i.fv = tail call noundef zeroext i1 @_ZNK12QCPErrorBars15errorBarVisibleEi(ptr noundef align 8 dereferenceable_or_null(248) %0, i32 noundef %.0129)
   %spec.select = select i1 %i.fv, i32 %.0129, i32 %.051128 ; 2 uses
-  %i.fw = add nsw i32 %.0129, -1
+  %i.fw = add nsw i32 %.0129, -1                  ; 2 uses
   %i.fx = icmp sgt i32 %.0129, 1
-  br i1 %i.fx, label %.lr.ph, label %.critedge, !llvm.loop !1385
+  %23 = icmp slt i32 %i.fw, %i.el
+  %or.cond57 = and i1 %i.fx, %23
+  br i1 %or.cond57, label %.lr.ph, label %.critedge, !llvm.loop !1385
 
 .critedge:                                        ; preds = %.lr.ph, %bb.ae, %_ZNK8QPointerI20QCPAbstractPlottableEptEv.exit78
   %.051.lcssa = phi i32 [ %i.fb, %_ZNK8QPointerI20QCPAbstractPlottableEptEv.exit78 ], [ %spec.select, %bb.ae ], [ %.051128, %.lr.ph ]

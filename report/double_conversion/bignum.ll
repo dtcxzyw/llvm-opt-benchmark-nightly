@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %._crit_edge
   %i.cr = sext i16 %i.cq to i32
   %i.cs = load i16, ptr %i.i, align 2, !tbaa !18  ; 2 uses
   %i.ct = sext i16 %i.cs to i32                   ; 3 uses
-  %i.cu = add nsw i32 %i.ct, %i.cr                ; 4 uses
+  %i.cu = add nsw i32 %i.ct, %i.cr                ; 3 uses
   %i.cv = load i16, ptr %0, align 4, !tbaa !17
   %i.cw = sext i16 %i.cv to i32
   %i.cx = load i16, ptr %i.c, align 2, !tbaa !18  ; 2 uses
@@ -221,22 +221,23 @@ bb.h:                                             ; preds = %.preheader
 .preheader.i.i:                                   ; preds = %bb.h
   %i.dc = tail call i16 @llvm.smin.i16(i16 %i.cx, i16 %i.cs)
   %i.dd = sext i16 %i.dc to i32                   ; 2 uses
-  %.not.not.not.i.i78 = icmp sgt i32 %i.cu, %i.dd
-  br i1 %.not.not.not.i.i78, label %.lr.ph82, label %_ZN17double_conversion6Bignum9LessEqualERKS0_S2_.exit.thread
+  %.0.i.i77 = add nsw i32 %i.cu, -1               ; 2 uses
+  %.not.i.i78 = icmp slt i32 %.0.i.i77, %i.dd
+  br i1 %.not.i.i78, label %_ZN17double_conversion6Bignum9LessEqualERKS0_S2_.exit.thread, label %.lr.ph82
 
 bb.i:                                             ; preds = %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit32.i.i
-  %.not.not.not.i.i = icmp sgt i32 %.0.i.i81, %i.dd
-  br i1 %.not.not.not.i.i, label %.lr.ph82, label %_ZN17double_conversion6Bignum9LessEqualERKS0_S2_.exit.thread, !llvm.loop !6
+  %.0.i.i = add nsw i32 %.0.in.i.i80, -1          ; 2 uses
+  %.not.i.i = icmp slt i32 %.0.i.i, %i.dd
+  br i1 %.not.i.i, label %_ZN17double_conversion6Bignum9LessEqualERKS0_S2_.exit.thread, label %.lr.ph82, !llvm.loop !6
 
 .lr.ph82:                                         ; preds = %.preheader.i.i, %bb.i
-  %.0.in.i.i80 = phi i32 [ %.0.i.i81, %bb.i ], [ %i.cu, %.preheader.i.i ] ; 3 uses
+  %.0.in.i.i80 = phi i32 [ %.0.i.i, %bb.i ], [ %.0.i.i77, %.preheader.i.i ] ; 5 uses
   %.023.i.i79 = phi i32 [ %.124.i.i, %bb.i ], [ undef, %.preheader.i.i ]
-  %.0.i.i81 = add nsw i32 %.0.in.i.i80, -1        ; 4 uses
-  %.not35.i.i = icmp sgt i32 %.0.in.i.i80, %i.ct
-  br i1 %.not35.i.i, label %bb.j, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit.i.i
+  %2 = icmp slt i32 %.0.in.i.i80, %i.ct
+  br i1 %2, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit.i.i, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph82
-  %i.de = sub nsw i32 %.0.i.i81, %i.ct
+  %i.de = sub nsw i32 %.0.in.i.i80, %i.ct
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %i.df
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !19
@@ -244,11 +245,11 @@ bb.j:                                             ; preds = %.lr.ph82
 
 _ZNK17double_conversion6Bignum11BigitOrZeroEi.exit.i.i: ; preds = %bb.j, %.lr.ph82
   %.0.i.i.i = phi i32 [ %i.dh, %bb.j ], [ 0, %.lr.ph82 ] ; 3 uses
-  %.not36.i.i = icmp sgt i32 %.0.in.i.i80, %i.cy
-  br i1 %.not36.i.i, label %bb.k, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit32.i.i
+  %3 = icmp slt i32 %.0.in.i.i80, %i.cy
+  br i1 %3, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit32.i.i, label %bb.k
 
 bb.k:                                             ; preds = %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit.i.i
-  %i.di = sub nsw i32 %.0.i.i81, %i.cy
+  %i.di = sub nsw i32 %.0.in.i.i80, %i.cy
   %i.dj = zext nneg i32 %i.di to i64
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.dj
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !19
@@ -651,7 +652,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.d = load i16, ptr %i.c, align 2, !tbaa !18   ; 2 uses
   %i.e = sext i16 %i.d to i32                     ; 3 uses
-  %i.f = add nsw i32 %i.e, %i.b                   ; 4 uses
+  %i.f = add nsw i32 %i.e, %i.b                   ; 3 uses
   %i.g = load i16, ptr %1, align 4, !tbaa !17
   %i.h = sext i16 %i.g to i32
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 2
@@ -670,22 +671,23 @@ bb.b:                                             ; preds = %bb.a
   %i.p = sext i16 %i.o to i32                     ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.not.not.not42 = icmp sgt i32 %i.f, %i.p
-  br i1 %.not.not.not42, label %.lr.ph, label %.loopexit
+  %.040 = add nsw i32 %i.f, -1                    ; 2 uses
+  %.not41 = icmp slt i32 %.040, %i.p
+  br i1 %.not41, label %.loopexit, label %.lr.ph
 
 bb.c:                                             ; preds = %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit32
-  %.not.not.not = icmp sgt i32 %.045, %i.p
-  br i1 %.not.not.not, label %.lr.ph, label %.loopexit, !llvm.loop !6
+  %.0 = add nsw i32 %.0.in44, -1                  ; 2 uses
+  %.not = icmp slt i32 %.0, %i.p
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !6
 
 .lr.ph:                                           ; preds = %.preheader, %bb.c
-  %.0.in44 = phi i32 [ %.045, %bb.c ], [ %i.f, %.preheader ] ; 3 uses
+  %.0.in44 = phi i32 [ %.0, %bb.c ], [ %.040, %.preheader ] ; 5 uses
   %.02343 = phi i32 [ %.124, %bb.c ], [ undef, %.preheader ]
-  %.045 = add nsw i32 %.0.in44, -1                ; 4 uses
-  %.not35 = icmp sgt i32 %.0.in44, %i.e
-  br i1 %.not35, label %bb.d, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit
+  %2 = icmp slt i32 %.0.in44, %i.e
+  br i1 %2, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.s = sub nsw i32 %.045, %i.e
+  %i.s = sub nsw i32 %.0.in44, %i.e
   %i.t = zext nneg i32 %i.s to i64
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.t
   %i.v = load i32, ptr %i.u, align 4, !tbaa !19
@@ -693,11 +695,11 @@ bb.d:                                             ; preds = %.lr.ph
 
 _ZNK17double_conversion6Bignum11BigitOrZeroEi.exit: ; preds = %.lr.ph, %bb.d
   %.0.i = phi i32 [ %i.v, %bb.d ], [ 0, %.lr.ph ] ; 3 uses
-  %.not36 = icmp sgt i32 %.0.in44, %i.k
-  br i1 %.not36, label %bb.e, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit32
+  %3 = icmp slt i32 %.0.in44, %i.k
+  br i1 %3, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit32, label %bb.e
 
 bb.e:                                             ; preds = %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit
-  %i.w = sub nsw i32 %.045, %i.k
+  %i.w = sub nsw i32 %.0.in44, %i.k
   %i.x = zext nneg i32 %i.w to i64
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.x
   %i.z = load i32, ptr %i.y, align 4, !tbaa !19
@@ -753,7 +755,7 @@ bb.b:                                             ; preds = %tailrecurse
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.r = load i16, ptr %i.q, align 2, !tbaa !18   ; 2 uses
   %i.s = sext i16 %i.r to i32                     ; 3 uses
-  %i.t = add nsw i32 %i.s, %i.p                   ; 5 uses
+  %i.t = add nsw i32 %i.s, %i.p                   ; 4 uses
   %i.u = icmp slt i32 %i.n, %i.t
   br i1 %i.u, label %.thread, label %bb.c
 
@@ -773,8 +775,9 @@ bb.e:                                             ; preds = %bb.d
   %i.y = select i1 %i.x, i16 %i.i, i16 %.val64
   %i.z = tail call i16 @llvm.smin.i16(i16 %i.r, i16 %i.y)
   %i.aa = sext i16 %i.z to i32                    ; 2 uses
-  %.not50.not.not77 = icmp sgt i32 %i.t, %i.aa
-  br i1 %.not50.not.not77, label %.lr.ph, label %.thread
+  %.04076 = add nsw i32 %i.t, -1                  ; 2 uses
+  %.not5077 = icmp slt i32 %.04076, %i.aa
+  br i1 %.not5077, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %.tr, i64 4
@@ -783,16 +786,15 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.k
-  %.040.in79 = phi i32 [ %i.t, %.lr.ph ], [ %.04080, %bb.k ] ; 6 uses
+  %.040.in79 = phi i32 [ %.04076, %.lr.ph ], [ %.040, %bb.k ] ; 9 uses
   %.04178 = phi i32 [ 0, %.lr.ph ], [ %i.av, %bb.k ]
-  %.04080 = add nsw i32 %.040.in79, -1            ; 5 uses
-  %.not.i = icmp sgt i32 %.040.in79, %i.e
-  %3 = icmp sle i32 %.040.in79, %i.d
+  %.not.i = icmp sge i32 %.040.in79, %i.e
+  %3 = icmp slt i32 %.040.in79, %i.d
   %or.cond.i = or i1 %3, %.not.i
   br i1 %or.cond.i, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ae = sub nsw i32 %.04080, %i.d
+  %i.ae = sub nsw i32 %.040.in79, %i.d
   %i.af = zext nneg i32 %i.ae to i64
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.af
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !19
@@ -800,13 +802,13 @@ bb.g:                                             ; preds = %bb.f
 
 _ZNK17double_conversion6Bignum11BigitOrZeroEi.exit: ; preds = %bb.f, %bb.g
   %.0.i = phi i32 [ %i.ah, %bb.g ], [ 0, %bb.f ]
-  %.not.i52 = icmp sgt i32 %.040.in79, %i.k
-  %4 = icmp sle i32 %.040.in79, %i.j
+  %.not.i52 = icmp sge i32 %.040.in79, %i.k
+  %4 = icmp slt i32 %.040.in79, %i.j
   %or.cond.i53 = or i1 %4, %.not.i52
   br i1 %or.cond.i53, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit55, label %bb.h
 
 bb.h:                                             ; preds = %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit
-  %i.ai = sub nsw i32 %.04080, %i.j
+  %i.ai = sub nsw i32 %.040.in79, %i.j
   %i.aj = zext nneg i32 %i.ai to i64
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.aj
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !19
@@ -814,11 +816,11 @@ bb.h:                                             ; preds = %_ZNK17double_conver
 
 _ZNK17double_conversion6Bignum11BigitOrZeroEi.exit55: ; preds = %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit, %bb.h
   %.0.i54 = phi i32 [ %i.al, %bb.h ], [ 0, %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit ]
-  %.not91 = icmp sgt i32 %.040.in79, %i.s
-  br i1 %.not91, label %bb.i, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit59
+  %5 = icmp slt i32 %.040.in79, %i.s
+  br i1 %5, label %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit59, label %bb.i
 
 bb.i:                                             ; preds = %_ZNK17double_conversion6Bignum11BigitOrZeroEi.exit55
-  %i.am = sub nsw i32 %.04080, %i.s
+  %i.am = sub nsw i32 %.040.in79, %i.s
   %i.an = zext nneg i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %i.an
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !19
@@ -838,8 +840,9 @@ bb.j:                                             ; preds = %_ZNK17double_conver
 
 bb.k:                                             ; preds = %bb.j
   %i.av = shl nuw nsw i32 %i.at, 28
-  %.not50.not.not = icmp sgt i32 %.04080, %i.aa
-  br i1 %.not50.not.not, label %bb.f, label %.thread.loopexit, !llvm.loop !73
+  %.040 = add nsw i32 %.040.in79, -1              ; 2 uses
+  %.not50 = icmp slt i32 %.040, %i.aa
+  br i1 %.not50, label %.thread.loopexit, label %bb.f, !llvm.loop !73
 
 .thread.loopexit:                                 ; preds = %bb.k
   %i.aw = icmp ne i32 %i.ar, %i.aq

@@ -205,23 +205,23 @@ check_cert_push_options.exit.thread:              ; preds = %read_push_options.e
   br label %.loopexit
 
 .preheader.i:                                     ; preds = %read_push_options.exit
-  %i.ge = getelementptr inbounds nuw i8, ptr %25, i64 8
+  %i.ge = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 2 uses
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bn, %.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %bb.bn ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %bb.bn ] ; 3 uses
   %.013.i = phi ptr [ %i.gc, %.preheader.i ], [ %i.gi, %bb.bn ]
   %i.gf = call ptr @find_commit_header(ptr noundef nonnull %.013.i, ptr noundef nonnull @.str.81, ptr noundef nonnull %i.c) #20 ; 3 uses
   %.not16.i = icmp eq ptr %i.gf, null
-  %27 = load i64, ptr %i.ge, align 8, !tbaa !59   ; 2 uses
   br i1 %.not16.i, label %check_cert_push_options.exit, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %.not22.i = icmp ugt i64 %27, %indvars.iv.i
-  br i1 %.not22.i, label %bb.bn, label %.critedge
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %27 = load i64, ptr %i.ge, align 8, !tbaa !59
+  %28 = icmp ult i64 %27, %indvars.iv.next.i
+  br i1 %28, label %.critedge, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %i.gg = load i64, ptr %i.c, align 8, !tbaa !51  ; 2 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gf, i64 %i.gg
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 1
@@ -233,7 +233,8 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %.not18.i, label %bb.bl, label %.critedge, !llvm.loop !115
 
 check_cert_push_options.exit:                     ; preds = %bb.bl
-  %.not17.i = icmp eq i64 %27, %indvars.iv.i
+  %29 = load i64, ptr %i.ge, align 8, !tbaa !59
+  %.not17.i = icmp eq i64 %29, %indvars.iv.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   br i1 %.not17.i, label %.loopexit, label %.lr.ph.preheader
 

@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us.backedge
   %i.gd = phi i8 [ %i.gz, %.lr.ph.split.us.backedge ], [ %i.fx, %.lr.ph ] ; 2 uses
-  %.0108141.us = phi i32 [ %.0108141.us.be, %.lr.ph.split.us.backedge ], [ 1, %.lr.ph ] ; 5 uses
+  %.0108141.us = phi i32 [ %.0108140.us.be, %.lr.ph.split.us.backedge ], [ 1, %.lr.ph ] ; 4 uses
   %i.ge = load i8, ptr %i.m, align 2, !tbaa !30
   %i.gf = icmp eq i8 %i.ge, 1
   br i1 %i.gf, label %bb.aq, label %bb.an
@@ -222,10 +222,11 @@ bb.ao:                                            ; preds = %bb.an
   %i.gl = load i8, ptr %i.gk, align 1, !tbaa !24
   %i.gm = zext i8 %i.gl to i32
   %i.gn = add nuw nsw i32 %i.gm, %i.gi            ; 3 uses
-  %i.go = load i16, ptr %i.fs, align 8, !tbaa !32 ; 2 uses
+  %i.go = load i16, ptr %i.fs, align 8, !tbaa !32
   %i.gp = zext i16 %i.go to i32
-  %.not130.us = icmp samesign ult i32 %i.gn, %i.gp
-  br i1 %.not130.us, label %bb.ap, label %.split.us
+  %5 = add nsw i32 %i.gp, -1                      ; 2 uses
+  %6 = icmp sgt i32 %i.gn, %5
+  br i1 %6, label %.split.us, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   %i.gq = trunc i32 %i.gn to i8                   ; 2 uses
@@ -235,7 +236,8 @@ bb.ap:                                            ; preds = %bb.ao
   %i.gt = zext i16 %i.gs to i32
   %i.gu = add nsw i32 %i.gt, -1
   %i.gv = icmp eq i32 %i.gr, %i.gu
-  %.not129.us = icmp sge i32 %.0108141.us, %.0104200
+  %7 = add nuw nsw i32 %.0108141.us, 1            ; 2 uses
+  %.not129.us = icmp sgt i32 %7, %.0104200
   %or.cond161 = select i1 %i.gv, i1 true, i1 %.not129.us
   br i1 %or.cond161, label %.loopexit, label %.lr.ph.split.us.backedge
 
@@ -244,17 +246,18 @@ bb.aq:                                            ; preds = %.lr.ph.split.us
   %i.gx = trunc nuw i32 %i.gw to i8
   %i.gy = or i8 %i.gd, %i.gx                      ; 2 uses
   store i8 %i.gy, ptr %i.fw, align 1, !tbaa !24
-  %.not129.us.old.not = icmp slt i32 %.0108141.us, %.0104200
-  br i1 %.not129.us.old.not, label %.lr.ph.split.us.backedge, label %.loopexit
+  %.old = add nuw nsw i32 %.0108141.us, 1         ; 2 uses
+  %.not129.us.old = icmp sgt i32 %.old, %.0104200
+  br i1 %.not129.us.old, label %.loopexit, label %.lr.ph.split.us.backedge
 
 .lr.ph.split.us.backedge:                         ; preds = %bb.aq, %bb.ap
-  %i.gz = phi i8 [ %i.gy, %bb.aq ], [ %i.gq, %bb.ap ]
-  %.0108141.us.be = add nuw nsw i32 %.0108141.us, 1
+  %i.gz = phi i8 [ %i.gq, %bb.ap ], [ %i.gy, %bb.aq ]
+  %.0108140.us.be = phi i32 [ %7, %bb.ap ], [ %.old, %bb.aq ]
   br label %.lr.ph.split.us, !llvm.loop !43
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.split.backedge
   %i.ha = phi i8 [ %i.hm, %.lr.ph.split.backedge ], [ %i.fx, %.lr.ph ] ; 2 uses
-  %.0108141 = phi i32 [ %.0108141.be, %.lr.ph.split.backedge ], [ 1, %.lr.ph ] ; 6 uses
+  %.0108141 = phi i32 [ %.0108140.be, %.lr.ph.split.backedge ], [ 1, %.lr.ph ] ; 5 uses
   %i.hb = load i8, ptr %i.m, align 2, !tbaa !30
   %i.hc = icmp eq i8 %i.hb, 1
   br i1 %i.hc, label %bb.ar, label %bb.as
@@ -271,12 +274,13 @@ bb.ar:                                            ; preds = %.lr.ph.split
   %i.hk = trunc i32 %i.hj to i8
   %i.hl = or i8 %i.hf, %i.hk                      ; 2 uses
   store i8 %i.hl, ptr %i.fw, align 1, !tbaa !24
-  %.not129.old.not = icmp slt i32 %.0108141, %.0104200
-  br i1 %.not129.old.not, label %.lr.ph.split.backedge, label %.loopexit
+  %.old161 = add nuw nsw i32 %.0108141, 1         ; 2 uses
+  %.not129.old = icmp sgt i32 %.old161, %.0104200
+  br i1 %.not129.old, label %.loopexit, label %.lr.ph.split.backedge
 
 .lr.ph.split.backedge:                            ; preds = %bb.ar, %bb.au
-  %i.hm = phi i8 [ %i.hl, %bb.ar ], [ %i.hy, %bb.au ]
-  %.0108141.be = add nuw nsw i32 %.0108141, 1
+  %i.hm = phi i8 [ %i.hy, %bb.au ], [ %i.hl, %bb.ar ]
+  %.0108140.be = phi i32 [ %10, %bb.au ], [ %.old161, %bb.ar ]
   br label %.lr.ph.split, !llvm.loop !43
 
 bb.as:                                            ; preds = %.lr.ph.split
@@ -291,16 +295,16 @@ bb.at:                                            ; preds = %bb.as
   %i.hs = load i8, ptr %i.hr, align 1, !tbaa !24
   %i.ht = zext i8 %i.hs to i32
   %i.hu = add nuw nsw i32 %i.ht, %i.hp            ; 3 uses
-  %i.hv = load i16, ptr %i.fs, align 8, !tbaa !32 ; 2 uses
+  %i.hv = load i16, ptr %i.fs, align 8, !tbaa !32
   %i.hw = zext i16 %i.hv to i32
-  %.not130 = icmp samesign ult i32 %i.hu, %i.hw
-  br i1 %.not130, label %bb.au, label %.split.us
+  %8 = add nsw i32 %i.hw, -1                      ; 2 uses
+  %9 = icmp sgt i32 %i.hu, %8
+  br i1 %9, label %.split.us, label %bb.au
 
 .split.us:                                        ; preds = %bb.at, %bb.ao
-  %.us-phi = phi i16 [ %i.go, %bb.ao ], [ %i.hv, %bb.at ]
-  %i.hx = trunc i16 %.us-phi to i8
-  %5 = add i8 %i.hx, -1
-  store i8 %5, ptr %i.fw, align 1, !tbaa !24
+  %.us-phi = phi i32 [ %5, %bb.ao ], [ %8, %bb.at ]
+  %i.hx = trunc i32 %.us-phi to i8
+  store i8 %i.hx, ptr %i.fw, align 1, !tbaa !24
   br label %.loopexit
 
 bb.au:                                            ; preds = %bb.at
@@ -311,7 +315,8 @@ bb.au:                                            ; preds = %bb.at
   %i.ib = zext i16 %i.ia to i32
   %i.ic = add nsw i32 %i.ib, -1
   %i.id = icmp eq i32 %i.hz, %i.ic
-  %.not129 = icmp sge i32 %.0108141, %.0104200
+  %10 = add nuw nsw i32 %.0108141, 1              ; 2 uses
+  %.not129 = icmp sgt i32 %10, %.0104200
   %or.cond163 = select i1 %i.id, i1 true, i1 %.not129
   br i1 %or.cond163, label %.loopexit, label %.lr.ph.split.backedge
 
@@ -441,7 +446,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not.3, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !51
 
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %i.jx = add nuw i32 %.1153, 1
+  %i.jx = add nuw nsw i32 %.1153, 1
   %exitcond176.not = icmp eq i32 %.1153, %.0103203
   br i1 %exitcond176.not, label %._crit_edge155.split, label %iter.check, !llvm.loop !52
 

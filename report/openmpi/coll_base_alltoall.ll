@@ -202,12 +202,12 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.d:                                             ; preds = %ompi_coll_base_sendrecv.exit
-  %i.u = add nuw i32 %.050, 1
-  %exitcond.not = icmp eq i32 %.050, %.val.val
-  br i1 %exitcond.not, label %.loopexit, label %bb.e, !llvm.loop !93
+  %i.u = add nuw nsw i32 %.050, 1                 ; 2 uses
+  %.not = icmp sgt i32 %i.u, %.val.val
+  br i1 %.not, label %.loopexit, label %bb.e, !llvm.loop !93
 
 bb.e:                                             ; preds = %.lr.ph, %bb.d
-  %.050 = phi i32 [ 1, %.lr.ph ], [ %i.u, %bb.d ] ; 4 uses
+  %.050 = phi i32 [ 1, %.lr.ph ], [ %i.u, %bb.d ] ; 3 uses
   %i.v = add nsw i32 %.050, %.val47
   %i.w = srem i32 %i.v, %.val.val                 ; 3 uses
   %i.x = sub i32 %i.p, %.050
@@ -510,7 +510,7 @@ bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %6, i64 264
   %.val = load ptr, ptr %i.d, align 8, !tbaa !40
   %i.e = getelementptr i8, ptr %.val, i64 16
-  %.val.val = load i32, ptr %i.e, align 8, !tbaa !43 ; 11 uses
+  %.val.val = load i32, ptr %i.e, align 8, !tbaa !43 ; 10 uses
   %i.f = getelementptr i8, ptr %6, i64 220
   %.val199 = load i32, ptr %i.f, align 4, !tbaa !44 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -541,11 +541,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aa, label %ompi_coll_base_free_reqs.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ab = add i32 %.val.val, -1                   ; 7 uses
-  %9 = icmp sge i32 %8, %.val.val
+  %i.ab = add i32 %.val.val, -1                   ; 8 uses
   %i.ac = icmp slt i32 %8, 1
-  %or.cond = or i1 %i.ac, %9
-  %i.ad = select i1 %or.cond, i32 %i.ab, i32 %8   ; 6 uses
+  %9 = tail call i32 @llvm.smin.i32(i32 %8, i32 %i.ab)
+  %i.ad = select i1 %i.ac, i32 %i.ab, i32 %9      ; 6 uses
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %bb.f, label %bb.g
 
@@ -946,6 +945,9 @@ declare i32 @opal_datatype_add(ptr noundef, ptr noundef, i64 noundef, i64 nounde
 declare i32 @opal_datatype_commit(ptr noundef) local_unnamed_addr #3
 
 declare i32 @opal_datatype_copy_content_same_ddt(ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6

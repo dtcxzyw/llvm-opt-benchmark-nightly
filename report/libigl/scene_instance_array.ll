@@ -205,7 +205,7 @@ _ZNK6embree13InstanceArray6boundsEmmmf.exit:      ; preds = %_ZNK6embree13Instan
   %.sroa.0352.0.lcssa = phi <4 x float> [ %.sroa.0352.1, %_ZNK6embree13InstanceArray6boundsEmmmf.exit ], [ %i.gjq, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 5 uses
   %.sroa.44.0.lcssa = phi <4 x float> [ %i.fmd, %_ZNK6embree13InstanceArray6boundsEmmmf.exit ], [ %i.gjt, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 5 uses
   %.sroa.0309.0.lcssa = phi <4 x float> [ %i.fmc, %_ZNK6embree13InstanceArray6boundsEmmmf.exit ], [ %i.gjr, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 5 uses
-  %i.fmp = tail call noundef i32 @llvm.smax.i32(i32 %i.fme, i32 1) ; 5 uses
+  %i.fmp = tail call noundef i32 @llvm.smax.i32(i32 %i.fme, i32 1) ; 4 uses
   %i.fmq = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
   %i.fmr = load float, ptr %i.fmq, align 8        ; 3 uses
   %i.fms = fptosi float %i.fmr to i32
@@ -391,11 +391,13 @@ _ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel: ; preds = %_ZNK6emb
   %i.frf = load <4 x float>, ptr %i.fnj, align 16, !noalias !1096
   %i.frg = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> zeroinitializer, <4 x float> %i.frf) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
+  %indvars.iv.next5086.peel = add nuw nsw i64 %i.fnk, 1 ; 2 uses
   %i.frh = load float, ptr %i.fmq, align 8        ; 2 uses
   %i.fri = fptosi float %i.frh to i32
   %i.frj = tail call noundef i32 @llvm.smin.i32(i32 %i.fri, i32 %i.af) ; 2 uses
-  %.not.not.peel = icmp slt i32 %i.fmp, %i.frj
-  br i1 %.not.not.peel, label %.peel.next, label %._crit_edge5076
+  %16 = sext i32 %i.frj to i64
+  %.not.peel = icmp sgt i64 %indvars.iv.next5086.peel, %16
+  br i1 %.not.peel, label %._crit_edge5076, label %.peel.next
 
 bb.cr:                                            ; preds = %.lr.ph, %_ZNK6embree13InstanceArray6boundsEmm.exit
   %indvars.iv = phi i64 [ %i.fmo, %.lr.ph ], [ %indvars.iv.next, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 3 uses
@@ -798,15 +800,15 @@ _ZNK6embree13InstanceArray6boundsEmm.exit:        ; preds = %_ZNK6embree13Instan
   br label %bb.de
 
 .peel.next:                                       ; preds = %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123
-  %indvars.iv5085.in = phi i64 [ %indvars.iv5085, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123 ], [ %i.fnk, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel ] ; 3 uses
+  %indvars.iv5085.in = phi i64 [ %indvars.iv.next5086, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123 ], [ %indvars.iv.next5086.peel, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel ] ; 4 uses
   %i.gjy = phi i32 [ %i.gnt, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123 ], [ %i.frj, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel ]
   %i.gjz = phi float [ %i.gnr, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123 ], [ %i.frh, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel ] ; 2 uses
   %.sroa.0262.05072 = phi <4 x float> [ %i.gno, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123 ], [ %i.fre, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel ]
   %.sroa.7.05071 = phi <4 x float> [ %i.gnq, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123 ], [ %i.frg, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel ]
-  %indvars.iv5085 = add nuw nsw i64 %indvars.iv5085.in, 1 ; 4 uses
-  %i.gka = trunc nuw nsw i64 %indvars.iv5085.in to i32
+  %indvars.iv5085 = add nsw i64 %indvars.iv5085.in, -1 ; 2 uses
+  %i.gka = trunc nuw nsw i64 %indvars.iv5085 to i32
   %i.gkb = uitofp nneg i32 %i.gka to float        ; 2 uses
-  %i.gkc = trunc nuw nsw i64 %indvars.iv5085 to i32
+  %i.gkc = trunc nuw nsw i64 %indvars.iv5085.in to i32
   %i.gkd = uitofp nneg i32 %i.gkc to float        ; 2 uses
   %i.gke = insertelement <2 x float> poison, float %i.gkb, i64 0
   %i.gkf = insertelement <2 x float> %i.gke, float %i.gkd, i64 1
@@ -814,7 +816,7 @@ _ZNK6embree13InstanceArray6boundsEmm.exit:        ; preds = %_ZNK6embree13Instan
   %i.gkh = fsub <2 x float> %i.gkg, %i.fnu
   %i.gki = fdiv <2 x float> %i.gkh, %i.fnx        ; 3 uses
   %i.gkj = zext i32 %i.gjy to i64
-  %i.gkk = icmp eq i64 %indvars.iv5085, %i.gkj
+  %i.gkk = icmp eq i64 %indvars.iv5085.in, %i.gkj
   %i.gkl = select i1 %i.gkk, float %i.fmy, float 1.000000e+00
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
@@ -949,7 +951,7 @@ _ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123: ; preds = %_ZNK6embree13
   %i.gnm = fadd <4 x float> %i.gnk, %i.gnl
   store <4 x float> %i.gnj, ptr %15, align 16
   store <4 x float> %i.gnm, ptr %i.fni, align 16
-  call void @_ZNK6embree13InstanceArray12boundSegmentEmmRKNS_4BBoxINS_6Vec3faEEES5_S5_S5_ff(ptr dead_on_unwind nonnull writable sret(%"struct.embree::BBox.13") align 16 %11, ptr noundef nonnull align 16 dereferenceable(200) %1, i64 noundef %2, i64 noundef %indvars.iv5085.in, ptr noundef nonnull align 16 dereferenceable(32) %12, ptr noundef nonnull align 16 dereferenceable(32) %13, ptr noundef nonnull align 16 dereferenceable(32) %14, ptr noundef nonnull align 16 dereferenceable(32) %15, float noundef 0.000000e+00, float noundef %i.gkl)
+  call void @_ZNK6embree13InstanceArray12boundSegmentEmmRKNS_4BBoxINS_6Vec3faEEES5_S5_S5_ff(ptr dead_on_unwind nonnull writable sret(%"struct.embree::BBox.13") align 16 %11, ptr noundef nonnull align 16 dereferenceable(200) %1, i64 noundef %2, i64 noundef %indvars.iv5085, ptr noundef nonnull align 16 dereferenceable(32) %12, ptr noundef nonnull align 16 dereferenceable(32) %13, ptr noundef nonnull align 16 dereferenceable(32) %14, ptr noundef nonnull align 16 dereferenceable(32) %15, float noundef 0.000000e+00, float noundef %i.gkl)
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #24
@@ -959,12 +961,13 @@ _ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123: ; preds = %_ZNK6embree13
   %i.gnp = load <4 x float>, ptr %i.fnj, align 16, !noalias !1096
   %i.gnq = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.7.05071, <4 x float> %i.gnp) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
+  %indvars.iv.next5086 = add nuw nsw i64 %indvars.iv5085.in, 1 ; 2 uses
   %i.gnr = load float, ptr %i.fmq, align 8        ; 2 uses
   %i.gns = fptosi float %i.gnr to i32
   %i.gnt = tail call noundef i32 @llvm.smin.i32(i32 %i.gns, i32 %i.af) ; 2 uses
   %i.gnu = sext i32 %i.gnt to i64
-  %.not.not = icmp slt i64 %indvars.iv5085, %i.gnu
-  br i1 %.not.not, label %.peel.next, label %._crit_edge5076, !llvm.loop !964
+  %.not = icmp sgt i64 %indvars.iv.next5086, %i.gnu
+  br i1 %.not, label %._crit_edge5076, label %.peel.next, !llvm.loop !964
 
 bb.de:                                            ; preds = %._crit_edge5076, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit125
   ret void

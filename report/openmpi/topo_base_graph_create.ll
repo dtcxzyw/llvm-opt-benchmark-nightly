@@ -41,9 +41,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   %i.h = load i32, ptr %i.g, align 4, !tbaa !50   ; 2 uses
-  %.not.i = icmp sge i32 %i.h, %2
+  %7 = add nsw i32 %2, -1                         ; 2 uses
+  %8 = icmp sgt i32 %i.h, %7
   %i.i = icmp eq i32 %i.h, -32766
-  %or.cond.i = or i1 %.not.i, %i.i
+  %or.cond.i = or i1 %8, %i.i
   br i1 %or.cond.i, label %mca_topo_base_graph_allocate.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -83,14 +84,14 @@ bb.f:                                             ; preds = %bb.e
 .loopexit.i:                                      ; preds = %.lr.ph.i.i.i, %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   store i32 %2, ptr %i.t, align 8, !tbaa !13
-  %i.u = sext i32 %2 to i64                       ; 2 uses
+  %i.u = sext i32 %2 to i64
   %i.v = shl nsw i64 %i.u, 2                      ; 2 uses
   %i.w = tail call noalias ptr @malloc(i64 noundef %i.v) #8 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   store ptr %i.w, ptr %i.x, align 8, !tbaa !14
-  %7 = getelementptr [4 x i8], ptr %3, i64 %i.u
-  %8 = getelementptr i8, ptr %7, i64 -4           ; 2 uses
-  %i.y = load i32, ptr %8, align 4, !tbaa !53
+  %9 = sext i32 %7 to i64
+  %10 = getelementptr inbounds [4 x i8], ptr %3, i64 %9 ; 2 uses
+  %i.y = load i32, ptr %10, align 4, !tbaa !53
   %i.z = sext i32 %i.y to i64
   %i.aa = shl nsw i64 %i.z, 2
   %i.ab = tail call noalias ptr @malloc(i64 noundef %i.aa) #8 ; 3 uses
@@ -146,7 +147,7 @@ opal_obj_run_destructors.exit.i:                  ; preds = %.lr.ph.i.i, %bb.j
 
 bb.k:                                             ; preds = %.loopexit.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.w, ptr nonnull readonly align 4 %3, i64 %i.v, i1 false)
-  %i.au = load i32, ptr %8, align 4, !tbaa !53
+  %i.au = load i32, ptr %10, align 4, !tbaa !53
   %i.av = sext i32 %i.au to i64
   %i.aw = shl nsw i64 %i.av, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ab, ptr readonly align 4 %4, i64 %i.aw, i1 false)

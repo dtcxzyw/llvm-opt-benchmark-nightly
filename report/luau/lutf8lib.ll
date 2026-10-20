@@ -72,12 +72,12 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZL10u_posrelatim.exit
 
 _ZL10u_posrelatim.exit:                           ; preds = %bb.a, %bb.c
-  %.0.i = phi i32 [ %i.q, %bb.c ], [ %i.i, %bb.a ] ; 4 uses
+  %.0.i = phi i32 [ %i.q, %bb.c ], [ %i.i, %bb.a ] ; 3 uses
   %i.r = icmp sgt i32 %.0.i, 0
   br i1 %i.r, label %bb.d, label %_ZL10u_posrelatim.exit.thread
 
 bb.d:                                             ; preds = %_ZL10u_posrelatim.exit
-  %i.s = add nsw i32 %.0.i, -1                    ; 7 uses
+  %i.s = add nsw i32 %.0.i, -1                    ; 8 uses
   %i.t = trunc i64 %i.j to i32                    ; 3 uses
   %.not = icmp sgt i32 %i.s, %i.t
   br i1 %.not, label %_ZL10u_posrelatim.exit.thread, label %bb.e
@@ -125,7 +125,7 @@ bb.i:                                             ; preds = %bb.g
 .preheader48:                                     ; preds = %bb.i
   %.13751 = add nsw i32 %i.c, -1                  ; 2 uses
   %i.ag = icmp ne i32 %i.c, 1
-  %1 = icmp samesign ule i32 %.0.i, %i.t
+  %1 = icmp samesign ult i32 %i.s, %i.t
   %i.ah = and i1 %i.ag, %1
   br i1 %i.ah, label %.preheader47.preheader, label %.critedge
 
@@ -445,7 +445,7 @@ bb.f:                                             ; preds = %bb.a
   br label %bb.k
 
 bb.g:                                             ; preds = %.lr.ph, %_ZL11buffutfcharP9lua_StateiPcPPKc.exit24
-  %.031 = phi i32 [ 1, %.lr.ph ], [ %i.az, %_ZL11buffutfcharP9lua_StateiPcPPKc.exit24 ] ; 4 uses
+  %.031 = phi i32 [ 1, %.lr.ph ], [ %i.az, %_ZL11buffutfcharP9lua_StateiPcPPKc.exit24 ] ; 3 uses
   %i.ac = call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef %.031) ; 3 uses
   %or.cond.i12 = icmp ult i32 %i.ac, 1114112
   br i1 %or.cond.i12, label %bb.i, label %bb.h
@@ -499,9 +499,9 @@ _ZL11buffutfcharP9lua_StateiPcPPKc.exit24:        ; preds = %bb.i, %bb.j
   %i.ax = getelementptr inbounds i8, ptr %i.ab, i64 %i.aw
   %i.ay = sext i32 %.1.i.i21 to i64
   call void @_Z15luaL_addlstringP11luaL_StrbufPKcm(ptr noundef nonnull %1, ptr noundef nonnull %i.ax, i64 noundef %i.ay)
-  %i.az = add nuw i32 %.031, 1
-  %exitcond.not = icmp eq i32 %.031, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %bb.g, !llvm.loop !22
+  %i.az = add nuw nsw i32 %.031, 1                ; 2 uses
+  %.not = icmp sgt i32 %i.az, %i.b
+  br i1 %.not, label %._crit_edge, label %bb.g, !llvm.loop !22
 
 bb.k:                                             ; preds = %._crit_edge, %_ZL11buffutfcharP9lua_StateiPcPPKc.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
@@ -551,7 +551,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZL10u_posrelatim.exit35
 
 _ZL10u_posrelatim.exit35:                         ; preds = %_ZL10u_posrelatim.exit, %bb.d, %bb.e
-  %.0.i34 = phi i32 [ %i.t, %bb.e ], [ %i.l, %_ZL10u_posrelatim.exit ], [ 0, %bb.d ] ; 3 uses
+  %.0.i34 = phi i32 [ %i.t, %bb.e ], [ %i.l, %_ZL10u_posrelatim.exit ], [ 0, %bb.d ] ; 2 uses
   %i.u = icmp sgt i32 %.0.i, 0
   br i1 %i.u, label %bb.f, label %bb.g
 
@@ -566,8 +566,9 @@ bb.g:                                             ; preds = %bb.f, %_ZL10u_posre
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %.not31 = icmp sgt i32 %.0.i34, %i.w
-  br i1 %.not31, label %bb.i, label %.preheader
+  %1 = add nsw i32 %.0.i34, -1                    ; 2 uses
+  %2 = icmp slt i32 %1, %i.w
+  br i1 %2, label %.preheader, label %bb.i
 
 .preheader:                                       ; preds = %bb.h
   %.not32.not52.not = icmp sgt i32 %.0.i, %.0.i34
@@ -651,8 +652,8 @@ bb.o:                                             ; preds = %bb.j, %bb.n
   %i.bb = sub i64 %i.ba, %i.x
   %i.bc = trunc i64 %i.bb to i32                  ; 2 uses
   %i.bd = add nuw nsw i32 %.02353, 1              ; 2 uses
-  %.not32.not = icmp sgt i32 %.0.i34, %i.bc
-  br i1 %.not32.not, label %bb.j, label %._crit_edge, !llvm.loop !23
+  %.not31 = icmp slt i32 %1, %i.bc
+  br i1 %.not31, label %._crit_edge, label %bb.j, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %bb.o, %.preheader, %.thread
   %.sink = phi i32 [ %i.ay, %.thread ], [ 0, %.preheader ], [ %i.bd, %bb.o ]
@@ -712,7 +713,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.b = call noundef ptr @_Z17luaL_checklstringP9lua_StateiPm(ptr noundef %0, i32 noundef 1, ptr noundef nonnull %i.a) ; 2 uses
-  %i.c = call noundef i32 @_Z14lua_tointegerxP9lua_StateiPi(ptr noundef %0, i32 noundef 2, ptr noundef null) ; 4 uses
+  %i.c = call noundef i32 @_Z14lua_tointegerxP9lua_StateiPi(ptr noundef %0, i32 noundef 2, ptr noundef null) ; 3 uses
   %i.d = icmp slt i32 %i.c, 1
   %.pre = load i64, ptr %i.a, align 8, !tbaa !11  ; 2 uses
   br i1 %i.d, label %..loopexit_crit_edge, label %bb.b
@@ -722,10 +723,10 @@ bb.a:
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = add nsw i32 %i.c, -1
+  %i.e = add nsw i32 %i.c, -1                     ; 2 uses
   %i.f = trunc i64 %.pre to i32                   ; 3 uses
-  %.not = icmp sgt i32 %i.c, %i.f
-  br i1 %.not, label %.loopexit, label %.preheader.preheader
+  %1 = icmp slt i32 %i.e, %i.f
+  br i1 %1, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.b
   %i.g = zext nneg i32 %i.c to i64

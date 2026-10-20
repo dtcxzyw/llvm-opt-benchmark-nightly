@@ -202,7 +202,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ax = tail call { i64, ptr } @jv_copy(i64 %.sroa.0146.2, ptr %.sroa.42.2) #8 ; 2 uses
   %i.ay = extractvalue { i64, ptr } %i.ax, 0
   %i.az = extractvalue { i64, ptr } %i.ax, 1
-  %i.ba = tail call i32 @jv_array_length(i64 %i.ay, ptr %i.az) #8 ; 6 uses
+  %i.ba = tail call i32 @jv_array_length(i64 %i.ay, ptr %i.az) #8 ; 5 uses
   %i.bb = load i32, ptr %i.a, align 4, !tbaa !13  ; 4 uses
   %i.bc = icmp sgt i32 %i.bb, -1
   br i1 %i.bc, label %bb.v, label %bb.w
@@ -229,11 +229,12 @@ bb.x:                                             ; preds = %bb.v
 
 bb.y:                                             ; preds = %bb.x
   %i.bk = sub nsw i32 %i.bi, %i.be
-  %.not210.not227 = icmp sgt i32 %i.ba, %i.bd
-  br i1 %.not210.not227, label %.lr.ph231, label %.lr.ph240.preheader
+  %.0226 = add nsw i32 %i.ba, -1                  ; 2 uses
+  %.not210227 = icmp slt i32 %.0226, %i.bd
+  br i1 %.not210227, label %.lr.ph240.preheader, label %.lr.ph231
 
 .lr.ph231:                                        ; preds = %bb.y, %bb.z
-  %.0230.in = phi i32 [ %.0230, %bb.z ], [ %i.ba, %bb.y ]
+  %.0230.in = phi i32 [ %.0, %bb.z ], [ %.0226, %bb.y ] ; 3 uses
   %.sroa.42.3229 = phi ptr [ %i.bv, %bb.z ], [ %.sroa.42.2, %bb.y ] ; 4 uses
   %.sroa.0146.3228 = phi i64 [ %i.bu, %bb.z ], [ %.sroa.0146.2, %bb.y ] ; 4 uses
   %i.bl = tail call i32 @jv_get_kind(i64 %.sroa.0146.3228, ptr %.sroa.42.3229) #8
@@ -241,19 +242,19 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not217, label %.critedge, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph231
-  %.0230 = add nsw i32 %.0230.in, -1              ; 4 uses
-  %i.bm = add nsw i32 %i.bk, %.0230
+  %i.bm = add nsw i32 %i.bk, %.0230.in
   %i.bn = tail call { i64, ptr } @jv_copy(i64 %.sroa.0146.3228, ptr %.sroa.42.3229) #8 ; 2 uses
   %i.bo = extractvalue { i64, ptr } %i.bn, 0
   %i.bp = extractvalue { i64, ptr } %i.bn, 1
-  %i.bq = tail call { i64, ptr } @jv_array_get(i64 %i.bo, ptr %i.bp, i32 noundef %.0230) #8 ; 2 uses
+  %i.bq = tail call { i64, ptr } @jv_array_get(i64 %i.bo, ptr %i.bp, i32 noundef %.0230.in) #8 ; 2 uses
   %i.br = extractvalue { i64, ptr } %i.bq, 0
   %i.bs = extractvalue { i64, ptr } %i.bq, 1
   %i.bt = tail call { i64, ptr } @jv_array_set(i64 %.sroa.0146.3228, ptr %.sroa.42.3229, i32 noundef %i.bm, i64 %i.br, ptr %i.bs) #8 ; 2 uses
   %i.bu = extractvalue { i64, ptr } %i.bt, 0      ; 2 uses
   %i.bv = extractvalue { i64, ptr } %i.bt, 1      ; 2 uses
-  %.not210.not = icmp sgt i32 %.0230, %i.bd
-  br i1 %.not210.not, label %.lr.ph231, label %.critedge, !llvm.loop !22
+  %.0 = add nsw i32 %.0230.in, -1                 ; 2 uses
+  %.not210 = icmp slt i32 %.0, %i.bd
+  br i1 %.not210, label %.critedge, label %.lr.ph231, !llvm.loop !22
 
 bb.aa:                                            ; preds = %bb.x
   %i.bw = icmp sgt i32 %i.be, %i.bi
