@@ -202,6 +202,7 @@ _ZN4llvm23SmallVectorTemplateBaseIPKNS_12LiveIntervalELb1EE9push_backES3_.exit: 
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 816
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 808
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.be = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.bg = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 3 uses
@@ -212,12 +213,12 @@ _ZN4llvm23SmallVectorTemplateBaseIPKNS_12LiveIntervalELb1EE9push_backES3_.exit: 
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 72
   %i.bn = getelementptr inbounds nuw i8, ptr %5, i64 80
-  %6 = insertelement <2 x ptr> poison, ptr %0, i64 0
-  %7 = insertelement <2 x ptr> %6, ptr %5, i64 1
-  %8 = getelementptr inbounds nuw i8, <2 x ptr> %7, <2 x i64> <i64 456, i64 104>
-  %i.bo = getelementptr inbounds nuw i8, ptr %5, i64 88
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 104
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 88
   %9 = getelementptr inbounds nuw i8, ptr %5, i64 92
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 2 uses
+  %10 = insertelement <2 x ptr> poison, ptr %6, i64 0
+  %11 = insertelement <2 x ptr> %10, ptr %7, i64 1
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph75, %bb.p
@@ -259,10 +260,10 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.bd, ptr %i.bj, align 8, !tbaa !293
   %i.cj = load i32, ptr %i.bl, align 8, !tbaa !93
   store i32 %i.cj, ptr %i.bk, align 8, !tbaa !294
-  store <2 x ptr> %8, ptr %i.bm, align 8, !tbaa !31
-  store i32 4, ptr %i.bo, align 8, !tbaa !114
+  store <2 x ptr> %11, ptr %i.bm, align 8, !tbaa !31
+  store i32 4, ptr %8, align 8, !tbaa !114
   store i32 0, ptr %9, align 4, !tbaa !115
-  store i8 1, ptr %10, align 8, !tbaa !116
+  store i8 1, ptr %i.bo, align 8, !tbaa !116
   %i.ck = load ptr, ptr %i.bg, align 8, !tbaa !295, !nonnull !118, !align !291 ; 4 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 8 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ck, i64 24
@@ -368,7 +369,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN4llvm19MachineRegisterInfo13resetDelegateEPNS0_8DelegateE.exit.i
 
 _ZN4llvm19MachineRegisterInfo13resetDelegateEPNS0_8DelegateE.exit.i: ; preds = %.critedge.i.i.i.i44, %bb.n, %bb.m, %bb.l, %bb.k
-  %i.ec = load i8, ptr %10, align 8, !tbaa !116, !range !123, !noundef !118
+  %i.ec = load i8, ptr %i.bo, align 8, !tbaa !116, !range !123, !noundef !118
   %i.ed = trunc nuw i8 %i.ec to i1
   br i1 %i.ed, label %_ZN4llvm13LiveRangeEditD2Ev.exit, label %bb.o
 

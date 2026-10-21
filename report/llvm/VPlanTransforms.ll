@@ -205,13 +205,16 @@ _ZN4llvm17VPlanPatternMatch5matchINS0_12Recipe_matchISt5tupleIJNS0_14specificval
 
 _ZN4llvm17VPlanPatternMatch5matchINS0_12Recipe_matchISt5tupleIJNS0_14specificval_tyEEELj85ELb0EJNS_13VPInstructionEEEEEEbPNS_17VPSingleDefRecipeERKT_.exit.thread.i: ; preds = %_ZN4llvm17VPlanPatternMatch5matchINS0_12Recipe_matchISt5tupleIJNS0_14specificval_tyEEELj85ELb0EJNS_13VPInstructionEEEEEEbPNS_17VPSingleDefRecipeERKT_.exit.i, %_ZNK4llvm13VPInstruction25getNumOperandsWithoutMaskEv.exit.i.i.i, %_ZNK4llvm13VPInstruction8isMaskedEv.exit.i.i.i, %bb.l, %bb.k, %_ZN4llvm17VPlanPatternMatch12Recipe_matchISt5tupleIJNS0_14specificval_tyEEELj85ELb0EJNS_13VPInstructionEEE20matchRecipeAndOpcodeIS5_EEbPKNS_12VPRecipeBaseE.exit.i.i.i, %bb.j
   %i.cl = load ptr, ptr %i.y, align 8, !tbaa !4314, !nonnull !255, !align !432
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !787
-  %i.cn = load ptr, ptr %0, align 8, !tbaa !4313
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !787 ; 2 uses
+  %i.cn = load ptr, ptr %0, align 8, !tbaa !4313  ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.cm, i64 96
   %i.co = insertelement <2 x ptr> poison, ptr %i.cn, i64 0
-  %i.cp = insertelement <2 x ptr> %i.co, ptr %i.cm, i64 1 ; 2 uses
+  %i.cp = insertelement <2 x ptr> %i.co, ptr %i.cm, i64 1
   %i.cq = icmp eq <2 x ptr> %i.cp, splat (ptr null)
-  %2 = getelementptr inbounds nuw i8, <2 x ptr> %i.cp, i64 96
-  %i.cr = select <2 x i1> %i.cq, <2 x ptr> splat (ptr null), <2 x ptr> %2
+  %3 = getelementptr inbounds nuw i8, ptr %i.cn, i64 96
+  %4 = insertelement <2 x ptr> poison, ptr %3, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %2, i64 1
+  %i.cr = select <2 x i1> %i.cq, <2 x ptr> splat (ptr null), <2 x ptr> %5
   %i.cs = ptrtoint <2 x ptr> %i.cr to <2 x i64>
   store <2 x i64> %i.cs, ptr %1, align 16, !tbaa !157, !alias.scope !4318
   %i.ct = call noundef zeroext i1 @_ZNK4llvm17VPlanPatternMatch12Recipe_matchISt5tupleIJNS_19PatternMatchHelpers9match_isaIJNS_7VPValueEEEENS0_14specificval_tyES7_EELj59ELb0EJNS_13VPWidenRecipeENS_17VPReplicateRecipeENS_17VPWidenCastRecipeENS_13VPInstructionEEE5matchEPKNS_12VPRecipeBaseE(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.c)

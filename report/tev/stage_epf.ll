@@ -204,7 +204,7 @@ define linkonce_odr hidden i32 @_ZNK3jxl6N_SSE49EPF0Stage10ProcessRowERKNSt3__16
   %i.a = alloca [12 x ptr], align 16              ; 17 uses
   %i.b = alloca [8 x float], align 16             ; 8 uses
   %i.c = alloca [8 x float], align 16             ; 5 uses
-  %i.d = alloca [3 x [7 x ptr]], align 16         ; 23 uses
+  %i.d = alloca [3 x [7 x ptr]], align 16         ; 26 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
@@ -283,11 +283,25 @@ define linkonce_odr hidden i32 @_ZNK3jxl6N_SSE49EPF0Stage10ProcessRowERKNSt3__16
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.as = load i64, ptr %i.ar, align 8, !tbaa !54 ; 3 uses
   %i.at = load ptr, ptr %i.aq, align 8, !tbaa !60
-  %i.au = getelementptr [8 x i8], ptr %i.at, i64 %i.as ; 4 uses
-  %i.av = getelementptr i8, ptr %i.au, i64 -24
-  %20 = load <4 x ptr>, ptr %i.av, align 8, !tbaa !62
-  %21 = getelementptr inbounds nuw i8, <4 x ptr> %20, i64 128 ; 4 uses
-  store <4 x ptr> %21, ptr %i.d, align 16, !tbaa !62
+  %i.au = getelementptr [8 x i8], ptr %i.at, i64 %i.as ; 7 uses
+  %20 = getelementptr i8, ptr %i.au, i64 -24
+  %21 = load ptr, ptr %20, align 8, !tbaa !62
+  %22 = getelementptr inbounds nuw i8, ptr %21, i64 128
+  store ptr %22, ptr %i.d, align 16, !tbaa !62
+  %23 = getelementptr i8, ptr %i.au, i64 -16
+  %24 = load ptr, ptr %23, align 8, !tbaa !62
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 128 ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  store ptr %25, ptr %26, align 8, !tbaa !62
+  %27 = getelementptr i8, ptr %i.au, i64 -8
+  %28 = load ptr, ptr %27, align 8, !tbaa !62
+  %29 = getelementptr inbounds nuw i8, ptr %28, i64 128 ; 5 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  store ptr %29, ptr %i.av, align 16, !tbaa !62
+  %30 = load ptr, ptr %i.au, align 8, !tbaa !62
+  %31 = getelementptr inbounds nuw i8, ptr %30, i64 128 ; 7 uses
+  %32 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  store ptr %31, ptr %32, align 8, !tbaa !62
   %i.aw = getelementptr i8, ptr %i.au, i64 8
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !62
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 128 ; 5 uses
@@ -393,9 +407,6 @@ define linkonce_odr hidden i32 @_ZNK3jxl6N_SSE49EPF0Stage10ProcessRowERKNSt3__16
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 124
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %22 = extractelement <4 x ptr> %21, i64 1
-  %23 = extractelement <4 x ptr> %21, i64 2       ; 4 uses
-  %24 = extractelement <4 x ptr> %21, i64 3       ; 6 uses
   br label %bb.a
 
 ._crit_edge:                                      ; preds = %.loopexit, %.preheader162
@@ -428,7 +439,7 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   br i1 %i.eh, label %.preheader160.preheader, label %.preheader161.preheader
 
 .preheader160.preheader:                          ; preds = %bb.a
-  %i.ei = getelementptr inbounds [4 x i8], ptr %24, i64 %.0139176
+  %i.ei = getelementptr inbounds [4 x i8], ptr %31, i64 %.0139176
   %i.ej = load <4 x float>, ptr %i.ei, align 16, !tbaa !63
   %i.ek = load ptr, ptr %2, align 8, !tbaa !53
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !60
@@ -467,8 +478,8 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   store <4 x float> zeroinitializer, ptr %19, align 16, !tbaa !63
   %i.fc = load <1 x float>, ptr %i.dz, align 8
   %i.fd = shufflevector <1 x float> %i.fc, <1 x float> poison, <4 x i32> zeroinitializer
-  %i.fe = getelementptr inbounds [4 x i8], ptr %24, i64 %.0139176 ; 4 uses
-  %i.ff = getelementptr inbounds [4 x i8], ptr %23, i64 %.0139176
+  %i.fe = getelementptr inbounds [4 x i8], ptr %31, i64 %.0139176 ; 4 uses
+  %i.ff = getelementptr inbounds [4 x i8], ptr %29, i64 %.0139176
   %i.fg = getelementptr inbounds i8, ptr %i.fe, i64 -4
   %i.fh = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %.0139176
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fe, i64 4
@@ -536,7 +547,7 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   br i1 %exitcond.not, label %.preheader161.1, label %.preheader, !llvm.loop !94
 
 .preheader161.1:                                  ; preds = %.preheader
-  %i.hi = getelementptr inbounds [4 x i8], ptr %23, i64 %.0139176
+  %i.hi = getelementptr inbounds [4 x i8], ptr %29, i64 %.0139176
   %i.hj = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %.0139176
   %i.hk = load <1 x float>, ptr %i.ea, align 4
   %i.hl = shufflevector <1 x float> %i.hk, <1 x float> poison, <4 x i32> zeroinitializer
@@ -691,7 +702,7 @@ bb.b:                                             ; preds = %.preheader.2
   %i.me = load <4 x float>, ptr %i.hm, align 16, !tbaa !63
   %i.mf = load <4 x float>, ptr %i.ju, align 16, !tbaa !63
   %.sroa.015.0.copyload = load <4 x float>, ptr %8, align 16, !tbaa !63
-  %i.mg = getelementptr inbounds [4 x i8], ptr %22, i64 %.0139176
+  %i.mg = getelementptr inbounds [4 x i8], ptr %25, i64 %.0139176
   %i.mh = load <4 x float>, ptr %i.mg, align 1, !tbaa !63, !noalias !105
   %i.mi = getelementptr inbounds [4 x i8], ptr %i.br, i64 %.0139176
   %i.mj = load <4 x float>, ptr %i.mi, align 1, !tbaa !63, !noalias !105
@@ -709,7 +720,7 @@ bb.b:                                             ; preds = %.preheader.2
   %i.mv = fadd <4 x float> %i.mf, %i.mu
   %i.mw = add nsw i64 %.0139176, -1               ; 9 uses
   %.sroa.015.0.copyload.1 = load <4 x float>, ptr %9, align 16, !tbaa !63
-  %i.mx = getelementptr inbounds [4 x i8], ptr %23, i64 %i.mw
+  %i.mx = getelementptr inbounds [4 x i8], ptr %29, i64 %i.mw
   %i.my = load <4 x float>, ptr %i.mx, align 1, !tbaa !63, !noalias !105
   %i.mz = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %i.mw
   %i.na = load <4 x float>, ptr %i.mz, align 1, !tbaa !63, !noalias !105
@@ -741,7 +752,7 @@ bb.b:                                             ; preds = %.preheader.2
   %i.nz = fadd <4 x float> %i.nm, %i.ny
   %i.oa = or disjoint i64 %.0139176, 1            ; 9 uses
   %.sroa.015.0.copyload.3 = load <4 x float>, ptr %11, align 16, !tbaa !63
-  %i.ob = getelementptr inbounds [4 x i8], ptr %23, i64 %i.oa
+  %i.ob = getelementptr inbounds [4 x i8], ptr %29, i64 %i.oa
   %i.oc = load <4 x float>, ptr %i.ob, align 1, !tbaa !63, !noalias !105
   %i.od = getelementptr inbounds [4 x i8], ptr %i.bv, i64 %i.oa
   %i.oe = load <4 x float>, ptr %i.od, align 1, !tbaa !63, !noalias !105
@@ -759,7 +770,7 @@ bb.b:                                             ; preds = %.preheader.2
   %i.oq = fadd <4 x float> %i.nz, %i.op
   %i.or = add nsw i64 %.0139176, -2               ; 3 uses
   %.sroa.015.0.copyload.4 = load <4 x float>, ptr %12, align 16, !tbaa !63
-  %i.os = getelementptr inbounds [4 x i8], ptr %24, i64 %i.or
+  %i.os = getelementptr inbounds [4 x i8], ptr %31, i64 %i.or
   %i.ot = load <4 x float>, ptr %i.os, align 1, !tbaa !63, !noalias !105
   %i.ou = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.or
   %i.ov = load <4 x float>, ptr %i.ou, align 1, !tbaa !63, !noalias !105
@@ -776,7 +787,7 @@ bb.b:                                             ; preds = %.preheader.2
   %i.pg = fmul <4 x float> %i.ox, %i.pa
   %i.ph = fadd <4 x float> %i.oq, %i.pg
   %.sroa.015.0.copyload.5 = load <4 x float>, ptr %13, align 16, !tbaa !63
-  %i.pi = getelementptr inbounds [4 x i8], ptr %24, i64 %i.mw
+  %i.pi = getelementptr inbounds [4 x i8], ptr %31, i64 %i.mw
   %i.pj = load <4 x float>, ptr %i.pi, align 1, !tbaa !63, !noalias !105
   %i.pk = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.mw
   %i.pl = load <4 x float>, ptr %i.pk, align 1, !tbaa !63, !noalias !105
@@ -793,7 +804,7 @@ bb.b:                                             ; preds = %.preheader.2
   %i.pw = fmul <4 x float> %i.pn, %i.pq
   %i.px = fadd <4 x float> %i.ph, %i.pw
   %.sroa.015.0.copyload.6 = load <4 x float>, ptr %14, align 16, !tbaa !63
-  %i.py = getelementptr inbounds [4 x i8], ptr %24, i64 %i.oa
+  %i.py = getelementptr inbounds [4 x i8], ptr %31, i64 %i.oa
   %i.pz = load <4 x float>, ptr %i.py, align 1, !tbaa !63, !noalias !105
   %i.qa = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.oa
   %i.qb = load <4 x float>, ptr %i.qa, align 1, !tbaa !63, !noalias !105
@@ -811,7 +822,7 @@ bb.b:                                             ; preds = %.preheader.2
   %i.qn = fadd <4 x float> %i.px, %i.qm
   %i.qo = or disjoint i64 %.0139176, 2            ; 3 uses
   %.sroa.015.0.copyload.7 = load <4 x float>, ptr %15, align 16, !tbaa !63
-  %i.qp = getelementptr inbounds [4 x i8], ptr %24, i64 %i.qo
+  %i.qp = getelementptr inbounds [4 x i8], ptr %31, i64 %i.qo
   %i.qq = load <4 x float>, ptr %i.qp, align 1, !tbaa !63, !noalias !105
   %i.qr = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.qo
   %i.qs = load <4 x float>, ptr %i.qr, align 1, !tbaa !63, !noalias !105
@@ -1214,70 +1225,67 @@ define linkonce_odr hidden i32 @_ZNK3jxl6N_AVX29EPF0Stage10ProcessRowERKNSt3__16
   %i.as = load ptr, ptr %i.ap, align 8, !tbaa !60
   %i.at = getelementptr [8 x i8], ptr %i.as, i64 %i.ar ; 4 uses
   %i.au = getelementptr i8, ptr %i.at, i64 -24
-  %20 = load <4 x ptr>, ptr %i.au, align 8, !tbaa !62
-  %21 = getelementptr inbounds nuw i8, <4 x ptr> %20, i64 128 ; 4 uses
-  store <4 x ptr> %21, ptr %i.d, align 16, !tbaa !62
-  %i.av = getelementptr i8, ptr %i.at, i64 8
+  %20 = load ptr, ptr %i.au, align 8, !tbaa !62
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 128
+  store ptr %21, ptr %i.d, align 16, !tbaa !62
+  %i.av = getelementptr i8, ptr %i.at, i64 -16
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !62
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 128 ; 5 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store ptr %i.ax, ptr %i.ay, align 16, !tbaa !62
-  %i.az = getelementptr i8, ptr %i.at, i64 16
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 128 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  store ptr %i.ax, ptr %i.ay, align 8, !tbaa !62
+  %i.az = getelementptr i8, ptr %i.at, i64 -8
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !62
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 128 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  store ptr %i.bb, ptr %i.bc, align 8, !tbaa !62
-  %i.bd = getelementptr i8, ptr %i.at, i64 24
-  %22 = load ptr, ptr %i.bd, align 8, !tbaa !62
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 128
-  %24 = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  store ptr %23, ptr %24, align 16, !tbaa !62
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 128 ; 5 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  store ptr %i.bb, ptr %i.bc, align 16, !tbaa !62
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  %22 = load <4 x ptr>, ptr %i.at, align 8, !tbaa !62
+  %23 = getelementptr inbounds nuw i8, <4 x ptr> %22, i64 128 ; 4 uses
+  store <4 x ptr> %23, ptr %i.bd, align 8, !tbaa !62
   %i.be = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !60
   %i.bg = getelementptr [8 x i8], ptr %i.bf, i64 %i.ar ; 4 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.d, i64 56 ; 4 uses
   %i.bi = getelementptr i8, ptr %i.bg, i64 -24
-  %25 = load <4 x ptr>, ptr %i.bi, align 8, !tbaa !62
-  %26 = getelementptr inbounds nuw i8, <4 x ptr> %25, i64 128 ; 4 uses
-  store <4 x ptr> %26, ptr %i.bh, align 8, !tbaa !62
-  %i.bj = getelementptr i8, ptr %i.bg, i64 8
+  %24 = load ptr, ptr %i.bi, align 8, !tbaa !62
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 128
+  store ptr %25, ptr %i.bh, align 8, !tbaa !62
+  %i.bj = getelementptr i8, ptr %i.bg, i64 -16
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !62
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 128 ; 5 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.d, i64 88
-  store ptr %i.bl, ptr %i.bm, align 8, !tbaa !62
-  %i.bn = getelementptr i8, ptr %i.bg, i64 16
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 128 ; 2 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.d, i64 64
+  store ptr %i.bl, ptr %i.bm, align 16, !tbaa !62
+  %i.bn = getelementptr i8, ptr %i.bg, i64 -8
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !62
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 128 ; 2 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.d, i64 96
-  store ptr %i.bp, ptr %i.bq, align 16, !tbaa !62
-  %i.br = getelementptr i8, ptr %i.bg, i64 24
-  %27 = load ptr, ptr %i.br, align 8, !tbaa !62
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 128
-  %29 = getelementptr inbounds nuw i8, ptr %i.d, i64 104
-  store ptr %28, ptr %29, align 8, !tbaa !62
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 128 ; 5 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.d, i64 72
+  store ptr %i.bp, ptr %i.bq, align 8, !tbaa !62
+  %i.br = getelementptr inbounds nuw i8, ptr %i.d, i64 80
+  %26 = load <4 x ptr>, ptr %i.bg, align 8, !tbaa !62
+  %27 = getelementptr inbounds nuw i8, <4 x ptr> %26, i64 128 ; 4 uses
+  store <4 x ptr> %27, ptr %i.br, align 16, !tbaa !62
   %i.bs = getelementptr inbounds nuw i8, ptr %i.ap, i64 48
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !60
   %i.bu = getelementptr [8 x i8], ptr %i.bt, i64 %i.ar ; 4 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.d, i64 112 ; 4 uses
   %i.bw = getelementptr i8, ptr %i.bu, i64 -24
-  %30 = load <4 x ptr>, ptr %i.bw, align 8, !tbaa !62
-  %31 = getelementptr inbounds nuw i8, <4 x ptr> %30, i64 128 ; 4 uses
-  store <4 x ptr> %31, ptr %i.bv, align 16, !tbaa !62
-  %i.bx = getelementptr i8, ptr %i.bu, i64 8
+  %28 = load ptr, ptr %i.bw, align 8, !tbaa !62
+  %29 = getelementptr inbounds nuw i8, ptr %28, i64 128
+  store ptr %29, ptr %i.bv, align 16, !tbaa !62
+  %i.bx = getelementptr i8, ptr %i.bu, i64 -16
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !62
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 128 ; 5 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  store ptr %i.bz, ptr %i.ca, align 16, !tbaa !62
-  %i.cb = getelementptr i8, ptr %i.bu, i64 16
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 128 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.d, i64 120
+  store ptr %i.bz, ptr %i.ca, align 8, !tbaa !62
+  %i.cb = getelementptr i8, ptr %i.bu, i64 -8
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !62
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 128 ; 2 uses
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.d, i64 152
-  store ptr %i.cd, ptr %i.ce, align 8, !tbaa !62
-  %i.cf = getelementptr i8, ptr %i.bu, i64 24
-  %32 = load ptr, ptr %i.cf, align 8, !tbaa !62
-  %33 = getelementptr inbounds nuw i8, ptr %32, i64 128
-  %34 = getelementptr inbounds nuw i8, ptr %i.d, i64 160
-  store ptr %33, ptr %34, align 16, !tbaa !62
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 128 ; 5 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.d, i64 128
+  store ptr %i.cd, ptr %i.ce, align 16, !tbaa !62
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.d, i64 136
+  %30 = load <4 x ptr>, ptr %i.bu, align 8, !tbaa !62
+  %31 = getelementptr inbounds nuw i8, <4 x ptr> %30, i64 128 ; 4 uses
+  store <4 x ptr> %31, ptr %i.cf, align 8, !tbaa !62
   %i.cg = add i64 %3, 7
   %i.ch = and i64 %i.cg, -8                       ; 2 uses
   %i.ci = sub i64 0, %i.ch                        ; 2 uses
@@ -1297,15 +1305,15 @@ define linkonce_odr hidden i32 @_ZNK3jxl6N_AVX29EPF0Stage10ProcessRowERKNSt3__16
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 124
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.cv = extractelement <4 x ptr> %21, i64 1
-  %i.cw = extractelement <4 x ptr> %21, i64 2     ; 4 uses
-  %i.cx = extractelement <4 x ptr> %21, i64 3     ; 6 uses
-  %i.cy = extractelement <4 x ptr> %26, i64 1
-  %i.cz = extractelement <4 x ptr> %26, i64 2     ; 4 uses
-  %i.da = extractelement <4 x ptr> %26, i64 3     ; 6 uses
-  %i.db = extractelement <4 x ptr> %31, i64 1
-  %i.dc = extractelement <4 x ptr> %31, i64 2     ; 4 uses
-  %i.dd = extractelement <4 x ptr> %31, i64 3     ; 6 uses
+  %i.cv = extractelement <4 x ptr> %23, i64 0     ; 6 uses
+  %i.cw = extractelement <4 x ptr> %23, i64 1     ; 4 uses
+  %i.cx = extractelement <4 x ptr> %23, i64 2
+  %i.cy = extractelement <4 x ptr> %27, i64 0     ; 6 uses
+  %i.cz = extractelement <4 x ptr> %27, i64 1     ; 4 uses
+  %i.da = extractelement <4 x ptr> %27, i64 2
+  %i.db = extractelement <4 x ptr> %31, i64 0     ; 6 uses
+  %i.dc = extractelement <4 x ptr> %31, i64 1     ; 4 uses
+  %i.dd = extractelement <4 x ptr> %31, i64 2
   br label %bb.a
 
 ._crit_edge:                                      ; preds = %.loopexit, %.preheader158
@@ -1337,7 +1345,7 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   br i1 %i.di, label %.preheader156.preheader, label %.preheader157.preheader
 
 .preheader156.preheader:                          ; preds = %bb.a
-  %i.dj = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %.0139172
+  %i.dj = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %.0139172
   %i.dk = load <8 x float>, ptr %i.dj, align 32, !tbaa !63
   %i.dl = load ptr, ptr %2, align 8, !tbaa !53
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !60
@@ -1345,7 +1353,7 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 128
   %i.dp = getelementptr inbounds [4 x i8], ptr %i.do, i64 %.0139172
   store <8 x float> %i.dk, ptr %i.dp, align 1, !tbaa !63
-  %i.dq = getelementptr inbounds [4 x i8], ptr %i.da, i64 %.0139172
+  %i.dq = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %.0139172
   %i.dr = load <8 x float>, ptr %i.dq, align 32, !tbaa !63
   %i.ds = load ptr, ptr %2, align 8, !tbaa !53
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 24
@@ -1354,7 +1362,7 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 128
   %i.dx = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %.0139172
   store <8 x float> %i.dr, ptr %i.dx, align 1, !tbaa !63
-  %i.dy = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %.0139172
+  %i.dy = getelementptr inbounds [4 x i8], ptr %i.db, i64 %.0139172
   %i.dz = load <8 x float>, ptr %i.dy, align 32, !tbaa !63
   br label %.loopexit
 
@@ -1374,10 +1382,10 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   store <8 x float> zeroinitializer, ptr %19, align 32, !tbaa !63
   %i.eb = load <1 x float>, ptr %i.cs, align 8
   %i.ec = shufflevector <1 x float> %i.eb, <1 x float> poison, <8 x i32> zeroinitializer
-  %i.ed = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %.0139172 ; 4 uses
-  %i.ee = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %.0139172
+  %i.ed = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %.0139172 ; 4 uses
+  %i.ee = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %.0139172
   %i.ef = getelementptr inbounds i8, ptr %i.ed, i64 -4
-  %i.eg = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %.0139172
+  %i.eg = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %.0139172
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ed, i64 4
   br label %.preheader
 
@@ -1442,14 +1450,14 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   br i1 %exitcond.not, label %.preheader157.1, label %.preheader, !llvm.loop !159
 
 .preheader157.1:                                  ; preds = %.preheader
-  %i.gg = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %.0139172
-  %i.gh = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %.0139172
+  %i.gg = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %.0139172
+  %i.gh = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %.0139172
   %i.gi = load <1 x float>, ptr %i.ct, align 4
   %i.gj = shufflevector <1 x float> %i.gi, <1 x float> poison, <8 x i32> zeroinitializer
-  %i.gk = getelementptr inbounds [4 x i8], ptr %i.da, i64 %.0139172 ; 4 uses
-  %i.gl = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %.0139172
+  %i.gk = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %.0139172 ; 4 uses
+  %i.gl = getelementptr inbounds [4 x i8], ptr %i.bp, i64 %.0139172
   %i.gm = getelementptr inbounds i8, ptr %i.gk, i64 -4
-  %i.gn = getelementptr inbounds [4 x i8], ptr %i.bl, i64 %.0139172
+  %i.gn = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %.0139172
   %i.go = getelementptr inbounds nuw i8, ptr %i.gk, i64 4
   br label %.preheader.1
 
@@ -1514,14 +1522,14 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   br i1 %exitcond.1.not, label %.preheader157.2, label %.preheader.1, !llvm.loop !159
 
 .preheader157.2:                                  ; preds = %.preheader.1
-  %i.in = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %.0139172
-  %i.io = getelementptr inbounds [4 x i8], ptr %i.bl, i64 %.0139172
+  %i.in = getelementptr inbounds [4 x i8], ptr %i.bp, i64 %.0139172
+  %i.io = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %.0139172
   %i.ip = load <1 x float>, ptr %i.cu, align 8
   %i.iq = shufflevector <1 x float> %i.ip, <1 x float> poison, <8 x i32> zeroinitializer
-  %i.ir = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %.0139172 ; 4 uses
-  %i.is = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %.0139172
+  %i.ir = getelementptr inbounds [4 x i8], ptr %i.db, i64 %.0139172 ; 4 uses
+  %i.is = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %.0139172
   %i.it = getelementptr inbounds i8, ptr %i.ir, i64 -4
-  %i.iu = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %.0139172
+  %i.iu = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %.0139172
   %i.iv = getelementptr inbounds nuw i8, ptr %i.ir, i64 4
   br label %.preheader.2
 
@@ -1586,8 +1594,8 @@ bb.a:                                             ; preds = %.lr.ph, %.loopexit
   br i1 %exitcond.2.not, label %bb.b, label %.preheader.2, !llvm.loop !159
 
 bb.b:                                             ; preds = %.preheader.2
-  %i.ku = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %.0139172
-  %i.kv = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %.0139172
+  %i.ku = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %.0139172
+  %i.kv = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %.0139172
   %i.kw = insertelement <8 x float> poison, float %i.dh, i64 0
   %i.kx = shufflevector <8 x float> %i.kw, <8 x float> poison, <8 x i32> zeroinitializer
   %i.ky = fmul <8 x float> %i.kx, %i.ea           ; 12 uses
@@ -1595,11 +1603,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.la = load <8 x float>, ptr %i.gk, align 32, !tbaa !63
   %i.lb = load <8 x float>, ptr %i.ir, align 32, !tbaa !63
   %.sroa.015.0.copyload = load <8 x float>, ptr %8, align 32, !tbaa !63
-  %i.lc = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %.0139172
+  %i.lc = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %.0139172
   %i.ld = load <8 x float>, ptr %i.lc, align 1, !tbaa !63, !noalias !170
-  %i.le = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %.0139172
+  %i.le = getelementptr inbounds [4 x i8], ptr %i.bl, i64 %.0139172
   %i.lf = load <8 x float>, ptr %i.le, align 1, !tbaa !63, !noalias !170
-  %i.lg = getelementptr inbounds [4 x i8], ptr %i.db, i64 %.0139172
+  %i.lg = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %.0139172
   %i.lh = load <8 x float>, ptr %i.lg, align 1, !tbaa !63, !noalias !170
   %i.li = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.lj = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.li, <8 x float> zeroinitializer, <8 x float> %i.li) ; 4 uses
@@ -1609,11 +1617,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.ln = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.lj, <8 x float> %i.lh, <8 x float> %i.lb)
   %i.lo = add nsw i64 %.0139172, -1               ; 9 uses
   %.sroa.015.0.copyload.1 = load <8 x float>, ptr %9, align 32, !tbaa !63
-  %i.lp = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %i.lo
+  %i.lp = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.lo
   %i.lq = load <8 x float>, ptr %i.lp, align 1, !tbaa !63, !noalias !170
-  %i.lr = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %i.lo
+  %i.lr = getelementptr inbounds [4 x i8], ptr %i.bp, i64 %i.lo
   %i.ls = load <8 x float>, ptr %i.lr, align 1, !tbaa !63, !noalias !170
-  %i.lt = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %i.lo
+  %i.lt = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %i.lo
   %i.lu = load <8 x float>, ptr %i.lt, align 1, !tbaa !63, !noalias !170
   %i.lv = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.1, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.lw = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.lv, <8 x float> zeroinitializer, <8 x float> %i.lv) ; 4 uses
@@ -1633,11 +1641,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.mj = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.mf, <8 x float> %i.md, <8 x float> %i.ma)
   %i.mk = or disjoint i64 %.0139172, 1            ; 9 uses
   %.sroa.015.0.copyload.3 = load <8 x float>, ptr %11, align 32, !tbaa !63
-  %i.ml = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %i.mk
+  %i.ml = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.mk
   %i.mm = load <8 x float>, ptr %i.ml, align 1, !tbaa !63, !noalias !170
-  %i.mn = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %i.mk
+  %i.mn = getelementptr inbounds [4 x i8], ptr %i.bp, i64 %i.mk
   %i.mo = load <8 x float>, ptr %i.mn, align 1, !tbaa !63, !noalias !170
-  %i.mp = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %i.mk
+  %i.mp = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %i.mk
   %i.mq = load <8 x float>, ptr %i.mp, align 1, !tbaa !63, !noalias !170
   %i.mr = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.3, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.ms = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.mr, <8 x float> zeroinitializer, <8 x float> %i.mr) ; 4 uses
@@ -1647,11 +1655,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.mw = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.ms, <8 x float> %i.mq, <8 x float> %i.mj)
   %i.mx = add nsw i64 %.0139172, -2               ; 3 uses
   %.sroa.015.0.copyload.4 = load <8 x float>, ptr %12, align 32, !tbaa !63
-  %i.my = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %i.mx
+  %i.my = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %i.mx
   %i.mz = load <8 x float>, ptr %i.my, align 1, !tbaa !63, !noalias !170
-  %i.na = getelementptr inbounds [4 x i8], ptr %i.da, i64 %i.mx
+  %i.na = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %i.mx
   %i.nb = load <8 x float>, ptr %i.na, align 1, !tbaa !63, !noalias !170
-  %i.nc = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %i.mx
+  %i.nc = getelementptr inbounds [4 x i8], ptr %i.db, i64 %i.mx
   %i.nd = load <8 x float>, ptr %i.nc, align 1, !tbaa !63, !noalias !170
   %i.ne = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.4, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.nf = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.ne, <8 x float> zeroinitializer, <8 x float> %i.ne) ; 4 uses
@@ -1660,11 +1668,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.ni = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.nf, <8 x float> %i.nb, <8 x float> %i.mv)
   %i.nj = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.nf, <8 x float> %i.nd, <8 x float> %i.mw)
   %.sroa.015.0.copyload.5 = load <8 x float>, ptr %13, align 32, !tbaa !63
-  %i.nk = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %i.lo
+  %i.nk = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %i.lo
   %i.nl = load <8 x float>, ptr %i.nk, align 1, !tbaa !63, !noalias !170
-  %i.nm = getelementptr inbounds [4 x i8], ptr %i.da, i64 %i.lo
+  %i.nm = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %i.lo
   %i.nn = load <8 x float>, ptr %i.nm, align 1, !tbaa !63, !noalias !170
-  %i.no = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %i.lo
+  %i.no = getelementptr inbounds [4 x i8], ptr %i.db, i64 %i.lo
   %i.np = load <8 x float>, ptr %i.no, align 1, !tbaa !63, !noalias !170
   %i.nq = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.5, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.nr = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.nq, <8 x float> zeroinitializer, <8 x float> %i.nq) ; 4 uses
@@ -1673,11 +1681,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.nu = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.nr, <8 x float> %i.nn, <8 x float> %i.ni)
   %i.nv = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.nr, <8 x float> %i.np, <8 x float> %i.nj)
   %.sroa.015.0.copyload.6 = load <8 x float>, ptr %14, align 32, !tbaa !63
-  %i.nw = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %i.mk
+  %i.nw = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %i.mk
   %i.nx = load <8 x float>, ptr %i.nw, align 1, !tbaa !63, !noalias !170
-  %i.ny = getelementptr inbounds [4 x i8], ptr %i.da, i64 %i.mk
+  %i.ny = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %i.mk
   %i.nz = load <8 x float>, ptr %i.ny, align 1, !tbaa !63, !noalias !170
-  %i.oa = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %i.mk
+  %i.oa = getelementptr inbounds [4 x i8], ptr %i.db, i64 %i.mk
   %i.ob = load <8 x float>, ptr %i.oa, align 1, !tbaa !63, !noalias !170
   %i.oc = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.6, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.od = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.oc, <8 x float> zeroinitializer, <8 x float> %i.oc) ; 4 uses
@@ -1687,11 +1695,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.oh = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.od, <8 x float> %i.ob, <8 x float> %i.nv)
   %i.oi = or disjoint i64 %.0139172, 2            ; 3 uses
   %.sroa.015.0.copyload.7 = load <8 x float>, ptr %15, align 32, !tbaa !63
-  %i.oj = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %i.oi
+  %i.oj = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %i.oi
   %i.ok = load <8 x float>, ptr %i.oj, align 1, !tbaa !63, !noalias !170
-  %i.ol = getelementptr inbounds [4 x i8], ptr %i.da, i64 %i.oi
+  %i.ol = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %i.oi
   %i.om = load <8 x float>, ptr %i.ol, align 1, !tbaa !63, !noalias !170
-  %i.on = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %i.oi
+  %i.on = getelementptr inbounds [4 x i8], ptr %i.db, i64 %i.oi
   %i.oo = load <8 x float>, ptr %i.on, align 1, !tbaa !63, !noalias !170
   %i.op = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.7, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.oq = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.op, <8 x float> zeroinitializer, <8 x float> %i.op) ; 4 uses
@@ -1700,11 +1708,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.ot = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.oq, <8 x float> %i.om, <8 x float> %i.og)
   %i.ou = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.oq, <8 x float> %i.oo, <8 x float> %i.oh)
   %.sroa.015.0.copyload.8 = load <8 x float>, ptr %16, align 32, !tbaa !63
-  %i.ov = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %i.lo
+  %i.ov = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %i.lo
   %i.ow = load <8 x float>, ptr %i.ov, align 1, !tbaa !63, !noalias !170
-  %i.ox = getelementptr inbounds [4 x i8], ptr %i.bl, i64 %i.lo
+  %i.ox = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %i.lo
   %i.oy = load <8 x float>, ptr %i.ox, align 1, !tbaa !63, !noalias !170
-  %i.oz = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %i.lo
+  %i.oz = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %i.lo
   %i.pa = load <8 x float>, ptr %i.oz, align 1, !tbaa !63, !noalias !170
   %i.pb = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.8, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.pc = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.pb, <8 x float> zeroinitializer, <8 x float> %i.pb) ; 4 uses
@@ -1723,11 +1731,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.po = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.pl, <8 x float> %i.pi, <8 x float> %i.pf)
   %i.pp = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.pl, <8 x float> %i.pj, <8 x float> %i.pg)
   %.sroa.015.0.copyload.10 = load <8 x float>, ptr %18, align 32, !tbaa !63
-  %i.pq = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %i.mk
+  %i.pq = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %i.mk
   %i.pr = load <8 x float>, ptr %i.pq, align 1, !tbaa !63, !noalias !170
-  %i.ps = getelementptr inbounds [4 x i8], ptr %i.bl, i64 %i.mk
+  %i.ps = getelementptr inbounds [4 x i8], ptr %i.cz, i64 %i.mk
   %i.pt = load <8 x float>, ptr %i.ps, align 1, !tbaa !63, !noalias !170
-  %i.pu = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %i.mk
+  %i.pu = getelementptr inbounds [4 x i8], ptr %i.dc, i64 %i.mk
   %i.pv = load <8 x float>, ptr %i.pu, align 1, !tbaa !63, !noalias !170
   %i.pw = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.10, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.px = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.pw, <8 x float> zeroinitializer, <8 x float> %i.pw) ; 4 uses
@@ -1736,11 +1744,11 @@ bb.b:                                             ; preds = %.preheader.2
   %i.qa = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.px, <8 x float> %i.pt, <8 x float> %i.po)
   %i.qb = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %i.px, <8 x float> %i.pv, <8 x float> %i.pp)
   %.sroa.015.0.copyload.11 = load <8 x float>, ptr %19, align 32, !tbaa !63
-  %i.qc = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %.0139172
+  %i.qc = getelementptr inbounds [4 x i8], ptr %i.cx, i64 %.0139172
   %i.qd = load <8 x float>, ptr %i.qc, align 1, !tbaa !63, !noalias !170
-  %i.qe = getelementptr inbounds [4 x i8], ptr %i.bp, i64 %.0139172
+  %i.qe = getelementptr inbounds [4 x i8], ptr %i.da, i64 %.0139172
   %i.qf = load <8 x float>, ptr %i.qe, align 1, !tbaa !63, !noalias !170
-  %i.qg = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %.0139172
+  %i.qg = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %.0139172
   %i.qh = load <8 x float>, ptr %i.qg, align 1, !tbaa !63, !noalias !170
   %i.qi = call noundef <8 x float> @llvm.fma.v8f32(<8 x float> %.sroa.015.0.copyload.11, <8 x float> %i.ky, <8 x float> splat (float 1.000000e+00)) ; 2 uses
   %i.qj = call noundef <8 x float> @llvm.x86.avx.blendv.ps.256(<8 x float> %i.qi, <8 x float> zeroinitializer, <8 x float> %i.qi) ; 4 uses

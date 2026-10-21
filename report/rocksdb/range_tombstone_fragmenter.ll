@@ -205,13 +205,17 @@ bb.d:                                             ; preds = %.critedge2
 define void @_ZN7rocksdb32FragmentedRangeTombstoneIterator10SeekToLastEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(200) initializes((136, 152)) %0) unnamed_addr #7 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !172
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %1 = load ptr, ptr %i.a, align 8, !tbaa !172    ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.b = load ptr, ptr %2, align 8, !tbaa !179
+  %i.c = getelementptr inbounds i8, ptr %i.b, i64 -48
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %1 = tail call <4 x ptr> @llvm.masked.load.v4p0.p0(ptr nonnull align 8 %i.c, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x ptr> poison), !tbaa !152
-  %2 = shufflevector <4 x ptr> %1, <4 x ptr> poison, <2 x i32> <i32 0, i32 3>
-  %3 = getelementptr inbounds i8, <2 x ptr> %2, <2 x i64> <i64 -48, i64 -8>
-  store <2 x ptr> %3, ptr %i.d, align 8, !tbaa !152
+  store ptr %i.c, ptr %i.d, align 8, !tbaa !179
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %4 = load ptr, ptr %3, align 8, !tbaa !118
+  %5 = getelementptr inbounds i8, ptr %4, i64 -8
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 144
+  store ptr %5, ptr %6, align 8, !tbaa !118
   ret void
 }
 

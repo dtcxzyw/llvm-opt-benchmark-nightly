@@ -204,31 +204,33 @@ bb.a:
   store i64 ptrtoint (ptr @lj_cont_stitch to i64), ptr %i.j, align 8, !tbaa !9
   store i64 %i.k, ptr %i.d, align 8, !tbaa !9
   store i64 -1, ptr %i.aq, align 8, !tbaa !9
-  %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.au = load <2 x ptr>, ptr %i.c, align 8, !tbaa !84
   %i.av = getelementptr inbounds nuw i8, <2 x ptr> %i.au, i64 24
   store <2 x ptr> %i.av, ptr %i.c, align 8, !tbaa !84
   %i.aw = tail call i32 @lj_vm_cpcall(ptr noundef %i.b, ptr noundef null, ptr noundef %0, ptr noundef nonnull @rec_stop_stitch_cp) #8 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aq, ptr nonnull align 8 %i.h, i64 %i.ar, i1 false)
   store i64 %i.k, ptr %i.j, align 8, !tbaa !9
-  %i.ax = load ptr, ptr %i.at, align 8, !tbaa !85 ; 3 uses
-  %1 = load <2 x ptr>, ptr %i.c, align 8, !tbaa !84
-  %2 = getelementptr inbounds i8, <2 x ptr> %1, i64 -24
-  store <2 x ptr> %2, ptr %i.c, align 8, !tbaa !84
+  %i.ax = load ptr, ptr %i.c, align 8, !tbaa !36
+  %1 = getelementptr inbounds i8, ptr %i.ax, i64 -24
+  store ptr %1, ptr %i.c, align 8, !tbaa !36
+  %2 = load ptr, ptr %i.at, align 8, !tbaa !85    ; 4 uses
+  %3 = getelementptr inbounds i8, ptr %2, i64 -24
+  store ptr %3, ptr %i.at, align 8, !tbaa !85
   switch i32 %i.aw, label %bb.c [
     i32 0, label %bb.e
     i32 2, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.ay = getelementptr inbounds i8, ptr %i.ax, i64 -32
-  %i.az = getelementptr inbounds i8, ptr %i.ax, i64 -8
+  %i.ay = getelementptr inbounds i8, ptr %2, i64 -32
+  %i.az = getelementptr inbounds i8, ptr %2, i64 -8
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !9
   store i64 %i.ba, ptr %i.ay, align 8, !tbaa !9
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.bb = getelementptr inbounds i8, ptr %i.ax, i64 -32
+  %i.bb = getelementptr inbounds i8, ptr %2, i64 -32
   store double 0.000000e+00, ptr %i.bb, align 8, !tbaa !9
   br label %bb.d
 

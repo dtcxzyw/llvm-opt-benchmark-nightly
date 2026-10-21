@@ -205,10 +205,7 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_ca
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.w = load ptr, ptr %8, align 8, !tbaa !433
   store ptr %i.w, ptr %i.v, align 8, !tbaa !433
-  %10 = insertelement <2 x ptr> poison, ptr %9, i64 0
-  %11 = insertelement <2 x ptr> %10, ptr %0, i64 1
-  %12 = getelementptr inbounds nuw i8, <2 x ptr> %11, <2 x i64> <i64 8, i64 32>
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   store i8 0, ptr %i.y, align 8, !tbaa !434
   %i.z = load i8, ptr %i.o, align 8, !tbaa !434
@@ -224,8 +221,11 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_ca
   store ptr %i.ac, ptr %i.ad, align 8, !tbaa !520
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #33
   %i.ae = load ptr, ptr %0, align 8, !tbaa !517, !nonnull !111, !align !114 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 40
+  %11 = insertelement <2 x ptr> poison, ptr %10, i64 0
+  %12 = insertelement <2 x ptr> %11, ptr %i.x, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_S7_SE_S7_S7_SE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSN_PKNS0_14mutable_bufferEEE5valueEiE4typeENSP_IXntsr14is_convertibleISQ_PKS7_EE5valueEiE4typeENSP_IXntsr14is_convertibleISM_SR_EE5valueEiE4typeENSP_IXntsr14is_convertibleISM_S7_EE5valueEiE4typeE.exit
@@ -628,7 +628,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 9 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 10 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -636,12 +636,12 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %5 = insertelement <2 x ptr> poison, ptr %4, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %0, i64 1
-  %7 = getelementptr inbounds nuw i8, <2 x ptr> %6, <2 x i64> <i64 8, i64 24>
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 40
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %8 = insertelement <2 x ptr> poison, ptr %5, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.e, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_viewIJNS0_6detail11buffers_refINS3_IJNS_4asio12const_bufferES7_S7_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_S7_SE_S7_S7_SE_EEEEEE14const_iteratorneERKSO_.exit.thread, %bb.a
@@ -767,15 +767,15 @@ _ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_v
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33
   call void @llvm.experimental.noalias.scope.decl(metadata !1396)
   store ptr %i.bd, ptr %4, align 8, !tbaa !433, !alias.scope !1396
-  store i8 0, ptr %i.m, align 8, !tbaa !434, !alias.scope !1396
+  store i8 0, ptr %6, align 8, !tbaa !434, !alias.scope !1396
   %i.be = load i8, ptr %i.g, align 8, !tbaa !434, !noalias !1396
   %i.bf = zext i8 %i.be to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33, !noalias !1396
-  store <2 x ptr> %7, ptr %3, align 16, !tbaa !519, !noalias !1396
+  store <2 x ptr> %9, ptr %3, align 16, !tbaa !519, !noalias !1396
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm11EE4callILm0ENS_5beast6detail7variantIJNS5_16buffers_cat_viewIJNS_4asio12const_bufferESA_SA_NS5_4http12basic_fieldsISaIcEE6writer11field_rangeENSB_10chunk_crlfEEE14const_iteratorEPKSA_SL_SL_SL_SL_SL_SL_SL_NS6_30buffers_cat_view_iterator_base8past_endEEE4copyEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSQ_(i64 noundef %i.bf, ptr noundef nonnull align 8 dereferenceable(16) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #33, !noalias !1396
   %i.bg = load ptr, ptr %i.a, align 8, !tbaa !520, !noalias !1396
-  store ptr %i.bg, ptr %8, align 8, !tbaa !520, !alias.scope !1396
+  store ptr %i.bg, ptr %7, align 8, !tbaa !520, !alias.scope !1396
   %i.bh = load i8, ptr %i.g, align 8, !tbaa !434, !noalias !1396
   %i.bi = zext i8 %i.bh to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33, !noalias !1396
@@ -785,9 +785,9 @@ _ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_v
   %i.bj = call { ptr, i64 } @_ZNK5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS0_6detail11buffers_refINS2_IJNS_4asio12const_bufferES6_S6_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS7_10chunk_crlfEEEEEENS7_6detail10chunk_sizeES6_SD_S6_SD_S6_S6_SD_EEEE14const_iteratordeEv(ptr noundef nonnull align 8 dereferenceable(48) %4)
   %i.bk = extractvalue { ptr, i64 } %i.bj, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #33
-  %i.bl = load i64, ptr %9, align 8, !tbaa !516
+  %i.bl = load i64, ptr %i.m, align 8, !tbaa !516
   %i.bm = sub i64 %i.bl, %i.bk
-  store i64 %i.bm, ptr %9, align 8, !tbaa !516
+  store i64 %i.bm, ptr %i.m, align 8, !tbaa !516
   %i.bn = add nuw nsw i64 %.0, 1
   br label %bb.b, !llvm.loop !1395
 
@@ -821,13 +821,14 @@ bb.a:
   br i1 %.not710, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %7 = insertelement <2 x ptr> poison, ptr %6, i64 0
-  %8 = insertelement <2 x ptr> %7, ptr %0, i64 1
-  %9 = getelementptr inbounds nuw i8, <2 x ptr> %8, <2 x i64> <i64 8, i64 24>
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %9 = insertelement <2 x ptr> poison, ptr %7, i64 0
+  %10 = insertelement <2 x ptr> %9, ptr %8, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
@@ -841,7 +842,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.p = load i8, ptr %i.j, align 8, !tbaa !434, !noalias !1400
   %i.q = zext i8 %i.p to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #33, !noalias !1400
-  store <2 x ptr> %9, ptr %5, align 16, !tbaa !519, !noalias !1400
+  store <2 x ptr> %10, ptr %5, align 16, !tbaa !519, !noalias !1400
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm11EE4callILm0ENS_5beast6detail7variantIJNS5_16buffers_cat_viewIJNS_4asio12const_bufferESA_SA_NS5_4http12basic_fieldsISaIcEE6writer11field_rangeENSB_10chunk_crlfEEE14const_iteratorEPKSA_SL_SL_SL_SL_SL_SL_SL_NS6_30buffers_cat_view_iterator_base8past_endEEE4copyEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSQ_(i64 noundef %i.q, ptr noundef nonnull align 8 dereferenceable(16) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #33, !noalias !1400
   %i.r = load ptr, ptr %i.l, align 8, !tbaa !520, !noalias !1400
@@ -1244,10 +1245,7 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_ca
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.w = load ptr, ptr %8, align 8, !tbaa !661
   store ptr %i.w, ptr %i.v, align 8, !tbaa !661
-  %10 = insertelement <2 x ptr> poison, ptr %9, i64 0
-  %11 = insertelement <2 x ptr> %10, ptr %0, i64 1
-  %12 = getelementptr inbounds nuw i8, <2 x ptr> %11, <2 x i64> <i64 8, i64 32>
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   store i8 0, ptr %i.y, align 8, !tbaa !434
   %i.z = load i8, ptr %i.o, align 8, !tbaa !434
@@ -1263,8 +1261,11 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_ca
   store ptr %i.ac, ptr %i.ad, align 8, !tbaa !735
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #33
   %i.ae = load ptr, ptr %0, align 8, !tbaa !734, !nonnull !111, !align !114 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 40
+  %11 = insertelement <2 x ptr> poison, ptr %10, i64 0
+  %12 = insertelement <2 x ptr> %11, ptr %i.x, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_St5arrayIS7_Lm65EESE_S7_S7_SE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit
@@ -1667,7 +1668,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 9 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 10 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -1675,12 +1676,12 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %5 = insertelement <2 x ptr> poison, ptr %4, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %0, i64 1
-  %7 = getelementptr inbounds nuw i8, <2 x ptr> %6, <2 x i64> <i64 8, i64 24>
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 40
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %8 = insertelement <2 x ptr> poison, ptr %5, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.e, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_viewIJNS0_6detail11buffers_refINS3_IJNS_4asio12const_bufferES7_S7_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_St5arrayIS7_Lm65EESE_S7_S7_SE_EEEEEE14const_iteratorneERKSQ_.exit.thread, %bb.a
@@ -1806,15 +1807,15 @@ _ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_v
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33
   call void @llvm.experimental.noalias.scope.decl(metadata !2480)
   store ptr %i.bd, ptr %4, align 8, !tbaa !661, !alias.scope !2480
-  store i8 0, ptr %i.m, align 8, !tbaa !434, !alias.scope !2480
+  store i8 0, ptr %6, align 8, !tbaa !434, !alias.scope !2480
   %i.be = load i8, ptr %i.g, align 8, !tbaa !434, !noalias !2480
   %i.bf = zext i8 %i.be to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33, !noalias !2480
-  store <2 x ptr> %7, ptr %3, align 16, !tbaa !519, !noalias !2480
+  store <2 x ptr> %9, ptr %3, align 16, !tbaa !519, !noalias !2480
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm11EE4callILm0ENS_5beast6detail7variantIJNS5_16buffers_cat_viewIJNS_4asio12const_bufferESA_SA_NS5_4http12basic_fieldsISaIcEE6writer11field_rangeENSB_10chunk_crlfEEE14const_iteratorEPKSA_SL_SL_SL_SL_SL_SL_SL_NS6_30buffers_cat_view_iterator_base8past_endEEE4copyEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSQ_(i64 noundef %i.bf, ptr noundef nonnull align 8 dereferenceable(16) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #33, !noalias !2480
   %i.bg = load ptr, ptr %i.a, align 8, !tbaa !735, !noalias !2480
-  store ptr %i.bg, ptr %8, align 8, !tbaa !735, !alias.scope !2480
+  store ptr %i.bg, ptr %7, align 8, !tbaa !735, !alias.scope !2480
   %i.bh = load i8, ptr %i.g, align 8, !tbaa !434, !noalias !2480
   %i.bi = zext i8 %i.bh to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33, !noalias !2480
@@ -1824,9 +1825,9 @@ _ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_v
   %i.bj = call { ptr, i64 } @_ZNK5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS0_6detail11buffers_refINS2_IJNS_4asio12const_bufferES6_S6_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS7_10chunk_crlfEEEEEENS7_6detail10chunk_sizeES6_SD_St5arrayIS6_Lm65EESD_S6_S6_SD_EEEE14const_iteratordeEv(ptr noundef nonnull align 8 dereferenceable(48) %4)
   %i.bk = extractvalue { ptr, i64 } %i.bj, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #33
-  %i.bl = load i64, ptr %9, align 8, !tbaa !733
+  %i.bl = load i64, ptr %i.m, align 8, !tbaa !733
   %i.bm = sub i64 %i.bl, %i.bk
-  store i64 %i.bm, ptr %9, align 8, !tbaa !733
+  store i64 %i.bm, ptr %i.m, align 8, !tbaa !733
   %i.bn = add nuw nsw i64 %.0, 1
   br label %bb.b, !llvm.loop !2479
 
@@ -1860,13 +1861,14 @@ bb.a:
   br i1 %.not710, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %7 = insertelement <2 x ptr> poison, ptr %6, i64 0
-  %8 = insertelement <2 x ptr> %7, ptr %0, i64 1
-  %9 = getelementptr inbounds nuw i8, <2 x ptr> %8, <2 x i64> <i64 8, i64 24>
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %9 = insertelement <2 x ptr> poison, ptr %7, i64 0
+  %10 = insertelement <2 x ptr> %9, ptr %8, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
@@ -1880,7 +1882,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.p = load i8, ptr %i.j, align 8, !tbaa !434, !noalias !2484
   %i.q = zext i8 %i.p to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #33, !noalias !2484
-  store <2 x ptr> %9, ptr %5, align 16, !tbaa !519, !noalias !2484
+  store <2 x ptr> %10, ptr %5, align 16, !tbaa !519, !noalias !2484
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm11EE4callILm0ENS_5beast6detail7variantIJNS5_16buffers_cat_viewIJNS_4asio12const_bufferESA_SA_NS5_4http12basic_fieldsISaIcEE6writer11field_rangeENSB_10chunk_crlfEEE14const_iteratorEPKSA_SL_SL_SL_SL_SL_SL_SL_NS6_30buffers_cat_view_iterator_base8past_endEEE4copyEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSQ_(i64 noundef %i.q, ptr noundef nonnull align 8 dereferenceable(16) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #33, !noalias !2484
   %i.r = load ptr, ptr %i.l, align 8, !tbaa !735, !noalias !2484

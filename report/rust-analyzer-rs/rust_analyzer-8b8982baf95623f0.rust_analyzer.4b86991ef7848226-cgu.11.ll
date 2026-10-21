@@ -205,14 +205,15 @@ bb.ce:                                            ; preds = %_RINvXs2J_NtNtCshzW
   br i1 %i.ip, label %_RNvMs1_NtCs6u1mgJOKDyY_13rust_analyzer12global_stateNtB5_19GlobalStateSnapshot38all_workspace_dependencies_for_package.exit.i, label %.lr.ph.i2.i.i
 
 .lr.ph.i2.i.i:                                    ; preds = %bb.ce
-  %1 = insertelement <2 x ptr> poison, ptr %i.az, i64 0
-  %2 = insertelement <2 x ptr> %1, ptr %i.j, i64 1
+  %1 = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %.sroa.411.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %.sroa.512.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 8, i64 24>
+  %2 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.iq = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.4.0..sroa_idx.i.i.i212.i = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %.sroa.12.0..sroa_idx269.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %3 = insertelement <2 x ptr> poison, ptr %1, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %2, i64 1
   br label %bb.cf
 
 bb.cf:                                            ; preds = %.backedge.i3.i.i, %.lr.ph.i2.i.i
@@ -249,7 +250,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
   store i64 0, ptr %.sroa.512.0..sroa_idx.i.i.i.i, align 8, !noalias !2850
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2850
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.i, align 8, !noalias !2850
-  store <2 x ptr> %3, ptr %i.iq, align 8, !noalias !2850
+  store <2 x ptr> %4, ptr %i.iq, align 8, !noalias !2850
   %i.jc = invoke { i32, i32 } @_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace11PackageDataEENCNvMsm_Csbq3eHDLgq0Z_8la_arenaINtB30_5ArenaB1P_E4iter0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvB6_12map_try_foldTINtB30_3IdxB1P_ERB1P_EB4R_uINtNtNtBc_3ops12control_flow11ControlFlowB4R_ENCNvMs4_B1R_NtB1R_14CargoWorkspace8packages0NCINvNvB3M_4find5checkB4R_NCNCNvMs1_NtCs6u1mgJOKDyY_13rust_analyzer12global_stateNtB7k_19GlobalStateSnapshot38all_workspace_dependencies_for_package00E0E0B5i_EB7m_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.j, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.i)
           to label %.noexc217.i unwind label %.loopexit.split-lp337.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
