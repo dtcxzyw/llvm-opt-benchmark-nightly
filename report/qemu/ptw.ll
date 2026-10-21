@@ -204,7 +204,9 @@ bb.hh:                                            ; preds = %bb.hg
   unreachable
 
 arm_pamax.exit.i:                                 ; preds = %bb.hg
-  %i.acu = icmp eq i64 %i.acs, 6
+  %8 = getelementptr inbounds nuw i8, ptr @pamax_map, i64 %i.acs
+  %9 = load i8, ptr %8, align 1
+  %i.acu = icmp eq i8 %9, 52
   br i1 %i.acu, label %lpae_block_desc_valid.exit.thread, label %.loopexit
 
 bb.hi:                                            ; preds = %bb.hd
@@ -607,7 +609,9 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 arm_pamax.exit:                                   ; preds = %bb.g
-  %i.m = icmp samesign ult i64 %i.k, 4
+  %6 = getelementptr inbounds nuw i8, ptr @pamax_map, i64 %i.k
+  %7 = load i8, ptr %6, align 1
+  %i.m = icmp ult i8 %7, 44
   br i1 %i.m, label %arm_pamax.exit.thread, label %bb.z
 
 bb.i:                                             ; preds = %bb.e
@@ -642,7 +646,9 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 arm_pamax.exit46:                                 ; preds = %bb.l
-  %i.v = icmp samesign ult i64 %i.t, 3
+  %8 = getelementptr inbounds nuw i8, ptr @pamax_map, i64 %i.t
+  %9 = load i8, ptr %8, align 1
+  %i.v = icmp ult i8 %9, 42
   br i1 %i.v, label %arm_pamax.exit.thread, label %bb.o
 
 bb.n:                                             ; preds = %bb.j
@@ -677,7 +683,9 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 arm_pamax.exit52:                                 ; preds = %bb.r
-  %i.ad = icmp samesign ult i64 %i.ab, 4
+  %10 = getelementptr inbounds nuw i8, ptr @pamax_map, i64 %i.ab
+  %11 = load i8, ptr %10, align 1
+  %i.ad = icmp ult i8 %11, 44
   br i1 %i.ad, label %arm_pamax.exit.thread, label %bb.t
 
 bb.t:                                             ; preds = %arm_pamax.exit52, %bb.p

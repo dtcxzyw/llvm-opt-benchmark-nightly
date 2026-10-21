@@ -205,81 +205,139 @@ bb.av:                                            ; preds = %bb.au
   %.lcssa37.i.i = phi ptr [ %i.fp, %bb.at ], [ @nuls, %.thread.i145 ], [ %scevgep.i.i, %bb.av ], [ %i.fz, %bb.au ]
   %i.gh = ptrtoint ptr %.lcssa37.i.i to i64
   %i.gi = ptrtoint ptr %i.gg to i64
-  %i.gj = sub i64 %i.gh, %i.gi                    ; 14 uses
+  %i.gj = sub i64 %i.gh, %i.gi                    ; 24 uses
   %i.gk = tail call i32 @strncmp(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
-  %1 = icmp eq i32 %i.gk, 0
-  %i.gl = icmp eq i64 %i.gj, 5                    ; 11 uses
-  %or.cond.i.i = and i1 %1, %i.gl
-  br i1 %or.cond.i.i, label %bb.bj, label %bb.aw
+  %i.gl = icmp eq i32 %i.gk, 0
+  br i1 %i.gl, label %1, label %5
 
-bb.aw:                                            ; preds = %.critedge.i.i
-  %2 = tail call i32 @strncmp(ptr noundef nonnull @.str.5, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
-  %3 = icmp eq i32 %2, 0
-  %or.cond53.i.i = and i1 %i.gl, %3
-  br i1 %or.cond53.i.i, label %bb.bj, label %bb.ax
+1:                                                ; preds = %.critedge.i.i
+  %2 = getelementptr inbounds nuw i8, ptr @.str.2, i64 %i.gj
+  %3 = load i8, ptr %2, align 1, !tbaa !31
+  %4 = icmp eq i8 %3, 0
+  br i1 %4, label %bb.bj, label %5
 
-bb.ax:                                            ; preds = %bb.aw
-  %i.gm = tail call i32 @strncmp(ptr noundef nonnull @.str.7, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+5:                                                ; preds = %1, %.critedge.i.i
+  %6 = tail call i32 @strncmp(ptr noundef nonnull @.str.5, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+  %7 = icmp eq i32 %6, 0
+  br i1 %7, label %8, label %12
+
+8:                                                ; preds = %5
+  %9 = getelementptr inbounds nuw i8, ptr @.str.5, i64 %i.gj
+  %10 = load i8, ptr %9, align 1, !tbaa !31
+  %11 = icmp eq i8 %10, 0
+  br i1 %11, label %bb.bj, label %12
+
+12:                                               ; preds = %8, %5
+  %13 = tail call i32 @strncmp(ptr noundef nonnull @.str.7, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+  %14 = icmp eq i32 %13, 0
+  br i1 %14, label %15, label %19
+
+15:                                               ; preds = %12
+  %16 = getelementptr inbounds nuw i8, ptr @.str.7, i64 %i.gj
+  %17 = load i8, ptr %16, align 1, !tbaa !31
+  %18 = icmp eq i8 %17, 0
+  br i1 %18, label %bb.bj, label %19
+
+19:                                               ; preds = %15, %12
+  %20 = tail call i32 @strncmp(ptr noundef nonnull @.str.9, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+  %21 = icmp eq i32 %20, 0
+  br i1 %21, label %22, label %26
+
+22:                                               ; preds = %19
+  %23 = getelementptr inbounds nuw i8, ptr @.str.9, i64 %i.gj
+  %24 = load i8, ptr %23, align 1, !tbaa !31
+  %25 = icmp eq i8 %24, 0
+  br i1 %25, label %bb.bj, label %26
+
+26:                                               ; preds = %22, %19
+  %27 = tail call i32 @strncmp(ptr noundef nonnull @.str.11, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+  %28 = icmp eq i32 %27, 0
+  br i1 %28, label %29, label %33
+
+29:                                               ; preds = %26
+  %30 = getelementptr inbounds nuw i8, ptr @.str.11, i64 %i.gj
+  %31 = load i8, ptr %30, align 1, !tbaa !31
+  %32 = icmp eq i8 %31, 0
+  br i1 %32, label %bb.bj, label %33
+
+33:                                               ; preds = %29, %26
+  %34 = tail call i32 @strncmp(ptr noundef nonnull @.str.13, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+  %35 = icmp eq i32 %34, 0
+  br i1 %35, label %36, label %40
+
+36:                                               ; preds = %33
+  %37 = getelementptr inbounds nuw i8, ptr @.str.13, i64 %i.gj
+  %38 = load i8, ptr %37, align 1, !tbaa !31
+  %39 = icmp eq i8 %38, 0
+  br i1 %39, label %bb.bj, label %40
+
+40:                                               ; preds = %36, %33
+  %41 = tail call i32 @strncmp(ptr noundef nonnull @.str.15, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+  %42 = icmp eq i32 %41, 0
+  br i1 %42, label %bb.aw, label %bb.ax
+
+bb.aw:                                            ; preds = %40
+  %43 = getelementptr inbounds nuw i8, ptr @.str.15, i64 %i.gj
+  %44 = load i8, ptr %43, align 1, !tbaa !31
+  %45 = icmp eq i8 %44, 0
+  br i1 %45, label %bb.bj, label %bb.ax
+
+bb.ax:                                            ; preds = %bb.aw, %40
+  %i.gm = tail call i32 @strncmp(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
   %i.gn = icmp eq i32 %i.gm, 0
-  %or.cond54.i.i = and i1 %i.gl, %i.gn
-  br i1 %or.cond54.i.i, label %bb.bj, label %bb.ay
+  br i1 %i.gn, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %bb.ax
-  %4 = tail call i32 @strncmp(ptr noundef nonnull @.str.9, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
-  %5 = icmp eq i32 %4, 0
-  %or.cond55.i.i = and i1 %i.gl, %5
-  br i1 %or.cond55.i.i, label %bb.bj, label %bb.az
+  %46 = getelementptr inbounds nuw i8, ptr @.str.17, i64 %i.gj
+  %47 = load i8, ptr %46, align 1, !tbaa !31
+  %48 = icmp eq i8 %47, 0
+  br i1 %48, label %bb.bj, label %bb.az
 
-bb.az:                                            ; preds = %bb.ay
-  %i.go = tail call i32 @strncmp(ptr noundef nonnull @.str.11, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+bb.az:                                            ; preds = %bb.ay, %bb.ax
+  %i.go = tail call i32 @strncmp(ptr noundef nonnull @.str.19, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
   %i.gp = icmp eq i32 %i.go, 0
-  %or.cond56.i.i = and i1 %i.gl, %i.gp
-  br i1 %or.cond56.i.i, label %bb.bj, label %bb.ba
+  br i1 %i.gp, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
-  %6 = tail call i32 @strncmp(ptr noundef nonnull @.str.13, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
-  %7 = icmp eq i32 %6, 0
-  %or.cond57.i.i = and i1 %i.gl, %7
-  br i1 %or.cond57.i.i, label %bb.bj, label %bb.bb
+  %49 = getelementptr inbounds nuw i8, ptr @.str.19, i64 %i.gj
+  %50 = load i8, ptr %49, align 1, !tbaa !31
+  %51 = icmp eq i8 %50, 0
+  br i1 %51, label %bb.bj, label %bb.bb
 
-bb.bb:                                            ; preds = %bb.ba
-  %i.gq = tail call i32 @strncmp(ptr noundef nonnull @.str.15, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+bb.bb:                                            ; preds = %bb.ba, %bb.az
+  %i.gq = tail call i32 @strncmp(ptr noundef nonnull @.str.21, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
   %i.gr = icmp eq i32 %i.gq, 0
-  %or.cond58.i.i = and i1 %i.gl, %i.gr
-  br i1 %or.cond58.i.i, label %bb.bj, label %bb.bc
+  br i1 %i.gr, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
-  %8 = tail call i32 @strncmp(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
-  %9 = icmp eq i32 %8, 0
-  %or.cond59.i.i = and i1 %i.gl, %9
-  br i1 %or.cond59.i.i, label %bb.bj, label %bb.bd
+  %52 = getelementptr inbounds nuw i8, ptr @.str.21, i64 %i.gj
+  %53 = load i8, ptr %52, align 1, !tbaa !31
+  %54 = icmp eq i8 %53, 0
+  br i1 %54, label %bb.bj, label %bb.bd
 
-bb.bd:                                            ; preds = %bb.bc
-  %i.gs = tail call i32 @strncmp(ptr noundef nonnull @.str.19, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+bb.bd:                                            ; preds = %bb.bc, %bb.bb
+  %i.gs = tail call i32 @strncmp(ptr noundef nonnull @.str.23, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
   %i.gt = icmp eq i32 %i.gs, 0
-  %or.cond60.i.i = and i1 %i.gl, %i.gt
-  br i1 %or.cond60.i.i, label %bb.bj, label %bb.be
+  br i1 %i.gt, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %bb.bd
-  %10 = tail call i32 @strncmp(ptr noundef nonnull @.str.21, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
-  %11 = icmp eq i32 %10, 0
-  %or.cond61.i.i = and i1 %i.gl, %11
-  br i1 %or.cond61.i.i, label %bb.bj, label %bb.bf
+  %55 = getelementptr inbounds nuw i8, ptr @.str.23, i64 %i.gj
+  %56 = load i8, ptr %55, align 1, !tbaa !31
+  %57 = icmp eq i8 %56, 0
+  br i1 %57, label %bb.bj, label %bb.bf
 
-bb.bf:                                            ; preds = %bb.be
-  %i.gu = tail call i32 @strncmp(ptr noundef nonnull @.str.23, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
+bb.bf:                                            ; preds = %bb.be, %bb.bd
+  %i.gu = tail call i32 @strncmp(ptr noundef nonnull @.str.25, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
   %i.gv = icmp eq i32 %i.gu, 0
-  %or.cond62.i.i = and i1 %i.gl, %i.gv
-  br i1 %or.cond62.i.i, label %bb.bj, label %bb.bg
+  br i1 %i.gv, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
-  %12 = tail call i32 @strncmp(ptr noundef nonnull @.str.25, ptr noundef nonnull %i.gg, i64 noundef %i.gj) #17
-  %13 = icmp eq i32 %12, 0
-  %i.gw = icmp eq i64 %i.gj, 6
-  %or.cond63.i.i = and i1 %i.gw, %13
-  br i1 %or.cond63.i.i, label %bb.bj, label %bb.bh
+  %58 = getelementptr inbounds nuw i8, ptr @.str.25, i64 %i.gj
+  %59 = load i8, ptr %58, align 1, !tbaa !31
+  %i.gw = icmp eq i8 %59, 0
+  br i1 %i.gw, label %bb.bj, label %bb.bh
 
-bb.bh:                                            ; preds = %bb.bg
+bb.bh:                                            ; preds = %bb.bg, %bb.bf
   %i.gx = load i32, ptr %i.ey, align 8, !tbaa !21
   %i.gy = icmp eq i32 %i.gx, 0
   br i1 %i.gy, label %bb.bi, label %seterr.exit.i.i146
@@ -292,8 +350,8 @@ seterr.exit.i.i146:                               ; preds = %bb.bi, %bb.bh
   store <2 x ptr> <ptr @nuls, ptr @nuls>, ptr %0, align 8, !tbaa !37
   br label %p_b_cclass.exit.i
 
-bb.bj:                                            ; preds = %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %.critedge.i.i
-  %.02940.lcssa.i.i = phi ptr [ @cclasses, %.critedge.i.i ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 24), %bb.aw ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 48), %bb.ax ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 72), %bb.ay ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 96), %bb.az ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 120), %bb.ba ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 144), %bb.bb ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 168), %bb.bc ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 192), %bb.bd ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 216), %bb.be ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 240), %bb.bf ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 264), %bb.bg ] ; 2 uses
+bb.bj:                                            ; preds = %bb.bg, %bb.be, %bb.bc, %bb.ba, %bb.ay, %bb.aw, %36, %29, %22, %15, %8, %1
+  %.02940.lcssa.i.i = phi ptr [ @cclasses, %1 ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 24), %8 ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 48), %15 ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 72), %22 ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 96), %29 ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 120), %36 ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 144), %bb.aw ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 168), %bb.ay ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 192), %bb.ba ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 216), %bb.bc ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 240), %bb.be ], [ getelementptr inbounds nuw (i8, ptr @cclasses, i64 264), %bb.bg ] ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %.02940.lcssa.i.i, i64 8
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !96 ; 2 uses
   %i.hb = load i8, ptr %i.ha, align 1, !tbaa !31  ; 2 uses

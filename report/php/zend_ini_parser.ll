@@ -151,11 +151,11 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca double, align 8                   ; 5 uses
-  %1 = alloca %struct._zval_struct, align 8       ; 6 uses
+  %1 = alloca %struct._zval_struct, align 8       ; 8 uses
   %i.d = alloca [200 x i8], align 16              ; 6 uses
   %2 = alloca [200 x %struct._zval_struct], align 16 ; 4 uses
   %3 = alloca %struct._zval_struct, align 8       ; 55 uses
-  %i.e = alloca [128 x i8], align 16              ; 12 uses
+  %i.e = alloca [128 x i8], align 16              ; 6 uses
   %i.f = alloca i64, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
@@ -170,23 +170,27 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 8 uses
   br label %bb.c
 
-bb.b:                                             ; preds = %bb.fr, %bb.t
-  %.0269 = phi i32 [ %i.ba, %bb.t ], [ %i.mr, %bb.fr ]
-  %.0247 = phi ptr [ %.3250, %bb.t ], [ %i.lz, %bb.fr ]
-  %.0234 = phi ptr [ %i.bd, %bb.t ], [ %i.ma, %bb.fr ]
-  %.0226 = phi i32 [ -2, %bb.t ], [ %.5, %bb.fr ]
+bb.b:                                             ; preds = %27, %bb.fr, %bb.t
+  %.0376 = phi ptr [ %.4379, %27 ], [ %.1377, %bb.fr ], [ %.1377, %bb.t ]
+  %.0269 = phi i32 [ %28, %27 ], [ %i.mr, %bb.fr ], [ %i.ba, %bb.t ]
+  %.0266 = phi i32 [ 3, %27 ], [ %.1270.a, %bb.fr ], [ %spec.select, %bb.t ]
+  %.0247 = phi ptr [ %.4251, %27 ], [ %i.lz, %bb.fr ], [ %.3250, %bb.t ]
+  %.0234 = phi ptr [ %29, %27 ], [ %i.ma, %bb.fr ], [ %i.bd, %bb.t ]
+  %.0226 = phi i32 [ %.6, %27 ], [ %.5, %bb.fr ], [ -2, %bb.t ]
   %i.j = getelementptr inbounds nuw i8, ptr %.0247, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1270.a = phi i32 [ 0, %bb.a ], [ %.0269, %bb.b ] ; 4 uses
+  %.1377 = phi ptr [ %i.e, %bb.a ], [ %.0376, %bb.b ] ; 17 uses
+  %.1270 = phi i32 [ 0, %bb.a ], [ %.0269, %bb.b ] ; 4 uses
+  %.1270.a = phi i32 [ 0, %bb.a ], [ %.0266, %bb.b ] ; 3 uses
   %.0263 = phi i64 [ 200, %bb.a ], [ %.2265, %bb.b ] ; 4 uses
   %.0256 = phi ptr [ %i.d, %bb.a ], [ %.3259, %bb.b ] ; 8 uses
   %.1248 = phi ptr [ %i.d, %bb.a ], [ %i.j, %bb.b ] ; 6 uses
   %.0243 = phi ptr [ %2, %bb.a ], [ %.3246, %bb.b ] ; 2 uses
   %.1235 = phi ptr [ %2, %bb.a ], [ %.0234, %bb.b ] ; 3 uses
   %.1227 = phi i32 [ -2, %bb.a ], [ %.0226, %bb.b ] ; 7 uses
-  %i.k = trunc nsw i32 %.1270.a to i8
+  %i.k = trunc nsw i32 %.1270 to i8
   store i8 %i.k, ptr %.1248, align 1, !tbaa !41
   %i.l = getelementptr inbounds i8, ptr %.0256, i64 %.0263
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 -1
@@ -234,17 +238,17 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 .thread393:                                       ; preds = %bb.h, %bb.c
   %.2265 = phi i64 [ %.0263, %bb.c ], [ %spec.store.select, %bb.h ]
-  %.3259 = phi ptr [ %.0256, %bb.c ], [ %i.v, %bb.h ] ; 8 uses
-  %.3250 = phi ptr [ %.1248, %bb.c ], [ %i.aa, %bb.h ] ; 10 uses
+  %.3259 = phi ptr [ %.0256, %bb.c ], [ %i.v, %bb.h ] ; 7 uses
+  %.3250 = phi ptr [ %.1248, %bb.c ], [ %i.aa, %bb.h ] ; 9 uses
   %.3246 = phi ptr [ %.0243, %bb.c ], [ %i.y, %bb.h ]
   %.3237 = phi ptr [ %.1235, %bb.c ], [ %i.ac, %bb.h ] ; 81 uses
-  %i.ae = icmp eq i32 %.1270.a, 2
+  %i.ae = icmp eq i32 %.1270, 2
   br i1 %i.ae, label %.loopexit, label %bb.i
 
 bb.i:                                             ; preds = %.thread393
-  %i.af = sext i32 %.1270.a to i64                ; 2 uses
+  %i.af = sext i32 %.1270 to i64                  ; 2 uses
   %i.ag = getelementptr inbounds i8, ptr @yypact, i64 %i.af
-  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !41  ; 2 uses
+  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !41  ; 3 uses
   %i.ai = sext i8 %i.ah to i32
   %i.aj = icmp eq i8 %i.ah, -46
   br i1 %i.aj, label %bb.u, label %bb.j
@@ -264,7 +268,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.an = icmp eq i32 %.2228, 256
-  br i1 %i.an, label %.loopexit449, label %bb.n
+  br i1 %i.an, label %.thread412, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ao = icmp samesign ult i32 %.2228, 274
@@ -304,12 +308,13 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.v
 
 bb.t:                                             ; preds = %bb.r
+  %spec.select = call i32 @llvm.usub.sat.i32(i32 %.1270.a, i32 1)
   %i.bd = getelementptr inbounds nuw i8, ptr %.3237, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bd, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !55
   br label %bb.b
 
 bb.u:                                             ; preds = %bb.p, %bb.q, %bb.i
-  %.4 = phi i32 [ %.1227, %bb.i ], [ %.3, %bb.p ], [ %.3, %bb.q ] ; 8 uses
+  %.4 = phi i32 [ %.1227, %bb.i ], [ %.3, %bb.p ], [ %.3, %bb.q ] ; 12 uses
   %i.be = getelementptr inbounds i8, ptr @yydefact, i64 %i.af
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !41  ; 2 uses
   %i.bg = sext i8 %i.bf to i32
@@ -712,32 +717,46 @@ bb.fr:                                            ; preds = %bb.fq, %bb.fp
 
 bb.fs:                                            ; preds = %bb.u
   %i.ms = icmp eq i32 %.4, -2
-  br i1 %i.ms, label %bb.fv, label %bb.ft
+  br i1 %i.ms, label %4, label %bb.ft
 
 bb.ft:                                            ; preds = %bb.fs
   %or.cond7 = icmp ult i32 %.4, 274
-  br i1 %or.cond7, label %bb.fu, label %bb.fv
+  br i1 %or.cond7, label %bb.fu, label %4
 
 bb.fu:                                            ; preds = %bb.ft
   %i.mt = zext nneg i32 %.4 to i64
   %i.mu = getelementptr inbounds nuw i8, ptr @yytranslate, i64 %i.mt
   %i.mv = load i8, ptr %i.mu, align 1, !tbaa !41
   %i.mw = sext i8 %i.mv to i32
-  br label %bb.fv
+  br label %4
 
-bb.fv:                                            ; preds = %bb.fs, %bb.ft, %bb.fu
-  %4 = phi i32 [ -2, %bb.fs ], [ %i.mw, %bb.fu ], [ 2, %bb.ft ] ; 2 uses
-  %i.mx = call fastcc i32 @yysyntax_error(ptr noundef %i.f, ptr nonnull %i.e, ptr %.3250, i32 %4)
+4:                                                ; preds = %bb.fu, %bb.ft, %bb.fs
+  %5 = phi i32 [ -2, %bb.fs ], [ %i.mw, %bb.fu ], [ 2, %bb.ft ] ; 3 uses
+  switch i32 %.1270.a, label %.thread412 [
+    i32 0, label %bb.fv
+    i32 3, label %8
+  ]
+
+bb.fv:                                            ; preds = %4
+  %i.mx = call fastcc i32 @yysyntax_error(ptr noundef %i.f, ptr %.1377, ptr %.3250, i32 %5)
   switch i32 %i.mx, label %.thread401 [
     i32 0, label %.thread405
-    i32 -1, label %bb.fw
+    i32 -1, label %6
   ]
 
 .thread405:                                       ; preds = %bb.fv
-  call fastcc void @ini_error(ptr noundef nonnull %i.e)
-  br label %.loopexit449
+  call fastcc void @ini_error(ptr noundef %.1377)
+  br label %.thread412
 
-bb.fw:                                            ; preds = %bb.fv
+6:                                                ; preds = %bb.fv
+  %.not298 = icmp eq ptr %.1377, %i.e
+  br i1 %.not298, label %bb.fw, label %7
+
+7:                                                ; preds = %6
+  call void @free(ptr noundef %.1377) #16
+  br label %bb.fw
+
+bb.fw:                                            ; preds = %7, %6
   %i.my = load i64, ptr %i.f, align 8, !tbaa !40
   %i.mz = call noalias ptr @malloc(i64 noundef %i.my) #17 ; 5 uses
   %.not299 = icmp eq ptr %i.mz, null
@@ -747,54 +766,97 @@ bb.fx:                                            ; preds = %bb.fw
   store i64 128, ptr %i.f, align 8, !tbaa !40
   br label %.thread401
 
-.thread401:                                       ; preds = %bb.fx, %bb.fv
+.thread401:                                       ; preds = %bb.fv, %bb.fx
+  %.2.ph = phi ptr [ %i.e, %bb.fx ], [ %.1377, %bb.fv ]
   call fastcc void @ini_error(ptr noundef nonnull @.str)
   br label %.thread386
 
 bb.fy:                                            ; preds = %bb.fw
-  %i.na = call fastcc i32 @yysyntax_error(ptr noundef %i.f, ptr nonnull %i.mz, ptr %.3250, i32 %4)
+  %i.na = call fastcc i32 @yysyntax_error(ptr noundef %i.f, ptr nonnull %i.mz, ptr %.3250, i32 %5)
   call fastcc void @ini_error(ptr noundef nonnull %i.mz)
   %i.nb = icmp eq i32 %i.na, -2
-  br i1 %i.nb, label %.thread386, label %.loopexit449
+  br i1 %i.nb, label %.thread386, label %.thread412
 
-.loopexit449:                                     ; preds = %bb.m, %bb.fy, %.thread405
-  %.2 = phi ptr [ %i.mz, %bb.fy ], [ %i.e, %.thread405 ], [ %i.e, %bb.m ] ; 2 uses
-  %.6 = phi i32 [ %.4, %bb.fy ], [ %.4, %.thread405 ], [ 257, %bb.m ] ; 2 uses
-  %i.nc = icmp eq ptr %.3250, %.3259
-  br i1 %i.nc, label %.loopexit, label %.lr.ph.a
+8:                                                ; preds = %4
+  %9 = icmp slt i32 %.4, 1
+  br i1 %9, label %10, label %12
 
-.lr.ph.a:                                         ; preds = %.loopexit449, %.lr.ph.a
-  %.4238477 = phi ptr [ %i.ng, %.lr.ph.a ], [ %.3237, %.loopexit449 ] ; 2 uses
-  %.4251476 = phi ptr [ %i.nh, %.lr.ph.a ], [ %.3250, %.loopexit449 ]
-  %.2271475 = phi i32 [ %i.nj, %.lr.ph.a ], [ %.1270.a, %.loopexit449 ]
-  %5 = sext i32 %.2271475 to i64
-  %i.nd = getelementptr inbounds i8, ptr @yystos, i64 %5
+10:                                               ; preds = %8
+  %11 = icmp eq i32 %.4, 0
+  br i1 %11, label %.thread429, label %.thread412
+
+12:                                               ; preds = %8
+  call fastcc void @yydestruct(i32 noundef %5, ptr noundef %1)
+  br label %.thread412
+
+.thread412:                                       ; preds = %4, %bb.fy, %.thread405, %bb.m, %10, %12
+  %.4379 = phi ptr [ %.1377, %10 ], [ %.1377, %12 ], [ %.1377, %4 ], [ %.1377, %bb.m ], [ %.1377, %.thread405 ], [ %i.mz, %bb.fy ] ; 2 uses
+  %.6 = phi i32 [ %.4, %10 ], [ -2, %12 ], [ %.4, %4 ], [ 257, %bb.m ], [ %.4, %.thread405 ], [ %.4, %bb.fy ] ; 2 uses
+  br label %13
+
+13:                                               ; preds = %.lr.ph.a, %.thread412
+  %14 = phi i8 [ %i.ah, %.thread412 ], [ %.pre, %.lr.ph.a ] ; 2 uses
+  %.2271 = phi i32 [ %.1270, %.thread412 ], [ %i.nj, %.lr.ph.a ]
+  %.4251 = phi ptr [ %.3250, %.thread412 ], [ %i.nh, %.lr.ph.a ] ; 4 uses
+  %.4238 = phi ptr [ %.3237, %.thread412 ], [ %i.ng, %.lr.ph.a ] ; 4 uses
+  %15 = sext i32 %.2271 to i64
+  %16 = icmp sgt i8 %14, -2
+  br i1 %16, label %.loopexit449, label %25
+
+.loopexit449:                                     ; preds = %13
+  %17 = sext i8 %14 to i64
+  %18 = add nsw i64 %17, 1                        ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr @yycheck, i64 %18
+  %20 = load i8, ptr %19, align 1, !tbaa !41
+  %i.nc = icmp eq i8 %20, 1
+  br i1 %i.nc, label %21, label %25
+
+21:                                               ; preds = %.loopexit449
+  %22 = getelementptr inbounds nuw i8, ptr @yytable, i64 %18
+  %23 = load i8, ptr %22, align 1, !tbaa !41      ; 2 uses
+  %24 = icmp sgt i8 %23, 0
+  br i1 %24, label %27, label %25
+
+25:                                               ; preds = %.loopexit449, %21, %13
+  %26 = icmp eq ptr %.4251, %.3259
+  br i1 %26, label %.loopexit, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %25
+  %i.nd = getelementptr inbounds i8, ptr @yystos, i64 %15
   %i.ne = load i8, ptr %i.nd, align 1, !tbaa !41
   %i.nf = sext i8 %i.ne to i32
-  call fastcc void @yydestruct(i32 noundef %i.nf, ptr noundef %.4238477)
-  %i.ng = getelementptr inbounds i8, ptr %.4238477, i64 -16 ; 2 uses
-  %i.nh = getelementptr inbounds i8, ptr %.4251476, i64 -1 ; 4 uses
-  %i.ni = load i8, ptr %i.nh, align 1, !tbaa !41
+  call fastcc void @yydestruct(i32 noundef %i.nf, ptr noundef %.4238)
+  %i.ng = getelementptr inbounds i8, ptr %.4238, i64 -16
+  %i.nh = getelementptr inbounds i8, ptr %.4251, i64 -1 ; 2 uses
+  %i.ni = load i8, ptr %i.nh, align 1, !tbaa !41  ; 2 uses
   %i.nj = sext i8 %i.ni to i32
-  %6 = icmp eq ptr %i.nh, %.3259
-  br i1 %6, label %.loopexit, label %.lr.ph.a
+  %.phi.trans.insert = sext i8 %i.ni to i64
+  %.phi.trans.insert513 = getelementptr inbounds i8, ptr @yypact, i64 %.phi.trans.insert
+  %.pre = load i8, ptr %.phi.trans.insert513, align 1, !tbaa !41
+  br label %13
 
-.thread386:                                       ; preds = %bb.e, %bb.d, %.thread401, %bb.fy
-  %.3378 = phi ptr [ %i.mz, %bb.fy ], [ %i.e, %.thread401 ], [ %i.e, %bb.d ], [ %i.e, %bb.e ]
-  %.5261 = phi ptr [ %.3259, %bb.fy ], [ %.3259, %.thread401 ], [ %.0256, %bb.d ], [ %.0256, %bb.e ]
-  %.6253 = phi ptr [ %.3250, %bb.fy ], [ %.3250, %.thread401 ], [ %.1248, %bb.d ], [ %.1248, %bb.e ]
-  %.6240 = phi ptr [ %.3237, %bb.fy ], [ %.3237, %.thread401 ], [ %.1235, %bb.d ], [ %.1235, %bb.e ]
-  %.8 = phi i32 [ %.4, %bb.fy ], [ %.4, %.thread401 ], [ %.1227, %bb.d ], [ %.1227, %bb.e ]
+27:                                               ; preds = %21
+  %28 = zext nneg i8 %23 to i32
+  %29 = getelementptr inbounds nuw i8, ptr %.4238, i64 16 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %29, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !55
+  br label %bb.b
+
+.thread386:                                       ; preds = %bb.e, %bb.d, %bb.fy, %.thread401
+  %.3378 = phi ptr [ %.2.ph, %.thread401 ], [ %.1377, %bb.e ], [ %.1377, %bb.d ], [ %i.mz, %bb.fy ]
+  %.5261 = phi ptr [ %.3259, %.thread401 ], [ %.0256, %bb.e ], [ %.0256, %bb.d ], [ %.3259, %bb.fy ]
+  %.6253 = phi ptr [ %.3250, %.thread401 ], [ %.1248, %bb.e ], [ %.1248, %bb.d ], [ %.3250, %bb.fy ]
+  %.6240 = phi ptr [ %.3237, %.thread401 ], [ %.1235, %bb.e ], [ %.1235, %bb.d ], [ %.3237, %bb.fy ]
+  %.8 = phi i32 [ %.4, %.thread401 ], [ %.1227, %bb.e ], [ %.1227, %bb.d ], [ %.4, %bb.fy ]
   call fastcc void @ini_error(ptr noundef nonnull @.str.3)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.h, %.thread393, %.lr.ph.a, %.loopexit449, %.thread386
-  %.4379 = phi ptr [ %.3378, %.thread386 ], [ %.2, %.loopexit449 ], [ %.2, %.lr.ph.a ], [ %i.e, %.thread393 ], [ %i.e, %bb.h ] ; 2 uses
-  %.6262 = phi ptr [ %.5261, %.thread386 ], [ %.3259, %.loopexit449 ], [ %.3259, %.lr.ph.a ], [ %.3259, %.thread393 ], [ %i.v, %bb.h ] ; 4 uses
-  %.7254 = phi ptr [ %.6253, %.thread386 ], [ %.3250, %.loopexit449 ], [ %i.nh, %.lr.ph.a ], [ %.3250, %.thread393 ], [ %i.aa, %bb.h ] ; 2 uses
-  %.7241 = phi ptr [ %.6240, %.thread386 ], [ %.3237, %.loopexit449 ], [ %i.ng, %.lr.ph.a ], [ %.3237, %.thread393 ], [ %i.ac, %bb.h ]
-  %.0232 = phi i32 [ 2, %.thread386 ], [ 1, %.loopexit449 ], [ 1, %.lr.ph.a ], [ 0, %.thread393 ], [ 1, %bb.h ]
-  %.9 = phi i32 [ %.8, %.thread386 ], [ %.6, %.loopexit449 ], [ %.6, %.lr.ph.a ], [ %.1227, %.thread393 ], [ %.1227, %bb.h ] ; 3 uses
+.loopexit:                                        ; preds = %bb.h, %.thread393, %25, %.thread386
+  %.6381 = phi ptr [ %.4379, %25 ], [ %.3378, %.thread386 ], [ %.1377, %.thread393 ], [ %.1377, %bb.h ] ; 3 uses
+  %.6262 = phi ptr [ %.3259, %25 ], [ %.5261, %.thread386 ], [ %.3259, %.thread393 ], [ %i.v, %bb.h ] ; 3 uses
+  %.7254 = phi ptr [ %.4251, %25 ], [ %.6253, %.thread386 ], [ %.3250, %.thread393 ], [ %i.aa, %bb.h ] ; 3 uses
+  %.7241 = phi ptr [ %.4238, %25 ], [ %.6240, %.thread386 ], [ %.3237, %.thread393 ], [ %i.ac, %bb.h ] ; 3 uses
+  %.0232 = phi i32 [ 1, %25 ], [ 2, %.thread386 ], [ 0, %.thread393 ], [ 1, %bb.h ] ; 3 uses
+  %.9 = phi i32 [ %.6, %25 ], [ %.8, %.thread386 ], [ %.1227, %.thread393 ], [ %.1227, %bb.h ] ; 3 uses
   %.not300 = icmp eq i32 %.9, -2
   br i1 %.not300, label %bb.gb, label %bb.fz
 
@@ -802,25 +864,41 @@ bb.fz:                                            ; preds = %.loopexit
   %or.cond11 = icmp ult i32 %.9, 274
   br i1 %or.cond11, label %.thread429, label %bb.ga
 
-.thread429:                                       ; preds = %bb.fz
-  %i.nk = zext nneg i32 %.9 to i64
+.thread429:                                       ; preds = %10, %bb.fz
+  %.6381423452 = phi ptr [ %.6381, %bb.fz ], [ %.1377, %10 ]
+  %.6262425450 = phi ptr [ %.6262, %bb.fz ], [ %.3259, %10 ]
+  %.7254427448 = phi ptr [ %.7254, %bb.fz ], [ %.3250, %10 ]
+  %.7241429446 = phi ptr [ %.7241, %bb.fz ], [ %.3237, %10 ]
+  %.0232431444 = phi i32 [ %.0232, %bb.fz ], [ 1, %10 ]
+  %.9433442 = phi i32 [ %.9, %bb.fz ], [ 0, %10 ]
+  %i.nk = zext nneg i32 %.9433442 to i64
   %i.nl = getelementptr inbounds nuw i8, ptr @yytranslate, i64 %i.nk
   %i.nm = load i8, ptr %i.nl, align 1, !tbaa !41
   %i.nn = sext i8 %i.nm to i32
   br label %bb.ga
 
 bb.ga:                                            ; preds = %bb.fz, %.thread429
+  %.6381423451 = phi ptr [ %.6381423452, %.thread429 ], [ %.6381, %bb.fz ]
+  %.6262425449 = phi ptr [ %.6262425450, %.thread429 ], [ %.6262, %bb.fz ]
+  %.7254427447 = phi ptr [ %.7254427448, %.thread429 ], [ %.7254, %bb.fz ]
+  %.7241429445 = phi ptr [ %.7241429446, %.thread429 ], [ %.7241, %bb.fz ]
+  %.0232431443 = phi i32 [ %.0232431444, %.thread429 ], [ %.0232, %bb.fz ]
   %i.no = phi i32 [ %i.nn, %.thread429 ], [ 2, %bb.fz ]
   call fastcc void @yydestruct(i32 noundef %i.no, ptr noundef %1)
   br label %bb.gb
 
 bb.gb:                                            ; preds = %bb.ga, %.loopexit
-  %.not301479 = icmp eq ptr %.7254, %.6262
+  %.0232432 = phi i32 [ %.0232431443, %bb.ga ], [ %.0232, %.loopexit ]
+  %.7241430 = phi ptr [ %.7241429445, %bb.ga ], [ %.7241, %.loopexit ]
+  %.7254428 = phi ptr [ %.7254427447, %bb.ga ], [ %.7254, %.loopexit ] ; 2 uses
+  %.6262426 = phi ptr [ %.6262425449, %bb.ga ], [ %.6262, %.loopexit ] ; 4 uses
+  %.6381424 = phi ptr [ %.6381423451, %bb.ga ], [ %.6381, %.loopexit ] ; 2 uses
+  %.not301479 = icmp eq ptr %.7254428, %.6262426
   br i1 %.not301479, label %._crit_edge, label %.lr.ph482
 
 .lr.ph482:                                        ; preds = %bb.gb, %.lr.ph482
-  %.8242481 = phi ptr [ %i.nu, %.lr.ph482 ], [ %.7241, %bb.gb ] ; 2 uses
-  %.8255480 = phi ptr [ %i.nv, %.lr.ph482 ], [ %.7254, %bb.gb ] ; 2 uses
+  %.8242481 = phi ptr [ %i.nu, %.lr.ph482 ], [ %.7241430, %bb.gb ] ; 2 uses
+  %.8255480 = phi ptr [ %i.nv, %.lr.ph482 ], [ %.7254428, %bb.gb ] ; 2 uses
   %i.np = load i8, ptr %.8255480, align 1, !tbaa !41
   %i.nq = sext i8 %i.np to i64
   %i.nr = getelementptr inbounds i8, ptr @yystos, i64 %i.nq
@@ -829,23 +907,23 @@ bb.gb:                                            ; preds = %bb.ga, %.loopexit
   call fastcc void @yydestruct(i32 noundef %i.nt, ptr noundef %.8242481)
   %i.nu = getelementptr inbounds i8, ptr %.8242481, i64 -16
   %i.nv = getelementptr inbounds i8, ptr %.8255480, i64 -1 ; 2 uses
-  %.not301 = icmp eq ptr %i.nv, %.6262
+  %.not301 = icmp eq ptr %i.nv, %.6262426
   br i1 %.not301, label %._crit_edge, label %.lr.ph482, !llvm.loop !54
 
 ._crit_edge:                                      ; preds = %.lr.ph482, %bb.gb
-  %.not302 = icmp eq ptr %.6262, %i.d
+  %.not302 = icmp eq ptr %.6262426, %i.d
   br i1 %.not302, label %bb.gd, label %bb.gc
 
 bb.gc:                                            ; preds = %._crit_edge
-  call void @free(ptr noundef %.6262) #16
+  call void @free(ptr noundef %.6262426) #16
   br label %bb.gd
 
 bb.gd:                                            ; preds = %bb.gc, %._crit_edge
-  %.not303 = icmp eq ptr %.4379, %i.e
+  %.not303 = icmp eq ptr %.6381424, %i.e
   br i1 %.not303, label %bb.gf, label %bb.ge
 
 bb.ge:                                            ; preds = %bb.gd
-  call void @free(ptr noundef %.4379) #16
+  call void @free(ptr noundef %.6381424) #16
   br label %bb.gf
 
 bb.gf:                                            ; preds = %bb.gd, %bb.ge
@@ -855,7 +933,7 @@ bb.gf:                                            ; preds = %bb.gd, %bb.ge
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #16
-  ret i32 %.0232
+  ret i32 %.0232432
 }
 
 declare void @shutdown_ini_scanner() local_unnamed_addr #2
@@ -1257,6 +1335,9 @@ declare i64 @llvm.smin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.usub.sat.i32(i32, i32) #15
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

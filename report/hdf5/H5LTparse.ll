@@ -106,11 +106,12 @@ bb.a:
   store i32 -2, ptr @H5LTyychar, align 4, !tbaa !8
   br label %bb.c
 
-bb.b:                                             ; preds = %bb.jv, %bb.t
-  %.0259 = phi ptr [ %.3262, %bb.t ], [ %i.afh, %bb.jv ]
-  %.0252 = phi ptr [ %i.az, %bb.t ], [ %i.afi, %bb.jv ]
-  %.0238.shrunk = phi i8 [ %i.ay, %bb.t ], [ %.in, %bb.jv ]
-  %.0238 = zext i8 %.0238.shrunk to i32
+bb.b:                                             ; preds = %26, %bb.jv, %bb.t
+  %.0259 = phi ptr [ %.4263, %26 ], [ %i.afh, %bb.jv ], [ %.3262, %bb.t ]
+  %.0252 = phi ptr [ %27, %26 ], [ %i.afi, %bb.jv ], [ %i.az, %bb.t ]
+  %.0241 = phi i32 [ 3, %26 ], [ %.1242, %bb.jv ], [ %.2243, %bb.t ]
+  %.0238.in = phi i8 [ %19, %26 ], [ %.in, %bb.jv ], [ %i.ay, %bb.t ]
+  %.0238 = zext i8 %.0238.in to i32
   %i.g = getelementptr inbounds nuw i8, ptr %.0259, i64 1
   br label %bb.c
 
@@ -120,6 +121,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.0255 = phi ptr [ %0, %bb.a ], [ %.3258, %bb.b ] ; 2 uses
   %.1253 = phi ptr [ %0, %bb.a ], [ %.0252, %bb.b ]
   %.0244 = phi i64 [ 200, %bb.a ], [ %.2246, %bb.b ] ; 4 uses
+  %.1242 = phi i32 [ 0, %bb.a ], [ %.0241, %bb.b ] ; 3 uses
   %.1 = phi i32 [ 0, %bb.a ], [ %.0238, %bb.b ]   ; 3 uses
   %i.h = trunc nuw i32 %.1 to i8
   store i8 %i.h, ptr %.1260, align 1, !tbaa !9
@@ -168,10 +170,10 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br i1 %.not300, label %.thread340, label %.loopexit.thread
 
 .thread340:                                       ; preds = %bb.h, %bb.c
-  %.3270 = phi ptr [ %.0267, %bb.c ], [ %i.s, %bb.h ] ; 4 uses
-  %.3262 = phi ptr [ %.1260, %bb.c ], [ %i.x, %bb.h ] ; 2 uses
+  %.3270 = phi ptr [ %.0267, %bb.c ], [ %i.s, %bb.h ] ; 5 uses
+  %.3262 = phi ptr [ %.1260, %bb.c ], [ %i.x, %bb.h ] ; 3 uses
   %.3258 = phi ptr [ %.0255, %bb.c ], [ %i.v, %bb.h ]
-  %.3 = phi ptr [ %.1253, %bb.c ], [ %i.z, %bb.h ] ; 24 uses
+  %.3 = phi ptr [ %.1253, %bb.c ], [ %i.z, %bb.h ] ; 25 uses
   %.2246 = phi i64 [ %.0244, %bb.c ], [ %spec.store.select, %bb.h ]
   %i.ab = icmp eq i32 %.1, 80
   br i1 %i.ab, label %.loopexit, label %bb.i
@@ -179,7 +181,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 bb.i:                                             ; preds = %.thread340
   %i.ac = zext nneg i32 %.1 to i64                ; 2 uses
   %i.ad = getelementptr inbounds nuw [2 x i8], ptr @yypact, i64 %i.ac
-  %i.ae = load i16, ptr %i.ad, align 2, !tbaa !11 ; 2 uses
+  %i.ae = load i16, ptr %i.ad, align 2, !tbaa !11 ; 3 uses
   %i.af = sext i16 %i.ae to i32
   %i.ag = icmp eq i16 %i.ae, -24
   br i1 %i.ag, label %bb.u, label %bb.j
@@ -209,7 +211,7 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n
   store i32 257, ptr @H5LTyychar, align 4, !tbaa !8
-  br label %.loopexit
+  br label %.preheader
 
 bb.p:                                             ; preds = %bb.n
   %i.an = icmp samesign ult i32 %i.ak, 334
@@ -239,6 +241,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   %i.ax = getelementptr inbounds nuw i8, ptr @yytable, i64 %i.at
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !9
+  %.2243 = call i32 @llvm.usub.sat.i32(i32 %.1242, i32 1)
   %i.az = getelementptr inbounds nuw i8, ptr %.3, i64 8 ; 2 uses
   %i.ba = load i64, ptr @H5LTyylval, align 8, !tbaa !9
   store i64 %i.ba, ptr %i.az, align 8, !tbaa !9
@@ -249,7 +252,7 @@ bb.u:                                             ; preds = %bb.r, %bb.s, %bb.i
   %i.bb = getelementptr inbounds nuw i8, ptr @yydefact, i64 %i.ac
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !9   ; 3 uses
   %i.bd = icmp eq i8 %i.bc, 0
-  br i1 %i.bd, label %bb.jw, label %bb.v
+  br i1 %i.bd, label %1, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.be = sext i8 %i.bc to i64                    ; 2 uses
@@ -652,20 +655,82 @@ bb.jv:                                            ; preds = %bb.ju, %bb.jt
   %.in = load i8, ptr %.in.in, align 1, !tbaa !9
   br label %bb.b
 
-bb.jw:                                            ; preds = %bb.u
+1:                                                ; preds = %bb.u
+  %2 = load i32, ptr @H5LTyychar, align 4, !tbaa !8 ; 2 uses
+  switch i32 %.1242, label %.preheader [
+    i32 0, label %bb.jw
+    i32 3, label %3
+  ]
+
+bb.jw:                                            ; preds = %1
   %i.aga = load i32, ptr @H5LTyynerrs, align 4, !tbaa !8
   %i.agb = add nsw i32 %i.aga, 1
   store i32 %i.agb, ptr @H5LTyynerrs, align 4, !tbaa !8
   %i.agc = call i32 @H5LTyyerror(ptr noundef nonnull @.str) #8 ; 0 uses
-  br label %.loopexit
+  br label %.preheader
+
+3:                                                ; preds = %1
+  %4 = icmp slt i32 %2, 1
+  br i1 %4, label %5, label %7
+
+5:                                                ; preds = %3
+  %6 = icmp eq i32 %2, 0
+  br i1 %6, label %.loopexit, label %.preheader
+
+7:                                                ; preds = %3
+  store i32 -2, ptr @H5LTyychar, align 4, !tbaa !8
+  br label %.preheader
+
+.preheader:                                       ; preds = %bb.jw, %1, %5, %7, %bb.o
+  br label %8
+
+8:                                                ; preds = %.preheader, %22
+  %9 = phi i16 [ %.pre, %22 ], [ %i.ae, %.preheader ] ; 2 uses
+  %.4263 = phi ptr [ %24, %22 ], [ %.3262, %.preheader ] ; 3 uses
+  %.4 = phi ptr [ %23, %22 ], [ %.3, %.preheader ] ; 2 uses
+  %10 = icmp sgt i16 %9, -2
+  br i1 %10, label %11, label %20
+
+11:                                               ; preds = %8
+  %12 = sext i16 %9 to i64
+  %13 = add nsw i64 %12, 1                        ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr @yycheck, i64 %13
+  %15 = load i8, ptr %14, align 1, !tbaa !9
+  %16 = icmp eq i8 %15, 1
+  br i1 %16, label %17, label %20
+
+17:                                               ; preds = %11
+  %18 = getelementptr inbounds nuw i8, ptr @yytable, i64 %13
+  %19 = load i8, ptr %18, align 1, !tbaa !9       ; 2 uses
+  %.not321 = icmp eq i8 %19, 0
+  br i1 %.not321, label %20, label %26
+
+20:                                               ; preds = %11, %17, %8
+  %21 = icmp eq ptr %.4263, %.3270
+  br i1 %21, label %.loopexit, label %22
+
+22:                                               ; preds = %20
+  %23 = getelementptr inbounds i8, ptr %.4, i64 -8
+  %24 = getelementptr inbounds i8, ptr %.4263, i64 -1 ; 2 uses
+  %25 = load i8, ptr %24, align 1, !tbaa !9
+  %.phi.trans.insert = zext i8 %25 to i64
+  %.phi.trans.insert371 = getelementptr inbounds nuw [2 x i8], ptr @yypact, i64 %.phi.trans.insert
+  %.pre = load i16, ptr %.phi.trans.insert371, align 2, !tbaa !11
+  br label %8
+
+26:                                               ; preds = %17
+  %27 = getelementptr inbounds nuw i8, ptr %.4, i64 8 ; 2 uses
+  %28 = load i64, ptr @H5LTyylval, align 8, !tbaa !9
+  store i64 %28, ptr %27, align 8, !tbaa !9
+  br label %bb.b
 
 bb.jx:                                            ; preds = %bb.d, %bb.e
   %i.agd = call i32 @H5LTyyerror(ptr noundef nonnull @.str.3) #8 ; 0 uses
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.thread340, %bb.o, %bb.jw, %bb.jx
-  %.5272 = phi ptr [ %.0267, %bb.jx ], [ %.3270, %bb.o ], [ %.3270, %bb.jw ], [ %.3270, %.thread340 ] ; 2 uses
-  %.0250 = phi i64 [ 2, %bb.jx ], [ 1, %bb.o ], [ 1, %bb.jw ], [ 0, %.thread340 ] ; 2 uses
+.loopexit:                                        ; preds = %5, %.thread340, %20, %bb.jx
+  %.5272 = phi ptr [ %.0267, %bb.jx ], [ %.3270, %20 ], [ %.3270, %.thread340 ], [ %.3270, %5 ] ; 2 uses
+  %.0250 = phi i64 [ 2, %bb.jx ], [ 1, %20 ], [ 0, %.thread340 ], [ 1, %5 ] ; 2 uses
   %.not323 = icmp eq ptr %.5272, %i.a
   br i1 %.not323, label %bb.jy, label %.loopexit.thread
 
@@ -749,6 +814,9 @@ declare i32 @H5LTyyerror(ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.usub.sat.i32(i32, i32) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="16384" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

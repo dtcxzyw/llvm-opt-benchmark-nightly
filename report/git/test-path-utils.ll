@@ -204,10 +204,11 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.ah, %bb.af
   %.1.i = phi i32 [ %.03240.i, %bb.af ], [ %.03240.i, %bb.ai ], [ 1, %bb.aj ], [ 1, %bb.ah ] ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 3 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.dw = getelementptr inbounds nuw [24 x i8], ptr @basename_data, i64 %indvars.iv.next.i
-  %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
-  %.not.i249 = icmp eq i64 %indvars.iv.next.i, 15
+  %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 8 ; 2 uses
+  %11 = load ptr, ptr %i.dx, align 8, !tbaa !19
+  %.not.i249 = icmp eq ptr %11, null
   br i1 %.not.i249, label %test_function.exit, label %.lr.ph.i, !llvm.loop !0
 
 test_function.exit:                               ; preds = %bb.ak

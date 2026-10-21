@@ -55,16 +55,16 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge, %bb.ct, %bb.t
-  %.0251 = phi i32 [ 1, %._crit_edge ], [ %i.mn, %bb.ct ], [ %i.av, %bb.t ]
+  %.0251 = phi i32 [ %17, %._crit_edge ], [ %i.mn, %bb.ct ], [ %i.av, %bb.t ]
   %.0248 = phi i32 [ 3, %._crit_edge ], [ %.1249, %bb.ct ], [ %spec.select, %bb.t ]
-  %.0231 = phi ptr [ %.4235.lcssa, %._crit_edge ], [ %i.lv, %bb.ct ], [ %.3234, %bb.t ]
+  %.0231 = phi ptr [ %.4235, %._crit_edge ], [ %i.lv, %bb.ct ], [ %.3234, %bb.t ]
   %.0219 = phi ptr [ %i.mu, %._crit_edge ], [ %i.lw, %bb.ct ], [ %i.az, %bb.t ]
   %.0212 = phi i32 [ %.6, %._crit_edge ], [ %.5, %bb.ct ], [ -2, %bb.t ]
   %i.e = getelementptr inbounds nuw i8, ptr %.0231, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1252 = phi i32 [ 0, %bb.a ], [ %.0251, %bb.b ] ; 4 uses
+  %.1252 = phi i32 [ 0, %bb.a ], [ %.0251, %bb.b ] ; 3 uses
   %.1249 = phi i32 [ 0, %bb.a ], [ %.0248, %bb.b ] ; 3 uses
   %.0245 = phi i64 [ 200, %bb.a ], [ %.2247, %bb.b ] ; 4 uses
   %.0239 = phi ptr [ %i.a, %bb.a ], [ %.3242, %bb.b ] ; 7 uses
@@ -121,16 +121,16 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 .thread300:                                       ; preds = %bb.h, %bb.c
   %.2247 = phi i64 [ %.0245, %bb.c ], [ %spec.store.select, %bb.h ]
   %.3242 = phi ptr [ %.0239, %bb.c ], [ %i.q, %bb.h ] ; 5 uses
-  %.3234 = phi ptr [ %.1232, %bb.c ], [ %i.v, %bb.h ] ; 4 uses
+  %.3234 = phi ptr [ %.1232, %bb.c ], [ %i.v, %bb.h ] ; 3 uses
   %.3230 = phi ptr [ %.0227, %bb.c ], [ %i.t, %bb.h ]
-  %.3222 = phi ptr [ %.1220, %bb.c ], [ %i.x, %bb.h ] ; 28 uses
+  %.3222 = phi ptr [ %.1220, %bb.c ], [ %i.x, %bb.h ] ; 27 uses
   %i.z = icmp eq i32 %.1252, 6
   br i1 %i.z, label %.thread325, label %bb.i
 
 bb.i:                                             ; preds = %.thread300
   %i.aa = sext i32 %.1252 to i64                  ; 2 uses
   %i.ab = getelementptr inbounds i8, ptr @yypact, i64 %i.aa
-  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !10  ; 2 uses
+  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !10  ; 3 uses
   %i.ad = sext i8 %i.ac to i32
   %i.ae = icmp eq i8 %i.ac, -18
   br i1 %i.ae, label %bb.u, label %bb.j
@@ -150,7 +150,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ai = icmp eq i32 %.2, 256
-  br i1 %i.ai, label %bb.cx, label %bb.n
+  br i1 %i.ai, label %4, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.aj = icmp samesign ult i32 %.2, 269
@@ -553,45 +553,64 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
   br label %bb.b
 
 bb.cu:                                            ; preds = %bb.u
-  switch i32 %.1249, label %bb.cx [
+  switch i32 %.1249, label %4 [
     i32 0, label %.thread307
     i32 3, label %bb.cv
   ]
 
 .thread307:                                       ; preds = %bb.cu
   call void @aagerror(ptr noundef %0, ptr noundef nonnull @.str) #16
-  br label %bb.cx
+  br label %4
 
 bb.cv:                                            ; preds = %bb.cu
   %i.mo = icmp slt i32 %.4, 1
-  br i1 %i.mo, label %bb.cw, label %bb.cx
+  br i1 %i.mo, label %bb.cw, label %4
 
 bb.cw:                                            ; preds = %bb.cv
   %i.mp = icmp eq i32 %.4, 0
-  br i1 %i.mp, label %.thread325, label %bb.cx
+  br i1 %i.mp, label %.thread325, label %4
 
-bb.cx:                                            ; preds = %bb.cu, %bb.cv, %.thread307, %bb.m, %bb.cw
+4:                                                ; preds = %bb.cu, %bb.cv, %.thread307, %bb.m, %bb.cw
   %.6 = phi i32 [ %.4, %bb.cw ], [ %.4, %.thread307 ], [ %.4, %bb.cu ], [ 257, %bb.m ], [ -2, %bb.cv ]
-  %i.mq = icmp eq i32 %.1252, 0
-  br i1 %i.mq, label %._crit_edge, label %.lr.ph
+  br label %5
 
-.lr.ph:                                           ; preds = %bb.cx, %bb.cy
-  %.4223442 = phi ptr [ %i.mr, %bb.cy ], [ %.3222, %bb.cx ]
-  %.4235441 = phi ptr [ %i.ms, %bb.cy ], [ %.3234, %bb.cx ] ; 2 uses
-  %4 = icmp eq ptr %.4235441, %.3242
-  br i1 %4, label %.thread325, label %bb.cy
+5:                                                ; preds = %bb.cy, %4
+  %6 = phi i8 [ %i.ac, %4 ], [ %.pre, %bb.cy ]    ; 2 uses
+  %.4235 = phi ptr [ %.3234, %4 ], [ %i.ms, %bb.cy ] ; 3 uses
+  %.4223 = phi ptr [ %.3222, %4 ], [ %i.mr, %bb.cy ] ; 2 uses
+  %7 = icmp sgt i8 %6, -2
+  br i1 %7, label %bb.cx, label %15
 
-bb.cy:                                            ; preds = %.lr.ph
-  %i.mr = getelementptr inbounds i8, ptr %.4223442, i64 -8 ; 2 uses
-  %i.ms = getelementptr inbounds i8, ptr %.4235441, i64 -1 ; 3 uses
+bb.cx:                                            ; preds = %5
+  %8 = sext i8 %6 to i64
+  %9 = add nsw i64 %8, 1                          ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr @yycheck, i64 %9
+  %11 = load i8, ptr %10, align 1, !tbaa !10
+  %i.mq = icmp eq i8 %11, 1
+  br i1 %i.mq, label %.lr.ph, label %15
+
+.lr.ph:                                           ; preds = %bb.cx
+  %12 = getelementptr inbounds nuw i8, ptr @yytable, i64 %9
+  %13 = load i8, ptr %12, align 1, !tbaa !10      ; 2 uses
+  %14 = icmp sgt i8 %13, 0
+  br i1 %14, label %._crit_edge, label %15
+
+15:                                               ; preds = %bb.cx, %.lr.ph, %5
+  %16 = icmp eq ptr %.4235, %.3242
+  br i1 %16, label %.thread325, label %bb.cy
+
+bb.cy:                                            ; preds = %15
+  %i.mr = getelementptr inbounds i8, ptr %.4223, i64 -8
+  %i.ms = getelementptr inbounds i8, ptr %.4235, i64 -1 ; 2 uses
   %i.mt = load i8, ptr %i.ms, align 1, !tbaa !10
-  %5 = icmp eq i8 %i.mt, 0
-  br i1 %5, label %._crit_edge, label %.lr.ph
+  %.phi.trans.insert = sext i8 %i.mt to i64
+  %.phi.trans.insert383 = getelementptr inbounds i8, ptr @yypact, i64 %.phi.trans.insert
+  %.pre = load i8, ptr %.phi.trans.insert383, align 1, !tbaa !10
+  br label %5
 
-._crit_edge:                                      ; preds = %bb.cy, %bb.cx
-  %.4235.lcssa = phi ptr [ %.3234, %bb.cx ], [ %i.ms, %bb.cy ]
-  %.4223.lcssa = phi ptr [ %.3222, %bb.cx ], [ %i.mr, %bb.cy ]
-  %i.mu = getelementptr inbounds nuw i8, ptr %.4223.lcssa, i64 8 ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph
+  %17 = zext nneg i8 %13 to i32
+  %i.mu = getelementptr inbounds nuw i8, ptr %.4223, i64 8 ; 2 uses
   %i.mv = load i64, ptr %2, align 8, !tbaa !10
   store i64 %i.mv, ptr %i.mu, align 8, !tbaa !10
   br label %bb.b
@@ -600,9 +619,9 @@ bb.cz:                                            ; preds = %bb.d, %bb.e
   call void @aagerror(ptr noundef %0, ptr noundef nonnull @.str.3) #16
   br label %.thread325
 
-.thread325:                                       ; preds = %.thread300, %bb.cw, %.lr.ph, %bb.cz
-  %.0217323 = phi i32 [ 1, %.lr.ph ], [ 2, %bb.cz ], [ 0, %.thread300 ], [ 1, %bb.cw ] ; 2 uses
-  %.5244317 = phi ptr [ %.3242, %.lr.ph ], [ %.0239, %bb.cz ], [ %.3242, %bb.cw ], [ %.3242, %.thread300 ] ; 2 uses
+.thread325:                                       ; preds = %.thread300, %bb.cw, %15, %bb.cz
+  %.0217323 = phi i32 [ 1, %15 ], [ 2, %bb.cz ], [ 0, %.thread300 ], [ 1, %bb.cw ] ; 2 uses
+  %.5244317 = phi ptr [ %.3242, %15 ], [ %.0239, %bb.cz ], [ %.3242, %bb.cw ], [ %.3242, %.thread300 ] ; 2 uses
   %.not280 = icmp eq ptr %.5244317, %i.a
   br i1 %.not280, label %bb.da, label %.thread325.thread
 

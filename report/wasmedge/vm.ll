@@ -205,26 +205,42 @@ bb.a:
   %i.f = select i1 %.not.i, i8 %i.e, i8 5
   store i8 %i.f, ptr %i.a, align 1, !tbaa !796
   %i.g = and i32 %i.b, 16777215                   ; 2 uses
-  %spec.select.i = select i1 %.not.i, i32 %i.g, i32 12 ; 2 uses
+  %spec.select.i = select i1 %.not.i, i32 %i.g, i32 12 ; 3 uses
   br label %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i
 
-_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i: ; preds = %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i, %bb.a
-  %.030.i.i.i.i = phi i64 [ 160, %bb.a ], [ %.1.i.i.i.i, %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i ] ; 2 uses
-  %.sroa.4.029.i.i.i.i = phi i64 [ 0, %bb.a ], [ %.sroa.4.1.i.i.i.i, %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i ] ; 2 uses
-  %i.h = lshr i64 %.030.i.i.i.i, 1                ; 3 uses
+_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread28.i.i.i.i, %bb.a
+  %.030.i.i.i.i = phi i64 [ 160, %bb.a ], [ %.1.i.i.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread28.i.i.i.i ] ; 2 uses
+  %.sroa.4.029.i.i.i.i = phi i64 [ 0, %bb.a ], [ %.sroa.4.1.i.i.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread28.i.i.i.i ] ; 3 uses
+  %i.h = lshr i64 %.030.i.i.i.i, 1                ; 4 uses
   %.sroa.5.0.i.i.i.i = add i64 %i.h, %.sroa.4.029.i.i.i.i ; 2 uses
-  %i.i = getelementptr inbounds nuw [24 x i8], ptr @_ZN8WasmEdgeL10ErrCodeStrE, i64 %.sroa.5.0.i.i.i.i
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !1914
-  %i.k = icmp ult i32 %i.j, %spec.select.i        ; 2 uses
-  %5 = add nuw nsw i64 %.sroa.5.0.i.i.i.i, 1
-  %6 = xor i64 %i.h, -1
-  %7 = add nsw i64 %.030.i.i.i.i, %6
-  %.sroa.4.1.i.i.i.i = select i1 %i.k, i64 %5, i64 %.sroa.4.029.i.i.i.i ; 3 uses
-  %.1.i.i.i.i = select i1 %i.k, i64 %7, i64 %i.h  ; 2 uses
-  %8 = icmp sgt i64 %.1.i.i.i.i, 0
-  br i1 %8, label %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i, label %.noexc, !llvm.loop !1908
+  %i.i = getelementptr inbounds nuw [24 x i8], ptr @_ZN8WasmEdgeL10ErrCodeStrE, i64 %.sroa.5.0.i.i.i.i ; 2 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !1914 ; 2 uses
+  %i.k = icmp ult i32 %i.j, %spec.select.i
+  br i1 %i.k, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread.i.i.i.i, label %5
 
-.noexc:                                           ; preds = %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i
+5:                                                ; preds = %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i
+  %6 = icmp ult i32 %spec.select.i, %i.j
+  br i1 %6, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread28.i.i.i.i, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.i.i.i.i
+
+_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.i.i.i.i: ; preds = %5
+  %7 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %.sroa.01.0.copyload.i.i.i.i.i.i = load i64, ptr %7, align 8, !tbaa !76
+  %8 = icmp slt i64 %.sroa.01.0.copyload.i.i.i.i.i.i, 0
+  br i1 %8, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread.i.i.i.i, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread28.i.i.i.i
+
+_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread.i.i.i.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.i.i.i.i, %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i
+  %9 = add nuw nsw i64 %.sroa.5.0.i.i.i.i, 1
+  %10 = xor i64 %i.h, -1
+  %11 = add nsw i64 %.030.i.i.i.i, %10
+  br label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread28.i.i.i.i
+
+_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread28.i.i.i.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread.i.i.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.i.i.i.i, %5
+  %.sroa.4.1.i.i.i.i = phi i64 [ %9, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread.i.i.i.i ], [ %.sroa.4.029.i.i.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.i.i.i.i ], [ %.sroa.4.029.i.i.i.i, %5 ] ; 3 uses
+  %.1.i.i.i.i = phi i64 [ %11, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread.i.i.i.i ], [ %i.h, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.i.i.i.i ], [ %i.h, %5 ] ; 2 uses
+  %12 = icmp sgt i64 %.1.i.i.i.i, 0
+  br i1 %12, label %_ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i, label %.noexc, !llvm.loop !1908
+
+.noexc:                                           ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIN8WasmEdge12SpareEnumMapILm160ENS3_7ErrCode5ValueESt17basic_string_viewIcSt11char_traitsIcEEE13ConstIteratorEKSt4pairIS6_SA_EEEbT_RT0_.exit.thread28.i.i.i.i
   %i.l = getelementptr inbounds nuw [24 x i8], ptr @_ZN8WasmEdgeL10ErrCodeStrE, i64 %.sroa.4.1.i.i.i.i
   %i.m = load i32, ptr %i.l, align 8, !tbaa !370
   %i.n = icmp eq i32 %i.m, %spec.select.i

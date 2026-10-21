@@ -204,10 +204,11 @@ bb.l:                                             ; preds = %bb.k, %bb.k, %bb.k,
   br i1 %i.bi, label %bb.p, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %1 = shl nuw i64 1, %sum.shift.i
-  %2 = and i64 %1, 70367662075646
-  %.not19.i41.not = icmp eq i64 %2, 0
-  br i1 %.not19.i41.not, label %bb.n, label %bb.p
+  %1 = getelementptr [28 x i8], ptr @p4_event_bind_map, i64 %sum.shift.i
+  %2 = getelementptr i8, ptr %1, i64 16
+  %3 = load i32, ptr %2, align 4
+  %.not19.i41.not = icmp eq i32 %3, 0
+  br i1 %.not19.i41.not, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bj = load i32, ptr @sysctl_perf_event_paranoid, align 4
