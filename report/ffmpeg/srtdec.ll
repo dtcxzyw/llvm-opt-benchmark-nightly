@@ -23,7 +23,7 @@ declare i32 @ff_ass_subtitle_header_default(ptr noundef) #0
 ; Function Attrs: nounwind uwtable
 define internal i32 @srt_decode_frame(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr noundef %3) #1 {
 bb.a:
-  %4 = alloca %struct.AVBPrint, align 8           ; 9 uses
+  %4 = alloca %struct.AVBPrint, align 8           ; 8 uses
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
@@ -47,8 +47,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.027 = phi i32 [ %i.h, %bb.b ], [ -1, %bb.a ]  ; 6 uses
-  %.026 = phi i32 [ %i.j, %bb.b ], [ -1, %bb.a ]  ; 6 uses
+  %.027 = phi i32 [ %i.h, %bb.b ], [ -1, %bb.a ]  ; 7 uses
+  %.026 = phi i32 [ %i.j, %bb.b ], [ -1, %bb.a ]  ; 7 uses
   %.025 = phi i32 [ %i.l, %bb.b ], [ -1, %bb.a ]  ; 4 uses
   %.024 = phi i32 [ %i.n, %bb.b ], [ -1, %bb.a ]  ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
@@ -86,30 +86,24 @@ bb.g:                                             ; preds = %bb.f
   %i.y = sub nuw nsw i32 %.024, %.026
   %i.z = lshr i32 %i.y, 1
   %i.aa = add nuw nsw i32 %i.z, %.026
-  %5 = sext i32 %i.x to i64
-  %6 = shl nuw nsw i64 %5, 3
-  %7 = udiv i64 %6, 15
-  %8 = trunc nuw nsw i64 %7 to i32
-  %9 = sext i32 %i.aa to i64
-  %10 = mul nuw nsw i64 %9, 3
-  %11 = udiv i64 %10, 5
-  %12 = trunc nuw nsw i64 %11 to i32
-  call void (ptr, ptr, ...) @av_bprintf(ptr noundef nonnull %4, ptr noundef nonnull @.str.3, i32 noundef %8, i32 noundef %12) #3
-  br label %srt_to_ass.exit
+  br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.e
-  %i.ab = zext nneg i32 %.027 to i64
+bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
+  %.sink.i = phi i32 [ %i.x, %bb.g ], [ %.027, %bb.f ], [ %.027, %bb.e ]
+  %.sink49.i = phi i32 [ %i.aa, %bb.g ], [ %.026, %bb.f ], [ %.026, %bb.e ]
+  %.str.3.sink.i = phi ptr [ @.str.3, %bb.g ], [ @.str.4, %bb.f ], [ @.str.4, %bb.e ]
+  %i.ab = zext nneg i32 %.sink.i to i64
   %i.ac = shl nuw nsw i64 %i.ab, 3
   %i.ad = udiv i64 %i.ac, 15
   %i.ae = trunc nuw nsw i64 %i.ad to i32
-  %i.af = zext nneg i32 %.026 to i64
+  %i.af = zext nneg i32 %.sink49.i to i64
   %i.ag = mul nuw nsw i64 %i.af, 3
   %i.ah = udiv i64 %i.ag, 5
   %i.ai = trunc nuw nsw i64 %i.ah to i32
-  call void (ptr, ptr, ...) @av_bprintf(ptr noundef nonnull %4, ptr noundef nonnull @.str.4, i32 noundef %i.ae, i32 noundef %i.ai) #3
+  call void (ptr, ptr, ...) @av_bprintf(ptr noundef nonnull %4, ptr noundef nonnull %.str.3.sink.i, i32 noundef %i.ae, i32 noundef %i.ai) #3
   br label %srt_to_ass.exit
 
-srt_to_ass.exit:                                  ; preds = %bb.d, %bb.g, %bb.h
+srt_to_ass.exit:                                  ; preds = %bb.d, %bb.h
   %i.aj = call i32 @ff_htmlmarkup_to_ass(ptr noundef nonnull %0, ptr noundef nonnull %4, ptr noundef %i.s) #3 ; 2 uses
   %i.ak = icmp sgt i32 %i.aj, -1
   br i1 %i.ak, label %bb.i, label %.thread

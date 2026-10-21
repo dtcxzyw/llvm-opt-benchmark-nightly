@@ -205,7 +205,7 @@ _ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit21.i381: ; preds = %_ZN2cvL14stbt
 
 bb.dg:                                            ; preds = %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit21.i381, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i365
   %i.uy = phi i32 [ %..i.i22.i383, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit21.i381 ], [ %i.ti, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i365 ] ; 6 uses
-  %i.uz = sub nsw i32 %i.uy, %i.ss                ; 17 uses
+  %i.uz = sub nsw i32 %i.uy, %i.ss                ; 4 uses
   %i.va = or i32 %i.uz, %i.ss
   %or.cond.not.i.i384 = icmp slt i32 %i.va, 0
   %i.vb = icmp sgt i32 %i.uy, %i.qe
@@ -215,52 +215,41 @@ bb.dg:                                            ; preds = %_ZN2cvL14stbtt__buf
 _ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390: ; preds = %bb.dg
   %i.vc = load ptr, ptr %4, align 8, !tbaa !113
   %i.vd = zext nneg i32 %i.ss to i64
-  %i.ve = getelementptr inbounds nuw i8, ptr %i.vc, i64 %i.vd ; 14 uses
-  %6 = tail call i32 @llvm.smin.i32(i32 %i.uz, i32 0) ; 2 uses
-  %.not.i.i.i391 = icmp sgt i32 %i.uz, 0
-  br i1 %.not.i.i.i391, label %bb.dh, label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.i392
+  %i.ve = getelementptr inbounds nuw i8, ptr %i.vc, i64 %i.vd ; 15 uses
+  %.not.i.i.i391.not = icmp eq i32 %i.uz, 0
+  br i1 %.not.i.i.i391.not, label %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i, label %bb.dh
 
 bb.dh:                                            ; preds = %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390
-  %7 = zext nneg i32 %6 to i64
-  %8 = getelementptr inbounds nuw i8, ptr %i.ve, i64 %7
-  %i.vf = load i8, ptr %8, align 1, !tbaa !32
+  %i.vf = load i8, ptr %i.ve, align 1, !tbaa !32
   %i.vg = zext i8 %i.vf to i32
-  %i.vh = shl nuw nsw i32 %i.vg, 8
-  br label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.i392
+  %i.vh = shl nuw nsw i32 %i.vg, 8                ; 2 uses
+  %.not.i.i.1.i394.not = icmp eq i32 %i.uz, 1
+  br i1 %.not.i.i.1.i394.not, label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395, label %bb.di
 
-_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.i392: ; preds = %bb.dh, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390
-  %.sroa.6.1.i = phi i32 [ 1, %bb.dh ], [ %6, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390 ] ; 4 uses
-  %.0.i.i.i393 = phi i32 [ %i.vh, %bb.dh ], [ 0, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390 ] ; 2 uses
-  %.not.i.i.1.i394 = icmp slt i32 %.sroa.6.1.i, %i.uz
-  br i1 %.not.i.i.1.i394, label %bb.di, label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395
-
-bb.di:                                            ; preds = %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.i392
-  %9 = add nsw i32 %.sroa.6.1.i, 1
-  %10 = sext i32 %.sroa.6.1.i to i64
-  %i.vi = getelementptr inbounds i8, ptr %i.ve, i64 %10
+bb.di:                                            ; preds = %bb.dh
+  %i.vi = getelementptr inbounds nuw i8, ptr %i.ve, i64 1
   %i.vj = load i8, ptr %i.vi, align 1, !tbaa !32
   %i.vk = zext i8 %i.vj to i32
-  %i.vl = or disjoint i32 %.0.i.i.i393, %i.vk
+  %i.vl = or disjoint i32 %i.vh, %i.vk
   br label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395
 
-_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395: ; preds = %bb.di, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.i392
-  %.sroa.6.1.1.i = phi i32 [ %9, %bb.di ], [ %.sroa.6.1.i, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.i392 ] ; 4 uses
-  %.0.i.i.1.i396 = phi i32 [ %i.vl, %bb.di ], [ %.0.i.i.i393, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.i392 ] ; 5 uses
-  %.not.i.i397 = icmp slt i32 %.sroa.6.1.1.i, %i.uz
+_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395: ; preds = %bb.di, %bb.dh
+  %.sroa.18.8.extract.trunc.i737924 = phi i32 [ %i.uz, %bb.di ], [ 1, %bb.dh ] ; 12 uses
+  %.sroa.6.1.1.i = phi i32 [ 2, %bb.di ], [ 1, %bb.dh ] ; 3 uses
+  %.0.i.i.1.i396 = phi i32 [ %i.vl, %bb.di ], [ %i.vh, %bb.dh ] ; 5 uses
+  %.not.i.i397 = icmp samesign ult i32 %.sroa.6.1.1.i, %.sroa.18.8.extract.trunc.i737924
   br i1 %.not.i.i397, label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403, label %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i
 
 _ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403: ; preds = %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395
-  %11 = sext i32 %.sroa.6.1.1.i to i64
-  %i.vm = getelementptr inbounds i8, ptr %i.ve, i64 %11
+  %6 = zext nneg i32 %.sroa.6.1.1.i to i64
+  %i.vm = getelementptr inbounds nuw i8, ptr %i.ve, i64 %6
   %i.vn = load i8, ptr %i.vm, align 1, !tbaa !32  ; 4 uses
   %i.vo = zext i8 %i.vn to i32                    ; 8 uses
   %.not.i9.i = icmp eq i8 %i.vn, 0
   br i1 %.not.i9.i, label %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i, label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403
-  %i.vp = add nsw i32 %.sroa.6.1.1.i, 1
-  %12 = icmp slt i32 %.sroa.6.1.1.i, -1
-  %..i.i.i404 = select i1 %12, i32 %i.uz, i32 %i.vp ; 4 uses
+  %i.vp = add nuw nsw i32 %.sroa.6.1.1.i, 1       ; 4 uses
   %i.vq = add nsw i32 %i.vo, -1                   ; 2 uses
   %xtraiter1071 = and i32 %i.vo, 1
   %i.vr = icmp eq i32 %i.vq, 0
@@ -271,12 +260,12 @@ _ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403: ; preds = %_ZN2cvL15stbtt_
   br label %.lr.ph.i.i405
 
 .lr.ph.i.i405:                                    ; preds = %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1, %.lr.ph.i.preheader.i.new
-  %.sroa.6.3.i = phi i32 [ %..i.i.i404, %.lr.ph.i.preheader.i.new ], [ %.sroa.6.4.i.1, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1 ]
-  %i.vs = phi i32 [ %..i.i.i404, %.lr.ph.i.preheader.i.new ], [ %i.wi, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1 ] ; 4 uses
+  %.sroa.6.3.i = phi i32 [ %i.vp, %.lr.ph.i.preheader.i.new ], [ %.sroa.6.4.i.1, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1 ]
+  %i.vs = phi i32 [ %i.vp, %.lr.ph.i.preheader.i.new ], [ %i.wi, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1 ] ; 4 uses
   %.056.i12.i = phi i32 [ 0, %.lr.ph.i.preheader.i.new ], [ %.0.i.i15.i.1, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1 ]
   %niter1079 = phi i32 [ 0, %.lr.ph.i.preheader.i.new ], [ %niter1079.next.1, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1 ]
   %i.vt = shl i32 %.056.i12.i, 8                  ; 2 uses
-  %.not.i.i13.i = icmp slt i32 %i.vs, %i.uz
+  %.not.i.i13.i = icmp slt i32 %i.vs, %.sroa.18.8.extract.trunc.i737924
   br i1 %.not.i.i13.i, label %bb.dj, label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i
 
 bb.dj:                                            ; preds = %.lr.ph.i.i405
@@ -293,7 +282,7 @@ _ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i: ; preds = %bb.dj, %.lr.ph
   %i.wa = phi i32 [ %i.vu, %bb.dj ], [ %i.vs, %.lr.ph.i.i405 ] ; 4 uses
   %.0.i.i15.i = phi i32 [ %i.vz, %bb.dj ], [ %i.vt, %.lr.ph.i.i405 ]
   %i.wb = shl i32 %.0.i.i15.i, 8                  ; 2 uses
-  %.not.i.i13.i.1 = icmp slt i32 %i.wa, %i.uz
+  %.not.i.i13.i.1 = icmp slt i32 %i.wa, %.sroa.18.8.extract.trunc.i737924
   br i1 %.not.i.i13.i.1, label %bb.dk, label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1
 
 bb.dk:                                            ; preds = %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i
@@ -318,13 +307,13 @@ _ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i14.i.1: ; preds = %bb.dk, %_ZN2
   br i1 %lcmp.mod1074.not, label %.lr.ph.i19.i.preheader, label %.lr.ph.i.i405.epil.preheader
 
 .lr.ph.i.i405.epil.preheader:                     ; preds = %.lr.ph.i19.i.preheader.unr-lcssa, %.lr.ph.i.preheader.i
-  %.sroa.6.3.i.epil.init = phi i32 [ %..i.i.i404, %.lr.ph.i.preheader.i ], [ %.sroa.6.4.i.1, %.lr.ph.i19.i.preheader.unr-lcssa ]
-  %.epil.init1073 = phi i32 [ %..i.i.i404, %.lr.ph.i.preheader.i ], [ %i.wi, %.lr.ph.i19.i.preheader.unr-lcssa ] ; 3 uses
+  %.sroa.6.3.i.epil.init = phi i32 [ %i.vp, %.lr.ph.i.preheader.i ], [ %.sroa.6.4.i.1, %.lr.ph.i19.i.preheader.unr-lcssa ]
+  %.epil.init1073 = phi i32 [ %i.vp, %.lr.ph.i.preheader.i ], [ %i.wi, %.lr.ph.i19.i.preheader.unr-lcssa ] ; 3 uses
   %.056.i12.i.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i ], [ %.0.i.i15.i.1, %.lr.ph.i19.i.preheader.unr-lcssa ]
   %lcmp.mod1077 = trunc i8 %i.vn to i1
   tail call void @llvm.assume(i1 %lcmp.mod1077)
   %i.wj = shl i32 %.056.i12.i.epil.init, 8        ; 2 uses
-  %.not.i.i13.i.epil = icmp slt i32 %.epil.init1073, %i.uz
+  %.not.i.i13.i.epil = icmp slt i32 %.epil.init1073, %.sroa.18.8.extract.trunc.i737924
   br i1 %.not.i.i13.i.epil, label %bb.dl, label %.lr.ph.i19.i.preheader
 
 bb.dl:                                            ; preds = %.lr.ph.i.i405.epil.preheader
@@ -352,7 +341,7 @@ bb.dl:                                            ; preds = %.lr.ph.i.i405.epil.
   %.056.i22.i = phi i32 [ 0, %.lr.ph.i19.i.preheader.new ], [ %.0.i.i25.i.1, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i24.i.1 ]
   %niter1087 = phi i32 [ 0, %.lr.ph.i19.i.preheader.new ], [ %niter1087.next.1, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i24.i.1 ]
   %i.ws = shl i32 %.056.i22.i, 8                  ; 2 uses
-  %.not.i.i23.i = icmp slt i32 %i.wr, %i.uz
+  %.not.i.i23.i = icmp slt i32 %i.wr, %.sroa.18.8.extract.trunc.i737924
   br i1 %.not.i.i23.i, label %bb.dm, label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i24.i
 
 bb.dm:                                            ; preds = %.lr.ph.i19.i
@@ -368,7 +357,7 @@ _ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i24.i: ; preds = %bb.dm, %.lr.ph
   %i.wz = phi i32 [ %i.wt, %bb.dm ], [ %i.wr, %.lr.ph.i19.i ] ; 4 uses
   %.0.i.i25.i = phi i32 [ %i.wy, %bb.dm ], [ %i.ws, %.lr.ph.i19.i ]
   %i.xa = shl i32 %.0.i.i25.i, 8                  ; 2 uses
-  %.not.i.i23.i.1 = icmp slt i32 %i.wz, %i.uz
+  %.not.i.i23.i.1 = icmp slt i32 %i.wz, %.sroa.18.8.extract.trunc.i737924
   br i1 %.not.i.i23.i.1, label %bb.dn, label %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i24.i.1
 
 bb.dn:                                            ; preds = %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i24.i
@@ -397,7 +386,7 @@ _ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa: ; preds 
   %lcmp.mod1085 = trunc i8 %i.vn to i1
   tail call void @llvm.assume(i1 %lcmp.mod1085)
   %i.xi = shl i32 %.056.i22.i.epil.init, 8        ; 2 uses
-  %.not.i.i23.i.epil = icmp slt i32 %.epil.init1082, %i.uz
+  %.not.i.i23.i.epil = icmp slt i32 %.epil.init1082, %.sroa.18.8.extract.trunc.i737924
   br i1 %.not.i.i23.i.epil, label %bb.do, label %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i
 
 bb.do:                                            ; preds = %.lr.ph.i19.i.epil.preheader
@@ -408,13 +397,13 @@ bb.do:                                            ; preds = %.lr.ph.i19.i.epil.p
   %i.xn = or disjoint i32 %i.xi, %i.xm
   br label %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i
 
-_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i: ; preds = %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa, %bb.do, %.lr.ph.i19.i.epil.preheader, %bb.dg, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395
-  %.0.i.i.1.i396752 = phi i32 [ %.0.i.i.1.i396, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ %.0.i.i.1.i396, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ %.0.i.i.1.i396, %.lr.ph.i19.i.epil.preheader ], [ %.0.i.i.1.i396, %bb.do ], [ %.0.i.i.1.i396, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ]
-  %.sroa.18.8.extract.trunc.i737743751 = phi i32 [ %i.uz, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ %i.uz, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ %i.uz, %.lr.ph.i19.i.epil.preheader ], [ %i.uz, %bb.do ], [ %i.uz, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ] ; 2 uses
-  %.sroa.0.0.i.i386736744750 = phi ptr [ %i.ve, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ %i.ve, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ null, %bb.dg ], [ %i.ve, %.lr.ph.i19.i.epil.preheader ], [ %i.ve, %bb.do ], [ %i.ve, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ]
-  %.0.i55.i = phi i32 [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ %i.vo, %.lr.ph.i19.i.epil.preheader ], [ %i.vo, %bb.do ], [ %i.vo, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ]
-  %.05.lcssa.i42.i = phi i32 [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ %.0.i.i15.i.lcssa, %.lr.ph.i19.i.epil.preheader ], [ %.0.i.i15.i.lcssa, %bb.do ], [ %.0.i.i15.i.lcssa, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ] ; 2 uses
-  %.05.lcssa.i27.i = phi i32 [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ %.0.i.i25.i.1, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ], [ %i.xn, %bb.do ], [ %i.xi, %.lr.ph.i19.i.epil.preheader ]
+_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i: ; preds = %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa, %bb.do, %.lr.ph.i19.i.epil.preheader, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390, %bb.dg, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395
+  %.0.i.i.1.i396752 = phi i32 [ %.0.i.i.1.i396, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ %.0.i.i.1.i396, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ 0, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390 ], [ %.0.i.i.1.i396, %.lr.ph.i19.i.epil.preheader ], [ %.0.i.i.1.i396, %bb.do ], [ %.0.i.i.1.i396, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ]
+  %.sroa.18.8.extract.trunc.i737743751 = phi i32 [ %.sroa.18.8.extract.trunc.i737924, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ %.sroa.18.8.extract.trunc.i737924, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ 0, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390 ], [ %.sroa.18.8.extract.trunc.i737924, %.lr.ph.i19.i.epil.preheader ], [ %.sroa.18.8.extract.trunc.i737924, %bb.do ], [ %.sroa.18.8.extract.trunc.i737924, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ] ; 2 uses
+  %.sroa.0.0.i.i386736744750 = phi ptr [ %i.ve, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ %i.ve, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ null, %bb.dg ], [ %i.ve, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390 ], [ %i.ve, %.lr.ph.i19.i.epil.preheader ], [ %i.ve, %bb.do ], [ %i.ve, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ]
+  %.0.i55.i = phi i32 [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ 0, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390 ], [ %i.vo, %.lr.ph.i19.i.epil.preheader ], [ %i.vo, %bb.do ], [ %i.vo, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ]
+  %.05.lcssa.i42.i = phi i32 [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ 0, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390 ], [ %.0.i.i15.i.lcssa, %.lr.ph.i19.i.epil.preheader ], [ %.0.i.i15.i.lcssa, %bb.do ], [ %.0.i.i15.i.lcssa, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ] ; 2 uses
+  %.05.lcssa.i27.i = phi i32 [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i403 ], [ 0, %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit.i.1.i395 ], [ 0, %bb.dg ], [ 0, %_ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit390 ], [ %.0.i.i25.i.1, %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i.loopexit.unr-lcssa ], [ %i.xn, %bb.do ], [ %i.xi, %.lr.ph.i19.i.epil.preheader ]
   %i.xo = add nuw nsw i32 %.0.i.i.1.i396752, 1
   %i.xp = mul nuw nsw i32 %.0.i55.i, %i.xo
   %i.xq = add nuw nsw i32 %i.xp, 2
@@ -434,8 +423,8 @@ bb.dp:                                            ; preds = %_ZN2cvL14stbtt__buf
 bb.dq:                                            ; preds = %bb.dp
   %i.xx = zext nneg i32 %i.xr to i64
   %i.xy = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i386736744750, i64 %i.xx
-  %i.xz = zext i32 %i.xs to i64
-  %i.ya = shl nuw i64 %i.xz, 32
+  %i.xz = zext nneg i32 %i.xs to i64
+  %i.ya = shl nuw nsw i64 %i.xz, 32
   br label %_ZN2cvL20stbtt__cff_index_getENS_10stbtt__bufEi.exit
 
 _ZN2cvL20stbtt__cff_index_getENS_10stbtt__bufEi.exit: ; preds = %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28.i, %bb.dp, %bb.dq
@@ -754,8 +743,8 @@ _ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit465: ; preds = %_ZN2cvL14stb
   %i.acq = load ptr, ptr %4, align 8              ; 2 uses
   %i.acr = zext nneg i32 %i.aag to i64
   %i.acs = getelementptr inbounds nuw i8, ptr %i.acq, i64 %i.acr
-  %i.act = zext i32 %i.acn to i64
-  %i.acu = shl nuw i64 %i.act, 32
+  %i.act = zext nneg i32 %i.acn to i64
+  %i.acu = shl nuw nsw i64 %i.act, 32
   %.sroa.0.0.i.i461 = select i1 %or.cond.i460, ptr null, ptr %i.acs
   %.sroa.5.0.i.i462 = select i1 %or.cond.i460, i64 0, i64 %i.acu
   %i.acv = getelementptr inbounds nuw i8, ptr %0, i64 504
@@ -814,8 +803,8 @@ _ZN2cvL16stbtt__buf_rangeEPKNS_10stbtt__bufEii.exit: ; preds = %bb.eg
   %i.adq = load ptr, ptr %4, align 8
   %i.adr = zext nneg i32 %i.adg to i64
   %i.ads = getelementptr inbounds nuw i8, ptr %i.adq, i64 %i.adr
-  %i.adt = zext i32 %i.adn to i64
-  %i.adu = shl nuw i64 %i.adt, 32
+  %i.adt = zext nneg i32 %i.adn to i64
+  %i.adu = shl nuw nsw i64 %i.adt, 32
   %.sroa.0.0.i = select i1 %or.cond760, ptr null, ptr %i.ads
   %.sroa.5.0.i = select i1 %or.cond760, i64 0, i64 %i.adu
   store ptr %.sroa.0.0.i, ptr %i.pv, align 8, !tbaa !75
@@ -1218,8 +1207,8 @@ bb.j:                                             ; preds = %_ZN2cvL14stbtt__buf
 bb.k:                                             ; preds = %bb.j
   %i.cc = zext nneg i32 %i.bw to i64
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 %i.cc
-  %i.ce = zext i32 %i.bx to i64
-  %i.cf = shl nuw i64 %i.ce, 32
+  %i.ce = zext nneg i32 %i.bx to i64
+  %i.cf = shl nuw nsw i64 %i.ce, 32
   br label %_ZN2cvL16stbtt__buf_rangeEPKNS_10stbtt__bufEii.exit
 
 _ZN2cvL16stbtt__buf_rangeEPKNS_10stbtt__bufEii.exit: ; preds = %_ZN2cvL14stbtt__buf_getEPNS_10stbtt__bufEi.exit28, %bb.j, %bb.k
@@ -1622,8 +1611,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.m = zext nneg i32 %i.e to i64
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 %i.m
-  %i.o = zext i32 %i.g to i64
-  %i.p = shl nuw i64 %i.o, 32
+  %i.o = zext nneg i32 %i.g to i64
+  %i.p = shl nuw nsw i64 %i.o, 32
   br label %_ZN2cvL16stbtt__buf_rangeEPKNS_10stbtt__bufEii.exit
 
 _ZN2cvL16stbtt__buf_rangeEPKNS_10stbtt__bufEii.exit: ; preds = %bb.b, %bb.c, %bb.d
@@ -1793,8 +1782,8 @@ _ZN2cvL20stbtt__cff_get_indexEPNS_10stbtt__bufE.exit: ; preds = %_ZN2cvL14stbtt_
   %or.cond.i8 = or i1 %i.bz, %or.cond.not.i.i     ; 2 uses
   %i.ca = zext nneg i32 %..i to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 %i.ca
-  %i.cc = zext i32 %i.bx to i64
-  %i.cd = shl nuw i64 %i.cc, 32
+  %i.cc = zext nneg i32 %i.bx to i64
+  %i.cd = shl nuw nsw i64 %i.cc, 32
   %.sroa.0.0.i.i = select i1 %or.cond.i8, ptr null, ptr %i.cb
   %.sroa.5.0.i.i = select i1 %or.cond.i8, i64 0, i64 %i.cd
   %.fca.0.insert.i.i = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0.i.i, 0
@@ -1823,7 +1812,7 @@ bb.a:
   br i1 %i.e, label %.preheader.i, label %._crit_edge
 
 .preheader.i:                                     ; preds = %bb.a, %.thread38.i
-  %.promoted5759.i = phi i32 [ %.promoted55.i, %.thread38.i ], [ %i.c, %bb.a ] ; 6 uses
+  %.promoted5759.i = phi i32 [ %.promoted55.i, %.thread38.i ], [ %i.c, %bb.a ] ; 7 uses
   %.not.i52.i = icmp slt i32 %.promoted5759.i, %i.b
   br i1 %.not.i52.i, label %_ZN2cvL16stbtt__buf_peek8EPNS_10stbtt__bufE.exit.lr.ph.i, label %.thread38.i
 
@@ -1832,7 +1821,7 @@ _ZN2cvL16stbtt__buf_peek8EPNS_10stbtt__bufE.exit.lr.ph.i: ; preds = %.preheader.
   br label %_ZN2cvL16stbtt__buf_peek8EPNS_10stbtt__bufE.exit.i
 
 _ZN2cvL16stbtt__buf_peek8EPNS_10stbtt__bufE.exit.i: ; preds = %_ZN2cvL23stbtt__cff_skip_operandEPNS_10stbtt__bufE.exit.i, %_ZN2cvL16stbtt__buf_peek8EPNS_10stbtt__bufE.exit.lr.ph.i
-  %spec.select454853.i = phi i32 [ %.promoted5759.i, %_ZN2cvL16stbtt__buf_peek8EPNS_10stbtt__bufE.exit.lr.ph.i ], [ %spec.select4549.i, %_ZN2cvL23stbtt__cff_skip_operandEPNS_10stbtt__bufE.exit.i ] ; 10 uses
+  %spec.select454853.i = phi i32 [ %.promoted5759.i, %_ZN2cvL16stbtt__buf_peek8EPNS_10stbtt__bufE.exit.lr.ph.i ], [ %spec.select4549.i, %_ZN2cvL23stbtt__cff_skip_operandEPNS_10stbtt__bufE.exit.i ] ; 11 uses
   %i.g = sext i32 %spec.select454853.i to i64
   %i.h = getelementptr inbounds i8, ptr %i.f, i64 %i.g ; 3 uses
   %i.i = load i8, ptr %i.h, align 1, !tbaa !32    ; 2 uses
@@ -1986,7 +1975,7 @@ _ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit24.i: ; preds = %bb.n, %bb.m, %_Z
   br i1 %i.av, label %bb.o, label %.thread38.i
 
 bb.o:                                             ; preds = %_ZN2cvL15stbtt__buf_get8EPNS_10stbtt__bufE.exit24.i
-  %i.aw = sub nsw i32 %spec.select454853.i, %.promoted5759.i ; 3 uses
+  %i.aw = sub nsw i32 %spec.select454853.i, %.promoted5759.i ; 2 uses
   %i.ax = or i32 %i.aw, %.promoted5759.i
   %or.cond.not.i.i = icmp slt i32 %i.ax, 0
   br i1 %or.cond.not.i.i, label %._crit_edge, label %_ZN2cvL15stbtt__dict_getEPNS_10stbtt__bufEi.exit
@@ -1999,14 +1988,14 @@ bb.o:                                             ; preds = %_ZN2cvL15stbtt__buf
 _ZN2cvL15stbtt__dict_getEPNS_10stbtt__bufEi.exit: ; preds = %bb.o
   %i.az = zext nneg i32 %.promoted5759.i to i64
   %i.ba = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.az
-  %i.bb = zext i32 %i.aw to i64
-  %i.bc = shl nuw i64 %i.bb, 32
+  %i.bb = zext nneg i32 %i.aw to i64
+  %i.bc = shl nuw nsw i64 %i.bb, 32
   store ptr %i.ba, ptr %4, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i64 %i.bc, ptr %i.bd, align 8
   %i.be = getelementptr inbounds nuw i8, ptr %4, i64 12
-  %5 = icmp sgt i32 %i.aw, 0
-  br i1 %5, label %.lr.ph.preheader, label %._crit_edge
+  %.not = icmp eq i32 %spec.select454853.i, %.promoted5759.i
+  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN2cvL15stbtt__dict_getEPNS_10stbtt__bufEi.exit
   %i.bf = zext nneg i32 %2 to i64
@@ -2205,8 +2194,8 @@ bb.j:                                             ; preds = %bb.i
   %i.bq = load ptr, ptr %0, align 8, !tbaa !113
   %i.br = zext nneg i32 %i.b to i64
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.br
-  %i.bt = zext i32 %i.bn to i64
-  %i.bu = shl nuw i64 %i.bt, 32
+  %i.bt = zext nneg i32 %i.bn to i64
+  %i.bu = shl nuw nsw i64 %i.bt, 32
   br label %_ZN2cvL16stbtt__buf_rangeEPKNS_10stbtt__bufEii.exit
 
 _ZN2cvL16stbtt__buf_rangeEPKNS_10stbtt__bufEii.exit: ; preds = %bb.i, %bb.j

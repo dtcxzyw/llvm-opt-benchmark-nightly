@@ -204,14 +204,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %bb.d
-  %.022 = phi i32 [ %2, %bb.d ], [ %i.n, %bb.h ]  ; 3 uses
+  %.022 = phi i32 [ %2, %bb.d ], [ %i.n, %bb.h ]  ; 2 uses
   %i.m = call i32 @llvm.smin.i32(i32 %.022, i32 16384) ; 4 uses
   %i.n = sub nsw i32 %.022, %i.m                  ; 2 uses
   %i.o = load ptr, ptr %i.i, align 8, !tbaa !92   ; 2 uses
   %i.p = icmp eq ptr %i.o, null
-  %4 = icmp slt i32 %.022, 0
-  %or.cond.i = or i1 %4, %i.p
-  br i1 %or.cond.i, label %_ZN4Ptex4v2_410PtexReader9readBlockEPvib.exit.thread, label %bb.f
+  br i1 %i.p, label %_ZN4Ptex4v2_410PtexReader9readBlockEPvib.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.q = load ptr, ptr %i.j, align 8, !tbaa !91   ; 2 uses

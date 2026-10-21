@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val = load ptr, ptr %i.h, align 8, !nonnull !45, !noundef !45
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.val2 = load i64, ptr %i.i, align 8, !noundef !45 ; 6 uses
+  %.val2 = load i64, ptr %i.i, align 8, !noundef !45 ; 5 uses
   %i.j = shl i64 %.val2, 1                        ; 5 uses
   %i.k = or i64 %i.j, %.val2
   %or.cond.i.i.i.not.i.i = icmp sgt i64 %i.k, -1
@@ -219,21 +219,16 @@ bb.c:                                             ; preds = %_ZN4core5alloc6layo
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #38, !noalias !31319
   %i.m = tail call noundef ptr @mi_malloc_aligned(i64 noundef %i.j, i64 noundef range(i64 1, 9) 1) #38, !noalias !31319 ; 2 uses
   %i.n = icmp eq ptr %i.m, null
-  br i1 %i.n, label %bb.d, label %2
-
-2:                                                ; preds = %bb.c
-  %3 = icmp sgt i64 %.val2, -1
-  tail call void @llvm.assume(i1 %3)
-  br label %"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h6f177f7381c0d405E.exit"
+  br i1 %i.n, label %bb.d, label %"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h6f177f7381c0d405E.exit"
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.4.0.ph.i.i.i = phi i64 [ 1, %bb.c ], [ 0, %bb.b ]
   tail call void @_ZN5alloc7raw_vec12handle_error17h5794e6eba25188a7E(i64 noundef %.sroa.4.0.ph.i.i.i, i64 %i.j, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @2135) #43, !noalias !31320
   unreachable
 
-"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h6f177f7381c0d405E.exit": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i, %2
-  %.sroa.10.0.i.i.i = phi ptr [ %i.m, %2 ], [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i ] ; 2 uses
-  %.sroa.4.0.i.i.i = phi i64 [ %.val2, %2 ], [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i ] ; 2 uses
+"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h6f177f7381c0d405E.exit": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i, %bb.c
+  %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i ], [ %i.m, %bb.c ] ; 2 uses
+  %.sroa.4.0.i.i.i = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i ], [ %.val2, %bb.c ] ; 2 uses
   %i.o = icmp ule i64 %.val2, %.sroa.4.0.i.i.i
   tail call void @llvm.assume(i1 %i.o)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i, ptr nonnull readonly align 1 %.val, i64 %i.j, i1 false), !noalias !31321
@@ -258,7 +253,7 @@ bb.e:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val3 = load ptr, ptr %i.w, align 8, !nonnull !45, !noundef !45
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.val4 = load i64, ptr %i.x, align 8, !noundef !45 ; 6 uses
+  %.val4 = load i64, ptr %i.x, align 8, !noundef !45 ; 5 uses
   %i.y = shl i64 %.val4, 1                        ; 5 uses
   %i.z = or i64 %i.y, %.val4
   %or.cond.i.i.i.not.i.i6 = icmp sgt i64 %i.z, -1
@@ -272,21 +267,16 @@ bb.f:                                             ; preds = %_ZN4core5alloc6layo
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #38, !noalias !31322
   %i.ab = tail call noundef ptr @mi_malloc_aligned(i64 noundef %i.y, i64 noundef range(i64 1, 9) 1) #38, !noalias !31322 ; 2 uses
   %i.ac = icmp eq ptr %i.ab, null
-  br i1 %i.ac, label %bb.g, label %4
-
-4:                                                ; preds = %bb.f
-  %5 = icmp sgt i64 %.val4, -1
-  tail call void @llvm.assume(i1 %5)
-  br label %"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h8017ed672b06d3bfE.exit"
+  br i1 %i.ac, label %bb.g, label %"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h8017ed672b06d3bfE.exit"
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.sroa.4.0.ph.i.i.i7 = phi i64 [ 1, %bb.f ], [ 0, %bb.e ]
   tail call void @_ZN5alloc7raw_vec12handle_error17h5794e6eba25188a7E(i64 noundef %.sroa.4.0.ph.i.i.i7, i64 %i.y, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @2135) #43, !noalias !31323
   unreachable
 
-"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h8017ed672b06d3bfE.exit": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i8, %4
-  %.sroa.10.0.i.i.i9 = phi ptr [ %i.ab, %4 ], [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i8 ] ; 2 uses
-  %.sroa.4.0.i.i.i10 = phi i64 [ %.val4, %4 ], [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i8 ] ; 2 uses
+"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h8017ed672b06d3bfE.exit": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i8, %bb.f
+  %.sroa.10.0.i.i.i9 = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i8 ], [ %i.ab, %bb.f ] ; 2 uses
+  %.sroa.4.0.i.i.i10 = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i8 ], [ %.val4, %bb.f ] ; 2 uses
   %i.ad = icmp ule i64 %.val4, %.sroa.4.0.i.i.i10
   tail call void @llvm.assume(i1 %i.ad)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i9, ptr nonnull readonly align 1 %.val3, i64 %i.y, i1 false), !noalias !31324

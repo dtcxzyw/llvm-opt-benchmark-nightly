@@ -50,7 +50,7 @@ bb.a:
 define dso_local void @Plain_CoordTranslate(i32 %0, i32 %1) #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.1) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.1) #12 ; 0 uses
   ret void
 }
 
@@ -60,7 +60,7 @@ declare ptr @Error(i32 noundef, i32 noundef, ptr noundef, i32 noundef, ptr nound
 define dso_local void @Plain_CoordScale(float %0, float %1) #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.2) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.2) #12 ; 0 uses
   ret void
 }
 
@@ -68,7 +68,7 @@ bb.a:
 define dso_local void @Plain_SaveGraphicState(ptr nofree readnone captures(none) %0) #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.3) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.3) #12 ; 0 uses
   ret void
 }
 
@@ -76,7 +76,7 @@ bb.a:
 define dso_local void @Plain_RestoreGraphicState() #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.4) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.4) #12 ; 0 uses
   ret void
 }
 
@@ -84,7 +84,7 @@ bb.a:
 define dso_local void @Plain_PrintGraphicObject(ptr nofree readnone captures(none) %0) #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.5) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.5) #12 ; 0 uses
   ret void
 }
 
@@ -92,7 +92,7 @@ bb.a:
 define dso_local void @Plain_DefineGraphicNames(ptr nofree readnone captures(none) %0) #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.6) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.6) #12 ; 0 uses
   ret void
 }
 
@@ -100,7 +100,7 @@ bb.a:
 define dso_local void @Plain_SaveTranslateDefineSave(ptr nofree readnone captures(none) %0, i32 %1, i32 %2) #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.7) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.7) #12 ; 0 uses
   ret void
 }
 
@@ -108,7 +108,7 @@ bb.a:
 define dso_local void @Plain_PrintGraphicInclude(ptr nofree readnone captures(none) %0, i32 %1, i32 %2) #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.8) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.8) #12 ; 0 uses
   ret void
 }
 
@@ -124,7 +124,7 @@ bb.a:
   %i.d = sitofp i32 %i.c to float
   %i.e = fdiv float %i.b, %i.d
   %i.f = fpext float %i.e to double
-  %i.g = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %.str.11..str.12, double noundef %i.f) #13 ; 0 uses
+  %i.g = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %.str.11..str.12, double noundef %i.f) #12 ; 0 uses
   ret void
 }
 
@@ -151,8 +151,8 @@ define internal void @Plain_PrintBeforeFirstPage(i32 noundef %0, i32 noundef %1,
 bb.a:
   %i.a = add nsw i32 %0, -1
   %i.b = load i32, ptr @PlainCharWidth, align 4, !tbaa !7
-  %i.c = sdiv i32 %i.a, %i.b                      ; 4 uses
-  %i.d = add nsw i32 %i.c, 1                      ; 2 uses
+  %i.c = sdiv i32 %i.a, %i.b                      ; 3 uses
+  %i.d = add nsw i32 %i.c, 1                      ; 3 uses
   store i32 %i.d, ptr @hsize, align 4, !tbaa !7
   %i.e = add nsw i32 %1, -1
   %i.f = load i32, ptr @PlainCharHeight, align 4, !tbaa !7
@@ -161,24 +161,21 @@ bb.a:
   store i32 %i.h, ptr @vsize, align 4, !tbaa !7
   %i.i = mul nsw i32 %i.h, %i.d
   %i.j = sext i32 %i.i to i64
-  %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #14 ; 10 uses
+  %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #13 ; 10 uses
   store ptr %i.k, ptr @page, align 8, !tbaa !13
   %i.l = or i32 %i.g, %i.c
   %or.cond.not = icmp sgt i32 %i.l, -1
   br i1 %or.cond.not, label %.preheader.preheader, label %._crit_edge15.split
 
 .preheader.preheader:                             ; preds = %bb.a
-  %3 = sext i32 %i.c to i64
-  %4 = add nsw i64 %3, 1                          ; 9 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.c, i32 0)
-  %narrow = add nuw i32 %smax, 1
+  %3 = zext nneg i32 %i.d to i64                  ; 9 uses
+  %narrow = add nuw i32 %i.c, 1
   %i.m = zext i32 %narrow to i64                  ; 9 uses
-  %smax18 = tail call i32 @llvm.smax.i32(i32 %i.g, i32 0)
-  %i.n = add nuw i32 %smax18, 1
+  %i.n = add nuw i32 %i.g, 1
   %wide.trip.count = zext i32 %i.n to i64         ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 7         ; 3 uses
-  %5 = icmp slt i32 %i.g, 7
-  br i1 %5, label %.preheader.epil.preheader, label %.preheader.preheader.new
+  %4 = icmp ult i32 %i.g, 7
+  br i1 %4, label %.preheader.epil.preheader, label %.preheader.preheader.new
 
 .preheader.preheader.new:                         ; preds = %.preheader.preheader
   %unroll_iter = and i64 %wide.trip.count, 4294967288
@@ -187,36 +184,36 @@ bb.a:
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
   %indvar = phi i64 [ 0, %.preheader.preheader.new ], [ %indvar.next.7, %.preheader ] ; 9 uses
   %niter = phi i64 [ 0, %.preheader.preheader.new ], [ %niter.next.7, %.preheader ]
-  %i.o = mul nuw nsw i64 %4, %indvar
-  %scevgep = getelementptr i8, ptr %i.k, i64 %i.o
+  %i.o = mul nuw nsw i64 %indvar, %3
+  %scevgep = getelementptr nuw i8, ptr %i.k, i64 %i.o
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next = or disjoint i64 %indvar, 1
-  %i.p = mul nuw nsw i64 %4, %indvar.next
-  %scevgep.1 = getelementptr i8, ptr %i.k, i64 %i.p
+  %i.p = mul nuw nsw i64 %indvar.next, %3
+  %scevgep.1 = getelementptr nuw i8, ptr %i.k, i64 %i.p
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.1, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next.1 = or disjoint i64 %indvar, 2
-  %i.q = mul nuw nsw i64 %4, %indvar.next.1
-  %scevgep.2 = getelementptr i8, ptr %i.k, i64 %i.q
+  %i.q = mul nuw nsw i64 %indvar.next.1, %3
+  %scevgep.2 = getelementptr nuw i8, ptr %i.k, i64 %i.q
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.2, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next.2 = or disjoint i64 %indvar, 3
-  %i.r = mul nuw nsw i64 %4, %indvar.next.2
-  %scevgep.3 = getelementptr i8, ptr %i.k, i64 %i.r
+  %i.r = mul nuw nsw i64 %indvar.next.2, %3
+  %scevgep.3 = getelementptr nuw i8, ptr %i.k, i64 %i.r
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.3, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next.3 = or disjoint i64 %indvar, 4
-  %i.s = mul nuw nsw i64 %4, %indvar.next.3
-  %scevgep.4 = getelementptr i8, ptr %i.k, i64 %i.s
+  %i.s = mul nuw nsw i64 %indvar.next.3, %3
+  %scevgep.4 = getelementptr nuw i8, ptr %i.k, i64 %i.s
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.4, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next.4 = or disjoint i64 %indvar, 5
-  %i.t = mul nuw nsw i64 %4, %indvar.next.4
-  %scevgep.5 = getelementptr i8, ptr %i.k, i64 %i.t
+  %i.t = mul nuw nsw i64 %indvar.next.4, %3
+  %scevgep.5 = getelementptr nuw i8, ptr %i.k, i64 %i.t
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.5, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next.5 = or disjoint i64 %indvar, 6
-  %i.u = mul nuw nsw i64 %4, %indvar.next.5
-  %scevgep.6 = getelementptr i8, ptr %i.k, i64 %i.u
+  %i.u = mul nuw nsw i64 %indvar.next.5, %3
+  %scevgep.6 = getelementptr nuw i8, ptr %i.k, i64 %i.u
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.6, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next.6 = or disjoint i64 %indvar, 7
-  %i.v = mul nuw nsw i64 %4, %indvar.next.6
-  %scevgep.7 = getelementptr i8, ptr %i.k, i64 %i.v
+  %i.v = mul nuw nsw i64 %indvar.next.6, %3
+  %scevgep.7 = getelementptr nuw i8, ptr %i.k, i64 %i.v
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.7, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next.7 = add nuw nsw i64 %indvar, 8     ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
@@ -236,8 +233,8 @@ bb.a:
 .preheader.epil:                                  ; preds = %.preheader.epil, %.preheader.epil.preheader
   %indvar.epil = phi i64 [ %indvar.epil.init, %.preheader.epil.preheader ], [ %indvar.next.epil, %.preheader.epil ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.preheader.epil.preheader ], [ %epil.iter.next, %.preheader.epil ]
-  %i.w = mul nuw nsw i64 %4, %indvar.epil
-  %scevgep.epil = getelementptr i8, ptr %i.k, i64 %i.w
+  %i.w = mul nuw nsw i64 %indvar.epil, %3
+  %scevgep.epil = getelementptr nuw i8, ptr %i.k, i64 %i.w
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.epil, i8 32, i64 %i.m, i1 false), !tbaa !14
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -337,12 +334,12 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge3
 
 bb.f:                                             ; preds = %bb.e
   %i.an = load ptr, ptr @page, align 8, !tbaa !13
-  tail call void @free(ptr noundef %i.an) #13
+  tail call void @free(ptr noundef %i.an) #12
   store i32 %i.ag, ptr @hsize, align 4, !tbaa !7
   store i32 %i.ak, ptr @vsize, align 4, !tbaa !7
   %i.ao = mul nsw i32 %i.ak, %i.ag
   %i.ap = sext i32 %i.ao to i64
-  %i.aq = tail call noalias ptr @malloc(i64 noundef %i.ap) #14
+  %i.aq = tail call noalias ptr @malloc(i64 noundef %i.ap) #13
   store ptr %i.aq, ptr @page, align 8, !tbaa !13
   br label %bb.g
 
@@ -456,7 +453,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.s = zext nneg i32 %i.o to i64
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
-  %i.u = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.t) #15
+  %i.u = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.t) #14
   %i.v = add i64 %i.u, %i.s
   %i.w = load i32, ptr @hsize, align 4, !tbaa !7  ; 2 uses
   %i.x = sext i32 %i.w to i64
@@ -474,14 +471,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ad = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.ae = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.ad, ptr noundef nonnull @.str.14) #13 ; 0 uses
+  %i.ae = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.ad, ptr noundef nonnull @.str.14) #12 ; 0 uses
   %.pre = load i32, ptr @vsize, align 4, !tbaa !7
   %i.af = icmp sgt i32 %.pre, %i.q
   br i1 %i.af, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.ag = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.ah = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.ag, ptr noundef nonnull @.str.16) #13 ; 0 uses
+  %i.ah = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.ag, ptr noundef nonnull @.str.16) #12 ; 0 uses
   br label %.thread
 
 .thread:                                          ; preds = %bb.c, %bb.e, %bb.d
@@ -513,7 +510,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.b, %bb.a
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.av = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 1, ptr noundef nonnull @.str.17, i32 noundef 2, ptr noundef nonnull %i.at, ptr noundef nonnull %i.au, i32 noundef %i.o, i32 noundef %i.q) #13 ; 0 uses
+  %i.av = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 1, ptr noundef nonnull @.str.17, i32 noundef 2, ptr noundef nonnull %i.at, ptr noundef nonnull %i.au, i32 noundef %i.o, i32 noundef %i.q) #12 ; 0 uses
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %.thread, %bb.f
@@ -530,18 +527,18 @@ bb.a:
   br i1 %switch, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 2, ptr noundef nonnull @.str.18, i32 noundef 2, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.19) #13 ; 0 uses
+  %i.c = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 2, ptr noundef nonnull @.str.18, i32 noundef 2, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.19) #12 ; 0 uses
   br label %.loopexit48
 
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
-  %i.e = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #15 ; 2 uses
+  %i.e = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #14 ; 2 uses
   %i.f = trunc i64 %i.e to i32                    ; 3 uses
   %i.g = icmp eq i64 %i.e, 0
   br i1 %i.g, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 3, ptr noundef nonnull @.str.20, i32 noundef 2, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.19) #13 ; 0 uses
+  %i.h = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 3, ptr noundef nonnull @.str.20, i32 noundef 2, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.19) #12 ; 0 uses
   br label %.loopexit48
 
 bb.e:                                             ; preds = %bb.c
@@ -580,8 +577,8 @@ bb.e:                                             ; preds = %bb.c
   %i.ao = fptosi double %i.an to i32              ; 3 uses
   %i.ap = extractelement <2 x float> %i.ak, i64 1
   %i.aq = fptosi float %i.ap to i32               ; 3 uses
-  tail call void @SetLengthDim(i32 noundef 0) #13
-  tail call void @SetLengthDim(i32 noundef 1) #13
+  tail call void @SetLengthDim(i32 noundef 0) #12
+  tail call void @SetLengthDim(i32 noundef 1) #12
   %i.ar = icmp sgt i32 %i.ac, -1
   br i1 %i.ar, label %bb.f, label %bb.g
 
@@ -676,7 +673,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %exitcond.not.1, label %..loopexit_crit_edge, label %.preheader.new, !llvm.loop !27
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.ca = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 4, ptr noundef nonnull @.str.21, i32 noundef 2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d, i32 noundef undef, i32 noundef undef) #13 ; 0 uses
+  %i.ca = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 4, ptr noundef nonnull @.str.21, i32 noundef 2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d, i32 noundef undef, i32 noundef undef) #12 ; 0 uses
   br label %.loopexit48
 
 .loopexit48:                                      ; preds = %..loopexit_crit_edge, %.preheader47, %.preheader.lr.ph, %bb.g, %bb.d, %bb.b
@@ -693,7 +690,7 @@ bb.a:
 define internal void @Plain_CoordRotate(i32 %0) #1 {
 bb.a:
   %i.a = load ptr, ptr @no_fpos, align 8, !tbaa !11
-  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.22) #13 ; 0 uses
+  %i.b = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 1, i32 noundef 2, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef %i.a, ptr noundef nonnull @.str.22) #12 ; 0 uses
   ret void
 }
 
@@ -735,11 +732,8 @@ bb.a:
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #11
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #12
+declare void @llvm.assume(i1 noundef) #11
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -752,11 +746,10 @@ attributes #7 = { mustprogress nofree nounwind willreturn allockind("alloc,unini
 attributes #8 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #13 = { nounwind }
-attributes #14 = { nounwind allocsize(0) }
-attributes #15 = { nounwind willreturn memory(read) }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #12 = { nounwind }
+attributes #13 = { nounwind allocsize(0) }
+attributes #14 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

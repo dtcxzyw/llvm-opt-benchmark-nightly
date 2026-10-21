@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.md = invoke noundef i64 @_RNvXNtCs4ytUTZt2Gw9_11arrow_array5arrayINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtB2_5ArrayEL_EB1a_3len(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.lt)
-          to label %bb.q unwind label %bb.h, !noalias !55451 ; 9 uses
+          to label %bb.q unwind label %bb.h, !noalias !55451 ; 8 uses
 
 bb.q:                                             ; preds = %bb.p
   %i.me = shl i64 %i.md, 1                        ; 5 uses
@@ -224,8 +224,6 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.mi, label %.invoke.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %3 = icmp sgt i64 %i.md, -1
-  call void @llvm.assume(i1 %3)
   %i.mj = ptrtoint ptr %i.mh to i64
   br label %bb.u
 
@@ -628,7 +626,7 @@ bb.abb:                                           ; preds = %bb.aba
 
 bb.abc:                                           ; preds = %bb.aba
   %i.buc = invoke noundef i64 @_RNvXNtCs4ytUTZt2Gw9_11arrow_array5arrayINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtB2_5ArrayEL_EB1a_3len(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.bts)
-          to label %bb.abd unwind label %bb.aau, !noalias !55947 ; 9 uses
+          to label %bb.abd unwind label %bb.aau, !noalias !55947 ; 8 uses
 
 bb.abd:                                           ; preds = %bb.abc
   %i.bud = shl i64 %i.buc, 1                      ; 5 uses
@@ -647,8 +645,6 @@ bb.abf:                                           ; preds = %bb.abe
   br i1 %i.buh, label %.invoke.i484, label %bb.abg
 
 bb.abg:                                           ; preds = %bb.abf
-  %4 = icmp sgt i64 %i.buc, -1
-  call void @llvm.assume(i1 %4)
   %i.bui = ptrtoint ptr %i.bug to i64
   br label %bb.abh
 
