@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = ptrtoaddr ptr %i.b to i64
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 4 uses
   %i.e = load i32, ptr %i.d, align 4              ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8
@@ -232,7 +232,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_m.exit: ; preds = %bb.a, %bb.b
   %i.t = phi i64 [ %.pre.i.i, %bb.b ], [ %i.q, %bb.a ] ; 2 uses
-  %i.u = inttoptr i64 %i.t to ptr
+  %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
   %i.v = add i64 %i.t, %i.m
   store i64 %i.v, ptr %i.p, align 8
   store ptr %i.u, ptr %i.a, align 8
@@ -249,37 +249,35 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_
   br i1 %i.ab, label %._crit_edge, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %.pre18 = load i32, ptr %i.d, align 4
   %i.ac = mul nsw i64 %i.y, -4
   br label %.lr.ph.split
 
 ._crit_edge:                                      ; preds = %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit, %.lr.ph, %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_m.exit
   ret void
 
-.lr.ph.splitthread-pre-split:                     ; preds = %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit
-  %.pr = load i32, ptr %i.z, align 8
-  br label %.lr.ph.split
-
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.lr.ph.splitthread-pre-split
-  %i.ad = phi i32 [ %.pr, %.lr.ph.splitthread-pre-split ], [ %i.aa, %.lr.ph.split.preheader ] ; 2 uses
-  %i.ae = phi i32 [ %i.bg, %.lr.ph.splitthread-pre-split ], [ %i.x, %.lr.ph.split.preheader ]
-  %.012 = phi i64 [ %i.bh, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph.split.preheader ] ; 5 uses
+.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit
+  %1 = phi i32 [ %4, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit ], [ %i.x, %.lr.ph.split.preheader ]
+  %i.ad = phi i32 [ %5, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit ], [ %.pre18, %.lr.ph.split.preheader ] ; 2 uses
+  %2 = phi ptr [ %6, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit ], [ %i.u, %.lr.ph.split.preheader ] ; 3 uses
+  %i.ae = phi i32 [ %i.bg, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit ], [ %i.aa, %.lr.ph.split.preheader ] ; 2 uses
+  %.012 = phi i64 [ %i.bh, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit ], [ 0, %.lr.ph.split.preheader ] ; 5 uses
+  %3 = ptrtoaddr ptr %2 to i64
   %i.af = mul i64 %i.ac, %.012
   %i.ag = sub i64 %i.af, %i.c
   %i.ah = shl nuw nsw i64 %.012, 2
   %i.ai = mul nuw i64 %.012, %i.y
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ai ; 5 uses
-  %i.ak = zext i32 %i.ad to i64
+  %i.ak = zext i32 %i.ae to i64
   %.idx = shl nuw nsw i64 %i.ak, 2                ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 %.idx
-  %.not9.i.i.i = icmp eq i32 %i.ad, 0
+  %.not9.i.i.i = icmp eq i32 %i.ae, 0
   br i1 %.not9.i.i.i, label %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.lr.ph.split
-  %1 = load ptr, ptr %i.a, align 8                ; 2 uses
-  %2 = load i32, ptr %i.d, align 4
-  %i.am = zext i32 %2 to i64                      ; 2 uses
+  %i.am = zext i32 %i.ad to i64                   ; 2 uses
   %i.an = mul nuw i64 %.012, %i.am
-  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.an ; 4 uses
+  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.an ; 4 uses
   %i.ap = add nsw i64 %.idx, -4                   ; 2 uses
   %i.aq = lshr exact i64 %i.ap, 2
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
@@ -287,7 +285,6 @@ _ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft7OpIndexEA_S5_EEPT_
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader19, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %3 = ptrtoaddr ptr %1 to i64
   %i.as = add i64 %i.ag, %3
   %i.at = mul i64 %i.ah, %i.am
   %i.au = add i64 %i.as, %i.at
@@ -337,15 +334,21 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i.i, label %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit, label %.lr.ph.i.i.i, !llvm.loop !342
 
 _ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit: ; preds = %.lr.ph.i.i.i, %middle.block
+  %.pre = load i32, ptr %i.z, align 8
+  %.pre15 = load ptr, ptr %i.a, align 8
+  %.pre17 = load i32, ptr %i.d, align 4
   %.pre.a = load i32, ptr %i.w, align 4
   br label %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit
 
 _ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit: ; preds = %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit, %.lr.ph.split
-  %i.bg = phi i32 [ %.pre.a, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit ], [ %i.ae, %.lr.ph.split ] ; 2 uses
+  %4 = phi i32 [ %.pre.a, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit ], [ %1, %.lr.ph.split ] ; 2 uses
+  %5 = phi i32 [ %.pre17, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit ], [ %i.ad, %.lr.ph.split ]
+  %6 = phi ptr [ %.pre15, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit ], [ %2, %.lr.ph.split ]
+  %i.bg = phi i32 [ %.pre, %_ZSt18uninitialized_copyIPKN2v88internal8compiler10turboshaft7OpIndexEPS4_ET0_T_S9_S8_.exit.loopexit ], [ 0, %.lr.ph.split ]
   %i.bh = add nuw nsw i64 %.012, 1                ; 2 uses
-  %i.bi = zext i32 %i.bg to i64
+  %i.bi = zext i32 %4 to i64
   %i.bj = icmp samesign ult i64 %i.bh, %i.bi
-  br i1 %i.bj, label %.lr.ph.splitthread-pre-split, label %._crit_edge, !llvm.loop !343
+  br i1 %i.bj, label %.lr.ph.split, label %._crit_edge, !llvm.loop !343
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

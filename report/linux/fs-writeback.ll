@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.c, %bb.b
   br i1 %.not.i, label %list_splice.exit, label %.lr.ph44
 
 .lr.ph44:                                         ; preds = %.preheader
-  %i.y = load ptr, ptr %i.a, align 8
+  %i.y = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.z = icmp eq ptr %i.y, %3
   br i1 %i.z, label %.loopexit.us, label %.lr.ph44.split
 
@@ -225,20 +225,25 @@ bb.h:                                             ; preds = %bb.g
   store ptr %.val4.i, ptr %i.ad, align 8
   br label %list_splice.exit
 
-.loopexit:                                        ; preds = %bb.j, %.lr.ph44.split
+.loopexit.loopexit:                               ; preds = %bb.j
+  %.pre = load ptr, ptr %i.a, align 8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.lr.ph44.split
+  %4 = phi ptr [ %.pre, %.loopexit.loopexit ], [ %5, %.lr.ph44.split ]
   %i.ae = load volatile ptr, ptr %3, align 8
   %.not34 = icmp eq ptr %i.ae, %3
   br i1 %.not34, label %list_splice.exit, label %.lr.ph44.split, !llvm.loop !184
 
 .lr.ph44.split:                                   ; preds = %.lr.ph44, %.loopexit
-  %4 = load ptr, ptr %i.a, align 8                ; 3 uses
-  %i.af = getelementptr i8, ptr %4, i64 -176
+  %5 = phi ptr [ %4, %.loopexit ], [ %i.y, %.lr.ph44 ] ; 4 uses
+  %i.af = getelementptr i8, ptr %5, i64 -176
   %i.ag = load ptr, ptr %i.af, align 8
-  %.not3540 = icmp eq ptr %4, %3
+  %.not3540 = icmp eq ptr %5, %3
   br i1 %.not3540, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph44.split, %bb.j
-  %.02841 = phi ptr [ %.02742, %bb.j ], [ %4, %.lr.ph44.split ] ; 6 uses
+  %.02841 = phi ptr [ %.02742, %bb.j ], [ %5, %.lr.ph44.split ] ; 6 uses
   %.02742.in = getelementptr i8, ptr %.02841, i64 8 ; 2 uses
   %.02742 = load ptr, ptr %.02742.in, align 8     ; 4 uses
   %i.ah = getelementptr i8, ptr %.02841, i64 -176
@@ -261,7 +266,7 @@ bb.i:                                             ; preds = %.lr.ph
 
 bb.j:                                             ; preds = %.lr.ph, %bb.i
   %.not35 = icmp eq ptr %.02742, %3
-  br i1 %.not35, label %.loopexit, label %.lr.ph, !llvm.loop !185
+  br i1 %.not35, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !185
 
 list_splice.exit:                                 ; preds = %.loopexit, %.loopexit.us, %.preheader, %bb.h, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13

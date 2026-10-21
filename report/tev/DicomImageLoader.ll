@@ -205,12 +205,16 @@ bb.e:                                             ; preds = %bb.b, %bb.c
 
 .lr.ph:                                           ; preds = %bb.e
   %i.t = load ptr, ptr %1, align 8, !tbaa !2629, !nonnull !203, !align !219 ; 3 uses
-  %i.u = getelementptr i8, ptr %i.t, i64 8
-  %i.v = load ptr, ptr %i.t, align 8
+  %i.u = getelementptr i8, ptr %i.t, i64 8        ; 2 uses
+  %i.v = load ptr, ptr %i.t, align 8              ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %i.x = load i64, ptr %i.w, align 8, !tbaa !109
   %i.y = icmp eq i64 %i.x, 0
-  br i1 %i.y, label %._crit_edge, label %.lr.ph.split
+  br i1 %i.y, label %._crit_edge, label %.lr.ph.split.from..lr.ph.split.preheader
+
+.lr.ph.split.from..lr.ph.split.preheader:         ; preds = %.lr.ph
+  %.val20.pre30 = load ptr, ptr %i.u, align 8
+  br label %.lr.ph.split
 
 ._crit_edge:                                      ; preds = %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit", %.lr.ph, %bb.e
   invoke void @_ZNSt3__17promiseIvE9set_valueEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr55)
@@ -223,10 +227,10 @@ bb.f:                                             ; preds = %._crit_edge
   call void @__clang_call_terminate(ptr %i.aa) #46
   unreachable
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit"
-  %.024 = phi i64 [ %i.at, %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit" ], [ %2, %.lr.ph ] ; 2 uses
-  %.val = load ptr, ptr %i.t, align 8             ; 2 uses
-  %.val20 = load ptr, ptr %i.u, align 8
+.lr.ph.split:                                     ; preds = %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit", %.lr.ph.split.from..lr.ph.split.preheader
+  %.val20 = phi ptr [ %.val2031, %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit" ], [ %.val20.pre30, %.lr.ph.split.from..lr.ph.split.preheader ] ; 2 uses
+  %.val = phi ptr [ %.val28, %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit" ], [ %i.v, %.lr.ph.split.from..lr.ph.split.preheader ] ; 3 uses
+  %.024 = phi i64 [ %i.at, %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit" ], [ %2, %.lr.ph.split.from..lr.ph.split.preheader ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !109 ; 3 uses
   %.not2.i = icmp eq i64 %i.ac, 0
@@ -257,9 +261,16 @@ bb.f:                                             ; preds = %._crit_edge
   store float %i.ar, ptr %i.ao, align 4, !tbaa !90
   %i.as = add nuw i64 %.01.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.as, %i.ac
-  br i1 %exitcond.not.i, label %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit", label %.from.44, !llvm.loop !2621
+  br i1 %exitcond.not.i, label %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.from._ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.loopexit", label %.from.44, !llvm.loop !2621
 
-"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit": ; preds = %.from.44, %.lr.ph.split
+"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.from._ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.loopexit": ; preds = %.from.44
+  %.val.pre = load ptr, ptr %i.t, align 8
+  %.val20.pre = load ptr, ptr %i.u, align 8
+  br label %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit"
+
+"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit": ; preds = %.lr.ph.split, %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.from._ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.loopexit"
+  %.val2031 = phi ptr [ %.val20.pre, %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.from._ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.loopexit" ], [ %.val20, %.lr.ph.split ]
+  %.val28 = phi ptr [ %.val.pre, %"_ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.from._ZZZN3tev14readDicomImageERKN4gdcm11ImageReaderERKNS_19ImageLoaderSettingsEiENK3$_0clEmENKUlmE_clEm.exit.loopexit" ], [ %.val, %.lr.ph.split ]
   %i.at = add nuw i64 %.024, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.at, %3
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !2622

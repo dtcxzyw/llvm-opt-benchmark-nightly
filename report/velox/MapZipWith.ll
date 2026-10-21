@@ -205,6 +205,7 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVect
   %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %.pre63 = load i8, ptr %3, align 8, !tbaa !273, !range !76
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUlimE_clEim.exit40
@@ -212,15 +213,15 @@ _ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVect
   br i1 %.not34, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUlimE_clEim.exit, label %bb.o
 
 bb.h:                                             ; preds = %.lr.ph, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit
-  %6 = phi i32 [ %i.bg, %.lr.ph ], [ %i.ez, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit ] ; 2 uses
-  %.053.a = phi i32 [ %i.c, %.lr.ph ], [ %6, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit ] ; 2 uses
-  %7 = sdiv i32 %.053.a, 64                       ; 3 uses
-  %8 = load i8, ptr %3, align 8, !tbaa !273, !range !76, !noundef !77
+  %6 = phi i8 [ %.pre63, %.lr.ph ], [ %8, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit ] ; 5 uses
+  %.053.a = phi i32 [ %i.bg, %.lr.ph ], [ %i.ez, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit ] ; 2 uses
+  %.053 = phi i32 [ %i.c, %.lr.ph ], [ %.053.a, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit ] ; 2 uses
+  %7 = sdiv i32 %.053, 64                         ; 3 uses
   %i.bm = load ptr, ptr %i.bh, align 8, !tbaa !274
   %i.bn = sext i32 %7 to i64
   %i.bo = getelementptr inbounds [8 x i8], ptr %i.bm, i64 %i.bn
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !110
-  %i.bq = xor i8 %8, 1
+  %i.bq = xor i8 %6, 1
   %i.br = zext nneg i8 %i.bq to i64
   %i.bs = sub nsw i64 0, %i.br
   %i.bt = xor i64 %i.bp, %i.bs                    ; 3 uses
@@ -282,7 +283,7 @@ bb.i:                                             ; preds = %bb.h
   %i.cv = shl nsw i32 %7, 6                       ; 2 uses
   %i.cw = add nuw i32 %i.cv, 64
   %i.cx = sext i32 %i.cw to i64
-  %.0.off = add i32 %.053.a, 127
+  %.0.off = add i32 %.053, 127
   %.not22.i = icmp ult i32 %.0.off, 64
   br i1 %.not22.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit, label %.lr.ph21.i
 
@@ -296,7 +297,7 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph21.i
   call void @_ZZN8facebook5velox9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEENKUliE_clEi(ptr noundef nonnull align 8 dereferenceable(32) %i.bi, i32 noundef %i.cz)
   %i.da = add nuw i64 %.020.i, 1                  ; 2 uses
   %i.db = icmp ult i64 %i.da, %i.cx
-  br i1 %i.db, label %bb.j, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit, !llvm.loop !754
+  br i1 %i.db, label %bb.j, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit.loopexit57, !llvm.loop !754
 
 bb.k:                                             ; preds = %_ZZN8facebook5velox9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEENKUliE_clEi.exit, %.lr.ph.i.split
   %.01519.i = phi i64 [ %i.bt, %.lr.ph.i.split ], [ %i.ey, %_ZZN8facebook5velox9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEENKUliE_clEi.exit ] ; 3 uses
@@ -406,8 +407,13 @@ _ZZN8facebook5velox9functions13countElementsINS0_9MapVectorEEEiRKNS0_17Selectivi
   %.not.i41 = icmp eq i64 %i.ey, 0
   br i1 %.not.i41, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit, label %bb.k, !llvm.loop !753
 
-_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit: ; preds = %bb.j, %_ZZN8facebook5velox9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEENKUliE_clEi.exit, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us, %bb.h, %bb.i
-  %i.ez = add nsw i32 %6, 64                      ; 2 uses
+_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit.loopexit57: ; preds = %bb.j
+  %.pre = load i8, ptr %3, align 8, !tbaa !273, !range !76
+  br label %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit
+
+_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit: ; preds = %_ZZN8facebook5velox9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEENKUliE_clEi.exit, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit.loopexit57, %bb.h, %bb.i
+  %8 = phi i8 [ %.pre, %_ZZN8facebook5velox4bits10forEachBitIZNS0_9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEEUliE_EEvPKmiibT_ENKUliE_clEi.exit.loopexit57 ], [ %6, %_ZN8facebook5velox11checkedPlusIiEET_S2_S2_PKc.exit.i.us ], [ %6, %bb.i ], [ %6, %bb.h ], [ %6, %_ZZN8facebook5velox9functions13countElementsINS0_9MapVectorEEEiRKNS0_17SelectivityVectorERNS0_13DecodedVectorEENKUliE_clEi.exit ]
+  %i.ez = add nsw i32 %.053.a, 64                 ; 2 uses
   %.not33 = icmp sgt i32 %i.ez, %i.d
   br i1 %.not33, label %._crit_edge, label %bb.h, !llvm.loop !759
 

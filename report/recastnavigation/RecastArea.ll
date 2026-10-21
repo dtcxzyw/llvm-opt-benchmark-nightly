@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_ZN13rcScopedTimerC
 
 .preheader.lr.ph:                                 ; preds = %bb.c
   %.not8091 = icmp sgt i32 %spec.store.select, %spec.select
-  %i.az = getelementptr inbounds nuw i8, ptr %4, i64 64
+  %i.az = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 88
   br i1 %.not8091, label %.loopexit, label %.preheader.preheader
@@ -216,10 +216,12 @@ bb.c:                                             ; preds = %_ZN13rcScopedTimerC
   %i.bf = sext i32 %i.g to i64
   %i.bg = add nuw nsw i32 %.067, 1
   %wide.trip.count105 = zext nneg i32 %i.bg to i64
+  %.pre107.pre = load ptr, ptr %i.az, align 8, !tbaa !70
   %wide.trip.count = zext nneg i32 %i.bd to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge94
+  %.pre107 = phi ptr [ %.pre107.pre, %.preheader.preheader ], [ %.pre107110, %._crit_edge94 ] ; 2 uses
   %indvars.iv102 = phi i64 [ %i.be, %.preheader.preheader ], [ %indvars.iv.next103, %._crit_edge94 ] ; 2 uses
   %i.bh = mul nsw i64 %indvars.iv102, %i.bf
   br label %bb.d
@@ -230,8 +232,9 @@ bb.c:                                             ; preds = %_ZN13rcScopedTimerC
   br i1 %exitcond106.not, label %.loopexit, label %.preheader
 
 bb.d:                                             ; preds = %.preheader, %._crit_edge
+  %.pre107111 = phi ptr [ %.pre107, %.preheader ], [ %.pre107110, %._crit_edge ]
+  %5 = phi ptr [ %.pre107, %.preheader ], [ %6, %._crit_edge ] ; 2 uses
   %indvars.iv99 = phi i64 [ %i.bc, %.preheader ], [ %indvars.iv.next100, %._crit_edge ] ; 2 uses
-  %5 = load ptr, ptr %i.az, align 8, !tbaa !70
   %i.bi = getelementptr [4 x i8], ptr %5, i64 %indvars.iv99
   %i.bj = getelementptr [4 x i8], ptr %i.bi, i64 %i.bh
   %i.bk = load i32, ptr %i.bj, align 4            ; 3 uses
@@ -248,7 +251,13 @@ bb.d:                                             ; preds = %.preheader, %._crit
   %.pre107.a = load ptr, ptr %i.ba, align 8, !tbaa !73
   br label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.g, %bb.d
+._crit_edge.loopexit:                             ; preds = %bb.g
+  %.pre = load ptr, ptr %i.az, align 8, !tbaa !70 ; 2 uses
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d
+  %.pre107110 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.pre107111, %bb.d ] ; 2 uses
+  %6 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %5, %bb.d ]
   %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next100, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge94, label %bb.d
@@ -280,7 +289,7 @@ bb.g:                                             ; preds = %bb.e, %.lr.ph, %bb.
   %i.cb = phi ptr [ %i.br, %bb.e ], [ %i.br, %.lr.ph ], [ %.pre.a, %bb.f ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cc = icmp samesign ult i64 %indvars.iv.next, %i.bq
-  br i1 %i.cc, label %.lr.ph, label %._crit_edge
+  br i1 %i.cc, label %.lr.ph, label %._crit_edge.loopexit
 
 .loopexit:                                        ; preds = %._crit_edge94, %bb.c, %.preheader.lr.ph, %_ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit
   %i.cd = load i8, ptr %i.a, align 1, !tbaa !27, !range !28, !noundef !29
@@ -683,7 +692,7 @@ _ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit: ; preds = %bb.a, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.m = load float, ptr %i.l, align 4, !tbaa !75 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.o = load float, ptr %i.n, align 4, !tbaa !75 ; 2 uses
+  %i.o = load float, ptr %i.n, align 4, !tbaa !75 ; 3 uses
   %i.p = fsub float %i.o, %2
   %i.q = fadd float %3, %i.m
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 28 ; 2 uses
@@ -758,6 +767,7 @@ bb.c:                                             ; preds = %_ZN13rcScopedTimerC
   br label %.preheader115
 
 .preheader115:                                    ; preds = %.preheader115.preheader, %._crit_edge
+  %.pre133 = phi float [ %i.o, %.preheader115.preheader ], [ %.pre133138, %._crit_edge ] ; 2 uses
   %indvars.iv128 = phi i64 [ %i.bj, %.preheader115.preheader ], [ %indvars.iv.next129, %._crit_edge ] ; 3 uses
   %i.bm = mul nsw i64 %indvars.iv128, %i.bk
   %i.bn = trunc nuw nsw i64 %indvars.iv128 to i32
@@ -772,6 +782,8 @@ bb.c:                                             ; preds = %_ZN13rcScopedTimerC
   br i1 %exitcond132.not, label %.loopexit116, label %.preheader115
 
 bb.d:                                             ; preds = %.preheader115, %.loopexit
+  %.pre133137 = phi float [ %.pre133, %.preheader115 ], [ %.pre133138, %.loopexit ]
+  %6 = phi float [ %.pre133, %.preheader115 ], [ %7, %.loopexit ] ; 2 uses
   %indvars.iv125 = phi i64 [ %i.bh, %.preheader115 ], [ %indvars.iv.next126, %.loopexit ] ; 3 uses
   %i.br = load ptr, ptr %i.be, align 8, !tbaa !70
   %i.bs = getelementptr [4 x i8], ptr %i.br, i64 %indvars.iv125
@@ -785,7 +797,6 @@ bb.d:                                             ; preds = %.preheader115, %.lo
   %i.ca = load <1 x float>, ptr %i.s, align 4
   %i.cb = load float, ptr %i.t, align 4, !tbaa !75
   %i.cc = load float, ptr %1, align 4, !tbaa !75
-  %6 = load float, ptr %i.n, align 4, !tbaa !75
   %i.cd = insertelement <2 x float> %i.bq, float %i.bz, i64 0
   %i.ce = shufflevector <1 x float> %i.ca, <1 x float> poison, <2 x i32> zeroinitializer
   %i.cf = insertelement <2 x float> %i.bw, float %i.cb, i64 1
@@ -836,9 +847,15 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %.lr.p
   %i.db = phi ptr [ %i.ct, %bb.e ], [ %.pre.a, %bb.f ], [ %i.ct, %.lr.ph ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dc = icmp samesign ult i64 %indvars.iv.next, %i.cs
-  br i1 %i.dc, label %.lr.ph, label %.loopexit
+  br i1 %i.dc, label %.lr.ph, label %.loopexit.loopexit
 
-.loopexit:                                        ; preds = %bb.g, %bb.d
+.loopexit.loopexit:                               ; preds = %bb.g
+  %.pre = load float, ptr %i.n, align 4, !tbaa !75 ; 2 uses
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.d
+  %.pre133138 = phi float [ %.pre, %.loopexit.loopexit ], [ %.pre133137, %bb.d ] ; 2 uses
+  %7 = phi float [ %.pre, %.loopexit.loopexit ], [ %6, %bb.d ]
   %indvars.iv.next126 = add nuw nsw i64 %indvars.iv125, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next126, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.d

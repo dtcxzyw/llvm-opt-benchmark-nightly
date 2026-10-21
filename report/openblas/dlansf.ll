@@ -72,7 +72,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.t = load i32, ptr %3, align 4, !tbaa !104    ; 7 uses
   %i.u = add nsw i32 %i.t, 1
-  %i.v = sdiv i32 %i.u, 2                         ; 3 uses
+  %i.v = sdiv i32 %i.u, 2                         ; 5 uses
   store i32 %i.v, ptr %i.e, align 4, !tbaa !104
   %.not973 = icmp eq i32 %spec.store.select, 0
   br i1 %.not973, label %bb.m, label %bb.h
@@ -151,8 +151,8 @@ bb.k:                                             ; preds = %bb.h
 .lr.ph1009:                                       ; preds = %bb.k, %._crit_edge
   %i.as = phi i32 [ %i.bi, %._crit_edge ], [ %i.ar, %bb.k ]
   %.pre1963 = phi i32 [ %i.bk, %._crit_edge ], [ 0, %bb.k ] ; 2 uses
+  %6 = phi i32 [ %7, %._crit_edge ], [ %i.v, %bb.k ] ; 3 uses
   %.31007 = phi double [ %.4.lcssa, %._crit_edge ], [ 0.000000e+00, %bb.k ] ; 2 uses
-  %6 = load i32, ptr %i.e, align 4, !tbaa !104    ; 2 uses
   %i.at = add nsw i32 %6, -1
   store i32 %i.at, ptr %i.b, align 4, !tbaa !104
   %.not9841003 = icmp slt i32 %6, 1
@@ -191,12 +191,14 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.not984.not, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !10
 
 ._crit_edge.loopexit:                             ; preds = %._crit_edge1964
+  %.pre = load i32, ptr %i.e, align 4, !tbaa !104
   %.pre1966 = load i32, ptr %i.a, align 4, !tbaa !104
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph1009
   %i.bi = phi i32 [ %i.as, %.lr.ph1009 ], [ %.pre1966, %._crit_edge.loopexit ] ; 2 uses
   %i.bj = phi i32 [ %.pre1963, %.lr.ph1009 ], [ %i.bf, %._crit_edge.loopexit ] ; 2 uses
+  %7 = phi i32 [ %6, %.lr.ph1009 ], [ %.pre, %._crit_edge.loopexit ]
   %.4.lcssa = phi double [ %.31007, %.lr.ph1009 ], [ %.5, %._crit_edge.loopexit ] ; 2 uses
   %i.bk = add nsw i32 %i.bj, 1                    ; 2 uses
   store i32 %i.bk, ptr %i.d, align 4, !tbaa !104
@@ -276,11 +278,11 @@ bb.p:                                             ; preds = %bb.m
 .lr.ph1033:                                       ; preds = %bb.p, %._crit_edge1028
   %i.cf = phi i32 [ %i.cv, %._crit_edge1028 ], [ %i.t, %bb.p ]
   %.pre1973 = phi i32 [ %i.cx, %._crit_edge1028 ], [ 0, %bb.p ] ; 2 uses
+  %8 = phi i32 [ %9, %._crit_edge1028 ], [ %i.v, %bb.p ] ; 3 uses
   %.91031 = phi double [ %.10.lcssa, %._crit_edge1028 ], [ 0.000000e+00, %bb.p ] ; 2 uses
-  %7 = load i32, ptr %i.e, align 4, !tbaa !104    ; 2 uses
-  %i.cg = add nsw i32 %7, -1
+  %i.cg = add nsw i32 %8, -1
   store i32 %i.cg, ptr %i.b, align 4, !tbaa !104
-  %.not9761023 = icmp slt i32 %7, 1
+  %.not9761023 = icmp slt i32 %8, 1
   br i1 %.not9761023, label %._crit_edge1028, label %.lr.ph1027
 
 .lr.ph1027:                                       ; preds = %.lr.ph1033, %._crit_edge1974
@@ -316,12 +318,14 @@ bb.q:                                             ; preds = %.lr.ph1027
   br i1 %.not976.not, label %.lr.ph1027, label %._crit_edge1028.loopexit, !llvm.loop !14
 
 ._crit_edge1028.loopexit:                         ; preds = %._crit_edge1974
+  %.pre1974 = load i32, ptr %i.e, align 4, !tbaa !104
   %.pre1976 = load i32, ptr %i.a, align 4, !tbaa !104
   br label %._crit_edge1028
 
 ._crit_edge1028:                                  ; preds = %._crit_edge1028.loopexit, %.lr.ph1033
   %i.cv = phi i32 [ %i.cf, %.lr.ph1033 ], [ %.pre1976, %._crit_edge1028.loopexit ] ; 2 uses
   %i.cw = phi i32 [ %.pre1973, %.lr.ph1033 ], [ %i.cs, %._crit_edge1028.loopexit ] ; 2 uses
+  %9 = phi i32 [ %8, %.lr.ph1033 ], [ %.pre1974, %._crit_edge1028.loopexit ]
   %.10.lcssa = phi double [ %.91031, %.lr.ph1033 ], [ %.11, %._crit_edge1028.loopexit ] ; 2 uses
   %i.cx = add nsw i32 %i.cw, 1                    ; 2 uses
   store i32 %i.cx, ptr %i.d, align 4, !tbaa !104

@@ -205,7 +205,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIS
 .preheader.lr.ph:                                 ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIS2_EEvRKNS_9EigenBaseIT_EE.exit.preheader
   %i.cc = load i64, ptr %i.bt, align 8, !tbaa !18 ; 5 uses
   %i.cd = icmp sgt i64 %i.cc, 0
-  %i.ce = load ptr, ptr %8, align 8               ; 3 uses
+  %i.ce = load ptr, ptr %8, align 8               ; 4 uses
   %i.cf = ptrtoaddr ptr %i.ce to i64              ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -216,11 +216,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIS
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us
+  %10 = phi ptr [ %11, %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us ], [ %i.ce, %.preheader.us.preheader ] ; 4 uses
   %indvars.iv232 = phi i64 [ %indvars.iv.next233, %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us ], [ 0, %.preheader.us.preheader ] ; 4 uses
   %.083184.us = phi i32 [ %.184.us, %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us ], [ 0, %.preheader.us.preheader ] ; 4 uses
   %i.ci = mul i64 %indvars.iv232, -4
   %i.cj = sub i64 %i.ci, %i.cf
-  %10 = load ptr, ptr %8, align 8
   %i.ck = getelementptr [4 x i8], ptr %10, i64 %indvars.iv232 ; 2 uses
   br label %.outer
 
@@ -262,7 +262,7 @@ bb.q:                                             ; preds = %.lr.ph174.us, %bb.p
 
 bb.r:                                             ; preds = %._crit_edge182.us
   %i.cq = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %indvars.iv232 ; 6 uses
-  %i.cr = add nsw i32 %.083184.us, 1              ; 4 uses
+  %i.cr = add nsw i32 %.083184.us, 1              ; 2 uses
   %i.cs = sext i32 %.083184.us to i64             ; 2 uses
   %i.ct = load ptr, ptr %3, align 8, !tbaa !19, !noalias !59 ; 2 uses
   %i.cu = ptrtoaddr ptr %i.ct to i64
@@ -307,7 +307,7 @@ vector.body287:                                   ; preds = %vector.body287, %ve
 
 middle.block292:                                  ; preds = %vector.body287
   %cmp.n293 = icmp eq i64 %i.cw, %n.vec286
-  br i1 %cmp.n293, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.preheader295
+  br i1 %cmp.n293, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.preheader295
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.preheader295:     ; preds = %vector.memcheck281, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.preheader, %middle.block292
   %.05.i.i.i.i.i.i.i.i.i.i.i.us.ph = phi i64 [ 0, %vector.memcheck281 ], [ %n.vec286, %middle.block292 ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.preheader ] ; 3 uses
@@ -333,7 +333,7 @@ middle.block292:                                  ; preds = %vector.body287
   %.05.i.i.i.i.i.i.i.i.i.i.i.us.unr = phi i64 [ %.05.i.i.i.i.i.i.i.i.i.i.i.us.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.preheader295 ], [ %i.do, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.prol ]
   %i.dp = sub nsw i64 %.05.i.i.i.i.i.i.i.i.i.i.i.us.ph, %i.cw
   %i.dq = icmp ugt i64 %i.dp, -4
-  br i1 %i.dq, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us
+  br i1 %i.dq, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.us:                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us
   %.05.i.i.i.i.i.i.i.i.i.i.i.us = phi i64 [ %i.eo, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us ], [ %.05.i.i.i.i.i.i.i.i.i.i.i.us.unr, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.prol.loopexit ] ; 6 uses
@@ -366,10 +366,15 @@ middle.block292:                                  ; preds = %vector.body287
   store i32 %i.en, ptr %i.ek, align 4, !tbaa !20
   %i.eo = add nuw nsw i64 %.05.i.i.i.i.i.i.i.i.i.i.i.us, 4 ; 2 uses
   %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.us.3 = icmp eq i64 %i.eo, %i.cw
-  br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.us.3, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us, !llvm.loop !47
+  br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.us.3, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us, !llvm.loop !47
 
-_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us: ; preds = %._crit_edge175.us.thread, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us, %middle.block292, %bb.r, %._crit_edge182.us
-  %.184.us = phi i32 [ %.083184.us, %._crit_edge182.us ], [ %i.cr, %bb.r ], [ %i.cr, %middle.block292 ], [ %i.cr, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.prol.loopexit ], [ %i.cr, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us ], [ %.083184.us, %._crit_edge175.us.thread ] ; 2 uses
+_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.loopexit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us, %middle.block292
+  %.pre247 = load ptr, ptr %8, align 8
+  br label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us
+
+_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us: ; preds = %._crit_edge175.us.thread, %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.loopexit, %bb.r, %._crit_edge182.us
+  %11 = phi ptr [ %10, %._crit_edge182.us ], [ %10, %bb.r ], [ %.pre247, %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.loopexit ], [ %10, %._crit_edge175.us.thread ]
+  %.184.us = phi i32 [ %.083184.us, %._crit_edge182.us ], [ %i.cr, %bb.r ], [ %i.cr, %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.loopexit ], [ %.083184.us, %._crit_edge175.us.thread ] ; 2 uses
   %indvars.iv.next233 = add nuw nsw i64 %indvars.iv232, 1 ; 2 uses
   %exitcond235.not = icmp eq i64 %indvars.iv.next233, %i.ca
   br i1 %exitcond235.not, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIS2_EEvRKNS_9EigenBaseIT_EE.exit._crit_edge, label %.preheader.us, !llvm.loop !48

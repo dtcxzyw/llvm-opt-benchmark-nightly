@@ -202,9 +202,11 @@ bb.r:                                             ; preds = %bb.p
 
 .lr.ph91.preheader:                               ; preds = %bb.r
   %wide.trip.count = zext nneg i32 %.062.lcssa to i64
+  %.pre98 = load i64, ptr @acpi_tables_addr, align 8
   br label %.lr.ph91
 
 .lr.ph91:                                         ; preds = %.lr.ph91.preheader, %._crit_edge
+  %2 = phi i64 [ %.pre98, %.lr.ph91.preheader ], [ %3, %._crit_edge ] ; 2 uses
   %indvars.iv94 = phi i64 [ 0, %.lr.ph91.preheader ], [ %indvars.iv.next95, %._crit_edge ] ; 2 uses
   %.06488 = phi i64 [ 0, %.lr.ph91.preheader ], [ %i.bh, %._crit_edge ]
   %i.bd = getelementptr [40 x i8], ptr @acpi_initrd_files, i64 %indvars.iv94 ; 2 uses
@@ -217,7 +219,6 @@ bb.r:                                             ; preds = %bb.p
   br i1 %.not7384, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph91
-  %2 = load i64, ptr @acpi_tables_addr, align 8
   %i.bi = add i64 %2, %i.bg
   %i.bj = load ptr, ptr %i.bd, align 8
   br label %.lr.ph
@@ -239,9 +240,14 @@ bb.r:                                             ; preds = %bb.p
   %i.br = add i64 %spec.select, %.05587
   %i.bs = sub nuw i64 %.05686, %spec.select       ; 2 uses
   %.not73 = icmp eq i64 %i.bs, 0
-  br i1 %.not73, label %._crit_edge, label %.lr.ph, !llvm.loop !17
+  br i1 %.not73, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !17
 
-._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph91
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load i64, ptr @acpi_tables_addr, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph91
+  %3 = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %2, %.lr.ph91 ]
   %indvars.iv.next95 = add nuw nsw i64 %indvars.iv94, 1 ; 2 uses
   %exitcond97.not = icmp eq i64 %indvars.iv.next95, %wide.trip.count
   br i1 %exitcond97.not, label %.loopexit, label %.lr.ph91, !llvm.loop !18

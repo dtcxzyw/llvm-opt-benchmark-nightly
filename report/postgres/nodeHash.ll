@@ -204,7 +204,8 @@ bb.a:
   br i1 %i.b, label %.lr.ph26, label %.preheader
 
 .lr.ph26:                                         ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.pre40 = load ptr, ptr %i.c, align 8
   br label %bb.b
 
 .preheader:                                       ; preds = %._crit_edge, %bb.a
@@ -214,14 +215,16 @@ bb.a:
   br i1 %i.f, label %.lr.ph34, label %._crit_edge35
 
 .lr.ph34:                                         ; preds = %.preheader
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %.pre43 = load ptr, ptr %i.g, align 8
+  %.pre45 = load ptr, ptr %i.h, align 8
   br label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph26, %._crit_edge
   %i.i = phi i32 [ %i.a, %.lr.ph26 ], [ %i.n, %._crit_edge ]
+  %1 = phi ptr [ %.pre40, %.lr.ph26 ], [ %2, %._crit_edge ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph26 ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %1 = load ptr, ptr %i.c, align 8
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %.01821 = load ptr, ptr %i.j, align 8           ; 2 uses
   %.not2022 = icmp eq ptr %.01821, null
@@ -238,11 +241,13 @@ bb.b:                                             ; preds = %.lr.ph26, %._crit_e
   br i1 %.not20, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !41
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load ptr, ptr %i.c, align 8
   %.pre.a = load i32, ptr %0, align 8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %i.n = phi i32 [ %.pre.a, %._crit_edge.loopexit ], [ %i.i, %bb.b ] ; 2 uses
+  %2 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %1, %bb.b ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.o = sext i32 %i.n to i64
   %i.p = icmp slt i64 %indvars.iv.next, %i.o
@@ -250,13 +255,13 @@ bb.b:                                             ; preds = %.lr.ph26, %._crit_e
 
 bb.c:                                             ; preds = %.lr.ph34, %._crit_edge32
   %i.q = phi i32 [ %i.e, %.lr.ph34 ], [ %i.y, %._crit_edge32 ]
+  %3 = phi ptr [ %.pre45, %.lr.ph34 ], [ %7, %._crit_edge32 ] ; 2 uses
+  %4 = phi ptr [ %.pre43, %.lr.ph34 ], [ %8, %._crit_edge32 ] ; 2 uses
   %indvars.iv37 = phi i64 [ 0, %.lr.ph34 ], [ %indvars.iv.next38, %._crit_edge32 ] ; 2 uses
-  %2 = load ptr, ptr %i.g, align 8
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv37
-  %4 = load i32, ptr %3, align 4
-  %5 = load ptr, ptr %i.h, align 8
-  %i.r = sext i32 %4 to i64
-  %i.s = getelementptr inbounds [8 x i8], ptr %5, i64 %i.r
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv37
+  %6 = load i32, ptr %5, align 4
+  %i.r = sext i32 %6 to i64
+  %i.s = getelementptr inbounds [8 x i8], ptr %3, i64 %i.r
   %i.t = load ptr, ptr %i.s, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.11927 = load ptr, ptr %i.u, align 8           ; 2 uses
@@ -274,11 +279,15 @@ bb.c:                                             ; preds = %.lr.ph34, %._crit_e
   br i1 %.not, label %._crit_edge32.loopexit, label %.lr.ph31, !llvm.loop !43
 
 ._crit_edge32.loopexit:                           ; preds = %.lr.ph31
+  %.pre42 = load ptr, ptr %i.g, align 8
+  %.pre44 = load ptr, ptr %i.h, align 8
   %.pre40.a = load i32, ptr %i.d, align 4
   br label %._crit_edge32
 
 ._crit_edge32:                                    ; preds = %._crit_edge32.loopexit, %bb.c
   %i.y = phi i32 [ %.pre40.a, %._crit_edge32.loopexit ], [ %i.q, %bb.c ] ; 2 uses
+  %7 = phi ptr [ %.pre44, %._crit_edge32.loopexit ], [ %3, %bb.c ]
+  %8 = phi ptr [ %.pre42, %._crit_edge32.loopexit ], [ %4, %bb.c ]
   %indvars.iv.next38 = add nuw nsw i64 %indvars.iv37, 1 ; 2 uses
   %i.z = sext i32 %i.y to i64
   %i.aa = icmp slt i64 %indvars.iv.next38, %i.z

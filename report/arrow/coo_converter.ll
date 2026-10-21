@@ -204,7 +204,8 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %.not.us, label %.loopexit.us, label %bb.b, !prof !57
 
 .lr.ph40.split:                                   ; preds = %.lr.ph40
-  br i1 %.not.i.i.i.i, label %.lr.ph40.split.split.preheader, label %.lr.ph40.split.split.us.preheader
+  %.pre73 = load ptr, ptr %i.x, align 8, !tbaa !69 ; 2 uses
+  br i1 %.not.i.i.i.i, label %.lr.ph40.split.split, label %.lr.ph40.split.split.us.preheader
 
 .lr.ph40.split.split.us.preheader:                ; preds = %.lr.ph40.split
   %i.dy = shl nuw nsw i64 %i.i, 3
@@ -214,15 +215,11 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   %cmp.n = icmp eq i64 %i.i, %n.vec
   br label %.lr.ph40.split.split.us
 
-.lr.ph40.split.split.preheader:                   ; preds = %.lr.ph40.split
-  %.pre71 = load ptr, ptr %i.x, align 8, !tbaa !69
-  br label %.lr.ph40.split.split
-
 .lr.ph40.split.split.us:                          ; preds = %.lr.ph40.split.split.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61
+  %3 = phi ptr [ %4, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %.pre73, %.lr.ph40.split.split.us.preheader ] ; 2 uses
   %.039.us41 = phi i64 [ %i.hc, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %i.q, %.lr.ph40.split.split.us.preheader ] ; 2 uses
-  %.02038.us42 = phi ptr [ %.2.us53, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %1, %.lr.ph40.split.split.us.preheader ] ; 7 uses
-  %.02137.us43.a = phi ptr [ %.122.us52, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %2, %.lr.ph40.split.split.us.preheader ] ; 3 uses
-  %3 = load ptr, ptr %i.x, align 8, !tbaa !69
+  %.02137.us43.a = phi ptr [ %.2.us53, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %1, %.lr.ph40.split.split.us.preheader ] ; 7 uses
+  %.02137.us43 = phi ptr [ %.122.us52, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %2, %.lr.ph40.split.split.us.preheader ] ; 3 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ea = load ptr, ptr %i.dz, align 8
   %i.eb = load i8, ptr %i.ea, align 1, !tbaa !28  ; 2 uses
@@ -230,23 +227,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %.not.us44, label %..loopexit_crit_edge.us48, label %.lr.ph.us45, !prof !57
 
 .lr.ph.us45:                                      ; preds = %.lr.ph40.split.split.us
-  store i8 %i.eb, ptr %.02137.us43.a, align 1, !tbaa !28
+  store i8 %i.eb, ptr %.02137.us43, align 1, !tbaa !28
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us45
-  %scevgep = getelementptr i8, ptr %.02038.us42, i64 %i.i
-  %bound0 = icmp ult ptr %.02038.us42, %scevgep4
+  %scevgep = getelementptr i8, ptr %.02137.us43.a, i64 %i.i
+  %bound0 = icmp ult ptr %.02137.us43.a, %scevgep4
   %bound1 = icmp ult ptr %.sroa.029.0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %i.ec = getelementptr i8, ptr %.02038.us42, i64 %n.vec ; 2 uses
+  %i.ec = getelementptr i8, ptr %.02137.us43.a, i64 %n.vec ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep = getelementptr i8, ptr %.02038.us42, i64 %index ; 2 uses
+  %next.gep = getelementptr i8, ptr %.02137.us43.a, i64 %index ; 2 uses
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr %.sroa.029.0, i64 %index ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 16
   %wide.load = load <2 x i64>, ptr %i.ed, align 8, !tbaa !32, !alias.scope !367
@@ -265,7 +262,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.us45, %middle.block
   %.01736.us46.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.us45 ], [ %n.vec, %middle.block ] ; 4 uses
-  %.135.us47.ph = phi ptr [ %.02038.us42, %vector.memcheck ], [ %.02038.us42, %.lr.ph.us45 ], [ %i.ec, %middle.block ] ; 2 uses
+  %.135.us47.ph = phi ptr [ %.02137.us43.a, %vector.memcheck ], [ %.02137.us43.a, %.lr.ph.us45 ], [ %i.ec, %middle.block ] ; 2 uses
   %i.ej = sub nsw i64 %i.i, %.01736.us46.ph
   %xtraiter = and i64 %i.ej, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -349,12 +346,14 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ..loopexit_crit_edge.us48.loopexit:               ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %.lcssa3 = phi ptr [ %i.ec, %middle.block ], [ %.lcssa48.unr, %scalar.ph.prol.loopexit ], [ %i.gd, %scalar.ph ]
-  %i.gf = getelementptr inbounds nuw i8, ptr %.02137.us43.a, i64 1
+  %i.gf = getelementptr inbounds nuw i8, ptr %.02137.us43, i64 1
+  %.pre = load ptr, ptr %i.x, align 8, !tbaa !69
   br label %..loopexit_crit_edge.us48
 
 ..loopexit_crit_edge.us48:                        ; preds = %..loopexit_crit_edge.us48.loopexit, %.lr.ph40.split.split.us
-  %.122.us52 = phi ptr [ %.02137.us43.a, %.lr.ph40.split.split.us ], [ %i.gf, %..loopexit_crit_edge.us48.loopexit ]
-  %.2.us53 = phi ptr [ %.02038.us42, %.lr.ph40.split.split.us ], [ %.lcssa3, %..loopexit_crit_edge.us48.loopexit ]
+  %4 = phi ptr [ %3, %.lr.ph40.split.split.us ], [ %.pre, %..loopexit_crit_edge.us48.loopexit ]
+  %.122.us52 = phi ptr [ %.02137.us43, %.lr.ph40.split.split.us ], [ %i.gf, %..loopexit_crit_edge.us48.loopexit ]
+  %.2.us53 = phi ptr [ %.02137.us43.a, %.lr.ph40.split.split.us ], [ %.lcssa3, %..loopexit_crit_edge.us48.loopexit ]
   %.val24.us54 = load ptr, ptr %i.a, align 8, !tbaa !56 ; 3 uses
   %.val25.us55 = load ptr, ptr %i.b, align 8, !tbaa !55
   %i.gg = ptrtoint ptr %.val25.us55 to i64
@@ -422,10 +421,10 @@ bb.f:                                             ; preds = %bb.e
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.029.0, i64 noundef %i.hi) #25
   br label %_ZNSt6vectorIlSaIlEED2Ev.exit28
 
-.lr.ph40.split.split:                             ; preds = %.lr.ph40.split.split.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit
-  %i.hj = phi ptr [ %i.ho, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit ], [ %.pre71, %.lr.ph40.split.split.preheader ] ; 2 uses
-  %.039 = phi i64 [ %i.il, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit ], [ %i.q, %.lr.ph40.split.split.preheader ] ; 2 uses
-  %.02137 = phi ptr [ %.122, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit ], [ %2, %.lr.ph40.split.split.preheader ] ; 3 uses
+.lr.ph40.split.split:                             ; preds = %.lr.ph40.split, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit
+  %i.hj = phi ptr [ %i.ho, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit ], [ %.pre73, %.lr.ph40.split ] ; 2 uses
+  %.039 = phi i64 [ %i.il, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit ], [ %i.q, %.lr.ph40.split ] ; 2 uses
+  %.02137 = phi ptr [ %.122, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit ], [ %2, %.lr.ph40.split ] ; 3 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hj, i64 16
   %i.hl = load ptr, ptr %i.hk, align 8
   %i.hm = load i8, ptr %i.hl, align 1, !tbaa !28  ; 2 uses
@@ -780,6 +779,7 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %.not.us, label %.loopexit.us, label %bb.b, !prof !57
 
 .lr.ph40.split:                                   ; preds = %.lr.ph40
+  %.pre72 = load ptr, ptr %i.x, align 8, !tbaa !69 ; 2 uses
   br i1 %.not.i.i.i.i, label %.lr.ph40.split.split.preheader, label %.lr.ph40.split.split.us.preheader
 
 .lr.ph40.split.split.us.preheader:                ; preds = %.lr.ph40.split
@@ -791,8 +791,7 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br label %.lr.ph40.split.split.us
 
 .lr.ph40.split.split.preheader:                   ; preds = %.lr.ph40.split
-  %.pre = load ptr, ptr %i.x, align 8, !tbaa !69
-  %i.dz = getelementptr inbounds nuw i8, ptr %.pre, i64 16
+  %i.dz = getelementptr inbounds nuw i8, ptr %.pre72, i64 16
   %.val24 = load ptr, ptr %i.a, align 8, !tbaa !56 ; 3 uses
   %.val25 = load ptr, ptr %i.b, align 8, !tbaa !55
   %i.ea = ptrtoint ptr %.val25 to i64
@@ -806,10 +805,10 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br label %.lr.ph40.split.split
 
 .lr.ph40.split.split.us:                          ; preds = %.lr.ph40.split.split.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61
+  %3 = phi ptr [ %4, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %.pre72, %.lr.ph40.split.split.us.preheader ] ; 2 uses
   %.039.us41 = phi i64 [ %i.hl, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %i.q, %.lr.ph40.split.split.us.preheader ] ; 2 uses
-  %.02038.us42 = phi ptr [ %.2.us53, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %1, %.lr.ph40.split.split.us.preheader ] ; 7 uses
-  %.02137.us43.a = phi ptr [ %.122.us52, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %2, %.lr.ph40.split.split.us.preheader ] ; 3 uses
-  %3 = load ptr, ptr %i.x, align 8, !tbaa !69
+  %.02137.us43.a = phi ptr [ %.2.us53, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %1, %.lr.ph40.split.split.us.preheader ] ; 7 uses
+  %.02137.us43 = phi ptr [ %.122.us52, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us61 ], [ %2, %.lr.ph40.split.split.us.preheader ] ; 3 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ej = load ptr, ptr %i.ei, align 8
   %i.ek = load i16, ptr %i.ej, align 2, !tbaa !30 ; 2 uses
@@ -817,23 +816,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %.not.us44, label %..loopexit_crit_edge.us48, label %.lr.ph.us45, !prof !57
 
 .lr.ph.us45:                                      ; preds = %.lr.ph40.split.split.us
-  store i16 %i.ek, ptr %.02137.us43.a, align 2, !tbaa !30
+  store i16 %i.ek, ptr %.02137.us43, align 2, !tbaa !30
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us45
-  %scevgep = getelementptr i8, ptr %.02038.us42, i64 %i.i
-  %bound0 = icmp ult ptr %.02038.us42, %scevgep4
+  %scevgep = getelementptr i8, ptr %.02137.us43.a, i64 %i.i
+  %bound0 = icmp ult ptr %.02137.us43.a, %scevgep4
   %bound1 = icmp ult ptr %.sroa.029.0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %i.el = getelementptr i8, ptr %.02038.us42, i64 %n.vec ; 2 uses
+  %i.el = getelementptr i8, ptr %.02137.us43.a, i64 %n.vec ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep = getelementptr i8, ptr %.02038.us42, i64 %index ; 2 uses
+  %next.gep = getelementptr i8, ptr %.02137.us43.a, i64 %index ; 2 uses
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %.sroa.029.0, i64 %index ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 16
   %wide.load = load <2 x i64>, ptr %i.em, align 8, !tbaa !32, !alias.scope !386
@@ -852,7 +851,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.us45, %middle.block
   %.01736.us46.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.us45 ], [ %n.vec, %middle.block ] ; 4 uses
-  %.135.us47.ph = phi ptr [ %.02038.us42, %vector.memcheck ], [ %.02038.us42, %.lr.ph.us45 ], [ %i.el, %middle.block ] ; 2 uses
+  %.135.us47.ph = phi ptr [ %.02137.us43.a, %vector.memcheck ], [ %.02137.us43.a, %.lr.ph.us45 ], [ %i.el, %middle.block ] ; 2 uses
   %i.es = sub nsw i64 %i.i, %.01736.us46.ph
   %xtraiter = and i64 %i.es, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -936,12 +935,14 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ..loopexit_crit_edge.us48.loopexit:               ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %.lcssa3 = phi ptr [ %i.el, %middle.block ], [ %.lcssa48.unr, %scalar.ph.prol.loopexit ], [ %i.gm, %scalar.ph ]
-  %i.go = getelementptr inbounds nuw i8, ptr %.02137.us43.a, i64 2
+  %i.go = getelementptr inbounds nuw i8, ptr %.02137.us43, i64 2
+  %.pre = load ptr, ptr %i.x, align 8, !tbaa !69
   br label %..loopexit_crit_edge.us48
 
 ..loopexit_crit_edge.us48:                        ; preds = %..loopexit_crit_edge.us48.loopexit, %.lr.ph40.split.split.us
-  %.122.us52 = phi ptr [ %.02137.us43.a, %.lr.ph40.split.split.us ], [ %i.go, %..loopexit_crit_edge.us48.loopexit ]
-  %.2.us53 = phi ptr [ %.02038.us42, %.lr.ph40.split.split.us ], [ %.lcssa3, %..loopexit_crit_edge.us48.loopexit ]
+  %4 = phi ptr [ %3, %.lr.ph40.split.split.us ], [ %.pre, %..loopexit_crit_edge.us48.loopexit ]
+  %.122.us52 = phi ptr [ %.02137.us43, %.lr.ph40.split.split.us ], [ %i.go, %..loopexit_crit_edge.us48.loopexit ]
+  %.2.us53 = phi ptr [ %.02137.us43.a, %.lr.ph40.split.split.us ], [ %.lcssa3, %..loopexit_crit_edge.us48.loopexit ]
   %.val24.us54 = load ptr, ptr %i.a, align 8, !tbaa !56 ; 3 uses
   %.val25.us55 = load ptr, ptr %i.b, align 8, !tbaa !55
   %i.gp = ptrtoint ptr %.val25.us55 to i64
@@ -1344,6 +1345,7 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %.not.us, label %.loopexit.us, label %bb.b, !prof !57
 
 .lr.ph41.split:                                   ; preds = %.lr.ph41
+  %.pre73 = load ptr, ptr %i.x, align 8, !tbaa !69 ; 2 uses
   br i1 %.not.i.i.i.i, label %.lr.ph41.split.split.preheader, label %.lr.ph41.split.split.us.preheader
 
 .lr.ph41.split.split.us.preheader:                ; preds = %.lr.ph41.split
@@ -1355,8 +1357,7 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br label %.lr.ph41.split.split.us
 
 .lr.ph41.split.split.preheader:                   ; preds = %.lr.ph41.split
-  %.pre = load ptr, ptr %i.x, align 8, !tbaa !69
-  %i.dz = getelementptr inbounds nuw i8, ptr %.pre, i64 16
+  %i.dz = getelementptr inbounds nuw i8, ptr %.pre73, i64 16
   %.val25 = load ptr, ptr %i.a, align 8, !tbaa !56 ; 3 uses
   %.val26 = load ptr, ptr %i.b, align 8, !tbaa !55
   %i.ea = ptrtoint ptr %.val26 to i64
@@ -1370,10 +1371,10 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br label %.lr.ph41.split.split
 
 .lr.ph41.split.split.us:                          ; preds = %.lr.ph41.split.split.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62
+  %3 = phi ptr [ %4, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %.pre73, %.lr.ph41.split.split.us.preheader ] ; 2 uses
   %.040.us42 = phi i64 [ %i.hl, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %i.q, %.lr.ph41.split.split.us.preheader ] ; 2 uses
-  %.02039.us43 = phi ptr [ %.2.us54, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %1, %.lr.ph41.split.split.us.preheader ] ; 7 uses
-  %.02138.us44.a = phi ptr [ %.122.us53, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %2, %.lr.ph41.split.split.us.preheader ] ; 3 uses
-  %3 = load ptr, ptr %i.x, align 8, !tbaa !69
+  %.02138.us44.a = phi ptr [ %.2.us54, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %1, %.lr.ph41.split.split.us.preheader ] ; 7 uses
+  %.02138.us44 = phi ptr [ %.122.us53, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %2, %.lr.ph41.split.split.us.preheader ] ; 3 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ej = load ptr, ptr %i.ei, align 8
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !27 ; 2 uses
@@ -1381,23 +1382,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %.not.us45, label %..loopexit_crit_edge.us49, label %.lr.ph.us46, !prof !57
 
 .lr.ph.us46:                                      ; preds = %.lr.ph41.split.split.us
-  store i32 %i.ek, ptr %.02138.us44.a, align 4, !tbaa !27
+  store i32 %i.ek, ptr %.02138.us44, align 4, !tbaa !27
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us46
-  %scevgep = getelementptr i8, ptr %.02039.us43, i64 %i.i
-  %bound0 = icmp ult ptr %.02039.us43, %scevgep4
+  %scevgep = getelementptr i8, ptr %.02138.us44.a, i64 %i.i
+  %bound0 = icmp ult ptr %.02138.us44.a, %scevgep4
   %bound1 = icmp ult ptr %.sroa.030.0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %i.el = getelementptr i8, ptr %.02039.us43, i64 %n.vec ; 2 uses
+  %i.el = getelementptr i8, ptr %.02138.us44.a, i64 %n.vec ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep = getelementptr i8, ptr %.02039.us43, i64 %index ; 2 uses
+  %next.gep = getelementptr i8, ptr %.02138.us44.a, i64 %index ; 2 uses
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %.sroa.030.0, i64 %index ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 16
   %wide.load = load <2 x i64>, ptr %i.em, align 8, !tbaa !32, !alias.scope !405
@@ -1416,7 +1417,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.us46, %middle.block
   %.01737.us47.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.us46 ], [ %n.vec, %middle.block ] ; 4 uses
-  %.136.us48.ph = phi ptr [ %.02039.us43, %vector.memcheck ], [ %.02039.us43, %.lr.ph.us46 ], [ %i.el, %middle.block ] ; 2 uses
+  %.136.us48.ph = phi ptr [ %.02138.us44.a, %vector.memcheck ], [ %.02138.us44.a, %.lr.ph.us46 ], [ %i.el, %middle.block ] ; 2 uses
   %i.es = sub nsw i64 %i.i, %.01737.us47.ph
   %xtraiter = and i64 %i.es, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1500,12 +1501,14 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ..loopexit_crit_edge.us49.loopexit:               ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %.lcssa3 = phi ptr [ %i.el, %middle.block ], [ %.lcssa48.unr, %scalar.ph.prol.loopexit ], [ %i.gm, %scalar.ph ]
-  %i.go = getelementptr inbounds nuw i8, ptr %.02138.us44.a, i64 4
+  %i.go = getelementptr inbounds nuw i8, ptr %.02138.us44, i64 4
+  %.pre = load ptr, ptr %i.x, align 8, !tbaa !69
   br label %..loopexit_crit_edge.us49
 
 ..loopexit_crit_edge.us49:                        ; preds = %..loopexit_crit_edge.us49.loopexit, %.lr.ph41.split.split.us
-  %.122.us53 = phi ptr [ %.02138.us44.a, %.lr.ph41.split.split.us ], [ %i.go, %..loopexit_crit_edge.us49.loopexit ]
-  %.2.us54 = phi ptr [ %.02039.us43, %.lr.ph41.split.split.us ], [ %.lcssa3, %..loopexit_crit_edge.us49.loopexit ]
+  %4 = phi ptr [ %3, %.lr.ph41.split.split.us ], [ %.pre, %..loopexit_crit_edge.us49.loopexit ]
+  %.122.us53 = phi ptr [ %.02138.us44, %.lr.ph41.split.split.us ], [ %i.go, %..loopexit_crit_edge.us49.loopexit ]
+  %.2.us54 = phi ptr [ %.02138.us44.a, %.lr.ph41.split.split.us ], [ %.lcssa3, %..loopexit_crit_edge.us49.loopexit ]
   %.val25.us55 = load ptr, ptr %i.a, align 8, !tbaa !56 ; 3 uses
   %.val26.us56 = load ptr, ptr %i.b, align 8, !tbaa !55
   %i.gp = ptrtoint ptr %.val26.us56 to i64
@@ -1908,6 +1911,7 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %.not.us, label %.loopexit.us, label %bb.b, !prof !57
 
 .lr.ph41.split:                                   ; preds = %.lr.ph41
+  %.pre73 = load ptr, ptr %i.x, align 8, !tbaa !69 ; 2 uses
   br i1 %.not.i.i.i.i, label %.lr.ph41.split.split.preheader, label %.lr.ph41.split.split.us.preheader
 
 .lr.ph41.split.split.us.preheader:                ; preds = %.lr.ph41.split
@@ -1919,8 +1923,7 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br label %.lr.ph41.split.split.us
 
 .lr.ph41.split.split.preheader:                   ; preds = %.lr.ph41.split
-  %.pre = load ptr, ptr %i.x, align 8, !tbaa !69
-  %i.dz = getelementptr inbounds nuw i8, ptr %.pre, i64 16
+  %i.dz = getelementptr inbounds nuw i8, ptr %.pre73, i64 16
   %.val25 = load ptr, ptr %i.a, align 8, !tbaa !56 ; 3 uses
   %.val26 = load ptr, ptr %i.b, align 8, !tbaa !55
   %i.ea = ptrtoint ptr %.val26 to i64
@@ -1934,10 +1937,10 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br label %.lr.ph41.split.split
 
 .lr.ph41.split.split.us:                          ; preds = %.lr.ph41.split.split.us.preheader, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62
+  %3 = phi ptr [ %4, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %.pre73, %.lr.ph41.split.split.us.preheader ] ; 2 uses
   %.040.us42 = phi i64 [ %i.hl, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %i.q, %.lr.ph41.split.split.us.preheader ] ; 2 uses
-  %.02039.us43 = phi ptr [ %.2.us54, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %1, %.lr.ph41.split.split.us.preheader ] ; 7 uses
-  %.02138.us44.a = phi ptr [ %.122.us53, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %2, %.lr.ph41.split.split.us.preheader ] ; 3 uses
-  %3 = load ptr, ptr %i.x, align 8, !tbaa !69
+  %.02138.us44.a = phi ptr [ %.2.us54, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %1, %.lr.ph41.split.split.us.preheader ] ; 7 uses
+  %.02138.us44 = phi ptr [ %.122.us53, %_ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_EERKS3_IlSaIlEE.exit.us62 ], [ %2, %.lr.ph41.split.split.us.preheader ] ; 3 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ej = load ptr, ptr %i.ei, align 8
   %i.ek = load i64, ptr %i.ej, align 8, !tbaa !32 ; 2 uses
@@ -1945,23 +1948,23 @@ _ZN5arrow8internal12_GLOBAL__N_122IncrementRowMajorIndexIlEEvRSt6vectorIT_SaIS4_
   br i1 %.not.us45, label %..loopexit_crit_edge.us49, label %.lr.ph.us46, !prof !57
 
 .lr.ph.us46:                                      ; preds = %.lr.ph41.split.split.us
-  store i64 %i.ek, ptr %.02138.us44.a, align 8, !tbaa !32
+  store i64 %i.ek, ptr %.02138.us44, align 8, !tbaa !32
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us46
-  %scevgep = getelementptr i8, ptr %.02039.us43, i64 %i.i
-  %bound0 = icmp ult ptr %.02039.us43, %scevgep4
+  %scevgep = getelementptr i8, ptr %.02138.us44.a, i64 %i.i
+  %bound0 = icmp ult ptr %.02138.us44.a, %scevgep4
   %bound1 = icmp ult ptr %.sroa.030.0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %i.el = getelementptr i8, ptr %.02039.us43, i64 %n.vec ; 2 uses
+  %i.el = getelementptr i8, ptr %.02138.us44.a, i64 %n.vec ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep = getelementptr i8, ptr %.02039.us43, i64 %index ; 2 uses
+  %next.gep = getelementptr i8, ptr %.02138.us44.a, i64 %index ; 2 uses
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %.sroa.030.0, i64 %index ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 16
   %wide.load = load <2 x i64>, ptr %i.em, align 8, !tbaa !32, !alias.scope !424
@@ -1980,7 +1983,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.us46, %middle.block
   %.01737.us47.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.us46 ], [ %n.vec, %middle.block ] ; 4 uses
-  %.136.us48.ph = phi ptr [ %.02039.us43, %vector.memcheck ], [ %.02039.us43, %.lr.ph.us46 ], [ %i.el, %middle.block ] ; 2 uses
+  %.136.us48.ph = phi ptr [ %.02138.us44.a, %vector.memcheck ], [ %.02138.us44.a, %.lr.ph.us46 ], [ %i.el, %middle.block ] ; 2 uses
   %i.es = sub nsw i64 %i.i, %.01737.us47.ph
   %xtraiter = and i64 %i.es, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -2064,12 +2067,14 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ..loopexit_crit_edge.us49.loopexit:               ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %.lcssa3 = phi ptr [ %i.el, %middle.block ], [ %.lcssa48.unr, %scalar.ph.prol.loopexit ], [ %i.gm, %scalar.ph ]
-  %i.go = getelementptr inbounds nuw i8, ptr %.02138.us44.a, i64 8
+  %i.go = getelementptr inbounds nuw i8, ptr %.02138.us44, i64 8
+  %.pre = load ptr, ptr %i.x, align 8, !tbaa !69
   br label %..loopexit_crit_edge.us49
 
 ..loopexit_crit_edge.us49:                        ; preds = %..loopexit_crit_edge.us49.loopexit, %.lr.ph41.split.split.us
-  %.122.us53 = phi ptr [ %.02138.us44.a, %.lr.ph41.split.split.us ], [ %i.go, %..loopexit_crit_edge.us49.loopexit ]
-  %.2.us54 = phi ptr [ %.02039.us43, %.lr.ph41.split.split.us ], [ %.lcssa3, %..loopexit_crit_edge.us49.loopexit ]
+  %4 = phi ptr [ %3, %.lr.ph41.split.split.us ], [ %.pre, %..loopexit_crit_edge.us49.loopexit ]
+  %.122.us53 = phi ptr [ %.02138.us44, %.lr.ph41.split.split.us ], [ %i.go, %..loopexit_crit_edge.us49.loopexit ]
+  %.2.us54 = phi ptr [ %.02138.us44.a, %.lr.ph41.split.split.us ], [ %.lcssa3, %..loopexit_crit_edge.us49.loopexit ]
   %.val25.us55 = load ptr, ptr %i.a, align 8, !tbaa !56 ; 3 uses
   %.val26.us56 = load ptr, ptr %i.b, align 8, !tbaa !55
   %i.gp = ptrtoint ptr %.val26.us56 to i64

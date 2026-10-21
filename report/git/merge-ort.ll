@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %struct.strbuf, align 8             ; 6 uses
   %5 = alloca %struct.strbuf, align 8             ; 6 uses
   %6 = alloca %struct.hashmap_iter, align 8       ; 5 uses
-  %7 = alloca %struct.string_list, align 8        ; 11 uses
+  %7 = alloca %struct.string_list, align 8        ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
@@ -292,13 +292,14 @@ bb.g:                                             ; preds = %strmap_get_size.exi
 
 .lr.ph74:                                         ; preds = %._crit_edge
   %.not55 = icmp eq i32 %1, 0
+  %.pre100 = load ptr, ptr %7, align 8, !tbaa !36 ; 2 uses
   br i1 %.not55, label %.lr.ph74.split.us, label %.lr.ph74.split
 
 .lr.ph74.split.us:                                ; preds = %.lr.ph74, %._crit_edge71.split.us.us
   %.pre100.a = phi i32 [ %.pre100106, %._crit_edge71.split.us.us ], [ %i.aa, %.lr.ph74 ] ; 3 uses
   %i.af = phi i64 [ %i.bb, %._crit_edge71.split.us.us ], [ %i.ae, %.lr.ph74 ]
+  %8 = phi ptr [ %9, %._crit_edge71.split.us.us ], [ %.pre100, %.lr.ph74 ] ; 2 uses
   %indvars.iv93 = phi i64 [ %indvars.iv.next94, %._crit_edge71.split.us.us ], [ 0, %.lr.ph74 ] ; 2 uses
-  %8 = load ptr, ptr %7, align 8, !tbaa !36
   %i.ag = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %indvars.iv93
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !43 ; 3 uses
@@ -347,12 +348,14 @@ bb.i:                                             ; preds = %.critedge.us.us, %b
   br i1 %i.ba, label %.lr.ph70.us, label %._crit_edge71.split.us.us.loopexit, !llvm.loop !191
 
 ._crit_edge71.split.us.us.loopexit:               ; preds = %bb.i
+  %.pre99 = load ptr, ptr %7, align 8, !tbaa !36
   %.pre102 = load i64, ptr %i.ad, align 8, !tbaa !46
   br label %._crit_edge71.split.us.us
 
 ._crit_edge71.split.us.us:                        ; preds = %._crit_edge71.split.us.us.loopexit, %.lr.ph74.split.us
   %.pre100106 = phi i32 [ %.pre100108, %._crit_edge71.split.us.us.loopexit ], [ %.pre100.a, %.lr.ph74.split.us ]
   %i.bb = phi i64 [ %.pre102, %._crit_edge71.split.us.us.loopexit ], [ %i.af, %.lr.ph74.split.us ] ; 2 uses
+  %9 = phi ptr [ %.pre99, %._crit_edge71.split.us.us.loopexit ], [ %8, %.lr.ph74.split.us ]
   %indvars.iv.next94 = add nuw nsw i64 %indvars.iv93, 1 ; 2 uses
   %i.bc = icmp ugt i64 %i.bb, %indvars.iv.next94
   br i1 %i.bc, label %.lr.ph74.split.us, label %._crit_edge75, !llvm.loop !192
@@ -365,9 +368,9 @@ bb.i:                                             ; preds = %.critedge.us.us, %b
 
 .lr.ph74.split:                                   ; preds = %.lr.ph74, %._crit_edge71.split
   %i.bf = phi i64 [ %i.bl, %._crit_edge71.split ], [ %i.ae, %.lr.ph74 ]
+  %10 = phi ptr [ %11, %._crit_edge71.split ], [ %.pre100, %.lr.ph74 ] ; 2 uses
   %indvars.iv87 = phi i64 [ %indvars.iv.next88, %._crit_edge71.split ], [ 0, %.lr.ph74 ] ; 2 uses
-  %9 = load ptr, ptr %7, align 8, !tbaa !36
-  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %indvars.iv87
+  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %10, i64 %indvars.iv87
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !43 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8 ; 2 uses
@@ -376,11 +379,13 @@ bb.i:                                             ; preds = %.critedge.us.us, %b
   br i1 %.not79, label %._crit_edge71.split, label %.lr.ph70
 
 ._crit_edge71.split.loopexit:                     ; preds = %bb.l
+  %.pre = load ptr, ptr %7, align 8, !tbaa !36
   %.pre96 = load i64, ptr %i.ad, align 8, !tbaa !46
   br label %._crit_edge71.split
 
 ._crit_edge71.split:                              ; preds = %._crit_edge71.split.loopexit, %.lr.ph74.split
   %i.bl = phi i64 [ %.pre96, %._crit_edge71.split.loopexit ], [ %i.bf, %.lr.ph74.split ] ; 2 uses
+  %11 = phi ptr [ %.pre, %._crit_edge71.split.loopexit ], [ %10, %.lr.ph74.split ]
   %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87, 1 ; 2 uses
   %i.bm = icmp ugt i64 %i.bl, %indvars.iv.next88
   br i1 %i.bm, label %.lr.ph74.split, label %._crit_edge75, !llvm.loop !192

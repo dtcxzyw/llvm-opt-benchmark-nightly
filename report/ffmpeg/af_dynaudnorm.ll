@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %.thread61
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !47
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 72
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !20 ; 14 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 2616
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 2616 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 2552 ; 2 uses
   %i.av = load i32, ptr %i.au, align 8, !tbaa !70 ; 2 uses
   %.not20.i = icmp eq i32 %i.av, 0
@@ -213,21 +213,24 @@ bb.o:                                             ; preds = %.thread61
 .lr.ph21.i:                                       ; preds = %bb.o
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 2544 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.as, i64 2600
+  %.pre27.i = load ptr, ptr %i.at, align 8, !tbaa !43
   br label %bb.p
 
 .loopexit.loopexit.i:                             ; preds = %.lr.ph.i
+  %.pre.i = load ptr, ptr %i.at, align 8, !tbaa !43
   %.pre.i.a = load i32, ptr %i.au, align 8, !tbaa !70
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.preheader.i, %.loopexit.loopexit.i
   %i.ay = phi i32 [ %.pre.i.a, %.loopexit.loopexit.i ], [ %i.az, %.preheader.i ] ; 2 uses
+  %1 = phi ptr [ %.pre.i, %.loopexit.loopexit.i ], [ %2, %.preheader.i ]
   %.not.i = icmp eq i32 %i.ay, 0
   br i1 %.not.i, label %.critedge.i, label %bb.p, !llvm.loop !107
 
 bb.p:                                             ; preds = %.loopexit.i, %.lr.ph21.i
   %i.az = phi i32 [ %i.av, %.lr.ph21.i ], [ %i.ay, %.loopexit.i ]
-  %1 = load ptr, ptr %i.at, align 8, !tbaa !43
-  %i.ba = load ptr, ptr %1, align 8, !tbaa !41
+  %2 = phi ptr [ %.pre27.i, %.lr.ph21.i ], [ %1, %.loopexit.i ] ; 2 uses
+  %i.ba = load ptr, ptr %2, align 8, !tbaa !41
   %i.bb = getelementptr i8, ptr %i.ba, i64 16
   %.val.i = load i32, ptr %i.bb, align 8, !tbaa !53
   %i.bc = icmp sgt i32 %.val.i, 0

@@ -205,12 +205,13 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
 
 .lr.ph325:                                        ; preds = %bb.bo
   %i.wr = getelementptr inbounds nuw i8, ptr %0, i64 8744
-  %i.ws = getelementptr inbounds nuw i8, ptr %1, i64 116
+  %i.ws = getelementptr inbounds nuw i8, ptr %1, i64 116 ; 2 uses
   %i.wt = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.wu = icmp sgt i32 %i.wf, 0                   ; 2 uses
+  %.pre388 = load i32, ptr %i.ws, align 4, !tbaa !176
   %wide.trip.count = zext i32 %i.wf to i64        ; 7 uses
   %wide.trip.count377 = zext nneg i32 %i.wf to i64
-  %i.wv = load ptr, ptr %i.wt, align 8, !tbaa !176
+  %i.wv = load ptr, ptr %i.wt, align 8, !tbaa !177
   %min.iters.check640 = icmp ult i32 %i.wf, 8
   %n.vec642 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   %broadcast.splatinsert643 = insertelement <4 x i32> poison, i32 %i.vu, i64 0
@@ -227,7 +228,8 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   br label %bb.bp
 
 bb.bp:                                            ; preds = %.lr.ph325, %.loopexit
-  %i.wx = phi i32 [ %i.wp, %.lr.ph325 ], [ %i.zi, %.loopexit ] ; 4 uses
+  %2 = phi i32 [ %i.wp, %.lr.ph325 ], [ %3, %.loopexit ] ; 4 uses
+  %i.wx = phi i32 [ %.pre388, %.lr.ph325 ], [ %i.zi, %.loopexit ] ; 2 uses
   %indvars.iv379 = phi i64 [ 0, %.lr.ph325 ], [ %indvars.iv.next380, %.loopexit ] ; 3 uses
   %i.wy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv379
   %i.wz = load i32, ptr %i.wy, align 4, !tbaa !62
@@ -235,8 +237,7 @@ bb.bp:                                            ; preds = %.lr.ph325, %.loopex
   %i.xb = getelementptr inbounds [8 x i8], ptr %i.wr, i64 %i.xa
   %i.xc = load ptr, ptr %i.xb, align 8, !tbaa !65 ; 7 uses
   %i.xd = ptrtoaddr ptr %i.xc to i64
-  %2 = load i32, ptr %i.ws, align 4, !tbaa !177
-  %i.xe = icmp eq i32 %2, 6
+  %i.xe = icmp eq i32 %i.wx, 6
   %i.xf = getelementptr inbounds nuw [8 x i8], ptr %i.wv, i64 %indvars.iv379
   %i.xg = load ptr, ptr %i.xf, align 8, !tbaa !79 ; 7 uses
   %i.xh = ptrtoaddr ptr %i.xg to i64
@@ -370,13 +371,15 @@ middle.block650:                                  ; preds = %vector.body645
   br i1 %exitcond.not.1, label %.loopexit.loopexit327, label %.lr.ph319, !llvm.loop !146
 
 .loopexit.loopexit327:                            ; preds = %.lr.ph319.prol.loopexit, %.lr.ph319, %middle.block650
+  %.pre387 = load i32, ptr %i.ws, align 4, !tbaa !176
   %.pre387.a = load i32, ptr %i.wo, align 4, !tbaa !175
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph322, %middle.block635, %.loopexit.loopexit327, %bb.br, %bb.bq
-  %i.zi = phi i32 [ %.pre387.a, %.loopexit.loopexit327 ], [ %i.wx, %bb.bq ], [ %i.wx, %bb.br ], [ %i.wx, %middle.block635 ], [ %i.wx, %.lr.ph322 ] ; 2 uses
+  %3 = phi i32 [ %.pre387.a, %.loopexit.loopexit327 ], [ %2, %bb.bq ], [ %2, %bb.br ], [ %2, %middle.block635 ], [ %2, %.lr.ph322 ] ; 2 uses
+  %i.zi = phi i32 [ %.pre387, %.loopexit.loopexit327 ], [ 6, %bb.bq ], [ %i.wx, %bb.br ], [ 6, %middle.block635 ], [ 6, %.lr.ph322 ]
   %indvars.iv.next380 = add nuw nsw i64 %indvars.iv379, 1 ; 2 uses
-  %i.zj = sext i32 %i.zi to i64
+  %i.zj = sext i32 %3 to i64
   %i.zk = icmp slt i64 %indvars.iv.next380, %i.zj
   br i1 %i.zk, label %bb.bp, label %._crit_edge326, !llvm.loop !147
 
@@ -779,8 +782,8 @@ attributes #14 = { nounwind willreturn memory(read) }
 !173 = !{!"AVFrame", !7, i64 0, !7, i64 64, !170, i64 96, !8, i64 104, !8, i64 108, !8, i64 112, !8, i64 116, !8, i64 120, !25, i64 124, !24, i64 136, !24, i64 144, !25, i64 152, !8, i64 160, !11, i64 168, !8, i64 176, !8, i64 180, !7, i64 184, !171, i64 248, !8, i64 256, !35, i64 264, !8, i64 272, !8, i64 276, !8, i64 280, !8, i64 284, !8, i64 288, !8, i64 292, !8, i64 296, !24, i64 304, !172, i64 312, !8, i64 320, !31, i64 328, !31, i64 336, !24, i64 344, !24, i64 352, !24, i64 360, !24, i64 368, !11, i64 376, !28, i64 384, !24, i64 408, !8, i64 416}
 !174 = !{!173, !8, i64 112}
 !175 = !{!36, !8, i64 356}
-!176 = !{!173, !170, i64 96}
-!177 = !{!173, !8, i64 116}
+!176 = !{!173, !8, i64 116}
+!177 = !{!173, !170, i64 96}
 !178 = !{!18, !8, i64 44}
 !179 = distinct !{!179, !54}
 !180 = distinct !{!180, !54}

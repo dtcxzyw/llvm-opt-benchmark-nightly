@@ -202,31 +202,35 @@ preparetrimprefix.exit:                           ; preds = %parseheader.exit
   store ptr %i.pr, ptr %i.ps, align 8
   %.015.i181 = load ptr, ptr @prefixes_to_trim, align 8 ; 2 uses
   %.not16.i = icmp eq ptr %.015.i181, null
-  %i.pt = load ptr, ptr @token_list, align 8      ; 2 uses
+  %i.pt = load ptr, ptr @token_list, align 8      ; 4 uses
   %i.pu = icmp eq ptr %i.pt, null
   %or.cond.i = select i1 %.not16.i, i1 true, i1 %i.pu
   br i1 %or.cond.i, label %trimprefix.exit.preheader, label %.lr.ph18.split.i
 
-trimprefix.exit.preheader:                        ; preds = %.loopexit.i.a, %preparetrimprefix.exit
+trimprefix.exit.preheader:                        ; preds = %.lr.ph18.splitthread-pre-split.i, %preparetrimprefix.exit
+  %.ph = phi ptr [ %i.pt, %preparetrimprefix.exit ], [ %2, %.lr.ph18.splitthread-pre-split.i ]
   br label %trimprefix.exit
 
-.loopexit.i.a:                                    ; preds = %bb.bq, %.lr.ph18.split.i
-  %.0.i186.a = load ptr, ptr %.017.i182, align 8  ; 2 uses
-  %.not.i187 = icmp eq ptr %.0.i186.a, null
-  br i1 %.not.i187, label %trimprefix.exit.preheader, label %.lr.ph18.splitthread-pre-split.i, !llvm.loop !15
+.loopexit.i.a:                                    ; preds = %bb.bq
+  %.0.i186.a = load ptr, ptr @token_list, align 8 ; 2 uses
+  br label %.lr.ph18.splitthread-pre-split.i
 
-.lr.ph18.splitthread-pre-split.i:                 ; preds = %.loopexit.i.a
-  %.0912.pr.i = load ptr, ptr @token_list, align 8
-  br label %.lr.ph18.split.i
+.lr.ph18.splitthread-pre-split.i:                 ; preds = %.lr.ph18.split.i, %.loopexit.i.a
+  %2 = phi ptr [ %.0.i186.a, %.loopexit.i.a ], [ %3, %.lr.ph18.split.i ] ; 2 uses
+  %.091221.i = phi ptr [ %.0.i186.a, %.loopexit.i.a ], [ null, %.lr.ph18.split.i ]
+  %.0912.pr.i = load ptr, ptr %.017.i182, align 8 ; 2 uses
+  %.not.i187 = icmp eq ptr %.0912.pr.i, null
+  br i1 %.not.i187, label %trimprefix.exit.preheader, label %.lr.ph18.split.i, !llvm.loop !15
 
 .lr.ph18.split.i:                                 ; preds = %preparetrimprefix.exit, %.lr.ph18.splitthread-pre-split.i
-  %.0912.i = phi ptr [ %.0912.pr.i, %.lr.ph18.splitthread-pre-split.i ], [ %i.pt, %preparetrimprefix.exit ] ; 2 uses
-  %.017.i182 = phi ptr [ %.0.i186.a, %.lr.ph18.splitthread-pre-split.i ], [ %.015.i181, %preparetrimprefix.exit ] ; 2 uses
+  %3 = phi ptr [ %2, %.lr.ph18.splitthread-pre-split.i ], [ %i.pt, %preparetrimprefix.exit ]
+  %.0912.i = phi ptr [ %.091221.i, %.lr.ph18.splitthread-pre-split.i ], [ %i.pt, %preparetrimprefix.exit ] ; 2 uses
+  %.017.i182 = phi ptr [ %.0912.pr.i, %.lr.ph18.splitthread-pre-split.i ], [ %.015.i181, %preparetrimprefix.exit ] ; 2 uses
   %i.pv = getelementptr i8, ptr %.017.i182, i64 8 ; 2 uses
   %i.pw = load ptr, ptr %i.pv, align 8            ; 2 uses
   %i.px = call i64 @strlen(ptr noundef %i.pw) #19 ; 2 uses
   %.not1013.i = icmp eq ptr %.0912.i, null
-  br i1 %.not1013.i, label %.loopexit.i.a, label %.lr.ph.i183
+  br i1 %.not1013.i, label %.lr.ph18.splitthread-pre-split.i, label %.lr.ph.i183
 
 .lr.ph.i183:                                      ; preds = %.lr.ph18.split.i, %bb.bq
   %i.py = phi ptr [ %i.qd, %bb.bq ], [ %i.pw, %.lr.ph18.split.i ] ; 2 uses
@@ -249,9 +253,9 @@ bb.bq:                                            ; preds = %bb.bp, %.lr.ph.i183
   %.not10.i = icmp eq ptr %.09.i185, null
   br i1 %.not10.i, label %.loopexit.i.a, label %.lr.ph.i183, !llvm.loop !16
 
-trimprefix.exit:                                  ; preds = %trimprefix.exit.backedge, %trimprefix.exit.preheader
-  %2 = load ptr, ptr @token_list, align 8
-  %i.qe = getelementptr i8, ptr %2, i64 8
+trimprefix.exit:                                  ; preds = %trimprefix.exit.preheader, %trimprefix.exit.backedge
+  %4 = phi ptr [ %.pre, %trimprefix.exit.backedge ], [ %.ph, %trimprefix.exit.preheader ]
+  %i.qe = getelementptr i8, ptr %4, i64 8
   %i.qf = load ptr, ptr %i.qe, align 8
   %i.qg = call i32 @g_strcmp0(ptr noundef %i.qf, ptr noundef @.str.25)
   %.not54 = icmp eq i32 %i.qg, 0
@@ -264,6 +268,7 @@ bb.br:                                            ; preds = %trimprefix.exit
   br label %trimprefix.exit.backedge
 
 trimprefix.exit.backedge:                         ; preds = %bb.br, %bb.bu, %bb.ca, %parseconst.exit, %bb.cy, %skipdeclare.exit, %bb.co, %bb.cs, %bb.cw
+  %.pre = load ptr, ptr @token_list, align 8
   br label %trimprefix.exit
 
 bb.bs:                                            ; preds = %trimprefix.exit

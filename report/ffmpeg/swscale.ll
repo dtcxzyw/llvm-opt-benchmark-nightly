@@ -205,7 +205,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @scale_internal(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef readonly captures(address_is_null) %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef readonly captures(address_is_null) %5, ptr nofree noundef readonly captures(address_is_null) %6, i32 noundef %7, i32 noundef %8) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x ptr], align 16               ; 21 uses
+  %i.a = alloca [4 x ptr], align 16               ; 22 uses
   %i.b = alloca [4 x ptr], align 16               ; 21 uses
   %i.c = alloca [4 x i32], align 16               ; 12 uses
   %i.d = alloca [4 x i32], align 16               ; 15 uses
@@ -590,17 +590,18 @@ bb.ar:                                            ; preds = %isALPHA.exit.thread
 
 .lr.ph398:                                        ; preds = %bb.ar
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
+  %.pre419 = load ptr, ptr %i.a, align 16, !tbaa !43
   %.pre418.a = load i32, ptr %i.ee, align 8, !tbaa !225
   br label %bb.as
 
 bb.as:                                            ; preds = %.lr.ph398, %._crit_edge
   %i.ef = phi i32 [ %.pre418.a, %.lr.ph398 ], [ %i.fa, %._crit_edge ]
+  %9 = phi ptr [ %.pre419, %.lr.ph398 ], [ %10, %._crit_edge ] ; 2 uses
   %.0291396 = phi i32 [ 0, %.lr.ph398 ], [ %i.fb, %._crit_edge ] ; 3 uses
   %i.eg = load i32, ptr %2, align 4, !tbaa !39
   %i.eh = mul nsw i32 %i.eg, %.0291396
   %i.ei = sext i32 %i.eh to i64                   ; 2 uses
   %i.ej = getelementptr inbounds i8, ptr %i.ec, i64 %i.ei
-  %9 = load ptr, ptr %i.a, align 16, !tbaa !43
   %i.ek = getelementptr inbounds i8, ptr %9, i64 %i.ei
   %i.el = shl nsw i32 %i.ef, 2
   %i.em = sext i32 %i.el to i64
@@ -627,10 +628,15 @@ bb.as:                                            ; preds = %.lr.ph398, %._crit_
   %i.ex = load i32, ptr %i.ee, align 8, !tbaa !225 ; 2 uses
   %i.ey = shl nsw i32 %i.ex, 2
   %i.ez = icmp slt i32 %i.ew, %i.ey
-  br i1 %i.ez, label %.lr.ph, label %._crit_edge, !llvm.loop !216
+  br i1 %i.ez, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !216
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.as
-  %i.fa = phi i32 [ %i.eo, %bb.as ], [ %i.ex, %.lr.ph ]
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre418 = load ptr, ptr %i.a, align 16, !tbaa !43
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.as
+  %i.fa = phi i32 [ %i.ex, %._crit_edge.loopexit ], [ %i.eo, %bb.as ]
+  %10 = phi ptr [ %.pre418, %._crit_edge.loopexit ], [ %9, %bb.as ]
   %i.fb = add nuw nsw i32 %.0291396, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.fb, %4
   br i1 %exitcond.not, label %._crit_edge399, label %bb.as, !llvm.loop !217

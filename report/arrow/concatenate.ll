@@ -204,8 +204,8 @@ _ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit.i.i200: ; pre
   br i1 %.not606.not.i.i, label %.critedge62.i.i210, label %.lr.ph.i.i201
 
 .lr.ph.i.i201:                                    ; preds = %_ZNSt10unique_ptrIN5arrow6BufferESt14default_deleteIS1_EED2Ev.exit.i.i200
-  %i.bhs = getelementptr inbounds nuw i8, ptr %58, i64 16 ; 2 uses
-  %i.bht = getelementptr inbounds nuw i8, ptr %58, i64 8 ; 6 uses
+  %i.bhs = getelementptr inbounds nuw i8, ptr %58, i64 16 ; 3 uses
+  %i.bht = getelementptr inbounds nuw i8, ptr %58, i64 8 ; 7 uses
   %i.bhu = getelementptr inbounds nuw i8, ptr %58, i64 24 ; 5 uses
   %i.bhv = getelementptr inbounds nuw i8, ptr %58, i64 32 ; 2 uses
   %i.bhw = getelementptr inbounds nuw i8, ptr %58, i64 40
@@ -382,19 +382,24 @@ bb.sx:                                            ; preds = %bb.sw, %bb.sv, %.th
 .lr.ph71.i.i.preheader.i211:                      ; preds = %.noexc82.i.i206
   %i.bkr = load i8, ptr %58, align 8, !tbaa !184, !range !84, !noalias !636, !noundef !85
   %i.bks = trunc nuw i8 %i.bkr to i1
-  br i1 %i.bks, label %.lr.ph71.i.i.i222, label %.lr.ph71.i.i.us.i212
+  br i1 %i.bks, label %.lr.ph71.i.i.i222, label %.lr.ph71.i.i.us.preheader.i
 
-.lr.ph71.i.i.us.i212:                             ; preds = %.lr.ph71.i.i.preheader.i211, %.loopexit.i.i.us.i216
-  %i.bkt = phi i64 [ %i.bly, %.loopexit.i.i.us.i216 ], [ %i.bkp, %.lr.ph71.i.i.preheader.i211 ]
-  %.03170.i.i.us.i213.a = phi i64 [ %.3.i.i.us.i217, %.loopexit.i.i.us.i216 ], [ 0, %.lr.ph71.i.i.preheader.i211 ] ; 3 uses
-  %118 = load i64, ptr %i.bhs, align 8, !tbaa !185, !noalias !636
-  %119 = load i64, ptr %i.bht, align 8, !tbaa !186, !noalias !636 ; 2 uses
-  %i.bku = sub nsw i64 %118, %119
+.lr.ph71.i.i.us.preheader.i:                      ; preds = %.lr.ph71.i.i.preheader.i211
+  %.pre260.i = load i64, ptr %i.bhs, align 8, !tbaa !185, !noalias !636
+  %.pre262.i = load i64, ptr %i.bht, align 8, !tbaa !186, !noalias !636
+  br label %.lr.ph71.i.i.us.i212
+
+.lr.ph71.i.i.us.i212:                             ; preds = %.loopexit.i.i.us.i216, %.lr.ph71.i.i.us.preheader.i
+  %i.bkt = phi i64 [ %i.bly, %.loopexit.i.i.us.i216 ], [ %i.bkp, %.lr.ph71.i.i.us.preheader.i ]
+  %.03170.i.i.us.i213.a = phi i64 [ %119, %.loopexit.i.i.us.i216 ], [ %.pre262.i, %.lr.ph71.i.i.us.preheader.i ] ; 2 uses
+  %118 = phi i64 [ %120, %.loopexit.i.i.us.i216 ], [ %.pre260.i, %.lr.ph71.i.i.us.preheader.i ] ; 2 uses
+  %.03170.i.i.us.i213 = phi i64 [ %.3.i.i.us.i217, %.loopexit.i.i.us.i216 ], [ 0, %.lr.ph71.i.i.us.preheader.i ] ; 3 uses
+  %i.bku = sub nsw i64 %118, %.03170.i.i.us.i213.a
   %.sroa.speculated.i.i.us.i214 = call i64 @llvm.smin.i64(i64 %i.bku, i64 32767) ; 4 uses
   %i.bkv = trunc i64 %.sroa.speculated.i.i.us.i214 to i16
   %sext.i.i.us.i215 = shl i64 %.sroa.speculated.i.i.us.i214, 48 ; 2 uses
   %i.bkw = ashr exact i64 %sext.i.i.us.i215, 48   ; 2 uses
-  %i.bkx = add nsw i64 %i.bkw, %119
+  %i.bkx = add nsw i64 %i.bkw, %.03170.i.i.us.i213.a ; 2 uses
   store i64 %i.bkx, ptr %i.bht, align 8, !tbaa !186, !noalias !636
   %i.bky = icmp sgt i16 %i.bkv, 0
   br i1 %i.bky, label %.lr.ph68.i.i.us.i218.preheader, label %.loopexit.i.i.us.i216
@@ -409,7 +414,7 @@ bb.sx:                                            ; preds = %bb.sw, %bb.sv, %.th
   br label %.lr.ph68.i.i.us.i218
 
 .lr.ph68.i.i.us.i218:                             ; preds = %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.us.i.1, %.lr.ph68.i.i.us.i218.preheader.new
-  %.166.i.i.us.i220 = phi i64 [ %.03170.i.i.us.i213.a, %.lr.ph68.i.i.us.i218.preheader.new ], [ %i.blp, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.us.i.1 ] ; 5 uses
+  %.166.i.i.us.i220 = phi i64 [ %.03170.i.i.us.i213, %.lr.ph68.i.i.us.i218.preheader.new ], [ %i.blp, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.us.i.1 ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph68.i.i.us.i218.preheader.new ], [ %niter.next.1, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.us.i.1 ]
   %i.bla = getelementptr inbounds [8 x i8], ptr %i.bin, i64 %.166.i.i.us.i220
   %i.blb = load i64, ptr %i.bla, align 8, !tbaa !161, !noalias !641
@@ -450,7 +455,7 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpO
   br i1 %lcmp.mod1177.not, label %.loopexit.i.i.us.loopexit.i, label %.lr.ph68.i.i.us.i218.epil.preheader
 
 .lr.ph68.i.i.us.i218.epil.preheader:              ; preds = %.loopexit.i.i.us.loopexit.i.unr-lcssa, %.lr.ph68.i.i.us.i218.preheader
-  %.166.i.i.us.i220.epil.init = phi i64 [ %.03170.i.i.us.i213.a, %.lr.ph68.i.i.us.i218.preheader ], [ %i.blp, %.loopexit.i.i.us.loopexit.i.unr-lcssa ] ; 4 uses
+  %.166.i.i.us.i220.epil.init = phi i64 [ %.03170.i.i.us.i213, %.lr.ph68.i.i.us.i218.preheader ], [ %i.blp, %.loopexit.i.i.us.loopexit.i.unr-lcssa ] ; 4 uses
   %lcmp.mod1179 = trunc i64 %.sroa.speculated.i.i.us.i214 to i1
   call void @llvm.assume(i1 %lcmp.mod1179)
   %i.blq = getelementptr inbounds [8 x i8], ptr %i.bin, i64 %.166.i.i.us.i220.epil.init
@@ -472,12 +477,16 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpO
 
 .loopexit.i.i.us.loopexit.i:                      ; preds = %.loopexit.i.i.us.loopexit.i.unr-lcssa, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.us.i.epil
   %.lcssa1143 = phi i64 [ %i.blp, %.loopexit.i.i.us.loopexit.i.unr-lcssa ], [ %i.blx, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.us.i.epil ]
+  %.pre259.i = load i64, ptr %i.bhs, align 8, !tbaa !185, !noalias !636
+  %.pre261.i = load i64, ptr %i.bht, align 8, !tbaa !186, !noalias !636
   %.pre259.i.a = load i64, ptr %i.bkn, align 8, !tbaa !128, !noalias !641
   br label %.loopexit.i.i.us.i216
 
 .loopexit.i.i.us.i216:                            ; preds = %.loopexit.i.i.us.loopexit.i, %.lr.ph71.i.i.us.i212
   %i.bly = phi i64 [ %i.bkt, %.lr.ph71.i.i.us.i212 ], [ %.pre259.i.a, %.loopexit.i.i.us.loopexit.i ] ; 2 uses
-  %.3.i.i.us.i217 = phi i64 [ %.03170.i.i.us.i213.a, %.lr.ph71.i.i.us.i212 ], [ %.lcssa1143, %.loopexit.i.i.us.loopexit.i ] ; 2 uses
+  %119 = phi i64 [ %i.bkx, %.lr.ph71.i.i.us.i212 ], [ %.pre261.i, %.loopexit.i.i.us.loopexit.i ]
+  %120 = phi i64 [ %118, %.lr.ph71.i.i.us.i212 ], [ %.pre259.i, %.loopexit.i.i.us.loopexit.i ]
+  %.3.i.i.us.i217 = phi i64 [ %.03170.i.i.us.i213, %.lr.ph71.i.i.us.i212 ], [ %.lcssa1143, %.loopexit.i.i.us.loopexit.i ] ; 2 uses
   %i.blz = icmp slt i64 %.3.i.i.us.i217, %i.bly
   br i1 %i.blz, label %.lr.ph71.i.i.us.i212, label %._crit_edge.i.i.i207, !llvm.loop !410
 

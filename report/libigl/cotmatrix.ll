@@ -205,17 +205,20 @@ bb.a:
 
 .preheader.lr.ph.split:                           ; preds = %.preheader.lr.ph
   %i.s = icmp eq ptr %i.q, null
+  %.pre40.pre = load double, ptr %3, align 8, !tbaa !25 ; 2 uses
   br i1 %i.s, label %.preheader.us, label %.preheader
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph.split, %._crit_edge25.split.us.us
+  %.pre40 = phi double [ %.pre4044, %._crit_edge25.split.us.us ], [ %.pre40.pre, %.preheader.lr.ph.split ] ; 2 uses
   %.028.us = phi i64 [ %i.bi, %._crit_edge25.split.us.us ], [ 0, %.preheader.lr.ph.split ] ; 3 uses
   %i.t = mul nsw i64 %i.i, %.028.us
   %invariant.gep26.us = getelementptr [8 x i8], ptr %i.g, i64 %i.t
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us: ; preds = %._crit_edge.us.us, %.preheader.us
+  %.pre4045 = phi double [ %.pre40, %.preheader.us ], [ %.pre4044, %._crit_edge.us.us ]
+  %4 = phi double [ %.pre40, %.preheader.us ], [ %5, %._crit_edge.us.us ] ; 2 uses
   %.01623.us.us = phi i64 [ 0, %.preheader.us ], [ %i.bh, %._crit_edge.us.us ] ; 3 uses
-  %4 = load double, ptr %3, align 8, !tbaa !25
   %gep27.us.us = getelementptr [8 x i8], ptr %invariant.gep26.us, i64 %.01623.us.us
   %i.u = load double, ptr %gep27.us.us, align 8, !tbaa !25
   %i.v = fmul double %4, %i.u                     ; 3 uses
@@ -255,7 +258,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %.sroa.8.022.us.us.unr = phi i64 [ %i.ac, %.lr.ph.us.us ], [ %i.ao, %.prol.loopexit.unr-lcssa ]
   %i.ap = add nsw i64 %i.aa, -1
   %i.aq = icmp eq i64 %i.ap, %i.ac
-  br i1 %i.aq, label %._crit_edge.us.us, label %.lr.ph.us.us.new
+  br i1 %i.aq, label %._crit_edge.us.us.loopexit, label %.lr.ph.us.us.new
 
 .lr.ph.us.us.new:                                 ; preds = %.prol.loopexit, %.lr.ph.us.us.new
   %.sroa.8.022.us.us = phi i64 [ %i.bg, %.lr.ph.us.us.new ], [ %.sroa.8.022.us.us.unr, %.prol.loopexit ] ; 4 uses
@@ -280,9 +283,15 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   store double %i.bf, ptr %gep.us.us.1, align 8, !tbaa !25
   %i.bg = add nsw i64 %.sroa.8.022.us.us, 2       ; 2 uses
   %exitcond35.not.1 = icmp eq i64 %i.bg, %i.aa
-  br i1 %exitcond35.not.1, label %._crit_edge.us.us, label %.lr.ph.us.us.new, !llvm.loop !1088
+  br i1 %exitcond35.not.1, label %._crit_edge.us.us.loopexit, label %.lr.ph.us.us.new, !llvm.loop !1088
 
-._crit_edge.us.us:                                ; preds = %.prol.loopexit, %.lr.ph.us.us.new, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us
+._crit_edge.us.us.loopexit:                       ; preds = %.lr.ph.us.us.new, %.prol.loopexit
+  %.pre39 = load double, ptr %3, align 8, !tbaa !25 ; 2 uses
+  br label %._crit_edge.us.us
+
+._crit_edge.us.us:                                ; preds = %._crit_edge.us.us.loopexit, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us
+  %.pre4044 = phi double [ %.pre39, %._crit_edge.us.us.loopexit ], [ %.pre4045, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us ] ; 2 uses
+  %5 = phi double [ %.pre39, %._crit_edge.us.us.loopexit ], [ %4, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us ]
   %i.bh = add nuw nsw i64 %.01623.us.us, 1        ; 2 uses
   %exitcond36.not = icmp eq i64 %i.bh, %i.e
   br i1 %exitcond36.not, label %._crit_edge25.split.us.us, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us, !llvm.loop !1089
@@ -293,6 +302,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   br i1 %exitcond37.not, label %._crit_edge30.split, label %.preheader.us, !llvm.loop !1090
 
 .preheader:                                       ; preds = %.preheader.lr.ph.split, %._crit_edge25.split
+  %.pre38 = phi double [ %.pre3841, %._crit_edge25.split ], [ %.pre40.pre, %.preheader.lr.ph.split ] ; 2 uses
   %.028 = phi i64 [ %i.bk, %._crit_edge25.split ], [ 0, %.preheader.lr.ph.split ] ; 3 uses
   %i.bj = mul nsw i64 %i.i, %.028
   %invariant.gep26 = getelementptr [8 x i8], ptr %i.g, i64 %i.bj
@@ -307,11 +317,12 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   br i1 %exitcond34.not, label %._crit_edge30.split, label %.preheader, !llvm.loop !1090
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit: ; preds = %.preheader, %._crit_edge
+  %.pre3842 = phi double [ %.pre38, %.preheader ], [ %.pre3841, %._crit_edge ]
+  %6 = phi double [ %.pre38, %.preheader ], [ %7, %._crit_edge ] ; 2 uses
   %.01623 = phi i64 [ 0, %.preheader ], [ %i.by, %._crit_edge ] ; 4 uses
-  %5 = load double, ptr %3, align 8, !tbaa !25
   %gep27 = getelementptr [8 x i8], ptr %invariant.gep26, i64 %.01623
   %i.bl = load double, ptr %gep27, align 8, !tbaa !25
-  %i.bm = fmul double %5, %i.bl
+  %i.bm = fmul double %6, %i.bl
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %.01623
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !24
   %i.bp = sext i32 %i.bo to i64                   ; 2 uses
@@ -329,7 +340,13 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %invariant.gep = getelementptr [8 x i8], ptr %i.bv, i64 %i.bx
   br label %bb.b
 
-._crit_edge:                                      ; preds = %bb.b, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
+._crit_edge.loopexit:                             ; preds = %bb.b
+  %.pre = load double, ptr %3, align 8, !tbaa !25 ; 2 uses
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
+  %.pre3841 = phi double [ %.pre, %._crit_edge.loopexit ], [ %.pre3842, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit ] ; 2 uses
+  %7 = phi double [ %.pre, %._crit_edge.loopexit ], [ %6, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit ]
   %i.by = add nuw nsw i64 %.01623, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.by, %i.e
   br i1 %exitcond.not, label %._crit_edge25.split, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit, !llvm.loop !1089
@@ -347,7 +364,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store double %i.cf, ptr %gep, align 8, !tbaa !25
   %i.cg = add nsw i64 %.sroa.8.022, 1             ; 2 uses
   %i.ch = icmp slt i64 %i.cg, %i.bt
-  br i1 %i.ch, label %bb.b, label %._crit_edge, !llvm.loop !1088
+  br i1 %i.ch, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !1088
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)

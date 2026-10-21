@@ -205,6 +205,7 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_6SDNodeELb1EE9push_backES2_.exit.loopexit:
 
 .preheader:                                       ; preds = %bb.af
   %.pre = load i32, ptr %i.t, align 8, !tbaa !198 ; 2 uses
+  %.pre171.pre = load ptr, ptr %4, align 8, !tbaa !40 ; 2 uses
   %.not.i92161 = icmp eq i32 %.pre, 0
   br i1 %.not.i92161, label %._crit_edge163, label %.lr.ph162
 
@@ -607,22 +608,24 @@ bb.af:                                            ; preds = %bb.f, %._crit_edge,
   br i1 %.not.i74, label %.preheader, label %bb.b
 
 .loopexit.loopexit:                               ; preds = %_ZN4llvm18ScheduleDAGSDNodes13isPassiveNodeEPNS_6SDNodeE.exit.thread, %bb.ah
+  %.pre168 = load ptr, ptr %4, align 8, !tbaa !40
   %.pre168.a = load i32, ptr %i.t, align 8, !tbaa !198
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %.lr.ph162
   %i.hp = phi i32 [ %.pre168.a, %.loopexit.loopexit ], [ %i.hu, %.lr.ph162 ] ; 2 uses
+  %6 = phi ptr [ %.pre168, %.loopexit.loopexit ], [ %7, %.lr.ph162 ] ; 2 uses
   %.not.i92 = icmp eq i32 %i.hp, 0
   br i1 %.not.i92, label %._crit_edge163, label %.lr.ph162, !llvm.loop !503
 
 .lr.ph162:                                        ; preds = %.preheader, %.loopexit
-  %6 = phi i32 [ %i.hp, %.loopexit ], [ %.pre, %.preheader ] ; 2 uses
-  %7 = load ptr, ptr %4, align 8, !tbaa !40
-  %i.hq = zext i32 %6 to i64
+  %7 = phi ptr [ %6, %.loopexit ], [ %.pre171.pre, %.preheader ] ; 2 uses
+  %8 = phi i32 [ %i.hp, %.loopexit ], [ %.pre, %.preheader ] ; 2 uses
+  %i.hq = zext i32 %8 to i64
   %i.hr = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.hq
   %i.hs = getelementptr inbounds i8, ptr %i.hr, i64 -8
   %i.ht = load ptr, ptr %i.hs, align 8, !tbaa !202
-  %i.hu = add i32 %6, -1                          ; 2 uses
+  %i.hu = add i32 %8, -1                          ; 2 uses
   store i32 %i.hu, ptr %i.t, align 8, !tbaa !198
   %i.hv = load ptr, ptr %i.ht, align 8, !tbaa !197 ; 2 uses
   %.not157 = icmp eq ptr %i.hv, null
@@ -710,12 +713,12 @@ bb.ah:                                            ; preds = %_ZN4llvm18ScheduleD
   br i1 %.not4.i.i, label %.lr.ph160, label %.loopexit.loopexit, !llvm.loop !504
 
 ._crit_edge163:                                   ; preds = %.loopexit, %.preheader
-  %8 = load ptr, ptr %4, align 8, !tbaa !40       ; 2 uses
-  %i.jb = icmp eq ptr %8, %i.s
+  %9 = phi ptr [ %.pre171.pre, %.preheader ], [ %6, %.loopexit ] ; 2 uses
+  %i.jb = icmp eq ptr %9, %i.s
   br i1 %i.jb, label %_ZN4llvm11SmallVectorIPNS_5SUnitELj8EED2Ev.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %._crit_edge163
-  call void @free(ptr noundef %8) #25
+  call void @free(ptr noundef %9) #25
   br label %_ZN4llvm11SmallVectorIPNS_5SUnitELj8EED2Ev.exit
 
 _ZN4llvm11SmallVectorIPNS_5SUnitELj8EED2Ev.exit:  ; preds = %._crit_edge163, %bb.ai

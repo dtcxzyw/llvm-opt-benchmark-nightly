@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.u
   br label %.critedge, !llvm.loop !590
 
 bb.w:                                             ; preds = %bb.v
-  %i.gi = load i32, ptr %i.e, align 4, !tbaa !83
+  %i.gi = load i32, ptr %i.e, align 4, !tbaa !83  ; 2 uses
   %i.gj = icmp eq i32 %i.gi, 0
   br i1 %i.gj, label %bb.bp, label %.preheader289
 
@@ -220,10 +220,10 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph444, %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit176
+  %6 = phi i32 [ %i.gi, %.lr.ph444 ], [ %7, %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit176 ]
   %indvars.iv468 = phi i64 [ 0, %.lr.ph444 ], [ %indvars.iv.next469, %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit176 ] ; 3 uses
   %i.go = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0257.0, i64 %indvars.iv468 ; 2 uses
   %i.gp = load double, ptr %i.go, align 8, !tbaa !82 ; 2 uses
-  %6 = load i32, ptr %i.e, align 4, !tbaa !83
   %i.gq = sitofp i32 %6 to double                 ; 2 uses
   %i.gr = load i32, ptr %i.ax, align 8, !tbaa !273
   %i.gs = icmp sgt i32 %i.gr, 0
@@ -466,7 +466,7 @@ _ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit.thread: ; preds 
   %i.kb = sitofp i32 %i.ka to double
   %i.kc = fmul double %i.ik, %i.kb
   %i.kd = call double @llvm.fmuladd.f64(double %i.gp, double %i.gq, double %i.kc)
-  %i.ke = load i32, ptr %i.e, align 4, !tbaa !83
+  %i.ke = load i32, ptr %i.e, align 4, !tbaa !83  ; 2 uses
   br label %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit176
 
 .lr.ph.i.i157:                                    ; preds = %bb.af
@@ -484,6 +484,7 @@ _ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit.thread: ; preds 
 
 .preheader27.i.i160:                              ; preds = %bb.ag
   %i.kp = icmp sgt i32 %i.lc, 0
+  %.pre475 = load i32, ptr %i.e, align 4, !tbaa !83 ; 2 uses
   br i1 %i.kp, label %.lr.ph33.i.i161, label %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit176
 
 .lr.ph33.i.i161:                                  ; preds = %.preheader27.i.i160
@@ -592,6 +593,7 @@ _ZN11UIestimator8n_vectorIiE9convert_xERKSt6vectorIdSaIdEE.exit.loopexit.i170: ;
 _ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit176: ; preds = %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit.thread, %.preheader27.i.i160, %_ZN11UIestimator8n_vectorIiE9convert_xERKSt6vectorIdSaIdEE.exit.loopexit.i170
   %i.ma = phi i32 [ %i.kl, %.preheader27.i.i160 ], [ %i.ke, %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit.thread ], [ %i.kl, %_ZN11UIestimator8n_vectorIiE9convert_xERKSt6vectorIdSaIdEE.exit.loopexit.i170 ]
   %i.mb = phi double [ %i.kk, %.preheader27.i.i160 ], [ %i.kd, %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit.thread ], [ %i.kk, %_ZN11UIestimator8n_vectorIiE9convert_xERKSt6vectorIdSaIdEE.exit.loopexit.i170 ]
+  %7 = phi i32 [ %.pre475, %.preheader27.i.i160 ], [ %i.ke, %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit.thread ], [ %.pre475, %_ZN11UIestimator8n_vectorIiE9convert_xERKSt6vectorIdSaIdEE.exit.loopexit.i170 ]
   %.021.lcssa.i.i156 = phi i64 [ 0, %.preheader27.i.i160 ], [ 0, %_ZN11UIestimator8n_vectorIiE9get_valueERKSt6vectorIdSaIdEE.exit.thread ], [ %i.lz, %_ZN11UIestimator8n_vectorIiE9convert_xERKSt6vectorIdSaIdEE.exit.loopexit.i170 ]
   %i.mc = getelementptr inbounds nuw [4 x i8], ptr %i.gn, i64 %.021.lcssa.i.i156
   %i.md = load i32, ptr %i.mc, align 4, !tbaa !83

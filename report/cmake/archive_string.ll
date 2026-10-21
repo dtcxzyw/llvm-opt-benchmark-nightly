@@ -205,7 +205,7 @@ bb.bq:                                            ; preds = %.thread516, %.loope
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -1, 1) i32 @archive_string_normalize_C(ptr nofree noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3) #1 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 21 uses
+  %i.a = alloca i32, align 4                      ; 22 uses
   %i.b = alloca i32, align 4                      ; 11 uses
   %i.c = alloca [10 x i32], align 16              ; 28 uses
   %i.d = alloca [10 x i32], align 16              ; 22 uses
@@ -608,26 +608,27 @@ bb.dr:                                            ; preds = %bb.dq
   br label %.lr.ph1142.preheader
 
 .lr.ph1142.preheader:                             ; preds = %bb.dr, %bb.df, %bb.dj, %bb.de, %bb.db, %bb.dm, %bb.da, %bb.cx, %bb.di, %bb.cw, %bb.ct, %bb.dn, %bb.cs, %bb.cp, %bb.dq, %bb.co, %bb.cl
-  %.11140.ph = phi i32 [ 10, %bb.dr ], [ 2, %bb.cl ], [ 2, %bb.co ], [ 9, %bb.dq ], [ 3, %bb.cp ], [ 3, %bb.cs ], [ 9, %bb.dn ], [ 4, %bb.ct ], [ 4, %bb.cw ], [ 7, %bb.di ], [ 5, %bb.cx ], [ 5, %bb.da ], [ 8, %bb.dm ], [ 6, %bb.db ], [ 6, %bb.de ], [ 8, %bb.dj ], [ 7, %bb.df ]
-  %.25931139.ph = phi i32 [ %i.wn, %bb.dr ], [ %i.oz, %bb.cl ], [ %i.oz, %bb.co ], [ %i.wn, %bb.dq ], [ %i.qb, %bb.cp ], [ %i.qb, %bb.cs ], [ %i.wn, %bb.dn ], [ %i.rd, %bb.ct ], [ %i.rd, %bb.cw ], [ %i.uj, %bb.di ], [ %i.sf, %bb.cx ], [ %i.sf, %bb.da ], [ %i.vl, %bb.dm ], [ %i.th, %bb.db ], [ %i.th, %bb.de ], [ %i.vl, %bb.dj ], [ %i.uj, %bb.df ]
-  %.26011137.ph = phi i32 [ %i.xj, %bb.dr ], [ %i.os, %bb.cl ], [ %i.pv, %bb.co ], [ %i.xj, %bb.dq ], [ %i.pv, %bb.cp ], [ %i.qx, %bb.cs ], [ %i.wh, %bb.dn ], [ %i.qx, %bb.ct ], [ %i.rz, %bb.cw ], [ %i.vf, %bb.di ], [ %i.rz, %bb.cx ], [ %i.tb, %bb.da ], [ %i.wh, %bb.dm ], [ %i.tb, %bb.db ], [ %i.ud, %bb.de ], [ %i.vf, %bb.dj ], [ %i.ud, %bb.df ]
-  %.16071136.ph = phi i32 [ %i.xj, %bb.dr ], [ %i.os, %bb.cl ], [ %i.os, %bb.co ], [ %i.wh, %bb.dq ], [ %i.pv, %bb.cp ], [ %i.pv, %bb.cs ], [ %i.wh, %bb.dn ], [ %i.qx, %bb.ct ], [ %i.qx, %bb.cw ], [ %i.ud, %bb.di ], [ %i.rz, %bb.cx ], [ %i.rz, %bb.da ], [ %i.vf, %bb.dm ], [ %i.tb, %bb.db ], [ %i.tb, %bb.de ], [ %i.vf, %bb.dj ], [ %i.ud, %bb.df ]
-  %.36321134.ph = phi i32 [ -1, %bb.dr ], [ %.06291210, %bb.cl ], [ %.06291210, %bb.co ], [ %.06291210, %bb.dq ], [ %.06291210, %bb.cp ], [ %.06291210, %bb.cs ], [ %.06291210, %bb.dn ], [ %.06291210, %bb.ct ], [ %.06291210, %bb.cw ], [ %.06291210, %bb.di ], [ %.06291210, %bb.cx ], [ %.06291210, %bb.da ], [ %.06291210, %bb.dm ], [ %.06291210, %bb.db ], [ %.06291210, %bb.de ], [ %.06291210, %bb.dj ], [ %.06291210, %bb.df ]
-  %.37201133.ph = phi ptr [ %i.xo, %bb.dr ], [ %i.ox, %bb.cl ], [ %i.ox, %bb.co ], [ %i.wl, %bb.dq ], [ %i.pz, %bb.cp ], [ %i.pz, %bb.cs ], [ %i.wl, %bb.dn ], [ %i.rb, %bb.ct ], [ %i.rb, %bb.cw ], [ %i.uh, %bb.di ], [ %i.sd, %bb.cx ], [ %i.sd, %bb.da ], [ %i.vj, %bb.dm ], [ %i.tf, %bb.db ], [ %i.tf, %bb.de ], [ %i.vj, %bb.dj ], [ %i.uh, %bb.df ]
-  %.37401132.ph = phi i64 [ %i.xp, %bb.dr ], [ %i.oy, %bb.cl ], [ %i.oy, %bb.co ], [ %i.wm, %bb.dq ], [ %i.qa, %bb.cp ], [ %i.qa, %bb.cs ], [ %i.wm, %bb.dn ], [ %i.rc, %bb.ct ], [ %i.rc, %bb.cw ], [ %i.ui, %bb.di ], [ %i.se, %bb.cx ], [ %i.se, %bb.da ], [ %i.vk, %bb.dm ], [ %i.tg, %bb.db ], [ %i.tg, %bb.de ], [ %i.vk, %bb.dj ], [ %i.ui, %bb.df ]
+  %.11140.ph = phi i32 [ %.06291210, %bb.df ], [ %.06291210, %bb.dj ], [ %.06291210, %bb.de ], [ %.06291210, %bb.db ], [ %.06291210, %bb.dm ], [ %.06291210, %bb.da ], [ %.06291210, %bb.cx ], [ %.06291210, %bb.di ], [ %.06291210, %bb.cw ], [ %.06291210, %bb.ct ], [ %.06291210, %bb.dn ], [ %.06291210, %bb.cs ], [ %.06291210, %bb.cp ], [ %.06291210, %bb.dq ], [ %.06291210, %bb.co ], [ %.06291210, %bb.cl ], [ -1, %bb.dr ]
+  %.25931139.ph = phi i32 [ %i.uj, %bb.df ], [ %i.vl, %bb.dj ], [ %i.th, %bb.de ], [ %i.th, %bb.db ], [ %i.vl, %bb.dm ], [ %i.sf, %bb.da ], [ %i.sf, %bb.cx ], [ %i.uj, %bb.di ], [ %i.rd, %bb.cw ], [ %i.rd, %bb.ct ], [ %i.wn, %bb.dn ], [ %i.qb, %bb.cs ], [ %i.qb, %bb.cp ], [ %i.wn, %bb.dq ], [ %i.oz, %bb.co ], [ %i.oz, %bb.cl ], [ %i.wn, %bb.dr ]
+  %.2739.lcssa14801498.ph = phi i64 [ %i.ui, %bb.df ], [ %i.vk, %bb.dj ], [ %i.tg, %bb.de ], [ %i.tg, %bb.db ], [ %i.vk, %bb.dm ], [ %i.se, %bb.da ], [ %i.se, %bb.cx ], [ %i.ui, %bb.di ], [ %i.rc, %bb.cw ], [ %i.rc, %bb.ct ], [ %i.wm, %bb.dn ], [ %i.qa, %bb.cs ], [ %i.qa, %bb.cp ], [ %i.wm, %bb.dq ], [ %i.oy, %bb.co ], [ %i.oy, %bb.cl ], [ %i.xp, %bb.dr ]
+  %.2719.lcssa14811496.ph = phi ptr [ %i.uh, %bb.df ], [ %i.vj, %bb.dj ], [ %i.tf, %bb.de ], [ %i.tf, %bb.db ], [ %i.vj, %bb.dm ], [ %i.sd, %bb.da ], [ %i.sd, %bb.cx ], [ %i.uh, %bb.di ], [ %i.rb, %bb.cw ], [ %i.rb, %bb.ct ], [ %i.wl, %bb.dn ], [ %i.pz, %bb.cs ], [ %i.pz, %bb.cp ], [ %i.wl, %bb.dq ], [ %i.ox, %bb.co ], [ %i.ox, %bb.cl ], [ %i.xo, %bb.dr ]
+  %.16071136.ph = phi i32 [ %i.ud, %bb.df ], [ %i.vf, %bb.dj ], [ %i.tb, %bb.de ], [ %i.tb, %bb.db ], [ %i.vf, %bb.dm ], [ %i.rz, %bb.da ], [ %i.rz, %bb.cx ], [ %i.ud, %bb.di ], [ %i.qx, %bb.cw ], [ %i.qx, %bb.ct ], [ %i.wh, %bb.dn ], [ %i.pv, %bb.cs ], [ %i.pv, %bb.cp ], [ %i.wh, %bb.dq ], [ %i.os, %bb.co ], [ %i.os, %bb.cl ], [ %i.xj, %bb.dr ]
+  %.36321134.ph = phi i32 [ %i.ud, %bb.df ], [ %i.vf, %bb.dj ], [ %i.ud, %bb.de ], [ %i.tb, %bb.db ], [ %i.wh, %bb.dm ], [ %i.tb, %bb.da ], [ %i.rz, %bb.cx ], [ %i.vf, %bb.di ], [ %i.rz, %bb.cw ], [ %i.qx, %bb.ct ], [ %i.wh, %bb.dn ], [ %i.qx, %bb.cs ], [ %i.pv, %bb.cp ], [ %i.xj, %bb.dq ], [ %i.pv, %bb.co ], [ %i.os, %bb.cl ], [ %i.xj, %bb.dr ]
+  %.ph1503 = phi i32 [ 7, %bb.df ], [ 8, %bb.dj ], [ 6, %bb.de ], [ 6, %bb.db ], [ 8, %bb.dm ], [ 5, %bb.da ], [ 5, %bb.cx ], [ 7, %bb.di ], [ 4, %bb.cw ], [ 4, %bb.ct ], [ 9, %bb.dn ], [ 3, %bb.cs ], [ 3, %bb.cp ], [ 9, %bb.dq ], [ 2, %bb.co ], [ 2, %bb.cl ], [ 10, %bb.dr ]
+  %.pre1372 = load i32, ptr %i.a, align 4, !tbaa !25
   br label %.lr.ph1142
 
 .lr.ph1142:                                       ; preds = %.lr.ph1142.preheader, %bb.eg
-  %.11140 = phi i32 [ %.4, %bb.eg ], [ %.11140.ph, %.lr.ph1142.preheader ] ; 9 uses
+  %4 = phi i32 [ %7, %bb.eg ], [ %.pre1372, %.lr.ph1142.preheader ] ; 3 uses
+  %.11140 = phi i32 [ %.4, %bb.eg ], [ %.ph1503, %.lr.ph1142.preheader ] ; 9 uses
   %.25931139 = phi i32 [ %.6, %bb.eg ], [ %.25931139.ph, %.lr.ph1142.preheader ] ; 5 uses
   %.05961138 = phi i32 [ %.1597, %bb.eg ], [ 1, %.lr.ph1142.preheader ] ; 9 uses
-  %.26011137 = phi i32 [ %.6605, %bb.eg ], [ %.26011137.ph, %.lr.ph1142.preheader ] ; 6 uses
+  %.26011137 = phi i32 [ %.6605, %bb.eg ], [ %.36321134.ph, %.lr.ph1142.preheader ] ; 6 uses
   %.16071136 = phi i32 [ %.4610, %bb.eg ], [ %.16071136.ph, %.lr.ph1142.preheader ] ; 4 uses
   %.181135 = phi ptr [ %.19, %bb.eg ], [ %.16141086, %.lr.ph1142.preheader ]
-  %.36321134 = phi i32 [ %.6635, %bb.eg ], [ %.36321134.ph, %.lr.ph1142.preheader ] ; 4 uses
-  %.37201133 = phi ptr [ %.6723, %bb.eg ], [ %.37201133.ph, %.lr.ph1142.preheader ] ; 7 uses
-  %.37401132 = phi i64 [ %.6743, %bb.eg ], [ %.37401132.ph, %.lr.ph1142.preheader ] ; 7 uses
-  %4 = load i32, ptr %i.a, align 4, !tbaa !25     ; 2 uses
+  %.36321134 = phi i32 [ %.6635, %bb.eg ], [ %.11140.ph, %.lr.ph1142.preheader ] ; 4 uses
+  %.37201133 = phi ptr [ %.6723, %bb.eg ], [ %.2719.lcssa14811496.ph, %.lr.ph1142.preheader ] ; 7 uses
+  %.37401132 = phi i64 [ %.6743, %bb.eg ], [ %.2739.lcssa14801498.ph, %.lr.ph1142.preheader ] ; 7 uses
   %i.xq = sext i32 %.05961138 to i64              ; 3 uses
   %i.xr = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.xq
   %i.xs = load i32, ptr %i.xr, align 4, !tbaa !25 ; 2 uses
@@ -686,7 +687,7 @@ get_nfc.exit821.thread:                           ; preds = %bb.ea
 
 get_nfc.exit821:                                  ; preds = %bb.dy
   %i.yj = getelementptr inbounds nuw i8, ptr %i.xw, i64 8
-  %i.yk = load i32, ptr %i.yj, align 4, !tbaa !136
+  %i.yk = load i32, ptr %i.yj, align 4, !tbaa !136 ; 4 uses
   store i32 %i.yk, ptr %i.a, align 4, !tbaa !25
   %i.yl = add nsw i32 %.05961138, 1               ; 2 uses
   %i.ym = icmp slt i32 %i.yl, %.11140
@@ -769,7 +770,7 @@ bb.ec:                                            ; preds = %bb.eb
   %i.zv = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.xq ; 2 uses
   %i.zw = call i32 %.0625(ptr noundef nonnull %i.zv, ptr noundef %.37201133, i64 noundef %.37401132) #23, !callees !53 ; 3 uses
   %i.zx = icmp slt i32 %i.zw, 1
-  br i1 %i.zx, label %._crit_edge1111, label %.lr.ph1903
+  br i1 %i.zx, label %._crit_edge1111.loopexit, label %.lr.ph1903
 
 .lr.ph1110:                                       ; preds = %bb.ef
   %i.zy = getelementptr inbounds [4 x i8], ptr %i.c, i64 %indvars.iv.next1365 ; 2 uses
@@ -826,29 +827,41 @@ bb.ef:                                            ; preds = %bb.ee
   store i32 %i.aax, ptr %i.abe, align 4, !tbaa !25
   %indvars.iv.next1365 = add nsw i64 %indvars.iv13641899, 1 ; 4 uses
   %exitcond1367.not = icmp eq i64 %indvars.iv.next1365, 10
-  br i1 %exitcond1367.not, label %._crit_edge1111, label %.lr.ph1110, !llvm.loop !124
+  br i1 %exitcond1367.not, label %._crit_edge1111.loopexit, label %.lr.ph1110, !llvm.loop !124
 
 ._crit_edge1111.loopexit.split.loop.exit:         ; preds = %bb.ee
   %i.abf = trunc nsw i64 %indvars.iv13641899 to i32
-  br label %._crit_edge1111
+  br label %._crit_edge1111.loopexit
 
 .lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge: ; preds = %.lr.ph1110
   %i.abg = trunc nsw i64 %indvars.iv.next1365 to i32
+  br label %._crit_edge1111.loopexit
+
+._crit_edge1111.loopexit:                         ; preds = %bb.ef, %.lr.ph1110.preheader, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge, %._crit_edge1111.loopexit.split.loop.exit
+  %5 = phi i32 [ %i.zw, %.lr.ph1110.preheader ], [ %i.aab, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.zz, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.aab, %bb.ef ]
+  %.4741.lcssa.ph = phi i64 [ %.37401132, %.lr.ph1110.preheader ], [ %.474111041902, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.abd, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.abd, %bb.ef ]
+  %.4721.lcssa.ph = phi ptr [ %.37201133, %.lr.ph1110.preheader ], [ %.472111051901, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.abc, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.abc, %bb.ef ]
+  %.2608.lcssa.ph = phi i32 [ %i.zt, %.lr.ph1110.preheader ], [ %.260811061900, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.aax, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.aax, %bb.ef ]
+  %.0.lcssa.ph = phi i32 [ %.05961138, %.lr.ph1110.preheader ], [ %i.abf, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.abg, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ 10, %bb.ef ]
+  %.4603.ph = phi i32 [ %.26011137, %.lr.ph1110.preheader ], [ %i.aax, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.aax, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.aax, %bb.ef ]
+  %.pre = load i32, ptr %i.a, align 4, !tbaa !25
   br label %._crit_edge1111
 
-._crit_edge1111:                                  ; preds = %bb.ef, %.lr.ph1110.preheader, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge, %._crit_edge1111.loopexit.split.loop.exit, %bb.ec
-  %.4741.lcssa = phi i64 [ %.37401132, %bb.ec ], [ %.37401132, %.lr.ph1110.preheader ], [ %.474111041902, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.abd, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.abd, %bb.ef ]
-  %.4721.lcssa = phi ptr [ %.37201133, %bb.ec ], [ %.37201133, %.lr.ph1110.preheader ], [ %.472111051901, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.abc, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.abc, %bb.ef ]
-  %.2608.lcssa = phi i32 [ %i.zt, %bb.ec ], [ %i.zt, %.lr.ph1110.preheader ], [ %.260811061900, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.aax, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.aax, %bb.ef ]
-  %.0.lcssa = phi i32 [ %.05961138, %bb.ec ], [ %.05961138, %.lr.ph1110.preheader ], [ %i.abf, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.abg, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ 10, %bb.ef ] ; 2 uses
-  %.4603 = phi i32 [ %.26011137, %bb.ec ], [ %.26011137, %.lr.ph1110.preheader ], [ %i.aax, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.aax, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.aax, %bb.ef ]
-  %.4595 = phi i32 [ %.25931139, %bb.ec ], [ %i.zw, %.lr.ph1110.preheader ], [ %i.aab, %._crit_edge1111.loopexit.split.loop.exit ], [ %i.zz, %.lr.ph1110.._crit_edge1111.loopexit.split.loop.exit1722_crit_edge ], [ %i.aab, %bb.ef ]
+._crit_edge1111:                                  ; preds = %._crit_edge1111.loopexit, %bb.ec
+  %6 = phi i32 [ %i.yk, %bb.ec ], [ %.pre, %._crit_edge1111.loopexit ]
+  %.4741.lcssa = phi i64 [ %.37401132, %bb.ec ], [ %.4741.lcssa.ph, %._crit_edge1111.loopexit ]
+  %.4721.lcssa = phi ptr [ %.37201133, %bb.ec ], [ %.4721.lcssa.ph, %._crit_edge1111.loopexit ]
+  %.2608.lcssa = phi i32 [ %i.zt, %bb.ec ], [ %.2608.lcssa.ph, %._crit_edge1111.loopexit ]
+  %.0.lcssa = phi i32 [ %.05961138, %bb.ec ], [ %.0.lcssa.ph, %._crit_edge1111.loopexit ] ; 2 uses
+  %.4603 = phi i32 [ %.26011137, %bb.ec ], [ %.4603.ph, %._crit_edge1111.loopexit ]
+  %.4595 = phi i32 [ %.25931139, %bb.ec ], [ %5, %._crit_edge1111.loopexit ]
   %i.abh = icmp sgt i32 %.0.lcssa, 9              ; 2 uses
   %..3632 = select i1 %i.abh, i32 -1, i32 %.36321134
   %..0 = select i1 %i.abh, i32 10, i32 %.0.lcssa
   br label %bb.eg
 
 bb.eg:                                            ; preds = %._crit_edge1103, %bb.eb, %._crit_edge1111, %get_nfc.exit821.thread
+  %7 = phi i32 [ %4, %get_nfc.exit821.thread ], [ %6, %._crit_edge1111 ], [ %i.yk, %._crit_edge1103 ], [ %i.yk, %bb.eb ]
   %.6743 = phi i64 [ %.37401132, %get_nfc.exit821.thread ], [ %.4741.lcssa, %._crit_edge1111 ], [ %.37401132, %._crit_edge1103 ], [ %.37401132, %bb.eb ] ; 2 uses
   %.6723 = phi ptr [ %.37201133, %get_nfc.exit821.thread ], [ %.4721.lcssa, %._crit_edge1111 ], [ %.37201133, %._crit_edge1103 ], [ %.37201133, %bb.eb ] ; 2 uses
   %.6635 = phi i32 [ %.36321134, %get_nfc.exit821.thread ], [ %..3632, %._crit_edge1111 ], [ %.36321134, %._crit_edge1103 ], [ %.36321134, %bb.eb ] ; 2 uses

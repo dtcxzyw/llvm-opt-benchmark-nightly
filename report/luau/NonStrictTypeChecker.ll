@@ -204,7 +204,11 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !314  ; 2 uses
   %.not12 = icmp eq ptr %i.g, null
-  br i1 %.not12, label %_ZN4Luau20NonStrictTypeChecker5visitEPNS_11AstTypePackE.exit, label %.preheader
+  br i1 %.not12, label %_ZN4Luau20NonStrictTypeChecker5visitEPNS_11AstTypePackE.exit, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %._crit_edge
+  %.pre19 = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !24
+  br label %.preheader
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.014 = phi ptr [ %i.i, %.lr.ph ], [ %i.b, %bb.a ] ; 2 uses
@@ -214,12 +218,12 @@ bb.a:
   %.not = icmp eq ptr %i.i, %i.e
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
-.preheader:                                       ; preds = %._crit_edge, %._crit_edge.i
-  %.tr29.i = phi ptr [ %i.q, %._crit_edge.i ], [ %i.g, %._crit_edge ] ; 6 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.tr29.i, i64 8
-  %3 = load i32, ptr %2, align 8, !tbaa !200      ; 3 uses
-  %i.j = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !24
-  %.not24.i = icmp eq i32 %3, %i.j
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge.i
+  %2 = phi i32 [ %4, %._crit_edge.i ], [ %.pre19, %.preheader.preheader ] ; 2 uses
+  %.tr29.i = phi ptr [ %i.q, %._crit_edge.i ], [ %i.g, %.preheader.preheader ] ; 6 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.tr29.i, i64 8
+  %i.j = load i32, ptr %3, align 8, !tbaa !200    ; 3 uses
+  %.not24.i = icmp eq i32 %i.j, %2
   br i1 %.not24.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.preheader
@@ -232,7 +236,12 @@ bb.b:                                             ; preds = %.preheader
   %.not.i31.i = icmp eq i64 %i.n, 0
   br i1 %.not.i31.i, label %._crit_edge.i, label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.b
+._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
+  %.pre = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !24
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.b
+  %4 = phi i32 [ %.pre, %._crit_edge.i.loopexit ], [ %2, %bb.b ]
   %i.p = getelementptr inbounds nuw i8, ptr %.tr29.i, i64 48
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !314  ; 2 uses
   %.not12.i.i = icmp eq ptr %i.q, null
@@ -244,11 +253,11 @@ bb.b:                                             ; preds = %.preheader
   tail call void @_ZN4Luau20NonStrictTypeChecker5visitEPNS_7AstTypeE(ptr noundef nonnull align 8 dereferenceable(772) %0, ptr noundef %i.r), !inline_history !842
   %i.s = getelementptr inbounds nuw i8, ptr %.0.i32.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.s, %i.o
-  br i1 %.not.i.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not.i.i, label %._crit_edge.i.loopexit, label %.lr.ph.i
 
 bb.c:                                             ; preds = %.preheader
   %i.t = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackVariadicEE5valueE, align 4, !tbaa !24
-  %.not26.i = icmp eq i32 %3, %i.t
+  %.not26.i = icmp eq i32 %i.j, %i.t
   br i1 %.not26.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -259,7 +268,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.w = load i32, ptr @_ZN4Luau7AstRttiINS_18AstTypePackGenericEE5valueE, align 4, !tbaa !24
-  %.not28.i = icmp eq i32 %3, %i.w
+  %.not28.i = icmp eq i32 %i.j, %i.w
   br i1 %.not28.i, label %bb.f, label %_ZN4Luau20NonStrictTypeChecker5visitEPNS_11AstTypePackE.exit
 
 bb.f:                                             ; preds = %bb.e
@@ -662,7 +671,11 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 120
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !302  ; 2 uses
   %.not12.i = icmp eq ptr %i.i, null
-  br i1 %.not12.i, label %_ZN4Luau20NonStrictTypeChecker5visitERNS_11AstTypeListE.exit, label %.preheader
+  br i1 %.not12.i, label %_ZN4Luau20NonStrictTypeChecker5visitERNS_11AstTypeListE.exit, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %._crit_edge
+  %.pre35 = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !24
+  br label %.preheader
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.0.i19 = phi ptr [ %i.k, %.lr.ph ], [ %i.d, %bb.a ] ; 2 uses
@@ -672,12 +685,12 @@ bb.a:
   %.not.i = icmp eq ptr %i.k, %i.g
   br i1 %.not.i, label %._crit_edge, label %.lr.ph
 
-.preheader:                                       ; preds = %._crit_edge, %._crit_edge.i
-  %.tr29.i = phi ptr [ %i.s, %._crit_edge.i ], [ %i.i, %._crit_edge ] ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.tr29.i, i64 8
-  %4 = load i32, ptr %3, align 8, !tbaa !200      ; 3 uses
-  %i.l = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !24
-  %.not24.i = icmp eq i32 %4, %i.l
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge.i
+  %3 = phi i32 [ %5, %._crit_edge.i ], [ %.pre35, %.preheader.preheader ] ; 2 uses
+  %.tr29.i = phi ptr [ %i.s, %._crit_edge.i ], [ %i.i, %.preheader.preheader ] ; 6 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.tr29.i, i64 8
+  %i.l = load i32, ptr %4, align 8, !tbaa !200    ; 3 uses
+  %.not24.i = icmp eq i32 %i.l, %3
   br i1 %.not24.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.preheader
@@ -690,7 +703,12 @@ bb.b:                                             ; preds = %.preheader
   %.not.i31.i = icmp eq i64 %i.p, 0
   br i1 %.not.i31.i, label %._crit_edge.i, label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.b
+._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
+  %.pre = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !24
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.b
+  %5 = phi i32 [ %.pre, %._crit_edge.i.loopexit ], [ %3, %bb.b ]
   %i.r = getelementptr inbounds nuw i8, ptr %.tr29.i, i64 48
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !314  ; 2 uses
   %.not12.i.i = icmp eq ptr %i.s, null
@@ -702,11 +720,11 @@ bb.b:                                             ; preds = %.preheader
   tail call void @_ZN4Luau20NonStrictTypeChecker5visitEPNS_7AstTypeE(ptr noundef nonnull align 8 dereferenceable(772) %1, ptr noundef %i.t), !inline_history !898
   %i.u = getelementptr inbounds nuw i8, ptr %.0.i32.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.u, %i.q
-  br i1 %.not.i.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not.i.i, label %._crit_edge.i.loopexit, label %.lr.ph.i
 
 bb.c:                                             ; preds = %.preheader
   %i.v = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackVariadicEE5valueE, align 4, !tbaa !24
-  %.not26.i = icmp eq i32 %4, %i.v
+  %.not26.i = icmp eq i32 %i.l, %i.v
   br i1 %.not26.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -717,7 +735,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.y = load i32, ptr @_ZN4Luau7AstRttiINS_18AstTypePackGenericEE5valueE, align 4, !tbaa !24
-  %.not28.i = icmp eq i32 %4, %i.y
+  %.not28.i = icmp eq i32 %i.l, %i.y
   br i1 %.not28.i, label %bb.f, label %_ZN4Luau20NonStrictTypeChecker5visitERNS_11AstTypeListE.exit
 
 bb.f:                                             ; preds = %bb.e

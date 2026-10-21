@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_ZNSt10unique_ptrIA
 .lr.ph:                                           ; preds = %bb.d
   %i.as = getelementptr inbounds nuw i8, ptr %i.ae, i64 612
   %i.at = load i32, ptr %i.as, align 4, !tbaa !151, !noalias !148
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.av = zext nneg i32 %i.r to i64               ; 18 uses
   %i.aw = and i64 %4, 2147483648
   %i.ax = icmp eq i64 %i.aw, 0
@@ -219,6 +219,7 @@ bb.d:                                             ; preds = %_ZNSt10unique_ptrIA
   %i.bd = mul nsw i64 %i.az, 3                    ; 6 uses
   %i.be = zext nneg i32 %i.at to i64
   %i.bf = zext i32 %i.ao to i64                   ; 7 uses
+  %.pre200 = load i32, ptr %i.au, align 8, !tbaa !27
   %i.bg = mul nuw i64 %.sroa.243.0.extract.shift, %i.bf
   %i.bh = add i64 %i.bg, %i.ba
   %i.bi = shl i64 %i.bh, 2
@@ -343,6 +344,7 @@ bb.d:                                             ; preds = %_ZNSt10unique_ptrIA
   ret void
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN8rawspeed12_GLOBAL__N_116decodeFPDeltaRowINS_13ieee_754_20088Binary16EEEvNS_10Array1DRefIKhEEiNS_17CroppedArray1DRefIfEE.exit
+  %5 = phi i32 [ %.pre200, %.lr.ph ], [ %6, %_ZN8rawspeed12_GLOBAL__N_116decodeFPDeltaRowINS_13ieee_754_20088Binary16EEEvNS_10Array1DRefIKhEEiNS_17CroppedArray1DRefIfEE.exit ] ; 6 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN8rawspeed12_GLOBAL__N_116decodeFPDeltaRowINS_13ieee_754_20088Binary16EEEvNS_10Array1DRefIKhEEiNS_17CroppedArray1DRefIfEE.exit ] ; 5 uses
   %i.df = mul nuw i64 %indvars.iv, %i.av
   %i.dg = getelementptr i8, ptr %i.q, i64 %i.df
@@ -351,7 +353,6 @@ bb.e:                                             ; preds = %.lr.ph, %_ZN8rawspe
   call void @llvm.assume(i1 %i.dh)
   %i.di = mul nuw i64 %indvars.iv, %i.av
   %i.dj = getelementptr i8, ptr %i.q, i64 %i.di   ; 34 uses
-  %5 = load i32, ptr %i.au, align 8, !tbaa !27    ; 5 uses
   %i.dk = icmp slt i32 %5, %i.r
   br i1 %i.dk, label %iter.check, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit
 
@@ -411,7 +412,7 @@ vector.body351:                                   ; preds = %vector.ph340, %vect
 
 middle.block360:                                  ; preds = %vector.body351
   %cmp.n361 = icmp eq i64 %i.dq, %n.vec341
-  br i1 %cmp.n361, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit, label %vec.epilog.iter.check
+  br i1 %cmp.n361, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit.loopexit, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block360
   %min.epilog.iters.check = icmp eq i64 %i.dv, 0
@@ -442,7 +443,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n384 = icmp eq i64 %i.dq, %n.vec363
-  br i1 %cmp.n384, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit, label %vec.epilog.scalar.ph.preheader
+  br i1 %cmp.n384, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit.loopexit, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck329, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.ph = phi i64 [ %i.dl, %iter.check ], [ %i.dl, %vector.memcheck329 ], [ %i.dw, %vec.epilog.iter.check ], [ %i.ec, %vec.epilog.middle.block ]
@@ -465,9 +466,14 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.es = trunc nuw i64 %indvars.iv.next.i to i32
   %i.et = icmp sgt i32 %i.r, %i.es
-  br i1 %i.et, label %vec.epilog.scalar.ph, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit, !llvm.loop !121
+  br i1 %i.et, label %vec.epilog.scalar.ph, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit.loopexit, !llvm.loop !121
 
-_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit: ; preds = %vec.epilog.scalar.ph, %middle.block360, %vec.epilog.middle.block, %bb.e
+_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit.loopexit: ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block360
+  %.pre199 = load i32, ptr %i.au, align 8, !tbaa !27
+  br label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit
+
+_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit: ; preds = %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit.loopexit, %bb.e
+  %6 = phi i32 [ %.pre199, %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit.loopexit ], [ %5, %bb.e ]
   %i.eu = add nuw nsw i64 %indvars.iv, %.sroa.243.0.extract.shift ; 2 uses
   %i.ev = icmp samesign ult i64 %i.eu, %i.be
   call void @llvm.assume(i1 %i.ev)

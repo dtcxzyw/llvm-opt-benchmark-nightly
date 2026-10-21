@@ -204,14 +204,15 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph123.preheader:                              ; preds = %bb.b
   %i.f = load ptr, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 576), align 8, !tbaa !18
+  %.pre124 = load i32, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 568), align 8, !tbaa !18
   br label %.lr.ph123
 
 .lr.ph123:                                        ; preds = %.lr.ph123.preheader, %.loopexit
-  %.098122.a = phi i32 [ %i.fl, %.loopexit ], [ %i.e, %.lr.ph123.preheader ]
+  %.098122.a = phi i32 [ %1, %.loopexit ], [ %.pre124, %.lr.ph123.preheader ] ; 3 uses
+  %.098122 = phi i32 [ %i.fl, %.loopexit ], [ %i.e, %.lr.ph123.preheader ]
   %.099121 = phi ptr [ %.1, %.loopexit ], [ %i.f, %.lr.ph123.preheader ] ; 5 uses
   %.0100120 = phi i32 [ %.1101, %.loopexit ], [ 0, %.lr.ph123.preheader ] ; 3 uses
-  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 568), align 8, !tbaa !18
-  %i.g = and i32 %1, 4
+  %i.g = and i32 %.098122.a, 4
   %.not106 = icmp eq i32 %i.g, 0
   br i1 %.not106, label %bb.d, label %bb.c
 
@@ -544,10 +545,15 @@ bb.an:                                            ; preds = %bb.am, %bb.g, %.lr.
   %i.fj = getelementptr inbounds nuw i8, ptr %.0118, i64 %i.x
   %i.fk = add i32 %.096117, -1                    ; 2 uses
   %.not107 = icmp eq i32 %i.fk, 0
-  br i1 %.not107, label %.loopexit, label %.lr.ph, !llvm.loop !171
+  br i1 %.not107, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !171
 
-.loopexit:                                        ; preds = %bb.an, %bb.f, %bb.e
-  %i.fl = add i32 %.098122.a, -1                  ; 2 uses
+.loopexit.loopexit:                               ; preds = %bb.an
+  %.pre = load i32, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 568), align 8, !tbaa !18
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.f, %bb.e
+  %1 = phi i32 [ %.pre, %.loopexit.loopexit ], [ %.098122.a, %bb.f ], [ %.098122.a, %bb.e ]
+  %i.fl = add i32 %.098122, -1                    ; 2 uses
   %.not103 = icmp eq i32 %i.fl, 0
   br i1 %.not103, label %._crit_edge, label %.lr.ph123, !llvm.loop !172
 

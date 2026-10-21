@@ -205,33 +205,34 @@ bb.nv:                                            ; preds = %bb.nu
 
 .lr.ph8.i:                                        ; preds = %bb.nv
   %i.aox = getelementptr i8, ptr %i.aor, i64 32
-  %i.aoy = getelementptr i8, ptr %.val1110, i64 328
+  %i.aoy = getelementptr i8, ptr %.val1110, i64 328 ; 2 uses
+  %.pre11.i = load ptr, ptr %i.aoy, align 8, !tbaa !117
   br label %bb.nw
 
 bb.nw:                                            ; preds = %.loopexit.i1324, %.lr.ph8.i
-  %.0547.i.a = phi ptr [ %i.aox, %.lr.ph8.i ], [ %.2.i1325, %.loopexit.i1324 ] ; 4 uses
-  %.0556.i.a = phi ptr [ %i.aor, %.lr.ph8.i ], [ %i.apx, %.loopexit.i1324 ] ; 6 uses
-  %.0565.i.a = phi ptr [ %i.aou, %.lr.ph8.i ], [ %.258.i, %.loopexit.i1324 ] ; 4 uses
-  %10 = getelementptr i8, ptr %.0556.i.a, i64 16  ; 4 uses
+  %.0547.i.a = phi ptr [ %.pre11.i, %.lr.ph8.i ], [ %12, %.loopexit.i1324 ] ; 4 uses
+  %.0556.i.a = phi ptr [ %i.aox, %.lr.ph8.i ], [ %.2.i1325, %.loopexit.i1324 ] ; 4 uses
+  %.0565.i.a = phi ptr [ %i.aor, %.lr.ph8.i ], [ %i.apx, %.loopexit.i1324 ] ; 6 uses
+  %.0565.i = phi ptr [ %i.aou, %.lr.ph8.i ], [ %.258.i, %.loopexit.i1324 ] ; 4 uses
+  %10 = getelementptr i8, ptr %.0565.i.a, i64 16  ; 4 uses
   %11 = load i32, ptr %10, align 8, !tbaa !328
-  %12 = load ptr, ptr %i.aoy, align 8, !tbaa !117 ; 2 uses
   %i.aoz = sext i32 %11 to i64
-  %i.apa = getelementptr [32 x i8], ptr %12, i64 %i.aoz ; 5 uses
+  %i.apa = getelementptr [32 x i8], ptr %.0547.i.a, i64 %i.aoz ; 5 uses
   %i.apb = load <2 x i32>, ptr %i.apa, align 8, !tbaa !21
   %i.apc = load i32, ptr %i.apa, align 8, !tbaa !320
-  store <2 x i32> %i.apb, ptr %.0556.i.a, align 8, !tbaa !21
+  store <2 x i32> %i.apb, ptr %.0565.i.a, align 8, !tbaa !21
   %i.apd = icmp eq i32 %i.apc, 4
-  %i.ape = getelementptr i8, ptr %.0556.i.a, i64 8 ; 2 uses
+  %i.ape = getelementptr i8, ptr %.0565.i.a, i64 8 ; 2 uses
   br i1 %i.apd, label %bb.nx, label %bb.oa
 
 bb.nx:                                            ; preds = %bb.nw
-  store ptr %.0565.i.a, ptr %i.ape, align 8, !tbaa !329
+  store ptr %.0565.i, ptr %i.ape, align 8, !tbaa !329
   %i.apf = getelementptr i8, ptr %i.apa, i64 8
   %i.apg = load ptr, ptr %i.apf, align 8, !tbaa !326
   br label %bb.ny
 
 bb.ny:                                            ; preds = %bb.ny, %bb.nx
-  %.157.i = phi ptr [ %.0565.i.a, %bb.nx ], [ %i.api, %bb.ny ] ; 2 uses
+  %.157.i = phi ptr [ %.0565.i, %bb.nx ], [ %i.api, %bb.ny ] ; 2 uses
   %.053.i = phi ptr [ %i.apg, %bb.nx ], [ %i.apj, %bb.ny ] ; 2 uses
   %i.aph = load i8, ptr %.053.i, align 1, !tbaa !22 ; 2 uses
   %i.api = getelementptr i8, ptr %.157.i, i64 1   ; 2 uses
@@ -242,8 +243,9 @@ bb.ny:                                            ; preds = %bb.ny, %bb.nx
 
 bb.nz:                                            ; preds = %bb.ny
   store i32 0, ptr %10, align 8, !tbaa !328
-  %i.apk = getelementptr i8, ptr %.0556.i.a, i64 24
+  %i.apk = getelementptr i8, ptr %.0565.i.a, i64 24
   store ptr null, ptr %i.apk, align 8, !tbaa !323
+  %.pre.i1326 = load ptr, ptr %i.aoy, align 8, !tbaa !117
   br label %.loopexit.i1324
 
 bb.oa:                                            ; preds = %bb.nw
@@ -251,8 +253,8 @@ bb.oa:                                            ; preds = %bb.nw
   %i.apl = getelementptr i8, ptr %i.apa, i64 24
   %i.apm = load i32, ptr %i.apl, align 8, !tbaa !240 ; 2 uses
   store i32 %i.apm, ptr %10, align 8, !tbaa !328
-  %i.apn = getelementptr i8, ptr %.0556.i.a, i64 24
-  store ptr %.0547.i.a, ptr %i.apn, align 8, !tbaa !323
+  %i.apn = getelementptr i8, ptr %.0565.i.a, i64 24
+  store ptr %.0556.i.a, ptr %i.apn, align 8, !tbaa !323
   %.not9.i = icmp eq i32 %i.apm, 0
   br i1 %.not9.i, label %.loopexit.i1324, label %.lr.ph.preheader.i
 
@@ -263,23 +265,24 @@ bb.oa:                                            ; preds = %bb.nw
 .lr.ph.i1322:                                     ; preds = %.lr.ph.i1322, %.lr.ph.preheader.i
   %.0.in4.i = phi ptr [ %i.apu, %.lr.ph.i1322 ], [ %i.apo, %.lr.ph.preheader.i ]
   %.0523.i = phi i32 [ %i.apr, %.lr.ph.i1322 ], [ 0, %.lr.ph.preheader.i ]
-  %.12.i = phi ptr [ %i.app, %.lr.ph.i1322 ], [ %.0547.i.a, %.lr.ph.preheader.i ] ; 2 uses
+  %.12.i = phi ptr [ %i.app, %.lr.ph.i1322 ], [ %.0556.i.a, %.lr.ph.preheader.i ] ; 2 uses
   %.0.i1323 = load i32, ptr %.0.in4.i, align 4, !tbaa !21 ; 2 uses
   %i.app = getelementptr i8, ptr %.12.i, i64 32   ; 2 uses
   %i.apq = getelementptr i8, ptr %.12.i, i64 16
   store i32 %.0.i1323, ptr %i.apq, align 8, !tbaa !328
   %i.apr = add nuw i32 %.0523.i, 1                ; 2 uses
   %i.aps = sext i32 %.0.i1323 to i64
-  %i.apt = getelementptr [32 x i8], ptr %12, i64 %i.aps
+  %i.apt = getelementptr [32 x i8], ptr %.0547.i.a, i64 %i.aps
   %i.apu = getelementptr i8, ptr %i.apt, i64 28
   %i.apv = load i32, ptr %10, align 8, !tbaa !328
   %i.apw = icmp ult i32 %i.apr, %i.apv
   br i1 %i.apw, label %.lr.ph.i1322, label %.loopexit.i1324, !llvm.loop !304
 
 .loopexit.i1324:                                  ; preds = %.lr.ph.i1322, %bb.oa, %bb.nz
-  %.258.i = phi ptr [ %i.api, %bb.nz ], [ %.0565.i.a, %bb.oa ], [ %.0565.i.a, %.lr.ph.i1322 ]
-  %.2.i1325 = phi ptr [ %.0547.i.a, %bb.nz ], [ %.0547.i.a, %bb.oa ], [ %i.app, %.lr.ph.i1322 ]
-  %i.apx = getelementptr i8, ptr %.0556.i.a, i64 32 ; 2 uses
+  %12 = phi ptr [ %.pre.i1326, %bb.nz ], [ %.0547.i.a, %bb.oa ], [ %.0547.i.a, %.lr.ph.i1322 ]
+  %.258.i = phi ptr [ %i.api, %bb.nz ], [ %.0565.i, %bb.oa ], [ %.0565.i, %.lr.ph.i1322 ]
+  %.2.i1325 = phi ptr [ %.0556.i.a, %bb.nz ], [ %.0556.i.a, %bb.oa ], [ %i.app, %.lr.ph.i1322 ]
+  %i.apx = getelementptr i8, ptr %.0565.i.a, i64 32 ; 2 uses
   %i.apy = icmp ult ptr %i.apx, %i.aou
   br i1 %i.apy, label %bb.nw, label %build_model.exit.thread1464, !llvm.loop !305
 

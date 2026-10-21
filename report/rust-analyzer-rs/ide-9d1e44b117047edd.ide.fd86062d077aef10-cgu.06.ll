@@ -205,7 +205,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %.lr
   %i.ie = udiv i64 %i.id, 59
   %i.if = load i64, ptr %i.bb, align 16, !alias.scope !1955, !noundef !5 ; 3 uses
   %i.ig = icmp ugt i64 %i.if, 2                   ; 3 uses
-  %i.ih = load ptr, ptr %i.l, align 16, !alias.scope !1955, !nonnull !5
+  %i.ih = load ptr, ptr %i.l, align 16, !alias.scope !1955 ; 2 uses
   %i.ii = load i64, ptr %i.bf, align 8, !alias.scope !1955 ; 2 uses
   %.sink11.i = select i1 %i.ig, ptr %i.ih, ptr %i.l
   %.sink10.i175 = select i1 %i.ig, i64 %i.ii, i64 %i.if ; 3 uses
@@ -244,6 +244,7 @@ _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb.exit: ; preds = %bb.bc, %.lo
   br label %.lr.ph490
 
 .lr.ph490:                                        ; preds = %.lr.ph490.lr.ph, %.outer
+  %.pre565 = phi ptr [ %i.ih, %.lr.ph490.lr.ph ], [ %.pre565580, %.outer ] ; 3 uses
   %i.iw = phi i64 [ %i.ii, %.lr.ph490.lr.ph ], [ %i.mf, %.outer ] ; 2 uses
   %i.ix = phi i64 [ %i.if, %.lr.ph490.lr.ph ], [ %i.mg, %.outer ] ; 2 uses
   %i.iy = phi i1 [ %i.ig, %.lr.ph490.lr.ph ], [ %i.mh, %.outer ]
@@ -255,15 +256,17 @@ _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb.exit: ; preds = %bb.bc, %.lo
   br label %bb.be
 
 bb.be:                                            ; preds = %.lr.ph490, %bb.bh
+  %.pre565582 = phi ptr [ %.pre565, %.lr.ph490 ], [ %.pre565581, %bb.bh ]
   %i.jb = phi i64 [ %i.iw, %.lr.ph490 ], [ %i.lk, %bb.bh ]
   %i.jc = phi i64 [ %i.ix, %.lr.ph490 ], [ %i.ll, %bb.bh ]
   %i.jd = phi i64 [ %i.iw, %.lr.ph490 ], [ %i.lm, %bb.bh ] ; 2 uses
   %i.je = phi i64 [ %i.ix, %.lr.ph490 ], [ %i.ln, %bb.bh ] ; 2 uses
+  %2 = phi ptr [ %.pre565, %.lr.ph490 ], [ %4, %bb.bh ]
+  %3 = phi ptr [ %.pre565, %.lr.ph490 ], [ %6, %bb.bh ] ; 2 uses
   %i.jf = phi i1 [ %i.iy, %.lr.ph490 ], [ %i.lr, %bb.bh ] ; 2 uses
   %.sroa.026.0489 = phi i64 [ %.sroa.026.0.ph495, %.lr.ph490 ], [ %i.lp, %bb.bh ] ; 2 uses
   %i.jg = phi i32 [ %.promoted496, %.lr.ph490 ], [ %i.lq, %bb.bh ]
-  %2 = load ptr, ptr %i.l, align 16, !alias.scope !1957, !nonnull !5
-  %.sink10.i260 = select i1 %i.jf, ptr %2, ptr %i.l ; 2 uses
+  %.sink10.i260 = select i1 %i.jf, ptr %3, ptr %i.l ; 2 uses
   %i.jh = select i1 %i.jf, i64 %i.jd, i64 %i.je   ; 2 uses
   %i.ji = icmp eq i64 %i.jh, 0
   br i1 %i.ji, label %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit, label %.lr.ph.preheader.i
@@ -277,7 +280,7 @@ bb.be:                                            ; preds = %.lr.ph490, %bb.bh
   %.sroa.4.018.i = phi ptr [ %i.jk, %.lr.ph.i266 ], [ %i.jj, %.lr.ph.preheader.i ]
   %.lcssa1617.i = phi i64 [ %i.ko, %.lr.ph.i266 ], [ 0, %.lr.ph.preheader.i ]
   %i.jk = getelementptr inbounds i8, ptr %.sroa.4.018.i, i64 -16 ; 4 uses
-  %i.jl = load i128, ptr %i.jk, align 16, !alias.scope !1958, !noundef !5 ; 3 uses
+  %i.jl = load i128, ptr %i.jk, align 16, !alias.scope !1957, !noundef !5 ; 3 uses
   %i.jm = lshr i128 %i.jl, 96
   %i.jn = trunc nuw nsw i128 %i.jm to i64
   %i.jo = shl nuw nsw i64 %.lcssa1617.i, 32
@@ -310,41 +313,41 @@ bb.be:                                            ; preds = %.lr.ph490, %bb.bh
   %i.kp = udiv i64 %i.kn, 10
   %i.kq = zext nneg i64 %i.kp to i128
   %i.kr = or i128 %i.kk, %i.kq
-  store i128 %i.kr, ptr %i.jk, align 16, !alias.scope !1958
+  store i128 %i.kr, ptr %i.jk, align 16, !alias.scope !1957
   %i.ks = icmp eq ptr %.sink10.i260, %i.jk
   br i1 %i.ks, label %._crit_edge.i, label %.lr.ph.i266
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i266
   %i.kt = trunc nuw nsw i64 %i.ko to i8
+  %.pre564 = load ptr, ptr %i.l, align 16, !alias.scope !1958 ; 3 uses
   %.pre568 = load i64, ptr %i.bb, align 16, !alias.scope !1959 ; 2 uses
   %.pre569 = load i64, ptr %i.bf, align 8, !alias.scope !1959 ; 2 uses
   br label %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit
 
 _RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit: ; preds = %bb.be, %._crit_edge.i
+  %.pre565581 = phi ptr [ %.pre565582, %bb.be ], [ %.pre564, %._crit_edge.i ] ; 2 uses
   %i.ku = phi i64 [ %i.jb, %bb.be ], [ %.pre569, %._crit_edge.i ] ; 2 uses
   %i.kv = phi i64 [ %i.jc, %bb.be ], [ %.pre568, %._crit_edge.i ] ; 2 uses
   %i.kw = phi i64 [ %i.jd, %bb.be ], [ %.pre569, %._crit_edge.i ] ; 4 uses
   %i.kx = phi i64 [ %i.je, %bb.be ], [ %.pre568, %._crit_edge.i ] ; 5 uses
+  %4 = phi ptr [ %2, %bb.be ], [ %.pre564, %._crit_edge.i ] ; 4 uses
+  %5 = phi ptr [ %3, %bb.be ], [ %.pre564, %._crit_edge.i ]
   %.sroa.0314.0 = phi i8 [ 0, %bb.be ], [ %i.kt, %._crit_edge.i ] ; 2 uses
   %i.ky = icmp ugt i64 %i.kx, 2                   ; 2 uses
   %.sink10.i268481 = select i1 %i.ky, i64 %i.kw, i64 %i.kx ; 2 uses
   %.not165482 = icmp eq i64 %.sink10.i268481, 0
-  br i1 %.not165482, label %.critedge172, label %.lr.ph484
+  br i1 %.not165482, label %.critedge172, label %bb.bf
 
-.lr.ph484:                                        ; preds = %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit
-  %3 = load ptr, ptr %i.l, align 16, !alias.scope !1959, !nonnull !5
-  br label %bb.bf
-
-bb.bf:                                            ; preds = %.lr.ph484, %bb.bn
-  %i.kz = phi i64 [ %i.ku, %.lr.ph484 ], [ %i.mm, %bb.bn ] ; 2 uses
-  %i.la = phi i64 [ %i.kv, %.lr.ph484 ], [ %i.mn, %bb.bn ] ; 2 uses
-  %i.lb = phi i64 [ %i.kw, %.lr.ph484 ], [ %i.mo, %bb.bn ] ; 2 uses
-  %i.lc = phi i64 [ %i.kx, %.lr.ph484 ], [ %i.mp, %bb.bn ] ; 2 uses
-  %i.ld = phi i64 [ %i.kw, %.lr.ph484 ], [ %i.mq, %bb.bn ]
-  %i.le = phi i64 [ %i.kx, %.lr.ph484 ], [ %i.mr, %bb.bn ]
-  %.sink10.i268483 = phi i64 [ %.sink10.i268481, %.lr.ph484 ], [ %.sink10.i268, %bb.bn ]
-  %i.lf = phi i1 [ %i.ky, %.lr.ph484 ], [ %i.ms, %bb.bn ] ; 2 uses
-  %.sink11.i267 = select i1 %i.lf, ptr %3, ptr %i.l
+bb.bf:                                            ; preds = %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit, %bb.bn
+  %i.kz = phi i64 [ %i.mm, %bb.bn ], [ %i.ku, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %i.la = phi i64 [ %i.mn, %bb.bn ], [ %i.kv, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %i.lb = phi i64 [ %i.mo, %bb.bn ], [ %i.kw, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %i.lc = phi i64 [ %i.mp, %bb.bn ], [ %i.kx, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %i.ld = phi i64 [ %i.mq, %bb.bn ], [ %i.kw, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ]
+  %i.le = phi i64 [ %i.mr, %bb.bn ], [ %i.kx, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ]
+  %.sink10.i268483 = phi i64 [ %.sink10.i268, %bb.bn ], [ %.sink10.i268481, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ]
+  %i.lf = phi i1 [ %i.ms, %bb.bn ], [ %i.ky, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %.sink11.i267 = select i1 %i.lf, ptr %4, ptr %i.l
   %i.lg = getelementptr [16 x i8], ptr %.sink11.i267, i64 %.sink10.i268483
   %i.lh = getelementptr i8, ptr %i.lg, i64 -16
   %i.li = load i128, ptr %i.lh, align 16, !noundef !5
@@ -356,6 +359,7 @@ bb.bf:                                            ; preds = %.lr.ph484, %bb.bn
   %i.ll = phi i64 [ %i.kv, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ], [ %i.la, %bb.bf ], [ %i.mn, %bb.bn ] ; 2 uses
   %i.lm = phi i64 [ %i.kw, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ], [ %i.lb, %bb.bf ], [ %i.mo, %bb.bn ] ; 2 uses
   %i.ln = phi i64 [ %i.kx, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ], [ %i.lc, %bb.bf ], [ %i.mp, %bb.bn ] ; 3 uses
+  %6 = phi ptr [ %5, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ], [ %4, %bb.bn ], [ %4, %bb.bf ]
   %.not166 = icmp eq i64 %.sroa.026.0489, 0
   br i1 %.not166, label %bb.bg, label %bb.bh
 
@@ -403,8 +407,9 @@ _RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exi
   %i.mc = load i64, ptr %.sroa.01.0.i276, align 8, !alias.scope !1961, !noundef !5
   %i.md = add i64 %i.mc, 1
   store i64 %i.md, ptr %.sroa.01.0.i276, align 8, !alias.scope !1961
-  %.pre573.a = load i64, ptr %i.bb, align 16, !alias.scope !1957
-  %.pre574 = load i64, ptr %i.bf, align 8, !alias.scope !1957
+  %.pre573.a = load i64, ptr %i.bb, align 16, !alias.scope !1958
+  %.pre574 = load i64, ptr %i.bf, align 8, !alias.scope !1958
+  %.pre565.pre = load ptr, ptr %i.l, align 16, !alias.scope !1958
   br label %.outer
 
 bb.bk:                                            ; preds = %bb.bg
@@ -413,6 +418,7 @@ bb.bk:                                            ; preds = %bb.bg
   br label %.outer
 
 .outer:                                           ; preds = %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit, %bb.bk
+  %.pre565580 = phi ptr [ %.pre565.pre, %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit ], [ %.pre565581, %bb.bk ]
   %i.mf = phi i64 [ %.pre574, %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit ], [ %i.lk, %bb.bk ] ; 2 uses
   %i.mg = phi i64 [ %.pre573.a, %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit ], [ %i.ll, %bb.bk ] ; 3 uses
   %.promoted = phi i32 [ %i.ja, %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit ], [ %i.me, %bb.bk ] ; 2 uses
@@ -815,7 +821,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %.lr
   %i.ie = udiv i64 %i.id, 59
   %i.if = load i64, ptr %i.bb, align 16, !alias.scope !2047, !noundef !5 ; 3 uses
   %i.ig = icmp ugt i64 %i.if, 2                   ; 3 uses
-  %i.ih = load ptr, ptr %i.l, align 16, !alias.scope !2047, !nonnull !5
+  %i.ih = load ptr, ptr %i.l, align 16, !alias.scope !2047 ; 2 uses
   %i.ii = load i64, ptr %i.bf, align 8, !alias.scope !2047 ; 2 uses
   %.sink11.i = select i1 %i.ig, ptr %i.ih, ptr %i.l
   %.sink10.i175 = select i1 %i.ig, i64 %i.ii, i64 %i.if ; 3 uses
@@ -854,6 +860,7 @@ _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb.exit: ; preds = %bb.bc, %.lo
   br label %.lr.ph490
 
 .lr.ph490:                                        ; preds = %.lr.ph490.lr.ph, %.outer
+  %.pre565 = phi ptr [ %i.ih, %.lr.ph490.lr.ph ], [ %.pre565580, %.outer ] ; 3 uses
   %i.iw = phi i64 [ %i.ii, %.lr.ph490.lr.ph ], [ %i.mf, %.outer ] ; 2 uses
   %i.ix = phi i64 [ %i.if, %.lr.ph490.lr.ph ], [ %i.mg, %.outer ] ; 2 uses
   %i.iy = phi i1 [ %i.ig, %.lr.ph490.lr.ph ], [ %i.mh, %.outer ]
@@ -865,15 +872,17 @@ _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb.exit: ; preds = %bb.bc, %.lo
   br label %bb.be
 
 bb.be:                                            ; preds = %.lr.ph490, %bb.bh
+  %.pre565582 = phi ptr [ %.pre565, %.lr.ph490 ], [ %.pre565581, %bb.bh ]
   %i.jb = phi i64 [ %i.iw, %.lr.ph490 ], [ %i.lk, %bb.bh ]
   %i.jc = phi i64 [ %i.ix, %.lr.ph490 ], [ %i.ll, %bb.bh ]
   %i.jd = phi i64 [ %i.iw, %.lr.ph490 ], [ %i.lm, %bb.bh ] ; 2 uses
   %i.je = phi i64 [ %i.ix, %.lr.ph490 ], [ %i.ln, %bb.bh ] ; 2 uses
+  %2 = phi ptr [ %.pre565, %.lr.ph490 ], [ %4, %bb.bh ]
+  %3 = phi ptr [ %.pre565, %.lr.ph490 ], [ %6, %bb.bh ] ; 2 uses
   %i.jf = phi i1 [ %i.iy, %.lr.ph490 ], [ %i.lr, %bb.bh ] ; 2 uses
   %.sroa.026.0489 = phi i64 [ %.sroa.026.0.ph495, %.lr.ph490 ], [ %i.lp, %bb.bh ] ; 2 uses
   %i.jg = phi i32 [ %.promoted496, %.lr.ph490 ], [ %i.lq, %bb.bh ]
-  %2 = load ptr, ptr %i.l, align 16, !alias.scope !2049, !nonnull !5
-  %.sink10.i260 = select i1 %i.jf, ptr %2, ptr %i.l ; 2 uses
+  %.sink10.i260 = select i1 %i.jf, ptr %3, ptr %i.l ; 2 uses
   %i.jh = select i1 %i.jf, i64 %i.jd, i64 %i.je   ; 2 uses
   %i.ji = icmp eq i64 %i.jh, 0
   br i1 %i.ji, label %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit, label %.lr.ph.preheader.i
@@ -887,7 +896,7 @@ bb.be:                                            ; preds = %.lr.ph490, %bb.bh
   %.sroa.4.018.i = phi ptr [ %i.jk, %.lr.ph.i266 ], [ %i.jj, %.lr.ph.preheader.i ]
   %.lcssa1617.i = phi i64 [ %i.ko, %.lr.ph.i266 ], [ 0, %.lr.ph.preheader.i ]
   %i.jk = getelementptr inbounds i8, ptr %.sroa.4.018.i, i64 -16 ; 4 uses
-  %i.jl = load i128, ptr %i.jk, align 16, !alias.scope !2050, !noundef !5 ; 3 uses
+  %i.jl = load i128, ptr %i.jk, align 16, !alias.scope !2049, !noundef !5 ; 3 uses
   %i.jm = lshr i128 %i.jl, 96
   %i.jn = trunc nuw nsw i128 %i.jm to i64
   %i.jo = shl nuw nsw i64 %.lcssa1617.i, 32
@@ -920,41 +929,41 @@ bb.be:                                            ; preds = %.lr.ph490, %bb.bh
   %i.kp = udiv i64 %i.kn, 10
   %i.kq = zext nneg i64 %i.kp to i128
   %i.kr = or i128 %i.kk, %i.kq
-  store i128 %i.kr, ptr %i.jk, align 16, !alias.scope !2050
+  store i128 %i.kr, ptr %i.jk, align 16, !alias.scope !2049
   %i.ks = icmp eq ptr %.sink10.i260, %i.jk
   br i1 %i.ks, label %._crit_edge.i, label %.lr.ph.i266
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i266
   %i.kt = trunc nuw nsw i64 %i.ko to i8
+  %.pre564 = load ptr, ptr %i.l, align 16, !alias.scope !2050 ; 3 uses
   %.pre568 = load i64, ptr %i.bb, align 16, !alias.scope !2051 ; 2 uses
   %.pre569 = load i64, ptr %i.bf, align 8, !alias.scope !2051 ; 2 uses
   br label %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit
 
 _RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit: ; preds = %bb.be, %._crit_edge.i
+  %.pre565581 = phi ptr [ %.pre565582, %bb.be ], [ %.pre564, %._crit_edge.i ] ; 2 uses
   %i.ku = phi i64 [ %i.jb, %bb.be ], [ %.pre569, %._crit_edge.i ] ; 2 uses
   %i.kv = phi i64 [ %i.jc, %bb.be ], [ %.pre568, %._crit_edge.i ] ; 2 uses
   %i.kw = phi i64 [ %i.jd, %bb.be ], [ %.pre569, %._crit_edge.i ] ; 4 uses
   %i.kx = phi i64 [ %i.je, %bb.be ], [ %.pre568, %._crit_edge.i ] ; 5 uses
+  %4 = phi ptr [ %2, %bb.be ], [ %.pre564, %._crit_edge.i ] ; 4 uses
+  %5 = phi ptr [ %3, %bb.be ], [ %.pre564, %._crit_edge.i ]
   %.sroa.0314.0 = phi i8 [ 0, %bb.be ], [ %i.kt, %._crit_edge.i ] ; 2 uses
   %i.ky = icmp ugt i64 %i.kx, 2                   ; 2 uses
   %.sink10.i268481 = select i1 %i.ky, i64 %i.kw, i64 %i.kx ; 2 uses
   %.not165482 = icmp eq i64 %.sink10.i268481, 0
-  br i1 %.not165482, label %.critedge172, label %.lr.ph484
+  br i1 %.not165482, label %.critedge172, label %bb.bf
 
-.lr.ph484:                                        ; preds = %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit
-  %3 = load ptr, ptr %i.l, align 16, !alias.scope !2051, !nonnull !5
-  br label %bb.bf
-
-bb.bf:                                            ; preds = %.lr.ph484, %bb.bn
-  %i.kz = phi i64 [ %i.ku, %.lr.ph484 ], [ %i.mm, %bb.bn ] ; 2 uses
-  %i.la = phi i64 [ %i.kv, %.lr.ph484 ], [ %i.mn, %bb.bn ] ; 2 uses
-  %i.lb = phi i64 [ %i.kw, %.lr.ph484 ], [ %i.mo, %bb.bn ] ; 2 uses
-  %i.lc = phi i64 [ %i.kx, %.lr.ph484 ], [ %i.mp, %bb.bn ] ; 2 uses
-  %i.ld = phi i64 [ %i.kw, %.lr.ph484 ], [ %i.mq, %bb.bn ]
-  %i.le = phi i64 [ %i.kx, %.lr.ph484 ], [ %i.mr, %bb.bn ]
-  %.sink10.i268483 = phi i64 [ %.sink10.i268481, %.lr.ph484 ], [ %.sink10.i268, %bb.bn ]
-  %i.lf = phi i1 [ %i.ky, %.lr.ph484 ], [ %i.ms, %bb.bn ] ; 2 uses
-  %.sink11.i267 = select i1 %i.lf, ptr %3, ptr %i.l
+bb.bf:                                            ; preds = %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit, %bb.bn
+  %i.kz = phi i64 [ %i.mm, %bb.bn ], [ %i.ku, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %i.la = phi i64 [ %i.mn, %bb.bn ], [ %i.kv, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %i.lb = phi i64 [ %i.mo, %bb.bn ], [ %i.kw, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %i.lc = phi i64 [ %i.mp, %bb.bn ], [ %i.kx, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %i.ld = phi i64 [ %i.mq, %bb.bn ], [ %i.kw, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ]
+  %i.le = phi i64 [ %i.mr, %bb.bn ], [ %i.kx, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ]
+  %.sink10.i268483 = phi i64 [ %.sink10.i268, %bb.bn ], [ %.sink10.i268481, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ]
+  %i.lf = phi i1 [ %i.ms, %bb.bn ], [ %i.ky, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ] ; 2 uses
+  %.sink11.i267 = select i1 %i.lf, ptr %4, ptr %i.l
   %i.lg = getelementptr [16 x i8], ptr %.sink11.i267, i64 %.sink10.i268483
   %i.lh = getelementptr i8, ptr %i.lg, i64 -16
   %i.li = load i128, ptr %i.lh, align 16, !noundef !5
@@ -966,6 +975,7 @@ bb.bf:                                            ; preds = %.lr.ph484, %bb.bn
   %i.ll = phi i64 [ %i.kv, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ], [ %i.la, %bb.bf ], [ %i.mn, %bb.bn ] ; 2 uses
   %i.lm = phi i64 [ %i.kw, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ], [ %i.lb, %bb.bf ], [ %i.mo, %bb.bn ] ; 2 uses
   %i.ln = phi i64 [ %i.kx, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ], [ %i.lc, %bb.bf ], [ %i.mp, %bb.bn ] ; 3 uses
+  %6 = phi ptr [ %5, %_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide.exit ], [ %4, %bb.bn ], [ %4, %bb.bf ]
   %.not166 = icmp eq i64 %.sroa.026.0489, 0
   br i1 %.not166, label %bb.bg, label %bb.bh
 
@@ -1013,8 +1023,9 @@ _RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exi
   %i.mc = load i64, ptr %.sroa.01.0.i276, align 8, !alias.scope !2053, !noundef !5
   %i.md = add i64 %i.mc, 1
   store i64 %i.md, ptr %.sroa.01.0.i276, align 8, !alias.scope !2053
-  %.pre573.a = load i64, ptr %i.bb, align 16, !alias.scope !2049
-  %.pre574 = load i64, ptr %i.bf, align 8, !alias.scope !2049
+  %.pre573.a = load i64, ptr %i.bb, align 16, !alias.scope !2050
+  %.pre574 = load i64, ptr %i.bf, align 8, !alias.scope !2050
+  %.pre565.pre = load ptr, ptr %i.l, align 16, !alias.scope !2050
   br label %.outer
 
 bb.bk:                                            ; preds = %bb.bg
@@ -1023,6 +1034,7 @@ bb.bk:                                            ; preds = %bb.bg
   br label %.outer
 
 .outer:                                           ; preds = %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit, %bb.bk
+  %.pre565580 = phi ptr [ %.pre565.pre, %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit ], [ %.pre565581, %bb.bk ]
   %i.mf = phi i64 [ %.pre574, %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit ], [ %i.lk, %bb.bk ] ; 2 uses
   %i.mg = phi i64 [ %.pre573.a, %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit ], [ %i.ll, %bb.bk ] ; 3 uses
   %.promoted = phi i32 [ %i.ja, %_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide.exit ], [ %i.me, %bb.bk ] ; 2 uses
@@ -1425,10 +1437,10 @@ begin_hunk_2_@llvm.abs.i128
 !1911 = distinct !{!1911, !1910, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide: argument 1"}
 !1912 = distinct !{!1912, i1 true, !"_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb"}
 !1913 = distinct !{!1913, !1912, !"_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb: argument 0"}
-!1914 = distinct !{!1914, i1 true, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide"}
-!1915 = distinct !{!1915, !1914, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide: argument 1"}
-!1916 = distinct !{!1916, i1 true, !"_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide"}
-!1917 = distinct !{!1917, !1916, !"_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide: argument 0"}
+!1914 = distinct !{!1914, i1 true, !"_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide"}
+!1915 = distinct !{!1915, !1914, !"_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5HalfSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide: argument 0"}
+!1916 = distinct !{!1916, i1 true, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide"}
+!1917 = distinct !{!1917, !1916, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide: argument 1"}
 !1918 = distinct !{!1918, i1 true, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide"}
 !1919 = distinct !{!1919, !1918, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide: argument 1"}
 !1920 = distinct !{!1920, i1 true, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide"}
@@ -1517,10 +1529,10 @@ begin_hunk_2_@llvm.abs.i128
 !2003 = distinct !{!2003, !2002, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide: argument 1"}
 !2004 = distinct !{!2004, i1 true, !"_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb"}
 !2005 = distinct !{!2005, !2004, !"_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb: argument 0"}
-!2006 = distinct !{!2006, i1 true, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide"}
-!2007 = distinct !{!2007, !2006, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide: argument 1"}
-!2008 = distinct !{!2008, i1 true, !"_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide"}
-!2009 = distinct !{!2009, !2008, !"_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide: argument 0"}
+!2006 = distinct !{!2006, i1 true, !"_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide"}
+!2007 = distinct !{!2007, !2006, !"_RINvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10each_chunkNCNvXs5_B4_INtB4_9IeeeFloatNtB4_5QuadSENtNtCshzWfHUSfYae_4core3fmt7Display3fmt0ECslLuZgPVt6hg_3ide: argument 0"}
+!2008 = distinct !{!2008, i1 true, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide"}
+!2009 = distinct !{!2009, !2008, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide: argument 1"}
 !2010 = distinct !{!2010, i1 true, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide"}
 !2011 = distinct !{!2011, !2010, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAoj2_E6tripleCslLuZgPVt6hg_3ide: argument 1"}
 !2012 = distinct !{!2012, i1 true, !"_RNvMsd_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecAhj40_E4pushCslLuZgPVt6hg_3ide"}

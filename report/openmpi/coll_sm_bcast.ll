@@ -151,6 +151,7 @@ opal_convertor_get_packed_size.exit:              ; preds = %bb.g, %bb.j
   %i.bg = add nsw i32 %.val141.val, -1
   %i.bh = getelementptr inbounds nuw i8, ptr %i.g, i64 48 ; 2 uses
   %i.bi = icmp sgt i32 %.fr186, 0
+  %.pre220 = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !101
   %wide.trip.count213 = zext i32 %.fr186 to i64   ; 2 uses
   %xtraiter276 = and i64 %wide.trip.count213, 1
   %i.bj = icmp eq i32 %.fr186, 1
@@ -160,14 +161,14 @@ opal_convertor_get_packed_size.exit:              ; preds = %bb.g, %bb.j
   br label %bb.k
 
 bb.k:                                             ; preds = %.split184.us.a, %opal_convertor_get_packed_size.exit
+  %8 = phi i32 [ %.pre220, %opal_convertor_get_packed_size.exit ], [ %.be, %.split184.us.a ]
   %.0114 = phi i64 [ 0, %opal_convertor_get_packed_size.exit ], [ %.us-phi185, %.split184.us.a ] ; 2 uses
-  %i.bk = load i32, ptr %i.be, align 8, !tbaa !101 ; 2 uses
+  %i.bk = load i32, ptr %i.be, align 8, !tbaa !102 ; 2 uses
   %i.bl = add i32 %i.bk, 1
-  store i32 %i.bl, ptr %i.be, align 8, !tbaa !101
-  %i.bm = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 288), align 8, !tbaa !102
+  store i32 %i.bl, ptr %i.be, align 8, !tbaa !102
+  %i.bm = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 288), align 8, !tbaa !103
   %i.bn = urem i32 %i.bk, %i.bm                   ; 3 uses
-  %i.bo = load ptr, ptr %i.bf, align 8, !tbaa !103
-  %8 = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !104
+  %i.bo = load ptr, ptr %i.bf, align 8, !tbaa !104
   %i.bp = mul nsw i32 %8, %i.bn
   %i.bq = sext i32 %i.bp to i64
   %i.br = getelementptr inbounds i8, ptr %i.bo, i64 %i.bq ; 5 uses
@@ -198,7 +199,7 @@ bb.m:                                             ; preds = %bb.l
 
 .loopexit:                                        ; preds = %bb.m, %.preheader, %bb.k
   store volatile i32 %i.bg, ptr %i.br, align 4, !tbaa !106
-  %i.ca = load i32, ptr %i.be, align 8, !tbaa !101
+  %i.ca = load i32, ptr %i.be, align 8, !tbaa !102
   %i.cb = add i32 %i.ca, -1
   %i.cc = getelementptr inbounds nuw i8, ptr %i.br, i64 4
   store volatile i32 %i.cb, ptr %i.cc, align 4, !tbaa !107
@@ -229,7 +230,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ct = load i64, ptr %i.a, align 8, !tbaa !110 ; 4 uses
   fence release
   %i.cu = load ptr, ptr %i.ck, align 8, !tbaa !114 ; 3 uses
-  %i.cv = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !104 ; 3 uses
+  %i.cv = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !101 ; 4 uses
   br i1 %i.bj, label %.epil.preheader275, label %.lr.ph.us.new
 
 .lr.ph.us.new:                                    ; preds = %.lr.ph.us, %.lr.ph.us.new
@@ -282,7 +283,7 @@ bb.m:                                             ; preds = %bb.l
   %i.dw = icmp ult i64 %i.dv, %.0155              ; 2 uses
   %i.dx = icmp slt i64 %indvars.iv.next216, %i.ci
   %i.dy = select i1 %i.dw, i1 %i.dx, i1 false
-  br i1 %i.dy, label %.lr.ph.us, label %.split184.us.a, !llvm.loop !12
+  br i1 %i.dy, label %.lr.ph.us, label %.split184.us, !llvm.loop !12
 
 .split:                                           ; preds = %.loopexit, %.split
   %indvars.iv207 = phi i64 [ %indvars.iv.next208, %.split ], [ %i.ch, %.loopexit ] ; 2 uses
@@ -307,12 +308,19 @@ bb.m:                                             ; preds = %bb.l
   %i.el = icmp ult i64 %i.ek, %.0155              ; 2 uses
   %i.em = icmp slt i64 %indvars.iv.next208, %i.ci
   %i.en = select i1 %i.el, i1 %i.em, i1 false
-  br i1 %i.en, label %.split, label %.split184.us.a, !llvm.loop !12
+  br i1 %i.en, label %.split, label %.split184.us.loopexit187, !llvm.loop !12
 
-.split184.us.a:                                   ; preds = %.split, %._crit_edge.us
-  %.us-phi = phi i1 [ %i.dw, %._crit_edge.us ], [ %i.el, %.split ]
-  %.us-phi185 = phi i64 [ %i.dv, %._crit_edge.us ], [ %i.ek, %.split ]
-  br i1 %.us-phi, label %bb.k, label %.loopexit163, !llvm.loop !13
+.split184.us.loopexit187:                         ; preds = %.split
+  %.pre219 = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !101
+  br i1 %i.el, label %.split184.us.a, label %.loopexit163
+
+.split184.us:                                     ; preds = %._crit_edge.us
+  br i1 %i.dw, label %.split184.us.a, label %.loopexit163
+
+.split184.us.a:                                   ; preds = %.split184.us, %.split184.us.loopexit187
+  %.be = phi i32 [ %i.cv, %.split184.us ], [ %.pre219, %.split184.us.loopexit187 ]
+  %.us-phi185 = phi i64 [ %i.dv, %.split184.us ], [ %i.ek, %.split184.us.loopexit187 ]
+  br label %bb.k, !llvm.loop !13
 
 bb.n:                                             ; preds = %opal_obj_run_constructors.exit
   %i.eo = call i32 @opal_convertor_prepare_for_recv(ptr noundef nonnull %7, ptr noundef %2, i64 noundef range(i64 -2147483648, 2147483648) %i.ak, ptr noundef %0) #4 ; 2 uses
@@ -363,11 +371,11 @@ opal_convertor_get_packed_size.exit148:           ; preds = %bb.o, %bb.r
 
 bb.s:                                             ; preds = %bb.ae, %opal_convertor_get_packed_size.exit148
   %.2116 = phi i64 [ 0, %opal_convertor_get_packed_size.exit148 ], [ %i.iy, %bb.ae ]
-  %i.ff = load i32, ptr %i.fa, align 8, !tbaa !101 ; 4 uses
-  %i.fg = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 288), align 8, !tbaa !102
+  %i.ff = load i32, ptr %i.fa, align 8, !tbaa !102 ; 4 uses
+  %i.fg = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 288), align 8, !tbaa !103
   %i.fh = urem i32 %i.ff, %i.fg                   ; 3 uses
-  %i.fi = load ptr, ptr %i.fb, align 8, !tbaa !103
-  %i.fj = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !104
+  %i.fi = load ptr, ptr %i.fb, align 8, !tbaa !104
+  %i.fj = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !101
   %i.fk = mul nsw i32 %i.fj, %i.fh
   %i.fl = sext i32 %i.fk to i64
   %i.fm = getelementptr inbounds i8, ptr %i.fi, i64 %i.fl ; 2 uses
@@ -413,7 +421,7 @@ bb.y:                                             ; preds = %bb.x, %.preheader16
 
 bb.z:                                             ; preds = %bb.x
   %i.gc = call i32 @opal_progress() #4            ; 0 uses
-  %i.gd = load i32, ptr %i.fa, align 8, !tbaa !101 ; 3 uses
+  %i.gd = load i32, ptr %i.fa, align 8, !tbaa !102 ; 3 uses
   %i.ge = load volatile i32, ptr %i.fn, align 4, !tbaa !107
   %i.gf = icmp eq i32 %i.gd, %i.ge
   br i1 %i.gf, label %.loopexit169, label %.preheader168
@@ -421,7 +429,7 @@ bb.z:                                             ; preds = %bb.x
 .loopexit169:                                     ; preds = %bb.z, %bb.y, %bb.t, %bb.u, %bb.v, %bb.w, %bb.s
   %i.gg = phi i32 [ %i.fq, %bb.y ], [ %i.ff, %bb.s ], [ %i.fq, %bb.w ], [ %i.fq, %bb.v ], [ %i.fq, %bb.u ], [ %i.fq, %bb.t ], [ %i.gd, %bb.z ]
   %i.gh = add i32 %i.gg, 1
-  store i32 %i.gh, ptr %i.fa, align 8, !tbaa !101
+  store i32 %i.gh, ptr %i.fa, align 8, !tbaa !102
   %i.gi = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 308), align 4, !tbaa !108 ; 2 uses
   %i.gj = mul i32 %i.gi, %i.fh
   %i.gk = add nsw i32 %i.fh, 1
@@ -439,7 +447,7 @@ bb.aa:                                            ; preds = %.loopexit166, %.loo
   %i.gr = load ptr, ptr %i.fc, align 8, !tbaa !109
   %i.gs = getelementptr inbounds [16 x i8], ptr %i.gr, i64 %indvars.iv203 ; 4 uses
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !114
-  %i.gu = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !104
+  %i.gu = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !101
   %i.gv = mul nsw i32 %i.gu, %.val
   %i.gw = sext i32 %i.gv to i64
   %i.gx = getelementptr inbounds i8, ptr %i.gt, i64 %i.gw ; 5 uses
@@ -488,7 +496,7 @@ bb.ad:                                            ; preds = %.loopexit165
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hk, ptr align 1 %i.hn, i64 %i.he, i1 false)
   fence release
   %i.ho = load ptr, ptr %i.gs, align 8, !tbaa !114 ; 3 uses
-  %i.hp = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !104 ; 3 uses
+  %i.hp = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_sm_component, i64 284), align 4, !tbaa !101 ; 3 uses
   %.pre = load i64, ptr %i.a, align 8, !tbaa !110 ; 3 uses
   br i1 %i.fe, label %.epil.preheader, label %.new
 
@@ -565,7 +573,7 @@ bb.ae:                                            ; preds = %.loopexit166
   %i.jc = atomicrmw volatile add ptr %i.fm, i32 -1 monotonic, align 4 ; 0 uses
   br i1 %i.iz, label %bb.s, label %.loopexit163, !llvm.loop !18
 
-.loopexit163:                                     ; preds = %bb.ae, %.split184.us.a
+.loopexit163:                                     ; preds = %bb.ae, %.split184.us, %.split184.us.loopexit187
   %i.jd = load ptr, ptr %7, align 8, !tbaa !66
   %i.je = getelementptr inbounds nuw i8, ptr %i.jd, i64 48
   %i.jf = load ptr, ptr %i.je, align 8, !tbaa !117 ; 2 uses
@@ -729,10 +737,10 @@ attributes #4 = { nounwind }
 !98 = !{!96, !35, i64 24}
 !99 = !{!96, !5, i64 20}
 !100 = !{!96, !35, i64 32}
-!101 = !{!82, !5, i64 64}
-!102 = !{!74, !5, i64 288}
-!103 = !{!82, !79, i64 40}
-!104 = !{!74, !5, i64 284}
+!101 = !{!74, !5, i64 284}
+!102 = !{!82, !5, i64 64}
+!103 = !{!74, !5, i64 288}
+!104 = !{!82, !79, i64 40}
 !105 = !{!"mca_coll_sm_in_use_flag_t", !5, i64 0, !5, i64 4}
 !106 = !{!105, !5, i64 0}
 !107 = !{!105, !5, i64 4}

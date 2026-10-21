@@ -143,7 +143,7 @@ lj_snap_grow_buf.exit.i:                          ; preds = %bb.b, %bb.a
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !30
   %i.ab = shl i32 %i.aa, 1
   %i.ac = add nsw i32 %i.t, -2
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 5 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 6 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !39 ; 2 uses
   %i.af = add nsw i32 %i.t, -1
   %i.ag = zext i32 %i.af to i64                   ; 3 uses
@@ -170,7 +170,7 @@ lj_snap_grow_map.exit.i:                          ; preds = %bb.c, %lj_snap_grow
   %i.aq = phi i8 [ %i.aj, %lj_snap_grow_buf.exit.i ], [ %.pre198.i, %bb.c ]
   %i.ar = phi ptr [ %i.ae, %lj_snap_grow_buf.exit.i ], [ %.pre.i, %bb.c ] ; 2 uses
   %i.as = getelementptr inbounds nuw [12 x i8], ptr %i.ar, i64 %i.ag
-  %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 4 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 5 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !42
   %i.av = load i32, ptr %i.as, align 4, !tbaa !43
   %i.aw = zext i32 %i.av to i64
@@ -573,11 +573,16 @@ bb.bf:                                            ; preds = %bb.be
   %i.nb = zext i16 %i.na to i32
   %.0134191.i.i = add nsw i32 %i.nb, -1           ; 2 uses
   %.not156192.i.i = icmp ult i32 %.0134191.i.i, %i.t
-  br i1 %.not156192.i.i, label %.loopexit172.i.i, label %.lr.ph195.i.i.a
+  br i1 %.not156192.i.i, label %.loopexit172.i.i, label %.lr.ph195.i.i
+
+.lr.ph195.i.i:                                    ; preds = %._crit_edge187.i.i
+  %.pre246.i.i = load ptr, ptr %i.ad, align 8, !tbaa !39
+  %.pre248.i.i = load ptr, ptr %i.at, align 8, !tbaa !42
+  br label %.lr.ph195.i.i.a
 
 .loopexit171.i.i.loopexit.unr-lcssa:              ; preds = %bb.bj
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit171.i.i, label %.lr.ph190.i.i.epil.preheader
+  br i1 %lcmp.mod.not, label %.loopexit171.loopexit.i.i, label %.lr.ph190.i.i.epil.preheader
 
 .lr.ph190.i.i.epil.preheader:                     ; preds = %.loopexit171.i.i.loopexit.unr-lcssa, %.lr.ph190.preheader.i.i
   %indvars.iv217.i.i.epil.init = phi i64 [ 0, %.lr.ph190.preheader.i.i ], [ %indvars.iv.next218.i.i.1, %.loopexit171.i.i.loopexit.unr-lcssa ]
@@ -587,7 +592,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.nd = load i32, ptr %i.nc, align 4, !tbaa !44
   %i.ne = and i32 %i.nd, 65535                    ; 2 uses
   %i.nf = icmp samesign ult i32 %i.ne, 32768
-  br i1 %i.nf, label %.loopexit171.i.i, label %bb.bg
+  br i1 %i.nf, label %.loopexit171.loopexit.i.i, label %bb.bg
 
 bb.bg:                                            ; preds = %.lr.ph190.i.i.epil.preheader
   %i.ng = load ptr, ptr %i.jw, align 8, !tbaa !47
@@ -597,23 +602,30 @@ bb.bg:                                            ; preds = %.lr.ph190.i.i.epil.
   %i.nk = load i8, ptr %i.nj, align 4, !tbaa !38
   %i.nl = and i8 %i.nk, -33
   store i8 %i.nl, ptr %i.nj, align 4, !tbaa !38
+  br label %.loopexit171.loopexit.i.i
+
+.loopexit171.loopexit.i.i:                        ; preds = %.lr.ph190.i.i.epil.preheader, %bb.bg, %.loopexit171.i.i.loopexit.unr-lcssa
+  %.pre.i.i = load ptr, ptr %i.ad, align 8, !tbaa !39
+  %.pre247.i.i = load ptr, ptr %i.at, align 8, !tbaa !42
   br label %.loopexit171.i.i
 
-.loopexit171.i.i:                                 ; preds = %.loopexit171.i.i.loopexit.unr-lcssa, %bb.bg, %.lr.ph190.i.i.epil.preheader, %.lr.ph195.i.i.a
+.loopexit171.i.i:                                 ; preds = %.lr.ph195.i.i.a, %.loopexit171.loopexit.i.i
+  %3 = phi ptr [ %.pre247.i.i, %.loopexit171.loopexit.i.i ], [ %5, %.lr.ph195.i.i.a ]
+  %4 = phi ptr [ %.pre.i.i, %.loopexit171.loopexit.i.i ], [ %6, %.lr.ph195.i.i.a ]
   %.0134.i.i = add i32 %.0134193.i.i, -1          ; 2 uses
   %.not156.i.i = icmp ult i32 %.0134.i.i, %i.t
   br i1 %.not156.i.i, label %.loopexit172.i.i, label %.lr.ph195.i.i.a, !llvm.loop !73
 
-.lr.ph195.i.i.a:                                  ; preds = %._crit_edge187.i.i, %.loopexit171.i.i
-  %.0134193.i.i = phi i32 [ %.0134.i.i, %.loopexit171.i.i ], [ %.0134191.i.i, %._crit_edge187.i.i ] ; 2 uses
-  %3 = load ptr, ptr %i.ad, align 8, !tbaa !39
-  %4 = zext i32 %.0134193.i.i to i64
-  %5 = getelementptr inbounds nuw [12 x i8], ptr %3, i64 %4 ; 2 uses
-  %6 = load ptr, ptr %i.at, align 8, !tbaa !42
-  %i.nm = load i32, ptr %5, align 4, !tbaa !43
+.lr.ph195.i.i.a:                                  ; preds = %.loopexit171.i.i, %.lr.ph195.i.i
+  %5 = phi ptr [ %.pre248.i.i, %.lr.ph195.i.i ], [ %3, %.loopexit171.i.i ] ; 2 uses
+  %6 = phi ptr [ %.pre246.i.i, %.lr.ph195.i.i ], [ %4, %.loopexit171.i.i ] ; 2 uses
+  %.0134193.i.i = phi i32 [ %.0134191.i.i, %.lr.ph195.i.i ], [ %.0134.i.i, %.loopexit171.i.i ] ; 2 uses
+  %7 = zext i32 %.0134193.i.i to i64
+  %8 = getelementptr inbounds nuw [12 x i8], ptr %6, i64 %7 ; 2 uses
+  %i.nm = load i32, ptr %8, align 4, !tbaa !43
   %i.nn = zext i32 %i.nm to i64
-  %i.no = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.nn ; 3 uses
-  %i.np = getelementptr inbounds nuw i8, ptr %5, i64 10
+  %i.no = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.nn ; 3 uses
+  %i.np = getelementptr inbounds nuw i8, ptr %8, i64 10
   %i.nq = load i8, ptr %i.np, align 2, !tbaa !41  ; 4 uses
   %.not210.i.i = icmp eq i8 %i.nq, 0
   br i1 %.not210.i.i, label %.loopexit171.i.i, label %.lr.ph190.preheader.i.i

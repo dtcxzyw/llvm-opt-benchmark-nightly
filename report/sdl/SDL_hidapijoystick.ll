@@ -204,7 +204,11 @@ bb.a:
   %i.c = alloca i8, align 1                       ; 5 uses
   tail call void @SDL_LockJoysticks_REAL() #8
   %.b = load i1, ptr @SDL_HIDAPI_hints_changed, align 1
-  br i1 %.b, label %bb.b, label %bb.bd
+  br i1 %.b, label %bb.b, label %._crit_edge120
+
+._crit_edge120:                                   ; preds = %bb.a
+  %.04295.pre = load ptr, ptr @SDL_HIDAPI_devices, align 8
+  br label %bb.bd
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
@@ -553,43 +557,47 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.ee = icmp eq ptr %i.ed, null
   br i1 %i.ee, label %SDL_HIDAPI_UpdateDrivers.exit, label %.split.i.a
 
-.splitthread-pre-split.i.loopexit:                ; preds = %.lr.ph.i
-  %.013.pr.i.pre = load ptr, ptr @SDL_HIDAPI_devices, align 8
-  br label %.split.i.backedge
-
-.split.i.backedge:                                ; preds = %.splitthread-pre-split.i.loopexit, %._crit_edge.i
-  %.013.pr.i120.be = phi ptr [ null, %._crit_edge.i ], [ %.013.pr.i.pre, %.splitthread-pre-split.i.loopexit ]
-  br label %.split.i.a, !llvm.loop !22
-
-.split.i.a:                                       ; preds = %bb.bb, %.split.i.backedge
-  %.013.pr.i120 = phi ptr [ %.013.pr.i120.be, %.split.i.backedge ], [ %i.ed, %bb.bb ] ; 2 uses
-  %i.ef = phi i1 [ true, %.split.i.backedge ], [ false, %bb.bb ]
+.split.i.a:                                       ; preds = %bb.bb, %._crit_edge.i
+  %.013.pr.i120 = phi ptr [ %.013.pre.i, %._crit_edge.i ], [ %i.ed, %bb.bb ] ; 3 uses
+  %i.ef = phi i1 [ true, %._crit_edge.i ], [ false, %bb.bb ]
   %.not14.i = icmp eq ptr %.013.pr.i120, null
-  br i1 %.not14.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not14.i, label %._crit_edge.i.peel, label %.lr.ph.i
+
+._crit_edge.i.peel:                               ; preds = %.split.i.a
+  br i1 %i.ef, label %.split.i, label %SDL_HIDAPI_UpdateDrivers.exit
+
+.split.i:                                         ; preds = %._crit_edge.i.peel, %.split.i
+  br label %.split.i, !llvm.loop !22
 
 bb.bc:                                            ; preds = %.lr.ph.i
   %i.eg = getelementptr inbounds nuw i8, ptr %.015.i, i64 184
   %.0.i = load ptr, ptr %i.eg, align 8            ; 2 uses
   %.not.i = icmp eq ptr %.0.i, null
-  br i1 %.not.i, label %SDL_HIDAPI_UpdateDrivers.exit, label %.lr.ph.i, !llvm.loop !23
+  br i1 %.not.i, label %._crit_edge.loopexit.i.thread, label %.lr.ph.i, !llvm.loop !23
+
+._crit_edge.loopexit.i.thread:                    ; preds = %bb.bc
+  %.013.pre.i139 = load ptr, ptr @SDL_HIDAPI_devices, align 8
+  br label %SDL_HIDAPI_UpdateDrivers.exit
 
 .lr.ph.i:                                         ; preds = %.split.i.a, %bb.bc
   %.015.i = phi ptr [ %.0.i, %bb.bc ], [ %.013.pr.i120, %.split.i.a ] ; 2 uses
   call fastcc void @HIDAPI_SetupDeviceDriver(ptr noundef %.015.i, ptr noundef %i.c)
   %i.eh = load i8, ptr %i.c, align 1, !range !7, !noundef !8
   %i.ei = trunc nuw i8 %i.eh to i1
-  br i1 %i.ei, label %.splitthread-pre-split.i.loopexit, label %bb.bc
+  br i1 %i.ei, label %._crit_edge.i, label %bb.bc
 
-._crit_edge.i:                                    ; preds = %.split.i.a
-  br i1 %i.ef, label %.split.i.backedge, label %SDL_HIDAPI_UpdateDrivers.exit
+._crit_edge.i:                                    ; preds = %.lr.ph.i
+  %.013.pre.i = load ptr, ptr @SDL_HIDAPI_devices, align 8
+  br label %.split.i.a
 
-SDL_HIDAPI_UpdateDrivers.exit:                    ; preds = %._crit_edge.i, %bb.bc, %bb.bb
+SDL_HIDAPI_UpdateDrivers.exit:                    ; preds = %._crit_edge.i.peel, %._crit_edge.loopexit.i.thread, %bb.bb
+  %.04295124 = phi ptr [ null, %bb.bb ], [ %.013.pre.i139, %._crit_edge.loopexit.i.thread ], [ %.013.pr.i120, %._crit_edge.i.peel ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   store i1 false, ptr @SDL_HIDAPI_hints_changed, align 1
   br label %bb.bd
 
-bb.bd:                                            ; preds = %SDL_HIDAPI_UpdateDrivers.exit, %bb.a
-  %.04295 = load ptr, ptr @SDL_HIDAPI_devices, align 8 ; 2 uses
+bb.bd:                                            ; preds = %._crit_edge120, %SDL_HIDAPI_UpdateDrivers.exit
+  %.04295 = phi ptr [ %.04295.pre, %._crit_edge120 ], [ %.04295124, %SDL_HIDAPI_UpdateDrivers.exit ] ; 2 uses
   %.not96 = icmp eq ptr %.04295, null
   br i1 %.not96, label %._crit_edge, label %.lr.ph
 
@@ -992,13 +1000,13 @@ bb.c:                                             ; preds = %.critedge.i, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call zeroext i1 %i.i(ptr noundef null, ptr noundef %3, i32 noundef %i.b, i16 noundef zeroext %0, i16 noundef zeroext %1, i16 noundef zeroext %2, i32 noundef -1, i32 noundef 0, i32 noundef 0, i32 noundef 0) #8, !inline_history !30
+  %i.j = tail call zeroext i1 %i.i(ptr noundef null, ptr noundef %3, i32 noundef %i.b, i16 noundef zeroext %0, i16 noundef zeroext %1, i16 noundef zeroext %2, i32 noundef -1, i32 noundef 0, i32 noundef 0, i32 noundef 0) #8, !inline_history !31
   br i1 %i.j, label %.critedge, label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.d, %bb.c
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 26
-  br i1 %exitcond.not.i, label %HIDAPI_IsDeviceSupported.exit, label %bb.c, !llvm.loop !31
+  br i1 %exitcond.not.i, label %HIDAPI_IsDeviceSupported.exit, label %bb.c, !llvm.loop !32
 
 HIDAPI_IsDeviceSupported.exit:                    ; preds = %.critedge.i
   %i.k = tail call ptr @SDL_strstr_REAL(ptr noundef %3, ptr noundef nonnull @.str.4) #8
@@ -1092,7 +1100,7 @@ HIDAPI_IsEquivalentToDevice.exit.us:              ; preds = %bb.o, %bb.m, %.thre
   %i.aj = getelementptr inbounds nuw i8, ptr %.01931.us, i64 184
   %.019.us = load ptr, ptr %i.aj, align 8         ; 2 uses
   %.not23.us.not = icmp eq ptr %.019.us, null
-  br i1 %.not23.us.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.us, !llvm.loop !32
+  br i1 %.not23.us.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.us, !llvm.loop !33
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.ak = icmp eq i16 %0, 2389
@@ -1137,7 +1145,7 @@ HIDAPI_IsEquivalentToDevice.exit.us50:            ; preds = %.thread73, %bb.q, %
   %i.ax = getelementptr inbounds nuw i8, ptr %.01931.us48, i64 184
   %.019.us51 = load ptr, ptr %i.ax, align 8       ; 2 uses
   %.not23.us52.not = icmp eq ptr %.019.us51, null
-  br i1 %.not23.us52.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.split.us, !llvm.loop !32
+  br i1 %.not23.us52.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.split.us, !llvm.loop !33
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %HIDAPI_IsEquivalentToDevice.exit
   %.01931 = phi ptr [ %.019, %HIDAPI_IsEquivalentToDevice.exit ], [ %.01929, %.lr.ph.split ] ; 4 uses
@@ -1166,7 +1174,7 @@ HIDAPI_IsEquivalentToDevice.exit:                 ; preds = %.lr.ph.split.split,
   %i.bi = getelementptr inbounds nuw i8, ptr %.01931, i64 184
   %.019 = load ptr, ptr %i.bi, align 8            ; 2 uses
   %.not23.not = icmp eq ptr %.019, null
-  br i1 %.not23.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.split, !llvm.loop !32
+  br i1 %.not23.not, label %HIDAPI_IsEquivalentToDevice.exit.thread, label %.lr.ph.split.split, !llvm.loop !33
 
 HIDAPI_IsEquivalentToDevice.exit.thread:          ; preds = %HIDAPI_IsEquivalentToDevice.exit, %bb.t, %HIDAPI_IsEquivalentToDevice.exit.us50, %bb.s, %.thread73, %HIDAPI_IsEquivalentToDevice.exit.us, %bb.l, %bb.n, %bb.m, %bb.o, %bb.h
   %.not23.lcssa = phi i1 [ false, %bb.h ], [ false, %HIDAPI_IsEquivalentToDevice.exit.us50 ], [ true, %bb.o ], [ true, %bb.m ], [ true, %bb.n ], [ true, %bb.l ], [ false, %HIDAPI_IsEquivalentToDevice.exit.us ], [ true, %.thread73 ], [ true, %bb.s ], [ true, %bb.t ], [ false, %HIDAPI_IsEquivalentToDevice.exit ]
@@ -1215,7 +1223,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %.0814, i64 184
   %.08 = load ptr, ptr %i.j, align 8              ; 2 uses
   %.not = icmp eq ptr %.08, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !33
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !34
 
 .loopexit:                                        ; preds = %bb.e, %bb.a, %bb.c, %bb.d
   %.0 = phi ptr [ %i.i, %bb.d ], [ null, %bb.c ], [ null, %bb.a ], [ null, %bb.e ]
@@ -1258,7 +1266,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %.0814, i64 184
   %.08 = load ptr, ptr %i.j, align 8              ; 2 uses
   %.not = icmp eq ptr %.08, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !34
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !35
 
 .loopexit:                                        ; preds = %bb.e, %bb.a, %bb.c, %bb.d
   %.0 = phi ptr [ %i.i, %bb.d ], [ null, %bb.c ], [ null, %bb.a ], [ null, %bb.e ]
@@ -1294,7 +1302,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %.048, i64 184
   %.04 = load ptr, ptr %i.g, align 8              ; 2 uses
   %.not = icmp eq ptr %.04, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !35
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !36
 
 .loopexit:                                        ; preds = %bb.c, %bb.a, %bb.b
   %.0 = phi i32 [ %i.f, %bb.b ], [ 0, %bb.a ], [ 0, %bb.c ]
@@ -1332,7 +1340,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %.048, i64 184
   %.04 = load ptr, ptr %i.g, align 8              ; 2 uses
   %.not = icmp eq ptr %.04, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !36
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !37
 
 .loopexit:                                        ; preds = %bb.c, %bb.a, %bb.b
   %.0 = phi i32 [ %i.f, %bb.b ], [ 1, %bb.a ], [ 1, %bb.c ]
@@ -1387,7 +1395,7 @@ bb.e:                                             ; preds = %bb.b, %bb.d, %bb.c,
   %i.o = getelementptr inbounds nuw i8, ptr %.014, i64 184
   %.0 = load ptr, ptr %i.o, align 8               ; 2 uses
   %.not = icmp eq ptr %.0, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !37
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !38
 
 ._crit_edge:                                      ; preds = %bb.e, %.preheader
   %i.p = tail call i32 @SDL_SetAtomicInt_REAL(ptr noundef nonnull @SDL_HIDAPI_updating_devices, i32 noundef 0) #8 ; 0 uses
@@ -1790,14 +1798,14 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.am = load i32, ptr %i.af, align 8
   %i.an = sext i32 %i.am to i64
   %i.ao = icmp slt i64 %indvars.iv.next, %i.an
-  br i1 %i.ao, label %bb.b, label %._crit_edge, !llvm.loop !38
+  br i1 %i.ao, label %bb.b, label %._crit_edge, !llvm.loop !39
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph21, %.preheader17
   %.sink = phi ptr [ %i.ae, %.preheader17 ], [ %i.ac, %.lr.ph21 ], [ %i.ae, %bb.b ]
   tail call fastcc void @HIDAPI_DelDevice(ptr noundef nonnull %.sink)
   %i.ap = load ptr, ptr @SDL_HIDAPI_devices, align 8 ; 2 uses
   %.not = icmp eq ptr %i.ap, null
-  br i1 %.not, label %.preheader, label %.lr.ph21, !llvm.loop !39
+  br i1 %.not, label %.preheader, label %.lr.ph21, !llvm.loop !40
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -1863,7 +1871,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %.0111 = load ptr, ptr %.0111.in, align 8       ; 3 uses
   %.not = icmp eq ptr %.0111, null
   %i.b = getelementptr inbounds nuw i8, ptr %.0111, i64 184
-  br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !40
+  br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !41
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load ptr, ptr %0, align 8
@@ -2215,7 +2223,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.lr.ph70
   %i.ap = icmp eq ptr %.043, %0
-  br i1 %i.ap, label %.lr.ph._crit_edge, label %.lr.ph70, !llvm.loop !41
+  br i1 %i.ap, label %.lr.ph._crit_edge, label %.lr.ph70, !llvm.loop !42
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
   %.04357.lcssa = phi ptr [ %.04354, %.lr.ph.preheader ], [ %.043, %.lr.ph ]
@@ -2255,7 +2263,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   tail call void @SDL_Delay_REAL(i32 noundef 10) #8
   %i.ba = tail call i32 @SDL_GetAtomicInt_REAL(ptr noundef nonnull %i.at) #8
   %i.bb = icmp sgt i32 %i.ba, 0
-  br i1 %i.bb, label %.lr.ph58, label %.preheader, !llvm.loop !42
+  br i1 %i.bb, label %.lr.ph58, label %.preheader, !llvm.loop !43
 
 bb.f:                                             ; preds = %.lr.ph60, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph60 ], [ %indvars.iv.next, %bb.f ] ; 2 uses
@@ -2268,7 +2276,7 @@ bb.f:                                             ; preds = %.lr.ph60, %bb.f
   %i.bg = load i32, ptr %i.aw, align 8
   %i.bh = sext i32 %i.bg to i64
   %i.bi = icmp slt i64 %indvars.iv.next, %i.bh
-  br i1 %i.bi, label %bb.f, label %._crit_edge, !llvm.loop !43
+  br i1 %i.bi, label %bb.f, label %._crit_edge, !llvm.loop !44
 
 ._crit_edge:                                      ; preds = %bb.f, %.preheader
   tail call void @SDL_SetObjectValid(ptr noundef nonnull %0, i32 noundef 9, i1 noundef zeroext false) #8
@@ -2298,7 +2306,7 @@ bb.f:                                             ; preds = %.lr.ph60, %bb.f
   %i.bu = getelementptr inbounds nuw i8, ptr %.0435769, i64 184
   %.043 = load ptr, ptr %i.bu, align 8            ; 4 uses
   %.not50 = icmp eq ptr %.043, null
-  br i1 %.not50, label %.loopexit, label %.lr.ph, !llvm.loop !41
+  br i1 %.not50, label %.loopexit, label %.lr.ph, !llvm.loop !42
 
 .loopexit:                                        ; preds = %.lr.ph70, %.thread, %._crit_edge
   ret void
@@ -2352,7 +2360,7 @@ bb.e:                                             ; preds = %bb.c, %bb.c, %bb.d
 bb.f:                                             ; preds = %bb.g
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !44
+  br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !45
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 2 uses
@@ -2469,7 +2477,7 @@ bb.b:                                             ; preds = %.lr.ph
   tail call void @HIDAPI_JoystickDisconnected(ptr noundef nonnull %0, i32 noundef %i.g)
   %i.h = load i32, ptr %i.d, align 4
   %.not18 = icmp eq i32 %i.h, 0
-  br i1 %.not18, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !45
+  br i1 %.not18, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !46
 
 .critedge.loopexit:                               ; preds = %bb.b, %.lr.ph
   %.pre = load ptr, ptr %i.a, align 8
@@ -2592,7 +2600,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g, %bb.h
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 26
-  br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !46
+  br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !47
 
 .loopexit:                                        ; preds = %bb.h, %bb.i, %bb.d, %bb.e, %bb.b, %bb.a
   %.2 = phi ptr [ null, %bb.e ], [ @SDL_HIDAPI_DriverCombined, %bb.a ], [ null, %bb.b ], [ null, %bb.d ], [ %i.w, %bb.h ], [ null, %bb.i ]
@@ -2783,7 +2791,7 @@ attributes #10 = { nounwind allocsize(0,1) }
 !19 = distinct !{!19, !6}
 !20 = distinct !{!20, !6}
 !21 = distinct !{null}
-!22 = distinct !{!22, !6, !29}
+!22 = distinct !{!22, !6, !29, !30}
 !23 = distinct !{!23, !6}
 !24 = distinct !{!24, !6}
 !25 = distinct !{!25, !6}
@@ -2791,8 +2799,8 @@ attributes #10 = { nounwind allocsize(0,1) }
 !27 = distinct !{!27, !6}
 !28 = distinct !{!28, !6}
 !29 = !{!"llvm.loop.unswitch.partial.disable"}
-!30 = distinct !{null}
-!31 = distinct !{!31, !6}
+!30 = !{!"llvm.loop.peeled.count", i32 1}
+!31 = distinct !{null}
 !32 = distinct !{!32, !6}
 !33 = distinct !{!33, !6}
 !34 = distinct !{!34, !6}
@@ -2808,4 +2816,5 @@ attributes #10 = { nounwind allocsize(0,1) }
 !44 = distinct !{!44, !6}
 !45 = distinct !{!45, !6}
 !46 = distinct !{!46, !6}
+!47 = distinct !{!47, !6}
 end_hunk_2

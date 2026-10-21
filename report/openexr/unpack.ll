@@ -204,7 +204,7 @@ bb.a:
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !24
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 10 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 11 uses
   %i.q = icmp sgt i32 %i.g, 0                     ; 10 uses
   %i.r = sext i32 %i.g to i64                     ; 2 uses
   %i.s = sext i32 %i.i to i64                     ; 2 uses
@@ -369,9 +369,11 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph567:                                        ; preds = %.preheader445
   %i.bv = sext i16 %i.ad to i64                   ; 9 uses
   %i.bw = sext i8 %i.ab to i64
+  %.pre669 = load i16, ptr %i.p, align 2, !tbaa !17
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph567, %.loopexit
+  %1 = phi i16 [ %.pre669, %.lr.ph567 ], [ %2, %.loopexit ] ; 2 uses
   %indvars.iv655 = phi i64 [ 0, %.lr.ph567 ], [ %indvars.iv.next656, %.loopexit ] ; 2 uses
   %.2304565 = phi ptr [ %.1303571, %.lr.ph567 ], [ %i.db, %.loopexit ] ; 3 uses
   %.0314564 = phi ptr [ %i.bc, %.lr.ph567 ], [ %i.cd, %.loopexit ] ; 2 uses
@@ -379,7 +381,6 @@ bb.g:                                             ; preds = %.lr.ph567, %.loopex
   %i.bx = load ptr, ptr %.0314564, align 8, !tbaa !10 ; 3 uses
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %.0311576, i64 %indvars.iv655
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !30 ; 3 uses
-  %1 = load i16, ptr %i.p, align 2, !tbaa !17
   %i.ca = and i16 %1, 1
   %i.cb = icmp eq i16 %i.ca, 0                    ; 2 uses
   %i.cc = select i1 %i.cb, i32 %.2358563, i32 0   ; 2 uses
@@ -443,7 +444,7 @@ bb.g:                                             ; preds = %.lr.ph567, %.loopex
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph561
   %lcmp.mod776.not = icmp eq i32 %xtraiter774, 0
-  br i1 %lcmp.mod776.not, label %.loopexit, label %.lr.ph561.epil.preheader
+  br i1 %lcmp.mod776.not, label %.loopexit.loopexit, label %.lr.ph561.epil.preheader
 
 .lr.ph561.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph561.preheader
   %.0373559.epil.init = phi ptr [ %.2304565, %.lr.ph561.preheader ], [ %i.cv, %.loopexit.loopexit.unr-lcssa ]
@@ -462,9 +463,14 @@ bb.g:                                             ; preds = %.lr.ph567, %.loopex
   %i.cy = getelementptr inbounds i8, ptr %.0374558.epil, i64 %i.bv
   %epil.iter775.next = add i32 %epil.iter775, 1   ; 2 uses
   %epil.iter775.cmp.not = icmp eq i32 %epil.iter775.next, %xtraiter774
-  br i1 %epil.iter775.cmp.not, label %.loopexit, label %.lr.ph561.epil, !llvm.loop !53
+  br i1 %epil.iter775.cmp.not, label %.loopexit.loopexit, label %.lr.ph561.epil, !llvm.loop !53
 
-.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph561.epil, %bb.g
+.loopexit.loopexit:                               ; preds = %.lr.ph561.epil, %.loopexit.loopexit.unr-lcssa
+  %.pre668 = load i16, ptr %i.p, align 2, !tbaa !17
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.g
+  %2 = phi i16 [ %.pre668, %.loopexit.loopexit ], [ %1, %bb.g ]
   %i.cz = sext i32 %spec.select to i64
   %i.da = mul nsw i64 %i.cz, %i.bw
   %i.db = getelementptr inbounds nuw i8, ptr %.2304565, i64 %i.da ; 2 uses
@@ -867,7 +873,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = icmp sgt i32 %i.i, 0                     ; 10 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 10 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 11 uses
   %i.r = sext i32 %i.i to i64                     ; 2 uses
   %.pre = load i16, ptr %i.n, align 8, !tbaa !18
   %wide.trip.count = zext i32 %i.i to i64         ; 3 uses
@@ -1027,9 +1033,11 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph580:                                        ; preds = %.preheader430
   %i.bo = sext i8 %i.ad to i64
+  %.pre687 = load i16, ptr %i.q, align 2, !tbaa !17
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph580, %._crit_edge573
+  %1 = phi i16 [ %.pre687, %.lr.ph580 ], [ %2, %._crit_edge573 ] ; 2 uses
   %indvars.iv672 = phi i64 [ 0, %.lr.ph580 ], [ %indvars.iv.next673, %._crit_edge573 ] ; 2 uses
   %.2287579 = phi ptr [ %.1286590, %.lr.ph580 ], [ %i.cb, %._crit_edge573 ] ; 3 uses
   %.0296578 = phi ptr [ %i.bb, %.lr.ph580 ], [ %.1297.lcssa, %._crit_edge573 ] ; 3 uses
@@ -1037,7 +1045,6 @@ bb.g:                                             ; preds = %.lr.ph580, %._crit_
   %.2361576 = phi i32 [ 0, %.lr.ph580 ], [ %spec.select389, %._crit_edge573 ] ; 2 uses
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %.0293598, i64 %indvars.iv672
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !30 ; 3 uses
-  %1 = load i16, ptr %i.q, align 2, !tbaa !17
   %i.br = and i16 %1, 1
   %i.bs = icmp eq i16 %i.br, 0                    ; 2 uses
   %i.bt = select i1 %i.bs, i32 %.2361576, i32 0   ; 2 uses
@@ -1058,7 +1065,7 @@ bb.g:                                             ; preds = %.lr.ph580, %._crit_
 
 ._crit_edge573.loopexit.unr-lcssa:                ; preds = %.lr.ph572
   %lcmp.mod818.not = icmp eq i32 %xtraiter816, 0
-  br i1 %lcmp.mod818.not, label %._crit_edge573, label %.lr.ph572.epil.preheader
+  br i1 %lcmp.mod818.not, label %._crit_edge573.loopexit, label %.lr.ph572.epil.preheader
 
 .lr.ph572.epil.preheader:                         ; preds = %._crit_edge573.loopexit.unr-lcssa, %.lr.ph572.preheader
   %.1297570.epil.init = phi ptr [ %.0296578, %.lr.ph572.preheader ], [ %i.cs, %._crit_edge573.loopexit.unr-lcssa ]
@@ -1077,10 +1084,16 @@ bb.g:                                             ; preds = %.lr.ph580, %._crit_
   %i.by = getelementptr inbounds i8, ptr %.1297570.epil, i64 %i.az ; 2 uses
   %epil.iter817.next = add i32 %epil.iter817, 1   ; 2 uses
   %epil.iter817.cmp.not = icmp eq i32 %epil.iter817.next, %xtraiter816
-  br i1 %epil.iter817.cmp.not, label %._crit_edge573, label %.lr.ph572.epil, !llvm.loop !78
+  br i1 %epil.iter817.cmp.not, label %._crit_edge573.loopexit, label %.lr.ph572.epil, !llvm.loop !78
 
-._crit_edge573:                                   ; preds = %._crit_edge573.loopexit.unr-lcssa, %.lr.ph572.epil, %bb.g
-  %.1297.lcssa = phi ptr [ %.0296578, %bb.g ], [ %i.cs, %._crit_edge573.loopexit.unr-lcssa ], [ %i.by, %.lr.ph572.epil ]
+._crit_edge573.loopexit:                          ; preds = %.lr.ph572.epil, %._crit_edge573.loopexit.unr-lcssa
+  %.lcssa789 = phi ptr [ %i.cs, %._crit_edge573.loopexit.unr-lcssa ], [ %i.by, %.lr.ph572.epil ]
+  %.pre686 = load i16, ptr %i.q, align 2, !tbaa !17
+  br label %._crit_edge573
+
+._crit_edge573:                                   ; preds = %._crit_edge573.loopexit, %bb.g
+  %2 = phi i16 [ %1, %bb.g ], [ %.pre686, %._crit_edge573.loopexit ]
+  %.1297.lcssa = phi ptr [ %.0296578, %bb.g ], [ %.lcssa789, %._crit_edge573.loopexit ]
   %i.bz = sext i32 %spec.select388 to i64         ; 2 uses
   %i.ca = mul nsw i64 %i.bz, %i.bo
   %i.cb = getelementptr inbounds nuw i8, ptr %.2287579, i64 %i.ca ; 2 uses

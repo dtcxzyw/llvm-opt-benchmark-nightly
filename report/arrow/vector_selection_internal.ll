@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %19 = alloca %"class.arrow::Status", align 8    ; 6 uses
-  %20 = alloca %class.anon.246, align 8           ; 8 uses
+  %20 = alloca %class.anon.246, align 8           ; 9 uses
   %21 = alloca %class.anon.247, align 8           ; 6 uses
   %22 = alloca %"class.arrow::Status", align 8    ; 4 uses
   %23 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -608,14 +608,15 @@ bb.as:                                            ; preds = %bb.ar
   %.pre.i.i.i.i.i = load ptr, ptr %i.cj, align 8, !tbaa !357, !noalias !961
   %.pre288.i.i.i.i.i = load i32, ptr %.pre.i.i.i.i.i, align 4, !tbaa !51, !noalias !962
   store ptr null, ptr %24, align 8, !tbaa !106, !alias.scope !960, !noalias !949
+  %.pre87.i.i.i = load ptr, ptr %20, align 8, !tbaa !358, !noalias !961
   br label %.lr.ph266.i.i.i.i.i
 
 .lr.ph266.i.i.i.i.i:                              ; preds = %_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i, %.lr.ph266.preheader.i.i.i.i.i
+  %27 = phi ptr [ %28, %_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i ], [ %.pre87.i.i.i, %.lr.ph266.preheader.i.i.i.i.i ] ; 2 uses
   %i.gf = phi i32 [ %i.hq, %_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i ], [ %.pre288.i.i.i.i.i, %.lr.ph266.preheader.i.i.i.i.i ] ; 3 uses
   %.0106265.i.i.i.i.i = phi i64 [ %i.hr, %_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i ], [ 0, %.lr.ph266.preheader.i.i.i.i.i ]
   %.1264.i.i.i.i.i = phi i64 [ %i.gg, %_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i ], [ %.0107268.i.i.i.i.i, %.lr.ph266.preheader.i.i.i.i.i ] ; 2 uses
   %i.gg = add nsw i64 %.1264.i.i.i.i.i, 1         ; 2 uses
-  %27 = load ptr, ptr %20, align 8, !tbaa !358, !noalias !961, !nonnull !118, !align !181
   %i.gh = load i64, ptr %27, align 8, !tbaa !151, !noalias !962
   %i.gi = add nsw i64 %i.gh, %.1264.i.i.i.i.i
   %i.gj = sext i32 %i.gf to i64
@@ -663,10 +664,15 @@ bb.at:                                            ; preds = %bb.at, %.lr.ph.i.i.
   %i.hn = sext i32 %i.hm to i64
   %i.ho = add nsw i64 %i.gk, %i.hn
   %i.hp = icmp slt i64 %i.hk, %i.ho
-  br i1 %i.hp, label %bb.at, label %_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i, !llvm.loop !8
+  br i1 %i.hp, label %bb.at, label %_ZN5arrow6StatusD2Ev.exit169.i.i.loopexit.i.i.i, !llvm.loop !8
 
-_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i:           ; preds = %bb.at, %.lr.ph266.i.i.i.i.i
-  %i.hq = phi i32 [ %i.gf, %.lr.ph266.i.i.i.i.i ], [ %i.hm, %bb.at ]
+_ZN5arrow6StatusD2Ev.exit169.i.i.loopexit.i.i.i:  ; preds = %bb.at
+  %.pre.i.i.i = load ptr, ptr %20, align 8, !tbaa !358, !noalias !961
+  br label %_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i
+
+_ZN5arrow6StatusD2Ev.exit169.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2Ev.exit169.i.i.loopexit.i.i.i, %.lr.ph266.i.i.i.i.i
+  %28 = phi ptr [ %27, %.lr.ph266.i.i.i.i.i ], [ %.pre.i.i.i, %_ZN5arrow6StatusD2Ev.exit169.i.i.loopexit.i.i.i ]
+  %i.hq = phi i32 [ %i.gf, %.lr.ph266.i.i.i.i.i ], [ %i.hm, %_ZN5arrow6StatusD2Ev.exit169.i.i.loopexit.i.i.i ]
   %i.hr = add nuw nsw i64 %.0106265.i.i.i.i.i, 1  ; 2 uses
   %exitcond287.not.i.i.i.i.i = icmp eq i64 %i.hr, %i.ga
   br i1 %exitcond287.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph266.i.i.i.i.i, !llvm.loop !925

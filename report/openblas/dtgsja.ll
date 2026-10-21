@@ -30,7 +30,7 @@ bb.a:
   %i.h = alloca double, align 8                   ; 6 uses
   %i.i = alloca double, align 8                   ; 5 uses
   %i.j = alloca double, align 8                   ; 5 uses
-  %i.k = alloca i32, align 4                      ; 9 uses
+  %i.k = alloca i32, align 4                      ; 8 uses
   %i.l = alloca double, align 8                   ; 4 uses
   %i.m = alloca double, align 8                   ; 4 uses
   %i.n = alloca double, align 8                   ; 4 uses
@@ -230,14 +230,13 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
-  store i32 0, ptr %i.k, align 4, !tbaa !21
   %i.by = sext i32 %i.ag to i64                   ; 3 uses
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.be
-  %.0485572.a = phi i32 [ 1, %bb.ab ], [ %i.jt, %bb.be ] ; 3 uses
-  %25 = load i32, ptr %i.k, align 4, !tbaa !21
-  %.not516 = icmp eq i32 %25, 0
+  %.0485572.a = phi i32 [ 0, %bb.ab ], [ %26, %bb.be ]
+  %.0485572 = phi i32 [ 1, %bb.ab ], [ %i.jt, %bb.be ] ; 3 uses
+  %.not516 = icmp eq i32 %.0485572.a, 0
   %i.bz = zext i1 %.not516 to i32                 ; 2 uses
   store i32 %i.bz, ptr %i.k, align 4, !tbaa !21
   %i.ca = load i32, ptr %7, align 4, !tbaa !21    ; 2 uses
@@ -556,7 +555,7 @@ bb.bc:                                            ; preds = %bb.ba, %bb.bb
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.ac
-  %i.ic = phi i32 [ %.pre620, %._crit_edge.loopexit ], [ %i.bz, %bb.ac ]
+  %i.ic = phi i32 [ %.pre620, %._crit_edge.loopexit ], [ %i.bz, %bb.ac ] ; 2 uses
   %.not518 = icmp eq i32 %i.ic, 0
   br i1 %.not518, label %bb.bd, label %bb.be
 
@@ -620,10 +619,12 @@ bb.bd:                                            ; preds = %._crit_edge
   br i1 %.not520.not, label %.lr.ph570, label %._crit_edge571.loopexit, !llvm.loop !10
 
 ._crit_edge571.loopexit:                          ; preds = %.lr.ph570
+  %.pre = load i32, ptr %i.k, align 4, !tbaa !21
   %i.jp = call double @llvm.fabs.f64(double %i.jn)
   br label %._crit_edge571
 
 ._crit_edge571:                                   ; preds = %._crit_edge571.loopexit, %bb.bd
+  %25 = phi i32 [ 0, %bb.bd ], [ %.pre, %._crit_edge571.loopexit ]
   %.0.lcssa = phi double [ 0.000000e+00, %bb.bd ], [ %i.jp, %._crit_edge571.loopexit ]
   %i.jq = load double, ptr %12, align 8, !tbaa !24 ; 2 uses
   %i.jr = load double, ptr %13, align 8, !tbaa !24 ; 2 uses
@@ -633,7 +634,8 @@ bb.bd:                                            ; preds = %._crit_edge
   br i1 %i.js, label %bb.be, label %bb.bg
 
 bb.be:                                            ; preds = %._crit_edge, %._crit_edge571
-  %i.jt = add nuw nsw i32 %.0485572.a, 1          ; 2 uses
+  %26 = phi i32 [ %i.ic, %._crit_edge ], [ %25, %._crit_edge571 ]
+  %i.jt = add nuw nsw i32 %.0485572, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.jt, 41
   br i1 %exitcond.not, label %bb.bf, label %bb.ac, !llvm.loop !11
 
@@ -1036,7 +1038,7 @@ vec.epilog.middle.block684:                       ; preds = %vec.epilog.vector.b
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %._crit_edge588, %bb.bf
-  %.0485559 = phi i32 [ 41, %bb.bf ], [ %.0485572.a, %._crit_edge588 ], [ %.0485572.a, %.loopexit.loopexit ]
+  %.0485559 = phi i32 [ 41, %bb.bf ], [ %.0485572, %._crit_edge588 ], [ %.0485572, %.loopexit.loopexit ]
   store i32 %.0485559, ptr %23, align 4, !tbaa !21
   br label %bb.bp
 

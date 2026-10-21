@@ -205,7 +205,7 @@ bb.ek:                                            ; preds = %.lr.ph.i.i371
   %i.acu = icmp eq ptr %.sroa.06.0.i.i, %i.acn
   br i1 %i.acu, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i, label %.lr.ph.i.i371, !llvm.loop !9
 
-_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i: ; preds = %bb.ek, %.lr.ph.i.i371, %bb.ej, %.lr.ph.i369
+_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i: ; preds = %.lr.ph.i.i371, %bb.ek, %bb.ej, %.lr.ph.i369
   %i.acv = or disjoint i64 %.sroa.5.017.i, 1      ; 2 uses
   %i.acw = icmp ult i64 %.sroa.5.017.i, 8
   %i.acx = getelementptr inbounds nuw [8 x i8], ptr %i.ace, i64 %i.acv
@@ -608,10 +608,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 264
   %i.d = load atomic i64, ptr %i.c acquire, align 8 ; 3 uses
   %i.e = load i64, ptr %1, align 8, !tbaa !844, !noalias !1343 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !861, !noalias !1343
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !862, !noalias !1343
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !862, !noalias !1343 ; 3 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
@@ -622,6 +622,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 3 uses
+  %.pre18 = load ptr, ptr %i.o, align 8           ; 2 uses
   %i.p = add i64 %i.e, %i.m
   %xtraiter = and i64 %i.n, 1
   %i.q = icmp eq i64 %i.p, 1
@@ -636,14 +637,14 @@ bb.a:
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
+  %.epil.init = phi ptr [ %i.i, %.lr.ph ], [ %11, %._crit_edge.loopexit.unr-lcssa ]
+  %.epil.init25 = phi ptr [ %.pre18, %.lr.ph ], [ %12, %._crit_edge.loopexit.unr-lcssa ]
   %.sroa.5.017.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.bd, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
   %lcmp.mod21 = trunc i64 %i.n to i1
   tail call void @llvm.assume(i1 %lcmp.mod21)
   %i.r = icmp ult i64 %.sroa.5.017.epil.init, 8
-  %2 = load ptr, ptr %i.o, align 8
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.sroa.5.017.epil.init
-  %3 = load ptr, ptr %i.f, align 8
-  %i.t = getelementptr [8 x i8], ptr %3, i64 %.sroa.5.017.epil.init
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %.epil.init25, i64 %.sroa.5.017.epil.init
+  %i.t = getelementptr [8 x i8], ptr %.epil.init, i64 %.sroa.5.017.epil.init
   %i.u = getelementptr i8, ptr %i.t, i64 -64
   %.0.i.i.epil = select i1 %i.r, ptr %i.s, ptr %i.u
   %i.v = load ptr, ptr %.0.i.i.epil, align 8, !tbaa !863 ; 2 uses
@@ -676,15 +677,15 @@ bb.c:                                             ; preds = %.lr.ph.i.epil
   ret void
 
 bb.d:                                             ; preds = %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1, %.lr.ph.new
+  %2 = phi ptr [ %i.i, %.lr.ph.new ], [ %11, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1 ] ; 3 uses
+  %3 = phi ptr [ %.pre18, %.lr.ph.new ], [ %12, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1 ] ; 3 uses
   %.sroa.5.017 = phi i64 [ 0, %.lr.ph.new ], [ %i.bd, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1 ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1 ]
   %4 = icmp ult i64 %.sroa.5.017, 8
-  %5 = load ptr, ptr %i.o, align 8
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.sroa.5.017
-  %7 = load ptr, ptr %i.f, align 8
-  %i.af = getelementptr [8 x i8], ptr %7, i64 %.sroa.5.017
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.5.017
+  %i.af = getelementptr [8 x i8], ptr %2, i64 %.sroa.5.017
   %i.ag = getelementptr i8, ptr %i.af, i64 -64
-  %.0.i.i = select i1 %4, ptr %6, ptr %i.ag
+  %.0.i.i = select i1 %4, ptr %5, ptr %i.ag
   %i.ah = load ptr, ptr %.0.i.i, align 8, !tbaa !863 ; 2 uses
   %.not = icmp eq ptr %i.ah, null
   br i1 %.not, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit, label %bb.e
@@ -703,23 +704,28 @@ bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 7496 ; 2 uses
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !883
   %i.ap = icmp eq i64 %i.ao, 72057594037927935
-  br i1 %i.ap, label %bb.f, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit
+  br i1 %i.ap, label %bb.f, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit
 
 bb.f:                                             ; preds = %.lr.ph.i
   store i64 %i.d, ptr %i.an, align 8, !tbaa !883
   %.sroa.06.0.i = load ptr, ptr %.sroa.06.010.i, align 8, !tbaa !882 ; 2 uses
   %i.aq = icmp eq ptr %.sroa.06.0.i, %i.aj
-  br i1 %i.aq, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit, label %.lr.ph.i, !llvm.loop !9
+  br i1 %i.aq, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit, label %.lr.ph.i, !llvm.loop !9
 
-_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit: ; preds = %bb.f, %.lr.ph.i, %bb.e, %bb.d
+_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit: ; preds = %.lr.ph.i, %bb.f
+  %.pre = load ptr, ptr %i.o, align 8
+  %.pre19 = load ptr, ptr %i.f, align 8
+  br label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit
+
+_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit: ; preds = %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit, %bb.e, %bb.d
+  %6 = phi ptr [ %.pre19, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit ], [ %2, %bb.e ], [ %2, %bb.d ] ; 3 uses
+  %7 = phi ptr [ %.pre, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit ], [ %3, %bb.e ], [ %3, %bb.d ] ; 3 uses
   %8 = or disjoint i64 %.sroa.5.017, 1            ; 2 uses
   %9 = icmp ult i64 %.sroa.5.017, 8
-  %10 = load ptr, ptr %i.o, align 8
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %8
-  %12 = load ptr, ptr %i.f, align 8
-  %i.ar = getelementptr [8 x i8], ptr %12, i64 %8
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %8
+  %i.ar = getelementptr [8 x i8], ptr %6, i64 %8
   %i.as = getelementptr i8, ptr %i.ar, i64 -64
-  %.0.i.i.1 = select i1 %9, ptr %11, ptr %i.as
+  %.0.i.i.1 = select i1 %9, ptr %10, ptr %i.as
   %i.at = load ptr, ptr %.0.i.i.1, align 8, !tbaa !863 ; 2 uses
   %.not.1 = icmp eq ptr %i.at, null
   br i1 %.not.1, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1, label %bb.g
@@ -738,15 +744,22 @@ bb.g:                                             ; preds = %_ZN7rocksdb12MemTab
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 7496 ; 2 uses
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !883
   %i.bb = icmp eq i64 %i.ba, 72057594037927935
-  br i1 %i.bb, label %bb.h, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1
+  br i1 %i.bb, label %bb.h, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit.1
 
 bb.h:                                             ; preds = %.lr.ph.i.1
   store i64 %i.d, ptr %i.az, align 8, !tbaa !883
   %.sroa.06.0.i.1 = load ptr, ptr %.sroa.06.010.i.1, align 8, !tbaa !882 ; 2 uses
   %i.bc = icmp eq ptr %.sroa.06.0.i.1, %i.av
-  br i1 %i.bc, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1, label %.lr.ph.i.1, !llvm.loop !9
+  br i1 %i.bc, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit.1, label %.lr.ph.i.1, !llvm.loop !9
 
-_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1: ; preds = %.lr.ph.i.1, %bb.h, %bb.g, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit
+_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit.1: ; preds = %bb.h, %.lr.ph.i.1
+  %.pre.1 = load ptr, ptr %i.o, align 8
+  %.pre19.1 = load ptr, ptr %i.f, align 8
+  br label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1
+
+_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.1: ; preds = %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit.1, %bb.g, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit
+  %11 = phi ptr [ %.pre19.1, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit.1 ], [ %6, %bb.g ], [ %6, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit ] ; 2 uses
+  %12 = phi ptr [ %.pre.1, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.loopexit.1 ], [ %7, %bb.g ], [ %7, %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit ] ; 2 uses
   %i.bd = add nuw i64 %.sroa.5.017, 2             ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -1149,7 +1162,7 @@ bb.au:                                            ; preds = %.lr.ph.i.i
   %i.gn = icmp eq ptr %.sroa.06.0.i.i, %i.gg
   br i1 %i.gn, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i, label %.lr.ph.i.i, !llvm.loop !9
 
-_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i: ; preds = %bb.au, %.lr.ph.i.i, %bb.at, %.lr.ph.i
+_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i: ; preds = %.lr.ph.i.i, %bb.au, %bb.at, %.lr.ph.i
   %i.go = or disjoint i64 %.sroa.5.017.i, 1       ; 2 uses
   %i.gp = icmp ult i64 %.sroa.5.017.i, 8
   %i.gq = getelementptr inbounds nuw [8 x i8], ptr %i.fx, i64 %i.go
@@ -1552,7 +1565,7 @@ bb.am:                                            ; preds = %.lr.ph.i.i
   %i.gg = icmp eq ptr %.sroa.06.0.i.i, %i.fz
   br i1 %i.gg, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i, label %.lr.ph.i.i, !llvm.loop !9
 
-_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i: ; preds = %bb.am, %.lr.ph.i.i, %bb.al, %.lr.ph.i
+_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i: ; preds = %.lr.ph.i.i, %bb.am, %bb.al, %.lr.ph.i
   %i.gh = or disjoint i64 %.sroa.5.017.i, 1       ; 2 uses
   %i.gi = icmp ult i64 %.sroa.5.017.i, 8
   %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.fq, i64 %i.gh
@@ -1955,7 +1968,7 @@ bb.bb:                                            ; preds = %.lr.ph.i.i
   %i.kq = icmp eq ptr %.sroa.06.0.i.i, %i.kj
   br i1 %i.kq, label %_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i, label %.lr.ph.i.i, !llvm.loop !9
 
-_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i: ; preds = %bb.bb, %.lr.ph.i.i, %bb.ba, %.lr.ph.i
+_ZN7rocksdb12MemTableList20AssignAtomicFlushSeqERKm.exit.i: ; preds = %.lr.ph.i.i, %bb.bb, %bb.ba, %.lr.ph.i
   %i.kr = or disjoint i64 %.sroa.5.017.i, 1       ; 2 uses
   %i.ks = icmp ult i64 %.sroa.5.017.i, 8
   %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.ka, i64 %i.kr

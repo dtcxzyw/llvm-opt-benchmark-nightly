@@ -205,7 +205,7 @@ bb.a:
   %6 = alloca %"class.std::function.106", align 8 ; 11 uses
   %i.c = alloca ptr, align 8                      ; 3 uses
   %7 = alloca %"class.pbrt::Bounds3", align 16    ; 11 uses
-  %8 = alloca %"class.std::vector.40", align 8    ; 21 uses
+  %8 = alloca %"class.std::vector.40", align 8    ; 20 uses
   %9 = alloca %"class.std::function.37", align 8  ; 11 uses
   %10 = alloca %"class.std::vector.46", align 8   ; 17 uses
   %11 = alloca %"struct.std::atomic", align 4     ; 5 uses
@@ -608,38 +608,38 @@ _ZNSt6vectorIN4pbrt15MortonPrimitiveESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.lr.ph
   %.sroa.048.0.i = phi ptr [ null, %_ZNSt6vectorIN4pbrt15MortonPrimitiveESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i ], [ %i.db, %.noexc67 ], [ %i.db, %middle.block246 ], [ %i.db, %vec.epilog.middle.block261 ], [ %i.db, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 6 uses
   %.0.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIN4pbrt15MortonPrimitiveESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i ], [ %i.dd, %.noexc67 ], [ %i.dg, %middle.block246 ], [ %i.dg, %vec.epilog.middle.block261 ], [ %i.dg, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 5 uses
   %.not667086.i = icmp eq ptr %.sroa.048.0.i, %.0.i.i.i.i.i.i
-  %.else.val.i = load ptr, ptr %8, align 8        ; 3 uses
+  %.else.val.i = load ptr, ptr %8, align 8        ; 5 uses
   %.then.val.i = load ptr, ptr %i.bo, align 8     ; 2 uses
   %.not6670.i = icmp eq ptr %.else.val.i, %.then.val.i
   br label %.cont51.i
 
 bb.p:                                             ; preds = %._crit_edge73.i
-  %14 = load ptr, ptr %8, align 8, !tbaa !86      ; 3 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !256
   store ptr %.sroa.048.0.i, ptr %8, align 8, !tbaa !86
   store ptr %.0.i.i.i.i.i.i, ptr %i.bo, align 8, !tbaa !257
   store ptr %.sroa.16.0.i, ptr %i.ea, align 8, !tbaa !256
-  %.not.i.i.i.i65 = icmp eq ptr %14, null
+  %.not.i.i.i.i65 = icmp eq ptr %15, null
   br i1 %.not.i.i.i.i65, label %_ZN4pbrtL9RadixSortEPSt6vectorINS_15MortonPrimitiveESaIS1_EE.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ec = ptrtoint ptr %i.eb to i64
-  %i.ed = ptrtoint ptr %14 to i64
+  %i.ed = ptrtoint ptr %15 to i64
   %i.ee = sub i64 %i.ec, %i.ed
-  call void @_ZdlPvm(ptr noundef nonnull %14, i64 noundef %i.ee) #35
+  call void @_ZdlPvm(ptr noundef nonnull %15, i64 noundef %i.ee) #35
   %.pre = load ptr, ptr %i.bo, align 8, !tbaa !257
   %.pre163 = load ptr, ptr %8, align 8, !tbaa !86
   br label %_ZN4pbrtL9RadixSortEPSt6vectorINS_15MortonPrimitiveESaIS1_EE.exit
 
 .cont51.i:                                        ; preds = %._crit_edge73.i, %_ZNSt6vectorIN4pbrt15MortonPrimitiveESaIS1_EEC2EmRKS2_.exit.i
+  %14 = phi ptr [ %.else.val.i, %_ZNSt6vectorIN4pbrt15MortonPrimitiveESaIS1_EEC2EmRKS2_.exit.i ], [ %15, %._crit_edge73.i ] ; 3 uses
+  %.then.val63.i = phi ptr [ %.else.val.i, %_ZNSt6vectorIN4pbrt15MortonPrimitiveESaIS1_EEC2EmRKS2_.exit.i ], [ %.then.val63.i164, %._crit_edge73.i ] ; 4 uses
   %.03474.i = phi i32 [ 0, %_ZNSt6vectorIN4pbrt15MortonPrimitiveESaIS1_EEC2EmRKS2_.exit.i ], [ %i.gy, %._crit_edge73.i ] ; 3 uses
   %i.ef = mul nuw nsw i32 %.03474.i, 6            ; 3 uses
   %i.eg = and i32 %.03474.i, 1
   %.not.i64 = icmp eq i32 %i.eg, 0                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false)
-  %.then.val63.i = load ptr, ptr %8, align 8
   %.then.val53.i = load ptr, ptr %i.bo, align 8
   %i.eh = select i1 %.not.i64, ptr %.then.val63.i, ptr %.sroa.048.0.i ; 2 uses
   %i.ei = select i1 %.not.i64, ptr %.then.val53.i, ptr %.0.i.i.i.i.i.i ; 2 uses
@@ -763,7 +763,13 @@ bb.s:                                             ; preds = %bb.s, %._crit_edge.
   %exitcond.not.i.8 = icmp eq i64 %indvars.iv.next.i.8, 64
   br i1 %exitcond.not.i.8, label %bb.r, label %bb.s, !llvm.loop !251
 
-._crit_edge73.i:                                  ; preds = %.else.i, %.cont55.us.i, %.cont.thread.i, %.cont.i
+._crit_edge73.i.loopexit162:                      ; preds = %.else.i
+  %.then.val63.i.pre = load ptr, ptr %8, align 8  ; 2 uses
+  br label %._crit_edge73.i
+
+._crit_edge73.i:                                  ; preds = %.cont55.us.i, %._crit_edge73.i.loopexit162, %.cont.thread.i, %.cont.i
+  %15 = phi ptr [ %.then.val63.i.pre, %._crit_edge73.i.loopexit162 ], [ %14, %.cont.i ], [ %14, %.cont.thread.i ], [ %14, %.cont55.us.i ] ; 4 uses
+  %.then.val63.i164 = phi ptr [ %.then.val63.i.pre, %._crit_edge73.i.loopexit162 ], [ %.then.val63.i, %.cont.i ], [ %.then.val63.i, %.cont.thread.i ], [ %.then.val63.i, %.cont55.us.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #32
   %i.gy = add nuw nsw i32 %.03474.i, 1            ; 2 uses
@@ -787,7 +793,7 @@ bb.s:                                             ; preds = %bb.s, %._crit_edge.
   store i64 %i.hj, ptr %i.hi, align 4, !tbaa !53
   %i.hk = getelementptr inbounds nuw i8, ptr %.sroa.036.071.i, i64 8 ; 2 uses
   %.not66.i = icmp eq ptr %i.hk, %.0.i.i.i.i.i.i
-  br i1 %.not66.i, label %._crit_edge73.i, label %.else.i
+  br i1 %.not66.i, label %._crit_edge73.i.loopexit162, label %.else.i
 
 _ZN4pbrtL9RadixSortEPSt6vectorINS_15MortonPrimitiveESaIS1_EE.exit: ; preds = %bb.q, %bb.p
   %i.hl = phi ptr [ %.pre163, %bb.q ], [ %.sroa.048.0.i, %bb.p ] ; 2 uses

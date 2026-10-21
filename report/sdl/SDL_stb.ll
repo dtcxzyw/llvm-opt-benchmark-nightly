@@ -205,7 +205,7 @@ stbi__cleanup_jpeg.exit339.i:                     ; preds = %bb.gu, %bb.gn
   br label %bb.iy
 
 bb.gv:                                            ; preds = %bb.gm
-  %i.amx = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
+  %i.amx = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.amy = load i32, ptr %i.amx, align 8
   %i.amz = icmp eq i32 %i.amy, %i.alv
   br i1 %i.amz, label %bb.gw, label %.preheader63.i.i
@@ -289,37 +289,40 @@ bb.gy:                                            ; preds = %.loopexit64.i.i
   %i.aor = getelementptr inbounds nuw i8, ptr %i.d, i64 18320
   %i.aos = shufflevector <4 x i32> %i.aoo, <4 x i32> poison, <2 x i32> <i32 3, i32 1>
   %i.aot = sub <2 x i32> splat (i32 3), %i.aos    ; 2 uses
-  %i.aou = getelementptr inbounds nuw i8, ptr %i.d, i64 18300
-  %i.aov = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %i.aou = getelementptr inbounds nuw i8, ptr %i.d, i64 18300 ; 2 uses
+  %i.aov = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.aow = extractelement <4 x i32> %i.aoo, i64 2
   %i.aox = sub i32 3, %i.aow
   %i.aoy = sext i32 %i.aox to i64
   %i.aoz = extractelement <4 x i32> %i.aoo, i64 0
   %i.apa = sub i32 3, %i.aoz
   %i.apb = sext i32 %i.apa to i64
+  %.pre81.i.i = load ptr, ptr %i.aov, align 8
+  %.pre83.i.i = load i32, ptr %i.amx, align 8
+  %.pre85.i.i = load i32, ptr %i.aou, align 4
   %.pre80.i.i.a = load i32, ptr %i.aoa, align 8
   %i.apc = extractelement <2 x i32> %i.aot, i64 0
   %i.apd = extractelement <2 x i32> %i.aot, i64 1
   br label %bb.gz
 
 bb.gz:                                            ; preds = %._crit_edge.i.i, %.lr.ph75.i.i
-  %i.ape = phi i32 [ %.pre80.i.i.a, %.lr.ph75.i.i ], [ %i.aqh, %._crit_edge.i.i ] ; 2 uses
-  %i.apf = phi ptr [ %i.aoa, %.lr.ph75.i.i ], [ %i.aqi, %._crit_edge.i.i ]
+  %7 = phi i32 [ %.pre80.i.i.a, %.lr.ph75.i.i ], [ %10, %._crit_edge.i.i ] ; 2 uses
+  %8 = phi i32 [ %.pre85.i.i, %.lr.ph75.i.i ], [ %11, %._crit_edge.i.i ] ; 2 uses
+  %9 = phi ptr [ %i.aoa, %.lr.ph75.i.i ], [ %12, %._crit_edge.i.i ]
+  %i.ape = phi i32 [ %.pre83.i.i, %.lr.ph75.i.i ], [ %i.aqh, %._crit_edge.i.i ] ; 2 uses
+  %i.apf = phi ptr [ %.pre81.i.i, %.lr.ph75.i.i ], [ %i.aqi, %._crit_edge.i.i ] ; 2 uses
   %.173.i.i = phi i32 [ 0, %.lr.ph75.i.i ], [ %i.aqj, %._crit_edge.i.i ] ; 4 uses
-  %i.apg = add i32 %i.ape, 1
+  %i.apg = add i32 %7, 1
   %.not78.i.i = icmp ult i32 %i.apg, 2
   br i1 %.not78.i.i, label %._crit_edge.i.i, label %.lr.ph72.preheader.i.i
 
 .lr.ph72.preheader.i.i:                           ; preds = %bb.gz
-  %7 = load ptr, ptr %i.aov, align 8
-  %8 = load i32, ptr %i.amx, align 8
-  %i.aph = mul i32 %8, %.173.i.i
+  %i.aph = mul i32 %.173.i.i, %i.ape
   %i.api = zext i32 %i.aph to i64
-  %i.apj = getelementptr inbounds nuw i8, ptr %7, i64 %i.api
+  %i.apj = getelementptr inbounds nuw i8, ptr %i.apf, i64 %i.api
   %i.apk = load ptr, ptr %i.aor, align 8
-  %i.apl = mul i32 %.173.i.i, %i.apd
-  %9 = load i32, ptr %i.aou, align 4
-  %i.apm = mul i32 %i.apl, %9
+  %i.apl = mul i32 %8, %i.apd
+  %i.apm = mul i32 %i.apl, %.173.i.i
   %i.apn = zext i32 %i.apm to i64
   %i.apo = getelementptr inbounds nuw i8, ptr %i.apk, i64 %i.apn
   %i.app = load ptr, ptr %i.aop, align 8
@@ -349,13 +352,22 @@ bb.gz:                                            ; preds = %._crit_edge.i.i, %.
   %i.aqe = add i32 %i.aqd, 1
   %i.aqf = lshr i32 %i.aqe, 1
   %i.aqg = icmp samesign ult i32 %i.aqb, %i.aqf
-  br i1 %i.aqg, label %.lr.ph72.i.i, label %._crit_edge.i.i, !llvm.loop !70
+  br i1 %i.aqg, label %.lr.ph72.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !70
 
-._crit_edge.i.i:                                  ; preds = %.lr.ph72.i.i, %bb.gz
-  %i.aqh = phi i32 [ %i.ape, %bb.gz ], [ %i.aqd, %.lr.ph72.i.i ]
-  %i.aqi = phi ptr [ %i.apf, %bb.gz ], [ %i.aqc, %.lr.ph72.i.i ] ; 3 uses
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph72.i.i
+  %.pre80.i.i = load ptr, ptr %i.aov, align 8
+  %.pre82.i.i = load i32, ptr %i.amx, align 8
+  %.pre84.i.i = load i32, ptr %i.aou, align 4
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.gz
+  %10 = phi i32 [ %i.aqd, %._crit_edge.loopexit.i.i ], [ %7, %bb.gz ]
+  %11 = phi i32 [ %.pre84.i.i, %._crit_edge.loopexit.i.i ], [ %8, %bb.gz ]
+  %12 = phi ptr [ %i.aqc, %._crit_edge.loopexit.i.i ], [ %9, %bb.gz ] ; 3 uses
+  %i.aqh = phi i32 [ %.pre82.i.i, %._crit_edge.loopexit.i.i ], [ %i.ape, %bb.gz ]
+  %i.aqi = phi ptr [ %.pre80.i.i, %._crit_edge.loopexit.i.i ], [ %i.apf, %bb.gz ]
   %i.aqj = add nuw nsw i32 %.173.i.i, 1           ; 2 uses
-  %i.aqk = getelementptr inbounds nuw i8, ptr %i.aqi, i64 4
+  %i.aqk = getelementptr inbounds nuw i8, ptr %12, i64 4
   %i.aql = load i32, ptr %i.aqk, align 4
   %i.aqm = add i32 %i.aql, 1
   %i.aqn = lshr i32 %i.aqm, 1
@@ -385,7 +397,7 @@ bb.ha:                                            ; preds = %bb.ha, %.lr.ph67.i.
   br i1 %i.arf, label %bb.ha, label %output_jpeg_nv12.exit.i, !llvm.loop !72
 
 output_jpeg_nv12.exit.i:                          ; preds = %bb.ha, %._crit_edge.i.i, %bb.gy, %.preheader.i.i
-  %i.arg = phi ptr [ %i.aqi, %._crit_edge.i.i ], [ %i.aoa, %bb.gy ], [ %i.aoa, %.preheader.i.i ], [ %i.ara, %bb.ha ]
+  %i.arg = phi ptr [ %12, %._crit_edge.i.i ], [ %i.aoa, %bb.gy ], [ %i.aoa, %.preheader.i.i ], [ %i.ara, %bb.ha ]
   %i.arh = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ari = load ptr, ptr %i.arh, align 8
   br label %.loopexit398.i

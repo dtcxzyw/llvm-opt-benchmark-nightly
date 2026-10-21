@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.e
 .lr.ph38:                                         ; preds = %bb.i
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.x = sext i32 %2 to i64                       ; 2 uses
   %i.y = icmp eq i64 %i.o, 4
   br i1 %i.y, label %.lr.ph38.split.us.preheader, label %.lr.ph38.split
@@ -244,23 +244,24 @@ bb.i:                                             ; preds = %bb.e
   %i.as = sext i32 %i.s to i64
   %i.at = sext i32 %i.m to i64
   %.pre = load ptr, ptr %i.u, align 8, !tbaa !242
+  %.pre50 = load i32, ptr %i.w, align 4, !tbaa !132
   br label %.preheader
 
 ._crit_edge:                                      ; preds = %.loopexit, %.lr.ph38.split.us, %.lr.ph38.split, %bb.i
   ret void
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit
-  %i.au = phi i32 [ %i.aq, %.preheader.preheader ], [ %i.bl, %.loopexit ] ; 3 uses
+  %3 = phi i32 [ %i.aq, %.preheader.preheader ], [ %4, %.loopexit ] ; 3 uses
+  %i.au = phi i32 [ %.pre50, %.preheader.preheader ], [ %i.bl, %.loopexit ] ; 2 uses
   %indvars.iv43 = phi i64 [ %i.as, %.preheader.preheader ], [ %indvars.iv.next44, %.loopexit ] ; 3 uses
-  %i.av = sext i32 %i.au to i64
+  %i.av = sext i32 %3 to i64
   %i.aw = mul nsw i64 %indvars.iv43, %i.av
   %i.ax = getelementptr inbounds [4 x i8], ptr %.pre, i64 %i.aw
-  %i.ay = icmp sgt i32 %i.au, 0
+  %i.ay = icmp sgt i32 %3, 0
   br i1 %i.ay, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %3 = load i32, ptr %i.w, align 4, !tbaa !132
-  %i.az = sext i32 %3 to i64
+  %i.az = sext i32 %i.au to i64
   %i.ba = mul nsw i64 %i.o, %i.az
   %i.bb = getelementptr inbounds i8, ptr %i.c, i64 %i.ba
   %i.bc = add nsw i64 %indvars.iv43, %i.x
@@ -279,10 +280,15 @@ bb.i:                                             ; preds = %bb.e
   %i.bi = load i32, ptr %i.v, align 8, !tbaa !152 ; 2 uses
   %i.bj = sext i32 %i.bi to i64
   %i.bk = icmp slt i64 %indvars.iv.next, %i.bj
-  br i1 %i.bk, label %.lr.ph, label %.loopexit, !llvm.loop !240
+  br i1 %i.bk, label %.lr.ph, label %.loopexit.loopexit, !llvm.loop !240
 
-.loopexit:                                        ; preds = %.lr.ph, %.preheader
-  %i.bl = phi i32 [ %i.au, %.preheader ], [ %i.bi, %.lr.ph ]
+.loopexit.loopexit:                               ; preds = %.lr.ph
+  %.pre49 = load i32, ptr %i.w, align 4, !tbaa !132
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader
+  %4 = phi i32 [ %i.bi, %.loopexit.loopexit ], [ %3, %.preheader ]
+  %i.bl = phi i32 [ %.pre49, %.loopexit.loopexit ], [ %i.au, %.preheader ]
   %indvars.iv.next44 = add nsw i64 %indvars.iv43, 1 ; 2 uses
   %i.bm = icmp slt i64 %indvars.iv.next44, %i.at
   br i1 %i.bm, label %.preheader, label %._crit_edge, !llvm.loop !241

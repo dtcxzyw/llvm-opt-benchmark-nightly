@@ -204,23 +204,24 @@ bb.t:                                             ; preds = %bb.s
 .lr.ph54.preheader.i:                             ; preds = %bb.t
   %i.bu = sext i32 %i.bt to i64
   %i.bv = add i32 %storemerge.i, 1
+  %.pre61.i = load i32, ptr %5, align 4
   br label %.lr.ph54.i
 
 .lr.ph54.i:                                       ; preds = %.loopexit.i, %.lr.ph54.preheader.i
+  %7 = phi i32 [ %.pre61.i, %.lr.ph54.preheader.i ], [ %8, %.loopexit.i ] ; 2 uses
   %indvars.iv56.i = phi i64 [ %i.bi, %.lr.ph54.preheader.i ], [ %indvars.iv.next57.i, %.loopexit.i ] ; 3 uses
   %i.bw = getelementptr inbounds [24 x i8], ptr %0, i64 %indvars.iv56.i ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
-  %7 = load i32, ptr %i.bx, align 8               ; 6 uses
-  %i.by = load i32, ptr %5, align 4
-  %i.bz = icmp sle i32 %7, %i.by
-  %.not45.i = icmp sgt i32 %7, %3
+  %i.by = load i32, ptr %i.bx, align 8            ; 7 uses
+  %i.bz = icmp sle i32 %i.by, %7
+  %.not45.i = icmp sgt i32 %i.by, %3
   %or.cond.i = or i1 %.not45.i, %i.bz
   br i1 %or.cond.i, label %bb.w, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph54.i
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8
-  %i.cc = sext i32 %7 to i64
+  %i.cc = sext i32 %i.by to i64
   %i.cd = shl nsw i64 %i.cc, 1
   %bcmp.i = tail call i32 @bcmp(ptr %i.cb, ptr nonnull readonly %2, i64 %i.cd)
   %i.ce = icmp eq i32 %bcmp.i, 0
@@ -228,16 +229,16 @@ bb.u:                                             ; preds = %.lr.ph54.i
 
 bb.v:                                             ; preds = %bb.u
   %i.cf = load i32, ptr %4, align 4
-  %..i = tail call i32 @llvm.smax.i32(i32 %i.cf, i32 %7)
+  %..i = tail call i32 @llvm.smax.i32(i32 %i.cf, i32 %i.by)
   store i32 %..i, ptr %4, align 4
   %i.cg = trunc nsw i64 %indvars.iv56.i to i32
   store i32 %i.cg, ptr %6, align 4
-  store i32 %7, ptr %5, align 4
+  store i32 %i.by, ptr %5, align 4
   br label %.loopexit.i
 
 bb.w:                                             ; preds = %bb.u, %.lr.ph54.i
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
-  %i.ci = tail call i32 @llvm.smin.i32(i32 %7, i32 %3) ; 2 uses
+  %i.ci = tail call i32 @llvm.smin.i32(i32 %i.by, i32 %3) ; 2 uses
   %i.cj = icmp slt i32 %i.bt, %i.ci
   br i1 %i.cj, label %.lr.ph.i31, label %.loopexit.i
 
@@ -249,7 +250,7 @@ bb.w:                                             ; preds = %bb.u, %.lr.ph54.i
   %i.cn = getelementptr inbounds [2 x i8], ptr %2, i64 %indvars.iv.i
   %i.co = load i16, ptr %i.cn, align 2
   %.not46.i = icmp eq i16 %i.cm, %i.co
-  br i1 %.not46.i, label %bb.x, label %.loopexit.i
+  br i1 %.not46.i, label %bb.x, label %.loopexit.loopexit.i
 
 bb.x:                                             ; preds = %.lr.ph.i31
   %i.cp = load i32, ptr %4, align 4
@@ -258,9 +259,14 @@ bb.x:                                             ; preds = %.lr.ph.i31
   %.48.i = tail call i32 @llvm.smax.i32(i32 %i.cp, i32 %i.cq)
   store i32 %.48.i, ptr %4, align 4
   %exitcond.not.i = icmp eq i32 %i.ci, %i.cq
-  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i31, !llvm.loop !24
+  br i1 %exitcond.not.i, label %.loopexit.loopexit.i, label %.lr.ph.i31, !llvm.loop !24
 
-.loopexit.i:                                      ; preds = %bb.x, %.lr.ph.i31, %bb.w, %bb.v
+.loopexit.loopexit.i:                             ; preds = %bb.x, %.lr.ph.i31
+  %.pre.i = load i32, ptr %5, align 4
+  br label %.loopexit.i
+
+.loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %bb.w, %bb.v
+  %8 = phi i32 [ %.pre.i, %.loopexit.loopexit.i ], [ %7, %bb.w ], [ %i.by, %bb.v ]
   %indvars.iv.next57.i = add nsw i64 %indvars.iv56.i, 1 ; 2 uses
   %lftr.wideiv59.i = trunc i64 %indvars.iv.next57.i to i32
   %exitcond60.not.i = icmp eq i32 %i.bv, %lftr.wideiv59.i

@@ -204,6 +204,7 @@ ir_array_init.exit156:                            ; preds = %ir_array_init.exit
 
 .lr.ph198.preheader:                              ; preds = %.preheader175
   %i.dc = zext nneg i32 %.sroa.17166.11 to i64
+  %.pre224 = load ptr, ptr %0, align 8, !tbaa !37
   br label %.lr.ph198
 
 bb.p:                                             ; preds = %.lr.ph190, %.loopexit176
@@ -349,18 +350,23 @@ bb.aa:                                            ; preds = %bb.v, %bb.x, %bb.w,
   %.not = icmp eq i32 %i.fj, 0
   br i1 %.not, label %.preheader175, label %bb.p, !llvm.loop !72
 
-.loopexit174:                                     ; preds = %bb.ad, %.lr.ph198
+.loopexit174.loopexit:                            ; preds = %bb.ad
+  %.pre = load ptr, ptr %0, align 8, !tbaa !37
+  br label %.loopexit174
+
+.loopexit174:                                     ; preds = %.loopexit174.loopexit, %.lr.ph198
+  %3 = phi ptr [ %.pre, %.loopexit174.loopexit ], [ %4, %.lr.ph198 ]
   %i.fk = icmp sgt i64 %indvars.iv, 1
   br i1 %i.fk, label %.lr.ph198, label %._crit_edge199, !llvm.loop !73
 
 .lr.ph198:                                        ; preds = %.lr.ph198.preheader, %.loopexit174
+  %4 = phi ptr [ %.pre224, %.lr.ph198.preheader ], [ %3, %.loopexit174 ] ; 2 uses
   %indvars.iv = phi i64 [ %i.dc, %.lr.ph198.preheader ], [ %indvars.iv.next, %.loopexit174 ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.next
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !38
-  %3 = load ptr, ptr %0, align 8, !tbaa !37
   %i.fn = sext i32 %i.fm to i64
-  %i.fo = getelementptr inbounds [16 x i8], ptr %3, i64 %i.fn ; 2 uses
+  %i.fo = getelementptr inbounds [16 x i8], ptr %4, i64 %i.fn ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 2
   %i.fq = load i16, ptr %i.fp, align 2, !tbaa !39 ; 2 uses
   %i.fr = icmp ugt i16 %i.fq, 1
@@ -393,7 +399,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %.lr.ph196, %bb.ab, %bb.ac
   %i.gb = getelementptr inbounds nuw i8, ptr %.3193, i64 4
   %i.gc = icmp samesign ugt i32 %.0142194.in, 2
-  br i1 %i.gc, label %.lr.ph196, label %.loopexit174, !llvm.loop !74
+  br i1 %i.gc, label %.lr.ph196, label %.loopexit174.loopexit, !llvm.loop !74
 
 ._crit_edge199:                                   ; preds = %.loopexit174, %ir_array_init.exit156, %.preheader175
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10

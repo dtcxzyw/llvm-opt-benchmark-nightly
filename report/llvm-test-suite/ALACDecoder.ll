@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %3, ptr %5, align 4, !tbaa !7
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 5 ; 8 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 5 ; 9 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 14 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 7 ; 3 uses
@@ -607,6 +607,7 @@ bb.bf:                                            ; preds = %.lr.ph455.split.us.
 .lr.ph455.split.split.preheader:                  ; preds = %.lr.ph455.split
   %i.mh = zext i32 %.2353 to i64
   %wide.trip.count570 = zext i32 %4 to i64
+  %.pre598 = load i8, ptr %i.k, align 1, !tbaa !52
   br label %.lr.ph455.split.split
 
 .lr.ph455.split.split.us.split.split:             ; preds = %.lr.ph455.split
@@ -657,8 +658,8 @@ _ZL6Zero16Psjj.exit.us467:                        ; preds = %.lr.ph.i395.us459, 
   br i1 %exitcond576.not, label %.loopexit, label %.lr.ph455.split.split.us.split.split.split.split, !llvm.loop !48
 
 .lr.ph455.split.split:                            ; preds = %.lr.ph455.split.split.preheader, %_ZL6Zero16Psjj.exit
+  %8 = phi i8 [ %.pre598, %.lr.ph455.split.split.preheader ], [ %9, %_ZL6Zero16Psjj.exit ] ; 2 uses
   %indvars.iv567 = phi i64 [ %i.mh, %.lr.ph455.split.split.preheader ], [ %indvars.iv.next568, %_ZL6Zero16Psjj.exit ] ; 4 uses
-  %8 = load i8, ptr %i.k, align 1, !tbaa !52
   switch i8 %8, label %_ZL6Zero16Psjj.exit [
     i8 16, label %.preheader.i
     i8 24, label %.preheader.i390
@@ -699,7 +700,7 @@ bb.bg:                                            ; preds = %bb.bg, %.preheader.
   store i8 0, ptr %i.ni, align 1, !tbaa !17
   %i.nj = add i32 %.014.i, %i.lx                  ; 2 uses
   %i.nk = icmp ult i32 %i.nj, %i.lw
-  br i1 %i.nk, label %bb.bg, label %_ZL6Zero16Psjj.exit, !llvm.loop !49
+  br i1 %i.nk, label %bb.bg, label %_ZL6Zero16Psjj.exit.loopexit517, !llvm.loop !49
 
 .preheader.i393:                                  ; preds = %.lr.ph455.split.split
   %i.nl = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv567
@@ -714,7 +715,12 @@ bb.bg:                                            ; preds = %bb.bg, %.preheader.
   %i.np = icmp ult i32 %i.no, %i.ls
   br i1 %i.np, label %.lr.ph.i395, label %_ZL6Zero16Psjj.exit, !llvm.loop !46
 
-_ZL6Zero16Psjj.exit:                              ; preds = %.lr.ph.i395, %bb.bg, %.lr.ph.i, %.preheader.i393, %.preheader.i, %.lr.ph455.split.split
+_ZL6Zero16Psjj.exit.loopexit517:                  ; preds = %bb.bg
+  %.pre597 = load i8, ptr %i.k, align 1, !tbaa !52
+  br label %_ZL6Zero16Psjj.exit
+
+_ZL6Zero16Psjj.exit:                              ; preds = %.lr.ph.i395, %.lr.ph.i, %_ZL6Zero16Psjj.exit.loopexit517, %.preheader.i393, %.preheader.i, %.lr.ph455.split.split
+  %9 = phi i8 [ 16, %.lr.ph.i ], [ %.pre597, %_ZL6Zero16Psjj.exit.loopexit517 ], [ %8, %.lr.ph455.split.split ], [ 16, %.preheader.i ], [ 32, %.preheader.i393 ], [ 32, %.lr.ph.i395 ]
   %indvars.iv.next568 = add nuw nsw i64 %indvars.iv567, 1 ; 2 uses
   %exitcond571.not = icmp eq i64 %indvars.iv.next568, %wide.trip.count570
   br i1 %exitcond571.not, label %.loopexit, label %.lr.ph455.split.split, !llvm.loop !48

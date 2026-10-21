@@ -204,18 +204,18 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 10 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.p = load ptr, ptr %2, align 8, !tbaa !337, !nonnull !183, !align !184
+  %i.p = load ptr, ptr %2, align 8, !tbaa !337    ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.r = load i32, ptr %i.q, align 8, !tbaa !113
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %"_ZZN12_GLOBAL__N_116promoteVariablesEPN6hermes8FunctionERN4llvh9SetVectorIS2_St6vectorIS2_SaIS2_EENS3_8DenseSetIS2_NS3_12DenseMapInfoIS2_EEEEEEENK3$_2clEPNS0_9ScopeDescE.exit", label %.lr.ph21.split.i
 
 .lr.ph21.split.i:                                 ; preds = %.lr.ph21.i, %_ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit.thread.i
+  %4 = phi ptr [ %6, %_ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit.thread.i ], [ %i.p, %.lr.ph21.i ] ; 6 uses
   %.019.i = phi ptr [ %i.ii, %_ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit.thread.i ], [ %.val, %.lr.ph21.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.t = load ptr, ptr %.019.i, align 8, !tbaa !114 ; 5 uses
   store ptr %i.t, ptr %i.a, align 8, !tbaa !114
-  %4 = load ptr, ptr %2, align 8, !tbaa !337, !nonnull !183, !align !184 ; 2 uses
   %i.u = load ptr, ptr %4, align 8, !tbaa !99     ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.w = load i32, ptr %i.v, align 8, !tbaa !113  ; 2 uses
@@ -294,7 +294,12 @@ bb.e:                                             ; preds = %_ZNK4llvh6detail12D
   %.not4316.i = icmp eq i32 %i.bl, 0
   br i1 %.not4316.i, label %._crit_edge.i, label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %_ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit55.i, %bb.e
+._crit_edge.i.loopexit:                           ; preds = %_ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit55.i
+  %.pre = load ptr, ptr %2, align 8, !tbaa !337
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.e
+  %5 = phi ptr [ %.pre, %._crit_edge.i.loopexit ], [ %4, %bb.e ]
   %i.bo = load ptr, ptr %3, align 8, !tbaa !79    ; 3 uses
   %i.bp = load i32, ptr %i.m, align 8, !tbaa !80  ; 2 uses
   %i.bq = zext i32 %i.bp to i64
@@ -695,9 +700,10 @@ bb.x:                                             ; preds = %_ZN6hermes9IRBuilde
 _ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit55.i: ; preds = %bb.s, %bb.x, %_ZN6hermes9IRBuilder20InstructionDestroyer3addEPNS_11InstructionE.exit.i, %bb.r, %.lr.ph.i
   %i.ih = getelementptr inbounds nuw i8, ptr %.03717.i, i64 8 ; 2 uses
   %.not43.i = icmp eq ptr %i.ih, %i.bn
-  br i1 %.not43.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not43.i, label %._crit_edge.i.loopexit, label %.lr.ph.i
 
 _ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit.thread.i: ; preds = %.lr.ph.i.i.i.i, %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i, %_ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit.i, %.lr.ph21.split.i
+  %6 = phi ptr [ %4, %.lr.ph21.split.i ], [ %5, %_ZN6hermes9IRBuilder20InstructionDestroyerD2Ev.exit.i ], [ %4, %_ZNK4llvh6detail12DenseSetImplIPN6hermes8VariableENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5countEPKS3_.exit.i ], [ %4, %.lr.ph.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   %i.ii = getelementptr inbounds nuw i8, ptr %.019.i, i64 8 ; 2 uses
   %.not.i = icmp eq ptr %i.ii, %i.g

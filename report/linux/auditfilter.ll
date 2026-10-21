@@ -204,12 +204,13 @@ bb.g:                                             ; preds = %_kzalloc_noprof.exi
   %i.y = getelementptr i8, ptr %0, i64 12
   %i.z = getelementptr i8, ptr %i.l, i64 48       ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(256) %i.z, ptr noundef readonly align 4 dereferenceable(256) %i.y, i64 256, i1 false)
-  %i.aa = getelementptr i8, ptr %i.l, i64 300     ; 2 uses
+  %i.aa = getelementptr i8, ptr %i.l, i64 300     ; 3 uses
+  %.pre67.i = load i32, ptr %i.aa, align 4
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.i, %.preheader56.i
+  %2 = phi i32 [ %.pre67.i, %.preheader56.i ], [ %3, %.loopexit.i ] ; 3 uses
   %indvars.iv63.i = phi i64 [ 0, %.preheader56.i ], [ %indvars.iv.next64.i, %.loopexit.i ] ; 3 uses
-  %2 = load i32, ptr %i.aa, align 4               ; 2 uses
   %i.ab = trunc nuw nsw i64 %indvars.iv63.i to i32
   %i.ac = lshr exact i32 -2147483648, %i.ab       ; 2 uses
   %i.ad = and i32 %i.ac, %2
@@ -218,7 +219,7 @@ bb.h:                                             ; preds = %.loopexit.i, %.preh
 
 bb.i:                                             ; preds = %bb.h
   %i.ae = xor i32 %i.ac, -1
-  %i.af = and i32 %2, %i.ae
+  %i.af = and i32 %2, %i.ae                       ; 2 uses
   store i32 %i.af, ptr %i.aa, align 4
   %i.ag = getelementptr [8 x i8], ptr @classes, i64 %indvars.iv63.i
   %i.ah = load ptr, ptr %i.ag, align 8            ; 5 uses
@@ -256,9 +257,14 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.bb, ptr %i.az, align 4
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %indvars.iv.next.i.3, 64
-  br i1 %exitcond.not.i.3, label %.loopexit.i, label %.preheader.i, !llvm.loop !36
+  br i1 %exitcond.not.i.3, label %.loopexit.loopexit.i, label %.preheader.i, !llvm.loop !36
 
-.loopexit.i:                                      ; preds = %.preheader.i, %bb.i, %bb.h
+.loopexit.loopexit.i:                             ; preds = %.preheader.i
+  %.pre.i = load i32, ptr %i.aa, align 4
+  br label %.loopexit.i
+
+.loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %bb.i, %bb.h
+  %3 = phi i32 [ %.pre.i, %.loopexit.loopexit.i ], [ %i.af, %bb.i ], [ %2, %bb.h ]
   %indvars.iv.next64.i = add nuw nsw i64 %indvars.iv63.i, 1 ; 2 uses
   %exitcond66.not.i = icmp eq i64 %indvars.iv.next64.i, 16
   br i1 %exitcond66.not.i, label %audit_to_entry_common.exit, label %bb.h, !llvm.loop !37

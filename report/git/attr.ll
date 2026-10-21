@@ -205,12 +205,16 @@ bb.d:                                             ; preds = %bb.c
   %i.e = tail call i32 @pthread_mutex_lock(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @check_vector, i64 24)) #22 ; 0 uses
   %i.f = load i64, ptr @check_vector, align 8, !tbaa !44 ; 2 uses
   %.not.i = icmp eq i64 %i.f, 0
-  br i1 %.not.i, label %drop_all_attr_stacks.exit, label %.lr.ph.i
+  br i1 %.not.i, label %drop_all_attr_stacks.exit, label %.lr.ph.preheader.i
 
-.lr.ph.i:                                         ; preds = %bb.d, %drop_attr_stack.exit.i
-  %i.g = phi i64 [ %i.ao, %drop_attr_stack.exit.i ], [ %i.f, %bb.d ]
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %drop_attr_stack.exit.i ], [ 0, %bb.d ] ; 2 uses
-  %1 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @check_vector, i64 16), align 8, !tbaa !45
+.lr.ph.preheader.i:                               ; preds = %bb.d
+  %.pre8.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @check_vector, i64 16), align 8, !tbaa !45
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %drop_attr_stack.exit.i, %.lr.ph.preheader.i
+  %i.g = phi i64 [ %i.f, %.lr.ph.preheader.i ], [ %i.ao, %drop_attr_stack.exit.i ]
+  %1 = phi ptr [ %.pre8.i, %.lr.ph.preheader.i ], [ %2, %drop_attr_stack.exit.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %drop_attr_stack.exit.i ] ; 2 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.i
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !47
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 3 uses
@@ -286,11 +290,13 @@ attr_stack_free.exit.i:                           ; preds = %._crit_edge.i.i, %.
   br i1 %.not.i.i, label %drop_attr_stack.exit.loopexit.i, label %.lr.ph.i.i, !llvm.loop !0
 
 drop_attr_stack.exit.loopexit.i:                  ; preds = %attr_stack_free.exit.i
+  %.pre.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @check_vector, i64 16), align 8, !tbaa !45
   %.pre.i.a = load i64, ptr @check_vector, align 8, !tbaa !44
   br label %drop_attr_stack.exit.i
 
 drop_attr_stack.exit.i:                           ; preds = %drop_attr_stack.exit.loopexit.i, %.lr.ph.i
   %i.ao = phi i64 [ %.pre.i.a, %drop_attr_stack.exit.loopexit.i ], [ %i.g, %.lr.ph.i ] ; 2 uses
+  %2 = phi ptr [ %.pre.i, %drop_attr_stack.exit.loopexit.i ], [ %1, %.lr.ph.i ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.ap = icmp ugt i64 %i.ao, %indvars.iv.next.i
   br i1 %i.ap, label %.lr.ph.i, label %drop_all_attr_stacks.exit, !llvm.loop !126

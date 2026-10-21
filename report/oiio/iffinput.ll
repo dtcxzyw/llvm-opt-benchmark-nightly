@@ -205,7 +205,7 @@ bb.a:
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !65
   %i.af = lshr i8 %i.ae, 3
   %i.ag = zext nneg i8 %i.af to i64
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 241 ; 23 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 241 ; 22 uses
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !67
   %i.aj = zext i8 %i.ai to i64
   %i.ak = mul nuw nsw i64 %i.ag, %i.aj
@@ -608,7 +608,7 @@ bb.ar:                                            ; preds = %bb.t
   %i.iq = load i8, ptr %i.ad, align 8, !tbaa !65
   %i.ir = lshr i8 %i.iq, 3
   %i.is = zext nneg i8 %i.ir to i64
-  %i.it = load i8, ptr %i.ah, align 1, !tbaa !67
+  %i.it = load i8, ptr %i.ah, align 1, !tbaa !67  ; 3 uses
   %i.iu = zext i8 %i.it to i64
   %i.iv = mul nuw nsw i64 %i.is, %i.iu
   %i.iw = mul nuw nsw i64 %i.iv, %i.ip
@@ -622,6 +622,8 @@ bb.ar:                                            ; preds = %bb.t
   br label %.lr.ph1027
 
 .lr.ph1027:                                       ; preds = %.lr.ph1027.preheader, %.thread819
+  %.pre1145 = phi i8 [ %.pre11451157, %.thread819 ], [ %i.it, %.lr.ph1027.preheader ] ; 4 uses
+  %7 = phi i8 [ %8, %.thread819 ], [ %i.it, %.lr.ph1027.preheader ] ; 2 uses
   %i.ix = phi i16 [ %i.ju, %.thread819 ], [ %i.ii, %.lr.ph1027.preheader ]
   %i.iy = phi i16 [ %i.jw, %.thread819 ], [ %.pre1143, %.lr.ph1027.preheader ] ; 2 uses
   %i.iz = phi i16 [ %i.jx, %.thread819 ], [ %.pre1143, %.lr.ph1027.preheader ] ; 2 uses
@@ -632,7 +634,6 @@ bb.ar:                                            ; preds = %bb.t
   %i.jd = load i8, ptr %i.ad, align 8, !tbaa !65
   %i.je = lshr i8 %i.jd, 3
   %i.jf = zext nneg i8 %i.je to i64
-  %7 = load i8, ptr %i.ah, align 1, !tbaa !67
   %i.jg = zext i8 %7 to i64
   %i.jh = mul nuw nsw i64 %i.jf, %i.jg
   %i.ji = load i8, ptr %i.al, align 8, !tbaa !66
@@ -664,6 +665,8 @@ bb.ar:                                            ; preds = %bb.t
   br label %.thread819
 
 .thread819:                                       ; preds = %.thread819.loopexit, %.lr.ph1027
+  %.pre11451157 = phi i8 [ %.pre11451155, %.thread819.loopexit ], [ %.pre1145, %.lr.ph1027 ]
+  %8 = phi i8 [ %11, %.thread819.loopexit ], [ %7, %.lr.ph1027 ]
   %i.ju = phi i16 [ %.pre1147.a, %.thread819.loopexit ], [ %i.ix, %.lr.ph1027 ] ; 2 uses
   %i.jv = phi i16 [ %.pre1146.a, %.thread819.loopexit ], [ %i.ja, %.lr.ph1027 ]
   %i.jw = phi i16 [ %i.nb, %.thread819.loopexit ], [ %i.iy, %.lr.ph1027 ]
@@ -676,7 +679,10 @@ bb.ar:                                            ; preds = %bb.t
   br i1 %.not456, label %switch.early.test, label %.lr.ph1027, !llvm.loop !342
 
 bb.as:                                            ; preds = %.lr.ph1023, %._crit_edge1019
+  %.pre11451156 = phi i8 [ %.pre1145, %.lr.ph1023 ], [ %.pre11451155, %._crit_edge1019 ]
+  %9 = phi i8 [ %.pre1145, %.lr.ph1023 ], [ %11, %._crit_edge1019 ]
   %i.ka = phi i16 [ %i.iy, %.lr.ph1023 ], [ %i.nb, %._crit_edge1019 ]
+  %10 = phi i8 [ %.pre1145, %.lr.ph1023 ], [ %12, %._crit_edge1019 ] ; 4 uses
   %indvars.iv1125 = phi i64 [ 0, %.lr.ph1023 ], [ %indvars.iv.next1126, %._crit_edge1019 ] ; 2 uses
   %i.kb = phi i16 [ %i.js, %.lr.ph1023 ], [ %i.nd, %._crit_edge1019 ] ; 2 uses
   %i.kc = trunc nuw nsw i64 %indvars.iv1125 to i32
@@ -685,8 +691,7 @@ bb.as:                                            ; preds = %.lr.ph1023, %._crit
   %i.kf = load i8, ptr %i.ad, align 8, !tbaa !65
   %i.kg = lshr i8 %i.kf, 3
   %i.kh = zext nneg i8 %i.kg to i64               ; 2 uses
-  %8 = load i8, ptr %i.ah, align 1, !tbaa !67     ; 4 uses
-  %i.ki = zext i8 %8 to i64                       ; 20 uses
+  %i.ki = zext i8 %10 to i64                      ; 20 uses
   %i.kj = mul nuw nsw i64 %i.kh, %i.ki            ; 3 uses
   %i.kk = mul nuw nsw i64 %i.kj, %i.ke            ; 2 uses
   %i.kl = add nuw nsw i64 %i.kk, %i.kj
@@ -710,7 +715,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.as
   %i.kn = getelementptr i8, ptr %i.ef, i64 %i.kk  ; 10 uses
-  %.not1051 = icmp eq i8 %8, 0
+  %.not1051 = icmp eq i8 %10, 0
   br i1 %.not1051, label %._crit_edge1019, label %iter.check
 
 iter.check:                                       ; preds = %bb.av
@@ -724,7 +729,7 @@ iter.check:                                       ; preds = %bb.av
   %i.kt = zext i16 %i.kb to i64
   %i.ku = mul nuw nsw i64 %i.ks, %i.kt            ; 2 uses
   %i.kv = getelementptr i8, ptr %i.jr, i64 %i.ku  ; 20 uses
-  %min.iters.check = icmp ult i8 %8, 8
+  %min.iters.check = icmp ult i8 %10, 8
   br i1 %min.iters.check, label %.lr.ph1018.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -740,7 +745,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %found.conflict, label %.lr.ph1018.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check1413 = icmp ult i8 %8, 32
+  %min.iters.check1413 = icmp ult i8 %10, 32
   br i1 %min.iters.check1413, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -907,13 +912,17 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.na, label %.lr.ph1018, label %._crit_edge1019.loopexit, !llvm.loop !347
 
 ._crit_edge1019.loopexit:                         ; preds = %.lr.ph1018, %vec.epilog.middle.block, %middle.block
+  %.pre1144 = load i8, ptr %i.ah, align 1, !tbaa !67 ; 3 uses
   %.pre1144.a = load i16, ptr %i.k, align 2, !tbaa !63
   %.pre1145.a = load i16, ptr %i.d, align 2, !tbaa !63
   br label %._crit_edge1019
 
 ._crit_edge1019:                                  ; preds = %._crit_edge1019.loopexit, %bb.av
+  %.pre11451155 = phi i8 [ %.pre1144, %._crit_edge1019.loopexit ], [ %.pre11451156, %bb.av ] ; 2 uses
+  %11 = phi i8 [ %.pre1144, %._crit_edge1019.loopexit ], [ %9, %bb.av ] ; 2 uses
   %i.nb = phi i16 [ %.pre1145.a, %._crit_edge1019.loopexit ], [ %i.ka, %bb.av ] ; 4 uses
   %i.nc = phi i16 [ %.pre1144.a, %._crit_edge1019.loopexit ], [ %i.kb, %bb.av ]
+  %12 = phi i8 [ %.pre1144, %._crit_edge1019.loopexit ], [ 0, %bb.av ]
   %i.nd = add i16 %i.nc, 1                        ; 3 uses
   store i16 %i.nd, ptr %i.k, align 2, !tbaa !63
   %indvars.iv.next1126 = add nuw nsw i64 %indvars.iv1125, 1

@@ -205,13 +205,17 @@ bb.a:
   %7 = alloca %"class.duckdb::vector.445", align 8 ; 8 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %10 = alloca %"class.duckdb::vector", align 8   ; 7 uses
+  %10 = alloca %"class.duckdb::vector", align 8   ; 8 uses
   %11 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 4 uses
   %12 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 4 uses
   %13 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 4 uses
   %14 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 4 uses
   %15 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 15 uses
-  %16 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 9 uses
+  %16 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 2 uses
+  %17 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 2 uses
+  %18 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 2 uses
+  %19 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 2 uses
+  %20 = alloca %"struct.duckdb::Subgraph2Denominator", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
@@ -237,7 +241,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not334369, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %9, i64 16
@@ -258,12 +262,13 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.bx
+  %.pre411 = load ptr, ptr %i.i, align 8, !tbaa !412
   %.pre410.a = load ptr, ptr %5, align 8, !tbaa !413
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %i.s = phi ptr [ %.pre410.a, %._crit_edge.loopexit ], [ null, %bb.b ] ; 17 uses
-  %i.t = phi ptr [ %i.hl, %._crit_edge.loopexit ], [ null, %bb.b ] ; 4 uses
+  %i.t = phi ptr [ %.pre411, %._crit_edge.loopexit ], [ null, %bb.b ] ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.v = load i64, ptr %i.u, align 8, !tbaa !169
   %i.w = uitofp i64 %i.v to double
@@ -281,12 +286,11 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIN6duckdb26FilterInfoWithTotalDomainsESaIS1_EED2Ev.exit271
 
 bb.d:                                             ; preds = %.lr.ph, %bb.bx
-  %i.ae = phi ptr [ null, %.lr.ph ], [ %i.hl, %bb.bx ] ; 7 uses
+  %i.ae = phi ptr [ null, %.lr.ph ], [ %i.hl, %bb.bx ] ; 21 uses
   %i.af = phi ptr [ null, %.lr.ph ], [ %i.hm, %bb.bx ] ; 18 uses
   %.sroa.0326.0370 = phi ptr [ %i.f, %.lr.ph ], [ %i.hn, %bb.bx ] ; 32 uses
-  %17 = load ptr, ptr %5, align 8, !tbaa !413     ; 13 uses
   %i.ag = ptrtoint ptr %i.af to i64               ; 2 uses
-  %i.ah = ptrtoint ptr %17 to i64
+  %i.ah = ptrtoint ptr %i.ae to i64
   %i.ai = sub i64 %i.ag, %i.ah                    ; 5 uses
   %i.aj = sdiv exact i64 %i.ai, 24                ; 8 uses
   %i.ak = icmp eq i64 %i.ai, 24
@@ -294,11 +298,11 @@ bb.d:                                             ; preds = %.lr.ph, %bb.bx
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #28
-  invoke void @_ZNK6duckdb12optional_ptrINS_15JoinRelationSetELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %17)
+  invoke void @_ZNK6duckdb12optional_ptrINS_15JoinRelationSetELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ae)
           to label %bb.f unwind label %bb.m
 
 bb.f:                                             ; preds = %bb.e
-  %i.al = load ptr, ptr %17, align 8, !tbaa !98
+  %i.al = load ptr, ptr %i.ae, align 8, !tbaa !98
   invoke void @_ZNK6duckdb15JoinRelationSet8ToStringB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %8, ptr noundef nonnull align 8 dereferenceable(16) %i.al)
           to label %bb.g unwind label %bb.m
 
@@ -402,7 +406,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit137: ; preds = %bb
           to label %bb.o unwind label %bb.ab
 
 bb.o:                                             ; preds = %.critedge127.thread
-  %i.bg = load ptr, ptr %10, align 8, !tbaa !104  ; 7 uses
+  %i.bg = load ptr, ptr %10, align 8, !tbaa !104  ; 5 uses
   %i.bh = load ptr, ptr %i.n, align 8, !tbaa !104 ; 2 uses
   %i.bi = icmp eq ptr %i.bg, %i.bh
   br i1 %i.bi, label %bb.p, label %bb.ac
@@ -475,7 +479,7 @@ bb.x:                                             ; preds = %bb.w
   store i64 %i.bw, ptr %.sroa.10.0..sroa_idx309, align 8, !tbaa !144
   %.sroa.12.0..sroa_idx315 = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   store double %i.cb, ptr %.sroa.12.0..sroa_idx315, align 8, !tbaa !423
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 3 uses
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 2 uses
   store ptr %i.cd, ptr %i.i, align 8, !tbaa !412
   br label %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE9push_backERKS1_.exit
 
@@ -500,7 +504,7 @@ _ZNKSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE12_M_check_lenEmPKc.exit.i.
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.cj = mul nuw nsw i64 %i.ci, 24
   %i.ck = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cj) #30
-          to label %.noexc148 unwind label %.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %.noexc148 unwind label %.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp ; 6 uses
 
 .noexc148:                                        ; preds = %_ZNKSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.ai ; 3 uses
@@ -509,12 +513,12 @@ _ZNKSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE12_M_check_lenEmPKc.exit.i.
   store i64 %i.bw, ptr %.sroa.10.0..sroa_idx311, align 8, !tbaa !144
   %.sroa.12.0..sroa_idx317 = getelementptr inbounds nuw i8, ptr %i.cl, i64 16
   store double %i.cb, ptr %.sroa.12.0..sroa_idx317, align 8, !tbaa !423
-  %.not10.i.i.i.i.i.i = icmp eq ptr %17, %i.af
+  %.not10.i.i.i.i.i.i = icmp eq ptr %i.ae, %i.af
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.noexc148, %.lr.ph.i.i.i.i.i.i
   %.012.i.i.i.i.i.i = phi ptr [ %i.cn, %.lr.ph.i.i.i.i.i.i ], [ %i.ck, %.noexc148 ] ; 2 uses
-  %.0911.i.i.i.i.i.i = phi ptr [ %i.cm, %.lr.ph.i.i.i.i.i.i ], [ %17, %.noexc148 ] ; 2 uses
+  %.0911.i.i.i.i.i.i = phi ptr [ %i.cm, %.lr.ph.i.i.i.i.i.i ], [ %i.ae, %.noexc148 ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !922, !alias.scope !923
   %i.cm = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 24 ; 2 uses
@@ -523,12 +527,12 @@ _ZNKSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE12_M_check_lenEmPKc.exit.i.
 
 _ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.noexc148
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.ck, %.noexc148 ], [ %i.cn, %.lr.ph.i.i.i.i.i.i ]
-  %i.co = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 24 ; 3 uses
-  %.not.i23.i.i = icmp eq ptr %17, null
+  %i.co = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 24 ; 2 uses
+  %.not.i23.i.i = icmp eq ptr %i.ae, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.aa
 
 bb.aa:                                            ; preds = %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i
-  call void @_ZdlPv(ptr noundef nonnull %17) #27
+  call void @_ZdlPv(ptr noundef nonnull %i.ae) #27
   br label %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.aa, %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i
@@ -567,7 +571,7 @@ _ZNSt6vectorImSaImEE2atEm.exit:                   ; preds = %bb.ac
   unreachable
 
 bb.ad:                                            ; preds = %_ZNSt6vectorImSaImEE2atEm.exit
-  %i.cx = getelementptr inbounds nuw [24 x i8], ptr %17, i64 %i.cv ; 13 uses
+  %i.cx = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %i.cv ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %15, i8 0, i64 16, i1 false)
   store double 1.000000e+00, ptr %i.p, align 8, !tbaa !415
@@ -756,7 +760,8 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   br i1 %exitcond.not.i193, label %_ZN6duckdb15JoinRelationSet8IsSubsetERS0_S1_.exit179.thread, label %bb.aw, !llvm.loop !11
 
 _ZN6duckdb15JoinRelationSet8IsSubsetERS0_S1_.exit179.thread: ; preds = %bb.as, %bb.ay, %bb.av, %bb.ap
-  %i.fn = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb20CardinalityEstimator24UpdateNumeratorRelationsENS_20Subgraph2DenominatorES1_RNS_26FilterInfoWithTotalDomainsE(ptr noundef nonnull align 8 dereferenceable(168) %1, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %i.cx, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %15, ptr noundef nonnull align 8 dereferenceable(25) %.sroa.0326.0370)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(24) %i.cx, i64 24, i1 false), !tbaa.struct !922
+  %i.fn = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb20CardinalityEstimator24UpdateNumeratorRelationsENS_20Subgraph2DenominatorES1_RNS_26FilterInfoWithTotalDomainsE(ptr noundef nonnull align 8 dereferenceable(168) %1, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %16, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %15, ptr noundef nonnull align 8 dereferenceable(25) %.sroa.0326.0370)
           to label %bb.az unwind label %bb.bd
 
 bb.az:                                            ; preds = %_ZN6duckdb15JoinRelationSet8IsSubsetERS0_S1_.exit179.thread
@@ -779,7 +784,8 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %bb.bb
   %i.ft = ptrtoint ptr %i.fs to i64
   store i64 %i.ft, ptr %i.cx, align 8, !tbaa !144
-  %i.fu = invoke noundef double @_ZN6duckdb20CardinalityEstimator21CalculateUpdatedDenomENS_20Subgraph2DenominatorES1_RNS_26FilterInfoWithTotalDomainsE(ptr nonnull align 8 poison, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %i.cx, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %15, ptr noundef nonnull align 8 dereferenceable(25) %.sroa.0326.0370)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, ptr noundef nonnull align 8 dereferenceable(24) %i.cx, i64 24, i1 false), !tbaa.struct !922
+  %i.fu = invoke noundef double @_ZN6duckdb20CardinalityEstimator21CalculateUpdatedDenomENS_20Subgraph2DenominatorES1_RNS_26FilterInfoWithTotalDomainsE(ptr nonnull align 8 poison, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %17, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %15, ptr noundef nonnull align 8 dereferenceable(25) %.sroa.0326.0370)
           to label %.critedge129 unwind label %bb.bd
 
 .critedge129:                                     ; preds = %bb.bc
@@ -804,14 +810,14 @@ _ZNSt6vectorImSaImEE2atEm.exit201:                ; preds = %bb.ac
   br i1 %.not.i.i202, label %bb.be, label %.invoke
 
 bb.be:                                            ; preds = %_ZNSt6vectorImSaImEE2atEm.exit201
-  %i.fy = getelementptr inbounds nuw [24 x i8], ptr %17, i64 %i.fx ; 7 uses
+  %i.fy = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %i.fx ; 7 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   %i.ga = load i64, ptr %i.fz, align 8, !tbaa !88 ; 3 uses
   %.not.i.i208 = icmp ult i64 %i.ga, %i.aj
   br i1 %.not.i.i208, label %bb.bf, label %.invoke
 
 bb.bf:                                            ; preds = %bb.be
-  %i.gb = getelementptr inbounds nuw [24 x i8], ptr %17, i64 %i.ga ; 5 uses
+  %i.gb = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %i.ga ; 5 uses
   invoke void @_ZNK6duckdb12optional_ptrINS_15JoinRelationSetELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %i.fy)
           to label %bb.bg unwind label %.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp
 
@@ -828,14 +834,16 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bh
   %i.gf = ptrtoint ptr %i.ge to i64
   store i64 %i.gf, ptr %i.fy, align 8, !tbaa !144
-  %i.gg = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb20CardinalityEstimator24UpdateNumeratorRelationsENS_20Subgraph2DenominatorES1_RNS_26FilterInfoWithTotalDomainsE(ptr noundef nonnull align 8 dereferenceable(168) %1, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %i.fy, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %i.gb, ptr noundef nonnull align 8 dereferenceable(25) %.sroa.0326.0370)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %18, ptr noundef nonnull align 8 dereferenceable(24) %i.fy, i64 24, i1 false), !tbaa.struct !922
+  %i.gg = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb20CardinalityEstimator24UpdateNumeratorRelationsENS_20Subgraph2DenominatorES1_RNS_26FilterInfoWithTotalDomainsE(ptr noundef nonnull align 8 dereferenceable(168) %1, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %18, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %i.gb, ptr noundef nonnull align 8 dereferenceable(25) %.sroa.0326.0370)
           to label %bb.bj unwind label %.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp
 
 bb.bj:                                            ; preds = %bb.bi
   %i.gh = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
   %i.gi = ptrtoint ptr %i.gg to i64
   store i64 %i.gi, ptr %i.gh, align 8, !tbaa !144
-  %i.gj = invoke noundef double @_ZN6duckdb20CardinalityEstimator21CalculateUpdatedDenomENS_20Subgraph2DenominatorES1_RNS_26FilterInfoWithTotalDomainsE(ptr nonnull align 8 poison, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %i.fy, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %i.gb, ptr noundef nonnull align 8 dereferenceable(25) %.sroa.0326.0370)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %19, ptr noundef nonnull align 8 dereferenceable(24) %i.fy, i64 24, i1 false), !tbaa.struct !922
+  %i.gj = invoke noundef double @_ZN6duckdb20CardinalityEstimator21CalculateUpdatedDenomENS_20Subgraph2DenominatorES1_RNS_26FilterInfoWithTotalDomainsE(ptr nonnull align 8 poison, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %19, ptr noundef nonnull byval(%"struct.duckdb::Subgraph2Denominator") align 8 %i.gb, ptr noundef nonnull align 8 dereferenceable(25) %.sroa.0326.0370)
           to label %bb.bk unwind label %.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp
 
 bb.bk:                                            ; preds = %bb.bj
@@ -848,12 +856,12 @@ bb.bk:                                            ; preds = %bb.bj
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %bb.bk
   %i.gn = mul nuw nsw i64 %i.gl, 96
-  %scevgep.i.i.i.i = getelementptr i8, ptr %17, i64 %i.gn ; 2 uses
+  %scevgep.i.i.i.i = getelementptr i8, ptr %i.ae, i64 %i.gn ; 2 uses
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.bo, %.lr.ph.preheader.i.i.i.i
   %.057.i.i.i.i = phi i64 [ %i.gs, %bb.bo ], [ %i.gl, %.lr.ph.preheader.i.i.i.i ] ; 2 uses
-  %.sroa.037.056.i.i.i.i = phi ptr [ %i.gr, %bb.bo ], [ %17, %.lr.ph.preheader.i.i.i.i ] ; 9 uses
+  %.sroa.037.056.i.i.i.i = phi ptr [ %i.gr, %bb.bo ], [ %i.ae, %.lr.ph.preheader.i.i.i.i ] ; 9 uses
   %.val.i.i.i.i.i = load ptr, ptr %.sroa.037.056.i.i.i.i, align 8, !tbaa !98
   %.not.i.i.i.i.i.i216 = icmp eq ptr %.val.i.i.i.i.i, null
   br i1 %.not.i.i.i.i.i.i216, label %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0EEET_SG_SG_T0_.exit.i.i", label %bb.bl
@@ -889,7 +897,7 @@ bb.bo:                                            ; preds = %bb.bn
 
 ._crit_edge.i.i.i.i:                              ; preds = %._crit_edge.loopexit.i.i.i.i, %bb.bk
   %.pre-phi63.i.i.i.i = phi i64 [ %.pre62.i.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %i.ai, %bb.bk ]
-  %.sroa.037.0.lcssa.i.i.i.i = phi ptr [ %scevgep.i.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %17, %bb.bk ] ; 5 uses
+  %.sroa.037.0.lcssa.i.i.i.i = phi ptr [ %scevgep.i.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %i.ae, %bb.bk ] ; 5 uses
   %i.gu = sdiv exact i64 %.pre-phi63.i.i.i.i, 24
   switch i64 %i.gu, label %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit" [
     i64 3, label %bb.bp
@@ -962,32 +970,33 @@ bb.bv:                                            ; preds = %bb.bu, %.lr.ph.i.i
   br i1 %.not.i.i215, label %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit.loopexit", label %.lr.ph.i.i, !llvm.loop !917
 
 "_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit.loopexit": ; preds = %bb.bv
-  %.pre409 = load ptr, ptr %i.i, align 8, !tbaa !410
+  %.pre409 = load ptr, ptr %5, align 8, !tbaa !413
   br label %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit"
 
 "_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit": ; preds = %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit.loopexit", %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0EEET_SG_SG_T0_.exit.i.i", %._crit_edge.i.i.i.i
-  %i.hc = phi ptr [ %i.ae, %._crit_edge.i.i.i.i ], [ %i.ae, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0EEET_SG_SG_T0_.exit.i.i" ], [ %.pre409, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit.loopexit" ] ; 3 uses
+  %i.hc = phi ptr [ %i.ae, %._crit_edge.i.i.i.i ], [ %i.ae, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0EEET_SG_SG_T0_.exit.i.i" ], [ %.pre409, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit.loopexit" ]
   %.sroa.012.2.i.i = phi ptr [ %i.af, %._crit_edge.i.i.i.i ], [ %.sroa.08.0.in.sroa.speculated.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEENS0_5__ops10_Iter_predIZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0EEET_SG_SG_T0_.exit.i.i" ], [ %.sroa.012.1.i.i, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit.loopexit" ] ; 2 uses
-  %.not.i.i.i218 = icmp eq ptr %i.hc, %.sroa.012.2.i.i
+  %21 = load ptr, ptr %i.i, align 8, !tbaa !410   ; 2 uses
+  %.not.i.i.i218 = icmp eq ptr %21, %.sroa.012.2.i.i
   br i1 %.not.i.i.i218, label %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE9push_backERKS1_.exit, label %_ZSt8_DestroyIPN6duckdb20Subgraph2DenominatorES1_EvT_S3_RSaIT0_E.exit.i.i.i
 
 _ZSt8_DestroyIPN6duckdb20Subgraph2DenominatorES1_EvT_S3_RSaIT0_E.exit.i.i.i: ; preds = %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit"
-  %i.hd = load ptr, ptr %5, align 8, !tbaa !410   ; 2 uses
+  %i.hd = load ptr, ptr %5, align 8, !tbaa !410   ; 3 uses
   %i.he = ptrtoint ptr %.sroa.012.2.i.i to i64
   %i.hf = ptrtoint ptr %i.hd to i64
   %i.hg = sub i64 %i.he, %i.hf
-  %i.hh = getelementptr inbounds i8, ptr %i.hd, i64 %i.hg ; 3 uses
+  %i.hh = getelementptr inbounds i8, ptr %i.hd, i64 %i.hg ; 2 uses
   store ptr %i.hh, ptr %i.i, align 8, !tbaa !412
   br label %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE9push_backERKS1_.exit
 
-.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bh, %bb.bf, %bb.bg, %bb.bj, %bb.u, %_ZNKSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE12_M_check_lenEmPKc.exit.i.i, %bb.s, %bb.r, %bb.q, %bb.p, %bb.v, %bb.t, %bb.bi, %bb.z, %.invoke
+.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bh, %bb.bf, %bb.bg, %bb.bj, %bb.u, %_ZNKSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE12_M_check_lenEmPKc.exit.i.i, %bb.s, %bb.r, %bb.q, %bb.p, %bb.v, %bb.t, %bb.bi, %.invoke, %bb.z
   %lpad.loopexit.split-lp530 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp339
 
 _ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE9push_backERKS1_.exit: ; preds = %bb.ac, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit", %_ZSt8_DestroyIPN6duckdb20Subgraph2DenominatorES1_EvT_S3_RSaIT0_E.exit.i.i.i, %bb.x, %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %.critedge129, %_ZN6duckdb15JoinRelationSet8IsSubsetERS0_S1_.exit194
-  %i.hi = phi ptr [ %i.ae, %bb.ac ], [ %i.hc, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit" ], [ %i.hh, %_ZSt8_DestroyIPN6duckdb20Subgraph2DenominatorES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.cd, %bb.x ], [ %i.co, %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.ae, %.critedge129 ], [ %i.ae, %_ZN6duckdb15JoinRelationSet8IsSubsetERS0_S1_.exit194 ]
-  %i.hj = phi ptr [ %i.af, %bb.ac ], [ %i.hc, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit" ], [ %i.hh, %_ZSt8_DestroyIPN6duckdb20Subgraph2DenominatorES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.cd, %bb.x ], [ %i.co, %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.af, %.critedge129 ], [ %i.af, %_ZN6duckdb15JoinRelationSet8IsSubsetERS0_S1_.exit194 ]
+  %i.hi = phi ptr [ %i.ae, %bb.ac ], [ %i.hc, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit" ], [ %i.hd, %_ZSt8_DestroyIPN6duckdb20Subgraph2DenominatorES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.ae, %bb.x ], [ %i.ck, %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.ae, %.critedge129 ], [ %i.ae, %_ZN6duckdb15JoinRelationSet8IsSubsetERS0_S1_.exit194 ]
+  %i.hj = phi ptr [ %i.af, %bb.ac ], [ %21, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN6duckdb20Subgraph2DenominatorESt6vectorIS3_SaIS3_EEEEZNS2_20CardinalityEstimator14GetDenominatorERNS2_15JoinRelationSetEE3$_0ET_SD_SD_T0_.exit" ], [ %i.hh, %_ZSt8_DestroyIPN6duckdb20Subgraph2DenominatorES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.cd, %bb.x ], [ %i.co, %_ZNSt6vectorIN6duckdb20Subgraph2DenominatorESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.af, %.critedge129 ], [ %i.af, %_ZN6duckdb15JoinRelationSet8IsSubsetERS0_S1_.exit194 ]
   %i.hk = load ptr, ptr %10, align 8, !tbaa !79   ; 2 uses
   %.not.i.i.i219 = icmp eq ptr %i.hk, null
   br i1 %.not.i.i.i219, label %_ZNSt6vectorImSaImEED2Ev.exit, label %bb.bw
@@ -1001,7 +1010,7 @@ _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %_ZNSt6vectorIN6duck
   br label %bb.bx
 
 bb.bx:                                            ; preds = %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE6insertERKm.exit, %bb.k, %_ZNSt6vectorImSaImEED2Ev.exit
-  %i.hl = phi ptr [ %i.ae, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE6insertERKm.exit ], [ %i.ae, %bb.k ], [ %i.hi, %_ZNSt6vectorImSaImEED2Ev.exit ] ; 2 uses
+  %i.hl = phi ptr [ %i.ae, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE6insertERKm.exit ], [ %i.ae, %bb.k ], [ %i.hi, %_ZNSt6vectorImSaImEED2Ev.exit ]
   %i.hm = phi ptr [ %i.af, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE6insertERKm.exit ], [ %i.af, %bb.k ], [ %i.hj, %_ZNSt6vectorImSaImEED2Ev.exit ]
   %i.hn = getelementptr inbounds nuw i8, ptr %.sroa.0326.0370, i64 32 ; 2 uses
   %.not334 = icmp eq ptr %i.hn, %i.h
@@ -1009,11 +1018,12 @@ bb.bx:                                            ; preds = %_ZNSt13unordered_se
 
 .loopexit.split-lp339:                            ; preds = %.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp, %bb.bd
   %.pn117.pn.pn = phi { ptr, i32 } [ %i.fw, %bb.bd ], [ %lpad.loopexit.split-lp530, %.loopexit.split-lp339.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
-  %.not.i.i.i220 = icmp eq ptr %i.bg, null
+  %22 = load ptr, ptr %10, align 8, !tbaa !79     ; 2 uses
+  %.not.i.i.i220 = icmp eq ptr %22, null
   br i1 %.not.i.i.i220, label %_ZNSt6vectorImSaImEED2Ev.exit221, label %bb.by
 
 bb.by:                                            ; preds = %.loopexit.split-lp339
-  call void @_ZdlPv(ptr noundef nonnull %i.bg) #27
+  call void @_ZdlPv(ptr noundef nonnull %22) #27
   br label %_ZNSt6vectorImSaImEED2Ev.exit221
 
 _ZNSt6vectorImSaImEED2Ev.exit221:                 ; preds = %bb.by, %.loopexit.split-lp339, %bb.ab
@@ -1022,30 +1032,30 @@ _ZNSt6vectorImSaImEED2Ev.exit221:                 ; preds = %bb.by, %.loopexit.s
   br label %.body
 
 bb.bz:                                            ; preds = %._crit_edge
-  call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false), !tbaa.struct !922
+  call void @llvm.lifetime.start.p0(ptr nonnull %20) #28
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %20, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false), !tbaa.struct !922
   %.sroa.0279.0371 = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %.not335372 = icmp eq ptr %.sroa.0279.0371, %i.t
   br i1 %.not335372, label %._crit_edge377, label %.lr.ph376
 
 .lr.ph376:                                        ; preds = %bb.bz
   %i.ho = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
-  %i.hp = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 3 uses
-  %i.hq = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
+  %i.hp = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 3 uses
+  %i.hq = getelementptr inbounds nuw i8, ptr %20, i64 16 ; 2 uses
   br label %bb.ca
 
 ._crit_edge377:                                   ; preds = %bb.cg, %bb.bz
-  call void @llvm.lifetime.end.p0(ptr nonnull %16) #28
+  call void @llvm.lifetime.end.p0(ptr nonnull %20) #28
   br label %bb.ci
 
 bb.ca:                                            ; preds = %.lr.ph376, %bb.cg
   %.sroa.0279.0374 = phi ptr [ %.sroa.0279.0371, %.lr.ph376 ], [ %.sroa.0279.0, %bb.cg ] ; 4 uses
   %.pn373 = phi ptr [ %i.s, %.lr.ph376 ], [ %.sroa.0279.0374, %bb.cg ] ; 2 uses
-  invoke void @_ZNK6duckdb12optional_ptrINS_15JoinRelationSetELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %16)
+  invoke void @_ZNK6duckdb12optional_ptrINS_15JoinRelationSetELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %20)
           to label %bb.cb unwind label %bb.ch
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.hr = load ptr, ptr %16, align 8, !tbaa !98
+  %i.hr = load ptr, ptr %20, align 8, !tbaa !98
   invoke void @_ZNK6duckdb12optional_ptrINS_15JoinRelationSetELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0279.0374)
           to label %bb.cc unwind label %bb.ch
 
@@ -1056,7 +1066,7 @@ bb.cc:                                            ; preds = %bb.cb
 
 bb.cd:                                            ; preds = %bb.cc
   %i.hu = ptrtoint ptr %i.ht to i64
-  store i64 %i.hu, ptr %16, align 8, !tbaa !144
+  store i64 %i.hu, ptr %20, align 8, !tbaa !144
   invoke void @_ZNK6duckdb12optional_ptrINS_15JoinRelationSetELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %i.hp)
           to label %bb.ce unwind label %bb.ch
 
@@ -1086,7 +1096,7 @@ bb.cg:                                            ; preds = %bb.cf
 bb.ch:                                            ; preds = %bb.cc, %bb.ca, %bb.cb, %bb.ce, %bb.cd, %bb.cf
   %i.ie = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %16) #28
+  call void @llvm.lifetime.end.p0(ptr nonnull %20) #28
   br label %.body
 
 bb.ci:                                            ; preds = %._crit_edge377, %._crit_edge
