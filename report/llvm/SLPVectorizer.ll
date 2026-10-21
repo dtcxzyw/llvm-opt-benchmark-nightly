@@ -205,7 +205,7 @@ bb.a:
   %16 = alloca %"class.llvm::ArrayRef.1899", align 8 ; 3 uses
   %17 = alloca %"class.llvm::slpvectorizer::BoUpSLP::ScheduleBundle", align 8 ; 12 uses
   %18 = alloca %"class.llvm::ArrayRef.1899", align 8 ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !1069   ; 68 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !1069   ; 67 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #31
   %i.d = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 2 uses
   store ptr %i.d, ptr %14, align 8, !tbaa !359
@@ -608,10 +608,7 @@ bb.dk:                                            ; preds = %bb.dj
 
 bb.dl:                                            ; preds = %bb.dk, %bb.dj
   %i.alz = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %19 = insertelement <2 x ptr> poison, ptr %i.c, i64 0
-  %20 = insertelement <2 x ptr> %19, ptr %i.ac, i64 1
-  %21 = getelementptr inbounds nuw i8, <2 x ptr> %20, <2 x i64> <i64 1680, i64 0>
-  %i.ama = getelementptr inbounds nuw i8, ptr %i.c, i64 1680 ; 2 uses
+  %i.ama = getelementptr inbounds nuw i8, ptr %i.c, i64 1680 ; 3 uses
   %i.amb = getelementptr inbounds nuw i8, ptr %i.c, i64 1712 ; 3 uses
   %i.amc = getelementptr inbounds nuw i8, ptr %i.c, i64 1704
   %i.amd = getelementptr inbounds nuw i8, ptr %i.c, i64 1688
@@ -636,6 +633,8 @@ bb.dl:                                            ; preds = %bb.dk, %bb.dj
   %i.amw = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
   %i.amx = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 8 uses
   %i.amy = getelementptr inbounds nuw i8, ptr %8, i64 12 ; 2 uses
+  %19 = insertelement <2 x ptr> poison, ptr %i.ama, i64 0
+  %20 = insertelement <2 x ptr> %19, ptr %i.ac, i64 1
   br label %bb.dm
 
 bb.dm:                                            ; preds = %_ZN4llvm13slpvectorizer7BoUpSLP15BlockScheduling8scheduleINS_9SetVectorIPNS1_14ScheduleEntityENS_11SmallVectorIS6_Lj0EEENS_8DenseSetIS6_NS_12DenseMapInfoIS6_vEEEELj0EEEEEvRKS1_RKN12_GLOBAL__N_117InstructionsStateERKNS1_8EdgeInfoES6_RT_.exit, %bb.dl
@@ -727,7 +726,7 @@ _ZN4llvm9SetVectorIPNS_13slpvectorizer7BoUpSLP14ScheduleEntityENS_11SmallVectorI
   %i.aot = load ptr, ptr %i.ae, align 8, !tbaa !1071 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   store ptr %i.c, ptr %3, align 8, !tbaa !2178
-  store <2 x ptr> %21, ptr %i.amf, align 8, !tbaa !874
+  store <2 x ptr> %20, ptr %i.amf, align 8, !tbaa !874
   store ptr %i.aot, ptr %i.amg, align 8, !tbaa !1060
   %i.aou = getelementptr inbounds nuw i8, ptr %i.ank, i64 8
   %i.aov = load i32, ptr %i.aou, align 4, !tbaa !986

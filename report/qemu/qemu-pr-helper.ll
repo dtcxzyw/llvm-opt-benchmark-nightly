@@ -202,8 +202,8 @@ bb.a:
   %2 = alloca %struct.PRHelperSGIOData, align 8   ; 9 uses
   %i.a = alloca ptr, align 8                      ; 7 uses
   %i.b = alloca i32, align 4                      ; 7 uses
-  %3 = alloca %struct.PRHelperRequest, align 8    ; 11 uses
-  %4 = alloca %struct.PRHelperResponse, align 4   ; 10 uses
+  %3 = alloca %struct.PRHelperRequest, align 8    ; 10 uses
+  %4 = alloca %struct.PRHelperResponse, align 4   ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   store ptr null, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
@@ -240,19 +240,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.s, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
-  %5 = insertelement <2 x ptr> poison, ptr %3, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %4, i64 1
-  %7 = getelementptr inbounds nuw i8, <2 x ptr> %6, <2 x i64> <i64 16, i64 8>
-  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %8 = insertelement <2 x ptr> poison, ptr %4, i64 0
-  %9 = insertelement <2 x ptr> %8, ptr %0, i64 1
-  %10 = getelementptr inbounds nuw i8, <2 x ptr> %9, <2 x i64> <i64 8, i64 20>
+  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.z = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 4
@@ -261,6 +255,8 @@ bb.c:                                             ; preds = %bb.b
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 36
   %.0.copyload.i = load i24, ptr @sense_code_INVALID_OPCODE, align 1
+  %5 = insertelement <2 x ptr> poison, ptr %i.v, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.w, i64 1 ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.k
@@ -296,7 +292,7 @@ bb.h:                                             ; preds = %bb.f
   store i32 %i.an, ptr %2, align 8
   store i32 0, ptr %i.ac, align 4
   store ptr %i.t, ptr %i.ad, align 8
-  store <2 x ptr> %10, ptr %i.ae, align 8
+  store <2 x ptr> %6, ptr %i.ae, align 8
   store i32 %i.ah, ptr %i.af, align 8
   store i32 -2, ptr %i.ag, align 4
   %i.as = call i32 @thread_pool_submit_co(ptr noundef nonnull @do_sgio_worker, ptr noundef nonnull %2) #13
@@ -309,8 +305,8 @@ bb.i:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   store i32 %i.at, ptr %1, align 8
   store i32 0, ptr %i.x, align 4
-  store <2 x ptr> %7, ptr %i.y, align 8
-  store ptr %i.w, ptr %i.z, align 8
+  store ptr %i.t, ptr %i.y, align 8
+  store <2 x ptr> %6, ptr %i.z, align 8
   store i32 8192, ptr %i.aa, align 8
   store i32 -3, ptr %i.ab, align 4
   %i.au = call i32 @thread_pool_submit_co(ptr noundef nonnull @do_sgio_worker, ptr noundef nonnull %1) #13

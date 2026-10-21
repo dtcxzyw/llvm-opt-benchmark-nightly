@@ -202,7 +202,7 @@ bb.a:
   %18 = alloca %"class.llvm::MachineOperand", align 8 ; 7 uses
   %19 = alloca %"class.llvm::MachineOperand", align 8 ; 6 uses
   %20 = alloca %"class.llvm::BitVector", align 8  ; 8 uses
-  %21 = alloca %"class.llvm::LiveRegUnits", align 16 ; 12 uses
+  %21 = alloca %"class.llvm::LiveRegUnits", align 16 ; 11 uses
   %22 = alloca %"class.llvm::MIMetadata", align 8 ; 5 uses
   %23 = alloca %"class.llvm::MachineInstrBuilder", align 8 ; 5 uses
   %24 = alloca %"class.llvm::MIMetadata", align 8 ; 5 uses
@@ -234,10 +234,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph247:                                        ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 4 uses
-  %29 = insertelement <2 x ptr> poison, ptr %i.g, i64 0
-  %30 = insertelement <2 x ptr> %29, ptr %21, i64 1
-  %31 = getelementptr inbounds nuw i8, <2 x ptr> %30, <2 x i64> <i64 0, i64 24>
-  %i.n = getelementptr inbounds nuw i8, ptr %21, i64 24 ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %21, i64 24 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %21, i64 20
   %i.q = getelementptr inbounds nuw i8, ptr %21, i64 72 ; 2 uses
@@ -281,6 +278,8 @@ bb.b:                                             ; preds = %bb.a
   %i.bc = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bd = getelementptr inbounds nuw i8, ptr %28, i64 8
   %i.be = getelementptr inbounds nuw i8, ptr %27, i64 8
+  %29 = insertelement <2 x ptr> poison, ptr %i.g, i64 0
+  %30 = insertelement <2 x ptr> %29, ptr %i.n, i64 1
   br label %bb.d
 
 ._crit_edge248:                                   ; preds = %_ZN4llvm12LiveRegUnitsD2Ev.exit, %bb.b
@@ -304,7 +303,7 @@ bb.d:                                             ; preds = %.lr.ph247, %_ZN4llv
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #13
   store i32 0, ptr %i.o, align 16, !tbaa !349
   store i32 6, ptr %i.p, align 4, !tbaa !350
-  store <2 x ptr> %31, ptr %21, align 16, !tbaa !9
+  store <2 x ptr> %30, ptr %21, align 16, !tbaa !9
   %i.bi = load i32, ptr %i.r, align 4, !tbaa !351 ; 4 uses
   store i32 %i.bi, ptr %i.q, align 8, !tbaa !355
   %i.bj = add i32 %i.bi, 63                       ; 2 uses

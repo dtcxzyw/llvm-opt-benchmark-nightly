@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   %i.fb = sext i32 %i.fa to i64
   %i.fc = getelementptr inbounds i8, ptr %i.ew, i64 %i.fb ; 2 uses
   store ptr %i.fc, ptr %i.b, align 16, !tbaa !47
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !47
   %i.fg = shl nsw i32 %i.es, 3                    ; 2 uses
@@ -227,23 +227,21 @@ bb.g:                                             ; preds = %bb.f
   %i.fu = load i32, ptr %i.bb, align 8, !tbaa !70 ; 3 uses
   call fastcc void @handle_partial_mb(ptr noundef %i.d, ptr noundef %i.b, ptr noundef nonnull %i.ey, i32 noundef %i.fu, i32 noundef %i.ev)
   %i.fv = icmp slt i32 %i.fu, 17
-  br i1 %i.fv, label %._crit_edge93, label %.lr.ph92.preheader
-
-.lr.ph92.preheader:                               ; preds = %bb.g
-  %4 = insertelement <2 x ptr> poison, ptr %i.fc, i64 0
-  %5 = insertelement <2 x ptr> %4, ptr %i.fl, i64 1
-  br label %.lr.ph92
+  br i1 %i.fv, label %._crit_edge93, label %.lr.ph92
 
 ._crit_edge93:                                    ; preds = %.lr.ph92, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   br label %bb.h
 
-.lr.ph92:                                         ; preds = %.lr.ph92.preheader, %.lr.ph92
-  %.090 = phi i32 [ %i.fy, %.lr.ph92 ], [ %i.fu, %.lr.ph92.preheader ] ; 2 uses
-  %i.fw = phi ptr [ %i.fx, %.lr.ph92 ], [ %i.ft, %.lr.ph92.preheader ]
-  %6 = phi <2 x ptr> [ %7, %.lr.ph92 ], [ %5, %.lr.ph92.preheader ]
-  %7 = getelementptr inbounds nuw i8, <2 x ptr> %6, <2 x i64> <i64 16, i64 8> ; 2 uses
-  store <2 x ptr> %7, ptr %i.b, align 16, !tbaa !47
+.lr.ph92:                                         ; preds = %bb.g, %.lr.ph92
+  %.090 = phi i32 [ %i.fy, %.lr.ph92 ], [ %i.fu, %bb.g ] ; 2 uses
+  %4 = phi ptr [ %6, %.lr.ph92 ], [ %i.fc, %bb.g ]
+  %5 = phi ptr [ %7, %.lr.ph92 ], [ %i.fl, %bb.g ]
+  %i.fw = phi ptr [ %i.fx, %.lr.ph92 ], [ %i.ft, %bb.g ]
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  store ptr %6, ptr %i.b, align 16, !tbaa !47
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  store ptr %7, ptr %i.fd, align 8, !tbaa !47
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 8 ; 2 uses
   store ptr %i.fx, ptr %i.fm, align 16, !tbaa !47
   %i.fy = add nsw i32 %.090, -16                  ; 2 uses

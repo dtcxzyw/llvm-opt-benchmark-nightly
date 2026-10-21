@@ -204,12 +204,9 @@ bb.qf:                                            ; preds = %bb.qc
 
 .thread.i509:                                     ; preds = %bb.qe, %bb.qd, %bb.pz, %bb.py, %bb.px
   call void @llvm.lifetime.start.p0(ptr nonnull %i.by), !noalias !10395
-  %.val55.i = load ptr, ptr %i.axn, align 8, !noalias !10395, !nonnull !17, !align !16, !noundef !17 ; 2 uses
-  %i.ayh = getelementptr inbounds nuw i8, ptr %.val55.i, i64 40
-  %3 = insertelement <2 x ptr> poison, ptr %1, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %.val55.i, i64 1
-  %5 = getelementptr inbounds nuw i8, <2 x ptr> %4, <2 x i64> <i64 1992, i64 40>
-  %i.ayi = getelementptr inbounds nuw i8, ptr %1, i64 1992
+  %.val55.i = load ptr, ptr %i.axn, align 8, !noalias !10395, !nonnull !17, !align !16, !noundef !17
+  %i.ayh = getelementptr inbounds nuw i8, ptr %.val55.i, i64 40 ; 2 uses
+  %i.ayi = getelementptr inbounds nuw i8, ptr %1, i64 1992 ; 2 uses
   %i.ayj = getelementptr inbounds nuw i8, ptr %1, i64 2336
   store i8 0, ptr %i.ayj, align 8, !noalias !10395
   %i.ayk = getelementptr inbounds nuw i8, ptr %1, i64 2480
@@ -226,6 +223,8 @@ bb.qf:                                            ; preds = %bb.qc
   store ptr %i.ayh, ptr %.sroa.11.0..sroa_idx.i510, align 8, !noalias !10395
   %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 2458 ; 2 uses
   store i8 0, ptr %.sroa.13.0..sroa_idx.i, align 2, !noalias !10395
+  %3 = insertelement <2 x ptr> poison, ptr %i.ayi, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.ayh, i64 1
   br label %bb.qi
 
 bb.qg:                                            ; preds = %bb.wu, %.body112.i
@@ -285,7 +284,7 @@ bb.qi:                                            ; preds = %._crit_edge2181, %.
   %i.azb = phi ptr [ %i.ayl, %.thread.i509 ], [ %.pre2187, %._crit_edge2181 ]
   %i.azc = phi ptr [ %.sroa.13.0..sroa_idx.i, %.thread.i509 ], [ %.phi.trans.insert.i494, %._crit_edge2181 ] ; 7 uses
   %i.azd = phi ptr [ %i.axj, %.thread.i509 ], [ %i.ayw, %._crit_edge2181 ] ; 8 uses
-  %i.aze = phi <2 x ptr> [ %5, %.thread.i509 ], [ %i.ayx, %._crit_edge2181 ]
+  %i.aze = phi <2 x ptr> [ %4, %.thread.i509 ], [ %i.ayx, %._crit_edge2181 ]
   %i.azf = getelementptr inbounds nuw i8, ptr %1, i64 2457
   %i.azg = getelementptr inbounds nuw i8, ptr %1, i64 2456
   %i.azh = getelementptr inbounds nuw i8, ptr %1, i64 2455 ; 2 uses

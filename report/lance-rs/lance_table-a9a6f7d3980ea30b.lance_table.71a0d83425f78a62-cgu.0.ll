@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %.thread615, %bb.e
   %i.cq = phi ptr [ %i.cl, %.thread615 ], [ %i.cp, %bb.e ] ; 2 uses
   %i.cr = phi ptr [ %i.ck, %.thread615 ], [ %i.co, %bb.e ] ; 3 uses
-  %i.cs = load ptr, ptr %i.cr, align 8, !noalias !41183, !nonnull !62, !align !67, !noundef !62 ; 2 uses
+  %i.cs = load ptr, ptr %i.cr, align 8, !noalias !41183, !nonnull !62, !align !67, !noundef !62
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.cu = load ptr, ptr %i.ct, align 8, !noalias !41183, !nonnull !62, !align !67, !noundef !62
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.088.i)
@@ -231,10 +231,7 @@ bb.g:                                             ; preds = %.noexc25.i, %.noexc
 
 .thread.i:                                        ; preds = %.noexc25.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt), !noalias !41184
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.cs, i64 48
-  %3 = insertelement <2 x ptr> poison, ptr %i.cs, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %i.cv, i64 1
-  %5 = getelementptr inbounds nuw i8, <2 x ptr> %4, <2 x i64> <i64 48, i64 0>
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.cs, i64 48 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   store ptr %i.cx, ptr %i.cy, align 8, !noalias !41183
   %.sroa.1198.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 96
@@ -242,6 +239,8 @@ bb.g:                                             ; preds = %.noexc25.i, %.noexc
   %.sroa.13100.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
   store i8 0, ptr %.sroa.13100.0..sroa_idx.i, align 8, !noalias !41183
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bw), !noalias !41183
+  %3 = insertelement <2 x ptr> poison, ptr %i.cx, i64 0
+  %4 = insertelement <2 x ptr> %3, ptr %i.cv, i64 1
   br label %bb.n
 
 bb.h:                                             ; preds = %.body.i, %bb.ft, %.body45.i
@@ -326,7 +325,7 @@ bb.n:                                             ; preds = %._crit_edge528, %.t
   %i.dn = phi ptr [ %i.cr, %.thread.i ], [ %i.co, %._crit_edge528 ] ; 2 uses
   %i.do = phi ptr [ %.sroa.13100.0..sroa_idx.i, %.thread.i ], [ %.phi.trans.insert.i, %._crit_edge528 ] ; 2 uses
   %i.dp = phi ptr [ %i.cy, %.thread.i ], [ %i.dk, %._crit_edge528 ] ; 2 uses
-  %i.dq = phi <2 x ptr> [ %5, %.thread.i ], [ %i.dl, %._crit_edge528 ]
+  %i.dq = phi <2 x ptr> [ %4, %.thread.i ], [ %i.dl, %._crit_edge528 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.br), !noalias !41190
   %i.dr = getelementptr inbounds nuw i8, ptr %i.br, i64 136
   store i64 -1, ptr %i.br, align 8, !noalias !41191
