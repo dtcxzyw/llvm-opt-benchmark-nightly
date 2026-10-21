@@ -204,7 +204,6 @@ bb.s:                                             ; preds = %.thread
   br i1 %i.br, label %.lr.ph, label %.thread173.thread
 
 .lr.ph:                                           ; preds = %bb.s, %bb.u
-  %.0.i410 = phi i1 [ %.1.i104, %bb.u ], [ false, %bb.s ]
   %.022.i409 = phi i32 [ %.123.i, %bb.u ], [ %.pre491, %bb.s ] ; 2 uses
   %.024.i408 = phi i32 [ %.125.i, %bb.u ], [ 1, %bb.s ] ; 2 uses
   %i.bs = add nuw nsw i32 %.022.i409, %.024.i408
@@ -229,21 +228,20 @@ bb.t:                                             ; preds = %.lr.ph
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %.lr.ph
-  %.120.i = phi i32 [ %i.ch, %bb.t ], [ %i.ca, %.lr.ph ] ; 10 uses
+  %.120.i = phi i32 [ %i.ch, %bb.t ], [ %i.ca, %.lr.ph ] ; 4 uses
   %i.ci = icmp slt i32 %.120.i, 0
   %.not28.i.not = icmp eq i32 %.120.i, 0          ; 2 uses
   %i.cj = add nuw nsw i32 %i.bt, 1
   %i.ck = icmp slt i32 %.120.i, 1
   %.125.i = select i1 %i.ck, i32 %.024.i408, i32 %i.cj ; 2 uses
   %.123.i = select i1 %i.ci, i32 %i.bt, i32 %.022.i409 ; 2 uses
-  %.1.i104 = select i1 %.not28.i.not, i1 true, i1 %.0.i410 ; 2 uses
   %i.cl = icmp sge i32 %.125.i, %.123.i
   %.not527 = select i1 %.not28.i.not, i1 true, i1 %i.cl
   br i1 %.not527, label %H5T__path_table_search.exit, label %.lr.ph, !llvm.loop !1
 
 H5T__path_table_search.exit:                      ; preds = %bb.u
   %.pre492.pre = load i32, ptr @H5T_g.0, align 8, !tbaa !54 ; 7 uses
-  br i1 %.1.i104, label %bb.v, label %.thread173.thread
+  br i1 %.not28.i.not, label %bb.v, label %.thread173.thread
 
 bb.v:                                             ; preds = %H5T__path_table_search.exit
   %i.cm = load ptr, ptr @H5T_g.2, align 8, !tbaa !53
@@ -280,7 +278,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.da, label %.thread194, label %.thread173.thread
 
 .thread173.thread:                                ; preds = %bb.s, %.thread, %H5T__path_table_search.exit, %bb.v, %.thread535, %.thread173, %.split
-  %.0133147163180189 = phi i32 [ %.120.i, %.split ], [ %.120.i, %bb.v ], [ 0, %.thread173 ], [ %.120.i, %.thread535 ], [ %.120.i, %H5T__path_table_search.exit ], [ 0, %.thread ], [ -1, %bb.s ] ; 2 uses
+  %.0133147163180189 = phi i32 [ 0, %.split ], [ 0, %bb.v ], [ 0, %.thread173 ], [ 0, %.thread535 ], [ %.120.i, %H5T__path_table_search.exit ], [ 0, %.thread ], [ -1, %bb.s ] ; 2 uses
   %.0130148161181187 = phi i32 [ %i.bt, %.split ], [ %i.bt, %bb.v ], [ 0, %.thread173 ], [ %i.bt, %.thread535 ], [ %i.bt, %H5T__path_table_search.exit ], [ 0, %.thread ], [ 1, %bb.s ] ; 2 uses
   %.086149159182185 = phi ptr [ %i.cp, %.split ], [ null, %bb.v ], [ null, %.thread173 ], [ %i.cp, %.thread535 ], [ null, %H5T__path_table_search.exit ], [ null, %.thread ], [ null, %bb.s ] ; 2 uses
   %i.db = phi i32 [ %.pre492.pre, %.split ], [ %.pre492.pre, %bb.v ], [ %.pre491.pre, %.thread173 ], [ %.pre492.pre, %.thread535 ], [ %.pre492.pre, %H5T__path_table_search.exit ], [ %.pre491, %.thread ], [ %.pre491, %bb.s ] ; 2 uses
@@ -683,7 +681,7 @@ H5T__path_find_init_new_path.exit.thread:         ; preds = %H5T__path_find_init
   %i.kr = phi i32 [ %.pre492.pre, %.thread535 ], [ %i.db, %H5T__path_find_init_new_path.exit ], [ %.pre491.pre, %.thread173 ], [ %.pre492.pre, %.split ], [ %i.db, %bb.ah ], [ %.pre492.pre, %bb.x ]
   %.086149159182184201 = phi ptr [ %i.cp, %.thread535 ], [ %.086149159182185, %H5T__path_find_init_new_path.exit ], [ %i.cw, %.thread173 ], [ %i.cp, %.split ], [ %.086149159182185, %bb.ah ], [ %i.cp, %bb.x ] ; 4 uses
   %.0130148161181186200 = phi i32 [ %i.bt, %.thread535 ], [ %.0130148161181187, %H5T__path_find_init_new_path.exit ], [ 0, %.thread173 ], [ %i.bt, %.split ], [ %.0130148161181187, %bb.ah ], [ %i.bt, %bb.x ] ; 2 uses
-  %.0133147163180188199 = phi i32 [ %.120.i, %.thread535 ], [ %.0133147163180189, %H5T__path_find_init_new_path.exit ], [ 0, %.thread173 ], [ %.120.i, %.split ], [ %.0133147163180189, %bb.ah ], [ %.120.i, %bb.x ] ; 2 uses
+  %.0133147163180188199 = phi i32 [ 0, %.thread535 ], [ %.0133147163180189, %H5T__path_find_init_new_path.exit ], [ 0, %.thread173 ], [ 0, %.split ], [ %.0133147163180189, %bb.ah ], [ 0, %bb.x ] ; 2 uses
   %i.ks = phi i1 [ false, %.thread535 ], [ true, %H5T__path_find_init_new_path.exit ], [ false, %.thread173 ], [ false, %.split ], [ true, %bb.ah ], [ false, %bb.x ] ; 3 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %.084202, i64 56
   %i.ku = load ptr, ptr %i.kt, align 8, !tbaa !31
@@ -715,7 +713,6 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %i.lf, label %.lr.ph432, label %H5T__path_table_search.exit123.thread
 
 .lr.ph432:                                        ; preds = %.preheader, %bb.cl
-  %.0.i114431 = phi i1 [ %.1.i122, %bb.cl ], [ false, %.preheader ]
   %.022.i111430 = phi i32 [ %.123.i121, %bb.cl ], [ %i.ky, %.preheader ] ; 2 uses
   %.024.i110429 = phi i32 [ %.125.i120, %bb.cl ], [ 1, %.preheader ] ; 2 uses
   %i.lg = add nuw nsw i32 %.022.i111430, %.024.i110429
@@ -747,13 +744,12 @@ bb.cl:                                            ; preds = %bb.ck, %.lr.ph432
   %i.ly = icmp slt i32 %.120.i116, 1
   %.125.i120 = select i1 %i.ly, i32 %.024.i110429, i32 %i.lx ; 2 uses
   %.123.i121 = select i1 %i.lw, i32 %i.lh, i32 %.022.i111430 ; 2 uses
-  %.1.i122 = select i1 %.not28.i117.not, i1 true, i1 %.0.i114431 ; 2 uses
   %i.lz = icmp sge i32 %.125.i120, %.123.i121
   %.not529 = select i1 %.not28.i117.not, i1 true, i1 %i.lz
   br i1 %.not529, label %H5T__path_table_search.exit123, label %.lr.ph432, !llvm.loop !1
 
 H5T__path_table_search.exit123:                   ; preds = %bb.cl
-  br i1 %.1.i122, label %bb.cm, label %H5T__path_table_search.exit123.thread
+  br i1 %.not28.i117.not, label %bb.cm, label %H5T__path_table_search.exit123.thread
 
 bb.cm:                                            ; preds = %H5T__path_table_search.exit123
   %i.ma = load ptr, ptr @H5T_g.2, align 8, !tbaa !53
@@ -968,7 +964,6 @@ bb.e:                                             ; preds = %._crit_edge, %bb.c,
   br i1 %or.cond, label %.lr.ph.i, label %H5T_path_noop.exit, !prof !48
 
 .lr.ph.i:                                         ; preds = %bb.e, %bb.g
-  %.032.i = phi i1 [ %.1.i, %bb.g ], [ false, %bb.e ]
   %.02231.i = phi i32 [ %.123.i, %bb.g ], [ %i.t, %bb.e ] ; 2 uses
   %.02430.i = phi i32 [ %.125.i, %bb.g ], [ 1, %bb.e ] ; 2 uses
   %i.v = add nuw nsw i32 %.02430.i, %.02231.i
@@ -1000,13 +995,12 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i
   %i.an = icmp slt i32 %.120.i, 1
   %.125.i = select i1 %i.an, i32 %.02430.i, i32 %i.am ; 2 uses
   %.123.i = select i1 %i.al, i32 %i.w, i32 %.02231.i ; 2 uses
-  %.1.i = select i1 %.not28.not.i, i1 true, i1 %.032.i ; 2 uses
   %i.ao = icmp sge i32 %.125.i, %.123.i
   %.not38.i = select i1 %.not28.not.i, i1 true, i1 %i.ao
   br i1 %.not38.i, label %H5T__path_table_search.exit, label %.lr.ph.i, !llvm.loop !1
 
 H5T__path_table_search.exit:                      ; preds = %bb.g
-  br i1 %.1.i, label %bb.h, label %H5T_path_noop.exit
+  br i1 %.not28.not.i, label %bb.h, label %H5T_path_noop.exit
 
 bb.h:                                             ; preds = %H5T__path_table_search.exit
   %i.ap = load ptr, ptr @H5T_g.2, align 8, !tbaa !53

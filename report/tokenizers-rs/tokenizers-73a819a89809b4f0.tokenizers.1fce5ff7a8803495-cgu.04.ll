@@ -204,9 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = ptrtoint ptr %0 to i64
   %i.d = sub nuw i64 %i.b, %i.c
   %i.e = lshr exact i64 %i.d, 7                   ; 2 uses
-  %i.f = trunc nuw i8 %.0.val to i1               ; 3 uses
-  %.1.i.i = select i1 %i.f, i64 3, i64 2          ; 2 uses
-  %..i.i = select i1 %i.f, i64 4, i64 2           ; 2 uses
+  %i.f = trunc nuw i8 %.0.val to i1
   br i1 %i.f, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.b, %_RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit.us
@@ -248,7 +246,7 @@ bb.f:                                             ; preds = %.split.us
   br label %_RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit.us
 
 _RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit.us: ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %.split.us
-  %.sroa.0.0.i.i.us = phi i64 [ %..i.i, %bb.f ], [ 0, %.split.us ], [ %i.t, %bb.d ], [ %i.r, %bb.c ], [ %.1.i.i, %bb.e ]
+  %.sroa.0.0.i.i.us = phi i64 [ 4, %bb.f ], [ 0, %.split.us ], [ %i.t, %bb.d ], [ %i.r, %bb.c ], [ 3, %bb.e ]
   %i.u = add i64 %.sroa.0.0.i.i.us, %.sroa.02.0.us ; 2 uses
   %i.v = add nuw i64 %.sroa.04.0.us, 1            ; 2 uses
   %i.w = icmp eq i64 %i.v, %i.e
@@ -265,7 +263,7 @@ _RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtB
   %i.ab = icmp slt i64 %i.y, 0
   %i.ac = select i1 %i.ab, i64 %i.aa, i64 3
   switch i64 %i.ac, label %.split14.us [
-    i64 0, label %2
+    i64 0, label %bb.g
     i64 1, label %bb.g
     i64 2, label %_RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit
     i64 3, label %bb.h
@@ -275,10 +273,7 @@ _RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtB
 .split14.us:                                      ; preds = %.split, %.split.us
   unreachable
 
-2:                                                ; preds = %.split
-  br label %_RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit
-
-bb.g:                                             ; preds = %.split
+bb.g:                                             ; preds = %.split, %.split
   br label %_RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit
 
 bb.h:                                             ; preds = %.split
@@ -295,8 +290,8 @@ bb.i:                                             ; preds = %.split
   %i.ak = tail call fastcc noundef i64 @_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs2JiOgHzbbc7_10tokenizers10processors20PostProcessorWrapperENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvNtNtB1Z_8adapters3map8map_foldRBQ_jjNCNvXs2_NtBS_8sequenceNtB3r_8SequenceNtNtBU_9tokenizer13PostProcessor12added_tokens0NCINvXsK_NtB1X_5accumjNtB4O_3Sum3sumINtB2J_3MapBF_B3j_EE0E0EBU_(ptr noundef nonnull %i.ag, ptr noundef %i.aj, i8 0)
   br label %_RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit
 
-_RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit: ; preds = %.split, %2, %bb.g, %bb.i, %bb.h
-  %.sroa.0.0.i.i = phi i64 [ %..i.i, %2 ], [ 0, %.split ], [ %i.ae, %bb.h ], [ %i.ak, %bb.i ], [ %.1.i.i, %bb.g ]
+_RNCNvXs2_NtNtCs2JiOgHzbbc7_10tokenizers10processors8sequenceNtB7_8SequenceNtNtBb_9tokenizer13PostProcessor12added_tokens0Bb_.exit: ; preds = %.split, %bb.g, %bb.i, %bb.h
+  %.sroa.0.0.i.i = phi i64 [ 2, %bb.g ], [ 0, %.split ], [ %i.ae, %bb.h ], [ %i.ak, %bb.i ]
   %i.al = add i64 %.sroa.0.0.i.i, %.sroa.02.0     ; 2 uses
   %i.am = add nuw i64 %.sroa.04.0, 1              ; 2 uses
   %i.an = icmp eq i64 %i.am, %i.e

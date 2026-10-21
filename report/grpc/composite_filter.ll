@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.z
           to label %_ZN9grpc_core39IsV2NonOwningWakerImplementationEnabledEv.exit56 unwind label %bb.bz
 
 _ZN9grpc_core39IsV2NonOwningWakerImplementationEnabledEv.exit56: ; preds = %bb.z, %_ZN9grpc_core39IsV2NonOwningWakerImplementationEnabledEv.exit.thread91, %bb.aa
-  %.0.i.i.i53 = phi i1 [ false, %bb.z ], [ true, %_ZN9grpc_core39IsV2NonOwningWakerImplementationEnabledEv.exit.thread91 ], [ %i.br, %bb.aa ] ; 6 uses
+  %.0.i.i.i53 = phi i1 [ false, %bb.z ], [ true, %_ZN9grpc_core39IsV2NonOwningWakerImplementationEnabledEv.exit.thread91 ], [ %i.br, %bb.aa ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #40
   %i.bs = load ptr, ptr %4, align 8, !tbaa !101   ; 7 uses
   %.not.i.i57 = icmp eq ptr %i.bs, null
@@ -215,7 +215,6 @@ _ZN9grpc_core2IfIbZNS_23V3InterceptorToV2BridgeINS_15CompositeFilterEE15MakeCall
   store ptr null, ptr %11, align 8, !tbaa !101
   %i.bt = getelementptr inbounds nuw i8, ptr %.0.i.i.i42, i64 200
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bs, i64 184 ; 2 uses
-  %.sroa.12.sroa.0.0116 = select i1 %.0.i.i.i53, ptr undef, ptr %i.bu
   %.sroa.882.0.in117 = select i1 %.0.i.i.i53, ptr %i.bt, ptr %i.bu
   br label %bb.ae
 
@@ -224,8 +223,7 @@ bb.ab:                                            ; preds = %_ZN9grpc_core39IsV2
   %i.bw = atomicrmw add ptr %i.bv, i64 1099511627776 monotonic, align 8 ; 0 uses
   store ptr null, ptr %11, align 8, !tbaa !101
   %i.bx = getelementptr inbounds nuw i8, ptr %.0.i.i.i42, i64 200
-  %i.by = getelementptr inbounds nuw i8, ptr %i.bs, i64 184 ; 2 uses
-  %.sroa.12.sroa.0.0 = select i1 %.0.i.i.i53, ptr undef, ptr %i.by ; 2 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bs, i64 184 ; 3 uses
   %.sroa.882.0.in = select i1 %.0.i.i.i53, ptr %i.bx, ptr %i.by ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %i.ca = atomicrmw sub ptr %i.bz, i64 1099511627776 acq_rel, align 8
@@ -246,7 +244,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %_ZN9grpc_core2IfIbZNS_23V3InterceptorToV2BridgeINS_15CompositeFilterEE15MakeCallPromiseENS_8CallArgsESt8functionIFNS_12ArenaPromiseISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEEES4_EEEUlvE0_ZNS3_15MakeCallPromiseES4_SE_EUlvE1_EC2EbOSF_OSG_.exit.thread, %bb.ac, %bb.ab
   %.sroa.882.0120.in = phi ptr [ %.sroa.882.0.in117, %_ZN9grpc_core2IfIbZNS_23V3InterceptorToV2BridgeINS_15CompositeFilterEE15MakeCallPromiseENS_8CallArgsESt8functionIFNS_12ArenaPromiseISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEEES4_EEEUlvE0_ZNS3_15MakeCallPromiseES4_SE_EUlvE1_EC2EbOSF_OSG_.exit.thread ], [ %.sroa.882.0.in, %bb.ac ], [ %.sroa.882.0.in, %bb.ab ]
-  %.sroa.12.sroa.0.0119 = phi ptr [ %.sroa.12.sroa.0.0116, %_ZN9grpc_core2IfIbZNS_23V3InterceptorToV2BridgeINS_15CompositeFilterEE15MakeCallPromiseENS_8CallArgsESt8functionIFNS_12ArenaPromiseISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEEES4_EEEUlvE0_ZNS3_15MakeCallPromiseES4_SE_EUlvE1_EC2EbOSF_OSG_.exit.thread ], [ %.sroa.12.sroa.0.0, %bb.ac ], [ %.sroa.12.sroa.0.0, %bb.ab ]
+  %.sroa.12.sroa.0.0119 = phi ptr [ %i.bu, %_ZN9grpc_core2IfIbZNS_23V3InterceptorToV2BridgeINS_15CompositeFilterEE15MakeCallPromiseENS_8CallArgsESt8functionIFNS_12ArenaPromiseISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEEES4_EEEUlvE0_ZNS3_15MakeCallPromiseES4_SE_EUlvE1_EC2EbOSF_OSG_.exit.thread ], [ %i.by, %bb.ac ], [ %i.by, %bb.ab ]
   %i.cf = zext i1 %.0.i.i.i53 to i8               ; 2 uses
   %i.cg = ptrtoint ptr %i.bs to i64
   %.sroa.882.0120 = ptrtoint ptr %.sroa.882.0120.in to i64

@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.hy, label %.split719.us, label %bb.am, !prof !20, !nosanitize !9
 
 bb.am:                                            ; preds = %bb.al
-  %i.hz = extractvalue { i32, i1 } %i.hx, 0, !nosanitize !9 ; 3 uses
+  %i.hz = extractvalue { i32, i1 } %i.hx, 0, !nosanitize !9 ; 2 uses
   %.not189.not.us = icmp eq i32 %i.hz, %1
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
@@ -319,7 +319,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.jx, label %.split735.us, label %bb.au, !prof !20, !nosanitize !9
 
 bb.au:                                            ; preds = %bb.at
-  %i.jy = extractvalue { i32, i1 } %i.jw, 0, !nosanitize !9 ; 3 uses
+  %i.jy = extractvalue { i32, i1 } %i.jw, 0, !nosanitize !9 ; 2 uses
   %.not190.not.us = icmp eq i32 %i.jy, %1
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #14
@@ -472,7 +472,6 @@ bb.aw:                                            ; preds = %.thread265.us
   unreachable, !nosanitize !9
 
 .split722.us:                                     ; preds = %bb.am, %bb.au
-  %.15.us = phi i32 [ %i.hz, %bb.am ], [ %i.jy, %bb.au ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
@@ -485,7 +484,7 @@ bb.aw:                                            ; preds = %.thread265.us
   unreachable, !nosanitize !9
 
 .loopexit:                                        ; preds = %bb.aw, %bb.p, %bb.n, %.split722.us
-  %spec.select = phi i32 [ %.15.us, %.split722.us ], [ 0, %bb.n ], [ 0, %bb.p ], [ %.17159.us, %bb.aw ]
+  %spec.select = phi i32 [ %1, %.split722.us ], [ 0, %bb.n ], [ 0, %bb.p ], [ %.17159.us, %bb.aw ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   ret i32 %spec.select

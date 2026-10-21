@@ -204,7 +204,7 @@ bb.ai:                                            ; preds = %.split, %lean_nat_l
   br label %lean_nat_eq.exit
 
 lean_nat_eq.exit:                                 ; preds = %bb.ai, %.critedge.i127
-  %.0.i128 = phi i1 [ %i.az, %.critedge.i127 ], [ %i.e, %bb.ai ] ; 2 uses
+  %.0.i128 = phi i1 [ %i.az, %.critedge.i127 ], [ %i.e, %bb.ai ]
   %i.ba = getelementptr i8, ptr %i.q, i64 8
   %.val = load i64, ptr %i.ba, align 8, !tbaa !13
   %i.bb = shl i64 %.val, 1
@@ -424,7 +424,6 @@ bb.bq:                                            ; preds = %bb.bp
 
 lean_dec_ref.exit109:                             ; preds = %bb.bo, %bb.bp, %bb.bq
   %i.cs = icmp eq i8 %i.co, 0
-  %.068. = select i1 %.0.i128, ptr undef, ptr %.068170
   %or.cond167 = select i1 %i.cs, i1 true, i1 %.0.i128
   br i1 %or.cond167, label %lean_dec_ref.exit113, label %lean_dec_ref.exit117
 
@@ -457,7 +456,7 @@ bb.bu:                                            ; preds = %bb.bt
   br label %lean_dec_ref.exit117
 
 lean_dec_ref.exit117:                             ; preds = %lean_dec_ref.exit109, %.thread152
-  %.275156 = phi ptr [ %i.cy, %.thread152 ], [ %.068., %lean_dec_ref.exit109 ] ; 2 uses
+  %.275156 = phi ptr [ %i.cy, %.thread152 ], [ %.068170, %lean_dec_ref.exit109 ] ; 2 uses
   %i.cz = add nuw i64 %.066171, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.cz, %3
   br i1 %exitcond.not, label %._crit_edge, label %bb.e

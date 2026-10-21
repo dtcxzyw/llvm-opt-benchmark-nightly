@@ -73,10 +73,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define noundef i32 @pmix_hash_store(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, ptr noundef %3, i64 noundef %4, ptr nofree noundef captures(address_is_null) %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 13 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 14 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !53
   %.not.i = icmp eq ptr %i.b, null                ; 6 uses
-  %..i = select i1 %.not.i, ptr null, ptr %i.a    ; 9 uses
+  %..i = select i1 %.not.i, ptr null, ptr %i.a    ; 7 uses
   %.not.i158 = icmp eq ptr %5, null
   %i.c = select i1 %.not.i158, ptr getelementptr inbounds nuw (i8, ptr @pmix_globals, i64 2944), ptr %5 ; 4 uses
   %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @pmix_gds_base_framework, i64 76), align 4, !tbaa !61 ; 3 uses
@@ -353,7 +353,7 @@ pmix_bfrops_base_tma_copy_value.exit167.us:       ; preds = %pmix_tma_malloc.exi
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cs, i64 520 ; 2 uses
   %i.dd = load i16, ptr %i.dc, align 8, !tbaa !84
   store i16 %i.dd, ptr %i.da, align 8, !tbaa !84
-  %i.de = tail call fastcc i32 @pmix_bfrops_base_tma_value_xfer(ptr noundef %i.da, ptr noundef nonnull readonly %i.dc, ptr noundef %..i) ; 3 uses
+  %i.de = tail call fastcc i32 @pmix_bfrops_base_tma_value_xfer(ptr noundef %i.da, ptr noundef nonnull readonly %i.dc, ptr noundef null) ; 3 uses
   switch i32 %i.de, label %pmix_bfrops_base_tma_copy_value.exit167.thread [
     i32 0, label %bb.ah
     i32 -2, label %.loopexit183
@@ -422,7 +422,7 @@ pmix_bfrops_base_tma_copy_value.exit167:          ; preds = %pmix_tma_malloc.exi
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dh, i64 520 ; 2 uses
   %i.ec = load i16, ptr %i.eb, align 8, !tbaa !84
   store i16 %i.ec, ptr %i.dz, align 8, !tbaa !84
-  %i.ed = tail call fastcc i32 @pmix_bfrops_base_tma_value_xfer(ptr noundef %i.dz, ptr noundef nonnull readonly %i.eb, ptr noundef %..i) ; 3 uses
+  %i.ed = tail call fastcc i32 @pmix_bfrops_base_tma_value_xfer(ptr noundef %i.dz, ptr noundef nonnull readonly %i.eb, ptr noundef nonnull %i.a) ; 3 uses
   switch i32 %i.ed, label %pmix_bfrops_base_tma_copy_value.exit167.thread [
     i32 0, label %bb.an
     i32 -2, label %.loopexit183
@@ -825,8 +825,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !53
   %.fr = freeze ptr %i.b
-  %.not.i = icmp eq ptr %.fr, null                ; 3 uses
-  %..i = select i1 %.not.i, ptr null, ptr %i.a    ; 2 uses
+  %.not.i = icmp eq ptr %.fr, null                ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !91   ; 2 uses
   %i.e = icmp slt i32 %1, 0
@@ -873,7 +872,7 @@ bb.c:                                             ; preds = %pmix_pointer_array_
   br i1 %.not.us, label %bb.d, label %pmix_bfrops_base_tma_value_release.exit.us
 
 pmix_bfrops_base_tma_value_release.exit.us:       ; preds = %.lr.ph.split.us
-  tail call fastcc void @pmix_bfrops_base_tma_value_destruct(ptr noundef nonnull %i.w, ptr noundef %..i)
+  tail call fastcc void @pmix_bfrops_base_tma_value_destruct(ptr noundef nonnull %i.w, ptr noundef null)
   %i.x = load ptr, ptr %i.v, align 8, !tbaa !80
   tail call void @free(ptr noundef %i.x) #16
   store ptr null, ptr %i.v, align 8, !tbaa !80
@@ -896,7 +895,7 @@ bb.d:                                             ; preds = %pmix_bfrops_base_tm
   br i1 %.not, label %bb.e, label %pmix_bfrops_base_tma_value_release.exit
 
 pmix_bfrops_base_tma_value_release.exit:          ; preds = %.lr.ph.split
-  tail call fastcc void @pmix_bfrops_base_tma_value_destruct(ptr noundef nonnull %i.ae, ptr noundef %..i)
+  tail call fastcc void @pmix_bfrops_base_tma_value_destruct(ptr noundef nonnull %i.ae, ptr noundef nonnull %i.a)
   %i.af = load ptr, ptr %i.ad, align 8, !tbaa !80
   %i.ag = load ptr, ptr %i.s, align 8, !tbaa !81
   tail call void %i.ag(ptr noundef nonnull %i.a, ptr noundef %i.af) #16, !inline_history !0
@@ -1299,11 +1298,11 @@ pmix_obj_new_tma.exit16:                          ; preds = %.lr.ph.i.i13, %bb.m
 ; Function Attrs: nounwind uwtable
 define internal void @pddes(ptr noundef %0) #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !53
   %.fr = freeze ptr %i.b
   %.not.i = icmp eq ptr %.fr, null                ; 3 uses
-  %..i = select i1 %.not.i, ptr null, ptr %i.a    ; 3 uses
+  %..i = select i1 %.not.i, ptr null, ptr %i.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 6 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !95   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 128
@@ -1442,7 +1441,7 @@ bb.j:                                             ; preds = %pmix_pointer_array_
   br i1 %.not52.us, label %bb.k, label %pmix_bfrops_base_tma_value_release.exit.us
 
 pmix_bfrops_base_tma_value_release.exit.us:       ; preds = %.lr.ph.split.us
-  tail call fastcc void @pmix_bfrops_base_tma_value_destruct(ptr noundef nonnull %i.bh, ptr noundef %..i)
+  tail call fastcc void @pmix_bfrops_base_tma_value_destruct(ptr noundef nonnull %i.bh, ptr noundef null)
   %i.bi = load ptr, ptr %i.bg, align 8, !tbaa !80
   tail call void @free(ptr noundef %i.bi) #16
   store ptr null, ptr %i.bg, align 8, !tbaa !80
@@ -1465,7 +1464,7 @@ bb.k:                                             ; preds = %pmix_bfrops_base_tm
   br i1 %.not52, label %bb.l, label %pmix_bfrops_base_tma_value_release.exit
 
 pmix_bfrops_base_tma_value_release.exit:          ; preds = %.lr.ph.split
-  tail call fastcc void @pmix_bfrops_base_tma_value_destruct(ptr noundef nonnull %i.bp, ptr noundef %..i)
+  tail call fastcc void @pmix_bfrops_base_tma_value_destruct(ptr noundef nonnull %i.bp, ptr noundef nonnull %i.a)
   %i.bq = load ptr, ptr %i.bo, align 8, !tbaa !80
   %i.br = load ptr, ptr %i.au, align 8, !tbaa !81
   tail call void %i.br(ptr noundef nonnull %i.a, ptr noundef %i.bq) #16, !inline_history !0

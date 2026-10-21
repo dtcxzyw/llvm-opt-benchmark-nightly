@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load i8, ptr %0, align 8, !tbaa !54, !range !55, !noundef !56
   %i.d = trunc nuw i8 %i.c to i1
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   br i1 %i.d, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -279,8 +279,7 @@ bb.k:                                             ; preds = %bb.j
   ], !prof !109
 
 bb.l:                                             ; preds = %bb.k
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.z = load i64, ptr %6, align 8, !tbaa !57     ; 2 uses
+  %i.z = load i64, ptr %i.e, align 8, !tbaa !57   ; 2 uses
   %i.aa = trunc i64 %i.z to i1
   br i1 %i.aa, label %bb.r, label %bb.m
 
@@ -347,8 +346,7 @@ _ZN9grpc_core5WakerD2Ev.exit:                     ; preds = %bb.r
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !105
   store i64 %i.p, ptr %5, align 8, !tbaa !57
   store i64 55, ptr %i.o, align 8, !tbaa !57
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  invoke void @_Z14grpc_cq_end_opP21grpc_completion_queuePvN4absl12lts_202505126StatusEPFvS1_P18grpc_cq_completionES1_S6_b(ptr noundef %i.s, ptr noundef %i.au, ptr noundef nonnull align 8 %5, ptr noundef nonnull @"_ZZN9grpc_core14WaitForCqEndOpclEvEN3$_08__invokeEPvP18grpc_cq_completion", ptr noundef nonnull %0, ptr noundef nonnull %7, i1 noundef zeroext false)
+  invoke void @_Z14grpc_cq_end_opP21grpc_completion_queuePvN4absl12lts_202505126StatusEPFvS1_P18grpc_cq_completionES1_S6_b(ptr noundef %i.s, ptr noundef %i.au, ptr noundef nonnull align 8 %5, ptr noundef nonnull @"_ZZN9grpc_core14WaitForCqEndOpclEvEN3$_08__invokeEPvP18grpc_cq_completion", ptr noundef nonnull %0, ptr noundef nonnull %i.e, i1 noundef zeroext false)
           to label %bb.t unwind label %bb.x
 
 bb.t:                                             ; preds = %_ZN9grpc_core5WakerD2Ev.exit

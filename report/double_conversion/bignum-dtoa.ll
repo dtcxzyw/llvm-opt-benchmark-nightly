@@ -12,8 +12,8 @@ define void @_ZN17double_conversion10BignumDtoaEdNS_14BignumDtoaModeEiNS_6Vector
 bb.a:
   %7 = alloca %"class.double_conversion::Bignum", align 4 ; 40 uses
   %8 = alloca %"class.double_conversion::Bignum", align 4 ; 28 uses
-  %9 = alloca %"class.double_conversion::Bignum", align 4 ; 21 uses
-  %10 = alloca %"class.double_conversion::Bignum", align 4 ; 15 uses
+  %9 = alloca %"class.double_conversion::Bignum", align 4 ; 22 uses
+  %10 = alloca %"class.double_conversion::Bignum", align 4 ; 18 uses
   %i.a = icmp eq i32 %1, 1
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -226,8 +226,7 @@ _ZN17double_conversionL15FixupMultiply10EibPiPNS_6BignumES2_S2_S2_.exit: ; preds
 
 bb.t:                                             ; preds = %_ZN17double_conversionL15FixupMultiply10EibPiPNS_6BignumES2_S2_S2_.exit, %_ZN17double_conversionL15FixupMultiply10EibPiPNS_6BignumES2_S2_S2_.exit
   %i.bk = call noundef i32 @_ZN17double_conversion6Bignum7CompareERKS0_S2_(ptr noundef nonnull align 4 dereferenceable(516) %9, ptr noundef nonnull align 4 dereferenceable(516) %10)
-  %i.bl = icmp eq i32 %i.bk, 0                    ; 3 uses
-  %spec.select.i = select i1 %i.bl, ptr %9, ptr %10 ; 6 uses
+  %i.bl = icmp eq i32 %i.bk, 0                    ; 2 uses
   store i32 0, ptr %5, align 4, !tbaa !10
   br i1 %i.ae, label %.split.us.i, label %.split.i47
 
@@ -246,7 +245,7 @@ bb.t:                                             ; preds = %_ZN17double_convers
   store i8 %i.bo, ptr %i.bs, align 1, !tbaa !9
   %i.bt = call noundef i32 @_ZN17double_conversion6Bignum7CompareERKS0_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %9)
   %i.bu = icmp slt i32 %i.bt, 1                   ; 2 uses
-  %i.bv = call noundef i32 @_ZN17double_conversion6Bignum11PlusCompareERKS0_S2_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %spec.select.i, ptr noundef nonnull align 4 dereferenceable(516) %8)
+  %i.bv = call noundef i32 @_ZN17double_conversion6Bignum11PlusCompareERKS0_S2_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %9, ptr noundef nonnull align 4 dereferenceable(516) %8)
   %i.bw = icmp sgt i32 %i.bv, -1                  ; 2 uses
   %or.cond.us.us.i = or i1 %i.bu, %i.bw
   br i1 %or.cond.us.us.i, label %.split6.us.i, label %bb.u
@@ -268,7 +267,7 @@ bb.u:                                             ; preds = %.split.us.split.us.
   store i8 %i.bz, ptr %i.cd, align 1, !tbaa !9
   %i.ce = call noundef i32 @_ZN17double_conversion6Bignum7CompareERKS0_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %9)
   %i.cf = icmp slt i32 %i.ce, 1                   ; 2 uses
-  %i.cg = call noundef i32 @_ZN17double_conversion6Bignum11PlusCompareERKS0_S2_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %spec.select.i, ptr noundef nonnull align 4 dereferenceable(516) %8)
+  %i.cg = call noundef i32 @_ZN17double_conversion6Bignum11PlusCompareERKS0_S2_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %10, ptr noundef nonnull align 4 dereferenceable(516) %8)
   %i.ch = icmp sgt i32 %i.cg, -1                  ; 2 uses
   %or.cond.us.i = or i1 %i.cf, %i.ch
   br i1 %or.cond.us.i, label %.split6.us.i, label %bb.v
@@ -276,7 +275,7 @@ bb.u:                                             ; preds = %.split.us.split.us.
 bb.v:                                             ; preds = %.split.us.split.i
   call void @_ZN17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %7, i32 noundef 10)
   call void @_ZN17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %9, i32 noundef 10)
-  call void @_ZN17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %spec.select.i, i32 noundef 10)
+  call void @_ZN17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %10, i32 noundef 10)
   br label %.split.us.split.i
 
 .split.i47:                                       ; preds = %bb.t
@@ -294,7 +293,7 @@ bb.v:                                             ; preds = %.split.us.split.i
   store i8 %i.ck, ptr %i.co, align 1, !tbaa !9
   %i.cp = call noundef i32 @_ZN17double_conversion6Bignum7CompareERKS0_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %9)
   %i.cq = icmp slt i32 %i.cp, 0                   ; 2 uses
-  %i.cr = call noundef i32 @_ZN17double_conversion6Bignum11PlusCompareERKS0_S2_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %spec.select.i, ptr noundef nonnull align 4 dereferenceable(516) %8)
+  %i.cr = call noundef i32 @_ZN17double_conversion6Bignum11PlusCompareERKS0_S2_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %9, ptr noundef nonnull align 4 dereferenceable(516) %8)
   %i.cs = icmp sgt i32 %i.cr, 0                   ; 2 uses
   %or.cond.us8.i = or i1 %i.cq, %i.cs
   br i1 %or.cond.us8.i, label %.split6.us.i, label %bb.w
@@ -316,7 +315,7 @@ bb.w:                                             ; preds = %.split.split.us.i
   store i8 %i.cv, ptr %i.cz, align 1, !tbaa !9
   %i.da = call noundef i32 @_ZN17double_conversion6Bignum7CompareERKS0_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %9)
   %i.db = icmp slt i32 %i.da, 0                   ; 2 uses
-  %i.dc = call noundef i32 @_ZN17double_conversion6Bignum11PlusCompareERKS0_S2_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %spec.select.i, ptr noundef nonnull align 4 dereferenceable(516) %8)
+  %i.dc = call noundef i32 @_ZN17double_conversion6Bignum11PlusCompareERKS0_S2_S2_(ptr noundef nonnull align 4 dereferenceable(516) %7, ptr noundef nonnull align 4 dereferenceable(516) %10, ptr noundef nonnull align 4 dereferenceable(516) %8)
   %i.dd = icmp sgt i32 %i.dc, 0                   ; 2 uses
   %or.cond.i48 = or i1 %i.db, %i.dd
   br i1 %or.cond.i48, label %.split6.us.i, label %bb.x
@@ -324,7 +323,7 @@ bb.w:                                             ; preds = %.split.split.us.i
 bb.x:                                             ; preds = %.split.split.i
   call void @_ZN17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %7, i32 noundef 10)
   call void @_ZN17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %9, i32 noundef 10)
-  call void @_ZN17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %spec.select.i, i32 noundef 10)
+  call void @_ZN17double_conversion6Bignum16MultiplyByUInt32Ej(ptr noundef nonnull align 4 dereferenceable(516) %10, i32 noundef 10)
   br label %.split.split.i
 
 .split6.us.i:                                     ; preds = %.split.split.i, %.split.split.us.i, %.split.us.split.i, %.split.us.split.us.i

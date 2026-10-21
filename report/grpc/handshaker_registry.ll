@@ -25,11 +25,10 @@ define void @_ZN9grpc_core18HandshakerRegistry7Builder25RegisterHandshakerFactor
 bb.a:
   %i.a = zext i32 %1 to i64
   %i.b = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %i.a ; 5 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !10   ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !10   ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !10   ; 3 uses
-  %i.f = icmp eq ptr %i.c, %i.e                   ; 2 uses
-  %spec.select = select i1 %i.f, ptr %i.c, ptr %i.e
+  %i.f = icmp eq ptr %i.c, %i.e
   br i1 %i.f, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
@@ -54,7 +53,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !20
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %bb.b
-  %.sroa.011.0.ph = phi ptr [ %spec.select, %bb.b ], [ %.sroa.08.013, %.lr.ph ]
+  %.sroa.011.0.ph = phi ptr [ %i.e, %bb.b ], [ %.sroa.08.013, %.lr.ph ]
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !10
   br label %._crit_edge
 

@@ -205,12 +205,11 @@ bb.j:                                             ; preds = %_RNvMNtCs6JMX4GRUq9
 
 .preheader:                                       ; preds = %bb.ax, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultNtNtNtCsipSpXIjCLRi_5regex5regex6string5RegexNtNtBN_5error5ErrorE6unwrapCsgy7pbN39oAf_6uu_ptx.exit
   %i.cr = load ptr, ptr %2, align 8, !noundef !7  ; 5 uses
-  %.not79 = icmp ne ptr %i.cr, null               ; 2 uses
+  %.not79 = icmp ne ptr %i.cr, null
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ct = load i64, ptr %i.cs, align 8            ; 2 uses
+  %i.ct = load i64, ptr %i.cs, align 8            ; 6 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.cv = load i64, ptr %i.cu, align 8            ; 2 uses
-  %.sroa.15.0.ph = select i1 %.not79, i64 %i.ct, i64 undef ; 5 uses
   %i.cw = icmp ne i64 %i.cv, 0
   %.not477 = select i1 %.not79, i1 %i.cw, i1 false
   br i1 %.not477, label %.lr.ph, label %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.thread
@@ -613,14 +612,13 @@ bb.ax:                                            ; preds = %bb.j, %_RNvCsgy7pbN
   br i1 %i.py, label %_RNvMsc_NtNtNtCs7tKScEop1B6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTE10init_frontB1L_.exit.i.us, label %.lr.ph.i.i.us.preheader
 
 .lr.ph.i.i.us.preheader:                          ; preds = %.lr.ph.split.us
-  %5 = add i64 %.sroa.15.0.ph, -1
-  %xtraiter1635 = and i64 %.sroa.15.0.ph, 7       ; 2 uses
+  %xtraiter1635 = and i64 %i.ct, 7                ; 2 uses
   %lcmp.mod1636.not = icmp eq i64 %xtraiter1635, 0
   br i1 %lcmp.mod1636.not, label %.lr.ph.i.i.us.prol.loopexit, label %.lr.ph.i.i.us.prol
 
 .lr.ph.i.i.us.prol:                               ; preds = %.lr.ph.i.i.us.preheader, %.lr.ph.i.i.us.prol
   %.sroa.013.017.i.i.us.prol = phi ptr [ %.sroa.013.0.i.i.us.prol, %.lr.ph.i.i.us.prol ], [ %i.cr, %.lr.ph.i.i.us.preheader ]
-  %.sroa.011.016.i.i.us.prol = phi i64 [ %i.qa, %.lr.ph.i.i.us.prol ], [ %.sroa.15.0.ph, %.lr.ph.i.i.us.preheader ]
+  %.sroa.011.016.i.i.us.prol = phi i64 [ %i.qa, %.lr.ph.i.i.us.prol ], [ %i.ct, %.lr.ph.i.i.us.preheader ]
   %prol.iter1637 = phi i64 [ %prol.iter1637.next, %.lr.ph.i.i.us.prol ], [ 0, %.lr.ph.i.i.us.preheader ]
   %i.pz = getelementptr inbounds nuw i8, ptr %.sroa.013.017.i.i.us.prol, i64 896
   %i.qa = add i64 %.sroa.011.016.i.i.us.prol, -1  ; 2 uses
@@ -632,8 +630,8 @@ bb.ax:                                            ; preds = %bb.j, %_RNvCsgy7pbN
 .lr.ph.i.i.us.prol.loopexit:                      ; preds = %.lr.ph.i.i.us.prol, %.lr.ph.i.i.us.preheader
   %.sroa.013.0.i.i.us.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.us.preheader ], [ %.sroa.013.0.i.i.us.prol, %.lr.ph.i.i.us.prol ]
   %.sroa.013.017.i.i.us.unr = phi ptr [ %i.cr, %.lr.ph.i.i.us.preheader ], [ %.sroa.013.0.i.i.us.prol, %.lr.ph.i.i.us.prol ]
-  %.sroa.011.016.i.i.us.unr = phi i64 [ %.sroa.15.0.ph, %.lr.ph.i.i.us.preheader ], [ %i.qa, %.lr.ph.i.i.us.prol ]
-  %i.qb = icmp ult i64 %5, 7
+  %.sroa.011.016.i.i.us.unr = phi i64 [ %i.ct, %.lr.ph.i.i.us.preheader ], [ %i.qa, %.lr.ph.i.i.us.prol ]
+  %i.qb = icmp ult i64 %i.ct, 8
   br i1 %i.qb, label %_RNvMsc_NtNtNtCs7tKScEop1B6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTE10init_frontB1L_.exit.i.us, label %.lr.ph.i.i.us
 
 .lr.ph.i.i.us:                                    ; preds = %.lr.ph.i.i.us.prol.loopexit, %.lr.ph.i.i.us
@@ -687,7 +685,7 @@ bb.ay:                                            ; preds = %.lr.ph.i.i.i.i97.us
 
 bb.az:                                            ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsgy7pbN39oAf_6uu_ptx.exit212, %.lr.ph.split.preheader
   %.sroa.6.0472 = phi ptr [ %.sroa.07.0.i.i.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsgy7pbN39oAf_6uu_ptx.exit212 ], [ null, %.lr.ph.split.preheader ] ; 2 uses
-  %.sroa.15.0471 = phi i64 [ %.sroa.78.0.i.i.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsgy7pbN39oAf_6uu_ptx.exit212 ], [ %.sroa.15.0.ph, %.lr.ph.split.preheader ] ; 6 uses
+  %.sroa.15.0471 = phi i64 [ %.sroa.78.0.i.i.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsgy7pbN39oAf_6uu_ptx.exit212 ], [ %i.ct, %.lr.ph.split.preheader ] ; 6 uses
   %.sroa.23.0470 = phi i64 [ %i.qv, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsgy7pbN39oAf_6uu_ptx.exit212 ], [ %i.cv, %.lr.ph.split.preheader ]
   %.sroa.10.0469 = phi i64 [ 0, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsgy7pbN39oAf_6uu_ptx.exit212 ], [ %i.px, %.lr.ph.split.preheader ] ; 2 uses
   %i.qv = add i64 %.sroa.23.0470, -1              ; 2 uses

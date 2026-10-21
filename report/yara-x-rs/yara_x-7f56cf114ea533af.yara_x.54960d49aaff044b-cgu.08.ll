@@ -205,22 +205,19 @@ bb.gr:                                            ; preds = %bb.gn
 bb.gs:                                            ; preds = %bb.gq
   %i.xr = getelementptr inbounds nuw i8, ptr %1, i64 152
   %i.xs = load i64, ptr %i.xr, align 8, !noundef !5 ; 2 uses
-  %2 = icmp uge i64 %i.xs, %i.xq                  ; 2 uses
-  %3 = sub nuw i64 %i.xs, %i.xq
-  %.sroa.3.0.i380 = select i1 %2, i64 %3, i64 undef ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
-  %4 = icmp ne i64 %.sroa.3.0.i380, 0
-  %or.cond = select i1 %2, i1 %4, i1 false
+  %or.cond = icmp ugt i64 %i.xs, %i.xq
   br i1 %or.cond, label %bb.gt, label %bb.gy
 
 bb.gt:                                            ; preds = %bb.gs
+  %2 = sub nuw i64 %i.xs, %i.xq
   store i64 1, ptr %i.m, align 8
   %i.xt = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store i64 %i.xq, ptr %i.xt, align 8
   %i.xu = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   store i64 1, ptr %i.xu, align 8
   %i.xv = getelementptr inbounds nuw i8, ptr %i.m, i64 24
-  store i64 %.sroa.3.0.i380, ptr %i.xv, align 8
+  store i64 %2, ptr %i.xv, align 8
   %i.xw = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.xw, i8 0, i64 16, i1 false)
   br label %bb.gu

@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %.lr.ph159, %_ZN8Was
   %.061157 = phi ptr [ %.sroa.0.0.i137178, %.lr.ph159 ], [ %i.ej, %_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t.exit.thread ] ; 7 uses
   %i.cw = load i64, ptr %.061157, align 8, !tbaa !96 ; 6 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.061157, i64 8
-  %i.cy = load i8, ptr %i.cx, align 8, !tbaa !102 ; 5 uses
+  %i.cy = load i8, ptr %i.cx, align 8, !tbaa !102 ; 3 uses
   %switch.i = icmp ugt i8 %i.cy, 2
   br i1 %switch.i, label %bb.x, label %_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t.exit
 
@@ -310,7 +310,7 @@ bb.ad:                                            ; preds = %_ZN8WasmEdge4Host4W
   br i1 %switch.i77, label %.thread, label %bb.ae
 
 .thread:                                          ; preds = %bb.ad
-  call void @_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t(ptr noundef nonnull align 8 dereferenceable(216) %i.cd, i64 noundef %i.cw, i16 noundef zeroext 28, i8 noundef zeroext %i.cy) #23
+  call void @_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t(ptr noundef nonnull align 8 dereferenceable(216) %i.cd, i64 noundef %i.cw, i16 noundef zeroext 28, i8 noundef zeroext 0) #23
   br label %_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t.exit.thread
 
 bb.ae:                                            ; preds = %bb.ad
@@ -320,7 +320,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ee, label %.thread146, label %bb.af
 
 .thread146:                                       ; preds = %bb.ae
-  call void @_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t(ptr noundef nonnull align 8 dereferenceable(216) %i.cd, i64 noundef %i.cw, i16 noundef zeroext 28, i8 noundef zeroext %i.cy) #23
+  call void @_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t(ptr noundef nonnull align 8 dereferenceable(216) %i.cd, i64 noundef %i.cw, i16 noundef zeroext 28, i8 noundef zeroext 0) #23
   br label %_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t.exit.thread
 
 bb.af:                                            ; preds = %bb.ae
@@ -723,7 +723,7 @@ bb.w:                                             ; preds = %.lr.ph159, %_ZN8Was
   %.061157 = phi ptr [ %.sroa.0.0.i137178, %.lr.ph159 ], [ %i.ej, %_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t.exit.thread ] ; 7 uses
   %i.cw = load i64, ptr %.061157, align 8, !tbaa !96 ; 6 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.061157, i64 8
-  %i.cy = load i8, ptr %i.cx, align 8, !tbaa !102 ; 5 uses
+  %i.cy = load i8, ptr %i.cx, align 8, !tbaa !102 ; 3 uses
   %switch.i = icmp ugt i8 %i.cy, 2
   br i1 %switch.i, label %bb.x, label %_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t.exit
 
@@ -829,7 +829,7 @@ bb.ad:                                            ; preds = %_ZN8WasmEdge4Host4W
   br i1 %switch.i77, label %.thread, label %bb.ae
 
 .thread:                                          ; preds = %bb.ad
-  call void @_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t(ptr noundef nonnull align 8 dereferenceable(216) %i.cd, i64 noundef %i.cw, i16 noundef zeroext 28, i8 noundef zeroext %i.cy) #23
+  call void @_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t(ptr noundef nonnull align 8 dereferenceable(216) %i.cd, i64 noundef %i.cw, i16 noundef zeroext 28, i8 noundef zeroext 0) #23
   br label %_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t.exit.thread
 
 bb.ae:                                            ; preds = %bb.ad
@@ -839,7 +839,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ee, label %.thread146, label %bb.af
 
 .thread146:                                       ; preds = %bb.ae
-  call void @_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t(ptr noundef nonnull align 8 dereferenceable(216) %i.cd, i64 noundef %i.cw, i16 noundef zeroext 28, i8 noundef zeroext %i.cy) #23
+  call void @_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t(ptr noundef nonnull align 8 dereferenceable(216) %i.cd, i64 noundef %i.cw, i16 noundef zeroext 28, i8 noundef zeroext 0) #23
   br label %_ZN8WasmEdge4Host4WASI6Poller5errorEm14__wasi_errno_t18__wasi_eventtype_t.exit.thread
 
 bb.af:                                            ; preds = %bb.ae
@@ -1242,9 +1242,8 @@ _ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread: ; preds = %
 
 bb.l:                                             ; preds = %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit
   %i.v = and i32 %6, 65532
-  %.not101 = icmp eq i32 %i.v, 0                  ; 2 uses
+  %.not101 = icmp eq i32 %i.v, 0
   %i.w = trunc i32 %6 to i16
-  %.sroa.483.0.extract.trunc = select i1 %.not101, i16 %i.w, i16 28
   br i1 %.not101, label %bb.m, label %.thread
 
 .thread:                                          ; preds = %bb.l
@@ -1373,7 +1372,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !582, !nonnull !86, !align !87
   %i.bp = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %i.bq = call i32 @_ZNK8WasmEdge4Host4WASI7Environ8sockRecvEiN5cxx204spanINS4_IhLm18446744073709551615EEELm18446744073709551615EEE16__wasi_riflags_tRjR16__wasi_roflags_t(ptr noundef nonnull align 8 dereferenceable(344) %i.bo, i32 noundef %3, ptr nonnull %i.bp, i64 %.val.i, i16 noundef zeroext %.sroa.483.0.extract.trunc, ptr noundef nonnull align 4 dereferenceable(4) %i.ao, ptr noundef nonnull align 2 dereferenceable(2) %i.at) #23 ; 2 uses
+  %i.bq = call i32 @_ZNK8WasmEdge4Host4WASI7Environ8sockRecvEiN5cxx204spanINS4_IhLm18446744073709551615EEELm18446744073709551615EEE16__wasi_riflags_tRjR16__wasi_roflags_t(ptr noundef nonnull align 8 dereferenceable(344) %i.bo, i32 noundef %3, ptr nonnull %i.bp, i64 %.val.i, i16 noundef zeroext %i.w, ptr noundef nonnull align 4 dereferenceable(4) %i.ao, ptr noundef nonnull align 2 dereferenceable(2) %i.at) #23 ; 2 uses
   %i.br = trunc i32 %i.bq to i1
   %.sroa.567.0.extract.shift = lshr i32 %i.bq, 16
   %spec.select = select i1 %i.br, i32 0, i32 %.sroa.567.0.extract.shift
@@ -1616,9 +1615,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p
   %i.as = and i32 %7, 65532
-  %.not124 = icmp eq i32 %i.as, 0                 ; 2 uses
+  %.not124 = icmp eq i32 %i.as, 0
   %i.at = trunc i32 %7 to i16
-  %.sroa.498.0.extract.trunc = select i1 %.not124, i16 %i.at, i16 28
   br i1 %.not124, label %bb.s, label %.thread
 
 .thread:                                          ; preds = %bb.r
@@ -1733,7 +1731,7 @@ bb.ac:                                            ; preds = %bb.ab
   store ptr %.sroa.0.0.i, ptr %11, align 8
   %.sroa.4103.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 %i.an, ptr %.sroa.4103.0..sroa_idx, align 8
-  %i.cc = call i32 @_ZNK8WasmEdge4Host4WASI7Environ12sockRecvFromEiN5cxx204spanINS4_IhLm18446744073709551615EEELm18446744073709551615EEE16__wasi_riflags_tP23__wasi_address_family_tS5_PtRjR16__wasi_roflags_t(ptr noundef nonnull align 8 dereferenceable(344) %i.ca, i32 noundef %3, ptr nonnull %i.cb, i64 %.val.i, i16 noundef zeroext %.sroa.498.0.extract.trunc, ptr noundef null, ptr noundef nonnull byval(%"struct.cxx20::span.164") align 8 %11, ptr noundef null, ptr noundef nonnull align 4 dereferenceable(4) %i.bf, ptr noundef nonnull align 2 dereferenceable(2) %i.bi) #23 ; 2 uses
+  %i.cc = call i32 @_ZNK8WasmEdge4Host4WASI7Environ12sockRecvFromEiN5cxx204spanINS4_IhLm18446744073709551615EEELm18446744073709551615EEE16__wasi_riflags_tP23__wasi_address_family_tS5_PtRjR16__wasi_roflags_t(ptr noundef nonnull align 8 dereferenceable(344) %i.ca, i32 noundef %3, ptr nonnull %i.cb, i64 %.val.i, i16 noundef zeroext %i.at, ptr noundef null, ptr noundef nonnull byval(%"struct.cxx20::span.164") align 8 %11, ptr noundef null, ptr noundef nonnull align 4 dereferenceable(4) %i.bf, ptr noundef nonnull align 2 dereferenceable(2) %i.bi) #23 ; 2 uses
   %i.cd = trunc i32 %i.cc to i1
   %.sroa.583.0.extract.shift = lshr i32 %i.cc, 16
   %spec.select = select i1 %i.cd, i32 0, i32 %.sroa.583.0.extract.shift
@@ -2136,9 +2134,8 @@ _ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit.thread: ; preds = %
 
 bb.l:                                             ; preds = %_ZNK8WasmEdge7Runtime12CallingFrame16getMemoryByIndexEj.exit
   %i.v = and i32 %6, 65532
-  %.not101 = icmp eq i32 %i.v, 0                  ; 2 uses
+  %.not101 = icmp eq i32 %i.v, 0
   %i.w = trunc i32 %6 to i16
-  %.sroa.483.0.extract.trunc = select i1 %.not101, i16 %i.w, i16 28
   br i1 %.not101, label %bb.m, label %.thread
 
 .thread:                                          ; preds = %bb.l
@@ -2267,7 +2264,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !693, !nonnull !86, !align !87
   %i.bp = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %i.bq = call i32 @_ZNK8WasmEdge4Host4WASI7Environ8sockRecvEiN5cxx204spanINS4_IhLm18446744073709551615EEELm18446744073709551615EEE16__wasi_riflags_tRjR16__wasi_roflags_t(ptr noundef nonnull align 8 dereferenceable(344) %i.bo, i32 noundef %3, ptr nonnull %i.bp, i64 %.val.i, i16 noundef zeroext %.sroa.483.0.extract.trunc, ptr noundef nonnull align 4 dereferenceable(4) %i.ao, ptr noundef nonnull align 2 dereferenceable(2) %i.at) #23 ; 2 uses
+  %i.bq = call i32 @_ZNK8WasmEdge4Host4WASI7Environ8sockRecvEiN5cxx204spanINS4_IhLm18446744073709551615EEELm18446744073709551615EEE16__wasi_riflags_tRjR16__wasi_roflags_t(ptr noundef nonnull align 8 dereferenceable(344) %i.bo, i32 noundef %3, ptr nonnull %i.bp, i64 %.val.i, i16 noundef zeroext %i.w, ptr noundef nonnull align 4 dereferenceable(4) %i.ao, ptr noundef nonnull align 2 dereferenceable(2) %i.at) #23 ; 2 uses
   %i.br = trunc i32 %i.bq to i1
   %.sroa.567.0.extract.shift = lshr i32 %i.bq, 16
   %spec.select = select i1 %i.br, i32 0, i32 %.sroa.567.0.extract.shift
@@ -2461,9 +2458,8 @@ bb.w:                                             ; preds = %bb.t, %bb.t, %bb.u
   %.sroa.6.0 = phi i64 [ %i.aq, %bb.t ], [ %i.aq, %bb.t ], [ 126, %bb.u ]
   %.070 = phi ptr [ null, %bb.t ], [ null, %bb.t ], [ %.sroa.0.0.i, %bb.u ] ; 2 uses
   %i.ax = and i32 %7, 65532
-  %.not147 = icmp eq i32 %i.ax, 0                 ; 2 uses
+  %.not147 = icmp eq i32 %i.ax, 0
   %i.ay = trunc i32 %7 to i16
-  %.sroa.4117.0.extract.trunc = select i1 %.not147, i16 %i.ay, i16 28
   br i1 %.not147, label %bb.x, label %.thread
 
 .thread:                                          ; preds = %bb.w
@@ -2594,7 +2590,7 @@ bb.aj:                                            ; preds = %bb.ai
   store ptr %.sroa.0122.0, ptr %12, align 8, !tbaa !230
   %i.cn = getelementptr inbounds nuw i8, ptr %12, i64 8
   store i64 %.sroa.6.0, ptr %i.cn, align 8, !tbaa !231
-  %i.co = call i32 @_ZNK8WasmEdge4Host4WASI7Environ12sockRecvFromEiN5cxx204spanINS4_IhLm18446744073709551615EEELm18446744073709551615EEE16__wasi_riflags_tP23__wasi_address_family_tS5_PtRjR16__wasi_roflags_t(ptr noundef nonnull align 8 dereferenceable(344) %i.cl, i32 noundef %3, ptr nonnull %i.cm, i64 %.val.i, i16 noundef zeroext %.sroa.4117.0.extract.trunc, ptr noundef nonnull %i.a, ptr noundef nonnull byval(%"struct.cxx20::span.164") align 8 %12, ptr noundef nonnull %i.bd, ptr noundef nonnull align 4 dereferenceable(4) %i.bn, ptr noundef nonnull align 2 dereferenceable(2) %i.bq) #23 ; 2 uses
+  %i.co = call i32 @_ZNK8WasmEdge4Host4WASI7Environ12sockRecvFromEiN5cxx204spanINS4_IhLm18446744073709551615EEELm18446744073709551615EEE16__wasi_riflags_tP23__wasi_address_family_tS5_PtRjR16__wasi_roflags_t(ptr noundef nonnull align 8 dereferenceable(344) %i.cl, i32 noundef %3, ptr nonnull %i.cm, i64 %.val.i, i16 noundef zeroext %i.ay, ptr noundef nonnull %i.a, ptr noundef nonnull byval(%"struct.cxx20::span.164") align 8 %12, ptr noundef nonnull %i.bd, ptr noundef nonnull align 4 dereferenceable(4) %i.bn, ptr noundef nonnull align 2 dereferenceable(2) %i.bq) #23 ; 2 uses
   %i.cp = trunc i32 %i.co to i1
   br i1 %i.cp, label %.critedge77, label %bb.ak
 

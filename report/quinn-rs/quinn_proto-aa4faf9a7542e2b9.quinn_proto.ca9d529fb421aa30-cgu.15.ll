@@ -204,13 +204,11 @@ bb.ay:                                            ; preds = %bb.aw
     #dbg_value(ptr undef, !15908, !DIExpression(), !15918)
     #dbg_value(ptr %3, !16511, !DIExpression(), !16516)
   %i.dx = load i16, ptr %3, align 4, !dbg !16978, !range !16517, !noundef !1135 ; 3 uses
-  %i.dy = trunc nuw i16 %i.dx to i1, !dbg !16979  ; 2 uses
+  %i.dy = trunc nuw i16 %i.dx to i1, !dbg !16979
   %i.dz = getelementptr inbounds nuw i8, ptr %3, i64 4, !dbg !16979
   %.sroa.036.0.copyload = load i128, ptr %i.dz, align 4, !dbg !16979
   %i.ea = getelementptr inbounds nuw i8, ptr %3, i64 2, !dbg !16979
   %.sroa.035.0.copyload = load i32, ptr %i.ea, align 2, !dbg !16979
-  %.sroa.6.1.insert.ext = zext i32 %.sroa.035.0.copyload to i128, !dbg !16979
-  %.sroa.6.0 = select i1 %i.dy, i128 %.sroa.036.0.copyload, i128 %.sroa.6.1.insert.ext, !dbg !16979 ; 2 uses
     #dbg_value(ptr undef, !15920, !DIExpression(), !15926)
     #dbg_value(ptr undef, !15904, !DIExpression(), !15918)
   %.mask = and i8 %i.dg, 1, !dbg !15918
@@ -409,7 +407,7 @@ bb.bh:                                            ; preds = %.split81, %bb.ay, %
     #dbg_value(ptr undef, !16696, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !16699)
     #dbg_value(ptr poison, !16703, !DIExpression(), !16709)
     #dbg_value(ptr poison, !16704, !DIExpression(), !16710)
-  %i.gl = icmp eq i128 %.sroa.23.5..sroa.23.5..sroa.23.5..sroa.23.49..sroa.11.0.copyload, %.sroa.6.0, !dbg !17004
+  %i.gl = icmp eq i128 %.sroa.23.5..sroa.23.5..sroa.23.5..sroa.23.49..sroa.11.0.copyload, %.sroa.036.0.copyload, !dbg !17004
   br i1 %i.gl, label %bb.bj, label %bb.bh, !dbg !15916
 
 bb.bi:                                            ; preds = %bb.bg
@@ -422,8 +420,7 @@ bb.bi:                                            ; preds = %bb.bg
     #dbg_value(ptr poison, !16724, !DIExpression(), !16730)
     #dbg_value(ptr poison, !16725, !DIExpression(), !16731)
   %.sroa.526.1.extract.trunc = trunc i128 %.sroa.23.5..sroa.23.5..sroa.23.5..sroa.23.49..sroa.11.0.copyload to i32, !dbg !17005
-  %.sroa.6.1.extract.trunc = trunc i128 %.sroa.6.0 to i32, !dbg !17005
-  %i.gn = icmp eq i32 %.sroa.526.1.extract.trunc, %.sroa.6.1.extract.trunc, !dbg !17005
+  %i.gn = icmp eq i32 %.sroa.035.0.copyload, %.sroa.526.1.extract.trunc, !dbg !17005
   br i1 %i.gn, label %bb.bj, label %bb.bh, !dbg !15916
 
 bb.bj:                                            ; preds = %.split81, %bb.bi

@@ -205,7 +205,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %_ZN12smt_renaming12all_is_legalEPKc.exit.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load i8, ptr %spec.select, align 1, !tbaa !15 ; 3 uses
+  %i.f = load i8, ptr %spec.select, align 1, !tbaa !15 ; 2 uses
   %.not = icmp eq i8 %i.f, 0
   br i1 %.not, label %_ZN12smt_renaming12all_is_legalEPKc.exit.thread, label %bb.c
 
@@ -261,8 +261,8 @@ _ZN12smt_renaming12is_numericalEPKc.exit.i:       ; preds = %.preheader12.i
   br i1 %.not.i.i, label %_ZN12smt_renaming12all_is_legalEPKc.exit.thread.thread, label %.preheader.i26
 
 .preheader.i26:                                   ; preds = %_ZN12smt_renaming12is_numericalEPKc.exit.i, %_ZN12smt_renaming8is_legalEc.exit.thread.i
-  %9 = phi i8 [ %.pre, %_ZN12smt_renaming8is_legalEc.exit.thread.i ], [ %i.f, %_ZN12smt_renaming12is_numericalEPKc.exit.i ] ; 2 uses
-  %.0.i27 = phi ptr [ %i.r, %_ZN12smt_renaming8is_legalEc.exit.thread.i ], [ %1, %_ZN12smt_renaming12is_numericalEPKc.exit.i ]
+  %.0.i27 = phi ptr [ %i.r, %_ZN12smt_renaming8is_legalEc.exit.thread.i ], [ %1, %_ZN12smt_renaming12is_numericalEPKc.exit.i ] ; 2 uses
+  %9 = load i8, ptr %.0.i27, align 1, !tbaa !15   ; 2 uses
   switch i8 %9, label %_ZN12smt_renaming8is_legalEc.exit.i [
     i8 0, label %_ZN12smt_renaming12all_is_legalEPKc.exit
     i8 95, label %_ZN12smt_renaming8is_legalEc.exit.thread.i
@@ -279,8 +279,7 @@ _ZN12smt_renaming8is_legalEc.exit.i:              ; preds = %.preheader.i26
   br i1 %.not11.i28, label %_ZN12smt_renaming12all_is_legalEPKc.exit.thread, label %_ZN12smt_renaming8is_legalEc.exit.thread.i
 
 _ZN12smt_renaming8is_legalEc.exit.thread.i:       ; preds = %_ZN12smt_renaming8is_legalEc.exit.i, %.preheader.i26, %.preheader.i26, %.preheader.i26, %.preheader.i26, %.preheader.i26
-  %i.r = getelementptr inbounds nuw i8, ptr %.0.i27, i64 1 ; 2 uses
-  %.pre = load i8, ptr %i.r, align 1, !tbaa !15
+  %i.r = getelementptr inbounds nuw i8, ptr %.0.i27, i64 1
   br label %.preheader.i26, !llvm.loop !2
 
 _ZN12smt_renaming12all_is_legalEPKc.exit:         ; preds = %.preheader.i26

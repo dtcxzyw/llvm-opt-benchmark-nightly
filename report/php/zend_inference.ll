@@ -183,12 +183,12 @@ bb.l:                                             ; preds = %bb.k
   %i.bj = sext i32 %i.bi to i64                   ; 6 uses
   %i.bk = getelementptr inbounds [16 x i8], ptr %i.h, i64 %i.bj ; 6 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 4 ; 4 uses
+  %.pre115.i = load i32, ptr %i.bl, align 4, !tbaa !193
   %2 = getelementptr inbounds nuw i8, ptr %i.bk, i64 8 ; 12 uses
-  %.pre377 = load i32, ptr %i.bl, align 4, !tbaa !193
   br label %bb.m
 
 bb.m:                                             ; preds = %select.unfold.i, %.lr.ph95.i
-  %i.bm = phi i32 [ %.pre377, %.lr.ph95.i ], [ %.0117.i71.i, %select.unfold.i ] ; 2 uses
+  %i.bm = phi i32 [ %.pre115.i, %.lr.ph95.i ], [ %.0117.i71.i, %select.unfold.i ] ; 2 uses
   %i.bn = phi ptr [ %i.bf, %.lr.ph95.i ], [ %i.je, %select.unfold.i ] ; 2 uses
   %i.bo = icmp sgt i32 %i.bm, -1
   br i1 %i.bo, label %bb.n, label %bb.p
@@ -591,17 +591,14 @@ _ssa_op2_max_range.exit904:                       ; preds = %bb.gw, %bb.gy, %bb.
   %i.adl = extractvalue { i64, i1 } %i.adj, 0
   %spec.select = select i1 %i.adk, i64 0, i64 %i.adl ; 2 uses
   %i.adm = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.1.i733, i64 %.1.i900) ; 2 uses
-  %i.adn = extractvalue { i64, i1 } %i.adm, 1     ; 2 uses
-  %i.ado = extractvalue { i64, i1 } %i.adm, 0
-  %.01077 = select i1 %i.adn, i64 0, i64 %i.ado   ; 2 uses
+  %i.adn = extractvalue { i64, i1 } %i.adm, 1
+  %i.ado = extractvalue { i64, i1 } %i.adm, 0     ; 2 uses
   %i.adp = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.1.i777, i64 %.1.i856) ; 2 uses
-  %i.adq = extractvalue { i64, i1 } %i.adp, 1     ; 2 uses
-  %i.adr = extractvalue { i64, i1 } %i.adp, 0
-  %.01076 = select i1 %i.adq, i64 0, i64 %i.adr   ; 2 uses
+  %i.adq = extractvalue { i64, i1 } %i.adp, 1
+  %i.adr = extractvalue { i64, i1 } %i.adp, 0     ; 2 uses
   %i.ads = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.1.i777, i64 %.1.i900) ; 2 uses
-  %i.adt = extractvalue { i64, i1 } %i.ads, 1     ; 2 uses
-  %i.adu = extractvalue { i64, i1 } %i.ads, 0
-  %.01075 = select i1 %i.adt, i64 0, i64 %i.adu   ; 2 uses
+  %i.adt = extractvalue { i64, i1 } %i.ads, 1
+  %i.adu = extractvalue { i64, i1 } %i.ads, 0     ; 2 uses
   switch i8 %i.wr, label %bb.hg [
     i8 1, label %bb.hc
     i8 0, label %_ssa_op1_range_underflow.exit662.thread1155
@@ -860,12 +857,12 @@ _ssa_op1_range_underflow.exit662.thread1155:      ; preds = %bb.id, %bb.ic, %bb.
   br label %_ssa_op1_has_range.exit638.thread
 
 bb.if:                                            ; preds = %_ssa_op2_range_overflow.exit976
-  %i.aig = tail call i64 @llvm.smin.i64(i64 %spec.select, i64 %.01077)
-  %i.aih = tail call i64 @llvm.smin.i64(i64 %.01076, i64 %.01075)
+  %i.aig = tail call i64 @llvm.smin.i64(i64 %spec.select, i64 %i.ado)
+  %i.aih = tail call i64 @llvm.smin.i64(i64 %i.adr, i64 %i.adu)
   %. = tail call i64 @llvm.smin.i64(i64 %i.aig, i64 %i.aih)
   store i64 %., ptr %5, align 8, !tbaa !89
-  %i.aii = tail call i64 @llvm.smax.i64(i64 %spec.select, i64 %.01077)
-  %i.aij = tail call i64 @llvm.smax.i64(i64 %.01076, i64 %.01075)
+  %i.aii = tail call i64 @llvm.smax.i64(i64 %spec.select, i64 %i.ado)
+  %i.aij = tail call i64 @llvm.smax.i64(i64 %i.adr, i64 %i.adu)
   %i.aik = tail call i64 @llvm.smax.i64(i64 %i.aii, i64 %i.aij)
   %i.ail = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %i.aik, ptr %i.ail, align 8, !tbaa !90

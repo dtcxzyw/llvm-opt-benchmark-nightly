@@ -205,7 +205,6 @@ _ZSt11stable_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEZN2cv5aruc
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.be, %.lr.ph451
-  %.079450 = phi i1 [ false, %.lr.ph451 ], [ %spec.select129, %bb.be ]
   %.sroa.0263.0449 = phi ptr [ %i.sa, %.lr.ph451 ], [ %i.st, %bb.be ] ; 3 uses
   %i.sg = load float, ptr %.sroa.0263.0449, align 4, !tbaa !144 ; 2 uses
   %i.sh = fcmp olt float %i.sg, %i.se
@@ -229,14 +228,13 @@ bb.be:                                            ; preds = %bb.bd
   %i.sq = add i32 %i.sp, %i.sf
   %i.sr = sitofp i32 %i.sq to float
   %i.ss = fcmp ogt float %i.sj, %i.sr             ; 2 uses
-  %spec.select129 = select i1 %i.ss, i1 true, i1 %.079450 ; 2 uses
   %i.st = getelementptr inbounds nuw i8, ptr %.sroa.0263.0449, i64 8 ; 2 uses
   %.not373 = icmp eq ptr %i.st, %i.sc
   %or.cond480 = select i1 %i.ss, i1 true, i1 %.not373
   br i1 %or.cond480, label %._crit_edge452, label %bb.bb
 
 ._crit_edge452:                                   ; preds = %bb.be
-  br i1 %spec.select129, label %.thread363, label %.critedge
+  br i1 %i.ss, label %.thread363, label %.critedge
 
 .critedge:                                        ; preds = %_ZSt11stable_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEZN2cv5aruco13ArucoDetector17ArucoDetectorImpl24filterTooCloseCandidatesERKNS7_5Size_IiEERS3_IS3_INS7_6Point_IfEESaISG_EESaISI_EERS3_IS3_INSF_IiEESaISM_EESaISO_EEiEUlRKmST_E_EvT_SV_T0_.exit, %._crit_edge452
   %i.su = sdiv i64 %i.rx, 64

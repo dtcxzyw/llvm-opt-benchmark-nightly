@@ -205,7 +205,6 @@ bb.aa:                                            ; preds = %.lr.ph, %bb.cc
 
 bb.ab:                                            ; preds = %_ZNSt4pairIN4cvc58internal12NodeTemplateILb1EEENS1_6theory11quantifiers8NodeRoleEED2Ev.exit, %.preheader
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt4pairIN4cvc58internal12NodeTemplateILb1EEENS1_6theory11quantifiers8NodeRoleEED2Ev.exit ], [ 1, %.preheader ] ; 3 uses
-  %.023155 = phi i1 [ %.124, %_ZNSt4pairIN4cvc58internal12NodeTemplateILb1EEENS1_6theory11quantifiers8NodeRoleEED2Ev.exit ], [ true, %.preheader ]
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !564
   %i.ep = getelementptr inbounds nuw [16 x i8], ptr %i.eo, i64 %indvars.iv ; 2 uses
   %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !88 ; 8 uses
@@ -247,8 +246,7 @@ bb.af:                                            ; preds = %._crit_edge160, %bb
   %.not154 = icmp eq ptr %i.eq, %i.fg
   %i.fh = load i32, ptr %i.a, align 4
   %.not = icmp eq i32 %i.ff, %i.fh
-  %cond = select i1 %.not154, i1 %.not, i1 false  ; 2 uses
-  %.124 = select i1 %cond, i1 %.023155, i1 false  ; 2 uses
+  %.124 = select i1 %.not154, i1 %.not, i1 false  ; 2 uses
   %i.fi = and i64 %i.fd, 1152920405095219200
   %.not.i.i.i89 = icmp eq i64 %i.fi, 1152920405095219200
   br i1 %.not.i.i.i89, label %_ZNSt4pairIN4cvc58internal12NodeTemplateILb1EEENS1_6theory11quantifiers8NodeRoleEED2Ev.exit, label %bb.ag, !prof !89
@@ -276,7 +274,7 @@ bb.ai:                                            ; preds = %bb.ah
 _ZNSt4pairIN4cvc58internal12NodeTemplateILb1EEENS1_6theory11quantifiers8NodeRoleEED2Ev.exit: ; preds = %bb.af, %bb.ag, %bb.ah
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.fq = icmp samesign ult i64 %indvars.iv, 2
-  %or.cond157 = select i1 %cond, i1 %i.fq, i1 false
+  %or.cond157 = select i1 %.124, i1 %i.fq, i1 false
   br i1 %or.cond157, label %bb.ab, label %bb.aj, !llvm.loop !552
 
 bb.aj:                                            ; preds = %_ZNSt4pairIN4cvc58internal12NodeTemplateILb1EEENS1_6theory11quantifiers8NodeRoleEED2Ev.exit

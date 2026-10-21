@@ -205,19 +205,17 @@ bb.n:                                             ; preds = %select.unfold
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.0230.i19 = phi i32 [ %i.ay, %.lr.ph ], [ %i.ag, %.lr.ph.preheader ]
   %.0231.i18 = phi ptr [ %i.ax, %.lr.ph ], [ %i.ar, %.lr.ph.preheader ] ; 3 uses
-  %.0237.i17 = phi i1 [ %.1238.i, %.lr.ph ], [ true, %.lr.ph.preheader ]
   %i.as = getelementptr inbounds nuw i8, ptr %.0231.i18, i64 24
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !119
   %i.au = getelementptr inbounds nuw i8, ptr %.0231.i18, i64 8
   %i.av = load i8, ptr %i.au, align 8, !tbaa !25
   %i.aw = icmp eq i8 %i.av, 0
   %.not258.i = icmp ne ptr %i.at, null
-  %2 = select i1 %i.aw, i1 true, i1 %.not258.i, !prof !30 ; 2 uses
-  %.1238.i = select i1 %2, i1 %.0237.i17, i1 false, !prof !30 ; 2 uses
+  %.1238.i = select i1 %i.aw, i1 true, i1 %.not258.i, !prof !30 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.0231.i18, i64 32
   %i.ay = add i32 %.0230.i19, -1                  ; 2 uses
   %.not256.i = icmp ne i32 %i.ay, 0
-  %or.cond.not = select i1 %2, i1 %.not256.i, i1 false
+  %or.cond.not = select i1 %.1238.i, i1 %.not256.i, i1 false
   br i1 %or.cond.not, label %.lr.ph, label %._crit_edge, !llvm.loop !3
 
 ._crit_edge:                                      ; preds = %.lr.ph
@@ -620,19 +618,17 @@ bb.n:                                             ; preds = %select.unfold
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.0230.i19 = phi i32 [ %i.ay, %.lr.ph ], [ %i.ag, %.lr.ph.preheader ]
   %.0231.i18 = phi ptr [ %i.ax, %.lr.ph ], [ %i.ar, %.lr.ph.preheader ] ; 3 uses
-  %.0237.i17 = phi i1 [ %.1238.i, %.lr.ph ], [ true, %.lr.ph.preheader ]
   %i.as = getelementptr inbounds nuw i8, ptr %.0231.i18, i64 24
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !119
   %i.au = getelementptr inbounds nuw i8, ptr %.0231.i18, i64 8
   %i.av = load i8, ptr %i.au, align 8, !tbaa !25
   %i.aw = icmp eq i8 %i.av, 0
   %.not258.i = icmp ne ptr %i.at, null
-  %2 = select i1 %i.aw, i1 true, i1 %.not258.i, !prof !30 ; 2 uses
-  %.1238.i = select i1 %2, i1 %.0237.i17, i1 false, !prof !30 ; 2 uses
+  %.1238.i = select i1 %i.aw, i1 true, i1 %.not258.i, !prof !30 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.0231.i18, i64 32
   %i.ay = add i32 %.0230.i19, -1                  ; 2 uses
   %.not256.i = icmp ne i32 %i.ay, 0
-  %or.cond.not = select i1 %2, i1 %.not256.i, i1 false
+  %or.cond.not = select i1 %.1238.i, i1 %.not256.i, i1 false
   br i1 %or.cond.not, label %.lr.ph, label %._crit_edge, !llvm.loop !3
 
 ._crit_edge:                                      ; preds = %.lr.ph

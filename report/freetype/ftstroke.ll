@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not, label %bb.n, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load ptr, ptr %0, align 8, !tbaa !70     ; 4 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !70     ; 3 uses
   %.not42 = icmp eq ptr %i.b, null
   br i1 %.not42, label %bb.n, label %bb.c
 
@@ -218,9 +218,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.e = call i32 @FT_Glyph_Copy(ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #10 ; 2 uses
-  %.not44 = icmp eq i32 %i.e, 0                   ; 2 uses
-  %i.f = load ptr, ptr %i.a, align 8              ; 2 uses
-  %.032 = select i1 %.not44, ptr %i.f, ptr %i.b   ; 6 uses
+  %.not44 = icmp eq i32 %i.e, 0
+  %i.f = load ptr, ptr %i.a, align 8              ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br i1 %.not44, label %bb.e, label %bb.n
 
@@ -315,15 +314,15 @@ bb.k:                                             ; preds = %._crit_edge.i37.i, 
   store i8 1, ptr %i.af, align 8, !tbaa !30
   %i.ag = add i32 %i.v, %i.j
   %i.ah = add i32 %.022.lcssa49.i39.i, %.022.lcssa49.i.i
-  %i.ai = load ptr, ptr %.032, align 8, !tbaa !74
+  %i.ai = load ptr, ptr %i.f, align 8, !tbaa !74
   %i.aj = call i32 @FT_Outline_Done(ptr noundef %i.ai, ptr noundef nonnull %i.g) #10 ; 0 uses
-  %i.ak = load ptr, ptr %.032, align 8, !tbaa !74
+  %i.ak = load ptr, ptr %i.f, align 8, !tbaa !74
   %i.al = call i32 @FT_Outline_New(ptr noundef %i.ak, i32 noundef %i.ag, i32 noundef %i.ah, ptr noundef nonnull %i.g) #10 ; 2 uses
   %.not47 = icmp eq i32 %i.al, 0
   br i1 %.not47, label %bb.l, label %FT_Stroker_GetCounts.exit.thread
 
 bb.l:                                             ; preds = %bb.k
-  %i.am = getelementptr inbounds nuw i8, ptr %.032, i64 42
+  %i.am = getelementptr inbounds nuw i8, ptr %i.f, i64 42
   store i16 0, ptr %i.am, align 2, !tbaa !60
   store i16 0, ptr %i.g, align 8, !tbaa !67
   call void @FT_Stroker_Export(ptr noundef nonnull %1, ptr noundef nonnull %i.g)
@@ -337,12 +336,12 @@ bb.m:                                             ; preds = %bb.l
 
 FT_Stroker_GetCounts.exit.thread:                 ; preds = %.lr.ph.i.i, %.lr.ph.i24.i, %._crit_edge.i37.i, %._crit_edge.i.i, %bb.f, %bb.e, %bb.k
   %.033.ph = phi i32 [ %i.al, %bb.k ], [ %i.h, %bb.e ], [ 20, %.lr.ph.i24.i ], [ 20, %._crit_edge.i37.i ], [ 20, %._crit_edge.i.i ], [ 6, %bb.f ], [ 20, %.lr.ph.i.i ] ; 2 uses
-  call void @FT_Done_Glyph(ptr noundef %.032) #10
+  call void @FT_Done_Glyph(ptr noundef %i.f) #10
   %.not48 = icmp eq i8 %2, 0
   br i1 %.not48, label %.sink.split, label %bb.n
 
 .sink.split:                                      ; preds = %FT_Stroker_GetCounts.exit.thread, %bb.l, %bb.m
-  %.032.sink = phi ptr [ %.032, %bb.l ], [ %.032, %bb.m ], [ null, %FT_Stroker_GetCounts.exit.thread ]
+  %.032.sink = phi ptr [ %i.f, %bb.l ], [ %i.f, %bb.m ], [ null, %FT_Stroker_GetCounts.exit.thread ]
   %.035.ph = phi i32 [ 0, %bb.l ], [ 0, %bb.m ], [ %.033.ph, %FT_Stroker_GetCounts.exit.thread ]
   store ptr %.032.sink, ptr %0, align 8, !tbaa !70
   br label %bb.n
@@ -368,7 +367,7 @@ bb.a:
   br i1 %.not, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load ptr, ptr %0, align 8, !tbaa !70     ; 4 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !70     ; 3 uses
   %.not46 = icmp eq ptr %i.b, null
   br i1 %.not46, label %bb.l, label %bb.c
 
@@ -381,9 +380,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.e = call i32 @FT_Glyph_Copy(ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #10 ; 2 uses
-  %.not48 = icmp eq i32 %i.e, 0                   ; 2 uses
-  %i.f = load ptr, ptr %i.a, align 8              ; 2 uses
-  %.037 = select i1 %.not48, ptr %i.f, ptr %i.b   ; 6 uses
+  %.not48 = icmp eq i32 %i.e, 0
+  %i.f = load ptr, ptr %i.a, align 8              ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br i1 %.not48, label %bb.e, label %bb.l
 
@@ -449,15 +447,15 @@ bb.h:                                             ; preds = %.lr.ph.i.i
 FT_Stroker_GetBorderCounts.exit:                  ; preds = %.lr.ph.i.i, %bb.f, %._crit_edge.i.i, %._crit_edge.thread.i.i
   %.016.i = phi i32 [ 0, %bb.f ], [ %i.o, %._crit_edge.thread.i.i ], [ 0, %._crit_edge.i.i ], [ 0, %.lr.ph.i.i ]
   %.015.i = phi i32 [ 0, %bb.f ], [ %.022.lcssa49.i.i, %._crit_edge.thread.i.i ], [ 0, %._crit_edge.i.i ], [ 0, %.lr.ph.i.i ]
-  %i.z = load ptr, ptr %.037, align 8, !tbaa !74
+  %i.z = load ptr, ptr %i.f, align 8, !tbaa !74
   %i.aa = call i32 @FT_Outline_Done(ptr noundef %i.z, ptr noundef nonnull %i.g) #10 ; 0 uses
-  %i.ab = load ptr, ptr %.037, align 8, !tbaa !74
+  %i.ab = load ptr, ptr %i.f, align 8, !tbaa !74
   %i.ac = call i32 @FT_Outline_New(ptr noundef %i.ab, i32 noundef %.016.i, i32 noundef %.015.i, ptr noundef nonnull %i.g) #10 ; 2 uses
   %.not51 = icmp eq i32 %i.ac, 0
   br i1 %.not51, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %FT_Stroker_GetBorderCounts.exit
-  %i.ad = getelementptr inbounds nuw i8, ptr %.037, i64 42
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.f, i64 42
   store i16 0, ptr %i.ad, align 2, !tbaa !60
   store i16 0, ptr %i.g, align 8, !tbaa !67
   call void @FT_Stroker_ExportBorder(ptr noundef %1, i32 noundef %.0, ptr noundef nonnull %i.g)
@@ -471,12 +469,12 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.e, %FT_Stroker_GetBorderCounts.exit
   %.038.ph = phi i32 [ %i.ac, %FT_Stroker_GetBorderCounts.exit ], [ %i.j, %bb.e ] ; 2 uses
-  call void @FT_Done_Glyph(ptr noundef nonnull %.037) #10
+  call void @FT_Done_Glyph(ptr noundef nonnull %i.f) #10
   %.not52 = icmp eq i8 %3, 0
   br i1 %.not52, label %.sink.split, label %bb.l
 
 .sink.split:                                      ; preds = %bb.k, %bb.i, %bb.j
-  %.037.sink = phi ptr [ %.037, %bb.i ], [ %.037, %bb.j ], [ null, %bb.k ]
+  %.037.sink = phi ptr [ %i.f, %bb.i ], [ %i.f, %bb.j ], [ null, %bb.k ]
   %.040.ph = phi i32 [ 0, %bb.i ], [ 0, %bb.j ], [ %.038.ph, %bb.k ]
   store ptr %.037.sink, ptr %0, align 8, !tbaa !70
   br label %bb.l

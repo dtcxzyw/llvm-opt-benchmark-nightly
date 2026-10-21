@@ -204,10 +204,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !528
   call void @_RINvMs2_NtCs5Xr050g3D4S_3std2fsNtB6_4File4openRNtNtB8_4path4PathECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2), !noalias !529
   %i.p = load i32, ptr %i.i, align 8, !range !23, !noalias !528, !noundef !6
-  %i.q = trunc nuw i32 %i.p to i1                 ; 2 uses
+  %i.q = trunc nuw i32 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 4
-  %i.s = load i32, ptr %i.r, align 4, !range !24, !noalias !528 ; 2 uses
-  %.sroa.01.0.i = select i1 %i.q, i32 -1, i32 %i.s ; 3 uses
+  %i.s = load i32, ptr %i.r, align 4, !range !24, !noalias !528 ; 4 uses
   br i1 %i.q, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
@@ -491,7 +490,7 @@ bb.af:                                            ; preds = %.noexc67.i
   br label %bb.aj
 
 bb.ag:                                            ; preds = %bb.l, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCs3Hr4GOJ0UGa_7memmap24MmapECsbNLsQi0JuJ4_5tgrep.exit70.i, %bb.m
-  %i.cg = call noundef i32 @close(i32 noundef %.sroa.01.0.i) #25, !noalias !529 ; 0 uses
+  %i.cg = call noundef i32 @close(i32 noundef %i.s) #25, !noalias !529 ; 0 uses
   br label %bb.ak
 
 bb.ah:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -506,7 +505,7 @@ common.resume:                                    ; preds = %bb.as, %bb.ai
 
 bb.ai:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.g
   %.pn.i = phi { ptr, i32 } [ %i.ab, %bb.g ], [ %lpad.loopexit.split-lp66, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %i.ci = call noundef i32 @close(i32 noundef %.sroa.01.0.i) #25, !noalias !529 ; 0 uses
+  %i.ci = call noundef i32 @close(i32 noundef %i.s) #25, !noalias !529 ; 0 uses
   br label %common.resume
 
 bb.aj:                                            ; preds = %.loopexit79.loopexit.i, %bb.v
@@ -515,7 +514,7 @@ bb.aj:                                            ; preds = %.loopexit79.loopexi
   %.sroa.4.0.i.i = phi i64 [ undef, %bb.v ], [ %.sroa.411.1.i.i, %.loopexit79.loopexit.i ]
   %.sroa.0.0.i.i = phi i64 [ 0, %bb.v ], [ %.sroa.09.1.i.i, %.loopexit79.loopexit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !528
-  %i.cl = call noundef i32 @close(i32 noundef %.sroa.01.0.i) #25, !noalias !529 ; 0 uses
+  %i.cl = call noundef i32 @close(i32 noundef %i.s) #25, !noalias !529 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !528
   store i64 %.sroa.0.0.i.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

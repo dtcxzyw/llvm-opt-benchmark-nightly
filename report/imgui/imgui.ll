@@ -205,7 +205,7 @@ _Z9ImHashStrPKcmj.exit:                           ; preds = %_Z9ImHashStrPKcmj.e
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4
   br label %.lr.ph.i9
 
-.lr.ph.i9:                                        ; preds = %.lr.ph.i9.preheader, %select.unfold.i
+.lr.ph.i9:                                        ; preds = %select.unfold.i, %.lr.ph.i9.preheader
   %.0914.i = phi ptr [ %i.ah, %select.unfold.i ], [ %i.y, %.lr.ph.i9.preheader ] ; 6 uses
   %i.z = load i32, ptr %.0914.i, align 4, !tbaa !608
   %i.aa = icmp eq i32 %i.z, %.4.i
@@ -608,24 +608,20 @@ bb.d:                                             ; preds = %bb.e
   br i1 %i.n, label %bb.e, label %.loopexit, !llvm.loop !1322
 
 bb.e:                                             ; preds = %.lr.ph, %bb.d
-  %.01726 = phi i1 [ undef, %.lr.ph ], [ %.118, %bb.d ]
   %indvars.iv25 = phi i64 [ %i.k, %.lr.ph ], [ %i.o, %bb.d ]
   %i.o = add nsw i64 %indvars.iv25, -1            ; 3 uses
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.o
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !601  ; 2 uses
   %i.r = icmp eq ptr %i.q, %0                     ; 2 uses
-  %2 = icmp ne ptr %i.q, %1                       ; 2 uses
-  %..017 = select i1 %2, i1 %.01726, i1 false
-  %.118 = select i1 %i.r, i1 true, i1 %..017      ; 2 uses
-  %not. = xor i1 %i.r, true
-  %cond1 = and i1 %2, %not.
-  br i1 %cond1, label %bb.d, label %..loopexit.loopexit_crit_edge27, !llvm.loop !1322
+  %2 = icmp eq ptr %i.q, %1
+  %cond1.not = or i1 %2, %i.r
+  br i1 %cond1.not, label %..loopexit.loopexit_crit_edge27, label %bb.d, !llvm.loop !1322
 
 ..loopexit.loopexit_crit_edge27:                  ; preds = %bb.e
   br label %.loopexit, !llvm.loop !1322
 
 .loopexit:                                        ; preds = %bb.d, %bb.c, %..loopexit.loopexit_crit_edge27, %bb.b
-  %.3 = phi i1 [ %i.e, %bb.b ], [ %.118, %..loopexit.loopexit_crit_edge27 ], [ false, %bb.c ], [ false, %bb.d ]
+  %.3 = phi i1 [ %i.e, %bb.b ], [ %i.r, %..loopexit.loopexit_crit_edge27 ], [ false, %bb.c ], [ false, %bb.d ]
   ret i1 %.3
 }
 
@@ -1028,8 +1024,8 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
-  %.1 = phi ptr [ %.0150, %bb.q ], [ %spec.select133, %bb.s ], [ %.0150, %bb.r ] ; 8 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.a, i64 8568 ; 3 uses
+  %.1 = phi ptr [ %.0150, %bb.q ], [ %spec.select133, %bb.s ], [ %.0150, %bb.r ] ; 7 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.a, i64 8568 ; 4 uses
   %.not116 = icmp eq ptr %.1, %i.cj
   br i1 %.not116, label %bb.aa, label %bb.u
 
@@ -1072,7 +1068,7 @@ bb.z:                                             ; preds = %bb.y, %bb.w
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.x, %bb.y, %bb.z, %bb.v, %bb.u, %bb.t
-  %.2 = phi ptr [ %i.cj, %bb.z ], [ %.1, %bb.y ], [ %.1, %bb.x ], [ %.1, %bb.v ], [ %.1, %bb.u ], [ %.1, %bb.t ] ; 15 uses
+  %.2 = phi ptr [ %i.cj, %bb.z ], [ %.1, %bb.y ], [ %.1, %bb.x ], [ %.1, %bb.v ], [ %.1, %bb.u ], [ %i.cj, %bb.t ] ; 15 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.a, i64 8236 ; 4 uses
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !713
   %i.df = icmp eq i32 %i.de, 0
@@ -1475,7 +1471,7 @@ bb.c:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %select.unfold.i
+.lr.ph.i:                                         ; preds = %select.unfold.i, %.lr.ph.i.preheader
   %.0914.i = phi ptr [ %i.w, %select.unfold.i ], [ %i.n, %.lr.ph.i.preheader ] ; 5 uses
   %i.o = load i32, ptr %.0914.i, align 4, !tbaa !608
   %i.p = icmp eq i32 %i.o, %i.i
@@ -1735,7 +1731,7 @@ _Z9ImHashStrPKcmj.exit:                           ; preds = %bb.o, %.critedge
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 4
   br label %.lr.ph.i13
 
-.lr.ph.i13:                                       ; preds = %.lr.ph.i13.preheader, %select.unfold.i
+.lr.ph.i13:                                       ; preds = %select.unfold.i, %.lr.ph.i13.preheader
   %.0914.i = phi ptr [ %i.di, %select.unfold.i ], [ %i.cy, %.lr.ph.i13.preheader ] ; 5 uses
   %i.cz = load i32, ptr %.0914.i, align 4, !tbaa !608
   %i.da = xor i32 %i.cz, %.4.i

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.thread, %bb.b
-  %.sroa.06.0 = phi i1 [ %switch, %.thread ], [ false, %bb.b ] ; 3 uses
+  %.sroa.06.0 = phi i1 [ %switch, %.thread ], [ false, %bb.b ] ; 2 uses
   %.sroa.05.0 = phi i1 [ %.sroa.05.1, %.thread ], [ false, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr %i.i, ptr %i.h, align 8
@@ -260,7 +260,6 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.o, label %bb.ad, label %.loopexit
 
 bb.l:                                             ; preds = %bb.i
-  %.88 = select i1 %.sroa.06.0, i32 2, i32 0      ; 2 uses
   %i.p = icmp eq i64 %1, 0
   br i1 %i.p, label %.loopexit, label %.lr.ph
 
@@ -307,7 +306,7 @@ _RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
 
 bb.m:                                             ; preds = %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us
   %i.y = add nuw nsw i32 %.sroa.013.0144.us, 1
-  %.not85.us = icmp sgt i32 %.88, %.sroa.013.0144.us
+  %.not85.us = icmp slt i32 %.sroa.013.0144.us, 2
   br i1 %.not85.us, label %.thread105.us, label %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread
 
 bb.n:                                             ; preds = %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us
@@ -322,7 +321,6 @@ bb.n:                                             ; preds = %_RNvXs_NtNtNtCs8Chj
   br i1 %i.ab, label %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.thread, label %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us
 
 _RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.lr.ph, %.thread105
-  %.sroa.013.0144 = phi i32 [ %.sroa.013.1107, %.thread105 ], [ 0, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.lr.ph ] ; 2 uses
   %.sroa.0.0143 = phi ptr [ %i.ac, %.thread105 ], [ %.sroa.029.0193, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.lr.ph ] ; 2 uses
   %.sroa.7.0142 = phi i64 [ %i.ad, %.thread105 ], [ 0, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.lr.ph ] ; 9 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.0143, i64 1 ; 2 uses
@@ -345,10 +343,10 @@ _RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.thread: ; preds 
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   br label %bb.s
 
-_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread: ; preds = %bb.q, %bb.p, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.n, %bb.m, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us, %._RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread.loopexit_crit_edge152, %.split.us, %.split167.us, %.split170.us, %.split173.us
-  %.sroa.011.0118 = phi i64 [ %.us-phi174, %.split173.us ], [ %.us-phi168, %.split167.us ], [ %.us-phi171, %.split170.us ], [ %.us-phi165, %.split.us ], [ %.sroa.7.0142.us, %bb.n ], [ %.sroa.7.0142, %._RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread.loopexit_crit_edge152 ], [ %.sroa.7.0142.us, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us ], [ %.sroa.7.0142.us, %bb.m ], [ %.sroa.7.0142, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ], [ %.sroa.7.0142, %bb.p ], [ %.sroa.7.0142, %bb.q ] ; 7 uses
-  %i.af = phi i1 [ true, %.split173.us ], [ true, %.split167.us ], [ true, %.split170.us ], [ true, %.split.us ], [ false, %bb.n ], [ true, %._RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread.loopexit_crit_edge152 ], [ true, %bb.m ], [ true, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us ], [ false, %bb.q ], [ true, %bb.p ], [ true, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ]
-  %.sroa.019.0 = phi ptr [ @17, %.split173.us ], [ @15, %.split167.us ], [ @16, %.split170.us ], [ @13, %.split.us ], [ null, %bb.n ], [ @14, %._RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread.loopexit_crit_edge152 ], [ @11, %bb.m ], [ @12, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us ], [ null, %bb.q ], [ @11, %bb.p ], [ @12, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ]
+_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread: ; preds = %bb.q, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.n, %bb.m, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us, %bb.p, %._RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread.loopexit_crit_edge152, %.split.us, %.split167.us, %.split170.us, %.split173.us
+  %.sroa.011.0118 = phi i64 [ %.us-phi174, %.split173.us ], [ %.us-phi168, %.split167.us ], [ %.us-phi171, %.split170.us ], [ %.us-phi165, %.split.us ], [ %.sroa.7.0142, %bb.p ], [ %.sroa.7.0142, %._RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread.loopexit_crit_edge152 ], [ %.sroa.7.0142.us, %bb.n ], [ %.sroa.7.0142.us, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us ], [ %.sroa.7.0142.us, %bb.m ], [ %.sroa.7.0142, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ], [ %.sroa.7.0142, %bb.q ] ; 7 uses
+  %i.af = phi i1 [ true, %.split173.us ], [ true, %.split167.us ], [ true, %.split170.us ], [ true, %.split.us ], [ true, %bb.p ], [ true, %._RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread.loopexit_crit_edge152 ], [ false, %bb.n ], [ true, %bb.m ], [ true, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us ], [ true, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ], [ false, %bb.q ]
+  %.sroa.019.0 = phi ptr [ @17, %.split173.us ], [ @15, %.split167.us ], [ @16, %.split170.us ], [ @13, %.split.us ], [ @11, %bb.p ], [ @14, %._RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread.loopexit_crit_edge152 ], [ null, %bb.n ], [ @11, %bb.m ], [ @12, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us ], [ @12, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ], [ null, %bb.q ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.ag = icmp ugt i64 %.sroa.011.0118, %.sroa.14.0192
   br i1 %i.ag, label %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread103, label %bb.o, !prof !1355
@@ -364,9 +362,7 @@ _RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit: ; preds = %bb.o
   br i1 %i.ak, label %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread, label %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread103, !prof !1357
 
 bb.p:                                             ; preds = %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
-  %5 = add nuw nsw i32 %.sroa.013.0144, 1
-  %.not85 = icmp sgt i32 %.88, %.sroa.013.0144
-  br i1 %.not85, label %.thread105, label %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread
+  br label %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread
 
 bb.q:                                             ; preds = %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
   %i.al = icmp ult i8 %i.ae, 32
@@ -389,8 +385,7 @@ bb.q:                                             ; preds = %_RNvXs_NtNtNtCs8Chj
   %.us-phi171 = phi i64 [ %.sroa.7.0142.us, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.us ], [ %.sroa.7.0142, %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ]
   br label %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread
 
-.thread105:                                       ; preds = %bb.p, %bb.q
-  %.sroa.013.1107 = phi i32 [ %5, %bb.p ], [ 0, %bb.q ]
+.thread105:                                       ; preds = %bb.q
   %i.an = icmp eq ptr %i.ac, %i.u
   br i1 %i.an, label %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.thread, label %_RNvXs_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
@@ -793,7 +788,7 @@ begin_hunk_1_@llvm.usub.sat.i64
 !1352 = distinct !{!1352, !1351, !"_RNvXs9_NtNtCs8Chj7Szqq0n_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get: argument 0"}
 !1353 = distinct !{!1353, i1 true, !"_RNvXs9_NtNtCs8Chj7Szqq0n_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get"}
 !1354 = distinct !{!1354, !1353, !"_RNvXs9_NtNtCs8Chj7Szqq0n_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get: argument 0"}
-!1355 = !{!"branch_weights", i32 1414083, i32 2146069565}
+!1355 = !{!"branch_weights", i32 1338358, i32 2146145290}
 !1356 = !{!1350}
 !1357 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
 !1358 = !{!1352}

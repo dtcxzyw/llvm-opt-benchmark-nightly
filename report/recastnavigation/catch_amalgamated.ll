@@ -205,15 +205,14 @@ bb.f:                                             ; preds = %.lr.ph75
 
 _ZN5Catch6Detail12_GLOBAL__N_119extractInstanceNameENS_9StringRefE.exit: ; preds = %bb.f, %._ZN5Catch6Detail12_GLOBAL__N_119extractInstanceNameENS_9StringRefE.exit_crit_edge76, %bb.e
   %.0.i.lcssa = phi i64 [ %.sroa.2.0.copyload, %bb.e ], [ %.0.i73, %._ZN5Catch6Detail12_GLOBAL__N_119extractInstanceNameENS_9StringRefE.exit_crit_edge76 ], [ %i.u, %bb.f ] ; 3 uses
-  %i.x = icmp ult i64 %.0.i.lcssa, %.sroa.2.0.copyload ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %.0.i.lcssa
-  %spec.select.i = select i1 %i.x, ptr %i.y, ptr @.str.15 ; 3 uses
+  %i.x = icmp ult i64 %.0.i.lcssa, %.sroa.2.0.copyload
+  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %.0.i.lcssa ; 3 uses
   %spec.select9.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.2.0.copyload, i64 %.0.i.lcssa) ; 5 uses
   br i1 %i.x, label %.lr.ph.i, label %_ZN5Catch4trimENS_9StringRefE.exit
 
 .lr.ph.i:                                         ; preds = %_ZN5Catch6Detail12_GLOBAL__N_119extractInstanceNameENS_9StringRefE.exit, %bb.g
   %.01219.i = phi i64 [ %i.ab, %bb.g ], [ 0, %_ZN5Catch6Detail12_GLOBAL__N_119extractInstanceNameENS_9StringRefE.exit ] ; 9 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 %.01219.i
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %.01219.i
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !9325
   switch i8 %i.aa, label %.critedge.i [
     i8 32, label %bb.g
@@ -228,7 +227,7 @@ bb.g:                                             ; preds = %.lr.ph.i, %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN5Catch4trimENS_9StringRefE.exit, label %.lr.ph.i, !llvm.loop !670
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %i.ac = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 %.01219.i ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 %.01219.i ; 2 uses
   %i.ad = icmp ugt i64 %spec.select9.i, %.01219.i
   br i1 %i.ad, label %.lr.ph25.i, label %.critedge2.thread.i
 
@@ -239,7 +238,7 @@ bb.g:                                             ; preds = %.lr.ph.i, %.lr.ph.i
 .lr.ph25.i:                                       ; preds = %.critedge.i, %bb.h
   %.024.i = phi i64 [ %i.af, %bb.h ], [ %spec.select9.i, %.critedge.i ] ; 2 uses
   %i.af = add i64 %.024.i, -1                     ; 3 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 %i.af
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.af
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !9325
   switch i8 %i.ah, label %.critedge2.i [
     i8 32, label %bb.h

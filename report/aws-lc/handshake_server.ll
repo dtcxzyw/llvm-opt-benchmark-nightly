@@ -81,7 +81,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %.04 = phi i1 [ undef, %bb.a ], [ %.1, %bb.c ]
   %i.f = call i64 @CBS_len(ptr noundef nonnull %2) #7
   %.not = icmp eq i64 %i.f, 0
   br i1 %.not, label %bb.d, label %bb.c
@@ -91,16 +90,13 @@ bb.c:                                             ; preds = %bb.b
   %i.g = call i32 @CBS_get_u16(ptr noundef nonnull %2, ptr noundef nonnull %i.a) #7
   %.not5 = icmp ne i32 %i.g, 0                    ; 2 uses
   %i.h = load i16, ptr %i.a, align 2
-  %3 = icmp eq i16 %i.h, %1                       ; 2 uses
-  %..04 = select i1 %3, i1 true, i1 %.04
-  %.1 = select i1 %.not5, i1 %..04, i1 false      ; 2 uses
+  %3 = icmp ne i16 %i.h, %1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
-  %not..not5 = xor i1 %.not5, true
-  %i.i = select i1 %not..not5, i1 true, i1 %3
-  br i1 %i.i, label %bb.d, label %bb.b, !llvm.loop !0
+  %i.i = select i1 %.not5, i1 %3, i1 false
+  br i1 %i.i, label %bb.b, label %bb.d, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.2 = phi i1 [ %.1, %bb.c ], [ false, %bb.b ]
+  %.2 = phi i1 [ %.not5, %bb.c ], [ false, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
   ret i1 %.2
 }
@@ -503,7 +499,6 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.av, %bb.at
-  %.04.i.i.i = phi i1 [ undef, %bb.at ], [ %.1.i.i.i, %bb.av ]
   %i.fx = call i64 @CBS_len(ptr noundef nonnull %52) #7
   %.not.i.i.i = icmp eq i64 %i.fx, 0
   br i1 %.not.i.i.i, label %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.thread.i.i, label %bb.av
@@ -517,17 +512,14 @@ bb.av:                                            ; preds = %bb.au
   %i.fy = call i32 @CBS_get_u16(ptr noundef nonnull %52, ptr noundef nonnull %i.q) #7
   %.not5.i.i.i = icmp ne i32 %i.fy, 0             ; 2 uses
   %i.fz = load i16, ptr %i.q, align 2
-  %65 = icmp eq i16 %i.fz, 4867                   ; 2 uses
-  %..04.i.i.i = select i1 %65, i1 true, i1 %.04.i.i.i
-  %.1.i.i.i = select i1 %.not5.i.i.i, i1 %..04.i.i.i, i1 false ; 2 uses
+  %65 = icmp ne i16 %i.fz, 4867
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #7
-  %not..not5.i.i.i = xor i1 %.not5.i.i.i, true
-  %i.ga = select i1 %not..not5.i.i.i, i1 true, i1 %65
-  br i1 %i.ga, label %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i.i, label %bb.au, !llvm.loop !0
+  %i.ga = select i1 %.not5.i.i.i, i1 %65, i1 false
+  br i1 %i.ga, label %bb.au, label %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i.i, !llvm.loop !0
 
 _ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i.i: ; preds = %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %52) #7
-  br i1 %.1.i.i.i, label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i, label %bb.aw
+  br i1 %.not5.i.i.i, label %_ZN4bsslL28is_probably_jdk11_with_tls13EPK22ssl_early_callback_ctx.exit.thread.i, label %bb.aw
 
 bb.aw:                                            ; preds = %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i.i, %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.thread.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #7
@@ -789,7 +781,6 @@ bb.by:                                            ; preds = %bb.bx
   br label %bb.bz
 
 bb.bz:                                            ; preds = %bb.ca, %bb.by
-  %.04.i.i37.i = phi i1 [ undef, %bb.by ], [ %.1.i.i41.i, %bb.ca ]
   %i.ih = call i64 @CBS_len(ptr noundef nonnull %49) #7
   %.not.i.i38.i = icmp eq i64 %i.ih, 0
   br i1 %.not.i.i38.i, label %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.thread.i44.i, label %bb.ca
@@ -803,17 +794,14 @@ bb.ca:                                            ; preds = %bb.bz
   %i.ii = call i32 @CBS_get_u16(ptr noundef nonnull %49, ptr noundef nonnull %i.p) #7
   %.not5.i.i39.i = icmp ne i32 %i.ii, 0           ; 2 uses
   %i.ij = load i16, ptr %i.p, align 2
-  %66 = icmp eq i16 %i.ij, 22016                  ; 2 uses
-  %..04.i.i40.i = select i1 %66, i1 true, i1 %.04.i.i37.i
-  %.1.i.i41.i = select i1 %.not5.i.i39.i, i1 %..04.i.i40.i, i1 false ; 2 uses
+  %66 = icmp ne i16 %i.ij, 22016
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #7
-  %not..not5.i.i42.i = xor i1 %.not5.i.i39.i, true
-  %i.ik = select i1 %not..not5.i.i42.i, i1 true, i1 %66
-  br i1 %i.ik, label %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i43.i, label %bb.bz, !llvm.loop !0
+  %i.ik = select i1 %.not5.i.i39.i, i1 %66, i1 false
+  br i1 %i.ik, label %bb.bz, label %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i43.i, !llvm.loop !0
 
 _ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i43.i: ; preds = %bb.ca
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #7
-  br i1 %.1.i.i41.i, label %bb.cb, label %bb.ce
+  br i1 %.not5.i.i39.i, label %bb.cb, label %bb.ce
 
 bb.cb:                                            ; preds = %_ZN4bssl38ssl_client_cipher_list_contains_cipherEPK22ssl_early_callback_ctxt.exit.i43.i
   %i.il = call noundef zeroext i16 @_ZN4bssl20ssl_protocol_versionEPK6ssl_st(ptr noundef %i.he) #7

@@ -205,14 +205,13 @@ select.unfold:                                    ; preds = %.thread, %bb.au
   br i1 %.not35, label %.thread108, label %.lr.ph
 
 .thread108:                                       ; preds = %select.unfold, %bb.h
-  br i1 %2, label %.thread108.thread, label %.thread108.thread111
+  br i1 %2, label %bb.az, label %.thread108.thread111
 
-.thread108.thread:                                ; preds = %.thread108, %bb.ak
-  %3 = phi i32 [ %i.ax, %bb.ak ], [ 0, %.thread108 ]
-  %.not36 = icmp eq i32 %3, 0
+.thread108.thread:                                ; preds = %bb.ak
+  %.not36 = icmp eq i32 %i.ax, 0
   br i1 %.not36, label %bb.az, label %.thread108.thread.thread
 
-bb.az:                                            ; preds = %.thread108.thread
+bb.az:                                            ; preds = %.thread108, %.thread108.thread
   %i.go = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.59, i64 noundef 24) ; 0 uses
   %i.gp = load ptr, ptr @_ZSt4cout, align 8, !tbaa !17
   %i.gq = getelementptr i8, ptr %i.gp, i64 -24

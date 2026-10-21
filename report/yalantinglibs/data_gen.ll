@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.b, label %.critedge, label %bb.b
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.02243 = phi ptr [ %2, %.lr.ph ], [ %i.a, %bb.a ] ; 4 uses
+  %.02243 = phi ptr [ %i.q, %.lr.ph ], [ %i.a, %bb.a ] ; 4 uses
   %.02342 = phi i64 [ %spec.select35, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
   %.02441 = phi ptr [ %.226, %.lr.ph ], [ null, %bb.a ]
   %.02740 = phi i64 [ %.128, %.lr.ph ], [ 0, %bb.a ]
@@ -226,9 +226,8 @@ bb.a:
   %.226 = select i1 %i.m, ptr %.02243, ptr %.02441 ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.02243, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !1498 ; 2 uses
-  %i.p = icmp ne ptr %i.o, null                   ; 2 uses
+  %i.p = icmp ne ptr %i.o, null
   %i.q = getelementptr inbounds i8, ptr %i.o, i64 -8
-  %2 = select i1 %i.p, ptr %i.q, ptr null
   %i.r = icmp samesign ult i64 %.128, 3
   %i.s = and i1 %i.r, %i.p
   br i1 %i.s, label %.lr.ph, label %._crit_edge, !llvm.loop !5786

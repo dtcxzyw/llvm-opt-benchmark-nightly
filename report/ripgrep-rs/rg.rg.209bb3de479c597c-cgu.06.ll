@@ -204,38 +204,37 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit.i.
 
 .loopexit.i.i.i.i.i.i.i.i.i.i.i:                  ; preds = %bb.bo, %bb.bm, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.4, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.5, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.6, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.7, %bb.bn, %.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bk, %bb.bk, %bb.bj
   %.sroa.8.0.insert.insert.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 257, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.gz, %.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 257, %bb.bk ], [ 1, %bb.bj ], [ 257, %bb.bk ], [ %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bn ], [ 257, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.7 ], [ 257, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.6 ], [ 257, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.5 ], [ 257, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.4 ], [ 257, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.3 ], [ 257, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.2 ], [ 257, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.1 ], [ 257, %bb.bm ], [ 513, %bb.bo ], !dbg !13474 ; 2 uses
-  %9 = trunc i64 %.sroa.8.0.insert.insert.i.i.i.i.i.i.i.i.i.i.i.i.i to i1, !dbg !13511 ; 2 uses
-  %.sroa.526.0.extract.shift.i.i.i.i.i.i.i.i.i.i.i.i = lshr i64 %.sroa.8.0.insert.insert.i.i.i.i.i.i.i.i.i.i.i.i.i, 32, !dbg !13512 ; 2 uses
-  %.sroa.5.0.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %9, i64 %i.gt, i64 %.sroa.526.0.extract.shift.i.i.i.i.i.i.i.i.i.i.i.i, !dbg !13512
-  %i.jx = icmp ugt i64 %.sroa.010.1.i.i.i.i.i.i.i.i.i.i.i.i, %i.fy, !dbg !13513
-  br i1 %i.jx, label %bb.cd, label %bb.cc, !dbg !13513, !prof !501
+  %.sroa.526.0.extract.shift.i.i.i.i.i.i.i.i.i.i.i.i = lshr i64 %.sroa.8.0.insert.insert.i.i.i.i.i.i.i.i.i.i.i.i.i, 32, !dbg !13511
+  %i.jx = icmp ugt i64 %.sroa.010.1.i.i.i.i.i.i.i.i.i.i.i.i, %i.fy, !dbg !13512
+  br i1 %i.jx, label %bb.cd, label %bb.cc, !dbg !13512, !prof !501
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNCINvNtCs7LWxN68iDgu_12grep_matcher11interpolate11interpolateNCINvYNtNtCsdq8xsXUia3c_10grep_regex7matcher13RegexCapturesNtB10_8Captures11interpolateNCNCNvMs_NtCshhHc5tDBDRu_12grep_printer4utilINtB3q_8ReplacerRRNtB20_12RegexMatcherE11replace_all00E0B3h_E0ECs2NzvFoTxuAy_2rg.exit.thread.thread.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNCNvNtCs7LWxN68iDgu_12grep_matcher11interpolate12find_cap_ref0ECs2NzvFoTxuAy_2rg.exit.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bx, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNvNtCs7LWxN68iDgu_12grep_matcher11interpolate19is_valid_cap_letterECs2NzvFoTxuAy_2rg.exit.thread.thread.i.i.i.i.i.i.i.i.i.i.i.i, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNvNtCs7LWxN68iDgu_12grep_matcher11interpolate19is_valid_cap_letterECs2NzvFoTxuAy_2rg.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bc, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCs2NzvFoTxuAy_2rg.exit45.i.i.i.i.i.i.i.i.i.i.i
-  %i.jy = load i64, ptr %i.ab, align 8, !dbg !13514, !alias.scope !13159, !noalias !13097, !noundef !387 ; 3 uses
-  %i.jz = load i64, ptr %i.z, align 8, !dbg !13515, !range !463, !alias.scope !13159, !noalias !13097, !noundef !387
-  %i.ka = icmp eq i64 %i.jy, %i.jz, !dbg !13516
-  br i1 %i.ka, label %bb.cb, label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit48.i.i.i.i.i.i.i.i.i.i.i, !dbg !13516
+  %i.jy = load i64, ptr %i.ab, align 8, !dbg !13513, !alias.scope !13159, !noalias !13097, !noundef !387 ; 3 uses
+  %i.jz = load i64, ptr %i.z, align 8, !dbg !13514, !range !463, !alias.scope !13159, !noalias !13097, !noundef !387
+  %i.ka = icmp eq i64 %i.jy, %i.jz, !dbg !13515
+  br i1 %i.ka, label %bb.cb, label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit48.i.i.i.i.i.i.i.i.i.i.i, !dbg !13515
 
 bb.cb:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNCINvNtCs7LWxN68iDgu_12grep_matcher11interpolate11interpolateNCINvYNtNtCsdq8xsXUia3c_10grep_regex7matcher13RegexCapturesNtB10_8Captures11interpolateNCNCNvMs_NtCshhHc5tDBDRu_12grep_printer4utilINtB3q_8ReplacerRRNtB20_12RegexMatcherE11replace_all00E0B3h_E0ECs2NzvFoTxuAy_2rg.exit.thread.thread.i.i.i.i.i.i.i.i.i.i.i
-  call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z) #24, !dbg !13517, !noalias !13108
-  br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit48.i.i.i.i.i.i.i.i.i.i.i, !dbg !13518
+  call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechE8grow_oneB7_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z) #24, !dbg !13516, !noalias !13108
+  br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit48.i.i.i.i.i.i.i.i.i.i.i, !dbg !13517
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit48.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.cb, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNCINvNtCs7LWxN68iDgu_12grep_matcher11interpolate11interpolateNCINvYNtNtCsdq8xsXUia3c_10grep_regex7matcher13RegexCapturesNtB10_8Captures11interpolateNCNCNvMs_NtCshhHc5tDBDRu_12grep_printer4utilINtB3q_8ReplacerRRNtB20_12RegexMatcherE11replace_all00E0B3h_E0ECs2NzvFoTxuAy_2rg.exit.thread.thread.i.i.i.i.i.i.i.i.i.i.i
-  %i.kb = load ptr, ptr %i.aw, align 8, !dbg !13519, !alias.scope !13159, !noalias !13097, !nonnull !387, !noundef !387
-  %i.kc = getelementptr inbounds nuw i8, ptr %i.kb, i64 %i.jy, !dbg !13520
-  store i8 36, ptr %i.kc, align 1, !dbg !13521, !noalias !13108
-  %i.kd = add i64 %i.jy, 1, !dbg !13522
-  store i64 %i.kd, ptr %i.ab, align 8, !dbg !13522, !alias.scope !13159, !noalias !13097
-  %i.ke = add nsw i64 %i.fy, -1, !dbg !13523
+  %i.kb = load ptr, ptr %i.aw, align 8, !dbg !13518, !alias.scope !13159, !noalias !13097, !nonnull !387, !noundef !387
+  %i.kc = getelementptr inbounds nuw i8, ptr %i.kb, i64 %i.jy, !dbg !13519
+  store i8 36, ptr %i.kc, align 1, !dbg !13520, !noalias !13108
+  %i.kd = add i64 %i.jy, 1, !dbg !13521
+  store i64 %i.kd, ptr %i.ab, align 8, !dbg !13521, !alias.scope !13159, !noalias !13097
+  %i.ke = add nsw i64 %i.fy, -1, !dbg !13522
   br label %.backedge.i.i.i.i.i.i.i.i.i.i.i, !dbg !13510
 
 .backedge.i.i.i.i.i.i.i.i.i.i.i:                  ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.cl, %bb.cg, %bb.cf, %bb.ce, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit48.i.i.i.i.i.i.i.i.i.i.i, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.20.0.be.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ke, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit48.i.i.i.i.i.i.i.i.i.i.i ], [ %i.jv, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit.i.i.i.i.i.i.i.i.i.i.i ], [ %i.kg, %bb.ce ], [ %i.kg, %bb.cg ], [ %i.kg, %bb.cf ], [ %i.kg, %bb.cl ], [ %i.kg, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.0.be.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ga, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit48.i.i.i.i.i.i.i.i.i.i.i ], [ %i.jw, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs2NzvFoTxuAy_2rg.exit.i.i.i.i.i.i.i.i.i.i.i ], [ %i.kh, %bb.ce ], [ %i.kh, %bb.cg ], [ %i.kh, %bb.cf ], [ %i.kh, %bb.cl ], [ %i.kh, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ]
-  %i.kf = icmp eq i64 %.sroa.20.0.be.i.i.i.i.i.i.i.i.i.i.i, 0, !dbg !13524
+  %i.kf = icmp eq i64 %.sroa.20.0.be.i.i.i.i.i.i.i.i.i.i.i, 0, !dbg !13523
   br i1 %i.kf, label %.thread.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, !dbg !13410
 
 bb.cc:                                            ; preds = %.loopexit.i.i.i.i.i.i.i.i.i.i.i
+  %9 = trunc i64 %.sroa.8.0.insert.insert.i.i.i.i.i.i.i.i.i.i.i.i.i to i1, !dbg !13524
   %i.kg = sub nuw nsw i64 %i.fy, %.sroa.010.1.i.i.i.i.i.i.i.i.i.i.i.i, !dbg !13525 ; 5 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %i.fr, i64 %.sroa.010.1.i.i.i.i.i.i.i.i.i.i.i.i, !dbg !13526 ; 5 uses
   br i1 %9, label %bb.cf, label %bb.ce, !dbg !13527
@@ -313,7 +312,7 @@ bb.ci:                                            ; preds = %bb.ck, %bb.ch
   %i.lt = sub nsw i64 0, %i.ls, !dbg !13562
   %i.lu = getelementptr inbounds [24 x i8], ptr %i.lj, i64 %i.lt, !dbg !13563 ; 2 uses
   %i.lv = getelementptr inbounds i8, ptr %i.lu, i64 -24, !dbg !13564
-  %i.lw = call noundef zeroext i1 @_RNvXCsjqcU1oJFKXj_9hashbrowneINtB2_10EquivalentINtNtCsexYYUdYSQU6_5alloc4sync3ArceEE10equivalentCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.gs, i64 noundef %.sroa.5.0.i.i.i.i.i.i.i.i.i.i.i.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.lv), !dbg !13565, !noalias !13210
+  %i.lw = call noundef zeroext i1 @_RNvXCsjqcU1oJFKXj_9hashbrowneINtB2_10EquivalentINtNtCsexYYUdYSQU6_5alloc4sync3ArceEE10equivalentCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.gs, i64 noundef %i.gt, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.lv), !dbg !13565, !noalias !13210
   br i1 %i.lw, label %bb.cl, label %bb.cj, !dbg !13566, !prof !512
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:  ; preds = %bb.cj, %bb.ci
@@ -716,20 +715,20 @@ begin_hunk_1_@llvm.umin.i64
 !13508 = !DILocation(line: 549, column: 27, scope: !12655, inlinedAt: !12775)
 !13509 = !DILocation(line: 90, column: 24, scope: !12777, inlinedAt: !12779)
 !13510 = !DILocation(line: 0, scope: !13157, inlinedAt: !12582)
-!13511 = !DILocation(line: 128, column: 20, scope: !12703, inlinedAt: !12675)
-!13512 = !DILocation(line: 128, column: 14, scope: !12703, inlinedAt: !12675)
-!13513 = !DILocation(line: 544, column: 12, scope: !12655, inlinedAt: !12782)
-!13514 = !DILocation(line: 1029, column: 19, scope: !12754, inlinedAt: !12786)
-!13515 = !DILocation(line: 616, column: 49, scope: !12752, inlinedAt: !12788)
-!13516 = !DILocation(line: 1032, column: 12, scope: !12755, inlinedAt: !12786)
-!13517 = !DILocation(line: 1033, column: 22, scope: !12755, inlinedAt: !12786)
-!13518 = !DILocation(line: 1032, column: 9, scope: !12755, inlinedAt: !12786)
-!13519 = !DILocation(line: 611, column: 9, scope: !12761, inlinedAt: !12792)
-!13520 = !DILocation(line: 971, column: 18, scope: !12769, inlinedAt: !12793)
-!13521 = !DILocation(line: 1964, column: 41, scope: !12771, inlinedAt: !12794)
-!13522 = !DILocation(line: 1038, column: 13, scope: !12772, inlinedAt: !12786)
-!13523 = !DILocation(line: 549, column: 27, scope: !12655, inlinedAt: !12796)
-!13524 = !DILocation(line: 137, column: 9, scope: !12797, inlinedAt: !12798)
+!13511 = !DILocation(line: 128, column: 14, scope: !12703, inlinedAt: !12675)
+!13512 = !DILocation(line: 544, column: 12, scope: !12655, inlinedAt: !12782)
+!13513 = !DILocation(line: 1029, column: 19, scope: !12754, inlinedAt: !12786)
+!13514 = !DILocation(line: 616, column: 49, scope: !12752, inlinedAt: !12788)
+!13515 = !DILocation(line: 1032, column: 12, scope: !12755, inlinedAt: !12786)
+!13516 = !DILocation(line: 1033, column: 22, scope: !12755, inlinedAt: !12786)
+!13517 = !DILocation(line: 1032, column: 9, scope: !12755, inlinedAt: !12786)
+!13518 = !DILocation(line: 611, column: 9, scope: !12761, inlinedAt: !12792)
+!13519 = !DILocation(line: 971, column: 18, scope: !12769, inlinedAt: !12793)
+!13520 = !DILocation(line: 1964, column: 41, scope: !12771, inlinedAt: !12794)
+!13521 = !DILocation(line: 1038, column: 13, scope: !12772, inlinedAt: !12786)
+!13522 = !DILocation(line: 549, column: 27, scope: !12655, inlinedAt: !12796)
+!13523 = !DILocation(line: 137, column: 9, scope: !12797, inlinedAt: !12798)
+!13524 = !DILocation(line: 128, column: 20, scope: !12703, inlinedAt: !12675)
 !13525 = !DILocation(line: 549, column: 27, scope: !12655, inlinedAt: !12782)
 !13526 = !DILocation(line: 90, column: 24, scope: !12799, inlinedAt: !12801)
 !13527 = !DILocation(line: 46, column: 9, scope: !12780, inlinedAt: !12582)

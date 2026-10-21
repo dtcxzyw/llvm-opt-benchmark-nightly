@@ -205,15 +205,14 @@ bb.a:
   %i.i = shl nsw i32 %10, 1
   %i.j = sext i32 %i.i to i64                     ; 4 uses
   %.not9394 = icmp eq i32 %i.f, 0
-  %.not93 = or i1 %.not9394, %.not                ; 2 uses
+  %.not93 = or i1 %.not9394, %.not
   %i.k = shl nsw i32 %12, 1
   %i.l = sext i32 %i.k to i64                     ; 2 uses
   %i.m = sext i32 %7 to i64                       ; 4 uses
   %i.n = sext i32 %12 to i64                      ; 4 uses
   %i.o = sext i32 %11 to i64                      ; 8 uses
   %i.p = shl nsw i32 %5, 1
-  %i.q = sext i32 %i.p to i64                     ; 13 uses
-  %spec.select.idx = select i1 %.not93, i64 0, i64 %i.q ; 2 uses
+  %i.q = sext i32 %i.p to i64                     ; 14 uses
   br i1 %.not93, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
@@ -341,7 +340,7 @@ bb.c:                                             ; preds = %bb.b, %.thread.us12
   %i.be = getelementptr inbounds i8, ptr %.086107.us118, i64 %i.q
   %i.bf = getelementptr inbounds i8, ptr %.088105.us120, i64 %i.q
   %i.bg = getelementptr inbounds i8, ptr %.087106.us119, i64 %i.q
-  %spec.select.us123 = getelementptr inbounds i8, ptr %.089104.us121, i64 %spec.select.idx
+  %spec.select.us123 = getelementptr inbounds i8, ptr %.089104.us121, i64 %i.q
   %i.bh = add nuw nsw i32 %.081112.us113, 1       ; 2 uses
   %exitcond128.not = icmp eq i32 %i.bh, %i.d
   br i1 %exitcond128.not, label %._crit_edge, label %.lr.ph.split.split.us, !llvm.loop !54
@@ -385,7 +384,7 @@ bb.e:                                             ; preds = %bb.d, %.thread
   %i.bt = getelementptr inbounds i8, ptr %.086107, i64 %i.q
   %i.bu = getelementptr inbounds i8, ptr %.088105, i64 %i.q
   %i.bv = getelementptr inbounds i8, ptr %.087106, i64 %i.q
-  %spec.select = getelementptr inbounds i8, ptr %.089104, i64 %spec.select.idx
+  %spec.select = getelementptr inbounds i8, ptr %.089104, i64 %i.q
   %i.bw = add nuw nsw i32 %.081112, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.bw, %i.d
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split.split, !llvm.loop !54

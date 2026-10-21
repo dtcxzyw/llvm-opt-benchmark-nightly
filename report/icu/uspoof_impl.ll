@@ -204,13 +204,13 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.critedge, %bb.a
-  %.058 = phi ptr [ %1, %bb.a ], [ %.260, %.critedge ] ; 2 uses
+  %.058 = phi ptr [ %1, %bb.a ], [ %i.t, %.critedge ] ; 2 uses
   %.055 = phi i32 [ 0, %bb.a ], [ %i.q, %.critedge ] ; 2 uses
   %i.c = call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %.058, i32 noundef 44) #23 ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
-  %.159 = phi ptr [ %.058, %bb.b ], [ %i.f, %bb.c ] ; 7 uses
+  %.159 = phi ptr [ %.058, %bb.b ], [ %i.f, %bb.c ] ; 6 uses
   %i.d = load i8, ptr %.159, align 1, !tbaa !38
   %i.e = icmp eq i8 %i.d, 32
   %i.f = getelementptr inbounds nuw i8, ptr %.159, i64 1
@@ -254,10 +254,9 @@ bb.g:                                             ; preds = %bb.f
 
 .critedge:                                        ; preds = %bb.g
   %i.r = load i32, ptr %2, align 4, !tbaa !22
-  %i.s = icmp slt i32 %i.r, 1                     ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %spec.select, i64 1
-  %.260 = select i1 %i.s, ptr %i.t, ptr %.159     ; 2 uses
-  %i.u = icmp ult ptr %.260, %i.b
+  %i.s = icmp slt i32 %i.r, 1
+  %i.t = getelementptr inbounds nuw i8, ptr %spec.select, i64 1 ; 2 uses
+  %i.u = icmp ult ptr %i.t, %i.b
   %or.cond74 = select i1 %i.s, i1 %i.u, i1 false
   br i1 %or.cond74, label %bb.b, label %.thread, !llvm.loop !73
 

@@ -205,13 +205,13 @@ bb.ge:                                            ; preds = %bb.gd, %.critedge.i
   br label %.critedge2.outer.i
 
 .critedge2.outer.i:                               ; preds = %bb.gg, %bb.ge
-  %.0298.ph.i = phi double [ %.1299.ph.i, %bb.gg ], [ %i.agb, %bb.ge ]
-  %.0291.ph.i = phi double [ %.1292.ph.i, %bb.gg ], [ %i.afz, %bb.ge ] ; 2 uses
+  %.0298.ph.i = phi double [ %i.agz, %bb.gg ], [ %i.agb, %bb.ge ]
+  %.0291.ph.i = phi double [ %i.agd, %bb.gg ], [ %i.afz, %bb.ge ]
   %.3.ph.i = phi i32 [ %i.ago, %bb.gg ], [ %.2.i, %bb.ge ]
   br label %.critedge2.i
 
 .critedge2.i:                                     ; preds = %bb.gf, %.critedge2.outer.i
-  %.0298.i = phi double [ %i.agc, %bb.gf ], [ %.0298.ph.i, %.critedge2.outer.i ] ; 3 uses
+  %.0298.i = phi double [ %i.agc, %bb.gf ], [ %.0298.ph.i, %.critedge2.outer.i ] ; 2 uses
   %.3.i193 = phi i32 [ %i.ago, %bb.gf ], [ %.3.ph.i, %.critedge2.outer.i ]
   %i.agc = fmul double %.0298.i, 5.000000e-01     ; 3 uses
   %i.agd = fadd double %.0291.ph.i, %i.agc        ; 7 uses
@@ -244,11 +244,9 @@ bb.gf:                                            ; preds = %.critedge2.i
 
 bb.gg:                                            ; preds = %bb.gf
   %i.agx = tail call double @llvm.fmuladd.f64(double %i.afu, double %i.agd, double %i.agu)
-  %i.agy = fcmp olt double %i.agt, %i.agx         ; 4 uses
-  %i.agz = fsub double %.0298.i, %i.agc
-  %.1299.ph.i = select i1 %i.agy, double %i.agz, double %.0298.i ; 2 uses
-  %.1292.ph.i = select i1 %i.agy, double %i.agd, double %.0291.ph.i
-  %i.aha = fcmp oge double %.1299.ph.i, %i.aag
+  %i.agy = fcmp olt double %i.agt, %i.agx         ; 2 uses
+  %i.agz = fsub double %.0298.i, %i.agc           ; 2 uses
+  %i.aha = fcmp oge double %i.agz, %i.aag
   %i.ahb = select i1 %i.agy, i1 %i.aha, i1 false
   br i1 %i.ahb, label %.critedge2.outer.i, label %bb.gh
 

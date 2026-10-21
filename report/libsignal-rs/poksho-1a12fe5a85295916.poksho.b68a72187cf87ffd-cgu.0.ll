@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %bb.a
 _RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntErrorE6expectCsfFEWD1QhNwv_6poksho.exit: ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.l = load i64, ptr %i.k, align 8, !noundef !4 ; 2 uses
-  %i.m = icmp ugt i64 %i.l, 255                   ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 255
   %i.n = trunc nuw i64 %i.l to i8
-  %.sroa.52.0 = select i1 %i.m, i8 2, i8 %i.n
   br i1 %i.m, label %bb.c, label %_RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntErrorE6expectCsfFEWD1QhNwv_6poksho.exit22, !prof !6
 
 bb.c:                                             ; preds = %_RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntErrorE6expectCsfFEWD1QhNwv_6poksho.exit
@@ -216,9 +215,8 @@ bb.c:                                             ; preds = %_RNvMNtCsgxBkk5gSRh
 _RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntErrorE6expectCsfFEWD1QhNwv_6poksho.exit22: ; preds = %_RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntErrorE6expectCsfFEWD1QhNwv_6poksho.exit
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.p = load i64, ptr %i.o, align 8, !noundef !4 ; 2 uses
-  %i.q = icmp ugt i64 %i.p, 255                   ; 2 uses
-  %i.r = trunc nuw i64 %i.p to i8
-  %.sroa.54.0 = select i1 %i.q, i8 2, i8 %i.r     ; 2 uses
+  %i.q = icmp ugt i64 %i.p, 255
+  %i.r = trunc nuw i64 %i.p to i8                 ; 2 uses
   br i1 %i.q, label %bb.d, label %_RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntErrorE6expectCsfFEWD1QhNwv_6poksho.exit23, !prof !6
 
 bb.d:                                             ; preds = %_RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntErrorE6expectCsfFEWD1QhNwv_6poksho.exit22
@@ -263,7 +261,7 @@ _RNvNtCs6i54tJFfzR_5alloc5boxed14box_new_uninit.exit: ; preds = %_RNvMNtCsgxBkk5
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.05.038, i64 32 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.05.038, i64 24
   %i.af = load i8, ptr %i.ae, align 8, !noundef !4 ; 2 uses
-  %.not = icmp ugt i8 %i.af, %.sroa.54.0
+  %.not = icmp ugt i8 %i.af, %i.r
   br i1 %.not, label %.invoke, label %bb.f, !prof !6
 
 ._crit_edge:                                      ; preds = %.loopexit, %_RNvNtCs6i54tJFfzR_5alloc5boxed14box_new_uninit.exit
@@ -353,13 +351,13 @@ bb.n:                                             ; preds = %_RNvMNtCsgxBkk5gSRh
   %.sroa.010.037 = phi ptr [ %i.bd, %_RNvMsF_NtCs6i54tJFfzR_5alloc3vecINtB5_3VechE8push_mutCsfFEWD1QhNwv_6poksho.exit32 ], [ %i.ay, %bb.n ] ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.010.037, i64 2 ; 2 uses
   %i.be = load i8, ptr %.sroa.010.037, align 1, !noundef !4 ; 2 uses
-  %i.bf = icmp ult i8 %i.be, %.sroa.52.0
+  %i.bf = icmp ult i8 %i.be, %i.n
   br i1 %i.bf, label %bb.o, label %.invoke, !prof !5
 
 bb.o:                                             ; preds = %.lr.ph
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.010.037, i64 1
   %i.bh = load i8, ptr %i.bg, align 1, !noundef !4 ; 2 uses
-  %i.bi = icmp ult i8 %i.bh, %.sroa.54.0
+  %i.bi = icmp ult i8 %i.bh, %i.r
   br i1 %i.bi, label %bb.p, label %.invoke, !prof !5
 
 .invoke:                                          ; preds = %.lr.ph39, %bb.o, %.lr.ph

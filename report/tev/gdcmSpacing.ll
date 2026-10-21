@@ -92,7 +92,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.sroa.12.0 = phi i64 [ 0, %bb.a ], [ %.sroa.0.0, %bb.c ] ; 2 uses
   %.sroa.0.0 = phi i64 [ 1, %bb.a ], [ %i.g, %bb.c ] ; 4 uses
-  %.040 = phi double [ %1, %bb.a ], [ %.1, %bb.c ] ; 4 uses
+  %.040 = phi double [ %1, %bb.a ], [ %i.k, %bb.c ] ; 3 uses
   %.sroa.16.0 = phi i64 [ 0, %bb.a ], [ %i.c, %bb.c ] ; 5 uses
   %.sroa.27.0 = phi i64 [ 1, %bb.a ], [ %.sroa.16.0, %bb.c ] ; 2 uses
   %i.a = fptosi double %.040 to i64               ; 3 uses
@@ -110,11 +110,10 @@ bb.c:                                             ; preds = %bb.b
   %i.f = mul nsw i64 %.sroa.0.0, %i.a
   %i.g = add nsw i64 %i.f, %.sroa.12.0            ; 2 uses
   %i.h = sitofp i64 %i.a to double                ; 2 uses
-  %i.i = fcmp une double %.040, %i.h              ; 2 uses
+  %i.i = fcmp une double %.040, %i.h
   %i.j = fsub double %.040, %i.h
   %i.k = fdiv double 1.000000e+00, %i.j           ; 2 uses
   %i.l = fcmp ule double %i.k, f0x41DFFFFFFFC00000
-  %.1 = select i1 %i.i, double %i.k, double %.040
   %.not45 = and i1 %i.i, %i.l
   br i1 %.not45, label %bb.b, label %split
 

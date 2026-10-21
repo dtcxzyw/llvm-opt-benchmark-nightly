@@ -204,18 +204,17 @@ bb.an:                                            ; preds = %bb.am
 read_variable_length.exit29:                      ; preds = %.lr.ph481, %bb.an
   %.19 = phi ptr [ %i.hf, %bb.an ], [ %i.hj, %.lr.ph481 ] ; 2 uses
   %.016.i25 = phi i64 [ %i.hg, %bb.an ], [ %i.hk, %.lr.ph481 ] ; 2 uses
-  %i.hm = icmp ne i64 %.016.i25, -1               ; 2 uses
+  %i.hm = icmp ne i64 %.016.i25, -1
   %i.hn = add i64 %.016.i25, 15                   ; 2 uses
   %i.ho = ptrtoint ptr %.10390.i to i64
   %i.hp = xor i64 %i.ho, -1
   %i.hq = icmp ule i64 %i.hn, %i.hp
-  %.11.i = select i1 %i.hm, i64 %i.hn, i64 15
   %.not128 = select i1 %i.hm, i1 %i.hq, i1 false
   br i1 %.not128, label %bb.ao, label %LZ4_wildCopy32.exit.thread
 
 bb.ao:                                            ; preds = %read_variable_length.exit29, %.loopexit134
   %.8 = phi ptr [ %.19, %read_variable_length.exit29 ], [ %.7, %.loopexit134 ]
-  %.12.i = phi i64 [ %.11.i, %read_variable_length.exit29 ], [ %.10.i, %.loopexit134 ]
+  %.12.i = phi i64 [ %i.hn, %read_variable_length.exit29 ], [ %.10.i, %.loopexit134 ]
   %i.hr = add i64 %.12.i, 4
   br label %.loopexit146
 
@@ -618,18 +617,17 @@ bb.al:                                            ; preds = %bb.ak
 read_variable_length.exit33:                      ; preds = %.lr.ph487, %bb.al
   %.20 = phi ptr [ %i.hl, %bb.al ], [ %i.hp, %.lr.ph487 ] ; 2 uses
   %.016.i29 = phi i64 [ %i.hm, %bb.al ], [ %i.hq, %.lr.ph487 ] ; 2 uses
-  %i.hs = icmp ne i64 %.016.i29, -1               ; 2 uses
+  %i.hs = icmp ne i64 %.016.i29, -1
   %i.ht = add i64 %.016.i29, 15                   ; 2 uses
   %i.hu = ptrtoint ptr %.10390.i to i64
   %i.hv = xor i64 %i.hu, -1
   %i.hw = icmp ule i64 %i.ht, %i.hv
-  %.11.i = select i1 %i.hs, i64 %i.ht, i64 15
   %.not136 = select i1 %i.hs, i1 %i.hw, i1 false
   br i1 %.not136, label %bb.am, label %LZ4_wildCopy32.exit.thread
 
 bb.am:                                            ; preds = %read_variable_length.exit33, %.loopexit142
   %.9 = phi ptr [ %.20, %read_variable_length.exit33 ], [ %.8, %.loopexit142 ]
-  %.12.i = phi i64 [ %.11.i, %read_variable_length.exit33 ], [ %.10.i, %.loopexit142 ]
+  %.12.i = phi i64 [ %i.ht, %read_variable_length.exit33 ], [ %.10.i, %.loopexit142 ]
   %i.hx = add i64 %.12.i, 4
   br label %.loopexit154
 
@@ -1032,18 +1030,17 @@ bb.ao:                                            ; preds = %bb.an
 read_variable_length.exit29:                      ; preds = %.lr.ph472, %bb.ao
   %.19 = phi ptr [ %i.gq, %bb.ao ], [ %i.gu, %.lr.ph472 ] ; 2 uses
   %.016.i25 = phi i64 [ %i.gr, %bb.ao ], [ %i.gv, %.lr.ph472 ] ; 2 uses
-  %i.gx = icmp ne i64 %.016.i25, -1               ; 2 uses
+  %i.gx = icmp ne i64 %.016.i25, -1
   %i.gy = add i64 %.016.i25, 15                   ; 2 uses
   %i.gz = ptrtoint ptr %.10390.i.ptr to i64
   %i.ha = xor i64 %i.gz, -1
   %i.hb = icmp ule i64 %i.gy, %i.ha
-  %.11.i = select i1 %i.gx, i64 %i.gy, i64 15
   %.not132 = select i1 %i.gx, i1 %i.hb, i1 false
   br i1 %.not132, label %bb.ap, label %LZ4_wildCopy32.exit.thread
 
 bb.ap:                                            ; preds = %read_variable_length.exit29, %.loopexit147
   %.8 = phi ptr [ %.19, %read_variable_length.exit29 ], [ %.7, %.loopexit147 ]
-  %.12.i = phi i64 [ %.11.i, %read_variable_length.exit29 ], [ %.10.i, %.loopexit147 ]
+  %.12.i = phi i64 [ %i.gy, %read_variable_length.exit29 ], [ %.10.i, %.loopexit147 ]
   %i.hc = add i64 %.12.i, 4
   br label %.loopexit159
 
@@ -1446,18 +1443,17 @@ bb.at:                                            ; preds = %bb.as
 read_variable_length.exit32:                      ; preds = %.lr.ph518, %bb.at
   %.19 = phi ptr [ %i.ir, %bb.at ], [ %i.iv, %.lr.ph518 ] ; 2 uses
   %.016.i28 = phi i64 [ %i.is, %bb.at ], [ %i.iw, %.lr.ph518 ] ; 2 uses
-  %i.iy = icmp ne i64 %.016.i28, -1               ; 2 uses
+  %i.iy = icmp ne i64 %.016.i28, -1
   %i.iz = add i64 %.016.i28, 15                   ; 2 uses
   %i.ja = ptrtoint ptr %.10390.i to i64
   %i.jb = xor i64 %i.ja, -1
   %i.jc = icmp ule i64 %i.iz, %i.jb
-  %.11.i = select i1 %i.iy, i64 %i.iz, i64 15
   %.not131 = select i1 %i.iy, i1 %i.jc, i1 false
   br i1 %.not131, label %bb.au, label %LZ4_wildCopy32.exit.thread
 
 bb.au:                                            ; preds = %read_variable_length.exit32, %.loopexit139
   %.8 = phi ptr [ %.19, %read_variable_length.exit32 ], [ %.7, %.loopexit139 ]
-  %.12.i = phi i64 [ %.11.i, %read_variable_length.exit32 ], [ %.10.i, %.loopexit139 ]
+  %.12.i = phi i64 [ %i.iz, %read_variable_length.exit32 ], [ %.10.i, %.loopexit139 ]
   %i.jd = add i64 %.12.i, 4
   br label %.loopexit153
 
@@ -1860,18 +1856,17 @@ bb.as:                                            ; preds = %bb.ar
 read_variable_length.exit36:                      ; preds = %.lr.ph520, %bb.as
   %.20 = phi ptr [ %i.jd, %bb.as ], [ %i.jh, %.lr.ph520 ] ; 2 uses
   %.016.i32 = phi i64 [ %i.je, %bb.as ], [ %i.ji, %.lr.ph520 ] ; 2 uses
-  %i.jk = icmp ne i64 %.016.i32, -1               ; 2 uses
+  %i.jk = icmp ne i64 %.016.i32, -1
   %i.jl = add i64 %.016.i32, 15                   ; 2 uses
   %i.jm = ptrtoint ptr %.10390.i to i64
   %i.jn = xor i64 %i.jm, -1
   %i.jo = icmp ule i64 %i.jl, %i.jn
-  %.11.i = select i1 %i.jk, i64 %i.jl, i64 15
   %.not139 = select i1 %i.jk, i1 %i.jo, i1 false
   br i1 %.not139, label %bb.at, label %LZ4_wildCopy32.exit.thread
 
 bb.at:                                            ; preds = %read_variable_length.exit36, %.loopexit146
   %.9 = phi ptr [ %.20, %read_variable_length.exit36 ], [ %.8, %.loopexit146 ]
-  %.12.i = phi i64 [ %.11.i, %read_variable_length.exit36 ], [ %.10.i, %.loopexit146 ]
+  %.12.i = phi i64 [ %i.jl, %read_variable_length.exit36 ], [ %.10.i, %.loopexit146 ]
   %i.jp = add i64 %.12.i, 4
   br label %.loopexit159
 
@@ -2274,18 +2269,17 @@ bb.bb:                                            ; preds = %bb.ba
 read_variable_length.exit91:                      ; preds = %.lr.ph590, %bb.bb
   %.19 = phi ptr [ %i.jo, %bb.bb ], [ %i.js, %.lr.ph590 ] ; 2 uses
   %.016.i87 = phi i64 [ %i.jp, %bb.bb ], [ %i.jt, %.lr.ph590 ] ; 2 uses
-  %i.jv = icmp ne i64 %.016.i87, -1               ; 2 uses
+  %i.jv = icmp ne i64 %.016.i87, -1
   %i.jw = add i64 %.016.i87, 15                   ; 2 uses
   %i.jx = ptrtoint ptr %.10390.i.i to i64
   %i.jy = xor i64 %i.jx, -1
   %i.jz = icmp ule i64 %i.jw, %i.jy
-  %.11.i.i = select i1 %i.jv, i64 %i.jw, i64 15
   %.not193 = select i1 %i.jv, i1 %i.jz, i1 false
   br i1 %.not193, label %bb.bc, label %LZ4_wildCopy32.exit.thread
 
 bb.bc:                                            ; preds = %read_variable_length.exit91, %.loopexit201
   %.8 = phi ptr [ %.19, %read_variable_length.exit91 ], [ %.7, %.loopexit201 ]
-  %.12.i.i = phi i64 [ %.11.i.i, %read_variable_length.exit91 ], [ %.10.i.i, %.loopexit201 ]
+  %.12.i.i = phi i64 [ %i.jw, %read_variable_length.exit91 ], [ %.10.i.i, %.loopexit201 ]
   %i.ka = add i64 %.12.i.i, 4
   br label %.loopexit215
 
@@ -2688,18 +2682,17 @@ bb.an:                                            ; preds = %bb.am
 read_variable_length.exit30:                      ; preds = %.lr.ph482, %bb.an
   %.19 = phi ptr [ %i.hh, %bb.an ], [ %i.hl, %.lr.ph482 ] ; 2 uses
   %.016.i26 = phi i64 [ %i.hi, %bb.an ], [ %i.hm, %.lr.ph482 ] ; 2 uses
-  %i.ho = icmp ne i64 %.016.i26, -1               ; 2 uses
+  %i.ho = icmp ne i64 %.016.i26, -1
   %i.hp = add i64 %.016.i26, 15                   ; 2 uses
   %i.hq = ptrtoint ptr %.10390.i to i64
   %i.hr = xor i64 %i.hq, -1
   %i.hs = icmp ule i64 %i.hp, %i.hr
-  %.11.i = select i1 %i.ho, i64 %i.hp, i64 15
   %.not129 = select i1 %i.ho, i1 %i.hs, i1 false
   br i1 %.not129, label %bb.ao, label %LZ4_wildCopy32.exit.thread
 
 bb.ao:                                            ; preds = %read_variable_length.exit30, %.loopexit135
   %.8 = phi ptr [ %.19, %read_variable_length.exit30 ], [ %.7, %.loopexit135 ]
-  %.12.i = phi i64 [ %.11.i, %read_variable_length.exit30 ], [ %.10.i, %.loopexit135 ]
+  %.12.i = phi i64 [ %i.hp, %read_variable_length.exit30 ], [ %.10.i, %.loopexit135 ]
   %i.ht = add i64 %.12.i, 4
   br label %.loopexit147
 
@@ -3102,18 +3095,17 @@ bb.aq:                                            ; preds = %bb.ap
 read_variable_length.exit33.i:                    ; preds = %.lr.ph722, %bb.aq
   %.20.i = phi ptr [ %i.gx, %bb.aq ], [ %i.hb, %.lr.ph722 ] ; 2 uses
   %.016.i29.i = phi i64 [ %i.gy, %bb.aq ], [ %i.hc, %.lr.ph722 ] ; 2 uses
-  %i.he = icmp ne i64 %.016.i29.i, -1             ; 2 uses
+  %i.he = icmp ne i64 %.016.i29.i, -1
   %i.hf = add i64 %.016.i29.i, 15                 ; 2 uses
   %i.hg = ptrtoint ptr %.10390.i.ptr.i to i64
   %i.hh = xor i64 %i.hg, -1
   %i.hi = icmp ule i64 %i.hf, %i.hh
-  %.11.i.i = select i1 %i.he, i64 %i.hf, i64 15
   %.not140.i = select i1 %i.he, i1 %i.hi, i1 false
   br i1 %.not140.i, label %bb.ar, label %LZ4_wildCopy32.exit.thread.i
 
 bb.ar:                                            ; preds = %read_variable_length.exit33.i, %.loopexit159.i
   %.9.i = phi ptr [ %.20.i, %read_variable_length.exit33.i ], [ %.8.i, %.loopexit159.i ]
-  %.12.i.i = phi i64 [ %.11.i.i, %read_variable_length.exit33.i ], [ %.10.i.i, %.loopexit159.i ]
+  %.12.i.i = phi i64 [ %i.hf, %read_variable_length.exit33.i ], [ %.10.i.i, %.loopexit159.i ]
   %i.hj = add i64 %.12.i.i, 4
   br label %.loopexit171.i
 
@@ -3516,18 +3508,17 @@ bb.cn:                                            ; preds = %bb.cm
 read_variable_length.exit34.i:                    ; preds = %.lr.ph700, %bb.cn
   %.20.i58 = phi ptr [ %i.so, %bb.cn ], [ %i.ss, %.lr.ph700 ] ; 2 uses
   %.016.i30.i = phi i64 [ %i.sp, %bb.cn ], [ %i.st, %.lr.ph700 ] ; 2 uses
-  %i.sv = icmp ne i64 %.016.i30.i, -1             ; 2 uses
+  %i.sv = icmp ne i64 %.016.i30.i, -1
   %i.sw = add i64 %.016.i30.i, 15                 ; 2 uses
   %i.sx = ptrtoint ptr %.10390.i.i to i64
   %i.sy = xor i64 %i.sx, -1
   %i.sz = icmp ule i64 %i.sw, %i.sy
-  %.11.i.i59 = select i1 %i.sv, i64 %i.sw, i64 15
   %.not137.i = select i1 %i.sv, i1 %i.sz, i1 false
   br i1 %.not137.i, label %bb.co, label %LZ4_wildCopy32.exit.thread.i54
 
 bb.co:                                            ; preds = %read_variable_length.exit34.i, %.loopexit143.i
   %.9.i52 = phi ptr [ %.20.i58, %read_variable_length.exit34.i ], [ %.8.i49, %.loopexit143.i ]
-  %.12.i.i53 = phi i64 [ %.11.i.i59, %read_variable_length.exit34.i ], [ %.10.i.i51, %.loopexit143.i ]
+  %.12.i.i53 = phi i64 [ %i.sw, %read_variable_length.exit34.i ], [ %.10.i.i51, %.loopexit143.i ]
   %i.ta = add i64 %.12.i.i53, 4
   br label %.loopexit155.i
 

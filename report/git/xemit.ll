@@ -202,8 +202,7 @@ bb.e:                                             ; preds = %is_func_rec.exit._c
 
 bb.f:                                             ; preds = %._crit_edge, %.lr.ph710
   %.1165 = phi i64 [ %i.ax, %._crit_edge ], [ %i.ac, %.lr.ph710 ] ; 2 uses
-  %i.ay = icmp sgt i64 %.1165, -1                 ; 2 uses
-  %5 = select i1 %i.ay, i64 -1, i64 1
+  %i.ay = icmp sgt i64 %.1165, -1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   br i1 %i.ay, label %.lr.ph.i, label %get_func_line.exit.thread
 
@@ -250,8 +249,8 @@ match_func_rec.exit.i:                            ; preds = %bb.g
   br i1 %i.bo, label %.thread.i, label %get_func_line.exit
 
 .thread.i:                                        ; preds = %match_func_rec.exit.i, %switch.early.test.i.i.i256, %bb.h
-  %i.bp = add nsw i64 %.02538.i, %5               ; 2 uses
-  %i.bq = icmp sgt i64 %i.bp, -1
+  %i.bp = add nsw i64 %.02538.i, -1
+  %i.bq = icmp sgt i64 %.02538.i, 0
   br i1 %i.bq, label %.lr.ph.i, label %get_func_line.exit.thread, !llvm.loop !31
 
 get_func_line.exit.thread:                        ; preds = %.lr.ph.i, %.thread.i, %bb.f
@@ -336,7 +335,7 @@ bb.n:                                             ; preds = %is_func_rec.exit268
   br i1 %i.cn, label %.lr.ph459, label %.critedge, !llvm.loop !33
 
 .critedge:                                        ; preds = %bb.n, %.lr.ph459, %.split611, %is_func_rec.exit268, %is_func_rec.exit268, %bb.m, %bb.k, %get_func_line.exit.thread, %get_func_line.exit
-  %.0166415 = phi i64 [ -1, %get_func_line.exit.thread ], [ %.0166458, %bb.k ], [ %.02538.i, %get_func_line.exit ], [ %.0166458, %.lr.ph459 ], [ 0, %bb.n ], [ %.0166458, %is_func_rec.exit268 ], [ %.0166458, %.split611 ], [ %.0166458, %bb.m ], [ %.0166458, %is_func_rec.exit268 ]
+  %.0166415 = phi i64 [ -1, %get_func_line.exit.thread ], [ %.0166458, %bb.k ], [ 0, %get_func_line.exit ], [ %.0166458, %.lr.ph459 ], [ 0, %bb.n ], [ %.0166458, %is_func_rec.exit268 ], [ %.0166458, %.split611 ], [ %.0166458, %bb.m ], [ %.0166458, %is_func_rec.exit268 ]
   %spec.store.select = call i64 @llvm.smax.i64(i64 %.0166415, i64 0) ; 5 uses
   %i.co = icmp sgt i64 %i.ab, %spec.store.select
   br i1 %i.co, label %bb.o, label %.preheader408
