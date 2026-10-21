@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.o
   br label %lean_dec_ref_known.exit
 
 lean_dec_ref_known.exit:                          ; preds = %lean_dec.exit.i, %bb.n, %bb.o, %bb.p
-  br i1 %.not.i36, label %bb.q, label %lean_dec.exit42
+  br i1 %.not.i36, label %bb.q, label %lean_inc_ref.exit50
 
 bb.q:                                             ; preds = %lean_dec_ref_known.exit
   %i.x = load i32, ptr %i.i, align 4, !tbaa !10   ; 3 uses
@@ -212,33 +212,20 @@ bb.q:                                             ; preds = %lean_dec_ref_known.
 bb.r:                                             ; preds = %bb.q
   %i.z = add nsw i32 %i.x, -1
   store i32 %i.z, ptr %i.i, align 4, !tbaa !10
-  br label %lean_dec.exit42
+  br label %lean_inc_ref.exit50
 
 bb.s:                                             ; preds = %bb.q
   %.not.i.i40 = icmp eq i32 %i.x, 0
-  br i1 %.not.i.i40, label %lean_dec.exit42, label %bb.t
+  br i1 %.not.i.i40, label %lean_inc_ref.exit50, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.i) #4
-  br label %lean_dec.exit42
-
-lean_dec.exit42:                                  ; preds = %bb.r, %bb.s, %bb.t, %lean_dec_ref_known.exit
-  %1 = and i64 %i.j, 510
-  %2 = icmp eq i64 %1, 0
-  %l_Std_Http_Internal_Mock_send___lam__0___closed__0_value.l_Std_Http_Internal_Mock_send___lam__0___closed__1_value = select i1 %2, ptr @l_Std_Http_Internal_Mock_send___lam__0___closed__0_value, ptr @l_Std_Http_Internal_Mock_send___lam__0___closed__1_value ; 3 uses
-  %.val.i.i48 = load i32, ptr %l_Std_Http_Internal_Mock_send___lam__0___closed__0_value.l_Std_Http_Internal_Mock_send___lam__0___closed__1_value, align 8, !tbaa !10 ; 2 uses
-  %3 = icmp sgt i32 %.val.i.i48, 0
-  br i1 %3, label %lean_inc_ref.exit50, label %4, !prof !13
-
-4:                                                ; preds = %lean_dec.exit42
-  %.not.i.i49 = icmp eq i32 %.val.i.i48, 0
-  br i1 %.not.i.i49, label %lean_inc_ref.exit50, label %5
-
-5:                                                ; preds = %4
-  %6 = atomicrmw add ptr %l_Std_Http_Internal_Mock_send___lam__0___closed__0_value.l_Std_Http_Internal_Mock_send___lam__0___closed__1_value, i32 -1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit50
 
-lean_inc_ref.exit50:                              ; preds = %lean_dec.exit42, %4, %5
+lean_inc_ref.exit50:                              ; preds = %bb.r, %bb.s, %bb.t, %lean_dec_ref_known.exit
+  %1 = and i64 %i.j, 510
+  %2 = icmp eq i64 %1, 0
+  %l_Std_Http_Internal_Mock_send___lam__0___closed__0_value.l_Std_Http_Internal_Mock_send___lam__0___closed__1_value = select i1 %2, ptr @l_Std_Http_Internal_Mock_send___lam__0___closed__0_value, ptr @l_Std_Http_Internal_Mock_send___lam__0___closed__1_value
   %i.aa = tail call ptr @lean_mk_io_user_error(ptr noundef nonnull %l_Std_Http_Internal_Mock_send___lam__0___closed__0_value.l_Std_Http_Internal_Mock_send___lam__0___closed__1_value) #4
   tail call void @lean_inc_heartbeat() #4
   %i.ab = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #4 ; 2 uses

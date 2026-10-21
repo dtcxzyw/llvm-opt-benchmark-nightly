@@ -204,8 +204,8 @@ bb.bj:                                            ; preds = %bb.bi
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %output_quoted_string.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %output_quoted_string.exit ] ; 3 uses
-  %.not = icmp eq i64 %indvars.iv, 0
-  %i.iq = select i1 %.not, ptr @.str.113, ptr @.str.9 ; 4 uses
+  %.not = icmp eq i64 %indvars.iv, 0              ; 2 uses
+  %i.iq = select i1 %.not, ptr @.str.113, ptr @.str.9 ; 2 uses
   %i.ir = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.is = load ptr, ptr %i.ir, align 8, !tbaa !13 ; 6 uses
   %i.it = icmp eq ptr %i.is, null
@@ -329,13 +329,11 @@ bb.bt:                                            ; preds = %isNumber.exit
   br label %output_quoted_string.exit
 
 isNumber.exit.thread:                             ; preds = %bb.bs, %bb.bn, %bb.bp, %isNumber.exit
-  %4 = load i8, ptr %i.iq, align 1, !tbaa !19
-  %.not266 = icmp eq i8 %4, 0
-  br i1 %.not266, label %bb.bv, label %bb.bu
+  br i1 %.not, label %bb.bv, label %bb.bu
 
 bb.bu:                                            ; preds = %isNumber.exit.thread
   %i.kp = load ptr, ptr %i.ik, align 8, !tbaa !23
-  %fputs = tail call i32 @fputs(ptr nonnull %i.iq, ptr %i.kp) ; 0 uses
+  %fputs = tail call i32 @fputc(i32 44, ptr %i.kp) ; 0 uses
   %.pre = load ptr, ptr %i.ir, align 8, !tbaa !13
   br label %bb.bv
 

@@ -118,7 +118,6 @@ $_ZN4llvm23SmallVectorTemplateBaseIN4mlir4TypeELb1EE15growAndPushBackES2_ = comd
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @.str = private unnamed_addr constant [34 x i8] c"failed to construct function type\00", align 1
-@.str.1 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.2 = private unnamed_addr constant [3 x i8] c": \00", align 1
 @.str.3 = private unnamed_addr constant [2 x i8] c"'\00", align 1
 @.str.4 = private unnamed_addr constant [92 x i8] c"' is an inferred attribute and should not be specified in the explicit attribute dictionary\00", align 1
@@ -416,30 +415,27 @@ bb.j:                                             ; preds = %bb.h
 _ZNO4mlir18InFlightDiagnosticlsIRA34_KcEEOS0_OT_.exit: ; preds = %bb.i, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #9
   %.pr = load ptr, ptr %23, align 8, !tbaa !42
-  %30 = load i64, ptr %i.as, align 8, !tbaa !61
-  %31 = icmp eq i64 %30, 0
-  %32 = select i1 %31, ptr @.str.1, ptr @.str.2   ; 2 uses
   %.not.i.i68 = icmp eq ptr %.pr, null
   br i1 %.not.i.i68, label %_ZNO4mlir18InFlightDiagnosticlsIRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEOS0_OT_.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZNO4mlir18InFlightDiagnosticlsIRA34_KcEEOS0_OT_.exit
-  %33 = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
+  %30 = load i64, ptr %i.as, align 8, !tbaa !61
+  %31 = icmp eq i64 %30, 0
+  %i.cm = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #9
-  %i.cm = getelementptr inbounds nuw i8, ptr %12, i64 33
-  store i8 1, ptr %i.cm, align 1, !tbaa !34
-  %34 = load i8, ptr %32, align 1, !tbaa !27
-  %.not.i.i.i.i = icmp eq i8 %34, 0
-  br i1 %.not.i.i.i.i, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit, label %bb.l
+  %32 = getelementptr inbounds nuw i8, ptr %12, i64 33
+  store i8 1, ptr %32, align 1, !tbaa !34
+  br i1 %31, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  store ptr %32, ptr %12, align 8, !tbaa !27
+  store ptr @.str.2, ptr %12, align 8, !tbaa !27
   br label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit
 
 _ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit: ; preds = %bb.k, %bb.l
   %storemerge.i.i.i.i = phi i8 [ 3, %bb.l ], [ 1, %bb.k ]
   %i.cn = getelementptr inbounds nuw i8, ptr %12, i64 32
   store i8 %storemerge.i.i.i.i, ptr %i.cn, align 8, !tbaa !33
-  %i.co = call noundef nonnull align 8 dereferenceable(192) ptr @_ZN4mlir10DiagnosticlsEON4llvm5TwineE(ptr noundef nonnull align 8 dereferenceable(192) %33, ptr noundef nonnull align 8 dereferenceable(34) %12) #9 ; 0 uses
+  %i.co = call noundef nonnull align 8 dereferenceable(192) ptr @_ZN4mlir10DiagnosticlsEON4llvm5TwineE(ptr noundef nonnull align 8 dereferenceable(192) %i.cm, ptr noundef nonnull align 8 dereferenceable(34) %12) #9 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #9
   %.pr107 = load ptr, ptr %23, align 8, !tbaa !42
   %.not.i.i69 = icmp eq ptr %.pr107, null
@@ -452,7 +448,7 @@ bb.m:                                             ; preds = %_ZNO4mlir18InFlight
   %i.cq = getelementptr inbounds nuw i8, ptr %11, i64 33
   store i8 1, ptr %i.cq, align 1, !tbaa !34
   store ptr %21, ptr %11, align 8, !tbaa !27
-  %i.cr = call noundef nonnull align 8 dereferenceable(192) ptr @_ZN4mlir10DiagnosticlsEON4llvm5TwineE(ptr noundef nonnull align 8 dereferenceable(192) %33, ptr noundef nonnull align 8 dereferenceable(34) %11) #9 ; 0 uses
+  %i.cr = call noundef nonnull align 8 dereferenceable(192) ptr @_ZN4mlir10DiagnosticlsEON4llvm5TwineE(ptr noundef nonnull align 8 dereferenceable(192) %i.cm, ptr noundef nonnull align 8 dereferenceable(34) %11) #9 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #9
   br label %_ZNO4mlir18InFlightDiagnosticlsIRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEOS0_OT_.exit
 

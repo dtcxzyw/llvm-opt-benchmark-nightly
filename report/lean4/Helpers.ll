@@ -204,30 +204,17 @@ bb.bp:                                            ; preds = %bb.bo
 lean_dec.exit:                                    ; preds = %bb.bn, %bb.bo, %bb.bp, %lean_dec_ref_known.exit147
   %i.cj = and i64 %i.bd, 510
   %i.ck = icmp eq i64 %i.cj, 0
-  %l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__1_value.l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__3_value = select i1 %i.ck, ptr @l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__1_value, ptr @l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__3_value ; 4 uses
-  %.val.i.i148 = load i32, ptr %l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__1_value.l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__3_value, align 8, !tbaa !10 ; 2 uses
-  %4 = icmp sgt i32 %.val.i.i148, 0
-  br i1 %4, label %lean_inc.exit, label %5, !prof !11
-
-5:                                                ; preds = %lean_dec.exit
-  %.not.i.i149 = icmp eq i32 %.val.i.i148, 0
-  br i1 %.not.i.i149, label %lean_inc.exit, label %6
-
-6:                                                ; preds = %5
-  %7 = atomicrmw add ptr %l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__1_value.l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__3_value, i32 -1 monotonic, align 4 ; 0 uses
-  br label %lean_inc.exit
-
-lean_inc.exit:                                    ; preds = %lean_dec.exit, %6, %5
+  %l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__1_value.l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__3_value = select i1 %i.ck, ptr @l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__1_value, ptr @l___private_Std_Http_Test_Helpers_0__Std_Http_Internal_Test_sendClose___lam__2___closed__3_value ; 2 uses
   br i1 %i.ai, label %bb.bq, label %bb.br
 
-bb.bq:                                            ; preds = %lean_inc.exit
+bb.bq:                                            ; preds = %lean_dec.exit
   %i.cl = getelementptr inbounds nuw i8, ptr %.093, i64 4 ; 2 uses
   %i.cm = load i32, ptr %i.cl, align 4
   %i.cn = and i32 %i.cm, 16777215
   store i32 %i.cn, ptr %i.cl, align 4
   br label %bb.bt
 
-bb.br:                                            ; preds = %lean_inc.exit
+bb.br:                                            ; preds = %lean_dec.exit
   tail call void @lean_inc_heartbeat() #5
   %i.co = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #5 ; 4 uses
   %i.cp = icmp eq ptr %i.co, null

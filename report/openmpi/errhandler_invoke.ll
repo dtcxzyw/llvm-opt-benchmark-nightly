@@ -64,39 +64,37 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = load i8, ptr @ompi_mpi_compat_mpi3, align 1, !tbaa !10, !range !11, !noundef !12
-  %i.l = trunc nuw i8 %i.k to i1                  ; 3 uses
-  %i.m = select i1 %i.l, ptr @ompi_mpi_comm_world, ptr @ompi_mpi_comm_self
-  store ptr %i.m, ptr %i.d, align 8, !tbaa !46
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_world, i64 312), align 8
-  %.val30 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_self, i64 312), align 8
-  %5 = select i1 %i.l, ptr %.val, ptr %.val30     ; 3 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %5, i64 84
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !48
+  %i.l = trunc nuw i8 %i.k to i1
+  %i.m = select i1 %i.l, ptr @ompi_mpi_comm_world, ptr @ompi_mpi_comm_self ; 3 uses
+  store ptr %i.m, ptr %i.d, align 8, !tbaa !47
+  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 312
+  %.val30 = load ptr, ptr %5, align 8, !tbaa !40  ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.val30, i64 84
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !49
   switch i32 %i.o, label %bb.w [
     i32 0, label %bb.d
     i32 1, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 88
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !49
+  %i.p = getelementptr inbounds nuw i8, ptr %.val30, i64 88
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !50
   call void (ptr, ptr, ...) %i.q(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, ptr noundef %4, ptr noundef null) #5
   br label %bb.w
 
 bb.e:                                             ; preds = %bb.c
-  %.val31 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_world, i64 256), align 8
-  %.val32 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_self, i64 256), align 8
-  %6 = select i1 %i.l, i32 %.val31, i32 %.val32
-  store i32 %6, ptr %i.b, align 4, !tbaa !8
-  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 120
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !50
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 256
+  %.val32 = load i32, ptr %6, align 8, !tbaa !51
+  store i32 %.val32, ptr %i.b, align 4, !tbaa !8
+  %i.r = getelementptr inbounds nuw i8, ptr %.val30, i64 120
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !52
   call void (ptr, ptr, ...) %i.s(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #5
   %i.t = load i32, ptr %i.c, align 4, !tbaa !8
   store i32 %i.t, ptr %i.a, align 4, !tbaa !8
   br label %bb.w
 
 bb.f:                                             ; preds = %bb.b
-  %i.u = load ptr, ptr @ompi_initial_error_handler, align 8, !tbaa !17
+  %i.u = load ptr, ptr @ompi_initial_error_handler, align 8, !tbaa !41
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %bb.g, label %bb.i
 
@@ -110,7 +108,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
-  %i.x = load ptr, ptr @ompi_initial_error_handler, align 8, !tbaa !17
+  %i.x = load ptr, ptr @ompi_initial_error_handler, align 8, !tbaa !41
   tail call void (ptr, ptr, ...) %i.x(ptr noundef null, ptr noundef null, ptr noundef %4) #5
   br label %bb.w
 
@@ -123,9 +121,9 @@ bb.j:                                             ; preds = %bb.a
   ]
 
 bb.k:                                             ; preds = %bb.j
-  store ptr %1, ptr %i.d, align 8, !tbaa !46
+  store ptr %1, ptr %i.d, align 8, !tbaa !47
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 84
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !48
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !49
   switch i32 %i.z, label %bb.w [
     i32 0, label %bb.l
     i32 1, label %bb.m
@@ -133,7 +131,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !49
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !50
   call void (ptr, ptr, ...) %i.ab(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, ptr noundef %4, ptr noundef null) #5
   br label %bb.w
 
@@ -142,16 +140,16 @@ bb.m:                                             ; preds = %bb.k
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !51
   store i32 %i.ad, ptr %i.b, align 4, !tbaa !8
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !50
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !52
   call void (ptr, ptr, ...) %i.af(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #5
   %i.ag = load i32, ptr %i.c, align 4, !tbaa !8
   store i32 %i.ag, ptr %i.a, align 4, !tbaa !8
   br label %bb.w
 
 bb.n:                                             ; preds = %bb.j
-  store ptr %1, ptr %i.e, align 8, !tbaa !53
+  store ptr %1, ptr %i.e, align 8, !tbaa !54
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 84
-  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !48
+  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !49
   switch i32 %i.ai, label %bb.w [
     i32 0, label %bb.o
     i32 1, label %bb.p
@@ -159,25 +157,25 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !54
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !55
   call void (ptr, ptr, ...) %i.ak(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, ptr noundef %4, ptr noundef null) #5
   br label %bb.w
 
 bb.p:                                             ; preds = %bb.n
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 248
-  %i.am = load i32, ptr %i.al, align 8, !tbaa !55
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !56
   store i32 %i.am, ptr %i.b, align 4, !tbaa !8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !50
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !52
   call void (ptr, ptr, ...) %i.ao(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #5
   %i.ap = load i32, ptr %i.c, align 4, !tbaa !8
   store i32 %i.ap, ptr %i.a, align 4, !tbaa !8
   br label %bb.w
 
 bb.q:                                             ; preds = %bb.j
-  store ptr %1, ptr %i.f, align 8, !tbaa !57
+  store ptr %1, ptr %i.f, align 8, !tbaa !58
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 84
-  %i.ar = load i32, ptr %i.aq, align 4, !tbaa !48
+  %i.ar = load i32, ptr %i.aq, align 4, !tbaa !49
   switch i32 %i.ar, label %bb.w [
     i32 0, label %bb.r
     i32 1, label %bb.s
@@ -185,25 +183,25 @@ bb.q:                                             ; preds = %bb.j
 
 bb.r:                                             ; preds = %bb.q
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.at = load ptr, ptr %i.as, align 8, !tbaa !58
+  %i.at = load ptr, ptr %i.as, align 8, !tbaa !59
   call void (ptr, ptr, ...) %i.at(ptr noundef nonnull %i.f, ptr noundef nonnull %i.a, ptr noundef %4, ptr noundef null) #5
   br label %bb.w
 
 bb.s:                                             ; preds = %bb.q
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %i.av = load i32, ptr %i.au, align 8, !tbaa !59
+  %i.av = load i32, ptr %i.au, align 8, !tbaa !60
   store i32 %i.av, ptr %i.b, align 4, !tbaa !8
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !50
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !52
   call void (ptr, ptr, ...) %i.ax(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #5
   %i.ay = load i32, ptr %i.c, align 4, !tbaa !8
   store i32 %i.ay, ptr %i.a, align 4, !tbaa !8
   br label %bb.w
 
 bb.t:                                             ; preds = %bb.j
-  store ptr %1, ptr %i.g, align 8, !tbaa !60
+  store ptr %1, ptr %i.g, align 8, !tbaa !61
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 84
-  %i.ba = load i32, ptr %i.az, align 4, !tbaa !48
+  %i.ba = load i32, ptr %i.az, align 4, !tbaa !49
   switch i32 %i.ba, label %bb.w [
     i32 0, label %bb.u
     i32 1, label %bb.v
@@ -211,16 +209,16 @@ bb.t:                                             ; preds = %bb.j
 
 bb.u:                                             ; preds = %bb.t
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !61
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !62
   call void (ptr, ptr, ...) %i.bc(ptr noundef nonnull %i.g, ptr noundef nonnull %i.a, ptr noundef %4, ptr noundef null) #5
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.t
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 240
-  %i.be = load i32, ptr %i.bd, align 8, !tbaa !63
+  %i.be = load i32, ptr %i.bd, align 8, !tbaa !64
   store i32 %i.be, ptr %i.b, align 4, !tbaa !8
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !50
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !52
   call void (ptr, ptr, ...) %i.bg(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #5
   %i.bh = load i32, ptr %i.c, align 4, !tbaa !8
   store i32 %i.bh, ptr %i.a, align 4, !tbaa !8
@@ -260,20 +258,20 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 5 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !70   ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !71   ; 2 uses
   %.not = icmp eq ptr %i.c, @ompi_request_null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 72
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !77   ; 5 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !78   ; 5 uses
   %.not50 = icmp eq i32 %i.e, 0
   br i1 %.not50, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !64
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !65
 
 bb.d:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
@@ -289,11 +287,11 @@ bb.d:                                             ; preds = %bb.b
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.k = load i8, ptr @opal_uses_threads, align 1, !tbaa !10, !range !11, !noundef !12
   %i.l = trunc nuw i8 %i.k to i1
-  br i1 %i.l, label %.lr.ph.split.i, label %.lr.ph.split.us.i, !prof !79
+  br i1 %i.l, label %.lr.ph.split.i, label %.lr.ph.split.us.i, !prof !80
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
   %i.m = load i32, ptr getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 88), align 8
-  %i.n = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 112), align 8, !tbaa !82
+  %i.n = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 112), align 8, !tbaa !83
   %i.o = sext i32 %i.m to i64
   %wide.trip.count.i = zext nneg i32 %i.i to i64
   br label %.thread.i.us.i
@@ -303,23 +301,23 @@ bb.d:                                             ; preds = %bb.b
   %.not.us.i = icmp slt i64 %indvars.iv.i, %i.o
   tail call void @llvm.assume(i1 %.not.us.i)
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv.i
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !17   ; 2 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !41   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %i.s = load i32, ptr %i.r, align 8, !tbaa !84
+  %i.s = load i32, ptr %i.r, align 8, !tbaa !85
   %i.t = icmp eq i32 %i.s, %i.e
   br i1 %i.t, label %.split.us.i, label %bb.e
 
 bb.e:                                             ; preds = %.thread.i.us.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %ompi_errcode_get_mpi_code.exit, label %.thread.i.us.i, !llvm.loop !65
+  br i1 %exitcond.not.i, label %ompi_errcode_get_mpi_code.exit, label %.thread.i.us.i, !llvm.loop !66
 
 bb.f:                                             ; preds = %opal_pointer_array_get_item.exit.i
   %indvars.iv.next19.i = add nuw nsw i64 %indvars.iv18.i, 1 ; 2 uses
   %i.u = load i32, ptr @ompi_errcode_intern_lastused, align 4, !tbaa !8
   %i.v = sext i32 %i.u to i64
   %i.w = icmp slt i64 %indvars.iv.next19.i, %i.v
-  br i1 %i.w, label %.lr.ph.split.i, label %ompi_errcode_get_mpi_code.exit, !llvm.loop !66
+  br i1 %i.w, label %.lr.ph.split.i, label %ompi_errcode_get_mpi_code.exit, !llvm.loop !67
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.f
   %i.x = phi i8 [ %i.ak, %bb.f ], [ 1, %.lr.ph.i ]
@@ -329,22 +327,22 @@ bb.f:                                             ; preds = %opal_pointer_array_
   %.not.i = icmp slt i64 %indvars.iv18.i, %i.z
   tail call void @llvm.assume(i1 %.not.i)
   %i.aa = trunc nuw i8 %i.x to i1
-  br i1 %i.aa, label %bb.g, label %.thread.i.i, !prof !79
+  br i1 %i.aa, label %bb.g, label %.thread.i.i, !prof !80
 
 .thread.i.i:                                      ; preds = %.lr.ph.split.i
-  %i.ab = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 112), align 8, !tbaa !82
+  %i.ab = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 112), align 8, !tbaa !83
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %indvars.iv18.i
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !17
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !41
   br label %opal_pointer_array_get_item.exit.i
 
 bb.g:                                             ; preds = %.lr.ph.split.i
   %i.ae = tail call i32 @pthread_mutex_lock(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 32)) #5 ; 0 uses
   %.pre.i.i = load i8, ptr @opal_uses_threads, align 1, !tbaa !10, !range !11
   %i.af = trunc nuw i8 %.pre.i.i to i1
-  %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 112), align 8, !tbaa !82
+  %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 112), align 8, !tbaa !83
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv18.i
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !17 ; 2 uses
-  br i1 %i.af, label %bb.h, label %opal_pointer_array_get_item.exit.i, !prof !86
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !41 ; 2 uses
+  br i1 %i.af, label %bb.h, label %opal_pointer_array_get_item.exit.i, !prof !87
 
 bb.h:                                             ; preds = %bb.g
   %i.aj = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @ompi_errcodes_intern, i64 32)) #5 ; 0 uses
@@ -355,42 +353,42 @@ opal_pointer_array_get_item.exit.i:               ; preds = %bb.h, %bb.g, %.thre
   %i.ak = phi i8 [ 0, %.thread.i.i ], [ %.pre.i, %bb.h ], [ 0, %bb.g ]
   %.0.i.i = phi ptr [ %i.ad, %.thread.i.i ], [ %i.ai, %bb.h ], [ %i.ai, %bb.g ] ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 16
-  %i.am = load i32, ptr %i.al, align 8, !tbaa !84
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !85
   %i.an = icmp eq i32 %i.am, %i.e
   br i1 %i.an, label %.split.us.i, label %bb.f
 
 .split.us.i:                                      ; preds = %.thread.i.us.i, %opal_pointer_array_get_item.exit.i
   %.us-phi.i = phi ptr [ %.0.i.i, %opal_pointer_array_get_item.exit.i ], [ %i.q, %.thread.i.us.i ]
   %i.ao = getelementptr inbounds nuw i8, ptr %.us-phi.i, i64 20
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !87
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !88
   br label %ompi_errcode_get_mpi_code.exit
 
 ompi_errcode_get_mpi_code.exit:                   ; preds = %bb.e, %bb.f, %bb.d, %.preheader.i, %.split.us.i
   %.010.i = phi i32 [ %i.e, %bb.d ], [ %i.ap, %.split.us.i ], [ 14, %bb.f ], [ 14, %.preheader.i ], [ 14, %bb.e ] ; 4 uses
-  %i.aq = load ptr, ptr %i.f, align 8, !tbaa !70  ; 2 uses
+  %i.aq = load ptr, ptr %i.f, align 8, !tbaa !71  ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 152
-  %.sroa.0.0.copyload = load ptr, ptr %i.ar, align 8, !tbaa !88 ; 9 uses
+  %.sroa.0.0.copyload = load ptr, ptr %i.ar, align 8, !tbaa !89 ; 9 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.aq, i64 56
-  %i.at = load i32, ptr %i.as, align 8, !tbaa !89
+  %i.at = load i32, ptr %i.as, align 8, !tbaa !90
   %i.au = icmp sgt i32 %0, %i.g
   br i1 %i.au, label %.lr.ph62, label %._crit_edge
 
 .lr.ph62:                                         ; preds = %ompi_errcode_get_mpi_code.exit, %bb.l
   %indvars.iv70 = phi i64 [ %indvars.iv.next71, %bb.l ], [ %indvars.iv, %ompi_errcode_get_mpi_code.exit ] ; 2 uses
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv70 ; 2 uses
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !70 ; 4 uses
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !71 ; 4 uses
   %.not52 = icmp eq ptr %i.aw, @ompi_request_null
   br i1 %.not52, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph62
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 100
-  %i.ay = load i8, ptr %i.ax, align 4, !tbaa !90, !range !11, !noundef !12
+  %i.ay = load i8, ptr %i.ax, align 4, !tbaa !91, !range !11, !noundef !12
   %i.az = trunc nuw i8 %i.ay to i1
   br i1 %i.az, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aw, i64 72
-  %i.bb = load i32, ptr %i.ba, align 8, !tbaa !77
+  %i.bb = load i32, ptr %i.ba, align 8, !tbaa !78
   switch i32 %i.bb, label %bb.k [
     i32 0, label %bb.l
     i32 76, label %bb.l
@@ -398,14 +396,14 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aw, i64 120
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !91
-  %i.be = tail call i32 %i.bd(ptr noundef nonnull %i.av) #5, !inline_history !67 ; 0 uses
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !92
+  %i.be = tail call i32 %i.bd(ptr noundef nonnull %i.av) #5, !inline_history !68 ; 0 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.j, %.lr.ph62, %bb.i, %bb.k
   %indvars.iv.next71 = add nuw nsw i64 %indvars.iv70, 1 ; 2 uses
   %exitcond74.not = icmp eq i64 %indvars.iv.next71, %wide.trip.count
-  br i1 %exitcond74.not, label %._crit_edge, label %.lr.ph62, !llvm.loop !68
+  br i1 %exitcond74.not, label %._crit_edge, label %.lr.ph62, !llvm.loop !69
 
 ._crit_edge:                                      ; preds = %bb.l, %ompi_errcode_get_mpi_code.exit
   switch i32 %i.at, label %bb.p [
@@ -417,7 +415,7 @@ bb.l:                                             ; preds = %bb.j, %bb.j, %.lr.p
 
 bb.m:                                             ; preds = %._crit_edge, %._crit_edge
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 312
-  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !92
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !40
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 320
   %i.bi = load i32, ptr %i.bh, align 8, !tbaa !93
   %i.bj = tail call i32 @ompi_errhandler_invoke(ptr noundef %i.bg, ptr noundef %.sroa.0.0.copyload, i32 noundef %i.bi, i32 noundef %.010.i, ptr noundef %2)
@@ -485,85 +483,85 @@ attributes #5 = { nounwind }
 !14 = !{!"p1 _ZTS19ompi_communicator_t", !13, i64 0}
 !15 = !{!"p1 _ZTS12opal_class_t", !13, i64 0}
 !16 = !{!"opal_object_t", !15, i64 0, !5, i64 8}
-!17 = !{!13, !13, i64 0}
-!18 = !{!"p1 _ZTS19opal_hash_element_t", !13, i64 0}
-!19 = !{!"long", !4, i64 0}
-!20 = !{!"p1 _ZTS24opal_hash_type_methods_t", !13, i64 0}
-!21 = !{!"opal_hash_table_t", !16, i64 0, !18, i64 16, !19, i64 24, !19, i64 32, !19, i64 40, !5, i64 48, !5, i64 52, !5, i64 56, !5, i64 60, !20, i64 64}
-!22 = !{!"p1 _ZTS11opal_info_t", !13, i64 0}
-!23 = !{!"opal_infosubscriber_t", !16, i64 0, !21, i64 16, !22, i64 88}
-!24 = !{!"opal_mutex_t", !16, i64 0, !4, i64 16, !5, i64 56}
-!25 = !{!"p1 omnipotent char", !13, i64 0}
-!26 = !{!"ompi_comm_extended_cid_t", !19, i64 0, !4, i64 8}
-!27 = !{!"ompi_comm_extended_cid_block_t", !26, i64 0, !19, i64 16, !4, i64 24, !4, i64 25}
-!28 = !{!"p1 int", !13, i64 0}
-!29 = !{!"p1 _ZTS12ompi_group_t", !13, i64 0}
-!30 = !{!"p1 _ZTS17opal_hash_table_t", !13, i64 0}
-!31 = !{!"p1 _ZTS22mca_topo_base_module_t", !13, i64 0}
-!32 = !{!"any p2 pointer", !13, i64 0}
-!33 = !{!"p2 _ZTS20ompi_peruse_handle_t", !32, i64 0}
-!34 = !{!"p1 _ZTS17ompi_errhandler_t", !13, i64 0}
-!35 = !{!"p1 _ZTS14mca_pml_comm_t", !13, i64 0}
-!36 = !{!"p1 _ZTS14mca_mtl_comm_t", !13, i64 0}
-!37 = !{!"p1 _ZTS25mca_coll_base_comm_coll_t", !13, i64 0}
-!38 = !{!"p1 _ZTS15ompi_instance_t", !13, i64 0}
-!39 = !{!"p1 _ZTS13opal_object_t", !13, i64 0}
-!40 = !{!"ompi_communicator_t", !23, i64 0, !24, i64 96, !25, i64 160, !26, i64 168, !27, i64 184, !5, i64 216, !5, i64 220, !5, i64 224, !5, i64 228, !5, i64 232, !28, i64 240, !5, i64 248, !5, i64 252, !5, i64 256, !29, i64 264, !29, i64 272, !14, i64 280, !30, i64 288, !31, i64 296, !33, i64 304, !34, i64 312, !5, i64 320, !35, i64 328, !36, i64 336, !37, i64 344, !38, i64 352, !39, i64 360, !5, i64 368, !5, i64 372, !9, i64 376, !9, i64 377, !9, i64 378}
-!41 = !{!"short", !4, i64 0}
-!42 = !{!"p1 _ZTS28ompi_osc_base_module_3_0_0_t", !13, i64 0}
-!43 = !{!"ompi_win_t", !23, i64 0, !24, i64 96, !4, i64 160, !29, i64 224, !41, i64 232, !41, i64 234, !5, i64 236, !30, i64 240, !5, i64 248, !34, i64 256, !5, i64 264, !42, i64 272, !5, i64 280}
-!44 = !{!"p1 _ZTS18mca_io_base_file_t", !13, i64 0}
-!45 = !{!"ompi_file_t", !23, i64 0, !14, i64 96, !25, i64 104, !5, i64 112, !5, i64 116, !5, i64 120, !34, i64 128, !5, i64 136, !5, i64 140, !24, i64 144, !4, i64 208, !4, i64 528, !44, i64 952}
-!46 = !{!14, !14, i64 0}
-!47 = !{!"ompi_errhandler_t", !16, i64 0, !4, i64 16, !5, i64 80, !5, i64 84, !13, i64 88, !13, i64 96, !13, i64 104, !13, i64 112, !13, i64 120, !5, i64 128}
-!48 = !{!47, !5, i64 84}
-!49 = !{!47, !13, i64 88}
-!50 = !{!47, !13, i64 120}
-!51 = !{!40, !5, i64 256}
-!52 = !{!"p1 _ZTS10ompi_win_t", !13, i64 0}
-!53 = !{!52, !52, i64 0}
-!54 = !{!47, !13, i64 104}
-!55 = !{!43, !5, i64 248}
-!56 = !{!"p1 _ZTS11ompi_file_t", !13, i64 0}
-!57 = !{!56, !56, i64 0}
-!58 = !{!47, !13, i64 96}
-!59 = !{!45, !5, i64 120}
-!60 = !{!38, !38, i64 0}
-!61 = !{!47, !13, i64 112}
-!62 = !{!"ompi_instance_t", !23, i64 0, !24, i64 96, !5, i64 160, !4, i64 164, !5, i64 228, !30, i64 232, !5, i64 240, !34, i64 248, !5, i64 256}
-!63 = !{!62, !5, i64 240}
-!64 = distinct !{!64, !78}
-!65 = distinct !{!65, !78}
-!66 = distinct !{!66, !78, !85}
-!67 = distinct !{null}
-!68 = distinct !{!68, !78}
-!69 = !{!"p1 _ZTS14ompi_request_t", !13, i64 0}
-!70 = !{!69, !69, i64 0}
-!71 = !{!"p1 _ZTS16opal_list_item_t", !13, i64 0}
-!72 = !{!"opal_list_item_t", !16, i64 0, !71, i64 16, !71, i64 24, !5, i64 32}
-!73 = !{!"p1 _ZTS30mca_rcache_base_registration_t", !13, i64 0}
-!74 = !{!"opal_free_list_item_t", !72, i64 0, !73, i64 40, !13, i64 48}
-!75 = !{!"ompi_status_public_t", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !19, i64 16}
-!76 = !{!"ompi_request_t", !74, i64 0, !5, i64 56, !75, i64 64, !13, i64 88, !5, i64 96, !9, i64 100, !5, i64 104, !13, i64 112, !13, i64 120, !13, i64 128, !13, i64 136, !13, i64 144, !4, i64 152}
-!77 = !{!76, !5, i64 72}
-!78 = !{!"llvm.loop.mustprogress"}
-!79 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!80 = !{!"p1 long", !13, i64 0}
-!81 = !{!"opal_pointer_array_t", !16, i64 0, !24, i64 16, !5, i64 80, !5, i64 84, !5, i64 88, !5, i64 92, !5, i64 96, !80, i64 104, !32, i64 112}
-!82 = !{!81, !32, i64 112}
-!83 = !{!"ompi_errcode_intern_t", !16, i64 0, !5, i64 16, !5, i64 20, !5, i64 24, !4, i64 28}
-!84 = !{!83, !5, i64 16}
-!85 = !{!"llvm.loop.unswitch.partial.disable"}
-!86 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
-!87 = !{!83, !5, i64 20}
-!88 = !{!4, !4, i64 0}
-!89 = !{!76, !5, i64 56}
-!90 = !{!76, !9, i64 100}
-!91 = !{!76, !13, i64 120}
-!92 = !{!40, !34, i64 312}
-!93 = !{!40, !5, i64 320}
-!94 = !{!45, !34, i64 128}
-!95 = !{!45, !5, i64 136}
-!96 = !{!43, !34, i64 256}
-!97 = !{!43, !5, i64 264}
+!17 = !{!"p1 _ZTS19opal_hash_element_t", !13, i64 0}
+!18 = !{!"long", !4, i64 0}
+!19 = !{!"p1 _ZTS24opal_hash_type_methods_t", !13, i64 0}
+!20 = !{!"opal_hash_table_t", !16, i64 0, !17, i64 16, !18, i64 24, !18, i64 32, !18, i64 40, !5, i64 48, !5, i64 52, !5, i64 56, !5, i64 60, !19, i64 64}
+!21 = !{!"p1 _ZTS11opal_info_t", !13, i64 0}
+!22 = !{!"opal_infosubscriber_t", !16, i64 0, !20, i64 16, !21, i64 88}
+!23 = !{!"opal_mutex_t", !16, i64 0, !4, i64 16, !5, i64 56}
+!24 = !{!"p1 omnipotent char", !13, i64 0}
+!25 = !{!"ompi_comm_extended_cid_t", !18, i64 0, !4, i64 8}
+!26 = !{!"ompi_comm_extended_cid_block_t", !25, i64 0, !18, i64 16, !4, i64 24, !4, i64 25}
+!27 = !{!"p1 int", !13, i64 0}
+!28 = !{!"p1 _ZTS12ompi_group_t", !13, i64 0}
+!29 = !{!"p1 _ZTS17opal_hash_table_t", !13, i64 0}
+!30 = !{!"p1 _ZTS22mca_topo_base_module_t", !13, i64 0}
+!31 = !{!"any p2 pointer", !13, i64 0}
+!32 = !{!"p2 _ZTS20ompi_peruse_handle_t", !31, i64 0}
+!33 = !{!"p1 _ZTS17ompi_errhandler_t", !13, i64 0}
+!34 = !{!"p1 _ZTS14mca_pml_comm_t", !13, i64 0}
+!35 = !{!"p1 _ZTS14mca_mtl_comm_t", !13, i64 0}
+!36 = !{!"p1 _ZTS25mca_coll_base_comm_coll_t", !13, i64 0}
+!37 = !{!"p1 _ZTS15ompi_instance_t", !13, i64 0}
+!38 = !{!"p1 _ZTS13opal_object_t", !13, i64 0}
+!39 = !{!"ompi_communicator_t", !22, i64 0, !23, i64 96, !24, i64 160, !25, i64 168, !26, i64 184, !5, i64 216, !5, i64 220, !5, i64 224, !5, i64 228, !5, i64 232, !27, i64 240, !5, i64 248, !5, i64 252, !5, i64 256, !28, i64 264, !28, i64 272, !14, i64 280, !29, i64 288, !30, i64 296, !32, i64 304, !33, i64 312, !5, i64 320, !34, i64 328, !35, i64 336, !36, i64 344, !37, i64 352, !38, i64 360, !5, i64 368, !5, i64 372, !9, i64 376, !9, i64 377, !9, i64 378}
+!40 = !{!39, !33, i64 312}
+!41 = !{!13, !13, i64 0}
+!42 = !{!"short", !4, i64 0}
+!43 = !{!"p1 _ZTS28ompi_osc_base_module_3_0_0_t", !13, i64 0}
+!44 = !{!"ompi_win_t", !22, i64 0, !23, i64 96, !4, i64 160, !28, i64 224, !42, i64 232, !42, i64 234, !5, i64 236, !29, i64 240, !5, i64 248, !33, i64 256, !5, i64 264, !43, i64 272, !5, i64 280}
+!45 = !{!"p1 _ZTS18mca_io_base_file_t", !13, i64 0}
+!46 = !{!"ompi_file_t", !22, i64 0, !14, i64 96, !24, i64 104, !5, i64 112, !5, i64 116, !5, i64 120, !33, i64 128, !5, i64 136, !5, i64 140, !23, i64 144, !4, i64 208, !4, i64 528, !45, i64 952}
+!47 = !{!14, !14, i64 0}
+!48 = !{!"ompi_errhandler_t", !16, i64 0, !4, i64 16, !5, i64 80, !5, i64 84, !13, i64 88, !13, i64 96, !13, i64 104, !13, i64 112, !13, i64 120, !5, i64 128}
+!49 = !{!48, !5, i64 84}
+!50 = !{!48, !13, i64 88}
+!51 = !{!39, !5, i64 256}
+!52 = !{!48, !13, i64 120}
+!53 = !{!"p1 _ZTS10ompi_win_t", !13, i64 0}
+!54 = !{!53, !53, i64 0}
+!55 = !{!48, !13, i64 104}
+!56 = !{!44, !5, i64 248}
+!57 = !{!"p1 _ZTS11ompi_file_t", !13, i64 0}
+!58 = !{!57, !57, i64 0}
+!59 = !{!48, !13, i64 96}
+!60 = !{!46, !5, i64 120}
+!61 = !{!37, !37, i64 0}
+!62 = !{!48, !13, i64 112}
+!63 = !{!"ompi_instance_t", !22, i64 0, !23, i64 96, !5, i64 160, !4, i64 164, !5, i64 228, !29, i64 232, !5, i64 240, !33, i64 248, !5, i64 256}
+!64 = !{!63, !5, i64 240}
+!65 = distinct !{!65, !79}
+!66 = distinct !{!66, !79}
+!67 = distinct !{!67, !79, !86}
+!68 = distinct !{null}
+!69 = distinct !{!69, !79}
+!70 = !{!"p1 _ZTS14ompi_request_t", !13, i64 0}
+!71 = !{!70, !70, i64 0}
+!72 = !{!"p1 _ZTS16opal_list_item_t", !13, i64 0}
+!73 = !{!"opal_list_item_t", !16, i64 0, !72, i64 16, !72, i64 24, !5, i64 32}
+!74 = !{!"p1 _ZTS30mca_rcache_base_registration_t", !13, i64 0}
+!75 = !{!"opal_free_list_item_t", !73, i64 0, !74, i64 40, !13, i64 48}
+!76 = !{!"ompi_status_public_t", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !18, i64 16}
+!77 = !{!"ompi_request_t", !75, i64 0, !5, i64 56, !76, i64 64, !13, i64 88, !5, i64 96, !9, i64 100, !5, i64 104, !13, i64 112, !13, i64 120, !13, i64 128, !13, i64 136, !13, i64 144, !4, i64 152}
+!78 = !{!77, !5, i64 72}
+!79 = !{!"llvm.loop.mustprogress"}
+!80 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!81 = !{!"p1 long", !13, i64 0}
+!82 = !{!"opal_pointer_array_t", !16, i64 0, !23, i64 16, !5, i64 80, !5, i64 84, !5, i64 88, !5, i64 92, !5, i64 96, !81, i64 104, !31, i64 112}
+!83 = !{!82, !31, i64 112}
+!84 = !{!"ompi_errcode_intern_t", !16, i64 0, !5, i64 16, !5, i64 20, !5, i64 24, !4, i64 28}
+!85 = !{!84, !5, i64 16}
+!86 = !{!"llvm.loop.unswitch.partial.disable"}
+!87 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!88 = !{!84, !5, i64 20}
+!89 = !{!4, !4, i64 0}
+!90 = !{!77, !5, i64 56}
+!91 = !{!77, !9, i64 100}
+!92 = !{!77, !13, i64 120}
+!93 = !{!39, !5, i64 320}
+!94 = !{!46, !33, i64 128}
+!95 = !{!46, !5, i64 136}
+!96 = !{!44, !33, i64 256}
+!97 = !{!44, !5, i64 264}
 end_hunk_0

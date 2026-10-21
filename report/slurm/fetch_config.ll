@@ -202,14 +202,13 @@ bb.a:
 define dso_local ptr @new_config_response(i1 noundef zeroext %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 16, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.2, i32 noundef 625, ptr noundef nonnull @__func__.new_config_response) #13 ; 8 uses
-  %spec.store.select = select i1 %0, ptr @slurmd_config_files, ptr @client_config_files ; 2 uses
+  %spec.store.select = select i1 %0, ptr @slurmd_config_files, ptr @client_config_files
   %i.b = tail call ptr @list_create(ptr noundef nonnull @destroy_config_file) #13
   store ptr %i.b, ptr %i.a, align 8
-  %1 = load ptr, ptr %spec.store.select, align 16 ; 2 uses
-  %.not45 = icmp eq ptr %1, null
-  br i1 %.not45, label %._crit_edge, label %.lr.ph
+  %1 = select i1 %0, ptr @.str.47, ptr @.str.41
+  br label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.e, %bb.a
+._crit_edge:                                      ; preds = %bb.e
   br i1 %0, label %.preheader44, label %bb.o
 
 .preheader44:                                     ; preds = %._crit_edge
@@ -222,8 +221,8 @@ bb.a:
   br label %.lr.ph48
 
 .lr.ph:                                           ; preds = %bb.a, %bb.e
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %bb.a ]
-  %i.d = phi ptr [ %i.k, %bb.e ], [ %1, %bb.a ]   ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.e ]
+  %i.d = phi ptr [ %1, %bb.a ], [ %i.k, %bb.e ]   ; 2 uses
   tail call fastcc void @_load_conf2list(ptr noundef nonnull %i.a, ptr noundef nonnull %i.d, i1 noundef zeroext false)
   %i.e = load ptr, ptr @conf_includes_list, align 8 ; 2 uses
   %.not41 = icmp eq ptr %i.e, null

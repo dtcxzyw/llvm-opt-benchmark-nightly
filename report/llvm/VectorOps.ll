@@ -206,7 +206,6 @@ bb.f:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.y = load i8, ptr %i.x, align 8, !tbaa !365, !range !157, !noundef !150
   %i.z = trunc nuw i8 %i.y to i1                  ; 2 uses
-  %16 = select i1 %i.z, ptr @.str.58, ptr @.str.13 ; 2 uses
   %i.aa = load ptr, ptr %12, align 8, !tbaa !197
   %.not.i.i = icmp eq ptr %i.aa, null
   br i1 %.not.i.i, label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit, label %bb.g
@@ -216,12 +215,10 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #27
   %i.ac = getelementptr inbounds nuw i8, ptr %8, i64 33
   store i8 1, ptr %i.ac, align 1, !tbaa !189
-  %17 = load i8, ptr %16, align 1, !tbaa !214
-  %.not.i.i.i.i = icmp eq i8 %17, 0
-  br i1 %.not.i.i.i.i, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit, label %bb.h
+  br i1 %i.z, label %bb.h, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit
 
 bb.h:                                             ; preds = %bb.g
-  store ptr %16, ptr %8, align 8, !tbaa !214
+  store ptr @.str.58, ptr %8, align 8, !tbaa !214
   br label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit
 
 _ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit: ; preds = %bb.g, %bb.h
@@ -265,7 +262,6 @@ bb.k:                                             ; preds = %bb.i
 _ZNO4mlir18InFlightDiagnosticlsIRlEEOS0_OT_.exit: ; preds = %bb.j, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #27
   %.pr39 = load ptr, ptr %12, align 8, !tbaa !197
-  %18 = select i1 %i.z, ptr @.str.59, ptr @.str.13 ; 2 uses
   %.not.i.i7 = icmp eq ptr %.pr39, null
   br i1 %.not.i.i7, label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit, label %bb.l
 
@@ -273,12 +269,10 @@ bb.l:                                             ; preds = %_ZNO4mlir18InFlight
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #27
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 33
   store i8 1, ptr %i.ar, align 1, !tbaa !189
-  %19 = load i8, ptr %18, align 1, !tbaa !214
-  %.not.i.i.i.i8 = icmp eq i8 %19, 0
-  br i1 %.not.i.i.i.i8, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit11, label %bb.m
+  br i1 %i.z, label %bb.m, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit11
 
 bb.m:                                             ; preds = %bb.l
-  store ptr %18, ptr %6, align 8, !tbaa !214
+  store ptr @.str.59, ptr %6, align 8, !tbaa !214
   br label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit11
 
 _ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit11: ; preds = %bb.l, %bb.m
@@ -324,7 +318,6 @@ _ZNO4mlir18InFlightDiagnosticlsIRA6_KcEEOS0_OT_.exit: ; preds = %bb.o, %bb.p
   %i.bd = getelementptr inbounds nuw i8, ptr %9, i64 24
   %i.be = load i8, ptr %i.bd, align 8, !tbaa !366, !range !157, !noundef !150
   %i.bf = trunc nuw i8 %i.be to i1                ; 2 uses
-  %20 = select i1 %i.bf, ptr @.str.58, ptr @.str.13 ; 2 uses
   %.not.i.i14 = icmp eq ptr %.pr43, null
   br i1 %.not.i.i14, label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit, label %bb.q
 
@@ -332,12 +325,10 @@ bb.q:                                             ; preds = %_ZNO4mlir18InFlight
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
   %i.bg = getelementptr inbounds nuw i8, ptr %4, i64 33
   store i8 1, ptr %i.bg, align 1, !tbaa !189
-  %21 = load i8, ptr %20, align 1, !tbaa !214
-  %.not.i.i.i.i15 = icmp eq i8 %21, 0
-  br i1 %.not.i.i.i.i15, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit18, label %bb.r
+  br i1 %i.bf, label %bb.r, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit18
 
 bb.r:                                             ; preds = %bb.q
-  store ptr %20, ptr %4, align 8, !tbaa !214
+  store ptr @.str.58, ptr %4, align 8, !tbaa !214
   br label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit18
 
 _ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit18: ; preds = %bb.q, %bb.r
@@ -381,7 +372,6 @@ bb.u:                                             ; preds = %bb.s
 _ZNO4mlir18InFlightDiagnosticlsIRlEEOS0_OT_.exit22: ; preds = %bb.t, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   %.pr45 = load ptr, ptr %12, align 8, !tbaa !197
-  %22 = select i1 %i.bf, ptr @.str.59, ptr @.str.13 ; 2 uses
   %.not.i.i23 = icmp eq ptr %.pr45, null
   br i1 %.not.i.i23, label %_ZNO4mlir18InFlightDiagnosticlsIRA2_KcEEOS0_OT_.exit, label %bb.v
 
@@ -390,12 +380,10 @@ bb.v:                                             ; preds = %_ZNO4mlir18InFlight
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #27
   %i.bx = getelementptr inbounds nuw i8, ptr %2, i64 33
   store i8 1, ptr %i.bx, align 1, !tbaa !189
-  %23 = load i8, ptr %22, align 1, !tbaa !214
-  %.not.i.i.i.i24 = icmp eq i8 %23, 0
-  br i1 %.not.i.i.i.i24, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit27, label %bb.w
+  br i1 %i.bf, label %bb.w, label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit27
 
 bb.w:                                             ; preds = %bb.v
-  store ptr %22, ptr %2, align 8, !tbaa !214
+  store ptr @.str.59, ptr %2, align 8, !tbaa !214
   br label %_ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit27
 
 _ZNO4mlir18InFlightDiagnosticlsIPKcEEOS0_OT_.exit27: ; preds = %bb.v, %bb.w

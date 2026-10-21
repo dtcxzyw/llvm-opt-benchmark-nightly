@@ -202,11 +202,9 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %or.cond257, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %4 = icmp ugt i32 %2, 19999
-  %i.t = select i1 %4, ptr @.str.74, ptr @.str.75 ; 2 uses
-  %5 = load i8, ptr %i.t, align 1, !tbaa !27
-  %6 = icmp eq i8 %5, 111
-  %i.u = select i1 %6, ptr @.str.77, ptr @.str.32
+  %4 = icmp ult i32 %2, 20000                     ; 2 uses
+  %i.t = select i1 %4, ptr @.str.75, ptr @.str.74
+  %i.u = select i1 %4, ptr @.str.77, ptr @.str.32
   %i.v = call i32 (ptr, ptr, ...) @easysrc_addf(ptr noundef nonnull @easysrc_toohard, ptr noundef nonnull @.str.76, ptr noundef %1, ptr noundef nonnull %i.u, ptr noundef nonnull %i.t) #9
   br label %bb.f
 

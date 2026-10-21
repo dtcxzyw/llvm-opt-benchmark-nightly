@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.aj = getelementptr i8, ptr %4, i64 1
   %i.ak = load i8, ptr %i.aj, align 1
-  %i.al = icmp eq i8 %i.ak, 0                     ; 6 uses
-  %UL_tti_info.DL_tti_info.i = select i1 %i.al, ptr @UL_tti_info, ptr @DL_tti_info ; 2 uses
+  %i.al = icmp eq i8 %i.ak, 0
+  %UL_tti_info.DL_tti_info.i = select i1 %i.al, ptr @UL_tti_info, ptr @DL_tti_info ; 8 uses
   %i.am = load i16, ptr %UL_tti_info.DL_tti_info.i, align 8
   %i.an = getelementptr i8, ptr %4, i64 10
   %i.ao = load i16, ptr %i.an, align 2            ; 2 uses
@@ -215,19 +215,17 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.aq = getelementptr i8, ptr %1, i64 24
   %i.ar = load i64, ptr %i.aq, align 8
-  %.val.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @UL_tti_info, i64 8), align 8
-  %.val28.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @DL_tti_info, i64 8), align 8
-  %9 = select i1 %i.al, i64 %.val.i, i64 %.val28.i
-  %i.as = sub i64 %i.ar, %9
+  %9 = getelementptr i8, ptr %UL_tti_info.DL_tti_info.i, i64 8
+  %.val28.i = load i64, ptr %9, align 8
+  %i.as = sub i64 %i.ar, %.val28.i
   %i.at = trunc i64 %i.as to i32
   %i.au = getelementptr i8, ptr %1, i64 32
   %i.av = load i32, ptr %i.au, align 8
-  %.val29.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @UL_tti_info, i64 16), align 8
-  %.val30.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @DL_tti_info, i64 16), align 8
-  %10 = select i1 %i.al, i32 %.val29.i, i32 %.val30.i
+  %10 = getelementptr i8, ptr %UL_tti_info.DL_tti_info.i, i64 16
+  %.val30.i = load i32, ptr %10, align 8
   %i.aw = mul i32 %i.at, 1000000
   %i.ax = add i32 %i.av, 500
-  %i.ay = sub i32 %i.ax, %10
+  %i.ay = sub i32 %i.ax, %.val30.i
   %i.az = sdiv i32 %i.ay, 1000
   %i.ba = add i32 %i.az, %i.aw
   %i.bb = icmp slt i32 %i.ba, 1000
@@ -235,25 +233,25 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge.i:                                      ; preds = %bb.c, %bb.b
   store i16 %i.ao, ptr %UL_tti_info.DL_tti_info.i, align 8
-  %11 = select i1 %i.al, ptr getelementptr inbounds nuw (i8, ptr @UL_tti_info, i64 8), ptr getelementptr inbounds nuw (i8, ptr @DL_tti_info, i64 8)
+  %11 = getelementptr i8, ptr %UL_tti_info.DL_tti_info.i, i64 8
   %i.bc = getelementptr i8, ptr %1, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, ptr noundef readonly align 8 dereferenceable(16) %i.bc, i64 16, i1 false)
-  %12 = select i1 %i.al, ptr getelementptr inbounds nuw (i8, ptr @UL_tti_info, i64 24), ptr getelementptr inbounds nuw (i8, ptr @DL_tti_info, i64 24) ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %11, ptr noundef readonly align 8 dereferenceable(16) %i.bc, i64 16, i1 false)
+  %12 = getelementptr i8, ptr %UL_tti_info.DL_tti_info.i, i64 24
   store i32 1, ptr %12, align 8
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %13 = select i1 %i.al, ptr getelementptr inbounds nuw (i8, ptr @UL_tti_info, i64 24), ptr getelementptr inbounds nuw (i8, ptr @DL_tti_info, i64 24) ; 3 uses
+  %13 = getelementptr i8, ptr %UL_tti_info.DL_tti_info.i, i64 24 ; 2 uses
   %i.bd = load i32, ptr %13, align 8
   %i.be = add i32 %i.bd, 1
   store i32 %i.be, ptr %13, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.critedge.i
-  %.pre-phi.i = phi ptr [ %13, %bb.d ], [ %12, %.critedge.i ] ; 2 uses
   %i.bf = tail call ptr @wmem_file_scope()
   %i.bg = tail call noalias dereferenceable_or_null(4) ptr @wmem_alloc(ptr noundef %i.bf, i64 noundef 4) #17 ; 2 uses
-  %i.bh = load i32, ptr %.pre-phi.i, align 8
+  %14 = getelementptr i8, ptr %UL_tti_info.DL_tti_info.i, i64 24 ; 2 uses
+  %i.bh = load i32, ptr %14, align 8
   store i32 %i.bh, ptr %i.bg, align 4
   %i.bi = load ptr, ptr @mac_lte_tti_info_result_hash, align 8
   %i.bj = load i32, ptr %i.ae, align 4
@@ -263,7 +261,7 @@ bb.e:                                             ; preds = %bb.d, %.critedge.i
   br label %count_ues_tti.exit
 
 count_ues_tti.exit:                               ; preds = %bb.a, %bb.e
-  %.026.in.in.i = phi ptr [ %.pre-phi.i, %bb.e ], [ %i.ai, %bb.a ]
+  %.026.in.in.i = phi ptr [ %14, %bb.e ], [ %i.ai, %bb.a ]
   %.026.in.i = load i32, ptr %.026.in.in.i, align 4
   %.026.i = trunc i32 %.026.in.i to i16
   %i.bn = getelementptr i8, ptr %5, i64 18

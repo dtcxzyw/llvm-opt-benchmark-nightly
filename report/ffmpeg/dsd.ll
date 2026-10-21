@@ -107,8 +107,8 @@ define void @ff_dsd2pcm_translate(ptr nofree noundef captures(none) %0, i64 noun
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %.not = icmp eq i32 %2, 0                       ; 6 uses
-  %i.b = select i1 %.not, ptr @ctables_msbf, ptr @ctables_lsbf ; 2 uses
+  %.not = icmp eq i32 %2, 0
+  %i.b = select i1 %.not, ptr @ctables_msbf, ptr @ctables_lsbf ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !21   ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false)
@@ -116,11 +116,11 @@ bb.a:
   br i1 %.not3639, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %7 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @ctables_msbf, i64 2048), ptr getelementptr inbounds nuw (i8, ptr @ctables_lsbf, i64 2048) ; 2 uses
-  %8 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @ctables_msbf, i64 4096), ptr getelementptr inbounds nuw (i8, ptr @ctables_lsbf, i64 4096) ; 2 uses
-  %9 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @ctables_msbf, i64 6144), ptr getelementptr inbounds nuw (i8, ptr @ctables_lsbf, i64 6144) ; 2 uses
-  %10 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @ctables_msbf, i64 8192), ptr getelementptr inbounds nuw (i8, ptr @ctables_lsbf, i64 8192) ; 2 uses
-  %11 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @ctables_msbf, i64 10240), ptr getelementptr inbounds nuw (i8, ptr @ctables_lsbf, i64 10240) ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 2048 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 4096 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 6144 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 8192 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 10240 ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

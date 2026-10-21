@@ -205,13 +205,12 @@ bb.l:                                             ; preds = %.noexc.i, %bb.k
 bb.m:                                             ; preds = %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   %i.bc = load i32, ptr %5, align 8, !tbaa !142
-  %i.bd = icmp sgt i32 %i.bc, 0                   ; 4 uses
-  %spec.select = select i1 %i.bd, ptr @_ZN8rational5m_oneE, ptr @_ZN8rational11m_minus_oneE ; 2 uses
+  %i.bd = icmp sgt i32 %i.bc, 0
+  %spec.select = select i1 %i.bd, ptr @_ZN8rational5m_oneE, ptr @_ZN8rational11m_minus_oneE ; 5 uses
   %i.be = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !164 ; 2 uses
-  %.val = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 4), align 4
-  %.val44 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 4), align 4
-  %7 = select i1 %i.bd, i8 %.val, i8 %.val44
-  %i.bf = and i8 %7, 1
+  %7 = getelementptr inbounds nuw i8, ptr %spec.select, i64 4
+  %.val44 = load i8, ptr %7, align 4
+  %i.bf = and i8 %.val44, 1
   %i.bg = icmp eq i8 %i.bf, 0
   br i1 %i.bg, label %bb.n, label %bb.o
 
@@ -228,11 +227,10 @@ bb.o:                                             ; preds = %bb.m
           to label %_ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i unwind label %bb.r
 
 _ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i:   ; preds = %bb.o, %bb.n
-  %8 = select i1 %i.bd, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 16) ; 2 uses
-  %.val45 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 20), align 4
-  %.val46 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 20), align 4
-  %9 = select i1 %i.bd, i8 %.val45, i8 %.val46
-  %i.bk = and i8 %9, 1
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select, i64 16 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %spec.select, i64 20
+  %.val46 = load i8, ptr %9, align 4
+  %i.bk = and i8 %.val46, 1
   %i.bl = icmp eq i8 %i.bk, 0
   br i1 %i.bl, label %bb.p, label %bb.q
 

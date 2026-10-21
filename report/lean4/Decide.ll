@@ -204,34 +204,21 @@ lean_nat_eq.exit:                                 ; preds = %lean_dec.exit368, %
 
 lean_nat_eq.exit405:                              ; preds = %lean_nat_eq.exit
   %.not533 = icmp eq i64 %i.be, 2
-  %l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__46_value.l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__47_value = select i1 %.not533, ptr @l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__47_value, ptr @l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__46_value ; 3 uses
+  %l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__46_value.l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__47_value = select i1 %.not533, ptr @l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__47_value, ptr @l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__46_value
   %i.bf = load atomic i32, ptr @l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__41_once seq_cst, align 4, !tbaa !17
   %i.bg = icmp eq i32 %i.bf, 1
   br i1 %i.bg, label %bb.af, label %bb.ag, !prof !13
 
 bb.af:                                            ; preds = %lean_nat_eq.exit405
   %i.bh = load ptr, ptr @l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__41, align 8, !tbaa !10
-  br label %lean_obj_once.exit
+  br label %lean_inc_ref.exit423
 
 bb.ag:                                            ; preds = %lean_nat_eq.exit405
   %i.bi = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__41, ptr noundef nonnull @l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__41_once, ptr noundef nonnull @_init_l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__41) #4
-  br label %lean_obj_once.exit
-
-lean_obj_once.exit:                               ; preds = %bb.af, %bb.ag
-  %.0.i420 = phi ptr [ %i.bh, %bb.af ], [ %i.bi, %bb.ag ]
-  %.val.i.i421 = load i32, ptr %l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__46_value.l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__47_value, align 8, !tbaa !12 ; 2 uses
-  %8 = icmp sgt i32 %.val.i.i421, 0
-  br i1 %8, label %lean_inc_ref.exit423, label %9, !prof !13
-
-9:                                                ; preds = %lean_obj_once.exit
-  %.not.i.i422 = icmp eq i32 %.val.i.i421, 0
-  br i1 %.not.i.i422, label %lean_inc_ref.exit423, label %10
-
-10:                                               ; preds = %9
-  %11 = atomicrmw add ptr %l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__46_value.l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__47_value, i32 -1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit423
 
-lean_inc_ref.exit423:                             ; preds = %lean_obj_once.exit, %9, %10
+lean_inc_ref.exit423:                             ; preds = %bb.af, %bb.ag
+  %.0.i420 = phi ptr [ %i.bh, %bb.af ], [ %i.bi, %bb.ag ]
   %i.bj = tail call ptr @l_Lean_stringToMessageData(ptr noundef nonnull %l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__46_value.l___private_Lean_Elab_Tactic_Decide_0__Lean_Elab_Tactic_evalDecideCore_diagnose___closed__47_value) #4
   tail call void @lean_inc_heartbeat() #4
   %i.bk = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #4 ; 6 uses

@@ -204,42 +204,29 @@ lean_inc_n.exit:                                  ; preds = %bb.a, %bb.c, %bb.d,
   %i.ae = getelementptr inbounds nuw i8, ptr %i.s, i64 56
   store ptr %1, ptr %i.ae, align 8, !tbaa !15
   %i.af = icmp eq i8 %0, 0
-  %l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__23_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value.l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__24_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value = select i1 %i.af, ptr @l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__23_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value, ptr @l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__24_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value ; 3 uses
-  %.val.i.i40 = load i32, ptr %l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__23_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value.l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__24_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value, align 8, !tbaa !11 ; 2 uses
-  %2 = icmp sgt i32 %.val.i.i40, 0
-  br i1 %2, label %lean_inc_ref.exit, label %3, !prof !17
-
-3:                                                ; preds = %lean_inc_n.exit
-  %.not.i.i41 = icmp eq i32 %.val.i.i40, 0
-  br i1 %.not.i.i41, label %lean_inc_ref.exit, label %4
-
-4:                                                ; preds = %3
-  %5 = atomicrmw add ptr %l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__23_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value.l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__24_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value, i32 -1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit
-
-lean_inc_ref.exit:                                ; preds = %lean_inc_n.exit, %3, %4
-  %6 = tail call ptr @lean_string_append(ptr noundef nonnull %l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__23_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value.l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__24_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value, ptr noundef nonnull @l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__22_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value) #10
+  %l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__23_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value.l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__24_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value = select i1 %i.af, ptr @l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__23_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value, ptr @l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__24_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value
+  %2 = tail call ptr @lean_string_append(ptr noundef nonnull %l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__23_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value.l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__24_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value, ptr noundef nonnull @l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__22_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value) #10
   tail call void @lean_inc_heartbeat() #10
-  %7 = tail call noalias ptr @mi_malloc_small(i64 noundef 40) #10 ; 8 uses
-  %8 = icmp eq ptr %7, null
-  br i1 %8, label %bb.f, label %lean_alloc_ctor.exit
+  %3 = tail call noalias ptr @mi_malloc_small(i64 noundef 40) #10 ; 8 uses
+  %4 = icmp eq ptr %3, null
+  br i1 %4, label %bb.f, label %lean_alloc_ctor.exit
 
-bb.f:                                             ; preds = %lean_inc_ref.exit
+bb.f:                                             ; preds = %lean_inc_n.exit
   tail call void @lean_internal_panic_out_of_memory() #9
   unreachable
 
-lean_alloc_ctor.exit:                             ; preds = %lean_inc_ref.exit
-  %i.ag = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 32
+lean_alloc_ctor.exit:                             ; preds = %lean_inc_n.exit
+  %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 32
   store i64 1, ptr %i.ah, align 8, !tbaa !13
-  store i32 1, ptr %7, align 8, !tbaa !11
+  store i32 1, ptr %3, align 8, !tbaa !11
   store i32 196648, ptr %i.ag, align 4
-  %i.ai = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr @l___private_Lean_Linter_UnusedVariables_0__Lean_Linter_initFn___lam__2___closed__21_00___x40_Lean_Linter_UnusedVariables_1088826556____hygCtx___hyg_2__value, ptr %i.ai, align 8, !tbaa !15
-  %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %1, ptr %i.aj, align 8, !tbaa !15
-  %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24
-  store ptr %6, ptr %i.ak, align 8, !tbaa !15
+  %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store ptr %2, ptr %i.ak, align 8, !tbaa !15
   tail call void @lean_inc_heartbeat() #10
   %i.al = tail call noalias ptr @mi_malloc_small(i64 noundef 32) #10 ; 7 uses
   %i.am = icmp eq ptr %i.al, null
@@ -254,7 +241,7 @@ lean_alloc_ctor.exit42:                           ; preds = %lean_alloc_ctor.exi
   store i32 1, ptr %i.al, align 4, !tbaa !11
   store i32 196640, ptr %i.an, align 4
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 8
-  store ptr %7, ptr %i.ao, align 8, !tbaa !15
+  store ptr %3, ptr %i.ao, align 8, !tbaa !15
   %i.ap = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   store ptr %i.s, ptr %i.ap, align 8, !tbaa !15
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 24

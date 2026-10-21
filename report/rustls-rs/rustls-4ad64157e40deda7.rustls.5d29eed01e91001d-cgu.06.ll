@@ -202,12 +202,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %_RNvMNtNtCs7ZUl82OSlxp_6rustls6client11client_connNtB2_12ClientConfig16supports_version.exit, label %.lr.ph.i.i.a
 
 .lr.ph.i.i.a:                                     ; preds = %bb.b
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, align 2, !range !24, !noalias !547
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, align 2, !range !24, !noalias !547
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, align 2, !range !24, !noalias !546
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, align 2, !range !24, !noalias !546
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.a
-  %i.i = phi ptr [ %i.e, %.lr.ph.i.i.a ], [ %i.m, %bb.c ] ; 2 uses
+  %i.i = phi ptr [ %i.m, %bb.c ], [ %i.e, %.lr.ph.i.i.a ] ; 2 uses
   %.val2.i.i = load i64, ptr %i.i, align 8, !range !15, !noalias !547, !noundef !6
   %i.j = trunc nuw i64 %.val2.i.i to i1
   %i.k = select i1 %i.j, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i.i, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i.i
@@ -253,12 +253,12 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i, label %.loopexit, label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %bb.d
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, align 2, !range !24, !noalias !551
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, align 2, !range !24, !noalias !551
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, align 2, !range !24
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, align 2, !range !24
   br label %bb.e
 
-bb.e:                                             ; preds = %_RNCNvMNtNtCs7ZUl82OSlxp_6rustls6client11client_connNtB4_12ClientConfig16supports_version0B8_.exit.backedge.i, %.lr.ph.i.a
-  %i.i = phi ptr [ %i.e, %.lr.ph.i.a ], [ %i.m, %_RNCNvMNtNtCs7ZUl82OSlxp_6rustls6client11client_connNtB4_12ClientConfig16supports_version0B8_.exit.backedge.i ] ; 2 uses
+bb.e:                                             ; preds = %.lr.ph.i.a, %_RNCNvMNtNtCs7ZUl82OSlxp_6rustls6client11client_connNtB4_12ClientConfig16supports_version0B8_.exit.backedge.i
+  %i.i = phi ptr [ %i.m, %_RNCNvMNtNtCs7ZUl82OSlxp_6rustls6client11client_connNtB4_12ClientConfig16supports_version0B8_.exit.backedge.i ], [ %i.e, %.lr.ph.i.a ] ; 2 uses
   %.val2.i = load i64, ptr %i.i, align 8, !range !15, !noalias !551, !noundef !6
   %i.j = trunc nuw i64 %.val2.i to i1
   %i.k = select i1 %i.j, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i
@@ -661,12 +661,12 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i, label %.loopexit, label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %bb.d
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, align 2, !range !24, !noalias !680
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, align 2, !range !24, !noalias !680
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, align 2, !range !24
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, align 2, !range !24
   br label %bb.e
 
-bb.e:                                             ; preds = %_RNCNvMs_NtNtCs7ZUl82OSlxp_6rustls6server11server_connNtB6_12ServerConfig16supports_version0Ba_.exit.backedge.i, %.lr.ph.i.a
-  %i.i = phi ptr [ %i.e, %.lr.ph.i.a ], [ %i.m, %_RNCNvMs_NtNtCs7ZUl82OSlxp_6rustls6server11server_connNtB6_12ServerConfig16supports_version0Ba_.exit.backedge.i ] ; 2 uses
+bb.e:                                             ; preds = %.lr.ph.i.a, %_RNCNvMs_NtNtCs7ZUl82OSlxp_6rustls6server11server_connNtB6_12ServerConfig16supports_version0Ba_.exit.backedge.i
+  %i.i = phi ptr [ %i.m, %_RNCNvMs_NtNtCs7ZUl82OSlxp_6rustls6server11server_connNtB6_12ServerConfig16supports_version0Ba_.exit.backedge.i ], [ %i.e, %.lr.ph.i.a ] ; 2 uses
   %.val2.i = load i64, ptr %i.i, align 8, !range !15, !noalias !680, !noundef !6
   %i.j = trunc nuw i64 %.val2.i to i1
   %i.k = select i1 %i.j, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i

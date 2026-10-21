@@ -202,27 +202,24 @@ bb.cs:                                            ; preds = %try_skey.exit, %try
 
 bb.ct:                                            ; preds = %bb.cs
   %i.jo = call i32 @OSSL_PROVIDER_available(ptr noundef %i.w, ptr noundef nonnull @.str.8) #5
-  %.not89 = icmp eq i32 %i.jo, 0
-  %spec.select = select i1 %.not89, ptr @.str.9, ptr @.str.7 ; 3 uses
+  %.not89 = icmp eq i32 %i.jo, 0                  ; 2 uses
   %.not90 = icmp eq ptr %i.v, null
+  call void @ERR_new() #5
   br i1 %.not90, label %bb.cv, label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct
-  call void @ERR_new() #5
+  %spec.select = select i1 %.not89, ptr @.str.9, ptr @.str.7
   call void @ERR_set_debug(ptr noundef nonnull @.str.10, i32 noundef 166, ptr noundef nonnull @__func__.ossl_store_handle_load_result) #5
   %i.jp = call ptr @OSSL_PROVIDER_get0_name(ptr noundef nonnull %i.v) #5
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 44, i32 noundef 524556, ptr noundef nonnull @.str.11, ptr noundef %i.jp, ptr noundef nonnull %spec.select) #5
   br label %bb.cy
 
 bb.cv:                                            ; preds = %bb.ct
-  %7 = load i8, ptr %spec.select, align 1, !tbaa !66
-  %.not91 = icmp eq i8 %7, 0
-  call void @ERR_new() #5
-  br i1 %.not91, label %bb.cx, label %bb.cw
+  br i1 %.not89, label %bb.cw, label %bb.cx
 
 bb.cw:                                            ; preds = %bb.cv
   call void @ERR_set_debug(ptr noundef nonnull @.str.10, i32 noundef 169, ptr noundef nonnull @__func__.ossl_store_handle_load_result) #5
-  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 44, i32 noundef 524556, ptr noundef nonnull @.str.12, ptr noundef nonnull %spec.select) #5
+  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 44, i32 noundef 524556, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.9) #5
   br label %bb.cy
 
 bb.cx:                                            ; preds = %bb.cv
