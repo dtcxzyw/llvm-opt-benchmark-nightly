@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.t = fsub double 1.000000e+00, %i.d           ; 2 uses
   %i.u = fdiv double %i.d, %i.t
-  %3 = uitofp nneg i32 %1 to double               ; 2 uses
-  %4 = fadd double %3, 1.000000e+00               ; 9 uses
-  %5 = fcmp ogt double %4, 1.500000e+01
+  %3 = add nuw i32 %1, 1
+  %4 = uitofp i32 %3 to double                    ; 8 uses
+  %5 = icmp ugt i32 %1, 14
   br i1 %5, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -232,29 +232,30 @@ bb.i:                                             ; preds = %bb.g
 
 _ZN6NFALUT9log_gammaEd.exit:                      ; preds = %bb.h, %bb.i
   %i.aj = phi double [ %i.ah, %bb.h ], [ %i.ai, %bb.i ]
-  %i.ak = uitofp nneg i32 %2 to double            ; 3 uses
-  %6 = fadd double %i.ak, 1.000000e+00            ; 9 uses
-  %7 = fcmp ogt double %6, 1.500000e+01
-  br i1 %7, label %bb.j, label %bb.k
+  %i.ak = uitofp nneg i32 %2 to double            ; 2 uses
+  %6 = add nuw i32 %2, 1
+  %7 = uitofp i32 %6 to double                    ; 8 uses
+  %8 = icmp ugt i32 %2, 14
+  br i1 %8, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZN6NFALUT9log_gammaEd.exit
-  %i.al = fadd double %6, -5.000000e-01
-  %i.am = tail call double @llvm.log.f64(double %6)
+  %i.al = fadd double %7, -5.000000e-01
+  %i.am = tail call double @llvm.log.f64(double %7)
   %i.an = tail call double @llvm.fmuladd.f64(double %i.al, double %i.am, double f0x3FED67F1C864BEB7)
-  %i.ao = fsub double %i.an, %6
-  %i.ap = fmul nnan double %6, 5.000000e-01
-  %i.aq = fdiv double 1.000000e+00, %6
+  %i.ao = fsub double %i.an, %7
+  %i.ap = fmul nnan double %7, 5.000000e-01
+  %i.aq = fdiv double 1.000000e+00, %7
   %i.ar = tail call double @sinh(double noundef %i.aq) #42
-  %i.as = tail call double @pow(double noundef %6, double noundef 6.000000e+00) #42
+  %i.as = tail call double @pow(double noundef %7, double noundef 6.000000e+00) #42
   %i.at = fmul double %i.as, 8.100000e+02
   %i.au = fdiv double 1.000000e+00, %i.at
-  %i.av = tail call double @llvm.fmuladd.f64(double %6, double %i.ar, double %i.au)
+  %i.av = tail call double @llvm.fmuladd.f64(double %7, double %i.ar, double %i.au)
   %i.aw = tail call double @log(double noundef %i.av) #42
   %i.ax = tail call noundef double @llvm.fmuladd.f64(double %i.ap, double %i.aw, double %i.ao)
   br label %_ZN6NFALUT9log_gammaEd.exit64
 
 bb.k:                                             ; preds = %_ZN6NFALUT9log_gammaEd.exit
-  %i.ay = tail call noundef double @_ZN6NFALUT17log_gamma_lanczosEd(double noundef %6)
+  %i.ay = tail call noundef double @_ZN6NFALUT17log_gamma_lanczosEd(double noundef %7)
   br label %_ZN6NFALUT9log_gammaEd.exit64
 
 _ZN6NFALUT9log_gammaEd.exit64:                    ; preds = %bb.j, %bb.k
@@ -318,7 +319,8 @@ _ZN6NFALUT12double_equalEdd.exit:                 ; preds = %_ZN6NFALUT9log_gamm
   br label %.backedge
 
 _ZN6NFALUT12double_equalEdd.exit.thread:          ; preds = %_ZN6NFALUT9log_gammaEd.exit65, %_ZN6NFALUT12double_equalEdd.exit
-  %i.ck = fmul double %i.d, %3
+  %9 = uitofp nneg i32 %1 to double
+  %i.ck = fmul double %i.d, %9
   %i.cl = fcmp olt double %i.ck, %i.ak
   br i1 %i.cl, label %bb.n, label %bb.o
 
