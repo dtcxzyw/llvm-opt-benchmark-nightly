@@ -205,110 +205,140 @@ bb.k:                                             ; preds = %bb.j
 .critedge.i:                                      ; preds = %bb.j, %..critedge_crit_edge.i
   %i.ag = phi i64 [ %.pre.i, %..critedge_crit_edge.i ], [ %i.ad, %bb.j ] ; 16 uses
   %.020.lcssa.i = phi i32 [ %i.ab, %..critedge_crit_edge.i ], [ %.02028.i, %bb.j ] ; 2 uses
-  %i.ah = and i64 %i.ag, 15                       ; 2 uses
-  %.not23.i = icmp eq i64 %i.ah, 0
-  br i1 %.not23.i, label %bb.m, label %bb.l
+  %i.ah = and i64 %i.ag, 15
+  %5 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.ah
+  %6 = load i32, ptr %5, align 4, !tbaa !50       ; 2 uses
+  %.not23.i = icmp eq i32 %6, 4
+  br i1 %.not23.i, label %bb.l, label %bb.aa
 
-bb.l:                                             ; preds = %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %.critedge.i
-  %.01830.lcssa.wide.i = phi i32 [ 0, %.critedge.i ], [ 4, %bb.m ], [ 8, %bb.n ], [ 12, %bb.o ], [ 16, %bb.p ], [ 20, %bb.q ], [ 24, %bb.r ], [ 28, %bb.s ], [ 32, %bb.t ], [ 36, %bb.u ], [ 40, %bb.v ], [ 44, %bb.w ], [ 48, %bb.x ], [ 52, %bb.y ], [ 56, %bb.z ], [ 60, %bb.aa ]
-  %.lcssa.i = phi i64 [ %i.ah, %.critedge.i ], [ %i.al, %bb.m ], [ %i.an, %bb.n ], [ %i.ap, %bb.o ], [ %i.ar, %bb.p ], [ %i.at, %bb.q ], [ %i.av, %bb.r ], [ %i.ax, %bb.s ], [ %i.az, %bb.t ], [ %i.bb, %bb.u ], [ %i.bd, %bb.v ], [ %i.bf, %bb.w ], [ %i.bh, %bb.x ], [ %i.bj, %bb.y ], [ %7, %bb.z ], [ %8, %bb.aa ]
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %.lcssa.i
-  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !50
-  %5 = or disjoint i32 %.01830.lcssa.wide.i, %.020.lcssa.i
-  %6 = add i32 %5, %i.aj
-  br label %sp_cnt_lsb.exit
+bb.l:                                             ; preds = %.critedge.i
+  %7 = lshr i64 %i.ag, 4
+  %8 = and i64 %7, 15
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %8
+  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !50 ; 2 uses
+  %.not23.1.i = icmp eq i32 %i.aj, 4
+  br i1 %.not23.1.i, label %bb.m, label %bb.aa
 
-bb.m:                                             ; preds = %.critedge.i
-  %i.ak = lshr exact i64 %i.ag, 4
-  %i.al = and i64 %i.ak, 15                       ; 2 uses
-  %.not23.1.i.a = icmp eq i64 %i.al, 0
-  br i1 %.not23.1.i.a, label %bb.n, label %bb.l
+bb.m:                                             ; preds = %bb.l
+  %i.ak = lshr i64 %i.ag, 8
+  %i.al = and i64 %i.ak, 15
+  %9 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.al
+  %10 = load i32, ptr %9, align 4, !tbaa !50      ; 2 uses
+  %.not23.1.i.a = icmp eq i32 %10, 4
+  br i1 %.not23.1.i.a, label %bb.n, label %bb.aa
 
 bb.n:                                             ; preds = %bb.m
-  %i.am = lshr i64 %i.ag, 8
-  %i.an = and i64 %i.am, 15                       ; 2 uses
-  %.not23.2.i = icmp eq i64 %i.an, 0
-  br i1 %.not23.2.i, label %bb.o, label %bb.l
+  %i.am = lshr i64 %i.ag, 12
+  %i.an = and i64 %i.am, 15
+  %11 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.an
+  %12 = load i32, ptr %11, align 4, !tbaa !50     ; 2 uses
+  %.not23.2.i = icmp eq i32 %12, 4
+  br i1 %.not23.2.i, label %bb.o, label %bb.aa
 
 bb.o:                                             ; preds = %bb.n
-  %i.ao = lshr i64 %i.ag, 12
-  %i.ap = and i64 %i.ao, 15                       ; 2 uses
-  %.not23.3.i = icmp eq i64 %i.ap, 0
-  br i1 %.not23.3.i, label %bb.p, label %bb.l
+  %i.ao = lshr i64 %i.ag, 16
+  %i.ap = and i64 %i.ao, 15
+  %13 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.ap
+  %14 = load i32, ptr %13, align 4, !tbaa !50     ; 2 uses
+  %.not23.3.i = icmp eq i32 %14, 4
+  br i1 %.not23.3.i, label %bb.p, label %bb.aa
 
 bb.p:                                             ; preds = %bb.o
-  %i.aq = lshr i64 %i.ag, 16
-  %i.ar = and i64 %i.aq, 15                       ; 2 uses
-  %.not23.4.i = icmp eq i64 %i.ar, 0
-  br i1 %.not23.4.i, label %bb.q, label %bb.l
+  %i.aq = lshr i64 %i.ag, 20
+  %i.ar = and i64 %i.aq, 15
+  %15 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.ar
+  %16 = load i32, ptr %15, align 4, !tbaa !50     ; 2 uses
+  %.not23.4.i = icmp eq i32 %16, 4
+  br i1 %.not23.4.i, label %bb.q, label %bb.aa
 
 bb.q:                                             ; preds = %bb.p
-  %i.as = lshr i64 %i.ag, 20
-  %i.at = and i64 %i.as, 15                       ; 2 uses
-  %.not23.5.i = icmp eq i64 %i.at, 0
-  br i1 %.not23.5.i, label %bb.r, label %bb.l
+  %i.as = lshr i64 %i.ag, 24
+  %i.at = and i64 %i.as, 15
+  %17 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.at
+  %18 = load i32, ptr %17, align 4, !tbaa !50     ; 2 uses
+  %.not23.5.i = icmp eq i32 %18, 4
+  br i1 %.not23.5.i, label %bb.r, label %bb.aa
 
 bb.r:                                             ; preds = %bb.q
-  %i.au = lshr i64 %i.ag, 24
-  %i.av = and i64 %i.au, 15                       ; 2 uses
-  %.not23.6.i = icmp eq i64 %i.av, 0
-  br i1 %.not23.6.i, label %bb.s, label %bb.l
+  %i.au = lshr i64 %i.ag, 28
+  %i.av = and i64 %i.au, 15
+  %19 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.av
+  %20 = load i32, ptr %19, align 4, !tbaa !50     ; 2 uses
+  %.not23.6.i = icmp eq i32 %20, 4
+  br i1 %.not23.6.i, label %bb.s, label %bb.aa
 
 bb.s:                                             ; preds = %bb.r
-  %i.aw = lshr i64 %i.ag, 28
-  %i.ax = and i64 %i.aw, 15                       ; 2 uses
-  %.not23.7.i = icmp eq i64 %i.ax, 0
-  br i1 %.not23.7.i, label %bb.t, label %bb.l
+  %i.aw = lshr i64 %i.ag, 32
+  %i.ax = and i64 %i.aw, 15
+  %21 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.ax
+  %22 = load i32, ptr %21, align 4, !tbaa !50     ; 2 uses
+  %.not23.7.i = icmp eq i32 %22, 4
+  br i1 %.not23.7.i, label %bb.t, label %bb.aa
 
 bb.t:                                             ; preds = %bb.s
-  %i.ay = lshr i64 %i.ag, 32
-  %i.az = and i64 %i.ay, 15                       ; 2 uses
-  %.not23.8.i = icmp eq i64 %i.az, 0
-  br i1 %.not23.8.i, label %bb.u, label %bb.l
+  %i.ay = lshr i64 %i.ag, 36
+  %i.az = and i64 %i.ay, 15
+  %23 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.az
+  %24 = load i32, ptr %23, align 4, !tbaa !50     ; 2 uses
+  %.not23.8.i = icmp eq i32 %24, 4
+  br i1 %.not23.8.i, label %bb.u, label %bb.aa
 
 bb.u:                                             ; preds = %bb.t
-  %i.ba = lshr i64 %i.ag, 36
-  %i.bb = and i64 %i.ba, 15                       ; 2 uses
-  %.not23.9.i = icmp eq i64 %i.bb, 0
-  br i1 %.not23.9.i, label %bb.v, label %bb.l
+  %i.ba = lshr i64 %i.ag, 40
+  %i.bb = and i64 %i.ba, 15
+  %25 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.bb
+  %26 = load i32, ptr %25, align 4, !tbaa !50     ; 2 uses
+  %.not23.9.i = icmp eq i32 %26, 4
+  br i1 %.not23.9.i, label %bb.v, label %bb.aa
 
 bb.v:                                             ; preds = %bb.u
-  %i.bc = lshr i64 %i.ag, 40
-  %i.bd = and i64 %i.bc, 15                       ; 2 uses
-  %.not23.10.i = icmp eq i64 %i.bd, 0
-  br i1 %.not23.10.i, label %bb.w, label %bb.l
+  %i.bc = lshr i64 %i.ag, 44
+  %i.bd = and i64 %i.bc, 15
+  %27 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.bd
+  %28 = load i32, ptr %27, align 4, !tbaa !50     ; 2 uses
+  %.not23.10.i = icmp eq i32 %28, 4
+  br i1 %.not23.10.i, label %bb.w, label %bb.aa
 
 bb.w:                                             ; preds = %bb.v
-  %i.be = lshr i64 %i.ag, 44
-  %i.bf = and i64 %i.be, 15                       ; 2 uses
-  %.not23.11.i = icmp eq i64 %i.bf, 0
-  br i1 %.not23.11.i, label %bb.x, label %bb.l
+  %i.be = lshr i64 %i.ag, 48
+  %i.bf = and i64 %i.be, 15
+  %29 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.bf
+  %30 = load i32, ptr %29, align 4, !tbaa !50     ; 2 uses
+  %.not23.11.i = icmp eq i32 %30, 4
+  br i1 %.not23.11.i, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %bb.w
-  %i.bg = lshr i64 %i.ag, 48
-  %i.bh = and i64 %i.bg, 15                       ; 2 uses
-  %.not23.12.i = icmp eq i64 %i.bh, 0
-  br i1 %.not23.12.i, label %bb.y, label %bb.l
+  %i.bg = lshr i64 %i.ag, 52
+  %i.bh = and i64 %i.bg, 15
+  %31 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.bh
+  %32 = load i32, ptr %31, align 4, !tbaa !50     ; 2 uses
+  %.not23.12.i = icmp eq i32 %32, 4
+  br i1 %.not23.12.i, label %bb.y, label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  %i.bi = lshr i64 %i.ag, 52
-  %i.bj = and i64 %i.bi, 15                       ; 2 uses
-  %.not23.13.i = icmp eq i64 %i.bj, 0
-  br i1 %.not23.13.i, label %bb.z, label %bb.l
+  %i.bi = lshr i64 %i.ag, 56
+  %i.bj = and i64 %i.bi, 15
+  %33 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.bj
+  %34 = load i32, ptr %33, align 4, !tbaa !50     ; 2 uses
+  %.not23.13.i = icmp eq i32 %34, 4
+  br i1 %.not23.13.i, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %i.bk = lshr i64 %i.ag, 56
-  %7 = and i64 %i.bk, 15                          ; 2 uses
-  %.not23.14.i = icmp eq i64 %7, 0
-  br i1 %.not23.14.i, label %bb.aa, label %bb.l
+  %i.bk = lshr i64 %i.ag, 60
+  %35 = getelementptr inbounds nuw [4 x i8], ptr @sp_lnz, i64 %i.bk
+  %36 = load i32, ptr %35, align 4, !tbaa !50     ; 2 uses
+  %.not23.14.i = icmp eq i32 %36, 4
+  br i1 %.not23.14.i, label %sp_cnt_lsb.exit, label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z
-  %8 = lshr i64 %i.ag, 60                         ; 2 uses
-  %.not23.15.i = icmp eq i64 %8, 0
-  br i1 %.not23.15.i, label %sp_cnt_lsb.exit, label %bb.l
+bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %.critedge.i
+  %.01829.lcssa.wide.i = phi i32 [ 0, %.critedge.i ], [ 4, %bb.l ], [ 8, %bb.m ], [ 12, %bb.n ], [ 16, %bb.o ], [ 20, %bb.p ], [ 24, %bb.q ], [ 28, %bb.r ], [ 32, %bb.s ], [ 36, %bb.t ], [ 40, %bb.u ], [ 44, %bb.v ], [ 48, %bb.w ], [ 52, %bb.x ], [ 56, %bb.y ], [ 60, %bb.z ]
+  %.lcssa.i = phi i32 [ %6, %.critedge.i ], [ %i.aj, %bb.l ], [ %10, %bb.m ], [ %12, %bb.n ], [ %14, %bb.o ], [ %16, %bb.p ], [ %18, %bb.q ], [ %20, %bb.r ], [ %22, %bb.s ], [ %24, %bb.t ], [ %26, %bb.u ], [ %28, %bb.v ], [ %30, %bb.w ], [ %32, %bb.x ], [ %34, %bb.y ], [ %36, %bb.z ]
+  %37 = or disjoint i32 %.01829.lcssa.wide.i, %.020.lcssa.i
+  %38 = add i32 %37, %.lcssa.i
+  br label %sp_cnt_lsb.exit
 
-sp_cnt_lsb.exit:                                  ; preds = %bb.i, %bb.l, %bb.aa
-  %.4.i = phi i32 [ 0, %bb.i ], [ %.020.lcssa.i, %bb.aa ], [ %6, %bb.l ] ; 5 uses
+sp_cnt_lsb.exit:                                  ; preds = %bb.i, %bb.z, %bb.aa
+  %.4.i = phi i32 [ 0, %bb.i ], [ %.020.lcssa.i, %bb.z ], [ %38, %bb.aa ] ; 5 uses
   %i.bl = icmp slt i32 %.4.i, 0
   %i.bm = tail call i32 @llvm.smax.i32(i32 %.4.i, i32 0)
   %i.bn = lshr i32 %i.bm, 6                       ; 6 uses

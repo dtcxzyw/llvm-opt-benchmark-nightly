@@ -34,7 +34,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 0, 3) i32 @php_json_yyparse(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca %union.PHP_JSON_YYSTYPE, align 8    ; 7 uses
+  %1 = alloca %union.PHP_JSON_YYSTYPE, align 8    ; 9 uses
   %i.a = alloca [200 x i8], align 16              ; 6 uses
   %2 = alloca [200 x %union.PHP_JSON_YYSTYPE], align 16 ; 4 uses
   %3 = alloca %union.PHP_JSON_YYSTYPE, align 8    ; 20 uses
@@ -49,7 +49,8 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 65
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 8 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -60,11 +61,12 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 160
   br label %bb.c
 
-bb.b:                                             ; preds = %bb.bb, %bb.y
-  %.0286 = phi ptr [ %i.bz, %bb.y ], [ %i.fe, %bb.bb ]
-  %.0273 = phi ptr [ %.3276, %bb.y ], [ %i.fd, %bb.bb ]
-  %.0257 = phi i32 [ %i.bw, %bb.y ], [ %i.fv, %bb.bb ]
-  %.0252 = phi i32 [ -2, %bb.y ], [ %.5, %bb.bb ]
+bb.b:                                             ; preds = %38, %bb.bb, %bb.y
+  %.0286 = phi ptr [ %40, %38 ], [ %i.fe, %bb.bb ], [ %i.bz, %bb.y ]
+  %.0273 = phi ptr [ %.5278, %38 ], [ %i.fd, %bb.bb ], [ %.3276, %bb.y ]
+  %.0261 = phi i32 [ 3, %38 ], [ %.1262, %bb.bb ], [ %spec.select, %bb.y ]
+  %.0257 = phi i32 [ %39, %38 ], [ %i.fv, %bb.bb ], [ %i.bw, %bb.y ]
+  %.0252 = phi i32 [ %.6, %38 ], [ %.5, %bb.bb ], [ -2, %bb.y ]
   %i.q = getelementptr inbounds nuw i8, ptr %.0273, i64 1
   br label %bb.c
 
@@ -74,7 +76,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.1274 = phi ptr [ %i.a, %bb.a ], [ %i.q, %bb.b ] ; 6 uses
   %.0267 = phi ptr [ %i.a, %bb.a ], [ %.3270, %bb.b ] ; 8 uses
   %.0264 = phi i64 [ 200, %bb.a ], [ %.2266, %bb.b ] ; 4 uses
-  %.1258 = phi i32 [ 0, %bb.a ], [ %.0257, %bb.b ] ; 6 uses
+  %.1262 = phi i32 [ 0, %bb.a ], [ %.0261, %bb.b ] ; 3 uses
+  %.1258 = phi i32 [ 0, %bb.a ], [ %.0257, %bb.b ] ; 9 uses
   %.1 = phi i32 [ -2, %bb.a ], [ %.0252, %bb.b ]  ; 7 uses
   %i.r = trunc nsw i32 %.1258 to i8
   store i8 %i.r, ptr %.1274, align 1, !tbaa !12
@@ -123,10 +126,10 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br i1 %.not327, label %.thread365, label %php_json_yyerror.exit348
 
 .thread365:                                       ; preds = %bb.h, %bb.c
-  %.3289 = phi ptr [ %.1287, %bb.c ], [ %i.aj, %bb.h ] ; 25 uses
+  %.3289 = phi ptr [ %.1287, %bb.c ], [ %i.aj, %bb.h ] ; 29 uses
   %.3285 = phi ptr [ %.0282, %bb.c ], [ %i.af, %bb.h ]
-  %.3276 = phi ptr [ %.1274, %bb.c ], [ %i.ah, %bb.h ] ; 8 uses
-  %.3270 = phi ptr [ %.0267, %bb.c ], [ %i.ac, %bb.h ] ; 7 uses
+  %.3276 = phi ptr [ %.1274, %bb.c ], [ %i.ah, %bb.h ] ; 12 uses
+  %.3270 = phi ptr [ %.0267, %bb.c ], [ %i.ac, %bb.h ] ; 6 uses
   %.2266 = phi i64 [ %.0264, %bb.c ], [ %spec.store.select, %bb.h ]
   %i.al = icmp eq i32 %.1258, 16
   br i1 %i.al, label %php_json_yyerror.exit348, label %bb.i
@@ -187,7 +190,7 @@ bb.q:                                             ; preds = %bb.p
   br label %zval_ptr_dtor_str.exit.i
 
 zval_ptr_dtor_str.exit.i:                         ; preds = %bb.q, %bb.p, %bb.o
-  store i32 0, ptr %i.h, align 8, !tbaa !12
+  store i32 0, ptr %4, align 8, !tbaa !12
   br label %php_json_yylex.exit
 
 .critedge.i:                                      ; preds = %bb.n, %bb.m, %bb.l, %bb.k
@@ -201,7 +204,7 @@ php_json_yylex.exit:                              ; preds = %.critedge.i, %zval_
 
 bb.r:                                             ; preds = %php_json_yylex.exit
   %i.bj = icmp eq i32 %.2, 256
-  br i1 %i.bj, label %php_json_yyerror.exit, label %bb.s
+  br i1 %i.bj, label %php_json_yyerror.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.bk = icmp samesign ult i32 %.2, 267
@@ -241,18 +244,19 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.w
+  %spec.select = call i32 @llvm.usub.sat.i32(i32 %.1262, i32 1)
   %i.bz = getelementptr inbounds nuw i8, ptr %.3289, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bz, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !33
   br label %bb.b
 
 bb.z:                                             ; preds = %bb.u, %bb.v, %bb.i
-  %.4 = phi i32 [ %.1, %bb.i ], [ %.3, %bb.u ], [ %.3, %bb.v ] ; 3 uses
+  %.4 = phi i32 [ %.1, %bb.i ], [ %.3, %bb.u ], [ %.3, %bb.v ] ; 10 uses
   %i.ca = getelementptr inbounds i8, ptr @yydefact, i64 %i.am
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !12
   %i.cc = sext i8 %i.cb to i32
   %i.cd = and i64 %i.aq, 328041767937
   %.not331 = icmp eq i64 %i.cd, 0
-  br i1 %.not331, label %bb.aa, label %bb.bc
+  br i1 %.not331, label %bb.aa, label %5
 
 bb.aa:                                            ; preds = %bb.z, %bb.x
   %.0295 = phi i32 [ %i.cc, %bb.z ], [ %i.by, %bb.x ] ; 2 uses
@@ -490,71 +494,135 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.fv = sext i8 %.in to i32
   br label %bb.b
 
-bb.bc:                                            ; preds = %bb.z
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
-  %i.fw = load i32, ptr %4, align 4, !tbaa !26
+5:                                                ; preds = %bb.z
+  %6 = icmp eq i32 %.4, -2
+  br i1 %6, label %13, label %7
+
+7:                                                ; preds = %5
+  %or.cond7 = icmp ult i32 %.4, 267
+  br i1 %or.cond7, label %8, label %13
+
+8:                                                ; preds = %7
+  %9 = zext nneg i32 %.4 to i64
+  %10 = getelementptr inbounds nuw i8, ptr @yytranslate, i64 %9
+  %11 = load i8, ptr %10, align 1, !tbaa !12
+  %12 = sext i8 %11 to i32
+  br label %13
+
+13:                                               ; preds = %8, %7, %5
+  %14 = phi i32 [ -2, %5 ], [ %12, %8 ], [ 2, %7 ]
+  switch i32 %.1262, label %php_json_yyerror.exit.thread [
+    i32 0, label %bb.bc
+    i32 3, label %15
+  ]
+
+bb.bc:                                            ; preds = %13
+  %i.fw = load i32, ptr %i.h, align 4, !tbaa !26
   %.not.i = icmp eq i32 %i.fw, 0
-  br i1 %.not.i, label %bb.bd, label %php_json_yyerror.exit
+  br i1 %.not.i, label %bb.bd, label %php_json_yyerror.exit.thread
 
 bb.bd:                                            ; preds = %bb.bc
-  store i32 4, ptr %4, align 4, !tbaa !26
-  br label %php_json_yyerror.exit
+  store i32 4, ptr %i.h, align 4, !tbaa !26
+  br label %php_json_yyerror.exit.thread
 
-.loopexit.sink.split:                             ; preds = %bb.aa, %bb.an, %bb.aa, %bb.ac
+15:                                               ; preds = %13
+  %16 = icmp slt i32 %.4, 1
+  br i1 %16, label %17, label %19
+
+17:                                               ; preds = %15
+  %18 = icmp eq i32 %.4, 0
+  br i1 %18, label %.thread390, label %php_json_yyerror.exit.thread
+
+19:                                               ; preds = %15
+  call fastcc void @yydestruct(i32 noundef %14, ptr noundef %1)
+  br label %php_json_yyerror.exit.thread
+
+.loopexit.sink.split:                             ; preds = %bb.an, %bb.aa, %bb.aa, %bb.ac
   %.sink = phi i32 [ 1, %bb.an ], [ 2, %bb.aa ], [ 1, %bb.ac ], [ 2, %bb.aa ]
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 84
-  store i32 %.sink, ptr %5, align 4, !tbaa !26
+  store i32 %.sink, ptr %i.h, align 4, !tbaa !26
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.ar, %bb.ap, %bb.al, %bb.ak, %bb.ag, %bb.ae, %.loopexit.sink.split
+.loopexit:                                        ; preds = %.loopexit.sink.split, %bb.ar, %bb.ap, %bb.al, %bb.ak, %bb.ag, %bb.ae
   %i.fx = sub nsw i64 0, %i.ch                    ; 2 uses
   %i.fy = getelementptr inbounds [16 x i8], ptr %.3289, i64 %i.fx
   %i.fz = getelementptr inbounds i8, ptr %.3276, i64 %i.fx ; 2 uses
   %i.ga = load i8, ptr %i.fz, align 1, !tbaa !12
   %i.gb = sext i8 %i.ga to i32
-  br label %php_json_yyerror.exit
+  br label %php_json_yyerror.exit.thread
 
-php_json_yyerror.exit:                            ; preds = %bb.r, %bb.bd, %bb.bc, %.loopexit
-  %.4290 = phi ptr [ %i.fy, %.loopexit ], [ %.3289, %bb.bc ], [ %.3289, %bb.bd ], [ %.3289, %bb.r ] ; 2 uses
-  %.4277 = phi ptr [ %i.fz, %.loopexit ], [ %.3276, %bb.bc ], [ %.3276, %bb.bd ], [ %.3276, %bb.r ] ; 3 uses
-  %.2259 = phi i32 [ %i.gb, %.loopexit ], [ %.1258, %bb.bc ], [ %.1258, %bb.bd ], [ %.1258, %bb.r ]
-  %.6 = phi i32 [ %.5, %.loopexit ], [ %.4, %bb.bc ], [ %.4, %bb.bd ], [ 257, %bb.r ] ; 2 uses
-  %i.gc = icmp eq ptr %.4277, %.3270
-  br i1 %i.gc, label %php_json_yyerror.exit348, label %.lr.ph.a
+php_json_yyerror.exit.thread:                     ; preds = %13, %bb.bc, %bb.bd, %bb.r, %17, %19, %.loopexit
+  %.4290 = phi ptr [ %.3289, %17 ], [ %.3289, %19 ], [ %.3289, %13 ], [ %i.fy, %.loopexit ], [ %.3289, %bb.r ], [ %.3289, %bb.bd ], [ %.3289, %bb.bc ]
+  %.4277 = phi ptr [ %.3276, %17 ], [ %.3276, %19 ], [ %.3276, %13 ], [ %i.fz, %.loopexit ], [ %.3276, %bb.r ], [ %.3276, %bb.bd ], [ %.3276, %bb.bc ]
+  %.2259 = phi i32 [ %.1258, %17 ], [ %.1258, %19 ], [ %.1258, %13 ], [ %i.gb, %.loopexit ], [ %.1258, %bb.r ], [ %.1258, %bb.bd ], [ %.1258, %bb.bc ]
+  %.6 = phi i32 [ %.4, %17 ], [ -2, %19 ], [ %.4, %13 ], [ %.5, %.loopexit ], [ 257, %bb.r ], [ %.4, %bb.bd ], [ %.4, %bb.bc ] ; 2 uses
+  br label %20
 
-.lr.ph.a:                                         ; preds = %php_json_yyerror.exit, %.lr.ph.a
-  %.3260502 = phi i32 [ %i.gj, %.lr.ph.a ], [ %.2259, %php_json_yyerror.exit ]
-  %.5278501 = phi ptr [ %i.gh, %.lr.ph.a ], [ %.4277, %php_json_yyerror.exit ]
-  %.5291500 = phi ptr [ %i.gg, %.lr.ph.a ], [ %.4290, %php_json_yyerror.exit ] ; 2 uses
-  %6 = sext i32 %.3260502 to i64
-  %i.gd = getelementptr inbounds i8, ptr @yystos, i64 %6
+20:                                               ; preds = %.lr.ph.a, %php_json_yyerror.exit.thread
+  %.5291 = phi ptr [ %.4290, %php_json_yyerror.exit.thread ], [ %i.gg, %.lr.ph.a ] ; 4 uses
+  %.5278 = phi ptr [ %.4277, %php_json_yyerror.exit.thread ], [ %i.gh, %.lr.ph.a ] ; 4 uses
+  %.3260 = phi i32 [ %.2259, %php_json_yyerror.exit.thread ], [ %i.gj, %.lr.ph.a ]
+  %21 = sext i32 %.3260 to i64                    ; 4 uses
+  %22 = shl nuw i64 1, %21
+  %23 = and i64 %22, 771450936318
+  %.not342 = icmp eq i64 %23, 0
+  %24 = lshr i64 328060683265, %21
+  %25 = trunc i64 %24 to i1
+  %or.cond = select i1 %.not342, i1 %25, i1 false
+  br i1 %or.cond, label %php_json_yyerror.exit, label %36
+
+php_json_yyerror.exit:                            ; preds = %20
+  %26 = getelementptr inbounds i8, ptr @yypact, i64 %21
+  %27 = load i8, ptr %26, align 1, !tbaa !12
+  %28 = sext i8 %27 to i64
+  %29 = add nsw i64 %28, 1                        ; 2 uses
+  %30 = getelementptr inbounds i8, ptr @yycheck, i64 %29
+  %31 = load i8, ptr %30, align 1, !tbaa !12
+  %i.gc = icmp eq i8 %31, 1
+  br i1 %i.gc, label %32, label %36
+
+32:                                               ; preds = %php_json_yyerror.exit
+  %33 = getelementptr inbounds i8, ptr @yytable, i64 %29
+  %34 = load i8, ptr %33, align 1, !tbaa !12      ; 2 uses
+  %35 = icmp sgt i8 %34, 0
+  br i1 %35, label %38, label %36
+
+36:                                               ; preds = %php_json_yyerror.exit, %32, %20
+  %37 = icmp eq ptr %.5278, %.3270
+  br i1 %37, label %php_json_yyerror.exit348, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %36
+  %i.gd = getelementptr inbounds i8, ptr @yystos, i64 %21
   %i.ge = load i8, ptr %i.gd, align 1, !tbaa !12
   %i.gf = sext i8 %i.ge to i32
-  call fastcc void @yydestruct(i32 noundef %i.gf, ptr noundef %.5291500)
-  %i.gg = getelementptr inbounds i8, ptr %.5291500, i64 -16 ; 2 uses
-  %i.gh = getelementptr inbounds i8, ptr %.5278501, i64 -1 ; 4 uses
+  call fastcc void @yydestruct(i32 noundef %i.gf, ptr noundef %.5291)
+  %i.gg = getelementptr inbounds i8, ptr %.5291, i64 -16
+  %i.gh = getelementptr inbounds i8, ptr %.5278, i64 -1 ; 2 uses
   %i.gi = load i8, ptr %i.gh, align 1, !tbaa !12
   %i.gj = sext i8 %i.gi to i32
-  %7 = icmp eq ptr %i.gh, %.3270
-  br i1 %7, label %php_json_yyerror.exit348, label %.lr.ph.a
+  br label %20
+
+38:                                               ; preds = %32
+  %39 = zext nneg i8 %34 to i32
+  %40 = getelementptr inbounds nuw i8, ptr %.5291, i64 16 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %40, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !33
+  br label %bb.b
 
 bb.be:                                            ; preds = %bb.d, %bb.e
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
-  %i.gk = load i32, ptr %8, align 4, !tbaa !26
+  %i.gk = load i32, ptr %i.h, align 4, !tbaa !26
   %.not.i347 = icmp eq i32 %i.gk, 0
   br i1 %.not.i347, label %bb.bf, label %php_json_yyerror.exit348
 
 bb.bf:                                            ; preds = %bb.be
-  store i32 4, ptr %8, align 4, !tbaa !26
+  store i32 4, ptr %i.h, align 4, !tbaa !26
   br label %php_json_yyerror.exit348
 
-php_json_yyerror.exit348:                         ; preds = %bb.h, %.thread365, %.lr.ph.a, %php_json_yyerror.exit, %bb.bf, %bb.be, %bb.ab
-  %.5303 = phi i64 [ 0, %bb.bf ], [ %i.ch, %bb.ab ], [ 0, %php_json_yyerror.exit ], [ 0, %bb.be ], [ 0, %.lr.ph.a ], [ 0, %.thread365 ], [ 0, %bb.h ]
-  %.0296 = phi i32 [ 2, %bb.bf ], [ 0, %bb.ab ], [ 1, %php_json_yyerror.exit ], [ 2, %bb.be ], [ 1, %.lr.ph.a ], [ 0, %.thread365 ], [ 1, %bb.h ]
-  %.7293 = phi ptr [ %.1287, %bb.bf ], [ %.3289, %bb.ab ], [ %.4290, %php_json_yyerror.exit ], [ %.1287, %bb.be ], [ %i.gg, %.lr.ph.a ], [ %.3289, %.thread365 ], [ %i.aj, %bb.h ]
-  %.7280 = phi ptr [ %.1274, %bb.bf ], [ %.3276, %bb.ab ], [ %.4277, %php_json_yyerror.exit ], [ %.1274, %bb.be ], [ %i.gh, %.lr.ph.a ], [ %.3276, %.thread365 ], [ %i.ah, %bb.h ]
-  %.5272 = phi ptr [ %.0267, %bb.bf ], [ %.3270, %bb.ab ], [ %.3270, %php_json_yyerror.exit ], [ %.0267, %bb.be ], [ %.3270, %.lr.ph.a ], [ %.3270, %.thread365 ], [ %i.ac, %bb.h ] ; 4 uses
-  %.9 = phi i32 [ %.1, %bb.bf ], [ %.5, %bb.ab ], [ %.6, %php_json_yyerror.exit ], [ %.1, %bb.be ], [ %.6, %.lr.ph.a ], [ %.1, %.thread365 ], [ %.1, %bb.h ] ; 3 uses
+php_json_yyerror.exit348:                         ; preds = %bb.h, %.thread365, %36, %bb.bf, %bb.be, %bb.ab
+  %.5303 = phi i64 [ 0, %bb.bf ], [ %i.ch, %bb.ab ], [ 0, %36 ], [ 0, %bb.be ], [ 0, %.thread365 ], [ 0, %bb.h ] ; 3 uses
+  %.0296 = phi i32 [ 2, %bb.bf ], [ 0, %bb.ab ], [ 1, %36 ], [ 2, %bb.be ], [ 0, %.thread365 ], [ 1, %bb.h ] ; 3 uses
+  %.7293 = phi ptr [ %.1287, %bb.bf ], [ %.3289, %bb.ab ], [ %.5291, %36 ], [ %.1287, %bb.be ], [ %.3289, %.thread365 ], [ %i.aj, %bb.h ] ; 3 uses
+  %.7280 = phi ptr [ %.1274, %bb.bf ], [ %.3276, %bb.ab ], [ %.5278, %36 ], [ %.1274, %bb.be ], [ %.3276, %.thread365 ], [ %i.ah, %bb.h ] ; 3 uses
+  %.5272 = phi ptr [ %.0267, %bb.bf ], [ %.3270, %bb.ab ], [ %.3270, %36 ], [ %.0267, %bb.be ], [ %.3270, %.thread365 ], [ %i.ac, %bb.h ] ; 3 uses
+  %.9 = phi i32 [ %.1, %bb.bf ], [ %.5, %bb.ab ], [ %.6, %36 ], [ %.1, %bb.be ], [ %.1, %.thread365 ], [ %.1, %bb.h ] ; 3 uses
   %.not343 = icmp eq i32 %.9, -2
   br i1 %.not343, label %bb.bi, label %bb.bg
 
@@ -562,26 +630,42 @@ bb.bg:                                            ; preds = %php_json_yyerror.ex
   %or.cond11 = icmp ult i32 %.9, 267
   br i1 %or.cond11, label %.thread390, label %bb.bh
 
-.thread390:                                       ; preds = %bb.bg
-  %i.gl = zext nneg i32 %.9 to i64
+.thread390:                                       ; preds = %17, %bb.bg
+  %.5303380409 = phi i64 [ %.5303, %bb.bg ], [ 0, %17 ]
+  %.0296382407 = phi i32 [ %.0296, %bb.bg ], [ 1, %17 ]
+  %.7293384405 = phi ptr [ %.7293, %bb.bg ], [ %.3289, %17 ]
+  %.7280386403 = phi ptr [ %.7280, %bb.bg ], [ %.3276, %17 ]
+  %.5272388401 = phi ptr [ %.5272, %bb.bg ], [ %.3270, %17 ]
+  %.9390399 = phi i32 [ %.9, %bb.bg ], [ 0, %17 ]
+  %i.gl = zext nneg i32 %.9390399 to i64
   %i.gm = getelementptr inbounds nuw i8, ptr @yytranslate, i64 %i.gl
   %i.gn = load i8, ptr %i.gm, align 1, !tbaa !12
   %i.go = sext i8 %i.gn to i32
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %.thread390
+  %.5303380408 = phi i64 [ %.5303380409, %.thread390 ], [ %.5303, %bb.bg ]
+  %.0296382406 = phi i32 [ %.0296382407, %.thread390 ], [ %.0296, %bb.bg ]
+  %.7293384404 = phi ptr [ %.7293384405, %.thread390 ], [ %.7293, %bb.bg ]
+  %.7280386402 = phi ptr [ %.7280386403, %.thread390 ], [ %.7280, %bb.bg ]
+  %.5272388400 = phi ptr [ %.5272388401, %.thread390 ], [ %.5272, %bb.bg ]
   %i.gp = phi i32 [ %i.go, %.thread390 ], [ 2, %bb.bg ]
   call fastcc void @yydestruct(i32 noundef %i.gp, ptr noundef %1)
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %php_json_yyerror.exit348
-  %i.gq = sub nsw i64 0, %.5303                   ; 2 uses
-  %i.gr = getelementptr inbounds i8, ptr %.7280, i64 %i.gq ; 2 uses
-  %.not344504 = icmp eq ptr %i.gr, %.5272
+  %.5272389 = phi ptr [ %.5272388400, %bb.bh ], [ %.5272, %php_json_yyerror.exit348 ] ; 4 uses
+  %.7280387 = phi ptr [ %.7280386402, %bb.bh ], [ %.7280, %php_json_yyerror.exit348 ]
+  %.7293385 = phi ptr [ %.7293384404, %bb.bh ], [ %.7293, %php_json_yyerror.exit348 ]
+  %.0296383 = phi i32 [ %.0296382406, %bb.bh ], [ %.0296, %php_json_yyerror.exit348 ]
+  %.5303381 = phi i64 [ %.5303380408, %bb.bh ], [ %.5303, %php_json_yyerror.exit348 ]
+  %i.gq = sub nsw i64 0, %.5303381                ; 2 uses
+  %i.gr = getelementptr inbounds i8, ptr %.7280387, i64 %i.gq ; 2 uses
+  %.not344504 = icmp eq ptr %i.gr, %.5272389
   br i1 %.not344504, label %._crit_edge, label %.lr.ph507.preheader
 
 .lr.ph507.preheader:                              ; preds = %bb.bi
-  %i.gs = getelementptr inbounds [16 x i8], ptr %.7293, i64 %i.gq
+  %i.gs = getelementptr inbounds [16 x i8], ptr %.7293385, i64 %i.gq
   br label %.lr.ph507
 
 .lr.ph507:                                        ; preds = %.lr.ph507.preheader, %.lr.ph507
@@ -595,15 +679,15 @@ bb.bi:                                            ; preds = %bb.bh, %php_json_yy
   call fastcc void @yydestruct(i32 noundef %i.gx, ptr noundef %.8294505)
   %i.gy = getelementptr inbounds i8, ptr %.8294505, i64 -16
   %i.gz = getelementptr inbounds i8, ptr %.8281506, i64 -1 ; 2 uses
-  %.not344 = icmp eq ptr %i.gz, %.5272
+  %.not344 = icmp eq ptr %i.gz, %.5272389
   br i1 %.not344, label %._crit_edge, label %.lr.ph507, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %.lr.ph507, %bb.bi
-  %.not345 = icmp eq ptr %.5272, %i.a
+  %.not345 = icmp eq ptr %.5272389, %i.a
   br i1 %.not345, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %._crit_edge
-  call void @free(ptr noundef %.5272) #11
+  call void @free(ptr noundef %.5272389) #11
   br label %bb.bk
 
 bb.bk:                                            ; preds = %._crit_edge, %bb.bj
@@ -611,7 +695,7 @@ bb.bk:                                            ; preds = %._crit_edge, %bb.bj
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
-  ret i32 %.0296
+  ret i32 %.0296383
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -1013,6 +1097,9 @@ declare zeroext i1 @_zend_handle_numeric_str_ex(ptr noundef, i64 noundef, ptr no
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.usub.sat.i32(i32, i32) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

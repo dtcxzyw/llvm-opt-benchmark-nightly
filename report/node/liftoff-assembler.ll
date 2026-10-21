@@ -202,14 +202,14 @@ bb.a:
   %4 = alloca %"class.v8::internal::wasm::WasmValue", align 8 ; 9 uses
   %.sroa.2.0.extract.shift = lshr i64 %1, 8       ; 2 uses
   %.sroa.2.0.extract.trunc = trunc i64 %.sroa.2.0.extract.shift to i8 ; 4 uses
-  %i.a = and i64 %.sroa.2.0.extract.shift, 15     ; 2 uses
+  %i.a = and i64 %.sroa.2.0.extract.shift, 15
   %i.b = icmp ult i8 %.sroa.2.0.extract.trunc, 11
   tail call void @llvm.assume(i1 %i.b)
   %i.c = getelementptr inbounds nuw i8, ptr @__const._ZN2v88internal4wasmL13reg_class_forENS1_9ValueKindE.kRegClasses, i64 %i.a
-  %i.d = load i8, ptr %i.c, align 1
+  %i.d = load i8, ptr %i.c, align 1               ; 2 uses
   %i.e = icmp ne i8 %.sroa.2.0.extract.trunc, 0
   tail call void @llvm.assume(i1 %i.e)
-  %5 = icmp ne i64 %i.a, 0
+  %5 = icmp ult i8 %i.d, 2
   tail call void @llvm.assume(i1 %5)
   %i.f = zext nneg i8 %i.d to i64
   %i.g = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasmL15GetCacheRegListENS1_8RegClassE.kRegLists, i64 %i.f
@@ -612,22 +612,40 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define hidden noundef nonnull align 8 dereferenceable(8) ptr @_ZN2v88internal4wasmlsERSoNS1_15LiftoffVarStateE(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 %1, i32 %2) local_unnamed_addr #0 {
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.a:
   %.sroa.0.0.extract.trunc = trunc i64 %1 to i8
-  %.sroa.36.0.extract.shift.a = lshr i64 %1, 32   ; 4 uses
-  %.sroa.36.sroa.0.0.extract.trunc = trunc i64 %.sroa.36.0.extract.shift.a to i8 ; 2 uses
-  %.sroa.2.0.extract.shift = lshr i64 %1, 8
-  %i.a = and i64 %.sroa.2.0.extract.shift, 255
+  %.sroa.36.0.extract.shift.a = lshr i64 %1, 8
+  %.sroa.36.0.extract.shift = lshr i64 %1, 32     ; 4 uses
+  %.sroa.36.sroa.0.0.extract.trunc = trunc i64 %.sroa.36.0.extract.shift to i8 ; 2 uses
+  %i.a = and i64 %.sroa.36.0.extract.shift.a, 255
   %i.b = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN2v88internal4wasm4nameENS1_9ValueKindE.kKindName, i64 %i.a
-  %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
-  %3 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #20
-  %4 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.c, i64 noundef %3) #20 ; 0 uses
-  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.2, i64 noundef 1) #20 ; 0 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 3 uses
+  %.not.i = icmp eq ptr %i.c, null
+  br i1 %.not.i, label %3, label %11
+
+3:                                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.a
+  %4 = load ptr, ptr %0, align 8
+  %5 = getelementptr i8, ptr %4, i64 -24
+  %6 = load i64, ptr %5, align 8
+  %7 = getelementptr inbounds i8, ptr %0, i64 %6  ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %9 = load i32, ptr %8, align 8
+  %10 = or i32 %9, 1
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %7, i32 noundef %10) #20
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+
+11:                                               ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.a
+  %12 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #20
+  %13 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.c, i64 noundef %12) #20 ; 0 uses
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %3, %11
+  %14 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.2, i64 noundef 1) #20 ; 0 uses
   switch i8 %.sroa.0.0.extract.trunc, label %bb.d [
     i8 0, label %bb.a
     i8 1, label %bb.b
     i8 2, label %bb.c
   ]
 
-bb.a:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.a
+bb.a:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.d = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.3, i64 noundef 3) #20 ; 0 uses
   %i.e = load ptr, ptr %0, align 8
   %i.f = getelementptr i8, ptr %i.e, i64 -24
@@ -652,19 +670,19 @@ bb.a:                                             ; preds = %_ZStlsISt11char_tra
   store i32 %i.v, ptr %i.s, align 8
   br label %bb.e
 
-bb.b:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.a
+bb.b:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.w = icmp ult i8 %.sroa.36.sroa.0.0.extract.trunc, 16
   br i1 %i.w, label %_ZN2v88internallsINS0_8RegisterEPKcEERSoS5_T_.exit.i, label %_ZN2v88internallsINS0_11XMMRegisterEPKcEERSoS5_T_.exit.i
 
 _ZN2v88internallsINS0_8RegisterEPKcEERSoS5_T_.exit.i: ; preds = %bb.b
-  %i.x = and i64 %.sroa.36.0.extract.shift.a, 15
+  %i.x = and i64 %.sroa.36.0.extract.shift, 15
   %i.y = getelementptr inbounds nuw [8 x i8], ptr @_ZZN2v88internal12RegisterNameENS0_8RegisterEE5Names, i64 %i.x
   br label %_ZN2v88internal4wasmlsERSoNS1_15LiftoffRegisterE.exit
 
 _ZN2v88internallsINS0_11XMMRegisterEPKcEERSoS5_T_.exit.i: ; preds = %bb.b
   %i.z = icmp slt i8 %.sroa.36.sroa.0.0.extract.trunc, 32
   tail call void @llvm.assume(i1 %i.z)
-  %sext = shl i64 %.sroa.36.0.extract.shift.a, 56
+  %sext = shl i64 %.sroa.36.0.extract.shift, 56
   %i.aa = ashr exact i64 %sext, 53
   %i.ab = getelementptr i8, ptr @_ZZN2v88internal12RegisterNameENS0_11XMMRegisterEE5Names, i64 %i.aa
   %i.ac = getelementptr i8, ptr %i.ab, i64 -128
@@ -677,13 +695,13 @@ _ZN2v88internal4wasmlsERSoNS1_15LiftoffRegisterE.exit: ; preds = %_ZN2v88interna
   %i.ae = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %.sink9.i, i64 noundef %i.ad) #20 ; 0 uses
   br label %bb.e
 
-bb.c:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.a
+bb.c:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.af = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.4, i64 noundef 1) #20 ; 0 uses
-  %tr.sh.diff = trunc nuw i64 %.sroa.36.0.extract.shift.a to i32
+  %tr.sh.diff = trunc nuw i64 %.sroa.36.0.extract.shift to i32
   %i.ag = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %tr.sh.diff) #20
   br label %bb.e
 
-bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.a
+bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.5) #22
   unreachable
 
@@ -1085,6 +1103,8 @@ declare void @_ZN2v88internal9Assembler4movwENS0_7OperandENS0_8RegisterE(ptr nou
 declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #17
 
 declare noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef, i64 noundef) local_unnamed_addr #6
+
+declare void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264), i32 noundef) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #18

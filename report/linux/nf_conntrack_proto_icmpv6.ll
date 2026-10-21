@@ -17,8 +17,10 @@ target triple = "x86_64-unknown-linux-gnu"
 %union.anon.0 = type { [4 x i32] }
 
 @invmap = internal unnamed_addr constant [13 x i8] c"\82\81\00\00\00\00\00\00\00\00\00\8D\8C", align 1
+@nf_conntrack_icmpv6_packet.valid_new = internal unnamed_addr constant [12 x i8] c"\01\00\00\00\00\00\00\00\00\00\00\01", align 1
 @.str = private unnamed_addr constant [13 x i8] c"short packet\00", align 1
 @.str.1 = private unnamed_addr constant [23 x i8] c"ICMPv6 checksum failed\00", align 1
+@noct_valid_new = internal unnamed_addr constant [23 x i8] c"\01\01\01\01\01\01\01\00\00\00\00\00\00\01\00\00\00\00\00\00\00\01\01", align 16
 @nf_conntrack_l4proto_icmpv6 = dso_local local_unnamed_addr constant { i8, i8, i16, [4 x i8], ptr, ptr, ptr, ptr, ptr, ptr, ptr, %struct.anon.30 } { i8 58, i8 1, i16 0, [4 x i8] zeroinitializer, ptr null, ptr null, ptr null, ptr @icmpv6_tuple_to_nlattr, ptr @icmpv6_nlattr_tuple_size, ptr @icmpv6_nlattr_to_tuple, ptr @icmpv6_nla_policy, %struct.anon.30 zeroinitializer }, align 8
 @.str.2 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
 @.str.3 = private unnamed_addr constant [15 x i8] c"short redirect\00", align 1
@@ -93,24 +95,25 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define dso_local noundef zeroext i1 @nf_conntrack_invert_icmpv6_tuple(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #3 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 36
-  %i.b = load i8, ptr %i.a, align 4               ; 3 uses
+  %i.b = load i8, ptr %i.a, align 4               ; 2 uses
   %i.c = zext i8 %i.b to i64
   %i.d = add nsw i64 %i.c, -128                   ; 2 uses
-  %2 = icmp slt i8 %i.b, 0
-  %3 = icmp ult i64 %i.d, 13
-  %or.cond.not16 = select i1 %2, i1 %3, i1 false
-  %4 = add i8 %i.b, 117
-  %.not = icmp ult i8 %4, -9
-  %or.cond13.not = and i1 %.not, %or.cond.not16   ; 2 uses
-  br i1 %or.cond13.not, label %bb.b, label %bb.c
+  %2 = icmp sgt i8 %i.b, -1
+  %3 = icmp ugt i64 %i.d, 12
+  %or.cond.not16 = select i1 %2, i1 true, i1 %3
+  br i1 %or.cond.not16, label %bb.c, label %4
 
-bb.b:                                             ; preds = %bb.a
+4:                                                ; preds = %bb.a
   %5 = getelementptr i8, ptr @invmap, i64 %i.d
+  %6 = load i8, ptr %5, align 1                   ; 2 uses
+  %.not = icmp eq i8 %6, 0
+  br i1 %.not, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %4
   %i.e = getelementptr i8, ptr %1, i64 16
   %i.f = load i16, ptr %i.e, align 4
   %i.g = getelementptr i8, ptr %0, i64 16
   store i16 %i.f, ptr %i.g, align 4
-  %6 = load i8, ptr %5, align 1
   %i.h = add i8 %6, -1
   %i.i = getelementptr i8, ptr %0, i64 36
   store i8 %i.h, ptr %i.i, align 4
@@ -120,8 +123,9 @@ bb.b:                                             ; preds = %bb.a
   store i8 %i.k, ptr %i.l, align 1
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
-  ret i1 %or.cond13.not
+bb.c:                                             ; preds = %bb.a, %4, %bb.b
+  %.0 = phi i1 [ true, %bb.b ], [ false, %4 ], [ false, %bb.a ]
+  ret i1 %.0
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
@@ -150,12 +154,12 @@ bb.b:                                             ; preds = %nf_ct_is_confirmed.
   br i1 %or.cond, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  switch i64 %i.i, label %.critedge [
-    i64 11, label %bb.d
-    i64 0, label %bb.d
-  ]
+  %4 = getelementptr i8, ptr @nf_conntrack_icmpv6_packet.valid_new, i64 %i.i
+  %5 = load i8, ptr %4, align 1
+  %.not21 = icmp eq i8 %5, 0
+  br i1 %.not21, label %.critedge, label %bb.d
 
-bb.d:                                             ; preds = %nf_ct_is_confirmed.exit, %bb.c, %bb.c
+bb.d:                                             ; preds = %nf_ct_is_confirmed.exit, %bb.c
   %i.l = getelementptr i8, ptr %0, i64 136
   %.val = load ptr, ptr %i.l, align 8
   %i.m = getelementptr i8, ptr %.val, i64 2980
@@ -241,10 +245,10 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %__skb
   br i1 %or.cond, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
-  %6 = shl nuw nsw i64 1, %i.u
-  %7 = and i64 %6, 2088832
-  %.not36.not = icmp eq i64 %7, 0
-  br i1 %.not36.not, label %bb.i, label %bb.j
+  %6 = getelementptr i8, ptr @noct_valid_new, i64 %i.u
+  %7 = load i8, ptr %6, align 1
+  %.not36.not = icmp eq i8 %7, 0
+  br i1 %.not36.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.x = getelementptr i8, ptr %1, i64 129        ; 2 uses
@@ -515,12 +519,17 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr i8, ptr %1, i64 36
   store i8 %.val27.a, ptr %i.e, align 4
   %i.f = icmp sgt i8 %.val27.a, -116
-  %3 = add nsw i8 %.val27.a, 126
-  %.not21 = icmp ult i8 %3, 9
-  %or.cond26 = select i1 %i.f, i1 true, i1 %.not21
-  br i1 %or.cond26, label %bb.j, label %bb.d
+  br i1 %i.f, label %bb.j, label %3
 
-bb.d:                                             ; preds = %bb.c, %bb.a
+3:                                                ; preds = %bb.c
+  %4 = zext i8 %.val27.a to i64
+  %5 = getelementptr i8, ptr @invmap, i64 %4
+  %6 = getelementptr i8, ptr %5, i64 -128
+  %7 = load i8, ptr %6, align 1
+  %.not21 = icmp eq i8 %7, 0
+  br i1 %.not21, label %bb.j, label %bb.d
+
+bb.d:                                             ; preds = %3, %bb.a
   %i.g = and i32 %2, 1024
   %.not22 = icmp eq i32 %i.g, 0
   br i1 %.not22, label %bb.g, label %bb.e
@@ -556,8 +565,8 @@ bb.i:                                             ; preds = %bb.h
   store i16 %.val28, ptr %i.p, align 4
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.g, %bb.i, %bb.h, %bb.e, %bb.c, %bb.b
-  %.0 = phi i32 [ -22, %bb.b ], [ -22, %bb.h ], [ -22, %bb.e ], [ -22, %bb.c ], [ 0, %bb.i ], [ 0, %bb.g ]
+bb.j:                                             ; preds = %bb.g, %bb.i, %bb.h, %bb.e, %bb.c, %3, %bb.b
+  %.0 = phi i32 [ -22, %bb.b ], [ -22, %bb.h ], [ -22, %bb.e ], [ -22, %bb.c ], [ -22, %3 ], [ 0, %bb.g ], [ 0, %bb.i ]
   ret i32 %.0
 }
 

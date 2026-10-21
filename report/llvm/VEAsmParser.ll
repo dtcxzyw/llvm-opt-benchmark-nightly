@@ -204,22 +204,20 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.bq = getelementptr inbounds nuw i8, ptr %.val.i, i64 16
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !85
-  %i.bs = and i64 %i.br, 4294967295               ; 3 uses
+  %i.bs = and i64 %i.br, 4294967295               ; 2 uses
   %.not10.i = icmp samesign ult i64 %i.bs, 31
   br i1 %.not10.i, label %bb.m, label %_ZN12_GLOBAL__N_19VEOperand13MorphToF32RegERS0_.exit
 
 bb.m:                                             ; preds = %bb.l
-  %3 = shl nuw nsw i64 1, %i.bs
-  %4 = and i64 %3, 61560
-  %.not11.i = icmp eq i64 %4, 0
-  br i1 %.not11.i, label %_ZN12_GLOBAL__N_19VEOperand14MorphToMISCRegERS0_.exit, label %_ZN12_GLOBAL__N_19VEOperand13MorphToF32RegERS0_.exit
+  %3 = getelementptr inbounds nuw [2 x i8], ptr @_ZL8MISCRegs, i64 %i.bs
+  %4 = load i16, ptr %3, align 2, !tbaa !86       ; 2 uses
+  %.not11.i = icmp eq i16 %4, 0
+  br i1 %.not11.i, label %_ZN12_GLOBAL__N_19VEOperand13MorphToF32RegERS0_.exit, label %_ZN12_GLOBAL__N_19VEOperand14MorphToMISCRegERS0_.exit
 
 _ZN12_GLOBAL__N_19VEOperand14MorphToMISCRegERS0_.exit: ; preds = %bb.m
-  %5 = getelementptr inbounds nuw [2 x i8], ptr @_ZL8MISCRegs, i64 %i.bs
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 48
   store i32 1, ptr %i.bt, align 8, !tbaa !55
-  %6 = load i16, ptr %5, align 2, !tbaa !86
-  %i.bu = zext i16 %6 to i32
+  %i.bu = zext i16 %4 to i32
   store i32 %i.bu, ptr %i.bo, align 8, !tbaa !38
   br label %_ZN12_GLOBAL__N_19VEOperand13MorphToF32RegERS0_.exit
 

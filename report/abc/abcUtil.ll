@@ -205,7 +205,7 @@ define range(i32 0, 2) i32 @Abc_NtkHasConstNode() local_unnamed_addr #22 {
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
   %indvars.iv = phi i64 [ 9, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.lr.ph ]
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, 145
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !280
 

@@ -205,16 +205,27 @@ _ZN4crow6loggerlsIA2_cEERS0_RKT_.exit:            ; preds = %bb.cl, %_ZN4crow6lo
 bb.cp:                                            ; preds = %_ZN4crow6loggerlsIA2_cEERS0_RKT_.exit
   %i.uq = and i64 %i.th, 4294967295
   %i.ur = getelementptr inbounds nuw [8 x i8], ptr @_ZN4crowL14method_stringsE, i64 %i.uq
-  %i.us = load ptr, ptr %i.ur, align 8, !tbaa !243, !noalias !2239 ; 3 uses
+  %i.us = load ptr, ptr %i.ur, align 8, !tbaa !243, !noalias !2239 ; 4 uses
   %i.ut = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 3 uses
   store ptr %i.ut, ptr %25, align 8, !tbaa !97, !alias.scope !2239
-  %29 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.us) #41 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2239
-  store i64 %29, ptr %i.a, align 8, !tbaa !99, !noalias !2239
-  %30 = icmp ugt i64 %29, 15
-  br i1 %30, label %.noexc.i.i279, label %._crit_edge.i.i.i278
+  %29 = icmp eq ptr %i.us, null
+  br i1 %29, label %.noexc.i284, label %30
 
-.noexc.i.i279:                                    ; preds = %bb.cp
+.noexc.i284:                                      ; preds = %bb.cp
+  invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.240) #40
+          to label %.noexc285 unwind label %bb.dc
+
+.noexc285:                                        ; preds = %.noexc.i284
+  unreachable
+
+30:                                               ; preds = %bb.cp
+  %31 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.us) #41 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2239
+  store i64 %31, ptr %i.a, align 8, !tbaa !99, !noalias !2239
+  %32 = icmp ugt i64 %31, 15
+  br i1 %32, label %.noexc.i.i279, label %._crit_edge.i.i.i278
+
+.noexc.i.i279:                                    ; preds = %30
   %i.uu = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %25, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
           to label %.noexc280 unwind label %bb.dc ; 2 uses
 
@@ -224,9 +235,9 @@ bb.cp:                                            ; preds = %_ZN4crow6loggerlsIA
   store i64 %i.uv, ptr %i.ut, align 8, !tbaa !102, !alias.scope !2239
   br label %._crit_edge.i.i.i278
 
-._crit_edge.i.i.i278:                             ; preds = %.noexc280, %bb.cp
-  %i.uw = phi ptr [ %i.uu, %.noexc280 ], [ %i.ut, %bb.cp ] ; 2 uses
-  switch i64 %29, label %bb.cr [
+._crit_edge.i.i.i278:                             ; preds = %.noexc280, %30
+  %i.uw = phi ptr [ %i.uu, %.noexc280 ], [ %i.ut, %30 ] ; 2 uses
+  switch i64 %31, label %bb.cr [
     i64 1, label %bb.cq
     i64 0, label %bb.cs
   ]
@@ -237,7 +248,7 @@ bb.cq:                                            ; preds = %._crit_edge.i.i.i27
   br label %bb.cs
 
 bb.cr:                                            ; preds = %._crit_edge.i.i.i278
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.uw, ptr nonnull align 1 %i.us, i64 %29, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.uw, ptr nonnull align 1 %i.us, i64 %31, i1 false)
   br label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr, %bb.cq, %._crit_edge.i.i.i278
@@ -352,7 +363,7 @@ bb.db:                                            ; preds = %bb.co, %bb.cn, %bb.
           cleanup
   br label %bb.dh
 
-bb.dc:                                            ; preds = %bb.ct, %.noexc.i.i279
+bb.dc:                                            ; preds = %bb.ct, %.noexc.i.i279, %.noexc.i284
   %i.we = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302
@@ -755,16 +766,27 @@ bb.ay:                                            ; preds = %_ZN4crow6loggerlsIc
   %i.lq = sext i8 %i.lo to i64
   %i.lr = and i64 %i.lq, 4294967295
   %i.ls = getelementptr inbounds nuw [8 x i8], ptr @_ZN4crowL14method_stringsE, i64 %i.lr
-  %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !243, !noalias !2421 ; 3 uses
+  %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !243, !noalias !2421 ; 4 uses
   %i.lu = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 3 uses
   store ptr %i.lu, ptr %15, align 8, !tbaa !97, !alias.scope !2421
-  %21 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.lt) #41 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2421
-  store i64 %21, ptr %i.a, align 8, !tbaa !99, !noalias !2421
-  %22 = icmp ugt i64 %21, 15
-  br i1 %22, label %.noexc.i.i, label %._crit_edge.i.i.i
+  %21 = icmp eq ptr %i.lt, null
+  br i1 %21, label %.noexc.i91, label %22
 
-.noexc.i.i:                                       ; preds = %bb.ay
+.noexc.i91:                                       ; preds = %bb.ay
+  invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.240) #40
+          to label %.noexc92 unwind label %bb.bj
+
+.noexc92:                                         ; preds = %.noexc.i91
+  unreachable
+
+22:                                               ; preds = %bb.ay
+  %23 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.lt) #41 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2421
+  store i64 %23, ptr %i.a, align 8, !tbaa !99, !noalias !2421
+  %24 = icmp ugt i64 %23, 15
+  br i1 %24, label %.noexc.i.i, label %._crit_edge.i.i.i
+
+.noexc.i.i:                                       ; preds = %22
   %i.lv = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %15, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
           to label %.noexc91 unwind label %bb.bj  ; 2 uses
 
@@ -774,9 +796,9 @@ bb.ay:                                            ; preds = %_ZN4crow6loggerlsIc
   store i64 %i.lw, ptr %i.lu, align 8, !tbaa !102, !alias.scope !2421
   br label %._crit_edge.i.i.i
 
-._crit_edge.i.i.i:                                ; preds = %.noexc91, %bb.ay
-  %i.lx = phi ptr [ %i.lv, %.noexc91 ], [ %i.lu, %bb.ay ] ; 2 uses
-  switch i64 %21, label %bb.ba [
+._crit_edge.i.i.i:                                ; preds = %.noexc91, %22
+  %i.lx = phi ptr [ %i.lv, %.noexc91 ], [ %i.lu, %22 ] ; 2 uses
+  switch i64 %23, label %bb.ba [
     i64 1, label %bb.az
     i64 0, label %bb.bb
   ]
@@ -787,7 +809,7 @@ bb.az:                                            ; preds = %._crit_edge.i.i.i
   br label %bb.bb
 
 bb.ba:                                            ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lx, ptr nonnull align 1 %i.lt, i64 %21, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lx, ptr nonnull align 1 %i.lt, i64 %23, i1 false)
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az, %._crit_edge.i.i.i
@@ -893,7 +915,7 @@ bb.bi:                                            ; preds = %bb.at, %bb.au, %bb.
           cleanup
   br label %bb.bl
 
-bb.bj:                                            ; preds = %bb.bc, %.noexc.i.i
+bb.bj:                                            ; preds = %bb.bc, %.noexc.i.i, %.noexc.i91
   %i.ne = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit110
@@ -1296,16 +1318,27 @@ bb.i:                                             ; preds = %_ZN4crow6loggerlsIA
   %i.aa = sext i8 %i.y to i64
   %i.ab = and i64 %i.aa, 4294967295
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr @_ZN4crowL14method_stringsE, i64 %i.ab
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !243, !noalias !2450 ; 3 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !243, !noalias !2450 ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   store ptr %i.ae, ptr %8, align 8, !tbaa !97, !alias.scope !2450
-  %17 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ad) #41 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2450
-  store i64 %17, ptr %i.a, align 8, !tbaa !99, !noalias !2450
-  %18 = icmp ugt i64 %17, 15
-  br i1 %18, label %.noexc.i.i, label %._crit_edge.i.i.i
+  %17 = icmp eq ptr %i.ad, null
+  br i1 %17, label %.noexc.i, label %18
 
-.noexc.i.i:                                       ; preds = %bb.i
+.noexc.i:                                         ; preds = %bb.i
+  invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.240) #40
+          to label %.noexc78 unwind label %bb.p
+
+.noexc78:                                         ; preds = %.noexc.i
+  unreachable
+
+18:                                               ; preds = %bb.i
+  %19 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ad) #41 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2450
+  store i64 %19, ptr %i.a, align 8, !tbaa !99, !noalias !2450
+  %20 = icmp ugt i64 %19, 15
+  br i1 %20, label %.noexc.i.i, label %._crit_edge.i.i.i
+
+.noexc.i.i:                                       ; preds = %18
   %i.af = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
           to label %.noexc78.a unwind label %bb.p ; 2 uses
 
@@ -1315,9 +1348,9 @@ bb.i:                                             ; preds = %_ZN4crow6loggerlsIA
   store i64 %i.ag, ptr %i.ae, align 8, !tbaa !102, !alias.scope !2450
   br label %._crit_edge.i.i.i
 
-._crit_edge.i.i.i:                                ; preds = %.noexc78.a, %bb.i
-  %i.ah = phi ptr [ %i.af, %.noexc78.a ], [ %i.ae, %bb.i ] ; 2 uses
-  switch i64 %17, label %bb.k [
+._crit_edge.i.i.i:                                ; preds = %.noexc78.a, %18
+  %i.ah = phi ptr [ %i.af, %.noexc78.a ], [ %i.ae, %18 ] ; 2 uses
+  switch i64 %19, label %bb.k [
     i64 1, label %bb.j
     i64 0, label %bb.l
   ]
@@ -1328,7 +1361,7 @@ bb.j:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.l
 
 bb.k:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ah, ptr nonnull align 1 %i.ad, i64 %17, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ah, ptr nonnull align 1 %i.ad, i64 %19, i1 false)
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %._crit_edge.i.i.i
@@ -1386,7 +1419,7 @@ bb.o:                                             ; preds = %bb.h, %bb.g, %bb.f
           cleanup
   br label %bb.r
 
-bb.p:                                             ; preds = %bb.m, %.noexc.i.i
+bb.p:                                             ; preds = %bb.m, %.noexc.i.i, %.noexc.i
   %i.az = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85
@@ -1789,16 +1822,27 @@ bb.bg:                                            ; preds = %_ZN4crow6loggerlsIc
   %i.mw = sext i8 %i.mu to i64
   %i.mx = and i64 %i.mw, 4294967295
   %i.my = getelementptr inbounds nuw [8 x i8], ptr @_ZN4crowL14method_stringsE, i64 %i.mx
-  %i.mz = load ptr, ptr %i.my, align 8, !tbaa !243, !noalias !2655 ; 3 uses
+  %i.mz = load ptr, ptr %i.my, align 8, !tbaa !243, !noalias !2655 ; 4 uses
   %i.na = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 3 uses
   store ptr %i.na, ptr %17, align 8, !tbaa !97, !alias.scope !2655
-  %23 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.mz) #41 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2655
-  store i64 %23, ptr %i.a, align 8, !tbaa !99, !noalias !2655
-  %24 = icmp ugt i64 %23, 15
-  br i1 %24, label %.noexc.i.i, label %._crit_edge.i.i.i
+  %23 = icmp eq ptr %i.mz, null
+  br i1 %23, label %.noexc.i91, label %24
 
-.noexc.i.i:                                       ; preds = %bb.bg
+.noexc.i91:                                       ; preds = %bb.bg
+  invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.240) #40
+          to label %.noexc92 unwind label %bb.br
+
+.noexc92:                                         ; preds = %.noexc.i91
+  unreachable
+
+24:                                               ; preds = %bb.bg
+  %25 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.mz) #41 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2655
+  store i64 %25, ptr %i.a, align 8, !tbaa !99, !noalias !2655
+  %26 = icmp ugt i64 %25, 15
+  br i1 %26, label %.noexc.i.i, label %._crit_edge.i.i.i
+
+.noexc.i.i:                                       ; preds = %24
   %i.nb = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %17, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
           to label %.noexc91 unwind label %bb.br  ; 2 uses
 
@@ -1808,9 +1852,9 @@ bb.bg:                                            ; preds = %_ZN4crow6loggerlsIc
   store i64 %i.nc, ptr %i.na, align 8, !tbaa !102, !alias.scope !2655
   br label %._crit_edge.i.i.i
 
-._crit_edge.i.i.i:                                ; preds = %.noexc91, %bb.bg
-  %i.nd = phi ptr [ %i.nb, %.noexc91 ], [ %i.na, %bb.bg ] ; 2 uses
-  switch i64 %23, label %bb.bi [
+._crit_edge.i.i.i:                                ; preds = %.noexc91, %24
+  %i.nd = phi ptr [ %i.nb, %.noexc91 ], [ %i.na, %24 ] ; 2 uses
+  switch i64 %25, label %bb.bi [
     i64 1, label %bb.bh
     i64 0, label %bb.bj
   ]
@@ -1821,7 +1865,7 @@ bb.bh:                                            ; preds = %._crit_edge.i.i.i
   br label %bb.bj
 
 bb.bi:                                            ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.nd, ptr nonnull align 1 %i.mz, i64 %23, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.nd, ptr nonnull align 1 %i.mz, i64 %25, i1 false)
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh, %._crit_edge.i.i.i
@@ -1927,7 +1971,7 @@ bb.bq:                                            ; preds = %bb.bb, %bb.bc, %bb.
           cleanup
   br label %bb.bt
 
-bb.br:                                            ; preds = %bb.bk, %.noexc.i.i
+bb.br:                                            ; preds = %bb.bk, %.noexc.i.i, %.noexc.i91
   %i.ok = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit110
@@ -2330,16 +2374,27 @@ bb.i:                                             ; preds = %_ZN4crow6loggerlsIA
   %i.aa = sext i8 %i.y to i64
   %i.ab = and i64 %i.aa, 4294967295
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr @_ZN4crowL14method_stringsE, i64 %i.ab
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !243, !noalias !2664 ; 3 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !243, !noalias !2664 ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   store ptr %i.ae, ptr %8, align 8, !tbaa !97, !alias.scope !2664
-  %17 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ad) #41 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2664
-  store i64 %17, ptr %i.a, align 8, !tbaa !99, !noalias !2664
-  %18 = icmp ugt i64 %17, 15
-  br i1 %18, label %.noexc.i.i, label %._crit_edge.i.i.i
+  %17 = icmp eq ptr %i.ad, null
+  br i1 %17, label %.noexc.i, label %18
 
-.noexc.i.i:                                       ; preds = %bb.i
+.noexc.i:                                         ; preds = %bb.i
+  invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.240) #40
+          to label %.noexc78 unwind label %bb.p
+
+.noexc78:                                         ; preds = %.noexc.i
+  unreachable
+
+18:                                               ; preds = %bb.i
+  %19 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ad) #41 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #41, !noalias !2664
+  store i64 %19, ptr %i.a, align 8, !tbaa !99, !noalias !2664
+  %20 = icmp ugt i64 %19, 15
+  br i1 %20, label %.noexc.i.i, label %._crit_edge.i.i.i
+
+.noexc.i.i:                                       ; preds = %18
   %i.af = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
           to label %.noexc78.a unwind label %bb.p ; 2 uses
 
@@ -2349,9 +2404,9 @@ bb.i:                                             ; preds = %_ZN4crow6loggerlsIA
   store i64 %i.ag, ptr %i.ae, align 8, !tbaa !102, !alias.scope !2664
   br label %._crit_edge.i.i.i
 
-._crit_edge.i.i.i:                                ; preds = %.noexc78.a, %bb.i
-  %i.ah = phi ptr [ %i.af, %.noexc78.a ], [ %i.ae, %bb.i ] ; 2 uses
-  switch i64 %17, label %bb.k [
+._crit_edge.i.i.i:                                ; preds = %.noexc78.a, %18
+  %i.ah = phi ptr [ %i.af, %.noexc78.a ], [ %i.ae, %18 ] ; 2 uses
+  switch i64 %19, label %bb.k [
     i64 1, label %bb.j
     i64 0, label %bb.l
   ]
@@ -2362,7 +2417,7 @@ bb.j:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.l
 
 bb.k:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ah, ptr nonnull align 1 %i.ad, i64 %17, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ah, ptr nonnull align 1 %i.ad, i64 %19, i1 false)
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %._crit_edge.i.i.i
@@ -2420,7 +2475,7 @@ bb.o:                                             ; preds = %bb.h, %bb.g, %bb.f
           cleanup
   br label %bb.r
 
-bb.p:                                             ; preds = %bb.m, %.noexc.i.i
+bb.p:                                             ; preds = %bb.m, %.noexc.i.i, %.noexc.i
   %i.az = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85

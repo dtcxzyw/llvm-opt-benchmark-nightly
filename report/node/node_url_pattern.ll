@@ -204,7 +204,7 @@ bb.a:
   %13 = alloca %"class.std::optional.529", align 8 ; 2 uses
   %14 = alloca %"class.std::optional.529", align 8 ; 2 uses
   %15 = alloca %"class.std::optional.529", align 8 ; 2 uses
-  %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
+  %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %17 = alloca %"class.ada::url_pattern", align 8 ; 63 uses
   %18 = alloca %"class.tl::expected.751", align 8 ; 7 uses
   %19 = alloca %"class.tl::expected.751", align 8 ; 7 uses
@@ -607,14 +607,22 @@ bb.ar:                                            ; preds = %bb.aq
   %i.fb = add i64 %i.ey, %i.fa
   %i.fc = and i64 %i.fb, 7
   %i.fd = getelementptr inbounds nuw [16 x i8], ptr @_ZN3ada6scheme7detailsL15is_special_listE, i64 %i.fc ; 2 uses
+  %.sroa.0129.0.copyload = load i64, ptr %i.fd, align 16 ; 3 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
   %i.fe = load i8, ptr %.sroa.4.0.copyload, align 1
   %i.ff = icmp eq i8 %i.fe, %i.ez
-  br i1 %i.ff, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit65, label %_ZN3ada6scheme10is_specialESt17basic_string_viewIcSt11char_traitsIcEE.exit.thread
+  br i1 %i.ff, label %30, label %_ZN3ada6scheme10is_specialESt17basic_string_viewIcSt11char_traitsIcEE.exit.thread
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit65: ; preds = %bb.ar
-  %.sroa.0129.0.copyload = load i64, ptr %i.fd, align 16 ; 2 uses
+30:                                               ; preds = %bb.ar
+  %31 = icmp eq i64 %.sroa.0129.0.copyload, 0
+  br i1 %31, label %32, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit65
+
+32:                                               ; preds = %30
+  call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.108, ptr noundef nonnull @.str.107, i64 noundef 1, i64 noundef 0) #25
+  unreachable
+
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit65: ; preds = %30
   %i.fg = add i64 %.sroa.0129.0.copyload, -1      ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload, i64 1
   %i.fi = getelementptr inbounds nuw i8, ptr %i.eu, i64 1 ; 2 uses
@@ -647,16 +655,24 @@ bb.au:                                            ; preds = %_ZN3ada6scheme10is_
   %i.fr = load i8, ptr %i.eu, align 1             ; 2 uses
   %i.fs = zext i8 %i.fr to i64
   %i.ft = add i64 %i.ey, %i.fs
-  %i.fu = and i64 %i.ft, 7                        ; 4 uses
+  %i.fu = and i64 %i.ft, 7                        ; 2 uses
   %i.fv = getelementptr inbounds nuw [16 x i8], ptr @_ZN3ada6scheme7detailsL15is_special_listE, i64 %i.fu ; 2 uses
+  %.sroa.0.0.copyload.i70 = load i64, ptr %i.fv, align 16 ; 3 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fv, i64 8
   %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 2 uses
   %i.fw = load i8, ptr %.sroa.4.0.copyload.i, align 1
   %i.fx = icmp eq i8 %i.fw, %i.fr
-  br i1 %i.fx, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit7.i, label %._crit_edge.i.i.thread177
+  br i1 %i.fx, label %33, label %._crit_edge.i.i.thread177
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit7.i: ; preds = %bb.au
-  %.sroa.0.0.copyload.i70 = load i64, ptr %i.fv, align 16 ; 2 uses
+33:                                               ; preds = %bb.au
+  %34 = icmp eq i64 %.sroa.0.0.copyload.i70, 0
+  br i1 %34, label %35, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit7.i
+
+35:                                               ; preds = %33
+  call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.108, ptr noundef nonnull @.str.107, i64 noundef 1, i64 noundef 0) #25
+  unreachable
+
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit7.i: ; preds = %33
   %i.fy = add i64 %.sroa.0.0.copyload.i70, -1     ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload.i, i64 1
   %i.ga = icmp eq i64 %.sroa.0.0.copyload.i70, %i.ew
@@ -673,28 +689,30 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i: ; preds = %bb.av
 
 _ZN3ada6scheme16get_special_portESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb.av, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i
   %i.gd = getelementptr inbounds nuw [2 x i8], ptr @_ZN3ada6scheme7detailsL13special_portsE, i64 %i.fu
-  %i.ge = load i16, ptr %i.gd, align 2
+  %i.ge = load i16, ptr %i.gd, align 2            ; 5 uses
   %i.gf = zext i16 %i.ge to i32                   ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !320)
-  %30 = shl nuw nsw i64 1, %i.fu
-  %31 = and i64 %30, 194
-  %.not181 = icmp eq i64 %31, 0
-  br i1 %.not181, label %.lr.ph.i.i, label %._crit_edge.i.i.thread177
+  %36 = icmp ult i16 %i.ge, 10
+  br i1 %36, label %._crit_edge.i.i.thread177, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZN3ada6scheme16get_special_portESt17basic_string_viewIcSt11char_traitsIcEE.exit
-  %32 = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 7 uses
-  store ptr %32, ptr %16, align 8, !alias.scope !320
-  %33 = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
-  switch i64 %i.fu, label %._crit_edge.i.i.thread [
-    i64 5, label %.lr.ph.preheader.i.i
-    i64 2, label %.lr.ph.preheader.i.i
-  ]
+  %37 = icmp ult i16 %i.ge, 100
+  br i1 %37, label %._crit_edge.i.i.thread, label %.lr.ph.preheader.i.i
 
-.lr.ph.preheader.i.i:                             ; preds = %.lr.ph.i.i, %.lr.ph.i.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %32, i8 45, i64 3, i1 false)
-  store i64 3, ptr %33, align 8, !alias.scope !320
-  %i.gg = getelementptr inbounds nuw i8, ptr %16, i64 19
+.lr.ph.preheader.i.i:                             ; preds = %.lr.ph.i.i
+  %38 = icmp ult i16 %i.ge, 1000
+  %39 = icmp ult i16 %i.ge, 10000
+  %spec.select = select i1 %39, i32 4, i32 5
+  %.022.i.i.ph.ph = select i1 %38, i32 3, i32 %spec.select ; 2 uses
+  %40 = zext nneg i32 %.022.i.i.ph.ph to i64      ; 5 uses
+  %41 = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 7 uses
+  store ptr %41, ptr %16, align 8, !alias.scope !320
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %41, i8 45, i64 %40, i1 false)
+  %42 = getelementptr inbounds nuw i8, ptr %16, i64 8
+  store i64 %40, ptr %42, align 8, !alias.scope !320
+  %i.gg = getelementptr inbounds nuw i8, ptr %41, i64 %40
   store i8 0, ptr %i.gg, align 1
+  %43 = add nsw i32 %.022.i.i.ph.ph, -1
   br label %.lr.ph.i11.i
 
 ._crit_edge.i.i.thread177:                        ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit7.i, %bb.au, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %_ZN3ada6scheme16get_special_portESt17basic_string_viewIcSt11char_traitsIcEE.exit
@@ -709,15 +727,18 @@ _ZN3ada6scheme16get_special_portESt17basic_string_viewIcSt11char_traitsIcEE.exit
   br label %bb.ax
 
 ._crit_edge.i.i.thread:                           ; preds = %.lr.ph.i.i
-  store i16 11565, ptr %32, align 8
-  store i64 2, ptr %33, align 8, !alias.scope !320
+  %44 = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 3 uses
+  store ptr %44, ptr %16, align 8, !alias.scope !320
+  store i16 11565, ptr %44, align 8
+  %45 = getelementptr inbounds nuw i8, ptr %16, i64 8
+  store i64 2, ptr %45, align 8, !alias.scope !320
   %i.gk = getelementptr inbounds nuw i8, ptr %16, i64 18
   store i8 0, ptr %i.gk, align 2
   br label %bb.aw
 
 .lr.ph.i11.i:                                     ; preds = %.lr.ph.i11.i, %.lr.ph.preheader.i.i
   %.020.i.i = phi i32 [ %i.gn, %.lr.ph.i11.i ], [ %i.gf, %.lr.ph.preheader.i.i ] ; 4 uses
-  %.01819.i.i = phi i32 [ %i.gy, %.lr.ph.i11.i ], [ 2, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.01819.i.i = phi i32 [ %i.gy, %.lr.ph.i11.i ], [ %43, %.lr.ph.preheader.i.i ] ; 3 uses
   %i.gl = urem i32 %.020.i.i, 100
   %i.gm = shl nuw nsw i32 %i.gl, 1
   %i.gn = udiv i32 %.020.i.i, 100                 ; 3 uses
@@ -726,12 +747,12 @@ _ZN3ada6scheme16get_special_portESt17basic_string_viewIcSt11char_traitsIcEE.exit
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 1
   %i.gr = load i8, ptr %i.gq, align 1, !noalias !320
   %i.gs = zext i32 %.01819.i.i to i64
-  %i.gt = getelementptr inbounds nuw i8, ptr %32, i64 %i.gs
-  store i8 %i.gr, ptr %i.gt, align 2
+  %i.gt = getelementptr inbounds nuw i8, ptr %41, i64 %i.gs
+  store i8 %i.gr, ptr %i.gt, align 1
   %i.gu = load i8, ptr %i.gp, align 2, !noalias !320
   %i.gv = add i32 %.01819.i.i, -1
   %i.gw = zext i32 %i.gv to i64
-  %i.gx = getelementptr inbounds nuw i8, ptr %32, i64 %i.gw
+  %i.gx = getelementptr inbounds nuw i8, ptr %41, i64 %i.gw
   store i8 %i.gu, ptr %i.gx, align 1
   %i.gy = add i32 %.01819.i.i, -2
   %i.gz = icmp samesign ugt i32 %.020.i.i, 9999
@@ -743,7 +764,8 @@ _ZN3ada6scheme16get_special_portESt17basic_string_viewIcSt11char_traitsIcEE.exit
 
 bb.aw:                                            ; preds = %._crit_edge.i.i.thread, %._crit_edge.i.i
   %.0.lcssa.i.i176 = phi i32 [ %i.gf, %._crit_edge.i.i.thread ], [ %i.gn, %._crit_edge.i.i ]
-  %i.hb = phi i64 [ 2, %._crit_edge.i.i.thread ], [ 3, %._crit_edge.i.i ]
+  %46 = phi ptr [ %44, %._crit_edge.i.i.thread ], [ %41, %._crit_edge.i.i ]
+  %i.hb = phi i64 [ 2, %._crit_edge.i.i.thread ], [ %40, %._crit_edge.i.i ]
   %i.hc = shl nuw nsw i32 %.0.lcssa.i.i176, 1
   %i.hd = zext nneg i32 %i.hc to i64
   %i.he = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.hd ; 2 uses
@@ -756,14 +778,14 @@ bb.aw:                                            ; preds = %._crit_edge.i.i.thr
 
 bb.ax:                                            ; preds = %._crit_edge.i.i.thread177, %._crit_edge.i.i
   %.0.lcssa.i.i179 = phi i32 [ %.1.i163, %._crit_edge.i.i.thread177 ], [ %i.gn, %._crit_edge.i.i ]
-  %i.hj = phi ptr [ %i.gh, %._crit_edge.i.i.thread177 ], [ %32, %._crit_edge.i.i ]
-  %i.hk = phi i64 [ 1, %._crit_edge.i.i.thread177 ], [ 3, %._crit_edge.i.i ]
+  %i.hj = phi ptr [ %i.gh, %._crit_edge.i.i.thread177 ], [ %41, %._crit_edge.i.i ]
+  %i.hk = phi i64 [ 1, %._crit_edge.i.i.thread177 ], [ %40, %._crit_edge.i.i ]
   %i.hl = trunc nuw nsw i32 %.0.lcssa.i.i179 to i8
   %i.hm = or disjoint i8 %i.hl, 48
   br label %_ZNSt7__cxx119to_stringEi.exit
 
 _ZNSt7__cxx119to_stringEi.exit:                   ; preds = %bb.aw, %bb.ax
-  %i.hn = phi ptr [ %i.hj, %bb.ax ], [ %32, %bb.aw ] ; 2 uses
+  %i.hn = phi ptr [ %i.hj, %bb.ax ], [ %46, %bb.aw ] ; 2 uses
   %i.ho = phi i64 [ %i.hk, %bb.ax ], [ %i.hb, %bb.aw ]
   %storemerge.i.i = phi i8 [ %i.hm, %bb.ax ], [ %i.hi, %bb.aw ]
   store i8 %storemerge.i.i, ptr %i.hn, align 1

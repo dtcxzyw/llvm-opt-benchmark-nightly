@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %tty_init_raw.exit.t
   %.not25.i.i.not.i.i = icmp eq i8 %.fr.i.i.i.i, 0
   br i1 %.not25.i.i.not.i.i, label %ic_strlen.exit.i.i.thread.i, label %.lr.ph.i.preheader.i.i.i.i
 
-ic_strnicmp.exit.i.i.thread.i.i:                  ; preds = %bb.o, %bb.p, %bb.q, %bb.r, %.lr.ph.i.preheader.i.i.i.i, %.lr.ph.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i.4
+ic_strnicmp.exit.i.i.thread.i.i:                  ; preds = %ic_strnicmp.exit.i.i.i.i
   %i.bo = add nuw nsw i64 %.01527.i.i.i.i, 1      ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !48  ; 2 uses
@@ -219,67 +219,94 @@ ic_strnicmp.exit.i.i.thread.i.i:                  ; preds = %bb.o, %bb.p, %bb.q,
   %i.bt = add i8 %i.br, -65
   %or.cond.i.i.i.i.i.i = icmp ult i8 %i.bt, 26
   %i.bu = add nuw nsw i8 %i.br, 32
-  %i.bv = select i1 %or.cond.i.i.i.i.i.i, i8 %i.bu, i8 %i.br
+  %i.bv = select i1 %or.cond.i.i.i.i.i.i, i8 %i.bu, i8 %i.br ; 2 uses
+  %.not.i.i.i.i.i = icmp slt i8 %i.bv, 117
+  %.1.i.i.i.i.i = select i1 %.not.i.i.i.i.i, i32 -1, i32 1 ; 2 uses
   %cond.i.i.i.i.i = icmp eq i8 %i.bv, 117
-  br i1 %cond.i.i.i.i.i, label %bb.o, label %ic_strnicmp.exit.i.i.thread.i.i
+  br i1 %cond.i.i.i.i.i, label %bb.o, label %ic_strnicmp.exit.i.i.i.i
 
 bb.o:                                             ; preds = %.lr.ph.i.preheader.i.i.i.i
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bs, i64 1
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !48  ; 4 uses
   %.not = icmp eq i8 %i.bx, 0
-  br i1 %.not, label %ic_strnicmp.exit.i.i.thread.i.i, label %.lr.ph.i.i.i.i.i.1
+  br i1 %.not, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.1
 
 .lr.ph.i.i.i.i.i.1:                               ; preds = %bb.o
   %i.by = add i8 %i.bx, -65
   %or.cond.i.i.i.i.i.i.1 = icmp ult i8 %i.by, 26
   %i.bz = add nuw nsw i8 %i.bx, 32
-  %i.ca = select i1 %or.cond.i.i.i.i.i.i.1, i8 %i.bz, i8 %i.bx
+  %i.ca = select i1 %or.cond.i.i.i.i.i.i.1, i8 %i.bz, i8 %i.bx ; 3 uses
+  %.not.i.i.i.i.i.1 = icmp slt i8 %i.ca, 116
+  %.not31.i.i.i.i.i.1 = icmp sgt i8 %i.ca, 116
+  %..024.i.i.i.i.i.1 = select i1 %.not31.i.i.i.i.i.1, i32 1, i32 %.1.i.i.i.i.i
+  %.1.i.i.i.i.i.1 = select i1 %.not.i.i.i.i.i.1, i32 -1, i32 %..024.i.i.i.i.i.1 ; 2 uses
   %cond.i.i.i.i.i.1 = icmp eq i8 %i.ca, 116
-  br i1 %cond.i.i.i.i.i.1, label %bb.p, label %ic_strnicmp.exit.i.i.thread.i.i
+  br i1 %cond.i.i.i.i.i.1, label %bb.p, label %ic_strnicmp.exit.i.i.i.i
 
 bb.p:                                             ; preds = %.lr.ph.i.i.i.i.i.1
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bs, i64 2
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !48  ; 4 uses
   %.not321 = icmp eq i8 %i.cc, 0
-  br i1 %.not321, label %ic_strnicmp.exit.i.i.thread.i.i, label %.lr.ph.i.i.i.i.i.2
+  br i1 %.not321, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.2
 
 .lr.ph.i.i.i.i.i.2:                               ; preds = %bb.p
   %i.cd = add i8 %i.cc, -65
   %or.cond.i.i.i.i.i.i.2 = icmp ult i8 %i.cd, 26
   %i.ce = add nuw nsw i8 %i.cc, 32
-  %i.cf = select i1 %or.cond.i.i.i.i.i.i.2, i8 %i.ce, i8 %i.cc
+  %i.cf = select i1 %or.cond.i.i.i.i.i.i.2, i8 %i.ce, i8 %i.cc ; 3 uses
+  %.not.i.i.i.i.i.2 = icmp slt i8 %i.cf, 102
+  %.not31.i.i.i.i.i.2 = icmp sgt i8 %i.cf, 102
+  %..024.i.i.i.i.i.2 = select i1 %.not31.i.i.i.i.i.2, i32 1, i32 %.1.i.i.i.i.i.1
+  %.1.i.i.i.i.i.2 = select i1 %.not.i.i.i.i.i.2, i32 -1, i32 %..024.i.i.i.i.i.2 ; 2 uses
   %cond.i.i.i.i.i.2 = icmp eq i8 %i.cf, 102
-  br i1 %cond.i.i.i.i.i.2, label %bb.q, label %ic_strnicmp.exit.i.i.thread.i.i
+  br i1 %cond.i.i.i.i.i.2, label %bb.q, label %ic_strnicmp.exit.i.i.i.i
 
 bb.q:                                             ; preds = %.lr.ph.i.i.i.i.i.2
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bs, i64 3
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !48  ; 4 uses
   %.not322 = icmp eq i8 %i.ch, 0
-  br i1 %.not322, label %ic_strnicmp.exit.i.i.thread.i.i, label %.lr.ph.i.i.i.i.i.3
+  br i1 %.not322, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.3
 
 .lr.ph.i.i.i.i.i.3:                               ; preds = %bb.q
   %i.ci = add i8 %i.ch, -65
   %or.cond.i.i.i.i.i.i.3 = icmp ult i8 %i.ci, 26
   %i.cj = add nuw nsw i8 %i.ch, 32
-  %i.ck = select i1 %or.cond.i.i.i.i.i.i.3, i8 %i.cj, i8 %i.ch
+  %i.ck = select i1 %or.cond.i.i.i.i.i.i.3, i8 %i.cj, i8 %i.ch ; 3 uses
+  %.not.i.i.i.i.i.3 = icmp slt i8 %i.ck, 45
+  %.not31.i.i.i.i.i.3 = icmp sgt i8 %i.ck, 45
+  %..024.i.i.i.i.i.3 = select i1 %.not31.i.i.i.i.i.3, i32 1, i32 %.1.i.i.i.i.i.2
+  %.1.i.i.i.i.i.3 = select i1 %.not.i.i.i.i.i.3, i32 -1, i32 %..024.i.i.i.i.i.3 ; 2 uses
   %cond.i.i.i.i.i.3 = icmp eq i8 %i.ck, 45
-  br i1 %cond.i.i.i.i.i.3, label %bb.r, label %ic_strnicmp.exit.i.i.thread.i.i
+  br i1 %cond.i.i.i.i.i.3, label %bb.r, label %ic_strnicmp.exit.i.i.i.i
 
 bb.r:                                             ; preds = %.lr.ph.i.i.i.i.i.3
   %i.cl = getelementptr inbounds nuw i8, ptr %i.bs, i64 4
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !48  ; 4 uses
   %.not323 = icmp eq i8 %i.cm, 0
-  br i1 %.not323, label %ic_strnicmp.exit.i.i.thread.i.i, label %.lr.ph.i.i.i.i.i.4
+  br i1 %.not323, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.4
 
 .lr.ph.i.i.i.i.i.4:                               ; preds = %bb.r
   %i.cn = add i8 %i.cm, -65
   %or.cond.i.i.i.i.i.i.4 = icmp ult i8 %i.cn, 26
   %i.co = add nuw nsw i8 %i.cm, 32
-  %i.cp = select i1 %or.cond.i.i.i.i.i.i.4, i8 %i.co, i8 %i.cm
+  %i.cp = select i1 %or.cond.i.i.i.i.i.i.4, i8 %i.co, i8 %i.cm ; 3 uses
+  %.not.i.i.i.i.i.4 = icmp slt i8 %i.cp, 56
+  %.not31.i.i.i.i.i.4 = icmp sgt i8 %i.cp, 56
+  %..024.i.i.i.i.i.4 = select i1 %.not31.i.i.i.i.i.4, i32 1, i32 %.1.i.i.i.i.i.3
+  %.1.i.i.i.i.i.4 = select i1 %.not.i.i.i.i.i.4, i32 -1, i32 %..024.i.i.i.i.i.4
   %cond.i.i.i.i.i.4 = icmp eq i8 %i.cp, 56
-  br i1 %cond.i.i.i.i.i.4, label %.thread40.i.i, label %ic_strnicmp.exit.i.i.thread.i.i
+  br i1 %cond.i.i.i.i.i.4, label %.thread40.i.i, label %ic_strnicmp.exit.i.i.i.i
 
-ic_strnicmp.exit.i.i23.thread.i.i:                ; preds = %bb.s, %bb.t, %bb.u, %.lr.ph.i.preheader.i.i11.i.i, %.lr.ph.i.i.i13.i.i.1, %.lr.ph.i.i.i13.i.i.2, %.lr.ph.i.i.i13.i.i.3
+._crit_edge.i.i.i.i.i:                            ; preds = %bb.o, %bb.p, %bb.q, %bb.r
+  %18 = sext i1 true to i32
+  br label %ic_strnicmp.exit.i.i.i.i
+
+ic_strnicmp.exit.i.i.i.i:                         ; preds = %.lr.ph.i.preheader.i.i.i.i, %.lr.ph.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i.4, %._crit_edge.i.i.i.i.i
+  %.3.i.i.i.i.i = phi i32 [ %18, %._crit_edge.i.i.i.i.i ], [ %.1.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ], [ %.1.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i.1 ], [ %.1.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.2 ], [ %.1.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i.3 ], [ %.1.i.i.i.i.i.4, %.lr.ph.i.i.i.i.i.4 ]
+  %19 = icmp eq i32 %.3.i.i.i.i.i, 0
+  br i1 %19, label %.thread40.i.i, label %ic_strnicmp.exit.i.i.thread.i.i
+
+ic_strnicmp.exit.i.i23.thread.i.i:                ; preds = %.lr.ph.i.i.i13.i.i.3, %.lr.ph.i.i.i13.i.i.2, %.lr.ph.i.i.i13.i.i.1, %.lr.ph.i.preheader.i.i11.i.i, %._crit_edge.i.i.i26.i.i
   %i.cq = add nuw nsw i64 %.01527.i.i12.i.i, 1    ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.cq
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !48  ; 2 uses
@@ -301,7 +328,7 @@ bb.s:                                             ; preds = %.lr.ph.i.preheader.
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cu, i64 1
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !48  ; 4 uses
   %.not339 = icmp eq i8 %i.cz, 0
-  br i1 %.not339, label %ic_strnicmp.exit.i.i23.thread.i.i, label %.lr.ph.i.i.i13.i.i.1
+  br i1 %.not339, label %._crit_edge.i.i.i26.i.i, label %.lr.ph.i.i.i13.i.i.1
 
 .lr.ph.i.i.i13.i.i.1:                             ; preds = %bb.s
   %i.da = add i8 %i.cz, -65
@@ -315,7 +342,7 @@ bb.t:                                             ; preds = %.lr.ph.i.i.i13.i.i.
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cu, i64 2
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !48  ; 4 uses
   %.not340 = icmp eq i8 %i.de, 0
-  br i1 %.not340, label %ic_strnicmp.exit.i.i23.thread.i.i, label %.lr.ph.i.i.i13.i.i.2
+  br i1 %.not340, label %._crit_edge.i.i.i26.i.i, label %.lr.ph.i.i.i13.i.i.2
 
 .lr.ph.i.i.i13.i.i.2:                             ; preds = %bb.t
   %i.df = add i8 %i.de, -65
@@ -329,7 +356,7 @@ bb.u:                                             ; preds = %.lr.ph.i.i.i13.i.i.
   %i.di = getelementptr inbounds nuw i8, ptr %i.cu, i64 3
   %i.dj = load i8, ptr %i.di, align 1, !tbaa !48  ; 4 uses
   %.not341 = icmp eq i8 %i.dj, 0
-  br i1 %.not341, label %ic_strnicmp.exit.i.i23.thread.i.i, label %.lr.ph.i.i.i13.i.i.3
+  br i1 %.not341, label %._crit_edge.i.i.i26.i.i, label %.lr.ph.i.i.i13.i.i.3
 
 .lr.ph.i.i.i13.i.i.3:                             ; preds = %bb.u
   %i.dk = add i8 %i.dj, -65
@@ -338,6 +365,10 @@ bb.u:                                             ; preds = %.lr.ph.i.i.i13.i.i.
   %i.dm = select i1 %or.cond.i.i.i.i16.i.i.3, i8 %i.dl, i8 %i.dj
   %cond.i.i.i22.i.i.3 = icmp eq i8 %i.dm, 56
   br i1 %cond.i.i.i22.i.i.3, label %.thread40.i.i, label %ic_strnicmp.exit.i.i23.thread.i.i
+
+._crit_edge.i.i.i26.i.i:                          ; preds = %bb.s, %bb.t, %bb.u
+  %20 = xor i1 true, true
+  br i1 %20, label %.thread40.i.i, label %ic_strnicmp.exit.i.i23.thread.i.i
 
 ic_strlen.exit.i.i.i:                             ; preds = %ic_strnicmp.exit.i.i23.thread.i.i
   %i.dn = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.bl) #29
@@ -362,7 +393,7 @@ ic_strlen.exit.i.i.thread.i:                      ; preds = %bb.n
   store i8 1, ptr %i.ds, align 1, !tbaa !201
   br label %tty_init_utf8.exit.i
 
-.thread40.i.i:                                    ; preds = %.lr.ph.i.i.i.i.i.4, %.lr.ph.i.i.i13.i.i.3
+.thread40.i.i:                                    ; preds = %ic_strnicmp.exit.i.i.i.i, %.lr.ph.i.i.i.i.i.4, %._crit_edge.i.i.i26.i.i, %.lr.ph.i.i.i13.i.i.3
   %i.dt = getelementptr inbounds nuw i8, ptr %i.z, i64 5
   store i8 1, ptr %i.dt, align 1, !tbaa !201
   br label %tty_init_utf8.exit.i

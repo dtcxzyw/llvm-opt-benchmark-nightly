@@ -204,7 +204,9 @@ bb.ei:                                            ; preds = %bb.eh
   %i.vt = add nsw i32 %i.vs, 1
   store i32 %i.vt, ptr %i.b, align 4, !tbaa !123
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.not106 = icmp eq i64 %indvars.iv.next, 12
+  %36 = getelementptr inbounds nuw [8 x i8], ptr @_ZN12_GLOBAL__N_112bullseyeHelpE, i64 %indvars.iv.next
+  %37 = load ptr, ptr %36, align 8, !tbaa !49
+  %.not106 = icmp eq ptr %37, null
   br i1 %.not106, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4lessIS5_ESaISt4pairIKS5_S5_EEE4findERS9_.exit.thread, label %._crit_edge.i.i319, !llvm.loop !1319
 
 bb.ej:                                            ; preds = %._crit_edge.i.i319

@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.m, label %.lr.ph.preheader.i, label %.critedge.i135
 
 .lr.ph.preheader.i:                               ; preds = %bb.f
-  %i.o = sub nuw i64 %1, %.promoted186
+  %i.o = sub nuw i64 %1, %.promoted186            ; 2 uses
+  %scevgep.i = getelementptr i8, ptr @.str.32, i64 %i.o
   %i.p = add i64 %.promoted186, 8                 ; 2 uses
   %i.q = add i8 %i.j, -65
   %or.cond.i.i = icmp ult i8 %i.q, 26
@@ -324,13 +325,14 @@ bb.n:                                             ; preds = %.lr.ph.i.7
   br i1 %exitcond.not.i.7, label %.critedge.i, label %.loopexit170
 
 .critedge.i:                                      ; preds = %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n
-  switch i64 %i.o, label %.lr.ph.preheader.i144 [
-    i64 8, label %.loopexit170
-    i64 3, label %.loopexit170
-  ]
+  %6 = icmp eq i64 %i.o, 3
+  %.pr.i = load i8, ptr %scevgep.i, align 1, !tbaa !273
+  %.not22.i = icmp eq i8 %.pr.i, 0
+  %or.cond164 = select i1 %.not22.i, i1 true, i1 %6
+  br i1 %or.cond164, label %.loopexit170, label %.lr.ph.preheader.i144
 
-.loopexit170:                                     ; preds = %.critedge.i, %.critedge.i, %bb.n
-  %.01930.i = phi i64 [ %1, %.critedge.i ], [ %i.p, %bb.n ], [ %1, %.critedge.i ] ; 2 uses
+.loopexit170:                                     ; preds = %bb.n, %.critedge.i
+  %.01930.i = phi i64 [ %1, %.critedge.i ], [ %i.p, %bb.n ] ; 2 uses
   store i64 %.01930.i, ptr %2, align 8, !tbaa !245
   %spec.select165 = select i1 %i.h, i32 -2147483647, i32 2147483647
   br label %bb.t

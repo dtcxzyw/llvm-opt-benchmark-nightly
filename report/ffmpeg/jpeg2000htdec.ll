@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %bb.af
 
 vlc_decode_u_prefix.exit166:                      ; preds = %bb.af, %bb.ag
   %i.jq = phi i8 [ %i.jo, %bb.af ], [ %.pre898.a, %bb.ag ]
-  %i.jr = load i64, ptr %i.eo, align 8, !tbaa !16 ; 3 uses
-  %i.js = and i64 %i.jr, 7                        ; 3 uses
+  %i.jr = load i64, ptr %i.eo, align 8, !tbaa !16 ; 2 uses
+  %i.js = and i64 %i.jr, 7                        ; 2 uses
   %i.jt = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.js
   %i.ju = load i8, ptr %i.jt, align 1, !tbaa !13  ; 2 uses
   %i.jv = zext nneg i8 %i.ju to i64
@@ -215,7 +215,7 @@ vlc_decode_u_prefix.exit166:                      ; preds = %bb.af, %bb.ag
   %i.jx = sub i8 %i.jq, %i.ju                     ; 3 uses
   store i8 %i.jx, ptr %i.ep, align 8, !tbaa !23
   %i.jy = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.js
-  %i.jz = load i8, ptr %i.jy, align 1, !tbaa !13
+  %i.jz = load i8, ptr %i.jy, align 1, !tbaa !13  ; 3 uses
   %i.ka = icmp ult i8 %i.jx, 3
   br i1 %i.ka, label %bb.ah, label %vlc_decode_u_prefix.exit165
 
@@ -227,8 +227,8 @@ bb.ah:                                            ; preds = %vlc_decode_u_prefix
 
 vlc_decode_u_prefix.exit165:                      ; preds = %vlc_decode_u_prefix.exit166, %bb.ah
   %i.kb = phi i8 [ %i.jx, %vlc_decode_u_prefix.exit166 ], [ %.pre900.a, %bb.ah ]
-  %i.kc = phi i64 [ %i.jw, %vlc_decode_u_prefix.exit166 ], [ %.pre899.a, %bb.ah ] ; 3 uses
-  %i.kd = and i64 %i.kc, 7                        ; 3 uses
+  %i.kc = phi i64 [ %i.jw, %vlc_decode_u_prefix.exit166 ], [ %.pre899.a, %bb.ah ] ; 2 uses
+  %i.kd = and i64 %i.kc, 7                        ; 2 uses
   %i.ke = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.kd
   %i.kf = load i8, ptr %i.ke, align 1, !tbaa !13  ; 2 uses
   %i.kg = zext nneg i8 %i.kf to i64
@@ -237,11 +237,10 @@ vlc_decode_u_prefix.exit165:                      ; preds = %vlc_decode_u_prefix
   %i.ki = sub i8 %i.kb, %i.kf                     ; 4 uses
   store i8 %i.ki, ptr %i.ep, align 8, !tbaa !23
   %i.kj = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.kd
-  %i.kk = load i8, ptr %i.kj, align 1, !tbaa !13
-  %i.kl = icmp ne i64 %i.js, 4
-  %11 = and i64 %i.jr, 3
-  %.not514 = icmp eq i64 %11, 0
-  br i1 %.not514, label %bb.ai, label %vlc_decode_u_suffix.exit181
+  %i.kk = load i8, ptr %i.kj, align 1, !tbaa !13  ; 3 uses
+  %i.kl = icmp ne i8 %i.jz, 3
+  %11 = icmp ult i8 %i.jz, 3
+  br i1 %11, label %vlc_decode_u_suffix.exit181, label %bb.ai
 
 bb.ai:                                            ; preds = %vlc_decode_u_prefix.exit165
   %i.km = icmp ult i8 %i.ki, 5
@@ -278,10 +277,9 @@ vlc_decode_u_suffix.exit181:                      ; preds = %vlc_decode_u_prefix
   %i.lc = phi i64 [ %i.kw, %bb.ak ], [ %i.kh, %vlc_decode_u_prefix.exit165 ] ; 2 uses
   %i.ld = phi i8 [ %i.kx, %bb.ak ], [ %i.ki, %vlc_decode_u_prefix.exit165 ] ; 3 uses
   %.0.i180 = phi i8 [ %i.lb, %bb.ak ], [ 0, %vlc_decode_u_prefix.exit165 ] ; 2 uses
-  %i.le = icmp ne i64 %i.kd, 4
-  %12 = and i64 %i.kc, 3
-  %.not516 = icmp eq i64 %12, 0
-  br i1 %.not516, label %bb.al, label %vlc_decode_u_suffix.exit179
+  %i.le = icmp ne i8 %i.kk, 3
+  %12 = icmp ult i8 %i.kk, 3
+  br i1 %12, label %vlc_decode_u_suffix.exit179, label %bb.al
 
 bb.al:                                            ; preds = %vlc_decode_u_suffix.exit181
   %i.lf = icmp ult i8 %i.ld, 5
@@ -388,8 +386,8 @@ bb.ar:                                            ; preds = %bb.aq
 
 vlc_decode_u_prefix.exit164:                      ; preds = %bb.aq, %bb.ar
   %i.nf = phi i8 [ %i.jo, %bb.aq ], [ %.pre909.a, %bb.ar ] ; 2 uses
-  %i.ng = load i64, ptr %i.eo, align 8, !tbaa !16 ; 3 uses
-  %i.nh = and i64 %i.ng, 7                        ; 3 uses
+  %i.ng = load i64, ptr %i.eo, align 8, !tbaa !16 ; 2 uses
+  %i.nh = and i64 %i.ng, 7                        ; 2 uses
   %i.ni = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.nh
   %i.nj = load i8, ptr %i.ni, align 1, !tbaa !13  ; 3 uses
   %i.nk = zext nneg i8 %i.nj to i64
@@ -398,10 +396,9 @@ vlc_decode_u_prefix.exit164:                      ; preds = %bb.aq, %bb.ar
   %i.nm = sub i8 %i.nf, %i.nj                     ; 4 uses
   store i8 %i.nm, ptr %i.ep, align 8, !tbaa !23
   %i.nn = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.nh
-  %i.no = load i8, ptr %i.nn, align 1, !tbaa !13
-  %13 = and i64 %i.ng, 3
-  %14 = icmp eq i64 %13, 0
-  br i1 %14, label %bb.as, label %bb.ax
+  %i.no = load i8, ptr %i.nn, align 1, !tbaa !13  ; 3 uses
+  %13 = icmp ugt i8 %i.no, 2
+  br i1 %13, label %bb.as, label %bb.ax
 
 bb.as:                                            ; preds = %vlc_decode_u_prefix.exit164
   %i.np = icmp eq i8 %i.nf, %i.nj
@@ -423,7 +420,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   %i.nu = trunc i64 %i.nr to i32
   %i.nv = and i32 %i.nu, 1
   %i.nw = add nuw nsw i32 %i.nv, 1
-  %i.nx = icmp ne i64 %i.nh, 4
+  %i.nx = icmp ne i8 %i.no, 3
   %i.ny = icmp ult i8 %i.nt, 5
   br i1 %i.ny, label %bb.av, label %vlc_decode_u_suffix.exit
 
@@ -489,8 +486,8 @@ bb.ay:                                            ; preds = %bb.ax
 
 vlc_decode_u_suffix.exit177:                      ; preds = %bb.ay, %bb.ax
   %i.pa = phi i8 [ %.pre911, %bb.ay ], [ %i.nm, %bb.ax ]
-  %i.pb = phi i64 [ %.pre910, %bb.ay ], [ %i.nl, %bb.ax ] ; 3 uses
-  %i.pc = and i64 %i.pb, 7                        ; 3 uses
+  %i.pb = phi i64 [ %.pre910, %bb.ay ], [ %i.nl, %bb.ax ] ; 2 uses
+  %i.pc = and i64 %i.pb, 7                        ; 2 uses
   %i.pd = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.pc
   %i.pe = load i8, ptr %i.pd, align 1, !tbaa !13  ; 2 uses
   %i.pf = zext nneg i8 %i.pe to i64
@@ -499,11 +496,10 @@ vlc_decode_u_suffix.exit177:                      ; preds = %bb.ay, %bb.ax
   %i.ph = sub i8 %i.pa, %i.pe                     ; 4 uses
   store i8 %i.ph, ptr %i.ep, align 8, !tbaa !23
   %i.pi = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.pc
-  %i.pj = load i8, ptr %i.pi, align 1, !tbaa !13
-  %i.pk = icmp ne i64 %i.pc, 4
-  %15 = and i64 %i.pb, 3
-  %.not518 = icmp eq i64 %15, 0
-  br i1 %.not518, label %bb.az, label %jpeg2000_bitbuf_get_bits_lsb.exit211
+  %i.pj = load i8, ptr %i.pi, align 1, !tbaa !13  ; 3 uses
+  %i.pk = icmp ne i8 %i.pj, 3
+  %14 = icmp ult i8 %i.pj, 3
+  br i1 %14, label %jpeg2000_bitbuf_get_bits_lsb.exit211, label %bb.az
 
 bb.az:                                            ; preds = %vlc_decode_u_suffix.exit177
   %i.pl = icmp ult i8 %i.ph, 5
@@ -593,8 +589,8 @@ bb.bg:                                            ; preds = %bb.bf
 
 vlc_decode_u_prefix.exit167:                      ; preds = %bb.bf, %bb.bg
   %i.qv = phi i8 [ %i.qt, %bb.bf ], [ %.pre, %bb.bg ]
-  %i.qw = load i64, ptr %i.eo, align 8, !tbaa !16 ; 3 uses
-  %i.qx = and i64 %i.qw, 7                        ; 3 uses
+  %i.qw = load i64, ptr %i.eo, align 8, !tbaa !16 ; 2 uses
+  %i.qx = and i64 %i.qw, 7                        ; 2 uses
   %i.qy = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.qx
   %i.qz = load i8, ptr %i.qy, align 1, !tbaa !13  ; 2 uses
   %i.ra = zext nneg i8 %i.qz to i64
@@ -603,11 +599,10 @@ vlc_decode_u_prefix.exit167:                      ; preds = %bb.bf, %bb.bg
   %i.rc = sub i8 %i.qv, %i.qz                     ; 4 uses
   store i8 %i.rc, ptr %i.ep, align 8, !tbaa !23
   %i.rd = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.qx
-  %i.re = load i8, ptr %i.rd, align 1, !tbaa !13
-  %i.rf = icmp ne i64 %i.qx, 4
-  %16 = and i64 %i.qw, 3
-  %.not512 = icmp eq i64 %16, 0
-  br i1 %.not512, label %bb.bh, label %jpeg2000_bitbuf_get_bits_lsb.exit203
+  %i.re = load i8, ptr %i.rd, align 1, !tbaa !13  ; 3 uses
+  %i.rf = icmp ne i8 %i.re, 3
+  %15 = icmp ult i8 %i.re, 3
+  br i1 %15, label %jpeg2000_bitbuf_get_bits_lsb.exit203, label %bb.bh
 
 bb.bh:                                            ; preds = %vlc_decode_u_prefix.exit167
   %i.rg = icmp ult i8 %i.rc, 5
@@ -1010,8 +1005,8 @@ bb.cs:                                            ; preds = %bb.cr
 vlc_decode_u_prefix.exit168:                      ; preds = %bb.cr, %bb.cs
   %i.aju = phi i8 [ %i.ajs, %bb.cr ], [ %.pre922.a, %bb.cs ]
   %i.ajv = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 6 uses
-  %i.ajw = load i64, ptr %i.ajv, align 8, !tbaa !16 ; 3 uses
-  %i.ajx = and i64 %i.ajw, 7                      ; 3 uses
+  %i.ajw = load i64, ptr %i.ajv, align 8, !tbaa !16 ; 2 uses
+  %i.ajx = and i64 %i.ajw, 7                      ; 2 uses
   %i.ajy = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.ajx
   %i.ajz = load i8, ptr %i.ajy, align 1, !tbaa !13 ; 2 uses
   %i.aka = zext nneg i8 %i.ajz to i64
@@ -1020,11 +1015,10 @@ vlc_decode_u_prefix.exit168:                      ; preds = %bb.cr, %bb.cs
   %i.akc = sub i8 %i.aju, %i.ajz                  ; 4 uses
   store i8 %i.akc, ptr %i.ajr, align 8, !tbaa !23
   %i.akd = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.ajx
-  %i.ake = load i8, ptr %i.akd, align 1, !tbaa !13
-  %i.akf = icmp ne i64 %i.ajx, 4
-  %17 = and i64 %i.ajw, 3
-  %.not495 = icmp eq i64 %17, 0
-  br i1 %.not495, label %bb.ct, label %jpeg2000_bitbuf_get_bits_lsb.exit201
+  %i.ake = load i8, ptr %i.akd, align 1, !tbaa !13 ; 3 uses
+  %i.akf = icmp ne i8 %i.ake, 3
+  %16 = icmp ult i8 %i.ake, 3
+  br i1 %16, label %jpeg2000_bitbuf_get_bits_lsb.exit201, label %bb.ct
 
 bb.ct:                                            ; preds = %vlc_decode_u_prefix.exit168
   %i.akg = icmp ult i8 %i.akc, 5
@@ -1427,8 +1421,8 @@ bb.dx:                                            ; preds = %bb.dw
 
 vlc_decode_u_prefix.exit170:                      ; preds = %bb.dw, %bb.dx
   %i.azn = phi i8 [ %i.azl, %bb.dw ], [ %.pre933.a, %bb.dx ]
-  %i.azo = load i64, ptr %i.atx, align 8, !tbaa !16 ; 3 uses
-  %i.azp = and i64 %i.azo, 7                      ; 3 uses
+  %i.azo = load i64, ptr %i.atx, align 8, !tbaa !16 ; 2 uses
+  %i.azp = and i64 %i.azo, 7                      ; 2 uses
   %i.azq = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.azp
   %i.azr = load i8, ptr %i.azq, align 1, !tbaa !13 ; 2 uses
   %i.azs = zext nneg i8 %i.azr to i64
@@ -1437,7 +1431,7 @@ vlc_decode_u_prefix.exit170:                      ; preds = %bb.dw, %bb.dx
   %i.azu = sub i8 %i.azn, %i.azr                  ; 3 uses
   store i8 %i.azu, ptr %i.atw, align 8, !tbaa !23
   %i.azv = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.azp
-  %i.azw = load i8, ptr %i.azv, align 1, !tbaa !13
+  %i.azw = load i8, ptr %i.azv, align 1, !tbaa !13 ; 3 uses
   %i.azx = icmp ult i8 %i.azu, 3
   br i1 %i.azx, label %bb.dy, label %vlc_decode_u_prefix.exit169
 
@@ -1449,8 +1443,8 @@ bb.dy:                                            ; preds = %vlc_decode_u_prefix
 
 vlc_decode_u_prefix.exit169:                      ; preds = %vlc_decode_u_prefix.exit170, %bb.dy
   %i.azy = phi i8 [ %i.azu, %vlc_decode_u_prefix.exit170 ], [ %.pre935.a, %bb.dy ]
-  %i.azz = phi i64 [ %i.azt, %vlc_decode_u_prefix.exit170 ], [ %.pre934.a, %bb.dy ] ; 3 uses
-  %i.baa = and i64 %i.azz, 7                      ; 3 uses
+  %i.azz = phi i64 [ %i.azt, %vlc_decode_u_prefix.exit170 ], [ %.pre934.a, %bb.dy ] ; 2 uses
+  %i.baa = and i64 %i.azz, 7                      ; 2 uses
   %i.bab = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.baa
   %i.bac = load i8, ptr %i.bab, align 1, !tbaa !13 ; 2 uses
   %i.bad = zext nneg i8 %i.bac to i64
@@ -1459,11 +1453,10 @@ vlc_decode_u_prefix.exit169:                      ; preds = %vlc_decode_u_prefix
   %i.baf = sub i8 %i.azy, %i.bac                  ; 4 uses
   store i8 %i.baf, ptr %i.atw, align 8, !tbaa !23
   %i.bag = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.baa
-  %i.bah = load i8, ptr %i.bag, align 1, !tbaa !13
-  %i.bai = icmp ne i64 %i.azp, 4
-  %18 = and i64 %i.azo, 3
-  %.not504 = icmp eq i64 %18, 0
-  br i1 %.not504, label %bb.dz, label %vlc_decode_u_suffix.exit189
+  %i.bah = load i8, ptr %i.bag, align 1, !tbaa !13 ; 3 uses
+  %i.bai = icmp ne i8 %i.azw, 3
+  %17 = icmp ult i8 %i.azw, 3
+  br i1 %17, label %vlc_decode_u_suffix.exit189, label %bb.dz
 
 bb.dz:                                            ; preds = %vlc_decode_u_prefix.exit169
   %i.baj = icmp ult i8 %i.baf, 5
@@ -1500,10 +1493,9 @@ vlc_decode_u_suffix.exit189:                      ; preds = %vlc_decode_u_prefix
   %i.baz = phi i64 [ %i.bat, %bb.eb ], [ %i.bae, %vlc_decode_u_prefix.exit169 ] ; 2 uses
   %i.bba = phi i8 [ %i.bau, %bb.eb ], [ %i.baf, %vlc_decode_u_prefix.exit169 ] ; 3 uses
   %.0.i188 = phi i8 [ %i.bay, %bb.eb ], [ 0, %vlc_decode_u_prefix.exit169 ] ; 2 uses
-  %i.bbb = icmp ne i64 %i.baa, 4
-  %19 = and i64 %i.azz, 3
-  %.not506 = icmp eq i64 %19, 0
-  br i1 %.not506, label %bb.ec, label %vlc_decode_u_suffix.exit187
+  %i.bbb = icmp ne i8 %i.bah, 3
+  %18 = icmp ult i8 %i.bah, 3
+  br i1 %18, label %vlc_decode_u_suffix.exit187, label %bb.ec
 
 bb.ec:                                            ; preds = %vlc_decode_u_suffix.exit189
   %i.bbc = icmp ult i8 %i.bba, 5
@@ -1614,8 +1606,8 @@ bb.ej:                                            ; preds = %bb.ei
 
 vlc_decode_u_prefix.exit171:                      ; preds = %bb.ei, %bb.ej
   %i.bdc = phi i8 [ %i.bda, %bb.ei ], [ %.pre928, %bb.ej ]
-  %i.bdd = load i64, ptr %i.atx, align 8, !tbaa !16 ; 3 uses
-  %i.bde = and i64 %i.bdd, 7                      ; 3 uses
+  %i.bdd = load i64, ptr %i.atx, align 8, !tbaa !16 ; 2 uses
+  %i.bde = and i64 %i.bdd, 7                      ; 2 uses
   %i.bdf = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.bde
   %i.bdg = load i8, ptr %i.bdf, align 1, !tbaa !13 ; 2 uses
   %i.bdh = zext nneg i8 %i.bdg to i64
@@ -1624,11 +1616,10 @@ vlc_decode_u_prefix.exit171:                      ; preds = %bb.ei, %bb.ej
   %i.bdj = sub i8 %i.bdc, %i.bdg                  ; 4 uses
   store i8 %i.bdj, ptr %i.atw, align 8, !tbaa !23
   %i.bdk = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.bde
-  %i.bdl = load i8, ptr %i.bdk, align 1, !tbaa !13
-  %i.bdm = icmp ne i64 %i.bde, 4
-  %20 = and i64 %i.bdd, 3
-  %.not502 = icmp eq i64 %20, 0
-  br i1 %.not502, label %bb.ek, label %jpeg2000_bitbuf_get_bits_lsb.exit195
+  %i.bdl = load i8, ptr %i.bdk, align 1, !tbaa !13 ; 3 uses
+  %i.bdm = icmp ne i8 %i.bdl, 3
+  %19 = icmp ult i8 %i.bdl, 3
+  br i1 %19, label %jpeg2000_bitbuf_get_bits_lsb.exit195, label %bb.ek
 
 bb.ek:                                            ; preds = %vlc_decode_u_prefix.exit171
   %i.bdn = icmp ult i8 %i.bdj, 5
@@ -2031,8 +2022,8 @@ bb.ga:                                            ; preds = %bb.fz
 
 vlc_decode_u_prefix.exit172:                      ; preds = %bb.fz, %bb.ga
   %i.bzz = phi i8 [ %i.bzx, %bb.fz ], [ %.pre944, %bb.ga ]
-  %i.caa = load i64, ptr %i.atx, align 8, !tbaa !16 ; 3 uses
-  %i.cab = and i64 %i.caa, 7                      ; 3 uses
+  %i.caa = load i64, ptr %i.atx, align 8, !tbaa !16 ; 2 uses
+  %i.cab = and i64 %i.caa, 7                      ; 2 uses
   %i.cac = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.drop_bits, i64 %i.cab
   %i.cad = load i8, ptr %i.cac, align 1, !tbaa !13 ; 2 uses
   %i.cae = zext nneg i8 %i.cad to i64
@@ -2041,11 +2032,10 @@ vlc_decode_u_prefix.exit172:                      ; preds = %bb.fz, %bb.ga
   %i.cag = sub i8 %i.bzz, %i.cad                  ; 4 uses
   store i8 %i.cag, ptr %i.atw, align 8, !tbaa !23
   %i.cah = getelementptr inbounds nuw i8, ptr @vlc_decode_u_prefix.return_value, i64 %i.cab
-  %i.cai = load i8, ptr %i.cah, align 1, !tbaa !13
-  %i.caj = icmp ne i64 %i.cab, 4
-  %21 = and i64 %i.caa, 3
-  %.not498 = icmp eq i64 %21, 0
-  br i1 %.not498, label %bb.gb, label %jpeg2000_bitbuf_get_bits_lsb.exit
+  %i.cai = load i8, ptr %i.cah, align 1, !tbaa !13 ; 3 uses
+  %i.caj = icmp ne i8 %i.cai, 3
+  %20 = icmp ult i8 %i.cai, 3
+  br i1 %20, label %jpeg2000_bitbuf_get_bits_lsb.exit, label %bb.gb
 
 bb.gb:                                            ; preds = %vlc_decode_u_prefix.exit172
   %i.cak = icmp ult i8 %i.cag, 5

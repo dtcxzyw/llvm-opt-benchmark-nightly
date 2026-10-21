@@ -205,29 +205,28 @@ bb.ad:                                            ; preds = %bb.ac
   %i.dk = select i1 %i.dh, ptr %i.dj, ptr null, !prof !98
   %i.dl = sdiv i64 %i.cb, 8
   %i.dm = getelementptr inbounds i8, ptr %i.dk, i64 %i.dl ; 4 uses
-  %i.dn = srem i64 %i.cb, 8                       ; 3 uses
-  %.not.i26 = icmp eq i64 %i.dn, 0
+  %i.dn = srem i64 %i.cb, 8                       ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL8kBitmaskE, i64 %i.dn
+  %12 = load i8, ptr %11, align 1, !tbaa !106     ; 3 uses
+  %.not.i26 = icmp eq i8 %12, 1
   br i1 %.not.i26, label %bb.ag, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.do = load i8, ptr %i.dm, align 1, !tbaa !106
-  %i.dp = trunc nsw i64 %i.dn to i8
+  %i.dp = trunc nuw nsw i64 %i.dn to i8
   %notmask.i = shl nsw i8 -1, %i.dp
   %i.dq = xor i8 %notmask.i, -1
   %i.dr = and i8 %i.do, %i.dq                     ; 2 uses
+  %13 = icmp ne i8 %12, 0
   %i.ds = icmp sgt i64 %i.cz, 0
-  br i1 %i.ds, label %.lr.ph.i, label %._crit_edge.i
+  %14 = and i1 %i.ds, %13
+  br i1 %14, label %bb.af, label %._crit_edge.i
 
-.lr.ph.i:                                         ; preds = %bb.ae
-  %11 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL8kBitmaskE, i64 %i.dn
-  %12 = load i8, ptr %11, align 1, !tbaa !106
-  br label %bb.af
-
-bb.af:                                            ; preds = %bb.af, %.lr.ph.i
-  %i.dt = phi i64 [ 0, %.lr.ph.i ], [ %i.du, %bb.af ] ; 2 uses
-  %.03549.i = phi i64 [ %i.cz, %.lr.ph.i ], [ %i.eb, %bb.af ] ; 2 uses
-  %.03648.i = phi i8 [ %12, %.lr.ph.i ], [ %i.ea, %bb.af ] ; 2 uses
-  %.04047.i = phi i8 [ %i.dr, %.lr.ph.i ], [ %i.dz, %bb.af ]
+bb.af:                                            ; preds = %bb.ae, %bb.af
+  %i.dt = phi i64 [ %i.du, %bb.af ], [ 0, %bb.ae ] ; 2 uses
+  %.03549.i = phi i64 [ %i.eb, %bb.af ], [ %i.cz, %bb.ae ] ; 2 uses
+  %.03648.i = phi i8 [ %i.ea, %bb.af ], [ %12, %bb.ae ] ; 2 uses
+  %.04047.i = phi i8 [ %i.dz, %bb.af ], [ %i.dr, %bb.ae ]
   %i.du = add nuw nsw i64 %i.dt, 1                ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.cw, i64 %i.dt
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !106
@@ -630,8 +629,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = sdiv i64 %1, 8
   %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 4 uses
-  %i.d = srem i64 %1, 8                           ; 3 uses
-  %.not = icmp eq i64 %i.d, 0
+  %i.d = srem i64 %1, 8                           ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL8kBitmaskE, i64 %i.d
+  %5 = load i8, ptr %4, align 1, !tbaa !106       ; 3 uses
+  %.not = icmp eq i8 %5, 1
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -640,12 +641,12 @@ bb.c:                                             ; preds = %bb.b
   %notmask = shl nsw i8 -1, %i.f
   %i.g = xor i8 %notmask, -1
   %i.h = and i8 %i.e, %i.g                        ; 2 uses
+  %6 = icmp ne i8 %5, 0
   %i.i = icmp sgt i64 %2, 0
-  br i1 %i.i, label %.lr.ph, label %._crit_edge
+  %7 = and i1 %6, %i.i
+  br i1 %7, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL8kBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !106
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !332
   %i.l = load ptr, ptr %3, align 8, !tbaa !1278, !nonnull !155, !align !226

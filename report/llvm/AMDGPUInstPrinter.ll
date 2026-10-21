@@ -204,12 +204,16 @@ bb.h:                                             ; preds = %_ZN4llvm11raw_ostre
 
 _ZN4llvm11raw_ostreamlsEPKc.exit11:               ; preds = %bb.g, %bb.h
   %i.ak = icmp samesign ult i64 %i.g, 5
-  br i1 %i.ak, label %_ZN4llvm9StringRefC2EPKc.exit.i, label %bb.l
+  br i1 %i.ak, label %6, label %bb.l
 
-_ZN4llvm9StringRefC2EPKc.exit.i:                  ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit11
-  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZN4llvm6AMDGPU8WMMAModsL12ModMatrixFmtE, i64 %i.g
-  %7 = load ptr, ptr %6, align 8, !tbaa !83       ; 3 uses
-  %i.al = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %7) #16 ; 5 uses
+6:                                                ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit11
+  %7 = getelementptr inbounds nuw [8 x i8], ptr @_ZN4llvm6AMDGPU8WMMAModsL12ModMatrixFmtE, i64 %i.g
+  %8 = load ptr, ptr %7, align 8, !tbaa !83       ; 4 uses
+  %.not.i.i = icmp eq ptr %8, null
+  br i1 %.not.i.i, label %_ZN4llvm11raw_ostreamlsEPKc.exit14, label %_ZN4llvm9StringRefC2EPKc.exit.i
+
+_ZN4llvm9StringRefC2EPKc.exit.i:                  ; preds = %6
+  %i.al = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %8) #16 ; 5 uses
   %i.am = load ptr, ptr %i.i, align 8, !tbaa !42
   %i.an = load ptr, ptr %i.k, align 8, !tbaa !41  ; 2 uses
   %i.ao = ptrtoint ptr %i.am to i64
@@ -219,7 +223,7 @@ _ZN4llvm9StringRefC2EPKc.exit.i:                  ; preds = %_ZN4llvm11raw_ostre
   br i1 %i.ar, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i
-  %i.as = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull %7, i64 noundef %i.al) #16 ; 0 uses
+  %i.as = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull %8, i64 noundef %i.al) #16 ; 0 uses
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit14
 
 bb.j:                                             ; preds = %_ZN4llvm9StringRefC2EPKc.exit.i
@@ -227,7 +231,7 @@ bb.j:                                             ; preds = %_ZN4llvm9StringRefC
   br i1 %.not.i2.i12, label %_ZN4llvm11raw_ostreamlsEPKc.exit14, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.an, ptr nonnull align 1 %7, i64 %i.al, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.an, ptr nonnull align 1 %8, i64 %i.al, i1 false)
   %i.at = load ptr, ptr %i.k, align 8, !tbaa !41
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.al
   store ptr %i.au, ptr %i.k, align 8, !tbaa !41
@@ -237,7 +241,7 @@ bb.l:                                             ; preds = %_ZN4llvm11raw_ostre
   %i.av = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.g) #16 ; 0 uses
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit14
 
-_ZN4llvm11raw_ostreamlsEPKc.exit14:               ; preds = %bb.k, %bb.j, %bb.i, %bb.l, %bb.a
+_ZN4llvm11raw_ostreamlsEPKc.exit14:               ; preds = %bb.k, %bb.j, %bb.i, %6, %bb.l, %bb.a
   ret void
 }
 
@@ -442,22 +446,26 @@ _ZN4llvm11raw_ostreamlsEc.exit:                   ; preds = %bb.e, %bb.f
 
 bb.g:                                             ; preds = %_ZN4llvm11raw_ostreamlsEc.exit
   %i.ah = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i, ptr noundef nonnull @.str.124, i64 noundef 11) #16 ; 0 uses
-  br label %_ZN4llvm11raw_ostreamlsEPKc.exit11.a
+  br label %_ZN4llvm11raw_ostreamlsEPKc.exit11
 
 bb.h:                                             ; preds = %_ZN4llvm11raw_ostreamlsEc.exit
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.ac, ptr noundef nonnull align 1 dereferenceable(11) @.str.124, i64 11, i1 false)
   %i.ai = load ptr, ptr %i.ab, align 8, !tbaa !41
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 11
   store ptr %i.aj, ptr %i.ab, align 8, !tbaa !41
-  br label %_ZN4llvm11raw_ostreamlsEPKc.exit11.a
+  br label %_ZN4llvm11raw_ostreamlsEPKc.exit11
 
-_ZN4llvm11raw_ostreamlsEPKc.exit11.a:             ; preds = %bb.g, %bb.h
-  %.not.a = icmp eq i64 %i.g, 3
-  br i1 %.not.a, label %bb.l, label %_ZN4llvm9StringRefC2EPKc.exit.i
+_ZN4llvm11raw_ostreamlsEPKc.exit11:               ; preds = %bb.g, %bb.h
+  %.not = icmp eq i64 %i.g, 3
+  br i1 %.not, label %bb.l, label %_ZN4llvm11raw_ostreamlsEPKc.exit11.a
+
+_ZN4llvm11raw_ostreamlsEPKc.exit11.a:             ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit11
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZN4llvm6AMDGPU8WMMAModsL17ModMatrixScaleFmtE, i64 %i.g
+  %7 = load ptr, ptr %6, align 8, !tbaa !83       ; 4 uses
+  %.not.a = icmp eq ptr %7, null
+  br i1 %.not.a, label %_ZN4llvm11raw_ostreamlsEPKc.exit14, label %_ZN4llvm9StringRefC2EPKc.exit.i
 
 _ZN4llvm9StringRefC2EPKc.exit.i:                  ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit11.a
-  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZN4llvm6AMDGPU8WMMAModsL17ModMatrixScaleFmtE, i64 %i.g
-  %7 = load ptr, ptr %6, align 8, !tbaa !83       ; 3 uses
   %i.ak = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %7) #16 ; 5 uses
   %i.al = load ptr, ptr %i.i, align 8, !tbaa !42
   %i.am = load ptr, ptr %i.k, align 8, !tbaa !41  ; 2 uses
@@ -482,11 +490,11 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.at, ptr %i.k, align 8, !tbaa !41
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit14
 
-bb.l:                                             ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit11.a
+bb.l:                                             ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit11
   %i.au = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef 3) #16 ; 0 uses
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit14
 
-_ZN4llvm11raw_ostreamlsEPKc.exit14:               ; preds = %bb.k, %bb.j, %bb.i, %bb.l, %bb.a
+_ZN4llvm11raw_ostreamlsEPKc.exit14:               ; preds = %bb.k, %bb.j, %bb.i, %_ZN4llvm11raw_ostreamlsEPKc.exit11.a, %bb.l, %bb.a
   ret void
 }
 

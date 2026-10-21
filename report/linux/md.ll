@@ -205,14 +205,21 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.ax = load i8, ptr %i.av, align 1
   switch i8 %i.ax, label %bb.t [
-    i8 0, label %bb.r
-    i8 10, label %bb.r
+    i8 0, label %3
+    i8 10, label %3
   ]
 
-bb.r:                                             ; preds = %bb.q, %bb.q
-  %3 = and i64 %i.an, 4294967294
-  %.not56 = icmp eq i64 %3, 0
-  br i1 %.not56, label %bb.s, label %bb.t
+3:                                                ; preds = %bb.q, %bb.q
+  %sext = shl i64 %i.an, 32
+  %4 = ashr exact i64 %sext, 32                   ; 2 uses
+  %5 = icmp ugt i64 %4, 1
+  br i1 %5, label %bb.t, label %bb.r
+
+bb.r:                                             ; preds = %3
+  %6 = getelementptr [56 x i8], ptr @super_types, i64 %4
+  %7 = load ptr, ptr %6, align 8
+  %.not56 = icmp eq ptr %7, null
+  br i1 %.not56, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.ay = getelementptr i8, ptr %0, i64 196
@@ -224,13 +231,13 @@ bb.s:                                             ; preds = %bb.r
   store i32 0, ptr %i.h, align 4
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.q, %bb.m, %bb.r, %bb.p, %bb.n, %bb.o, %bb.f, %bb.s, %bb.i
-  %.not58 = phi i64 [ %2, %bb.i ], [ %2, %bb.m ], [ -22, %bb.n ], [ -22, %bb.o ], [ -22, %bb.p ], [ -22, %bb.q ], [ -2, %bb.r ], [ -16, %bb.f ], [ %2, %bb.s ]
+bb.t:                                             ; preds = %bb.q, %bb.m, %3, %bb.r, %bb.p, %bb.n, %bb.o, %bb.f, %bb.s, %bb.i
+  %.not57 = phi i64 [ %2, %bb.i ], [ %2, %bb.m ], [ -22, %bb.n ], [ -22, %bb.o ], [ -22, %bb.p ], [ -22, %bb.q ], [ -2, %3 ], [ -2, %bb.r ], [ %2, %bb.s ], [ -16, %bb.f ]
   call void @mddev_unlock(ptr noundef %0) #30
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %mddev_lock.exit
-  %.044 = phi i64 [ %i.g, %mddev_lock.exit ], [ %.not58, %bb.t ]
+  %.044 = phi i64 [ %i.g, %mddev_lock.exit ], [ %.not57, %bb.t ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   ret i64 %.044
 }

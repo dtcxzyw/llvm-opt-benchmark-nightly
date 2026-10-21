@@ -23,7 +23,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 3) i32 @syncrep_yyparse(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %union.YYSTYPE, align 8             ; 5 uses
+  %3 = alloca %union.YYSTYPE, align 8             ; 6 uses
   %i.a = alloca [200 x i8], align 16              ; 6 uses
   %4 = alloca [200 x %union.YYSTYPE], align 16    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
@@ -32,19 +32,21 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   br label %bb.c
 
-bb.b:                                             ; preds = %bb.ah, %bb.r
-  %.0219.in = phi i8 [ %i.as, %bb.r ], [ %.in, %bb.ah ]
-  %.0199 = phi ptr [ %.3202, %bb.r ], [ %i.cg, %bb.ah ]
-  %.0187 = phi ptr [ %i.at, %bb.r ], [ %i.ch, %bb.ah ]
-  %.0176 = phi i32 [ -2, %bb.r ], [ %.4, %bb.ah ]
+bb.b:                                             ; preds = %35, %bb.ah, %bb.r
+  %.0219.in = phi i8 [ %27, %35 ], [ %.in, %bb.ah ], [ %i.as, %bb.r ]
+  %.0216 = phi i32 [ 3, %35 ], [ %.1217, %bb.ah ], [ %.2218, %bb.r ]
+  %.0199 = phi ptr [ %.4203, %35 ], [ %i.cg, %bb.ah ], [ %.3202, %bb.r ]
+  %.0187 = phi ptr [ %36, %35 ], [ %i.ch, %bb.ah ], [ %i.at, %bb.r ]
+  %.0176 = phi i32 [ %.6, %35 ], [ %.4, %bb.ah ], [ -2, %bb.r ]
   %.0219 = sext i8 %.0219.in to i32
   %i.b = getelementptr inbounds nuw i8, ptr %.0199, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1220 = phi i32 [ 0, %bb.a ], [ %.0219, %bb.b ] ; 3 uses
+  %.1220 = phi i32 [ 0, %bb.a ], [ %.0219, %bb.b ] ; 4 uses
+  %.1217 = phi i32 [ 0, %bb.a ], [ %.0216, %bb.b ] ; 3 uses
   %.0213 = phi i64 [ 200, %bb.a ], [ %.2215, %bb.b ] ; 4 uses
-  %.0207 = phi ptr [ %i.a, %bb.a ], [ %.3210, %bb.b ] ; 8 uses
+  %.0207 = phi ptr [ %i.a, %bb.a ], [ %.3210, %bb.b ] ; 7 uses
   %.1200 = phi ptr [ %i.a, %bb.a ], [ %i.b, %bb.b ] ; 4 uses
   %.0195 = phi ptr [ %4, %bb.a ], [ %.3198, %bb.b ] ; 2 uses
   %.1188 = phi ptr [ %4, %bb.a ], [ %.0187, %bb.b ]
@@ -62,7 +64,7 @@ bb.d:                                             ; preds = %bb.c
   %i.h = sub i64 %i.f, %i.g                       ; 3 uses
   %i.i = add i64 %i.h, 1                          ; 3 uses
   %i.j = icmp sgt i64 %.0213, 9999
-  br i1 %i.j, label %.thread286.sink.split, label %bb.e
+  br i1 %i.j, label %38, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.k = shl i64 %.0213, 1
@@ -71,7 +73,7 @@ bb.e:                                             ; preds = %bb.d
   %i.m = add i64 %i.l, 7
   %i.n = call ptr @palloc(i64 noundef %i.m) #7    ; 6 uses
   %.not234.not = icmp eq ptr %i.n, null
-  br i1 %.not234.not, label %.thread286.sink.split, label %bb.f
+  br i1 %.not234.not, label %38, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr align 1 %.0207, i64 %i.i, i1 false)
@@ -97,10 +99,10 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 .thread263:                                       ; preds = %bb.h, %bb.c
   %.2215 = phi i64 [ %.0213, %bb.c ], [ %spec.store.select, %bb.h ]
-  %.3210 = phi ptr [ %.0207, %bb.c ], [ %i.n, %bb.h ] ; 4 uses
-  %.3202 = phi ptr [ %.1200, %bb.c ], [ %i.s, %bb.h ] ; 2 uses
+  %.3210 = phi ptr [ %.0207, %bb.c ], [ %i.n, %bb.h ] ; 5 uses
+  %.3202 = phi ptr [ %.1200, %bb.c ], [ %i.s, %bb.h ] ; 3 uses
   %.3198 = phi ptr [ %.0195, %bb.c ], [ %i.q, %bb.h ]
-  %.3190 = phi ptr [ %.1188, %bb.c ], [ %i.u, %bb.h ] ; 16 uses
+  %.3190 = phi ptr [ %.1188, %bb.c ], [ %i.u, %bb.h ] ; 17 uses
   %i.w = icmp eq i32 %.1220, 12
   br i1 %i.w, label %.thread286, label %bb.i
 
@@ -129,7 +131,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ag = icmp eq i32 %.2, 256
-  br i1 %i.ag, label %.thread286, label %bb.n
+  br i1 %i.ag, label %10, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ah = icmp samesign ult i32 %.2, 263
@@ -160,16 +162,17 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.ar = getelementptr inbounds nuw i8, ptr @yytable, i64 %i.an
   %i.as = load i8, ptr %i.ar, align 1
+  %.2218 = call i32 @llvm.usub.sat.i32(i32 %.1217, i32 1)
   %i.at = getelementptr inbounds nuw i8, ptr %.3190, i64 8 ; 2 uses
   %i.au = load i64, ptr %3, align 8
   store i64 %i.au, ptr %i.at, align 8
   br label %bb.b
 
 bb.s:                                             ; preds = %bb.p, %bb.q, %bb.i
-  %.4 = phi i32 [ %.1177, %bb.i ], [ %.3, %bb.p ], [ %.3, %bb.q ]
+  %.4 = phi i32 [ %.1177, %bb.i ], [ %.3, %bb.p ], [ %.3, %bb.q ] ; 6 uses
   %i.av = and i64 %i.ab, 3386937
   %.not240 = icmp eq i64 %i.av, 0
-  br i1 %.not240, label %bb.t, label %.thread286.sink.split
+  br i1 %.not240, label %bb.t, label %5
 
 bb.t:                                             ; preds = %bb.s
   %i.aw = getelementptr inbounds i8, ptr @yydefact, i64 %i.x
@@ -287,28 +290,93 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %.in = load i8, ptr %.in.in, align 1
   br label %bb.b
 
-.thread286.sink.split:                            ; preds = %bb.e, %bb.d, %bb.s
-  %.str.1.sink = phi ptr [ @.str.1, %bb.s ], [ @.str.4, %bb.d ], [ @.str.4, %bb.e ]
-  %.0185284.ph = phi i32 [ 1, %bb.s ], [ 2, %bb.d ], [ 2, %bb.e ]
-  %.5212278.ph = phi ptr [ %.3210, %bb.s ], [ %.0207, %bb.d ], [ %.0207, %bb.e ]
-  call void @syncrep_yyerror(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %.str.1.sink) #7
+5:                                                ; preds = %bb.s
+  switch i32 %.1217, label %10 [
+    i32 0, label %.thread270
+    i32 3, label %6
+  ]
+
+.thread270:                                       ; preds = %5
+  call void @syncrep_yyerror(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull @.str.1) #7
+  br label %10
+
+6:                                                ; preds = %5
+  %7 = icmp slt i32 %.4, 1
+  br i1 %7, label %8, label %10
+
+8:                                                ; preds = %6
+  %9 = icmp eq i32 %.4, 0
+  br i1 %9, label %.thread286, label %10
+
+10:                                               ; preds = %5, %6, %.thread270, %bb.m, %8
+  %.6 = phi i32 [ %.4, %8 ], [ %.4, %.thread270 ], [ %.4, %5 ], [ 257, %bb.m ], [ -2, %6 ]
+  br label %11
+
+11:                                               ; preds = %.thread286.sink.split, %10
+  %.2221 = phi i32 [ %.1220, %10 ], [ %34, %.thread286.sink.split ]
+  %.4203 = phi ptr [ %.3202, %10 ], [ %32, %.thread286.sink.split ] ; 3 uses
+  %.4191 = phi ptr [ %.3190, %10 ], [ %31, %.thread286.sink.split ] ; 2 uses
+  %12 = sext i32 %.2221 to i64                    ; 3 uses
+  %13 = shl nuw i64 1, %12
+  %14 = and i64 %13, 13390146
+  %.not242 = icmp eq i64 %14, 0
+  %15 = lshr i64 3386936, %12
+  %16 = trunc i64 %15 to i1
+  %or.cond = select i1 %.not242, i1 %16, i1 false
+  br i1 %or.cond, label %17, label %29
+
+17:                                               ; preds = %11
+  %18 = getelementptr inbounds i8, ptr @yypact, i64 %12
+  %19 = load i8, ptr %18, align 1
+  %20 = sext i8 %19 to i64
+  %21 = add nsw i64 %20, 1                        ; 2 uses
+  %22 = getelementptr inbounds i8, ptr @yycheck, i64 %21
+  %23 = load i8, ptr %22, align 1
+  %24 = icmp eq i8 %23, 1
+  br i1 %24, label %25, label %29
+
+25:                                               ; preds = %17
+  %26 = getelementptr inbounds i8, ptr @yytable, i64 %21
+  %27 = load i8, ptr %26, align 1                 ; 2 uses
+  %28 = icmp sgt i8 %27, 0
+  br i1 %28, label %35, label %29
+
+29:                                               ; preds = %17, %25, %11
+  %30 = icmp eq ptr %.4203, %.3210
+  br i1 %30, label %.thread286, label %.thread286.sink.split
+
+.thread286.sink.split:                            ; preds = %29
+  %31 = getelementptr inbounds i8, ptr %.4191, i64 -8
+  %32 = getelementptr inbounds i8, ptr %.4203, i64 -1 ; 2 uses
+  %33 = load i8, ptr %32, align 1
+  %34 = sext i8 %33 to i32
+  br label %11
+
+35:                                               ; preds = %25
+  %36 = getelementptr inbounds nuw i8, ptr %.4191, i64 8 ; 2 uses
+  %37 = load i64, ptr %3, align 8
+  store i64 %37, ptr %36, align 8
+  br label %bb.b
+
+38:                                               ; preds = %bb.d, %bb.e
+  call void @syncrep_yyerror(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull @.str.4) #7
   br label %.thread286
 
-.thread286:                                       ; preds = %.thread263, %bb.h, %bb.m, %.thread286.sink.split
-  %.0185284 = phi i32 [ %.0185284.ph, %.thread286.sink.split ], [ 1, %bb.h ], [ 1, %bb.m ], [ 0, %.thread263 ]
-  %.5212278 = phi ptr [ %.5212278.ph, %.thread286.sink.split ], [ %i.n, %bb.h ], [ %.3210, %bb.m ], [ %.3210, %.thread263 ] ; 2 uses
-  %.not245 = icmp eq ptr %.5212278, %i.a
+.thread286:                                       ; preds = %.thread263, %bb.h, %8, %29, %38
+  %.0185286 = phi i32 [ 1, %29 ], [ 2, %38 ], [ 1, %bb.h ], [ 0, %.thread263 ], [ 1, %8 ]
+  %.5212280 = phi ptr [ %.3210, %29 ], [ %.0207, %38 ], [ %i.n, %bb.h ], [ %.3210, %.thread263 ], [ %.3210, %8 ] ; 2 uses
+  %.not245 = icmp eq ptr %.5212280, %i.a
   br i1 %.not245, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %.thread286
-  call void @pfree(ptr noundef %.5212278) #7
+  call void @pfree(ptr noundef %.5212280) #7
   br label %bb.aj
 
 bb.aj:                                            ; preds = %.thread286, %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
-  ret i32 %.0185284
+  ret i32 %.0185286
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -425,6 +493,9 @@ declare i64 @__isoc23_strtol(ptr noundef, ptr noundef, i32 noundef) local_unname
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.usub.sat.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

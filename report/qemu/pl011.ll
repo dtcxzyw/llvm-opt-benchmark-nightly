@@ -204,15 +204,12 @@ bb.ab:                                            ; preds = %.thread, %bb.aa
   %i.cc = phi i32 [ %i.bw, %.thread ], [ %i.by, %bb.aa ]
   %i.cd = phi i32 [ %.0.ph.in, %.thread ], [ %i.bx, %bb.aa ] ; 2 uses
   %.025.a = phi i64 [ %.0.ph, %.thread ], [ %.0, %bb.aa ] ; 2 uses
+  %3 = getelementptr inbounds nuw [8 x i8], ptr @pl011_regname.rname, i64 %i.cb
+  %4 = load ptr, ptr %3, align 8
   %i.ce = shl nuw nsw i64 1, %i.cb
   %i.cf = and i64 %i.ce, 188
   %.not.not.i = icmp eq i64 %i.cf, 0
-  br i1 %.not.not.i, label %3, label %bb.ac
-
-3:                                                ; preds = %bb.ab
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @pl011_regname.rname, i64 %i.cb
-  %5 = load ptr, ptr %4, align 8
-  br label %pl011_regname.exit
+  br i1 %.not.not.i, label %pl011_regname.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.cg = phi i32 [ %i.cc, %bb.ab ], [ %i.by, %bb.aa ]
@@ -223,10 +220,10 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %.str.26..str.27.i = select i1 %or.cond.i, ptr @.str.26, ptr @.str.27
   br label %pl011_regname.exit
 
-pl011_regname.exit:                               ; preds = %3, %bb.ac
-  %i.cj = phi i32 [ %i.cd, %3 ], [ %i.ch, %bb.ac ]
-  %.023 = phi i64 [ %.025.a, %3 ], [ %.024.a, %bb.ac ]
-  %.0.i = phi ptr [ %5, %3 ], [ %.str.26..str.27.i, %bb.ac ]
+pl011_regname.exit:                               ; preds = %bb.ab, %bb.ac
+  %i.cj = phi i32 [ %i.cd, %bb.ab ], [ %i.ch, %bb.ac ]
+  %.023 = phi i64 [ %.025.a, %bb.ab ], [ %.024.a, %bb.ac ]
+  %.0.i = phi ptr [ %4, %bb.ab ], [ %.str.26..str.27.i, %bb.ac ]
   %i.ck = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i = icmp eq i32 %i.ck, 0
   br i1 %.not.i, label %trace_pl011_read.exit, label %bb.ad, !prof !7
@@ -243,7 +240,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not3.i, label %trace_pl011_read.exit, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.11, i64 noundef %1, i32 noundef %i.cj, ptr noundef %.0.i) #4
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.11, i64 noundef %1, i32 noundef %i.cj, ptr noundef nonnull %.0.i) #4
   br label %trace_pl011_read.exit
 
 trace_pl011_read.exit:                            ; preds = %pl011_regname.exit, %bb.ad, %bb.ae, %bb.af
@@ -258,20 +255,15 @@ bb.a:
   %i.c = trunc i64 %2 to i32                      ; 16 uses
   %i.d = lshr i64 %1, 2                           ; 3 uses
   %i.e = trunc i64 %i.d to i32
-  %i.f = and i64 %i.d, 4294967295                 ; 3 uses
+  %i.f = and i64 %i.d, 4294967295                 ; 2 uses
   %i.g = icmp samesign ult i64 %i.f, 19
   br i1 %i.g, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %4 = shl nuw nsw i64 1, %i.f
-  %5 = and i64 %4, 188
-  %.not.not.i = icmp eq i64 %5, 0
-  br i1 %.not.not.i, label %6, label %bb.c
-
-6:                                                ; preds = %bb.b
-  %7 = getelementptr inbounds nuw [8 x i8], ptr @pl011_regname.rname, i64 %i.f
-  %8 = load ptr, ptr %7, align 8
-  br label %pl011_regname.exit
+  %4 = getelementptr inbounds nuw [8 x i8], ptr @pl011_regname.rname, i64 %i.f
+  %5 = load ptr, ptr %4, align 8                  ; 2 uses
+  %.not.not.i = icmp eq ptr %5, null
+  br i1 %.not.not.i, label %bb.c, label %pl011_regname.exit
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.h = add i32 %i.e, -1016
@@ -279,8 +271,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.str.26..str.27.i = select i1 %or.cond.i, ptr @.str.26, ptr @.str.27
   br label %pl011_regname.exit
 
-pl011_regname.exit:                               ; preds = %6, %bb.c
-  %.0.i = phi ptr [ %8, %6 ], [ %.str.26..str.27.i, %bb.c ]
+pl011_regname.exit:                               ; preds = %bb.b, %bb.c
+  %.0.i = phi ptr [ %5, %bb.b ], [ %.str.26..str.27.i, %bb.c ]
   %i.i = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i = icmp eq i32 %i.i, 0
   br i1 %.not.i, label %trace_pl011_write.exit, label %bb.d, !prof !7
@@ -297,7 +289,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not3.i, label %trace_pl011_write.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.30, i64 noundef %1, i32 noundef %i.c, ptr noundef %.0.i) #4
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.30, i64 noundef %1, i32 noundef %i.c, ptr noundef nonnull %.0.i) #4
   br label %trace_pl011_write.exit
 
 trace_pl011_write.exit:                           ; preds = %pl011_regname.exit, %bb.d, %bb.e, %bb.f

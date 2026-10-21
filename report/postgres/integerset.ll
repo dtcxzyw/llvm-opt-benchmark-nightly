@@ -21,10 +21,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @intset_create() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @palloc(i64 noundef 5968) #11 ; 9 uses
+  %i.a = tail call ptr @palloc(i64 noundef 5968) #10 ; 9 uses
   %i.b = load ptr, ptr @CurrentMemoryContext, align 8
   store ptr %i.b, ptr %i.a, align 8
-  %i.c = tail call i64 @GetMemoryChunkSpace(ptr noundef nonnull %i.a) #11
+  %i.c = tail call i64 @GetMemoryChunkSpace(ptr noundef nonnull %i.a) #10
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.c, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -72,9 +72,9 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #12 ; 0 uses
-  %i.e = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str) #11 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 372, ptr noundef nonnull @__func__.intset_add_member) #11
+  %i.d = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
+  %i.e = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str) #10 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 372, ptr noundef nonnull @__func__.intset_add_member) #10
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -90,9 +90,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not12, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #12 ; 0 uses
-  %i.k = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2) #11 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 375, ptr noundef nonnull @__func__.intset_add_member) #11
+  %i.j = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
+  %i.k = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 375, ptr noundef nonnull @__func__.intset_add_member) #10
   unreachable
 
 bb.f:                                             ; preds = %bb.d, %bb.c
@@ -111,8 +111,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.t = load ptr, ptr %0, align 8
-  %i.u = tail call ptr @MemoryContextAlloc(ptr noundef %i.t, i64 noundef 1040) #11 ; 8 uses
-  %i.v = tail call i64 @GetMemoryChunkSpace(ptr noundef %i.u) #11
+  %i.u = tail call ptr @MemoryContextAlloc(ptr noundef %i.t, i64 noundef 1040) #10 ; 8 uses
+  %i.v = tail call i64 @GetMemoryChunkSpace(ptr noundef %i.u) #10
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8
   %i.y = add i64 %i.x, %i.v
@@ -290,8 +290,8 @@ simple8b_encode.exit.i:                           ; preds = %._crit_edge.i.i, %.
 
 bb.p:                                             ; preds = %simple8b_encode.exit.i
   %i.ct = load ptr, ptr %0, align 8
-  %i.cu = tail call ptr @MemoryContextAlloc(ptr noundef %i.ct, i64 noundef 1040) #11 ; 8 uses
-  %i.cv = tail call i64 @GetMemoryChunkSpace(ptr noundef %i.cu) #11
+  %i.cu = tail call ptr @MemoryContextAlloc(ptr noundef %i.ct, i64 noundef 1040) #10 ; 8 uses
+  %i.cv = tail call i64 @GetMemoryChunkSpace(ptr noundef %i.cu) #10
   %i.cw = load i64, ptr %i.ae, align 8
   %i.cx = add i64 %i.cw, %i.cv
   store i64 %i.cx, ptr %i.ae, align 8
@@ -323,9 +323,9 @@ bb.q:                                             ; preds = %tailrecurse.i.i
   br i1 %i.dc, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.dd = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #12, !inline_history !6 ; 0 uses
-  %i.de = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.3) #11, !inline_history !6 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 497, ptr noundef nonnull @__func__.intset_update_upper) #11, !inline_history !6
+  %i.dd = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11, !inline_history !6 ; 0 uses
+  %i.de = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.3) #10, !inline_history !6 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 497, ptr noundef nonnull @__func__.intset_update_upper) #10, !inline_history !6
   unreachable
 
 bb.s:                                             ; preds = %bb.q
@@ -338,8 +338,8 @@ bb.s:                                             ; preds = %bb.q
   %.0.in.i.i = getelementptr inbounds nuw i8, ptr %i.df, i64 %.0.in.v.i.i
   %.0.i43.i = load i64, ptr %.0.in.i.i, align 8
   %i.dj = load ptr, ptr %0, align 8
-  %i.dk = tail call ptr @MemoryContextAlloc(ptr noundef %i.dj, i64 noundef 1032) #11, !inline_history !6 ; 8 uses
-  %i.dl = tail call i64 @GetMemoryChunkSpace(ptr noundef %i.dk) #11, !inline_history !6
+  %i.dk = tail call ptr @MemoryContextAlloc(ptr noundef %i.dj, i64 noundef 1032) #10, !inline_history !6 ; 8 uses
+  %i.dl = tail call i64 @GetMemoryChunkSpace(ptr noundef %i.dk) #10, !inline_history !6
   %i.dm = load i64, ptr %i.ae, align 8
   %i.dn = add i64 %i.dm, %i.dl
   store i64 %i.dn, ptr %i.ae, align 8
@@ -368,8 +368,8 @@ bb.t:                                             ; preds = %bb.s, %tailrecurse.
 bb.u:                                             ; preds = %bb.t
   %i.dy = getelementptr inbounds [8 x i8], ptr %i.q, i64 %.pre-phi.i.i
   %i.dz = load ptr, ptr %0, align 8
-  %i.ea = tail call ptr @MemoryContextAlloc(ptr noundef %i.dz, i64 noundef 1032) #11, !inline_history !6 ; 7 uses
-  %i.eb = tail call i64 @GetMemoryChunkSpace(ptr noundef %i.ea) #11, !inline_history !6
+  %i.ea = tail call ptr @MemoryContextAlloc(ptr noundef %i.dz, i64 noundef 1032) #10, !inline_history !6 ; 7 uses
+  %i.eb = tail call i64 @GetMemoryChunkSpace(ptr noundef %i.ea) #10, !inline_history !6
   %i.ec = load i64, ptr %i.ae, align 8
   %i.ed = add i64 %i.ec, %i.eb
   store i64 %i.ed, ptr %i.ae, align 8
@@ -600,18 +600,19 @@ bb.g:                                             ; preds = %intset_binsrch_leaf
 
 bb.h:                                             ; preds = %bb.g
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 8
-  %i.bi = load i64, ptr %i.bh, align 8            ; 4 uses
+  %i.bi = load i64, ptr %i.bh, align 8            ; 3 uses
   %i.bj = lshr i64 %i.bi, 60
   %i.bk = getelementptr inbounds nuw [2 x i8], ptr @simple8b_modes, i64 %i.bj ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 1
-  %i.bm = load i8, ptr %i.bl, align 1             ; 2 uses
-  %i.bn = load i8, ptr %i.bk, align 2
+  %i.bm = load i8, ptr %i.bl, align 1             ; 3 uses
+  %2 = zext i8 %i.bm to i32
+  %i.bn = load i8, ptr %i.bk, align 2             ; 2 uses
   %i.bo = icmp eq i64 %i.bi, 1152921504606846975
   br i1 %i.bo, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %2 = icmp ult i64 %i.bi, 2305843009213693952
-  br i1 %2, label %bb.j, label %.lr.ph.preheader.i
+  %3 = icmp eq i8 %i.bn, 0
+  br i1 %3, label %bb.j, label %.lr.ph.preheader.i
 
 bb.j:                                             ; preds = %bb.i
   %i.bp = sub i64 %1, %i.bf
@@ -623,11 +624,10 @@ bb.j:                                             ; preds = %bb.i
   %i.bs = zext i8 %i.bn to i64                    ; 2 uses
   %notmask.i = shl nsw i64 -1, %i.bs
   %i.bt = xor i64 %notmask.i, -1
-  %3 = tail call i8 @llvm.umax.i8(i8 %i.bm, i8 1)
-  %umax.i = zext i8 %3 to i32
-  br label %.lr.ph.i58
+  %.not3842.not.i = icmp eq i8 %i.bm, 0
+  br i1 %.not3842.not.i, label %.critedge, label %.lr.ph.i58
 
-.lr.ph.i58:                                       ; preds = %bb.k, %.lr.ph.preheader.i
+.lr.ph.i58:                                       ; preds = %.lr.ph.preheader.i, %bb.k
   %.045.i = phi i32 [ %i.by, %bb.k ], [ 0, %.lr.ph.preheader.i ]
   %.02844.i = phi i64 [ %i.bw, %bb.k ], [ %i.bf, %.lr.ph.preheader.i ]
   %.03243.i = phi i64 [ %i.bx, %bb.k ], [ %i.bi, %.lr.ph.preheader.i ] ; 2 uses
@@ -640,15 +640,15 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.lr.ph.i58
   %i.bx = lshr i64 %.03243.i, %i.bs
   %i.by = add nuw nsw i32 %.045.i, 1              ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.by, %umax.i
+  %exitcond.not.i = icmp eq i32 %i.by, %2
   br i1 %exitcond.not.i, label %.critedge, label %.lr.ph.i58, !llvm.loop !13
 
 .split.loop.exit39.i:                             ; preds = %.lr.ph.i58
   %i.bz = icmp eq i64 %i.bw, %1
   br label %.critedge
 
-.critedge:                                        ; preds = %.lr.ph, %intset_binsrch_uint64.exit54, %bb.k, %._crit_edge, %.split.loop.exit39.i, %bb.j, %bb.h, %bb.g, %intset_binsrch_leaf.exit, %bb.d, %intset_binsrch_uint64.exit, %bb.c
-  %.2 = phi i1 [ false, %intset_binsrch_uint64.exit ], [ %i.r, %bb.c ], [ %i.bz, %.split.loop.exit39.i ], [ false, %bb.d ], [ false, %intset_binsrch_leaf.exit ], [ false, %bb.k ], [ true, %bb.g ], [ false, %._crit_edge ], [ false, %bb.h ], [ %i.br, %bb.j ], [ false, %intset_binsrch_uint64.exit54 ], [ false, %.lr.ph ]
+.critedge:                                        ; preds = %.lr.ph, %intset_binsrch_uint64.exit54, %bb.k, %._crit_edge, %.split.loop.exit39.i, %.lr.ph.preheader.i, %bb.j, %bb.h, %bb.g, %intset_binsrch_leaf.exit, %bb.d, %intset_binsrch_uint64.exit, %bb.c
+  %.2 = phi i1 [ false, %intset_binsrch_uint64.exit ], [ %i.r, %bb.c ], [ false, %.lr.ph.preheader.i ], [ false, %bb.d ], [ false, %intset_binsrch_leaf.exit ], [ false, %bb.k ], [ true, %bb.g ], [ false, %._crit_edge ], [ false, %bb.h ], [ %i.br, %bb.j ], [ %i.bz, %.split.loop.exit39.i ], [ false, %intset_binsrch_uint64.exit54 ], [ false, %.lr.ph ]
   ret i1 %.2
 }
 
@@ -730,23 +730,23 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.ac, ptr %i.f, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.ae = load i64, ptr %i.ad, align 8            ; 4 uses
-  %i.af = lshr i64 %i.ae, 60                      ; 2 uses
+  %i.af = lshr i64 %i.ae, 60
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr @simple8b_modes, i64 %i.af ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 1
-  %i.ai = load i8, ptr %i.ah, align 1
-  %2 = zext i8 %i.ai to i32                       ; 2 uses
+  %i.ai = load i8, ptr %i.ah, align 1             ; 5 uses
   %i.aj = load i8, ptr %i.ag, align 2
   %i.ak = zext i8 %i.aj to i64                    ; 3 uses
   %notmask.i = shl nsw i64 -1, %i.ak
   %i.al = xor i64 %notmask.i, -1                  ; 3 uses
-  %i.am = icmp eq i64 %i.ae, 1152921504606846975
-  br i1 %i.am, label %.backedge.thread, label %.lr.ph.preheader.i
+  %2 = icmp eq i64 %i.ae, 1152921504606846975
+  %i.am = icmp eq i8 %i.ai, 0
+  %or.cond.i = select i1 %2, i1 true, i1 %i.am
+  br i1 %or.cond.i, label %.backedge.thread, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.d
-  %umax.i = tail call i32 @llvm.umax.i32(i32 %2, i32 1) ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %umax.i to i64 ; 2 uses
+  %wide.trip.count.i = zext i8 %i.ai to i64       ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
-  %i.an = icmp eq i64 %i.af, 15
+  %i.an = icmp eq i8 %i.ai, 1
   br i1 %i.an, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
@@ -784,7 +784,7 @@ simple8b_decode.exit.loopexit.unr-lcssa:          ; preds = %.lr.ph.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %simple8b_decode.exit.loopexit.unr-lcssa ]
   %.02025.i.epil.init = phi i64 [ %i.ac, %.lr.ph.preheader.i ], [ %i.av, %simple8b_decode.exit.loopexit.unr-lcssa ]
   %.02124.i.epil.init = phi i64 [ %i.ae, %.lr.ph.preheader.i ], [ %i.ay, %simple8b_decode.exit.loopexit.unr-lcssa ]
-  %lcmp.mod61 = trunc i32 %umax.i to i1
+  %lcmp.mod61 = trunc i8 %i.ai to i1
   tail call void @llvm.assume(i1 %lcmp.mod61)
   %i.az = and i64 %.02124.i.epil.init, %i.al
   %i.ba = add i64 %.02025.i.epil.init, 1
@@ -794,7 +794,8 @@ simple8b_decode.exit.loopexit.unr-lcssa:          ; preds = %.lr.ph.i
   br label %simple8b_decode.exit.loopexit
 
 simple8b_decode.exit.loopexit:                    ; preds = %simple8b_decode.exit.loopexit.unr-lcssa, %.lr.ph.i.epil.preheader
-  %i.bd = add nuw nsw i32 %2, 1
+  %3 = zext i8 %i.ai to i32
+  %i.bd = add nuw nsw i32 %3, 1
   br label %.backedge.thread
 
 .backedge.thread:                                 ; preds = %bb.d, %simple8b_decode.exit.loopexit
@@ -848,12 +849,6 @@ declare ptr @MemoryContextAlloc(ptr noundef, i64 noundef) local_unnamed_addr #1
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umax.i8(i8, i8) #10
-
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
@@ -864,9 +859,8 @@ attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #7 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { nounwind }
-attributes #12 = { cold nounwind }
+attributes #10 = { nounwind }
+attributes #11 = { cold nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

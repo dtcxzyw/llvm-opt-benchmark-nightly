@@ -205,37 +205,41 @@ _ZNK3jxl11BlockCtxMap7ContextEijmm.exit:          ; preds = %.lr.ph.i, %middle.b
   %i.cq = tail call noundef i64 @_ZN3jxl15ANSSymbolReader23ReadHybridUintClusteredILb1EEEmmPNS_9BitReaderE(ptr noundef nonnull align 8 dereferenceable(604) %12, i64 noundef %i.cp, ptr noundef %11) #50 ; 5 uses
   %i.cr = mul nsw i64 %i.d, 63
   %i.cs = icmp ugt i64 %i.cq, %i.cr
-  br i1 %i.cs, label %bb.h, label %.preheader.preheader.a
+  br i1 %i.cs, label %bb.h, label %.preheader89
 
-.preheader.preheader.a:                           ; preds = %_ZNK3jxl11BlockCtxMap7ContextEijmm.exit
-  %19 = and i64 %9, 4294967295                    ; 3 uses
+.preheader89:                                     ; preds = %_ZNK3jxl11BlockCtxMap7ContextEijmm.exit
+  %19 = and i64 %9, 4294967295                    ; 2 uses
   %20 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %19
-  %21 = load i8, ptr %20, align 1, !tbaa !222
+  %21 = load i8, ptr %20, align 1, !tbaa !222     ; 2 uses
+  %22 = zext i8 %21 to i64
+  %.not = icmp eq i8 %21, 0
+  br i1 %.not, label %._crit_edge92.split, label %.preheader.preheader.a
+
+.preheader.preheader.a:                           ; preds = %.preheader89
+  %23 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %19
+  %24 = load i8, ptr %23, align 1, !tbaa !222     ; 3 uses
+  %25 = zext i8 %24 to i64                        ; 3 uses
+  %.not98 = icmp eq i8 %24, 0
   %i.ct = add nsw i64 %i.d, -1
   %i.cu = add i64 %i.ct, %i.cq
   %i.cv = lshr i64 %i.cu, %1
   %i.cw = trunc i64 %i.cv to i32                  ; 2 uses
   %i.cx = getelementptr [4 x i8], ptr %2, i64 %6
-  %22 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %19
-  %23 = load i8, ptr %22, align 1, !tbaa !222
-  %24 = tail call i8 @llvm.umax.i8(i8 %23, i8 1)
-  %umax = zext i8 %24 to i64                      ; 3 uses
-  %25 = tail call i8 @llvm.umax.i8(i8 %21, i8 1)
-  %umax99 = zext i8 %25 to i64
-  %26 = shl nuw i64 1, %19
-  %27 = and i64 %26, 786431
-  %min.iters.check113.not = icmp eq i64 %27, 0
-  %n.vec115 = and i64 %umax, 248                  ; 3 uses
+  br i1 %.not98, label %._crit_edge92.split, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %.preheader.preheader.a
+  %min.iters.check113 = icmp ult i8 %24, 8
+  %n.vec115 = and i64 %25, 248                    ; 3 uses
   %broadcast.splatinsert116 = insertelement <4 x i32> poison, i32 %i.cw, i64 0
   %broadcast.splat117 = shufflevector <4 x i32> %broadcast.splatinsert116, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %cmp.n122 = icmp eq i64 %n.vec115, %umax
+  %cmp.n122 = icmp eq i64 %n.vec115, %25
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.preheader.a, %._crit_edge
-  %.07991 = phi i64 [ %i.dp, %._crit_edge ], [ 0, %.preheader.preheader.a ] ; 2 uses
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.07991 = phi i64 [ %i.dp, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
   %i.cy = mul i64 %.07991, %4
   %invariant.gep = getelementptr [4 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
-  br i1 %min.iters.check113.not, label %vector.body118, label %scalar.ph112.preheader
+  br i1 %min.iters.check113, label %scalar.ph112.preheader, label %vector.body118
 
 vector.body118:                                   ; preds = %.preheader, %vector.body118
   %index119 = phi i64 [ %index.next120, %vector.body118 ], [ 0, %.preheader ] ; 2 uses
@@ -254,7 +258,7 @@ scalar.ph112.preheader:                           ; preds = %.preheader, %middle
   %.07890.ph = phi i64 [ 0, %.preheader ], [ %n.vec115, %middle.block121 ]
   br label %scalar.ph112
 
-._crit_edge92.split:                              ; preds = %._crit_edge
+._crit_edge92.split:                              ; preds = %._crit_edge, %.preheader.preheader.a, %.preheader89
   %i.dc = load i64, ptr %i.ce, align 8, !tbaa !317
   %i.dd = mul nuw nsw i32 %i.ca, 458
   %i.de = trunc i64 %i.dc to i32
@@ -275,7 +279,7 @@ scalar.ph112.preheader:                           ; preds = %.preheader, %middle
 
 ._crit_edge:                                      ; preds = %scalar.ph112, %middle.block121
   %i.dp = add nuw nsw i64 %.07991, 1              ; 2 uses
-  %exitcond100.not = icmp eq i64 %i.dp, %umax99
+  %exitcond100.not = icmp eq i64 %i.dp, %22
   br i1 %exitcond100.not, label %._crit_edge92.split, label %.preheader, !llvm.loop !4988
 
 scalar.ph112:                                     ; preds = %scalar.ph112.preheader, %scalar.ph112
@@ -283,7 +287,7 @@ scalar.ph112:                                     ; preds = %scalar.ph112.prehea
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %.07890
   store i32 %i.cw, ptr %gep, align 4, !tbaa !23
   %i.dq = add nuw nsw i64 %.07890, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dq, %umax
+  %exitcond.not = icmp eq i64 %i.dq, %25
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph112, !llvm.loop !4989
 
 ._crit_edge97:                                    ; preds = %bb.g, %._crit_edge92.split
@@ -508,37 +512,41 @@ _ZNK3jxl11BlockCtxMap7ContextEijmm.exit:          ; preds = %.lr.ph.i, %middle.b
   %i.cq = tail call noundef i64 @_ZN3jxl15ANSSymbolReader23ReadHybridUintClusteredILb1EEEmmPNS_9BitReaderE(ptr noundef nonnull align 8 dereferenceable(604) %12, i64 noundef %i.cp, ptr noundef %11) #50 ; 5 uses
   %i.cr = mul nsw i64 %i.d, 63
   %i.cs = icmp ugt i64 %i.cq, %i.cr
-  br i1 %i.cs, label %bb.h, label %.preheader.preheader.a
+  br i1 %i.cs, label %bb.h, label %.preheader89
 
-.preheader.preheader.a:                           ; preds = %_ZNK3jxl11BlockCtxMap7ContextEijmm.exit
-  %19 = and i64 %9, 4294967295                    ; 3 uses
+.preheader89:                                     ; preds = %_ZNK3jxl11BlockCtxMap7ContextEijmm.exit
+  %19 = and i64 %9, 4294967295                    ; 2 uses
   %20 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %19
-  %21 = load i8, ptr %20, align 1, !tbaa !222
+  %21 = load i8, ptr %20, align 1, !tbaa !222     ; 2 uses
+  %22 = zext i8 %21 to i64
+  %.not = icmp eq i8 %21, 0
+  br i1 %.not, label %._crit_edge92.split, label %.preheader.preheader.a
+
+.preheader.preheader.a:                           ; preds = %.preheader89
+  %23 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %19
+  %24 = load i8, ptr %23, align 1, !tbaa !222     ; 3 uses
+  %25 = zext i8 %24 to i64                        ; 3 uses
+  %.not98 = icmp eq i8 %24, 0
   %i.ct = add nsw i64 %i.d, -1
   %i.cu = add i64 %i.ct, %i.cq
   %i.cv = lshr i64 %i.cu, %1
   %i.cw = trunc i64 %i.cv to i32                  ; 2 uses
   %i.cx = getelementptr [4 x i8], ptr %2, i64 %6
-  %22 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %19
-  %23 = load i8, ptr %22, align 1, !tbaa !222
-  %24 = tail call i8 @llvm.umax.i8(i8 %23, i8 1)
-  %umax = zext i8 %24 to i64                      ; 3 uses
-  %25 = tail call i8 @llvm.umax.i8(i8 %21, i8 1)
-  %umax99 = zext i8 %25 to i64
-  %26 = shl nuw i64 1, %19
-  %27 = and i64 %26, 786431
-  %min.iters.check113.not = icmp eq i64 %27, 0
-  %n.vec115 = and i64 %umax, 248                  ; 3 uses
+  br i1 %.not98, label %._crit_edge92.split, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %.preheader.preheader.a
+  %min.iters.check113 = icmp ult i8 %24, 8
+  %n.vec115 = and i64 %25, 248                    ; 3 uses
   %broadcast.splatinsert116 = insertelement <4 x i32> poison, i32 %i.cw, i64 0
   %broadcast.splat117 = shufflevector <4 x i32> %broadcast.splatinsert116, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %cmp.n122 = icmp eq i64 %n.vec115, %umax
+  %cmp.n122 = icmp eq i64 %n.vec115, %25
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.preheader.a, %._crit_edge
-  %.07991 = phi i64 [ %i.dp, %._crit_edge ], [ 0, %.preheader.preheader.a ] ; 2 uses
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.07991 = phi i64 [ %i.dp, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
   %i.cy = mul i64 %.07991, %4
   %invariant.gep = getelementptr [4 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
-  br i1 %min.iters.check113.not, label %vector.body118, label %scalar.ph112.preheader
+  br i1 %min.iters.check113, label %scalar.ph112.preheader, label %vector.body118
 
 vector.body118:                                   ; preds = %.preheader, %vector.body118
   %index119 = phi i64 [ %index.next120, %vector.body118 ], [ 0, %.preheader ] ; 2 uses
@@ -557,7 +565,7 @@ scalar.ph112.preheader:                           ; preds = %.preheader, %middle
   %.07890.ph = phi i64 [ 0, %.preheader ], [ %n.vec115, %middle.block121 ]
   br label %scalar.ph112
 
-._crit_edge92.split:                              ; preds = %._crit_edge
+._crit_edge92.split:                              ; preds = %._crit_edge, %.preheader.preheader.a, %.preheader89
   %i.dc = load i64, ptr %i.ce, align 8, !tbaa !317
   %i.dd = mul nuw nsw i32 %i.ca, 458
   %i.de = trunc i64 %i.dc to i32
@@ -578,7 +586,7 @@ scalar.ph112.preheader:                           ; preds = %.preheader, %middle
 
 ._crit_edge:                                      ; preds = %scalar.ph112, %middle.block121
   %i.dp = add nuw nsw i64 %.07991, 1              ; 2 uses
-  %exitcond100.not = icmp eq i64 %i.dp, %umax99
+  %exitcond100.not = icmp eq i64 %i.dp, %22
   br i1 %exitcond100.not, label %._crit_edge92.split, label %.preheader, !llvm.loop !5005
 
 scalar.ph112:                                     ; preds = %scalar.ph112.preheader, %scalar.ph112
@@ -586,7 +594,7 @@ scalar.ph112:                                     ; preds = %scalar.ph112.prehea
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %.07890
   store i32 %i.cw, ptr %gep, align 4, !tbaa !23
   %i.dq = add nuw nsw i64 %.07890, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dq, %umax
+  %exitcond.not = icmp eq i64 %i.dq, %25
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph112, !llvm.loop !5006
 
 ._crit_edge97:                                    ; preds = %bb.g, %._crit_edge92.split
@@ -811,37 +819,41 @@ _ZNK3jxl11BlockCtxMap7ContextEijmm.exit:          ; preds = %.lr.ph.i, %middle.b
   %i.cq = tail call noundef i64 @_ZN3jxl15ANSSymbolReader23ReadHybridUintClusteredILb0EEEmmPNS_9BitReaderE(ptr noundef nonnull align 8 dereferenceable(604) %12, i64 noundef %i.cp, ptr noundef %11) #50 ; 5 uses
   %i.cr = mul nsw i64 %i.d, 63
   %i.cs = icmp ugt i64 %i.cq, %i.cr
-  br i1 %i.cs, label %bb.h, label %.preheader.preheader.a
+  br i1 %i.cs, label %bb.h, label %.preheader89
 
-.preheader.preheader.a:                           ; preds = %_ZNK3jxl11BlockCtxMap7ContextEijmm.exit
-  %19 = and i64 %9, 4294967295                    ; 3 uses
+.preheader89:                                     ; preds = %_ZNK3jxl11BlockCtxMap7ContextEijmm.exit
+  %19 = and i64 %9, 4294967295                    ; 2 uses
   %20 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %19
-  %21 = load i8, ptr %20, align 1, !tbaa !222
+  %21 = load i8, ptr %20, align 1, !tbaa !222     ; 2 uses
+  %22 = zext i8 %21 to i64
+  %.not = icmp eq i8 %21, 0
+  br i1 %.not, label %._crit_edge92.split, label %.preheader.preheader.a
+
+.preheader.preheader.a:                           ; preds = %.preheader89
+  %23 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %19
+  %24 = load i8, ptr %23, align 1, !tbaa !222     ; 3 uses
+  %25 = zext i8 %24 to i64                        ; 3 uses
+  %.not98 = icmp eq i8 %24, 0
   %i.ct = add nsw i64 %i.d, -1
   %i.cu = add i64 %i.ct, %i.cq
   %i.cv = lshr i64 %i.cu, %1
   %i.cw = trunc i64 %i.cv to i32                  ; 2 uses
   %i.cx = getelementptr [4 x i8], ptr %2, i64 %6
-  %22 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %19
-  %23 = load i8, ptr %22, align 1, !tbaa !222
-  %24 = tail call i8 @llvm.umax.i8(i8 %23, i8 1)
-  %umax = zext i8 %24 to i64                      ; 3 uses
-  %25 = tail call i8 @llvm.umax.i8(i8 %21, i8 1)
-  %umax99 = zext i8 %25 to i64
-  %26 = shl nuw i64 1, %19
-  %27 = and i64 %26, 786431
-  %min.iters.check113.not = icmp eq i64 %27, 0
-  %n.vec115 = and i64 %umax, 248                  ; 3 uses
+  br i1 %.not98, label %._crit_edge92.split, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %.preheader.preheader.a
+  %min.iters.check113 = icmp ult i8 %24, 8
+  %n.vec115 = and i64 %25, 248                    ; 3 uses
   %broadcast.splatinsert116 = insertelement <4 x i32> poison, i32 %i.cw, i64 0
   %broadcast.splat117 = shufflevector <4 x i32> %broadcast.splatinsert116, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %cmp.n122 = icmp eq i64 %n.vec115, %umax
+  %cmp.n122 = icmp eq i64 %n.vec115, %25
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.preheader.a, %._crit_edge
-  %.07991 = phi i64 [ %i.dp, %._crit_edge ], [ 0, %.preheader.preheader.a ] ; 2 uses
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.07991 = phi i64 [ %i.dp, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
   %i.cy = mul i64 %.07991, %4
   %invariant.gep = getelementptr [4 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
-  br i1 %min.iters.check113.not, label %vector.body118, label %scalar.ph112.preheader
+  br i1 %min.iters.check113, label %scalar.ph112.preheader, label %vector.body118
 
 vector.body118:                                   ; preds = %.preheader, %vector.body118
   %index119 = phi i64 [ %index.next120, %vector.body118 ], [ 0, %.preheader ] ; 2 uses
@@ -860,7 +872,7 @@ scalar.ph112.preheader:                           ; preds = %.preheader, %middle
   %.07890.ph = phi i64 [ 0, %.preheader ], [ %n.vec115, %middle.block121 ]
   br label %scalar.ph112
 
-._crit_edge92.split:                              ; preds = %._crit_edge
+._crit_edge92.split:                              ; preds = %._crit_edge, %.preheader.preheader.a, %.preheader89
   %i.dc = load i64, ptr %i.ce, align 8, !tbaa !317
   %i.dd = mul nuw nsw i32 %i.ca, 458
   %i.de = trunc i64 %i.dc to i32
@@ -881,7 +893,7 @@ scalar.ph112.preheader:                           ; preds = %.preheader, %middle
 
 ._crit_edge:                                      ; preds = %scalar.ph112, %middle.block121
   %i.dp = add nuw nsw i64 %.07991, 1              ; 2 uses
-  %exitcond100.not = icmp eq i64 %i.dp, %umax99
+  %exitcond100.not = icmp eq i64 %i.dp, %22
   br i1 %exitcond100.not, label %._crit_edge92.split, label %.preheader, !llvm.loop !5022
 
 scalar.ph112:                                     ; preds = %scalar.ph112.preheader, %scalar.ph112
@@ -889,7 +901,7 @@ scalar.ph112:                                     ; preds = %scalar.ph112.prehea
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %.07890
   store i32 %i.cw, ptr %gep, align 4, !tbaa !23
   %i.dq = add nuw nsw i64 %.07890, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dq, %umax
+  %exitcond.not = icmp eq i64 %i.dq, %25
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph112, !llvm.loop !5023
 
 ._crit_edge97:                                    ; preds = %bb.g, %._crit_edge92.split
@@ -1114,37 +1126,41 @@ _ZNK3jxl11BlockCtxMap7ContextEijmm.exit:          ; preds = %.lr.ph.i, %middle.b
   %i.cq = tail call noundef i64 @_ZN3jxl15ANSSymbolReader23ReadHybridUintClusteredILb0EEEmmPNS_9BitReaderE(ptr noundef nonnull align 8 dereferenceable(604) %12, i64 noundef %i.cp, ptr noundef %11) #50 ; 5 uses
   %i.cr = mul nsw i64 %i.d, 63
   %i.cs = icmp ugt i64 %i.cq, %i.cr
-  br i1 %i.cs, label %bb.h, label %.preheader.preheader.a
+  br i1 %i.cs, label %bb.h, label %.preheader89
 
-.preheader.preheader.a:                           ; preds = %_ZNK3jxl11BlockCtxMap7ContextEijmm.exit
-  %19 = and i64 %9, 4294967295                    ; 3 uses
+.preheader89:                                     ; preds = %_ZNK3jxl11BlockCtxMap7ContextEijmm.exit
+  %19 = and i64 %9, 4294967295                    ; 2 uses
   %20 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_yEvE4kLut, i64 %19
-  %21 = load i8, ptr %20, align 1, !tbaa !222
+  %21 = load i8, ptr %20, align 1, !tbaa !222     ; 2 uses
+  %22 = zext i8 %21 to i64
+  %.not = icmp eq i8 %21, 0
+  br i1 %.not, label %._crit_edge92.split, label %.preheader.preheader.a
+
+.preheader.preheader.a:                           ; preds = %.preheader89
+  %23 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %19
+  %24 = load i8, ptr %23, align 1, !tbaa !222     ; 3 uses
+  %25 = zext i8 %24 to i64                        ; 3 uses
+  %.not98 = icmp eq i8 %24, 0
   %i.ct = add nsw i64 %i.d, -1
   %i.cu = add i64 %i.ct, %i.cq
   %i.cv = lshr i64 %i.cu, %1
   %i.cw = trunc i64 %i.cv to i32                  ; 2 uses
   %i.cx = getelementptr [4 x i8], ptr %2, i64 %6
-  %22 = getelementptr inbounds nuw i8, ptr @_ZZNK3jxl10AcStrategy16covered_blocks_xEvE4kLut, i64 %19
-  %23 = load i8, ptr %22, align 1, !tbaa !222
-  %24 = tail call i8 @llvm.umax.i8(i8 %23, i8 1)
-  %umax = zext i8 %24 to i64                      ; 3 uses
-  %25 = tail call i8 @llvm.umax.i8(i8 %21, i8 1)
-  %umax99 = zext i8 %25 to i64
-  %26 = shl nuw i64 1, %19
-  %27 = and i64 %26, 786431
-  %min.iters.check113.not = icmp eq i64 %27, 0
-  %n.vec115 = and i64 %umax, 248                  ; 3 uses
+  br i1 %.not98, label %._crit_edge92.split, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %.preheader.preheader.a
+  %min.iters.check113 = icmp ult i8 %24, 8
+  %n.vec115 = and i64 %25, 248                    ; 3 uses
   %broadcast.splatinsert116 = insertelement <4 x i32> poison, i32 %i.cw, i64 0
   %broadcast.splat117 = shufflevector <4 x i32> %broadcast.splatinsert116, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %cmp.n122 = icmp eq i64 %n.vec115, %umax
+  %cmp.n122 = icmp eq i64 %n.vec115, %25
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.preheader.a, %._crit_edge
-  %.07991 = phi i64 [ %i.dp, %._crit_edge ], [ 0, %.preheader.preheader.a ] ; 2 uses
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.07991 = phi i64 [ %i.dp, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
   %i.cy = mul i64 %.07991, %4
   %invariant.gep = getelementptr [4 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
-  br i1 %min.iters.check113.not, label %vector.body118, label %scalar.ph112.preheader
+  br i1 %min.iters.check113, label %scalar.ph112.preheader, label %vector.body118
 
 vector.body118:                                   ; preds = %.preheader, %vector.body118
   %index119 = phi i64 [ %index.next120, %vector.body118 ], [ 0, %.preheader ] ; 2 uses
@@ -1163,7 +1179,7 @@ scalar.ph112.preheader:                           ; preds = %.preheader, %middle
   %.07890.ph = phi i64 [ 0, %.preheader ], [ %n.vec115, %middle.block121 ]
   br label %scalar.ph112
 
-._crit_edge92.split:                              ; preds = %._crit_edge
+._crit_edge92.split:                              ; preds = %._crit_edge, %.preheader.preheader.a, %.preheader89
   %i.dc = load i64, ptr %i.ce, align 8, !tbaa !317
   %i.dd = mul nuw nsw i32 %i.ca, 458
   %i.de = trunc i64 %i.dc to i32
@@ -1184,7 +1200,7 @@ scalar.ph112.preheader:                           ; preds = %.preheader, %middle
 
 ._crit_edge:                                      ; preds = %scalar.ph112, %middle.block121
   %i.dp = add nuw nsw i64 %.07991, 1              ; 2 uses
-  %exitcond100.not = icmp eq i64 %i.dp, %umax99
+  %exitcond100.not = icmp eq i64 %i.dp, %22
   br i1 %exitcond100.not, label %._crit_edge92.split, label %.preheader, !llvm.loop !5039
 
 scalar.ph112:                                     ; preds = %scalar.ph112.preheader, %scalar.ph112
@@ -1192,7 +1208,7 @@ scalar.ph112:                                     ; preds = %scalar.ph112.prehea
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %.07890
   store i32 %i.cw, ptr %gep, align 4, !tbaa !23
   %i.dq = add nuw nsw i64 %.07890, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dq, %umax
+  %exitcond.not = icmp eq i64 %i.dq, %25
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph112, !llvm.loop !5040
 
 ._crit_edge97:                                    ; preds = %bb.g, %._crit_edge92.split
@@ -1593,9 +1609,6 @@ declare <2 x float> @llvm.fma.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umax.i8(i8, i8) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10

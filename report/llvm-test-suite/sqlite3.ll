@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %sqlite3HashFindElem
 ; Function Attrs: nofree nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @identPut(ptr nofree noundef nonnull writeonly captures(none) %0, ptr nofree noundef nonnull captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #31 {
 bb.a:
-  %i.a = load i32, ptr %1, align 4, !tbaa !112    ; 6 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !112    ; 7 uses
   %i.b = load i8, ptr %2, align 1, !tbaa !139     ; 4 uses
   %.not59 = icmp eq i8 %i.b, 0
   %.pre = tail call ptr @__ctype_b_loc() #46      ; 2 uses
@@ -274,15 +274,15 @@ bb.d:                                             ; preds = %bb.c
   %.not24.i.i = icmp eq i8 %.0.in.in23.i.i, 0
   br i1 %.not24.i.i, label %.thread45, label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %bb.d, %bb.h
-  %.0.in.in25.i.i = phi i8 [ %.0.in.in.i.i.a, %bb.h ], [ %.0.in.in23.i.i, %bb.d ]
+.lr.ph.i.i:                                       ; preds = %bb.d, %3
+  %.0.in.in25.i.i = phi i8 [ %.0.in.in.i.i, %3 ], [ %.0.in.in23.i.i, %bb.d ]
   %.0.in.i.i = zext i8 %.0.in.in25.i.i to i64
-  %.0.i.i = add nsw i64 %.0.in.i.i, -1            ; 3 uses
+  %.0.i.i = add nsw i64 %.0.in.i.i, -1            ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr @keywordCode.aLen, i64 %.0.i.i
   %i.am = load i8, ptr %i.al, align 1, !tbaa !139
   %i.an = zext i8 %i.am to i64
   %i.ao = icmp eq i64 %indvars.iv.next, %i.an
-  br i1 %i.ao, label %bb.e, label %bb.h
+  br i1 %i.ao, label %bb.e, label %3
 
 bb.e:                                             ; preds = %.lr.ph.i.i
   %i.ap = getelementptr inbounds nuw [2 x i8], ptr @keywordCode.aOffset, i64 %.0.i.i
@@ -315,7 +315,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bd = getelementptr inbounds nuw i8, ptr %.01014.i.i.i, i64 1
   %i.be = getelementptr inbounds nuw i8, ptr %.015.i.i.i, i64 1
   %i.bf = icmp samesign ugt i32 %.in.i.i.i, 1
-  br i1 %i.bf, label %.lr.ph.i.i.i, label %.thread43, !llvm.loop !31
+  br i1 %i.bf, label %.lr.ph.i.i.i, label %bb.h, !llvm.loop !31
 
 split.i.i.i:                                      ; preds = %bb.f
   %i.bg = zext i8 %i.ax to i32
@@ -333,24 +333,30 @@ sqlite3StrNICmp.exit.i.i:                         ; preds = %sqlite3StrNICmp.exi
   %i.bi = phi i32 [ %i.bg, %split.i.i.i ], [ 0, %sqlite3StrNICmp.exit.loopexit.i.i ]
   %i.bj = zext i8 %i.bh to i32
   %i.bk = icmp eq i32 %i.bi, %i.bj
-  br i1 %i.bk, label %.thread43, label %bb.h
+  br i1 %i.bk, label %bb.h, label %3
 
-bb.h:                                             ; preds = %sqlite3StrNICmp.exit.i.i, %.lr.ph.i.i
-  %i.bl = getelementptr inbounds nuw i8, ptr @keywordCode.aNext, i64 %.0.i.i
-  %.0.in.in.i.i.a = load i8, ptr %i.bl, align 1, !tbaa !139 ; 2 uses
-  %.not.i.i.a = icmp eq i8 %.0.in.in.i.i.a, 0
-  br i1 %.not.i.i.a, label %.thread45, label %.lr.ph.i.i, !llvm.loop !74
+3:                                                ; preds = %sqlite3StrNICmp.exit.i.i, %.lr.ph.i.i
+  %4 = getelementptr inbounds nuw i8, ptr @keywordCode.aNext, i64 %.0.i.i
+  %.0.in.in.i.i = load i8, ptr %4, align 1, !tbaa !139 ; 2 uses
+  %.not.i.i = icmp eq i8 %.0.in.in.i.i, 0
+  br i1 %.not.i.i, label %.thread45, label %.lr.ph.i.i, !llvm.loop !74
 
-.thread43:                                        ; preds = %.lr.ph, %sqlite3StrNICmp.exit.i.i, %bb.g, %._crit_edge.thread, %._crit_edge
+bb.h:                                             ; preds = %sqlite3StrNICmp.exit.i.i, %bb.g
+  %i.bl = getelementptr inbounds nuw i8, ptr @keywordCode.aCode, i64 %.0.i.i
+  %.0.in.in.i.i.a = load i8, ptr %i.bl, align 1, !tbaa !139
+  %.not.i.i.a = icmp eq i8 %.0.in.in.i.i.a, 23
+  br i1 %.not.i.i.a, label %.thread45, label %.thread43
+
+.thread43:                                        ; preds = %.lr.ph, %._crit_edge.thread, %._crit_edge, %bb.h
   %i.bm = add nsw i32 %i.a, 1
   %i.bn = sext i32 %i.a to i64
   %i.bo = getelementptr inbounds i8, ptr %0, i64 %i.bn
   store i8 34, ptr %i.bo, align 1, !tbaa !139
   br label %.thread45
 
-.thread45:                                        ; preds = %bb.h, %._crit_edge.thread, %bb.d, %bb.c, %.thread43
-  %3 = phi i1 [ true, %.thread43 ], [ false, %bb.d ], [ false, %bb.c ], [ false, %._crit_edge.thread ], [ false, %bb.h ]
-  %.034 = phi i32 [ %i.bm, %.thread43 ], [ %i.a, %bb.d ], [ %i.a, %bb.c ], [ %i.a, %._crit_edge.thread ], [ %i.a, %bb.h ] ; 2 uses
+.thread45:                                        ; preds = %3, %._crit_edge.thread, %bb.d, %bb.c, %.thread43, %bb.h
+  %5 = phi i1 [ true, %.thread43 ], [ false, %bb.h ], [ false, %bb.c ], [ false, %bb.d ], [ false, %._crit_edge.thread ], [ false, %3 ]
+  %.034 = phi i32 [ %i.bm, %.thread43 ], [ %i.a, %bb.h ], [ %i.a, %bb.c ], [ %i.a, %bb.d ], [ %i.a, %._crit_edge.thread ], [ %i.a, %3 ] ; 2 uses
   %i.bp = load i8, ptr %2, align 1, !tbaa !139    ; 2 uses
   %.not4262 = icmp eq i8 %i.bp, 0
   br i1 %.not4262, label %._crit_edge66, label %.lr.ph65
@@ -385,7 +391,7 @@ bb.j:                                             ; preds = %.lr.ph65, %bb.i
 
 ._crit_edge66:                                    ; preds = %bb.j, %.thread45
   %.135.lcssa = phi i32 [ %.034, %.thread45 ], [ %.2, %bb.j ] ; 3 uses
-  br i1 %3, label %bb.k, label %bb.l
+  br i1 %5, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %._crit_edge66
   %i.cc = add nsw i32 %.135.lcssa, 1
