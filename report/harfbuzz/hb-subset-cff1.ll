@@ -205,6 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   %i.b = load i32, ptr %i.a, align 4, !tbaa !380  ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %.not19.i.i.not = icmp eq i32 %i.b, 0
   br i1 %.not19.i.i.not, label %_ZN11hb_vector_tIN3CFF15parsed_cs_str_tELb0EE10copy_arrayIS1_TnPN12hb_enable_ifIXaantsr3std21is_trivially_copyableIT_EE5valuesr3std21is_copy_constructibleIS5_EE5valueEvE4typeELPv0EEEv10hb_array_tIKS1_E.exit, label %.thread.i.i
 
@@ -251,7 +252,6 @@ bb.f:                                             ; preds = %_ZN11hb_vector_tIN3
 
 .lr.ph.i:                                         ; preds = %bb.f
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN3CFF15parsed_cs_str_tC2ERKS0_.exit.i, %.lr.ph.i
@@ -310,10 +310,9 @@ _ZN3CFF15parsed_cs_str_tC2ERKS0_.exit.i:          ; preds = %_ZN11hb_vector_tIN3
 
 _ZN11hb_vector_tIN3CFF15parsed_cs_str_tELb0EE10copy_arrayIS1_TnPN12hb_enable_ifIXaantsr3std21is_trivially_copyableIT_EE5valuesr3std21is_copy_constructibleIS5_EE5valueEvE4typeELPv0EEEv10hb_array_tIKS1_E.exit: ; preds = %_ZN3CFF15parsed_cs_str_tC2ERKS0_.exit.i, %bb.a, %bb.f
   %i.ap = phi i32 [ 0, %bb.a ], [ 0, %bb.f ], [ %.pr, %_ZN3CFF15parsed_cs_str_tC2ERKS0_.exit.i ]
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.aq = load i32, ptr %3, align 4, !tbaa !380
+  %i.aq = load i32, ptr %2, align 4, !tbaa !380
   %i.ar = add i32 %i.aq, %i.ap
-  store i32 %i.ar, ptr %3, align 4, !tbaa !380
+  store i32 %i.ar, ptr %2, align 4, !tbaa !380
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN11hb_vector_tIN3CFF15parsed_cs_str_tELb0EE11alloc_exactEj.exit, %_ZN11hb_vector_tIN3CFF15parsed_cs_str_tELb0EE10copy_arrayIS1_TnPN12hb_enable_ifIXaantsr3std21is_trivially_copyableIT_EE5valuesr3std21is_copy_constructibleIS5_EE5valueEvE4typeELPv0EEEv10hb_array_tIKS1_E.exit

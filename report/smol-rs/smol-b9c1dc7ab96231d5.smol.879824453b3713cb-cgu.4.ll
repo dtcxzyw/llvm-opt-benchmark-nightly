@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/smol-rs/original/smol-b9c1dc7ab96231d5.smol.879824453b3713cb-cgu.4?download=true
-inline.NumInlined: 192
+inline.NumInlined: 193
 inline.NumDeleted: 136
 begin_hunk_0
 @12 = private unnamed_addr constant [28 x i8] c"cannot spawn executor thread", align 1
@@ -202,7 +202,7 @@ bb.a:
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %i.g = alloca [24 x i8], align 8                ; 5 uses
   %i.h = alloca [32 x i8], align 8                ; 6 uses
-  %i.i = alloca [232 x i8], align 16              ; 23 uses
+  %i.i = alloca [232 x i8], align 16              ; 22 uses
   %i.j = alloca [32 x i8], align 8                ; 4 uses
   %i.k = alloca [32 x i8], align 8                ; 14 uses
   %i.l = alloca [232 x i8], align 8               ; 7 uses
@@ -495,12 +495,12 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsa9iXSdNszRG_14async_executor6TickerE
   %i.cc = load ptr, ptr %i.cb, align 8, !alias.scope !169, !noalias !159, !nonnull !7, !noundef !7
   %i.cd = atomicrmw add ptr %i.cc, i64 -1 release, align 8, !noalias !170
   %i.ce = icmp eq i64 %i.cd, 1
-  br i1 %i.ce, label %bb.aa, label %1
+  br i1 %i.ce, label %bb.aa, label %bb.ai
 
 bb.aa:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsa9iXSdNszRG_14async_executor6TickerECsbDLrNlwBX3H_4smol.exit2.i.i.i.i.i.i
   fence acquire
   invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEE9drop_slowCsa9iXSdNszRG_14async_executor(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.cb) #18
-          to label %1 unwind label %.loopexit.split-lp103.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !157
+          to label %bb.ai unwind label %.loopexit.split-lp103.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !157
 
 bb.ab:                                            ; preds = %bb.y, %bb.w
   %i.cf = landingpad { ptr, i32 }
@@ -524,13 +524,7 @@ bb.ac:                                            ; preds = %bb.r, %bb.q
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMsb_Csa9iXSdNszRG_14async_executorNtBK_5State3runuINtNtNtB4_6future7pending7PendinguEE0ECsbDLrNlwBX3H_4smol(ptr noundef nonnull align 8 %i.i) #22
           to label %.body.thread.i.i.i unwind label %bb.ad, !noalias !157
 
-1:                                                ; preds = %bb.aa, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsa9iXSdNszRG_14async_executor6TickerECsbDLrNlwBX3H_4smol.exit2.i.i.i.i.i.i
-  store i8 0, ptr %i.ae, align 8, !noalias !159
-  store i8 1, ptr %.phi.trans.insert.i.i.i.i, align 1, !noalias !159
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMsb_Csa9iXSdNszRG_14async_executorNtBK_5State3runuINtNtNtB4_6future7pending7PendinguEE0ECsbDLrNlwBX3H_4smol(ptr noundef nonnull align 8 %i.i)
-          to label %bb.ai unwind label %.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !157
-
-.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RNvMs3_Csa9iXSdNszRG_14async_executorNtB5_8Executor5state.exit.i.i.i.i, %bb.h, %1
+.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RNvMs3_Csa9iXSdNszRG_14async_executorNtB5_8Executor5state.exit.i.i.i.i, %bb.h
   %lpad.loopexit.split-lp31 = landingpad { ptr, i32 }
           cleanup
   br label %.body.thread.i.i.i
@@ -567,7 +561,9 @@ bb.ah:                                            ; preds = %bb.u
   %i.cj = invoke noundef zeroext i1 @_RNvMCs2KJ8IamB81r_7parkingNtB2_6Parker12park_timeout(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.01.0.i.i.i, i64 noundef 0, i32 noundef 0)
           to label %bb.at unwind label %.loopexit.split-lp108.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !157
 
-bb.ai:                                            ; preds = %1
+bb.ai:                                            ; preds = %bb.aa, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsa9iXSdNszRG_14async_executor6TickerECsbDLrNlwBX3H_4smol.exit2.i.i.i.i.i.i
+  store i8 0, ptr %i.ae, align 8, !noalias !159
+  store i8 1, ptr %.phi.trans.insert.i.i.i.i, align 1, !noalias !159
   store i8 0, ptr %i.ab, align 16, !noalias !158
   store i8 1, ptr %i.aa, align 1, !noalias !158
   %i.ck = invoke noundef zeroext i1 @_RNvMCs2KJ8IamB81r_7parkingNtB2_6Parker12park_timeout(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.01.0.i.i.i, i64 noundef 0, i32 noundef 0)

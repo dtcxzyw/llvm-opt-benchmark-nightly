@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nanobind/original/test_eval?download=true
-inline.NumInlined: 255
+inline.NumInlined: 257
 inline.NumDeleted: 108
 begin_hunk_0
 %class.anon.1 = type { %"class.nanobind::dict" }
@@ -202,7 +202,7 @@ bb.a:
   %i.i = alloca [1 x ptr], align 8                ; 4 uses
   %9 = alloca %"struct.nanobind::detail::func_data_init", align 8 ; 12 uses
   %10 = alloca %"class.nanobind::dict", align 8   ; 5 uses
-  %11 = alloca %"class.nanobind::detail::accessor", align 8 ; 9 uses
+  %11 = alloca %"class.nanobind::detail::accessor", align 8 ; 8 uses
   %12 = alloca %"class.nanobind::module_", align 8 ; 6 uses
   %13 = alloca %class.anon, align 8               ; 4 uses
   %14 = alloca %class.anon.1, align 8             ; 4 uses
@@ -248,7 +248,7 @@ bb.e:                                             ; preds = %.noexc
 bb.f:                                             ; preds = %.noexc
   store ptr %i.n, ptr %12, align 8
   store ptr %i.n, ptr %11, align 8, !tbaa !48, !alias.scope !49
-  %i.o = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %11, i64 8
   store ptr null, ptr %i.o, align 8, !tbaa !19, !alias.scope !49
   %i.p = getelementptr inbounds nuw i8, ptr %11, i64 16
   store ptr @.str.4, ptr %i.p, align 8, !tbaa !20, !alias.scope !49
@@ -260,9 +260,7 @@ bb.f:                                             ; preds = %.noexc
           to label %bb.g unwind label %bb.m       ; 7 uses
 
 bb.g:                                             ; preds = %bb.f
-  store ptr null, ptr %i.o, align 8, !tbaa !19, !noalias !50
   store ptr %i.r, ptr %10, align 8, !alias.scope !50
-  call void @_ZN8nanobind6detail8accessorINS0_8str_attrEED2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %11) #16
   %i.s = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %12) #16 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
@@ -665,7 +663,7 @@ define internal noundef ptr @"_ZZN8nanobind6detail11func_createILb0ELb1EZL32nano
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %4 = alloca %"class.nanobind::detail::accessor.21", align 8 ; 10 uses
-  %5 = alloca %"class.nanobind::dict", align 8    ; 7 uses
+  %5 = alloca %"class.nanobind::dict", align 8    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
   tail call void @llvm.experimental.noalias.scope.decl(metadata !121)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !122)
@@ -728,8 +726,6 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17, !noalias !121
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17, !noalias !121
   %i.l = load ptr, ptr %5, align 8, !tbaa !25
-  store ptr null, ptr %5, align 8, !tbaa !25
-  %6 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %5) #16 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   ret ptr %i.l
 }

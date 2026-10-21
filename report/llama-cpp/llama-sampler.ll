@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llama-cpp/original/llama-sampler?download=true
 inline.NumInlined: 6714
-inline.NumDeleted: 2633
+inline.NumDeleted: 2632
 loop-unroll.NumCompletelyUnrolled: 8
 loop-unroll.NumRuntimeUnrolled: 33
 loop-unroll.NumUnrolled: 58
@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %i.an = getelementptr inbounds nuw [48 x i8], ptr %i.am, i64 %.tr38 ; 2 uses
   %i.ao = load ptr, ptr %i.h, align 8, !tbaa !588
   %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.ao, i64 %.tr38 ; 4 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8 ; 5 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8 ; 6 uses
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !598 ; 4 uses
   %i.as = icmp ne i32 %i.ar, 0
   %.sroa.0.0.copyload.pre.i = load ptr, ptr %i.ap, align 8 ; 2 uses
@@ -214,6 +214,9 @@ bb.h:                                             ; preds = %bb.g
   %or.cond.i = select i1 %i.as, i1 %.not.i108, i1 false
   br i1 %or.cond.i, label %bb.i, label %._crit_edge.i
 
+common.ret:                                       ; preds = %bb.z, %bb.i, %bb.g, %bb.v, %_ZNKSt8__detail6_StateIcE10_M_matchesEc.exit, %bb.y, %.thread.i, %bb.ac, %bb.ae, %bb.ag, %bb.ah, %tailrecurse, %_ZNSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcEELb1EE16_M_rep_once_moreENS9_11_Match_modeEl.exit, %_ZNKSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcEELb1EE11_M_at_beginEv.exit, %.split, %_ZNKSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcEELb1EE9_M_at_endEv.exit, %bb.t, %bb.u, %bb.q, %bb.n, %bb.p, %bb.s, %bb.aj, %bb.ak, %bb.l, %bb.k, %bb.j, %._crit_edge.i
+  ret void
+
 ._crit_edge.i:                                    ; preds = %bb.h
   store ptr %.pre.i, ptr %i.ap, align 8, !tbaa !597
   store i32 1, ptr %i.aq, align 8, !tbaa !598
@@ -221,7 +224,8 @@ bb.h:                                             ; preds = %bb.g
   %i.au = load i64, ptr %i.at, align 8, !tbaa !87
   tail call void @_ZNSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcEELb1EE6_M_dfsENS9_11_Match_modeEl(ptr noundef nonnull align 8 dereferenceable(117) %0, i8 noundef zeroext %1, i64 noundef %i.au), !inline_history !1201
   store ptr %.sroa.0.0.copyload.pre.i, ptr %i.ap, align 8, !tbaa !597
-  br label %.sink.split.i
+  store i32 %i.ar, ptr %i.aq, align 8, !tbaa !598
+  br label %common.ret
 
 bb.i:                                             ; preds = %bb.h
   %i.av = icmp slt i32 %i.ar, 2
@@ -235,15 +239,8 @@ bb.j:                                             ; preds = %bb.i
   tail call void @_ZNSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcEELb1EE6_M_dfsENS9_11_Match_modeEl(ptr noundef nonnull align 8 dereferenceable(117) %0, i8 noundef zeroext %1, i64 noundef %i.ay), !inline_history !1201
   %i.az = load i32, ptr %i.aq, align 8, !tbaa !598
   %i.ba = add nsw i32 %i.az, -1
-  br label %.sink.split.i
-
-.sink.split.i:                                    ; preds = %bb.j, %._crit_edge.i
-  %.sink.i109 = phi i32 [ %i.ba, %bb.j ], [ %i.ar, %._crit_edge.i ]
-  store i32 %.sink.i109, ptr %i.aq, align 8, !tbaa !598
+  store i32 %i.ba, ptr %i.aq, align 8, !tbaa !598
   br label %common.ret
-
-common.ret:                                       ; preds = %.sink.split.i, %bb.i, %bb.z, %bb.g, %bb.v, %_ZNKSt8__detail6_StateIcE10_M_matchesEc.exit, %bb.y, %.thread.i, %bb.ac, %bb.ae, %bb.ag, %bb.ah, %tailrecurse, %_ZNSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcEELb1EE16_M_rep_once_moreENS9_11_Match_modeEl.exit, %_ZNKSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcEELb1EE11_M_at_beginEv.exit, %.split, %_ZNKSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcEELb1EE9_M_at_endEv.exit, %bb.t, %bb.u, %bb.q, %bb.n, %bb.p, %bb.s, %bb.aj, %bb.ak, %bb.l, %bb.k
-  ret void
 
 bb.k:                                             ; preds = %tailrecurse
   %i.bb = getelementptr inbounds nuw i8, ptr %i.m, i64 16

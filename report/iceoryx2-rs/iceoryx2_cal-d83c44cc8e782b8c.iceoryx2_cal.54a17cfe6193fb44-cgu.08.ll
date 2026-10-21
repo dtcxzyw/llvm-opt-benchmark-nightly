@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/iceoryx2-rs/original/iceoryx2_cal-d83c44cc8e782b8c.iceoryx2_cal.54a17cfe6193fb44-cgu.08?download=true
-inline.NumInlined: 83
+inline.NumInlined: 84
 inline.NumDeleted: 41
 begin_hunk_0_@_RNvXs4_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_9ConnectorINtB7_29CommunicationChannelConnectoryNtB5_7ChannelE11open_sender:.split
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1056) %i.a, ptr noundef nonnull align 8 dereferenceable(1056) %1, i64 1056, i1 false)
@@ -202,11 +202,10 @@ bb.m:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @_RNvXs5_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_6DuplexNtNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits7testing11abandonable11Abandonable16abandon_in_place(ptr noundef nonnull initializes((1064, 1065)) %0) unnamed_addr #0 {
+define void @_RNvXs5_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_6DuplexNtNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits7testing11abandonable11Abandonable16abandon_in_place(ptr noundef nonnull initializes((1064, 1065)) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1064
   store i8 0, ptr %i.a, align 8
-  tail call void @_RNvXs6_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_6DuplexNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(1072) %0) #10
   tail call void @llvm.experimental.noalias.scope.decl(metadata !86)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !87)
   %i.b = load ptr, ptr %0, align 8, !alias.scope !88, !nonnull !5, !noundef !5

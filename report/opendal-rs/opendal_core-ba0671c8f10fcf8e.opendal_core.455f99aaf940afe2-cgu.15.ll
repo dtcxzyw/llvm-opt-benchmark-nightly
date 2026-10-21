@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opendal-rs/original/opendal_core-ba0671c8f10fcf8e.opendal_core.455f99aaf940afe2-cgu.15?download=true
-inline.NumInlined: 678
+inline.NumInlined: 679
 inline.NumDeleted: 320
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 5
@@ -205,10 +205,9 @@ default.unreachable17:                            ; preds = %bb.e, %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 129
   br label %bb.g
 
-bb.b:                                             ; preds = %3, %.body
-  %.pn4 = phi { ptr, i32 } [ %4, %3 ], [ %eh.lpad-body, %.body ]
+bb.b:                                             ; preds = %.body
   store i8 2, ptr %i.c, align 8
-  resume { ptr, i32 } %.pn4
+  resume { ptr, i32 } %eh.lpad-body
 
 bb.c:                                             ; preds = %bb.a
   tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const28panic_const_async_fn_resumed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @37) #19
@@ -308,7 +307,7 @@ bb.k:                                             ; preds = %bb.e
 
 bb.l:                                             ; preds = %bb.i, %bb.f
   %i.at = phi ptr [ %i.o, %bb.i ], [ %i.n, %bb.f ] ; 5 uses
-  %i.au = phi ptr [ %i.p, %bb.i ], [ %i.m, %bb.f ] ; 7 uses
+  %i.au = phi ptr [ %i.p, %bb.i ], [ %i.m, %bb.f ] ; 6 uses
   invoke void @_RNvXs_NtNtCsgxBkk5gSRhY_4core6future6futureINtNtB8_3pin3PinINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtB4_6Futurep6OutputINtNtB8_6result6ResultNtNtNtCs5XgW7KoffLW_12opendal_core3raw3rps9RpRestoreNtNtNtB2g_5types5error5ErrorENtNtB8_6marker4SendEL_EEB1u_4pollB2g_(ptr noalias nofree noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.au, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.n unwind label %bb.m
 
@@ -408,7 +407,7 @@ bb.y:                                             ; preds = %bb.k, %bb.j
           to label %bb.b unwind label %bb.ab
 
 common.ret:                                       ; preds = %bb.aa, %bb.z
-  %storemerge = phi i8 [ 3, %bb.z ], [ 1, %bb.aa ]
+  %storemerge = phi i8 [ 1, %bb.aa ], [ 3, %bb.z ]
   store i8 %storemerge, ptr %i.c, align 8
   ret void
 
@@ -423,13 +422,7 @@ bb.aa:                                            ; preds = %bb.r, %bb.q
   store i8 0, ptr %i.bt, align 8, !noalias !684
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !684
   store i8 1, ptr %i.at, align 1, !noalias !684
-  invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNCNvXs1_NtNtCs5XgW7KoffLW_12opendal_core3raw8accessorINtNtCs6i54tJFfzR_5alloc4sync3ArcDNtBJ_10ServiceDynEL_ENtBJ_7Service7restore0EBN_(ptr noundef nonnull align 8 %i.au)
-          to label %common.ret unwind label %3
-
-3:                                                ; preds = %bb.aa
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.b
+  br label %common.ret
 
 bb.ab:                                            ; preds = %.body
   %i.bu = landingpad { ptr, i32 }

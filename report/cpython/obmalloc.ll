@@ -206,15 +206,15 @@ _mi_page_malloc.exit.i:                           ; preds = %bb.f, %bb.e
   br label %mi_heap_malloc_zero_aligned_at.exit
 
 bb.k:                                             ; preds = %bb.c
-  %i.ai = ptrtoint ptr %1 to i64                  ; 5 uses
+  %i.ai = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.aj = add i64 %i.ai, -1
   %i.ak = and i64 %i.aj, -33554432                ; 2 uses
-  %i.al = inttoptr i64 %i.ak to ptr               ; 2 uses
+  %i.al = inttoptr i64 %i.ak to ptr               ; 5 uses
   %i.am = sub i64 %i.ai, %i.ak
   %i.an = lshr i64 %i.am, 16
   %i.ao = getelementptr i8, ptr %i.al, i64 264
-  %i.ap = getelementptr [80 x i8], ptr %i.ao, i64 %i.an ; 2 uses
-  %i.aq = getelementptr i8, ptr %i.ap, i64 4
+  %i.ap = getelementptr [80 x i8], ptr %i.ao, i64 %i.an ; 3 uses
+  %i.aq = getelementptr i8, ptr %i.ap, i64 4      ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !100
   %i.as = zext i32 %i.ar to i64
   %i.at = sub nsw i64 0, %i.as
@@ -324,23 +324,15 @@ bb.v:                                             ; preds = %bb.t, %bb.u
   call void @llvm.assume(i1 true) [ "align"(ptr %.2.i.i58, i64 8) ]
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.2.i.i58, ptr nonnull readonly align 8 %1, i64 %i.cm, i1 false)
-  %6 = add i64 %i.ai, -8
-  %7 = and i64 %6, -33554432                      ; 2 uses
-  %8 = inttoptr i64 %7 to ptr                     ; 4 uses
   %i.cn = tail call ptr asm "movq %fs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(ptr) null) #57, !srcloc !99
   %i.co = ptrtoint ptr %i.cn to i64
-  %i.cp = getelementptr i8, ptr %8, i64 256
+  %i.cp = getelementptr i8, ptr %i.al, i64 256
   %i.cq = load atomic i64, ptr %i.cp monotonic, align 256
   %i.cr = icmp eq i64 %i.cq, %i.co
-  %9 = sub i64 %i.ai, %7
-  %10 = lshr i64 %9, 16
-  %11 = getelementptr i8, ptr %8, i64 264
-  %12 = getelementptr [80 x i8], ptr %11, i64 %10 ; 2 uses
-  %13 = getelementptr i8, ptr %12, i64 4
-  %i.cs = load i32, ptr %13, align 4, !tbaa !100
+  %i.cs = load i32, ptr %i.aq, align 4, !tbaa !100
   %i.ct = zext i32 %i.cs to i64
   %i.cu = sub nsw i64 0, %i.ct
-  %i.cv = getelementptr i8, ptr %12, i64 %i.cu    ; 6 uses
+  %i.cv = getelementptr i8, ptr %i.ap, i64 %i.cu  ; 6 uses
   br i1 %i.cr, label %bb.w, label %bb.aa, !prof !96
 
 bb.w:                                             ; preds = %bb.v
@@ -367,11 +359,11 @@ bb.y:                                             ; preds = %bb.x
   br label %mi_heap_malloc_zero_aligned_at.exit
 
 bb.z:                                             ; preds = %bb.w
-  tail call void @_mi_free_generic(ptr noundef nonnull %8, ptr noundef %i.cv, i1 noundef zeroext true, ptr noundef nonnull %1)
+  tail call void @_mi_free_generic(ptr noundef nonnull %i.al, ptr noundef %i.cv, i1 noundef zeroext true, ptr noundef nonnull %1)
   br label %mi_heap_malloc_zero_aligned_at.exit
 
 bb.aa:                                            ; preds = %bb.v
-  tail call void @_mi_free_generic(ptr noundef nonnull %8, ptr noundef %i.cv, i1 noundef zeroext false, ptr noundef nonnull %1)
+  tail call void @_mi_free_generic(ptr noundef nonnull %i.al, ptr noundef %i.cv, i1 noundef zeroext false, ptr noundef nonnull %1)
   br label %mi_heap_malloc_zero_aligned_at.exit
 
 mi_heap_malloc_zero_aligned_at.exit:              ; preds = %bb.q, %bb.aa, %bb.z, %bb.y, %bb.x, %_mi_page_malloc.exit.i, %bb.j, %bb.i, %bb.g, %bb.d, %bb.p, %mi_heap_malloc_aligned_at.exit, %bb.b

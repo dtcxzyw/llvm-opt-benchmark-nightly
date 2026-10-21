@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tokio-rs/original/tokio_util-33d465a5f0994b3a.tokio_util.c404ee82605926b4-cgu.0?download=true
-inline.NumInlined: 238
+inline.NumInlined: 239
 inline.NumDeleted: 98
 begin_hunk_0_@_RNvMNtNtCsgPparXX7oiu_10tokio_util4sync14poll_semaphoreNtB2_13PollSemaphore17poll_acquire_many:bb.a
   store ptr %i.ae, ptr %i.h, align 8, !alias.scope !372
@@ -202,13 +202,12 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nonlazybind uwtable
 define noundef nonnull ptr @_RNvMNtNtNtCsgPparXX7oiu_10tokio_util4sync18cancellation_token5guardNtB2_9DropGuard6disarm(ptr nofree noundef readnone returned captures(address_is_null, ret: address, provenance) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [8 x i8], align 8                 ; 3 uses
+  %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr null, ptr %i.a, align 8
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b, !prof !16
 
 bb.b:                                             ; preds = %bb.a
-  call fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsgPparXX7oiu_10tokio_util4sync18cancellation_token5guard9DropGuardEBJ_(ptr noalias nofree noundef align 8 dereferenceable(8) %i.a)
   ret ptr %0
 
 bb.c:                                             ; preds = %bb.a

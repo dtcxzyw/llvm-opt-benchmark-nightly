@@ -202,7 +202,8 @@ _ZN6hermes2vmL13stringIndexOfERNS0_7RuntimeENS0_6HandleINS0_15StringPrimitiveEEE
   store i32 0, ptr %i.ix, align 8, !tbaa !44
   %i.iy = getelementptr inbounds nuw i8, ptr %9, i64 12
   store i32 32, ptr %i.iy, align 4, !tbaa !43
-  %i.iz = call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.0.i.i.i.i.i.i152) #13 ; 3 uses
+  %i.iz = call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.0.i.i.i.i.i.i152) #13 ; 2 uses
+  %13 = extractvalue { ptr, i64 } %i.iz, 0        ; 3 uses
   %i.ja = extractvalue { ptr, i64 } %i.iz, 1      ; 3 uses
   %i.jb = load ptr, ptr %i.b, align 8, !tbaa !12  ; 4 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 192 ; 2 uses
@@ -255,7 +256,6 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
 .lr.ph323:                                        ; preds = %_ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.exit
   %.sroa.2.8.extract.trunc.i = trunc i64 %i.ja to i32 ; 3 uses
   %i.jr = and i32 %.sroa.2.8.extract.trunc.i, -1073741824 ; 2 uses
-  %13 = extractvalue { ptr, i64 } %i.iz, 0        ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
   %i.jt = ptrtoint ptr %.0.i.i.i.i.i.i158 to i64
   %i.ju = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
@@ -430,8 +430,7 @@ bb.bo:                                            ; preds = %._crit_edge324
   %.sroa.2.12.insert.ext.i.i = zext i32 %i.mt to i64
   %.sroa.2.12.insert.shift.i.i = shl nuw i64 %.sroa.2.12.insert.ext.i.i, 32
   %.sroa.2.12.insert.insert.i.i = or disjoint i64 %.sroa.2.12.insert.shift.i.i, %.sroa.2.8.insert.ext.i.i
-  %14 = extractvalue { ptr, i64 } %i.iz, 0
-  store ptr %14, ptr %12, align 8
+  store ptr %13, ptr %12, align 8
   %i.my = getelementptr inbounds nuw i8, ptr %12, i64 8
   store i64 %.sroa.2.12.insert.insert.i.i, ptr %i.my, align 8
   %i.mz = call { ptr, i64 } @_ZNK6hermes2vm10StringView11getUTF16RefERN4llvh15SmallVectorImplIDsEEb(ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef nonnull align 8 dereferenceable(16) %9, i1 noundef zeroext true) #13 ; 0 uses
@@ -834,6 +833,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = tail call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nonnull %1) #13 ; 2 uses
+  %5 = extractvalue { ptr, i64 } %i.n, 0          ; 15 uses
   %i.o = extractvalue { ptr, i64 } %i.n, 1        ; 2 uses
   %i.p = tail call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nonnull %3) #13 ; 2 uses
   %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 7 uses
@@ -847,7 +847,6 @@ bb.c:                                             ; preds = %bb.b
   %i.v = and i32 %.sroa.2.8.extract.trunc.i.i, -1073741824
   %i.w = or disjoint i32 %i.u, %i.v
   %.sroa.2.12.insert.ext.i.i = zext i32 %i.s to i64 ; 4 uses
-  %5 = extractvalue { ptr, i64 } %i.n, 0          ; 15 uses
   %i.x = icmp slt i32 %.sroa.2.8.extract.trunc.i.i, 0 ; 2 uses
   br i1 %i.x, label %bb.d, label %bb.k
 

@@ -202,19 +202,18 @@ _ZNKSt6vectorIlSaIlEE12_M_check_lenEmPKc.exit.i.i4: ; preds = %_ZNKSt6vectorIlSa
   store ptr %i.d, ptr %i.a, align 8, !tbaa !43
   store ptr %i.d, ptr %i.b, align 8, !tbaa !61
   %i.e = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #18
-          to label %_ZNSt6vectorIlSaIlEE9push_backERKl.exit12 unwind label %bb.c ; 5 uses
+          to label %_ZNSt6vectorIlSaIlEE9push_backERKl.exit12 unwind label %bb.c ; 4 uses
 
 _ZNSt6vectorIlSaIlEE9push_backERKl.exit12:        ; preds = %_ZNKSt6vectorIlSaIlEE12_M_check_lenEmPKc.exit.i.i4
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store i64 %2, ptr %i.f, align 8, !tbaa !42
   %i.g = load i64, ptr %i.c, align 8, !tbaa !42
   store i64 %i.g, ptr %i.e, align 8, !tbaa !42
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   tail call void @_ZdlPv(ptr noundef nonnull %i.c) #19
   store ptr %i.e, ptr %3, align 8, !tbaa !44
   store ptr %i.h, ptr %i.a, align 8, !tbaa !43
-  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  store ptr %4, ptr %i.b, align 8, !tbaa !61
+  store ptr %i.h, ptr %i.b, align 8, !tbaa !61
   %i.i = invoke noundef ptr @_ZN9benchmark8internal9Benchmark4ArgsERKSt6vectorIlSaIlEE(ptr noundef nonnull align 8 dereferenceable(224) %0, ptr noundef nonnull align 8 dereferenceable(24) %3)
           to label %bb.a unwind label %bb.c
 

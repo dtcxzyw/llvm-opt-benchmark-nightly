@@ -205,9 +205,8 @@ bb.a:
   %i.a = load i32, ptr %4, align 8, !tbaa !69     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !70   ; 2 uses
-  %i.d = load i16, ptr %3, align 2, !tbaa !71
-  %10 = freeze i16 %i.d                           ; 5 uses
-  %i.e = zext i16 %10 to i32                      ; 2 uses
+  %i.d = load i16, ptr %3, align 2, !tbaa !71     ; 5 uses
+  %i.e = zext i16 %i.d to i32                     ; 2 uses
   %i.f = add nuw nsw i32 %i.e, 1                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
@@ -420,7 +419,7 @@ bb.d:                                             ; preds = %.preheader453, %._c
   %i.cd = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %indvars.iv529 ; 2 uses
   %i.ce = load i16, ptr %i.cd, align 2, !tbaa !71 ; 3 uses
   %i.cf = add i16 %i.ce, -1
-  %or.cond254.not = icmp ult i16 %i.cf, %10
+  %or.cond254.not = icmp ult i16 %i.cf, %i.d
   br i1 %or.cond254.not, label %bb.e, label %_ZL11walkContouriiiiR20rcCompactHeightfieldPKtR12rcTempVectorIiE.exit
 
 bb.e:                                             ; preds = %.lr.ph464
@@ -460,7 +459,7 @@ bb.g:                                             ; preds = %bb.f
   %i.cz = load i16, ptr %i.cy, align 2, !tbaa !71 ; 3 uses
   %i.da = zext i16 %i.cz to i32                   ; 3 uses
   %i.db = add i16 %i.cz, -1
-  %or.cond255.not = icmp ult i16 %i.db, %10
+  %or.cond255.not = icmp ult i16 %i.db, %i.d
   br i1 %or.cond255.not, label %bb.h, label %_ZL20addUniqueFloorRegionR8rcRegioni.exit
 
 bb.h:                                             ; preds = %bb.g
@@ -863,9 +862,9 @@ bb.av:                                            ; preds = %_ZL25isRegionConnec
 
 .preheader444:                                    ; preds = %bb.av
   %i.up = load ptr, ptr %i.k, align 8, !tbaa !98  ; 9 uses
-  %i.uq = zext i16 %10 to i64
+  %i.uq = zext i16 %i.d to i64
   %xtraiter1028 = and i64 %i.g, 3                 ; 3 uses
-  %i.ur = icmp ult i16 %10, 3
+  %i.ur = icmp ult i16 %i.d, 3
   br i1 %i.ur, label %.epil.preheader1027, label %.preheader444.new
 
 .preheader444.new:                                ; preds = %.preheader444

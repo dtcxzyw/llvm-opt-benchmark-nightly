@@ -204,7 +204,7 @@ _ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit: ; 
   %i.m = and i64 %i.j, 2
   %.not = icmp eq i64 %i.m, 0
   %or.cond = or i1 %i.l, %.not
-  br i1 %or.cond, label %.lr.ph, label %._crit_edge, !llvm.loop !34
+  br i1 %or.cond, label %.lr.ph, label %._crit_edge
 
 .lr.ph19:                                         ; preds = %.preheader, %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit
   %.sroa.0.018 = phi i32 [ %.sroa.0.1, %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit ], [ 1, %.preheader ] ; 8 uses
@@ -227,7 +227,7 @@ bb.b:                                             ; preds = %.lr.ph19
   tail call void @llvm.x86.sse2.pause()
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !35
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !34
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
   %.01.i.i.unr = phi i32 [ %.sroa.0.018, %.lr.ph.i.i.preheader ], [ %i.p, %.lr.ph.i.i.prol ]
@@ -261,7 +261,7 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit:   ; preds = %_ZN3tbb6detail2d013
   %i.v = load atomic i64, ptr %0 monotonic, align 8
   %i.w = and i64 %i.v, -4
   %.not2 = icmp eq i64 %i.w, 4
-  br i1 %.not2, label %._crit_edge20, label %.lr.ph19, !llvm.loop !36
+  br i1 %.not2, label %._crit_edge20, label %.lr.ph19, !llvm.loop !35
 
 ._crit_edge20:                                    ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit, %.preheader
   %i.x = atomicrmw add ptr %0, i64 -6 seq_cst, align 8 ; 0 uses
@@ -375,7 +375,6 @@ attributes #4 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-siz
 !31 = distinct !{!31, !20}
 !32 = distinct !{!32, !21}
 !33 = distinct !{!33, !20}
-!34 = distinct !{!34, !20}
-!35 = distinct !{!35, !21}
-!36 = distinct !{!36, !20}
+!34 = distinct !{!34, !21}
+!35 = distinct !{!35, !20}
 end_hunk_0

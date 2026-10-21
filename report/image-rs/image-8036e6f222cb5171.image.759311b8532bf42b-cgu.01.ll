@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/image-rs/original/image-8036e6f222cb5171.image.759311b8532bf42b-cgu.01?download=true
-inline.NumInlined: 1496
+inline.NumInlined: 1498
 inline.NumDeleted: 531
 loop-unroll.NumCompletelyUnrolled: 36
 loop-unroll.NumRuntimeUnrolled: 18
@@ -205,7 +205,7 @@ bb.a:
   %i.o = alloca [24 x i8], align 8                ; 6 uses
   %i.p = alloca [24 x i8], align 8                ; 6 uses
   %i.q = alloca [4 x i8], align 4                 ; 6 uses
-  %i.r = alloca [24 x i8], align 8                ; 13 uses
+  %i.r = alloca [24 x i8], align 8                ; 12 uses
   %i.s = alloca [32 x i8], align 8                ; 7 uses
   %i.t = alloca [24 x i8], align 8                ; 7 uses
   %i.u = alloca [16 x i8], align 8                ; 5 uses
@@ -456,7 +456,6 @@ _RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream6refillINtNtNtNtCslN0b7
   %i.du = zext nneg i8 %i.ds to i64
   %i.dv = shl i64 %i.dr, %i.du
   store i64 %i.dv, ptr %i.dt, align 8, !alias.scope !722
-  call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultAhj4_NtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader12ZByteIoErrorEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(24) %i.r), !noalias !732
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !723
   br label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream6refillINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECsa5QsYiPB8Gl_5image.exit.thread.i
 
@@ -859,7 +858,7 @@ bb.a:
   %i.o = alloca [24 x i8], align 8                ; 6 uses
   %i.p = alloca [24 x i8], align 8                ; 6 uses
   %i.q = alloca [4 x i8], align 4                 ; 6 uses
-  %i.r = alloca [24 x i8], align 8                ; 13 uses
+  %i.r = alloca [24 x i8], align 8                ; 12 uses
   %i.s = alloca [32 x i8], align 8                ; 7 uses
   %i.t = alloca [24 x i8], align 8                ; 7 uses
   %i.u = alloca [16 x i8], align 8                ; 5 uses
@@ -1110,7 +1109,6 @@ _RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream6refillINtNtNtNtCslN0b7
   %i.du = zext nneg i8 %i.ds to i64
   %i.dv = shl i64 %i.dr, %i.du
   store i64 %i.dv, ptr %i.dt, align 8, !alias.scope !1033
-  call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultAhj4_NtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader12ZByteIoErrorEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(24) %i.r), !noalias !1043
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !1034
   br label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream6refillINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorRShEECsa5QsYiPB8Gl_5image.exit.thread.i
 

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/actix_server-cb478365b72cce50.actix_server.31bc02354b125ea4-cgu.0?download=true
-inline.NumInlined: 3999
+inline.NumInlined: 4000
 inline.NumDeleted: 1944
 loop-unroll.NumCompletelyUnrolled: 9
 loop-unroll.NumRuntimeUnrolled: 31
@@ -205,7 +205,7 @@ bb.cj:                                            ; preds = %.noexc3.i.i.i.i
 
 bb.ck:                                            ; preds = %bb.cg, %._crit_edge.i.i.i.i.i.i
   %i.fi = phi ptr [ %.pre.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ], [ %i.fd, %bb.cg ] ; 7 uses
-  %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 6 uses
+  %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !7736)
   call void @llvm.experimental.noalias.scope.decl(metadata !7766)
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.fi, null
@@ -397,19 +397,19 @@ bb.dc:                                            ; preds = %bb.cz, %bb.cy, %bb.
   %.pre.i.i.i.i.i.i.i = load ptr, ptr %i.fj, align 8, !alias.scope !7777, !noalias !7735 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !7778)
   %i.gz = icmp eq ptr %.pre.i.i.i.i.i.i.i, null
-  br i1 %i.gz, label %2, label %bb.dd
+  br i1 %i.gz, label %bb.di, label %bb.dd
 
 bb.dd:                                            ; preds = %.noexc26.i.i.i.i.i.i, %.noexc21.i.i.i.i.i.i
   %.sroa.02.016.i.i.i.i.i.i.i = phi i8 [ 1, %.noexc21.i.i.i.i.i.i ], [ %spec.select.i.i.i.i.i.i.i, %.noexc26.i.i.i.i.i.i ] ; 2 uses
   %i.ha = phi ptr [ %i.fi, %.noexc21.i.i.i.i.i.i ], [ %.pre.i.i.i.i.i.i.i, %.noexc26.i.i.i.i.i.i ]
   %i.hb = atomicrmw add ptr %i.ha, i64 -1 release, align 8, !noalias !7779
   %i.hc = icmp eq i64 %i.hb, 1
-  br i1 %i.hc, label %bb.de, label %2
+  br i1 %i.hc, label %bb.de, label %bb.di
 
 bb.de:                                            ; preds = %bb.dd
   fence acquire
   invoke void @"_ZN5alloc4sync16Arc$LT$T$C$A$GT$9drop_slow17hd1d4e4546c42d21aE"(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.fj)
-          to label %2 unwind label %bb.df, !noalias !7732
+          to label %bb.di unwind label %bb.df, !noalias !7732
 
 bb.df:                                            ; preds = %bb.de
   %i.hd = landingpad { ptr, i32 }
@@ -427,18 +427,14 @@ bb.dg:                                            ; preds = %bb.dc, %bb.db, %"_Z
   invoke fastcc void @"_ZN4core3ptr67drop_in_place$LT$tokio..sync..oneshot..Receiver$LT$$LP$$RP$$GT$$GT$17hda34d53a9da8a35cE"(ptr noalias noundef align 8 dereferenceable(8) %i.fj) #36
           to label %bb.ch unwind label %bb.dk, !noalias !7732
 
-2:                                                ; preds = %bb.de, %bb.dd, %.noexc26.i.i.i.i.i.i
-  %.sroa.02.017.i.i.i.i.i.i.i = phi i8 [ %.sroa.02.016.i.i.i.i.i.i.i, %bb.dd ], [ %spec.select.i.i.i.i.i.i.i, %.noexc26.i.i.i.i.i.i ], [ %.sroa.02.016.i.i.i.i.i.i.i, %bb.de ]
-  store ptr null, ptr %i.fj, align 8, !alias.scope !7736, !noalias !7735
-  invoke fastcc void @"_ZN4core3ptr67drop_in_place$LT$tokio..sync..oneshot..Receiver$LT$$LP$$RP$$GT$$GT$17hda34d53a9da8a35cE"(ptr noalias noundef align 8 dereferenceable(8) %i.fj)
-          to label %bb.di unwind label %bb.dh, !noalias !7732
-
-bb.dh:                                            ; preds = %bb.dj, %2, %bb.cf, %bb.ce
+bb.dh:                                            ; preds = %bb.dj, %bb.cf, %bb.ce
   %i.hf = landingpad { ptr, i32 }
           cleanup
   br label %bb.ch
 
-bb.di:                                            ; preds = %2
+bb.di:                                            ; preds = %bb.de, %bb.dd, %.noexc26.i.i.i.i.i.i
+  %.sroa.02.017.i.i.i.i.i.i.i = phi i8 [ %.sroa.02.016.i.i.i.i.i.i.i, %bb.dd ], [ %spec.select.i.i.i.i.i.i.i, %.noexc26.i.i.i.i.i.i ], [ %.sroa.02.016.i.i.i.i.i.i.i, %bb.de ]
+  store ptr null, ptr %i.fj, align 8, !alias.scope !7736, !noalias !7735
   %i.hg = trunc nuw i8 %.sroa.02.017.i.i.i.i.i.i.i to i1
   br i1 %i.hg, label %bb.dj, label %bb.dp, !prof !18
 

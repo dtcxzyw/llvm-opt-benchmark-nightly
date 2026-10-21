@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rocksdb/original/transaction_base?download=true
-inline.NumInlined: 2567
+inline.NumInlined: 2568
 inline.NumDeleted: 1109
 loop-unroll.NumCompletelyUnrolled: 9
 loop-unroll.NumRuntimeUnrolled: 4
@@ -205,7 +205,7 @@ _ZNSt16allocator_traitsISaIN7rocksdb19TransactionBaseImpl9SavePointEEE9construct
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt16allocator_traitsISaIN7rocksdb19TransactionBaseImpl9SavePointEEE9constructIS2_JRSt10shared_ptrIKNS0_8SnapshotEERbRS6_INS0_19TransactionNotifierEERmSF_SF_SF_RKNS0_18LockTrackerFactoryEEEEvRS3_PT_DpOT0_.exit, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %i.aj, %.lr.ph.i.i.i ], [ %i.q, %_ZNSt16allocator_traitsISaIN7rocksdb19TransactionBaseImpl9SavePointEEE9constructIS2_JRSt10shared_ptrIKNS0_8SnapshotEERbRS6_INS0_19TransactionNotifierEERmSF_SF_SF_RKNS0_18LockTrackerFactoryEEEEvRS3_PT_DpOT0_.exit ] ; 6 uses
-  %.0911.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i ], [ %i.c, %_ZNSt16allocator_traitsISaIN7rocksdb19TransactionBaseImpl9SavePointEEE9constructIS2_JRSt10shared_ptrIKNS0_8SnapshotEERbRS6_INS0_19TransactionNotifierEERmSF_SF_SF_RKNS0_18LockTrackerFactoryEEEEvRS3_PT_DpOT0_.exit ] ; 11 uses
+  %.0911.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i ], [ %i.c, %_ZNSt16allocator_traitsISaIN7rocksdb19TransactionBaseImpl9SavePointEEE9constructIS2_JRSt10shared_ptrIKNS0_8SnapshotEERbRS6_INS0_19TransactionNotifierEERmSF_SF_SF_RKNS0_18LockTrackerFactoryEEEEvRS3_PT_DpOT0_.exit ] ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !900)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !901)
   %i.t = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8
@@ -234,7 +234,6 @@ _ZNSt16allocator_traitsISaIN7rocksdb19TransactionBaseImpl9SavePointEEE9construct
   store ptr null, ptr %i.ag, align 8, !tbaa !43, !alias.scope !901
   store <2 x ptr> %i.ah, ptr %i.ae, align 8, !tbaa !67, !alias.scope !900
   store ptr null, ptr %i.af, align 8, !tbaa !551, !alias.scope !901
-  tail call void @_ZN7rocksdb19TransactionBaseImpl9SavePointD2Ev(ptr noundef nonnull align 8 dead_on_return(88) dereferenceable(88) %.0911.i.i.i) #30, !noalias !900
   %i.ai = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 88 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 88 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ai, %1
@@ -248,7 +247,7 @@ _ZNSt6vectorIN7rocksdb19TransactionBaseImpl9SavePointESaIS2_EE11_S_relocateEPS2_
 
 .lr.ph.i.i.i34:                                   ; preds = %_ZNSt6vectorIN7rocksdb19TransactionBaseImpl9SavePointESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, %.lr.ph.i.i.i34
   %.012.i.i.i35 = phi ptr [ %i.bb, %.lr.ph.i.i.i34 ], [ %i.ak, %_ZNSt6vectorIN7rocksdb19TransactionBaseImpl9SavePointESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit ] ; 6 uses
-  %.0911.i.i.i36 = phi ptr [ %i.ba, %.lr.ph.i.i.i34 ], [ %1, %_ZNSt6vectorIN7rocksdb19TransactionBaseImpl9SavePointESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit ] ; 11 uses
+  %.0911.i.i.i36 = phi ptr [ %i.ba, %.lr.ph.i.i.i34 ], [ %1, %_ZNSt6vectorIN7rocksdb19TransactionBaseImpl9SavePointESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit ] ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !903)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !904)
   %i.al = getelementptr inbounds nuw i8, ptr %.0911.i.i.i36, i64 8
@@ -277,7 +276,6 @@ _ZNSt6vectorIN7rocksdb19TransactionBaseImpl9SavePointESaIS2_EE11_S_relocateEPS2_
   store ptr null, ptr %i.ay, align 8, !tbaa !43, !alias.scope !904
   store <2 x ptr> %i.az, ptr %i.aw, align 8, !tbaa !67, !alias.scope !903
   store ptr null, ptr %i.ax, align 8, !tbaa !551, !alias.scope !904
-  tail call void @_ZN7rocksdb19TransactionBaseImpl9SavePointD2Ev(ptr noundef nonnull align 8 dead_on_return(88) dereferenceable(88) %.0911.i.i.i36) #30, !noalias !903
   %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i36, i64 88 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.012.i.i.i35, i64 88 ; 2 uses
   %.not.i.i.i37 = icmp eq ptr %i.ba, %i.b
