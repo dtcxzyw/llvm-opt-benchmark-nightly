@@ -205,8 +205,6 @@ $_ZTVN4llvm2cl3optIbLb1ENS0_6parserIbEEEE = comdat any
 
 $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 
-$_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 $_ZTVN4llvm9MemorySSA13CachingWalkerE = comdat any
 
 $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
@@ -255,7 +253,6 @@ $_ZTVN4llvm11GraphWriterIP15DOTFuncMSSAInfoEE = comdat any
 @_ZTVN4llvm2cl3optIbLb1ENS0_6parserIbEEEE = linkonce_odr unnamed_addr constant { [13 x ptr] } { [13 x ptr] [ptr null, ptr null, ptr @_ZN4llvm2cl3optIbLb1ENS0_6parserIbEEE16handleOccurrenceEjNS_9StringRefES5_, ptr @_ZNK4llvm2cl3optIbLb1ENS0_6parserIbEEE27getValueExpectedFlagDefaultEv, ptr @_ZN4llvm2cl6Option6anchorEv, ptr @_ZN4llvm2cl3optIbLb1ENS0_6parserIbEEED2Ev, ptr @_ZN4llvm2cl3optIbLb1ENS0_6parserIbEEED0Ev, ptr @_ZNK4llvm2cl3optIbLb1ENS0_6parserIbEEE14getOptionWidthEv, ptr @_ZNK4llvm2cl3optIbLb1ENS0_6parserIbEEE15printOptionInfoEm, ptr @_ZNK4llvm2cl3optIbLb1ENS0_6parserIbEEE16printOptionValueEmb, ptr @_ZN4llvm2cl3optIbLb1ENS0_6parserIbEEE10setDefaultEv, ptr @_ZN4llvm2cl3optIbLb1ENS0_6parserIbEEE19getExtraOptionNamesERNS_15SmallVectorImplINS_9StringRefEEE, ptr @_ZN4llvm2cl6Option13addOccurrenceEjNS_9StringRefES2_b] }, comdat, align 8
 @_ZTVN4llvm2cl11OptionValueIbEE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZNK4llvm2cl15OptionValueCopyIbE7compareERKNS0_18GenericOptionValueE, ptr @_ZN4llvm2cl18GenericOptionValue6anchorEv] }, comdat, align 8
 @_ZTVN4llvm21SimpleCaptureAnalysisE = external unnamed_addr constant { [5 x ptr] }, align 8
-@_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\01\01\00\00\00", [8 x i8] c"\01\01\01\00\00\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00", [8 x i8] c"\01\01\01\01\01\01\01\01"], comdat, align 16
 @_ZTVN12_GLOBAL__N_124MemorySSAAnnotatedWriterE = internal unnamed_addr constant { [10 x ptr] } { [10 x ptr] [ptr null, ptr null, ptr @_ZN4llvm24AssemblyAnnotationWriterD2Ev, ptr @_ZN12_GLOBAL__N_124MemorySSAAnnotatedWriterD0Ev, ptr @_ZN4llvm24AssemblyAnnotationWriter17emitFunctionAnnotEPKNS_8FunctionERNS_21formatted_raw_ostreamE, ptr @_ZN12_GLOBAL__N_124MemorySSAAnnotatedWriter24emitBasicBlockStartAnnotEPKN4llvm10BasicBlockERNS1_21formatted_raw_ostreamE, ptr @_ZN4llvm24AssemblyAnnotationWriter22emitBasicBlockEndAnnotEPKNS_10BasicBlockERNS_21formatted_raw_ostreamE, ptr @_ZN12_GLOBAL__N_124MemorySSAAnnotatedWriter20emitInstructionAnnotEPKN4llvm11InstructionERNS1_21formatted_raw_ostreamE, ptr @_ZN4llvm24AssemblyAnnotationWriter15emitMDNodeAnnotEPKNS_6MDNodeERNS_21formatted_raw_ostreamE, ptr @_ZN4llvm24AssemblyAnnotationWriter16printInfoCommentERKNS_5ValueERNS_21formatted_raw_ostreamE] }, align 8
 @.str.21 = private unnamed_addr constant [3 x i8] c"; \00", align 1
 @_ZTVN4llvm9MemorySSA13CachingWalkerE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN4llvm15MemorySSAWalkerD2Ev, ptr @_ZN4llvm9MemorySSA13CachingWalkerD0Ev, ptr @_ZN4llvm9MemorySSA13CachingWalker25getClobberingMemoryAccessEPNS_12MemoryAccessERNS_14BatchAAResultsE, ptr @_ZN4llvm9MemorySSA13CachingWalker25getClobberingMemoryAccessEPNS_12MemoryAccessERKNS_14MemoryLocationERNS_14BatchAAResultsE, ptr @_ZN4llvm9MemorySSA13CachingWalker14invalidateInfoEPNS_12MemoryAccessE] }, comdat, align 8
@@ -658,12 +655,10 @@ _ZL24instructionClobbersQueryIN4llvm14BatchAAResultsEEbPKNS0_9MemoryDefERKNS0_14
   %i.nd = and i16 %.val.i35, 896
   %i.ne = icmp eq i16 %i.nd, 896
   %i.nf = lshr i16 %.val37.i36, 7
-  %10 = and i16 %i.nf, 7
-  %11 = zext nneg i16 %10 to i64
-  %12 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %11
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 4
-  %14 = load i8, ptr %13, align 4, !tbaa !59, !range !37, !noundef !38
-  %i.ng = trunc nuw i8 %14 to i1
+  %10 = trunc i16 %i.nf to i8
+  %11 = and i8 %10, 7
+  %12 = lshr i8 -48, %11
+  %i.ng = trunc i8 %12 to i1
   %i.nh = or i1 %i.ne, %i.ng
   br i1 %i.nh, label %.thread126.i, label %.backedge.us.i
 
@@ -792,12 +787,10 @@ _ZL24instructionClobbersQueryIN4llvm14BatchAAResultsEEbPKNS0_9MemoryDefERKNS0_14
   %i.pb = and i16 %.val.i25, 896
   %i.pc = icmp eq i16 %i.pb, 896
   %i.pd = lshr i16 %.val37.i, 7
-  %15 = and i16 %i.pd, 7
-  %16 = zext nneg i16 %15 to i64
-  %17 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %16
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 4
-  %19 = load i8, ptr %18, align 4, !tbaa !59, !range !37, !noundef !38
-  %i.pe = trunc nuw i8 %19 to i1
+  %13 = trunc i16 %i.pd to i8
+  %14 = and i8 %13, 7
+  %15 = lshr i8 -48, %14
+  %i.pe = trunc i8 %15 to i1
   %i.pf = or i1 %i.pc, %i.pe
   br i1 %i.pf, label %.thread126.i, label %.backedge.i
 
@@ -1200,12 +1193,10 @@ _ZL24instructionClobbersQueryIN4llvm14BatchAAResultsEEbPKNS0_9MemoryDefERKNS0_14
   %i.no = and i16 %.val.i231.i, 896
   %i.np = icmp eq i16 %i.no, 896
   %i.nq = lshr i16 %.val37.i232.i, 7
-  %20 = and i16 %i.nq, 7
-  %21 = zext nneg i16 %20 to i64
-  %22 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %21
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 4
-  %24 = load i8, ptr %23, align 4, !tbaa !59, !range !37, !noalias !986, !noundef !38
-  %i.nr = trunc nuw i8 %24 to i1
+  %20 = trunc i16 %i.nq to i8
+  %21 = and i8 %20, 7
+  %22 = lshr i8 -48, %21
+  %i.nr = trunc i8 %22 to i1
   %i.ns = or i1 %i.np, %i.nr
   store i8 %i.mk, ptr %i.mj, align 8, !tbaa !981, !noalias !987
   br i1 %i.ns, label %.loopexit322.i, label %..thread43_crit_edge.i192.i
@@ -1608,12 +1599,10 @@ _ZL24instructionClobbersQueryIN4llvm14BatchAAResultsEEbPKNS0_9MemoryDefERKNS0_14
   %i.sx = and i16 %.val.i199.i, 896
   %i.sy = icmp eq i16 %i.sx, 896
   %i.sz = lshr i16 %.val37.i.i, 7
-  %25 = and i16 %i.sz, 7
-  %26 = zext nneg i16 %25 to i64
-  %27 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %26
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 4
-  %29 = load i8, ptr %28, align 4, !tbaa !59, !range !37, !noalias !982, !noundef !38
-  %i.ta = trunc nuw i8 %29 to i1
+  %23 = trunc i16 %i.sz to i8
+  %24 = and i8 %23, 7
+  %25 = lshr i8 -48, %24
+  %i.ta = trunc i8 %25 to i1
   %i.tb = or i1 %i.sy, %i.ta
   store i8 %i.rt, ptr %i.rs, align 8, !tbaa !981
   br i1 %i.tb, label %.loopexit.i, label %..thread43_crit_edge.i.i
@@ -2016,12 +2005,10 @@ bb.f:                                             ; preds = %_ZN4llvm16dyn_cast_
   %i.w = and i16 %.val, 896
   %i.x = icmp eq i16 %i.w, 896
   %i.y = lshr i16 %.val37, 7
-  %4 = and i16 %i.y, 7
-  %5 = zext nneg i16 %4 to i64
-  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %5
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %8 = load i8, ptr %7, align 4, !tbaa !59, !range !37, !noundef !38
-  %i.z = trunc nuw i8 %8 to i1
+  %4 = trunc i16 %i.y to i8
+  %5 = and i8 %4, 7
+  %6 = lshr i8 -48, %5
+  %i.z = trunc i8 %6 to i1
   %i.aa = or i1 %i.x, %i.z
   br label %bb.g
 
@@ -2424,12 +2411,10 @@ bb.f:                                             ; preds = %_ZN4llvm16dyn_cast_
   %i.u = and i16 %.val, 896
   %i.v = icmp eq i16 %i.u, 896
   %i.w = lshr i16 %.val37, 7
-  %4 = and i16 %i.w, 7
-  %5 = zext nneg i16 %4 to i64
-  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %5
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %8 = load i8, ptr %7, align 4, !tbaa !59, !range !37, !noundef !38
-  %i.x = trunc nuw i8 %8 to i1
+  %4 = trunc i16 %i.w to i8
+  %5 = and i8 %4, 7
+  %6 = lshr i8 -48, %5
+  %i.x = trunc i8 %6 to i1
   %i.y = or i1 %i.v, %i.x
   br label %bb.g
 

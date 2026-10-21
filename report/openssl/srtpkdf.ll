@@ -10,7 +10,6 @@ target triple = "x86_64-pc-linux-gnu"
 @__func__.kdf_srtpkdf_derive = private unnamed_addr constant [19 x i8] c"kdf_srtpkdf_derive\00", align 1
 @__func__.kdf_srtpkdf_check_key = private unnamed_addr constant [22 x i8] c"kdf_srtpkdf_check_key\00", align 1
 @__func__.SRTPKDF = private unnamed_addr constant [8 x i8] c"SRTPKDF\00", align 1
-@is_srtp.strp_table = internal unnamed_addr constant [8 x i8] c"\01\01\01\00\00\00\01\01", align 1
 @.str.1 = private unnamed_addr constant [11 x i8] c"properties\00", align 1
 @.str.2 = private unnamed_addr constant [7 x i8] c"cipher\00", align 1
 @.str.3 = private unnamed_addr constant [4 x i8] c"key\00", align 1
@@ -345,11 +344,9 @@ bb.p:                                             ; preds = %bb.o
   br label %SRTPKDF.exit
 
 bb.q:                                             ; preds = %bb.o
-  %4 = zext nneg i32 %i.ai to i64
-  %5 = getelementptr inbounds nuw i8, ptr @is_srtp.strp_table, i64 %4
-  %6 = load i8, ptr %5, align 1, !tbaa !36, !range !37, !noundef !38
-  %7 = trunc nuw i8 %6 to i1
-  %i.at = select i1 %7, i32 6, i32 4              ; 3 uses
+  %4 = add nsw i32 %i.ai, -6
+  %5 = icmp ult i32 %4, -3
+  %i.at = select i1 %5, i32 6, i32 4              ; 3 uses
   %i.au = icmp ne ptr %i.aa, null
   %i.av = icmp ne i64 %i.ac, 0
   %or.cond5.i = and i1 %i.au, %i.av
@@ -430,7 +427,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.bf, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader, label %vec.epilog.ph, !prof !41
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader, label %vec.epilog.ph, !prof !37
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -717,7 +714,7 @@ bb.q:                                             ; preds = %bb.p, %bb.n, %bb.l,
   %i.bg = getelementptr inbounds nuw i8, ptr %.04163.i, i64 40 ; 2 uses
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !27 ; 2 uses
   %.not.i = icmp eq ptr %i.bh, null
-  br i1 %.not.i, label %bb.r, label %.lr.ph.i, !llvm.loop !42
+  br i1 %.not.i, label %bb.r, label %.lr.ph.i, !llvm.loop !38
 
 srtp_set_ctx_params_decoder.exit:                 ; preds = %bb.e, %bb.g, %bb.i, %bb.j, %bb.l, %bb.n, %bb.p
   %.sink.i = phi i32 [ 114, %bb.n ], [ 103, %bb.l ], [ 91, %bb.j ], [ 80, %bb.i ], [ 65, %bb.g ], [ 54, %bb.e ], [ 125, %bb.p ]
@@ -945,7 +942,7 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   %i.h = getelementptr inbounds nuw i8, ptr %.0916.i, i64 40 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !27   ; 2 uses
   %.not12.i = icmp eq ptr %i.i, null
-  br i1 %.not12.i, label %bb.e, label %.lr.ph.i, !llvm.loop !43
+  br i1 %.not12.i, label %bb.e, label %.lr.ph.i, !llvm.loop !39
 
 srtp_get_ctx_params_decoder.exit:                 ; preds = %bb.c
   tail call void @ERR_new() #8
@@ -1116,16 +1113,12 @@ attributes #9 = { nounwind willreturn memory(read) }
 !29 = !{!11, !11, i64 0}
 !30 = !{!12, !12, i64 0}
 !31 = !{!5, !5, i64 0}
-!32 = distinct !{!32, !25, !39, !40}
-!33 = distinct !{!33, !25, !39, !40}
-!34 = distinct !{!34, !25, !40, !39}
-!35 = !{!"_Bool", !4, i64 0}
-!36 = !{!35, !35, i64 0}
-!37 = !{i8 0, i8 2}
-!38 = !{}
-!39 = !{!"llvm.loop.isvectorized", i32 1}
-!40 = !{!"llvm.loop.unroll.runtime.disable"}
-!41 = !{!"branch_weights", i32 8, i32 24}
-!42 = distinct !{!42, !25}
-!43 = distinct !{!43, !25}
+!32 = distinct !{!32, !25, !35, !36}
+!33 = distinct !{!33, !25, !35, !36}
+!34 = distinct !{!34, !25, !36, !35}
+!35 = !{!"llvm.loop.isvectorized", i32 1}
+!36 = !{!"llvm.loop.unroll.runtime.disable"}
+!37 = !{!"branch_weights", i32 8, i32 24}
+!38 = distinct !{!38, !25}
+!39 = distinct !{!39, !25}
 end_hunk_0

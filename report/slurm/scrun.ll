@@ -202,12 +202,8 @@ _disable_sigpipe.exit:                            ; preds = %._crit_edge
   %i.ek = load ptr, ptr %i.ej, align 8
   call void %i.ek(i32 noundef %i.dn, ptr noundef nonnull %i.dp) #16
   %i.el = load i32, ptr @command_requested, align 4
-  %4 = sext i32 %i.el to i64                      ; 2 uses
-  %5 = getelementptr inbounds [32 x i8], ptr @commands, i64 %4
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %7 = load i8, ptr %6, align 8, !range !17, !noundef !18
-  %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %bb.bu, label %bb.by
+  %.not38 = icmp eq i32 %i.el, 5
+  br i1 %.not38, label %bb.by, label %bb.bu
 
 .lr.ph47:                                         ; preds = %.lr.ph47.preheader73, %.lr.ph47
   %indvars.iv53 = phi i64 [ %indvars.iv.next54, %.lr.ph47 ], [ %indvars.iv53.ph, %.lr.ph47.preheader73 ] ; 2 uses
@@ -294,7 +290,7 @@ _get_anchor_socket.exit:                          ; preds = %bb.bw, %bb.bx
   br label %bb.by
 
 bb.by:                                            ; preds = %_get_anchor_socket.exit, %_disable_sigpipe.exit
-  %.pre-phi = phi i64 [ %.pre60, %_get_anchor_socket.exit ], [ %4, %_disable_sigpipe.exit ]
+  %.pre-phi = phi i64 [ %.pre60, %_get_anchor_socket.exit ], [ 5, %_disable_sigpipe.exit ]
   %i.gc = getelementptr inbounds [32 x i8], ptr @commands, i64 %.pre-phi
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 16
   %i.ge = load ptr, ptr %i.gd, align 16
@@ -438,7 +434,7 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit.preheader, label %.lr.ph, !llvm.loop !19
+  br i1 %exitcond.not, label %.loopexit.preheader, label %.lr.ph, !llvm.loop !17
 
 .loopexit.preheader:                              ; preds = %bb.c, %bb.a
   br label %.loopexit
@@ -498,7 +494,7 @@ bb.j:                                             ; preds = %.loopexit
   br i1 %i.v, label %bb.k, label %.loopexit.backedge
 
 .loopexit.backedge:                               ; preds = %bb.j, %bb.k, %bb.h, %bb.i, %bb.f, %bb.g, %bb.l, %bb.e, %bb.d
-  br label %.loopexit, !llvm.loop !20
+  br label %.loopexit, !llvm.loop !18
 
 bb.k:                                             ; preds = %bb.j
   call void (i32, ptr, ...) @log_var(i32 noundef 5, ptr noundef nonnull @.str.69) #16
@@ -637,7 +633,7 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit.preheader, label %.lr.ph, !llvm.loop !21
+  br i1 %exitcond.not, label %.loopexit.preheader, label %.lr.ph, !llvm.loop !19
 
 .loopexit.preheader:                              ; preds = %bb.c, %bb.a
   br label %.loopexit
@@ -655,7 +651,7 @@ bb.d:                                             ; preds = %.loopexit
   br i1 %i.l, label %bb.e, label %.loopexit.backedge
 
 .loopexit.backedge:                               ; preds = %bb.d, %bb.e
-  br label %.loopexit, !llvm.loop !22
+  br label %.loopexit, !llvm.loop !20
 
 bb.e:                                             ; preds = %bb.d
   call void (i32, ptr, ...) @log_var(i32 noundef 5, ptr noundef nonnull @.str.77) #16
@@ -725,7 +721,7 @@ bb.n:                                             ; preds = %bb.k
   br i1 %.not30, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ao = call i64 @__isoc23_strtol(ptr noundef nonnull %i.ag, ptr noundef null, i32 noundef 10) #16, !inline_history !23
+  %i.ao = call i64 @__isoc23_strtol(ptr noundef nonnull %i.ag, ptr noundef null, i32 noundef 10) #16, !inline_history !21
   %i.ap = trunc i64 %i.ao to i32
   br label %bb.q
 
@@ -806,7 +802,7 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit.preheader, label %.lr.ph, !llvm.loop !24
+  br i1 %exitcond.not, label %.loopexit.preheader, label %.lr.ph, !llvm.loop !22
 
 .loopexit.preheader:                              ; preds = %bb.c, %bb.a
   br label %.loopexit
@@ -832,7 +828,7 @@ bb.e:                                             ; preds = %.loopexit
   br label %.loopexit.backedge
 
 .loopexit.backedge:                               ; preds = %bb.e, %bb.d
-  br label %.loopexit, !llvm.loop !25
+  br label %.loopexit, !llvm.loop !23
 
 bb.f:                                             ; preds = %.loopexit
   %i.p = load i32, ptr @optind, align 4           ; 3 uses
@@ -946,13 +942,11 @@ attributes #21 = { nounwind willreturn memory(none) }
 !14 = distinct !{!14, !8, !9, !15}
 !15 = !{!"llvm.loop.isvectorized", i32 1}
 !16 = !{!"llvm.loop.unroll.runtime.disable"}
-!17 = !{i8 0, i8 2}
-!18 = !{}
+!17 = distinct !{!17, !8, !9}
+!18 = distinct !{!18, !8, !9}
 !19 = distinct !{!19, !8, !9}
 !20 = distinct !{!20, !8, !9}
-!21 = distinct !{!21, !8, !9}
+!21 = distinct !{null}
 !22 = distinct !{!22, !8, !9}
-!23 = distinct !{null}
-!24 = distinct !{!24, !8, !9}
-!25 = distinct !{!25, !8, !9}
+!23 = distinct !{!23, !8, !9}
 end_hunk_0

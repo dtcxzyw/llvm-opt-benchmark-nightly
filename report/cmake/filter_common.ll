@@ -78,7 +78,7 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge.1:                                    ; preds = %._crit_edge.fold.split.1, %._crit_edge.fold.split85.1, %._crit_edge.fold.split86.1, %._crit_edge.fold.split87.1, %._crit_edge.fold.split88.1, %._crit_edge.fold.split89.1, %._crit_edge.fold.split90.1, %._crit_edge.fold.split91.1, %._crit_edge.fold.split92.1, %.preheader.1
   %.lcssa.1 = phi ptr [ @features, %.preheader.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 192), %._crit_edge.fold.split91.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 24), %._crit_edge.fold.split.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 48), %._crit_edge.fold.split85.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 72), %._crit_edge.fold.split86.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 96), %._crit_edge.fold.split87.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 120), %._crit_edge.fold.split88.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 144), %._crit_edge.fold.split89.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 168), %._crit_edge.fold.split90.1 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 216), %._crit_edge.fold.split92.1 ]
   %i.h = getelementptr inbounds nuw i8, ptr %.lcssa.1, i64 8
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !26   ; 2 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !21   ; 2 uses
   %i.j = tail call ptr @lzma_alloc(i64 noundef %i.i, ptr noundef %2) #4 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %i.j, ptr %i.k, align 8, !tbaa !14
@@ -99,7 +99,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.p = load i64, ptr %i.o, align 8, !tbaa !13   ; 3 uses
   %.not.1 = icmp eq i64 %i.p, -1
-  br i1 %.not.1, label %._crit_edge61, label %.lr.ph60.1, !llvm.loop !24
+  br i1 %.not.1, label %._crit_edge61, label %.lr.ph60.1, !llvm.loop !17
 
 .lr.ph60.1:                                       ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -153,7 +153,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 ._crit_edge.2:                                    ; preds = %._crit_edge.fold.split.2, %._crit_edge.fold.split85.2, %._crit_edge.fold.split86.2, %._crit_edge.fold.split87.2, %._crit_edge.fold.split88.2, %._crit_edge.fold.split89.2, %._crit_edge.fold.split90.2, %._crit_edge.fold.split91.2, %._crit_edge.fold.split92.2, %.preheader.2
   %.lcssa.2 = phi ptr [ @features, %.preheader.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 192), %._crit_edge.fold.split91.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 24), %._crit_edge.fold.split.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 48), %._crit_edge.fold.split85.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 72), %._crit_edge.fold.split86.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 96), %._crit_edge.fold.split87.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 120), %._crit_edge.fold.split88.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 144), %._crit_edge.fold.split89.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 168), %._crit_edge.fold.split90.2 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 216), %._crit_edge.fold.split92.2 ]
   %i.u = getelementptr inbounds nuw i8, ptr %.lcssa.2, i64 8
-  %i.v = load i64, ptr %i.u, align 8, !tbaa !26   ; 2 uses
+  %i.v = load i64, ptr %i.u, align 8, !tbaa !21   ; 2 uses
   %i.w = tail call ptr @lzma_alloc(i64 noundef %i.v, ptr noundef %2) #4 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr %i.w, ptr %i.x, align 8, !tbaa !14
@@ -174,7 +174,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !13 ; 3 uses
   %.not.2 = icmp eq i64 %i.ac, -1
-  br i1 %.not.2, label %._crit_edge61, label %.lr.ph60.2, !llvm.loop !24
+  br i1 %.not.2, label %._crit_edge61, label %.lr.ph60.2, !llvm.loop !17
 
 .lr.ph60.2:                                       ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -228,7 +228,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 ._crit_edge.3:                                    ; preds = %._crit_edge.fold.split.3, %._crit_edge.fold.split85.3, %._crit_edge.fold.split86.3, %._crit_edge.fold.split87.3, %._crit_edge.fold.split88.3, %._crit_edge.fold.split89.3, %._crit_edge.fold.split90.3, %._crit_edge.fold.split91.3, %._crit_edge.fold.split92.3, %.preheader.3
   %.lcssa.3 = phi ptr [ @features, %.preheader.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 192), %._crit_edge.fold.split91.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 24), %._crit_edge.fold.split.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 48), %._crit_edge.fold.split85.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 72), %._crit_edge.fold.split86.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 96), %._crit_edge.fold.split87.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 120), %._crit_edge.fold.split88.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 144), %._crit_edge.fold.split89.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 168), %._crit_edge.fold.split90.3 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 216), %._crit_edge.fold.split92.3 ]
   %i.ah = getelementptr inbounds nuw i8, ptr %.lcssa.3, i64 8
-  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !26 ; 2 uses
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !21 ; 2 uses
   %i.aj = tail call ptr @lzma_alloc(i64 noundef %i.ai, ptr noundef %2) #4 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 56
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !14
@@ -249,7 +249,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !13
   %.not.3 = icmp eq i64 %i.ap, -1
-  br i1 %.not.3, label %._crit_edge61, label %.lr.ph65.preheader, !llvm.loop !24
+  br i1 %.not.3, label %._crit_edge61, label %.lr.ph65.preheader, !llvm.loop !17
 
 .lr.ph60.preheader:                               ; preds = %bb.b
   store i64 %i.c, ptr %3, align 16, !tbaa !13
@@ -307,7 +307,7 @@ bb.l:                                             ; preds = %.lr.ph60.preheader
 ._crit_edge:                                      ; preds = %.preheader, %._crit_edge.fold.split92, %._crit_edge.fold.split91, %._crit_edge.fold.split90, %._crit_edge.fold.split89, %._crit_edge.fold.split88, %._crit_edge.fold.split87, %._crit_edge.fold.split86, %._crit_edge.fold.split85, %._crit_edge.fold.split
   %.lcssa = phi ptr [ @features, %.preheader ], [ getelementptr inbounds nuw (i8, ptr @features, i64 192), %._crit_edge.fold.split91 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 24), %._crit_edge.fold.split ], [ getelementptr inbounds nuw (i8, ptr @features, i64 48), %._crit_edge.fold.split85 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 72), %._crit_edge.fold.split86 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 96), %._crit_edge.fold.split87 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 120), %._crit_edge.fold.split88 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 144), %._crit_edge.fold.split89 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 168), %._crit_edge.fold.split90 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 216), %._crit_edge.fold.split92 ]
   %i.au = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
-  %i.av = load i64, ptr %i.au, align 8, !tbaa !26 ; 2 uses
+  %i.av = load i64, ptr %i.au, align 8, !tbaa !21 ; 2 uses
   %i.aw = tail call ptr @lzma_alloc(i64 noundef %i.av, ptr noundef %2) #4 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.aw, ptr %i.ax, align 8, !tbaa !14
@@ -323,7 +323,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bb = load i64, ptr %i.ba, align 8, !tbaa !13 ; 3 uses
   %.not = icmp eq i64 %i.bb, -1
-  br i1 %.not, label %._crit_edge61, label %.lr.ph60, !llvm.loop !24
+  br i1 %.not, label %._crit_edge61, label %.lr.ph60, !llvm.loop !17
 
 ._crit_edge61:                                    ; preds = %bb.n, %bb.e, %bb.h, %bb.k, %bb.b
   %.036.lcssa = phi i64 [ 0, %bb.b ], [ 1, %bb.n ], [ 2, %bb.e ], [ 3, %bb.h ], [ 4, %bb.k ] ; 2 uses
@@ -355,7 +355,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !14
   tail call void @lzma_free(ptr noundef %i.bj, ptr noundef %2) #4
   %.not47 = icmp eq i64 %i.bg, 0
-  br i1 %.not47, label %.loopexit, label %.lr.ph65, !llvm.loop !25
+  br i1 %.not47, label %.loopexit, label %.lr.ph65, !llvm.loop !18
 
 .loopexit:                                        ; preds = %.lr.ph65, %.thread, %._crit_edge61
   %.039 = phi i32 [ 0, %._crit_edge61 ], [ %.3, %.thread ], [ %.381, %.lr.ph65 ]
@@ -405,13 +405,13 @@ bb.a:
   %.not = icmp eq i64 %i.h, -1
   %i.i = icmp eq i64 %i.f, 4
   %or.cond = or i1 %i.i, %.not
-  br i1 %or.cond, label %.loopexit, label %.lr.ph, !llvm.loop !27
+  br i1 %or.cond, label %.loopexit, label %.lr.ph, !llvm.loop !22
 
 .loopexit:                                        ; preds = %.lr.ph, %.preheader, %bb.a
   ret void
 }
 
-; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local range(i32 0, 12) i32 @lzma_validate_chain(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = icmp eq ptr %0, null
@@ -425,59 +425,31 @@ bb.b:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %bb.b, %bb.c
   %i.d = phi i64 [ %i.i, %bb.c ], [ %i.b, %bb.b ]
   %.028 = phi i64 [ %i.f, %bb.c ], [ 0, %bb.b ]
-  %.026 = phi i8 [ %4, %bb.c ], [ 1, %bb.b ]
+  %.026 = phi i1 [ %2, %bb.c ], [ true, %bb.b ]
   %.024 = phi i64 [ %i.g, %bb.c ], [ 0, %bb.b ]
   switch i64 %i.d, label %.critedge [
     i64 4611686018427387905, label %._crit_edge
-    i64 4611686018427387906, label %._crit_edge.fold.split
-    i64 33, label %._crit_edge.fold.split54
-    i64 4, label %._crit_edge.fold.split55
-    i64 5, label %._crit_edge.fold.split56
-    i64 6, label %._crit_edge.fold.split57
-    i64 7, label %._crit_edge.fold.split58
-    i64 8, label %._crit_edge.fold.split59
-    i64 9, label %._crit_edge.fold.split60
+    i64 4611686018427387906, label %._crit_edge
+    i64 33, label %._crit_edge
+    i64 4, label %._crit_edge.fold.split61
+    i64 5, label %._crit_edge.fold.split61
+    i64 6, label %._crit_edge.fold.split61
+    i64 7, label %._crit_edge.fold.split61
+    i64 8, label %._crit_edge.fold.split61
+    i64 9, label %._crit_edge.fold.split61
     i64 3, label %._crit_edge.fold.split61
   ]
 
-._crit_edge.fold.split:                           ; preds = %.preheader
+._crit_edge.fold.split61:                         ; preds = %.preheader, %.preheader, %.preheader, %.preheader, %.preheader, %.preheader, %.preheader
   br label %._crit_edge
 
-._crit_edge.fold.split54:                         ; preds = %.preheader
-  br label %._crit_edge
-
-._crit_edge.fold.split55:                         ; preds = %.preheader
-  br label %._crit_edge
-
-._crit_edge.fold.split56:                         ; preds = %.preheader
-  br label %._crit_edge
-
-._crit_edge.fold.split57:                         ; preds = %.preheader
-  br label %._crit_edge
-
-._crit_edge.fold.split58:                         ; preds = %.preheader
-  br label %._crit_edge
-
-._crit_edge.fold.split59:                         ; preds = %.preheader
-  br label %._crit_edge
-
-._crit_edge.fold.split60:                         ; preds = %.preheader
-  br label %._crit_edge
-
-._crit_edge.fold.split61:                         ; preds = %.preheader
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %.preheader, %._crit_edge.fold.split61, %._crit_edge.fold.split60, %._crit_edge.fold.split59, %._crit_edge.fold.split58, %._crit_edge.fold.split57, %._crit_edge.fold.split56, %._crit_edge.fold.split55, %._crit_edge.fold.split54, %._crit_edge.fold.split
-  %.lcssa = phi ptr [ @features, %.preheader ], [ getelementptr inbounds nuw (i8, ptr @features, i64 192), %._crit_edge.fold.split60 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 24), %._crit_edge.fold.split ], [ getelementptr inbounds nuw (i8, ptr @features, i64 48), %._crit_edge.fold.split54 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 72), %._crit_edge.fold.split55 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 96), %._crit_edge.fold.split56 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 120), %._crit_edge.fold.split57 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 144), %._crit_edge.fold.split58 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 168), %._crit_edge.fold.split59 ], [ getelementptr inbounds nuw (i8, ptr @features, i64 216), %._crit_edge.fold.split61 ] ; 3 uses
-  %2 = trunc nuw i8 %.026 to i1
-  br i1 %2, label %bb.c, label %.critedge
+._crit_edge:                                      ; preds = %.preheader, %.preheader, %.preheader, %._crit_edge.fold.split61
+  %2 = phi i1 [ false, %.preheader ], [ false, %.preheader ], [ true, %._crit_edge.fold.split61 ], [ false, %.preheader ]
+  %3 = phi i1 [ true, %.preheader ], [ true, %.preheader ], [ false, %._crit_edge.fold.split61 ], [ true, %.preheader ] ; 2 uses
+  br i1 %.026, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %._crit_edge
-  %3 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 16
-  %4 = load i8, ptr %3, align 8, !tbaa !18, !range !19, !noundef !20
-  %5 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 18
-  %6 = load i8, ptr %5, align 2, !tbaa !21, !range !19, !noundef !20
-  %i.e = zext nneg i8 %6 to i64
+  %i.e = zext i1 %3 to i64
   %i.f = add i64 %.028, %i.e                      ; 2 uses
   %i.g = add i64 %.024, 1                         ; 4 uses
   %i.h = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.g
@@ -486,17 +458,14 @@ bb.c:                                             ; preds = %._crit_edge
   br i1 %.not34, label %bb.d, label %.preheader, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.c
-  %7 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 17
-  %8 = load i8, ptr %7, align 1, !tbaa !22, !range !19, !noundef !20
   %i.j = icmp ult i64 %i.g, 5
-  %9 = trunc nuw i8 %8 to i1
-  %or.cond = and i1 %i.j, %9
+  %or.cond = and i1 %i.j, %3
   %i.k = icmp ult i64 %i.f, 4
   %or.cond3.not = select i1 %or.cond, i1 %i.k, i1 false
   br i1 %or.cond3.not, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  store i64 %i.g, ptr %1, align 8, !tbaa !28
+  store i64 %i.g, ptr %1, align 8, !tbaa !23
   br label %.critedge
 
 .critedge:                                        ; preds = %._crit_edge, %.preheader, %bb.e, %bb.d, %bb.a, %bb.b
@@ -520,59 +489,31 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 1, %bb.b ] ; 3 uses
   %i.d = phi i64 [ %i.i, %bb.c ], [ %i.b, %bb.b ]
   %.028.i = phi i64 [ %i.f, %bb.c ], [ 0, %bb.b ]
-  %.026.i = phi i8 [ %8, %bb.c ], [ 1, %bb.b ]
+  %.026.i = phi i1 [ %6, %bb.c ], [ true, %bb.b ]
   %.024.i = phi i64 [ %i.g, %bb.c ], [ 0, %bb.b ]
   switch i64 %i.d, label %lzma_validate_chain.exit.thread [
     i64 4611686018427387905, label %._crit_edge.i
-    i64 4611686018427387906, label %._crit_edge.fold.split.i
-    i64 33, label %._crit_edge.fold.split54.i
-    i64 4, label %._crit_edge.fold.split55.i
-    i64 5, label %._crit_edge.fold.split56.i
-    i64 6, label %._crit_edge.fold.split57.i
-    i64 7, label %._crit_edge.fold.split58.i
-    i64 8, label %._crit_edge.fold.split59.i
-    i64 9, label %._crit_edge.fold.split60.i
+    i64 4611686018427387906, label %._crit_edge.i
+    i64 33, label %._crit_edge.i
+    i64 4, label %._crit_edge.fold.split61.i
+    i64 5, label %._crit_edge.fold.split61.i
+    i64 6, label %._crit_edge.fold.split61.i
+    i64 7, label %._crit_edge.fold.split61.i
+    i64 8, label %._crit_edge.fold.split61.i
+    i64 9, label %._crit_edge.fold.split61.i
     i64 3, label %._crit_edge.fold.split61.i
   ]
 
-._crit_edge.fold.split.i:                         ; preds = %.preheader.i
+._crit_edge.fold.split61.i:                       ; preds = %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i
   br label %._crit_edge.i
 
-._crit_edge.fold.split54.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split55.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split56.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split57.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split58.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split59.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split60.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split61.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.fold.split61.i, %._crit_edge.fold.split60.i, %._crit_edge.fold.split59.i, %._crit_edge.fold.split58.i, %._crit_edge.fold.split57.i, %._crit_edge.fold.split56.i, %._crit_edge.fold.split55.i, %._crit_edge.fold.split54.i, %._crit_edge.fold.split.i, %.preheader.i
-  %.lcssa.i = phi ptr [ @features, %.preheader.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 192), %._crit_edge.fold.split60.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 24), %._crit_edge.fold.split.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 48), %._crit_edge.fold.split54.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 72), %._crit_edge.fold.split55.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 96), %._crit_edge.fold.split56.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 120), %._crit_edge.fold.split57.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 144), %._crit_edge.fold.split58.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 168), %._crit_edge.fold.split59.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 216), %._crit_edge.fold.split61.i ] ; 3 uses
-  %6 = trunc nuw i8 %.026.i to i1
-  br i1 %6, label %bb.c, label %lzma_validate_chain.exit.thread
+._crit_edge.i:                                    ; preds = %.preheader.i, %.preheader.i, %._crit_edge.fold.split61.i, %.preheader.i
+  %6 = phi i1 [ false, %.preheader.i ], [ false, %.preheader.i ], [ true, %._crit_edge.fold.split61.i ], [ false, %.preheader.i ]
+  %7 = phi i1 [ true, %.preheader.i ], [ true, %.preheader.i ], [ false, %._crit_edge.fold.split61.i ], [ true, %.preheader.i ] ; 2 uses
+  br i1 %.026.i, label %bb.c, label %lzma_validate_chain.exit.thread
 
 bb.c:                                             ; preds = %._crit_edge.i
-  %7 = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 16
-  %8 = load i8, ptr %7, align 8, !tbaa !18, !range !19, !noundef !20
-  %9 = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 18
-  %10 = load i8, ptr %9, align 2, !tbaa !21, !range !19, !noundef !20
-  %i.e = zext nneg i8 %10 to i64
+  %i.e = zext i1 %7 to i64
   %i.f = add i64 %.028.i, %i.e                    ; 2 uses
   %i.g = add i64 %.024.i, 1                       ; 6 uses
   %i.h = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.g
@@ -582,11 +523,8 @@ bb.c:                                             ; preds = %._crit_edge.i
   br i1 %.not34.i, label %bb.d, label %.preheader.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.c
-  %11 = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 17
-  %12 = load i8, ptr %11, align 1, !tbaa !22, !range !19, !noundef !20
   %i.j = icmp ult i64 %i.g, 5
-  %13 = trunc nuw i8 %12 to i1
-  %or.cond.i = and i1 %i.j, %13
+  %or.cond.i = and i1 %i.j, %7
   %i.k = icmp ult i64 %i.f, 4
   %or.cond3.not.i = select i1 %or.cond.i, i1 %i.k, i1 false
   br i1 %or.cond3.not.i, label %lzma_validate_chain.exit, label %lzma_validate_chain.exit.thread
@@ -617,23 +555,23 @@ bb.e:                                             ; preds = %.lr.ph88, %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !31   ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !26   ; 2 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %.thread72, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.u = load i64, ptr %i.n, align 8, !tbaa !13
   %i.v = getelementptr [24 x i8], ptr %i.l, i64 %i.m ; 3 uses
-  store i64 %i.u, ptr %i.v, align 8, !tbaa !33
+  store i64 %i.u, ptr %i.v, align 8, !tbaa !28
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  store ptr %i.s, ptr %i.w, align 8, !tbaa !34
+  store ptr %i.s, ptr %i.w, align 8, !tbaa !29
   %i.x = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !14
   %i.z = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  store ptr %i.y, ptr %i.z, align 8, !tbaa !35
+  store ptr %i.y, ptr %i.z, align 8, !tbaa !30
   %i.aa = add nuw i64 %.05087, 1                  ; 2 uses
   %exitcond94.not = icmp eq i64 %i.aa, %indvars.iv
-  br i1 %exitcond94.not, label %.loopexit, label %bb.e, !llvm.loop !29
+  br i1 %exitcond94.not, label %.loopexit, label %bb.e, !llvm.loop !24
 
 .lr.ph:                                           ; preds = %.preheader80, %bb.i
   %.085 = phi i64 [ %i.ao, %bb.i ], [ 0, %.preheader80 ] ; 3 uses
@@ -645,29 +583,29 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %.lr.ph
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !31 ; 2 uses
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !26 ; 2 uses
   %i.ah = icmp eq ptr %i.ag, null
   br i1 %i.ah, label %.thread72, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ai = load i64, ptr %i.ab, align 8, !tbaa !13
   %i.aj = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %.085 ; 3 uses
-  store i64 %i.ai, ptr %i.aj, align 8, !tbaa !33
+  store i64 %i.ai, ptr %i.aj, align 8, !tbaa !28
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  store ptr %i.ag, ptr %i.ak, align 8, !tbaa !34
+  store ptr %i.ag, ptr %i.ak, align 8, !tbaa !29
   %i.al = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !14
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
-  store ptr %i.am, ptr %i.an, align 8, !tbaa !35
+  store ptr %i.am, ptr %i.an, align 8, !tbaa !30
   %i.ao = add nuw i64 %.085, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ao, %indvars.iv
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !30
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !25
 
 .loopexit:                                        ; preds = %bb.i, %bb.g, %.preheader80, %.preheader
   %i.ap = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %i.g ; 2 uses
-  store i64 -1, ptr %i.ap, align 8, !tbaa !33
+  store i64 -1, ptr %i.ap, align 8, !tbaa !28
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
-  store ptr null, ptr %i.aq, align 8, !tbaa !34
+  store ptr null, ptr %i.aq, align 8, !tbaa !29
   %i.ar = call i32 @lzma_next_filter_init(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %5) #4 ; 2 uses
   %.not62 = icmp eq i32 %i.ar, 0
   br i1 %.not62, label %.thread72, label %bb.j
@@ -704,59 +642,31 @@ bb.b:                                             ; preds = %bb.a
 .preheader.i:                                     ; preds = %bb.b, %bb.c
   %i.d = phi i64 [ %i.i, %bb.c ], [ %i.b, %bb.b ]
   %.028.i = phi i64 [ %i.f, %bb.c ], [ 0, %bb.b ]
-  %.026.i = phi i8 [ %4, %bb.c ], [ 1, %bb.b ]
+  %.026.i = phi i1 [ %2, %bb.c ], [ true, %bb.b ]
   %.024.i = phi i64 [ %i.g, %bb.c ], [ 0, %bb.b ]
   switch i64 %i.d, label %.critedge [
     i64 4611686018427387905, label %._crit_edge.i
-    i64 4611686018427387906, label %._crit_edge.fold.split.i
-    i64 33, label %._crit_edge.fold.split54.i
-    i64 4, label %._crit_edge.fold.split55.i
-    i64 5, label %._crit_edge.fold.split56.i
-    i64 6, label %._crit_edge.fold.split57.i
-    i64 7, label %._crit_edge.fold.split58.i
-    i64 8, label %._crit_edge.fold.split59.i
-    i64 9, label %._crit_edge.fold.split60.i
+    i64 4611686018427387906, label %._crit_edge.i
+    i64 33, label %._crit_edge.i
+    i64 4, label %._crit_edge.fold.split61.i
+    i64 5, label %._crit_edge.fold.split61.i
+    i64 6, label %._crit_edge.fold.split61.i
+    i64 7, label %._crit_edge.fold.split61.i
+    i64 8, label %._crit_edge.fold.split61.i
+    i64 9, label %._crit_edge.fold.split61.i
     i64 3, label %._crit_edge.fold.split61.i
   ]
 
-._crit_edge.fold.split.i:                         ; preds = %.preheader.i
+._crit_edge.fold.split61.i:                       ; preds = %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i
   br label %._crit_edge.i
 
-._crit_edge.fold.split54.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split55.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split56.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split57.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split58.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split59.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split60.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.fold.split61.i:                       ; preds = %.preheader.i
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.fold.split61.i, %._crit_edge.fold.split60.i, %._crit_edge.fold.split59.i, %._crit_edge.fold.split58.i, %._crit_edge.fold.split57.i, %._crit_edge.fold.split56.i, %._crit_edge.fold.split55.i, %._crit_edge.fold.split54.i, %._crit_edge.fold.split.i, %.preheader.i
-  %.lcssa.i = phi ptr [ @features, %.preheader.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 192), %._crit_edge.fold.split60.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 24), %._crit_edge.fold.split.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 48), %._crit_edge.fold.split54.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 72), %._crit_edge.fold.split55.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 96), %._crit_edge.fold.split56.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 120), %._crit_edge.fold.split57.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 144), %._crit_edge.fold.split58.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 168), %._crit_edge.fold.split59.i ], [ getelementptr inbounds nuw (i8, ptr @features, i64 216), %._crit_edge.fold.split61.i ] ; 3 uses
-  %2 = trunc nuw i8 %.026.i to i1
-  br i1 %2, label %bb.c, label %.critedge
+._crit_edge.i:                                    ; preds = %.preheader.i, %.preheader.i, %._crit_edge.fold.split61.i, %.preheader.i
+  %2 = phi i1 [ false, %.preheader.i ], [ false, %.preheader.i ], [ true, %._crit_edge.fold.split61.i ], [ false, %.preheader.i ]
+  %3 = phi i1 [ true, %.preheader.i ], [ true, %.preheader.i ], [ false, %._crit_edge.fold.split61.i ], [ true, %.preheader.i ] ; 2 uses
+  br i1 %.026.i, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %._crit_edge.i
-  %3 = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 16
-  %4 = load i8, ptr %3, align 8, !tbaa !18, !range !19, !noundef !20
-  %5 = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 18
-  %6 = load i8, ptr %5, align 2, !tbaa !21, !range !19, !noundef !20
-  %i.e = zext nneg i8 %6 to i64
+  %i.e = zext i1 %3 to i64
   %i.f = add i64 %.028.i, %i.e                    ; 2 uses
   %i.g = add i64 %.024.i, 1                       ; 3 uses
   %i.h = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.g
@@ -765,11 +675,8 @@ bb.c:                                             ; preds = %._crit_edge.i
   br i1 %.not34.i, label %bb.d, label %.preheader.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.c
-  %7 = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 17
-  %8 = load i8, ptr %7, align 1, !tbaa !22, !range !19, !noundef !20
   %i.j = icmp ult i64 %i.g, 5
-  %9 = trunc nuw i8 %8 to i1
-  %or.cond.i = and i1 %i.j, %9
+  %or.cond.i = and i1 %i.j, %3
   %i.k = icmp ult i64 %i.f, 4
   %or.cond3.not.i = select i1 %or.cond.i, i1 %i.k, i1 false
   br i1 %or.cond3.not.i, label %lzma_validate_chain.exit, label %.critedge
@@ -785,7 +692,7 @@ lzma_validate_chain.exit:                         ; preds = %bb.d, %bb.h
 
 bb.e:                                             ; preds = %lzma_validate_chain.exit
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !37   ; 2 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !32   ; 2 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %bb.f, label %bb.g
 
@@ -807,7 +714,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.y = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.x
   %i.z = load i64, ptr %i.y, align 8, !tbaa !13   ; 2 uses
   %.not32 = icmp eq i64 %i.z, -1
-  br i1 %.not32, label %bb.i, label %lzma_validate_chain.exit, !llvm.loop !36
+  br i1 %.not32, label %bb.i, label %lzma_validate_chain.exit, !llvm.loop !31
 
 bb.i:                                             ; preds = %bb.h
   %i.aa = add i64 %.3, 32768
@@ -821,14 +728,14 @@ bb.i:                                             ; preds = %bb.h
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!1, !2, !3}
 !llvm.ident = !{!4}
 !llvm.errno.tbaa = !{!9}
 
-!0 = distinct !{!0, !17}
+!0 = distinct !{!0, !15}
 !1 = !{i32 8, !"PIC Level", i32 2}
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
@@ -843,27 +750,22 @@ attributes #4 = { nounwind }
 !12 = !{!"", !10, i64 0, !11, i64 8}
 !13 = !{!12, !10, i64 0}
 !14 = !{!12, !11, i64 8}
-!15 = !{!"_Bool", !6, i64 0}
-!16 = !{!"", !10, i64 0, !10, i64 8, !15, i64 16, !15, i64 17, !15, i64 18}
-!17 = !{!"llvm.loop.mustprogress"}
-!18 = !{!16, !15, i64 16}
-!19 = !{i8 0, i8 2}
-!20 = !{}
-!21 = !{!16, !15, i64 18}
-!22 = !{!16, !15, i64 17}
-!23 = !{!"", !10, i64 0, !11, i64 8, !11, i64 16}
-!24 = distinct !{!24, !17}
-!25 = distinct !{!25, !17}
-!26 = !{!16, !10, i64 8}
-!27 = distinct !{!27, !17}
-!28 = !{!10, !10, i64 0}
-!29 = distinct !{!29, !17}
-!30 = distinct !{!30, !17}
-!31 = !{!23, !11, i64 8}
-!32 = !{!"lzma_filter_info_s", !10, i64 0, !11, i64 8, !11, i64 16}
-!33 = !{!32, !10, i64 0}
-!34 = !{!32, !11, i64 8}
-!35 = !{!32, !11, i64 16}
-!36 = distinct !{!36, !17}
-!37 = !{!23, !11, i64 16}
+!15 = !{!"llvm.loop.mustprogress"}
+!16 = !{!"", !10, i64 0, !11, i64 8, !11, i64 16}
+!17 = distinct !{!17, !15}
+!18 = distinct !{!18, !15}
+!19 = !{!"_Bool", !6, i64 0}
+!20 = !{!"", !10, i64 0, !10, i64 8, !19, i64 16, !19, i64 17, !19, i64 18}
+!21 = !{!20, !10, i64 8}
+!22 = distinct !{!22, !15}
+!23 = !{!10, !10, i64 0}
+!24 = distinct !{!24, !15}
+!25 = distinct !{!25, !15}
+!26 = !{!16, !11, i64 8}
+!27 = !{!"lzma_filter_info_s", !10, i64 0, !11, i64 8, !11, i64 16}
+!28 = !{!27, !10, i64 0}
+!29 = !{!27, !11, i64 8}
+!30 = !{!27, !11, i64 16}
+!31 = distinct !{!31, !15}
+!32 = !{!16, !11, i64 16}
 end_hunk_0

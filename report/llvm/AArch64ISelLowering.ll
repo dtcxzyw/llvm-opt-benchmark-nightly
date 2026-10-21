@@ -205,8 +205,6 @@ $_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
 
 $_ZZNK4llvm3MVT13getSizeInBitsEvE9SizeTable = comdat any
 
-$_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 
 $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
@@ -342,7 +340,6 @@ $_ZTVN4llvm2cl11OptionValueIiEE = comdat any
 @_ZZL26getStructuredStoreFunctionPN4llvm6ModuleEjbPNS_4TypeES3_E10NEONStores = internal unnamed_addr constant [3 x i32] [i32 748, i32 750, i32 752], align 4
 @.str.160 = private unnamed_addr constant [14 x i8] c"bitset::reset\00", align 1
 @.str.161 = private unnamed_addr constant [52 x i8] c"%s: __position (which is %zu) >= _Nb (which is %zu)\00", align 1
-@_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\01\01\00\00\00", [8 x i8] c"\01\01\01\00\00\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00", [8 x i8] c"\01\01\01\01\01\01\01\01"], comdat, align 16
 @.str.162 = private unnamed_addr constant [15 x i8] c"no-jump-tables\00", align 1
 @_ZTVN4llvm2cl11OptionValueIbEE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZNK4llvm2cl15OptionValueCopyIbE7compareERKNS0_18GenericOptionValueE, ptr @_ZN4llvm2cl18GenericOptionValue6anchorEv] }, comdat, align 8
 @_ZTVN4llvm2cl6parserIbEE = external unnamed_addr constant { [6 x ptr] }, align 8
@@ -745,11 +742,9 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !806
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !1012
-  %i.l = zext i32 %4 to i64
-  %27 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %i.l
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 4
-  %29 = load i8, ptr %28, align 4, !tbaa !415, !range !58, !noundef !59
-  %i.m = trunc nuw i8 %29 to i1                   ; 2 uses
+  %i.l = zext nneg i32 %4 to i64
+  %27 = lshr i64 208, %i.l
+  %i.m = trunc i64 %27 to i1                      ; 2 uses
   %i.n = tail call { i64, i8 } @_ZNK4llvm4Type22getPrimitiveSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(24) %2) #37 ; 2 uses
   %.fca.1.extract19 = extractvalue { i64, i8 } %i.n, 1
   %i.o = trunc nuw i8 %.fca.1.extract19 to i1
@@ -1152,11 +1147,8 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !806
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !1012 ; 5 uses
-  %17 = zext i32 %4 to i64
-  %18 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %17
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 5
-  %20 = load i8, ptr %19, align 1, !tbaa !415, !range !58, !noundef !59
-  %21 = trunc nuw i8 %20 to i1                    ; 2 uses
+  %17 = add i32 %4, -5
+  %18 = icmp ult i32 %17, 3                       ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !772
   %i.n = tail call { i64, i8 } @_ZNK4llvm4Type22getPrimitiveSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.m) #37 ; 2 uses
@@ -1174,7 +1166,7 @@ _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.a
   br i1 %i.p, label %bb.c, label %bb.m
 
 bb.c:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
-  %i.q = select i1 %21, i32 1281, i32 1283
+  %i.q = select i1 %18, i32 1281, i32 1283
   %i.r = tail call noundef ptr @_ZN4llvm9Intrinsic22getOrInsertDeclarationEPNS_6ModuleEjNS_8ArrayRefIPNS_4TypeEEE(ptr noundef %i.k, i32 noundef %i.q, ptr null, i64 0) #35 ; 5 uses
   %i.s = load ptr, ptr %i.k, align 8, !tbaa !1168, !nonnull !59, !align !357
   %i.t = tail call noundef ptr @_ZN4llvm4Type10getInt64TyERNS_11LLVMContextE(ptr noundef nonnull align 8 dereferenceable(8) %i.s) #35 ; 6 uses
@@ -1363,7 +1355,7 @@ _ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit68:
   br label %bb.p
 
 bb.m:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
-  %i.ct = select i1 %21, i32 1282, i32 1284
+  %i.ct = select i1 %18, i32 1282, i32 1284
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #35
   %i.cu = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !772

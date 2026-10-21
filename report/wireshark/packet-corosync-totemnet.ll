@@ -45,7 +45,6 @@ target triple = "x86_64-pc-linux-gnu"
 @corosync_totemnet_crypto_type = internal constant [3 x { i32, [4 x i8], ptr }] [{ i32, [4 x i8], ptr } { i32 0, [4 x i8] zeroinitializer, ptr @.str.18 }, { i32, [4 x i8], ptr } { i32 1, [4 x i8] zeroinitializer, ptr @.str.19 }, { i32, [4 x i8], ptr } zeroinitializer], align 16
 @dissect_corosynec_totemnet.last_key_index = internal unnamed_addr global i32 -1, align 4
 @dissect_corosynec_totemnet.last_check_crypt_type_index = internal unnamed_addr global i32 0, align 4
-@__const.dissect_corosynec_totemnet.check_crypt_type_list = private unnamed_addr constant [2 x i8] c"\00\01", align 1
 @.str.21 = private unnamed_addr constant [15 x i8] c"Decrypted Data\00", align 1
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
@@ -135,14 +134,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load i32, ptr @dissect_corosynec_totemnet.last_check_crypt_type_index, align 4
-  %4 = zext nneg i32 %i.c to i64
-  %5 = getelementptr i8, ptr @__const.dissect_corosynec_totemnet.check_crypt_type_list, i64 %4
-  %6 = load i8, ptr %5, align 1, !range !8, !noundef !9
-  %7 = trunc nuw i8 %6 to i1
+  %4 = icmp eq i32 %i.c, 1
   %i.d = sext i32 %i.b to i64
   %i.e = getelementptr [8 x i8], ptr %i.a, i64 %i.d
   %i.f = load ptr, ptr %i.e, align 8
-  %i.g = tail call fastcc i32 @dissect_corosynec_totemnet_with_decryption(ptr noundef %0, ptr noundef %1, ptr noundef %2, i1 noundef zeroext %7, ptr noundef %i.f) ; 2 uses
+  %i.g = tail call fastcc i32 @dissect_corosynec_totemnet_with_decryption(ptr noundef %0, ptr noundef %1, ptr noundef %2, i1 noundef zeroext %4, ptr noundef %i.f) ; 2 uses
   %i.h = icmp slt i32 %i.g, 1
   br i1 %i.h, label %bb.d, label %.critedge.thread
 
@@ -163,27 +159,23 @@ bb.e:                                             ; preds = %bb.d, %bb.b
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %.preheader
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %.preheader ] ; 4 uses
-  %8 = getelementptr i8, ptr @__const.dissect_corosynec_totemnet.check_crypt_type_list, i64 %indvars.iv
-  %9 = load i8, ptr %8, align 1, !range !8, !noundef !9
-  %10 = trunc nuw i8 %9 to i1
+  %.02545 = phi i32 [ 0, %.preheader ], [ %6, %bb.g ] ; 4 uses
+  %5 = icmp eq i32 %.02545, 1
   %i.l = load ptr, ptr @corosync_totemnet_private_keys_list, align 8
   %i.m = getelementptr [8 x i8], ptr %i.l, i64 %i.k
   %i.n = load ptr, ptr %i.m, align 8
-  %i.o = tail call fastcc i32 @dissect_corosynec_totemnet_with_decryption(ptr noundef %0, ptr noundef %1, ptr noundef %2, i1 noundef zeroext %10, ptr noundef %i.n) ; 3 uses
+  %i.o = tail call fastcc i32 @dissect_corosynec_totemnet_with_decryption(ptr noundef %0, ptr noundef %1, ptr noundef %2, i1 noundef zeroext %5, ptr noundef %i.n) ; 3 uses
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %.thread, label %bb.g
 
 .thread:                                          ; preds = %bb.f
-  %11 = trunc nuw nsw i64 %indvars.iv to i32
   store i32 %.02647, ptr @dissect_corosynec_totemnet.last_key_index, align 4
-  store i32 %11, ptr @dissect_corosynec_totemnet.last_check_crypt_type_index, align 4
+  store i32 %.02545, ptr @dissect_corosynec_totemnet.last_check_crypt_type_index, align 4
   br label %.critedge.thread
 
 bb.g:                                             ; preds = %bb.f
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %12 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.q = or i32 %i.o, %12
+  %6 = add nuw nsw i32 %.02545, 1
+  %i.q = or i32 %i.o, %.02545
   %or.cond = icmp eq i32 %i.q, 0
   br i1 %or.cond, label %bb.f, label %bb.h, !llvm.loop !6
 
@@ -435,9 +427,7 @@ attributes #6 = { nounwind willreturn memory(read) }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
-!6 = distinct !{!6, !10}
-!7 = distinct !{!7, !10}
-!8 = !{i8 0, i8 2}
-!9 = !{}
-!10 = !{!"llvm.loop.mustprogress"}
+!6 = distinct !{!6, !8}
+!7 = distinct !{!7, !8}
+!8 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -124,8 +124,8 @@ _ZNSt10unique_ptrI15ZL_Compressor_sN12_GLOBAL__N_17DeleterIS0_XadL_Z18ZL_Compres
   br i1 %or.cond.i, label %_ZNSt10unique_ptrI15ZL_Compressor_sN12_GLOBAL__N_17DeleterIS0_XadL_Z18ZL_Compressor_freeEEEEED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrI15ZL_Compressor_sN12_GLOBAL__N_17DeleterIS0_XadL_Z18ZL_Compressor_freeEEEEE5resetEPS0_.exit.i
-  %i.e = zext nneg i32 %0 to i64
-  %i.f = getelementptr inbounds nuw [24 x i8], ptr @_ZN12_GLOBAL__N_19kProfilesE, i64 %i.e ; 2 uses
+  %i.e = zext nneg i32 %0 to i64                  ; 2 uses
+  %i.f = getelementptr inbounds nuw [24 x i8], ptr @_ZN12_GLOBAL__N_19kProfilesE, i64 %i.e
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.g = invoke ptr @ZL_Compressor_create()
           to label %.noexc unwind label %bb.n     ; 10 uses
@@ -155,9 +155,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.m = load i64, ptr %i.l, align 8, !tbaa !37
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %7 = load i8, ptr %6, align 8, !tbaa !38, !range !39, !noundef !40
-  %i.n = trunc nuw i8 %7 to i1
+  %6 = lshr i64 340, %i.e
+  %i.n = trunc i64 %6 to i1
   %i.o = invoke i32 @_ZN6openzl8profiles13buildIntGraphEP15ZL_Compressor_smbm(ptr noundef nonnull %i.g, i64 noundef %i.m, i1 noundef zeroext %i.n, i64 noundef 16777216)
           to label %bb.h unwind label %bb.l
 
@@ -227,7 +226,7 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  store ptr null, ptr %i.a, align 8, !tbaa !41
+  store ptr null, ptr %i.a, align 8, !tbaa !38
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   store i64 0, ptr %i.b, align 8, !tbaa !18
   %i.y = invoke { i32, i64 } @ZL_CompressorSerializer_serialize(ptr noundef nonnull %i.w, ptr noundef nonnull %i.g, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b)
@@ -249,12 +248,12 @@ bb.t:                                             ; preds = %bb.r
 bb.u:                                             ; preds = %bb.s
   %i.ab = load i64, ptr %i.b, align 8, !tbaa !18  ; 3 uses
   %i.ac = call i64 @llvm.umax.i64(i64 %i.ab, i64 1)
-  %i.ad = call noalias ptr @malloc(i64 noundef %i.ac) #13, !noalias !42 ; 3 uses
+  %i.ad = call noalias ptr @malloc(i64 noundef %i.ac) #13, !noalias !39 ; 3 uses
   %.not58 = icmp eq ptr %i.ad, null
   br i1 %.not58, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.ae = load ptr, ptr %i.a, align 8, !tbaa !41
+  %i.ae = load ptr, ptr %i.a, align 8, !tbaa !38
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ad, ptr readonly align 1 %i.ae, i64 %i.ab, i1 false)
   store ptr %i.ad, ptr %1, align 8, !tbaa !17
   store i64 %i.ab, ptr %2, align 8, !tbaa !18
@@ -420,7 +419,7 @@ bb.g:                                             ; preds = %bb.e
   %i.k = add i64 %3, 80
   %i.l = add i64 %i.k, %i.j                       ; 2 uses
   %i.m = tail call i64 @llvm.umax.i64(i64 %i.l, i64 1)
-  %i.n = tail call noalias ptr @malloc(i64 noundef %i.m) #13, !noalias !45 ; 5 uses
+  %i.n = tail call noalias ptr @malloc(i64 noundef %i.m) #13, !noalias !42 ; 5 uses
   %.not56 = icmp eq ptr %i.n, null
   %.pre57 = load ptr, ptr %7, align 8, !tbaa !20  ; 4 uses
   br i1 %.not56, label %_ZNSt10unique_ptrIhN12_GLOBAL__N_111FreeDeleterEED2Ev.exit42, label %bb.h
@@ -712,7 +711,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.e = extractvalue { i32, i64 } %i.c, 1        ; 2 uses
   %i.f = tail call i64 @llvm.umax.i64(i64 %i.e, i64 1)
-  %i.g = tail call noalias ptr @malloc(i64 noundef %i.f) #13, !noalias !48 ; 6 uses
+  %i.g = tail call noalias ptr @malloc(i64 noundef %i.f) #13, !noalias !45 ; 6 uses
   %.not70 = icmp eq ptr %i.g, null
   br i1 %.not70, label %openzl_wasm_getDecompressedSize.exit, label %bb.e
 
@@ -908,7 +907,7 @@ bb.o:                                             ; preds = %bb.m
   %i.t = add i64 %3, 80
   %i.u = add i64 %i.t, %i.s                       ; 3 uses
   %i.v = tail call i64 @llvm.umax.i64(i64 %i.u, i64 1)
-  %i.w = tail call noalias ptr @malloc(i64 noundef %i.v) #13, !noalias !52 ; 6 uses
+  %i.w = tail call noalias ptr @malloc(i64 noundef %i.v) #13, !noalias !49 ; 6 uses
   %.not192 = icmp eq ptr %i.w, null
   br i1 %.not192, label %_ZNSt10unique_ptrIhN12_GLOBAL__N_111FreeDeleterEED2Ev.exit154.thread, label %bb.p
 
@@ -943,7 +942,7 @@ bb.s:                                             ; preds = %bb.r
   %i.af = extractvalue { i32, i64 } %i.ad, 1      ; 2 uses
   %i.ag = add nuw i64 %.0119197, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.ag, %4
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !51
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !48
 
 ._crit_edge:                                      ; preds = %bb.r, %bb.s
   %.0120.lcssa.ph = phi i64 [ %.0120196, %bb.r ], [ %i.af, %bb.s ]
@@ -1090,7 +1089,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.d = extractvalue { i32, i64 } %i.b, 1        ; 4 uses
   %i.e = tail call i64 @llvm.umax.i64(i64 %i.d, i64 1)
-  %i.f = tail call noalias ptr @malloc(i64 noundef %i.e) #13, !noalias !56 ; 5 uses
+  %i.f = tail call noalias ptr @malloc(i64 noundef %i.e) #13, !noalias !53 ; 5 uses
   %.not116 = icmp eq ptr %i.f, null
   br i1 %.not116, label %openzl_wasm_getDecompressedSize.exit, label %bb.e
 
@@ -1139,7 +1138,7 @@ bb.k:                                             ; preds = %bb.j
   %i.p = extractvalue { i32, i64 } %i.n, 1        ; 2 uses
   %i.q = add nuw i64 %.063121, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.q, %2
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !55
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !52
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.k
   %.060.lcssa.ph = phi i64 [ %.060122, %bb.j ], [ %i.p, %bb.k ]
@@ -1311,23 +1310,20 @@ attributes #15 = { noreturn nounwind }
 !35 = distinct !{!35, i1 true, !"_ZN12_GLOBAL__N_111allocBufferEm"}
 !36 = distinct !{!36, !35, !"_ZN12_GLOBAL__N_111allocBufferEm: argument 0"}
 !37 = !{!16, !14, i64 8}
-!38 = !{!16, !15, i64 16}
-!39 = !{i8 0, i8 2}
-!40 = !{}
-!41 = !{!12, !12, i64 0}
-!42 = !{!36}
+!38 = !{!12, !12, i64 0}
+!39 = !{!36}
+!40 = distinct !{!40, i1 true, !"_ZN12_GLOBAL__N_111allocBufferEm"}
+!41 = distinct !{!41, !40, !"_ZN12_GLOBAL__N_111allocBufferEm: argument 0"}
+!42 = !{!41}
 !43 = distinct !{!43, i1 true, !"_ZN12_GLOBAL__N_111allocBufferEm"}
 !44 = distinct !{!44, !43, !"_ZN12_GLOBAL__N_111allocBufferEm: argument 0"}
 !45 = !{!44}
 !46 = distinct !{!46, i1 true, !"_ZN12_GLOBAL__N_111allocBufferEm"}
 !47 = distinct !{!47, !46, !"_ZN12_GLOBAL__N_111allocBufferEm: argument 0"}
-!48 = !{!47}
-!49 = distinct !{!49, i1 true, !"_ZN12_GLOBAL__N_111allocBufferEm"}
-!50 = distinct !{!50, !49, !"_ZN12_GLOBAL__N_111allocBufferEm: argument 0"}
-!51 = distinct !{!51, !33}
-!52 = !{!50}
-!53 = distinct !{!53, i1 true, !"_ZN12_GLOBAL__N_111allocBufferEm"}
-!54 = distinct !{!54, !53, !"_ZN12_GLOBAL__N_111allocBufferEm: argument 0"}
-!55 = distinct !{!55, !33}
-!56 = !{!54}
+!48 = distinct !{!48, !33}
+!49 = !{!47}
+!50 = distinct !{!50, i1 true, !"_ZN12_GLOBAL__N_111allocBufferEm"}
+!51 = distinct !{!51, !50, !"_ZN12_GLOBAL__N_111allocBufferEm: argument 0"}
+!52 = distinct !{!52, !33}
+!53 = !{!51}
 end_hunk_0

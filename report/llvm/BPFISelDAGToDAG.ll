@@ -72,8 +72,6 @@ $_ZSt19piecewise_construct = comdat any
 
 $_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
 
-$_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @_ZL39InitializeBPFDAGToDAGISelLegacyPassFlag = internal global %"struct.std::once_flag" zeroinitializer, align 4
@@ -91,7 +89,6 @@ $_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
 @_ZZN12_GLOBAL__N_115BPFDAGToDAGISel10SelectCodeEPN4llvm6SDNodeEE12OperandLists = internal constant [42 x i8] c"\00\00\01\01\00\02\01\02\03\04\02\01\02\03\01\04\03\04\05\03\01\03\04\00\01\05\03\04\00\05\06\03\04\01\05\03\04\05\01\02\05\06", align 16
 @.str.5 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] zeroinitializer, [8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\01\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00"], comdat, align 16
-@_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\01\01\00\00\00", [8 x i8] c"\01\01\01\00\00\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00", [8 x i8] c"\01\01\01\01\01\01\01\01"], comdat, align 16
 @_ZSt15__once_callable = external thread_local local_unnamed_addr global ptr, align 8
 @_ZSt11__once_call = external thread_local local_unnamed_addr global ptr, align 8
 
@@ -494,10 +491,8 @@ bb.aa:                                            ; preds = %bb.z
 
 _ZNK4llvm9MemSDNode17getMergedOrderingEv.exit98:  ; preds = %bb.y, %bb.z, %bb.aa
   %.0.i.i.i97 = phi i64 [ %i.eh, %bb.aa ], [ 6, %bb.z ], [ 6, %bb.y ]
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %.0.i.i.i97
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %6 = load i8, ptr %5, align 4, !tbaa !474, !range !267, !noundef !110
-  %i.ei = trunc nuw i8 %6 to i1
+  %4 = lshr i64 208, %.0.i.i.i97
+  %i.ei = trunc i64 %4 to i1
   %.9 = xor i1 %i.ei, true
   br label %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit
 
@@ -535,13 +530,13 @@ bb.ae:                                            ; preds = %bb.a
   %i.fb = icmp eq i16 %i.ez, 4
   %i.fc = icmp eq i16 %i.fa, 5
   %or.cond.i.i.i100 = and i1 %i.fc, %i.fb
-  br i1 %or.cond.i.i.i100, label %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit104, label %bb.af
+  br i1 %or.cond.i.i.i100, label %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.fd = icmp eq i16 %i.ez, 5
   %i.fe = icmp eq i16 %i.fa, 4
   %or.cond3.i.i.i101 = and i1 %i.fe, %i.fd
-  br i1 %or.cond3.i.i.i101, label %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit104, label %bb.ag
+  br i1 %or.cond3.i.i.i101, label %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.ff = zext nneg i16 %i.ez to i64
@@ -551,16 +546,8 @@ bb.ag:                                            ; preds = %bb.af
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !474, !range !267, !noundef !110
   %i.fk = trunc nuw i8 %i.fj to i1
   %.v.i.i102 = select i1 %i.fk, i16 %i.ez, i16 %i.fa
-  %7 = zext nneg i16 %.v.i.i102 to i64
-  br label %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit104
-
-_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit104: ; preds = %bb.ae, %bb.af, %bb.ag
-  %.0.i.i.i103 = phi i64 [ %7, %bb.ag ], [ 6, %bb.af ], [ 6, %bb.ae ]
-  %8 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %.0.i.i.i103
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 5
-  %10 = load i8, ptr %9, align 1, !tbaa !474, !range !267, !noundef !110
-  %11 = trunc nuw i8 %10 to i1
-  %.13 = xor i1 %11, true
+  %5 = add nsw i16 %.v.i.i102, -8
+  %6 = icmp ult i16 %5, -3
   br label %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit
 
 bb.ah:                                            ; preds = %bb.a
@@ -771,8 +758,8 @@ bb.bb:                                            ; preds = %bb.a
   %.not = icmp eq i16 %i.jv, 0
   br label %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit
 
-_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit:    ; preds = %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit104, %bb.ad, %bb.ac, %bb.ab, %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit98, %bb.x, %bb.h, %bb.g, %bb.f, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit
-  %.22 = phi i1 [ %i.p, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit ], [ %.not192, %bb.f ], [ %.not190, %bb.g ], [ %.not188, %bb.h ], [ %.not, %bb.bb ], [ false, %bb.i ], [ false, %bb.l ], [ false, %bb.o ], [ true, %bb.r ], [ %.not186, %bb.x ], [ %.9, %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit98 ], [ %.not44, %bb.ab ], [ %i.ep, %bb.ac ], [ %.not184, %bb.ad ], [ %.13, %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit104 ], [ %.not43, %bb.ah ], [ %.not42, %bb.ai ], [ %i.fy, %bb.aj ], [ %i.gg, %bb.ak ], [ %i.go, %bb.al ], [ %i.gw, %bb.am ], [ %i.he, %bb.an ], [ %i.hm, %bb.ao ], [ %i.hu, %bb.ap ], [ %i.ic, %bb.aq ], [ %i.ik, %bb.ar ], [ %i.is, %bb.as ], [ %.not41, %bb.at ], [ %.not40, %bb.au ], [ %i.ja, %bb.av ], [ %i.jb, %bb.aw ], [ %.not39, %bb.ax ], [ %.not38, %bb.ay ], [ %.not37, %bb.az ], [ %i.js, %bb.ba ], [ %i.ao, %bb.k ], [ false, %bb.j ], [ %i.bh, %bb.n ], [ false, %bb.m ], [ %i.ca, %bb.q ], [ false, %bb.p ], [ %i.ct, %bb.t ], [ true, %bb.s ], [ %i.dm, %bb.w ], [ false, %bb.v ], [ false, %bb.u ]
+_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit:    ; preds = %bb.ag, %bb.af, %bb.ae, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ad, %bb.ac, %bb.ab, %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit98, %bb.x, %bb.h, %bb.g, %bb.f, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit
+  %.22 = phi i1 [ %i.p, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit ], [ %.not192, %bb.f ], [ %.not190, %bb.g ], [ %.not188, %bb.h ], [ %.not, %bb.bb ], [ false, %bb.i ], [ false, %bb.l ], [ false, %bb.o ], [ true, %bb.r ], [ %.not186, %bb.x ], [ %.9, %_ZNK4llvm9MemSDNode17getMergedOrderingEv.exit98 ], [ %.not44, %bb.ab ], [ %i.ep, %bb.ac ], [ %.not184, %bb.ad ], [ false, %bb.u ], [ %.not43, %bb.ah ], [ %.not42, %bb.ai ], [ %i.fy, %bb.aj ], [ %i.gg, %bb.ak ], [ %i.go, %bb.al ], [ %i.gw, %bb.am ], [ %i.he, %bb.an ], [ %i.hm, %bb.ao ], [ %i.hu, %bb.ap ], [ %i.ic, %bb.aq ], [ %i.ik, %bb.ar ], [ %i.is, %bb.as ], [ %.not41, %bb.at ], [ %.not40, %bb.au ], [ %i.ja, %bb.av ], [ %i.jb, %bb.aw ], [ %.not39, %bb.ax ], [ %.not38, %bb.ay ], [ %.not37, %bb.az ], [ %i.js, %bb.ba ], [ %i.ao, %bb.k ], [ false, %bb.j ], [ %i.bh, %bb.n ], [ false, %bb.m ], [ %i.ca, %bb.q ], [ false, %bb.p ], [ %i.ct, %bb.t ], [ true, %bb.s ], [ %i.dm, %bb.w ], [ false, %bb.v ], [ %6, %bb.ag ], [ false, %bb.af ], [ false, %bb.ae ]
   ret i1 %.22
 }
 
