@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %.lr.ph
   br i1 %exitcond.not, label %.critedge7.i, label %.lr.ph, !llvm.loop !3256
 
 .critedge7.i.thread.thread:                       ; preds = %.lr.ph
-  %i.hr = trunc nuw i64 %indvars.iv to i32
+  %i.hr = trunc nuw nsw i64 %indvars.iv to i32
   %i.hs = call noundef i16 @llvm.bswap.i16(i16 %i.hp)
   br label %bb.aa
 
