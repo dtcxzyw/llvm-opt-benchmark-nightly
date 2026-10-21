@@ -204,7 +204,7 @@ ar_cleared_entry.exit40:                          ; preds = %.lr.ph
 
 ar_cleared_entry.exit40.thread:                   ; preds = %.lr.ph, %ar_cleared_entry.exit40
   %i.aa = getelementptr i8, ptr %i.j, i64 %indvars.iv59 ; 2 uses
-  %i.ab = trunc nuw i64 %indvars.iv59 to i32
+  %i.ab = trunc nuw nsw i64 %indvars.iv59 to i32
   %i.ac = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv59 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !102
   %i.ad = load i8, ptr %i.aa, align 1, !tbaa !24
@@ -360,7 +360,7 @@ ar_cleared_entry.exit40.i:                        ; preds = %.lr.ph.i
 
 ar_cleared_entry.exit40.thread.i:                 ; preds = %ar_cleared_entry.exit40.i, %.lr.ph.i
   %i.ap = getelementptr i8, ptr %i.j, i64 %indvars.iv59.i ; 2 uses
-  %i.aq = trunc nuw i64 %indvars.iv59.i to i32
+  %i.aq = trunc nuw nsw i64 %indvars.iv59.i to i32
   %i.ar = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv59.i ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ae, ptr noundef nonnull align 8 dereferenceable(16) %i.ar, i64 16, i1 false), !tbaa.struct !102
   %i.as = load i8, ptr %i.ap, align 1, !tbaa !24
