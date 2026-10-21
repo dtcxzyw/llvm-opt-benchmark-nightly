@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.j
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit
 
 _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit: ; preds = %bb.i, %bb.k, %bb.l
-  %i.v = phi i32 [ %i.u, %bb.l ], [ %i.t, %bb.k ], [ %i.p, %bb.i ] ; 2 uses
+  %i.v = phi i32 [ %i.u, %bb.l ], [ %i.t, %bb.k ], [ %i.p, %bb.i ] ; 3 uses
   %i.w = icmp ugt i32 %narrow.i.i, %i.v
   br i1 %i.w, label %.lr.ph, label %._crit_edge
 
@@ -215,6 +215,8 @@ _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit: ; preds = %bb
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 64
   %i.aa = getelementptr inbounds nuw i8, ptr %11, i64 12
   %i.ab = zext nneg i32 %i.v to i64
+  %umax = call i32 @llvm.umax.i32(i32 %i.v, i32 %narrow.i18)
+  %wide.trip.count = zext nneg i32 %umax to i64
   br label %bb.p
 
 ._crit_edge:                                      ; preds = %_ZN2cv8MatShapeixEm.exit, %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit
@@ -251,11 +253,11 @@ _ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEmRKS1_.exit: ; preds = %bb.m, %bb.n, 
   ret i1 false
 
 bb.p:                                             ; preds = %.lr.ph, %_ZN2cv8MatShapeixEm.exit
-  %indvars.iv = phi i64 [ %i.ab, %.lr.ph ], [ %indvars.iv.next, %_ZN2cv8MatShapeixEm.exit ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.ab, %.lr.ph ], [ %indvars.iv.next, %_ZN2cv8MatShapeixEm.exit ] ; 5 uses
   %i.an = load i32, ptr %i.y, align 4, !tbaa !25
   %narrow.i16 = call i32 @llvm.smax.i32(i32 %i.an, i32 1)
-  %12 = trunc nsw i64 %indvars.iv to i32          ; 2 uses
-  %13 = icmp ugt i32 %narrow.i16, %12
+  %12 = zext nneg i32 %narrow.i16 to i64
+  %13 = icmp samesign ult i64 %indvars.iv, %12
   br i1 %13, label %_ZNK2cv8MatShapeixEm.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -288,8 +290,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   br label %common.resume
 
 _ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.p
-  %14 = icmp ugt i32 %narrow.i18, %12
-  br i1 %14, label %_ZN2cv8MatShapeixEm.exit, label %bb.t
+  %exitcond.not = icmp eq i64 %indvars.iv, %wide.trip.count
+  br i1 %exitcond.not, label %bb.t, label %_ZN2cv8MatShapeixEm.exit
 
 bb.t:                                             ; preds = %_ZNK2cv8MatShapeixEm.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
@@ -326,7 +328,7 @@ _ZN2cv8MatShapeixEm.exit:                         ; preds = %_ZNK2cv8MatShapeixE
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %indvars.iv
   store i32 %i.bb, ptr %i.bc, align 4, !tbaa !22
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %lftr.wideiv = trunc nuw nsw i64 %indvars.iv.next to i32
   %exitcond.not.a = icmp eq i32 %narrow.i.i, %lftr.wideiv
   br i1 %exitcond.not.a, label %._crit_edge, label %bb.p, !llvm.loop !363
 }
@@ -728,6 +730,9 @@ declare i64 @llvm.smax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #18
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
