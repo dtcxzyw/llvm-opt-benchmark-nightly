@@ -205,10 +205,7 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_ca
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.w = load ptr, ptr %8, align 8, !tbaa !2073
   store ptr %i.w, ptr %i.v, align 8, !tbaa !2073
-  %10 = insertelement <2 x ptr> poison, ptr %9, i64 0
-  %11 = insertelement <2 x ptr> %10, ptr %0, i64 1
-  %12 = getelementptr inbounds nuw i8, <2 x ptr> %11, <2 x i64> <i64 8, i64 32>
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   store i8 0, ptr %i.y, align 8, !tbaa !2074
   %i.z = load i8, ptr %i.o, align 8, !tbaa !2074
@@ -224,8 +221,11 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_ca
   store ptr %i.ac, ptr %i.ad, align 8, !tbaa !2087
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #35
   %i.ae = load ptr, ptr %0, align 8, !tbaa !2173, !nonnull !1352, !align !1356 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 40
+  %11 = insertelement <2 x ptr> poison, ptr %10, i64 0
+  %12 = insertelement <2 x ptr> %11, ptr %i.x, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_S7_SE_S7_S7_SE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSN_PKNS0_14mutable_bufferEEE5valueEiE4typeENSP_IXntsr14is_convertibleISQ_PKS7_EE5valueEiE4typeENSP_IXntsr14is_convertibleISM_SR_EE5valueEiE4typeENSP_IXntsr14is_convertibleISM_S7_EE5valueEiE4typeE.exit
