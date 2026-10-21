@@ -205,7 +205,7 @@ _ZNK15ExpressionApplyI17DataObjectRequestI12WriteReleaseEEclI5FieldI22UniformRec
 define linkonce_odr dso_local void @_ZN18LoopApplyEvaluator8evaluateI16ApplyMultiArgLocI9MultiArg7I5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd10BrickViewUESB_SB_SB_S3_IS9_d16ConstantFunctionES3_IS9_4ZeroIdESC_ESD_EN6Forgas6TGuessILi3EEEE8IntervalILi3EEEEvRKT_RKT0_10WrappedIntILi3EE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(24) %1) local_unnamed_addr #7 comdat align 2 {
 bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !1156 ; 3 uses
+  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !1156 ; 4 uses
   %i.a = load i32, ptr %1, align 4, !tbaa !165    ; 19 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i32, ptr %i.b, align 4, !tbaa !165  ; 18 uses
@@ -377,7 +377,7 @@ bb.a:
   %i.fa = insertelement <4 x ptr> poison, ptr %i.an, i64 0
   %i.fb = insertelement <4 x ptr> %i.fa, ptr %.sroa.4.0.copyload, i64 1
   %i.fc = insertelement <4 x ptr> %i.fb, ptr %i.ex, i64 2
-  %i.fd = insertelement <4 x ptr> %i.fc, ptr %i.ez, i64 3 ; 2 uses
+  %i.fd = insertelement <4 x ptr> %i.fc, ptr %i.ez, i64 3
   %i.fe = getelementptr i8, <4 x ptr> %i.fd, <4 x i64> <i64 152, i64 8, i64 8, i64 8>
   %i.ff = mul i32 %i.bt, %i.c
   %i.fg = add i32 %i.a, %i.ff
@@ -429,7 +429,8 @@ bb.a:
   %i.gs = insertelement <8 x i32> %i.gr, i32 %i.ed, i64 5
   %i.gt = insertelement <8 x i32> %i.gs, i32 %i.ef, i64 6
   %i.gu = insertelement <8 x i32> %i.gt, i32 %i.ej, i64 7 ; 2 uses
-  %i.gv = insertelement <4 x ptr> %i.fd, ptr %i.ao, i64 0
+  %2 = insertelement <4 x ptr> poison, ptr %i.ao, i64 0
+  %i.gv = insertelement <4 x ptr> %2, ptr %.sroa.4.0.copyload, i64 1
   %i.gw = insertelement <4 x ptr> %i.gv, ptr %i.cv, i64 2
   %i.gx = insertelement <4 x ptr> %i.gw, ptr %i.da, i64 3
   %i.gy = shufflevector <2 x i32> %i.cd, <2 x i32> %i.br, <8 x i32> <i32 0, i32 2, i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>

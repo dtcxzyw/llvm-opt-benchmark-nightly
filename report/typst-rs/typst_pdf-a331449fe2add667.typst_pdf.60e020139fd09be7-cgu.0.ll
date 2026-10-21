@@ -205,10 +205,7 @@ _RNvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table24try_resolve_table_stroke.
   store i32 %.sroa.0493.0.i, ptr %i.we, align 8
   %i.wf = getelementptr inbounds nuw i8, ptr %i.fx, i64 60
   store float %.sroa.5494.0.i, ptr %i.wf, align 4
-  %i.wg = getelementptr inbounds nuw i8, ptr %i.fx, i64 88
-  %1 = insertelement <2 x ptr> poison, ptr %i.fx, i64 0 ; 2 uses
-  %2 = insertelement <2 x ptr> %1, ptr %i.gv, i64 1
-  %3 = getelementptr inbounds nuw i8, <2 x ptr> %2, <2 x i64> <i64 88, i64 0>
+  %i.wg = getelementptr inbounds nuw i8, ptr %i.fx, i64 88 ; 2 uses
   store i32 %.sroa.7495.0.i, ptr %i.wg, align 8
   %i.wh = load i64, ptr %i.gy, align 8, !noundef !10
   %.not101.i = icmp eq i64 %i.wh, 0
@@ -239,8 +236,11 @@ _RNvMs0_NtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context4gridINtB5_9GridCellsNtNtB7_5
 _RNvXs1f_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_9ChunksMutINtNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context4grid9GridEntryNtNtBZ_5table13TableCellDataEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextB13_.exit.i.lr.ph.i: ; preds = %_RNvMs0_NtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context4gridINtB5_9GridCellsNtNtB7_5table13TableCellDataE8rows_mutBb_.exit.i
   %i.wn = load ptr, ptr %.phi.trans.insert1182.i, align 8, !alias.scope !19610, !nonnull !10, !noundef !10
   %i.wo = getelementptr inbounds nuw i8, ptr %i.fx, i64 92 ; 2 uses
+  %1 = insertelement <2 x ptr> poison, ptr %i.fx, i64 0
   %i.wp = insertelement <2 x ptr> %1, ptr %i.we, i64 1
   %i.wq = getelementptr inbounds nuw i8, <2 x ptr> %i.wp, <2 x i64> <i64 96, i64 0>
+  %2 = insertelement <2 x ptr> poison, ptr %i.wg, i64 0
+  %3 = insertelement <2 x ptr> %2, ptr %i.gv, i64 1
   br label %_RNvXs1f_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_9ChunksMutINtNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context4grid9GridEntryNtNtBZ_5table13TableCellDataEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextB13_.exit.i.i
 
 bb.di:                                            ; preds = %_RNvNtNtNtCs8jFhWeO2DFb_9typst_pdf4tags7context5table24try_resolve_table_stroke.exit.i

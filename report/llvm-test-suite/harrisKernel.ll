@@ -202,33 +202,31 @@ scalar.ph603.preheader:                           ; preds = %.preheader305, %mid
   br i1 %exitcond429.not, label %.preheader303.preheader, label %.preheader305, !llvm.loop !42
 
 scalar.ph603:                                     ; preds = %scalar.ph603.preheader, %scalar.ph603
-  %indvars.iv420 = phi i64 [ %indvars.iv.next421, %scalar.ph603 ], [ %indvars.iv420.ph, %scalar.ph603.preheader ] ; 6 uses
+  %indvars.iv420 = phi i64 [ %i.kz, %scalar.ph603 ], [ %indvars.iv420.ph, %scalar.ph603.preheader ] ; 6 uses
   %i.ky = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %indvars.iv420
-  %indvars.iv.next421 = add nuw nsw i64 %indvars.iv420, 1 ; 3 uses
-  %i.kz = add nuw nsw i64 %indvars.iv420, 2       ; 2 uses
+  %14 = load float, ptr %i.ky, align 4, !tbaa !61
+  %i.kz = add nuw nsw i64 %indvars.iv420, 1       ; 4 uses
   %i.la = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %i.kz
-  %14 = load float, ptr %i.la, align 4, !tbaa !61
   %i.lb = getelementptr inbounds nuw [4 x i8], ptr %i.jt, i64 %indvars.iv420
   %i.lc = load float, ptr %i.lb, align 4, !tbaa !61
-  %i.ld = getelementptr inbounds nuw [4 x i8], ptr %i.jt, i64 %indvars.iv.next421
+  %i.ld = getelementptr inbounds nuw [4 x i8], ptr %i.jt, i64 %i.kz
   %i.le = getelementptr inbounds nuw [4 x i8], ptr %i.ju, i64 %indvars.iv420
-  %15 = load <2 x float>, ptr %i.ky, align 4, !tbaa !61
   %i.lf = load <2 x float>, ptr %i.ld, align 4, !tbaa !61
   %i.lg = load <2 x float>, ptr %i.le, align 4, !tbaa !61
-  %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.ju, i64 %i.kz
-  %16 = load float, ptr %i.lh, align 4, !tbaa !61
-  %17 = insertelement <8 x float> poison, float %14, i64 2
-  %18 = insertelement <8 x float> %17, float %i.lc, i64 3
-  %19 = shufflevector <2 x float> %15, <2 x float> poison, <8 x i32> <i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %20 = shufflevector <8 x float> %19, <8 x float> %18, <8 x i32> <i32 0, i32 1, i32 10, i32 11, i32 poison, i32 poison, i32 poison, i32 poison>
-  %21 = shufflevector <2 x float> %i.lf, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %22 = shufflevector <8 x float> %20, <8 x float> %21, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 poison, i32 poison>
-  %23 = shufflevector <2 x float> %i.lg, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %24 = shufflevector <8 x float> %22, <8 x float> %23, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
-  %op.rdx707 = tail call fast float @llvm.vector.reduce.fadd.v8f32(float %16, <8 x float> %24)
+  %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.ju, i64 %indvars.iv420
+  %15 = getelementptr inbounds nuw i8, ptr %i.lh, i64 8
+  %16 = load float, ptr %15, align 4, !tbaa !61
+  %17 = shufflevector <2 x float> %i.lf, <2 x float> %i.lg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %18 = tail call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %17)
+  %19 = load <2 x float>, ptr %i.la, align 4, !tbaa !61
+  %20 = insertelement <2 x float> poison, float %18, i64 0
+  %21 = insertelement <2 x float> %20, float %14, i64 1
+  %22 = fadd fast <2 x float> %21, %19
+  %op.rdx712 = fadd fast float %i.lc, %16
+  %op.rdx707 = tail call fast float @llvm.vector.reduce.fadd.v2f32(float %op.rdx712, <2 x float> %22)
   %i.li = getelementptr inbounds nuw [4 x i8], ptr %i.jv, i64 %indvars.iv420
   store float %op.rdx707, ptr %i.li, align 4, !tbaa !61
-  %exitcond424.not = icmp eq i64 %indvars.iv.next421, %wide.trip.count423
+  %exitcond424.not = icmp eq i64 %i.kz, %wide.trip.count423
   br i1 %exitcond424.not, label %._crit_edge336, label %scalar.ph603, !llvm.loop !43
 
 .preheader303:                                    ; preds = %.preheader303.preheader, %._crit_edge339
@@ -304,33 +302,31 @@ scalar.ph628.preheader:                           ; preds = %.preheader303, %mid
   br i1 %exitcond439.not, label %.preheader301.preheader, label %.preheader303, !llvm.loop !48
 
 scalar.ph628:                                     ; preds = %scalar.ph628.preheader, %scalar.ph628
-  %indvars.iv430 = phi i64 [ %indvars.iv.next431, %scalar.ph628 ], [ %indvars.iv430.ph, %scalar.ph628.preheader ] ; 6 uses
+  %indvars.iv430 = phi i64 [ %i.ml, %scalar.ph628 ], [ %indvars.iv430.ph, %scalar.ph628.preheader ] ; 6 uses
   %i.mk = getelementptr inbounds nuw [4 x i8], ptr %i.lj, i64 %indvars.iv430
-  %indvars.iv.next431 = add nuw nsw i64 %indvars.iv430, 1 ; 3 uses
-  %i.ml = add nuw nsw i64 %indvars.iv430, 2       ; 2 uses
+  %23 = load float, ptr %i.mk, align 4, !tbaa !61
+  %i.ml = add nuw nsw i64 %indvars.iv430, 1       ; 4 uses
   %i.mm = getelementptr inbounds nuw [4 x i8], ptr %i.lj, i64 %i.ml
-  %25 = load float, ptr %i.mm, align 4, !tbaa !61
   %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv430
   %i.mo = load float, ptr %i.mn, align 4, !tbaa !61
-  %i.mp = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %indvars.iv.next431
+  %i.mp = getelementptr inbounds nuw [4 x i8], ptr %i.lk, i64 %i.ml
   %i.mq = getelementptr inbounds nuw [4 x i8], ptr %i.ll, i64 %indvars.iv430
-  %26 = load <2 x float>, ptr %i.mk, align 4, !tbaa !61
   %i.mr = load <2 x float>, ptr %i.mp, align 4, !tbaa !61
   %i.ms = load <2 x float>, ptr %i.mq, align 4, !tbaa !61
-  %i.mt = getelementptr inbounds nuw [4 x i8], ptr %i.ll, i64 %i.ml
-  %27 = load float, ptr %i.mt, align 4, !tbaa !61
-  %28 = insertelement <8 x float> poison, float %25, i64 2
-  %29 = insertelement <8 x float> %28, float %i.mo, i64 3
-  %30 = shufflevector <2 x float> %26, <2 x float> poison, <8 x i32> <i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %31 = shufflevector <8 x float> %30, <8 x float> %29, <8 x i32> <i32 0, i32 1, i32 10, i32 11, i32 poison, i32 poison, i32 poison, i32 poison>
-  %32 = shufflevector <2 x float> %i.mr, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %33 = shufflevector <8 x float> %31, <8 x float> %32, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 poison, i32 poison>
-  %34 = shufflevector <2 x float> %i.ms, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %35 = shufflevector <8 x float> %33, <8 x float> %34, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
-  %op.rdx = tail call fast float @llvm.vector.reduce.fadd.v8f32(float %27, <8 x float> %35)
+  %i.mt = getelementptr inbounds nuw [4 x i8], ptr %i.ll, i64 %indvars.iv430
+  %24 = getelementptr inbounds nuw i8, ptr %i.mt, i64 8
+  %25 = load float, ptr %24, align 4, !tbaa !61
+  %26 = shufflevector <2 x float> %i.mr, <2 x float> %i.ms, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %27 = tail call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %26)
+  %28 = load <2 x float>, ptr %i.mm, align 4, !tbaa !61
+  %29 = insertelement <2 x float> poison, float %27, i64 0
+  %30 = insertelement <2 x float> %29, float %23, i64 1
+  %31 = fadd fast <2 x float> %30, %28
+  %op.rdx708 = fadd fast float %i.mo, %25
+  %op.rdx = tail call fast float @llvm.vector.reduce.fadd.v2f32(float %op.rdx708, <2 x float> %31)
   %i.mu = getelementptr inbounds nuw [4 x i8], ptr %i.lm, i64 %indvars.iv430
   store float %op.rdx, ptr %i.mu, align 4, !tbaa !61
-  %exitcond434.not = icmp eq i64 %indvars.iv.next431, %wide.trip.count433
+  %exitcond434.not = icmp eq i64 %i.ml, %wide.trip.count433
   br i1 %exitcond434.not, label %._crit_edge339, label %scalar.ph628, !llvm.loop !49
 
 .preheader301:                                    ; preds = %.preheader301.preheader, %._crit_edge342
@@ -657,6 +653,12 @@ scalar.ph691:                                     ; preds = %scalar.ph691.prol.l
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v4f32(float, <4 x float>) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v8f32(float, <8 x float>) #1

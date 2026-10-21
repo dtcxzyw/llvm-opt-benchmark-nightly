@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.m
 
 .preheader346.lr.ph.split:                        ; preds = %bb.s
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !50 ; 100 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !50 ; 112 uses
   %sext = shl i64 %i.f, 32
   %i.ar = ashr exact i64 %sext, 32                ; 4 uses
   %i.as = zext nneg i32 %i.ah to i64
@@ -608,10 +608,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .preheader345.preheader:                          ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec539, %vec.epilog.middle.block ]
-  %10 = getelementptr i8, ptr %i.aq, i64 %i.ay
-  %11 = getelementptr i8, ptr %i.aq, i64 %i.ba
-  %12 = getelementptr i8, ptr %i.aq, i64 %i.bc
-  %13 = getelementptr i8, ptr %i.aq, i64 %i.ax
   br label %.preheader345
 
 ._crit_edge355.split:                             ; preds = %._crit_edge, %bb.s
@@ -630,29 +626,89 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .preheader345:                                    ; preds = %.preheader345.preheader, %.preheader345
   %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader345 ], [ %indvars.iv.ph, %.preheader345.preheader ] ; 3 uses
   %i.bbt = shl nuw nsw i64 %indvars.iv, 2         ; 4 uses
-  %i.bbu = getelementptr i8, ptr %10, i64 %i.bbt
-  %14 = load <4 x i8>, ptr %i.bbu, align 1, !tbaa !18 ; 2 uses
-  %i.bbv = getelementptr i8, ptr %11, i64 %i.bbt
-  %15 = load <4 x i8>, ptr %i.bbv, align 1, !tbaa !18 ; 2 uses
-  %i.bbw = getelementptr i8, ptr %12, i64 %i.bbt
-  %16 = load <4 x i8>, ptr %i.bbw, align 1, !tbaa !18 ; 2 uses
-  %i.bbx = getelementptr i8, ptr %13, i64 %i.bbt
-  %17 = load <4 x i8>, ptr %i.bbx, align 1, !tbaa !18 ; 2 uses
-  %18 = shufflevector <4 x i8> %17, <4 x i8> %16, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %19 = shufflevector <4 x i8> %15, <4 x i8> %14, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 5, i32 4, i32 6, i32 7>
-  %20 = tail call <8 x i8> @llvm.umin.v8i8(<8 x i8> %18, <8 x i8> %19)
-  %21 = tail call i8 @llvm.vector.reduce.umin.v8i8(<8 x i8> %20)
-  %22 = shufflevector <4 x i8> %14, <4 x i8> %15, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %23 = shufflevector <4 x i8> %16, <4 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %24 = shufflevector <16 x i8> %22, <16 x i8> %23, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 18, i32 19, i32 poison, i32 poison, i32 poison, i32 poison>
-  %25 = shufflevector <4 x i8> %17, <4 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %26 = shufflevector <16 x i8> %24, <16 x i8> %25, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 16, i32 17, i32 18, i32 19>
-  %27 = tail call i8 @llvm.vector.reduce.umax.v16i8(<16 x i8> %26)
+  %10 = add nsw i64 %i.ay, %i.bbt                 ; 4 uses
+  %11 = getelementptr inbounds i8, ptr %i.aq, i64 %10
+  %12 = load i8, ptr %11, align 1, !tbaa !18      ; 2 uses
+  %13 = getelementptr i8, ptr %i.aq, i64 %10
+  %14 = getelementptr i8, ptr %13, i64 1
+  %15 = load i8, ptr %14, align 1, !tbaa !18      ; 2 uses
+  %spec.select.1 = tail call i8 @llvm.umin.i8(i8 %15, i8 %12)
+  %.2280.1 = tail call i8 @llvm.umax.i8(i8 %15, i8 %12)
+  %16 = getelementptr i8, ptr %i.aq, i64 %10
+  %17 = getelementptr i8, ptr %16, i64 2
+  %18 = load i8, ptr %17, align 1, !tbaa !18      ; 2 uses
+  %spec.select.2 = tail call i8 @llvm.umin.i8(i8 %18, i8 %spec.select.1)
+  %.2280.2 = tail call i8 @llvm.umax.i8(i8 %18, i8 %.2280.1)
+  %19 = getelementptr i8, ptr %i.aq, i64 %10
+  %20 = getelementptr i8, ptr %19, i64 3
+  %21 = load i8, ptr %20, align 1, !tbaa !18      ; 2 uses
+  %spec.select.3 = tail call i8 @llvm.umin.i8(i8 %21, i8 %spec.select.2)
+  %.2280.3 = tail call i8 @llvm.umax.i8(i8 %21, i8 %.2280.2)
+  %22 = add nsw i64 %i.ba, %i.bbt                 ; 4 uses
+  %23 = getelementptr inbounds i8, ptr %i.aq, i64 %22
+  %24 = load i8, ptr %23, align 1, !tbaa !18      ; 2 uses
+  %spec.select.1394 = tail call i8 @llvm.umin.i8(i8 %24, i8 %spec.select.3)
+  %.2280.1395 = tail call i8 @llvm.umax.i8(i8 %24, i8 %.2280.3)
+  %25 = getelementptr i8, ptr %i.aq, i64 %22
+  %26 = getelementptr i8, ptr %25, i64 1
+  %27 = load i8, ptr %26, align 1, !tbaa !18      ; 2 uses
+  %spec.select.1.1 = tail call i8 @llvm.umin.i8(i8 %27, i8 %spec.select.1394)
+  %.2280.1.1 = tail call i8 @llvm.umax.i8(i8 %27, i8 %.2280.1395)
+  %28 = getelementptr i8, ptr %i.aq, i64 %22
+  %29 = getelementptr i8, ptr %28, i64 2
+  %30 = load i8, ptr %29, align 1, !tbaa !18      ; 2 uses
+  %spec.select.2.1 = tail call i8 @llvm.umin.i8(i8 %30, i8 %spec.select.1.1)
+  %.2280.2.1 = tail call i8 @llvm.umax.i8(i8 %30, i8 %.2280.1.1)
+  %31 = getelementptr i8, ptr %i.aq, i64 %22
+  %32 = getelementptr i8, ptr %31, i64 3
+  %33 = load i8, ptr %32, align 1, !tbaa !18      ; 2 uses
+  %spec.select.3.1 = tail call i8 @llvm.umin.i8(i8 %33, i8 %spec.select.2.1)
+  %.2280.3.1 = tail call i8 @llvm.umax.i8(i8 %33, i8 %.2280.2.1)
+  %34 = add nsw i64 %i.bc, %i.bbt                 ; 4 uses
+  %35 = getelementptr inbounds i8, ptr %i.aq, i64 %34
+  %36 = load i8, ptr %35, align 1, !tbaa !18      ; 2 uses
+  %spec.select.2396 = tail call i8 @llvm.umin.i8(i8 %36, i8 %spec.select.3.1)
+  %.2280.2397 = tail call i8 @llvm.umax.i8(i8 %36, i8 %.2280.3.1)
+  %37 = getelementptr i8, ptr %i.aq, i64 %34
+  %38 = getelementptr i8, ptr %37, i64 1
+  %39 = load i8, ptr %38, align 1, !tbaa !18      ; 2 uses
+  %spec.select.1.2 = tail call i8 @llvm.umin.i8(i8 %39, i8 %spec.select.2396)
+  %.2280.1.2 = tail call i8 @llvm.umax.i8(i8 %39, i8 %.2280.2397)
+  %40 = getelementptr i8, ptr %i.aq, i64 %34
+  %i.bbu = getelementptr i8, ptr %40, i64 2
+  %41 = load i8, ptr %i.bbu, align 1, !tbaa !18   ; 2 uses
+  %spec.select.2.2 = tail call i8 @llvm.umin.i8(i8 %41, i8 %spec.select.1.2)
+  %.2280.2.2 = tail call i8 @llvm.umax.i8(i8 %41, i8 %.2280.1.2)
+  %42 = getelementptr i8, ptr %i.aq, i64 %34
+  %i.bbv = getelementptr i8, ptr %42, i64 3
+  %43 = load i8, ptr %i.bbv, align 1, !tbaa !18   ; 2 uses
+  %spec.select.3.2 = tail call i8 @llvm.umin.i8(i8 %43, i8 %spec.select.2.2)
+  %.2280.3.2 = tail call i8 @llvm.umax.i8(i8 %43, i8 %.2280.2.2)
+  %44 = add nsw i64 %i.ax, %i.bbt                 ; 4 uses
+  %i.bbw = getelementptr inbounds i8, ptr %i.aq, i64 %44
+  %45 = load i8, ptr %i.bbw, align 1, !tbaa !18   ; 2 uses
+  %spec.select.3398 = tail call i8 @llvm.umin.i8(i8 %45, i8 %spec.select.3.2)
+  %.2280.3399 = tail call i8 @llvm.umax.i8(i8 %45, i8 %.2280.3.2)
+  %46 = getelementptr i8, ptr %i.aq, i64 %44
+  %i.bbx = getelementptr i8, ptr %46, i64 1
+  %47 = load i8, ptr %i.bbx, align 1, !tbaa !18   ; 2 uses
+  %spec.select.1.3 = tail call i8 @llvm.umin.i8(i8 %47, i8 %spec.select.3398)
+  %.2280.1.3 = tail call i8 @llvm.umax.i8(i8 %47, i8 %.2280.3399)
+  %48 = getelementptr i8, ptr %i.aq, i64 %44
+  %49 = getelementptr i8, ptr %48, i64 2
+  %50 = load i8, ptr %49, align 1, !tbaa !18      ; 2 uses
+  %spec.select.2.3 = tail call i8 @llvm.umin.i8(i8 %50, i8 %spec.select.1.3)
+  %.2280.2.3 = tail call i8 @llvm.umax.i8(i8 %50, i8 %.2280.1.3)
+  %51 = getelementptr i8, ptr %i.aq, i64 %44
+  %52 = getelementptr i8, ptr %51, i64 3
+  %53 = load i8, ptr %52, align 1, !tbaa !18      ; 2 uses
+  %spec.select.3.3 = tail call i8 @llvm.umin.i8(i8 %53, i8 %spec.select.2.3)
+  %.2280.3.3 = tail call i8 @llvm.umax.i8(i8 %53, i8 %.2280.2.3)
   %i.bby = add nuw nsw i64 %indvars.iv, %i.av     ; 2 uses
   %i.bbz = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.bby
-  store i8 %27, ptr %i.bbz, align 1, !tbaa !18
+  store i8 %.2280.3.3, ptr %i.bbz, align 1, !tbaa !18
   %i.bca = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.bby
-  store i8 %21, ptr %i.bca, align 1, !tbaa !18
+  store i8 %spec.select.3.3, ptr %i.bca, align 1, !tbaa !18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.preheader345, !llvm.loop !136
@@ -1054,12 +1110,6 @@ declare <8 x i8> @llvm.umin.v8i8(<8 x i8>, <8 x i8>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i8> @llvm.umax.v8i8(<8 x i8>, <8 x i8>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.umax.v16i8(<16 x i8>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.umin.v8i8(<8 x i8>) #3
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

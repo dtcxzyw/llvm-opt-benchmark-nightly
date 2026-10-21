@@ -204,15 +204,13 @@ bb.a:
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 16660
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 8468
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 8443
-  %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 8264 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8272 ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8280 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 8312
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8316
-  %6 = insertelement <2 x ptr> poison, ptr %0, i64 0
-  %7 = insertelement <2 x ptr> %6, ptr %3, i64 1
-  %8 = getelementptr inbounds nuw i8, <2 x ptr> %7, <2 x i64> <i64 52, i64 40>
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.as = getelementptr inbounds nuw i8, ptr %4, i64 40
@@ -229,6 +227,8 @@ bb.a:
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 8360
   %i.be = getelementptr inbounds nuw i8, ptr %3, i64 8356
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 8355
+  %7 = insertelement <2 x ptr> poison, ptr %6, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.ak, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.thread281

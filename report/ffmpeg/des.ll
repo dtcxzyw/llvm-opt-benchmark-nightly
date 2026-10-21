@@ -204,6 +204,7 @@ shuffle.exit:                                     ; preds = %shuffle.exit.prehea
   %i.ar = and i64 %i.aq, 63
   %i.as = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @S_boxes_P_shuffle, i64 1536), i64 %i.ar
   %i.at = load i32, ptr %i.as, align 4, !tbaa !23
+  %3 = or i32 %i.at, %i.am
   %i.au = lshr i32 %i.an, 4
   %i.av = lshr i64 %i.ag, 12
   %i.aw = zext nneg i32 %i.au to i64
@@ -211,6 +212,7 @@ shuffle.exit:                                     ; preds = %shuffle.exit.prehea
   %i.ay = and i64 %i.ax, 63
   %i.az = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @S_boxes_P_shuffle, i64 1280), i64 %i.ay
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !23
+  %4 = or i32 %3, %i.ba
   %i.bb = lshr i32 %i.an, 8
   %i.bc = lshr i64 %i.ag, 18
   %i.bd = zext nneg i32 %i.bb to i64
@@ -218,6 +220,7 @@ shuffle.exit:                                     ; preds = %shuffle.exit.prehea
   %i.bf = and i64 %i.be, 63
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @S_boxes_P_shuffle, i64 1024), i64 %i.bf
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !23
+  %5 = or i32 %4, %i.bh
   %i.bi = lshr i32 %i.an, 12
   %i.bj = lshr i64 %i.ag, 24
   %i.bk = zext nneg i32 %i.bi to i64
@@ -225,6 +228,7 @@ shuffle.exit:                                     ; preds = %shuffle.exit.prehea
   %i.bm = and i64 %i.bl, 63
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @S_boxes_P_shuffle, i64 768), i64 %i.bm
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !23
+  %6 = or i32 %5, %i.bo
   %i.bp = lshr i32 %i.an, 16
   %i.bq = lshr i64 %i.ag, 30
   %i.br = zext nneg i32 %i.bp to i64
@@ -232,6 +236,7 @@ shuffle.exit:                                     ; preds = %shuffle.exit.prehea
   %i.bt = and i64 %i.bs, 63
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @S_boxes_P_shuffle, i64 512), i64 %i.bt
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !23
+  %7 = or i32 %6, %i.bv
   %i.bw = lshr i32 %i.an, 20
   %i.bx = lshr i64 %i.ag, 36
   %i.by = zext nneg i32 %i.bw to i64
@@ -239,6 +244,7 @@ shuffle.exit:                                     ; preds = %shuffle.exit.prehea
   %i.ca = and i64 %i.bz, 63
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @S_boxes_P_shuffle, i64 256), i64 %i.ca
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !23
+  %8 = or i32 %7, %i.cc
   %i.cd = lshr i32 %i.an, 24
   %i.ce = lshr i64 %i.ag, 42
   %i.cf = zext nneg i32 %i.cd to i64
@@ -246,17 +252,9 @@ shuffle.exit:                                     ; preds = %shuffle.exit.prehea
   %i.ch = and i64 %i.cg, 63
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr @S_boxes_P_shuffle, i64 %i.ch
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !23
-  %3 = insertelement <8 x i32> poison, i32 %i.at, i64 0
-  %4 = insertelement <8 x i32> %3, i32 %i.am, i64 1
-  %5 = insertelement <8 x i32> %4, i32 %i.ba, i64 2
-  %6 = insertelement <8 x i32> %5, i32 %i.bh, i64 3
-  %7 = insertelement <8 x i32> %6, i32 %i.bo, i64 4
-  %8 = insertelement <8 x i32> %7, i32 %i.bv, i64 5
-  %9 = insertelement <8 x i32> %8, i32 %i.cc, i64 6
-  %10 = insertelement <8 x i32> %9, i32 %i.cj, i64 7
-  %11 = tail call i32 @llvm.vector.reduce.or.v8i32(<8 x i32> %10)
+  %9 = or i32 %8, %i.cj
   %i.ck = tail call i64 @llvm.fshl.i64(i64 %.019, i64 %.019, i64 32)
-  %i.cl = zext i32 %11 to i64
+  %i.cl = zext i32 %9 to i64
   %i.cm = xor i64 %i.ck, %i.cl                    ; 3 uses
   %i.cn = add nuw nsw i32 %.01518, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.cn, 16
@@ -315,9 +313,6 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v8i32(<8 x i32>) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

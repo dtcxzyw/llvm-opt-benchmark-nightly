@@ -204,10 +204,11 @@ _ZN4llvm11SmallVectorIlLj6EED2Ev.exit69:          ; preds = %_ZN4llvm11SmallVect
   %i.dl = call ptr @_ZNK4mlir10VectorType14getElementTypeEv(ptr noundef nonnull align 8 dereferenceable(8) %11) #22
   %i.dm = call ptr @_ZN4mlir10VectorType3getEN4llvm8ArrayRefIlEENS_4TypeENS2_IbEE(ptr %i.de, i64 %i.dg, ptr %i.dl, ptr null, i64 0) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
-  %17 = insertelement <2 x ptr> poison, ptr %i.cz, i64 0
-  %i.dn = insertelement <2 x ptr> %17, ptr %i.dd, i64 1
-  %18 = getelementptr inbounds i8, <2 x ptr> %i.dn, i64 -16
-  %i.do = ptrtoint <2 x ptr> %18 to <2 x i64>
+  %17 = getelementptr inbounds i8, ptr %i.cz, i64 -16
+  %18 = getelementptr inbounds i8, ptr %i.dd, i64 -16
+  %i.dn = insertelement <2 x ptr> poison, ptr %17, i64 0
+  %19 = insertelement <2 x ptr> %i.dn, ptr %18, i64 1
+  %i.do = ptrtoint <2 x ptr> %19 to <2 x i64>
   %i.dp = or <2 x i64> %i.do, splat (i64 4)
   store <2 x i64> %i.dp, ptr %12, align 16
   %i.dq = load i32, ptr %i.bz, align 4            ; 2 uses

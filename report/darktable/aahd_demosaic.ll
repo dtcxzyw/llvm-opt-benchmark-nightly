@@ -204,63 +204,66 @@ bb.t:                                             ; preds = %.lr.ph355, %._crit_
   %indvars.iv397 = phi i64 [ %i.qc, %.lr.ph352.preheader ], [ %indvars.iv.next398, %bb.w ] ; 9 uses
   %.0247350 = phi i32 [ 0, %.lr.ph352.preheader ], [ %i.xm, %bb.w ]
   %i.qj = load i32, ptr %i.c, align 4, !tbaa !85  ; 2 uses
-  %i.qk = sext i32 %i.qj to i64                   ; 10 uses
+  %i.qk = sext i32 %i.qj to i64                   ; 11 uses
+  %1 = sub nsw i64 0, %i.qk                       ; 2 uses
   %i.ql = sub nsw i64 1, %i.qk                    ; 2 uses
   %i.qm = load ptr, ptr %i.en, align 8, !tbaa !89
-  %i.qn = getelementptr inbounds i8, ptr %i.qm, i64 %indvars.iv397 ; 8 uses
+  %i.qn = getelementptr inbounds i8, ptr %i.qm, i64 %indvars.iv397 ; 9 uses
   %i.qo = xor i64 %i.qk, -1                       ; 2 uses
   %i.qp = getelementptr inbounds i8, ptr %i.qn, i64 %i.qo
+  %2 = load i8, ptr %i.qp, align 1, !tbaa !102
   %i.qq = getelementptr inbounds i8, ptr %i.qn, i64 -1
   %i.qr = load i8, ptr %i.qq, align 1, !tbaa !102
+  %3 = add i8 %2, %i.qr
   %i.qs = add nsw i64 %i.qk, -1                   ; 2 uses
   %i.qt = getelementptr inbounds i8, ptr %i.qn, i64 %i.qs
   %i.qu = load i8, ptr %i.qt, align 1, !tbaa !102
-  %1 = load <2 x i8>, ptr %i.qp, align 1, !tbaa !102
-  %2 = load i8, ptr %i.qn, align 1, !tbaa !102
-  %i.qv = getelementptr inbounds i8, ptr %i.qn, i64 %i.qk
+  %4 = add i8 %3, %i.qu
+  %i.qv = getelementptr inbounds i8, ptr %i.qn, i64 %1
   %i.qw = load i8, ptr %i.qv, align 1, !tbaa !102
-  %3 = getelementptr inbounds i8, ptr %i.qn, i64 %i.ql
-  %i.qx = load i8, ptr %3, align 1, !tbaa !102
-  %i.qy = getelementptr inbounds nuw i8, ptr %i.qn, i64 1
+  %5 = add i8 %4, %i.qw
+  %i.qx = load i8, ptr %i.qn, align 1, !tbaa !102
+  %6 = add i8 %5, %i.qx
+  %i.qy = getelementptr inbounds i8, ptr %i.qn, i64 %i.qk
   %i.qz = load i8, ptr %i.qy, align 1, !tbaa !102
-  %4 = add nsw i64 %i.qk, 1                       ; 2 uses
-  %i.ra = getelementptr inbounds i8, ptr %i.qn, i64 %4
+  %7 = add i8 %6, %i.qz
+  %i.ra = getelementptr inbounds i8, ptr %i.qn, i64 %i.ql
   %i.rb = load i8, ptr %i.ra, align 1, !tbaa !102
-  %5 = shufflevector <2 x i8> %1, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %6 = insertelement <8 x i8> %5, i8 %i.qx, i64 2
-  %7 = insertelement <8 x i8> %6, i8 %i.qu, i64 3
-  %8 = insertelement <8 x i8> %7, i8 %i.qw, i64 4
-  %9 = insertelement <8 x i8> %8, i8 %i.rb, i64 5
-  %10 = insertelement <8 x i8> %9, i8 %i.qr, i64 6
-  %11 = insertelement <8 x i8> %10, i8 %2, i64 7
-  %12 = tail call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %11)
-  %op.rdx = add i8 %12, %i.qz                     ; 2 uses
+  %8 = add i8 %7, %i.rb
+  %9 = getelementptr inbounds nuw i8, ptr %i.qn, i64 1
+  %10 = load i8, ptr %9, align 1, !tbaa !102
+  %11 = add i8 %8, %10
+  %12 = add nsw i64 %i.qk, 1                      ; 2 uses
+  %13 = getelementptr inbounds i8, ptr %i.qn, i64 %12
+  %14 = load i8, ptr %13, align 1, !tbaa !102
+  %op.rdx = add i8 %11, %14                       ; 2 uses
   %i.rc = load ptr, ptr %i.eq, align 8, !tbaa !89
-  %13 = getelementptr inbounds i8, ptr %i.rc, i64 %indvars.iv397 ; 8 uses
-  %i.rd = getelementptr inbounds i8, ptr %13, i64 %i.qo
-  %i.re = getelementptr inbounds i8, ptr %13, i64 -1
+  %i.rd = getelementptr inbounds i8, ptr %i.rc, i64 %indvars.iv397 ; 9 uses
+  %i.re = getelementptr inbounds i8, ptr %i.rd, i64 %i.qo
   %i.rf = load i8, ptr %i.re, align 1, !tbaa !102
-  %i.rg = getelementptr inbounds i8, ptr %13, i64 %i.qs
+  %i.rg = getelementptr inbounds i8, ptr %i.rd, i64 -1
   %i.rh = load i8, ptr %i.rg, align 1, !tbaa !102
-  %14 = load <2 x i8>, ptr %i.rd, align 1, !tbaa !102
-  %15 = load i8, ptr %13, align 1, !tbaa !102
-  %16 = getelementptr inbounds i8, ptr %13, i64 %i.qk
+  %15 = add i8 %i.rf, %i.rh
+  %16 = getelementptr inbounds i8, ptr %i.rd, i64 %i.qs
   %17 = load i8, ptr %16, align 1, !tbaa !102
-  %i.ri = getelementptr inbounds i8, ptr %13, i64 %i.ql
+  %18 = add i8 %15, %17
+  %i.ri = getelementptr inbounds i8, ptr %i.rd, i64 %1
   %i.rj = load i8, ptr %i.ri, align 1, !tbaa !102
-  %18 = getelementptr inbounds nuw i8, ptr %13, i64 1
-  %i.rk = load i8, ptr %18, align 1, !tbaa !102
-  %i.rl = getelementptr inbounds i8, ptr %13, i64 %4
+  %19 = add i8 %18, %i.rj
+  %i.rk = load i8, ptr %i.rd, align 1, !tbaa !102
+  %20 = add i8 %19, %i.rk
+  %i.rl = getelementptr inbounds i8, ptr %i.rd, i64 %i.qk
   %i.rm = load i8, ptr %i.rl, align 1, !tbaa !102
-  %19 = shufflevector <2 x i8> %14, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %20 = insertelement <8 x i8> %19, i8 %i.rj, i64 2
-  %21 = insertelement <8 x i8> %20, i8 %i.rh, i64 3
-  %22 = insertelement <8 x i8> %21, i8 %17, i64 4
-  %23 = insertelement <8 x i8> %22, i8 %i.rm, i64 5
-  %24 = insertelement <8 x i8> %23, i8 %i.rf, i64 6
-  %25 = insertelement <8 x i8> %24, i8 %15, i64 7
-  %26 = tail call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %25)
-  %op.rdx447 = add i8 %26, %i.rk                  ; 2 uses
+  %21 = add i8 %20, %i.rm
+  %22 = getelementptr inbounds i8, ptr %i.rd, i64 %i.ql
+  %23 = load i8, ptr %22, align 1, !tbaa !102
+  %24 = add i8 %21, %23
+  %25 = getelementptr inbounds nuw i8, ptr %i.rd, i64 1
+  %26 = load i8, ptr %25, align 1, !tbaa !102
+  %27 = add i8 %24, %26
+  %28 = getelementptr inbounds i8, ptr %i.rd, i64 %12
+  %29 = load i8, ptr %28, align 1, !tbaa !102
+  %op.rdx447 = add i8 %27, %29                    ; 2 uses
   %.not = icmp eq i8 %op.rdx, %op.rdx447
   br i1 %.not, label %bb.v, label %bb.u
 
@@ -662,9 +665,6 @@ declare i16 @llvm.umin.i16(i16, i16) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.pow.v8f32(<8 x float>, <8 x float>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.add.v8i8(<8 x i8>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <4 x i32> @llvm.masked.load.v4i32.p0(ptr captures(none), <4 x i1>, <4 x i32>) #10

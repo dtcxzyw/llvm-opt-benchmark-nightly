@@ -46,16 +46,17 @@ define hidden void @_RINvMNtNtCsdjW2DEjcQy2_12clap_builder4util8flat_mapINtB3_7F
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 5 uses
-  %i.c = alloca [16 x i8], align 16               ; 4 uses
+  %i.c = alloca [16 x i8], align 8                ; 5 uses
   %i.d = alloca [8 x i8], align 8                 ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %i.f = alloca [40 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.f, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 40, i1 false)
-  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -69,19 +70,16 @@ bb.b:                                             ; preds = %_RNvMNtNtCsdjW2DEjc
   call void @llvm.experimental.noalias.scope.decl(metadata !56)
   call void @llvm.experimental.noalias.scope.decl(metadata !57)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !58
-  store ptr %i.g, ptr %i.d, align 8, !noalias !59
-  %i.p = load ptr, ptr %i.h, align 8, !alias.scope !60, !nonnull !5, !noundef !5
-  %.promoted.i.i.i.i = load ptr, ptr %i.f, align 8, !alias.scope !60 ; 2 uses
-  %2 = load ptr, ptr %i.j, align 8, !alias.scope !61, !nonnull !5
-  %.promoted15.i.i.i.i.a = load ptr, ptr %i.i, align 8, !alias.scope !61 ; 2 uses
-  %3 = insertelement <2 x ptr> poison, ptr %.promoted.i.i.i.i, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %.promoted15.i.i.i.i.a, i64 1
+  store ptr %2, ptr %i.d, align 8, !noalias !59
+  %i.p = load ptr, ptr %i.g, align 8, !alias.scope !60, !nonnull !5, !noundef !5
+  %.promoted.i.i.i.i = load ptr, ptr %i.f, align 8, !alias.scope !60
+  %.promoted15.i.i.i.i.a = load ptr, ptr %i.i, align 8, !alias.scope !61, !nonnull !5
+  %.promoted15.i.i.i.i = load ptr, ptr %i.h, align 8, !alias.scope !61
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
-  %i.q = phi ptr [ %6, %bb.f ], [ %.promoted15.i.i.i.i.a, %bb.b ] ; 2 uses
-  %i.r = phi ptr [ %i.t, %bb.f ], [ %.promoted.i.i.i.i, %bb.b ] ; 7 uses
-  %5 = phi <2 x ptr> [ %7, %bb.f ], [ %4, %bb.b ] ; 2 uses
+  %i.q = phi ptr [ %3, %bb.f ], [ %.promoted15.i.i.i.i, %bb.b ] ; 3 uses
+  %i.r = phi ptr [ %i.t, %bb.f ], [ %.promoted.i.i.i.i, %bb.b ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !62)
   %i.s = icmp eq ptr %i.r, %i.p
   br i1 %i.s, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtCsdjW2DEjcQy2_12clap_builder4util8flat_map4IterNtNtB17_2id2IdNtNtNtNtB19_6parser7matches11matched_arg10MatchedArgENCNvMs_NtB2e_9validatorNtB36_9Conflicts9with_args0ENtNtNtB9_6traits8iterator8Iterator4nextB19_.exit.thread.i, label %bb.d
@@ -93,7 +91,7 @@ _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtCsdjW2
 bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 24 ; 2 uses
   store ptr %i.t, ptr %i.f, align 8, !alias.scope !60
-  %i.u = icmp eq ptr %i.q, %2
+  %i.u = icmp eq ptr %i.q, %.promoted15.i.i.i.i.a
   br i1 %i.u, label %bb.e, label %bb.f, !prof !6
 
 bb.e:                                             ; preds = %bb.d
@@ -101,11 +99,11 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
+  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 104 ; 2 uses
+  store ptr %3, ptr %i.h, align 8, !alias.scope !60
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !59
-  %6 = getelementptr inbounds nuw i8, ptr %i.q, i64 104 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, <2 x ptr> %5, <2 x i64> <i64 24, i64 104>
-  store ptr %6, ptr %i.i, align 8, !alias.scope !60
-  store <2 x ptr> %5, ptr %i.c, align 16, !noalias !64
+  store ptr %i.r, ptr %i.c, align 8, !noalias !64
+  store ptr %i.q, ptr %i.j, align 8, !noalias !64
   %i.v = call noundef zeroext i1 @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtNtCsdjW2DEjcQy2_12clap_builder6parser9validatorNtBV_9Conflicts9with_args0INtB7_5FnMutTRTRNtNtNtBZ_4util2id2IdRNtNtNtBX_7matches11matched_arg10MatchedArgEEE8call_mutBZ_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.d, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.c), !noalias !65
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !59
   br i1 %i.v, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtCsdjW2DEjcQy2_12clap_builder4util8flat_map4IterNtNtB17_2id2IdNtNtNtNtB19_6parser7matches11matched_arg10MatchedArgENCNvMs_NtB2e_9validatorNtB36_9Conflicts9with_args0ENtNtNtB9_6traits8iterator8Iterator4nextB19_.exit.i, label %bb.c
@@ -116,7 +114,7 @@ _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtCsdjW2
   br i1 %.not.i.i.i, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtNtCsdjW2DEjcQy2_12clap_builder4util8flat_map4IterNtNtB17_2id2IdNtNtNtNtB19_6parser7matches11matched_arg10MatchedArgENCNvMs_NtB2e_9validatorNtB36_9Conflicts9with_args0ENtNtNtB9_6traits8iterator8Iterator4nextB19_.exit.i
-  %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !54, !nonnull !5, !align !7, !noundef !5
+  %.val.i = load ptr, ptr %2, align 8, !alias.scope !54, !nonnull !5, !align !7, !noundef !5
   call void @llvm.experimental.noalias.scope.decl(metadata !66)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !67
   call void @_RNvNtNtCsdjW2DEjcQy2_12clap_builder6parser9validator23gather_direct_conflicts(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(776) %.val.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r), !noalias !68

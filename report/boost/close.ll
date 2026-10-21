@@ -205,10 +205,7 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_ca
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.w = load ptr, ptr %8, align 8, !tbaa !1969
   store ptr %i.w, ptr %i.v, align 8, !tbaa !1969
-  %10 = insertelement <2 x ptr> poison, ptr %9, i64 0
-  %11 = insertelement <2 x ptr> %10, ptr %0, i64 1
-  %12 = getelementptr inbounds nuw i8, <2 x ptr> %11, <2 x i64> <i64 8, i64 32>
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   store i8 0, ptr %i.y, align 8, !tbaa !1970
   %i.z = load i8, ptr %i.o, align 8, !tbaa !1970
@@ -224,8 +221,11 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_ca
   store ptr %i.ac, ptr %i.ad, align 8, !tbaa !1983
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #36
   %i.ae = load ptr, ptr %0, align 8, !tbaa !2080, !nonnull !1301, !align !1304 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 40
+  %11 = insertelement <2 x ptr> poison, ptr %10, i64 0
+  %12 = insertelement <2 x ptr> %11, ptr %i.x, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_S7_SE_S7_S7_SE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSN_PKNS0_14mutable_bufferEEE5valueEiE4typeENSP_IXntsr14is_convertibleISQ_PKS7_EE5valueEiE4typeENSP_IXntsr14is_convertibleISM_SR_EE5valueEiE4typeENSP_IXntsr14is_convertibleISM_S7_EE5valueEiE4typeE.exit
@@ -628,7 +628,7 @@ bb.a:
   %4 = alloca %"struct.boost::beast::detail::variant<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>::const_iterator, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, boost::beast::detail::buffers_cat_view_iterator_base::past_end>::copy", align 16 ; 4 uses
   %5 = alloca %"class.boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::beast::detail::buffers_ref<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>>, boost::beast::http::detail::chunk_size, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::chunk_crlf>>::const_iterator", align 8 ; 7 uses
   %6 = alloca %"struct.boost::beast::detail::variant<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>::const_iterator, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, boost::beast::detail::buffers_cat_view_iterator_base::past_end>::copy", align 8 ; 5 uses
-  %7 = alloca %"class.boost::beast::buffers_prefix_view<const boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::beast::detail::buffers_ref<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>>, boost::beast::http::detail::chunk_size, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::chunk_crlf>> &>::const_iterator", align 8 ; 12 uses
+  %7 = alloca %"class.boost::beast::buffers_prefix_view<const boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::beast::detail::buffers_ref<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>>, boost::beast::http::detail::chunk_size, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::chunk_crlf>> &>::const_iterator", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #36
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %7, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 5 uses
@@ -657,17 +657,17 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 1024 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 1032 ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 10 uses
-  %8 = insertelement <2 x ptr> poison, ptr %5, i64 0
-  %9 = insertelement <2 x ptr> %8, ptr %7, i64 1
-  %10 = getelementptr inbounds nuw i8, <2 x ptr> %9, <2 x i64> <i64 8, i64 24>
+  %i.w = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 11 uses
   store ptr %i.w, ptr %6, align 8, !tbaa !1981
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm11EE4callILm0ENS_5beast6detail7variantIJNS5_16buffers_cat_viewIJNS_4asio12const_bufferESA_SA_NS5_4http12basic_fieldsISaIcEE6writer11field_rangeENSB_10chunk_crlfEEE14const_iteratorEPKSA_SL_SL_SL_SL_SL_SL_SL_NS6_30buffers_cat_view_iterator_base8past_endEEE4copyEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSQ_(i64 noundef %i.h, ptr noundef nonnull align 8 dereferenceable(16) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #36
   %i.x = load ptr, ptr %i.k, align 8, !tbaa !1983
   store ptr %i.x, ptr %i.j, align 8, !tbaa !1983
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %9 = insertelement <2 x ptr> poison, ptr %8, i64 0
+  %10 = insertelement <2 x ptr> %9, ptr %i.w, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %.noexc, %bb.a
@@ -844,7 +844,7 @@ bb.a:
   %3 = alloca %"struct.boost::beast::detail::variant<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>::const_iterator, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, boost::beast::detail::buffers_cat_view_iterator_base::past_end>::copy", align 16 ; 4 uses
   %4 = alloca %"class.boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::beast::detail::buffers_ref<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>>, boost::beast::http::detail::chunk_size, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::chunk_crlf>>::const_iterator", align 8 ; 7 uses
   %5 = alloca %"struct.boost::beast::detail::variant<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>::const_iterator, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, const boost::asio::const_buffer *, boost::beast::detail::buffers_cat_view_iterator_base::past_end>::copy", align 8 ; 5 uses
-  %6 = alloca %"class.boost::beast::buffers_prefix_view<const boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::beast::detail::buffers_ref<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>>, boost::beast::http::detail::chunk_size, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::chunk_crlf>> &>::const_iterator", align 8 ; 12 uses
+  %6 = alloca %"class.boost::beast::buffers_prefix_view<const boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::beast::detail::buffers_ref<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::basic_fields<std::allocator<char>>::writer::field_range, boost::beast::http::chunk_crlf>>, boost::beast::http::detail::chunk_size, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::beast::http::chunk_crlf, boost::asio::const_buffer, boost::asio::const_buffer, boost::beast::http::chunk_crlf>> &>::const_iterator", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #36
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %6, ptr noundef nonnull align 8 dereferenceable(64) %0, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 5 uses
@@ -871,17 +871,17 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 10 uses
-  %7 = insertelement <2 x ptr> poison, ptr %4, i64 0
-  %8 = insertelement <2 x ptr> %7, ptr %6, i64 1
-  %9 = getelementptr inbounds nuw i8, <2 x ptr> %8, <2 x i64> <i64 8, i64 24>
+  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 11 uses
   store ptr %i.u, ptr %5, align 8, !tbaa !1981
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm11EE4callILm0ENS_5beast6detail7variantIJNS5_16buffers_cat_viewIJNS_4asio12const_bufferESA_SA_NS5_4http12basic_fieldsISaIcEE6writer11field_rangeENSB_10chunk_crlfEEE14const_iteratorEPKSA_SL_SL_SL_SL_SL_SL_SL_NS6_30buffers_cat_view_iterator_base8past_endEEE4copyEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSQ_(i64 noundef %i.h, ptr noundef nonnull align 8 dereferenceable(16) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #36
   %i.v = load ptr, ptr %i.k, align 8, !tbaa !1983
   store ptr %i.v, ptr %i.j, align 8, !tbaa !1983
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %8 = insertelement <2 x ptr> poison, ptr %7, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.u, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %.noexc, %bb.a

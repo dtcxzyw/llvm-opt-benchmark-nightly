@@ -105,8 +105,8 @@ bb.a:
   %7 = alloca %"class.clang::BalancedDelimiterTracker", align 8 ; 18 uses
   %8 = alloca %"class.clang::DiagnosticBuilder", align 8 ; 8 uses
   %9 = alloca %"struct.clang::Sema::ProcessDeclAttributeOptions", align 1 ; 5 uses
-  %10 = alloca %"class.clang::ParsedAttributes", align 8 ; 16 uses
-  %11 = alloca %"class.clang::ParsedAttributes", align 8 ; 16 uses
+  %10 = alloca %"class.clang::ParsedAttributes", align 8 ; 15 uses
+  %11 = alloca %"class.clang::ParsedAttributes", align 8 ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.c = load i16, ptr %i.b, align 8, !tbaa !14
@@ -263,42 +263,41 @@ bb.e:                                             ; preds = %_ZN5clang24Balanced
   store i8 0, ptr %i.bs, align 1, !tbaa !1044
   call void @_ZN5clang4Sema24ProcessDeclAttributeListEPNS_5ScopeEPNS_4DeclERKNS_20ParsedAttributesViewERKNS0_27ProcessDeclAttributeOptionsE(ptr noundef nonnull align 8 dereferenceable(18640) %i.bp, ptr noundef %i.br, ptr noundef %i.bo, ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 1 dereferenceable(2) %9) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #13
-  %i.bt = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %i.bu = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 3 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %10, i64 16
-  %i.bx = getelementptr inbounds nuw i8, ptr %10, i64 20
-  %i.by = getelementptr inbounds nuw i8, ptr %10, i64 40 ; 5 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %10, i64 48 ; 2 uses
-  %12 = insertelement <2 x ptr> poison, ptr %0, i64 0 ; 2 uses
-  %13 = insertelement <2 x ptr> %12, ptr %10, i64 1
-  %14 = getelementptr inbounds nuw i8, <2 x ptr> %13, <2 x i64> <i64 488, i64 64>
-  %i.ca = getelementptr inbounds nuw i8, ptr %10, i64 64 ; 2 uses
-  %i.cb = getelementptr inbounds nuw i8, ptr %10, i64 56
-  %i.cc = getelementptr inbounds nuw i8, ptr %10, i64 60
-  %i.cd = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.ce = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
-  %i.cf = getelementptr inbounds nuw i8, ptr %11, i64 24 ; 3 uses
-  %i.cg = getelementptr inbounds nuw i8, ptr %11, i64 16
-  %i.ch = getelementptr inbounds nuw i8, ptr %11, i64 20
-  %i.ci = getelementptr inbounds nuw i8, ptr %11, i64 40 ; 5 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %11, i64 48 ; 2 uses
-  %15 = insertelement <2 x ptr> %12, ptr %11, i64 1
-  %16 = getelementptr inbounds nuw i8, <2 x ptr> %15, <2 x i64> <i64 488, i64 64>
-  %i.ck = getelementptr inbounds nuw i8, ptr %11, i64 64 ; 2 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %11, i64 56
-  %17 = getelementptr inbounds nuw i8, ptr %11, i64 60
-  %i.cm = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %18 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %19 = zext i1 %i.d to i64                       ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 488
+  %i.bu = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %i.bv = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 3 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %10, i64 16
+  %i.by = getelementptr inbounds nuw i8, ptr %10, i64 20
+  %i.bz = getelementptr inbounds nuw i8, ptr %10, i64 40 ; 5 uses
+  %12 = getelementptr inbounds nuw i8, ptr %10, i64 48 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %10, i64 64 ; 3 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %10, i64 56
+  %i.cb = getelementptr inbounds nuw i8, ptr %10, i64 60
+  %i.cc = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %i.cd = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %11, i64 24 ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %i.cg = getelementptr inbounds nuw i8, ptr %11, i64 20
+  %i.ch = getelementptr inbounds nuw i8, ptr %11, i64 40 ; 5 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %11, i64 48 ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %11, i64 64 ; 3 uses
+  %14 = getelementptr inbounds nuw i8, ptr %11, i64 56
+  %15 = getelementptr inbounds nuw i8, ptr %11, i64 60
+  %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.cl = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %16 = zext i1 %i.d to i64                       ; 2 uses
+  %i.cm = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %17 = insertelement <2 x ptr> poison, ptr %i.bt, i64 0 ; 2 uses
+  %18 = insertelement <2 x ptr> %17, ptr %13, i64 1
+  %19 = insertelement <2 x ptr> %17, ptr %i.cj, i64 1
   br label %bb.j
 
 .critedge29:                                      ; preds = %_ZL29validateDeclsInsideHLSLBufferN5clang9OpaquePtrINS_12DeclGroupRefEEENS_14SourceLocationEbRNS_6ParserE.exit.thread55, %_ZL29validateDeclsInsideHLSLBufferN5clang9OpaquePtrINS_12DeclGroupRefEEENS_14SourceLocationEbRNS_6ParserE.exit
-  %i.cn = load ptr, ptr %i.ci, align 8, !tbaa !994, !nonnull !96, !align !97
-  call void @_ZN5clang16AttributeFactory11reclaimPoolERNS_13AttributePoolE(ptr noundef nonnull align 8 dereferenceable(1296) %i.cn, ptr noundef nonnull align 8 dereferenceable(40) %i.ci) #13
-  %i.co = load ptr, ptr %i.cj, align 8, !tbaa !995 ; 2 uses
-  %i.cp = icmp eq ptr %i.co, %i.ck
+  %i.cn = load ptr, ptr %i.ch, align 8, !tbaa !994, !nonnull !96, !align !97
+  call void @_ZN5clang16AttributeFactory11reclaimPoolERNS_13AttributePoolE(ptr noundef nonnull align 8 dereferenceable(1296) %i.cn, ptr noundef nonnull align 8 dereferenceable(40) %i.ch) #13
+  %i.co = load ptr, ptr %i.ci, align 8, !tbaa !995 ; 2 uses
+  %i.cp = icmp eq ptr %i.co, %i.cj
   br i1 %i.cp, label %_ZN5clang13AttributePoolD2Ev.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %.critedge29
@@ -306,8 +305,8 @@ bb.f:                                             ; preds = %.critedge29
   br label %_ZN5clang13AttributePoolD2Ev.exit.i
 
 _ZN5clang13AttributePoolD2Ev.exit.i:              ; preds = %bb.f, %.critedge29
-  %i.cq = load ptr, ptr %i.ce, align 8, !tbaa !995 ; 2 uses
-  %i.cr = icmp eq ptr %i.cq, %i.cf
+  %i.cq = load ptr, ptr %i.cd, align 8, !tbaa !995 ; 2 uses
+  %i.cr = icmp eq ptr %i.cq, %i.ce
   br i1 %i.cr, label %_ZN5clang16ParsedAttributesD2Ev.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN5clang13AttributePoolD2Ev.exit.i
@@ -316,10 +315,10 @@ bb.g:                                             ; preds = %_ZN5clang13Attribut
 
 _ZN5clang16ParsedAttributesD2Ev.exit:             ; preds = %_ZN5clang13AttributePoolD2Ev.exit.i, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
-  %i.cs = load ptr, ptr %i.by, align 8, !tbaa !994, !nonnull !96, !align !97
-  call void @_ZN5clang16AttributeFactory11reclaimPoolERNS_13AttributePoolE(ptr noundef nonnull align 8 dereferenceable(1296) %i.cs, ptr noundef nonnull align 8 dereferenceable(40) %i.by) #13
-  %i.ct = load ptr, ptr %i.bz, align 8, !tbaa !995 ; 2 uses
-  %i.cu = icmp eq ptr %i.ct, %i.ca
+  %i.cs = load ptr, ptr %i.bz, align 8, !tbaa !994, !nonnull !96, !align !97
+  call void @_ZN5clang16AttributeFactory11reclaimPoolERNS_13AttributePoolE(ptr noundef nonnull align 8 dereferenceable(1296) %i.cs, ptr noundef nonnull align 8 dereferenceable(40) %i.bz) #13
+  %i.ct = load ptr, ptr %12, align 8, !tbaa !995  ; 2 uses
+  %i.cu = icmp eq ptr %i.ct, %13
   br i1 %i.cu, label %_ZN5clang13AttributePoolD2Ev.exit.i35, label %bb.h
 
 bb.h:                                             ; preds = %_ZN5clang16ParsedAttributesD2Ev.exit
@@ -327,8 +326,8 @@ bb.h:                                             ; preds = %_ZN5clang16ParsedAt
   br label %_ZN5clang13AttributePoolD2Ev.exit.i35
 
 _ZN5clang13AttributePoolD2Ev.exit.i35:            ; preds = %bb.h, %_ZN5clang16ParsedAttributesD2Ev.exit
-  %i.cv = load ptr, ptr %i.bu, align 8, !tbaa !995 ; 2 uses
-  %i.cw = icmp eq ptr %i.cv, %i.bv
+  %i.cv = load ptr, ptr %i.bv, align 8, !tbaa !995 ; 2 uses
+  %i.cw = icmp eq ptr %i.cv, %i.bw
   br i1 %i.cw, label %_ZN5clang16ParsedAttributesD2Ev.exit36, label %bb.i
 
 bb.i:                                             ; preds = %_ZN5clang13AttributePoolD2Ev.exit.i35
@@ -349,22 +348,22 @@ bb.j:                                             ; preds = %_ZN5clang16ParsedAt
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #13
   store i32 0, ptr %10, align 8, !tbaa !123
-  store i32 0, ptr %i.bt, align 4, !tbaa !123
-  store ptr %i.bv, ptr %i.bu, align 8, !tbaa !995
-  store i32 0, ptr %i.bw, align 8, !tbaa !996
-  store i32 2, ptr %i.bx, align 4, !tbaa !997
-  store <2 x ptr> %14, ptr %i.by, align 8, !tbaa !998
-  store i32 0, ptr %i.cb, align 8, !tbaa !996
-  store i32 2, ptr %i.cc, align 4, !tbaa !997
+  store i32 0, ptr %i.bu, align 4, !tbaa !123
+  store ptr %i.bw, ptr %i.bv, align 8, !tbaa !995
+  store i32 0, ptr %i.bx, align 8, !tbaa !996
+  store i32 2, ptr %i.by, align 4, !tbaa !997
+  store <2 x ptr> %18, ptr %i.bz, align 8, !tbaa !998
+  store i32 0, ptr %i.ca, align 8, !tbaa !996
+  store i32 2, ptr %i.cb, align 4, !tbaa !997
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #13
   store i32 0, ptr %11, align 8, !tbaa !123
-  store i32 0, ptr %i.cd, align 4, !tbaa !123
-  store ptr %i.cf, ptr %i.ce, align 8, !tbaa !995
-  store i32 0, ptr %i.cg, align 8, !tbaa !996
-  store i32 2, ptr %i.ch, align 4, !tbaa !997
-  store <2 x ptr> %16, ptr %i.ci, align 8, !tbaa !998
-  store i32 0, ptr %i.cl, align 8, !tbaa !996
-  store i32 2, ptr %17, align 4, !tbaa !997
+  store i32 0, ptr %i.cc, align 4, !tbaa !123
+  store ptr %i.ce, ptr %i.cd, align 8, !tbaa !995
+  store i32 0, ptr %i.cf, align 8, !tbaa !996
+  store i32 2, ptr %i.cg, align 4, !tbaa !997
+  store <2 x ptr> %19, ptr %i.ch, align 8, !tbaa !998
+  store i32 0, ptr %14, align 8, !tbaa !996
+  store i32 2, ptr %15, align 4, !tbaa !997
   %i.cy = call ptr @_ZN5clang6Parser24ParseExternalDeclarationERNS_16ParsedAttributesES2_PNS_15ParsingDeclSpecE(ptr noundef nonnull align 8 dereferenceable(2960) %0, ptr noundef nonnull align 8 dereferenceable(80) %10, ptr noundef nonnull align 8 dereferenceable(80) %11, ptr noundef null) #13 ; 3 uses
   %.not22.i = icmp eq ptr %i.cy, null
   br i1 %.not22.i, label %_ZN5clang6Parser10ParseScope4ExitEv.exit, label %bb.l
@@ -388,7 +387,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN5clang12DeclGroupRef3endEv.exit.i
 
 _ZN5clang12DeclGroupRef3endEv.exit.i:             ; preds = %bb.l, %bb.m
-  %.0.i11.i = phi ptr [ %i.dh, %bb.m ], [ %i.cm, %bb.l ] ; 2 uses
+  %.0.i11.i = phi ptr [ %i.dh, %bb.m ], [ %i.ck, %bb.l ] ; 2 uses
   %.not23.i = icmp eq ptr %.0.i.i, %.0.i11.i
   br i1 %.not23.i, label %_ZL29validateDeclsInsideHLSLBufferN5clang9OpaquePtrINS_12DeclGroupRefEEENS_14SourceLocationEbRNS_6ParserE.exit.thread55, label %.lr.ph.i
 
@@ -436,7 +435,7 @@ bb.n:                                             ; preds = %.lr.ph.i, %.lr.ph.i
   br i1 %.not.i.i.i.i, label %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i.i, label %_ZNK5clang17DiagnosticBuilderlsIbEERKS0_RKT_.exit.i
 
 _ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i.i: ; preds = %bb.n
-  %i.do = load ptr, ptr %18, align 8, !tbaa !102
+  %i.do = load ptr, ptr %i.cl, align 8, !tbaa !102
   %i.dp = call noundef ptr @_ZN5clang20DiagStorageAllocator8AllocateEv(ptr noundef nonnull align 8 dereferenceable(14980) %i.do) ; 2 uses
   store ptr %i.dp, ptr %4, align 8, !tbaa !101
   br label %_ZNK5clang17DiagnosticBuilderlsIbEERKS0_RKT_.exit.i
@@ -455,7 +454,7 @@ _ZNK5clang17DiagnosticBuilderlsIbEERKS0_RKT_.exit.i: ; preds = %_ZNK5clang19Stre
   store i8 %i.dy, ptr %i.dv, align 8, !tbaa !114
   %i.dz = zext i8 %i.dx to i64
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %i.dz
-  store i64 %19, ptr %i.ea, align 8, !tbaa !116
+  store i64 %16, ptr %i.ea, align 8, !tbaa !116
   call void @_ZN5clang17DiagnosticBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(66) dereferenceable(66) %4) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   br label %bb.p
@@ -470,7 +469,7 @@ bb.o:                                             ; preds = %.lr.ph.i
   br i1 %.not.i.i.i14.i, label %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i15.i, label %_ZNK5clang17DiagnosticBuilderlsIbEERKS0_RKT_.exit16.i
 
 _ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i15.i: ; preds = %bb.o
-  %i.ed = load ptr, ptr %20, align 8, !tbaa !102
+  %i.ed = load ptr, ptr %i.cm, align 8, !tbaa !102
   %i.ee = call noundef ptr @_ZN5clang20DiagStorageAllocator8AllocateEv(ptr noundef nonnull align 8 dereferenceable(14980) %i.ed) ; 2 uses
   store ptr %i.ee, ptr %5, align 8, !tbaa !101
   br label %_ZNK5clang17DiagnosticBuilderlsIbEERKS0_RKT_.exit16.i
@@ -489,7 +488,7 @@ _ZNK5clang17DiagnosticBuilderlsIbEERKS0_RKT_.exit16.i: ; preds = %_ZNK5clang19St
   store i8 %i.en, ptr %i.ek, align 8, !tbaa !114
   %i.eo = zext i8 %i.em to i64
   %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.el, i64 %i.eo
-  store i64 %19, ptr %i.ep, align 8, !tbaa !116
+  store i64 %16, ptr %i.ep, align 8, !tbaa !116
   call void @_ZN5clang17DiagnosticBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(66) dereferenceable(66) %5) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %bb.p
@@ -514,10 +513,10 @@ _ZN5clang6Parser10ParseScope4ExitEv.exit:         ; preds = %bb.k, %_ZL29validat
   %i.et = load ptr, ptr %i.es, align 8, !tbaa !1040
   %.sroa.02.0.copyload = load i32, ptr %1, align 4, !tbaa !16
   call void @_ZN5clang8SemaHLSL17ActOnFinishBufferEPNS_4DeclENS_14SourceLocationE(ptr noundef nonnull align 8 dereferenceable(273) %i.et, ptr noundef %i.bo, i32 %.sroa.02.0.copyload) #13
-  %i.eu = load ptr, ptr %i.ci, align 8, !tbaa !994, !nonnull !96, !align !97
-  call void @_ZN5clang16AttributeFactory11reclaimPoolERNS_13AttributePoolE(ptr noundef nonnull align 8 dereferenceable(1296) %i.eu, ptr noundef nonnull align 8 dereferenceable(40) %i.ci) #13
-  %i.ev = load ptr, ptr %i.cj, align 8, !tbaa !995 ; 2 uses
-  %i.ew = icmp eq ptr %i.ev, %i.ck
+  %i.eu = load ptr, ptr %i.ch, align 8, !tbaa !994, !nonnull !96, !align !97
+  call void @_ZN5clang16AttributeFactory11reclaimPoolERNS_13AttributePoolE(ptr noundef nonnull align 8 dereferenceable(1296) %i.eu, ptr noundef nonnull align 8 dereferenceable(40) %i.ch) #13
+  %i.ev = load ptr, ptr %i.ci, align 8, !tbaa !995 ; 2 uses
+  %i.ew = icmp eq ptr %i.ev, %i.cj
   br i1 %i.ew, label %_ZN5clang13AttributePoolD2Ev.exit.i41, label %bb.q
 
 bb.q:                                             ; preds = %_ZN5clang6Parser10ParseScope4ExitEv.exit
@@ -525,8 +524,8 @@ bb.q:                                             ; preds = %_ZN5clang6Parser10P
   br label %_ZN5clang13AttributePoolD2Ev.exit.i41
 
 _ZN5clang13AttributePoolD2Ev.exit.i41:            ; preds = %bb.q, %_ZN5clang6Parser10ParseScope4ExitEv.exit
-  %i.ex = load ptr, ptr %i.ce, align 8, !tbaa !995 ; 2 uses
-  %i.ey = icmp eq ptr %i.ex, %i.cf
+  %i.ex = load ptr, ptr %i.cd, align 8, !tbaa !995 ; 2 uses
+  %i.ey = icmp eq ptr %i.ex, %i.ce
   br i1 %i.ey, label %_ZN5clang16ParsedAttributesD2Ev.exit42, label %bb.r
 
 bb.r:                                             ; preds = %_ZN5clang13AttributePoolD2Ev.exit.i41
@@ -535,10 +534,10 @@ bb.r:                                             ; preds = %_ZN5clang13Attribut
 
 _ZN5clang16ParsedAttributesD2Ev.exit42:           ; preds = %_ZN5clang13AttributePoolD2Ev.exit.i41, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
-  %i.ez = load ptr, ptr %i.by, align 8, !tbaa !994, !nonnull !96, !align !97
-  call void @_ZN5clang16AttributeFactory11reclaimPoolERNS_13AttributePoolE(ptr noundef nonnull align 8 dereferenceable(1296) %i.ez, ptr noundef nonnull align 8 dereferenceable(40) %i.by) #13
-  %i.fa = load ptr, ptr %i.bz, align 8, !tbaa !995 ; 2 uses
-  %i.fb = icmp eq ptr %i.fa, %i.ca
+  %i.ez = load ptr, ptr %i.bz, align 8, !tbaa !994, !nonnull !96, !align !97
+  call void @_ZN5clang16AttributeFactory11reclaimPoolERNS_13AttributePoolE(ptr noundef nonnull align 8 dereferenceable(1296) %i.ez, ptr noundef nonnull align 8 dereferenceable(40) %i.bz) #13
+  %i.fa = load ptr, ptr %12, align 8, !tbaa !995  ; 2 uses
+  %i.fb = icmp eq ptr %i.fa, %13
   br i1 %i.fb, label %_ZN5clang13AttributePoolD2Ev.exit.i43, label %bb.s
 
 bb.s:                                             ; preds = %_ZN5clang16ParsedAttributesD2Ev.exit42
@@ -546,8 +545,8 @@ bb.s:                                             ; preds = %_ZN5clang16ParsedAt
   br label %_ZN5clang13AttributePoolD2Ev.exit.i43
 
 _ZN5clang13AttributePoolD2Ev.exit.i43:            ; preds = %bb.s, %_ZN5clang16ParsedAttributesD2Ev.exit42
-  %i.fc = load ptr, ptr %i.bu, align 8, !tbaa !995 ; 2 uses
-  %i.fd = icmp eq ptr %i.fc, %i.bv
+  %i.fc = load ptr, ptr %i.bv, align 8, !tbaa !995 ; 2 uses
+  %i.fd = icmp eq ptr %i.fc, %i.bw
   br i1 %i.fd, label %_ZN5clang16ParsedAttributesD2Ev.exit44, label %bb.t
 
 bb.t:                                             ; preds = %_ZN5clang13AttributePoolD2Ev.exit.i43

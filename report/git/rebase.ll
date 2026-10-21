@@ -204,7 +204,7 @@ bb.a:
   %23 = alloca %struct.object_id, align 4         ; 5 uses
   %i.j = alloca i32, align 4                      ; 5 uses
   %i.k = alloca i32, align 4                      ; 5 uses
-  %24 = alloca %struct.reset_head_opts, align 16  ; 15 uses
+  %24 = alloca %struct.reset_head_opts, align 8   ; 16 uses
   %25 = alloca [43 x %struct.option], align 16    ; 486 uses
   %26 = alloca %struct.object_id, align 4         ; 3 uses
   %27 = alloca %struct.lock_file, align 8         ; 6 uses
@@ -275,7 +275,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #17
   store i32 0, ptr %i.k, align 4, !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #17
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %24, i8 0, i64 64, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %24, i8 0, i64 64, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #17
   store i32 10, ptr %25, align 16, !tbaa !90
   %i.ae = getelementptr inbounds nuw i8, ptr %25, i64 4
@@ -678,14 +678,14 @@ bb.bw:                                            ; preds = %bb.bu, %bb.bv
   %i.ye = getelementptr inbounds nuw i8, ptr %18, i64 56 ; 2 uses
   %i.yf = load ptr, ptr %i.ye, align 8, !tbaa !49
   %i.yg = getelementptr inbounds nuw i8, ptr %i.yf, i64 8
-  store ptr %i.yg, ptr %24, align 16, !tbaa !50
+  store ptr %i.yg, ptr %24, align 8, !tbaa !50
   %i.yh = getelementptr inbounds nuw i8, ptr %30, i64 16
   %i.yi = load ptr, ptr %i.yh, align 8, !tbaa !32
   %i.yj = getelementptr inbounds nuw i8, ptr %24, i64 40
   store ptr %i.yi, ptr %i.yj, align 8, !tbaa !51
   %i.yk = load ptr, ptr %i.xx, align 8, !tbaa !48
   %i.yl = getelementptr inbounds nuw i8, ptr %24, i64 16
-  store ptr %i.yk, ptr %i.yl, align 16, !tbaa !52
+  store ptr %i.yk, ptr %i.yl, align 8, !tbaa !52
   %i.ym = getelementptr inbounds nuw i8, ptr %24, i64 24
   store i32 2, ptr %i.ym, align 8, !tbaa !47
   %i.yn = load ptr, ptr @the_repository, align 8, !tbaa !40
@@ -1088,12 +1088,15 @@ bb.kc:                                            ; preds = %_.exit321, %bb.jz
   %i.aut = load ptr, ptr %i.wh, align 8, !tbaa !45
   %i.auu = load ptr, ptr %i.ah, align 8, !tbaa !123
   call void (ptr, ptr, ...) @strbuf_addf(ptr noundef nonnull %19, ptr noundef nonnull @.str.176, ptr noundef %i.aut, ptr noundef %i.auu) #17
-  %i.auv = getelementptr inbounds nuw i8, ptr %18, i64 64
+  %34 = getelementptr inbounds nuw i8, ptr %18, i64 64 ; 2 uses
+  %35 = load ptr, ptr %34, align 8, !tbaa !72
+  %i.auv = getelementptr inbounds nuw i8, ptr %35, i64 8
+  store ptr %i.auv, ptr %24, align 8, !tbaa !50
   %i.auw = getelementptr inbounds nuw i8, ptr %18, i64 56 ; 3 uses
-  %34 = load <2 x ptr>, ptr %i.auw, align 8, !tbaa !150
-  %35 = getelementptr inbounds nuw i8, <2 x ptr> %34, i64 8
-  %36 = shufflevector <2 x ptr> %35, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %36, ptr %24, align 16, !tbaa !151
+  %36 = load ptr, ptr %i.auw, align 8, !tbaa !49
+  %37 = getelementptr inbounds nuw i8, ptr %36, i64 8
+  %38 = getelementptr inbounds nuw i8, ptr %24, i64 8
+  store ptr %37, ptr %38, align 8, !tbaa !150
   %i.aux = getelementptr inbounds nuw i8, ptr %24, i64 24
   store i32 21, ptr %i.aux, align 8, !tbaa !47
   %i.auy = getelementptr inbounds nuw i8, ptr %19, i64 16
@@ -1102,7 +1105,7 @@ bb.kc:                                            ; preds = %_.exit321, %bb.jz
   store ptr %i.auz, ptr %i.ava, align 8, !tbaa !51
   %i.avb = load ptr, ptr %i.wh, align 8, !tbaa !45
   %i.avc = getelementptr inbounds nuw i8, ptr %24, i64 56
-  store ptr %i.avb, ptr %i.avc, align 8, !tbaa !152
+  store ptr %i.avb, ptr %i.avc, align 8, !tbaa !151
   %i.avd = load ptr, ptr @the_repository, align 8, !tbaa !40
   %i.ave = call i32 @reset_head(ptr noundef %i.avd, ptr noundef nonnull %24) #17
   %.not206 = icmp eq i32 %i.ave, 0
@@ -1162,7 +1165,7 @@ bb.ki:                                            ; preds = %bb.kf
   br i1 %.not208, label %bb.kk, label %bb.kj
 
 bb.kj:                                            ; preds = %bb.ki
-  %i.awc = load ptr, ptr %i.auv, align 8, !tbaa !72
+  %i.awc = load ptr, ptr %34, align 8, !tbaa !72
   br label %bb.km
 
 bb.kk:                                            ; preds = %bb.ki
@@ -1187,7 +1190,7 @@ bb.km:                                            ; preds = %bb.kk, %bb.kl, %bb.
   %i.awm = getelementptr inbounds nuw i8, ptr %20, i64 16
   %i.awn = load ptr, ptr %i.awm, align 8, !tbaa !32
   %i.awo = getelementptr inbounds nuw i8, ptr %18, i64 80
-  store ptr %i.awn, ptr %i.awo, align 8, !tbaa !153
+  store ptr %i.awn, ptr %i.awo, align 8, !tbaa !152
   br label %bb.kn
 
 bb.kn:                                            ; preds = %bb.br, %bb.bm, %bb.km, %bb.ci, %bb.ch
@@ -1494,7 +1497,7 @@ bb.lq:                                            ; preds = %path_squash_onto.ex
   call void @discard_index(ptr noundef %i.bay) #17
   %i.baz = load ptr, ptr @the_repository, align 8, !tbaa !40
   %i.bba = getelementptr inbounds nuw i8, ptr %11, i64 16
-  %i.bbb = load ptr, ptr %i.bba, align 8, !tbaa !156
+  %i.bbb = load ptr, ptr %i.bba, align 8, !tbaa !155
   %i.bbc = call i32 @todo_list_parse_insn_buffer(ptr noundef %i.baz, ptr noundef nonnull %12, ptr noundef %i.bbb, ptr noundef nonnull %11) #17
   %.not30.i.i.i = icmp eq i32 %i.bbc, 0
   br i1 %.not30.i.i.i, label %bb.ls, label %bb.lr
@@ -1694,7 +1697,7 @@ bb.mn:                                            ; preds = %bb.mf
   %i.bdb = call ptr (ptr, ptr, ...) @repo_git_path(ptr noundef %i.bda, ptr noundef nonnull @.str.272) #17 ; 10 uses
   %i.bdc = call i32 (ptr, i32, ...) @open64(ptr noundef %i.bdb, i32 noundef 577, i32 noundef 438) #17 ; 2 uses
   %i.bdd = getelementptr inbounds nuw i8, ptr %6, i64 84
-  store i32 %i.bdc, ptr %i.bdd, align 4, !tbaa !158
+  store i32 %i.bdc, ptr %i.bdd, align 4, !tbaa !157
   %i.bde = icmp slt i32 %i.bdc, 0
   br i1 %i.bde, label %bb.mo, label %bb.mq
 
@@ -1719,12 +1722,12 @@ bb.mq:                                            ; preds = %bb.mn
   store i8 8, ptr %i.bdi, align 8
   call void (ptr, ...) @strvec_pushl(ptr noundef nonnull %6, ptr noundef nonnull @.str.274, ptr noundef nonnull @.str.275, ptr noundef nonnull @.str.276, ptr noundef nonnull @.str.277, ptr noundef nonnull @.str.278, ptr noundef nonnull @.str.279, ptr noundef nonnull @.str.280, ptr noundef nonnull @.str.281, ptr noundef nonnull @.str.282, ptr noundef nonnull @.str.283, ptr noundef nonnull @.str.284, ptr noundef nonnull @.str.285, ptr noundef null) #17
   %i.bdj = getelementptr inbounds nuw i8, ptr %18, i64 352
-  %i.bdk = load i64, ptr %i.bdj, align 8, !tbaa !159
+  %i.bdk = load i64, ptr %i.bdj, align 8, !tbaa !158
   %.not.i26.i = icmp eq i64 %i.bdk, 0
   br i1 %.not.i26.i, label %bb.ms, label %bb.mr
 
 bb.mr:                                            ; preds = %bb.mq
-  %i.bdl = load ptr, ptr %i.y, align 8, !tbaa !160
+  %i.bdl = load ptr, ptr %i.y, align 8, !tbaa !159
   call void @strvec_split(ptr noundef nonnull %6, ptr noundef %i.bdl) #17
   br label %bb.ms
 
@@ -1733,7 +1736,7 @@ bb.ms:                                            ; preds = %bb.mr, %bb.mq
   %.not57.i.i = icmp eq i32 %i.bdm, 0
   %.pn.in.v.i.i.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not57.i.i, i64 24, i64 64
   %.pn.in.v.i.i.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %18, i64 %.pn.in.v.i.i.sroa.sel.v.sroa.sel.v.sroa.sel.v
-  %.pn.i.i = load ptr, ptr %.pn.in.v.i.i.sroa.sel.v.sroa.sel.v.sroa.sel, align 8, !tbaa !150
+  %.pn.i.i = load ptr, ptr %.pn.in.v.i.i.sroa.sel.v.sroa.sel.v.sroa.sel, align 8, !tbaa !160
   %i.bdn = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 8
   %i.bdo = call ptr @oid_to_hex(ptr noundef nonnull %i.bdn) #17
   %i.bdp = getelementptr inbounds nuw i8, ptr %18, i64 56 ; 2 uses
@@ -1773,7 +1776,7 @@ bb.mv:                                            ; preds = %bb.mu
   store ptr %i.bef, ptr %i.beg, align 8, !tbaa !52
   %i.beh = load ptr, ptr %i.wh, align 8, !tbaa !45
   %i.bei = getelementptr inbounds nuw i8, ptr %7, i64 56
-  store ptr %i.beh, ptr %i.bei, align 8, !tbaa !152
+  store ptr %i.beh, ptr %i.bei, align 8, !tbaa !151
   %i.bej = load ptr, ptr @the_repository, align 8, !tbaa !40
   %i.bek = call i32 @reset_head(ptr noundef %i.bej, ptr noundef nonnull %7) #17 ; 0 uses
   %i.bel = load i32, ptr @git_gettext_enabled, align 4, !tbaa !36
@@ -1787,7 +1790,7 @@ bb.mw:                                            ; preds = %bb.mv
 _.exit68.i.i:                                     ; preds = %bb.mw, %bb.mv
   %.0.i67.i.i = phi ptr [ %i.bem, %bb.mw ], [ @.str.286, %bb.mv ]
   %i.ben = getelementptr inbounds nuw i8, ptr %18, i64 80
-  %i.beo = load ptr, ptr %i.ben, align 8, !tbaa !153
+  %i.beo = load ptr, ptr %i.ben, align 8, !tbaa !152
   %i.bep = call i32 (ptr, ...) @error(ptr noundef %.0.i67.i.i, ptr noundef %i.beo) #17 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
   br label %run_am.exit.i
@@ -2190,18 +2193,18 @@ attributes #20 = { noreturn }
 !147 = !{!"diff_options", !13, i64 0, !13, i64 8, !9, i64 16, !9, i64 20, !13, i64 24, !9, i64 32, !140, i64 40, !18, i64 48, !18, i64 56, !13, i64 64, !13, i64 72, !13, i64 80, !13, i64 88, !141, i64 96, !9, i64 240, !9, i64 244, !9, i64 248, !9, i64 252, !9, i64 256, !9, i64 260, !9, i64 264, !9, i64 268, !9, i64 272, !9, i64 276, !9, i64 280, !9, i64 284, !9, i64 288, !9, i64 292, !9, i64 296, !9, i64 300, !9, i64 304, !9, i64 308, !9, i64 312, !9, i64 316, !9, i64 320, !9, i64 324, !13, i64 328, !9, i64 336, !13, i64 344, !9, i64 352, !9, i64 356, !17, i64 360, !18, i64 368, !18, i64 376, !9, i64 384, !9, i64 388, !9, i64 392, !9, i64 396, !13, i64 400, !9, i64 408, !9, i64 412, !142, i64 416, !9, i64 424, !9, i64 428, !9, i64 432, !12, i64 440, !143, i64 448, !9, i64 456, !8, i64 460, !145, i64 464, !12, i64 488, !12, i64 496, !12, i64 504, !12, i64 512, !12, i64 520, !12, i64 528, !12, i64 536, !12, i64 544, !9, i64 552, !146, i64 560, !9, i64 568, !9, i64 572, !39, i64 576, !117, i64 584, !9, i64 592, !9, i64 596, !9, i64 600}
 !148 = !{!147, !9, i64 280}
 !149 = !{!147, !9, i64 264}
-!150 = !{!14, !14, i64 0}
-!151 = !{!15, !15, i64 0}
-!152 = !{!46, !13, i64 56}
-!153 = !{!23, !13, i64 80}
-!154 = !{!"p1 _ZTS9todo_item", !12, i64 0}
-!155 = !{!"todo_list", !22, i64 0, !154, i64 24, !9, i64 32, !9, i64 36, !9, i64 40, !9, i64 44, !9, i64 48}
-!156 = !{!155, !13, i64 16}
-!157 = !{!"child_process", !19, i64 0, !19, i64 24, !9, i64 48, !9, i64 52, !18, i64 56, !13, i64 64, !13, i64 72, !9, i64 80, !9, i64 84, !9, i64 88, !13, i64 96, !9, i64 104, !9, i64 104, !9, i64 104, !9, i64 104, !9, i64 104, !9, i64 104, !101, i64 112, !9, i64 120, !9, i64 120, !9, i64 120, !9, i64 120, !12, i64 128}
-!158 = !{!157, !9, i64 84}
-!159 = !{!23, !18, i64 352}
-!160 = !{!23, !13, i64 360}
-!161 = !{!157, !9, i64 80}
+!150 = !{!46, !15, i64 8}
+!151 = !{!46, !13, i64 56}
+!152 = !{!23, !13, i64 80}
+!153 = !{!"p1 _ZTS9todo_item", !12, i64 0}
+!154 = !{!"todo_list", !22, i64 0, !153, i64 24, !9, i64 32, !9, i64 36, !9, i64 40, !9, i64 44, !9, i64 48}
+!155 = !{!154, !13, i64 16}
+!156 = !{!"child_process", !19, i64 0, !19, i64 24, !9, i64 48, !9, i64 52, !18, i64 56, !13, i64 64, !13, i64 72, !9, i64 80, !9, i64 84, !9, i64 88, !13, i64 96, !9, i64 104, !9, i64 104, !9, i64 104, !9, i64 104, !9, i64 104, !9, i64 104, !101, i64 112, !9, i64 120, !9, i64 120, !9, i64 120, !9, i64 120, !12, i64 128}
+!157 = !{!156, !9, i64 84}
+!158 = !{!23, !18, i64 352}
+!159 = !{!23, !13, i64 360}
+!160 = !{!14, !14, i64 0}
+!161 = !{!156, !9, i64 80}
 !162 = !{!18, !18, i64 0}
 !163 = !{!"p1 _ZTS13hashmap_entry", !12, i64 0}
 !164 = !{!"hashmap_entry", !163, i64 0, !9, i64 8}

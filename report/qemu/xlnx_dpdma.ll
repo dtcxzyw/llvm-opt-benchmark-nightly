@@ -138,7 +138,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.bm = getelementptr inbounds nuw i8, ptr %4, i64 36
-  %i.bn = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %i.bn = getelementptr inbounds nuw i8, ptr %4, i64 52
   %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.bp = getelementptr inbounds nuw i8, ptr %4, i64 60
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 5184
@@ -315,23 +315,21 @@ bb.p:                                             ; preds = %bb.m
 
 bb.q:                                             ; preds = %bb.p
   %i.ff = load i32, ptr %i.bl, align 4
-  %5 = load i32, ptr %i.bm, align 4
-  %i.fg = load <4 x i32>, ptr %i.bn, align 4
-  %i.fh = load i32, ptr %i.bo, align 4
-  %6 = insertelement <8 x i32> poison, i32 %i.dm, i64 0
-  %7 = insertelement <8 x i32> %6, i32 %i.dw, i64 1
-  %8 = insertelement <8 x i32> %7, i32 %i.ff, i64 2
-  %9 = insertelement <8 x i32> %8, i32 %5, i64 3
-  %10 = shufflevector <4 x i32> %i.fg, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %11 = shufflevector <8 x i32> %9, <8 x i32> %10, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %12 = call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %11)
-  %op.rdx.a = add i32 %12, %i.df
-  %op.rdx194.a = add i32 %i.dd, %i.dh
-  %op.rdx195.a = add i32 %i.di, %i.dk
-  %op.rdx196.a = add i32 %i.dl, %i.fh
+  %i.fg = load <4 x i32>, ptr %i.bm, align 4
+  %i.fh = load i32, ptr %i.bn, align 4
+  %5 = load i32, ptr %i.bo, align 4
+  %6 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.fg)
+  %op.rdx = add i32 %6, %i.df
+  %op.rdx194 = add i32 %i.dd, %i.dh
+  %op.rdx195 = add i32 %i.di, %i.dk
+  %op.rdx196 = add i32 %i.dl, %i.dm
+  %op.rdx.a = add i32 %i.dw, %i.ff
+  %op.rdx194.a = add i32 %i.fh, %5
+  %op.rdx195.a = add i32 %op.rdx, %op.rdx194
+  %op.rdx196.a = add i32 %op.rdx195, %op.rdx196
   %op.rdx197 = add i32 %op.rdx.a, %op.rdx194.a
   %op.rdx198 = add i32 %op.rdx195.a, %op.rdx196.a
-  %op.rdx199 = add i32 %op.rdx197, %op.rdx198
+  %op.rdx199 = add i32 %op.rdx198, %op.rdx197
   %i.fi = load i32, ptr %i.bp, align 4
   %i.fj = icmp eq i32 %op.rdx199, %i.fi
   br i1 %i.fj, label %bb.s, label %bb.r
@@ -734,7 +732,7 @@ declare ptr @object_class_dynamic_cast_assert(ptr noundef, ptr noundef, ptr noun
 declare i32 @llvm.fshl.i32(i32, i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #5
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

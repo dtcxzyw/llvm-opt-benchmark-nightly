@@ -205,13 +205,14 @@ switch.lookup:
   %i.ba = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.bb = load i64, ptr %i.ba, align 8
   store i64 %i.az, ptr %i.as, align 8
-  %.sroa.4127.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %17, i64 24
-  %35 = insertelement <2 x ptr> poison, ptr %i.ad, i64 0
-  %i.bc = insertelement <2 x ptr> %35, ptr %i.af, i64 1
-  %36 = getelementptr inbounds i8, <2 x ptr> %i.bc, i64 -16
+  %.sroa.4127.0..sroa_idx = getelementptr inbounds nuw i8, ptr %17, i64 24
+  %.sroa.4127.0..sroa_idx.a = getelementptr inbounds i8, ptr %i.ad, i64 -16
+  %35 = getelementptr inbounds i8, ptr %i.af, i64 -16
+  %i.bc = insertelement <2 x ptr> poison, ptr %.sroa.4127.0..sroa_idx.a, i64 0
+  %36 = insertelement <2 x ptr> %i.bc, ptr %35, i64 1
   %i.bd = ptrtoint <2 x ptr> %36 to <2 x i64>
   %i.be = or <2 x i64> %i.bd, splat (i64 4)
-  store <2 x i64> %i.be, ptr %.sroa.4127.0..sroa_idx.a, align 8
+  store <2 x i64> %i.be, ptr %.sroa.4127.0..sroa_idx, align 8
   %.sroa.6129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %17, i64 40
   store i64 %i.bb, ptr %.sroa.6129.0..sroa_idx, align 8
   store i32 4, ptr %i.at, align 8, !tbaa !79
@@ -614,10 +615,11 @@ _ZN4mlir6linalg27getFmrFromWinogradConv2DFmrENS0_17WinogradConv2DFmrE.exit:
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
   %i.ai = call ptr @_ZN4mlir6affine23makeComposedAffineApplyERNS_9OpBuilderENS_8LocationENS_9AffineMapEN4llvm8ArrayRefINS_12OpFoldResultEEEb(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr %.sroa.0.0.copyload.i.i, ptr %i.q, ptr nonnull %i.ah, i64 1, i1 noundef zeroext false) #30
   %i.aj = call ptr @_ZN4mlir7Builder17getI64IntegerAttrEl(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef 1) #30
-  %13 = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
-  %i.ak = insertelement <2 x ptr> %13, ptr %i.ad, i64 1
-  %14 = getelementptr inbounds i8, <2 x ptr> %i.ak, i64 -16
-  %i.al = ptrtoint <2 x ptr> %14 to <2 x i64>
+  %13 = getelementptr inbounds i8, ptr %i.ab, i64 -16
+  %14 = getelementptr inbounds i8, ptr %i.ad, i64 -16
+  %i.ak = insertelement <2 x ptr> poison, ptr %13, i64 0
+  %15 = insertelement <2 x ptr> %i.ak, ptr %14, i64 1
+  %i.al = ptrtoint <2 x ptr> %15 to <2 x i64>
   %i.am = or <2 x i64> %i.al, splat (i64 4)
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.ao = load i64, ptr %i.an, align 8

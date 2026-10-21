@@ -205,13 +205,13 @@ declare void @_ZN5clang16ObjCProtocolList3setEPKPNS_16ObjCProtocolDeclEjPKNS_14S
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN5clang13ASTDeclMerger19MergeDefinitionDataEPNS_17ObjCInterfaceDeclEONS1_14DefinitionDataE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(84) %2) local_unnamed_addr #1 align 2 {
 bb.a:
-  %3 = alloca %"struct.std::pair.1018", align 16  ; 5 uses
+  %3 = alloca %"struct.std::pair.1018", align 8   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 120
   %.0.copyload.i.i.i.i = load i64, ptr %i.a, align 8
   %i.b = and i64 %.0.copyload.i.i.i.i, -8
   %i.c = inttoptr i64 %i.b to ptr                 ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1284 ; 2 uses
-  %i.e = load ptr, ptr %2, align 8, !tbaa !1284   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1284 ; 3 uses
+  %i.e = load ptr, ptr %2, align 8, !tbaa !1284   ; 3 uses
   %i.f = icmp eq ptr %i.d, %i.e
   br i1 %i.f, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang17ObjCInterfaceDeclEPNS3_14DefinitionDataEELb1EE9push_backES7_.exit, label %bb.b
 
@@ -219,14 +219,16 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %0, align 8, !tbaa !1209, !nonnull !155, !align !156
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 13072
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  %4 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
-  %5 = insertelement <2 x ptr> %4, ptr %i.d, i64 1 ; 2 uses
-  %6 = icmp eq <2 x ptr> %5, splat (ptr null)
-  %7 = getelementptr inbounds nuw i8, <2 x ptr> %5, i64 48
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %8 = select <2 x i1> %6, <2 x ptr> splat (ptr null), <2 x ptr> %7
-  store <2 x ptr> %8, ptr %3, align 16, !tbaa !1084
-  %i.j = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang11DeclContextES4_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S4_EEEES4_S4_S6_S9_E24lookupOrInsertIntoBucketIS4_JS4_EEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.i), !noalias !1840 ; 0 uses
+  %4 = icmp eq ptr %i.e, null
+  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 48
+  %spec.select.i = select i1 %4, ptr null, ptr %5
+  store ptr %spec.select.i, ptr %3, align 8, !tbaa !1217
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %7 = icmp eq ptr %i.d, null
+  %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 48
+  %8 = select i1 %7, ptr null, ptr %i.i
+  store ptr %8, ptr %6, align 8, !tbaa !1218
+  %i.j = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang11DeclContextES4_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S4_EEEES4_S4_S6_S9_E24lookupOrInsertIntoBucketIS4_JS4_EEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(8) %6), !noalias !1840 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   %i.k = load ptr, ptr %0, align 8, !tbaa !1209, !nonnull !155, !align !156
   %i.l = load ptr, ptr %i.c, align 8, !tbaa !1284
@@ -629,13 +631,13 @@ _ZN4llvm23SmallVectorTemplateBaseIN5clang14SourceLocationELb1EE9push_backES2_.ex
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN5clang13ASTDeclMerger19MergeDefinitionDataEPNS_16ObjCProtocolDeclEONS1_14DefinitionDataE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(40) %2) local_unnamed_addr #1 align 2 {
 bb.a:
-  %3 = alloca %"struct.std::pair.1018", align 16  ; 5 uses
+  %3 = alloca %"struct.std::pair.1018", align 8   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 104
   %.0.copyload.i.i.i.i = load i64, ptr %i.a, align 8
   %i.b = and i64 %.0.copyload.i.i.i.i, -8
   %i.c = inttoptr i64 %i.b to ptr                 ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1862 ; 2 uses
-  %i.e = load ptr, ptr %2, align 8, !tbaa !1862   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1862 ; 3 uses
+  %i.e = load ptr, ptr %2, align 8, !tbaa !1862   ; 3 uses
   %i.f = icmp eq ptr %i.d, %i.e
   br i1 %i.f, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang16ObjCProtocolDeclEPNS3_14DefinitionDataEELb1EE9push_backES7_.exit, label %bb.b
 
@@ -643,14 +645,16 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %0, align 8, !tbaa !1209, !nonnull !155, !align !156
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 13072
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  %4 = insertelement <2 x ptr> poison, ptr %i.e, i64 0
-  %5 = insertelement <2 x ptr> %4, ptr %i.d, i64 1 ; 2 uses
-  %6 = icmp eq <2 x ptr> %5, splat (ptr null)
-  %7 = getelementptr inbounds nuw i8, <2 x ptr> %5, i64 48
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %8 = select <2 x i1> %6, <2 x ptr> splat (ptr null), <2 x ptr> %7
-  store <2 x ptr> %8, ptr %3, align 16, !tbaa !1084
-  %i.j = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang11DeclContextES4_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S4_EEEES4_S4_S6_S9_E24lookupOrInsertIntoBucketIS4_JS4_EEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.i), !noalias !1863 ; 0 uses
+  %4 = icmp eq ptr %i.e, null
+  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 48
+  %spec.select.i = select i1 %4, ptr null, ptr %5
+  store ptr %spec.select.i, ptr %3, align 8, !tbaa !1217
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %7 = icmp eq ptr %i.d, null
+  %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 48
+  %8 = select i1 %7, ptr null, ptr %i.i
+  store ptr %8, ptr %6, align 8, !tbaa !1218
+  %i.j = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang11DeclContextES4_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S4_EEEES4_S4_S6_S9_E24lookupOrInsertIntoBucketIS4_JS4_EEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(8) %6), !noalias !1863 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   %i.k = load ptr, ptr %0, align 8, !tbaa !1209, !nonnull !155, !align !156
   %i.l = load ptr, ptr %i.c, align 8, !tbaa !1862
@@ -1053,13 +1057,13 @@ declare void @_ZN5clang13LambdaCaptureC1ENS_14SourceLocationEbNS_17LambdaCapture
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN5clang13ASTDeclMerger19MergeDefinitionDataEPNS_13CXXRecordDeclEONS1_14DefinitionDataE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(104) %2) local_unnamed_addr #1 align 2 {
 bb.a:
-  %3 = alloca %"struct.std::pair.1018", align 16  ; 5 uses
+  %3 = alloca %"struct.std::pair.1018", align 8   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1060 ; 57 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 6 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1077 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1077 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 7 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !1077 ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !1077 ; 3 uses
   %.not = icmp eq ptr %i.d, %i.f
   br i1 %.not, label %bb.g, label %bb.b
 
@@ -1067,14 +1071,16 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %0, align 8, !tbaa !1209, !nonnull !155, !align !156
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 13072
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  %4 = insertelement <2 x ptr> poison, ptr %i.f, i64 0
-  %5 = insertelement <2 x ptr> %4, ptr %i.d, i64 1 ; 2 uses
-  %6 = icmp eq <2 x ptr> %5, splat (ptr null)
-  %7 = getelementptr inbounds nuw i8, <2 x ptr> %5, i64 64
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %8 = select <2 x i1> %6, <2 x ptr> splat (ptr null), <2 x ptr> %7
-  store <2 x ptr> %8, ptr %3, align 16, !tbaa !1084
-  %i.j = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang11DeclContextES4_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S4_EEEES4_S4_S6_S9_E24lookupOrInsertIntoBucketIS4_JS4_EEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.i), !noalias !2048 ; 0 uses
+  %4 = icmp eq ptr %i.f, null
+  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 64
+  %spec.select.i = select i1 %4, ptr null, ptr %5
+  store ptr %spec.select.i, ptr %3, align 8, !tbaa !1217
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %7 = icmp eq ptr %i.d, null
+  %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 64
+  %8 = select i1 %7, ptr null, ptr %i.i
+  store ptr %8, ptr %6, align 8, !tbaa !1218
+  %i.j = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang11DeclContextES4_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S4_EEEES4_S4_S6_S9_E24lookupOrInsertIntoBucketIS4_JS4_EEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(8) %6), !noalias !2048 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   %i.k = load ptr, ptr %0, align 8, !tbaa !1209, !nonnull !155, !align !156 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 3920 ; 3 uses

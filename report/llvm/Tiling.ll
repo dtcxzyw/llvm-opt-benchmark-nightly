@@ -205,8 +205,8 @@ _ZL28emitIsPositiveIndexAssertionRN4mlir20ImplicitLocOpBuilderENS_12OpFoldResult
   %i.cn = or i64 %i.cm, 4                         ; 2 uses
   store i64 %i.cn, ptr %i.cl, align 8
   %.sroa.0.0.copyload.i.i116 = load ptr, ptr %i.f, align 8
-  %i.co = call ptr @_ZN4mlir6affine23makeComposedAffineApplyERNS_9OpBuilderENS_8LocationENS_10AffineExprEN4llvm8ArrayRefINS_12OpFoldResultEEEb(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr %.sroa.0.0.copyload.i.i116, ptr %i.ck, ptr nonnull %26, i64 2, i1 noundef zeroext false) #16 ; 2 uses
-  %i.cp = getelementptr inbounds i8, ptr %i.co, i64 -16
+  %i.co = call ptr @_ZN4mlir6affine23makeComposedAffineApplyERNS_9OpBuilderENS_8LocationENS_10AffineExprEN4llvm8ArrayRefINS_12OpFoldResultEEEb(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr %.sroa.0.0.copyload.i.i116, ptr %i.ck, ptr nonnull %26, i64 2, i1 noundef zeroext false) #16
+  %i.cp = getelementptr inbounds i8, ptr %i.co, i64 -16 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #16
   %i.cq = call ptr @_ZNK4mlir10AffineExprplES0_(ptr noundef nonnull align 8 dereferenceable(8) %14, ptr %i.aw) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #16
@@ -216,15 +216,12 @@ _ZL28emitIsPositiveIndexAssertionRN4mlir20ImplicitLocOpBuilderENS_12OpFoldResult
   %i.ct = getelementptr inbounds nuw i8, ptr %27, i64 8
   store i64 %i.bd, ptr %i.ct, align 8
   %.sroa.0.0.copyload.i.i117 = load ptr, ptr %i.f, align 8
-  %i.cu = call ptr @_ZN4mlir6affine23makeComposedAffineApplyERNS_9OpBuilderENS_8LocationENS_10AffineExprEN4llvm8ArrayRefINS_12OpFoldResultEEEb(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr %.sroa.0.0.copyload.i.i117, ptr %i.cq, ptr nonnull %27, i64 2, i1 noundef zeroext false) #16 ; 2 uses
-  %i.cv = getelementptr inbounds i8, ptr %i.cu, i64 -16
+  %i.cu = call ptr @_ZN4mlir6affine23makeComposedAffineApplyERNS_9OpBuilderENS_8LocationENS_10AffineExprEN4llvm8ArrayRefINS_12OpFoldResultEEEb(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr %.sroa.0.0.copyload.i.i117, ptr %i.cq, ptr nonnull %27, i64 2, i1 noundef zeroext false) #16
+  %i.cv = getelementptr inbounds i8, ptr %i.cu, i64 -16 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #16
   br i1 %7, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %_ZL28emitIsPositiveIndexAssertionRN4mlir20ImplicitLocOpBuilderENS_12OpFoldResultE.exit108
-  %31 = insertelement <2 x ptr> poison, ptr %i.co, i64 0
-  %32 = insertelement <2 x ptr> %31, ptr %i.cu, i64 1
-  %33 = getelementptr inbounds i8, <2 x ptr> %32, i64 -16
   %i.cw = call ptr @_ZN4mlir7Builder19getAffineSymbolExprEj(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef 3) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #16
   %i.cx = call ptr @_ZNK4mlir10AffineExprmlES0_(ptr noundef nonnull align 8 dereferenceable(8) %14, ptr %i.aw) #16
@@ -234,7 +231,9 @@ bb.g:                                             ; preds = %_ZL28emitIsPositive
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #16
   store i64 %i.cs, ptr %29, align 8
   %i.da = getelementptr inbounds nuw i8, ptr %29, i64 8
-  %i.db = ptrtoint <2 x ptr> %33 to <2 x i64>
+  %31 = insertelement <2 x ptr> poison, ptr %i.cp, i64 0
+  %32 = insertelement <2 x ptr> %31, ptr %i.cv, i64 1
+  %i.db = ptrtoint <2 x ptr> %32 to <2 x i64>
   %i.dc = or <2 x i64> %i.db, splat (i64 4)
   store <2 x i64> %i.dc, ptr %i.da, align 8
   %i.dd = getelementptr inbounds nuw i8, ptr %29, i64 24

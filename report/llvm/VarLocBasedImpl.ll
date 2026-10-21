@@ -205,7 +205,7 @@ bb.a:
   %2 = alloca %"class.llvm::IntervalMap<unsigned long, char>::const_iterator", align 8 ; 9 uses
   %3 = alloca %"class.llvm::IntervalMap<unsigned long, char>::const_iterator", align 8 ; 9 uses
   %4 = alloca %"class.llvm::IntervalMap<unsigned long, char>::const_iterator", align 8 ; 11 uses
-  %5 = alloca %"class.llvm::IntervalMap<unsigned long, char>::const_iterator", align 16 ; 8 uses
+  %5 = alloca %"class.llvm::IntervalMap<unsigned long, char>::const_iterator", align 16 ; 7 uses
   %6 = alloca %"class.llvm::IntervalMap<unsigned long, char>::const_iterator", align 8 ; 14 uses
   %7 = alloca %"class.llvm::IntervalMap<unsigned long, char>::const_iterator", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
@@ -233,13 +233,10 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 204 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %8 = insertelement <2 x ptr> poison, ptr %1, i64 0
-  %9 = insertelement <2 x ptr> %8, ptr %5, i64 1
-  %10 = getelementptr inbounds nuw i8, <2 x ptr> %9, <2 x i64> <i64 8, i64 24>
-  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  store ptr %i.q, ptr %3, align 8, !tbaa !379, !alias.scope !1314
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
+  store ptr %i.p, ptr %3, align 8, !tbaa !379, !alias.scope !1314
   call void @_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator9goToBeginEv(ptr noundef nonnull align 8 dereferenceable(88) %3)
+  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 204 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 2 uses
@@ -261,7 +258,12 @@ bb.a:
   store i64 %.sroa.2.8.insert.insert.i.i.i.i124, ptr %i.o, align 8, !alias.scope !1315
   %i.x = load i32, ptr %i.d, align 8, !tbaa !43   ; 2 uses
   %.not.i.i.i.i.i125 = icmp eq i32 %i.x, 0
-  br i1 %.not.i.i.i.i.i125, label %.thread77, label %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i
+  br i1 %.not.i.i.i.i.i125, label %.thread77, label %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i.preheader
+
+_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i.preheader: ; preds = %bb.a
+  %8 = insertelement <2 x ptr> poison, ptr %i.p, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.q, i64 1
+  br label %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i
 
 .thread77:                                        ; preds = %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29, %bb.a
   %.sink.i.lcssa = phi ptr [ %.sink.i121, %bb.a ], [ %.sink.i, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ]
@@ -281,11 +283,11 @@ bb.a:
   store i32 1, ptr %i.aa, align 8, !tbaa !43, !alias.scope !1316
   br label %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.thread.i
 
-_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i: ; preds = %bb.a, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29
-  %i.ad = phi i32 [ %i.do, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ], [ %i.x, %bb.a ] ; 4 uses
-  %.sroa.2.8.insert.insert.i.i.i.i127 = phi i64 [ %.sroa.2.8.insert.insert.i.i.i.i, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ], [ %.sroa.2.8.insert.insert.i.i.i.i124, %bb.a ]
-  %.sink.i126 = phi ptr [ %.sink.i, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ], [ %.sink.i121, %bb.a ] ; 3 uses
-  %i.ae = phi i32 [ %i.dm, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ], [ %i.v, %bb.a ] ; 2 uses
+_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i: ; preds = %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i.preheader, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29
+  %i.ad = phi i32 [ %i.do, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ], [ %i.x, %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i.preheader ] ; 4 uses
+  %.sroa.2.8.insert.insert.i.i.i.i127 = phi i64 [ %.sroa.2.8.insert.insert.i.i.i.i, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ], [ %.sroa.2.8.insert.insert.i.i.i.i124, %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i.preheader ]
+  %.sink.i126 = phi ptr [ %.sink.i, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ], [ %.sink.i121, %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i.preheader ] ; 3 uses
+  %i.ae = phi i32 [ %i.dm, %_ZN4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorppEv.exit29 ], [ %i.v, %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i.i.preheader ] ; 2 uses
   %i.af = load ptr, ptr %i.b, align 8, !tbaa !42  ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 12
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !381
@@ -311,17 +313,17 @@ _ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorneERKS4_.
 _ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorneERKS4_.exit.thread: ; preds = %bb.b, %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratorneERKS4_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   call void @llvm.experimental.noalias.scope.decl(metadata !1317)
-  store <2 x ptr> %10, ptr %5, align 16, !tbaa !360, !alias.scope !1317
+  store <2 x ptr> %9, ptr %5, align 16, !tbaa !360, !alias.scope !1317
   store i32 4, ptr %i.r, align 4, !tbaa !44, !alias.scope !1317
   %i.as = load i32, ptr %i.s, align 4, !tbaa !228, !noalias !1317 ; 2 uses
   %i.at = load i32, ptr %i.t, align 8, !tbaa !227, !noalias !1317
   %.not.i.i.i14 = icmp eq i32 %i.at, 0
   %.sink.idx.i15 = select i1 %.not.i.i.i14, i64 0, i64 8
-  %.sink.i16 = getelementptr inbounds nuw i8, ptr %i.q, i64 %.sink.idx.i15 ; 2 uses
+  %.sink.i16 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.sink.idx.i15 ; 2 uses
   %.sroa.4.8.insert.ext.i.i.i.i17 = zext i32 %i.as to i64 ; 2 uses
   %.sroa.4.8.insert.shift.i.i.i.i18 = shl nuw i64 %.sroa.4.8.insert.ext.i.i.i.i17, 32
   %.sroa.2.8.insert.insert.i.i.i.i19 = or disjoint i64 %.sroa.4.8.insert.shift.i.i.i.i18, %.sroa.4.8.insert.ext.i.i.i.i17
-  store ptr %.sink.i16, ptr %i.p, align 8, !alias.scope !1317
+  store ptr %.sink.i16, ptr %i.q, align 8, !alias.scope !1317
   store i64 %.sroa.2.8.insert.insert.i.i.i.i19, ptr %i.u, align 16, !alias.scope !1317
   %i.au = load i32, ptr %i.h, align 8, !tbaa !43  ; 3 uses
   %.not.i.i.i.i.i20 = icmp eq i32 %i.au, 0
@@ -508,7 +510,7 @@ _ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratoreqERKS4_.
 _ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.thread.i: ; preds = %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.exit.i, %.thread77, %_ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iteratoreqERKS4_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
   call void @llvm.experimental.noalias.scope.decl(metadata !1319)
-  store ptr %i.q, ptr %7, align 8, !tbaa !379, !alias.scope !1319
+  store ptr %i.p, ptr %7, align 8, !tbaa !379, !alias.scope !1319
   %i.eg = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.eh = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
   store ptr %i.eh, ptr %i.eg, align 8, !tbaa !42, !alias.scope !1319
@@ -518,7 +520,7 @@ _ZNK4llvm11IntervalMapImcLj11ENS_15IntervalMapInfoImEEE14const_iterator5validEv.
   %i.ek = load i32, ptr %i.t, align 8, !tbaa !227, !noalias !1319
   %.not.i.i.i37 = icmp eq i32 %i.ek, 0
   %.sink.idx.i38 = select i1 %.not.i.i.i37, i64 0, i64 8
-  %.sink.i39 = getelementptr inbounds nuw i8, ptr %i.q, i64 %.sink.idx.i38 ; 2 uses
+  %.sink.i39 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.sink.idx.i38 ; 2 uses
   %.sroa.4.8.insert.ext.i.i.i.i40 = zext i32 %i.ej to i64 ; 2 uses
   %.sroa.4.8.insert.shift.i.i.i.i41 = shl nuw i64 %.sroa.4.8.insert.ext.i.i.i.i40, 32
   %.sroa.2.8.insert.insert.i.i.i.i42 = or disjoint i64 %.sroa.4.8.insert.shift.i.i.i.i41, %.sroa.4.8.insert.ext.i.i.i.i40
