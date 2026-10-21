@@ -205,13 +205,13 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
   %.lcssa17.i.i = phi i64 [ 0, %bb.f ], [ 1, %bb.g ], [ 2, %bb.h ], [ 3, %bb.i ], [ 4, %bb.j ]
-  %.lcssa.i.i = phi i16 [ %i.ak, %bb.f ], [ %i.am, %bb.g ], [ %i.ao, %bb.h ], [ %i.aq, %bb.i ], [ %i.as, %bb.j ] ; 4 uses
+  %.lcssa.i.i = phi i16 [ %i.ak, %bb.f ], [ %i.am, %bb.g ], [ %i.ao, %bb.h ], [ %i.aq, %bb.i ], [ %i.as, %bb.j ] ; 5 uses
   %i.at = getelementptr [2 x i8], ptr %i.aj, i64 %.lcssa17.i.i
   store i16 0, ptr %i.at, align 2
   %i.au = lshr i16 %.lcssa.i.i, 4                 ; 3 uses
   %i.av = zext nneg i16 %i.au to i64
   %.idx = mul nuw nsw i64 %i.av, 26
-  %i.aw = getelementptr i8, ptr @minstrel_mcs_groups, i64 %.idx ; 3 uses
+  %i.aw = getelementptr i8, ptr @minstrel_mcs_groups, i64 %.idx ; 2 uses
   %i.ax = and i16 %.lcssa.i.i, 15                 ; 2 uses
   %i.ay = icmp eq i16 %i.au, 16                   ; 2 uses
   br i1 %i.ay, label %bb.l, label %bb.m
@@ -260,9 +260,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.u
 
 bb.q:                                             ; preds = %bb.o
-  %4 = load i16, ptr %i.aw, align 2
-  %5 = and i16 %4, 256
-  %.not48 = icmp eq i16 %5, 0
+  %.not48 = icmp ult i16 %.lcssa.i.i, 288
   %i.by = trunc nuw nsw i16 %i.ax to i8           ; 2 uses
   %i.bz = getelementptr i8, ptr %i.aw, i64 2
   %i.ca = load i8, ptr %i.bz, align 2             ; 2 uses

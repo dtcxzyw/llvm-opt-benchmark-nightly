@@ -204,11 +204,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.i = zext nneg i8 %i.g to i64
   %i.j = add nuw nsw i64 %i.i, 4294967199
-  %i.k = and i64 %i.j, 4294967295                 ; 2 uses
-  %6 = shl nuw nsw i64 1, %i.k
-  %7 = and i64 %6, 41943036
-  %.not1867.not = icmp eq i64 %7, 0
-  br i1 %.not1867.not, label %bb.g, label %bb.l
+  %i.k = and i64 %i.j, 4294967295
+  %6 = getelementptr inbounds nuw i8, ptr @flags_by_subtype, i64 %i.k
+  %7 = load i8, ptr %6, align 1, !tbaa !13        ; 2 uses
+  %.not1867.not = icmp eq i8 %7, 0
+  br i1 %.not1867.not, label %bb.l, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 3
@@ -268,11 +268,9 @@ bb.n:                                             ; preds = %bb.m
   %i.ai = load <4 x i32>, ptr %i.af, align 4, !tbaa !14
   %i.aj = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %i.ai)
   store <4 x i32> %i.aj, ptr %i.af, align 4, !tbaa !14
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 4168 ; 2 uses
-  %.ptr1871.a = getelementptr inbounds nuw i8, ptr %5, i64 4096 ; 12 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr @flags_by_subtype, i64 %i.k
-  %9 = load i8, ptr %i.ak, align 1, !tbaa !13
-  call fastcc void @BF_set_key(ptr noundef %0, ptr noundef %8, ptr noundef %.ptr1871.a, i8 noundef zeroext %9)
+  %.ptr1871.a = getelementptr inbounds nuw i8, ptr %5, i64 4168 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 4096 ; 12 uses
+  call fastcc void @BF_set_key(ptr noundef %0, ptr noundef %.ptr1871.a, ptr noundef %i.ak, i8 noundef zeroext %7)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(4096) %5, ptr noundef nonnull align 4 dereferenceable(4096) @BF_init_state, i64 4096, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 3072 ; 96 uses
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 2048 ; 96 uses
@@ -316,7 +314,7 @@ bb.p:                                             ; preds = %.preheader1886.preh
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !13
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 4
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !13
-  %i.bo = load i32, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.bo = load i32, ptr %i.ak, align 4, !tbaa !14
   %i.bp = xor i32 %i.bl, %.018551913
   %i.bq = xor i32 %i.bp, %i.bo                    ; 5 uses
   %i.br = and i32 %i.bq, 255
@@ -706,7 +704,7 @@ bb.p:                                             ; preds = %.preheader1886.preh
   %i.ql = xor i32 %i.qk, %i.op                    ; 3 uses
   %i.qm = load i32, ptr %i.be, align 4, !tbaa !14
   %i.qn = xor i32 %i.qm, %i.pn                    ; 3 uses
-  %i.qo = getelementptr inbounds nuw [4 x i8], ptr %.ptr1871.a, i64 %indvars.iv ; 2 uses
+  %i.qo = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv ; 2 uses
   store i32 %i.qn, ptr %i.qo, align 4, !tbaa !14
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qo, i64 4
   store i32 %i.ql, ptr %i.qp, align 4, !tbaa !14
@@ -724,7 +722,7 @@ bb.q:                                             ; preds = %.preheader1885, %bb
   %i.qs = xor i32 %i.qr, %.11856
   %i.qt = load i32, ptr %i.bh, align 4, !tbaa !13
   %i.qu = xor i32 %i.qt, %.11852
-  %i.qv = load i32, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.qv = load i32, ptr %i.ak, align 4, !tbaa !14
   %i.qw = xor i32 %i.qs, %i.qv                    ; 5 uses
   %i.qx = and i32 %i.qw, 255
   %i.qy = lshr i32 %i.qw, 8
@@ -1117,7 +1115,7 @@ bb.q:                                             ; preds = %.preheader1885, %bb
   store i32 %i.afq, ptr %i.aft, align 4, !tbaa !14
   %i.afu = load i32, ptr %i.af, align 4, !tbaa !13
   %i.afv = load i32, ptr %i.bi, align 4, !tbaa !13
-  %i.afw = load i32, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.afw = load i32, ptr %i.ak, align 4, !tbaa !14
   %i.afx = xor i32 %i.afu, %i.afw
   %i.afy = xor i32 %i.afx, %i.afs                 ; 5 uses
   %i.afz = and i32 %i.afy, 255
@@ -1520,10 +1518,10 @@ begin_hunk_1_@BF_crypt:bb.a
 
 .preheader1883.preheader:                         ; preds = %.preheader1884, %bb.u
   %.01846 = phi i32 [ %i.caa, %bb.u ], [ %i.ad, %.preheader1884 ]
-  %i.auz = load <4 x i32>, ptr %8, align 4, !tbaa !14
-  %i.ava = load <4 x i32>, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.auz = load <4 x i32>, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.ava = load <4 x i32>, ptr %i.ak, align 4, !tbaa !14
   %i.avb = xor <4 x i32> %i.ava, %i.auz
-  store <4 x i32> %i.avb, ptr %.ptr1871.a, align 4, !tbaa !14
+  store <4 x i32> %i.avb, ptr %i.ak, align 4, !tbaa !14
   %i.avc = load <4 x i32>, ptr %i.aur, align 4, !tbaa !14
   %i.avd = load <4 x i32>, ptr %i.aus, align 4, !tbaa !14
   %i.ave = xor <4 x i32> %i.avd, %i.avc
@@ -1552,7 +1550,7 @@ bb.r:                                             ; preds = %bb.r, %.preheader18
   %.11849.idx = phi i64 [ 4096, %.preheader1883 ], [ %.11849.add, %bb.r ] ; 3 uses
   %.11849.ptr = getelementptr inbounds nuw i8, ptr %5, i64 %.11849.idx ; 2 uses
   %.11849.add = add nuw nsw i64 %.11849.idx, 8
-  %i.avo = load i32, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.avo = load i32, ptr %i.ak, align 4, !tbaa !14
   %i.avp = xor i32 %i.avo, %.21857                ; 5 uses
   %i.avq = and i32 %i.avp, 255
   %i.avr = lshr i32 %i.avp, 8
@@ -1952,7 +1950,7 @@ bb.r:                                             ; preds = %bb.r, %.preheader18
   %.21850.idx = phi i64 [ %.21850.add, %.preheader1882 ], [ 0, %bb.r ] ; 3 uses
   %.21850.ptr = getelementptr inbounds nuw i8, ptr %5, i64 %.21850.idx ; 2 uses
   %.21850.add = add nuw nsw i64 %.21850.idx, 8
-  %i.bko = load i32, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.bko = load i32, ptr %i.ak, align 4, !tbaa !14
   %i.bkp = xor i32 %i.bko, %.31858                ; 5 uses
   %i.bkq = and i32 %i.bkp, 255
   %i.bkr = lshr i32 %i.bkp, 8
@@ -2351,9 +2349,9 @@ bb.s:                                             ; preds = %.preheader1882
 
 bb.t:                                             ; preds = %bb.s
   %i.bzo = load <4 x i32>, ptr %i.af, align 4, !tbaa !13 ; 5 uses
-  %i.bzp = load <4 x i32>, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.bzp = load <4 x i32>, ptr %i.ak, align 4, !tbaa !14
   %i.bzq = xor <4 x i32> %i.bzp, %i.bzo
-  store <4 x i32> %i.bzq, ptr %.ptr1871.a, align 4, !tbaa !14
+  store <4 x i32> %i.bzq, ptr %i.ak, align 4, !tbaa !14
   %i.bzr = load <4 x i32>, ptr %i.aus, align 4, !tbaa !14
   %i.bzs = xor <4 x i32> %i.bzr, %i.bzo
   store <4 x i32> %i.bzs, ptr %i.aus, align 4, !tbaa !14
@@ -2375,7 +2373,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %.not1873, label %.preheader, label %.preheader1883.preheader, !llvm.loop !23
 
 .preheader:                                       ; preds = %bb.u
-  %i.cab = load i32, ptr %.ptr1871.a, align 4, !tbaa !14
+  %i.cab = load i32, ptr %i.ak, align 4, !tbaa !14
   %i.cac = load i32, ptr %i.ao, align 4, !tbaa !14
   %i.cad = load i32, ptr %i.ap, align 4, !tbaa !14
   %i.cae = load i32, ptr %i.aq, align 4, !tbaa !14
