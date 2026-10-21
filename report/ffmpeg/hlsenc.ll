@@ -204,13 +204,13 @@ get_default_pattern_localtime_fmt.exit:           ; preds = %bb.b, %bb.c
 bb.d:                                             ; preds = %bb.a
   %i.bd = getelementptr inbounds nuw i8, ptr %i.x, i64 72
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !81
-  %i.bf = icmp eq i32 %i.be, 1                    ; 2 uses
+  %i.bf = icmp eq i32 %i.be, 1
   %i.bg = select i1 %i.bf, ptr @.str.206, ptr @.str.207
   %i.bh = load i32, ptr %i.y, align 8, !tbaa !71
-  %5 = and i32 %i.bh, 1
-  %.not272 = icmp eq i32 %5, 0
-  %6 = select i1 %i.bf, ptr getelementptr inbounds nuw (i8, ptr @.str.206, i64 2), ptr getelementptr inbounds nuw (i8, ptr @.str.207, i64 2)
-  %spec.select = select i1 %.not272, ptr %i.bg, ptr %6
+  %5 = shl i32 %i.bh, 1
+  %6 = and i32 %5, 2
+  %spec.select.idx = zext nneg i32 %6 to i64
+  %spec.select = getelementptr inbounds nuw i8, ptr %i.bg, i64 %spec.select.idx
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %get_default_pattern_localtime_fmt.exit
