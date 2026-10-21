@@ -205,7 +205,7 @@ bb.a:
 switch.lookup:                                    ; preds = %.split
   %i.f = zext nneg i32 %i.d to i64
   %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table.png_build_grayscale_palette, i64 %i.f
-  %switch.load = load i16, ptr %switch.gep, align 2 ; 2 uses
+  %switch.load = load i16, ptr %switch.gep, align 2
   %switch.ext = zext i16 %switch.load to i64      ; 2 uses
   %switch.shiftamt = shl nuw nsw i32 %i.d, 3
   %switch.downshift = lshr i32 17913343, %switch.shiftamt
@@ -232,28 +232,18 @@ switch.lookup:                                    ; preds = %.split
   store i8 %i.j, ptr %i.m, align 1, !tbaa !125
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 5
   store i8 %i.j, ptr %i.n, align 1, !tbaa !126
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.o = add i8 %i.j, %switch.masked              ; 4 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
+  %i.o = add i8 %i.j, %switch.masked
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !122
+  br i1 %niter.ncmp.1, label %.lr.ph.epil.preheader, label %.lr.ph, !llvm.loop !122
 
-.loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa
-  %lcmp.mod26 = trunc i16 %switch.load to i1
-  tail call void @llvm.assume(i1 %lcmp.mod26)
-  %2 = getelementptr inbounds nuw [3 x i8], ptr %1, i64 %indvars.iv.next.1 ; 3 uses
-  store i8 %i.o, ptr %2, align 1, !tbaa !124
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %i.o, ptr %3, align 1, !tbaa !125
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %i.o, ptr %4, align 1, !tbaa !126
+  call void @llvm.assume(i1 %lcmp.mod.not)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.split, %bb.a
+.loopexit:                                        ; preds = %.lr.ph.epil.preheader, %.split, %bb.a
   ret void
 }
 

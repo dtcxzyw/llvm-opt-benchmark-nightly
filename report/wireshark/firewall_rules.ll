@@ -190,19 +190,10 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none) uwtable
-define hidden zeroext i1 @firewall_product_does_inbound(i64 noundef %0) local_unnamed_addr #0 {
-  %2 = icmp ugt i64 %0, 7
-  br i1 %2, label %7, label %bb.a
-
-bb.a:                                             ; preds = %1
-  %3 = getelementptr [64 x i8], ptr @products, i64 %0
-  %4 = getelementptr i8, ptr %3, i64 56
-  %5 = load i8, ptr %4, align 8, !range !6, !noundef !7
-  %6 = trunc nuw i8 %5 to i1
-  br label %7
-
-7:                                                ; preds = %1, %bb.a
-  %.0 = phi i1 [ %6, %bb.a ], [ false, %1 ]
+define hidden noundef zeroext i1 @firewall_product_does_inbound(i64 noundef %0) local_unnamed_addr #0 {
+bb.a:
+  %1 = add i64 %0, -1
+  %.0 = icmp ult i64 %1, 5
   ret i1 %.0
 }
 
@@ -455,6 +446,4 @@ attributes #2 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protect
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
-!6 = !{i8 0, i8 2}
-!7 = !{}
 end_hunk_0

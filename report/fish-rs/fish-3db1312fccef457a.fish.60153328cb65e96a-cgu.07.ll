@@ -205,9 +205,9 @@ switch.lookup:                                    ; preds = %bb.b, %bb.c, %bb.a
   %i.k = trunc nuw i64 %4 to i1                   ; 4 uses
   %.38 = select i1 %i.k, i64 %5, i64 6            ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %i.l = zext nneg i8 %8 to i64
+  %i.l = zext nneg i8 %8 to i64                   ; 3 uses
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp12format_floatNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish, i64 %i.l
-  %switch.load = load i8, ptr %switch.gep, align 1 ; 3 uses
+  %switch.load = load i8, ptr %switch.gep, align 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   store ptr %1, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 16
@@ -244,10 +244,12 @@ switch.lookup:                                    ; preds = %bb.b, %bb.c, %bb.a
 
 bb.d:                                             ; preds = %switch.lookup
   tail call void @llvm.experimental.noalias.scope.decl(metadata !395)
-  %10 = trunc nuw i8 %switch.load to i1           ; 2 uses
+  %10 = shl nuw nsw i64 1, %i.l
+  %11 = and i64 %10, 120175
+  %.not146 = icmp eq i64 %11, 0                   ; 2 uses
   %i.ac = fcmp uno double %2, 0.000000e+00
-  %..i = select i1 %10, ptr @16, ptr @15
-  %.3.i = select i1 %10, ptr @18, ptr @17
+  %..i = select i1 %.not146, ptr @15, ptr @16
+  %.3.i = select i1 %.not146, ptr @17, ptr @18
   %.sroa.0.0.i = select i1 %i.ac, ptr %.3.i, ptr %..i ; 8 uses
   %i.ad = add nuw nsw i64 %.sroa.5.0, 3           ; 3 uses
   %i.ae = trunc i48 %i.aa to i1
@@ -650,7 +652,9 @@ bb.z:                                             ; preds = %bb.y, %bb.y
   %i.gt = trunc i48 %i.y to i1
   %i.gu = trunc i48 %i.aa to i1                   ; 3 uses
   %i.gv = trunc i48 %.sroa.010.4.extract.shift to i1
-  %11 = trunc nuw i8 %switch.load to i1           ; 3 uses
+  %12 = shl nuw nsw i64 1, %i.l
+  %13 = and i64 %12, 120175
+  %.not145 = icmp eq i64 %13, 0                   ; 3 uses
   %i.gw = tail call { double, i32 } @_RNvNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp5frexp(double noundef %i.w), !noalias !442 ; 2 uses
   %i.gx = extractvalue { double, i32 } %i.gw, 0   ; 3 uses
   %i.gy = extractvalue { double, i32 } %i.gw, 1   ; 2 uses
@@ -666,7 +670,7 @@ bb.ab:                                            ; preds = %bb.ac, %bb.z
   %.sroa.018.0.i = phi i32 [ %i.hc, %bb.ac ], [ %i.gy, %bb.z ] ; 2 uses
   %.sroa.06.0.i = phi double [ %i.hd, %bb.ac ], [ %i.gx, %bb.z ] ; 3 uses
   %brmerge84.i = or i1 %.not76.i, %i.gv           ; 2 uses
-  br i1 %11, label %bb.af, label %bb.ae
+  br i1 %.not145, label %bb.ae, label %bb.af
 
 bb.ac:                                            ; preds = %bb.aa
   %i.hc = extractvalue { i32, i1 } %i.ha, 0
@@ -706,7 +710,7 @@ bb.ai:                                            ; preds = %bb.af
   %.sroa.06.1.i = phi double [ %i.in, %bb.al ], [ %i.ij, %bb.ak ], [ %.sroa.06.0.i, %bb.ah ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !442
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !442
-  %.81.i = select i1 %11, i32 112, i32 80
+  %.81.i = select i1 %.not145, i32 80, i32 112
   store i32 %.81.i, ptr %i.d, align 4, !noalias !442
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !442
   %i.hf = icmp slt i32 %.sroa.018.0.i, 0
@@ -732,7 +736,7 @@ bb.ai:                                            ; preds = %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !442
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !442
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !442
-  %.sroa.026.0.i = select i1 %11, ptr @41, ptr @40
+  %.sroa.026.0.i = select i1 %.not145, ptr @40, ptr @41
   %i.hi = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 5 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
   %i.hk = icmp ne i64 %.38, 0                     ; 2 uses

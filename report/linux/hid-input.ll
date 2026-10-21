@@ -49,7 +49,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoli
 @.str.15 = private unnamed_addr constant [23 x i8] c"event field not found\0A\00", align 1
 @system_percpu_wq = external dso_local local_unnamed_addr global ptr, align 8
 @hid_keyboard = internal unnamed_addr constant [256 x i8] c"\00\00\00\00\1E0. \12!\22#\17$%&21\18\19\10\13\1F\14\16/\11-\15,\02\03\04\05\06\07\08\09\0A\0B\1C\01\0E\0F9\0C\0D\1A\1B++'()345:;<=>?@ABCDWXcFwnfhokmjilgEb7JN`OPQKLMGHIRSV\7Ftu\B7\B8\B9\BA\BB\BC\BD\BE\BF\C0\C1\C2\86\8A\82\84\80\81\83\89\85\87\88qsr\F0\F0\F0y\F0Y]|\\^_\F0\F0\F0z{Z[U\F0\F0\F0\F0\F0\F0\F0o\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\B3\B4\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0\F0o\F0\F0\F0\F0\F0\F0\F0\1D*8}a6d~\A4\A6\A5\A3\A1srq\96\9E\9F\80\88\B1\B2\B0\8E\98\AD\8C\F0\F0\F0\F0", align 16
-@hidinput_usages_priorities = internal unnamed_addr constant [5 x { i32, i8, [3 x i8], i32 }] [{ i32, i8, [3 x i8], i32 } { i32 852037, i8 0, [3 x i8] zeroinitializer, i32 0 }, { i32, i8, [3 x i8], i32 } { i32 852028, i8 0, [3 x i8] zeroinitializer, i32 0 }, { i32, i8, [3 x i8], i32 } { i32 852034, i8 0, [3 x i8] zeroinitializer, i32 0 }, { i32, i8, [3 x i8], i32 } { i32 852016, i8 0, [3 x i8] zeroinitializer, i32 0 }, { i32, i8, [3 x i8], i32 } { i32 852018, i8 0, [3 x i8] zeroinitializer, i32 0 }], align 16
 @hid_map_usage._rs = internal global %struct.ratelimit_state { %struct.raw_spinlock zeroinitializer, i32 5000, i32 10, %struct.atomic_t zeroinitializer, %struct.atomic_t zeroinitializer, i32 0, i64 0 }, align 8
 @__func__.hid_map_usage = private unnamed_addr constant [14 x i8] c"hid_map_usage\00", align 1
 @.str.17 = private unnamed_addr constant [31 x i8] c"\014%s: Invalid code %d type %d\0A\00", align 1
@@ -452,29 +451,15 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e, %.fold.split1208, %.fold.split1207, %.fold.split1206, %.fold.split
   %.08051156.lcssa.wide.neg = phi i32 [ 1280, %bb.e ], [ 512, %.fold.split1207 ], [ 1024, %.fold.split ], [ 768, %.fold.split1206 ], [ 256, %.fold.split1208 ]
-  %.lcssa1164 = phi ptr [ @hidinput_usages_priorities, %bb.e ], [ getelementptr inbounds nuw (i8, ptr @hidinput_usages_priorities, i64 36), %.fold.split1207 ], [ getelementptr inbounds nuw (i8, ptr @hidinput_usages_priorities, i64 12), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @hidinput_usages_priorities, i64 24), %.fold.split1206 ], [ getelementptr inbounds nuw (i8, ptr @hidinput_usages_priorities, i64 48), %.fold.split1208 ] ; 2 uses
-  %i.q = getelementptr i8, ptr %1, i64 64         ; 2 uses
+  %i.q = getelementptr i8, ptr %1, i64 64
   %i.r = load ptr, ptr %i.q, align 8
-  %i.s = zext i32 %3 to i64                       ; 3 uses
+  %i.s = zext i32 %3 to i64                       ; 2 uses
   %i.t = getelementptr [4 x i8], ptr %i.r, i64 %i.s
   store i32 %.08051156.lcssa.wide.neg, ptr %i.t, align 4
-  %4 = getelementptr i8, ptr %.lcssa1164, i64 4
-  %5 = load i8, ptr %4, align 4, !range !18, !noundef !19
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %7, label %.thread
-
-7:                                                ; preds = %bb.f
-  %8 = getelementptr i8, ptr %.lcssa1164, i64 8
-  %9 = load i32, ptr %8, align 4
-  %10 = load ptr, ptr %i.q, align 8
-  %11 = getelementptr [4 x i8], ptr %10, i64 %i.s ; 2 uses
-  %12 = load i32, ptr %11, align 4
-  %13 = or i32 %12, %9
-  store i32 %13, ptr %11, align 4
-  br label %14
+  br label %.thread
 
 .thread:                                          ; preds = %.thread.loopexit, %bb.f
-  %.pre-phi = phi i64 [ %i.s, %bb.f ], [ %.pre1169.a, %.thread.loopexit ]
+  %.pre-phi = phi i64 [ %.pre1169.a, %.thread.loopexit ], [ %i.s, %bb.f ]
   %i.u = getelementptr i8, ptr %1, i64 132
   %i.v = load i32, ptr %i.u, align 4
   %i.w = shl i32 %i.v, 16
@@ -485,18 +470,15 @@ bb.f:                                             ; preds = %bb.e, %.fold.split1
   %i.ab = load i32, ptr %i.aa, align 4
   %i.ac = or i32 %i.ab, %i.x
   store i32 %i.ac, ptr %i.aa, align 4
-  br label %14
-
-14:                                               ; preds = %.thread, %7
-  %15 = getelementptr i8, ptr %.val, i64 7104     ; 2 uses
-  %16 = load ptr, ptr %15, align 8
-  %17 = getelementptr i8, ptr %16, i64 112
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
-  %.not828 = icmp eq ptr %18, null
+  %4 = getelementptr i8, ptr %.val, i64 7104      ; 2 uses
+  %5 = load ptr, ptr %4, align 8
+  %6 = getelementptr i8, ptr %5, i64 112
+  %7 = load ptr, ptr %6, align 8                  ; 2 uses
+  %.not828 = icmp eq ptr %7, null
   br i1 %.not828, label %bb.h, label %bb.g
 
-bb.g:                                             ; preds = %14
-  %i.ad = call i32 %18(ptr noundef %.val, ptr noundef nonnull %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #12 ; 2 uses
+bb.g:                                             ; preds = %.thread
+  %i.ad = call i32 %7(ptr noundef %.val, ptr noundef nonnull %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #12 ; 2 uses
   %i.ae = icmp sgt i32 %i.ad, 0
   %i.af = lshr i32 %i.ad, 30
   %. = and i32 %i.af, 2
@@ -507,7 +489,7 @@ bb.g:                                             ; preds = %14
     i32 2, label %.critedge.thread
   ]
 
-bb.h:                                             ; preds = %bb.g, %14
+bb.h:                                             ; preds = %bb.g, %.thread
   %i.ag = load i32, ptr %2, align 4               ; 19 uses
   %i.ah = and i32 %i.ag, -65536
   switch i32 %i.ah, label %bb.md [
@@ -910,7 +892,7 @@ bb.mk:                                            ; preds = %bb.ac, %bb.bl, %bb.
   br i1 %.not844, label %thread-pre-split1145.thread, label %bb.ml
 
 bb.ml:                                            ; preds = %bb.mk
-  %i.fm = load ptr, ptr %15, align 8
+  %i.fm = load ptr, ptr %4, align 8
   %i.fn = getelementptr i8, ptr %i.fm, i64 120
   %i.fo = load ptr, ptr %i.fn, align 8            ; 2 uses
   %.not845 = icmp eq ptr %i.fo, null

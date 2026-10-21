@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %bb.b
-  %indvars.iv.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.next.i, %bb.g ] ; 2 uses
-  %i.b = getelementptr [40 x i8], ptr @psmouse_protocols, i64 %indvars.iv.i ; 5 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.b ], [ %indvars.iv.next.i, %bb.g ] ; 3 uses
+  %i.b = getelementptr [40 x i8], ptr @psmouse_protocols, i64 %indvars.iv.i ; 4 uses
   %i.c = getelementptr i8, ptr %i.b, i64 8
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = tail call i64 @strlen(ptr noundef %i.d) #13
@@ -239,10 +239,11 @@ psmouse_protocol_by_name.exit:                    ; preds = %bb.d, %bb.f
   br i1 %.not9, label %psmouse_protocol_by_name.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %psmouse_protocol_by_name.exit
-  %2 = getelementptr i8, ptr %i.b, i64 4
-  %3 = load i8, ptr %2, align 4, !range !12, !noundef !13
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %bb.i, label %psmouse_protocol_by_name.exit.thread
+  %2 = and i64 %indvars.iv.i, 2305843009213693951
+  %3 = shl nuw i64 1, %2
+  %4 = and i64 %3, 65633
+  %.not12 = icmp eq i64 %4, 0
+  br i1 %.not12, label %psmouse_protocol_by_name.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.m = load i32, ptr %i.b, align 8

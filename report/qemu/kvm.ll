@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %hyperv_feature_supported.exit.thread
   %indvars.iv101 = phi i64 [ 0, %bb.f ], [ %indvars.iv.next102, %hyperv_feature_supported.exit.thread ] ; 4 uses
-  %i.bo = getelementptr inbounds nuw [48 x i8], ptr @kvm_hyperv_properties, i64 %indvars.iv101 ; 7 uses
+  %i.bo = getelementptr inbounds nuw [48 x i8], ptr @kvm_hyperv_properties, i64 %indvars.iv101 ; 6 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   %i.bq = load i32, ptr %i.bp, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
@@ -218,8 +218,11 @@ bb.g:                                             ; preds = %bb.f, %hyperv_featu
   br i1 %.not18.i, label %bb.h, label %hyperv_feature_supported.exit.thread
 
 bb.h:                                             ; preds = %bb.g
-  %.not.1.not.i = icmp eq i64 %indvars.iv101, 9
-  br i1 %.not.1.not.i, label %bb.i, label %hyperv_feature_supported.exit
+  %2 = trunc nuw nsw i64 %indvars.iv101 to i32
+  switch i32 %2, label %bb.j [
+    i32 9, label %bb.i
+    i32 16, label %hyperv_feature_supported.exit.thread
+  ]
 
 bb.i:                                             ; preds = %bb.h
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bo, i64 20
@@ -231,22 +234,16 @@ bb.i:                                             ; preds = %bb.h
   %i.cd = tail call fastcc i32 @hv_cpuid_get_host(ptr noundef %0, i32 noundef %i.by, i32 noundef %i.cc)
   %i.ce = and i32 %i.cd, %i.ca
   %.not18.1.i = icmp eq i32 %i.ce, %i.ca
-  br i1 %.not18.1.i, label %hyperv_feature_supported.exit, label %hyperv_feature_supported.exit.thread
+  br i1 %.not18.1.i, label %bb.j, label %hyperv_feature_supported.exit.thread
 
-hyperv_feature_supported.exit:                    ; preds = %bb.i, %bb.h
-  %2 = getelementptr inbounds nuw i8, ptr %i.bo, i64 40
-  %3 = load i8, ptr %2, align 8, !range !10, !noundef !11
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %hyperv_feature_supported.exit.thread, label %bb.j
-
-bb.j:                                             ; preds = %hyperv_feature_supported.exit
+bb.j:                                             ; preds = %bb.i, %bb.h
   %i.cf = shl nuw nsw i64 1, %indvars.iv101
   %i.cg = load i64, ptr %i.bn, align 16
   %i.ch = or i64 %i.cg, %i.cf
   store i64 %i.ch, ptr %i.bn, align 16
   br label %hyperv_feature_supported.exit.thread
 
-hyperv_feature_supported.exit.thread:             ; preds = %bb.i, %bb.g, %hyperv_feature_supported.exit, %bb.j
+hyperv_feature_supported.exit.thread:             ; preds = %bb.h, %bb.i, %bb.g, %bb.j
   %indvars.iv.next102 = add nuw nsw i64 %indvars.iv101, 1 ; 2 uses
   %exitcond104.not = icmp eq i64 %indvars.iv.next102, 21
   br i1 %exitcond104.not, label %.loopexit, label %bb.g, !llvm.loop !23

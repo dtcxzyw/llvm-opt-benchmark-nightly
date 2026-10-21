@@ -117,8 +117,6 @@ $_ZNK4llvm2cl15OptionValueCopyIbE7compareERKNS0_18GenericOptionValueE = comdat a
 
 $_ZZNSt9once_flag18_Prepare_executionC1IZSt9call_onceIRFvRN4llvm12PassRegistryEEJSt17reference_wrapperIS4_EEEvRS_OT_DpOT0_EUlvE_EERSB_ENUlvE_8__invokeEv = comdat any
 
-$_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 $_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
 
 $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
@@ -140,7 +138,6 @@ $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 @_ZN4llvm17PreservedAnalyses14AllAnalysesKeyE = external global %"struct.llvm::AnalysisSetKey", align 8
 @.str.5 = private unnamed_addr constant [16 x i8] c"amdgpu-tg-split\00", align 1
 @_ZTVN12_GLOBAL__N_118SIGfx6CacheControlE = internal unnamed_addr constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr null, ptr @_ZNK12_GLOBAL__N_118SIGfx6CacheControl21enableLoadCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_118SIGfx6CacheControl22enableStoreCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_118SIGfx6CacheControl20enableRMWCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_118SIGfx6CacheControl30enableVolatileAndOrNonTemporalERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_17SIAtomicAddrSpaceENS_7SIMemOpEbbb, ptr @_ZNK12_GLOBAL__N_114SICacheControl13finalizeStoreERN4llvm12MachineInstrEb, ptr @_ZNK12_GLOBAL__N_114SICacheControl12finalizeLoadERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEE, ptr @_ZNK12_GLOBAL__N_114SICacheControl23handleCooperativeAtomicERN4llvm12MachineInstrE, ptr @_ZNK12_GLOBAL__N_118SIGfx6CacheControl10insertWaitERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_7SIMemOpEbNS_8PositionENS1_14AtomicOrderingEb, ptr @_ZNK12_GLOBAL__N_118SIGfx6CacheControl13insertAcquireERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_8PositionE, ptr @_ZNK12_GLOBAL__N_118SIGfx6CacheControl15insertWritebackERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_8PositionE, ptr @_ZNK12_GLOBAL__N_114SICacheControl17handleNonVolatileERN4llvm12MachineInstrE, ptr @_ZN12_GLOBAL__N_114SICacheControlD2Ev, ptr @_ZN12_GLOBAL__N_118SIGfx6CacheControlD0Ev] }, align 8
-@_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\01\01\00\00\00", [8 x i8] c"\01\01\01\00\00\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00", [8 x i8] c"\01\01\01\01\01\01\01\01"], comdat, align 16
 @_ZTVN12_GLOBAL__N_119SIGfx10CacheControlE = internal unnamed_addr constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr null, ptr @_ZNK12_GLOBAL__N_119SIGfx10CacheControl21enableLoadCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_119SIGfx10CacheControl22enableStoreCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_119SIGfx10CacheControl20enableRMWCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_119SIGfx10CacheControl30enableVolatileAndOrNonTemporalERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_17SIAtomicAddrSpaceENS_7SIMemOpEbbb, ptr @_ZNK12_GLOBAL__N_114SICacheControl13finalizeStoreERN4llvm12MachineInstrEb, ptr @_ZNK12_GLOBAL__N_114SICacheControl12finalizeLoadERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEE, ptr @_ZNK12_GLOBAL__N_114SICacheControl23handleCooperativeAtomicERN4llvm12MachineInstrE, ptr @_ZNK12_GLOBAL__N_119SIGfx10CacheControl10insertWaitERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_7SIMemOpEbNS_8PositionENS1_14AtomicOrderingEb, ptr @_ZNK12_GLOBAL__N_119SIGfx10CacheControl13insertAcquireERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_8PositionE, ptr @_ZNK12_GLOBAL__N_119SIGfx10CacheControl15insertWritebackERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_8PositionE, ptr @_ZNK12_GLOBAL__N_114SICacheControl17handleNonVolatileERN4llvm12MachineInstrE, ptr @_ZN12_GLOBAL__N_114SICacheControlD2Ev, ptr @_ZN12_GLOBAL__N_119SIGfx10CacheControlD0Ev] }, align 8
 @_ZTVN12_GLOBAL__N_119SIGfx12CacheControlE = internal unnamed_addr constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr null, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl21enableLoadCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl22enableStoreCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl20enableRMWCacheBypassERKN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceE, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl30enableVolatileAndOrNonTemporalERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_17SIAtomicAddrSpaceENS_7SIMemOpEbbb, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl13finalizeStoreERN4llvm12MachineInstrEb, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl12finalizeLoadERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEE, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl23handleCooperativeAtomicERN4llvm12MachineInstrE, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl10insertWaitERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_7SIMemOpEbNS_8PositionENS1_14AtomicOrderingEb, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl13insertAcquireERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_8PositionE, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl15insertWritebackERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS_13SIAtomicScopeENS_17SIAtomicAddrSpaceENS_8PositionE, ptr @_ZNK12_GLOBAL__N_119SIGfx12CacheControl17handleNonVolatileERN4llvm12MachineInstrE, ptr @_ZN12_GLOBAL__N_114SICacheControlD2Ev, ptr @_ZN12_GLOBAL__N_119SIGfx12CacheControlD0Ev] }, align 8
 @.str.6 = private unnamed_addr constant [41 x i8] c"Unsupported atomic synchronization scope\00", align 1
@@ -543,15 +540,11 @@ bb.k:                                             ; preds = %bb.f, %_ZN4llvm7Bui
   br i1 %i.bk, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %10 = zext i32 %7 to i64
-  %11 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %10
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 5
-  %13 = load i8, ptr %12, align 1, !tbaa !387, !range !21, !noundef !22
-  %14 = trunc nuw i8 %13 to i1
-  %15 = icmp eq i32 %.0, 3
-  %or.cond5 = and i1 %15, %14
-  %or.cond5.not = xor i1 %or.cond5, true
-  %brmerge = or i1 %.not42, %or.cond5.not
+  %10 = add i32 %7, -8
+  %11 = icmp ult i32 %10, -3
+  %12 = icmp ne i32 %.0, 3
+  %or.cond5.not83 = or i1 %11, %12
+  %brmerge = or i1 %.not42, %or.cond5.not83
   br i1 %brmerge, label %bb.m, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit63
 
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit63: ; preds = %bb.l
@@ -954,17 +947,12 @@ bb.f:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 641
   %i.v = load i8, ptr %i.u, align 1, !tbaa !518, !range !21, !noundef !22
   %i.w = trunc nuw i8 %i.v to i1
-  br i1 %i.w, label %12, label %bb.g
+  %12 = add i32 %7, -8
+  %13 = icmp ult i32 %12, -3
+  %or.cond114.not = and i1 %13, %i.w
+  br i1 %or.cond114.not, label %bb.i, label %bb.g
 
-12:                                               ; preds = %bb.f
-  %13 = zext i32 %7 to i64
-  %14 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %13
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 5
-  %16 = load i8, ptr %15, align 1, !tbaa !387, !range !21, !noundef !22
-  %17 = trunc nuw i8 %16 to i1
-  br i1 %17, label %bb.g, label %bb.i
-
-bb.g:                                             ; preds = %12, %bb.f
+bb.g:                                             ; preds = %bb.f
   %.not59 = trunc i32 %4 to i1
   %i.x = and i32 %4, 2
   %.not60 = icmp ne i32 %i.x, 0
@@ -973,9 +961,9 @@ bb.g:                                             ; preds = %12, %bb.f
 bb.h:                                             ; preds = %bb.d
   unreachable
 
-bb.i:                                             ; preds = %bb.g, %bb.e, %12, %bb.d, %bb.d, %bb.c
-  %.056 = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ %.not62, %bb.e ], [ %.not60, %bb.g ], [ false, %12 ], [ false, %bb.d ]
-  %.255 = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ %.not61, %bb.e ], [ %.not59, %bb.g ], [ false, %12 ], [ false, %bb.d ] ; 2 uses
+bb.i:                                             ; preds = %bb.f, %bb.g, %bb.e, %bb.d, %bb.d, %bb.c
+  %.056 = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ %.not62, %bb.e ], [ %.not60, %bb.g ], [ false, %bb.f ], [ false, %bb.d ]
+  %.255 = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ %.not61, %bb.e ], [ %.not59, %bb.g ], [ false, %bb.f ], [ false, %bb.d ] ; 2 uses
   %i.y = and i32 %3, 2
   %.not63 = icmp eq i32 %i.y, 0                   ; 2 uses
   %.off = add i32 %2, -1
@@ -1060,15 +1048,11 @@ bb.n:                                             ; preds = %bb.i, %_ZN4llvm7Bui
   br i1 %i.bg, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %18 = zext i32 %7 to i64
-  %19 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %18
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 5
-  %21 = load i8, ptr %20, align 1, !tbaa !387, !range !21, !noundef !22
-  %22 = trunc nuw i8 %21 to i1
-  %23 = icmp eq i32 %2, 3
-  %or.cond3 = and i1 %23, %22
-  %or.cond3.not = xor i1 %or.cond3, true
-  %brmerge = or i1 %.not63, %or.cond3.not
+  %14 = add i32 %7, -8
+  %15 = icmp ult i32 %14, -3
+  %16 = icmp ne i32 %2, 3
+  %or.cond3.not118 = or i1 %16, %15
+  %brmerge = or i1 %.not63, %or.cond3.not118
   br i1 %brmerge, label %bb.p, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit82
 
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit82: ; preds = %bb.o
@@ -1471,21 +1455,16 @@ bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 641
   %i.x = load i8, ptr %i.w, align 1, !tbaa !518, !range !21, !noundef !22
   %i.y = trunc nuw i8 %i.x to i1
-  br i1 %i.y, label %14, label %bb.h
+  br i1 %i.y, label %bb.f, label %bb.h
 
-14:                                               ; preds = %bb.e
-  %15 = getelementptr inbounds nuw i8, ptr %i.v, i64 759
-  %16 = load i8, ptr %15, align 1, !tbaa !519, !range !21, !noundef !22
-  %17 = trunc nuw i8 %16 to i1
-  br i1 %17, label %bb.h, label %bb.f
-
-bb.f:                                             ; preds = %14
-  %18 = zext i32 %7 to i64
-  %19 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm23isAtLeastOrStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %18
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 5
-  %21 = load i8, ptr %20, align 1, !tbaa !387, !range !21, !noundef !22
-  %22 = trunc nuw i8 %21 to i1
-  br i1 %22, label %bb.h, label %.thread151
+bb.f:                                             ; preds = %bb.e
+  %14 = getelementptr inbounds nuw i8, ptr %i.v, i64 759
+  %15 = load i8, ptr %14, align 1, !tbaa !519, !range !21, !noundef !22
+  %16 = trunc nuw i8 %15 to i1
+  %17 = add i32 %7, -5
+  %18 = icmp ult i32 %17, 3
+  %or.cond = or i1 %18, %16
+  br i1 %or.cond, label %bb.h, label %.thread151
 
 bb.g:                                             ; preds = %bb.d
   unreachable
@@ -1499,7 +1478,7 @@ bb.g:                                             ; preds = %bb.d
   %spec.select61139 = and i1 %5, %or.cond138
   br i1 %spec.select61139, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit101, label %.thread151.thread
 
-bb.h:                                             ; preds = %bb.e, %14, %bb.f
+bb.h:                                             ; preds = %bb.e, %bb.f
   %i.aa = and i32 %4, 1
   %.not55.not = icmp eq i32 %i.aa, 0
   %i.ab = and i32 %4, 2

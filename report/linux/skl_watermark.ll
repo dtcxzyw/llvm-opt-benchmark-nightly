@@ -205,87 +205,20 @@ bb.da:                                            ; preds = %bb.cz, %bb.cy
   %i.mk = load i64, ptr %i.mj, align 8
   %i.ml = and i64 %i.mk, 4503599627370496
   %.not168.i = icmp eq i64 %i.ml, 0
-  br i1 %.not168.i, label %bb.db, label %6
+  br i1 %.not168.i, label %bb.db, label %adlp_check_mbus_joined.exit.i
 
 bb.db:                                            ; preds = %bb.da
   %i.mm = getelementptr i8, ptr %i.lt, i64 1168
   %i.mn = load i16, ptr %i.mm, align 8
   %i.mo = icmp ugt i16 %i.mn, 13
-  br i1 %i.mo, label %6, label %bb.dd
+  br i1 %i.mo, label %adlp_check_mbus_joined.exit.i, label %bb.dd
 
-6:                                                ; preds = %bb.db, %bb.da
-  %7 = load i8, ptr %i.mg, align 1
-  switch i8 %7, label %adlp_check_mbus_joined.exit.i [
-    i8 1, label %8
-    i8 2, label %.fold.split.i.i.i
-    i8 3, label %.fold.split6.i.i.i
-    i8 4, label %.fold.split7.i.i.i
-    i8 5, label %.fold.split8.i.i.i
-    i8 6, label %.fold.split9.i.i.i
-    i8 7, label %.fold.split10.i.i.i
-    i8 8, label %.fold.split11.i.i.i
-    i8 9, label %.fold.split12.i.i.i
-    i8 10, label %.fold.split13.i.i.i
-    i8 11, label %.fold.split14.i.i.i
-    i8 12, label %.fold.split15.i.i.i
-    i8 13, label %.fold.split16.i.i.i
-    i8 14, label %.fold.split17.i.i.i
-    i8 15, label %.fold.split18.i.i.i
-  ]
-
-.fold.split.i.i.i:                                ; preds = %6
-  br label %8
-
-.fold.split6.i.i.i:                               ; preds = %6
-  br label %8
-
-.fold.split7.i.i.i:                               ; preds = %6
-  br label %8
-
-.fold.split8.i.i.i:                               ; preds = %6
-  br label %8
-
-.fold.split9.i.i.i:                               ; preds = %6
-  br label %8
-
-.fold.split10.i.i.i:                              ; preds = %6
-  br label %8
-
-.fold.split11.i.i.i:                              ; preds = %6
-  br label %8
-
-.fold.split12.i.i.i:                              ; preds = %6
-  br label %8
-
-.fold.split13.i.i.i:                              ; preds = %6
-  br label %8
-
-.fold.split14.i.i.i:                              ; preds = %6
-  br label %8
-
-.fold.split15.i.i.i:                              ; preds = %6
-  br label %8
-
-.fold.split16.i.i.i:                              ; preds = %6
-  br label %8
-
-.fold.split17.i.i.i:                              ; preds = %6
-  br label %8
-
-.fold.split18.i.i.i:                              ; preds = %6
-  br label %8
-
-8:                                                ; preds = %.fold.split18.i.i.i, %.fold.split17.i.i.i, %.fold.split16.i.i.i, %.fold.split15.i.i.i, %.fold.split14.i.i.i, %.fold.split13.i.i.i, %.fold.split12.i.i.i, %.fold.split11.i.i.i, %.fold.split10.i.i.i, %.fold.split9.i.i.i, %.fold.split8.i.i.i, %.fold.split7.i.i.i, %.fold.split6.i.i.i, %.fold.split.i.i.i, %6
-  %.lcssa.i.i.i = phi ptr [ @adlp_allowed_dbufs, %6 ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 78), %.fold.split15.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 90), %.fold.split17.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 84), %.fold.split16.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 6), %.fold.split.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 24), %.fold.split6.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 30), %.fold.split7.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 36), %.fold.split8.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 42), %.fold.split9.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 48), %.fold.split10.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 54), %.fold.split11.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 60), %.fold.split12.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 66), %.fold.split13.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 72), %.fold.split14.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 96), %.fold.split18.i.i.i ]
-  %9 = getelementptr i8, ptr %.lcssa.i.i.i, i64 5
-  %10 = load i8, ptr %9, align 1, !range !18, !noundef !19
-  %11 = trunc nuw i8 %10 to i1
-  br label %adlp_check_mbus_joined.exit.i
-
-adlp_check_mbus_joined.exit.i:                    ; preds = %8, %6
-  %.08.i.i.i = phi i1 [ %11, %8 ], [ false, %6 ]  ; 2 uses
+adlp_check_mbus_joined.exit.i:                    ; preds = %bb.db, %bb.da
+  %6 = load i8, ptr %i.mg, align 1
+  %.off.i.i.i = add i8 %6, -1
+  %switch.i.i.i = icmp ult i8 %.off.i.i.i, 2      ; 2 uses
   %i.mp = getelementptr i8, ptr %i.lw, i64 71
-  %i.mq = zext i1 %.08.i.i.i to i8                ; 2 uses
+  %i.mq = zext i1 %switch.i.i.i to i8             ; 2 uses
   store i8 %i.mq, ptr %i.mp, align 1
   %i.mr = getelementptr i8, ptr %i.mc, i64 71
   %i.ms = load i8, ptr %i.mr, align 1, !range !18, !noundef !19
@@ -293,7 +226,7 @@ adlp_check_mbus_joined.exit.i:                    ; preds = %8, %6
   br i1 %.not169.i, label %bb.dd, label %bb.dc
 
 bb.dc:                                            ; preds = %adlp_check_mbus_joined.exit.i
-  %i.mt = call i32 @intel_cdclk_state_set_joined_mbus(ptr noundef %0, i1 noundef zeroext %.08.i.i.i) #16 ; 2 uses
+  %i.mt = call i32 @intel_cdclk_state_set_joined_mbus(ptr noundef %0, i1 noundef zeroext %switch.i.i.i) #16 ; 2 uses
   %.not170.i = icmp eq i32 %i.mt, 0
   br i1 %.not170.i, label %bb.dd, label %skl_print_wm_changes.exit
 
@@ -696,79 +629,16 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.i = getelementptr i8, ptr %i.b, i64 71       ; 3 uses
   %i.j = load i8, ptr %i.i, align 1, !range !18, !noundef !19
   %i.k = trunc nuw i8 %i.j to i1
-  br i1 %i.k, label %2, label %skl_mbus_sanitize.exit
+  br i1 %i.k, label %adlp_check_mbus_joined.exit.i, label %skl_mbus_sanitize.exit
 
-2:                                                ; preds = %bb.c
-  %3 = getelementptr i8, ptr %i.b, i64 69
-  %4 = load i8, ptr %3, align 1                   ; 2 uses
-  switch i8 %4, label %adlp_check_mbus_joined.exit.thread.i [
-    i8 1, label %adlp_check_mbus_joined.exit.i
-    i8 2, label %.fold.split.i.i.i
-    i8 3, label %.fold.split6.i.i.i
-    i8 4, label %.fold.split7.i.i.i
-    i8 5, label %.fold.split8.i.i.i
-    i8 6, label %.fold.split9.i.i.i
-    i8 7, label %.fold.split10.i.i.i
-    i8 8, label %.fold.split11.i.i.i
-    i8 9, label %.fold.split12.i.i.i
-    i8 10, label %.fold.split13.i.i.i
-    i8 11, label %.fold.split14.i.i.i
-    i8 12, label %.fold.split15.i.i.i
-    i8 13, label %.fold.split16.i.i.i
-    i8 14, label %.fold.split17.i.i.i
-    i8 15, label %.fold.split18.i.i.i
-  ]
+adlp_check_mbus_joined.exit.i:                    ; preds = %bb.c
+  %2 = getelementptr i8, ptr %i.b, i64 69
+  %3 = load i8, ptr %2, align 1                   ; 2 uses
+  %.off.i.i.i = add i8 %3, -1
+  %switch.i.i.i = icmp ult i8 %.off.i.i.i, 2
+  br i1 %switch.i.i.i, label %skl_mbus_sanitize.exit, label %adlp_check_mbus_joined.exit.thread.i
 
-.fold.split.i.i.i:                                ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split6.i.i.i:                               ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split7.i.i.i:                               ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split8.i.i.i:                               ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split9.i.i.i:                               ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split10.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split11.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split12.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split13.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split14.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split15.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split16.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split17.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-.fold.split18.i.i.i:                              ; preds = %2
-  br label %adlp_check_mbus_joined.exit.i
-
-adlp_check_mbus_joined.exit.i:                    ; preds = %.fold.split18.i.i.i, %.fold.split17.i.i.i, %.fold.split16.i.i.i, %.fold.split15.i.i.i, %.fold.split14.i.i.i, %.fold.split13.i.i.i, %.fold.split12.i.i.i, %.fold.split11.i.i.i, %.fold.split10.i.i.i, %.fold.split9.i.i.i, %.fold.split8.i.i.i, %.fold.split7.i.i.i, %.fold.split6.i.i.i, %.fold.split.i.i.i, %2
-  %.lcssa.i.i.i = phi ptr [ @adlp_allowed_dbufs, %2 ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 78), %.fold.split15.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 90), %.fold.split17.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 84), %.fold.split16.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 6), %.fold.split.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 24), %.fold.split6.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 30), %.fold.split7.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 36), %.fold.split8.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 42), %.fold.split9.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 48), %.fold.split10.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 54), %.fold.split11.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 60), %.fold.split12.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 66), %.fold.split13.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 72), %.fold.split14.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @adlp_allowed_dbufs, i64 96), %.fold.split18.i.i.i ]
-  %5 = getelementptr i8, ptr %.lcssa.i.i.i, i64 5
-  %6 = load i8, ptr %5, align 1, !range !18, !noundef !19
-  %7 = trunc nuw i8 %6 to i1
-  br i1 %7, label %skl_mbus_sanitize.exit, label %adlp_check_mbus_joined.exit.thread.i
-
-adlp_check_mbus_joined.exit.thread.i:             ; preds = %adlp_check_mbus_joined.exit.i, %2
+adlp_check_mbus_joined.exit.thread.i:             ; preds = %adlp_check_mbus_joined.exit.i
   %i.l = load ptr, ptr %0, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %i.l, null
   br i1 %.not.i.i, label %__drm_to_dev.exit.i, label %bb.d
@@ -780,7 +650,7 @@ bb.d:                                             ; preds = %adlp_check_mbus_joi
 
 __drm_to_dev.exit.i:                              ; preds = %bb.d, %adlp_check_mbus_joined.exit.thread.i
   %i.o = phi ptr [ %i.n, %bb.d ], [ null, %adlp_check_mbus_joined.exit.thread.i ]
-  %i.p = zext i8 %4 to i32
+  %i.p = zext i8 %3 to i32
   tail call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.o, i32 noundef 2, ptr noundef @.str.61, i32 noundef %i.p) #16
   store i8 0, ptr %i.i, align 1
   %i.q = getelementptr i8, ptr %i.b, i64 70

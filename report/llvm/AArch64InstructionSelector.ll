@@ -204,12 +204,9 @@ _ZNK4llvm13GMemOperation6getMMOEv.exit:           ; preds = %bb.jr, %bb.js
   %i.bwd = load i16, ptr %i.bwc, align 4
   %i.bwe = lshr i16 %i.bwd, 8
   %i.bwf = and i16 %i.bwe, 15                     ; 2 uses
-  %155 = zext nneg i16 %i.bwf to i64
-  %156 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %155
-  %157 = getelementptr inbounds nuw i8, ptr %156, i64 2
-  %158 = load i8, ptr %157, align 2, !tbaa !241, !range !238, !noundef !239
-  %159 = trunc nuw i8 %158 to i1
-  br i1 %159, label %bb.jt, label %bb.kb
+  %155 = add nsw i16 %i.bwf, -3
+  %156 = icmp ult i16 %155, 5
+  br i1 %156, label %bb.jt, label %bb.kb
 
 bb.jt:                                            ; preds = %_ZNK4llvm13GMemOperation6getMMOEv.exit
   %i.bwg = load i32, ptr %i.w, align 4, !tbaa !468

@@ -205,15 +205,12 @@ $_ZN4llvm15SmallVectorImplIPNS_5ValueEE6insertIPPNS_11InstructionEvEEPS2_S8_T_S9
 
 $_ZN4llvm15SmallVectorImplIPNS_10BasicBlockEE6insertIPKS2_vEEPS2_S7_T_S8_ = comdat any
 
-$_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = comdat any
-
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @.str = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 @.str.1 = private unnamed_addr constant [3 x i8] c"{ \00", align 1
 @.str.2 = private unnamed_addr constant [2 x i8] c"}\00", align 1
 @.str.3 = private unnamed_addr constant [15 x i8] c".gvnsink.split\00", align 1
-@_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup = linkonce_odr local_unnamed_addr constant [8 x [8 x i8]] [[8 x i8] zeroinitializer, [8 x i8] c"\01\00\00\00\00\00\00\00", [8 x i8] c"\01\01\00\00\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\00\00\00\00", [8 x i8] c"\01\01\01\00\00\00\00\00", [8 x i8] c"\01\01\01\01\01\01\00\00", [8 x i8] c"\01\01\01\01\01\01\01\00"], comdat, align 16
 @_ZTVN12_GLOBAL__N_118InstructionUseExprE = internal unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN4llvm13GVNExpression15BasicExpressionD2Ev, ptr @_ZN12_GLOBAL__N_118InstructionUseExprD0Ev, ptr @_ZNK4llvm13GVNExpression15BasicExpression6equalsERKNS0_10ExpressionE, ptr @_ZNK4llvm13GVNExpression10Expression13exactlyEqualsERKS1_, ptr @_ZNK12_GLOBAL__N_118InstructionUseExpr12getHashValueEv, ptr @_ZNK4llvm13GVNExpression15BasicExpression13printInternalERNS_11raw_ostreamEb] }, align 8
 @.str.4 = private unnamed_addr constant [22 x i8] c"ExpressionTypeBasic, \00", align 1
 @.str.5 = private unnamed_addr constant [13 x i8] c"operands = {\00", align 1
@@ -616,14 +613,9 @@ define internal fastcc noundef ptr @_ZN12_GLOBAL__N_110ValueTable16createMemoryE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
   %i.b = load i16, ptr %i.a, align 2, !tbaa !208
-  %2 = lshr i16 %i.b, 7
-  %i.c = and i16 %2, 7
-  %3 = zext nneg i16 %i.c to i64
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %3
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !187, !range !79, !noundef !81
-  %7 = trunc nuw i8 %6 to i1
-  br i1 %7, label %bb.d, label %bb.b
+  %i.c = and i16 %i.b, 768
+  %.not = icmp eq i16 %i.c, 0
+  br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call noundef zeroext i1 @_ZNK4llvm11Instruction8isAtomicEv(ptr noundef nonnull align 8 dereferenceable(72) %1) #21
@@ -648,14 +640,9 @@ define internal fastcc noundef ptr @_ZN12_GLOBAL__N_110ValueTable16createMemoryE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
   %i.b = load i16, ptr %i.a, align 2, !tbaa !208
-  %2 = lshr i16 %i.b, 7
-  %i.c = and i16 %2, 7
-  %3 = zext nneg i16 %i.c to i64
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN4llvm14isStrongerThanENS_14AtomicOrderingES0_E6lookup, i64 %3
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !187, !range !79, !noundef !81
-  %7 = trunc nuw i8 %6 to i1
-  br i1 %7, label %bb.d, label %bb.b
+  %i.c = and i16 %i.b, 768
+  %.not = icmp eq i16 %i.c, 0
+  br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call noundef zeroext i1 @_ZNK4llvm11Instruction8isAtomicEv(ptr noundef nonnull align 8 dereferenceable(72) %1) #21

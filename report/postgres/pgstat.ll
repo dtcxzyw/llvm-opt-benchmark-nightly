@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.t
   br label %.thread134.sink.split.i
 
 bb.v:                                             ; preds = %bb.s
-  %i.ao = load i32, ptr %i.c, align 4             ; 7 uses
+  %i.ao = load i32, ptr %i.c, align 4             ; 8 uses
   %i.ap = add i32 %i.ao, -1
   %i.aq = icmp ult i32 %i.ap, 13                  ; 2 uses
   %i.ar = add i32 %i.ao, -24                      ; 2 uses
@@ -247,11 +247,9 @@ bb.ab:                                            ; preds = %pgstat_get_kind_inf
   br label %.thread134.sink.split.i
 
 bb.ac:                                            ; preds = %bb.y
-  %2 = zext nneg i32 %i.ao to i64
-  %3 = getelementptr inbounds nuw [144 x i8], ptr @pgstat_kind_builtin_infos, i64 %2 ; 3 uses
-  %4 = load i8, ptr %3, align 16
-  %5 = trunc i8 %4 to i1
-  br i1 %5, label %bb.af, label %bb.ad
+  %2 = add nsw i32 %i.ao, -7
+  %3 = icmp ult i32 %2, 7
+  br i1 %3, label %bb.af, label %bb.ad
 
 .thread.i:                                        ; preds = %pgstat_get_kind_info.exit.i
   %i.bd = load i8, ptr %i.ba, align 8
@@ -267,7 +265,9 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.thread134.sink.split.i
 
 bb.af:                                            ; preds = %bb.ac
-  %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %4 = zext nneg i32 %i.ao to i64
+  %5 = getelementptr inbounds nuw [144 x i8], ptr @pgstat_kind_builtin_infos, i64 %4 ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.bi = load i32, ptr %i.bh, align 4
   %i.bj = zext i32 %i.bi to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bj
@@ -279,7 +279,7 @@ bb.af:                                            ; preds = %bb.ac
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.thread130.i, %bb.af
-  %.sink295.i = phi ptr [ %i.ba, %.thread130.i ], [ %3, %bb.af ] ; 3 uses
+  %.sink295.i = phi ptr [ %i.ba, %.thread130.i ], [ %5, %bb.af ] ; 3 uses
   %.sink.i = phi ptr [ %i.bm, %.thread130.i ], [ %i.bk, %bb.af ]
   %i.bn = getelementptr inbounds nuw i8, ptr %.sink295.i, i64 16
   %i.bo = load i32, ptr %i.bn, align 8
@@ -682,7 +682,7 @@ bb.o:                                             ; preds = %pgstat_build_snapsh
   br label %bb.w
 
 bb.p:                                             ; preds = %._crit_edge, %pgstat_build_snapshot_fixed.exit
-  %indvars.iv = phi i64 [ 1, %._crit_edge ], [ %indvars.iv.next, %pgstat_build_snapshot_fixed.exit ] ; 6 uses
+  %indvars.iv = phi i64 [ 1, %._crit_edge ], [ %indvars.iv.next, %pgstat_build_snapshot_fixed.exit ] ; 7 uses
   %i.bo = icmp samesign ult i64 %indvars.iv, 14
   br i1 %i.bo, label %bb.s, label %bb.q
 
@@ -703,24 +703,28 @@ pgstat_get_kind_info.exit32:                      ; preds = %bb.r
   br i1 %.not24, label %pgstat_build_snapshot_fixed.exit, label %.thread
 
 bb.s:                                             ; preds = %bb.p
-  %1 = getelementptr inbounds nuw [144 x i8], ptr @pgstat_kind_builtin_infos, i64 %indvars.iv ; 2 uses
-  %2 = load i8, ptr %1, align 16
-  %3 = trunc i8 %2 to i1
-  br i1 %3, label %pgstat_get_kind_info.exit.i, label %pgstat_build_snapshot_fixed.exit
+  %1 = trunc nuw nsw i64 %indvars.iv to i32
+  %2 = add nsw i32 %1, -7
+  %3 = icmp ult i32 %2, 7
+  br i1 %3, label %4, label %pgstat_build_snapshot_fixed.exit
 
 .thread:                                          ; preds = %pgstat_get_kind_info.exit32
   %i.bv = load i8, ptr %i.bu, align 8
   %i.bw = trunc i8 %i.bv to i1
   br i1 %i.bw, label %.thread42, label %pgstat_build_snapshot_fixed.exit
 
+4:                                                ; preds = %bb.s
+  %5 = getelementptr inbounds nuw [144 x i8], ptr @pgstat_kind_builtin_infos, i64 %indvars.iv
+  br label %pgstat_get_kind_info.exit.i
+
 .thread42:                                        ; preds = %.thread
   %i.bx = add nsw i64 %indvars.iv, -24
   br label %pgstat_get_kind_info.exit.i
 
-pgstat_get_kind_info.exit.i:                      ; preds = %bb.s, %.thread42
-  %.010.i = phi i64 [ %i.bx, %.thread42 ], [ %indvars.iv, %bb.s ]
-  %.0.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @pgStatLocal, i64 58776), %.thread42 ], [ getelementptr inbounds nuw (i8, ptr @pgStatLocal, i64 40), %bb.s ]
-  %.1.i.i33 = phi ptr [ %i.bu, %.thread42 ], [ %1, %bb.s ]
+pgstat_get_kind_info.exit.i:                      ; preds = %.thread42, %4
+  %.010.i = phi i64 [ %indvars.iv, %4 ], [ %i.bx, %.thread42 ]
+  %.0.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @pgStatLocal, i64 40), %4 ], [ getelementptr inbounds nuw (i8, ptr @pgStatLocal, i64 58776), %.thread42 ]
+  %.1.i.i33 = phi ptr [ %5, %4 ], [ %i.bu, %.thread42 ]
   %i.by = load i32, ptr @pgstat_fetch_consistency, align 4
   %i.bz = icmp eq i32 %i.by, 0
   %i.ca = getelementptr inbounds i8, ptr %.0.i, i64 %.010.i ; 3 uses

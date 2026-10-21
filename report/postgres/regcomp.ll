@@ -205,9 +205,9 @@ bb.r:                                             ; preds = %regc_wc_isword.exit
   br i1 %i.cr, label %bb.s, label %.split103.i.a
 
 bb.s:                                             ; preds = %bb.r
-  %i.cs = add i32 %1, -58
-  %or.cond.i = icmp ult i32 %i.cs, -10
-  br i1 %or.cond.i, label %regc_wc_isdigit.exit.thread.i, label %bb.t
+  %i.cs = add i32 %1, -48
+  %or.cond.i = icmp ult i32 %i.cs, 10
+  br i1 %or.cond.i, label %bb.t, label %regc_wc_isdigit.exit.thread.i
 
 .split103.i.a:                                    ; preds = %bb.r
   %i.ct = getelementptr inbounds nuw i8, ptr %i.co, i64 16
@@ -610,9 +610,9 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %i.ko, label %bb.eb, label %.split
 
 bb.eb:                                            ; preds = %bb.ea
-  %i.kp = add i32 %i.kk, -58
-  %or.cond1131 = icmp ult i32 %i.kp, -10
-  br i1 %or.cond1131, label %regc_wc_isdigit.exit.thread, label %bb.ec
+  %i.kp = add i32 %i.kk, -48
+  %or.cond1131 = icmp ult i32 %i.kp, 10
+  br i1 %or.cond1131, label %bb.ec, label %regc_wc_isdigit.exit.thread
 
 .split:                                           ; preds = %bb.ea
   %i.kq = getelementptr inbounds nuw i8, ptr %i.kl, i64 16
@@ -622,7 +622,7 @@ bb.eb:                                            ; preds = %bb.ea
   %i.ku = tail call zeroext i1 %i.kt(i32 noundef %i.kk, ptr noundef nonnull %i.kl) #17, !inline_history !122
   br i1 %i.ku, label %bb.ec, label %regc_wc_isdigit.exit.thread
 
-regc_wc_isdigit.exit.thread:                      ; preds = %.split, %bb.eb, %bb.dz
+regc_wc_isdigit.exit.thread:                      ; preds = %bb.eb, %.split, %bb.dz
   %i.kv = load ptr, ptr %0, align 8
   %i.kw = getelementptr inbounds nuw i8, ptr %i.kv, i64 16 ; 2 uses
   %i.kx = load i64, ptr %i.kw, align 8
@@ -1025,18 +1025,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.c = load i8, ptr %i.b, align 2, !range !20, !noundef !21
   %i.d = trunc nuw i8 %i.c to i1
-  br i1 %i.d, label %1, label %bb.c
+  br i1 %i.d, label %bb.b, label %bb.c
 
-1:                                                ; preds = %bb.a
-  %2 = icmp ult i32 %0, 128
-  br i1 %2, label %bb.b, label %bb.d
-
-bb.b:                                             ; preds = %1
-  %3 = zext nneg i32 %0 to i64
-  %4 = getelementptr inbounds nuw i8, ptr @pg_char_properties, i64 %3
-  %5 = load i8, ptr %4, align 1
-  %6 = and i8 %5, 1
-  %7 = zext nneg i8 %6 to i32
+bb.b:                                             ; preds = %bb.a
+  %1 = add i32 %0, -48
+  %narrow = icmp ult i32 %1, 10
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -1045,11 +1038,11 @@ bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 40
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = tail call zeroext i1 %i.h(i32 noundef %0, ptr noundef nonnull %i.a) #17
-  %8 = zext i1 %i.i to i32
   br label %bb.d
 
-bb.d:                                             ; preds = %1, %bb.b, %bb.c
-  %.0 = phi i32 [ %8, %bb.c ], [ 0, %1 ], [ %7, %bb.b ]
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.0.in = phi i1 [ %narrow, %bb.b ], [ %i.i, %bb.c ]
+  %.0 = zext i1 %.0.in to i32
   ret i32 %.0
 }
 

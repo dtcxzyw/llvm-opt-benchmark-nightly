@@ -205,8 +205,6 @@ $_ZZNK6VNType5asciiEvE5names = comdat any
 
 $_ZSt19piecewise_construct = comdat any
 
-$_ZZNK9VEdgeType11clockedStmtEvE7clocked = comdat any
-
 @.str = private unnamed_addr constant [3 x i8] c"- \00", align 1
 @.str.1 = private unnamed_addr constant [54 x i8] c"/opt-bench/work/verilator/verilator/src/V3Delayed.cpp\00", align 1
 @__FUNCTION__._ZN9V3Delayed10delayedAllEP10AstNetlist = private unnamed_addr constant [11 x i8] c"delayedAll\00", align 1
@@ -609,7 +607,6 @@ begin_hunk_1
 @.str.578 = private unnamed_addr constant [11 x i8] c"__VdlyMask\00", align 1
 @_ZTV6AstSel = external constant { [58 x ptr] }, align 8
 @.str.579 = private unnamed_addr constant [11 x i8] c"__VdlyElem\00", align 1
-@_ZZNK9VEdgeType11clockedStmtEvE7clocked = linkonce_odr dso_local local_unnamed_addr constant [14 x i8] c"\01\01\01\01\01\01\01\00\00\00\00\00\00\00", comdat, align 1
 @_ZTV10AstSenItem = external constant { [42 x ptr] }, align 8
 @.str.580 = private unnamed_addr constant [38 x i8] c"NBA, variables using ShadowVar scheme\00", align 1
 @.str.581 = private unnamed_addr constant [44 x i8] c"NBA, variables using ShadowVarMasked scheme\00", align 1
@@ -1012,13 +1009,10 @@ _ZN14DelayedVisitor23isProcedureWithSentreepI17AstAlwaysReactiveEEbPK16AstNodePr
 
 .lr.ph.i:                                         ; preds = %_ZN14DelayedVisitor23isProcedureWithSentreepI17AstAlwaysReactiveEEbPK16AstNodeProcedure.exit.thread, %bb.h
   %.09.i = phi ptr [ %i.au, %bb.h ], [ %i.aq, %_ZN14DelayedVisitor23isProcedureWithSentreepI17AstAlwaysReactiveEEbPK16AstNodeProcedure.exit.thread ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.09.i, i64 152
-  %.sroa.0.0.copyload.i.i = load i8, ptr %2, align 8, !tbaa !541
-  %3 = zext i8 %.sroa.0.0.copyload.i.i to i64
-  %i.ar = getelementptr inbounds nuw i8, ptr @_ZZNK9VEdgeType11clockedStmtEvE7clocked, i64 %3
-  %i.as = load i8, ptr %i.ar, align 1, !tbaa !173, !range !79, !noundef !80
-  %4 = trunc nuw i8 %i.as to i1
-  br i1 %4, label %_ZZN14DelayedVisitor5visitEP16AstNodeProcedureENKUlPK10AstSenItemE_clES4_.exit, label %bb.g
+  %i.ar = getelementptr inbounds nuw i8, ptr %.09.i, i64 152
+  %i.as = load i8, ptr %i.ar, align 8, !tbaa !541
+  %2 = icmp ult i8 %i.as, 7
+  br i1 %2, label %_ZZN14DelayedVisitor5visitEP16AstNodeProcedureENKUlPK10AstSenItemE_clES4_.exit, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.i
   %i.at = getelementptr inbounds nuw i8, ptr %.09.i, i64 8

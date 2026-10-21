@@ -109,13 +109,10 @@ bb.h:                                             ; preds = %bb.g
 ; Function Attrs: nofree norecurse nosync nounwind null_pointer_is_valid sspstrong memory(none) uwtable
 define i32 @ieee80211_chan_band_to_mhz(i32 noundef %0, i1 noundef zeroext %1, i1 noundef zeroext %2) local_unnamed_addr #1 {
 bb.a:
-  %3 = zext i1 %1 to i8                           ; 5 uses
-  %i.a = select i1 %2, i64 3, i64 0               ; 5 uses
-  %i.b = getelementptr [16 x i8], ptr @freq_cvt, i64 %i.a ; 4 uses
-  %4 = getelementptr i8, ptr %i.b, i64 12
-  %5 = load i8, ptr %4, align 4, !range !6, !noundef !7
-  %6 = icmp eq i8 %5, %3
-  br i1 %6, label %bb.b, label %bb.e
+  %i.a = select i1 %2, i64 3, i64 0               ; 6 uses
+  %i.b = getelementptr [16 x i8], ptr @freq_cvt, i64 %i.a ; 3 uses
+  %3 = xor i1 %1, %2
+  br i1 %3, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %i.b, i64 8
@@ -147,11 +144,9 @@ bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c
   br i1 %exitcond.not, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = getelementptr [16 x i8], ptr @freq_cvt, i64 %indvars.iv.next ; 4 uses
-  %7 = getelementptr i8, ptr %i.n, i64 12
-  %8 = load i8, ptr %7, align 4, !range !6, !noundef !7
-  %9 = icmp eq i8 %8, %3
-  br i1 %9, label %bb.g, label %bb.i
+  %i.n = getelementptr [16 x i8], ptr @freq_cvt, i64 %indvars.iv.next ; 3 uses
+  %4 = xor i1 %1, %2
+  br i1 %4, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr i8, ptr %i.n, i64 8
@@ -175,11 +170,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %exitcond.not.1, label %.loopexit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.w = getelementptr [16 x i8], ptr @freq_cvt, i64 %indvars.iv.next.1 ; 4 uses
-  %10 = getelementptr i8, ptr %i.w, i64 12
-  %11 = load i8, ptr %10, align 4, !range !6, !noundef !7
-  %12 = icmp eq i8 %11, %3
-  br i1 %12, label %bb.k, label %bb.m
+  %i.w = getelementptr [16 x i8], ptr @freq_cvt, i64 %indvars.iv.next.1 ; 3 uses
+  br i1 %1, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.x = getelementptr i8, ptr %i.w, i64 8
@@ -203,11 +195,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
   br i1 %exitcond.not.2, label %.loopexit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.af = getelementptr [16 x i8], ptr @freq_cvt, i64 %indvars.iv.next.2 ; 4 uses
-  %13 = getelementptr i8, ptr %i.af, i64 12
-  %14 = load i8, ptr %13, align 4, !range !6, !noundef !7
-  %15 = icmp eq i8 %14, %3
-  br i1 %15, label %bb.o, label %bb.q
+  %i.af = getelementptr [16 x i8], ptr @freq_cvt, i64 %indvars.iv.next.2 ; 3 uses
+  br i1 %1, label %.critedge, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ag = getelementptr i8, ptr %i.af, i64 8
@@ -225,13 +214,10 @@ bb.p:                                             ; preds = %bb.o
   %.not20.3 = icmp sgt i32 %0, %i.an
   br i1 %.not20.3, label %bb.q, label %bb.d
 
-bb.q:                                             ; preds = %bb.n, %bb.o, %bb.p
-  %i.ao = getelementptr [16 x i8], ptr @freq_cvt, i64 %i.a ; 4 uses
-  %16 = getelementptr i8, ptr %i.ao, i64 64
-  %i.ap = getelementptr i8, ptr %i.ao, i64 76
-  %17 = load i8, ptr %i.ap, align 4, !range !6, !noundef !7
-  %18 = icmp eq i8 %17, %3
-  br i1 %18, label %bb.r, label %.loopexit
+bb.q:                                             ; preds = %bb.o, %bb.p
+  %i.ao = getelementptr [16 x i8], ptr @freq_cvt, i64 %i.a ; 3 uses
+  %i.ap = getelementptr i8, ptr %i.ao, i64 64
+  br i1 %1, label %.loopexit, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.aq = getelementptr i8, ptr %i.ao, i64 72
@@ -242,15 +228,20 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.as = getelementptr i8, ptr %i.ao, i64 68
   %i.at = load i32, ptr %i.as, align 4
-  %i.au = load i32, ptr %16, align 16             ; 2 uses
+  %i.au = load i32, ptr %i.ap, align 16           ; 2 uses
   %i.av = sub i32 %i.at, %i.au
   %i.aw = udiv i32 %i.av, 5
   %i.ax = add i32 %i.aw, %i.ar
   %.not20.4 = icmp sgt i32 %0, %i.ax
   br i1 %.not20.4, label %.loopexit, label %bb.d
 
-.loopexit:                                        ; preds = %bb.e, %bb.i, %bb.m, %bb.s, %bb.r, %bb.q, %bb.d
-  %.016 = phi i32 [ %i.m, %bb.d ], [ 0, %bb.q ], [ 0, %bb.r ], [ 0, %bb.s ], [ 0, %bb.m ], [ 0, %bb.i ], [ 0, %bb.e ]
+.critedge:                                        ; preds = %bb.n
+  %5 = getelementptr [16 x i8], ptr @freq_cvt, i64 %i.a
+  %6 = getelementptr i8, ptr %5, i64 64           ; 0 uses
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.e, %bb.i, %bb.m, %.critedge, %bb.s, %bb.r, %bb.q, %bb.d
+  %.016 = phi i32 [ %i.m, %bb.d ], [ 0, %bb.q ], [ 0, %bb.r ], [ 0, %bb.s ], [ 0, %.critedge ], [ 0, %bb.m ], [ 0, %bb.i ], [ 0, %bb.e ]
   ret i32 %.016
 }
 
@@ -336,6 +327,4 @@ attributes #3 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protect
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
-!6 = !{i8 0, i8 2}
-!7 = !{}
 end_hunk_0

@@ -205,25 +205,24 @@ bb.aj:                                            ; preds = %vlv_setup_wm_latenc
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal fastcc noundef ptr @pnv_get_cxsr_latency(ptr noundef %0) unnamed_addr #0 align 16 prefalign(16) {
+define internal fastcc ptr @pnv_get_cxsr_latency(ptr noundef %0) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = tail call ptr @intel_dram_info(ptr noundef %0) #12 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
   %i.c = getelementptr i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8
   %i.e = and i64 %i.d, 2
-  %1 = icmp ne i64 %i.e, 0
+  %.not = icmp eq i64 %i.e, 0
   %i.f = icmp ne i32 %i.b, 2
   %i.g = getelementptr i8, ptr %i.a, i64 4        ; 2 uses
   %i.h = getelementptr i8, ptr %i.a, i64 8        ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.e
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.e ] ; 3 uses
-  %i.i = getelementptr [14 x i8], ptr @cxsr_latency_table, i64 %indvars.iv ; 4 uses
-  %2 = load i8, ptr %i.i, align 2
-  %3 = trunc i8 %2 to i1
-  %i.j = xor i1 %1, %3
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.e ] ; 4 uses
+  %i.i = getelementptr [14 x i8], ptr @cxsr_latency_table, i64 %indvars.iv ; 3 uses
+  %1 = icmp samesign ugt i64 %indvars.iv, 14
+  %i.j = xor i1 %1, %.not
   %i.k = trunc nuw nsw i64 %indvars.iv to i32
   %i.l = lshr i32 831283992, %i.k
   %i.m = trunc i32 %i.l to i1

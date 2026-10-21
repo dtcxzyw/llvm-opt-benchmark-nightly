@@ -204,7 +204,6 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_9TypedAttrEvE13resolveTypeIDEvE2id = comd
 @_ZN4mlir6detail14TypeIDResolverINS_3mpi10FinalizeOpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
 @.str.38 = private unnamed_addr constant [4 x i8] c"req\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_3mpi7IRecvOpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
-@__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic = private unnamed_addr constant [2 x i8] c"\01\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_3mpi7ISendOpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3mpi6InitOpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3mpi6RecvOpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
@@ -607,7 +606,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.j = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 noundef %.sroa.0.0.insert.ext.i.i) #20
   br label %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit
 
-_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit:   ; preds = %bb.a, %bb.b, %.lr.ph.i.i
+_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit:   ; preds = %bb.a, %.lr.ph.i.i, %bb.b
   %i.k = phi ptr [ %i.j, %bb.b ], [ %i.h, %.lr.ph.i.i ], [ %i.e, %bb.a ]
   %i.l = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i64 noundef 0) #20
   tail call void %1(i64 noundef %2, ptr %i.l, ptr nonnull @.str.35, i64 4) #20, !inline_history !12
@@ -617,47 +616,40 @@ _ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit:   ; preds = %bb.a, %bb.b, %.lr.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @_ZN4mlir3mpi10CommRankOp26getODSResultIndexAndLengthEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #4 align 2 {
 bb.a:
-  %.not = icmp eq i32 %1, 0
+  %.not = icmp eq i32 %1, 0                       ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !140
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !140
-  %4 = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.a = zext nneg <4 x i8> %wide.load17 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %4               ; 2 uses
-  %5 = add <4 x i32> %vec.phi16, %i.a             ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.c = icmp eq i64 %index.next, %n.vec
+  %vec.phi16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi16, zeroinitializer
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add nuw <4 x i32> %vec.phi16, splat (i32 8)
+  %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !285
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %5, %i.b
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.d, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.e = load ptr, ptr %0, align 8, !tbaa !28
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 36
@@ -666,25 +658,21 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %6 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %7 = load i8, ptr %6, align 1, !tbaa !140, !range !49, !noundef !50
-  %8 = trunc nuw i8 %7 to i1
-  %i.l = zext i32 %i.h to i64
+  %3 = select i1 %.not, i32 %i.h, i32 1
+  %i.l = zext i32 %3 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %8, i64 %i.m, i64 4294967296
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %9 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %10 = load i8, ptr %9, align 1, !tbaa !140, !range !49, !noundef !50
-  %i.n = zext nneg i8 %10 to i32
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.01013 = phi i32 [ %5, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %4 = icmp eq i32 %.01013, 0
+  %i.n = zext i1 %4 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %5 = add nuw i32 %.01013, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %5, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !286
 }
 
@@ -1087,7 +1075,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 .lr.ph.i.i:                                       ; preds = %.lr.ph.preheader
   %.pre = load ptr, ptr %0, align 8, !tbaa !28    ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 36
-  %.pre127 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94
+  %.pre127 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94 ; 2 uses
   %.pre128 = add i32 %.pre127, -1                 ; 2 uses
   %i.bi = icmp eq i32 %.pre128, 0
   %i.bj = getelementptr inbounds i8, ptr %.pre, i64 -16 ; 2 uses
@@ -1096,21 +1084,20 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 bb.o:                                             ; preds = %.lr.ph.i.i
   %.pre129 = zext i32 %.pre128 to i64             ; 2 uses
   %i.bk = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.bj, i64 noundef %.pre129) #20
+  %6 = zext i32 %.pre127 to i64
   br label %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit
 
 _ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit:   ; preds = %.lr.ph.i.i.thread, %.lr.ph.i.i, %bb.o
   %.087.lcssa138 = phi i32 [ 1, %bb.o ], [ 1, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
-  %.sroa.0.0.insert.ext.i.i.pre-phi137 = phi i64 [ %.pre129, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ] ; 3 uses
+  %7 = phi i64 [ %6, %bb.o ], [ 1, %.lr.ph.i.i ], [ 1, %.lr.ph.i.i.thread ]
+  %.sroa.0.0.insert.ext.i.i.pre-phi137 = phi i64 [ %.pre129, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
   %i.bl = phi ptr [ %i.bk, %bb.o ], [ %i.bj, %.lr.ph.i.i ], [ %i.q, %.lr.ph.i.i.thread ]
-  %6 = add nuw nsw i64 %.sroa.0.0.insert.ext.i.i.pre-phi137, 1
-  %7 = and i64 %6, 4294967295                     ; 2 uses
   %i.bm = sub nsw i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi137
-  %.not107116 = icmp eq i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi137
-  br i1 %.not107116, label %.thread103, label %.lr.ph119
+  br label %.lr.ph119
 
 .lr.ph119:                                        ; preds = %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit, %bb.p
-  %.sroa.4.0118 = phi i64 [ %i.bv, %bb.p ], [ 0, %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit ] ; 2 uses
-  %.2117 = phi i32 [ %i.bu, %bb.p ], [ %.087.lcssa138, %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0118 = phi i64 [ 0, %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit ], [ %i.bv, %bb.p ] ; 2 uses
+  %.2117 = phi i32 [ %.087.lcssa138, %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit ], [ %i.bu, %bb.p ] ; 2 uses
   %i.bn = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.bl, i64 noundef %.sroa.4.0118) #20
   %i.bo = load ptr, ptr %0, align 8, !tbaa !28
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
@@ -1127,8 +1114,8 @@ bb.p:                                             ; preds = %.lr.ph119
   %.not107 = icmp eq i64 %i.bv, %i.bm
   br i1 %.not107, label %.thread103, label %.lr.ph119
 
-.thread103:                                       ; preds = %bb.p, %.lr.ph119, %_ZN4mlir3mpi10CommRankOp14getODSOperandsEj.exit, %.lr.ph.preheader, %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.026.10 = phi i8 [ 1, %_ZN4mlir3mpi10CommRankOp13getODSResultsEj.exit ], [ %i.bc, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph.preheader ], [ 0, %_ZN4mlir3mpi10CommRankOp14getODSOperandsEj.exit ], [ 1, %bb.p ], [ 0, %.lr.ph119 ]
+.thread103:                                       ; preds = %.lr.ph119, %bb.p, %_ZN4mlir3mpi10CommRankOp14getODSOperandsEj.exit, %.lr.ph.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.026.10 = phi i8 [ 0, %_ZN4mlir3mpi10CommRankOp14getODSOperandsEj.exit ], [ %i.bc, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph.preheader ], [ 0, %.lr.ph119 ], [ 1, %bb.p ]
   ret i8 %.sroa.026.10
 }
 
@@ -1531,7 +1518,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.j = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 noundef %.sroa.0.0.insert.ext.i.i) #20
   br label %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit
 
-_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit:   ; preds = %bb.a, %bb.b, %.lr.ph.i.i
+_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit:   ; preds = %bb.a, %.lr.ph.i.i, %bb.b
   %i.k = phi ptr [ %i.j, %bb.b ], [ %i.h, %.lr.ph.i.i ], [ %i.e, %bb.a ]
   %i.l = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i64 noundef 0) #20
   tail call void %1(i64 noundef %2, ptr %i.l, ptr nonnull @.str.36, i64 4) #20, !inline_history !12
@@ -1541,47 +1528,40 @@ _ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit:   ; preds = %bb.a, %bb.b, %.lr.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @_ZN4mlir3mpi10CommSizeOp26getODSResultIndexAndLengthEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #4 align 2 {
 bb.a:
-  %.not = icmp eq i32 %1, 0
+  %.not = icmp eq i32 %1, 0                       ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !140
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !140
-  %4 = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.a = zext nneg <4 x i8> %wide.load17 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %4               ; 2 uses
-  %5 = add <4 x i32> %vec.phi16, %i.a             ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.c = icmp eq i64 %index.next, %n.vec
+  %vec.phi16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi16, zeroinitializer
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add nuw <4 x i32> %vec.phi16, splat (i32 8)
+  %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !290
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %5, %i.b
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.d, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.e = load ptr, ptr %0, align 8, !tbaa !28
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 36
@@ -1590,25 +1570,21 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %6 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %7 = load i8, ptr %6, align 1, !tbaa !140, !range !49, !noundef !50
-  %8 = trunc nuw i8 %7 to i1
-  %i.l = zext i32 %i.h to i64
+  %3 = select i1 %.not, i32 %i.h, i32 1
+  %i.l = zext i32 %3 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %8, i64 %i.m, i64 4294967296
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %9 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %10 = load i8, ptr %9, align 1, !tbaa !140, !range !49, !noundef !50
-  %i.n = zext nneg i8 %10 to i32
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.01013 = phi i32 [ %5, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %4 = icmp eq i32 %.01013, 0
+  %i.n = zext i1 %4 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %5 = add nuw i32 %.01013, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %5, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !291
 }
 
@@ -2011,7 +1987,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 .lr.ph.i.i:                                       ; preds = %.lr.ph.preheader
   %.pre = load ptr, ptr %0, align 8, !tbaa !28    ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 36
-  %.pre127 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94
+  %.pre127 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94 ; 2 uses
   %.pre128 = add i32 %.pre127, -1                 ; 2 uses
   %i.bi = icmp eq i32 %.pre128, 0
   %i.bj = getelementptr inbounds i8, ptr %.pre, i64 -16 ; 2 uses
@@ -2020,21 +1996,20 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 bb.o:                                             ; preds = %.lr.ph.i.i
   %.pre129 = zext i32 %.pre128 to i64             ; 2 uses
   %i.bk = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.bj, i64 noundef %.pre129) #20
+  %6 = zext i32 %.pre127 to i64
   br label %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit
 
 _ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit:   ; preds = %.lr.ph.i.i.thread, %.lr.ph.i.i, %bb.o
   %.087.lcssa138 = phi i32 [ 1, %bb.o ], [ 1, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
-  %.sroa.0.0.insert.ext.i.i.pre-phi137 = phi i64 [ %.pre129, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ] ; 3 uses
+  %7 = phi i64 [ %6, %bb.o ], [ 1, %.lr.ph.i.i ], [ 1, %.lr.ph.i.i.thread ]
+  %.sroa.0.0.insert.ext.i.i.pre-phi137 = phi i64 [ %.pre129, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
   %i.bl = phi ptr [ %i.bk, %bb.o ], [ %i.bj, %.lr.ph.i.i ], [ %i.q, %.lr.ph.i.i.thread ]
-  %6 = add nuw nsw i64 %.sroa.0.0.insert.ext.i.i.pre-phi137, 1
-  %7 = and i64 %6, 4294967295                     ; 2 uses
   %i.bm = sub nsw i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi137
-  %.not107116 = icmp eq i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi137
-  br i1 %.not107116, label %.thread103, label %.lr.ph119
+  br label %.lr.ph119
 
 .lr.ph119:                                        ; preds = %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit, %bb.p
-  %.sroa.4.0118 = phi i64 [ %i.bv, %bb.p ], [ 0, %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit ] ; 2 uses
-  %.2117 = phi i32 [ %i.bu, %bb.p ], [ %.087.lcssa138, %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0118 = phi i64 [ 0, %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit ], [ %i.bv, %bb.p ] ; 2 uses
+  %.2117 = phi i32 [ %.087.lcssa138, %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit ], [ %i.bu, %bb.p ] ; 2 uses
   %i.bn = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.bl, i64 noundef %.sroa.4.0118) #20
   %i.bo = load ptr, ptr %0, align 8, !tbaa !28
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
@@ -2051,8 +2026,8 @@ bb.p:                                             ; preds = %.lr.ph119
   %.not107 = icmp eq i64 %i.bv, %i.bm
   br i1 %.not107, label %.thread103, label %.lr.ph119
 
-.thread103:                                       ; preds = %bb.p, %.lr.ph119, %_ZN4mlir3mpi10CommSizeOp14getODSOperandsEj.exit, %.lr.ph.preheader, %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.026.10 = phi i8 [ 1, %_ZN4mlir3mpi10CommSizeOp13getODSResultsEj.exit ], [ %i.bc, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph.preheader ], [ 0, %_ZN4mlir3mpi10CommSizeOp14getODSOperandsEj.exit ], [ 1, %bb.p ], [ 0, %.lr.ph119 ]
+.thread103:                                       ; preds = %.lr.ph119, %bb.p, %_ZN4mlir3mpi10CommSizeOp14getODSOperandsEj.exit, %.lr.ph.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.026.10 = phi i8 [ 0, %_ZN4mlir3mpi10CommSizeOp14getODSOperandsEj.exit ], [ %i.bc, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph.preheader ], [ 0, %.lr.ph119 ], [ 1, %bb.p ]
   ret i8 %.sroa.026.10
 }
 
@@ -2455,7 +2430,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.j = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 noundef %.sroa.0.0.insert.ext.i.i) #20
   br label %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit
 
-_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit:  ; preds = %bb.a, %bb.b, %.lr.ph.i.i
+_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit:  ; preds = %bb.a, %.lr.ph.i.i, %bb.b
   %i.k = phi ptr [ %i.j, %bb.b ], [ %i.h, %.lr.ph.i.i ], [ %i.e, %bb.a ]
   %i.l = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i64 noundef 0) #20
   tail call void %1(i64 noundef %2, ptr %i.l, ptr nonnull @.str.37, i64 7) #20, !inline_history !12
@@ -2465,47 +2440,40 @@ _ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit:  ; preds = %bb.a, %bb.b, %.lr.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @_ZN4mlir3mpi11CommSplitOp26getODSResultIndexAndLengthEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #4 align 2 {
 bb.a:
-  %.not = icmp eq i32 %1, 0
+  %.not = icmp eq i32 %1, 0                       ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !140
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !140
-  %4 = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.a = zext nneg <4 x i8> %wide.load17 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %4               ; 2 uses
-  %5 = add <4 x i32> %vec.phi16, %i.a             ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.c = icmp eq i64 %index.next, %n.vec
+  %vec.phi16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi16, zeroinitializer
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add nuw <4 x i32> %vec.phi16, splat (i32 8)
+  %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !295
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %5, %i.b
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.d, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.e = load ptr, ptr %0, align 8, !tbaa !28
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 36
@@ -2514,25 +2482,21 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %6 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %7 = load i8, ptr %6, align 1, !tbaa !140, !range !49, !noundef !50
-  %8 = trunc nuw i8 %7 to i1
-  %i.l = zext i32 %i.h to i64
+  %3 = select i1 %.not, i32 %i.h, i32 1
+  %i.l = zext i32 %3 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %8, i64 %i.m, i64 4294967296
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %9 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %10 = load i8, ptr %9, align 1, !tbaa !140, !range !49, !noundef !50
-  %i.n = zext nneg i8 %10 to i32
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.01013 = phi i32 [ %5, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %4 = icmp eq i32 %.01013, 0
+  %i.n = zext i1 %4 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %5 = add nuw i32 %.01013, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %5, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !296
 }
 
@@ -2935,7 +2899,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 .lr.ph.i.i:                                       ; preds = %.lr.ph.preheader
   %.pre = load ptr, ptr %0, align 8, !tbaa !28    ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 36
-  %.pre223 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94
+  %.pre223 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94 ; 2 uses
   %.pre224 = add i32 %.pre223, -1                 ; 2 uses
   %i.ca = icmp eq i32 %.pre224, 0
   %i.cb = getelementptr inbounds i8, ptr %.pre, i64 -16 ; 2 uses
@@ -2944,21 +2908,20 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 bb.o:                                             ; preds = %.lr.ph.i.i
   %.pre225 = zext i32 %.pre224 to i64             ; 2 uses
   %i.cc = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.cb, i64 noundef %.pre225) #20
+  %6 = zext i32 %.pre223 to i64
   br label %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit
 
 _ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit:  ; preds = %.lr.ph.i.i.thread, %.lr.ph.i.i, %bb.o
   %.0155.lcssa234 = phi i32 [ 1, %bb.o ], [ 1, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
-  %.sroa.0.0.insert.ext.i.i.pre-phi233 = phi i64 [ %.pre225, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ] ; 3 uses
+  %7 = phi i64 [ %6, %bb.o ], [ 1, %.lr.ph.i.i ], [ 1, %.lr.ph.i.i.thread ]
+  %.sroa.0.0.insert.ext.i.i.pre-phi233 = phi i64 [ %.pre225, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
   %i.cd = phi ptr [ %i.cc, %bb.o ], [ %i.cb, %.lr.ph.i.i ], [ %i.ai, %.lr.ph.i.i.thread ]
-  %6 = add nuw nsw i64 %.sroa.0.0.insert.ext.i.i.pre-phi233, 1
-  %7 = and i64 %6, 4294967295                     ; 2 uses
   %i.ce = sub nsw i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi233
-  %.not191208 = icmp eq i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi233
-  br i1 %.not191208, label %.thread170, label %.lr.ph211
+  br label %.lr.ph211
 
 .lr.ph211:                                        ; preds = %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit, %bb.p
-  %.sroa.4.0210 = phi i64 [ %i.cn, %bb.p ], [ 0, %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit ] ; 2 uses
-  %.2157209 = phi i32 [ %i.cm, %bb.p ], [ %.0155.lcssa234, %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0210 = phi i64 [ 0, %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit ], [ %i.cn, %bb.p ] ; 2 uses
+  %.2157209 = phi i32 [ %.0155.lcssa234, %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit ], [ %i.cm, %bb.p ] ; 2 uses
   %i.cf = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.cd, i64 noundef %.sroa.4.0210) #20
   %i.cg = load ptr, ptr %0, align 8, !tbaa !28
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
@@ -2975,8 +2938,8 @@ bb.p:                                             ; preds = %.lr.ph211
   %.not191 = icmp eq i64 %i.cn, %i.ce
   br i1 %.not191, label %.thread170, label %.lr.ph211
 
-.thread170:                                       ; preds = %bb.p, %.lr.ph211, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit58, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit69, %.lr.ph.preheader, %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.044.18 = phi i8 [ %i.bu, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir3mpi11CommSplitOp13getODSResultsEj.exit ], [ 0, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit ], [ 0, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit58 ], [ 0, %.lr.ph.preheader ], [ 0, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit69 ], [ 1, %bb.p ], [ 0, %.lr.ph211 ]
+.thread170:                                       ; preds = %.lr.ph211, %bb.p, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit58, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit69, %.lr.ph.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.044.18 = phi i8 [ %i.bu, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit69 ], [ 0, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit ], [ 0, %_ZN4mlir3mpi11CommSplitOp14getODSOperandsEj.exit58 ], [ 0, %.lr.ph.preheader ], [ 0, %.lr.ph211 ], [ 1, %bb.p ]
   ret i8 %.sroa.044.18
 }
 
@@ -3379,7 +3342,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.j = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 noundef %.sroa.0.0.insert.ext.i.i) #20
   br label %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit
 
-_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit:       ; preds = %bb.a, %bb.b, %.lr.ph.i.i
+_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit:       ; preds = %bb.a, %.lr.ph.i.i, %bb.b
   %i.k = phi ptr [ %i.j, %bb.b ], [ %i.h, %.lr.ph.i.i ], [ %i.e, %bb.a ]
   %i.l = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i64 noundef 0) #20
   tail call void %1(i64 noundef %2, ptr %i.l, ptr nonnull @.str.38, i64 3) #20, !inline_history !12
@@ -3389,47 +3352,40 @@ _ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit:       ; preds = %bb.a, %bb.b, %.lr.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @_ZN4mlir3mpi7IRecvOp26getODSResultIndexAndLengthEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #4 align 2 {
 bb.a:
-  %.not = icmp eq i32 %1, 0
+  %.not = icmp eq i32 %1, 0                       ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !140
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !140
-  %4 = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.a = zext nneg <4 x i8> %wide.load17 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %4               ; 2 uses
-  %5 = add <4 x i32> %vec.phi16, %i.a             ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.c = icmp eq i64 %index.next, %n.vec
+  %vec.phi16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi16, zeroinitializer
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add nuw <4 x i32> %vec.phi16, splat (i32 8)
+  %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !303
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %5, %i.b
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.d, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.e = load ptr, ptr %0, align 8, !tbaa !28
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 36
@@ -3438,25 +3394,21 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %6 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %7 = load i8, ptr %6, align 1, !tbaa !140, !range !49, !noundef !50
-  %8 = trunc nuw i8 %7 to i1
-  %i.l = zext i32 %i.h to i64
+  %3 = select i1 %.not, i32 %i.h, i32 1
+  %i.l = zext i32 %3 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %8, i64 %i.m, i64 4294967296
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %9 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %10 = load i8, ptr %9, align 1, !tbaa !140, !range !49, !noundef !50
-  %i.n = zext nneg i8 %10 to i32
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.01013 = phi i32 [ %5, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %4 = icmp eq i32 %.01013, 0
+  %i.n = zext i1 %4 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %5 = add nuw i32 %.01013, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %5, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !304
 }
 
@@ -3859,7 +3811,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 .lr.ph.i.i:                                       ; preds = %.lr.ph.preheader
   %.pre = load ptr, ptr %0, align 8, !tbaa !28    ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 36
-  %.pre270 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94
+  %.pre270 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94 ; 2 uses
   %.pre271 = add i32 %.pre270, -1                 ; 2 uses
   %i.cj = icmp eq i32 %.pre271, 0
   %i.ck = getelementptr inbounds i8, ptr %.pre, i64 -16 ; 2 uses
@@ -3868,21 +3820,20 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 bb.o:                                             ; preds = %.lr.ph.i.i
   %.pre272 = zext i32 %.pre271 to i64             ; 2 uses
   %i.cl = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.ck, i64 noundef %.pre272) #20
+  %6 = zext i32 %.pre270 to i64
   br label %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit
 
 _ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit:       ; preds = %.lr.ph.i.i.thread, %.lr.ph.i.i, %bb.o
   %.0189.lcssa281 = phi i32 [ 1, %bb.o ], [ 1, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
-  %.sroa.0.0.insert.ext.i.i.pre-phi280 = phi i64 [ %.pre272, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ] ; 3 uses
+  %7 = phi i64 [ %6, %bb.o ], [ 1, %.lr.ph.i.i ], [ 1, %.lr.ph.i.i.thread ]
+  %.sroa.0.0.insert.ext.i.i.pre-phi280 = phi i64 [ %.pre272, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
   %i.cm = phi ptr [ %i.cl, %bb.o ], [ %i.ck, %.lr.ph.i.i ], [ %i.ar, %.lr.ph.i.i.thread ]
-  %6 = add nuw nsw i64 %.sroa.0.0.insert.ext.i.i.pre-phi280, 1
-  %7 = and i64 %6, 4294967295                     ; 2 uses
   %i.cn = sub nsw i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi280
-  %.not232253 = icmp eq i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi280
-  br i1 %.not232253, label %.thread210, label %.lr.ph256
+  br label %.lr.ph256
 
 .lr.ph256:                                        ; preds = %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit, %bb.p
-  %.sroa.4.0255 = phi i64 [ %i.cw, %bb.p ], [ 0, %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit ] ; 2 uses
-  %.2191254 = phi i32 [ %i.cv, %bb.p ], [ %.0189.lcssa281, %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0255 = phi i64 [ 0, %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit ], [ %i.cw, %bb.p ] ; 2 uses
+  %.2191254 = phi i32 [ %.0189.lcssa281, %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit ], [ %i.cv, %bb.p ] ; 2 uses
   %i.co = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.cm, i64 noundef %.sroa.4.0255) #20
   %i.cp = load ptr, ptr %0, align 8, !tbaa !28
   %i.cq = getelementptr inbounds nuw i8, ptr %i.co, i64 8
@@ -3899,8 +3850,8 @@ bb.p:                                             ; preds = %.lr.ph256
   %.not232 = icmp eq i64 %i.cw, %i.cn
   br i1 %.not232, label %.thread210, label %.lr.ph256
 
-.thread210:                                       ; preds = %bb.p, %.lr.ph256, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit69, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit80, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit91, %.lr.ph.preheader, %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.053.22 = phi i8 [ %i.cd, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir3mpi7IRecvOp13getODSResultsEj.exit ], [ 0, %.lr.ph.preheader ], [ 0, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit ], [ 0, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit69 ], [ 0, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit91 ], [ 0, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit80 ], [ 1, %bb.p ], [ 0, %.lr.ph256 ]
+.thread210:                                       ; preds = %.lr.ph256, %bb.p, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit69, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit80, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit91, %.lr.ph.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.053.22 = phi i8 [ %i.cd, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit80 ], [ 0, %.lr.ph.preheader ], [ 0, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit ], [ 0, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit69 ], [ 0, %_ZN4mlir3mpi7IRecvOp14getODSOperandsEj.exit91 ], [ 0, %.lr.ph256 ], [ 1, %bb.p ]
   ret i8 %.sroa.053.22
 }
 
@@ -4303,7 +4254,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.j = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 noundef %.sroa.0.0.insert.ext.i.i) #20
   br label %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit
 
-_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit:       ; preds = %bb.a, %bb.b, %.lr.ph.i.i
+_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit:       ; preds = %bb.a, %.lr.ph.i.i, %bb.b
   %i.k = phi ptr [ %i.j, %bb.b ], [ %i.h, %.lr.ph.i.i ], [ %i.e, %bb.a ]
   %i.l = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i64 noundef 0) #20
   tail call void %1(i64 noundef %2, ptr %i.l, ptr nonnull @.str.38, i64 3) #20, !inline_history !12
@@ -4313,47 +4264,40 @@ _ZN4mlir3mpi7ISendOp13getODSResultsEj.exit:       ; preds = %bb.a, %bb.b, %.lr.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @_ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #4 align 2 {
 bb.a:
-  %.not = icmp eq i32 %1, 0
+  %.not = icmp eq i32 %1, 0                       ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.b, %vector.body ]
-  %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !140
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !140
-  %4 = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.a = zext nneg <4 x i8> %wide.load17 to <4 x i32>
-  %i.b = add <4 x i32> %vec.phi, %4               ; 2 uses
-  %5 = add <4 x i32> %vec.phi16, %i.a             ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.c = icmp eq i64 %index.next, %n.vec
+  %vec.phi16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %2 = icmp eq <4 x i32> %vec.phi16, zeroinitializer
+  %i.a = zext <4 x i1> %2 to <4 x i32>
+  %i.b = add <4 x i32> %vec.phi, %i.a             ; 2 uses
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add nuw <4 x i32> %vec.phi16, splat (i32 8)
+  %i.c = icmp eq i32 %index.next, %n.vec
   br i1 %i.c, label %middle.block, label %vector.body, !llvm.loop !308
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %5, %i.b
-  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %i.d = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.b) ; 2 uses
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.d, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.e = load ptr, ptr %0, align 8, !tbaa !28
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 36
@@ -4362,25 +4306,21 @@ middle.block:                                     ; preds = %vector.body
   %i.i = add i32 %i.g, -2
   %i.j = mul nsw i32 %i.i, %.0.lcssa
   %i.k = add i32 %i.j, %1
-  %6 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %7 = load i8, ptr %6, align 1, !tbaa !140, !range !49, !noundef !50
-  %8 = trunc nuw i8 %7 to i1
-  %i.l = zext i32 %i.h to i64
+  %3 = select i1 %.not, i32 %i.h, i32 1
+  %i.l = zext i32 %3 to i64
   %i.m = shl nuw i64 %i.l, 32
-  %.sroa.2.0.insert.shift = select i1 %8, i64 %i.m, i64 4294967296
   %.sroa.0.0.insert.ext = zext i32 %i.k to i64
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.0.0.insert.insert = or disjoint i64 %i.m, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %9 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir3mpi7ISendOp26getODSResultIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %10 = load i8, ptr %9, align 1, !tbaa !140, !range !49, !noundef !50
-  %i.n = zext nneg i8 %10 to i32
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.01013 = phi i32 [ %5, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %4 = icmp eq i32 %.01013, 0
+  %i.n = zext i1 %4 to i32
   %spec.select = add nuw nsw i32 %.014, %i.n      ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %5 = add nuw i32 %.01013, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %5, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !309
 }
 
@@ -4783,7 +4723,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 .lr.ph.i.i:                                       ; preds = %.lr.ph.preheader
   %.pre = load ptr, ptr %0, align 8, !tbaa !28    ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 36
-  %.pre270 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94
+  %.pre270 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !94 ; 2 uses
   %.pre271 = add i32 %.pre270, -1                 ; 2 uses
   %i.cj = icmp eq i32 %.pre271, 0
   %i.ck = getelementptr inbounds i8, ptr %.pre, i64 -16 ; 2 uses
@@ -4792,21 +4732,20 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.m, %bb.n
 bb.o:                                             ; preds = %.lr.ph.i.i
   %.pre272 = zext i32 %.pre271 to i64             ; 2 uses
   %i.cl = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.ck, i64 noundef %.pre272) #20
+  %6 = zext i32 %.pre270 to i64
   br label %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit
 
 _ZN4mlir3mpi7ISendOp13getODSResultsEj.exit:       ; preds = %.lr.ph.i.i.thread, %.lr.ph.i.i, %bb.o
   %.0189.lcssa281 = phi i32 [ 1, %bb.o ], [ 1, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
-  %.sroa.0.0.insert.ext.i.i.pre-phi280 = phi i64 [ %.pre272, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ] ; 3 uses
+  %7 = phi i64 [ %6, %bb.o ], [ 1, %.lr.ph.i.i ], [ 1, %.lr.ph.i.i.thread ]
+  %.sroa.0.0.insert.ext.i.i.pre-phi280 = phi i64 [ %.pre272, %bb.o ], [ 0, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.thread ]
   %i.cm = phi ptr [ %i.cl, %bb.o ], [ %i.ck, %.lr.ph.i.i ], [ %i.ar, %.lr.ph.i.i.thread ]
-  %6 = add nuw nsw i64 %.sroa.0.0.insert.ext.i.i.pre-phi280, 1
-  %7 = and i64 %6, 4294967295                     ; 2 uses
   %i.cn = sub nsw i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi280
-  %.not232253 = icmp eq i64 %7, %.sroa.0.0.insert.ext.i.i.pre-phi280
-  br i1 %.not232253, label %.thread210, label %.lr.ph256
+  br label %.lr.ph256
 
 .lr.ph256:                                        ; preds = %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit, %bb.p
-  %.sroa.4.0255 = phi i64 [ %i.cw, %bb.p ], [ 0, %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit ] ; 2 uses
-  %.2191254 = phi i32 [ %i.cv, %bb.p ], [ %.0189.lcssa281, %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit ] ; 2 uses
+  %.sroa.4.0255 = phi i64 [ 0, %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit ], [ %i.cw, %bb.p ] ; 2 uses
+  %.2191254 = phi i32 [ %.0189.lcssa281, %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit ], [ %i.cv, %bb.p ] ; 2 uses
   %i.co = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.cm, i64 noundef %.sroa.4.0255) #20
   %i.cp = load ptr, ptr %0, align 8, !tbaa !28
   %i.cq = getelementptr inbounds nuw i8, ptr %i.co, i64 8
@@ -4823,8 +4762,8 @@ bb.p:                                             ; preds = %.lr.ph256
   %.not232 = icmp eq i64 %i.cw, %i.cn
   br i1 %.not232, label %.thread210, label %.lr.ph256
 
-.thread210:                                       ; preds = %bb.p, %.lr.ph256, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit69, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit80, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit91, %.lr.ph.preheader, %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.053.22 = phi i8 [ %i.cd, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir3mpi7ISendOp13getODSResultsEj.exit ], [ 0, %.lr.ph.preheader ], [ 0, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit ], [ 0, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit69 ], [ 0, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit91 ], [ 0, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit80 ], [ 1, %bb.p ], [ 0, %.lr.ph256 ]
+.thread210:                                       ; preds = %.lr.ph256, %bb.p, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit69, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit80, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit91, %.lr.ph.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.053.22 = phi i8 [ %i.cd, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit80 ], [ 0, %.lr.ph.preheader ], [ 0, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit ], [ 0, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit69 ], [ 0, %_ZN4mlir3mpi7ISendOp14getODSOperandsEj.exit91 ], [ 0, %.lr.ph256 ], [ 1, %bb.p ]
   ret i8 %.sroa.053.22
 }
 
