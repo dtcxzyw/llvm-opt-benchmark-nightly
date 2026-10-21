@@ -205,26 +205,28 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph.i
   %wide.trip.count = zext i32 %i.as to i64
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.i, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
-  %.02539 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.i ] ; 2 uses
+2:                                                ; preds = %bb.i
+  %spec.select31 = select i1 %exitcond.not.a, i32 %i.bf, i32 -2147483648
+  %.2 = select i1 %.not27.a, i32 %.02539, i32 %spec.select31 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %_ZN7CaDiCaL11LratBuilder16clause_satisfiedEPNS_17LratBuilderClauseE.exit, label %bb.i, !llvm.loop !303
+
+bb.i:                                             ; preds = %.lr.ph, %2
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %2 ] ; 2 uses
+  %.02539 = phi i32 [ 0, %.lr.ph ], [ %.2, %2 ]   ; 2 uses
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %indvars.iv
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !65 ; 2 uses
   %i.bg = sext i32 %i.bf to i64
   %i.bh = getelementptr inbounds i8, ptr %i.bd, i64 %i.bg
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !69
-  %.not = icmp eq i8 %i.bi, 0                     ; 2 uses
-  %.not27.a = icmp ne i32 %.02539, 0              ; 2 uses
-  %spec.select31 = select i1 %.not27.a, i32 -2147483648, i32 %i.bf
-  %cond.not56 = select i1 %.not, i1 %.not27.a, i1 false
-  %.2 = select i1 %.not, i32 %spec.select31, i32 %.02539 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %or.cond = select i1 %cond.not56, i1 true, i1 %exitcond.not.a
-  br i1 %or.cond, label %_ZN7CaDiCaL11LratBuilder16clause_satisfiedEPNS_17LratBuilderClauseE.exit, label %bb.i, !llvm.loop !303
+  %.not27.a = icmp ne i8 %i.bi, 0                 ; 2 uses
+  %exitcond.not.a = icmp eq i32 %.02539, 0        ; 2 uses
+  %or.cond = select i1 %.not27.a, i1 true, i1 %exitcond.not.a
+  br i1 %or.cond, label %2, label %_ZN7CaDiCaL11LratBuilder16clause_satisfiedEPNS_17LratBuilderClauseE.exit
 
-_ZN7CaDiCaL11LratBuilder16clause_satisfiedEPNS_17LratBuilderClauseE.exit: ; preds = %bb.h, %bb.i
-  %.4 = phi i32 [ %.2, %bb.i ], [ 0, %bb.h ]      ; 6 uses
+_ZN7CaDiCaL11LratBuilder16clause_satisfiedEPNS_17LratBuilderClauseE.exit: ; preds = %bb.h, %2, %bb.i
+  %.4 = phi i32 [ %.2, %2 ], [ -2147483648, %bb.i ], [ 0, %bb.h ] ; 6 uses
   switch i32 %i.as, label %bb.l [
     i32 1, label %bb.j
     i32 0, label %_ZN7CaDiCaL11LratBuilder16clause_satisfiedEPNS_17LratBuilderClauseE.exit.thread

@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca i32, align 4                      ; 4 uses
-  %i.d = alloca i32, align 4                      ; 5 uses
+  %i.d = alloca i32, align 4                      ; 6 uses
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = load i32, ptr %3, align 4, !tbaa !16     ; 2 uses
   %i.g = icmp eq i32 %i.f, -1
@@ -237,8 +237,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.219.i = phi i32 [ %.118.i, %bb.d ], [ %.01725.i, %bb.c ] ; 2 uses
-  %.2.i = phi i32 [ %.1.i, %bb.d ], [ %.026.i, %bb.c ] ; 3 uses
+  %.219.i = phi i32 [ %.118.i, %bb.d ], [ %.01725.i, %bb.c ] ; 3 uses
+  %.2.i = phi i32 [ %.1.i, %bb.d ], [ %.026.i, %bb.c ] ; 4 uses
   %i.n = add nuw nsw i32 %.02024.i, 1             ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.n, 20
   br i1 %exitcond.not.i, label %determine_best_coding_stop_bits.exit, label %bb.c, !llvm.loop !3
@@ -274,35 +274,46 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.2.i65 = phi i32 [ %.1.i63, %bb.g ], [ %.026.i57, %bb.f ] ; 3 uses
   %i.t = add nuw nsw i32 %.02024.i59, 1           ; 2 uses
   %exitcond.not.i66 = icmp eq i32 %i.t, 20
-  br i1 %exitcond.not.i66, label %determine_best_coding_triple.exit.a, label %bb.f, !llvm.loop !2
+  br i1 %exitcond.not.i66, label %5, label %bb.f, !llvm.loop !2
 
-determine_best_coding_triple.exit.a:              ; preds = %bb.h
-  %.not = icmp eq i32 %.2.i, -1                   ; 4 uses
+5:                                                ; preds = %bb.h
+  %.not = icmp eq i32 %.2.i, -1                   ; 3 uses
   %.048 = select i1 %.not, i32 -1, i32 %.219.i    ; 2 uses
+  %6 = icmp eq i32 %.2.i65, -1
+  br i1 %6, label %determine_best_coding_triple.exit, label %7
+
+determine_best_coding_triple.exit:                ; preds = %5
   %.0 = select i1 %.not, i32 -1, i32 1
-  %5 = icmp ne i32 %.2.i65, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
-  %6 = icmp slt i32 %.219.i64, %.048
-  %or.cond = select i1 %.not, i1 true, i1 %6
-  %or.cond123 = select i1 %5, i1 %or.cond, i1 false ; 4 uses
-  %.146 = select i1 %or.cond123, i32 %.2.i65, i32 %.2.i ; 2 uses
-  %.1 = select i1 %or.cond123, i32 3, i32 %.0     ; 2 uses
+  br label %determine_best_coding_triple.exit.a
+
+7:                                                ; preds = %5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
+  %8 = icmp slt i32 %.219.i64, %.048
+  %or.cond = select i1 %.not, i1 true, i1 %8
+  br i1 %or.cond, label %9, label %determine_best_coding_triple.exit.a
+
+9:                                                ; preds = %7
+  br label %determine_best_coding_triple.exit.a
+
+determine_best_coding_triple.exit.a:              ; preds = %determine_best_coding_triple.exit, %7, %9
+  %.149 = phi i32 [ %.048, %determine_best_coding_triple.exit ], [ %.219.i64, %9 ], [ %.219.i, %7 ]
+  %.146 = phi i32 [ %.2.i, %determine_best_coding_triple.exit ], [ %.2.i65, %9 ], [ %.2.i, %7 ] ; 2 uses
+  %.1 = phi i32 [ %.0, %determine_best_coding_triple.exit ], [ 3, %9 ], [ 1, %7 ] ; 3 uses
   call void @Ptngc_coder_deinit(ptr noundef %i.o) #12
   %i.u = icmp sgt i32 %2, 3
   br i1 %i.u, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %determine_best_coding_triple.exit.a
-  %.149 = select i1 %or.cond123, i32 %.219.i64, i32 %.048
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   store i32 %i.h, ptr %i.c, align 4, !tbaa !16
   %i.v = call ptr @Ptngc_coder_init() #12         ; 2 uses
   %i.w = call ptr @Ptngc_pack_array(ptr noundef %i.v, ptr noundef %0, ptr noundef nonnull %i.c, i32 noundef 9, i32 noundef 0, i32 noundef %1, i32 noundef %2) #12 ; 0 uses
   call void @Ptngc_coder_deinit(ptr noundef %i.v) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
-  %not.or.cond123 = xor i1 %or.cond123, true
-  %7 = select i1 %not.or.cond123, i1 %.not, i1 false
+  %10 = icmp eq i32 %.1, -1
   %i.x = icmp sgt i32 %.149, 40
-  %or.cond55 = select i1 %7, i1 true, i1 %i.x     ; 2 uses
+  %or.cond55 = select i1 %10, i1 true, i1 %i.x    ; 2 uses
   %spec.select = select i1 %or.cond55, i32 0, i32 %.146
   %spec.select56 = select i1 %or.cond55, i32 9, i32 %.1
   br label %bb.j

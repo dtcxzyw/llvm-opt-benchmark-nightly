@@ -204,20 +204,23 @@ bb.d:                                             ; preds = %.preheader60
   br i1 %or.cond, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %.thread, %.preheader
-  %.039 = phi ptr [ %.140, %.preheader ], [ %i.m, %.thread ] ; 3 uses
+  %.039 = phi ptr [ %i.t, %.preheader ], [ %i.m, %.thread ] ; 3 uses
   %i.s = getelementptr inbounds i8, ptr %.039, i64 -1
-  %i.t = call ptr @jvp_utf8_backtrack(ptr noundef nonnull %i.s, ptr noundef %.243, ptr noundef null) #17 ; 3 uses
+  %i.t = call ptr @jvp_utf8_backtrack(ptr noundef nonnull %i.s, ptr noundef %.243, ptr noundef null) #17 ; 4 uses
   %i.u = call ptr @jvp_utf8_next(ptr noundef %i.t, ptr noundef %.039, ptr noundef nonnull %i.a) #17 ; 0 uses
   %i.v = load i32, ptr %i.a, align 4, !tbaa !15
   %i.w = call i32 @jvp_codepoint_is_whitespace(i32 noundef %i.v) #17
   %.not53 = icmp ne i32 %i.w, 0                   ; 2 uses
   %i.x = icmp ne ptr %i.t, %.243
-  %.140 = select i1 %.not53, ptr %i.t, ptr %.039  ; 2 uses
   %.not59 = select i1 %.not53, i1 %i.x, i1 false
-  br i1 %.not59, label %.preheader, label %.loopexit
+  br i1 %.not59, label %.preheader, label %.loopexit.loopexit
 
-.loopexit:                                        ; preds = %.preheader, %.thread
-  %.2 = phi ptr [ %i.m, %.thread ], [ %.140, %.preheader ] ; 2 uses
+.loopexit.loopexit:                               ; preds = %.preheader
+  %.140 = select i1 %.not53, ptr %i.t, ptr %.039
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.thread
+  %.2 = phi ptr [ %i.m, %.thread ], [ %.140, %.loopexit.loopexit ] ; 2 uses
   %i.y = icmp eq ptr %.243, %i.k
   %i.z = icmp eq ptr %.2, %i.m
   %or.cond54 = select i1 %i.y, i1 %i.z, i1 false

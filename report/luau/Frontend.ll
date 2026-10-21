@@ -204,8 +204,8 @@ bb.ca:                                            ; preds = %bb.bz
 .loopexit.i.i:                                    ; preds = %bb.ca, %bb.bz, %bb.bw, %bb.bv
   %i.oa = phi ptr [ %.pre.i.i, %bb.bv ], [ %i.mt, %bb.bw ], [ %.pre.i.i, %bb.bz ], [ %.pre.i.i, %bb.ca ] ; 2 uses
   %i.ob = icmp eq i64 %i.nj, 0                    ; 2 uses
-  %i.oc = shl i64 %i.nj, 1                        ; 3 uses
-  %spec.select.i.i.i = select i1 %i.ob, i64 16, i64 %i.oc ; 6 uses
+  %i.oc = shl i64 %i.nj, 1                        ; 4 uses
+  %spec.select.i.i.i = select i1 %i.ob, i64 16, i64 %i.oc ; 5 uses
   %.not.i.i.i.i140 = icmp eq i64 %spec.select.i.i.i, 0
   br i1 %.not.i.i.i.i140, label %_ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISC_EERKSC_RKNS_15TypeCheckLimitsEbSt8functionIFbSH_EEE4MarkES4_IKS3_SO_ENS0_16ItemInterfaceMapIS3_SO_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERSQ_m.exit.i.i.i, label %bb.cb
 
@@ -288,6 +288,7 @@ _ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parse
   br i1 %.not.i11.i.i.i, label %_ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISC_EERKSC_RKNS_15TypeCheckLimitsEbSt8functionIFbSH_EEE4MarkES4_IKS3_SO_ENS0_16ItemInterfaceMapIS3_SO_EENS_16DenseHashPointerESt8equal_toIS3_EE14rehash_if_fullERSQ_.exit.i, label %bb.cc
 
 bb.cc:                                            ; preds = %._crit_edge27.thread.i.i.i, %._crit_edge27.i.i.i
+  %.pre.i = phi i64 [ %i.oc, %._crit_edge27.thread.i.i.i ], [ 16, %._crit_edge27.i.i.i ]
   call void @_ZdlPv(ptr noundef nonnull %.pre32.i.i.i) #34
   br label %_ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISC_EERKSC_RKNS_15TypeCheckLimitsEbSt8functionIFbSH_EEE4MarkES4_IKS3_SO_ENS0_16ItemInterfaceMapIS3_SO_EENS_16DenseHashPointerESt8equal_toIS3_EE14rehash_if_fullERSQ_.exit.i
 
@@ -357,7 +358,7 @@ bb.cf:                                            ; preds = %_ZN4Luau6detail14De
 
 _ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISC_EERKSC_RKNS_15TypeCheckLimitsEbSt8functionIFbSH_EEE4MarkES4_IKS3_SO_ENS0_16ItemInterfaceMapIS3_SO_EENS_16DenseHashPointerESt8equal_toIS3_EE14rehash_if_fullERSQ_.exit.i: ; preds = %bb.by, %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EE9push_backERKS2_.exit137._ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISC_EERKSC_RKNS_15TypeCheckLimitsEbSt8functionIFbSH_EEE4MarkES4_IKS3_SO_ENS0_16ItemInterfaceMapIS3_SO_EENS_16DenseHashPointerESt8equal_toIS3_EE14rehash_if_fullERSQ_.exit.i_crit_edge, %bb.cc, %._crit_edge27.i.i.i
   %i.pt = phi ptr [ %.sroa.0.0.i.i.i, %bb.cc ], [ %.pre606, %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EE9push_backERKS2_.exit137._ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISC_EERKSC_RKNS_15TypeCheckLimitsEbSt8functionIFbSH_EEE4MarkES4_IKS3_SO_ENS0_16ItemInterfaceMapIS3_SO_EENS_16DenseHashPointerESt8equal_toIS3_EE14rehash_if_fullERSQ_.exit.i_crit_edge ], [ %.sroa.0.0.i.i.i, %._crit_edge27.i.i.i ], [ %i.nt, %bb.by ] ; 2 uses
-  %i.pu = phi i64 [ %spec.select.i.i.i, %bb.cc ], [ %i.nj, %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EE9push_backERKS2_.exit137._ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISC_EERKSC_RKNS_15TypeCheckLimitsEbSt8functionIFbSH_EEE4MarkES4_IKS3_SO_ENS0_16ItemInterfaceMapIS3_SO_EENS_16DenseHashPointerESt8equal_toIS3_EE14rehash_if_fullERSQ_.exit.i_crit_edge ], [ 16, %._crit_edge27.i.i.i ], [ %i.nj, %bb.by ]
+  %i.pu = phi i64 [ %.pre.i, %bb.cc ], [ %i.nj, %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EE9push_backERKS2_.exit137._ZN4Luau6detail14DenseHashTableIPNS_10SourceNodeESt4pairIS3_ZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISC_EERKSC_RKNS_15TypeCheckLimitsEbSt8functionIFbSH_EEE4MarkES4_IKS3_SO_ENS0_16ItemInterfaceMapIS3_SO_EENS_16DenseHashPointerESt8equal_toIS3_EE14rehash_if_fullERSQ_.exit.i_crit_edge ], [ 16, %._crit_edge27.i.i.i ], [ %i.nj, %bb.by ]
   %i.pv = add i64 %i.pu, -1                       ; 3 uses
   %i.pw = ptrtoint ptr %i.mt to i64
   %i.px = mul i64 %i.pw, -4658895280553007687     ; 2 uses
@@ -760,7 +761,7 @@ _ZNSt12__shared_ptrIN4Luau19BuildQueueWorkStateELN9__gnu_cxx12_Lock_policyE2EED2
 bb.ea:                                            ; preds = %.lr.ph782, %_ZNSt12__shared_ptrIN4Luau19BuildQueueWorkStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit303
   %i.yq = phi ptr [ %i.yh, %.lr.ph782 ], [ %i.ahg, %_ZNSt12__shared_ptrIN4Luau19BuildQueueWorkStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit303 ] ; 4 uses
   %.070781 = phi i8 [ 0, %.lr.ph782 ], [ %.7, %_ZNSt12__shared_ptrIN4Luau19BuildQueueWorkStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit303 ] ; 2 uses
-  %.sroa.0462.0780 = phi i64 [ undef, %.lr.ph782 ], [ %.sroa.0462.3, %_ZNSt12__shared_ptrIN4Luau19BuildQueueWorkStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit303 ] ; 2 uses
+  %.sroa.0462.0780 = phi i64 [ undef, %.lr.ph782 ], [ %.sroa.0462.3, %_ZNSt12__shared_ptrIN4Luau19BuildQueueWorkStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit303 ] ; 4 uses
   %.sroa.5463.0779 = phi i8 [ 0, %.lr.ph782 ], [ %.sroa.5463.3, %_ZNSt12__shared_ptrIN4Luau19BuildQueueWorkStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit303 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #34
   %i.yr = getelementptr inbounds nuw i8, ptr %i.yq, i64 88 ; 2 uses
@@ -890,17 +891,15 @@ bb.en:                                            ; preds = %.lr.ph.i239
   %i.zy = phi ptr [ %i.acx, %._crit_edge762 ], [ %i.zr, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ] ; 4 uses
   %.1769 = phi i8 [ 0, %._crit_edge762 ], [ %.070781, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ] ; 4 uses
   %.sroa.0458.0768 = phi ptr [ %i.acy, %._crit_edge762 ], [ %i.zt, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ] ; 2 uses
-  %.sroa.0462.1767 = phi i64 [ %spec.select546, %._crit_edge762 ], [ %.sroa.0462.0780, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ]
   %.sroa.5463.1766 = phi i8 [ 0, %._crit_edge762 ], [ %.sroa.5463.0779, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ]
-  %i.zz = load i64, ptr %.sroa.0458.0768, align 8, !tbaa !218 ; 2 uses
+  %i.zz = load i64, ptr %.sroa.0458.0768, align 8, !tbaa !218 ; 3 uses
   %i.aaa = getelementptr inbounds nuw i8, ptr %i.zy, i64 64
   %i.aab = load ptr, ptr %i.aaa, align 8, !tbaa !585
   %i.aac = getelementptr inbounds nuw [200 x i8], ptr %i.aab, i64 %i.zz ; 10 uses
   %i.aad = getelementptr inbounds nuw i8, ptr %i.aac, i64 192
   %i.aae = load ptr, ptr %i.aad, align 8, !tbaa !686 ; 2 uses
-  %.not533 = icmp eq ptr %i.aae, null             ; 3 uses
+  %.not533 = icmp eq ptr %i.aae, null             ; 4 uses
   %spec.select545 = select i1 %.not533, i8 %.sroa.5463.1766, i8 1 ; 3 uses
-  %spec.select546 = select i1 %.not533, i64 %.sroa.0462.1767, i64 %i.zz ; 4 uses
   %i.aaf = load i8, ptr @_ZN5FFlag35DebugLuauCyclicRequireTypeInferenceE, align 8, !tbaa !430, !range !138, !noundef !139
   %i.aag = trunc nuw i8 %i.aaf to i1              ; 2 uses
   br i1 %i.aag, label %bb.eo, label %bb.es
@@ -930,7 +929,7 @@ bb.eq:                                            ; preds = %.lr.ph749
   %i.aap = getelementptr inbounds nuw i8, ptr %i.aao, i64 945
   %i.aaq = load i8, ptr %i.aap, align 1, !tbaa !583, !range !138, !noundef !139
   %i.aar = trunc nuw i8 %i.aaq to i1
-  br i1 %i.aar, label %.critedge138, label %bb.er
+  br i1 %i.aar, label %.critedge138.loopexit, label %bb.er
 
 bb.er:                                            ; preds = %.lr.ph749, %bb.eq
   %i.aas = getelementptr inbounds nuw i8, ptr %.sroa.0451.0747, i64 544 ; 2 uses
@@ -957,7 +956,7 @@ bb.et:                                            ; preds = %bb.es
   %i.aba = trunc nuw i8 %spec.select545 to i1
   %i.abb = trunc nuw i8 %.5 to i1
   %or.cond5 = select i1 %i.aba, i1 true, i1 %i.abb
-  br i1 %or.cond5, label %.critedge138, label %bb.eu
+  br i1 %or.cond5, label %.critedge138.loopexit1102.split.loop.exit, label %bb.eu
 
 bb.eu:                                            ; preds = %.loopexit559
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
@@ -1138,11 +1137,19 @@ _ZNSt6vectorImSaImEE9push_backERKm.exit261:       ; preds = %_ZNSt6vectorImSaImE
   %.not532 = icmp eq ptr %i.acy, %i.zv
   br i1 %.not532, label %.critedge138, label %.lr.ph770
 
-.critedge138:                                     ; preds = %._crit_edge762, %.loopexit559, %bb.eq, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit"
-  %i.acz = phi ptr [ %i.zr, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ], [ %i.zy, %bb.eq ], [ %i.zy, %.loopexit559 ], [ %i.acx, %._crit_edge762 ] ; 8 uses
-  %.sroa.5463.3 = phi i8 [ %.sroa.5463.0779, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ], [ 0, %bb.eq ], [ %spec.select545, %.loopexit559 ], [ 0, %._crit_edge762 ] ; 2 uses
-  %.sroa.0462.3 = phi i64 [ %.sroa.0462.0780, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ], [ %spec.select546, %bb.eq ], [ %spec.select546, %.loopexit559 ], [ %spec.select546, %._crit_edge762 ] ; 2 uses
-  %.6 = phi i8 [ %.070781, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ], [ 1, %bb.eq ], [ %.5, %.loopexit559 ], [ 0, %._crit_edge762 ] ; 2 uses
+.critedge138.loopexit:                            ; preds = %bb.eq
+  %spec.select546.le1225 = select i1 %.not533, i64 %.sroa.0462.0780, i64 %i.zz
+  br label %.critedge138
+
+.critedge138.loopexit1102.split.loop.exit:        ; preds = %.loopexit559
+  %spec.select546.le = select i1 %.not533, i64 %.sroa.0462.0780, i64 %i.zz
+  br label %.critedge138
+
+.critedge138:                                     ; preds = %._crit_edge762, %.critedge138.loopexit1102.split.loop.exit, %.critedge138.loopexit, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit"
+  %i.acz = phi ptr [ %i.zr, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ], [ %i.zy, %.critedge138.loopexit ], [ %i.zy, %.critedge138.loopexit1102.split.loop.exit ], [ %i.acx, %._crit_edge762 ] ; 8 uses
+  %.sroa.5463.3 = phi i8 [ %.sroa.5463.0779, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ], [ 0, %.critedge138.loopexit ], [ %spec.select545, %.critedge138.loopexit1102.split.loop.exit ], [ 0, %._crit_edge762 ] ; 2 uses
+  %.sroa.0462.3 = phi i64 [ %.sroa.0462.0780, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ], [ %spec.select546.le1225, %.critedge138.loopexit ], [ %spec.select546.le, %.critedge138.loopexit1102.split.loop.exit ], [ %.sroa.0462.0780, %._crit_edge762 ] ; 2 uses
+  %.6 = phi i8 [ %.070781, %"_ZZN4Luau8Frontend18checkQueuedModulesB5cxx11ESt8optionalINS_15FrontendOptionsEESt8functionIFvSt6vectorIS4_IFvvEESaIS7_EEEES4_IFbmmEEEN3$_2D2Ev.exit" ], [ 1, %.critedge138.loopexit ], [ %.5, %.critedge138.loopexit1102.split.loop.exit ], [ 0, %._crit_edge762 ] ; 2 uses
   %i.ada = getelementptr inbounds nuw i8, ptr %i.acz, i64 176
   %i.adb = getelementptr inbounds nuw i8, ptr %i.acz, i64 184 ; 2 uses
   %i.adc = load ptr, ptr %i.adb, align 8, !tbaa !709 ; 2 uses

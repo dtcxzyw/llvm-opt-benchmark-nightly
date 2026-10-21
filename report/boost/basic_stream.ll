@@ -204,18 +204,23 @@ bb.a:
 ._crit_edge.thread:                               ; preds = %bb.a
   %spec.select.i.i39 = select i1 %.not.i.i38, ptr %.pre26, ptr %.pre
   store ptr %spec.select.i.i39, ptr %.phi.trans.insert, align 8, !tbaa !1162
-  br i1 %.not.i.i38, label %.thread, label %bb.b
+  br i1 %.not.i.i38, label %.thread, label %._crit_edge.thread._crit_edge
 
-bb.b:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %11 = load ptr, ptr %10, align 8, !tbaa !4087, !nonnull !310, !align !313 ; 2 uses
-  %i.c = load ptr, ptr %11, align 8, !tbaa !373
+._crit_edge.thread._crit_edge:                    ; preds = %._crit_edge.thread
+  %.phi.trans.insert42 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.pre43 = load ptr, ptr %.phi.trans.insert42, align 8, !tbaa !4087
+  br label %bb.b
+
+bb.b:                                             ; preds = %._crit_edge.thread._crit_edge, %._crit_edge
+  %10 = phi ptr [ %.pre43, %._crit_edge.thread._crit_edge ], [ %i.bz, %._crit_edge ] ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.c = load ptr, ptr %10, align 8, !tbaa !373
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  %i.e = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %10, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #36
   call void @_ZN5boost4asio6detail28reactive_socket_service_base5closeERNS2_24base_implementation_typeERNS_6system10error_codeE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %8, ptr noundef nonnull align 8 dereferenceable(33) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #36
-  %i.f = load ptr, ptr %10, align 8, !tbaa !4087, !nonnull !310, !align !313 ; 4 uses
+  %i.f = load ptr, ptr %11, align 8, !tbaa !4087, !nonnull !310, !align !313 ; 4 uses
   %i.g = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !1158 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
@@ -411,7 +416,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %._crit_edge27
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !4087, !nonnull !310, !align !313
+  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !4087, !nonnull !310, !align !313 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   %i.cb = load i32, ptr %i.ca, align 8, !tbaa !376
   %.not = icmp eq i32 %i.cb, -1
@@ -814,18 +819,23 @@ bb.a:
 ._crit_edge.thread:                               ; preds = %bb.a
   %spec.select.i.i39 = select i1 %.not.i.i38, ptr %.pre26, ptr %.pre
   store ptr %spec.select.i.i39, ptr %.phi.trans.insert, align 8, !tbaa !1162
-  br i1 %.not.i.i38, label %.thread, label %bb.b
+  br i1 %.not.i.i38, label %.thread, label %._crit_edge.thread._crit_edge
 
-bb.b:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %11 = load ptr, ptr %10, align 8, !tbaa !4194, !nonnull !310, !align !313 ; 2 uses
-  %i.c = load ptr, ptr %11, align 8, !tbaa !373
+._crit_edge.thread._crit_edge:                    ; preds = %._crit_edge.thread
+  %.phi.trans.insert42 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.pre43 = load ptr, ptr %.phi.trans.insert42, align 8, !tbaa !4194
+  br label %bb.b
+
+bb.b:                                             ; preds = %._crit_edge.thread._crit_edge, %._crit_edge
+  %10 = phi ptr [ %.pre43, %._crit_edge.thread._crit_edge ], [ %i.bz, %._crit_edge ] ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.c = load ptr, ptr %10, align 8, !tbaa !373
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  %i.e = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %10, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #36
   call void @_ZN5boost4asio6detail28reactive_socket_service_base5closeERNS2_24base_implementation_typeERNS_6system10error_codeE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %8, ptr noundef nonnull align 8 dereferenceable(33) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #36
-  %i.f = load ptr, ptr %10, align 8, !tbaa !4194, !nonnull !310, !align !313 ; 4 uses
+  %i.f = load ptr, ptr %11, align 8, !tbaa !4194, !nonnull !310, !align !313 ; 4 uses
   %i.g = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !1185 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
@@ -1021,7 +1031,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %._crit_edge27
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !4194, !nonnull !310, !align !313
+  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !4194, !nonnull !310, !align !313 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   %i.cb = load i32, ptr %i.ca, align 8, !tbaa !376
   %.not = icmp eq i32 %i.cb, -1

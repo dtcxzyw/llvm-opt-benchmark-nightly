@@ -193,7 +193,7 @@ bb.a:
   %.sroa.41548 = alloca [28 x i8], align 4        ; 4 uses
   %i.l = alloca [72 x i8], align 8                ; 14 uses
   %i.m = alloca [24 x i8], align 8                ; 17 uses
-  %i.n = alloca [72 x i8], align 8                ; 29 uses
+  %i.n = alloca [72 x i8], align 8                ; 28 uses
   %i.o = alloca [96 x i8], align 8                ; 31 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !130)
@@ -270,7 +270,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %1, ptr %.sroa.3.0..sroa_idx, align 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 2 uses
   store i64 %2, ptr %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx.sroa_idx, align 8
-  %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 16 uses
+  %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 15 uses
   store i64 0, ptr %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx, align 8
   %.sroa.3.sroa.4.0..sroa.3.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 40 ; 2 uses
   store i64 %2, ptr %.sroa.3.sroa.4.0..sroa.3.0..sroa_idx.sroa_idx, align 8
@@ -459,8 +459,8 @@ bb.m:                                             ; preds = %_RINvNtCshzWfHUSfYa
   ret void
 
 select.unfold:                                    ; preds = %bb.h, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCskVLyBV5N46_15ra_ap_rustc_abi.exit.i
-  %.lcssa23602406 = phi i64 [ %.lcssa23602407, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCskVLyBV5N46_15ra_ap_rustc_abi.exit.i ], [ %i.bk, %bb.h ] ; 15 uses
-  %.lcssa18032365 = phi i64 [ %.lcssa180323662402, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCskVLyBV5N46_15ra_ap_rustc_abi.exit.i ], [ %i.bk, %bb.h ] ; 15 uses
+  %.lcssa23602406 = phi i64 [ %.lcssa23602407, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCskVLyBV5N46_15ra_ap_rustc_abi.exit.i ], [ %i.bk, %bb.h ] ; 14 uses
+  %.lcssa18032365 = phi i64 [ %.lcssa180323662402, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCskVLyBV5N46_15ra_ap_rustc_abi.exit.i ], [ %i.bk, %bb.h ] ; 14 uses
   %i.cf = phi i1 [ true, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCskVLyBV5N46_15ra_ap_rustc_abi.exit.i ], [ false, %bb.h ]
   %.pn2473 = phi i64 [ %.pre2.i.i, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCskVLyBV5N46_15ra_ap_rustc_abi.exit.i ], [ %i.bm, %bb.h ]
   %.sroa.4.1.i = sub nuw i64 %.pn2473, %.lcssa180323662402 ; 3 uses
@@ -863,7 +863,7 @@ bb.eu:                                            ; preds = %bb.dr
 
 bb.ev:                                            ; preds = %bb.eu
   %cond3387 = icmp eq i64 %i.we, 1
-  %i.wg = load i8, ptr %i.wf, align 1             ; 2 uses
+  %i.wg = load i8, ptr %i.wf, align 1             ; 4 uses
   br i1 %cond3387, label %bb.ew, label %thread-pre-split.i983
 
 bb.ew:                                            ; preds = %bb.ev
@@ -1135,11 +1135,15 @@ bb.fr:                                            ; preds = %bb.fl
 bb.fs:                                            ; preds = %.loopexit1712.thread
   switch i64 %i.we, label %thread-pre-split.i.i1060 [
     i64 0, label %.loopexit
-    i64 1, label %.thread3383
+    i64 1, label %.thread3362thread-pre-split
   ]
 
-.thread3383:                                      ; preds = %bb.ew, %bb.ew, %bb.fs
-  %4 = load i8, ptr %i.wf, align 1, !alias.scope !164, !noundef !5 ; 2 uses
+.thread3362thread-pre-split:                      ; preds = %bb.fs
+  %.pr3363 = load i8, ptr %i.wf, align 1, !alias.scope !164
+  br label %.thread3383
+
+.thread3383:                                      ; preds = %.thread3362thread-pre-split, %bb.ew, %bb.ew
+  %4 = phi i8 [ %.pr3363, %.thread3362thread-pre-split ], [ %i.wg, %bb.ew ], [ %i.wg, %bb.ew ] ; 2 uses
   switch i8 %4, label %bb.ft [
     i8 43, label %.loopexit
     i8 45, label %.loopexit
@@ -1169,7 +1173,7 @@ bb.ft:                                            ; preds = %thread-pre-split.i.
   br i1 %.not52.i.i1047, label %.loopexit1709, label %.preheader56.i.i1043.preheader
 
 .preheader56.i.i1043.preheader:                   ; preds = %bb.ft, %.preheader56.i.i1043
-  %.sroa.0.1.i.i10464848 = phi ptr [ %i.zf, %.preheader56.i.i1043 ], [ %.sroa.0.0.i.i1042, %bb.ft ] ; 3 uses
+  %.sroa.0.1.i.i10464848 = phi ptr [ %i.zf, %.preheader56.i.i1043 ], [ %.sroa.0.0.i.i1042, %bb.ft ] ; 2 uses
   %.sroa.15.1.i.i10454847 = phi i64 [ %i.zg, %.preheader56.i.i1043 ], [ %.sroa.15.0.i.i1040, %bb.ft ]
   %.sroa.042.0.i.i10444846 = phi i64 [ %i.zq, %.preheader56.i.i1043 ], [ 0, %bb.ft ]
   %i.zf = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i10464848, i64 1
@@ -1177,20 +1181,17 @@ bb.ft:                                            ; preds = %thread-pre-split.i.
   %i.zh = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i10444846, i64 10) ; 2 uses
   %i.zi = extractvalue { i64, i1 } %i.zh, 0       ; 2 uses
   %i.zj = extractvalue { i64, i1 } %i.zh, 1
+  %5 = load i8, ptr %.sroa.0.1.i.i10464848, align 1, !alias.scope !164, !noundef !5 ; 2 uses
   br i1 %i.zj, label %bb.fv, label %bb.fu, !prof !4
 
 bb.fu:                                            ; preds = %.preheader56.i.i1043.preheader
-  %5 = load i8, ptr %.sroa.0.1.i.i10464848, align 1, !alias.scope !164, !noundef !5
   %i.zk = zext i8 %5 to i32
   %i.zl = add nsw i32 %i.zk, -48                  ; 2 uses
   %i.zm = icmp ult i32 %i.zl, 10
   br i1 %i.zm, label %bb.fw, label %.loopexit
 
 bb.fv:                                            ; preds = %.preheader56.i.i1043.preheader
-  store i64 %.lcssa23602406, ptr %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx, align 8
-  store i64 %.lcssa18032365, ptr %i.n, align 8
-  %6 = load i8, ptr %.sroa.0.1.i.i10464848, align 1, !alias.scope !164, !noundef !5
-  %i.zn = add i8 %6, -48
+  %i.zn = add i8 %5, -48
   %i.zo = icmp ult i8 %i.zn, 10
   %spec.select.i1048 = select i1 %i.zo, i8 2, i8 1
   br label %.loopexit

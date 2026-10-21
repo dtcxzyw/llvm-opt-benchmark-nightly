@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13189)
-  %.promoted.i.i.i.i = load ptr, ptr %i.f, align 8, !alias.scope !13190, !noalias !13186 ; 3 uses
+  %.promoted.i.i.i.i = load ptr, ptr %i.f, align 8, !alias.scope !13190, !noalias !13186 ; 4 uses
   %.not.peel.i.i.i.i = icmp eq ptr %.promoted.i.i.i.i, null
   br i1 %.not.peel.i.i.i.i, label %bb.f, label %bb.d
 
@@ -218,25 +218,32 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.g, ptr %i.a, align 8, !alias.scope !13185, !noalias !13193
   %i.h = load i64, ptr %.promoted.i.i.i.i, align 8, !range !16, !alias.scope !13194, !noalias !13195, !noundef !3
   %.not.i.i.peel.i.i.i.i = icmp eq i64 %i.h, 2    ; 2 uses
-  %i.i = icmp eq i64 %i.g, 0                      ; 2 uses
-  %brmerge.i.i.peel.i.i.i.i = or i1 %i.i, %.not.i.i.peel.i.i.i.i
-  br i1 %brmerge.i.i.peel.i.i.i.i, label %1, label %bb.f
+  %i.i = icmp eq i64 %i.g, 0
+  br i1 %i.i, label %2, label %1
+
+1:                                                ; preds = %bb.d
+  br i1 %.not.i.i.peel.i.i.i.i, label %.sink.split.i.i.loopexit.i.i.i.i, label %bb.f
+
+2:                                                ; preds = %bb.d
+  store ptr null, ptr %i.f, align 8, !alias.scope !13190, !noalias !13186
+  %.sroa.2.0.i.i.i.i.i.i.i.i = select i1 %.not.i.i.peel.i.i.i.i, ptr %.promoted.i.i.i.i, ptr null
+  br label %_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtBa_8adapters4take4TakeINtNtBW_5chain5ChainINtNtNtBa_7sources4once4OnceRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEINtNtNtBc_5slice4iter4IterB27_EEENtB6_15IteratorRefSpec13spec_try_folduNCINvNvXs_NtBW_9enumerateINtB4w_9EnumeratepENtB6_8Iterator8try_fold9enumerateB26_uINtNtNtBc_3ops12control_flow11ControlFlowTjB26_EENCINvNvB54_4find5checkB6l_NCINvYBR_NtCs6Wt4yPw39th_9itertools9Itertools13find_positionNCNvMs6_B29_NtNtB2b_8relation19TypeRelationChecker26check_signature_pair_innersb_0E0E0E0B5G_EB2d_.exit
+
+.sink.split.i.i.loopexit.i.i.i.i:                 ; preds = %1
+  store ptr null, ptr %i.f, align 8, !alias.scope !13190, !noalias !13186
+  br label %_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtBa_8adapters4take4TakeINtNtBW_5chain5ChainINtNtNtBa_7sources4once4OnceRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEINtNtNtBc_5slice4iter4IterB27_EEENtB6_15IteratorRefSpec13spec_try_folduNCINvNvXs_NtBW_9enumerateINtB4w_9EnumeratepENtB6_8Iterator8try_fold9enumerateB26_uINtNtNtBc_3ops12control_flow11ControlFlowTjB26_EENCINvNvB54_4find5checkB6l_NCINvYBR_NtCs6Wt4yPw39th_9itertools9Itertools13find_positionNCNvMs6_B29_NtNtB2b_8relation19TypeRelationChecker26check_signature_pair_innersb_0E0E0E0B5G_EB2d_.exit
 
 bb.e:                                             ; preds = %bb.f, %bb.b
-  %.sroa.4.0 = phi i64 [ %.sroa.4.1, %bb.f ], [ 0, %bb.b ]
-  %i.j = phi i64 [ %i.m, %bb.f ], [ %i.b, %bb.b ]
+  %.sroa.4.0 = phi i64 [ %.sroa.4.1, %bb.f ], [ 0, %bb.b ] ; 2 uses
+  %i.j = phi i64 [ %i.m, %bb.f ], [ %i.b, %bb.b ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !alias.scope !13188, !noalias !13186, !noundef !3 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.l, null
   br i1 %.not.i.i.i, label %_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtBa_8adapters4take4TakeINtNtBW_5chain5ChainINtNtNtBa_7sources4once4OnceRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEINtNtNtBc_5slice4iter4IterB27_EEENtB6_15IteratorRefSpec13spec_try_folduNCINvNvXs_NtBW_9enumerateINtB4w_9EnumeratepENtB6_8Iterator8try_fold9enumerateB26_uINtNtNtBc_3ops12control_flow11ControlFlowTjB26_EENCINvNvB54_4find5checkB6l_NCINvYBR_NtCs6Wt4yPw39th_9itertools9Itertools13find_positionNCNvMs6_B29_NtNtB2b_8relation19TypeRelationChecker26check_signature_pair_innersb_0E0E0E0B5G_EB2d_.exit, label %bb.g
 
-1:                                                ; preds = %bb.d
-  store ptr null, ptr %i.f, align 8, !alias.scope !13190, !noalias !13186
-  br label %.loopexit12.i.i
-
-bb.f:                                             ; preds = %bb.d, %bb.c
-  %.sroa.4.1 = phi i64 [ 0, %bb.c ], [ 1, %bb.d ]
-  %i.m = phi i64 [ %i.b, %bb.c ], [ %i.g, %bb.d ]
+bb.f:                                             ; preds = %1, %bb.c
+  %.sroa.4.1 = phi i64 [ 0, %bb.c ], [ 1, %1 ]
+  %i.m = phi i64 [ %i.b, %bb.c ], [ %i.g, %1 ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, i8 0, i64 16, i1 false), !alias.scope !13188, !noalias !13186
   br label %bb.e
 
@@ -244,12 +251,14 @@ bb.g:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13196)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load ptr, ptr %i.n, align 8, !alias.scope !13197, !noalias !13186, !nonnull !3, !noundef !3
+  %3 = add i64 %i.j, %.sroa.4.0
+  %4 = add i64 %3, -1
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.i, %bb.g
-  %i.p = phi i64 [ %2, %bb.i ], [ %.sroa.4.0, %bb.g ] ; 2 uses
-  %i.q = phi i64 [ %i.u, %bb.i ], [ %i.j, %bb.g ]
-  %i.r = phi ptr [ %i.t, %bb.i ], [ %i.l, %bb.g ] ; 4 uses
+bb.h:                                             ; preds = %5, %bb.g
+  %i.p = phi i64 [ %6, %5 ], [ %.sroa.4.0, %bb.g ] ; 2 uses
+  %i.q = phi i64 [ %i.u, %5 ], [ %i.j, %bb.g ]
+  %i.r = phi ptr [ %i.t, %5 ], [ %i.l, %bb.g ]    ; 5 uses
   %i.s = icmp eq ptr %i.r, %i.o
   br i1 %i.s, label %_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtBa_8adapters4take4TakeINtNtBW_5chain5ChainINtNtNtBa_7sources4once4OnceRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEINtNtNtBc_5slice4iter4IterB27_EEENtB6_15IteratorRefSpec13spec_try_folduNCINvNvXs_NtBW_9enumerateINtB4w_9EnumeratepENtB6_8Iterator8try_fold9enumerateB26_uINtNtNtBc_3ops12control_flow11ControlFlowTjB26_EENCINvNvB54_4find5checkB6l_NCINvYBR_NtCs6Wt4yPw39th_9itertools9Itertools13find_positionNCNvMs6_B29_NtNtB2b_8relation19TypeRelationChecker26check_signature_pair_innersb_0E0E0E0B5G_EB2d_.exit, label %bb.i
 
@@ -261,24 +270,20 @@ bb.i:                                             ; preds = %bb.h
   store i64 %i.u, ptr %i.a, align 8, !alias.scope !13185, !noalias !13199
   %i.v = load i64, ptr %i.r, align 8, !range !16, !alias.scope !13200, !noalias !13201, !noundef !3
   %.not.i.i.i.i.i = icmp eq i64 %i.v, 2           ; 2 uses
-  %2 = add i64 %i.p, 1
-  %i.w = icmp eq i64 %i.u, 0                      ; 2 uses
-  %brmerge.i.i.i.i.i = or i1 %i.w, %.not.i.i.i.i.i
-  br i1 %brmerge.i.i.i.i.i, label %.loopexit12.i.i, label %bb.h
+  %i.w = icmp eq i64 %i.u, 0
+  br i1 %i.w, label %.loopexit12.i.i, label %5
 
-.loopexit12.i.i:                                  ; preds = %bb.i, %1
-  %.not.i.i.lcssa.sink.i.i.i = phi i1 [ %.not.i.i.peel.i.i.i.i, %1 ], [ %.not.i.i.i.i.i, %bb.i ]
-  %.lcssa52.sink.i.i.i = phi i1 [ %i.i, %1 ], [ %i.w, %bb.i ]
-  %.lcssa51.sink.i.i.i = phi ptr [ %.promoted.i.i.i.i, %1 ], [ %i.r, %bb.i ]
-  %.lcssa53.sink.i.i.i = phi i64 [ 0, %1 ], [ %i.p, %bb.i ]
-  %3 = xor i1 %.not.i.i.lcssa.sink.i.i.i, true
-  %4 = and i1 %.lcssa52.sink.i.i.i, %3
-  %.sroa.2.0.i.i.mux.i.i.i.i.i = select i1 %4, ptr null, ptr %.lcssa51.sink.i.i.i
+.loopexit12.i.i:                                  ; preds = %bb.i
+  %.sroa.2.0.i.i.mux.i.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr %i.r, ptr null
   br label %_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtBa_8adapters4take4TakeINtNtBW_5chain5ChainINtNtNtBa_7sources4once4OnceRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEINtNtNtBc_5slice4iter4IterB27_EEENtB6_15IteratorRefSpec13spec_try_folduNCINvNvXs_NtBW_9enumerateINtB4w_9EnumeratepENtB6_8Iterator8try_fold9enumerateB26_uINtNtNtBc_3ops12control_flow11ControlFlowTjB26_EENCINvNvB54_4find5checkB6l_NCINvYBR_NtCs6Wt4yPw39th_9itertools9Itertools13find_positionNCNvMs6_B29_NtNtB2b_8relation19TypeRelationChecker26check_signature_pair_innersb_0E0E0E0B5G_EB2d_.exit
 
-_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtBa_8adapters4take4TakeINtNtBW_5chain5ChainINtNtNtBa_7sources4once4OnceRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEINtNtNtBc_5slice4iter4IterB27_EEENtB6_15IteratorRefSpec13spec_try_folduNCINvNvXs_NtBW_9enumerateINtB4w_9EnumeratepENtB6_8Iterator8try_fold9enumerateB26_uINtNtNtBc_3ops12control_flow11ControlFlowTjB26_EENCINvNvB54_4find5checkB6l_NCINvYBR_NtCs6Wt4yPw39th_9itertools9Itertools13find_positionNCNvMs6_B29_NtNtB2b_8relation19TypeRelationChecker26check_signature_pair_innersb_0E0E0E0B5G_EB2d_.exit: ; preds = %bb.h, %bb.a, %bb.e, %.loopexit12.i.i
-  %.sroa.4.0.i.i = phi ptr [ null, %bb.a ], [ %.sroa.2.0.i.i.mux.i.i.i.i.i, %.loopexit12.i.i ], [ null, %bb.e ], [ null, %bb.h ] ; 2 uses
-  %.sroa.0.0.i.i = phi i64 [ undef, %bb.a ], [ %.lcssa53.sink.i.i.i, %.loopexit12.i.i ], [ undef, %bb.e ], [ undef, %bb.h ]
+5:                                                ; preds = %bb.i
+  %6 = add i64 %i.p, 1
+  br i1 %.not.i.i.i.i.i, label %_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtBa_8adapters4take4TakeINtNtBW_5chain5ChainINtNtNtBa_7sources4once4OnceRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEINtNtNtBc_5slice4iter4IterB27_EEENtB6_15IteratorRefSpec13spec_try_folduNCINvNvXs_NtBW_9enumerateINtB4w_9EnumeratepENtB6_8Iterator8try_fold9enumerateB26_uINtNtNtBc_3ops12control_flow11ControlFlowTjB26_EENCINvNvB54_4find5checkB6l_NCINvYBR_NtCs6Wt4yPw39th_9itertools9Itertools13find_positionNCNvMs6_B29_NtNtB2b_8relation19TypeRelationChecker26check_signature_pair_innersb_0E0E0E0B5G_EB2d_.exit, label %bb.h
+
+_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtBa_8adapters4take4TakeINtNtBW_5chain5ChainINtNtNtBa_7sources4once4OnceRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterEINtNtNtBc_5slice4iter4IterB27_EEENtB6_15IteratorRefSpec13spec_try_folduNCINvNvXs_NtBW_9enumerateINtB4w_9EnumeratepENtB6_8Iterator8try_fold9enumerateB26_uINtNtNtBc_3ops12control_flow11ControlFlowTjB26_EENCINvNvB54_4find5checkB6l_NCINvYBR_NtCs6Wt4yPw39th_9itertools9Itertools13find_positionNCNvMs6_B29_NtNtB2b_8relation19TypeRelationChecker26check_signature_pair_innersb_0E0E0E0B5G_EB2d_.exit: ; preds = %bb.h, %5, %bb.a, %2, %.sink.split.i.i.loopexit.i.i.i.i, %bb.e, %.loopexit12.i.i
+  %.sroa.4.0.i.i = phi ptr [ null, %bb.a ], [ null, %bb.e ], [ %.promoted.i.i.i.i, %.sink.split.i.i.loopexit.i.i.i.i ], [ %.sroa.2.0.i.i.i.i.i.i.i.i, %2 ], [ %.sroa.2.0.i.i.mux.i.i.i.i.i, %.loopexit12.i.i ], [ null, %bb.h ], [ %i.r, %5 ] ; 2 uses
+  %.sroa.0.0.i.i = phi i64 [ undef, %bb.a ], [ undef, %bb.e ], [ 0, %.sink.split.i.i.loopexit.i.i.i.i ], [ 0, %2 ], [ %4, %.loopexit12.i.i ], [ undef, %bb.h ], [ %i.p, %5 ]
   %.not = icmp eq ptr %.sroa.4.0.i.i, null
   %.sroa.0.0 = select i1 %.not, i64 undef, i64 %.sroa.0.0.i.i
   %i.x = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0

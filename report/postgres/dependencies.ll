@@ -204,7 +204,7 @@ list_length.exit260.lr.ph:                        ; preds = %bb.l, %.lr.ph301
   %i.as = icmp sgt i32 %.0204299.lcssa, 0         ; 3 uses
   %i.at = shl i32 %.0204299.lcssa, 16
   %sext = add i32 %i.at, 65536
-  %i.au = ashr exact i32 %sext, 16
+  %i.au = ashr exact i32 %sext, 16                ; 3 uses
   %.0207 = select i1 %i.as, i32 %i.au, i32 0      ; 3 uses
   %i.av = trunc nsw i32 %.0207 to i16
   %i.aw = load i32, ptr %i.ag, align 4            ; 2 uses
@@ -305,7 +305,8 @@ list_length.exit260:                              ; preds = %.lr.ph311, %bb.m
   br i1 %i.cd, label %.lr.ph311, label %.critedge287
 
 .critedge287:                                     ; preds = %list_length.exit260, %.critedge.thread, %list_length.exit260.lr.ph
-  %.0207442 = phi i32 [ 0, %.critedge.thread ], [ %.0207, %list_length.exit260.lr.ph ], [ %.0207, %list_length.exit260 ] ; 3 uses
+  %.0207442 = phi i32 [ 0, %.critedge.thread ], [ %.0207, %list_length.exit260.lr.ph ], [ %.0207, %list_length.exit260 ] ; 2 uses
+  %7 = phi i32 [ 1, %.critedge.thread ], [ %i.au, %list_length.exit260.lr.ph ], [ %i.au, %list_length.exit260 ]
   %i.ce = phi i1 [ false, %.critedge.thread ], [ %i.as, %list_length.exit260.lr.ph ], [ %i.as, %list_length.exit260 ] ; 3 uses
   %.0204.lcssa441 = phi i32 [ 0, %.critedge.thread ], [ %.0204299.lcssa, %list_length.exit260.lr.ph ], [ %.0204299.lcssa, %list_length.exit260 ] ; 2 uses
   %i.cf = phi ptr [ %i.w, %.critedge.thread ], [ %i.ac, %list_length.exit260.lr.ph ], [ %i.ac, %list_length.exit260 ] ; 4 uses
@@ -542,7 +543,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.x
   %i.ft = trunc nuw nsw i64 %indvars.iv399 to i32
   %i.fu = xor i32 %i.ft, -1
-  %i.fv = add i32 %.0207442, %i.fu
+  %i.fv = add i32 %7, %i.fu
   %i.fw = trunc i32 %i.fv to i16                  ; 2 uses
   %i.fx = icmp eq i16 %i.fw, 0
   br i1 %i.fx, label %.thread274.thread, label %bb.aa

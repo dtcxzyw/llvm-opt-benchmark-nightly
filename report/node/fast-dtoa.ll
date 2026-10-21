@@ -24,11 +24,10 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = bitcast double %0 to i64                 ; 3 uses
-  %9 = and i64 %i.c, 4503599627370495             ; 4 uses
+  %i.c = bitcast double %0 to i64                 ; 5 uses
   %i.d = and i64 %i.c, 9218868437227405312
-  %i.e = icmp eq i64 %i.d, 0
-  %i.f = or disjoint i64 %9, 4503599627370496     ; 2 uses
+  %i.e = icmp eq i64 %i.d, 0                      ; 2 uses
+  %i.f = or i64 %i.c, 4503599627370496
   %i.g = lshr i64 %i.c, 52
   %i.h = trunc nuw nsw i64 %i.g to i32
   %i.i = and i32 %i.h, 2047
@@ -37,7 +36,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %.lr.ph.i.i
   %.010.i.i = phi i32 [ %i.l, %.lr.ph.i.i ], [ -1074, %bb.b ]
-  %.079.i.i = phi i64 [ %i.k, %.lr.ph.i.i ], [ %9, %bb.b ] ; 2 uses
+  %.079.i.i = phi i64 [ %i.k, %.lr.ph.i.i ], [ %i.c, %bb.b ] ; 2 uses
   %i.k = shl i64 %.079.i.i, 1                     ; 2 uses
   %i.l = add nsw i32 %.010.i.i, -1                ; 2 uses
   %i.m = and i64 %.079.i.i, 2251799813685248
@@ -46,9 +45,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK2v84base6Double17AsNormalizedDiyFpEv.exit.i:  ; preds = %.lr.ph.i.i, %bb.b
   %.0.i1.i.i.i = phi i32 [ %i.j, %bb.b ], [ -1074, %.lr.ph.i.i ] ; 3 uses
-  %.0.i.i.i.i = phi i64 [ %i.f, %bb.b ], [ %9, %.lr.ph.i.i ] ; 2 uses
   %.07.lcssa.i.i = phi i64 [ %i.f, %bb.b ], [ %i.k, %.lr.ph.i.i ]
   %.0.lcssa.i.i = phi i32 [ %i.j, %bb.b ], [ %i.l, %.lr.ph.i.i ] ; 3 uses
+  %9 = and i64 %i.c, 4503599627370495             ; 3 uses
+  %10 = or disjoint i64 %9, 4503599627370496
+  %.0.i.i.i.i = select i1 %i.e, i64 %9, i64 %10   ; 2 uses
   %i.o = shl nuw nsw i64 %.0.i.i.i.i, 1           ; 2 uses
   %i.p = or disjoint i64 %i.o, 1
   %i.q = add nsw i32 %.0.i1.i.i.i, -1             ; 2 uses

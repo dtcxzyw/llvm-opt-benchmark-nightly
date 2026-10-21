@@ -205,8 +205,8 @@ bb.tk:                                            ; preds = %bb.tj
 bb.tl:                                            ; preds = %.preheader, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1199
   %i.brb = phi i1 [ true, %.preheader ], [ false, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1199 ] ; 3 uses
   %or.cond = phi i1 [ false, %.preheader ], [ %i.bjk, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1199 ]
-  %.val = load ptr, ptr %51, align 8
-  %.val1542 = load ptr, ptr %52, align 8
+  %.val = load ptr, ptr %51, align 8              ; 2 uses
+  %.val1542 = load ptr, ptr %52, align 8          ; 2 uses
   %i.brc = select i1 %i.brb, ptr %.val, ptr %.val1542 ; 14 uses
   %i.brd = load i64, ptr %i.brc, align 8          ; 3 uses
   %i.bre = lshr i64 %i.brd, 40
@@ -505,6 +505,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1199: ; preds = %_ZN4cvc58internal
   br i1 %i.brb, label %bb.tl, label %bb.th, !llvm.loop !598
 
 bb.ul:                                            ; preds = %.thread, %.critedge.i1185, %.critedge.i1170, %bb.tq
+  %.lcssa2018 = phi ptr [ %i.brc, %.thread ], [ %.val1542, %.critedge.i1185 ], [ %.val, %.critedge.i1170 ], [ %i.brc, %bb.tq ]
   %i.bvi = landingpad { ptr, i32 }
           cleanup
   br label %bb.vv
@@ -819,8 +820,9 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1221: ; preds = %bb.vt, %bb.vs, %b
   br label %bb.vv
 
 bb.vv:                                            ; preds = %bb.ul, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1221
+  %110 = phi ptr [ %.lcssa2018, %bb.ul ], [ %i.brc, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1221 ] ; 3 uses
   %.pn227.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bvi, %bb.ul ], [ %.pn227.pn.pn, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1221 ] ; 3 uses
-  %i.bzu = load i64, ptr %i.brc, align 8          ; 3 uses
+  %i.bzu = load i64, ptr %110, align 8            ; 3 uses
   %i.bzv = and i64 %i.bzu, 1152920405095219200
   %.not.i.i1222 = icmp eq i64 %i.bzv, 1152920405095219200
   br i1 %.not.i.i1222, label %.body1417, label %bb.vw, !prof !70
@@ -830,12 +832,12 @@ bb.vw:                                            ; preds = %bb.vv
   %i.bzx = and i64 %i.bzw, 1152920405095219200    ; 2 uses
   %i.bzy = and i64 %i.bzu, -1152920405095219201
   %i.bzz = or disjoint i64 %i.bzx, %i.bzy
-  store i64 %i.bzz, ptr %i.brc, align 8
+  store i64 %i.bzz, ptr %110, align 8
   %i.caa = icmp eq i64 %i.bzx, 0
   br i1 %i.caa, label %bb.vx, label %.body1417, !prof !70
 
 bb.vx:                                            ; preds = %bb.vw
-  invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %i.brc)
+  invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %110)
           to label %.body1417 unwind label %bb.vy
 
 bb.vy:                                            ; preds = %bb.vx

@@ -205,19 +205,28 @@ bb.d:                                             ; preds = %.lr.ph93
   %i.aw = select i1 %.not42, i32 0, i32 2
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 195
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !513
-  %i.az = zext i8 %i.ay to i32
-  %i.ba = select i1 %i.as, i32 6, i32 8
+  %i.az = zext i8 %i.ay to i32                    ; 3 uses
+  %i.ba = select i1 %i.as, i32 6, i32 8           ; 2 uses
   %i.bb = add nuw nsw i32 %i.ba, %i.aw
   %invariant.op109 = add nuw nsw i32 %i.bb, %i.az ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 196
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 193 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 194 ; 2 uses
-  br i1 %.not42, label %.lr.ph106.split.us, label %.lr.ph106.split
+  br i1 %.not42, label %.lr.ph106.split.us.preheader, label %.lr.ph106.split.preheader
 
-.lr.ph106.split.us:                               ; preds = %.lr.ph106, %._crit_edge99.split.us.us
-  %.0104.us = phi i32 [ %.1.lcssa.us, %._crit_edge99.split.us.us ], [ %i.at, %.lr.ph106 ]
-  %.sroa.048.0103.us = phi ptr [ %i.bx, %._crit_edge99.split.us.us ], [ %i.au, %.lr.ph106 ] ; 3 uses
-  %.reass.us110 = add i32 %.0104.us, %invariant.op109 ; 2 uses
+.lr.ph106.split.preheader:                        ; preds = %.lr.ph106
+  %4 = add nuw nsw i32 %i.ba, 2
+  %5 = add nuw nsw i32 %4, %i.az
+  br label %.lr.ph106.split
+
+.lr.ph106.split.us.preheader:                     ; preds = %.lr.ph106
+  %6 = add nuw nsw i32 %i.az, 6
+  br label %.lr.ph106.split.us
+
+.lr.ph106.split.us:                               ; preds = %.lr.ph106.split.us.preheader, %._crit_edge99.split.us.us
+  %.0104.us = phi i32 [ %.1.lcssa.us, %._crit_edge99.split.us.us ], [ %i.at, %.lr.ph106.split.us.preheader ] ; 2 uses
+  %.sroa.048.0103.us = phi ptr [ %i.bx, %._crit_edge99.split.us.us ], [ %i.au, %.lr.ph106.split.us.preheader ] ; 3 uses
+  %.reass.us110 = add i32 %.0104.us, %invariant.op109
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.048.0103.us, i64 16
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !502 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.048.0103.us, i64 24
@@ -232,13 +241,14 @@ bb.d:                                             ; preds = %.lr.ph93
   %i.bm = zext i8 %i.bl to i32                    ; 2 uses
   %i.bn = load i8, ptr %i.be, align 2, !tbaa !515
   %i.bo = zext i8 %i.bn to i32                    ; 2 uses
-  %invariant.op.us.a = add nuw nsw i32 %i.bm, %i.bo
+  %invariant.op.us = add nuw nsw i32 %i.bm, %i.bo
+  %invariant.op.us.a = add i32 %6, %.0104.us
   %i.bp = add i64 %i.bj, -48
   %i.bq = sub i64 %i.bp, %i.bk
   %i.br = udiv i64 %i.bq, 48
   %i.bs = trunc i64 %i.br to i32
-  %i.bt = mul i32 %invariant.op.us.a, %i.bs
-  %i.bu = add i32 %.reass.us110, %i.bt
+  %i.bt = mul i32 %invariant.op.us, %i.bs
+  %i.bu = add i32 %invariant.op.us.a, %i.bt
   %i.bv = add i32 %i.bu, %i.bo
   %i.bw = add i32 %i.bv, %i.bm
   br label %._crit_edge99.split.us.us
@@ -305,10 +315,10 @@ bb.g:                                             ; preds = %_ZN5ErrorD2Ev.exit
 _ZN5ErrorC2ERKS_.exit:                            ; preds = %bb.f, %bb.g
   ret void
 
-.lr.ph106.split:                                  ; preds = %.lr.ph106, %._crit_edge99.split
-  %.0104 = phi i32 [ %.1.lcssa, %._crit_edge99.split ], [ %i.at, %.lr.ph106 ]
-  %.sroa.048.0103 = phi ptr [ %i.dv, %._crit_edge99.split ], [ %i.au, %.lr.ph106 ] ; 3 uses
-  %.reass = add i32 %.0104, %invariant.op109      ; 2 uses
+.lr.ph106.split:                                  ; preds = %.lr.ph106.split.preheader, %._crit_edge99.split
+  %.0104 = phi i32 [ %.1.lcssa, %._crit_edge99.split ], [ %i.at, %.lr.ph106.split.preheader ] ; 2 uses
+  %.sroa.048.0103 = phi ptr [ %i.dv, %._crit_edge99.split ], [ %i.au, %.lr.ph106.split.preheader ] ; 3 uses
+  %.reass = add i32 %.0104, %invariant.op109
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.048.0103, i64 16
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !502 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.048.0103, i64 24
@@ -326,13 +336,14 @@ _ZN5ErrorC2ERKS_.exit:                            ; preds = %bb.f, %bb.g
   %invariant.op = add nuw nsw i32 %i.dh, %i.dj
   %i.dk = load i8, ptr %i.bc, align 4, !tbaa !517
   %i.dl = zext i8 %i.dk to i32                    ; 2 uses
-  %invariant.op101.a = add nuw nsw i32 %invariant.op, %i.dl
+  %invariant.op101 = add nuw nsw i32 %invariant.op, %i.dl
+  %invariant.op101.a = add i32 %5, %.0104
   %i.dm = add i64 %i.de, -48
   %i.dn = sub i64 %i.dm, %i.df
   %i.do = udiv i64 %i.dn, 48
   %i.dp = trunc i64 %i.do to i32
-  %i.dq = mul i32 %invariant.op101.a, %i.dp
-  %i.dr = add i32 %.reass, %i.dq
+  %i.dq = mul i32 %invariant.op101, %i.dp
+  %i.dr = add i32 %invariant.op101.a, %i.dq
   %i.ds = add i32 %i.dr, %i.dl
   %i.dt = add i32 %i.ds, %i.dj
   %i.du = add i32 %i.dt, %i.dh

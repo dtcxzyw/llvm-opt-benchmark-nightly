@@ -205,23 +205,23 @@ bb.d:                                             ; preds = %bb.b
   store ptr null, ptr %i.a, align 8, !tbaa !110
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.h = call i32 @redisGetReply(ptr noundef nonnull %i.c, ptr noundef nonnull %i.a) #20
-  %.pre = load ptr, ptr %i.a, align 8             ; 9 uses
+  %.pre = load ptr, ptr %i.a, align 8             ; 11 uses
   %i.i = icmp eq i32 %i.h, 0                      ; 2 uses
-  %i.j = select i1 %i.i, ptr %.pre, ptr null      ; 3 uses
+  %i.j = select i1 %i.i, ptr %.pre, ptr null
   %i.k = icmp ne ptr %.pre, null
   %or.cond = select i1 %i.i, i1 %i.k, i1 false
   br i1 %or.cond, label %bb.e, label %bb.k
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = load i32, ptr %.pre, align 8, !tbaa !91
+  %i.l = load i32, ptr %.pre, align 8, !tbaa !91  ; 2 uses
   %cond = icmp eq i32 %i.l, 2
-  br i1 %cond, label %bb.f, label %bb.k
+  br i1 %cond, label %bb.f, label %bb.l
 
 bb.f:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %.pre, i64 48
   %i.n = load i64, ptr %i.m, align 8, !tbaa !111
   %i.o = icmp ult i64 %i.n, 2
-  br i1 %i.o, label %bb.k, label %bb.g
+  br i1 %i.o, label %.threadthread-pre-split, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %.pre, i64 56
@@ -237,22 +237,22 @@ bb.g:                                             ; preds = %bb.f
   %i.w = call i32 @redisGetReply(ptr noundef nonnull %i.c, ptr noundef nonnull %i.a) #20
   call void @freeReplyObject(ptr noundef nonnull %.pre) #20
   %i.x = icmp eq i32 %i.w, 0                      ; 2 uses
-  %i.y = load ptr, ptr %i.a, align 8              ; 9 uses
-  %i.z = select i1 %i.x, ptr %i.y, ptr null       ; 3 uses
+  %i.y = load ptr, ptr %i.a, align 8              ; 11 uses
+  %i.z = select i1 %i.x, ptr %i.y, ptr null
   %i.aa = icmp ne ptr %i.y, null
   %or.cond.1 = select i1 %i.x, i1 %i.aa, i1 false
   br i1 %or.cond.1, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %bb.g
-  %i.ab = load i32, ptr %i.y, align 8, !tbaa !91
+  %i.ab = load i32, ptr %i.y, align 8, !tbaa !91  ; 2 uses
   %cond.1 = icmp eq i32 %i.ab, 2
-  br i1 %cond.1, label %bb.i, label %bb.k
+  br i1 %cond.1, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %bb.h
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 48
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !111
   %i.ae = icmp ult i64 %i.ad, 2
-  br i1 %i.ae, label %bb.k, label %bb.j
+  br i1 %i.ae, label %.threadthread-pre-split, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.af = getelementptr inbounds nuw i8, ptr %i.y, i64 56
@@ -269,19 +269,27 @@ bb.j:                                             ; preds = %bb.i
   call void @redisFree(ptr noundef nonnull %i.c) #20
   br label %bb.u
 
-bb.k:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.d, %bb.f, %bb.e
-  %.lcssa65 = phi ptr [ %.pre, %bb.d ], [ %.pre, %bb.f ], [ %.pre, %bb.e ], [ %i.y, %bb.g ], [ %i.y, %bb.h ], [ %i.y, %bb.i ] ; 3 uses
-  %.lcssa = phi ptr [ %i.j, %bb.d ], [ %i.j, %bb.f ], [ %i.j, %bb.e ], [ %i.z, %bb.g ], [ %i.z, %bb.h ], [ %i.z, %bb.i ] ; 2 uses
+bb.k:                                             ; preds = %bb.g, %bb.d
+  %.lcssa65 = phi ptr [ %.pre, %bb.d ], [ %i.y, %bb.g ]
+  %.lcssa = phi ptr [ %i.j, %bb.d ], [ %i.z, %bb.g ] ; 2 uses
   %.not56 = icmp eq ptr %.lcssa, null
-  br i1 %.not56, label %.critedge, label %bb.l
+  br i1 %.not56, label %.critedge, label %.threadthread-pre-split
 
-bb.l:                                             ; preds = %bb.k
-  %3 = load i32, ptr %.lcssa65, align 8, !tbaa !91
+.threadthread-pre-split:                          ; preds = %bb.k, %bb.f, %bb.i
+  %.lcssa78.ph = phi ptr [ %.pre, %bb.f ], [ %i.y, %bb.i ], [ %.lcssa, %bb.k ]
+  %.lcssa6577.ph = phi ptr [ %.pre, %bb.f ], [ %i.y, %bb.i ], [ %.lcssa65, %bb.k ] ; 2 uses
+  %.pr = load i32, ptr %.lcssa6577.ph, align 8, !tbaa !91
+  br label %bb.l
+
+bb.l:                                             ; preds = %.threadthread-pre-split, %bb.h, %bb.e
+  %3 = phi i32 [ %.pr, %.threadthread-pre-split ], [ %i.ab, %bb.h ], [ %i.l, %bb.e ]
+  %.lcssa78 = phi ptr [ %.lcssa78.ph, %.threadthread-pre-split ], [ %i.y, %bb.h ], [ %.pre, %bb.e ] ; 2 uses
+  %.lcssa6577 = phi ptr [ %.lcssa6577.ph, %.threadthread-pre-split ], [ %i.y, %bb.h ], [ %.pre, %bb.e ] ; 2 uses
   %i.am = icmp eq i32 %3, 6
   br i1 %i.am, label %bb.m, label %.critedge
 
 bb.m:                                             ; preds = %bb.l
-  %i.an = getelementptr inbounds nuw i8, ptr %.lcssa65, i64 32
+  %i.an = getelementptr inbounds nuw i8, ptr %.lcssa6577, i64 32
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !92 ; 3 uses
   %i.ap = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %i.ao, ptr noundef nonnull dereferenceable(7) @.str.162, i64 noundef 6) #21
   %.not57 = icmp eq i32 %i.ap, 0
@@ -301,14 +309,15 @@ bb.p:                                             ; preds = %bb.n
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.p
-  call void @freeReplyObject(ptr noundef nonnull %.lcssa65) #20
+  call void @freeReplyObject(ptr noundef nonnull %.lcssa6577) #20
   call void @redisFree(ptr noundef nonnull %i.c) #20
   call fastcc void @freeRedisConfig(ptr noundef %i.b)
   call void @exit(i32 noundef 1) #24
   unreachable
 
 .critedge:                                        ; preds = %bb.l, %bb.k, %bb.m
-  call void @freeReplyObject(ptr noundef %.lcssa) #20
+  %.lcssa79 = phi ptr [ %.lcssa78, %bb.l ], [ null, %bb.k ], [ %.lcssa78, %bb.m ]
+  call void @freeReplyObject(ptr noundef %.lcssa79) #20
   call void @redisFree(ptr noundef nonnull %i.c) #20
   %i.au = load ptr, ptr %i.b, align 8, !tbaa !100 ; 2 uses
   %.not.i = icmp eq ptr %i.au, null

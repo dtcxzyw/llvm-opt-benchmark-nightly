@@ -204,7 +204,7 @@ p4d_offset.exit.i:                                ; preds = %bb.g, %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %vunmap_pud_range.exit.i, %p4d_offset.exit.i
-  %.3 = phi i32 [ %.1, %p4d_offset.exit.i ], [ %spec.select44, %vunmap_pud_range.exit.i ] ; 2 uses
+  %.3 = phi i32 [ %.1, %p4d_offset.exit.i ], [ %.5, %vunmap_pud_range.exit.i ] ; 3 uses
   %.019.i = phi ptr [ %.0.i.i, %p4d_offset.exit.i ], [ %i.cw, %vunmap_pud_range.exit.i ] ; 4 uses
   %.0.i30 = phi i64 [ %.020, %p4d_offset.exit.i ], [ %i.am, %vunmap_pud_range.exit.i ] ; 4 uses
   %i.ai = and i64 %.0.i30, -549755813888
@@ -216,8 +216,8 @@ bb.h:                                             ; preds = %vunmap_pud_range.ex
   %i.an = load i64, ptr %.019.i, align 8          ; 3 uses
   %i.ao = and i64 %i.an, 9218868437227409304
   %.not29.i = icmp eq i64 %i.ao, 0                ; 2 uses
-  %i.ap = or i32 %.3, 2
-  %spec.select44 = select i1 %.not29.i, i32 %.3, i32 %i.ap ; 2 uses
+  %i.ap = or i32 %.3, 2                           ; 2 uses
+  %spec.select44 = select i1 %.not29.i, i32 %.3, i32 %i.ap
   %i.aq = and i64 %i.an, -97
   %.not.i.i = icmp eq i64 %i.aq, 0
   br i1 %.not.i.i, label %vunmap_pud_range.exit.i, label %bb.i
@@ -383,12 +383,13 @@ vunmap_pmd_range.exit.i.i:                        ; preds = %pmd_none_or_clear_b
   br i1 %.not30.i.i, label %vunmap_pud_range.exit.i, label %bb.k, !llvm.loop !110
 
 vunmap_pud_range.exit.i:                          ; preds = %vunmap_pmd_range.exit.i.i, %bb.j, %bb.h
+  %.5 = phi i32 [ %spec.select44, %bb.h ], [ %i.ap, %bb.j ], [ %.3, %vunmap_pmd_range.exit.i.i ] ; 2 uses
   %i.cw = getelementptr i8, ptr %.019.i, i64 8
   %.not22.i = icmp eq i64 %i.am, %i.p
   br i1 %.not22.i, label %pgd_none_or_clear_bad.exit, label %bb.h, !llvm.loop !111
 
 pgd_none_or_clear_bad.exit:                       ; preds = %vunmap_pud_range.exit.i, %bb.e, %pgd_none.exit.i
-  %.2 = phi i32 [ %.1, %bb.e ], [ %.1, %pgd_none.exit.i ], [ %spec.select44, %vunmap_pud_range.exit.i ] ; 2 uses
+  %.2 = phi i32 [ %.1, %bb.e ], [ %.1, %pgd_none.exit.i ], [ %.5, %vunmap_pud_range.exit.i ] ; 2 uses
   %i.cx = getelementptr i8, ptr %.0, i64 8
   %.not26 = icmp eq i64 %i.p, %1
   br i1 %.not26, label %bb.w, label %bb.d, !llvm.loop !112
@@ -791,7 +792,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.not.i = icmp eq i32 %i.o, 0
   %i.p = or i32 %4, 2
   %.059.i = select i1 %.not.i, i32 %i.p, i32 %4   ; 6 uses
-  %i.q = or i32 %.059.i, 8192                     ; 2 uses
+  %i.q = or i32 %.059.i, 8192                     ; 4 uses
   %i.r = and i32 %i.q, -32769
   %i.s = icmp eq i32 %7, -1                       ; 3 uses
   %i.t = sext i32 %7 to i64                       ; 2 uses
@@ -883,7 +884,7 @@ __ilog2_u32.exit133.i:                            ; preds = %_kmalloc_node_nopro
   %i.bd = getelementptr i8, ptr %i.z, i64 40
   store i32 %i.bc, ptr %i.bd, align 8
   %.not104 = icmp eq i32 %i.bc, 0                 ; 3 uses
-  %spec.select.i94 = select i1 %.not104, i32 %i.q, i32 %i.r ; 9 uses
+  %spec.select.i94 = select i1 %.not104, i32 %i.q, i32 %i.r ; 7 uses
   %i.be = call i32 asm "bsrl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.al, i32 -1) #27, !srcloc !77 ; 2 uses
   %.not142.i = icmp eq i32 %i.be, 0
   %.v.i = select i1 %.not142.i, i32 -1025, i32 -33793
@@ -1046,7 +1047,7 @@ bb.w:                                             ; preds = %.preheader.split.us
   %i.dm = zext nneg i32 %i.dl to i64
   %i.dn = zext i32 %.1.us.i to i64
   %i.do = getelementptr [8 x i8], ptr %.1.i.i.sink, i64 %i.dn
-  %i.dp = call i64 @alloc_pages_bulk_mempolicy_noprof(i32 noundef %spec.select.i94, i64 noundef %i.dm, ptr noundef %i.do) #23
+  %i.dp = call i64 @alloc_pages_bulk_mempolicy_noprof(i32 noundef %i.q, i64 noundef %i.dm, ptr noundef %i.do) #23
   %.0113.us.i = trunc i64 %i.dp to i32            ; 2 uses
   %i.dq = add i32 %.1.us.i, %.0113.us.i           ; 4 uses
   %i.dr = icmp ult i32 %.1.us.i, %i.dq
@@ -1080,7 +1081,7 @@ bb.x:                                             ; preds = %.preheader.split.i
   %i.eb = call i32 @llvm.umin.i32(i32 %i.ea, i32 100) ; 2 uses
   %i.ec = zext i32 %.1.i to i64
   %i.ed = getelementptr [8 x i8], ptr %.1.i.i.sink, i64 %i.ec
-  %i.ee = call i64 @alloc_pages_bulk_noprof(i32 noundef %spec.select.i94, i32 noundef range(i32 0, -1) %7, ptr noundef null, i32 noundef %i.eb, ptr noundef %i.ed) #23
+  %i.ee = call i64 @alloc_pages_bulk_noprof(i32 noundef %i.q, i32 noundef range(i32 0, -1) %7, ptr noundef null, i32 noundef %i.eb, ptr noundef %i.ed) #23
   %.0113.i = trunc i64 %i.ee to i32               ; 2 uses
   %i.ef = add i32 %.1.i, %.0113.i                 ; 4 uses
   %i.eg = icmp ult i32 %.1.i, %i.ef

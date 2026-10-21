@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %. = select i1 %i.e, i32 8, i32 64
   %i.f = icmp samesign ult i8 %.val24, 2
   %i.g = zext i1 %i.f to i32
-  %.sroa.0.1 = or disjoint i32 %., %i.g           ; 3 uses
+  %.sroa.0.1 = or disjoint i32 %., %i.g           ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 43290 ; 2 uses
   %i.i = load i8, ptr %i.h, align 2, !range !6, !noundef !4
   %i.j = trunc nuw i8 %i.i to i1
@@ -267,12 +267,10 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.af
 
 bb.j:                                             ; preds = %bb.h
-  %i.ac = or disjoint i32 %.sroa.0.1, 2
-  %spec.select = select i1 %i.u, i32 %i.ac, i32 %.sroa.0.1 ; 5 uses
+  %i.ac = or disjoint i32 %.sroa.0.1, 2           ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 32776 ; 10 uses
   %i.ae = load i64, ptr %i.ad, align 8, !noundef !4 ; 4 uses
   %i.af = icmp eq i64 %i.ae, 0
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 32768 ; 11 uses
   br i1 %i.af, label %bb.l, label %bb.ad
 
 bb.k:                                             ; preds = %bb.h
@@ -290,8 +288,10 @@ bb.k:                                             ; preds = %bb.h
   br i1 %i.an, label %bb.aj, label %bb.ag
 
 bb.l:                                             ; preds = %bb.j
+  %spec.select = select i1 %i.u, i32 %i.ac, i32 %.sroa.0.1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !193)
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 32784 ; 5 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 32768 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !194
   %i.ap = load i64, ptr %7, align 8, !alias.scope !193, !noundef !4
   call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.ap, i32 noundef range(i32 8, 68) %spec.select), !noalias !195
@@ -351,7 +351,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !194
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !194
-  call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ax, i64 noundef 0, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.bg, i32 noundef range(i32 8, 68) %spec.select), !noalias !195
+  call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ax, i64 noundef 0, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.bg, i32 noundef range(i32 8, 68) %.sroa.0.1), !noalias !195
   %i.bj = load i64, ptr %i.a, align 8, !noalias !194, !noundef !4 ; 2 uses
   %i.bk = load i64, ptr %i.ar, align 8, !noalias !194, !noundef !4
   %i.bl = load i8, ptr %i.at, align 8, !range !11, !noalias !194, !noundef !4 ; 2 uses
@@ -410,7 +410,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !194
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !194
-  call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.bw, i64 noundef %i.bv, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.cg, i32 noundef range(i32 8, 68) %spec.select), !noalias !195
+  call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.bw, i64 noundef %i.bv, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.cg, i32 noundef range(i32 8, 68) %.sroa.0.1), !noalias !195
   %i.cl = load i64, ptr %i.a, align 8, !noalias !194, !noundef !4 ; 3 uses
   %i.cm = load i64, ptr %i.ar, align 8, !noalias !194, !noundef !4
   %i.cn = load i8, ptr %i.at, align 8, !range !11, !noalias !194, !noundef !4 ; 2 uses
@@ -464,7 +464,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !194
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !194
-  call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ax, i64 noundef 0, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.dc, i32 noundef range(i32 8, 68) %spec.select), !noalias !195
+  call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ax, i64 noundef 0, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.dc, i32 noundef range(i32 8, 68) %.sroa.0.1), !noalias !195
   %i.dg = load i64, ptr %i.a, align 8, !noalias !194, !noundef !4 ; 2 uses
   %i.dh = load i64, ptr %i.ar, align 8, !noalias !194, !noundef !4
   %i.di = load i8, ptr %i.at, align 8, !range !11, !noalias !194, !noundef !4 ; 2 uses
@@ -547,7 +547,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !194
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !194
-  call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dt, i64 noundef %i.ds, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.ed, i32 noundef range(i32 8, 68) %spec.select), !noalias !195
+  call void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(10504) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dt, i64 noundef %i.ds, ptr noalias nofree noundef nonnull align 8 dereferenceable(43296) %1, i64 noundef 32768, i64 noundef %i.ed, i32 noundef range(i32 8, 68) %i.ac), !noalias !195
   %i.en = load i64, ptr %i.a, align 8, !noalias !194, !noundef !4 ; 3 uses
   %i.eo = load i64, ptr %i.ar, align 8, !noalias !194, !noundef !4
   %i.ep = load i8, ptr %i.at, align 8, !range !11, !noalias !194, !noundef !4 ; 2 uses
@@ -583,7 +583,8 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate6stream12inflate_loop.exit: ; preds =
 bb.ad:                                            ; preds = %bb.j
   tail call void @llvm.experimental.noalias.scope.decl(metadata !208)
   %..i.i = tail call noundef i64 @llvm.umin.i64(i64 %5, i64 %i.ae) ; 4 uses
-  %i.ew = load i64, ptr %7, align 8, !alias.scope !208, !noundef !4 ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 32768 ; 2 uses
+  %i.ew = load i64, ptr %8, align 8, !alias.scope !208, !noundef !4 ; 4 uses
   %i.ex = add i64 %i.ew, %..i.i                   ; 4 uses
   %i.ey = icmp uge i64 %i.ex, %i.ew
   %i.ez = icmp ult i64 %i.ex, 32769
@@ -600,7 +601,7 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate6stream13push_dict_out.exit: ; preds 
   %i.fb = sub nuw i64 %i.ae, %..i.i
   store i64 %i.fb, ptr %i.ad, align 8, !alias.scope !208
   %i.fc = and i64 %i.ex, 32767
-  store i64 %i.fc, ptr %7, align 8, !alias.scope !208
+  store i64 %i.fc, ptr %8, align 8, !alias.scope !208
   %i.fd = icmp eq i8 %.val32, 0
   %i.fe = icmp ule i64 %i.ae, %5
   %or.cond = and i1 %i.fd, %i.fe

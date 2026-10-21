@@ -127,7 +127,7 @@ bb.a:
   store i64 0, ptr %i.a, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 5 uses
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 6 uses
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 7 uses
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs79ICTHwG85D_12regex_syntax(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %1)
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -156,12 +156,15 @@ bb.b:                                             ; preds = %.noexc
   %i.r = or disjoint i8 %i.q, -16
   %i.s = or disjoint i8 %i.m, -32
   %i.t = or disjoint i8 %i.i, -64
-  %.pre15.i.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !25 ; 4 uses
-  br i1 %i.c, label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.i.i.i.i, label %.split.i.i.i.i
+  br i1 %i.c, label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.preheader.i.i.i.i, label %.split.i.i.i.i
 
-_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.i.i.i.i: ; preds = %bb.b, %.noexc3
-  %i.u = phi i64 [ %i.y, %.noexc3 ], [ %.pre15.i.i.i.i, %bb.b ] ; 3 uses
-  %.sroa.01.0.us.i.i.i.i = phi i64 [ %i.aa, %.noexc3 ], [ %i.b, %bb.b ] ; 2 uses
+_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.preheader.i.i.i.i: ; preds = %bb.b
+  %.pre15.i.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !25
+  br label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.i.i.i.i
+
+_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.i.i.i.i: ; preds = %.noexc3, %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.preheader.i.i.i.i
+  %i.u = phi i64 [ %i.y, %.noexc3 ], [ %.pre15.i.i.i.i, %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.preheader.i.i.i.i ] ; 3 uses
+  %.sroa.01.0.us.i.i.i.i = phi i64 [ %i.aa, %.noexc3 ], [ %i.b, %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us.preheader.i.i.i.i ] ; 2 uses
   %i.v = icmp sgt i64 %i.u, -1
   call void @llvm.assume(i1 %i.v)
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs79ICTHwG85D_12regex_syntax(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 1)
@@ -179,10 +182,11 @@ _RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
 
 .split.i.i.i.i:                                   ; preds = %bb.b
   %i.ab = icmp samesign ult i32 %2, 2048
+  %.pre14.i.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !25 ; 3 uses
   br i1 %i.ab, label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us4.i.i.i.i, label %.split.split.i.i.i.i
 
 _RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us4.i.i.i.i: ; preds = %.split.i.i.i.i, %.noexc4
-  %i.ac = phi i64 [ %i.ah, %.noexc4 ], [ %.pre15.i.i.i.i, %.split.i.i.i.i ] ; 3 uses
+  %i.ac = phi i64 [ %i.ah, %.noexc4 ], [ %.pre14.i.i.i.i, %.split.i.i.i.i ] ; 3 uses
   %.sroa.01.0.us3.i.i.i.i = phi i64 [ %i.aj, %.noexc4 ], [ %i.b, %.split.i.i.i.i ] ; 2 uses
   %i.ad = icmp sgt i64 %i.ac, -1
   call void @llvm.assume(i1 %i.ad)
@@ -205,7 +209,7 @@ _RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
   br i1 %i.d, label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us7.i.i.i.i, label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.i.i.i.i
 
 _RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us7.i.i.i.i: ; preds = %.split.split.i.i.i.i, %.noexc5
-  %i.ak = phi i64 [ %i.aq, %.noexc5 ], [ %.pre15.i.i.i.i, %.split.split.i.i.i.i ] ; 3 uses
+  %i.ak = phi i64 [ %i.aq, %.noexc5 ], [ %.pre14.i.i.i.i, %.split.split.i.i.i.i ] ; 3 uses
   %.sroa.01.0.us6.i.i.i.i = phi i64 [ %i.as, %.noexc5 ], [ %i.b, %.split.split.i.i.i.i ] ; 2 uses
   %i.al = icmp sgt i64 %i.ak, -1
   call void @llvm.assume(i1 %i.al)
@@ -227,7 +231,7 @@ _RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
   br i1 %i.ar, label %_RINvXsd_NtCscdodAO9FK5_5alloc6stringNtB6_6StringINtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect6ExtendcE6extendINtNtNtBR_8adapters4take4TakeINtNtNtBR_7sources6repeat6RepeatcEEECs79ICTHwG85D_12regex_syntax.exit, label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.us7.i.i.i.i
 
 _RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCscdodAO9FK5_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs79ICTHwG85D_12regex_syntax.exit.i.i.i.i: ; preds = %.split.split.i.i.i.i, %.noexc6
-  %i.at = phi i64 [ %i.ba, %.noexc6 ], [ %.pre15.i.i.i.i, %.split.split.i.i.i.i ] ; 3 uses
+  %i.at = phi i64 [ %i.ba, %.noexc6 ], [ %.pre14.i.i.i.i, %.split.split.i.i.i.i ] ; 3 uses
   %.sroa.01.0.i.i.i.i = phi i64 [ %i.bc, %.noexc6 ], [ %i.b, %.split.split.i.i.i.i ] ; 2 uses
   %i.au = icmp sgt i64 %i.at, -1
   call void @llvm.assume(i1 %i.au)

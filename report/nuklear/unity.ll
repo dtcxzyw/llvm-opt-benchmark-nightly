@@ -205,9 +205,7 @@ middle.block172:                                  ; preds = %vector.body166
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i28, %middle.block172
   %.lcssa160 = phi i32 [ %i.fo, %middle.block172 ], [ %i.fr, %.lr.ph.i28 ]
-  %.not.i = icmp eq i32 %10, 0                    ; 2 uses
   %i.fs = fneg float %5
-  %12 = select i1 %.not.i, float %5, float %i.fs  ; 2 uses
   %i.ft = add nsw i32 %.lcssa160, 1
   %i.fu = sext i32 %i.ft to i64
   %i.fv = mul nsw i64 %i.fu, 20
@@ -218,11 +216,12 @@ middle.block172:                                  ; preds = %vector.body166
   br i1 %i.fx, label %stbtt__rasterize.exit, label %.lr.ph117.i
 
 .lr.ph117.i:                                      ; preds = %._crit_edge.loopexit.i
+  %.not.i = icmp eq i32 %10, 0
   br i1 %.not.i, label %.lr.ph117.split.us.i.preheader, label %.lr.ph117.split.i.preheader
 
 .lr.ph117.split.i.preheader:                      ; preds = %.lr.ph117.i
   %i.fy = insertelement <4 x float> poison, float %4, i64 0
-  %i.fz = insertelement <4 x float> %i.fy, float %12, i64 1
+  %i.fz = insertelement <4 x float> %i.fy, float %i.fs, i64 1
   %i.ga = shufflevector <4 x float> %i.fz, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.gb = insertelement <4 x float> poison, float %6, i64 0
   %i.gc = insertelement <4 x float> %i.gb, float %7, i64 1
@@ -231,7 +230,7 @@ middle.block172:                                  ; preds = %vector.body166
 
 .lr.ph117.split.us.i.preheader:                   ; preds = %.lr.ph117.i
   %i.ge = insertelement <4 x float> poison, float %4, i64 0
-  %i.gf = insertelement <4 x float> %i.ge, float %12, i64 1
+  %i.gf = insertelement <4 x float> %i.ge, float %5, i64 1
   %i.gg = shufflevector <4 x float> %i.gf, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.gh = insertelement <4 x float> poison, float %6, i64 0
   %i.gi = insertelement <4 x float> %i.gh, float %7, i64 1
@@ -634,7 +633,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 4 uses
   %i.g = fcmp olt float %i.d, %i.f
   %or.cond.i = select i1 %i.e, i1 %i.g, i1 false
-  br i1 %or.cond.i, label %bb.c, label %nk_input_is_mouse_pressed.exit
+  br i1 %or.cond.i, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %.sroa.0.4.vec.extract.i = extractelement <2 x float> %1, i64 1 ; 2 uses
@@ -645,20 +644,20 @@ bb.c:                                             ; preds = %bb.b
   %i.k = extractelement <2 x float> %foldExtExtBinop73, i64 1 ; 2 uses
   %i.l = fcmp olt float %i.i, %i.k
   %or.cond = select i1 %i.j, i1 %i.l, i1 false
-  br i1 %or.cond, label %nk_input_is_mouse_down.exit, label %nk_input_is_mouse_pressed.exit
+  br i1 %or.cond, label %nk_input_is_mouse_down.exit, label %bb.f
 
 nk_input_is_mouse_down.exit:                      ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 260
   %i.n = load i8, ptr %i.m, align 4, !tbaa !388, !range !88, !noundef !89
   %i.o = trunc nuw i8 %i.n to i1                  ; 3 uses
-  %spec.store.select = select i1 %i.o, i32 34, i32 18 ; 5 uses
+  %spec.store.select = select i1 %i.o, i32 34, i32 18 ; 4 uses
   store i32 %spec.store.select, ptr %0, align 4, !tbaa !55
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 268
   %i.q = load float, ptr %i.p, align 4, !tbaa !389 ; 2 uses
   %i.r = fcmp ole float %.sroa.0.0.vec.extract.i, %i.q
   %i.s = fcmp olt float %i.q, %i.f
   %or.cond.i34 = select i1 %i.r, i1 %i.s, i1 false
-  br i1 %or.cond.i34, label %nk_input_has_mouse_click_in_button_rect.exit, label %nk_input_is_mouse_pressed.exit
+  br i1 %or.cond.i34, label %nk_input_has_mouse_click_in_button_rect.exit, label %bb.f
 
 nk_input_has_mouse_click_in_button_rect.exit:     ; preds = %nk_input_is_mouse_down.exit
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 272
@@ -666,38 +665,43 @@ nk_input_has_mouse_click_in_button_rect.exit:     ; preds = %nk_input_is_mouse_d
   %i.v = fcmp ole float %.sroa.0.4.vec.extract.i, %i.u
   %i.w = fcmp olt float %i.u, %i.k
   %or.cond16.i = select i1 %i.v, i1 %i.w, i1 false
-  br i1 %or.cond16.i, label %bb.d, label %nk_input_is_mouse_pressed.exit
+  br i1 %or.cond16.i, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %nk_input_has_mouse_click_in_button_rect.exit
-  %.not27 = icmp eq i32 %4, 0
-  br i1 %.not27, label %5, label %nk_input_is_mouse_pressed.exit
+  %.not27 = icmp ne i32 %4, 0                     ; 3 uses
+  %.not = xor i1 %i.o, true
+  %brmerge = select i1 %.not27, i1 true, i1 %.not
+  %spec.store.select.mux = select i1 %.not27, i32 %spec.store.select, i32 18
+  %.mux = and i1 %.not27, %i.o
+  br i1 %brmerge, label %bb.f, label %bb.e
 
-5:                                                ; preds = %bb.d
-  br i1 %i.o, label %bb.e, label %bb.f
-
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 264
   %i.y = load i32, ptr %i.x, align 4, !tbaa !383
   %.not6.i = icmp eq i32 %i.y, 0
   br i1 %.not6.i, label %bb.f, label %nk_input_is_mouse_pressed.exit
 
-bb.f:                                             ; preds = %bb.e, %5
-  br label %nk_input_is_mouse_pressed.exit
+bb.f:                                             ; preds = %bb.d, %bb.e, %nk_input_is_mouse_down.exit, %bb.b, %bb.c, %nk_input_has_mouse_click_in_button_rect.exit
+  %5 = phi i32 [ %spec.store.select, %nk_input_is_mouse_down.exit ], [ %spec.store.select, %nk_input_has_mouse_click_in_button_rect.exit ], [ %., %bb.c ], [ %., %bb.b ], [ %spec.store.select.mux, %bb.d ], [ 34, %bb.e ] ; 4 uses
+  %.0 = phi i1 [ false, %nk_input_is_mouse_down.exit ], [ false, %nk_input_has_mouse_click_in_button_rect.exit ], [ false, %bb.c ], [ false, %bb.b ], [ %.mux, %bb.d ], [ false, %bb.e ] ; 3 uses
+  %6 = and i32 %5, 16
+  %.not28 = icmp eq i32 %6, 0
+  br i1 %.not28, label %nk_input_is_mouse_pressed.exit, label %bb.g
 
-nk_input_is_mouse_pressed.exit:                   ; preds = %bb.d, %nk_input_is_mouse_down.exit, %bb.b, %bb.c, %bb.f, %bb.e, %nk_input_has_mouse_click_in_button_rect.exit
-  %6 = phi i32 [ %spec.store.select, %nk_input_is_mouse_down.exit ], [ %spec.store.select, %nk_input_has_mouse_click_in_button_rect.exit ], [ %., %bb.c ], [ %., %bb.b ], [ %spec.store.select, %bb.f ], [ 34, %bb.e ], [ %spec.store.select, %bb.d ] ; 2 uses
-  %.0 = phi i1 [ false, %nk_input_is_mouse_down.exit ], [ false, %nk_input_has_mouse_click_in_button_rect.exit ], [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.f ], [ true, %bb.e ], [ %i.o, %bb.d ] ; 3 uses
-  %7 = and i32 %6, 16
-  %.not28 = icmp eq i32 %7, 0
+nk_input_is_mouse_pressed.exit:                   ; preds = %bb.e, %bb.f
+  %.074 = phi i1 [ %.0, %bb.f ], [ true, %bb.e ]
+  %7 = phi i32 [ %5, %bb.f ], [ 34, %bb.e ]
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 364
-  %.pre = load float, ptr %.phi.trans.insert, align 4, !tbaa !393 ; 4 uses
-  br i1 %.not28, label %nk_input_is_mouse_pressed.exit._crit_edge, label %bb.g
+  %.pre = load float, ptr %.phi.trans.insert, align 4, !tbaa !393
+  br label %nk_input_is_mouse_pressed.exit._crit_edge
 
-bb.g:                                             ; preds = %nk_input_is_mouse_pressed.exit
-  %i.z = fcmp ole float %.sroa.0.0.vec.extract.i, %.pre
-  %i.aa = fcmp olt float %.pre, %i.f
+bb.g:                                             ; preds = %bb.f
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 364
+  %9 = load float, ptr %8, align 4, !tbaa !393    ; 3 uses
+  %i.z = fcmp ole float %.sroa.0.0.vec.extract.i, %9
+  %i.aa = fcmp olt float %9, %i.f
   %or.cond.i46 = select i1 %i.z, i1 %i.aa, i1 false
-  br i1 %or.cond.i46, label %bb.h, label %nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split
+  br i1 %or.cond.i46, label %bb.h, label %nk_input_is_mouse_prev_hovering_rect.exit.thread
 
 bb.h:                                             ; preds = %bb.g
   %.sroa.0.4.vec.extract.i48 = extractelement <2 x float> %1, i64 1
@@ -708,11 +712,18 @@ bb.h:                                             ; preds = %bb.g
   %i.ae = extractelement <2 x float> %foldExtExtBinop75, i64 1
   %i.af = fcmp olt float %i.ac, %i.ae
   %or.cond64 = select i1 %i.ad, i1 %i.af, i1 false
-  br i1 %or.cond64, label %nk_input_is_mouse_pressed.exit._crit_edge, label %nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split
+  br i1 %or.cond64, label %nk_input_is_mouse_pressed.exit._crit_edge, label %nk_input_is_mouse_prev_hovering_rect.exit.thread
+
+nk_input_is_mouse_prev_hovering_rect.exit.thread: ; preds = %bb.g, %bb.h
+  %10 = or i32 %5, 8
+  br label %nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split
 
 nk_input_is_mouse_pressed.exit._crit_edge:        ; preds = %nk_input_is_mouse_pressed.exit, %bb.h
-  %i.ag = fcmp ole float %.sroa.0.0.vec.extract.i, %.pre
-  %i.ah = fcmp olt float %.pre, %i.f
+  %.073 = phi i1 [ %.074, %nk_input_is_mouse_pressed.exit ], [ %.0, %bb.h ] ; 3 uses
+  %11 = phi i32 [ %7, %nk_input_is_mouse_pressed.exit ], [ %5, %bb.h ]
+  %12 = phi float [ %.pre, %nk_input_is_mouse_pressed.exit ], [ %9, %bb.h ] ; 2 uses
+  %i.ag = fcmp ole float %.sroa.0.0.vec.extract.i, %12
+  %i.ah = fcmp olt float %12, %i.f
   %or.cond.i53 = select i1 %i.ag, i1 %i.ah, i1 false
   br i1 %or.cond.i53, label %bb.i, label %nk_input_is_mouse_prev_hovering_rect.exit57.thread
 
@@ -725,16 +736,20 @@ bb.i:                                             ; preds = %nk_input_is_mouse_p
   %i.al = extractelement <2 x float> %foldExtExtBinop77, i64 1
   %i.am = fcmp olt float %i.aj, %i.al
   %or.cond66 = select i1 %i.ak, i1 %i.am, i1 false
-  br i1 %or.cond66, label %nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split, label %nk_input_is_mouse_prev_hovering_rect.exit57.thread
+  br i1 %or.cond66, label %13, label %nk_input_is_mouse_prev_hovering_rect.exit57.thread
 
-nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split: ; preds = %bb.i, %bb.h, %bb.g
-  %.sink71 = phi i32 [ 8, %bb.h ], [ 8, %bb.g ], [ 64, %bb.i ]
-  %8 = or i32 %6, %.sink71
-  store i32 %8, ptr %0, align 4, !tbaa !55
+13:                                               ; preds = %bb.i
+  %14 = or i32 %11, 64
+  br label %nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split
+
+nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split: ; preds = %13, %nk_input_is_mouse_prev_hovering_rect.exit.thread
+  %.sink = phi i32 [ %10, %nk_input_is_mouse_prev_hovering_rect.exit.thread ], [ %14, %13 ]
+  %.024.ph = phi i1 [ %.0, %nk_input_is_mouse_prev_hovering_rect.exit.thread ], [ %.073, %13 ]
+  store i32 %.sink, ptr %0, align 4, !tbaa !55
   br label %nk_input_is_mouse_prev_hovering_rect.exit57.thread
 
 nk_input_is_mouse_prev_hovering_rect.exit57.thread: ; preds = %nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split, %nk_input_is_mouse_pressed.exit._crit_edge, %bb.i, %bb.a
-  %.024 = phi i1 [ false, %bb.a ], [ %.0, %nk_input_is_mouse_pressed.exit._crit_edge ], [ %.0, %bb.i ], [ %.0, %nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split ]
+  %.024 = phi i1 [ false, %bb.a ], [ %.073, %nk_input_is_mouse_pressed.exit._crit_edge ], [ %.073, %bb.i ], [ %.024.ph, %nk_input_is_mouse_prev_hovering_rect.exit57.thread.sink.split ]
   ret i1 %.024
 }
 

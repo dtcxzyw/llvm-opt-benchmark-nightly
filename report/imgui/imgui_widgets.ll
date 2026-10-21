@@ -205,11 +205,12 @@ bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i32 %i.a, 10                     ; 2 uses
   %i.f = and i32 %i.c, 67108864
   %i.g = icmp ne i32 %i.f, 0                      ; 3 uses
-  %7 = select i1 %i.e, i1 %i.g, i1 false
   %or.cond = and i1 %5, %i.e
   %or.cond.not = xor i1 %or.cond, true
-  %brmerge.a = select i1 %or.cond.not, i1 true, i1 %i.g
-  br i1 %brmerge.a, label %bb.d, label %bb.c
+  %brmerge = select i1 %or.cond.not, i1 true, i1 %i.g
+  %7 = select i1 %5, i1 true, i1 %i.g
+  %brmerge.a = select i1 %i.e, i1 %7, i1 false
+  br i1 %brmerge, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   store i32 32, ptr %2, align 4, !tbaa !208
@@ -217,7 +218,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %.0130 = phi i32 [ 32, %bb.c ], [ %i.a, %bb.b ] ; 3 uses
-  %.0127.shrunk = phi i1 [ true, %bb.c ], [ %7, %bb.b ]
+  %.0127.shrunk = phi i1 [ true, %bb.c ], [ %brmerge.a, %bb.b ]
   %i.h = icmp eq i32 %.0130, 10
   %i.i = select i1 %i.h, i1 %i.g, i1 false
   %i.j = or i1 %.0127.shrunk, %i.i

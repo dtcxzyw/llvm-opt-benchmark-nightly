@@ -202,8 +202,8 @@ bb.s:                                             ; preds = %bb.q, %bb.i
   %.074 = phi i32 [ %i.af, %bb.q ], [ 0, %bb.i ]
   store i32 %.074, ptr %1, align 8, !tbaa !53
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.ai = load i16, ptr %i.ah, align 4, !tbaa !21 ; 2 uses
-  %i.aj = tail call i16 @llvm.bswap.i16(i16 %i.ai)
+  %i.ai = load i16, ptr %i.ah, align 4, !tbaa !21 ; 3 uses
+  %i.aj = tail call i16 @llvm.bswap.i16(i16 %i.ai) ; 2 uses
   %.0.i100 = select i1 %i.g, i16 %i.aj, i16 %i.ai ; 4 uses
   %i.ak = icmp ugt i16 %.0.i100, 256
   br i1 %i.ak, label %bb.t, label %bb.u
@@ -251,7 +251,7 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.ad
 
 bb.z:                                             ; preds = %bb.x
-  %i.az = zext nneg i16 %.0.i100 to i64           ; 3 uses
+  %i.az = zext nneg i16 %.0.i100 to i64
   %i.ba = tail call ptr @cli_calloc(i64 noundef %i.az, i64 noundef 40) #8 ; 5 uses
   %.not94 = icmp eq ptr %i.ba, null
   br i1 %.not94, label %bb.ab, label %.preheader
@@ -261,10 +261,18 @@ bb.z:                                             ; preds = %bb.x
   br i1 %.not110, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  br i1 %i.g, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.g, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.aa
-  %indvars.iv121 = phi i64 [ %indvars.iv.next122, %bb.aa ], [ 0, %.lr.ph ] ; 3 uses
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %wide.trip.count119 = zext i16 %i.ai to i64
+  br label %.lr.ph.split
+
+.lr.ph.split.us.preheader:                        ; preds = %.lr.ph
+  %wide.trip.count124 = zext i16 %i.aj to i64
+  br label %.lr.ph.split.us
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %bb.aa
+  %indvars.iv121 = phi i64 [ 0, %.lr.ph.split.us.preheader ], [ %indvars.iv.next122, %bb.aa ] ; 3 uses
   %i.bb = getelementptr inbounds nuw [40 x i8], ptr %i.ba, i64 %indvars.iv121 ; 4 uses
   %i.bc = tail call i64 @read(i32 noundef %0, ptr noundef nonnull %i.bb, i64 noundef 40) #8
   %.not95.us = icmp eq i64 %i.bc, 40
@@ -288,7 +296,7 @@ bb.aa:                                            ; preds = %.lr.ph.split.us
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bh, i64 12
   store i32 %i.bo, ptr %i.bp, align 4, !tbaa !60
   %indvars.iv.next122 = add nuw nsw i64 %indvars.iv121, 1 ; 2 uses
-  %exitcond125.not = icmp eq i64 %indvars.iv.next122, %i.az
+  %exitcond125.not = icmp eq i64 %indvars.iv.next122, %wide.trip.count124
   br i1 %exitcond125.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !49
 
 bb.ab:                                            ; preds = %bb.z
@@ -298,8 +306,8 @@ bb.ab:                                            ; preds = %bb.z
   store ptr null, ptr %i.ay, align 8, !tbaa !55
   br label %bb.ad
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %bb.ac
-  %indvars.iv116 = phi i64 [ %indvars.iv.next117, %bb.ac ], [ 0, %.lr.ph ] ; 3 uses
+.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.ac
+  %indvars.iv116 = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next117, %bb.ac ] ; 3 uses
   %i.br = getelementptr inbounds nuw [40 x i8], ptr %i.ba, i64 %indvars.iv116 ; 3 uses
   %i.bs = tail call i64 @read(i32 noundef %0, ptr noundef nonnull %i.br, i64 noundef 40) #8
   %.not95 = icmp eq i64 %i.bs, 40
@@ -323,7 +331,7 @@ bb.ac:                                            ; preds = %.lr.ph.split
   %i.ca = load <2 x i32>, ptr %i.by, align 4, !tbaa !7
   store <2 x i32> %i.ca, ptr %i.bz, align 4, !tbaa !7
   %indvars.iv.next117 = add nuw nsw i64 %indvars.iv116, 1 ; 2 uses
-  %exitcond120.not = icmp eq i64 %indvars.iv.next117, %i.az
+  %exitcond120.not = icmp eq i64 %indvars.iv.next117, %wide.trip.count119
   br i1 %exitcond120.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %bb.ac, %bb.aa, %.preheader

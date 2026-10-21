@@ -205,29 +205,30 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
   br i1 %exitcond.not.3, label %.lr.ph426, label %scalar.ph, !llvm.loop !206
 
-bb.m:                                             ; preds = %bb.m, %.lr.ph426
-  %indvars.iv503 = phi i64 [ %i.dj, %.lr.ph426 ], [ %indvars.iv.next504, %bb.m ] ; 2 uses
+11:                                               ; preds = %bb.m
+  %indvars.iv.next504 = add nsw i64 %indvars.iv503, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next504 to i32
+  %exitcond506.not = icmp eq i32 %i.ae, %lftr.wideiv
+  br i1 %exitcond506.not, label %.lr.ph435, label %bb.m
+
+bb.m:                                             ; preds = %.lr.ph426, %11
+  %indvars.iv503 = phi i64 [ %i.dj, %.lr.ph426 ], [ %indvars.iv.next504, %11 ] ; 2 uses
   %.idx600 = shl nsw i64 %indvars.iv503, 3
   %i.ed = getelementptr inbounds i8, ptr %i.dh, i64 %.idx600
   %i.ee = load <2 x float>, ptr %i.ed, align 4, !tbaa !12
   %i.ef = fptosi <2 x float> %i.ee to <2 x i32>   ; 2 uses
   %i.eg = shufflevector <2 x i32> %i.ef, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.eh = shufflevector <2 x i32> %i.ef, <2 x i32> %i.di, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %11 = shufflevector <4 x i32> <i32 1, i32 1, i32 poison, i32 poison>, <4 x i32> %i.eg, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %12 = icmp sgt <4 x i32> %i.eh, %11
-  %13 = freeze <4 x i1> %12
-  %14 = bitcast <4 x i1> %13 to i4
-  %15 = icmp eq i4 %14, -1                        ; 2 uses
-  %indvars.iv.next504 = add nsw i64 %indvars.iv503, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next504 to i32
-  %exitcond506.not.a = icmp eq i32 %i.ae, %lftr.wideiv
-  %or.cond612 = select i1 %15, i1 true, i1 %exitcond506.not.a
-  br i1 %or.cond612, label %._crit_edge427, label %bb.m
+  %i.eh = shufflevector <2 x i32> %i.di, <2 x i32> %i.ef, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
+  %12 = shufflevector <4 x i32> %i.eg, <4 x i32> <i32 poison, i32 poison, i32 2, i32 2>, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
+  %13 = icmp sle <4 x i32> %i.eh, %12
+  %14 = icmp slt <4 x i32> %i.eh, %12
+  %15 = shufflevector <4 x i1> %13, <4 x i1> %14, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %16 = freeze <4 x i1> %15
+  %17 = bitcast <4 x i1> %16 to i4
+  %exitcond506.not.a = icmp eq i4 %17, 0
+  br i1 %exitcond506.not.a, label %bb.p, label %11
 
-._crit_edge427:                                   ; preds = %bb.m
-  br i1 %15, label %bb.p, label %.lr.ph435
-
-.lr.ph435:                                        ; preds = %._crit_edge427
+.lr.ph435:                                        ; preds = %11
   %i.ei = sdiv <2 x i32> %i.s, splat (i32 2)      ; 3 uses
   %i.ej = load ptr, ptr %i.b, align 8, !tbaa !128 ; 5 uses
   %i.ek = extractelement <2 x i32> %i.ei, i64 0
@@ -370,9 +371,9 @@ bb.o:                                             ; preds = %bb.n, %scalar.ph633
   %exitcond511.not = icmp eq i64 %indvars.iv.next508, %wide.trip.count510
   br i1 %exitcond511.not, label %._crit_edge436, label %scalar.ph633, !llvm.loop !208
 
-bb.p:                                             ; preds = %._crit_edge436, %._crit_edge427
-  %.4295 = phi i1 [ true, %._crit_edge427 ], [ %.not314, %._crit_edge436 ] ; 2 uses
-  %.1285 = phi i32 [ 0, %._crit_edge427 ], [ %spec.select, %._crit_edge436 ] ; 2 uses
+bb.p:                                             ; preds = %bb.m, %._crit_edge436
+  %.4295 = phi i1 [ %.not314, %._crit_edge436 ], [ true, %bb.m ] ; 2 uses
+  %.1285 = phi i32 [ %spec.select, %._crit_edge436 ], [ 0, %bb.m ] ; 2 uses
   %.pre537.pre = load ptr, ptr %i.c, align 8, !tbaa !128 ; 10 uses
   br i1 %i.az, label %.lr.ph440, label %.thread390
 

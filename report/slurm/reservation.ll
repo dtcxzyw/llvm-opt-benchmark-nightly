@@ -202,9 +202,9 @@ declare void @license_free_rec(ptr noundef) #2
 define internal fastcc range(i32 -1, 1) i32 @_handle_add_remove_names(ptr noundef nonnull %0, i32 noundef range(i32 1, 3) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef captures(none) %5, i1 noundef zeroext %6, i1 noundef zeroext %7) unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i32 %1, 2                        ; 6 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %.0124 = select i1 %i.a, ptr %i.b, ptr %i.c     ; 7 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 7 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
+  %.0124 = select i1 %i.a, ptr %i.b, ptr %i.c     ; 5 uses
   %.0123.v = select i1 %i.a, i64 328, i64 8
   %.0123 = getelementptr inbounds nuw i8, ptr %0, i64 %.0123.v ; 7 uses
   %i.d = load i32, ptr %.0124, align 4            ; 2 uses
@@ -363,7 +363,7 @@ bb.f:                                             ; preds = %.split._crit_edge, 
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph178, %.loopexit158
-  %i.aj = phi i32 [ %i.af, %.lr.ph178 ], [ %i.de, %.loopexit158 ] ; 3 uses
+  %i.aj = phi i32 [ %i.af, %.lr.ph178 ], [ %i.de, %.loopexit158 ] ; 2 uses
   %indvars.iv210 = phi i64 [ 0, %.lr.ph178 ], [ %indvars.iv.next211, %.loopexit158 ] ; 4 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv210
   %i.al = load i32, ptr %i.ak, align 4
@@ -382,7 +382,6 @@ bb.g:                                             ; preds = %.lr.ph178, %.loopex
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv210
   %i.ap = load ptr, ptr %i.ai, align 8
   %i.aq = load i32, ptr %i.ao, align 4
-  %8 = zext nneg i32 %i.aj to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.i, %.lr.ph170.split.us
@@ -394,8 +393,10 @@ bb.h:                                             ; preds = %bb.i, %.lr.ph170.sp
 
 bb.i:                                             ; preds = %bb.h
   %indvars.iv.next202 = add nuw nsw i64 %indvars.iv201, 1 ; 2 uses
-  %9 = icmp samesign ult i64 %indvars.iv.next202, %8
-  br i1 %9, label %bb.h, label %.loopexit, !llvm.loop !93
+  %8 = load i32, ptr %i.b, align 8
+  %9 = sext i32 %8 to i64
+  %10 = icmp slt i64 %indvars.iv.next202, %9
+  br i1 %10, label %bb.h, label %.loopexit, !llvm.loop !93
 
 .split148:                                        ; preds = %.lr.ph170, %bb.j
   %indvars.iv198 = phi i64 [ %indvars.iv.next199, %bb.j ], [ 0, %.lr.ph170 ] ; 3 uses
@@ -413,7 +414,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %.split148
   %indvars.iv.next199 = add nuw nsw i64 %indvars.iv198, 1 ; 2 uses
-  %i.bb = load i32, ptr %.0124, align 4
+  %i.bb = load i32, ptr %i.c, align 8
   %i.bc = sext i32 %i.bb to i64
   %i.bd = icmp slt i64 %indvars.iv.next199, %i.bc
   br i1 %i.bd, label %.split148, label %.loopexit, !llvm.loop !93
@@ -582,7 +583,7 @@ bb.u:                                             ; preds = %.lr.ph183, %.thread
   br i1 %.not132, label %.preheader, label %.thread155
 
 .preheader:                                       ; preds = %bb.u
-  %i.dk = load i32, ptr %.0124, align 4           ; 2 uses
+  %i.dk = load i32, ptr %.0124, align 4
   %i.dl = icmp sgt i32 %i.dk, 0
   br i1 %i.dl, label %.lr.ph180, label %._crit_edge181
 
@@ -594,7 +595,6 @@ bb.u:                                             ; preds = %.lr.ph183, %.thread
   %i.dn = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv221
   %i.do = load ptr, ptr %i.dh, align 8
   %i.dp = load i32, ptr %i.dn, align 4
-  %10 = zext nneg i32 %i.dk to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %.lr.ph180.split.us
@@ -606,8 +606,10 @@ bb.v:                                             ; preds = %bb.w, %.lr.ph180.sp
 
 bb.w:                                             ; preds = %bb.v
   %indvars.iv.next219 = add nuw nsw i64 %indvars.iv218, 1 ; 2 uses
-  %11 = icmp samesign ult i64 %indvars.iv.next219, %10
-  br i1 %11, label %bb.v, label %._crit_edge181, !llvm.loop !98
+  %11 = load i32, ptr %i.b, align 8
+  %12 = sext i32 %11 to i64
+  %13 = icmp slt i64 %indvars.iv.next219, %12
+  br i1 %13, label %bb.v, label %._crit_edge181, !llvm.loop !98
 
 .split152:                                        ; preds = %.lr.ph180, %bb.x
   %indvars.iv215 = phi i64 [ %indvars.iv.next216, %bb.x ], [ 0, %.lr.ph180 ] ; 2 uses
@@ -625,7 +627,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %.split152
   %indvars.iv.next216 = add nuw nsw i64 %indvars.iv215, 1 ; 2 uses
-  %i.ea = load i32, ptr %.0124, align 4
+  %i.ea = load i32, ptr %i.c, align 8
   %i.eb = sext i32 %i.ea to i64
   %i.ec = icmp slt i64 %indvars.iv.next216, %i.eb
   br i1 %i.ec, label %.split152, label %._crit_edge181, !llvm.loop !98

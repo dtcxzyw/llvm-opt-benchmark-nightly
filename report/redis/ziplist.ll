@@ -202,14 +202,14 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bp, label %bb.au, label %bb.u, !prof !25
 
 bb.u:                                             ; preds = %bb.t
-  %i.bq = load i8, ptr %i.bm, align 1, !tbaa !14  ; 5 uses
+  %i.bq = load i8, ptr %i.bm, align 1, !tbaa !14  ; 6 uses
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 20
   %i.bs = icmp ult i8 %i.bq, -64                  ; 2 uses
   %i.bt = and i8 %i.bq, -64
   %spec.select219 = select i1 %i.bs, i8 %i.bt, i8 %i.bq ; 5 uses
   store i8 %spec.select219, ptr %i.br, align 4, !tbaa !29
   %i.bu = add i8 %spec.select219, 64              ; 2 uses
-  %i.bv = tail call i8 @llvm.fshl.i8(i8 %i.bu, i8 %i.bu, i8 7) ; 3 uses
+  %i.bv = tail call i8 @llvm.fshl.i8(i8 %i.bu, i8 %i.bu, i8 7) ; 2 uses
   %i.bw = icmp ult i8 %i.bv, 32
   br i1 %i.bw, label %switch.hole_check239, label %bb.v
 
@@ -337,7 +337,9 @@ bb.ah:                                            ; preds = %bb.ad
 
 bb.ai:                                            ; preds = %bb.ac
   store i32 1, ptr %i.bz, align 8, !tbaa !31
-  switch i8 %i.bv, label %bb.ao [
+  %5 = add nsw i8 %i.bq, 64                       ; 2 uses
+  %6 = tail call i8 @llvm.fshl.i8(i8 %5, i8 %5, i8 7)
+  switch i8 %6, label %bb.ao [
     i8 31, label %bb.aj
     i8 0, label %bb.ak
     i8 24, label %bb.al
