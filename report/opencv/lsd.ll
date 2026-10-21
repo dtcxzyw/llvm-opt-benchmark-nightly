@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.du = mul i64 %i.dt, %indvars.iv154
   %.sink.idx.i.i = select i1 %i.dr, i64 0, i64 %i.du
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.ds, i64 %.sink.idx.i.i
-  %i.dv = getelementptr inbounds [8 x i8], ptr %.sink.i.i, i64 %indvars.iv
+  %i.dv = getelementptr inbounds nuw [8 x i8], ptr %.sink.i.i, i64 %indvars.iv
   %i.dw = load double, ptr %i.dv, align 8, !tbaa !87 ; 2 uses
   %i.dx = fcmp oeq double %i.dw, -1.024000e+03
   br i1 %i.dx, label %_ZNK2cv23LineSegmentDetectorImpl9isAlignedEiiRKdS2_.exit.thread, label %bb.k
@@ -235,9 +235,9 @@ _ZNK2cv23LineSegmentDetectorImpl9isAlignedEiiRKdS2_.exit: ; preds = %bb.k, %bb.l
   br i1 %i.eh, label %_ZNK2cv23LineSegmentDetectorImpl9isAlignedEiiRKdS2_.exit.thread, label %bb.n
 
 bb.n:                                             ; preds = %_ZNK2cv23LineSegmentDetectorImpl9isAlignedEiiRKdS2_.exit
-  %i.ei = getelementptr inbounds [8 x i8], ptr %i.dc, i64 %indvars.iv ; 2 uses
+  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %indvars.iv ; 2 uses
   store i8 1, ptr %i.di, align 1, !tbaa !57
-  %i.ej = getelementptr inbounds [8 x i8], ptr %i.dg, i64 %indvars.iv
+  %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %indvars.iv
   %i.ek = load double, ptr %i.ej, align 8, !tbaa !87 ; 2 uses
   %i.el = load double, ptr %i.ei, align 8, !tbaa !87 ; 2 uses
   %i.em = load ptr, ptr %i.b, align 8, !tbaa !105 ; 8 uses

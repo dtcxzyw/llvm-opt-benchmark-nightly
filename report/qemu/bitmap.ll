@@ -204,7 +204,7 @@ bb.a:
   %.neg = or i64 %1, -64                          ; 2 uses
   %i.e = lshr i64 %1, 6
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.e ; 4 uses
-  %i.g = add i64 %.neg, %2                        ; 6 uses
+  %i.g = add nsw i64 %.neg, %2                    ; 6 uses
   %i.h = icmp sgt i64 %i.g, -1
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
@@ -218,7 +218,7 @@ bb.a:
 
 .lr.ph.preheader33:                               ; preds = %.lr.ph.preheader
   %i.m = tail call i64 @llvm.umin.i64(i64 %i.g, i64 127)
-  %i.n = add i64 %.neg, %2
+  %i.n = add nsw i64 %.neg, %2
   %i.o = add i64 %i.n, 63
   %i.p = sub i64 %i.o, %i.m                       ; 2 uses
   %i.q = lshr i64 %i.p, 6
@@ -312,7 +312,7 @@ bb.c:                                             ; preds = %bb.a
   %i.h = and i32 %i.g, 63
   %i.i = sub nuw nsw i32 64, %i.h                 ; 2 uses
   %i.j = zext nneg i32 %i.i to i64
-  %i.k = sub i64 %2, %i.j                         ; 2 uses
+  %i.k = sub nsw i64 %2, %i.j                     ; 2 uses
   %i.l = icmp sgt i64 %i.k, 0
   br i1 %i.l, label %bb.d, label %bb.e
 
@@ -332,7 +332,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %or.cond3, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.e
-  %i.q = add i64 %.0, -64
+  %i.q = add nsw i64 %.0, -64
   %i.r = lshr i64 %i.q, 3
   %i.s = and i64 %i.r, 2305843009213693944
   %i.t = add nuw nsw i64 %i.s, 8                  ; 2 uses
@@ -378,7 +378,7 @@ bb.a:
   %.neg = or i64 %1, -64                          ; 2 uses
   %i.e = lshr i64 %1, 6
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.e ; 4 uses
-  %i.g = add i64 %.neg, %2                        ; 6 uses
+  %i.g = add nsw i64 %.neg, %2                    ; 6 uses
   %i.h = icmp sgt i64 %i.g, -1
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
@@ -393,7 +393,7 @@ bb.a:
 
 .lr.ph.preheader33:                               ; preds = %.lr.ph.preheader
   %i.n = tail call i64 @llvm.umin.i64(i64 %i.g, i64 127)
-  %i.o = add i64 %.neg, %2
+  %i.o = add nsw i64 %.neg, %2
   %i.p = add i64 %i.o, 63
   %i.q = sub i64 %i.p, %i.n                       ; 2 uses
   %i.r = lshr i64 %i.q, 6
@@ -485,7 +485,7 @@ bb.c:                                             ; preds = %bb.a
   %i.h = and i32 %i.g, 63
   %i.i = sub nuw nsw i32 64, %i.h                 ; 2 uses
   %i.j = zext nneg i32 %i.i to i64
-  %i.k = sub i64 %2, %i.j                         ; 2 uses
+  %i.k = sub nsw i64 %2, %i.j                     ; 2 uses
   %i.l = icmp sgt i64 %i.k, 0
   br i1 %i.l, label %bb.d, label %bb.e
 
@@ -510,7 +510,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %or.cond3, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.e
-  %i.t = add i64 %.038, -64                       ; 2 uses
+  %i.t = add nsw i64 %.038, -64                   ; 2 uses
   %i.u = lshr i64 %i.t, 6
   %i.v = add nuw nsw i64 %i.u, 1
   %xtraiter = and i64 %i.v, 3                     ; 2 uses
@@ -647,7 +647,7 @@ bb.c:                                             ; preds = %bb.a
   %i.h = and i32 %i.g, 63
   %i.i = sub nuw nsw i32 64, %i.h                 ; 2 uses
   %i.j = zext nneg i32 %i.i to i64
-  %i.k = sub i64 %2, %i.j                         ; 2 uses
+  %i.k = sub nsw i64 %2, %i.j                     ; 2 uses
   %i.l = icmp sgt i64 %i.k, 0
   br i1 %i.l, label %bb.d, label %bb.e
 
@@ -670,7 +670,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %or.cond3, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.e
-  %i.s = add i64 %.0, -64                         ; 2 uses
+  %i.s = add nsw i64 %.0, -64                     ; 2 uses
   %i.t = and i64 %i.s, 64
   %lcmp.mod.not.not = icmp eq i64 %i.t, 0
   br i1 %lcmp.mod.not.not, label %.preheader.prol, label %.preheader.prol.loopexit

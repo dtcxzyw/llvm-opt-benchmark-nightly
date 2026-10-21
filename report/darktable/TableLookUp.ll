@@ -204,12 +204,12 @@ vec.epilog.scalar.ph192.prol:                     ; preds = %vec.epilog.scalar.p
   %prol.iter = phi i32 [ %prol.iter.next, %vec.epilog.scalar.ph192.prol ], [ 0, %vec.epilog.scalar.ph192.preheader ]
   %i.jq = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.jr = shl nsw i32 %.088.prol, 1               ; 2 uses
-  %3 = icmp samesign ult i32 %i.jr, 131072
-  tail call void @llvm.assume(i1 %3)
-  %4 = zext nneg i32 %i.jr to i64
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %4 ; 2 uses
-  store i16 %i.jq, ptr %5, align 2, !tbaa !22
-  %i.js = getelementptr inbounds nuw i8, ptr %5, i64 2
+  %3 = zext nneg i32 %i.jr to i64
+  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %3 ; 2 uses
+  store i16 %i.jq, ptr %4, align 2, !tbaa !22
+  %5 = icmp samesign ult i32 %i.jr, 131072
+  tail call void @llvm.assume(i1 %5)
+  %i.js = getelementptr inbounds nuw i8, ptr %4, i64 2
   store i16 0, ptr %i.js, align 2, !tbaa !22
   %i.jt = add i32 %.088.prol, 1                   ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
@@ -303,82 +303,82 @@ vec.epilog.scalar.ph192:                          ; preds = %vec.epilog.scalar.p
   %.088 = phi i32 [ %i.mt, %vec.epilog.scalar.ph192 ], [ %.088.unr, %vec.epilog.scalar.ph192.prol.loopexit ] ; 9 uses
   %i.lo = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.lp = shl nsw i32 %.088, 1                    ; 2 uses
-  %6 = icmp samesign ult i32 %i.lp, 131072
-  tail call void @llvm.assume(i1 %6)
-  %7 = zext nneg i32 %i.lp to i64
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %7 ; 2 uses
-  store i16 %i.lo, ptr %8, align 2, !tbaa !22
-  %i.lq = getelementptr inbounds nuw i8, ptr %8, i64 2
+  %6 = zext nneg i32 %i.lp to i64
+  %7 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %6 ; 2 uses
+  store i16 %i.lo, ptr %7, align 2, !tbaa !22
+  %8 = icmp samesign ult i32 %i.lp, 131072
+  tail call void @llvm.assume(i1 %8)
+  %i.lq = getelementptr inbounds nuw i8, ptr %7, i64 2
   store i16 0, ptr %i.lq, align 2, !tbaa !22
   %i.lr = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.ls = shl i32 %.088, 1
   %i.lt = add i32 %i.ls, 2                        ; 2 uses
-  %9 = icmp samesign ult i32 %i.lt, 131072
-  tail call void @llvm.assume(i1 %9)
-  %10 = zext nneg i32 %i.lt to i64
-  %11 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %10 ; 2 uses
-  store i16 %i.lr, ptr %11, align 2, !tbaa !22
-  %i.lu = getelementptr inbounds nuw i8, ptr %11, i64 2
+  %9 = zext nneg i32 %i.lt to i64
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %9 ; 2 uses
+  store i16 %i.lr, ptr %10, align 2, !tbaa !22
+  %11 = icmp samesign ult i32 %i.lt, 131072
+  tail call void @llvm.assume(i1 %11)
+  %i.lu = getelementptr inbounds nuw i8, ptr %10, i64 2
   store i16 0, ptr %i.lu, align 2, !tbaa !22
   %i.lv = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.lw = shl i32 %.088, 1
   %i.lx = add i32 %i.lw, 4                        ; 2 uses
-  %12 = icmp samesign ult i32 %i.lx, 131072
-  tail call void @llvm.assume(i1 %12)
-  %13 = zext nneg i32 %i.lx to i64
-  %14 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %13 ; 2 uses
-  store i16 %i.lv, ptr %14, align 2, !tbaa !22
-  %i.ly = getelementptr inbounds nuw i8, ptr %14, i64 2
+  %12 = zext nneg i32 %i.lx to i64
+  %13 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %12 ; 2 uses
+  store i16 %i.lv, ptr %13, align 2, !tbaa !22
+  %14 = icmp samesign ult i32 %i.lx, 131072
+  tail call void @llvm.assume(i1 %14)
+  %i.ly = getelementptr inbounds nuw i8, ptr %13, i64 2
   store i16 0, ptr %i.ly, align 2, !tbaa !22
   %i.lz = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.ma = shl i32 %.088, 1
   %i.mb = add i32 %i.ma, 6                        ; 2 uses
-  %15 = icmp samesign ult i32 %i.mb, 131072
-  tail call void @llvm.assume(i1 %15)
-  %16 = zext nneg i32 %i.mb to i64
-  %17 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %16 ; 2 uses
-  store i16 %i.lz, ptr %17, align 2, !tbaa !22
-  %i.mc = getelementptr inbounds nuw i8, ptr %17, i64 2
+  %15 = zext nneg i32 %i.mb to i64
+  %16 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %15 ; 2 uses
+  store i16 %i.lz, ptr %16, align 2, !tbaa !22
+  %17 = icmp samesign ult i32 %i.mb, 131072
+  tail call void @llvm.assume(i1 %17)
+  %i.mc = getelementptr inbounds nuw i8, ptr %16, i64 2
   store i16 0, ptr %i.mc, align 2, !tbaa !22
   %i.md = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.me = shl i32 %.088, 1
   %i.mf = add i32 %i.me, 8                        ; 2 uses
-  %18 = icmp samesign ult i32 %i.mf, 131072
-  tail call void @llvm.assume(i1 %18)
-  %19 = zext nneg i32 %i.mf to i64
-  %20 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %19 ; 2 uses
-  store i16 %i.md, ptr %20, align 2, !tbaa !22
-  %i.mg = getelementptr inbounds nuw i8, ptr %20, i64 2
+  %18 = zext nneg i32 %i.mf to i64
+  %19 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %18 ; 2 uses
+  store i16 %i.md, ptr %19, align 2, !tbaa !22
+  %20 = icmp samesign ult i32 %i.mf, 131072
+  tail call void @llvm.assume(i1 %20)
+  %i.mg = getelementptr inbounds nuw i8, ptr %19, i64 2
   store i16 0, ptr %i.mg, align 2, !tbaa !22
   %i.mh = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.mi = shl i32 %.088, 1
   %i.mj = add i32 %i.mi, 10                       ; 2 uses
-  %21 = icmp samesign ult i32 %i.mj, 131072
-  tail call void @llvm.assume(i1 %21)
-  %22 = zext nneg i32 %i.mj to i64
-  %23 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %22 ; 2 uses
-  store i16 %i.mh, ptr %23, align 2, !tbaa !22
-  %i.mk = getelementptr inbounds nuw i8, ptr %23, i64 2
+  %21 = zext nneg i32 %i.mj to i64
+  %22 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %21 ; 2 uses
+  store i16 %i.mh, ptr %22, align 2, !tbaa !22
+  %23 = icmp samesign ult i32 %i.mj, 131072
+  tail call void @llvm.assume(i1 %23)
+  %i.mk = getelementptr inbounds nuw i8, ptr %22, i64 2
   store i16 0, ptr %i.mk, align 2, !tbaa !22
   %i.ml = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.mm = shl i32 %.088, 1
   %i.mn = add i32 %i.mm, 12                       ; 2 uses
-  %24 = icmp samesign ult i32 %i.mn, 131072
-  tail call void @llvm.assume(i1 %24)
-  %25 = zext nneg i32 %i.mn to i64
-  %26 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %25 ; 2 uses
-  store i16 %i.ml, ptr %26, align 2, !tbaa !22
-  %i.mo = getelementptr inbounds nuw i8, ptr %26, i64 2
+  %24 = zext nneg i32 %i.mn to i64
+  %25 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %24 ; 2 uses
+  store i16 %i.ml, ptr %25, align 2, !tbaa !22
+  %26 = icmp samesign ult i32 %i.mn, 131072
+  tail call void @llvm.assume(i1 %26)
+  %i.mo = getelementptr inbounds nuw i8, ptr %25, i64 2
   store i16 0, ptr %i.mo, align 2, !tbaa !22
   %i.mp = load i16, ptr %i.hv, align 2, !tbaa !22
   %i.mq = shl i32 %.088, 1
   %i.mr = add i32 %i.mq, 14                       ; 2 uses
-  %27 = icmp samesign ult i32 %i.mr, 131072
-  tail call void @llvm.assume(i1 %27)
-  %28 = zext nneg i32 %i.mr to i64
-  %29 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %28 ; 2 uses
-  store i16 %i.mp, ptr %29, align 2, !tbaa !22
-  %i.ms = getelementptr inbounds nuw i8, ptr %29, i64 2
+  %27 = zext nneg i32 %i.mr to i64
+  %28 = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %27 ; 2 uses
+  store i16 %i.mp, ptr %28, align 2, !tbaa !22
+  %29 = icmp samesign ult i32 %i.mr, 131072
+  tail call void @llvm.assume(i1 %29)
+  %i.ms = getelementptr inbounds nuw i8, ptr %28, i64 2
   store i16 0, ptr %i.ms, align 2, !tbaa !22
   %i.mt = add i32 %.088, 8                        ; 2 uses
   %exitcond98.not.7 = icmp eq i32 %i.mt, 65536

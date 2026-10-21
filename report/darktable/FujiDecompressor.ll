@@ -204,13 +204,13 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_ev
   %i.qx = getelementptr inbounds nuw [2 x i8], ptr %i.qv, i64 %i.qw
   %i.qy = load i16, ptr %i.qx, align 2, !tbaa !92
   %i.qz = zext i16 %i.qy to i32                   ; 4 uses
-  %12 = icmp samesign ule i32 %i.qp, %i.qe
+  %12 = icmp sle i32 %i.qp, %i.qe
   call void @llvm.assume(i1 %12)
   %i.ra = zext nneg i32 %i.qp to i64
   %i.rb = getelementptr inbounds nuw [2 x i8], ptr %i.qv, i64 %i.ra
   %i.rc = load i16, ptr %i.rb, align 2, !tbaa !92
   %i.rd = zext i16 %i.rc to i32                   ; 2 uses
-  %i.re = add nuw nsw i32 %i.qp, 2                ; 2 uses
+  %i.re = add nsw i32 %i.qp, 2                    ; 2 uses
   %i.rf = icmp samesign ult i32 %i.re, %i.qe
   call void @llvm.assume(i1 %i.rf)
   %i.rg = zext nneg i32 %i.re to i64
@@ -283,13 +283,13 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_ev
   %i.sp = getelementptr inbounds nuw [2 x i8], ptr %i.sn, i64 %i.so
   %i.sq = load i16, ptr %i.sp, align 2, !tbaa !92
   %i.sr = zext i16 %i.sq to i32                   ; 5 uses
-  %13 = icmp samesign ule i32 %i.sh, %i.qe
+  %13 = icmp sle i32 %i.sh, %i.qe
   call void @llvm.assume(i1 %13)
   %i.ss = zext nneg i32 %i.sh to i64
   %i.st = getelementptr inbounds nuw [2 x i8], ptr %i.sn, i64 %i.ss
   %i.su = load i16, ptr %i.st, align 2, !tbaa !92
   %i.sv = zext i16 %i.su to i32                   ; 2 uses
-  %i.sw = add nuw nsw i32 %i.sh, 2                ; 2 uses
+  %i.sw = add nsw i32 %i.sh, 2                    ; 2 uses
   %i.sx = icmp samesign ult i32 %i.sw, %i.qe
   call void @llvm.assume(i1 %i.sx)
   %i.sy = zext nneg i32 %i.sw to i64
@@ -692,13 +692,13 @@ bb.cd:                                            ; preds = %"_ZZN8rawspeed12_GL
   %i.avo = getelementptr inbounds nuw [2 x i8], ptr %i.avm, i64 %i.avn
   %i.avp = load i16, ptr %i.avo, align 2, !tbaa !92
   %i.avq = zext i16 %i.avp to i32                 ; 5 uses
-  %14 = icmp samesign ule i32 %i.ave, %i.aup
+  %14 = icmp sle i32 %i.ave, %i.aup
   call void @llvm.assume(i1 %14)
   %i.avr = zext nneg i32 %i.ave to i64
   %i.avs = getelementptr inbounds nuw [2 x i8], ptr %i.avm, i64 %i.avr
   %i.avt = load i16, ptr %i.avs, align 2, !tbaa !92
   %i.avu = zext i16 %i.avt to i32                 ; 2 uses
-  %i.avv = add nuw nsw i32 %i.ave, 2              ; 2 uses
+  %i.avv = add nsw i32 %i.ave, 2                  ; 2 uses
   %i.avw = icmp samesign ult i32 %i.avv, %i.aup
   call void @llvm.assume(i1 %i.avw)
   %i.avx = zext nneg i32 %i.avv to i64

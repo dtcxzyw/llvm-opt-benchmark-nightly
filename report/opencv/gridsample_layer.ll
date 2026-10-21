@@ -205,8 +205,8 @@ _ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch2DILi0EEEfPKfiiiimb.exit.us
   br i1 %exitcond.not.i.i.i.3, label %._crit_edge.us.us.i.i.i, label %_ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch2DILi0EEEfPKfiiiimb.exit.us20.us.i.i.i, !llvm.loop !1578
 
 .lr.ph.split.us.us.us.i.i.i:                      ; preds = %.lr.ph.us.us.i.i.i
-  %2 = sext i32 %i.cp to i64                      ; 2 uses
-  %3 = sext i32 %i.cr to i64                      ; 2 uses
+  %2 = zext nneg i32 %i.cp to i64                 ; 2 uses
+  %3 = zext nneg i32 %i.cr to i64                 ; 2 uses
   %i.dj = load ptr, ptr %i.an, align 8, !tbaa !1603, !nonnull !79, !align !114
   %i.dk = load i64, ptr %i.dj, align 8, !tbaa !18 ; 2 uses
   %i.dl = mul i64 %i.dk, %3
@@ -219,7 +219,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.split.us.us.
   %i.dm = shl i64 %i.dk, 2
   %i.dn = mul i64 %i.dm, %3
   %i.do = add i64 %i.ca, %i.dn
-  %i.dp = shl nsw i64 %2, 2
+  %i.dp = shl nuw nsw i64 %2, 2
   %i.dq = add i64 %i.do, %i.dp
   %i.dr = sub i64 %i.dq, %i.cc
   %diff.check = icmp ugt i64 %i.dr, -32
@@ -622,8 +622,8 @@ _ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch2DILi1EEEfPKfiiiimb.exit.us
   br i1 %exitcond36.not.i.i.i.3, label %._crit_edge.us.us.i.i.i, label %_ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch2DILi1EEEfPKfiiiimb.exit.us3.us.us.i.i.i, !llvm.loop !1609
 
 .lr.ph.split.us.us.us.i.i.i:                      ; preds = %.lr.ph.us.us.i.i.i
-  %2 = sext i32 %i.db to i64                      ; 2 uses
-  %3 = sext i32 %i.dd to i64                      ; 2 uses
+  %2 = zext nneg i32 %i.db to i64                 ; 2 uses
+  %3 = zext nneg i32 %i.dd to i64                 ; 2 uses
   %i.fi = load ptr, ptr %i.an, align 8, !tbaa !1634, !nonnull !79, !align !114
   %i.fj = load i64, ptr %i.fi, align 8, !tbaa !18 ; 2 uses
   %i.fk = mul i64 %i.fj, %3
@@ -636,7 +636,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.split.us.us.
   %i.fl = shl i64 %i.fj, 2
   %i.fm = mul i64 %i.fl, %3
   %i.fn = add i64 %i.ce, %i.fm
-  %i.fo = shl nsw i64 %2, 2
+  %i.fo = shl nuw nsw i64 %2, 2
   %i.fp = add i64 %i.fn, %i.fo
   %i.fq = sub i64 %i.fp, %i.co
   %diff.check = icmp ugt i64 %i.fq, -32
@@ -1039,7 +1039,7 @@ _ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch3DILi0EEEfPKfiiiiiimmb.exit
   br i1 %exitcond.not.i.i.i.3, label %._crit_edge.us.us.i.i.i, label %_ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch3DILi0EEEfPKfiiiiiimmb.exit.us24.us.i.i.i, !llvm.loop !1877
 
 .lr.ph.split.split.us.us.us.i.i.i:                ; preds = %.lr.ph.split.us22.us.i.i.i
-  %i.fq = zext i32 %i.en to i64                   ; 2 uses
+  %i.fq = zext nneg i32 %i.en to i64              ; 2 uses
   %i.fr = zext i32 %i.el to i64                   ; 2 uses
   %i.fs = zext i32 %i.ej to i64                   ; 2 uses
   %i.ft = load ptr, ptr %i.aw, align 8, !tbaa !1912, !nonnull !79, !align !114
@@ -1145,7 +1145,7 @@ _ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch3DILi0EEEfPKfiiiiiimmb.exit
 .lr.ph.split.us.us.us.i.i.i:                      ; preds = %.lr.ph.us.us.i.i.i
   %i.hf = sext i32 %i.ej to i64                   ; 2 uses
   %i.hg = sext i32 %i.el to i64                   ; 2 uses
-  %2 = sext i32 %i.en to i64                      ; 2 uses
+  %2 = zext nneg i32 %i.en to i64                 ; 2 uses
   %i.hh = load ptr, ptr %i.ax, align 8, !tbaa !1913, !nonnull !79, !align !114
   %i.hi = load i64, ptr %i.hh, align 8, !tbaa !18 ; 2 uses
   %i.hj = mul i64 %i.hi, %2
@@ -1159,11 +1159,11 @@ _ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch3DILi0EEEfPKfiiiiiimmb.exit
   br i1 %brmerge61, label %_ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch3DILi0EEEfPKfiiiiiimmb.exit.us.us.us.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us.us.i.i.i
-  %i.hn = shl i64 %i.hi, 2
-  %i.ho = mul i64 %i.hn, %2
+  %i.hn = shl i64 %i.hl, 2
+  %i.ho = mul i64 %i.hn, %i.hg
   %i.hp = add i64 %i.df, %i.ho
-  %i.hq = shl i64 %i.hl, 2
-  %i.hr = mul i64 %i.hq, %i.hg
+  %i.hq = shl i64 %i.hi, 2
+  %i.hr = mul i64 %i.hq, %2
   %i.hs = add i64 %i.hp, %i.hr
   %i.ht = shl nsw i64 %i.hf, 2
   %i.hu = add i64 %i.hs, %i.ht
@@ -1566,7 +1566,7 @@ _ZN2cv3dnn12cpu_baseline16gs_simd_internalL10gs_fetch3DILi1EEEfPKfiiiiiimmb.exit
 .lr.ph.split.us.us.us.i.i.i:                      ; preds = %.lr.ph.us.us.i.i.i
   %i.hg = sext i32 %i.ej to i64                   ; 2 uses
   %i.hh = sext i32 %i.el to i64                   ; 2 uses
-  %2 = sext i32 %i.en to i64                      ; 2 uses
+  %2 = zext nneg i32 %i.en to i64                 ; 2 uses
   %i.hi = load ptr, ptr %i.ax, align 8, !tbaa !1952, !nonnull !79, !align !114
   %i.hj = load i64, ptr %i.hi, align 8, !tbaa !18 ; 2 uses
   %i.hk = mul i64 %i.hj, %2

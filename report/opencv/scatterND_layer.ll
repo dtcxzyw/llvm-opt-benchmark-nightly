@@ -204,7 +204,7 @@ iter.check144:                                    ; preds = %bb.c
 
 vector.memcheck127:                               ; preds = %iter.check144
   %i.be = add i64 %i.am, %.04463.us.us
-  %i.bf = zext i32 %i.at to i64
+  %i.bf = zext nneg i32 %i.at to i64
   %i.bg = mul i64 %i.az, %i.bf
   %i.bh = add i64 %i.be, %i.bg
   %i.bi = add i64 %i.bh, -1
@@ -607,7 +607,7 @@ iter.check144:                                    ; preds = %bb.c
 
 vector.memcheck127:                               ; preds = %iter.check144
   %i.bf = add i64 %i.am, %.04463.us.us
-  %i.bg = zext i32 %i.au to i64
+  %i.bg = zext nneg i32 %i.au to i64
   %i.bh = mul i64 %i.ba, %i.bg
   %i.bi = add i64 %i.bf, %i.bh
   %i.bj = add i64 %i.bi, -1

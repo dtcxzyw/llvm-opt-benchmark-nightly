@@ -204,11 +204,11 @@ _ZN4ncnnL13compute_coordEfiii.exit105:            ; preds = %bb.c, %bb.f, %bb.e,
   br i1 %i.cu, label %bb.g, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit
 
 bb.g:                                             ; preds = %_ZN4ncnnL13compute_coordEfiii.exit105
-  %11 = sext i32 %i.cp to i64
+  %11 = zext nneg i32 %i.cp to i64
   %i.cv = mul i64 %i.al, %11
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.cv
-  %12 = sext i32 %i.cn to i64
-  %i.cx = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %12
+  %12 = zext nneg i32 %i.cn to i64
+  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.cw, i64 %12
   %i.cy = load float, ptr %i.cx, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit
 
@@ -222,11 +222,11 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit:   ; preds = %bb.g, %_ZN4ncnnL13c
   br i1 %i.dc, label %bb.h, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit110
 
 bb.h:                                             ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit
-  %13 = sext i32 %i.cp to i64
+  %13 = zext nneg i32 %i.cp to i64
   %i.dd = mul i64 %i.al, %13
   %i.de = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.dd
-  %14 = sext i32 %i.co to i64
-  %i.df = getelementptr inbounds [4 x i8], ptr %i.de, i64 %14
+  %14 = zext nneg i32 %i.co to i64
+  %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %14
   %i.dg = load float, ptr %i.df, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit110
 
@@ -240,11 +240,11 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit110: ; preds = %bb.h, %_ZN4ncnnL17
   br i1 %i.dk, label %bb.i, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit115
 
 bb.i:                                             ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit110
-  %15 = sext i32 %i.cq to i64
+  %15 = zext nneg i32 %i.cq to i64
   %i.dl = mul i64 %i.al, %15
   %i.dm = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.dl
-  %16 = sext i32 %i.cn to i64
-  %i.dn = getelementptr inbounds [4 x i8], ptr %i.dm, i64 %16
+  %16 = zext nneg i32 %i.cn to i64
+  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %16
   %i.do = load float, ptr %i.dn, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit115
 
@@ -257,11 +257,11 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit115: ; preds = %bb.i, %_ZN4ncnnL17
   br i1 %i.dr, label %bb.j, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit120
 
 bb.j:                                             ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit115
-  %17 = sext i32 %i.cq to i64
+  %17 = zext nneg i32 %i.cq to i64
   %i.ds = mul i64 %i.al, %17
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.ds
-  %18 = sext i32 %i.co to i64
-  %i.du = getelementptr inbounds [4 x i8], ptr %i.dt, i64 %18
+  %18 = zext nneg i32 %i.co to i64
+  %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.dt, i64 %18
   %i.dv = load float, ptr %i.du, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit120
 
@@ -510,11 +510,11 @@ _ZN4ncnnL13compute_coordEfiii.exit81:             ; preds = %bb.c, %bb.f, %bb.e,
   br i1 %i.ct, label %bb.g, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit
 
 bb.g:                                             ; preds = %_ZN4ncnnL13compute_coordEfiii.exit81
-  %11 = sext i32 %i.co to i64
+  %11 = zext nneg i32 %i.co to i64
   %i.cu = mul i64 %i.al, %11
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.cu
-  %12 = sext i32 %i.cp to i64
-  %i.cw = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %12
+  %12 = zext nneg i32 %i.cp to i64
+  %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.cv, i64 %12
   %i.cx = load float, ptr %i.cw, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEii.exit
 
@@ -722,11 +722,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i:           ; preds = %bb.f, %bb.e, %_ZN4n
   br i1 %i.cs, label %bb.g, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit
 
 bb.g:                                             ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i
-  %9 = sext i32 %i.cn to i64
+  %9 = zext nneg i32 %i.cn to i64
   %i.ct = mul i64 %i.ao, %9
   %i.cu = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.ct
-  %10 = sext i32 %i.cm to i64
-  %i.cv = getelementptr inbounds [4 x i8], ptr %i.cu, i64 %10
+  %10 = zext nneg i32 %i.cm to i64
+  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %10
   %i.cw = load float, ptr %i.cv, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit
 
@@ -793,11 +793,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i131:        ; preds = %bb.j, %bb.i, %_ZN4n
   br i1 %i.eg, label %bb.k, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit146
 
 bb.k:                                             ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i131
-  %11 = sext i32 %i.eb to i64
+  %11 = zext nneg i32 %i.eb to i64
   %i.eh = mul i64 %i.ao, %11
   %i.ei = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.eh
-  %12 = sext i32 %i.ea to i64
-  %i.ej = getelementptr inbounds [4 x i8], ptr %i.ei, i64 %12
+  %12 = zext nneg i32 %i.ea to i64
+  %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %12
   %i.ek = load float, ptr %i.ej, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit146
 
@@ -864,11 +864,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i148:        ; preds = %bb.n, %bb.m, %_ZN4n
   br i1 %i.fu, label %bb.o, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit163
 
 bb.o:                                             ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i148
-  %13 = sext i32 %i.fp to i64
+  %13 = zext nneg i32 %i.fp to i64
   %i.fv = mul i64 %i.ao, %13
   %i.fw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.fv
-  %14 = sext i32 %i.fo to i64
-  %i.fx = getelementptr inbounds [4 x i8], ptr %i.fw, i64 %14
+  %14 = zext nneg i32 %i.fo to i64
+  %i.fx = getelementptr inbounds nuw [4 x i8], ptr %i.fw, i64 %14
   %i.fy = load float, ptr %i.fx, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit163
 
@@ -935,11 +935,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i165:        ; preds = %bb.r, %bb.q, %_ZN4n
   br i1 %i.hi, label %bb.s, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit180
 
 bb.s:                                             ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i165
-  %15 = sext i32 %i.hd to i64
+  %15 = zext nneg i32 %i.hd to i64
   %i.hj = mul i64 %i.ao, %15
   %i.hk = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.hj
-  %16 = sext i32 %i.hc to i64
-  %i.hl = getelementptr inbounds [4 x i8], ptr %i.hk, i64 %16
+  %16 = zext nneg i32 %i.hc to i64
+  %i.hl = getelementptr inbounds nuw [4 x i8], ptr %i.hk, i64 %16
   %i.hm = load float, ptr %i.hl, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit180
 
@@ -1005,11 +1005,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i182:        ; preds = %bb.v, %bb.u, %_ZN4n
   br i1 %i.iv, label %bb.w, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit197
 
 bb.w:                                             ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i182
-  %17 = sext i32 %i.iq to i64
+  %17 = zext nneg i32 %i.iq to i64
   %i.iw = mul i64 %i.ao, %17
   %i.ix = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.iw
-  %18 = sext i32 %i.ip to i64
-  %i.iy = getelementptr inbounds [4 x i8], ptr %i.ix, i64 %18
+  %18 = zext nneg i32 %i.ip to i64
+  %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.ix, i64 %18
   %i.iz = load float, ptr %i.iy, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit197
 
@@ -1075,11 +1075,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i199:        ; preds = %bb.z, %bb.y, %_ZN4n
   br i1 %i.ki, label %bb.aa, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit214
 
 bb.aa:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i199
-  %19 = sext i32 %i.kd to i64
+  %19 = zext nneg i32 %i.kd to i64
   %i.kj = mul i64 %i.ao, %19
   %i.kk = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.kj
-  %20 = sext i32 %i.kc to i64
-  %i.kl = getelementptr inbounds [4 x i8], ptr %i.kk, i64 %20
+  %20 = zext nneg i32 %i.kc to i64
+  %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.kk, i64 %20
   %i.km = load float, ptr %i.kl, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit214
 
@@ -1145,11 +1145,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i216:        ; preds = %bb.ad, %bb.ac, %_ZN
   br i1 %i.lv, label %bb.ae, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit231
 
 bb.ae:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i216
-  %21 = sext i32 %i.lq to i64
+  %21 = zext nneg i32 %i.lq to i64
   %i.lw = mul i64 %i.ao, %21
   %i.lx = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.lw
-  %22 = sext i32 %i.lp to i64
-  %i.ly = getelementptr inbounds [4 x i8], ptr %i.lx, i64 %22
+  %22 = zext nneg i32 %i.lp to i64
+  %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.lx, i64 %22
   %i.lz = load float, ptr %i.ly, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit231
 
@@ -1215,11 +1215,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i233:        ; preds = %bb.ah, %bb.ag, %_ZN
   br i1 %i.ni, label %bb.ai, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit248
 
 bb.ai:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i233
-  %23 = sext i32 %i.nd to i64
+  %23 = zext nneg i32 %i.nd to i64
   %i.nj = mul i64 %i.ao, %23
   %i.nk = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.nj
-  %24 = sext i32 %i.nc to i64
-  %i.nl = getelementptr inbounds [4 x i8], ptr %i.nk, i64 %24
+  %24 = zext nneg i32 %i.nc to i64
+  %i.nl = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %24
   %i.nm = load float, ptr %i.nl, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit248
 
@@ -1285,11 +1285,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i250:        ; preds = %bb.al, %bb.ak, %_ZN
   br i1 %i.ov, label %bb.am, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit265
 
 bb.am:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i250
-  %25 = sext i32 %i.oq to i64
+  %25 = zext nneg i32 %i.oq to i64
   %i.ow = mul i64 %i.ao, %25
   %i.ox = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.ow
-  %26 = sext i32 %i.op to i64
-  %i.oy = getelementptr inbounds [4 x i8], ptr %i.ox, i64 %26
+  %26 = zext nneg i32 %i.op to i64
+  %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.ox, i64 %26
   %i.oz = load float, ptr %i.oy, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit265
 
@@ -1355,11 +1355,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i267:        ; preds = %bb.ap, %bb.ao, %_ZN
   br i1 %i.qi, label %bb.aq, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit282
 
 bb.aq:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i267
-  %27 = sext i32 %i.qd to i64
+  %27 = zext nneg i32 %i.qd to i64
   %i.qj = mul i64 %i.ao, %27
   %i.qk = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.qj
-  %28 = sext i32 %i.qc to i64
-  %i.ql = getelementptr inbounds [4 x i8], ptr %i.qk, i64 %28
+  %28 = zext nneg i32 %i.qc to i64
+  %i.ql = getelementptr inbounds nuw [4 x i8], ptr %i.qk, i64 %28
   %i.qm = load float, ptr %i.ql, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit282
 
@@ -1425,11 +1425,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i284:        ; preds = %bb.at, %bb.as, %_ZN
   br i1 %i.rv, label %bb.au, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit299
 
 bb.au:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i284
-  %29 = sext i32 %i.rq to i64
+  %29 = zext nneg i32 %i.rq to i64
   %i.rw = mul i64 %i.ao, %29
   %i.rx = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.rw
-  %30 = sext i32 %i.rp to i64
-  %i.ry = getelementptr inbounds [4 x i8], ptr %i.rx, i64 %30
+  %30 = zext nneg i32 %i.rp to i64
+  %i.ry = getelementptr inbounds nuw [4 x i8], ptr %i.rx, i64 %30
   %i.rz = load float, ptr %i.ry, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit299
 
@@ -1495,11 +1495,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i301:        ; preds = %bb.ax, %bb.aw, %_ZN
   br i1 %i.ti, label %bb.ay, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit316
 
 bb.ay:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i301
-  %31 = sext i32 %i.td to i64
+  %31 = zext nneg i32 %i.td to i64
   %i.tj = mul i64 %i.ao, %31
   %i.tk = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.tj
-  %32 = sext i32 %i.tc to i64
-  %i.tl = getelementptr inbounds [4 x i8], ptr %i.tk, i64 %32
+  %32 = zext nneg i32 %i.tc to i64
+  %i.tl = getelementptr inbounds nuw [4 x i8], ptr %i.tk, i64 %32
   %i.tm = load float, ptr %i.tl, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit316
 
@@ -1565,11 +1565,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i318:        ; preds = %bb.bb, %bb.ba, %_ZN
   br i1 %i.uv, label %bb.bc, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit333
 
 bb.bc:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i318
-  %33 = sext i32 %i.uq to i64
+  %33 = zext nneg i32 %i.uq to i64
   %i.uw = mul i64 %i.ao, %33
   %i.ux = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.uw
-  %34 = sext i32 %i.up to i64
-  %i.uy = getelementptr inbounds [4 x i8], ptr %i.ux, i64 %34
+  %34 = zext nneg i32 %i.up to i64
+  %i.uy = getelementptr inbounds nuw [4 x i8], ptr %i.ux, i64 %34
   %i.uz = load float, ptr %i.uy, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit333
 
@@ -1635,11 +1635,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i335:        ; preds = %bb.bf, %bb.be, %_ZN
   br i1 %i.wi, label %bb.bg, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit350
 
 bb.bg:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i335
-  %35 = sext i32 %i.wd to i64
+  %35 = zext nneg i32 %i.wd to i64
   %i.wj = mul i64 %i.ao, %35
   %i.wk = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.wj
-  %36 = sext i32 %i.wc to i64
-  %i.wl = getelementptr inbounds [4 x i8], ptr %i.wk, i64 %36
+  %36 = zext nneg i32 %i.wc to i64
+  %i.wl = getelementptr inbounds nuw [4 x i8], ptr %i.wk, i64 %36
   %i.wm = load float, ptr %i.wl, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit350
 
@@ -1705,11 +1705,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i352:        ; preds = %bb.bj, %bb.bi, %_ZN
   br i1 %i.xv, label %bb.bk, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit367
 
 bb.bk:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i352
-  %37 = sext i32 %i.xq to i64
+  %37 = zext nneg i32 %i.xq to i64
   %i.xw = mul i64 %i.ao, %37
   %i.xx = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.xw
-  %38 = sext i32 %i.xp to i64
-  %i.xy = getelementptr inbounds [4 x i8], ptr %i.xx, i64 %38
+  %38 = zext nneg i32 %i.xp to i64
+  %i.xy = getelementptr inbounds nuw [4 x i8], ptr %i.xx, i64 %38
   %i.xz = load float, ptr %i.xy, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit367
 
@@ -1775,11 +1775,11 @@ _ZN4ncnnL13compute_coordEfiii.exit16.i369:        ; preds = %bb.bn, %bb.bm, %_ZN
   br i1 %i.zi, label %bb.bo, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit384
 
 bb.bo:                                            ; preds = %_ZN4ncnnL13compute_coordEfiii.exit16.i369
-  %39 = sext i32 %i.zd to i64
+  %39 = zext nneg i32 %i.zd to i64
   %i.zj = mul i64 %i.ao, %39
   %i.zk = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.zj
-  %40 = sext i32 %i.zc to i64
-  %i.zl = getelementptr inbounds [4 x i8], ptr %i.zk, i64 %40
+  %40 = zext nneg i32 %i.zc to i64
+  %i.zl = getelementptr inbounds nuw [4 x i8], ptr %i.zk, i64 %40
   %i.zm = load float, ptr %i.zl, align 4, !tbaa !43
   br label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit384
 
@@ -2031,7 +2031,7 @@ bb.c:                                             ; preds = %_ZN4ncnnL17get_valu
   br i1 %i.bq, label %_ZN4ncnn3MatD2Ev.exit.i.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i.us.us.us:                 ; preds = %bb.c
-  %9 = sext i32 %i.bh to i64
+  %9 = zext nneg i32 %i.bh to i64
   %i.br = mul i64 %i.aq, %9
   %i.bs = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.br
   %i.bt = sext i32 %i.bf to i64
@@ -2054,7 +2054,7 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit.us.us.us: ; preds = %_ZN4ncnn3Ma
   br i1 %i.cd, label %_ZN4ncnn3MatD2Ev.exit.i152.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit153.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i152.us.us.us:              ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit.us.us.us
-  %10 = sext i32 %i.bh to i64
+  %10 = zext nneg i32 %i.bh to i64
   %i.ce = mul i64 %i.aq, %10
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.ce
   %i.cg = sext i32 %i.bf to i64
@@ -2077,7 +2077,7 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit153.us.us.us: ; preds = %_ZN4ncnn
   br i1 %i.cq, label %_ZN4ncnn3MatD2Ev.exit.i157.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit158.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i157.us.us.us:              ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit153.us.us.us
-  %11 = sext i32 %i.bh to i64
+  %11 = zext nneg i32 %i.bh to i64
   %i.cr = mul i64 %i.aq, %11
   %i.cs = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.cr
   %i.ct = sext i32 %i.bj to i64
@@ -2099,7 +2099,7 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit158.us.us.us: ; preds = %_ZN4ncnn
   br i1 %i.dc, label %_ZN4ncnn3MatD2Ev.exit.i162.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit163.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i162.us.us.us:              ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit158.us.us.us
-  %12 = sext i32 %i.bh to i64
+  %12 = zext nneg i32 %i.bh to i64
   %i.dd = mul i64 %i.aq, %12
   %i.de = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.dd
   %i.df = sext i32 %i.bj to i64
@@ -2121,7 +2121,7 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit163.us.us.us: ; preds = %_ZN4ncnn
   br i1 %i.do, label %_ZN4ncnn3MatD2Ev.exit.i167.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit168.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i167.us.us.us:              ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit163.us.us.us
-  %13 = sext i32 %i.bk to i64
+  %13 = zext nneg i32 %i.bk to i64
   %i.dp = mul i64 %i.aq, %13
   %i.dq = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.dp
   %i.dr = sext i32 %i.bf to i64
@@ -2142,7 +2142,7 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit168.us.us.us: ; preds = %_ZN4ncnn
   br i1 %i.dz, label %_ZN4ncnn3MatD2Ev.exit.i172.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit173.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i172.us.us.us:              ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit168.us.us.us
-  %14 = sext i32 %i.bk to i64
+  %14 = zext nneg i32 %i.bk to i64
   %i.ea = mul i64 %i.aq, %14
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.ea
   %i.ec = sext i32 %i.bf to i64
@@ -2163,7 +2163,7 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit173.us.us.us: ; preds = %_ZN4ncnn
   br i1 %i.ek, label %_ZN4ncnn3MatD2Ev.exit.i177.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit178.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i177.us.us.us:              ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit173.us.us.us
-  %15 = sext i32 %i.bk to i64
+  %15 = zext nneg i32 %i.bk to i64
   %i.el = mul i64 %i.aq, %15
   %i.em = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.el
   %i.en = sext i32 %i.bj to i64
@@ -2184,7 +2184,7 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit178.us.us.us: ; preds = %_ZN4ncnn
   br i1 %i.ev, label %_ZN4ncnn3MatD2Ev.exit.i182.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit183.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i182.us.us.us:              ; preds = %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit178.us.us.us
-  %16 = sext i32 %i.bk to i64
+  %16 = zext nneg i32 %i.bk to i64
   %i.ew = mul i64 %i.aq, %16
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.ew
   %i.ey = sext i32 %i.bj to i64
@@ -2399,7 +2399,7 @@ bb.c:                                             ; preds = %_ZN4ncnnL17get_valu
   br i1 %i.bq, label %_ZN4ncnn3MatD2Ev.exit.i.us.us.us, label %_ZN4ncnnL17get_value_boundedERKNS_3MatEiii.exit.us.us.us
 
 _ZN4ncnn3MatD2Ev.exit.i.us.us.us:                 ; preds = %bb.c
-  %9 = sext i32 %i.bk to i64
+  %9 = zext nneg i32 %i.bk to i64
   %i.br = mul i64 %i.aq, %9
   %i.bs = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.br
   %i.bt = sext i32 %i.bh to i64

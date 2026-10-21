@@ -203,8 +203,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store i32 0, ptr %i.k, align 4, !tbaa !17
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  %3 = sext i32 %2 to i64
-  %4 = sext i32 %1 to i64
+  %3 = zext nneg i32 %2 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %getSlotOrReply.exit48
@@ -257,7 +256,8 @@ getSlotOrReply.exit48:                            ; preds = %getSlotOrReply.exit
   %i.ai = add nsw i32 %i.ac, 1
   store i32 %i.ai, ptr %i.k, align 4, !tbaa !17
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %.not43 = icmp slt i64 %indvars.iv.next, %4
+  %4 = trunc nuw i64 %indvars.iv.next to i32
+  %.not43 = icmp sgt i32 %1, %4
   br i1 %.not43, label %bb.d, label %.critedge, !llvm.loop !199
 
 bb.e:                                             ; preds = %getSlotOrReply.exit48.thread, %getSlotOrReply.exit.thread

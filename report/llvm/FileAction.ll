@@ -135,6 +135,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %bb.a
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 4
   %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !17
+  %4 = icmp sgt i32 %.pre, -1
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -146,8 +147,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
-  %4 = phi i32 [ %.pre, %._crit_edge ], [ %1, %bb.b ]
-  %5 = icmp sgt i32 %4, -1
+  %5 = phi i1 [ %4, %._crit_edge ], [ true, %bb.b ]
   ret i1 %5
 }
 

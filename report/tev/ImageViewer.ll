@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bn, label %bb.g, label %.critedge
 
 .critedge:                                        ; preds = %bb.f
-  %.sroa.2.0.insert.ext.i46 = zext i32 %i.ba to i64
-  %.sroa.2.0.insert.shift.i47 = shl nuw i64 %.sroa.2.0.insert.ext.i46, 32
-  %.sroa.0.0.insert.ext.i48 = zext i32 %i.aw to i64
+  %.sroa.2.0.insert.ext.i46 = zext nneg i32 %i.ba to i64
+  %.sroa.2.0.insert.shift.i47 = shl nuw nsw i64 %.sroa.2.0.insert.ext.i46, 32
+  %.sroa.0.0.insert.ext.i48 = zext nneg i32 %i.aw to i64
   %.sroa.0.0.insert.insert.i49 = or disjoint i64 %.sroa.2.0.insert.shift.i47, %.sroa.0.0.insert.ext.i48
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 1152
   store i64 %.sroa.0.0.insert.insert.i49, ptr %i.bo, align 16, !tbaa !220

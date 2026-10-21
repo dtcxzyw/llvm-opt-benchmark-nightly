@@ -203,14 +203,14 @@ bb.c:                                             ; preds = %opal_argv_count.exi
   br i1 %or.cond3.not, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = add i32 %3, %2                           ; 2 uses
+  %i.k = add nuw i32 %3, %2                       ; 2 uses
   %i.l = sub i32 %.07.i, %i.k                     ; 2 uses
   %invariant.smin = tail call i32 @llvm.smin.i32(i32 %.07.i, i32 %i.k) ; 2 uses
   %or.cond5051 = icmp slt i32 %2, %invariant.smin
   br i1 %or.cond5051, label %.lr.ph.preheader, label %.critedge.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %i.m = zext i32 %2 to i64
+  %i.m = zext nneg i32 %2 to i64
   br label %.lr.ph
 
 .critedge.preheader.loopexit:                     ; preds = %.lr.ph
@@ -224,10 +224,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not55, label %.critedge._crit_edge, label %.lr.ph54
 
 .lr.ph54:                                         ; preds = %.critedge.preheader
-  %i.o = zext i32 %2 to i64                       ; 3 uses
-  %i.p = zext i32 %3 to i64
+  %i.o = zext nneg i32 %2 to i64                  ; 3 uses
+  %i.p = zext nneg i32 %3 to i64
   %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.p ; 2 uses
-  %i.q = add i32 %2, 1
+  %i.q = add nuw i32 %2, 1
   %i.r = tail call i32 @llvm.smax.i32(i32 %i.n, i32 %i.q)
   %i.s = xor i32 %2, -1
   %i.t = add i32 %i.r, %i.s                       ; 2 uses

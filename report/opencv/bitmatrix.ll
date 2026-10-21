@@ -202,8 +202,7 @@ bb.i:                                             ; preds = %bb.e
 .preheader.preheader:                             ; preds = %bb.i
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %9 = sext i32 %2 to i64
-  %10 = sext i32 %i.ai to i64
+  %9 = zext nneg i32 %2 to i64
   br label %.preheader
 
 bb.j:                                             ; preds = %bb.i
@@ -259,7 +258,8 @@ _ZN5zxing12ErrorHandlerD2Ev.exit54:               ; preds = %bb.l, %_ZNKSt7__cxx
 
 ._crit_edge:                                      ; preds = %bb.m
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %11 = icmp slt i64 %indvars.iv.next, %10
+  %10 = trunc nuw i64 %indvars.iv.next to i32
+  %11 = icmp sgt i32 %i.ai, %10
   br i1 %11, label %.preheader, label %.loopexit, !llvm.loop !96
 
 bb.m:                                             ; preds = %.preheader, %bb.m
@@ -437,8 +437,7 @@ bb.i:                                             ; preds = %bb.e
 .preheader.preheader:                             ; preds = %bb.i
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %9 = sext i32 %2 to i64
-  %10 = sext i32 %i.ai to i64
+  %9 = zext nneg i32 %2 to i64
   br label %.preheader
 
 bb.j:                                             ; preds = %bb.i
@@ -494,7 +493,8 @@ _ZN5zxing12ErrorHandlerD2Ev.exit54:               ; preds = %bb.l, %_ZNKSt7__cxx
 
 ._crit_edge:                                      ; preds = %bb.m
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %11 = icmp slt i64 %indvars.iv.next, %10
+  %10 = trunc nuw i64 %indvars.iv.next to i32
+  %11 = icmp sgt i32 %i.ai, %10
   br i1 %11, label %.preheader, label %.loopexit, !llvm.loop !98
 
 bb.m:                                             ; preds = %.preheader, %bb.m

@@ -205,12 +205,12 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.ae, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.i
-  %i.af = add nsw i64 %i.e, 1                     ; 2 uses
+  %i.af = add nuw nsw i64 %i.e, 1                 ; 2 uses
   %i.ag = icmp ult i64 %i.af, %i.y
   br i1 %i.ag, label %.lr.ph, label %.critedge
 
 .preheader:                                       ; preds = %.lr.ph
-  %i.ah = add nsw i64 %i.aj, 1                    ; 2 uses
+  %i.ah = add nuw nsw i64 %i.aj, 1                ; 2 uses
   %i.ai = icmp ult i64 %i.ah, %i.y
   br i1 %i.ai, label %.lr.ph, label %.critedge, !llvm.loop !14
 

@@ -202,7 +202,7 @@ _ZNSolsEl.exit17:                                 ; preds = %_ZStlsISt11char_tra
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.a
-  %i.g = sub nsw i64 9223372036854775807, %0
+  %i.g = sub nuw nsw i64 9223372036854775807, %0
   %.not = icmp sgt i64 %1, %i.g
   br i1 %.not, label %bb.g, label %bb.f, !prof !18
 
@@ -211,8 +211,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %3 = xor i64 %0, -9223372036854775808
-  %i.i = add nsw i64 %1, %3
+  %3 = or disjoint i64 %0, -9223372036854775808
+  %i.i = add nsw i64 %3, %1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %_ZNSolsEl.exit17

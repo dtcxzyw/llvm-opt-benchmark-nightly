@@ -204,7 +204,7 @@ remap_verify_area.exit:                           ; preds = %bb.h
   br i1 %i.z, label %remap_verify_area.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %remap_verify_area.exit
-  %i.aa = add i64 %i.m, %i.k
+  %i.aa = add nuw i64 %i.m, %i.k
   %i.ab = getelementptr i8, ptr %.val, i64 80
   %i.ac = load volatile i64, ptr %i.ab, align 8
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !13

@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %.lr.ph.i
 .preheader37.i.i:                                 ; preds = %bb.x, %.preheader37.i.i
   %.017.i.i = phi i64 [ %4, %.preheader37.i.i ], [ %i.cn, %bb.x ] ; 4 uses
   %i.dj = icmp sgt i64 %.017.i.i, %i.dh
-  %4 = ashr i64 %.017.i.i, 3
+  %4 = lshr i64 %.017.i.i, 3
   br i1 %i.dj, label %.preheader37.i.i, label %.preheader.i137.i, !llvm.loop !121
 
 .preheader.i137.i:                                ; preds = %.preheader37.i.i
@@ -233,8 +233,8 @@ compatible_kind.exit.i.i:                         ; preds = %.lr.ph.i138.i
   br i1 %.not43.i.i, label %compatible_stack.exit.thread.i, label %compatible_kind.exit.thread29.i.i
 
 compatible_kind.exit.thread29.i.i:                ; preds = %compatible_kind.exit.i.i, %.split.i.i, %.lr.ph.i138.i
-  %5 = ashr i64 %.11840.i.i, 3                    ; 2 uses
-  %6 = ashr i64 %.01641.i.i, 3                    ; 2 uses
+  %5 = lshr i64 %.11840.i.i, 3                    ; 2 uses
+  %6 = lshr i64 %.01641.i.i, 3                    ; 2 uses
   %.not.i139.i = icmp eq i64 %5, 0
   br i1 %.not.i139.i, label %compatible_stack.exit.i, label %.lr.ph.i138.i
 
