@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luau/original/Analyze?download=true
-inline.NumInlined: 2341
+inline.NumInlined: 2342
 inline.NumDeleted: 1374
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,7 @@ bb.a:
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.std::optional.118", align 8 ; 10 uses
   %12 = alloca %"struct.Luau::ConfigOptions::AliasOptions", align 8 ; 15 uses
-  %13 = alloca %"struct.Luau::ConfigOptions", align 8 ; 13 uses
+  %13 = alloca %"struct.Luau::ConfigOptions", align 8 ; 11 uses
   %14 = alloca %"class.std::optional.118", align 8 ; 11 uses
   %15 = alloca %"class.std::optional.118", align 8 ; 10 uses
   %16 = alloca %"struct.Luau::ConfigOptions::AliasOptions", align 8 ; 14 uses
@@ -510,7 +510,7 @@ bb.ag:                                            ; preds = %._crit_edge.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cn, ptr align 1 %i.ci, i64 %i.cj, i1 false)
   br label %bb.ah
 
-bb.ah:                                            ; preds = %._crit_edge.i.i.i.i.i.i, %bb.af, %bb.ag
+bb.ah:                                            ; preds = %bb.ag, %bb.af, %._crit_edge.i.i.i.i.i.i
   %i.cp = load i64, ptr %i.d, align 8, !tbaa !35  ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 4 uses
   store i64 %i.cp, ptr %i.cq, align 8, !tbaa !30
@@ -526,7 +526,7 @@ bb.ah:                                            ; preds = %._crit_edge.i.i.i.i
   %i.cu = getelementptr inbounds nuw i8, ptr %13, i64 56 ; 5 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %13, i64 40 ; 5 uses
-  %i.cx = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 3 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 7 uses
   store ptr %i.cx, ptr %i.cv, align 8, !tbaa !27
   %i.cy = load ptr, ptr %12, align 8, !tbaa !36   ; 2 uses
   %i.cz = icmp eq ptr %i.cy, %i.ch
@@ -548,7 +548,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNSt19_Optional_base_implIN4Luau13ConfigOptions12AliasOptionsESt14_Optional_baseIS2_Lb0ELb0EEE12_M_constructIJS2_EEEvDpOT_.exit.i
 
 _ZNSt19_Optional_base_implIN4Luau13ConfigOptions12AliasOptionsESt14_Optional_baseIS2_Lb0ELb0EEE12_M_constructIJS2_EEEvDpOT_.exit.i: ; preds = %bb.ai, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.de = phi i64 [ %.pre155, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.da, %bb.ai ]
+  %i.de = phi i64 [ %i.da, %bb.ai ], [ %.pre155, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ]
   %i.df = getelementptr inbounds nuw i8, ptr %13, i64 16
   store i64 %i.de, ptr %i.df, align 8, !tbaa !30
   store ptr %i.ch, ptr %12, align 8, !tbaa !36
@@ -659,12 +659,11 @@ bb.at:                                            ; preds = %_ZNSt14_Optional_ba
 
 bb.au:                                            ; preds = %bb.at
   %i.en = load ptr, ptr %i.cv, align 8, !tbaa !36 ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 2 uses
-  %i.eo = icmp eq ptr %i.en, %22
+  %i.eo = icmp eq ptr %i.en, %i.cx
   br i1 %i.eo, label %_ZN4Luau13ConfigOptionsD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.au
-  %i.ep = load i64, ptr %22, align 8, !tbaa !31
+  %i.ep = load i64, ptr %i.cx, align 8, !tbaa !31
   %i.eq = add i64 %i.ep, 1
   call void @_ZdlPvm(ptr noundef %i.en, i64 noundef %i.eq) #32
   br label %_ZN4Luau13ConfigOptionsD2Ev.exit
@@ -703,12 +702,11 @@ bb.aw:                                            ; preds = %_ZNSt14_Optional_ba
 
 bb.ax:                                            ; preds = %bb.aw
   %i.fb = load ptr, ptr %i.cv, align 8, !tbaa !36 ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 2 uses
-  %i.fc = icmp eq ptr %i.fb, %23
+  %i.fc = icmp eq ptr %i.fb, %i.cx
   br i1 %i.fc, label %_ZN4Luau13ConfigOptionsD2Ev.exit73, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i71
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i71: ; preds = %bb.ax
-  %i.fd = load i64, ptr %23, align 8, !tbaa !31
+  %i.fd = load i64, ptr %i.cx, align 8, !tbaa !31
   %i.fe = add i64 %i.fd, 1
   call void @_ZdlPvm(ptr noundef %i.fb, i64 noundef %i.fe) #32
   br label %_ZN4Luau13ConfigOptionsD2Ev.exit73

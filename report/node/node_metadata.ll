@@ -204,10 +204,10 @@ define dso_local void @_ZN4node8Metadata7ReleaseC2Ev(ptr noundef nonnull align 8
   store i64 4, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i8 0, ptr %i.c, align 4
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   store ptr %i.e, ptr %i.d, align 8
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   store i64 0, ptr %i.f, align 8
   store i8 0, ptr %i.e, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -216,7 +216,11 @@ define dso_local void @_ZN4node8Metadata7ReleaseC2Ev(ptr noundef nonnull align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   store i64 0, ptr %i.i, align 8
   store i8 0, ptr %i.h, align 8
-  %1 = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.52, i64 noundef 63) ; 0 uses
+  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.52, i64 noundef 63)
+  store i64 63, ptr %i.f, align 8
+  %1 = load ptr, ptr %i.d, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 63
+  store i8 0, ptr %2, align 1
   %i.j = load i64, ptr %i.i, align 8
   %i.k = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.g, i64 noundef 0, i64 noundef %i.j, ptr noundef nonnull @.str.53, i64 noundef 71) ; 0 uses
   ret void

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nanobind/original/test_foreign?download=true
-inline.NumInlined: 60
+inline.NumInlined: 62
 inline.NumDeleted: 39
 begin_hunk_0_@_ZNKR8nanobind6handle7dec_refEv:bb.a
   %i.a = load ptr, ptr %0, align 8, !tbaa !16     ; 4 uses
@@ -202,7 +202,7 @@ define internal noundef ptr @"_ZZN8nanobind6detail11func_createILb0ELb1EZL4execP
 bb.a:
   %4 = alloca %"class.nanobind::str", align 8     ; 7 uses
   %5 = alloca %"struct.nanobind::detail::tuple.17", align 8 ; 4 uses
-  %6 = alloca %"class.nanobind::str", align 8     ; 6 uses
+  %6 = alloca %"class.nanobind::str", align 8     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   %i.a = load ptr, ptr %1, align 8, !tbaa !17
   %i.b = and i32 %2, -2
@@ -229,8 +229,6 @@ bb.c:                                             ; preds = %bb.b
   %i.h = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %4) #14 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15, !noalias !60
   %i.i = load ptr, ptr %6, align 8, !tbaa !16
-  store ptr null, ptr %6, align 8, !tbaa !16
-  %7 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %6) #14 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   br label %"_ZZN8nanobind6detail11func_createILb0ELb1EZL4execP7_objectE3$_0NS_3strEJRK7ForeignEJLm0EEJNS_5scopeENS_4nameENS_9is_methodEEEES3_OT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPS3_jPNS0_12cleanup_listEE_clESP_SQ_jSS_.exit"
 
@@ -268,7 +266,7 @@ bb.e:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress optsize uwtable
 define linkonce_odr hidden void @_ZNK8nanobind3str6formatIJRKiEEES0_DpOT_(ptr dead_on_unwind noalias writable sret(%"class.nanobind::str") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 4 dereferenceable(4) %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.nanobind::object", align 8  ; 7 uses
+  %3 = alloca %"class.nanobind::object", align 8  ; 6 uses
   %4 = alloca %"class.nanobind::detail::accessor", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
@@ -288,7 +286,6 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %3, align 8, !tbaa !16
   store ptr null, ptr %3, align 8, !tbaa !16
   store ptr %i.c, ptr %0, align 8
-  %5 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %3) #14 ; 0 uses
   call void @_ZN8nanobind6detail8accessorINS0_8str_attrEED2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %4) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/hdr_dynamic_metadata?download=true
-inline.NumInlined: 158
+inline.NumInlined: 165
 inline.NumDeleted: 8
 loop-unroll.NumCompletelyUnrolled: 11
 loop-unroll.NumRuntimeUnrolled: 4
@@ -205,7 +205,7 @@ declare void @av_free(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define range(i32 -1397118274, 1) i32 @av_dynamic_hdr_smpte2094_app5_to_t35(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef captures(address_is_null) %1, ptr nofree noundef captures(address_is_null) %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.PutBitContext, align 8      ; 33 uses
+  %3 = alloca %struct.PutBitContext, align 8      ; 27 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %.loopexit276, label %bb.b
@@ -232,17 +232,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %i.g = load i8, ptr %i.f, align 1, !tbaa !56
+  %i.g = load i8, ptr %i.f, align 1, !tbaa !56    ; 2 uses
   %i.h = icmp ugt i8 %i.g, 2
   br i1 %i.h, label %.loopexit276, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
-  %i.j = load i8, ptr %i.i, align 2, !tbaa !57
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
+  %i.j = load i8, ptr %i.i, align 2, !tbaa !57    ; 2 uses
   %.not192 = icmp eq i8 %i.j, 0
   %spec.select = select i1 %.not192, i64 16, i64 32 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !58
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !58    ; 2 uses
   %.not193 = icmp eq i8 %i.l, 0
   br i1 %.not193, label %.thread264, label %bb.h
 
@@ -448,12 +448,18 @@ bb.v:                                             ; preds = %bb.t
 
 ._crit_edge370:                                   ; preds = %bb.v
   %.pre371 = load i8, ptr %0, align 2, !tbaa !55
+  %.pre387 = load i8, ptr %i.f, align 1, !tbaa !56
+  %.pre388 = load i8, ptr %i.i, align 2, !tbaa !57
+  %.pre389 = load i8, ptr %i.k, align 1, !tbaa !58
   br label %bb.w
 
 bb.w:                                             ; preds = %._crit_edge370, %bb.u
+  %4 = phi i8 [ %.pre389, %._crit_edge370 ], [ %i.l, %bb.u ] ; 2 uses
+  %5 = phi i8 [ %.pre388, %._crit_edge370 ], [ %i.j, %bb.u ] ; 2 uses
+  %6 = phi i8 [ %.pre387, %._crit_edge370 ], [ %i.g, %bb.u ]
   %i.cu = phi i8 [ %.pre371, %._crit_edge370 ], [ %i.d, %bb.u ]
-  %.0181 = phi ptr [ %i.ct, %._crit_edge370 ], [ %i.cq, %bb.u ] ; 2 uses
-  %i.cv = trunc i64 %i.cp to i32                  ; 2 uses
+  %.0181 = phi ptr [ %i.ct, %._crit_edge370 ], [ %i.cq, %bb.u ] ; 4 uses
+  %i.cv = trunc i64 %i.cp to i32                  ; 3 uses
   %i.cw = icmp slt i32 %i.cv, 0
   %spec.select.i = select i1 %i.cw, ptr null, ptr %.0181 ; 3 uses
   %spec.select11.i = tail call i32 @llvm.smax.i32(i32 %i.cv, i32 0)
@@ -463,38 +469,54 @@ bb.w:                                             ; preds = %._crit_edge370, %bb
   %i.cz = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 %i.cy
   %i.da = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 22 uses
   store ptr %i.cz, ptr %i.da, align 8, !tbaa !52
-  %i.db = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 20 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 21 uses
   store ptr %spec.select.i, ptr %i.db, align 8, !tbaa !53
-  %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 11 uses
-  store i32 32, ptr %i.dc, align 4, !tbaa !51
-  store i32 0, ptr %3, align 8, !tbaa !50
+  %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 12 uses
   %i.dd = zext i8 %i.cu to i32
-  call fastcc void @put_bits(ptr noundef %3, i32 noundef 3, i32 noundef %i.dd)
-  %4 = load i8, ptr %i.f, align 1, !tbaa !56
-  %i.de = zext i8 %4 to i32
-  call fastcc void @put_bits(ptr noundef %3, i32 noundef 3, i32 noundef %i.de)
-  call fastcc void @put_bits(ptr noundef %3, i32 noundef 2, i32 noundef 0)
-  %5 = load i8, ptr %i.i, align 2, !tbaa !57
-  %6 = zext i8 %5 to i32
-  call fastcc void @put_bits(ptr noundef %3, i32 noundef 1, i32 noundef %6)
-  %7 = load i8, ptr %i.k, align 1, !tbaa !58
-  %8 = zext i8 %7 to i32
-  call fastcc void @put_bits(ptr noundef %3, i32 noundef 1, i32 noundef %8)
-  call fastcc void @put_bits(ptr noundef %3, i32 noundef 6, i32 noundef 0)
-  %9 = load i8, ptr %i.i, align 2, !tbaa !57
-  %.not205 = icmp eq i8 %9, 0
+  %7 = zext i8 %6 to i32
+  %i.de = zext i8 %5 to i32
+  %8 = shl nuw nsw i32 %i.dd, 6
+  %9 = shl nuw nsw i32 %7, 3
+  %10 = or i32 %8, %9
+  %11 = or i32 %10, %i.de
+  %12 = zext i8 %4 to i32
+  %13 = shl nuw nsw i32 %11, 1
+  %14 = or i32 %13, %12                           ; 2 uses
+  %15 = shl nuw nsw i32 %14, 6
+  store i32 %15, ptr %3, align 8, !tbaa !50
+  store i32 16, ptr %i.dc, align 4, !tbaa !51
+  %.not205 = icmp eq i8 %5, 0
   br i1 %.not205, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.dg = load i16, ptr %i.df, align 2, !tbaa !59
-  %i.dh = zext i16 %i.dg to i32
-  call fastcc void @put_bits(ptr noundef %3, i32 noundef 16, i32 noundef %i.dh)
+  %i.dh = zext i16 %i.dg to i32                   ; 2 uses
+  %16 = icmp sgt i32 %i.cv, 3
+  br i1 %16, label %17, label %22
+
+17:                                               ; preds = %bb.x
+  %18 = shl i32 %14, 22
+  %19 = or disjoint i32 %18, %i.dh
+  %20 = tail call i32 @llvm.bswap.i32(i32 %19)
+  store i32 %20, ptr %.0181, align 1, !tbaa !21
+  %21 = getelementptr inbounds nuw i8, ptr %.0181, i64 4
+  store ptr %21, ptr %i.db, align 8, !tbaa !53
+  br label %put_bits.exit232
+
+22:                                               ; preds = %bb.x
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #10
+  br label %put_bits.exit232
+
+put_bits.exit232:                                 ; preds = %17, %22
+  store i32 %i.dh, ptr %3, align 8, !tbaa !50
+  store i32 32, ptr %i.dc, align 4, !tbaa !51
+  %.pre390 = load i8, ptr %i.k, align 1, !tbaa !58
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %bb.w
-  %10 = load i8, ptr %i.k, align 1, !tbaa !58
-  %.not206 = icmp eq i8 %10, 0
+bb.y:                                             ; preds = %put_bits.exit232, %bb.w
+  %23 = phi i8 [ %.pre390, %put_bits.exit232 ], [ %4, %bb.w ]
+  %.not206 = icmp eq i8 %23, 0
   br i1 %.not206, label %.loopexit271, label %bb.z
 
 bb.z:                                             ; preds = %bb.y

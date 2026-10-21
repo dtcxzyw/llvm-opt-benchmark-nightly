@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libevent/original/evdns?download=true
-inline.NumInlined: 196
+inline.NumInlined: 197
 inline.NumDeleted: 52
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call void @evutil_set_evdns_getaddrinfo_fn_(ptr noundef nonnull @evdns_getaddrinfo) #19
   tail call void @evutil_set_evdns_getaddrinfo_cancel_fn_(ptr noundef nonnull @evdns_getaddrinfo_cancel) #19
-  %i.c = tail call ptr @event_mm_malloc_(i64 noundef 320) #19 ; 26 uses
+  %i.c = tail call ptr @event_mm_malloc_(i64 noundef 320) #19 ; 28 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.n, label %bb.d
 
@@ -216,24 +216,36 @@ bb.d:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %bb.d
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 304
-  br label %bb.g
+  br label %2
 
 bb.e:                                             ; preds = %bb.d
   %i.g = tail call ptr %i.e(i32 noundef 1) #19    ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 304 ; 3 uses
   store ptr %i.g, ptr %i.h, align 8
   %.not49 = icmp eq ptr %i.g, null
-  br i1 %.not49, label %bb.g, label %bb.f
+  br i1 %.not49, label %2, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 24), align 8
   %i.j = tail call i32 %i.i(i32 noundef 0, ptr noundef nonnull %i.g) #19 ; 0 uses
+  br label %2
+
+2:                                                ; preds = %.thread, %bb.f, %bb.e
+  %3 = phi ptr [ %i.f, %.thread ], [ %i.h, %bb.f ], [ %i.h, %bb.e ]
+  store ptr null, ptr %i.c, align 8
+  %4 = tail call ptr @event_mm_calloc_(i64 noundef 13, i64 noundef 8) #19 ; 2 uses
+  %.not.i = icmp eq ptr %4, null
+  br i1 %.not.i, label %bb.g, label %5
+
+5:                                                ; preds = %2
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
+  store ptr %4, ptr %i.c, align 8
+  store i32 13, ptr %6, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 52
+  store i32 64, ptr %7, align 4
   br label %bb.g
 
-bb.g:                                             ; preds = %.thread, %bb.f, %bb.e
-  %2 = phi ptr [ %i.f, %.thread ], [ %i.h, %bb.f ], [ %i.h, %bb.e ]
-  store ptr null, ptr %i.c, align 8
-  tail call fastcc void @evdns_base_set_max_requests_inflight(ptr noundef nonnull %i.c, i32 noundef 64)
+bb.g:                                             ; preds = %2, %5
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store ptr null, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 32
@@ -305,7 +317,7 @@ bb.k:                                             ; preds = %.critedge
   br label %bb.l
 
 bb.l:                                             ; preds = %.critedge, %bb.k
-  %i.ae = load ptr, ptr %2, align 8               ; 2 uses
+  %i.ae = load ptr, ptr %3, align 8               ; 2 uses
   %.not55 = icmp eq ptr %i.ae, null
   br i1 %.not55, label %bb.n, label %bb.m
 

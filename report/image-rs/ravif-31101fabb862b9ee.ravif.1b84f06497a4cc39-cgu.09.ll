@@ -205,9 +205,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.sroa.0.0.copyload = load i64, ptr %i.c, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
   %.sroa.51.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.sroa.51.0.copyload = load ptr, ptr %.sroa.51.0..sroa_idx, align 8
+  %.sroa.51.0.copyload = load ptr, ptr %.sroa.51.0..sroa_idx, align 8 ; 2 uses
   %.sroa.62.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.sroa.62.0.copyload = load i64, ptr %.sroa.62.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -268,6 +268,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   br i1 %.not.i.i.i.i, label %_RINvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB5_9EnumerateINtNtB7_3zip3ZipIB19_INtNtNtBb_5slice4iter4ItermEIB1u_fEEINtNtB7_7step_by6StepByIB1u_NtNtCsdEEMmLUVy6d_5rav1e2me7MEStatsEEEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldTjTTRmRfERB2v_EETfxxEuNCNCNvMs0_NtNtB2z_3api8internalINtB4F_12ContextInnerhE24update_block_importances00QNCINvNvB38_8for_each4callB4p_NCB4z_s_0E0E0ECs2mu2Cb9JdUH_5ravif.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.51.0.copyload) ]
   %i.s = shl i64 %.sroa.78.8.copyload, 6
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.8.copyload) ]
   %i.t = shl i64 %.sroa.78.8.copyload, 3          ; 3 uses
@@ -670,9 +672,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.sroa.0.0.copyload = load i64, ptr %i.c, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
   %.sroa.51.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.sroa.51.0.copyload = load ptr, ptr %.sroa.51.0..sroa_idx, align 8
+  %.sroa.51.0.copyload = load ptr, ptr %.sroa.51.0..sroa_idx, align 8 ; 2 uses
   %.sroa.62.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.sroa.62.0.copyload = load i64, ptr %.sroa.62.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -733,6 +735,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   br i1 %.not.i.i.i.i, label %_RINvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB5_9EnumerateINtNtB7_3zip3ZipIB19_INtNtNtBb_5slice4iter4ItermEIB1u_fEEINtNtB7_7step_by6StepByIB1u_NtNtCsdEEMmLUVy6d_5rav1e2me7MEStatsEEEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldTjTTRmRfERB2v_EETfxxEuNCNCNvMs0_NtNtB2z_3api8internalINtB4F_12ContextInnertE24update_block_importances00QNCINvNvB38_8for_each4callB4p_NCB4z_s_0E0E0ECs2mu2Cb9JdUH_5ravif.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.51.0.copyload) ]
   %i.s = shl i64 %.sroa.78.8.copyload, 6
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.8.copyload) ]
   %i.t = shl i64 %.sroa.78.8.copyload, 3          ; 3 uses

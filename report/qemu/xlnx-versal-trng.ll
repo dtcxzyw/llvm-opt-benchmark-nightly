@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/xlnx-versal-trng?download=true
-inline.NumInlined: 93
+inline.NumInlined: 94
 inline.NumDeleted: 23
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,16 +204,20 @@ bb.g:                                             ; preds = %bb.e
   store i64 %i.q, ptr %i.z, align 8
   br label %trng_reseed.exit
 
-trng_reseed.exit:                                 ; preds = %bb.f, %bb.g
+trng_reseed.exit:                                 ; preds = %bb.g, %bb.f
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 816
   %i.ab = load ptr, ptr %i.aa, align 8
   call void @g_rand_set_seed_array(ptr noundef %i.ab, ptr noundef nonnull %i.a, i32 noundef 24) #5
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 832
-  store i32 0, ptr %i.ac, align 8
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.d, i64 840
-  store i64 281474976710656, ptr %i.ad, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 840
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
-  call fastcc void @trng_regen(ptr noundef nonnull %i.d)
+  store i64 281474976710655, ptr %2, align 8
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.d, i64 892 ; 2 uses
+  %3 = load i32, ptr %i.ad, align 4
+  %4 = and i32 %3, -3585
+  %5 = or disjoint i32 %4, 2048
+  store i32 %5, ptr %i.ad, align 4
+  store i32 8, ptr %i.ac, align 8
   br label %trng_trss_enabled.exit.thread
 
 trng_trss_enabled.exit.thread:                    ; preds = %bb.b, %bb.a, %trng_trss_enabled.exit, %trng_reseed.exit

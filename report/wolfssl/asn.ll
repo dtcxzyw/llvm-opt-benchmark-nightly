@@ -205,7 +205,7 @@ SetExplicit.exit336:                              ; preds = %.split.i, %bb.aw
   br label %bb.ax
 
 bb.ax:                                            ; preds = %SetAlgoIDImpl.exit.thread, %SetExplicit.exit336, %SetAlgoIDImpl.exit, %SetSequence.exit181, %bb.ae, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %i.fy, %SetExplicit.exit336 ], [ 0, %SetAlgoIDImpl.exit ], [ 0, %SetAlgoIDImpl.exit.thread ], [ 0, %bb.ae ], [ %i.ak, %SetSequence.exit181 ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %i.fy, %SetExplicit.exit336 ], [ 0, %SetAlgoIDImpl.exit ], [ 0, %bb.ae ], [ %i.ak, %SetSequence.exit181 ], [ 0, %SetAlgoIDImpl.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   ret i32 %.0
 }
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %bb.h, %OidFromId.ex
   br i1 %i.ac, label %bb.k, label %.thread758
 
 bb.k:                                             ; preds = %bb.j
-  %i.ad = add i32 %i.j, %1                        ; 13 uses
+  %i.ad = add i32 %i.j, %1                        ; 14 uses
   %i.ae = icmp ult i32 %i.ad, 128
   br i1 %i.ae, label %SetLength.exit, label %bb.l
 
@@ -631,7 +631,7 @@ SetLength.exit:                                   ; preds = %bb.k
   %i.aj = add nuw nsw i32 %i.ad, 63
   %i.ak = add i32 %i.aj, %.1135                   ; 2 uses
   %.not159 = icmp eq ptr %2, null
-  br i1 %.not159, label %bb.m, label %.thread.i.i178
+  br i1 %.not159, label %bb.m, label %15
 
 SetLength.exit.thread.thread:                     ; preds = %bb.l
   %op.rdx = add i32 %.1135, 67
@@ -657,6 +657,12 @@ bb.p:                                             ; preds = %bb.o
   %i.an = select i1 %.not5.2.i.i175, i32 3, i32 4
   br label %BytePrecision.exit.i170
 
+15:                                               ; preds = %SetLength.exit
+  %16 = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
+  %17 = trunc nuw nsw i32 %i.ad to i8
+  store i8 %17, ptr %16, align 1, !tbaa !15
+  br label %.thread.i.i178
+
 bb.q:                                             ; preds = %SetLength.exit.thread
   %.not5.1.i.i.i.i.i = icmp samesign ult i32 %i.ad, 65536
   br i1 %.not5.1.i.i.i.i.i, label %bb.r, label %iter.check
@@ -668,8 +674,10 @@ bb.r:                                             ; preds = %bb.q
 
 iter.check:                                       ; preds = %SetLength.exit.thread.thread, %bb.q, %bb.r
   %i.ap = phi i32 [ %i.ai, %bb.q ], [ %i.ai, %bb.r ], [ %op.rdx1067, %SetLength.exit.thread.thread ] ; 2 uses
-  %.0.lcssa.i.i.i.i.i = phi i8 [ 3, %bb.q ], [ %i.ao, %bb.r ], [ 4, %SetLength.exit.thread.thread ] ; 5 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %.0.lcssa.i.i.i.i.i = phi i8 [ 3, %bb.q ], [ %i.ao, %bb.r ], [ 4, %SetLength.exit.thread.thread ] ; 6 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 4 uses
+  %18 = or disjoint i8 %.0.lcssa.i.i.i.i.i, -128
+  store i8 %18, ptr %i.aq, align 1, !tbaa !15
   %i.ar = zext nneg i8 %.0.lcssa.i.i.i.i.i to i64 ; 2 uses
   %min.iters.check = icmp samesign ult i8 %.0.lcssa.i.i.i.i.i, 4
   br i1 %min.iters.check, label %.split.i.i.i.i.preheader, label %vec.epilog.vector.body
@@ -714,16 +722,16 @@ vec.epilog.vector.body:                           ; preds = %iter.check
   %.not26.i.i.i.i = icmp eq i8 %i.bi, 0
   br i1 %.not26.i.i.i.i, label %.thread.i.i178, label %.split.i.i.i.i, !llvm.loop !178
 
-.thread.i.i178:                                   ; preds = %.split.i.i.i.i, %vec.epilog.vector.body, %SetLength.exit
-  %i.bj = phi i32 [ %i.ak, %SetLength.exit ], [ %i.ap, %vec.epilog.vector.body ], [ %i.ap, %.split.i.i.i.i ] ; 8 uses
+.thread.i.i178:                                   ; preds = %.split.i.i.i.i, %vec.epilog.vector.body, %15
+  %19 = phi ptr [ %16, %15 ], [ %i.aq, %vec.epilog.vector.body ], [ %i.aq, %.split.i.i.i.i ] ; 2 uses
+  %i.bj = phi i32 [ %i.ak, %15 ], [ %i.ap, %vec.epilog.vector.body ], [ %i.ap, %.split.i.i.i.i ] ; 8 uses
   store i8 48, ptr %2, align 1, !tbaa !15
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.bk = icmp ult i32 %i.bj, 128
   br i1 %i.bk, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.thread.i.i178
   %i.bl = trunc nuw nsw i32 %i.bj to i8
-  store i8 %i.bl, ptr %15, align 1, !tbaa !15
+  store i8 %i.bl, ptr %19, align 1, !tbaa !15
   br label %SetSequence.exit
 
 bb.t:                                             ; preds = %.thread.i.i178
@@ -742,7 +750,8 @@ bb.v:                                             ; preds = %bb.u
 iter.check826:                                    ; preds = %bb.t, %bb.u, %bb.v
   %.0.lcssa.i.i.i.i.i181 = phi i8 [ 4, %bb.t ], [ %i.bm, %bb.v ], [ 3, %bb.u ] ; 6 uses
   %i.bn = or disjoint i8 %.0.lcssa.i.i.i.i.i181, -128
-  store i8 %i.bn, ptr %15, align 1, !tbaa !15
+  store i8 %i.bn, ptr %19, align 1, !tbaa !15
+  %20 = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.bo = zext nneg i8 %.0.lcssa.i.i.i.i.i181 to i64 ; 2 uses
   %min.iters.check808 = icmp samesign ult i8 %.0.lcssa.i.i.i.i.i181, 4
   br i1 %min.iters.check808, label %.split.i.i.i.i182.preheader, label %vec.epilog.vector.body836
@@ -780,7 +789,7 @@ vec.epilog.vector.body836:                        ; preds = %iter.check826
   %i.cb = add nsw i32 %i.ca, -8
   %i.cc = lshr i32 %i.bj, %i.cb
   %i.cd = trunc i32 %i.cc to i8
-  %i.ce = getelementptr inbounds nuw i8, ptr %15, i64 %indvars.iv.i.i.i.i183
+  %i.ce = getelementptr inbounds nuw i8, ptr %20, i64 %indvars.iv.i.i.i.i183
   store i8 %i.cd, ptr %i.ce, align 1, !tbaa !15
   %indvars.iv.next.i.i.i.i185 = add nuw nsw i64 %indvars.iv.i.i.i.i183, 1 ; 2 uses
   %i.cf = add nsw i8 %.029.i.i.i.i184, -1         ; 2 uses

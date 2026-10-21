@@ -202,7 +202,6 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 2168
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 45 uses
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 15 uses
   invoke void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr null, ptr noundef nonnull align 8 dereferenceable(32) %i.h)
           to label %.noexc34 unwind label %.loopexit.split-lp247.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -223,6 +222,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.p = load ptr, ptr %i.i, align 8, !tbaa !109  ; 8 uses
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.q = load ptr, ptr %9, align 8, !tbaa !111
   %.not.i35 = icmp eq ptr %i.p, %i.q
   br i1 %.not.i35, label %bb.e, label %.noexc.i.i37
@@ -327,7 +327,8 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 
 bb.j:                                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRS5_EEES9_DpOT_.exit48
   %i.at = load ptr, ptr %i.i, align 8, !tbaa !109 ; 6 uses
-  %i.au = load ptr, ptr %9, align 8, !tbaa !111
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.au = load ptr, ptr %10, align 8, !tbaa !111
   %.not.i49 = icmp eq ptr %i.at, %i.au
   br i1 %.not.i49, label %bb.k, label %._crit_edge.i.i.i50
 
@@ -354,7 +355,7 @@ bb.k:                                             ; preds = %bb.j
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA14_KcEEERS5_DpOT_.exit: ; preds = %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA14_KcEEERS5_DpOT_.exit_crit_edge, %._crit_edge.i.i.i50
   %i.ba = phi ptr [ %.pre274, %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA14_KcEEERS5_DpOT_.exit_crit_edge ], [ %i.az, %._crit_edge.i.i.i50 ] ; 8 uses
-  %i.bb = load ptr, ptr %9, align 8, !tbaa !111
+  %i.bb = load ptr, ptr %10, align 8, !tbaa !111
   %.not.i55 = icmp eq ptr %i.ba, %i.bb
   br i1 %.not.i55, label %bb.o, label %bb.l
 
@@ -420,7 +421,8 @@ bb.p:                                             ; preds = %_ZNSt6vectorINSt7__
   br i1 %i.bq, label %bb.q, label %bb.y
 
 bb.q:                                             ; preds = %bb.p
-  %i.br = load ptr, ptr %9, align 8, !tbaa !111
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.br = load ptr, ptr %11, align 8, !tbaa !111
   %.not.i63 = icmp eq ptr %.pre278, %i.br
   br i1 %.not.i63, label %bb.r, label %._crit_edge.i.i.i64
 
@@ -493,7 +495,7 @@ bb.t:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i
   %i.cp = load ptr, ptr %i.i, align 8, !tbaa !109 ; 6 uses
-  %i.cq = load ptr, ptr %9, align 8, !tbaa !111
+  %i.cq = load ptr, ptr %11, align 8, !tbaa !111
   %.not.i69 = icmp eq ptr %i.cp, %i.cq
   br i1 %.not.i69, label %bb.w, label %bb.u
 
@@ -572,7 +574,8 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.p
   %i.dk = phi ptr [ %.pre277, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.pre278, %bb.p ] ; 6 uses
-  %i.dl = load ptr, ptr %9, align 8, !tbaa !111
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 9 uses
+  %i.dl = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i76 = icmp eq ptr %i.dk, %i.dl
   br i1 %.not.i76, label %bb.z, label %._crit_edge.i.i.i77
 
@@ -645,7 +648,7 @@ bb.ab:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit94: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i89
   %i.ej = load ptr, ptr %i.i, align 8, !tbaa !109 ; 6 uses
-  %i.ek = load ptr, ptr %9, align 8, !tbaa !111
+  %i.ek = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i95 = icmp eq ptr %i.ej, %i.ek
   br i1 %.not.i95, label %bb.ae, label %bb.ac
 
@@ -729,7 +732,7 @@ bb.af:                                            ; preds = %bb.ae
 .preheader:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRKS5_EEERS5_DpOT_.exit
   %.sroa.0234.0262 = phi ptr [ %i.gh, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRKS5_EEERS5_DpOT_.exit ], [ %i.fa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103 ] ; 4 uses
   %i.fj = load ptr, ptr %i.i, align 8, !tbaa !109 ; 6 uses
-  %i.fk = load ptr, ptr %9, align 8, !tbaa !111
+  %i.fk = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i107 = icmp eq ptr %i.fj, %i.fk
   br i1 %.not.i107, label %bb.ag, label %._crit_edge.i.i.i108
 
@@ -756,7 +759,7 @@ bb.ag:                                            ; preds = %.preheader
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA3_KcEEERS5_DpOT_.exit114: ; preds = %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA3_KcEEERS5_DpOT_.exit114_crit_edge, %._crit_edge.i.i.i108
   %i.fq = phi ptr [ %.pre281, %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA3_KcEEERS5_DpOT_.exit114_crit_edge ], [ %i.fp, %._crit_edge.i.i.i108 ] ; 8 uses
-  %i.fr = load ptr, ptr %9, align 8, !tbaa !111
+  %i.fr = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i115 = icmp eq ptr %i.fq, %i.fr
   br i1 %.not.i115, label %bb.ak, label %bb.ah
 
@@ -843,7 +846,7 @@ bb.an:                                            ; preds = %bb.am
 .lr.ph:                                           ; preds = %bb.an, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRKS5_EEERS5_DpOT_.exit135
   %.sroa.0230.0264 = phi ptr [ %i.ho, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRKS5_EEERS5_DpOT_.exit135 ], [ %i.go, %bb.an ] ; 4 uses
   %i.gq = load ptr, ptr %i.i, align 8, !tbaa !109 ; 6 uses
-  %i.gr = load ptr, ptr %9, align 8, !tbaa !111
+  %i.gr = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i122 = icmp eq ptr %i.gq, %i.gr
   br i1 %.not.i122, label %bb.ao, label %._crit_edge.i.i.i123
 
@@ -870,7 +873,7 @@ bb.ao:                                            ; preds = %.lr.ph
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA13_KcEEERS5_DpOT_.exit: ; preds = %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA13_KcEEERS5_DpOT_.exit_crit_edge, %._crit_edge.i.i.i123
   %i.gx = phi ptr [ %.pre282, %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA13_KcEEERS5_DpOT_.exit_crit_edge ], [ %i.gw, %._crit_edge.i.i.i123 ] ; 8 uses
-  %i.gy = load ptr, ptr %9, align 8, !tbaa !111
+  %i.gy = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i128 = icmp eq ptr %i.gx, %i.gy
   br i1 %.not.i128, label %bb.as, label %bb.ap
 
@@ -1161,7 +1164,7 @@ bb.bi:                                            ; preds = %.loopexit245
 
 bb.bj:                                            ; preds = %bb.bi
   %i.kk = load ptr, ptr %i.i, align 8, !tbaa !109 ; 6 uses
-  %i.kl = load ptr, ptr %9, align 8, !tbaa !111
+  %i.kl = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i155 = icmp eq ptr %i.kk, %i.kl
   br i1 %.not.i155, label %bb.bk, label %._crit_edge.i.i.i156
 
@@ -1356,7 +1359,7 @@ bb.br:                                            ; preds = %.noexc.i
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178, %bb.bn
   %i.mt = load ptr, ptr %i.i, align 8, !tbaa !109 ; 8 uses
-  %i.mu = load ptr, ptr %9, align 8, !tbaa !111
+  %i.mu = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i182 = icmp eq ptr %i.mt, %i.mu
   br i1 %.not.i182, label %bb.bv, label %bb.bs
 
@@ -1500,7 +1503,7 @@ bb.ca:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit206: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i201
   %i.oi = load ptr, ptr %i.i, align 8, !tbaa !109 ; 6 uses
-  %i.oj = load ptr, ptr %9, align 8, !tbaa !111
+  %i.oj = load ptr, ptr %12, align 8, !tbaa !111
   %.not.i207 = icmp eq ptr %i.oi, %i.oj
   br i1 %.not.i207, label %bb.cd, label %bb.cb
 

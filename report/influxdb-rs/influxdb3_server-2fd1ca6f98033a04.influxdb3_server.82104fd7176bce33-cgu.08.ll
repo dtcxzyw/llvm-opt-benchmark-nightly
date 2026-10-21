@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/influxdb-rs/original/influxdb3_server-2fd1ca6f98033a04.influxdb3_server.82104fd7176bce33-cgu.08?download=true
-inline.NumInlined: 1716
+inline.NumInlined: 1718
 inline.NumDeleted: 715
 loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumUnrolled: 7
@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.g, %_RINvXs7_NtC
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.d) #34
           to label %common.resume unwind label %bb.n
 
-bb.i:                                             ; preds = %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionIBT_NtNtCs9h7Hq22ZyhR_15influxdb3_types5write14WriteLineErrorEEECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i, %.noexc5, %.noexc3
-  %.sroa.0.0.i.i.ph = phi ptr [ %i.q, %.noexc3 ], [ %i.u, %.noexc5 ], [ %i.t, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionIBT_NtNtCs9h7Hq22ZyhR_15influxdb3_types5write14WriteLineErrorEEECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i ]
+bb.i:                                             ; preds = %.noexc5, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionIBT_NtNtCs9h7Hq22ZyhR_15influxdb3_types5write14WriteLineErrorEEECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i, %.noexc3
+  %.sroa.0.0.i.i.ph = phi ptr [ %i.q, %.noexc3 ], [ %i.t, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionIBT_NtNtCs9h7Hq22ZyhR_15influxdb3_types5write14WriteLineErrorEEECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i ], [ %i.u, %.noexc5 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1664
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1662
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -347,8 +347,8 @@ bb.h:                                             ; preds = %bb.g, %_RINvXs7_NtC
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.d) #34
           to label %common.resume unwind label %bb.n
 
-bb.i:                                             ; preds = %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtCs9h7Hq22ZyhR_15influxdb3_types5write14WriteLineErrorEECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i, %.noexc5, %.noexc3
-  %.sroa.0.0.i.i.ph = phi ptr [ %i.q, %.noexc3 ], [ %i.u, %.noexc5 ], [ %i.t, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtCs9h7Hq22ZyhR_15influxdb3_types5write14WriteLineErrorEECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i ]
+bb.i:                                             ; preds = %.noexc5, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtCs9h7Hq22ZyhR_15influxdb3_types5write14WriteLineErrorEECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i, %.noexc3
+  %.sroa.0.0.i.i.ph = phi ptr [ %i.q, %.noexc3 ], [ %i.t, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtCs9h7Hq22ZyhR_15influxdb3_types5write14WriteLineErrorEECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i ], [ %i.u, %.noexc5 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1683
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1681
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -751,7 +751,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_RNvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB5_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct3endCsbakdBCgU4AF_16influxdb3_server.exit
 
 _RNvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB5_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct3endCsbakdBCgU4AF_16influxdb3_server.exit: ; preds = %bb.d, %bb.c, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECsbakdBCgU4AF_16influxdb3_server.exit, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionuEECsbakdBCgU4AF_16influxdb3_server.exit, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionuEECsbakdBCgU4AF_16influxdb3_server.exit.thread
-  %.sroa.0.0 = phi ptr [ %i.h, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionuEECsbakdBCgU4AF_16influxdb3_server.exit.thread ], [ %i.i, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionuEECsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.d, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECsbakdBCgU4AF_16influxdb3_server.exit ], [ null, %bb.c ], [ null, %bb.d ]
+  %.sroa.0.0 = phi ptr [ %i.i, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionuEECsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.h, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCs4NRVxsYgnAr_4core6option6OptionuEECsbakdBCgU4AF_16influxdb3_server.exit.thread ], [ %i.d, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECsbakdBCgU4AF_16influxdb3_server.exit ], [ null, %bb.c ], [ null, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %.sroa.0.0
 }
@@ -1154,7 +1154,24 @@ bb.dv:                                            ; preds = %.noexc13.i.i
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.i, i64 16, i1 false), !alias.scope !3487, !noalias !3480
   store i64 -1, ptr %i.ru, align 8, !alias.scope !3482, !noalias !3480
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsjEnfTjJ0OqM_3csv6writer6WriterINtNtCscdodAO9FK5_5alloc3vec3VechEEECsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(376) %i.a)
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
+  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(32) %3)
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsjEnfTjJ0OqM_3csv6writer6BufferECsbakdBCgU4AF_16influxdb3_server.exit.i.i unwind label %4, !noalias !3478
+
+4:                                                ; preds = %bb.dv
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(32) %3)
+          to label %.body.i43 unwind label %6, !noalias !3478
+
+6:                                                ; preds = %4
+  %7 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #36, !noalias !3478
+  unreachable
+
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsjEnfTjJ0OqM_3csv6writer6BufferECsbakdBCgU4AF_16influxdb3_server.exit.i.i: ; preds = %bb.dv
+  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(32) %3)
           to label %bb.dy unwind label %bb.dx, !noalias !3478
 
 bb.dw:                                            ; preds = %bb.du
@@ -1163,18 +1180,18 @@ bb.dw:                                            ; preds = %bb.du
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #36, !noalias !3485
   unreachable
 
-bb.dx:                                            ; preds = %bb.dv
+bb.dx:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsjEnfTjJ0OqM_3csv6writer6BufferECsbakdBCgU4AF_16influxdb3_server.exit.i.i
   %i.sg = landingpad { ptr, i32 }
           cleanup
   br label %.body.i43
 
-.body.i43:                                        ; preds = %bb.dx, %bb.du
-  %eh.lpad-body.i44 = phi { ptr, i32 } [ %i.se, %bb.du ], [ %i.sg, %bb.dx ]
+.body.i43:                                        ; preds = %bb.dx, %4, %bb.du
+  %eh.lpad-body.i44 = phi { ptr, i32 } [ %5, %4 ], [ %i.se, %bb.du ], [ %i.sg, %bb.dx ]
   %i.sh = getelementptr inbounds nuw i8, ptr %i.ac, i64 376
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef align 8 dereferenceable(24) %i.sh) #34
           to label %bb.ex unwind label %bb.ew, !noalias !3478
 
-bb.dy:                                            ; preds = %bb.dv
+bb.dy:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsjEnfTjJ0OqM_3csv6writer6BufferECsbakdBCgU4AF_16influxdb3_server.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !3480
   store i64 %i.sc, ptr %i.ad, align 8, !alias.scope !3488
   %.sroa.7.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
@@ -1577,7 +1594,7 @@ bb.bd:                                            ; preds = %bb.bc, %_RINvXs7_Nt
           to label %.body unwind label %bb.bh, !noalias !3777
 
 bb.be:                                            ; preds = %.noexc5.i, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i.i, %.noexc3.i
-  %.sroa.0.0.i.i.ph.i = phi ptr [ %i.eg, %.noexc3.i ], [ %i.ek, %.noexc5.i ], [ %i.ej, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i.i ]
+  %.sroa.0.0.i.i.ph.i = phi ptr [ %i.eg, %.noexc3.i ], [ %i.ej, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECsbakdBCgU4AF_16influxdb3_server.exit.thread.i.i.i ], [ %i.ek, %.noexc5.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3776
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3775
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e)

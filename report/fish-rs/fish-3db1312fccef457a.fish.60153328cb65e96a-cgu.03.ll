@@ -205,7 +205,8 @@ _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB4_5ChainIBO_INtNtNtB8_7s
   %i.aj = tail call i64 @llvm.uadd.sat.i64(i64 %.sink41.i, i64 %.sroa.0.0.i.i15)
   %i.ak = add i64 %.sroa.0.0.i.i15, %.sink.i      ; 2 uses
   %i.al = icmp uge i64 %i.ak, %.sink.i
-  %narrow = select i1 %.sroa.05.0.sink.shrunk.i, i1 %i.al, i1 false
+  %cond.fr = freeze i1 %.sroa.05.0.sink.shrunk.i
+  %narrow = select i1 %cond.fr, i1 %i.al, i1 false
   br label %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB4_5ChainIBO_INtNtNtB8_7sources8repeat_n7RepeatNcEB13_ENtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32ENtNtNtB8_6traits8iterator8Iterator9size_hintCs8frGy5WneL6_4fish.exit57
 
 bb.u:                                             ; preds = %bb.b

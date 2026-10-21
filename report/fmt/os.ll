@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fmt/original/os?download=true
-inline.NumInlined: 2700
+inline.NumInlined: 2702
 inline.NumDeleted: 669
 loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 36
@@ -205,8 +205,8 @@ declare noalias noundef ptr @fdopen(i32 noundef, ptr noundef readonly captures(n
 define hidden void @_ZN3fmt3v124pipeC2Ev(ptr nofree noundef nonnull align 4 captures(none) dereferenceable(8) initializes((0, 8)) %0) unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [2 x i32], align 8                ; 7 uses
-  %1 = alloca %"class.fmt::v12::file", align 4    ; 7 uses
-  %2 = alloca %"class.fmt::v12::file", align 4    ; 7 uses
+  %1 = alloca %"class.fmt::v12::file", align 4    ; 5 uses
+  %2 = alloca %"class.fmt::v12::file", align 4    ; 5 uses
   store i32 -1, ptr %0, align 4, !tbaa !66
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 5 uses
   store i32 -1, ptr %i.b, align 4, !tbaa !66
@@ -275,10 +275,8 @@ bb.j:                                             ; preds = %bb.h
   call void @__cxa_free_exception(ptr %i.m) #31
   br label %.body
 
-bb.k:                                             ; preds = %.noexc, %bb.f
+bb.k:                                             ; preds = %bb.f, %.noexc
   store i32 %i.i, ptr %0, align 4, !tbaa !66
-  store i32 -1, ptr %1, align 4, !tbaa !66
-  call void @_ZN3fmt3v124fileD2Ev(ptr noundef nonnull align 4 dead_on_return(4) dereferenceable(4) %1) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -317,10 +315,8 @@ bb.o:                                             ; preds = %bb.m
   call void @__cxa_free_exception(ptr %i.v) #31
   br label %.body11
 
-bb.p:                                             ; preds = %.noexc9, %bb.k
+bb.p:                                             ; preds = %bb.k, %.noexc9
   store i32 %i.r, ptr %i.b, align 4, !tbaa !66
-  store i32 -1, ptr %2, align 4, !tbaa !66
-  call void @_ZN3fmt3v124fileD2Ev(ptr noundef nonnull align 4 dead_on_return(4) dereferenceable(4) %2) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
   ret void
@@ -723,7 +719,7 @@ bb.i:                                             ; preds = %._crit_edge.i33.i.i
   store i8 %i.ce, ptr %i.ch, align 1, !tbaa !61
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %_ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i
+bb.j:                                             ; preds = %_ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i, %bb.h, %bb.i
   %.027.i.i = phi ptr [ %i.y, %_ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i ], [ %i.ab, %bb.h ], [ %i.ab, %bb.i ]
   %i.ci = call ptr @_ZN3fmt3v126detail13copy_noinlineIcPcNS0_14basic_appenderIcEEEET1_T0_S7_S6_(ptr noundef nonnull %i.a, ptr noundef %.027.i.i, ptr %0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
@@ -1126,11 +1122,11 @@ bb.af:                                            ; preds = %_ZNK3fmt3v127contex
   unreachable
 
 _ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit: ; preds = %bb.u, %bb.r, %bb.s, %bb.t, %bb.v
-  %.0.i = phi i64 [ %.sroa.010.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert71, %bb.u ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert68, %bb.v ], [ %i.bb, %bb.r ], [ %i.bc, %bb.s ] ; 2 uses
+  %.0.i = phi i64 [ %.sroa.010.sroa.0.sroa.0.0.insert.insert71, %bb.u ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert68, %bb.v ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %i.bb, %bb.r ], [ %i.bc, %bb.s ] ; 2 uses
   %i.bd = icmp ugt i64 %.0.i, 2147483647
   br i1 %i.bd, label %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread, label %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread42
 
-_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.u, %bb.q, %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
+_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.q, %bb.u, %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
   tail call void @_ZN3fmt3v1212report_errorEPKc(ptr noundef nonnull @.str.39) #34
   unreachable
 

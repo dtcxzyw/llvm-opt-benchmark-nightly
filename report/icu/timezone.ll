@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/timezone?download=true
-inline.NumInlined: 303
+inline.NumInlined: 304
 inline.NumDeleted: 78
 begin_hunk_0_@_ZN6icu_788TimeZone15getEquivalentIDERKNS_13UnicodeStringEi:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
@@ -202,12 +202,21 @@ declare i32 @ures_getInt_78(ptr noundef, ptr noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN6icu_788TimeZone9getRegionERKNS_13UnicodeStringE(ptr noundef nonnull align 8 dereferenceable(64) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 4 uses
+  %i.a = alloca i32, align 4                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store i32 0, ptr %i.a, align 4, !tbaa !20
-  %1 = call noundef ptr @_ZN6icu_788TimeZone9getRegionERKNS_13UnicodeStringER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
+  %1 = call ptr @ures_openDirect_78(ptr noundef null, ptr noundef nonnull @.str.4, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 3 uses
+  %2 = call ptr @ures_getByKey_78(ptr noundef %1, ptr noundef nonnull @.str.3, ptr noundef null, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 4 uses
+  %3 = call fastcc noundef i32 @_ZN6icu_78L17findInStringArrayEP15UResourceBundleRKNS_13UnicodeStringER10UErrorCode(ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
+  %4 = call ptr @ures_getByKey_78(ptr noundef %1, ptr noundef nonnull @.str.6, ptr noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 0 uses
+  %5 = call ptr @ures_getStringByIndex_78(ptr noundef %2, i32 noundef %3, ptr noundef null, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
+  %6 = load i32, ptr %i.a, align 4, !tbaa !20
+  %7 = icmp sgt i32 %6, 0
+  %spec.select.i = select i1 %7, ptr null, ptr %5
+  call void @ures_close_78(ptr noundef %2)
+  call void @ures_close_78(ptr noundef %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  ret ptr %1
+  ret ptr %spec.select.i
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -238,7 +247,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define noundef i32 @_ZN6icu_788TimeZone9getRegionERKNS_13UnicodeStringEPciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef initializes((0, 1)) %1, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 4 uses
+  %i.a = alloca i32, align 4                      ; 9 uses
   store i8 0, ptr %1, align 1, !tbaa !17
   %i.b = load i32, ptr %3, align 4, !tbaa !20
   %i.c = icmp slt i32 %i.b, 1
@@ -254,35 +263,44 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i32, ptr %i.i, align 4
   %i.k = select i1 %i.f, i32 %i.j, i32 %i.h
   %i.l = invoke noundef signext i8 @_ZNK6icu_7813UnicodeString9doCompareEiiPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %0, i32 noundef 0, i32 noundef %i.k, ptr noundef nonnull @_ZL15UNKNOWN_ZONE_ID, i32 noundef 0, i32 noundef 11)
-          to label %_ZNK6icu_7813UnicodeString7compareENS_14ConstChar16PtrEi.exit unwind label %4
+          to label %_ZNK6icu_7813UnicodeString7compareENS_14ConstChar16PtrEi.exit unwind label %11
 
 _ZNK6icu_7813UnicodeString7compareENS_14ConstChar16PtrEi.exit: ; preds = %bb.b
   %.not25 = icmp eq i8 %i.l, 0
   tail call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull @_ZL15UNKNOWN_ZONE_ID) #19, !srcloc !14
   br i1 %.not25, label %.thread, label %bb.c
 
-4:                                                ; preds = %bb.b
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  tail call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull @_ZL15UNKNOWN_ZONE_ID) #19, !srcloc !14
-  resume { ptr, i32 } %5
-
 bb.c:                                             ; preds = %_ZNK6icu_7813UnicodeString7compareENS_14ConstChar16PtrEi.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store i32 0, ptr %i.a, align 4, !tbaa !20
-  %6 = call noundef ptr @_ZN6icu_788TimeZone9getRegionERKNS_13UnicodeStringER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 3 uses
+  %4 = call ptr @ures_openDirect_78(ptr noundef null, ptr noundef nonnull @.str.4, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 3 uses
+  %5 = call ptr @ures_getByKey_78(ptr noundef %4, ptr noundef nonnull @.str.3, ptr noundef null, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 4 uses
+  %6 = call fastcc noundef i32 @_ZN6icu_78L17findInStringArrayEP15UResourceBundleRKNS_13UnicodeStringER10UErrorCode(ptr noundef %5, ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
+  %7 = call ptr @ures_getByKey_78(ptr noundef %4, ptr noundef nonnull @.str.6, ptr noundef %5, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 0 uses
+  %8 = call ptr @ures_getStringByIndex_78(ptr noundef %5, i32 noundef %6, ptr noundef null, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 3 uses
+  %9 = load i32, ptr %i.a, align 4, !tbaa !20
+  %10 = icmp sgt i32 %9, 0
+  call void @ures_close_78(ptr noundef %5)
+  call void @ures_close_78(ptr noundef %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  %i.m = icmp eq ptr %6, null
-  br i1 %i.m, label %.thread, label %bb.d
+  %i.m = icmp eq ptr %8, null
+  %or.cond = select i1 %10, i1 true, i1 %i.m
+  br i1 %or.cond, label %.thread, label %bb.d
 
-.thread:                                          ; preds = %_ZNK6icu_7813UnicodeString7compareENS_14ConstChar16PtrEi.exit, %bb.c
+11:                                               ; preds = %bb.b
+  %12 = landingpad { ptr, i32 }
+          cleanup
+  tail call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull @_ZL15UNKNOWN_ZONE_ID) #19, !srcloc !14
+  resume { ptr, i32 } %12
+
+.thread:                                          ; preds = %bb.c, %_ZNK6icu_7813UnicodeString7compareENS_14ConstChar16PtrEi.exit
   store i32 1, ptr %3, align 4, !tbaa !20
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = call i32 @u_strlen_78(ptr noundef nonnull %6) ; 4 uses
+  %i.n = call i32 @u_strlen_78(ptr noundef nonnull %8) ; 4 uses
   %i.o = call i32 @uprv_min_78(i32 noundef %i.n, i32 noundef %2)
-  call void @u_UCharsToChars_78(ptr noundef nonnull %6, ptr noundef nonnull %1, i32 noundef %i.o)
+  call void @u_UCharsToChars_78(ptr noundef nonnull %8, ptr noundef nonnull %1, i32 noundef %i.o)
   %i.p = icmp slt i32 %2, %i.n
   br i1 %i.p, label %bb.e, label %bb.f
 

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/hcd-ohci?download=true
-inline.NumInlined: 197
+inline.NumInlined: 199
 inline.NumDeleted: 78
 loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 2
@@ -205,18 +205,48 @@ bb.ah:                                            ; preds = %trace_usb_ohci_mem_
 bb.ai:                                            ; preds = %trace_usb_ohci_mem_write.exit
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 532 ; 2 uses
   %i.cq = load i32, ptr %i.cp, align 4
-  %i.cr = or i32 %i.cq, %i.cb
+  %i.cr = or i32 %i.cq, %i.cb                     ; 3 uses
   store i32 %i.cr, ptr %i.cp, align 4
-  tail call fastcc void @ohci_intr_update(ptr noundef %0)
+  %.not.i79 = icmp sgt i32 %i.cr, -1
+  br i1 %.not.i79, label %ohci_intr_update.exit, label %4
+
+4:                                                ; preds = %bb.ai
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 528
+  %6 = load i32, ptr %5, align 16
+  %7 = and i32 %6, %i.cr
+  %.not4.i80 = icmp ne i32 %7, 0
+  %spec.select.i = zext i1 %.not4.i80 to i32
+  br label %ohci_intr_update.exit
+
+ohci_intr_update.exit:                            ; preds = %bb.ai, %4
+  %.0.i81 = phi i32 [ 0, %bb.ai ], [ %spec.select.i, %4 ]
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 192
+  %9 = load ptr, ptr %8, align 16
+  tail call void @qemu_set_irq(ptr noundef %9, i32 noundef %.0.i81) #11
   br label %trace_usb_ohci_mem_write_unaligned.exit
 
 bb.aj:                                            ; preds = %trace_usb_ohci_mem_write.exit
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 532 ; 2 uses
   %i.ct = load i32, ptr %i.cs, align 4
   %i.cu = xor i32 %i.cb, -1
-  %i.cv = and i32 %i.ct, %i.cu
+  %i.cv = and i32 %i.ct, %i.cu                    ; 3 uses
   store i32 %i.cv, ptr %i.cs, align 4
-  tail call fastcc void @ohci_intr_update(ptr noundef %0)
+  %.not.i82 = icmp sgt i32 %i.cv, -1
+  br i1 %.not.i82, label %ohci_intr_update.exit86, label %10
+
+10:                                               ; preds = %bb.aj
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 528
+  %12 = load i32, ptr %11, align 16
+  %13 = and i32 %12, %i.cv
+  %.not4.i83 = icmp ne i32 %13, 0
+  %spec.select.i84 = zext i1 %.not4.i83 to i32
+  br label %ohci_intr_update.exit86
+
+ohci_intr_update.exit86:                          ; preds = %bb.aj, %10
+  %.0.i85 = phi i32 [ 0, %bb.aj ], [ %spec.select.i84, %10 ]
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 192
+  %15 = load ptr, ptr %14, align 16
+  tail call void @qemu_set_irq(ptr noundef %15, i32 noundef %.0.i85) #11
   br label %trace_usb_ohci_mem_write_unaligned.exit
 
 bb.ak:                                            ; preds = %trace_usb_ohci_mem_write.exit
@@ -319,7 +349,7 @@ bb.ay:                                            ; preds = %trace_usb_ohci_mem_
   tail call fastcc void @trace_usb_ohci_mem_write_bad_offset(i32 noundef %i.bz)
   br label %trace_usb_ohci_mem_write_unaligned.exit
 
-trace_usb_ohci_mem_write_unaligned.exit:          ; preds = %bb.z, %bb.y, %bb.e, %bb.d, %bb.c, %bb.b, %trace_usb_ohci_mem_write.exit, %trace_usb_ohci_mem_write.exit, %trace_usb_ohci_mem_write.exit, %bb.ae, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.aw, %bb.ax, %bb.ay, %bb.ag, %bb.af, %bb.av, %bb.au, %trace_usb_ohci_mem_write.exit
+trace_usb_ohci_mem_write_unaligned.exit:          ; preds = %bb.z, %bb.y, %bb.e, %bb.d, %bb.c, %bb.b, %trace_usb_ohci_mem_write.exit, %trace_usb_ohci_mem_write.exit, %trace_usb_ohci_mem_write.exit, %bb.ae, %bb.ah, %ohci_intr_update.exit, %ohci_intr_update.exit86, %bb.ak, %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.aw, %bb.ax, %bb.ay, %bb.ag, %bb.af, %bb.av, %bb.au, %trace_usb_ohci_mem_write.exit
   ret void
 }
 

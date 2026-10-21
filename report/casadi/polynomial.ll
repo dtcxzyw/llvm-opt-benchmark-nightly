@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/polynomial?download=true
-inline.NumInlined: 621
+inline.NumInlined: 624
 inline.NumDeleted: 256
 loop-unroll.NumRuntimeUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -127,17 +127,22 @@ declare i32 @__gxx_personality_v0(...)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6casadi10PolynomialC2Edd(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6casadi10PolynomialC2Edd(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  invoke void @_ZNSt6vectorIdSaIdEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 2)
-          to label %_ZNSt6vectorIdSaIdEE6resizeEm.exit unwind label %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %4 = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #17
+          to label %_ZNSt6vectorIdSaIdEE6resizeEm.exit unwind label %bb.b ; 4 uses
 
 _ZNSt6vectorIdSaIdEE6resizeEm.exit:               ; preds = %bb.a
-  %3 = load ptr, ptr %0, align 8, !tbaa !12       ; 2 uses
-  store double %1, ptr %3, align 8, !tbaa !15
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store double %2, ptr %i.a, align 8, !tbaa !15
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store ptr %4, ptr %0, align 8, !tbaa !12
+  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  store ptr %i.a, ptr %5, align 8, !tbaa !16
+  store ptr %i.a, ptr %3, align 8, !tbaa !13
+  store double %1, ptr %4, align 8, !tbaa !15
+  store double %2, ptr %6, align 8, !tbaa !15
   ret void
 
 bb.b:                                             ; preds = %bb.a
@@ -148,8 +153,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load ptr, ptr %4, align 8, !tbaa !13
+  %i.d = load ptr, ptr %3, align 8, !tbaa !13
   %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %i.c to i64
   %i.g = sub i64 %i.e, %i.f
@@ -161,18 +165,23 @@ _ZNSt6vectorIdSaIdEED2Ev.exit:                    ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6casadi10PolynomialC2Eddd(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2, double noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6casadi10PolynomialC2Eddd(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2, double noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  invoke void @_ZNSt6vectorIdSaIdEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 3)
-          to label %_ZNSt6vectorIdSaIdEE6resizeEm.exit unwind label %bb.b
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %5 = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #17
+          to label %_ZNSt6vectorIdSaIdEE6resizeEm.exit unwind label %bb.b ; 5 uses
 
 _ZNSt6vectorIdSaIdEE6resizeEm.exit:               ; preds = %bb.a
-  %4 = load ptr, ptr %0, align 8, !tbaa !12       ; 3 uses
-  store double %1, ptr %4, align 8, !tbaa !15
-  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store double %2, ptr %i.a, align 8, !tbaa !15
-  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  store ptr %5, ptr %0, align 8, !tbaa !12
+  %i.a = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  store ptr %i.a, ptr %6, align 8, !tbaa !16
+  store ptr %i.a, ptr %4, align 8, !tbaa !13
+  store double %1, ptr %5, align 8, !tbaa !15
+  store double %2, ptr %7, align 8, !tbaa !15
+  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   store double %3, ptr %i.b, align 8, !tbaa !15
   ret void
 
@@ -184,8 +193,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = load ptr, ptr %5, align 8, !tbaa !13
+  %i.e = load ptr, ptr %4, align 8, !tbaa !13
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = ptrtoint ptr %i.d to i64
   %i.h = sub i64 %i.f, %i.g
@@ -197,20 +205,25 @@ _ZNSt6vectorIdSaIdEED2Ev.exit:                    ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6casadi10PolynomialC2Edddd(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2, double noundef %3, double noundef %4) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6casadi10PolynomialC2Edddd(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2, double noundef %3, double noundef %4) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  invoke void @_ZNSt6vectorIdSaIdEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 4)
-          to label %_ZNSt6vectorIdSaIdEE6resizeEm.exit unwind label %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %6 = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #17
+          to label %_ZNSt6vectorIdSaIdEE6resizeEm.exit unwind label %bb.b ; 6 uses
 
 _ZNSt6vectorIdSaIdEE6resizeEm.exit:               ; preds = %bb.a
-  %5 = load ptr, ptr %0, align 8, !tbaa !12       ; 4 uses
-  store double %1, ptr %5, align 8, !tbaa !15
-  %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store double %2, ptr %i.a, align 8, !tbaa !15
-  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store ptr %6, ptr %0, align 8, !tbaa !12
+  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
+  store ptr %i.a, ptr %7, align 8, !tbaa !16
+  store ptr %i.a, ptr %5, align 8, !tbaa !13
+  store double %1, ptr %6, align 8, !tbaa !15
+  store double %2, ptr %8, align 8, !tbaa !15
+  %i.b = getelementptr inbounds nuw i8, ptr %6, i64 16
   store double %3, ptr %i.b, align 8, !tbaa !15
-  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 24
   store double %4, ptr %i.c, align 8, !tbaa !15
   ret void
 
@@ -222,8 +235,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.f = load ptr, ptr %6, align 8, !tbaa !13
+  %i.f = load ptr, ptr %5, align 8, !tbaa !13
   %i.g = ptrtoint ptr %i.f to i64
   %i.h = ptrtoint ptr %i.e to i64
   %i.i = sub i64 %i.g, %i.h

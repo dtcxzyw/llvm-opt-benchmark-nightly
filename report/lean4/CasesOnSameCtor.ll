@@ -204,9 +204,9 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.
   %i.ca = shl i64 %.val271, 1
   %i.cb = or disjoint i64 %i.ca, 1
   %i.cc = inttoptr i64 %i.cb to ptr               ; 2 uses
-  %i.cd = ptrtoint ptr %6 to i64
+  %i.cd = ptrtoint ptr %6 to i64                  ; 2 uses
   %i.ce = and i64 %i.cd, 1
-  %.not = icmp eq i64 %i.ce, 0                    ; 3 uses
+  %.not = icmp eq i64 %i.ce, 0                    ; 2 uses
   br i1 %.not, label %lean_nat_eq.exit, label %.split, !prof !9
 
 .split:                                           ; preds = %bb.as
@@ -609,7 +609,9 @@ lean_dec_ref_known.exit348:                       ; preds = %bb.gc, %bb.gb, %bb.
   %i.gr = shl i64 %.val270, 1
   %i.gs = or disjoint i64 %i.gr, 1
   %i.gt = inttoptr i64 %i.gs to ptr               ; 3 uses
-  br i1 %.not, label %.critedge.i265, label %bb.eo, !prof !9
+  %17 = and i64 %i.cd, 1
+  %.not361 = icmp eq i64 %17, 0
+  br i1 %.not361, label %.critedge.i265, label %bb.eo, !prof !9
 
 bb.eo:                                            ; preds = %lean_dec_ref_known.exit348
   %i.gu = icmp eq ptr %6, %i.gt

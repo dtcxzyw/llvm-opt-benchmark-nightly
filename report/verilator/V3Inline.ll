@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/verilator/original/V3Inline?download=true
-inline.NumInlined: 2345
+inline.NumInlined: 2346
 inline.NumDeleted: 840
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
@@ -204,7 +204,7 @@ define dso_local void @_ZN8V3Inline9inlineAllEP10AstNetlist(ptr noundef %0) #0 a
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
-  %1 = alloca %class.InlineModGraphBuilder, align 8 ; 5 uses
+  %1 = alloca %class.InlineModGraphBuilder, align 8 ; 7 uses
   %2 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 12 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -437,14 +437,40 @@ bb.q:                                             ; preds = %bb.a, %_ZNSt7__cxx1
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !166, !noalias !374 ; 2 uses
   store i64 %i.bo, ptr %7, align 8, !tbaa !166, !alias.scope !374
   store ptr null, ptr %i.bn, align 8, !tbaa !166, !noalias !374
-  call void @_ZN21InlineModGraphBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %1) #26, !noalias !374
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #26, !noalias !374
+  store ptr getelementptr inbounds nuw inrange(-16, 4184) (i8, ptr @_ZTV9VNVisitor, i64 16), ptr %1, align 8, !tbaa !35, !noalias !374
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.bp = inttoptr i64 %i.bo to ptr               ; 7 uses
-  %12 = invoke noundef i32 @_ZL14dumpGraphLevelv()
+  invoke void @_ZN9VNDeleter9doDeletesEv(ptr noundef nonnull align 8 dereferenceable(24) %12)
+          to label %13 unwind label %21, !noalias !374, !inline_history !187
+
+13:                                               ; preds = %bb.q
+  %14 = load ptr, ptr %12, align 8, !tbaa !188, !noalias !374 ; 3 uses
+  %.not.i.i.i.i.i.i.i = icmp eq ptr %14, null
+  br i1 %.not.i.i.i.i.i.i.i, label %_ZN21InlineModGraphBuilder5applyEP10AstNetlist.exit, label %15
+
+15:                                               ; preds = %13
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %17 = load ptr, ptr %16, align 8, !tbaa !189, !noalias !374
+  %18 = ptrtoint ptr %17 to i64
+  %19 = ptrtoint ptr %14 to i64
+  %20 = sub i64 %18, %19
+  call void @_ZdlPvm(ptr noundef nonnull %14, i64 noundef %20) #25, !noalias !374, !inline_history !187
+  br label %_ZN21InlineModGraphBuilder5applyEP10AstNetlist.exit
+
+21:                                               ; preds = %bb.q
+  %22 = landingpad { ptr, i32 }
+          catch ptr null
+  %23 = extractvalue { ptr, i32 } %22, 0
+  call void @__clang_call_terminate(ptr %23) #29, !noalias !374, !inline_history !187
+  unreachable
+
+_ZN21InlineModGraphBuilder5applyEP10AstNetlist.exit: ; preds = %13, %15
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #26, !noalias !374
+  %24 = invoke noundef i32 @_ZL14dumpGraphLevelv()
           to label %bb.r unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.r:                                             ; preds = %bb.q
-  %i.bq = icmp sgt i32 %12, 5
+bb.r:                                             ; preds = %_ZN21InlineModGraphBuilder5applyEP10AstNetlist.exit
+  %i.bq = icmp sgt i32 %24, 5
   br i1 %i.bq, label %._crit_edge.i.i, label %bb.u
 
 ._crit_edge.i.i:                                  ; preds = %bb.r
@@ -794,7 +820,7 @@ bb.ay:                                            ; preds = %bb.ax
   store ptr @.str.27, ptr %i.fi, align 8, !tbaa !55
   br label %_ZN6V3ListI13V3GraphVertexXadL_ZNS0_5linksEvEES0_E19SimpleItertatorImplIS0_Lb0EEppEv.exit
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph, %bb.ah, %.noexc133, %.noexc134, %.noexc135, %.noexc141, %.noexc140, %.noexc139, %bb.aj, %.critedge, %.lr.ph225, %bb.ad, %bb.ae, %bb.aa, %bb.y, %_ZN13V3GraphVertex2asI19InlineModCellVertexEEPT_v.exit143, %.noexc129, %.noexc128, %.noexc127, %bb.v, %bb.u, %bb.q, %bb.be, %bb.bd, %._crit_edge, %_ZN13V3GraphVertex2asI21InlineModModuleVertexEEPT_v.exit
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph, %bb.ah, %.noexc133, %.noexc134, %.noexc135, %.noexc141, %.noexc140, %.noexc139, %bb.aj, %.critedge, %.lr.ph225, %bb.ad, %bb.ae, %bb.aa, %bb.y, %_ZN13V3GraphVertex2asI19InlineModCellVertexEEPT_v.exit143, %.noexc129, %.noexc128, %.noexc127, %bb.v, %bb.u, %_ZN21InlineModGraphBuilder5applyEP10AstNetlist.exit, %bb.be, %bb.bd, %._crit_edge, %_ZN13V3GraphVertex2asI21InlineModModuleVertexEEPT_v.exit
   %lpad.loopexit.split-lp261 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.loopexit.split-lp

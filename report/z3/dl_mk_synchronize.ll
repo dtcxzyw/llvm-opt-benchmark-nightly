@@ -205,6 +205,7 @@ _ZNK6vectorIP9func_declLb0EjE8capacityEv.exit.thread.i: ; preds = %_ZNK6vectorIP
   br label %_ZN6vectorIP9func_declLb0EjE6resizeEj.exit
 
 _ZN6vectorIP9func_declLb0EjE6resizeEj.exit:       ; preds = %.lr.ph.preheader.i, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit.i, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit.i.thread
+  %.not.not.i75 = phi i1 [ true, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit.i.thread ], [ true, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit.i ], [ false, %.lr.ph.preheader.i ]
   %.0.i74 = phi i32 [ 0, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit.i.thread ], [ 0, %_ZNK6vectorIP9func_declLb0EjE4sizeEv.exit.i ], [ %i.dq, %.lr.ph.preheader.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
   store i8 0, ptr %i.b, align 1, !tbaa !119
@@ -224,8 +225,7 @@ _ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.i.i: ; preds = %bb.u
   store i64 %i.ed, ptr %7, align 8, !tbaa !63
   %i.ee = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 5 uses
   store ptr null, ptr %i.ee, align 8, !tbaa !143
-  %.not.not.i.i50 = icmp eq i32 %.0.i74, 0
-  br i1 %.not.not.i.i50, label %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE6resizeEj.exit, label %.preheader
+  br i1 %.not.not.i75, label %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE6resizeEj.exit, label %.preheader
 
 .preheader:                                       ; preds = %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.i.i, %.noexc52
   %i.ef = phi ptr [ %.pr.pre.i.i47, %.noexc52 ], [ null, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.i.i ] ; 4 uses
@@ -236,7 +236,7 @@ _ZNK6vectorIPN7datalog4ruleELb0EjE8capacityEv.exit.i.i: ; preds = %.preheader
   %i.eh = getelementptr inbounds i8, ptr %i.ef, i64 -8
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !93
   %i.ej = icmp ugt i32 %.0.i74, %i.ei
-  br i1 %i.ej, label %_ZNK6vectorIPN7datalog4ruleELb0EjE8capacityEv.exit.thread.i.i, label %.lr.ph.preheader.i.i
+  br i1 %i.ej, label %_ZNK6vectorIPN7datalog4ruleELb0EjE8capacityEv.exit.thread.i.i, label %9
 
 _ZNK6vectorIPN7datalog4ruleELb0EjE8capacityEv.exit.thread.i.i: ; preds = %_ZNK6vectorIPN7datalog4ruleELb0EjE8capacityEv.exit.i.i, %.preheader
   invoke void @_ZN6vectorIPN7datalog4ruleELb0EjE13expand_vectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ee)
@@ -246,15 +246,19 @@ _ZNK6vectorIPN7datalog4ruleELb0EjE8capacityEv.exit.thread.i.i: ; preds = %_ZNK6v
   %.pr.pre.i.i47 = load ptr, ptr %i.ee, align 8, !tbaa !143
   br label %.preheader
 
-.lr.ph.preheader.i.i:                             ; preds = %_ZNK6vectorIPN7datalog4ruleELb0EjE8capacityEv.exit.i.i
-  %9 = getelementptr inbounds i8, ptr %i.ef, i64 -4
-  store i32 %.0.i74, ptr %9, align 4, !tbaa !93
+9:                                                ; preds = %_ZNK6vectorIPN7datalog4ruleELb0EjE8capacityEv.exit.i.i
+  %10 = getelementptr inbounds i8, ptr %i.ef, i64 -4
+  store i32 %.0.i74, ptr %10, align 4, !tbaa !93
+  %.not1218.i.i = icmp eq i32 %.0.i74, 0
+  br i1 %.not1218.i.i, label %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE6resizeEj.exit, label %.lr.ph.preheader.i.i
+
+.lr.ph.preheader.i.i:                             ; preds = %9
   %i.ek = zext i32 %.0.i74 to i64
   %i.el = shl nuw nsw i64 %i.ek, 3
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ef, i8 0, i64 %i.el, i1 false), !tbaa !144
   br label %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE6resizeEj.exit
 
-_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE6resizeEj.exit: ; preds = %.lr.ph.preheader.i.i, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.i.i
+_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE6resizeEj.exit: ; preds = %.lr.ph.preheader.i.i, %9, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   invoke void @_ZN7datalog14mk_synchronize17rename_bound_varsERK10ptr_vectorI13obj_hashtableI9func_declEERNS_8rule_setE(ptr dead_on_unwind nonnull writable sret(%class.vector.137) align 8 %8, ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(248) %2)
           to label %bb.v unwind label %bb.ad

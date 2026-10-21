@@ -202,18 +202,15 @@ declare i64 @deflateBound(ptr noundef, i64 noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define dso_local void @git_deflate_init(ptr noundef initializes((0, 160)) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %0, i8 0, i64 160, i1 false)
   %i.d = tail call i32 @deflateInit_(ptr noundef nonnull %0, i32 noundef %1, ptr noundef nonnull @.str, i32 noundef 112) #6 ; 3 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !19     ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !21   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.g = load <2 x ptr>, ptr %2, align 8, !tbaa !30
   %i.h = insertelement <2 x ptr> poison, ptr %i.e, i64 0
   %i.i = insertelement <2 x ptr> %i.h, ptr %i.f, i64 1
@@ -221,7 +218,8 @@ bb.a:
   %i.k = ptrtoint <2 x ptr> %i.g to <2 x i64>
   %i.l = sub <2 x i64> %i.j, %i.k                 ; 4 uses
   %i.m = load i64, ptr %i.c, align 8, !tbaa !25   ; 2 uses
-  %i.n = load i64, ptr %5, align 8, !tbaa !24
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %i.n = load i64, ptr %4, align 8, !tbaa !24
   %i.o = extractelement <2 x i64> %i.l, i64 1
   %i.p = add i64 %i.n, %i.o
   %.not.i = icmp eq i64 %i.m, %i.p
@@ -236,14 +234,16 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not22.i, label %._crit_edge.i, label %bb.d
 
 ._crit_edge.i:                                    ; preds = %bb.c
-  %.pre.i = load i64, ptr %4, align 8, !tbaa !22
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !22
   %i.q = extractelement <2 x i64> %i.l, i64 0
   %.pre24.i = add i64 %.pre.i, %i.q
   br label %zlib_post_call.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.r = load i64, ptr %i.b, align 8, !tbaa !23   ; 2 uses
-  %i.s = load i64, ptr %4, align 8, !tbaa !22
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %i.s = load i64, ptr %5, align 8, !tbaa !22
   %i.t = extractelement <2 x i64> %i.l, i64 0
   %i.u = add i64 %i.s, %i.t
   %.not23.i = icmp eq i64 %i.r, %i.u
@@ -255,13 +255,15 @@ bb.e:                                             ; preds = %bb.d
 
 zlib_post_call.exit:                              ; preds = %._crit_edge.i, %bb.d
   %.pre-phi.i = phi i64 [ %.pre24.i, %._crit_edge.i ], [ %i.r, %bb.d ]
-  store i64 %i.m, ptr %5, align 8, !tbaa !24
-  store i64 %.pre-phi.i, ptr %4, align 8, !tbaa !22
+  store i64 %i.m, ptr %4, align 8, !tbaa !24
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  store i64 %.pre-phi.i, ptr %6, align 8, !tbaa !22
   store ptr %i.e, ptr %2, align 8, !tbaa !18
   store ptr %i.f, ptr %3, align 8, !tbaa !20
-  %i.v = load <2 x i64>, ptr %6, align 8, !tbaa !31
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %i.v = load <2 x i64>, ptr %7, align 8, !tbaa !31
   %i.w = sub <2 x i64> %i.v, %i.l
-  store <2 x i64> %i.w, ptr %6, align 8, !tbaa !31
+  store <2 x i64> %i.w, ptr %7, align 8, !tbaa !31
   %i.x = icmp eq i32 %i.d, 0
   br i1 %i.x, label %bb.f, label %bb.g
 
@@ -293,18 +295,15 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @do_git_deflate_init(ptr noundef initializes((0, 160)) %0, i32 noundef %1, i32 noundef range(i32 -15, 32) %2) unnamed_addr #0 {
 bb.a:
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %0, i8 0, i64 160, i1 false)
   %i.d = tail call i32 @deflateInit2_(ptr noundef nonnull %0, i32 noundef %1, i32 noundef 8, i32 noundef %2, i32 noundef 8, i32 noundef 0, ptr noundef nonnull @.str, i32 noundef 112) #6 ; 3 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !19     ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !21   ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.g = load <2 x ptr>, ptr %3, align 8, !tbaa !30
   %i.h = insertelement <2 x ptr> poison, ptr %i.e, i64 0
   %i.i = insertelement <2 x ptr> %i.h, ptr %i.f, i64 1
@@ -312,7 +311,8 @@ bb.a:
   %i.k = ptrtoint <2 x ptr> %i.g to <2 x i64>
   %i.l = sub <2 x i64> %i.j, %i.k                 ; 4 uses
   %i.m = load i64, ptr %i.c, align 8, !tbaa !25   ; 2 uses
-  %i.n = load i64, ptr %6, align 8, !tbaa !24
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %i.n = load i64, ptr %5, align 8, !tbaa !24
   %i.o = extractelement <2 x i64> %i.l, i64 1
   %i.p = add i64 %i.n, %i.o
   %.not.i = icmp eq i64 %i.m, %i.p
@@ -327,14 +327,16 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not22.i, label %._crit_edge.i, label %bb.d
 
 ._crit_edge.i:                                    ; preds = %bb.c
-  %.pre.i = load i64, ptr %5, align 8, !tbaa !22
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !22
   %i.q = extractelement <2 x i64> %i.l, i64 0
   %.pre24.i = add i64 %.pre.i, %i.q
   br label %zlib_post_call.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.r = load i64, ptr %i.b, align 8, !tbaa !23   ; 2 uses
-  %i.s = load i64, ptr %5, align 8, !tbaa !22
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %i.s = load i64, ptr %6, align 8, !tbaa !22
   %i.t = extractelement <2 x i64> %i.l, i64 0
   %i.u = add i64 %i.s, %i.t
   %.not23.i = icmp eq i64 %i.r, %i.u
@@ -346,13 +348,15 @@ bb.e:                                             ; preds = %bb.d
 
 zlib_post_call.exit:                              ; preds = %._crit_edge.i, %bb.d
   %.pre-phi.i = phi i64 [ %.pre24.i, %._crit_edge.i ], [ %i.r, %bb.d ]
-  store i64 %i.m, ptr %6, align 8, !tbaa !24
-  store i64 %.pre-phi.i, ptr %5, align 8, !tbaa !22
+  store i64 %i.m, ptr %5, align 8, !tbaa !24
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  store i64 %.pre-phi.i, ptr %7, align 8, !tbaa !22
   store ptr %i.e, ptr %3, align 8, !tbaa !18
   store ptr %i.f, ptr %4, align 8, !tbaa !20
-  %i.v = load <2 x i64>, ptr %7, align 8, !tbaa !31
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %i.v = load <2 x i64>, ptr %8, align 8, !tbaa !31
   %i.w = sub <2 x i64> %i.v, %i.l
-  store <2 x i64> %i.w, ptr %7, align 8, !tbaa !31
+  store <2 x i64> %i.w, ptr %8, align 8, !tbaa !31
   %i.x = icmp eq i32 %i.d, 0
   br i1 %i.x, label %bb.f, label %bb.g
 

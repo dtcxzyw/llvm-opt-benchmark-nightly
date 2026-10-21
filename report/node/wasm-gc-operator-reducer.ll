@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/wasm-gc-operator-reducer?download=true
-inline.NumInlined: 905
+inline.NumInlined: 906
 inline.NumDeleted: 380
 begin_hunk_0_@_ZN2v88internal8compiler13PersistentMapISt4pairIPNS1_4NodeEmENS1_12NodeWithTypeENS_4base4hashIS6_EEE6ModifyIZNSB_3SetES6_S7_EUlPS7_E_EEvS6_T_:bb.a
   %i.e = add i64 %i.d, %i.c                       ; 2 uses
@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.i
 _ZNK2v88internal8compiler13PersistentMapISt4pairIPNS1_4NodeEmENS1_12NodeWithTypeENS_4base4hashIS6_EEE15GetFocusedValueEPKNSB_11FocusedTreeERKS6_.exit: ; preds = %.loopexit, %_ZNKSt3mapISt4pairIPN2v88internal8compiler4NodeEmENS3_12NodeWithTypeESt4lessIS6_ENS2_13ZoneAllocatorIS0_IKS6_S7_EEEE4findERSB_.exit.thread.i, %bb.h, %bb.j, %bb.k
   %.not.i3353 = phi i1 [ true, %.loopexit ], [ false, %bb.j ], [ false, %bb.k ], [ false, %_ZNKSt3mapISt4pairIPN2v88internal8compiler4NodeEmENS3_12NodeWithTypeESt4lessIS6_ENS2_13ZoneAllocatorIS0_IKS6_S7_EEEE4findERSB_.exit.thread.i ], [ false, %bb.h ]
   %.3.i51 = phi i32 [ %.3.i.ph, %.loopexit ], [ %.3.i, %bb.j ], [ %.3.i, %bb.k ], [ %.3.i, %_ZNKSt3mapISt4pairIPN2v88internal8compiler4NodeEmENS3_12NodeWithTypeESt4lessIS6_ENS2_13ZoneAllocatorIS0_IKS6_S7_EEEE4findERSB_.exit.thread.i ], [ %.3.i, %bb.h ] ; 4 uses
-  %.039.i49 = phi ptr [ null, %.loopexit ], [ %.046.i, %bb.j ], [ %.046.i, %bb.k ], [ %.046.i, %_ZNKSt3mapISt4pairIPN2v88internal8compiler4NodeEmENS3_12NodeWithTypeESt4lessIS6_ENS2_13ZoneAllocatorIS0_IKS6_S7_EEEE4findERSB_.exit.thread.i ], [ %.046.i, %bb.h ] ; 6 uses
+  %.039.i49 = phi ptr [ null, %.loopexit ], [ %.046.i, %bb.j ], [ %.046.i, %bb.k ], [ %.046.i, %_ZNKSt3mapISt4pairIPN2v88internal8compiler4NodeEmENS3_12NodeWithTypeESt4lessIS6_ENS2_13ZoneAllocatorIS0_IKS6_S7_EEEE4findERSB_.exit.thread.i ], [ %.046.i, %bb.h ] ; 5 uses
   %.1.i = phi ptr [ %i.bs, %.loopexit ], [ %i.cv, %bb.j ], [ %i.cw, %bb.k ], [ %i.cn, %_ZNKSt3mapISt4pairIPN2v88internal8compiler4NodeEmENS3_12NodeWithTypeESt4lessIS6_ENS2_13ZoneAllocatorIS0_IKS6_S7_EEEE4findERSB_.exit.thread.i ], [ %i.co, %bb.h ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
@@ -267,15 +267,15 @@ _ZN2v88internal4Zone3NewINS0_7ZoneMapISt4pairIPNS0_8compiler4NodeEmENS5_12NodeWi
   %i.ed = load ptr, ptr %i.ds, align 8
   %i.ee = ptrtoint ptr %i.ed to i64
   store i64 %i.ee, ptr %i.eb, align 8
-  %i.ef = getelementptr inbounds nuw i8, ptr %i.eb, i64 16 ; 6 uses
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.eb, i64 16 ; 8 uses
   store i32 0, ptr %i.ef, align 8
-  %i.eg = getelementptr inbounds nuw i8, ptr %i.eb, i64 24 ; 3 uses
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.eb, i64 24 ; 4 uses
   store ptr null, ptr %i.eg, align 8
-  %i.eh = getelementptr inbounds nuw i8, ptr %i.eb, i64 32 ; 3 uses
+  %i.eh = getelementptr inbounds nuw i8, ptr %i.eb, i64 32 ; 4 uses
   store ptr %i.ef, ptr %i.eh, align 8
-  %i.ei = getelementptr inbounds nuw i8, ptr %i.eb, i64 40 ; 3 uses
+  %i.ei = getelementptr inbounds nuw i8, ptr %i.eb, i64 40 ; 4 uses
   store ptr %i.ef, ptr %i.ei, align 8
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.eb, i64 48 ; 3 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %i.eb, i64 48 ; 4 uses
   store i64 0, ptr %i.ej, align 8
   %i.ek = load ptr, ptr %i.dj, align 8            ; 4 uses
   %.not30 = icmp eq ptr %i.ek, null
@@ -341,7 +341,11 @@ bb.t:                                             ; preds = %_ZNSt8_Rb_treeISt4p
   br label %_ZN2v88internal7ZoneMapISt4pairIPNS0_8compiler4NodeEmENS3_12NodeWithTypeESt4lessIS6_EEaSERKSA_.exit
 
 bb.u:                                             ; preds = %_ZN2v88internal4Zone3NewINS0_7ZoneMapISt4pairIPNS0_8compiler4NodeEmENS5_12NodeWithTypeESt4lessIS8_EEEJRPS1_EEEPT_DpOT0_.exit
-  %8 = tail call noundef i64 @_ZNSt8_Rb_treeISt4pairIPN2v88internal8compiler4NodeEmES0_IKS6_NS3_12NodeWithTypeEESt10_Select1stIS9_ESt4lessIS6_ENS2_13ZoneAllocatorIS9_EEE5eraseERS7_(ptr noundef nonnull align 8 dereferenceable(56) %i.eb, ptr noundef nonnull align 8 dereferenceable(16) %.039.i49) ; 0 uses
+  tail call void @_ZNSt8_Rb_treeISt4pairIPN2v88internal8compiler4NodeEmES0_IKS6_NS3_12NodeWithTypeEESt10_Select1stIS9_ESt4lessIS6_ENS2_13ZoneAllocatorIS9_EEE8_M_eraseEPSt13_Rb_tree_nodeIS9_E(ptr noundef nonnull align 8 dereferenceable(56) %i.eb, ptr noundef null)
+  store ptr null, ptr %i.eg, align 8
+  store ptr %i.ef, ptr %i.eh, align 8
+  store ptr %i.ef, ptr %i.ei, align 8
+  store i64 0, ptr %i.ej, align 8
   %i.ey = getelementptr inbounds nuw i8, ptr %.039.i49, i64 16
   %i.ez = tail call { ptr, i8 } @_ZNSt8_Rb_treeISt4pairIPN2v88internal8compiler4NodeEmES0_IKS6_NS3_12NodeWithTypeEESt10_Select1stIS9_ESt4lessIS6_ENS2_13ZoneAllocatorIS9_EEE17_M_emplace_uniqueIJRS7_RKS8_EEES0_ISt17_Rb_tree_iteratorIS9_EbEDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.eb, ptr noundef nonnull align 8 dereferenceable(16) %.039.i49, ptr noundef nonnull align 8 dereferenceable(24) %i.ey) ; 0 uses
   br label %_ZN2v88internal7ZoneMapISt4pairIPNS0_8compiler4NodeEmENS3_12NodeWithTypeESt4lessIS6_EEaSERKSA_.exit

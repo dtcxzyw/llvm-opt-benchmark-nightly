@@ -202,18 +202,14 @@ declare void @_ZNSt9exceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(8) 
 define linkonce_odr void @_ZN5boost9iostreams6detail18indirect_streambufINS0_20file_descriptor_sinkESt11char_traitsIcESaIcENS0_15output_seekableEE4openERKS3_ll(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.boost::iostreams::detail::concept_adapter", align 8 ; 7 uses
-  switch i64 %2, label %.thread.fold.split [
-    i64 -1, label %.thread
-    i64 0, label %bb.d
-  ]
+  %.not = icmp eq i64 %2, -1
+  %spec.select = select i1 %.not, i64 4096, i64 %2 ; 3 uses
+  %.not16 = icmp eq i64 %spec.select, 0
+  br i1 %.not16, label %bb.d, label %.thread
 
-.thread.fold.split:                               ; preds = %bb.a
-  br label %.thread
-
-.thread:                                          ; preds = %bb.a, %.thread.fold.split
-  %5 = phi i64 [ 4096, %bb.a ], [ %2, %.thread.fold.split ] ; 4 uses
+.thread:                                          ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.b = shl i64 %5, 32
+  %i.b = shl i64 %spec.select, 32
   %i.c = ashr exact i64 %i.b, 32                  ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !60
@@ -242,7 +238,6 @@ bb.c:                                             ; preds = %_ZN5boost9iostreams
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %.thread, %_ZN5boost9iostreams6detail12basic_bufferIcSaIcEEC2El.exit.i18, %bb.c
-  %6 = phi i64 [ %2, %bb.a ], [ %5, %.thread ], [ %5, %_ZN5boost9iostreams6detail12basic_bufferIcSaIcEEC2El.exit.i18 ], [ %5, %bb.c ]
   %i.j = load ptr, ptr %0, align 8, !tbaa !14
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 176
   %i.l = load ptr, ptr %i.k, align 8
@@ -346,7 +341,7 @@ _ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !39
-  %i.ay = icmp sgt i64 %6, 1
+  %i.ay = icmp sgt i64 %spec.select, 1
   %spec.select.v = select i1 %i.ay, i32 3, i32 1
   %spec.select.a = or i32 %i.ax, %spec.select.v
   store i32 %spec.select.a, ptr %i.aw, align 8, !tbaa !39

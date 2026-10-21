@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/SHA1?download=true
-inline.NumInlined: 40
+inline.NumInlined: 41
 inline.NumDeleted: 24
 loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumUnrolled: 5
@@ -36,23 +36,68 @@ module asm
 @_ZN11OpenImageIO4v3_15CSHA1C1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN11OpenImageIO4v3_15CSHA1C2Ev
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN11OpenImageIO4v3_14SHA1C2EPKvm(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(9) initializes((0, 9)) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN11OpenImageIO4v3_14SHA1C2EPKvm(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(9) initializes((0, 9)) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(200) ptr @_Znwm(i64 noundef 200) #16 ; 7 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(200) ptr @_Znwm(i64 noundef 200) #16 ; 13 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 192
   store ptr %i.b, ptr %i.c, align 8, !tbaa !10
   store <4 x i32> <i32 1732584193, i32 -271733879, i32 -1732584194, i32 271733878>, ptr %i.a, align 8, !tbaa !7
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i32 -1009589776, ptr %i.d, align 8, !tbaa !7
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 20 ; 2 uses
   store i32 0, ptr %i.e, align 4, !tbaa !7
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
   store i32 0, ptr %i.f, align 8, !tbaa !7
   store ptr %i.a, ptr %0, align 8, !tbaa !14
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.g, align 8, !tbaa !15
-  tail call void @_ZN11OpenImageIO4v3_14SHA16appendEPKvm(ptr noundef nonnull align 8 dereferenceable(9) %0, ptr noundef %1, i64 noundef %2)
+  %3 = icmp ne ptr %1, null
+  %4 = icmp ne i64 %2, 0
+  %or.cond.i = and i1 %3, %4
+  br i1 %or.cond.i, label %5, label %_ZN11OpenImageIO4v3_14SHA16appendEPKvm.exit
+
+5:                                                ; preds = %bb.a
+  %6 = trunc i64 %2 to i32                        ; 7 uses
+  %7 = shl i32 %6, 3
+  store i32 %7, ptr %i.e, align 4, !tbaa !7
+  %8 = lshr i32 %6, 29
+  store i32 %8, ptr %i.f, align 8, !tbaa !7
+  %9 = icmp ugt i32 %6, 63
+  br i1 %9, label %10, label %.loopexit.i.i
+
+10:                                               ; preds = %5
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %11, ptr noundef nonnull readonly align 1 dereferenceable(64) %1, i64 64, i1 false)
+  tail call void @_ZN11OpenImageIO4v3_15CSHA19TransformEPjPKh(ptr noundef nonnull align 8 dereferenceable(200) %i.a, ptr noundef nonnull align 8 dereferenceable(200) %i.a, ptr noundef nonnull %11)
+  %12 = icmp ugt i32 %6, 127
+  br i1 %12, label %.lr.ph.i.i, label %.loopexit.i.i
+
+.lr.ph.i.i:                                       ; preds = %10, %.lr.ph.i.i
+  %.023.i.i = phi i32 [ %15, %.lr.ph.i.i ], [ 64, %10 ] ; 3 uses
+  %13 = zext i32 %.023.i.i to i64
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 %13
+  tail call void @_ZN11OpenImageIO4v3_15CSHA19TransformEPjPKh(ptr noundef nonnull align 8 dereferenceable(200) %i.a, ptr noundef nonnull align 8 dereferenceable(200) %i.a, ptr noundef nonnull readonly %14)
+  %15 = add i32 %.023.i.i, 64                     ; 2 uses
+  %16 = add i32 %.023.i.i, 127
+  %17 = icmp ult i32 %16, %6
+  br i1 %17, label %.lr.ph.i.i, label %.loopexit.i.i, !llvm.loop !0
+
+.loopexit.i.i:                                    ; preds = %.lr.ph.i.i, %5, %10
+  %.1.i.i = phi i32 [ 0, %5 ], [ 64, %10 ], [ %15, %.lr.ph.i.i ] ; 3 uses
+  %.not.i.i = icmp eq i32 %.1.i.i, %6
+  br i1 %.not.i.i, label %_ZN11OpenImageIO4v3_14SHA16appendEPKvm.exit, label %18
+
+18:                                               ; preds = %.loopexit.i.i
+  %19 = sub i32 %6, %.1.i.i
+  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %21 = zext i32 %.1.i.i to i64
+  %22 = getelementptr inbounds nuw i8, ptr %1, i64 %21
+  %23 = zext i32 %19 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %20, ptr nonnull readonly align 1 %22, i64 %23, i1 false)
+  br label %_ZN11OpenImageIO4v3_14SHA16appendEPKvm.exit
+
+_ZN11OpenImageIO4v3_14SHA16appendEPKvm.exit:      ; preds = %bb.a, %.loopexit.i.i, %18
   ret void
 }
 
@@ -68,7 +113,7 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #2
 define void @_ZN11OpenImageIO4v3_14SHA16appendEPKvm(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(9) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !15, !range !16, !noundef !17
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !15, !range !17, !noundef !18
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.b, label %bb.c, !prof !25
 
@@ -242,7 +287,7 @@ bb.d:                                             ; preds = %bb.c, %.loopexit
 define void @_ZN11OpenImageIO4v3_14SHA17gethashERNS1_4HashE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(9) %0, ptr nofree noundef nonnull writeonly align 1 captures(none) dereferenceable(20) initializes((0, 20)) %1) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !15, !range !16, !noundef !17
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !15, !range !17, !noundef !18
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -476,7 +521,7 @@ define void @_ZN11OpenImageIO4v3_14SHA16digestB5cxx11Ev(ptr dead_on_unwind noali
 bb.a:
   %i.a = alloca [84 x i8], align 16               ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.c = load i8, ptr %i.b, align 8, !tbaa !15, !range !16, !noundef !17
+  %i.c = load i8, ptr %i.b, align 8, !tbaa !15, !range !17, !noundef !18
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.c, label %bb.b
 
@@ -879,7 +924,7 @@ attributes #19 = { nounwind }
 !llvm.ident = !{!3}
 !llvm.errno.tbaa = !{!7}
 
-!0 = distinct !{!0, !18}
+!0 = distinct !{!0, !16}
 !1 = !{i32 8, !"PIC Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"Ubuntu clang version 23.0.0 (++20260310081906+9c464ee5f9df-1~exp1~20260310202043.1510)"}
@@ -895,9 +940,9 @@ attributes #19 = { nounwind }
 !13 = !{!"_ZTSN11OpenImageIO4v3_14SHA1E", !11, i64 0, !12, i64 8}
 !14 = !{!13, !11, i64 0}
 !15 = !{!13, !12, i64 8}
-!16 = !{i8 0, i8 2}
-!17 = !{}
-!18 = !{!"llvm.loop.mustprogress"}
+!16 = !{!"llvm.loop.mustprogress"}
+!17 = !{i8 0, i8 2}
+!18 = !{}
 !19 = !{!5, !5, i64 0}
 !20 = !{!"p1 omnipotent char", !8, i64 0}
 !21 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !20, i64 0}
@@ -907,7 +952,7 @@ attributes #19 = { nounwind }
 !25 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !26 = !{!"p1 _ZTS8_IO_FILE", !8, i64 0}
 !27 = !{!26, !26, i64 0}
-!28 = distinct !{!28, !18}
+!28 = distinct !{!28, !16}
 !29 = !{!21, !20, i64 0}
 !30 = !{!23, !20, i64 0}
 !31 = !{!"_ZTSN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEE", !20, i64 0, !22, i64 8}

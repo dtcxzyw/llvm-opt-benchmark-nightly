@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant.qdrant.3f8cc1c7dccbb09-cgu.006?download=true
-inline.NumInlined: 9333
+inline.NumInlined: 9340
 inline.NumDeleted: 3748
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_RNvMNtCsexYYUdYSQU
 define hidden void @_RINvXse_NtNtCsiHzErX7aQFk_12futures_util6stream17futures_unorderedINtB6_16FuturesUnorderedINtNtNtBa_6future6either6EitherINtNtB1v_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2p_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecIB4u_IB4u_NtNtCs607s0NAIaWN_7segment5types11ScoredPointEEENCNCNvMNtB2p_8read_opsB3A_11query_batch00E0s_0NCB2h_s0_0EIB1W_INtNtCskKLDkoKarTP_4core3pin3PinINtNtB4y_5boxed3BoxDNtNtNtB71_6future6future6Futurep6OutputINtNtB71_6result6ResultB4t_NtNtNtB2t_10operations5types15CollectionErrorENtNtB71_6marker4SendEL_EENCNCB2h_s2_00EEEINtNtNtNtB71_4iter6traits7collect6ExtendB1q_E6extendINtNtB71_6option6OptionB1q_EECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 5 uses
-  %i.b = alloca [56 x i8], align 8                ; 8 uses
+  %i.b = alloca [56 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.b, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false)
   %.promoted = load i64, ptr %i.b, align 8        ; 2 uses
@@ -232,8 +232,6 @@ bb.a:
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtNtCsiHzErX7aQFk_12futures_util6future6either6EitherINtNtB14_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2n_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecIB4s_IB4s_NtNtCs607s0NAIaWN_7segment5types11ScoredPointEEENCNCNvMNtB2n_8read_opsB3y_11query_batch00E0s_0NCB2f_s0_0EIB1U_INtNtB4_3pin3PinINtNtB4w_5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultB4r_NtNtNtB2r_10operations5types15CollectionErrorENtNtB4_6marker4SendEL_EENCNCB2f_s2_00EEEECsl8OoimOLbh_6qdrant.exit unwind label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.split.us, %bb.a
-  store i64 -1, ptr %i.b, align 8
-  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsiHzErX7aQFk_12futures_util6future6either6EitherINtNtB12_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2l_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecIB4q_IB4q_NtNtCs607s0NAIaWN_7segment5types11ScoredPointEEENCNCNvMNtB2l_8read_opsB3w_11query_batch00E0s_0NCB2d_s0_0EIB1S_INtNtB4_3pin3PinINtNtB4u_5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultB4p_NtNtNtB2p_10operations5types15CollectionErrorENtNtB4_6marker4SendEL_EENCNCB2d_s2_00EEEECsl8OoimOLbh_6qdrant(ptr noundef nonnull readonly align 8 %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret void
 
@@ -251,7 +249,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtNtCsiHzErX7
 define hidden void @_RINvXse_NtNtCsiHzErX7aQFk_12futures_util6stream17futures_unorderedINtB6_16FuturesUnorderedINtNtNtBa_6future6either6EitherINtNtB1v_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2p_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecIB4u_NtNtCs607s0NAIaWN_7segment5types11ScoredPointEENCNCNvMNtB2p_8read_opsB3A_11core_search00E0s_0NCB2h_s0_0EIB1W_INtNtCskKLDkoKarTP_4core3pin3PinINtNtB4y_5boxed3BoxDNtNtNtB6V_6future6future6Futurep6OutputINtNtB6V_6result6ResultB4t_NtNtNtB2t_10operations5types15CollectionErrorENtNtB6V_6marker4SendEL_EENCNCB2h_s2_00EEEINtNtNtNtB6V_4iter6traits7collect6ExtendB1q_E6extendINtNtB6V_6option6OptionB1q_EECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 5 uses
-  %i.b = alloca [56 x i8], align 8                ; 8 uses
+  %i.b = alloca [56 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.b, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false)
   %.promoted = load i64, ptr %i.b, align 8        ; 2 uses
@@ -279,8 +277,6 @@ bb.a:
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtNtCsiHzErX7aQFk_12futures_util6future6either6EitherINtNtB14_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2n_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecIB4s_NtNtCs607s0NAIaWN_7segment5types11ScoredPointEENCNCNvMNtB2n_8read_opsB3y_11core_search00E0s_0NCB2f_s0_0EIB1U_INtNtB4_3pin3PinINtNtB4w_5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultB4r_NtNtNtB2r_10operations5types15CollectionErrorENtNtB4_6marker4SendEL_EENCNCB2f_s2_00EEEECsl8OoimOLbh_6qdrant.exit unwind label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.split.us, %bb.a
-  store i64 -1, ptr %i.b, align 8
-  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsiHzErX7aQFk_12futures_util6future6either6EitherINtNtB12_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2l_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecIB4q_NtNtCs607s0NAIaWN_7segment5types11ScoredPointEENCNCNvMNtB2l_8read_opsB3w_11core_search00E0s_0NCB2d_s0_0EIB1S_INtNtB4_3pin3PinINtNtB4u_5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultB4p_NtNtNtB2p_10operations5types15CollectionErrorENtNtB4_6marker4SendEL_EENCNCB2d_s2_00EEEECsl8OoimOLbh_6qdrant(ptr noundef nonnull readonly align 8 %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret void
 
@@ -298,7 +294,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtNtCsiHzErX7
 define hidden void @_RINvXse_NtNtCsiHzErX7aQFk_12futures_util6stream17futures_unorderedINtB6_16FuturesUnorderedINtNtNtBa_6future6either6EitherINtNtB1v_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2p_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs5QaNqjAn6vc_5shard8retrieve15record_internal14RecordInternalENCNCNvMNtB2p_8read_opsB3A_9scroll_by00E0s_0NCB2h_s0_0EIB1W_INtNtCskKLDkoKarTP_4core3pin3PinINtNtB4y_5boxed3BoxDNtNtNtB79_6future6future6Futurep6OutputINtNtB79_6result6ResultB4t_NtNtNtB2t_10operations5types15CollectionErrorENtNtB79_6marker4SendEL_EENCNCB2h_s2_00EEEINtNtNtNtB79_4iter6traits7collect6ExtendB1q_E6extendINtNtB79_6option6OptionB1q_EECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(56) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 5 uses
-  %i.b = alloca [56 x i8], align 8                ; 8 uses
+  %i.b = alloca [56 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.b, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false)
   %.promoted = load i64, ptr %i.b, align 8        ; 2 uses
@@ -326,8 +322,6 @@ bb.a:
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtNtCsiHzErX7aQFk_12futures_util6future6either6EitherINtNtB14_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2n_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs5QaNqjAn6vc_5shard8retrieve15record_internal14RecordInternalENCNCNvMNtB2n_8read_opsB3y_9scroll_by00E0s_0NCB2f_s0_0EIB1U_INtNtB4_3pin3PinINtNtB4w_5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultB4r_NtNtNtB2r_10operations5types15CollectionErrorENtNtB4_6marker4SendEL_EENCNCB2f_s2_00EEEECsl8OoimOLbh_6qdrant.exit unwind label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.split.us, %bb.a
-  store i64 -1, ptr %i.b, align 8
-  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsiHzErX7aQFk_12futures_util6future6either6EitherINtNtB12_6future3MapNCNCINvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set22execute_read_operationNtB2l_15ShardReplicaSet30execute_cluster_read_operationINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs5QaNqjAn6vc_5shard8retrieve15record_internal14RecordInternalENCNCNvMNtB2l_8read_opsB3w_9scroll_by00E0s_0NCB2d_s0_0EIB1S_INtNtB4_3pin3PinINtNtB4u_5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultB4p_NtNtNtB2p_10operations5types15CollectionErrorENtNtB4_6marker4SendEL_EENCNCB2d_s2_00EEEECsl8OoimOLbh_6qdrant(ptr noundef nonnull readonly align 8 %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret void
 

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yara-x-rs/original/yara_x-7f56cf114ea533af.yara_x.54960d49aaff044b-cgu.11?download=true
-inline.NumInlined: 4347
+inline.NumInlined: 4348
 inline.NumDeleted: 1844
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 14
@@ -205,9 +205,9 @@ bb.aw:                                            ; preds = %bb.bj, %_RINvNtCskK
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9100.i.i.i)
   br label %.body.i.i.i
 
-bb.ax:                                            ; preds = %bb.if, %bb.ar, %bb.s, %bb.r, %bb.h, %bb.g
-  %2 = phi ptr [ %4, %bb.if ], [ %i.dp, %bb.ar ], [ %.phi.trans.insert.i.i, %bb.s ], [ %.phi.trans.insert.i.i, %bb.r ], [ %i.ba, %bb.h ], [ %i.ba, %bb.g ]
-  %3 = phi ptr [ %5, %bb.if ], [ %i.dq, %bb.ar ], [ %i.aw, %bb.s ], [ %i.aw, %bb.r ], [ %i.bb, %bb.h ], [ %i.bb, %bb.g ]
+bb.ax:                                            ; preds = %bb.ar, %bb.s, %bb.r, %bb.h, %bb.g
+  %2 = phi ptr [ %i.dp, %bb.ar ], [ %.phi.trans.insert.i.i, %bb.s ], [ %.phi.trans.insert.i.i, %bb.r ], [ %i.ba, %bb.h ], [ %i.ba, %bb.g ]
+  %3 = phi ptr [ %i.dq, %bb.ar ], [ %i.aw, %bb.s ], [ %i.aw, %bb.r ], [ %i.bb, %bb.h ], [ %i.bb, %bb.g ]
   %i.en = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i.i
@@ -482,7 +482,7 @@ bb.bv:                                            ; preds = %bb.id, %.thread54.i
   %i.hq = phi ptr [ %i.wu, %bb.fr ], [ %i.ka, %bb.db ], [ %i.gz, %bb.bu ], [ %i.wp, %bb.fp ], [ %i.kl, %.thread42.i.i.i.i ], [ %i.wk, %.thread46.i.i.i.i ], [ %i.ahf, %.thread54.i.i.i.i ], [ %i.afi, %bb.id ], [ %i.zl, %.thread61.i.i.i.i ] ; 3 uses
   %i.hr = phi ptr [ %i.wv, %bb.fr ], [ %i.kb, %bb.db ], [ %i.ha, %bb.bu ], [ %i.wq, %bb.fp ], [ %i.km, %.thread42.i.i.i.i ], [ %i.wl, %.thread46.i.i.i.i ], [ %i.ahg, %.thread54.i.i.i.i ], [ %i.afj, %bb.id ], [ %i.zm, %.thread61.i.i.i.i ] ; 3 uses
   %i.hs = phi ptr [ %i.ww, %bb.fr ], [ %i.kc, %bb.db ], [ %i.hg, %bb.bu ], [ %i.wr, %bb.fp ], [ %i.kn, %.thread42.i.i.i.i ], [ %i.wm, %.thread46.i.i.i.i ], [ %i.ahh, %.thread54.i.i.i.i ], [ %i.afk, %bb.id ], [ %i.zn, %.thread61.i.i.i.i ] ; 3 uses
-  %i.ht = phi ptr [ %i.wx, %bb.fr ], [ %i.kd, %bb.db ], [ %i.hh, %bb.bu ], [ %i.ws, %bb.fp ], [ %i.ko, %.thread42.i.i.i.i ], [ %i.wn, %.thread46.i.i.i.i ], [ %i.ahi, %.thread54.i.i.i.i ], [ %i.afl, %bb.id ], [ %i.zo, %.thread61.i.i.i.i ] ; 6 uses
+  %i.ht = phi ptr [ %i.wx, %bb.fr ], [ %i.kd, %bb.db ], [ %i.hh, %bb.bu ], [ %i.ws, %bb.fp ], [ %i.ko, %.thread42.i.i.i.i ], [ %i.wn, %.thread46.i.i.i.i ], [ %i.ahi, %.thread54.i.i.i.i ], [ %i.afl, %bb.id ], [ %i.zo, %.thread61.i.i.i.i ] ; 5 uses
   %.sroa.025.0.i.i.i.i = phi ptr [ %i.xd, %bb.fr ], [ %i.kj, %bb.db ], [ %i.hp, %bb.bu ], [ %.sroa.039.1.i.i.i.i.i, %bb.fp ], [ %i.lx, %.thread42.i.i.i.i ], [ %.sroa.039.1.i.ph.i.i.i.i, %.thread46.i.i.i.i ], [ %.sroa.029.0.i.ph.i.i.i.i, %.thread54.i.i.i.i ], [ %.sroa.029.5.i.i.i.i.i, %bb.id ], [ %i.aev, %.thread61.i.i.i.i ]
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.ht)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i unwind label %bb.bw, !noalias !1264
@@ -885,7 +885,7 @@ bb.ft:                                            ; preds = %bb.id, %.thread58.i
   %i.xh = phi ptr [ %i.afi, %bb.id ], [ %i.zl, %.thread58.i.i.i.i ], [ %i.wu, %bb.fs ] ; 3 uses
   %i.xi = phi ptr [ %i.afj, %bb.id ], [ %i.zm, %.thread58.i.i.i.i ], [ %i.wv, %bb.fs ] ; 3 uses
   %i.xj = phi ptr [ %i.afk, %bb.id ], [ %i.zn, %.thread58.i.i.i.i ], [ %i.ww, %bb.fs ] ; 3 uses
-  %i.xk = phi ptr [ %i.afl, %bb.id ], [ %i.zo, %.thread58.i.i.i.i ], [ %i.wx, %bb.fs ] ; 6 uses
+  %i.xk = phi ptr [ %i.afl, %bb.id ], [ %i.zo, %.thread58.i.i.i.i ], [ %i.wx, %bb.fs ] ; 5 uses
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.xk)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i unwind label %bb.fu, !noalias !1264
 
@@ -903,7 +903,7 @@ bb.fv:                                            ; preds = %bb.fu
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i: ; preds = %bb.ft
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.xk)
-          to label %bb.if unwind label %bb.br, !noalias !1264
+          to label %_RNvXsp_NtCskKLDkoKarTP_4core6resultINtB5_6ResultTNtNtNtCsiOkGTpNE17y_8wasmtime7runtime8instance8InstanceINtNtB7_6option6OptionNtNtCsbhAup8j5lif_16wasmtime_environ5types9FuncIndexEENtNtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5error5ErrorENtNtNtB7_3ops9try_trait3Try6branchCs7gfv9tzbXmh_6yara_x.exit.i.i unwind label %bb.br, !noalias !1264
 
 .thread168.i.i.i.i:                               ; preds = %bb.fs
   %i.xn = load ptr, ptr %i.wy, align 8, !noalias !1263, !nonnull !4, !align !15, !noundef !4 ; 2 uses
@@ -1306,19 +1306,9 @@ bb.ie:                                            ; preds = %bb.bz, %bb.by
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm8instance9allocator19initialize_instance0ECs7gfv9tzbXmh_6yara_x(ptr noundef nonnull align 8 %i.ahn) #38
           to label %.body.i.i.i unwind label %bb.ay, !noalias !1264
 
-bb.if:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i
-  %4 = phi ptr [ %i.hq, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i ], [ %i.xh, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i ] ; 3 uses
-  %5 = phi ptr [ %i.hr, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i ], [ %i.xi, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i ] ; 3 uses
-  %6 = phi ptr [ %i.hs, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i ], [ %i.xj, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i ]
-  %7 = phi ptr [ %i.ht, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i ], [ %i.xk, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i ]
-  %.sroa.025.1.i.i.i.i = phi ptr [ %.sroa.025.0.i.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i ], [ null, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i ] ; 2 uses
-  store i8 1, ptr %6, align 1, !noalias !1263
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm8instance9allocator19initialize_instance0ECs7gfv9tzbXmh_6yara_x(ptr noundef nonnull align 8 %7)
-          to label %8 unwind label %bb.ax, !noalias !1264
-
-8:                                                ; preds = %bb.if
-  %.not33.i.i.i = icmp eq ptr %.sroa.025.1.i.i.i.i, null
-  br i1 %.not33.i.i.i, label %_RNvXsp_NtCskKLDkoKarTP_4core6resultINtB5_6ResultTNtNtNtCsiOkGTpNE17y_8wasmtime7runtime8instance8InstanceINtNtB7_6option6OptionNtNtCsbhAup8j5lif_16wasmtime_environ5types9FuncIndexEENtNtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5error5ErrorENtNtNtB7_3ops9try_trait3Try6branchCs7gfv9tzbXmh_6yara_x.exit.i.i, label %bb.ik
+bb.if:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i
+  store i8 1, ptr %i.hs, align 1, !noalias !1263
+  br label %bb.ik
 
 bb.ig:                                            ; preds = %bb.l, %bb.k
   %i.aho = landingpad { ptr, i32 }
@@ -1331,7 +1321,8 @@ bb.ig:                                            ; preds = %bb.l, %bb.k
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCsiOkGTpNE17y_8wasmtime7runtime8instanceNtBG_8Instance7new_raw0ECs7gfv9tzbXmh_6yara_x(ptr noundef nonnull align 8 %i.ahp) #38
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin14PinMacroHelperNCINvMNtNtCsiOkGTpNE17y_8wasmtime7runtime8instanceNtB19_8Instance11new_startedNtNtNtCs7gfv9tzbXmh_6yara_x7scanner7context11ScanContextE0EEB2p_.exit.i unwind label %bb.il, !noalias !1262
 
-_RNvXsp_NtCskKLDkoKarTP_4core6resultINtB5_6ResultTNtNtNtCsiOkGTpNE17y_8wasmtime7runtime8instance8InstanceINtNtB7_6option6OptionNtNtCsbhAup8j5lif_16wasmtime_environ5types9FuncIndexEENtNtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5error5ErrorENtNtNtB7_3ops9try_trait3Try6branchCs7gfv9tzbXmh_6yara_x.exit.i.i: ; preds = %8
+_RNvXsp_NtCskKLDkoKarTP_4core6resultINtB5_6ResultTNtNtNtCsiOkGTpNE17y_8wasmtime7runtime8instance8InstanceINtNtB7_6option6OptionNtNtCsbhAup8j5lif_16wasmtime_environ5types9FuncIndexEENtNtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5error5ErrorENtNtNtB7_3ops9try_trait3Try6branchCs7gfv9tzbXmh_6yara_x.exit.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6values3ValEECs7gfv9tzbXmh_6yara_x.exit.i75.i.i.i.i
+  store i8 1, ptr %i.xj, align 1, !noalias !1263
   %i.ahq = getelementptr inbounds nuw i8, ptr %i.ae, i64 672
   %i.ahr = load i64, ptr %i.ahq, align 8, !range !7, !noalias !1263, !noundef !4 ; 2 uses
   %i.ahs = getelementptr inbounds nuw i8, ptr %i.ae, i64 680
@@ -1344,8 +1335,8 @@ _RNvXsp_NtCskKLDkoKarTP_4core6resultINtB5_6ResultTNtNtNtCsiOkGTpNE17y_8wasmtime7
   %i.ahy = load i32, ptr %i.ahx, align 8, !range !9, !noalias !1264, !noundef !4
   %i.ahz = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 460
   %i.aia = load i32, ptr %i.ahz, align 4, !noalias !1264
-  store i8 1, ptr %4, align 8, !noalias !1263
-  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCsiOkGTpNE17y_8wasmtime7runtime8instanceNtBG_8Instance7new_raw0ECs7gfv9tzbXmh_6yara_x(ptr noundef nonnull align 8 %5), !noalias !1262
+  store i8 1, ptr %i.xh, align 8, !noalias !1263
+  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCsiOkGTpNE17y_8wasmtime7runtime8instanceNtBG_8Instance7new_raw0ECs7gfv9tzbXmh_6yara_x(ptr noundef nonnull align 8 %i.xi), !noalias !1262
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !noalias !1261
   store i64 %i.ahr, ptr %i.ad, align 8, !noalias !1261
   %i.aib = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
@@ -1370,10 +1361,10 @@ bb.ij:                                            ; preds = %bb.ii
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !1261
   br label %bb.io
 
-bb.ik:                                            ; preds = %8, %bb.i, %bb.h, %bb.as, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm17ModuleRuntimeInfoECs7gfv9tzbXmh_6yara_x.exit69.i.i.i, %bb.aq
-  %.ph = phi ptr [ %i.ch, %bb.aq ], [ %i.dp, %bb.as ], [ %i.ep, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm17ModuleRuntimeInfoECs7gfv9tzbXmh_6yara_x.exit69.i.i.i ], [ %i.ba, %bb.i ], [ %i.ba, %bb.h ], [ %4, %8 ]
-  %.ph95 = phi ptr [ %i.ci, %bb.aq ], [ %i.dq, %bb.as ], [ %i.eq, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm17ModuleRuntimeInfoECs7gfv9tzbXmh_6yara_x.exit69.i.i.i ], [ %i.bb, %bb.i ], [ %i.bb, %bb.h ], [ %5, %8 ]
-  %.sroa.027.0.ph.i.i.ph = phi ptr [ %i.dm, %bb.aq ], [ %i.eb, %bb.as ], [ %.sroa.3.0.copyload.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm17ModuleRuntimeInfoECs7gfv9tzbXmh_6yara_x.exit69.i.i.i ], [ %i.bk, %bb.i ], [ %i.bl, %bb.h ], [ %.sroa.025.1.i.i.i.i, %8 ]
+bb.ik:                                            ; preds = %bb.i, %bb.h, %bb.as, %bb.if, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm17ModuleRuntimeInfoECs7gfv9tzbXmh_6yara_x.exit69.i.i.i, %bb.aq
+  %.ph = phi ptr [ %i.ch, %bb.aq ], [ %i.dp, %bb.as ], [ %i.ep, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm17ModuleRuntimeInfoECs7gfv9tzbXmh_6yara_x.exit69.i.i.i ], [ %i.hq, %bb.if ], [ %i.ba, %bb.h ], [ %i.ba, %bb.i ]
+  %.ph95 = phi ptr [ %i.ci, %bb.aq ], [ %i.dq, %bb.as ], [ %i.eq, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm17ModuleRuntimeInfoECs7gfv9tzbXmh_6yara_x.exit69.i.i.i ], [ %i.hr, %bb.if ], [ %i.bb, %bb.h ], [ %i.bb, %bb.i ]
+  %.sroa.027.0.ph.i.i.ph = phi ptr [ %i.dm, %bb.aq ], [ %i.eb, %bb.as ], [ %.sroa.3.0.copyload.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm17ModuleRuntimeInfoECs7gfv9tzbXmh_6yara_x.exit69.i.i.i ], [ %.sroa.025.0.i.i.i.i, %bb.if ], [ %i.bl, %bb.h ], [ %i.bk, %bb.i ]
   store i8 1, ptr %.ph, align 8, !noalias !1263
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCsiOkGTpNE17y_8wasmtime7runtime8instanceNtBG_8Instance7new_raw0ECs7gfv9tzbXmh_6yara_x(ptr noundef nonnull align 8 %.ph95), !noalias !1262
   br label %bb.io

@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lean4/original/ImportCompletion?download=true
-inline.NumInlined: 824
+inline.NumInlined: 827
 inline.NumDeleted: 61
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,7 @@ lean_dec.exit:                                    ; preds = %bb.g, %bb.f, %bb.e
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @l_ImportCompletion_find(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #0 {
+define noalias noundef nonnull ptr @l_ImportCompletion_find(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = load atomic i32, ptr @l_ImportCompletion_AvailableImports_toImportTrie___closed__0_once seq_cst, align 4, !tbaa !17
   %i.b = icmp eq i32 %i.a, 1
@@ -498,22 +498,24 @@ bb.at:                                            ; preds = %lean_dec.exit
 
 lean_alloc_ctor.exit:                             ; preds = %lean_dec.exit, %lean_dec.exit66, %lean_dec.exit70
   %.sink113 = phi ptr [ %i.bc, %lean_dec.exit66 ], [ %i.ap, %lean_dec.exit70 ], [ %i.bp, %lean_dec.exit ] ; 5 uses
-  %.sink106 = phi ptr [ %i.bb, %lean_dec.exit66 ], [ %i.ao, %lean_dec.exit70 ], [ %i.bo, %lean_dec.exit ]
+  %.sink106 = phi ptr [ %i.bb, %lean_dec.exit66 ], [ %i.ao, %lean_dec.exit70 ], [ %i.bo, %lean_dec.exit ] ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.sink113, i64 4
   %i.bs = getelementptr inbounds nuw i8, ptr %.sink113, i64 16
   store i64 0, ptr %i.bs, align 8, !tbaa !15
   store i32 1, ptr %.sink113, align 8, !tbaa !12
   store i32 65560, ptr %i.br, align 4
-  %i.bt = getelementptr inbounds nuw i8, ptr %.sink113, i64 8
-  store ptr %.sink106, ptr %i.bt, align 8, !tbaa !10
-  %5 = tail call ptr @l_ImportCompletion_addCompletionItemData(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %.sink113)
-  ret ptr %5
+  %5 = getelementptr inbounds nuw i8, ptr %.sink113, i64 8
+  %i.bt = getelementptr i8, ptr %.sink106, i64 8
+  %.val.i90 = load i64, ptr %i.bt, align 8, !tbaa !15
+  %6 = tail call ptr @l___private_Init_Data_Array_Basic_0__Array_mapMUnsafe_map___at___00ImportCompletion_addCompletionItemData_spec__0(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %.val.i90, i64 noundef 0, ptr noundef %.sink106)
+  store ptr %6, ptr %5, align 8, !tbaa !10
+  ret ptr %.sink113
 }
 
 declare ptr @l_Lean_NameTrie_toArray___redArg(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define ptr @l_ImportCompletion_find___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
+define noalias noundef nonnull ptr @l_ImportCompletion_find___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @l_ImportCompletion_find(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
   %i.b = load i32, ptr %4, align 4, !tbaa !12     ; 3 uses
@@ -695,7 +697,7 @@ bb.w:                                             ; preds = %bb.v
   br label %lean_dec.exit60
 
 lean_dec.exit60:                                  ; preds = %bb.w, %bb.v, %bb.u, %lean_inc_ref.exit81
-  %i.af = tail call ptr @l_ImportCompletion_addCompletionItemData(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %i.z) ; 2 uses
+  %i.af = tail call ptr @l_ImportCompletion_addCompletionItemData(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.z) ; 2 uses
   br i1 %i.k, label %lean_dec.exit.sink.split, label %bb.x
 
 bb.x:                                             ; preds = %lean_dec.exit60

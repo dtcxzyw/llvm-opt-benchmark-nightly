@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/boost/original/test_noop?download=true
-inline.NumInlined: 314
+inline.NumInlined: 315
 inline.NumDeleted: 155
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -62,7 +62,6 @@ $_ZGVZN5boost6detail12test_resultsEvE8instance = comdat any
 @.str.8 = private unnamed_addr constant [24 x i8] c"res.second >= res.first\00", align 1
 @.str.9 = private unnamed_addr constant [24 x i8] c"res.second == res.first\00", align 1
 @.str.10 = private unnamed_addr constant [26 x i8] c"!(res.second > res.first)\00", align 1
-@.str.11 = private unnamed_addr constant [13 x i8] c"!empty_frame\00", align 1
 @__PRETTY_FUNCTION__._Z16test_empty_framev = private unnamed_addr constant [24 x i8] c"void test_empty_frame()\00", align 1
 @.str.12 = private unnamed_addr constant [32 x i8] c"empty_frame.source_file() == \22\22\00", align 1
 @.str.13 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
@@ -465,16 +464,32 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #23
   store ptr null, ptr %0, align 8, !tbaa !48
-  %6 = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.1, i32 noundef 37, ptr noundef nonnull @__PRETTY_FUNCTION__._Z16test_empty_framev, i1 noundef zeroext true) ; 0 uses
+  %6 = load atomic i8, ptr @_ZGVZN5boost6detail12test_resultsEvE8instance acquire, align 8
+  %i.a = icmp eq i8 %6, 0
+  br i1 %i.a, label %7, label %_ZN5boost6detail9test_implEPKcS2_iS2_b.exit, !prof !16
+
+7:                                                ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
+  %8 = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost6detail12test_resultsEvE8instance) #23
+  %.not.i.i5 = icmp eq i32 %8, 0
+  br i1 %.not.i.i5, label %_ZN5boost6detail9test_implEPKcS2_iS2_b.exit, label %9
+
+9:                                                ; preds = %7
+  store i8 0, ptr @_ZZN5boost6detail12test_resultsEvE8instance, align 4, !tbaa !19
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost6detail12test_resultsEvE8instance, i64 4), align 4, !tbaa !20
+  %10 = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5boost6detail11test_resultD2Ev, ptr nonnull @_ZZN5boost6detail12test_resultsEvE8instance, ptr nonnull @__dso_handle) #23 ; 0 uses
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost6detail12test_resultsEvE8instance) #23
+  br label %_ZN5boost6detail9test_implEPKcS2_iS2_b.exit
+
+_ZN5boost6detail9test_implEPKcS2_iS2_b.exit:      ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %7, %9
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
   call void @_ZNK5boost10stacktrace5frame11source_fileB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %1, ptr noundef nonnull align 8 dereferenceable(8) %0)
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load i64, ptr %7, align 8, !tbaa !57
-  %i.a = icmp eq i64 %8, 0
-  %9 = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.1, i32 noundef 38, ptr noundef nonnull @__PRETTY_FUNCTION__._Z16test_empty_framev, i1 noundef zeroext %i.a)
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %12 = load i64, ptr %11, align 8, !tbaa !57
+  %13 = icmp eq i64 %12, 0
+  %14 = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.1, i32 noundef 38, ptr noundef nonnull @__PRETTY_FUNCTION__._Z16test_empty_framev, i1 noundef zeroext %13)
           to label %bb.a unwind label %bb.e       ; 0 uses
 
-bb.a:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
+bb.a:                                             ; preds = %_ZN5boost6detail9test_implEPKcS2_iS2_b.exit
   %i.b = load ptr, ptr %1, align 8, !tbaa !58     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.d = icmp eq ptr %i.b, %i.c
@@ -566,7 +581,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit19: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #23
   ret void
 
-bb.e:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
+bb.e:                                             ; preds = %_ZN5boost6detail9test_implEPKcS2_iS2_b.exit
   %i.an = landingpad { ptr, i32 }
           cleanup
   %i.ao = load ptr, ptr %1, align 8, !tbaa !58    ; 2 uses

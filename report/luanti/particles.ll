@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/particles?download=true
-inline.NumInlined: 2466
+inline.NumInlined: 2467
 inline.NumDeleted: 1098
 loop-unroll.NumCompletelyUnrolled: 16
 loop-unroll.NumUnrolled: 16
@@ -204,9 +204,8 @@ _ZNSt13unordered_mapImSt10unique_ptrI15ParticleSpawnerSt14default_deleteIS1_EESt
 ; Function Attrs: uwtable
 define dso_local void @_ZN15ParticleManager18addParticleSpawnerEmSt10unique_ptrI15ParticleSpawnerSt14default_deleteIS1_EE(ptr noundef nonnull align 8 dereferenceable(232) %0, i64 noundef %1, ptr nofree noundef align 8 captures(none) %2) local_unnamed_addr #10 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca ptr, align 8                        ; 4 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %4 = alloca %"struct.std::_Hashtable<unsigned long, std::pair<const unsigned long, std::unique_ptr<ParticleSpawner>>, std::allocator<std::pair<const unsigned long, std::unique_ptr<ParticleSpawner>>>, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>>::_Scoped_node", align 8 ; 6 uses
+  %3 = alloca %"struct.std::_Hashtable<unsigned long, std::pair<const unsigned long, std::unique_ptr<ParticleSpawner>>, std::allocator<std::pair<const unsigned long, std::unique_ptr<ParticleSpawner>>>, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>>::_Scoped_node", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
   %i.c = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.b) #27 ; 2 uses
   %.not.i.i = icmp eq i32 %i.c, 0
@@ -255,13 +254,13 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i
   br label %.loopexit.i.i, !llvm.loop !15
 
 .loopexit.i.i:                                    ; preds = %.lr.ph.i.i.i.i, %..loopexit_crit_edge21.i.i.i.i, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
-  store ptr %i.d, ptr %4, align 8, !tbaa !618
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
+  store ptr %i.d, ptr %3, align 8, !tbaa !618
   %i.t = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #31
           to label %.noexc unwind label %bb.t     ; 5 uses
 
 .noexc:                                           ; preds = %.loopexit.i.i
-  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr null, ptr %i.t, align 8, !tbaa !421
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   store i64 %1, ptr %i.v, align 8, !tbaa !626
@@ -272,14 +271,14 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i
           to label %_ZNSt10_HashtableImSt4pairIKmSt10unique_ptrI15ParticleSpawnerSt14default_deleteIS3_EEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i unwind label %bb.f
 
 _ZNSt10_HashtableImSt4pairIKmSt10unique_ptrI15ParticleSpawnerSt14default_deleteIS3_EEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i: ; preds = %.noexc
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   br label %.loopexit
 
 bb.f:                                             ; preds = %.noexc
   %i.y = landingpad { ptr, i32 }
           cleanup
-  call void @_ZNSt10_HashtableImSt4pairIKmSt10unique_ptrI15ParticleSpawnerSt14default_deleteIS3_EEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %4) #27
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
+  call void @_ZNSt10_HashtableImSt4pairIKmSt10unique_ptrI15ParticleSpawnerSt14default_deleteIS3_EEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #27
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   br label %.body
 
 .loopexit:                                        ; preds = %bb.d, %_ZNSt10_HashtableImSt4pairIKmSt10unique_ptrI15ParticleSpawnerSt14default_deleteIS3_EEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i, %bb.c
@@ -307,7 +306,7 @@ _ZTW11errorstream.exit:                           ; preds = %bb.g, %bb.h
 
 .noexc4:                                          ; preds = %_ZTW11errorstream.exit
   %.v.i = select i1 %i.ae, i64 976, i64 984
-  %i.af = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.v.i ; 4 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.v.i ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr @.str.5, ptr %i.a, align 8, !tbaa !200
   %i.ag = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN11StreamProxy20emit_with_null_checkIPKcEERS_OT_(ptr noundef nonnull align 8 dereferenceable(8) %i.af, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
@@ -317,7 +316,7 @@ bb.i:                                             ; preds = %.noexc4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ah = load ptr, ptr %i.af, align 8, !tbaa !362 ; 5 uses
   %.not.i6 = icmp eq ptr %i.ah, null
-  br i1 %.not.i6, label %_ZN11StreamProxylsIRmEERS_OT_.exit, label %bb.j
+  br i1 %.not.i6, label %_ZN11StreamProxylsEPFRSoS0_E.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !48
@@ -342,34 +341,55 @@ bb.l:                                             ; preds = %.noexc7, %bb.j
   %i.aq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.ap, i64 noundef %1)
           to label %_ZN11StreamProxylsIRmEERS_OT_.exit unwind label %bb.t ; 0 uses
 
-_ZN11StreamProxylsIRmEERS_OT_.exit:               ; preds = %bb.i, %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store ptr @.str.6, ptr %3, align 8, !tbaa !200
-  %5 = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN11StreamProxy20emit_with_null_checkIPKcEERS_OT_(ptr noundef nonnull align 8 dereferenceable(8) %i.af, ptr noundef nonnull align 8 dereferenceable(8) %3)
-          to label %bb.m unwind label %bb.t       ; 2 uses
+_ZN11StreamProxylsIRmEERS_OT_.exit:               ; preds = %bb.l
+  %.pr = load ptr, ptr %i.af, align 8, !tbaa !362 ; 5 uses
+  %.not.i.i15 = icmp eq ptr %.pr, null
+  br i1 %.not.i.i15, label %_ZN11StreamProxylsEPFRSoS0_E.exit, label %bb.m
 
 bb.m:                                             ; preds = %_ZN11StreamProxylsIRmEERS_OT_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %6 = load ptr, ptr %5, align 8, !tbaa !362      ; 5 uses
-  %.not.i10.a = icmp eq ptr %6, null
-  br i1 %.not.i10.a, label %_ZN11StreamProxylsEPFRSoS0_E.exit, label %bb.n
+  %4 = load ptr, ptr %.pr, align 8, !tbaa !48
+  %5 = getelementptr i8, ptr %4, i64 -24
+  %6 = load i64, ptr %5, align 8
+  %7 = getelementptr inbounds i8, ptr %.pr, i64 %6
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %9 = load i32, ptr %8, align 8, !tbaa !369
+  %.not.i10.a = icmp eq i32 %9, 0
+  br i1 %.not.i10.a, label %.thread.i, label %10
 
-bb.n:                                             ; preds = %bb.m
-  %i.ar = load ptr, ptr %6, align 8, !tbaa !48
+10:                                               ; preds = %bb.m
+  invoke void @_ZN11StreamProxy16fix_stream_stateERSo(ptr noundef nonnull align 8 dereferenceable(8) %.pr)
+          to label %.noexc19 unwind label %bb.t
+
+.noexc19:                                         ; preds = %10
+  %.pre.i5.i = load ptr, ptr %i.af, align 8, !tbaa !362
+  br label %.thread.i
+
+.thread.i:                                        ; preds = %.noexc19, %bb.m
+  %11 = phi ptr [ %.pre.i5.i, %.noexc19 ], [ %.pr, %bb.m ]
+  %12 = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %11, ptr noundef nonnull @.str.6, i64 noundef 20)
+          to label %_ZN11StreamProxylsEPKc.exit unwind label %bb.t ; 0 uses
+
+_ZN11StreamProxylsEPKc.exit:                      ; preds = %.thread.i
+  %.pr31 = load ptr, ptr %i.af, align 8, !tbaa !362 ; 5 uses
+  %.not.i10 = icmp eq ptr %.pr31, null
+  br i1 %.not.i10, label %_ZN11StreamProxylsEPFRSoS0_E.exit, label %bb.n
+
+bb.n:                                             ; preds = %_ZN11StreamProxylsEPKc.exit
+  %i.ar = load ptr, ptr %.pr31, align 8, !tbaa !48
   %i.as = getelementptr i8, ptr %i.ar, i64 -24
   %i.at = load i64, ptr %i.as, align 8            ; 2 uses
-  %i.au = getelementptr inbounds i8, ptr %6, i64 %i.at
+  %i.au = getelementptr inbounds i8, ptr %.pr31, i64 %i.at
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 32
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !369
   %i.ax = icmp eq i32 %i.aw, 0
   br i1 %i.ax, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  invoke void @_ZN11StreamProxy16fix_stream_stateERSo(ptr noundef nonnull align 8 dereferenceable(8) %6)
+  invoke void @_ZN11StreamProxy16fix_stream_stateERSo(ptr noundef nonnull align 8 dereferenceable(8) %.pr31)
           to label %.noexc12 unwind label %bb.t
 
 .noexc12:                                         ; preds = %bb.o
-  %.pre.i11 = load ptr, ptr %5, align 8, !tbaa !362 ; 2 uses
+  %.pre.i11 = load ptr, ptr %i.af, align 8, !tbaa !362 ; 2 uses
   %.pre = load ptr, ptr %.pre.i11, align 8, !tbaa !48
   %.phi.trans.insert = getelementptr i8, ptr %.pre, i64 -24
   %.pre27 = load i64, ptr %.phi.trans.insert, align 8
@@ -377,7 +397,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %.noexc12, %bb.n
   %i.ay = phi i64 [ %.pre27, %.noexc12 ], [ %i.at, %bb.n ]
-  %i.az = phi ptr [ %.pre.i11, %.noexc12 ], [ %6, %bb.n ] ; 2 uses
+  %i.az = phi ptr [ %.pre.i11, %.noexc12 ], [ %.pr31, %bb.n ] ; 2 uses
   %i.ba = getelementptr inbounds i8, ptr %i.az, i64 %i.ay
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 240
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !375 ; 6 uses
@@ -422,7 +442,7 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i: ; preds = %.noexc16, %bb.r
   %i.bm = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bl)
           to label %_ZN11StreamProxylsEPFRSoS0_E.exit unwind label %bb.t ; 0 uses
 
-bb.t:                                             ; preds = %.noexc18, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i, %.noexc16, %bb.s, %bb.q, %bb.o, %_ZN11StreamProxylsIRmEERS_OT_.exit, %bb.l, %bb.k, %.noexc4, %_ZTW11errorstream.exit, %.loopexit.i.i
+bb.t:                                             ; preds = %.noexc18, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i, %.noexc16, %bb.s, %bb.q, %.thread.i, %10, %bb.o, %bb.l, %bb.k, %.noexc4, %_ZTW11errorstream.exit, %.loopexit.i.i
   %i.bn = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -444,7 +464,7 @@ bb.v:                                             ; preds = %bb.u
   tail call void @_ZNKSt14default_deleteI15ParticleSpawnerEclEPS0_(ptr noundef nonnull align 8 dereferenceable(8) %.1.i.i, ptr noundef nonnull %i.bq)
   br label %_ZN11StreamProxylsEPFRSoS0_E.exit
 
-_ZN11StreamProxylsEPFRSoS0_E.exit:                ; preds = %bb.v, %bb.u, %bb.m, %.noexc18
+_ZN11StreamProxylsEPFRSoS0_E.exit:                ; preds = %bb.i, %_ZN11StreamProxylsIRmEERS_OT_.exit, %bb.v, %bb.u, %_ZN11StreamProxylsEPKc.exit, %.noexc18
   %i.br = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.b) #27 ; 0 uses
   ret void
 }

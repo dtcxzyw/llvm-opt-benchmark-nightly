@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/allwinner-a10-pit?download=true
-inline.NumInlined: 15
+inline.NumInlined: 16
 inline.NumDeleted: 5
 loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumUnrolled: 5
@@ -204,12 +204,54 @@ declare void @device_class_set_legacy_reset(ptr noundef, ptr noundef) local_unna
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @a10_pit_reset(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.3, i32 noundef 9, ptr noundef nonnull @__func__.AW_A10_PIT) #3 ; 29 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 1296
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.3, i32 noundef 9, ptr noundef nonnull @__func__.AW_A10_PIT) #3 ; 34 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 1296 ; 6 uses
   store i32 0, ptr %i.b, align 16
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 1300
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 1300 ; 6 uses
   store i32 0, ptr %i.c, align 4
-  tail call fastcc void @a10_pit_update_irq(ptr noundef %i.a)
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 808
+  %2 = load ptr, ptr %1, align 8
+  tail call void @qemu_set_irq(ptr noundef %2, i32 noundef 0) #3
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 816
+  %4 = load ptr, ptr %3, align 16
+  %5 = load i32, ptr %i.c, align 4
+  %6 = load i32, ptr %i.b, align 16
+  %7 = and i32 %6, %5
+  %8 = lshr i32 %7, 1
+  %9 = and i32 %8, 1
+  tail call void @qemu_set_irq(ptr noundef %4, i32 noundef %9) #3
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 824
+  %11 = load ptr, ptr %10, align 8
+  %12 = load i32, ptr %i.c, align 4
+  %13 = load i32, ptr %i.b, align 16
+  %14 = and i32 %13, %12
+  %15 = lshr i32 %14, 2
+  %16 = and i32 %15, 1
+  tail call void @qemu_set_irq(ptr noundef %11, i32 noundef %16) #3
+  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 832
+  %18 = load ptr, ptr %17, align 16
+  %19 = load i32, ptr %i.c, align 4
+  %20 = load i32, ptr %i.b, align 16
+  %21 = and i32 %20, %19
+  %22 = lshr i32 %21, 3
+  %23 = and i32 %22, 1
+  tail call void @qemu_set_irq(ptr noundef %18, i32 noundef %23) #3
+  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 840
+  %25 = load ptr, ptr %24, align 8
+  %26 = load i32, ptr %i.c, align 4
+  %27 = load i32, ptr %i.b, align 16
+  %28 = and i32 %27, %26
+  %29 = lshr i32 %28, 4
+  %30 = and i32 %29, 1
+  tail call void @qemu_set_irq(ptr noundef %25, i32 noundef %30) #3
+  %31 = getelementptr inbounds nuw i8, ptr %i.a, i64 848
+  %32 = load ptr, ptr %31, align 16
+  %33 = load i32, ptr %i.c, align 4
+  %34 = load i32, ptr %i.b, align 16
+  %35 = and i32 %34, %33
+  %36 = lshr i32 %35, 5
+  %37 = and i32 %36, 1
+  tail call void @qemu_set_irq(ptr noundef %32, i32 noundef %37) #3
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 1304 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 1328
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 1352

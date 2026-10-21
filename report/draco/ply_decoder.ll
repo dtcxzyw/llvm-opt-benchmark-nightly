@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %_ZNKSt3mapINSt7__cx
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit240
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit240: ; preds = %bb.i, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE4findERS9_.exit.i, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i.i
-  %.0.i = phi ptr [ %i.bo, %bb.i ], [ null, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE4findERS9_.exit.i ], [ null, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i.i ] ; 3 uses
+  %.0.i = phi ptr [ %i.bo, %bb.i ], [ null, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE4findERS9_.exit.i ], [ null, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS8_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i.i ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
@@ -608,7 +608,7 @@ _ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; pre
   %i.hi = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 5 uses
   %i.hk = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #19
-          to label %_ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i369 unwind label %bb.ah ; 5 uses
+          to label %_ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i369 unwind label %bb.ah ; 4 uses
 
 _ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i369: ; preds = %_ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   store ptr %.0.i, ptr %i.hk, align 8, !tbaa !90
@@ -617,19 +617,18 @@ _ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i369: ; 
   store ptr %i.hl, ptr %i.hi, align 8, !tbaa !95
   store ptr %i.hl, ptr %i.hj, align 8, !tbaa !193
   %i.hm = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #19
-          to label %_ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i379 unwind label %bb.ah ; 7 uses
+          to label %_ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i379 unwind label %bb.ah ; 6 uses
 
 _ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i379: ; preds = %_ZNKSt6vectorIPKN5draco11PlyPropertyESaIS3_EE12_M_check_lenEmPKc.exit.i.i369
+  %38 = ptrtoint ptr %.0.i to i64
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 8
   store ptr %.0.i265, ptr %i.hn, align 8, !tbaa !90
-  %38 = load i64, ptr %i.hk, align 8
   store i64 %38, ptr %i.hm, align 8
-  %i.ho = getelementptr inbounds nuw i8, ptr %i.hm, i64 16
+  %i.ho = getelementptr inbounds nuw i8, ptr %i.hm, i64 16 ; 2 uses
   call void @_ZdlPvm(ptr noundef nonnull %i.hk, i64 noundef 8) #16
   store ptr %i.hm, ptr %11, align 8, !tbaa !94
   store ptr %i.ho, ptr %i.hi, align 8, !tbaa !95
-  %39 = getelementptr inbounds nuw i8, ptr %i.hm, i64 16
-  store ptr %39, ptr %i.hj, align 8, !tbaa !193
+  store ptr %i.ho, ptr %i.hj, align 8, !tbaa !193
   %i.hp = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #19
           to label %_ZNSt6vectorIPKN5draco11PlyPropertyESaIS3_EE9push_backERKS3_.exit387 unwind label %bb.ah ; 6 uses
 

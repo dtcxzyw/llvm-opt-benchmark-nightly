@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bitwuzla/original/parser?download=true
-inline.NumInlined: 5128
+inline.NumInlined: 5129
 inline.NumDeleted: 1457
 loop-unroll.NumCompletelyUnrolled: 9
 loop-unroll.NumRuntimeUnrolled: 2
@@ -205,11 +205,10 @@ bb.a:
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %18 = alloca %"class.std::optional", align 16   ; 6 uses
   %19 = alloca %"class.std::optional", align 8    ; 4 uses
-  %20 = alloca %"class.std::optional.222", align 8 ; 4 uses
-  %21 = alloca %"class.std::optional.222", align 16 ; 6 uses
-  %22 = alloca %"class.bitwuzla::Term", align 16  ; 7 uses
+  %20 = alloca %"class.std::optional.222", align 16 ; 6 uses
+  %21 = alloca %"class.bitwuzla::Term", align 16  ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1616
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1624 ; 8 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1624 ; 10 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !162  ; 2 uses
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !165
   %i.g = ptrtoint ptr %i.e to i64
@@ -416,7 +415,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit91: ; preds = %bb.
   br label %bb.bg
 
 bb.k:                                             ; preds = %bb.e
-  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 1600 ; 6 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 1600 ; 8 uses
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !260
   %i.bq = getelementptr inbounds i8, ptr %i.bp, i64 -152
   %i.br = load i32, ptr %i.bq, align 8, !tbaa !240
@@ -819,16 +818,18 @@ bb.au:                                            ; preds = %bb.ar
   br label %bb.bc
 
 _ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit: ; preds = %bb.ar
-  call void @llvm.lifetime.start.p0(ptr nonnull %20) #30
-  %i.je = getelementptr inbounds nuw i8, ptr %20, i64 16
-  store i8 0, ptr %i.je, align 8, !tbaa !339
-  call void @_ZN4bzla6parser4smt26Parser16close_term_scopeERKSt8optionalIN8bitwuzla4TermEE(ptr noundef nonnull align 8 dereferenceable(2056) %0, ptr noundef nonnull align 8 dereferenceable(24) %20)
-  call void @llvm.lifetime.end.p0(ptr nonnull %20) #30
+  %22 = load ptr, ptr %i.bo, align 8, !tbaa !260
+  %i.je = getelementptr inbounds i8, ptr %22, i64 -152 ; 2 uses
+  store ptr %i.je, ptr %i.bo, align 8, !tbaa !184
+  tail call void @_ZN4bzla6parser4smt26Parser10ParsedItemD2Ev(ptr noundef nonnull align 8 dead_on_return(145) dereferenceable(145) %i.je) #30
+  %23 = load ptr, ptr %i.d, align 8, !tbaa !162
+  %24 = getelementptr inbounds i8, ptr %23, i64 -8
+  store ptr %24, ptr %i.d, align 8, !tbaa !162
   br label %bb.bc
 
 bb.av:                                            ; preds = %bb.ar
+  call void @llvm.lifetime.start.p0(ptr nonnull %20) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #30
-  call void @llvm.lifetime.start.p0(ptr nonnull %22) #30
   %i.jf = load ptr, ptr %i.bo, align 8, !tbaa !260
   %i.jg = getelementptr inbounds i8, ptr %i.jf, i64 -152
   %i.jh = load i32, ptr %i.jg, align 8, !tbaa !240
@@ -836,18 +837,18 @@ bb.av:                                            ; preds = %bb.ar
   br i1 %i.ji, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  call void @_ZN4bzla6parser4smt26Parser12pop_term_argEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Term") align 8 %22, ptr noundef nonnull align 8 dereferenceable(2056) %0)
+  call void @_ZN4bzla6parser4smt26Parser12pop_term_argEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Term") align 8 %21, ptr noundef nonnull align 8 dereferenceable(2056) %0)
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.av
-  call void @_ZN8bitwuzla4TermC1Ev(ptr noundef nonnull align 8 dereferenceable(16) %22)
+  call void @_ZN8bitwuzla4TermC1Ev(ptr noundef nonnull align 8 dereferenceable(16) %21)
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
-  %i.jj = getelementptr inbounds nuw i8, ptr %22, i64 8
+  %i.jj = getelementptr inbounds nuw i8, ptr %21, i64 8
   %i.jk = load ptr, ptr %i.jj, align 8, !tbaa !253 ; 2 uses
-  %i.jl = load <2 x ptr>, ptr %22, align 16, !tbaa !265
-  store <2 x ptr> %i.jl, ptr %21, align 16, !tbaa !265
+  %i.jl = load <2 x ptr>, ptr %21, align 16, !tbaa !265
+  store <2 x ptr> %i.jl, ptr %20, align 16, !tbaa !265
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.jk, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit166, label %bb.az
 
@@ -868,14 +869,14 @@ bb.bb:                                            ; preds = %bb.az
   br label %_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit166
 
 _ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit166: ; preds = %bb.ay, %bb.ba, %bb.bb
-  %i.jr = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
+  %i.jr = getelementptr inbounds nuw i8, ptr %20, i64 16 ; 2 uses
   store i8 1, ptr %i.jr, align 16, !tbaa !339
-  call void @_ZN4bzla6parser4smt26Parser16close_term_scopeERKSt8optionalIN8bitwuzla4TermEE(ptr noundef nonnull align 8 dereferenceable(2056) %0, ptr noundef nonnull align 8 dereferenceable(24) %21)
+  call void @_ZN4bzla6parser4smt26Parser16close_term_scopeERKSt8optionalIN8bitwuzla4TermEE(ptr noundef nonnull align 8 dereferenceable(2056) %0, ptr noundef nonnull align 8 dereferenceable(24) %20)
   store i8 0, ptr %i.jr, align 16, !tbaa !339
-  call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %21) #30
-  call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %22) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %22) #30
+  call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %20) #30
+  call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %21) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %20) #30
   br label %bb.bc
 
 bb.bc:                                            ; preds = %.split193, %.split192, %.split191, %.split190, %.split189, %.split188, %.split187, %.split186, %.split185, %.split, %bb.as, %bb.au, %_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit166, %_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit, %bb.at, %bb.af

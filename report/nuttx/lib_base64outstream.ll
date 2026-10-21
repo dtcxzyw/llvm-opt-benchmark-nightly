@@ -1,4 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nuttx/original/lib_base64outstream?download=true
+inline.NumInlined: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -44,8 +45,8 @@ bb.a:
   br i1 %i.h, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.k = load i64, ptr %i.j, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.k
   %i.m = tail call i32 @b64_ntop(ptr noundef nonnull %i.b, i64 noundef 3, ptr noundef nonnull %i.l, i64 noundef 5) #6 ; 0 uses
@@ -57,7 +58,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %2 = tail call i32 @base64stream_flush(ptr noundef nonnull %0) #7 ; 0 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %3 = load ptr, ptr %2, align 8                  ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %5 = load ptr, ptr %4, align 8
+  %6 = tail call i64 %5(ptr noundef %3, ptr noundef nonnull %i.i, i64 noundef 128) #6, !inline_history !7 ; 0 uses
+  store i64 0, ptr %i.j, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
@@ -90,8 +96,8 @@ memcpy.inline.exit63:                             ; preds = %bb.a
   br i1 %i.k, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %memcpy.inline.exit63
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.n = load i64, ptr %i.m, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.n
   %i.p = tail call i32 @b64_ntop(ptr noundef nonnull %i.d, i64 noundef 3, ptr noundef nonnull %i.o, i64 noundef 5) #6 ; 0 uses
@@ -103,7 +109,12 @@ bb.b:                                             ; preds = %memcpy.inline.exit6
   br i1 %i.s, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %3 = tail call i32 @base64stream_flush(ptr noundef nonnull %0) #7 ; 0 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %4 = load ptr, ptr %3, align 8                  ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %7 = tail call i64 %6(ptr noundef %4, ptr noundef nonnull %i.l, i64 noundef 128) #6, !inline_history !7 ; 0 uses
+  store i64 0, ptr %i.m, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %memcpy.inline.exit63, %bb.c, %bb.b, %bb.a
@@ -153,7 +164,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ao = icmp ugt i64 %i.al, 2
-  br i1 %i.ao, label %bb.e, label %._crit_edge, !llvm.loop !7
+  br i1 %i.ao, label %bb.e, label %._crit_edge, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.d
   %.156.lcssa = phi ptr [ %.055, %bb.d ], [ %i.ak, %bb.i ]
@@ -239,6 +250,7 @@ attributes #7 = { noredzone optsize }
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
 !6 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
+!7 = !{ptr @base64stream_flush}
+!8 = distinct !{!8, !9}
+!9 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -205,7 +205,7 @@ define void @_ZN7rocksdb2DB4OpenERKNS_7OptionsERKNSt7__cxx1112basic_stringIcSt11
 bb.a:
   %4 = alloca %"struct.rocksdb::DBOptions", align 8 ; 8 uses
   %5 = alloca %"struct.rocksdb::ColumnFamilyOptions", align 8 ; 9 uses
-  %6 = alloca %"class.std::vector.108", align 8   ; 12 uses
+  %6 = alloca %"class.std::vector.108", align 8   ; 13 uses
   %7 = alloca %"class.std::vector.998", align 8   ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   call void @_ZN7rocksdb9DBOptionsC1ERKNS_7OptionsE(ptr noundef nonnull align 8 dereferenceable(753) %4, ptr noundef nonnull align 8 dereferenceable(1736) %1)
@@ -216,35 +216,35 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   invoke void @_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE17_M_realloc_insertIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr null, ptr noundef nonnull align 8 dereferenceable(32) @_ZN7rocksdb24kDefaultColumnFamilyNameB5cxx11E, ptr noundef nonnull align 8 dereferenceable(976) %5)
           to label %_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEERS1_DpOT_.exit unwind label %bb.g
 
 _ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEERS1_DpOT_.exit: ; preds = %bb.b
+  %.pre.i = load ptr, ptr %i.a, align 8, !tbaa !198 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 344 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !1696, !range !136, !noundef !137
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.c, label %_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEERS1_DpOT_.exit19
 
 bb.c:                                             ; preds = %_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEERS1_DpOT_.exit
-  %9 = load ptr, ptr %8, align 8, !tbaa !1086     ; 3 uses
-  %i.e = load ptr, ptr %i.a, align 8, !tbaa !1087
-  %.not.i15 = icmp eq ptr %9, %i.e
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.e = load ptr, ptr %8, align 8, !tbaa !1086
+  %.not.i15 = icmp eq ptr %.pre.i, %i.e
   br i1 %.not.i15, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  invoke void @_ZN7rocksdb22ColumnFamilyDescriptorC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_19ColumnFamilyOptionsE(ptr noundef nonnull align 8 dereferenceable(1008) %9, ptr noundef nonnull align 8 dereferenceable(32) @_ZN7rocksdb32kPersistentStatsColumnFamilyNameB5cxx11E, ptr noundef nonnull align 8 dereferenceable(976) %5)
+  invoke void @_ZN7rocksdb22ColumnFamilyDescriptorC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_19ColumnFamilyOptionsE(ptr noundef nonnull align 8 dereferenceable(1008) %.pre.i, ptr noundef nonnull align 8 dereferenceable(32) @_ZN7rocksdb32kPersistentStatsColumnFamilyNameB5cxx11E, ptr noundef nonnull align 8 dereferenceable(976) %5)
           to label %.noexc17 unwind label %bb.g
 
 .noexc17:                                         ; preds = %bb.d
-  %i.f = load ptr, ptr %8, align 8, !tbaa !1086
+  %i.f = load ptr, ptr %i.a, align 8, !tbaa !1087
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 1008
-  store ptr %i.g, ptr %8, align 8, !tbaa !1086
+  store ptr %i.g, ptr %i.a, align 8, !tbaa !1087
   br label %_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEERS1_DpOT_.exit19
 
 bb.e:                                             ; preds = %bb.c
-  invoke void @_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE17_M_realloc_insertIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr %9, ptr noundef nonnull align 8 dereferenceable(32) @_ZN7rocksdb32kPersistentStatsColumnFamilyNameB5cxx11E, ptr noundef nonnull align 8 dereferenceable(976) %5)
+  invoke void @_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE17_M_realloc_insertIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr %.pre.i, ptr noundef nonnull align 8 dereferenceable(32) @_ZN7rocksdb32kPersistentStatsColumnFamilyNameB5cxx11E, ptr noundef nonnull align 8 dereferenceable(976) %5)
           to label %_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEERS1_DpOT_.exit19 unwind label %bb.g
 
 bb.f:                                             ; preds = %bb.a
@@ -322,7 +322,7 @@ thread-pre-split.thread:                          ; preds = %bb.m, %bb.n, %threa
 _ZNSt6vectorIPN7rocksdb18ColumnFamilyHandleESaIS2_EED2Ev.exit: ; preds = %thread-pre-split, %thread-pre-split.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
   %i.ae = load ptr, ptr %6, align 8, !tbaa !1092  ; 3 uses
-  %i.af = load ptr, ptr %8, align 8, !tbaa !1086  ; 2 uses
+  %i.af = load ptr, ptr %i.a, align 8, !tbaa !1087 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.ae, %i.af
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN7rocksdb22ColumnFamilyDescriptorES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
@@ -356,7 +356,8 @@ _ZSt8_DestroyIPN7rocksdb22ColumnFamilyDescriptorES1_EvT_S3_RSaIT0_E.exit.i: ; pr
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EED2Ev.exit, label %bb.o
 
 bb.o:                                             ; preds = %_ZSt8_DestroyIPN7rocksdb22ColumnFamilyDescriptorES1_EvT_S3_RSaIT0_E.exit.i
-  %i.ao = load ptr, ptr %i.a, align 8, !tbaa !1087
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.ao = load ptr, ptr %9, align 8, !tbaa !1086
   %i.ap = ptrtoint ptr %i.ao to i64
   %i.aq = ptrtoint ptr %i.an to i64
   %i.ar = sub i64 %i.ap, %i.aq
@@ -604,7 +605,7 @@ define linkonce_odr void @_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_E
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !1092   ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !1086 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !1087 ; 2 uses
   %.not4.i.i = icmp eq ptr %i.a, %i.c
   br i1 %.not4.i.i, label %_ZSt8_DestroyIPN7rocksdb22ColumnFamilyDescriptorES1_EvT_S3_RSaIT0_E.exit, label %.lr.ph.i.i
 
@@ -639,7 +640,7 @@ _ZSt8_DestroyIPN7rocksdb22ColumnFamilyDescriptorES1_EvT_S3_RSaIT0_E.exit: ; pred
 
 bb.b:                                             ; preds = %_ZSt8_DestroyIPN7rocksdb22ColumnFamilyDescriptorES1_EvT_S3_RSaIT0_E.exit
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !1087
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !1086
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = ptrtoint ptr %i.k to i64
   %i.p = sub i64 %i.n, %i.o
@@ -1042,7 +1043,7 @@ bb.fa:                                            ; preds = %_ZNSt6vectorIPN7roc
   br i1 %i.sv, label %.preheader, label %.thread645.thread
 
 .preheader:                                       ; preds = %.loopexit684
-  %i.sw = load ptr, ptr %i.g, align 8, !tbaa !1086
+  %i.sw = load ptr, ptr %i.g, align 8, !tbaa !1087
   %i.sx = load ptr, ptr %3, align 8, !tbaa !1092  ; 2 uses
   %.not766 = icmp eq ptr %i.sw, %i.sx
   br i1 %.not766, label %.thread638.thread, label %.lr.ph757
@@ -1067,7 +1068,7 @@ bb.fb:                                            ; preds = %.lr.ph757
 
 bb.fc:                                            ; preds = %bb.fb
   %i.ti = add nuw i64 %.094756, 1                 ; 2 uses
-  %i.tj = load ptr, ptr %i.g, align 8, !tbaa !1086
+  %i.tj = load ptr, ptr %i.g, align 8, !tbaa !1087
   %i.tk = load ptr, ptr %3, align 8, !tbaa !1092  ; 2 uses
   %i.tl = ptrtoint ptr %i.tj to i64
   %i.tm = ptrtoint ptr %i.tk to i64
@@ -1470,7 +1471,7 @@ begin_hunk_2_@_ZN7rocksdb13InternalStats15CompactionStats3AddERKS1_:bb.a
 define linkonce_odr void @_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE17_M_realloc_insertIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_19ColumnFamilyOptionsEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(976) %3) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !1086 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !1087 ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !1092   ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
@@ -1630,7 +1631,7 @@ _ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE11_S_relocateEPS1_S4_S4_R
   br i1 %.not.i41, label %_ZNSt12_Vector_baseIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit40
-  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !1087
+  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !1086
   %i.bi = ptrtoint ptr %i.bh to i64
   %i.bj = sub i64 %i.bi, %i.e
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.bj) #28
@@ -1638,9 +1639,9 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN7rock
 
 _ZNSt12_Vector_baseIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZNSt6vectorIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit40, %bb.e
   store ptr %i.p, ptr %0, align 8, !tbaa !1092
-  store ptr %.0.lcssa.i.i.i38, ptr %i.a, align 8, !tbaa !1086
+  store ptr %.0.lcssa.i.i.i38, ptr %i.a, align 8, !tbaa !1087
   %i.bk = getelementptr inbounds nuw [1008 x i8], ptr %i.p, i64 %i.l
-  store ptr %i.bk, ptr %i.bg, align 8, !tbaa !1087
+  store ptr %i.bk, ptr %i.bg, align 8, !tbaa !1086
   ret void
 
 bb.f:                                             ; preds = %bb.g
@@ -2043,8 +2044,8 @@ begin_hunk_3_@llvm.vector.reduce.add.v4i64
 !1083 = !{!102, !102, i64 0}
 !1084 = !{!"p1 _ZTSN7rocksdb16ImmutableOptionsE", !60, i64 0}
 !1085 = !{!"_ZTSNSt12_Vector_baseIN7rocksdb22ColumnFamilyDescriptorESaIS1_EE17_Vector_impl_dataE", !197, i64 0, !197, i64 8, !197, i64 16}
-!1086 = !{!1085, !197, i64 8}
-!1087 = !{!1085, !197, i64 16}
+!1086 = !{!1085, !197, i64 16}
+!1087 = !{!1085, !197, i64 8}
 !1088 = !{!"p2 _ZTSN7rocksdb18ColumnFamilyHandleE", !152, i64 0}
 !1089 = !{!"_ZTSNSt12_Vector_baseIPN7rocksdb18ColumnFamilyHandleESaIS2_EE17_Vector_impl_dataE", !1088, i64 0, !1088, i64 8, !1088, i64 16}
 !1090 = !{!1089, !1088, i64 0}

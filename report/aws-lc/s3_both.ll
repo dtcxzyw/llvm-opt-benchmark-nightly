@@ -202,7 +202,7 @@ bb.a:
 .preheader.us:                                    ; preds = %.lr.ph52.split, %.thread42.us57
   %.02651.us53 = phi i64 [ %i.w, %.thread42.us57 ], [ 0, %.lr.ph52.split ] ; 2 uses
   %.02750.us54 = phi ptr [ %.229.us60, %.thread42.us57 ], [ null, %.lr.ph52.split ] ; 5 uses
-  %.sroa.036.049.us55 = phi i8 [ %.sroa.036.2.us59, %.thread42.us57 ], [ 0, %.lr.ph52.split ] ; 6 uses
+  %.sroa.036.049.us55 = phi i8 [ %.sroa.036.2.us59, %.thread42.us57 ], [ 0, %.lr.ph52.split ] ; 5 uses
   %.sroa.537.048.us56 = phi i8 [ %.sroa.537.2.us58, %.thread42.us57 ], [ 0, %.lr.ph52.split ] ; 5 uses
   %i.f = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i64 noundef %.02651.us53) #7
   %i.g = tail call i64 @OPENSSL_sk_num(ptr noundef nonnull %3) #7
@@ -245,15 +245,14 @@ bb.f:                                             ; preds = %bb.e
 _ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us: ; preds = %bb.f
   %i.u = icmp eq i8 %.sroa.537.048.us56, 0
   %i.v = icmp eq i8 %.sroa.036.049.us55, 0
-  %or.cond.us = select i1 %i.u, i1 true, i1 %i.v  ; 2 uses
-  %spec.select.us = select i1 %or.cond.us, i8 1, i8 %.sroa.036.049.us55
+  %or.cond.us = select i1 %i.u, i1 true, i1 %i.v
   %spec.select46.us = select i1 %or.cond.us, ptr %i.i, ptr %.02750.us54
   br label %.thread42.us57
 
-.thread42.us57:                                   ; preds = %bb.d, %.preheader.us, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us, %bb.f, %bb.e
-  %.sroa.537.2.us58 = phi i8 [ 1, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us ], [ %.sroa.537.048.us56, %bb.e ], [ %.sroa.537.048.us56, %bb.f ], [ %.sroa.537.048.us56, %.preheader.us ], [ %.sroa.537.048.us56, %bb.d ]
-  %.sroa.036.2.us59 = phi i8 [ %spec.select.us, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us ], [ %.sroa.036.049.us55, %bb.e ], [ %.sroa.036.049.us55, %bb.f ], [ %.sroa.036.049.us55, %.preheader.us ], [ %.sroa.036.049.us55, %bb.d ]
-  %.229.us60 = phi ptr [ %spec.select46.us, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us ], [ %.02750.us54, %bb.e ], [ %.02750.us54, %bb.f ], [ %.02750.us54, %.preheader.us ], [ %.02750.us54, %bb.d ] ; 2 uses
+.thread42.us57:                                   ; preds = %bb.d, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us, %.preheader.us, %bb.f, %bb.e
+  %.sroa.537.2.us58 = phi i8 [ %.sroa.537.048.us56, %.preheader.us ], [ %.sroa.537.048.us56, %bb.e ], [ %.sroa.537.048.us56, %bb.f ], [ 1, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us ], [ %.sroa.537.048.us56, %bb.d ]
+  %.sroa.036.2.us59 = phi i8 [ %.sroa.036.049.us55, %.preheader.us ], [ %.sroa.036.049.us55, %bb.e ], [ %.sroa.036.049.us55, %bb.f ], [ 1, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us ], [ %.sroa.036.049.us55, %bb.d ]
+  %.229.us60 = phi ptr [ %.02750.us54, %.preheader.us ], [ %.02750.us54, %bb.e ], [ %.02750.us54, %bb.f ], [ %spec.select46.us, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us ], [ %.02750.us54, %bb.d ] ; 2 uses
   %i.w = add nuw i64 %.02651.us53, 1              ; 2 uses
   %i.x = tail call i64 @OPENSSL_sk_num(ptr noundef %0) #7
   %i.y = icmp ult i64 %i.w, %i.x
@@ -318,10 +317,10 @@ _ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit: ; preds = %bb.k
   %spec.select46 = select i1 %or.cond, ptr %i.ac, ptr %.02750
   br label %.thread42
 
-.thread42:                                        ; preds = %bb.i, %.preheader, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit, %bb.j, %bb.k
-  %.sroa.537.2 = phi i8 [ 1, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit ], [ %.sroa.537.048, %bb.j ], [ %.sroa.537.048, %bb.k ], [ %.sroa.537.048, %.preheader ], [ %.sroa.537.048, %bb.i ]
-  %.sroa.036.2 = phi i8 [ %spec.select, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit ], [ %.sroa.036.049, %bb.j ], [ %.sroa.036.049, %bb.k ], [ %.sroa.036.049, %.preheader ], [ %.sroa.036.049, %bb.i ]
-  %.229 = phi ptr [ %spec.select46, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit ], [ %.02750, %bb.j ], [ %.02750, %bb.k ], [ %.02750, %.preheader ], [ %.02750, %bb.i ] ; 2 uses
+.thread42:                                        ; preds = %bb.i, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit, %.preheader, %bb.j, %bb.k
+  %.sroa.537.2 = phi i8 [ %.sroa.537.048, %.preheader ], [ %.sroa.537.048, %bb.j ], [ %.sroa.537.048, %bb.k ], [ 1, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit ], [ %.sroa.537.048, %bb.i ]
+  %.sroa.036.2 = phi i8 [ %.sroa.036.049, %.preheader ], [ %.sroa.036.049, %bb.j ], [ %.sroa.036.049, %bb.k ], [ %spec.select, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit ], [ %.sroa.036.049, %bb.i ]
+  %.229 = phi ptr [ %.02750, %.preheader ], [ %.02750, %bb.j ], [ %.02750, %bb.k ], [ %spec.select46, %_ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit ], [ %.02750, %bb.i ] ; 2 uses
   %i.au = add nuw i64 %.02651, 1                  ; 2 uses
   %i.av = tail call i64 @OPENSSL_sk_num(ptr noundef %0) #7
   %i.aw = icmp ult i64 %i.au, %i.av

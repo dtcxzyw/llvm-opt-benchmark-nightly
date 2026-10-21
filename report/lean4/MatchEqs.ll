@@ -204,7 +204,7 @@ lean_alloc_ctor.exit721:                          ; preds = %bb.eg
   store ptr %i.gb, ptr %i.go, align 8, !tbaa !15
   br label %lean_dec_ref_known.exit717
 
-.thread:                                          ; preds = %.split994, %.split.a, %lean_nat_eq.exit671, %bb.mw, %lean_nat_eq.exit
+.thread:                                          ; preds = %.split994, %lean_nat_eq.exit671, %.split.a, %bb.mw, %lean_nat_eq.exit
   %.0369 = phi i8 [ %i.tb, %lean_nat_eq.exit ], [ 0, %bb.mw ], [ 0, %lean_nat_eq.exit671 ], [ 0, %.split.a ], [ 0, %.split994 ]
   %i.gp = load atomic i32, ptr @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Match_MatchEqs_0__Lean_Meta_Match_getEquationsForImpl_go_spec__8___redArg___lam__1___closed__3_once seq_cst, align 4, !tbaa !19
   %i.gq = icmp eq i32 %i.gp, 1
@@ -607,7 +607,8 @@ lean_alloc_ctor.exit785:                          ; preds = %bb.ms
 
 bb.mu:                                            ; preds = %.split994, %bb.mw
   %i.sx = ptrtoint ptr %18 to i64
-  %i.sy = and i64 %i.th, %i.sx
+  %28 = and i64 %i.tg, 1
+  %i.sy = and i64 %28, %i.sx
   %or.cond.not = icmp eq i64 %i.sy, 0
   br i1 %or.cond.not, label %.critedge.i667, label %bb.mv, !prof !17
 
@@ -630,8 +631,8 @@ lean_dec_ref_known.exit717.thread:                ; preds = %bb.bd, %bb.bc, %lea
   %i.td = shl i64 %.val682, 1
   %i.te = or disjoint i64 %i.td, 1
   %i.tf = inttoptr i64 %i.te to ptr               ; 2 uses
-  %i.tg = ptrtoint ptr %5 to i64
-  %i.th = and i64 %i.tg, 1                        ; 2 uses
+  %i.tg = ptrtoint ptr %5 to i64                  ; 2 uses
+  %i.th = and i64 %i.tg, 1
   %.not803 = icmp eq i64 %i.th, 0                 ; 4 uses
   br i1 %.not803, label %lean_nat_eq.exit671, label %.split.a, !prof !9
 
@@ -1034,7 +1035,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %lean_dec.exit453
 
 lean_dec.exit453:                                 ; preds = %bb.x, %bb.w, %bb.ab, %bb.aa, %bb.z
-  %.1.i361996 = phi ptr [ %i.au, %bb.z ], [ %i.au, %bb.ab ], [ %i.au, %bb.aa ], [ inttoptr (i64 1 to ptr), %bb.w ], [ %i.at, %bb.x ] ; 8 uses
+  %.1.i361996 = phi ptr [ %i.au, %bb.ab ], [ %i.au, %bb.z ], [ %i.au, %bb.aa ], [ inttoptr (i64 1 to ptr), %bb.w ], [ %i.at, %bb.x ] ; 8 uses
   %i.ay = ptrtoint ptr %.1.i361996 to i64
   %i.az = and i64 %i.ay, 1
   %.not.i603 = icmp eq i64 %i.az, 0
@@ -1437,7 +1438,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %lean_dec.exit132
 
 lean_dec.exit132:                                 ; preds = %bb.x, %bb.w, %bb.ab, %bb.aa, %bb.z
-  %.1.i116237 = phi ptr [ %i.ay, %bb.z ], [ %i.ay, %bb.ab ], [ %i.ay, %bb.aa ], [ inttoptr (i64 1 to ptr), %bb.w ], [ %i.ax, %bb.x ] ; 8 uses
+  %.1.i116237 = phi ptr [ %i.ay, %bb.ab ], [ %i.ay, %bb.z ], [ %i.ay, %bb.aa ], [ inttoptr (i64 1 to ptr), %bb.w ], [ %i.ax, %bb.x ] ; 8 uses
   %i.bc = ptrtoint ptr %.1.i116237 to i64
   %i.bd = and i64 %i.bc, 1
   %.not.i161 = icmp eq i64 %i.bd, 0
@@ -1840,7 +1841,7 @@ bb.v:                                             ; preds = %lean_dec_ref_known.
   %i.aj = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l___private_Lean_Meta_Match_MatchEqs_0__Lean_Meta_Match_initFn___lam__0___closed__2_00___x40_Lean_Meta_Match_MatchEqs_3170112230____hygCtx___hyg_2_, ptr noundef nonnull @l___private_Lean_Meta_Match_MatchEqs_0__Lean_Meta_Match_initFn___lam__0___closed__2_00___x40_Lean_Meta_Match_MatchEqs_3170112230____hygCtx___hyg_2__once, ptr noundef nonnull @_init_l___private_Lean_Meta_Match_MatchEqs_0__Lean_Meta_Match_initFn___lam__0___closed__2_00___x40_Lean_Meta_Match_MatchEqs_3170112230____hygCtx___hyg_2_) #7
   br label %lean_dec_ref.exit175
 
-lean_dec_ref.exit175:                             ; preds = %bb.v, %bb.u
+lean_dec_ref.exit175:                             ; preds = %bb.u, %bb.v
   %.0.i193 = phi ptr [ %i.ai, %bb.u ], [ %i.aj, %bb.v ]
   %i.ak = tail call ptr @lean_alloc_object(i64 noundef 280) #7 ; 5 uses
   store i32 1, ptr %i.ak, align 4, !tbaa !11

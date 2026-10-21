@@ -205,18 +205,17 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit11:        ; preds = %bb.b
   %i.i = load i32, ptr %1, align 8, !tbaa !207
   store i32 %i.i, ptr %i.h, align 4, !tbaa !207
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.k = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #20 ; 5 uses
+  %i.k = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #20 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %i.m = load i32, ptr %i.j, align 4, !tbaa !207
   store i32 %i.m, ptr %i.l, align 4, !tbaa !207
   %i.n = load i32, ptr %i.h, align 4
   store i32 %i.n, ptr %i.k, align 4
-  %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 4) #21
   store ptr %i.k, ptr %2, align 8, !tbaa !212
   store ptr %i.o, ptr %i.f, align 8, !tbaa !211
-  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  store ptr %3, ptr %i.g, align 8, !tbaa !252
+  store ptr %i.o, ptr %i.g, align 8, !tbaa !252
   %i.p = load ptr, ptr %i.d, align 8, !tbaa !265
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.r = load i64, ptr %i.q, align 8, !tbaa !294

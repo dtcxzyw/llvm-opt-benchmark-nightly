@@ -204,13 +204,14 @@ _ZNKSt8functionIFdPKfiEEclES1_i.exit251:          ; preds = %bb.ai
   br label %bb.br
 
 bb.ak:                                            ; preds = %bb.ah
-  %i.ke = zext nneg i32 %5 to i64                 ; 7 uses
-  %i.kf = shl nuw nsw i64 %i.ke, 2                ; 5 uses
-  %i.kg = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kf) #34 ; 15 uses
+  %i.ke = zext nneg i32 %5 to i64                 ; 8 uses
+  %i.kf = shl nuw nsw i64 %i.ke, 2                ; 3 uses
+  %i.kg = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kf) #34 ; 14 uses
   store i32 0, ptr %i.kg, align 4, !tbaa !204
-  %i.kh = getelementptr i8, ptr %i.kg, i64 4
-  %.idx.i.i.i.i.i.i.i253.a = add nsw i64 %i.kf, -4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kh, i8 0, i64 %.idx.i.i.i.i.i.i.i253.a, i1 false), !tbaa !204
+  %i.kh = getelementptr i8, ptr %i.kg, i64 4      ; 2 uses
+  %.idx.i.i.i.i.i.i.i253.a = add nsw i64 %i.ke, -1 ; 2 uses
+  %.idx.i.i.i.i.i.i.i253 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i253.a, 2 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kh, i8 0, i64 %.idx.i.i.i.i.i.i.i253, i1 false), !tbaa !204
   %min.iters.check524 = icmp ult i32 %5, 8
   br i1 %min.iters.check524, label %scalar.ph523.preheader, label %vector.ph525
 
@@ -240,7 +241,7 @@ scalar.ph523.preheader:                           ; preds = %bb.ak, %middle.bloc
   br label %scalar.ph523
 
 .loopexit:                                        ; preds = %scalar.ph523, %middle.block533
-  %i.kl = getelementptr i8, ptr %i.kg, i64 %i.kf
+  %i.kl = getelementptr inbounds nuw i8, ptr %i.kh, i64 %.idx.i.i.i.i.i.i.i253
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   store ptr %2, ptr %7, align 8
   %.sroa.2417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -261,13 +262,13 @@ scalar.ph523:                                     ; preds = %scalar.ph523.prehea
 
 bb.al:                                            ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  %i.ko = shl nuw nsw i64 %i.ke, 3                ; 4 uses
+  %i.ko = shl nuw nsw i64 %i.ke, 3                ; 3 uses
   %i.kp = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ko) #34
           to label %.lr.ph452.preheader unwind label %bb.am ; 12 uses
 
 .lr.ph452.preheader:                              ; preds = %bb.al
   %i.kq = getelementptr i8, ptr %i.kp, i64 8
-  %.idx.i.i.i.i.i.i.i259 = add nsw i64 %i.ko, -8
+  %.idx.i.i.i.i.i.i.i259 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i253.a, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.kq, i8 0, i64 %.idx.i.i.i.i.i.i.i259, i1 false), !tbaa !191
   %i.kr = load ptr, ptr %i.aa, align 8, !tbaa !221 ; 4 uses
   %i.ks = load ptr, ptr %i.y, align 8, !tbaa !240 ; 5 uses
@@ -318,7 +319,6 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.lq = getelementptr inbounds nuw [8 x i8], ptr %i.kp, i64 %i.lp
   %i.lr = load double, ptr %i.lq, align 8, !tbaa !191
   %i.ls = fmul double %i.lr, 5.000000e-01         ; 4 uses
-  %10 = ptrtoint ptr %i.kp to i64
   br label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.preheader, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
@@ -376,6 +376,7 @@ bb.am:                                            ; preds = %.loopexit, %bb.al
   br i1 %niter544.ncmp.1, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.preheader.unr-lcssa, label %.lr.ph452, !llvm.loop !396
 
 _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
+  %10 = ptrtoint ptr %i.kp to i64
   %i.my = ptrtoint ptr %.sroa.011.1.i.i to i64
   %i.mz = sub i64 %i.my, %10
   %i.na = ashr exact i64 %i.mz, 3                 ; 2 uses
@@ -553,13 +554,14 @@ _ZNKSt8functionIFdPKfiEEclES1_i.exit284:          ; preds = %bb.ba
   br label %bb.br
 
 bb.bc:                                            ; preds = %bb.az
-  %i.pn = zext nneg i32 %5 to i64                 ; 7 uses
-  %i.po = shl nuw nsw i64 %i.pn, 2                ; 5 uses
-  %i.pp = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.po) #34 ; 15 uses
+  %i.pn = zext nneg i32 %5 to i64                 ; 8 uses
+  %i.po = shl nuw nsw i64 %i.pn, 2                ; 3 uses
+  %i.pp = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.po) #34 ; 14 uses
   store i32 0, ptr %i.pp, align 4, !tbaa !204
-  %i.pq = getelementptr i8, ptr %i.pp, i64 4
-  %.idx.i.i.i.i.i.i.i287.a = add nsw i64 %i.po, -4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.pq, i8 0, i64 %.idx.i.i.i.i.i.i.i287.a, i1 false), !tbaa !204
+  %i.pq = getelementptr i8, ptr %i.pp, i64 4      ; 2 uses
+  %.idx.i.i.i.i.i.i.i287.a = add nsw i64 %i.pn, -1 ; 2 uses
+  %.idx.i.i.i.i.i.i.i287 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i287.a, 2 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.pq, i8 0, i64 %.idx.i.i.i.i.i.i.i287, i1 false), !tbaa !204
   %min.iters.check = icmp ult i32 %5, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -589,7 +591,7 @@ scalar.ph.preheader:                              ; preds = %bb.bc, %middle.bloc
   br label %scalar.ph
 
 .loopexit536:                                     ; preds = %scalar.ph, %middle.block
-  %i.pu = getelementptr i8, ptr %i.pp, i64 %i.po
+  %i.pu = getelementptr inbounds nuw i8, ptr %i.pq, i64 %.idx.i.i.i.i.i.i.i287
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store ptr %2, ptr %6, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -612,13 +614,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.bd:                                            ; preds = %.loopexit536
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.px = shl nuw nsw i64 %i.pn, 3                ; 4 uses
+  %i.px = shl nuw nsw i64 %i.pn, 3                ; 3 uses
   %i.py = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.px) #34
           to label %.lr.ph.preheader unwind label %bb.be ; 12 uses
 
 .lr.ph.preheader:                                 ; preds = %bb.bd
   %i.pz = getelementptr i8, ptr %i.py, i64 8
-  %.idx.i.i.i.i.i.i.i295 = add nsw i64 %i.px, -8
+  %.idx.i.i.i.i.i.i.i295 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i287.a, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.pz, i8 0, i64 %.idx.i.i.i.i.i.i.i295, i1 false), !tbaa !191
   %i.qa = load ptr, ptr %i.aa, align 8, !tbaa !221 ; 4 uses
   %i.qb = load ptr, ptr %i.z, align 8, !tbaa !240 ; 5 uses
@@ -676,7 +678,6 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.rg = getelementptr inbounds nuw [8 x i8], ptr %i.py, i64 %i.rf
   %i.rh = load double, ptr %i.rg, align 8, !tbaa !191
   %i.ri = fmul double %i.rh, 5.000000e-01         ; 4 uses
-  %11 = ptrtoint ptr %i.py to i64
   br label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i302
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i302: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i302.preheader, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i302
@@ -740,6 +741,7 @@ bb.be:                                            ; preds = %.loopexit536, %bb.b
   br i1 %niter.ncmp.1, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i302.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !399
 
 _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit309: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i302
+  %11 = ptrtoint ptr %i.py to i64
   %i.su = ptrtoint ptr %.sroa.011.1.i.i307 to i64
   %i.sv = sub i64 %i.su, %11
   %i.sw = ashr exact i64 %i.sv, 3                 ; 2 uses
@@ -1142,13 +1144,14 @@ _ZNKSt8functionIFdPKfiEEclES1_i.exit277:          ; preds = %bb.as
   br label %bb.cb
 
 bb.au:                                            ; preds = %bb.ar
-  %i.nm = zext nneg i32 %5 to i64                 ; 7 uses
-  %i.nn = shl nuw nsw i64 %i.nm, 2                ; 5 uses
-  %i.no = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.nn) #34 ; 15 uses
+  %i.nm = zext nneg i32 %5 to i64                 ; 8 uses
+  %i.nn = shl nuw nsw i64 %i.nm, 2                ; 3 uses
+  %i.no = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.nn) #34 ; 14 uses
   store i32 0, ptr %i.no, align 4, !tbaa !204
-  %i.np = getelementptr i8, ptr %i.no, i64 4
-  %.idx.i.i.i.i.i.i.i279.a = add nsw i64 %i.nn, -4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.np, i8 0, i64 %.idx.i.i.i.i.i.i.i279.a, i1 false), !tbaa !204
+  %i.np = getelementptr i8, ptr %i.no, i64 4      ; 2 uses
+  %.idx.i.i.i.i.i.i.i279.a = add nsw i64 %i.nm, -1 ; 2 uses
+  %.idx.i.i.i.i.i.i.i279 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i279.a, 2 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.np, i8 0, i64 %.idx.i.i.i.i.i.i.i279, i1 false), !tbaa !204
   %min.iters.check564 = icmp ult i32 %5, 8
   br i1 %min.iters.check564, label %scalar.ph563.preheader, label %vector.ph565
 
@@ -1178,7 +1181,7 @@ scalar.ph563.preheader:                           ; preds = %bb.au, %middle.bloc
   br label %scalar.ph563
 
 .loopexit:                                        ; preds = %scalar.ph563, %middle.block573
-  %i.nt = getelementptr i8, ptr %i.no, i64 %i.nn
+  %i.nt = getelementptr inbounds nuw i8, ptr %i.np, i64 %.idx.i.i.i.i.i.i.i279
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   store ptr %2, ptr %7, align 8
   %.sroa.2443.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -1199,13 +1202,13 @@ scalar.ph563:                                     ; preds = %scalar.ph563.prehea
 
 bb.av:                                            ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  %i.nw = shl nuw nsw i64 %i.nm, 3                ; 4 uses
+  %i.nw = shl nuw nsw i64 %i.nm, 3                ; 3 uses
   %i.nx = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.nw) #34
           to label %.lr.ph487.preheader unwind label %bb.aw ; 12 uses
 
 .lr.ph487.preheader:                              ; preds = %bb.av
   %i.ny = getelementptr i8, ptr %i.nx, i64 8
-  %.idx.i.i.i.i.i.i.i285 = add nsw i64 %i.nw, -8
+  %.idx.i.i.i.i.i.i.i285 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i279.a, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.ny, i8 0, i64 %.idx.i.i.i.i.i.i.i285, i1 false), !tbaa !191
   %i.nz = load ptr, ptr %i.aa, align 8, !tbaa !221 ; 4 uses
   %i.oa = load ptr, ptr %i.y, align 8, !tbaa !240 ; 5 uses
@@ -1259,7 +1262,6 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.pb = load float, ptr %i.pa, align 4, !tbaa !147
   %i.pc = fpext float %i.pb to double
   %i.pd = fmul double %i.oz, %i.pc                ; 4 uses
-  %10 = ptrtoint ptr %i.nx to i64
   br label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.preheader, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
@@ -1317,6 +1319,7 @@ bb.aw:                                            ; preds = %.loopexit, %bb.av
   br i1 %niter587.ncmp.1, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.preheader.unr-lcssa, label %.lr.ph487, !llvm.loop !515
 
 _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
+  %10 = ptrtoint ptr %i.nx to i64
   %i.qj = ptrtoint ptr %.sroa.011.1.i.i to i64
   %i.qk = sub i64 %i.qj, %10
   %i.ql = ashr exact i64 %i.qk, 3                 ; 2 uses
@@ -1494,13 +1497,14 @@ _ZNKSt8functionIFdPKfiEEclES1_i.exit310:          ; preds = %bb.bk
   br label %bb.cb
 
 bb.bm:                                            ; preds = %bb.bj
-  %i.sy = zext nneg i32 %5 to i64                 ; 7 uses
-  %i.sz = shl nuw nsw i64 %i.sy, 2                ; 5 uses
-  %i.ta = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.sz) #34 ; 15 uses
+  %i.sy = zext nneg i32 %5 to i64                 ; 8 uses
+  %i.sz = shl nuw nsw i64 %i.sy, 2                ; 3 uses
+  %i.ta = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.sz) #34 ; 14 uses
   store i32 0, ptr %i.ta, align 4, !tbaa !204
-  %i.tb = getelementptr i8, ptr %i.ta, i64 4
-  %.idx.i.i.i.i.i.i.i313.a = add nsw i64 %i.sz, -4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.tb, i8 0, i64 %.idx.i.i.i.i.i.i.i313.a, i1 false), !tbaa !204
+  %i.tb = getelementptr i8, ptr %i.ta, i64 4      ; 2 uses
+  %.idx.i.i.i.i.i.i.i313.a = add nsw i64 %i.sy, -1 ; 2 uses
+  %.idx.i.i.i.i.i.i.i313 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i313.a, 2 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.tb, i8 0, i64 %.idx.i.i.i.i.i.i.i313, i1 false), !tbaa !204
   %min.iters.check = icmp ult i32 %5, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -1530,7 +1534,7 @@ scalar.ph.preheader:                              ; preds = %bb.bm, %middle.bloc
   br label %scalar.ph
 
 .loopexit576:                                     ; preds = %scalar.ph, %middle.block
-  %i.tf = getelementptr i8, ptr %i.ta, i64 %i.sz
+  %i.tf = getelementptr inbounds nuw i8, ptr %i.tb, i64 %.idx.i.i.i.i.i.i.i313
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store ptr %2, ptr %6, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -1553,13 +1557,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.bn:                                            ; preds = %.loopexit576
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.ti = shl nuw nsw i64 %i.sy, 3                ; 4 uses
+  %i.ti = shl nuw nsw i64 %i.sy, 3                ; 3 uses
   %i.tj = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ti) #34
           to label %.lr.ph.preheader unwind label %bb.bo ; 12 uses
 
 .lr.ph.preheader:                                 ; preds = %bb.bn
   %i.tk = getelementptr i8, ptr %i.tj, i64 8
-  %.idx.i.i.i.i.i.i.i321 = add nsw i64 %i.ti, -8
+  %.idx.i.i.i.i.i.i.i321 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i313.a, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.tk, i8 0, i64 %.idx.i.i.i.i.i.i.i321, i1 false), !tbaa !191
   %i.tl = load ptr, ptr %i.aa, align 8, !tbaa !221 ; 4 uses
   %i.tm = load ptr, ptr %i.z, align 8, !tbaa !240 ; 5 uses
@@ -1620,7 +1624,6 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.uu = load float, ptr %i.ut, align 4, !tbaa !147
   %i.uv = fpext float %i.uu to double
   %i.uw = fmul double %i.us, %i.uv                ; 4 uses
-  %11 = ptrtoint ptr %i.tj to i64
   br label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i328
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i328: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i328.preheader, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i328
@@ -1684,6 +1687,7 @@ bb.bo:                                            ; preds = %.loopexit576, %bb.b
   br i1 %niter.ncmp.1, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i328.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !518
 
 _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit335: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i328
+  %11 = ptrtoint ptr %i.tj to i64
   %i.wi = ptrtoint ptr %.sroa.011.1.i.i333 to i64
   %i.wj = sub i64 %i.wi, %11
   %i.wk = ashr exact i64 %i.wj, 3                 ; 2 uses
@@ -2086,13 +2090,14 @@ _ZNKSt8functionIFdPKfiEEclES1_i.exit:             ; preds = %bb.c
   br label %bb.al
 
 bb.e:                                             ; preds = %bb.b
-  %i.ac = zext nneg i32 %5 to i64                 ; 7 uses
-  %i.ad = shl nuw nsw i64 %i.ac, 2                ; 5 uses
-  %i.ae = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #34 ; 15 uses
+  %i.ac = zext nneg i32 %5 to i64                 ; 8 uses
+  %i.ad = shl nuw nsw i64 %i.ac, 2                ; 3 uses
+  %i.ae = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #34 ; 14 uses
   store i32 0, ptr %i.ae, align 4, !tbaa !204
-  %i.af = getelementptr i8, ptr %i.ae, i64 4
-  %.idx.i.i.i.i.i.i.i.a = add nsw i64 %i.ad, -4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.af, i8 0, i64 %.idx.i.i.i.i.i.i.i.a, i1 false), !tbaa !204
+  %i.af = getelementptr i8, ptr %i.ae, i64 4      ; 2 uses
+  %.idx.i.i.i.i.i.i.i.a = add nsw i64 %i.ac, -1   ; 2 uses
+  %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i.a, 2 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.af, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !204
   %min.iters.check301 = icmp ult i32 %5, 8
   br i1 %min.iters.check301, label %scalar.ph300.preheader, label %vector.ph302
 
@@ -2122,7 +2127,7 @@ scalar.ph300.preheader:                           ; preds = %bb.e, %middle.block
   br label %scalar.ph300
 
 .loopexit:                                        ; preds = %scalar.ph300, %middle.block310
-  %i.aj = getelementptr i8, ptr %i.ae, i64 %i.ad
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 %.idx.i.i.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   store ptr %2, ptr %7, align 8
   %.sroa.2248.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -2143,13 +2148,13 @@ scalar.ph300:                                     ; preds = %scalar.ph300.prehea
 
 bb.f:                                             ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  %i.am = shl nuw nsw i64 %i.ac, 3                ; 4 uses
+  %i.am = shl nuw nsw i64 %i.ac, 3                ; 3 uses
   %i.an = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.am) #34
           to label %.lr.ph274.preheader unwind label %bb.g ; 12 uses
 
 .lr.ph274.preheader:                              ; preds = %bb.f
   %i.ao = getelementptr i8, ptr %i.an, i64 8
-  %.idx.i.i.i.i.i.i.i94 = add nsw i64 %i.am, -8
+  %.idx.i.i.i.i.i.i.i94 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i.a, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.ao, i8 0, i64 %.idx.i.i.i.i.i.i.i94, i1 false), !tbaa !191
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.aq = load ptr, ptr %i.q, align 8, !tbaa !240 ; 5 uses
@@ -2201,7 +2206,6 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.bo
   %i.bq = load double, ptr %i.bp, align 8, !tbaa !191
   %i.br = fmul double %i.bq, 5.000000e-01         ; 4 uses
-  %8 = ptrtoint ptr %i.an to i64
   br label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.preheader, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
@@ -2259,6 +2263,7 @@ bb.g:                                             ; preds = %.loopexit, %bb.f
   br i1 %niter321.ncmp.1, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.preheader.unr-lcssa, label %.lr.ph274, !llvm.loop !792
 
 _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i
+  %8 = ptrtoint ptr %i.an to i64
   %i.cx = ptrtoint ptr %.sroa.011.1.i.i to i64
   %i.cy = sub i64 %i.cx, %8
   %i.cz = ashr exact i64 %i.cy, 3                 ; 2 uses
@@ -2436,13 +2441,14 @@ _ZNKSt8functionIFdPKfiEEclES1_i.exit115:          ; preds = %bb.u
   br label %bb.al
 
 bb.w:                                             ; preds = %bb.t
-  %i.fm = zext nneg i32 %5 to i64                 ; 7 uses
-  %i.fn = shl nuw nsw i64 %i.fm, 2                ; 5 uses
-  %i.fo = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fn) #34 ; 15 uses
+  %i.fm = zext nneg i32 %5 to i64                 ; 8 uses
+  %i.fn = shl nuw nsw i64 %i.fm, 2                ; 3 uses
+  %i.fo = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fn) #34 ; 14 uses
   store i32 0, ptr %i.fo, align 4, !tbaa !204
-  %i.fp = getelementptr i8, ptr %i.fo, i64 4
-  %.idx.i.i.i.i.i.i.i118.a = add nsw i64 %i.fn, -4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.fp, i8 0, i64 %.idx.i.i.i.i.i.i.i118.a, i1 false), !tbaa !204
+  %i.fp = getelementptr i8, ptr %i.fo, i64 4      ; 2 uses
+  %.idx.i.i.i.i.i.i.i118.a = add nsw i64 %i.fm, -1 ; 2 uses
+  %.idx.i.i.i.i.i.i.i118 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i118.a, 2 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.fp, i8 0, i64 %.idx.i.i.i.i.i.i.i118, i1 false), !tbaa !204
   %min.iters.check = icmp ult i32 %5, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -2472,7 +2478,7 @@ scalar.ph.preheader:                              ; preds = %bb.w, %middle.block
   br label %scalar.ph
 
 .loopexit313:                                     ; preds = %scalar.ph, %middle.block
-  %i.ft = getelementptr i8, ptr %i.fo, i64 %i.fn
+  %i.ft = getelementptr inbounds nuw i8, ptr %i.fp, i64 %.idx.i.i.i.i.i.i.i118
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store ptr %2, ptr %6, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -2495,13 +2501,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.x:                                             ; preds = %.loopexit313
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.fw = shl nuw nsw i64 %i.fm, 3                ; 4 uses
+  %i.fw = shl nuw nsw i64 %i.fm, 3                ; 3 uses
   %i.fx = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fw) #34
           to label %.lr.ph.preheader unwind label %bb.y ; 12 uses
 
 .lr.ph.preheader:                                 ; preds = %bb.x
   %i.fy = getelementptr i8, ptr %i.fx, i64 8
-  %.idx.i.i.i.i.i.i.i126 = add nsw i64 %i.fw, -8
+  %.idx.i.i.i.i.i.i.i126 = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i118.a, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.fy, i8 0, i64 %.idx.i.i.i.i.i.i.i126, i1 false), !tbaa !191
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ga = load ptr, ptr %i.r, align 8, !tbaa !240 ; 5 uses
@@ -2560,7 +2566,6 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.fx, i64 %i.hf
   %i.hh = load double, ptr %i.hg, align 8, !tbaa !191
   %i.hi = fmul double %i.hh, 5.000000e-01         ; 4 uses
-  %9 = ptrtoint ptr %i.fx to i64
   br label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i133
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i133: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i133.preheader, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i133
@@ -2624,6 +2629,7 @@ bb.y:                                             ; preds = %.loopexit313, %bb.x
   br i1 %niter.ncmp.1, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i133.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !795
 
 _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit140: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i133
+  %9 = ptrtoint ptr %i.fx to i64
   %i.iu = ptrtoint ptr %.sroa.011.1.i.i138 to i64
   %i.iv = sub i64 %i.iu, %9
   %i.iw = ashr exact i64 %i.iv, 3                 ; 2 uses

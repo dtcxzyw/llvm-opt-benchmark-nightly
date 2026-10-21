@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lua/original/lobject?download=true
-inline.NumInlined: 25
+inline.NumInlined: 28
 inline.NumDeleted: 10
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -8,8 +8,6 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 %struct.BuffFS = type { ptr, ptr, i64, i64, i32, [219 x i8] }
-%struct.TValue = type { %union.Value, i8 }
-%union.Value = type { ptr }
 %struct.__va_list_tag = type { i32, i32, ptr, ptr }
 
 @luaO_ceillog2.log_2 = internal unnamed_addr constant [256 x i8] c"\00\01\02\02\03\03\03\03\04\04\04\04\04\04\04\04\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08", align 16
@@ -412,14 +410,11 @@ declare hidden ptr @luaS_newlstr(ptr noundef, ptr noundef, i64 noundef) local_un
 ; Function Attrs: nounwind uwtable
 define hidden ptr @luaO_pushvfstring(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 5 uses
+  %i.a = alloca [64 x i8], align 16               ; 10 uses
   %i.b = alloca [64 x i8], align 16               ; 5 uses
   %i.c = alloca [64 x i8], align 16               ; 5 uses
   %3 = alloca %struct.BuffFS, align 8             ; 21 uses
   %i.d = alloca i8, align 1                       ; 4 uses
-  %4 = alloca %struct.TValue, align 8             ; 5 uses
-  %5 = alloca %struct.TValue, align 8             ; 5 uses
-  %6 = alloca %struct.TValue, align 8             ; 5 uses
   %i.e = alloca [64 x i8], align 16               ; 5 uses
   %i.f = alloca [8 x i8], align 1                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
@@ -446,9 +441,6 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %addstr2buff.exit45
@@ -761,7 +753,6 @@ addstr2buff.exit53:                               ; preds = %bb.af, %bb.ai, %.th
   br label %addstr2buff.exit45
 
 bb.ar:                                            ; preds = %addstr2buff.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   %i.dp = load i32, ptr %2, align 8               ; 3 uses
   %i.dq = icmp ult i32 %i.dp, 41
   br i1 %i.dq, label %bb.as, label %bb.at
@@ -784,11 +775,9 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   %i.dx = phi ptr [ %i.dt, %bb.as ], [ %i.dv, %bb.at ]
   %i.dy = load i32, ptr %i.dx, align 4, !tbaa !31
   %i.dz = sext i32 %i.dy to i64
-  store i64 %i.dz, ptr %4, align 8, !tbaa !9
-  store i8 3, ptr %9, align 8, !tbaa !11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
-  %10 = call i32 @luaO_tostringbuff(ptr noundef nonnull readonly %4, ptr noundef nonnull %i.c)
-  %i.ea = zext i32 %10 to i64                     ; 5 uses
+  %4 = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 64, ptr noundef nonnull @.str, i64 noundef %i.dz) #16
+  %i.ea = zext i32 %4 to i64                      ; 5 uses
   %i.eb = load i64, ptr %i.i, align 8, !tbaa !26  ; 3 uses
   %i.ec = load i64, ptr %i.j, align 8, !tbaa !27  ; 4 uses
   %i.ed = sub i64 %i.eb, %i.ec                    ; 2 uses
@@ -870,11 +859,9 @@ bb.bf:                                            ; preds = %bb.be, %._crit_edge
 
 addnum2buff.exit:                                 ; preds = %bb.au, %bb.ax, %.thread.i.i, %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   br label %addstr2buff.exit45
 
 bb.bg:                                            ; preds = %addstr2buff.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   %i.fa = load i32, ptr %2, align 8               ; 3 uses
   %i.fb = icmp ult i32 %i.fa, 41
   br i1 %i.fb, label %bb.bh, label %bb.bi
@@ -896,11 +883,9 @@ bb.bi:                                            ; preds = %bb.bg
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
   %i.fi = phi ptr [ %i.fe, %bb.bh ], [ %i.fg, %bb.bi ]
   %i.fj = load i64, ptr %i.fi, align 8, !tbaa !13
-  store i64 %i.fj, ptr %5, align 8, !tbaa !9
-  store i8 3, ptr %8, align 8, !tbaa !11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
-  %11 = call i32 @luaO_tostringbuff(ptr noundef nonnull readonly %5, ptr noundef nonnull %i.b)
-  %i.fk = zext i32 %11 to i64                     ; 5 uses
+  %5 = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.b, i64 noundef 64, ptr noundef nonnull @.str, i64 noundef %i.fj) #16
+  %i.fk = zext i32 %5 to i64                      ; 5 uses
   %i.fl = load i64, ptr %i.i, align 8, !tbaa !26  ; 3 uses
   %i.fm = load i64, ptr %i.j, align 8, !tbaa !27  ; 4 uses
   %i.fn = sub i64 %i.fl, %i.fm                    ; 2 uses
@@ -982,14 +967,12 @@ bb.bu:                                            ; preds = %bb.bt, %._crit_edge
 
 addnum2buff.exit61:                               ; preds = %bb.bj, %bb.bm, %.thread.i.i60, %bb.bu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   br label %addstr2buff.exit45
 
 bb.bv:                                            ; preds = %addstr2buff.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
   %i.gk = load i32, ptr %i.q, align 4             ; 3 uses
   %i.gl = icmp ult i32 %i.gk, 161
-  br i1 %i.gl, label %bb.bw, label %bb.bx
+  br i1 %i.gl, label %bb.bw, label %6
 
 bb.bw:                                            ; preds = %bb.bv
   %i.gm = load ptr, ptr %i.o, align 8
@@ -997,22 +980,50 @@ bb.bw:                                            ; preds = %bb.bv
   %i.go = getelementptr i8, ptr %i.gm, i64 %i.gn
   %i.gp = add nuw nsw i32 %i.gk, 16
   store i32 %i.gp, ptr %i.q, align 4
-  br label %bb.by
+  br label %9
 
-bb.bx:                                            ; preds = %bb.bv
-  %i.gq = load ptr, ptr %i.n, align 8             ; 2 uses
-  %i.gr = getelementptr i8, ptr %i.gq, i64 8
-  store ptr %i.gr, ptr %i.n, align 8
-  br label %bb.by
+6:                                                ; preds = %bb.bv
+  %7 = load ptr, ptr %i.n, align 8                ; 2 uses
+  %8 = getelementptr i8, ptr %7, i64 8
+  store ptr %8, ptr %i.n, align 8
+  br label %9
 
-bb.by:                                            ; preds = %bb.bx, %bb.bw
-  %12 = phi ptr [ %i.go, %bb.bw ], [ %i.gq, %bb.bx ]
-  %13 = load double, ptr %12, align 8, !tbaa !33
-  store double %13, ptr %6, align 8, !tbaa !9
-  store i8 19, ptr %7, align 8, !tbaa !11
+9:                                                ; preds = %bb.bw, %6
+  %10 = phi ptr [ %i.go, %bb.bw ], [ %7, %6 ]
+  %11 = load double, ptr %10, align 8, !tbaa !33  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  %14 = call i32 @luaO_tostringbuff(ptr noundef nonnull readonly %6, ptr noundef nonnull %i.a)
-  %i.gs = zext i32 %14 to i64                     ; 5 uses
+  %12 = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 64, ptr noundef nonnull @.str.8, double noundef %11) #16
+  %13 = call double @strtod(ptr noundef nonnull captures(none) %i.a, ptr noundef null) #16
+  %14 = fcmp une double %13, %11
+  br i1 %14, label %15, label %17
+
+15:                                               ; preds = %9
+  %16 = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 64, ptr noundef nonnull @.str.9, double noundef %11) #16
+  br label %17
+
+17:                                               ; preds = %15, %9
+  %.0.i.i116 = phi i32 [ %16, %15 ], [ %12, %9 ]  ; 3 uses
+  %18 = call i64 @strspn(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.10) #17
+  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 %18
+  %20 = load i8, ptr %19, align 1, !tbaa !9
+  %21 = icmp eq i8 %20, 0
+  br i1 %21, label %bb.bx, label %bb.by
+
+bb.bx:                                            ; preds = %17
+  %22 = call ptr @localeconv() #16
+  %i.gq = load ptr, ptr %22, align 8, !tbaa !18
+  %23 = load i8, ptr %i.gq, align 1, !tbaa !9
+  %24 = sext i32 %.0.i.i116 to i64
+  %25 = getelementptr inbounds i8, ptr %i.a, i64 %24 ; 2 uses
+  store i8 %23, ptr %25, align 1, !tbaa !9
+  %26 = add nsw i32 %.0.i.i116, 2
+  %i.gr = getelementptr i8, ptr %25, i64 1
+  store i8 48, ptr %i.gr, align 1, !tbaa !9
+  br label %bb.by
+
+bb.by:                                            ; preds = %17, %bb.bx
+  %.0.i117 = phi i32 [ %.0.i.i116, %17 ], [ %26, %bb.bx ]
+  %i.gs = zext i32 %.0.i117 to i64                ; 5 uses
   %i.gt = load i64, ptr %i.i, align 8, !tbaa !26  ; 3 uses
   %i.gu = load i64, ptr %i.j, align 8, !tbaa !27  ; 4 uses
   %i.gv = sub i64 %i.gt, %i.gu                    ; 2 uses
@@ -1094,7 +1105,6 @@ bb.cj:                                            ; preds = %bb.ci, %._crit_edge
 
 addnum2buff.exit69:                               ; preds = %bb.by, %bb.cb, %.thread.i.i68, %bb.cj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
   br label %addstr2buff.exit45
 
 bb.ck:                                            ; preds = %addstr2buff.exit

@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %_ZNSt3__16vectorIN3
   br label %_ZNSt3__16vectorIN3jxl14CompressParamsENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2_.exit61
 
 _ZNSt3__16vectorIN3jxl14CompressParamsENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2_.exit61: ; preds = %bb.h, %bb.i
-  %.0.i60 = phi ptr [ %i.ao, %bb.h ], [ %i.ap, %bb.i ] ; 3 uses
+  %.0.i60 = phi ptr [ %i.ao, %bb.h ], [ %i.ap, %bb.i ] ; 5 uses
   store ptr %.0.i60, ptr %i.af, align 8, !tbaa !105
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, i8 0, i64 24, i1 false)
@@ -222,15 +222,11 @@ bb.j:                                             ; preds = %_ZNSt3__16vectorIN3
   call void @_ZNSt3__16vectorImNS_9allocatorImEEE8__appendEm(ptr noundef nonnull align 8 dereferenceable(24) %16, i64 noundef %i.av) #29
   %.pre = load ptr, ptr %i.af, align 8, !tbaa !105
   %.pre146 = load ptr, ptr %14, align 8, !tbaa !125
-  %.pre151 = ptrtoint ptr %.pre to i64
-  %.pre152 = ptrtoint ptr %.pre146 to i64
-  %.pre154 = sub i64 %.pre151, %.pre152
-  %.pre156 = sdiv exact i64 %.pre154, 648
-  %22 = trunc i64 %.pre156 to i32
   br label %_ZNSt3__16vectorImNS_9allocatorImEEE6resizeEm.exit
 
 _ZNSt3__16vectorImNS_9allocatorImEEE6resizeEm.exit: ; preds = %_ZNSt3__16vectorIN3jxl14CompressParamsENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2_.exit61, %bb.j
-  %.pre-phi157 = phi i32 [ %22, %bb.j ], [ 0, %_ZNSt3__16vectorIN3jxl14CompressParamsENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2_.exit61 ] ; 2 uses
+  %22 = phi ptr [ %.0.i60, %_ZNSt3__16vectorIN3jxl14CompressParamsENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2_.exit61 ], [ %.pre146, %bb.j ]
+  %23 = phi ptr [ %.0.i60, %_ZNSt3__16vectorIN3jxl14CompressParamsENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2_.exit61 ], [ %.pre, %bb.j ]
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #28
   store ptr %i.a, ptr %17, align 8, !tbaa !128
   %i.aw = getelementptr inbounds nuw i8, ptr %17, i64 8
@@ -247,6 +243,11 @@ _ZNSt3__16vectorImNS_9allocatorImEEE6resizeEm.exit: ; preds = %_ZNSt3__16vectorI
   store ptr %i.c, ptr %i.bb, align 8, !tbaa !135
   %i.bc = getelementptr inbounds nuw i8, ptr %17, i64 56
   store ptr %16, ptr %i.bc, align 8, !tbaa !137
+  %24 = ptrtoint ptr %23 to i64
+  %25 = ptrtoint ptr %22 to i64
+  %26 = sub i64 %24, %25
+  %27 = sdiv exact i64 %26, 648
+  %28 = trunc i64 %27 to i32                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #28
   %i.bd = icmp eq ptr %6, null                    ; 2 uses
   br i1 %i.bd, label %bb.k, label %bb.l
@@ -256,12 +257,12 @@ bb.k:                                             ; preds = %_ZNSt3__16vectorImN
   store ptr null, ptr %10, align 8, !tbaa !139
   %i.be = getelementptr inbounds nuw i8, ptr %10, i64 8
   store ptr %10, ptr %i.be, align 8, !tbaa !140
-  %i.bf = call fastcc i32 @"_ZN3jxl10ThreadPool3RunIZNS_9RunOnPoolIZNS_11EncodeFrameEP22JxlMemoryManagerStructRKNS_14CompressParamsERKNS_9FrameInfoEPKNS_13CodecMetadataERNS_29JxlEncoderChunkedFrameAdapterERK15JxlCmsInterfacePS0_P32JxlEncoderOutputProcessorWrapperPNS_6AuxOutEE3$_0EENS_6StatusESJ_jjRKNS_16ThreadPoolNoInitERKT_PKcEUlmE_SO_EESP_jjSV_RKT0_SX_"(ptr noundef nonnull align 8 dereferenceable(16) %10, i32 noundef %.pre-phi157, ptr noundef nonnull align 1 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(64) %17) #29
+  %i.bf = call fastcc i32 @"_ZN3jxl10ThreadPool3RunIZNS_9RunOnPoolIZNS_11EncodeFrameEP22JxlMemoryManagerStructRKNS_14CompressParamsERKNS_9FrameInfoEPKNS_13CodecMetadataERNS_29JxlEncoderChunkedFrameAdapterERK15JxlCmsInterfacePS0_P32JxlEncoderOutputProcessorWrapperPNS_6AuxOutEE3$_0EENS_6StatusESJ_jjRKNS_16ThreadPoolNoInitERKT_PKcEUlmE_SO_EESP_jjSV_RKT0_SX_"(ptr noundef nonnull align 8 dereferenceable(16) %10, i32 noundef %28, ptr noundef nonnull align 1 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(64) %17) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #28
   br label %"_ZN3jxl9RunOnPoolIZNS_9RunOnPoolIZNS_11EncodeFrameEP22JxlMemoryManagerStructRKNS_14CompressParamsERKNS_9FrameInfoEPKNS_13CodecMetadataERNS_29JxlEncoderChunkedFrameAdapterERK15JxlCmsInterfacePNS_10ThreadPoolEP32JxlEncoderOutputProcessorWrapperPNS_6AuxOutEE3$_0EENS_6StatusESJ_jjRKNS_16ThreadPoolNoInitERKT_PKcEUlmE_SO_EESP_SJ_jjSV_RKT0_SX_.exit"
 
 bb.l:                                             ; preds = %_ZNSt3__16vectorImNS_9allocatorImEEE6resizeEm.exit
-  %i.bg = call fastcc i32 @"_ZN3jxl10ThreadPool3RunIZNS_9RunOnPoolIZNS_11EncodeFrameEP22JxlMemoryManagerStructRKNS_14CompressParamsERKNS_9FrameInfoEPKNS_13CodecMetadataERNS_29JxlEncoderChunkedFrameAdapterERK15JxlCmsInterfacePS0_P32JxlEncoderOutputProcessorWrapperPNS_6AuxOutEE3$_0EENS_6StatusESJ_jjRKNS_16ThreadPoolNoInitERKT_PKcEUlmE_SO_EESP_jjSV_RKT0_SX_"(ptr noundef nonnull align 8 dereferenceable(16) %6, i32 noundef %.pre-phi157, ptr noundef nonnull align 1 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(64) %17) #29
+  %i.bg = call fastcc i32 @"_ZN3jxl10ThreadPool3RunIZNS_9RunOnPoolIZNS_11EncodeFrameEP22JxlMemoryManagerStructRKNS_14CompressParamsERKNS_9FrameInfoEPKNS_13CodecMetadataERNS_29JxlEncoderChunkedFrameAdapterERK15JxlCmsInterfacePS0_P32JxlEncoderOutputProcessorWrapperPNS_6AuxOutEE3$_0EENS_6StatusESJ_jjRKNS_16ThreadPoolNoInitERKT_PKcEUlmE_SO_EESP_jjSV_RKT0_SX_"(ptr noundef nonnull align 8 dereferenceable(16) %6, i32 noundef %28, ptr noundef nonnull align 1 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(64) %17) #29
   br label %"_ZN3jxl9RunOnPoolIZNS_9RunOnPoolIZNS_11EncodeFrameEP22JxlMemoryManagerStructRKNS_14CompressParamsERKNS_9FrameInfoEPKNS_13CodecMetadataERNS_29JxlEncoderChunkedFrameAdapterERK15JxlCmsInterfacePNS_10ThreadPoolEP32JxlEncoderOutputProcessorWrapperPNS_6AuxOutEE3$_0EENS_6StatusESJ_jjRKNS_16ThreadPoolNoInitERKT_PKcEUlmE_SO_EESP_SJ_jjSV_RKT0_SX_.exit"
 
 "_ZN3jxl9RunOnPoolIZNS_9RunOnPoolIZNS_11EncodeFrameEP22JxlMemoryManagerStructRKNS_14CompressParamsERKNS_9FrameInfoEPKNS_13CodecMetadataERNS_29JxlEncoderChunkedFrameAdapterERK15JxlCmsInterfacePNS_10ThreadPoolEP32JxlEncoderOutputProcessorWrapperPNS_6AuxOutEE3$_0EENS_6StatusESJ_jjRKNS_16ThreadPoolNoInitERKT_PKcEUlmE_SO_EESP_SJ_jjSV_RKT0_SX_.exit": ; preds = %bb.k, %bb.l
@@ -664,7 +665,7 @@ bb.bs:                                            ; preds = %.loopexit
   br label %_ZNK3jxl19ProgressiveSplitter10InitPassesEPNS_6PassesE.exit
 
 _ZNK3jxl19ProgressiveSplitter10InitPassesEPNS_6PassesE.exit: ; preds = %.loopexit, %bb.bs, %bb.bl, %bb.ba, %bb.az, %bb.ax, %bb.ay, %_ZN3jxl12_GLOBAL__N_120LoopFilterFromParamsERKNS_14CompressParamsEbPNS_11FrameHeaderE.exit, %bb.ab, %bb.ac, %bb.y, %bb.z, %bb.w, %bb.v, %bb.a
-  %.sroa.0222.0 = phi i32 [ 1, %bb.ac ], [ 1, %bb.bl ], [ 1, %bb.ba ], [ 1, %bb.az ], [ 1, %bb.ax ], [ 1, %_ZN3jxl12_GLOBAL__N_120LoopFilterFromParamsERKNS_14CompressParamsEbPNS_11FrameHeaderE.exit ], [ 1, %bb.ab ], [ 1, %bb.y ], [ %i.cg, %bb.w ], [ %i.cd, %bb.v ], [ 1, %bb.a ], [ 1, %bb.z ], [ 1, %bb.ay ], [ 0, %bb.bs ], [ 0, %.loopexit ]
+  %.sroa.0222.0 = phi i32 [ 1, %bb.ab ], [ 1, %bb.bl ], [ 1, %bb.ba ], [ 1, %bb.az ], [ 1, %bb.ax ], [ 1, %_ZN3jxl12_GLOBAL__N_120LoopFilterFromParamsERKNS_14CompressParamsEbPNS_11FrameHeaderE.exit ], [ 1, %bb.y ], [ %i.cg, %bb.w ], [ %i.cd, %bb.v ], [ 1, %bb.a ], [ 0, %.loopexit ], [ 1, %bb.z ], [ 1, %bb.ac ], [ 1, %bb.ay ], [ 0, %bb.bs ]
   ret i32 %.sroa.0222.0
 }
 

@@ -161,19 +161,19 @@ bb.e:                                             ; preds = %.loopexit208
   br label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.lr.ph, %scan.exit
-  %i.cb = phi i64 [ %i.ca, %.lr.ph.i.preheader.lr.ph ], [ %7, %scan.exit ]
-  %.sroa.113.0350 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.113.2, %scan.exit ] ; 22 uses
-  %.sroa.111.0348 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.111.2, %scan.exit ] ; 22 uses
-  %.sroa.109.0342 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.109.1, %scan.exit ] ; 6 uses
-  %.sroa.107.0340 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.107.1, %scan.exit ] ; 21 uses
-  %.sroa.103.0339 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.103.1, %scan.exit ] ; 19 uses
-  %.sroa.100.0337 = phi i32 [ 1, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.100.1, %scan.exit ] ; 21 uses
+  %i.cb = phi i64 [ %i.ca, %.lr.ph.i.preheader.lr.ph ], [ %.pre-phi, %scan.exit ]
+  %.sroa.113.0350 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.109.2, %scan.exit ] ; 20 uses
+  %.sroa.111.0348 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.107.2, %scan.exit ] ; 20 uses
+  %.sroa.109.0342 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.105.1, %scan.exit ] ; 4 uses
+  %.sroa.107.0340 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.103.1, %scan.exit ] ; 19 uses
+  %.sroa.103.0339 = phi i32 [ 0, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.99.1, %scan.exit ] ; 19 uses
+  %.sroa.100.0337 = phi i32 [ 1, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.96.1, %scan.exit ] ; 19 uses
   %.sroa.21.0335 = phi ptr [ %i.av, %.lr.ph.i.preheader.lr.ph ], [ %.sroa.21.1, %scan.exit ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.fs
   %.sroa.33.0 = phi ptr [ %.28.i, %bb.fs ], [ %.sroa.21.0335, %.lr.ph.i.preheader ] ; 72 uses
-  %i.cc = phi i64 [ %i.ui, %bb.fs ], [ %i.cb, %.lr.ph.i.preheader ] ; 2 uses
+  %i.cc = phi i64 [ %i.ui, %bb.fs ], [ %i.cb, %.lr.ph.i.preheader ] ; 3 uses
   %i.cd = load i8, ptr %.sroa.33.0, align 1, !tbaa !15 ; 11 uses
   %i.ce = icmp ult i8 %i.cd, 45
   br i1 %i.ce, label %bb.f, label %bb.k
@@ -288,11 +288,11 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.dt, label %bb.at, label %.thread577.i
 
 .thread577.i:                                     ; preds = %bb.dl, %bb.ci, %bb.ce, %.lr.ph800, %bb.bn, %bb.cx, %.lr.ph836, %bb.fq, %bb.fp, %bb.fo, %bb.fn, %bb.fk, %bb.fh, %bb.fe, %bb.fd, %bb.fa, %bb.ey, %bb.eu, %bb.ep, %bb.eo, %bb.ek, %bb.ei, %bb.eb, %bb.dv, %bb.du, %bb.dp, %bb.do, %bb.dn, %bb.dj, %bb.dh, %bb.da, %bb.cy, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.ck, %bb.ch, %bb.cf, %bb.cd, %bb.cc, %bb.ca, %bb.bz, %bb.bs, %bb.br, %bb.bp, %bb.bm, %bb.bk, %bb.bj, %bb.bh, %bb.bg, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.az, %bb.ay, %bb.at, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.v, %bb.t
-  %.2.i = phi ptr [ %i.dp, %bb.ao ], [ %i.dp, %bb.t ], [ %i.lq, %bb.cq ], [ %i.lm, %bb.cp ], [ %i.le, %bb.co ], [ %i.gw, %bb.at ], [ %i.hz, %bb.bd ], [ %i.ic, %bb.be ], [ %i.il, %bb.bh ], [ %i.il, %bb.bj ], [ %i.ic, %bb.bg ], [ %i.iu, %bb.bk ], [ %i.iu, %bb.bm ], [ %i.dp, %bb.v ], [ %i.dp, %bb.cc ], [ %i.dp, %bb.bb ], [ %i.dp, %bb.ar ], [ %i.dp, %bb.fq ], [ %i.dp, %bb.fp ], [ %i.dp, %bb.fo ], [ %i.dp, %bb.fn ], [ %i.dp, %bb.fk ], [ %i.dp, %bb.fh ], [ %i.dp, %bb.fe ], [ %i.dp, %bb.fd ], [ %i.dp, %bb.fa ], [ %i.dp, %bb.ey ], [ %i.dp, %bb.eu ], [ %i.dp, %bb.ep ], [ %i.dp, %bb.eo ], [ %i.dp, %bb.ek ], [ %i.dp, %bb.ei ], [ %i.dp, %bb.eb ], [ %i.dp, %bb.dv ], [ %i.dp, %bb.du ], [ %i.dp, %bb.dj ], [ %i.dp, %bb.dh ], [ %i.dp, %bb.cd ], [ %i.dp, %bb.ca ], [ %i.dp, %bb.bz ], [ %i.dp, %bb.bc ], [ %i.dp, %bb.az ], [ %i.dp, %bb.ay ], [ %i.dp, %bb.as ], [ %i.dp, %bb.ap ], [ %i.iu, %bb.ci ], [ %i.ic, %bb.ce ], [ %i.il, %.lr.ph800 ], [ %i.gw, %bb.bn ], [ %i.le, %bb.cx ], [ %i.lm, %.lr.ph836 ], [ %i.gw, %bb.bp ], [ %i.dp, %bb.do ], [ %i.le, %bb.cy ], [ %i.ic, %bb.cf ], [ %i.dp, %bb.dp ], [ %i.dp, %bb.dn ], [ %i.lm, %bb.da ], [ %i.iu, %bb.cn ], [ %i.iu, %bb.cm ], [ %i.iu, %bb.ck ], [ %i.il, %bb.ch ], [ %i.gw, %bb.bs ], [ %i.gw, %bb.br ], [ %i.dp, %bb.dl ] ; 4 uses
-  %i.du = ptrtoint ptr %.2.i to i64               ; 2 uses
+  %.2.i = phi ptr [ %i.dp, %bb.ao ], [ %i.dp, %bb.t ], [ %i.lq, %bb.cq ], [ %i.lm, %bb.cp ], [ %i.le, %bb.co ], [ %i.gw, %bb.at ], [ %i.hz, %bb.bd ], [ %i.ic, %bb.be ], [ %i.il, %bb.bh ], [ %i.il, %bb.bj ], [ %i.ic, %bb.bg ], [ %i.iu, %bb.bk ], [ %i.iu, %bb.bm ], [ %i.dp, %bb.v ], [ %i.dp, %bb.cc ], [ %i.dp, %bb.bb ], [ %i.dp, %bb.ar ], [ %i.dp, %bb.fq ], [ %i.dp, %bb.fp ], [ %i.dp, %bb.fo ], [ %i.dp, %bb.fn ], [ %i.dp, %bb.fk ], [ %i.dp, %bb.fh ], [ %i.dp, %bb.fe ], [ %i.dp, %bb.fd ], [ %i.dp, %bb.fa ], [ %i.dp, %bb.ey ], [ %i.dp, %bb.eu ], [ %i.dp, %bb.ep ], [ %i.dp, %bb.eo ], [ %i.dp, %bb.ek ], [ %i.dp, %bb.ei ], [ %i.dp, %bb.eb ], [ %i.dp, %bb.dv ], [ %i.dp, %bb.du ], [ %i.dp, %bb.dj ], [ %i.dp, %bb.dh ], [ %i.dp, %bb.cd ], [ %i.dp, %bb.ca ], [ %i.dp, %bb.bz ], [ %i.dp, %bb.bc ], [ %i.dp, %bb.az ], [ %i.dp, %bb.ay ], [ %i.dp, %bb.as ], [ %i.dp, %bb.ap ], [ %i.iu, %bb.ci ], [ %i.ic, %bb.ce ], [ %i.il, %.lr.ph800 ], [ %i.gw, %bb.bn ], [ %i.le, %bb.cx ], [ %i.lm, %.lr.ph836 ], [ %i.gw, %bb.bp ], [ %i.dp, %bb.do ], [ %i.le, %bb.cy ], [ %i.ic, %bb.cf ], [ %i.dp, %bb.dp ], [ %i.dp, %bb.dn ], [ %i.lm, %bb.da ], [ %i.iu, %bb.cn ], [ %i.iu, %bb.cm ], [ %i.iu, %bb.ck ], [ %i.il, %bb.ch ], [ %i.gw, %bb.bs ], [ %i.gw, %bb.br ], [ %i.dp, %bb.dl ] ; 2 uses
+  %i.du = ptrtoint ptr %.2.i to i64               ; 3 uses
   %reass.sub356 = sub i64 %i.du, %i.cc
   %i.dv = add i64 %reass.sub356, 1
-  %i.dw = tail call noalias ptr @_ecalloc(i64 noundef 1, i64 noundef %i.dv) #13 ; 6 uses
+  %i.dw = tail call noalias ptr @_ecalloc(i64 noundef 1, i64 noundef %i.dv) #13 ; 4 uses
   %i.dx = ptrtoint ptr %.sroa.33.0 to i64         ; 2 uses
   %i.dy = sub i64 %i.du, %i.dx
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dw, ptr nonnull align 1 %.sroa.33.0, i64 %i.dy, i1 false)
@@ -348,7 +348,7 @@ add_error.exit572.i:                              ; preds = %bb.y
   %i.fa = getelementptr inbounds [24 x i8], ptr %i.ew, i64 %i.ez
   %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 16
   store ptr %i.ev, ptr %i.fb, align 8, !tbaa !34
-  br label %scan.exit
+  br label %.critedge.i
 
 bb.z:                                             ; preds = %bb.y
   %i.fc = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 12) ; 7 uses
@@ -433,12 +433,16 @@ bb.ai:                                            ; preds = %add_error.exit575.i
   store ptr %i.ge, ptr %i.a, align 8, !tbaa !18
   %i.gf = load i32, ptr %i.e, align 8, !tbaa !29
   %.not567.i = icmp eq i32 %i.gf, 0
-  br i1 %.not567.i, label %bb.aj, label %scan.exit
+  br i1 %.not567.i, label %bb.aj, label %.critedge.i
 
 bb.aj:                                            ; preds = %bb.ai
   %i.gg = load i8, ptr %i.ge, align 1, !tbaa !15  ; 2 uses
   %.not568.i = icmp eq i8 %i.gg, 0
-  br i1 %.not568.i, label %scan.exit, label %bb.w, !llvm.loop !21
+  br i1 %.not568.i, label %.critedge.i, label %bb.w, !llvm.loop !21
+
+.critedge.i:                                      ; preds = %bb.aj, %bb.ai, %add_error.exit572.i
+  tail call void @_efree(ptr noundef %i.dw) #9
+  br label %scan.exit
 
 bb.ak:                                            ; preds = %bb.o
   %i.gh = getelementptr inbounds nuw i8, ptr %.sroa.33.0, i64 1 ; 2 uses
@@ -519,7 +523,7 @@ bb.at:                                            ; preds = %bb.bm, %bb.bj, %bb.
   br i1 %.not552.i, label %bb.au, label %.preheader603.i
 
 bb.au:                                            ; preds = %.lr.ph
-  %i.hh = ptrtoint ptr %i.he to i64               ; 2 uses
+  %i.hh = ptrtoint ptr %i.he to i64               ; 3 uses
   %reass.sub = sub i64 %i.hh, %i.cc
   %i.hi = add i64 %reass.sub, 1
   %i.hj = tail call noalias ptr @_ecalloc(i64 noundef 1, i64 noundef %i.hi) #13 ; 3 uses
@@ -530,6 +534,7 @@ bb.au:                                            ; preds = %.lr.ph
   store ptr %i.hm, ptr %i.a, align 8, !tbaa !18
   %i.hn = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 9)
   %i.ho = trunc i64 %i.hn to i32
+  tail call void @_efree(ptr noundef nonnull %i.hj) #9
   br label %scan.exit
 
 bb.av:                                            ; preds = %bb.al
@@ -932,7 +937,7 @@ bb.fb:                                            ; preds = %bb.ew, %bb.ev
   br i1 %i.rj, label %bb.ff, label %.thread.i112
 
 bb.fc:                                            ; preds = %bb.fl, %bb.ex
-  %i.rk = phi i64 [ 16, %bb.fl ], [ 12, %bb.ex ]  ; 3 uses
+  %i.rk = phi i64 [ 16, %bb.fl ], [ 12, %bb.ex ]  ; 2 uses
   %i.rl = getelementptr inbounds nuw i8, ptr %.sroa.33.0, i64 %i.rk ; 4 uses
   %i.rm = getelementptr inbounds nuw i8, ptr %i.rl, i64 1
   %i.rn = load i8, ptr %i.rm, align 1, !tbaa !15
@@ -1001,14 +1006,16 @@ bb.fl:                                            ; preds = %bb.fi
   br i1 %i.sp, label %bb.fc, label %.thread.i112
 
 bb.fm:                                            ; preds = %bb.fj
-  %i.sq = getelementptr inbounds nuw i8, ptr %i.rl, i64 4
+  %i.sq = getelementptr inbounds nuw i8, ptr %i.rl, i64 4 ; 2 uses
   %.not564.i = icmp eq i32 %.sroa.109.0342, 0
   %.not565.i = icmp eq i32 %.sroa.103.0339, 0
   %or.cond = select i1 %.not564.i, i1 %.not565.i, i1 false ; 3 uses
   %.sroa.111.1 = select i1 %or.cond, i32 1, i32 %.sroa.111.0348
   %.sroa.113.1 = select i1 %or.cond, i32 %.sroa.113.0350, i32 1
   %.0.i = select i1 %or.cond, ptr %i.ay, ptr %i.bg ; 6 uses
-  %i.sr = add nuw nsw i64 %i.rk, 5
+  %7 = ptrtoint ptr %i.sq to i64                  ; 2 uses
+  %reass.sub354 = sub i64 %7, %i.cc
+  %i.sr = add i64 %reass.sub354, 1
   %i.ss = tail call noalias ptr @_ecalloc(i64 noundef 1, i64 noundef %i.sr) #13 ; 3 uses
   %i.st = add nuw nsw i64 %i.rk, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ss, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.33.0, i64 %i.st, i1 false)
@@ -1030,6 +1037,7 @@ bb.fm:                                            ; preds = %bb.fj
   %i.td = call fastcc i64 @timelib_get_nr(ptr noundef %i.a, i32 noundef 2)
   %i.te = getelementptr inbounds nuw i8, ptr %.0.i, i64 40
   store i64 %i.td, ptr %i.te, align 8, !tbaa !44
+  tail call void @_efree(ptr noundef nonnull %i.ss) #9
   br label %scan.exit
 
 bb.fn:                                            ; preds = %bb.fk
@@ -1060,7 +1068,7 @@ bb.fq:                                            ; preds = %bb.fp
   br i1 %or.cond116.i, label %.thread577.i, label %bb.fr
 
 bb.fr:                                            ; preds = %bb.fq
-  %i.tq = getelementptr inbounds nuw i8, ptr %.sroa.33.0, i64 20
+  %i.tq = getelementptr inbounds nuw i8, ptr %.sroa.33.0, i64 20 ; 2 uses
   %i.tr = tail call noalias dereferenceable_or_null(21) ptr @_ecalloc(i64 noundef 1, i64 noundef 21) #13 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.tr, ptr noundef nonnull align 1 dereferenceable(20) %.sroa.33.0, i64 20, i1 false)
   store ptr %i.tr, ptr %i.a, align 8, !tbaa !18
@@ -1091,6 +1099,8 @@ bb.fr:                                            ; preds = %bb.fq
   store ptr %i.ug, ptr %i.a, align 8, !tbaa !18
   %i.uh = call fastcc i64 @timelib_get_unsigned_nr(ptr noundef %i.a, i32 noundef 2)
   store i64 %i.uh, ptr %i.bt, align 8, !tbaa !57
+  tail call void @_efree(ptr noundef nonnull %i.tr) #9
+  %.pre = ptrtoint ptr %i.tq to i64
   br label %scan.exit
 
 bb.fs:                                            ; preds = %bb.r, %.thread.i112, %bb.p
@@ -1100,30 +1110,28 @@ bb.fs:                                            ; preds = %bb.r, %.thread.i112
   %i.uk = icmp slt i64 %i.uj, 20
   br i1 %i.uk, label %.loopexit, label %.lr.ph.i
 
-scan.exit:                                        ; preds = %bb.ai, %bb.aj, %add_error.exit572.i, %bb.au, %bb.fm, %bb.fr
-  %.sink = phi ptr [ %i.tr, %bb.fr ], [ %i.hj, %bb.au ], [ %i.ss, %bb.fm ], [ %i.dw, %add_error.exit572.i ], [ %i.dw, %bb.aj ], [ %i.dw, %bb.ai ]
-  %.sroa.21.1 = phi ptr [ %i.tq, %bb.fr ], [ %i.he, %bb.au ], [ %i.sq, %bb.fm ], [ %.2.i, %add_error.exit572.i ], [ %.2.i, %bb.aj ], [ %.2.i, %bb.ai ] ; 2 uses
-  %.sroa.100.1 = phi i32 [ %.sroa.100.0337, %bb.fr ], [ %i.ho, %bb.au ], [ %.sroa.100.0337, %bb.fm ], [ %.sroa.100.0337, %add_error.exit572.i ], [ %.sroa.100.0337, %bb.aj ], [ %.sroa.100.0337, %bb.ai ] ; 2 uses
-  %.sroa.103.1 = phi i32 [ 1, %bb.fr ], [ %.sroa.103.0339, %bb.au ], [ %.sroa.103.0339, %bb.fm ], [ 1, %add_error.exit572.i ], [ 1, %bb.aj ], [ 1, %bb.ai ] ; 2 uses
-  %.sroa.107.1 = phi i32 [ %.sroa.107.0340, %bb.fr ], [ 1, %bb.au ], [ %.sroa.107.0340, %bb.fm ], [ %.sroa.107.0340, %add_error.exit572.i ], [ %.sroa.107.0340, %bb.aj ], [ %.sroa.107.0340, %bb.ai ] ; 2 uses
-  %.sroa.109.1 = phi i32 [ %.sroa.109.0342, %bb.fr ], [ %.sroa.109.0342, %bb.au ], [ 1, %bb.fm ], [ %.sroa.109.0342, %add_error.exit572.i ], [ %.sroa.109.0342, %bb.aj ], [ %.sroa.109.0342, %bb.ai ]
-  %.sroa.111.2 = phi i32 [ %.sroa.111.0348, %bb.fr ], [ %.sroa.111.0348, %bb.au ], [ %.sroa.111.1, %bb.fm ], [ %.sroa.111.0348, %add_error.exit572.i ], [ %.sroa.111.0348, %bb.aj ], [ %.sroa.111.0348, %bb.ai ] ; 2 uses
-  %.sroa.113.2 = phi i32 [ %.sroa.113.0350, %bb.fr ], [ %.sroa.113.0350, %bb.au ], [ %.sroa.113.1, %bb.fm ], [ %.sroa.113.0350, %add_error.exit572.i ], [ %.sroa.113.0350, %bb.aj ], [ %.sroa.113.0350, %bb.ai ] ; 2 uses
-  tail call void @_efree(ptr noundef %.sink) #9
+scan.exit:                                        ; preds = %.critedge.i, %bb.au, %bb.fm, %bb.fr
+  %.pre-phi = phi i64 [ %i.du, %.critedge.i ], [ %i.hh, %bb.au ], [ %7, %bb.fm ], [ %.pre, %bb.fr ] ; 2 uses
+  %.sroa.21.1 = phi ptr [ %.2.i, %.critedge.i ], [ %i.he, %bb.au ], [ %i.sq, %bb.fm ], [ %i.tq, %bb.fr ]
+  %.sroa.96.1 = phi i32 [ %.sroa.100.0337, %.critedge.i ], [ %i.ho, %bb.au ], [ %.sroa.100.0337, %bb.fm ], [ %.sroa.100.0337, %bb.fr ] ; 2 uses
+  %.sroa.99.1 = phi i32 [ 1, %.critedge.i ], [ %.sroa.103.0339, %bb.au ], [ %.sroa.103.0339, %bb.fm ], [ 1, %bb.fr ] ; 2 uses
+  %.sroa.103.1 = phi i32 [ %.sroa.107.0340, %.critedge.i ], [ 1, %bb.au ], [ %.sroa.107.0340, %bb.fm ], [ %.sroa.107.0340, %bb.fr ] ; 2 uses
+  %.sroa.105.1 = phi i32 [ %.sroa.109.0342, %.critedge.i ], [ %.sroa.109.0342, %bb.au ], [ 1, %bb.fm ], [ %.sroa.109.0342, %bb.fr ]
+  %.sroa.107.2 = phi i32 [ %.sroa.111.0348, %.critedge.i ], [ %.sroa.111.0348, %bb.au ], [ %.sroa.111.1, %bb.fm ], [ %.sroa.111.0348, %bb.fr ] ; 2 uses
+  %.sroa.109.2 = phi i32 [ %.sroa.113.0350, %.critedge.i ], [ %.sroa.113.0350, %bb.au ], [ %.sroa.113.1, %bb.fm ], [ %.sroa.113.0350, %bb.fr ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store ptr null, ptr %i.a, align 8, !tbaa !18
-  %7 = ptrtoint ptr %.sroa.21.1 to i64            ; 2 uses
-  %i.ul = sub i64 %i.by, %7
+  %i.ul = sub i64 %i.by, %.pre-phi
   %i.um = icmp slt i64 %i.ul, 20
   br i1 %i.um, label %.loopexit, label %.lr.ph.i.preheader, !llvm.loop !22
 
 .loopexit:                                        ; preds = %scan.exit, %.preheader603.i.preheader, %.preheader597.i.preheader, %.preheader594.i.preheader, %.preheader591.i.preheader, %.preheader588.i.preheader, %.preheader585.i.preheader, %.preheader.i.preheader, %bb.fs, %.preheader603.i, %bb.dm, %.preheader597.i, %.preheader594.i, %.preheader591.i, %.preheader588.i, %.preheader585.i, %.preheader.i, %bb.e
-  %.sroa.100.0330 = phi i32 [ %.sroa.100.0337, %.preheader603.i ], [ %.sroa.100.0337, %bb.fs ], [ %.sroa.100.0337, %.preheader.i ], [ %.sroa.100.0337, %bb.dm ], [ %.sroa.100.0337, %.preheader585.i ], [ %.sroa.100.0337, %.preheader594.i ], [ %.sroa.100.0337, %.preheader588.i ], [ %.sroa.100.0337, %.preheader591.i ], [ %.sroa.100.0337, %.preheader597.i ], [ 1, %bb.e ], [ %.sroa.100.1, %scan.exit ], [ %.sroa.100.0337, %.preheader591.i.preheader ], [ %.sroa.100.0337, %.preheader594.i.preheader ], [ %.sroa.100.0337, %.preheader597.i.preheader ], [ %.sroa.100.0337, %.preheader603.i.preheader ], [ %.sroa.100.0337, %.preheader.i.preheader ], [ %.sroa.100.0337, %.preheader585.i.preheader ], [ %.sroa.100.0337, %.preheader588.i.preheader ]
-  %.sroa.103.0320 = phi i32 [ %.sroa.103.0339, %.preheader603.i ], [ %.sroa.103.0339, %bb.fs ], [ %.sroa.103.0339, %.preheader.i ], [ %.sroa.103.0339, %bb.dm ], [ %.sroa.103.0339, %.preheader585.i ], [ %.sroa.103.0339, %.preheader594.i ], [ %.sroa.103.0339, %.preheader588.i ], [ %.sroa.103.0339, %.preheader591.i ], [ %.sroa.103.0339, %.preheader597.i ], [ 0, %bb.e ], [ %.sroa.103.1, %scan.exit ], [ %.sroa.103.0339, %.preheader591.i.preheader ], [ %.sroa.103.0339, %.preheader594.i.preheader ], [ %.sroa.103.0339, %.preheader597.i.preheader ], [ %.sroa.103.0339, %.preheader603.i.preheader ], [ %.sroa.103.0339, %.preheader.i.preheader ], [ %.sroa.103.0339, %.preheader585.i.preheader ], [ %.sroa.103.0339, %.preheader588.i.preheader ]
-  %.sroa.107.0310 = phi i32 [ %.sroa.107.0340, %.preheader603.i ], [ %.sroa.107.0340, %bb.fs ], [ %.sroa.107.0340, %.preheader.i ], [ %.sroa.107.0340, %bb.dm ], [ %.sroa.107.0340, %.preheader585.i ], [ %.sroa.107.0340, %.preheader594.i ], [ %.sroa.107.0340, %.preheader588.i ], [ %.sroa.107.0340, %.preheader591.i ], [ %.sroa.107.0340, %.preheader597.i ], [ 0, %bb.e ], [ %.sroa.107.1, %scan.exit ], [ %.sroa.107.0340, %.preheader591.i.preheader ], [ %.sroa.107.0340, %.preheader594.i.preheader ], [ %.sroa.107.0340, %.preheader597.i.preheader ], [ %.sroa.107.0340, %.preheader603.i.preheader ], [ %.sroa.107.0340, %.preheader.i.preheader ], [ %.sroa.107.0340, %.preheader585.i.preheader ], [ %.sroa.107.0340, %.preheader588.i.preheader ]
-  %.sroa.111.0300 = phi i32 [ %.sroa.111.0348, %.preheader603.i ], [ %.sroa.111.0348, %bb.fs ], [ %.sroa.111.0348, %.preheader.i ], [ %.sroa.111.0348, %bb.dm ], [ %.sroa.111.0348, %.preheader585.i ], [ %.sroa.111.0348, %.preheader594.i ], [ %.sroa.111.0348, %.preheader588.i ], [ %.sroa.111.0348, %.preheader591.i ], [ %.sroa.111.0348, %.preheader597.i ], [ 0, %bb.e ], [ %.sroa.111.2, %scan.exit ], [ %.sroa.111.0348, %.preheader591.i.preheader ], [ %.sroa.111.0348, %.preheader594.i.preheader ], [ %.sroa.111.0348, %.preheader597.i.preheader ], [ %.sroa.111.0348, %.preheader603.i.preheader ], [ %.sroa.111.0348, %.preheader.i.preheader ], [ %.sroa.111.0348, %.preheader585.i.preheader ], [ %.sroa.111.0348, %.preheader588.i.preheader ]
-  %.sroa.113.0290 = phi i32 [ %.sroa.113.0350, %.preheader603.i ], [ %.sroa.113.0350, %bb.fs ], [ %.sroa.113.0350, %.preheader.i ], [ %.sroa.113.0350, %bb.dm ], [ %.sroa.113.0350, %.preheader585.i ], [ %.sroa.113.0350, %.preheader594.i ], [ %.sroa.113.0350, %.preheader588.i ], [ %.sroa.113.0350, %.preheader591.i ], [ %.sroa.113.0350, %.preheader597.i ], [ 0, %bb.e ], [ %.sroa.113.2, %scan.exit ], [ %.sroa.113.0350, %.preheader591.i.preheader ], [ %.sroa.113.0350, %.preheader594.i.preheader ], [ %.sroa.113.0350, %.preheader597.i.preheader ], [ %.sroa.113.0350, %.preheader603.i.preheader ], [ %.sroa.113.0350, %.preheader.i.preheader ], [ %.sroa.113.0350, %.preheader585.i.preheader ], [ %.sroa.113.0350, %.preheader588.i.preheader ]
+  %.sroa.100.0330 = phi i32 [ %.sroa.100.0337, %.preheader603.i ], [ %.sroa.100.0337, %bb.fs ], [ %.sroa.100.0337, %.preheader.i ], [ %.sroa.100.0337, %bb.dm ], [ %.sroa.100.0337, %.preheader585.i ], [ %.sroa.100.0337, %.preheader594.i ], [ %.sroa.100.0337, %.preheader588.i ], [ %.sroa.100.0337, %.preheader591.i ], [ %.sroa.100.0337, %.preheader597.i ], [ 1, %bb.e ], [ %.sroa.96.1, %scan.exit ], [ %.sroa.100.0337, %.preheader591.i.preheader ], [ %.sroa.100.0337, %.preheader594.i.preheader ], [ %.sroa.100.0337, %.preheader597.i.preheader ], [ %.sroa.100.0337, %.preheader603.i.preheader ], [ %.sroa.100.0337, %.preheader.i.preheader ], [ %.sroa.100.0337, %.preheader585.i.preheader ], [ %.sroa.100.0337, %.preheader588.i.preheader ]
+  %.sroa.103.0320 = phi i32 [ %.sroa.103.0339, %.preheader603.i ], [ %.sroa.103.0339, %bb.fs ], [ %.sroa.103.0339, %.preheader.i ], [ %.sroa.103.0339, %bb.dm ], [ %.sroa.103.0339, %.preheader585.i ], [ %.sroa.103.0339, %.preheader594.i ], [ %.sroa.103.0339, %.preheader588.i ], [ %.sroa.103.0339, %.preheader591.i ], [ %.sroa.103.0339, %.preheader597.i ], [ 0, %bb.e ], [ %.sroa.99.1, %scan.exit ], [ %.sroa.103.0339, %.preheader591.i.preheader ], [ %.sroa.103.0339, %.preheader594.i.preheader ], [ %.sroa.103.0339, %.preheader597.i.preheader ], [ %.sroa.103.0339, %.preheader603.i.preheader ], [ %.sroa.103.0339, %.preheader.i.preheader ], [ %.sroa.103.0339, %.preheader585.i.preheader ], [ %.sroa.103.0339, %.preheader588.i.preheader ]
+  %.sroa.107.0310 = phi i32 [ %.sroa.107.0340, %.preheader603.i ], [ %.sroa.107.0340, %bb.fs ], [ %.sroa.107.0340, %.preheader.i ], [ %.sroa.107.0340, %bb.dm ], [ %.sroa.107.0340, %.preheader585.i ], [ %.sroa.107.0340, %.preheader594.i ], [ %.sroa.107.0340, %.preheader588.i ], [ %.sroa.107.0340, %.preheader591.i ], [ %.sroa.107.0340, %.preheader597.i ], [ 0, %bb.e ], [ %.sroa.103.1, %scan.exit ], [ %.sroa.107.0340, %.preheader591.i.preheader ], [ %.sroa.107.0340, %.preheader594.i.preheader ], [ %.sroa.107.0340, %.preheader597.i.preheader ], [ %.sroa.107.0340, %.preheader603.i.preheader ], [ %.sroa.107.0340, %.preheader.i.preheader ], [ %.sroa.107.0340, %.preheader585.i.preheader ], [ %.sroa.107.0340, %.preheader588.i.preheader ]
+  %.sroa.111.0300 = phi i32 [ %.sroa.111.0348, %.preheader603.i ], [ %.sroa.111.0348, %bb.fs ], [ %.sroa.111.0348, %.preheader.i ], [ %.sroa.111.0348, %bb.dm ], [ %.sroa.111.0348, %.preheader585.i ], [ %.sroa.111.0348, %.preheader594.i ], [ %.sroa.111.0348, %.preheader588.i ], [ %.sroa.111.0348, %.preheader591.i ], [ %.sroa.111.0348, %.preheader597.i ], [ 0, %bb.e ], [ %.sroa.107.2, %scan.exit ], [ %.sroa.111.0348, %.preheader591.i.preheader ], [ %.sroa.111.0348, %.preheader594.i.preheader ], [ %.sroa.111.0348, %.preheader597.i.preheader ], [ %.sroa.111.0348, %.preheader603.i.preheader ], [ %.sroa.111.0348, %.preheader.i.preheader ], [ %.sroa.111.0348, %.preheader585.i.preheader ], [ %.sroa.111.0348, %.preheader588.i.preheader ]
+  %.sroa.113.0290 = phi i32 [ %.sroa.113.0350, %.preheader603.i ], [ %.sroa.113.0350, %bb.fs ], [ %.sroa.113.0350, %.preheader.i ], [ %.sroa.113.0350, %bb.dm ], [ %.sroa.113.0350, %.preheader585.i ], [ %.sroa.113.0350, %.preheader594.i ], [ %.sroa.113.0350, %.preheader588.i ], [ %.sroa.113.0350, %.preheader591.i ], [ %.sroa.113.0350, %.preheader597.i ], [ 0, %bb.e ], [ %.sroa.109.2, %scan.exit ], [ %.sroa.113.0350, %.preheader591.i.preheader ], [ %.sroa.113.0350, %.preheader594.i.preheader ], [ %.sroa.113.0350, %.preheader597.i.preheader ], [ %.sroa.113.0350, %.preheader603.i.preheader ], [ %.sroa.113.0350, %.preheader.i.preheader ], [ %.sroa.113.0350, %.preheader585.i.preheader ], [ %.sroa.113.0350, %.preheader588.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   tail call void @_efree(ptr noundef %i.av) #9
   %.not105 = icmp eq ptr %6, null

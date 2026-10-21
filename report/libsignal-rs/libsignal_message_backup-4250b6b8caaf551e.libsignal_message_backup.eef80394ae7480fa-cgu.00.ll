@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/libsignal_message_backup-4250b6b8caaf551e.libsignal_message_backup.eef80394ae7480fa-cgu.00?download=true
-inline.NumInlined: 1614
+inline.NumInlined: 1637
 inline.NumDeleted: 452
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_messag
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val47, i64 noundef 32, i64 noundef 8) #19
   br label %bb.n
 
-bb.n:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs6i54tJFfzR_5alloc6string6StringEECskw1zp9IbpTW_24libsignal_message_backup.exit, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i
+bb.n:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup7contact10RegisteredEBJ_.exit.sink.split.i.i, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs6i54tJFfzR_5alloc6string6StringEECskw1zp9IbpTW_24libsignal_message_backup.exit
   store i64 2, ptr %i.u, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 6 uses
   %i.aa = load i64, ptr %i.z, align 8, !range !4, !alias.scope !1391, !noundef !5
@@ -607,22 +607,17 @@ define void @_RNvXsx_NtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backupNt
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.a, align 8
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
-  invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup22distribution_list_item4ItemEEB15_(ptr noalias nofree noundef align 8 dereferenceable(72) %i.b)
-          to label %1 unwind label %bb.b
-
-1:                                                ; preds = %bb.a
-  store i64 -2, ptr %i.b, align 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCskw1zp9IbpTW_24libsignal_message_backup5proto6backup22distribution_list_item4ItemEEB15_(ptr noalias nofree noundef align 8 dereferenceable(72) %i.b)
           to label %bb.c unwind label %bb.b
 
-bb.b:                                             ; preds = %bb.a, %1
+bb.b:                                             ; preds = %bb.a
   %i.c = landingpad { ptr, i32 }
           cleanup
   store i64 -2, ptr %i.b, align 8
   resume { ptr, i32 } %i.c
 
-bb.c:                                             ; preds = %1
+bb.c:                                             ; preds = %bb.a
   store i64 -2, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
   tail call void @_RNvMNtCsh1373Z0TDxr_8protobuf7specialNtB2_13SpecialFields5clear(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d)

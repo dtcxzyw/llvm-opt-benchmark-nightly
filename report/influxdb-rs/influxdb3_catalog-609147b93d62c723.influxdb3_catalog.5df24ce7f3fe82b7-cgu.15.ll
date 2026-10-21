@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_RNvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB5_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct3endCs844E4pPEVZX_17influxdb3_catalog.exit
 
 _RNvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB5_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct3endCs844E4pPEVZX_17influxdb3_catalog.exit: ; preds = %bb.c, %bb.b, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECs844E4pPEVZX_17influxdb3_catalog.exit, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldbECs844E4pPEVZX_17influxdb3_catalog.exit, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldbECs844E4pPEVZX_17influxdb3_catalog.exit.thread
-  %.sroa.0.0 = phi ptr [ %i.e, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldbECs844E4pPEVZX_17influxdb3_catalog.exit.thread ], [ %i.g, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldbECs844E4pPEVZX_17influxdb3_catalog.exit ], [ %i.b, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECs844E4pPEVZX_17influxdb3_catalog.exit ], [ null, %bb.b ], [ null, %bb.c ]
+  %.sroa.0.0 = phi ptr [ %i.g, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldbECs844E4pPEVZX_17influxdb3_catalog.exit ], [ %i.e, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldbECs844E4pPEVZX_17influxdb3_catalog.exit.thread ], [ %i.b, %_RINvXs7_NtCsdLkRf3gRIi6_10serde_json3serINtB6_8CompoundQINtNtCscdodAO9FK5_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs5CfTnloWo2c_10serde_core3ser15SerializeStruct15serialize_fieldNtNtBX_6string6StringECs844E4pPEVZX_17influxdb3_catalog.exit ], [ null, %bb.b ], [ null, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %.sroa.0.0
 }
@@ -605,7 +605,7 @@ bb.a:
   %i.q = alloca [24 x i8], align 8                ; 8 uses
   %i.r = alloca [24 x i8], align 8                ; 8 uses
   %i.s = alloca [24 x i8], align 8                ; 4 uses
-  %i.t = alloca [80 x i8], align 8                ; 7 uses
+  %i.t = alloca [80 x i8], align 8                ; 6 uses
   %i.u = alloca [24 x i8], align 8                ; 6 uses
   %i.v = alloca [24 x i8], align 8                ; 5 uses
   %i.w = alloca [24 x i8], align 8                ; 6 uses
@@ -1008,7 +1008,7 @@ bb.ev:                                            ; preds = %bb.eu
   call void @llvm.experimental.noalias.scope.decl(metadata !3286), !noalias !3283
   %i.rk = getelementptr inbounds nuw i8, ptr %i.oo, i64 648 ; 2 uses
   %i.rl = load ptr, ptr %i.rk, align 8, !alias.scope !3287, !noalias !3285, !noundef !6 ; 2 uses
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i139.i = load i64, ptr %i.rl, align 1, !noalias !3288 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i139.i = load i64, ptr %i.rl, align 1, !noalias !3288 ; 2 uses
   %i.rm = getelementptr inbounds nuw i8, ptr %i.rl, i64 8
   store ptr %i.rm, ptr %i.rk, align 8, !alias.scope !3287, !noalias !3285
   %i.rn = add i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i139.i, -11
@@ -1018,8 +1018,6 @@ bb.ev:                                            ; preds = %bb.eu
 _RNvMs_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v1NtB4_13LastCacheSize3new.exit.i.i.i.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i137.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !3289
   store i8 39, ptr %i.t, align 8, !noalias !3289
-  %.sroa.57.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i139.i, ptr %.sroa.57.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !3289
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !3290
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !3291
   store i64 0, ptr %i.r, align 8, !noalias !3291

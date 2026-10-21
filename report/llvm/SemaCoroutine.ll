@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SemaCoroutine?download=true
-inline.NumInlined: 3397
+inline.NumInlined: 3398
 inline.NumDeleted: 1861
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 1
@@ -205,7 +205,7 @@ bb.ce:                                            ; preds = %bb.cd, %bb.cb
   %i.sn = getelementptr inbounds nuw i8, ptr %20, i64 12
   store i32 2, ptr %i.sn, align 4, !tbaa !23
   store ptr %i.ro, ptr %.ptr203, align 8, !tbaa !959
-  %i.so = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 3 uses
+  %i.so = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 4 uses
   store i32 1, ptr %i.so, align 8, !tbaa !22
   %i.sp = load ptr, ptr %i.r, align 8, !tbaa !999, !nonnull !715, !align !716
   %i.sq = getelementptr inbounds nuw i8, ptr %i.sp, i64 216
@@ -220,7 +220,9 @@ bb.ce:                                            ; preds = %bb.cd, %bb.cb
   br i1 %or.cond202, label %bb.cf, label %bb.cg
 
 bb.cf:                                            ; preds = %.lr.ph.i.i.i.i.i.i.i.i
-  call void @_ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_(ptr noundef nonnull align 8 dereferenceable(16) %20, ptr noundef %.176)
+  %22 = getelementptr inbounds nuw i8, ptr %20, i64 24
+  store ptr %.176, ptr %22, align 8
+  store i32 2, ptr %i.so, align 8, !tbaa !22
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf, %.lr.ph.i.i.i.i.i.i.i.i

@@ -204,7 +204,7 @@ define void @_ZNK4cvc58internal8TypeNode11instantiateERKSt6vectorIS1_SaIS1_EE(pt
 bb.a:
   %3 = alloca %"class.cvc5::internal::NodeBuilder", align 8 ; 7 uses
   %4 = alloca %"class.cvc5::internal::TypeNode", align 8 ; 7 uses
-  %5 = alloca %"class.std::vector", align 8       ; 12 uses
+  %5 = alloca %"class.std::vector", align 8       ; 13 uses
   %6 = alloca %"class.cvc5::internal::TypeNode", align 8 ; 8 uses
   %7 = alloca %"class.cvc5::internal::TypeNode", align 8 ; 8 uses
   %8 = alloca %"class.cvc5::internal::TypeNode", align 8 ; 4 uses
@@ -297,11 +297,10 @@ bb.i:                                             ; preds = %bb.h
   invoke void @_ZN4cvc58internal4expr9NodeValue20markRefCountMaxedOutEv(ptr noundef nonnull align 8 dereferenceable(24) %i.aa)
           to label %_ZNK4cvc58internal8TypeNodeixEi.exit unwind label %bb.l
 
-_ZNK4cvc58internal8TypeNodeixEi.exit:             ; preds = %bb.h, %bb.g, %bb.i
+_ZNK4cvc58internal8TypeNodeixEi.exit:             ; preds = %bb.i, %bb.g, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   invoke void @_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr null, ptr noundef nonnull align 8 dereferenceable(8) %4)
           to label %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -310,7 +309,11 @@ _ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit: ; preds = %
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !145 ; 2 uses
   %.not59 = icmp eq ptr %i.ao, %i.aq
-  br i1 %.not59, label %._crit_edge, label %.lr.ph.a
+  br i1 %.not59, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit
+  %9 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  br label %.lr.ph.a
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit33, %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
@@ -338,10 +341,10 @@ bb.l:                                             ; preds = %bb.i, %bb.f
           cleanup
   br label %bb.ak
 
-.lr.ph.a:                                         ; preds = %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit, %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit33
-  %.sroa.056.060 = phi ptr [ %i.bl, %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit33 ], [ %i.ao, %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
-  %i.au = load ptr, ptr %9, align 8, !tbaa !127   ; 3 uses
-  %i.av = load ptr, ptr %i.an, align 8, !tbaa !134
+.lr.ph.a:                                         ; preds = %.lr.ph, %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit33
+  %.sroa.056.060 = phi ptr [ %i.ao, %.lr.ph ], [ %i.bl, %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit33 ] ; 3 uses
+  %i.au = load ptr, ptr %i.an, align 8, !tbaa !127 ; 3 uses
+  %i.av = load ptr, ptr %9, align 8, !tbaa !134
   %.not.i29 = icmp eq ptr %i.au, %i.av
   br i1 %.not.i29, label %bb.q, label %bb.m
 
@@ -375,9 +378,9 @@ bb.p:                                             ; preds = %bb.o
           to label %_ZN4cvc58internal8TypeNodeC2ERKS1_.exit.i30 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZN4cvc58internal8TypeNodeC2ERKS1_.exit.i30:      ; preds = %bb.p, %bb.o, %bb.n
-  %i.bj = load ptr, ptr %9, align 8, !tbaa !127
+  %i.bj = load ptr, ptr %i.an, align 8, !tbaa !127
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
-  store ptr %i.bk, ptr %9, align 8, !tbaa !127
+  store ptr %i.bk, ptr %i.an, align 8, !tbaa !127
   br label %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EE9push_backERKS2_.exit33
 
 bb.q:                                             ; preds = %.lr.ph.a
@@ -479,7 +482,7 @@ bb.aa:                                            ; preds = %bb.z
 _ZN4cvc58internal8TypeNodeD2Ev.exit:              ; preds = %_ZN4cvc58internal8TypeNodeaSERKS1_.exit, %bb.y, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %i.cr = load ptr, ptr %5, align 8, !tbaa !128   ; 3 uses
-  %i.cs = load ptr, ptr %9, align 8, !tbaa !127   ; 2 uses
+  %i.cs = load ptr, ptr %i.an, align 8, !tbaa !127 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.cr, %i.cs
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4cvc58internal8TypeNodeES2_EvT_S4_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
@@ -526,7 +529,8 @@ _ZSt8_DestroyIPN4cvc58internal8TypeNodeES2_EvT_S4_RSaIT0_E.exit.i: ; preds = %_Z
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4cvc58internal8TypeNodeESaIS2_EED2Ev.exit, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZSt8_DestroyIPN4cvc58internal8TypeNodeES2_EvT_S4_RSaIT0_E.exit.i
-  %i.df = load ptr, ptr %i.an, align 8, !tbaa !134
+  %10 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.df = load ptr, ptr %10, align 8, !tbaa !134
   %i.dg = ptrtoint ptr %i.df to i64
   %i.dh = ptrtoint ptr %i.de to i64
   %i.di = sub i64 %i.dg, %i.dh

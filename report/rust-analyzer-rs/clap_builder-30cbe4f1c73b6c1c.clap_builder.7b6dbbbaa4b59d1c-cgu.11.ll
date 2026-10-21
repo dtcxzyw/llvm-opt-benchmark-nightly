@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/clap_builder-30cbe4f1c73b6c1c.clap_builder.7b6dbbbaa4b59d1c-cgu.11?download=true
-inline.NumInlined: 186
+inline.NumInlined: 188
 inline.NumDeleted: 129
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.a
   %i.n = zext i1 %i.m to i32                      ; 0 uses
   br label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsE_NtB2C_12value_parserNtB3Z_17FalseyValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6B_EEB3R_ENtB57_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a
 
-_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsE_NtB2C_12value_parserNtB3Z_17FalseyValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6B_EEB3R_ENtB57_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a: ; preds = %bb.a, %bb.b, %bb.c
+_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsE_NtB2C_12value_parserNtB3Z_17FalseyValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6B_EEB3R_ENtB57_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a: ; preds = %bb.c, %bb.b, %bb.a
   %.sroa.0.0.shrunk.i.i.i = phi i1 [ %i.d, %bb.b ], [ %i.m, %bb.c ], [ true, %bb.a ]
   %.sroa.0.0.i.i.i = zext i1 %.sroa.0.0.shrunk.i.i.i to i8
   store i64 %1, ptr %i.a, align 8, !noalias !69
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   store i64 0, ptr %i.o, align 8, !noalias !69
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !69
@@ -223,10 +223,29 @@ _RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_
   store i64 %.val1, ptr %.sroa.8.0..sroa_idx.i.i, align 8, !noalias !69
   %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   store i8 %.sroa.0.0.i.i.i, ptr %.sroa.9.0..sroa_idx.i.i, align 8, !noalias !69
-  %3 = add i64 %1, -1
-  call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueEBH_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.o)
+  invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3str3StrENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBL_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.o)
+          to label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsE_NtB2C_12value_parserNtB3Z_17FalseyValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6B_EEB3R_ENtB57_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit unwind label %3
+
+3:                                                ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsE_NtB2C_12value_parserNtB3Z_17FalseyValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6B_EEB3R_ENtB57_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVecNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3str3StrENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBS_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.o)
+          to label %common.resume.i.i unwind label %5
+
+5:                                                ; preds = %3
+  %6 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #16
+  unreachable
+
+common.resume.i.i:                                ; preds = %3
+  resume { ptr, i32 } %4
+
+_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsE_NtB2C_12value_parserNtB3Z_17FalseyValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6B_EEB3R_ENtB57_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit: ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsE_NtB2C_12value_parserNtB3Z_17FalseyValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6B_EEB3R_ENtB57_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a
+  %7 = add i64 %1, -1
+  call void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVecNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3str3StrENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBS_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !69
-  ret i64 %3
+  ret i64 %7
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -260,11 +279,11 @@ bb.c:                                             ; preds = %bb.a
   %i.n = zext i1 %i.m to i32                      ; 0 uses
   br label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsH_NtB2C_12value_parserNtB3Z_18BoolishValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6C_EEB3R_ENtB58_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a
 
-_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsH_NtB2C_12value_parserNtB3Z_18BoolishValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6C_EEB3R_ENtB58_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a: ; preds = %bb.a, %bb.b, %bb.c
+_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsH_NtB2C_12value_parserNtB3Z_18BoolishValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6C_EEB3R_ENtB58_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a: ; preds = %bb.c, %bb.b, %bb.a
   %.sroa.0.0.shrunk.i.i.i = phi i1 [ %i.d, %bb.b ], [ %i.m, %bb.c ], [ true, %bb.a ]
   %.sroa.0.0.i.i.i = zext i1 %.sroa.0.0.shrunk.i.i.i to i8
   store i64 %1, ptr %i.a, align 8, !noalias !72
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   store i64 0, ptr %i.o, align 8, !noalias !72
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !72
@@ -278,10 +297,29 @@ _RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_
   store i64 %.val1, ptr %.sroa.8.0..sroa_idx.i.i, align 8, !noalias !72
   %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   store i8 %.sroa.0.0.i.i.i, ptr %.sroa.9.0..sroa_idx.i.i, align 8, !noalias !72
-  %3 = add i64 %1, -1
-  call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueEBH_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.o)
+  invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3str3StrENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBL_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.o)
+          to label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsH_NtB2C_12value_parserNtB3Z_18BoolishValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6C_EEB3R_ENtB58_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit unwind label %3
+
+3:                                                ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsH_NtB2C_12value_parserNtB3Z_18BoolishValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6C_EEB3R_ENtB58_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVecNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3str3StrENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBS_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.o)
+          to label %common.resume.i.i unwind label %5
+
+5:                                                ; preds = %3
+  %6 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #16
+  unreachable
+
+common.resume.i.i:                                ; preds = %3
+  resume { ptr, i32 } %4
+
+_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsH_NtB2C_12value_parserNtB3Z_18BoolishValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6C_EEB3R_ENtB58_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit: ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied13copy_try_foldReINtNtNtBa_3num7nonzero7NonZerojEINtNtBa_6option6OptionB15_ENCINvNtB6_3map12map_try_foldB13_NtNtNtCsaB0tVqiIPBo_12clap_builder7builder14possible_value13PossibleValueB15_B1B_NCNvMsH_NtB2C_12value_parserNtB3Z_18BoolishValueParser15possible_values0NCNvXs_NvNtNtNtB8_6traits8iterator8Iterator10advance_byINtB27_3MapINtB4_6CopiedINtNtB6_5chain5ChainINtNtNtBa_5slice4iter4IterB13_EB6C_EEB3R_ENtB58_13SpecAdvanceBy15spec_advance_by0E0E0B2E_.exit.a
+  %7 = add i64 %1, -1
+  call void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVecNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3str3StrENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBS_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !72
-  ret i64 %3
+  ret i64 %7
 }
 
 ; Function Attrs: nonlazybind uwtable

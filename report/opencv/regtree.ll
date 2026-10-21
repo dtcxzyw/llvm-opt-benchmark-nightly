@@ -204,7 +204,7 @@ _ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i: ; preds = %.noexc179
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.aq, i8 0, i64 %.idx.i.i.i.i.i31.i, i1 false), !tbaa !51
   br label %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit36.i
 
-_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit36.i: ; preds = %.noexc179, %_ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i
+_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit36.i: ; preds = %_ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i, %.noexc179
   store ptr %i.an, ptr %14, align 8, !tbaa !54
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.de ; 2 uses
   store ptr %i.ar, ptr %i.aj, align 8, !tbaa !151
@@ -428,7 +428,7 @@ bb.w:                                             ; preds = %bb.s
           cleanup
   br label %bb.ar
 
-_ZNSt6vectorImSaImEE6resizeEm.exit:               ; preds = %._crit_edge.thread, %._crit_edge, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit36.i
+_ZNSt6vectorImSaImEE6resizeEm.exit:               ; preds = %._crit_edge.thread, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit36.i, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #19
   %i.dh = trunc i64 %3 to i32
   %i.di = trunc i64 %4 to i32
@@ -831,7 +831,7 @@ bb.ak:                                            ; preds = %_ZNSt6vectorIN2cv6P
   %i.fx = load ptr, ptr %i.fu, align 8, !tbaa !37 ; 2 uses
   %i.fy = ptrtoint ptr %i.fw to i64
   %i.fz = ptrtoint ptr %i.fx to i64
-  %i.ga = sub i64 %i.fy, %i.fz                    ; 4 uses
+  %i.ga = sub i64 %i.fy, %i.fz                    ; 5 uses
   %.not342 = icmp eq ptr %i.fw, %i.fx
   br i1 %.not342, label %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit99, label %bb.al
 
@@ -848,17 +848,18 @@ bb.am:                                            ; preds = %bb.al
 
 _ZNKSt6vectorIN2cv6Point_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.al
   %i.gc = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ga) #22
-          to label %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i unwind label %.loopexit.split-lp203.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
+          to label %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i unwind label %.loopexit.split-lp203.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 _ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i: ; preds = %_ZNKSt6vectorIN2cv6Point_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.gc, i8 0, i64 %i.ga, i1 false), !tbaa !58
   store ptr %i.gc, ptr %18, align 8, !tbaa !37
-  %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 %i.ga ; 2 uses
+  %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 %i.ga
   store ptr %i.gd, ptr %i.dr, align 8, !tbaa !45
-  store ptr %i.gd, ptr %i.ds, align 8, !tbaa !57
+  %30 = getelementptr inbounds nuw i8, ptr %i.gc, i64 %i.ga
+  store ptr %30, ptr %i.ds, align 8, !tbaa !57
   br label %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit99
 
-_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit99: ; preds = %bb.ak, %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i
+_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit99: ; preds = %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i, %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #19
   %i.ge = trunc i64 %i.ei to i32                  ; 2 uses
   %i.gf = trunc i64 %i.ej to i32                  ; 2 uses
@@ -1143,7 +1144,7 @@ bb.bb:                                            ; preds = %bb.y
   %i.ji = load ptr, ptr %i.jf, align 8, !tbaa !37 ; 2 uses
   %i.jj = ptrtoint ptr %i.jh to i64
   %i.jk = ptrtoint ptr %i.ji to i64
-  %i.jl = sub i64 %i.jj, %i.jk                    ; 4 uses
+  %i.jl = sub i64 %i.jj, %i.jk                    ; 5 uses
   %.not341 = icmp eq ptr %i.jh, %i.ji
   br i1 %.not341, label %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit129, label %bb.bc
 
@@ -1160,17 +1161,18 @@ bb.bd:                                            ; preds = %bb.bc
 
 _ZNKSt6vectorIN2cv6Point_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i181: ; preds = %bb.bc
   %i.jn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.jl) #22
-          to label %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i190 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
+          to label %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i190 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 _ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i190: ; preds = %_ZNKSt6vectorIN2cv6Point_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i181
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jn, i8 0, i64 %i.jl, i1 false), !tbaa !58
   store ptr %i.jn, ptr %24, align 8, !tbaa !37
-  %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 %i.jl ; 2 uses
+  %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 %i.jl
   store ptr %i.jo, ptr %i.cy, align 8, !tbaa !45
-  store ptr %i.jo, ptr %i.cz, align 8, !tbaa !57
+  %31 = getelementptr inbounds nuw i8, ptr %i.jn, i64 %i.jl
+  store ptr %31, ptr %i.cz, align 8, !tbaa !57
   br label %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit129
 
-_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit129: ; preds = %bb.bb, %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i190
+_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE6resizeEm.exit129: ; preds = %_ZNSt12_Vector_baseIN2cv6Point_IfEESaIS2_EE13_M_deallocateEPS2_m.exit37.i190, %bb.bb
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #19
   %i.jp = trunc i64 %i.ei to i32                  ; 2 uses
   %i.jq = trunc i64 %i.ej to i32                  ; 2 uses

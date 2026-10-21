@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/folly/original/AsyncSocket?download=true
-inline.NumInlined: 5680
+inline.NumInlined: 5681
 inline.NumDeleted: 2333
 loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 3
@@ -205,12 +205,12 @@ bb.f:                                             ; preds = %_ZN5folly14goodMall
   unreachable
 
 bb.g:                                             ; preds = %_ZN5folly14goodMallocSizeEm.exit
-  %i.u = load i64, ptr %0, align 8, !tbaa !16184  ; 4 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %i.u = load i64, ptr %0, align 8, !tbaa !16184  ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.w = load ptr, ptr %i.v, align 8
-  %.not1.i.i = icmp slt i64 %i.u, 0               ; 2 uses
+  %.not1.i.i = icmp slt i64 %i.u, 0               ; 3 uses
   %i.x = select i1 %.not1.i.i, ptr %i.w, ptr %i.v ; 5 uses
-  %i.y = and i64 %i.u, 9223372036854775807        ; 2 uses
+  %i.y = and i64 %i.u, 9223372036854775807        ; 5 uses
   %i.z = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %i.y
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %3 ; 2 uses
   %i.ab = load ptr, ptr %2, align 8, !tbaa !17516, !nonnull !1501, !align !16578 ; 3 uses
@@ -298,18 +298,30 @@ bb.h:                                             ; preds = %_ZN5folly6detail14S
   %i.bc = getelementptr inbounds nuw i8, ptr %.012.i13.i, i64 16 ; 2 uses
   %i.bd = add nuw nsw i64 %.0911.i14.i, 1
   %.not.i15.i = icmp eq ptr %i.bc, %i.z
-  br i1 %.not.i15.i, label %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit, label %.lr.ph.i12.i, !llvm.loop !782
+  br i1 %.not.i15.i, label %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread, label %.lr.ph.i12.i, !llvm.loop !782
 
-_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit: ; preds = %.lr.ph.i12.i, %_ZN5folly6detail14ScopeGuardImplIZNS0_18IntegralSizePolicyImLb1ELb0EE26moveToUninitializedEmplaceISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS7_6EventsELm32EEEE8ObserverEEZNS_12small_vectorISE_Lm2EvE12emplace_backIJSE_EEERSE_DpOT_EUlPvE_EEvPT_SP_SP_mOT0_EUlvE_Lb1EED2Ev.exit.i
+_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread: ; preds = %.lr.ph.i12.i
+  %4 = load ptr, ptr %i.v, align 8
+  %5 = select i1 %.not1.i.i, ptr %4, ptr %i.v     ; 2 uses
+  %.idx47 = shl nuw nsw i64 %i.y, 4
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %.idx47
+  br label %.lr.ph.i.i.i.preheader
+
+_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit: ; preds = %_ZN5folly6detail14ScopeGuardImplIZNS0_18IntegralSizePolicyImLb1ELb0EE26moveToUninitializedEmplaceISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS7_6EventsELm32EEEE8ObserverEEZNS_12small_vectorISE_Lm2EvE12emplace_backIJSE_EEERSE_DpOT_EUlPvE_EEvPT_SP_SP_mOT0_EUlvE_Lb1EED2Ev.exit.i
   %i.be = load ptr, ptr %i.v, align 8
   %i.bf = select i1 %.not1.i.i, ptr %i.be, ptr %i.v ; 2 uses
-  %i.bg = shl i64 %i.u, 4                         ; 2 uses
+  %i.bg = shl nuw nsw i64 %i.y, 4
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.bg
-  %.not4.i.i.i = icmp samesign eq i64 %i.bg, 0
-  br i1 %.not4.i.i.i, label %_ZSt7destroyIPSt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvT_SC_.exit, label %.lr.ph.i.i.i
+  %.not4.i.i.i = icmp eq i64 %i.y, 0
+  br i1 %.not4.i.i.i, label %_ZSt7destroyIPSt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvT_SC_.exit, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i:                                     ; preds = %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit, %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.bz, %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i ], [ %i.bf, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit ] ; 2 uses
+.lr.ph.i.i.i.preheader:                           ; preds = %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit
+  %7 = phi ptr [ %6, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread ], [ %i.bh, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit ]
+  %8 = phi ptr [ %5, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread ], [ %i.bf, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_12emplace_backIJSC_EEERSC_DpOT_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit ]
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i
+  %.05.i.i.i = phi ptr [ %i.bz, %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i ], [ %8, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !16122 ; 8 uses
   %.not.i.i.i.i.i.i.i20 = icmp eq ptr %i.bj, null
@@ -361,7 +373,7 @@ bb.n:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i: ; preds = %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i, %bb.j, %.lr.ph.i.i.i
   %i.bz = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 16 ; 2 uses
-  %.not.i.i.i = icmp eq ptr %i.bz, %i.bh
+  %.not.i.i.i = icmp eq ptr %i.bz, %7
   br i1 %.not.i.i.i, label %_ZSt7destroyIPSt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvT_SC_.exit.loopexit, label %.lr.ph.i.i.i, !llvm.loop !781
 
 _ZSt7destroyIPSt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvT_SC_.exit.loopexit: ; preds = %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i
@@ -482,12 +494,12 @@ bb.f:                                             ; preds = %_ZN5folly14goodMall
   unreachable
 
 bb.g:                                             ; preds = %_ZN5folly14goodMallocSizeEm.exit
-  %i.u = load i64, ptr %0, align 8, !tbaa !16184  ; 4 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %i.u = load i64, ptr %0, align 8, !tbaa !16184  ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.w = load ptr, ptr %i.v, align 8
-  %.not1.i.i = icmp slt i64 %i.u, 0               ; 2 uses
+  %.not1.i.i = icmp slt i64 %i.u, 0               ; 3 uses
   %i.x = select i1 %.not1.i.i, ptr %i.w, ptr %i.v ; 5 uses
-  %i.y = and i64 %i.u, 9223372036854775807        ; 2 uses
+  %i.y = and i64 %i.u, 9223372036854775807        ; 5 uses
   %i.z = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %i.y
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %3 ; 2 uses
   %i.ab = load ptr, ptr %2, align 8, !tbaa !17518, !nonnull !1501, !align !16578 ; 3 uses
@@ -575,18 +587,30 @@ bb.h:                                             ; preds = %_ZN5folly6detail14S
   %i.bc = getelementptr inbounds nuw i8, ptr %.012.i13.i, i64 16 ; 2 uses
   %i.bd = add nuw nsw i64 %.0911.i14.i, 1
   %.not.i15.i = icmp eq ptr %i.bc, %i.z
-  br i1 %.not.i15.i, label %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit, label %.lr.ph.i12.i, !llvm.loop !782
+  br i1 %.not.i15.i, label %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread, label %.lr.ph.i12.i, !llvm.loop !782
 
-_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit: ; preds = %.lr.ph.i12.i, %_ZN5folly6detail14ScopeGuardImplIZNS0_18IntegralSizePolicyImLb1ELb0EE26moveToUninitializedEmplaceISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS7_6EventsELm32EEEE8ObserverEEZNS_12small_vectorISE_Lm2EvE6insertEPKSE_OSE_EUlPvE_EEvPT_SN_SN_mOT0_EUlvE_Lb1EED2Ev.exit.i
+_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread: ; preds = %.lr.ph.i12.i
+  %4 = load ptr, ptr %i.v, align 8
+  %5 = select i1 %.not1.i.i, ptr %4, ptr %i.v     ; 2 uses
+  %.idx47 = shl nuw nsw i64 %i.y, 4
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %.idx47
+  br label %.lr.ph.i.i.i.preheader
+
+_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit: ; preds = %_ZN5folly6detail14ScopeGuardImplIZNS0_18IntegralSizePolicyImLb1ELb0EE26moveToUninitializedEmplaceISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS7_6EventsELm32EEEE8ObserverEEZNS_12small_vectorISE_Lm2EvE6insertEPKSE_OSE_EUlPvE_EEvPT_SN_SN_mOT0_EUlvE_Lb1EED2Ev.exit.i
   %i.be = load ptr, ptr %i.v, align 8
   %i.bf = select i1 %.not1.i.i, ptr %i.be, ptr %i.v ; 2 uses
-  %i.bg = shl i64 %i.u, 4                         ; 2 uses
+  %i.bg = shl nuw nsw i64 %i.y, 4
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.bg
-  %.not4.i.i.i = icmp samesign eq i64 %i.bg, 0
-  br i1 %.not4.i.i.i, label %_ZSt7destroyIPSt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvT_SC_.exit, label %.lr.ph.i.i.i
+  %.not4.i.i.i = icmp eq i64 %i.y, 0
+  br i1 %.not4.i.i.i, label %_ZSt7destroyIPSt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvT_SC_.exit, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i:                                     ; preds = %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit, %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.bz, %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i ], [ %i.bf, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit ] ; 2 uses
+.lr.ph.i.i.i.preheader:                           ; preds = %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit
+  %7 = phi ptr [ %6, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread ], [ %i.bh, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit ]
+  %8 = phi ptr [ %5, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit.thread ], [ %i.bf, %_ZN5folly6detail14ScopeGuardImplIZNS_12small_vectorISt10shared_ptrINS_21ObserverContainerBaseINS_28AsyncSocketObserverInterfaceENS_11AsyncSocketENS_34ObserverContainerBasePolicyDefaultINS5_6EventsELm32EEEE8ObserverEELm2EvE16makeSizeInternalILb1ELb0EZNSD_6insertEPKSC_OSC_EUlPvE_EEvmOT1_mEUlvE_Lb1EED2Ev.exit ]
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i
+  %.05.i.i.i = phi ptr [ %i.bz, %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i ], [ %8, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !16122 ; 8 uses
   %.not.i.i.i.i.i.i.i20 = icmp eq ptr %i.bj, null
@@ -638,7 +662,7 @@ bb.n:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i: ; preds = %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i, %bb.j, %.lr.ph.i.i.i
   %i.bz = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 16 ; 2 uses
-  %.not.i.i.i = icmp eq ptr %i.bz, %i.bh
+  %.not.i.i.i = icmp eq ptr %i.bz, %7
   br i1 %.not.i.i.i, label %_ZSt7destroyIPSt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvT_SC_.exit.loopexit, label %.lr.ph.i.i.i, !llvm.loop !781
 
 _ZSt7destroyIPSt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvT_SC_.exit.loopexit: ; preds = %_ZSt8_DestroyISt10shared_ptrIN5folly21ObserverContainerBaseINS1_28AsyncSocketObserverInterfaceENS1_11AsyncSocketENS1_34ObserverContainerBasePolicyDefaultINS3_6EventsELm32EEEE8ObserverEEEvPT_.exit.i.i.i
@@ -1041,7 +1065,7 @@ bb.n:                                             ; preds = %bb.m
   store i64 %i.bj, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !16131
   br label %bb.o
 
-bb.o:                                             ; preds = %_ZZN3fmt2v96detail11parse_widthIcRNS1_13specs_checkerINS1_21dynamic_specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEEEEEEEEPKT_SD_SD_OT0_EN13width_adapterclEi.exit, %.critedge
+bb.o:                                             ; preds = %.critedge, %_ZZN3fmt2v96detail11parse_widthIcRNS1_13specs_checkerINS1_21dynamic_specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEEEEEEEEPKT_SD_SD_OT0_EN13width_adapterclEi.exit
   %.025 = phi ptr [ %.043, %_ZZN3fmt2v96detail11parse_widthIcRNS1_13specs_checkerINS1_21dynamic_specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEEEEEEEEPKT_SD_SD_OT0_EN13width_adapterclEi.exit ], [ %.lcssa45, %.critedge ]
   ret ptr %.025
 }
@@ -1223,7 +1247,7 @@ bb.n:                                             ; preds = %bb.m
   store i64 %i.bj, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !16131
   br label %bb.o
 
-bb.o:                                             ; preds = %_ZZN3fmt2v96detail15parse_precisionIcRNS1_13specs_checkerINS1_21dynamic_specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEEEEEEEEPKT_SD_SD_OT0_EN17precision_adapterclEi.exit, %.critedge
+bb.o:                                             ; preds = %.critedge, %_ZZN3fmt2v96detail15parse_precisionIcRNS1_13specs_checkerINS1_21dynamic_specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEEEEEEEEPKT_SD_SD_OT0_EN17precision_adapterclEi.exit
   %.025 = phi ptr [ %.043, %_ZZN3fmt2v96detail15parse_precisionIcRNS1_13specs_checkerINS1_21dynamic_specs_handlerINS0_26basic_format_parse_contextIcNS1_13error_handlerEEEEEEEEEPKT_SD_SD_OT0_EN17precision_adapterclEi.exit ], [ %.lcssa45, %.critedge ]
   ret ptr %.025
 }
@@ -1626,7 +1650,7 @@ bb.t:                                             ; preds = %bb.a
   unreachable
 
 _ZN3fmt2v916visit_format_argINS0_6detail13width_checkerINS2_13error_handlerEEENS0_20basic_format_contextINS0_8appenderEcEEEEDTclfp_Li0EEEOT_RKNS0_16basic_format_argIT0_EE.exit: ; preds = %bb.e, %bb.d, %bb.g, %_ZN3fmt2v96detail13width_checkerINS1_13error_handlerEEclInTnNSt9enable_ifIXsr10is_integerIT_EE5valueEiE4typeELi0EEEyS7_.exit, %bb.j
-  %.0.i = phi i64 [ %i.j, %bb.g ], [ %i.m, %_ZN3fmt2v96detail13width_checkerINS1_13error_handlerEEclInTnNSt9enable_ifIXsr10is_integerIT_EE5valueEiE4typeELi0EEEyS7_.exit ], [ %i.h, %bb.e ], [ %i.g, %bb.d ], [ %i.o, %bb.j ] ; 2 uses
+  %.0.i = phi i64 [ %i.m, %_ZN3fmt2v96detail13width_checkerINS1_13error_handlerEEclInTnNSt9enable_ifIXsr10is_integerIT_EE5valueEiE4typeELi0EEEyS7_.exit ], [ %i.o, %bb.j ], [ %i.h, %bb.e ], [ %i.g, %bb.d ], [ %i.j, %bb.g ] ; 2 uses
   %i.p = icmp ugt i64 %.0.i, 2147483647
   br i1 %i.p, label %_ZN3fmt2v916visit_format_argINS0_6detail13width_checkerINS2_13error_handlerEEENS0_20basic_format_contextINS0_8appenderEcEEEEDTclfp_Li0EEEOT_RKNS0_16basic_format_argIT0_EE.exit.thread9, label %bb.u
 
@@ -1753,7 +1777,7 @@ bb.t:                                             ; preds = %bb.a
   unreachable
 
 _ZN3fmt2v916visit_format_argINS0_6detail17precision_checkerINS2_13error_handlerEEENS0_20basic_format_contextINS0_8appenderEcEEEEDTclfp_Li0EEEOT_RKNS0_16basic_format_argIT0_EE.exit: ; preds = %bb.e, %bb.d, %bb.g, %_ZN3fmt2v96detail17precision_checkerINS1_13error_handlerEEclInTnNSt9enable_ifIXsr10is_integerIT_EE5valueEiE4typeELi0EEEyS7_.exit, %bb.j
-  %.0.i = phi i64 [ %i.j, %bb.g ], [ %i.m, %_ZN3fmt2v96detail17precision_checkerINS1_13error_handlerEEclInTnNSt9enable_ifIXsr10is_integerIT_EE5valueEiE4typeELi0EEEyS7_.exit ], [ %i.h, %bb.e ], [ %i.g, %bb.d ], [ %i.o, %bb.j ] ; 2 uses
+  %.0.i = phi i64 [ %i.m, %_ZN3fmt2v96detail17precision_checkerINS1_13error_handlerEEclInTnNSt9enable_ifIXsr10is_integerIT_EE5valueEiE4typeELi0EEEyS7_.exit ], [ %i.o, %bb.j ], [ %i.h, %bb.e ], [ %i.g, %bb.d ], [ %i.j, %bb.g ] ; 2 uses
   %i.p = icmp ugt i64 %.0.i, 2147483647
   br i1 %i.p, label %_ZN3fmt2v916visit_format_argINS0_6detail17precision_checkerINS2_13error_handlerEEENS0_20basic_format_contextINS0_8appenderEcEEEEDTclfp_Li0EEEOT_RKNS0_16basic_format_argIT0_EE.exit.thread9, label %bb.u
 

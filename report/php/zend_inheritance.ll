@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca ptr, align 8                      ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !116  ; 4 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !116  ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !116  ; 4 uses
@@ -285,16 +285,20 @@ full_property_types_compatible.exit:              ; preds = %bb.b, %bb.f, %bb.g
   %i.as = icmp eq i32 %.1.i, -1
   %or.cond3 = and i1 %4, %i.as
   %or.cond40 = or i1 %or.cond, %or.cond3
-  br i1 %or.cond40, label %bb.h, label %bb.i
+  br i1 %or.cond40, label %full_property_types_compatible.exit._crit_edge, label %bb.i
+
+full_property_types_compatible.exit._crit_edge:   ; preds = %full_property_types_compatible.exit
+  %.pre = load i32, ptr %i.f, align 8
+  br label %bb.h
 
 full_property_types_compatible.exit.thread:       ; preds = %bb.c
   br i1 %3, label %bb.h, label %.thread
 
-bb.h:                                             ; preds = %full_property_types_compatible.exit.thread, %full_property_types_compatible.exit
+bb.h:                                             ; preds = %full_property_types_compatible.exit._crit_edge, %full_property_types_compatible.exit.thread
+  %5 = phi i32 [ %.pre, %full_property_types_compatible.exit._crit_edge ], [ %i.g, %full_property_types_compatible.exit.thread ]
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !110
   %i.av = load ptr, ptr %i.e, align 8
-  %5 = load i32, ptr %i.f, align 8
   %i.aw = tail call ptr @zend_type_to_string_resolved(ptr %i.av, i32 %5, ptr noundef %i.au) #16
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !110

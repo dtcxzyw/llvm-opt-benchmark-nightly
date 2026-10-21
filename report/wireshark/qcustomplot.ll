@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = fcmp une double %i.k, %i.m
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c
+bb.e:                                             ; preds = %bb.c, %bb.d
   %i.o = phi i1 [ true, %bb.c ], [ %i.n, %bb.d ]  ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #50
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #50
@@ -607,7 +607,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 5 uses
   %i.d = alloca double, align 8                   ; 5 uses
-  %6 = alloca %class.QCPRange, align 8            ; 9 uses
+  %6 = alloca %class.QCPRange, align 8            ; 8 uses
   %7 = alloca %class.QCPRange, align 8            ; 6 uses
   %8 = alloca %class.QCPDataRange, align 4        ; 5 uses
   %9 = alloca %class.QCPDataRange, align 4        ; 5 uses
@@ -711,10 +711,13 @@ bb.j:                                             ; preds = %bb.i
   %i.ax = sext i32 %i.aw to i64                   ; 2 uses
   %i.ay = getelementptr i8, ptr %i.as, i64 24
   %i.az = load i64, ptr %i.ay, align 8            ; 3 uses
-  %10 = getelementptr [16 x i8], ptr %i.au, i64 %i.az
   %i.ba = trunc i64 %i.az to i32
   %i.bb = icmp eq i32 %i.aw, %i.ba
-  br i1 %i.bb, label %_ZNK16QCPDataContainerI12QCPGraphDataE9findBeginEdb.exit, label %bb.k
+  br i1 %i.bb, label %10, label %bb.k
+
+10:                                               ; preds = %bb.j
+  %11 = getelementptr [16 x i8], ptr %i.au, i64 %i.az
+  br label %_ZNK16QCPDataContainerI12QCPGraphDataE9findBeginEdb.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.bc = load double, ptr %6, align 8
@@ -748,9 +751,10 @@ _ZSt9__advanceIN5QListI12QCPGraphDataE14const_iteratorExEvRT_T0_St26random_acces
   %i.bo = icmp sgt i64 %.1.i.i.i, 0
   br i1 %i.bo, label %_ZSt9__advanceIN5QListI12QCPGraphDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, label %_ZNK16QCPDataContainerI12QCPGraphDataE9findBeginEdb.exit, !llvm.loop !51
 
-_ZNK16QCPDataContainerI12QCPGraphDataE9findBeginEdb.exit: ; preds = %_ZSt9__advanceIN5QListI12QCPGraphDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, %bb.j, %.noexc
-  %.sroa.04.0.i = phi ptr [ %10, %bb.j ], [ %i.bd, %.noexc ], [ %.sroa.012.1.i.i.i, %_ZSt9__advanceIN5QListI12QCPGraphDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i ] ; 2 uses
+_ZNK16QCPDataContainerI12QCPGraphDataE9findBeginEdb.exit: ; preds = %_ZSt9__advanceIN5QListI12QCPGraphDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, %10, %.noexc
+  %.sroa.04.0.i = phi ptr [ %11, %10 ], [ %i.bd, %.noexc ], [ %.sroa.012.1.i.i.i, %_ZSt9__advanceIN5QListI12QCPGraphDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i ] ; 2 uses
   %i.bp = load ptr, ptr %i.h, align 8             ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.bq = getelementptr i8, ptr %i.bp, i64 24
   %i.br = load i64, ptr %i.bq, align 8            ; 3 uses
   %i.bs = getelementptr i8, ptr %i.bp, i64 32
@@ -766,8 +770,7 @@ bb.l:                                             ; preds = %_ZNK16QCPDataContai
   br label %_ZNK16QCPDataContainerI12QCPGraphDataE7findEndEdb.exit
 
 bb.m:                                             ; preds = %_ZNK16QCPDataContainerI12QCPGraphDataE9findBeginEdb.exit
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.bz = load double, ptr %11, align 8
+  %i.bz = load double, ptr %12, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   invoke void @_ZN12QCPGraphDataC1Edd(ptr noundef nonnull align 8 dereferenceable_or_null(16) %4, double noundef %i.bz, double noundef 0.000000e+00)
           to label %.noexc54 unwind label %bb.ac
@@ -815,8 +818,7 @@ _ZNK16QCPDataContainerI12QCPGraphDataE7findEndEdb.exit: ; preds = %_ZSt9__advanc
   br i1 %i.cp, label %bb.ad, label %.preheader
 
 .preheader:                                       ; preds = %_ZNK16QCPDataContainerI12QCPGraphDataE7findEndEdb.exit
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.cq = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br label %bb.q
 
@@ -832,7 +834,7 @@ bb.q:                                             ; preds = %.preheader, %_ZNK8Q
   %i.cu = load double, ptr %i.ct, align 8         ; 2 uses
   %i.cv = load double, ptr %7, align 8
   %i.cw = fcmp oge double %i.cu, %i.cv
-  %i.cx = load double, ptr %12, align 8
+  %i.cx = load double, ptr %i.cq, align 8
   %i.cy = fcmp ole double %i.cu, %i.cx
   %or.cond = select i1 %i.cw, i1 %i.cy, i1 false  ; 2 uses
   br i1 %i.cs, label %bb.r, label %bb.u
@@ -844,7 +846,7 @@ bb.s:                                             ; preds = %bb.r
   %i.cz = load double, ptr %.sroa.0.093, align 8  ; 2 uses
   %i.da = load double, ptr %6, align 8
   %i.db = fcmp oge double %i.cz, %i.da
-  %i.dc = load double, ptr %i.cq, align 8
+  %i.dc = load double, ptr %12, align 8
   %i.dd = fcmp ole double %i.cz, %i.dc
   %or.cond84 = select i1 %i.db, i1 %i.dd, i1 false
   br i1 %or.cond84, label %bb.t, label %_ZNK8QCPRange8containsEd.exit.thread
@@ -871,7 +873,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dq = load double, ptr %.sroa.0.093, align 8  ; 2 uses
   %i.dr = load double, ptr %6, align 8
   %i.ds = fcmp oge double %i.dq, %i.dr
-  %i.dt = load double, ptr %i.cq, align 8
+  %i.dt = load double, ptr %12, align 8
   %i.du = fcmp ole double %i.dq, %i.dt
   %or.cond90 = select i1 %i.ds, i1 %i.du, i1 false
   br i1 %or.cond90, label %_ZNK8QCPRange8containsEd.exit.thread, label %_ZNK8QCPRange8containsEd.exit56.thread
@@ -1274,7 +1276,7 @@ _ZN16QCPDataSelectionD2Ev.exit:                   ; preds = %bb.ab, %_ZN17QArray
   br label %_ZNK8QPointerI7QCPAxisEcvPS0_Ev.exit.thread
 
 bb.ad:                                            ; preds = %bb.v, %bb.w, %bb.s
-  %.pn44.pn.pn.pn = phi { ptr, i32 } [ %i.cl, %bb.s ], [ %i.cu, %bb.w ], [ %i.ct, %bb.v ]
+  %.pn44.pn.pn.pn = phi { ptr, i32 } [ %i.cl, %bb.s ], [ %i.ct, %bb.v ], [ %i.cu, %bb.w ]
   %i.cz = load ptr, ptr %4, align 8               ; 2 uses
   %.not.i.i.i.i83 = icmp eq ptr %i.cz, null
   br i1 %.not.i.i.i.i83, label %_ZN16QCPDataSelectionD2Ev.exit86, label %_ZN17QArrayDataPointerI12QCPDataRangeE5derefEv.exit.i.i.i84
@@ -1677,16 +1679,6 @@ bb.i:                                             ; preds = %_ZNK20QCPAbstractPl
   invoke void @_ZN8QCPRangeC1Edd(ptr noundef nonnull align 8 dereferenceable_or_null(16) %5, double noundef %i.aq, double noundef %i.ar)
           to label %bb.j unwind label %bb.w
 
-8:                                                ; preds = %bb.h, %_ZNK20QCPAbstractPlottable14pixelsToCoordsERK7QPointFRdS3_.exit
-  %9 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.aa
-
-10:                                               ; preds = %_ZNK20QCPAbstractPlottable14pixelsToCoordsERK7QPointFRdS3_.exit41
-  %11 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.z
-
 bb.j:                                             ; preds = %bb.i
   %i.as = load ptr, ptr %i.h, align 8             ; 3 uses
   %i.at = getelementptr i8, ptr %i.as, i64 16
@@ -1701,6 +1693,16 @@ bb.j:                                             ; preds = %bb.i
   %i.ba = getelementptr i8, ptr %i.au, i64 %.idx92 ; 2 uses
   %i.bb = icmp eq i64 %.idx, %.idx92
   br i1 %i.bb, label %bb.x, label %.lr.ph
+
+8:                                                ; preds = %bb.h, %_ZNK20QCPAbstractPlottable14pixelsToCoordsERK7QPointFRdS3_.exit
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.aa
+
+10:                                               ; preds = %_ZNK20QCPAbstractPlottable14pixelsToCoordsERK7QPointFRdS3_.exit41
+  %11 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.z
 
 .lr.ph:                                           ; preds = %bb.j
   %i.bc = getelementptr i8, ptr %i.au, i64 %.idx
@@ -2104,7 +2106,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 5 uses
   %i.d = alloca double, align 8                   ; 5 uses
-  %6 = alloca %class.QCPRange, align 8            ; 9 uses
+  %6 = alloca %class.QCPRange, align 8            ; 8 uses
   %7 = alloca %class.QCPRange, align 8            ; 6 uses
   %8 = alloca %class.QCPDataRange, align 4        ; 5 uses
   %9 = alloca %class.QCPDataRange, align 4        ; 5 uses
@@ -2208,10 +2210,13 @@ bb.j:                                             ; preds = %bb.i
   %i.ax = sext i32 %i.aw to i64                   ; 2 uses
   %i.ay = getelementptr i8, ptr %i.as, i64 24
   %i.az = load i64, ptr %i.ay, align 8            ; 3 uses
-  %10 = getelementptr [16 x i8], ptr %i.au, i64 %i.az
   %i.ba = trunc i64 %i.az to i32
   %i.bb = icmp eq i32 %i.aw, %i.ba
-  br i1 %i.bb, label %_ZNK16QCPDataContainerI11QCPBarsDataE9findBeginEdb.exit, label %bb.k
+  br i1 %i.bb, label %10, label %bb.k
+
+10:                                               ; preds = %bb.j
+  %11 = getelementptr [16 x i8], ptr %i.au, i64 %i.az
+  br label %_ZNK16QCPDataContainerI11QCPBarsDataE9findBeginEdb.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.bc = load double, ptr %6, align 8
@@ -2245,9 +2250,10 @@ _ZSt9__advanceIN5QListI11QCPBarsDataE14const_iteratorExEvRT_T0_St26random_access
   %i.bo = icmp sgt i64 %.1.i.i.i, 0
   br i1 %i.bo, label %_ZSt9__advanceIN5QListI11QCPBarsDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, label %_ZNK16QCPDataContainerI11QCPBarsDataE9findBeginEdb.exit, !llvm.loop !73
 
-_ZNK16QCPDataContainerI11QCPBarsDataE9findBeginEdb.exit: ; preds = %_ZSt9__advanceIN5QListI11QCPBarsDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, %bb.j, %.noexc
-  %.sroa.04.0.i = phi ptr [ %10, %bb.j ], [ %i.bd, %.noexc ], [ %.sroa.012.1.i.i.i, %_ZSt9__advanceIN5QListI11QCPBarsDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i ] ; 2 uses
+_ZNK16QCPDataContainerI11QCPBarsDataE9findBeginEdb.exit: ; preds = %_ZSt9__advanceIN5QListI11QCPBarsDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, %10, %.noexc
+  %.sroa.04.0.i = phi ptr [ %11, %10 ], [ %i.bd, %.noexc ], [ %.sroa.012.1.i.i.i, %_ZSt9__advanceIN5QListI11QCPBarsDataE14const_iteratorExEvRT_T0_St26random_access_iterator_tag.exit.i.i.i ] ; 2 uses
   %i.bp = load ptr, ptr %i.h, align 8             ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.bq = getelementptr i8, ptr %i.bp, i64 24
   %i.br = load i64, ptr %i.bq, align 8            ; 3 uses
   %i.bs = getelementptr i8, ptr %i.bp, i64 32
@@ -2263,8 +2269,7 @@ bb.l:                                             ; preds = %_ZNK16QCPDataContai
   br label %_ZNK16QCPDataContainerI11QCPBarsDataE7findEndEdb.exit
 
 bb.m:                                             ; preds = %_ZNK16QCPDataContainerI11QCPBarsDataE9findBeginEdb.exit
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.bz = load double, ptr %11, align 8
+  %i.bz = load double, ptr %12, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   invoke void @_ZN11QCPBarsDataC1Edd(ptr noundef nonnull align 8 dereferenceable_or_null(16) %4, double noundef %i.bz, double noundef 0.000000e+00)
           to label %.noexc54 unwind label %bb.ac
@@ -2312,8 +2317,7 @@ _ZNK16QCPDataContainerI11QCPBarsDataE7findEndEdb.exit: ; preds = %_ZSt9__advance
   br i1 %i.cp, label %bb.ad, label %.preheader
 
 .preheader:                                       ; preds = %_ZNK16QCPDataContainerI11QCPBarsDataE7findEndEdb.exit
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.cq = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br label %bb.q
 
@@ -2329,7 +2333,7 @@ bb.q:                                             ; preds = %.preheader, %_ZNK8Q
   %i.cu = load double, ptr %i.ct, align 8         ; 2 uses
   %i.cv = load double, ptr %7, align 8
   %i.cw = fcmp oge double %i.cu, %i.cv
-  %i.cx = load double, ptr %12, align 8
+  %i.cx = load double, ptr %i.cq, align 8
   %i.cy = fcmp ole double %i.cu, %i.cx
   %or.cond = select i1 %i.cw, i1 %i.cy, i1 false  ; 2 uses
   br i1 %i.cs, label %bb.r, label %bb.u
@@ -2341,7 +2345,7 @@ bb.s:                                             ; preds = %bb.r
   %i.cz = load double, ptr %.sroa.0.093, align 8  ; 2 uses
   %i.da = load double, ptr %6, align 8
   %i.db = fcmp oge double %i.cz, %i.da
-  %i.dc = load double, ptr %i.cq, align 8
+  %i.dc = load double, ptr %12, align 8
   %i.dd = fcmp ole double %i.cz, %i.dc
   %or.cond84 = select i1 %i.db, i1 %i.dd, i1 false
   br i1 %or.cond84, label %bb.t, label %_ZNK8QCPRange8containsEd.exit.thread
@@ -2368,7 +2372,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dq = load double, ptr %.sroa.0.093, align 8  ; 2 uses
   %i.dr = load double, ptr %6, align 8
   %i.ds = fcmp oge double %i.dq, %i.dr
-  %i.dt = load double, ptr %i.cq, align 8
+  %i.dt = load double, ptr %12, align 8
   %i.du = fcmp ole double %i.dq, %i.dt
   %or.cond90 = select i1 %i.ds, i1 %i.du, i1 false
   br i1 %or.cond90, label %_ZNK8QCPRange8containsEd.exit.thread, label %_ZNK8QCPRange8containsEd.exit56.thread
@@ -2771,10 +2775,14 @@ bb.j:                                             ; preds = %bb.i
   %i.ax = sext i32 %i.aw to i64                   ; 2 uses
   %i.ay = getelementptr i8, ptr %i.as, i64 24
   %i.az = load i64, ptr %i.ay, align 8            ; 4 uses
-  %10 = getelementptr [40 x i8], ptr %i.au, i64 %i.az
   %i.ba = trunc i64 %i.az to i32
   %i.bb = icmp eq i32 %i.aw, %i.ba
-  br i1 %i.bb, label %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a, label %bb.k
+  br i1 %i.bb, label %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread, label %bb.k
+
+_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread: ; preds = %bb.j
+  %10 = getelementptr [40 x i8], ptr %i.au, i64 %i.az
+  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  br label %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a
 
 bb.k:                                             ; preds = %bb.j
   %i.bc = load double, ptr %6, align 8
@@ -2822,18 +2830,19 @@ _ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit: ; preds = %_ZSt9__
   %.pre98 = load ptr, ptr %.phi.trans.insert97, align 8 ; 2 uses
   %.pre99 = trunc i64 %.pre94.a to i32
   %i.bp = icmp eq i32 %.pre96.a, %.pre99
+  %12 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   br i1 %i.bp, label %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a, label %bb.l
 
-_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a: ; preds = %bb.j, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit
-  %.sroa.0.0.i110 = phi ptr [ %.sroa.012.0.lcssa.i.i.i, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit ], [ %10, %bb.j ]
-  %i.bq = phi i64 [ %.pre94.a, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit ], [ %i.az, %bb.j ]
-  %i.br = phi ptr [ %.pre98, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit ], [ %i.au, %bb.j ]
+_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a: ; preds = %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit
+  %13 = phi ptr [ %11, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread ], [ %12, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit ]
+  %.sroa.0.0.i110 = phi ptr [ %10, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread ], [ %.sroa.012.0.lcssa.i.i.i, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit ]
+  %i.bq = phi i64 [ %i.az, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread ], [ %.pre94.a, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit ]
+  %i.br = phi ptr [ %i.au, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread ], [ %.pre98, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit ]
   %i.bs = getelementptr [40 x i8], ptr %i.br, i64 %i.bq
   br label %_ZNK16QCPDataContainerI16QCPFinancialDataE7findEndEdb.exit
 
 bb.l:                                             ; preds = %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.bt = load double, ptr %11, align 8
+  %i.bt = load double, ptr %12, align 8
   %i.bu = sext i32 %.pre96.a to i64               ; 2 uses
   %.idx6.i40 = mul nsw i64 %i.bu, 40
   %i.bv = getelementptr i8, ptr %.pre98, i64 %.idx6.i40 ; 2 uses
@@ -2883,14 +2892,14 @@ bb.n:                                             ; preds = %_ZNK20QCPAbstractPl
   br label %bb.ae
 
 _ZNK16QCPDataContainerI16QCPFinancialDataE7findEndEdb.exit: ; preds = %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a, %_ZSt11upper_boundIN5QListI16QCPFinancialDataE14const_iteratorES1_PFbRKS1_S5_EET_S8_S8_RKT0_T1_.exit.i
+  %14 = phi ptr [ %13, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a ], [ %12, %_ZSt11upper_boundIN5QListI16QCPFinancialDataE14const_iteratorES1_PFbRKS1_S5_EET_S8_S8_RKT0_T1_.exit.i ] ; 2 uses
   %.sroa.0.0.i109 = phi ptr [ %.sroa.0.0.i110, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a ], [ %.sroa.012.0.lcssa.i.i.i, %_ZSt11upper_boundIN5QListI16QCPFinancialDataE14const_iteratorES1_PFbRKS1_S5_EET_S8_S8_RKT0_T1_.exit.i ] ; 2 uses
   %.sroa.0.0.i44 = phi ptr [ %i.bs, %_ZNK16QCPDataContainerI16QCPFinancialDataE9findBeginEdb.exit.thread.a ], [ %.sroa.012.0.lcssa.i.i.i43, %_ZSt11upper_boundIN5QListI16QCPFinancialDataE14const_iteratorES1_PFbRKS1_S5_EET_S8_S8_RKT0_T1_.exit.i ] ; 3 uses
   %i.cj = icmp eq ptr %.sroa.0.0.i109, %.sroa.0.0.i44
   br i1 %i.cj, label %bb.ac, label %.preheader
 
 .preheader:                                       ; preds = %_ZNK16QCPDataContainerI16QCPFinancialDataE7findEndEdb.exit
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.ck = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br label %bb.p
 
@@ -2906,7 +2915,7 @@ bb.p:                                             ; preds = %.preheader, %_ZNK8Q
   %i.co = load double, ptr %i.cn, align 8         ; 2 uses
   %i.cp = load double, ptr %7, align 8
   %i.cq = fcmp oge double %i.co, %i.cp
-  %i.cr = load double, ptr %12, align 8
+  %i.cr = load double, ptr %i.ck, align 8
   %i.cs = fcmp ole double %i.co, %i.cr
   %or.cond = select i1 %i.cq, i1 %i.cs, i1 false  ; 2 uses
   br i1 %i.cm, label %bb.q, label %bb.t
@@ -2918,7 +2927,7 @@ bb.r:                                             ; preds = %bb.q
   %i.ct = load double, ptr %.sroa.0.092, align 8  ; 2 uses
   %i.cu = load double, ptr %6, align 8
   %i.cv = fcmp oge double %i.ct, %i.cu
-  %i.cw = load double, ptr %i.ck, align 8
+  %i.cw = load double, ptr %14, align 8
   %i.cx = fcmp ole double %i.ct, %i.cw
   %or.cond83 = select i1 %i.cv, i1 %i.cx, i1 false
   br i1 %or.cond83, label %bb.s, label %_ZNK8QCPRange8containsEd.exit.thread
@@ -2945,7 +2954,7 @@ bb.u:                                             ; preds = %bb.t
   %i.dk = load double, ptr %.sroa.0.092, align 8  ; 2 uses
   %i.dl = load double, ptr %6, align 8
   %i.dm = fcmp oge double %i.dk, %i.dl
-  %i.dn = load double, ptr %i.ck, align 8
+  %i.dn = load double, ptr %14, align 8
   %i.do = fcmp ole double %i.dk, %i.dn
   %or.cond89 = select i1 %i.dm, i1 %i.do, i1 false
   br i1 %or.cond89, label %_ZNK8QCPRange8containsEd.exit.thread, label %_ZNK8QCPRange8containsEd.exit55.thread

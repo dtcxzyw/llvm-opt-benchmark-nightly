@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/unistr?download=true
-inline.NumInlined: 387
+inline.NumInlined: 388
 inline.NumDeleted: 66
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -182,17 +182,17 @@ bb.e:                                             ; preds = %_ZN6icu_7813Unicode
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   br label %4
 
-4:                                                ; preds = %_ZN6icu_7813UnicodeString10setToBogusEv.exit, %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
-  ret void
-
-bb.f:                                             ; preds = %_ZN6icu_7813UnicodeString6appendERKS0_.exit17, %.sink.split.i.i.i, %.sink.split.i.i.i11
+bb.f:                                             ; preds = %.sink.split.i.i.i11, %.sink.split.i.i.i, %_ZN6icu_7813UnicodeString6appendERKS0_.exit17
   %i.ay = landingpad { ptr, i32 }
           cleanup
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %3) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   resume { ptr, i32 } %i.ay
+
+4:                                                ; preds = %_ZN6icu_7813UnicodeString10setToBogusEv.exit, %bb.e
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  ret void
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -329,17 +329,17 @@ bb.g:                                             ; preds = %_ZN6icu_7813Unicode
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   br label %5
 
-5:                                                ; preds = %_ZN6icu_7813UnicodeString10setToBogusEv.exit, %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
-  ret void
-
-bb.h:                                             ; preds = %_ZN6icu_7813UnicodeString6appendISt17basic_string_viewIDsSt11char_traitsIDsEEvEERS0_RKT_.exit, %.sink.split.i.i.i, %bb.f
+bb.h:                                             ; preds = %bb.f, %.sink.split.i.i.i, %_ZN6icu_7813UnicodeString6appendISt17basic_string_viewIDsSt11char_traitsIDsEEvEERS0_RKT_.exit
   %i.ak = landingpad { ptr, i32 }
           cleanup
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   resume { ptr, i32 } %i.ak
+
+5:                                                ; preds = %_ZN6icu_7813UnicodeString10setToBogusEv.exit, %bb.g
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  ret void
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
@@ -742,43 +742,61 @@ bb.am:                                            ; preds = %bb.d, %.thread85, %
 
 declare void @u_charsToUChars_78(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #7
 
-; Function Attrs: mustprogress uwtable
-define void @_ZN6icu_7813UnicodeString30readOnlyAliasFromU16StringViewESt17basic_string_viewIDsSt11char_traitsIDsEE(ptr dead_on_unwind noalias writable sret(%"class.icu_78::UnicodeString") align 8 initializes((0, 10)) %0, i64 %1, ptr %2) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
+; Function Attrs: mustprogress nounwind uwtable
+define void @_ZN6icu_7813UnicodeString30readOnlyAliasFromU16StringViewESt17basic_string_viewIDsSt11char_traitsIDsEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.icu_78::UnicodeString") align 8 captures(none) initializes((0, 10)) %0, i64 %1, ptr %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.icu_78::ConstChar16Ptr", align 8 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %0, align 8, !tbaa !11
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store i16 2, ptr %i.a, align 8, !tbaa !9
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = icmp ult i64 %1, 2147483648
-  br i1 %i.b, label %bb.b, label %_ZN6icu_7813UnicodeString10setToBogusEv.exit.a
+  br i1 %i.b, label %3, label %bb.e
 
-bb.b:                                             ; preds = %bb.a
-  store ptr %2, ptr %3, align 8, !tbaa !22
-  %4 = trunc nuw nsw i64 %1 to i32
-  %5 = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString5setToEaNS_14ConstChar16PtrEi(ptr noundef nonnull align 8 dereferenceable(64) %0, i8 noundef signext 0, ptr noundef nonnull align 8 %3, i32 noundef %4)
-          to label %bb.c unwind label %bb.e       ; 0 uses
+3:                                                ; preds = %bb.a
+  %4 = trunc nuw nsw i64 %1 to i32                ; 2 uses
+  %5 = icmp eq ptr %2, null
+  br i1 %5, label %_ZN6icu_7813UnicodeString12releaseArrayEv.exit.i, label %_ZN6icu_7813UnicodeString12releaseArrayEv.exit24.i
 
-bb.c:                                             ; preds = %bb.b
-  tail call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %2) #22, !srcloc !25
+_ZN6icu_7813UnicodeString12releaseArrayEv.exit.i: ; preds = %3
+  store i16 2, ptr %i.a, align 8, !tbaa !9
   br label %bb.d
 
-_ZN6icu_7813UnicodeString10setToBogusEv.exit.a:   ; preds = %bb.a
-  store i16 1, ptr %i.a, align 8, !tbaa !9
+_ZN6icu_7813UnicodeString12releaseArrayEv.exit24.i: ; preds = %3
+  %6 = icmp samesign ult i64 %1, 1024
+  br i1 %6, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %_ZN6icu_7813UnicodeString12releaseArrayEv.exit24.i
+  %.tr.i.i.i.i = trunc nuw nsw i64 %1 to i16
+  %7 = shl nuw nsw i16 %.tr.i.i.i.i, 5
+  %8 = or disjoint i16 %7, 8
+  br label %_ZN6icu_7813UnicodeString10setToBogusEv.exit.a
+
+bb.c:                                             ; preds = %_ZN6icu_7813UnicodeString12releaseArrayEv.exit24.i
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i32 %4, ptr %9, align 4, !tbaa !9
+  br label %_ZN6icu_7813UnicodeString10setToBogusEv.exit.a
+
+_ZN6icu_7813UnicodeString10setToBogusEv.exit.a:   ; preds = %bb.c, %bb.b
+  %.sink.i.i = phi i16 [ %8, %bb.b ], [ -24, %bb.c ]
+  store i16 %.sink.i.i, ptr %i.a, align 8, !tbaa !9
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr null, ptr %i.c, align 8, !tbaa !9
+  store ptr %2, ptr %i.c, align 8, !tbaa !9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 0, ptr %i.d, align 8, !tbaa !9
+  store i32 %4, ptr %i.d, align 8, !tbaa !9
   br label %bb.d
 
-bb.d:                                             ; preds = %_ZN6icu_7813UnicodeString10setToBogusEv.exit.a, %bb.c
-  ret void
-
-bb.e:                                             ; preds = %bb.b
-  %6 = landingpad { ptr, i32 }
-          cleanup
+bb.d:                                             ; preds = %_ZN6icu_7813UnicodeString10setToBogusEv.exit.a, %_ZN6icu_7813UnicodeString12releaseArrayEv.exit.i
   tail call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %2) #22, !srcloc !25
-  tail call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %0) #22
-  resume { ptr, i32 } %6
+  br label %12
+
+bb.e:                                             ; preds = %bb.a
+  store i16 1, ptr %i.a, align 8, !tbaa !9
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store ptr null, ptr %10, align 8, !tbaa !9
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 0, ptr %11, align 8, !tbaa !9
+  br label %12
+
+12:                                               ; preds = %bb.e, %bb.d
+  ret void
 }
 
 ; Function Attrs: mustprogress uwtable

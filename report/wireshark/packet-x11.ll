@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-x11?download=true
-inline.NumInlined: 1770
-inline.NumDeleted: 948
+inline.NumInlined: 1773
+inline.NumDeleted: 949
 loop-unroll.NumCompletelyUnrolled: 129
 loop-unroll.NumRuntimeUnrolled: 2
 loop-unroll.NumUnrolled: 137
@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal void @dispatch_xkb(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef %2, ptr noundef %3, i32 noundef %4) #1 {
+define internal void @dispatch_xkb(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) #1 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = load i32, ptr @hf_x11_xkb_extension_minor, align 4
@@ -608,7 +608,7 @@ listOfCard32.exit:                                ; preds = %.lr.ph.i, %.lr.ph
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal fastcc void @struct_xkb_Action(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr noundef %2, i32 noundef %3, i32 noundef range(i32 0, 65536) %4) unnamed_addr #1 {
+define internal fastcc void @struct_xkb_Action(ptr noundef %0, ptr nofree noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef range(i32 0, 65536) %4) unnamed_addr #1 {
 bb.a:
   %i.a = load i32, ptr %1, align 4                ; 2 uses
   %.not = icmp eq i32 %4, 0
@@ -616,7 +616,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.0144 = phi i32 [ %i.la, %.lr.ph ], [ 0, %bb.a ]
-  %.0142143 = phi i32 [ %i.kz, %.lr.ph ], [ %i.a, %bb.a ] ; 37 uses
+  %.0142143 = phi i32 [ %i.kz, %.lr.ph ], [ %i.a, %bb.a ] ; 40 uses
   %i.b = load i32, ptr @hf_x11_union_xkb_Action, align 4
   %i.c = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.b, ptr noundef %0, i32 noundef %.0142143, i32 noundef 8, i32 noundef 0)
   %i.d = load i32, ptr @ett_x11_rectangle, align 4
@@ -638,11 +638,68 @@ bb.a:
   store i32 %.0142143, ptr %1, align 4
   tail call fastcc void @struct_xkb_SASetMods(ptr noundef %0, ptr noundef %1, ptr noundef %i.e, i32 noundef %3)
   store i32 %.0142143, ptr %1, align 4
-  tail call fastcc void @struct_xkb_SASetGroup(ptr noundef %0, ptr noundef %1, ptr noundef %i.e, i32 noundef %3)
+  %5 = load i32, ptr @hf_x11_struct_xkb_SASetGroup, align 4
+  %6 = tail call ptr @proto_tree_add_item(ptr noundef %i.e, i32 noundef %5, ptr noundef %0, i32 noundef %.0142143, i32 noundef 8, i32 noundef 0)
+  %7 = load i32, ptr @ett_x11_rectangle, align 4
+  %8 = tail call ptr @proto_item_add_subtree(ptr noundef %6, i32 noundef %7) ; 4 uses
+  %9 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_type, align 4
+  %10 = tail call fastcc i32 @field8(ptr noundef %0, ptr noundef %1, ptr noundef %8, i32 noundef %9, i32 noundef %3) ; 0 uses
+  %11 = load i32, ptr %1, align 4
+  %12 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_flags, align 4
+  %13 = load i32, ptr @ett_x11_rectangle, align 4
+  %14 = tail call ptr @proto_tree_add_bitmask(ptr noundef %8, ptr noundef %0, i32 noundef %11, i32 noundef %12, i32 noundef %13, ptr noundef @struct_xkb_SASetGroup.flags_bits, i32 noundef %3) ; 0 uses
+  %15 = load i32, ptr %1, align 4
+  %16 = add i32 %15, 1                            ; 2 uses
+  store i32 %16, ptr %1, align 4
+  %17 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_group, align 4
+  %18 = tail call ptr @proto_tree_add_item(ptr noundef %8, i32 noundef %17, ptr noundef %0, i32 noundef %16, i32 noundef 1, i32 noundef %3) ; 0 uses
+  %19 = load i32, ptr %1, align 4
+  %20 = add i32 %19, 1                            ; 2 uses
+  store i32 %20, ptr %1, align 4
+  %21 = load i32, ptr @hf_x11_unused, align 4
+  %22 = tail call ptr @proto_tree_add_item(ptr noundef %8, i32 noundef %21, ptr noundef %0, i32 noundef %20, i32 noundef 5, i32 noundef 0) ; 0 uses
   store i32 %.0142143, ptr %1, align 4
-  tail call fastcc void @struct_xkb_SASetGroup(ptr noundef %0, ptr noundef %1, ptr noundef %i.e, i32 noundef %3)
+  %23 = load i32, ptr @hf_x11_struct_xkb_SASetGroup, align 4
+  %24 = tail call ptr @proto_tree_add_item(ptr noundef %i.e, i32 noundef %23, ptr noundef %0, i32 noundef %.0142143, i32 noundef 8, i32 noundef 0)
+  %25 = load i32, ptr @ett_x11_rectangle, align 4
+  %26 = tail call ptr @proto_item_add_subtree(ptr noundef %24, i32 noundef %25) ; 4 uses
+  %27 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_type, align 4
+  %28 = tail call fastcc i32 @field8(ptr noundef %0, ptr noundef %1, ptr noundef %26, i32 noundef %27, i32 noundef %3) ; 0 uses
+  %29 = load i32, ptr %1, align 4
+  %30 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_flags, align 4
+  %31 = load i32, ptr @ett_x11_rectangle, align 4
+  %32 = tail call ptr @proto_tree_add_bitmask(ptr noundef %26, ptr noundef %0, i32 noundef %29, i32 noundef %30, i32 noundef %31, ptr noundef @struct_xkb_SASetGroup.flags_bits, i32 noundef %3) ; 0 uses
+  %33 = load i32, ptr %1, align 4
+  %34 = add i32 %33, 1                            ; 2 uses
+  store i32 %34, ptr %1, align 4
+  %35 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_group, align 4
+  %36 = tail call ptr @proto_tree_add_item(ptr noundef %26, i32 noundef %35, ptr noundef %0, i32 noundef %34, i32 noundef 1, i32 noundef %3) ; 0 uses
+  %37 = load i32, ptr %1, align 4
+  %38 = add i32 %37, 1                            ; 2 uses
+  store i32 %38, ptr %1, align 4
+  %39 = load i32, ptr @hf_x11_unused, align 4
+  %40 = tail call ptr @proto_tree_add_item(ptr noundef %26, i32 noundef %39, ptr noundef %0, i32 noundef %38, i32 noundef 5, i32 noundef 0) ; 0 uses
   store i32 %.0142143, ptr %1, align 4
-  tail call fastcc void @struct_xkb_SASetGroup(ptr noundef %0, ptr noundef %1, ptr noundef %i.e, i32 noundef %3)
+  %41 = load i32, ptr @hf_x11_struct_xkb_SASetGroup, align 4
+  %42 = tail call ptr @proto_tree_add_item(ptr noundef %i.e, i32 noundef %41, ptr noundef %0, i32 noundef %.0142143, i32 noundef 8, i32 noundef 0)
+  %43 = load i32, ptr @ett_x11_rectangle, align 4
+  %44 = tail call ptr @proto_item_add_subtree(ptr noundef %42, i32 noundef %43) ; 4 uses
+  %45 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_type, align 4
+  %46 = tail call fastcc i32 @field8(ptr noundef %0, ptr noundef %1, ptr noundef %44, i32 noundef %45, i32 noundef %3) ; 0 uses
+  %47 = load i32, ptr %1, align 4
+  %48 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_flags, align 4
+  %49 = load i32, ptr @ett_x11_rectangle, align 4
+  %50 = tail call ptr @proto_tree_add_bitmask(ptr noundef %44, ptr noundef %0, i32 noundef %47, i32 noundef %48, i32 noundef %49, ptr noundef @struct_xkb_SASetGroup.flags_bits, i32 noundef %3) ; 0 uses
+  %51 = load i32, ptr %1, align 4
+  %52 = add i32 %51, 1                            ; 2 uses
+  store i32 %52, ptr %1, align 4
+  %53 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_group, align 4
+  %54 = tail call ptr @proto_tree_add_item(ptr noundef %44, i32 noundef %53, ptr noundef %0, i32 noundef %52, i32 noundef 1, i32 noundef %3) ; 0 uses
+  %55 = load i32, ptr %1, align 4
+  %56 = add i32 %55, 1                            ; 2 uses
+  store i32 %56, ptr %1, align 4
+  %57 = load i32, ptr @hf_x11_unused, align 4
+  %58 = tail call ptr @proto_tree_add_item(ptr noundef %44, i32 noundef %57, ptr noundef %0, i32 noundef %56, i32 noundef 5, i32 noundef 0) ; 0 uses
   store i32 %.0142143, ptr %1, align 4
   %i.o = load i32, ptr @hf_x11_struct_xkb_SAMovePtr, align 4
   %i.p = tail call ptr @proto_tree_add_item(ptr noundef %i.e, i32 noundef %i.o, ptr noundef %0, i32 noundef %.0142143, i32 noundef 8, i32 noundef 0)
@@ -1041,35 +1098,6 @@ bb.a:
   %i.aj = load i32, ptr %1, align 4
   %i.ak = add i32 %i.aj, 2
   store i32 %i.ak, ptr %1, align 4
-  ret void
-}
-
-; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal fastcc void @struct_xkb_SASetGroup(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr noundef %2, i32 noundef %3) unnamed_addr #1 {
-  %5 = load i32, ptr @hf_x11_struct_xkb_SASetGroup, align 4
-  %6 = load i32, ptr %1, align 4
-  %7 = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %5, ptr noundef %0, i32 noundef %6, i32 noundef 8, i32 noundef 0)
-  %8 = load i32, ptr @ett_x11_rectangle, align 4
-  %9 = tail call ptr @proto_item_add_subtree(ptr noundef %7, i32 noundef %8) ; 4 uses
-  %10 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_type, align 4
-  %11 = tail call fastcc i32 @field8(ptr noundef %0, ptr noundef %1, ptr noundef %9, i32 noundef %10, i32 noundef %3) ; 0 uses
-  %12 = load i32, ptr %1, align 4
-  %13 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_flags, align 4
-  %14 = load i32, ptr @ett_x11_rectangle, align 4
-  %15 = tail call ptr @proto_tree_add_bitmask(ptr noundef %9, ptr noundef %0, i32 noundef %12, i32 noundef %13, i32 noundef %14, ptr noundef @struct_xkb_SASetGroup.flags_bits, i32 noundef %3) ; 0 uses
-  %16 = load i32, ptr %1, align 4
-  %17 = add i32 %16, 1                            ; 2 uses
-  store i32 %17, ptr %1, align 4
-  %18 = load i32, ptr @hf_x11_struct_xkb_SASetGroup_group, align 4
-  %19 = tail call ptr @proto_tree_add_item(ptr noundef %9, i32 noundef %18, ptr noundef %0, i32 noundef %17, i32 noundef 1, i32 noundef %3) ; 0 uses
-  %20 = load i32, ptr %1, align 4
-  %21 = add i32 %20, 1                            ; 2 uses
-  store i32 %21, ptr %1, align 4
-  %22 = load i32, ptr @hf_x11_unused, align 4
-  %23 = tail call ptr @proto_tree_add_item(ptr noundef %9, i32 noundef %22, ptr noundef %0, i32 noundef %21, i32 noundef 5, i32 noundef 0) ; 0 uses
-  %24 = load i32, ptr %1, align 4
-  %25 = add i32 %24, 5
-  store i32 %25, ptr %1, align 4
   ret void
 }
 
@@ -1476,7 +1504,7 @@ bb.a:
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal void @xkbGetMap_Reply(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, ptr noundef %3, i32 noundef %4) #1 {
+define internal void @xkbGetMap_Reply(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8
@@ -1879,7 +1907,7 @@ bb.a:
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal void @xkbGetKbdByName_Reply(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef %2, ptr noundef %3, i32 noundef %4) #1 {
+define internal void @xkbGetKbdByName_Reply(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8
@@ -2282,7 +2310,7 @@ bb.at:                                            ; preds = %bb.as, %listOfCard3
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal void @xkbGetDeviceInfo_Reply(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, ptr noundef %3, i32 noundef %4) #1 {
+define internal void @xkbGetDeviceInfo_Reply(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8

@@ -204,30 +204,33 @@ lv_obj_get_parent.exit:                           ; preds = %bb.a
 
 bb.b:                                             ; preds = %lv_obj_get_parent.exit
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !42   ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !42   ; 3 uses
   %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %.preheader14.i, label %bb.c
+  br i1 %i.e, label %..preheader14.i_crit_edge, label %bb.c
+
+..preheader14.i_crit_edge:                        ; preds = %bb.b
+  %.pre = load i16, ptr inttoptr (i64 64 to ptr), align 64, !tbaa !46
+  br label %.preheader14.i
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  %i.g = load i16, ptr %i.f, align 8, !tbaa !46
+  %i.g = load i16, ptr %i.f, align 8, !tbaa !46   ; 2 uses
   %i.h = zext i16 %i.g to i32
   br label %.preheader14.i
 
-.preheader14.i:                                   ; preds = %bb.b, %bb.c
-  %.0.i44 = phi i32 [ %i.h, %bb.c ], [ 0, %bb.b ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  %3 = load i16, ptr %2, align 8, !tbaa !46       ; 2 uses
-  %.not17.i = icmp eq i16 %3, 0
+.preheader14.i:                                   ; preds = %..preheader14.i_crit_edge, %bb.c
+  %2 = phi i16 [ %i.g, %bb.c ], [ %.pre, %..preheader14.i_crit_edge ] ; 2 uses
+  %.0.i = phi i32 [ %i.h, %bb.c ], [ 0, %..preheader14.i_crit_edge ] ; 2 uses
+  %.not17.i = icmp eq i16 %2, 0
   br i1 %.not17.i, label %.preheader13.i.preheader, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader14.i
-  %i.i = load ptr, ptr %i.d, align 8, !tbaa !47
-  %wide.trip.count.i = zext i16 %3 to i64
+  %i.i = load ptr, ptr %i.d, align 8, !tbaa !47   ; 6 uses
+  %wide.trip.count.i = zext i16 %2 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 8 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 9 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !41
   %i.l = icmp eq ptr %i.k, %0
@@ -245,12 +248,12 @@ bb.e:                                             ; preds = %bb.d
   br label %.preheader13.i
 
 bb.f:                                             ; preds = %bb.d
-  %i.m = trunc nuw nsw i64 %indvars.iv.i to i32   ; 4 uses
+  %i.m = trunc nuw nsw i64 %indvars.iv.i to i32   ; 3 uses
   %i.n = icmp slt i32 %1, 0
-  %i.o = select i1 %i.n, i32 %.0.i44, i32 0
-  %spec.select = add i32 %i.o, %1                 ; 8 uses
+  %i.o = select i1 %i.n, i32 %.0.i, i32 0         ; 2 uses
+  %spec.select = add nsw i32 %i.o, %1             ; 7 uses
   %i.p = icmp slt i32 %spec.select, 0
-  %.not42 = icmp sge i32 %spec.select, %.0.i44
+  %.not42 = icmp sge i32 %spec.select, %.0.i
   %or.cond.not48 = select i1 %i.p, i1 true, i1 %.not42
   %i.q = icmp eq i32 %spec.select, %i.m
   %or.cond43 = or i1 %or.cond.not48, %i.q
@@ -262,16 +265,17 @@ bb.g:                                             ; preds = %bb.f
 
 .preheader50:                                     ; preds = %bb.g
   %i.s = icmp samesign ugt i32 %spec.select, %i.m
-  %.pre = load ptr, ptr %i.d, align 8, !tbaa !47  ; 4 uses
   br i1 %i.s, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader50
   %i.t = shl nuw nsw i64 %indvars.iv.i, 3         ; 2 uses
-  %scevgep = getelementptr nuw i8, ptr %.pre, i64 %i.t
-  %i.u = getelementptr nuw i8, ptr %.pre, i64 %i.t
+  %scevgep = getelementptr nuw i8, ptr %i.i, i64 %i.t
+  %i.u = getelementptr nuw i8, ptr %i.i, i64 %i.t
   %scevgep58 = getelementptr nuw i8, ptr %i.u, i64 8
-  %i.v = xor i32 %i.m, -1
-  %i.w = add nsw i32 %spec.select, %i.v
+  %3 = trunc i64 %indvars.iv.i to i32
+  %i.v = xor i32 %3, -1
+  %4 = add i32 %1, %i.v
+  %i.w = add i32 %i.o, %4
   %i.x = zext i32 %i.w to i64
   %i.y = shl nuw nsw i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 8
@@ -279,7 +283,6 @@ bb.g:                                             ; preds = %bb.f
   br label %.loopexit
 
 .preheader49:                                     ; preds = %bb.g
-  %4 = load ptr, ptr %i.d, align 8, !tbaa !47     ; 4 uses
   %i.aa = zext nneg i32 %spec.select to i64       ; 2 uses
   %i.ab = sub nsw i64 %indvars.iv.i, %i.aa        ; 3 uses
   %min.iters.check = icmp ult i64 %i.ab, 4
@@ -293,7 +296,7 @@ vector.ph:                                        ; preds = %.preheader49
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ad = sub i64 %indvars.iv.i, %index
-  %i.ae = getelementptr [8 x i8], ptr %4, i64 %i.ad ; 4 uses
+  %i.ae = getelementptr [8 x i8], ptr %i.i, i64 %i.ad ; 4 uses
   %i.af = getelementptr i8, ptr %i.ae, i64 -16
   %i.ag = getelementptr i8, ptr %i.ae, i64 -32
   %wide.load = load <2 x ptr>, ptr %i.af, align 8, !tbaa !41
@@ -316,7 +319,7 @@ scalar.ph.preheader:                              ; preds = %.preheader49, %midd
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.ak = getelementptr [8 x i8], ptr %4, i64 %indvars.iv ; 2 uses
+  %i.ak = getelementptr [8 x i8], ptr %i.i, i64 %indvars.iv ; 2 uses
   %i.al = getelementptr i8, ptr %i.ak, i64 -8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !41
   store ptr %i.am, ptr %i.ak, align 8, !tbaa !41
@@ -325,9 +328,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %i.an, label %scalar.ph, label %.loopexit, !llvm.loop !71
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %.lr.ph, %.preheader50
-  %5 = phi ptr [ %.pre, %.lr.ph ], [ %.pre, %.preheader50 ], [ %4, %middle.block ], [ %4, %scalar.ph ]
   %i.ao = zext nneg i32 %spec.select to i64
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.ao
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.ao
   store ptr %0, ptr %i.ap, align 8, !tbaa !41
   %i.aq = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.b, i32 noundef 43, ptr noundef null) #7 ; 0 uses
   %i.ar = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %i.b) #7 ; 0 uses
@@ -722,7 +724,7 @@ lv_obj_get_parent.exit.i:                         ; preds = %bb.a
 
 .preheader27.i:                                   ; preds = %lv_obj_get_parent.exit.i
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !42   ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !42   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   %i.g = load i16, ptr %i.f, align 8, !tbaa !46   ; 2 uses
   %.not32.i = icmp eq i16 %i.g, 0
@@ -769,26 +771,27 @@ lv_obj_get_index_by_type.exit.thread26:           ; preds = %lv_obj_get_parent.e
 lv_obj_get_index_by_type.exit.thread:             ; preds = %.preheader27.i
   %i.r = add nsw i32 %1, -1
   %i.s = icmp slt i32 %1, 1
-  br i1 %i.s, label %lv_obj_get_child_by_type.exit, label %.thread
+  br i1 %i.s, label %lv_obj_get_child_by_type.exit, label %.preheader33.i
 
 .preheader.i18:                                   ; preds = %lv_obj_get_index_by_type.exit.thread26, %.preheader.i18
   br label %.preheader.i18
 
-.thread:                                          ; preds = %lv_obj_get_index_by_type.exit, %lv_obj_get_index_by_type.exit.thread
-  %3 = phi i32 [ %i.r, %lv_obj_get_index_by_type.exit.thread ], [ %i.o, %lv_obj_get_index_by_type.exit ]
+.thread:                                          ; preds = %lv_obj_get_index_by_type.exit
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !42   ; 3 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !42   ; 2 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %lv_obj_get_child_by_type.exit, label %.preheader33.i
 
-.preheader33.i:                                   ; preds = %.thread
-  %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 64
+.preheader33.i:                                   ; preds = %lv_obj_get_index_by_type.exit.thread, %.thread
+  %3 = phi i32 [ %i.o, %.thread ], [ %i.r, %lv_obj_get_index_by_type.exit.thread ]
+  %4 = phi ptr [ %i.u, %.thread ], [ %i.e, %lv_obj_get_index_by_type.exit.thread ] ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 64
   %i.x = load i16, ptr %i.w, align 8, !tbaa !46   ; 2 uses
   %.not48.i = icmp eq i16 %i.x, 0
   br i1 %.not48.i, label %lv_obj_get_child_by_type.exit, label %.lr.ph43.i
 
 .lr.ph43.i:                                       ; preds = %.preheader33.i
-  %i.y = load ptr, ptr %i.u, align 8, !tbaa !47
+  %i.y = load ptr, ptr %4, align 8, !tbaa !47
   %wide.trip.count.i16 = zext i16 %i.x to i64
   br label %bb.f
 
@@ -815,8 +818,8 @@ bb.i:                                             ; preds = %bb.h, %bb.f
   %exitcond.not.i17 = icmp eq i64 %indvars.iv.next53.i, %wide.trip.count.i16
   br i1 %exitcond.not.i17, label %lv_obj_get_child_by_type.exit, label %bb.f, !llvm.loop !4
 
-lv_obj_get_child_by_type.exit:                    ; preds = %bb.i, %bb.g, %lv_obj_get_index_by_type.exit.thread26, %lv_obj_get_index_by_type.exit.thread, %.preheader33.i, %.thread, %lv_obj_get_index_by_type.exit
-  %.0 = phi ptr [ null, %lv_obj_get_index_by_type.exit ], [ null, %.thread ], [ null, %.preheader33.i ], [ null, %lv_obj_get_index_by_type.exit.thread26 ], [ null, %lv_obj_get_index_by_type.exit.thread ], [ %i.aa, %bb.g ], [ null, %bb.i ]
+lv_obj_get_child_by_type.exit:                    ; preds = %bb.i, %bb.g, %lv_obj_get_index_by_type.exit.thread26, %.preheader33.i, %.thread, %lv_obj_get_index_by_type.exit.thread, %lv_obj_get_index_by_type.exit
+  %.0 = phi ptr [ null, %lv_obj_get_index_by_type.exit.thread ], [ null, %lv_obj_get_index_by_type.exit ], [ null, %.thread ], [ null, %.preheader33.i ], [ null, %lv_obj_get_index_by_type.exit.thread26 ], [ %i.aa, %bb.g ], [ null, %bb.i ]
   ret ptr %.0
 }
 

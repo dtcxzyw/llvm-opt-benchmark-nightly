@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xet-core-rs/original/xet_data-86dac44e6197ce72.xet_data.e57936c3af4ef8b8-cgu.13?download=true
-inline.NumInlined: 1140
+inline.NumInlined: 1141
 inline.NumDeleted: 613
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 7
@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %.critedge.i.thread
 
 bb.d:                                             ; preds = %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCsjHtSR7YjKD4_8xet_data.exit.thread.i.i, %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCsjHtSR7YjKD4_8xet_data.exit.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %.val1, i64 212 ; 4 uses
-  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 200 ; 5 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %.val1, i64 112 ; 4 uses
+  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 200 ; 6 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.val1, i64 112 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.val1, i64 88
   %i.o = getelementptr inbounds nuw i8, ptr %.val1, i64 104 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.val1, i64 96
@@ -329,7 +329,7 @@ bb.l:                                             ; preds = %bb.k
 default.unreachable:                              ; preds = %bb.g, %bb.f
   unreachable
 
-.loopexit.split-lp.i:                             ; preds = %bb.ah, %bb.h
+.loopexit.split-lp.i:                             ; preds = %bb.h
   %lpad.loopexit.split-lp.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.n
@@ -338,7 +338,7 @@ bb.m:                                             ; preds = %bb.i
   tail call void @llvm.trap()
   unreachable
 
-bb.n:                                             ; preds = %.body.i.i, %.loopexit.split-lp.i
+bb.n:                                             ; preds = %.loopexit.split-lp.i, %.body.i.i
   %.pn9.pn.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i, %.body.i.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   store i8 2, ptr %i.l, align 4, !noalias !1533
   resume { ptr, i32 } %.pn9.pn.i.i
@@ -425,12 +425,7 @@ bb.z:                                             ; preds = %bb.w
 
 bb.aa:                                            ; preds = %bb.y, %bb.x
   %i.bg = trunc nuw i8 %i.aq to i1
-  br i1 %i.bg, label %bb.ac, label %3
-
-3:                                                ; preds = %bb.aa
-  %4 = load ptr, ptr %i.r, align 8, !noalias !1534, !nonnull !7, !noundef !7
-  %5 = load i32, ptr %i.s, align 4, !noalias !1534, !noundef !7
-  br label %bb.ah
+  br i1 %i.bg, label %bb.ac, label %bb.ai
 
 bb.ab:                                            ; preds = %bb.y
   %i.bh = landingpad { ptr, i32 }
@@ -476,18 +471,14 @@ bb.ag:                                            ; preds = %bb.s, %bb.r
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCsUrhh0HcRih_5tokio4sync9semaphoreNtBG_9Semaphore18acquire_many_owned0ECsjHtSR7YjKD4_8xet_data(ptr noundef nonnull align 8 %i.m) #36
           to label %bb.n unwind label %bb.ak, !noalias !1545
 
-bb.ah:                                            ; preds = %bb.ad, %bb.ac, %3
-  %.sroa.823.0.ph.i.i = phi i32 [ undef, %bb.ac ], [ undef, %bb.ad ], [ %5, %3 ]
-  %.sroa.622.0.ph.i.i = phi ptr [ null, %bb.ac ], [ null, %bb.ad ], [ %4, %3 ] ; 2 uses
+bb.ah:                                            ; preds = %bb.ac, %bb.ad
   store i8 1, ptr %.phi.trans.insert.i.i, align 8, !noalias !1534
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCsUrhh0HcRih_5tokio4sync9semaphoreNtBG_9Semaphore18acquire_many_owned0ECsjHtSR7YjKD4_8xet_data(ptr noundef nonnull align 8 %i.m)
-          to label %6 unwind label %.loopexit.split-lp.i, !noalias !1545
+  br label %bb.al
 
-6:                                                ; preds = %bb.ah
-  %7 = icmp eq ptr %.sroa.622.0.ph.i.i, null
-  br i1 %7, label %bb.al, label %bb.ai
-
-bb.ai:                                            ; preds = %6
+bb.ai:                                            ; preds = %bb.aa
+  %3 = load ptr, ptr %i.r, align 8, !noalias !1534, !nonnull !7, !noundef !7
+  %4 = load i32, ptr %i.s, align 4, !noalias !1534, !noundef !7
+  store i8 1, ptr %.phi.trans.insert.i.i, align 8, !noalias !1534
   %i.bo = load i32, ptr %i.q, align 8, !noalias !1533, !noundef !7
   %i.bp = load ptr, ptr %i.o, align 8, !noalias !1533, !nonnull !7, !align !13, !noundef !7
   %.val14.i.i = load ptr, ptr %i.bp, align 8, !noalias !1545, !nonnull !7, !noundef !7 ; 2 uses
@@ -505,9 +496,11 @@ bb.ak:                                            ; preds = %.body.i.i
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #35, !noalias !1545
   unreachable
 
-bb.al:                                            ; preds = %bb.ai, %6
-  %.sroa.91.0.ph.i = phi i32 [ %i.bo, %bb.ai ], [ undef, %6 ]
-  %.sroa.5.0.ph.i = phi ptr [ %.val14.i.i, %bb.ai ], [ null, %6 ]
+bb.al:                                            ; preds = %bb.ah, %bb.ai
+  %.sroa.622.0.ph.i.i8 = phi ptr [ %3, %bb.ai ], [ null, %bb.ah ]
+  %.sroa.823.0.ph.i.i7 = phi i32 [ %4, %bb.ai ], [ undef, %bb.ah ]
+  %.sroa.91.0.ph.i = phi i32 [ %i.bo, %bb.ai ], [ undef, %bb.ah ]
+  %.sroa.5.0.ph.i = phi ptr [ %.val14.i.i, %bb.ai ], [ null, %bb.ah ]
   store i8 1, ptr %i.l, align 4, !noalias !1533
   %i.bt = load i8, ptr %.val, align 1, !noalias !1532, !noundef !7
   %i.bu = or i8 %i.bt, 2
@@ -516,9 +509,9 @@ bb.al:                                            ; preds = %bb.ai, %6
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0.ph.i, ptr %.sroa.44.0..sroa_idx.i, align 8, !alias.scope !1531
   %.sroa.44.sroa.4.0..sroa.44.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.622.0.ph.i.i, ptr %.sroa.44.sroa.4.0..sroa.44.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1531
+  store ptr %.sroa.622.0.ph.i.i8, ptr %.sroa.44.sroa.4.0..sroa.44.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1531
   %.sroa.44.sroa.5.0..sroa.44.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 %.sroa.823.0.ph.i.i, ptr %.sroa.44.sroa.5.0..sroa.44.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1531
+  store i32 %.sroa.823.0.ph.i.i7, ptr %.sroa.44.sroa.5.0..sroa.44.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1531
   %.sroa.44.sroa.7.0..sroa.44.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %.sroa.91.0.ph.i, ptr %.sroa.44.sroa.7.0..sroa.44.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1531
   br label %_RNCNCNvMNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction18file_reconstructorNtB6_17FileReconstructor8run_impl0s4_0Ba_.exit

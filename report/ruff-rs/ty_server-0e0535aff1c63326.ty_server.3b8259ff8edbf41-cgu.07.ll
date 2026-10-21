@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ty_server-0e0535aff1c63326.ty_server.3b8259ff8edbf41-cgu.07?download=true
-inline.NumInlined: 1655
+inline.NumInlined: 1656
 inline.NumDeleted: 759
 begin_hunk_0_@_RNvXs1_NtCsjNt1Wzngcv_9ty_server7sessionNtB5_13MutIndexGuardNtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4drop:bb.a
   %i.az = icmp eq i64 %i.ay, 1
@@ -202,7 +202,7 @@ bb.a:
   %.sroa.05.i = alloca [112 x i8], align 8        ; 6 uses
   %.sroa.0.i = alloca [56 x i8], align 8          ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 5 uses
-  %i.i = alloca [32 x i8], align 8                ; 10 uses
+  %i.i = alloca [32 x i8], align 8                ; 9 uses
   %i.j = alloca [16 x i8], align 8                ; 5 uses
   %i.k = alloca [16 x i8], align 8                ; 5 uses
   %i.l = alloca [16 x i8], align 8                ; 5 uses
@@ -525,8 +525,8 @@ bb.aj:                                            ; preds = %bb.ai
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #34, !noalias !2435
   unreachable
 
-common.resume.i:                                  ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscvBHLZPbXnS_10serde_json5value5ValueEECsjNt1Wzngcv_9ty_server.exit.i, %bb.av, %bb.as, %bb.al, %bb.ai, %bb.b
-  %common.resume.op.i = phi { ptr, i32 } [ %i.dl, %bb.av ], [ %i.da, %bb.al ], [ %i.cy, %bb.ai ], [ %i.dj, %bb.as ], [ %.pn94.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscvBHLZPbXnS_10serde_json5value5ValueEECsjNt1Wzngcv_9ty_server.exit.i ], [ %.pn.i, %bb.b ]
+common.resume.i:                                  ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscvBHLZPbXnS_10serde_json5value5ValueEECsjNt1Wzngcv_9ty_server.exit.i, %4, %bb.av, %bb.as, %bb.al, %bb.ai, %bb.b
+  %common.resume.op.i = phi { ptr, i32 } [ %5, %4 ], [ %i.da, %bb.al ], [ %i.dl, %bb.av ], [ %i.cy, %bb.ai ], [ %i.dj, %bb.as ], [ %.pn94.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscvBHLZPbXnS_10serde_json5value5ValueEECsjNt1Wzngcv_9ty_server.exit.i ], [ %.pn.i, %bb.b ]
   resume { ptr, i32 } %common.resume.op.i
 
 bb.ak:                                            ; preds = %bb.ag
@@ -560,7 +560,7 @@ bb.ao:                                            ; preds = %bb.an, %_RINvNtCs4N
   %.sroa.3.sroa.0.0.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.an ], [ %.sroa.6.sroa.0.0.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsjNt1Wzngcv_9ty_server8document11DocumentKeyEBF_.exit.i ]
   %.sroa.03.0.i = phi i64 [ 0, %bb.an ], [ %.sroa.0.0.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsjNt1Wzngcv_9ty_server8document11DocumentKeyEBF_.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2437
-  %i.dc = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.dc = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 4 uses
   store i64 %.sroa.03.0.i, ptr %i.dc, align 8, !noalias !2437
   %.sroa.3.0..sroa_idx5.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store ptr %.sroa.3.sroa.0.0.i, ptr %.sroa.3.0..sroa_idx5.i, align 8, !noalias !2437
@@ -572,7 +572,7 @@ bb.ao:                                            ; preds = %bb.an, %_RINvNtCs4N
   switch i32 %i.de, label %default.unreachable [
     i32 0, label %bb.bk
     i32 1, label %bb.bn
-    i32 2, label %bb.bq
+    i32 2, label %3
   ]
 
 bb.ap:                                            ; preds = %.body107.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCscvBHLZPbXnS_10serde_json5value5ValueEECsjNt1Wzngcv_9ty_server.exit.i, %.body.i, %bb.h, %bb.b
@@ -827,9 +827,25 @@ bb.bp:                                            ; preds = %bb.bo
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #34, !noalias !2445
   unreachable
 
-bb.bq:                                            ; preds = %bb.ao
+3:                                                ; preds = %bb.ao
   store i64 -1, ptr %0, align 8, !alias.scope !2435
-  call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs8w9c0syp1Hj_13ruff_notebook6schema11SourceValueECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(32) %i.i), !noalias !2435
+  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dc)
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs8w9c0syp1Hj_13ruff_notebook6schema11SourceValueECsjNt1Wzngcv_9ty_server.exit.i unwind label %4, !noalias !2435
+
+4:                                                ; preds = %3
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dc)
+          to label %common.resume.i unwind label %bb.bq, !noalias !2435
+
+bb.bq:                                            ; preds = %4
+  %6 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #34, !noalias !2435
+  unreachable
+
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs8w9c0syp1Hj_13ruff_notebook6schema11SourceValueECsjNt1Wzngcv_9ty_server.exit.i: ; preds = %3
+  call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dc), !noalias !2435
   br label %_RNCNvMNtNtCsjNt1Wzngcv_9ty_server8document8notebookNtB4_16NotebookDocument16to_ruff_notebook0B8_.exit
 
 .body.i:                                          ; preds = %bb.bl
@@ -903,7 +919,7 @@ bb.bs:                                            ; preds = %bb.bn
   store i64 %i.fx, ptr %.sroa.836.sroa.5.0..sroa.836.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !2435
   br label %_RNCNvMNtNtCsjNt1Wzngcv_9ty_server8document8notebookNtB4_16NotebookDocument16to_ruff_notebook0B8_.exit
 
-_RNCNvMNtNtCsjNt1Wzngcv_9ty_server8document8notebookNtB4_16NotebookDocument16to_ruff_notebook0B8_.exit: ; preds = %bb.bq, %bb.br, %bb.bs
+_RNCNvMNtNtCsjNt1Wzngcv_9ty_server8document8notebookNtB4_16NotebookDocument16to_ruff_notebook0B8_.exit: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs8w9c0syp1Hj_13ruff_notebook6schema11SourceValueECsjNt1Wzngcv_9ty_server.exit.i, %bb.br, %bb.bs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !2437
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
@@ -1306,7 +1322,7 @@ _RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit: ; preds = %bb.b
   %i.i = tail call noundef zeroext i1 @_RNvXs8_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_8UpperHex3fmt(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %0, ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
   br i1 %i.i, label %_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit7, label %bb.c
 
-bb.c:                                             ; preds = %.split8, %.split, %_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit
+bb.c:                                             ; preds = %_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit, %.split, %.split8
   %i.j = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !nonnull !5, !align !8, !noundef !5
@@ -1339,8 +1355,8 @@ bb.h:                                             ; preds = %bb.e
   %i.x = tail call noundef zeroext i1 @_RNvXs8_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_8UpperHex3fmt(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.p, ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
   br label %_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit7
 
-_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit7: ; preds = %bb.h, %bb.g, %bb.f, %.split8, %.split, %bb.c, %_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit
-  %.sroa.0.0 = phi i1 [ true, %bb.c ], [ true, %_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit ], [ true, %.split8 ], [ true, %.split ], [ %i.w, %bb.g ], [ %i.x, %bb.h ], [ %i.v, %bb.f ]
+_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit7: ; preds = %bb.h, %bb.g, %bb.f, %bb.c, %.split8, %.split, %_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit
+  %.sroa.0.0 = phi i1 [ %i.v, %bb.f ], [ true, %_RNvXsZ_NtNtCs4NRVxsYgnAr_4core3fmt3numjNtB7_5Debug3fmt.exit ], [ true, %bb.c ], [ true, %.split ], [ true, %.split8 ], [ %i.w, %bb.g ], [ %i.x, %bb.h ]
   ret i1 %.sroa.0.0
 }
 

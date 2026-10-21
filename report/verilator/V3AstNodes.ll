@@ -204,56 +204,81 @@ bb.a:
 define dso_local noundef ptr @_ZN11AstArraySel9baseFrompEP7AstNodeb(ptr nofree noundef readonly captures(address_is_null, ret: address, provenance) %0, i1 noundef zeroext %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %.not107 = icmp eq ptr %0, null
-  br i1 %.not107, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge, label %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a
+  br i1 %.not107, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge, label %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.lr.ph
 
-_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a:    ; preds = %bb.a, %.backedge.a
-  %.0108 = phi ptr [ %.0.be.a, %.backedge.a ], [ %0, %bb.a ] ; 4 uses
+_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.lr.ph: ; preds = %bb.a
+  br i1 %1, label %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, label %bb.b
+
+_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a:    ; preds = %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.lr.ph, %.backedge.a
+  %.0108 = phi ptr [ %.0.be.a, %.backedge.a ], [ %0, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.lr.ph ] ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.0108, i64 64
-  %.sroa.0.0.copyload.i.i.i.a = load i16, ptr %i.a, align 8, !tbaa !62 ; 4 uses
-  switch i16 %.sroa.0.0.copyload.i.i.i.a, label %bb.b [
+  %.sroa.0.0.copyload.i.i.i.a = load i16, ptr %i.a, align 8, !tbaa !62 ; 2 uses
+  switch i16 %.sroa.0.0.copyload.i.i.i.a, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit.us [
     i16 279, label %.backedge.sink.split.a
     i16 246, label %.backedge.sink.split.a
     i16 280, label %.backedge.sink.split.a
     i16 281, label %.backedge.sink.split.a
-  ]
-
-.backedge.sink.split.a:                           ; preds = %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit, %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit, %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit, %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit, %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a
-  %i.b = getelementptr inbounds nuw i8, ptr %.0108, i64 24
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !61
-  br label %.backedge.a
-
-.backedge.a:                                      ; preds = %.backedge.sink.split.a, %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit
-  %.0.be.a = phi ptr [ %i.g, %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit ], [ %i.c, %.backedge.sink.split.a ] ; 2 uses
-  %.not.a = icmp eq ptr %.0.be.a, null
-  br i1 %.not.a, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge, label %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, !llvm.loop !1204
-
-bb.b:                                             ; preds = %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a
-  br i1 %1, label %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit, label %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit
-
-_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit:     ; preds = %bb.b
-  switch i16 %.sroa.0.0.copyload.i.i.i.a, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit [
     i16 153, label %.backedge.sink.split.a
     i16 185, label %.backedge.sink.split.a
     i16 104, label %.backedge.sink.split.a
   ]
 
-_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit:         ; preds = %bb.b
-  %i.d = icmp eq i16 %.sroa.0.0.copyload.i.i.i.a, 104
-  br i1 %i.d, label %.backedge.sink.split.a, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit
+_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit.us: ; preds = %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a
+  %2 = add i16 %.sroa.0.0.copyload.i.i.i.a, -294
+  %spec.select.i.i.us = icmp ult i16 %2, 4
+  br i1 %spec.select.i.i.us, label %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit.us, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge
 
-_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit:    ; preds = %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit, %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit
-  %i.e = add i16 %.sroa.0.0.copyload.i.i.i.a, -294
+_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit.us: ; preds = %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit.us
+  %3 = getelementptr inbounds nuw i8, ptr %.0108, i64 48
+  %4 = load ptr, ptr %3, align 8, !tbaa !165      ; 2 uses
+  %.not21.us = icmp eq ptr %4, null
+  br i1 %.not21.us, label %.backedge.sink.split.a, label %.backedge.a
+
+.backedge.sink.split.a:                           ; preds = %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit.us, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a
+  %i.b = getelementptr inbounds nuw i8, ptr %.0108, i64 24
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !61
+  br label %.backedge.a
+
+.backedge.a:                                      ; preds = %.backedge.sink.split.a, %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit.us
+  %.0.be.a = phi ptr [ %4, %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit.us ], [ %i.c, %.backedge.sink.split.a ] ; 2 uses
+  %.not.a = icmp eq ptr %.0.be.a, null
+  br i1 %.not.a, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge, label %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.a, !llvm.loop !1204
+
+bb.b:                                             ; preds = %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.lr.ph, %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit
+  %.077 = phi ptr [ %.0.be, %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit ], [ %0, %_ZN7AstNode2isI11AstArraySelS_EEbPKT0_.exit.lr.ph ] ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.077, i64 64
+  %.sroa.0.0.copyload.i.i.i = load i16, ptr %5, align 8, !tbaa !62 ; 2 uses
+  switch i16 %.sroa.0.0.copyload.i.i.i, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit [
+    i16 279, label %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit
+    i16 246, label %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit
+    i16 280, label %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit
+    i16 281, label %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit
+    i16 104, label %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit
+  ]
+
+_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit:     ; preds = %bb.b, %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit, %bb.b, %bb.b, %bb.b, %bb.b
+  %6 = getelementptr inbounds nuw i8, ptr %.077, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !61
+  br label %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit
+
+_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit:         ; preds = %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit, %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit
+  %.0.be = phi ptr [ %i.g, %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit ], [ %7, %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit ] ; 2 uses
+  %i.d = icmp eq ptr %.0.be, null
+  br i1 %i.d, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge, label %bb.b, !llvm.loop !1204
+
+_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit:    ; preds = %bb.b
+  %i.e = add i16 %.sroa.0.0.copyload.i.i.i, -294
   %spec.select.i.i = icmp ult i16 %i.e, 4
   br i1 %spec.select.i.i, label %_ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit, label %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge
 
 _ZN7AstNode2asI13AstNodePreSelS_EEPT_PT0_.exit:   ; preds = %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit
-  %i.f = getelementptr inbounds nuw i8, ptr %.0108, i64 48
+  %i.f = getelementptr inbounds nuw i8, ptr %.077, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !165  ; 2 uses
   %.not21 = icmp eq ptr %i.g, null
-  br i1 %.not21, label %.backedge.sink.split.a, label %.backedge.a
+  br i1 %.not21, label %_ZN7AstNode2isI12AstMemberSelS_EEbPKT0_.exit, label %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit
 
-_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge: ; preds = %.backedge.a, %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit, %bb.a
-  %.0.lcssa = phi ptr [ null, %bb.a ], [ %.0108, %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit ], [ null, %.backedge.a ]
+_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit._crit_edge: ; preds = %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit, %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit, %.backedge.a, %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit.us, %bb.a
+  %.0.lcssa = phi ptr [ null, %bb.a ], [ %.0108, %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit.us ], [ null, %.backedge.a ], [ %.077, %_ZN7AstNode2isI13AstNodePreSelS_EEbPKT0_.exit ], [ null, %_ZN7AstNode2isI9AstAttrOfS_EEbPKT0_.exit ]
   ret ptr %.0.lcssa
 }
 
@@ -656,7 +681,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %.lr.ph.preheader
 
 .preheader:                                       ; preds = %bb.e, %bb.l, %.split
-  %.1.ph.idx = phi i64 [ %.0.idx, %.split ], [ %.6.idx, %bb.l ], [ %.0.idx, %bb.e ] ; 2 uses
+  %.1.ph.idx = phi i64 [ %.0.idx, %.split ], [ %.0.idx, %bb.e ], [ %.6.idx, %bb.l ] ; 2 uses
   %i.v = icmp samesign ugt i64 %.1.ph.idx, 16
   br i1 %i.v, label %.lr.ph.preheader, label %_ZNSt10unique_ptrIA_P7AstNodeSt14default_deleteIS2_EED2Ev.exit63, !prof !2200
 
@@ -750,8 +775,8 @@ bb.r:                                             ; preds = %bb.q
   %.not94 = icmp eq ptr %i.ba, null
   br i1 %.not94, label %.backedge, label %.split88._crit_edge
 
-.backedge:                                        ; preds = %bb.r, %bb.y, %bb.z, %.split88
-  %.1.be = phi ptr [ %.3, %.split88 ], [ %i.bn, %bb.z ], [ %.3, %bb.r ], [ %.10, %bb.y ] ; 2 uses
+.backedge:                                        ; preds = %bb.r, %bb.y, %.split88, %bb.z
+  %.1.be = phi ptr [ %.3, %.split88 ], [ %i.bn, %bb.z ], [ %.10, %bb.y ], [ %.3, %bb.r ] ; 2 uses
   %i.bb = icmp ugt ptr %.1.be, %.138
   br i1 %i.bb, label %.lr.ph, label %.split88._crit_edge, !prof !726, !llvm.loop !2199
 

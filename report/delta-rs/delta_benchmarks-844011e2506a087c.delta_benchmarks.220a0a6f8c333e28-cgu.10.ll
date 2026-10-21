@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/delta-rs/original/delta_benchmarks-844011e2506a087c.delta_benchmarks.220a0a6f8c333e28-cgu.10?download=true
-inline.NumInlined: 5210
+inline.NumInlined: 5211
 inline.NumDeleted: 2104
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !9274, !nonnull !14, !noundef !14
   %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !9274
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %.sroa.2.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.3.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -213,9 +213,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.86.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   br label %bb.c
 
-bb.c:                                             ; preds = %switch.lookup, %bb.b
-  %i.e = phi ptr [ %.promoted.i.i.i, %bb.b ], [ %i.g, %switch.lookup ] ; 3 uses
-  %.sroa.01.0.i.i.i = phi i64 [ %1, %bb.b ], [ %2, %switch.lookup ] ; 3 uses
+bb.c:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i, %bb.b
+  %i.e = phi ptr [ %.promoted.i.i.i, %bb.b ], [ %i.g, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ] ; 3 uses
+  %.sroa.01.0.i.i.i = phi i64 [ %1, %bb.b ], [ %6, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ] ; 3 uses
   %i.f = icmp eq ptr %i.e, %i.c
   br i1 %i.f, label %_RNvXs_NvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCs2VbMhdeEr66_16delta_benchmarks6OpKindENCNvXso_NtNtCs4s1dLWtJWRF_12clap_builder7builder12value_parserINtB36_15EnumValueParserB2i_ENtB36_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit, label %switch.lookup
 
@@ -235,14 +235,33 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %switch.load, ptr %.sroa.64.0..sroa_idx.i.i.i.i, align 8, !noalias !9275
   store i64 6, ptr %.sroa.75.0..sroa_idx.i.i.i.i, align 8, !noalias !9275
   store i8 0, ptr %.sroa.86.0..sroa_idx.i.i.i.i, align 8, !noalias !9275
-  %2 = add i64 %.sroa.01.0.i.i.i, -1              ; 2 uses
-  call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !9275
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !9275
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %_RNvXs_NvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCs2VbMhdeEr66_16delta_benchmarks6OpKindENCNvXso_NtNtCs4s1dLWtJWRF_12clap_builder7builder12value_parserINtB36_15EnumValueParserB2i_ENtB36_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit, label %bb.c
+  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecNtNtNtCs4s1dLWtJWRF_12clap_builder7builder3str3StrENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i unwind label %2, !noalias !9275
 
-_RNvXs_NvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCs2VbMhdeEr66_16delta_benchmarks6OpKindENCNvXso_NtNtCs4s1dLWtJWRF_12clap_builder7builder12value_parserINtB36_15EnumValueParserB2i_ENtB36_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit: ; preds = %bb.c, %switch.lookup, %bb.a
-  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %.sroa.01.0.i.i.i, %bb.c ], [ 0, %switch.lookup ]
+2:                                                ; preds = %switch.lookup
+  %3 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecNtNtNtCs4s1dLWtJWRF_12clap_builder7builder3str3StrENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %common.resume.i.i.i.i unwind label %4, !noalias !9275
+
+4:                                                ; preds = %2
+  %5 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #39, !noalias !9275
+  unreachable
+
+common.resume.i.i.i.i:                            ; preds = %2
+  resume { ptr, i32 } %3
+
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i: ; preds = %switch.lookup
+  %6 = add i64 %.sroa.01.0.i.i.i, -1              ; 2 uses
+  call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecNtNtNtCs4s1dLWtJWRF_12clap_builder7builder3str3StrENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !9275
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !9275
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %_RNvXs_NvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCs2VbMhdeEr66_16delta_benchmarks6OpKindENCNvXso_NtNtCs4s1dLWtJWRF_12clap_builder7builder12value_parserINtB36_15EnumValueParserB2i_ENtB36_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit, label %bb.c
+
+_RNvXs_NvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCs2VbMhdeEr66_16delta_benchmarks6OpKindENCNvXso_NtNtCs4s1dLWtJWRF_12clap_builder7builder12value_parserINtB36_15EnumValueParserB2i_ENtB36_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit: ; preds = %bb.c, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i, %bb.a
+  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %.sroa.01.0.i.i.i, %bb.c ], [ 0, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ]
   ret i64 %.sroa.0.1.i
 }
 
@@ -266,7 +285,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9302)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !9303, !nonnull !14, !noundef !14 ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %.sroa.2.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.3.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -275,9 +294,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.86.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   br label %bb.c
 
-bb.c:                                             ; preds = %switch.lookup, %bb.b
-  %i.e = phi ptr [ %.pre, %bb.b ], [ %i.g, %switch.lookup ] ; 3 uses
-  %.sroa.01.0.i.i.i.i = phi i64 [ %2, %bb.b ], [ %3, %switch.lookup ] ; 2 uses
+bb.c:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i, %bb.b
+  %i.e = phi ptr [ %.pre, %bb.b ], [ %i.g, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i ] ; 3 uses
+  %.sroa.01.0.i.i.i.i = phi i64 [ %2, %bb.b ], [ %7, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i ] ; 2 uses
   %i.f = icmp eq ptr %i.e, %i.c
   br i1 %i.f, label %_RNvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtCs2VbMhdeEr66_16delta_benchmarks6OpKindENCNvXso_NtNtCs4s1dLWtJWRF_12clap_builder7builder12value_parserINtB2i_15EnumValueParserB1u_ENtB2i_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator10advance_byB1w_.exit, label %switch.lookup
 
@@ -297,19 +316,38 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %switch.load, ptr %.sroa.64.0..sroa_idx.i.i.i.i.i, align 8, !noalias !9304
   store i64 6, ptr %.sroa.75.0..sroa_idx.i.i.i.i.i, align 8, !noalias !9304
   store i8 0, ptr %.sroa.86.0..sroa_idx.i.i.i.i.i, align 8, !noalias !9304
-  %3 = add i64 %.sroa.01.0.i.i.i.i, -1            ; 2 uses
-  call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !9304
+  invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecNtNtNtCs4s1dLWtJWRF_12clap_builder7builder3str3StrENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i unwind label %3, !noalias !9304
+
+3:                                                ; preds = %switch.lookup
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecNtNtNtCs4s1dLWtJWRF_12clap_builder7builder3str3StrENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %common.resume.i.i.i.i.i unwind label %5, !noalias !9304
+
+5:                                                ; preds = %3
+  %6 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #39, !noalias !9304
+  unreachable
+
+common.resume.i.i.i.i.i:                          ; preds = %3
+  resume { ptr, i32 } %4
+
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i: ; preds = %switch.lookup
+  %7 = add i64 %.sroa.01.0.i.i.i.i, -1            ; 2 uses
+  call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecNtNtNtCs4s1dLWtJWRF_12clap_builder7builder3str3StrENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !9304
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !9304
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %.loopexit, label %bb.c
+  %8 = icmp eq i64 %7, 0
+  br i1 %8, label %.loopexit, label %bb.c
 
 _RNvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtCs2VbMhdeEr66_16delta_benchmarks6OpKindENCNvXso_NtNtCs4s1dLWtJWRF_12clap_builder7builder12value_parserINtB2i_15EnumValueParserB1u_ENtB2i_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator10advance_byB1w_.exit: ; preds = %bb.c
   store i64 -9223372036854775808, ptr %0, align 8
   br label %_RNvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB5_9FilterMapINtNtNtBb_5slice4iter4IterNtCs2VbMhdeEr66_16delta_benchmarks6OpKindENCNvXso_NtNtCs4s1dLWtJWRF_12clap_builder7builder12value_parserINtB2o_15EnumValueParserB1A_ENtB2o_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator4nextB1C_.exit
 
-.loopexit:                                        ; preds = %switch.lookup, %..loopexit_crit_edge
-  %i.i = phi ptr [ %.pre4, %..loopexit_crit_edge ], [ %i.c, %switch.lookup ]
-  %i.j = phi ptr [ %.pre, %..loopexit_crit_edge ], [ %i.g, %switch.lookup ] ; 3 uses
+.loopexit:                                        ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i, %..loopexit_crit_edge
+  %i.i = phi ptr [ %.pre4, %..loopexit_crit_edge ], [ %i.c, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i ]
+  %i.j = phi ptr [ %.pre, %..loopexit_crit_edge ], [ %i.g, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4s1dLWtJWRF_12clap_builder7builder14possible_value13PossibleValueECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !9305)
   call void @llvm.experimental.noalias.scope.decl(metadata !9306)
   call void @llvm.experimental.noalias.scope.decl(metadata !9307)

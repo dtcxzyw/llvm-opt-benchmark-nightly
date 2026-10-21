@@ -122,8 +122,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.r = add i64 %i.p, %i.q
   %i.s = and i64 %i.o, 4294965248
   %i.t = or disjoint i64 %i.r, %i.s
-  %.fr.i = freeze i64 %i.t
-  %i.u = udiv i64 %.fr.i, 500                     ; 2 uses
+  %i.u = udiv i64 %i.t, 500                       ; 2 uses
   %i.v = lshr i64 %i.u, 32                        ; 5 uses
   %i.w = icmp samesign ugt i64 %i.v, %i.e
   %i.x = sub nuw nsw i64 %i.v, %i.e
@@ -158,18 +157,17 @@ bb.d:                                             ; preds = %bb.c
   %i.ao = mul nuw nsw i64 %i.an, 38400            ; 2 uses
   %i.ap = and i64 %i.ao, 281470681743360
   %i.aq = mul i64 %i.am, 38400
-  %i.ar = add i64 %i.ap, %i.aq
+  %i.ar = add i64 %i.ap, %i.aq                    ; 2 uses
   %i.as = and i64 %i.ao, 4294965248
   %i.at = or disjoint i64 %i.ar, %i.as
-  %.fr.1.i = freeze i64 %i.at                     ; 2 uses
-  %i.au = udiv i64 %.fr.1.i, 500                  ; 2 uses
+  %i.au = udiv i64 %i.at, 500                     ; 2 uses
   %i.av = lshr i64 %i.au, 32                      ; 3 uses
   %i.aw = icmp samesign ugt i64 %i.av, %i.ae
   %i.ax = sub nuw nsw i64 %i.av, %i.ae
   %i.ay = sub nuw nsw i64 %i.ae, %i.av
   %i.az = select i1 %i.aw, i64 %i.ax, i64 %i.ay
   %i.ba = udiv i64 %i.az, %i.ae
-  %i.bb = add i64 %.fr.1.i, -21474836480000000
+  %i.bb = add i64 %i.ar, -21474836480000000
   %or.cond.not64.1.i = icmp ult i64 %i.bb, 4297114779648000
   %i.bc = icmp samesign ult i64 %i.ba, %i.c
   %or.cond63.1.i = select i1 %or.cond.not64.1.i, i1 %i.bc, i1 false
@@ -572,13 +570,13 @@ intel_lt_phy_transaction_begin.exit:              ; preds = %bb.n, %bb.n, %bb.n,
   %i.ar = tail call i32 @intel_readout_lane_count(ptr noundef %0, i32 noundef 1, i32 noundef 2) #9
   %i.as = getelementptr i8, ptr %1, i64 84
   store i32 %i.ar, ptr %i.as, align 4
-  %i.at = tail call zeroext i8 @intel_cx0_read(ptr noundef %0, i8 noundef zeroext range(i8 0, 3) 1, i16 noundef zeroext 3074) #9
+  %i.at = tail call zeroext i8 @intel_cx0_read(ptr noundef %0, i8 noundef zeroext 1, i16 noundef zeroext 3074) #9
   %i.au = getelementptr i8, ptr %1, i64 78
   store i8 %i.at, ptr %i.au, align 2
   %i.av = tail call zeroext i8 @intel_cx0_read(ptr noundef %0, i8 noundef zeroext 1, i16 noundef zeroext 3075) #9
   %i.aw = getelementptr i8, ptr %1, i64 79
   store i8 %i.av, ptr %i.aw, align 1
-  %i.ax = tail call zeroext i8 @intel_cx0_read(ptr noundef %0, i8 noundef zeroext range(i8 0, 3) 1, i16 noundef zeroext 3267) #9
+  %i.ax = tail call zeroext i8 @intel_cx0_read(ptr noundef %0, i8 noundef zeroext 1, i16 noundef zeroext 3267) #9
   %i.ay = getelementptr i8, ptr %1, i64 80
   store i8 %i.ax, ptr %i.ay, align 4
   %i.az = getelementptr i8, ptr %1, i64 26

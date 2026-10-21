@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   %i.n = load ptr, ptr %i.k, align 8, !tbaa !66   ; 2 uses
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = ptrtoint ptr %i.n to i64
-  %i.q = sub i64 %i.o, %i.p                       ; 4 uses
+  %i.q = sub i64 %i.o, %i.p                       ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %.not192 = icmp eq ptr %i.m, %i.n
   br i1 %.not192, label %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE6resizeEm.exit, label %bb.i
@@ -221,18 +221,20 @@ bb.j:                                             ; preds = %bb.i
 
 _ZNKSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.i
   %i.u = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #29
-          to label %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i unwind label %bb.bh ; 4 uses
+          to label %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i unwind label %bb.bh ; 5 uses
 
 _ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i: ; preds = %_ZNKSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.u, i8 0, i64 %i.q, i1 false), !tbaa !69
   store ptr %i.u, ptr %2, align 8, !tbaa !66
-  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.q ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.q ; 2 uses
   store ptr %i.v, ptr %i.r, align 8, !tbaa !65
-  store ptr %i.v, ptr %i.s, align 8, !tbaa !70
+  %11 = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.q ; 2 uses
+  store ptr %11, ptr %i.s, align 8, !tbaa !70
   br label %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE6resizeEm.exit
 
-_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE6resizeEm.exit: ; preds = %bb.h, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i
-  %i.w = phi ptr [ %i.v, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ], [ null, %bb.h ] ; 3 uses
+_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE6resizeEm.exit: ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i, %bb.h
+  %12 = phi ptr [ %11, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ], [ null, %bb.h ]
+  %i.w = phi ptr [ %i.v, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ], [ null, %bb.h ] ; 2 uses
   %i.x = phi ptr [ %i.u, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ], [ null, %bb.h ] ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -635,7 +637,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ed, i64 8
   store ptr %i.w, ptr %i.eh, align 8, !tbaa !65
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ed, i64 16
-  store ptr %i.w, ptr %i.ei, align 8, !tbaa !70
+  store ptr %12, ptr %i.ei, align 8, !tbaa !70
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, i8 0, i64 24, i1 false)
   %i.ej = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #29
           to label %.noexc60 unwind label %bb.at  ; 5 uses
@@ -1038,7 +1040,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ck = load ptr, ptr %i.ch, align 8, !tbaa !66 ; 2 uses
   %i.cl = ptrtoint ptr %i.cj to i64
   %i.cm = ptrtoint ptr %i.ck to i64
-  %i.cn = sub i64 %i.cl, %i.cm                    ; 4 uses
+  %i.cn = sub i64 %i.cl, %i.cm                    ; 5 uses
   %i.co = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %.not158 = icmp eq ptr %i.cj, %i.ck
   br i1 %.not158, label %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE6resizeEm.exit, label %bb.x
@@ -1057,19 +1059,21 @@ bb.y:                                             ; preds = %bb.x
 
 _ZNKSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.x
   %i.cr = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cn) #29
-          to label %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
+          to label %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
 _ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i: ; preds = %_ZNKSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.cr, i8 0, i64 %i.cn, i1 false), !tbaa !69
   store ptr %i.cr, ptr %8, align 8, !tbaa !66
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cn ; 3 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cn ; 2 uses
   store ptr %i.cs, ptr %i.co, align 8, !tbaa !65
-  store ptr %i.cs, ptr %i.cp, align 8, !tbaa !70
+  %11 = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cn ; 2 uses
+  store ptr %11, ptr %i.cp, align 8, !tbaa !70
   br label %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE6resizeEm.exit
 
 _ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE6resizeEm.exit: ; preds = %bb.w, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i
-  %i.ct = phi ptr [ %i.cs, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ], [ null, %bb.w ] ; 2 uses
-  %i.cu = phi ptr [ %i.cr, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ], [ null, %bb.w ] ; 2 uses
+  %12 = phi ptr [ null, %bb.w ], [ %11, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ]
+  %i.ct = phi ptr [ null, %bb.w ], [ %i.cs, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ]
+  %i.cu = phi ptr [ null, %bb.w ], [ %i.cr, %_ZNSt12_Vector_baseISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE13_M_deallocateEPS5_m.exit37.i ] ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.cw = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.cx = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
@@ -1242,7 +1246,7 @@ bb.an:                                            ; preds = %bb.am
   %i.er = getelementptr inbounds nuw i8, ptr %i.en, i64 8
   store ptr %i.ct, ptr %i.er, align 8, !tbaa !65
   %i.es = getelementptr inbounds nuw i8, ptr %i.en, i64 16
-  store ptr %i.ct, ptr %i.es, align 8, !tbaa !70
+  store ptr %12, ptr %i.es, align 8, !tbaa !70
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, i8 0, i64 24, i1 false)
   %i.et = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #29
           to label %.noexc63 unwind label %bb.ao  ; 5 uses

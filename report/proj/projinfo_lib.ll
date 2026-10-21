@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/proj/original/projinfo_lib?download=true
-inline.NumInlined: 3852
+inline.NumInlined: 3854
 inline.NumDeleted: 1140
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 2
@@ -205,10 +205,10 @@ bb.cz:                                            ; preds = %bb.cy
 bb.da:                                            ; preds = %bb.cz
   %i.kx = getelementptr inbounds nuw i8, ptr %40, i64 8
   %i.ky = load <2 x ptr>, ptr %40, align 16, !tbaa !95
+  %57 = load ptr, ptr %40, align 16, !tbaa !141
   store ptr null, ptr %i.kx, align 8, !tbaa !98
   store <2 x ptr> %i.ky, ptr %39, align 16, !tbaa !95
   store ptr null, ptr %40, align 16, !tbaa !141
-  call void @_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %40) #31
   %i.kz = load ptr, ptr %41, align 8, !tbaa !63   ; 2 uses
   %i.la = icmp eq ptr %i.kz, %i.kv
   br i1 %i.la, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit260, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i258
@@ -217,13 +217,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i25
   %i.lb = load i64, ptr %i.kv, align 8, !tbaa !64
   %i.lc = add i64 %i.lb, 1
   call void @_ZdlPvm(ptr noundef %i.kz, i64 noundef %i.lc) #35
+  %.pre490 = load ptr, ptr %39, align 16, !tbaa !141
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit260
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit260: ; preds = %bb.da, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i258
+  %58 = phi ptr [ %.pre490, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i258 ], [ %57, %bb.da ]
   call void @llvm.lifetime.end.p0(ptr nonnull %41) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #31
-  %57 = load ptr, ptr %39, align 16, !tbaa !141
-  %i.ld = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK5osgeo4proj6common16IdentifiedObject11identifiersEv(ptr noundef nonnull align 8 dereferenceable(40) %57) #33 ; 2 uses
+  %i.ld = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK5osgeo4proj6common16IdentifiedObject11identifiersEv(ptr noundef nonnull align 8 dereferenceable(40) %58) #33 ; 2 uses
   %i.le = load ptr, ptr %i.ld, align 8, !tbaa !143
   %i.lf = getelementptr inbounds nuw i8, ptr %i.ld, i64 8
   %i.lg = load ptr, ptr %i.lf, align 8, !tbaa !143
@@ -299,10 +300,10 @@ bb.di:                                            ; preds = %bb.dh
 bb.dj:                                            ; preds = %bb.di
   %i.mc = getelementptr inbounds nuw i8, ptr %43, i64 8
   %i.md = load <2 x ptr>, ptr %43, align 16, !tbaa !95
+  %59 = load ptr, ptr %43, align 16, !tbaa !141
   store ptr null, ptr %i.mc, align 8, !tbaa !98
   store <2 x ptr> %i.md, ptr %42, align 16, !tbaa !95
   store ptr null, ptr %43, align 16, !tbaa !141
-  call void @_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %43) #31
   %i.me = load ptr, ptr %44, align 8, !tbaa !63   ; 2 uses
   %i.mf = icmp eq ptr %i.me, %i.ma
   br i1 %i.mf, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit266, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i264
@@ -311,13 +312,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i26
   %i.mg = load i64, ptr %i.ma, align 8, !tbaa !64
   %i.mh = add i64 %i.mg, 1
   call void @_ZdlPvm(ptr noundef %i.me, i64 noundef %i.mh) #35
+  %.pre492 = load ptr, ptr %42, align 16, !tbaa !141
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit266
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit266: ; preds = %bb.dj, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i264
+  %60 = phi ptr [ %.pre492, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i264 ], [ %59, %bb.dj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %44) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %43) #31
-  %58 = load ptr, ptr %42, align 16, !tbaa !141
-  %i.mi = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK5osgeo4proj6common16IdentifiedObject11identifiersEv(ptr noundef nonnull align 8 dereferenceable(40) %58) #33 ; 2 uses
+  %i.mi = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK5osgeo4proj6common16IdentifiedObject11identifiersEv(ptr noundef nonnull align 8 dereferenceable(40) %60) #33 ; 2 uses
   %i.mj = load ptr, ptr %i.mi, align 8, !tbaa !143
   %i.mk = getelementptr inbounds nuw i8, ptr %i.mi, i64 8
   %i.ml = load ptr, ptr %i.mk, align 8, !tbaa !143

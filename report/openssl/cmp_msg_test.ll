@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/cmp_msg_test?download=true
-inline.NumInlined: 54
+inline.NumInlined: 55
 inline.NumDeleted: 11
 begin_hunk_0_@test_cmp_create_certconf_fail_info_max:bb.a
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !28
@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %.sink.split, %bb.a
 ; Function Attrs: nounwind uwtable
 define internal i32 @test_cmp_create_cr_without_key() #0 {
 bb.a:
-  %i.a = tail call fastcc ptr @set_up(ptr noundef nonnull @.str.35) ; 9 uses
+  %i.a = tail call fastcc ptr @set_up(ptr noundef nonnull @.str.35) ; 8 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.c, label %bb.b
 
@@ -213,9 +213,14 @@ bb.b:                                             ; preds = %bb.a
   store i32 -1, ptr %i.d, align 4, !tbaa !25
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store i32 0, ptr %i.e, align 8, !tbaa !26
-  %0 = tail call fastcc i32 @execute_certreq_create_test(ptr noundef %i.a)
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.f = load ptr, ptr %1, align 8, !tbaa !27
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %1 = load ptr, ptr %0, align 8, !tbaa !27
+  %2 = tail call ptr @ossl_cmp_certreq_new(ptr noundef %1, i32 noundef 2, ptr noundef null) #4 ; 2 uses
+  %3 = tail call i32 @test_ptr_null(ptr noundef nonnull @.str.14, i32 noundef 90, ptr noundef nonnull @.str.50, ptr noundef %2) #4
+  tail call void @OSSL_CMP_MSG_free(ptr noundef %2) #4
+  %4 = load ptr, ptr @stderr, align 8, !tbaa !31
+  tail call void @ERR_print_errors_fp(ptr noundef %4) #4
+  %i.f = load ptr, ptr %0, align 8, !tbaa !27
   tail call void @OSSL_CMP_CTX_free(ptr noundef %i.f) #4
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !28
@@ -227,7 +232,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.08 = phi i32 [ %0, %bb.b ], [ 0, %bb.a ]
+  %.08 = phi i32 [ %3, %bb.b ], [ 0, %bb.a ]
   ret i32 %.08
 }
 

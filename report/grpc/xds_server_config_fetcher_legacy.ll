@@ -204,7 +204,7 @@ _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exi
 
 .noexc52.i:                                       ; preds = %.critedge.i.i
   %i.tj = getelementptr inbounds nuw i8, ptr %i.ti, i64 32 ; 5 uses
-  %i.tk = getelementptr inbounds nuw i8, ptr %i.ti, i64 48 ; 3 uses
+  %i.tk = getelementptr inbounds nuw i8, ptr %i.ti, i64 48 ; 5 uses
   store ptr %i.tk, ptr %i.tj, align 8, !tbaa !122
   %i.tl = load ptr, ptr %i.ro, align 8, !tbaa !123 ; 2 uses
   %i.tm = load i64, ptr %i.ru, align 8, !tbaa !106 ; 4 uses
@@ -276,12 +276,12 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N
   store ptr %i.rs, ptr %i.uc, align 8, !tbaa !519
   %i.ud = getelementptr inbounds nuw i8, ptr %i.ti, i64 96
   store i8 0, ptr %i.ud, align 8, !tbaa !263
-  %.val7.i.i.i.i = load ptr, ptr %i.tj, align 8   ; 2 uses
-  %.val8.i.i.i.i = load i64, ptr %i.tz, align 8   ; 3 uses
+  %.val7.i.i.i.i = load ptr, ptr %i.tj, align 8   ; 4 uses
+  %.val8.i.i.i.i = load i64, ptr %i.tz, align 8   ; 4 uses
   %i.ue = call fastcc { ptr, ptr } @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateEESt10_Select1stISE_ESt4lessIS5_ESaISE_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorISE_ERS7_(ptr noundef nonnull align 8 dereferenceable(48) %i.qz, ptr %.08.lcssa.i.i.i29.i.i, ptr %.val7.i.i.i.i, i64 %.val8.i.i.i.i) ; 2 uses
   %i.uf = extractvalue { ptr, ptr } %i.ue, 1      ; 5 uses
   %.not.i.i.i.i = icmp eq ptr %i.uf, null
-  br i1 %.not.i.i.i.i, label %bb.dn, label %bb.dl
+  br i1 %.not.i.i.i.i, label %_ZN9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateD2Ev.exit.i.i.i.i, label %bb.dl
 
 bb.dl:                                            ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateEESt10_Select1stISE_ESt4lessIS5_ESaISE_EE10_Auto_nodeC2IJRS7_SD_EEERSK_DpOT_.exit.i.i.i.i
   %i.ug = extractvalue { ptr, ptr } %i.ue, 0
@@ -324,8 +324,23 @@ _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exi
   store i64 %i.us, ptr %i.rd, align 8, !tbaa !118
   br label %_ZN9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateD2Ev.exit.i
 
-bb.dn:                                            ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateEESt10_Select1stISE_ESt4lessIS5_ESaISE_EE10_Auto_nodeC2IJRS7_SD_EEERSK_DpOT_.exit.i.i.i.i
-  call fastcc void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateEESt10_Select1stISE_ESt4lessIS5_ESaISE_EE12_M_drop_nodeEPSt13_Rb_tree_nodeISE_E(ptr noundef %i.ti) #38
+_ZN9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateD2Ev.exit.i.i.i.i: ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateEESt10_Select1stISE_ESt4lessIS5_ESaISE_EE10_Auto_nodeC2IJRS7_SD_EEERSK_DpOT_.exit.i.i.i.i
+  %22 = icmp eq ptr %.val7.i.i.i.i, %i.tk
+  br i1 %22, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i285.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i: ; preds = %_ZN9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateD2Ev.exit.i.i.i.i
+  %23 = icmp ult i64 %.val8.i.i.i.i, 16
+  call void @llvm.assume(i1 %23)
+  br label %bb.dn
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i285.i: ; preds = %_ZN9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateD2Ev.exit.i.i.i.i
+  %24 = load i64, ptr %i.tk, align 8, !tbaa !93
+  %25 = add i64 %24, 1
+  call void @_ZdlPvm(ptr noundef %.val7.i.i.i.i, i64 noundef %25) #44
+  br label %bb.dn
+
+bb.dn:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i285.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i
+  call void @_ZdlPvm(ptr noundef nonnull %i.ti, i64 noundef 104) #44
   br label %_ZN9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateD2Ev.exit.i
 
 _ZN9grpc_core12_GLOBAL__N_122XdsServerConfigFetcher15ListenerWatcher23FilterChainMatchManager14RdsUpdateStateD2Ev.exit.i: ; preds = %bb.dn, %.thread.i.i.i.i, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i

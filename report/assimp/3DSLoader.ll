@@ -205,7 +205,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEmRKS1_.exit: ; preds = %bb.b, %bb.c,
   %i.da = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.db = ptrtoint ptr %i.cz to i64
   %i.dc = ptrtoint ptr %i.da to i64
-  %i.dd = sub i64 %i.db, %i.dc                    ; 4 uses
+  %i.dd = sub i64 %i.db, %i.dc                    ; 5 uses
   %i.de = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.not303 = icmp eq ptr %i.cz, %i.da
   br i1 %.not303, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit, label %bb.e
@@ -221,12 +221,13 @@ bb.e:                                             ; preds = %._crit_edge
 
 _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.e
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.di = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dd) #31 ; 4 uses
+  %i.di = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dd) #31 ; 5 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.di, i8 0, i64 %i.dd, i1 false)
   store ptr %i.di, ptr %2, align 8
-  %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.dd ; 2 uses
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.dd
   store ptr %i.dj, ptr %i.de, align 8
-  store ptr %i.dj, ptr %i.dh, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.dd
+  store ptr %5, ptr %i.dh, align 8
   br label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit
 
 .lr.ph230:                                        ; preds = %.preheader218, %.lr.ph230
@@ -252,7 +253,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.e
   %i.dx = icmp ugt i64 %i.ad, %i.dw
   br i1 %i.dx, label %.lr.ph230, label %._crit_edge.loopexit, !llvm.loop !52
 
-_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit: ; preds = %._crit_edge, %_ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i
+_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit: ; preds = %_ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i, %._crit_edge
   %i.dy = phi ptr [ %i.di, %_ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i ], [ null, %._crit_edge ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   invoke void @_ZN6Assimp13SGSpatialSortC1Ev(ptr noundef nonnull align 8 dereferenceable(40) %3)

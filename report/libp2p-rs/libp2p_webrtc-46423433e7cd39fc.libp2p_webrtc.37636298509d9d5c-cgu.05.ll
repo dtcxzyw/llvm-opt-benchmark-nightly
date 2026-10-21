@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/libp2p_webrtc-46423433e7cd39fc.libp2p_webrtc.37636298509d9d5c-cgu.05?download=true
-inline.NumInlined: 3171
+inline.NumInlined: 3172
 inline.NumDeleted: 1268
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,7 @@ bb.gq:                                            ; preds = %bb.a
   ]
 
 bb.gr:                                            ; preds = %.thread181, %bb.gq
-  %i.sf = phi ptr [ %i.rp, %.thread181 ], [ %i.se, %bb.gq ] ; 3 uses
+  %i.sf = phi ptr [ %i.rp, %.thread181 ], [ %i.se, %bb.gq ] ; 2 uses
   %i.sg = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.sh = load ptr, ptr %i.sf, align 8, !nonnull !14, !noundef !14 ; 5 uses
@@ -268,12 +268,12 @@ bb.gy:                                            ; preds = %bb.gw
   %i.su = load ptr, ptr %i.e, align 8, !alias.scope !1877, !nonnull !14, !noundef !14
   %i.sv = atomicrmw add ptr %i.su, i64 -1 release, align 8, !noalias !1877
   %i.sw = icmp eq i64 %i.sv, 1
-  br i1 %i.sw, label %bb.gz, label %3
+  br i1 %i.sw, label %bb.gz, label %bb.hh
 
 bb.gz:                                            ; preds = %bb.gy
   fence acquire
   invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtCsbCXxVlMkWND_6webrtc12data_channel14RTCDataChannelE9drop_slowBK_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.e) #22
-          to label %3 unwind label %bb.ha
+          to label %bb.hh unwind label %bb.ha
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtCsbCXxVlMkWND_6webrtc12data_channel14RTCDataChannelEECs4KPtkQIfQGm_13libp2p_webrtc.exit8.i: ; preds = %bb.hc, %bb.hb, %bb.ha
   %.pn3.i = phi { ptr, i32 } [ %i.sx, %bb.ha ], [ %.pn4.i, %bb.hc ], [ %.pn4.i, %bb.hb ]
@@ -331,13 +331,9 @@ bb.hg:                                            ; preds = %bb.hf, %bb.he
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvNtNtCs4KPtkQIfQGm_13libp2p_webrtc5tokio10connection34register_data_channel_open_handler0EBJ_(ptr noundef nonnull align 8 %i.td) #25
           to label %.body91 unwind label %bb.k
 
-3:                                                ; preds = %bb.gz, %bb.gy
+bb.hh:                                            ; preds = %bb.gy, %bb.gz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   store i8 1, ptr %i.sg, align 8
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvNtNtCs4KPtkQIfQGm_13libp2p_webrtc5tokio10connection34register_data_channel_open_handler0EBJ_(ptr noundef nonnull align 8 %i.sf)
-          to label %bb.hh unwind label %bb.hs
-
-bb.hh:                                            ; preds = %3
   %i.te = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i8 0, ptr %i.te, align 8
   br label %bb.hi
@@ -409,7 +405,7 @@ bb.hr:                                            ; preds = %bb.ho
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #24
   unreachable
 
-bb.hs:                                            ; preds = %3, %bb.hq
+bb.hs:                                            ; preds = %bb.hq
   %i.tw = landingpad { ptr, i32 }
           cleanup
   br label %.body91

@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.ac, %_ZNSt7__cxx
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN2cv10GifEncoder16OctreeColorQuant13recurseReduceERKSt10shared_ptrINS1_10OctreeNodeEE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(224) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::vector.41", align 8    ; 11 uses
+  %2 = alloca %"class.std::vector.41", align 8    ; 12 uses
   %3 = alloca %"class.std::shared_ptr.38", align 16 ; 8 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !189    ; 2 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -218,20 +218,20 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
   invoke void @_ZNSt6vectorISt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr null, ptr noundef nonnull align 8 dereferenceable(16) %1)
           to label %_ZNSt6vectorISt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEESaIS5_EE9push_backERKS5_.exit.preheader unwind label %bb.o
 
 _ZNSt6vectorISt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEESaIS5_EE9push_backERKS5_.exit.preheader: ; preds = %bb.c
   %i.e = load ptr, ptr %2, align 8, !tbaa !187    ; 2 uses
-  %i.f = load ptr, ptr %4, align 8, !tbaa !187    ; 2 uses
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !187  ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
   br i1 %i.g, label %_ZSt8_DestroyIPSt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEES5_EvT_S7_RSaIT0_E.exit.i, label %.lr.ph28
 
 .lr.ph28:                                         ; preds = %_ZNSt6vectorISt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEESaIS5_EE9push_backERKS5_.exit.preheader
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
   br label %bb.d
 
@@ -263,9 +263,9 @@ bb.g:                                             ; preds = %bb.e
   br label %_ZNSt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEEC2ERKS4_.exit
 
 _ZNSt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEEC2ERKS4_.exit: ; preds = %bb.d, %bb.f, %bb.g
-  %i.u = load ptr, ptr %4, align 8, !tbaa !166    ; 2 uses
+  %i.u = load ptr, ptr %i.d, align 8, !tbaa !166  ; 2 uses
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 -16
-  store ptr %i.v, ptr %4, align 8, !tbaa !166
+  store ptr %i.v, ptr %i.d, align 8, !tbaa !166
   %i.w = getelementptr inbounds i8, ptr %i.u, i64 -8
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !135  ; 8 uses
   %.not.i.i.i15 = icmp eq ptr %i.x, null
@@ -348,8 +348,8 @@ bb.o:                                             ; preds = %bb.c
   br i1 %.not, label %_ZNSt6vectorISt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEESaIS5_EE9push_backERKS5_.exit23, label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph
-  %i.az = load ptr, ptr %4, align 8, !tbaa !166   ; 6 uses
-  %i.ba = load ptr, ptr %i.d, align 8, !tbaa !167
+  %i.az = load ptr, ptr %i.d, align 8, !tbaa !166 ; 6 uses
+  %i.ba = load ptr, ptr %4, align 8, !tbaa !167
   %.not.i17 = icmp eq ptr %i.az, %i.ba
   br i1 %.not.i17, label %bb.u, label %bb.q
 
@@ -376,7 +376,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.bi = atomicrmw volatile add ptr %i.be, i32 1 acq_rel, align 4 ; 0 uses
-  %.pre.i21 = load ptr, ptr %4, align 8, !tbaa !166
+  %.pre.i21 = load ptr, ptr %i.d, align 8, !tbaa !166
   %.pre = load ptr, ptr %3, align 16, !tbaa !189
   br label %_ZNSt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEEC2ERKS4_.exit.i20
 
@@ -384,7 +384,7 @@ _ZNSt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEEC2ERKS4_.exit.
   %i.bj = phi ptr [ %i.av, %bb.q ], [ %i.av, %bb.s ], [ %.pre, %bb.t ]
   %i.bk = phi ptr [ %i.az, %bb.q ], [ %i.az, %bb.s ], [ %.pre.i21, %bb.t ]
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
-  store ptr %i.bl, ptr %4, align 8, !tbaa !166
+  store ptr %i.bl, ptr %i.d, align 8, !tbaa !166
   br label %_ZNSt6vectorISt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEESaIS5_EE9push_backERKS5_.exit23
 
 bb.u:                                             ; preds = %bb.p
@@ -458,7 +458,7 @@ bb.ab:                                            ; preds = %_ZN9__gnu_cxx27__ex
 _ZNSt12__shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %.loopexit, %bb.x, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   %i.ch = load ptr, ptr %2, align 8, !tbaa !187   ; 2 uses
-  %i.ci = load ptr, ptr %4, align 8, !tbaa !187   ; 2 uses
+  %i.ci = load ptr, ptr %i.d, align 8, !tbaa !187 ; 2 uses
   %i.cj = icmp eq ptr %i.ch, %i.ci
   br i1 %i.cj, label %_ZSt8_DestroyIPSt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEES5_EvT_S7_RSaIT0_E.exit.i, label %bb.d, !llvm.loop !432
 
@@ -474,7 +474,8 @@ _ZSt8_DestroyIPSt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEES5
   br i1 %.not.i.i1.i, label %_ZNSt6vectorISt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEESaIS5_EED2Ev.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN2cv10GifEncoder16OctreeColorQuant10OctreeNodeEES5_EvT_S7_RSaIT0_E.exit.i
-  %i.co = load ptr, ptr %i.d, align 8, !tbaa !167
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.co = load ptr, ptr %5, align 8, !tbaa !167
   %i.cp = ptrtoint ptr %i.co to i64
   %i.cq = ptrtoint ptr %.lcssa to i64
   %i.cr = sub i64 %i.cp, %i.cq

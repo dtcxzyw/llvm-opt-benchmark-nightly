@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tokenizers-rs/original/tokenizers-73a819a89809b4f0.tokenizers.1fce5ff7a8803495-cgu.06?download=true
-inline.NumInlined: 1216
+inline.NumInlined: 1217
 inline.NumDeleted: 506
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
@@ -205,7 +205,7 @@ bb.a:
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = alloca [8 x i8], align 8                 ; 4 uses
   %i.e = alloca [8 x i8], align 8                 ; 4 uses
-  %i.f = alloca [32 x i8], align 8                ; 6 uses
+  %i.f = alloca [32 x i8], align 8                ; 5 uses
   %i.g = alloca [64 x i8], align 8                ; 5 uses
   %i.h = alloca [32 x i8], align 8                ; 4 uses
   %i.i = alloca [24 x i8], align 8                ; 6 uses
@@ -214,10 +214,9 @@ bb.a:
   %i.l = alloca [16 x i8], align 8                ; 7 uses
   %i.m = alloca [32 x i8], align 8                ; 5 uses
   %i.n = alloca [24 x i8], align 8                ; 4 uses
-  %5 = alloca [32 x i8], align 8                  ; 6 uses
   %i.o = alloca [32 x i8], align 8                ; 13 uses
-  %i.p = alloca [24 x i8], align 8                ; 12 uses
-  %i.q = alloca [56 x i8], align 8                ; 8 uses
+  %i.p = alloca [24 x i8], align 8                ; 11 uses
+  %i.q = alloca [56 x i8], align 8                ; 9 uses
   %i.r = alloca [72 x i8], align 8                ; 16 uses
   %i.s = alloca [64 x i8], align 8                ; 9 uses
   %i.t = alloca [32 x i8], align 8                ; 9 uses
@@ -620,24 +619,12 @@ bb.bc:                                            ; preds = %bb.az, %bb.bb, %bb.
 
 bb.bd:                                            ; preds = %bb.ad
   %.sroa.0126.0.copyload = load i64, ptr %i.cb, align 8
-  %.sroa.5127.0.copyload = load i64, ptr %.sroa.5127.0..sroa_idx, align 8
-  %i.dm = icmp eq i64 %.sroa.0126.0.copyload, 0
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  br i1 %i.dm, label %6, label %bb.be
-
-6:                                                ; preds = %bb.bd
-  store i64 2, ptr %5, align 8
-  invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe5ErrorEBH_(ptr noalias noundef nonnull align 8 dereferenceable(32) %5)
-          to label %bb.bj unwind label %bb.bi
+  %i.dm = icmp eq i64 %.sroa.0126.0.copyload, 0   ; 2 uses
+  br i1 %i.dm, label %bb.bj, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %.sroa.4112.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %.sroa.4112.0.copyload = load i64, ptr %.sroa.4112.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store i64 2, ptr %i.f, align 8
-  %.sroa.433.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store i64 %.sroa.4112.0.copyload, ptr %.sroa.433.0..sroa_idx, align 8
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #27, !noalias !1286
   %i.dn = call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 0, 1401) 32, i64 noundef range(i64 1, 9) 8) #27, !noalias !1286 ; 3 uses
   %i.do = icmp eq ptr %i.dn, null
@@ -662,23 +649,21 @@ bb.bh:                                            ; preds = %bb.bg
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #30
   unreachable
 
-bb.bi:                                            ; preds = %bb.bj, %6
-  %.sroa.062.0 = phi i1 [ false, %bb.bj ], [ true, %6 ]
+bb.bi:                                            ; preds = %bb.bj
   %i.dr = landingpad { ptr, i32 }
           cleanup
   br label %.body151
 
 .body151:                                         ; preds = %bb.bg, %bb.bi
-  %.sroa.062.0.lpad-body = phi i1 [ %.sroa.062.0, %bb.bi ], [ true, %bb.bg ]
   %eh.lpad-body152 = phi { ptr, i32 } [ %i.dr, %bb.bi ], [ %i.dp, %bb.bg ] ; 2 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs5PtHgSLqj5O_10serde_json5value5ValueECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef align 8 dereferenceable(32) %i.o) #29
           to label %bb.bn unwind label %bb.bs
 
-bb.bj:                                            ; preds = %6
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+bb.bj:                                            ; preds = %bb.bd
+  %.sroa.5127.0.copyload = load i64, ptr %.sroa.5127.0..sroa_idx, align 8
   %i.ds = trunc i64 %.sroa.5127.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 24, i1 false)
   %i.dt = invoke { i32, i32 } @_RNvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB5_7HashMapNtNtCscdodAO9FK5_5alloc6string6StringmNtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE6insertCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.s, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.n, i32 noundef %i.ds)
           to label %bb.bk unwind label %bb.bi     ; 0 uses
 
@@ -697,7 +682,7 @@ bb.bm:                                            ; preds = %bb.bk
           to label %bb.bl unwind label %.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.bn:                                            ; preds = %.body151
-  br i1 %.sroa.062.0.lpad-body, label %.split.thread.loopexit.split-lp, label %.body176
+  br i1 %i.dm, label %.body176, label %.split.thread.loopexit.split-lp
 
 .split.thread.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bw, %bb.bo
   %lpad.loopexit.split-lp219 = landingpad { ptr, i32 }

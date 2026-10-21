@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/gdcmFileChangeTransferSyntax?download=true
-inline.NumInlined: 1361
+inline.NumInlined: 1362
 inline.NumDeleted: 585
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,7 @@ bb.ch:                                            ; preds = %bb.cg
   %i.kv = ptrtoint ptr %.pre377 to i64
   br label %_ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit212
 
-_ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit212: ; preds = %bb.cg, %._ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit212_crit_edge
+_ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit212: ; preds = %._ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit212_crit_edge, %bb.cg
   %i.kw = phi ptr [ %.pre378, %._ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit212_crit_edge ], [ %i.kn, %bb.cg ]
   %i.kx = phi i64 [ %i.kv, %._ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit212_crit_edge ], [ 0, %bb.cg ]
   %i.ky = phi ptr [ %.pre, %._ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit212_crit_edge ], [ null, %bb.cg ] ; 5 uses
@@ -607,7 +607,7 @@ bb.v:                                             ; preds = %bb.u, %bb.h
   call void @_ZN4gdcm12SmartPointerINS_5ValueEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.au) #27
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.g, %bb.v
+bb.w:                                             ; preds = %bb.v, %bb.g
   %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %bb.v ], [ %i.aa, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   %i.av = load i8, ptr %i.g, align 4
@@ -1010,7 +1010,7 @@ bb.i:                                             ; preds = %bb.f, %_ZNSt3__112b
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZNK4gdcm9AttributeILt40ELt8464ELx8ELi1EE16GetAsDataElementEv(ptr dead_on_unwind noalias writable sret(%"class.gdcm::DataElement") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::__1::basic_ostringstream", align 8 ; 35 uses
+  %2 = alloca %"class.std::__1::basic_ostringstream", align 8 ; 37 uses
   %3 = alloca %"class.gdcm::VR", align 8          ; 6 uses
   %4 = alloca %"class.std::__1::basic_string", align 8 ; 15 uses
   %5 = alloca %"class.std::__1::basic_string", align 8 ; 15 uses
@@ -1069,10 +1069,51 @@ bb.f:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 104 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.r, i8 0, i64 32, i1 false)
   store i32 16, ptr %i.s, align 8, !tbaa !117
-  invoke void @_ZN4gdcm22EncodingImplementationILx1685163643EE5WriteINS_6StringILc92ELj16ELc32EEEEEvPKT_mRNSt3__113basic_ostreamIcNS8_11char_traitsIcEEEE(ptr noundef nonnull %1, i64 noundef 1, ptr noundef nonnull align 8 dereferenceable(8) %2)
-          to label %bb.g unwind label %bb.j
+  %7 = load ptr, ptr %2, align 8, !tbaa !16
+  %8 = getelementptr i8, ptr %7, i64 -24
+  %9 = load i64, ptr %8, align 8
+  %10 = getelementptr inbounds i8, ptr %2, i64 %9
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 32
+  %12 = load i32, ptr %11, align 8, !tbaa !62
+  %13 = and i32 %12, 5
+  %.not19.i = icmp eq i32 %13, 0
+  br i1 %.not19.i, label %19, label %14
 
-bb.g:                                             ; preds = %bb.f
+14:                                               ; preds = %bb.f
+  %15 = call ptr @__cxa_allocate_exception(i64 40) #27 ; 3 uses
+  invoke void @_ZN4gdcm9ExceptionC2EPKcS2_jS2_(ptr noundef nonnull align 8 dereferenceable(40) %15, ptr noundef nonnull @.str.57, ptr noundef nonnull @.str.55, i32 noundef 257, ptr noundef nonnull @.str.2)
+          to label %.invoke unwind label %17
+
+.invoke:                                          ; preds = %bb.i, %14
+  %16 = phi ptr [ %15, %14 ], [ %i.w, %bb.i ]
+  invoke void @__cxa_throw(ptr nonnull %16, ptr nonnull @_ZTIN4gdcm9ExceptionE, ptr nonnull @_ZN4gdcm9ExceptionD2Ev) #29
+          to label %.cont unwind label %bb.j
+
+.cont:                                            ; preds = %.invoke
+  unreachable
+
+17:                                               ; preds = %14
+  %18 = landingpad { ptr, i32 }
+          cleanup
+  call void @__cxa_free_exception(ptr nonnull %15) #27
+  br label %bb.bc
+
+19:                                               ; preds = %bb.f
+  %20 = load i8, ptr %1, align 8                  ; 2 uses
+  %21 = trunc i8 %20 to i1                        ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %23 = load ptr, ptr %22, align 8
+  %24 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %25 = select i1 %21, ptr %23, ptr %24
+  %26 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %27 = load i64, ptr %26, align 8
+  %28 = lshr i8 %20, 1
+  %29 = zext nneg i8 %28 to i64
+  %30 = select i1 %21, i64 %27, i64 %29
+  %31 = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3__124__put_character_sequenceB8ne180100IcNS_11char_traitsIcEEEERNS_13basic_ostreamIT_T0_EES7_PKS4_m(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %25, i64 noundef %30)
+          to label %bb.g unwind label %bb.j       ; 0 uses
+
+bb.g:                                             ; preds = %19
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   store i64 8, ptr %3, align 8
   %i.t = invoke noundef zeroext i1 @_ZNK4gdcm2VR8IsVRFileEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
@@ -1099,13 +1140,9 @@ _ZN4gdcm11DataElement5SetVRERKNS_2VRE.exit:       ; preds = %_ZN4gdcm11DataEleme
 bb.i:                                             ; preds = %_ZN4gdcm11DataElement5SetVRERKNS_2VRE.exit
   %i.w = call ptr @__cxa_allocate_exception(i64 40) #27 ; 3 uses
   invoke void @_ZN4gdcm9ExceptionC2EPKcS2_jS2_(ptr noundef nonnull align 8 dereferenceable(40) %i.w, ptr noundef nonnull @.str.53, ptr noundef nonnull @.str.50, i32 noundef 425, ptr noundef nonnull @.str.2)
-          to label %7 unwind label %bb.l
+          to label %.invoke unwind label %bb.l
 
-7:                                                ; preds = %bb.i
-  invoke void @__cxa_throw(ptr nonnull %i.w, ptr nonnull @_ZTIN4gdcm9ExceptionE, ptr nonnull @_ZN4gdcm9ExceptionD2Ev) #29
-          to label %8 unwind label %bb.j
-
-bb.j:                                             ; preds = %bb.y, %7, %bb.f
+bb.j:                                             ; preds = %.invoke, %bb.y, %19
   %i.x = landingpad { ptr, i32 }
           cleanup
   br label %bb.bc
@@ -1508,8 +1545,8 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit49: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #27
   br label %bb.bc
 
-bb.bc:                                            ; preds = %bb.ay, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit49, %bb.z, %bb.l, %bb.k, %bb.j
-  %.pn.pn.pn = phi { ptr, i32 } [ %i.y, %bb.k ], [ %i.x, %bb.j ], [ %i.bs, %bb.z ], [ %i.fl, %bb.ay ], [ %i.z, %bb.l ], [ %.pn, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit49 ]
+bb.bc:                                            ; preds = %bb.j, %17, %bb.ay, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit49, %bb.z, %bb.l, %bb.k
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.y, %bb.k ], [ %i.fl, %bb.ay ], [ %i.bs, %bb.z ], [ %18, %17 ], [ %i.z, %bb.l ], [ %.pn, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit49 ], [ %i.x, %bb.j ]
   call void @_ZNSt3__119basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %2) #27
   br label %.body
 
@@ -1519,9 +1556,6 @@ bb.bc:                                            ; preds = %bb.ay, %_ZNSt3__112
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
   call void @_ZN4gdcm12SmartPointerINS_5ValueEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.ft) #27
   resume { ptr, i32 } %.pn.pn.pn.pn
-
-8:                                                ; preds = %7
-  unreachable
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)

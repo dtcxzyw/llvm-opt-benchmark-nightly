@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ty_python_semantic-ec859307257497d7.ty_python_semantic.4ad91d80fb3de5b-cgu.01?download=true
-inline.NumInlined: 12775
+inline.NumInlined: 12776
 inline.NumDeleted: 7325
 loop-unroll.NumRuntimeUnrolled: 149
 loop-unroll.NumUnrolled: 149
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   ret void
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11ide_support16unreachable_code16UnreachableRangeE7reserveBL_.exit: ; preds = %bb.b
-  call void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.h, i64 noundef range(i64 1, 0) 1, i64 noundef 4, i64 noundef 12)
+  call void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.h, i64 noundef 1, i64 noundef 4, i64 noundef 12)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11ide_support16unreachable_code16UnreachableRangeE7reserveBL_.exit
@@ -607,7 +607,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.o, label %bb.d, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints12ConstraintIdBE_EE7reserveBK_.exit, !prof !16
 
 bb.d:                                             ; preds = %bb.c
-  call void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.m, i64 noundef range(i64 1, 0) 1, i64 noundef 4, i64 noundef 8)
+  call void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.m, i64 noundef 1, i64 noundef 4, i64 noundef 8)
   br label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints12ConstraintIdBE_EE7reserveBK_.exit
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints12ConstraintIdBE_EE7reserveBK_.exit: ; preds = %bb.d, %bb.c, %bb.b
@@ -1010,7 +1010,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8n
   br i1 %i.x, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs2O29vuvTAEJ_14ty_python_core9predicate17ScopedPredicateIdE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, label %.noexc8.i
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs2O29vuvTAEJ_14ty_python_core9predicate17ScopedPredicateIdE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i: ; preds = %.lr.ph.i.i.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.u, i64 noundef range(i64 1, 0) 1, i64 noundef 4, i64 noundef 4)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.u, i64 noundef 1, i64 noundef 4, i64 noundef 4)
           to label %.noexc8.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !8570
 
 .noexc8.i:                                        ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs2O29vuvTAEJ_14ty_python_core9predicate17ScopedPredicateIdE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, %.lr.ph.i.i.i
@@ -1413,7 +1413,7 @@ bb.f:                                             ; preds = %.noexc7.i
   br i1 %i.am, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12ClassLiteralE7reserveBJ_.exit.i.i.i, label %.noexc8.i
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12ClassLiteralE7reserveBJ_.exit.i.i.i: ; preds = %bb.f
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.o, i64 noundef %i.aj, i64 noundef range(i64 1, 0) 1, i64 noundef 4, i64 noundef 12)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.o, i64 noundef %i.aj, i64 noundef 1, i64 noundef 4, i64 noundef 12)
           to label %.noexc8.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !19832
 
 .noexc8.i:                                        ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12ClassLiteralE7reserveBJ_.exit.i.i.i, %bb.f
@@ -1774,7 +1774,7 @@ bb.l:                                             ; preds = %.noexc5.i
   br i1 %i.as, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar14BindingContextE7reserveBJ_.exit.i.i.i, label %.noexc6.i
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar14BindingContextE7reserveBJ_.exit.i.i.i: ; preds = %bb.l
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.ap, i64 noundef range(i64 1, 0) 1, i64 noundef 4, i64 noundef 12)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.ap, i64 noundef 1, i64 noundef 4, i64 noundef 12)
           to label %.noexc6.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !19938
 
 .noexc6.i:                                        ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar14BindingContextE7reserveBJ_.exit.i.i.i, %bb.l
@@ -2177,7 +2177,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.al, label %bb.k, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, !prof !16
 
 bb.k:                                             ; preds = %.noexc7.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.aj, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 8)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.aj, i64 noundef 1, i64 noundef 8, i64 noundef 8)
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !20345
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i: ; preds = %bb.k, %.noexc7.i, %bb.i
@@ -2291,7 +2291,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8n
   br i1 %i.z, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, label %.noexc9.i
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i: ; preds = %.lr.ph.i.i.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.w, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 16)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.w, i64 noundef 1, i64 noundef 8, i64 noundef 16)
           to label %.noexc9.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !20377
 
 .noexc9.i:                                        ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, %.lr.ph.i.i.i
@@ -2430,7 +2430,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i
   br i1 %i.ae, label %bb.e, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, !prof !16
 
 bb.e:                                             ; preds = %.noexc9.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %i.ac, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 16)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %i.ac, i64 noundef 1, i64 noundef 8, i64 noundef 16)
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !20404
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i: ; preds = %bb.e, %.noexc9.i, %.lr.ph.i.i.i
@@ -2548,7 +2548,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8n
   br i1 %i.x, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, label %.noexc9.i
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i: ; preds = %.lr.ph.i.i.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.u, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 16)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.u, i64 noundef 1, i64 noundef 8, i64 noundef 16)
           to label %.noexc9.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !20421
 
 .noexc9.i:                                        ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, %.lr.ph.i.i.i
@@ -2685,7 +2685,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i
   br i1 %i.ac, label %bb.e, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, !prof !16
 
 bb.e:                                             ; preds = %.noexc9.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %i.aa, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 16)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %i.aa, i64 noundef 1, i64 noundef 8, i64 noundef 16)
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !20442
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i: ; preds = %bb.e, %.noexc9.i, %.lr.ph.i.i.i
@@ -3088,7 +3088,7 @@ bb.e:                                             ; preds = %.noexc9
   br i1 %i.an, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12GenericAliasE7reserveBJ_.exit.i.i, label %.noexc11
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12GenericAliasE7reserveBJ_.exit.i.i: ; preds = %bb.e
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %i.ak, i64 noundef range(i64 1, 0) 1, i64 noundef 4, i64 noundef 8)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %i.ak, i64 noundef 1, i64 noundef 4, i64 noundef 8)
           to label %.noexc11 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc11:                                         ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12GenericAliasE7reserveBJ_.exit.i.i, %bb.e
@@ -3491,7 +3491,7 @@ bb.i:                                             ; preds = %_RNvXs0_NtNtNtCs4NR
   br i1 %i.ar, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types8function15OverloadLiteralE7reserveBJ_.exit.i.i, label %.noexc11
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types8function15OverloadLiteralE7reserveBJ_.exit.i.i: ; preds = %bb.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %i.ao, i64 noundef range(i64 1, 0) 1, i64 noundef 4, i64 noundef 8)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %i.ao, i64 noundef 1, i64 noundef 4, i64 noundef 8)
           to label %.noexc11 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc11:                                         ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types8function15OverloadLiteralE7reserveBJ_.exit.i.i, %bb.i
@@ -3894,7 +3894,7 @@ bb.i:                                             ; preds = %.noexc7
   br i1 %i.as, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes10IdentifierE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, label %.noexc8
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes10IdentifierE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i: ; preds = %bb.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.ap, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 8)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.ap, i64 noundef 1, i64 noundef 8, i64 noundef 8)
           to label %.noexc8 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc8:                                          ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes10IdentifierE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, %bb.i
@@ -3998,7 +3998,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8n
   br i1 %i.t, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtB7_3map3MapINtNtB7_4skip4SkipINtNtB7_5chain5ChainIB1B_INtNtNtBb_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultEB1Z_EB1Z_EENCNvMs0_NtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builder8functionNtB3M_20TypeInferenceBuilder35validate_unpacked_typed_dict_kwargss_0ENCB3E_s0_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB3S_.exit.i.i, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i
 
 _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtB7_3map3MapINtNtB7_4skip4SkipINtNtB7_5chain5ChainIB1B_INtNtNtBb_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultEB1Z_EB1Z_EENCNvMs0_NtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builder8functionNtB3M_20TypeInferenceBuilder35validate_unpacked_typed_dict_kwargss_0ENCB3E_s0_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB3S_.exit.i.i: ; preds = %.lr.ph.i.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.q, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 8)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.q, i64 noundef 1, i64 noundef 8, i64 noundef 8)
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i: ; preds = %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filterINtB5_6FilterINtNtB7_3map3MapINtNtB7_4skip4SkipINtNtB7_5chain5ChainIB1B_INtNtNtBb_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultEB1Z_EB1Z_EENCNvMs0_NtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builder8functionNtB3M_20TypeInferenceBuilder35validate_unpacked_typed_dict_kwargss_0ENCB3E_s0_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB3S_.exit.i.i, %.lr.ph.i.i
@@ -4117,7 +4117,7 @@ _RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10take_whileINtB5_9TakeWhileINtNt
   br i1 %i.aa, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10take_whileINtB5_9TakeWhileINtNtNtBb_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterENCNvMs7_B1C_NtB1C_10Parameters10positional0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1G_.exit.i.i, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterE7reserveBK_.exit.i.i
 
 _RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10take_whileINtB5_9TakeWhileINtNtNtBb_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterENCNvMs7_B1C_NtB1C_10Parameters10positional0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1G_.exit.i.i: ; preds = %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10take_whileINtB5_9TakeWhileINtNtNtBb_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterENCNvMs7_B1C_NtB1C_10Parameters10positional0ENtNtNtB9_6traits8iterator8Iterator4nextB1G_.exit.i.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b, i64 noundef %i.u, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 8)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b, i64 noundef %i.u, i64 noundef 1, i64 noundef 8, i64 noundef 8)
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterE7reserveBK_.exit.i.i unwind label %bb.g
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecRNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterE7reserveBK_.exit.i.i: ; preds = %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10take_whileINtB5_9TakeWhileINtNtNtBb_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterENCNvMs7_B1C_NtB1C_10Parameters10positional0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1G_.exit.i.i, %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10take_whileINtB5_9TakeWhileINtNtNtBb_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9ParameterENCNvMs7_B1C_NtB1C_10Parameters10positional0ENtNtNtB9_6traits8iterator8Iterator4nextB1G_.exit.i.i
@@ -4450,7 +4450,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al, %bb.
   br i1 %i.am, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, label %.noexc11
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i: ; preds = %bb.an
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.aj, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 16)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.aj, i64 noundef 1, i64 noundef 8, i64 noundef 16)
           to label %.noexc11 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc11:                                         ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecReE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, %bb.an
@@ -4569,7 +4569,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsoTR8n
   br i1 %i.w, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCs2O29vuvTAEJ_14ty_python_core5scope11FileScopeIdRNtBG_5ScopeEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, label %.noexc10
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCs2O29vuvTAEJ_14ty_python_core5scope11FileScopeIdRNtBG_5ScopeEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i: ; preds = %.lr.ph.i.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.t, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 16)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %i.t, i64 noundef 1, i64 noundef 8, i64 noundef 16)
           to label %.noexc10 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc10:                                         ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCs2O29vuvTAEJ_14ty_python_core5scope11FileScopeIdRNtBG_5ScopeEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, %.lr.ph.i.i
@@ -4728,7 +4728,7 @@ bb.i:                                             ; preds = %.noexc
   br i1 %i.ah, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic8LintNameNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, label %bb.j
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic8LintNameNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i: ; preds = %bb.i
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.ae, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 24)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.ae, i64 noundef 1, i64 noundef 8, i64 noundef 24)
           to label %.noexc6 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc6:                                          ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic8LintNameNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i
@@ -5131,7 +5131,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ba, label %bb.o, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints12ConstraintIdjEE7reserveBK_.exit.i.i, !prof !16
 
 bb.o:                                             ; preds = %.noexc12
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %i.ay, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 16)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %i.ay, i64 noundef 1, i64 noundef 8, i64 noundef 16)
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints12ConstraintIdjEE7reserveBK_.exit.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints12ConstraintIdjEE7reserveBK_.exit.i.i: ; preds = %bb.o, %.noexc12, %bb.m
@@ -5262,7 +5262,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i
   br i1 %i.ab, label %bb.e, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameINtNtB6_6borrow3CowNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldEEE7reserveB1N_.exit.i.i, !prof !16
 
 bb.e:                                             ; preds = %.noexc5
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.z, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 40)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.z, i64 noundef 1, i64 noundef 8, i64 noundef 40)
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameINtNtB6_6borrow3CowNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldEEE7reserveB1N_.exit.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameINtNtB6_6borrow3CowNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldEEE7reserveB1N_.exit.i.i: ; preds = %bb.e, %.noexc5, %.lr.ph.i.i
@@ -5665,7 +5665,7 @@ bb.q:                                             ; preds = %_RNvXs0_NtNtNtCs4NR
   br i1 %i.bg, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTjINtNtCs4NRVxsYgnAr_4core6option6OptionjEEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, label %.noexc6
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTjINtNtCs4NRVxsYgnAr_4core6option6OptionjEEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i: ; preds = %bb.q
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %i.bd, i64 noundef range(i64 1, 0) 1, i64 noundef 8, i64 noundef 24)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %i.bd, i64 noundef 1, i64 noundef 8, i64 noundef 24)
           to label %.noexc6 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc6:                                          ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTjINtNtCs4NRVxsYgnAr_4core6option6OptionjEEE7reserveCsoTR8nlGN3X_18ty_python_semantic.exit.i.i, %bb.q
@@ -6068,7 +6068,7 @@ bb.t:                                             ; preds = %bb.s, %_RNvYINvMNtC
 define internal fastcc void @_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapNtNtNtBb_3str4iter5CharsNCNvNvMNtNtCsoTR8nlGN3X_18ty_python_semantic5types9iterationNtB1t_4Type21try_iterate_with_mode22non_async_special_cases_0ENtNtNtB9_6traits8iterator8Iterator4nextB1v_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 4 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 13 uses
-  %i.b = alloca [24 x i8], align 8                ; 7 uses
+  %i.b = alloca [24 x i8], align 8                ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25977)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25978)
   %i.c = load ptr, ptr %1, align 8, !alias.scope !25979, !nonnull !14, !noundef !14 ; 6 uses
@@ -6149,8 +6149,8 @@ bb.c:                                             ; preds = %_RNvXs2J_NtNtCs4NRV
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !25987
   store i32 0, ptr %i.a, align 4, !noalias !25987
   %i.ar = icmp samesign ult i32 %spec.select.i.ph, 128
-  %.sink21.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 3 uses
-  %.sink21.i.sroa.gep3.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %.sink21.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %.sink21.i.sroa.gep3.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 3 uses
   br i1 %i.ar, label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -6183,13 +6183,13 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.bj = or disjoint i8 %i.bb, -32
   store i8 %i.bj, ptr %i.a, align 4, !alias.scope !25988, !noalias !25987
-  store i8 %i.az, ptr %.sink21.i.sroa.gep.i, align 1, !alias.scope !25988, !noalias !25987
+  store i8 %i.az, ptr %.sink21.i.sroa.gep3.i, align 1, !alias.scope !25988, !noalias !25987
   br label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i
 
 bb.h:                                             ; preds = %bb.f
   store i8 %i.bg, ptr %i.a, align 4, !alias.scope !25988, !noalias !25987
-  store i8 %i.bd, ptr %.sink21.i.sroa.gep.i, align 1, !alias.scope !25988, !noalias !25987
-  store i8 %i.az, ptr %.sink21.i.sroa.gep3.i, align 2, !alias.scope !25988, !noalias !25987
+  store i8 %i.bd, ptr %.sink21.i.sroa.gep3.i, align 1, !alias.scope !25988, !noalias !25987
+  store i8 %i.az, ptr %.sink21.i.sroa.gep.i, align 2, !alias.scope !25988, !noalias !25987
   %i.bk = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i8 %i.av, ptr %i.bk, align 1, !alias.scope !25988, !noalias !25987
   %.sroa.015.0.copyload.i.i.i.i = load i32, ptr %i.a, align 4, !alias.scope !25989, !noalias !25987
@@ -6198,14 +6198,16 @@ bb.h:                                             ; preds = %bb.f
 _RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i: ; preds = %.thread, %bb.h, %bb.c
   %.val214 = phi ptr [ %.val2, %bb.h ], [ %.val2, %bb.c ], [ %.val28, %.thread ]
   %.val12 = phi ptr [ %.val, %bb.h ], [ %.val, %bb.c ], [ %.val7, %.thread ]
-  %.sroa.02.0.i.i.ph.in.i.i = phi i32 [ %.sroa.015.0.copyload.i.i.i.i, %bb.h ], [ %spec.select.i.ph, %bb.c ], [ %i.s, %.thread ]
-  %.sroa.0.0.i.i.ph.i.i = phi i64 [ -4323455642275676160, %bb.h ], [ -4539628424389459968, %bb.c ], [ -4539628424389459968, %.thread ]
-  %.sroa.02.0.i.i.ph.i.i = zext i32 %.sroa.02.0.i.i.ph.in.i.i to i64
+  %.ph.i = phi i64 [ -4323455642275676160, %bb.h ], [ -4539628424389459968, %bb.c ], [ -4539628424389459968, %.thread ]
+  %.sroa.02.0.i.i.ph.in.i.i = phi i32 [ %.sroa.015.0.copyload.i.i.i.i, %bb.h ], [ %spec.select.i.ph, %bb.c ], [ %i.s, %.thread ] ; 2 uses
+  %.sroa.02.sroa.0.0.extract.trunc5.i = trunc i32 %.sroa.02.0.i.i.ph.in.i.i to i8
+  %2 = lshr i32 %.sroa.02.0.i.i.ph.in.i.i, 8
+  %.sroa.02.sroa.6.0.extract.trunc7.i = zext nneg i32 %2 to i56
   br label %_RNCNvNvMNtNtCsoTR8nlGN3X_18ty_python_semantic5types9iterationNtB8_4Type21try_iterate_with_mode22non_async_special_cases_0Ba_.exit
 
 _RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i: ; preds = %bb.g, %bb.e
-  %.sink21.i.sroa.phi.i = phi ptr [ %.sink21.i.sroa.gep.i, %bb.e ], [ %.sink21.i.sroa.gep3.i, %bb.g ]
-  %.sroa.0.05.i.ph.ph.i.i = phi i64 [ 2, %bb.e ], [ 3, %bb.g ] ; 2 uses
+  %.sink21.i.sroa.phi.i = phi ptr [ %.sink21.i.sroa.gep.i, %bb.g ], [ %.sink21.i.sroa.gep3.i, %bb.e ]
+  %.sroa.0.05.i.ph.ph.i.i = phi i64 [ 3, %bb.g ], [ 2, %bb.e ] ; 2 uses
   store i8 %i.av, ptr %.sink21.i.sroa.phi.i, align 1, !alias.scope !25988, !noalias !25987
   %i.bl = shl nuw nsw i64 %.sroa.0.05.i.ph.ph.i.i, 56
   %i.bm = or disjoint i64 %i.bl, -4611686018427387904
@@ -6217,20 +6219,26 @@ _RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i: ; preds = %bb
   %i.bq = zext i16 %.sroa.021.0.copyload.i.i.i.i to i64
   %i.br = shl nuw nsw i64 %i.bo, 3
   %i.bs = shl nuw nsw i64 %i.bq, %i.br
-  %i.bt = or i64 %i.bs, %i.bn
+  %i.bt = or i64 %i.bs, %i.bn                     ; 2 uses
+  %.sroa.02.sroa.0.0.extract.trunc.i = trunc i64 %i.bt to i8
+  %.sroa.02.sroa.6.0.extract.shift.i = lshr i64 %i.bt, 8
+  %.sroa.02.sroa.6.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.02.sroa.6.0.extract.shift.i to i56
   br label %_RNCNvNvMNtNtCsoTR8nlGN3X_18ty_python_semantic5types9iterationNtB8_4Type21try_iterate_with_mode22non_async_special_cases_0Ba_.exit
 
 _RNCNvNvMNtNtCsoTR8nlGN3X_18ty_python_semantic5types9iterationNtB8_4Type21try_iterate_with_mode22non_async_special_cases_0Ba_.exit: ; preds = %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i
   %.val213 = phi ptr [ %.val214, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i ], [ %.val2, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i ]
   %.val11 = phi ptr [ %.val12, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i ], [ %.val, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i ]
-  %.sroa.0.0.i.i20.i.i = phi i64 [ %.sroa.0.0.i.i.ph.i.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i ], [ %i.bm, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i ]
-  %.sroa.02.0.i.i19.i.i = phi i64 [ %.sroa.02.0.i.i.ph.i.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i ], [ %i.bt, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i ]
+  %.sroa.02.sroa.6.0.extract.trunc12.i = phi i56 [ %.sroa.02.sroa.6.0.extract.trunc7.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i ], [ %.sroa.02.sroa.6.0.extract.trunc.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i ]
+  %.sroa.02.sroa.0.0.extract.trunc11.i = phi i8 [ %.sroa.02.sroa.0.0.extract.trunc5.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i ], [ %.sroa.02.sroa.0.0.extract.trunc.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i ]
+  %.sroa.02.0.i.i19.i.i = phi i64 [ %.ph.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i.i ], [ %i.bm, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !25987
-  store i64 %.sroa.02.0.i.i19.i.i, ptr %i.b, align 8, !noalias !25986
+  store i8 %.sroa.02.sroa.0.0.extract.trunc11.i, ptr %i.b, align 8, !noalias !25986
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  store i56 %.sroa.02.sroa.6.0.extract.trunc12.i, ptr %.sroa.5.0..sroa_idx.i, align 1, !noalias !25986
   %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 0, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx.i, align 8, !noalias !25986
   %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i64 %.sroa.0.0.i.i20.i.i, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.i, align 8, !noalias !25986
+  store i64 %.sroa.02.0.i.i19.i.i, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.i, align 8, !noalias !25986
   call void @_RINvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB7_4Type14string_literalNtCsg7m2K3K1Fzf_11compact_str13CompactStringEB9_(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %0, ptr noundef nonnull %.val11, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val213, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !25986
   br label %bb.i

@@ -205,7 +205,7 @@ bb.bs:                                            ; preds = %bb.br
   call void @__clang_call_terminate(ptr %i.ld) #23
   unreachable
 
-_ZN7obj_refI3app11ast_managerED2Ev.exit:          ; preds = %bb.br, %bb.bq, %bb.bp
+_ZN7obj_refI3app11ast_managerED2Ev.exit:          ; preds = %bb.bp, %bb.bq, %bb.br
   %i.le = load ptr, ptr %12, align 8, !tbaa !210  ; 6 uses
   store ptr %i.le, ptr %9, align 8, !tbaa !210
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #22
@@ -608,7 +608,7 @@ bb.ax:                                            ; preds = %bb.aw
   call void @__clang_call_terminate(ptr %i.gj) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit126:      ; preds = %bb.aw, %bb.av, %bb.au
+_ZN7obj_refI4expr11ast_managerED2Ev.exit126:      ; preds = %bb.au, %bb.av, %bb.aw
   %i.gk = load ptr, ptr %15, align 8, !tbaa !151  ; 5 uses
   store ptr %i.gk, ptr %12, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
@@ -1011,13 +1011,15 @@ _ZN7obj_refI4expr11ast_managerED2Ev.exit20:       ; preds = %_ZN7obj_refI4expr11
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !207  ; 2 uses
   %i.y = icmp eq ptr %i.r, %i.x
   %or.cond.a = select i1 %i.v, i1 %i.y, i1 false
-  br i1 %or.cond.a, label %thread-pre-split, label %_ZN7obj_refI4expr11ast_managerED2Ev.exit20._crit_edge
+  br i1 %or.cond.a, label %8, label %_ZN7obj_refI4expr11ast_managerED2Ev.exit20._crit_edge
 
 _ZN7obj_refI4expr11ast_managerED2Ev.exit20._crit_edge: ; preds = %_ZN7obj_refI4expr11ast_managerED2Ev.exit20
-  %6 = icmp ne ptr %i.q, %i.x
-  %7 = icmp ne ptr %i.r, %i.u
-  %or.cond55.not = select i1 %6, i1 true, i1 %7
-  %spec.select = select i1 %or.cond55.not, i1 %.01237, i1 false
+  %6 = icmp eq ptr %i.q, %i.x
+  %7 = icmp eq ptr %i.r, %i.u
+  %spec.select = select i1 %6, i1 %7, i1 false
+  br i1 %spec.select, label %8, label %thread-pre-split
+
+8:                                                ; preds = %_ZN7obj_refI4expr11ast_managerED2Ev.exit20, %_ZN7obj_refI4expr11ast_managerED2Ev.exit20._crit_edge
   br label %thread-pre-split
 
 bb.d:                                             ; preds = %bb.c
@@ -1032,8 +1034,8 @@ bb.e:                                             ; preds = %_ZN7obj_refI4expr11
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br label %bb.m
 
-thread-pre-split:                                 ; preds = %_ZN7obj_refI4expr11ast_managerED2Ev.exit20._crit_edge, %_ZN7obj_refI4expr11ast_managerED2Ev.exit20
-  %.1 = phi i1 [ false, %_ZN7obj_refI4expr11ast_managerED2Ev.exit20 ], [ %spec.select, %_ZN7obj_refI4expr11ast_managerED2Ev.exit20._crit_edge ] ; 2 uses
+thread-pre-split:                                 ; preds = %8, %_ZN7obj_refI4expr11ast_managerED2Ev.exit20._crit_edge
+  %.1 = phi i1 [ false, %8 ], [ %.01237, %_ZN7obj_refI4expr11ast_managerED2Ev.exit20._crit_edge ] ; 2 uses
   %.not.i.i21 = icmp eq ptr %i.r, null
   br i1 %.not.i.i21, label %_ZN7obj_refI4expr11ast_managerED2Ev.exit22, label %bb.f
 
@@ -1436,7 +1438,7 @@ bb.k:                                             ; preds = %bb.j
   call void @__clang_call_terminate(ptr %i.am) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.j, %bb.i, %bb.h
+_ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.h, %bb.i, %bb.j
   %i.an = load ptr, ptr %8, align 8, !tbaa !151
   store ptr %i.an, ptr %7, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #22
@@ -1839,7 +1841,7 @@ bb.v:                                             ; preds = %bb.u
   call void @__clang_call_terminate(ptr %i.bl) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.u, %bb.t, %bb.s
+_ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.s, %bb.t, %bb.u
   %i.bm = load ptr, ptr %11, align 8, !tbaa !151
   store ptr %i.bm, ptr %10, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #22
@@ -2023,7 +2025,7 @@ bb.ah:                                            ; preds = %bb.ag
   call void @__clang_call_terminate(ptr %i.dm) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit72:       ; preds = %bb.ag, %bb.af, %bb.ae
+_ZN7obj_refI4expr11ast_managerED2Ev.exit72:       ; preds = %bb.ae, %bb.af, %bb.ag
   %i.dn = load ptr, ptr %12, align 8, !tbaa !151
   store ptr %i.dn, ptr %10, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #22
@@ -2165,7 +2167,7 @@ bb.au:                                            ; preds = %bb.at
   call void @__clang_call_terminate(ptr %i.fb) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit83:       ; preds = %bb.at, %bb.as, %bb.ar
+_ZN7obj_refI4expr11ast_managerED2Ev.exit83:       ; preds = %bb.ar, %bb.as, %bb.at
   %i.fc = load ptr, ptr %15, align 8, !tbaa !151
   store ptr %i.fc, ptr %10, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
@@ -2466,7 +2468,7 @@ bb.bv:                                            ; preds = %bb.bu
   call void @__clang_call_terminate(ptr %i.ix) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit114:      ; preds = %bb.bu, %bb.bt, %_Z6mk_andRK10ref_vectorI4expr11ast_managerE.exit109
+_ZN7obj_refI4expr11ast_managerED2Ev.exit114:      ; preds = %_Z6mk_andRK10ref_vectorI4expr11ast_managerE.exit109, %bb.bt, %bb.bu
   store ptr %i.im, ptr %10, align 8, !tbaa !151
   br label %_ZN7obj_refI4expr11ast_managerED2Ev.exit114.invoke
 
@@ -2869,7 +2871,7 @@ bb.az:                                            ; preds = %bb.ay
   call void @__clang_call_terminate(ptr %i.it) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.ay, %bb.ax, %bb.aw
+_ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.aw, %bb.ax, %bb.ay
   %i.iu = load ptr, ptr %13, align 8, !tbaa !151  ; 2 uses
   store ptr %i.iu, ptr %7, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #22
@@ -2905,7 +2907,7 @@ bb.be:                                            ; preds = %bb.bd
   call void @__clang_call_terminate(ptr %i.jc) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit92:       ; preds = %bb.bd, %bb.bc, %bb.bb
+_ZN7obj_refI4expr11ast_managerED2Ev.exit92:       ; preds = %bb.bb, %bb.bc, %bb.bd
   %i.jd = load ptr, ptr %14, align 8, !tbaa !151  ; 2 uses
   store ptr %i.jd, ptr %7, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #22
@@ -2954,7 +2956,7 @@ bb.bl:                                            ; preds = %bb.bk
   call void @__clang_call_terminate(ptr %i.jo) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit97:       ; preds = %bb.bk, %bb.bj, %bb.bi
+_ZN7obj_refI4expr11ast_managerED2Ev.exit97:       ; preds = %bb.bi, %bb.bj, %bb.bk
   %i.jp = load ptr, ptr %15, align 8, !tbaa !151  ; 3 uses
   store ptr %i.jp, ptr %7, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
@@ -3017,7 +3019,7 @@ bb.bv:                                            ; preds = %bb.bq
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #22
   br label %bb.ch
 
-bb.bw:                                            ; preds = %bb.br, %bb.bs, %bb.bt
+bb.bw:                                            ; preds = %bb.bt, %bb.bs, %bb.br
   %i.kb = load ptr, ptr %16, align 8, !tbaa !151  ; 3 uses
   store ptr %i.kb, ptr %7, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #22
@@ -3420,7 +3422,7 @@ bb.j:                                             ; preds = %bb.i
   call void @__clang_call_terminate(ptr %i.af) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.i, %bb.h, %bb.g
+_ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.g, %bb.h, %bb.i
   %i.ag = load ptr, ptr %7, align 8, !tbaa !151
   store ptr %i.ag, ptr %5, align 16, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
@@ -3453,7 +3455,7 @@ bb.n:                                             ; preds = %bb.m
   call void @__clang_call_terminate(ptr %i.ao) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit49:       ; preds = %bb.m, %bb.l, %bb.k
+_ZN7obj_refI4expr11ast_managerED2Ev.exit49:       ; preds = %bb.k, %bb.l, %bb.m
   %i.ap = load ptr, ptr %8, align 8, !tbaa !151
   store ptr %i.ap, ptr %5, align 16, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #22
@@ -3598,7 +3600,7 @@ bb.aa:                                            ; preds = %bb.z
   call void @__clang_call_terminate(ptr %i.ce) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit54:       ; preds = %bb.z, %bb.y, %bb.x
+_ZN7obj_refI4expr11ast_managerED2Ev.exit54:       ; preds = %bb.x, %bb.y, %bb.z
   %i.cf = load ptr, ptr %11, align 8, !tbaa !151
   store ptr %i.cf, ptr %5, align 16, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #22
@@ -4001,7 +4003,7 @@ bb.bn:                                            ; preds = %bb.bm
   call void @__clang_call_terminate(ptr %i.hv) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit94:       ; preds = %bb.bm, %bb.bl, %bb.bk
+_ZN7obj_refI4expr11ast_managerED2Ev.exit94:       ; preds = %bb.bk, %bb.bl, %bb.bm
   %i.hw = load ptr, ptr %14, align 8, !tbaa !151
   store ptr %i.hw, ptr %5, align 16, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #22
@@ -4404,7 +4406,7 @@ bb.ad:                                            ; preds = %bb.ac
   call void @__clang_call_terminate(ptr %i.hn) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit46:       ; preds = %bb.ac, %bb.ab, %bb.aa
+_ZN7obj_refI4expr11ast_managerED2Ev.exit46:       ; preds = %bb.aa, %bb.ab, %bb.ac
   %i.ho = load ptr, ptr %10, align 8, !tbaa !151  ; 4 uses
   store ptr %i.ho, ptr %3, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
@@ -4807,7 +4809,7 @@ bb.aw:                                            ; preds = %bb.av
   call void @__clang_call_terminate(ptr %i.gt) #23
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit77:       ; preds = %bb.av, %bb.au, %bb.at
+_ZN7obj_refI4expr11ast_managerED2Ev.exit77:       ; preds = %bb.at, %bb.au, %bb.av
   %i.gu = load ptr, ptr %10, align 8, !tbaa !151  ; 3 uses
   store ptr %i.gu, ptr %3, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22

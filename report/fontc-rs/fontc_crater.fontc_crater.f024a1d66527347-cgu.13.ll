@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fontc-rs/original/fontc_crater.fontc_crater.f024a1d66527347-cgu.13?download=true
-inline.NumInlined: 438
+inline.NumInlined: 439
 inline.NumDeleted: 278
 loop-unroll.NumRuntimeUnrolled: 38
 loop-unroll.NumUnrolled: 38
@@ -204,9 +204,8 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs6_NtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumerNtB5_14CollectReducerINtNtB9_8plumbing7ReducerINtB5_13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB21_9RunResultNtNtB21_15ttx_diff_runner10DiffOutputNtB30_9DiffErrorEEEE6reduceB21_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs6_NtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumerNtB5_14CollectReducerINtNtB9_8plumbing7ReducerINtB5_13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB21_9RunResultNtNtB21_15ttx_diff_runner10DiffOutputNtB30_9DiffErrorEEEE6reduceB21_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, ptr noalias nofree noundef align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %3 = alloca [24 x i8], align 8                  ; 5 uses
   %i.a = load ptr, ptr %1, align 8, !noundef !5
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 2 uses
@@ -220,6 +219,9 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_RNvXs2_NtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumerINtB5_13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1h_9RunResultNtNtB1h_15ttx_diff_runner10DiffOutputNtB2g_9DiffErrorEEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropB1h_(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %2)
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit
 
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit: ; preds = %bb.b, %bb.c
+  ret void
+
 bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load i64, ptr %i.g, align 8, !noundef !5
@@ -227,38 +229,12 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load i64, ptr %i.i, align 8, !noundef !5
   %i.k = add i64 %i.j, %i.h
   store i64 %i.k, ptr %i.i, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %5 = load i64, ptr %4, align 8, !noundef !5
-  store i64 0, ptr %4, align 8
-  invoke void @_RNvXs2_NtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumerINtB5_13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1h_9RunResultNtNtB1h_15ttx_diff_runner10DiffOutputNtB2g_9DiffErrorEEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropB1h_(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %3)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit3 unwind label %9
-
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit: ; preds = %bb.b, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit3
-  ret void
-
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit3: ; preds = %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %6 = add i64 %5, %i.c
-  store i64 %6, ptr %i.b, align 8
+  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.sroa.45.0.copyload = load i64, ptr %.sroa.45.0..sroa_idx, align 8
+  %3 = add i64 %.sroa.45.0.copyload, %i.c
+  store i64 %3, ptr %i.b, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit
-
-7:                                                ; preds = %9
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #14
-  unreachable
-
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit4: ; preds = %9
-  resume { ptr, i32 } %10
-
-9:                                                ; preds = %bb.c
-  %10 = landingpad { ptr, i32 }
-          cleanup
-  invoke void @_RNvXs2_NtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumerINtB5_13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1h_9RunResultNtNtB1h_15ttx_diff_runner10DiffOutputNtB2g_9DiffErrorEEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropB1h_(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %1)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsimRn6g4KI1Q_5rayon4iter7collect8consumer13CollectResultTNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtB1K_9RunResultNtNtB1K_15ttx_diff_runner10DiffOutputNtB2J_9DiffErrorEEEEB1K_.exit4 unwind label %7
 }
 
 ; Function Attrs: nonlazybind uwtable

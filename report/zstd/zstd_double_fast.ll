@@ -205,7 +205,7 @@ ZSTD_storeSeq.exit364:                            ; preds = %bb.m, %.lr.ph.i.pro
   store ptr %i.fj, ptr %i.av, align 8, !tbaa !35
   %i.fk = icmp ugt i64 %i.ct, 65535
   %.pre551 = load ptr, ptr %i.ay, align 8, !tbaa !40 ; 3 uses
-  br i1 %i.fk, label %bb.r, label %bb.s, !prof !152
+  br i1 %i.fk, label %bb.r, label %bb.s, !prof !41
 
 bb.r:                                             ; preds = %ZSTD_storeSeq.exit364
   store i32 1, ptr %i.ax, align 8, !tbaa !42
@@ -608,7 +608,7 @@ ZSTD_storeSeq.exit360:                            ; preds = %bb.as, %.lr.ph.i446
   store ptr %i.ok, ptr %i.av, align 8, !tbaa !35
   %i.ol = icmp ugt i64 %i.lv, 65535
   %.pre553 = load ptr, ptr %i.ay, align 8, !tbaa !40 ; 3 uses
-  br i1 %i.ol, label %bb.ax, label %bb.ay, !prof !152
+  br i1 %i.ol, label %bb.ax, label %bb.ay, !prof !41
 
 bb.ax:                                            ; preds = %ZSTD_storeSeq.exit360
   store i32 1, ptr %i.ax, align 8, !tbaa !42
@@ -1011,5 +1011,4 @@ attributes #10 = { nounwind memory(none) }
 !149 = distinct !{!149, !25}
 !150 = !{!17, !6, i64 28}
 !151 = !{!17, !10, i64 16}
-!152 = !{!"branch_weights", !"expected", i32 1717127, i32 2145766521}
 end_hunk_2

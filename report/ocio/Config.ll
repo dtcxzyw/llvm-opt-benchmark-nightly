@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/Config?download=true
 inline.NumInlined: 10699
-inline.NumDeleted: 2966
+inline.NumDeleted: 2965
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 14
 loop-unroll.NumUnrolled: 18
@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   %i.as = getelementptr inbounds nuw [48 x i8], ptr %i.ar, i64 %.tr37 ; 2 uses
   %i.at = load ptr, ptr %i.h, align 8, !tbaa !617
   %i.au = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %.tr37 ; 5 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8 ; 5 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8 ; 6 uses
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !622 ; 4 uses
   %i.ax = icmp eq i32 %i.aw, 0
   br i1 %i.ax, label %._crit_edge.i, label %bb.j
@@ -223,7 +223,10 @@ bb.j:                                             ; preds = %bb.i
   %i.bb = ptrtoint ptr %i.az to i64
   br i1 %.not.i107, label %bb.l, label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %._crit_edge.i
+common.ret:                                       ; preds = %bb.ab, %_ZNKSt8__detail6_StateIcE10_M_matchesEc.exit.i, %bb.y, %bb.ac, %bb.l, %bb.h, %.thread.i, %bb.ah, %bb.aj, %bb.al, %.critedge.i, %tailrecurse, %_ZNSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS5_9sub_matchISB_EEENS5_12regex_traitsIcEELb1EE16_M_rep_once_moreENSH_11_Match_modeEl.exit, %_ZNKSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS5_9sub_matchISB_EEENS5_12regex_traitsIcEELb1EE11_M_at_beginEv.exit, %.split, %_ZNKSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS5_9sub_matchISB_EEENS5_12regex_traitsIcEELb1EE9_M_at_endEv.exit, %bb.w, %bb.x, %bb.t, %bb.q, %bb.s, %bb.v, %bb.an, %bb.ao, %bb.o, %bb.n, %bb.m, %bb.k
+  ret void
+
+bb.k:                                             ; preds = %._crit_edge.i, %bb.j
   %i.bc = phi i64 [ %.pre.i, %._crit_edge.i ], [ %i.bb, %bb.j ]
   %.sroa.0.0.copyload.i108 = phi i64 [ %.sroa.0.0.copyload.pre.i, %._crit_edge.i ], [ %i.ba, %bb.j ]
   store i64 %i.bc, ptr %i.au, align 8, !tbaa !100
@@ -232,7 +235,8 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !91
   tail call void @_ZNSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS5_9sub_matchISB_EEENS5_12regex_traitsIcEELb1EE6_M_dfsENSH_11_Match_modeEl(ptr noundef nonnull align 8 dereferenceable(117) %0, i8 noundef zeroext %1, i64 noundef %i.be), !inline_history !1782
   store i64 %.sroa.0.0.copyload.i108, ptr %i.au, align 8, !tbaa !100
-  br label %.sink.split.i
+  store i32 %i.aw, ptr %i.av, align 8, !tbaa !622
+  br label %common.ret
 
 bb.l:                                             ; preds = %bb.j
   %i.bf = icmp slt i32 %i.aw, 2
@@ -246,15 +250,8 @@ bb.m:                                             ; preds = %bb.l
   tail call void @_ZNSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS5_9sub_matchISB_EEENS5_12regex_traitsIcEELb1EE6_M_dfsENSH_11_Match_modeEl(ptr noundef nonnull align 8 dereferenceable(117) %0, i8 noundef zeroext %1, i64 noundef %i.bi), !inline_history !1782
   %i.bj = load i32, ptr %i.av, align 8, !tbaa !622
   %i.bk = add nsw i32 %i.bj, -1
-  br label %.sink.split.i
-
-.sink.split.i:                                    ; preds = %bb.m, %bb.k
-  %.sink.i109 = phi i32 [ %i.bk, %bb.m ], [ %i.aw, %bb.k ]
-  store i32 %.sink.i109, ptr %i.av, align 8, !tbaa !622
+  store i32 %i.bk, ptr %i.av, align 8, !tbaa !622
   br label %common.ret
-
-common.ret:                                       ; preds = %bb.ab, %_ZNKSt8__detail6_StateIcE10_M_matchesEc.exit.i, %bb.y, %.sink.split.i, %bb.l, %bb.ac, %bb.h, %.thread.i, %bb.ah, %bb.aj, %bb.al, %.critedge.i, %tailrecurse, %_ZNSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS5_9sub_matchISB_EEENS5_12regex_traitsIcEELb1EE16_M_rep_once_moreENSH_11_Match_modeEl.exit, %_ZNKSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS5_9sub_matchISB_EEENS5_12regex_traitsIcEELb1EE11_M_at_beginEv.exit, %.split, %_ZNKSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS5_9sub_matchISB_EEENS5_12regex_traitsIcEELb1EE9_M_at_endEv.exit, %bb.w, %bb.x, %bb.t, %bb.q, %bb.s, %bb.v, %bb.an, %bb.ao, %bb.o, %bb.n
-  ret void
 
 bb.n:                                             ; preds = %tailrecurse
   %i.bl = getelementptr inbounds nuw i8, ptr %i.m, i64 16

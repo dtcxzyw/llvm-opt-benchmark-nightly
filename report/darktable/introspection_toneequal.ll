@@ -205,7 +205,7 @@ bb.a:
   %i.an = add i64 %i.n, -1                        ; 6 uses
   %i.ao = add i64 %i.k, -1                        ; 4 uses
   %i.ap = fcmp reassoc nsz arcp contract afn oeq float %7, 1.000000e+00
-  %.not31.i = icmp eq i64 %i.p, 0                 ; 2 uses
+  %.not31.i = icmp eq i64 %i.p, 0                 ; 3 uses
   %brmerge = select i1 %.not.i, i1 true, i1 %.not91.i ; 2 uses
   %brmerge235 = or i1 %.not.i138, %.not91.i140
   %brmerge234 = or i1 %.not.i138, %.not91.i140
@@ -608,10 +608,13 @@ interpolate_bilinear.exit127:                     ; preds = %._crit_edge.i125
   call void @llvm.experimental.noalias.scope.decl(metadata !635)
   call void @llvm.experimental.noalias.scope.decl(metadata !636)
   call void @llvm.experimental.noalias.scope.decl(metadata !637)
+  br i1 %.not31.i, label %eigf_blending.exit, label %.lr.ph.i129
+
+.lr.ph.i129:                                      ; preds = %interpolate_bilinear.exit127
   %8 = icmp eq i32 %spec.select, 0
   br i1 %8, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i.preheader
 
-.lr.ph.split.i.preheader:                         ; preds = %interpolate_bilinear.exit127
+.lr.ph.split.i.preheader:                         ; preds = %.lr.ph.i129
   br i1 %min.iters.check, label %.lr.ph.split.i.preheader290, label %vector.body26
 
 vector.body26:                                    ; preds = %.lr.ph.split.i.preheader, %vector.body26
@@ -655,7 +658,7 @@ middle.block36:                                   ; preds = %vector.body26
   %.044.i.ph = phi i64 [ 0, %.lr.ph.split.i.preheader ], [ %n.vec23, %middle.block36 ]
   br label %.lr.ph.split.i
 
-.lr.ph.split.us.i.preheader:                      ; preds = %interpolate_bilinear.exit127
+.lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i129
   br i1 %min.iters.check, label %.lr.ph.split.us.i.preheader289, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.split.us.i.preheader, %vector.body
@@ -1058,7 +1061,7 @@ middle.block180:                                  ; preds = %vector.body173
   %exitcond.not.i155 = icmp eq i64 %i.acq, %i.p
   br i1 %exitcond.not.i155, label %eigf_blending.exit, label %.lr.ph.split.i153, !llvm.loop !620
 
-eigf_blending.exit:                               ; preds = %.lr.ph.split.i153, %.lr.ph.split.us.i157, %.lr.ph.split.i, %.lr.ph.split.us.i, %middle.block196, %middle.block180, %middle.block36, %middle.block, %eigf_variance_analysis_no_mask.exit, %eigf_variance_analysis.exit
+eigf_blending.exit:                               ; preds = %.lr.ph.split.i153, %.lr.ph.split.us.i157, %.lr.ph.split.i, %.lr.ph.split.us.i, %middle.block196, %middle.block180, %middle.block36, %middle.block, %eigf_variance_analysis_no_mask.exit, %eigf_variance_analysis.exit, %interpolate_bilinear.exit127
   %i.acr = add nuw nsw i32 %.089232, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.acr, %5
   br i1 %exitcond.not, label %.loopexit, label %bb.c

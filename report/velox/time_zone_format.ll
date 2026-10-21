@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/time_zone_format?download=true
-inline.NumInlined: 499
+inline.NumInlined: 500
 inline.NumDeleted: 172
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,7 @@ bb.fh:                                            ; preds = %bb.fg, %bb.fn
   br label %bb.gi
 
 bb.fi:                                            ; preds = %bb.fe
-  %i.vs = load i32, ptr %i.b, align 4, !tbaa !21  ; 5 uses
+  %i.vs = load i32, ptr %i.b, align 4, !tbaa !21  ; 6 uses
   %i.vt = icmp slt i32 %i.vs, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #19
@@ -229,13 +229,17 @@ bb.fk:                                            ; preds = %bb.fi
   br i1 %.not716, label %.critedge13, label %bb.fl
 
 bb.fl:                                            ; preds = %bb.fk
-  %i.wd = zext nneg i32 %i.vs to i64
-  %21 = call { i64, i64 } @_ZN4absl12lts_2024011613time_internal4cctz6detailplENS3_10civil_timeINS3_10second_tagEEEl(i64 -9223372036854775808, i64 257, i64 noundef %i.wd) #19 ; 2 uses
-  %i.we = extractvalue { i64, i64 } %21, 0
+  %21 = udiv i32 %i.vs, 60
+  %.zext = zext nneg i32 %21 to i64
+  %22 = urem i32 %i.vs, 60
+  %i.wd = zext nneg i32 %22 to i64
+  %23 = call { i64, i64 } @_ZN4absl12lts_2024011613time_internal4cctz6detail4impl5n_secEllllll(i64 noundef -9223372036854775808, i64 noundef 1, i64 noundef 1, i64 noundef 0, i64 noundef %.zext, i64 noundef %i.wd) #19 ; 2 uses
+  %.fca.1.extract.i.i = extractvalue { i64, i64 } %23, 1
+  %.sroa.2.8.insert.ext.i = and i64 %.fca.1.extract.i.i, 1099511627775
+  %i.we = extractvalue { i64, i64 } %23, 0
   store i64 %i.we, ptr %15, align 8
   %i.wf = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %22 = extractvalue { i64, i64 } %21, 1
-  store i64 %22, ptr %i.wf, align 8
+  store i64 %.sroa.2.8.insert.ext.i, ptr %i.wf, align 8
   %i.wg = call noundef zeroext i1 @_ZN4absl12lts_2024011613time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef nonnull align 8 dereferenceable(16) %15) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #19

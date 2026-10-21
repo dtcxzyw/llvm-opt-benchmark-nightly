@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libphonenumber/original/unicodetext?download=true
-inline.NumInlined: 200
+inline.NumInlined: 201
 inline.NumDeleted: 79
 begin_hunk_0_@_ZN4i18n12phonenumbers11UnicodeText4Repr6appendEPKci:bb.a
   %i.t = sext i32 %2 to i64
@@ -202,38 +202,47 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress uwtable
-define void @_ZN4i18n12phonenumbers11UnicodeTextC2ERKS1_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) initializes((0, 18)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+; Function Attrs: mustprogress memory(readwrite, target_mem: none) uwtable
+define void @_ZN4i18n12phonenumbers11UnicodeTextC2ERKS1_(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 18)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #9 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(18) %0, i8 0, i64 16, i1 false)
   store i8 1, ptr %i.a, align 8, !tbaa !23
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 1, ptr %i.b, align 1, !tbaa !46
-  %2 = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZN4i18n12phonenumbers11UnicodeText4CopyERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1)
-          to label %bb.b unwind label %bb.c       ; 0 uses
+  %2 = load ptr, ptr %1, align 8, !tbaa !48
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %4 = load i32, ptr %3, align 8, !tbaa !49       ; 6 uses
+  %5 = icmp eq i32 %4, 0
+  br i1 %5, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %.not = icmp sgt i32 %4, 0
+  br i1 %.not, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %bb.b
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %7 = tail call i32 @llvm.umax.i32(i32 %4, i32 20) ; 2 uses
+  store i32 %7, ptr %6, align 4, !tbaa !19
+  %8 = zext nneg i32 %7 to i64
+  %9 = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %8) #23 ; 3 uses
+  store ptr %9, ptr %0, align 8, !tbaa !21
+  %10 = zext nneg i32 %4 to i64
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %9, i8 0, i64 %10, i1 false)
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.pre.pre.i.i5 = phi ptr [ %9, %bb.c ], [ null, %bb.b ]
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 %4, ptr %11, align 8, !tbaa !22
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.a, %bb.d
+  %12 = phi ptr [ %.pre.pre.i.i5, %bb.d ], [ null, %bb.a ]
+  store i8 1, ptr %i.a, align 8, !tbaa !23
+  %13 = sext i32 %4 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %12, ptr readonly align 1 %2, i64 %13, i1 false)
   ret void
-
-bb.c:                                             ; preds = %bb.a
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  %4 = load i8, ptr %i.a, align 8, !tbaa !23, !range !20, !noundef !24
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %bb.d, label %_ZN4i18n12phonenumbers11UnicodeText4ReprD2Ev.exit
-
-bb.d:                                             ; preds = %bb.c
-  %6 = load ptr, ptr %0, align 8, !tbaa !21       ; 2 uses
-  %7 = icmp eq ptr %6, null
-  br i1 %7, label %_ZN4i18n12phonenumbers11UnicodeText4ReprD2Ev.exit, label %bb.e
-
-bb.e:                                             ; preds = %bb.d
-  tail call void @_ZdaPv(ptr noundef nonnull %6) #24
-  br label %_ZN4i18n12phonenumbers11UnicodeText4ReprD2Ev.exit
-
-_ZN4i18n12phonenumbers11UnicodeText4ReprD2Ev.exit: ; preds = %bb.c, %bb.d, %bb.e
-  resume { ptr, i32 } %3
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -345,8 +354,8 @@ bb.a:
   %i.f = ptrtoint ptr %i.c to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = trunc i64 %i.g to i32                    ; 3 uses
-  %.not.i.i.not = icmp sgt i32 %i.h, 0
-  br i1 %.not.i.i.not, label %.noexc, label %bb.b
+  %.not.i.i = icmp slt i32 %i.h, 1
+  br i1 %.not.i.i, label %bb.b, label %.noexc
 
 .noexc:                                           ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 12

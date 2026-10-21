@@ -204,46 +204,44 @@ bb.a:
   store i64 0, ptr %3, align 8, !tbaa !27
   %i.a = load i32, ptr %0, align 4, !tbaa !62     ; 2 uses
   %i.b = icmp eq i32 %i.a, 0
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.d = load i8, ptr %i.c, align 4               ; 2 uses
-  br i1 %i.b, label %psa_sign_hash_abort_internal.exit.thread.a, label %bb.b
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %i.d = load i8, ptr %i.c, align 4               ; 4 uses
+  br i1 %i.b, label %psa_sign_hash_abort_internal.exit.thread74, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = and i8 %i.d, 1
   %.not = icmp eq i8 %i.e, 0
-  br i1 %.not, label %bb.c, label %psa_sign_hash_abort_internal.exit.thread74
+  br i1 %.not, label %bb.c, label %psa_sign_hash_abort_internal.exit.thread.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = icmp eq i64 %2, 0
-  br i1 %i.f, label %psa_sign_hash_abort_internal.exit.thread74, label %bb.d
+  br i1 %i.f, label %psa_sign_hash_abort_internal.exit.thread.a, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = tail call noalias ptr @calloc(i64 noundef %2, i64 noundef 1) #19 ; 3 uses
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %psa_sign_hash_abort_internal.exit.thread74, label %bb.e
+  %.pre = load i8, ptr %i.c, align 4              ; 2 uses
+  br i1 %i.h, label %psa_sign_hash_abort_internal.exit.thread.a, label %bb.e
 
-psa_sign_hash_abort_internal.exit.thread.a:       ; preds = %bb.a
-  %i.i = or i8 %i.d, 1
+psa_sign_hash_abort_internal.exit.thread.a:       ; preds = %bb.d, %bb.b, %bb.c
+  %4 = phi i8 [ %i.d, %bb.c ], [ %i.d, %bb.b ], [ %.pre, %bb.d ]
+  %.024.ph.ph = phi i32 [ -138, %bb.c ], [ -137, %bb.b ], [ -141, %bb.d ]
+  %i.i = or i8 %4, 1
   store i8 %i.i, ptr %i.c, align 4
+  store i32 0, ptr %0, align 4, !tbaa !62
   br label %psa_crypto_local_output_free.exit
 
-psa_sign_hash_abort_internal.exit.thread74:       ; preds = %bb.c, %bb.b, %bb.d
-  %.02453.ph.ph = phi i32 [ -141, %bb.d ], [ -137, %bb.b ], [ -138, %bb.c ]
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %5 = load i8, ptr %4, align 4
-  %i.j = or i8 %5, 1
-  store i8 %i.j, ptr %4, align 4
-  store i32 0, ptr %0, align 4, !tbaa !62
+psa_sign_hash_abort_internal.exit.thread74:       ; preds = %bb.a
+  %i.j = or i8 %i.d, 1
+  store i8 %i.j, ptr %i.c, align 4
   br label %psa_crypto_local_output_free.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 0, ptr %i.k, align 4, !tbaa !59
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.g, i8 33, i64 %2, i1 false)
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %7 = load i8, ptr %6, align 4
-  %i.l = or i8 %7, 1
-  store i8 %i.l, ptr %6, align 4
+  %i.l = or i8 %.pre, 1
+  store i8 %i.l, ptr %i.c, align 4
   store i32 0, ptr %0, align 4, !tbaa !62
   %i.m = icmp eq ptr %1, null
   br i1 %i.m, label %psa_crypto_local_output_free.exit, label %psa_crypto_copy_output.exit.i
@@ -256,7 +254,7 @@ psa_crypto_copy_output.exit.i:                    ; preds = %bb.e
   br label %psa_crypto_local_output_free.exit
 
 psa_crypto_local_output_free.exit:                ; preds = %psa_sign_hash_abort_internal.exit.thread74, %psa_sign_hash_abort_internal.exit.thread.a, %psa_crypto_copy_output.exit.i, %bb.e
-  %i.n = phi i32 [ -151, %bb.e ], [ %spec.select.i, %psa_crypto_copy_output.exit.i ], [ %.02453.ph.ph, %psa_sign_hash_abort_internal.exit.thread74 ], [ -137, %psa_sign_hash_abort_internal.exit.thread.a ]
+  %i.n = phi i32 [ -151, %bb.e ], [ %.024.ph.ph, %psa_sign_hash_abort_internal.exit.thread.a ], [ -137, %psa_sign_hash_abort_internal.exit.thread74 ], [ %spec.select.i, %psa_crypto_copy_output.exit.i ]
   ret i32 %i.n
 }
 

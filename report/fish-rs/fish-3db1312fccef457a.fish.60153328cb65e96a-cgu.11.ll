@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish-3db1312fccef457a.fish.60153328cb65e96a-cgu.11?download=true
-inline.NumInlined: 2091
+inline.NumInlined: 2092
 inline.NumDeleted: 836
 loop-unroll.NumCompletelyUnrolled: 16
 loop-unroll.NumRuntimeUnrolled: 4
@@ -206,7 +206,7 @@ bb.a:
   %i.i = alloca [88 x i8], align 8                ; 6 uses
   %i.j = alloca [24 x i8], align 8                ; 6 uses
   %i.k = alloca [24 x i8], align 8                ; 6 uses
-  %i.l = alloca [80 x i8], align 8                ; 6 uses
+  %i.l = alloca [80 x i8], align 8                ; 5 uses
   %i.m = alloca [24 x i8], align 8                ; 8 uses
   %i.n = alloca [24 x i8], align 8                ; 8 uses
   %i.o = alloca [24 x i8], align 8                ; 8 uses
@@ -609,8 +609,8 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCs8frGy5WneL6_4fish8autoload2
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.fu, i64 noundef %i.fw)
           to label %bb.ak unwind label %.body16.i.i.i, !noalias !2191
 
-.body.i.i.i:                                      ; preds = %.body16.thread.i.i.i, %.body16.i.i.i, %bb.bn, %bb.bj, %bb.ay, %bb.au
-  %.pn.i.i.i37 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i.i.i, %.body16.i.i.i ], [ %eh.lpad-body173.i.i.i, %.body16.thread.i.i.i ], [ %i.hy, %bb.bj ], [ %i.gp, %bb.au ], [ %i.gx, %bb.ay ], [ %i.ig, %bb.bn ]
+.body.i.i.i:                                      ; preds = %.body16.thread.i.i.i, %7, %.body16.i.i.i, %bb.bn, %bb.bj, %bb.ay, %bb.au
+  %.pn.i.i.i37 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i.i.i, %.body16.i.i.i ], [ %eh.lpad-body173.i.i.i, %.body16.thread.i.i.i ], [ %i.hy, %bb.bj ], [ %i.gp, %bb.au ], [ %i.gx, %bb.ay ], [ %8, %7 ], [ %i.ig, %bb.bn ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(24) %i.s) #35
           to label %common.resume unwind label %bb.bv, !noalias !2191
 
@@ -895,7 +895,7 @@ bb.bp:                                            ; preds = %bb.bm
           cleanup
   br label %.body16.thread.i.i.i
 
-.body16.i.i.i:                                    ; preds = %bb.bq, %.invoke.i.i.i, %bb.aq, %bb.ap, %.noexc.i
+.body16.i.i.i:                                    ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs8frGy5WneL6_4fish.exit.i.i.i.i, %.invoke.i.i.i, %bb.aq, %bb.ap, %.noexc.i
   %lpad.thr_comm.split-lp.i.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i.i
@@ -903,10 +903,26 @@ bb.bp:                                            ; preds = %bb.bm
 bb.bq:                                            ; preds = %.noexc.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !2202
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !2189
-  %i.ip = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %i.ip = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ip, ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 24, i1 false), !noalias !2189
   store i64 -1, ptr %i.l, align 8, !noalias !2189
-  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish8autoload20AutoloadableFileInfoEBF_(ptr noalias nofree noundef align 8 dereferenceable(80) %i.l)
+  invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ip)
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs8frGy5WneL6_4fish.exit.i.i.i.i unwind label %7, !noalias !2191
+
+7:                                                ; preds = %bb.bq
+  %8 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ip)
+          to label %.body.i.i.i unwind label %9, !noalias !2191
+
+9:                                                ; preds = %7
+  %10 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #34, !noalias !2191
+  unreachable
+
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs8frGy5WneL6_4fish.exit.i.i.i.i: ; preds = %bb.bq
+  invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ip)
           to label %bb.bs unwind label %.body16.i.i.i, !noalias !2191
 
 bb.br:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs8frGy5WneL6_4fish.exit.i.i.i.i.i.i.i, %bb.bc
@@ -915,8 +931,8 @@ bb.br:                                            ; preds = %_RINvNtCs3oUPovFnLW
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9, ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 24, i1 false)
   br label %bb.bs
 
-bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %.sroa.0.0 = phi i64 [ -2, %bb.bq ], [ -1, %bb.br ]
+bb.bs:                                            ; preds = %bb.br, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs8frGy5WneL6_4fish.exit.i.i.i.i
+  %.sroa.0.0 = phi i64 [ -2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs8frGy5WneL6_4fish.exit.i.i.i.i ], [ -1, %bb.br ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !2189
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !2189
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s)
@@ -1319,7 +1335,7 @@ begin_hunk_2_@llvm.experimental.cttz.elts.i64.v16i1
 !2273 = !{!2158, !2157, !2101}
 !2274 = !{!2101, !2103, !2099}
 !2275 = !{!2098, !2099}
-!2276 = !{!"branch_weights", !"expected", i32 2143282671, i32 4200977}
+!2276 = !{!"branch_weights", !"expected", i32 2143282672, i32 4200976}
 !2277 = !{!2160}
 !2278 = distinct !{!2278, i1 true, !"_RNvMs_NtCs25YkazkrsH5_9hashbrown3mapINtB4_7HashMapINtCskOHnqPTvc0z_3lru6KeyRefNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEINtNtNtCs3oUPovFnLWP_4core3ptr8non_null7NonNullINtBP_8LruEntryB1e_NtNtCsaL1QbXo9JQH_3std4time7InstantEEE13with_capacityCs8frGy5WneL6_4fish"}
 !2279 = distinct !{!2279, !2278, !"_RNvMs_NtCs25YkazkrsH5_9hashbrown3mapINtB4_7HashMapINtCskOHnqPTvc0z_3lru6KeyRefNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEINtNtNtCs3oUPovFnLWP_4core3ptr8non_null7NonNullINtBP_8LruEntryB1e_NtNtCsaL1QbXo9JQH_3std4time7InstantEEE13with_capacityCs8frGy5WneL6_4fish: argument 0"}

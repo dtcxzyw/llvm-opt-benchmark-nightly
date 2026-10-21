@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/syn-rs/original/syn-2b0ecb81dd371323.syn.bc9ad91376fc82fa-cgu.15?download=true
-inline.NumInlined: 554
+inline.NumInlined: 555
 inline.NumDeleted: 211
 begin_hunk_0_@_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn8generics9TypeParamEBF_:bb.a
 bb.b:                                             ; preds = %bb.a
@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 7 uses
-  %i.d = alloca [32 x i8], align 8                ; 8 uses
+  %i.d = alloca [32 x i8], align 8                ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1066)
   %i.e = load ptr, ptr %0, align 8, !alias.scope !1066, !nonnull !6, !noundef !6 ; 9 uses
   %i.f = load i64, ptr %i.e, align 8, !noalias !1066, !noundef !6
@@ -349,7 +349,7 @@ bb.l:                                             ; preds = %bb.h
   store ptr %.sroa.0.0.i.i.i.i.i.i.i.i, ptr %0, align 8, !alias.scope !1066
   br label %.body.thread
 
-.body.thread19:                                   ; preds = %.invoke, %.noexc4, %bb.c, %.noexc, %bb.i
+.body.thread19:                                   ; preds = %.invoke, %.noexc4, %bb.i, %.noexc, %bb.c
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.body.thread
@@ -379,7 +379,11 @@ bb.o:                                             ; preds = %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.47.0..sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(28) %i.aw, i64 28, i1 false)
   store i32 %.sroa.02.0.copyload38.i.i, ptr %i.a, align 8, !noalias !1080
   invoke void @_RNvNtCs6et67aoV1xO_11proc_macro28fallback26push_token_from_proc_macro(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.av, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.a)
-          to label %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB1w_8for_each4callBS_NCINvXsa_NtBU_8fallbackNtB2L_11TokenStreamINtNtB1A_7collect6ExtendBS_E6extendB3_E0E0ECsgbWeKYPjk8w_3syn.exit.loopexit.i unwind label %bb.n, !noalias !1080
+          to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit.loopexit.i.i unwind label %bb.n, !noalias !1080
+
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit.loopexit.i.i: ; preds = %bb.o
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1079
+  br label %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB1w_8for_each4callBS_NCINvXsa_NtBU_8fallbackNtB2L_11TokenStreamINtNtB1A_7collect6ExtendBS_E6extendB3_E0E0ECsgbWeKYPjk8w_3syn.exit.i
 
 bb.p:                                             ; preds = %bb.n
   %i.ax = landingpad { ptr, i32 }
@@ -387,13 +391,7 @@ bb.p:                                             ; preds = %bb.n
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #17, !noalias !1078
   unreachable
 
-_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB1w_8for_each4callBS_NCINvXsa_NtBU_8fallbackNtB2L_11TokenStreamINtNtB1A_7collect6ExtendBS_E6extendB3_E0E0ECsgbWeKYPjk8w_3syn.exit.loopexit.i: ; preds = %bb.o
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1079
-  store i32 -1, ptr %i.d, align 8, !alias.scope !1077
-  br label %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB1w_8for_each4callBS_NCINvXsa_NtBU_8fallbackNtB2L_11TokenStreamINtNtB1A_7collect6ExtendBS_E6extendB3_E0E0ECsgbWeKYPjk8w_3syn.exit.i
-
-_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB1w_8for_each4callBS_NCINvXsa_NtBU_8fallbackNtB2L_11TokenStreamINtNtB1A_7collect6ExtendBS_E6extendB3_E0E0ECsgbWeKYPjk8w_3syn.exit.i: ; preds = %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB1w_8for_each4callBS_NCINvXsa_NtBU_8fallbackNtB2L_11TokenStreamINtNtB1A_7collect6ExtendBS_E6extendB3_E0E0ECsgbWeKYPjk8w_3syn.exit.loopexit.i, %bb.m
-  call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.d)
+_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB1w_8for_each4callBS_NCINvXsa_NtBU_8fallbackNtB2L_11TokenStreamINtNtB1A_7collect6ExtendBS_E6extendB3_E0E0ECsgbWeKYPjk8w_3syn.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn.exit.loopexit.i.i, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   ret void
 
@@ -401,7 +399,7 @@ _RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_
   %eh.lpad-body13 = phi { ptr, i32 } [ %eh.lpad-body14, %.body.thread ], [ %i.au, %bb.n ]
   resume { ptr, i32 } %eh.lpad-body13
 
-.body.thread:                                     ; preds = %bb.l, %bb.f, %.body.thread19
+.body.thread:                                     ; preds = %bb.f, %bb.l, %.body.thread19
   %eh.lpad-body14 = phi { ptr, i32 } [ %lpad.thr_comm, %.body.thread19 ], [ %i.as, %bb.l ], [ %i.x, %bb.f ]
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs6et67aoV1xO_11proc_macro29TokenTreeEECsgbWeKYPjk8w_3syn(ptr noalias nofree noundef align 8 dereferenceable(32) %1) #18
           to label %.body.thread15 unwind label %bb.q
