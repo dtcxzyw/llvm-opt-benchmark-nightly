@@ -202,9 +202,9 @@ bb.cc:                                            ; preds = %bb.cc, %bb.cb
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.cc ], [ 64, %bb.cb ] ; 2 uses
   %.232.i.i = phi i64 [ %i.ha, %bb.cc ], [ %.0408, %bb.cb ] ; 3 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
-  %i.gv = and i64 %.232.i.i, 7                    ; 2 uses
+  %i.gv = and i64 %.232.i.i, 7
   %i.gw = getelementptr inbounds nuw i8, ptr @.str.4, i64 %i.gv
-  %i.gx = load i8, ptr %i.gw, align 1, !tbaa !15
+  %i.gx = load i8, ptr %i.gw, align 1, !tbaa !15  ; 2 uses
   %i.gy = and i64 %indvars.iv.next.i, 4294967295  ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.gy
   store i8 %i.gx, ptr %i.gz, align 1, !tbaa !15
@@ -217,8 +217,8 @@ u2s.exit.i484:                                    ; preds = %bb.cc
   %i.hc = trunc nuw i8 %.0387 to i1
   %i.hd = sub i64 65, %indvars.iv.i
   %i.he = and i64 %i.hd, 4294967295               ; 2 uses
-  %.not.i = icmp ne i64 %i.gv, 0
-  %or.cond532.not = and i1 %.not.i, %i.hc
+  %.not.i = icmp ne i8 %i.gx, 48
+  %or.cond532.not = select i1 %i.hc, i1 %.not.i, i1 false
   br i1 %or.cond532.not, label %bb.cd, label %o2s.exit
 
 bb.cd:                                            ; preds = %u2s.exit.i484

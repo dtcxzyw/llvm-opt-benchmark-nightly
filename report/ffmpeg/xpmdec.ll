@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bf = trunc nsw i64 %indvars.iv.i to i32
   br label %.critedge6.i
 
-.critedge6.i:                                     ; preds = %bb.d, %.lr.ph77.split.i, %.critedge6.loopexit85.i, %.critedge2.i
+.critedge6.i:                                     ; preds = %.lr.ph77.split.i, %bb.d, %.critedge6.loopexit85.i, %.critedge2.i
   %.3.i = phi i32 [ %i.ba, %.critedge2.i ], [ %i.bf, %.critedge6.loopexit85.i ], [ %.04874.i, %.lr.ph77.split.i ], [ %.04874.i, %bb.d ]
   %i.bg = add nsw i32 %.3.i, 1
   br label %.lr.ph77.split.i
@@ -396,7 +396,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.di = trunc nsw i64 %indvars.iv.i130 to i32
   br label %.critedge6.i132
 
-.critedge6.i132:                                  ; preds = %bb.v, %.lr.ph77.split.i128, %.critedge6.loopexit85.i131, %.critedge2.i139
+.critedge6.i132:                                  ; preds = %.lr.ph77.split.i128, %bb.v, %.critedge6.loopexit85.i131, %.critedge2.i139
   %.3.i133 = phi i32 [ %i.dd, %.critedge2.i139 ], [ %i.di, %.critedge6.loopexit85.i131 ], [ %.04874.i129, %.lr.ph77.split.i128 ], [ %.04874.i129, %bb.v ]
   %i.dj = add nsw i32 %.3.i133, 1
   br label %.lr.ph77.split.i128
@@ -405,8 +405,8 @@ mod_strcspn.exit146.loopexit:                     ; preds = %.lr.ph77.split.i128
   %i.dk = sext i32 %.04874.i129 to i64
   br label %mod_strcspn.exit146
 
-mod_strcspn.exit146:                              ; preds = %.lr.ph196, %mod_strcspn.exit146.loopexit
-  %.04868.i145 = phi i64 [ %i.dk, %mod_strcspn.exit146.loopexit ], [ 0, %.lr.ph196 ]
+mod_strcspn.exit146:                              ; preds = %mod_strcspn.exit146.loopexit, %.lr.ph196
+  %.04868.i145 = phi i64 [ 0, %.lr.ph196 ], [ %i.dk, %mod_strcspn.exit146.loopexit ]
   %i.dl = getelementptr i8, ptr %.1104194, i64 %.04868.i145
   %i.dm = getelementptr i8, ptr %i.dl, i64 1      ; 3 uses
   %i.dn = ptrtoint ptr %i.dm to i64

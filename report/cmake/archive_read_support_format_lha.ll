@@ -205,13 +205,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.aa = add nsw i32 %i.y, -13
   %i.ab = zext nneg i32 %i.aa to i64
   %i.ac = lshr i64 %i.z, %i.ab
-  %i.ad = and i64 %i.ac, 1023                     ; 2 uses
-  %.not34 = icmp eq i64 %i.ad, 1023
+  %i.ad = and i64 %i.ac, 1023
+  %3 = getelementptr inbounds nuw i8, ptr @bitlen_tbl, i64 %i.ad
+  %4 = load i8, ptr %3, align 1, !tbaa !10        ; 2 uses
+  %.not34 = icmp eq i8 %4, 0
   br i1 %.not34, label %._crit_edge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = getelementptr inbounds nuw i8, ptr @bitlen_tbl, i64 %i.ad
-  %4 = load i8, ptr %3, align 1, !tbaa !10
   %i.ae = sext i8 %4 to i32                       ; 2 uses
   %.neg35 = add i32 %i.y, 3
   %i.af = sub i32 %.neg35, %i.ae

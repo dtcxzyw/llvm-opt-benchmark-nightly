@@ -205,15 +205,15 @@ bb.hs:                                            ; preds = %.lr.ph.i.i5507
 _ZL25denormalizeSimpleEnumImplN4llvm12function_refIFvRKNS_5TwineEEEEjNS_3opt6Option11OptionClassEjj.exit5524: ; preds = %bb.hs, %.lr.ph.i.i5507
   %.sroa.0.0.i.i.i.i5516 = phi i64 [ %i.ash, %bb.hs ], [ 0, %.lr.ph.i.i5507 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #26
-  store ptr %i.asg, ptr %22, align 8, !alias.scope !1485
-  %.sroa.23.0..sroa_idx.i.i.i.i.i.i5521 = getelementptr inbounds nuw i8, ptr %22, i64 8
-  store i64 %.sroa.0.0.i.i.i.i5516, ptr %.sroa.23.0..sroa_idx.i.i.i.i.i.i5521, align 8, !tbaa !92, !alias.scope !1485
-  %i.asi = getelementptr inbounds nuw i8, ptr %22, i64 16
-  store ptr @.str.22, ptr %i.asi, align 8, !alias.scope !1485
+  %461 = getelementptr inbounds nuw i8, ptr %22, i64 16
+  store ptr @.str.22, ptr %461, align 8, !alias.scope !1485
+  store ptr %i.asg, ptr %22, align 8
+  %i.asi = getelementptr inbounds nuw i8, ptr %22, i64 8
+  store i64 %.sroa.0.0.i.i.i.i5516, ptr %i.asi, align 8, !tbaa !92
   %i.asj = getelementptr inbounds nuw i8, ptr %22, i64 32
-  store i8 5, ptr %i.asj, align 8, !tbaa !387, !alias.scope !1485
+  store i8 5, ptr %i.asj, align 8, !tbaa !393
   %i.ask = getelementptr inbounds nuw i8, ptr %22, i64 33
-  store i8 3, ptr %i.ask, align 1, !tbaa !388, !alias.scope !1485
+  store i8 3, ptr %i.ask, align 1, !tbaa !393
   call void %1(i64 noundef %2, ptr noundef nonnull align 8 dereferenceable(34) %22) #26, !inline_history !15
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #26
   %.pre7183 = load i64, ptr %0, align 8
@@ -616,15 +616,15 @@ bb.rq:                                            ; preds = %.lr.ph.i.i5651
 _ZL25denormalizeSimpleEnumImplN4llvm12function_refIFvRKNS_5TwineEEEEjNS_3opt6Option11OptionClassEjj.exit5668: ; preds = %bb.rq, %.lr.ph.i.i5651
   %.sroa.0.0.i.i.i.i5660 = phi i64 [ %i.ckz, %bb.rq ], [ 0, %.lr.ph.i.i5651 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
-  store ptr %i.cky, ptr %14, align 8, !alias.scope !1509
-  %.sroa.23.0..sroa_idx.i.i.i.i.i.i5665 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  store i64 %.sroa.0.0.i.i.i.i5660, ptr %.sroa.23.0..sroa_idx.i.i.i.i.i.i5665, align 8, !tbaa !92, !alias.scope !1509
-  %i.cla = getelementptr inbounds nuw i8, ptr %14, i64 16
-  store ptr @.str.250, ptr %i.cla, align 8, !alias.scope !1509
+  %462 = getelementptr inbounds nuw i8, ptr %14, i64 16
+  store ptr @.str.250, ptr %462, align 8, !alias.scope !1509
+  store ptr %i.cky, ptr %14, align 8
+  %i.cla = getelementptr inbounds nuw i8, ptr %14, i64 8
+  store i64 %.sroa.0.0.i.i.i.i5660, ptr %i.cla, align 8, !tbaa !92
   %i.clb = getelementptr inbounds nuw i8, ptr %14, i64 32
-  store i8 5, ptr %i.clb, align 8, !tbaa !387, !alias.scope !1509
+  store i8 5, ptr %i.clb, align 8, !tbaa !393
   %i.clc = getelementptr inbounds nuw i8, ptr %14, i64 33
-  store i8 3, ptr %i.clc, align 1, !tbaa !388, !alias.scope !1509
+  store i8 3, ptr %i.clc, align 1, !tbaa !393
   call void %1(i64 noundef %2, ptr noundef nonnull align 8 dereferenceable(34) %14) #26, !inline_history !15
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #26
   br label %bb.rr
@@ -1027,15 +1027,15 @@ bb.iu:                                            ; preds = %.lr.ph.i.i4823
 _ZL25denormalizeSimpleEnumImplN4llvm12function_refIFvRKNS_5TwineEEEEjNS_3opt6Option11OptionClassEjj.exit4840: ; preds = %bb.iu, %.lr.ph.i.i4823
   %.sroa.0.0.i.i.i.i4832 = phi i64 [ %i.awq, %bb.iu ], [ 0, %.lr.ph.i.i4823 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #26
-  store ptr %i.awp, ptr %27, align 8, !alias.scope !2200
-  %.sroa.23.0..sroa_idx.i.i.i.i.i.i4837 = getelementptr inbounds nuw i8, ptr %27, i64 8
-  store i64 %.sroa.0.0.i.i.i.i4832, ptr %.sroa.23.0..sroa_idx.i.i.i.i.i.i4837, align 8, !tbaa !92, !alias.scope !2200
-  %i.awr = getelementptr inbounds nuw i8, ptr %27, i64 16
-  store ptr @.str.197, ptr %i.awr, align 8, !alias.scope !2200
+  %409 = getelementptr inbounds nuw i8, ptr %27, i64 16
+  store ptr @.str.197, ptr %409, align 8, !alias.scope !2200
+  store ptr %i.awp, ptr %27, align 8
+  %i.awr = getelementptr inbounds nuw i8, ptr %27, i64 8
+  store i64 %.sroa.0.0.i.i.i.i4832, ptr %i.awr, align 8, !tbaa !92
   %i.aws = getelementptr inbounds nuw i8, ptr %27, i64 32
-  store i8 5, ptr %i.aws, align 8, !tbaa !387, !alias.scope !2200
+  store i8 5, ptr %i.aws, align 8, !tbaa !393
   %i.awt = getelementptr inbounds nuw i8, ptr %27, i64 33
-  store i8 3, ptr %i.awt, align 1, !tbaa !388, !alias.scope !2200
+  store i8 3, ptr %i.awt, align 1, !tbaa !393
   call void %1(i64 noundef %2, ptr noundef nonnull align 8 dereferenceable(34) %27) #26, !inline_history !15
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #26
   br label %bb.iv

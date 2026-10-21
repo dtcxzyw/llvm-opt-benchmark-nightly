@@ -202,7 +202,7 @@ _ZN4entt19basic_hashed_stringIcEC2ENS1_13const_wrapperE.exit201: ; preds = %_ZNK
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #16
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
-  %i.fu = load i8, ptr %19, align 8, !tbaa !40, !range !41, !noundef !49
+  %i.fu = load i8, ptr %19, align 8, !tbaa !40, !range !41
   %i.fv = trunc nuw i8 %i.fu to i1
   br i1 %i.fv, label %.critedge87, label %bb.bo
 
@@ -605,7 +605,7 @@ _ZN4entt19basic_hashed_stringIwEC2ENS1_13const_wrapperE.exit202: ; preds = %_ZNK
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #16
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %19)
-  %i.fu = load i8, ptr %19, align 8, !tbaa !40, !range !41, !noundef !49
+  %i.fu = load i8, ptr %19, align 8, !tbaa !40, !range !41
   %i.fv = trunc nuw i8 %i.fu to i1
   br i1 %i.fv, label %.critedge87, label %bb.bo
 

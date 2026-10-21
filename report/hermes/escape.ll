@@ -205,12 +205,11 @@ _ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit31: ; preds = %_ZN4
   %.pre106 = zext i32 %.pre7.pre.i.i to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit: ; preds = %.thread.i, %.preheader.preheader
-  %.pre-phi = phi i64 [ %.pre106, %.thread.i ], [ %i.ds, %.preheader.preheader ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit: ; preds = %.preheader.preheader, %.thread.i
+  %.pre-phi = phi i64 [ %i.ds, %.preheader.preheader ], [ %.pre106, %.thread.i ]
   %i.eu = load ptr, ptr %4, align 8, !tbaa !33
   %i.ev = getelementptr inbounds nuw [2 x i8], ptr %i.eu, i64 %.pre-phi
   store i32 7667749, ptr %i.ev, align 1
-  %.pre = load i32, ptr %i.x, align 4, !tbaa !35
   %.pre.i.i = load i32, ptr %i.w, align 8, !tbaa !34
   %i.ew = add i32 %.pre.i.i, 2                    ; 3 uses
   store i32 %i.ew, ptr %i.w, align 8, !tbaa !34
@@ -219,7 +218,8 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit: ; preds = %.thread.i, %.p
   %i.ez = or disjoint i16 %i.ex, 48
   %i.fa = add nuw nsw i16 %i.ex, 55
   %.0.i37 = select i1 %i.ey, i16 %i.ez, i16 %i.fa
-  %.not.i38 = icmp ult i32 %i.ew, %.pre
+  %5 = load i32, ptr %i.x, align 4, !tbaa !35
+  %.not.i38 = icmp ult i32 %i.ew, %5
   br i1 %.not.i38, label %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit40, label %bb.ap, !prof !26
 
 bb.ap:                                            ; preds = %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit

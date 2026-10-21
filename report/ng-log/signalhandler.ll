@@ -204,6 +204,7 @@ _ZNSt6atomicIbE21compare_exchange_weakERbbSt12memory_orderS2_.exit: ; preds = %_
 ._crit_edge:                                      ; preds = %.loopexit, %bb.c
   %i.t = tail call i64 @time(ptr noundef null) #20 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
+  %.0.lcssa.i.sroa.gep.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 15 ; 3 uses
   store <8 x i8> <i8 42, i8 42, i8 42, i8 32, i8 65, i8 98, i8 111, i8 114>, ptr %i.b, align 16, !tbaa !33
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store <4 x i8> <i8 116, i8 101, i8 100, i8 32>, ptr %i.u, align 8, !tbaa !33
@@ -213,7 +214,6 @@ _ZNSt6atomicIbE21compare_exchange_weakERbbSt12memory_orderS2_.exit: ; preds = %_
   store i8 116, ptr %i.w, align 1, !tbaa !33
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 14
   store i8 32, ptr %i.x, align 2, !tbaa !33
-  %.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 15 ; 3 uses
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.e
@@ -223,7 +223,7 @@ bb.d:                                             ; preds = %bb.e
 bb.e:                                             ; preds = %._crit_edge, %bb.d
   %.015.i.i.i40 = phi i64 [ %i.t, %._crit_edge ], [ %i.aa, %bb.d ] ; 3 uses
   %indvars.iv.i.i39 = phi i64 [ 0, %._crit_edge ], [ %indvars.iv.next.i.i, %bb.d ] ; 3 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %.ptr.i.i, i64 %indvars.iv.i.i39
+  %i.y = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i.i, i64 %indvars.iv.i.i39
   %i.z = urem i64 %.015.i.i.i40, 10
   %i.aa = udiv i64 %.015.i.i.i40, 10
   %i.ab = trunc nuw nsw i64 %i.z to i8
@@ -249,14 +249,14 @@ split.i.i.i:                                      ; preds = %bb.e
   br label %bb.q
 
 .lr.ph.i.i.preheader.i.i.i:                       ; preds = %bb.d, %split.i.i.i
-  %.pre-phi.i101.i.i = phi i64 [ %indvars.iv.next.i.i, %split.i.i.i ], [ 241, %bb.d ] ; 14 uses
-  %i.ah = getelementptr i8, ptr %.ptr.i.i, i64 %.pre-phi.i101.i.i
+  %.pre-phi.i101.i.i = phi i64 [ %indvars.iv.next.i.i, %split.i.i.i ], [ 241, %bb.d ] ; 13 uses
+  %i.ah = getelementptr i8, ptr %.0.lcssa.i.sroa.gep.i.i, i64 %.pre-phi.i101.i.i
   %.012.i.i.i.i.i = getelementptr i8, ptr %i.ah, i64 -1
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i.i.preheader.i.i.i
   %.014.i.i.i.i.i = phi ptr [ %.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.012.i.i.i.i.i, %.lr.ph.i.i.preheader.i.i.i ] ; 3 uses
-  %.0913.i.i.i.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i ], [ %.ptr.i.i, %.lr.ph.i.i.preheader.i.i.i ] ; 3 uses
+  %.0913.i.i.i.i.i = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i ], [ %.0.lcssa.i.sroa.gep.i.i, %.lr.ph.i.i.preheader.i.i.i ] ; 3 uses
   %i.ai = load i8, ptr %.0913.i.i.i.i.i, align 1, !tbaa !33
   %i.aj = load i8, ptr %.014.i.i.i.i.i, align 1, !tbaa !33
   store i8 %i.aj, ptr %.0913.i.i.i.i.i, align 1, !tbaa !33
@@ -267,14 +267,14 @@ split.i.i.i:                                      ; preds = %bb.e
   br i1 %i.al, label %.lr.ph.i.i.i.i.i, label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i.i, !llvm.loop !0
 
 _ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i
-  %.add.i.i = add nuw nsw i64 %.pre-phi.i101.i.i, 15 ; 3 uses
+  %.add.i.i = add nuw nsw i64 %.pre-phi.i101.i.i, 15 ; 4 uses
   %.ptr48.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 %.add.i.i ; 11 uses
   %i.am = icmp ult i64 %.pre-phi.i101.i.i, 241
   br i1 %i.am, label %bb.f, label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit6.i.i
 
 bb.f:                                             ; preds = %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i.i
   store i8 32, ptr %.ptr48.i.i, align 1, !tbaa !33
-  %.not.i.i = icmp eq i64 %.pre-phi.i101.i.i, 240
+  %.not.i.i = icmp eq i64 %.add.i.i, 255
   br i1 %.not.i.i, label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit6.i.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -677,6 +677,7 @@ _ZN5nglog12_GLOBAL__N_112DumpTimeInfoEv.exit.i:   ; preds = %bb.bm, %bb.bl, %bb.
   %i.dz = add nuw nsw i64 %.0.lcssa.i29.i.i, %i.cc
   call void %i.dy(ptr noundef nonnull %i.b, i64 noundef %i.dz), !inline_history !49
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
+  %.0.lcssa.i.sroa.gep.i8.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 5 uses
   %switch.tableidx = add i32 %0, -4               ; 3 uses
   %i.ea = icmp ult i32 %switch.tableidx, 12
   %switch.maskindex = trunc i32 %switch.tableidx to i16
@@ -691,17 +692,16 @@ switch.lookup:                                    ; preds = %_ZN5nglog12_GLOBAL_
   %switch.load = load ptr, ptr %switch.gep, align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   store <4 x i8> <i8 42, i8 42, i8 42, i8 32>, ptr %i.a, align 16, !tbaa !33
-  %.ptr199.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 5 uses
   %i.ec = load i8, ptr %switch.load, align 1, !tbaa !33 ; 2 uses
   %.not9.i.i.i = icmp eq i8 %i.ec, 0
   br i1 %.not9.i.i.i, label %.thread379.i.i, label %.lr.ph.i.i.i.preheader
 
 .thread379.i.i:                                   ; preds = %switch.lookup
-  store i8 32, ptr %.ptr199.i.i, align 4, !tbaa !33
+  store i8 32, ptr %.0.lcssa.i.sroa.gep.i8.i, align 4, !tbaa !33
   br label %.sink.split
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader
-  %i.ed = getelementptr inbounds nuw i8, ptr %.ptr199.i.i, i64 %i.er
+  %i.ed = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i8.i, i64 %i.er
   store i8 %i.et, ptr %i.ed, align 1, !tbaa !33
   %i.ee = or disjoint i64 %.010.i20.i.i46, 2      ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %switch.load, i64 %i.ee
@@ -710,7 +710,7 @@ switch.lookup:                                    ; preds = %_ZN5nglog12_GLOBAL_
   br i1 %.not.i22.i.i.1, label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit23.loopexit.i.i, label %.lr.ph.i.i.i.1, !llvm.loop !1
 
 .lr.ph.i.i.i.1:                                   ; preds = %.lr.ph.i.i.i
-  %i.eh = getelementptr inbounds nuw i8, ptr %.ptr199.i.i, i64 %i.ee
+  %i.eh = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i8.i, i64 %i.ee
   store i8 %i.eg, ptr %i.eh, align 2, !tbaa !33
   %i.ei = or disjoint i64 %.010.i20.i.i46, 3      ; 3 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %switch.load, i64 %i.ei
@@ -719,7 +719,7 @@ switch.lookup:                                    ; preds = %_ZN5nglog12_GLOBAL_
   br i1 %.not.i22.i.i.2, label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit23.loopexit.i.i, label %.lr.ph.i.i.i.2, !llvm.loop !1
 
 .lr.ph.i.i.i.2:                                   ; preds = %.lr.ph.i.i.i.1
-  %i.el = getelementptr inbounds nuw i8, ptr %.ptr199.i.i, i64 %i.ei
+  %i.el = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i8.i, i64 %i.ei
   store i8 %i.ek, ptr %i.el, align 1, !tbaa !33
   %i.em = add nuw nsw i64 %.010.i20.i.i46, 4      ; 4 uses
   %i.en = getelementptr inbounds nuw i8, ptr %switch.load, i64 %i.em
@@ -734,7 +734,7 @@ switch.lookup:                                    ; preds = %_ZN5nglog12_GLOBAL_
 .lr.ph.i.i.i.preheader:                           ; preds = %switch.lookup, %.lr.ph.i.i.i.3
   %.010.i20.i.i46 = phi i64 [ %i.em, %.lr.ph.i.i.i.3 ], [ 0, %switch.lookup ] ; 5 uses
   %i.ep = phi i8 [ %i.eo, %.lr.ph.i.i.i.3 ], [ %i.ec, %switch.lookup ]
-  %i.eq = getelementptr inbounds nuw i8, ptr %.ptr199.i.i, i64 %.010.i20.i.i46
+  %i.eq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.sroa.gep.i8.i, i64 %.010.i20.i.i46
   store i8 %i.ep, ptr %i.eq, align 4, !tbaa !33
   %i.er = or disjoint i64 %.010.i20.i.i46, 1      ; 3 uses
   %i.es = getelementptr inbounds nuw i8, ptr %switch.load, i64 %i.er
@@ -920,7 +920,7 @@ _ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit50.i.i: ; preds =
 bb.bw:                                            ; preds = %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit50.i.i
   %.ptr207.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.add203.i.i
   store i8 41, ptr %.ptr207.i.i, align 1, !tbaa !33
-  br label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit55.i.i, !llvm.loop !1
+  br label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit55.i.i
 
 _ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit55.i.i: ; preds = %bb.bw, %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit50.i.i
   %.0.lcssa.i53.i.i = phi i64 [ 0, %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit50.i.i ], [ 1, %bb.bw ]
@@ -1323,7 +1323,7 @@ _ZSt4copyIPcS0_ET0_T_S2_S1_.exit.i:               ; preds = %bb.j, %bb.i, %bb.h
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %.ptr48.ptr, i8 32, i64 %gepdiff, i1 false)
   br label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter20AppendHexWithPaddingEmi.exit
 
-_ZN5nglog12_GLOBAL__N_116MinimalFormatter20AppendHexWithPaddingEmi.exit: ; preds = %_ZSt4copyIPcS0_ET0_T_S2_S1_.exit.i, %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i
+_ZN5nglog12_GLOBAL__N_116MinimalFormatter20AppendHexWithPaddingEmi.exit: ; preds = %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i, %_ZSt4copyIPcS0_ET0_T_S2_S1_.exit.i
   %.sroa.4.0.idx = phi i64 [ %.ptr48.add, %_ZSt4copyIPcS0_ET0_T_S2_S1_.exit.i ], [ %.ptr49.add, %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendUint64Emj.exit.i ] ; 3 uses
   %i.av = icmp slt i64 %.sroa.4.0.idx, 1024
   br i1 %i.av, label %bb.k, label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit15
@@ -1331,7 +1331,7 @@ _ZN5nglog12_GLOBAL__N_116MinimalFormatter20AppendHexWithPaddingEmi.exit: ; preds
 bb.k:                                             ; preds = %_ZN5nglog12_GLOBAL__N_116MinimalFormatter20AppendHexWithPaddingEmi.exit
   %.ptr52 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.4.0.idx
   store i8 32, ptr %.ptr52, align 1, !tbaa !33
-  br label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit15, !llvm.loop !1
+  br label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit15
 
 _ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit15: ; preds = %bb.k, %_ZN5nglog12_GLOBAL__N_116MinimalFormatter20AppendHexWithPaddingEmi.exit
   %.0.lcssa.i13 = phi i64 [ 0, %_ZN5nglog12_GLOBAL__N_116MinimalFormatter20AppendHexWithPaddingEmi.exit ], [ 1, %bb.k ]
@@ -1373,7 +1373,7 @@ _ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit21: ; preds = %.
 bb.l:                                             ; preds = %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit21
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ax, i64 %.0.lcssa.i19
   store i8 10, ptr %i.bh, align 1, !tbaa !33
-  br label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit26, !llvm.loop !1
+  br label %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit26
 
 _ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit26: ; preds = %bb.l, %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit21
   %.0.lcssa.i24 = phi i64 [ 0, %_ZN5nglog12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit21 ], [ 1, %bb.l ]
