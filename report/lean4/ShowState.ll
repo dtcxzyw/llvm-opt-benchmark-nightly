@@ -204,24 +204,11 @@ lean_nat_eq.exit:                                 ; preds = %bb.d, %bb.m, %bb.l,
   %.val102 = load i64, ptr %i.aq, align 8, !tbaa !15
   %.mask = and i64 %.val102, 9223372036854775807
   %.not = icmp eq i64 %.mask, 0
-  br i1 %.not, label %bb.q, label %9
+  br i1 %.not, label %bb.q, label %lean_inc_ref.exit107
 
-9:                                                ; preds = %lean_nat_eq.exit
-  %10 = icmp eq i8 %1, 0
-  %l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__3_value.l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__4_value = select i1 %10, ptr @l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__3_value, ptr @l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__4_value ; 3 uses
-  %.val.i.i105 = load i32, ptr %l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__3_value.l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__4_value, align 8, !tbaa !12 ; 2 uses
-  %11 = icmp sgt i32 %.val.i.i105, 0
-  br i1 %11, label %lean_inc_ref.exit107, label %12, !prof !13
-
-12:                                               ; preds = %9
-  %.not.i.i106 = icmp eq i32 %.val.i.i105, 0
-  br i1 %.not.i.i106, label %lean_inc_ref.exit107, label %13
-
-13:                                               ; preds = %12
-  %14 = atomicrmw add ptr %l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__3_value.l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__4_value, i32 -1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit107
-
-lean_inc_ref.exit107:                             ; preds = %9, %12, %13
+lean_inc_ref.exit107:                             ; preds = %lean_nat_eq.exit
+  %9 = icmp eq i8 %1, 0
+  %l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__3_value.l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__4_value = select i1 %9, ptr @l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__3_value, ptr @l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__4_value
   %i.ar = tail call ptr @lean_string_append(ptr noundef nonnull %l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__3_value.l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__4_value, ptr noundef nonnull @l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__2_value) #5
   %i.as = tail call ptr @l_Lean_Meta_Grind_ppExprArray(ptr noundef nonnull @l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppProps_x3f___redArg___closed__1_value, ptr noundef %i.ar, ptr noundef nonnull %i.ag, ptr noundef nonnull @l___private_Lean_Elab_Tactic_Grind_ShowState_0__Lean_Elab_Tactic_Grind_ppAsserted_x3f___redArg___closed__4_value, i8 noundef zeroext %2) #5
   tail call void @lean_inc_heartbeat() #5

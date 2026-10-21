@@ -204,42 +204,29 @@ lean_inc_n.exit:                                  ; preds = %bb.a, %bb.c, %bb.d,
   %i.af = getelementptr inbounds nuw i8, ptr %i.s, i64 64
   store ptr %2, ptr %i.af, align 8, !tbaa !13
   %i.ag = icmp eq i8 %1, 0
-  %l_Lean_logAt___at___00Lean_log___at___00Lean_logWarning___at___00__private_Lean_Widget_UserWidget_0__Lean_Widget_initFn_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__spec__3_spec__4_spec__5___closed__0_value.l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__3_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value = select i1 %i.ag, ptr @l_Lean_logAt___at___00Lean_log___at___00Lean_logWarning___at___00__private_Lean_Widget_UserWidget_0__Lean_Widget_initFn_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__spec__3_spec__4_spec__5___closed__0_value, ptr @l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__3_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value ; 3 uses
-  %.val.i.i99 = load i32, ptr %l_Lean_logAt___at___00Lean_log___at___00Lean_logWarning___at___00__private_Lean_Widget_UserWidget_0__Lean_Widget_initFn_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__spec__3_spec__4_spec__5___closed__0_value.l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__3_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value, align 8, !tbaa !10 ; 2 uses
-  %3 = icmp sgt i32 %.val.i.i99, 0
-  br i1 %3, label %lean_inc_ref.exit, label %4, !prof !11
-
-4:                                                ; preds = %lean_inc_n.exit
-  %.not.i.i100 = icmp eq i32 %.val.i.i99, 0
-  br i1 %.not.i.i100, label %lean_inc_ref.exit, label %5
-
-5:                                                ; preds = %4
-  %6 = atomicrmw add ptr %l_Lean_logAt___at___00Lean_log___at___00Lean_logWarning___at___00__private_Lean_Widget_UserWidget_0__Lean_Widget_initFn_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__spec__3_spec__4_spec__5___closed__0_value.l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__3_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value, i32 -1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit
-
-lean_inc_ref.exit:                                ; preds = %lean_inc_n.exit, %4, %5
-  %7 = tail call ptr @lean_string_append(ptr noundef nonnull %l_Lean_logAt___at___00Lean_log___at___00Lean_logWarning___at___00__private_Lean_Widget_UserWidget_0__Lean_Widget_initFn_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__spec__3_spec__4_spec__5___closed__0_value.l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__3_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value, ptr noundef nonnull @l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__2_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value) #11
+  %l_Lean_logAt___at___00Lean_log___at___00Lean_logWarning___at___00__private_Lean_Widget_UserWidget_0__Lean_Widget_initFn_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__spec__3_spec__4_spec__5___closed__0_value.l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__3_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value = select i1 %i.ag, ptr @l_Lean_logAt___at___00Lean_log___at___00Lean_logWarning___at___00__private_Lean_Widget_UserWidget_0__Lean_Widget_initFn_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__spec__3_spec__4_spec__5___closed__0_value, ptr @l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__3_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value
+  %3 = tail call ptr @lean_string_append(ptr noundef nonnull %l_Lean_logAt___at___00Lean_log___at___00Lean_logWarning___at___00__private_Lean_Widget_UserWidget_0__Lean_Widget_initFn_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__spec__3_spec__4_spec__5___closed__0_value.l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__3_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value, ptr noundef nonnull @l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__2_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value) #11
   tail call void @lean_inc_heartbeat() #11
-  %8 = tail call noalias ptr @mi_malloc_small(i64 noundef 40) #11 ; 8 uses
-  %9 = icmp eq ptr %8, null
-  br i1 %9, label %bb.f, label %lean_alloc_ctor.exit
+  %4 = tail call noalias ptr @mi_malloc_small(i64 noundef 40) #11 ; 8 uses
+  %5 = icmp eq ptr %4, null
+  br i1 %5, label %bb.f, label %lean_alloc_ctor.exit
 
-bb.f:                                             ; preds = %lean_inc_ref.exit
+bb.f:                                             ; preds = %lean_inc_n.exit
   tail call void @lean_internal_panic_out_of_memory() #12
   unreachable
 
-lean_alloc_ctor.exit:                             ; preds = %lean_inc_ref.exit
-  %i.ah = getelementptr inbounds nuw i8, ptr %8, i64 4
-  %i.ai = getelementptr inbounds nuw i8, ptr %8, i64 32
+lean_alloc_ctor.exit:                             ; preds = %lean_inc_n.exit
+  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 32
   store i64 1, ptr %i.ai, align 8, !tbaa !15
-  store i32 1, ptr %8, align 8, !tbaa !10
+  store i32 1, ptr %4, align 8, !tbaa !10
   store i32 196648, ptr %i.ah, align 4
-  %i.aj = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr @l___private_Lean_Widget_UserWidget_0__Lean_Widget_initFn___lam__3___closed__1_00___x40_Lean_Widget_UserWidget_3570059497____hygCtx___hyg_2__value, ptr %i.aj, align 8, !tbaa !13
-  %i.ak = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 16
   store ptr %2, ptr %i.ak, align 8, !tbaa !13
-  %i.al = getelementptr inbounds nuw i8, ptr %8, i64 24
-  store ptr %7, ptr %i.al, align 8, !tbaa !13
+  %i.al = getelementptr inbounds nuw i8, ptr %4, i64 24
+  store ptr %3, ptr %i.al, align 8, !tbaa !13
   tail call void @lean_inc_heartbeat() #11
   %i.am = tail call noalias ptr @mi_malloc_small(i64 noundef 32) #11 ; 15 uses
   %i.an = icmp eq ptr %i.am, null
@@ -253,7 +240,7 @@ lean_inc_ref.exit104:                             ; preds = %lean_alloc_ctor.exi
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 4
   store i32 196640, ptr %i.ao, align 4
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 8 ; 2 uses
-  store ptr %8, ptr %i.ap, align 8, !tbaa !13
+  store ptr %4, ptr %i.ap, align 8, !tbaa !13
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   store ptr %i.s, ptr %i.aq, align 8, !tbaa !13
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 24

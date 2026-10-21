@@ -202,40 +202,27 @@ lean_dec.exit194:                                 ; preds = %lean_inc.exit224, %
   %.val246 = load i64, ptr %i.dd, align 8, !tbaa !18
   %.mask301 = and i64 %.val246, 9223372036854775807
   %i.de = icmp eq i64 %.mask301, 1
-  %spec.select = select i1 %i.de, ptr @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_collectAwaiting___closed__1_value, ptr @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_collectAwaiting___closed__2_value ; 3 uses
-  %i.df = tail call ptr @lean_string_append(ptr noundef nonnull @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_collectAwaiting___closed__0_value, ptr noundef nonnull %spec.select) #4
-  %i.dg = load i32, ptr %spec.select, align 8, !tbaa !12 ; 2 uses
+  %spec.select = select i1 %i.de, ptr @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_collectAwaiting___closed__1_value, ptr @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_collectAwaiting___closed__2_value
+  %5 = tail call ptr @lean_string_append(ptr noundef nonnull @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_collectAwaiting___closed__0_value, ptr noundef nonnull %spec.select) #4
+  %6 = tail call ptr @lean_string_append(ptr noundef %5, ptr noundef nonnull @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_collectAwaiting___closed__3_value) #4
+  %7 = tail call ptr @lean_array_to_list(ptr noundef nonnull %i.ct) #4
+  %8 = tail call ptr @l_String_intercalate(ptr noundef nonnull @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_namesToString___closed__0_value, ptr noundef %7) #4 ; 4 uses
+  %i.df = tail call ptr @lean_string_append(ptr noundef %6, ptr noundef %8) #4 ; 2 uses
+  %i.dg = load i32, ptr %8, align 4, !tbaa !12    ; 3 uses
   %i.dh = icmp sgt i32 %i.dg, 1
-  br i1 %i.dh, label %lean_dec_ref.exit219, label %5, !prof !13
+  br i1 %i.dh, label %bb.ce, label %bb.cf, !prof !13
 
-5:                                                ; preds = %lean_dec.exit194
-  %.not.i218 = icmp eq i32 %i.dg, 0
-  br i1 %.not.i218, label %lean_dec_ref.exit219, label %6
-
-6:                                                ; preds = %5
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %spec.select) #4
-  br label %lean_dec_ref.exit219
-
-lean_dec_ref.exit219:                             ; preds = %lean_dec.exit194, %5, %6
-  %7 = tail call ptr @lean_string_append(ptr noundef %i.df, ptr noundef nonnull @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_collectAwaiting___closed__3_value) #4
-  %8 = tail call ptr @lean_array_to_list(ptr noundef nonnull %i.ct) #4
-  %9 = tail call ptr @l_String_intercalate(ptr noundef nonnull @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_namesToString___closed__0_value, ptr noundef %8) #4 ; 4 uses
-  %10 = tail call ptr @lean_string_append(ptr noundef %7, ptr noundef %9) #4 ; 2 uses
-  %11 = load i32, ptr %9, align 4, !tbaa !12      ; 3 uses
-  %12 = icmp sgt i32 %11, 1
-  br i1 %12, label %bb.ce, label %bb.cf, !prof !13
-
-bb.ce:                                            ; preds = %lean_dec_ref.exit219
-  %i.di = add nsw i32 %11, -1
-  store i32 %i.di, ptr %9, align 4, !tbaa !12
+bb.ce:                                            ; preds = %lean_dec.exit194
+  %i.di = add nsw i32 %i.dg, -1
+  store i32 %i.di, ptr %8, align 4, !tbaa !12
   br label %lean_dec_ref.exit217
 
-bb.cf:                                            ; preds = %lean_dec_ref.exit219
-  %.not.i216 = icmp eq i32 %11, 0
+bb.cf:                                            ; preds = %lean_dec.exit194
+  %.not.i216 = icmp eq i32 %i.dg, 0
   br i1 %.not.i216, label %lean_dec_ref.exit217, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %9) #4
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %8) #4
   br label %lean_dec_ref.exit217
 
 lean_dec_ref.exit217:                             ; preds = %bb.ce, %bb.cf, %bb.cg
@@ -345,7 +332,7 @@ lean_alloc_ctor.exit289:                          ; preds = %lean_dec_ref.exit21
 
 lean_dec.exit202.sink.split:                      ; preds = %lean_dec_ref.exit217, %lean_alloc_ctor.exit275, %bb.ch, %lean_alloc_ctor.exit288, %lean_alloc_ctor.exit289, %lean_alloc_ctor.exit
   %.sink328 = phi ptr [ %i.bu, %lean_alloc_ctor.exit ], [ %i.dy, %lean_alloc_ctor.exit289 ], [ %i.ds, %lean_alloc_ctor.exit288 ], [ %i.dj, %bb.ch ], [ %i.cg, %lean_alloc_ctor.exit275 ], [ %.0175, %lean_dec_ref.exit217 ] ; 2 uses
-  %.sink = phi ptr [ %i.bk, %lean_alloc_ctor.exit ], [ @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_extraLCtxVars___redArg___closed__4_value, %lean_alloc_ctor.exit289 ], [ %i.ct, %lean_alloc_ctor.exit288 ], [ %10, %bb.ch ], [ %i.j, %lean_alloc_ctor.exit275 ], [ %10, %lean_dec_ref.exit217 ]
+  %.sink = phi ptr [ %i.bk, %lean_alloc_ctor.exit ], [ @l___private_Lean_PrettyPrinter_Delaborator_Metavariable_0__Lean_PrettyPrinter_Delaborator_describeMVar_extraLCtxVars___redArg___closed__4_value, %lean_alloc_ctor.exit289 ], [ %i.ct, %lean_alloc_ctor.exit288 ], [ %i.df, %bb.ch ], [ %i.j, %lean_alloc_ctor.exit275 ], [ %i.df, %lean_dec_ref.exit217 ]
   %i.eb = getelementptr inbounds nuw i8, ptr %.sink328, i64 8
   store ptr %.sink, ptr %i.eb, align 8, !tbaa !10
   br label %lean_dec.exit202

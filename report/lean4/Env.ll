@@ -204,35 +204,22 @@ lean_alloc_ctor.exit475:                          ; preds = %lean_alloc_ctor.exi
   store ptr @l___private_Lake_Config_Env_0__Lake_Env_compute_computePkgUrlMap___closed__0_value, ptr %i.hh, align 8, !tbaa !11
   %i.hi = getelementptr inbounds nuw i8, ptr %i.he, i64 16
   store ptr %i.ha, ptr %i.hi, align 8, !tbaa !11
-  %1 = icmp eq i8 %i.z, 0
-  %.0342 = select i1 %1, ptr @l_Lake_Env_baseVars___closed__1_value, ptr @l_Lake_Env_baseVars___closed__2_value ; 3 uses
-  %.val.i.i476 = load i32, ptr %.0342, align 8, !tbaa !13 ; 2 uses
-  %2 = icmp sgt i32 %.val.i.i476, 0
-  br i1 %2, label %lean_inc_ref.exit478, label %3, !prof !14
-
-3:                                                ; preds = %lean_alloc_ctor.exit475
-  %.not.i.i477 = icmp eq i32 %.val.i.i476, 0
-  br i1 %.not.i.i477, label %lean_inc_ref.exit478, label %4
-
-4:                                                ; preds = %3
-  %5 = atomicrmw add ptr %.0342, i32 -1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit478
-
-lean_inc_ref.exit478:                             ; preds = %lean_alloc_ctor.exit475, %3, %4
   tail call void @lean_inc_heartbeat() #7
-  %6 = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #7 ; 5 uses
-  %7 = icmp eq ptr %6, null
-  br i1 %7, label %bb.cw, label %lean_alloc_ctor.exit479
+  %1 = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #7 ; 5 uses
+  %2 = icmp eq ptr %1, null
+  br i1 %2, label %bb.cw, label %lean_alloc_ctor.exit479
 
-bb.cw:                                            ; preds = %lean_inc_ref.exit478
+bb.cw:                                            ; preds = %lean_alloc_ctor.exit475
   tail call void @lean_internal_panic_out_of_memory() #8
   unreachable
 
-lean_alloc_ctor.exit479:                          ; preds = %lean_inc_ref.exit478
-  %i.hj = getelementptr inbounds nuw i8, ptr %6, i64 4
-  store i32 1, ptr %6, align 4, !tbaa !13
+lean_alloc_ctor.exit479:                          ; preds = %lean_alloc_ctor.exit475
+  %3 = icmp eq i8 %i.z, 0
+  %.0342 = select i1 %3, ptr @l_Lake_Env_baseVars___closed__1_value, ptr @l_Lake_Env_baseVars___closed__2_value
+  %i.hj = getelementptr inbounds nuw i8, ptr %1, i64 4
+  store i32 1, ptr %1, align 4, !tbaa !13
   store i32 16842768, ptr %i.hj, align 4
-  %i.hk = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %.0342, ptr %i.hk, align 8, !tbaa !11
   tail call void @lean_inc_heartbeat() #7
   %i.hl = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #7 ; 6 uses
@@ -250,7 +237,7 @@ lean_alloc_ctor.exit480:                          ; preds = %lean_alloc_ctor.exi
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hl, i64 8
   store ptr @l_Lake_Env_compute___closed__2_value, ptr %i.ho, align 8, !tbaa !11
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hl, i64 16
-  store ptr %6, ptr %i.hp, align 8, !tbaa !11
+  store ptr %1, ptr %i.hp, align 8, !tbaa !11
   tail call void @lean_inc_heartbeat() #7
   %i.hq = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #7 ; 6 uses
   %i.hr = icmp eq ptr %i.hq, null

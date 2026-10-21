@@ -204,10 +204,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 518435
   %i.h = load i8, ptr %i.g, align 1, !tbaa !102, !range !21, !noundef !22
-  %9 = trunc nuw i8 %i.h to i1
-  %10 = icmp eq i32 %i.b, 361
-  %or.cond = or i1 %10, %9
-  %.str.9..str.10 = select i1 %or.cond, ptr @.str.9, ptr @.str.10 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.j = load i64, ptr %i.i, align 8, !tbaa !129
@@ -220,23 +216,18 @@ bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.o = getelementptr inbounds nuw i8, ptr %8, i64 33
   store i8 1, ptr %i.o, align 1, !tbaa !127
-  %11 = load i8, ptr %.str.9..str.10, align 1, !tbaa !96
-  %.not.i = icmp eq i8 %11, 0
-  br i1 %.not.i, label %_ZN4llvm5TwineC2EPKc.exit, label %12
-
-12:                                               ; preds = %bb.c
+  %9 = icmp eq i32 %i.b, 361
+  %10 = trunc nuw i8 %i.h to i1
+  %or.cond = or i1 %9, %10
+  %.str.9..str.10 = select i1 %or.cond, ptr @.str.9, ptr @.str.10
   store ptr %.str.9..str.10, ptr %8, align 8, !tbaa !96
-  br label %_ZN4llvm5TwineC2EPKc.exit
-
-_ZN4llvm5TwineC2EPKc.exit:                        ; preds = %bb.c, %12
-  %storemerge.i = phi i8 [ 3, %12 ], [ 1, %bb.c ]
-  store i8 %storemerge.i, ptr %i.n, align 8, !tbaa !128
+  store i8 3, ptr %i.n, align 8, !tbaa !128
   call fastcc void @_ZL4failRKN4llvm5SDLocERNS_12SelectionDAGERKNS_5TwineENS_7SDValueE(ptr noundef nonnull align 8 dereferenceable(12) %7, ptr noundef nonnull align 8 dereferenceable(920) %3, ptr noundef nonnull align 8 dereferenceable(34) %8, ptr null)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.a, %_ZN4llvm5TwineC2EPKc.exit
+bb.d:                                             ; preds = %bb.a, %bb.a, %bb.c
   ret void
 }
 

@@ -204,7 +204,7 @@ lean_string_dec_eq.exit.thread.i.i522:            ; preds = %lean_string_dec_eq.
 bb.w:                                             ; preds = %bb.gi, %bb.gk, %bb.gl, %bb.gm
   %i.be = and i64 %i.jn, 510
   %i.bf = icmp eq i64 %i.be, 0
-  %l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__0_value.l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__1_value = select i1 %i.bf, ptr @l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__0_value, ptr @l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__1_value ; 3 uses
+  %l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__0_value.l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__1_value = select i1 %i.bf, ptr @l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__0_value, ptr @l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__1_value
   %i.bg = tail call ptr @l_Array_fromJson_x3f___at___00Lean_Server_FileWorker_handlePostRequestSpecialCases_spec__1(ptr noundef %i.o) ; 10 uses
   %i.bh = ptrtoint ptr %i.bg to i64               ; 2 uses
   %i.bi = and i64 %i.bh, 1
@@ -424,23 +424,10 @@ bb.bd:                                            ; preds = %bb.bb
 lean_obj_tag.exit543:                             ; preds = %bb.bc, %bb.bd
   %.0.i541 = phi i32 [ %i.dh, %bb.bc ], [ %i.dj, %bb.bd ]
   %i.dk = icmp eq i32 %.0.i541, 0
-  br i1 %i.dk, label %5, label %bb.cv
+  br i1 %i.dk, label %lean_inc_ref.exit546, label %bb.cv
 
-5:                                                ; preds = %lean_obj_tag.exit543
+lean_inc_ref.exit546:                             ; preds = %lean_obj_tag.exit543
   tail call fastcc void @lean_dec_ref_known(ptr noundef %i.dd, i32 noundef 1)
-  %.val.i.i544 = load i32, ptr %l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__0_value.l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__1_value, align 8, !tbaa !12 ; 2 uses
-  %6 = icmp sgt i32 %.val.i.i544, 0
-  br i1 %6, label %lean_inc_ref.exit546, label %7, !prof !13
-
-7:                                                ; preds = %5
-  %.not.i.i545 = icmp eq i32 %.val.i.i544, 0
-  br i1 %.not.i.i545, label %lean_inc_ref.exit546, label %8
-
-8:                                                ; preds = %7
-  %9 = atomicrmw add ptr %l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__0_value.l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__1_value, i32 -1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit546
-
-lean_inc_ref.exit546:                             ; preds = %5, %7, %8
   %i.dl = tail call ptr @l_Lean_Server_FileWorker_handleUnknownIdentifierCodeAction(ptr noundef %1, ptr noundef %0, ptr noundef nonnull %i.iz, ptr noundef nonnull %l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__0_value.l_Lean_Server_FileWorker_handlePostRequestSpecialCases___lam__0___closed__1_value, ptr noundef %4) #8 ; 14 uses
   %i.dm = ptrtoint ptr %i.dl to i64               ; 2 uses
   %i.dn = and i64 %i.dm, 1

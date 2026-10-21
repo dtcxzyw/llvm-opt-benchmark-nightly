@@ -204,18 +204,13 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %.val38, i64 1024
   %.val38.val = load i32, ptr %i.e, align 8       ; 2 uses
   %i.f = icmp ult i32 %.val39, 5
-  %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i = select i1 %i.f, ptr @rtl_coalesce_info_8169, ptr @rtl_coalesce_info_8168_8136 ; 3 uses
+  %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i = select i1 %i.f, ptr @rtl_coalesce_info_8169, ptr @rtl_coalesce_info_8168_8136 ; 2 uses
   %i.g = icmp eq i32 %.val38.val, -1
-  br i1 %i.g, label %rtl_coalesce_info.exit, label %.preheader.i
+  br i1 %i.g, label %rtl_coalesce_info.exit, label %.lr.ph.i
 
-.preheader.i:                                     ; preds = %bb.b
-  %4 = load i32, ptr %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i, align 16 ; 2 uses
-  %.not1.i = icmp eq i32 %4, 0
-  br i1 %.not1.i, label %rtl_coalesce_info.exit.thread, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.preheader.i, %bb.c
-  %i.h = phi i32 [ %i.k, %bb.c ], [ %4, %.preheader.i ]
-  %.12.i = phi ptr [ %i.j, %bb.c ], [ %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i, %.preheader.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %bb.b, %bb.c
+  %i.h = phi i32 [ %i.k, %bb.c ], [ 1000, %bb.b ]
+  %.12.i = phi ptr [ %i.j, %bb.c ], [ %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i, %bb.b ] ; 2 uses
   %i.i = icmp eq i32 %.val38.val, %i.h
   br i1 %i.i, label %rtl_coalesce_info.exit, label %bb.c
 
@@ -230,8 +225,8 @@ rtl_coalesce_info.exit:                           ; preds = %.lr.ph.i, %bb.b
   %i.l = icmp ugt ptr %.09.i, inttoptr (i64 -4096 to ptr)
   br i1 %i.l, label %rtl_coalesce_info.exit.thread, label %bb.d
 
-rtl_coalesce_info.exit.thread:                    ; preds = %bb.c, %.preheader.i, %rtl_coalesce_info.exit
-  %.09.i41 = phi ptr [ %.09.i, %rtl_coalesce_info.exit ], [ inttoptr (i64 -48 to ptr), %.preheader.i ], [ inttoptr (i64 -48 to ptr), %bb.c ]
+rtl_coalesce_info.exit.thread:                    ; preds = %bb.c, %rtl_coalesce_info.exit
+  %.09.i41 = phi ptr [ %.09.i, %rtl_coalesce_info.exit ], [ inttoptr (i64 -48 to ptr), %bb.c ]
   %i.m = ptrtoint ptr %.09.i41 to i64
   %i.n = trunc i64 %i.m to i32
   br label %bb.e
@@ -318,18 +313,13 @@ bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr i8, ptr %.val83, i64 1024
   %.val83.val = load i32, ptr %i.p, align 8       ; 2 uses
   %i.q = icmp samesign ult i32 %.val82, 5
-  %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i.i = select i1 %i.q, ptr @rtl_coalesce_info_8169, ptr @rtl_coalesce_info_8168_8136 ; 3 uses
+  %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i.i = select i1 %i.q, ptr @rtl_coalesce_info_8169, ptr @rtl_coalesce_info_8168_8136 ; 2 uses
   %i.r = icmp eq i32 %.val83.val, -1
-  br i1 %i.r, label %rtl_coalesce_info.exit.i, label %.preheader.i.i
+  br i1 %i.r, label %rtl_coalesce_info.exit.i, label %.lr.ph.i.i
 
-.preheader.i.i:                                   ; preds = %bb.c
-  %4 = load i32, ptr %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i.i, align 16 ; 2 uses
-  %.not1.i.i = icmp eq i32 %4, 0
-  br i1 %.not1.i.i, label %rtl_coalesce_info.exit.thread.i, label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %.preheader.i.i, %bb.d
-  %i.s = phi i32 [ %i.v, %bb.d ], [ %4, %.preheader.i.i ]
-  %.12.i.i = phi ptr [ %i.u, %bb.d ], [ %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i.i, %.preheader.i.i ] ; 2 uses
+.lr.ph.i.i:                                       ; preds = %bb.c, %bb.d
+  %i.s = phi i32 [ %i.v, %bb.d ], [ 1000, %bb.c ]
+  %.12.i.i = phi ptr [ %i.u, %bb.d ], [ %rtl_coalesce_info_8169.rtl_coalesce_info_8168_8136.i.i, %bb.c ] ; 2 uses
   %i.t = icmp eq i32 %.val83.val, %i.s
   br i1 %i.t, label %rtl_coalesce_info.exit.i, label %bb.d
 
@@ -352,8 +342,8 @@ rtl_coalesce_info.exit.i:                         ; preds = %.lr.ph.i.i, %bb.c
   %.not.i = icmp ugt i32 %i.n, %i.aa
   br i1 %.not.i, label %bb.e, label %rtl_coalesce_choose_scale.exit
 
-rtl_coalesce_info.exit.thread.i:                  ; preds = %bb.d, %rtl_coalesce_info.exit.i, %.preheader.i.i
-  %.09.i2.i = phi ptr [ %.09.i.i, %rtl_coalesce_info.exit.i ], [ inttoptr (i64 -48 to ptr), %.preheader.i.i ], [ inttoptr (i64 -48 to ptr), %bb.d ]
+rtl_coalesce_info.exit.thread.i:                  ; preds = %bb.d, %rtl_coalesce_info.exit.i
+  %.09.i2.i = phi ptr [ %.09.i.i, %rtl_coalesce_info.exit.i ], [ inttoptr (i64 -48 to ptr), %bb.d ]
   %i.ab = ptrtoint ptr %.09.i2.i to i64
   %i.ac = trunc i64 %i.ab to i32
   br label %rtl_coalesce_choose_scale.exit

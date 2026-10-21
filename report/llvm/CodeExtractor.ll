@@ -204,17 +204,14 @@ _ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit: ;
   %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.jw = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
   %i.jx = load i32, ptr %i.jw, align 8, !tbaa !69
-  %33 = icmp ugt i32 %i.jx, 1
-  %34 = select i1 %33, ptr @.str.19, ptr @.str.2  ; 2 uses
+  %33 = icmp ult i32 %i.jx, 2
   %i.jy = getelementptr inbounds nuw i8, ptr %26, i64 32
   %i.jz = getelementptr inbounds nuw i8, ptr %26, i64 33
   store i8 1, ptr %i.jz, align 1, !tbaa !195
-  %35 = load i8, ptr %34, align 1, !tbaa !141
-  %.not.i367 = icmp eq i8 %35, 0
-  br i1 %.not.i367, label %_ZN4llvm5TwineC2EPKc.exit, label %bb.ar
+  br i1 %33, label %_ZN4llvm5TwineC2EPKc.exit, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit
-  store ptr %34, ptr %26, align 8, !tbaa !141
+  store ptr @.str.19, ptr %26, align 8, !tbaa !141
   br label %_ZN4llvm5TwineC2EPKc.exit
 
 _ZN4llvm5TwineC2EPKc.exit:                        ; preds = %_ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit, %bb.ar

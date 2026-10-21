@@ -204,37 +204,24 @@ bb.c:                                             ; preds = %bb.a
 lean_obj_once.exit:                               ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.c, %bb.b ], [ %i.d, %bb.c ]
   %i.e = tail call zeroext i8 @l_List_isEmpty___redArg(ptr noundef %2) #6
-  %.not = icmp eq i8 %i.e, 0
-  %l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__4_value.l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__5_value = select i1 %.not, ptr @l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__5_value, ptr @l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__4_value ; 3 uses
-  %.val.i.i = load i32, ptr %l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__4_value.l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__5_value, align 8, !tbaa !11 ; 2 uses
-  %8 = icmp sgt i32 %.val.i.i, 0
-  br i1 %8, label %lean_inc_ref.exit, label %9, !prof !12
-
-9:                                                ; preds = %lean_obj_once.exit
-  %.not.i.i = icmp eq i32 %.val.i.i, 0
-  br i1 %.not.i.i, label %lean_inc_ref.exit, label %10
-
-10:                                               ; preds = %9
-  %11 = atomicrmw add ptr %l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__4_value.l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__5_value, i32 -1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit
-
-lean_inc_ref.exit:                                ; preds = %lean_obj_once.exit, %9, %10
   tail call void @lean_inc_heartbeat() #6
-  %12 = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #6 ; 5 uses
-  %13 = icmp eq ptr %12, null
-  br i1 %13, label %bb.d, label %lean_alloc_ctor.exit
+  %8 = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #6 ; 5 uses
+  %9 = icmp eq ptr %8, null
+  br i1 %9, label %bb.d, label %lean_alloc_ctor.exit
 
-bb.d:                                             ; preds = %lean_inc_ref.exit
+bb.d:                                             ; preds = %lean_obj_once.exit
   tail call void @lean_internal_panic_out_of_memory() #7
   unreachable
 
-lean_alloc_ctor.exit:                             ; preds = %lean_inc_ref.exit
-  %i.f = getelementptr inbounds nuw i8, ptr %12, i64 4
-  store i32 1, ptr %12, align 4, !tbaa !11
+lean_alloc_ctor.exit:                             ; preds = %lean_obj_once.exit
+  %.not = icmp eq i8 %i.e, 0
+  %l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__4_value.l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__5_value = select i1 %.not, ptr @l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__5_value, ptr @l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__4_value
+  %i.f = getelementptr inbounds nuw i8, ptr %8, i64 4
+  store i32 1, ptr %8, align 4, !tbaa !11
   store i32 50397200, ptr %i.f, align 4
-  %i.g = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.g = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr %l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__4_value.l___private_Lean_Meta_LetToHave_0__Lean_Meta_LetToHave_visit___lam__2___closed__5_value, ptr %i.g, align 8, !tbaa !14
-  %i.h = tail call ptr @l_Lean_MessageData_ofFormat(ptr noundef nonnull %12) #6
+  %i.h = tail call ptr @l_Lean_MessageData_ofFormat(ptr noundef nonnull %8) #6
   tail call void @lean_inc_heartbeat() #6
   %i.i = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #6 ; 6 uses
   %i.j = icmp eq ptr %i.i, null

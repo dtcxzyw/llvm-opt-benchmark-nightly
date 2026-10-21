@@ -205,12 +205,8 @@ _ZN4llvm9BitVectorC2Ejb.exit94:                   ; preds = %_ZN4llvm11SmallVect
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 296
   br label %bb.z
 
-._crit_edge147.loopexit:                          ; preds = %_ZN12_GLOBAL__N_117isFunctionSkippedERN4llvm8FunctionE.exit.thread
-  %13 = select i1 %.4, ptr @.str.102, ptr @.str.103
-  br label %._crit_edge147
-
-._crit_edge147:                                   ; preds = %._crit_edge147.loopexit, %_ZN4llvm9BitVectorC2Ejb.exit94
-  %.086.lcssa = phi ptr [ @.str.103, %_ZN4llvm9BitVectorC2Ejb.exit94 ], [ %13, %._crit_edge147.loopexit ] ; 2 uses
+._crit_edge147:                                   ; preds = %_ZN12_GLOBAL__N_117isFunctionSkippedERN4llvm8FunctionE.exit.thread, %_ZN4llvm9BitVectorC2Ejb.exit94
+  %.086.lcssa = phi i1 [ false, %_ZN4llvm9BitVectorC2Ejb.exit94 ], [ %.4, %_ZN12_GLOBAL__N_117isFunctionSkippedERN4llvm8FunctionE.exit.thread ] ; 2 uses
   %i.ec = load i32, ptr %i.da, align 8, !tbaa !790, !noalias !791 ; 2 uses
   %i.ed = icmp eq i32 %i.ec, 0
   br i1 %i.ed, label %._crit_edge152, label %bb.w
@@ -613,7 +609,7 @@ _ZN12_GLOBAL__N_117isFunctionSkippedERN4llvm8FunctionE.exit.thread: ; preds = %_
   %i.rd = getelementptr inbounds nuw i8, ptr %.sroa.078.0145, i64 8
   %i.re = load ptr, ptr %i.rd, align 8, !tbaa !188 ; 2 uses
   %.not90 = icmp eq ptr %i.re, %2
-  br i1 %.not90, label %._crit_edge147.loopexit, label %bb.z
+  br i1 %.not90, label %._crit_edge147, label %bb.z
 
 ._crit_edge152:                                   ; preds = %bb.y, %bb.cs, %bb.cr, %_ZN4llvm11raw_ostreamlsEPKc.exit178, %_ZN4llvm28const_set_bits_iterator_implINS_9BitVectorEEppEv.exit, %bb.ct, %bb.x, %._crit_edge147, %_ZNK4llvm9BitVector8set_bitsEv.exit
   %i.rf = load i32, ptr %i.ds, align 8, !tbaa !790, !noalias !808 ; 2 uses
@@ -1016,15 +1012,16 @@ _ZN4llvm11raw_ostreamlsEPKc.exit235:              ; preds = %bb.dw, %bb.dx
   br i1 %i.abr, label %bb.dy, label %bb.dz
 
 bb.dy:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit235
-  %i.abs = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i234, ptr noundef nonnull %.086.lcssa, i64 noundef 4) #25 ; 2 uses
+  %.str.102..str.103 = select i1 %.086.lcssa, ptr @.str.102, ptr @.str.103
+  %i.abs = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i234, ptr noundef nonnull %.str.102..str.103, i64 noundef 4) #25 ; 2 uses
   %.phi.trans.insert197 = getelementptr inbounds nuw i8, ptr %i.abs, i64 32
   %.pre198 = load ptr, ptr %.phi.trans.insert197, align 8, !tbaa !64
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit239
 
 bb.dz:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit235
   %i.abt = getelementptr inbounds nuw i8, ptr %.0.i.i234, i64 32 ; 2 uses
-  %14 = load i32, ptr %.086.lcssa, align 1
-  store i32 %14, ptr %i.abl, align 1
+  %13 = select i1 %.086.lcssa, i32 1279869254, i32 1397965136
+  store i32 %13, ptr %i.abl, align 1
   %i.abu = load ptr, ptr %i.abt, align 8, !tbaa !64
   %i.abv = getelementptr inbounds nuw i8, ptr %i.abu, i64 4 ; 2 uses
   store ptr %i.abv, ptr %i.abt, align 8, !tbaa !64

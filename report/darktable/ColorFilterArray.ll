@@ -42,8 +42,6 @@ $_ZZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKczE3buf = comdat an
 @.str.4 = private unnamed_addr constant [47 x i8] c"%s, line 116: No CFA size set (or set to zero)\00", align 1
 @__PRETTY_FUNCTION__._ZN8rawspeed16ColorFilterArray9shiftDownEi = private unnamed_addr constant [48 x i8] c"void rawspeed::ColorFilterArray::shiftDown(int)\00", align 1
 @.str.5 = private unnamed_addr constant [14 x i8] c"Shift down:%d\00", align 1
-@.str.6 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.str.7 = private unnamed_addr constant [2 x i8] c",\00", align 1
 @.str.8 = private unnamed_addr constant [40 x i8] c"%s, line 205: Unsupported CFA Color: %u\00", align 1
 @__PRETTY_FUNCTION__._ZN8rawspeed16ColorFilterArray13colorToStringB5cxx11ENS_8CFAColorE = private unnamed_addr constant [71 x i8] c"static std::string rawspeed::ColorFilterArray::colorToString(CFAColor)\00", align 1
 @.str.9 = private unnamed_addr constant [42 x i8] c"%s, line 211: position out of CFA pattern\00", align 1
@@ -446,8 +444,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.l,
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
   %i.bu = load i32, ptr %i.c, align 8, !tbaa !28
   %i.bv = add nsw i32 %i.bu, -1
-  %i.bw = icmp eq i32 %.01287, %i.bv
-  %.str.6..str.7 = select i1 %i.bw, ptr @.str.6, ptr @.str.7 ; 2 uses
+  %i.bw = icmp eq i32 %.01287, %i.bv              ; 2 uses
   %i.bx = load i64, ptr %i.b, align 8, !tbaa !37  ; 9 uses
   %i.by = icmp eq i64 %i.bx, 9223372036854775807
   br i1 %i.by, label %.invoke142, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i
@@ -471,7 +468,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.thr
 
 bb.m:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.bx
-  %3 = load i8, ptr %.str.6..str.7, align 1, !tbaa !38
+  %3 = select i1 %i.bw, i8 10, i8 44
   store i8 %3, ptr %i.ce, align 1, !tbaa !38
   %.pre103 = load ptr, ptr %0, align 8, !tbaa !39
   br label %bb.t
@@ -537,7 +534,7 @@ bb.s:                                             ; preds = %.noexc53
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i39: ; preds = %.noexc53, %bb.s, %bb.r
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.bx
-  %4 = load i8, ptr %.str.6..str.7, align 1, !tbaa !38
+  %4 = select i1 %i.bw, i8 10, i8 44
   store i8 %4, ptr %i.cp, align 1, !tbaa !38
   %i.cq = icmp eq ptr %.pre.i43.pre, %i.a
   br i1 %i.cq, label %.noexc21, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i28.i46
