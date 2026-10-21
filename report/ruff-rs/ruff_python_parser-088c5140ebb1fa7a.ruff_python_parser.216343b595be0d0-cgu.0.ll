@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %._crit_edge.i.i, %_
 
 .split.i:                                         ; preds = %bb.b
   %i.ap = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.5.0.i10, i1 true)
-  %i.aq = zext nneg i32 %i.ap to i64              ; 3 uses
+  %i.aq = zext nneg i32 %i.ap to i64              ; 4 uses
   %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RNvMs_NtCsb6FLkjZuKG_18ruff_python_parser6parserNtB4_6Parser39is_enclosing_list_element_or_terminator, i64 %i.aq
-  %switch.load = load i16, ptr %switch.gep, align 2 ; 3 uses
+  %switch.load = load i16, ptr %switch.gep, align 2 ; 2 uses
   %.sroa.4.0.extract.shift.i.i = lshr i16 %switch.load, 8 ; 5 uses
   br i1 %i.b, label %_RNvXs0_NtCs3kOHrDoa4ON_8bitflags4iterINtB5_4IterNtNtCsb6FLkjZuKG_18ruff_python_parser6parser15RecoveryContextENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBO_.exit.thread11, label %bb.d
 
@@ -362,10 +362,12 @@ bb.v:                                             ; preds = %bb.d
   ]
 
 bb.w:                                             ; preds = %bb.d
-  %0 = trunc i16 %switch.load to i1
+  %0 = shl nuw nsw i64 1, %i.aq
+  %1 = and i64 %0, 3249247530
+  %.not = icmp eq i64 %1, 0
   %i.ax = trunc i16 %.sroa.4.0.extract.shift.i.i to i1
   %.46.i.i = select i1 %i.ax, i64 10, i64 7
-  %.sroa.015.0.i.i = select i1 %0, i64 39, i64 %.46.i.i
+  %.sroa.015.0.i.i = select i1 %.not, i64 %.46.i.i, i64 39
   %i.ay = icmp eq i64 %.sroa.015.0.i.i, %i.a
   br i1 %i.ay, label %_RNvXs0_NtCs3kOHrDoa4ON_8bitflags4iterINtB5_4IterNtNtCsb6FLkjZuKG_18ruff_python_parser6parser15RecoveryContextENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBO_.exit.thread11, label %_RNvMs7_NtCsb6FLkjZuKG_18ruff_python_parser6parserNtB5_19RecoveryContextKind18is_list_terminator.exit
 

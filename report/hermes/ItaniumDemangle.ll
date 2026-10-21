@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit: ; preds = %bb.c
   %i.h = load i8, ptr %i.f, align 1, !tbaa !18    ; 2 uses
-  %switch.tableidx = add i8 %i.h, -76             ; 3 uses
+  %switch.tableidx = add i8 %i.h, -76             ; 4 uses
   %i.i = icmp ult i8 %switch.tableidx, 39
   br i1 %i.i, label %switch.hole_check, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread
 
@@ -217,7 +217,7 @@ switch.hole_check:                                ; preds = %_ZN4llvh16itanium_d
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.j = zext nneg i8 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE13parseFoldExprEv, i64 %i.j
-  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
+  %switch.load = load i8, ptr %switch.gep, align 1
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 33 uses
   store ptr %i.k, ptr %0, align 16, !tbaa !33
   %i.l = ptrtoint ptr %i.k to i64
@@ -463,9 +463,10 @@ bb.ac:                                            ; preds = %bb.ab, %bb.ab
   br i1 %i.dh, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %1 = trunc nuw i8 %switch.load to i1            ; 2 uses
-  %spec.select = select i1 %1, ptr %i.dg, ptr %i.de
-  %spec.select189 = select i1 %1, ptr %i.de, ptr %i.dg
+  %1 = and i8 %switch.tableidx, 31
+  %2 = icmp eq i8 %1, 0                           ; 2 uses
+  %spec.select = select i1 %2, ptr %i.dg, ptr %i.de
+  %spec.select189 = select i1 %2, ptr %i.de, ptr %i.dg
   br label %.thread
 
 .thread:                                          ; preds = %bb.ad, %bb.ab
