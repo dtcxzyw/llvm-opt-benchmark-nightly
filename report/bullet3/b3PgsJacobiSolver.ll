@@ -204,19 +204,15 @@ bb.b:                                             ; preds = %bb.a
   %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %.lr.ph35.split, label %.loopexit
 
-.lr.ph29.splitthread-pre-split:                   ; preds = %._crit_edge
-  %.pr = load i32, ptr %i.i, align 4, !tbaa !37
-  br label %.lr.ph29.split
-
-.lr.ph29.split:                                   ; preds = %.lr.ph29, %.lr.ph29.splitthread-pre-split
-  %i.u = phi i32 [ %.pr, %.lr.ph29.splitthread-pre-split ], [ %i.m, %.lr.ph29 ] ; 2 uses
-  %i.v = phi i32 [ %i.am, %.lr.ph29.splitthread-pre-split ], [ %i.g, %.lr.ph29 ]
-  %.028 = phi i32 [ %i.an, %.lr.ph29.splitthread-pre-split ], [ 0, %.lr.ph29 ]
-  %i.w = icmp sgt i32 %i.u, 0
+.lr.ph29.split:                                   ; preds = %.lr.ph29, %._crit_edge
+  %i.u = phi i32 [ %4, %._crit_edge ], [ %i.g, %.lr.ph29 ]
+  %i.v = phi i32 [ %i.am, %._crit_edge ], [ %i.m, %.lr.ph29 ] ; 3 uses
+  %.028 = phi i32 [ %i.an, %._crit_edge ], [ 0, %.lr.ph29 ]
+  %i.w = icmp sgt i32 %i.v, 0
   br i1 %i.w, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph29.split
-  %wide.trip.count = zext nneg i32 %i.u to i64
+  %wide.trip.count = zext nneg i32 %i.v to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -242,28 +238,26 @@ bb.b:                                             ; preds = %bb.a
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !216
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load i32, ptr %i.i, align 4, !tbaa !37
   %.pre.a = load i32, ptr %i.f, align 4, !tbaa !69
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph29.split
-  %i.am = phi i32 [ %.pre.a, %._crit_edge.loopexit ], [ %i.v, %.lr.ph29.split ] ; 2 uses
+  %4 = phi i32 [ %.pre.a, %._crit_edge.loopexit ], [ %i.u, %.lr.ph29.split ] ; 2 uses
+  %i.am = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %i.v, %.lr.ph29.split ]
   %i.an = add nuw nsw i32 %.028, 1                ; 2 uses
-  %i.ao = icmp slt i32 %i.an, %i.am
-  br i1 %i.ao, label %.lr.ph29.splitthread-pre-split, label %.loopexit, !llvm.loop !217
+  %i.ao = icmp slt i32 %i.an, %4
+  br i1 %i.ao, label %.lr.ph29.split, label %.loopexit, !llvm.loop !217
 
-.lr.ph35.splitthread-pre-split:                   ; preds = %._crit_edge33
-  %.pr53 = load i32, ptr %i.o, align 4, !tbaa !37
-  br label %.lr.ph35.split
-
-.lr.ph35.split:                                   ; preds = %.lr.ph35, %.lr.ph35.splitthread-pre-split
-  %i.ap = phi i32 [ %.pr53, %.lr.ph35.splitthread-pre-split ], [ %i.s, %.lr.ph35 ] ; 2 uses
-  %i.aq = phi i32 [ %i.bh, %.lr.ph35.splitthread-pre-split ], [ %i.g, %.lr.ph35 ]
-  %.134 = phi i32 [ %i.bi, %.lr.ph35.splitthread-pre-split ], [ 0, %.lr.ph35 ]
-  %i.ar = icmp sgt i32 %i.ap, 0
+.lr.ph35.split:                                   ; preds = %.lr.ph35, %._crit_edge33
+  %i.ap = phi i32 [ %5, %._crit_edge33 ], [ %i.g, %.lr.ph35 ]
+  %i.aq = phi i32 [ %i.bh, %._crit_edge33 ], [ %i.s, %.lr.ph35 ] ; 3 uses
+  %.134 = phi i32 [ %i.bi, %._crit_edge33 ], [ 0, %.lr.ph35 ]
+  %i.ar = icmp sgt i32 %i.aq, 0
   br i1 %i.ar, label %.lr.ph32.preheader, label %._crit_edge33
 
 .lr.ph32.preheader:                               ; preds = %.lr.ph35.split
-  %wide.trip.count43 = zext nneg i32 %i.ap to i64
+  %wide.trip.count43 = zext nneg i32 %i.aq to i64
   br label %.lr.ph32
 
 .lr.ph32:                                         ; preds = %.lr.ph32.preheader, %.lr.ph32
@@ -289,14 +283,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %exitcond44.not, label %._crit_edge33.loopexit, label %.lr.ph32, !llvm.loop !218
 
 ._crit_edge33.loopexit:                           ; preds = %.lr.ph32
+  %.pre47 = load i32, ptr %i.o, align 4, !tbaa !37
   %.pre45 = load i32, ptr %i.f, align 4, !tbaa !69
   br label %._crit_edge33
 
 ._crit_edge33:                                    ; preds = %._crit_edge33.loopexit, %.lr.ph35.split
-  %i.bh = phi i32 [ %.pre45, %._crit_edge33.loopexit ], [ %i.aq, %.lr.ph35.split ] ; 2 uses
+  %5 = phi i32 [ %.pre45, %._crit_edge33.loopexit ], [ %i.ap, %.lr.ph35.split ] ; 2 uses
+  %i.bh = phi i32 [ %.pre47, %._crit_edge33.loopexit ], [ %i.aq, %.lr.ph35.split ]
   %i.bi = add nuw nsw i32 %.134, 1                ; 2 uses
-  %i.bj = icmp slt i32 %i.bi, %i.bh
-  br i1 %i.bj, label %.lr.ph35.splitthread-pre-split, label %.loopexit, !llvm.loop !219
+  %i.bj = icmp slt i32 %i.bi, %5
+  br i1 %i.bj, label %.lr.ph35.split, label %.loopexit, !llvm.loop !219
 
 .loopexit:                                        ; preds = %._crit_edge, %._crit_edge33, %.lr.ph35, %.lr.ph29, %.preheader25, %.preheader, %bb.a
   ret void

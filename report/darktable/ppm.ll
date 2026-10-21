@@ -45,7 +45,7 @@ bb.a:
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !14
@@ -63,16 +63,12 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   br label %.preheader32
 
-.preheader32thread-pre-split:                     ; preds = %._crit_edge
-  %.pr = load i32, ptr %i.c, align 4, !tbaa !13
-  br label %.preheader32
-
-.preheader32:                                     ; preds = %.preheader32thread-pre-split, %.preheader32.preheader
-  %i.m = phi i32 [ %.pr, %.preheader32thread-pre-split ], [ %i.j, %.preheader32.preheader ]
-  %i.n = phi i32 [ %i.z, %.preheader32thread-pre-split ], [ %i.h, %.preheader32.preheader ]
-  %.02739 = phi i32 [ %i.aa, %.preheader32thread-pre-split ], [ 0, %.preheader32.preheader ]
-  %.02838 = phi ptr [ %.1.lcssa, %.preheader32thread-pre-split ], [ %2, %.preheader32.preheader ] ; 2 uses
-  %i.o = icmp sgt i32 %i.m, 0
+.preheader32:                                     ; preds = %.preheader32.preheader, %._crit_edge
+  %i.m = phi i32 [ %12, %._crit_edge ], [ %i.h, %.preheader32.preheader ]
+  %i.n = phi i32 [ %i.z, %._crit_edge ], [ %i.j, %.preheader32.preheader ] ; 2 uses
+  %.02739 = phi i32 [ %i.aa, %._crit_edge ], [ 0, %.preheader32.preheader ]
+  %.02838 = phi ptr [ %.1.lcssa, %._crit_edge ], [ %2, %.preheader32.preheader ] ; 2 uses
+  %i.o = icmp sgt i32 %i.n, 0
   br i1 %i.o, label %.preheader, label %._crit_edge
 
 ._crit_edge40:                                    ; preds = %._crit_edge, %.preheader32.lr.ph, %bb.b
@@ -92,13 +88,13 @@ bb.b:                                             ; preds = %bb.a
   %i.u = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 2, i64 noundef 3, ptr noundef nonnull %i.b)
   %i.v = and i64 %i.u, 4294967295
   %.not31 = icmp eq i64 %i.v, 3
+  %.pre.pre = load i32, ptr %i.c, align 4, !tbaa !13 ; 2 uses
   br i1 %.not31, label %bb.c, label %._crit_edge.loopexit
 
 bb.c:                                             ; preds = %.preheader
   %i.w = getelementptr inbounds nuw i8, ptr %.134, i64 8 ; 2 uses
   %i.x = add nuw nsw i32 %.02535, 1               ; 2 uses
-  %12 = load i32, ptr %i.c, align 4, !tbaa !13
-  %i.y = icmp slt i32 %i.x, %12
+  %i.y = icmp slt i32 %i.x, %.pre.pre
   br i1 %i.y, label %.preheader, label %._crit_edge.loopexit
 
 ._crit_edge.loopexit:                             ; preds = %bb.c, %.preheader
@@ -107,11 +103,12 @@ bb.c:                                             ; preds = %.preheader
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader32
-  %i.z = phi i32 [ %i.n, %.preheader32 ], [ %.pre, %._crit_edge.loopexit ] ; 2 uses
+  %12 = phi i32 [ %i.m, %.preheader32 ], [ %.pre, %._crit_edge.loopexit ] ; 2 uses
+  %i.z = phi i32 [ %i.n, %.preheader32 ], [ %.pre.pre, %._crit_edge.loopexit ]
   %.1.lcssa = phi ptr [ %.02838, %.preheader32 ], [ %.1.lcssa.ph, %._crit_edge.loopexit ]
   %i.aa = add nuw nsw i32 %.02739, 1              ; 2 uses
-  %i.ab = icmp slt i32 %i.aa, %i.z
-  br i1 %i.ab, label %.preheader32thread-pre-split, label %._crit_edge40, !llvm.loop !11
+  %i.ab = icmp slt i32 %i.aa, %12
+  br i1 %i.ab, label %.preheader32, label %._crit_edge40, !llvm.loop !11
 
 bb.d:                                             ; preds = %._crit_edge40, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11

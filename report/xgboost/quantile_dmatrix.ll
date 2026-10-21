@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.aa, %.noexc.i
   %.sroa.6.0.i = phi i64 [ %i.cn, %bb.aa ], [ 1, %.noexc.i ] ; 10 uses
   %.sroa.0.0.i = phi i64 [ 1, %bb.aa ], [ %i.cm, %.noexc.i ] ; 3 uses
   %i.co = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !800, !nonnull !53, !align !222 ; 8 uses
+  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !800, !nonnull !53, !align !222 ; 6 uses
   %i.cq = icmp eq i32 %i.bt, 1
   br i1 %i.cq, label %.preheader.i.i, label %bb.ai
 
@@ -216,7 +216,6 @@ bb.ac:                                            ; preds = %bb.aa, %.noexc.i
   br i1 %or.cond, label %"_ZN7xgboost6common11ParallelForImZZZNS_4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS2_12DMatrixProxyEPNS2_13DataIterProxyIFvPvEFiSA_EEEfPNS2_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS2_17DenseAdapterBatchEEEDaSK_EUlSI_E_EEvSI_iNS0_5SchedEOT0_.exit.i", label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.preheader.i.i
-  %.pre10.i.i.i.pre = load float, ptr %i.cp, align 4
   %xtraiter556 = and i64 %.sroa.7.0.copyload, 1
   %i.cs = icmp eq i64 %.sroa.7.0.copyload, 1
   %unroll_iter562 = and i64 %.sroa.7.0.copyload, -2
@@ -225,14 +224,13 @@ bb.ac:                                            ; preds = %bb.aa, %.noexc.i
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i"
-  %.pre10.i.i.i = phi float [ %.pre10.i.i.i167.lcssa, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i" ], [ %.pre10.i.i.i.pre, %.lr.ph.i.i.i.preheader ] ; 4 uses
   %.049162.i.i = phi i64 [ %i.eb, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i" ], [ 0, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %i.ct = mul i64 %.049162.i.i, %.sroa.7.0.copyload
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.copyload, i64 %i.ct ; 3 uses
+  %.pre10.i.i.i = load float, ptr %i.cp, align 4  ; 2 uses
   br i1 %i.cs, label %.epil.preheader555, label %.lr.ph.i.i.i.new
 
 .lr.ph.i.i.i.new:                                 ; preds = %.lr.ph.i.i.i, %bb.ag
-  %.pre10.i.i.i168 = phi float [ %.pre10.i.i.i167.1, %bb.ag ], [ %.pre10.i.i.i, %.lr.ph.i.i.i ]
   %i.cv = phi float [ %i.dq, %bb.ag ], [ %.pre10.i.i.i, %.lr.ph.i.i.i ] ; 2 uses
   %.09.i.i.i = phi i64 [ %i.dr, %bb.ag ], [ 0, %.lr.ph.i.i.i ] ; 4 uses
   %niter563 = phi i64 [ %niter563.next.1, %bb.ag ], [ 0, %.lr.ph.i.i.i ]
@@ -249,11 +247,10 @@ bb.ad:                                            ; preds = %.lr.ph.i.i.i.new
   %i.dd = load i64, ptr %i.dc, align 8, !tbaa !44
   %i.de = add i64 %i.dd, 1
   store i64 %i.de, ptr %i.dc, align 8, !tbaa !44
-  %.pre.i.i.i = load float, ptr %i.cp, align 4    ; 2 uses
+  %.pre.i.i.i = load float, ptr %i.cp, align 4
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %.lr.ph.i.i.i.new
-  %.pre10.i.i.i167 = phi float [ %.pre.i.i.i, %bb.ad ], [ %.pre10.i.i.i168, %.lr.ph.i.i.i.new ]
   %i.df = phi float [ %.pre.i.i.i, %bb.ad ], [ %i.cv, %.lr.ph.i.i.i.new ] ; 2 uses
   %i.dg = or disjoint i64 %.09.i.i.i, 1           ; 2 uses
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %i.dg
@@ -269,11 +266,10 @@ bb.af:                                            ; preds = %bb.ae
   %i.do = load i64, ptr %i.dn, align 8, !tbaa !44
   %i.dp = add i64 %i.do, 1
   store i64 %i.dp, ptr %i.dn, align 8, !tbaa !44
-  %.pre.i.i.i.1 = load float, ptr %i.cp, align 4  ; 2 uses
+  %.pre.i.i.i.1 = load float, ptr %i.cp, align 4
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
-  %.pre10.i.i.i167.1 = phi float [ %.pre.i.i.i.1, %bb.af ], [ %.pre10.i.i.i167, %bb.ae ] ; 3 uses
   %i.dq = phi float [ %.pre.i.i.i.1, %bb.af ], [ %i.df, %bb.ae ] ; 2 uses
   %i.dr = add nuw i64 %.09.i.i.i, 2               ; 2 uses
   %niter563.next.1 = add nuw i64 %niter563, 2     ; 2 uses
@@ -284,7 +280,6 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %lcmp.mod559.not.a, label %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i", label %.epil.preheader555
 
 .epil.preheader555:                               ; preds = %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa", %.lr.ph.i.i.i
-  %.pre10.i.i.i168.epil.init = phi float [ %.pre10.i.i.i, %.lr.ph.i.i.i ], [ %.pre10.i.i.i167.1, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa" ]
   %.epil.init558 = phi float [ %.pre10.i.i.i, %.lr.ph.i.i.i ], [ %i.dq, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa" ]
   %.09.i.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.i ], [ %i.dr, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa" ] ; 2 uses
   call void @llvm.assume(i1 %lcmp.mod561)
@@ -301,11 +296,9 @@ bb.ah:                                            ; preds = %.epil.preheader555
   %i.dz = load i64, ptr %i.dy, align 8, !tbaa !44
   %i.ea = add i64 %i.dz, 1
   store i64 %i.ea, ptr %i.dy, align 8, !tbaa !44
-  %.pre.i.i.i.epil = load float, ptr %i.cp, align 4
   br label %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i"
 
 "_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i": ; preds = %.epil.preheader555, %bb.ah, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa"
-  %.pre10.i.i.i167.lcssa = phi float [ %.pre10.i.i.i167.1, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa" ], [ %.pre.i.i.i.epil, %bb.ah ], [ %.pre10.i.i.i168.epil.init, %.epil.preheader555 ]
   %i.eb = add nuw i64 %.049162.i.i, 1             ; 2 uses
   %exitcond189.not.i.i = icmp eq i64 %i.eb, %.sroa.6.0.copyload
   br i1 %exitcond189.not.i.i, label %"_ZN7xgboost6common11ParallelForImZZZNS_4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS2_12DMatrixProxyEPNS2_13DataIterProxyIFvPvEFiSA_EEEfPNS2_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS2_17DenseAdapterBatchEEEDaSK_EUlSI_E_EEvSI_iNS0_5SchedEOT0_.exit.i", label %.lr.ph.i.i.i, !llvm.loop !694
@@ -420,7 +413,6 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   br i1 %or.cond90, label %"_ZN7xgboost6common11ParallelForImZZZNS_4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS2_12DMatrixProxyEPNS2_13DataIterProxyIFvPvEFiSA_EEEfPNS2_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS2_17DenseAdapterBatchEEEDaSK_EUlSI_E_EEvSI_iNS0_5SchedEOT0_.exit.i", label %.lr.ph.i.i87.i.i.preheader
 
 .lr.ph.i.i87.i.i.preheader:                       ; preds = %.preheader147.i.i
-  %.pre10.i.i88.i.i.pre = load float, ptr %i.cp, align 4
   %xtraiter549 = and i64 %.sroa.7.0.copyload, 1
   %i.eu = icmp eq i64 %.sroa.7.0.copyload, 1
   %unroll_iter553 = and i64 %.sroa.7.0.copyload, -2
@@ -429,14 +421,13 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   br label %.lr.ph.i.i87.i.i
 
 .lr.ph.i.i87.i.i:                                 ; preds = %.lr.ph.i.i87.i.i.preheader, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i"
-  %.pre10.i.i88.i.i = phi float [ %.pre10.i.i88.i.i164.lcssa, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i" ], [ %.pre10.i.i88.i.i.pre, %.lr.ph.i.i87.i.i.preheader ] ; 4 uses
   %.040152.i.i = phi i64 [ %i.gd, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i" ], [ 0, %.lr.ph.i.i87.i.i.preheader ] ; 2 uses
   %i.ev = mul i64 %.040152.i.i, %.sroa.7.0.copyload
   %i.ew = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.copyload, i64 %i.ev ; 3 uses
+  %.pre10.i.i88.i.i = load float, ptr %i.cp, align 4 ; 2 uses
   br i1 %i.eu, label %.epil.preheader548, label %.lr.ph.i.i87.i.i.new
 
 .lr.ph.i.i87.i.i.new:                             ; preds = %.lr.ph.i.i87.i.i, %bb.as
-  %.pre10.i.i88.i.i165 = phi float [ %.pre10.i.i88.i.i164.1, %bb.as ], [ %.pre10.i.i88.i.i, %.lr.ph.i.i87.i.i ]
   %i.ex = phi float [ %i.fs, %bb.as ], [ %.pre10.i.i88.i.i, %.lr.ph.i.i87.i.i ] ; 2 uses
   %.09.i.i89.i.i = phi i64 [ %i.ft, %bb.as ], [ 0, %.lr.ph.i.i87.i.i ] ; 4 uses
   %niter554 = phi i64 [ %niter554.next.1, %bb.as ], [ 0, %.lr.ph.i.i87.i.i ]
@@ -453,11 +444,10 @@ bb.ap:                                            ; preds = %.lr.ph.i.i87.i.i.ne
   %i.ff = load i64, ptr %i.fe, align 8, !tbaa !44
   %i.fg = add i64 %i.ff, 1
   store i64 %i.fg, ptr %i.fe, align 8, !tbaa !44
-  %.pre.i.i91.i.i = load float, ptr %i.cp, align 4 ; 2 uses
+  %.pre.i.i91.i.i = load float, ptr %i.cp, align 4
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %.lr.ph.i.i87.i.i.new
-  %.pre10.i.i88.i.i164 = phi float [ %.pre.i.i91.i.i, %bb.ap ], [ %.pre10.i.i88.i.i165, %.lr.ph.i.i87.i.i.new ]
   %i.fh = phi float [ %.pre.i.i91.i.i, %bb.ap ], [ %i.ex, %.lr.ph.i.i87.i.i.new ] ; 2 uses
   %i.fi = or disjoint i64 %.09.i.i89.i.i, 1       ; 2 uses
   %i.fj = getelementptr inbounds nuw [4 x i8], ptr %i.ew, i64 %i.fi
@@ -473,11 +463,10 @@ bb.ar:                                            ; preds = %bb.aq
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !44
   %i.fr = add i64 %i.fq, 1
   store i64 %i.fr, ptr %i.fp, align 8, !tbaa !44
-  %.pre.i.i91.i.i.1 = load float, ptr %i.cp, align 4 ; 2 uses
+  %.pre.i.i91.i.i.1 = load float, ptr %i.cp, align 4
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
-  %.pre10.i.i88.i.i164.1 = phi float [ %.pre.i.i91.i.i.1, %bb.ar ], [ %.pre10.i.i88.i.i164, %bb.aq ] ; 3 uses
   %i.fs = phi float [ %.pre.i.i91.i.i.1, %bb.ar ], [ %i.fh, %bb.aq ] ; 2 uses
   %i.ft = add nuw i64 %.09.i.i89.i.i, 2           ; 2 uses
   %niter554.next.1 = add nuw i64 %niter554, 2     ; 2 uses
@@ -488,7 +477,6 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   br i1 %lcmp.mod550.not, label %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i", label %.epil.preheader548
 
 .epil.preheader548:                               ; preds = %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i.unr-lcssa", %.lr.ph.i.i87.i.i
-  %.pre10.i.i88.i.i165.epil.init = phi float [ %.pre10.i.i88.i.i, %.lr.ph.i.i87.i.i ], [ %.pre10.i.i88.i.i164.1, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i.unr-lcssa" ]
   %.epil.init = phi float [ %.pre10.i.i88.i.i, %.lr.ph.i.i87.i.i ], [ %i.fs, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i.unr-lcssa" ]
   %.09.i.i89.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i87.i.i ], [ %i.ft, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i.unr-lcssa" ] ; 2 uses
   call void @llvm.assume(i1 %lcmp.mod552)
@@ -505,11 +493,9 @@ bb.at:                                            ; preds = %.epil.preheader548
   %i.gb = load i64, ptr %i.ga, align 8, !tbaa !44
   %i.gc = add i64 %i.gb, 1
   store i64 %i.gc, ptr %i.ga, align 8, !tbaa !44
-  %.pre.i.i91.i.i.epil = load float, ptr %i.cp, align 4
   br label %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i"
 
 "_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i": ; preds = %.epil.preheader548, %bb.at, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i.unr-lcssa"
-  %.pre10.i.i88.i.i164.lcssa = phi float [ %.pre10.i.i88.i.i164.1, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit92.i.i.unr-lcssa" ], [ %.pre.i.i91.i.i.epil, %bb.at ], [ %.pre10.i.i88.i.i165.epil.init, %.epil.preheader548 ]
   %i.gd = add nuw i64 %.040152.i.i, 1             ; 2 uses
   %exitcond184.not.i.i = icmp eq i64 %i.gd, %.sroa.6.0.copyload
   br i1 %exitcond184.not.i.i, label %"_ZN7xgboost6common11ParallelForImZZZNS_4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS2_12DMatrixProxyEPNS2_13DataIterProxyIFvPvEFiSA_EEEfPNS2_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS2_17DenseAdapterBatchEEEDaSK_EUlSI_E_EEvSI_iNS0_5SchedEOT0_.exit.i", label %.lr.ph.i.i87.i.i, !llvm.loop !699

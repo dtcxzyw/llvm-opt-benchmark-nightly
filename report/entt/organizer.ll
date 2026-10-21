@@ -205,7 +205,7 @@ _ZNK4entt10basic_flowISaIjEE18transitive_closureERNS_16adjacency_matrixINS_12dir
   br i1 %epil.iter.cmp.not, label %.preheader30.lr.ph.i, label %.lr.ph.i.epil, !llvm.loop !820
 
 .preheader30.lr.ph.i:                             ; preds = %.lr.ph.i.epil, %.preheader30.lr.ph.i.unr-lcssa
-  %.pre42.pre.i = load i64, ptr %i.t, align 8, !tbaa !163
+  %.pre42.pre.i = load i64, ptr %i.t, align 8, !tbaa !163 ; 2 uses
   %xtraiter31 = and i64 %.pr, 1
   %i.ay = icmp eq i64 %.pr, 1
   %unroll_iter38 = and i64 %.pr, -2
@@ -245,7 +245,8 @@ _ZNK4entt10basic_flowISaIjEE18transitive_closureERNS_16adjacency_matrixINS_12dir
   br i1 %niter.ncmp.3, label %.preheader30.lr.ph.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !821
 
 .preheader30.i:                                   ; preds = %bb.i, %.preheader30.lr.ph.i
-  %.pre42.i.a = phi i64 [ %.pre42.pre.i, %.preheader30.lr.ph.i ], [ %.pre4247.i, %bb.i ] ; 3 uses
+  %.pre4347.i = phi i64 [ %.pre42.pre.i, %.preheader30.lr.ph.i ], [ %.pre4247.i, %bb.i ]
+  %.pre42.i.a = phi i64 [ %.pre42.pre.i, %.preheader30.lr.ph.i ], [ %.pre4143.i, %bb.i ] ; 2 uses
   %.02535.i = phi i64 [ 0, %.preheader30.lr.ph.i ], [ %i.bt, %bb.i ] ; 5 uses
   br label %bb.j
 
@@ -255,8 +256,8 @@ bb.i:                                             ; preds = %_ZNK4entt16adjacenc
   br i1 %exitcond40.not.i, label %_ZNK4entt10basic_flowISaIjEE20transitive_reductionERNS_16adjacency_matrixINS_12directed_tagESaImEEE.exit, label %.preheader30.i, !llvm.loop !822
 
 bb.j:                                             ; preds = %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7, %.preheader30.i
-  %.pre4250.i = phi i64 [ %.pre42.i.a, %.preheader30.i ], [ %.pre4247.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7 ] ; 4 uses
-  %.pre41.i = phi i64 [ %.pre42.i.a, %.preheader30.i ], [ %.pre4143.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7 ] ; 6 uses
+  %.pre4250.i = phi i64 [ %.pre4347.i, %.preheader30.i ], [ %.pre4247.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7 ] ; 6 uses
+  %.pre41.i = phi i64 [ %.pre42.i.a, %.preheader30.i ], [ %.pre4143.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7 ] ; 2 uses
   %i.bu = phi i64 [ %.pre42.i.a, %.preheader30.i ], [ %i.dd, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7 ] ; 3 uses
   %.02434.i = phi i64 [ 0, %.preheader30.i ], [ %i.de, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7 ] ; 5 uses
   %i.bv = mul i64 %.02434.i, %i.bu
@@ -274,9 +275,8 @@ _ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.i8: ; pred
   br i1 %i.ay, label %.preheader.i10.epil.preheader, label %.preheader.i10
 
 .preheader.i10:                                   ; preds = %.preheader.i10.preheader, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1
-  %.pre4249.i = phi i64 [ %.pre4248.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1 ], [ %.pre4250.i, %.preheader.i10.preheader ] ; 2 uses
-  %.pre4145.i = phi i64 [ %.pre4144.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1 ], [ %.pre41.i, %.preheader.i10.preheader ] ; 2 uses
-  %i.ca = phi i64 [ %i.ct, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1 ], [ %.pre41.i, %.preheader.i10.preheader ] ; 4 uses
+  %.pre4145.i = phi i64 [ %.pre4144.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1 ], [ %.pre4250.i, %.preheader.i10.preheader ] ; 2 uses
+  %i.ca = phi i64 [ %i.ct, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1 ], [ %.pre4250.i, %.preheader.i10.preheader ] ; 4 uses
   %.033.i = phi i64 [ %i.cu, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1 ], [ 0, %.preheader.i10.preheader ] ; 4 uses
   %niter39 = phi i64 [ %niter39.next.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1 ], [ 0, %.preheader.i10.preheader ]
   %i.cb = mul i64 %i.ca, %.02535.i
@@ -295,11 +295,10 @@ bb.k:                                             ; preds = %_ZNK4entt16adjacenc
   %i.ch = getelementptr [8 x i8], ptr %i.w, i64 %i.cg
   %i.ci = getelementptr [8 x i8], ptr %i.ch, i64 %.033.i
   store i64 0, ptr %i.ci, align 8, !tbaa !82
-  %.pre.i11.a = load i64, ptr %i.t, align 8, !tbaa !163 ; 3 uses
+  %.pre.i11.a = load i64, ptr %i.t, align 8, !tbaa !163 ; 2 uses
   br label %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i
 
 _ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i: ; preds = %bb.k, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i, %.preheader.i10
-  %.pre4248.i = phi i64 [ %.pre4249.i, %.preheader.i10 ], [ %.pre4249.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i ], [ %.pre.i11.a, %bb.k ] ; 2 uses
   %.pre4144.i.a = phi i64 [ %.pre4145.i, %.preheader.i10 ], [ %.pre4145.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i ], [ %.pre.i11.a, %bb.k ] ; 2 uses
   %i.cj = phi i64 [ %i.ca, %.preheader.i10 ], [ %i.ca, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i ], [ %.pre.i11.a, %bb.k ] ; 4 uses
   %i.ck = or disjoint i64 %.033.i, 1              ; 2 uses
@@ -319,13 +318,12 @@ bb.l:                                             ; preds = %_ZNK4entt16adjacenc
   %i.cr = getelementptr [8 x i8], ptr %i.w, i64 %i.cq
   %i.cs = getelementptr [8 x i8], ptr %i.cr, i64 %i.ck
   store i64 0, ptr %i.cs, align 8, !tbaa !82
-  %.pre.i11.1.a = load i64, ptr %i.t, align 8, !tbaa !163 ; 3 uses
+  %.pre.i11.1.a = load i64, ptr %i.t, align 8, !tbaa !163 ; 2 uses
   br label %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1
 
 _ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i.1: ; preds = %bb.l, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i
-  %.pre4248.i.1 = phi i64 [ %.pre4248.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i ], [ %.pre4248.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.1 ], [ %.pre.i11.1.a, %bb.l ] ; 3 uses
   %.pre4144.i.1 = phi i64 [ %.pre4144.i.a, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i ], [ %.pre4144.i.a, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.1 ], [ %.pre.i11.1.a, %bb.l ] ; 3 uses
-  %i.ct = phi i64 [ %i.cj, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i ], [ %i.cj, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.1 ], [ %.pre.i11.1.a, %bb.l ] ; 3 uses
+  %i.ct = phi i64 [ %i.cj, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.thread.i ], [ %i.cj, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.1 ], [ %.pre.i11.1.a, %bb.l ] ; 4 uses
   %i.cu = add nuw i64 %.033.i, 2                  ; 2 uses
   %niter39.next.1 = add i64 %niter39, 2           ; 2 uses
   %niter39.ncmp.1 = icmp eq i64 %niter39.next.1, %unroll_iter38
@@ -335,9 +333,8 @@ _ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.
   br i1 %lcmp.mod33.not, label %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7, label %.preheader.i10.epil.preheader
 
 .preheader.i10.epil.preheader:                    ; preds = %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa, %.preheader.i10.preheader
-  %.pre4249.i.epil.init = phi i64 [ %.pre4250.i, %.preheader.i10.preheader ], [ %.pre4248.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ] ; 2 uses
-  %.pre4145.i.epil.init = phi i64 [ %.pre41.i, %.preheader.i10.preheader ], [ %.pre4144.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ] ; 2 uses
-  %.epil.init = phi i64 [ %.pre41.i, %.preheader.i10.preheader ], [ %i.ct, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ] ; 4 uses
+  %.pre4145.i.epil.init = phi i64 [ %.pre4250.i, %.preheader.i10.preheader ], [ %.pre4144.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ] ; 2 uses
+  %.epil.init = phi i64 [ %.pre4250.i, %.preheader.i10.preheader ], [ %i.ct, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ] ; 6 uses
   %.033.i.epil.init = phi i64 [ 0, %.preheader.i10.preheader ], [ %i.cu, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ] ; 2 uses
   tail call void @llvm.assume(i1 %lcmp.mod37)
   %i.cv = mul i64 %.epil.init, %.02535.i
@@ -360,8 +357,8 @@ bb.m:                                             ; preds = %_ZNK4entt16adjacenc
   br label %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7
 
 _ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7: ; preds = %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa, %bb.m, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.epil, %.preheader.i10.epil.preheader, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.i8, %bb.j
-  %.pre4247.i = phi i64 [ %.pre4250.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.i8 ], [ %.pre4250.i, %bb.j ], [ %.pre4248.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ], [ %.pre4249.i.epil.init, %.preheader.i10.epil.preheader ], [ %.pre4249.i.epil.init, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.epil ], [ %.pre.i11.epil, %bb.m ] ; 2 uses
-  %.pre4143.i = phi i64 [ %.pre41.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.i8 ], [ %.pre41.i, %bb.j ], [ %.pre4144.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ], [ %.pre4145.i.epil.init, %.preheader.i10.epil.preheader ], [ %.pre4145.i.epil.init, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.epil ], [ %.pre.i11.epil, %bb.m ]
+  %.pre4247.i = phi i64 [ %.pre4250.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.i8 ], [ %.pre4250.i, %bb.j ], [ %.pre4144.i.1, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ], [ %.pre4145.i.epil.init, %.preheader.i10.epil.preheader ], [ %.pre4145.i.epil.init, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.epil ], [ %.pre.i11.epil, %bb.m ] ; 2 uses
+  %.pre4143.i = phi i64 [ %.pre41.i, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.i8 ], [ %.pre41.i, %bb.j ], [ %i.ct, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ], [ %.epil.init, %.preheader.i10.epil.preheader ], [ %.epil.init, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.epil ], [ %.pre.i11.epil, %bb.m ] ; 2 uses
   %i.dd = phi i64 [ %i.bu, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.i8 ], [ %i.bu, %bb.j ], [ %i.ct, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit.thread.i7.loopexit.unr-lcssa ], [ %.epil.init, %.preheader.i10.epil.preheader ], [ %.epil.init, %_ZNK4entt16adjacency_matrixINS_12directed_tagESaImEE8containsEmm.exit28.i.epil ], [ %.pre.i11.epil, %bb.m ]
   %i.de = add nuw i64 %.02434.i, 1                ; 2 uses
   %exitcond39.not.i = icmp eq i64 %i.de, %.pr
