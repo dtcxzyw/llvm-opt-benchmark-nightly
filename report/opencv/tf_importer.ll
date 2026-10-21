@@ -205,6 +205,7 @@ switch.early.test:                                ; preds = %bb.et
   %i.sp = load i32, ptr %38, align 4, !tbaa !285
   %narrow.i404 = call i32 @llvm.smax.i32(i32 %i.sp, i32 1) ; 2 uses
   %i.sq = getelementptr inbounds nuw i8, ptr %38, i64 12
+  %55 = zext nneg i32 %narrow.i404 to i64
   %wide.trip.count = zext nneg i32 %.fr to i64
   br label %bb.eu
 
@@ -248,9 +249,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i407: ; preds = %
   br label %.body410
 
 bb.ey:                                            ; preds = %bb.eu
-  %55 = trunc i64 %indvars.iv to i32
-  %56 = sub i32 5, %55
-  %57 = icmp ugt i32 %narrow.i404, %56
+  %56 = sub nsw i64 5, %indvars.iv
+  %57 = icmp ult i64 %56, %55
   br i1 %57, label %bb.fc, label %bb.ez
 
 bb.ez:                                            ; preds = %bb.ey

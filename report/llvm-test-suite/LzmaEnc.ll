@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.lr.ph.i.i
   br i1 %exitcond.not.i.i, label %ReadMatchDistances.exit.i, label %.lr.ph.i.i, !llvm.loop !145
 
 .critedge.loopexit.split.loop.exit.i.i:           ; preds = %.lr.ph.i.i
-  %i.hb = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.hb = trunc nuw nsw i64 %indvars.iv.i.i to i32
   br label %ReadMatchDistances.exit.i
 
 ReadMatchDistances.exit.i:                        ; preds = %bb.v, %.critedge.loopexit.split.loop.exit.i.i, %bb.u, %bb.t, %bb.s
@@ -608,7 +608,7 @@ bb.bd:                                            ; preds = %.lr.ph.i182.i
   br i1 %exitcond.not.i187.i, label %ReadMatchDistances.exit188.i, label %.lr.ph.i182.i, !llvm.loop !145
 
 .critedge.loopexit.split.loop.exit.i184.i:        ; preds = %.lr.ph.i182.i
-  %i.ok = trunc nuw i64 %indvars.iv.i183.i to i32
+  %i.ok = trunc nuw nsw i64 %indvars.iv.i183.i to i32
   br label %ReadMatchDistances.exit188.i
 
 ReadMatchDistances.exit188.i:                     ; preds = %bb.bd, %.critedge.loopexit.split.loop.exit.i184.i, %bb.bc, %bb.bb
@@ -975,7 +975,7 @@ bb.ca:                                            ; preds = %.lr.ph.i.i263
   br i1 %exitcond.not.i.i268, label %ReadMatchDistances.exit.i259, label %.lr.ph.i.i263, !llvm.loop !145
 
 .critedge.loopexit.split.loop.exit.i.i265:        ; preds = %.lr.ph.i.i263
-  %i.us = trunc nuw i64 %indvars.iv.i.i264 to i32
+  %i.us = trunc nuw nsw i64 %indvars.iv.i.i264 to i32
   br label %ReadMatchDistances.exit.i259
 
 ReadMatchDistances.exit.i259:                     ; preds = %bb.ca, %.critedge.loopexit.split.loop.exit.i.i265, %bb.bz, %bb.by, %bb.bx
@@ -1378,7 +1378,7 @@ bb.ee:                                            ; preds = %.lr.ph.i850.i
   br i1 %exitcond.not.i855.i, label %ReadMatchDistances.exit856.i, label %.lr.ph.i850.i, !llvm.loop !145
 
 .critedge.loopexit.split.loop.exit.i852.i:        ; preds = %.lr.ph.i850.i
-  %i.amc = trunc nuw i64 %indvars.iv.i851.i to i32
+  %i.amc = trunc nuw nsw i64 %indvars.iv.i851.i to i32
   br label %ReadMatchDistances.exit856.i
 
 ReadMatchDistances.exit856.i:                     ; preds = %bb.ee, %.critedge.loopexit.split.loop.exit.i852.i, %bb.ed, %bb.ec, %.lr.ph1056.i
