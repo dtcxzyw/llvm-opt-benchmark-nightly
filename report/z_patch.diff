@@ -1,0 +1,500 @@
+diff --git a/llvm/lib/Transforms/Scalar/GVN.cpp b/llvm/lib/Transforms/Scalar/GVN.cpp
+index d3f80a95d5123..e043b9d1e2e49 100644
+--- a/llvm/lib/Transforms/Scalar/GVN.cpp
++++ b/llvm/lib/Transforms/Scalar/GVN.cpp
+@@ -3541,6 +3541,35 @@ bool GVNPassImpl::propagateEquality(
+     bool IsKnownTrue = CI->isMinusOne();
+     bool IsKnownFalse = !IsKnownTrue;
+ 
++    // Find select instructions whose condition matches LHS, and propagate
++    // replacements of the selected value into dominated successors.
++    for (User *U : LHS->users()) {
++      auto *SI = dyn_cast<SelectInst>(U);
++      if (!SI || SI->getCondition() != LHS)
++        continue;
++
++      Value *SIVal = IsKnownTrue ? SI->getTrueValue() : SI->getFalseValue();
++
++      unsigned NumReplacements;
++      if (const BasicBlockEdge *Edge = std::get_if<BasicBlockEdge>(&Root)) {
++        if (!DT->dominates(SI->getParent(), Edge->getStart()))
++          continue;
++        NumReplacements =
++            replaceDominatedUsesWith(SI, SIVal, *DT, *Edge);
++      } else {
++        auto *InstBB = std::get<Instruction *>(Root)->getParent();
++        if (!DT->dominates(SI->getParent(), InstBB))
++          continue;
++        NumReplacements = replaceDominatedUsesWith(
++            SI, SIVal, *DT, std::get<Instruction *>(Root));
++      }
++      Changed |= NumReplacements > 0;
++      NumGVNEqProp += NumReplacements;
++      // Cached information for anything that uses SI will be invalid.
++      if (MD)
++        MD->invalidateCachedPointerInfo(SI);
++    }
++
+     // If "A && B" is known true then both A and B are known true.  If "A || B"
+     // is known false then both A and B are known false.
+     Value *A, *B;
+diff --git a/llvm/test/CodeGen/AMDGPU/branch-folding-implicit-def-subreg.ll b/llvm/test/CodeGen/AMDGPU/branch-folding-implicit-def-subreg.ll
+index 263460e2754ce..22f4561f7da1b 100644
+--- a/llvm/test/CodeGen/AMDGPU/branch-folding-implicit-def-subreg.ll
++++ b/llvm/test/CodeGen/AMDGPU/branch-folding-implicit-def-subreg.ll
+@@ -922,42 +922,40 @@ define amdgpu_kernel void @f1(ptr addrspace(1) %arg, ptr addrspace(1) %arg1, i64
+   ; GFX90A-NEXT:   liveins: $sgpr14, $sgpr16, $sgpr17, $vgpr31, $sgpr4_sgpr5, $sgpr6_sgpr7, $sgpr8_sgpr9:0x000000000000000F, $sgpr10_sgpr11, $sgpr12_sgpr13, $sgpr18_sgpr19, $sgpr34_sgpr35, $sgpr36_sgpr37, $sgpr38_sgpr39, $sgpr40_sgpr41, $sgpr42_sgpr43, $sgpr44_sgpr45, $sgpr46_sgpr47, $sgpr48_sgpr49, $sgpr50_sgpr51, $sgpr52_sgpr53, $sgpr54_sgpr55, $sgpr64_sgpr65, $sgpr20_sgpr21_sgpr22_sgpr23:0x000000000000003C, $sgpr24_sgpr25_sgpr26_sgpr27:0x00000000000000F0, $vgpr0_vgpr1:0x000000000000000F, $vgpr2_vgpr3:0x000000000000000F, $vgpr4_vgpr5:0x0000000000000003, $vgpr6_vgpr7:0x000000000000000F, $vgpr8_vgpr9:0x000000000000000F, $vgpr10_vgpr11:0x0000000000000003, $vgpr14_vgpr15:0x0000000000000003, $vgpr18_vgpr19:0x0000000000000003, $vgpr20_vgpr21:0x0000000000000003, $vgpr22_vgpr23:0x0000000000000003, $vgpr24_vgpr25:0x0000000000000003, $vgpr26_vgpr27:0x0000000000000003, $vgpr32_vgpr33:0x000000000000000F, $vgpr40_vgpr41:0x000000000000000F, $vgpr42_vgpr43:0x000000000000000F, $vgpr44_vgpr45:0x000000000000000F, $vgpr46_vgpr47:0x000000000000000F, $vgpr56_vgpr57:0x000000000000000F, $vgpr58_vgpr59:0x000000000000000F, $vgpr60_vgpr61:0x000000000000000F, $vgpr62_vgpr63:0x000000000000000F, $sgpr0_sgpr1_sgpr2_sgpr3
+   ; GFX90A-NEXT: {{  $}}
+   ; GFX90A-NEXT:   renamable $vgpr12 = V_OR_B32_e32 1, killed $vgpr26, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr28 = V_OR_B32_e32 $vgpr12, killed $vgpr24, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr22 = V_OR_B32_e32 $vgpr28, killed $vgpr22, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr16 = V_CNDMASK_B32_e64 0, $vgpr22, 0, 0, $sgpr12_sgpr13, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr26 = V_OR_B32_e32 $vgpr16, killed $vgpr4, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr24 = V_OR_B32_e32 $vgpr26, killed $vgpr10, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr4 = V_OR_B32_e32 $vgpr24, killed $vgpr18, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr24 = V_OR_B32_e32 $vgpr12, killed $vgpr24, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr16 = V_OR_B32_e32 $vgpr24, killed $vgpr22, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr5 = V_CNDMASK_B32_e64 0, $vgpr16, 0, 0, $sgpr12_sgpr13, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr22 = V_OR_B32_e32 killed $vgpr5, killed $vgpr4, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr10 = V_OR_B32_e32 $vgpr22, killed $vgpr10, implicit $exec
+   ; GFX90A-NEXT:   dead renamable $sgpr24_sgpr25 = S_AND_B64 renamable $sgpr12_sgpr13, $exec, implicit-def $scc
+-  ; GFX90A-NEXT:   renamable $vgpr10 = V_CNDMASK_B32_e64 0, 0, 0, $vgpr4, killed $sgpr12_sgpr13, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr4 = V_OR_B32_e32 $vgpr10, killed $vgpr18, implicit $exec
+   ; GFX90A-NEXT:   renamable $sgpr66_sgpr67 = COPY $exec
+   ; GFX90A-NEXT:   S_CBRANCH_SCC0 %bb.69, implicit $scc
+   ; GFX90A-NEXT: {{  $}}
+   ; GFX90A-NEXT: bb.68.bb186:
+   ; GFX90A-NEXT:   successors: %bb.8(0x80000000)
+-  ; GFX90A-NEXT:   liveins: $sgpr8, $sgpr9, $sgpr14, $sgpr16, $sgpr17, $sgpr21, $sgpr22, $sgpr26, $sgpr27, $vgpr0, $vgpr1, $vgpr4, $vgpr6, $vgpr7, $vgpr8, $vgpr9, $vgpr10, $vgpr12, $vgpr16, $vgpr22, $vgpr24, $vgpr26, $vgpr28, $vgpr31, $vgpr32, $vgpr33, $vgpr40, $vgpr41, $vgpr42, $vgpr43, $vgpr44, $vgpr45, $vgpr46, $vgpr47, $vgpr56, $vgpr57, $vgpr58, $vgpr59, $vgpr60, $vgpr61, $vgpr62, $vgpr63, $sgpr4_sgpr5, $sgpr6_sgpr7, $sgpr10_sgpr11, $sgpr18_sgpr19, $sgpr34_sgpr35, $sgpr36_sgpr37, $sgpr38_sgpr39, $sgpr40_sgpr41, $sgpr42_sgpr43, $sgpr44_sgpr45, $sgpr46_sgpr47, $sgpr48_sgpr49, $sgpr50_sgpr51, $sgpr52_sgpr53, $sgpr54_sgpr55, $sgpr64_sgpr65, $sgpr66_sgpr67, $vgpr2_vgpr3
++  ; GFX90A-NEXT:   liveins: $sgpr8, $sgpr9, $sgpr14, $sgpr16, $sgpr17, $sgpr21, $sgpr22, $sgpr26, $sgpr27, $vgpr0, $vgpr1, $vgpr4, $vgpr6, $vgpr7, $vgpr8, $vgpr9, $vgpr10, $vgpr12, $vgpr16, $vgpr22, $vgpr24, $vgpr31, $vgpr32, $vgpr33, $vgpr40, $vgpr41, $vgpr42, $vgpr43, $vgpr44, $vgpr45, $vgpr46, $vgpr47, $vgpr56, $vgpr57, $vgpr58, $vgpr59, $vgpr60, $vgpr61, $vgpr62, $vgpr63, $sgpr4_sgpr5, $sgpr6_sgpr7, $sgpr10_sgpr11, $sgpr18_sgpr19, $sgpr34_sgpr35, $sgpr36_sgpr37, $sgpr38_sgpr39, $sgpr40_sgpr41, $sgpr42_sgpr43, $sgpr44_sgpr45, $sgpr46_sgpr47, $sgpr48_sgpr49, $sgpr50_sgpr51, $sgpr52_sgpr53, $sgpr54_sgpr55, $sgpr64_sgpr65, $sgpr66_sgpr67, $vgpr2_vgpr3
+   ; GFX90A-NEXT: {{  $}}
+   ; GFX90A-NEXT:   renamable $vgpr2_vgpr3 = nsw V_LSHLREV_B64_e64 3, killed $vgpr2_vgpr3, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr5 = COPY renamable $sgpr27, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr2, renamable $vcc = V_ADD_CO_U32_e64 killed $sgpr26, $vgpr2, 0, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr3, dead renamable $vcc = V_ADDC_U32_e64 killed $vgpr5, killed $vgpr3, killed $vcc, 0, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr13 = AV_MOV_B32_IMM_PSEUDO 0, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr29 = COPY renamable $vgpr13, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr23 = COPY renamable $vgpr13, implicit $exec
+-  ; GFX90A-NEXT:   renamable $vgpr27 = COPY renamable $vgpr13, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr25 = COPY renamable $vgpr13, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr17 = COPY renamable $vgpr13, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr23 = COPY renamable $vgpr13, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr11 = COPY renamable $vgpr13, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr5 = COPY renamable $vgpr13, implicit $exec
+   ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr13, renamable $vgpr12_vgpr13, 0, 0, implicit $exec :: (store (s64) into `ptr addrspace(3) null`, addrspace 3)
+-  ; GFX90A-NEXT:   renamable $vgpr12 = COPY renamable $sgpr21, implicit $exec
+-  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr12, killed renamable $vgpr28_vgpr29, 0, 0, implicit $exec :: (store (s64) into %ir.4, addrspace 3)
+-  ; GFX90A-NEXT:   renamable $vgpr14 = COPY killed renamable $sgpr22, implicit $exec
+-  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 killed renamable $vgpr14, killed renamable $vgpr22_vgpr23, 0, 0, implicit $exec :: (store (s64) into %ir.5, addrspace 3)
+-  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr13, killed renamable $vgpr26_vgpr27, 0, 0, implicit $exec :: (store (s64) into `ptr addrspace(3) null`, addrspace 3)
+-  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr12, killed renamable $vgpr24_vgpr25, 0, 0, implicit $exec :: (store (s64) into %ir.4, addrspace 3)
+-  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr13, killed renamable $vgpr16_vgpr17, 0, 0, implicit $exec :: (store (s64) into `ptr addrspace(3) null`, addrspace 3)
+-  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 killed renamable $vgpr12, killed renamable $vgpr10_vgpr11, 0, 0, implicit $exec :: (store (s64) into %ir.4, addrspace 3)
++  ; GFX90A-NEXT:   renamable $vgpr14 = COPY renamable $sgpr21, implicit $exec
++  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr14, killed renamable $vgpr24_vgpr25, 0, 0, implicit $exec :: (store (s64) into %ir.4, addrspace 3)
++  ; GFX90A-NEXT:   renamable $vgpr12 = COPY killed renamable $sgpr22, implicit $exec
++  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 killed renamable $vgpr12, killed renamable $vgpr16_vgpr17, 0, 0, implicit $exec :: (store (s64) into %ir.5, addrspace 3)
++  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr13, killed renamable $vgpr22_vgpr23, 0, 0, implicit $exec :: (store (s64) into `ptr addrspace(3) null`, addrspace 3)
++  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr14, killed renamable $vgpr10_vgpr11, 0, 0, implicit $exec :: (store (s64) into %ir.4, addrspace 3)
++  ; GFX90A-NEXT:   renamable $vgpr12 = COPY renamable $vgpr13, implicit $exec
++  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 renamable $vgpr13, renamable $vgpr12_vgpr13, 0, 0, implicit $exec :: (store (s64) into `ptr addrspace(3) null`, addrspace 3)
++  ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 killed renamable $vgpr14, renamable $vgpr4_vgpr5, 0, 0, implicit $exec :: (store (s64) into %ir.4, addrspace 3)
+   ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 killed renamable $vgpr13, killed renamable $vgpr4_vgpr5, 0, 0, implicit $exec :: (store (s64) into `ptr addrspace(3) null`, addrspace 3)
+   ; GFX90A-NEXT:   BUFFER_STORE_DWORD_OFFSET killed renamable $vgpr3, $sgpr0_sgpr1_sgpr2_sgpr3, 0, 4, 0, 0, implicit $exec :: (store (s32) into `ptr addrspace(5) null` + 4, basealign 8, addrspace 5)
+   ; GFX90A-NEXT:   BUFFER_STORE_DWORD_OFFSET killed renamable $vgpr2, $sgpr0_sgpr1_sgpr2_sgpr3, 0, 0, 0, 0, implicit $exec :: (store (s32) into `ptr addrspace(5) null`, align 8, addrspace 5)
+@@ -965,9 +963,10 @@ define amdgpu_kernel void @f1(ptr addrspace(1) %arg, ptr addrspace(1) %arg1, i64
+   ; GFX90A-NEXT: {{  $}}
+   ; GFX90A-NEXT: bb.69.bb196:
+   ; GFX90A-NEXT:   successors: %bb.8(0x80000000)
+-  ; GFX90A-NEXT:   liveins: $sgpr8, $sgpr9, $sgpr14, $sgpr16, $sgpr17, $vgpr0, $vgpr1, $vgpr6, $vgpr7, $vgpr8, $vgpr9, $vgpr10, $vgpr14, $vgpr20, $vgpr31, $vgpr32, $vgpr33, $vgpr40, $vgpr41, $vgpr42, $vgpr43, $vgpr44, $vgpr45, $vgpr46, $vgpr47, $vgpr56, $vgpr57, $vgpr58, $vgpr59, $vgpr60, $vgpr61, $vgpr62, $vgpr63, $sgpr4_sgpr5, $sgpr6_sgpr7, $sgpr10_sgpr11, $sgpr18_sgpr19, $sgpr34_sgpr35, $sgpr36_sgpr37, $sgpr38_sgpr39, $sgpr40_sgpr41, $sgpr42_sgpr43, $sgpr44_sgpr45, $sgpr46_sgpr47, $sgpr48_sgpr49, $sgpr50_sgpr51, $sgpr52_sgpr53, $sgpr54_sgpr55, $sgpr64_sgpr65, $sgpr66_sgpr67
++  ; GFX90A-NEXT:   liveins: $sgpr8, $sgpr9, $sgpr14, $sgpr16, $sgpr17, $vgpr0, $vgpr1, $vgpr4, $vgpr6, $vgpr7, $vgpr8, $vgpr9, $vgpr14, $vgpr20, $vgpr31, $vgpr32, $vgpr33, $vgpr40, $vgpr41, $vgpr42, $vgpr43, $vgpr44, $vgpr45, $vgpr46, $vgpr47, $vgpr56, $vgpr57, $vgpr58, $vgpr59, $vgpr60, $vgpr61, $vgpr62, $vgpr63, $sgpr4_sgpr5, $sgpr6_sgpr7, $sgpr10_sgpr11, $sgpr12_sgpr13, $sgpr18_sgpr19, $sgpr34_sgpr35, $sgpr36_sgpr37, $sgpr38_sgpr39, $sgpr40_sgpr41, $sgpr42_sgpr43, $sgpr44_sgpr45, $sgpr46_sgpr47, $sgpr48_sgpr49, $sgpr50_sgpr51, $sgpr52_sgpr53, $sgpr54_sgpr55, $sgpr64_sgpr65, $sgpr66_sgpr67
+   ; GFX90A-NEXT: {{  $}}
+-  ; GFX90A-NEXT:   renamable $vgpr2 = V_OR_B32_e32 killed $vgpr10, killed $vgpr20, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr2 = V_CNDMASK_B32_e64 0, 0, 0, killed $vgpr4, killed $sgpr12_sgpr13, implicit $exec
++  ; GFX90A-NEXT:   renamable $vgpr2 = V_OR_B32_e32 killed $vgpr2, killed $vgpr20, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr2 = V_OR_B32_e32 killed $vgpr2, killed $vgpr14, implicit $exec
+   ; GFX90A-NEXT:   renamable $vgpr3 = AV_MOV_B32_IMM_PSEUDO 0, implicit $exec
+   ; GFX90A-NEXT:   DS_WRITE_B64_gfx9 killed renamable $vgpr3, renamable $vgpr2_vgpr3, 0, 0, implicit $exec :: (store (s64) into `ptr addrspace(3) null`, addrspace 3)
+diff --git a/llvm/test/Transforms/GVN/select.ll b/llvm/test/Transforms/GVN/select.ll
+new file mode 100644
+index 0000000000000..319955c303e05
+--- /dev/null
++++ b/llvm/test/Transforms/GVN/select.ll
+@@ -0,0 +1,377 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt %s -passes=gvn -S | FileCheck %s
++
++define i1 @covariant_select(i1 %c) {
++; CHECK-LABEL: @covariant_select(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       f:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  %rt = icmp eq i64 %s, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++define i1 @covariant_select_variable_operand(i1 %c, i64 %a) {
++; CHECK-LABEL: @covariant_select_variable_operand(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 [[A:%.*]], i64 1
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       f:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = select i1 %c, i64 %a, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  %rt = icmp eq i64 %s, %a
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++define i64 @covariant_select_cond_and(i1 %c, i1 %d) {
++; CHECK-LABEL: @covariant_select_cond_and(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:    [[A:%.*]] = and i1 [[C]], [[D:%.*]]
++; CHECK-NEXT:    br i1 [[A]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i64 10
++; CHECK:       f:
++; CHECK-NEXT:    [[RF:%.*]] = add i64 [[S]], 20
++; CHECK-NEXT:    ret i64 [[RF]]
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  %a = and i1 %c, %d
++  br i1 %a, label %t, label %f
++
++t:
++  %rt = add i64 %s, 10
++  ret i64 %rt
++
++f:
++  %rf = add i64 %s, 20
++  ret i64 %rf
++}
++
++define i1 @covariant_select_cond_and_compare(i1 %c, i1 %d) {
++; CHECK-LABEL: @covariant_select_cond_and_compare(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:    [[A:%.*]] = and i1 [[C]], [[D:%.*]]
++; CHECK-NEXT:    br i1 [[A]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       f:
++; CHECK-NEXT:    [[RF:%.*]] = icmp eq i64 [[S]], 1
++; CHECK-NEXT:    ret i1 [[RF]]
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  %a = and i1 %c, %d
++  br i1 %a, label %t, label %f
++
++t:
++  %rt = icmp eq i64 %s, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++define i32 @covariant_select_aggregate(i1 %c, {i32, i32} %a, {i32, i32} %b) {
++; CHECK-LABEL: @covariant_select_aggregate(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], { i32, i32 } [[A:%.*]], { i32, i32 } [[B:%.*]]
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    [[XT:%.*]] = extractvalue { i32, i32 } [[A]], 0
++; CHECK-NEXT:    ret i32 [[XT]]
++; CHECK:       f:
++; CHECK-NEXT:    [[XF:%.*]] = extractvalue { i32, i32 } [[B]], 1
++; CHECK-NEXT:    ret i32 [[XF]]
++;
++entry:
++  %s = select i1 %c, {i32, i32} %a, {i32, i32} %b
++  br i1 %c, label %t, label %f
++
++t:
++  %xt = extractvalue {i32, i32} %s, 0
++  ret i32 %xt
++
++f:
++  %xf = extractvalue {i32, i32} %s, 1
++  ret i32 %xf
++}
++
++define i32 @covariant_select_vector(i1 %c, <2 x i32> %a, <2 x i32> %b) {
++; CHECK-LABEL: @covariant_select_vector(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], <2 x i32> [[A:%.*]], <2 x i32> [[B:%.*]]
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    [[XT:%.*]] = extractelement <2 x i32> [[A]], i32 0
++; CHECK-NEXT:    ret i32 [[XT]]
++; CHECK:       f:
++; CHECK-NEXT:    [[XF:%.*]] = extractelement <2 x i32> [[B]], i32 1
++; CHECK-NEXT:    ret i32 [[XF]]
++;
++entry:
++  %s = select i1 %c, <2 x i32> %a, <2 x i32> %b
++  br i1 %c, label %t, label %f
++
++t:
++  %xt = extractelement <2 x i32> %s, i32 0
++  ret i32 %xt
++
++f:
++  %xf = extractelement <2 x i32> %s, i32 1
++  ret i32 %xf
++}
++
++define i1 @covariant_select_single_dominated_use(i1 %c) {
++; CHECK-LABEL: @covariant_select_single_dominated_use(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       f:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  ret i1 false
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++define i1 @select_wrong_use(i1 %c, i1 %k) {
++; CHECK-LABEL: @select_wrong_use(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[K:%.*]], i1 [[C:%.*]], i1 true
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    [[RT:%.*]] = icmp eq i1 [[S]], false
++; CHECK-NEXT:    ret i1 [[RT]]
++; CHECK:       f:
++; CHECK-NEXT:    ret i1 [[S]]
++;
++entry:
++  %s = select i1 %k, i1 %c, i1 1
++  br i1 %c, label %t, label %f
++
++t:
++  %rt = icmp eq i1 %s, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i1 %s, 1
++  ret i1 %rf
++}
++
++define i64 @duplicate_select_in_successor(i1 %c, i64 %x) {
++; CHECK-LABEL: @duplicate_select_in_successor(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i64 [[X:%.*]]
++; CHECK:       f:
++; CHECK-NEXT:    [[RF:%.*]] = add i64 1, [[X]]
++; CHECK-NEXT:    ret i64 [[RF]]
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  %s2 = select i1 %c, i64 0, i64 1
++  %rt = add i64 %s2, %x
++  ret i64 %rt
++
++f:
++  %rf = add i64 %s, %x
++  ret i64 %rf
++}
++
++define i64 @select_phi_user(i1 %c) {
++; CHECK-LABEL: @select_phi_user(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    br label [[JOIN:%.*]]
++; CHECK:       f:
++; CHECK-NEXT:    br label [[JOIN]]
++; CHECK:       join:
++; CHECK-NEXT:    [[P:%.*]] = phi i64 [ 0, [[T]] ], [ 2, [[F]] ]
++; CHECK-NEXT:    ret i64 [[P]]
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  br label %join
++
++f:
++  %y = add i64 %s, 1
++  br label %join
++
++join:
++  %p = phi i64 [ %s, %t ], [ %y, %f ]
++  ret i64 %p
++}
++
++define i64 @select_edge_does_not_dominate_end(i1 %c, i1 %d) {
++; CHECK-LABEL: @select_edge_does_not_dominate_end(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[C]], label [[JOIN:%.*]], label [[OTHER:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    br i1 [[D:%.*]], label [[JOIN]], label [[EXIT:%.*]]
++; CHECK:       join:
++; CHECK-NEXT:    [[R:%.*]] = add i64 [[S]], 10
++; CHECK-NEXT:    ret i64 [[R]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i64 0
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %join, label %other
++
++other:
++  br i1 %d, label %join, label %exit
++
++join:
++  %r = add i64 %s, 10
++  ret i64 %r
++
++exit:
++  ret i64 0
++}
++
++define i64 @select_cond_is_logical_and(i1 %c, i1 %d) {
++; CHECK-LABEL: @select_cond_is_logical_and(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = select i1 [[C:%.*]], i1 [[D:%.*]], i1 false
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[A]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[A]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i64 10
++; CHECK:       f:
++; CHECK-NEXT:    ret i64 21
++;
++entry:
++  %a = select i1 %c, i1 %d, i1 false
++  %s = select i1 %a, i64 0, i64 1
++  br i1 %a, label %t, label %f
++
++t:
++  %rt = add i64 %s, 10
++  ret i64 %rt
++
++f:
++  %rf = add i64 %s, 20
++  ret i64 %rf
++}
++
++define i64 @select_after_assume(i1 %c, i64 %x) {
++; CHECK-LABEL: @select_after_assume(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 7, i64 [[X:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    ret i64 12
++;
++entry:
++  %s = select i1 %c, i64 7, i64 %x
++  call void @llvm.assume(i1 %c)
++  %r = add i64 %s, 5
++  ret i64 %r
++}
++
++define i32 @select_pointer_load(i1 %c, ptr %p, ptr %q) {
++; CHECK-LABEL: @select_pointer_load(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    store i32 42, ptr [[P:%.*]], align 4
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], ptr [[P]], ptr [[Q:%.*]]
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i32 42
++; CHECK:       f:
++; CHECK-NEXT:    [[W:%.*]] = load i32, ptr [[Q]], align 4
++; CHECK-NEXT:    ret i32 [[W]]
++;
++entry:
++  store i32 42, ptr %p
++  %s = select i1 %c, ptr %p, ptr %q
++  br i1 %c, label %t, label %f
++
++t:
++  %v = load i32, ptr %s
++  ret i32 %v
++
++f:
++  %w = load i32, ptr %s
++  ret i32 %w
++}
++
++define i64 @select_loop_carried(i64 %n) {
++; CHECK-LABEL: @select_loop_carried(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[I_NEXT:%.*]], [[LATCH:%.*]] ]
++; CHECK-NEXT:    [[PREV:%.*]] = phi i64 [ 100, [[ENTRY]] ], [ 1, [[LATCH]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[I]], [[N:%.*]]
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C]], i64 1, i64 2
++; CHECK-NEXT:    br i1 [[C]], label [[LATCH]], label [[EXIT:%.*]]
++; CHECK:       latch:
++; CHECK-NEXT:    [[I_NEXT]] = add i64 [[I]], 1
++; CHECK-NEXT:    br label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i64 [[PREV]]
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %latch ]
++  %prev = phi i64 [ 100, %entry ], [ %s, %latch ]
++  %c = icmp ult i64 %i, %n
++  %s = select i1 %c, i64 1, i64 2
++  br i1 %c, label %latch, label %exit
++
++latch:
++  %i.next = add i64 %i, 1
++  br label %loop
++
++exit:
++  ret i64 %prev
++}
