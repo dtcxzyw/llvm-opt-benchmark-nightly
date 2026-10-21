@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/fit_rotations?download=true
-inline.NumInlined: 1689
+inline.NumInlined: 1690
 inline.NumDeleted: 1101
 loop-unroll.NumCompletelyUnrolled: 17
 loop-unroll.NumRuntimeUnrolled: 4
@@ -205,29 +205,55 @@ declare void @_ZN3igl9polar_svdIN5Eigen6MatrixIfLi3ELi3ELi0ELi3ELi3EEES3_S3_S3_N
 
 ; Function Attrs: mustprogress uwtable
 define weak_odr dso_local void @_ZN3igl20fit_rotations_planarIN5Eigen6MatrixIdLi2ELi2ELi0ELi2ELi2EEENS2_IdLin1ELin1ELi0ELin1ELin1EEEEEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #3 comdat personality ptr @__gxx_personality_v0 {
-_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit:
-  %2 = alloca %"class.Eigen::Matrix.106", align 16 ; 5 uses
-  %3 = alloca %"class.Eigen::Matrix.106", align 16 ; 10 uses
-  %4 = alloca %"class.Eigen::Matrix.106", align 16 ; 3 uses
-  %5 = alloca %"class.Eigen::Matrix.106", align 16 ; 5 uses
-  %6 = alloca %"class.Eigen::Matrix.106", align 16 ; 6 uses
-  %7 = alloca %"class.Eigen::Matrix.116", align 16 ; 3 uses
-  tail call void @_ZN5Eigen12DenseStorageIdLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 4, i64 noundef 2, i64 noundef 2)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa !28
-  %scevgep = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %3 = alloca %"class.Eigen::Matrix.106", align 16 ; 5 uses
+  %4 = alloca %"class.Eigen::Matrix.106", align 16 ; 10 uses
+  %5 = alloca %"class.Eigen::Matrix.106", align 16 ; 3 uses
+  %6 = alloca %"class.Eigen::Matrix.106", align 16 ; 5 uses
+  %7 = alloca %"class.Eigen::Matrix.106", align 16 ; 6 uses
+  %8 = alloca %"class.Eigen::Matrix.116", align 16 ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %10 = load i64, ptr %9, align 8, !tbaa !24
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %12 = load i64, ptr %11, align 8, !tbaa !25
+  %13 = mul nsw i64 %12, %10
+  %.not.i = icmp eq i64 %13, 4
+  br i1 %.not.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit, label %14
+
+14:                                               ; preds = %2
+  %15 = load ptr, ptr %1, align 8, !tbaa !26
+  tail call void @free(ptr noundef %15) #12
+  %16 = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #14 ; 2 uses
+  %17 = icmp eq ptr %16, null
+  br i1 %17, label %18, label %.sink.split.i
+
+18:                                               ; preds = %14
+  %19 = tail call ptr @__cxa_allocate_exception(i64 8) #12 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %19, align 8, !tbaa !15
+  tail call void @__cxa_throw(ptr nonnull %19, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #13
+  unreachable
+
+.sink.split.i:                                    ; preds = %14
+  store ptr %16, ptr %1, align 8, !tbaa !26
+  br label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+
+_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit: ; preds = %2, %.sink.split.i
+  store i64 2, ptr %9, align 8, !tbaa !24
+  store i64 2, ptr %11, align 8, !tbaa !25
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa !28
+  %scevgep = getelementptr inbounds nuw i8, ptr %3, i64 16
   %scevgep52 = getelementptr i8, ptr %0, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %scevgep, ptr noundef nonnull align 8 dereferenceable(16) %scevgep52, i64 16, i1 false), !tbaa !28
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
-  call void @_ZN3igl9polar_svdIN5Eigen6MatrixIdLi2ELi2ELi0ELi2ELi2EEES3_S3_S3_NS2_IdLi2ELi1ELi0ELi2ELi1EEES3_EEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EERNSA_IT1_EERNSA_IT2_EERNSA_IT3_EERNSA_IT4_EE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 16 dereferenceable(32) %3, ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 16 dereferenceable(32) %5, ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(32) %6)
-  %i.d = load double, ptr %3, align 16, !tbaa !28
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
+  call void @_ZN3igl9polar_svdIN5Eigen6MatrixIdLi2ELi2ELi0ELi2ELi2EEES3_S3_S3_NS2_IdLi2ELi1ELi0ELi2ELi1EEES3_EEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EERNSA_IT1_EERNSA_IT2_EERNSA_IT3_EERNSA_IT4_EE(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 16 dereferenceable(32) %5, ptr noundef nonnull align 16 dereferenceable(32) %6, ptr noundef nonnull align 16 dereferenceable(16) %8, ptr noundef nonnull align 16 dereferenceable(32) %7)
+  %i.d = load double, ptr %4, align 16, !tbaa !28
   %i.e = load double, ptr %i.b, align 8, !tbaa !28
   %i.f = load double, ptr %i.a, align 8, !tbaa !28
   %i.g = load double, ptr %i.c, align 16, !tbaa !28
@@ -238,14 +264,14 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %i.k, label %bb.a, label %.preheader.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i
 
 bb.a:                                             ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
-  %i.l = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.m = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.n = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.n = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.o = load <2 x double>, ptr %i.n, align 16, !tbaa !32
   %i.p = fneg <2 x double> %i.o                   ; 3 uses
   store <2 x double> %i.p, ptr %i.n, align 16, !tbaa !32
-  %i.q = load <2 x double>, ptr %5, align 16, !tbaa !32 ; 2 uses
-  %i.r = load <1 x double>, ptr %6, align 16
+  %i.q = load <2 x double>, ptr %6, align 16, !tbaa !32 ; 2 uses
+  %i.r = load <1 x double>, ptr %7, align 16
   %i.s = shufflevector <1 x double> %i.r, <1 x double> poison, <2 x i32> zeroinitializer
   %i.t = fmul <2 x double> %i.q, %i.s
   %i.u = load <2 x double>, ptr %i.m, align 16, !tbaa !32 ; 2 uses
@@ -258,34 +284,33 @@ bb.a:                                             ; preds = %_ZN5Eigen15PlainObj
   %i.ab = shufflevector <2 x double> %i.p, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.ac = fmul <2 x double> %i.u, %i.ab
   %i.ad = fadd <2 x double> %i.aa, %i.ac
-  store <2 x double> %i.x, ptr %3, align 16, !tbaa !32
+  store <2 x double> %i.x, ptr %4, align 16, !tbaa !32
   store <2 x double> %i.ad, ptr %i.c, align 16, !tbaa !32
   br label %.preheader.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i
 
 .preheader.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i:         ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit, %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ae = load ptr, ptr %1, align 8, !tbaa !26, !noalias !93 ; 4 uses
-  %i.af = load i64, ptr %8, align 8, !tbaa !24, !noalias !93
+  %i.af = load i64, ptr %9, align 8, !tbaa !24, !noalias !93
   %i.ag = getelementptr i8, ptr %i.ae, i64 8
   store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.ae, align 8, !tbaa !28
   %i.ah = getelementptr [8 x i8], ptr %i.ae, i64 %i.af ; 3 uses
   %i.ai = getelementptr i8, ptr %i.ah, i64 8
   store <2 x double> <double 0.000000e+00, double 1.000000e+00>, ptr %i.ah, align 8, !tbaa !28
-  %i.aj = load double, ptr %3, align 16, !tbaa !28
+  %i.aj = load double, ptr %4, align 16, !tbaa !28
   store double %i.aj, ptr %i.ae, align 8, !tbaa !28
   %i.ak = load double, ptr %i.c, align 16, !tbaa !28
   store double %i.ak, ptr %i.ag, align 8, !tbaa !28
   %i.al = load double, ptr %i.a, align 8, !tbaa !28
   store double %i.al, ptr %i.ah, align 8, !tbaa !28
-  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.an = load double, ptr %i.am, align 8, !tbaa !28
   store double %i.an, ptr %i.ai, align 8, !tbaa !28
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   ret void
 }
 

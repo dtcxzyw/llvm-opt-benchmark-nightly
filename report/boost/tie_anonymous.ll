@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/boost/original/tie_anonymous?download=true
-inline.NumInlined: 239
+inline.NumInlined: 240
 inline.NumDeleted: 132
 begin_hunk_0_@_ZN5boost6detail14test_with_implINS0_10lw_test_eqENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEA11_cEEbT_PKcSC_SC_iSC_RKT0_RKT1_:bb.a
   %.not.i9 = icmp eq ptr %2, null
@@ -202,19 +202,30 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 
 ; Function Attrs: mustprogress norecurse uwtable
 define hidden noundef i32 @main() local_unnamed_addr #4 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %0 = alloca %"struct.testing::(anonymous namespace)::anon", align 4 ; 6 uses
-  %1 = alloca i32, align 4                        ; 4 uses
+  %1 = alloca %"struct.testing::(anonymous namespace)::anon", align 4 ; 5 uses
   %2 = alloca i32, align 4                        ; 4 uses
   %3 = alloca %"struct.testing::(anonymous namespace)::other_anon_with_optional", align 8 ; 15 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %0) #16
-  store i32 10, ptr %0, align 4, !tbaa !11
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  store i32 20, ptr %4, align 4, !tbaa !11
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #16
-  store i32 10, ptr %1, align 4, !tbaa !12
-  %5 = call noundef zeroext i1 @_ZN5boost6detail14test_with_implINS0_10lw_test_eqEiiEEbT_PKcS5_S5_iS5_RKT0_RKT1_(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, i32 noundef 72, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN7testing12_GLOBAL__N_115test_in_anon_nsEv, ptr noundef nonnull align 4 dereferenceable(4) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #16
+  store i32 10, ptr %1, align 4, !tbaa !11
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
+  store i32 20, ptr %4, align 4, !tbaa !11
+  %5 = load atomic i8, ptr @_ZGVZN5boost6detail12test_resultsEvE8instance acquire, align 8
+  %6 = icmp eq i8 %5, 0
+  br i1 %6, label %7, label %bb.a, !prof !38
+
+7:                                                ; preds = %0
+  %8 = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost6detail12test_resultsEvE8instance) #16
+  %.not.i.i = icmp eq i32 %8, 0
+  br i1 %.not.i.i, label %bb.a, label %9
+
+9:                                                ; preds = %7
+  store i8 0, ptr @_ZZN5boost6detail12test_resultsEvE8instance, align 4, !tbaa !40
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost6detail12test_resultsEvE8instance, i64 4), align 4, !tbaa !41
+  %10 = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5boost6detail11test_resultD2Ev, ptr nonnull @_ZZN5boost6detail12test_resultsEvE8instance, ptr nonnull @__dso_handle) #16 ; 0 uses
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost6detail12test_resultsEvE8instance) #16
+  br label %bb.a
+
+bb.a:                                             ; preds = %0, %7, %9
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   store i32 20, ptr %2, align 4, !tbaa !12
   %i.a = call noundef zeroext i1 @_ZN5boost6detail14test_with_implINS0_10lw_test_eqEiiEEbT_PKcS5_S5_iS5_RKT0_RKT1_(ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.2, i32 noundef 73, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN7testing12_GLOBAL__N_115test_in_anon_nsEv, ptr noundef nonnull align 4 dereferenceable(4) %4, ptr noundef nonnull align 4 dereferenceable(4) %2) ; 0 uses
@@ -271,12 +282,12 @@ bb.d:                                             ; preds = %bb.a
           cleanup
   call fastcc void @_ZN7testing12_GLOBAL__N_124other_anon_with_optionalD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %3) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #16
   resume { ptr, i32 } %i.u
 
 _ZN7testing12_GLOBAL__N_115test_in_anon_nsEv.exit: ; preds = %_ZNSt14_Optional_baseIN7testing12_GLOBAL__N_118anon_with_optionalELb0ELb0EED2Ev.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #16
   call void @_ZN7testing18test_in_non_non_nsEv()
   %i.v = call noundef i32 @_ZN5boost13report_errorsEv()
   ret i32 %i.v

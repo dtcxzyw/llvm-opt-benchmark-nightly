@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/z3/original/dl_product_relation?download=true
-inline.NumInlined: 1630
+inline.NumInlined: 1631
 inline.NumDeleted: 739
 loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 10
@@ -205,9 +205,9 @@ bb.s:                                             ; preds = %bb.r, %bb.n
 define hidden void @_ZN7datalog16product_relationC2ERNS_23product_relation_pluginERKNS_18relation_signatureE(ptr noundef nonnull align 8 dereferenceable(48) initializes((0, 29), (32, 48)) %0, ptr noundef nonnull align 8 dereferenceable(104) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 128) (i8, ptr @_ZTVN7datalog17tr_infrastructureINS_15relation_traitsEE13base_ancestorE, i64 16), ptr %0, align 8, !tbaa !40
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr %1, ptr %i.a, align 8, !tbaa !42
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr null, ptr %i.b, align 8, !tbaa !128
   %i.c = load ptr, ptr %2, align 8, !tbaa !128    ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.c, null
@@ -250,7 +250,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN7datalog13relation_baseC2ERNS_15relation_pluginERKNS_18relation_signatureE.exit
 
 _ZN7datalog13relation_baseC2ERNS_15relation_pluginERKNS_18relation_signatureE.exit: ; preds = %bb.a, %_ZNK6vectorIP4sortLb0EjE8capacityEv.exit.i.i.i.i.i.i.i, %bb.b, %bb.c, %bb.d
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.w = load i32, ptr %i.v, align 8, !tbaa !33
   store i32 %i.w, ptr %i.u, align 8, !tbaa !106
@@ -258,17 +258,32 @@ _ZN7datalog13relation_baseC2ERNS_15relation_pluginERKNS_18relation_signatureE.ex
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i8 1, ptr %i.x, align 4, !tbaa !122
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
-  invoke void @_ZN7datalog16product_relation19ensure_correct_kindEv(ptr noundef nonnull align 8 dereferenceable(48) %0)
+  %4 = load ptr, ptr %i.a, align 8, !tbaa !99, !nonnull !95, !align !96
+  %5 = tail call ptr @__dynamic_cast(ptr nonnull %4, ptr nonnull @_ZTIN7datalog15relation_pluginE, ptr nonnull @_ZTIN7datalog23product_relation_pluginE, i64 0) #23 ; 2 uses
+  %6 = icmp eq ptr %5, null
+  br i1 %6, label %7, label %_ZNK7datalog16product_relation10get_pluginEv.exit.i
+
+7:                                                ; preds = %_ZN7datalog13relation_baseC2ERNS_15relation_pluginERKNS_18relation_signatureE.exit
+  invoke void @__cxa_bad_cast() #24
+          to label %.noexc4 unwind label %bb.f
+
+.noexc4:                                          ; preds = %7
+  unreachable
+
+_ZNK7datalog16product_relation10get_pluginEv.exit.i: ; preds = %_ZN7datalog13relation_baseC2ERNS_15relation_pluginERKNS_18relation_signatureE.exit
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %9 = invoke noundef i32 @_ZN7datalog14rel_spec_storeINS_8rel_specE12svector_hashINS_23product_relation_plugin8fid_hashEENS_14vector_eq_procIS1_EEE17get_relation_kindERKNS_18relation_signatureERKS1_(ptr noundef nonnull align 8 dereferenceable(64) %8, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %3)
           to label %bb.e unwind label %bb.f
 
-bb.e:                                             ; preds = %_ZN7datalog13relation_baseC2ERNS_15relation_pluginERKNS_18relation_signatureE.exit
+bb.e:                                             ; preds = %_ZNK7datalog16product_relation10get_pluginEv.exit.i
+  store i32 %9, ptr %i.u, align 8, !tbaa !106
   ret void
 
-bb.f:                                             ; preds = %_ZN7datalog13relation_baseC2ERNS_15relation_pluginERKNS_18relation_signatureE.exit
+bb.f:                                             ; preds = %_ZNK7datalog16product_relation10get_pluginEv.exit.i, %7
   %i.z = landingpad { ptr, i32 }
           cleanup
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @_ZN6vectorIiLb0EjED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #23
   tail call void @_ZN6vectorIPN7datalog13relation_baseELb0EjED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.y) #23
   tail call void @_ZN7datalog17tr_infrastructureINS_15relation_traitsEE13base_ancestorD2Ev(ptr noundef nonnull align 8 dead_on_return(28) dereferenceable(28) %0) #23

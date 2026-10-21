@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pingora-rs/original/pingora_core-a5e7685b4b87ec55.pingora_core.ebac96924b791bb8-cgu.14?download=true
-inline.NumInlined: 640
+inline.NumInlined: 641
 inline.NumDeleted: 223
 loop-unroll.NumCompletelyUnrolled: 43
 loop-unroll.NumRuntimeUnrolled: 1
@@ -205,18 +205,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   ret void
 }
 
-; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvYINtNtNtCsiRgJJXJ4lb7_6brotli3enc19context_map_entropy17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtNtB7_9interface16CommandProcessor25push_block_switch_literalCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef align 8 dereferenceable(920) %0, i8 noundef %1) unnamed_addr #1 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
+define hidden void @_RNvYINtNtNtCsiRgJJXJ4lb7_6brotli3enc19context_map_entropy17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtNtB7_9interface16CommandProcessor25push_block_switch_literalCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef writeonly align 8 captures(none) dereferenceable(920) initializes((912, 914)) %0, i8 noundef %1) unnamed_addr #3 {
 bb.a:
-  %2 = alloca [56 x i8], align 8                  ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %1, ptr %i.a, align 1
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 0, ptr %i.b, align 2
-  store i8 4, ptr %2, align 8
-  call void @_RNvXs_NtNtCsiRgJJXJ4lb7_6brotli3enc19context_map_entropyINtB4_17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtNtB6_9interface16CommandProcessor4pushCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(920) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 912
+  store i8 %1, ptr %i.a, align 8, !alias.scope !1936
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 913
+  store i8 0, ptr %i.b, align 1, !alias.scope !1936
   ret void
 }
 
@@ -619,4 +614,11 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !1927 = !{!1878, !1877, !1870, !1864}
 !1928 = !{!1872}
 !1929 = !{!1880}
+!1930 = distinct !{!1930, i1 true, !"_RNvXs_NtNtCsiRgJJXJ4lb7_6brotli3enc19context_map_entropyINtB4_17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtNtB6_9interface16CommandProcessor4pushCskeugdADtBsi_12pingora_core"}
+!1931 = distinct !{!1931, !1930, !"_RNvXs_NtNtCsiRgJJXJ4lb7_6brotli3enc19context_map_entropyINtB4_17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtNtB6_9interface16CommandProcessor4pushCskeugdADtBsi_12pingora_core: argument 0"}
+!1932 = distinct !{!1932, i1 true, !"_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc12ir_interpret9push_baseINtNtB4_19context_map_entropy17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core"}
+!1933 = distinct !{!1933, !1932, !"_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc12ir_interpret9push_baseINtNtB4_19context_map_entropy17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEECskeugdADtBsi_12pingora_core: argument 0"}
+!1934 = distinct !{!1934, i1 true, !"_RNvXs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19context_map_entropyINtB5_17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtNtB7_12ir_interpret13IRInterpreter17update_block_typeCskeugdADtBsi_12pingora_core"}
+!1935 = distinct !{!1935, !1934, !"_RNvXs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19context_map_entropyINtB5_17ContextMapEntropyNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtNtB7_12ir_interpret13IRInterpreter17update_block_typeCskeugdADtBsi_12pingora_core: argument 0"}
+!1936 = !{!1935, !1933, !1931}
 end_hunk_1

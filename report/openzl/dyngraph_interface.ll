@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.h = tail call ptr @ALLOC_Arena_malloc(ptr noundef %0, i64 noundef 48) #11 ; 4 uses
   %.not81.i = icmp eq ptr %i.h, null
-  br i1 %.not81.i, label %.thread.i, label %bb.e, !prof !50
+  br i1 %.not81.i, label %.thread.i, label %bb.e, !prof !87
 
 .thread.i:                                        ; preds = %bb.d
   %i.i = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @ZL_transferRuntimeGraphParams_stage2.__zl_static_error_info.90, ptr noundef nonnull %2, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.88, i32 noundef 291, i32 noundef 70, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15, ptr noundef null, ptr noundef null) #11 ; 2 uses
@@ -215,7 +215,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !86
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, ptr noundef nonnull align 8 dereferenceable(48) %i.l, i64 48, i1 false), !tbaa.struct !87
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, ptr noundef nonnull align 8 dereferenceable(48) %i.l, i64 48, i1 false), !tbaa.struct !88
   %i.m = tail call { i32, i64 } @LP_transferLocalParams(ptr noundef %0, ptr noundef nonnull %i.h) #11 ; 2 uses
   %i.n = extractvalue { i32, i64 } %i.m, 0        ; 2 uses
   %.not82.i = icmp eq i32 %i.n, 0
@@ -234,7 +234,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  %i.t = load i64, ptr %i.s, align 8, !tbaa !88   ; 3 uses
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !89   ; 3 uses
   %.not83.i = icmp eq i64 %i.t, 0
   br i1 %.not83.i, label %bb.l, label %bb.i
 
@@ -259,23 +259,23 @@ bb.j:                                             ; preds = %bb.i
   %i.aa = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @ZL_transferRuntimeGraphParams_stage2.__zl_static_error_info.98, ptr noundef nonnull %2, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.88, i32 noundef 299, i32 noundef 70, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.100, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15, ptr noundef null, ptr noundef null) #11 ; 2 uses
   %i.ab = extractvalue { i32, ptr } %i.aa, 0      ; 2 uses
   %i.ac = extractvalue { i32, ptr } %i.aa, 1
-  %i.ad = load i64, ptr %i.s, align 8, !tbaa !88
+  %i.ad = load i64, ptr %i.s, align 8, !tbaa !89
   %i.ae = shl i64 %i.ad, 2
   call void (i32, ptr, ptr, ...) @ZL_E_appendToMessage(i32 %i.ab, ptr %i.ac, ptr noundef nonnull @.str.16, i64 noundef %i.ae, ptr noundef nonnull @.str.93) #11
   br label %ZL_transferRuntimeGraphParams_stage2.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !89
-  %i.ah = load i64, ptr %i.s, align 8, !tbaa !88
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !90
+  %i.ah = load i64, ptr %i.s, align 8, !tbaa !89
   %i.ai = shl i64 %i.ah, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.z, ptr readonly align 1 %i.ag, i64 %i.ai, i1 false)
-  store ptr %i.z, ptr %i.af, align 8, !tbaa !89
+  store ptr %i.z, ptr %i.af, align 8, !tbaa !90
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.h
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 3 uses
-  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !90 ; 3 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !91 ; 3 uses
   %.not85.i = icmp eq i64 %i.ak, 0
   br i1 %.not85.i, label %ZL_transferRuntimeGraphParams_stage2.exit.thread, label %bb.m
 
@@ -300,18 +300,18 @@ bb.n:                                             ; preds = %bb.m
   %i.ar = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @ZL_transferRuntimeGraphParams_stage2.__zl_static_error_info.104, ptr noundef nonnull %2, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.88, i32 noundef 309, i32 noundef 70, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.106, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15, ptr noundef null, ptr noundef null) #11 ; 2 uses
   %i.as = extractvalue { i32, ptr } %i.ar, 0      ; 2 uses
   %i.at = extractvalue { i32, ptr } %i.ar, 1
-  %i.au = load i64, ptr %i.aj, align 8, !tbaa !90
+  %i.au = load i64, ptr %i.aj, align 8, !tbaa !91
   %i.av = shl i64 %i.au, 2
   call void (i32, ptr, ptr, ...) @ZL_E_appendToMessage(i32 %i.as, ptr %i.at, ptr noundef nonnull @.str.16, i64 noundef %i.av, ptr noundef nonnull @.str.93) #11
   br label %ZL_transferRuntimeGraphParams_stage2.exit
 
 bb.o:                                             ; preds = %bb.n
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !91
-  %i.ay = load i64, ptr %i.aj, align 8, !tbaa !90
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !92
+  %i.ay = load i64, ptr %i.aj, align 8, !tbaa !91
   %i.az = shl i64 %i.ay, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aq, ptr readonly align 1 %i.ax, i64 %i.az, i1 false)
-  store ptr %i.aq, ptr %i.aw, align 8, !tbaa !91
+  store ptr %i.aq, ptr %i.aw, align 8, !tbaa !92
   br label %ZL_transferRuntimeGraphParams_stage2.exit.thread
 
 ZL_transferRuntimeGraphParams_stage2.exit.thread: ; preds = %bb.l, %bb.o
@@ -375,7 +375,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = tail call ptr @CGRAPH_getSegmenterDesc(ptr noundef %i.j, i32 %2) #11 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 32
-  %i.p = load i8, ptr %i.o, align 8, !tbaa !94, !range !44, !noundef !45
+  %i.p = load i8, ptr %i.o, align 8, !tbaa !95, !range !44, !noundef !45
   %i.q = trunc nuw i8 %i.p to i1
   %.sroa.6.1168 = load i64, ptr %i.n, align 8, !tbaa !59 ; 2 uses
   br i1 %i.q, label %bb.e, label %bb.f
@@ -396,7 +396,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 32
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 40
-  %i.y = load i32, ptr %i.x, align 8, !tbaa !95
+  %i.y = load i32, ptr %i.x, align 8, !tbaa !96
   %.not173 = icmp eq i32 %i.y, 0
   %.sroa.6.1 = load i64, ptr %i.w, align 8, !tbaa !59 ; 2 uses
   br i1 %.not173, label %bb.f, label %bb.e
@@ -560,7 +560,7 @@ bb.u:                                             ; preds = %GenericVector_reall
   %.val108.peel = load i32, ptr %i.ap, align 8, !tbaa !28
   %i.cg = zext i32 %.val108.peel to i64
   %i.ch = getelementptr inbounds nuw i8, ptr %i.av, i64 8
-  store i64 %i.cg, ptr %i.ch, align 8, !tbaa !96
+  store i64 %i.cg, ptr %i.ch, align 8, !tbaa !97
   %exitcond.peel.not = icmp eq i64 %1, 1
   br i1 %exitcond.peel.not, label %.loopexit155, label %.peel.next
 
@@ -710,14 +710,14 @@ bb.ai:                                            ; preds = %.thread20.i, %Gener
   %.val108 = load i32, ptr %i.ap, align 8, !tbaa !28
   %i.el = zext i32 %.val108 to i64
   %i.em = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
-  store i64 %i.el, ptr %i.em, align 8, !tbaa !96
+  store i64 %i.el, ptr %i.em, align 8, !tbaa !97
   %i.en = add nuw i64 %.097152, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.en, %1
-  br i1 %exitcond.not, label %.loopexit155, label %.peel.next, !llvm.loop !92
+  br i1 %exitcond.not, label %.loopexit155, label %.peel.next, !llvm.loop !93
 
 .loopexit155:                                     ; preds = %bb.ai, %bb.u
   %i.eo = getelementptr inbounds nuw i8, ptr %i.b, i64 168
-  %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !98
+  %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !99
   %i.eq = tail call ptr @ZL_transferRuntimeGraphParams(ptr noundef %i.ep, ptr noundef %3)
   %.val = load i32, ptr %i.al, align 8, !tbaa !28
   %i.er = zext i32 %.val to i64
@@ -888,7 +888,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !34
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 128
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !99
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !100
   ret ptr %i.d
 }
 
@@ -896,7 +896,7 @@ bb.a:
 define i32 @ZL_Graph_getDepth(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !100
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !101
   ret i32 %i.b
 }
 
@@ -944,7 +944,7 @@ declare { i32, i64 } @CCTX_tryGraph(ptr noundef, ptr noundef, i64 noundef, ptr n
 define { i32, i64 } @ZL_Graph_tryGraph(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
-  store ptr %1, ptr %i.a, align 8, !tbaa !102
+  store ptr %1, ptr %i.a, align 8, !tbaa !103
   %i.b = load ptr, ptr %0, align 8, !tbaa !22
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !18
@@ -1096,20 +1096,21 @@ attributes #12 = { nounwind willreturn memory(none) }
 !84 = !{i64 0, i64 8, !60, i64 8, i64 8, !53, i64 16, i64 8, !59, i64 24, i64 8, !53, i64 32, i64 8, !59, i64 40, i64 8, !53, i64 48, i64 8, !53, i64 56, i64 8, !59, i64 64, i64 32, !51}
 !85 = !{!"ZL_GraphParameters_s", !24, i64 0, !11, i64 8, !35, i64 16, !11, i64 24, !35, i64 32, !11, i64 40, !41, i64 48}
 !86 = !{!85, !11, i64 40}
-!87 = !{i64 0, i64 8, !53, i64 8, i64 8, !59, i64 16, i64 8, !53, i64 24, i64 8, !59, i64 32, i64 8, !53, i64 40, i64 8, !59}
-!88 = !{!85, !35, i64 16}
-!89 = !{!85, !11, i64 8}
-!90 = !{!85, !35, i64 32}
-!91 = !{!85, !11, i64 24}
-!92 = distinct !{!92, !57, !97}
-!93 = !{!"", !24, i64 0, !11, i64 8, !11, i64 16, !35, i64 24, !43, i64 32, !11, i64 40, !35, i64 48, !37, i64 56, !38, i64 104, !39, i64 128, !41, i64 168}
-!94 = !{!93, !43, i64 32}
-!95 = !{!42, !8, i64 40}
-!96 = !{!54, !35, i64 8}
-!97 = !{!"llvm.loop.peeled.count", i32 1}
-!98 = !{!17, !16, i64 168}
-!99 = !{!42, !11, i64 128}
-!100 = !{!17, !8, i64 152}
-!101 = !{!"p1 _ZTS10ZL_Input_s", !11, i64 0}
-!102 = !{!101, !101, i64 0}
+!87 = !{!"branch_weights", !"expected", i32 1073204, i32 2146410444}
+!88 = !{i64 0, i64 8, !53, i64 8, i64 8, !59, i64 16, i64 8, !53, i64 24, i64 8, !59, i64 32, i64 8, !53, i64 40, i64 8, !59}
+!89 = !{!85, !35, i64 16}
+!90 = !{!85, !11, i64 8}
+!91 = !{!85, !35, i64 32}
+!92 = !{!85, !11, i64 24}
+!93 = distinct !{!93, !57, !98}
+!94 = !{!"", !24, i64 0, !11, i64 8, !11, i64 16, !35, i64 24, !43, i64 32, !11, i64 40, !35, i64 48, !37, i64 56, !38, i64 104, !39, i64 128, !41, i64 168}
+!95 = !{!94, !43, i64 32}
+!96 = !{!42, !8, i64 40}
+!97 = !{!54, !35, i64 8}
+!98 = !{!"llvm.loop.peeled.count", i32 1}
+!99 = !{!17, !16, i64 168}
+!100 = !{!42, !11, i64 128}
+!101 = !{!17, !8, i64 152}
+!102 = !{!"p1 _ZTS10ZL_Input_s", !11, i64 0}
+!103 = !{!102, !102, i64 0}
 end_hunk_0

@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = load i32, ptr %i.d, align 4, !tbaa !10   ; 2 uses
   %i.f = add i32 %i.e, 384
   %i.g = icmp ugt i32 %i.e, -385
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 8 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !11   ; 2 uses
   br i1 %i.g, label %bb.d, label %._crit_edge.i.i, !prof !8
 
@@ -334,11 +334,12 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 SHA1_Update.exit43:                               ; preds = %.thread66, %bb.o, %bb.l
   %i.ay = call i32 @SHA1_Final(ptr noundef nonnull %i.b, ptr noundef nonnull %0) ; 0 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.az, i8 0, i64 68, i1 false)
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 28
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.az, i8 0, i64 64, i1 false)
   store <4 x i32> <i32 1732584193, i32 -271733879, i32 -1732584194, i32 271733878>, ptr %0, align 4, !tbaa !14
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 -1009589776, ptr %i.ba, align 4, !tbaa !13
+  store i32 0, ptr %i.h, align 4, !tbaa !11
   store i32 384, ptr %i.d, align 4, !tbaa !10
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 48, ptr %i.l, align 4, !tbaa !12

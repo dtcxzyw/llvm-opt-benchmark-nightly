@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/redis/original/llex?download=true
-inline.NumInlined: 23
+inline.NumInlined: 24
 inline.NumDeleted: 5
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
@@ -204,16 +204,45 @@ bb.a:
   %i.b = alloca [80 x i8], align 16               ; 4 uses
   %i.c = load i32, ptr %0, align 8, !tbaa !64
   tail call fastcc void @save(ptr noundef nonnull %0, i32 noundef %i.c)
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 7 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 9 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !58   ; 4 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !62   ; 2 uses
   %i.g = add i64 %i.f, -1
   store i64 %i.g, ptr %i.e, align 8, !tbaa !62
   %.not = icmp eq i64 %i.f, 0
-  br i1 %.not, label %bb.c, label %bb.b
+  br i1 %.not, label %9, label %3
 
-bb.b:                                             ; preds = %bb.a
-  %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+3:                                                ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  %5 = load ptr, ptr %4, align 8, !tbaa !63       ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 1
+  store ptr %6, ptr %4, align 8, !tbaa !63
+  %7 = load i8, ptr %5, align 1, !tbaa !9
+  %8 = zext i8 %7 to i32
+  br label %11
+
+9:                                                ; preds = %bb.a
+  %10 = tail call i32 @luaZ_fill(ptr noundef nonnull %i.e) #5
+  br label %11
+
+11:                                               ; preds = %9, %3
+  %12 = phi i32 [ %8, %3 ], [ %10, %9 ]           ; 3 uses
+  store i32 %12, ptr %0, align 8, !tbaa !64
+  switch i32 %12, label %bb.f [
+    i32 10, label %13
+    i32 13, label %13
+  ]
+
+13:                                               ; preds = %11, %11
+  %14 = load ptr, ptr %i.d, align 8, !tbaa !58    ; 4 uses
+  %15 = load i64, ptr %14, align 8, !tbaa !62     ; 2 uses
+  %16 = add i64 %15, -1
+  store i64 %16, ptr %14, align 8, !tbaa !62
+  %.not.i = icmp eq i64 %15, 0
+  br i1 %.not.i, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %13
+  %i.h = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !63   ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1
   store ptr %i.j, ptr %i.h, align 8, !tbaa !63
@@ -221,23 +250,63 @@ bb.b:                                             ; preds = %bb.a
   %i.l = zext i8 %i.k to i32
   br label %bb.d
 
-bb.c:                                             ; preds = %bb.a
-  %i.m = tail call i32 @luaZ_fill(ptr noundef nonnull %i.e) #5
+bb.c:                                             ; preds = %13
+  %i.m = tail call i32 @luaZ_fill(ptr noundef nonnull %14) #5
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.n = phi i32 [ %i.l, %bb.b ], [ %i.m, %bb.c ] ; 2 uses
+  %i.n = phi i32 [ %i.l, %bb.b ], [ %i.m, %bb.c ] ; 3 uses
   store i32 %i.n, ptr %0, align 8, !tbaa !64
-  switch i32 %i.n, label %bb.f [
-    i32 10, label %bb.e
-    i32 13, label %bb.e
+  switch i32 %i.n, label %32 [
+    i32 10, label %17
+    i32 13, label %17
   ]
 
-bb.e:                                             ; preds = %bb.d, %bb.d
-  tail call fastcc void @inclinenumber(ptr noundef nonnull %0)
+17:                                               ; preds = %bb.d, %bb.d
+  %.not14.i = icmp eq i32 %i.n, %12
+  br i1 %.not14.i, label %32, label %18
+
+18:                                               ; preds = %17
+  %19 = load ptr, ptr %i.d, align 8, !tbaa !58    ; 4 uses
+  %20 = load i64, ptr %19, align 8, !tbaa !62     ; 2 uses
+  %21 = add i64 %20, -1
+  store i64 %21, ptr %19, align 8, !tbaa !62
+  %.not15.i = icmp eq i64 %20, 0
+  br i1 %.not15.i, label %28, label %22
+
+22:                                               ; preds = %18
+  %23 = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 2 uses
+  %24 = load ptr, ptr %23, align 8, !tbaa !63     ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 1
+  store ptr %25, ptr %23, align 8, !tbaa !63
+  %26 = load i8, ptr %24, align 1, !tbaa !9
+  %27 = zext i8 %26 to i32
+  br label %30
+
+28:                                               ; preds = %18
+  %29 = tail call i32 @luaZ_fill(ptr noundef nonnull %19) #5
+  br label %30
+
+30:                                               ; preds = %28, %22
+  %31 = phi i32 [ %27, %22 ], [ %29, %28 ]
+  store i32 %31, ptr %0, align 8, !tbaa !64
+  br label %32
+
+32:                                               ; preds = %30, %17, %bb.d
+  %33 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %34 = load i32, ptr %33, align 4, !tbaa !26     ; 2 uses
+  %35 = add nsw i32 %34, 1
+  store i32 %35, ptr %33, align 4, !tbaa !26
+  %36 = icmp sgt i32 %34, 2147483643
+  br i1 %36, label %bb.e, label %bb.f
+
+bb.e:                                             ; preds = %32
+  %37 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %38 = load i32, ptr %37, align 8, !tbaa !31
+  tail call void @luaX_lexerror(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.38, i32 noundef %38)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %bb.e
+bb.f:                                             ; preds = %bb.e, %32, %11
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 7 uses

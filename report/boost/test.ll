@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/boost/original/test?download=true
-inline.NumInlined: 1190
+inline.NumInlined: 1191
 inline.NumDeleted: 318
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -134,7 +134,6 @@ $_ZGVZN5boost6detail12test_resultsEvE8instance = comdat any
 @.str.49 = private unnamed_addr constant [83 x i8] c"st[i].source_file() != fv.source_file() || st[i].source_line() != fv.source_line()\00", align 1
 @.str.50 = private unnamed_addr constant [6 x i8] c"st[i]\00", align 1
 @.str.51 = private unnamed_addr constant [36 x i8] c"hash_value(st[i]) == hash_value(fv)\00", align 1
-@.str.52 = private unnamed_addr constant [13 x i8] c"!empty_frame\00", align 1
 @.str.53 = private unnamed_addr constant [26 x i8] c"empty_frame.source_file()\00", align 1
 @.str.54 = private unnamed_addr constant [3 x i8] c"\22\22\00", align 1
 @.str.55 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
@@ -537,8 +536,21 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge:                                      ; preds = %bb.au, %.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
   store ptr null, ptr %9, align 8, !tbaa !44
-  %12 = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.52, ptr noundef nonnull @.str.1, i32 noundef 235, ptr noundef nonnull @__PRETTY_FUNCTION__._Z10test_framev, i1 noundef zeroext true)
-          to label %bb.aw unwind label %13        ; 0 uses
+  %12 = load atomic i8, ptr @_ZGVZN5boost6detail12test_resultsEvE8instance acquire, align 8
+  %13 = icmp eq i8 %12, 0
+  br i1 %13, label %14, label %bb.aw, !prof !48
+
+14:                                               ; preds = %._crit_edge
+  %15 = call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost6detail12test_resultsEvE8instance) #26
+  %.not.i.i68 = icmp eq i32 %15, 0
+  br i1 %.not.i.i68, label %bb.aw, label %16
+
+16:                                               ; preds = %14
+  store i8 0, ptr @_ZZN5boost6detail12test_resultsEvE8instance, align 4, !tbaa !51
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost6detail12test_resultsEvE8instance, i64 4), align 4, !tbaa !52
+  %17 = call i32 @__cxa_atexit(ptr nonnull @_ZN5boost6detail11test_resultD2Ev, ptr nonnull @_ZZN5boost6detail12test_resultsEvE8instance, ptr nonnull @__dso_handle) #26 ; 0 uses
+  call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost6detail12test_resultsEvE8instance) #26
+  br label %bb.aw
 
 bb.c:                                             ; preds = %bb.a
   %i.af = landingpad { ptr, i32 }
@@ -941,7 +953,7 @@ bb.av:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   br label %.loopexit.split-lp
 
-bb.aw:                                            ; preds = %._crit_edge
+bb.aw:                                            ; preds = %16, %14, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
   invoke void @_ZNK5boost10stacktrace5frame11source_fileB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %10, ptr noundef nonnull align 8 dereferenceable(8) %9)
           to label %bb.ax unwind label %bb.bf
@@ -1033,11 +1045,6 @@ _ZN5boost10stacktrace16basic_stacktraceISaINS0_5frameEEED2Ev.exit112: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #26
   ret void
 
-13:                                               ; preds = %._crit_edge
-  %14 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bm
-
 bb.bf:                                            ; preds = %bb.aw
   %i.gz = landingpad { ptr, i32 }
           cleanup
@@ -1102,8 +1109,8 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   br label %bb.bm
 
-bb.bm:                                            ; preds = %bb.bl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115, %13
-  %.pn50.pn = phi { ptr, i32 } [ %.pn50, %bb.bl ], [ %.pn48, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118 ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115 ], [ %14, %13 ]
+bb.bm:                                            ; preds = %bb.bl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115
+  %.pn50.pn = phi { ptr, i32 } [ %.pn50, %bb.bl ], [ %.pn48, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118 ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
   br label %.loopexit.split-lp
 

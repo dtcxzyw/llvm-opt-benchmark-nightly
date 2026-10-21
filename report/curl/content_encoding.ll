@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/curl/original/content_encoding?download=true
-inline.NumInlined: 17
+inline.NumInlined: 18
 inline.NumDeleted: 4
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,26 +204,69 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16424
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16424 ; 4 uses
   store ptr %3, ptr %i.f, align 8, !tbaa !25
-  %i.g = trunc i64 %4 to i32
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16432
+  %i.g = trunc i64 %4 to i32                      ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16432 ; 2 uses
   store i32 %i.g, ptr %i.h, align 8, !tbaa !26
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !23
   %i.k = icmp eq i32 %i.j, 3
-  br i1 %i.k, label %bb.d, label %bb.e
+  br i1 %i.k, label %5, label %bb.e
 
-bb.d:                                             ; preds = %bb.c
-  %5 = tail call fastcc i32 @process_trailer(ptr noundef %0, ptr noundef nonnull %1)
+5:                                                ; preds = %bb.c
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16420 ; 2 uses
+  %7 = load i32, ptr %6, align 4, !tbaa !27       ; 4 uses
+  %..i = tail call i32 @llvm.umin.i32(i32 %i.g, i32 %7) ; 3 uses
+  %8 = sub nuw i32 %7, %..i
+  store i32 %8, ptr %6, align 4, !tbaa !27
+  %9 = sub nuw i32 %i.g, %..i
+  store i32 %9, ptr %i.h, align 8, !tbaa !26
+  %10 = zext i32 %..i to i64
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 %10
+  store ptr %11, ptr %i.f, align 8, !tbaa !25
+  %.not.not.i = icmp ult i32 %7, %i.g
+  br i1 %.not.not.i, label %process_zlib_error.exit.i.i, label %13
+
+process_zlib_error.exit.i.i:                      ; preds = %5
+  %12 = tail call i32 @inflateEnd(ptr noundef nonnull %i.f) #5 ; 0 uses
+  store i32 0, ptr %i.i, align 8, !tbaa !28
+  br label %bb.f
+
+13:                                               ; preds = %5
+  %.not23.not.i = icmp ugt i32 %7, %i.g
+  br i1 %.not23.not.i, label %bb.f, label %.split19.i
+
+.split19.i:                                       ; preds = %13
+  %14 = tail call i32 @inflateEnd(ptr noundef nonnull %i.f) #5
+  %.not.i = icmp eq i32 %14, 0
+  br i1 %.not.i, label %bb.d, label %15
+
+15:                                               ; preds = %.split19.i
+  %16 = getelementptr i8, ptr %1, i64 16472
+  %.val.i29.i = load ptr, ptr %16, align 8, !tbaa !20 ; 2 uses
+  %.not.i.i30.i = icmp eq ptr %.val.i29.i, null
+  br i1 %.not.i.i30.i, label %18, label %17
+
+17:                                               ; preds = %15
+  tail call void (ptr, ptr, ...) @Curl_failf(ptr noundef %0, ptr noundef nonnull @.str.16, ptr noundef nonnull %.val.i29.i) #5
+  br label %bb.d
+
+18:                                               ; preds = %15
+  tail call void (ptr, ptr, ...) @Curl_failf(ptr noundef %0, ptr noundef nonnull @.str.17) #5
+  br label %bb.d
+
+bb.d:                                             ; preds = %18, %17, %.split19.i
+  %.0.i27.i = phi i32 [ 0, %.split19.i ], [ 61, %17 ], [ 61, %18 ]
+  store i32 0, ptr %i.i, align 8, !tbaa !28
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
   %i.l = tail call fastcc i32 @inflate_stream(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %2, i32 noundef 2)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
-  %.0 = phi i32 [ %5, %bb.d ], [ %i.l, %bb.e ], [ %i.e, %bb.b ]
+bb.f:                                             ; preds = %13, %bb.d, %process_zlib_error.exit.i.i, %bb.e, %bb.b
+  %.0 = phi i32 [ %i.e, %bb.b ], [ %i.l, %bb.e ], [ 23, %process_zlib_error.exit.i.i ], [ %.0.i27.i, %bb.d ], [ 0, %13 ]
   ret i32 %.0
 }
 
@@ -231,7 +274,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
 define internal void @deflate_do_close(ptr noundef %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !27
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !28
   %.not.i = icmp eq i32 %i.b, 0
   br i1 %.not.i, label %exit_zlib.exit, label %bb.b
 
@@ -256,7 +299,7 @@ bb.e:                                             ; preds = %bb.c
   br label %process_zlib_error.exit.i
 
 process_zlib_error.exit.i:                        ; preds = %bb.e, %bb.d, %bb.b
-  store i32 0, ptr %i.a, align 4, !tbaa !27
+  store i32 0, ptr %i.a, align 4, !tbaa !28
   br label %exit_zlib.exit
 
 exit_zlib.exit:                                   ; preds = %bb.a, %process_zlib_error.exit.i
@@ -266,7 +309,7 @@ exit_zlib.exit:                                   ; preds = %bb.a, %process_zlib
 ; Function Attrs: nounwind uwtable
 define internal ptr @zalloc_cb(ptr nofree readnone captures(none) %0, i32 noundef %1, i32 noundef %2) #0 {
 bb.a:
-  %i.a = load ptr, ptr @Curl_ccalloc, align 8, !tbaa !28
+  %i.a = load ptr, ptr @Curl_ccalloc, align 8, !tbaa !29
   %i.b = zext i32 %1 to i64
   %i.c = zext i32 %2 to i64
   %i.d = tail call ptr %i.a(i64 noundef %i.b, i64 noundef %i.c) #5
@@ -276,7 +319,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal void @zfree_cb(ptr nofree readnone captures(none) %0, ptr noundef %1) #0 {
 bb.a:
-  %i.a = load ptr, ptr @Curl_cfree, align 8, !tbaa !28
+  %i.a = load ptr, ptr @Curl_cfree, align 8, !tbaa !29
   tail call void %i.a(ptr noundef %1) #5
   ret void
 }
@@ -292,10 +335,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16432 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !26   ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16420 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !29   ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !27   ; 4 uses
   %. = tail call i32 @llvm.umin.i32(i32 %i.c, i32 %i.e) ; 3 uses
   %i.f = sub nuw i32 %i.e, %.
-  store i32 %i.f, ptr %i.d, align 4, !tbaa !29
+  store i32 %i.f, ptr %i.d, align 4, !tbaa !27
   %i.g = sub nuw i32 %i.c, %.
   store i32 %i.g, ptr %i.b, align 8, !tbaa !26
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !25
@@ -307,13 +350,13 @@ bb.a:
 
 .split:                                           ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !27
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !28
   %.not.i = icmp eq i32 %i.l, 0
   br i1 %.not.i, label %exit_zlib.exit, label %process_zlib_error.exit.i
 
 process_zlib_error.exit.i:                        ; preds = %.split
   %i.m = tail call i32 @inflateEnd(ptr noundef nonnull %i.a) #5 ; 0 uses
-  store i32 0, ptr %i.k, align 8, !tbaa !27
+  store i32 0, ptr %i.k, align 8, !tbaa !28
   br label %exit_zlib.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -322,7 +365,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not23.not, label %bb.g, label %.split19
 
 .split19:                                         ; preds = %bb.b
-  %i.o = load i32, ptr %i.n, align 8, !tbaa !27
+  %i.o = load i32, ptr %i.n, align 8, !tbaa !28
   %.not.i24 = icmp eq i32 %i.o, 0
   br i1 %.not.i24, label %exit_zlib.exit, label %bb.c
 
@@ -347,7 +390,7 @@ bb.f:                                             ; preds = %bb.d
 
 process_zlib_error.exit.i26:                      ; preds = %bb.f, %bb.e, %bb.c
   %.0.i27 = phi i32 [ 0, %bb.c ], [ 61, %bb.e ], [ 61, %bb.f ]
-  store i32 0, ptr %i.n, align 8, !tbaa !27
+  store i32 0, ptr %i.n, align 8, !tbaa !28
   br label %exit_zlib.exit
 
 bb.g:                                             ; preds = %bb.b
@@ -397,7 +440,7 @@ bb.c:                                             ; preds = %exit_zlib.exit88
 
 bb.d:                                             ; preds = %bb.c
   tail call void (ptr, ptr, ...) @Curl_failf(ptr noundef %0, ptr noundef nonnull @.str.18) #5
-  %i.q = load i32, ptr %i.e, align 8, !tbaa !27
+  %i.q = load i32, ptr %i.e, align 8, !tbaa !28
   %.not.i86 = icmp eq i32 %i.q, 0
   br i1 %.not.i86, label %exit_zlib.exit, label %exit_zlib.exit.sink.split.sink.split
 
@@ -422,13 +465,13 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not82, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.x = load i32, ptr %i.e, align 8, !tbaa !27
+  %i.x = load i32, ptr %i.e, align 8, !tbaa !28
   %.not.i89 = icmp eq i32 %i.x, 0
   br i1 %.not.i89, label %exit_zlib.exit88.thread117, label %process_zlib_error.exit.i
 
 process_zlib_error.exit.i:                        ; preds = %bb.g
   %i.y = tail call i32 @inflateEnd(ptr noundef nonnull %i.a) #5 ; 0 uses
-  store i32 0, ptr %i.e, align 8, !tbaa !27
+  store i32 0, ptr %i.e, align 8, !tbaa !28
   br label %exit_zlib.exit88.thread117
 
 bb.h:                                             ; preds = %bb.f, %bb.e
@@ -460,7 +503,7 @@ bb.l:                                             ; preds = %bb.k
   store ptr %i.d, ptr %i.a, align 8, !tbaa !25
   store i32 %i.c, ptr %i.b, align 8, !tbaa !26
   store i32 2, ptr %i.e, align 8, !tbaa !23
-  store i32 4, ptr %i.l, align 4, !tbaa !29
+  store i32 4, ptr %i.l, align 4, !tbaa !27
   br label %exit_zlib.exit88.backedge
 
 bb.m:                                             ; preds = %bb.k
@@ -481,13 +524,13 @@ bb.o:                                             ; preds = %.loopexit
   br label %process_zlib_error.exit
 
 process_zlib_error.exit:                          ; preds = %bb.n, %bb.o
-  %i.ae = load i32, ptr %i.e, align 8, !tbaa !27
+  %i.ae = load i32, ptr %i.e, align 8, !tbaa !28
   %.not.i93 = icmp eq i32 %i.ae, 0
   br i1 %.not.i93, label %exit_zlib.exit88.thread117, label %bb.p
 
 bb.p:                                             ; preds = %process_zlib_error.exit
   %i.af = tail call i32 @inflateEnd(ptr noundef nonnull %i.a) #5 ; 0 uses
-  store i32 0, ptr %i.e, align 8, !tbaa !27
+  store i32 0, ptr %i.e, align 8, !tbaa !28
   br label %exit_zlib.exit88.thread117
 
 bb.q:                                             ; preds = %bb.h
@@ -504,13 +547,13 @@ bb.s:                                             ; preds = %bb.q
   br label %process_zlib_error.exit102
 
 process_zlib_error.exit102:                       ; preds = %bb.r, %bb.s
-  %i.ag = load i32, ptr %i.e, align 8, !tbaa !27
+  %i.ag = load i32, ptr %i.e, align 8, !tbaa !28
   %.not.i103 = icmp eq i32 %i.ag, 0
   br i1 %.not.i103, label %exit_zlib.exit88.thread117, label %bb.t
 
 bb.t:                                             ; preds = %process_zlib_error.exit102
   %i.ah = tail call i32 @inflateEnd(ptr noundef nonnull %i.a) #5 ; 0 uses
-  store i32 0, ptr %i.e, align 8, !tbaa !27
+  store i32 0, ptr %i.e, align 8, !tbaa !28
   br label %exit_zlib.exit88.thread117
 
 exit_zlib.exit88.thread117:                       ; preds = %bb.h, %bb.t, %bb.i, %bb.p, %process_zlib_error.exit102, %process_zlib_error.exit, %bb.g, %process_zlib_error.exit.i
@@ -531,7 +574,7 @@ exit_zlib.exit.sink.split.sink.split:             ; preds = %bb.d, %bb.a
 exit_zlib.exit.sink.split:                        ; preds = %exit_zlib.exit.sink.split.sink.split, %bb.u
   %.sink = phi i32 [ %3, %bb.u ], [ 0, %exit_zlib.exit.sink.split.sink.split ]
   %.274.ph = phi i32 [ %.4, %bb.u ], [ %.274.ph.ph, %exit_zlib.exit.sink.split.sink.split ]
-  store i32 %.sink, ptr %i.e, align 8, !tbaa !27
+  store i32 %.sink, ptr %i.e, align 8, !tbaa !28
   br label %exit_zlib.exit
 
 exit_zlib.exit:                                   ; preds = %exit_zlib.exit.sink.split, %bb.a, %bb.d, %exit_zlib.exit88.thread117, %bb.u
@@ -616,7 +659,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.l = tail call i32 @inflateEnd(ptr noundef nonnull %i.a) #5 ; 0 uses
-  store i32 0, ptr %i.g, align 8, !tbaa !27
+  store i32 0, ptr %i.g, align 8, !tbaa !28
   br label %exit_zlib.exit
 
 exit_zlib.exit:                                   ; preds = %bb.c, %bb.e, %bb.d, %bb.b
@@ -628,7 +671,7 @@ exit_zlib.exit:                                   ; preds = %bb.c, %bb.e, %bb.d,
 define internal void @gzip_do_close(ptr noundef %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !27
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !28
   %.not.i = icmp eq i32 %i.b, 0
   br i1 %.not.i, label %exit_zlib.exit, label %bb.b
 
@@ -653,7 +696,7 @@ bb.e:                                             ; preds = %bb.c
   br label %process_zlib_error.exit.i
 
 process_zlib_error.exit.i:                        ; preds = %bb.e, %bb.d, %bb.b
-  store i32 0, ptr %i.a, align 4, !tbaa !27
+  store i32 0, ptr %i.a, align 4, !tbaa !28
   br label %exit_zlib.exit
 
 exit_zlib.exit:                                   ; preds = %bb.a, %process_zlib_error.exit.i
@@ -1009,9 +1052,9 @@ attributes #5 = { nounwind }
 !24 = !{!21, !15, i64 8}
 !25 = !{!17, !9, i64 0}
 !26 = !{!17, !5, i64 8}
-!27 = !{!5, !5, i64 0}
-!28 = !{!8, !8, i64 0}
-!29 = !{!22, !5, i64 16420}
+!27 = !{!22, !5, i64 16420}
+!28 = !{!5, !5, i64 0}
+!29 = !{!8, !8, i64 0}
 !30 = !{!"p1 _ZTS24BrotliDecoderStateStruct", !8, i64 0}
 !31 = !{!"brotli_writer", !21, i64 0, !4, i64 32, !30, i64 16416}
 !32 = !{!31, !30, i64 16416}

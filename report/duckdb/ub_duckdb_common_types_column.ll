@@ -204,7 +204,7 @@ bb.a:
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !260  ; 2 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = sub i64 %i.h, %i.i                       ; 4 uses
+  %i.j = sub i64 %i.h, %i.i                       ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %.not230 = icmp eq ptr %i.f, %i.g
   br i1 %.not230, label %_ZNSt6vectorIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE6resizeEm.exit, label %bb.b
@@ -224,18 +224,19 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNKSt6vectorIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.b
   %i.o = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #28
-          to label %_ZNSt12_Vector_baseIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE13_M_deallocateEPS4_m.exit36.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
+          to label %_ZNSt12_Vector_baseIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE13_M_deallocateEPS4_m.exit36.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
 _ZNSt12_Vector_baseIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE13_M_deallocateEPS4_m.exit36.i: ; preds = %_ZNKSt6vectorIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE12_M_check_lenEmPKc.exit.i
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.o, i8 0, i64 %i.j, i1 false)
   store ptr %i.o, ptr %5, align 8, !tbaa !459
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.j ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.j ; 2 uses
   store ptr %i.p, ptr %i.k, align 8, !tbaa !460
-  store ptr %i.p, ptr %i.m, align 8, !tbaa !461
+  %10 = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.j
+  store ptr %10, ptr %i.m, align 8, !tbaa !461
   %i.q = ptrtoint ptr %i.p to i64
   br label %_ZNSt6vectorIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE6resizeEm.exit
 
-_ZNSt6vectorIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE6resizeEm.exit: ; preds = %bb.a, %_ZNSt12_Vector_baseIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE13_M_deallocateEPS4_m.exit36.i
+_ZNSt6vectorIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE6resizeEm.exit: ; preds = %_ZNSt12_Vector_baseIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE13_M_deallocateEPS4_m.exit36.i, %bb.a
   %i.r = phi ptr [ %i.o, %_ZNSt12_Vector_baseIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE13_M_deallocateEPS4_m.exit36.i ], [ null, %bb.a ] ; 2 uses
   %i.s = phi i64 [ %i.q, %_ZNSt12_Vector_baseIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESaIS4_EE13_M_deallocateEPS4_m.exit36.i ], [ 0, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24

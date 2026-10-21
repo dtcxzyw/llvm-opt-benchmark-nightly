@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.u) #10
   br label %lean_dec.exit63
 
-lean_dec.exit63:                                  ; preds = %lean_nat_lt.exit.thread, %bb.i, %bb.h, %bb.g
+lean_dec.exit63:                                  ; preds = %lean_nat_lt.exit.thread, %bb.g, %bb.h, %bb.i
   %i.ah = load i8, ptr @l_instInhabitedUInt8, align 1, !tbaa !24
   %i.ai = zext i8 %i.ah to i64
   %i.aj = shl nuw nsw i64 %i.ai, 1
@@ -607,7 +607,7 @@ bb.i:                                             ; preds = %bb.h
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.aa) #10
   br label %lean_dec.exit64
 
-lean_dec.exit64:                                  ; preds = %lean_nat_lt.exit.thread, %bb.i, %bb.h, %bb.g
+lean_dec.exit64:                                  ; preds = %lean_nat_lt.exit.thread, %bb.g, %bb.h, %bb.i
   %i.an = load i8, ptr @l_instInhabitedUInt8, align 1, !tbaa !24
   %i.ao = zext i8 %i.an to i64
   %i.ap = shl nuw nsw i64 %i.ao, 1
@@ -1010,12 +1010,12 @@ lean_dec.exit237:                                 ; preds = %bb.ac, %bb.ab, %bb.
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !12 ; 12 uses
   %.val = load i32, ptr %i.w, align 8, !tbaa !14
   %i.aq = icmp eq i32 %.val, 1                    ; 3 uses
-  %.pre = ptrtoint ptr %i.ap to i64
-  %.pre303 = and i64 %.pre, 1                     ; 2 uses
+  %.pre = ptrtoint ptr %i.ap to i64               ; 2 uses
   br i1 %i.aq, label %lean_dec.exit237._crit_edge, label %bb.ad
 
 bb.ad:                                            ; preds = %lean_dec.exit237
-  %.not.i179 = icmp eq i64 %.pre303, 0
+  %12 = and i64 %.pre, 1
+  %.not.i179 = icmp eq i64 %12, 0
   br i1 %.not.i179, label %bb.ae, label %lean_inc.exit180
 
 bb.ae:                                            ; preds = %bb.ad
@@ -1085,7 +1085,8 @@ lean_dec.exit237._crit_edge:                      ; preds = %lean_dec.exit237, %
   %i.bd = shl i64 %.val257, 1
   %i.be = add i64 %i.bd, -1
   %i.bf = inttoptr i64 %i.be to ptr               ; 4 uses
-  %.not = icmp eq i64 %.pre303, 0                 ; 2 uses
+  %13 = and i64 %.pre, 1
+  %.not = icmp eq i64 %13, 0                      ; 2 uses
   br i1 %.not, label %lean_nat_le.exit, label %.split358, !prof !21
 
 .split358:                                        ; preds = %lean_dec.exit237._crit_edge
@@ -1488,12 +1489,12 @@ lean_dec.exit261:                                 ; preds = %bb.w, %bb.v, %bb.u,
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !12 ; 12 uses
   %.val = load i32, ptr %i.w, align 8, !tbaa !14
   %i.aq = icmp eq i32 %.val, 1                    ; 3 uses
-  %.pre = ptrtoint ptr %i.ap to i64
-  %.pre435 = and i64 %.pre, 1                     ; 2 uses
+  %.pre = ptrtoint ptr %i.ap to i64               ; 2 uses
   br i1 %i.aq, label %lean_dec.exit261._crit_edge, label %bb.x
 
 bb.x:                                             ; preds = %lean_dec.exit261
-  %.not.i191 = icmp eq i64 %.pre435, 0
+  %9 = and i64 %.pre, 1
+  %.not.i191 = icmp eq i64 %9, 0
   br i1 %.not.i191, label %bb.y, label %lean_inc.exit192
 
 bb.y:                                             ; preds = %bb.x
@@ -1562,7 +1563,8 @@ lean_dec.exit261._crit_edge:                      ; preds = %lean_dec.exit261, %
   %i.bc = shl i64 %.val281, 1
   %i.bd = add i64 %i.bc, -1
   %i.be = inttoptr i64 %i.bd to ptr               ; 4 uses
-  %.not367 = icmp eq i64 %.pre435, 0              ; 2 uses
+  %10 = and i64 %.pre, 1
+  %.not367 = icmp eq i64 %10, 0                   ; 2 uses
   br i1 %.not367, label %lean_nat_le.exit, label %.split, !prof !21
 
 .split:                                           ; preds = %lean_dec.exit261._crit_edge

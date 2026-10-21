@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/ide_db-6375deef0079f440.ide_db.4a77f52129cf6f1d-cgu.06?download=true
-inline.NumInlined: 1559
+inline.NumInlined: 1560
 inline.NumDeleted: 650
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 8
@@ -205,8 +205,7 @@ bb.a:
   %i.m = alloca [16 x i8], align 4                ; 6 uses
   %i.n = alloca [48 x i8], align 8                ; 8 uses
   %i.o = alloca [16 x i8], align 4                ; 6 uses
-  %3 = alloca [40 x i8], align 8                  ; 5 uses
-  %i.p = alloca [80 x i8], align 8                ; 6 uses
+  %i.p = alloca [80 x i8], align 8                ; 8 uses
   %i.q = alloca [8 x i8], align 8                 ; 7 uses
   %i.r = alloca [48 x i8], align 8                ; 10 uses
   %i.s = alloca [40 x i8], align 8                ; 5 uses
@@ -391,7 +390,7 @@ _RNvMNtCsbDqbwph1Irx_7tracing4spanNtB2_4Span7entered.exit: ; preds = %.thread, %
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dh)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dg)
   %i.ec = load ptr, ptr %i.eb, align 8, !nonnull !4, !align !12, !noundef !4
-  %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 15 uses
+  %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 14 uses
   invoke void @_RNvNtCs6oosyzwIepl_6ide_db6traits18as_trait_assoc_def(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.dg, ptr noundef nonnull %i.ec, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(560) @18, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.ed)
           to label %bb.j unwind label %bb.i
 
@@ -471,9 +470,9 @@ bb.p:                                             ; preds = %_RINvNtCshzWfHUSfYa
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.ev = load ptr, ptr %i.eu, align 8, !align !12, !noundef !4 ; 3 uses
   %.sroa.212.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 3 uses
-  %.sroa.212.0.copyload = load i32, ptr %.sroa.212.0..sroa_idx, align 4 ; 5 uses
+  %.sroa.212.0.copyload = load i32, ptr %.sroa.212.0..sroa_idx, align 4 ; 6 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8 ; 5 uses
+  %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8 ; 6 uses
   %.not150 = icmp eq ptr %i.ev, null
   br i1 %.not150, label %bb.ag, label %bb.q
 
@@ -876,7 +875,10 @@ bb.ez:                                            ; preds = %bb.er
   %i.po = load i8, ptr %i.ed, align 8             ; 2 uses
   %i.pp = icmp eq i8 %i.po, 1
   %i.pq = getelementptr inbounds nuw i8, ptr %i.p, i64 32
-  %i.pr = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 36
+  %.sroa.5.0..sroa_idx7.i = getelementptr inbounds nuw i8, ptr %i.p, i64 40
+  %i.pr = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %3 = load <2 x i32>, ptr %i.pr, align 4
   %i.ps = getelementptr inbounds nuw i8, ptr %i.o, i64 4
   %i.pt = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.pu = getelementptr inbounds nuw i8, ptr %i.n, i64 4
@@ -1279,7 +1281,10 @@ bb.qa:                                            ; preds = %bb.px
   br i1 %i.ako, label %bb.qj, label %bb.qw
 
 bb.qb:                                            ; preds = %bb.px
-  br i1 %i.pp, label %bb.qk, label %bb.qw
+  %.sroa.05.0.copyload.i = load i32, ptr %i.pq, align 8
+  %4 = icmp eq i32 %.sroa.05.0.copyload.i, %.sroa.212.0.copyload
+  %or.cond884 = select i1 %i.pp, i1 %4, i1 false
+  br i1 %or.cond884, label %bb.qk, label %bb.qw
 
 bb.qc:                                            ; preds = %bb.pz
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !1741
@@ -1386,12 +1391,15 @@ bb.qj:                                            ; preds = %bb.qa
   br label %bb.qw
 
 bb.qk:                                            ; preds = %bb.qb
-  call void @llvm.lifetime.start.p0(ptr nonnull %3), !noalias !1741
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.pr, ptr noundef nonnull align 8 dereferenceable(16) %i.pq, i64 16, i1 false), !noalias !1741
-  store i8 1, ptr %3, align 8, !noalias !1741
-  %4 = call fastcc noundef zeroext i1 @_RNvXsi_NtCs6oosyzwIepl_6ide_db4defsNtB5_10DefinitionNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.ed) #38
-  call void @llvm.lifetime.end.p0(ptr nonnull %3), !noalias !1741
-  br i1 %4, label %bb.ql, label %bb.qw
+  %.sroa.46.0.copyload.i = load i32, ptr %.sroa.46.0..sroa_idx.i, align 4, !noalias !1741
+  %5 = icmp eq i32 %.sroa.46.0.copyload.i, %.sroa.3.0.copyload
+  %6 = load <2 x i32>, ptr %.sroa.5.0..sroa_idx7.i, align 8, !noalias !1741
+  %7 = icmp eq <2 x i32> %6, %3                   ; 2 uses
+  %8 = extractelement <2 x i1> %7, i64 0
+  %or.cond.i690 = select i1 %8, i1 %5, i1 false
+  %9 = extractelement <2 x i1> %7, i64 1
+  %or.cond28.i = select i1 %or.cond.i690, i1 %9, i1 false
+  br i1 %or.cond28.i, label %bb.ql, label %bb.qw
 
 bb.ql:                                            ; preds = %bb.qk
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !1741

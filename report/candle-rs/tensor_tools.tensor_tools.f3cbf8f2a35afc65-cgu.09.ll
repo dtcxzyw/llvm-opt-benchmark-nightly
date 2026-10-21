@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/tensor_tools.tensor_tools.f3cbf8f2a35afc65-cgu.09?download=true
-inline.NumInlined: 382
+inline.NumInlined: 383
 inline.NumDeleted: 214
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !558, !nonnull !6, !noundef !6
   %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !558
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.53.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.64.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -213,9 +213,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.108.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   br label %bb.c
 
-bb.c:                                             ; preds = %switch.lookup, %bb.b
-  %i.e = phi ptr [ %.promoted.i.i.i, %bb.b ], [ %i.g, %switch.lookup ] ; 3 uses
-  %.sroa.01.0.i.i.i = phi i64 [ %1, %bb.b ], [ %2, %switch.lookup ] ; 3 uses
+bb.c:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i, %bb.b
+  %i.e = phi ptr [ %.promoted.i.i.i, %bb.b ], [ %i.g, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i ] ; 3 uses
+  %.sroa.01.0.i.i.i = phi i64 [ %1, %bb.b ], [ %6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i ] ; 3 uses
   %i.f = icmp eq ptr %i.e, %i.c
   br i1 %i.f, label %_RNvXs_NvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCskVIURZGHVHJ_12tensor_tools6FormatENCNvXso_NtNtCsflt7xRw9JFr_12clap_builder7builder12value_parserINtB32_15EnumValueParserB2i_ENtB32_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit, label %switch.lookup
 
@@ -239,14 +239,33 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %switch.load, ptr %.sroa.86.0..sroa_idx.i.i.i.i, align 8, !noalias !559
   store i64 %switch.ext, ptr %.sroa.97.0..sroa_idx.i.i.i.i, align 8, !noalias !559
   store i8 0, ptr %.sroa.108.0..sroa_idx.i.i.i.i, align 8, !noalias !559
-  %2 = add i64 %.sroa.01.0.i.i.i, -1              ; 2 uses
-  call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !559
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !559
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %_RNvXs_NvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCskVIURZGHVHJ_12tensor_tools6FormatENCNvXso_NtNtCsflt7xRw9JFr_12clap_builder7builder12value_parserINtB32_15EnumValueParserB2i_ENtB32_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit, label %bb.c
+  invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCsflt7xRw9JFr_12clap_builder7builder3str3StrENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i unwind label %2, !noalias !559
 
-_RNvXs_NvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCskVIURZGHVHJ_12tensor_tools6FormatENCNvXso_NtNtCsflt7xRw9JFr_12clap_builder7builder12value_parserINtB32_15EnumValueParserB2i_ENtB32_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit: ; preds = %bb.c, %switch.lookup, %bb.a
-  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %.sroa.01.0.i.i.i, %bb.c ], [ 0, %switch.lookup ]
+2:                                                ; preds = %switch.lookup
+  %3 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecNtNtNtCsflt7xRw9JFr_12clap_builder7builder3str3StrENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %common.resume.i.i.i.i unwind label %4, !noalias !559
+
+4:                                                ; preds = %2
+  %5 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #27, !noalias !559
+  unreachable
+
+common.resume.i.i.i.i:                            ; preds = %2
+  resume { ptr, i32 } %3
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i: ; preds = %switch.lookup
+  %6 = add i64 %.sroa.01.0.i.i.i, -1              ; 2 uses
+  call void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecNtNtNtCsflt7xRw9JFr_12clap_builder7builder3str3StrENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !559
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !559
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %_RNvXs_NvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCskVIURZGHVHJ_12tensor_tools6FormatENCNvXso_NtNtCsflt7xRw9JFr_12clap_builder7builder12value_parserINtB32_15EnumValueParserB2i_ENtB32_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit, label %bb.c
+
+_RNvXs_NvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtCskVIURZGHVHJ_12tensor_tools6FormatENCNvXso_NtNtCsflt7xRw9JFr_12clap_builder7builder12value_parserINtB32_15EnumValueParserB2i_ENtB32_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2k_.exit: ; preds = %bb.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i, %bb.a
+  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %.sroa.01.0.i.i.i, %bb.c ], [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i ]
   ret i64 %.sroa.0.1.i
 }
 
@@ -270,7 +289,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !586)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !587, !nonnull !6, !noundef !6 ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.53.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.64.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -279,9 +298,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.108.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   br label %bb.c
 
-bb.c:                                             ; preds = %switch.lookup, %bb.b
-  %i.e = phi ptr [ %.pre, %bb.b ], [ %i.g, %switch.lookup ] ; 3 uses
-  %.sroa.01.0.i.i.i.i = phi i64 [ %2, %bb.b ], [ %3, %switch.lookup ] ; 2 uses
+bb.c:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i, %bb.b
+  %i.e = phi ptr [ %.pre, %bb.b ], [ %i.g, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i ] ; 3 uses
+  %.sroa.01.0.i.i.i.i = phi i64 [ %2, %bb.b ], [ %7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i ] ; 2 uses
   %i.f = icmp eq ptr %i.e, %i.c
   br i1 %i.f, label %_RNvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtCskVIURZGHVHJ_12tensor_tools6FormatENCNvXso_NtNtCsflt7xRw9JFr_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator10advance_byB1w_.exit, label %switch.lookup
 
@@ -305,19 +324,38 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %switch.load, ptr %.sroa.86.0..sroa_idx.i.i.i.i.i, align 8, !noalias !588
   store i64 %switch.ext, ptr %.sroa.97.0..sroa_idx.i.i.i.i.i, align 8, !noalias !588
   store i8 0, ptr %.sroa.108.0..sroa_idx.i.i.i.i.i, align 8, !noalias !588
-  %3 = add i64 %.sroa.01.0.i.i.i.i, -1            ; 2 uses
-  call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !588
+  invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCsflt7xRw9JFr_12clap_builder7builder3str3StrENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i unwind label %3, !noalias !588
+
+3:                                                ; preds = %switch.lookup
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecNtNtNtCsflt7xRw9JFr_12clap_builder7builder3str3StrENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %common.resume.i.i.i.i.i unwind label %5, !noalias !588
+
+5:                                                ; preds = %3
+  %6 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #27, !noalias !588
+  unreachable
+
+common.resume.i.i.i.i.i:                          ; preds = %3
+  resume { ptr, i32 } %4
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i: ; preds = %switch.lookup
+  %7 = add i64 %.sroa.01.0.i.i.i.i, -1            ; 2 uses
+  call void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecNtNtNtCsflt7xRw9JFr_12clap_builder7builder3str3StrENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCskVIURZGHVHJ_12tensor_tools(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !588
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !588
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %.loopexit, label %bb.c
+  %8 = icmp eq i64 %7, 0
+  br i1 %8, label %.loopexit, label %bb.c
 
 _RNvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtCskVIURZGHVHJ_12tensor_tools6FormatENCNvXso_NtNtCsflt7xRw9JFr_12clap_builder7builder12value_parserINtB2e_15EnumValueParserB1u_ENtB2e_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator10advance_byB1w_.exit: ; preds = %bb.c
   store i64 -1, ptr %0, align 8
   br label %_RNvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters10filter_mapINtB5_9FilterMapINtNtNtBb_5slice4iter4IterNtCskVIURZGHVHJ_12tensor_tools6FormatENCNvXso_NtNtCsflt7xRw9JFr_12clap_builder7builder12value_parserINtB2k_15EnumValueParserB1A_ENtB2k_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator4nextB1C_.exit
 
-.loopexit:                                        ; preds = %switch.lookup, %..loopexit_crit_edge
-  %i.j = phi ptr [ %.pre4, %..loopexit_crit_edge ], [ %i.c, %switch.lookup ]
-  %i.k = phi ptr [ %.pre, %..loopexit_crit_edge ], [ %i.g, %switch.lookup ] ; 3 uses
+.loopexit:                                        ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i, %..loopexit_crit_edge
+  %i.j = phi ptr [ %.pre4, %..loopexit_crit_edge ], [ %i.c, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i ]
+  %i.k = phi ptr [ %.pre, %..loopexit_crit_edge ], [ %i.g, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtCsflt7xRw9JFr_12clap_builder7builder14possible_value13PossibleValueECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !589)
   call void @llvm.experimental.noalias.scope.decl(metadata !590)
   call void @llvm.experimental.noalias.scope.decl(metadata !591)

@@ -205,8 +205,7 @@ bb.bz:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.ca:                                            ; preds = %bb.bz
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #24, !noalias !733
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %34, i8 0, i64 24, i1 false), !noalias !733
-  %40 = getelementptr inbounds nuw i8, ptr %34, i64 8 ; 4 uses
-  %i.gy = getelementptr inbounds nuw i8, ptr %34, i64 16
+  %i.gy = getelementptr inbounds nuw i8, ptr %34, i64 8 ; 4 uses
   invoke void @_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %34, ptr null, ptr noundef nonnull align 8 dereferenceable(24) %21)
           to label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !733
 
@@ -218,7 +217,11 @@ _ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader.i: ; 
   %i.hd = ptrtoint ptr %i.hb to i64
   %i.he = sub i64 %i.hc, %i.hd
   %i.hf = icmp ugt i64 %i.he, 16
-  br i1 %i.hf, label %.lr.ph.i.a, label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit._crit_edge.i
+  br i1 %i.hf, label %.lr.ph.i, label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit._crit_edge.i
+
+.lr.ph.i:                                         ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader.i
+  %40 = getelementptr inbounds nuw i8, ptr %34, i64 16
+  br label %.lr.ph.i.a
 
 _ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit._crit_edge.i: ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit132.i, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader.i
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #24, !noalias !733
@@ -230,8 +233,8 @@ bb.cb:                                            ; preds = %bb.bz
           cleanup
   br label %bb.fq
 
-.lr.ph.i.a:                                       ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader.i, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit132.i
-  %.035189.i = phi i64 [ %i.ho, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit132.i ], [ 2, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader.i ] ; 2 uses
+.lr.ph.i.a:                                       ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit132.i, %.lr.ph.i
+  %.035189.i = phi i64 [ 2, %.lr.ph.i ], [ %i.ho, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit132.i ] ; 2 uses
   %i.hh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %.035189.i)
           to label %bb.cc unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !733
 
@@ -241,8 +244,8 @@ bb.cc:                                            ; preds = %.lr.ph.i.a
 
 bb.cd:                                            ; preds = %bb.cc
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 56 ; 2 uses
-  %i.hk = load ptr, ptr %40, align 8, !tbaa !61, !noalias !733 ; 3 uses
-  %i.hl = load ptr, ptr %i.gy, align 8, !tbaa !60, !noalias !733
+  %i.hk = load ptr, ptr %i.gy, align 8, !tbaa !61, !noalias !733 ; 3 uses
+  %i.hl = load ptr, ptr %40, align 8, !tbaa !60, !noalias !733
   %.not.i129.i = icmp eq ptr %i.hk, %i.hl
   br i1 %.not.i129.i, label %bb.cf, label %bb.ce
 
@@ -251,9 +254,9 @@ bb.ce:                                            ; preds = %bb.cd
           to label %.noexc130.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !733
 
 .noexc130.i:                                      ; preds = %bb.ce
-  %i.hm = load ptr, ptr %40, align 8, !tbaa !61, !noalias !733
+  %i.hm = load ptr, ptr %i.gy, align 8, !tbaa !61, !noalias !733
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 24
-  store ptr %i.hn, ptr %40, align 8, !tbaa !61, !noalias !733
+  store ptr %i.hn, ptr %i.gy, align 8, !tbaa !61, !noalias !733
   br label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit132.i
 
 bb.cf:                                            ; preds = %bb.cd
@@ -656,7 +659,7 @@ _ZN6duckdb17AggregateFunctionD2Ev.exit.i:         ; preds = %bb.fj, %_ZN9__gnu_c
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #24, !noalias !733
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #24, !noalias !733
   %i.ss = load ptr, ptr %34, align 8, !tbaa !59, !noalias !733 ; 3 uses
-  %i.st = load ptr, ptr %40, align 8, !tbaa !61, !noalias !733 ; 2 uses
+  %i.st = load ptr, ptr %i.gy, align 8, !tbaa !61, !noalias !733 ; 2 uses
   %.not4.i.i.i.i = icmp eq ptr %i.ss, %i.st
   br i1 %.not4.i.i.i.i, label %_ZSt8_DestroyIPN6duckdb11LogicalTypeES1_EvT_S3_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i
 
@@ -1059,8 +1062,7 @@ bb.be:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.bf:                                            ; preds = %bb.be
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %29, i8 0, i64 24, i1 false)
-  %36 = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 4 uses
-  %i.fm = getelementptr inbounds nuw i8, ptr %29, i64 16
+  %i.fm = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 4 uses
   invoke void @_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %29, ptr null, ptr noundef nonnull align 8 dereferenceable(24) %20)
           to label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -1072,7 +1074,11 @@ _ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader: ; pr
   %i.fr = ptrtoint ptr %i.fp to i64
   %i.fs = sub i64 %i.fq, %i.fr
   %i.ft = icmp ugt i64 %i.fs, 16
-  br i1 %i.ft, label %.lr.ph.a, label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit._crit_edge
+  br i1 %i.ft, label %.lr.ph, label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit._crit_edge
+
+.lr.ph:                                           ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader
+  %36 = getelementptr inbounds nuw i8, ptr %29, i64 16
+  br label %.lr.ph.a
 
 _ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit._crit_edge: ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit112, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #24
@@ -1084,8 +1090,8 @@ bb.bg:                                            ; preds = %bb.be
           cleanup
   br label %bb.fd
 
-.lr.ph.a:                                         ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit112
-  %.030170 = phi i64 [ %i.gc, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit112 ], [ 2, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit.preheader ] ; 2 uses
+.lr.ph.a:                                         ; preds = %.lr.ph, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit112
+  %.030170 = phi i64 [ 2, %.lr.ph ], [ %i.gc, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit112 ] ; 2 uses
   %i.fv = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %.030170)
           to label %bb.bh unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -1095,8 +1101,8 @@ bb.bh:                                            ; preds = %.lr.ph.a
 
 bb.bi:                                            ; preds = %bb.bh
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 56 ; 2 uses
-  %i.fy = load ptr, ptr %36, align 8, !tbaa !61   ; 3 uses
-  %i.fz = load ptr, ptr %i.fm, align 8, !tbaa !60
+  %i.fy = load ptr, ptr %i.fm, align 8, !tbaa !61 ; 3 uses
+  %i.fz = load ptr, ptr %36, align 8, !tbaa !60
   %.not.i109 = icmp eq ptr %i.fy, %i.fz
   br i1 %.not.i109, label %bb.bk, label %bb.bj
 
@@ -1105,9 +1111,9 @@ bb.bj:                                            ; preds = %bb.bi
           to label %.noexc110 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc110:                                        ; preds = %bb.bj
-  %i.ga = load ptr, ptr %36, align 8, !tbaa !61
+  %i.ga = load ptr, ptr %i.fm, align 8, !tbaa !61
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ga, i64 24
-  store ptr %i.gb, ptr %36, align 8, !tbaa !61
+  store ptr %i.gb, ptr %i.fm, align 8, !tbaa !61
   br label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE9push_backERKS1_.exit112
 
 bb.bk:                                            ; preds = %bb.bi
@@ -1510,7 +1516,7 @@ _ZN6duckdb17AggregateFunctionD2Ev.exit131:        ; preds = %_ZN6duckdb17Aggrega
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #24
   %i.rm = load ptr, ptr %29, align 8, !tbaa !59   ; 3 uses
-  %i.rn = load ptr, ptr %36, align 8, !tbaa !61   ; 2 uses
+  %i.rn = load ptr, ptr %i.fm, align 8, !tbaa !61 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.rm, %i.rn
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN6duckdb11LogicalTypeES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
@@ -1913,12 +1919,12 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
   store ptr null, ptr %i.k, align 8, !tbaa !993
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 6 uses
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   invoke void @_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE17_M_realloc_insertIJRKNS0_13LogicalTypeIdEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %i.i, ptr null, ptr noundef nonnull align 1 dereferenceable(1) @_ZN6duckdb11LogicalType9USMALLINTE)
           to label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE12emplace_backIJRKNS0_13LogicalTypeIdEEEEvDpOT_.exit unwind label %bb.am
 
 _ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EE12emplace_backIJRKNS0_13LogicalTypeIdEEEEvDpOT_.exit: ; preds = %bb.c
   %.pre.a = load ptr, ptr %i.l, align 8, !tbaa !61 ; 3 uses
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %.pre99.a = load ptr, ptr %16, align 8, !tbaa !60
   %.not.i34 = icmp eq ptr %.pre.a, %.pre99.a
   br i1 %.not.i34, label %bb.e, label %bb.d

@@ -204,7 +204,7 @@ _ZN4llvm8ExpectedIRNS_3orc8JITDylibEED2Ev.exit:   ; preds = %bb.aw, %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #26
   br label %bb.ax
 
-bb.ax:                                            ; preds = %_ZN4llvm8ExpectedINS_18IntrusiveRefCntPtrINS_3orc8JITDylibEEEED2Ev.exit, %_ZN4llvm8ExpectedISt10unique_ptrINS_3orc14IRCompileLayer10IRCompilerESt14default_deleteIS4_EEED2Ev.exit, %_ZN4llvm5ErrorD2Ev.exit94, %_ZN4llvm8ExpectedIRNS_3orc8JITDylibEED2Ev.exit, %_ZN4llvm8ExpectedINS_18IntrusiveRefCntPtrINS_3orc8JITDylibEEEED2Ev.exit103
+bb.ax:                                            ; preds = %_ZN4llvm8ExpectedISt10unique_ptrINS_3orc14IRCompileLayer10IRCompilerESt14default_deleteIS4_EEED2Ev.exit, %_ZN4llvm8ExpectedINS_18IntrusiveRefCntPtrINS_3orc8JITDylibEEEED2Ev.exit, %_ZN4llvm5ErrorD2Ev.exit94, %_ZN4llvm8ExpectedIRNS_3orc8JITDylibEED2Ev.exit, %_ZN4llvm8ExpectedINS_18IntrusiveRefCntPtrINS_3orc8JITDylibEEEED2Ev.exit103
   %.pr206 = load ptr, ptr %15, align 8, !tbaa !204 ; 3 uses
   %.not.i1.i110 = icmp eq ptr %.pr206, null
   br i1 %.not.i1.i110, label %_ZN4llvm8ExpectedISt10unique_ptrINS_3orc11ObjectLayerESt14default_deleteIS3_EEED2Ev.exit, label %_ZNSt10unique_ptrIN4llvm3orc11ObjectLayerESt14default_deleteIS2_EED2Ev.exit.sink.split.i
@@ -607,7 +607,7 @@ bb.a:
   %9 = alloca %"class.llvm::Twine", align 8       ; 7 uses
   %10 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %11 = alloca %"class.llvm::IRBuilder", align 8  ; 20 uses
-  %12 = alloca %"class.std::vector.1210", align 8 ; 11 uses
+  %12 = alloca %"class.std::vector.1210", align 8 ; 12 uses
   %13 = alloca %"class.llvm::Twine", align 8      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
@@ -737,7 +737,6 @@ _ZN4llvm11GlobalValue13setVisibilityENS0_15VisibilityTypesE.exit: ; preds = %_ZN
   store i16 0, ptr %.sroa.4.0..sroa_idx.i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false)
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 4 uses
   call void @_ZNSt6vectorIPN4llvm5ValueESaIS2_EE15_M_range_insertIPKS2_EEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EET_SC_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %12, ptr null, ptr noundef %.0.val1, ptr noundef %i.a)
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ah, i64 2 ; 2 uses
   %i.bm = load i16, ptr %i.bl, align 2, !tbaa !1925 ; 2 uses
@@ -771,6 +770,7 @@ _ZN4llvm8Function4argsEv.exit:                    ; preds = %_ZN4llvm8Function9a
   br i1 %.not3417, label %._crit_edge20, label %.lr.ph19
 
 .lr.ph19:                                         ; preds = %_ZN4llvm8Function4argsEv.exit
+  %14 = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
   %.pre21 = load ptr, ptr %14, align 8, !tbaa !656
   %.pre22 = load ptr, ptr %i.bx, align 8, !tbaa !668
@@ -860,7 +860,8 @@ bb.j:                                             ; preds = %._crit_edge20
 _ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit: ; preds = %._crit_edge20, %bb.j
   %i.cz = phi ptr [ %i.cy, %bb.j ], [ null, %._crit_edge20 ]
   %i.da = load ptr, ptr %12, align 8, !tbaa !657  ; 2 uses
-  %i.db = load ptr, ptr %14, align 8, !tbaa !656
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.db = load ptr, ptr %15, align 8, !tbaa !656
   %i.dc = ptrtoint ptr %i.db to i64
   %i.dd = ptrtoint ptr %i.da to i64
   %i.de = sub i64 %i.dc, %i.dd
@@ -1263,8 +1264,8 @@ bb.d:                                             ; preds = %.lr.ph
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, i8 0, i64 24, i1 false)
   br label %_ZN4llvm3orc15SymbolLookupSetD2Ev.exit44
 
-_ZN4llvm3orc15SymbolLookupSetD2Ev.exit44:         ; preds = %bb.d, %.lr.ph
-  %.2 = phi i32 [ %i.an, %bb.d ], [ %.03349, %.lr.ph ] ; 2 uses
+_ZN4llvm3orc15SymbolLookupSetD2Ev.exit44:         ; preds = %.lr.ph, %bb.d
+  %.2 = phi i32 [ %.03349, %.lr.ph ], [ %i.an, %bb.d ] ; 2 uses
   %i.bi = add i32 %i.an, 1
   %i.bj = and i32 %i.bi, %i.y                     ; 3 uses
   %i.bk = zext i32 %i.bj to i64                   ; 2 uses

@@ -205,14 +205,13 @@ _ZNKSt3mapIN5vcpkg13StringLiteralENSt7__cxx1112basic_stringIcSt11char_traitsIcES
 ; Function Attrs: mustprogress noreturn uwtable
 define internal fastcc void @_ZN12_GLOBAL__N_130perform_find_artifact_and_exitERKN5vcpkg10VcpkgPathsENS0_8OptionalINS0_10StringViewEEES6_(ptr noundef nonnull align 8 dereferenceable(400) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return %1, ptr noundef nonnull align 8 dead_on_return %2) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::vector.84", align 8    ; 12 uses
+  %3 = alloca %"class.std::vector.84", align 8    ; 13 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %4 = alloca %"struct.vcpkg::LineInfo", align 8  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
   invoke void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRA5_KcEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr null, ptr noundef nonnull align 1 dereferenceable(5) @.str.2)
           to label %.noexc12 unwind label %bb.j
 
@@ -249,11 +248,12 @@ bb.e:                                             ; preds = %bb.c, %.noexc12
   %i.l = load i8, ptr %2, align 8, !tbaa !43, !range !44, !noundef !45
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %.pre24 = load ptr, ptr %5, align 8, !tbaa !82  ; 8 uses
+  %.pre24 = load ptr, ptr %i.c, align 8, !tbaa !82 ; 8 uses
   br i1 %i.m, label %bb.f, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRN5vcpkg10StringViewEEEERS5_DpOT_.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.o = load ptr, ptr %i.c, align 8, !tbaa !90
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.o = load ptr, ptr %5, align 8, !tbaa !90
   %.not.i13 = icmp eq ptr %.pre24, %i.o
   br i1 %.not.i13, label %bb.g, label %._crit_edge.i.i.i14
 
@@ -266,7 +266,7 @@ bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %.pre24, i64 25
   store i8 0, ptr %i.r, align 1, !tbaa !57
   %i.s = getelementptr inbounds nuw i8, ptr %.pre24, i64 32 ; 2 uses
-  store ptr %i.s, ptr %5, align 8, !tbaa !82
+  store ptr %i.s, ptr %i.c, align 8, !tbaa !82
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA10_KcEEERS5_DpOT_.exit
 
 bb.g:                                             ; preds = %bb.f
@@ -274,12 +274,12 @@ bb.g:                                             ; preds = %bb.f
           to label %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA10_KcEEERS5_DpOT_.exit_crit_edge unwind label %bb.j
 
 ._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA10_KcEEERS5_DpOT_.exit_crit_edge: ; preds = %bb.g
-  %.pre = load ptr, ptr %5, align 8, !tbaa !82
+  %.pre = load ptr, ptr %i.c, align 8, !tbaa !82
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA10_KcEEERS5_DpOT_.exit
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA10_KcEEERS5_DpOT_.exit: ; preds = %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA10_KcEEERS5_DpOT_.exit_crit_edge, %._crit_edge.i.i.i14
   %i.t = phi ptr [ %.pre, %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA10_KcEEERS5_DpOT_.exit_crit_edge ], [ %i.s, %._crit_edge.i.i.i14 ] ; 3 uses
-  %i.u = load ptr, ptr %i.c, align 8, !tbaa !90
+  %i.u = load ptr, ptr %5, align 8, !tbaa !90
   %.not.i19 = icmp eq ptr %i.t, %i.u
   br i1 %.not.i19, label %bb.i, label %bb.h
 
@@ -288,9 +288,9 @@ bb.h:                                             ; preds = %_ZNSt6vectorINSt7__
           to label %.noexc21 unwind label %bb.j
 
 .noexc21:                                         ; preds = %bb.h
-  %i.v = load ptr, ptr %5, align 8, !tbaa !82
+  %i.v = load ptr, ptr %i.c, align 8, !tbaa !82
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 32 ; 2 uses
-  store ptr %i.w, ptr %5, align 8, !tbaa !82
+  store ptr %i.w, ptr %i.c, align 8, !tbaa !82
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRN5vcpkg10StringViewEEEERS5_DpOT_.exit
 
 bb.i:                                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA10_KcEEERS5_DpOT_.exit
@@ -298,7 +298,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorINSt7__
           to label %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRN5vcpkg10StringViewEEEERS5_DpOT_.exit_crit_edge unwind label %bb.j
 
 ._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRN5vcpkg10StringViewEEEERS5_DpOT_.exit_crit_edge: ; preds = %bb.i
-  %.pre23 = load ptr, ptr %5, align 8, !tbaa !82
+  %.pre23 = load ptr, ptr %i.c, align 8, !tbaa !82
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRN5vcpkg10StringViewEEEERS5_DpOT_.exit
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.a
@@ -338,7 +338,7 @@ bb.m:                                             ; preds = %bb.k, %_ZNSt6vector
 bb.n:                                             ; preds = %bb.m, %bb.j, %bb.d
   %.pn = phi { ptr, i32 } [ %i.ah, %bb.m ], [ %i.x, %bb.j ], [ %i.k, %bb.d ]
   %i.ai = load ptr, ptr %3, align 8, !tbaa !81    ; 3 uses
-  %i.aj = load ptr, ptr %5, align 8, !tbaa !82    ; 2 uses
+  %i.aj = load ptr, ptr %i.c, align 8, !tbaa !82  ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.ai, %i.aj
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
@@ -370,7 +370,8 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
   br i1 %.not.i.i1.i, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, label %bb.o
 
 bb.o:                                             ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i
-  %i.ar = load ptr, ptr %i.c, align 8, !tbaa !90
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.ar = load ptr, ptr %6, align 8, !tbaa !90
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = ptrtoint ptr %i.aq to i64
   %i.au = sub i64 %i.as, %i.at
@@ -773,11 +774,11 @@ bb.af:                                            ; preds = %_ZNK3fmt3v127contex
   unreachable
 
 _ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit: ; preds = %bb.u, %bb.r, %bb.s, %bb.t, %bb.v
-  %.0.i = phi i64 [ %.sroa.010.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert71, %bb.u ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert68, %bb.v ], [ %i.bb, %bb.r ], [ %i.bc, %bb.s ] ; 2 uses
+  %.0.i = phi i64 [ %.sroa.010.sroa.0.sroa.0.0.insert.insert71, %bb.u ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert68, %bb.v ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %i.bb, %bb.r ], [ %i.bc, %bb.s ] ; 2 uses
   %i.bd = icmp ugt i64 %.0.i, 2147483647
   br i1 %i.bd, label %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread, label %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread42
 
-_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.u, %bb.q, %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
+_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.q, %bb.u, %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
   tail call void @_ZN3fmt3v1212report_errorEPKc(ptr noundef nonnull @.str.54) #22
   unreachable
 

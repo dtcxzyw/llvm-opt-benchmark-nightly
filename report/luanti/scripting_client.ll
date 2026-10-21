@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/scripting_client?download=true
-inline.NumInlined: 118
+inline.NumInlined: 119
 inline.NumDeleted: 56
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -135,7 +135,7 @@ $_ZTS20ScriptApiModChannels = comdat any
 @_ZN13ModifySafeMapItSt10unique_ptrI18ClientActiveObjectSt14default_deleteIS1_EEE10null_valueE = linkonce_odr dso_local global { { { ptr } } } zeroinitializer, comdat, align 8
 @_ZGVN13ModifySafeMapItSt10unique_ptrI18ClientActiveObjectSt14default_deleteIS1_EEE10null_valueE = linkonce_odr dso_local local_unnamed_addr global i64 0, comdat($_ZN13ModifySafeMapItSt10unique_ptrI18ClientActiveObjectSt14default_deleteIS1_EEE10null_valueE), align 8
 @__dso_handle = external hidden global i8
-@warningstream = external thread_local global %class.LogStream, align 8
+@warningstream = external thread_local local_unnamed_addr global %class.LogStream, align 8
 @.str.5 = private unnamed_addr constant [34 x i8] c"IO API called in client scripting\00", align 1
 @.str.6 = private unnamed_addr constant [7 x i8] c"(null)\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN13ModifySafeMapItSt10unique_ptrI18ClientActiveObjectSt14default_deleteIS1_EEE10null_valueE }]
@@ -538,7 +538,6 @@ bb.a:
 ; Function Attrs: uwtable
 define linkonce_odr dso_local noundef zeroext i1 @_ZN15ClientScripting17checkPathInternalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbPb(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i1 noundef zeroext %2, ptr noundef %3) unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = alloca ptr, align 8                        ; 4 uses
   %.not.i = icmp eq ptr @_ZTH13warningstream, null
   br i1 %.not.i, label %_ZTW13warningstream.exit, label %bb.b
 
@@ -546,34 +545,52 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZTH13warningstream()
   br label %_ZTW13warningstream.exit
 
-_ZTW13warningstream.exit:                         ; preds = %bb.a, %bb.b
+_ZTW13warningstream.exit:                         ; preds = %bb.b, %bb.a
   %i.a = tail call noundef align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @warningstream) ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !51, !nonnull !52, !align !53 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !12
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = tail call noundef zeroext i1 %i.d(ptr noundef nonnull align 8 dereferenceable(8) %i.b), !inline_history !88
   %.v.i = select i1 %i.e, i64 976, i64 984
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %.v.i ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  store ptr @.str.5, ptr %4, align 8, !tbaa !54
-  %5 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN11StreamProxy20emit_with_null_checkIPKcEERS_OT_(ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 8 dereferenceable(8) %4) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %.v.i ; 4 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !55   ; 5 uses
   %.not.i1.a = icmp eq ptr %i.g, null
-  br i1 %.not.i1.a, label %_ZN11StreamProxylsEPFRSoS0_E.exit, label %bb.c
+  br i1 %.not.i1.a, label %_ZN11StreamProxylsEPFRSoS0_E.exit, label %4
 
-bb.c:                                             ; preds = %_ZTW13warningstream.exit
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !12
+4:                                                ; preds = %_ZTW13warningstream.exit
+  %5 = load ptr, ptr %i.g, align 8, !tbaa !12
+  %6 = getelementptr i8, ptr %5, i64 -24
+  %7 = load i64, ptr %6, align 8
+  %8 = getelementptr inbounds i8, ptr %i.g, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %10 = load i32, ptr %9, align 8, !tbaa !62
+  %11 = icmp eq i32 %10, 0
+  br i1 %11, label %_ZN11StreamProxy20emit_with_null_checkIPKcEERS_OT_.exit, label %12
+
+12:                                               ; preds = %4
+  tail call void @_ZN11StreamProxy16fix_stream_stateERSo(ptr noundef nonnull align 8 dereferenceable(8) %i.g)
+  %.pre.i5.i = load ptr, ptr %i.f, align 8, !tbaa !55
+  br label %_ZN11StreamProxy20emit_with_null_checkIPKcEERS_OT_.exit
+
+_ZN11StreamProxy20emit_with_null_checkIPKcEERS_OT_.exit: ; preds = %4, %12
+  %13 = phi ptr [ %.pre.i5.i, %12 ], [ %i.g, %4 ]
+  %14 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %13, ptr noundef nonnull @.str.5, i64 noundef 33) ; 0 uses
+  %.pr = load ptr, ptr %i.f, align 8, !tbaa !55   ; 5 uses
+  %.not.i1 = icmp eq ptr %.pr, null
+  br i1 %.not.i1, label %_ZN11StreamProxylsEPFRSoS0_E.exit, label %bb.c
+
+bb.c:                                             ; preds = %_ZN11StreamProxy20emit_with_null_checkIPKcEERS_OT_.exit
+  %i.h = load ptr, ptr %.pr, align 8, !tbaa !12
   %i.i = getelementptr i8, ptr %i.h, i64 -24
   %i.j = load i64, ptr %i.i, align 8              ; 2 uses
-  %i.k = getelementptr inbounds i8, ptr %i.g, i64 %i.j
+  %i.k = getelementptr inbounds i8, ptr %.pr, i64 %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.m = load i32, ptr %i.l, align 8, !tbaa !62
   %i.n = icmp eq i32 %i.m, 0
   br i1 %i.n, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  call void @_ZN11StreamProxy16fix_stream_stateERSo(ptr noundef nonnull align 8 dereferenceable(8) %i.g)
+  tail call void @_ZN11StreamProxy16fix_stream_stateERSo(ptr noundef nonnull align 8 dereferenceable(8) %.pr)
   %.pre.i = load ptr, ptr %i.f, align 8, !tbaa !55 ; 2 uses
   %.pre = load ptr, ptr %.pre.i, align 8, !tbaa !12
   %.phi.trans.insert = getelementptr i8, ptr %.pre, i64 -24
@@ -582,7 +599,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.o = phi i64 [ %.pre2, %bb.d ], [ %i.j, %bb.c ]
-  %i.p = phi ptr [ %.pre.i, %bb.d ], [ %i.g, %bb.c ] ; 2 uses
+  %i.p = phi ptr [ %.pre.i, %bb.d ], [ %.pr, %bb.c ] ; 2 uses
   %i.q = getelementptr inbounds i8, ptr %i.p, i64 %i.o
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 240
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !68   ; 6 uses
@@ -590,7 +607,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not.i.i.i, label %bb.f, label %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i
 
 bb.f:                                             ; preds = %bb.e
-  call void @_ZSt16__throw_bad_castv() #19
+  tail call void @_ZSt16__throw_bad_castv() #19
   unreachable
 
 _ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i: ; preds = %bb.e
@@ -605,20 +622,20 @@ bb.g:                                             ; preds = %_ZSt13__check_facet
   br label %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit
 
 bb.h:                                             ; preds = %_ZSt13__check_facetISt5ctypeIcEERKT_PS3_.exit.i.i
-  call void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570) %i.s)
+  tail call void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570) %i.s)
   %i.x = load ptr, ptr %i.s, align 8, !tbaa !12
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 48
   %i.z = load ptr, ptr %i.y, align 8
-  %6 = call noundef signext i8 %i.z(ptr noundef nonnull align 8 dereferenceable(570) %i.s, i8 noundef signext 10), !inline_history !89
+  %15 = tail call noundef signext i8 %i.z(ptr noundef nonnull align 8 dereferenceable(570) %i.s, i8 noundef signext 10), !inline_history !89
   br label %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit
 
 _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.g, %bb.h
-  %.0.i.i.i = phi i8 [ %i.w, %bb.g ], [ %6, %bb.h ]
-  %7 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.p, i8 noundef signext %.0.i.i.i)
-  %8 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %7) ; 0 uses
+  %.0.i.i.i = phi i8 [ %i.w, %bb.g ], [ %15, %bb.h ]
+  %16 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.p, i8 noundef signext %.0.i.i.i)
+  %17 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %16) ; 0 uses
   br label %_ZN11StreamProxylsEPFRSoS0_E.exit
 
-_ZN11StreamProxylsEPFRSoS0_E.exit:                ; preds = %_ZTW13warningstream.exit, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit
+_ZN11StreamProxylsEPFRSoS0_E.exit:                ; preds = %_ZTW13warningstream.exit, %_ZN11StreamProxy20emit_with_null_checkIPKcEERS_OT_.exit, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit
   ret i1 false
 }
 

@@ -204,7 +204,7 @@ lean_dec_ref.exit26:                              ; preds = %bb.t, %bb.u, %bb.v
 define noalias nonnull ptr @l_Lean_Elab_withSaveParentDeclInfoContext___at___00Lean_Elab_Term_withDeclName_spec__1___redArg___lam__0(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree readnone captures(none) %2, ptr nofree readnone captures(none) %3, ptr nofree readnone captures(none) %4, ptr nofree readnone captures(none) %5) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 14 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 15 uses
   %i.c = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.d = and i64 %i.c, 1
   %.not.i.i = icmp eq i64 %i.d, 0                 ; 3 uses
@@ -242,6 +242,8 @@ bb.g:                                             ; preds = %lean_inc.exit.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   store i32 1, ptr %i.h, align 4, !tbaa !10
   store i32 65552, ptr %i.j, align 4
+  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
+  store ptr %i.b, ptr %6, align 8, !tbaa !13
   br i1 %.not.i.i, label %lean_obj_tag.exit, label %lean_obj_tag.exit.thread
 
 lean_obj_tag.exit:                                ; preds = %bb.g
@@ -370,7 +372,6 @@ bb.y:                                             ; preds = %bb.x
 
 lean_dec.exit:                                    ; preds = %lean_obj_tag.exit.thread, %bb.y, %bb.x, %bb.w, %lean_alloc_ctor.exit74, %bb.s
   %storemerge = phi ptr [ %i.ae, %lean_alloc_ctor.exit74 ], [ %.053, %bb.s ], [ inttoptr (i64 1 to ptr), %bb.y ], [ inttoptr (i64 1 to ptr), %lean_obj_tag.exit.thread ], [ inttoptr (i64 1 to ptr), %bb.w ], [ inttoptr (i64 1 to ptr), %bb.x ]
-  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store ptr %storemerge, ptr %6, align 8, !tbaa !13
   ret ptr %i.h
 }
@@ -773,7 +774,7 @@ bb.bj:                                            ; preds = %lean_alloc_ctor.exi
   tail call void @lean_internal_panic_out_of_memory() #10
   unreachable
 
-bb.bk:                                            ; preds = %.split.a, %lean_nat_lt.exit
+bb.bk:                                            ; preds = %lean_nat_lt.exit, %.split.a
   %i.dl = load i32, ptr %i.p, align 4, !tbaa !10  ; 3 uses
   %i.dm = icmp sgt i32 %i.dl, 1
   br i1 %i.dm, label %bb.bl, label %bb.bm, !prof !11
@@ -1176,7 +1177,7 @@ bb.bj:                                            ; preds = %bb.bi
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.u) #9
   br label %lean_dec_ref.exit122
 
-lean_dec_ref.exit122:                             ; preds = %bb.bf, %bb.be, %bb.bd, %bb.bb, %bb.bj, %bb.bi, %bb.bh
+lean_dec_ref.exit122:                             ; preds = %bb.bh, %bb.bi, %bb.bj, %bb.bb, %bb.bd, %bb.be, %bb.bf
   %.088 = phi ptr [ %i.u, %bb.bb ], [ %i.u, %bb.bf ], [ %i.u, %bb.be ], [ %i.u, %bb.bd ], [ inttoptr (i64 1 to ptr), %bb.bj ], [ inttoptr (i64 1 to ptr), %bb.bi ], [ inttoptr (i64 1 to ptr), %bb.bh ] ; 2 uses
   %i.ct = tail call ptr @lean_alloc_object(i64 noundef 280) #9 ; 5 uses
   store i32 1, ptr %i.ct, align 4, !tbaa !10

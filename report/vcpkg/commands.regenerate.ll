@@ -83,13 +83,12 @@ $_ZN5vcpkg15SwitchNormalizeE = comdat any
 define dso_local void @_ZN5vcpkg27command_regenerate_and_exitERKNS_17VcpkgCmdArgumentsERKNS_10VcpkgPathsE(ptr noundef nonnull align 8 dereferenceable(1752) %0, ptr noundef nonnull align 1 %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %2 = alloca %"class.std::vector", align 8       ; 13 uses
+  %2 = alloca %"class.std::vector", align 8       ; 14 uses
   %3 = alloca %"struct.vcpkg::ParsedArguments", align 8 ; 8 uses
   %4 = alloca %"struct.vcpkg::LineInfo", align 8  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
   invoke void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRA11_KcEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr null, ptr noundef nonnull align 1 dereferenceable(11) @.str.2)
           to label %.noexc9 unwind label %bb.i
 
@@ -101,8 +100,9 @@ bb.a:
 bb.b:                                             ; preds = %.noexc9
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 144
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !15   ; 3 uses
-  %i.e = load ptr, ptr %5, align 8, !tbaa !16     ; 8 uses
-  %i.f = load ptr, ptr %i.b, align 8, !tbaa !17
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !16   ; 8 uses
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.f = load ptr, ptr %5, align 8, !tbaa !17
   %.not.i10 = icmp eq ptr %i.e, %i.f
   br i1 %.not.i10, label %bb.f, label %bb.c
 
@@ -151,9 +151,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i: ; preds = 
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.p
   store i8 0, ptr %i.s, align 1, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
-  %i.t = load ptr, ptr %5, align 8, !tbaa !16
+  %i.t = load ptr, ptr %i.b, align 8, !tbaa !16
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 32
-  store ptr %i.u, ptr %5, align 8, !tbaa !16
+  store ptr %i.u, ptr %i.b, align 8, !tbaa !16
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit
 
 bb.f:                                             ; preds = %bb.b
@@ -197,8 +197,8 @@ _ZN5vcpkg4Util4Sets8containsISt3setINS_13StringLiteralESt4lessIvESaIS4_EES4_EEbR
   br i1 %i.ab, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN5vcpkg4Util4Sets8containsISt3setINS_13StringLiteralESt4lessIvESaIS4_EES4_EEbRKT_RKT0_.exit
-  %i.ac = load ptr, ptr %5, align 8, !tbaa !16    ; 7 uses
-  %i.ad = load ptr, ptr %i.b, align 8, !tbaa !17
+  %i.ac = load ptr, ptr %i.b, align 8, !tbaa !16  ; 7 uses
+  %i.ad = load ptr, ptr %5, align 8, !tbaa !17
   %.not.i15 = icmp eq ptr %i.ac, %i.ad
   br i1 %.not.i15, label %bb.h, label %._crit_edge.i.i.i16
 
@@ -211,7 +211,7 @@ bb.g:                                             ; preds = %_ZN5vcpkg4Util4Sets
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 23
   store i8 0, ptr %i.ag, align 1, !tbaa !26
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
-  store ptr %i.ah, ptr %5, align 8, !tbaa !16
+  store ptr %i.ah, ptr %i.b, align 8, !tbaa !16
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit
 
 bb.h:                                             ; preds = %bb.g
@@ -290,7 +290,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 16
   store ptr @__func__._ZN5vcpkg27command_regenerate_and_exitERKNS_17VcpkgCmdArgumentsERKNS_10VcpkgPathsE, ptr %i.at, align 8, !tbaa !41
   %i.au = load ptr, ptr %2, align 8, !tbaa !15    ; 2 uses
-  %i.av = load ptr, ptr %5, align 8, !tbaa !16
+  %i.av = load ptr, ptr %i.b, align 8, !tbaa !16
   %i.aw = ptrtoint ptr %i.av to i64
   %i.ax = ptrtoint ptr %i.au to i64
   %i.ay = sub i64 %i.aw, %i.ax
@@ -324,7 +324,7 @@ bb.t:                                             ; preds = %bb.s, %bb.j
 bb.u:                                             ; preds = %bb.t, %bb.i
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.t ], [ %i.ai, %bb.i ]
   %i.bc = load ptr, ptr %2, align 8, !tbaa !15    ; 3 uses
-  %i.bd = load ptr, ptr %5, align 8, !tbaa !16    ; 2 uses
+  %i.bd = load ptr, ptr %i.b, align 8, !tbaa !16  ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.bc, %i.bd
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
@@ -356,7 +356,8 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
   br i1 %.not.i.i1.i, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, label %bb.v
 
 bb.v:                                             ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i
-  %i.bl = load ptr, ptr %i.b, align 8, !tbaa !17
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.bl = load ptr, ptr %6, align 8, !tbaa !17
   %i.bm = ptrtoint ptr %i.bl to i64
   %i.bn = ptrtoint ptr %i.bk to i64
   %i.bo = sub i64 %i.bm, %i.bn

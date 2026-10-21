@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.am = ptrtoint ptr %i.ah to i64
   %i.an = ptrtoint ptr %i.af to i64
-  %i.ao = sub i64 %i.am, %i.an                    ; 4 uses
+  %i.ao = sub i64 %i.am, %i.an                    ; 5 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.ar = icmp ugt i64 %i.ao, 9223372036854775800
@@ -219,14 +219,15 @@ bb.g:                                             ; preds = %bb.f
 
 _ZNKSt6vectorIN3dap7integerESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.f
   %i.as = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ao) #24
-          to label %_ZNSt6vectorIN3dap7integerESaIS1_EE6resizeEm.exit unwind label %bb.k ; 4 uses
+          to label %_ZNSt6vectorIN3dap7integerESaIS1_EE6resizeEm.exit unwind label %bb.k ; 5 uses
 
 _ZNSt6vectorIN3dap7integerESaIS1_EE6resizeEm.exit: ; preds = %_ZNKSt6vectorIN3dap7integerESaIS1_EE12_M_check_lenEmPKc.exit.i
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.as, i8 0, i64 %i.ao, i1 false), !tbaa !118
   store ptr %i.as, ptr %6, align 8, !tbaa !184
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ao ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ao
   store ptr %i.at, ptr %i.ap, align 8, !tbaa !185
-  store ptr %i.at, ptr %i.aq, align 8, !tbaa !186
+  %7 = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ao
+  store ptr %7, ptr %i.aq, align 8, !tbaa !186
   %.pre = load ptr, ptr %4, align 8, !tbaa !181   ; 2 uses
   %.pre67 = load ptr, ptr %i.ag, align 8, !tbaa !181 ; 2 uses
   %.not7.i = icmp eq ptr %.pre, %.pre67

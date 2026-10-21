@@ -205,11 +205,10 @@ _ZNSt6vectorIN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEESaIS5_E
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN11OpenImageIO4v3_1L14oiio_simd_capsB5cxx11Ev(ptr dead_on_unwind noalias nonnull writable align 8 %0) unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.std::vector.14", align 8    ; 9 uses
+  %1 = alloca %"class.std::vector.14", align 8    ; 10 uses
   %2 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   invoke void @_ZNSt6vectorIN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEESaIS5_EE17_M_realloc_insertIJRA5_KcEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr null, ptr noundef nonnull align 1 dereferenceable(5) @.str.133)
           to label %.noexc unwind label %bb.d
 
@@ -226,6 +225,7 @@ bb.b:                                             ; preds = %.noexc
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEESaIS5_EED2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = load ptr, ptr %3, align 8, !tbaa !103
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.b to i64
@@ -245,7 +245,8 @@ bb.d:                                             ; preds = %bb.a, %.noexc
   br i1 %.not.i.i.i1, label %_ZNSt6vectorIN11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEEESaIS5_EED2Ev.exit2, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = load ptr, ptr %3, align 8, !tbaa !103
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.i = load ptr, ptr %4, align 8, !tbaa !103
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = ptrtoint ptr %i.h to i64
   %i.l = sub i64 %i.j, %i.k
@@ -648,7 +649,7 @@ bb.i:                                             ; preds = %._crit_edge.i33.i.i
   store i8 %i.cl, ptr %i.co, align 1, !tbaa !68
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %_ZN3fmt3v126detail17do_format_decimalIcjEEPT_S4_T0_i.exit.i.i
+bb.j:                                             ; preds = %_ZN3fmt3v126detail17do_format_decimalIcjEEPT_S4_T0_i.exit.i.i, %bb.h, %bb.i
   %.027.i.i = phi ptr [ %i.aa, %_ZN3fmt3v126detail17do_format_decimalIcjEEPT_S4_T0_i.exit.i.i ], [ %i.ad, %bb.h ], [ %i.ad, %bb.i ]
   %i.cp = call ptr @_ZN3fmt3v126detail13copy_noinlineIcPcNS0_14basic_appenderIcEEEET1_T0_S7_S6_(ptr noundef nonnull %i.a, ptr noundef %.027.i.i, ptr %0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #39
@@ -1051,7 +1052,7 @@ bb.i:                                             ; preds = %._crit_edge.i33.i.i
   store i8 %i.ce, ptr %i.ch, align 1, !tbaa !68
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %_ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i
+bb.j:                                             ; preds = %_ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i, %bb.h, %bb.i
   %.027.i.i = phi ptr [ %i.y, %_ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i ], [ %i.ab, %bb.h ], [ %i.ab, %bb.i ]
   %i.ci = call ptr @_ZN3fmt3v126detail13copy_noinlineIcPcNS0_14basic_appenderIcEEEET1_T0_S7_S6_(ptr noundef nonnull %i.a, ptr noundef %.027.i.i, ptr %0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #39
@@ -1454,11 +1455,11 @@ bb.af:                                            ; preds = %_ZNK3fmt3v127contex
   unreachable
 
 _ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit: ; preds = %bb.u, %bb.r, %bb.s, %bb.t, %bb.v
-  %.0.i = phi i64 [ %.sroa.010.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert71, %bb.u ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert68, %bb.v ], [ %i.bb, %bb.r ], [ %i.bc, %bb.s ] ; 2 uses
+  %.0.i = phi i64 [ %.sroa.010.sroa.0.sroa.0.0.insert.insert71, %bb.u ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert68, %bb.v ], [ %.sroa.010.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %i.bb, %bb.r ], [ %i.bc, %bb.s ] ; 2 uses
   %i.bd = icmp ugt i64 %.0.i, 2147483647
   br i1 %i.bd, label %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread, label %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread42
 
-_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.u, %bb.q, %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
+_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.q, %bb.u, %_ZNK3fmt3v1216basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
   tail call void @_ZN3fmt3v1212report_errorEPKc(ptr noundef nonnull @.str.125) #42
   unreachable
 

@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [25 x i8], align 16               ; 9 uses
   %i.b = alloca ptr, align 8                      ; 31 uses
   %i.c = alloca ptr, align 8                      ; 6 uses
-  %i.d = alloca [25 x i8], align 16               ; 12 uses
+  %i.d = alloca [25 x i8], align 16               ; 15 uses
   %i.e = alloca i32, align 4                      ; 4 uses
   %i.f = alloca i32, align 4                      ; 5 uses
   %i.g = alloca [25 x i8], align 16               ; 7 uses
@@ -242,6 +242,8 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %3 = ptrtoint ptr %i.d to i64
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   br label %bb.l
 
 .lr.ph:                                           ; preds = %bb.a, %bb.k
@@ -644,12 +646,7 @@ put_bits.exit31.i.i:                              ; preds = %flush_put_bits.exit
   %i.iw = shl i32 %i.is, 8
   %i.ix = or i32 %i.iu, %i.iw
   %i.iy = or i32 %i.ix, %i.iv                     ; 3 uses
-  br i1 %.not142.i.i, label %put_bits.exit60.i.i, label %put_bits.exit60.thread.i.i
-
-put_bits.exit60.i.i:                              ; preds = %put_bits.exit31.i.i
-  %3 = load i32, ptr %i.f, align 4, !tbaa !56     ; 2 uses
-  %4 = icmp sgt i32 %3, -1
-  br i1 %4, label %bb.ai, label %.lr.ph.i65.i.i
+  br i1 %.not142.i.i, label %bb.ah, label %put_bits.exit60.thread.i.i
 
 put_bits.exit60.thread.i.i:                       ; preds = %put_bits.exit31.i.i
   %i.iz = shl i32 %i.iy, 8
@@ -667,37 +664,41 @@ put_bits.exit60.thread.i.i:                       ; preds = %put_bits.exit31.i.i
   %i.jk = call i32 @llvm.smax.i32(i32 %i.jj, i32 -32768)
   %.0.i.i56.i.i = call range(i32 -32768, 32768) i32 @llvm.smin.i32(i32 %i.jk, i32 32767) ; 2 uses
   %i.jl = load i32, ptr %i.f, align 4, !tbaa !56  ; 2 uses
-  %i.jm = icmp sgt i32 %i.jl, -1
-  br i1 %i.jm, label %bb.ah, label %.lr.ph.i65.i.i
-
-bb.ah:                                            ; preds = %put_bits.exit60.thread.i.i
+  %i.jm = icmp sgt i32 %i.jl, -1                  ; 2 uses
   %5 = shl nsw i32 %.0.i.i56.i.i, 8
   %6 = or i32 %5, %i.jl
+  %.sroa.38.1.i.i = select i1 %i.jm, i32 8, i32 16
+  %.sroa.0.1.i.i = select i1 %i.jm, i32 %6, i32 %.0.i.i56.i.i
   br label %.lr.ph.i65.i.i
 
-bb.ai:                                            ; preds = %put_bits.exit60.i.i
+bb.ah:                                            ; preds = %put_bits.exit31.i.i
+  %7 = load i32, ptr %i.f, align 4, !tbaa !56     ; 2 uses
+  %8 = icmp sgt i32 %7, -1
+  br i1 %8, label %bb.ai, label %.lr.ph.i65.i.i
+
+bb.ai:                                            ; preds = %bb.ah
   %i.jn = shl i32 %i.iy, 8
-  %i.jo = or i32 %3, %i.jn
+  %i.jo = or i32 %7, %i.jn
   %i.jp = call i32 @llvm.bswap.i32(i32 %i.jo)
   store i32 %i.jp, ptr %i.d, align 16, !tbaa !20
   br label %flush_put_bits.exit66.i.i
 
-.lr.ph.i65.i.i:                                   ; preds = %bb.ah, %put_bits.exit60.thread.i.i, %put_bits.exit60.i.i
-  %.sroa.80.1.idx.ph.i.i = phi i64 [ 4, %put_bits.exit60.thread.i.i ], [ 4, %bb.ah ], [ 0, %put_bits.exit60.i.i ] ; 4 uses
-  %.sroa.40.1.ph.i.i = phi i32 [ 16, %put_bits.exit60.thread.i.i ], [ 8, %bb.ah ], [ 8, %put_bits.exit60.i.i ] ; 2 uses
-  %.sroa.0.1.ph.i.i = phi i32 [ %.0.i.i56.i.i, %put_bits.exit60.thread.i.i ], [ %6, %bb.ah ], [ %i.iy, %put_bits.exit60.i.i ]
-  %i.jq = shl i32 %.sroa.0.1.ph.i.i, %.sroa.40.1.ph.i.i ; 2 uses
-  %i.jr = lshr exact i32 %.sroa.40.1.ph.i.i, 3
-  %i.js = trunc nuw nsw i64 %.sroa.80.1.idx.ph.i.i to i32
+.lr.ph.i65.i.i:                                   ; preds = %bb.ah, %put_bits.exit60.thread.i.i
+  %.sroa.0.1131.i.i = phi i32 [ %.sroa.0.1.i.i, %put_bits.exit60.thread.i.i ], [ %i.iy, %bb.ah ]
+  %.sroa.38.1130.i.i = phi i32 [ %.sroa.38.1.i.i, %put_bits.exit60.thread.i.i ], [ 8, %bb.ah ] ; 2 uses
+  %.sroa.68.1129.idx.i.i = phi i64 [ 4, %put_bits.exit60.thread.i.i ], [ 0, %bb.ah ] ; 4 uses
+  %i.jq = shl i32 %.sroa.0.1131.i.i, %.sroa.38.1130.i.i ; 2 uses
+  %i.jr = lshr exact i32 %.sroa.38.1130.i.i, 3
+  %i.js = trunc nuw nsw i64 %.sroa.68.1129.idx.i.i to i32
   %reass.sub.i = sub nsw i32 %i.js, %i.jr
-  %i.jt = add nsw i32 %reass.sub.i, 4             ; 3 uses
-  %wide.trip.count.i.a = zext nneg i32 %i.jt to i64 ; 3 uses
+  %i.jt = add nsw i32 %reass.sub.i, 4
+  %wide.trip.count.i.a = zext nneg i32 %i.jt to i64 ; 4 uses
   %xtraiter = and i64 %wide.trip.count.i.a, 3     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %.lr.ph.i65.i.i, %.prol.preheader
-  %.sroa.80.28.idx.i.i.prol = phi i64 [ %.sroa.80.28.add.i.i.prol, %.prol.preheader ], [ %.sroa.80.1.idx.ph.i.i, %.lr.ph.i65.i.i ] ; 2 uses
+  %.sroa.80.28.idx.i.i.prol = phi i64 [ %.sroa.80.28.add.i.i.prol, %.prol.preheader ], [ %.sroa.68.1129.idx.i.i, %.lr.ph.i65.i.i ] ; 2 uses
   %.sroa.0.3.i.i.prol = phi i32 [ %i.jw, %.prol.preheader ], [ %i.jq, %.lr.ph.i65.i.i ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph.i65.i.i ]
   %.sroa.80.28.ptr.i.i.prol = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.80.28.idx.i.i.prol
@@ -711,11 +712,11 @@ bb.ai:                                            ; preds = %put_bits.exit60.i.i
   br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !158
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph.i65.i.i
-  %.sroa.80.28.idx.i.i.unr = phi i64 [ %.sroa.80.1.idx.ph.i.i, %.lr.ph.i65.i.i ], [ %.sroa.80.28.add.i.i.prol, %.prol.preheader ]
+  %.sroa.80.28.idx.i.i.unr = phi i64 [ %.sroa.68.1129.idx.i.i, %.lr.ph.i65.i.i ], [ %.sroa.80.28.add.i.i.prol, %.prol.preheader ]
   %.sroa.0.3.i.i.unr = phi i32 [ %i.jq, %.lr.ph.i65.i.i ], [ %i.jw, %.prol.preheader ]
-  %i.jx = sub nsw i64 %.sroa.80.1.idx.ph.i.i, %wide.trip.count.i.a
+  %i.jx = sub nsw i64 %.sroa.68.1129.idx.i.i, %wide.trip.count.i.a
   %i.jy = icmp ugt i64 %i.jx, -4
-  br i1 %i.jy, label %flush_put_bits.exit66.i.i, label %.lr.ph.i65.i.i.new
+  br i1 %i.jy, label %flush_put_bits.exit50.loopexit.i.i, label %.lr.ph.i65.i.i.new
 
 .lr.ph.i65.i.i.new:                               ; preds = %.prol.loopexit, %.lr.ph.i65.i.i.new
   %.sroa.80.28.idx.i.i = phi i64 [ %.sroa.80.28.add.i.i.3, %.lr.ph.i65.i.i.new ], [ %.sroa.80.28.idx.i.i.unr, %.prol.loopexit ] ; 5 uses
@@ -740,11 +741,18 @@ bb.ai:                                            ; preds = %put_bits.exit60.i.i
   %.sroa.80.28.add.i.i.3 = add nuw nsw i64 %.sroa.80.28.idx.i.i, 4 ; 2 uses
   store i8 %i.ki, ptr %.sroa.80.28.ptr.i.i.3, align 1, !tbaa !20
   %exitcond.not.i.3 = icmp eq i64 %.sroa.80.28.add.i.i.3, %wide.trip.count.i.a
-  br i1 %exitcond.not.i.3, label %flush_put_bits.exit66.i.i, label %.lr.ph.i65.i.i.new, !llvm.loop !159
+  br i1 %exitcond.not.i.3, label %flush_put_bits.exit50.loopexit.i.i, label %.lr.ph.i65.i.i.new, !llvm.loop !159
 
-flush_put_bits.exit66.i.i:                        ; preds = %.prol.loopexit, %.lr.ph.i65.i.i.new, %bb.ai
-  %.sroa.80.1.idx.pn.i.i = phi i32 [ 4, %bb.ai ], [ %i.jt, %.lr.ph.i65.i.i.new ], [ %i.jt, %.prol.loopexit ]
-  call void @avio_write(ptr noundef %i.hv, ptr noundef nonnull %i.d, i32 noundef %.sroa.80.1.idx.pn.i.i) #10
+flush_put_bits.exit50.loopexit.i.i:               ; preds = %.lr.ph.i65.i.i.new, %.prol.loopexit
+  %.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %wide.trip.count.i.a
+  br label %flush_put_bits.exit66.i.i
+
+flush_put_bits.exit66.i.i:                        ; preds = %flush_put_bits.exit50.loopexit.i.i, %bb.ai
+  %.sroa.68.12.i.i = phi ptr [ %4, %bb.ai ], [ %.ptr.i.i, %flush_put_bits.exit50.loopexit.i.i ]
+  %9 = ptrtoint ptr %.sroa.68.12.i.i to i64
+  %10 = sub i64 %9, %3
+  %11 = trunc i64 %10 to i32
+  call void @avio_write(ptr noundef %i.hv, ptr noundef nonnull %i.d, i32 noundef %11) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
   %indvars.iv.next.i124.i = add nuw nsw i64 %indvars.iv.i122.i, 1 ; 2 uses

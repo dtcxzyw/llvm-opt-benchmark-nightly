@@ -204,7 +204,7 @@ define linkonce_odr hidden { i64, i8 } @_ZN4llvm9dwarfutil17ObjFileAddressMap31g
 bb.a:
   %6 = alloca %"class.std::optional.273", align 8 ; 6 uses
   %i.a = load i8, ptr %2, align 8, !tbaa !487
-  switch i8 %i.a, label %bb.f [
+  switch i8 %i.a, label %7 [
     i8 10, label %bb.b
     i8 12, label %bb.b
     i8 14, label %bb.b
@@ -229,9 +229,7 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 34
   %i.l = load i8, ptr %i.k, align 2, !tbaa !242
   %i.m = tail call noundef zeroext i1 @_ZN4llvm9dwarfutil17ObjFileAddressMap18isDeadAddressRangeEmSt8optionalImEtNS0_13TombstoneKindEh(ptr noundef nonnull align 8 dereferenceable(81) %0, i64 noundef %i.d, i64 undef, i8 0, i16 noundef zeroext %i.f, i32 noundef %i.j, i8 noundef zeroext %i.l)
-  %not. = xor i1 %i.m, true
-  %spec.select = zext i1 %not. to i8
-  br label %bb.f
+  br i1 %i.m, label %7, label %bb.f
 
 bb.c:                                             ; preds = %bb.a, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
@@ -260,14 +258,17 @@ bb.d:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
-  br label %bb.f
+  br label %7
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.b, %bb.a, %.thread, %bb.e
-  %.sroa.3.1 = phi i8 [ %spec.select, %bb.b ], [ 1, %bb.e ], [ 0, %.thread ], [ 0, %bb.a ]
+7:                                                ; preds = %.thread, %bb.b, %bb.a
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %bb.b, %7
+  %.sroa.3.1 = phi i8 [ 0, %7 ], [ 1, %bb.e ], [ 1, %bb.b ]
   %.fca.1.insert = insertvalue { i64, i8 } { i64 0, i8 poison }, i8 %.sroa.3.1, 1
   ret { i64, i8 } %.fca.1.insert
 }

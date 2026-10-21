@@ -202,7 +202,7 @@ define internal fastcc void @_ZN12_GLOBAL__N_114graphml_reader10get_graphsERKN5b
   br i1 %.not157, label %.critedge, label %.preheader112.lr.ph
 
 .preheader112.lr.ph:                              ; preds = %.split153
-  %i.j = icmp eq i64 %2, -1                       ; 2 uses
+  %i.j = icmp eq i64 %2, -1                       ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
@@ -224,7 +224,7 @@ define internal fastcc void @_ZN12_GLOBAL__N_114graphml_reader10get_graphsERKN5b
   %.048155 = phi i64 [ 0, %.preheader112.lr.ph ], [ %.us-phi151, %.loopexit ] ; 4 uses
   %.sroa.095.0154 = phi ptr [ %i.i, %.preheader112.lr.ph ], [ %i.ed, %.loopexit ] ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.095.0154, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.095.0154, i64 32 ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.095.0154, i64 32 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.095.0154, i64 64
   %i.ab = load i64, ptr %i.y, align 8, !tbaa !53
   %i.ac = icmp eq i64 %i.ab, 5
@@ -325,7 +325,7 @@ bb.g:                                             ; preds = %_ZNSt6vectorIPKN5bo
   %i.br = getelementptr inbounds i8, ptr %i.bp, i64 -96
   %i.bs = select i1 %i.bq, ptr null, ptr %i.br    ; 2 uses
   %i.bt = icmp eq ptr %i.bs, %i.bn
-  br i1 %i.bt, label %.critedge3.a, label %.preheader
+  br i1 %i.bt, label %.critedge3, label %.preheader
 
 .preheader:                                       ; preds = %bb.g, %.split.us
   %.sroa.085.0147 = phi ptr [ %i.dw, %.split.us ], [ %i.bs, %bb.g ] ; 4 uses
@@ -508,14 +508,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit81: ; preds = %_ZN
   %i.dv = getelementptr inbounds i8, ptr %i.dt, i64 -96
   %i.dw = select i1 %i.du, ptr null, ptr %i.dv    ; 2 uses
   %i.dx = icmp eq ptr %i.dw, %i.bn
-  br i1 %i.dx, label %.critedge3.a, label %.preheader, !llvm.loop !399
+  br i1 %i.dx, label %.critedge3, label %.preheader, !llvm.loop !399
 
-.critedge3.a:                                     ; preds = %.split.us, %bb.g, %_ZNSt6vectorIPKN5boost13property_tree11basic_ptreeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_St4lessIS8_EEESaISD_EE9push_backEOSD_.exit
+.critedge3:                                       ; preds = %.split.us, %bb.g
   call fastcc void @_ZN12_GLOBAL__N_114graphml_reader10get_graphsERKN5boost13property_tree11basic_ptreeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4lessIS9_EEEmbRSt6vectorIPSD_SaISG_EE(ptr noundef nonnull align 8 dereferenceable(272) %0, ptr noundef nonnull align 8 dereferenceable(40) %i.z, i64 noundef -1, i1 noundef zeroext false, ptr noundef nonnull align 8 dereferenceable(24) %4)
   br i1 %i.j, label %bb.m, label %.critedge
 
-bb.m:                                             ; preds = %.critedge3.a, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %.347 = phi i1 [ false, %.critedge3.a ], [ %.044156, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ]
+.critedge3.a:                                     ; preds = %_ZNSt6vectorIPKN5boost13property_tree11basic_ptreeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_St4lessIS8_EEESaISD_EE9push_backEOSD_.exit
+  call fastcc void @_ZN12_GLOBAL__N_114graphml_reader10get_graphsERKN5boost13property_tree11basic_ptreeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4lessIS9_EEEmbRSt6vectorIPSD_SaISG_EE(ptr noundef nonnull align 8 dereferenceable(272) %0, ptr noundef nonnull align 8 dereferenceable(40) %i.z, i64 noundef -1, i1 noundef zeroext false, ptr noundef nonnull align 8 dereferenceable(24) %4)
+  br i1 %i.j, label %bb.m, label %.critedge
+
+bb.m:                                             ; preds = %.critedge3.a, %.critedge3, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %.347 = phi i1 [ false, %.critedge3 ], [ %.044156, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ false, %.critedge3.a ]
   %i.dy = add i64 %.048155, 1
   br label %.loopexit
 
@@ -530,7 +534,7 @@ bb.m:                                             ; preds = %.critedge3.a, %_ZSt
   %.not186 = icmp eq ptr %i.ed, %i.d
   br i1 %.not186, label %.critedge, label %.preheader112, !llvm.loop !400
 
-.critedge:                                        ; preds = %.critedge3.a, %.loopexit, %.split153
+.critedge:                                        ; preds = %.critedge3, %.critedge3.a, %.loopexit, %.split153
   ret void
 }
 
@@ -933,7 +937,7 @@ bb.n:                                             ; preds = %bb.m
   store ptr %i.ad, ptr %i.ar, align 8, !tbaa !61
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.j
+bb.o:                                             ; preds = %bb.j, %bb.k, %bb.l, %bb.m, %bb.n
   %i.au = ptrtoint ptr %i.t to i64
   %i.av = load i64, ptr %i.ad, align 8, !tbaa !59
   %i.aw = and i64 %i.av, 1

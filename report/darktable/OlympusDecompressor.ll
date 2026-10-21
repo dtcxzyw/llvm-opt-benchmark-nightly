@@ -204,7 +204,7 @@ _ZN8rawspeed8RawImageC2ERKS0_.exit:               ; preds = %bb.a, %bb.c, %bb.d
   store ptr null, ptr %i.b, align 8, !tbaa !16
   store ptr %i.j, ptr %i.l, align 8, !tbaa !16
   store ptr null, ptr %3, align 8, !tbaa !19
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, i8 0, i64 24, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
@@ -218,11 +218,15 @@ _ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i: ; preds = %_ZN8rawspe
   store ptr %i.q, ptr %i.n, align 8, !tbaa !108
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i
-  %.val.val.i.i.i = phi ptr [ %i.p, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i ], [ %.val5, %_ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i ] ; 6 uses
-  %i.r = phi ptr [ %i.q, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i ], [ %i.am, %_ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i ] ; 4 uses
-  %.val.val3.i.i.i = phi ptr [ %i.p, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i ], [ %i.an, %_ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i ] ; 3 uses
-  %.06.i.i.i = phi i32 [ 4096, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i ], [ %i.ao, %_ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i ]
+thread-pre-split.i.i:                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i
+  %.val.val.i.pr.i.i = load ptr, ptr %i.m, align 8, !tbaa !107
+  br label %bb.e
+
+bb.e:                                             ; preds = %thread-pre-split.i.i, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i
+  %.val.val.i.i.i = phi ptr [ %.val.val.i.pr.i.i, %thread-pre-split.i.i ], [ %i.p, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i ] ; 6 uses
+  %i.r = phi ptr [ %i.am, %thread-pre-split.i.i ], [ %i.q, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i ] ; 4 uses
+  %.val.val3.i.i.i = phi ptr [ %i.an, %thread-pre-split.i.i ], [ %i.p, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i ] ; 3 uses
+  %.06.i.i.i = phi i32 [ %i.ao, %thread-pre-split.i.i ], [ 4096, %_ZNSt12_Vector_baseIaSaIaEE13_M_deallocateEPam.exit.i.i.i ]
   %i.s = ptrtoint ptr %.val.val3.i.i.i to i64
   %i.t = ptrtoint ptr %.val.val.i.i.i to i64      ; 2 uses
   %i.u = sub i64 %i.s, %i.t
@@ -238,7 +242,6 @@ bb.f:                                             ; preds = %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 2 uses
   store ptr %i.z, ptr %i.o, align 8, !tbaa !122
   %.pre7.i.i.i = load ptr, ptr %i.n, align 8, !tbaa !108
-  %.val.val.i.pre.i.i = load ptr, ptr %i.m, align 8, !tbaa !107
   br label %_ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.e
@@ -263,7 +266,7 @@ _ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i: ; preds = %bb.g
   %.not.i.i.i.i.i.i.i.i = icmp ne i64 %i.ag, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i.i.i.i)
   %i.ah = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #21
-          to label %.noexc5.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit ; 5 uses
+          to label %.noexc5.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit ; 4 uses
 
 .noexc5.i.i:                                      ; preds = %_ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ab ; 2 uses
@@ -292,12 +295,11 @@ _ZNSt6vectorIaSaIaEE17_M_realloc_insertIJaEEEvN9__gnu_cxx17__normal_iteratorIPaS
   br label %_ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i
 
 _ZNSt20back_insert_iteratorISt6vectorIaSaIaEEEaSEOa.exit.i.i.i: ; preds = %_ZNSt6vectorIaSaIaEE17_M_realloc_insertIJaEEEvN9__gnu_cxx17__normal_iteratorIPaS1_EEDpOT_.exit.i.i.i.i.i.i, %bb.f
-  %.val5 = phi ptr [ %.val.val.i.pre.i.i, %bb.f ], [ %i.ah, %_ZNSt6vectorIaSaIaEE17_M_realloc_insertIJaEEEvN9__gnu_cxx17__normal_iteratorIPaS1_EEDpOT_.exit.i.i.i.i.i.i ] ; 7 uses
   %i.am = phi ptr [ %.pre7.i.i.i, %bb.f ], [ %i.al, %_ZNSt6vectorIaSaIaEE17_M_realloc_insertIJaEEEvN9__gnu_cxx17__normal_iteratorIPaS1_EEDpOT_.exit.i.i.i.i.i.i ] ; 2 uses
   %i.an = phi ptr [ %i.z, %bb.f ], [ %i.ak, %_ZNSt6vectorIaSaIaEE17_M_realloc_insertIJaEEEvN9__gnu_cxx17__normal_iteratorIPaS1_EEDpOT_.exit.i.i.i.i.i.i ]
   %i.ao = add nsw i32 %.06.i.i.i, -1              ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.ao, 0
-  br i1 %.not.i.i.i, label %_ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImplC2ENS_8RawImageE.exit, label %bb.e, !llvm.loop !114
+  br i1 %.not.i.i.i, label %_ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImplC2ENS_8RawImageE.exit, label %thread-pre-split.i.i, !llvm.loop !114
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit: ; preds = %_ZNKSt6vectorIaSaIaEE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -335,8 +337,9 @@ _ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImplC2ENS_8RawImageE.exit: ; pred
   %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 8 ; 3 uses
   %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.416.0.copyload = load i32, ptr %.sroa.416.0..sroa_idx, align 8 ; 3 uses
-  %.val.a = load ptr, ptr %2, align 8, !tbaa !19  ; 6 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %.val.a, i64 44
+  %.val = load ptr, ptr %2, align 8, !tbaa !19    ; 6 uses
+  %.val.a = load ptr, ptr %i.m, align 8           ; 6 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %.val, i64 44
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !124 ; 2 uses
   %i.ay = icmp sgt i32 %i.ax, 0
   tail call void @llvm.assume(i1 %i.ay)
@@ -351,15 +354,15 @@ _ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImplC2ENS_8RawImageE.exit: ; pred
   br i1 %i.be, label %.invoke, label %_ZN8rawspeed14BitStreamerMSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.i
 
 _ZN8rawspeed14BitStreamerMSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.i: ; preds = %_ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImplC2ENS_8RawImageE.exit
-  %i.bf = getelementptr inbounds nuw i8, ptr %.val.a, i64 568
-  %i.bg = getelementptr inbounds nuw i8, ptr %.val.a, i64 592
+  %i.bf = getelementptr inbounds nuw i8, ptr %.val, i64 568
+  %i.bg = getelementptr inbounds nuw i8, ptr %.val, i64 592
   %i.bh = load i32, ptr %i.bg, align 8, !tbaa !90, !noalias !125
-  %i.bi = getelementptr inbounds nuw i8, ptr %.val.a, i64 608
+  %i.bi = getelementptr inbounds nuw i8, ptr %.val, i64 608
   %i.bj = load i32, ptr %i.bi, align 8, !tbaa !126, !noalias !125
   %i.bk = mul nsw i32 %i.bj, %i.bh                ; 6 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %.val.a, i64 612
+  %i.bl = getelementptr inbounds nuw i8, ptr %.val, i64 612
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !127, !noalias !125
-  %i.bn = getelementptr inbounds nuw i8, ptr %.val.a, i64 48
+  %i.bn = getelementptr inbounds nuw i8, ptr %.val, i64 48
   %i.bo = load i32, ptr %i.bn, align 8, !tbaa !128, !noalias !125
   %i.bp = ashr i32 %i.bo, 1                       ; 3 uses
   %i.bq = icmp sge i32 %i.bp, %i.bk
@@ -452,7 +455,7 @@ _ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialR
   %i.dh = lshr i32 %i.dg, 14
   %i.di = sub nsw i32 0, %i.dh
   %i.dj = and i64 %i.df, 4095
-  %i.dk = getelementptr inbounds nuw i8, ptr %.val5, i64 %i.dj
+  %i.dk = getelementptr inbounds nuw i8, ptr %.val.a, i64 %i.dj
   %i.dl = load i8, ptr %i.dk, align 1, !tbaa !103 ; 3 uses
   %.not.i13.i.i = icmp eq i8 %i.dl, 12
   br i1 %.not.i13.i.i, label %bb.r, label %bb.q, !prof !105
@@ -564,7 +567,7 @@ _ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialR
   %i.fj = lshr i32 %i.fi, 14
   %i.fk = sub nsw i32 0, %i.fj
   %i.fl = and i64 %i.fh, 4095
-  %i.fm = getelementptr inbounds nuw i8, ptr %.val5, i64 %i.fl
+  %i.fm = getelementptr inbounds nuw i8, ptr %.val.a, i64 %i.fl
   %i.fn = load i8, ptr %i.fm, align 1, !tbaa !103 ; 3 uses
   %.not.i13.1.i.i = icmp eq i8 %i.fn, 12
   br i1 %.not.i13.1.i.i, label %bb.y, label %bb.x, !prof !105
@@ -711,7 +714,7 @@ _ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialR
   %i.hx = lshr i32 %i.hw, 14
   %i.hy = sub nsw i32 0, %i.hx
   %i.hz = and i64 %i.hv, 4095
-  %i.ia = getelementptr inbounds nuw i8, ptr %.val5, i64 %i.hz
+  %i.ia = getelementptr inbounds nuw i8, ptr %.val.a, i64 %i.hz
   %i.ib = load i8, ptr %i.ia, align 1, !tbaa !103 ; 3 uses
   %.not.i16.i.i = icmp eq i8 %i.ib, 12
   br i1 %.not.i16.i.i, label %bb.af, label %bb.ae, !prof !105
@@ -898,7 +901,7 @@ _ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialR
   %i.ly = lshr i32 %i.lx, 14
   %i.lz = sub nsw i32 0, %i.ly
   %i.ma = and i64 %i.lw, 4095
-  %i.mb = getelementptr inbounds nuw i8, ptr %.val5, i64 %i.ma
+  %i.mb = getelementptr inbounds nuw i8, ptr %.val.a, i64 %i.ma
   %i.mc = load i8, ptr %i.mb, align 1, !tbaa !103 ; 3 uses
   %.not.i16.1.i.i = icmp eq i8 %i.mc, 12
   br i1 %.not.i16.1.i.i, label %bb.ar, label %bb.aq, !prof !105
@@ -1035,9 +1038,9 @@ _ZNK8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl13decompressRowERNS_14BitStr
 
 _ZN8rawspeed9SimpleLUTIaLi12EED2Ev.exit.i:        ; preds = %_ZNK8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl13decompressRowERNS_14BitStreamerMSBEi.exit.i
   %i.ox = ptrtoint ptr %i.am to i64
-  %i.oy = ptrtoint ptr %.val5 to i64
+  %i.oy = ptrtoint ptr %.val.a to i64
   %i.oz = sub i64 %i.ox, %i.oy
-  tail call void @_ZdlPvm(ptr noundef nonnull %.val5, i64 noundef %i.oz) #22
+  tail call void @_ZdlPvm(ptr noundef nonnull %.val.a, i64 noundef %i.oz) #22
   %i.pa = load ptr, ptr %i.l, align 8, !tbaa !16  ; 8 uses
   %.not.i.i.i.i11 = icmp eq ptr %i.pa, null
   br i1 %.not.i.i.i.i11, label %_ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImplD2Ev.exit, label %bb.ay

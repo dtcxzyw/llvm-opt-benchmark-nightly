@@ -204,13 +204,13 @@ bb.w:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.af = shl i64 %i.e, 32
-  %sext = mul i64 %i.af, %.sroa.6.0.extract.shift ; 3 uses
+  %sext = mul i64 %i.af, %.sroa.6.0.extract.shift ; 4 uses
+  %21 = ashr exact i64 %sext, 32                  ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %.not = icmp eq i64 %sext, 0
   br i1 %.not, label %bb.z, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %21 = ashr exact i64 %sext, 32                  ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ai = icmp ugt i64 %21, 1152921504606846975
   br i1 %i.ai, label %bb.y, label %_ZNKSt6vectorIN2cv6Point_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i
@@ -223,19 +223,20 @@ bb.y:                                             ; preds = %bb.x
   unreachable
 
 _ZNKSt6vectorIN2cv6Point_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.x
-  %i.aj = ashr exact i64 %sext, 29                ; 2 uses
+  %i.aj = ashr exact i64 %sext, 29
   %i.ak = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #30
           to label %.noexc98 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 .noexc98:                                         ; preds = %_ZNKSt6vectorIN2cv6Point_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ak, i8 0, i64 %i.aj, i1 false), !tbaa !167
+  %22 = ashr exact i64 %sext, 29
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ak, i8 0, i64 %22, i1 false), !tbaa !167
   store ptr %i.ak, ptr %5, align 8, !tbaa !170
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %21 ; 2 uses
   store ptr %i.al, ptr %i.ag, align 8, !tbaa !171
   store ptr %i.al, ptr %i.ah, align 8, !tbaa !172
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.w, %.noexc98
+bb.z:                                             ; preds = %.noexc98, %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i32 0, ptr %i.am, align 8, !tbaa !73

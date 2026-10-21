@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CGExprScalar?download=true
-inline.NumInlined: 7192
+inline.NumInlined: 7193
 inline.NumDeleted: 2875
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 4
@@ -205,7 +205,7 @@ bb.a:
   %2 = alloca %"class.llvm::Twine", align 8       ; 5 uses
   %3 = alloca %"class.llvm::Twine", align 8       ; 6 uses
   %4 = alloca %"class.llvm::Twine", align 8       ; 6 uses
-  %5 = alloca %"class.llvm::SmallVector.1935", align 8 ; 11 uses
+  %5 = alloca %"class.llvm::SmallVector.1935", align 8 ; 10 uses
   %6 = alloca %"class.clang::CodeGen::SanitizerDebugLocation", align 8 ; 4 uses
   %7 = alloca %"class.llvm::SmallVector.922", align 8 ; 10 uses
   %8 = alloca %"class.llvm::Twine", align 8       ; 4 uses
@@ -459,16 +459,17 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  %i.dw = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
   store ptr %i.dw, ptr %5, align 8, !tbaa !749
-  %i.dx = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.dx = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   store i32 0, ptr %i.dx, align 8, !tbaa !750
   %i.dy = getelementptr inbounds nuw i8, ptr %5, i64 12
   store i32 3, ptr %i.dy, align 4, !tbaa !751
   br i1 %i.cn, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  call void @_ZN4llvm23SmallVectorTemplateBaseIN5clang13SanitizerKind16SanitizerOrdinalELb1EE9push_backES3_(ptr noundef nonnull align 8 dereferenceable(16) %5, i64 noundef 38)
+  store i64 38, ptr %i.dw, align 8
+  store i32 1, ptr %i.dx, align 8, !tbaa !750
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p

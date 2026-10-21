@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruby/original/parse?download=true
-inline.NumInlined: 1675
+inline.NumInlined: 1676
 inline.NumDeleted: 268
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 14
@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = tail call noalias nonnull dereferenceable(32) ptr @ruby_xcalloc(i64 noundef 1, i64 noundef 32) #33 ; 7 uses
   %i.c = add nuw nsw i64 %1, 1
-  %i.d = tail call noalias nonnull ptr @ruby_xcalloc(i64 noundef %i.c, i64 noundef 1) #33 ; 3 uses
+  %i.d = tail call noalias nonnull ptr @ruby_xcalloc(i64 noundef %i.c, i64 noundef 1) #33 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store ptr %i.d, ptr %i.e, align 8, !tbaa !38
   %.not.i.i = icmp eq ptr %0, null
@@ -220,21 +220,81 @@ bb.d:                                             ; preds = %bb.c
 rb_parser_encoding_string_new.exit:               ; preds = %bb.c, %bb.d
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %1, ptr %i.f, align 8, !tbaa !39
-  %i.g = getelementptr i8, ptr %i.d, i64 %1
+  %i.g = getelementptr i8, ptr %i.d, i64 %1       ; 8 uses
   store i8 0, ptr %i.g, align 1, !tbaa !31
   store i32 0, ptr %i.b, align 8, !tbaa !40
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store ptr %2, ptr %i.h, align 8, !tbaa !41
   %i.i = and i32 %3, 4
   %.not = icmp eq i32 %i.i, 0
-  br i1 %.not, label %bb.e, label %bb.i
+  br i1 %.not, label %5, label %bb.i
 
-bb.e:                                             ; preds = %rb_parser_encoding_string_new.exit
-  %5 = tail call fastcc i32 @rb_parser_enc_str_coderange(ptr noundef nonnull %i.b)
-  %i.j = icmp eq i32 %5, 1
-  br i1 %i.j, label %bb.i, label %bb.f
+5:                                                ; preds = %rb_parser_encoding_string_new.exit
+  %6 = tail call nonnull ptr @rb_ascii8bit_encoding() #31
+  %7 = icmp eq ptr %2, %6
+  %8 = icmp ult ptr %i.d, %i.g                    ; 2 uses
+  br i1 %7, label %9, label %13
 
-bb.f:                                             ; preds = %bb.e
+9:                                                ; preds = %5
+  br i1 %8, label %.lr.ph.i.i.i.i, label %.sink.split
+
+.lr.ph.i.i.i.i:                                   ; preds = %9, %11
+  %.08.i.i.i.i = phi ptr [ %12, %11 ], [ %i.d, %9 ] ; 2 uses
+  %10 = load i8, ptr %.08.i.i.i.i, align 1, !tbaa !31
+  %.not.i.i.i.i = icmp sgt i8 %10, -1
+  br i1 %.not.i.i.i.i, label %11, label %bb.f
+
+11:                                               ; preds = %.lr.ph.i.i.i.i
+  %12 = getelementptr i8, ptr %.08.i.i.i.i, i64 1 ; 2 uses
+  %exitcond.not.i.i.i.i = icmp eq ptr %12, %i.g
+  br i1 %exitcond.not.i.i.i.i, label %.sink.split, label %.lr.ph.i.i.i.i, !llvm.loop !11
+
+13:                                               ; preds = %5
+  br i1 %8, label %.lr.ph.i36.i.i.i, label %.sink.split
+
+.lr.ph.i36.i.i.i:                                 ; preds = %13, %17
+  %.08.i37.i.i.i = phi ptr [ %18, %17 ], [ %i.d, %13 ] ; 4 uses
+  %14 = load i8, ptr %.08.i37.i.i.i, align 1, !tbaa !31
+  %.not.i38.i.i.i = icmp sgt i8 %14, -1
+  br i1 %.not.i38.i.i.i, label %17, label %rb_parser_search_nonascii.exit40.preheader.i.i.i
+
+rb_parser_search_nonascii.exit40.preheader.i.i.i: ; preds = %.lr.ph.i36.i.i.i
+  %15 = tail call i32 @rb_enc_precise_mbclen(ptr noundef nonnull %.08.i37.i.i.i, ptr noundef nonnull %i.g, ptr noundef %2) #31 ; 2 uses
+  %16 = icmp sgt i32 %15, 0
+  br i1 %16, label %.lr.ph.i.i.i, label %bb.f
+
+17:                                               ; preds = %.lr.ph.i36.i.i.i
+  %18 = getelementptr i8, ptr %.08.i37.i.i.i, i64 1 ; 2 uses
+  %exitcond.not.i39.i.i.i = icmp eq ptr %18, %i.g
+  br i1 %exitcond.not.i39.i.i.i, label %.sink.split, label %.lr.ph.i36.i.i.i, !llvm.loop !11
+
+rb_parser_search_nonascii.exit40.loopexit.i.i.i:  ; preds = %.lr.ph.i42.i.i.i
+  %19 = tail call i32 @rb_enc_precise_mbclen(ptr noundef nonnull %.08.i43.i.i.i, ptr noundef nonnull %i.g, ptr noundef %2) #31 ; 2 uses
+  %20 = icmp sgt i32 %19, 0
+  br i1 %20, label %.lr.ph.i.i.i, label %bb.f
+
+.lr.ph.i.i.i:                                     ; preds = %rb_parser_search_nonascii.exit40.preheader.i.i.i, %rb_parser_search_nonascii.exit40.loopexit.i.i.i
+  %21 = phi i32 [ %19, %rb_parser_search_nonascii.exit40.loopexit.i.i.i ], [ %15, %rb_parser_search_nonascii.exit40.preheader.i.i.i ]
+  %.02216.i.i.i = phi ptr [ %.08.i43.i.i.i, %rb_parser_search_nonascii.exit40.loopexit.i.i.i ], [ %.08.i37.i.i.i, %rb_parser_search_nonascii.exit40.preheader.i.i.i ]
+  %22 = zext nneg i32 %21 to i64
+  %23 = getelementptr i8, ptr %.02216.i.i.i, i64 %22 ; 2 uses
+  %24 = icmp ult ptr %23, %i.g
+  br i1 %24, label %.lr.ph.i42.i.i.i, label %bb.f
+
+.lr.ph.i42.i.i.i:                                 ; preds = %.lr.ph.i.i.i, %bb.e
+  %.08.i43.i.i.i = phi ptr [ %26, %bb.e ], [ %23, %.lr.ph.i.i.i ] ; 4 uses
+  %25 = load i8, ptr %.08.i43.i.i.i, align 1, !tbaa !31
+  %.not.i44.i.i.i = icmp sgt i8 %25, -1
+  br i1 %.not.i44.i.i.i, label %bb.e, label %rb_parser_search_nonascii.exit40.loopexit.i.i.i
+
+bb.e:                                             ; preds = %.lr.ph.i42.i.i.i
+  %26 = getelementptr i8, ptr %.08.i43.i.i.i, i64 1 ; 2 uses
+  %i.j = icmp eq ptr %26, %i.g
+  br i1 %i.j, label %bb.f, label %.lr.ph.i42.i.i.i, !llvm.loop !11
+
+bb.f:                                             ; preds = %.lr.ph.i.i.i, %rb_parser_search_nonascii.exit40.loopexit.i.i.i, %bb.e, %.lr.ph.i.i.i.i, %rb_parser_search_nonascii.exit40.preheader.i.i.i
+  %.2.i.i.i.ph = phi i32 [ 2, %bb.e ], [ 3, %rb_parser_search_nonascii.exit40.preheader.i.i.i ], [ 2, %.lr.ph.i.i.i.i ], [ 2, %.lr.ph.i.i.i ], [ 3, %rb_parser_search_nonascii.exit40.loopexit.i.i.i ]
+  store i32 %.2.i.i.i.ph, ptr %i.b, align 8, !tbaa !40
   %i.k = tail call nonnull ptr @rb_usascii_encoding() #31
   %i.l = icmp eq ptr %4, %i.k
   br i1 %i.l, label %bb.g, label %bb.i
@@ -247,10 +307,14 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.n = tail call nonnull ptr @rb_ascii8bit_encoding() #31
   store ptr %i.n, ptr %i.h, align 8, !tbaa !41
-  store i32 2, ptr %i.b, align 8, !tbaa !40
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %17, %11, %13, %9, %bb.h
+  %.sink = phi i32 [ 2, %bb.h ], [ 1, %11 ], [ 1, %13 ], [ 1, %9 ], [ 1, %17 ]
+  store i32 %.sink, ptr %i.b, align 8, !tbaa !40
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.e, %bb.h, %bb.g, %bb.f, %rb_parser_encoding_string_new.exit
+bb.i:                                             ; preds = %.sink.split, %bb.g, %bb.f, %rb_parser_encoding_string_new.exit
   ret ptr %i.b
 }
 

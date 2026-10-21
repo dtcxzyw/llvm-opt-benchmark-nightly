@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cvc5/original/node_utils?download=true
-inline.NumInlined: 647
-inline.NumDeleted: 258
+inline.NumInlined: 648
+inline.NumDeleted: 259
 begin_hunk_0_@_ZN4cvc58internal6theory5arith8rewriter10mkMultTermERKNS0_8RationalENS0_12NodeTemplateILb0EEE:bb.a
   invoke void @_ZN4cvc58internal11NodeBuilder13constructNodeEv(ptr dead_on_unwind writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %0, ptr noundef nonnull align 8 dereferenceable(124) %3)
           to label %bb.s unwind label %bb.r
@@ -202,7 +202,7 @@ bb.a:
   %6 = alloca %"class.cvc5::internal::NodeTemplate.0", align 8 ; 2 uses
   %7 = alloca %"class.cvc5::internal::RealAlgebraicNumber", align 8 ; 7 uses
   %8 = alloca %"class.cvc5::internal::RealAlgebraicNumber", align 8 ; 7 uses
-  %9 = alloca %"class.std::vector", align 8       ; 14 uses
+  %9 = alloca %"class.std::vector", align 8       ; 15 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !14
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !18   ; 3 uses
@@ -327,12 +327,12 @@ _ZN4cvc58internal19RealAlgebraicNumberD2Ev.exit20: ; preds = %_ZN4cvc58internal1
 bb.q:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
   invoke void @_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %9, ptr null, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %.noexc21 unwind label %bb.t
 
 .noexc21:                                         ; preds = %bb.q
+  %.pre.i = load ptr, ptr %i.w, align 8, !tbaa !24 ; 4 uses
   %i.x = load ptr, ptr %2, align 8, !tbaa !14     ; 7 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.z = load i64, ptr %i.y, align 8
@@ -340,7 +340,6 @@ bb.q:                                             ; preds = %bb.f
   %i.ab = and i32 %i.aa, 1023                     ; 2 uses
   %.off = add nsw i32 %i.ab, -41
   %switch = icmp ult i32 %.off, 2
-  %11 = load ptr, ptr %10, align 8, !tbaa !24     ; 4 uses
   br i1 %switch, label %bb.r, label %bb.u
 
 bb.r:                                             ; preds = %.noexc21
@@ -359,7 +358,7 @@ bb.s:                                             ; preds = %bb.r
   %i.aj = and i64 %i.ai, 67108863
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.aj
   %i.al = load ptr, ptr %9, align 8, !tbaa !24    ; 2 uses
-  %i.am = ptrtoint ptr %11 to i64
+  %i.am = ptrtoint ptr %.pre.i to i64
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = sub i64 %i.am, %i.an
   %i.ap = getelementptr inbounds i8, ptr %i.al, i64 %i.ao
@@ -372,12 +371,13 @@ bb.t:                                             ; preds = %bb.q, %bb.y, %bb.z,
   br label %.body
 
 bb.u:                                             ; preds = %.noexc21
-  %i.ar = load ptr, ptr %i.w, align 8, !tbaa !26
-  %.not.i24 = icmp eq ptr %11, %i.ar
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %i.ar = load ptr, ptr %10, align 8, !tbaa !26
+  %.not.i24 = icmp eq ptr %.pre.i, %i.ar
   br i1 %.not.i24, label %bb.z, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  store ptr %i.x, ptr %11, align 8, !tbaa !20
+  store ptr %i.x, ptr %.pre.i, align 8, !tbaa !20
   %i.as = load i64, ptr %i.x, align 8             ; 3 uses
   %i.at = lshr i64 %i.as, 40
   %i.au = trunc nuw nsw i64 %i.at to i32
@@ -405,13 +405,13 @@ bb.y:                                             ; preds = %bb.x
           to label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit.i unwind label %bb.t
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit.i: ; preds = %bb.y, %bb.x, %bb.w
-  %i.be = load ptr, ptr %10, align 8, !tbaa !27
+  %i.be = load ptr, ptr %i.w, align 8, !tbaa !27
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 8
-  store ptr %i.bf, ptr %10, align 8, !tbaa !27
+  store ptr %i.bf, ptr %i.w, align 8, !tbaa !27
   br label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRNS2_ILb0EEEEEERS3_DpOT_.exit
 
 bb.z:                                             ; preds = %bb.u
-  invoke void @_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_M_realloc_insertIJRNS2_ILb0EEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %9, ptr %11, ptr noundef nonnull align 8 dereferenceable(8) %2)
+  invoke void @_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_M_realloc_insertIJRNS2_ILb0EEEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %9, ptr %.pre.i, ptr noundef nonnull align 8 dereferenceable(8) %2)
           to label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRNS2_ILb0EEEEEERS3_DpOT_.exit unwind label %bb.t
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRNS2_ILb0EEEEEERS3_DpOT_.exit: ; preds = %bb.z, %bb.s, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit.i
@@ -421,7 +421,7 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRNS2_IL
 
 .noexc28:                                         ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE12emplace_backIJRNS2_ILb0EEEEEERS3_DpOT_.exit
   %i.bg = load ptr, ptr %9, align 8, !tbaa !24, !noalias !38 ; 2 uses
-  %i.bh = load ptr, ptr %10, align 8, !tbaa !24, !noalias !38 ; 2 uses
+  %i.bh = load ptr, ptr %i.w, align 8, !tbaa !24, !noalias !38 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3), !noalias !38
   %.not6.i.i.i = icmp eq ptr %i.bh, %i.bg
   br i1 %.not6.i.i.i, label %.loopexit4.i, label %.lr.ph.i.i.i
@@ -454,7 +454,7 @@ bb.aa:                                            ; preds = %.loopexit4.i
   call void @_ZN4cvc58internal11NodeBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(124) dereferenceable(124) %4) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19, !noalias !38
   %i.bl = load ptr, ptr %9, align 8, !tbaa !29    ; 3 uses
-  %i.bm = load ptr, ptr %10, align 8, !tbaa !27   ; 2 uses
+  %i.bm = load ptr, ptr %i.w, align 8, !tbaa !27  ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.bl, %i.bm
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4cvc58internal12NodeTemplateILb1EEES3_EvT_S5_RSaIT0_E.exit.i, label %.lr.ph.i.i.i29
 
@@ -501,7 +501,8 @@ _ZSt8_DestroyIPN4cvc58internal12NodeTemplateILb1EEES3_EvT_S5_RSaIT0_E.exit.i: ; 
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZSt8_DestroyIPN4cvc58internal12NodeTemplateILb1EEES3_EvT_S5_RSaIT0_E.exit.i
-  %i.bz = load ptr, ptr %i.w, align 8, !tbaa !26
+  %11 = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %i.bz = load ptr, ptr %11, align 8, !tbaa !26
   %i.ca = ptrtoint ptr %i.bz to i64
   %i.cb = ptrtoint ptr %i.by to i64
   %i.cc = sub i64 %i.ca, %i.cb

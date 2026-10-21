@@ -204,7 +204,7 @@ define dso_local void @_ZN5vcpkg4Test10diff_linesB5cxx11ENS_10StringViewES1_(ptr
 bb.a:
   %5 = alloca %"class.std::vector.112", align 8   ; 14 uses
   %6 = alloca %"class.std::vector.112", align 8   ; 16 uses
-  %7 = alloca %"class.std::vector.139", align 8   ; 14 uses
+  %7 = alloca %"class.std::vector.139", align 8   ; 15 uses
   %8 = alloca %"class.std::vector.112", align 8   ; 21 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
@@ -221,13 +221,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
-  %15 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 6 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 6 uses
   invoke void @_ZNSt6vectorIS_ImSaImEESaIS1_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr null)
           to label %.noexc unwind label %.loopexit.split-lp286.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.b
-  %.pre.i = load ptr, ptr %15, align 8, !tbaa !332 ; 2 uses
+  %.pre.i = load ptr, ptr %i.a, align 8, !tbaa !332 ; 2 uses
   %i.b = getelementptr inbounds i8, ptr %.pre.i, i64 -24 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !131
@@ -329,7 +328,7 @@ _ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit: 
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !131 ; 2 uses
   %i.al = load ptr, ptr %5, align 8, !tbaa !130   ; 2 uses
   %.not362 = icmp eq ptr %i.ak, %i.al
-  br i1 %.not362, label %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit.._crit_edge_crit_edge, label %.lr.ph343.a
+  br i1 %.not362, label %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit.._crit_edge_crit_edge, label %.lr.ph343
 
 _ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit.._crit_edge_crit_edge: ; preds = %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit
   %i.am = ptrtoint ptr %i.ak to i64
@@ -344,6 +343,10 @@ _ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit..
   %.pre390 = sub i64 %.pre387, %.pre388
   %.pre392 = ashr exact i64 %.pre390, 5
   br label %._crit_edge
+
+.lr.ph343:                                        ; preds = %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit
+  %15 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  br label %.lr.ph343.a
 
 .loopexit284:                                     ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread254, %_ZNSt6vectorImSaImEE6resizeEm.exit108
   %i.aq = load ptr, ptr %i.aj, align 8, !tbaa !131
@@ -372,18 +375,18 @@ bb.f:                                             ; preds = %bb.a
           cleanup
   br label %bb.bi
 
-.lr.ph343.a:                                      ; preds = %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit, %.loopexit284
-  %.068342 = phi i64 [ %i.ck, %.loopexit284 ], [ 0, %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEiEvT_S7_T0_.exit ] ; 3 uses
-  %i.bf = load ptr, ptr %15, align 8, !tbaa !161  ; 3 uses
-  %i.bg = load ptr, ptr %i.a, align 8, !tbaa !162
+.lr.ph343.a:                                      ; preds = %.lr.ph343, %.loopexit284
+  %.068342 = phi i64 [ 0, %.lr.ph343 ], [ %i.ck, %.loopexit284 ] ; 3 uses
+  %i.bf = load ptr, ptr %i.a, align 8, !tbaa !161 ; 3 uses
+  %i.bg = load ptr, ptr %15, align 8, !tbaa !162
   %.not.i101 = icmp eq ptr %i.bf, %i.bg
   br i1 %.not.i101, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph343.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bf, i8 0, i64 24, i1 false)
-  %i.bh = load ptr, ptr %15, align 8, !tbaa !161
+  %i.bh = load ptr, ptr %i.a, align 8, !tbaa !161
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 24 ; 2 uses
-  store ptr %i.bi, ptr %15, align 8, !tbaa !161
+  store ptr %i.bi, ptr %i.a, align 8, !tbaa !161
   br label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph343.a
@@ -391,7 +394,7 @@ bb.h:                                             ; preds = %.lr.ph343.a
           to label %.noexc103 unwind label %.loopexit.split-lp286.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc103:                                        ; preds = %bb.h
-  %.pre.i102 = load ptr, ptr %15, align 8, !tbaa !332
+  %.pre.i102 = load ptr, ptr %i.a, align 8, !tbaa !332
   br label %bb.i
 
 bb.i:                                             ; preds = %.noexc103, %bb.g
@@ -794,7 +797,7 @@ bb.bc:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.bd:                                            ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, %bb.o
   %i.oe = phi ptr [ %.pre386, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ], [ %i.aw, %bb.o ] ; 3 uses
-  %i.of = load ptr, ptr %15, align 8, !tbaa !161  ; 2 uses
+  %i.of = load ptr, ptr %i.a, align 8, !tbaa !161 ; 2 uses
   %.not4.i.i.i223 = icmp eq ptr %i.oe, %i.of
   br i1 %.not4.i.i.i223, label %_ZSt8_DestroyIPSt6vectorImSaImEES2_EvT_S4_RSaIT0_E.exit.i, label %.lr.ph.i.i.i224
 
@@ -828,7 +831,8 @@ _ZSt8_DestroyIPSt6vectorImSaImEES2_EvT_S4_RSaIT0_E.exit.i: ; preds = %_ZSt8_Dest
   br i1 %.not.i.i1.i228, label %_ZNSt6vectorIS_ImSaImEESaIS1_EED2Ev.exit, label %bb.bf
 
 bb.bf:                                            ; preds = %_ZSt8_DestroyIPSt6vectorImSaImEES2_EvT_S4_RSaIT0_E.exit.i
-  %i.oo = load ptr, ptr %i.a, align 8, !tbaa !162
+  %16 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.oo = load ptr, ptr %16, align 8, !tbaa !162
   %i.op = ptrtoint ptr %i.oo to i64
   %i.oq = ptrtoint ptr %i.on to i64
   %i.or = sub i64 %i.op, %i.oq

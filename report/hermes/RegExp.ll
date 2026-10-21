@@ -205,7 +205,8 @@ bb.w:                                             ; preds = %_ZN6hermes2vm13Muta
 
 _ZN6hermes2vm13MutableHandleINS0_8JSObjectEEC2ERNS0_15HandleRootOwnerEPS2_.exit: ; preds = %bb.v, %bb.w
   %.0.i.i.i.i.i.i258 = phi ptr [ %i.dl, %bb.v ], [ %i.dq, %bb.w ] ; 17 uses
-  %i.dr = call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.0.i.i.i.i.i.i) #12 ; 3 uses
+  %i.dr = call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.0.i.i.i.i.i.i) #12 ; 2 uses
+  %12 = extractvalue { ptr, i64 } %i.dr, 0        ; 2 uses
   %i.ds = extractvalue { ptr, i64 } %i.dr, 1      ; 3 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %1, i64 856 ; 4 uses
   %i.du = ptrtoint ptr %1 to i64                  ; 10 uses
@@ -534,7 +535,6 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
   %i.jx = getelementptr inbounds nuw i8, ptr %1, i64 9472
   %.sroa.2.8.extract.trunc.i = trunc i64 %i.ds to i32 ; 2 uses
   %i.jy = and i32 %.sroa.2.8.extract.trunc.i, -1073741824
-  %12 = extractvalue { ptr, i64 } %i.dr, 0
   %i.jz = getelementptr inbounds nuw i8, ptr %10, i64 8
   %wide.trip.count = zext i32 %i.jp to i64
   br label %bb.aq
@@ -937,8 +937,7 @@ bb.di:                                            ; preds = %.thread513
   %.sroa.2.12.insert.ext.i.i = zext i32 %i.yr to i64
   %.sroa.2.12.insert.shift.i.i = shl nuw i64 %.sroa.2.12.insert.ext.i.i, 32
   %.sroa.2.12.insert.insert.i.i = or disjoint i64 %.sroa.2.12.insert.shift.i.i, %.sroa.2.8.insert.ext.i.i
-  %13 = extractvalue { ptr, i64 } %i.dr, 0
-  store ptr %13, ptr %11, align 8
+  store ptr %12, ptr %11, align 8
   %i.yw = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 %.sroa.2.12.insert.insert.i.i, ptr %i.yw, align 8
   %i.yx = call { ptr, i64 } @_ZNK6hermes2vm10StringView11getUTF16RefERN4llvh15SmallVectorImplIDsEEb(ptr noundef nonnull align 8 dereferenceable(16) %11, ptr noundef nonnull align 8 dereferenceable(16) %7, i1 noundef zeroext true) #12 ; 0 uses
@@ -1341,6 +1340,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.x = extractvalue { ptr, i64 } %i.w, 0        ; 17 uses
   %i.y = extractvalue { ptr, i64 } %i.w, 1        ; 5 uses
   %i.z = tail call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nonnull %2) #12 ; 5 uses
+  %14 = extractvalue { ptr, i64 } %i.z, 0         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
   %i.aa = tail call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nonnull %1) #12 ; 2 uses
   %i.ab = extractvalue { ptr, i64 } %i.aa, 0
@@ -1380,7 +1380,6 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.2.12.insert.ext.i.i = zext i32 %i.am to i64
   %.sroa.2.12.insert.shift.i.i = shl nuw i64 %.sroa.2.12.insert.ext.i.i, 32
   %.sroa.2.12.insert.insert.i.i = or disjoint i64 %.sroa.2.12.insert.shift.i.i, %.sroa.2.8.insert.ext.i.i
-  %14 = extractvalue { ptr, i64 } %i.z, 0         ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %11, i64 8
   %.sroa.2.8.insert.ext.i = and i64 %i.ah, 4294967295
   %.sroa.2.12.insert.ext.i = zext i32 %3 to i64
@@ -1630,8 +1629,8 @@ _ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i151: ; preds = %bb.aj, %bb.a
   br label %_ZNK6hermes2vm10StringViewixEj.exit161
 
 _ZNK6hermes2vm10StringViewixEj.exit161:           ; preds = %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i158, %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i151
-  %.0.i153 = phi i16 [ %i.dl, %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i158 ], [ %i.eb, %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i151 ] ; 6 uses
-  %i.ec = zext i16 %.0.i153 to i32                ; 4 uses
+  %.0.i153 = phi i16 [ %i.dl, %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i158 ], [ %i.eb, %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i151 ] ; 9 uses
+  %i.ec = zext nneg i16 %.0.i153 to i32
   switch i16 %.0.i153, label %bb.ar [
     i16 36, label %bb.ak
     i16 38, label %bb.am
@@ -2034,13 +2033,13 @@ bb.dt:                                            ; preds = %bb.cn
   %.pre578 = zext i32 %.pre7.pre.i.i to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit: ; preds = %.thread.i, %bb.dt
-  %.pre-phi = phi i64 [ %.pre578, %.thread.i ], [ %i.oi, %bb.dt ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit: ; preds = %bb.dt, %.thread.i
+  %.pre-phi = phi i64 [ %i.oi, %bb.dt ], [ %.pre578, %.thread.i ]
   %i.om = load ptr, ptr %9, align 8, !tbaa !41
-  %i.on = getelementptr inbounds nuw [2 x i8], ptr %i.om, i64 %.pre-phi
-  %.sroa.4576.0.insert.shift = shl nuw nsw i32 %i.ec, 16
-  %.sroa.0575.0.insert.insert = or disjoint i32 %.sroa.4576.0.insert.shift, 36
-  store i32 %.sroa.0575.0.insert.insert, ptr %i.on, align 1
+  %i.on = getelementptr inbounds nuw [2 x i8], ptr %i.om, i64 %.pre-phi ; 2 uses
+  store i16 36, ptr %i.on, align 1
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.on, i64 2
+  store i16 %.0.i153, ptr %.sroa.4.0..sroa_idx, align 1
   %.pre.i.i257 = load i32, ptr %i.af, align 8, !tbaa !43
   %i.oo = add i32 %.pre.i.i257, 2
   store i32 %i.oo, ptr %i.af, align 8, !tbaa !43
@@ -2326,13 +2325,13 @@ bb.fa:                                            ; preds = %bb.du
   %.pre581.a = zext i32 %.pre7.pre.i.i315 to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit316
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit316: ; preds = %.thread.i314, %bb.fa
-  %.pre-phi582.a = phi i64 [ %.pre581.a, %.thread.i314 ], [ %i.sp, %bb.fa ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit316: ; preds = %bb.fa, %.thread.i314
+  %.pre-phi582.a = phi i64 [ %i.sp, %bb.fa ], [ %.pre581.a, %.thread.i314 ]
   %i.st = load ptr, ptr %9, align 8, !tbaa !41
-  %i.su = getelementptr inbounds nuw [2 x i8], ptr %i.st, i64 %.pre-phi582.a
-  %.sroa.4574.0.insert.shift = shl nuw nsw i32 %i.ec, 16
-  %.sroa.0573.0.insert.insert = or disjoint i32 %.sroa.4574.0.insert.shift, 36
-  store i32 %.sroa.0573.0.insert.insert, ptr %i.su, align 1
+  %i.su = getelementptr inbounds nuw [2 x i8], ptr %i.st, i64 %.pre-phi582.a ; 2 uses
+  store i16 36, ptr %i.su, align 1
+  %.sroa.4460.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.su, i64 2
+  store i16 %.0.i153, ptr %.sroa.4460.0..sroa_idx, align 1
   %.pre.i.i313 = load i32, ptr %i.af, align 8, !tbaa !43
   %i.sv = add i32 %.pre.i.i313, 2
   store i32 %i.sv, ptr %i.af, align 8, !tbaa !43
@@ -2535,11 +2534,13 @@ bb.fn:                                            ; preds = %_ZNK6hermes2vm10Str
   %.pre584 = zext i32 %.pre7.pre.i.i337 to i64
   br label %.thread508
 
-.thread508:                                       ; preds = %.thread504, %.thread.i336
-  %.pre-phi585 = phi i64 [ %i.vo, %.thread504 ], [ %.pre584, %.thread.i336 ]
+.thread508:                                       ; preds = %.thread.i336, %.thread504
+  %.pre-phi585 = phi i64 [ %.pre584, %.thread.i336 ], [ %i.vo, %.thread504 ]
   %i.vs = load ptr, ptr %9, align 8, !tbaa !41
-  %i.vt = getelementptr inbounds nuw [2 x i8], ptr %i.vs, i64 %.pre-phi585
-  store i32 3932196, ptr %i.vt, align 1
+  %i.vt = getelementptr inbounds nuw [2 x i8], ptr %i.vs, i64 %.pre-phi585 ; 2 uses
+  store i16 36, ptr %i.vt, align 1
+  %.sroa.4462.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vt, i64 2
+  store i16 60, ptr %.sroa.4462.0..sroa_idx, align 1
   %.pre.i.i335 = load i32, ptr %i.af, align 8, !tbaa !43
   %i.vu = add i32 %.pre.i.i335, 2
   store i32 %i.vu, ptr %i.af, align 8, !tbaa !43
@@ -2724,13 +2725,13 @@ bb.fy:                                            ; preds = %bb.fc, %bb.fb
   %.pre586 = zext i32 %.pre7.pre.i.i358 to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit359
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit359: ; preds = %.thread.i357, %bb.fy
-  %.pre-phi587 = phi i64 [ %.pre586, %.thread.i357 ], [ %i.yk, %bb.fy ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh8ArrayRefIDsEE.exit359: ; preds = %bb.fy, %.thread.i357
+  %.pre-phi587 = phi i64 [ %i.yk, %bb.fy ], [ %.pre586, %.thread.i357 ]
   %i.yo = load ptr, ptr %9, align 8, !tbaa !41
-  %i.yp = getelementptr inbounds nuw [2 x i8], ptr %i.yo, i64 %.pre-phi587
-  %.sroa.4.0.insert.shift = shl nuw i32 %i.ec, 16
-  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.4.0.insert.shift, 36
-  store i32 %.sroa.0.0.insert.insert, ptr %i.yp, align 1
+  %i.yp = getelementptr inbounds nuw [2 x i8], ptr %i.yo, i64 %.pre-phi587 ; 2 uses
+  store i16 36, ptr %i.yp, align 1
+  %.sroa.4464.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.yp, i64 2
+  store i16 %.0.i153, ptr %.sroa.4464.0..sroa_idx, align 1
   %.pre.i.i356 = load i32, ptr %i.af, align 8, !tbaa !43
   %i.yq = add i32 %.pre.i.i356, 2
   store i32 %i.yq, ptr %i.af, align 8, !tbaa !43

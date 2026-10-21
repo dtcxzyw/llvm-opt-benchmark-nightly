@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wasmi-rs/original/wasmi.wasmi.2e05a1d9f0df8596-cgu.15?download=true
-inline.NumInlined: 184
+inline.NumInlined: 185
 inline.NumDeleted: 116
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !256, !nonnull !6, !noundef !6
   %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !256
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.53.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.64.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -213,9 +213,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.108.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   br label %bb.c
 
-bb.c:                                             ; preds = %switch.lookup, %bb.b
-  %i.e = phi ptr [ %.promoted.i.i.i, %bb.b ], [ %i.g, %switch.lookup ] ; 3 uses
-  %.sroa.01.0.i.i.i = phi i64 [ %1, %bb.b ], [ %2, %switch.lookup ] ; 3 uses
+bb.c:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i, %bb.b
+  %i.e = phi ptr [ %.promoted.i.i.i, %bb.b ], [ %i.g, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i ] ; 3 uses
+  %.sroa.01.0.i.i.i = phi i64 [ %1, %bb.b ], [ %6, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i ] ; 3 uses
   %i.f = icmp eq ptr %i.e, %i.c
   br i1 %i.f, label %_RNvXs_NvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB3l_15EnumValueParserB2i_ENtB3l_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2o_.exit, label %switch.lookup
 
@@ -239,14 +239,33 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %switch.load, ptr %.sroa.86.0..sroa_idx.i.i.i.i, align 8, !noalias !257
   store i64 %switch.ext, ptr %.sroa.97.0..sroa_idx.i.i.i.i, align 8, !noalias !257
   store i8 0, ptr %.sroa.108.0..sroa_idx.i.i.i.i, align 8, !noalias !257
-  %2 = add i64 %.sroa.01.0.i.i.i, -1              ; 2 uses
-  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !257
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !257
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %_RNvXs_NvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB3l_15EnumValueParserB2i_ENtB3l_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2o_.exit, label %bb.c
+  invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs2C93r1qUspC_12clap_builder7builder3str3StrENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i unwind label %2, !noalias !257
 
-_RNvXs_NvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB3l_15EnumValueParserB2i_ENtB3l_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2o_.exit: ; preds = %bb.c, %switch.lookup, %bb.a
-  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %.sroa.01.0.i.i.i, %bb.c ], [ 0, %switch.lookup ]
+2:                                                ; preds = %switch.lookup
+  %3 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs2C93r1qUspC_12clap_builder7builder3str3StrENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %common.resume.i.i.i.i unwind label %4, !noalias !257
+
+4:                                                ; preds = %2
+  %5 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #25, !noalias !257
+  unreachable
+
+common.resume.i.i.i.i:                            ; preds = %2
+  resume { ptr, i32 } %3
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i: ; preds = %switch.lookup
+  %6 = add i64 %.sroa.01.0.i.i.i, -1              ; 2 uses
+  call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs2C93r1qUspC_12clap_builder7builder3str3StrENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !257
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !257
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %_RNvXs_NvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB3l_15EnumValueParserB2i_ENtB3l_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2o_.exit, label %bb.c
+
+_RNvXs_NvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB3l_15EnumValueParserB2i_ENtB3l_16TypedValueParser15possible_values0ENtB4_13SpecAdvanceBy15spec_advance_byB2o_.exit: ; preds = %bb.c, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i, %bb.a
+  %.sroa.0.1.i = phi i64 [ 0, %bb.a ], [ %.sroa.01.0.i.i.i, %bb.c ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i ]
   ret i64 %.sroa.0.1.i
 }
 
@@ -270,7 +289,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !284)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !285, !nonnull !6, !noundef !6 ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.53.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.64.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -279,9 +298,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.108.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   br label %bb.c
 
-bb.c:                                             ; preds = %switch.lookup, %bb.b
-  %i.e = phi ptr [ %.pre, %bb.b ], [ %i.g, %switch.lookup ] ; 3 uses
-  %.sroa.01.0.i.i.i.i = phi i64 [ %2, %bb.b ], [ %3, %switch.lookup ] ; 2 uses
+bb.c:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i, %bb.b
+  %i.e = phi ptr [ %.pre, %bb.b ], [ %i.g, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i ] ; 3 uses
+  %.sroa.01.0.i.i.i.i = phi i64 [ %2, %bb.b ], [ %7, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i ] ; 2 uses
   %i.f = icmp eq ptr %i.e, %i.c
   br i1 %i.f, label %_RNvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB2x_15EnumValueParserB1u_ENtB2x_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator10advance_byB1A_.exit, label %switch.lookup
 
@@ -305,19 +324,38 @@ switch.lookup:                                    ; preds = %bb.c
   store ptr %switch.load, ptr %.sroa.86.0..sroa_idx.i.i.i.i.i, align 8, !noalias !286
   store i64 %switch.ext, ptr %.sroa.97.0..sroa_idx.i.i.i.i.i, align 8, !noalias !286
   store i8 0, ptr %.sroa.108.0..sroa_idx.i.i.i.i.i, align 8, !noalias !286
-  %3 = add i64 %.sroa.01.0.i.i.i.i, -1            ; 2 uses
-  call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !286
+  invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs2C93r1qUspC_12clap_builder7builder3str3StrENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i unwind label %3, !noalias !286
+
+3:                                                ; preds = %switch.lookup
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs2C93r1qUspC_12clap_builder7builder3str3StrENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d)
+          to label %common.resume.i.i.i.i.i unwind label %5, !noalias !286
+
+5:                                                ; preds = %3
+  %6 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #25, !noalias !286
+  unreachable
+
+common.resume.i.i.i.i.i:                          ; preds = %3
+  resume { ptr, i32 } %4
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i: ; preds = %switch.lookup
+  %7 = add i64 %.sroa.01.0.i.i.i.i, -1            ; 2 uses
+  call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs2C93r1qUspC_12clap_builder7builder3str3StrENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.d), !noalias !286
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !286
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %.loopexit, label %bb.c
+  %8 = icmp eq i64 %7, 0
+  br i1 %8, label %.loopexit, label %bb.c
 
 _RNvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB2x_15EnumValueParserB1u_ENtB2x_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator10advance_byB1A_.exit: ; preds = %bb.c
   store i64 -1, ptr %0, align 8
   br label %_RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_mapINtB5_9FilterMapINtNtNtBb_5slice4iter4IterNtNtNtCs3WYoaQ2jqaU_5wasmi8commands3run15CompilationModeENCNvXso_NtNtCs2C93r1qUspC_12clap_builder7builder12value_parserINtB2D_15EnumValueParserB1A_ENtB2D_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator4nextB1G_.exit
 
-.loopexit:                                        ; preds = %switch.lookup, %..loopexit_crit_edge
-  %i.j = phi ptr [ %.pre4, %..loopexit_crit_edge ], [ %i.c, %switch.lookup ]
-  %i.k = phi ptr [ %.pre, %..loopexit_crit_edge ], [ %i.g, %switch.lookup ] ; 3 uses
+.loopexit:                                        ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i, %..loopexit_crit_edge
+  %i.j = phi ptr [ %.pre4, %..loopexit_crit_edge ], [ %i.c, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i ]
+  %i.k = phi ptr [ %.pre, %..loopexit_crit_edge ], [ %i.g, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2C93r1qUspC_12clap_builder7builder14possible_value13PossibleValueECs3WYoaQ2jqaU_5wasmi.exit.i.i.i.i ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !287)
   call void @llvm.experimental.noalias.scope.decl(metadata !288)
   call void @llvm.experimental.noalias.scope.decl(metadata !289)

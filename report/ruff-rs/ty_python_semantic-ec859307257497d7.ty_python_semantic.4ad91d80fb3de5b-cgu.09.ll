@@ -204,13 +204,13 @@ _RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type18apply_type_mapping
 define hidden void @_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type26single_char_string_literal(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 4 captures(none) dereferenceable(16) %0, ptr noundef nonnull %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %2, i32 noundef range(i32 0, 1114112) %3) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 12 uses
-  %i.b = alloca [24 x i8], align 8                ; 6 uses
+  %i.b = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !11956
   store i32 0, ptr %i.a, align 4, !noalias !11956
   %i.c = icmp samesign ult i32 %3, 128
-  %.sink21.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 3 uses
-  %.sink21.i.sroa.gep3 = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %.sink21.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %.sink21.i.sroa.gep3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 3 uses
   br i1 %i.c, label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -243,27 +243,29 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.u = or disjoint i8 %i.m, -32
   store i8 %i.u, ptr %i.a, align 4, !alias.scope !11957, !noalias !11956
-  store i8 %i.k, ptr %.sink21.i.sroa.gep, align 1, !alias.scope !11957, !noalias !11956
+  store i8 %i.k, ptr %.sink21.i.sroa.gep3, align 1, !alias.scope !11957, !noalias !11956
   br label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i
 
 bb.f:                                             ; preds = %bb.d
   store i8 %i.r, ptr %i.a, align 4, !alias.scope !11957, !noalias !11956
-  store i8 %i.o, ptr %.sink21.i.sroa.gep, align 1, !alias.scope !11957, !noalias !11956
-  store i8 %i.k, ptr %.sink21.i.sroa.gep3, align 2, !alias.scope !11957, !noalias !11956
+  store i8 %i.o, ptr %.sink21.i.sroa.gep3, align 1, !alias.scope !11957, !noalias !11956
+  store i8 %i.k, ptr %.sink21.i.sroa.gep, align 2, !alias.scope !11957, !noalias !11956
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i8 %i.g, ptr %i.v, align 1, !alias.scope !11957, !noalias !11956
   %.sroa.015.0.copyload.i.i.i = load i32, ptr %i.a, align 4, !alias.scope !11958, !noalias !11956
   br label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i
 
-_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i: ; preds = %bb.f, %bb.a
-  %.sroa.02.0.i.i.ph.in.i = phi i32 [ %.sroa.015.0.copyload.i.i.i, %bb.f ], [ %3, %bb.a ]
-  %.sroa.0.0.i.i.ph.i = phi i64 [ -4323455642275676160, %bb.f ], [ -4539628424389459968, %bb.a ]
-  %.sroa.02.0.i.i.ph.i = zext i32 %.sroa.02.0.i.i.ph.in.i to i64
+_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i: ; preds = %bb.a, %bb.f
+  %.ph = phi i64 [ -4323455642275676160, %bb.f ], [ -4539628424389459968, %bb.a ]
+  %.sroa.02.0.i.i.ph.in.i = phi i32 [ %.sroa.015.0.copyload.i.i.i, %bb.f ], [ %3, %bb.a ] ; 2 uses
+  %.sroa.02.sroa.0.0.extract.trunc5 = trunc i32 %.sroa.02.0.i.i.ph.in.i to i8
+  %4 = lshr i32 %.sroa.02.0.i.i.ph.in.i, 8
+  %.sroa.02.sroa.6.0.extract.trunc7 = zext nneg i32 %4 to i56
   br label %_RNvXs1_NtNtCsg7m2K3K1Fzf_11compact_str4repr6traitscNtB5_8IntoRepr9into_repr.exit
 
-_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i: ; preds = %bb.e, %bb.c
-  %.sink21.i.sroa.phi = phi ptr [ %.sink21.i.sroa.gep, %bb.c ], [ %.sink21.i.sroa.gep3, %bb.e ]
-  %.sroa.0.05.i.ph.ph.i = phi i64 [ 2, %bb.c ], [ 3, %bb.e ] ; 2 uses
+_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i: ; preds = %bb.c, %bb.e
+  %.sink21.i.sroa.phi = phi ptr [ %.sink21.i.sroa.gep, %bb.e ], [ %.sink21.i.sroa.gep3, %bb.c ]
+  %.sroa.0.05.i.ph.ph.i = phi i64 [ 3, %bb.e ], [ 2, %bb.c ] ; 2 uses
   store i8 %i.g, ptr %.sink21.i.sroa.phi, align 1, !alias.scope !11957, !noalias !11956
   %i.w = shl nuw nsw i64 %.sroa.0.05.i.ph.ph.i, 56
   %i.x = or disjoint i64 %i.w, -4611686018427387904
@@ -275,18 +277,24 @@ _RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i: ; preds = %bb.e
   %i.ab = zext i16 %.sroa.021.0.copyload.i.i.i to i64
   %i.ac = shl nuw nsw i64 %i.z, 3
   %i.ad = shl nuw nsw i64 %i.ab, %i.ac
-  %i.ae = or i64 %i.ad, %i.y
+  %i.ae = or i64 %i.ad, %i.y                      ; 2 uses
+  %.sroa.02.sroa.0.0.extract.trunc = trunc i64 %i.ae to i8
+  %.sroa.02.sroa.6.0.extract.shift = lshr i64 %i.ae, 8
+  %.sroa.02.sroa.6.0.extract.trunc = trunc nuw nsw i64 %.sroa.02.sroa.6.0.extract.shift to i56
   br label %_RNvXs1_NtNtCsg7m2K3K1Fzf_11compact_str4repr6traitscNtB5_8IntoRepr9into_repr.exit
 
-_RNvXs1_NtNtCsg7m2K3K1Fzf_11compact_str4repr6traitscNtB5_8IntoRepr9into_repr.exit: ; preds = %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i
-  %.sroa.0.0.i.i20.i = phi i64 [ %.sroa.0.0.i.i.ph.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i ], [ %i.x, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i ]
-  %.sroa.02.0.i.i19.i = phi i64 [ %.sroa.02.0.i.i.ph.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i ], [ %i.ae, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i ]
+_RNvXs1_NtNtCsg7m2K3K1Fzf_11compact_str4repr6traitscNtB5_8IntoRepr9into_repr.exit: ; preds = %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i
+  %.sroa.02.sroa.6.0.extract.trunc12 = phi i56 [ %.sroa.02.sroa.6.0.extract.trunc7, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i ], [ %.sroa.02.sroa.6.0.extract.trunc, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i ]
+  %.sroa.02.sroa.0.0.extract.trunc11 = phi i8 [ %.sroa.02.sroa.0.0.extract.trunc5, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i ], [ %.sroa.02.sroa.0.0.extract.trunc, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i ]
+  %.sroa.02.0.i.i19.i = phi i64 [ %.ph, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread.i ], [ %i.x, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !11956
-  store i64 %.sroa.02.0.i.i19.i, ptr %i.b, align 8
+  store i8 %.sroa.02.sroa.0.0.extract.trunc11, ptr %i.b, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  store i56 %.sroa.02.sroa.6.0.extract.trunc12, ptr %.sroa.5.0..sroa_idx, align 1
   %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 0, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, align 8
   %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i64 %.sroa.0.0.i.i20.i, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.02.0.i.i19.i, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx, align 8
   %i.af = call { i32, i32 } @_RINvMs9_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types7literals2_1__NtB8_17StringLiteralType3newDNtNtBc_2db2DbEL_NtCsg7m2K3K1Fzf_11compact_str13CompactStringEBc_(ptr noundef nonnull %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %2, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.b) ; 2 uses
   %i.ag = extractvalue { i32, i32 } %i.af, 0
   %i.ah = extractvalue { i32, i32 } %i.af, 1
@@ -689,8 +697,8 @@ _RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtN
   %.sroa.3.0.i.i = phi i32 [ undef, %_RNvYNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types3mro11MroIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3nthB8_.exit.thread.i.i ], [ %.sroa.3.0.i.i.i, %_RINvYNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types3mro11MroIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB19_8adapters10filter_map19filter_map_try_foldNtNtB7_10class_base9ClassBaseNtNtB7_5class9ClassTypeuINtNtNtB1b_3ops12control_flow11ControlFlowNtNtB7_8function12FunctionTypeENvMB33_B31_10into_classNCIB2b_B3u_NtNtB3w_14static_literal18StaticClassLiteraluB3S_NCNvNtB7_5enums24iter_parent_enum_classes0NCINvNtB2f_6filter15filter_try_foldB5B_uB3S_NCNvB6s_27inherited_known_enum_method0NCINvNvB13_8find_map5checkB5B_B4y_NCB7O_s_0E0E0E0E0B3S_EB9_.exit.i.i ]
   %.sroa.0.0.i.i = phi i32 [ 0, %_RNvYNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types3mro11MroIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3nthB8_.exit.thread.i.i ], [ %.sroa.0.0.i.i.i, %_RINvYNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types3mro11MroIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB19_8adapters10filter_map19filter_map_try_foldNtNtB7_10class_base9ClassBaseNtNtB7_5class9ClassTypeuINtNtNtB1b_3ops12control_flow11ControlFlowNtNtB7_8function12FunctionTypeENvMB33_B31_10into_classNCIB2b_B3u_NtNtB3w_14static_literal18StaticClassLiteraluB3S_NCNvNtB7_5enums24iter_parent_enum_classes0NCINvNtB2f_6filter15filter_try_foldB5B_uB3S_NCNvB6s_27inherited_known_enum_method0NCINvNvB13_8find_map5checkB5B_B4y_NCB7O_s_0E0E0E0E0B3S_EB9_.exit.i.i ]
   %i.ah = insertvalue { i32, i32 } poison, i32 %.sroa.0.0.i.i, 0
-  %7 = insertvalue { i32, i32 } %i.ah, i32 %.sroa.3.0.i.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
+  %7 = insertvalue { i32, i32 } %i.ah, i32 %.sroa.3.0.i.i, 1
   ret { i32, i32 } %7
 }
 
@@ -1093,9 +1101,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 0, ptr %i.a, align 4
   %i.b = icmp samesign ult i32 %1, 128
-  %.sink21.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %.sink21.sroa.gep22 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  br i1 %i.b, label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread, label %bb.b
+  %.sink21.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %.sink21.sroa.gep22 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  br i1 %i.b, label %3, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 2048
@@ -1140,17 +1148,12 @@ bb.f:                                             ; preds = %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i8 %i.f, ptr %i.x, align 1, !alias.scope !18322
   %.sroa.015.0.copyload.i.i = load i32, ptr %i.a, align 4, !alias.scope !18323
-  br label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread
-
-_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread: ; preds = %bb.a, %bb.f
-  %.sroa.02.0.i.i.ph.in = phi i32 [ %.sroa.015.0.copyload.i.i, %bb.f ], [ %1, %bb.a ]
-  %.sroa.0.0.i.i.ph = phi i64 [ -4323455642275676160, %bb.f ], [ -4539628424389459968, %bb.a ]
-  %.sroa.02.0.i.i.ph = zext i32 %.sroa.02.0.i.i.ph.in to i64
+  %2 = zext i32 %.sroa.015.0.copyload.i.i to i64
   br label %bb.g
 
-_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit: ; preds = %bb.c, %bb.e
-  %.sink21.sroa.phi = phi ptr [ %.sink21.sroa.gep, %bb.c ], [ %.sink21.sroa.gep22, %bb.e ]
-  %.sroa.0.05.i.ph.ph = phi i64 [ 2, %bb.c ], [ 3, %bb.e ] ; 2 uses
+_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit: ; preds = %bb.e, %bb.c
+  %.sink21.sroa.phi = phi ptr [ %.sink21.sroa.gep, %bb.e ], [ %.sink21.sroa.gep22, %bb.c ]
+  %.sroa.0.05.i.ph.ph = phi i64 [ 3, %bb.e ], [ 2, %bb.c ] ; 2 uses
   store i8 %i.f, ptr %.sink21.sroa.phi, align 1, !alias.scope !18322
   %i.y = shl nuw nsw i64 %.sroa.0.05.i.ph.ph, 56
   %i.z = or disjoint i64 %i.y, -4611686018427387904
@@ -1165,14 +1168,18 @@ _RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit: ; preds = %bb.c, 
   %i.ag = or i64 %i.af, %i.aa
   br label %bb.g
 
-bb.g:                                             ; preds = %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit
-  %.sroa.0.0.i.i20 = phi i64 [ %.sroa.0.0.i.i.ph, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread ], [ %i.z, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit ]
-  %.sroa.02.0.i.i19 = phi i64 [ %.sroa.02.0.i.i.ph, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit.thread ], [ %i.ag, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit ]
-  store i64 %.sroa.02.0.i.i19, ptr %0, align 8
+3:                                                ; preds = %bb.a
+  %4 = zext nneg i32 %1 to i64
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.f, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit, %3
+  %5 = phi i64 [ -4323455642275676160, %bb.f ], [ -4539628424389459968, %3 ], [ %i.z, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit ]
+  %.sroa.02.0.i.i = phi i64 [ %2, %bb.f ], [ %4, %3 ], [ %i.ag, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr3new.exit ]
+  store i64 %.sroa.02.0.i.i, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.0.0.i.i20, ptr %.sroa.3.0..sroa_idx, align 8
+  store i64 %5, ptr %.sroa.3.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
