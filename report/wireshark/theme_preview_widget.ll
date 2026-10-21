@@ -205,11 +205,11 @@ declare double @llvm.fmuladd.f64(double, double, double) #7
 define noundef range(i32 129, 131) i32 @_ZNK18ThemePreviewWidget9cellFlagsEi(ptr nofree noundef readnone align 8 captures(none) dereferenceable_or_null(64) %0, i32 noundef %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = sext i32 %1 to i64
-  %2 = getelementptr [24 x i8], ptr @_ZN12_GLOBAL__N_18kColumnsE, i64 %i.a
-  %3 = getelementptr i8, ptr %2, i64 8
-  %4 = load i8, ptr %3, align 8, !range !8, !noundef !9
-  %5 = trunc nuw i8 %4 to i1
-  %i.b = select i1 %5, i32 130, i32 129
+  %2 = and i64 %i.a, 2305843009213693951
+  %3 = shl nuw i64 1, %2
+  %4 = and i64 %3, 69
+  %.not = icmp eq i64 %4, 0
+  %i.b = select i1 %.not, i32 129, i32 130
   ret i32 %i.b
 }
 
@@ -612,7 +612,7 @@ bb.v:                                             ; preds = %bb.l
   br label %.loopexit.split-lp
 
 bb.w:                                             ; preds = %bb.ac, %.peel.next99
-  %indvars.iv = phi i64 [ 2, %.peel.next99 ], [ %indvars.iv.next, %bb.ac ] ; 4 uses
+  %indvars.iv = phi i64 [ 2, %.peel.next99 ], [ %indvars.iv.next, %bb.ac ] ; 5 uses
   %.04289 = phi double [ f0x3FC5C28F5C28F5C2, %.peel.next99 ], [ %i.cw, %bb.ac ]
   invoke void @_ZN8QPainter6setPenERK6QColor(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 4 dereferenceable(14) %8)
           to label %.lr.ph.i.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp
@@ -651,7 +651,7 @@ _ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit: ; preds = %.lr.ph.i
   %.lcssa = phi double [ 6.900000e-01, %.lr.ph.i.6 ], [ f0x3FC5C28F5C28F5C2, %.lr.ph.i.preheader ], [ 5.400000e-01, %_ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit.fold.split140 ], [ 2.600000e-01, %_ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit.fold.split ], [ 4.000000e-01, %_ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit.fold.split139 ], [ 6.300000e-01, %_ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit.fold.split141 ]
   %i.cg = call double @llvm.fmuladd.f64(double %.lcssa, double %i.ag, double %i.ae)
   %i.ch = fadd double %i.cg, 4.000000e+00
-  %i.ci = getelementptr [24 x i8], ptr @_ZN12_GLOBAL__N_18kColumnsE, i64 %indvars.iv ; 4 uses
+  %i.ci = getelementptr [24 x i8], ptr @_ZN12_GLOBAL__N_18kColumnsE, i64 %indvars.iv ; 3 uses
   %i.cj = load double, ptr %i.ci, align 8, !noalias !35
   %i.ck = fmul double %i.cj, %i.ag
   %i.cl = sitofp i32 %i.cd to double
@@ -662,8 +662,6 @@ _ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit: ; preds = %.lr.ph.i
   store double %i.cl, ptr %i.ah, align 8, !alias.scope !36
   store double %i.co, ptr %i.ai, align 8, !alias.scope !36
   store double %i.cm, ptr %i.aj, align 8, !alias.scope !36
-  %12 = getelementptr i8, ptr %i.ci, i64 8
-  %13 = load i8, ptr %12, align 8, !range !8, !noundef !9
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   %i.cp = getelementptr i8, ptr %i.ci, i64 16
   %i.cq = load ptr, ptr %i.cp, align 8
@@ -671,8 +669,10 @@ _ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit: ; preds = %.lr.ph.i
           to label %_ZN18ThemePreviewWidget2trEPKcS1_i.exit unwind label %.loopexit.split-lp130
 
 _ZN18ThemePreviewWidget2trEPKcS1_i.exit:          ; preds = %_ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit
-  %14 = trunc nuw i8 %13 to i1
-  %i.cr = select i1 %14, i32 130, i32 129
+  %12 = shl nuw nsw i64 1, %indvars.iv
+  %13 = and i64 %12, 69
+  %.not.i = icmp eq i64 %13, 0
+  %i.cr = select i1 %.not.i, i32 129, i32 130
   invoke void @_ZN8QPainter8drawTextERK6QRectFiRK7QStringPS0_(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %10, i32 noundef %i.cr, ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef null)
           to label %bb.x unwind label %.loopexit.split-lp134
 
@@ -1075,7 +1075,7 @@ bb.az:                                            ; preds = %bb.ao, %bb.an, %bb.
   br label %bb.be
 
 .preheader:                                       ; preds = %_ZN7QStringD2Ev.exit161.peel255, %_ZN7QStringD2Ev.exit161
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN7QStringD2Ev.exit161 ], [ 3, %_ZN7QStringD2Ev.exit161.peel255 ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN7QStringD2Ev.exit161 ], [ 3, %_ZN7QStringD2Ev.exit161.peel255 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #23
   %i.ff = load i32, ptr %i.ao, align 4            ; 2 uses
   %i.fg = load i32, ptr %i.aq, align 4
@@ -1105,7 +1105,7 @@ _ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit: ; preds = %.prehead
   %.lcssa = phi double [ 6.900000e-01, %.lr.ph.i.6 ], [ 5.400000e-01, %_ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit.fold.split265 ], [ 2.600000e-01, %.preheader ], [ 4.000000e-01, %_ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit.fold.split ], [ 6.300000e-01, %_ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit.fold.split266 ]
   %i.fi = call double @llvm.fmuladd.f64(double %.lcssa, double %i.ay, double %i.ax)
   %i.fj = fadd double %i.fi, 4.000000e+00
-  %i.fk = getelementptr [24 x i8], ptr @_ZN12_GLOBAL__N_18kColumnsE, i64 %indvars.iv ; 2 uses
+  %i.fk = getelementptr [24 x i8], ptr @_ZN12_GLOBAL__N_18kColumnsE, i64 %indvars.iv
   %i.fl = load double, ptr %i.fk, align 8, !noalias !53
   %i.fm = fmul double %i.fl, %i.ay
   %i.fn = sitofp i32 %i.ff to double
@@ -1116,10 +1116,10 @@ _ZNK18ThemePreviewWidget8cellRectERK5QRectiii.exit.loopexit: ; preds = %.prehead
   store double %i.fn, ptr %i.az, align 8, !alias.scope !54
   store double %i.fq, ptr %i.ba, align 8, !alias.scope !54
   store double %i.fo, ptr %i.bb, align 8, !alias.scope !54
-  %19 = getelementptr i8, ptr %i.fk, i64 8
-  %20 = load i8, ptr %19, align 8, !range !8, !noundef !9
-  %21 = trunc nuw i8 %20 to i1
-  %i.fr = select i1 %21, i32 130, i32 129
+  %19 = shl nuw nsw i64 1, %indvars.iv
+  %20 = and i64 %19, 69
+  %.not.i154 = icmp eq i64 %20, 0
+  %i.fr = select i1 %.not.i154, i32 129, i32 130
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #23
   %i.fs = getelementptr [8 x i8], ptr %i.ca, i64 %indvars.iv
   %i.ft = load ptr, ptr %i.fs, align 8            ; 3 uses
