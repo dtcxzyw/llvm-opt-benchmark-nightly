@@ -32,16 +32,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store <4 x i32> splat (i32 1), ptr @texShapes, align 16
   store i32 7, ptr getelementptr inbounds nuw (i8, ptr @texShapes, i64 16), align 16
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr @texShapesRec, align 16
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) @texShapes, ptr noundef nonnull align 8 dereferenceable(20) %0, i64 20, i1 false)
-  store <2 x float> %1, ptr @texShapesRec, align 16
-  store <2 x float> %2, ptr getelementptr inbounds nuw (i8, ptr @texShapesRec, i64 8), align 8
+  %3 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %storemerge = phi <4 x float> [ %3, %bb.c ], [ <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00>, %bb.b ]
+  store <4 x float> %storemerge, ptr @texShapesRec, align 16
   ret void
 }
 

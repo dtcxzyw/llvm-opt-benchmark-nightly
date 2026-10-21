@@ -202,15 +202,15 @@ bb.a:
   %i.j = shufflevector <2 x double> %i.i, <2 x double> poison, <2 x i32> zeroinitializer
   %i.k = fdiv <2 x double> %i.h, %i.j
   %i.l = fadd <2 x double> %i.e, %i.k             ; 2 uses
-  store <2 x double> %i.l, ptr %i.a, align 8, !tbaa !21
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.n = fsub <2 x double> %i.g, %i.l
   %i.o = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> zeroinitializer
   %i.p = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.q = fmul <2 x double> %i.o, %i.p
   %i.r = load <2 x double>, ptr %i.m, align 8, !tbaa !21
   %i.s = fadd <2 x double> %i.r, %i.q
-  store <2 x double> %i.s, ptr %i.m, align 8, !tbaa !21
+  %3 = shufflevector <2 x double> %i.l, <2 x double> %i.s, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %3, ptr %i.a, align 8, !tbaa !21
   ret void
 }
 
@@ -312,15 +312,15 @@ bb.a:
   %i.j = shufflevector <2 x double> %i.i, <2 x double> poison, <2 x i32> zeroinitializer
   %i.k = fdiv <2 x double> %i.h, %i.j
   %i.l = fadd <2 x double> %i.e, %i.k             ; 2 uses
-  store <2 x double> %i.l, ptr %i.a, align 8, !tbaa !21
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.n = fsub <2 x double> %i.g, %i.l             ; 2 uses
   %i.o = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> zeroinitializer
   %i.p = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.q = fmul <2 x double> %i.o, %i.p
   %i.r = load <2 x double>, ptr %i.m, align 8, !tbaa !21
   %i.s = fadd <2 x double> %i.r, %i.q
-  store <2 x double> %i.s, ptr %i.m, align 8, !tbaa !21
+  %3 = shufflevector <2 x double> %i.l, <2 x double> %i.s, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %3, ptr %i.a, align 8, !tbaa !21
   %foldExtExtBinop = fmul <2 x double> %i.h, %i.n
   %i.t = extractelement <2 x double> %foldExtExtBinop, i64 1
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -535,15 +535,15 @@ bb.a:
   %i.j = shufflevector <2 x double> %i.i, <2 x double> poison, <2 x i32> zeroinitializer
   %i.k = fdiv <2 x double> %i.h, %i.j
   %i.l = fadd <2 x double> %i.e, %i.k             ; 2 uses
-  store <2 x double> %i.l, ptr %i.a, align 8, !tbaa !21
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.n = fsub <2 x double> %i.g, %i.l             ; 2 uses
   %i.o = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> zeroinitializer
   %i.p = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.q = fmul <2 x double> %i.o, %i.p
   %i.r = load <2 x double>, ptr %i.m, align 8, !tbaa !21
   %i.s = fadd <2 x double> %i.r, %i.q
-  store <2 x double> %i.s, ptr %i.m, align 8, !tbaa !21
+  %3 = shufflevector <2 x double> %i.l, <2 x double> %i.s, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %3, ptr %i.a, align 8, !tbaa !21
   %foldExtExtBinop = fmul <2 x double> %i.h, %i.n
   %i.t = extractelement <2 x double> %foldExtExtBinop, i64 1
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
