@@ -205,52 +205,60 @@ _RNvMNtNtCs2zhaXXqUmnG_8chacha208backends4avx2INtB2_7BackendNtB6_3R12NtNtB6_8var
   %i.cz = add <8 x i32> %i.ce, %i.g, !dbg !2946   ; 2 uses
   %i.da = add <8 x i32> %i.cm, %i.h, !dbg !2946   ; 2 uses
   %.sroa.2.32.vec.extract = shufflevector <8 x i32> %i.da, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2947
+  %2 = bitcast <4 x i32> %.sroa.2.32.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.2.48.vec.extract = shufflevector <8 x i32> %i.da, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>, !dbg !2947
+  %3 = bitcast <4 x i32> %.sroa.2.48.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.5.64.vec.extract = shufflevector <8 x i32> %i.cz, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2947
+  %4 = bitcast <4 x i32> %.sroa.5.64.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.5.80.vec.extract = shufflevector <8 x i32> %i.cz, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>, !dbg !2947
+  %5 = bitcast <4 x i32> %.sroa.5.80.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.8.96.vec.extract = shufflevector <8 x i32> %i.cy, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2947
+  %6 = bitcast <4 x i32> %.sroa.8.96.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.8.112.vec.extract = shufflevector <8 x i32> %i.cy, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>, !dbg !2947
+  %7 = bitcast <4 x i32> %.sroa.8.112.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.11.128.vec.extract = shufflevector <8 x i32> %i.cx, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2947
+  %8 = bitcast <4 x i32> %.sroa.11.128.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.11.144.vec.extract = shufflevector <8 x i32> %i.cx, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>, !dbg !2947
-  store <4 x i32> %.sroa.2.32.vec.extract, ptr %1, align 4, !dbg !2948, !noalias !2890
-  %i.db = getelementptr inbounds nuw i8, ptr %1, i64 64, !dbg !2949
-  store <4 x i32> %.sroa.2.48.vec.extract, ptr %i.db, align 4, !dbg !2950, !noalias !2891
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !2951
-  store <4 x i32> %.sroa.5.64.vec.extract, ptr %2, align 4, !dbg !2948, !noalias !2890
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !2949
-  store <4 x i32> %.sroa.5.80.vec.extract, ptr %3, align 4, !dbg !2950, !noalias !2891
+  %9 = bitcast <4 x i32> %.sroa.11.144.vec.extract to <2 x i64>, !dbg !2947
+  %i.db = getelementptr inbounds nuw i8, ptr %1, i64 64, !dbg !2948
+  %10 = shufflevector <2 x i64> %2, <2 x i64> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2949
+  store <4 x i64> %10, ptr %1, align 4, !dbg !2949, !noalias !2890
+  %11 = shufflevector <2 x i64> %3, <2 x i64> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2950
+  store <4 x i64> %11, ptr %i.db, align 4, !dbg !2950, !noalias !2891
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 32, !dbg !2951
-  store <4 x i32> %.sroa.8.96.vec.extract, ptr %i.dc, align 4, !dbg !2948, !noalias !2890
-  %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 96, !dbg !2949
-  store <4 x i32> %.sroa.8.112.vec.extract, ptr %i.dd, align 4, !dbg !2950, !noalias !2891
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !2951
-  store <4 x i32> %.sroa.11.128.vec.extract, ptr %4, align 4, !dbg !2948, !noalias !2890
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 112, !dbg !2949
-  store <4 x i32> %.sroa.11.144.vec.extract, ptr %5, align 4, !dbg !2950, !noalias !2891
+  %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 96, !dbg !2948
+  %12 = shufflevector <2 x i64> %6, <2 x i64> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2949
+  store <4 x i64> %12, ptr %i.dc, align 4, !dbg !2949, !noalias !2890
+  %13 = shufflevector <2 x i64> %7, <2 x i64> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2950
+  store <4 x i64> %13, ptr %i.dd, align 4, !dbg !2950, !noalias !2891
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 128, !dbg !2952
   %.sroa.14.160.vec.extract = shufflevector <8 x i32> %i.cv, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2947
+  %14 = bitcast <4 x i32> %.sroa.14.160.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.14.176.vec.extract = shufflevector <8 x i32> %i.cv, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>, !dbg !2947
+  %15 = bitcast <4 x i32> %.sroa.14.176.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.17.192.vec.extract = shufflevector <8 x i32> %i.cu, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2947
+  %16 = bitcast <4 x i32> %.sroa.17.192.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.17.208.vec.extract = shufflevector <8 x i32> %i.cu, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>, !dbg !2947
+  %17 = bitcast <4 x i32> %.sroa.17.208.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.20.224.vec.extract = shufflevector <8 x i32> %i.ct, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2947
+  %18 = bitcast <4 x i32> %.sroa.20.224.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.20.240.vec.extract = shufflevector <8 x i32> %i.ct, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>, !dbg !2947
+  %19 = bitcast <4 x i32> %.sroa.20.240.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.23.256.vec.extract = shufflevector <8 x i32> %i.cs, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2947
+  %20 = bitcast <4 x i32> %.sroa.23.256.vec.extract to <2 x i64>, !dbg !2947
   %.sroa.23.272.vec.extract = shufflevector <8 x i32> %i.cs, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>, !dbg !2947
-  store <4 x i32> %.sroa.14.160.vec.extract, ptr %i.de, align 4, !dbg !2948, !noalias !2890
-  %i.df = getelementptr inbounds nuw i8, ptr %1, i64 192, !dbg !2949
-  store <4 x i32> %.sroa.14.176.vec.extract, ptr %i.df, align 4, !dbg !2950, !noalias !2891
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 144, !dbg !2951
-  store <4 x i32> %.sroa.17.192.vec.extract, ptr %6, align 4, !dbg !2948, !noalias !2890
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 208, !dbg !2949
-  store <4 x i32> %.sroa.17.208.vec.extract, ptr %7, align 4, !dbg !2950, !noalias !2891
+  %21 = bitcast <4 x i32> %.sroa.23.272.vec.extract to <2 x i64>, !dbg !2947
+  %i.df = getelementptr inbounds nuw i8, ptr %1, i64 192, !dbg !2948
+  %22 = shufflevector <2 x i64> %14, <2 x i64> %16, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2949
+  store <4 x i64> %22, ptr %i.de, align 4, !dbg !2949, !noalias !2890
+  %23 = shufflevector <2 x i64> %15, <2 x i64> %17, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2950
+  store <4 x i64> %23, ptr %i.df, align 4, !dbg !2950, !noalias !2891
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 160, !dbg !2951
-  store <4 x i32> %.sroa.20.224.vec.extract, ptr %i.dg, align 4, !dbg !2948, !noalias !2890
-  %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 224, !dbg !2949
-  store <4 x i32> %.sroa.20.240.vec.extract, ptr %i.dh, align 4, !dbg !2950, !noalias !2891
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 176, !dbg !2951
-  store <4 x i32> %.sroa.23.256.vec.extract, ptr %8, align 4, !dbg !2948, !noalias !2890
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 240, !dbg !2949
-  store <4 x i32> %.sroa.23.272.vec.extract, ptr %9, align 4, !dbg !2950, !noalias !2891
+  %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 224, !dbg !2948
+  %24 = shufflevector <2 x i64> %18, <2 x i64> %20, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2949
+  store <4 x i64> %24, ptr %i.dg, align 4, !dbg !2949, !noalias !2890
+  %25 = shufflevector <2 x i64> %19, <2 x i64> %21, <4 x i32> <i32 0, i32 1, i32 2, i32 3>, !dbg !2950
+  store <4 x i64> %25, ptr %i.dh, align 4, !dbg !2950, !noalias !2891
   %i.di = add <4 x i64> %i.d, <i64 4, i64 poison, i64 poison, i64 poison>, !dbg !2953
   %i.dj = bitcast <4 x i64> %i.di to <8 x i32>, !dbg !2954
   %i.dk = shufflevector <8 x i32> %i.dj, <8 x i32> poison, <2 x i32> <i32 0, i32 1>, !dbg !2955
@@ -653,26 +661,26 @@ begin_hunk_1_@llvm.fshl.v8i32
 !2834 = distinct !DILocation(line: 219, column: 51, scope: !2821, inlinedAt: !2833)
 !2835 = distinct !DILocation(line: 799, column: 27, scope: !2820, inlinedAt: !2834)
 !2836 = distinct !DILocation(line: 1153, column: 18, scope: !2819, inlinedAt: !2835)
-!2837 = distinct !{!2837, i1 true, !"_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i15write_unalignedCsbaWXNhtWAp9_11foundations"}
-!2838 = distinct !{!2838, !2837, !"_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i15write_unalignedCsbaWXNhtWAp9_11foundations: argument 0"}
-!2839 = distinct !DILexicalBlock(scope: !2829, file: !2861, line: 195, column: 13)
-!2840 = distinct !DILexicalBlock(scope: !2839, file: !2861, line: 196, column: 17)
+!2837 = distinct !DISubprogram(name: "add<core::core_arch::x86::__m128i>", linkageName: "_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i3addCsbaWXNhtWAp9_11foundations", scope: !576, file: !574, line: 936, type: !495, scopeLine: 936, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !494)
+!2838 = distinct !DILexicalBlock(scope: !2829, file: !2861, line: 195, column: 13)
+!2839 = distinct !DILexicalBlock(scope: !2838, file: !2861, line: 196, column: 17)
+!2840 = distinct !DILexicalBlock(scope: !2839, file: !2861, line: 197, column: 17)
 !2841 = distinct !DILexicalBlock(scope: !2840, file: !2861, line: 197, column: 17)
-!2842 = distinct !DILexicalBlock(scope: !2841, file: !2861, line: 197, column: 17)
-!2843 = distinct !DILocation(line: 198, column: 21, scope: !2842, inlinedAt: !2742)
+!2842 = distinct !DILocation(line: 199, column: 48, scope: !2841, inlinedAt: !2742)
+!2843 = distinct !DILocation(line: 198, column: 21, scope: !2841, inlinedAt: !2742)
 !2844 = distinct !DILocation(line: 1405, column: 14, scope: !235, inlinedAt: !2843)
 !2845 = distinct !DILocation(line: 1464, column: 18, scope: !234, inlinedAt: !2844)
 !2846 = distinct !DILocation(line: 2057, column: 14, scope: !233, inlinedAt: !2845)
-!2847 = distinct !DISubprogram(name: "add<core::core_arch::x86::__m128i>", linkageName: "_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i3addCsbaWXNhtWAp9_11foundations", scope: !576, file: !574, line: 936, type: !495, scopeLine: 936, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !494)
-!2848 = distinct !DILocation(line: 199, column: 48, scope: !2842, inlinedAt: !2742)
-!2849 = distinct !{!2849, i1 true, !"_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i15write_unalignedCsbaWXNhtWAp9_11foundations"}
-!2850 = distinct !{!2850, !2849, !"_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i15write_unalignedCsbaWXNhtWAp9_11foundations: argument 0"}
-!2851 = distinct !DILocation(line: 199, column: 21, scope: !2842, inlinedAt: !2742)
-!2852 = distinct !DILocation(line: 1405, column: 14, scope: !235, inlinedAt: !2851)
-!2853 = distinct !DILocation(line: 1464, column: 18, scope: !234, inlinedAt: !2852)
-!2854 = distinct !DILocation(line: 2057, column: 14, scope: !233, inlinedAt: !2853)
-!2855 = distinct !DILocation(line: 198, column: 48, scope: !2842, inlinedAt: !2742)
-!2856 = distinct !DILocation(line: 201, column: 39, scope: !2840, inlinedAt: !2742)
+!2847 = distinct !{!2847, i1 true, !"_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i15write_unalignedCsbaWXNhtWAp9_11foundations"}
+!2848 = distinct !{!2848, !2847, !"_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i15write_unalignedCsbaWXNhtWAp9_11foundations: argument 0"}
+!2849 = distinct !DILocation(line: 199, column: 21, scope: !2841, inlinedAt: !2742)
+!2850 = distinct !DILocation(line: 1405, column: 14, scope: !235, inlinedAt: !2849)
+!2851 = distinct !DILocation(line: 1464, column: 18, scope: !234, inlinedAt: !2850)
+!2852 = distinct !DILocation(line: 2057, column: 14, scope: !233, inlinedAt: !2851)
+!2853 = distinct !{!2853, i1 true, !"_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i15write_unalignedCsbaWXNhtWAp9_11foundations"}
+!2854 = distinct !{!2854, !2853, !"_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtNtNtB6_9core_arch3x867___m128i15write_unalignedCsbaWXNhtWAp9_11foundations: argument 0"}
+!2855 = distinct !DILocation(line: 198, column: 48, scope: !2841, inlinedAt: !2742)
+!2856 = distinct !DILocation(line: 201, column: 39, scope: !2839, inlinedAt: !2742)
 !2857 = distinct !DISubprogram(name: "_mm256_add_epi64", linkageName: "_RNvNtNtNtCs3oUPovFnLWP_4core9core_arch3x864avx216__mm256_add_epi64", scope: !2869, file: !2868, line: 83, type: !568, scopeLine: 83, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !494)
 !2858 = distinct !DILexicalBlock(scope: !2827, file: !2861, line: 190, column: 13)
 !2859 = distinct !DILexicalBlock(scope: !2858, file: !2861, line: 190, column: 13)
@@ -706,8 +714,8 @@ begin_hunk_1_@llvm.fshl.v8i32
 !2887 = !DIFile(filename: "library/core/src/array/iter.rs", directory: "/rustc/787af2b8c80638c51a4fc8e44f84e6891f243ec7", checksumkind: CSK_MD5, checksum: "c1dd90260bb3443fb9d4fc76ebd1ded3")
 !2888 = !DINamespace(name: "{impl#5}", scope: !2882)
 !2889 = !DILexicalBlockFile(scope: !2829, file: !2861, discriminator: 2)
-!2890 = !{!2838}
-!2891 = !{!2850}
+!2890 = !{!2848}
+!2891 = !{!2854}
 !2892 = !DILocation(line: 574, column: 14, scope: !220, inlinedAt: !2714)
 !2893 = !DILocation(line: 871, column: 18, scope: !223, inlinedAt: !2715)
 !2894 = !DILocation(line: 574, column: 14, scope: !220, inlinedAt: !2719)
@@ -764,11 +772,11 @@ begin_hunk_1_@llvm.fshl.v8i32
 !2945 = !DILocation(line: 96, column: 24, scope: !2813, inlinedAt: !2814)
 !2946 = !DILocation(line: 96, column: 24, scope: !2813, inlinedAt: !2817)
 !2947 = !DILocation(line: 1756, column: 9, scope: !2818, inlinedAt: !2836)
-!2948 = !DILocation(line: 1964, column: 41, scope: !230, inlinedAt: !2846)
-!2949 = !DILocation(line: 970, column: 18, scope: !2847, inlinedAt: !2848)
-!2950 = !DILocation(line: 1964, column: 41, scope: !230, inlinedAt: !2854)
-!2951 = !DILocation(line: 970, column: 18, scope: !2847, inlinedAt: !2855)
-!2952 = !DILocation(line: 970, column: 18, scope: !2847, inlinedAt: !2856)
+!2948 = !DILocation(line: 970, column: 18, scope: !2837, inlinedAt: !2842)
+!2949 = !DILocation(line: 1964, column: 41, scope: !230, inlinedAt: !2846)
+!2950 = !DILocation(line: 1964, column: 41, scope: !230, inlinedAt: !2852)
+!2951 = !DILocation(line: 970, column: 18, scope: !2837, inlinedAt: !2855)
+!2952 = !DILocation(line: 970, column: 18, scope: !2837, inlinedAt: !2856)
 !2953 = !DILocation(line: 84, column: 24, scope: !2857, inlinedAt: !2860)
 !2954 = !DILocation(line: 110, column: 43, scope: !2741)
 !2955 = !DILocation(line: 110, column: 5, scope: !2741)

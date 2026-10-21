@@ -205,12 +205,16 @@ vector.ph2826:                                    ; preds = %vector.main.loop.it
   %i.dnq = load float, ptr %i.dnf, align 4, !tbaa !195, !alias.scope !641 ; 2 uses
   %broadcast.splatinsert2828 = insertelement <4 x float> poison, float %i.dnq, i64 0
   %broadcast.splat2829 = shufflevector <4 x float> %broadcast.splatinsert2828, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.dnr = fpext <4 x float> %broadcast.splat2829 to <4 x double> ; 4 uses
+  %i.dnr = fpext <4 x float> %broadcast.splat2829 to <4 x double> ; 2 uses
   %i.dns = load float, ptr %i.dng, align 8, !tbaa !194, !alias.scope !641
   %i.dnt = fsub float %i.dns, %i.dnq
   %broadcast.splatinsert2830 = insertelement <4 x float> poison, float %i.dnt, i64 0
   %broadcast.splat2831 = shufflevector <4 x float> %broadcast.splatinsert2830, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.dnu = fpext <4 x float> %broadcast.splat2831 to <4 x double> ; 4 uses
+  %i.dnu = fpext <4 x float> %broadcast.splat2831 to <4 x double> ; 2 uses
+  %94 = shufflevector <4 x double> %i.dnu, <4 x double> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3>
+  %95 = shufflevector <4 x double> %i.dnr, <4 x double> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3>
+  %96 = shufflevector <4 x double> %i.dnu, <4 x double> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3>
+  %97 = shufflevector <4 x double> %i.dnr, <4 x double> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3>
   br label %vector.body2832
 
 vector.body2832:                                  ; preds = %vector.ph2826, %vector.body2832
@@ -223,22 +227,16 @@ vector.body2832:                                  ; preds = %vector.ph2826, %vec
   %wide.load2835 = load <4 x double>, ptr %i.dnw, align 8, !tbaa !186
   %wide.load2836 = load <4 x double>, ptr %i.dnx, align 8, !tbaa !186
   %wide.load2837 = load <4 x double>, ptr %i.dny, align 8, !tbaa !186
-  %94 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.dnu, <4 x double> %wide.load2834, <4 x double> %i.dnr)
-  %95 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.dnu, <4 x double> %wide.load2835, <4 x double> %i.dnr)
-  %96 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.dnu, <4 x double> %wide.load2836, <4 x double> %i.dnr)
-  %97 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.dnu, <4 x double> %wide.load2837, <4 x double> %i.dnr)
-  %98 = fptrunc <4 x double> %94 to <4 x float>
-  %99 = fptrunc <4 x double> %95 to <4 x float>
-  %100 = fptrunc <4 x double> %96 to <4 x float>
-  %101 = fptrunc <4 x double> %97 to <4 x float>
-  %102 = getelementptr inbounds nuw [4 x i8], ptr %i.dnk, i64 %index2833 ; 4 uses
-  %103 = getelementptr inbounds nuw i8, ptr %102, i64 16
-  %104 = getelementptr inbounds nuw i8, ptr %102, i64 32
-  %105 = getelementptr inbounds nuw i8, ptr %102, i64 48
-  store <4 x float> %98, ptr %102, align 4, !tbaa !149, !alias.scope !642, !noalias !641
-  store <4 x float> %99, ptr %103, align 4, !tbaa !149, !alias.scope !642, !noalias !641
-  store <4 x float> %100, ptr %104, align 4, !tbaa !149, !alias.scope !642, !noalias !641
-  store <4 x float> %101, ptr %105, align 4, !tbaa !149, !alias.scope !642, !noalias !641
+  %98 = getelementptr inbounds nuw [4 x i8], ptr %i.dnk, i64 %index2833 ; 2 uses
+  %99 = getelementptr inbounds nuw i8, ptr %98, i64 32
+  %100 = shufflevector <4 x double> %wide.load2834, <4 x double> %wide.load2835, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %101 = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %94, <8 x double> %100, <8 x double> %95)
+  %102 = fptrunc <8 x double> %101 to <8 x float>
+  store <8 x float> %102, ptr %98, align 4, !tbaa !149, !alias.scope !642, !noalias !641
+  %103 = shufflevector <4 x double> %wide.load2836, <4 x double> %wide.load2837, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %104 = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %96, <8 x double> %103, <8 x double> %97)
+  %105 = fptrunc <8 x double> %104 to <8 x float>
+  store <8 x float> %105, ptr %99, align 4, !tbaa !149, !alias.scope !642, !noalias !641
   %index.next2838 = add nuw i64 %index2833, 16    ; 2 uses
   %i.dnz = icmp eq i64 %index.next2838, %n.vec2827
   br i1 %i.dnz, label %middle.block2839, label %vector.body2832, !llvm.loop !520
@@ -640,6 +638,9 @@ declare <4 x float> @llvm.masked.load.v4f32.p0(ptr captures(none), <4 x i1>, <4 
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x double> @llvm.fmuladd.v8f64(<8 x double>, <8 x double>, <8 x double>) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <4 x ptr> @llvm.masked.gather.v4p0.v4p0(<4 x ptr>, <4 x i1>, <4 x ptr>) #27
