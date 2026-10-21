@@ -205,11 +205,10 @@ bb.c:                                             ; preds = %.lr.ph68
   br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !30
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.c
-  %i.aa = icmp eq i32 %i.o, 0                     ; 2 uses
+  %i.aa = icmp eq i32 %i.o, 0
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %. = select i1 %i.aa, i32 262144, i32 1
-  %.56 = select i1 %i.aa, i32 -262144, i32 -1
-  %2 = atomicrmw sub ptr %i.ab, i32 %. seq_cst, align 4
+  %.56 = select i1 %i.aa, i32 -262144, i32 -1     ; 2 uses
+  %2 = atomicrmw add ptr %i.ab, i32 %.56 seq_cst, align 4
   %i.ac = add i32 %2, %.56
   %i.ad = and i32 %i.ac, -1073217537
   %or.cond23 = icmp eq i32 %i.ad, -2147483648

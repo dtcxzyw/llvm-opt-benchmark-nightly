@@ -202,7 +202,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !39)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !40)
   %i.h = load ptr, ptr %i.f, align 8, !alias.scope !41, !noalias !35, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !42
+  %1 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !42
   %i.i = icmp eq i64 %1, 1
   br i1 %i.i, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core8registry10ThreadInfoEBF_.exit.i.i
 
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46)
   %i.o = load ptr, ptr %i.m, align 8, !alias.scope !47, !noalias !35, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !48
+  %2 = atomicrmw add ptr %i.o, i64 -1 release, align 8, !noalias !48
   %i.p = icmp eq i64 %2, 1
   br i1 %i.p, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core8registry10ThreadInfoEBF_.exit8.i.i
 
@@ -384,7 +384,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !76)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !77)
   %i.i = load ptr, ptr %i.g, align 8, !alias.scope !78, !noalias !73, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !79
+  %1 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !79
   %i.j = icmp eq i64 %1, 1
   br i1 %i.j, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsjayvGk2fZH7_15crossbeam_deque5deque6WorkerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEEB1s_.exit.i.i.i.i
 
@@ -411,7 +411,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !81)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !82)
   %i.p = load ptr, ptr %i.n, align 8, !alias.scope !83, !noalias !73, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.p, i64 1 release, align 8, !noalias !84
+  %2 = atomicrmw add ptr %i.p, i64 -1 release, align 8, !noalias !84
   %i.q = icmp eq i64 %2, 1
   br i1 %i.q, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsjayvGk2fZH7_15crossbeam_deque5deque6WorkerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEEB1s_.exit8.i.i.i.i
 
@@ -458,7 +458,7 @@ bb.a:
   br i1 %.not.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core5latch14CountLatchKindEBF_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !93
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !93
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core5latch14CountLatchKindEBF_.exit
 
@@ -477,7 +477,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !114)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !115)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !116, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.a, i64 1 release, align 8, !noalias !116
+  %1 = atomicrmw add ptr %i.a, i64 -1 release, align 8, !noalias !116
   %i.b = icmp eq i64 %1, 1
   br i1 %i.b, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCskVyUMSjkkSy_10rayon_core8registry8RegistryEEB1d_.exit
 
@@ -497,7 +497,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core5latch10CountLatchEBF_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %2 = atomicrmw sub ptr %i.e, i64 1 release, align 8, !noalias !120
+  %2 = atomicrmw add ptr %i.e, i64 -1 release, align 8, !noalias !120
   %i.f = icmp eq i64 %2, 1
   br i1 %i.f, label %bb.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core5latch10CountLatchEBF_.exit
 
@@ -515,7 +515,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCs
   br i1 %.not.i.i2, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core5latch10CountLatchEBF_.exit3, label %bb.f
 
 bb.f:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCskVyUMSjkkSy_10rayon_core8registry8RegistryEEB1d_.exit
-  %3 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !124
+  %3 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !124
   %i.i = icmp eq i64 %3, 1
   br i1 %i.i, label %bb.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core5latch10CountLatchEBF_.exit3
 
@@ -593,7 +593,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.f
   %i.i = landingpad { ptr, i32 }
           cleanup
-  %3 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !134
+  %3 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !134
   %i.j = icmp eq i64 %3, 1
   br i1 %i.j, label %bb.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCskVyUMSjkkSy_10rayon_core8registry8RegistryEEB1d_.exit.i
 
@@ -885,7 +885,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.f
   %i.m = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %3 = atomicrmw sub ptr %i.l, i64 1 release, align 8, !noalias !151
+  %3 = atomicrmw add ptr %i.l, i64 -1 release, align 8, !noalias !151
   %i.n = icmp eq i64 %3, 1
   br i1 %i.n, label %bb.i, label %common.resume
 
@@ -1010,7 +1010,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakINtNtCsfI5zKgsrATz_15crossbeam_utils12cache_padded11CachePaddedINtNtCsjayvGk2fZH7_15crossbeam_deque5deque5InnerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEERNtNtBG_5alloc6GlobalEEB31_.exit
 
@@ -1025,7 +1025,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsfI5zKgsrATz_15crossbeam_utils12ca
 
 bb.e:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsfI5zKgsrATz_15crossbeam_utils12cache_padded11CachePaddedINtNtCsjayvGk2fZH7_15crossbeam_deque5deque5InnerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEEEB2s_.exit
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %2 = atomicrmw sub ptr %i.h, i64 1 release, align 8
+  %2 = atomicrmw add ptr %i.h, i64 -1 release, align 8
   %i.i = icmp eq i64 %2, 1
   br i1 %i.i, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakINtNtCsfI5zKgsrATz_15crossbeam_utils12cache_padded11CachePaddedINtNtCsjayvGk2fZH7_15crossbeam_deque5deque5InnerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEERNtNtBG_5alloc6GlobalEEB31_.exit2
 
@@ -1058,7 +1058,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataEEECskVyUMSjkkSy_10rayon_core.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !175
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !175
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataEEECskVyUMSjkkSy_10rayon_core.exit.i
 
@@ -1074,7 +1074,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataEEECskVyUMSjkkSy_10rayon_core.exit3.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %2 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !178
+  %2 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !178
   %i.i = icmp eq i64 %2, 1
   br i1 %i.i, label %bb.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataEEECskVyUMSjkkSy_10rayon_core.exit3.i
 
@@ -1159,7 +1159,7 @@ bb.p:                                             ; preds = %_RINvNtCs3oUPovFnLW
 
 bb.q:                                             ; preds = %.body
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %3 = atomicrmw sub ptr %i.af, i64 1 release, align 8
+  %3 = atomicrmw add ptr %i.af, i64 -1 release, align 8
   %i.ag = icmp eq i64 %3, 1
   br i1 %i.ag, label %bb.r, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakINtNtNtCsaL1QbXo9JQH_3std6thread9lifecycle6PacketuERNtNtBG_5alloc6GlobalEECskVyUMSjkkSy_10rayon_core.exit
 
@@ -1174,7 +1174,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsaL1QbXo9JQH_3std6thread9lifecyc
 
 bb.s:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsaL1QbXo9JQH_3std6thread9lifecycle6PacketuEECskVyUMSjkkSy_10rayon_core.exit
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %4 = atomicrmw sub ptr %i.ai, i64 1 release, align 8
+  %4 = atomicrmw add ptr %i.ai, i64 -1 release, align 8
   %i.aj = icmp eq i64 %4, 1
   br i1 %i.aj, label %bb.t, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakINtNtNtCsaL1QbXo9JQH_3std6thread9lifecycle6PacketuERNtNtBG_5alloc6GlobalEECskVyUMSjkkSy_10rayon_core.exit2
 
@@ -1418,7 +1418,7 @@ bb.aa:                                            ; preds = %.body24.i, %.body.i
 
 bb.ab:                                            ; preds = %.body
   %i.bm = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %1 = atomicrmw sub ptr %i.bm, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.bm, i64 -1 release, align 8
   %i.bn = icmp eq i64 %1, 1
   br i1 %i.bn, label %bb.ac, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakNtNtCskVyUMSjkkSy_10rayon_core8registry8RegistryRNtNtBG_5alloc6GlobalEEB1e_.exit
 
@@ -1433,7 +1433,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core8registry8
 
 bb.ad:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core8registry8RegistryEBF_.exit
   %i.bp = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %2 = atomicrmw sub ptr %i.bp, i64 1 release, align 8
+  %2 = atomicrmw add ptr %i.bp, i64 -1 release, align 8
   %i.bq = icmp eq i64 %2, 1
   br i1 %i.bq, label %bb.ae, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakNtNtCskVyUMSjkkSy_10rayon_core8registry8RegistryRNtNtBG_5alloc6GlobalEEB1e_.exit2
 
@@ -1460,7 +1460,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !199)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !200)
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !201, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !201
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !201
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataECskVyUMSjkkSy_10rayon_core.exit
 
@@ -1477,7 +1477,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %2 = atomicrmw sub ptr %i.g, i64 1 release, align 8
+  %2 = atomicrmw add ptr %i.g, i64 -1 release, align 8
   %i.h = icmp eq i64 %2, 1
   br i1 %i.h, label %bb.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataRNtNtBG_5alloc6GlobalEECskVyUMSjkkSy_10rayon_core.exit
 
@@ -1492,7 +1492,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9S
 
 bb.f:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataECskVyUMSjkkSy_10rayon_core.exit
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %3 = atomicrmw sub ptr %i.j, i64 1 release, align 8
+  %3 = atomicrmw add ptr %i.j, i64 -1 release, align 8
   %i.k = icmp eq i64 %3, 1
   br i1 %i.k, label %bb.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataRNtNtBG_5alloc6GlobalEECskVyUMSjkkSy_10rayon_core.exit2
 
@@ -1737,7 +1737,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !250)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !251)
   %i.g = load ptr, ptr %1, align 8, !alias.scope !252, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !252
+  %2 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !252
   %i.h = icmp eq i64 %2, 1
   br i1 %i.h, label %bb.d, label %bb.l
 
@@ -1783,7 +1783,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.x = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %3 = atomicrmw sub ptr %i.p, i64 1 release, align 8, !noalias !256
+  %3 = atomicrmw add ptr %i.p, i64 -1 release, align 8, !noalias !256
   %i.y = icmp eq i64 %3, 1
   br i1 %i.y, label %bb.i, label %.body
 
@@ -1820,7 +1820,7 @@ bb.l:                                             ; preds = %bb.c, %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !258)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !259)
   %i.ag = load ptr, ptr %i.af, align 8, !alias.scope !260, !nonnull !4, !noundef !4
-  %4 = atomicrmw sub ptr %i.ag, i64 1 release, align 8, !noalias !260
+  %4 = atomicrmw add ptr %i.ag, i64 -1 release, align 8, !noalias !260
   %i.ah = icmp eq i64 %4, 1
   br i1 %i.ah, label %bb.m, label %.body
 
@@ -2223,7 +2223,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !334)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !335)
   %i.h = load ptr, ptr %i.f, align 8, !alias.scope !336, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !336
+  %1 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !336
   %i.i = icmp eq i64 %1, 1
   br i1 %i.i, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsjayvGk2fZH7_15crossbeam_deque5deque6WorkerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEEB1s_.exit.i
 
@@ -2250,7 +2250,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !338)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !339)
   %i.o = load ptr, ptr %i.m, align 8, !alias.scope !340, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !340
+  %2 = atomicrmw add ptr %i.o, i64 -1 release, align 8, !noalias !340
   %i.p = icmp eq i64 %2, 1
   br i1 %i.p, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsjayvGk2fZH7_15crossbeam_deque5deque6WorkerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEEB1s_.exit8.i
 
@@ -2295,7 +2295,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !357)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !358)
   %i.h = load ptr, ptr %i.f, align 8, !alias.scope !359, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !359
+  %1 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !359
   %i.i = icmp eq i64 %1, 1
   br i1 %i.i, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsjayvGk2fZH7_15crossbeam_deque5deque7StealerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEEB1t_.exit.i
 
@@ -2322,7 +2322,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !361)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !362)
   %i.o = load ptr, ptr %i.m, align 8, !alias.scope !363, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !363
+  %2 = atomicrmw add ptr %i.o, i64 -1 release, align 8, !noalias !363
   %i.p = icmp eq i64 %2, 1
   br i1 %i.p, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsjayvGk2fZH7_15crossbeam_deque5deque7StealerNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefEEB1t_.exit8.i
 
@@ -2368,7 +2368,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !385)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !386)
   %i.h = load ptr, ptr %i.f, align 8, !alias.scope !387, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.h, i64 1 release, align 8, !noalias !387
+  %1 = atomicrmw add ptr %i.h, i64 -1 release, align 8, !noalias !387
   %i.i = icmp eq i64 %1, 1
   br i1 %i.i, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core8registry10ThreadInfoEBF_.exit.i
 
@@ -2396,7 +2396,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !390)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !391)
   %i.o = load ptr, ptr %i.m, align 8, !alias.scope !392, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !392
+  %2 = atomicrmw add ptr %i.o, i64 -1 release, align 8, !noalias !392
   %i.p = icmp eq i64 %2, 1
   br i1 %i.p, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskVyUMSjkkSy_10rayon_core8registry10ThreadInfoEBF_.exit8.i
 

@@ -202,7 +202,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !61, !nonnull !7, !noundef !7
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !61
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !61
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtNtCsaL1QbXo9JQH_3std3sys2fs4unix12InnerReadDirEECslghKHtsL3a4_5tokio.exit.i.i
 
@@ -605,7 +605,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !255)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !256)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !257, !nonnull !7, !noundef !7
-  %1 = atomicrmw sub ptr %i.a, i64 1 release, align 8, !noalias !257
+  %1 = atomicrmw add ptr %i.a, i64 -1 release, align 8, !noalias !257
   %i.b = icmp eq i64 %1, 1
   br i1 %i.b, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtNtCsaL1QbXo9JQH_3std3sys2fs4unix12InnerReadDirEECslghKHtsL3a4_5tokio.exit.i
 
@@ -769,7 +769,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !298)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !299)
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !300, !nonnull !7, !noundef !7
-  %1 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !300
+  %1 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !300
   %i.n = icmp eq i64 %1, 1
   br i1 %i.n, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcuEECslghKHtsL3a4_5tokio.exit
 
@@ -789,7 +789,7 @@ bb.g:                                             ; preds = %bb.d, %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !301)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !302)
   %i.t = load ptr, ptr %i.s, align 8, !alias.scope !303, !nonnull !7, !noundef !7
-  %2 = atomicrmw sub ptr %i.t, i64 1 release, align 8, !noalias !303
+  %2 = atomicrmw add ptr %i.t, i64 -1 release, align 8, !noalias !303
   %i.u = icmp eq i64 %2, 1
   br i1 %i.u, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcuEECslghKHtsL3a4_5tokio.exit3
 
@@ -895,7 +895,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !348)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !349)
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !350, !nonnull !7, !noundef !7
-  %1 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !350
+  %1 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !350
   %i.j = icmp eq i64 %1, 1
   br i1 %i.j, label %bb.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std2fs7ReadDirECslghKHtsL3a4_5tokio.exit
 
@@ -911,7 +911,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc11collections
   tail call void @llvm.experimental.noalias.scope.decl(metadata !353)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !354)
   %i.l = load ptr, ptr %i.k, align 8, !alias.scope !355, !nonnull !7, !noundef !7
-  %2 = atomicrmw sub ptr %i.l, i64 1 release, align 8, !noalias !355
+  %2 = atomicrmw add ptr %i.l, i64 -1 release, align 8, !noalias !355
   %i.m = icmp eq i64 %2, 1
   br i1 %i.m, label %bb.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std2fs7ReadDirECslghKHtsL3a4_5tokio.exit1
 
@@ -1314,7 +1314,7 @@ common.resume:                                    ; preds = %bb.e, %.body, %bb.c
   resume { ptr, i32 } %common.resume.op
 
 .body:                                            ; preds = %bb.h
-  %2 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !511
+  %2 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !511
   %i.j = icmp eq i64 %2, 1
   br i1 %i.j, label %bb.e, label %common.resume
 

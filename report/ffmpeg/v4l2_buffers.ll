@@ -204,13 +204,13 @@ buf_to_m2mctx.exit:                               ; preds = %bb.a, %switch.looku
   %.sink.i = phi i64 [ %switch.load, %switch.lookup ], [ -4104, %bb.a ]
   %i.e = getelementptr inbounds i8, ptr %.val, i64 %.sink.i ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %2 = atomicrmw sub ptr %i.f, i32 1 seq_cst, align 8
+  %2 = atomicrmw add ptr %i.f, i32 -1 seq_cst, align 8
   %i.g = icmp eq i32 %2, 1
   br i1 %i.g, label %bb.b, label %bb.k
 
 bb.b:                                             ; preds = %buf_to_m2mctx.exit
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 4688 ; 2 uses
-  %3 = atomicrmw sub ptr %i.h, i32 1 acq_rel, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.h, i32 -1 acq_rel, align 8 ; 0 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 4692
   %i.j = load i32, ptr %i.i, align 4, !tbaa !112
   %.not = icmp eq i32 %i.j, 0

@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.split.us
 bb.k:                                             ; preds = %bb.j
   %i.aw = load ptr, ptr %5, align 8, !tbaa !268
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
-  %6 = atomicrmw sub ptr %i.ax, i64 1 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.ax, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.l:                                             ; preds = %bb.j
@@ -608,7 +608,7 @@ bb.i:                                             ; preds = %._crit_edge122
 bb.j:                                             ; preds = %bb.i
   %i.ax = load ptr, ptr %6, align 8, !tbaa !268
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  %10 = atomicrmw sub ptr %i.ay, i64 1 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.ay, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.k:                                             ; preds = %bb.i
@@ -748,7 +748,7 @@ bb.w:                                             ; preds = %._crit_edge
 bb.x:                                             ; preds = %bb.w
   %i.db = load ptr, ptr %7, align 8, !tbaa !268
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 8
-  %11 = atomicrmw sub ptr %i.dc, i64 1 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.dc, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit72
 
 bb.y:                                             ; preds = %bb.w
@@ -954,7 +954,7 @@ bb.an:                                            ; preds = %._crit_edge116
 bb.ao:                                            ; preds = %bb.an
   %i.gp = load ptr, ptr %9, align 8, !tbaa !268
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 8
-  %12 = atomicrmw sub ptr %i.gq, i64 1 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.gq, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit92
 
 bb.ap:                                            ; preds = %bb.an
@@ -977,7 +977,7 @@ bb.aq:                                            ; preds = %_ZN6duckdb13Segment
 bb.ar:                                            ; preds = %bb.aq
   %i.gu = load ptr, ptr %8, align 8, !tbaa !268
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 8
-  %13 = atomicrmw sub ptr %i.gv, i64 1 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.gv, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit94
 
 bb.as:                                            ; preds = %bb.aq
@@ -1173,7 +1173,7 @@ bb.i:                                             ; preds = %._crit_edge120
 bb.j:                                             ; preds = %bb.i
   %i.ax = load ptr, ptr %6, align 8, !tbaa !268
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  %10 = atomicrmw sub ptr %i.ay, i64 1 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.ay, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.k:                                             ; preds = %bb.i
@@ -1300,7 +1300,7 @@ bb.u:                                             ; preds = %._crit_edge
 bb.v:                                             ; preds = %bb.u
   %i.cw = load ptr, ptr %7, align 8, !tbaa !268
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
-  %11 = atomicrmw sub ptr %i.cx, i64 1 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.cx, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit72
 
 bb.w:                                             ; preds = %bb.u
@@ -1504,7 +1504,7 @@ bb.al:                                            ; preds = %_ZN6duckdb18FixedSi
 bb.am:                                            ; preds = %bb.al
   %i.gi = load ptr, ptr %9, align 8, !tbaa !268
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
-  %12 = atomicrmw sub ptr %i.gj, i64 1 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.gj, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit92
 
 bb.an:                                            ; preds = %bb.al
@@ -1527,7 +1527,7 @@ bb.ao:                                            ; preds = %_ZN6duckdb13Segment
 bb.ap:                                            ; preds = %bb.ao
   %i.gn = load ptr, ptr %8, align 8, !tbaa !268
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 8
-  %13 = atomicrmw sub ptr %i.go, i64 1 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.go, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit94
 
 bb.aq:                                            ; preds = %bb.ao
@@ -1715,7 +1715,7 @@ bb.i:                                             ; preds = %._crit_edge122
 bb.j:                                             ; preds = %bb.i
   %i.ax = load ptr, ptr %6, align 8, !tbaa !268
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  %10 = atomicrmw sub ptr %i.ay, i64 1 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.ay, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.k:                                             ; preds = %bb.i
@@ -1853,7 +1853,7 @@ bb.w:                                             ; preds = %._crit_edge
 bb.x:                                             ; preds = %bb.w
   %i.cz = load ptr, ptr %7, align 8, !tbaa !268
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
-  %11 = atomicrmw sub ptr %i.da, i64 1 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.da, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit72
 
 bb.y:                                             ; preds = %bb.w
@@ -2059,7 +2059,7 @@ bb.an:                                            ; preds = %._crit_edge116
 bb.ao:                                            ; preds = %bb.an
   %i.gn = load ptr, ptr %9, align 8, !tbaa !268
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 8
-  %12 = atomicrmw sub ptr %i.go, i64 1 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.go, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit92
 
 bb.ap:                                            ; preds = %bb.an
@@ -2082,7 +2082,7 @@ bb.aq:                                            ; preds = %_ZN6duckdb13Segment
 bb.ar:                                            ; preds = %bb.aq
   %i.gs = load ptr, ptr %8, align 8, !tbaa !268
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 8
-  %13 = atomicrmw sub ptr %i.gt, i64 1 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.gt, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit94
 
 bb.as:                                            ; preds = %bb.aq
@@ -2266,7 +2266,7 @@ bb.g:                                             ; preds = %._crit_edge121
 bb.h:                                             ; preds = %bb.g
   %i.au = load ptr, ptr %6, align 8, !tbaa !268
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8
-  %10 = atomicrmw sub ptr %i.av, i64 1 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.av, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -2406,7 +2406,7 @@ bb.u:                                             ; preds = %._crit_edge
 bb.v:                                             ; preds = %bb.u
   %i.cy = load ptr, ptr %7, align 8, !tbaa !268
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
-  %11 = atomicrmw sub ptr %i.cz, i64 1 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.cz, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit72
 
 bb.w:                                             ; preds = %bb.u
@@ -2597,7 +2597,7 @@ bb.aj:                                            ; preds = %._crit_edge115
 bb.ak:                                            ; preds = %bb.aj
   %i.gf = load ptr, ptr %9, align 8, !tbaa !268
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 8
-  %12 = atomicrmw sub ptr %i.gg, i64 1 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.gg, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit92
 
 bb.al:                                            ; preds = %bb.aj
@@ -2620,7 +2620,7 @@ bb.am:                                            ; preds = %_ZN6duckdb13Segment
 bb.an:                                            ; preds = %bb.am
   %i.gk = load ptr, ptr %8, align 8, !tbaa !268
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 8
-  %13 = atomicrmw sub ptr %i.gl, i64 1 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.gl, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit94
 
 bb.ao:                                            ; preds = %bb.am
@@ -2798,7 +2798,7 @@ bb.g:                                             ; preds = %._crit_edge121
 bb.h:                                             ; preds = %bb.g
   %i.au = load ptr, ptr %6, align 8, !tbaa !268
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8
-  %10 = atomicrmw sub ptr %i.av, i64 1 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.av, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -2936,7 +2936,7 @@ bb.u:                                             ; preds = %._crit_edge
 bb.v:                                             ; preds = %bb.u
   %i.cw = load ptr, ptr %7, align 8, !tbaa !268
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
-  %11 = atomicrmw sub ptr %i.cx, i64 1 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.cx, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit72
 
 bb.w:                                             ; preds = %bb.u
@@ -3127,7 +3127,7 @@ bb.aj:                                            ; preds = %._crit_edge115
 bb.ak:                                            ; preds = %bb.aj
   %i.gd = load ptr, ptr %9, align 8, !tbaa !268
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 8
-  %12 = atomicrmw sub ptr %i.ge, i64 1 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.ge, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit92
 
 bb.al:                                            ; preds = %bb.aj
@@ -3150,7 +3150,7 @@ bb.am:                                            ; preds = %_ZN6duckdb13Segment
 bb.an:                                            ; preds = %bb.am
   %i.gi = load ptr, ptr %8, align 8, !tbaa !268
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
-  %13 = atomicrmw sub ptr %i.gj, i64 1 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.gj, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit94
 
 bb.ao:                                            ; preds = %bb.am
@@ -3318,7 +3318,7 @@ bb.g:                                             ; preds = %_ZN6duckdb18FixedSi
 bb.h:                                             ; preds = %bb.g
   %i.at = load ptr, ptr %3, align 8, !tbaa !268
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  %5 = atomicrmw sub ptr %i.au, i64 1 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.au, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -3419,7 +3419,7 @@ bb.p:                                             ; preds = %_ZN6duckdb18FixedSi
 bb.q:                                             ; preds = %bb.p
   %i.cq = load ptr, ptr %4, align 8, !tbaa !268
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 8
-  %6 = atomicrmw sub ptr %i.cr, i64 1 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.cr, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit20
 
 bb.r:                                             ; preds = %bb.p
@@ -3601,7 +3601,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.b = load ptr, ptr %0, align 8, !tbaa !268
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %1 = atomicrmw sub ptr %i.c, i64 1 seq_cst, align 8 ; 0 uses
+  %1 = atomicrmw add ptr %i.c, i64 -1 seq_cst, align 8 ; 0 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c
@@ -3801,7 +3801,7 @@ bb.f:                                             ; preds = %middle.block
 bb.g:                                             ; preds = %bb.f
   %i.bg = load ptr, ptr %1, align 8, !tbaa !268
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  %2 = atomicrmw sub ptr %i.bh, i64 1 seq_cst, align 8 ; 0 uses
+  %2 = atomicrmw add ptr %i.bh, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.h:                                             ; preds = %bb.f
@@ -3941,7 +3941,7 @@ bb.f:                                             ; preds = %middle.block
 bb.g:                                             ; preds = %bb.f
   %i.bg = load ptr, ptr %1, align 8, !tbaa !268
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  %2 = atomicrmw sub ptr %i.bh, i64 1 seq_cst, align 8 ; 0 uses
+  %2 = atomicrmw add ptr %i.bh, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.h:                                             ; preds = %bb.f
@@ -4049,7 +4049,7 @@ bb.e:                                             ; preds = %._crit_edge
 bb.f:                                             ; preds = %bb.e
   %i.ao = load ptr, ptr %4, align 8, !tbaa !268
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  %7 = atomicrmw sub ptr %i.ap, i64 1 seq_cst, align 8 ; 0 uses
+  %7 = atomicrmw add ptr %i.ap, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -4339,7 +4339,7 @@ bb.g:                                             ; preds = %.loopexit
 bb.h:                                             ; preds = %bb.g
   %i.bh = load ptr, ptr %3, align 8, !tbaa !268
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
-  %4 = atomicrmw sub ptr %i.bi, i64 1 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.bi, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -4555,7 +4555,7 @@ bb.i:                                             ; preds = %._crit_edge
 bb.j:                                             ; preds = %bb.i
   %i.bb = load ptr, ptr %4, align 8, !tbaa !268
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  %5 = atomicrmw sub ptr %i.bc, i64 1 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.bc, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.k:                                             ; preds = %bb.i
@@ -4704,7 +4704,7 @@ bb.g:                                             ; preds = %._crit_edge
 bb.h:                                             ; preds = %bb.g
   %i.ay = load ptr, ptr %4, align 8, !tbaa !268
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
-  %5 = atomicrmw sub ptr %i.az, i64 1 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.az, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -4832,7 +4832,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.aw = load ptr, ptr %2, align 8, !tbaa !268
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
-  %3 = atomicrmw sub ptr %i.ax, i64 1 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.ax, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.k:                                             ; preds = %bb.i
@@ -4959,7 +4959,7 @@ bb.h:                                             ; preds = %.critedge
 bb.i:                                             ; preds = %bb.h
   %i.au = load ptr, ptr %2, align 8, !tbaa !268
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8
-  %3 = atomicrmw sub ptr %i.av, i64 1 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.av, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.j:                                             ; preds = %bb.h
@@ -5362,7 +5362,7 @@ bb.bb:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.bc:                                            ; preds = %bb.bb
   %i.iz = load ptr, ptr %7, align 8, !tbaa !268
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 8
-  %9 = atomicrmw sub ptr %i.ja, i64 1 seq_cst, align 8 ; 0 uses
+  %9 = atomicrmw add ptr %i.ja, i64 -1 seq_cst, align 8 ; 0 uses
   br label %_ZN6duckdb13SegmentHandleD2Ev.exit
 
 bb.bd:                                            ; preds = %bb.bb

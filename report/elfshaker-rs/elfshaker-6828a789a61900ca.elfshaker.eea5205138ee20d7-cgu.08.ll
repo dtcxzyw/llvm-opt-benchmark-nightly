@@ -202,7 +202,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !451)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !452)
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !453, !nonnull !5, !noundef !5
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !453
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !453
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCsk6GKf1Xiy0l_4ureq5agent11AgentConfigEECskuiImRAV2ip_9elfshaker.exit.i
 
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !454)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !455)
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !456, !nonnull !5, !noundef !5
-  %2 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !457
+  %2 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !457
   %i.g = icmp eq i64 %2, 1
   br i1 %i.g, label %bb.d, label %.body
 
@@ -232,7 +232,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCs
   tail call void @llvm.experimental.noalias.scope.decl(metadata !458)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !459)
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !460, !nonnull !5, !noundef !5
-  %3 = atomicrmw sub ptr %i.i, i64 1 release, align 8, !noalias !461
+  %3 = atomicrmw add ptr %i.i, i64 -1 release, align 8, !noalias !461
   %i.j = icmp eq i64 %3, 1
   br i1 %i.j, label %bb.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsk6GKf1Xiy0l_4ureq5agent5AgentECskuiImRAV2ip_9elfshaker.exit
 

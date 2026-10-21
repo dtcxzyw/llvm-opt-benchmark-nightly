@@ -205,7 +205,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
   tail call void @llvm.experimental.noalias.scope.decl(metadata !816)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !817)
   %i.j = load ptr, ptr %i.h, align 8, !alias.scope !818, !noalias !813, !nonnull !10, !noundef !10
-  %1 = atomicrmw sub ptr %i.j, i64 1 release, align 8, !noalias !819
+  %1 = atomicrmw add ptr %i.j, i64 -1 release, align 8, !noalias !819
   %i.k = icmp eq i64 %1, 1
   br i1 %i.k, label %bb.c, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder4util9any_value8AnyValueEBH_.exit.i.i.i.i
 
@@ -608,7 +608,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1119)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1120)
   %i.fm = load ptr, ptr %i.fk, align 8, !alias.scope !1121, !noalias !1122, !nonnull !10, !noundef !10
-  %1 = atomicrmw sub ptr %i.fm, i64 1 release, align 8, !noalias !1123
+  %1 = atomicrmw add ptr %i.fm, i64 -1 release, align 8, !noalias !1123
   %i.fn = icmp eq i64 %1, 1
   br i1 %i.fn, label %bb.ax, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder4util9any_value8AnyValueEBH_.exit.i.i.i.i.i.i.i.i.i.i
 
@@ -831,7 +831,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1150)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1151)
   %i.hy = load ptr, ptr %i.hw, align 8, !alias.scope !1152, !noalias !1147, !nonnull !10, !noundef !10
-  %2 = atomicrmw sub ptr %i.hy, i64 1 release, align 8, !noalias !1153
+  %2 = atomicrmw add ptr %i.hy, i64 -1 release, align 8, !noalias !1153
   %i.hz = icmp eq i64 %2, 1
   br i1 %i.hz, label %bb.bl, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder4util9any_value8AnyValueEBH_.exit.i.i.i.i.i
 
@@ -905,7 +905,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecjEECsfu
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1184)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1185)
   %i.p = load ptr, ptr %i.n, align 8, !alias.scope !1186, !noalias !1187, !nonnull !10, !noundef !10
-  %1 = atomicrmw sub ptr %i.p, i64 1 release, align 8, !noalias !1188
+  %1 = atomicrmw add ptr %i.p, i64 -1 release, align 8, !noalias !1188
   %i.q = icmp eq i64 %1, 1
   br i1 %i.q, label %bb.c, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder4util9any_value8AnyValueEBH_.exit.i.i.i.i.i.i
 
@@ -1308,7 +1308,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_mapINtB2_7FlatMapNtNtB4_9any_val
 
 bb.k:                                             ; preds = %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_mapINtB2_7FlatMapNtNtB4_9any_value10AnyValueIdNtB12_8AnyValueE6insertB6_.exit.i
   %.pr.cast.i = inttoptr i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i to ptr
-  %2 = atomicrmw sub ptr %.pr.cast.i, i64 1 release, align 8, !noalias !5769
+  %2 = atomicrmw add ptr %.pr.cast.i, i64 -1 release, align 8, !noalias !5769
   %i.br = icmp eq i64 %2, 1
   br i1 %i.br, label %bb.l, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsfu0rQaTkGUu_12clap_builder4util9any_value8AnyValueEEB13_.exit.i
 
@@ -1711,7 +1711,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueDNtNtB4_3any3AnyNtNtB4_6marker4SendNtBT_
 
 bb.c:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueDNtNtB4_3any3AnyNtNtB4_6marker4SendNtBT_4SyncEL_ECsfu0rQaTkGUu_12clap_builder.exit
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %1 = atomicrmw sub ptr %i.k, i64 1 release, align 8
+  %1 = atomicrmw add ptr %i.k, i64 -1 release, align 8
   %i.l = icmp eq i64 %1, 1
   br i1 %i.l, label %bb.d, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync4WeakDNtNtB4_3any3AnyNtNtB4_6marker4SendNtB1s_4SyncEL_RNtNtBG_5alloc6GlobalEECsfu0rQaTkGUu_12clap_builder.exit
 

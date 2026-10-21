@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit
 
 bb.f:                                             ; preds = %bb.d
-  %3 = atomicrmw sub ptr %i.o, i64 4 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.o, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit
 
 _ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit: ; preds = %bb.c, %bb.e, %bb.f
@@ -230,7 +230,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit12
 
 bb.i:                                             ; preds = %bb.g
-  %4 = atomicrmw sub ptr %i.s, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.s, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit12
 
 _ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit12: ; preds = %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE5eraseERNSG_14const_accessorE.exit, %bb.h, %bb.i
@@ -633,7 +633,7 @@ bb.am:                                            ; preds = %bb.al
   br label %bb.as
 
 bb.an:                                            ; preds = %bb.al
-  %15 = atomicrmw sub ptr %i.dm, i64 4 seq_cst, align 8 ; 0 uses
+  %15 = atomicrmw add ptr %i.dm, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.as
 
 bb.ao:                                            ; preds = %bb.aj
@@ -655,7 +655,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit5.i.i
 
 bb.ar:                                            ; preds = %bb.ap
-  %16 = atomicrmw sub ptr %i.dr, i64 4 seq_cst, align 8 ; 0 uses
+  %16 = atomicrmw add ptr %i.dr, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit5.i.i
 
 _ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit5.i.i: ; preds = %bb.ar, %bb.aq, %bb.ao
@@ -1058,7 +1058,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN7openvdb5v13_02io5Queue4Impl9setStatusEjNS2_6StatusE.exit
 
 bb.e:                                             ; preds = %bb.c
-  %5 = atomicrmw sub ptr %i.m, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.m, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN7openvdb5v13_02io5Queue4Impl9setStatusEjNS2_6StatusE.exit
 
 bb.f:                                             ; preds = %bb.a
@@ -1080,7 +1080,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit5.i
 
 bb.i:                                             ; preds = %bb.g
-  %6 = atomicrmw sub ptr %i.r, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.r, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit5.i
 
 common.resume:                                    ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit, %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit5.i
@@ -1202,7 +1202,7 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit
 
 bb.s:                                             ; preds = %bb.q
-  %7 = atomicrmw sub ptr %i.ar, i64 4 seq_cst, align 8 ; 0 uses
+  %7 = atomicrmw add ptr %i.ar, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit
 
 _ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit: ; preds = %bb.p, %bb.r, %bb.s
@@ -1226,7 +1226,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit18
 
 bb.v:                                             ; preds = %bb.t
-  %8 = atomicrmw sub ptr %i.av, i64 4 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.av, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit18
 
 _ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit18: ; preds = %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE5eraseERNSG_8accessorE.exit, %bb.u, %bb.v
@@ -1235,7 +1235,7 @@ _ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d11
 
 .thread26:                                        ; preds = %.thread, %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE14const_accessorD2Ev.exit18
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %9 = atomicrmw sub ptr %i.az, i32 1 seq_cst, align 4 ; 0 uses
+  %9 = atomicrmw add ptr %i.az, i32 -1 seq_cst, align 4 ; 0 uses
   br label %bb.w
 
 bb.w:                                             ; preds = %.thread, %.thread26, %._crit_edge
@@ -1586,7 +1586,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not5.not.i.i, label %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13_02io5Queue6StatusEEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %8 = atomicrmw sub ptr %i.ao, i64 4 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.ao, i64 -4 seq_cst, align 8 ; 0 uses
   br label %.split.preheader
 
 _ZN3tbb6detail2d113spin_rw_mutex8try_lockEv.exit.i: ; preds = %bb.j
@@ -1673,7 +1673,7 @@ bb.o:                                             ; preds = %.split
   br i1 %.not5.not.i.i39, label %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13_02io5Queue6StatusEEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %9 = atomicrmw sub ptr %i.ao, i64 4 seq_cst, align 8 ; 0 uses
+  %9 = atomicrmw add ptr %i.ao, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %.split, %bb.p
@@ -1733,7 +1733,7 @@ bb.r:                                             ; preds = %.split74.us
   br label %bb.t
 
 bb.s:                                             ; preds = %.split74.us
-  %10 = atomicrmw sub ptr %i.bs, i64 4 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.bs, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s
@@ -1805,19 +1805,19 @@ bb.ab:                                            ; preds = %bb.x
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt4
 
 bb.ac:                                            ; preds = %bb.u
-  %11 = atomicrmw sub ptr %i.by, i64 4 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.by, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt1
 
 bb.ad:                                            ; preds = %bb.v
-  %12 = atomicrmw sub ptr %i.bz, i64 4 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.bz, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt2
 
 bb.ae:                                            ; preds = %bb.w
-  %13 = atomicrmw sub ptr %i.ca, i64 4 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.ca, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt0
 
 bb.af:                                            ; preds = %bb.x
-  %14 = atomicrmw sub ptr %i.cb, i64 4 seq_cst, align 8 ; 0 uses
+  %14 = atomicrmw add ptr %i.cb, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt4
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt1: ; preds = %bb.ac, %bb.y, %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13_02io5Queue6StatusEEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt1
@@ -1979,7 +1979,7 @@ bb.i:                                             ; preds = %.preheader9.i
   br i1 %.not5.not.i.i, label %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE15bucket_accessor7acquireEPSG_mb.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %4 = atomicrmw sub ptr %i.w, i64 4 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.w, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.preheader9.i
@@ -2056,7 +2056,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit
 
 bb.q:                                             ; preds = %bb.o
-  %5 = atomicrmw sub ptr %i.ax, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.ax, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit: ; preds = %bb.n, %bb.p, %bb.q
@@ -2200,11 +2200,11 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i: ; preds = %bb.e, %_ZN3tbb6deta
   br i1 %.not2.i, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread, label %.lr.ph19.i, !llvm.loop !10
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit.thread: ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i, %.preheader.i
-  %4 = atomicrmw sub ptr %i.x, i64 6 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.x, i64 -6 seq_cst, align 8 ; 0 uses
   br label %bb.j
 
 ._crit_edge.i:                                    ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit.i, %bb.c
-  %5 = atomicrmw sub ptr %i.x, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.x, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer
 
 _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i.outer: ; preds = %_ZN3tbb6detail2d0L13machine_pauseEi.exit.i.i.i, %._crit_edge.i
@@ -2312,7 +2312,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31
 
 bb.q:                                             ; preds = %bb.o
-  %6 = atomicrmw sub ptr %i.bo, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.bo, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit31: ; preds = %._crit_edge, %bb.p, %bb.q
@@ -2414,11 +2414,11 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit:   ; preds = %_ZN3tbb6detail2d0L1
   br i1 %.not2, label %._crit_edge20, label %.lr.ph19, !llvm.loop !10
 
 ._crit_edge20:                                    ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit, %.preheader
-  %1 = atomicrmw sub ptr %0, i64 6 seq_cst, align 8 ; 0 uses
+  %1 = atomicrmw add ptr %0, i64 -6 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d113spin_rw_mutex4lockEv.exit
 
 ._crit_edge:                                      ; preds = %_ZNSt13__atomic_baseIlE23compare_exchange_strongERllSt12memory_orderS2_.exit, %bb.a
-  %2 = atomicrmw sub ptr %0, i64 4 seq_cst, align 8 ; 0 uses
+  %2 = atomicrmw add ptr %0, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.outer
 
 _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.outer: ; preds = %_ZN3tbb6detail2d0L13machine_pauseEi.exit.i.i, %._crit_edge
@@ -2590,7 +2590,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE7releaseEv.exit.i
 
 bb.j:                                             ; preds = %bb.h
-  %3 = atomicrmw sub ptr %i.at, i64 4 seq_cst, align 8 ; 0 uses
+  %3 = atomicrmw add ptr %i.at, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE7releaseEv.exit.i
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE7releaseEv.exit.i: ; preds = %bb.j, %bb.i
@@ -2619,7 +2619,7 @@ _ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13
   br i1 %.not.i28.jt3, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit30.jt3, label %bb.n
 
 _ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13_02io5Queue6StatusEEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt2: ; preds = %bb.k, %bb.l
-  %4 = atomicrmw sub ptr %i.h, i64 1 seq_cst, align 8 ; 0 uses
+  %4 = atomicrmw add ptr %i.h, i64 -1 seq_cst, align 8 ; 0 uses
   %i.bc = load ptr, ptr %2, align 8, !tbaa !61    ; 3 uses
   %.not.i28.jt2 = icmp eq ptr %i.bc, null
   br i1 %.not.i28.jt2, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit30.jt2, label %bb.o
@@ -2655,15 +2655,15 @@ bb.r:                                             ; preds = %bb.o
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit30.jt2
 
 bb.s:                                             ; preds = %bb.m
-  %5 = atomicrmw sub ptr %i.ba, i64 4 seq_cst, align 8 ; 0 uses
+  %5 = atomicrmw add ptr %i.ba, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit30.jt1
 
 bb.t:                                             ; preds = %bb.n
-  %6 = atomicrmw sub ptr %i.bb, i64 4 seq_cst, align 8 ; 0 uses
+  %6 = atomicrmw add ptr %i.bb, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit30.jt3
 
 bb.u:                                             ; preds = %bb.o
-  %7 = atomicrmw sub ptr %i.bc, i64 4 seq_cst, align 8 ; 0 uses
+  %7 = atomicrmw add ptr %i.bc, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit30.jt2
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit30.jt1: ; preds = %bb.s, %bb.p, %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13_02io5Queue6StatusEEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt1
@@ -2703,7 +2703,7 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE7releaseEv.exit.i33
 
 bb.y:                                             ; preds = %bb.w
-  %8 = atomicrmw sub ptr %i.br, i64 4 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.br, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE7releaseEv.exit.i33
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE7releaseEv.exit.i33: ; preds = %bb.y, %bb.x
@@ -3009,7 +3009,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not5.not.i.i, label %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13_02io5Queue6StatusEEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %8 = atomicrmw sub ptr %i.bw, i64 4 seq_cst, align 8 ; 0 uses
+  %8 = atomicrmw add ptr %i.bw, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.x
 
 _ZN3tbb6detail2d113spin_rw_mutex8try_lockEv.exit.i: ; preds = %bb.t
@@ -3043,7 +3043,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not5.not.i.i68, label %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13_02io5Queue6StatusEEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %9 = atomicrmw sub ptr %i.bw, i64 4 seq_cst, align 8 ; 0 uses
+  %9 = atomicrmw add ptr %i.bw, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.ad
 
 _ZN3tbb6detail2d113spin_rw_mutex8try_lockEv.exit.i71: ; preds = %bb.z
@@ -3108,7 +3108,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ae
-  %10 = atomicrmw sub ptr %i.cs, i64 4 seq_cst, align 8 ; 0 uses
+  %10 = atomicrmw add ptr %i.cs, i64 -4 seq_cst, align 8 ; 0 uses
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.af, %bb.ag
@@ -3167,15 +3167,15 @@ bb.an:                                            ; preds = %bb.ak
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt2
 
 bb.ao:                                            ; preds = %bb.ai
-  %11 = atomicrmw sub ptr %i.cy, i64 4 seq_cst, align 8 ; 0 uses
+  %11 = atomicrmw add ptr %i.cy, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt0
 
 bb.ap:                                            ; preds = %bb.aj
-  %12 = atomicrmw sub ptr %i.cz, i64 4 seq_cst, align 8 ; 0 uses
+  %12 = atomicrmw add ptr %i.cz, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt6
 
 bb.aq:                                            ; preds = %bb.ak
-  %13 = atomicrmw sub ptr %i.da, i64 4 seq_cst, align 8 ; 0 uses
+  %13 = atomicrmw add ptr %i.da, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt2
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit.jt0: ; preds = %bb.ao, %bb.al, %_ZNK3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKjN7openvdb5v13_02io5Queue6StatusEEEENS3_13spin_rw_mutexEE15check_mask_raceEmRm.exit.jt0
@@ -3315,7 +3315,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75
 
 bb.aw:                                            ; preds = %bb.au
-  %14 = atomicrmw sub ptr %i.w, i64 4 seq_cst, align 8 ; 0 uses
+  %14 = atomicrmw add ptr %i.w, i64 -4 seq_cst, align 8 ; 0 uses
   br label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75
 
 _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEED2Ev.exit75: ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.av, %bb.aw
