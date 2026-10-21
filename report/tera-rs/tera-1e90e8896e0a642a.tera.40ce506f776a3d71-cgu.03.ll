@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8, !dbg !27826, !alias.scope !27671, !nonnull !1505, !noundef !1505
     #dbg_value(ptr %i.f, !27659, !DIExpression(), !27495)
     #dbg_value(ptr %i.f, !27666, !DIExpression(), !27492)
-  %1 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !dbg !27827, !noalias !27671
+  %1 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !dbg !27827, !noalias !27671
   %i.g = icmp eq i64 %1, 1, !dbg !27828
   br i1 %i.g, label %bb.c, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera5value10ValueInnerEBF_.exit, !dbg !27828
 
@@ -285,7 +285,7 @@ bb.g:                                             ; preds = %bb.f
   %i.l = load ptr, ptr %i.k, align 8, !dbg !27835, !alias.scope !27756, !nonnull !1505, !noundef !1505
     #dbg_value(ptr %i.l, !27749, !DIExpression(), !27568)
     #dbg_value(ptr %i.l, !27753, !DIExpression(), !27565)
-  %2 = atomicrmw sub ptr %i.l, i64 1 release, align 8, !dbg !27836, !noalias !27756
+  %2 = atomicrmw add ptr %i.l, i64 -1 release, align 8, !dbg !27836, !noalias !27756
   %i.m = icmp eq i64 %2, 1, !dbg !27837
   br i1 %i.m, label %bb.h, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera5value10ValueInnerEBF_.exit, !dbg !27837
 
@@ -309,7 +309,7 @@ bb.i:                                             ; preds = %bb.a
   %i.o = load ptr, ptr %i.n, align 8, !dbg !27841, !alias.scope !27787, !nonnull !1505, !noundef !1505
     #dbg_value(ptr %i.o, !27780, !DIExpression(), !27592)
     #dbg_value(ptr %i.o, !27784, !DIExpression(), !27589)
-  %3 = atomicrmw sub ptr %i.o, i64 1 release, align 8, !dbg !27842, !noalias !27787
+  %3 = atomicrmw add ptr %i.o, i64 -1 release, align 8, !dbg !27842, !noalias !27787
   %i.p = icmp eq i64 %3, 1, !dbg !27843
   br i1 %i.p, label %bb.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera5value10ValueInnerEBF_.exit, !dbg !27843
 
@@ -333,7 +333,7 @@ bb.k:                                             ; preds = %bb.a
   %i.r = load ptr, ptr %i.q, align 8, !dbg !27847, !alias.scope !27818, !nonnull !1505, !noundef !1505
     #dbg_value(ptr %i.r, !27811, !DIExpression(), !27616)
     #dbg_value(ptr %i.r, !27815, !DIExpression(), !27613)
-  %4 = atomicrmw sub ptr %i.r, i64 1 release, align 8, !dbg !27848, !noalias !27818
+  %4 = atomicrmw add ptr %i.r, i64 -1 release, align 8, !dbg !27848, !noalias !27818
   %i.s = icmp eq i64 %4, 1, !dbg !27849
   br i1 %i.s, label %bb.l, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5yXxDE1DkoT_4tera5value10ValueInnerEBF_.exit, !dbg !27849
 

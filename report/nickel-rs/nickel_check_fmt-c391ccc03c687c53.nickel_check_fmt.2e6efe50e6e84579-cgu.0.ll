@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %"_ZN4core3ptr118dro
   tail call void @llvm.experimental.noalias.scope.decl(metadata !493)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !494)
   %i.x = load ptr, ptr %i.w, align 8, !alias.scope !495, !noalias !488, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.x, i64 1 release, align 8, !noalias !496
+  %1 = atomicrmw add ptr %i.x, i64 -1 release, align 8, !noalias !496
   %i.y = icmp eq i64 %1, 1
   br i1 %i.y, label %bb.e, label %"_ZN4core3ptr118drop_in_place$LT$$LP$regex_automata..util..determinize..state..State$C$regex_automata..hybrid..id..LazyStateID$RP$$GT$17hdf99c23e3e2444b1E.exit.i.i.i.i.i"
 
@@ -605,7 +605,7 @@ bb.d:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !614)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !615)
   %i.o = load ptr, ptr %i.n, align 8, !alias.scope !616, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !616
+  %1 = atomicrmw add ptr %i.o, i64 -1 release, align 8, !noalias !616
   %i.p = icmp eq i64 %1, 1
   br i1 %i.p, label %bb.e, label %"_ZN4core3ptr80drop_in_place$LT$alloc..sync..Arc$LT$regex_automata..meta..regex..RegexI$GT$$GT$17h495fcd0c27455c4cE.exit.i.i"
 
@@ -645,7 +645,7 @@ bb.h:                                             ; preds = %"_ZN4core3ptr80drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !618)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !619)
   %i.w = load ptr, ptr %i.v, align 8, !alias.scope !620, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.w, i64 1 release, align 8, !noalias !621
+  %2 = atomicrmw add ptr %i.w, i64 -1 release, align 8, !noalias !621
   %i.x = icmp eq i64 %2, 1
   br i1 %i.x, label %bb.i, label %"_ZN4core3ptr48drop_in_place$LT$alloc..sync..Arc$LT$str$GT$$GT$17h30e344febd979501E.exit.i"
 
@@ -659,7 +659,7 @@ bb.i:                                             ; preds = %.body.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !622)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !623)
   %i.z = load ptr, ptr %i.y, align 8, !alias.scope !624, !nonnull !4, !noundef !4
-  %3 = atomicrmw sub ptr %i.z, i64 1 release, align 8, !noalias !625
+  %3 = atomicrmw add ptr %i.z, i64 -1 release, align 8, !noalias !625
   %i.aa = icmp eq i64 %3, 1
   br i1 %i.aa, label %bb.j, label %"_ZN4core3ptr84drop_in_place$LT$alloc..boxed..Box$LT$$u5b$alloc..boxed..Box$LT$str$GT$$u5d$$GT$$GT$17heec28a5cc8612ab6E.exit"
 
@@ -781,7 +781,7 @@ bb.h:                                             ; preds = %"_ZN4core3ptr118dro
   tail call void @llvm.experimental.noalias.scope.decl(metadata !684)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !685)
   %i.aj = load ptr, ptr %i.ai, align 8, !alias.scope !686, !noalias !679, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.aj, i64 1 release, align 8, !noalias !687
+  %1 = atomicrmw add ptr %i.aj, i64 -1 release, align 8, !noalias !687
   %i.ak = icmp eq i64 %1, 1
   br i1 %i.ak, label %bb.i, label %"_ZN4core3ptr118drop_in_place$LT$$LP$regex_automata..util..determinize..state..State$C$regex_automata..hybrid..id..LazyStateID$RP$$GT$17hdf99c23e3e2444b1E.exit.i.i.i.i.i.i"
 
@@ -942,7 +942,7 @@ bb.u:                                             ; preds = %"_ZN4core3ptr80drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !696)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !697)
   %i.ci = load ptr, ptr %i.ch, align 8, !alias.scope !698, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.ci, i64 1 release, align 8, !noalias !698
+  %2 = atomicrmw add ptr %i.ci, i64 -1 release, align 8, !noalias !698
   %i.cj = icmp eq i64 %2, 1
   br i1 %i.cj, label %bb.v, label %"_ZN4core3ptr60drop_in_place$LT$regex_automata..hybrid..dfa..StateSaver$GT$17hf42e15c7146e070dE.exit"
 
@@ -964,7 +964,7 @@ bb.w:                                             ; preds = %"_ZN4core3ptr80drop
   tail call void @llvm.experimental.noalias.scope.decl(metadata !701)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !702)
   %i.co = load ptr, ptr %i.cn, align 8, !alias.scope !703, !nonnull !4, !noundef !4
-  %3 = atomicrmw sub ptr %i.co, i64 1 release, align 8, !noalias !703
+  %3 = atomicrmw add ptr %i.co, i64 -1 release, align 8, !noalias !703
   %i.cp = icmp eq i64 %3, 1
   br i1 %i.cp, label %bb.x, label %"_ZN4core3ptr60drop_in_place$LT$regex_automata..hybrid..dfa..StateSaver$GT$17hf42e15c7146e070dE.exit30"
 
@@ -996,7 +996,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !732)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !733)
   %i.c = load ptr, ptr %i.b, align 8, !alias.scope !734, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !734
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !734
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %bb.b, label %"_ZN4core3ptr62drop_in_place$LT$regex_automata..util..captures..GroupInfo$GT$17h0b570163d0a10365E.exit.i"
 
@@ -1399,7 +1399,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !926)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !927)
   %i.f = load ptr, ptr %i.d, align 8, !alias.scope !928, !nonnull !4, !noundef !4
-  %1 = atomicrmw sub ptr %i.f, i64 1 release, align 8, !noalias !929
+  %1 = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !929
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.b, label %"_ZN4core3ptr68drop_in_place$LT$regex_automata..util..determinize..state..State$GT$17h663ce0555d5b9fc7E.exit.i.i"
 
@@ -1426,7 +1426,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !931)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !932)
   %i.m = load ptr, ptr %i.k, align 8, !alias.scope !933, !nonnull !4, !noundef !4
-  %2 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !934
+  %2 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !934
   %i.n = icmp eq i64 %2, 1
   br i1 %i.n, label %bb.d, label %"_ZN4core3ptr68drop_in_place$LT$regex_automata..util..determinize..state..State$GT$17h663ce0555d5b9fc7E.exit8.i.i"
 

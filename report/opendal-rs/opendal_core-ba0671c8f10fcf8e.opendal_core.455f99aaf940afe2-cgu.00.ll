@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !296)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !297)
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !298, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !298
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !298
   %i.e = icmp eq i64 %1, 1
   br i1 %i.e, label %bb.c, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtNtNtCs5XgW7KoffLW_12opendal_core5types7context4read11ReadContextEEB1g_.exit.i
 
@@ -516,7 +516,7 @@ bb.l:                                             ; preds = %_RINvNtCsgxBkk5gSRh
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
 bb.m:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs76KlaVGnJsc_4http7request5PartsECs5XgW7KoffLW_12opendal_core.exit
-  %1 = atomicrmw sub ptr %i.p, i64 1 release, align 8, !noalias !327
+  %1 = atomicrmw add ptr %i.p, i64 -1 release, align 8, !noalias !327
   %i.ab = icmp eq i64 %1, 1
   br i1 %i.ab, label %bb.n, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -546,7 +546,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !343)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !344)
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !345, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !345
+  %1 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !345
   %i.c = icmp eq i64 %1, 1
   br i1 %i.c, label %bb.b, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCs5XgW7KoffLW_12opendal_core5types7execute8executor8ExecutorEBJ_.exit
 
@@ -619,7 +619,7 @@ bb.j:                                             ; preds = %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !346)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !347)
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !348, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !348
+  %2 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !348
   %i.n = icmp eq i64 %2, 1
   br i1 %i.n, label %bb.k, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcINtNtNtB4_4sync6atomic6AtomicjEEECs5XgW7KoffLW_12opendal_core.exit
 
@@ -638,7 +638,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtNtCs6i54tJFfzR_5alloc11collections9
   tail call void @llvm.experimental.noalias.scope.decl(metadata !349)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !350)
   %i.q = load ptr, ptr %i.p, align 8, !alias.scope !351, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.q, i64 1 release, align 8, !noalias !351
+  %3 = atomicrmw add ptr %i.q, i64 -1 release, align 8, !noalias !351
   %i.r = icmp eq i64 %3, 1
   br i1 %i.r, label %bb.m, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcINtNtNtB4_4sync6atomic6AtomicjEEECs5XgW7KoffLW_12opendal_core.exit9
 
@@ -875,7 +875,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !405)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !406)
   %i.c = load ptr, ptr %0, align 8, !alias.scope !407, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !407
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !407
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %common.ret.sink.split, label %common.ret
 
@@ -898,7 +898,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !408)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !409)
   %i.j = load ptr, ptr %0, align 8, !alias.scope !410, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.j, i64 1 release, align 8, !noalias !410
+  %2 = atomicrmw add ptr %i.j, i64 -1 release, align 8, !noalias !410
   %i.k = icmp eq i64 %2, 1
   br i1 %i.k, label %bb.f, label %.noexc
 
@@ -919,7 +919,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNCNvMNtNtNtCs5XgW7KoffLW_12opendal_core5
   tail call void @llvm.experimental.noalias.scope.decl(metadata !411)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !412)
   %i.m = load ptr, ptr %0, align 8, !alias.scope !413, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.m, i64 1 release, align 8, !noalias !413
+  %3 = atomicrmw add ptr %i.m, i64 -1 release, align 8, !noalias !413
   %i.n = icmp eq i64 %3, 1
   br i1 %i.n, label %common.ret.sink.split, label %common.ret
 
@@ -1050,7 +1050,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %common.ret, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %1 = atomicrmw sub ptr %i.c, i64 1 release, align 8, !noalias !428
+  %1 = atomicrmw add ptr %i.c, i64 -1 release, align 8, !noalias !428
   %i.e = icmp eq i64 %1, 1
   br i1 %i.e, label %bb.d, label %common.ret
 
@@ -1453,7 +1453,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer5InnerEBH_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %1 = atomicrmw sub ptr %i.a, i64 1 release, align 8, !noalias !527
+  %1 = atomicrmw add ptr %i.a, i64 -1 release, align 8, !noalias !527
   %i.m = icmp eq i64 %1, 1
   br i1 %i.m, label %bb.d, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer5InnerEBH_.exit
 
@@ -1583,7 +1583,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !546
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !546
   %i.p = icmp eq i64 %1, 1
   br i1 %i.p, label %bb.f, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -1643,7 +1643,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %1 = atomicrmw sub ptr %i.d, i64 1 release, align 8, !noalias !565
+  %1 = atomicrmw add ptr %i.d, i64 -1 release, align 8, !noalias !565
   %i.p = icmp eq i64 %1, 1
   br i1 %i.p, label %bb.f, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -1719,7 +1719,7 @@ bb.g:                                             ; preds = %bb.f
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit unwind label %bb.k, !inline_history !24
 
 bb.h:                                             ; preds = %bb.f
-  %1 = atomicrmw sub ptr %i.g, i64 1 release, align 8, !noalias !594
+  %1 = atomicrmw add ptr %i.g, i64 -1 release, align 8, !noalias !594
   %i.s = icmp eq i64 %1, 1
   br i1 %i.s, label %bb.i, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -1818,7 +1818,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !624)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !625)
   %i.e = load ptr, ptr %i.d, align 8, !alias.scope !626, !nonnull !11, !noundef !11
-  %1 = atomicrmw sub ptr %i.e, i64 1 release, align 8, !noalias !626
+  %1 = atomicrmw add ptr %i.e, i64 -1 release, align 8, !noalias !626
   %i.f = icmp eq i64 %1, 1
   br i1 %i.f, label %bb.e, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCs5XgW7KoffLW_12opendal_core5types7context4read13ReadGeneratorEBJ_.exit.i.i.i
 
@@ -1897,7 +1897,7 @@ bb.n:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !629)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !630)
   %i.aa = load ptr, ptr %i.z, align 8, !alias.scope !631, !nonnull !11, !noundef !11
-  %2 = atomicrmw sub ptr %i.aa, i64 1 release, align 8, !noalias !631
+  %2 = atomicrmw add ptr %i.aa, i64 -1 release, align 8, !noalias !631
   %i.ab = icmp eq i64 %2, 1
   br i1 %i.ab, label %bb.o, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtNtNtCs5XgW7KoffLW_12opendal_core5types7context4read11ReadContextEEB1g_.exit.i.i.i
 
@@ -2300,7 +2300,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNCNvMNtNtNtCs5XgW7KoffLW_12opendal_core5
   call void @llvm.experimental.noalias.scope.decl(metadata !849)
   call void @llvm.experimental.noalias.scope.decl(metadata !850)
   %i.j = load ptr, ptr %1, align 8, !alias.scope !851, !nonnull !11, !noundef !11
-  %3 = atomicrmw sub ptr %i.j, i64 1 release, align 8, !noalias !851
+  %3 = atomicrmw add ptr %i.j, i64 -1 release, align 8, !noalias !851
   %i.k = icmp eq i64 %3, 1
   br i1 %i.k, label %bb.b, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtNtNtCs5XgW7KoffLW_12opendal_core5types7context4read11ReadContextEEB1g_.exit
 
@@ -2627,7 +2627,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3o
   br label %.body.i
 
 bb.ag:                                            ; preds = %.body.i.i
-  %4 = atomicrmw sub ptr %i.bs, i64 1 release, align 8, !noalias !858
+  %4 = atomicrmw add ptr %i.bs, i64 -1 release, align 8, !noalias !858
   %i.cv = icmp eq i64 %4, 1
   br i1 %i.cv, label %bb.ah, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3ops6OpStatEBH_.exit.i.i
 
@@ -2679,7 +2679,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.dc = inttoptr i64 %.sroa.3.sroa.0.0.copyload.i to ptr
-  %5 = atomicrmw sub ptr %i.dc, i64 1 release, align 8, !noalias !860
+  %5 = atomicrmw add ptr %i.dc, i64 -1 release, align 8, !noalias !860
   %i.dd = icmp eq i64 %5, 1
   br i1 %i.dd, label %bb.an, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types8metadata8MetadataEBH_.exit20.i
 
@@ -2725,7 +2725,7 @@ bb.ar:                                            ; preds = %bb.m
   br i1 %i.dj, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3ops6OpStatEBH_.exit.i, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %6 = atomicrmw sub ptr %i.di, i64 1 release, align 8, !noalias !865
+  %6 = atomicrmw add ptr %i.di, i64 -1 release, align 8, !noalias !865
   %i.dk = icmp eq i64 %6, 1
   br i1 %i.dk, label %bb.at, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3ops6OpStatEBH_.exit.i
 
@@ -2791,7 +2791,7 @@ bb.ay:                                            ; preds = %bb.aq, %_RINvNtCsgx
   call void @llvm.experimental.noalias.scope.decl(metadata !867)
   call void @llvm.experimental.noalias.scope.decl(metadata !868)
   %i.dq = load ptr, ptr %1, align 8, !alias.scope !869, !nonnull !11, !noundef !11
-  %7 = atomicrmw sub ptr %i.dq, i64 1 release, align 8, !noalias !869
+  %7 = atomicrmw add ptr %i.dq, i64 -1 release, align 8, !noalias !869
   %i.dr = icmp eq i64 %7, 1
   br i1 %i.dr, label %bb.az, label %common.ret
 
@@ -3194,7 +3194,7 @@ bb.k:                                             ; preds = %bb.j
           to label %bb.n unwind label %.thread, !inline_history !5
 
 bb.l:                                             ; preds = %bb.j
-  %2 = atomicrmw sub ptr %i.t, i64 1 release, align 8, !noalias !1090
+  %2 = atomicrmw add ptr %i.t, i64 -1 release, align 8, !noalias !1090
   %i.af = icmp eq i64 %2, 1
   br i1 %i.af, label %bb.m, label %bb.n
 
@@ -3597,7 +3597,7 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.l unwind label %.thread, !inline_history !5
 
 bb.j:                                             ; preds = %bb.h
-  %2 = atomicrmw sub ptr %i.k, i64 1 release, align 8, !noalias !1208
+  %2 = atomicrmw add ptr %i.k, i64 -1 release, align 8, !noalias !1208
   %i.w = icmp eq i64 %2, 1
   br i1 %i.w, label %bb.k, label %bb.l
 
@@ -4000,7 +4000,7 @@ bb.m:                                             ; preds = %bb.l
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit unwind label %bb.q, !inline_history !24
 
 bb.n:                                             ; preds = %bb.l
-  %3 = atomicrmw sub ptr %i.ah, i64 1 release, align 8, !noalias !1321
+  %3 = atomicrmw add ptr %i.ah, i64 -1 release, align 8, !noalias !1321
   %i.ap = icmp eq i64 %3, 1
   br i1 %i.ap, label %bb.o, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -4080,7 +4080,7 @@ bb.d:                                             ; preds = %bb.c
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit unwind label %bb.g, !inline_history !24
 
 bb.e:                                             ; preds = %bb.c
-  %2 = atomicrmw sub ptr %i.b, i64 1 release, align 8, !noalias !1339
+  %2 = atomicrmw add ptr %i.b, i64 -1 release, align 8, !noalias !1339
   %i.p = icmp eq i64 %2, 1
   br i1 %i.p, label %bb.f, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -4483,7 +4483,7 @@ bb.f:                                             ; preds = %bb.e
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit unwind label %bb.i, !inline_history !24
 
 bb.g:                                             ; preds = %bb.e
-  %4 = atomicrmw sub ptr %i.j, i64 1 release, align 8, !noalias !1440
+  %4 = atomicrmw add ptr %i.j, i64 -1 release, align 8, !noalias !1440
   %i.r = icmp eq i64 %4, 1
   br i1 %i.r, label %bb.h, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -4886,7 +4886,7 @@ bb.t:                                             ; preds = %bb.s
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit unwind label %bb.x, !inline_history !24
 
 bb.u:                                             ; preds = %bb.s
-  %4 = atomicrmw sub ptr %i.bg, i64 1 release, align 8, !noalias !1485
+  %4 = atomicrmw add ptr %i.bg, i64 -1 release, align 8, !noalias !1485
   %i.bq = icmp eq i64 %4, 1
   br i1 %i.bq, label %bb.v, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -4933,7 +4933,7 @@ bb.y:                                             ; preds = %_RINvNtCsgxBkk5gSRh
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1487)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1488)
   %i.cb = load ptr, ptr %i.ca, align 8, !alias.scope !1489, !nonnull !11, !noundef !11
-  %5 = atomicrmw sub ptr %i.cb, i64 1 release, align 8, !noalias !1489
+  %5 = atomicrmw add ptr %i.cb, i64 -1 release, align 8, !noalias !1489
   %i.cc = icmp eq i64 %5, 1
   br i1 %i.cc, label %bb.z, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtNtNtCs5XgW7KoffLW_12opendal_core5types7context4read11ReadContextEEB1g_.exit.i
 
@@ -5336,7 +5336,7 @@ bb.bn:                                            ; preds = %bb.bm
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit unwind label %bb.bq, !inline_history !24
 
 bb.bo:                                            ; preds = %bb.bm
-  %3 = atomicrmw sub ptr %i.jr, i64 1 release, align 8, !noalias !1645
+  %3 = atomicrmw add ptr %i.jr, i64 -1 release, align 8, !noalias !1645
   %i.kd = icmp eq i64 %3, 1
   br i1 %i.kd, label %bb.bp, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -5693,7 +5693,7 @@ bb.de:                                            ; preds = %bb.dd
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit473 unwind label %bb.p, !inline_history !24
 
 bb.df:                                            ; preds = %bb.dd
-  %4 = atomicrmw sub ptr %i.lu, i64 1 release, align 8, !noalias !1658
+  %4 = atomicrmw add ptr %i.lu, i64 -1 release, align 8, !noalias !1658
   %i.mf = icmp eq i64 %4, 1
   br i1 %i.mf, label %bb.dg, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit473
 
@@ -6096,7 +6096,7 @@ bb.di:                                            ; preds = %bb.dh
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit unwind label %bb.dm, !inline_history !24
 
 bb.dj:                                            ; preds = %bb.dh
-  %2 = atomicrmw sub ptr %i.lj, i64 1 release, align 8, !noalias !1833
+  %2 = atomicrmw add ptr %i.lj, i64 -1 release, align 8, !noalias !1833
   %i.lv = icmp eq i64 %2, 1
   br i1 %i.lv, label %bb.dk, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
@@ -6499,7 +6499,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 
 bb.ax:                                            ; preds = %bb.av
-  %2 = atomicrmw sub ptr %i.ey, i64 1 release, align 8, !noalias !1949
+  %2 = atomicrmw add ptr %i.ey, i64 -1 release, align 8, !noalias !1949
   %i.fk = icmp eq i64 %2, 1
   br i1 %i.fk, label %bb.ay, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEBH_.exit
 

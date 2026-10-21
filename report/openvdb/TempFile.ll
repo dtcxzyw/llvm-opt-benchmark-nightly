@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %_ZN7openvdb5v13_02i
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  %2 = atomicrmw sub ptr %i.aa, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.aa, i32 -1 acq_rel, align 4
   %i.ab = icmp eq i32 %2, 1
   br i1 %i.ab, label %bb.i, label %_ZN5boost9iostreams15file_descriptorD2Ev.exit.i.i.i
 
@@ -215,7 +215,7 @@ bb.i:                                             ; preds = %bb.h
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.i
   %i.af = getelementptr inbounds nuw i8, ptr %i.z, i64 12
-  %3 = atomicrmw sub ptr %i.af, i32 1 acq_rel, align 4
+  %3 = atomicrmw add ptr %i.af, i32 -1 acq_rel, align 4
   %i.ag = icmp eq i32 %3, 1
   br i1 %i.ag, label %bb.j, label %_ZN5boost9iostreams15file_descriptorD2Ev.exit.i.i.i
 
@@ -618,7 +618,7 @@ _ZN5boost10shared_ptrINS_9iostreams6detail20file_descriptor_implEEC2ERKS4_.exit.
 
 bb.ab:                                            ; preds = %_ZN5boost10shared_ptrINS_9iostreams6detail20file_descriptor_implEEC2ERKS4_.exit.i.i.i
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
-  %12 = atomicrmw sub ptr %i.cf, i32 1 acq_rel, align 4
+  %12 = atomicrmw add ptr %i.cf, i32 -1 acq_rel, align 4
   %i.cg = icmp eq i32 %12, 1
   br i1 %i.cg, label %bb.ac, label %_ZN5boost9iostreams20file_descriptor_sinkaSERKS1_.exit
 
@@ -631,7 +631,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.ac
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ce, i64 12
-  %13 = atomicrmw sub ptr %i.ck, i32 1 acq_rel, align 4
+  %13 = atomicrmw add ptr %i.ck, i32 -1 acq_rel, align 4
   %i.cl = icmp eq i32 %13, 1
   br i1 %i.cl, label %bb.ad, label %_ZN5boost9iostreams20file_descriptor_sinkaSERKS1_.exit
 
@@ -656,7 +656,7 @@ _ZN5boost9iostreams20file_descriptor_sinkaSERKS1_.exit: ; preds = %_ZN5boost10sh
 
 bb.af:                                            ; preds = %_ZN5boost9iostreams20file_descriptor_sinkaSERKS1_.exit
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
-  %14 = atomicrmw sub ptr %i.cs, i32 1 acq_rel, align 4
+  %14 = atomicrmw add ptr %i.cs, i32 -1 acq_rel, align 4
   %i.ct = icmp eq i32 %14, 1
   br i1 %i.ct, label %bb.ag, label %_ZN5boost9iostreams15file_descriptorD2Ev.exit
 
@@ -669,7 +669,7 @@ bb.ag:                                            ; preds = %bb.af
 
 .noexc.i.i.i:                                     ; preds = %bb.ag
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cr, i64 12
-  %15 = atomicrmw sub ptr %i.cx, i32 1 acq_rel, align 4
+  %15 = atomicrmw add ptr %i.cx, i32 -1 acq_rel, align 4
   %i.cy = icmp eq i32 %15, 1
   br i1 %i.cy, label %bb.ah, label %_ZN5boost9iostreams15file_descriptorD2Ev.exit
 
@@ -979,7 +979,7 @@ bb.i:                                             ; preds = %_ZN5boost9iostreams
 
 bb.j:                                             ; preds = %bb.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %1 = atomicrmw sub ptr %i.w, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.w, i32 -1 acq_rel, align 4
   %i.x = icmp eq i32 %1, 1
   br i1 %i.x, label %bb.k, label %_ZN5boost9iostreams6detail18indirect_streambufINS0_20file_descriptor_sinkESt11char_traitsIcESaIcENS0_15output_seekableEED2Ev.exit
 
@@ -992,7 +992,7 @@ bb.k:                                             ; preds = %bb.j
 
 .noexc.i.i.i.i.i.i.i:                             ; preds = %bb.k
   %i.ab = getelementptr inbounds nuw i8, ptr %i.v, i64 12
-  %2 = atomicrmw sub ptr %i.ab, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.ab, i32 -1 acq_rel, align 4
   %i.ac = icmp eq i32 %2, 1
   br i1 %i.ac, label %bb.l, label %_ZN5boost9iostreams6detail18indirect_streambufINS0_20file_descriptor_sinkESt11char_traitsIcESaIcENS0_15output_seekableEED2Ev.exit
 
@@ -1034,7 +1034,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %1 = atomicrmw sub ptr %i.c, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.c, i32 -1 acq_rel, align 4
   %i.d = icmp eq i32 %1, 1
   br i1 %i.d, label %bb.c, label %_ZN5boost10shared_ptrINS_9iostreams6detail20file_descriptor_implEED2Ev.exit
 
@@ -1047,7 +1047,7 @@ bb.c:                                             ; preds = %bb.b
 
 .noexc.i.i:                                       ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  %2 = atomicrmw sub ptr %i.h, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.h, i32 -1 acq_rel, align 4
   %i.i = icmp eq i32 %2, 1
   br i1 %i.i, label %bb.d, label %_ZN5boost10shared_ptrINS_9iostreams6detail20file_descriptor_implEED2Ev.exit
 
@@ -1450,7 +1450,7 @@ bb.c:                                             ; preds = %_ZN5boost9iostreams
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %1 = atomicrmw sub ptr %i.j, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.j, i32 -1 acq_rel, align 4
   %i.k = icmp eq i32 %1, 1
   br i1 %i.k, label %bb.e, label %_ZN5boost9iostreams6detail8optionalINS1_15concept_adapterINS0_20file_descriptor_sinkEEEED2Ev.exit
 
@@ -1463,7 +1463,7 @@ bb.e:                                             ; preds = %bb.d
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 12
-  %2 = atomicrmw sub ptr %i.o, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.o, i32 -1 acq_rel, align 4
   %i.p = icmp eq i32 %2, 1
   br i1 %i.p, label %bb.f, label %_ZN5boost9iostreams6detail8optionalINS1_15concept_adapterINS0_20file_descriptor_sinkEEEED2Ev.exit
 
@@ -1517,7 +1517,7 @@ bb.c:                                             ; preds = %_ZN5boost9iostreams
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %1 = atomicrmw sub ptr %i.j, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.j, i32 -1 acq_rel, align 4
   %i.k = icmp eq i32 %1, 1
   br i1 %i.k, label %bb.e, label %_ZN5boost9iostreams6detail18indirect_streambufINS0_20file_descriptor_sinkESt11char_traitsIcESaIcENS0_15output_seekableEED2Ev.exit
 
@@ -1530,7 +1530,7 @@ bb.e:                                             ; preds = %bb.d
 
 .noexc.i.i.i.i.i.i.i:                             ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 12
-  %2 = atomicrmw sub ptr %i.o, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.o, i32 -1 acq_rel, align 4
   %i.p = icmp eq i32 %2, 1
   br i1 %i.p, label %bb.f, label %_ZN5boost9iostreams6detail18indirect_streambufINS0_20file_descriptor_sinkESt11char_traitsIcESaIcENS0_15output_seekableEED2Ev.exit
 
@@ -1577,7 +1577,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %1 = atomicrmw sub ptr %i.c, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.c, i32 -1 acq_rel, align 4
   %i.d = icmp eq i32 %1, 1
   br i1 %i.d, label %bb.c, label %_ZN5boost9iostreams15file_descriptorD2Ev.exit
 
@@ -1590,7 +1590,7 @@ bb.c:                                             ; preds = %bb.b
 
 .noexc.i.i.i:                                     ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  %2 = atomicrmw sub ptr %i.h, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.h, i32 -1 acq_rel, align 4
   %i.i = icmp eq i32 %2, 1
   br i1 %i.i, label %bb.d, label %_ZN5boost9iostreams15file_descriptorD2Ev.exit
 
@@ -1993,7 +1993,7 @@ _ZN5boost9iostreams13stream_bufferINS0_20file_descriptor_sinkESt11char_traitsIcE
 
 bb.f:                                             ; preds = %_ZN5boost9iostreams13stream_bufferINS0_20file_descriptor_sinkESt11char_traitsIcESaIcENS0_15output_seekableEE9open_implERKS2_ll.exit
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %7 = atomicrmw sub ptr %i.h, i32 1 acq_rel, align 4
+  %7 = atomicrmw add ptr %i.h, i32 -1 acq_rel, align 4
   %i.i = icmp eq i32 %7, 1
   br i1 %i.i, label %bb.g, label %_ZN5boost9iostreams15file_descriptorD2Ev.exit
 
@@ -2006,7 +2006,7 @@ bb.g:                                             ; preds = %bb.f
 
 .noexc.i.i.i:                                     ; preds = %bb.g
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 12
-  %8 = atomicrmw sub ptr %i.m, i32 1 acq_rel, align 4
+  %8 = atomicrmw add ptr %i.m, i32 -1 acq_rel, align 4
   %i.n = icmp eq i32 %8, 1
   br i1 %i.n, label %bb.h, label %_ZN5boost9iostreams15file_descriptorD2Ev.exit
 
@@ -2409,7 +2409,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %5 = atomicrmw sub ptr %i.u, i32 1 acq_rel, align 4
+  %5 = atomicrmw add ptr %i.u, i32 -1 acq_rel, align 4
   %i.v = icmp eq i32 %5, 1
   br i1 %i.v, label %bb.g, label %_ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exit.i.i
 
@@ -2422,7 +2422,7 @@ bb.g:                                             ; preds = %bb.f
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.g
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 12
-  %6 = atomicrmw sub ptr %i.z, i32 1 acq_rel, align 4
+  %6 = atomicrmw add ptr %i.z, i32 -1 acq_rel, align 4
   %i.aa = icmp eq i32 %6, 1
   br i1 %i.aa, label %bb.h, label %_ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exit.i.i
 
@@ -2457,7 +2457,7 @@ bb.j:                                             ; preds = %_ZN5boost9iostreams
 
 bb.k:                                             ; preds = %bb.j
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
-  %7 = atomicrmw sub ptr %i.ai, i32 1 acq_rel, align 4
+  %7 = atomicrmw add ptr %i.ai, i32 -1 acq_rel, align 4
   %i.aj = icmp eq i32 %7, 1
   br i1 %i.aj, label %bb.l, label %_ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exit
 
@@ -2470,7 +2470,7 @@ bb.l:                                             ; preds = %bb.k
 
 .noexc.i.i.i.i:                                   ; preds = %bb.l
   %i.an = getelementptr inbounds nuw i8, ptr %i.ah, i64 12
-  %8 = atomicrmw sub ptr %i.an, i32 1 acq_rel, align 4
+  %8 = atomicrmw add ptr %i.an, i32 -1 acq_rel, align 4
   %i.ao = icmp eq i32 %8, 1
   br i1 %i.ao, label %bb.m, label %_ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exit
 
@@ -2536,7 +2536,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %6 = atomicrmw sub ptr %i.g, i32 1 acq_rel, align 4
+  %6 = atomicrmw add ptr %i.g, i32 -1 acq_rel, align 4
   %i.h = icmp eq i32 %6, 1
   br i1 %i.h, label %bb.e, label %_ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exit.i.i
 
@@ -2549,7 +2549,7 @@ bb.e:                                             ; preds = %bb.d
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 12
-  %7 = atomicrmw sub ptr %i.l, i32 1 acq_rel, align 4
+  %7 = atomicrmw add ptr %i.l, i32 -1 acq_rel, align 4
   %i.m = icmp eq i32 %7, 1
   br i1 %i.m, label %bb.f, label %_ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exit.i.i
 
@@ -2754,7 +2754,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %1 = atomicrmw sub ptr %i.g, i32 1 acq_rel, align 4
+  %1 = atomicrmw add ptr %i.g, i32 -1 acq_rel, align 4
   %i.h = icmp eq i32 %1, 1
   br i1 %i.h, label %bb.d, label %_ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exit.i
 
@@ -2767,7 +2767,7 @@ bb.d:                                             ; preds = %bb.c
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 12
-  %2 = atomicrmw sub ptr %i.l, i32 1 acq_rel, align 4
+  %2 = atomicrmw add ptr %i.l, i32 -1 acq_rel, align 4
   %i.m = icmp eq i32 %2, 1
   br i1 %i.m, label %bb.e, label %_ZN5boost9iostreams6detail15concept_adapterINS0_20file_descriptor_sinkEED2Ev.exit.i
 

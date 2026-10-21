@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1638, !nonnull !275, !align !411 ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 216
-  %1 = atomicrmw sub ptr %i.c, i64 1 seq_cst, align 8
+  %1 = atomicrmw add ptr %i.c, i64 -1 seq_cst, align 8
   %i.d = icmp eq i64 %1, 1
   br i1 %i.d, label %bb.b, label %_ZN4asio6detail9scheduler13work_finishedEv.exit
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.j = load ptr, ptr %0, align 8, !tbaa !1177   ; 11 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 216
-  %1 = atomicrmw sub ptr %i.k, i64 1 seq_cst, align 8
+  %1 = atomicrmw add ptr %i.k, i64 -1 seq_cst, align 8
   %i.l = icmp eq i64 %1, 1
   br i1 %i.l, label %bb.e, label %_ZN4asio6detail9scheduler13work_finishedEv.exit
 
@@ -1011,7 +1011,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !665, !nonnull !275, !align !411 ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 216
-  %1 = atomicrmw sub ptr %i.f, i64 1 seq_cst, align 8
+  %1 = atomicrmw add ptr %i.f, i64 -1 seq_cst, align 8
   %i.g = icmp eq i64 %1, 1
   br i1 %i.g, label %bb.c, label %_ZN4asio6detail9scheduler13work_finishedEv.exit
 
@@ -1414,7 +1414,7 @@ define linkonce_odr dso_local void @_ZN4crow10ConnectionINS_17UnixSocketAdaptorE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 5168
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !3147, !nonnull !275, !align !1285
-  %1 = atomicrmw sub ptr %i.b, i32 1 seq_cst, align 4 ; 0 uses
+  %1 = atomicrmw add ptr %i.b, i32 -1 seq_cst, align 4 ; 0 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 5080
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !164  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 5096 ; 2 uses
@@ -1817,7 +1817,7 @@ define linkonce_odr dso_local void @_ZN4crow10ConnectionINS_13SocketAdaptorENS_4
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 5168
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !3412, !nonnull !275, !align !1285
-  %1 = atomicrmw sub ptr %i.b, i32 1 seq_cst, align 4 ; 0 uses
+  %1 = atomicrmw add ptr %i.b, i32 -1 seq_cst, align 4 ; 0 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 5080
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !164  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 5096 ; 2 uses

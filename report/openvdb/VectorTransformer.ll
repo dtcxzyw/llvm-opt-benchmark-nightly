@@ -205,7 +205,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !17
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -222,14 +222,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -256,7 +256,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !17
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -273,14 +273,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -683,7 +683,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !18
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -700,14 +700,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -734,7 +734,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !18
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -751,14 +751,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -1161,7 +1161,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !19
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -1178,14 +1178,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -1212,7 +1212,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !19
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -1229,14 +1229,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -1639,7 +1639,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !23
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -1656,14 +1656,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -1690,7 +1690,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !23
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -1707,14 +1707,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -2117,7 +2117,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !24
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -2134,14 +2134,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -2168,7 +2168,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !24
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -2185,14 +2185,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -2595,7 +2595,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !25
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -2612,14 +2612,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -2646,7 +2646,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !25
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -2663,14 +2663,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -3073,7 +3073,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !29
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -3090,14 +3090,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -3124,7 +3124,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !29
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -3141,14 +3141,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_15MatMulNormalizeEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -3551,7 +3551,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !30
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -3568,14 +3568,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -3602,7 +3602,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !30
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -3619,14 +3619,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_6MatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -4029,7 +4029,7 @@ _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partiti
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !31
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %2 = atomicrmw sub ptr %i.ac, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.ac, i32 -1 seq_cst, align 4
   %i.ad = add i32 %2, -1
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -4046,14 +4046,14 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %i.ai = inttoptr i64 %i.ah to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %3 = atomicrmw sub ptr %i.aj, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.aj, i32 -1 seq_cst, align 4
   %i.ak = add i32 %3, -1
   %i.al = icmp sgt i32 %i.ak, 0
   br i1 %i.al, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.am, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.am, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.h, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 
@@ -4080,7 +4080,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   tail call void %i.f(ptr noundef nonnull align 64 dead_on_return(664) dereferenceable(664) %0) #21, !inline_history !31
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = atomicrmw sub ptr %i.g, i32 1 seq_cst, align 4
+  %2 = atomicrmw add ptr %i.g, i32 -1 seq_cst, align 4
   %i.h = add i32 %2, -1
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
@@ -4097,14 +4097,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.m = inttoptr i64 %i.l to ptr
   tail call void @_ZN3tbb6detail2r110deallocateERNS0_2d117small_object_poolEPvmRKNS2_14execution_dataE(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull %.019.i.i, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = atomicrmw sub ptr %i.n, i32 1 seq_cst, align 4
+  %3 = atomicrmw add ptr %i.n, i32 -1 seq_cst, align 4
   %i.o = add i32 %3, -1
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 24
-  %4 = atomicrmw sub ptr %i.q, i64 1 seq_cst, align 8
+  %4 = atomicrmw add ptr %i.q, i64 -1 seq_cst, align 8
   %.not.i.i.i.i = icmp eq i64 %4, 1
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEENS4_5tools8valxform15SharedOpApplierISU_KNSW_17HomogeneousMatMulEEEKNS1_16auto_partitionerEE8finalizeERKNS1_14execution_dataE.exit
 

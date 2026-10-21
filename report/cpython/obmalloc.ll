@@ -206,7 +206,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bd, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %.thread.i, %bb.j
-  %8 = atomicrmw sub ptr @mi_arena_count, i64 1 acq_rel, align 64 ; 0 uses
+  %8 = atomicrmw add ptr @mi_arena_count, i64 -1 acq_rel, align 64 ; 0 uses
   br label %mi_arena_add.exit
 
 bb.l:                                             ; preds = %bb.j
@@ -374,7 +374,7 @@ bb.m:                                             ; preds = %_mi_prim_free.exit.
   br label %_mi_prim_free.exit.thread.i.i
 
 _mi_prim_free.exit.thread.i.i:                    ; preds = %bb.m, %_mi_prim_free.exit.i.i, %bb.l
-  %5 = atomicrmw sub ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 120), i64 1073741824 monotonic, align 8
+  %5 = atomicrmw add ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 120), i64 -1073741824 monotonic, align 8
   %i.af = add i64 %5, -1073741824                 ; 2 uses
   %i.ag = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 112) monotonic, align 16
   br label %bb.n
@@ -392,7 +392,7 @@ bb.o:                                             ; preds = %bb.n
 
 mi_atomic_maxi64_relaxed.exit.i.i.i.i:            ; preds = %bb.o, %bb.n
   %i.al = atomicrmw add ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 104), i64 1073741824 monotonic, align 8 ; 0 uses
-  %6 = atomicrmw sub ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 88), i64 1073741824 monotonic, align 8
+  %6 = atomicrmw add ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 88), i64 -1073741824 monotonic, align 8
   %i.am = add i64 %6, -1073741824                 ; 2 uses
   %i.an = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 80) monotonic, align 16
   br label %bb.p
@@ -663,7 +663,7 @@ bb.f:                                             ; preds = %_mi_bitmap_claim.ex
   br i1 %i.at, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %7 = atomicrmw sub ptr @mi_arena_count, i64 1 acq_rel, align 64 ; 0 uses
+  %7 = atomicrmw add ptr @mi_arena_count, i64 -1 acq_rel, align 64 ; 0 uses
   br label %mi_arena_add.exit.i
 
 bb.h:                                             ; preds = %bb.f
@@ -1034,7 +1034,7 @@ bb.s:                                             ; preds = %_mi_prim_free.exit.
   br label %_mi_prim_free.exit.thread.i
 
 _mi_prim_free.exit.thread.i:                      ; preds = %bb.s, %_mi_prim_free.exit.i, %bb.r
-  %10 = atomicrmw sub ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 120), i64 1073741824 monotonic, align 8
+  %10 = atomicrmw add ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 120), i64 -1073741824 monotonic, align 8
   %i.bn = add i64 %10, -1073741824                ; 2 uses
   %i.bo = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 112) monotonic, align 16
   br label %bb.t
@@ -1052,7 +1052,7 @@ bb.u:                                             ; preds = %bb.t
 
 mi_atomic_maxi64_relaxed.exit.i.i.i:              ; preds = %bb.u, %bb.t
   %i.bt = atomicrmw add ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 104), i64 1073741824 monotonic, align 8 ; 0 uses
-  %11 = atomicrmw sub ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 88), i64 1073741824 monotonic, align 8
+  %11 = atomicrmw add ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 88), i64 -1073741824 monotonic, align 8
   %i.bu = add i64 %11, -1073741824                ; 2 uses
   %i.bv = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 80) monotonic, align 16
   br label %bb.v
@@ -1455,8 +1455,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not7, label %_mi_heap_done.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %1 = atomicrmw sub ptr @thread_count, i64 1 monotonic, align 8 ; 0 uses
-  %2 = atomicrmw sub ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 312), i64 1 monotonic, align 8
+  %1 = atomicrmw add ptr @thread_count, i64 -1 monotonic, align 8 ; 0 uses
+  %2 = atomicrmw add ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 312), i64 -1 monotonic, align 8
   %i.e = add i64 %2, -1                           ; 2 uses
   %i.f = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @_mi_stats_main, i64 304) monotonic, align 16
   br label %bb.e
@@ -1859,7 +1859,7 @@ _mi_stat_decrease.exit:                           ; preds = %mi_page_block_size.
   br i1 %i.az, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %_mi_stat_decrease.exit
-  %2 = atomicrmw sub ptr %i.ba, i64 1 monotonic, align 8
+  %2 = atomicrmw add ptr %i.ba, i64 -1 monotonic, align 8
   %i.bb = getelementptr i8, ptr %i.av, i64 48     ; 2 uses
   %i.bc = add i64 %2, -1                          ; 2 uses
   %i.bd = load atomic i64, ptr %i.bb monotonic, align 8
@@ -2262,7 +2262,7 @@ bb.k:                                             ; preds = %bb.l, %mi_abandoned
   br i1 %.not.i, label %mi_abandoned_pop.exit.thread6, label %bb.l
 
 mi_abandoned_pop.exit.thread6:                    ; preds = %bb.k
-  %2 = atomicrmw sub ptr %i.an, i64 1 monotonic, align 64 ; 0 uses
+  %2 = atomicrmw add ptr %i.an, i64 -1 monotonic, align 64 ; 0 uses
   br label %mi_abandoned_pop.exit.thread
 
 bb.l:                                             ; preds = %bb.k
@@ -2280,10 +2280,10 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bb = getelementptr i8, ptr %i.ar, i64 176
-  %3 = atomicrmw sub ptr %i.an, i64 1 monotonic, align 64 ; 0 uses
+  %3 = atomicrmw add ptr %i.an, i64 -1 monotonic, align 64 ; 0 uses
   store atomic ptr null, ptr %i.bb release, align 8
   %i.bc = getelementptr i8, ptr %i.b, i64 128
-  %4 = atomicrmw sub ptr %i.bc, i64 1 monotonic, align 64 ; 0 uses
+  %4 = atomicrmw add ptr %i.bc, i64 -1 monotonic, align 64 ; 0 uses
   %i.bd = tail call fastcc ptr @mi_segment_reclaim(ptr noundef %i.ar, ptr noundef %0, i64 noundef 0, ptr noundef null, ptr noundef %1) ; 0 uses
   br label %bb.b, !llvm.loop !568
 
@@ -2322,7 +2322,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.m, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %5 = atomicrmw sub ptr %i.n, i64 1 monotonic, align 8
+  %5 = atomicrmw add ptr %i.n, i64 -1 monotonic, align 8
   %i.o = getelementptr i8, ptr %i.i, i64 240      ; 2 uses
   %i.p = add i64 %5, -1                           ; 2 uses
   %i.q = load atomic i64, ptr %i.o monotonic, align 8
@@ -2428,7 +2428,7 @@ mi_heap_by_tag.exit:                              ; preds = %.lr.ph.i, %bb.m, %b
   br i1 %i.bh, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %mi_heap_by_tag.exit
-  %6 = atomicrmw sub ptr %i.bi, i64 1 monotonic, align 8
+  %6 = atomicrmw add ptr %i.bi, i64 -1 monotonic, align 8
   %i.bj = getelementptr i8, ptr %i.bd, i64 272    ; 2 uses
   %i.bk = add i64 %6, -1                          ; 2 uses
   %i.bl = load atomic i64, ptr %i.bj monotonic, align 8
@@ -2831,7 +2831,7 @@ bb.q:                                             ; preds = %bb.r, %mi_abandoned
   br i1 %.not.i17, label %mi_abandoned_pop.exit.thread21, label %bb.r
 
 mi_abandoned_pop.exit.thread21:                   ; preds = %bb.q
-  %3 = atomicrmw sub ptr %i.ap, i64 1 monotonic, align 64 ; 0 uses
+  %3 = atomicrmw add ptr %i.ap, i64 -1 monotonic, align 64 ; 0 uses
   br label %.critedge
 
 bb.r:                                             ; preds = %bb.q
@@ -2849,9 +2849,9 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.cj = getelementptr i8, ptr %i.bz, i64 176    ; 2 uses
-  %4 = atomicrmw sub ptr %i.ap, i64 1 monotonic, align 64 ; 0 uses
+  %4 = atomicrmw add ptr %i.ap, i64 -1 monotonic, align 64 ; 0 uses
   store atomic ptr null, ptr %i.cj release, align 8
-  %5 = atomicrmw sub ptr %i.ao, i64 1 monotonic, align 64 ; 0 uses
+  %5 = atomicrmw add ptr %i.ao, i64 -1 monotonic, align 64 ; 0 uses
   %i.ck = tail call fastcc zeroext i1 @mi_segment_check_free(ptr noundef %i.bz, i64 noundef 0, i64 noundef 0, ptr noundef %2) ; 0 uses
   %i.cl = getelementptr i8, ptr %i.bz, i64 208
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !112
@@ -3019,7 +3019,7 @@ bb.k:                                             ; preds = %_mi_page_free_colle
   br i1 %i.be, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
-  %4 = atomicrmw sub ptr %i.bf, i64 1 monotonic, align 8
+  %4 = atomicrmw add ptr %i.bf, i64 -1 monotonic, align 8
   %i.bg = getelementptr i8, ptr %i.ba, i64 272    ; 2 uses
   %i.bh = add i64 %4, -1                          ; 2 uses
   %i.bi = load atomic i64, ptr %i.bg monotonic, align 8
@@ -3422,7 +3422,7 @@ bb.ag:                                            ; preds = %bb.ah, %mi_abandone
   br i1 %.not.i.i.i, label %mi_abandoned_pop.exit.thread42.i.i, label %bb.ah
 
 mi_abandoned_pop.exit.thread42.i.i:               ; preds = %bb.ag
-  %5 = atomicrmw sub ptr %i.ez, i64 1 monotonic, align 64 ; 0 uses
+  %5 = atomicrmw add ptr %i.ez, i64 -1 monotonic, align 64 ; 0 uses
   br label %mi_segment_try_reclaim.exit.i
 
 bb.ah:                                            ; preds = %bb.ag
@@ -3440,10 +3440,10 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   %i.fn = getelementptr i8, ptr %i.fd, i64 176    ; 2 uses
-  %6 = atomicrmw sub ptr %i.ez, i64 1 monotonic, align 64 ; 0 uses
+  %6 = atomicrmw add ptr %i.ez, i64 -1 monotonic, align 64 ; 0 uses
   store atomic ptr null, ptr %i.fn release, align 8
   %i.fo = getelementptr i8, ptr %i.dn, i64 128
-  %7 = atomicrmw sub ptr %i.fo, i64 1 monotonic, align 64 ; 0 uses
+  %7 = atomicrmw add ptr %i.fo, i64 -1 monotonic, align 64 ; 0 uses
   %i.fp = getelementptr i8, ptr %i.fd, i64 200    ; 3 uses
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !203
   %i.fr = add i64 %i.fq, 1
@@ -3846,7 +3846,7 @@ bb.i:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
-  %2 = atomicrmw sub ptr %i.g, i64 1 monotonic, align 8
+  %2 = atomicrmw add ptr %i.g, i64 -1 monotonic, align 8
   %i.x = getelementptr i8, ptr %i.c, i64 16       ; 2 uses
   %i.y = add i64 %2, -1                           ; 2 uses
   %i.z = load atomic i64, ptr %i.x monotonic, align 8
