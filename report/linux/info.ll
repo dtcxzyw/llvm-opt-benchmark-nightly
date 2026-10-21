@@ -65,10 +65,8 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoli
 @__UNIQUE_ID_addressable_snd_card_rw_proc_new_523 = internal global ptr @snd_card_rw_proc_new, section ".discard.addressable", align 8
 @.str.15 = private unnamed_addr constant [4 x i8] c"%s\0A\00", align 1
 @kmalloc_caches = external dso_local local_unnamed_addr global [3 x [14 x ptr]], align 16
-@.str.17 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @snd_info_entry_operations = internal constant { i32, [4 x i8], ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr } { i32 0, [4 x i8] zeroinitializer, ptr @snd_info_entry_open, ptr @snd_info_entry_read, ptr null, ptr @snd_info_entry_write, ptr @snd_info_entry_llseek, ptr @snd_info_entry_release, ptr @snd_info_entry_poll, ptr @snd_info_entry_ioctl, ptr null, ptr @snd_info_entry_mmap, ptr null }, align 8
 @snd_info_text_entry_ops = internal constant { i32, [4 x i8], ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr } { i32 0, [4 x i8] zeroinitializer, ptr @snd_info_text_entry_open, ptr @seq_read, ptr null, ptr @snd_info_text_entry_write, ptr @seq_lseek, ptr @snd_info_text_entry_release, ptr null, ptr null, ptr null, ptr null, ptr null }, align 8
-@.str.21 = private unnamed_addr constant [26 x i8] c"include/linux/ucopysize.h\00", align 1
 @.str.22 = private unnamed_addr constant [55 x i8] c"Advanced Linux Sound Architecture Driver Version k%s.\0A\00", align 1
 @init_uts_ns = external dso_local global %struct.uts_namespace, align 64
 @llvm.compiler.used = appending global [9 x ptr] [ptr @__UNIQUE_ID_addressable_snd_card_rw_proc_new_523, ptr @__UNIQUE_ID_addressable_snd_info_create_card_entry_514, ptr @__UNIQUE_ID_addressable_snd_info_create_module_entry_513, ptr @__UNIQUE_ID_addressable_snd_info_free_entry_519, ptr @__UNIQUE_ID_addressable_snd_info_get_line_509, ptr @__UNIQUE_ID_addressable_snd_info_get_str_510, ptr @__UNIQUE_ID_addressable_snd_info_register_522, ptr @__UNIQUE_ID_addressable_snd_seq_root_490, ptr @snd_info_done], section "llvm.metadata"
@@ -471,7 +469,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.r, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.s = add i64 %i.q, %i.e
+  %i.s = add nuw i64 %i.q, %i.e
   store i64 %i.s, ptr %3, align 8
   br label %bb.e
 
@@ -512,7 +510,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.r, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c
-  %i.s = add i64 %i.q, %i.e
+  %i.s = add nuw i64 %i.q, %i.e
   store i64 %i.s, ptr %3, align 8
   br label %.thread
 
@@ -819,7 +817,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.not.i, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = add i64 %i.i, %2                         ; 6 uses
+  %i.k = add nuw i64 %i.i, %2                     ; 6 uses
   %i.l = icmp ugt i64 %i.k, 16384
   br i1 %i.l, label %bb.j, label %bb.d
 
@@ -848,7 +846,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 ._crit_edge:                                      ; preds = %bb.f
   %.pre = load ptr, ptr %.046, align 8
-  br label %4
+  br label %copy_from_user.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.v = add nuw nsw i64 %i.k, 4095
@@ -865,21 +863,11 @@ bb.h:                                             ; preds = %bb.g
   %i.aa = add nuw nsw i32 %i.z, 4095
   %i.ab = and i32 %i.aa, 61440
   store i32 %i.ab, ptr %i.r, align 8
-  br label %4
+  br label %copy_from_user.exit
 
-4:                                                ; preds = %._crit_edge, %bb.h
-  %5 = phi ptr [ %.pre, %._crit_edge ], [ %i.x, %bb.h ]
-  %6 = icmp ugt i64 %2, 2147483647
-  br i1 %6, label %7, label %copy_from_user.exit, !prof !28
-
-7:                                                ; preds = %4
-  tail call void asm sideeffect "312: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 312b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 312) #16, !srcloc !29
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr @.str.17, ptr @.str.21, i32 57, i32 2307, i64 16) #16, !srcloc !30
-  tail call void asm sideeffect "313: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 313b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 313) #16, !srcloc !31
-  br label %.critedge
-
-copy_from_user.exit:                              ; preds = %4
-  %i.ac = getelementptr i8, ptr %5, i64 %i.i
+copy_from_user.exit:                              ; preds = %bb.h, %._crit_edge
+  %4 = phi ptr [ %.pre, %._crit_edge ], [ %i.x, %bb.h ]
+  %i.ac = getelementptr i8, ptr %4, i64 %i.i
   %i.ad = tail call i64 @_copy_from_user(ptr noundef %i.ac, ptr noundef %1, i64 noundef %2) #13
   %.not53 = icmp eq i64 %i.ad, 0
   br i1 %.not53, label %bb.i, label %.critedge
@@ -891,8 +879,8 @@ bb.i:                                             ; preds = %copy_from_user.exit
   store i64 %i.k, ptr %3, align 8
   br label %.critedge
 
-.critedge:                                        ; preds = %7, %bb.g, %copy_from_user.exit, %bb.e, %bb.i
-  %.1 = phi i64 [ -14, %copy_from_user.exit ], [ %2, %bb.i ], [ -12, %bb.g ], [ -12, %bb.e ], [ -14, %7 ]
+.critedge:                                        ; preds = %bb.g, %copy_from_user.exit, %bb.e, %bb.i
+  %.1 = phi i64 [ -14, %copy_from_user.exit ], [ %2, %bb.i ], [ -12, %bb.g ], [ -12, %bb.e ]
   tail call void @mutex_unlock(ptr noundef %i.m) #13
   br label %bb.j
 
@@ -1058,8 +1046,4 @@ attributes #17 = { noredzone nounwind allocsize(0) "no-builtin-wcslen" }
 !25 = distinct !{!25, !11}
 !26 = distinct !{!26, !11}
 !27 = distinct !{!27, !11}
-!28 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!29 = !{i64 2153584902, i64 2153584777}
-!30 = !{i64 2153585425, i64 2153586478, i64 2153586511, i64 2153586546, i64 2153586562, i64 2153587489, i64 2153587547, i64 2153587596, i64 2153587406, i64 2153586621, i64 2153586653, i64 2153586736}
-!31 = !{i64 2153587900, i64 2153587776}
 end_hunk_1

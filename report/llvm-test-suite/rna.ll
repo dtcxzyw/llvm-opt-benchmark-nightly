@@ -204,13 +204,13 @@ bb.ac:                                            ; preds = %.preheader333.us, %
   br i1 %or.cond.us, label %bb.ad, label %bb.an
 
 bb.ad:                                            ; preds = %.lr.ph366.us
-  %12 = sext i32 %i.go to i64                     ; 2 uses
-  %13 = icmp sgt i64 %indvars.iv529, %12
+  %12 = zext nneg i32 %i.go to i64                ; 2 uses
+  %13 = icmp samesign ugt i64 %indvars.iv529, %12
   %or.cond254.us = and i1 %i.gi, %13
   br i1 %or.cond254.us, label %bb.aj, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %14 = icmp slt i64 %indvars.iv529, %12
+  %14 = icmp samesign ult i64 %indvars.iv529, %12
   %or.cond255.us = and i1 %i.gi, %14
   br i1 %or.cond255.us, label %bb.af, label %bb.an
 
@@ -613,7 +613,7 @@ bb.at:                                            ; preds = %bb.as, %.lr.ph389.u
   br i1 %or.cond3.us402.us423.us, label %bb.au, label %bb.aw
 
 bb.au:                                            ; preds = %.lr.ph389.us.us.us
-  %i.ux = zext i32 %i.us to i64                   ; 2 uses
+  %i.ux = zext nneg i32 %i.us to i64              ; 2 uses
   %or.cond464.not = icmp eq i64 %indvars.iv582, %i.ux
   br i1 %or.cond464.not, label %bb.aw, label %bb.av
 

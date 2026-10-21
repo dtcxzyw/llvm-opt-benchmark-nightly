@@ -205,9 +205,9 @@ bb.y:                                             ; preds = %.lr.ph418
   %.095.sroa_idx = getelementptr inbounds nuw i8, ptr %.095415, i64 4
   %i.my = load float, ptr %.095.sroa_idx, align 4
   %i.mz = insertelement <4 x float> poison, float %i.mw, i64 0
-  %i.na = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.mz) ; 8 uses
+  %i.na = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.mz) ; 6 uses
   %i.nb = insertelement <4 x float> poison, float %i.my, i64 0
-  %i.nc = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.nb) ; 15 uses
+  %i.nc = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.nb) ; 13 uses
   %i.nd = icmp slt i32 %i.na, %.sroa.0381.0.extract.trunc
   %i.ne = or i32 %i.nc, %i.na
   %i.nf = icmp sgt i32 %i.ne, -1
@@ -253,17 +253,13 @@ bb.ac:                                            ; preds = %bb.ab
   %.not.i160.us = icmp sgt i32 %i.na, 0
   %i.oa = icmp sle i32 %i.na, %.sroa.0381.0.extract.trunc
   %or.cond388.us = and i1 %.not.i160.us, %i.oa    ; 4 uses
-  br i1 %i.np, label %.split.us.preheader.a, label %.split.preheader
-
-.split.preheader:                                 ; preds = %bb.ac
-  br i1 %or.cond388.us, label %35, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread
+  br i1 %i.np, label %bb.ad, label %.split.us.preheader.a
 
 .split.us.preheader.a:                            ; preds = %bb.ac
-  br i1 %or.cond388.us, label %bb.ad, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us
+  br i1 %or.cond388.us, label %bb.al, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread
 
-bb.ad:                                            ; preds = %.split.us.preheader.a
-  %.not8.i161.us = icmp sgt i32 %i.nc, -1
-  br i1 %.not8.i161.us, label %bb.ae, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
+bb.ad:                                            ; preds = %bb.ac
+  br i1 %or.cond388.us, label %bb.ae, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ob = zext nneg i32 %i.ny to i64
@@ -277,11 +273,7 @@ bb.af:                                            ; preds = %bb.ae
   store i16 %i.nn, ptr %i.oc, align 2, !tbaa !93
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us: ; preds = %.split.us.preheader.a
-  %.not.i160.us.1 = icmp sgt i32 %i.na, -1
-  br i1 %.not.i160.us.1, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread: ; preds = %bb.af, %bb.ae, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread: ; preds = %bb.ad, %bb.af, %bb.ae
   %.not8.i161.us.1 = icmp sgt i32 %i.nc, 0
   %i.of = icmp sle i32 %i.nc, %.sroa.3.0.extract.trunc
   %or.cond389.us.1 = and i1 %.not8.i161.us.1, %i.of
@@ -319,11 +311,7 @@ bb.ak:                                            ; preds = %bb.aj
   store i16 %i.nn, ptr %i.ol, align 2, !tbaa !93
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
 
-35:                                               ; preds = %.split.preheader
-  %.not8.i161 = icmp sgt i32 %i.nc, -1
-  br i1 %.not8.i161, label %bb.al, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-bb.al:                                            ; preds = %35
+bb.al:                                            ; preds = %.split.us.preheader.a
   %i.oo = load i64, ptr %i.jm, align 8
   %i.op = zext nneg i32 %i.nc to i64
   %i.oq = mul i64 %i.oo, %i.op
@@ -339,11 +327,7 @@ bb.am:                                            ; preds = %bb.al
   store i16 %i.nn, ptr %i.os, align 2, !tbaa !93
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread: ; preds = %.split.preheader
-  %.not.i160.1 = icmp sgt i32 %i.na, -1
-  br i1 %.not.i160.1, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread: ; preds = %bb.am, %bb.al, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread: ; preds = %bb.am, %.split.us.preheader.a, %bb.al
   %.not8.i161.1 = icmp sgt i32 %i.nc, 0
   %i.ov = icmp sle i32 %i.nc, %.sroa.3.0.extract.trunc
   %or.cond389.1 = and i1 %.not8.i161.1, %i.ov
@@ -389,7 +373,7 @@ bb.ar:                                            ; preds = %bb.aq
   store i16 %i.nn, ptr %i.ph, align 2, !tbaa !93
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread: ; preds = %35, %bb.ad, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.1, %bb.ap, %bb.aq, %bb.ar, %bb.ak, %bb.aj, %bb.ai, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.1, %bb.y, %bb.ab, %.lr.ph418
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread: ; preds = %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.1, %bb.ap, %bb.aq, %bb.ar, %bb.ak, %bb.aj, %bb.ai, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.1, %bb.y, %bb.ab, %.lr.ph418
   %i.pk = getelementptr inbounds nuw i8, ptr %.095415, i64 8
   %i.pl = getelementptr inbounds nuw i8, ptr %.094416, i64 12 ; 2 uses
   %i.pm = icmp ult ptr %i.pl, %i.mu
@@ -792,9 +776,9 @@ bb.y:                                             ; preds = %.lr.ph419
   %.095.sroa_idx = getelementptr inbounds nuw i8, ptr %.095416, i64 4
   %i.oj = load float, ptr %.095.sroa_idx, align 4
   %i.ok = insertelement <4 x float> poison, float %i.oh, i64 0
-  %i.ol = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.ok) ; 8 uses
+  %i.ol = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.ok) ; 6 uses
   %i.om = insertelement <4 x float> poison, float %i.oj, i64 0
-  %i.on = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.om) ; 15 uses
+  %i.on = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.om) ; 13 uses
   %i.oo = icmp slt i32 %i.ol, %.sroa.0382.0.extract.trunc
   %i.op = or i32 %i.on, %i.ol
   %i.oq = icmp sgt i32 %i.op, -1
@@ -837,17 +821,13 @@ bb.ac:                                            ; preds = %bb.ab
   %.not.i160.us = icmp sgt i32 %i.ol, 0
   %i.pi = icmp sle i32 %i.ol, %.sroa.0382.0.extract.trunc
   %or.cond389.us = and i1 %.not.i160.us, %i.pi    ; 4 uses
-  br i1 %i.ow, label %.split.us.preheader.a, label %.split.preheader
-
-.split.preheader:                                 ; preds = %bb.ac
-  br i1 %or.cond389.us, label %35, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread
+  br i1 %i.ow, label %bb.ad, label %.split.us.preheader.a
 
 .split.us.preheader.a:                            ; preds = %bb.ac
-  br i1 %or.cond389.us, label %bb.ad, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us
+  br i1 %or.cond389.us, label %bb.al, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread
 
-bb.ad:                                            ; preds = %.split.us.preheader.a
-  %.not8.i161.us = icmp sgt i32 %i.on, -1
-  br i1 %.not8.i161.us, label %bb.ae, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
+bb.ad:                                            ; preds = %bb.ac
+  br i1 %or.cond389.us, label %bb.ae, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread
 
 bb.ae:                                            ; preds = %bb.ad
   %i.pj = zext nneg i32 %i.pg to i64
@@ -862,11 +842,7 @@ bb.af:                                            ; preds = %bb.ae
   store float %i.ou, ptr %i.pk, align 4, !tbaa !31
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us: ; preds = %.split.us.preheader.a
-  %.not.i160.us.1 = icmp sgt i32 %i.ol, -1
-  br i1 %.not.i160.us.1, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread: ; preds = %bb.af, %bb.ae, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread: ; preds = %bb.ad, %bb.af, %bb.ae
   %.not8.i161.us.1 = icmp sgt i32 %i.on, 0
   %i.po = icmp sle i32 %i.on, %.sroa.3.0.extract.trunc
   %or.cond390.us.1 = and i1 %.not8.i161.us.1, %i.po
@@ -906,11 +882,7 @@ bb.ak:                                            ; preds = %bb.aj
   store float %i.ou, ptr %i.pv, align 4, !tbaa !31
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
 
-35:                                               ; preds = %.split.preheader
-  %.not8.i161 = icmp sgt i32 %i.on, -1
-  br i1 %.not8.i161, label %bb.al, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-bb.al:                                            ; preds = %35
+bb.al:                                            ; preds = %.split.us.preheader.a
   %i.pz = load i64, ptr %i.kx, align 8
   %i.qa = zext nneg i32 %i.on to i64
   %i.qb = mul i64 %i.pz, %i.qa
@@ -927,11 +899,7 @@ bb.am:                                            ; preds = %bb.al
   store float %i.ou, ptr %i.qd, align 4, !tbaa !31
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread: ; preds = %.split.preheader
-  %.not.i160.1 = icmp sgt i32 %i.ol, -1
-  br i1 %.not.i160.1, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread: ; preds = %bb.am, %bb.al, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread: ; preds = %bb.am, %.split.us.preheader.a, %bb.al
   %.not8.i161.1 = icmp sgt i32 %i.on, 0
   %i.qh = icmp sle i32 %i.on, %.sroa.3.0.extract.trunc
   %or.cond390.1 = and i1 %.not8.i161.1, %i.qh
@@ -979,7 +947,7 @@ bb.ar:                                            ; preds = %bb.aq
   store float %i.ou, ptr %i.qu, align 4, !tbaa !31
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread: ; preds = %35, %bb.ad, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.1, %bb.ap, %bb.aq, %bb.ar, %bb.ak, %bb.aj, %bb.ai, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.1, %bb.y, %bb.ab, %.lr.ph419
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread: ; preds = %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.1, %bb.ap, %bb.aq, %bb.ar, %bb.ak, %bb.aj, %bb.ai, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.1, %bb.y, %bb.ab, %.lr.ph419
   %i.qy = getelementptr inbounds nuw i8, ptr %.095416, i64 8
   %i.qz = getelementptr inbounds nuw i8, ptr %.094417, i64 12 ; 2 uses
   %i.ra = icmp ult ptr %i.qz, %i.of
@@ -1382,9 +1350,9 @@ bb.y:                                             ; preds = %.lr.ph419
   %.095.sroa_idx = getelementptr inbounds nuw i8, ptr %.095416, i64 4
   %i.mz = load float, ptr %.095.sroa_idx, align 4
   %i.na = insertelement <4 x float> poison, float %i.mx, i64 0
-  %i.nb = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.na) ; 8 uses
+  %i.nb = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.na) ; 6 uses
   %i.nc = insertelement <4 x float> poison, float %i.mz, i64 0
-  %i.nd = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.nc) ; 15 uses
+  %i.nd = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.nc) ; 13 uses
   %i.ne = icmp slt i32 %i.nb, %.sroa.0382.0.extract.trunc
   %i.nf = or i32 %i.nd, %i.nb
   %i.ng = icmp sgt i32 %i.nf, -1
@@ -1428,17 +1396,13 @@ bb.ac:                                            ; preds = %bb.ab
   %.not.i160.us = icmp sgt i32 %i.nb, 0
   %i.nz = icmp sle i32 %i.nb, %.sroa.0382.0.extract.trunc
   %or.cond389.us = and i1 %.not.i160.us, %i.nz    ; 4 uses
-  br i1 %i.nn, label %.split.us.preheader.a, label %.split.preheader
-
-.split.preheader:                                 ; preds = %bb.ac
-  br i1 %or.cond389.us, label %35, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread
+  br i1 %i.nn, label %bb.ad, label %.split.us.preheader.a
 
 .split.us.preheader.a:                            ; preds = %bb.ac
-  br i1 %or.cond389.us, label %bb.ad, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us
+  br i1 %or.cond389.us, label %bb.al, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread
 
-bb.ad:                                            ; preds = %.split.us.preheader.a
-  %.not8.i161.us = icmp sgt i32 %i.nd, -1
-  br i1 %.not8.i161.us, label %bb.ae, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
+bb.ad:                                            ; preds = %bb.ac
+  br i1 %or.cond389.us, label %bb.ae, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread
 
 bb.ae:                                            ; preds = %bb.ad
   %i.oa = zext nneg i32 %i.nx to i64
@@ -1453,11 +1417,7 @@ bb.af:                                            ; preds = %bb.ae
   store double %i.nl, ptr %i.ob, align 8, !tbaa !53
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us: ; preds = %.split.us.preheader.a
-  %.not.i160.us.1 = icmp sgt i32 %i.nb, -1
-  br i1 %.not.i160.us.1, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread: ; preds = %bb.af, %bb.ae, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.thread: ; preds = %bb.ad, %bb.af, %bb.ae
   %.not8.i161.us.1 = icmp sgt i32 %i.nd, 0
   %i.of = icmp sle i32 %i.nd, %.sroa.3.0.extract.trunc
   %or.cond390.us.1 = and i1 %.not8.i161.us.1, %i.of
@@ -1497,11 +1457,7 @@ bb.ak:                                            ; preds = %bb.aj
   store double %i.nl, ptr %i.om, align 8, !tbaa !53
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
 
-35:                                               ; preds = %.split.preheader
-  %.not8.i161 = icmp sgt i32 %i.nd, -1
-  br i1 %.not8.i161, label %bb.al, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-bb.al:                                            ; preds = %35
+bb.al:                                            ; preds = %.split.us.preheader.a
   %i.oq = load i64, ptr %i.jn, align 8
   %i.or = zext nneg i32 %i.nd to i64
   %i.os = mul i64 %i.oq, %i.or
@@ -1518,11 +1474,7 @@ bb.am:                                            ; preds = %bb.al
   store double %i.nl, ptr %i.ou, align 8, !tbaa !53
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread: ; preds = %.split.preheader
-  %.not.i160.1 = icmp sgt i32 %i.nb, -1
-  br i1 %.not.i160.1, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread, label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
-
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread: ; preds = %bb.am, %bb.al, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.thread: ; preds = %bb.am, %.split.us.preheader.a, %bb.al
   %.not8.i161.1 = icmp sgt i32 %i.nd, 0
   %i.oy = icmp sle i32 %i.nd, %.sroa.3.0.extract.trunc
   %or.cond390.1 = and i1 %.not8.i161.1, %i.oy
@@ -1570,7 +1522,7 @@ bb.ar:                                            ; preds = %bb.aq
   store double %i.nl, ptr %i.pl, align 8, !tbaa !53
   br label %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread
 
-_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread: ; preds = %35, %bb.ad, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.1, %bb.ap, %bb.aq, %bb.ar, %bb.ak, %bb.aj, %bb.ai, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.1, %bb.y, %bb.ab, %.lr.ph419
+_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit.thread: ; preds = %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.1, %bb.ap, %bb.aq, %bb.ar, %bb.ak, %bb.aj, %bb.ai, %_ZNK2cv5Rect_IiE8containsIiEEbRKNS_6Point_IT_EE.exit162.thread.us.1, %bb.y, %bb.ab, %.lr.ph419
   %i.pp = getelementptr inbounds nuw i8, ptr %.095416, i64 8
   %i.pq = getelementptr inbounds nuw i8, ptr %.094417, i64 12 ; 2 uses
   %i.pr = icmp ult ptr %i.pq, %i.mv

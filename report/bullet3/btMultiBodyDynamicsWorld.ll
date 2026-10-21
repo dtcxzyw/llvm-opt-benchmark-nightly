@@ -204,8 +204,8 @@ bb.u:                                             ; preds = %bb.t
   %i.ha = load ptr, ptr %i.a, align 8, !tbaa !108
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 24
   %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !231 ; 8 uses
-  %2 = sext i32 %i.gu to i64
-  %i.hd = getelementptr inbounds [8 x i8], ptr %i.hc, i64 %2 ; 2 uses
+  %2 = zext nneg i32 %i.gu to i64
+  %i.hd = getelementptr inbounds nuw [8 x i8], ptr %i.hc, i64 %2 ; 2 uses
   %i.he = load i32, ptr %i.hd, align 4, !tbaa !233 ; 2 uses
   %.not7.i.i113 = icmp eq i32 %i.gu, %i.he
   br i1 %.not7.i.i113, label %_ZN11btUnionFind4findEi.exit.i116, label %.lr.ph.i.i114
@@ -225,8 +225,8 @@ bb.u:                                             ; preds = %bb.t
 
 _ZN11btUnionFind4findEi.exit.i116:                ; preds = %.lr.ph.i.i114, %bb.u
   %.0.lcssa.i.i117 = phi i32 [ %i.gu, %bb.u ], [ %i.hj, %.lr.ph.i.i114 ] ; 2 uses
-  %3 = sext i32 %i.gy to i64
-  %i.hn = getelementptr inbounds [8 x i8], ptr %i.hc, i64 %3 ; 2 uses
+  %3 = zext nneg i32 %i.gy to i64
+  %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.hc, i64 %3 ; 2 uses
   %i.ho = load i32, ptr %i.hn, align 4, !tbaa !233 ; 2 uses
   %.not7.i9.i118 = icmp eq i32 %i.gy, %i.ho
   br i1 %.not7.i9.i118, label %_ZN11btUnionFind4findEi.exit13.i121, label %.lr.ph.i10.i119

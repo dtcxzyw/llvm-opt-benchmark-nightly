@@ -204,12 +204,12 @@ bb.do:                                            ; preds = %bb.dn
   %i.mk = icmp slt i32 %i.mj, 2
   %i.ml = load ptr, ptr %i.lo, align 8, !tbaa !133
   %i.mm = load i64, ptr %i.lp, align 8
-  %59 = sext i32 %i.mf to i64
+  %59 = zext nneg i32 %i.mf to i64
   %i.mn = mul i64 %i.mm, %59
   %.sink.idx.i = select i1 %i.mk, i64 0, i64 %i.mn
   %.sink.i = getelementptr inbounds nuw i8, ptr %i.ml, i64 %.sink.idx.i
-  %60 = sext i32 %i.me to i64
-  %i.mo = getelementptr inbounds i8, ptr %.sink.i, i64 %60
+  %60 = zext nneg i32 %i.me to i64
+  %i.mo = getelementptr inbounds nuw i8, ptr %.sink.i, i64 %60
   %i.mp = load i8, ptr %i.mo, align 1, !tbaa !34
   %.not493 = icmp eq i8 %i.mp, 0
   br i1 %.not493, label %.critedge, label %bb.dp

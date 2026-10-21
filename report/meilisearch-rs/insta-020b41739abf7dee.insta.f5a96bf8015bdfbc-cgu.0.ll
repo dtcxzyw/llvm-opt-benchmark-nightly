@@ -205,10 +205,9 @@ bb.gt:                                            ; preds = %"_ZN63_$LT$alloc..a
   br i1 %i.to, label %"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h7f57ba00103f2100E.exit.i.i", label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hd5e7ac0f9a14006eE.exit.i.i.i.i"
-  %4 = and i64 %.val2.i.i, 9223372036854775807
-  %i.tp = add i64 %.val2.i.i, -1
-  %i.tq = call i64 @llvm.umin.i64(i64 %4, i64 %i.tp) ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.tq, 8
+  %i.tp = add nsw i64 %.val2.i.i, -1
+  %i.tq = call i64 @llvm.umin.i64(i64 %.val2.i.i, i64 %i.tp) ; 2 uses
+  %min.iters.check = icmp ult i64 %i.tq, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader66, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -302,7 +301,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 bb.gu:                                            ; preds = %.lr.ph.i.i.i.i
   %i.vx = add nsw i64 %.sroa.10.021.i.i.i.i, -1   ; 2 uses
-  %i.vy = add nuw nsw i64 %.sroa.7.022.i.i.i.i, 1
+  %i.vy = add nuw i64 %.sroa.7.022.i.i.i.i, 1
   %i.vz = getelementptr inbounds nuw i8, ptr %.sroa.014.023.i.i.i.i, i64 2
   %.val.i.i.i.i = load i8, ptr %.sroa.014.023.i.i.i.i, align 1, !range !26, !alias.scope !356, !noalias !358, !noundef !17
   %i.wa = getelementptr i8, ptr %.sroa.014.023.i.i.i.i, i64 1
@@ -705,7 +704,7 @@ bb.a:
   %i.c = load i64, ptr %0, align 8, !range !20, !noundef !17 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5624)
   %i.d = shl nuw i64 %i.c, 1                      ; 2 uses
-  %i.e = tail call i64 @llvm.umax.i64(i64 %i.d, i64 4) ; 4 uses
+  %i.e = tail call i64 @llvm.umax.i64(i64 %i.d, i64 4) ; 3 uses
   %i.f = shl i64 %i.e, 1                          ; 2 uses
   %i.g = or i64 %i.f, %i.e
   %or.cond.i.i.not = icmp sgt i64 %i.g, -1
@@ -753,8 +752,6 @@ bb.e:                                             ; preds = %"_ZN5alloc7raw_vec2
   %i.q = load ptr, ptr %i.m, align 8, !noalias !5624, !nonnull !17, !noundef !17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5624
   store ptr %i.q, ptr %i.h, align 8, !alias.scope !5624
-  %2 = icmp sgt i64 %i.e, -1
-  tail call void @llvm.assume(i1 %2)
   store i64 %i.e, ptr %0, align 8, !alias.scope !5624
   ret void
 }

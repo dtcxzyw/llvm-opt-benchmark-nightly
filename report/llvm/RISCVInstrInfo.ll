@@ -204,17 +204,15 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond.not.i, label %bb.g, label %_ZN4llvm5RISCV11hasEqualFRMERKNS_12MachineInstrES3_.exit
 
 bb.g:                                             ; preds = %bb.f
-  %3 = sext i16 %i.v to i64
-  %4 = sext i16 %i.s to i64
   %i.y = load ptr, ptr %i.j, align 8, !tbaa !75
-  %5 = and i64 %4, 4294967295
-  %i.z = getelementptr inbounds nuw [32 x i8], ptr %i.y, i64 %5
+  %3 = zext nneg i16 %i.s to i64
+  %i.z = getelementptr inbounds nuw [32 x i8], ptr %i.y, i64 %3
   %.sroa.313.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %.sroa.313.0.copyload.i = load i64, ptr %.sroa.313.0..sroa_idx.i, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !75
-  %6 = and i64 %3, 4294967295
-  %i.ac = getelementptr inbounds nuw [32 x i8], ptr %i.ab, i64 %6
+  %4 = zext nneg i16 %i.v to i64
+  %i.ac = getelementptr inbounds nuw [32 x i8], ptr %i.ab, i64 %4
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %.sroa.3.0.copyload.i = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8
   %i.ad = icmp eq i64 %.sroa.313.0.copyload.i, %.sroa.3.0.copyload.i
@@ -241,18 +239,16 @@ bb.a:
   br i1 %or.cond.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sext i16 %i.f to i64
-  %3 = sext i16 %i.c to i64
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !75
-  %4 = and i64 %3, 4294967295
-  %i.j = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %4
+  %2 = zext nneg i16 %i.c to i64
+  %i.j = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %2
   %.sroa.313.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %.sroa.313.0.copyload = load i64, ptr %.sroa.313.0..sroa_idx, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !75
-  %5 = and i64 %2, 4294967295
-  %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %5
+  %3 = zext nneg i16 %i.f to i64
+  %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %3
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8
   %i.n = icmp eq i64 %.sroa.313.0.copyload, %.sroa.3.0.copyload

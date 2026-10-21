@@ -204,8 +204,8 @@ bb.k:                                             ; preds = %bb.k, %.preheader.i
   br i1 %.not.i, label %bb.l, label %bb.k, !llvm.loop !60
 
 bb.l:                                             ; preds = %bb.k
-  %.sroa.2.0.insert.ext.i97.le.i = zext i32 %i.ro to i64
-  %.sroa.2.0.insert.shift.i98.le.i = shl nuw i64 %.sroa.2.0.insert.ext.i97.le.i, 32 ; 2 uses
+  %.sroa.2.0.insert.ext.i97.le.i = zext nneg i32 %i.ro to i64
+  %.sroa.2.0.insert.shift.i98.le.i = shl nuw nsw i64 %.sroa.2.0.insert.ext.i97.le.i, 32 ; 2 uses
   %.not.i101.i = icmp eq ptr %.sroa.12.1261.i, %.sroa.19.1262.i
   br i1 %.not.i101.i, label %bb.n, label %bb.m
 

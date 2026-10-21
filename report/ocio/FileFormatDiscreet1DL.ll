@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %1, ptr %i.b, align 8, !tbaa !64
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store i32 %2, ptr %i.d, align 4, !tbaa !67
-  %i.e = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %2)
+  %i.e = tail call range(i32 0, 32) i32 @llvm.ctpop.i32(i32 %2)
   %i.f = icmp eq i32 %i.e, 1
   br i1 %i.f, label %.split.i, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils24IMLutTableSizeToBitDepthEib.exit
 
@@ -255,8 +255,8 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils24IMLutTableSizeToBitDepthEib.exi
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader
-  %3 = zext nneg i32 %2 to i64
-  %4 = shl nuw nsw i64 %3, 1
+  %3 = shl nuw i32 %2, 1
+  %4 = zext i32 %3 to i64
   %wide.trip.count = zext nneg i32 %1 to i64
   br label %bb.d
 

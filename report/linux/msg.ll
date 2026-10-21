@@ -202,7 +202,7 @@ bb.a:
   br i1 %or.cond.not, label %bb.b, label %copy_compat_msqid_from_user.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = and i32 %1, -257
+  %i.h = and i32 %1, 2147483391
   switch i32 %i.h, label %copy_compat_msqid_from_user.exit [
     i32 3, label %bb.c
     i32 12, label %bb.c

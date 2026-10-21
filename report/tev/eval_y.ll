@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %Alloc_Node.exit
   %i.az = getelementptr inbounds [384 x i8], ptr %i.ae, i64 %i.ay ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aj, i64 40
   store i32 %7, ptr %i.ba, align 8, !tbaa !21
-  %8 = sext i32 %7 to i64
-  %i.bb = getelementptr inbounds [384 x i8], ptr %i.ae, i64 %8 ; 3 uses
+  %8 = zext nneg i32 %7 to i64
+  %i.bb = getelementptr inbounds nuw [384 x i8], ptr %i.ae, i64 %8 ; 3 uses
   %i.bc = load i32, ptr %i.an, align 8, !tbaa !24
   %i.bd = icmp eq i32 %i.bc, -1000
   br i1 %i.bd, label %bb.j, label %bb.k

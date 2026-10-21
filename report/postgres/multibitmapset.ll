@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 @__func__.mbms_is_member = private unnamed_addr constant [15 x i8] c"mbms_is_member\00", align 1
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @mbms_add_member(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define dso_local nonnull ptr @mbms_add_member(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = or i32 %2, %1
   %or.cond.not = icmp sgt i32 %i.a, -1
@@ -26,27 +26,23 @@ bb.b:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %bb.a, %bb.c
   %.0 = phi ptr [ %i.d, %bb.c ], [ %0, %bb.a ]    ; 5 uses
   %.not.i = icmp eq ptr %.0, null
-  br i1 %.not.i, label %list_length.exit, label %3
+  br i1 %.not.i, label %bb.c, label %list_length.exit
 
-3:                                                ; preds = %.preheader
-  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 4
-  %5 = load i32, ptr %4, align 4
-  br label %list_length.exit
-
-list_length.exit:                                 ; preds = %.preheader, %3
-  %6 = phi i32 [ %5, %3 ], [ 0, %.preheader ]
-  %.not = icmp sgt i32 %6, %1
+list_length.exit:                                 ; preds = %.preheader
+  %3 = getelementptr inbounds nuw i8, ptr %.0, i64 4
+  %4 = load i32, ptr %3, align 4
+  %.not = icmp sgt i32 %4, %1
   br i1 %.not, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %list_length.exit
+bb.c:                                             ; preds = %.preheader, %list_length.exit
   %i.d = tail call ptr @lappend(ptr noundef %.0, ptr noundef null) #4
   br label %.preheader, !llvm.loop !5
 
 bb.d:                                             ; preds = %list_length.exit
   %i.e = getelementptr i8, ptr %.0, i64 16
   %.0.val = load ptr, ptr %i.e, align 8
-  %7 = sext i32 %1 to i64
-  %i.f = getelementptr inbounds [8 x i8], ptr %.0.val, i64 %7 ; 2 uses
+  %5 = zext nneg i32 %1 to i64
+  %i.f = getelementptr inbounds nuw [8 x i8], ptr %.0.val, i64 %5 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = tail call ptr @bms_add_member(ptr noundef %i.g, i32 noundef %2) #4
   store ptr %i.h, ptr %i.f, align 8
@@ -236,19 +232,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %.not.i = icmp eq ptr %2, null
-  br i1 %.not.i, label %list_length.exit, label %bb.d
+  br i1 %.not.i, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.e = load i32, ptr %i.d, align 4
-  br label %list_length.exit
+  %3 = icmp slt i32 %0, %i.e
+  br i1 %3, label %bb.e, label %bb.f
 
-list_length.exit:                                 ; preds = %bb.c, %bb.d
-  %3 = phi i32 [ %i.e, %bb.d ], [ 0, %bb.c ]
-  %.not = icmp slt i32 %0, %3
-  br i1 %.not, label %bb.e, label %bb.f
-
-bb.e:                                             ; preds = %list_length.exit
+bb.e:                                             ; preds = %bb.d
   %i.f = getelementptr i8, ptr %2, i64 16
   %.val = load ptr, ptr %i.f, align 8
   %i.g = zext nneg i32 %0 to i64
@@ -257,8 +249,8 @@ bb.e:                                             ; preds = %list_length.exit
   %i.j = tail call zeroext i1 @bms_is_member(i32 noundef %1, ptr noundef %i.i) #4
   br label %bb.f
 
-bb.f:                                             ; preds = %list_length.exit, %bb.e
-  %.0 = phi i1 [ %i.j, %bb.e ], [ false, %list_length.exit ]
+bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
+  %.0 = phi i1 [ %i.j, %bb.e ], [ false, %bb.d ], [ false, %bb.c ]
   ret i1 %.0
 }
 

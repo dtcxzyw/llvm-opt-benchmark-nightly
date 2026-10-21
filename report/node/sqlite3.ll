@@ -206,12 +206,11 @@ sqlite3_mutex_enter.exit:                         ; preds = %bb.c, %bb.d
   br i1 %or.cond.not, label %bb.e, label %.thread63
 
 bb.e:                                             ; preds = %sqlite3_mutex_enter.exit
-  %5 = zext nneg i32 %3 to i64
-  %i.j = zext nneg i32 %2 to i64
-  %6 = add nuw nsw i64 %5, %i.j
+  %narrow = add nuw i32 %3, %2
+  %i.j = zext i32 %narrow to i64
   %i.k = load i32, ptr %0, align 8, !tbaa !1244
   %i.l = sext i32 %i.k to i64
-  %i.m = icmp sgt i64 %6, %i.l
+  %i.m = icmp sgt i64 %i.j, %i.l
   br i1 %i.m, label %.thread63, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

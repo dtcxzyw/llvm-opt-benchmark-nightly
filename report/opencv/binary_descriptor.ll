@@ -205,56 +205,58 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.s = fsub double 1.000000e+00, %2             ; 2 uses
   %i.t = fdiv double %2, %i.s
-  %i.u = uitofp nneg i32 %0 to double             ; 2 uses
-  %6 = fadd double %i.u, 1.000000e+00             ; 9 uses
-  %7 = fcmp ogt double %6, 1.500000e+01
-  br i1 %7, label %bb.k, label %bb.l
+  %i.u = uitofp nneg i32 %0 to double
+  %6 = add nuw i32 %0, 1
+  %7 = uitofp i32 %6 to double                    ; 8 uses
+  %8 = icmp ugt i32 %0, 14
+  br i1 %8, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.v = fadd double %6, -5.000000e-01
-  %i.w = tail call double @llvm.log.f64(double %6)
+  %i.v = fadd double %7, -5.000000e-01
+  %i.w = tail call double @log(double noundef %7) #23
   %i.x = tail call double @llvm.fmuladd.f64(double %i.v, double %i.w, double f0x3FED67F1C864BEB7)
-  %i.y = fsub double %i.x, %6
-  %i.z = fmul nnan double %6, 5.000000e-01
-  %i.aa = fdiv double 1.000000e+00, %6
+  %i.y = fsub double %i.x, %7
+  %i.z = fmul nnan double %7, 5.000000e-01
+  %i.aa = fdiv double 1.000000e+00, %7
   %i.ab = tail call double @sinh(double noundef %i.aa) #23
-  %i.ac = tail call double @pow(double noundef %6, double noundef 6.000000e+00) #23
+  %i.ac = tail call double @pow(double noundef %7, double noundef 6.000000e+00) #23
   %i.ad = fmul double %i.ac, 8.100000e+02
   %i.ae = fdiv double 1.000000e+00, %i.ad
-  %i.af = tail call double @llvm.fmuladd.f64(double %6, double %i.ab, double %i.ae)
+  %i.af = tail call double @llvm.fmuladd.f64(double %7, double %i.ab, double %i.ae)
   %i.ag = tail call double @log(double noundef %i.af) #23
   %i.ah = tail call noundef double @llvm.fmuladd.f64(double %i.z, double %i.ag, double %i.y)
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %i.ai = tail call noundef double @_ZN2cv15line_descriptor16BinaryDescriptor14EDLineDetector17log_gamma_lanczosEd(double noundef %6)
+  %i.ai = tail call noundef double @_ZN2cv15line_descriptor16BinaryDescriptor14EDLineDetector17log_gamma_lanczosEd(double noundef %7)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.aj = phi double [ %i.ah, %bb.k ], [ %i.ai, %bb.l ]
-  %i.ak = uitofp nneg i32 %1 to double            ; 3 uses
-  %8 = fadd double %i.ak, 1.000000e+00            ; 9 uses
-  %9 = fcmp ogt double %8, 1.500000e+01
-  br i1 %9, label %bb.n, label %bb.o
+  %i.ak = uitofp nneg i32 %1 to double            ; 2 uses
+  %9 = add nuw i32 %1, 1
+  %10 = uitofp i32 %9 to double                   ; 8 uses
+  %11 = icmp ugt i32 %1, 14
+  br i1 %11, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.al = fadd double %8, -5.000000e-01
-  %i.am = tail call double @llvm.log.f64(double %8)
+  %i.al = fadd double %10, -5.000000e-01
+  %i.am = tail call double @log(double noundef %10) #23
   %i.an = tail call double @llvm.fmuladd.f64(double %i.al, double %i.am, double f0x3FED67F1C864BEB7)
-  %i.ao = fsub double %i.an, %8
-  %i.ap = fmul nnan double %8, 5.000000e-01
-  %i.aq = fdiv double 1.000000e+00, %8
+  %i.ao = fsub double %i.an, %10
+  %i.ap = fmul nnan double %10, 5.000000e-01
+  %i.aq = fdiv double 1.000000e+00, %10
   %i.ar = tail call double @sinh(double noundef %i.aq) #23
-  %i.as = tail call double @pow(double noundef %8, double noundef 6.000000e+00) #23
+  %i.as = tail call double @pow(double noundef %10, double noundef 6.000000e+00) #23
   %i.at = fmul double %i.as, 8.100000e+02
   %i.au = fdiv double 1.000000e+00, %i.at
-  %i.av = tail call double @llvm.fmuladd.f64(double %8, double %i.ar, double %i.au)
+  %i.av = tail call double @llvm.fmuladd.f64(double %10, double %i.ar, double %i.au)
   %i.aw = tail call double @log(double noundef %i.av) #23
   %i.ax = tail call noundef double @llvm.fmuladd.f64(double %i.ap, double %i.aw, double %i.ao)
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.m
-  %i.ay = tail call noundef double @_ZN2cv15line_descriptor16BinaryDescriptor14EDLineDetector17log_gamma_lanczosEd(double noundef %8)
+  %i.ay = tail call noundef double @_ZN2cv15line_descriptor16BinaryDescriptor14EDLineDetector17log_gamma_lanczosEd(double noundef %10)
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -330,7 +332,7 @@ bb.u:                                             ; preds = %_ZN2cv15line_descri
   %.07998 = phi double [ %i.cs, %.lr.ph.backedge ], [ %i.bz, %.preheader ]
   %.08097 = phi double [ %i.cr, %.lr.ph.backedge ], [ %i.bz, %.preheader ]
   %.07899 = add nuw nsw i32 %.07899.in, 1         ; 4 uses
-  %i.cm = sub i32 %0, %.07899.in
+  %i.cm = sub nsw i32 %0, %.07899.in
   %i.cn = sitofp i32 %i.cm to double              ; 2 uses
   %i.co = uitofp nneg i32 %.07899 to double
   %i.cp = fdiv double %i.cn, %i.co                ; 2 uses

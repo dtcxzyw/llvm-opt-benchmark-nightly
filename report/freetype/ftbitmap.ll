@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %thread-pre-split, %
 
 bb.ak:                                            ; preds = %bb.aj
   %i.fg = load ptr, ptr %i.b, align 8, !tbaa !21
-  %i.fh = mul nsw i32 %i.fe, %.0103203
+  %i.fh = mul nuw nsw i32 %i.fe, %.0103203
   %i.fi = zext nneg i32 %i.fh to i64
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fg, i64 %i.fi
   %.pre177 = load i32, ptr %1, align 8, !tbaa !27

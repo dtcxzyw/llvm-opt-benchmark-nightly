@@ -205,17 +205,17 @@ bb.f:                                             ; preds = %stbi__mul2sizes_val
 
 stbi__mul2sizes_valid.exit18.i.i.i:               ; preds = %bb.f
   %i.l = udiv i32 2147483647, %i.e
-  %.not.i.i.i = icmp sle i32 %i.i, %i.l
+  %.not.i.i.i = icmp sgt i32 %i.i, %i.l
   %i.m = mul nuw nsw i32 %i.e, %i.i
-  %or.cond.not.i.i = icmp ult i32 %i.m, 536870912
-  %or.cond.i.i = select i1 %.not.i.i.i, i1 %or.cond.not.i.i, i1 false
-  br i1 %or.cond.i.i, label %stbi__malloc_mad4.exit.i, label %stbi__malloc_mad4.exit.thread.i
+  %5 = icmp sgt i32 %i.m, 536870911
+  %or.cond.i.i = select i1 %.not.i.i.i, i1 true, i1 %5
+  br i1 %or.cond.i.i, label %stbi__malloc_mad4.exit.thread.i, label %stbi__malloc_mad4.exit.i
 
 stbi__malloc_mad4.exit.i:                         ; preds = %stbi__mul2sizes_valid.exit18.i.i.i, %bb.f
   %i.n = shl i32 %i.i, 2
   %i.o = mul i32 %i.n, %i.e
-  %5 = sext i32 %i.o to i64
-  %i.p = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %5) #53 ; 8 uses
+  %6 = zext nneg i32 %i.o to i64
+  %i.p = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %6) #53 ; 8 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %stbi__malloc_mad4.exit.thread.i, label %bb.g
 
@@ -228,7 +228,7 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   %i.r = and i32 %i.e, 1
   %.not.i = icmp eq i32 %i.r, 0                   ; 2 uses
   %i.s = sext i1 %.not.i to i32
-  %.0.i = add i32 %i.e, %i.s                      ; 5 uses
+  %.0.i = add nsw i32 %i.e, %i.s                  ; 5 uses
   %i.t = icmp sgt i32 %i.i, 0
   br i1 %i.t, label %.preheader48.lr.ph.i, label %.loopexit.i
 
@@ -241,7 +241,7 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   br i1 %i.u, label %.preheader48.preheader.i, label %._crit_edge51.split.i
 
 .preheader48.preheader.i:                         ; preds = %.preheader48.lr.ph.i
-  %6 = sext i32 %i.e to i64
+  %7 = zext nneg i32 %i.e to i64
   %wide.trip.count57.i = zext nneg i32 %i.i to i64
   %wide.trip.count.i = zext nneg i32 %.0.i to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
@@ -253,14 +253,14 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
 
 .preheader48.i:                                   ; preds = %._crit_edge.i, %.preheader48.preheader.i
   %indvars.iv54.i = phi i64 [ 0, %.preheader48.preheader.i ], [ %indvars.iv.next55.i, %._crit_edge.i ] ; 2 uses
-  %i.aa = mul nuw nsw i64 %indvars.iv54.i, %6     ; 3 uses
+  %i.aa = mul nuw nsw i64 %indvars.iv54.i, %7     ; 3 uses
   br i1 %i.z, label %.epil.preheader, label %.preheader48.i.new
 
 .preheader48.i.new:                               ; preds = %.preheader48.i, %.preheader48.i.new
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %.preheader48.i.new ], [ 0, %.preheader48.i ] ; 3 uses
   %niter = phi i64 [ %niter.next.1, %.preheader48.i.new ], [ 0, %.preheader48.i ]
-  %i.ab = add nsw i64 %indvars.iv.i, %i.aa        ; 2 uses
-  %i.ac = getelementptr inbounds i8, ptr %i.a, i64 %i.ab
+  %i.ab = add nuw nsw i64 %indvars.iv.i, %i.aa    ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1
   %i.ae = uitofp i8 %i.ad to float
   %i.af = fdiv float %i.ae, 2.550000e+02
@@ -268,11 +268,11 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   %i.ah = tail call double @pow(double noundef %i.ag, double noundef %i.w) #52
   %i.ai = fmul double %i.ah, %i.y
   %i.aj = fptrunc double %i.ai to float
-  %i.ak = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.ab
+  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.ab
   store float %i.aj, ptr %i.ak, align 4
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1
-  %i.al = add nsw i64 %indvars.iv.next.i, %i.aa   ; 2 uses
-  %i.am = getelementptr inbounds i8, ptr %i.a, i64 %i.al
+  %i.al = add nuw nsw i64 %indvars.iv.next.i, %i.aa ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1
   %i.ao = uitofp i8 %i.an to float
   %i.ap = fdiv float %i.ao, 2.550000e+02
@@ -280,7 +280,7 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   %i.ar = tail call double @pow(double noundef %i.aq, double noundef %i.w) #52
   %i.as = fmul double %i.ar, %i.y
   %i.at = fptrunc double %i.as to float
-  %i.au = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.al
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.al
   store float %i.at, ptr %i.au, align 4
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
@@ -293,8 +293,8 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.preheader48.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader48.i ], [ %indvars.iv.next.i.1, %._crit_edge.i.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod21)
-  %i.av = add nsw i64 %indvars.iv.i.epil.init, %i.aa ; 2 uses
-  %i.aw = getelementptr inbounds i8, ptr %i.a, i64 %i.av
+  %i.av = add nuw nsw i64 %indvars.iv.i.epil.init, %i.aa ; 2 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1
   %i.ay = uitofp i8 %i.ax to float
   %i.az = fdiv float %i.ay, 2.550000e+02
@@ -302,7 +302,7 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   %i.bb = tail call double @pow(double noundef %i.ba, double noundef %i.w) #52
   %i.bc = fmul double %i.bb, %i.y
   %i.bd = fptrunc double %i.bc to float
-  %i.be = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.av
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.av
   store float %i.bd, ptr %i.be, align 4
   br label %._crit_edge.i
 
@@ -315,7 +315,7 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   br i1 %.not.i, label %.lr.ph.preheader.i, label %.loopexit.i
 
 .lr.ph.preheader.i:                               ; preds = %._crit_edge51.split.i
-  %7 = sext i32 %i.e to i64                       ; 3 uses
+  %8 = zext nneg i32 %i.e to i64                  ; 3 uses
   %i.bf = sext i32 %.0.i to i64                   ; 3 uses
   %wide.trip.count62.i = zext nneg i32 %i.i to i64 ; 2 uses
   %xtraiter22 = and i64 %wide.trip.count62.i, 1
@@ -329,7 +329,7 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
   %indvars.iv59.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next60.i.1, %.lr.ph.i ] ; 3 uses
   %niter26 = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter26.next.1, %.lr.ph.i ]
-  %i.bh = mul nuw nsw i64 %indvars.iv59.i, %7
+  %i.bh = mul nuw nsw i64 %indvars.iv59.i, %8
   %i.bi = add nsw i64 %i.bh, %i.bf                ; 2 uses
   %i.bj = getelementptr inbounds i8, ptr %i.a, i64 %i.bi
   %i.bk = load i8, ptr %i.bj, align 1
@@ -338,7 +338,7 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   %i.bn = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.bi
   store float %i.bm, ptr %i.bn, align 4
   %indvars.iv.next60.i = or disjoint i64 %indvars.iv59.i, 1
-  %i.bo = mul nuw nsw i64 %indvars.iv.next60.i, %7
+  %i.bo = mul nuw nsw i64 %indvars.iv.next60.i, %8
   %i.bp = add nsw i64 %i.bo, %i.bf                ; 2 uses
   %i.bq = getelementptr inbounds i8, ptr %i.a, i64 %i.bp
   %i.br = load i8, ptr %i.bq, align 1
@@ -359,7 +359,7 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   %indvars.iv59.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next60.i.1, %.loopexit.i.loopexit.unr-lcssa ]
   %lcmp.mod24 = trunc i32 %i.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod24)
-  %i.bv = mul nuw nsw i64 %indvars.iv59.i.epil.init, %7
+  %i.bv = mul nuw nsw i64 %indvars.iv59.i.epil.init, %8
   %i.bw = add nsw i64 %i.bv, %i.bf                ; 2 uses
   %i.bx = getelementptr inbounds i8, ptr %i.a, i64 %i.bw
   %i.by = load i8, ptr %i.bx, align 1
@@ -762,7 +762,7 @@ stbi__mul2sizes_valid.exit12.i.i.i:               ; preds = %stbi__mul2sizes_val
 
 stbi__malloc_mad3.exit.i:                         ; preds = %stbi__mul2sizes_valid.exit12.i.i.i, %stbi__mul2sizes_valid.exit.thread15.i.i.i
   %i.adi = mul nuw nsw i32 %i.adc, %i.acz
-  %9 = sext i32 %i.adi to i64
+  %9 = zext nneg i32 %i.adi to i64
   %i.adj = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %9) #53 ; 30 uses
   %.not369.i = icmp eq ptr %i.adj, null
   br i1 %.not369.i, label %stbi__malloc_mad3.exit.thread.i, label %bb.cq
@@ -1165,13 +1165,13 @@ stbi__mul2sizes_valid.exit12.i.i.i:               ; preds = %bb.fk
 
 stbi__malloc_mad3.exit.i:                         ; preds = %stbi__mul2sizes_valid.exit12.i.i.i, %bb.fk
   %i.tp = mul nuw nsw i32 %i.tl, %i.td
-  %4 = sext i32 %i.tp to i64
+  %4 = zext nneg i32 %i.tp to i64
   %i.tq = call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %4) #53 ; 4 uses
   %.not92.i = icmp eq ptr %i.tq, null
   br i1 %.not92.i, label %stbi__malloc_mad3.exit.thread.i, label %.preheader100.i
 
 .preheader100.i:                                  ; preds = %stbi__malloc_mad3.exit.i
-  %5 = sext i32 %i.td to i64                      ; 9 uses
+  %5 = zext nneg i32 %i.td to i64                 ; 9 uses
   br label %bb.fl
 
 stbi__malloc_mad3.exit.thread.i:                  ; preds = %stbi__malloc_mad3.exit.i, %stbi__mul2sizes_valid.exit12.i.i.i, %stbi__mul2sizes_valid.exit.thread15.i.i.i, %stbi__mul2sizes_valid.exit.i.i.i, %bb.fi
@@ -1266,7 +1266,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.vn = getelementptr inbounds i8, ptr %i.vj, i64 %i.vm
   %i.vo = add nuw nsw i64 %indvars.iv.i352, %i.vh
   %i.vp = mul nuw nsw i64 %i.vo, %5
-  %i.vq = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.vp
+  %i.vq = getelementptr inbounds nuw i8, ptr %.pre115.i, i64 %i.vp
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.vn, ptr align 1 %i.vq, i64 %5, i1 false)
   %indvars.iv.next.i353 = or disjoint i64 %indvars.iv.i352, 1 ; 2 uses
   %i.vr = mul nsw i64 %indvars.iv.next.i353, %i.uz
@@ -1275,7 +1275,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.vu = getelementptr inbounds i8, ptr %i.vj, i64 %i.vt
   %i.vv = add nuw nsw i64 %indvars.iv.next.i353, %i.vh
   %i.vw = mul nuw nsw i64 %i.vv, %5
-  %i.vx = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.vw
+  %i.vx = getelementptr inbounds nuw i8, ptr %.pre115.i, i64 %i.vw
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.vu, ptr align 1 %i.vx, i64 %5, i1 false)
   %indvars.iv.next.i353.1 = add nuw nsw i64 %indvars.iv.i352, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
@@ -1294,7 +1294,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.wb = getelementptr inbounds i8, ptr %i.vj, i64 %i.wa
   %i.wc = add nuw nsw i64 %indvars.iv.i352.epil.init, %i.vh
   %i.wd = mul nuw nsw i64 %i.wc, %5
-  %i.we = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.wd
+  %i.we = getelementptr inbounds nuw i8, ptr %.pre115.i, i64 %i.wd
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.wb, ptr align 1 %i.we, i64 %5, i1 false)
   br label %._crit_edge.i
 
@@ -1697,7 +1697,7 @@ stbi__mul2sizes_valid.exit12.i.i:                 ; preds = %bb.d
 
 stbi__malloc_mad3.exit:                           ; preds = %bb.d, %stbi__mul2sizes_valid.exit12.i.i
   %i.i = mul nuw nsw i32 %i.e, %4
-  %5 = sext i32 %i.i to i64
+  %5 = zext nneg i32 %i.i to i64
   %i.j = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %5) #53 ; 4 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %stbi__malloc_mad3.exit.thread, label %.preheader197
@@ -1709,8 +1709,8 @@ stbi__malloc_mad3.exit:                           ; preds = %bb.d, %stbi__mul2si
 .lr.ph258:                                        ; preds = %.preheader197
   %i.m = shl nsw i32 %1, 3
   %i.n = add nsw i32 %i.m, %2                     ; 2 uses
-  %.11167198 = add i32 %3, -1                     ; 32 uses
-  %i.o = icmp sgt i32 %.11167198, -1              ; 12 uses
+  %.11167198 = add nsw i32 %3, -1                 ; 31 uses
+  %i.o = icmp sgt i32 %3, 0                       ; 12 uses
   switch i32 %i.n, label %.critedge [
     i32 10, label %.lr.ph258.split
     i32 11, label %.lr.ph258.split
@@ -1728,10 +1728,10 @@ stbi__malloc_mad3.exit:                           ; preds = %bb.d, %stbi__mul2si
 
 .lr.ph258.split:                                  ; preds = %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258, %.lr.ph258
   %wide.trip.count = zext nneg i32 %4 to i64
-  %i.p = zext i32 %3 to i64                       ; 22 uses
+  %i.p = zext nneg i32 %3 to i64                  ; 22 uses
   %min.iters.check504 = icmp ult i32 %3, 8
-  %n.vec506 = and i64 %i.p, 4294967288            ; 5 uses
-  %i.q = trunc nuw i64 %n.vec506 to i32
+  %n.vec506 = and i64 %i.p, 2147483640            ; 5 uses
+  %i.q = trunc nuw nsw i64 %n.vec506 to i32
   %i.r = sub i32 %.11167198, %i.q
   %i.s = shl nuw nsw i64 %n.vec506, 1
   %i.t = shl nuw nsw i64 %n.vec506, 2
@@ -1754,8 +1754,8 @@ stbi__malloc_mad3.exit:                           ; preds = %bb.d, %stbi__mul2si
   %i.ae = sub i32 %.11167198, %i.ad
   %i.af = shl nsw i64 %n.vec486, 2
   %min.iters.check430 = icmp ult i32 %3, 8
-  %n.vec432 = and i64 %i.p, 4294967288            ; 5 uses
-  %i.ag = trunc nuw i64 %n.vec432 to i32
+  %n.vec432 = and i64 %i.p, 2147483640            ; 5 uses
+  %i.ag = trunc nuw nsw i64 %n.vec432 to i32
   %i.ah = sub i32 %.11167198, %i.ag
   %i.ai = shl nuw nsw i64 %n.vec432, 1
   %i.aj = mul nuw nsw i64 %n.vec432, 3
@@ -1763,24 +1763,24 @@ stbi__malloc_mad3.exit:                           ; preds = %bb.d, %stbi__mul2si
   %min.iters.check377 = icmp ult i32 %3, 8
   %min.iters.check379 = icmp ult i32 %3, 16
   %i.ak = and i64 %i.p, 8
-  %n.vec381 = and i64 %i.p, 4294967280            ; 6 uses
-  %i.al = trunc nuw i64 %n.vec381 to i32
+  %n.vec381 = and i64 %i.p, 2147483632            ; 6 uses
+  %i.al = trunc nuw nsw i64 %n.vec381 to i32
   %i.am = sub i32 %.11167198, %i.al
   %i.an = mul nuw nsw i64 %n.vec381, 3
   %cmp.n403 = icmp eq i64 %n.vec381, %i.p
   %min.epilog.iters.check410.not.not = icmp eq i64 %i.ak, 0
-  %n.vec412 = and i64 %i.p, 4294967288            ; 5 uses
-  %i.ao = trunc nuw i64 %n.vec412 to i32
+  %n.vec412 = and i64 %i.p, 2147483640            ; 5 uses
+  %i.ao = trunc nuw nsw i64 %n.vec412 to i32
   %i.ap = sub i32 %.11167198, %i.ao
   %i.aq = mul nuw nsw i64 %n.vec412, 3
   %cmp.n426 = icmp eq i64 %n.vec412, %i.p
   %xtraiter = and i32 %3, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  %.6162.prol = add i32 %3, -2
+  %.6162.prol = add nsw i32 %3, -2
   %i.ar = icmp eq i32 %.11167198, 0
   %xtraiter538 = and i32 %3, 1
   %lcmp.mod539.not = icmp eq i32 %xtraiter538, 0
-  %.5161.prol = add i32 %3, -2
+  %.5161.prol = add nsw i32 %3, -2
   %i.as = icmp eq i32 %.11167198, 0
   %xtraiter540 = and i32 %3, 3                    ; 2 uses
   %lcmp.mod541.not = icmp eq i32 %xtraiter540, 0
@@ -1811,20 +1811,20 @@ stbi__malloc_mad3.exit:                           ; preds = %bb.d, %stbi__mul2si
   %min.iters.check = icmp ult i32 %3, 4
   %min.iters.check308 = icmp ult i32 %3, 16
   %i.bi = and i64 %i.p, 12
-  %n.vec = and i64 %i.p, 4294967280               ; 6 uses
-  %i.bj = trunc nuw i64 %n.vec to i32
+  %n.vec = and i64 %i.p, 2147483632               ; 6 uses
+  %i.bj = trunc nuw nsw i64 %n.vec to i32
   %i.bk = sub i32 %.11167198, %i.bj
   %i.bl = shl nuw nsw i64 %n.vec, 1
   %cmp.n = icmp eq i64 %n.vec, %i.p
   %min.epilog.iters.check = icmp eq i64 %i.bi, 0
-  %n.vec315 = and i64 %i.p, 4294967292            ; 5 uses
-  %i.bm = trunc nuw i64 %n.vec315 to i32
+  %n.vec315 = and i64 %i.p, 2147483644            ; 5 uses
+  %i.bm = trunc nuw nsw i64 %n.vec315 to i32
   %i.bn = sub i32 %.11167198, %i.bm
   %i.bo = shl nuw nsw i64 %n.vec315, 1
   %cmp.n322 = icmp eq i64 %n.vec315, %i.p
   %xtraiter548 = and i32 %3, 1
   %lcmp.mod549.not = icmp eq i32 %xtraiter548, 0
-  %.11167.prol = add i32 %3, -2
+  %.11167.prol = add nsw i32 %3, -2
   %i.bp = icmp eq i32 %.11167198, 0
   br label %bb.e
 
@@ -2227,7 +2227,7 @@ stbi__malloc_mad3.exit.thread:                    ; preds = %stbi__mul2sizes_val
 
 stbi__malloc_mad3.exit:                           ; preds = %bb.c, %stbi__mul2sizes_valid.exit12.i.i
   %i.r = mul nuw nsw i32 %i.h, %i.m
-  %8 = sext i32 %i.r to i64
+  %8 = zext nneg i32 %i.r to i64
   %i.s = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %8) #53 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %i.s, ptr %i.t, align 8
@@ -2333,20 +2333,20 @@ bb.l:                                             ; preds = %bb.j
   %i.aw = icmp eq i32 %i.g, %3                    ; 3 uses
   %i.ax = icmp eq i32 %i.g, 1                     ; 3 uses
   %.not404 = icmp eq i32 %i.x, 0                  ; 4 uses
-  %.030.i305 = add i32 %4, -1                     ; 4 uses
+  %.030.i305 = add nsw i32 %4, -1                 ; 4 uses
   %i.ay = icmp sgt i32 %4, 0                      ; 4 uses
   %i.az = zext i32 %.030.i305 to i64              ; 16 uses
-  %i.ba = zext i32 %i.x to i64
+  %i.ba = zext nneg i32 %i.x to i64
   %i.bb = icmp eq i32 %7, 0
-  %9 = sext i32 %6 to i64
-  %i.bc = getelementptr inbounds i8, ptr @stbi__depth_scale_table, i64 %9
-  %wide.trip.count460 = zext i32 %5 to i64
+  %9 = zext nneg i32 %6 to i64
+  %i.bc = getelementptr inbounds nuw i8, ptr @stbi__depth_scale_table, i64 %9
+  %wide.trip.count460 = zext nneg i32 %5 to i64
   %i.bd = zext nneg i32 %i.ae to i64
   %wide.trip.count424 = zext i32 %spec.select to i64 ; 15 uses
   %wide.trip.count434 = zext nneg i32 %spec.select to i64
   %wide.trip.count444 = zext i32 %i.ap to i64     ; 8 uses
   %i.be = sub nsw i64 %i.au, %i.aq                ; 28 uses
-  %i.bf = add i32 %i.x, -1                        ; 3 uses
+  %i.bf = add nsw i32 %i.x, -1                    ; 3 uses
   %i.bg = add nuw nsw i64 %i.az, 1
   %min.iters.check699 = icmp ult i64 %i.be, 8
   %i.bh = add nsw i64 %i.aq, -1
@@ -2434,12 +2434,12 @@ bb.l:                                             ; preds = %bb.j
   %i.cd = add nsw i64 %i.au, -1
   %xtraiter761 = and i32 %4, 1
   %i.ce = icmp eq i32 %.030.i305, 0
-  %unroll_iter = and i32 %4, -2
+  %unroll_iter = and i32 %4, 2147483646
   %lcmp.mod762.not = icmp eq i32 %xtraiter761, 0
   %lcmp.mod763 = trunc i32 %4 to i1
   %xtraiter764 = and i32 %i.x, 3                  ; 3 uses
   %i.cf = icmp ult i32 %i.x, 4
-  %unroll_iter767 = and i32 %i.x, -4
+  %unroll_iter767 = and i32 %i.x, 2147483644
   %lcmp.mod765.not = icmp eq i32 %xtraiter764, 0
   %lcmp.mod766 = icmp ne i32 %xtraiter764, 0
   %i.cg = and i64 %i.az, 1
@@ -2455,17 +2455,17 @@ bb.l:                                             ; preds = %bb.j
   %cmp.n = icmp eq i64 %n.vec, %i.ck
   %xtraiter772 = and i32 %i.x, 1
   %i.cm = icmp eq i32 %i.bf, 0
-  %unroll_iter776 = and i32 %i.x, -2
+  %unroll_iter776 = and i32 %i.x, 2147483646
   %lcmp.mod774.not = icmp eq i32 %xtraiter772, 0
   %lcmp.mod775 = trunc i32 %i.x to i1
   %xtraiter778 = and i32 %i.x, 1
   %i.cn = icmp eq i32 %i.bf, 0
-  %unroll_iter782 = and i32 %i.x, -2
+  %unroll_iter782 = and i32 %i.x, 2147483646
   %lcmp.mod780.not = icmp eq i32 %xtraiter778, 0
   %lcmp.mod781 = trunc i32 %i.x to i1
   %xtraiter784 = and i32 %i.x, 1
   %i.co = icmp eq i32 %i.bf, 0
-  %unroll_iter788 = and i32 %i.x, -2
+  %unroll_iter788 = and i32 %i.x, 2147483646
   %lcmp.mod786.not = icmp eq i32 %xtraiter784, 0
   %lcmp.mod787 = trunc i32 %i.x to i1
   %i.cp = and i64 %i.az, 1
