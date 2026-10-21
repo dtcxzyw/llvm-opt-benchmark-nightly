@@ -202,17 +202,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i38: ; preds = %bb.a
   br i1 %.not.i.i40, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit42, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i43
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit42: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i38
-  %i.u = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.u = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.v = insertelement <2 x float> poison, float %1, i64 0
   %i.w = insertelement <2 x float> %i.v, float %.036, i64 1 ; 2 uses
   %i.x = fcmp ogt <2 x float> %i.w, zeroinitializer
   %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_116FilterTriangle2DE, i64 16), ptr %i.u, align 8, !tbaa !24
-  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.z = select <2 x i1> %i.x, <2 x float> %i.w, <2 x float> splat (float 2.000000e+00) ; 2 uses
-  store <2 x float> %i.z, ptr %i.y, align 8, !tbaa !11
-  %4 = fdiv <2 x float> splat (float 2.000000e+00), %i.z
-  store <2 x float> %4, ptr %3, align 8, !tbaa !11
+  %3 = fdiv <2 x float> splat (float 2.000000e+00), %i.z
+  %4 = shufflevector <2 x float> %i.z, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.y, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i43: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i38
@@ -223,17 +222,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i43: ; preds = %_ZNSt11char_traitsI
   br i1 %.not.i.i45, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit47, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i73
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit47: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i43
-  %i.ad = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.ad = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.ae = insertelement <2 x float> poison, float %1, i64 0
   %i.af = insertelement <2 x float> %i.ae, float %.036, i64 1 ; 2 uses
   %i.ag = fcmp ogt <2 x float> %i.af, zeroinitializer
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_116FilterGaussian2DE, i64 16), ptr %i.ad, align 8, !tbaa !24
-  %5 = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %i.ai = select <2 x i1> %i.ag, <2 x float> %i.af, <2 x float> splat (float 3.000000e+00) ; 2 uses
-  store <2 x float> %i.ai, ptr %i.ah, align 8, !tbaa !11
-  %6 = fdiv <2 x float> splat (float 2.000000e+00), %i.ai
-  store <2 x float> %6, ptr %5, align 8, !tbaa !11
+  %5 = fdiv <2 x float> splat (float 2.000000e+00), %i.ai
+  %6 = shufflevector <2 x float> %i.ai, <2 x float> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.ah, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i48: ; preds = %bb.a
@@ -242,17 +240,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i48: ; preds = %bb.a
   br i1 %.not.i.i50, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit52, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i93
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit52: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i48
-  %i.aj = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.aj = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.ak = insertelement <2 x float> poison, float %1, i64 0
   %i.al = insertelement <2 x float> %i.ak, float %.036, i64 1 ; 2 uses
   %i.am = fcmp ogt <2 x float> %i.al, zeroinitializer
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_121FilterSharpGaussian2DE, i64 16), ptr %i.aj, align 8, !tbaa !24
-  %7 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   %i.ao = select <2 x i1> %i.am, <2 x float> %i.al, <2 x float> splat (float 2.000000e+00) ; 2 uses
-  store <2 x float> %i.ao, ptr %i.an, align 8, !tbaa !11
-  %8 = fdiv <2 x float> splat (float 2.000000e+00), %i.ao
-  store <2 x float> %8, ptr %7, align 8, !tbaa !11
+  %7 = fdiv <2 x float> splat (float 2.000000e+00), %i.ao
+  %8 = shufflevector <2 x float> %i.ao, <2 x float> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.an, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i53: ; preds = %bb.a
@@ -266,17 +263,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i58: ; preds = %bb.a
   br i1 %.not.i.i60, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit57, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i133
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit57: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i58, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i53
-  %i.ap = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.ap = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.aq = insertelement <2 x float> poison, float %1, i64 0
   %i.ar = insertelement <2 x float> %i.aq, float %.036, i64 1 ; 2 uses
   %i.as = fcmp ogt <2 x float> %i.ar, zeroinitializer
   %i.at = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_118FilterCatmullRom2DE, i64 16), ptr %i.ap, align 8, !tbaa !24
-  %9 = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %i.au = select <2 x i1> %i.as, <2 x float> %i.ar, <2 x float> splat (float 4.000000e+00) ; 2 uses
-  store <2 x float> %i.au, ptr %i.at, align 8, !tbaa !11
-  %10 = fdiv <2 x float> splat (float 4.000000e+00), %i.au
-  store <2 x float> %10, ptr %9, align 8, !tbaa !11
+  %9 = fdiv <2 x float> splat (float 4.000000e+00), %i.au
+  %10 = shufflevector <2 x float> %i.au, <2 x float> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.at, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i63: ; preds = %bb.a
@@ -285,17 +281,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i63: ; preds = %bb.a
   br i1 %.not.i.i65, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit67, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i88
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit67: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i63
-  %i.av = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.av = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.aw = insertelement <2 x float> poison, float %1, i64 0
   %i.ax = insertelement <2 x float> %i.aw, float %.036, i64 1 ; 2 uses
   %i.ay = fcmp ogt <2 x float> %i.ax, zeroinitializer
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_122FilterBlackmanHarris2DE, i64 16), ptr %i.av, align 8, !tbaa !24
-  %11 = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.ba = select <2 x i1> %i.ay, <2 x float> %i.ax, <2 x float> splat (float 3.000000e+00) ; 2 uses
-  store <2 x float> %i.ba, ptr %i.az, align 8, !tbaa !11
-  %12 = fdiv <2 x float> splat (float 2.000000e+00), %i.ba
-  store <2 x float> %12, ptr %11, align 8, !tbaa !11
+  %11 = fdiv <2 x float> splat (float 2.000000e+00), %i.ba
+  %12 = shufflevector <2 x float> %i.ba, <2 x float> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %i.az, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i68: ; preds = %bb.a
@@ -332,17 +327,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i83: ; preds = %bb.a
   br i1 %.not.i.i85, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit77, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit77: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i83, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i78, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i73
-  %i.bj = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.bj = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.bk = insertelement <2 x float> poison, float %1, i64 0
   %i.bl = insertelement <2 x float> %i.bk, float %.036, i64 1 ; 2 uses
   %i.bm = fcmp ogt <2 x float> %i.bl, zeroinitializer
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_117FilterLanczos3_2DE, i64 16), ptr %i.bj, align 8, !tbaa !24
-  %13 = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
   %i.bo = select <2 x i1> %i.bm, <2 x float> %i.bl, <2 x float> splat (float 6.000000e+00) ; 2 uses
-  store <2 x float> %i.bo, ptr %i.bn, align 8, !tbaa !11
-  %14 = fdiv <2 x float> splat (float 6.000000e+00), %i.bo
-  store <2 x float> %14, ptr %13, align 8, !tbaa !11
+  %13 = fdiv <2 x float> splat (float 6.000000e+00), %i.bo
+  %14 = shufflevector <2 x float> %i.bo, <2 x float> %13, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %i.bn, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i88: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i63
@@ -356,17 +350,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i93: ; preds = %_ZNSt11char_traitsI
   br i1 %.not.i.i95, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit92, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit92: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i93, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i88
-  %i.bp = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.bp = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.bq = insertelement <2 x float> poison, float %1, i64 0
   %i.br = insertelement <2 x float> %i.bq, float %.036, i64 1 ; 2 uses
   %i.bs = fcmp ogt <2 x float> %i.br, zeroinitializer
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_123FilterRadialLanczos3_2DE, i64 16), ptr %i.bp, align 8, !tbaa !24
-  %15 = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   %i.bu = select <2 x i1> %i.bs, <2 x float> %i.br, <2 x float> splat (float 6.000000e+00) ; 2 uses
-  store <2 x float> %i.bu, ptr %i.bt, align 8, !tbaa !11
-  %16 = fdiv <2 x float> splat (float 6.000000e+00), %i.bu
-  store <2 x float> %16, ptr %15, align 8, !tbaa !11
+  %15 = fdiv <2 x float> splat (float 6.000000e+00), %i.bu
+  %16 = shufflevector <2 x float> %i.bu, <2 x float> %15, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %16, ptr %i.bt, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i98: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i73
@@ -375,17 +368,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i98: ; preds = %_ZNSt11char_traitsI
   br i1 %.not.i.i100, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit102, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i103
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit102: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i98
-  %i.bv = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.bv = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.bw = insertelement <2 x float> poison, float %1, i64 0
   %i.bx = insertelement <2 x float> %i.bw, float %.036, i64 1 ; 2 uses
   %i.by = fcmp ogt <2 x float> %i.bx, zeroinitializer
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_116FilterMitchell2DE, i64 16), ptr %i.bv, align 8, !tbaa !24
-  %17 = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
   %i.ca = select <2 x i1> %i.by, <2 x float> %i.bx, <2 x float> splat (float 4.000000e+00) ; 2 uses
-  store <2 x float> %i.ca, ptr %i.bz, align 8, !tbaa !11
-  %18 = fdiv <2 x float> splat (float 2.000000e+00), %i.ca
-  store <2 x float> %18, ptr %17, align 8, !tbaa !11
+  %17 = fdiv <2 x float> splat (float 2.000000e+00), %i.ca
+  %18 = shufflevector <2 x float> %i.ca, <2 x float> %17, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %18, ptr %i.bz, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i103: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i98
@@ -401,17 +393,16 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i108: ; preds = %_ZNSt11char_traits
   br i1 %.not.i.i110, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit107, label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit107: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i108, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i103
-  %i.ce = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 4 uses
+  %i.ce = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 3 uses
   %i.cf = insertelement <2 x float> poison, float %1, i64 0
   %i.cg = insertelement <2 x float> %i.cf, float %.036, i64 1 ; 2 uses
   %i.ch = fcmp ogt <2 x float> %i.cg, zeroinitializer
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN11OpenImageIO4v3_115FilterBSpline2DE, i64 16), ptr %i.ce, align 8, !tbaa !24
-  %19 = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
   %i.cj = select <2 x i1> %i.ch, <2 x float> %i.cg, <2 x float> splat (float 4.000000e+00) ; 2 uses
-  store <2 x float> %i.cj, ptr %i.ci, align 8, !tbaa !11
-  %20 = fdiv <2 x float> splat (float 4.000000e+00), %i.cj
-  store <2 x float> %20, ptr %19, align 8, !tbaa !11
+  %19 = fdiv <2 x float> splat (float 4.000000e+00), %i.cj
+  %20 = shufflevector <2 x float> %i.cj, <2 x float> %19, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %20, ptr %i.ci, align 8, !tbaa !11
   br label %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit137.thread
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i113: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i68

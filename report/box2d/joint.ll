@@ -202,7 +202,7 @@ bb.ab:                                            ; preds = %b2EmplaceHelper.exi
   br label %bb.ac
 
 bb.ac:                                            ; preds = %b2EmplaceHelper.exit200, %bb.ab, %b2EmplaceHelper.exit196, %bb.y, %b2EmplaceHelper.exit
-  %.1 = phi ptr [ %i.ee, %b2EmplaceHelper.exit ], [ %i.fg, %b2EmplaceHelper.exit196 ], [ %i.fn, %bb.y ], [ %i.hc, %bb.ab ], [ %i.gm, %b2EmplaceHelper.exit200 ] ; 8 uses
+  %.1 = phi ptr [ %i.ee, %b2EmplaceHelper.exit ], [ %i.fg, %b2EmplaceHelper.exit196 ], [ %i.fn, %bb.y ], [ %i.hc, %bb.ab ], [ %i.gm, %b2EmplaceHelper.exit200 ] ; 7 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %.1, i64 16
   %i.he = getelementptr inbounds nuw i8, ptr %1, i64 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.hd, ptr noundef nonnull align 8 dereferenceable(16) %i.he, i64 16, i1 false), !tbaa.struct !232
@@ -214,9 +214,8 @@ bb.ac:                                            ; preds = %b2EmplaceHelper.exi
   %i.hi = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.hj = getelementptr inbounds nuw i8, ptr %.1, i64 64
   %i.hk = load <2 x float>, ptr %i.hi, align 8, !tbaa !10
-  store <2 x float> %i.hk, ptr %i.hj, align 4, !tbaa !10
-  %3 = getelementptr inbounds nuw i8, ptr %.1, i64 72
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %3, align 4, !tbaa !10
+  %3 = shufflevector <2 x float> %i.hk, <2 x float> <float 0.000000e+00, float 1.000000e+00>, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.hj, align 4, !tbaa !10
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.1, i64 80
   store float 0.000000e+00, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !10
   %i.hl = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -619,7 +618,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @b2Joint_SetLocalFrameA(i64 %0, <2 x float> %1, <2 x float> %2) local_unnamed_addr #7 {
 bb.a:
-  %3 = alloca %struct.b2RecArgs_JointSetLocalFrameA, align 8 ; 6 uses
+  %3 = alloca %struct.b2RecArgs_JointSetLocalFrameA, align 8 ; 5 uses
   %.sroa.310.0.extract.shift = lshr i64 %0, 32
   %i.a = trunc nuw i64 %.sroa.310.0.extract.shift to i32
   %i.b = and i32 %i.a, 65535
@@ -633,9 +632,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   store i64 %0, ptr %3, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store <2 x float> %1, ptr %i.f, align 8, !tbaa !10
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !10
+  %4 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.f, align 8, !tbaa !10
   call void @b2RecWrite_JointSetLocalFrameA(ptr noundef nonnull %i.e, ptr noundef nonnull %3) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %bb.c
@@ -674,11 +672,10 @@ b2GetJointSim.exit:                               ; preds = %bb.d, %bb.e
   %.sink.in.i = phi ptr [ %i.z, %bb.e ], [ %i.u, %bb.d ]
   %.sink.i = load ptr, ptr %.sink.in.i, align 8, !tbaa !88
   %i.aa = sext i32 %i.p to i64
-  %i.ab = getelementptr inbounds [252 x i8], ptr %.sink.i, i64 %i.aa ; 2 uses
+  %i.ab = getelementptr inbounds [252 x i8], ptr %.sink.i, i64 %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  store <2 x float> %1, ptr %i.ac, align 4, !tbaa !10
-  %.sroa.3.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx7, align 4, !tbaa !10
+  %5 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.ac, align 4, !tbaa !10
   ret void
 }
 
@@ -737,7 +734,7 @@ b2GetJointSim.exit:                               ; preds = %bb.b, %bb.c
 ; Function Attrs: nounwind uwtable
 define void @b2Joint_SetLocalFrameB(i64 %0, <2 x float> %1, <2 x float> %2) local_unnamed_addr #7 {
 bb.a:
-  %3 = alloca %struct.b2RecArgs_JointSetLocalFrameB, align 8 ; 6 uses
+  %3 = alloca %struct.b2RecArgs_JointSetLocalFrameB, align 8 ; 5 uses
   %.sroa.310.0.extract.shift = lshr i64 %0, 32
   %i.a = trunc nuw i64 %.sroa.310.0.extract.shift to i32
   %i.b = and i32 %i.a, 65535
@@ -751,9 +748,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   store i64 %0, ptr %3, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store <2 x float> %1, ptr %i.f, align 8, !tbaa !10
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !10
+  %4 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.f, align 8, !tbaa !10
   call void @b2RecWrite_JointSetLocalFrameB(ptr noundef nonnull %i.e, ptr noundef nonnull %3) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %bb.c
@@ -792,11 +788,10 @@ b2GetJointSim.exit:                               ; preds = %bb.d, %bb.e
   %.sink.in.i = phi ptr [ %i.z, %bb.e ], [ %i.u, %bb.d ]
   %.sink.i = load ptr, ptr %.sink.in.i, align 8, !tbaa !88
   %i.aa = sext i32 %i.p to i64
-  %i.ab = getelementptr inbounds [252 x i8], ptr %.sink.i, i64 %i.aa ; 2 uses
+  %i.ab = getelementptr inbounds [252 x i8], ptr %.sink.i, i64 %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
-  store <2 x float> %1, ptr %i.ac, align 4, !tbaa !10
-  %.sroa.3.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %i.ab, i64 40
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx7, align 4, !tbaa !10
+  %5 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.ac, align 4, !tbaa !10
   ret void
 }
 

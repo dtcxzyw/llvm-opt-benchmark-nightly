@@ -204,10 +204,8 @@ vector.ph262:                                     ; preds = %.lr.ph46.i.preheade
 
 vector.body264:                                   ; preds = %vector.body264, %vector.ph262
   %index265 = phi i64 [ 0, %vector.ph262 ], [ %index.next266, %vector.body264 ] ; 3 uses
-  %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %index265 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  store <2 x i32> splat (i32 -2147483648), ptr %i.at, align 4, !tbaa !77
-  store <2 x i32> splat (i32 -2147483648), ptr %18, align 4, !tbaa !77
+  %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %index265
+  store <4 x i32> splat (i32 -2147483648), ptr %i.at, align 4, !tbaa !77
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %index265 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.au, align 8, !tbaa !91
@@ -247,10 +245,8 @@ vector.ph272:                                     ; preds = %.lr.ph46.i74.prehea
 
 vector.body274:                                   ; preds = %vector.body274, %vector.ph272
   %index275 = phi i64 [ 0, %vector.ph272 ], [ %index.next276, %vector.body274 ] ; 3 uses
-  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %index275 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
-  store <2 x i32> splat (i32 2147483647), ptr %i.ba, align 4, !tbaa !77
-  store <2 x i32> splat (i32 2147483647), ptr %19, align 4, !tbaa !77
+  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %index275
+  store <4 x i32> splat (i32 2147483647), ptr %i.ba, align 4, !tbaa !77
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %index275 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.bb, align 8, !tbaa !91
@@ -638,10 +634,8 @@ vector.ph:                                        ; preds = %.lr.ph44.i.preheade
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.hm = add nuw i64 %.0.lcssa.i, %index         ; 2 uses
-  %i.hn = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.hm ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.hn, i64 8
-  store <2 x i32> splat (i32 -2147483648), ptr %i.hn, align 4, !tbaa !77
-  store <2 x i32> splat (i32 -2147483648), ptr %20, align 4, !tbaa !77
+  %i.hn = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.hm
+  store <4 x i32> splat (i32 -2147483648), ptr %i.hn, align 4, !tbaa !77
   %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.hm ; 2 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %i.ho, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.ho, align 8, !tbaa !91
@@ -808,10 +802,8 @@ vector.ph252:                                     ; preds = %.lr.ph44.i99.prehea
 vector.body254:                                   ; preds = %vector.body254, %vector.ph252
   %index255 = phi i64 [ 0, %vector.ph252 ], [ %index.next256, %vector.body254 ] ; 2 uses
   %i.kd = add nuw i64 %.0.lcssa.i98, %index255    ; 2 uses
-  %i.ke = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.kd ; 2 uses
-  %21 = getelementptr inbounds nuw i8, ptr %i.ke, i64 8
-  store <2 x i32> splat (i32 2147483647), ptr %i.ke, align 4, !tbaa !77
-  store <2 x i32> splat (i32 2147483647), ptr %21, align 4, !tbaa !77
+  %i.ke = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.kd
+  store <4 x i32> splat (i32 2147483647), ptr %i.ke, align 4, !tbaa !77
   %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.kd ; 2 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kf, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.kf, align 8, !tbaa !91

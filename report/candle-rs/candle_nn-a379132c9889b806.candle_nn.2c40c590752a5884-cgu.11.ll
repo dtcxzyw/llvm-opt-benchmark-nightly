@@ -205,8 +205,8 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.q = add i64 %.sroa.5.0.copyload, %n.vec      ; 2 uses
   %i.r = load i64, ptr %i.e, align 8, !alias.scope !508, !noalias !509, !noundef !4
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.r, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %2 = getelementptr [4 x i8], ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
+  %3 = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -215,14 +215,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %wide.load = load <2 x i64>, ptr %i.s, align 8, !alias.scope !510, !noalias !511
   %wide.load11 = load <2 x i64>, ptr %i.t, align 8, !alias.scope !510, !noalias !511
-  %3 = icmp ugt <2 x i64> %wide.load, %broadcast.splat
-  %4 = icmp ugt <2 x i64> %wide.load11, %broadcast.splat
-  %5 = select <2 x i1> %3, <2 x float> splat (float -inf), <2 x float> zeroinitializer
-  %6 = select <2 x i1> %4, <2 x float> splat (float -inf), <2 x float> zeroinitializer
-  %7 = getelementptr [4 x i8], ptr %2, i64 %index ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store <2 x float> %5, ptr %7, align 4, !alias.scope !512, !noalias !513
-  store <2 x float> %6, ptr %8, align 4, !alias.scope !512, !noalias !513
+  %4 = getelementptr [4 x i8], ptr %2, i64 %index
+  %5 = shufflevector <2 x i64> %wide.load, <2 x i64> %wide.load11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = icmp ugt <4 x i64> %5, %3
+  %7 = select <4 x i1> %6, <4 x float> splat (float -inf), <4 x float> zeroinitializer
+  store <4 x float> %7, ptr %4, align 4, !alias.scope !512, !noalias !513
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.u = icmp eq i64 %index.next, %n.vec
   br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !506

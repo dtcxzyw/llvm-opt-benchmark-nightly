@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %struct.b2RecArgs_CreateCircleShape, align 8 ; 8 uses
   %4 = alloca %struct.b2RecArgs_CreateCapsuleShape, align 8 ; 7 uses
   %5 = alloca %struct.b2Capsule, align 4          ; 5 uses
-  %6 = alloca %struct.b2RecArgs_CreateSegmentShape, align 8 ; 8 uses
+  %6 = alloca %struct.b2RecArgs_CreateSegmentShape, align 8 ; 7 uses
   %7 = alloca %struct.b2RecArgs_CreatePolygonShape, align 8 ; 7 uses
   %8 = alloca %struct.b2Polygon, align 4          ; 5 uses
   %9 = alloca %struct.b2RecArgs_CreateChainSegmentShape, align 8 ; 7 uses
@@ -215,7 +215,7 @@ bb.a:
   %13 = alloca %struct.b2RecArgs_ShapeSetCircle, align 8 ; 5 uses
   %14 = alloca %struct.b2RecArgs_ShapeSetCapsule, align 8 ; 4 uses
   %15 = alloca %struct.b2Capsule, align 4         ; 5 uses
-  %16 = alloca %struct.b2RecArgs_ShapeSetSegment, align 8 ; 5 uses
+  %16 = alloca %struct.b2RecArgs_ShapeSetSegment, align 8 ; 4 uses
   %17 = alloca %struct.b2RecArgs_ShapeSetPolygon, align 8 ; 4 uses
   %18 = alloca %struct.b2Polygon, align 4         ; 5 uses
   %19 = alloca %struct.b2RecArgs_ShapeSetChainSegment, align 8 ; 4 uses
@@ -232,7 +232,7 @@ bb.a:
   %30 = alloca %struct.b2RecArgs_CreateRevoluteJoint, align 8 ; 6 uses
   %31 = alloca %struct.b2RecArgs_CreateWeldJoint, align 8 ; 6 uses
   %32 = alloca %struct.b2RecArgs_CreateWheelJoint, align 8 ; 6 uses
-  %33 = alloca %struct.b2RecArgs_QueryOverlapAABB, align 8 ; 10 uses
+  %33 = alloca %struct.b2RecArgs_QueryOverlapAABB, align 8 ; 9 uses
   %34 = alloca %struct.b2RecArgs_QueryOverlapShape, align 8 ; 9 uses
   %35 = alloca %struct.b2RecArgs_QueryCastRay, align 8 ; 9 uses
   %36 = alloca %struct.b2RecArgs_QueryCastShape, align 8 ; 10 uses
@@ -635,9 +635,8 @@ bb.cu:                                            ; preds = %b2RecRdrCheck.exit.
   %.sroa.3.0.copyload.i1540 = load <2 x float>, ptr %.sroa.3.0..sroa_idx.i1539, align 1
   %i.vi = add nsw i32 %i.uz, 16
   store i32 %i.vi, ptr %i.b, align 4, !tbaa !18
-  store <2 x float> %.sroa.0.0.copyload.i, ptr %i.uy, align 8, !tbaa !28
-  %.sroa.4149.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 104
-  store <2 x float> %.sroa.3.0.copyload.i1540, ptr %.sroa.4149.0..sroa_idx, align 8, !tbaa !28
+  %44 = shufflevector <2 x float> %.sroa.0.0.copyload.i, <2 x float> %.sroa.3.0.copyload.i1540, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %44, ptr %i.uy, align 8, !tbaa !28
   call fastcc void @b2RecDispatch_CreateSegmentShape(ptr noundef %6, ptr noundef nonnull %i.a)
   br label %b2RecR_SEGMENT.exit.thread
 
@@ -1040,9 +1039,8 @@ bb.ef:                                            ; preds = %b2RecRdrCheck.exit.
   %.sroa.3.0.copyload.i1668 = load <2 x float>, ptr %.sroa.3.0..sroa_idx.i1667, align 1
   %i.adq = add nsw i32 %i.adh, 16
   store i32 %i.adq, ptr %i.b, align 4, !tbaa !18
-  store <2 x float> %.sroa.0.0.copyload.i1666, ptr %i.adg, align 8, !tbaa !28
-  %.sroa.4128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %16, i64 16
-  store <2 x float> %.sroa.3.0.copyload.i1668, ptr %.sroa.4128.0..sroa_idx, align 8, !tbaa !28
+  %45 = shufflevector <2 x float> %.sroa.0.0.copyload.i1666, <2 x float> %.sroa.3.0.copyload.i1668, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %45, ptr %i.adg, align 8, !tbaa !28
   %i.adr = getelementptr i8, ptr %0, i64 88
   %.val1006 = load i16, ptr %i.adr, align 8, !tbaa !105
   %i.ads = add i16 %.val1006, -1
@@ -1445,9 +1443,8 @@ b2RecR_WORLDID.exit2242:                          ; preds = %b2RecRdrCheck.exit.
   %i.btv = tail call { <2 x float>, <2 x float> } @b2RecR_AABB(ptr noundef nonnull %i.a) ; 2 uses
   %i.btw = extractvalue { <2 x float>, <2 x float> } %i.btv, 0
   %i.btx = extractvalue { <2 x float>, <2 x float> } %i.btv, 1
-  store <2 x float> %i.btw, ptr %i.btu, align 4, !tbaa !28
-  %.sroa.438.0..sroa_idx = getelementptr inbounds nuw i8, ptr %33, i64 20
-  store <2 x float> %i.btx, ptr %.sroa.438.0..sroa_idx, align 4, !tbaa !28
+  %46 = shufflevector <2 x float> %i.btw, <2 x float> %i.btx, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %46, ptr %i.btu, align 4, !tbaa !28
   %i.bty = getelementptr inbounds nuw i8, ptr %33, i64 32
   %i.btz = tail call { i64, i64 } @b2RecR_QUERYFILTER(ptr noundef nonnull %i.a) ; 2 uses
   %i.bua = extractvalue { i64, i64 } %i.btz, 0
@@ -1850,11 +1847,10 @@ bb.lz:                                            ; preds = %bb.ly
   %i.cag = extractvalue { <2 x float>, <2 x float> } %i.cad, 1
   %i.cah = extractvalue { <2 x float>, <2 x float> } %i.cad, 0
   %i.cai = getelementptr i8, ptr %0, i64 152
-  %.val1185 = load ptr, ptr %i.cai, align 8, !tbaa !106 ; 2 uses
+  %.val1185 = load ptr, ptr %i.cai, align 8, !tbaa !106
   %i.caj = getelementptr inbounds nuw i8, ptr %.val1185, i64 44
-  store <2 x float> %i.cah, ptr %i.caj, align 4, !tbaa !28
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.val1185, i64 52
-  store <2 x float> %i.cag, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !28
+  %47 = shufflevector <2 x float> %i.cah, <2 x float> %i.cag, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %47, ptr %i.caj, align 4, !tbaa !28
   br label %b2RecR_WORLDID.exit
 
 bb.ma:                                            ; preds = %bb.d

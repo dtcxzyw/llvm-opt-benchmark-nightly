@@ -205,14 +205,13 @@ bb.z:                                             ; preds = %._crit_edge
 
 bb.aa:                                            ; preds = %bb.aa, %bb.z
   %.296 = phi ptr [ %.094.lcssa, %bb.z ], [ %i.eh, %bb.aa ] ; 3 uses
-  %.2 = phi ptr [ %.0.lcssa, %bb.z ], [ %i.eg, %bb.aa ] ; 3 uses
+  %.2 = phi ptr [ %.0.lcssa, %bb.z ], [ %i.eg, %bb.aa ] ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.296, i64 8
   %i.ed = load <2 x float>, ptr %.296, align 4, !tbaa !77
   %i.ee = fadd <2 x float> %i.eb, %i.ed
-  %.sroa.5203.0..2.sroa_idx = getelementptr inbounds nuw i8, ptr %.2, i64 8
   %i.ef = load <2 x float>, ptr %i.ec, align 4, !tbaa !77
-  store <2 x float> %i.ee, ptr %.2, align 4, !tbaa !77
-  store <2 x float> %i.ef, ptr %.sroa.5203.0..2.sroa_idx, align 4, !tbaa !77
+  %11 = shufflevector <2 x float> %i.ee, <2 x float> %i.ef, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %.2, align 4, !tbaa !77
   %i.eg = getelementptr inbounds nuw i8, ptr %.2, i64 16 ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %.296, i64 16 ; 2 uses
   %.not = icmp eq ptr %i.eh, %i.bn
@@ -231,14 +230,13 @@ bb.ab:                                            ; preds = %.loopexit249
 
 bb.ac:                                            ; preds = %bb.ac, %bb.ab
   %.293 = phi ptr [ %.091.lcssa, %bb.ab ], [ %i.er, %bb.ac ] ; 3 uses
-  %.4 = phi ptr [ %.3, %bb.ab ], [ %i.eq, %bb.ac ] ; 3 uses
+  %.4 = phi ptr [ %.3, %bb.ab ], [ %i.eq, %bb.ac ] ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %.293, i64 8
   %i.en = load <2 x float>, ptr %.293, align 4, !tbaa !77
   %i.eo = fadd <2 x float> %i.el, %i.en
-  %.sroa.5.0..4.sroa_idx = getelementptr inbounds nuw i8, ptr %.4, i64 8
   %i.ep = load <2 x float>, ptr %i.em, align 4, !tbaa !77
-  store <2 x float> %i.eo, ptr %.4, align 4, !tbaa !77
-  store <2 x float> %i.ep, ptr %.sroa.5.0..4.sroa_idx, align 4, !tbaa !77
+  %12 = shufflevector <2 x float> %i.eo, <2 x float> %i.ep, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %.4, align 4, !tbaa !77
   %i.eq = getelementptr inbounds nuw i8, ptr %.4, i64 16 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.293, i64 16 ; 2 uses
   %.not118 = icmp eq ptr %i.er, %i.br

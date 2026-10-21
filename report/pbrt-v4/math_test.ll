@@ -204,12 +204,12 @@ _ZN7testing15AssertionResultD2Ev.exit:
   %9 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %10 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %11 = alloca %"class.pbrt::SquareMatrix", align 16 ; 4 uses
-  %12 = alloca %"class.pbrt::SquareMatrix", align 8 ; 5 uses
+  %12 = alloca %"class.pbrt::SquareMatrix", align 16 ; 4 uses
   %13 = alloca %"class.testing::Message", align 8 ; 8 uses
   %14 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %15 = alloca %"class.pbrt::SquareMatrix", align 16 ; 5 uses
   %16 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
-  %17 = alloca %"class.pbrt::SquareMatrix", align 8 ; 5 uses
+  %17 = alloca %"class.pbrt::SquareMatrix", align 16 ; 4 uses
   %18 = alloca %"class.testing::Message", align 8 ; 8 uses
   %19 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %20 = alloca %"class.pstd::array", align 8      ; 6 uses
@@ -546,9 +546,7 @@ _ZN7testing15AssertionResultD2Ev.exit149:         ; preds = %bb.ah, %.noexc.i.i1
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #25
   store <4 x float> <float 2.000000e+00, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, ptr %11, align 16, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
-  store <2 x float> <float 2.000000e+00, float 0.000000e+00>, ptr %12, align 8
-  %58 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  store <2 x float> <float 0.000000e+00, float -1.000000e+00>, ptr %58, align 8
+  store <4 x float> <float 2.000000e+00, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, ptr %12, align 16
   call void @_ZN7testing8internal11CmpHelperEQIN4pbrt12SquareMatrixILi2EEES4_EENS_15AssertionResultEPKcS7_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %10, ptr noundef nonnull @.str.192, ptr noundef nonnull @.str.193, ptr noundef nonnull align 4 dereferenceable(16) %11, ptr noundef nonnull align 4 dereferenceable(16) %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #25
@@ -694,9 +692,7 @@ _ZN7testing15AssertionResultD2Ev.exit178:         ; preds = %_ZNSt7__cxx1112basi
   store <4 x float> <float 1.000000e+00, float 3.000000e+00, float 2.000000e+00, float 4.000000e+00>, ptr %15, align 16, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #25
-  store <2 x float> <float 1.000000e+00, float 3.000000e+00>, ptr %17, align 8
-  %59 = getelementptr inbounds nuw i8, ptr %17, i64 8
-  store <2 x float> <float 2.000000e+00, float 4.000000e+00>, ptr %59, align 8
+  store <4 x float> <float 1.000000e+00, float 3.000000e+00, float 2.000000e+00, float 4.000000e+00>, ptr %17, align 16
   call void @_ZN7testing8internal11CmpHelperEQIN4pbrt12SquareMatrixILi2EEES4_EENS_15AssertionResultEPKcS7_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %16, ptr noundef nonnull @.str.195, ptr noundef nonnull @.str.196, ptr noundef nonnull align 4 dereferenceable(16) %17, ptr noundef nonnull align 4 dereferenceable(16) %15)
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #25
   %i.cq = load i8, ptr %16, align 8, !tbaa !18, !range !19, !noundef !20
@@ -1099,9 +1095,9 @@ bb.a:
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = alloca i32, align 4                      ; 10 uses
-  %19 = alloca %"class.pbrt::SquareMatrix", align 8 ; 11 uses
+  %19 = alloca %"class.pbrt::SquareMatrix", align 16 ; 11 uses
   %20 = alloca %"class.pstd::optional", align 8   ; 9 uses
-  %21 = alloca %"class.pbrt::SquareMatrix", align 8 ; 9 uses
+  %21 = alloca %"class.pbrt::SquareMatrix", align 16 ; 8 uses
   %22 = alloca %"class.testing::AssertionResult", align 8 ; 6 uses
   %23 = alloca %"class.testing::Message", align 8 ; 14 uses
   %24 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
@@ -1141,12 +1137,11 @@ bb.a:
   %51 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   store i32 0, ptr %i.a, align 4, !tbaa !34
-  %52 = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %20, i64 16 ; 3 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %19, i64 4
-  %gep.1.i.a = getelementptr inbounds nuw i8, ptr %20, i64 8
-  %i.k = getelementptr inbounds nuw i8, ptr %19, i64 12
-  %i.l = getelementptr inbounds nuw i8, ptr %21, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %i.j = getelementptr inbounds nuw i8, ptr %20, i64 16 ; 3 uses
+  %gep.1.i.a = getelementptr inbounds nuw i8, ptr %19, i64 4
+  %i.k = getelementptr inbounds nuw i8, ptr %20, i64 8
+  %i.l = getelementptr inbounds nuw i8, ptr %19, i64 12
   %i.m = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %14, i64 8
@@ -1222,11 +1217,7 @@ bb.b:                                             ; preds = %bb.a, %bb.bv
   %i.bs = trunc nuw nsw <2 x i64> %i.br to <2 x i32>
   %i.bt = call <2 x i32> @llvm.fshr.v2i32(<2 x i32> %i.bq, <2 x i32> %i.bq, <2 x i32> %i.bs)
   %i.bu = uitofp <2 x i32> %i.bt to <2 x float>
-  %53 = fmul nnan <2 x float> %i.bu, splat (float f0x2F800000) ; 2 uses
-  %54 = fcmp olt <2 x float> %53, splat (float f0x3F7FFFFF)
-  %55 = select <2 x i1> %54, <2 x float> %53, <2 x float> splat (float f0x3F7FFFFF)
-  %i.bv = fmul nnan <2 x float> %55, splat (float 2.000000e+01)
-  %56 = fadd <2 x float> %i.bv, splat (float -1.000000e+01)
+  %i.bv = fmul nnan <2 x float> %i.bu, splat (float f0x2F800000) ; 2 uses
   %i.bw = mul i64 %i.bk, 6364136223846793005
   %i.bx = add i64 %i.bw, %i.bf                    ; 2 uses
   %i.by = mul i64 %i.bx, 6364136223846793005
@@ -1242,15 +1233,16 @@ bb.b:                                             ; preds = %bb.a, %bb.bv
   %i.ci = call <2 x i32> @llvm.fshr.v2i32(<2 x i32> %i.cf, <2 x i32> %i.cf, <2 x i32> %i.ch)
   %i.cj = uitofp <2 x i32> %i.ci to <2 x float>
   %i.ck = fmul nnan <2 x float> %i.cj, splat (float f0x2F800000) ; 2 uses
-  %57 = fcmp olt <2 x float> %i.ck, splat (float f0x3F7FFFFF)
-  %58 = select <2 x i1> %57, <2 x float> %i.ck, <2 x float> splat (float f0x3F7FFFFF)
-  %59 = fmul nnan <2 x float> %58, splat (float 2.000000e+01)
-  %60 = fadd <2 x float> %59, splat (float -1.000000e+01)
-  store <2 x float> %56, ptr %19, align 8
-  store <2 x float> %60, ptr %52, align 8
+  %52 = shufflevector <2 x float> %i.bv, <2 x float> %i.ck, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %53 = fcmp olt <4 x float> %52, splat (float f0x3F7FFFFF)
+  %54 = shufflevector <2 x float> %i.bv, <2 x float> %i.ck, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %55 = fmul nnan <4 x float> %54, splat (float 2.000000e+01)
+  %56 = fadd <4 x float> %55, splat (float -1.000000e+01)
+  %57 = select <4 x i1> %53, <4 x float> %56, <4 x float> splat (float f0x411FFFFE)
+  store <4 x float> %57, ptr %19, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #25
   call void @_ZN4pbrt7InverseILi2EEEN4pstd8optionalINS_12SquareMatrixIXT_EEEEERKS4_(ptr dead_on_unwind nonnull writable sret(%"class.pstd::optional") align 4 %20, ptr noundef nonnull align 4 dereferenceable(16) %19)
-  %i.cl = load i8, ptr %i.i, align 8, !tbaa !46, !range !19, !noundef !20
+  %i.cl = load i8, ptr %i.j, align 8, !tbaa !46, !range !19, !noundef !20
   %i.cm = trunc nuw i8 %i.cl to i1
   br i1 %i.cm, label %bb.d, label %bb.c
 
@@ -1262,24 +1254,24 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #25
   %i.co = load <2 x float>, ptr %20, align 8, !tbaa !37 ; 2 uses
-  %i.cp = load <2 x float>, ptr %gep.1.i.a, align 8, !tbaa !37 ; 2 uses
-  %i.cq = load <1 x float>, ptr %19, align 8
-  %i.cr = load float, ptr %i.j, align 4, !tbaa !37
+  %i.cp = load <2 x float>, ptr %i.k, align 8, !tbaa !37 ; 2 uses
+  %i.cq = load <1 x float>, ptr %19, align 16
+  %i.cr = load float, ptr %gep.1.i.a, align 4, !tbaa !37
   %i.cs = shufflevector <1 x float> %i.cq, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ct = call <2 x float> @llvm.fma.v2f32(<2 x float> %i.cs, <2 x float> %i.co, <2 x float> zeroinitializer)
   %i.cu = insertelement <2 x float> poison, float %i.cr, i64 0
   %i.cv = shufflevector <2 x float> %i.cu, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cw = call <2 x float> @llvm.fma.v2f32(<2 x float> %i.cv, <2 x float> %i.cp, <2 x float> %i.ct)
-  %i.cx = load float, ptr %52, align 8, !tbaa !37
-  %i.cy = load float, ptr %i.k, align 4, !tbaa !37
+  %i.cx = load float, ptr %i.i, align 8, !tbaa !37
+  %i.cy = load float, ptr %i.l, align 4, !tbaa !37
   %i.cz = insertelement <2 x float> poison, float %i.cx, i64 0
   %i.da = shufflevector <2 x float> %i.cz, <2 x float> poison, <2 x i32> zeroinitializer
   %i.db = call <2 x float> @llvm.fma.v2f32(<2 x float> %i.da, <2 x float> %i.co, <2 x float> zeroinitializer)
   %i.dc = insertelement <2 x float> poison, float %i.cy, i64 0
   %i.dd = shufflevector <2 x float> %i.dc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.de = call <2 x float> @llvm.fma.v2f32(<2 x float> %i.dd, <2 x float> %i.cp, <2 x float> %i.db)
-  store <2 x float> %i.cw, ptr %21, align 8
-  store <2 x float> %i.de, ptr %i.l, align 8
+  %58 = shufflevector <2 x float> %i.cw, <2 x float> %i.de, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %58, ptr %21, align 16
   br label %.preheader561
 
 .preheader561:                                    ; preds = %bb.d, %bb.f
@@ -1373,7 +1365,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
           to label %_ZN7testing7MessagelsIA7_cEERS0_RKT_.exit unwind label %.loopexit.split-lp568.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN7testing7MessagelsIA7_cEERS0_RKT_.exit:        ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i
-  %i.ej = load i8, ptr %i.i, align 8, !tbaa !46, !range !19, !noundef !20
+  %i.ej = load i8, ptr %i.j, align 8, !tbaa !46, !range !19, !noundef !20
   %i.ek = trunc nuw i8 %i.ej to i1
   br i1 %i.ek, label %_ZN4pstd8optionalIN4pbrt12SquareMatrixILi2EEEEdeEv.exit146, label %bb.l
 
@@ -1776,7 +1768,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
           to label %_ZN7testing7MessagelsIA7_cEERS0_RKT_.exit196 unwind label %.loopexit.split-lp563.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZN7testing7MessagelsIA7_cEERS0_RKT_.exit196:     ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i190
-  %i.in = load i8, ptr %i.i, align 8, !tbaa !46, !range !19, !noundef !20
+  %i.in = load i8, ptr %i.j, align 8, !tbaa !46, !range !19, !noundef !20
   %i.io = trunc nuw i8 %i.in to i1
   br i1 %i.io, label %_ZN4pstd8optionalIN4pbrt12SquareMatrixILi2EEEEdeEv.exit198, label %bb.at
 

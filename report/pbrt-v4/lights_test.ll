@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN23LightBounds_Basics_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.pbrt::LightBounds", align 8 ; 15 uses
+  %1 = alloca %"class.pbrt::LightBounds", align 8 ; 12 uses
   %2 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %i.a = alloca float, align 4                    ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
@@ -223,16 +223,10 @@ bb.a:
   %10 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
   store <2 x float> zeroinitializer, ptr %1, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store float 0.000000e+00, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store <2 x float> splat (float 1.000000e-01), ptr %.sroa.5.0..sroa_idx, align 4
-  %.sroa.6205.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20
-  store <2 x float> <float f0x3C23D70A, float 1.000000e+00>, ptr %.sroa.6205.0..sroa_idx, align 4
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  store <2 x float> zeroinitializer, ptr %i.g, align 4
-  %.sroa.2.0..sroa_idx.i77 = getelementptr inbounds nuw i8, ptr %1, i64 36
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.2.0..sroa_idx.i77, align 4
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store float 0.000000e+00, ptr %i.g, align 8
+  %.sroa.2.0..sroa_idx.i77 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  store <8 x float> <float 1.000000e-01, float 1.000000e-01, float f0x3C23D70A, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.2.0..sroa_idx.i77, align 4
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 44
   store float f0xB33BBD2E, ptr %i.h, align 4, !tbaa !168
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 48

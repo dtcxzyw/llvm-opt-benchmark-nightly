@@ -205,9 +205,8 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.cz = extractvalue { <2 x float>, <2 x float> } %i.cy, 0
   %i.da = extractvalue { <2 x float>, <2 x float> } %i.cy, 1
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 36
-  store <2 x float> %i.cz, ptr %i.db, align 4
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 44
-  store <2 x float> %i.da, ptr %.sroa.5.0..sroa_idx, align 4
+  %11 = shufflevector <2 x float> %i.cz, <2 x float> %i.da, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %i.db, align 4
   %i.dc = invoke noundef float @_ZN6Assimp11XFileParser9ReadFloatEv(ptr noundef nonnull align 8 dereferenceable(56) %0)
           to label %bb.r unwind label %bb.y
 
@@ -610,10 +609,9 @@ bb.m:                                             ; preds = %bb.k
   %i.az = extractvalue { <2 x float>, <2 x float> } %i.ay, 0
   %i.ba = extractvalue { <2 x float>, <2 x float> } %i.ay, 1
   %i.bb = load ptr, ptr %i.g, align 8
-  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.bb, i64 %i.ar ; 2 uses
-  store <2 x float> %i.az, ptr %i.bc, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
-  store <2 x float> %i.ba, ptr %.sroa.4.0..sroa_idx, align 4
+  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.bb, i64 %i.ar
+  %4 = shufflevector <2 x float> %i.az, <2 x float> %i.ba, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.bc, align 4
   %i.bd = load i8, ptr %i.ac, align 8, !range !11, !noundef !12
   %i.be = trunc nuw i8 %i.bd to i1
   br i1 %i.be, label %bb.v, label %.preheader.i

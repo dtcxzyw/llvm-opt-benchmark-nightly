@@ -204,7 +204,7 @@ _ZN3ozz9animation12_GLOBAL__N_19KeysRatioERKNS_4spanIKfEERKNS2_IKhEERKNS2_IKjEE.
   %i.sn = getelementptr inbounds nuw [160 x i8], ptr %i.sm, i64 %.06225.i65
   store <4 x float> %i.sl, ptr %i.sn, align 16, !tbaa !56
   %i.so = load ptr, ptr %i.ol, align 8, !tbaa !63
-  %i.sp = getelementptr inbounds nuw [160 x i8], ptr %i.so, i64 %.06225.i65 ; 4 uses
+  %i.sp = getelementptr inbounds nuw [160 x i8], ptr %i.so, i64 %.06225.i65 ; 2 uses
   %i.sq = getelementptr inbounds nuw i8, ptr %i.sp, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.sr = load i16, ptr %i.rb, align 2, !tbaa !60 ; 2 uses
@@ -446,16 +446,14 @@ _ZN3ozz9animation12_GLOBAL__N_19KeysRatioERKNS_4spanIKfEERKNS2_IKhEERKNS2_IKjEE.
   %i.aaa = or <4 x i32> %i.zy, %i.zz
   store <4 x i32> %i.aaa, ptr %i.yw, align 16, !tbaa !56
   %i.aab = load <4 x float>, ptr %i.b, align 16, !tbaa !56
-  store <4 x float> %i.aab, ptr %i.sq, align 16, !tbaa !56
   %i.aac = load <4 x float>, ptr %i.pa, align 16, !tbaa !56
-  %4 = getelementptr inbounds nuw i8, ptr %i.sp, i64 48
-  store <4 x float> %i.aac, ptr %4, align 16, !tbaa !56
+  %4 = shufflevector <4 x float> %i.aab, <4 x float> %i.aac, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %4, ptr %i.sq, align 16, !tbaa !56
   %i.aad = load <4 x float>, ptr %i.pb, align 16, !tbaa !56
   %i.aae = getelementptr inbounds nuw i8, ptr %i.sp, i64 64
-  store <4 x float> %i.aad, ptr %i.aae, align 16, !tbaa !56
   %i.aaf = load <4 x float>, ptr %i.pc, align 16, !tbaa !56
-  %5 = getelementptr inbounds nuw i8, ptr %i.sp, i64 80
-  store <4 x float> %i.aaf, ptr %5, align 16, !tbaa !56
+  %5 = shufflevector <4 x float> %i.aad, <4 x float> %i.aaf, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %5, ptr %i.aae, align 16, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   %i.aag = load i32, ptr %i.py, align 4, !tbaa !58
@@ -524,7 +522,7 @@ _ZN3ozz9animation12_GLOBAL__N_19KeysRatioERKNS_4spanIKfEERKNS2_IKhEERKNS2_IKjEE.
   %i.aby = getelementptr inbounds nuw i8, ptr %i.abx, i64 16
   store <4 x float> %i.abv, ptr %i.aby, align 16, !tbaa !56
   %i.abz = load ptr, ptr %i.ol, align 8, !tbaa !63
-  %i.aca = getelementptr inbounds nuw [160 x i8], ptr %i.abz, i64 %.06225.i65 ; 4 uses
+  %i.aca = getelementptr inbounds nuw [160 x i8], ptr %i.abz, i64 %.06225.i65 ; 2 uses
   %i.acb = getelementptr inbounds nuw i8, ptr %i.aca, i64 96
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   %i.acc = load i16, ptr %i.aai, align 2, !tbaa !60 ; 2 uses
@@ -766,16 +764,14 @@ _ZN3ozz9animation12_GLOBAL__N_19KeysRatioERKNS_4spanIKfEERKNS2_IKhEERKNS2_IKjEE.
   %i.ajl = or <4 x i32> %i.ajj, %i.ajk
   store <4 x i32> %i.ajl, ptr %i.aih, align 16, !tbaa !56
   %i.ajm = load <4 x float>, ptr %i.d, align 16, !tbaa !56
-  store <4 x float> %i.ajm, ptr %i.acb, align 16, !tbaa !56
   %i.ajn = load <4 x float>, ptr %i.po, align 16, !tbaa !56
-  %6 = getelementptr inbounds nuw i8, ptr %i.aca, i64 112
-  store <4 x float> %i.ajn, ptr %6, align 16, !tbaa !56
+  %6 = shufflevector <4 x float> %i.ajm, <4 x float> %i.ajn, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %6, ptr %i.acb, align 16, !tbaa !56
   %i.ajo = load <4 x float>, ptr %i.pp, align 16, !tbaa !56
   %i.ajp = getelementptr inbounds nuw i8, ptr %i.aca, i64 128
-  store <4 x float> %i.ajo, ptr %i.ajp, align 16, !tbaa !56
   %i.ajq = load <4 x float>, ptr %i.pq, align 16, !tbaa !56
-  %7 = getelementptr inbounds nuw i8, ptr %i.aca, i64 144
-  store <4 x float> %i.ajq, ptr %7, align 16, !tbaa !56
+  %7 = shufflevector <4 x float> %i.ajo, <4 x float> %i.ajq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %7, ptr %i.ajp, align 16, !tbaa !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #15
   br label %bb.s
@@ -1178,7 +1174,7 @@ _ZN3ozz9animation12_GLOBAL__N_110DecompressINS0_8internal9Float3KeyENS3_15Interp
   %i.axa = load <4 x float>, ptr %i.awz, align 16, !tbaa !56
   %i.axb = fsub <4 x float> %i.axa, %i.awx
   %i.axc = tail call noundef <4 x float> @llvm.x86.sse.rcp.ps(<4 x float> %i.axb)
-  %i.axd = fmul <4 x float> %i.awy, %i.axc        ; 3 uses
+  %i.axd = fmul <4 x float> %i.awy, %i.axc        ; 2 uses
   %i.axe = getelementptr inbounds nuw [160 x i8], ptr %i.awr, i64 %.011.i ; 10 uses
   %i.axf = load <4 x float>, ptr %i.axe, align 16, !tbaa !56 ; 2 uses
   %i.axg = fsub <4 x float> %i.awv, %i.axf
@@ -1194,19 +1190,17 @@ _ZN3ozz9animation12_GLOBAL__N_110DecompressINS0_8internal9Float3KeyENS3_15Interp
   %i.axq = load <4 x float>, ptr %i.axp, align 16, !tbaa !56
   %i.axr = fsub <4 x float> %i.axq, %i.axn
   %i.axs = tail call noundef <4 x float> @llvm.x86.sse.rcp.ps(<4 x float> %i.axr)
-  %i.axt = fmul <4 x float> %i.axo, %i.axs        ; 3 uses
+  %i.axt = fmul <4 x float> %i.axo, %i.axs        ; 2 uses
   %i.axu = getelementptr inbounds nuw i8, ptr %i.aww, i64 32
   %i.axv = getelementptr inbounds nuw i8, ptr %i.aww, i64 80
   %i.axw = load <4 x float>, ptr %i.axv, align 16, !tbaa !56, !noalias !108
   %i.axx = load <4 x float>, ptr %i.axu, align 16, !tbaa !56, !noalias !108 ; 2 uses
   %i.axy = fsub <4 x float> %i.axw, %i.axx
-  %8 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.axy, <4 x float> %i.axd, <4 x float> %i.axx)
   %i.axz = getelementptr inbounds nuw i8, ptr %i.aww, i64 96
   %i.aya = load <4 x float>, ptr %i.axz, align 16, !tbaa !56, !noalias !108
   %i.ayb = getelementptr inbounds nuw i8, ptr %i.aww, i64 48
   %i.ayc = load <4 x float>, ptr %i.ayb, align 16, !tbaa !56, !noalias !108 ; 2 uses
   %i.ayd = fsub <4 x float> %i.aya, %i.ayc
-  %9 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ayd, <4 x float> %i.axd, <4 x float> %i.ayc)
   %i.aye = getelementptr inbounds nuw i8, ptr %i.aww, i64 112
   %i.ayf = load <4 x float>, ptr %i.aye, align 16, !tbaa !56, !noalias !108
   %i.ayg = getelementptr inbounds nuw i8, ptr %i.aww, i64 64
@@ -1214,10 +1208,12 @@ _ZN3ozz9animation12_GLOBAL__N_110DecompressINS0_8internal9Float3KeyENS3_15Interp
   %i.ayi = fsub <4 x float> %i.ayf, %i.ayh
   %i.ayj = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ayi, <4 x float> %i.axd, <4 x float> %i.ayh)
   %i.ayk = load ptr, ptr %i.awl, align 8, !tbaa !109
-  %i.ayl = getelementptr inbounds nuw [160 x i8], ptr %i.ayk, i64 %.011.i ; 3 uses
-  store <4 x float> %8, ptr %i.ayl, align 16, !tbaa !56
-  %.sroa.49.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ayl, i64 16
-  store <4 x float> %9, ptr %.sroa.49.0..sroa_idx.i, align 16, !tbaa !56
+  %i.ayl = getelementptr inbounds nuw [160 x i8], ptr %i.ayk, i64 %.011.i ; 2 uses
+  %8 = shufflevector <4 x float> %i.axy, <4 x float> %i.ayd, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %9 = shufflevector <4 x float> %i.axd, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3>
+  %10 = shufflevector <4 x float> %i.axx, <4 x float> %i.ayc, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %11 = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %8, <8 x float> %9, <8 x float> %10)
+  store <8 x float> %11, ptr %i.ayl, align 16, !tbaa !56
   %.sroa.510.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ayl, i64 32
   store <4 x float> %i.ayj, ptr %.sroa.510.0..sroa_idx.i, align 16, !tbaa !56
   %i.aym = getelementptr inbounds nuw i8, ptr %i.axe, i64 32
@@ -1259,27 +1255,23 @@ _ZN3ozz9animation12_GLOBAL__N_110DecompressINS0_8internal9Float3KeyENS3_15Interp
   %i.azw = fmul <4 x float> %i.azd, %i.azt
   %i.azx = fmul <4 x float> %i.azj, %i.azt
   %i.azy = load ptr, ptr %i.awl, align 8, !tbaa !109
-  %i.azz = getelementptr inbounds nuw [160 x i8], ptr %i.azy, i64 %.011.i ; 4 uses
+  %i.azz = getelementptr inbounds nuw [160 x i8], ptr %i.azy, i64 %.011.i ; 2 uses
   %i.baa = getelementptr inbounds nuw i8, ptr %i.azz, i64 48
-  store <4 x float> %i.azu, ptr %i.baa, align 16, !tbaa !56
-  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.azz, i64 64
-  store <4 x float> %i.azv, ptr %.sroa.46.0..sroa_idx.i, align 16, !tbaa !56
+  %12 = shufflevector <4 x float> %i.azu, <4 x float> %i.azv, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %12, ptr %i.baa, align 16, !tbaa !56
   %.sroa.57.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.azz, i64 80
-  store <4 x float> %i.azw, ptr %.sroa.57.0..sroa_idx.i, align 16, !tbaa !56
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.azz, i64 96
-  store <4 x float> %i.azx, ptr %.sroa.6.0..sroa_idx.i, align 16, !tbaa !56
+  %13 = shufflevector <4 x float> %i.azw, <4 x float> %i.azx, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %13, ptr %.sroa.57.0..sroa_idx.i, align 16, !tbaa !56
   %i.bab = getelementptr inbounds nuw i8, ptr %i.axm, i64 32
   %i.bac = getelementptr inbounds nuw i8, ptr %i.axm, i64 80
   %i.bad = load <4 x float>, ptr %i.bac, align 16, !tbaa !56, !noalias !111
   %i.bae = load <4 x float>, ptr %i.bab, align 16, !tbaa !56, !noalias !111 ; 2 uses
   %i.baf = fsub <4 x float> %i.bad, %i.bae
-  %10 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.baf, <4 x float> %i.axt, <4 x float> %i.bae)
   %i.bag = getelementptr inbounds nuw i8, ptr %i.axm, i64 96
   %i.bah = load <4 x float>, ptr %i.bag, align 16, !tbaa !56, !noalias !111
   %i.bai = getelementptr inbounds nuw i8, ptr %i.axm, i64 48
   %i.baj = load <4 x float>, ptr %i.bai, align 16, !tbaa !56, !noalias !111 ; 2 uses
   %i.bak = fsub <4 x float> %i.bah, %i.baj
-  %11 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bak, <4 x float> %i.axt, <4 x float> %i.baj)
   %i.bal = getelementptr inbounds nuw i8, ptr %i.axm, i64 112
   %i.bam = load <4 x float>, ptr %i.bal, align 16, !tbaa !56, !noalias !111
   %i.ban = getelementptr inbounds nuw i8, ptr %i.axm, i64 64
@@ -1287,11 +1279,13 @@ _ZN3ozz9animation12_GLOBAL__N_110DecompressINS0_8internal9Float3KeyENS3_15Interp
   %i.bap = fsub <4 x float> %i.bam, %i.bao
   %i.baq = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bap, <4 x float> %i.axt, <4 x float> %i.bao)
   %i.bar = load ptr, ptr %i.awl, align 8, !tbaa !109
-  %i.bas = getelementptr inbounds nuw [160 x i8], ptr %i.bar, i64 %.011.i ; 3 uses
+  %i.bas = getelementptr inbounds nuw [160 x i8], ptr %i.bar, i64 %.011.i ; 2 uses
   %i.bat = getelementptr inbounds nuw i8, ptr %i.bas, i64 112
-  store <4 x float> %10, ptr %i.bat, align 16, !tbaa !56
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bas, i64 128
-  store <4 x float> %11, ptr %.sroa.4.0..sroa_idx.i, align 16, !tbaa !56
+  %14 = shufflevector <4 x float> %i.baf, <4 x float> %i.bak, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %15 = shufflevector <4 x float> %i.axt, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3>
+  %16 = shufflevector <4 x float> %i.bae, <4 x float> %i.baj, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %17 = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %14, <8 x float> %15, <8 x float> %16)
+  store <8 x float> %17, ptr %i.bat, align 16, !tbaa !56
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bas, i64 144
   store <4 x float> %i.baq, ptr %.sroa.5.0..sroa_idx.i, align 16, !tbaa !56
   %i.bau = add nuw i64 %.011.i, 1                 ; 2 uses
@@ -1693,6 +1687,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

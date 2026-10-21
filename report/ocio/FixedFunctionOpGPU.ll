@@ -202,7 +202,7 @@ bb.a:
   %6 = alloca %"struct.OpenColorIO_v2_5::ACES2::ToneScaleParams", align 4 ; 7 uses
   %7 = alloca %"struct.OpenColorIO_v2_5::ACES2::JMhParams", align 4 ; 6 uses
   %8 = alloca %"struct.OpenColorIO_v2_5::ACES2::SharedCompressionParameters", align 4 ; 8 uses
-  %9 = alloca %"struct.OpenColorIO_v2_5::ACES2::ChromaCompressParams", align 8 ; 6 uses
+  %9 = alloca %"struct.OpenColorIO_v2_5::ACES2::ChromaCompressParams", align 16 ; 5 uses
   %10 = alloca %"struct.OpenColorIO_v2_5::ACES2::GamutCompressParams", align 4 ; 5 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -273,10 +273,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
   %i.x = call { <2 x float>, <2 x float> } @_ZN16OpenColorIO_v2_55ACES225init_ChromaCompressParamsEfRKNS0_15ToneScaleParamsE(float noundef %i.d, ptr noundef nonnull align 4 dereferenceable(44) %6) ; 2 uses
   %i.y = extractvalue { <2 x float>, <2 x float> } %i.x, 0
-  store <2 x float> %i.y, ptr %9, align 8
-  %40 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %41 = extractvalue { <2 x float>, <2 x float> } %i.x, 1
-  store <2 x float> %41, ptr %40, align 8
+  %40 = extractvalue { <2 x float>, <2 x float> } %i.x, 1
+  %41 = shufflevector <2 x float> %i.y, <2 x float> %40, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %41, ptr %9, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #18
   call void @_ZN16OpenColorIO_v2_55ACES224init_GamutCompressParamsEfRKNS0_9JMhParamsES3_RKNS0_15ToneScaleParamsERKNS0_27SharedCompressionParametersES3_(ptr dead_on_unwind nonnull writable sret(%"struct.OpenColorIO_v2_5::ACES2::GamutCompressParams") align 4 %10, float noundef %i.d, ptr noundef nonnull align 4 dereferenceable(164) %4, ptr noundef nonnull align 4 dereferenceable(164) %5, ptr noundef nonnull align 4 dereferenceable(44) %6, ptr noundef nonnull align 4 dereferenceable(1460) %8, ptr noundef nonnull align 4 dereferenceable(164) %7)
   %i.z = load ptr, ptr %0, align 8, !tbaa !14
@@ -679,7 +678,7 @@ bb.a:
   %6 = alloca %"struct.OpenColorIO_v2_5::ACES2::ToneScaleParams", align 4 ; 7 uses
   %7 = alloca %"struct.OpenColorIO_v2_5::ACES2::JMhParams", align 4 ; 6 uses
   %8 = alloca %"struct.OpenColorIO_v2_5::ACES2::SharedCompressionParameters", align 4 ; 8 uses
-  %9 = alloca %"struct.OpenColorIO_v2_5::ACES2::ChromaCompressParams", align 8 ; 6 uses
+  %9 = alloca %"struct.OpenColorIO_v2_5::ACES2::ChromaCompressParams", align 16 ; 5 uses
   %10 = alloca %"struct.OpenColorIO_v2_5::ACES2::GamutCompressParams", align 4 ; 5 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -748,10 +747,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
   %i.x = call { <2 x float>, <2 x float> } @_ZN16OpenColorIO_v2_55ACES225init_ChromaCompressParamsEfRKNS0_15ToneScaleParamsE(float noundef %i.d, ptr noundef nonnull align 4 dereferenceable(44) %6) ; 2 uses
   %i.y = extractvalue { <2 x float>, <2 x float> } %i.x, 0
-  store <2 x float> %i.y, ptr %9, align 8
-  %38 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %39 = extractvalue { <2 x float>, <2 x float> } %i.x, 1
-  store <2 x float> %39, ptr %38, align 8
+  %38 = extractvalue { <2 x float>, <2 x float> } %i.x, 1
+  %39 = shufflevector <2 x float> %i.y, <2 x float> %38, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %39, ptr %9, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #18
   call void @_ZN16OpenColorIO_v2_55ACES224init_GamutCompressParamsEfRKNS0_9JMhParamsES3_RKNS0_15ToneScaleParamsERKNS0_27SharedCompressionParametersES3_(ptr dead_on_unwind nonnull writable sret(%"struct.OpenColorIO_v2_5::ACES2::GamutCompressParams") align 4 %10, float noundef %i.d, ptr noundef nonnull align 4 dereferenceable(164) %4, ptr noundef nonnull align 4 dereferenceable(164) %5, ptr noundef nonnull align 4 dereferenceable(44) %6, ptr noundef nonnull align 4 dereferenceable(1460) %8, ptr noundef nonnull align 4 dereferenceable(164) %7)
   %i.z = load ptr, ptr %0, align 8, !tbaa !14
@@ -1154,7 +1152,7 @@ bb.a:
   %4 = alloca %"struct.OpenColorIO_v2_5::ACES2::ToneScaleParams", align 4 ; 6 uses
   %5 = alloca %"struct.OpenColorIO_v2_5::ACES2::JMhParams", align 4 ; 5 uses
   %6 = alloca %"struct.OpenColorIO_v2_5::ACES2::SharedCompressionParameters", align 4 ; 6 uses
-  %7 = alloca %"struct.OpenColorIO_v2_5::ACES2::ChromaCompressParams", align 8 ; 6 uses
+  %7 = alloca %"struct.OpenColorIO_v2_5::ACES2::ChromaCompressParams", align 16 ; 5 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -1178,10 +1176,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
   %i.e = call { <2 x float>, <2 x float> } @_ZN16OpenColorIO_v2_55ACES225init_ChromaCompressParamsEfRKNS0_15ToneScaleParamsE(float noundef %i.d, ptr noundef nonnull align 4 dereferenceable(44) %4) ; 2 uses
   %i.f = extractvalue { <2 x float>, <2 x float> } %i.e, 0
-  store <2 x float> %i.f, ptr %7, align 8
-  %17 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %18 = extractvalue { <2 x float>, <2 x float> } %i.e, 1
-  store <2 x float> %18, ptr %17, align 8
+  %17 = extractvalue { <2 x float>, <2 x float> } %i.e, 1
+  %18 = shufflevector <2 x float> %i.f, <2 x float> %17, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %18, ptr %7, align 16
   %i.g = load ptr, ptr %0, align 8, !tbaa !14
   %i.h = call noundef i32 @_ZN16OpenColorIO_v2_516GpuShaderCreator20getNextResourceIndexEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #18 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
@@ -1584,7 +1581,7 @@ bb.a:
   %4 = alloca %"struct.OpenColorIO_v2_5::ACES2::ToneScaleParams", align 4 ; 6 uses
   %5 = alloca %"struct.OpenColorIO_v2_5::ACES2::JMhParams", align 4 ; 5 uses
   %6 = alloca %"struct.OpenColorIO_v2_5::ACES2::SharedCompressionParameters", align 4 ; 6 uses
-  %7 = alloca %"struct.OpenColorIO_v2_5::ACES2::ChromaCompressParams", align 8 ; 6 uses
+  %7 = alloca %"struct.OpenColorIO_v2_5::ACES2::ChromaCompressParams", align 16 ; 5 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -1608,10 +1605,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
   %i.e = call { <2 x float>, <2 x float> } @_ZN16OpenColorIO_v2_55ACES225init_ChromaCompressParamsEfRKNS0_15ToneScaleParamsE(float noundef %i.d, ptr noundef nonnull align 4 dereferenceable(44) %4) ; 2 uses
   %i.f = extractvalue { <2 x float>, <2 x float> } %i.e, 0
-  store <2 x float> %i.f, ptr %7, align 8
-  %17 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %18 = extractvalue { <2 x float>, <2 x float> } %i.e, 1
-  store <2 x float> %18, ptr %17, align 8
+  %17 = extractvalue { <2 x float>, <2 x float> } %i.e, 1
+  %18 = shufflevector <2 x float> %i.f, <2 x float> %17, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %18, ptr %7, align 16
   %i.g = load ptr, ptr %0, align 8, !tbaa !14
   %i.h = call noundef i32 @_ZN16OpenColorIO_v2_516GpuShaderCreator20getNextResourceIndexEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #18 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18

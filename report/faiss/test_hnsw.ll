@@ -205,10 +205,8 @@ vector.ph:                                        ; preds = %.lr.ph46.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %index ; 2 uses
-  %21 = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %i.bm, align 4, !tbaa !41
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %21, align 4, !tbaa !41
+  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %index
+  store <4 x float> splat (float f0x7F7FFFFF), ptr %i.bm, align 4, !tbaa !41
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %index ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.bn, align 8, !tbaa !35
@@ -273,10 +271,8 @@ vector.ph187:                                     ; preds = %.lr.ph46.i.i61.preh
 
 vector.body189:                                   ; preds = %vector.body189, %vector.ph187
   %index190 = phi i64 [ 0, %vector.ph187 ], [ %index.next191, %vector.body189 ] ; 3 uses
-  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %index190 ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %i.cg, align 4, !tbaa !41
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %22, align 4, !tbaa !41
+  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %index190
+  store <4 x float> splat (float f0x7F7FFFFF), ptr %i.cg, align 4, !tbaa !41
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %index190 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.ch, align 8, !tbaa !35
@@ -679,10 +675,8 @@ vector.ph:                                        ; preds = %.lr.ph44.i.preheade
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bp = add nuw i64 %.0.lcssa.i, %index         ; 2 uses
-  %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.bp ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %i.bq, align 4, !tbaa !41
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %1, align 4, !tbaa !41
+  %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.bp
+  store <4 x float> splat (float f0x7F7FFFFF), ptr %i.bq, align 4, !tbaa !41
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.bp ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.br, align 8, !tbaa !35
@@ -772,10 +766,8 @@ vector.ph:                                        ; preds = %.lr.ph46.i.preheade
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %i.p, align 4, !tbaa !41
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %3, align 4, !tbaa !41
+  %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %index
+  store <4 x float> splat (float f0x7F7FFFFF), ptr %i.p, align 4, !tbaa !41
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %index ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.q, align 8, !tbaa !35
@@ -1178,10 +1170,8 @@ vector.ph:                                        ; preds = %.lr.ph44.i.preheade
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ck = add nuw i64 %.0.lcssa.i, %index         ; 2 uses
-  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ck ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %i.cl, align 4, !tbaa !41
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %3, align 4, !tbaa !41
+  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ck
+  store <4 x float> splat (float f0x7F7FFFFF), ptr %i.cl, align 4, !tbaa !41
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.ck ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.cm, align 8, !tbaa !35

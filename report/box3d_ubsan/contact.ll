@@ -204,8 +204,8 @@ define hidden noundef zeroext i1 @b3UpdateContact(ptr noundef %0, i32 noundef %1
 bb.a:
   %13 = alloca %struct.b3ChildShape, align 8      ; 20 uses
   %14 = alloca %struct.b3Shape, align 8           ; 17 uses
-  %15 = alloca %struct.b3Transform, align 8       ; 7 uses
-  %16 = alloca %struct.b3Transform, align 8       ; 7 uses
+  %15 = alloca %struct.b3Transform, align 8       ; 6 uses
+  %16 = alloca %struct.b3Transform, align 8       ; 6 uses
   %i.a = icmp ne ptr %3, null, !nosanitize !9
   %i.b = ptrtoint ptr %3 to i64, !nosanitize !9   ; 2 uses
   %i.c = and i64 %i.b, 7, !nosanitize !9
@@ -378,9 +378,8 @@ bb.p:                                             ; preds = %bb.j
   %i.ce = fadd <2 x float> %i.br, %i.cd
   %i.cf = fsub <2 x float> %i.br, %i.cd
   %i.cg = shufflevector <2 x float> %i.ce, <2 x float> %i.cf, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.bq, ptr %i.bd, align 4, !tbaa !131, !alias.scope !171
-  %.sroa.4.0..sroa_idx.i183 = getelementptr inbounds nuw i8, ptr %15, i64 20
-  store <2 x float> %i.cg, ptr %.sroa.4.0..sroa_idx.i183, align 4, !tbaa !131, !alias.scope !171
+  %17 = shufflevector <2 x float> %i.bq, <2 x float> %i.cg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %17, ptr %i.bd, align 4, !tbaa !131, !alias.scope !171
   %i.ch = load <2 x float>, ptr %6, align 8
   %foldExtExtBinop = fmul <2 x float> %.sroa.0284.0.copyload, %.sroa.8282.0.copyload
   %i.ci = extractelement <2 x float> %foldExtExtBinop, i64 0
@@ -468,9 +467,8 @@ bb.p:                                             ; preds = %bb.j
   %i.en = fadd <2 x float> %i.ea, %i.em
   %i.eo = fsub <2 x float> %i.ea, %i.em
   %i.ep = shufflevector <2 x float> %i.en, <2 x float> %i.eo, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.dz, ptr %i.dm, align 4, !tbaa !131, !alias.scope !175
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %16, i64 20
-  store <2 x float> %i.ep, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !131, !alias.scope !175
+  %18 = shufflevector <2 x float> %i.dz, <2 x float> %i.ep, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %18, ptr %i.dm, align 4, !tbaa !131, !alias.scope !175
   %i.eq = load <2 x float>, ptr %6, align 8
   %foldExtExtBinop766 = fmul <2 x float> %.sroa.0268.0.copyload, %.sroa.8.0.copyload
   %i.er = extractelement <2 x float> %foldExtExtBinop766, i64 0
@@ -873,7 +871,7 @@ define internal fastcc noundef zeroext i1 @b3UpdateConvexContact(ptr noundef %0,
 bb.a:
   %9 = alloca %struct.b3BlockAllocator, align 8   ; 4 uses
   %10 = alloca %struct.b3LocalManifold, align 8   ; 14 uses
-  %11 = alloca %struct.b3Transform, align 8       ; 13 uses
+  %11 = alloca %struct.b3Transform, align 8       ; 12 uses
   %12 = alloca [4 x %struct.b3ManifoldPoint], align 16 ; 22 uses
   %13 = alloca %struct.b3Arena, align 8           ; 9 uses
   %i.a = alloca [12 x i8], align 1                ; 20 uses
@@ -1061,9 +1059,8 @@ b3Bump.exit.i:                                    ; preds = %bb.s, %bb.l
   %i.ck = fadd <2 x float> %i.cg, %i.cj
   %i.cl = fadd <2 x float> %i.cf, %i.ck
   %.sroa.231.12.vec.insert.i.i = shufflevector <2 x float> %.sroa.231.8.vec.insert.i.i, <2 x float> %i.cl, <2 x i32> <i32 0, i32 2>
-  store <2 x float> %i.bw, ptr %i.bf, align 4, !tbaa !131, !alias.scope !195
-  %.sroa.47.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %11, i64 20
-  store <2 x float> %.sroa.231.12.vec.insert.i.i, ptr %.sroa.47.0..sroa_idx.i.i, align 4, !tbaa !131, !alias.scope !195
+  %14 = shufflevector <2 x float> %i.bw, <2 x float> %.sroa.231.12.vec.insert.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %i.bf, align 4, !tbaa !131, !alias.scope !195
   %i.cm = fsub float %.sroa.6191.0.copyload, %.sroa.6.0.copyload ; 3 uses
   %i.cn = fsub <2 x float> %.sroa.0189.0.copyload, %.sroa.0.0.copyload ; 4 uses
   %i.co = shufflevector <2 x float> %i.cn, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses

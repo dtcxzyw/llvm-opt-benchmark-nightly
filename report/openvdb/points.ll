@@ -205,10 +205,9 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit5.i: ; preds = 
 
 _ZN7openvdb5v13_06points19TypedAttributeArrayINS0_4math4QuatIfEENS1_9NullCodecEE8collapseERKS5_.exit: ; preds = %.critedge, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit.i
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !587 ; 2 uses
-  store <2 x float> %i.ag, ptr %i.bc, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
-  store <2 x float> %i.ah, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !160
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !587
+  %1 = shufflevector <2 x float> %i.ag, <2 x float> %i.ah, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %1, ptr %i.bc, align 4
   br label %_ZN7openvdb5v13_04math14isExactlyEqualINS1_4QuatIfEES4_EEbRKT_RKT0_.exit.thread
 
 _ZN7openvdb5v13_04math14isExactlyEqualINS1_4QuatIfEES4_EEbRKT_RKT0_.exit.thread: ; preds = %bb.d, %_ZN7openvdb5v13_06points19TypedAttributeArrayINS0_4math4QuatIfEENS1_9NullCodecEE8collapseERKS5_.exit, %bb.a

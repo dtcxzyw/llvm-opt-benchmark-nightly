@@ -202,12 +202,11 @@ bb.c:                                             ; preds = %bb.a, %_ZNSt6vector
           to label %bb.d unwind label %bb.f, !noalias !110
 
 bb.d:                                             ; preds = %bb.c
-  %i.bn = call noalias noundef nonnull dereferenceable(192) ptr @_Znwm(i64 noundef 192) #21, !noalias !110 ; 5 uses
+  %i.bn = call noalias noundef nonnull dereferenceable(192) ptr @_Znwm(i64 noundef 192) #21, !noalias !110 ; 4 uses
   %i.bo = call noundef ptr @_ZN4pstd3pmr19new_delete_resourceEv() #18, !noalias !110
   call void @llvm.lifetime.start.p0(ptr nonnull %26), !noalias !110
-  store <2 x float> %i.bj, ptr %i.bn, align 8, !noalias !110
-  %64 = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
-  store <2 x float> splat (float f0x3EAAAAAB), ptr %64, align 8, !tbaa !11, !noalias !110
+  %64 = shufflevector <2 x float> %i.bj, <2 x float> splat (float f0x3EAAAAAB), <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %64, ptr %i.bn, align 8, !noalias !110
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   %i.bq = ptrtoint ptr %i.bn to i64
   %i.br = or i64 %i.bq, 432345564227567616        ; 2 uses
@@ -610,13 +609,12 @@ bb.a:
           to label %bb.b unwind label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call noalias noundef nonnull dereferenceable(192) ptr @_Znwm(i64 noundef 192) #21 ; 5 uses
+  %i.d = tail call noalias noundef nonnull dereferenceable(192) ptr @_Znwm(i64 noundef 192) #21 ; 4 uses
   %.sroa.02.0.copyload = load <2 x float>, ptr %1, align 4
   %i.e = tail call noundef ptr @_ZN4pstd3pmr19new_delete_resourceEv() #18
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store <2 x float> %.sroa.02.0.copyload, ptr %i.d, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store <2 x float> splat (float f0x3EAAAAAB), ptr %4, align 8, !tbaa !11
+  %4 = shufflevector <2 x float> %.sroa.02.0.copyload, <2 x float> splat (float f0x3EAAAAAB), <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.d, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.g = ptrtoint ptr %i.d to i64
   %i.h = or i64 %i.g, 432345564227567616          ; 2 uses

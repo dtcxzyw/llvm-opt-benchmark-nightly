@@ -204,7 +204,7 @@ declare void @b2ParallelFor(ptr noundef, ptr noundef, i32 noundef, i32 noundef, 
 define internal void @b2SensorTask(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) #3 {
 bb.a:
   %4 = alloca %struct.b2DynamicArray_b2Visitor, align 8 ; 4 uses
-  %5 = alloca %struct.b2SensorQueryContext, align 8 ; 11 uses
+  %5 = alloca %struct.b2SensorQueryContext, align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 2208
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !65
   %i.c = sext i32 %2 to i64
@@ -217,11 +217,10 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 2176
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 2144
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 1920
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.k = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.k = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 112
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 184
   %i.o = sext i32 %0 to i64
@@ -337,11 +336,11 @@ bb.i:                                             ; preds = %bb.f
   %i.br = extractvalue { <2 x float>, <2 x float> } %i.bp, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   store ptr %3, ptr %5, align 8, !tbaa !106
-  store ptr %i.d, ptr %6, align 8, !tbaa !134
-  store ptr %i.q, ptr %i.j, align 8, !tbaa !107
-  store ptr %i.v, ptr %i.k, align 8, !tbaa !108
-  store <2 x float> %i.bq, ptr %i.l, align 8, !tbaa !109
-  store <2 x float> %i.br, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !109
+  store ptr %i.d, ptr %i.j, align 8, !tbaa !134
+  store ptr %i.q, ptr %i.k, align 8, !tbaa !107
+  store ptr %i.v, ptr %i.l, align 8, !tbaa !108
+  %6 = shufflevector <2 x float> %i.bq, <2 x float> %i.br, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !109
   %i.bs = getelementptr inbounds nuw i8, ptr %i.v, i64 64
   %.sroa.026.0.copyload = load <2 x float>, ptr %i.bs, align 8, !tbaa !109 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 72
@@ -712,7 +711,7 @@ declare i64 @b2DynamicTree_Query(ptr noundef, <2 x float>, <2 x float>, i64 noun
 ; Function Attrs: nounwind uwtable
 define internal noundef zeroext i1 @b2SensorQueryCallback(i32 %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2) #3 {
 bb.a:
-  %3 = alloca %struct.b2DistanceInput, align 4    ; 8 uses
+  %3 = alloca %struct.b2DistanceInput, align 4    ; 7 uses
   %4 = alloca %struct.b2ShapeProxy, align 4       ; 4 uses
   %5 = alloca %struct.b2SimplexCache, align 8     ; 4 uses
   %6 = alloca %struct.b2DistanceOutput, align 4   ; 4 uses
@@ -855,9 +854,8 @@ bb.h:                                             ; preds = %bb.g
   %i.bv = fadd <2 x float> %i.br, %i.bu
   %i.bw = fsub <2 x float> %i.br, %i.bu
   %i.bx = shufflevector <2 x float> %i.bv, <2 x float> %i.bw, <2 x i32> <i32 1, i32 2>
-  store <2 x float> %i.bx, ptr %i.bc, align 4, !tbaa !109
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 152
-  store <2 x float> %i.bo, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !109
+  %7 = shufflevector <2 x float> %i.bx, <2 x float> %i.bo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.bc, align 4, !tbaa !109
   %i.by = getelementptr inbounds nuw i8, ptr %3, i64 160
   store i8 1, ptr %i.by, align 4, !tbaa !147
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9

@@ -205,7 +205,7 @@ bb.a:
   %16 = alloca %struct.pot_derivatives_t, align 4 ; 9 uses
   %17 = alloca %struct.pot_derivatives_t, align 4 ; 8 uses
   %18 = alloca %"struct.std::pair", align 4       ; 6 uses
-  %19 = alloca %struct.pot_derivatives_t, align 8 ; 6 uses
+  %19 = alloca %struct.pot_derivatives_t, align 16 ; 5 uses
   %20 = alloca %"struct.std::pair", align 4       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
@@ -573,9 +573,8 @@ bb.ai:                                            ; preds = %.noexc124
 bb.aj:                                            ; preds = %.noexc, %bb.af, %bb.ac
   %.sroa.0.1.i = phi <2 x float> [ %.sroa.0.0.i, %bb.af ], [ %.sroa.0.4.vec.insert49.i, %.noexc ], [ zeroinitializer, %bb.ac ] ; 2 uses
   %.sroa.4.0.i = phi <2 x float> [ %.sroa.4.8.vec.insert.i, %bb.af ], [ %.sroa.4.8.vec.insert52.i, %.noexc ], [ zeroinitializer, %bb.ac ] ; 2 uses
-  store <2 x float> %.sroa.0.1.i, ptr %19, align 8
-  %21 = getelementptr inbounds nuw i8, ptr %19, i64 8
-  store <2 x float> %.sroa.4.0.i, ptr %21, align 8
+  %21 = shufflevector <2 x float> %.sroa.0.1.i, <2 x float> %.sroa.4.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %21, ptr %19, align 16
   %i.em = sitofp i32 %5 to double
   %i.en = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 2 uses
   %i.eo = load double, ptr %i.en, align 8, !tbaa !194
@@ -978,8 +977,8 @@ bb.l:                                             ; preds = %bb.a, %bb.k
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef float @_ZL13pressureErrorN3gmx8ArrayRefIK17VerletbufAtomtypeEERK14gmx_ffparams_tRK10t_inputrecfRKSt4pairI17pot_derivatives_tSB_EbifRK18VerletbufListSetupif(ptr %0, ptr %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(104) %2, ptr noundef nonnull align 8 dereferenceable(888) %3, float noundef %4, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(32) %5, i1 noundef zeroext %6, i32 noundef %7, float noundef %8, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %9, i32 noundef %10, float noundef %11) unnamed_addr #16 {
 bb.a:
-  %12 = alloca %struct.pot_derivatives_t, align 8 ; 5 uses
-  %13 = alloca %struct.pot_derivatives_t, align 8 ; 5 uses
+  %12 = alloca %struct.pot_derivatives_t, align 16 ; 4 uses
+  %13 = alloca %struct.pot_derivatives_t, align 16 ; 4 uses
   %14 = alloca %struct.pot_derivatives_t, align 4 ; 4 uses
   %i.a = fpext float %11 to double
   %i.b = fdiv double f0x3FF6A09E667F3BCD, %i.a
@@ -991,18 +990,16 @@ bb.a:
   %.sroa.0.4.vec.insert.i = shufflevector <4 x float> %i.f, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.g = shufflevector <4 x float> %i.f, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %.sroa.3.12.vec.insert.i96 = insertelement <2 x float> %i.g, float 0.000000e+00, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %12, align 8
-  %15 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i96, ptr %15, align 8
+  %15 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i, <2 x float> %.sroa.3.12.vec.insert.i96, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %15, ptr %12, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #26
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.i = load <2 x float>, ptr %i.h, align 4, !tbaa !27
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 28
   %i.k = load float, ptr %i.j, align 4, !tbaa !201
   %.sroa.3.12.vec.insert.i54 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.k, i64 0
-  store <2 x float> %i.i, ptr %13, align 8
-  %16 = getelementptr inbounds nuw i8, ptr %13, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i54, ptr %16, align 8
+  %16 = shufflevector <2 x float> %i.i, <2 x float> %.sroa.3.12.vec.insert.i54, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %16, ptr %13, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %14, i8 0, i64 16, i1 false)
   %i.l = tail call noundef i32 @_ZN3gmx18nonbondedMtsFactorERK10t_inputrec(ptr noundef nonnull align 8 dereferenceable(888) %3)

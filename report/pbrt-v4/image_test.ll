@@ -205,7 +205,7 @@ _ZN4pstd6vectorIhNS_3pmr21polymorphic_allocatorIhEEED2Ev.exit440: ; preds = %bb.
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN23Image_SampleSimple_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #11 align 2 personality ptr @__gxx_personality_v0 {
 _ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i:
-  %1 = alloca %"class.pbrt::Bounds2.64", align 8  ; 5 uses
+  %1 = alloca %"class.pbrt::Bounds2.64", align 16 ; 4 uses
   %2 = alloca %"class.pstd::vector.4", align 8    ; 8 uses
   %3 = alloca %"class.pbrt::Image", align 8       ; 7 uses
   %4 = alloca %"class.pstd::vector.4", align 8    ; 8 uses
@@ -477,9 +477,7 @@ _ZN4pstd6vectorIfNS_3pmr21polymorphic_allocatorIfEEED2Ev.exit: ; preds = %_ZNSt7
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25, !noalias !447
-  store <2 x float> zeroinitializer, ptr %1, align 8, !noalias !447
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store <2 x float> splat (float 1.000000e+00), ptr %15, align 8, !noalias !447
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %1, align 16, !noalias !447
   %i.cv = call noundef ptr @_ZN4pstd3pmr19new_delete_resourceEv() #25, !noalias !447
   invoke void @_ZN4pbrt5Image23GetSamplingDistributionIZNS0_23GetSamplingDistributionEvEUlNS_6Point2IfEEE_EENS_7Array2DIfEET_RKNS_7Bounds2IfEEN4pstd3pmr21polymorphic_allocatorISt4byteEE(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::Array2D") align 8 %7, ptr noundef nonnull align 8 dereferenceable(152) %3, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr %i.cv)
           to label %bb.d unwind label %bb.p
@@ -882,7 +880,7 @@ _ZN4pbrt19PiecewiseConstant1DD2Ev.exit:           ; preds = %_ZN4pstd6vectorIfNS
 define dso_local void @_ZN23Image_SampleLinear_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #11 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %2 = alloca %"class.pbrt::Bounds2.64", align 8  ; 5 uses
+  %2 = alloca %"class.pbrt::Bounds2.64", align 16 ; 4 uses
   %3 = alloca %"class.pstd::vector.4", align 8    ; 8 uses
   %4 = alloca %"class.pbrt::Image", align 8       ; 7 uses
   %5 = alloca %"class.pstd::vector.4", align 8    ; 8 uses
@@ -1285,9 +1283,7 @@ _ZN4pstd6vectorIfNS_3pmr21polymorphic_allocatorIfEEED2Ev.exit: ; preds = %_ZNSt7
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25, !noalias !467
-  store <2 x float> zeroinitializer, ptr %2, align 8, !noalias !467
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> splat (float 1.000000e+00), ptr %12, align 8, !noalias !467
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %2, align 16, !noalias !467
   %i.ho = call noundef ptr @_ZN4pstd3pmr19new_delete_resourceEv() #25, !noalias !467
   invoke void @_ZN4pbrt5Image23GetSamplingDistributionIZNS0_23GetSamplingDistributionEvEUlNS_6Point2IfEEE_EENS_7Array2DIfEET_RKNS_7Bounds2IfEEN4pstd3pmr21polymorphic_allocatorISt4byteEE(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::Array2D") align 8 %8, ptr noundef nonnull align 8 dereferenceable(152) %4, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr %i.ho)
           to label %bb.o unwind label %bb.aa
@@ -1690,7 +1686,7 @@ bb.bh:                                            ; preds = %bb.bg, %bb.k
 define dso_local void @_ZN23Image_SampleSinCos_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #11 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %2 = alloca %"class.pbrt::Bounds2.64", align 8  ; 5 uses
+  %2 = alloca %"class.pbrt::Bounds2.64", align 16 ; 4 uses
   %3 = alloca %"class.pstd::vector.4", align 8    ; 8 uses
   %4 = alloca %"class.pbrt::Image", align 8       ; 7 uses
   %5 = alloca %"class.pstd::vector.4", align 8    ; 8 uses
@@ -2093,9 +2089,7 @@ _ZN4pstd6vectorIfNS_3pmr21polymorphic_allocatorIfEEED2Ev.exit: ; preds = %_ZNSt7
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25, !noalias !485
-  store <2 x float> zeroinitializer, ptr %2, align 8, !noalias !485
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> splat (float 1.000000e+00), ptr %12, align 8, !noalias !485
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %2, align 16, !noalias !485
   %i.hx = call noundef ptr @_ZN4pstd3pmr19new_delete_resourceEv() #25, !noalias !485
   invoke void @_ZN4pbrt5Image23GetSamplingDistributionIZNS0_23GetSamplingDistributionEvEUlNS_6Point2IfEEE_EENS_7Array2DIfEET_RKNS_7Bounds2IfEEN4pstd3pmr21polymorphic_allocatorISt4byteEE(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::Array2D") align 8 %8, ptr noundef nonnull align 8 dereferenceable(152) %4, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr %i.hx)
           to label %bb.o unwind label %bb.aa

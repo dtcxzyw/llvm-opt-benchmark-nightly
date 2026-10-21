@@ -37,7 +37,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.0144 = phi ptr [ %4, %.lr.ph ], [ %i.bt, %bb.b ] ; 8 uses
   %.0132143 = phi i64 [ %6, %.lr.ph ], [ %i.bq, %bb.b ] ; 2 uses
   %.0133142 = phi ptr [ %0, %.lr.ph ], [ %i.br, %bb.b ] ; 9 uses
-  %.0134141 = phi ptr [ %2, %.lr.ph ], [ %i.bs, %bb.b ] ; 9 uses
+  %.0134141 = phi ptr [ %2, %.lr.ph ], [ %i.bs, %bb.b ] ; 7 uses
   %.0133.val = load <2 x double>, ptr %.0133142, align 16, !tbaa !12 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.0144, i64 32
   %i.d = load i64, ptr %i.c, align 8, !tbaa !11
@@ -90,7 +90,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ar = getelementptr inbounds nuw i8, ptr %.0134141, i64 16
   store <2 x double> %i.ap, ptr %i.aq, align 16, !tbaa !12
   %i.as = fadd <2 x double> %i.aj, %i.ao
-  store <2 x double> %i.as, ptr %i.ar, align 16, !tbaa !12
   %i.at = fsub <2 x double> %i.g, %i.o            ; 2 uses
   %i.au = fsub <2 x double> %i.af, %i.ai
   %i.av = bitcast <2 x double> %i.au to <2 x i64>
@@ -101,8 +100,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ba = getelementptr inbounds nuw i8, ptr %.0134141, i64 96
   store <2 x double> %i.az, ptr %i.ba, align 16, !tbaa !12
   %i.bb = fadd <2 x double> %i.at, %i.ay
-  %9 = getelementptr inbounds nuw i8, ptr %.0134141, i64 32
-  store <2 x double> %i.bb, ptr %9, align 16, !tbaa !12
+  %9 = shufflevector <2 x double> %i.as, <2 x double> %i.bb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %9, ptr %i.ar, align 16, !tbaa !12
   %i.bc = fsub <2 x double> %i.f, %i.ae           ; 2 uses
   %i.bd = fadd <2 x double> %i.n, %i.ah
   %i.be = bitcast <2 x double> %i.bd to <2 x i64>
@@ -114,12 +113,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store <2 x double> %i.bi, ptr %i.bj, align 16, !tbaa !12
   %i.bk = fadd <2 x double> %i.bc, %i.bh
   %i.bl = getelementptr inbounds nuw i8, ptr %.0134141, i64 48
-  store <2 x double> %i.bk, ptr %i.bl, align 16, !tbaa !12
   %i.bm = fadd <2 x double> %i.g, %i.o            ; 2 uses
   %i.bn = fadd <2 x double> %i.ai, %i.af          ; 2 uses
   %i.bo = fsub <2 x double> %i.bm, %i.bn
-  %10 = getelementptr inbounds nuw i8, ptr %.0134141, i64 64
-  store <2 x double> %i.bo, ptr %10, align 16, !tbaa !12
+  %10 = shufflevector <2 x double> %i.bk, <2 x double> %i.bo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %10, ptr %i.bl, align 16, !tbaa !12
   %i.bp = fadd <2 x double> %i.bm, %i.bn
   store <2 x double> %i.bp, ptr %.0134141, align 16, !tbaa !12
   %i.bq = add nsw i64 %.0132143, -1

@@ -205,10 +205,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load = load <2 x float>, ptr %i.ey, align 1, !alias.scope !75
   %wide.load96 = load <2 x float>, ptr %i.ez, align 1, !alias.scope !75
   %i.fa = add i64 %i.ew, 12
-  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
-  store <2 x float> %wide.load, ptr %i.fb, align 16
-  store <2 x float> %wide.load96, ptr %10, align 8
+  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index
+  %10 = shufflevector <2 x float> %wide.load, <2 x float> %wide.load96, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.fb, align 16
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.fc = add i64 %i.ew, 16
   %i.fd = icmp eq i64 %index.next, %n.vec
@@ -611,7 +610,7 @@ _ZN6Assimp11B3DImporter7ReadIntEv.exit:           ; preds = %bb.a
 bb.e:                                             ; preds = %.lr.ph, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit
   %i.y = phi i64 [ %i.c, %.lr.ph ], [ %i.dn, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 2 uses
   %.sroa.18.0311 = phi ptr [ null, %.lr.ph ], [ %.sroa.18.2, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 10 uses
-  %.sroa.11.0310 = phi ptr [ null, %.lr.ph ], [ %.sroa.11.1, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 7 uses
+  %.sroa.11.0310 = phi ptr [ null, %.lr.ph ], [ %.sroa.11.1, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 6 uses
   %.sroa.0107.0309 = phi ptr [ null, %.lr.ph ], [ %.sroa.0107.2, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 11 uses
   %.sroa.18131.0308 = phi ptr [ null, %.lr.ph ], [ %.sroa.18131.2, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 9 uses
   %.sroa.11126.0307 = phi ptr [ null, %.lr.ph ], [ %.sroa.11126.1, %_ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.exit ] ; 7 uses
@@ -883,9 +882,8 @@ bb.y:                                             ; preds = %bb.x
   %i.cn = sitofp i32 %.0.copyload.i28 to double
   store double %i.cn, ptr %.sroa.11.0310, align 8
   %i.co = getelementptr inbounds nuw i8, ptr %.sroa.11.0310, i64 8
-  store <2 x float> %i.cl, ptr %i.co, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.11.0310, i64 16
-  store <2 x float> %i.cm, ptr %.sroa.6.0..sroa_idx, align 8
+  %6 = shufflevector <2 x float> %i.cl, <2 x float> %i.cm, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.co, align 8
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.11.0310, i64 24
   store i32 1, ptr %i.cp, align 8
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.11.0310, i64 32
@@ -919,13 +917,12 @@ _ZNKSt6vectorI9aiQuatKeySaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.z
           to label %.noexc65 unwind label %.loopexit.split-lp183.loopexit.split-lp ; 5 uses
 
 .noexc65:                                         ; preds = %_ZNKSt6vectorI9aiQuatKeySaIS0_EE12_M_check_lenEmPKc.exit.i.i
-  %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.ct ; 4 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.ct ; 3 uses
   %i.dd = sitofp i32 %.0.copyload.i28 to double
   store double %i.dd, ptr %i.dc, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
-  store <2 x float> %i.cl, ptr %i.de, align 8
-  %.sroa.6.0..sroa_idx90 = getelementptr inbounds nuw i8, ptr %i.dc, i64 16
-  store <2 x float> %i.cm, ptr %.sroa.6.0..sroa_idx90, align 8
+  %7 = shufflevector <2 x float> %i.cl, <2 x float> %i.cm, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.de, align 8
   %i.df = getelementptr inbounds nuw i8, ptr %i.dc, i64 24
   store i32 1, ptr %i.df, align 8
   %.not10.i.i.i.i.i57 = icmp eq ptr %.sroa.0107.0309, %.sroa.18.0311

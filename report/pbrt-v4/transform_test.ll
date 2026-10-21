@@ -204,16 +204,13 @@ _ZN4pbrt6Tuple3INS_7Vector3EfEixEi.exit107.2.2:   ; preds = %..preheader_crit_ed
   store float 1.000000e+00, ptr %.sroa.33.0..sroa_idx, align 4, !tbaa !35
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.cw = shufflevector <8 x float> %i.ca, <8 x float> poison, <2 x i32> <i32 0, i32 4>
-  store <2 x float> %i.cw, ptr %i.cv, align 4
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.cx = insertelement <2 x float> %i.cu, float 0.000000e+00, i64 1
-  store <2 x float> %i.cx, ptr %.sroa.5.0..sroa_idx, align 4
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %5 = shufflevector <2 x float> %i.cw, <2 x float> %i.cx, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.cy = shufflevector <8 x float> %i.ca, <8 x float> poison, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.cy, ptr %.sroa.7.0..sroa_idx, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %5 = shufflevector <2 x float> %i.cu, <2 x float> <float poison, float 0.000000e+00>, <2 x i32> <i32 1, i32 3>
-  store <2 x float> %5, ptr %.sroa.9.0..sroa_idx, align 4
+  %6 = shufflevector <2 x float> %i.cu, <2 x float> <float poison, float 0.000000e+00>, <2 x i32> <i32 1, i32 3>
+  %7 = shufflevector <2 x float> %i.cy, <2 x float> %6, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = shufflevector <4 x float> %5, <4 x float> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %8, ptr %i.cv, align 4
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.cz = shufflevector <8 x float> %i.ca, <8 x float> poison, <2 x i32> <i32 2, i32 6>
   store <2 x float> %i.cz, ptr %.sroa.11.0..sroa_idx, align 4

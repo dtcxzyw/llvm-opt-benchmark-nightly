@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %_ZNK5scene19CGLTFMe
   %i.fn = extractelement <2 x float> %.sroa.5.0.i114, i64 0
   %i.fo = fneg float %i.fn
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> %.sroa.5.0.i114, float %i.fo, i64 0 ; 2 uses
-  %i.fp = load ptr, ptr %i.en, align 8, !tbaa !996 ; 8 uses
+  %i.fp = load ptr, ptr %i.en, align 8, !tbaa !996 ; 7 uses
   %i.fq = load ptr, ptr %i.eo, align 8, !tbaa !997
   %.not.i.i.i132 = icmp eq ptr %i.fp, %i.fq
   br i1 %.not.i.i.i132, label %bb.an, label %bb.am
@@ -213,9 +213,8 @@ bb.al:                                            ; preds = %_ZNK5scene19CGLTFMe
 bb.am:                                            ; preds = %bb.al
   store float %.0.i105, ptr %i.fp, align 4, !tbaa !412
   %.sroa.5.0..sroa_idx.i133 = getelementptr inbounds nuw i8, ptr %i.fp, i64 4
-  store <2 x float> %.sroa.0.0.i115, ptr %.sroa.5.0..sroa_idx.i133, align 4, !tbaa !412
-  %.sroa.5.i131.sroa.5.0..sroa.5.0..sroa_idx.i133.sroa_idx = getelementptr inbounds nuw i8, ptr %i.fp, i64 12
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.5.i131.sroa.5.0..sroa.5.0..sroa_idx.i133.sroa_idx, align 4, !tbaa !412
+  %8 = shufflevector <2 x float> %.sroa.0.0.i115, <2 x float> %.sroa.3.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %.sroa.5.0..sroa_idx.i133, align 4, !tbaa !412
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fp, i64 20
   store ptr %i.fr, ptr %i.en, align 8, !tbaa !996
   br label %_ZN5scene11SkinnedMesh7ChannelIN4core10quaternionEE8pushBackEfRKS3_.exit
@@ -249,12 +248,11 @@ _ZNKSt6vectorIN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESaIS6_EE12
           to label %.noexc145 unwind label %.loopexit.split-lp222.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
 .noexc145:                                        ; preds = %_ZNKSt6vectorIN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i.i
-  %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 %i.fv ; 3 uses
+  %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 %i.fv ; 2 uses
   store float %.0.i105, ptr %i.ge, align 4, !tbaa !412
   %.sroa.5.0..sroa_idx4.i136 = getelementptr inbounds nuw i8, ptr %i.ge, i64 4
-  store <2 x float> %.sroa.0.0.i115, ptr %.sroa.5.0..sroa_idx4.i136, align 4, !tbaa !412
-  %.sroa.5.i131.sroa.5.0..sroa.5.0..sroa_idx4.i136.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ge, i64 12
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.5.i131.sroa.5.0..sroa.5.0..sroa_idx4.i136.sroa_idx, align 4, !tbaa !412
+  %9 = shufflevector <2 x float> %.sroa.0.0.i115, <2 x float> %.sroa.3.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %.sroa.5.0..sroa_idx4.i136, align 4, !tbaa !412
   %.not10.i.i.i.i.i.i.i137 = icmp eq ptr %i.fs, %i.fp
   br i1 %.not10.i.i.i.i.i.i.i137, label %_ZNSt6vectorIN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i138
 
@@ -657,20 +655,18 @@ _ZSt3getIN5scene19CGLTFMeshFileLoader8AccessorIN4core10quaternionEE12BufferSourc
   %i.as = load <2 x float>, ptr %i.ar, align 1
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %i.au = load <2 x float>, ptr %i.at, align 1
-  %i.av = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.us ; 2 uses
-  store <2 x float> %i.as, ptr %i.av, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %i.av, i64 8
-  store <2 x float> %i.au, ptr %.sroa.52.0..sroa_idx.us, align 4, !tbaa !412
+  %i.av = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.us
+  %7 = shufflevector <2 x float> %i.as, <2 x float> %i.au, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.av, align 4, !tbaa !412
   %i.aw = or disjoint i64 %.0141.us, 1            ; 2 uses
   %i.ax = mul i64 %.sroa.4.0.copyload.i, %i.aw
   %i.ay = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ax ; 2 uses
   %i.az = load <2 x float>, ptr %i.ay, align 1
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   %i.bb = load <2 x float>, ptr %i.ba, align 1
-  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.aw ; 2 uses
-  store <2 x float> %i.az, ptr %i.bc, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.us.1 = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
-  store <2 x float> %i.bb, ptr %.sroa.52.0..sroa_idx.us.1, align 4, !tbaa !412
+  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.aw
+  %8 = shufflevector <2 x float> %i.az, <2 x float> %i.bb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.bc, align 4, !tbaa !412
   %i.bd = add nuw i64 %.0141.us, 2                ; 2 uses
   %niter229.next.1 = add nuw i64 %niter229, 2     ; 2 uses
   %niter229.ncmp.1 = icmp eq i64 %niter229.next.1, %unroll_iter228
@@ -683,19 +679,17 @@ _ZSt3getISt6vectorIN4core10quaternionESaIS2_EEJN5scene19CGLTFMeshFileLoader8Acce
   %.sroa.0.0.copyload5.i.us = load <2 x float>, ptr %i.be, align 4, !tbaa !412
   %.sroa.5.0..sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   %.sroa.5.0.copyload.i.us = load <2 x float>, ptr %.sroa.5.0..sroa_idx.i.us, align 4, !tbaa !412
-  %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.us143 ; 2 uses
-  store <2 x float> %.sroa.0.0.copyload5.i.us, ptr %i.bf, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.us146 = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
-  store <2 x float> %.sroa.5.0.copyload.i.us, ptr %.sroa.52.0..sroa_idx.us146, align 4, !tbaa !412
+  %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.us143
+  %9 = shufflevector <2 x float> %.sroa.0.0.copyload5.i.us, <2 x float> %.sroa.5.0.copyload.i.us, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.bf, align 4, !tbaa !412
   %i.bg = or disjoint i64 %.0141.us143, 1         ; 2 uses
   %i.bh = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %i.bg ; 2 uses
   %.sroa.0.0.copyload5.i.us.1 = load <2 x float>, ptr %i.bh, align 4, !tbaa !412
   %.sroa.5.0..sroa_idx.i.us.1 = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %.sroa.5.0.copyload.i.us.1 = load <2 x float>, ptr %.sroa.5.0..sroa_idx.i.us.1, align 4, !tbaa !412
-  %i.bi = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.bg ; 2 uses
-  store <2 x float> %.sroa.0.0.copyload5.i.us.1, ptr %i.bi, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.us146.1 = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
-  store <2 x float> %.sroa.5.0.copyload.i.us.1, ptr %.sroa.52.0..sroa_idx.us146.1, align 4, !tbaa !412
+  %i.bi = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.bg
+  %10 = shufflevector <2 x float> %.sroa.0.0.copyload5.i.us.1, <2 x float> %.sroa.5.0.copyload.i.us.1, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.bi, align 4, !tbaa !412
   %i.bj = add nuw i64 %.0141.us143, 2             ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -714,10 +708,8 @@ _ZSt3getISt6vectorIN4core10quaternionESaIS2_EEJN5scene19CGLTFMeshFileLoader8Acce
 .lr.ph.split.split.epil:                          ; preds = %.lr.ph.split.split.epil, %.lr.ph.split.split.epil.preheader
   %.0141.epil = phi i64 [ %i.bl, %.lr.ph.split.split.epil ], [ %.0141.epil.init, %.lr.ph.split.split.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.split.split.epil ], [ 0, %.lr.ph.split.split.epil.preheader ]
-  %i.bk = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.epil ; 2 uses
-  store <2 x float> zeroinitializer, ptr %i.bk, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.epil = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.52.0..sroa_idx.epil, align 4, !tbaa !412
+  %i.bk = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.epil
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.bk, align 4, !tbaa !412
   %i.bl = add nuw i64 %.0141.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter230
@@ -736,10 +728,9 @@ _ZSt3getIN5scene19CGLTFMeshFileLoader8AccessorIN4core10quaternionEE12BufferSourc
   %i.bo = load <2 x float>, ptr %i.bn, align 1
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   %i.bq = load <2 x float>, ptr %i.bp, align 1
-  %i.br = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.us.epil.init ; 2 uses
-  store <2 x float> %i.bo, ptr %i.br, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.us.epil = getelementptr inbounds nuw i8, ptr %i.br, i64 8
-  store <2 x float> %i.bq, ptr %.sroa.52.0..sroa_idx.us.epil, align 4, !tbaa !412
+  %i.br = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.us.epil.init
+  %11 = shufflevector <2 x float> %i.bo, <2 x float> %i.bq, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %i.br, align 4, !tbaa !412
   br label %._crit_edge
 
 ._crit_edge.loopexit220.unr-lcssa:                ; preds = %_ZSt3getISt6vectorIN4core10quaternionESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us
@@ -754,10 +745,9 @@ _ZSt3getISt6vectorIN4core10quaternionESaIS2_EEJN5scene19CGLTFMeshFileLoader8Acce
   %.sroa.0.0.copyload5.i.us.epil = load <2 x float>, ptr %i.bs, align 4, !tbaa !412
   %.sroa.5.0..sroa_idx.i.us.epil = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   %.sroa.5.0.copyload.i.us.epil = load <2 x float>, ptr %.sroa.5.0..sroa_idx.i.us.epil, align 4, !tbaa !412
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.us143.epil.init ; 2 uses
-  store <2 x float> %.sroa.0.0.copyload5.i.us.epil, ptr %i.bt, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.us146.epil = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
-  store <2 x float> %.sroa.5.0.copyload.i.us.epil, ptr %.sroa.52.0..sroa_idx.us146.epil, align 4, !tbaa !412
+  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141.us143.epil.init
+  %12 = shufflevector <2 x float> %.sroa.0.0.copyload5.i.us.epil, <2 x float> %.sroa.5.0.copyload.i.us.epil, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %i.bt, align 4, !tbaa !412
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZSt3getISt6vectorIN4core10quaternionESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.epil.preheader, %._crit_edge.loopexit220.unr-lcssa, %_ZSt3getIN5scene19CGLTFMeshFileLoader8AccessorIN4core10quaternionEE12BufferSourceEJS6_St6vectorIS4_SaIS4_EESt5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.epil.preheader, %._crit_edge.loopexit219.unr-lcssa, %._crit_edge.loopexit.unr-lcssa, %.lr.ph.split.split.epil, %_ZNSt6vectorIN4core10quaternionESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i, %_ZNSt6vectorIN4core10quaternionESaIS1_EEC2EmRKS2_.exit
@@ -785,25 +775,17 @@ bb.j:                                             ; preds = %_ZNSt12_Vector_base
 .lr.ph.split.split:                               ; preds = %.lr.ph.split.split, %.lr.ph.split.split.preheader.new
   %.0141 = phi i64 [ 0, %.lr.ph.split.split.preheader.new ], [ %i.cc, %.lr.ph.split.split ] ; 5 uses
   %niter234 = phi i64 [ 0, %.lr.ph.split.split.preheader.new ], [ %niter234.next.3, %.lr.ph.split.split ]
-  %i.by = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141 ; 2 uses
-  store <2 x float> zeroinitializer, ptr %i.by, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 8
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.52.0..sroa_idx, align 4, !tbaa !412
-  %i.bz = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
-  store <2 x float> zeroinitializer, ptr %7, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.52.0..sroa_idx.1, align 4, !tbaa !412
-  %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.ca, i64 32
-  store <2 x float> zeroinitializer, ptr %8, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.ca, i64 40
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.52.0..sroa_idx.2, align 4, !tbaa !412
-  %i.cb = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.cb, i64 48
-  store <2 x float> zeroinitializer, ptr %9, align 4, !tbaa !412
-  %.sroa.52.0..sroa_idx.3 = getelementptr inbounds nuw i8, ptr %i.cb, i64 56
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.52.0..sroa_idx.3, align 4, !tbaa !412
+  %i.by = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.by, align 4, !tbaa !412
+  %i.bz = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141
+  %.sroa.52.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.52.0..sroa_idx.1, align 4, !tbaa !412
+  %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141
+  %.sroa.52.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.ca, i64 32
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.52.0..sroa_idx.2, align 4, !tbaa !412
+  %i.cb = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0141
+  %.sroa.52.0..sroa_idx.3 = getelementptr inbounds nuw i8, ptr %i.cb, i64 48
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.52.0..sroa_idx.3, align 4, !tbaa !412
   %i.cc = add nuw i64 %.0141, 4                   ; 2 uses
   %niter234.next.3 = add nuw i64 %niter234, 4     ; 2 uses
   %niter234.ncmp.3 = icmp eq i64 %niter234.next.3, %unroll_iter233
@@ -1037,10 +1019,9 @@ bb.aa:                                            ; preds = %_ZSt5visitIZN5scene
   %i.fm = load <2 x float>, ptr %i.fl, align 1
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fl, i64 8
   %i.fo = load <2 x float>, ptr %i.fn, align 1
-  %i.fp = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0121.0200, i64 %i.ff ; 2 uses
-  store <2 x float> %i.fm, ptr %i.fp, align 4, !tbaa !412
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
-  store <2 x float> %i.fo, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !412
+  %i.fp = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0121.0200, i64 %i.ff
+  %13 = shufflevector <2 x float> %i.fm, <2 x float> %i.fo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %i.fp, align 4, !tbaa !412
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #31
   %i.fq = add i64 %i.fj, 1                        ; 2 uses
   store i64 %i.fq, ptr %i.b, align 8, !tbaa !181
@@ -1443,20 +1424,18 @@ _ZSt3getIN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIfLm4EEE12BufferSourceEJS
   %.sroa.0.0.copyload.i.i.us = load <2 x float>, ptr %i.av, align 1
   %.sroa.2.0..sroa_idx.i.i.us = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   %.sroa.2.0.copyload.i.i.us = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i.i.us, align 1
-  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0125.us ; 2 uses
-  store <2 x float> %.sroa.0.0.copyload.i.i.us, ptr %i.aw, align 4
-  %.sroa.52.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
-  store <2 x float> %.sroa.2.0.copyload.i.i.us, ptr %.sroa.52.0..sroa_idx.us, align 4, !tbaa !60
+  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0125.us
+  %7 = shufflevector <2 x float> %.sroa.0.0.copyload.i.i.us, <2 x float> %.sroa.2.0.copyload.i.i.us, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.aw, align 4
   %i.ax = or disjoint i64 %.0125.us, 1            ; 2 uses
   %i.ay = mul i64 %.sroa.4.0.copyload.i, %i.ax
   %i.az = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ay ; 2 uses
   %.sroa.0.0.copyload.i.i.us.1 = load <2 x float>, ptr %i.az, align 1
   %.sroa.2.0..sroa_idx.i.i.us.1 = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %.sroa.2.0.copyload.i.i.us.1 = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i.i.us.1, align 1
-  %i.ba = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.ax ; 2 uses
-  store <2 x float> %.sroa.0.0.copyload.i.i.us.1, ptr %i.ba, align 4
-  %.sroa.52.0..sroa_idx.us.1 = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
-  store <2 x float> %.sroa.2.0.copyload.i.i.us.1, ptr %.sroa.52.0..sroa_idx.us.1, align 4, !tbaa !60
+  %i.ba = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.ax
+  %8 = shufflevector <2 x float> %.sroa.0.0.copyload.i.i.us.1, <2 x float> %.sroa.2.0.copyload.i.i.us.1, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.ba, align 4
   %i.bb = add nuw i64 %.0125.us, 2                ; 2 uses
   %niter207.next.1 = add nuw i64 %niter207, 2     ; 2 uses
   %niter207.ncmp.1.not = icmp eq i64 %niter207.next.1, %unroll_iter206
@@ -1469,19 +1448,17 @@ _ZSt3getISt6vectorISt5arrayIfLm4EESaIS2_EEJN5scene19CGLTFMeshFileLoader8Accessor
   %.sroa.02.0.copyload.i.us = load <2 x float>, ptr %i.bc, align 4
   %.sroa.43.0..sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   %.sroa.43.0.copyload.i.us = load <2 x float>, ptr %.sroa.43.0..sroa_idx.i.us, align 4, !tbaa !60
-  %i.bd = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0125.us127 ; 2 uses
-  store <2 x float> %.sroa.02.0.copyload.i.us, ptr %i.bd, align 4
-  %.sroa.52.0..sroa_idx.us130 = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
-  store <2 x float> %.sroa.43.0.copyload.i.us, ptr %.sroa.52.0..sroa_idx.us130, align 4, !tbaa !60
+  %i.bd = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0125.us127
+  %9 = shufflevector <2 x float> %.sroa.02.0.copyload.i.us, <2 x float> %.sroa.43.0.copyload.i.us, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.bd, align 4
   %i.be = or disjoint i64 %.0125.us127, 1         ; 2 uses
   %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.aq, i64 %i.be ; 2 uses
   %.sroa.02.0.copyload.i.us.1 = load <2 x float>, ptr %i.bf, align 4
   %.sroa.43.0..sroa_idx.i.us.1 = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   %.sroa.43.0.copyload.i.us.1 = load <2 x float>, ptr %.sroa.43.0..sroa_idx.i.us.1, align 4, !tbaa !60
-  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.be ; 2 uses
-  store <2 x float> %.sroa.02.0.copyload.i.us.1, ptr %i.bg, align 4
-  %.sroa.52.0..sroa_idx.us130.1 = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  store <2 x float> %.sroa.43.0.copyload.i.us.1, ptr %.sroa.52.0..sroa_idx.us130.1, align 4, !tbaa !60
+  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.be
+  %10 = shufflevector <2 x float> %.sroa.02.0.copyload.i.us.1, <2 x float> %.sroa.43.0.copyload.i.us.1, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.bg, align 4
   %i.bh = add nuw i64 %.0125.us127, 2             ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
@@ -1520,10 +1497,9 @@ _ZSt3getIN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIfLm4EEE12BufferSourceEJS
   %.sroa.0.0.copyload.i.i.us.epil = load <2 x float>, ptr %i.bl, align 1
   %.sroa.2.0..sroa_idx.i.i.us.epil = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   %.sroa.2.0.copyload.i.i.us.epil = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i.i.us.epil, align 1
-  %i.bm = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0125.us.epil.init ; 2 uses
-  store <2 x float> %.sroa.0.0.copyload.i.i.us.epil, ptr %i.bm, align 4
-  %.sroa.52.0..sroa_idx.us.epil = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
-  store <2 x float> %.sroa.2.0.copyload.i.i.us.epil, ptr %.sroa.52.0..sroa_idx.us.epil, align 4, !tbaa !60
+  %i.bm = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0125.us.epil.init
+  %11 = shufflevector <2 x float> %.sroa.0.0.copyload.i.i.us.epil, <2 x float> %.sroa.2.0.copyload.i.i.us.epil, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %i.bm, align 4
   br label %._crit_edge
 
 ._crit_edge.loopexit199.unr-lcssa:                ; preds = %_ZSt3getISt6vectorISt5arrayIfLm4EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us
@@ -1538,10 +1514,9 @@ _ZSt3getISt6vectorISt5arrayIfLm4EESaIS2_EEJN5scene19CGLTFMeshFileLoader8Accessor
   %.sroa.02.0.copyload.i.us.epil = load <2 x float>, ptr %i.bn, align 4
   %.sroa.43.0..sroa_idx.i.us.epil = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   %.sroa.43.0.copyload.i.us.epil = load <2 x float>, ptr %.sroa.43.0..sroa_idx.i.us.epil, align 4, !tbaa !60
-  %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0125.us127.epil.init ; 2 uses
-  store <2 x float> %.sroa.02.0.copyload.i.us.epil, ptr %i.bo, align 4
-  %.sroa.52.0..sroa_idx.us130.epil = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
-  store <2 x float> %.sroa.43.0.copyload.i.us.epil, ptr %.sroa.52.0..sroa_idx.us130.epil, align 4, !tbaa !60
+  %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.0125.us127.epil.init
+  %12 = shufflevector <2 x float> %.sroa.02.0.copyload.i.us.epil, <2 x float> %.sroa.43.0.copyload.i.us.epil, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %i.bo, align 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZSt3getISt6vectorISt5arrayIfLm4EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.epil.preheader, %._crit_edge.loopexit199.unr-lcssa, %_ZSt3getIN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIfLm4EEE12BufferSourceEJS6_St6vectorIS4_SaIS4_EESt5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.epil.preheader, %._crit_edge.loopexit198.unr-lcssa, %._crit_edge.loopexit.unr-lcssa, %.lr.ph.split.split.epil, %_ZNSt6vectorISt5arrayIfLm4EESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i, %_ZNSt6vectorISt5arrayIfLm4EESaIS1_EEC2EmRKS2_.exit
@@ -1826,10 +1801,9 @@ bb.af:                                            ; preds = %_ZSt5visitIZN5scene
   %.sroa.0.0.copyload.i.i73 = load <2 x float>, ptr %i.fm, align 1
   %.sroa.2.0..sroa_idx.i.i74 = getelementptr inbounds nuw i8, ptr %i.fm, i64 8
   %.sroa.2.0.copyload.i.i75 = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i.i74, align 1
-  %i.fn = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0113.0181, i64 %i.fg ; 2 uses
-  store <2 x float> %.sroa.0.0.copyload.i.i73, ptr %i.fn, align 4
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fn, i64 8
-  store <2 x float> %.sroa.2.0.copyload.i.i75, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !60
+  %i.fn = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0113.0181, i64 %i.fg
+  %13 = shufflevector <2 x float> %.sroa.0.0.copyload.i.i73, <2 x float> %.sroa.2.0.copyload.i.i75, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %i.fn, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #31
   %i.fo = add i64 %i.fk, 1                        ; 2 uses
   store i64 %i.fo, ptr %i.b, align 8, !tbaa !181

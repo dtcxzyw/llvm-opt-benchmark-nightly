@@ -205,7 +205,7 @@ declare i64 @b3DynamicTree_Query(ptr noundef, ptr noundef byval(%struct.b3AABB) 
 define internal noundef zeroext i1 @b3CompoundOverlapCallback(i32 %0, i64 noundef %1, ptr noundef %2) #5 {
 bb.a:
   %3 = alloca %struct.b3ChildShape, align 8       ; 12 uses
-  %4 = alloca %struct.b3Transform, align 8        ; 10 uses
+  %4 = alloca %struct.b3Transform, align 8        ; 9 uses
   %i.a = trunc i64 %1 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   %i.b = load ptr, ptr %2, align 8, !tbaa !75
@@ -291,9 +291,8 @@ bb.a:
   %i.be = fadd <2 x float> %i.ar, %i.bd
   %i.bf = fsub <2 x float> %i.ar, %i.bd
   %i.bg = shufflevector <2 x float> %i.be, <2 x float> %i.bf, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.aq, ptr %i.ag, align 4, !tbaa !19, !alias.scope !225
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 20
-  store <2 x float> %i.bg, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !19, !alias.scope !225
+  %5 = shufflevector <2 x float> %i.aq, <2 x float> %i.bg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.ag, align 4, !tbaa !19, !alias.scope !225
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 76
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !42
   switch i32 %i.bi, label %.thread [
@@ -696,13 +695,11 @@ bb.a:
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %0, i64 32
   store float %i.ab, ptr %.sroa.5.0..sroa_idx2, align 4, !tbaa !19
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store <2 x float> %i.an, ptr %i.bg, align 4, !tbaa !19
-  %.sroa.9.12..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 44
-  store <2 x float> %i.bd, ptr %.sroa.9.12..sroa_idx5, align 4, !tbaa !19
+  %3 = shufflevector <2 x float> %i.an, <2 x float> %i.bd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.bg, align 4, !tbaa !19
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store <2 x float> %i.an, ptr %i.bh, align 4, !tbaa !19
-  %.sroa.9.12..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store <2 x float> %i.bd, ptr %.sroa.9.12..sroa_idx, align 4, !tbaa !19
+  %4 = shufflevector <2 x float> %i.an, <2 x float> %i.bd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.bh, align 4, !tbaa !19
   ret void
 }
 

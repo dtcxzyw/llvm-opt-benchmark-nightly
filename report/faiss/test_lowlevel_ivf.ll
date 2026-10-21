@@ -205,10 +205,8 @@ vector.ph:                                        ; preds = %.lr.ph44.i.i.i.preh
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.lx = add nuw i64 %.0.lcssa.i.i.i, %index     ; 2 uses
-  %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.jm, i64 %i.lx ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %i.ly, i64 8
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %i.ly, align 4, !tbaa !61
-  store <2 x float> splat (float f0x7F7FFFFF), ptr %16, align 4, !tbaa !61
+  %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.jm, i64 %i.lx
+  store <4 x float> splat (float f0x7F7FFFFF), ptr %i.ly, align 4, !tbaa !61
   %i.lz = getelementptr inbounds nuw [8 x i8], ptr %i.jn, i64 %i.lx ; 2 uses
   %i.ma = getelementptr inbounds nuw i8, ptr %i.lz, i64 16
   store <2 x i64> splat (i64 -1), ptr %i.lz, align 8, !tbaa !56

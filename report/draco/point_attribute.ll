@@ -205,8 +205,8 @@ _ZN5draco15IndexTypeVectorINS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEES
 define linkonce_odr noundef i32 @_ZN5draco14PointAttribute26DeduplicateFormattedValuesIfLi4EEEjRKNS_17GeometryAttributeENS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEE(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr nofreeobj noundef align 4 dead_on_return dereferenceable(4) %2) local_unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::unordered_map.119", align 8 ; 13 uses
-  %.sroa.053 = alloca [4 x float], align 8        ; 7 uses
-  %4 = alloca %"struct.std::pair.145", align 4    ; 6 uses
+  %.sroa.053.sroa.0 = alloca <4 x float>, align 16 ; 5 uses
+  %4 = alloca %"struct.std::pair.145", align 16   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
   store ptr %i.a, ptr %3, align 8, !tbaa !97
@@ -218,7 +218,7 @@ bb.a:
   store float 1.000000e+00, ptr %i.d, align 8, !tbaa !82
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.053)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.053.sroa.0)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 5 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !62   ; 2 uses
   %i.h = zext i32 %i.g to i64                     ; 3 uses
@@ -242,7 +242,6 @@ _ZN5draco15IndexTypeVectorINS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEES
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %.sroa.053.8..sroa_idx130 = getelementptr inbounds nuw i8, ptr %.sroa.053, i64 8
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.g
@@ -271,11 +270,11 @@ bb.c:                                             ; preds = %.lr.ph, %bb.g
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.ac, align 1
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %.sroa.2.0.copyload.i = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i, align 1
-  store <2 x float> %.sroa.0.0.copyload.i, ptr %.sroa.053, align 8
-  store <2 x float> %.sroa.2.0.copyload.i, ptr %.sroa.053.8..sroa_idx130, align 8, !tbaa !28
+  %5 = shufflevector <2 x float> %.sroa.0.0.copyload.i, <2 x float> %.sroa.2.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
+  store <4 x float> %5, ptr %.sroa.053.sroa.0, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.053, i64 16, i1 false)
-  store i32 %.sroa.055.066, ptr %i.o, align 4, !tbaa !68
+  store <4 x float> %5, ptr %4, align 16
+  store i32 %.sroa.055.066, ptr %i.o, align 16, !tbaa !68
   %i.ad = invoke { ptr, i8 } @_ZNSt10_HashtableISt5arrayIjLm4EESt4pairIKS1_N5draco9IndexTypeIjNS4_29AttributeValueIndex_tag_type_EEEESaIS8_ENSt8__detail10_Select1stESt8equal_toIS1_ENS4_9HashArrayIS1_EENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE10_M_emplaceIJS2_IS1_S7_EEEES2_INSA_14_Node_iteratorIS8_Lb0ELb1EEEbESt17integral_constantIbLb1EEDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %3, ptr noundef nonnull align 4 dereferenceable(20) %4)
           to label %_ZNSt13unordered_mapISt5arrayIjLm4EEN5draco9IndexTypeIjNS2_29AttributeValueIndex_tag_type_EEENS2_9HashArrayIS1_EESt8equal_toIS1_ESaISt4pairIKS1_S5_EEE6insertISA_IS1_S5_EEENSt9enable_ifIXsr16is_constructibleISC_OT_EE5valueESA_INSt8__detail14_Node_iteratorISC_Lb0ELb1EEEbEE4typeESJ_.exit unwind label %bb.e ; 2 uses
 
@@ -304,7 +303,7 @@ bb.f:                                             ; preds = %_ZNSt13unordered_ma
   %i.al = load ptr, ptr %0, align 8, !tbaa !84
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !35
   %i.an = getelementptr inbounds i8, ptr %i.am, i64 %i.ak
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.an, ptr nonnull align 8 %.sroa.053, i64 %i.aj, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.an, ptr nonnull align 16 %.sroa.053.sroa.0, i64 %i.aj, i1 false)
   %i.ao = add i32 %.sroa.055.066, 1
   br label %bb.g
 
@@ -547,7 +546,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 _ZN5draco15IndexTypeVectorINS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEES3_ED2Ev.exit: ; preds = %bb.a, %.thread
   %.sroa.055.0.lcssa108114 = phi i32 [ %.sroa.055.0.lcssa108113, %.thread ], [ 0, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.053)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.053.sroa.0)
   %i.dx = load ptr, ptr %i.c, align 8, !tbaa !99  ; 2 uses
   %.not5.i.i.i.i = icmp eq ptr %i.dx, null
   br i1 %.not5.i.i.i.i, label %_ZNSt10_HashtableISt5arrayIjLm4EESt4pairIKS1_N5draco9IndexTypeIjNS4_29AttributeValueIndex_tag_type_EEEESaIS8_ENSt8__detail10_Select1stESt8equal_toIS1_ENS4_9HashArrayIS1_EENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE5clearEv.exit.i.i, label %.lr.ph.i.i.i.i
@@ -587,7 +586,7 @@ bb.o:                                             ; preds = %bb.m, %bb.e
 
 _ZN5draco15IndexTypeVectorINS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEES3_ED2Ev.exit26: ; preds = %bb.o, %bb.b
   %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.r, %bb.b ], [ %.pn.pn.pn.pn, %bb.o ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.053)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.053.sroa.0)
   call void @_ZNSt13unordered_mapISt5arrayIjLm4EEN5draco9IndexTypeIjNS2_29AttributeValueIndex_tag_type_EEENS2_9HashArrayIS1_EESt8equal_toIS1_ESaISt4pairIKS1_S5_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %3) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   resume { ptr, i32 } %.pn.pn.pn.pn.pn

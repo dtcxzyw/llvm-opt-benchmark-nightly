@@ -204,9 +204,8 @@ b3RecR_QUAT.exit:                                 ; preds = %b3RecR_VEC3.exit, %
   %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.bc, i64 0
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.bd, i64 1
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> %.sroa.3.8.vec.insert.i, float %i.be, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %i.bf, align 4, !tbaa !30
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !30
+  %2 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i, <2 x float> %.sroa.3.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.bf, align 4, !tbaa !30
   ret void
 }
 
@@ -407,9 +406,8 @@ b3RecR_QUAT.exit:                                 ; preds = %b3RecR_POSITION.exi
   %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.bc, i64 0
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.bd, i64 1
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> %.sroa.3.8.vec.insert.i, float %i.be, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %i.bf, align 4, !tbaa !30
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !30
+  %2 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i, <2 x float> %.sroa.3.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.bf, align 4, !tbaa !30
   ret void
 }
 
@@ -812,7 +810,7 @@ bb.a:
   %3 = alloca %struct.b3RecArgs_BodySetTargetTransform, align 8 ; 8 uses
   %4 = alloca %struct.b3RecArgs_BodyApplyForce, align 8 ; 10 uses
   %5 = alloca %struct.b3RecArgs_BodyApplyLinearImpulse, align 8 ; 10 uses
-  %6 = alloca %struct.b3RecArgs_CreateSphereShape, align 8 ; 8 uses
+  %6 = alloca %struct.b3RecArgs_CreateSphereShape, align 8 ; 7 uses
   %7 = alloca %struct.b3RecArgs_CreateCapsuleShape, align 8 ; 7 uses
   %8 = alloca %struct.b3Capsule, align 4          ; 5 uses
   %9 = alloca %struct.b3RecArgs_CreateHullShape, align 8 ; 7 uses
@@ -821,7 +819,7 @@ bb.a:
   %12 = alloca %struct.b3RecArgs_CreateCompoundShape, align 8 ; 7 uses
   %13 = alloca %struct.b3RecArgs_ShapeSetSurfaceMaterial, align 8 ; 5 uses
   %14 = alloca %struct.b3RecArgs_ShapeSetFilter, align 8 ; 6 uses
-  %15 = alloca %struct.b3RecArgs_ShapeSetSphere, align 8 ; 5 uses
+  %15 = alloca %struct.b3RecArgs_ShapeSetSphere, align 8 ; 4 uses
   %16 = alloca %struct.b3RecArgs_ShapeSetCapsule, align 8 ; 4 uses
   %17 = alloca %struct.b3Capsule, align 4         ; 5 uses
   %18 = alloca %struct.b3RecArgs_ShapeApplyWind, align 8 ; 11 uses
@@ -1224,9 +1222,8 @@ bb.cj:                                            ; preds = %b3RecRdrCheck.exit.
   %.sroa.3.0.copyload.i = load <2 x float>, ptr %.sroa.3.0..sroa_idx.i, align 1
   %i.si = add nsw i32 %i.rz, 16
   store i32 %i.si, ptr %i.a, align 4, !tbaa !23
-  store <2 x float> %.sroa.0.0.copyload.i1722, ptr %i.ry, align 8, !tbaa !30
-  %.sroa.4219.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 136
-  store <2 x float> %.sroa.3.0.copyload.i, ptr %.sroa.4219.0..sroa_idx, align 8, !tbaa !30
+  %40 = shufflevector <2 x float> %.sroa.0.0.copyload.i1722, <2 x float> %.sroa.3.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %40, ptr %i.ry, align 8, !tbaa !30
   call fastcc void @b3RecDispatch_CreateSphereShape(ptr noundef %6, ptr noundef nonnull %0)
   br label %b3RecR_SPHERE.exit.thread
 
@@ -1629,9 +1626,8 @@ bb.dt:                                            ; preds = %b3RecRdrCheck.exit.
   %.sroa.3.0.copyload.i1845 = load <2 x float>, ptr %.sroa.3.0..sroa_idx.i1844, align 1
   %i.abe = add nsw i32 %i.aav, 16
   store i32 %i.abe, ptr %i.a, align 4, !tbaa !23
-  store <2 x float> %.sroa.0.0.copyload.i1843, ptr %i.aau, align 8, !tbaa !30
-  %.sroa.4195.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 16
-  store <2 x float> %.sroa.3.0.copyload.i1845, ptr %.sroa.4195.0..sroa_idx, align 8, !tbaa !30
+  %41 = shufflevector <2 x float> %.sroa.0.0.copyload.i1843, <2 x float> %.sroa.3.0.copyload.i1845, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %41, ptr %i.aau, align 8, !tbaa !30
   %i.abf = getelementptr i8, ptr %0, i64 16
   %.val1163 = load i16, ptr %i.abf, align 8, !tbaa !135
   %i.abg = add i16 %.val1163, -1

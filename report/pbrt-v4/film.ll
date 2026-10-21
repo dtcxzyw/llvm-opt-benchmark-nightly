@@ -205,7 +205,7 @@ define dso_local void @_ZN4pbrt18FilmBaseParametersC2ERKNS_19ParameterDictionary
   %i.a = alloca i32, align 4                      ; 5 uses
   %18 = alloca %"class.std::vector.44", align 8   ; 13 uses
   %19 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %20 = alloca %"class.pbrt::Bounds2.49", align 8 ; 9 uses
+  %20 = alloca %"class.pbrt::Bounds2.49", align 16 ; 9 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 11 uses
@@ -608,9 +608,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit298: ; preds = %bb
 bb.aq:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit298
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hn, i64 248
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #30
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %20, ptr noundef nonnull align 4 dereferenceable(16) %i.hr, i64 16, i1 false)
-  %.sroa.04.0.copyload.i300 = load <2 x float>, ptr %20, align 8 ; 4 uses
-  %i.hs = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %20, ptr noundef nonnull align 4 dereferenceable(16) %i.hr, i64 16, i1 false)
+  %.sroa.04.0.copyload.i300 = load <2 x float>, ptr %20, align 16 ; 4 uses
+  %i.hs = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
   %i.ht = fcmp olt <2 x float> %.sroa.04.0.copyload.i300, zeroinitializer
   %i.hu = select <2 x i1> %i.ht, <2 x float> zeroinitializer, <2 x float> %.sroa.04.0.copyload.i300
   %i.hv = fcmp une <2 x float> %i.hu, %.sroa.04.0.copyload.i300 ; 2 uses
@@ -687,14 +687,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i321: ; preds = 
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i324: ; preds = %bb.as, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i323
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30
-  %.sroa.04.0.copyload.i335 = load <2 x float>, ptr %20, align 8, !tbaa !55 ; 2 uses
+  %.sroa.04.0.copyload.i335 = load <2 x float>, ptr %20, align 16, !tbaa !55 ; 2 uses
   %i.iw = fcmp olt <2 x float> %.sroa.04.0.copyload.i335, zeroinitializer
   %i.ix = select <2 x i1> %i.iw, <2 x float> zeroinitializer, <2 x float> %.sroa.04.0.copyload.i335 ; 2 uses
   %.sroa.01.0.copyload.i343 = load <2 x float>, ptr %i.hs, align 8, !tbaa !55 ; 2 uses
   %i.iy = fcmp ogt <2 x float> %.sroa.01.0.copyload.i343, splat (float 1.000000e+00)
   %i.iz = select <2 x i1> %i.iy, <2 x float> splat (float 1.000000e+00), <2 x float> %.sroa.01.0.copyload.i343 ; 2 uses
-  store <2 x float> %i.ix, ptr %20, align 8
-  store <2 x float> %i.iz, ptr %i.hs, align 8
+  %22 = shufflevector <2 x float> %i.ix, <2 x float> %i.iz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %22, ptr %20, align 16
   br label %bb.ax
 
 bb.au:                                            ; preds = %._crit_edge.i.i292
@@ -1097,9 +1097,8 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 72
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %0, i8 0, i64 72, i1 false)
-  store <2 x float> %2, ptr %i.j, align 4
-  %.sroa.241.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store <2 x float> %3, ptr %.sroa.241.0..sroa_idx, align 4, !tbaa !32
+  %5 = shufflevector <2 x float> %2, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.j, align 4
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i8 1, ptr %i.k, align 4, !tbaa !70
   %.sroa.0.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -1502,7 +1501,7 @@ define dso_local void @_ZN4pbrt11GBufferFilm9AddSampleENS_6Point2IiEENS_15Sample
   %8 = alloca %"class.pbrt::Transform", align 4   ; 5 uses
   %9 = alloca %"class.pbrt::Transform", align 8   ; 9 uses
   %10 = alloca %"class.pbrt::Transform", align 8  ; 9 uses
-  %11 = alloca %"class.pbrt::SampledSpectrum", align 8 ; 5 uses
+  %11 = alloca %"class.pbrt::SampledSpectrum", align 16 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !108  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -1905,9 +1904,8 @@ _ZN4pbrt3RGBixEi.exit348.2:                       ; preds = %bb.h, %bb.g, %bb.i
   %.sroa.8.0.copyload.i = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !32
   %i.nk = fmul <2 x float> %.sroa.0.0.copyload4.i, %i.ni
   %i.nl = fmul <2 x float> %i.nj, %.sroa.8.0.copyload.i
-  store <2 x float> %i.nk, ptr %11, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 8
-  store <2 x float> %i.nl, ptr %12, align 8
+  %12 = shufflevector <2 x float> %i.nk, <2 x float> %i.nl, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %11, align 16
   %i.nm = load ptr, ptr %i.ne, align 8, !tbaa !166
   %i.nn = call { <2 x float>, float } @_ZNK4pbrt15SampledSpectrum5ToRGBERKNS_18SampledWavelengthsERKNS_13RGBColorSpaceE(ptr noundef nonnull align 4 dereferenceable(16) %11, ptr noundef nonnull align 4 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(152) %i.nm) ; 2 uses
   %.fca.0.extract = extractvalue { <2 x float>, float } %i.nn, 0

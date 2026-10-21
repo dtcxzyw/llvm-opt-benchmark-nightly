@@ -205,18 +205,14 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %wide.load438 = load <4 x i64>, ptr %i.xb, align 8, !tbaa !433
   %wide.load439 = load <4 x i64>, ptr %i.xc, align 8, !tbaa !433
   %wide.load440 = load <4 x i64>, ptr %i.xd, align 8, !tbaa !433
-  %27 = trunc <4 x i64> %wide.load to <4 x i32>
-  %28 = trunc <4 x i64> %wide.load438 to <4 x i32>
-  %29 = trunc <4 x i64> %wide.load439 to <4 x i32>
-  %30 = trunc <4 x i64> %wide.load440 to <4 x i32>
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %index ; 4 uses
-  %i.xe = getelementptr inbounds nuw i8, ptr %gep, i64 16
-  %31 = getelementptr inbounds nuw i8, ptr %gep, i64 32
-  %32 = getelementptr inbounds nuw i8, ptr %gep, i64 48
-  store <4 x i32> %27, ptr %gep, align 4, !tbaa !356
-  store <4 x i32> %28, ptr %i.xe, align 4, !tbaa !356
-  store <4 x i32> %29, ptr %31, align 4, !tbaa !356
-  store <4 x i32> %30, ptr %32, align 4, !tbaa !356
+  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %index ; 2 uses
+  %i.xe = getelementptr inbounds nuw i8, ptr %gep, i64 32
+  %27 = shufflevector <4 x i64> %wide.load, <4 x i64> %wide.load438, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %28 = trunc <8 x i64> %27 to <8 x i32>
+  store <8 x i32> %28, ptr %gep, align 4, !tbaa !356
+  %29 = shufflevector <4 x i64> %wide.load439, <4 x i64> %wide.load440, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %30 = trunc <8 x i64> %29 to <8 x i32>
+  store <8 x i32> %30, ptr %i.xe, align 4, !tbaa !356
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.xf = icmp eq i64 %index.next, %n.vec
   br i1 %i.xf, label %middle.block, label %vector.body, !llvm.loop !2407

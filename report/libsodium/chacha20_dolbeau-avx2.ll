@@ -144,7 +144,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind ssp uwtable
 define internal fastcc void @chacha20_encrypt_bytes(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef range(i64 1, 0) %3) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 20 uses
+  %i.a = alloca [64 x i8], align 16               ; 18 uses
   %i.b = ptrtoaddr ptr %i.a to i64
   %i.c = icmp ugt i64 %3, 511
   br i1 %i.c, label %bb.b, label %.loopexit1144
@@ -547,13 +547,11 @@ iter.check:                                       ; preds = %bb.l
   %i.afn = add <4 x i32> %i.afh, %i.ads
   %i.afo = bitcast <2 x i64> %i.adu to <4 x i32>
   %i.afp = add <4 x i32> %i.afe, %i.afo
-  store <4 x i32> %i.afl, ptr %i.a, align 16
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store <4 x i32> %i.afm, ptr %4, align 16
+  %4 = shufflevector <4 x i32> %i.afl, <4 x i32> %i.afm, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x i32> %4, ptr %i.a, align 16
   %i.afq = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store <4 x i32> %i.afn, ptr %i.afq, align 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store <4 x i32> %i.afp, ptr %5, align 16
+  %5 = shufflevector <4 x i32> %i.afn, <4 x i32> %i.afp, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x i32> %5, ptr %i.afq, align 16
   %min.iters.check = icmp samesign ult i64 %.41107.lcssa, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 

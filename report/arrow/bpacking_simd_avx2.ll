@@ -205,7 +205,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i:                                       ; preds = %_ZN5arrow8internal12unpack_exactILi1ELb1EbEEiPKhPT1_ii.exit.i.i, %.lr.ph.i.i
   %.031.i.i = phi i32 [ %i.eb, %.lr.ph.i.i ], [ 0, %_ZN5arrow8internal12unpack_exactILi1ELb1EbEEiPKhPT1_ii.exit.i.i ]
   %.02530.i.i = phi ptr [ %i.dz, %.lr.ph.i.i ], [ %i.t, %_ZN5arrow8internal12unpack_exactILi1ELb1EbEEiPKhPT1_ii.exit.i.i ] ; 2 uses
-  %.02629.i.i = phi ptr [ %i.ea, %.lr.ph.i.i ], [ %i.v, %_ZN5arrow8internal12unpack_exactILi1ELb1EbEEiPKhPT1_ii.exit.i.i ] ; 3 uses
+  %.02629.i.i = phi ptr [ %i.ea, %.lr.ph.i.i ], [ %i.v, %_ZN5arrow8internal12unpack_exactILi1ELb1EbEEiPKhPT1_ii.exit.i.i ] ; 2 uses
   %i.di = load i32, ptr %.02530.i.i, align 1
   %i.dj = insertelement <8 x i32> poison, i32 %i.di, i64 0
   %i.dk = shufflevector <8 x i32> %i.dj, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
@@ -218,14 +218,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dr = bitcast <8 x i32> %i.dm to <32 x i8>
   %i.ds = and <32 x i8> %i.dr, <i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison>
   %i.dt = shufflevector <32 x i8> %i.dq, <32 x i8> %i.ds, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.dt, ptr %.02629.i.i, align 1, !tbaa !25
-  %5 = getelementptr inbounds nuw i8, ptr %.02629.i.i, i64 16
   %i.du = bitcast <8 x i32> %i.dn to <32 x i8>
   %i.dv = and <32 x i8> %i.du, <i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison>
   %i.dw = bitcast <8 x i32> %i.do to <32 x i8>
   %i.dx = and <32 x i8> %i.dw, <i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison>
   %i.dy = shufflevector <32 x i8> %i.dv, <32 x i8> %i.dx, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.dy, ptr %5, align 1, !tbaa !25
+  %5 = shufflevector <16 x i8> %i.dt, <16 x i8> %i.dy, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i8> %5, ptr %.02629.i.i, align 1, !tbaa !25
   %i.dz = getelementptr inbounds nuw i8, ptr %.02530.i.i, i64 4 ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %.02629.i.i, i64 32 ; 2 uses
   %i.eb = add nuw nsw i32 %.031.i.i, 1            ; 2 uses
@@ -487,7 +486,7 @@ vec.epilog.middle.block218:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i.i:                                       ; preds = %_ZN5arrow8internal12unpack_exactILi1ELb1EhEEiPKhPT1_ii.exit.i.i, %.lr.ph.i.i
   %.031.i.i = phi i32 [ %i.em, %.lr.ph.i.i ], [ 0, %_ZN5arrow8internal12unpack_exactILi1ELb1EhEEiPKhPT1_ii.exit.i.i ]
   %.02530.i.i = phi ptr [ %i.ek, %.lr.ph.i.i ], [ %i.ae, %_ZN5arrow8internal12unpack_exactILi1ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 2 uses
-  %.02629.i.i = phi ptr [ %i.el, %.lr.ph.i.i ], [ %i.ag, %_ZN5arrow8internal12unpack_exactILi1ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 3 uses
+  %.02629.i.i = phi ptr [ %i.el, %.lr.ph.i.i ], [ %i.ag, %_ZN5arrow8internal12unpack_exactILi1ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 2 uses
   %i.dt = load i32, ptr %.02530.i.i, align 1
   %i.du = insertelement <8 x i32> poison, i32 %i.dt, i64 0
   %i.dv = shufflevector <8 x i32> %i.du, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
@@ -500,14 +499,13 @@ vec.epilog.middle.block218:                       ; preds = %vec.epilog.vector.b
   %i.ec = bitcast <8 x i32> %i.dx to <32 x i8>
   %i.ed = and <32 x i8> %i.ec, <i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison>
   %i.ee = shufflevector <32 x i8> %i.eb, <32 x i8> %i.ed, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.ee, ptr %.02629.i.i, align 1, !tbaa !11
   %i.ef = bitcast <8 x i32> %i.dy to <32 x i8>
   %i.eg = and <32 x i8> %i.ef, <i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison>
-  %5 = getelementptr inbounds nuw i8, ptr %.02629.i.i, i64 16
   %i.eh = bitcast <8 x i32> %i.dz to <32 x i8>
   %i.ei = and <32 x i8> %i.eh, <i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison>
   %i.ej = shufflevector <32 x i8> %i.eg, <32 x i8> %i.ei, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.ej, ptr %5, align 1, !tbaa !11
+  %5 = shufflevector <16 x i8> %i.ee, <16 x i8> %i.ej, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i8> %5, ptr %.02629.i.i, align 1, !tbaa !11
   %i.ek = getelementptr inbounds nuw i8, ptr %.02530.i.i, i64 4 ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.02629.i.i, i64 32 ; 2 uses
   %i.em = add nuw nsw i32 %.031.i.i, 1            ; 2 uses
@@ -749,7 +747,7 @@ vec.epilog.middle.block162:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i44.i:                                     ; preds = %_ZN5arrow8internal12unpack_exactILi2ELb1EhEEiPKhPT1_ii.exit.i.i, %.lr.ph.i44.i
   %.032.i.i = phi i32 [ %i.ka, %.lr.ph.i44.i ], [ 0, %_ZN5arrow8internal12unpack_exactILi2ELb1EhEEiPKhPT1_ii.exit.i.i ]
   %.02531.i.i = phi ptr [ %i.jy, %.lr.ph.i44.i ], [ %i.fo, %_ZN5arrow8internal12unpack_exactILi2ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 3 uses
-  %.02630.i.i = phi ptr [ %i.jz, %.lr.ph.i44.i ], [ %i.fq, %_ZN5arrow8internal12unpack_exactILi2ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 3 uses
+  %.02630.i.i = phi ptr [ %i.jz, %.lr.ph.i44.i ], [ %i.fq, %_ZN5arrow8internal12unpack_exactILi2ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 2 uses
   %i.jd = load i32, ptr %.02531.i.i, align 1
   %i.je = insertelement <8 x i32> poison, i32 %i.jd, i64 0
   %i.jf = shufflevector <8 x i32> %i.je, <8 x i32> poison, <8 x i32> zeroinitializer ; 2 uses
@@ -766,14 +764,13 @@ vec.epilog.middle.block162:                       ; preds = %vec.epilog.vector.b
   %i.jq = bitcast <8 x i32> %i.jh to <32 x i8>
   %i.jr = and <32 x i8> %i.jq, <i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison>
   %i.js = shufflevector <32 x i8> %i.jp, <32 x i8> %i.jr, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.js, ptr %.02630.i.i, align 1, !tbaa !11
   %i.jt = bitcast <8 x i32> %i.jm to <32 x i8>
   %i.ju = and <32 x i8> %i.jt, <i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison>
-  %6 = getelementptr inbounds nuw i8, ptr %.02630.i.i, i64 16
   %i.jv = bitcast <8 x i32> %i.jn to <32 x i8>
   %i.jw = and <32 x i8> %i.jv, <i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison>
   %i.jx = shufflevector <32 x i8> %i.ju, <32 x i8> %i.jw, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.jx, ptr %6, align 1, !tbaa !11
+  %6 = shufflevector <16 x i8> %i.js, <16 x i8> %i.jx, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i8> %6, ptr %.02630.i.i, align 1, !tbaa !11
   %i.jy = getelementptr inbounds nuw i8, ptr %.02531.i.i, i64 8 ; 2 uses
   %i.jz = getelementptr inbounds nuw i8, ptr %.02630.i.i, i64 32 ; 2 uses
   %i.ka = add nuw nsw i32 %.032.i.i, 1            ; 2 uses
@@ -878,7 +875,7 @@ _ZN5arrow8internal12unpack_exactILi3ELb1EhEEiPKhPT1_ii.exit.i.i: ; preds = %bb.h
 .lr.ph.i58.i:                                     ; preds = %_ZN5arrow8internal12unpack_exactILi3ELb1EhEEiPKhPT1_ii.exit.i.i, %.lr.ph.i58.i
   %.032.i59.i = phi i32 [ %i.nn, %.lr.ph.i58.i ], [ 0, %_ZN5arrow8internal12unpack_exactILi3ELb1EhEEiPKhPT1_ii.exit.i.i ]
   %.02531.i60.i = phi ptr [ %i.nl, %.lr.ph.i58.i ], [ %i.lc, %_ZN5arrow8internal12unpack_exactILi3ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 4 uses
-  %.02630.i61.i = phi ptr [ %i.nm, %.lr.ph.i58.i ], [ %i.le, %_ZN5arrow8internal12unpack_exactILi3ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 3 uses
+  %.02630.i61.i = phi ptr [ %i.nm, %.lr.ph.i58.i ], [ %i.le, %_ZN5arrow8internal12unpack_exactILi3ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 2 uses
   %i.mc = load i32, ptr %.02531.i60.i, align 1    ; 3 uses
   %i.md = insertelement <8 x i32> poison, i32 %i.mc, i64 0 ; 2 uses
   %i.me = shufflevector <8 x i32> %i.md, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -909,14 +906,13 @@ _ZN5arrow8internal12unpack_exactILi3ELb1EhEEiPKhPT1_ii.exit.i.i: ; preds = %bb.h
   %i.nd = bitcast <8 x i32> %i.mp to <32 x i8>
   %i.ne = and <32 x i8> %i.nd, <i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison>
   %i.nf = shufflevector <32 x i8> %i.nc, <32 x i8> %i.ne, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.nf, ptr %.02630.i61.i, align 1, !tbaa !11
   %i.ng = bitcast <8 x i32> %i.mx to <32 x i8>
   %i.nh = and <32 x i8> %i.ng, <i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison>
-  %7 = getelementptr inbounds nuw i8, ptr %.02630.i61.i, i64 16
   %i.ni = bitcast <8 x i32> %i.na to <32 x i8>
   %i.nj = and <32 x i8> %i.ni, <i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison, i8 7, i8 poison, i8 poison, i8 poison>
   %i.nk = shufflevector <32 x i8> %i.nh, <32 x i8> %i.nj, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.nk, ptr %7, align 1, !tbaa !11
+  %7 = shufflevector <16 x i8> %i.nf, <16 x i8> %i.nk, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i8> %7, ptr %.02630.i61.i, align 1, !tbaa !11
   %i.nl = getelementptr inbounds nuw i8, ptr %.02531.i60.i, i64 12 ; 2 uses
   %i.nm = getelementptr inbounds nuw i8, ptr %.02630.i61.i, i64 32 ; 2 uses
   %i.nn = add nuw nsw i32 %.032.i59.i, 1          ; 2 uses
@@ -1110,7 +1106,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i76.i:                                     ; preds = %_ZN5arrow8internal12unpack_exactILi4ELb1EhEEiPKhPT1_ii.exit.i.i, %.lr.ph.i76.i
   %.032.i77.i = phi i32 [ %i.te, %.lr.ph.i76.i ], [ 0, %_ZN5arrow8internal12unpack_exactILi4ELb1EhEEiPKhPT1_ii.exit.i.i ]
   %.02531.i78.i = phi ptr [ %i.tc, %.lr.ph.i76.i ], [ %i.op, %_ZN5arrow8internal12unpack_exactILi4ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 5 uses
-  %.02630.i79.i = phi ptr [ %i.td, %.lr.ph.i76.i ], [ %i.or, %_ZN5arrow8internal12unpack_exactILi4ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 3 uses
+  %.02630.i79.i = phi ptr [ %i.td, %.lr.ph.i76.i ], [ %i.or, %_ZN5arrow8internal12unpack_exactILi4ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 2 uses
   %i.rz = load i32, ptr %.02531.i78.i, align 1
   %i.sa = insertelement <8 x i32> poison, i32 %i.rz, i64 0
   %i.sb = shufflevector <8 x i32> %i.sa, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -1135,14 +1131,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.su = bitcast <8 x i32> %i.sh to <32 x i8>
   %i.sv = and <32 x i8> %i.su, <i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison>
   %i.sw = shufflevector <32 x i8> %i.st, <32 x i8> %i.sv, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.sw, ptr %.02630.i79.i, align 1, !tbaa !11
   %i.sx = bitcast <8 x i32> %i.sm to <32 x i8>
   %i.sy = and <32 x i8> %i.sx, <i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison>
-  %8 = getelementptr inbounds nuw i8, ptr %.02630.i79.i, i64 16
   %i.sz = bitcast <8 x i32> %i.sr to <32 x i8>
   %i.ta = and <32 x i8> %i.sz, <i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison, i8 15, i8 poison, i8 poison, i8 poison>
   %i.tb = shufflevector <32 x i8> %i.sy, <32 x i8> %i.ta, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.tb, ptr %8, align 1, !tbaa !11
+  %8 = shufflevector <16 x i8> %i.sw, <16 x i8> %i.tb, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i8> %8, ptr %.02630.i79.i, align 1, !tbaa !11
   %i.tc = getelementptr inbounds nuw i8, ptr %.02531.i78.i, i64 16 ; 2 uses
   %i.td = getelementptr inbounds nuw i8, ptr %.02630.i79.i, i64 32 ; 2 uses
   %i.te = add nuw nsw i32 %.032.i77.i, 1          ; 2 uses
@@ -1247,7 +1242,7 @@ _ZN5arrow8internal12unpack_exactILi5ELb1EhEEiPKhPT1_ii.exit.i.i: ; preds = %bb.l
 .lr.ph.i95.i:                                     ; preds = %_ZN5arrow8internal12unpack_exactILi5ELb1EhEEiPKhPT1_ii.exit.i.i, %.lr.ph.i95.i
   %.032.i96.i = phi i32 [ %i.xj, %.lr.ph.i95.i ], [ 0, %_ZN5arrow8internal12unpack_exactILi5ELb1EhEEiPKhPT1_ii.exit.i.i ]
   %.02531.i97.i = phi ptr [ %i.xh, %.lr.ph.i95.i ], [ %i.ug, %_ZN5arrow8internal12unpack_exactILi5ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 6 uses
-  %.02630.i98.i = phi ptr [ %i.xi, %.lr.ph.i95.i ], [ %i.ui, %_ZN5arrow8internal12unpack_exactILi5ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 3 uses
+  %.02630.i98.i = phi ptr [ %i.xi, %.lr.ph.i95.i ], [ %i.ui, %_ZN5arrow8internal12unpack_exactILi5ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 2 uses
   %i.vg = load i32, ptr %.02531.i97.i, align 1    ; 4 uses
   %i.vh = getelementptr inbounds nuw i8, ptr %.02531.i97.i, i64 4
   %i.vi = load i32, ptr %i.vh, align 1            ; 4 uses
@@ -1296,14 +1291,13 @@ _ZN5arrow8internal12unpack_exactILi5ELb1EhEEiPKhPT1_ii.exit.i.i: ; preds = %bb.l
   %i.wz = bitcast <8 x i32> %i.wa to <32 x i8>
   %i.xa = and <32 x i8> %i.wz, <i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison>
   %i.xb = shufflevector <32 x i8> %i.wy, <32 x i8> %i.xa, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.xb, ptr %.02630.i98.i, align 1, !tbaa !11
   %i.xc = bitcast <8 x i32> %i.wl to <32 x i8>
   %i.xd = and <32 x i8> %i.xc, <i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison>
-  %9 = getelementptr inbounds nuw i8, ptr %.02630.i98.i, i64 16
   %i.xe = bitcast <8 x i32> %i.ww to <32 x i8>
   %i.xf = and <32 x i8> %i.xe, <i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison, i8 31, i8 poison, i8 poison, i8 poison>
   %i.xg = shufflevector <32 x i8> %i.xd, <32 x i8> %i.xf, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.xg, ptr %9, align 1, !tbaa !11
+  %9 = shufflevector <16 x i8> %i.xb, <16 x i8> %i.xg, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i8> %9, ptr %.02630.i98.i, align 1, !tbaa !11
   %i.xh = getelementptr inbounds nuw i8, ptr %.02531.i97.i, i64 20 ; 2 uses
   %i.xi = getelementptr inbounds nuw i8, ptr %.02630.i98.i, i64 32 ; 2 uses
   %i.xj = add nuw nsw i32 %.032.i96.i, 1          ; 2 uses
@@ -1408,7 +1402,7 @@ _ZN5arrow8internal12unpack_exactILi6ELb1EhEEiPKhPT1_ii.exit.i.i: ; preds = %bb.n
 .lr.ph.i114.i:                                    ; preds = %_ZN5arrow8internal12unpack_exactILi6ELb1EhEEiPKhPT1_ii.exit.i.i, %.lr.ph.i114.i
   %.032.i115.i = phi i32 [ %i.abq, %.lr.ph.i114.i ], [ 0, %_ZN5arrow8internal12unpack_exactILi6ELb1EhEEiPKhPT1_ii.exit.i.i ]
   %.02531.i116.i = phi ptr [ %i.abo, %.lr.ph.i114.i ], [ %i.yl, %_ZN5arrow8internal12unpack_exactILi6ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 7 uses
-  %.02630.i117.i = phi ptr [ %i.abp, %.lr.ph.i114.i ], [ %i.yn, %_ZN5arrow8internal12unpack_exactILi6ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 3 uses
+  %.02630.i117.i = phi ptr [ %i.abp, %.lr.ph.i114.i ], [ %i.yn, %_ZN5arrow8internal12unpack_exactILi6ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 2 uses
   %i.zl = load i32, ptr %.02531.i116.i, align 1   ; 3 uses
   %i.zm = getelementptr inbounds nuw i8, ptr %.02531.i116.i, i64 4
   %i.zn = load i32, ptr %i.zm, align 1            ; 6 uses
@@ -1459,14 +1453,13 @@ _ZN5arrow8internal12unpack_exactILi6ELb1EhEEiPKhPT1_ii.exit.i.i: ; preds = %bb.n
   %i.abg = bitcast <8 x i32> %i.aag to <32 x i8>
   %i.abh = and <32 x i8> %i.abg, <i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison>
   %i.abi = shufflevector <32 x i8> %i.abf, <32 x i8> %i.abh, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.abi, ptr %.02630.i117.i, align 1, !tbaa !11
   %i.abj = bitcast <8 x i32> %i.aas to <32 x i8>
   %i.abk = and <32 x i8> %i.abj, <i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison>
-  %10 = getelementptr inbounds nuw i8, ptr %.02630.i117.i, i64 16
   %i.abl = bitcast <8 x i32> %i.abd to <32 x i8>
   %i.abm = and <32 x i8> %i.abl, <i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison, i8 63, i8 poison, i8 poison, i8 poison>
   %i.abn = shufflevector <32 x i8> %i.abk, <32 x i8> %i.abm, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.abn, ptr %10, align 1, !tbaa !11
+  %10 = shufflevector <16 x i8> %i.abi, <16 x i8> %i.abn, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i8> %10, ptr %.02630.i117.i, align 1, !tbaa !11
   %i.abo = getelementptr inbounds nuw i8, ptr %.02531.i116.i, i64 24 ; 2 uses
   %i.abp = getelementptr inbounds nuw i8, ptr %.02630.i117.i, i64 32 ; 2 uses
   %i.abq = add nuw nsw i32 %.032.i115.i, 1        ; 2 uses
@@ -1571,7 +1564,7 @@ _ZN5arrow8internal12unpack_exactILi7ELb1EhEEiPKhPT1_ii.exit.i.i: ; preds = %bb.p
 .lr.ph.i133.i:                                    ; preds = %_ZN5arrow8internal12unpack_exactILi7ELb1EhEEiPKhPT1_ii.exit.i.i, %.lr.ph.i133.i
   %.032.i134.i = phi i32 [ %i.afh, %.lr.ph.i133.i ], [ 0, %_ZN5arrow8internal12unpack_exactILi7ELb1EhEEiPKhPT1_ii.exit.i.i ]
   %.02531.i135.i = phi ptr [ %i.aff, %.lr.ph.i133.i ], [ %i.acs, %_ZN5arrow8internal12unpack_exactILi7ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 5 uses
-  %.02630.i136.i = phi ptr [ %i.afg, %.lr.ph.i133.i ], [ %i.acu, %_ZN5arrow8internal12unpack_exactILi7ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 3 uses
+  %.02630.i136.i = phi ptr [ %i.afg, %.lr.ph.i133.i ], [ %i.acu, %_ZN5arrow8internal12unpack_exactILi7ELb1EhEEiPKhPT1_ii.exit.i.i ] ; 2 uses
   %i.ads = getelementptr inbounds nuw i8, ptr %.02531.i135.i, i64 4
   %i.adt = load <4 x i32>, ptr %.02531.i135.i, align 1 ; 2 uses
   %i.adu = load <4 x i32>, ptr %i.ads, align 1    ; 5 uses
@@ -1606,14 +1599,13 @@ _ZN5arrow8internal12unpack_exactILi7ELb1EhEEiPKhPT1_ii.exit.i.i: ; preds = %bb.p
   %i.aex = bitcast <8 x i32> %i.aeb to <32 x i8>
   %i.aey = and <32 x i8> %i.aex, <i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison>
   %i.aez = shufflevector <32 x i8> %i.aew, <32 x i8> %i.aey, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.aez, ptr %.02630.i136.i, align 1, !tbaa !11
   %i.afa = bitcast <8 x i32> %i.aej to <32 x i8>
   %i.afb = and <32 x i8> %i.afa, <i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison>
-  %11 = getelementptr inbounds nuw i8, ptr %.02630.i136.i, i64 16
   %i.afc = bitcast <8 x i32> %i.aeu to <32 x i8>
   %i.afd = and <32 x i8> %i.afc, <i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison, i8 127, i8 poison, i8 poison, i8 poison>
   %i.afe = shufflevector <32 x i8> %i.afb, <32 x i8> %i.afd, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 32, i32 36, i32 40, i32 44, i32 48, i32 52, i32 56, i32 60>
-  store <16 x i8> %i.afe, ptr %11, align 1, !tbaa !11
+  %11 = shufflevector <16 x i8> %i.aez, <16 x i8> %i.afe, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i8> %11, ptr %.02630.i136.i, align 1, !tbaa !11
   %i.aff = getelementptr inbounds nuw i8, ptr %.02531.i135.i, i64 28 ; 2 uses
   %i.afg = getelementptr inbounds nuw i8, ptr %.02630.i136.i, i64 32 ; 2 uses
   %i.afh = add nuw nsw i32 %.032.i134.i, 1        ; 2 uses

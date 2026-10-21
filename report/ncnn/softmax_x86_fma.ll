@@ -204,11 +204,11 @@ begin_hunk_0_@_ZN4ncnnL7softmaxEPfiimiS0_S0_:bb.a
   %.1321660.i = phi ptr [ %i.akj, %.lr.ph663.i ], [ %.0320.lcssa.i, %.preheader626.i ] ; 3 uses
   %.1324659.i = phi i32 [ %i.akk, %.lr.ph663.i ], [ %.0323.lcssa.i, %.preheader626.i ]
   %i.aey = load <4 x float>, ptr %.1315662.i, align 1, !tbaa !61
-  %i.aez = getelementptr inbounds nuw i8, ptr %.1315662.i, i64 16 ; 2 uses
+  %i.aez = getelementptr inbounds nuw i8, ptr %.1315662.i, i64 16
   %i.afa = load <4 x float>, ptr %i.aez, align 1, !tbaa !61
   %i.afb = getelementptr inbounds nuw i8, ptr %.1315662.i, i64 32 ; 2 uses
   %i.afc = load <4 x float>, ptr %i.afb, align 1, !tbaa !61
-  %i.afd = getelementptr inbounds nuw i8, ptr %.1315662.i, i64 48 ; 2 uses
+  %i.afd = getelementptr inbounds nuw i8, ptr %.1315662.i, i64 48
   %i.afe = load <4 x float>, ptr %i.afd, align 1, !tbaa !61
   %i.aff = load float, ptr %.1318661.i, align 4, !tbaa !65
   %i.afg = insertelement <4 x float> poison, float %i.aff, i64 0
@@ -329,10 +329,10 @@ begin_hunk_0_@_ZN4ncnnL7softmaxEPfiimiS0_S0_:bb.a
   %i.ajr = add <4 x i32> %i.ajq, splat (i32 1065353216)
   %i.ajs = bitcast <4 x i32> %i.ajr to <4 x float>
   %i.ajt = fmul fast <4 x float> %i.ajo, %i.ajs   ; 3 uses
-  store <4 x float> %i.agh, ptr %.1315662.i, align 1, !tbaa !61
-  store <4 x float> %i.ahl, ptr %i.aez, align 1, !tbaa !61
-  store <4 x float> %i.aip, ptr %i.afb, align 1, !tbaa !61
-  store <4 x float> %i.ajt, ptr %i.afd, align 1, !tbaa !61
+  %7 = shufflevector <4 x float> %i.agh, <4 x float> %i.ahl, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %7, ptr %.1315662.i, align 1, !tbaa !61
+  %8 = shufflevector <4 x float> %i.aip, <4 x float> %i.ajt, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %8, ptr %i.afb, align 1, !tbaa !61
   %i.aju = shufflevector <4 x float> %i.agh, <4 x float> %i.ahl, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
   %i.ajv = shufflevector <4 x float> %i.aip, <4 x float> %i.ajt, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
   %i.ajw = shufflevector <4 x float> %i.agh, <4 x float> %i.ahl, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
@@ -649,35 +649,31 @@ bb.g:                                             ; preds = %._crit_edge708.i, %
   %.1333698.i = phi ptr [ %i.aqv, %.lr.ph700.i ], [ %.0332.lcssa.i, %.preheader620.i ] ; 5 uses
   %.1336697.i = phi ptr [ %i.aqu, %.lr.ph700.i ], [ %.0335.lcssa.i, %.preheader620.i ] ; 6 uses
   %i.aqf = load <4 x float>, ptr %.1336697.i, align 1, !tbaa !61
-  %i.aqg = getelementptr inbounds nuw i8, ptr %.1336697.i, i64 16 ; 2 uses
+  %i.aqg = getelementptr inbounds nuw i8, ptr %.1336697.i, i64 16
   %i.aqh = load <4 x float>, ptr %i.aqg, align 1, !tbaa !61
   %i.aqi = getelementptr inbounds nuw i8, ptr %.1336697.i, i64 32 ; 2 uses
   %i.aqj = load <4 x float>, ptr %i.aqi, align 1, !tbaa !61
-  %i.aqk = getelementptr inbounds nuw i8, ptr %.1336697.i, i64 48 ; 2 uses
+  %i.aqk = getelementptr inbounds nuw i8, ptr %.1336697.i, i64 48
   %i.aql = load <4 x float>, ptr %i.aqk, align 1, !tbaa !61
   %i.aqm = load float, ptr %.1333698.i, align 4, !tbaa !65
   %i.aqn = insertelement <4 x float> poison, float %i.aqm, i64 0
-  %7 = shufflevector <4 x float> %i.aqn, <4 x float> poison, <4 x i32> zeroinitializer
-  %8 = fmul fast <4 x float> %7, %i.aqf
   %i.aqo = getelementptr inbounds nuw i8, ptr %.1333698.i, i64 4
   %i.aqp = load float, ptr %i.aqo, align 4, !tbaa !65
   %i.aqq = insertelement <4 x float> poison, float %i.aqp, i64 0
-  %9 = shufflevector <4 x float> %i.aqq, <4 x float> poison, <4 x i32> zeroinitializer
-  %10 = fmul fast <4 x float> %9, %i.aqh
   %i.aqr = getelementptr inbounds nuw i8, ptr %.1333698.i, i64 8
   %i.aqs = load float, ptr %i.aqr, align 4, !tbaa !65
   %i.aqt = insertelement <4 x float> poison, float %i.aqs, i64 0
-  %11 = shufflevector <4 x float> %i.aqt, <4 x float> poison, <4 x i32> zeroinitializer
-  %12 = fmul fast <4 x float> %11, %i.aqj
-  %13 = getelementptr inbounds nuw i8, ptr %.1333698.i, i64 12
-  %14 = load float, ptr %13, align 4, !tbaa !65
-  %15 = insertelement <4 x float> poison, float %14, i64 0
-  %16 = shufflevector <4 x float> %15, <4 x float> poison, <4 x i32> zeroinitializer
-  %17 = fmul fast <4 x float> %16, %i.aql
-  store <4 x float> %8, ptr %.1336697.i, align 1, !tbaa !61
-  store <4 x float> %10, ptr %i.aqg, align 1, !tbaa !61
-  store <4 x float> %12, ptr %i.aqi, align 1, !tbaa !61
-  store <4 x float> %17, ptr %i.aqk, align 1, !tbaa !61
+  %9 = getelementptr inbounds nuw i8, ptr %.1333698.i, i64 12
+  %10 = load float, ptr %9, align 4, !tbaa !65
+  %11 = insertelement <4 x float> poison, float %10, i64 0
+  %12 = shufflevector <4 x float> %i.aqn, <4 x float> %i.aqq, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
+  %13 = shufflevector <4 x float> %i.aqf, <4 x float> %i.aqh, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %14 = fmul fast <8 x float> %12, %13
+  store <8 x float> %14, ptr %.1336697.i, align 1, !tbaa !61
+  %15 = shufflevector <4 x float> %i.aqt, <4 x float> %11, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
+  %16 = shufflevector <4 x float> %i.aqj, <4 x float> %i.aql, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %17 = fmul fast <8 x float> %15, %16
+  store <8 x float> %17, ptr %i.aqi, align 1, !tbaa !61
   %i.aqu = getelementptr inbounds nuw i8, ptr %.1336697.i, i64 64 ; 2 uses
   %i.aqv = getelementptr inbounds nuw i8, ptr %.1333698.i, i64 16 ; 2 uses
   %i.aqw = add nuw nsw i32 %.1330699.i, 4         ; 3 uses

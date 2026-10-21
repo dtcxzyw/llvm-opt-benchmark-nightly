@@ -16,7 +16,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind ssp uwtable
 define internal noundef i32 @stream_avx2(ptr noundef %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #0 {
 bb.a:
-  %4 = alloca %struct.salsa_ctx, align 16         ; 14 uses
+  %4 = alloca %struct.salsa_ctx, align 4          ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   %.not = icmp eq i64 %1, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -26,7 +26,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %3, i64 4
   %i.c = load i32, ptr %i.b, align 1
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 40
-  store i32 %i.c, ptr %i.d, align 8
+  store i32 %i.c, ptr %i.d, align 4
   %i.e = getelementptr i8, ptr %3, i64 8
   %i.f = load i32, ptr %i.e, align 1
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 60
@@ -34,9 +34,8 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr i8, ptr %3, i64 12
   %i.i = load i32, ptr %i.h, align 1
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 48
-  store i32 %i.i, ptr %i.j, align 16
+  store i32 %i.i, ptr %i.j, align 4
   %i.k = getelementptr i8, ptr %3, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.l = getelementptr i8, ptr %3, i64 24
   %i.m = load i32, ptr %i.l, align 1
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 36
@@ -44,20 +43,20 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr i8, ptr %3, i64 28
   %i.p = load i32, ptr %i.o, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 56
-  store i32 %i.p, ptr %i.q, align 8
-  store <4 x i32> <i32 1634760805, i32 857760878, i32 2036477234, i32 1797285236>, ptr %4, align 16
+  store i32 %i.p, ptr %i.q, align 4
   %i.r = load i32, ptr %2, align 1
   %i.s = load <2 x i32>, ptr %i.k, align 1
   %i.t = shufflevector <2 x i32> %i.s, <2 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 0>
   %i.u = insertelement <4 x i32> %i.t, i32 %i.a, i64 1
   %i.v = insertelement <4 x i32> %i.u, i32 %i.r, i64 2
-  store <4 x i32> %i.v, ptr %5, align 16
+  %5 = shufflevector <4 x i32> <i32 1634760805, i32 857760878, i32 2036477234, i32 1797285236>, <4 x i32> %i.v, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x i32> %5, ptr %4, align 4
   %i.w = getelementptr i8, ptr %2, i64 4
   %i.x = load i32, ptr %i.w, align 1
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 44
   store i32 %i.x, ptr %i.y, align 4
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 32
-  store i32 0, ptr %i.z, align 16
+  store i32 0, ptr %i.z, align 4
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 52
   store i32 0, ptr %i.aa, align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %0, i8 noundef 0, i64 noundef range(i64 1, 0) %1, i1 noundef false) #6
@@ -73,7 +72,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind ssp uwtable
 define internal noundef i32 @stream_avx2_xor_ic(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5) #0 {
 bb.a:
-  %6 = alloca %struct.salsa_ctx, align 16         ; 14 uses
+  %6 = alloca %struct.salsa_ctx, align 4          ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -86,7 +85,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %5, i64 4
   %i.c = load i32, ptr %i.b, align 1
   %i.d = getelementptr inbounds nuw i8, ptr %6, i64 40
-  store i32 %i.c, ptr %i.d, align 8
+  store i32 %i.c, ptr %i.d, align 4
   %i.e = getelementptr i8, ptr %5, i64 8
   %i.f = load i32, ptr %i.e, align 1
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 60
@@ -94,9 +93,8 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr i8, ptr %5, i64 12
   %i.i = load i32, ptr %i.h, align 1
   %i.j = getelementptr inbounds nuw i8, ptr %6, i64 48
-  store i32 %i.i, ptr %i.j, align 16
+  store i32 %i.i, ptr %i.j, align 4
   %i.k = getelementptr i8, ptr %5, i64 16
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.l = getelementptr i8, ptr %5, i64 24
   %i.m = load i32, ptr %i.l, align 1
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 36
@@ -104,20 +102,20 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr i8, ptr %5, i64 28
   %i.p = load i32, ptr %i.o, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %6, i64 56
-  store i32 %i.p, ptr %i.q, align 8
-  store <4 x i32> <i32 1634760805, i32 857760878, i32 2036477234, i32 1797285236>, ptr %6, align 16
+  store i32 %i.p, ptr %i.q, align 4
   %i.r = load i32, ptr %3, align 1
   %i.s = load <2 x i32>, ptr %i.k, align 1
   %i.t = shufflevector <2 x i32> %i.s, <2 x i32> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 0>
   %i.u = insertelement <4 x i32> %i.t, i32 %i.a, i64 1
   %i.v = insertelement <4 x i32> %i.u, i32 %i.r, i64 2
-  store <4 x i32> %i.v, ptr %7, align 16
+  %7 = shufflevector <4 x i32> <i32 1634760805, i32 857760878, i32 2036477234, i32 1797285236>, <4 x i32> %i.v, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x i32> %7, ptr %6, align 4
   %i.w = getelementptr i8, ptr %3, i64 4
   %i.x = load i32, ptr %i.w, align 1
   %i.y = getelementptr inbounds nuw i8, ptr %6, i64 44
   store i32 %i.x, ptr %i.y, align 4
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 32
-  store i32 %.sroa.0.0.extract.trunc, ptr %i.z, align 16
+  store i32 %.sroa.0.0.extract.trunc, ptr %i.z, align 4
   %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 52
   store i32 %.sroa.4.0.extract.trunc, ptr %i.aa, align 4
   call fastcc void @salsa20_encrypt_bytes(ptr noundef %6, ptr noundef %1, ptr noundef %0, i64 noundef %2)

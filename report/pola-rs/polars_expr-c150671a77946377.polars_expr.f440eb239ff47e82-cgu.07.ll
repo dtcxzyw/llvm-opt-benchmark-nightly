@@ -205,10 +205,8 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16, !dbg !155718
   store <8 x i16> %broadcast.splat, ptr %i.av, align 2, !dbg !155718, !alias.scope !155674, !noalias !155675
   store <8 x i16> %broadcast.splat, ptr %i.aw, align 2, !dbg !155718, !alias.scope !155674, !noalias !155675
-  %2 = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.au, !dbg !155719 ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !155720
-  store <8 x i8> splat (i8 1), ptr %2, align 1, !dbg !155720, !alias.scope !155676, !noalias !155663
-  store <8 x i8> splat (i8 1), ptr %i.ax, align 1, !dbg !155720, !alias.scope !155676, !noalias !155663
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.au, !dbg !155719
+  store <16 x i8> splat (i8 1), ptr %i.ax, align 1, !dbg !155720, !alias.scope !155676, !noalias !155663
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ay = icmp eq i64 %index.next, %n.vec, !dbg !155716
   br i1 %i.ay, label %middle.block, label %vector.body, !dbg !155716, !llvm.loop !155655
@@ -611,10 +609,8 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16, !dbg !156976
   store <8 x i16> %broadcast.splat, ptr %i.av, align 2, !dbg !156976, !alias.scope !156932, !noalias !156933
   store <8 x i16> %broadcast.splat, ptr %i.aw, align 2, !dbg !156976, !alias.scope !156932, !noalias !156933
-  %2 = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.au, !dbg !156977 ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !156978
-  store <8 x i8> splat (i8 1), ptr %2, align 1, !dbg !156978, !alias.scope !156934, !noalias !156921
-  store <8 x i8> splat (i8 1), ptr %i.ax, align 1, !dbg !156978, !alias.scope !156934, !noalias !156921
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.au, !dbg !156977
+  store <16 x i8> splat (i8 1), ptr %i.ax, align 1, !dbg !156978, !alias.scope !156934, !noalias !156921
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ay = icmp eq i64 %index.next, %n.vec, !dbg !156974
   br i1 %i.ay, label %middle.block, label %vector.body, !dbg !156974, !llvm.loop !156913
@@ -1017,10 +1013,8 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16, !dbg !159094
   store <8 x i16> %broadcast.splat, ptr %i.av, align 2, !dbg !159094, !alias.scope !159050, !noalias !159051
   store <8 x i16> %broadcast.splat, ptr %i.aw, align 2, !dbg !159094, !alias.scope !159050, !noalias !159051
-  %2 = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.au, !dbg !159095 ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !159096
-  store <8 x i8> splat (i8 1), ptr %2, align 1, !dbg !159096, !alias.scope !159052, !noalias !159039
-  store <8 x i8> splat (i8 1), ptr %i.ax, align 1, !dbg !159096, !alias.scope !159052, !noalias !159039
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.au, !dbg !159095
+  store <16 x i8> splat (i8 1), ptr %i.ax, align 1, !dbg !159096, !alias.scope !159052, !noalias !159039
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ay = icmp eq i64 %index.next, %n.vec, !dbg !159092
   br i1 %i.ay, label %middle.block, label %vector.body, !dbg !159092, !llvm.loop !159031

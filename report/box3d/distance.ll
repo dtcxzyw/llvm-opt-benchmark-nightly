@@ -204,9 +204,8 @@ b3NLerp.exit:                                     ; preds = %bb.a, %bb.b
   %.sroa.010.0.i.i = phi <2 x float> [ %i.ak, %bb.b ], [ zeroinitializer, %bb.a ] ; 6 uses
   %.sroa.4.0.i.i = phi <2 x float> [ %i.al, %bb.b ], [ <float 0.000000e+00, float 1.000000e+00>, %bb.a ] ; 5 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store <2 x float> %.sroa.010.0.i.i, ptr %i.am, align 4, !tbaa !16
-  %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store <2 x float> %.sroa.4.0.i.i, ptr %.sroa.425.0..sroa_idx, align 4, !tbaa !16
+  %3 = shufflevector <2 x float> %.sroa.010.0.i.i, <2 x float> %.sroa.4.0.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.am, align 4, !tbaa !16
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.019.0.copyload = load <2 x float>, ptr %i.an, align 4
@@ -270,7 +269,7 @@ bb.a:
   %2 = alloca %struct.b3ShapeProxy, align 8       ; 12 uses
   %3 = alloca %struct.b3ShapeProxy, align 8       ; 12 uses
   %4 = alloca %struct.b3SimplexCache, align 8     ; 6 uses
-  %5 = alloca %struct.b3DistanceInput, align 8    ; 10 uses
+  %5 = alloca %struct.b3DistanceInput, align 8    ; 9 uses
   %6 = alloca %struct.b3DistanceOutput, align 8   ; 11 uses
   %7 = alloca %struct.b3SeparationFunction, align 8 ; 32 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 5 uses
@@ -380,10 +379,9 @@ bb.a:
   %i.ax = fadd <2 x float> %i.aw, %i.av
   %i.ay = fcmp olt <2 x float> %i.ax, zeroinitializer ; 2 uses
   %.sroa.03.4.vec.extract.i.i.i409 = extractelement <2 x float> %.sroa.0920.0.copyload, i64 1 ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %5, i64 40
-  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %5, i64 44
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 52
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 44
   %i.az = fneg <2 x float> %.sroa.23.0.copyload   ; 4 uses
   %i.ba = fneg <2 x float> %.sroa.25.0.copyload   ; 4 uses
   %i.bb = fneg <2 x float> %.sroa.24.0.copyload   ; 4 uses
@@ -671,10 +669,10 @@ b3GetSweepTransform.exit420:                      ; preds = %b3GetSweepTransform
   %i.ix = fadd <2 x float> %i.it, %i.iw
   %i.iy = fadd <2 x float> %i.is, %i.ix
   %.sroa.251.12.vec.insert.i = shufflevector <2 x float> %foldExtExtBinop2465, <2 x float> %i.iy, <2 x i32> <i32 0, i32 2>
-  store <2 x float> %i.id, ptr %8, align 8, !tbaa !16
-  store float %i.if, ptr %.sroa.4.0..sroa_idx.a, align 8, !tbaa !16
-  store <2 x float> %i.in, ptr %.sroa.5.0..sroa_idx.a, align 4, !tbaa !16
-  store <2 x float> %.sroa.251.12.vec.insert.i, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !16
+  store <2 x float> %i.id, ptr %.sroa.4.0..sroa_idx.a, align 8, !tbaa !16
+  store float %i.if, ptr %.sroa.5.0..sroa_idx.a, align 8, !tbaa !16
+  %8 = shufflevector <2 x float> %i.in, <2 x float> %.sroa.251.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   call void @b3ShapeDistance(ptr dead_on_unwind nonnull writable sret(%struct.b3DistanceOutput) align 4 %6, ptr noundef nonnull %5, ptr noundef nonnull %4, ptr noundef null, i32 noundef 0)
   %i.iz = load float, ptr %i.bd, align 4, !tbaa !26 ; 8 uses

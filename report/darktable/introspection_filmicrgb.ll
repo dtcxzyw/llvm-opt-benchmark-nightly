@@ -205,9 +205,9 @@ define internal fastcc range(i32 0, 2) i32 @dt_iop_filmic_rgb_compute_spline(ptr
 bb.a:
   %i.a = alloca [25 x double], align 16           ; 18 uses
   %i.b = alloca [5 x double], align 16            ; 8 uses
-  %i.c = alloca [16 x double], align 16           ; 14 uses
+  %i.c = alloca [16 x double], align 16           ; 13 uses
   %i.d = alloca [4 x double], align 16            ; 7 uses
-  %i.e = alloca [16 x double], align 16           ; 13 uses
+  %i.e = alloca [16 x double], align 16           ; 12 uses
   %i.f = alloca [4 x double], align 16            ; 7 uses
   %i.g = alloca [25 x double], align 16           ; 17 uses
   %i.h = alloca [5 x double], align 16            ; 8 uses
@@ -561,9 +561,8 @@ bb.p:                                             ; preds = %bb.n
   %i.ia = insertelement <2 x double> poison, double %i.ft, i64 0
   %i.ib = insertelement <2 x double> %i.ia, double %i.fs, i64 1
   %i.ic = fmul reassoc nsz arcp contract afn <2 x double> %i.ib, <double 3.000000e+00, double 2.000000e+00>
-  store <2 x double> %i.ic, ptr %i.hz, align 16, !tbaa !185
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 80
-  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %2, align 16, !tbaa !185
+  %2 = shufflevector <2 x double> %i.ic, <2 x double> <double 1.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %2, ptr %i.hz, align 16, !tbaa !185
   %i.id = getelementptr inbounds nuw i8, ptr %i.c, i64 96
   %i.ie = fmul reassoc nsz arcp contract afn double %i.fs, 6.000000e+00
   store double %i.ie, ptr %i.id, align 16, !tbaa !185
@@ -640,9 +639,8 @@ bb.s:                                             ; preds = %bb.r
   %i.jq = insertelement <2 x double> poison, double %i.fw, i64 0
   %i.jr = insertelement <2 x double> %i.jq, double %i.fv, i64 1
   %i.js = fmul reassoc nsz arcp contract afn <2 x double> %i.jr, <double 3.000000e+00, double 2.000000e+00>
-  store <2 x double> %i.js, ptr %i.jp, align 16, !tbaa !185
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 80
-  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %3, align 16, !tbaa !185
+  %3 = shufflevector <2 x double> %i.js, <2 x double> <double 1.000000e+00, double 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %3, ptr %i.jp, align 16, !tbaa !185
   %i.jt = getelementptr inbounds nuw i8, ptr %i.e, i64 96
   %i.ju = fmul reassoc nsz arcp contract afn double %i.fv, 6.000000e+00
   store double %i.ju, ptr %i.jt, align 16, !tbaa !185

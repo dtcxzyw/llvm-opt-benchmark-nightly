@@ -202,9 +202,8 @@ _ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKe
   %.fca.1.insert.merged.i = phi { <2 x float>, <2 x float> } [ %.fca.1.insert.merged.i.i, %_ZN3ozz9animation7offline12_GLOBAL__N_19TrackLerpINS1_16RawTrackKeyframeINS_4math6Float4EEEEENT_9ValueTypeERKS8_SB_f.exit.i ], [ %i.j, %bb.d ], [ %i.p, %bb.f ], [ zeroinitializer, %bb.b ] ; 2 uses
   %i.bb = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i, 0
   %i.bc = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i, 1
-  store <2 x float> %i.bb, ptr %2, align 4, !tbaa !13
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> %i.bc, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !13
+  %3 = shufflevector <2 x float> %i.bb, <2 x float> %i.bc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %2, align 4, !tbaa !13
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math6Float4EEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit
@@ -367,9 +366,8 @@ _ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKe
   %.fca.1.insert.merged.i = phi { <2 x float>, <2 x float> } [ %.fca.1.insert.merged.i.i, %_ZN3ozz9animation7offline12_GLOBAL__N_19TrackLerpINS1_16RawTrackKeyframeINS_4math10QuaternionEEEEENT_9ValueTypeERKS8_SB_f.exit.i ], [ %i.j, %bb.d ], [ %i.p, %bb.f ], [ { <2 x float> zeroinitializer, <2 x float> <float 0.000000e+00, float 1.000000e+00> }, %bb.b ] ; 2 uses
   %i.bx = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i, 0
   %i.by = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i, 1
-  store <2 x float> %i.bx, ptr %2, align 4, !tbaa !13
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> %i.by, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !13
+  %3 = shufflevector <2 x float> %i.bx, <2 x float> %i.by, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %2, align 4, !tbaa !13
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit

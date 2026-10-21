@@ -204,9 +204,9 @@ middle.block:                                     ; preds = %vector.body
 vector.ph39:                                      ; preds = %.lr.ph33.i.i
   %n.vec40 = and i64 %i.k, 2044                   ; 3 uses
   %broadcast.splatinsert41 = insertelement <2 x float> poison, float %i.bu, i64 0
-  %broadcast.splat42 = shufflevector <2 x float> %broadcast.splatinsert41, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert43 = insertelement <2 x float> poison, float %i.bx, i64 0
-  %broadcast.splat44 = shufflevector <2 x float> %broadcast.splatinsert43, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %2 = shufflevector <2 x float> %broadcast.splatinsert43, <2 x float> poison, <4 x i32> zeroinitializer
+  %3 = shufflevector <2 x float> %broadcast.splatinsert41, <2 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body45
 
 vector.body45:                                    ; preds = %vector.body45, %vector.ph39
@@ -215,16 +215,12 @@ vector.body45:                                    ; preds = %vector.body45, %vec
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 16
   %wide.load47 = load <2 x i64>, ptr %i.by, align 16, !tbaa !171
   %wide.load48 = load <2 x i64>, ptr %i.bz, align 16, !tbaa !171
-  %2 = sitofp <2 x i64> %wide.load47 to <2 x float>
-  %3 = sitofp <2 x i64> %wide.load48 to <2 x float>
-  %4 = fmul nnan <2 x float> %broadcast.splat42, %2
-  %5 = fmul nnan <2 x float> %broadcast.splat42, %3
-  %6 = fmul <2 x float> %broadcast.splat44, %4
-  %7 = fmul <2 x float> %broadcast.splat44, %5
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index46 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store <2 x float> %6, ptr %8, align 4, !tbaa !165
-  store <2 x float> %7, ptr %9, align 4, !tbaa !165
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index46
+  %5 = shufflevector <2 x i64> %wide.load47, <2 x i64> %wide.load48, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = sitofp <4 x i64> %5 to <4 x float>
+  %7 = fmul nnan <4 x float> %3, %6
+  %8 = fmul <4 x float> %2, %7
+  store <4 x float> %8, ptr %4, align 4, !tbaa !165
   %index.next49 = add nuw i64 %index46, 4         ; 2 uses
   %i.ca = icmp eq i64 %index.next49, %n.vec40
   br i1 %i.ca, label %middle.block50, label %vector.body45, !llvm.loop !537

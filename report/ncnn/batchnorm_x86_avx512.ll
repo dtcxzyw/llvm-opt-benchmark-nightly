@@ -204,9 +204,9 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %wide.load29 = load <16 x float>, ptr %i.ac, align 4, !tbaa !37
   %wide.load30 = load <16 x float>, ptr %i.ad, align 4, !tbaa !37
   %i.ae = getelementptr inbounds [2 x i8], ptr %i.q, i64 %i.z ; 5 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 32 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 64 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 96 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 96
   %wide.load31 = load <16 x i16>, ptr %i.ae, align 2, !tbaa !43
   %wide.load32 = load <16 x i16>, ptr %i.af, align 2, !tbaa !43
   %wide.load33 = load <16 x i16>, ptr %i.ag, align 2, !tbaa !43
@@ -239,22 +239,16 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bd = fadd fast <16 x float> %i.av, %wide.load36
   %i.be = fadd fast <16 x float> %i.aw, %wide.load37
   %i.bf = fadd fast <16 x float> %i.ax, %wide.load38
-  %7 = bitcast <16 x float> %i.bc to <16 x i32>
-  %8 = bitcast <16 x float> %i.bd to <16 x i32>
-  %9 = bitcast <16 x float> %i.be to <16 x i32>
-  %10 = bitcast <16 x float> %i.bf to <16 x i32>
-  %11 = lshr <16 x i32> %7, splat (i32 16)
-  %12 = lshr <16 x i32> %8, splat (i32 16)
-  %13 = lshr <16 x i32> %9, splat (i32 16)
-  %14 = lshr <16 x i32> %10, splat (i32 16)
-  %15 = trunc nuw <16 x i32> %11 to <16 x i16>
-  %16 = trunc nuw <16 x i32> %12 to <16 x i16>
-  %17 = trunc nuw <16 x i32> %13 to <16 x i16>
-  %18 = trunc nuw <16 x i32> %14 to <16 x i16>
-  store <16 x i16> %15, ptr %i.ae, align 2, !tbaa !43
-  store <16 x i16> %16, ptr %i.af, align 2, !tbaa !43
-  store <16 x i16> %17, ptr %i.ag, align 2, !tbaa !43
-  store <16 x i16> %18, ptr %i.ah, align 2, !tbaa !43
+  %7 = shufflevector <16 x float> %i.bc, <16 x float> %i.bd, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %8 = bitcast <32 x float> %7 to <32 x i32>
+  %9 = lshr <32 x i32> %8, splat (i32 16)
+  %10 = trunc nuw <32 x i32> %9 to <32 x i16>
+  store <32 x i16> %10, ptr %i.ae, align 2, !tbaa !43
+  %11 = shufflevector <16 x float> %i.be, <16 x float> %i.bf, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %12 = bitcast <32 x float> %11 to <32 x i32>
+  %13 = lshr <32 x i32> %12, splat (i32 16)
+  %14 = trunc nuw <32 x i32> %13 to <32 x i16>
+  store <32 x i16> %14, ptr %i.ag, align 2, !tbaa !43
   %index.next = add nuw i32 %index, 64            ; 2 uses
   %i.bg = icmp eq i32 %index.next, %n.vec
   br i1 %i.bg, label %middle.block, label %vector.body, !llvm.loop !101

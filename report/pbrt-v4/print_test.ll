@@ -204,13 +204,13 @@ bb.a:
   %65 = alloca %"class.testing::Message", align 8 ; 8 uses
   %66 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %67 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 17 uses
-  %68 = alloca %"class.pbrt::Ray", align 8        ; 9 uses
+  %68 = alloca %"class.pbrt::Ray", align 8        ; 8 uses
   %69 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %70 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %71 = alloca %"class.testing::Message", align 8 ; 8 uses
   %72 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %73 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 17 uses
-  %74 = alloca %"class.pbrt::Bounds2", align 8    ; 6 uses
+  %74 = alloca %"class.pbrt::Bounds2", align 16   ; 6 uses
   %75 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %76 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %77 = alloca %"class.testing::Message", align 8 ; 8 uses
@@ -613,12 +613,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(112) %67)
   call void @llvm.lifetime.start.p0(ptr nonnull %68) #21
   store <2 x float> <float -5.500000e+00, float 2.750000e+00>, ptr %68, align 8
-  %.sroa.27.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %68, i64 8
-  store float 0.000000e+00, ptr %.sroa.27.0..sroa_idx.i, align 8
-  %i.afb = getelementptr inbounds nuw i8, ptr %68, i64 12
-  store <2 x float> <float 1.000000e+00, float -8.750000e+00>, ptr %i.afb, align 4
-  %.sroa.23.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %68, i64 20
-  store <2 x float> <float 2.250000e+00, float 2.500000e-01>, ptr %.sroa.23.0..sroa_idx.i, align 4
+  %i.afb = getelementptr inbounds nuw i8, ptr %68, i64 8
+  store float 0.000000e+00, ptr %i.afb, align 8
+  %.sroa.23.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %68, i64 12
+  store <4 x float> <float 1.000000e+00, float -8.750000e+00, float 2.250000e+00, float 2.500000e-01>, ptr %.sroa.23.0..sroa_idx.i, align 4
   %i.afc = getelementptr inbounds nuw i8, ptr %68, i64 32
   store i64 0, ptr %i.afc, align 8, !tbaa !270
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
@@ -925,9 +923,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.start.p0(ptr nonnull %73) #21
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(112) %73)
   call void @llvm.lifetime.start.p0(ptr nonnull %74) #21
-  store <2 x float> <float -8.000000e+00, float -5.000000e+00>, ptr %74, align 8
-  %i.aii = getelementptr inbounds nuw i8, ptr %74, i64 8 ; 2 uses
-  store <2 x float> <float 2.000000e+00, float 3.000000e+00>, ptr %i.aii, align 8
+  %i.aii = getelementptr inbounds nuw i8, ptr %74, i64 8
+  store <4 x float> <float -8.000000e+00, float -5.000000e+00, float 2.000000e+00, float 3.000000e+00>, ptr %74, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.aij = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 8 uses
   store ptr %i.aij, ptr %4, align 8, !tbaa !15, !alias.scope !274

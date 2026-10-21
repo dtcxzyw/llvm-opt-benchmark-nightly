@@ -204,10 +204,9 @@ bb.g:                                             ; preds = %bb.f, %bb.b
   %i.p = phi i32 [ %.pre33.i, %bb.f ], [ %i.e, %bb.b ]
   %i.q = phi ptr [ %storemerge.i, %bb.f ], [ %.pre.i, %bb.b ]
   %i.r = sext i32 %i.p to i64
-  %i.s = getelementptr inbounds i8, ptr %i.q, i64 %i.r ; 2 uses
-  store <2 x float> %1, ptr %i.s, align 1
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  store <2 x float> %2, ptr %.sroa.2.0..sroa_idx, align 1
+  %i.s = getelementptr inbounds i8, ptr %i.q, i64 %i.r
+  %3 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.s, align 1
   %i.t = load i32, ptr %i.d, align 4, !tbaa !16
   %i.u = add nsw i32 %i.t, 16
   br label %b3RecBufAppend.exit
@@ -610,10 +609,9 @@ bb.m:                                             ; preds = %bb.l, %bb.h
   %i.at = phi i32 [ %.pre33.i.i, %bb.l ], [ %i.ai, %bb.h ]
   %i.au = phi ptr [ %storemerge.i.i, %bb.l ], [ %.pre.i.i, %bb.h ]
   %i.av = sext i32 %i.at to i64
-  %i.aw = getelementptr inbounds i8, ptr %i.au, i64 %i.av ; 2 uses
-  store <2 x float> %i.ad, ptr %i.aw, align 1
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
-  store <2 x float> %i.af, ptr %.sroa.2.0..sroa_idx.i, align 1
+  %i.aw = getelementptr inbounds i8, ptr %i.au, i64 %i.av
+  %2 = shufflevector <2 x float> %i.ad, <2 x float> %i.af, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.aw, align 1
   %i.ax = load i32, ptr %i.j, align 4, !tbaa !16
   %i.ay = add nsw i32 %i.ax, 16
   br label %b3RecW_SPHERE.exit
@@ -1016,10 +1014,9 @@ bb.l:                                             ; preds = %bb.k, %bb.g
   %i.ar = phi i32 [ %.pre33.i.i, %bb.k ], [ %i.ab, %bb.g ]
   %i.as = phi ptr [ %storemerge.i.i, %bb.k ], [ %.pre.i.i, %bb.g ]
   %i.at = sext i32 %i.ar to i64
-  %i.au = getelementptr inbounds i8, ptr %i.as, i64 %i.at ; 2 uses
-  store <2 x float> %i.ae, ptr %i.au, align 1
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.au, i64 8
-  store <2 x float> %i.ag, ptr %.sroa.2.0..sroa_idx.i, align 1
+  %i.au = getelementptr inbounds i8, ptr %i.as, i64 %i.at
+  %2 = shufflevector <2 x float> %i.ae, <2 x float> %i.ag, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.au, align 1
   %i.av = load i32, ptr %i.j, align 4, !tbaa !16
   %i.aw = add nsw i32 %i.av, 16
   br label %b3RecW_SPHERE.exit

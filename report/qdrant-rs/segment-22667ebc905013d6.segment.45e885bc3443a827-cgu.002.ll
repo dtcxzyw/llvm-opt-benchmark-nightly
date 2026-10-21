@@ -205,12 +205,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %wide.load = load <2 x double>, ptr %i.m, align 8, !alias.scope !9724, !noalias !9725
   %wide.load4 = load <2 x double>, ptr %i.n, align 8, !alias.scope !9724, !noalias !9725
-  %3 = fptrunc <2 x double> %wide.load to <2 x float>
-  %4 = fptrunc <2 x double> %wide.load4 to <2 x float>
-  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store <2 x float> %3, ptr %i.o, align 4, !alias.scope !9726, !noalias !9727
-  store <2 x float> %4, ptr %5, align 4, !alias.scope !9726, !noalias !9727
+  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index
+  %3 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = fptrunc <4 x double> %3 to <4 x float>
+  store <4 x float> %4, ptr %i.o, align 4, !alias.scope !9726, !noalias !9727
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !9721
@@ -333,12 +331,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %wide.load = load <2 x double>, ptr %i.m, align 8, !alias.scope !9743, !noalias !9744
   %wide.load4 = load <2 x double>, ptr %i.n, align 8, !alias.scope !9743, !noalias !9744
-  %3 = fptrunc <2 x double> %wide.load to <2 x float>
-  %4 = fptrunc <2 x double> %wide.load4 to <2 x float>
-  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store <2 x float> %3, ptr %i.o, align 4, !alias.scope !9745, !noalias !9746
-  store <2 x float> %4, ptr %5, align 4, !alias.scope !9745, !noalias !9746
+  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index
+  %3 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = fptrunc <4 x double> %3 to <4 x float>
+  store <4 x float> %4, ptr %i.o, align 4, !alias.scope !9745, !noalias !9746
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !9740
@@ -461,12 +457,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %wide.load = load <2 x double>, ptr %i.m, align 8, !alias.scope !9762, !noalias !9763
   %wide.load4 = load <2 x double>, ptr %i.n, align 8, !alias.scope !9762, !noalias !9763
-  %3 = fptrunc <2 x double> %wide.load to <2 x float>
-  %4 = fptrunc <2 x double> %wide.load4 to <2 x float>
-  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store <2 x float> %3, ptr %i.o, align 4, !alias.scope !9764, !noalias !9765
-  store <2 x float> %4, ptr %5, align 4, !alias.scope !9764, !noalias !9765
+  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index
+  %3 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = fptrunc <4 x double> %3 to <4 x float>
+  store <4 x float> %4, ptr %i.o, align 4, !alias.scope !9764, !noalias !9765
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !9759
@@ -589,12 +583,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %wide.load = load <2 x double>, ptr %i.m, align 8, !alias.scope !9781, !noalias !9782
   %wide.load4 = load <2 x double>, ptr %i.n, align 8, !alias.scope !9781, !noalias !9782
-  %3 = fptrunc <2 x double> %wide.load to <2 x float>
-  %4 = fptrunc <2 x double> %wide.load4 to <2 x float>
-  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store <2 x float> %3, ptr %i.o, align 4, !alias.scope !9783, !noalias !9784
-  store <2 x float> %4, ptr %5, align 4, !alias.scope !9783, !noalias !9784
+  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index
+  %3 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = fptrunc <4 x double> %3 to <4 x float>
+  store <4 x float> %4, ptr %i.o, align 4, !alias.scope !9783, !noalias !9784
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !9778
@@ -717,12 +709,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %wide.load = load <2 x double>, ptr %i.m, align 8, !alias.scope !9800, !noalias !9801
   %wide.load4 = load <2 x double>, ptr %i.n, align 8, !alias.scope !9800, !noalias !9801
-  %3 = fptrunc <2 x double> %wide.load to <2 x float>
-  %4 = fptrunc <2 x double> %wide.load4 to <2 x float>
-  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store <2 x float> %3, ptr %i.o, align 4, !alias.scope !9802, !noalias !9803
-  store <2 x float> %4, ptr %5, align 4, !alias.scope !9802, !noalias !9803
+  %i.o = getelementptr [4 x i8], ptr %i.l, i64 %index
+  %3 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = fptrunc <4 x double> %3 to <4 x float>
+  store <4 x float> %4, ptr %i.o, align 4, !alias.scope !9802, !noalias !9803
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !9797

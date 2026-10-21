@@ -205,12 +205,10 @@ vector.body729:                                   ; preds = %vector.body729, %ve
   %i.on = getelementptr inbounds nuw i8, ptr %i.om, i64 16
   %wide.load731 = load <2 x i64>, ptr %i.om, align 8, !tbaa !95
   %wide.load732 = load <2 x i64>, ptr %i.on, align 8, !tbaa !95
-  %10 = sitofp <2 x i64> %wide.load731 to <2 x float>
-  %11 = sitofp <2 x i64> %wide.load732 to <2 x float>
-  %i.oo = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index730 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.oo, i64 8
-  store <2 x float> %10, ptr %i.oo, align 4, !tbaa !106
-  store <2 x float> %11, ptr %12, align 4, !tbaa !106
+  %i.oo = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index730
+  %10 = shufflevector <2 x i64> %wide.load731, <2 x i64> %wide.load732, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = sitofp <4 x i64> %10 to <4 x float>
+  store <4 x float> %11, ptr %i.oo, align 4, !tbaa !106
   %index.next733 = add nuw i64 %index730, 4       ; 2 uses
   %i.op = icmp eq i64 %index.next733, %n.vec728
   br i1 %i.op, label %middle.block734, label %vector.body729, !llvm.loop !636
@@ -519,12 +517,10 @@ vector.body831:                                   ; preds = %vector.body831, %ve
   %i.rd = getelementptr inbounds nuw i8, ptr %i.rc, i64 16
   %wide.load833 = load <2 x double>, ptr %i.rc, align 8, !tbaa !108
   %wide.load834 = load <2 x double>, ptr %i.rd, align 8, !tbaa !108
-  %13 = fptrunc <2 x double> %wide.load833 to <2 x float>
-  %14 = fptrunc <2 x double> %wide.load834 to <2 x float>
-  %i.re = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index832 ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %i.re, i64 8
-  store <2 x float> %13, ptr %i.re, align 4, !tbaa !106
-  store <2 x float> %14, ptr %15, align 4, !tbaa !106
+  %i.re = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index832
+  %12 = shufflevector <2 x double> %wide.load833, <2 x double> %wide.load834, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %13 = fptrunc <4 x double> %12 to <4 x float>
+  store <4 x float> %13, ptr %i.re, align 4, !tbaa !106
   %index.next835 = add nuw i64 %index832, 4       ; 2 uses
   %i.rf = icmp eq i64 %index.next835, %n.vec830
   br i1 %i.rf, label %middle.block836, label %vector.body831, !llvm.loop !651

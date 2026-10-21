@@ -205,18 +205,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load70 = load <8 x i16>, ptr %i.au, align 1, !alias.scope !3181
   %wide.load71 = load <8 x i16>, ptr %i.av, align 1, !alias.scope !3181
   %wide.load72 = load <8 x i16>, ptr %i.aw, align 1, !alias.scope !3181
-  %4 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load)
-  %5 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load70)
-  %6 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load71)
-  %7 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load72)
-  %i.ax = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %index ; 4 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
-  %9 = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
-  store <8 x i16> %4, ptr %i.ax, align 2, !tbaa !2039, !alias.scope !3182, !noalias !3181
-  store <8 x i16> %5, ptr %i.ay, align 2, !tbaa !2039, !alias.scope !3182, !noalias !3181
-  store <8 x i16> %6, ptr %8, align 2, !tbaa !2039, !alias.scope !3182, !noalias !3181
-  store <8 x i16> %7, ptr %9, align 2, !tbaa !2039, !alias.scope !3182, !noalias !3181
+  %i.ax = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %index ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
+  %4 = shufflevector <8 x i16> %wide.load, <8 x i16> %wide.load70, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %5 = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %4)
+  store <16 x i16> %5, ptr %i.ax, align 2, !tbaa !2039, !alias.scope !3182, !noalias !3181
+  %6 = shufflevector <8 x i16> %wide.load71, <8 x i16> %wide.load72, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %7 = tail call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %6)
+  store <16 x i16> %7, ptr %i.ay, align 2, !tbaa !2039, !alias.scope !3182, !noalias !3181
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.az = add nuw nsw i64 %i.as, 64
   %i.ba = icmp eq i64 %index.next, %n.vec
@@ -288,14 +284,12 @@ vector.body108:                                   ; preds = %vector.body108, %ve
   %wide.load115 = load <8 x i16>, ptr %i.by, align 1, !alias.scope !3185
   %wide.load116 = load <8 x i16>, ptr %i.bz, align 1, !alias.scope !3185
   %wide.load117 = load <8 x i16>, ptr %i.ca, align 1, !alias.scope !3185
-  %i.cb = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %index109 ; 4 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
-  %11 = getelementptr inbounds nuw i8, ptr %i.cb, i64 32
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 48
-  store <8 x i16> %wide.load114, ptr %i.cb, align 2, !tbaa !2039, !alias.scope !3186, !noalias !3185
-  store <8 x i16> %wide.load115, ptr %10, align 2, !tbaa !2039, !alias.scope !3186, !noalias !3185
-  store <8 x i16> %wide.load116, ptr %11, align 2, !tbaa !2039, !alias.scope !3186, !noalias !3185
-  store <8 x i16> %wide.load117, ptr %i.cc, align 2, !tbaa !2039, !alias.scope !3186, !noalias !3185
+  %i.cb = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %index109 ; 2 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 32
+  %8 = shufflevector <8 x i16> %wide.load114, <8 x i16> %wide.load115, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x i16> %8, ptr %i.cb, align 2, !tbaa !2039, !alias.scope !3186, !noalias !3185
+  %9 = shufflevector <8 x i16> %wide.load116, <8 x i16> %wide.load117, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x i16> %9, ptr %i.cc, align 2, !tbaa !2039, !alias.scope !3186, !noalias !3185
   %index.next118 = add nuw i64 %index109, 32      ; 2 uses
   %i.cd = add nuw nsw i64 %i.bw, 64
   %i.ce = icmp eq i64 %index.next118, %n.vec104
@@ -698,7 +692,7 @@ declare i32 @llvm.smax.i32(i32, i32) #16
 declare i32 @llvm.umin.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #16
+declare <16 x i16> @llvm.bswap.v16i16(<16 x i16>) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i32> @llvm.smax.v16i32(<16 x i32>, <16 x i32>) #16

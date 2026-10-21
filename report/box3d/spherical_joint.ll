@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @b3SphericalJoint_SetTargetRotation(i64 %0, <2 x float> %1, <2 x float> %2) local_unnamed_addr #4 {
 bb.a:
-  %3 = alloca %struct.b3RecArgs_SphericalJointSetTargetRotation, align 8 ; 6 uses
+  %3 = alloca %struct.b3RecArgs_SphericalJointSetTargetRotation, align 8 ; 5 uses
   %.sroa.37.0.extract.shift = lshr i64 %0, 32
   %i.a = trunc nuw i64 %.sroa.37.0.extract.shift to i32
   %i.b = and i32 %i.a, 65535
@@ -216,19 +216,17 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   store i64 %0, ptr %3, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store <2 x float> %1, ptr %i.f, align 8, !tbaa !83
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !83
+  %4 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.f, align 8, !tbaa !83
   call void @b3RecWrite_SphericalJointSetTargetRotation(ptr noundef nonnull %i.e, ptr noundef nonnull %3) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.g = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 6) #9 ; 2 uses
+  %i.g = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 6) #9
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 268
-  store <2 x float> %1, ptr %i.h, align 4, !tbaa !83
-  %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.g, i64 276
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx4, align 4, !tbaa !83
+  %5 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.h, align 4, !tbaa !83
   ret void
 }
 

@@ -202,11 +202,12 @@ bb.ay:                                            ; preds = %bb.aw
   %i.nl = trunc nuw nsw i64 %indvars.iv872 to i32 ; 3 uses
   %broadcast.splatinsert997 = insertelement <4 x i32> poison, i32 %i.mf, i64 0
   %broadcast.splat998 = shufflevector <4 x i32> %broadcast.splatinsert997, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
-  %broadcast.splatinsert999 = insertelement <4 x i32> poison, i32 %i.nl, i64 0
-  %broadcast.splat1000 = shufflevector <4 x i32> %broadcast.splatinsert999, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
-  %invariant.op.a = sub <4 x i32> splat (i32 4), %broadcast.splat998
-  %invariant.op1146 = sub <4 x i32> splat (i32 8), %broadcast.splat998
-  %invariant.op1148 = sub <4 x i32> splat (i32 12), %broadcast.splat998
+  %broadcast.splatinsert999 = insertelement <4 x i32> poison, i32 %i.nl, i64 0 ; 2 uses
+  %invariant.op = sub <4 x i32> splat (i32 4), %broadcast.splat998
+  %invariant.op.a = sub <4 x i32> splat (i32 8), %broadcast.splat998
+  %invariant.op1146 = sub <4 x i32> splat (i32 12), %broadcast.splat998
+  %25 = shufflevector <4 x i32> %broadcast.splatinsert999, <4 x i32> poison, <8 x i32> zeroinitializer
+  %26 = shufflevector <4 x i32> %broadcast.splatinsert999, <4 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert1008 = insertelement <4 x i32> poison, i32 %i.mf, i64 0
   %broadcast.splat1009 = shufflevector <4 x i32> %broadcast.splatinsert1008, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert1010 = insertelement <4 x i32> poison, i32 %i.nl, i64 0
@@ -289,25 +290,19 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <4 x double> %broadcast.splat996, ptr %i.ox, align 8, !tbaa !33
   store <4 x double> %broadcast.splat996, ptr %i.oy, align 8, !tbaa !33
   %i.oz = sub nsw <4 x i32> %vec.ind, %broadcast.splat998
-  %.reass = add <4 x i32> %vec.ind, %invariant.op.a
-  %.reass1147 = add <4 x i32> %vec.ind, %invariant.op1146
-  %.reass1149 = add <4 x i32> %vec.ind, %invariant.op1148
-  %i.pa = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.oq ; 4 uses
-  %25 = getelementptr inbounds nuw i8, ptr %i.pa, i64 16
-  %26 = getelementptr inbounds nuw i8, ptr %i.pa, i64 32
-  %i.pb = getelementptr inbounds nuw i8, ptr %i.pa, i64 48
-  store <4 x i32> %i.oz, ptr %i.pa, align 4, !tbaa !31
-  store <4 x i32> %.reass, ptr %25, align 4, !tbaa !31
-  store <4 x i32> %.reass1147, ptr %26, align 4, !tbaa !31
-  store <4 x i32> %.reass1149, ptr %i.pb, align 4, !tbaa !31
-  %i.pc = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.oq ; 4 uses
-  %27 = getelementptr inbounds nuw i8, ptr %i.pc, i64 16
-  %28 = getelementptr inbounds nuw i8, ptr %i.pc, i64 32
-  %i.pd = getelementptr inbounds nuw i8, ptr %i.pc, i64 48
-  store <4 x i32> %broadcast.splat1000, ptr %i.pc, align 4, !tbaa !31
-  store <4 x i32> %broadcast.splat1000, ptr %27, align 4, !tbaa !31
-  store <4 x i32> %broadcast.splat1000, ptr %28, align 4, !tbaa !31
-  store <4 x i32> %broadcast.splat1000, ptr %i.pd, align 4, !tbaa !31
+  %.reass = add <4 x i32> %vec.ind, %invariant.op
+  %.reass1147 = add <4 x i32> %vec.ind, %invariant.op.a
+  %.reass1149 = add <4 x i32> %vec.ind, %invariant.op1146
+  %i.pa = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.oq ; 2 uses
+  %i.pb = getelementptr inbounds nuw i8, ptr %i.pa, i64 32
+  %27 = shufflevector <4 x i32> %i.oz, <4 x i32> %.reass, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x i32> %27, ptr %i.pa, align 4, !tbaa !31
+  %28 = shufflevector <4 x i32> %.reass1147, <4 x i32> %.reass1149, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x i32> %28, ptr %i.pb, align 4, !tbaa !31
+  %i.pc = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.oq ; 2 uses
+  %i.pd = getelementptr inbounds nuw i8, ptr %i.pc, i64 32
+  store <8 x i32> %25, ptr %i.pc, align 4, !tbaa !31
+  store <8 x i32> %26, ptr %i.pd, align 4, !tbaa !31
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 16)
   %i.pe = icmp eq i64 %index.next, %n.vec

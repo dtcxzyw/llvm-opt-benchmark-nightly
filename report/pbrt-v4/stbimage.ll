@@ -205,22 +205,16 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %wide.load42 = load <16 x i16>, ptr %i.r, align 2, !tbaa !38
   %wide.load43 = load <16 x i16>, ptr %i.s, align 2, !tbaa !38
   %wide.load44 = load <16 x i16>, ptr %i.t, align 2, !tbaa !38
-  %6 = lshr <16 x i16> %wide.load, splat (i16 8)
-  %7 = lshr <16 x i16> %wide.load42, splat (i16 8)
-  %8 = lshr <16 x i16> %wide.load43, splat (i16 8)
-  %9 = lshr <16 x i16> %wide.load44, splat (i16 8)
-  %10 = trunc nuw <16 x i16> %6 to <16 x i8>
-  %11 = trunc nuw <16 x i16> %7 to <16 x i8>
-  %12 = trunc nuw <16 x i16> %8 to <16 x i8>
-  %13 = trunc nuw <16 x i16> %9 to <16 x i8>
-  %14 = getelementptr inbounds nuw i8, ptr %i.m, i64 %index ; 4 uses
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 16
-  %16 = getelementptr inbounds nuw i8, ptr %14, i64 32
-  %17 = getelementptr inbounds nuw i8, ptr %14, i64 48
-  store <16 x i8> %10, ptr %14, align 1, !tbaa !32
-  store <16 x i8> %11, ptr %15, align 1, !tbaa !32
-  store <16 x i8> %12, ptr %16, align 1, !tbaa !32
-  store <16 x i8> %13, ptr %17, align 1, !tbaa !32
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 %index ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %8 = shufflevector <16 x i16> %wide.load, <16 x i16> %wide.load42, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %9 = lshr <32 x i16> %8, splat (i16 8)
+  %10 = trunc nuw <32 x i16> %9 to <32 x i8>
+  store <32 x i8> %10, ptr %6, align 1, !tbaa !32
+  %11 = shufflevector <16 x i16> %wide.load43, <16 x i16> %wide.load44, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %12 = lshr <32 x i16> %11, splat (i16 8)
+  %13 = trunc nuw <32 x i16> %12 to <32 x i8>
+  store <32 x i8> %13, ptr %7, align 1, !tbaa !32
   %index.next = add nuw i64 %index, 64            ; 2 uses
   %i.u = icmp eq i64 %index.next, %n.vec
   br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !133
@@ -623,7 +617,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
-  %.090103 = phi ptr [ %0, %.lr.ph.preheader ], [ %i.al, %.lr.ph ] ; 3 uses
+  %.090103 = phi ptr [ %0, %.lr.ph.preheader ], [ %i.al, %.lr.ph ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   %i.e = load i64, ptr %i.d, align 1, !tbaa !32
   %i.f = insertelement <2 x i64> poison, i64 %i.e, i64 0
@@ -656,13 +650,10 @@ bb.a:
   %i.ag = ashr <8 x i16> %i.ac, splat (i16 4)
   %i.ah = ashr <8 x i16> %i.ad, splat (i16 4)
   %i.ai = ashr <8 x i16> %i.af, splat (i16 4)
-  %i.aj = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.ag, <8 x i16> %i.ah) ; 2 uses
-  %i.ak = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.ai, <8 x i16> splat (i16 255)) ; 2 uses
-  %6 = shufflevector <16 x i8> %i.aj, <16 x i8> %i.ak, <16 x i32> <i32 0, i32 16, i32 8, i32 24, i32 1, i32 17, i32 9, i32 25, i32 2, i32 18, i32 10, i32 26, i32 3, i32 19, i32 11, i32 27>
-  %7 = shufflevector <16 x i8> %i.aj, <16 x i8> %i.ak, <16 x i32> <i32 4, i32 20, i32 12, i32 28, i32 5, i32 21, i32 13, i32 29, i32 6, i32 22, i32 14, i32 30, i32 7, i32 23, i32 15, i32 31>
-  store <16 x i8> %6, ptr %.090103, align 1, !tbaa !32
-  %8 = getelementptr inbounds nuw i8, ptr %.090103, i64 16
-  store <16 x i8> %7, ptr %8, align 1, !tbaa !32
+  %i.aj = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.ag, <8 x i16> %i.ah)
+  %i.ak = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.ai, <8 x i16> splat (i16 255))
+  %6 = shufflevector <16 x i8> %i.aj, <16 x i8> %i.ak, <32 x i32> <i32 0, i32 16, i32 8, i32 24, i32 1, i32 17, i32 9, i32 25, i32 2, i32 18, i32 10, i32 26, i32 3, i32 19, i32 11, i32 27, i32 4, i32 20, i32 12, i32 28, i32 5, i32 21, i32 13, i32 29, i32 6, i32 22, i32 14, i32 30, i32 7, i32 23, i32 15, i32 31>
+  store <32 x i8> %6, ptr %.090103, align 1, !tbaa !32
   %i.al = getelementptr inbounds nuw i8, ptr %.090103, i64 32 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 8 ; 3 uses
   %i.am = or disjoint i64 %indvars.iv.next, 7
