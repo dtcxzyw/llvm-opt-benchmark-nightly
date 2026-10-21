@@ -107,13 +107,14 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k, %bb.h
   %i.v = phi ptr [ %i.q, %bb.k ], [ null, %bb.h ] ; 2 uses
-  %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @g_procfs_operations, i64 152), align 8 ; 2 uses
+  %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @g_procfs_operations, i64 152), align 8
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %bb.t, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   call void @inode_unlock() #11
-  %i.y = call i32 %i.w(ptr noundef null, ptr noundef %4, ptr noundef nonnull %i.c) #11 ; 2 uses
+  %6 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @g_procfs_operations, i64 152), align 8
+  %i.y = call i32 %6(ptr noundef null, ptr noundef %4, ptr noundef nonnull %i.c) #11 ; 2 uses
   call void @inode_lock() #11
   %i.z = icmp slt i32 %i.y, 0
   br i1 %i.z, label %bb.t, label %bb.o
