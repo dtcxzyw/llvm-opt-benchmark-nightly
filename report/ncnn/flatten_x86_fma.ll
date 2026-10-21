@@ -28,7 +28,7 @@ declare void @_ZN4ncnn5LayerD2Ev(ptr noundef nonnull align 8 dead_on_return(208)
 define linkonce_odr hidden void @_ZN4ncnn15Flatten_x86_fmaD0Ev(ptr noundef nonnull align 8 dereferenceable(208) %0) unnamed_addr #1 comdat align 2 {
 bb.a:
   tail call void @_ZN4ncnn5LayerD2Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %0) #6
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 208) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 208) #13
   ret void
 }
 
@@ -198,8 +198,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.br = and i32 %i.bi, 3
-  %.not = icmp eq i32 %i.br, 0                    ; 3 uses
-  %4 = select i1 %.not, i64 4, i64 1
+  %.not = icmp eq i32 %i.br, 0                    ; 2 uses
   %i.bs = sext i32 %i.g to i64
   %i.bt = udiv i64 %i.be, %i.bs
   %i.bu = select i1 %.not, i64 2, i64 0
@@ -212,7 +211,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %.thread95, %bb.o
   %i.bx = phi i64 [ %i.bq, %.thread95 ], [ %i.bv, %bb.o ] ; 2 uses
-  %i.by = phi i64 [ 8, %.thread95 ], [ %4, %bb.o ]
+  %i.by = phi i64 [ 3, %.thread95 ], [ 2, %bb.o ]
   %.097 = phi i32 [ 8, %.thread95 ], [ 4, %bb.o ] ; 4 uses
   %i.bz = icmp eq i32 %i.o, 2                     ; 2 uses
   %i.ca = icmp eq i32 %i.g, 1                     ; 2 uses
@@ -293,8 +292,7 @@ _ZN4ncnn3MataSERKS0_.exit:                        ; preds = %bb.q, %_ZN4ncnn3Mat
   store i32 %i.cy, ptr %i.cz, align 4, !tbaa !27
   %i.da = getelementptr inbounds nuw i8, ptr %2, i64 48
   store i32 1, ptr %i.da, align 8, !tbaa !28
-  %5 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.by, i1 true)
-  %i.db = lshr i64 %.pre, %5
+  %i.db = lshr i64 %.pre, %i.by
   %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 64
   store i64 %i.db, ptr %i.dc, align 8, !tbaa !23
   %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -697,8 +695,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bm = and i32 %i.bd, 3
-  %.not = icmp eq i32 %i.bm, 0                    ; 3 uses
-  %4 = select i1 %.not, i64 4, i64 1
+  %.not = icmp eq i32 %i.bm, 0                    ; 2 uses
   %i.bn = sext i32 %i.az to i64
   %i.bo = udiv i64 %i.ax, %i.bn
   %i.bp = select i1 %.not, i64 2, i64 0
@@ -711,7 +708,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %.thread84, %bb.m
   %i.bs = phi i64 [ %i.bl, %.thread84 ], [ %i.bq, %bb.m ] ; 2 uses
-  %i.bt = phi i64 [ 8, %.thread84 ], [ %4, %bb.m ]
+  %i.bt = phi i64 [ 3, %.thread84 ], [ 2, %bb.m ]
   %.086 = phi i32 [ 8, %.thread84 ], [ 4, %bb.m ] ; 4 uses
   %i.bu = icmp eq i32 %i.g, 2                     ; 2 uses
   %i.bv = icmp eq i32 %i.az, 1                    ; 2 uses
@@ -792,8 +789,7 @@ _ZN4ncnn3MataSERKS0_.exit:                        ; preds = %bb.o, %_ZN4ncnn3Mat
   store i32 %i.ct, ptr %i.cu, align 4, !tbaa !27
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 48
   store i32 1, ptr %i.cv, align 8, !tbaa !28
-  %5 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.bt, i1 true)
-  %i.cw = lshr i64 %.pre, %5
+  %i.cw = lshr i64 %.pre, %i.bt
   %i.cx = getelementptr inbounds nuw i8, ptr %2, i64 64
   store i64 %i.cw, ptr %i.cx, align 8, !tbaa !23
   %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1196,14 +1192,11 @@ bb.c:                                             ; preds = %._crit_edge36, %bb.
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #10
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.cttz.i64(i64, i1 immarg) #11
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #12
+declare i32 @llvm.smin.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
 
 attributes #0 = { nounwind "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -1216,10 +1209,9 @@ attributes #7 = { alwaysinline norecurse nounwind uwtable "min-legal-vector-widt
 attributes #8 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #9 = { alwaysinline norecurse nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #10 = { nobuiltin nounwind "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #11 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #14 = { builtin nounwind }
+attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #13 = { builtin nounwind }
 
 !llvm.module.flags = !{!1, !2, !3}
 !llvm.ident = !{!4}

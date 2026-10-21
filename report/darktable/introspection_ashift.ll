@@ -205,7 +205,7 @@ bb.a:
 .preheader.lr.ph:                                 ; preds = %.lr.ph, %.preheader87
   %i.ak = icmp sgt i32 %2, 0
   %i.al = sext i32 %2 to i64                      ; 3 uses
-  %i.am = add nsw i32 %2, -1                      ; 2 uses
+  %i.am = add nsw i32 %2, -1
   br i1 %i.ak, label %.preheader.preheader, label %._crit_edge112.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
@@ -362,8 +362,6 @@ middle.block:                                     ; preds = %vector.body
   %i.dt = sub nuw nsw i64 1, %indvars.iv134
   %i.du = mul nuw nsw i64 %i.dt, %i.al
   %i.dv = getelementptr [8 x i8], ptr %1, i64 %i.du ; 9 uses
-  %5 = icmp samesign ult i64 %indvars.iv134, %i.an ; 2 uses
-  %spec.select = select i1 %5, i32 %i.am, i32 1
   br i1 %.not, label %iter.check, label %.lr.ph101.split
 
 iter.check:                                       ; preds = %.preheader
@@ -417,6 +415,7 @@ iter.check:                                       ; preds = %.preheader
   br i1 %niter.ncmp.7, label %._crit_edge102.loopexit.unr-lcssa, label %.lr.ph101.split.us.split.us, !llvm.loop !556
 
 .lr.ph101.split:                                  ; preds = %.preheader
+  %5 = icmp samesign ult i64 %indvars.iv134, %i.an
   br i1 %5, label %.lr.ph101.split.split.us, label %iter.check263
 
 iter.check263:                                    ; preds = %.lr.ph101.split
@@ -470,7 +469,7 @@ vec.epilog.middle.block273:                       ; preds = %vec.epilog.vector.b
   br label %.lr.ph101.split.split.split
 
 .lr.ph101.split.split.us:                         ; preds = %.lr.ph101.split, %bb.e
-  %.073100.us103 = phi i32 [ %6, %bb.e ], [ 0, %.lr.ph101.split ] ; 7 uses
+  %.073100.us103 = phi i32 [ %7, %bb.e ], [ 0, %.lr.ph101.split ] ; 7 uses
   %i.fi = sext i32 %.073100.us103 to i64
   %i.fj = getelementptr [8 x i8], ptr %i.dp, i64 %i.fi ; 2 uses
   %i.fk = icmp slt i32 %.073100.us103, 1
@@ -497,9 +496,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.0.us104 = load double, ptr %.0.us104.in, align 8, !tbaa !166
   store double %.0.us104, ptr %i.fj, align 8, !tbaa !166
   %i.fr = icmp eq i32 %.073100.us103, 1
-  %.1.us106 = select i1 %i.fr, i32 %spec.select, i32 %.073100.us103
-  %6 = add nsw i32 %.1.us106, 1                   ; 2 uses
-  %i.fs = icmp slt i32 %6, %2
+  %6 = add nsw i32 %.073100.us103, 1
+  %7 = select i1 %i.fr, i32 %2, i32 %6            ; 2 uses
+  %i.fs = icmp slt i32 %7, %2
   br i1 %i.fs, label %.lr.ph101.split.split.us, label %._crit_edge102
 
 ._crit_edge112.split:                             ; preds = %._crit_edge102, %.preheader.lr.ph, %.preheader87

@@ -205,20 +205,19 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.bl = load i8, ptr %i.bc, align 1, !tbaa !94
   %i.bm = add i8 %i.bl, -48                       ; 2 uses
-  %i.bn = mul nuw i32 %i.bj, 10                   ; 4 uses
+  %i.bn = mul nuw i32 %i.bj, 10                   ; 3 uses
   %i.bo = zext i8 %i.bm to i32
   %i.bp = add i32 %i.bn, %i.bo                    ; 2 uses
   %.not146 = icmp eq i64 %i.bg, 1
   %i.bq = icmp ult i8 %i.bm, 10
-  %or.cond.not = and i1 %.not146, %i.bq           ; 2 uses
+  %or.cond.not = and i1 %.not146, %i.bq
   %i.br = icmp uge i32 %i.bp, %i.bn
   %. = tail call i32 @llvm.umax.i32(i32 %i.bp, i32 %i.bn)
-  %.9104 = select i1 %or.cond.not, i32 %., i32 %i.bn, !prof !2629
   %cond9 = select i1 %or.cond.not, i1 %i.br, i1 false, !prof !2629
   br i1 %cond9, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u, %bb.s, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %bb.g, %bb.e, %bb.c, %bb.a
-  %.10 = phi i32 [ %.9104, %bb.u ], [ %i.bj, %bb.s ], [ %i.bb, %bb.q ], [ %i.au, %bb.o ], [ %i.an, %bb.m ], [ %i.ag, %bb.k ], [ %i.z, %bb.i ], [ %i.s, %bb.g ], [ %i.l, %bb.e ], [ %i.e, %bb.c ], [ 0, %bb.a ]
+  %.10 = phi i32 [ %., %bb.u ], [ %i.bj, %bb.s ], [ %i.bb, %bb.q ], [ %i.au, %bb.o ], [ %i.an, %bb.m ], [ %i.ag, %bb.k ], [ %i.z, %bb.i ], [ %i.s, %bb.g ], [ %i.l, %bb.e ], [ %i.e, %bb.c ], [ 0, %bb.a ]
   store i32 %.10, ptr %2, align 4, !tbaa !69
   br label %bb.w
 

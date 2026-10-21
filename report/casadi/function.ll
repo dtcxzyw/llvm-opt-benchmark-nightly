@@ -204,7 +204,7 @@ define linkonce_odr hidden void @_ZN6casadi17extract_from_dictISt6vectorINSt7__c
 bb.a:
   %4 = alloca %"struct.std::_Rb_tree<std::__cxx11::basic_string<char>, std::pair<const std::__cxx11::basic_string<char>, casadi::GenericType>, std::_Select1st<std::pair<const std::__cxx11::basic_string<char>, casadi::GenericType>>, std::less<std::__cxx11::basic_string<char>>>::_Alloc_node", align 8 ; 4 uses
   %5 = alloca %"class.std::vector", align 16      ; 10 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   store i32 0, ptr %i.a, align 8, !tbaa !100
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr null, ptr %i.b, align 8, !tbaa !69
@@ -319,8 +319,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i: ; preds = %_ZNSt11c
 
 _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6casadi11GenericTypeESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i
   %.0.i.i.i.i.i = phi i32 [ %i.af, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i ], [ %.0.i6.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i ]
-  %i.ah = icmp slt i32 %.0.i.i.i.i.i, 0           ; 2 uses
-  %spec.select.i.i = select i1 %i.ah, ptr %i.a, ptr %.19.i.i.i
+  %i.ah = icmp slt i32 %.0.i.i.i.i.i, 0
   br i1 %i.ah, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6casadi11GenericTypeESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6casadi11GenericTypeESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit
@@ -417,7 +416,7 @@ bb.h:                                             ; preds = %_ZSt8_DestroyIPNSt7
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
-  %i.bo = call noundef nonnull ptr @_ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_(ptr noundef %spec.select.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.a) #29 ; 4 uses
+  %i.bo = call noundef nonnull ptr @_ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_(ptr noundef %.19.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.a) #29 ; 4 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 64
   invoke void @_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEE10count_downEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bp)
           to label %_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit.i.i.i.i.i.i unwind label %bb.i

@@ -205,10 +205,9 @@ _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE4nextCsbaWXNhtWAp
   %i.ax = tail call { ptr, i64 } @_RINvMNtCs3oUPovFnLWP_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i, i64 noundef %.sroa.4.1.i125266), !dbg !15246 ; 2 uses
   %i.ay = extractvalue { ptr, i64 } %i.ax, 0, !dbg !15246 ; 15 uses
   %i.az = extractvalue { ptr, i64 } %i.ax, 1, !dbg !15246 ; 2 uses
-  %.not.i = icmp eq ptr %i.ay, null, !dbg !15247  ; 2 uses
+  %.not.i = icmp eq ptr %i.ay, null, !dbg !15247
   %.not5.i = icmp eq i64 %i.az, 0, !dbg !15248
   %i.ba = select i1 %.not.i, i1 true, i1 %.not5.i, !dbg !15248
-  %.sroa.4.0.i = select i1 %.not.i, i64 undef, i64 %i.az, !dbg !15248
   br i1 %i.ba, label %_RNvMNtNtCs3oUPovFnLWP_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit, label %bb.k, !dbg !15249
 
 bb.k:                                             ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE4nextCsbaWXNhtWAp9_11foundations.exit139.thread272
@@ -407,7 +406,7 @@ bb.t:                                             ; preds = %.loopexit.i.i175
   br i1 %i.da, label %bb.u, label %_RNvMNtNtCs3oUPovFnLWP_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit, !dbg !15298
 
 bb.u:                                             ; preds = %.outer._crit_edge
-  switch i64 %.sroa.4.0.i, label %_RNvMNtNtCs3oUPovFnLWP_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit [
+  switch i64 %i.az, label %_RNvMNtNtCs3oUPovFnLWP_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit [
     i64 31, label %bb.v
     i64 28, label %bb.ah
     i64 10, label %bb.au

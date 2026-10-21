@@ -205,10 +205,9 @@ bb.lp:                                            ; preds = %bb.lo
   %.sroa.5279.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %.sroa.5279.0.copyload.i = load ptr, ptr %.sroa.5279.0..sroa_idx.i, align 8, !alias.scope !2970, !noalias !2952 ; 10 uses
   %.sroa.8280.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.z, i64 24
-  %.sroa.8280.0.copyload.i = load i64, ptr %.sroa.8280.0..sroa_idx.i, align 8, !alias.scope !2970, !noalias !2952 ; 9 uses
+  %.sroa.8280.0.copyload.i = load i64, ptr %.sroa.8280.0..sroa_idx.i, align 8, !alias.scope !2970, !noalias !2952 ; 10 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !2952
-  %i.are = icmp eq i64 %.sroa.0278.0.copyload.i, -9223372036854775808 ; 2 uses
-  %.sroa.925.0.i = select i1 %i.are, i64 undef, i64 %.sroa.8280.0.copyload.i ; 2 uses
+  %i.are = icmp eq i64 %.sroa.0278.0.copyload.i, -9223372036854775808
   br i1 %i.are, label %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h8e5c1babcdd0534fE.exit193.i", label %.lr.ph.lr.ph.i
 
 .body236.i:                                       ; preds = %.loopexit.split-lp413.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ob, %bb.ny, %.body221.i, %bb.mt, %bb.mr, %bb.mq, %bb.mj, %bb.mi
@@ -306,12 +305,12 @@ bb.lu:                                            ; preds = %_ZN4core5slice6memc
 
 "_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17hedfb204892c3ce9cE.exit.i.i": ; preds = %bb.lt, %.noexc188.i, %.preheader.i.i.i.i, %bb.ls, %bb.lr
   %.lcssa472500.i = phi i64 [ %.sroa.8280.0.copyload.i, %bb.ls ], [ %.lcssa472501.i, %bb.lr ], [ %.sroa.8280.0.copyload.i, %.preheader.i.i.i.i ], [ %.sroa.8280.0.copyload.i, %.noexc188.i ], [ %i.asc, %bb.lt ]
-  %.not.i3.i.not.i = icmp eq i64 %.sroa.925.0.i, %.lcssa475482.i ; 3 uses
+  %.not.i3.i.not.i = icmp eq i64 %.sroa.8280.0.copyload.i, %.lcssa475482.i ; 3 uses
   %brmerge = select i1 %.not.i3.i.not.i, i1 true, i1 %.not131.i
   br i1 %brmerge, label %.thread392.i.loopexit.split.loop.exit179, label %select.unfold.thread.i
 
 select.unfold.thread.i:                           ; preds = %bb.lu, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17hedfb204892c3ce9cE.exit.i.i"
-  %.pn750.i = phi i64 [ %.sroa.925.0.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17hedfb204892c3ce9cE.exit.i.i" ], [ %i.asc, %bb.lu ] ; 2 uses
+  %.pn750.i = phi i64 [ %.sroa.8280.0.copyload.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17hedfb204892c3ce9cE.exit.i.i" ], [ %i.asc, %bb.lu ] ; 2 uses
   %i.asg = phi i1 [ true, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17hedfb204892c3ce9cE.exit.i.i" ], [ false, %bb.lu ]
   %.lcssa474748.i = phi i64 [ %.lcssa475482.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17hedfb204892c3ce9cE.exit.i.i" ], [ %i.asc, %bb.lu ] ; 2 uses
   %.lcssa472499746.i = phi i64 [ %.lcssa472500.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17hedfb204892c3ce9cE.exit.i.i" ], [ %i.asc, %bb.lu ] ; 2 uses

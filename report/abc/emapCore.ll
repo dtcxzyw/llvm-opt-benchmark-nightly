@@ -206,7 +206,7 @@ bb.p:                                             ; preds = %bb.o
   %i.es = getelementptr inbounds nuw i8, ptr %i.ek, i64 32 ; 4 uses
   %i.et = getelementptr inbounds nuw i8, ptr %i.ek, i64 4 ; 4 uses
   %i.eu = trunc nuw nsw i64 %indvars.iv180.i.i to i32 ; 6 uses
-  %i.ev = select i1 %.not129.i.i, i64 0, i64 %i.er ; 2 uses
+  %i.ev = select i1 %.not129.i.i, i64 0, i64 %i.er
   br i1 %.not129.i.i, label %bb.q, label %Emap_LibFindFirst.exit.thread.i.i
 
 bb.q:                                             ; preds = %bb.p
@@ -292,8 +292,7 @@ bb.y:                                             ; preds = %.lr.ph151.i.i
   %i.ge = getelementptr inbounds nuw i8, ptr %i.ga, i64 64
   %i.gf = load i64, ptr %i.ge, align 8, !tbaa !134
   %i.gg = load i64, ptr %i.es, align 8, !tbaa !65
-  %22 = xor i64 %i.gg, %i.ev
-  %.not131.i.i = icmp eq i64 %i.gf, %22
+  %.not131.i.i = icmp eq i64 %i.gf, %i.gg
   br i1 %.not131.i.i, label %.preheader.i101.i, label %Emap_LibFindFirst.exit.thread.i.i
 
 .preheader.i101.i:                                ; preds = %bb.y

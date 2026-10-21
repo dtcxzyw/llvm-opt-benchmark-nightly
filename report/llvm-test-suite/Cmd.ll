@@ -204,7 +204,7 @@ _ZN2PP4Word10get_stringB5cxx11Ev.exit:            ; preds = %._crit_edge.i.i.i, 
   %i.bp = load ptr, ptr %i.k, align 8, !tbaa !66  ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !134 ; 2 uses
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 8 ; 3 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 8 ; 2 uses
   %.not10.i.i.i = icmp eq ptr %i.br, null
   br i1 %.not10.i.i.i, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit.thread, label %.lr.ph.i.i.i
 
@@ -273,8 +273,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i: ; preds = %_ZNSt11c
 
 _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i
   %.0.i.i.i.i.i = phi i32 [ %i.cj, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i ], [ %.0.i6.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i ]
-  %i.cl = icmp slt i32 %.0.i.i.i.i.i, 0           ; 2 uses
-  %spec.select.i.i = select i1 %i.cl, ptr %i.bs, ptr %.19.i.i.i
+  %i.cl = icmp slt i32 %.0.i.i.i.i.i, 0
   br i1 %i.cl, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit.thread, label %.preheader424
 
 .preheader424:                                    ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2PP8VariableESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit
@@ -677,7 +676,7 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr, %._c
   store i8 0, ptr %i.vg, align 1, !tbaa !25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #22, !noalias !870
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #22
-  %i.vh = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 64 ; 2 uses
+  %i.vh = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 64 ; 2 uses
   %i.vi = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 7 uses
   store ptr %i.vi, ptr %16, align 8, !tbaa !21
   %i.vj = load ptr, ptr %8, align 8, !tbaa !55    ; 2 uses

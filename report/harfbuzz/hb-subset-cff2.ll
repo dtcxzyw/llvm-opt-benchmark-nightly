@@ -205,7 +205,7 @@ _ZN11hb_vector_tIN3CFF12cs_command_tELb0EEixEi.exit.i.i.i: ; preds = %_ZN3CFF12c
   br label %.preheader.i164.i.i.i
 
 .preheader.i55.i.i.i:                             ; preds = %_ZN11hb_vector_tIN3CFF12cs_command_tELb0EEixEi.exit.i.i.i, %_ZN11hb_vector_tIN3CFF12cs_command_tELb0EEixEi.exit.i.i.i
-  %i.abf = call ptr @hb_realloc(ptr noundef null, i64 noundef 64) #16 ; 7 uses
+  %i.abf = call ptr @hb_realloc(ptr noundef null, i64 noundef 64) #16 ; 10 uses
   %.not22.i57.not.not.i.i.i = icmp eq ptr %i.abf, null ; 5 uses
   %i.abg = load i32, ptr %i.aav, align 8, !tbaa !140
   switch i32 %i.abg, label %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit73.i.i.i [
@@ -222,6 +222,10 @@ bb.dj:                                            ; preds = %.preheader.i55.i.i.
 _ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit.i.i.i: ; preds = %bb.dj
   br i1 %.not22.i57.not.not.i.i.i, label %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i, label %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i
 
+_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i: ; preds = %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit.i.i.i
+  store i64 %i.xg, ptr @_hb_CrapPool, align 16
+  br label %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit73.i.i.i
+
 _ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i: ; preds = %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit.i.i.i
   %i.abj = getelementptr inbounds nuw i8, ptr %i.aau, i64 8
   %i.abk = load ptr, ptr %i.abj, align 8, !tbaa !138
@@ -229,10 +233,6 @@ _ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i: ; preds
   store i64 %i.abl, ptr %i.abf, align 8, !tbaa !142
   %i.abm = getelementptr inbounds nuw i8, ptr %i.abf, i64 8
   store i64 0, ptr %i.abm, align 8, !tbaa !142
-  br label %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit73.i.i.i
-
-_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i: ; preds = %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit.i.i.i
-  store i64 %i.xg, ptr @_hb_CrapPool, align 16
   br label %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit73.i.i.i
 
 bb.dk:                                            ; preds = %.preheader.i55.i.i.i
@@ -257,7 +257,8 @@ _ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit82.i.i.i: ; preds = %bb.dl
   store i64 %i.abs, ptr %i.abr, align 8, !tbaa !142
   br label %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit73.i.i.i
 
-_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit73.i.i.i: ; preds = %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit82.i.i.i, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit79.i.i.i, %bb.dk, %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i, %bb.dj, %.preheader.i55.i.i.i
+_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit73.i.i.i: ; preds = %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit82.i.i.i, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit79.i.i.i, %bb.dk, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i, %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i, %bb.dj, %.preheader.i55.i.i.i
+  %.sroa.43833.0.i.i.i = phi ptr [ %i.abf, %bb.dk ], [ null, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit79.i.i.i ], [ %i.abf, %.preheader.i55.i.i.i ], [ %i.abf, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i ], [ null, %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i ], [ %i.abf, %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit82.i.i.i ], [ %i.abf, %bb.dj ] ; 2 uses
   %.not.i.i.i.i.i.i.i.i = phi i1 [ true, %bb.dk ], [ true, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit79.i.i.i ], [ true, %.preheader.i55.i.i.i ], [ false, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i ], [ true, %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i ], [ false, %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit82.i.i.i ], [ true, %bb.dj ]
   %.sroa.23822.0.i.i.i = phi i32 [ 0, %bb.dk ], [ 0, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit79.i.i.i ], [ 0, %.preheader.i55.i.i.i ], [ 2, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i ], [ 0, %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i ], [ 2, %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit82.i.i.i ], [ 0, %bb.dj ] ; 3 uses
   %.sroa.0807.0.i.i.i = phi i1 [ %.not22.i57.not.not.i.i.i, %bb.dk ], [ true, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit79.i.i.i ], [ %.not22.i57.not.not.i.i.i, %.preheader.i55.i.i.i ], [ false, %_ZN11hb_vector_tIN3CFF8number_tELb0EE4pushIJRS1_EEEPS1_DpOT_.exit.i.i.i ], [ true, %_ZN11hb_vector_tIN3CFF8number_tELb0EE5allocEjb.exit341.i.i.i ], [ false, %_ZN11hb_vector_tIN3CFF8number_tELb0EEixEi.exit82.i.i.i ], [ %.not22.i57.not.not.i.i.i, %bb.dj ]
@@ -337,7 +338,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.acr = load i32, ptr %i.acm, align 4, !tbaa !137
   %i.acs = zext i32 %i.acr to i64
   %i.act = getelementptr inbounds nuw [8 x i8], ptr %i.acq, i64 %i.acs
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.act, ptr readonly align 1 %i.abf, i64 %i.aco, i1 false), !alias.scope !765
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.act, ptr readonly align 1 %.sroa.43833.0.i.i.i, i64 %i.aco, i1 false), !alias.scope !765
   br label %_ZN11hb_vector_tIN3CFF8number_tELb0EE10copy_arrayIS1_TnPN12hb_enable_ifIXsr3std21is_trivially_copyableIT_EE5valueEvE4typeELPv0EEEv10hb_array_tIKS1_E.exit.i.i.i.i.i.i
 
 _ZN11hb_vector_tIN3CFF8number_tELb0EE10copy_arrayIS1_TnPN12hb_enable_ifIXsr3std21is_trivially_copyableIT_EE5valueEvE4typeELPv0EEEv10hb_array_tIKS1_E.exit.i.i.i.i.i.i: ; preds = %bb.dr, %bb.dq
@@ -357,7 +358,7 @@ _ZN11hb_vector_tIhLb0EED2Ev.exit.i.i.i73.i:       ; preds = %_ZN11hb_vector_tIN3
   br i1 %.sroa.0807.0.i.i.i, label %_ZN3CFF12cs_command_tD2Ev.exit.i.i.i, label %bb.ds
 
 bb.ds:                                            ; preds = %_ZN11hb_vector_tIhLb0EED2Ev.exit.i.i.i73.i
-  call void @hb_free(ptr noundef %i.abf) #16
+  call void @hb_free(ptr noundef %.sroa.43833.0.i.i.i) #16
   br label %_ZN3CFF12cs_command_tD2Ev.exit.i.i.i
 
 bb.dt:                                            ; preds = %_ZN11hb_vector_tIN3CFF12cs_command_tELb0EEixEi.exit.i.i.i, %_ZN11hb_vector_tIN3CFF12cs_command_tELb0EEixEi.exit.i.i.i

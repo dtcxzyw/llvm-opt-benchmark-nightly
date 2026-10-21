@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %._crit_edge.thread
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef i32 @_ZN9Stockfish10Tablebases9probe_dtzERNS_8PositionEPNS0_10ProbeStateE(ptr noundef nonnull align 8 dereferenceable(1048) %0, ptr nofree noundef captures(none) initializes((0, 4)) %1) local_unnamed_addr #4 {
 bb.a:
-  %i.a = alloca [7 x i8], align 1                 ; 74 uses
+  %i.a = alloca [7 x i8], align 1                 ; 75 uses
   %i.b = ptrtoaddr ptr %i.a to i64
-  %i.c = alloca [7 x i8], align 1                 ; 18 uses
+  %i.c = alloca [7 x i8], align 1                 ; 19 uses
   %i.d = alloca i8, align 1                       ; 4 uses
   %i.e = alloca i8, align 1                       ; 4 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -369,7 +369,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ba = load i32, ptr %i.az, align 8, !tbaa !81
   %i.bb = add nsw i32 %i.ba, %i.ay
   %i.bc = icmp eq i32 %i.bb, 2
-  br i1 %i.bc, label %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit, label %bb.l
+  br i1 %i.bc, label %bb.dr, label %bb.l
 
 bb.l:                                             ; preds = %.thread
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 3 uses
@@ -772,7 +772,9 @@ bb.bx:                                            ; preds = %_ZSt11max_elementIP
 
 bb.by:                                            ; preds = %bb.bx
   store i32 -1, ptr %1, align 4, !tbaa !159
-  br label %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
+  br label %bb.ds
 
 _ZN9Stockfish12_GLOBAL__N_113check_dtz_stmEPNS0_7TBTableILNS0_6TBTypeE1EEEiNS_4FileE.exit.thread.i.i: ; preds = %bb.bx
   %i.bkw = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -1175,7 +1177,7 @@ bb.dn:                                            ; preds = %bb.dm, %bb.dl, %._c
   br i1 %or.cond.i.i15.i, label %bb.dq, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
-  switch i32 %.4.ph.i8891, label %_ZN9Stockfish12_GLOBAL__N_19map_scoreEPNS0_7TBTableILNS0_6TBTypeE1EEENS_4FileEiNS_10Tablebases8WDLScoreE.exit.i.i [
+  switch i32 %.4.ph.i8891, label %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i [
     i32 -2, label %bb.dp
     i32 1, label %bb.dq
     i32 -1, label %bb.dq
@@ -1184,45 +1186,36 @@ bb.do:                                            ; preds = %bb.dn
 bb.dp:                                            ; preds = %bb.do
   %i.cec = and i32 %i.cdg, 8
   %i.ced = icmp eq i32 %i.cec, 0
-  br i1 %i.ced, label %bb.dq, label %_ZN9Stockfish12_GLOBAL__N_19map_scoreEPNS0_7TBTableILNS0_6TBTypeE1EEENS_4FileEiNS_10Tablebases8WDLScoreE.exit.i.i
+  br i1 %i.ced, label %bb.dq, label %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i
 
 bb.dq:                                            ; preds = %bb.dp, %bb.do, %bb.do, %bb.dn
   %i.cee = shl nuw nsw i32 %.0.i.i.i, 1
-  br label %_ZN9Stockfish12_GLOBAL__N_19map_scoreEPNS0_7TBTableILNS0_6TBTypeE1EEENS_4FileEiNS_10Tablebases8WDLScoreE.exit.i.i
-
-_ZN9Stockfish12_GLOBAL__N_19map_scoreEPNS0_7TBTableILNS0_6TBTypeE1EEENS_4FileEiNS_10Tablebases8WDLScoreE.exit.i.i: ; preds = %bb.dq, %bb.dp, %bb.do
-  %.1.i.i.i = phi i32 [ %i.cee, %bb.dq ], [ %.0.i.i.i, %bb.dp ], [ %.0.i.i.i, %bb.do ]
-  %17 = add nuw nsw i32 %.1.i.i.i, 1
-  %.pr.pre.pre = load i32, ptr %1, align 4, !tbaa !159
   br label %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i
 
-_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i: ; preds = %_ZN9Stockfish12_GLOBAL__N_19map_scoreEPNS0_7TBTableILNS0_6TBTypeE1EEENS_4FileEiNS_10Tablebases8WDLScoreE.exit.i.i, %bb.by
-  %.pr.pre = phi i32 [ %.pr.pre.pre, %_ZN9Stockfish12_GLOBAL__N_19map_scoreEPNS0_7TBTableILNS0_6TBTypeE1EEENS_4FileEiNS_10Tablebases8WDLScoreE.exit.i.i ], [ -1, %bb.by ]
-  %.0.i.i = phi i32 [ %17, %_ZN9Stockfish12_GLOBAL__N_19map_scoreEPNS0_7TBTableILNS0_6TBTypeE1EEENS_4FileEiNS_10Tablebases8WDLScoreE.exit.i.i ], [ 0, %bb.by ]
+_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i: ; preds = %bb.do, %bb.dp, %bb.dq
+  %.1.i.i.i = phi i32 [ %i.cee, %bb.dq ], [ %.0.i.i.i, %bb.dp ], [ %.0.i.i.i, %bb.do ]
+  %17 = add nuw nsw i32 %.1.i.i.i, 1
+  %.pr.pre.pre = load i32, ptr %1, align 4, !tbaa !159 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
-  br label %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit
-
-_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit: ; preds = %.thread, %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i
-  %.pr = phi i32 [ %.pr.pre, %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i ], [ 1, %.thread ] ; 2 uses
-  %.1.i.ph = phi i32 [ %.0.i.i, %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i ], [ 0, %.thread ]
-  switch i32 %.pr, label %bb.dr [
+  switch i32 %.pr.pre.pre, label %bb.dr [
     i32 0, label %_ZN9Stockfish12_GLOBAL__N_118dtz_before_zeroingENS_10Tablebases8WDLScoreE.exit
     i32 -1, label %bb.ds
   ]
 
-bb.dr:                                            ; preds = %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit
+bb.dr:                                            ; preds = %.thread, %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i
+  %.1.i.ph232 = phi i32 [ %17, %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i ], [ 0, %.thread ]
   %i.cef = icmp eq i32 %.4.ph.i8891, -1
   %i.ceg = icmp eq i32 %.4.ph.i8891, 1
   %i.ceh = or i1 %i.cef, %i.ceg
   %i.cei = select i1 %i.ceh, i32 100, i32 0
-  %i.cej = add nuw nsw i32 %.1.i.ph, %i.cei
+  %i.cej = add nuw nsw i32 %.1.i.ph232, %i.cei
   %.lobit.neg.i = ashr i32 %.4.ph.i8891, 31
   %i.cek = or i32 %.lobit.neg.i, 1
   %i.cel = mul nsw i32 %i.cej, %i.cek
   br label %_ZN9Stockfish12_GLOBAL__N_118dtz_before_zeroingENS_10Tablebases8WDLScoreE.exit
 
-bb.ds:                                            ; preds = %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit
+bb.ds:                                            ; preds = %bb.by, %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #26
   %i.cem = getelementptr inbounds nuw i8, ptr %15, i64 512
@@ -1374,8 +1367,8 @@ bb.eg:                                            ; preds = %._crit_edge, %.thre
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #26
   br label %_ZN9Stockfish12_GLOBAL__N_118dtz_before_zeroingENS_10Tablebases8WDLScoreE.exit
 
-_ZN9Stockfish12_GLOBAL__N_118dtz_before_zeroingENS_10Tablebases8WDLScoreE.exit: ; preds = %.thread104, %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit.thread, %.fold.split.i, %bb.k, %bb.j, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit.thread83, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit.thread, %bb.dr, %bb.eg, %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit
-  %.5 = phi i32 [ 0, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit ], [ 0, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit.thread83 ], [ %i.cgg, %bb.eg ], [ %i.cel, %bb.dr ], [ %.pr, %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit ], [ 0, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit.thread ], [ 1, %bb.j ], [ %i.aw, %bb.k ], [ 101, %.fold.split.i ], [ 0, %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit.thread ], [ 1, %.thread104 ]
+_ZN9Stockfish12_GLOBAL__N_118dtz_before_zeroingENS_10Tablebases8WDLScoreE.exit: ; preds = %.thread104, %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit.thread, %.fold.split.i, %bb.k, %bb.j, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit.thread83, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit.thread, %bb.dr, %bb.eg, %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit
+  %.5 = phi i32 [ 0, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit ], [ 0, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit.thread83 ], [ %i.cgg, %bb.eg ], [ %i.cel, %bb.dr ], [ %.pr.pre.pre, %_ZN9Stockfish12_GLOBAL__N_114do_probe_tableINS0_7TBTableILNS0_6TBTypeE1EEEiEET0_RKNS_8PositionEPT_NS_10Tablebases8WDLScoreEPNSB_10ProbeStateE.exit.i ], [ 0, %_ZN9Stockfish12_GLOBAL__N_16searchILb1EEENS_10Tablebases8WDLScoreERNS_8PositionEPNS2_10ProbeStateE.exit.thread ], [ 1, %bb.j ], [ %i.aw, %bb.k ], [ 101, %.fold.split.i ], [ 0, %_ZN9Stockfish12_GLOBAL__N_111probe_tableILNS0_6TBTypeE1EiEET0_RKNS_8PositionEPNS_10Tablebases10ProbeStateENS7_8WDLScoreE.exit.thread ], [ 1, %.thread104 ]
   ret i32 %.5
 }
 

@@ -204,23 +204,22 @@ bb.f:                                             ; preds = %.lr.ph
   %.not32 = icmp eq ptr %i.l, null                ; 2 uses
   %.not33 = icmp eq ptr %.02437, null             ; 2 uses
   %spec.select = select i1 %.not33, ptr %i.l, ptr null
-  %.2 = select i1 %.not32, ptr %.02437, ptr %spec.select ; 2 uses
+  %.2 = select i1 %.not32, ptr %.02437, ptr %spec.select
   %cond = select i1 %.not32, i1 true, i1 %.not33
-  br i1 %cond, label %.thread16, label %._crit_edge
+  br i1 %cond, label %.thread16, label %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 .thread16:                                        ; preds = %.lr.ph, %bb.f
-  %.222 = phi ptr [ %.2, %bb.f ], [ %.02437, %.lr.ph ] ; 2 uses
+  %.222 = phi ptr [ %.2, %bb.f ], [ %.02437, %.lr.ph ] ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.010.036, i64 16 ; 2 uses
   %.not = icmp eq ptr %i.m, %i.i
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.thread16, %bb.f
-  %.5 = phi ptr [ %.2, %bb.f ], [ %.222, %.thread16 ] ; 2 uses
-  %.not34 = icmp eq ptr %.5, null
+._crit_edge:                                      ; preds = %.thread16
+  %.not34 = icmp eq ptr %.222, null
   br i1 %.not34, label %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %.thread26
 
 .thread26:                                        ; preds = %bb.b, %._crit_edge
-  %.529 = phi ptr [ %.5, %._crit_edge ], [ %i.b, %bb.b ] ; 5 uses
+  %.529 = phi ptr [ %.222, %._crit_edge ], [ %i.b, %bb.b ] ; 5 uses
   %i.n = load ptr, ptr %.529, align 8, !tbaa !80
   %i.o = getelementptr i8, ptr %i.n, i64 -24
   %i.p = load i64, ptr %i.o, align 8
@@ -480,7 +479,7 @@ bb.ao:                                            ; preds = %_ZN9__gnu_cxx27__ex
   tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.z) #31
   br label %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
-_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.e, %bb.c, %bb.ao, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i58, %bb.ak, %_ZNSt12__shared_ptrIN5osgeo4proj3crs13GeographicCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.g, %._crit_edge
+_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.f, %bb.e, %bb.c, %bb.ao, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i58, %bb.ak, %_ZNSt12__shared_ptrIN5osgeo4proj3crs13GeographicCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.g, %._crit_edge
   %.pr = load ptr, ptr %0, align 8, !tbaa !297    ; 3 uses
   %.not31 = icmp eq ptr %.pr, null
   br i1 %.not31, label %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.thread, label %bb.ap

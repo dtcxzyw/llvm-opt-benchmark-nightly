@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 ZSTD_window_enforceMaxDist.exit:                  ; preds = %.ZSTD_window_enforceMaxDist.exit_crit_edge, %bb.j
   %.val263.i = phi i32 [ %i.bu, %.ZSTD_window_enforceMaxDist.exit_crit_edge ], [ %i.bx, %bb.j ] ; 2 uses
-  %.val262.i = phi i32 [ %.val262.i.pre, %.ZSTD_window_enforceMaxDist.exit_crit_edge ], [ %.val262.i101, %bb.j ] ; 5 uses
-  %.not.i = icmp ult i32 %.val263.i, %.val262.i   ; 4 uses
+  %.val262.i = phi i32 [ %.val262.i.pre, %.ZSTD_window_enforceMaxDist.exit_crit_edge ], [ %.val262.i101, %bb.j ] ; 6 uses
+  %.not.i = icmp ult i32 %.val263.i, %.val262.i   ; 2 uses
   %i.ca = load i32, ptr %i.u, align 4, !tbaa !14
   %.12.val.fr.i.i = freeze i32 %i.ca              ; 2 uses
   %i.cb = load i32, ptr %i.v, align 4, !tbaa !15  ; 2 uses
@@ -219,14 +219,12 @@ bb.k:                                             ; preds = %ZSTD_window_enforce
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.k, %ZSTD_window_enforceMaxDist.exit
-  %i.cg = phi i32 [ %.val263.i, %bb.k ], [ %.val262.i, %ZSTD_window_enforceMaxDist.exit ] ; 3 uses
+  %i.cg = phi i32 [ %.val263.i, %bb.k ], [ %.val262.i, %ZSTD_window_enforceMaxDist.exit ] ; 4 uses
   %i.ch = phi ptr [ %i.cf, %bb.k ], [ null, %ZSTD_window_enforceMaxDist.exit ] ; 3 uses
   %i.ci = zext i32 %i.cg to i64
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.ci
-  %6 = select i1 %.not.i, ptr %i.cj, ptr null     ; 4 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.ci ; 3 uses
   %i.ck = zext i32 %.val262.i to i64              ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.ck ; 2 uses
-  %7 = select i1 %.not.i, ptr %i.cl, ptr null     ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.ck ; 5 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.al ; 6 uses
   %i.co = getelementptr inbounds i8, ptr %i.cn, i64 -8 ; 2 uses
@@ -269,7 +267,7 @@ ZSTD_ldm_gear_reset.exit.i:                       ; preds = %.thread.i
   %i.dd = getelementptr inbounds i8, ptr %i.cn, i64 -7 ; 4 uses
   %i.de = getelementptr inbounds i8, ptr %i.cn, i64 -3 ; 2 uses
   %i.df = getelementptr inbounds i8, ptr %i.cn, i64 -1 ; 2 uses
-  %i.dg = icmp ugt ptr %7, %6
+  %i.dg = icmp ugt i32 %.val262.i, %i.cg
   %.idx.i = shl nuw nsw i64 %i.dc, 3
   br label %bb.l
 
@@ -581,7 +579,7 @@ ZSTD_count_2segments.exit.us.i:                   ; preds = %ZSTD_count.exit49.i
   br i1 %.not253.us.i, label %ZSTD_ldm_countBackwardsMatch_2segments.exit.thread.us.i, label %bb.an
 
 bb.an:                                            ; preds = %ZSTD_count_2segments.exit.us.i
-  %i.hk = select i1 %i.eu, ptr %6, ptr %i.cm      ; 4 uses
+  %i.hk = select i1 %i.eu, ptr %i.cj, ptr %i.cm   ; 4 uses
   %i.hl = icmp ugt ptr %i.ex, %i.hk
   %or.cond11.i.i.us.i = and i1 %i.eq, %i.hl
   br i1 %or.cond11.i.i.us.i, label %.lr.ph.i.i.us.i, label %ZSTD_ldm_countBackwardsMatch.exit.i.us.i
@@ -609,7 +607,7 @@ ZSTD_ldm_countBackwardsMatch.exit.i.us.i:         ; preds = %bb.ao, %.lr.ph.i.i.
   %i.hu = sub i64 0, %.0.lcssa.i.i.us.i           ; 2 uses
   %i.hv = getelementptr inbounds i8, ptr %i.ex, i64 %i.hu
   %.not.i266.us.i = icmp ne ptr %i.hv, %i.hk
-  %i.hw = icmp eq ptr %i.hk, %6
+  %i.hw = icmp eq ptr %i.hk, %i.cj
   %or.cond.i.us.i = or i1 %i.hw, %.not.i266.us.i
   br i1 %or.cond.i.us.i, label %ZSTD_ldm_countBackwardsMatch.exit.thread279.us.i, label %bb.ap
 
@@ -622,7 +620,7 @@ bb.ap:                                            ; preds = %ZSTD_ldm_countBackw
 .lr.ph.i21.i.us.i:                                ; preds = %bb.ap, %bb.aq
   %.014.i22.i.us.i = phi i64 [ %i.ie, %bb.aq ], [ 0, %bb.ap ] ; 2 uses
   %.0913.i23.i.us.i = phi ptr [ %i.hz, %bb.aq ], [ %i.hx, %bb.ap ]
-  %.01012.i24.i.us.i = phi ptr [ %i.ib, %bb.aq ], [ %7, %bb.ap ]
+  %.01012.i24.i.us.i = phi ptr [ %i.ib, %bb.aq ], [ %i.cl, %bb.ap ]
   %i.hz = getelementptr inbounds i8, ptr %.0913.i23.i.us.i, i64 -1 ; 3 uses
   %i.ia = load i8, ptr %i.hz, align 1, !tbaa !29
   %i.ib = getelementptr inbounds i8, ptr %.01012.i24.i.us.i, i64 -1 ; 3 uses
@@ -633,7 +631,7 @@ bb.ap:                                            ; preds = %ZSTD_ldm_countBackw
 bb.aq:                                            ; preds = %.lr.ph.i21.i.us.i
   %i.ie = add i64 %.014.i22.i.us.i, 1             ; 2 uses
   %i.if = icmp ugt ptr %i.hz, %.1238318.i
-  %i.ig = icmp ugt ptr %i.ib, %6
+  %i.ig = icmp ugt ptr %i.ib, %i.cj
   %or.cond.i25.i.us.i = and i1 %i.if, %i.ig
   br i1 %or.cond.i25.i.us.i, label %.lr.ph.i21.i.us.i, label %ZSTD_ldm_countBackwardsMatch.exit26.i.us.i, !llvm.loop !51
 

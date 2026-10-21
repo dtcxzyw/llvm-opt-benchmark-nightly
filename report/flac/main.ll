@@ -202,12 +202,12 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %.critedge308.thread
   %i.ap = tail call i32 @strcasecmp(ptr noundef %i.aa, ptr noundef nonnull @.str.204) #20
   %i.aq = icmp ne i32 %i.ap, 0                    ; 2 uses
-  %spec.select313 = select i1 %i.aq, i32 0, i32 7
+  %spec.select313 = select i1 %i.aq, i64 0, i64 7
   br label %.critedge310
 
 .critedge310:                                     ; preds = %bb.o, %bb.n, %.critedge308.thread, %bb.m, %bb.l, %bb.k, %bb.j, %bb.h
   %.not279 = phi i1 [ %i.aq, %bb.o ], [ false, %bb.h ], [ false, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.m ], [ false, %bb.n ], [ false, %.critedge308.thread ] ; 2 uses
-  %.0236 = phi i32 [ %spec.select313, %bb.o ], [ 1, %bb.h ], [ 3, %bb.j ], [ 2, %bb.k ], [ 4, %bb.l ], [ 4, %bb.m ], [ 6, %bb.n ], [ 7, %.critedge308.thread ] ; 2 uses
+  %.0236 = phi i64 [ %spec.select313, %bb.o ], [ 1, %bb.h ], [ 3, %bb.j ], [ 2, %bb.k ], [ 4, %bb.l ], [ 4, %bb.m ], [ 6, %bb.n ], [ 7, %.critedge308.thread ] ; 2 uses
   %i.ar = call i64 @fread(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef nonnull %.0239)
   %i.as = trunc i64 %i.ar to i32                  ; 4 uses
   %i.at = icmp ult i32 %i.as, 12
@@ -224,8 +224,7 @@ bb.p:                                             ; preds = %.critedge310
 
 bb.q:                                             ; preds = %bb.p
   %i.ax = load ptr, ptr @stderr, align 8, !tbaa !36
-  %4 = zext nneg i32 %.0236 to i64
-  %i.ay = getelementptr inbounds nuw [8 x i8], ptr @FileFormatString, i64 %4
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr @FileFormatString, i64 %.0236
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !37
   call void (ptr, i32, ptr, ...) @flac__utils_printf(ptr noundef %i.ax, i32 noundef 1, ptr noundef nonnull @.str.249, ptr noundef nonnull %0, ptr noundef %i.az, ptr noundef nonnull @.str.208) #18
   %i.ba = load i32, ptr getelementptr inbounds nuw (i8, ptr @option_values, i64 16), align 8, !tbaa !64
@@ -246,7 +245,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %.critedge310.thread, %.critedge310
   %i.bg = phi i32 [ %i.av, %.critedge310.thread ], [ %i.as, %.critedge310 ] ; 9 uses
-  %.0236480 = phi i32 [ 0, %.critedge310.thread ], [ %.0236, %.critedge310 ]
+  %.0236480 = phi i64 [ 0, %.critedge310.thread ], [ %.0236, %.critedge310 ]
   %.not279477 = phi i1 [ true, %.critedge310.thread ], [ %.not279, %.critedge310 ]
   %i.bh = load i16, ptr %i.a, align 1
   %i.bi = xor i16 %i.bh, 17481
@@ -359,8 +358,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   %i.dk = load ptr, ptr @stderr, align 8, !tbaa !36
-  %5 = zext nneg i32 %.0236480 to i64
-  %i.dl = getelementptr inbounds nuw [8 x i8], ptr @FileFormatString, i64 %5
+  %i.dl = getelementptr inbounds nuw [8 x i8], ptr @FileFormatString, i64 %.0236480
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !37
   call void (ptr, i32, ptr, ...) @flac__utils_printf(ptr noundef %i.dk, i32 noundef 1, ptr noundef nonnull @.str.249, ptr noundef nonnull %0, ptr noundef %i.dm, ptr noundef nonnull @.str.208) #18
   %i.dn = load i32, ptr getelementptr inbounds nuw (i8, ptr @option_values, i64 16), align 8, !tbaa !64

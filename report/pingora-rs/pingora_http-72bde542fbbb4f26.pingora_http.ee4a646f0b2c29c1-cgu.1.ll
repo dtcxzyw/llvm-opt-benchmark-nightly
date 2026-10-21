@@ -205,10 +205,9 @@ bb.b:                                             ; preds = %_RNvXs3_NtCskKLDkoK
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 33
   %.sroa.6.sroa.0.0.copyload.i = load i56, ptr %.sroa.6.0..sroa_idx.i, align 1, !noalias !673
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !673
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 8 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 7 uses
   %i.w = load i64, ptr %i.v, align 8, !range !12, !alias.scope !672, !noundef !9
-  %.not.i = icmp eq i64 %i.w, -1                  ; 2 uses
-  %..i = select i1 %.not.i, ptr null, ptr %i.v    ; 2 uses
+  %.not.i = icmp eq i64 %i.w, -1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !673
   store ptr null, ptr %i.n, align 8, !noalias !672
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8
@@ -611,7 +610,7 @@ bb.bu:                                            ; preds = %.loopexit
   br i1 %i.ip, label %bb.bz, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.iq = getelementptr inbounds nuw i8, ptr %..i, i64 24 ; 2 uses
+  %i.iq = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !748
   %i.ir = getelementptr inbounds nuw i8, ptr %i.c, i64 88
   store i16 %i.hl, ptr %i.ir, align 8, !noalias !748
@@ -847,7 +846,7 @@ bb.ct:                                            ; preds = %bb.bt
   br i1 %i.la, label %bb.cy, label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct
-  %i.lb = getelementptr inbounds nuw i8, ptr %..i, i64 24 ; 2 uses
+  %i.lb = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !774
   %i.lc = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   store i16 %i.hl, ptr %i.lc, align 8, !noalias !774

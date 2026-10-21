@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %.thread1569
-  %.04351858 = phi i1 [ true, %.preheader ], [ %spec.select, %.thread1569 ]
+  %.04351858 = phi i1 [ true, %.preheader ], [ %spec.select, %.thread1569 ] ; 3 uses
   %.04381857 = phi i1 [ false, %.preheader ], [ %.34411575, %.thread1569 ] ; 8 uses
   %.04441856 = phi ptr [ %i.ag, %.preheader ], [ %.34471574, %.thread1569 ] ; 8 uses
   %.sroa.01545.01855 = phi ptr [ %i.ab, %.preheader ], [ %i.eo, %.thread1569 ] ; 2 uses
@@ -560,9 +560,10 @@ bb.y:                                             ; preds = %bb.x, %_ZNSt7__cxx1
   br i1 %.not1651, label %.loopexit1710, label %bb.d
 
 .loopexit1710:                                    ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, %.thread1569, %.thread1576
-  %.4448 = phi ptr [ %i.av, %.thread1576 ], [ %.34471574, %.thread1569 ], [ %i.dt, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ]
-  %.4442 = phi i1 [ true, %.thread1576 ], [ %.34411575, %.thread1569 ], [ %i.ds, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ] ; 2 uses
-  %.not = xor i1 %spec.select, true
+  %spec.select1957 = phi i1 [ %.04351858, %.thread1576 ], [ %.04351858, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ], [ %spec.select, %.thread1569 ]
+  %.4448 = phi ptr [ %i.av, %.thread1576 ], [ %i.dt, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ], [ %.34471574, %.thread1569 ]
+  %.4442 = phi i1 [ true, %.thread1576 ], [ %i.ds, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ], [ %.34411575, %.thread1569 ] ; 2 uses
+  %.not = xor i1 %spec.select1957, true
   %or.cond = select i1 %.not, i1 true, i1 %.4442
   %spec.select610 = select i1 %or.cond, ptr %.4448, ptr null
   br label %bb.z

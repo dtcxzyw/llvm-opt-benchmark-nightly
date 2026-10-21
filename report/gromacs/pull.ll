@@ -205,16 +205,15 @@ bb.bq:                                            ; preds = %bb.bo
   br label %bb.by
 
 bb.br:                                            ; preds = %.loopexit646.i
-  %i.zp = icmp eq ptr %i.af, %i.ah                ; 2 uses
-  %i.zq = fdiv double 1.000000e+00, %5
-  %spec.select.i = select i1 %i.zp, double 0.000000e+00, double %i.zq ; 2 uses
+  %i.zp = icmp eq ptr %i.af, %i.ah
+  %i.zq = fdiv double 1.000000e+00, %5            ; 2 uses
   %i.zr = load ptr, ptr %i.bc, align 8, !tbaa !186
   %i.zs = load ptr, ptr %i.bb, align 8, !tbaa !111 ; 3 uses
   %.not519.i = icmp eq ptr %i.zr, %i.zs
   br i1 %.not519.i, label %.preheader432.i, label %.lr.ph509.i.preheader
 
 .lr.ph509.i.preheader:                            ; preds = %bb.br
-  %i.zt = insertelement <2 x double> poison, double %spec.select.i, i64 0
+  %i.zt = insertelement <2 x double> poison, double %i.zq, i64 0
   %i.zu = shufflevector <2 x double> %i.zt, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph509.i
 
@@ -526,7 +525,7 @@ bb.bw:                                            ; preds = %.lr.ph506.split.i
   %i.ahk = getelementptr inbounds nuw i8, ptr %i.ahf, i64 8 ; 2 uses
   %i.ahl = load float, ptr %i.ahk, align 4, !tbaa !72
   %i.ahm = fpext float %i.ahl to double
-  %i.ahn = call double @llvm.fmuladd.f64(double %spec.select.i, double %i.ags, double %i.ahm)
+  %i.ahn = call double @llvm.fmuladd.f64(double %i.zq, double %i.ags, double %i.ahm)
   %i.aho = fptrunc double %i.ahn to float
   store float %i.aho, ptr %i.ahk, align 4, !tbaa !72
   %i.ahp = add nuw nsw i64 %.0237504.i, 1         ; 2 uses

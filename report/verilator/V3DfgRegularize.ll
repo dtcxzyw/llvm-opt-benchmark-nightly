@@ -202,8 +202,7 @@ _ZN13DfgRegularize8isUnusedERK9DfgVertex.exit:    ; preds = %_ZNK12DfgVertexVar1
 
 ._crit_edge:                                      ; preds = %bb.a, %bb.e, %_ZNK12DfgVertexVar10hasExtRefsEv.exit.i
   %i.ad = and i16 %.sroa.0.0.copyload.i.i.i.i.i, -2
-  %spec.select.i.i.i.not = icmp eq i16 %i.ad, 60  ; 2 uses
-  %..i = select i1 %spec.select.i.i.i.not, ptr %1, ptr null ; 2 uses
+  %spec.select.i.i.i.not = icmp eq i16 %i.ad, 60
   br i1 %spec.select.i.i.i.not, label %bb.f, label %_ZNK12DfgVertexVar10hasExtRefsEv.exit.thread
 
 bb.f:                                             ; preds = %._crit_edge
@@ -273,7 +272,7 @@ bb.m:                                             ; preds = %bb.n, %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i.i, i64 8
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !206
-  %i.bl = icmp eq ptr %..i, %i.bk
+  %i.bl = icmp eq ptr %1, %i.bk
   br i1 %i.bl, label %_ZNK12DfgVertexVar10hasExtRefsEv.exit.thread, label %bb.m, !llvm.loop !299
 
 bb.o:                                             ; preds = %bb.k
@@ -295,7 +294,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bw, label %_ZNK12DfgVertexVar10hasExtRefsEv.exit.thread, label %.lr.ph.i.i.i.i.i
 
 bb.q:                                             ; preds = %bb.r
-  %i.bx = icmp eq ptr %..i, %i.ca
+  %i.bx = icmp eq ptr %1, %i.ca
   br i1 %i.bx, label %_ZNK12DfgVertexVar10hasExtRefsEv.exit.thread, label %.lr.ph.i.i.i.i.i, !llvm.loop !5
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.p, %bb.q

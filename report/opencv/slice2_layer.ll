@@ -204,19 +204,21 @@ bb.u:                                             ; preds = %bb.t
   %i.bg = select i1 %i.bd, i32 1, i32 %i.bf
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.v, %bb.u
-  %.sroa.044.052 = phi ptr [ %i.bb, %bb.u ], [ %8, %bb.v ] ; 2 uses
+7:                                                ; preds = %bb.v
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.044.052, i64 4 ; 2 uses
+  %.not49 = icmp eq ptr %8, %i.ba
+  br i1 %.not49, label %bb.w, label %bb.v
+
+bb.v:                                             ; preds = %bb.u, %7
+  %.sroa.044.052 = phi ptr [ %i.bb, %bb.u ], [ %8, %7 ] ; 2 uses
   %i.bh = load i32, ptr %.sroa.044.052, align 4, !tbaa !40 ; 2 uses
   %i.bi = icmp sgt i32 %i.bh, -1
-  %7 = icmp ne i32 %i.bh, %i.bg
-  %or.cond41.not = select i1 %i.bi, i1 %7, i1 false ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.044.052, i64 4 ; 2 uses
-  %.not49.a = icmp ne ptr %8, %i.ba
-  %or.cond69.not = select i1 %or.cond41.not, i1 %.not49.a, i1 false
-  br i1 %or.cond69.not, label %bb.v, label %bb.w
+  %.not49.a = icmp ne i32 %i.bh, %i.bg            ; 2 uses
+  %or.cond69.not = select i1 %i.bi, i1 %.not49.a, i1 false
+  br i1 %or.cond69.not, label %7, label %.thread
 
-bb.w:                                             ; preds = %bb.v
-  %or.cond = and i1 %i.o, %or.cond41.not
+bb.w:                                             ; preds = %7
+  %or.cond = and i1 %i.o, %.not49.a
   br i1 %or.cond, label %bb.x, label %.thread
 
 bb.x:                                             ; preds = %bb.w
@@ -235,7 +237,7 @@ bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
   br label %bb.ae
 
-.thread:                                          ; preds = %bb.t, %bb.w
+.thread:                                          ; preds = %bb.v, %bb.t, %bb.w
   br i1 %i.o, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %.thread

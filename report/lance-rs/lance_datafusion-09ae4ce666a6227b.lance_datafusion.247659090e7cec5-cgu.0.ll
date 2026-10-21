@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
   call void @_RNvMNtCs2bHstFFhpHt_17datafusion_common8dfschemaNtB2_8DFSchema15index_of_column(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.k)
   %i.l = load i64, ptr %i.a, align 8, !range !318, !noalias !35896, !noundef !313
   %.not.i = icmp eq i64 %i.l, -1
+  %3 = load i64, ptr %i.e, align 8, !noalias !35896
   br i1 %.not.i, label %bb.d, label %_RNCNvMs_NtNtCsf6gb3FOA7sv_14datafusion_sql4expr8functionINtNtBa_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE20sql_function_to_exprsa_0B1l_.exit
 
 bb.d:                                             ; preds = %bb.c
-  %3 = load i64, ptr %i.e, align 8, !noalias !35896
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !35896
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !noalias !35896, !nonnull !313, !noundef !313 ; 2 uses
@@ -611,19 +611,18 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.gk = sub nuw i64 %.val4.i.i.i.i.i.i, %.val.i.i.i.i.i.i
   %.sroa.7.0.i.i.i.i.i = select i1 %i.gj, i64 %i.gk, i64 0 ; 2 uses
   %i.gl = add i64 %.sroa.8.0.i.i.i.i.i, %.sroa.7.0.i.i.i.i.i ; 3 uses
-  %.not74.i.i.i.i.i = icmp uge i64 %i.gl, %.sroa.7.0.i.i.i.i.i ; 2 uses
-  %i.gm = add i64 %.sroa.871.0.i.i.i.i.i, %i.gl   ; 2 uses
+  %.not74.i.i.i.i.i = icmp uge i64 %i.gl, %.sroa.7.0.i.i.i.i.i
+  %i.gm = add i64 %.sroa.871.0.i.i.i.i.i, %i.gl   ; 3 uses
   %i.gn = icmp uge i64 %i.gm, %i.gl
   %or.cond.not.i.i.i.i.i = select i1 %.not74.i.i.i.i.i, i1 %i.gn, i1 false, !prof !72497
-  %.sroa.8.3.i.i.i.i.i = select i1 %.not74.i.i.i.i.i, i64 %i.gm, i64 undef, !prof !72497 ; 2 uses
   br i1 %or.cond.not.i.i.i.i.i, label %bb.bn, label %bb.bp, !prof !319
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.go = icmp ugt i64 %.sroa.8.3.i.i.i.i.i, %.sroa.4.0.i.i
+  %i.go = icmp ugt i64 %i.gm, %.sroa.4.0.i.i
   br i1 %i.go, label %bb.bo, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs1Jc0oVeks7E_15datafusion_expr4expr4ExprE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.i.i, !prof !314
 
 bb.bo:                                            ; preds = %bb.bn
-  invoke fastcc void @_RINvNvMs2_NtCs40k4W9msRzi_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.y, i64 noundef 0, i64 noundef %.sroa.8.3.i.i.i.i.i, i64 noundef 16, i64 noundef 112)
+  invoke fastcc void @_RINvNvMs2_NtCs40k4W9msRzi_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.y, i64 noundef 0, i64 noundef %i.gm, i64 noundef 16, i64 noundef 112)
           to label %._RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs1Jc0oVeks7E_15datafusion_expr4expr4ExprE7reserveCsc85D0lJ81Z_16lance_datafusion.exit_crit_edge.i.i.i unwind label %bb.bx, !noalias !72498
 
 ._RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs1Jc0oVeks7E_15datafusion_expr4expr4ExprE7reserveCsc85D0lJ81Z_16lance_datafusion.exit_crit_edge.i.i.i: ; preds = %bb.bo

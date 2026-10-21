@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9793)
   %i.g = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 80
   %i.h = load i32, ptr %i.g, align 8, !range !48, !alias.scope !9792, !noalias !9794, !noundef !10 ; 4 uses
-  %.not12 = icmp eq i32 %i.h, -1                  ; 2 uses
-  %1 = select i1 %.not12, i64 1452335207727870361, i64 386524617143769950 ; 2 uses
+  %.not12 = icmp eq i32 %i.h, -1
   br i1 %.not12, label %_RINvXs8_NtNtCsdaEETE4DqmE_13typst_library9visualize5paintNtB6_5PaintNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -216,8 +215,8 @@ bb.c:                                             ; preds = %bb.b
   %i.j = zext nneg i32 %i.h to i64                ; 2 uses
   %i.k = add nsw i64 %i.j, -1
   %i.l = select i1 %i.i, i64 %i.k, i64 0          ; 2 uses
-  %2 = add nsw i64 %1, %i.l
-  %3 = mul i64 %2, -1065810590584100411           ; 3 uses
+  %1 = mul i64 %i.l, -1065810590584100411
+  %2 = add i64 %1, 7745086105557359958            ; 3 uses
   switch i64 %i.l, label %bb.d [
     i64 0, label %bb.e
     i64 1, label %bb.h
@@ -230,7 +229,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9797)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9798)
-  %i.m = add i64 %3, %i.j
+  %i.m = add i64 %2, %i.j
   %i.n = mul i64 %i.m, -1065810590584100411       ; 2 uses
   store i64 %i.n, ptr %i.e, align 8, !alias.scope !9799
   %i.o = trunc nuw i32 %i.h to i1
@@ -288,7 +287,7 @@ bb.h:                                             ; preds = %bb.c
   %i.au = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 96
   %.val1.i.i.i.i.i.i = load ptr, ptr %i.au, align 8, !alias.scope !9806, !noalias !9794, !nonnull !10, !noundef !10 ; 18 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9807)
-  %i.av = add i64 %.val.i.i.i.i.i.i, %3
+  %i.av = add i64 %.val.i.i.i.i.i.i, %2
   %i.aw = mul i64 %i.av, -1065810590584100411     ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i.i, i64 16 ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i.i, i64 72 ; 3 uses
@@ -691,7 +690,7 @@ bb.ab:                                            ; preds = %bb.aa
 _RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i: ; preds = %bb.ab, %bb.aa
   %.sroa.0.0.i.off0.i.i.i.i.i.i.i.i = phi i64 [ %extract.t.i.i.i.i.i.i.i.i, %bb.ab ], [ %extract.t1.i.i.i.i.i.i.i.i, %bb.aa ]
   %.sroa.0.0.i.off64.i.i.i.i.i.i.i.i = phi i64 [ %extract.t2.i.i.i.i.i.i.i.i, %bb.ab ], [ %extract.t4.i.i.i.i.i.i.i.i, %bb.aa ]
-  %i.kd = add i64 %.sroa.0.0.i.off0.i.i.i.i.i.i.i.i, %3
+  %i.kd = add i64 %.sroa.0.0.i.off0.i.i.i.i.i.i.i.i, %2
   %i.ke = mul i64 %i.kd, -1065810590584100411
   %i.kf = add i64 %i.ke, %.sroa.0.0.i.off64.i.i.i.i.i.i.i.i
   %i.kg = mul i64 %i.kf, -1065810590584100411
@@ -732,7 +731,7 @@ _RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oU
   br label %_RINvXs8_NtNtCsdaEETE4DqmE_13typst_library9visualize5paintNtB6_5PaintNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i
 
 _RINvXs8_NtNtCsdaEETE4DqmE_13typst_library9visualize5paintNtB6_5PaintNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i: ; preds = %_RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i, %_RINvXsb_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB6_8GradientNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i, %_RINvXsy_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_5ColorNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i, %bb.b
-  %i.lo = phi i64 [ %1, %bb.b ], [ %storemerge.i.i.i.i.i.i.i.i, %_RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ], [ %i.jt, %_RINvXsb_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB6_8GradientNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ], [ %storemerge.i.i.i.i.i.i.i, %_RINvXsy_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_5ColorNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ]
+  %i.lo = phi i64 [ 1452335207727870361, %bb.b ], [ %storemerge.i.i.i.i.i.i.i.i, %_RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ], [ %i.jt, %_RINvXsb_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB6_8GradientNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ], [ %storemerge.i.i.i.i.i.i.i, %_RINvXsy_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_5ColorNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ]
   %i.lp = load i64, ptr %i.f, align 8, !range !19, !alias.scope !9792, !noalias !9794, !noundef !10 ; 2 uses
   %i.lq = add i64 %i.lp, %i.lo
   %i.lr = mul i64 %i.lq, -1065810590584100411     ; 2 uses
@@ -1135,7 +1134,7 @@ bb.l:                                             ; preds = %bb.j, %_RNvMs_NtNtC
   store i8 %i.ca, ptr %.sroa.669.0..sroa_idx, align 8, !noalias !20012
   br label %bb.k
 
-.thread96.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph154, %.lr.ph, %.noexc20, %bb.ad, %bb.w, %bb.u, %switch.lookup156
+.thread96.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph154, %.lr.ph, %.noexc20, %5, %bb.w, %bb.u, %switch.lookup156
   %lpad.loopexit.split-lp160 = landingpad { ptr, i32 }
           cleanup
   br label %.thread96
@@ -1368,7 +1367,7 @@ bb.aa:                                            ; preds = %.loopexit, %.loopex
   %.sroa.0.1.i = phi i8 [ 2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread38.i ], [ 1, %.split.i ], [ 1, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.i ], [ 2, %.loopexit ], [ %.sroa.011.0.copyload.i, %.cont.cont.i ], [ 0, %bb.z ], [ 2, %.loopexit ] ; 2 uses
   %.sroa.0.0.insert.ext.i = zext i8 %.sroa.0.1.i to i56
   %.sroa.0.0.insert.insert.i = or disjoint i56 %.sroa.034.1.insert.shift.i, %.sroa.0.0.insert.ext.i
-  %i.dt = load i64, ptr %2, align 8, !range !29, !noundef !10
+  %i.dt = load i64, ptr %2, align 8, !range !29, !noundef !10 ; 2 uses
   %.not42.i = icmp eq i64 %i.dt, 2
   %i.du = load i64, ptr %i.am, align 8, !range !29, !noalias !20012, !noundef !10 ; 2 uses
   %.not43.i = icmp eq i64 %i.du, 2
@@ -1401,8 +1400,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ek = getelementptr inbounds nuw i8, ptr %i.am, i64 40
   %i.el = load double, ptr %i.ek, align 8, !alias.scope !20033, !noundef !10
   call void @llvm.experimental.noalias.scope.decl(metadata !20034)
-  %5 = load i64, ptr %2, align 8, !range !19, !alias.scope !20035, !noundef !10
-  %i.em = trunc nuw i64 %5 to i1
+  %i.em = trunc nuw i64 %i.dt to i1
   br i1 %i.em, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i: ; preds = %bb.ac
@@ -1413,7 +1411,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_lib
   store <2 x double> splat (double +inf), ptr %.sroa.4.0..sroa.4.0..sroa_idx.i.sroa_idx.i, align 8, !alias.scope !20036
   %.sroa.6.0..sroa.4.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 32
   store <2 x double> splat (double -inf), ptr %.sroa.6.0..sroa.4.0..sroa_idx.i.sroa_idx.i, align 8, !alias.scope !20036
-  br label %bb.ad
+  br label %5
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i: ; preds = %bb.ac
   %i.en = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1421,19 +1419,26 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_lib
   %i.eo = icmp eq i64 %.pre.i, %i.ed
   br i1 %i.eo, label %bb.ad, label %bb.ae
 
-bb.ad:                                            ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i
-  %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.eq = load double, ptr %i.ep, align 8, !alias.scope !20032, !noundef !10
-  %i.er = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.es = load double, ptr %i.er, align 8, !alias.scope !20032, !noundef !10
-  %6 = invoke { double, double } @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout5pointNtB2_5Point3min(double noundef %i.eq, double noundef %i.es, double noundef %i.ef, double noundef %i.eh)
+bb.ad:                                            ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i
+  %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.eq = load double, ptr %i.ep, align 8, !alias.scope !20032
+  %i.er = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.es = load double, ptr %i.er, align 8, !alias.scope !20032
+  br label %5
+
+5:                                                ; preds = %bb.ad, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i
+  %6 = phi double [ %i.es, %bb.ad ], [ +inf, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i ]
+  %7 = phi double [ %i.eq, %bb.ad ], [ +inf, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i ]
+  %8 = invoke { double, double } @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout5pointNtB2_5Point3min(double noundef %7, double noundef %6, double noundef %i.ef, double noundef %i.eh)
           to label %.noexc20 unwind label %.thread96.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-.noexc20:                                         ; preds = %bb.ad
-  %i.et = extractvalue { double, double } %6, 0
-  %i.eu = extractvalue { double, double } %6, 1
-  store double %i.et, ptr %i.ep, align 8, !alias.scope !20032
-  store double %i.eu, ptr %i.er, align 8, !alias.scope !20032
+.noexc20:                                         ; preds = %5
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.et = extractvalue { double, double } %8, 0
+  %i.eu = extractvalue { double, double } %8, 1
+  store double %i.et, ptr %10, align 8, !alias.scope !20032
+  store double %i.eu, ptr %9, align 8, !alias.scope !20032
   %i.ev = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.ew = load double, ptr %i.ev, align 8, !alias.scope !20032, !noundef !10
   %i.ex = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
@@ -1836,7 +1841,7 @@ bb.j:                                             ; preds = %_RNvMs_NtNtCs8jFhWe
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.i
   %i.ap = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.ab, %bb.i ] ; 2 uses
-  %i.aq = load i64, ptr %1, align 8, !range !29, !noundef !10
+  %i.aq = load i64, ptr %1, align 8, !range !29, !noundef !10 ; 2 uses
   %.not15 = icmp eq i64 %i.aq, 2
   %.not16 = icmp eq i64 %i.ap, 2
   %i.ar = or i1 %.not15, %.not16
@@ -1868,8 +1873,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.bh = load double, ptr %i.bg, align 8, !alias.scope !20765, !noundef !10
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20766)
-  %2 = load i64, ptr %1, align 8, !range !19, !alias.scope !20767, !noundef !10
-  %i.bi = trunc nuw i64 %2 to i1
+  %i.bi = trunc nuw i64 %i.aq to i1
   br i1 %i.bi, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i: ; preds = %bb.l
@@ -1886,23 +1890,34 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_lib
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.pre.i = load i64, ptr %i.bj, align 8, !alias.scope !20764
   %i.bk = icmp eq i64 %.pre.i, %i.az
-  br i1 %i.bk, label %bb.m, label %bb.n
+  br i1 %i.bk, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i._crit_edge, label %bb.n
 
-bb.m:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %4 = load double, ptr %3, align 8, !alias.scope !20764, !noundef !10
-  %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %5 = load double, ptr %i.bl, align 8, !alias.scope !20764, !noundef !10
-  %i.bm = tail call { double, double } @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout5pointNtB2_5Point3min(double noundef %4, double noundef %5, double noundef %i.bb, double noundef %i.bd), !noalias !20769 ; 2 uses
+_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i._crit_edge: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.pre4 = load double, ptr %.phi.trans.insert, align 8, !alias.scope !20764
+  %.phi.trans.insert5 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %.pre6 = load double, ptr %.phi.trans.insert5, align 8, !alias.scope !20764
+  %.phi.trans.insert7 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %.pre8 = load double, ptr %.phi.trans.insert7, align 8, !alias.scope !20764
+  %.phi.trans.insert9 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %.pre10 = load double, ptr %.phi.trans.insert9, align 8, !alias.scope !20764
+  br label %bb.m
+
+bb.m:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i._crit_edge, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i
+  %2 = phi double [ %.pre10, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i._crit_edge ], [ -inf, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i ]
+  %3 = phi double [ %.pre8, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i._crit_edge ], [ -inf, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i ]
+  %4 = phi double [ %.pre6, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i._crit_edge ], [ +inf, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i ]
+  %5 = phi double [ %.pre4, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.i._crit_edge ], [ +inf, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionTjNtNtNtCsdaEETE4DqmE_13typst_library6layout4rect4RectEE18get_or_insert_withNCNvB2_13get_or_insert0ECs8jFhWeO2DFb_9typst_pdf.exit.thread.i ]
+  %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.bm = tail call { double, double } @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout5pointNtB2_5Point3min(double noundef %5, double noundef %4, double noundef %i.bb, double noundef %i.bd), !noalias !20769 ; 2 uses
   %i.bn = extractvalue { double, double } %i.bm, 0
   %i.bo = extractvalue { double, double } %i.bm, 1
-  store double %i.bn, ptr %3, align 8, !alias.scope !20764
-  store double %i.bo, ptr %i.bl, align 8, !alias.scope !20764
-  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %6 = load double, ptr %i.bp, align 8, !alias.scope !20764, !noundef !10
-  %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %7 = load double, ptr %i.bq, align 8, !alias.scope !20764, !noundef !10
-  %i.br = tail call { double, double } @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout5pointNtB2_5Point3max(double noundef %6, double noundef %7, double noundef %i.bf, double noundef %i.bh), !noalias !20769 ; 2 uses
+  store double %i.bn, ptr %i.bl, align 8, !alias.scope !20764
+  store double %i.bo, ptr %6, align 8, !alias.scope !20764
+  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.br = tail call { double, double } @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout5pointNtB2_5Point3max(double noundef %3, double noundef %2, double noundef %i.bf, double noundef %i.bh), !noalias !20769 ; 2 uses
   %i.bs = extractvalue { double, double } %i.br, 0
   %i.bt = extractvalue { double, double } %i.br, 1
   store double %i.bs, ptr %i.bp, align 8, !alias.scope !20764

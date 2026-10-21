@@ -205,7 +205,7 @@ bb.co:                                            ; preds = %.backedge.i30.i.i.i
   switch i64 %i.mi, label %bb.cp [
     i64 0, label %bb.cq
     i64 1, label %bb.di
-    i64 2, label %bb.dm
+    i64 2, label %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread65.i.i.i
   ]
 
 bb.cp:                                            ; preds = %bb.co
@@ -254,12 +254,12 @@ bb.ct:                                            ; preds = %bb.cr
   store i64 %.val1.i23.i23.i.i.i, ptr %i.ly, align 8, !noalias !41996
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.lz, i8 0, i64 16, i1 false), !noalias !41996
   %i.mv = call { i64, ptr } @_RNvXs_NtCsaI3lGUjttVO_5hyper7upgradeNtB4_8UpgradedNtNtNtB6_2rt2io4Read9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %.val19.i.i.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.i) #52, !noalias !41997 ; 2 uses
-  %i.mw = extractvalue { i64, ptr } %i.mv, 0
+  %i.mw = extractvalue { i64, ptr } %i.mv, 0      ; 2 uses
   %i.mx = extractvalue { i64, ptr } %i.mv, 1      ; 2 uses
   %i.my = trunc nuw i64 %i.mw to i1               ; 2 uses
-  %.not12.i.i.i.i.i.i.i = icmp ne ptr %i.mx, null ; 2 uses
+  %.not12.i.i.i.i.i.i.i = icmp ne ptr %i.mx, null
   %or.cond.not.i.i.i.i.i.i.i = select i1 %i.my, i1 true, i1 %.not12.i.i.i.i.i.i.i
-  br i1 %or.cond.not.i.i.i.i.i.i.i, label %_RNvXs_NtNtCsczhfDQ1qNkX_5tokio2io10async_readQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtB4_9AsyncRead9poll_readCs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i, label %bb.cu
+  br i1 %or.cond.not.i.i.i.i.i.i.i, label %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i, label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct
   %i.mz = load i64, ptr %i.ly, align 8, !noalias !41996, !noundef !145 ; 2 uses
@@ -270,13 +270,6 @@ bb.cu:                                            ; preds = %bb.ct
 bb.cv:                                            ; preds = %bb.cu
   call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.na, i64 noundef %i.mz, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2085) #62, !noalias !41997
   unreachable
-
-_RNvXs_NtNtCsczhfDQ1qNkX_5tokio2io10async_readQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtB4_9AsyncRead9poll_readCs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i: ; preds = %bb.ct
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !41996
-  br i1 %i.my, label %.loopexit.i, label %2
-
-2:                                                ; preds = %_RNvXs_NtNtCsczhfDQ1qNkX_5tokio2io10async_readQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtB4_9AsyncRead9poll_readCs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i
-  br i1 %.not12.i.i.i.i.i.i.i, label %.loopexit70.i.i.i, label %.thread.i.i.i.i.i
 
 bb.cw:                                            ; preds = %bb.cu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !41996
@@ -291,7 +284,7 @@ bb.cy:                                            ; preds = %bb.cw
   call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.na, i64 noundef %.val1.i23.i23.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !41999
   unreachable
 
-.thread.i.i.i.i.i:                                ; preds = %bb.cx, %2
+.thread.i.i.i.i.i:                                ; preds = %bb.cx
   store i8 1, ptr %i.lt, align 8, !alias.scope !41995, !noalias !41978
   br label %._crit_edge.i.i34.i.i.i
 
@@ -373,6 +366,10 @@ bb.di:                                            ; preds = %bb.co
   %i.of = trunc nuw i64 %i.oe to i1
   br i1 %i.of, label %.loopexit.i, label %bb.dk
 
+_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread65.i.i.i: ; preds = %bb.co
+  %2 = load i64, ptr %i.im, align 16, !alias.scope !41993, !noalias !41978, !noundef !145
+  br label %bb.dm
+
 bb.dj:                                            ; preds = %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1w_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i
   %i.og = icmp samesign ugt i8 %i.nf, 1
   %or.cond.i37.i.i.i = select i1 %i.og, i1 true, i1 %i.lv
@@ -409,11 +406,21 @@ _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Al
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i25.i29.i.i.i, i64 noundef %.val1.i23.i23.i.i.i, i64 noundef 1) #52, !noalias !42004
   br label %.backedge.i30.i.i.i
 
-bb.dm:                                            ; preds = %bb.co
+_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i: ; preds = %bb.ct
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !41996
+  %.mux.i.i.i.i = select i1 %i.my, ptr undef, ptr %i.mx ; 2 uses
+  %3 = ptrtoint ptr %.mux.i.i.i.i to i64
+  switch i64 %i.mw, label %.loopexit70.i.i.i [
+    i64 1, label %.loopexit.i
+    i64 -1, label %bb.dm
+  ]
+
+bb.dm:                                            ; preds = %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread65.i.i.i
+  %4 = phi i64 [ %2, %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread65.i.i.i ], [ %3, %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i ] ; 2 uses
   br i1 %i.ls, label %.loopexit.i, label %bb.dn
 
-.loopexit70.i.i.i:                                ; preds = %bb.cl, %bb.dk, %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1w_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i, %2, %bb.dg, %bb.de, %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamQINtNtNtB1x_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i.i
-  %.sroa.9145.0.ph.in.i = phi ptr [ %i.mx, %2 ], [ %.sroa.9.1.i5.i.i.i.i, %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamQINtNtNtB1x_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i.i ], [ %i.oc, %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1w_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %i.ny, %bb.dg ], [ %i.nq, %bb.de ], [ %i.ok, %bb.dk ], [ %i.lq, %bb.cl ]
+.loopexit70.i.i.i:                                ; preds = %bb.cl, %bb.dk, %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1w_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i, %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i, %bb.dg, %bb.de, %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamQINtNtNtB1x_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i.i
+  %.sroa.9145.0.ph.in.i = phi ptr [ %i.oc, %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1w_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i ], [ %.sroa.9.1.i5.i.i.i.i, %_RINvMs_NtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utilsNtB5_10CopyBuffer9poll_copyQNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamQINtNtNtB1x_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i.i ], [ %.mux.i.i.i.i, %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i ], [ %i.ny, %bb.dg ], [ %i.nq, %bb.de ], [ %i.ok, %bb.dk ], [ %i.lq, %bb.cl ]
   %.sroa.9145.0.ph.i = ptrtoint ptr %.sroa.9145.0.ph.in.i to i64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !42005
   store i64 1, ptr %i.n, align 8, !noalias !42006
@@ -428,7 +435,6 @@ bb.dm:                                            ; preds = %bb.co
   br i1 %i.on, label %bb.dp, label %bb.dq
 
 bb.dn:                                            ; preds = %bb.dm
-  %3 = load i64, ptr %i.im, align 16, !alias.scope !41993, !noalias !41978, !noundef !145 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !42005
   store i64 0, ptr %i.n, align 8, !noalias !42006
   %.sroa.9145.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 8
@@ -532,7 +538,7 @@ bb.dr:                                            ; preds = %bb.bh
   unreachable
 
 bb.ds:                                            ; preds = %bb.dq, %bb.do, %bb.dn
-  %.sroa.13146.0186.i = phi i64 [ undef, %bb.dq ], [ %3, %bb.do ], [ %3, %bb.dn ]
+  %.sroa.13146.0186.i = phi i64 [ undef, %bb.dq ], [ %4, %bb.do ], [ %4, %bb.dn ]
   %.sroa.9145.0184.i = phi i64 [ %.sroa.9145.0.ph.i, %bb.dq ], [ %.sroa.7.0.i.i.i.i, %bb.do ], [ %.sroa.7.0.i.i.i.i, %bb.dn ] ; 2 uses
   %.sroa.0144.0182.i = phi i1 [ true, %bb.dq ], [ false, %bb.do ], [ false, %bb.dn ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !42005
@@ -578,7 +584,7 @@ _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Al
   store i8 0, ptr %i.pq, align 1, !noalias !41963
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNCINvNtNtCs8UFHSMUhzWe_19shadowsocks_service5local5utils29establish_tcp_tunnel_bypassedINtNtNtBI_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtBI_3net3tcp17auto_proxy_stream21AutoProxyClientStreamE0ECs7XnEB7DeNXr_7sslocal.exit.i
 
-.loopexit.i:                                      ; preds = %bb.di, %bb.db, %_RNvXs_NtNtCsczhfDQ1qNkX_5tokio2io10async_readQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtB4_9AsyncRead9poll_readCs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i, %bb.da, %bb.dm
+.loopexit.i:                                      ; preds = %bb.di, %bb.db, %bb.da, %bb.dm, %_RINvNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay5utils22transfer_one_directionQINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEQNtNtNtNtB1q_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i), !noalias !41978
   store i8 3, ptr %i.ik, align 1, !noalias !41978
   store i8 7, ptr %i.ii, align 8, !noalias !41963
@@ -981,7 +987,7 @@ begin_hunk_1_@llvm.ucmp.i32.i32
 !87269 = !{!87052}
 !87270 = !{!87044, !86979}
 !87271 = !{!87051, !87046, !87042, !86977}
-!87272 = !{!87051, !87053, !87052, !87048, !87044, !86983, !86979}
+!87272 = !{!87051, !87053, !87052, !87049, !87047, !87048, !87044, !86983, !86979}
 !87273 = !{!87048, !87044, !86983, !86979}
 !87274 = !{!87051, !87053, !87052, !87046, !87049, !87047, !87048, !87042, !87054, !87043, !87044, !86983, !86977, !86994, !86978, !86979}
 !87275 = !{!87056}

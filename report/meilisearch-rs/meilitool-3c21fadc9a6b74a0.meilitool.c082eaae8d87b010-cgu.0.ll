@@ -206,13 +206,12 @@ _ZN10serde_json3ser9Formatter18begin_object_value17he63e0bb025a34ac7E.exit.i.i: 
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78240)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78241)
   %i.ac = load ptr, ptr %1, align 8, !alias.scope !78242, !noundef !23 ; 2 uses
-  %.not.i.i.i.i.i = icmp ne ptr %i.ac, null       ; 2 uses
+  %.not.i.i.i.i.i = icmp ne ptr %i.ac, null
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ae = load i64, ptr %i.ad, align 8, !alias.scope !78243
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ag = load i64, ptr %i.af, align 8, !alias.scope !78243 ; 2 uses
   %i.ah = ptrtoint ptr %i.ac to i64
-  %.sroa.18.0.i.i.i.i = select i1 %.not.i.i.i.i.i, i64 %i.ae, i64 undef
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78244)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78245)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78246)
@@ -255,7 +254,7 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph.i.split.i.i.preheader.i.i.i:               ; preds = %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i"
   %i.av = phi i64 [ %i.dy, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %i.ar, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 3 uses
   %.sroa.11.1.i.i.i.i = phi i64 [ 0, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %i.ah, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 2 uses
-  %.sroa.7.0.i.i.i35.i.i.i.i.i.i = phi i64 [ %.sroa.7.0.i.i.i.i.i.i.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %.sroa.18.0.i.i.i.i, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 6 uses
+  %.sroa.7.0.i.i.i35.i.i.i.i.i.i = phi i64 [ %.sroa.7.0.i.i.i.i.i.i.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %i.ae, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 6 uses
   %i.aw = phi i1 [ false, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ true, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ]
   %.sroa.012.0.lcssa.i.i20.i.i.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i.i.i.i.i, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ null, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ] ; 2 uses
   %i.ax = phi i64 [ %i.ay, %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17hc3f94668e41477d1E.exit.i.i.i.i.i.i" ], [ %i.ag, %_ZN10serde_json3ser9Formatter12begin_object17h16713b5239a02560E.exit.i.i.i.i.i ]
@@ -658,12 +657,11 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %bb.cp
   %i.mc = load i64, ptr %i.ey, align 8, !range !42, !noundef !23
-  %i.md = trunc nuw i64 %i.mc to i1               ; 2 uses
+  %i.md = trunc nuw i64 %i.mc to i1
   %i.me = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
   %i.mf = load ptr, ptr %i.me, align 8            ; 2 uses
   %i.mg = getelementptr inbounds nuw i8, ptr %i.ey, i64 16
   %i.mh = load i32, ptr %i.mg, align 8
-  %.sroa.1079.0 = select i1 %i.md, i32 undef, i32 %i.mh
   %.sroa.678.0 = ptrtoint ptr %i.mf to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ey)
   br i1 %i.md, label %bb.ng, label %bb.cr
@@ -675,12 +673,11 @@ bb.cr:                                            ; preds = %bb.cq
 
 bb.cs:                                            ; preds = %bb.cr
   %i.mi = load i64, ptr %i.ex, align 8, !range !42, !noundef !23
-  %i.mj = trunc nuw i64 %i.mi to i1               ; 2 uses
+  %i.mj = trunc nuw i64 %i.mi to i1
   %i.mk = getelementptr inbounds nuw i8, ptr %i.ex, i64 8
   %i.ml = load ptr, ptr %i.mk, align 8            ; 2 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %i.ex, i64 16
   %i.mn = load i32, ptr %i.mm, align 8
-  %.sroa.1083.0 = select i1 %i.mj, i32 undef, i32 %i.mn
   %.sroa.682.0 = ptrtoint ptr %i.ml to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ex)
   br i1 %i.mj, label %bb.ng, label %bb.ct
@@ -936,7 +933,7 @@ bb.dm:                                            ; preds = %bb.dk
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dh)
   store i32 0, ptr %i.dh, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dg)
-  invoke fastcc void @"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$4iter17h9a0cd9ceee11e155E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.dg, i64 %.sroa.678.0, i32 %.sroa.1079.0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.fb)
+  invoke fastcc void @"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$4iter17h9a0cd9ceee11e155E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.dg, i64 %.sroa.678.0, i32 %i.mh, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.fb)
           to label %bb.do unwind label %bb.dn
 
 .thread1450:                                      ; preds = %bb.cp, %bb.cn, %bb.cr, %bb.eh, %"_ZN4core3ptr183drop_in_place$LT$heed..iterator..iter..RoIter$LT$heed_types..integer..U32$LT$byteorder..BigEndian$GT$$C$heed_types..serde_json..SerdeJson$LT$meilisearch_types..tasks..Task$GT$$GT$$GT$17hdc1f7ebbc0864e88E.exit934", %bb.dh, %bb.di, %bb.dj, %bb.kl, %bb.dl, %bb.dg, %bb.ct, %bb.cu, %bb.cw, %bb.nf, %bb.dv, %bb.ea, %bb.jx, %"_ZN4core3ptr186drop_in_place$LT$heed..iterator..iter..RoIter$LT$heed_types..integer..U32$LT$byteorder..BigEndian$GT$$C$heed_types..serde_json..SerdeJson$LT$meilisearch_types..batches..Batch$GT$$GT$$GT$17he31964f62925b4b5E.exit937", %bb.eg, %"_ZN4core3ptr112drop_in_place$LT$heed..iterator..iter..RoIter$LT$heed_types..str..Str$C$meilitool..uuid_codec..UuidCodec$GT$$GT$17h83a8c467babf010aE.exit940", %bb.ef, %bb.dy, %bb.dx, %bb.dw
@@ -1082,7 +1079,7 @@ bb.dy:                                            ; preds = %bb.dx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cx)
   store i32 0, ptr %i.cx, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cw)
-  invoke fastcc void @"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$4iter17h8db6e44d747c3d2bE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.cw, i64 %.sroa.682.0, i32 %.sroa.1083.0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.fb)
+  invoke fastcc void @"_ZN4heed9databases8database34Database$LT$KC$C$DC$C$C$C$CDUP$GT$4iter17h8db6e44d747c3d2bE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.cw, i64 %.sroa.682.0, i32 %i.mn, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.fb)
           to label %bb.dz unwind label %.thread1450
 
 bb.dz:                                            ; preds = %bb.dy

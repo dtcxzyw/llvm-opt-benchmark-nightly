@@ -205,10 +205,9 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 33
   %.sroa.6.sroa.0.0.copyload = load i56, ptr %.sroa.6.0..sroa_idx, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 7 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 6 uses
   %i.u = load i64, ptr %i.t, align 8, !range !22, !noundef !13
-  %.not = icmp eq i64 %i.u, -1                    ; 2 uses
-  %. = select i1 %.not, ptr null, ptr %i.t        ; 6 uses
+  %.not = icmp eq i64 %i.u, -1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !948)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !949)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !950)
@@ -611,7 +610,7 @@ bb.bs:                                            ; preds = %.loopexit
   br i1 %i.ip, label %bb.bx, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.iq = getelementptr inbounds nuw i8, ptr %., i64 24 ; 2 uses
+  %i.iq = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1018
   %i.ir = getelementptr inbounds nuw i8, ptr %i.c, i64 88
   store i16 %i.hl, ptr %i.ir, align 8, !noalias !1018
@@ -760,7 +759,7 @@ _RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4c
   br i1 %i.ke, label %bb.ck, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i48.i
 
 bb.ck:                                            ; preds = %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i49.i, %.split.i64.i
-  %i.kf = getelementptr inbounds nuw i8, ptr %., i64 48 ; 4 uses
+  %i.kf = getelementptr inbounds nuw i8, ptr %1, i64 160 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1027)
   call void @llvm.experimental.noalias.scope.decl(metadata !1028)
   %i.kg = load i64, ptr %i.jr, align 8, !range !14, !alias.scope !1027, !noalias !1013, !noundef !13
@@ -770,7 +769,7 @@ bb.ck:                                            ; preds = %_RNvXsy_NtNtCs84JG9
 bb.cl:                                            ; preds = %bb.ck
   %i.ki = getelementptr inbounds nuw i8, ptr %i.jr, i64 16 ; 2 uses
   %i.kj = load i64, ptr %i.ki, align 8, !alias.scope !1027, !noalias !1013, !noundef !13 ; 4 uses
-  %i.kk = getelementptr inbounds nuw i8, ptr %., i64 64 ; 2 uses
+  %i.kk = getelementptr inbounds nuw i8, ptr %1, i64 176 ; 2 uses
   %i.kl = load i64, ptr %i.kk, align 8, !alias.scope !1029, !noundef !13 ; 7 uses
   %i.km = icmp ult i64 %i.kl, 144115188075855872
   call void @llvm.assume(i1 %i.km)
@@ -798,7 +797,7 @@ bb.co:                                            ; preds = %bb.cn
   unreachable
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameEE8push_mutCskeugdADtBsi_12pingora_core.exit.i.i.i: ; preds = %bb.cm, %bb.cl
-  %i.kt = getelementptr inbounds nuw i8, ptr %., i64 56 ; 2 uses
+  %i.kt = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 2 uses
   %i.ku = load ptr, ptr %i.kt, align 8, !alias.scope !1030, !nonnull !13, !noundef !13
   %i.kv = getelementptr inbounds nuw [64 x i8], ptr %i.ku, i64 %i.kl ; 8 uses
   store i64 1, ptr %i.kv, align 8, !noalias !1033
@@ -822,7 +821,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCs84JG9zk80ZV_4http6header3ma
   br i1 %.not.i.i62.i, label %bb.cu, label %bb.ct
 
 bb.cp:                                            ; preds = %bb.ck
-  %i.kx = getelementptr inbounds nuw i8, ptr %., i64 64 ; 2 uses
+  %i.kx = getelementptr inbounds nuw i8, ptr %1, i64 176 ; 2 uses
   %i.ky = load i64, ptr %i.kx, align 8, !alias.scope !1029, !noundef !13 ; 6 uses
   %i.kz = icmp ult i64 %i.ky, 144115188075855872
   call void @llvm.assume(i1 %i.kz)
@@ -926,7 +925,7 @@ bb.cw:                                            ; preds = %bb.br
   br i1 %i.lw, label %bb.db, label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw
-  %i.lx = getelementptr inbounds nuw i8, ptr %., i64 24 ; 2 uses
+  %i.lx = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1046
   %i.ly = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   store i16 %i.hl, ptr %i.ly, align 8, !noalias !1046

@@ -205,7 +205,7 @@ bb.a:
   %.pre.i = ptrtoint ptr %i.d to i64
   %.pre24.i = ptrtoint ptr %i.e to i64
   %.pre26.i = sub i64 %.pre.i, %.pre24.i
-  %.pre28.i = ashr exact i64 %.pre26.i, 6         ; 22 uses
+  %.pre28.i = ashr exact i64 %.pre26.i, 6         ; 17 uses
   br i1 %.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
@@ -254,27 +254,17 @@ _ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11c
 
 _ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10keys_equalERKS7_SC_.exit.i.i, %.lr.ph.i.split.us.i
   %.us-phi.i = phi i64 [ %.0711.i.us.i, %.lr.ph.i.split.us.i ], [ %.0711.i.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10keys_equalERKS7_SC_.exit.i.i ]
-  %.fr15.i = freeze i64 %.us-phi.i                ; 7 uses
-  %i.v = icmp eq i64 %.fr15.i, -1                 ; 2 uses
-  %spec.select.i = select i1 %i.v, i64 %.pre28.i, i64 %.fr15.i ; 3 uses
+  %.fr15.i = freeze i64 %.us-phi.i                ; 9 uses
+  %i.v = icmp eq i64 %.fr15.i, -1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  %.not6.i.a = icmp eq i64 %spec.select.i, %.pre28.i
-  br i1 %.not6.i.a, label %_ZSt8distanceIN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS8_EE10iterator_tIKSt4pairIS8_S8_EEEENSt15iterator_traitsIT_E15difference_typeESI_SI_.exit, label %.lr.ph.i
+  %.not6.i.a = icmp eq i64 %.fr15.i, %.pre28.i
+  %.not6.i = select i1 %i.v, i1 true, i1 %.not6.i.a
+  br i1 %.not6.i, label %_ZSt8distanceIN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS8_EE10iterator_tIKSt4pairIS8_S8_EEEENSt15iterator_traitsIT_E15difference_typeESI_SI_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit
   %i.w = getelementptr inbounds nuw [64 x i8], ptr %i.e, i64 %.fr15.i ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  br i1 %i.v, label %.lr.ph.split.us.i, label %.lr.ph.split.i
-
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %.lr.ph.split.us.i
-  %.08.us.i = phi i64 [ %4, %.lr.ph.split.us.i ], [ 0, %.lr.ph.i ]
-  %.us-phi57.us.i = phi i64 [ %spec.select.i12, %.lr.ph.split.us.i ], [ %.pre28.i, %.lr.ph.i ] ; 2 uses
-  %.not.i.us.i = icmp ult i64 %.us-phi57.us.i, %.pre28.i
-  %3 = zext i1 %.not.i.us.i to i64
-  %spec.select.i12 = add nuw i64 %.us-phi57.us.i, %3 ; 2 uses
-  %4 = add nuw nsw i64 %.08.us.i, 1               ; 2 uses
-  %.not.us.i = icmp eq i64 %spec.select.i12, %.pre28.i
-  br i1 %.not.us.i, label %_ZSt8distanceIN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS8_EE10iterator_tIKSt4pairIS8_S8_EEEENSt15iterator_traitsIT_E15difference_typeESI_SI_.exit, label %.lr.ph.split.us.i, !llvm.loop !1908
+  br label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i
   %.08.i = phi i64 [ %i.ax, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
@@ -351,10 +341,10 @@ _ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11ch
   %.not.i = icmp eq i64 %.us-phi4.i, %.pre28.i
   br i1 %.not.i, label %_ZSt8distanceIN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS8_EE10iterator_tIKSt4pairIS8_S8_EEEENSt15iterator_traitsIT_E15difference_typeESI_SI_.exit, label %.lr.ph.split.i, !llvm.loop !1908
 
-_ZSt8distanceIN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS8_EE10iterator_tIKSt4pairIS8_S8_EEEENSt15iterator_traitsIT_E15difference_typeESI_SI_.exit: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i, %.lr.ph.split.us.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i.thread, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit
-  %.us-phi.sink.i56 = phi i64 [ %.fr15.i, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit ], [ %.fr15.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i.thread ], [ -1, %.lr.ph.split.us.i ], [ -1, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread ], [ %.fr15.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i ] ; 2 uses
-  %.us-phi.sink42.i55 = phi i64 [ %.pre28.i, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit ], [ %spec.select.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i.thread ], [ %.pre28.i, %.lr.ph.split.us.i ], [ %.pre28.i, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread ], [ %spec.select.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i ] ; 2 uses
-  %.0.lcssa.i = phi i64 [ 0, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit ], [ %i.aw, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i.thread ], [ %4, %.lr.ph.split.us.i ], [ 0, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread ], [ %i.ax, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i ]
+_ZSt8distanceIN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS8_EE10iterator_tIKSt4pairIS8_S8_EEEENSt15iterator_traitsIT_E15difference_typeESI_SI_.exit: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i.thread, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit
+  %.us-phi.sink.i56 = phi i64 [ %.fr15.i, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit ], [ %.fr15.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i.thread ], [ -1, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread ], [ %.fr15.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i ] ; 2 uses
+  %.us-phi.sink42.i55 = phi i64 [ %.pre28.i, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit ], [ %.fr15.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i.thread ], [ %.pre28.i, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread ], [ %.fr15.i, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i ] ; 2 uses
+  %.0.lcssa.i = phi i64 [ 0, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit ], [ %i.aw, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i.thread ], [ 0, %_ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE11equal_rangeERKS7_.exit.thread ], [ %i.ax, %_ZN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8equal_toIS7_EE10iterator_tIKSt4pairIS7_S7_EEppEv.exit.i ]
   invoke void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE7reserveEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.0.lcssa.i)
           to label %.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -757,8 +747,7 @@ bb.n:                                             ; preds = %_ZNSt10lock_guardIS
   br label %bb.bc
 
 bb.o:                                             ; preds = %bb.f, %bb.f
-  %i.bc = icmp eq i8 %i.aa, 1                     ; 2 uses
-  %5 = select i1 %i.bc, i32 1, i32 2
+  %i.bc = icmp eq i8 %i.aa, 1
   %i.bd = load ptr, ptr %1, align 8, !tbaa !196   ; 6 uses
   %i.be = icmp eq ptr %i.bd, %i.k
   %i.bf = load ptr, ptr %2, align 8, !tbaa !196   ; 5 uses
@@ -1161,7 +1150,7 @@ bb.bb:                                            ; preds = %bb.f
 
 _ZN7httplib2ws4impl13is_valid_utf8ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %bb.ax, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.jt1, %bb.am, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67, %.loopexit98, %bb.k, %bb.m, %bb.bb, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit43, %bb.h, %bb.e
   %.sroa.7.1 = phi i8 [ %.sroa.7.0, %bb.bb ], [ %.sroa.7.0, %bb.h ], [ %.sroa.7.0, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit43 ], [ %.sroa.7.0, %bb.k ], [ %.sroa.7.0, %bb.m ], [ %.sroa.7.0, %bb.e ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67 ], [ %.sroa.7.0, %.loopexit98 ], [ %.sroa.7.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.jt1 ], [ %.sroa.7.0, %bb.am ], [ %.sroa.7.0, %bb.ax ] ; 2 uses
-  %.426 = phi i32 [ 0, %bb.bb ], [ %.022, %bb.h ], [ %.022, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit43 ], [ 0, %bb.k ], [ 0, %bb.m ], [ 0, %bb.e ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67 ], [ 2, %.loopexit98 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.jt1 ], [ 1, %bb.am ], [ %5, %bb.ax ] ; 2 uses
+  %.426 = phi i32 [ 0, %bb.bb ], [ %.022, %bb.h ], [ %.022, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit43 ], [ 0, %bb.k ], [ 0, %bb.m ], [ 0, %bb.e ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67 ], [ 2, %.loopexit98 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.jt1 ], [ 1, %bb.am ], [ 1, %bb.ax ] ; 2 uses
   %.2 = phi i1 [ false, %bb.bb ], [ true, %bb.h ], [ true, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit43 ], [ false, %bb.k ], [ false, %bb.m ], [ false, %bb.e ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67 ], [ false, %.loopexit98 ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.jt1 ], [ false, %bb.am ], [ false, %bb.ax ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   %i.fz = load ptr, ptr %2, align 8, !tbaa !196   ; 2 uses

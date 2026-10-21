@@ -205,11 +205,11 @@ _ZNSt12__shared_ptrIN6opencc9ConverterELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: 
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i, %_ZNSt12__shared_ptrIN6opencc9ConverterELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %.0127 = phi i64 [ 0, %_ZNSt12__shared_ptrIN6opencc9ConverterELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.br, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i ] ; 3 uses
-  %.0123 = phi i64 [ 0, %_ZNSt12__shared_ptrIN6opencc9ConverterELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.bk, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i ] ; 3 uses
+  %.0127 = phi i64 [ 0, %_ZNSt12__shared_ptrIN6opencc9ConverterELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.br, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i ] ; 2 uses
+  %.0123 = phi i64 [ 0, %_ZNSt12__shared_ptrIN6opencc9ConverterELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.bk, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i ] ; 2 uses
   %i.am = call i32 @feof(ptr noundef %0) #34
-  %.not = icmp eq i32 %i.am, 0                    ; 2 uses
-  br i1 %.not, label %bb.l, label %.loopexit.thread
+  %.not = icmp eq i32 %i.am, 0
+  br i1 %.not, label %bb.l, label %bb.ag
 
 bb.l:                                             ; preds = %bb.k
   %i.an = load ptr, ptr %2, align 8, !tbaa !46
@@ -382,17 +382,12 @@ bb.z:                                             ; preds = %bb.t
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i: ; preds = %_ZNSt6vectorIN6opencc13AmbiguousSpanESaIS1_EED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
-  br i1 %i.bc, label %.loopexit.thread, label %bb.k
+  br i1 %i.bc, label %bb.ap, label %bb.k
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %.pn.pn = phi { ptr, i32 } [ %i.dc, %bb.z ], [ %i.db, %bb.y ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   br label %bb.bq
-
-.loopexit.thread:                                 ; preds = %bb.k, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i
-  %.2129.ph = phi i64 [ %.0127, %bb.k ], [ %i.br, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i ] ; 2 uses
-  %.2125.ph = phi i64 [ %.0123, %bb.k ], [ %i.bk, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i ] ; 2 uses
-  br i1 %.not, label %bb.ap, label %bb.ag
 
 .loopexit:                                        ; preds = %bb.l
   %i.dd = call i32 @ferror(ptr noundef %0) #34
@@ -448,9 +443,7 @@ bb.af:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.de) #34
   br label %bb.bq
 
-bb.ag:                                            ; preds = %.loopexit, %.loopexit.thread
-  %.2129199203 = phi i64 [ %.2129.ph, %.loopexit.thread ], [ %.0127, %.loopexit ]
-  %.2125200202 = phi i64 [ %.2125.ph, %.loopexit.thread ], [ %.0123, %.loopexit ]
+bb.ag:                                            ; preds = %bb.k, %.loopexit
   %i.dm = call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #34
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #34
   invoke void @_ZN6opencc15AmbiguityStream6FinishEv(ptr dead_on_unwind nonnull writable sret(%"struct.opencc::AmbiguityStream::Chunk") align 8 %8, ptr noundef nonnull align 8 dereferenceable(8) %3)
@@ -466,7 +459,7 @@ bb.ah:                                            ; preds = %bb.ag
   store double %i.ds, ptr getelementptr inbounds nuw (i8, ptr @measurement, i64 8), align 8, !tbaa !140
   %i.dt = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.du = load i64, ptr %i.dt, align 8, !tbaa !45
-  %i.dv = add i64 %i.du, %.2125200202
+  %i.dv = add i64 %i.du, %.0123
   %i.dw = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !347
@@ -475,7 +468,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.eb = ptrtoint ptr %i.dz to i64
   %i.ec = sub i64 %i.ea, %i.eb
   %i.ed = sdiv exact i64 %i.ec, 24
-  %i.ee = add i64 %i.ed, %.2129199203
+  %i.ee = add i64 %i.ed, %.0127
   %i.ef = call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #34
   %i.eg = invoke noundef i64 @_Z26WriteAmbiguityChunkRecordsRKN6opencc15AmbiguityStream5ChunkEP8_IO_FILE(ptr noundef nonnull align 8 dereferenceable(81) %8, ptr noundef %1)
           to label %.noexc62 unwind label %bb.an
@@ -589,9 +582,9 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #34
   br label %bb.bq
 
-bb.ap:                                            ; preds = %.loopexit.thread, %_ZN6opencc15AmbiguityStream5ChunkD2Ev.exit80
-  %.3130 = phi i64 [ %.2129.ph, %.loopexit.thread ], [ %i.ee, %_ZN6opencc15AmbiguityStream5ChunkD2Ev.exit80 ]
-  %.3126 = phi i64 [ %.2125.ph, %.loopexit.thread ], [ %i.dv, %_ZN6opencc15AmbiguityStream5ChunkD2Ev.exit80 ]
+bb.ap:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i, %_ZN6opencc15AmbiguityStream5ChunkD2Ev.exit80
+  %.3130 = phi i64 [ %i.ee, %_ZN6opencc15AmbiguityStream5ChunkD2Ev.exit80 ], [ %i.br, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i ]
+  %.3126 = phi i64 [ %i.dv, %_ZN6opencc15AmbiguityStream5ChunkD2Ev.exit80 ], [ %i.bk, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #34
   %i.fv = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.fw = getelementptr inbounds nuw i8, ptr %9, i64 40

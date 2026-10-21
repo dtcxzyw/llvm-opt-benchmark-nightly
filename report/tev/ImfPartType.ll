@@ -202,9 +202,9 @@ bb.a:
   %i.b = trunc i8 %i.a to i1                      ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8              ; 5 uses
-  %i.e = lshr i8 %i.a, 1                          ; 5 uses
+  %i.e = lshr i8 %i.a, 1                          ; 7 uses
   %i.f = zext nneg i8 %i.e to i64                 ; 5 uses
-  %i.g = select i1 %i.b, i64 %i.d, i64 %i.f       ; 3 uses
+  %i.g = select i1 %i.b, i64 %i.d, i64 %i.f
   switch i64 %i.g, label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit42 [
     i64 13, label %bb.b
     i64 10, label %bb.c
@@ -271,22 +271,25 @@ _ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsI
   br i1 %i.u, label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit42, label %.thread62
 
 bb.e:                                             ; preds = %.lr.ph.i8
-  switch i64 %i.g, label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit42 [
-    i64 12, label %bb.f
-    i64 8, label %bb.i
+  switch i8 %i.e, label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit42 [
+    i8 12, label %.lr.ph.i21.preheader
+    i8 8, label %bb.i
   ]
 
-bb.f:                                             ; preds = %bb.a, %bb.e
+bb.f:                                             ; preds = %bb.a
   br i1 %i.b, label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit29, label %.preheader.i19
 
 .preheader.i19:                                   ; preds = %bb.f
   %.not1922.i20 = icmp eq i8 %i.e, 0
-  br i1 %.not1922.i20, label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit42, label %.lr.ph.i21
+  br i1 %.not1922.i20, label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit42, label %.lr.ph.i21.preheader
 
-.lr.ph.i21:                                       ; preds = %.preheader.i19, %bb.g
-  %.01525.pn.i22 = phi ptr [ %.01525.i25, %bb.g ], [ %0, %.preheader.i19 ]
-  %.024.i23 = phi ptr [ %i.y, %bb.g ], [ getelementptr inbounds nuw (i8, ptr @_ZN7Imf_3_4L12DEEPSCANLINEE, i64 1), %.preheader.i19 ] ; 2 uses
-  %.01623.i24 = phi i64 [ %i.x, %bb.g ], [ %i.f, %.preheader.i19 ]
+.lr.ph.i21.preheader:                             ; preds = %bb.e, %.preheader.i19
+  br label %.lr.ph.i21
+
+.lr.ph.i21:                                       ; preds = %.lr.ph.i21.preheader, %bb.g
+  %.01525.pn.i22 = phi ptr [ %.01525.i25, %bb.g ], [ %0, %.lr.ph.i21.preheader ]
+  %.024.i23 = phi ptr [ %i.y, %bb.g ], [ getelementptr inbounds nuw (i8, ptr @_ZN7Imf_3_4L12DEEPSCANLINEE, i64 1), %.lr.ph.i21.preheader ] ; 2 uses
+  %.01623.i24 = phi i64 [ %i.x, %bb.g ], [ %i.f, %.lr.ph.i21.preheader ]
   %.01525.i25 = getelementptr inbounds nuw i8, ptr %.01525.pn.i22, i64 1 ; 2 uses
   %i.v = load i8, ptr %.01525.i25, align 1, !tbaa !9
   %i.w = load i8, ptr %.024.i23, align 1, !tbaa !9
@@ -310,7 +313,7 @@ _ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsI
   br label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit42
 
 bb.h:                                             ; preds = %.lr.ph.i21
-  %.not.i30 = icmp eq i64 %i.g, 8
+  %.not.i30 = icmp eq i8 %i.e, 8
   br i1 %.not.i30, label %bb.i, label %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit42
 
 bb.i:                                             ; preds = %bb.a, %bb.e, %bb.h

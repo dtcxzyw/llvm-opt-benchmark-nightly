@@ -205,16 +205,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.af = sub nuw i64 %.val4.i.i.i, %.val.i.i.i
   %.sroa.7.0.i.i = select i1 %i.ae, i64 %i.af, i64 0 ; 2 uses
   %i.ag = add i64 %.sroa.8.0.i.i, %.sroa.7.0.i.i  ; 3 uses
-  %.not74.i.i = icmp uge i64 %i.ag, %.sroa.7.0.i.i ; 2 uses
-  %i.ah = add i64 %.sroa.871.0.i.i, %i.ag         ; 2 uses
+  %.not74.i.i = icmp uge i64 %i.ag, %.sroa.7.0.i.i
+  %i.ah = add i64 %.sroa.871.0.i.i, %i.ag         ; 3 uses
   %i.ai = icmp uge i64 %i.ah, %i.ag
   %or.cond.not.i.i = select i1 %.not74.i.i, i1 %i.ai, i1 false, !prof !14771
-  %.sroa.8.3.i.i = select i1 %.not74.i.i, i64 %i.ah, i64 undef, !prof !14771 ; 2 uses
   br i1 %or.cond.not.i.i, label %bb.d, label %bb.f, !prof !102
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  invoke void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.j, i64 noundef %.sroa.8.3.i.i, i1 noundef zeroext false, i64 noundef 16, i64 noundef 112)
+  invoke void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.j, i64 noundef %i.ah, i1 noundef zeroext false, i64 noundef 16, i64 noundef 112)
           to label %.noexc unwind label %bb.ah
 
 .noexc:                                           ; preds = %bb.d
@@ -239,7 +238,7 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %.noexc
   %i.ap = load ptr, ptr %i.an, align 8, !nonnull !97, !noundef !97 ; 2 uses
-  %i.aq = icmp ule i64 %.sroa.8.3.i.i, %i.am
+  %i.aq = icmp ule i64 %i.ah, %i.am
   tail call void @llvm.assume(i1 %i.aq)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   store i64 %i.am, ptr %i.l, align 8
@@ -290,19 +289,18 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bm = sub nuw i64 %.val4.i.i.i.i.i, %.val.i.i.i.i.i
   %.sroa.7.0.i.i.i.i = select i1 %i.bl, i64 %i.bm, i64 0 ; 2 uses
   %i.bn = add i64 %.sroa.8.0.i.i.i.i, %.sroa.7.0.i.i.i.i ; 3 uses
-  %.not74.i.i.i.i = icmp uge i64 %i.bn, %.sroa.7.0.i.i.i.i ; 2 uses
-  %i.bo = add i64 %.sroa.871.0.i.i.i.i, %i.bn     ; 2 uses
+  %.not74.i.i.i.i = icmp uge i64 %i.bn, %.sroa.7.0.i.i.i.i
+  %i.bo = add i64 %.sroa.871.0.i.i.i.i, %i.bn     ; 3 uses
   %i.bp = icmp uge i64 %i.bo, %i.bn
   %or.cond.not.i.i.i.i = select i1 %.not74.i.i.i.i, i1 %i.bp, i1 false, !prof !14771
-  %.sroa.8.3.i.i.i.i = select i1 %.not74.i.i.i.i, i64 %i.bo, i64 undef, !prof !14771 ; 2 uses
   br i1 %or.cond.not.i.i.i.i, label %bb.j, label %bb.l, !prof !102
 
 bb.j:                                             ; preds = %bb.i
-  %i.bq = icmp ugt i64 %.sroa.8.3.i.i.i.i, %i.am
+  %i.bq = icmp ugt i64 %i.bo, %i.am
   br i1 %i.bq, label %bb.k, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs7fnekraeopg_15datafusion_expr4expr4ExprE7reserveCs43kcu4yvms7_24influxdb3_query_executor.exit.i.i, !prof !99
 
 bb.k:                                             ; preds = %bb.j
-  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.l, i64 noundef 0, i64 noundef %.sroa.8.3.i.i.i.i, i64 noundef 16, i64 noundef 112)
+  invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.l, i64 noundef 0, i64 noundef %i.bo, i64 noundef 16, i64 noundef 112)
           to label %._RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs7fnekraeopg_15datafusion_expr4expr4ExprE7reserveCs43kcu4yvms7_24influxdb3_query_executor.exit_crit_edge.i.i unwind label %bb.ab, !noalias !14777
 
 ._RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs7fnekraeopg_15datafusion_expr4expr4ExprE7reserveCs43kcu4yvms7_24influxdb3_query_executor.exit_crit_edge.i.i: ; preds = %bb.k

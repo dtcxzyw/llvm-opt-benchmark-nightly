@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f
   %i.ag = extractvalue { i32, i32 } %i.ac, 0
-  %i.ah = extractvalue { i32, i32 } %i.ac, 1      ; 7 uses
+  %i.ah = extractvalue { i32, i32 } %i.ac, 1      ; 5 uses
   %i.ai = trunc i32 %i.ag to i1                   ; 2 uses
-  %i.aj = icmp ugt i32 %i.ah, 1027
+  %i.aj = icmp ugt i32 %i.ah, 1027                ; 3 uses
   %or.cond.i = select i1 %i.ai, i1 %i.aj, i1 false
   br i1 %or.cond.i, label %bb.j, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtCsej0D7ZFyXq_12wasm_bindgen7JsValueBX_EECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.i
 
@@ -262,8 +262,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit33.i: ; preds = %.body46.i, %.body39.i, %.body.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit33.sink.split.i
   %.pn.i = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %eh.lpad-body40.i, %.body39.i ], [ %eh.lpad-body47.i, %.body46.i ], [ %.pn.ph.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit33.sink.split.i ] ; 2 uses
-  %1 = icmp ugt i32 %i.ah, 1027
-  br i1 %1, label %common.resume.sink.split, label %common.resume
+  br i1 %i.aj, label %common.resume.sink.split, label %common.resume
 
 bb.n:                                             ; preds = %.split
   %i.at = landingpad { ptr, i32 }
@@ -485,8 +484,7 @@ bb.av:                                            ; preds = %_RINvNtCsf3Ta7LF998
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit48.i: ; preds = %bb.av, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtCsej0D7ZFyXq_12wasm_bindgen7JsValueBX_EECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit44.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !649
-  %2 = icmp ugt i32 %i.ah, 1027
-  br i1 %2, label %bb.aw, label %_RNCNvNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler15get_memory_infos0_0B5_.exit
+  br i1 %i.aj, label %bb.aw, label %_RNCNvNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler15get_memory_infos0_0B5_.exit
 
 bb.aw:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsej0D7ZFyXq_12wasm_bindgen7JsValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit48.i
   call void @_RNvCsej0D7ZFyXq_12wasm_bindgen26___wbindgen_object_drop_ref(i32 noundef %i.ah) #29, !noalias !649

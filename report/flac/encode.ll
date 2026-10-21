@@ -205,7 +205,7 @@ declare i32 @flac__utils_canonicalize_skip_until_specification(ptr noundef, i32 
 declare void @stats_new_line() local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc range(i32 0, 2) i32 @EncoderSession_init_encoder(ptr noundef nonnull %0, ptr nofree noundef byval(%struct.encode_options_t) align 8 captures(none) %1) unnamed_addr #0 {
+define internal fastcc range(i32 0, 2) i32 @EncoderSession_init_encoder(ptr noundef nonnull initializes((48, 52)) %0, ptr nofree noundef byval(%struct.encode_options_t) align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 7 uses
@@ -226,9 +226,7 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !28
   %i.q = and i32 %i.p, -2
-  %switch.not = icmp eq i32 %i.q, 6               ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %spec.select517 = select i1 %switch.not, ptr %4, ptr null ; 12 uses
+  %switch.not = icmp eq i32 %i.q, 6
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.r = add i32 %i.h, -1
@@ -610,7 +608,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 .critedge.preheader:                              ; preds = %.thread, %.preheader..critedge.preheader_crit_edge
   %i.eq = phi i64 [ %.pre736, %.preheader..critedge.preheader_crit_edge ], [ %i.ft, %.thread ] ; 2 uses
-  %i.er = getelementptr inbounds nuw i8, ptr %spec.select517, i64 24 ; 17 uses
+  %i.er = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 17 uses
   %.not710 = icmp eq i64 %i.eq, 0
   br i1 %.not710, label %.thread823, label %.lr.ph669
 
@@ -619,7 +617,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %._crit_edge738
 
 .lr.ph669:                                        ; preds = %.critedge.preheader
-  %i.es = getelementptr inbounds nuw i8, ptr %spec.select517, i64 32 ; 2 uses
+  %i.es = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %1, i64 1168
   %i.eu = load ptr, ptr %i.et, align 8
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 32
@@ -869,8 +867,8 @@ bb.bt:                                            ; preds = %bb.bs, %bb.br
   br i1 %i.hq, label %.lr.ph673, label %._crit_edge674
 
 .lr.ph673:                                        ; preds = %bb.bt
-  %scevgep = getelementptr i8, ptr %spec.select517, i64 48
-  %scevgep724 = getelementptr i8, ptr %spec.select517, i64 40
+  %scevgep = getelementptr i8, ptr %0, i64 216
+  %scevgep724 = getelementptr i8, ptr %0, i64 208
   %i.hr = shl i64 %i.hp, 3
   %i.hs = add i64 %i.hr, -8
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep, ptr align 8 %scevgep724, i64 %i.hs, i1 false), !tbaa !61
@@ -889,7 +887,7 @@ bb.bu:                                            ; preds = %._crit_edge674, %bb
   br i1 %.not711, label %._crit_edge679, label %.lr.ph678
 
 .lr.ph678:                                        ; preds = %bb.bp, %bb.bu
-  %i.hw = getelementptr inbounds nuw i8, ptr %spec.select517, i64 32 ; 2 uses
+  %i.hw = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %i.hx = load ptr, ptr %i.an, align 8
   %i.hy = icmp eq ptr %i.hx, null
   %i.hz = load ptr, ptr %i.an, align 8
@@ -1196,8 +1194,8 @@ bb.di:                                            ; preds = %bb.dh
   br i1 %i.lk, label %.lr.ph683, label %._crit_edge684
 
 .lr.ph683:                                        ; preds = %bb.di
-  %scevgep725 = getelementptr i8, ptr %spec.select517, i64 48
-  %scevgep726 = getelementptr i8, ptr %spec.select517, i64 40
+  %scevgep725 = getelementptr i8, ptr %0, i64 216
+  %scevgep726 = getelementptr i8, ptr %0, i64 208
   %i.ll = shl i64 %i.lj, 3
   %i.lm = add i64 %i.ll, -8
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep725, ptr align 8 %scevgep726, i64 %i.lm, i1 false), !tbaa !61
@@ -1216,7 +1214,7 @@ bb.dj:                                            ; preds = %._crit_edge684, %._
   br i1 %.not712, label %._crit_edge690, label %.lr.ph689
 
 .lr.ph689:                                        ; preds = %bb.dj
-  %i.lq = getelementptr inbounds nuw i8, ptr %spec.select517, i64 32 ; 3 uses
+  %i.lq = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
   %i.lr = icmp sgt i32 %i.ca, -1
   %i.ls = icmp sgt i32 %i.ca, 0
   br label %bb.dk
@@ -1328,8 +1326,8 @@ bb.dw:                                            ; preds = %bb.dv
   br i1 %i.my, label %.lr.ph695, label %._crit_edge696
 
 .lr.ph695:                                        ; preds = %bb.dw
-  %scevgep727 = getelementptr i8, ptr %spec.select517, i64 48
-  %scevgep728 = getelementptr i8, ptr %spec.select517, i64 40
+  %scevgep727 = getelementptr i8, ptr %0, i64 216
+  %scevgep728 = getelementptr i8, ptr %0, i64 208
   %i.mz = shl i64 %i.mx, 3
   %i.na = add i64 %i.mz, -8
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep727, ptr align 8 %scevgep728, i64 %i.na, i1 false), !tbaa !61
@@ -1348,7 +1346,7 @@ bb.dx:                                            ; preds = %._crit_edge696, %._
   br i1 %.not713, label %._crit_edge702, label %.lr.ph701
 
 .lr.ph701:                                        ; preds = %bb.dx
-  %i.ne = getelementptr inbounds nuw i8, ptr %spec.select517, i64 32 ; 2 uses
+  %i.ne = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   br label %bb.dy
 
 bb.dy:                                            ; preds = %.lr.ph701, %bb.eb
@@ -1462,7 +1460,7 @@ bb.eh:                                            ; preds = %bb.eg
 
 bb.ei:                                            ; preds = %bb.eh, %bb.ef
   %i.ow = phi i64 [ %i.ov, %bb.eh ], [ %.0361.lcssa, %bb.ef ]
-  %i.ox = getelementptr inbounds nuw i8, ptr %spec.select517, i64 40
+  %i.ox = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.oy = trunc i64 %i.ow to i32
   %i.oz = add i32 %i.oy, -1
   br label %bb.fp

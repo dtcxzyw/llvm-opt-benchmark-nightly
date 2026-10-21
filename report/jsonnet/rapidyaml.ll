@@ -205,24 +205,21 @@ bb.a:
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
   %.0710.i.i = phi i64 [ %i.n, %bb.b ], [ 0, %bb.a ] ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %.0710.i.i
-  %i.m = load i8, ptr %i.l, align 1, !tbaa !87
+  %i.m = load i8, ptr %i.l, align 1, !tbaa !87    ; 2 uses
   %.not.i.i = icmp eq i8 %i.m, 32
-  br i1 %.not.i.i, label %bb.b, label %_ZNK2c415basic_substringIcE12first_not_ofEc.exit.i
+  br i1 %.not.i.i, label %bb.b, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit
 
 bb.b:                                             ; preds = %.lr.ph.i.i
   %i.n = add nuw i64 %.0710.i.i, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.n, %i.g
   br i1 %exitcond.not.i.i, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread, label %.lr.ph.i.i, !llvm.loop !23
 
-_ZNK2c415basic_substringIcE12first_not_ofEc.exit.i: ; preds = %.lr.ph.i.i
-  %.not.not.i = icmp eq i64 %.0710.i.i, -1
-  br i1 %.not.not.i, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit
-
-_ZNK2c415basic_substringIKcE11begins_withEc.exit: ; preds = %_ZNK2c415basic_substringIcE12first_not_ofEc.exit.i
-  %spec.select.i = getelementptr inbounds nuw i8, ptr %i.i, i64 %.0710.i.i ; 3 uses
-  %2 = load i8, ptr %spec.select.i, align 1, !tbaa !87
-  %i.o = icmp eq i8 %2, 35
-  br i1 %i.o, label %bb.c, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread
+_ZNK2c415basic_substringIKcE11begins_withEc.exit: ; preds = %.lr.ph.i.i
+  %spec.select.i = getelementptr inbounds nuw i8, ptr %i.i, i64 %.0710.i.i ; 2 uses
+  %.not.not.i = icmp ne i64 %.0710.i.i, -1
+  %i.o = icmp eq i8 %i.m, 35
+  %or.cond = and i1 %.not.not.i, %i.o
+  br i1 %or.cond, label %bb.c, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread
 
 bb.c:                                             ; preds = %_ZNK2c415basic_substringIKcE11begins_withEc.exit
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 56 ; 3 uses
@@ -288,7 +285,7 @@ _ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE13_skip_commentEv.exit: ; preds 
   store i64 0, ptr %i.f, align 8, !tbaa !102
   br label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread
 
-_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread: ; preds = %bb.b, %_ZNK2c415basic_substringIcE12first_not_ofEc.exit.i, %bb.a, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE13_skip_commentEv.exit, %_ZNK2c415basic_substringIKcE11begins_withEc.exit
+_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread: ; preds = %bb.b, %_ZNK2c415basic_substringIKcE11begins_withEc.exit, %bb.a, %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE13_skip_commentEv.exit
   ret void
 }
 

@@ -204,8 +204,8 @@ bb.w:                                             ; preds = %.lr.ph.i.i49.i
   br i1 %.not53.i.i53.i, label %_RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i30.i, label %.lr.ph.i.i49.i
 
 _RNvMsv_NtCsf3Ta7LF998c_4core3numj27from_ascii_bytes_radix_impl.exit.i30.i: ; preds = %bb.v, %.preheader56.i.i41.i.preheader, %.preheader56.i.i41.i, %bb.w, %.lr.ph.i.i49.i, %.preheader.i.i47.i, %bb.t, %bb.t, %bb.s
-  %.sroa.102.0.i31.i = phi i64 [ undef, %bb.t ], [ 0, %.preheader.i.i47.i ], [ undef, %bb.s ], [ undef, %bb.t ], [ undef, %.lr.ph.i.i49.i ], [ %i.dc, %bb.w ], [ undef, %bb.v ], [ %i.cs, %.preheader56.i.i41.i ], [ undef, %.preheader56.i.i41.i.preheader ]
-  %.sink.i.i32.i = phi i1 [ true, %bb.t ], [ false, %.preheader.i.i47.i ], [ true, %bb.s ], [ true, %bb.t ], [ %i.cx, %bb.w ], [ %i.cx, %.lr.ph.i.i49.i ], [ true, %bb.v ], [ false, %.preheader56.i.i41.i ], [ true, %.preheader56.i.i41.i.preheader ] ; 2 uses
+  %.sroa.102.0.i31.i = phi i64 [ undef, %bb.t ], [ 0, %.preheader.i.i47.i ], [ undef, %bb.s ], [ undef, %bb.t ], [ undef, %.lr.ph.i.i49.i ], [ %i.dc, %bb.w ], [ undef, %bb.v ], [ %i.cs, %.preheader56.i.i41.i ], [ undef, %.preheader56.i.i41.i.preheader ] ; 2 uses
+  %.sink.i.i32.i = phi i1 [ true, %bb.t ], [ false, %.preheader.i.i47.i ], [ true, %bb.s ], [ true, %bb.t ], [ %i.cx, %bb.w ], [ %i.cx, %.lr.ph.i.i49.i ], [ true, %bb.v ], [ false, %.preheader56.i.i41.i ], [ true, %.preheader56.i.i41.i.preheader ]
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs1hTjP0dFAwJ_12fontc_crater(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.f)
           to label %_RNCNvMs2_CsaM4fumF1j8I_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0Cs1hTjP0dFAwJ_12fontc_crater.exit.i unwind label %bb.x
 
@@ -226,10 +226,9 @@ _RNCNvMs2_CsaM4fumF1j8I_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_
           to label %.noexc68 unwind label %bb.ag
 
 .noexc68:                                         ; preds = %_RNCNvMs2_CsaM4fumF1j8I_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0Cs1hTjP0dFAwJ_12fontc_crater.exit.i
-  %.sroa.3.0.i36.i = select i1 %.sink.i.i32.i, i64 undef, i64 %.sroa.102.0.i31.i ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.715.i)
-  %i.df = icmp eq i64 %.sroa.3.0.i36.i, 0
+  %i.df = icmp eq i64 %.sroa.102.0.i31.i, 0
   %or.cond.not.i = select i1 %.sink.i.i32.i, i1 true, i1 %i.df
   br i1 %or.cond.not.i, label %bb.aa, label %_RNvMs2_CsaM4fumF1j8I_10rayon_coreNtB5_17ThreadPoolBuilder15get_num_threadsCs1hTjP0dFAwJ_12fontc_crater.exit
 
@@ -286,7 +285,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5erro
           to label %bb.cs unwind label %bb.cm
 
 _RNvMs2_CsaM4fumF1j8I_10rayon_coreNtB5_17ThreadPoolBuilder15get_num_threadsCs1hTjP0dFAwJ_12fontc_crater.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECs1hTjP0dFAwJ_12fontc_crater.exit.i57.i, %.noexc69, %.noexc68, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECs1hTjP0dFAwJ_12fontc_crater.exit.i.i, %.noexc65, %bb.m, %bb.a
-  %.sroa.0.1.i = phi i64 [ %.sroa.102.0.i.i, %bb.m ], [ %.val, %bb.a ], [ %.sroa.3.0.i36.i, %.noexc68 ], [ %i.bt, %.noexc65 ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECs1hTjP0dFAwJ_12fontc_crater.exit.i.i ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECs1hTjP0dFAwJ_12fontc_crater.exit.i57.i ], [ %i.dk, %.noexc69 ]
+  %.sroa.0.1.i = phi i64 [ %.sroa.102.0.i.i, %bb.m ], [ %.val, %bb.a ], [ %.sroa.102.0.i31.i, %.noexc68 ], [ %i.bt, %.noexc65 ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECs1hTjP0dFAwJ_12fontc_crater.exit.i.i ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECs1hTjP0dFAwJ_12fontc_crater.exit.i57.i ], [ %i.dk, %.noexc69 ]
   %i.dr = call i64 @llvm.umin.i64(i64 %.sroa.0.1.i, i64 65535) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae)
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 89

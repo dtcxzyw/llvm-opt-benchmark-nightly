@@ -206,8 +206,8 @@ bb.b:                                             ; preds = %bb.a
   %i.b = icmp eq ptr %0, null
   %spec.select19 = select i1 %i.b, i32 0, i32 %2  ; 9 uses
   %i.c = icmp eq i32 %spec.select19, 0            ; 2 uses
-  %i.d = and i32 %1, -8
-  %i.e = select i1 %i.c, i32 0, i32 %i.d          ; 2 uses
+  %i.d = and i32 %1, -8                           ; 2 uses
+  %i.e = select i1 %i.c, i32 0, i32 %i.d
   store i32 %i.e, ptr getelementptr inbounds nuw (i8, ptr @pcache1_g, i64 92), align 4, !tbaa !1300
   store i32 %spec.select19, ptr getelementptr inbounds nuw (i8, ptr @pcache1_g, i64 136), align 8, !tbaa !1301
   store i32 %spec.select19, ptr getelementptr inbounds nuw (i8, ptr @pcache1_g, i64 96), align 8, !tbaa !1302
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.c, label %bb.d, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.thread, %bb.c
-  %i.i = sext i32 %i.e to i64                     ; 9 uses
+  %i.i = sext i32 %i.d to i64                     ; 9 uses
   %i.j = add i32 %spec.select19, -1
   %xtraiter = and i32 %spec.select19, 7           ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -633,9 +633,7 @@ bb.k:                                             ; preds = %bb.f
   br i1 %.not67, label %bb.l, label %.thread97
 
 bb.l:                                             ; preds = %bb.k
-  %i.ax = icmp eq i32 %3, 0                       ; 3 uses
-  %spec.select = select i1 %i.ax, i8 2, i8 0
-  %spec.select73 = select i1 %i.ax, i32 %1, i32 0
+  %i.ax = icmp eq i32 %3, 0
   %i.ay = getelementptr i8, ptr %0, i64 64        ; 2 uses
   br i1 %i.ax, label %.split.us, label %.split
 
@@ -705,7 +703,7 @@ releasePage.exit78.us:                            ; preds = %bb.p, %bb.o, %bb.m
 .split:                                           ; preds = %bb.l, %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #57
   %.val = load i32, ptr %i.ay, align 8, !tbaa !997
-  %i.ce = call fastcc i32 @allocateBtreePage(ptr noundef nonnull %0, ptr noundef %i.g, ptr noundef %i.e, i32 noundef %spec.select73, i8 noundef zeroext %spec.select) ; 2 uses
+  %i.ce = call fastcc i32 @allocateBtreePage(ptr noundef nonnull %0, ptr noundef %i.g, ptr noundef %i.e, i32 noundef 0, i8 noundef zeroext 0) ; 2 uses
   %.not68 = icmp eq i32 %i.ce, 0
   br i1 %.not68, label %bb.t, label %.split105.us
 
@@ -1108,9 +1106,9 @@ sqlite3GetUInt32.exit97.thread:                   ; preds = %.lr.ph.i88, %bb.aa
   br label %bb.af
 
 sqlite3GetUInt32.exit97:                          ; preds = %bb.ab
-  %i.cm = trunc i64 %i.ch to i32                  ; 2 uses
+  %i.cm = trunc i64 %i.ch to i32                  ; 3 uses
   %.not17.i94 = icmp ne i8 %i.ck, 0               ; 2 uses
-  %spec.select.i95 = select i1 %.not17.i94, i32 0, i32 %i.cm ; 3 uses
+  %spec.select.i95 = select i1 %.not17.i94, i32 0, i32 %i.cm ; 2 uses
   store i32 %spec.select.i95, ptr %i.ca, align 4, !tbaa !570
   %i.cn = icmp ult i32 %spec.select.i95, 2
   %or.cond109 = or i1 %.not17.i94, %i.cn
@@ -1140,7 +1138,7 @@ bb.ae:                                            ; preds = %.lr.ph.i98
   %.011.i = phi ptr [ %.0.i, %bb.ae ], [ %.09.i, %bb.ad ] ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %.011.i, i64 88
   %i.cw = load i32, ptr %i.cv, align 8, !tbaa !1802
-  %i.cx = icmp ne i32 %i.cw, %spec.select.i95
+  %i.cx = icmp ne i32 %i.cw, %i.cm
   %.not8.i = icmp eq ptr %.011.i, %i.by
   %or.cond.i = or i1 %.not8.i, %i.cx
   br i1 %or.cond.i, label %bb.ae, label %sqlite3IndexHasDuplicateRootPage.exit
@@ -1543,8 +1541,7 @@ sqlite3StrICmp.exit:                              ; preds = %bb.n, %.lr.ph.split
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @sqlite3TriggerColmask(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, i32 noundef range(i32 0, 2) %3, i32 noundef range(i32 1, 4) %4, ptr noundef nonnull %5, i32 noundef %6) unnamed_addr #0 {
 bb.a:
-  %.not = icmp eq ptr %2, null                    ; 2 uses
-  %7 = select i1 %.not, i32 129, i32 130          ; 2 uses
+  %.not = icmp eq ptr %2, null
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 63
   %i.b = load i8, ptr %i.a, align 1, !tbaa !1147
   %i.c = icmp eq i8 %i.b, 2
@@ -1564,8 +1561,7 @@ bb.a:
   %.02139.us = phi i32 [ %.2.us, %checkColumnOverlap.exit.thread.us ], [ 0, %.lr.ph42 ] ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.040.us, i64 16
   %i.g = load i8, ptr %i.f, align 8, !tbaa !2200
-  %8 = zext i8 %i.g to i32
-  %i.h = icmp eq i32 %7, %8
+  %i.h = icmp eq i8 %i.g, -127
   br i1 %i.h, label %bb.b, label %checkColumnOverlap.exit.thread.us
 
 bb.b:                                             ; preds = %.lr.ph42.split.us
@@ -1637,8 +1633,7 @@ checkColumnOverlap.exit.thread.us:                ; preds = %getRowTrigger.exit.
   %.02139 = phi i32 [ %.2, %checkColumnOverlap.exit.thread ], [ 0, %.lr.ph42 ] ; 7 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.040, i64 16
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !2200
-  %9 = zext i8 %i.ae to i32
-  %i.af = icmp eq i32 %7, %9
+  %i.af = icmp eq i8 %i.ae, -126
   br i1 %i.af, label %bb.e, label %checkColumnOverlap.exit.thread
 
 bb.e:                                             ; preds = %.lr.ph42.split
@@ -2041,12 +2036,11 @@ sqlite3VdbeAddOp2.exit24:                         ; preds = %bb.b, %bb.t, %bb.s
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @pragmaFunclistLine(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(address_is_null) %1, i32 noundef range(i32 0, 2) %2, i32 noundef range(i32 0, 2) %3) unnamed_addr #0 {
 bb.a:
-  %.not = icmp eq i32 %3, 0                       ; 2 uses
-  %spec.store.select = select i1 %.not, i32 3934208, i32 -1 ; 2 uses
   %.not1720 = icmp eq ptr %1, null
   br i1 %.not1720, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %.not = icmp eq i32 %3, 0
   br i1 %.not, label %.lr.ph.split, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.e
@@ -2081,8 +2075,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !741
   %i.p = load i16, ptr %.01621.us, align 8, !tbaa !1338
   %i.q = sext i16 %i.p to i32
-  %4 = and i32 %i.e, %spec.store.select
-  %i.r = xor i32 %4, 2097152
+  %i.r = xor i32 %i.e, 2097152
   tail call void (ptr, i32, ptr, ...) @sqlite3VdbeMultiLoad(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @.str.1133, ptr noundef %i.k, i32 noundef %2, ptr noundef nonnull %.0.us, ptr noundef %i.o, i32 noundef %i.q, i32 noundef %i.r)
   br label %bb.e
 
@@ -2129,7 +2122,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !741
   %i.ak = load i16, ptr %.01621, align 8, !tbaa !1338
   %i.al = sext i16 %i.ak to i32
-  %i.am = and i32 %i.y, %spec.store.select
+  %i.am = and i32 %i.y, 3672064
   %i.an = xor i32 %i.am, 2097152
   tail call void (ptr, i32, ptr, ...) @sqlite3VdbeMultiLoad(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @.str.1133, ptr noundef %i.af, i32 noundef %2, ptr noundef nonnull %.0, ptr noundef %i.aj, i32 noundef %i.al, i32 noundef %i.an)
   br label %bb.j

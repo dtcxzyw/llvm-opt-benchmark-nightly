@@ -205,12 +205,11 @@ _ZNK9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAlloca
   br i1 %.not.i.i.i.i493, label %.loopexit1088, label %bb.cu, !llvm.loop !4
 
 .loopexit1088:                                    ; preds = %_ZNK9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE11StringEqualIS5_EEbRKNS0_IS2_T_EE.exit.thread3.i.i.i.i492, %_ZNK9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE11StringEqualIS5_EEbRKNS0_IS2_T_EE.exit.i.i.i.i497, %bb.cv, %_ZN9rapidjson8internal6SchemaINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES7_EEE21GetDependenciesStringEv.exit
-  %storemerge.lcssa.i.i.i.i494 = phi ptr [ %i.xm, %_ZN9rapidjson8internal6SchemaINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES7_EEE21GetDependenciesStringEv.exit ], [ %storemerge6.i.i.i.i489, %bb.cv ], [ %storemerge6.i.i.i.i489, %_ZNK9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE11StringEqualIS5_EEbRKNS0_IS2_T_EE.exit.i.i.i.i497 ], [ %i.xp, %_ZNK9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE11StringEqualIS5_EEbRKNS0_IS2_T_EE.exit.thread3.i.i.i.i492 ] ; 4 uses
+  %storemerge.lcssa.i.i.i.i494 = phi ptr [ %i.xm, %_ZN9rapidjson8internal6SchemaINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES7_EEE21GetDependenciesStringEv.exit ], [ %storemerge6.i.i.i.i489, %bb.cv ], [ %storemerge6.i.i.i.i489, %_ZNK9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE11StringEqualIS5_EEbRKNS0_IS2_T_EE.exit.i.i.i.i497 ], [ %i.xp, %_ZNK9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE11StringEqualIS5_EEbRKNS0_IS2_T_EE.exit.thread3.i.i.i.i492 ] ; 6 uses
   %i.yv = getelementptr inbounds nuw [32 x i8], ptr %i.xm, i64 %i.xo
   %.not.i495 = icmp ne ptr %storemerge.lcssa.i.i.i.i494, %i.yv
-  %i.yw = freeze i1 %.not.i495                    ; 3 uses
-  %i.yx = getelementptr inbounds nuw i8, ptr %storemerge.lcssa.i.i.i.i494, i64 16 ; 5 uses
-  %spec.select.i496 = select i1 %i.yw, ptr %i.yx, ptr null ; 2 uses
+  %i.yw = freeze i1 %.not.i495                    ; 2 uses
+  %i.yx = getelementptr inbounds nuw i8, ptr %storemerge.lcssa.i.i.i.i494, i64 16 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %39) #33
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %39, i8 0, i64 16, i1 false)
   %i.yy = getelementptr inbounds nuw i8, ptr %39, i64 14
@@ -320,7 +319,7 @@ bb.dd:                                            ; preds = %.loopexit1084
   br i1 %i.aar, label %bb.de, label %.loopexit1080
 
 bb.de:                                            ; preds = %bb.dd
-  %i.aas = getelementptr inbounds nuw i8, ptr %spec.select.i496, i64 8 ; 2 uses
+  %i.aas = getelementptr inbounds nuw i8, ptr %storemerge.lcssa.i.i.i.i494, i64 24 ; 2 uses
   %i.aat = load i32, ptr %i.yx, align 8, !tbaa !60
   %.not10461126 = icmp eq i32 %i.aat, 0
   br i1 %.not10461126, label %.loopexit1080, label %.lr.ph1128.preheader
@@ -723,7 +722,7 @@ bb.gb:                                            ; preds = %_ZN9rapidjson8inter
 
 bb.gc:                                            ; preds = %.noexc576, %.noexc578
   store i8 1, ptr %i.aw, align 1, !tbaa !378
-  %i.asp = getelementptr inbounds nuw i8, ptr %spec.select.i496, i64 8 ; 2 uses
+  %i.asp = getelementptr inbounds nuw i8, ptr %storemerge.lcssa.i.i.i.i494, i64 24 ; 2 uses
   %i.asq = load i32, ptr %i.yx, align 8, !tbaa !60
   %.not10511145 = icmp eq i32 %i.asq, 0
   br i1 %.not10511145, label %._crit_edge1150, label %.lr.ph1149

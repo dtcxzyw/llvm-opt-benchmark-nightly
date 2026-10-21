@@ -202,10 +202,9 @@ bb.an:                                            ; preds = %bb.ad
 
 bb.ao:                                            ; preds = %bb.an
   %i.ci = load i64, ptr %i.a, align 8, !noalias !14
-  %i.cj = trunc nuw i64 %i.ci to i1               ; 2 uses
+  %i.cj = trunc nuw i64 %i.ci to i1
   %i.ck = load ptr, ptr %i.bn, align 8, !noalias !14 ; 2 uses
   %i.cl = load i64, ptr %i.bo, align 8, !noalias !14
-  %.sroa.3.0.i.i = select i1 %i.cj, i64 undef, i64 %i.cl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !14
   %.not.i20.i = icmp eq ptr %i.ck, null
   %.not.i.i = select i1 %i.cj, i1 true, i1 %.not.i20.i
@@ -237,7 +236,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not6.i, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %i.ct = invoke zeroext i1 @_RNvXss_NtNtCskKLDkoKarTP_4core3str7patternRReNtB5_7Pattern15is_contained_inCsdAIXAMGuHRT_18build_script_build(ptr nonnull align 8 %i.cs, ptr %i.ck, i64 %.sroa.3.0.i.i) #24
+  %i.ct = invoke zeroext i1 @_RNvXss_NtNtCskKLDkoKarTP_4core3str7patternRReNtB5_7Pattern15is_contained_inCsdAIXAMGuHRT_18build_script_build(ptr nonnull align 8 %i.cs, ptr %i.ck, i64 %i.cl) #24
           to label %_RINvMNtCskKLDkoKarTP_4core3stre8containsRReECsdAIXAMGuHRT_18build_script_build.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !14
 
 bb.au:                                            ; preds = %bb.as
@@ -478,10 +477,9 @@ bb.x:                                             ; preds = %bb.p
 
 bb.y:                                             ; preds = %bb.x
   %i.ay = load i64, ptr %i.a, align 8, !noalias !22
-  %i.az = trunc nuw i64 %i.ay to i1               ; 2 uses
+  %i.az = trunc nuw i64 %i.ay to i1
   %i.ba = load ptr, ptr %i.ae, align 8, !noalias !22 ; 2 uses
   %i.bb = load i64, ptr %i.af, align 8, !noalias !22
-  %.sroa.3.0.i.i = select i1 %i.az, i64 undef, i64 %i.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !22
   %.not.i16.i = icmp eq ptr %i.ba, null
   %.not.i.i = select i1 %i.az, i1 true, i1 %.not.i16.i
@@ -513,7 +511,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not5.i, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.bj = invoke zeroext i1 @_RNvXss_NtNtCskKLDkoKarTP_4core3str7patternRReNtB5_7Pattern15is_contained_inCsdAIXAMGuHRT_18build_script_build(ptr nonnull align 8 %i.bi, ptr %i.ba, i64 %.sroa.3.0.i.i) #24
+  %i.bj = invoke zeroext i1 @_RNvXss_NtNtCskKLDkoKarTP_4core3str7patternRReNtB5_7Pattern15is_contained_inCsdAIXAMGuHRT_18build_script_build(ptr nonnull align 8 %i.bi, ptr %i.ba, i64 %i.bb) #24
           to label %_RINvMNtCskKLDkoKarTP_4core3stre8containsRReECsdAIXAMGuHRT_18build_script_build.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !22
 
 bb.ae:                                            ; preds = %bb.ac

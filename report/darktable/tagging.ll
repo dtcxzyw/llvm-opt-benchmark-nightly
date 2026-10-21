@@ -202,10 +202,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @dt_conf_get_int(ptr noundef nonnull @.str.88) #16 ; 2 uses
-  %i.d = icmp eq i32 %i.c, -1                     ; 2 uses
+  %i.d = icmp eq i32 %i.c, -1
   %i.e = tail call i32 @llvm.smax.i32(i32 %i.c, i32 5)
-  %spec.select.i = shl nuw i32 %i.e, 1
-  %.0.i24 = select i1 %i.d, i32 -1, i32 %spec.select.i ; 2 uses
+  %spec.select.i = shl nuw i32 %i.e, 1            ; 2 uses
   br i1 %i.d, label %bb.c, label %.preheader
 
 bb.c:                                             ; preds = %bb.b
@@ -231,11 +230,11 @@ bb.e:                                             ; preds = %.preheader, %bb.d
   br label %.preheader
 
 bb.f:                                             ; preds = %.preheader
-  %i.i = icmp sgt i32 %.0, %.0.i24
+  %i.i = icmp sgt i32 %.0, %spec.select.i
   br i1 %i.i, label %g_strdup_inline.exit, label %bb.i
 
 g_strdup_inline.exit:                             ; preds = %bb.f
-  %i.j = sub nsw i32 %.0, %.0.i24                 ; 2 uses
+  %i.j = sub nsw i32 %.0, %spec.select.i          ; 2 uses
   %i.k = tail call noalias ptr @g_strdup(ptr noundef nonnull %i.a) #16 ; 3 uses
   %i.l = icmp sgt i32 %i.j, 0
   br i1 %i.l, label %.lr.ph, label %._crit_edge

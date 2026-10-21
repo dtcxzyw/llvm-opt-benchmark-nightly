@@ -205,8 +205,7 @@ _ZN4dmlc6Stream5WriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKT
   %i.at = call noundef i64 %i.as(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 8), !inline_history !501 ; 0 uses
   %i.au = load ptr, ptr %i.aj, align 8, !tbaa !205 ; 2 uses
   %i.av = load ptr, ptr %4, align 8, !tbaa !204   ; 3 uses
-  %i.aw = icmp eq ptr %i.au, %i.av                ; 2 uses
-  %spec.select.i.i.i.i.i = select i1 %i.aw, ptr null, ptr %i.av
+  %i.aw = icmp eq ptr %i.au, %i.av
   %i.ax = ptrtoint ptr %i.au to i64
   %i.ay = ptrtoint ptr %i.av to i64
   %i.az = sub i64 %i.ax, %i.ay
@@ -215,7 +214,7 @@ _ZN4dmlc6Stream5WriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKT
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZN4dmlc6Stream5WriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKT_.exit, %_ZN4dmlc6Stream5WriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKT_.exit.i.i.i.i.i
   %.05.i.i.i.i.i = phi i64 [ %i.bp, %_ZN4dmlc6Stream5WriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKT_.exit.i.i.i.i.i ], [ 0, %_ZN4dmlc6Stream5WriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKT_.exit ] ; 2 uses
-  %i.bb = getelementptr inbounds nuw [32 x i8], ptr %spec.select.i.i.i.i.i, i64 %.05.i.i.i.i.i ; 2 uses
+  %i.bb = getelementptr inbounds nuw [32 x i8], ptr %i.av, i64 %.05.i.i.i.i.i ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8 ; 2 uses
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !120

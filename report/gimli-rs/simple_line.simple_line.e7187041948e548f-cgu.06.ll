@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %.lr.ph150, %.thread
   %.sroa.332.1148 = phi i64 [ 0, %.lr.ph150 ], [ %.sroa.332.2, %.thread ] ; 6 uses
   %.sroa.533.1147 = phi i64 [ 0, %.lr.ph150 ], [ %.sroa.533.2, %.thread ] ; 6 uses
   %.sroa.7.sroa.4.1146 = phi i64 [ 0, %.lr.ph150 ], [ %.sroa.7.sroa.4.2, %.thread ] ; 6 uses
-  %.sroa.0.0143 = phi ptr [ %.sroa.0.0.copyload, %.lr.ph150 ], [ %storemerge10.i.i.i, %.thread ] ; 6 uses
+  %.sroa.0.0143 = phi ptr [ %.sroa.0.0.copyload, %.lr.ph150 ], [ %i.ar, %.thread ] ; 6 uses
   %.sroa.6.0142 = phi i64 [ %.sroa.6.0.copyload, %.lr.ph150 ], [ %storemerge.i.i.i, %.thread ] ; 3 uses
   %.sroa.8.0141 = phi i32 [ %.sroa.8.0.copyload, %.lr.ph150 ], [ %i.as, %.thread ]
   %i.ak = phi <2 x i64> [ <i64 undef, i64 0>, %.lr.ph150 ], [ %i.bx, %.thread ] ; 6 uses
@@ -223,9 +223,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.aq = zext i32 %.sroa.03.0.i26.i.i to i64     ; 4 uses
-  %.not.i.i.i = icmp ult i64 %.sroa.6.0142, %i.aq ; 2 uses
+  %.not.i.i.i = icmp ult i64 %.sroa.6.0142, %i.aq
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.0143, i64 %i.aq
-  %storemerge10.i.i.i = select i1 %.not.i.i.i, ptr inttoptr (i64 1 to ptr), ptr %i.ar
   %storemerge.i.i.i = call i64 @llvm.usub.sat.i64(i64 %.sroa.6.0142, i64 range(i64 8, 0) %i.aq)
   br i1 %.not.i.i.i, label %_RNvMNtNtNtCs9Jn0q30Ea0B_6object4read5macho12load_commandINtB2_19LoadCommandIteratorNtNtB8_6endian10EndiannessE4nextCsjQ7aQP35kzr_11simple_line.exit.thread86, label %bb.k
 
@@ -595,7 +594,7 @@ bb.h:                                             ; preds = %.lr.ph150, %.thread
   %.sroa.332.1148 = phi i64 [ 0, %.lr.ph150 ], [ %.sroa.332.2, %.thread ] ; 6 uses
   %.sroa.533.1147 = phi i64 [ 0, %.lr.ph150 ], [ %.sroa.533.2, %.thread ] ; 6 uses
   %.sroa.7.sroa.4.1146 = phi i64 [ 0, %.lr.ph150 ], [ %.sroa.7.sroa.4.2, %.thread ] ; 6 uses
-  %.sroa.0.0143 = phi ptr [ %.sroa.0.0.copyload, %.lr.ph150 ], [ %storemerge10.i.i.i, %.thread ] ; 6 uses
+  %.sroa.0.0143 = phi ptr [ %.sroa.0.0.copyload, %.lr.ph150 ], [ %i.ar, %.thread ] ; 6 uses
   %.sroa.6.0142 = phi i64 [ %.sroa.6.0.copyload, %.lr.ph150 ], [ %storemerge.i.i.i, %.thread ] ; 3 uses
   %.sroa.8.0141 = phi i32 [ %.sroa.8.0.copyload, %.lr.ph150 ], [ %i.as, %.thread ]
   %i.ak = phi <2 x i64> [ <i64 undef, i64 0>, %.lr.ph150 ], [ %i.bx, %.thread ] ; 6 uses
@@ -616,9 +615,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.aq = zext i32 %.sroa.03.0.i26.i.i to i64     ; 4 uses
-  %.not.i.i.i = icmp ult i64 %.sroa.6.0142, %i.aq ; 2 uses
+  %.not.i.i.i = icmp ult i64 %.sroa.6.0142, %i.aq
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.0143, i64 %i.aq
-  %storemerge10.i.i.i = select i1 %.not.i.i.i, ptr inttoptr (i64 1 to ptr), ptr %i.ar
   %storemerge.i.i.i = call i64 @llvm.usub.sat.i64(i64 %.sroa.6.0142, i64 range(i64 8, 0) %i.aq)
   br i1 %.not.i.i.i, label %_RNvMNtNtNtCs9Jn0q30Ea0B_6object4read5macho12load_commandINtB2_19LoadCommandIteratorNtNtB8_6endian10EndiannessE4nextCsjQ7aQP35kzr_11simple_line.exit.thread86, label %bb.k
 

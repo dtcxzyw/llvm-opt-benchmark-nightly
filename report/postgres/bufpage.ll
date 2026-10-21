@@ -204,8 +204,8 @@ bb.r:                                             ; preds = %._crit_edge, %._cri
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @PageTruncateLinePointerArray(ptr nofree noundef captures(none) %0) local_unnamed_addr #6 {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 12         ; 2 uses
-  %.val = load i16, ptr %i.a, align 4             ; 3 uses
+  %i.a = getelementptr i8, ptr %0, i64 12         ; 3 uses
+  %.val = load i16, ptr %i.a, align 4             ; 4 uses
   %i.b = icmp ult i16 %.val, 25
   %i.c = zext i16 %.val to i32
   %i.d = add nuw nsw i32 %i.c, 262120
@@ -221,7 +221,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %.01843 = phi i32 [ %i.f, %.lr.ph ], [ %i.n, %bb.d ] ; 3 uses
-  %.01942 = phi i32 [ 0, %.lr.ph ], [ %.237, %bb.d ] ; 3 uses
+  %.01942 = phi i32 [ 0, %.lr.ph ], [ %.237, %bb.d ] ; 4 uses
   %.02340 = phi i1 [ false, %.lr.ph ], [ %.22535, %bb.d ] ; 2 uses
   %i.h = zext nneg i32 %.01843 to i64
   %i.i = getelementptr [4 x i8], ptr %i.g, i64 %i.h
@@ -239,39 +239,45 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %.not.not, label %._crit_edge.a, label %bb.d
+  br i1 %.not.not, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.thread, %bb.c
-  %.237 = phi i32 [ %spec.select28, %.thread ], [ %.01942, %bb.c ] ; 2 uses
+  %.237 = phi i32 [ %spec.select28, %.thread ], [ %.01942, %bb.c ] ; 3 uses
   %.22535 = phi i1 [ %not..not27, %.thread ], [ %.02340, %bb.c ]
   %i.n = add nsw i32 %.01843, -1                  ; 2 uses
   %.not38 = icmp eq i32 %i.n, 0
   br i1 %.not38, label %._crit_edge.a, label %bb.b, !llvm.loop !19
 
-._crit_edge.a:                                    ; preds = %bb.c, %bb.d
-  %.019.lcssa = phi i32 [ %.237, %bb.d ], [ %.01942, %bb.c ] ; 2 uses
-  %.222 = phi i1 [ false, %bb.d ], [ true, %bb.c ] ; 2 uses
-  %i.o = icmp sgt i32 %.019.lcssa, 0
-  br i1 %i.o, label %.split.a, label %bb.e
+._crit_edge:                                      ; preds = %bb.c
+  %1 = icmp sgt i32 %.01942, 0
+  br i1 %1, label %bb.e, label %bb.f
+
+._crit_edge.a:                                    ; preds = %bb.d
+  %i.o = icmp sgt i32 %.237, 0
+  br i1 %i.o, label %.split.a, label %.thread53
 
 .split.a:                                         ; preds = %._crit_edge.a
-  %i.p = trunc i32 %.019.lcssa to i16
+  %i.p = trunc i32 %.237 to i16
   %i.q = shl i16 %i.p, 2
   %i.r = sub i16 %.val, %i.q
   store i16 %i.r, ptr %i.a, align 4
-  br i1 %.222, label %bb.f, label %.thread53
+  br label %.thread53
 
-bb.e:                                             ; preds = %._crit_edge.a
-  br i1 %.222, label %bb.f, label %.thread53
+bb.e:                                             ; preds = %._crit_edge
+  %2 = trunc i32 %.01942 to i16
+  %3 = shl i16 %2, 2
+  %4 = sub i16 %.val, %3
+  store i16 %4, ptr %i.a, align 4
+  br label %bb.f
 
-bb.f:                                             ; preds = %.split.a, %bb.e
+bb.f:                                             ; preds = %._crit_edge, %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
   %i.t = load i16, ptr %i.s, align 2
   %i.u = or i16 %i.t, 1
   store i16 %i.u, ptr %i.s, align 2
   br label %bb.g
 
-.thread53:                                        ; preds = %bb.a, %.split.a, %bb.e
+.thread53:                                        ; preds = %._crit_edge.a, %.split.a, %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
   %i.w = load i16, ptr %i.v, align 2
   %i.x = and i16 %i.w, -2

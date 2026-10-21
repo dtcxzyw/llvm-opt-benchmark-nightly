@@ -204,9 +204,7 @@ _ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit: ; preds = %bb.a, %bb.b
 
 _ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit43: ; preds = %_ZN4Luau3getINS_12FunctionTypeEEEPKT_PKNS_4TypeE.exit
   %i.k = load i32, ptr %i.j, align 8, !tbaa !516
-  %i.l = icmp eq i32 %i.k, 8                      ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %14 = select i1 %i.l, ptr %13, ptr null
+  %i.l = icmp eq i32 %i.k, 8
   %i.m = icmp ne ptr %i.g, null
   %or.cond = and i1 %i.m, %i.l
   br i1 %or.cond, label %bb.c, label %.critedge41
@@ -397,7 +395,7 @@ _ZN4Luau3getINS_8FreeTypeEEEPKT_PKNS_4TypeE.exit.thread: ; preds = %bb.m, %bb.n,
   br i1 %.not, label %bb.q, label %_ZN4Luau3getINS_12FreeTypePackEEEPKT_PKNS_11TypePackVarE.exit.thread
 
 bb.q:                                             ; preds = %.loopexit
-  %i.ce = getelementptr inbounds nuw i8, ptr %14, i64 216 ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.j, i64 224 ; 2 uses
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !711 ; 3 uses
   %.not.i.i47 = icmp eq ptr %i.cf, null
   br i1 %.not.i.i47, label %_ZN4Luau3getINS_12FreeTypePackEEEPKT_PKNS_11TypePackVarE.exit.thread, label %bb.r

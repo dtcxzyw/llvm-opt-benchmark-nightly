@@ -205,19 +205,17 @@ _ZNK4pugi13xml_attribute4nameEv.exit.i:           ; preds = %bb.a
   %.not5.i.i = icmp eq ptr %i.c, null
   %i.d = select i1 %.not5.i.i, ptr @.str, ptr %i.c ; 3 uses
   %i.e = tail call noundef ptr @strchr(ptr noundef nonnull readonly dereferenceable(1) %i.d, i32 noundef 58) #50 ; 2 uses
-  %.not.i6.i = icmp eq ptr %i.e, null             ; 3 uses
-  %3 = select i1 %.not.i6.i, ptr null, ptr %i.d
+  %.not.i6.i = icmp eq ptr %i.e, null
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = ptrtoint ptr %i.d to i64
   %i.h = sub i64 %i.f, %i.g
-  %4 = select i1 %.not.i6.i, i64 0, i64 %i.h
   %.not.i720.i = icmp eq ptr %.sroa.0.0.copyload.i7, null
   %or.cond.i = select i1 %.not.i6.i, i1 true, i1 %.not.i720.i
   br i1 %or.cond.i, label %_ZN4pugi4impl12_GLOBAL__N_113namespace_uriENS_13xml_attributeENS_8xml_nodeE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNK4pugi13xml_attribute4nameEv.exit.i, %bb.b
   %.sroa.014.021.i = phi ptr [ %i.l, %bb.b ], [ %.sroa.0.0.copyload.i7, %_ZNK4pugi13xml_attribute4nameEv.exit.i ] ; 2 uses
-  %i.i = call fastcc ptr @_ZNK4pugi8xml_node14find_attributeINS_4impl12_GLOBAL__N_123namespace_uri_predicateEEENS_13xml_attributeET_(ptr nonnull %.sroa.014.021.i, ptr %3, i64 %4) ; 2 uses
+  %i.i = call fastcc ptr @_ZNK4pugi8xml_node14find_attributeINS_4impl12_GLOBAL__N_123namespace_uri_predicateEEENS_13xml_attributeET_(ptr nonnull %.sroa.014.021.i, ptr nonnull %i.d, i64 %i.h) ; 2 uses
   %.not.i8.i = icmp eq ptr %i.i, null
   br i1 %.not.i8.i, label %bb.b, label %_ZN4pugi4impl12_GLOBAL__N_113namespace_uriENS_13xml_attributeENS_8xml_nodeE.exit.sink.split
 

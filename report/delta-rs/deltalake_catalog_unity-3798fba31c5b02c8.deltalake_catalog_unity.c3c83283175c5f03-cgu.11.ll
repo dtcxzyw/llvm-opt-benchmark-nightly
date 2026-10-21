@@ -202,17 +202,16 @@ bb.g:                                             ; preds = %_RNvMNtCs6Po7BT7Nkn
 
 bb.h:                                             ; preds = %_RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxINtNtNtCs95DO3lnzZ3L_4moka6common5deque7DeqNodeINtNtBJ_10concurrent11KeyHashDateNtNtB4_6string6StringEEE3newCsgO8S5jLFugx_23deltalake_catalog_unity.exit, %bb.f, %bb.e
   %.sink = phi ptr [ %i.j, %bb.f ], [ %i.i, %bb.e ], [ %0, %_RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxINtNtNtCs95DO3lnzZ3L_4moka6common5deque7DeqNodeINtNtBJ_10concurrent11KeyHashDateNtNtB4_6string6StringEEE3newCsgO8S5jLFugx_23deltalake_catalog_unity.exit ]
-  %i.k = tail call noundef nonnull ptr @_RNvMs1_NtNtCs95DO3lnzZ3L_4moka6common5dequeINtB5_5DequeINtNtB7_10concurrent11KeyHashDateNtNtCs6Po7BT7Nknu_5alloc6string6StringEE9push_backCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef nonnull align 8 dereferenceable(48) %.sink, ptr noalias noundef nonnull align 8 %i.d) ; 3 uses
+  %i.k = tail call noundef nonnull ptr @_RNvMs1_NtNtCs95DO3lnzZ3L_4moka6common5dequeINtB5_5DequeINtNtB7_10concurrent11KeyHashDateNtNtCs6Po7BT7Nknu_5alloc6string6StringEE9push_backCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef nonnull align 8 dereferenceable(48) %.sink, ptr noalias noundef nonnull align 8 %i.d) ; 2 uses
   %i.l = icmp ult ptr %i.k, inttoptr (i64 4 to ptr)
-  %i.m = ptrtoint ptr %i.k to i64
+  %i.m = ptrtoint ptr %i.k to i64                 ; 2 uses
   %i.n = or i64 %i.m, %i.h
   %i.o = inttoptr i64 %i.n to ptr
   br i1 %i.l, label %.noexc6, label %_RNvMNtCsbvkFyIu7lgC_4core6resultINtB2_6ResultINtCsgtZWsW6JDnL_6tagptr10TagNonNullINtNtNtCs95DO3lnzZ3L_4moka6common5deque7DeqNodeINtNtB1m_10concurrent11KeyHashDateNtNtCs6Po7BT7Nknu_5alloc6string6StringEEKj2_ENtBK_4NullE6expectCsgO8S5jLFugx_23deltalake_catalog_unity.exit, !prof !6
 
 .noexc6:                                          ; preds = %bb.h
-  %4 = ptrtoint ptr %i.k to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i64 %4, ptr %i.a, align 8
+  store i64 %i.m, ptr %i.a, align 8
   call void @_RNvNtCsbvkFyIu7lgC_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 92, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @57, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #32
   unreachable
 

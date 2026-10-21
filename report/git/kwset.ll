@@ -204,10 +204,9 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.ji = shl i32 %.fr.i21, 2
   %i.jj = sext i32 %i.ji to i64                   ; 2 uses
-  %.not177.i = icmp ult i64 %2, %i.jj             ; 2 uses
+  %.not177.i = icmp ult i64 %2, %i.jj
   %i.jk = sub nsw i64 0, %i.jj
-  %i.jl = getelementptr inbounds i8, ptr %i.jh, i64 %i.jk
-  %.0126.i = select i1 %.not177.i, ptr null, ptr %i.jl ; 3 uses
+  %i.jl = getelementptr inbounds i8, ptr %i.jh, i64 %i.jk ; 3 uses
   %i.jm = ptrtoint ptr %i.jh to i64               ; 6 uses
   %.not183.i = icmp eq ptr %.fr356.i, null        ; 2 uses
   br i1 %.not177.i, label %.split267.us.i, label %.outer213.i
@@ -406,7 +405,7 @@ bb.af:                                            ; preds = %bb.ai, %.outer213.i
   br i1 %.not178.i, label %cwexec.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %.not180.i = icmp ugt ptr %.0127.i, %.0126.i
+  %.not180.i = icmp ugt ptr %.0127.i, %i.jl
   %i.lr = getelementptr i8, ptr %.0127.i, i64 %i.lq ; 2 uses
   %i.ls = getelementptr i8, ptr %i.lr, i64 -1     ; 4 uses
   %i.lt = load i8, ptr %i.ls, align 1, !tbaa !34  ; 3 uses
@@ -417,7 +416,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   %i.lx = icmp ne i8 %i.lw, 0
-  %i.ly = icmp ult ptr %i.ls, %.0126.i
+  %i.ly = icmp ult ptr %i.ls, %i.jl
   %i.lz = select i1 %i.lx, i1 %i.ly, i1 false
   br i1 %i.lz, label %.lr.ph.i27, label %._crit_edge.i
 
@@ -443,7 +442,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.mr = getelementptr inbounds nuw i8, ptr %i.je, i64 %i.mq
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !34  ; 3 uses
   %i.mt = icmp ne i8 %i.ms, 0
-  %i.mu = icmp ult ptr %i.mo, %.0126.i
+  %i.mu = icmp ult ptr %i.mo, %i.jl
   %i.mv = select i1 %i.mt, i1 %i.mu, i1 false
   br i1 %i.mv, label %.lr.ph.i27, label %._crit_edge.i, !llvm.loop !76
 

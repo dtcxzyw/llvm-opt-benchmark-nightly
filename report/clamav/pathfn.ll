@@ -202,13 +202,12 @@ bb.a:
   br i1 %.not18, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %2 = select i1 %1, ptr @.str.13, ptr @.str.14   ; 2 uses
   br i1 %1, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.d
   %i.b = phi i32 [ %i.i, %bb.d ], [ %i.a, %.lr.ph ] ; 3 uses
   %.019.us = phi ptr [ %i.h, %bb.d ], [ %0, %.lr.ph ] ; 3 uses
-  %i.c = tail call ptr @wcschr(ptr noundef nonnull %2, i32 noundef signext %i.b) #17
+  %i.c = tail call ptr @wcschr(ptr noundef nonnull @.str.13, i32 noundef signext %i.b) #17
   %.not16.us = icmp ne ptr %i.c, null
   %i.d = icmp ult i32 %i.b, 32
   %or.cond17.us = or i1 %i.d, %.not16.us
@@ -243,7 +242,7 @@ bb.d:                                             ; preds = %.sink.split, %bb.c,
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.f
   %i.j = phi i32 [ %i.m, %bb.f ], [ %i.a, %.lr.ph ]
   %.019 = phi ptr [ %i.l, %bb.f ], [ %0, %.lr.ph ] ; 2 uses
-  %i.k = tail call ptr @wcschr(ptr noundef nonnull %2, i32 noundef signext %i.j) #17
+  %i.k = tail call ptr @wcschr(ptr noundef nonnull @.str.14, i32 noundef signext %i.j) #17
   %.not16.not = icmp eq ptr %i.k, null
   br i1 %.not16.not, label %bb.f, label %bb.e
 

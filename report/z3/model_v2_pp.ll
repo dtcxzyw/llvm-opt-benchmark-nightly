@@ -202,9 +202,7 @@ _ZNK11func_interp11num_entriesEv.exit.i.i:        ; preds = %_ZlsRSo6symbol.exit
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
   %i.dw = load i32, ptr %i.dv, align 8, !tbaa !70
   %.fr66.i.i = freeze i32 %i.dw                   ; 2 uses
-  %i.dx = icmp eq i32 %i.du, 0                    ; 3 uses
-  %8 = select i1 %i.dx, ptr @.str.3, ptr @.str.4  ; 2 uses
-  %9 = select i1 %i.dx, i32 2, i32 10             ; 2 uses
+  %i.dx = icmp eq i32 %i.du, 0
   br i1 %i.dx, label %._crit_edge61.i.i, label %.lr.ph60.i.i
 
 .lr.ph60.i.i:                                     ; preds = %_ZNK11func_interp11num_entriesEv.exit.i.i
@@ -267,8 +265,8 @@ bb.aa:                                            ; preds = %._crit_edge.us.i.i
   br label %common.resume
 
 ._crit_edge61.i.i:                                ; preds = %bb.aa, %bb.ab, %_ZNK11func_interp11num_entriesEv.exit.i.i, %_ZlsRSo6symbol.exit.i.i
-  %i.en = phi i32 [ %9, %bb.ab ], [ 2, %_ZlsRSo6symbol.exit.i.i ], [ 2, %_ZNK11func_interp11num_entriesEv.exit.i.i ], [ %9, %bb.aa ]
-  %i.eo = phi ptr [ %8, %bb.ab ], [ @.str.3, %_ZlsRSo6symbol.exit.i.i ], [ @.str.3, %_ZNK11func_interp11num_entriesEv.exit.i.i ], [ %8, %bb.aa ] ; 2 uses
+  %i.en = phi i32 [ 10, %bb.ab ], [ 2, %_ZlsRSo6symbol.exit.i.i ], [ 2, %_ZNK11func_interp11num_entriesEv.exit.i.i ], [ 10, %bb.aa ]
+  %i.eo = phi ptr [ @.str.4, %bb.ab ], [ @.str.3, %_ZlsRSo6symbol.exit.i.i ], [ @.str.3, %_ZNK11func_interp11num_entriesEv.exit.i.i ], [ @.str.4, %bb.aa ] ; 2 uses
   %i.ep = phi i64 [ 10, %bb.ab ], [ 2, %_ZlsRSo6symbol.exit.i.i ], [ 2, %_ZNK11func_interp11num_entriesEv.exit.i.i ], [ 10, %bb.aa ] ; 2 uses
   br i1 %2, label %bb.ac, label %bb.ad
 

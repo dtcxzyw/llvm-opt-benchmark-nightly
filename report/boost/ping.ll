@@ -205,8 +205,7 @@ _ZN5boost5beast9websocket6streamIRNS0_4test12basic_streamINS_4asio15any_io_execu
   %i.jr = load ptr, ptr %23, align 8, !tbaa !1284 ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %i.jr, i64 2224
   %i.jt = load i32, ptr %i.js, align 8, !tbaa !1308
-  %.not.i148 = icmp eq i32 %i.jt, 0               ; 2 uses
-  %33 = select i1 %.not.i148, i8 -128, i8 0
+  %.not.i148 = icmp eq i32 %i.jt, 0
   br i1 %.not.i148, label %bb.bv, label %.thread213
 
 .thread213:                                       ; preds = %_ZN5boost5beast9websocket6streamIRNS0_4test12basic_streamINS_4asio15any_io_executorEEELb1EE9impl_type14check_stop_nowERNS_6system10error_codeE.exit183
@@ -233,7 +232,7 @@ bb.bv:                                            ; preds = %_ZN5boost5beast9web
 bb.bw:                                            ; preds = %.noexc156
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 -119, ptr %i.a, align 1, !tbaa !989
-  store i8 %33, ptr %.1..1..1..sroa_idx, align 1, !tbaa !989
+  store i8 -128, ptr %.1..1..1..sroa_idx, align 1, !tbaa !989
   store i32 %i.jy, ptr %.2..2..2..2..2..2.gep.sroa_idx, align 1
   br label %bb.bx
 
@@ -636,8 +635,7 @@ _ZN5boost5beast9websocket6streamIRNS0_4test12basic_streamINS_4asio15any_io_execu
   %i.jr = load ptr, ptr %23, align 8, !tbaa !1284 ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %i.jr, i64 2224
   %i.jt = load i32, ptr %i.js, align 8, !tbaa !1308
-  %.not.i148 = icmp eq i32 %i.jt, 0               ; 2 uses
-  %33 = select i1 %.not.i148, i8 -128, i8 0
+  %.not.i148 = icmp eq i32 %i.jt, 0
   br i1 %.not.i148, label %bb.bv, label %.thread213
 
 .thread213:                                       ; preds = %_ZN5boost5beast9websocket6streamIRNS0_4test12basic_streamINS_4asio15any_io_executorEEELb1EE9impl_type14check_stop_nowERNS_6system10error_codeE.exit183
@@ -664,7 +662,7 @@ bb.bv:                                            ; preds = %_ZN5boost5beast9web
 bb.bw:                                            ; preds = %.noexc156
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 -118, ptr %i.a, align 1, !tbaa !989
-  store i8 %33, ptr %.1..1..1..sroa_idx, align 1, !tbaa !989
+  store i8 -128, ptr %.1..1..1..sroa_idx, align 1, !tbaa !989
   store i32 %i.jy, ptr %.2..2..2..2..2..2.gep.sroa_idx, align 1
   br label %bb.bx
 

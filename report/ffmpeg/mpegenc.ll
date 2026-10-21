@@ -202,7 +202,7 @@ bb.as:                                            ; preds = %get_nb_frames.exit
   %.not322 = icmp eq i64 %.0291, -9223372036854775808 ; 2 uses
   %.not323 = icmp eq i64 %.0292, %.0291
   %spec.select337 = select i1 %.not323, i32 128, i32 192 ; 2 uses
-  %.0262 = select i1 %.not322, i32 0, i32 %spec.select337
+  %.0262 = select i1 %.not322, i32 0, i32 %spec.select337 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.k, i64 48
   %i.gc = load i32, ptr %i.gb, align 8, !tbaa !67
   %i.gd = icmp eq i32 %i.gc, 0                    ; 2 uses
@@ -214,11 +214,11 @@ bb.as:                                            ; preds = %get_nb_frames.exit
   %i.gh = add nsw i32 %.3274, -3
   %i.gi = add nsw i32 %i.gh, %.5280
   call void @avio_w8(ptr noundef %i.gg, i32 noundef %i.gi) #9
-  br i1 %.not322, label %.critedge, label %.thread._crit_edge
+  br i1 %.not322, label %6, label %.thread._crit_edge
 
 .thread._crit_edge:                               ; preds = %.thread
   %i.gj = load ptr, ptr %i.cp, align 8, !tbaa !81 ; 3 uses
-  %i.gk = and i32 %spec.select337, 64             ; 2 uses
+  %i.gk = and i32 %spec.select337, 64
   %.not325 = icmp eq i32 %i.gk, 0
   %i.gl = select i1 %.not325, i32 32, i32 48
   %i.gm = lshr i64 %.0291, 29
@@ -236,10 +236,14 @@ bb.as:                                            ; preds = %get_nb_frames.exit
   %i.gw = and i32 %i.gv, 65534
   %i.gx = or disjoint i32 %i.gw, 1
   call void @avio_wb16(ptr noundef %i.gj, i32 noundef %i.gx) #9
-  %6 = icmp eq i32 %i.gk, 0
-  br i1 %6, label %.critedge, label %bb.at
+  br label %6
 
-bb.at:                                            ; preds = %.thread._crit_edge
+6:                                                ; preds = %.thread._crit_edge, %.thread
+  %7 = and i32 %.0262, 64
+  %.not326 = icmp eq i32 %7, 0
+  br i1 %.not326, label %.critedge, label %bb.at
+
+bb.at:                                            ; preds = %6
   %i.gy = load ptr, ptr %i.cp, align 8, !tbaa !81 ; 3 uses
   %i.gz = lshr i64 %.0292, 29
   %i.ha = trunc i64 %i.gz to i32
@@ -257,7 +261,7 @@ bb.at:                                            ; preds = %.thread._crit_edge
   call void @avio_wb16(ptr noundef %i.gy, i32 noundef %i.hj) #9
   br label %.critedge
 
-.critedge:                                        ; preds = %.thread, %bb.at, %.thread._crit_edge
+.critedge:                                        ; preds = %bb.at, %6
   br i1 %i.gd, label %bb.au, label %bb.bc
 
 bb.au:                                            ; preds = %.critedge
@@ -660,11 +664,11 @@ put_bits.exit98.thread:                           ; preds = %put_bits.exit86
 put_bits.exit98:                                  ; preds = %put_bits.exit86
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 36
   %i.s = load i32, ptr %i.r, align 4, !tbaa !59
-  %i.t = shl i32 %i.k, 8
-  %3 = shl i32 %i.s, 2
-  %4 = or i32 %i.t, %3
+  %i.t = shl i32 %i.k, 6
+  %3 = or i32 %i.s, %i.t                          ; 2 uses
+  %4 = shl i32 %3, 2
   %i.u = zext i1 %i.n to i32
-  %.sroa.0.1 = or disjoint i32 %4, %i.u           ; 3 uses
+  %.sroa.0.1 = or disjoint i32 %4, %i.u           ; 2 uses
   br i1 %i.n, label %put_bits.exit126, label %bb.a
 
 bb.a:                                             ; preds = %put_bits.exit98
@@ -674,7 +678,7 @@ bb.a:                                             ; preds = %put_bits.exit98
   br i1 %.not74, label %put_bits.exit126.thread, label %put_bits.exit126.thread508
 
 put_bits.exit126.thread:                          ; preds = %bb.a
-  %i.x = shl i32 %.sroa.0.1, 3
+  %i.x = shl i32 %3, 5
   %i.y = or disjoint i32 %i.x, 1
   br label %bb.c
 

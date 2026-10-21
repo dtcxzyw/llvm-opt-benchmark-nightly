@@ -202,16 +202,15 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !99)
   %i.b = load ptr, ptr %0, align 8, !alias.scope !99, !nonnull !6, !noundef !6
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !alias.scope !99, !noundef !6 ; 2 uses
+  %i.d = load i64, ptr %i.c, align 8, !alias.scope !99, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !100
   call void @_RNvNtNtCsj6eKBz9Db1c_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %i.d) #23, !noalias !100
   %i.e = load i64, ptr %i.a, align 8, !range !7, !noalias !100, !noundef !6
-  %i.f = trunc nuw i64 %i.e to i1                 ; 2 uses
+  %i.f = trunc nuw i64 %i.e to i1
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !noalias !100, !nonnull !6 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.j = load i64, ptr %i.i, align 8, !noalias !100 ; 4 uses
-  %.sink.i = select i1 %i.f, i64 %i.d, i64 %i.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !100
   %.not.i.i = icmp eq i64 %i.j, 0
   %or.cond = select i1 %i.f, i1 true, i1 %.not.i.i
@@ -261,7 +260,7 @@ bb.c:                                             ; preds = %.lr.ph.preheader.i.
   br i1 %i.x, label %bb.d, label %_RNCNvMs1_Cs3RZUOUhPFQ6_8clap_lexNtB7_9ParsedArg18is_negative_number0B7_.exit.thread
 
 bb.d:                                             ; preds = %._crit_edge.i.i
-  %i.y = add i64 %.sink.i, -2
+  %i.y = add i64 %i.j, -2
   %i.z = icmp ne i64 %.sroa.6.1.i.i, %i.y
   br label %_RNCNvMs1_Cs3RZUOUhPFQ6_8clap_lexNtB7_9ParsedArg18is_negative_number0B7_.exit.thread
 

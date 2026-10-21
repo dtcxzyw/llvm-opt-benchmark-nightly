@@ -204,9 +204,8 @@ bb.an:                                            ; preds = %.critedge90.i
   %.0212.i = phi i32 [ %i.md, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes14AllocStackInstEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5eraseERKS4_.exit.i ], [ 0, %bb.an ] ; 2 uses
   %i.ld = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.0174.0219.i, i32 noundef %.0212.i) #10 ; 2 uses
   %i.le = load i8, ptr %i.ld, align 8, !tbaa !65
-  %.not199.i = icmp eq i8 %i.le, 52               ; 2 uses
+  %.not199.i = icmp eq i8 %i.le, 52
   %i.lf = getelementptr inbounds i8, ptr %i.ld, i64 -16 ; 3 uses
-  %spec.select.i92.i = select i1 %.not199.i, ptr %i.lf, ptr null
   br i1 %.not199.i, label %bb.ao, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes14AllocStackInstEPNS2_5ValueENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E5eraseERKS4_.exit.i
 
 bb.ao:                                            ; preds = %.lr.ph.i33
@@ -243,7 +242,7 @@ bb.aq:                                            ; preds = %.lr.ph.i.i.i.i35
   %i.lx = zext i32 %.027.i.i.i.i38 to i64
   %i.ly = getelementptr inbounds nuw [16 x i8], ptr %i.lg, i64 %i.lx ; 2 uses
   %i.lz = load ptr, ptr %i.ly, align 8, !tbaa !71 ; 2 uses
-  %i.ma = icmp eq ptr %spec.select.i92.i, %i.lz
+  %i.ma = icmp eq ptr %i.lf, %i.lz
   br i1 %i.ma, label %.loopexit.i.i, label %.lr.ph.i.i.i.i35, !prof !38, !llvm.loop !1
 
 .loopexit.i.i:                                    ; preds = %bb.aq, %bb.ap

@@ -205,11 +205,6 @@ bb.ac:                                            ; preds = %bb.ab
   call void @_RNvNtCs3oUPovFnLWP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @36, i64 noundef 43, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @37) #15, !noalias !782
   unreachable
 
-_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread: ; preds = %bb.aa, %.thread.i19.i, %bb.w, %bb.s, %bb.o, %bb.g, %bb.d, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter22print_posix_offset_wtr.exit.i, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter22print_posix_offset_wtr.exit.i.i
-  %.pn10 = phi { i64, ptr } [ %i.dd, %.thread.i19.i ], [ %i.bh, %bb.o ], [ %i.by, %bb.s ], [ %i.ci, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter22print_posix_offset_wtr.exit.i.i ], [ %i.ag, %bb.g ], [ %i.cs, %bb.w ], [ %i.u, %bb.d ], [ %i.aq, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter22print_posix_offset_wtr.exit.i ], [ %i.dn, %bb.aa ]
-  %.sroa.5.0.i.ph = extractvalue { i64, ptr } %.pn10, 1
-  br label %_RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter6finish.exit
-
 _RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit: ; preds = %bb.z, %bb.ab
   %i.dr = phi ptr [ %.pre.i37.i.i, %bb.ab ], [ %i.dg, %bb.z ] ; 2 uses
   %i.ds = phi i16 [ %.pre6.i41.i.i, %bb.ab ], [ %i.dk, %bb.z ]
@@ -224,8 +219,12 @@ _RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print
   %i.dy = call fastcc { i64, ptr } @_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter24print_posix_day_time_wtr(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.dx, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) ; 2 uses
   %i.dz = extractvalue { i64, ptr } %i.dy, 0
   %i.ea = trunc nuw i64 %i.dz to i1
-  %4 = extractvalue { i64, ptr } %i.dy, 1
-  br i1 %i.ea, label %_RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter6finish.exit, label %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread7
+  br i1 %i.ea, label %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread, label %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread7
+
+_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread: ; preds = %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter22print_posix_offset_wtr.exit.i.i, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter22print_posix_offset_wtr.exit.i, %bb.d, %bb.g, %bb.o, %bb.s, %bb.w, %.thread.i19.i, %bb.aa, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit
+  %.pn10.pn = phi { i64, ptr } [ %i.dy, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit ], [ %i.dd, %.thread.i19.i ], [ %i.bh, %bb.o ], [ %i.by, %bb.s ], [ %i.ci, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter22print_posix_offset_wtr.exit.i.i ], [ %i.ag, %bb.g ], [ %i.cs, %bb.w ], [ %i.u, %bb.d ], [ %i.aq, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter22print_posix_offset_wtr.exit.i ], [ %i.dn, %bb.aa ]
+  %.sroa.5.0.i.ph.pn = extractvalue { i64, ptr } %.pn10.pn, 1
+  br label %_RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter6finish.exit
 
 _RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread7: ; preds = %bb.j, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit
   %.sroa.0.0.copyload = load ptr, ptr %i.a, align 8, !nonnull !6, !noundef !6 ; 2 uses
@@ -250,9 +249,9 @@ bb.ae:                                            ; preds = %_RNvMNtNtNtCsa9sSWS
   store i16 0, ptr %i.ec, align 8, !noalias !783
   br label %_RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter6finish.exit
 
-_RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter6finish.exit: ; preds = %bb.ae, %bb.ad, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread
-  %.sroa.5.0.i.ph.pn.pn = phi ptr [ %4, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit ], [ %.sroa.5.0.i.ph, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread ], [ %i.ek, %bb.ad ], [ undef, %bb.ae ]
-  %.sroa.0.0 = phi i64 [ 1, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit ], [ 1, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread ], [ 1, %bb.ad ], [ 0, %bb.ae ]
+_RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedWriter6finish.exit: ; preds = %bb.ae, %bb.ad, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread
+  %.sroa.5.0.i.ph.pn.pn = phi ptr [ %.sroa.5.0.i.ph.pn, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread ], [ %i.ek, %bb.ad ], [ undef, %bb.ae ]
+  %.sroa.0.0 = phi i64 [ 1, %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter25print_posix_time_zone_wtr.exit.thread ], [ 1, %bb.ad ], [ 0, %bb.ae ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)

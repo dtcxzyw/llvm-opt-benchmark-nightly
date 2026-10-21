@@ -205,7 +205,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %should_continue_reclaim.exit, %bb.a
-  %.0 = phi i1 [ false, %bb.a ], [ %spec.select, %should_continue_reclaim.exit ]
+  %.0 = phi i1 [ false, %bb.a ], [ %spec.select, %should_continue_reclaim.exit ] ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(20) %i.e, i8 0, i64 20, i1 false)
   %i.bc = load i64, ptr %i.f, align 8
   call void @_raw_spin_lock_irq(ptr noundef %i.g) #14
@@ -608,7 +608,7 @@ bb.ce:                                            ; preds = %shrink_node_memcgs.
 flush_reclaim_state.exit:                         ; preds = %shrink_node_memcgs.exit, %bb.ce
   %i.qy = load i64, ptr %i.f, align 8
   %.not66 = icmp ne i64 %i.qy, %i.bc              ; 3 uses
-  %spec.select = select i1 %.not66, i1 true, i1 %.0 ; 2 uses
+  %spec.select = select i1 %.not66, i1 true, i1 %.0 ; 7 uses
   %i.qz = load i32, ptr %i.dx, align 4
   %i.ra = and i32 %i.qz, 131072
   %.not67 = icmp eq i32 %i.ra, 0
@@ -816,7 +816,8 @@ should_continue_reclaim.exit:                     ; preds = %can_reclaim_anon_pa
   br i1 %i.tl, label %bb.b, label %should_continue_reclaim.exit.thread
 
 should_continue_reclaim.exit.thread:              ; preds = %bb.ct, %bb.cw, %in_reclaim_compaction.exit.i, %bb.cu, %should_continue_reclaim.exit, %bb.cy, %bb.cz
-  br i1 %spec.select, label %bb.dd, label %bb.dj
+  %spec.select111 = phi i1 [ %spec.select, %bb.cy ], [ %spec.select, %bb.cz ], [ %.0, %in_reclaim_compaction.exit.i ], [ %spec.select, %bb.cu ], [ %spec.select, %should_continue_reclaim.exit ], [ %spec.select, %bb.ct ], [ %spec.select, %bb.cw ]
+  br i1 %spec.select111, label %bb.dd, label %bb.dj
 
 bb.dd:                                            ; preds = %should_continue_reclaim.exit.thread
   %i.tm = load i8, ptr %i.bb, align 1

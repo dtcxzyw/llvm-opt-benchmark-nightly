@@ -202,7 +202,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.h, %.preheader.us.us.us
   %indvars.iv = phi i32 [ %indvars.iv.next, %bb.h ], [ 0, %.preheader.us.us.us ] ; 2 uses
-  %.3153.us.us.us = phi i1 [ %spec.select75.us.us.us, %bb.h ], [ %.2159.us.us.us, %.preheader.us.us.us ]
   %i.cv = trunc nuw nsw i32 %indvars.iv to i16
   %i.cw = add i16 %i.bq, %i.cv
   %i.cx = sext i16 %i.cw to i32
@@ -219,14 +218,17 @@ bb.h:                                             ; preds = %bb.g
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.dc, i64 %i.cy
   %i.de = load i16, ptr %i.dd, align 4, !tbaa !64
   %.not140.us.us.us = icmp ne i16 %i.de, 127      ; 2 uses
-  %spec.select75.us.us.us = select i1 %.not140.us.us.us, i1 %.3153.us.us.us, i1 false ; 2 uses
   %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
   %i.df = icmp samesign ult i32 %indvars.iv.next, %i.cl
   %or.cond = select i1 %.not140.us.us.us, i1 %i.df, i1 false
-  br i1 %or.cond, label %bb.g, label %.thread.us.us.us, !llvm.loop !134
+  br i1 %or.cond, label %bb.g, label %.thread.us.us.us.split.loop.exit, !llvm.loop !134
 
-.thread.us.us.us:                                 ; preds = %bb.h, %bb.g
-  %.5.us.us.us = phi i1 [ %spec.select75.us.us.us, %bb.h ], [ false, %bb.g ] ; 4 uses
+.thread.us.us.us.split.loop.exit:                 ; preds = %bb.h
+  %spec.select75.us.us.us.le = select i1 %.not140.us.us.us, i1 %.2159.us.us.us, i1 false
+  br label %.thread.us.us.us
+
+.thread.us.us.us:                                 ; preds = %bb.g, %.thread.us.us.us.split.loop.exit
+  %.5.us.us.us = phi i1 [ %spec.select75.us.us.us.le, %.thread.us.us.us.split.loop.exit ], [ false, %bb.g ] ; 4 uses
   %indvars.iv.next182 = add nuw nsw i32 %indvars.iv181, 1 ; 2 uses
   %exitcond.not = icmp eq i32 %indvars.iv.next182, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.split.us.us.us, label %.preheader.us.us.us, !llvm.loop !135

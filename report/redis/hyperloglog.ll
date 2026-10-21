@@ -205,9 +205,8 @@ bb.ac:                                            ; preds = %.thread
   %i.cy = and i32 %i.cx, 192                      ; 2 uses
   %i.cz = icmp eq i32 %i.cy, 64                   ; 2 uses
   %.v = select i1 %i.cz, i64 2, i64 1
-  %i.da = getelementptr inbounds nuw i8, ptr %.0182.lcssa, i64 %.v ; 3 uses
-  %.not229 = icmp ult ptr %i.da, %i.ch            ; 2 uses
-  %spec.store.select = select i1 %.not229, ptr %i.da, ptr null ; 2 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %.0182.lcssa, i64 %.v ; 4 uses
+  %.not229 = icmp ult ptr %i.da, %i.ch
   %.not303 = icmp eq i32 %i.cy, 0                 ; 4 uses
   br i1 %.not303, label %bb.ah, label %bb.ad
 
@@ -516,9 +515,9 @@ bb.bc:                                            ; preds = %sdsalloc.exit258
 bb.bd:                                            ; preds = %bb.bc
   %i.iq = getelementptr inbounds i8, ptr %i.da, i64 %i.io
   %i.ir = ptrtoint ptr %i.ch to i64
-  %i.is = ptrtoint ptr %spec.store.select to i64
+  %i.is = ptrtoint ptr %i.da to i64
   %i.it = sub i64 %i.ir, %i.is
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.iq, ptr align 1 %spec.store.select, i64 %i.it, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.iq, ptr nonnull align 1 %i.da, i64 %i.it, i1 false)
   %.pre = load ptr, ptr %i.c, align 8, !tbaa !26
   br label %bb.be
 

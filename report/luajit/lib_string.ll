@@ -204,9 +204,7 @@ bb.f:                                             ; preds = %bb.d, %bb.a
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ao ; 5 uses
   %i.aq = load i8, ptr %i.am, align 1, !tbaa !19
   %.fr = freeze i8 %i.aq
-  %.not77 = icmp eq i8 %.fr, 94                   ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 25 ; 2 uses
-  %spec.select81 = select i1 %.not77, ptr %3, ptr %i.am
+  %.not77 = icmp eq i8 %.fr, 94
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   store ptr %0, ptr %i.ar, align 8, !tbaa !41
   store ptr %i.an, ptr %2, align 8, !tbaa !42
@@ -214,18 +212,21 @@ bb.f:                                             ; preds = %bb.d, %bb.a
   %i.at = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.as
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store ptr %i.at, ptr %i.au, align 8, !tbaa !43
-  %i.av = getelementptr inbounds nuw i8, ptr %2, i64 28 ; 2 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
-  store i32 0, ptr %i.av, align 4, !tbaa !44
-  store i32 0, ptr %i.aw, align 8, !tbaa !45
+  %i.av = getelementptr inbounds nuw i8, ptr %2, i64 28 ; 3 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 5 uses
   br i1 %.not77, label %.split.us, label %.split, !llvm.loop !63
 
 .split.us:                                        ; preds = %bb.f
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 25
+  store i32 0, ptr %i.av, align 4, !tbaa !44
+  store i32 0, ptr %i.aw, align 8, !tbaa !45
   %i.ax = call fastcc ptr @match(ptr noundef %2, ptr noundef nonnull %i.ap, ptr noundef nonnull %3) ; 2 uses
   %.not75.us = icmp eq ptr %i.ax, null
   br i1 %.not75.us, label %.critedge, label %.split94.us
 
 .split:                                           ; preds = %bb.f
+  store i32 0, ptr %i.av, align 4, !tbaa !44
+  store i32 0, ptr %i.aw, align 8, !tbaa !45
   %i.ay = call fastcc ptr @match(ptr noundef %2, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.am) ; 2 uses
   %.not7596 = icmp eq ptr %i.ay, null
   br i1 %.not7596, label %push_captures.exit86, label %.split94.us
@@ -298,7 +299,7 @@ bb.i:                                             ; preds = %push_captures.exit8
   %i.ca = getelementptr inbounds nuw i8, ptr %.06097, i64 1 ; 3 uses
   store i32 0, ptr %i.av, align 4, !tbaa !44
   store i32 0, ptr %i.aw, align 8, !tbaa !45
-  %i.cb = call fastcc ptr @match(ptr noundef %2, ptr noundef nonnull %i.ca, ptr noundef nonnull %spec.select81) ; 2 uses
+  %i.cb = call fastcc ptr @match(ptr noundef %2, ptr noundef nonnull %i.ca, ptr noundef nonnull %i.am) ; 2 uses
   %.not75 = icmp eq ptr %i.cb, null
   br i1 %.not75, label %push_captures.exit86, label %.split94.us
 

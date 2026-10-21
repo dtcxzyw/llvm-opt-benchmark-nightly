@@ -204,18 +204,12 @@ bb.ay:                                            ; preds = %bb.ax
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %.173) #4
   br label %lean_dec.exit83.thread190
 
-4:                                                ; preds = %.thread
-  %5 = ptrtoint ptr %.173 to i64                  ; 2 uses
-  %6 = and i64 %5, 1
-  %.not.i122 = icmp eq i64 %6, 0
-  br i1 %.not.i122, label %bb.ba, label %bb.az
-
-bb.az:                                            ; preds = %4
-  %i.ci = lshr i64 %5, 1
+bb.az:                                            ; preds = %.thread
+  %i.ci = lshr i64 %i.dp, 1
   %i.cj = trunc i64 %i.ci to i32
   br label %lean_obj_tag.exit125
 
-bb.ba:                                            ; preds = %4
+bb.ba:                                            ; preds = %bb.bw
   %i.ck = getelementptr i8, ptr %.173, i64 4
   %.val.i124 = load i32, ptr %i.ck, align 4
   %i.cl = lshr i32 %.val.i124, 24
@@ -322,7 +316,7 @@ bb.bq:                                            ; preds = %bb.bp
   br label %lean_dec_ref_known.exit140
 
 lean_dec.exit:                                    ; preds = %bb.aa, %bb.ac, %bb.ad, %bb.ae, %lean_dec.exit89, %bb.by, %bb.bz, %bb.ca
-  %.173 = phi ptr [ %i.ds, %lean_dec.exit89 ], [ %i.ds, %bb.ca ], [ %i.ds, %bb.bz ], [ %i.ds, %bb.by ], [ %i.am, %bb.ae ], [ %i.am, %bb.ad ], [ %i.am, %bb.ac ], [ %i.am, %bb.aa ] ; 12 uses
+  %.173 = phi ptr [ %i.ds, %lean_dec.exit89 ], [ %i.ds, %bb.ca ], [ %i.ds, %bb.bz ], [ %i.ds, %bb.by ], [ %i.am, %bb.ae ], [ %i.am, %bb.ad ], [ %i.am, %bb.ac ], [ %i.am, %bb.aa ] ; 11 uses
   %i.di = tail call zeroext i8 @l_Lean_Syntax_isMissing(ptr noundef %i.o) #4
   %i.dj = ptrtoint ptr %i.o to i64
   %i.dk = and i64 %i.dj, 1
@@ -349,29 +343,24 @@ bb.bu:                                            ; preds = %bb.bt
 
 lean_dec.exit81:                                  ; preds = %bb.bu, %bb.bt, %bb.bs, %lean_dec.exit
   %i.do = icmp eq i8 %i.di, 0
-  %i.dp = ptrtoint ptr %.173 to i64               ; 2 uses
+  %i.dp = ptrtoint ptr %.173 to i64               ; 3 uses
   %i.dq = and i64 %i.dp, 1
   %.not.i82 = icmp eq i64 %i.dq, 0                ; 2 uses
   br i1 %i.do, label %bb.au, label %bb.bv
 
 bb.bv:                                            ; preds = %lean_dec.exit81
-  br i1 %.not.i82, label %bb.bw, label %7
-
-7:                                                ; preds = %bb.bv
-  %8 = lshr i64 %i.dp, 1
-  %9 = trunc i64 %8 to i32
-  br label %.thread
+  br i1 %.not.i82, label %bb.bw, label %.thread
 
 bb.bw:                                            ; preds = %bb.bv
   %i.dr = getelementptr i8, ptr %.173, i64 4
   %.val.i143 = load i32, ptr %i.dr, align 4
-  %10 = lshr i32 %.val.i143, 24
-  br label %.thread
+  %.not = icmp ult i32 %.val.i143, 16777216
+  br i1 %.not, label %lean_dec.exit83.thread190, label %bb.ba
 
-.thread:                                          ; preds = %bb.bw, %7
-  %.0.i142 = phi i32 [ %9, %7 ], [ %10, %bb.bw ]
-  %.not.a = icmp eq i32 %.0.i142, 0
-  br i1 %.not.a, label %lean_dec.exit83.thread190, label %4
+.thread:                                          ; preds = %bb.bv
+  %4 = and i64 %i.dp, 8589934590
+  %.not.a = icmp eq i64 %4, 0
+  br i1 %.not.a, label %lean_dec.exit83.thread190, label %bb.az
 
 lean_dec.exit89:                                  ; preds = %lean_obj_tag.exit119, %lean_obj_tag.exit
   %i.ds = tail call ptr @l_Lean_Syntax_getTailPos_x3f(ptr noundef %i.g, i8 noundef zeroext %i.d) #4 ; 4 uses
@@ -401,7 +390,7 @@ bb.ca:                                            ; preds = %bb.bz
 lean_dec.exit83:                                  ; preds = %bb.at, %bb.as, %bb.ar, %lean_nat_eq.exit
   br i1 %.0.i111, label %.thread160, label %lean_dec.exit83.thread190
 
-lean_dec.exit83.thread190:                        ; preds = %.thread, %lean_dec.exit83, %bb.ay, %bb.ax, %bb.aw, %bb.au
+lean_dec.exit83.thread190:                        ; preds = %.thread, %bb.bw, %lean_dec.exit83, %bb.ay, %bb.ax, %bb.aw, %bb.au
   %i.dy = add i64 %.062194, 1                     ; 2 uses
   %i.dz = icmp eq i64 %i.dy, %3                   ; 2 uses
   %i.ea = zext i1 %i.dz to i8

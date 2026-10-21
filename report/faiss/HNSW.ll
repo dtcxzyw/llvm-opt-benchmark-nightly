@@ -205,8 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(25) %17, i8 0, i64 24, i1 false)
   %i.g = load ptr, ptr %7, align 8, !tbaa !46     ; 2 uses
-  %.not.i = icmp eq ptr %i.g, getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5faiss18VisitedTableVectorE, i64 16) ; 2 uses
-  %18 = select i1 %.not.i, ptr %7, ptr null       ; 2 uses
+  %.not.i = icmp eq ptr %i.g, getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5faiss18VisitedTableVectorE, i64 16)
   br i1 %.not.i, label %bb.b, label %.critedge.i
 
 bb.b:                                             ; preds = %bb.a
@@ -340,11 +339,11 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %i.az = getelementptr inbounds [8 x i8], ptr %i.al, i64 %.0.lcssa.i.i.i.i.i.i
   store i64 %.sroa.02.0.copyload.i.i.i.i.i, ptr %i.az, align 4
   %i.ba = sext i32 %3 to i64
-  %i.bb = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 2 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !152
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.ba ; 2 uses
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !66
-  %i.bf = getelementptr inbounds nuw i8, ptr %18, i64 32 ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
   %i.bg = load i8, ptr %i.bf, align 8, !tbaa !158 ; 2 uses
   %.not.i.i.i = icmp eq i8 %i.be, %i.bg
   br i1 %.not.i.i.i, label %_ZN5faiss18VisitedTableVector3setEm.exit.i.i.i, label %bb.h
@@ -747,8 +746,7 @@ bb.a:
   %i.f = alloca [4 x i32], align 16               ; 9 uses
   %i.g = alloca [4 x float], align 16             ; 8 uses
   %i.h = load ptr, ptr %6, align 8, !tbaa !46     ; 2 uses
-  %.not = icmp eq ptr %i.h, getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5faiss18VisitedTableVectorE, i64 16) ; 2 uses
-  %17 = select i1 %.not, ptr %6, ptr null         ; 2 uses
+  %.not = icmp eq ptr %i.h, getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5faiss18VisitedTableVectorE, i64 16)
   br i1 %.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
@@ -882,11 +880,11 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.ba = getelementptr inbounds [8 x i8], ptr %i.am, i64 %.0.lcssa.i.i.i.i.i
   store i64 %.sroa.02.0.copyload.i.i.i.i, ptr %i.ba, align 4
   %i.bb = sext i32 %3 to i64
-  %i.bc = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 3 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !152
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.bb ; 2 uses
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !66
-  %i.bg = getelementptr inbounds nuw i8, ptr %17, i64 32 ; 3 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 3 uses
   %i.bh = load i8, ptr %i.bg, align 8, !tbaa !158 ; 2 uses
   %.not.i.i = icmp eq i8 %i.bf, %i.bh
   br i1 %.not.i.i, label %_ZN5faiss18VisitedTableVector3setEm.exit.i.i, label %bb.h
@@ -1289,8 +1287,7 @@ bb.a:
   %i.f = alloca [4 x i64], align 16               ; 10 uses
   %i.g = alloca [4 x float], align 16             ; 7 uses
   %i.h = load ptr, ptr %4, align 8, !tbaa !46     ; 2 uses
-  %.not = icmp eq ptr %i.h, getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5faiss18VisitedTableVectorE, i64 16) ; 2 uses
-  %10 = select i1 %.not, ptr %4, ptr null         ; 2 uses
+  %.not = icmp eq ptr %i.h, getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5faiss18VisitedTableVectorE, i64 16)
   br i1 %.not, label %bb.b, label %_ZZN5faiss12_GLOBAL__N_131search_from_candidates_dispatchINS_4CMaxIflEEEEiRKNS_4HNSWERNS_16DistanceComputerERNS_22ResultHandlerUnorderedIflEERNS_12MinimaxHeapTINSt11conditionalIXsrT_6is_maxENS2_IfiEENS_4CMinIfiEEE4typeEEERNS_12VisitedTableERNS_9HNSWStatsEiiPKNS_16SearchParametersEENKUlTyRSE_E_clINS_18VisitedTableVectorEEEiST_.exit.thread
 
 bb.b:                                             ; preds = %bb.a
@@ -1426,8 +1423,8 @@ _ZN5faiss18VisitedTableVector3setEm.exit.us.i.i:  ; preds = %bb.i, %bb.h
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bs = sext i32 %6 to i64
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.by = getelementptr inbounds nuw i8, ptr %i.f, i64 24
@@ -1830,8 +1827,7 @@ bb.a:
   %i.f = alloca [4 x i64], align 16               ; 10 uses
   %i.g = alloca [4 x float], align 16             ; 7 uses
   %i.h = load ptr, ptr %4, align 8, !tbaa !46     ; 2 uses
-  %.not = icmp eq ptr %i.h, getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5faiss18VisitedTableVectorE, i64 16) ; 2 uses
-  %9 = select i1 %.not, ptr %4, ptr null          ; 2 uses
+  %.not = icmp eq ptr %i.h, getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5faiss18VisitedTableVectorE, i64 16)
   br i1 %.not, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
@@ -1966,8 +1962,8 @@ _ZN5faiss18VisitedTableVector3setEm.exit.us.i.i:  ; preds = %bb.i, %bb.h
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.bx = getelementptr inbounds nuw i8, ptr %i.f, i64 24

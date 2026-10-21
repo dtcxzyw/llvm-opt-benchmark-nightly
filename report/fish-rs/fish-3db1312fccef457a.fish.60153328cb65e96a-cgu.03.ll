@@ -205,13 +205,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNt
 bb.ep:                                            ; preds = %.loopexit308
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb)
   %i.ms = load ptr, ptr %i.be, align 8, !noundef !5
-  %i.mt = icmp eq ptr %i.ms, null                 ; 2 uses
-  %.sroa.8.0..sroa_idx.val276 = load i64, ptr %.sroa.8.0..sroa_idx, align 8 ; 2 uses
+  %i.mt = icmp eq ptr %i.ms, null
   %.sroa.12229.0..sroa_idx.val277 = load i64, ptr %.sroa.12229.0..sroa_idx, align 8
-  %.sroa.0.0.i122 = select i1 %i.mt, i64 %.sroa.8.0..sroa_idx.val276, i64 %.sroa.12229.0..sroa_idx.val277
   br i1 %i.mt, label %.thread, label %bb.er
 
 .thread:                                          ; preds = %bb.ep
+  %.sroa.8.0..sroa_idx.val276 = load i64, ptr %.sroa.8.0..sroa_idx, align 8
   %.not55259 = icmp eq i64 %.sroa.8.0..sroa_idx.val276, 0
   %.260 = zext i1 %.not55259 to i32
   br label %bb.fk
@@ -220,7 +219,7 @@ bb.eq:                                            ; preds = %bb.fd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai)
   %.pr = load ptr, ptr %i.be, align 8
-  %.not55 = icmp eq i64 %.sroa.0.0.i122, 0
+  %.not55 = icmp eq i64 %.sroa.12229.0..sroa_idx.val277, 0
   %. = zext i1 %.not55 to i32                     ; 2 uses
   %i.mu = icmp eq ptr %.pr, null
   br i1 %i.mu, label %bb.fk, label %bb.fl

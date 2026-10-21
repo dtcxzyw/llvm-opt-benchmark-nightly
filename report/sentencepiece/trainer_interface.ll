@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.lr.ph, %.critedge
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 32
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !54
   %i.ai = icmp slt i32 %i.ah, %storemerge1375     ; 2 uses
-  %.19.i.i.i = select i1 %i.ai, ptr %.0811.i.i.i, ptr %.012.i.i.i ; 6 uses
+  %.19.i.i.i = select i1 %i.ai, ptr %.0811.i.i.i, ptr %.012.i.i.i ; 5 uses
   %.1.in.v.i.i.i = select i1 %i.ai, i64 24, i64 16
   %.1.in.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 %.1.in.v.i.i.i
   %.1.i.i.i = load ptr, ptr %.1.in.i.i.i, align 8, !tbaa !248 ; 2 uses
@@ -217,7 +217,7 @@ _ZNKSt8_Rb_treeIiSt4pairIKiS0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIc
   br i1 %i.aj, label %_ZNKSt3mapIiSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13sentencepiece29ModelProto_SentencePiece_TypeEESt4lessIiESaIS0_IKiS9_EEE4findERSC_.exit.thread, label %_ZNKSt3mapIiSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13sentencepiece29ModelProto_SentencePiece_TypeEESt4lessIiESaIS0_IKiS9_EEE4findERSC_.exit
 
 _ZNKSt3mapIiSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13sentencepiece29ModelProto_SentencePiece_TypeEESt4lessIiESaIS0_IKiS9_EEE4findERSC_.exit: ; preds = %_ZNKSt8_Rb_treeIiSt4pairIKiS0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13sentencepiece29ModelProto_SentencePiece_TypeEEESt10_Select1stISB_ESt4lessIiESaISB_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISB_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i
-  %i.ak = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32
+  %i.ak = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32 ; 2 uses
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !54
   %i.am = icmp slt i32 %storemerge1375, %i.al
   br i1 %i.am, label %_ZNKSt3mapIiSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13sentencepiece29ModelProto_SentencePiece_TypeEESt4lessIiESaIS0_IKiS9_EEE4findERSC_.exit.thread, label %bb.k
@@ -284,7 +284,6 @@ bb.o:                                             ; preds = %.noexc, %bb.n
 
 _ZN13sentencepiece10ModelProto10add_piecesEv.exit: ; preds = %.noexc253, %bb.m
   %.0.i.i.i.i = phi ptr [ %i.av, %bb.m ], [ %i.be, %.noexc253 ] ; 5 uses
-  %67 = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32
   %i.bl = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 40
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i, i64 40 ; 4 uses
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !54
@@ -321,7 +320,7 @@ bb.q:                                             ; preds = %_ZN13sentencepiece2
   store float 0.000000e+00, ptr %i.cc, align 8, !tbaa !253
   %i.cd = load i32, ptr %i.z, align 8, !tbaa !117
   %i.ce = add nsw i32 %i.cd, -1
-  %i.cf = load i32, ptr %67, align 8, !tbaa !254
+  %i.cf = load i32, ptr %i.ak, align 8, !tbaa !254
   %i.cg = icmp eq i32 %i.ce, %i.cf
   br i1 %i.cg, label %bb.ah, label %bb.r
 

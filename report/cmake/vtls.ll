@@ -202,13 +202,12 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i8, ptr %i.a, align 1, !range !150
   %i.k = trunc nuw i8 %i.j to i1                  ; 2 uses
   %. = select i1 %i.k, i32 0, i32 81
-  %.037 = select i1 %.not, i32 %., i32 %i.i       ; 2 uses
+  %.037 = select i1 %.not, i32 %., i32 %i.i
   %i.l = select i1 %.not, i1 %i.k, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   br i1 %i.l, label %bb.c, label %bb.k
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1 = phi i32 [ %.037, %bb.b ], [ 0, %bb.a ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 168 ; 4 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !156  ; 4 uses
   %.not46 = icmp eq i64 %i.n, 0
@@ -259,7 +258,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.b, %bb.e, %bb.j, %bb.g
-  %.2 = phi i32 [ 0, %bb.e ], [ %i.v, %bb.j ], [ %.1, %bb.g ], [ %.037, %bb.b ]
+  %.2 = phi i32 [ 0, %bb.e ], [ %i.v, %bb.j ], [ 0, %bb.g ], [ %.037, %bb.b ]
   %i.z = load ptr, ptr %i.c, align 8, !tbaa !115
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 64
   store ptr %.sroa.0.0.copyload, ptr %i.aa, align 8, !tbaa !141

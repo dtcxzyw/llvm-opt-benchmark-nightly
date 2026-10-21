@@ -204,10 +204,9 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.u
   %i.el = trunc i64 %.0.copyload.i.i94 to i32
   %i.em = and i32 %i.el, 255                      ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !273)
-  %i.en = icmp samesign ult i32 %i.em, 10         ; 3 uses
+  %i.en = icmp samesign ult i32 %i.em, 10
   %i.eo = icmp samesign ult i32 %i.em, 100        ; 2 uses
-  %. = select i1 %i.eo, i64 2, i64 3              ; 4 uses
-  %.022.i.i = select i1 %i.en, i64 1, i64 %.      ; 3 uses
+  %.022.i.i = select i1 %i.eo, i64 2, i64 3       ; 4 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 12 uses
   store ptr %i.ep, ptr %22, align 8, !tbaa !161, !alias.scope !273
   br i1 %i.en, label %.thread404, label %bb.af
@@ -218,9 +217,9 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.u
   br label %bb.ag
 
 bb.af:                                            ; preds = %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2) %i.ep, i8 45, i64 %., i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2) %i.ep, i8 45, i64 %.022.i.i, i1 false)
   %i.er = getelementptr inbounds nuw i8, ptr %22, i64 8
-  store i64 %., ptr %i.er, align 8, !tbaa !162, !alias.scope !273
+  store i64 %.022.i.i, ptr %i.er, align 8, !tbaa !162, !alias.scope !273
   %..sroa.sel.v = select i1 %i.eo, i64 18, i64 19
   %..sroa.sel = getelementptr inbounds nuw i8, ptr %22, i64 %..sroa.sel.v
   store i8 0, ptr %..sroa.sel, align 1, !tbaa !20
@@ -252,6 +251,7 @@ bb.af:                                            ; preds = %_ZNSt8__detail14__t
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
 
 bb.ag:                                            ; preds = %.lr.ph.preheader.i.i, %.thread404
+  %35 = phi i64 [ %.022.i.i, %.lr.ph.preheader.i.i ], [ 1, %.thread404 ]
   %.sink = phi i8 [ %i.fb, %.lr.ph.preheader.i.i ], [ 0, %.thread404 ]
   %.0.lcssa.i.i.ph = phi i8 [ %i.ev, %.lr.ph.preheader.i.i ], [ %i.cj, %.thread404 ]
   %i.fj = getelementptr inbounds nuw i8, ptr %22, i64 17
@@ -260,11 +260,12 @@ bb.ag:                                            ; preds = %.lr.ph.preheader.i.
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i: ; preds = %bb.ag, %._crit_edge.i.i
+  %36 = phi i64 [ %35, %bb.ag ], [ %.022.i.i, %._crit_edge.i.i ] ; 5 uses
   %storemerge.i.i = phi i8 [ %i.fk, %bb.ag ], [ %i.fi, %._crit_edge.i.i ]
   store i8 %storemerge.i.i, ptr %i.ep, align 8, !tbaa !20
   %i.fl = getelementptr inbounds nuw i8, ptr %22, i64 8
-  %i.fm = or disjoint i64 %.022.i.i, 64           ; 5 uses
-  %i.fn = add nuw nsw i64 %.022.i.i, 65
+  %i.fm = or disjoint i64 %36, 64                 ; 5 uses
+  %i.fn = add nuw nsw i64 %36, 65
   %i.fo = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fn) #28
           to label %bb.ah unwind label %bb.dd     ; 4 uses
 
@@ -272,7 +273,8 @@ bb.ah:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.fo, ptr noundef nonnull align 1 dereferenceable(64) @.str.40, i64 64, i1 false)
   %.pre.i463 = load ptr, ptr %22, align 8, !tbaa !19 ; 4 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 64 ; 2 uses
-  br i1 %i.en, label %bb.ai, label %bb.aj
+  %cond31.i = icmp eq i64 %36, 1
+  br i1 %cond31.i, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
   %i.fq = load i8, ptr %.pre.i463, align 1, !tbaa !20
@@ -280,7 +282,7 @@ bb.ai:                                            ; preds = %bb.ah
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit27.i
 
 bb.aj:                                            ; preds = %bb.ah
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(2) %i.fp, ptr noundef nonnull align 1 dereferenceable(2) %.pre.i463, i64 %., i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fp, ptr align 1 %.pre.i463, i64 %36, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit27.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit27.i: ; preds = %bb.aj, %bb.ai
@@ -310,7 +312,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i unwind label %bb.de
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i29.i
-  %i.fx = add nuw nsw i64 %.022.i.i, 66           ; 2 uses
+  %i.fx = add nuw nsw i64 %36, 66                 ; 2 uses
   store i64 %i.fx, ptr %i.fw, align 8, !tbaa !162, !noalias !275
   %i.fy = load ptr, ptr %21, align 8, !tbaa !19, !noalias !275
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 %i.fx

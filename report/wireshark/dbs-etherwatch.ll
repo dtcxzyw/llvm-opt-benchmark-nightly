@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr i8, ptr %0, i64 2
   %i.g = load i8, ptr %i.f, align 1
-  %i.h = icmp eq i8 %i.g, 91                      ; 2 uses
-  %. = select i1 %i.h, i32 21, i32 1              ; 2 uses
+  %i.h = icmp eq i8 %i.g, 91
   br i1 %i.h, label %.lr.ph, label %.preheader42
 
 .lr.ph.1:                                         ; preds = %.lr.ph
@@ -317,13 +316,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.bj, label %.loopexit, label %.preheader42
 
 .preheader42:                                     ; preds = %.lr.ph.18, %bb.c
-  %3 = load ptr, ptr @g_ascii_table, align 8      ; 5 uses
-  %4 = zext nneg i32 %. to i64                    ; 5 uses
-  %5 = add nuw nsw i32 %., 5
-  %i.bk = getelementptr i8, ptr %0, i64 %4
+  %3 = phi i64 [ 1, %bb.c ], [ 21, %.lr.ph.18 ]   ; 6 uses
+  %4 = load ptr, ptr @g_ascii_table, align 8      ; 5 uses
+  %i.bk = getelementptr i8, ptr %0, i64 %3
   %i.bl = load i8, ptr %i.bk, align 1             ; 2 uses
   %i.bm = zext i8 %i.bl to i64
-  %i.bn = getelementptr [2 x i8], ptr %3, i64 %i.bm
+  %i.bn = getelementptr [2 x i8], ptr %4, i64 %i.bm
   %i.bo = load i16, ptr %i.bn, align 2
   %i.bp = zext i16 %i.bo to i32                   ; 2 uses
   %i.bq = and i32 %i.bp, 256
@@ -348,11 +346,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %.preheader42
   %.1 = phi i32 [ 0, %.preheader42 ], [ %i.bw, %bb.e ] ; 2 uses
-  %i.bx = getelementptr i8, ptr %0, i64 %4
+  %i.bx = getelementptr i8, ptr %0, i64 %3
   %i.by = getelementptr i8, ptr %i.bx, i64 1
   %i.bz = load i8, ptr %i.by, align 1             ; 2 uses
   %i.ca = zext i8 %i.bz to i64
-  %i.cb = getelementptr [2 x i8], ptr %3, i64 %i.ca
+  %i.cb = getelementptr [2 x i8], ptr %4, i64 %i.ca
   %i.cc = load i16, ptr %i.cb, align 2
   %i.cd = zext i16 %i.cc to i32                   ; 2 uses
   %i.ce = and i32 %i.cd, 256
@@ -373,11 +371,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.f
   %.1.1 = phi i32 [ %.1, %bb.f ], [ %i.cj, %bb.h ] ; 2 uses
-  %i.ck = getelementptr i8, ptr %0, i64 %4
+  %i.ck = getelementptr i8, ptr %0, i64 %3
   %i.cl = getelementptr i8, ptr %i.ck, i64 2
   %i.cm = load i8, ptr %i.cl, align 1             ; 2 uses
   %i.cn = zext i8 %i.cm to i64
-  %i.co = getelementptr [2 x i8], ptr %3, i64 %i.cn
+  %i.co = getelementptr [2 x i8], ptr %4, i64 %i.cn
   %i.cp = load i16, ptr %i.co, align 2
   %i.cq = zext i16 %i.cp to i32                   ; 2 uses
   %i.cr = and i32 %i.cq, 256
@@ -398,11 +396,11 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.i
   %.1.2 = phi i32 [ %.1.1, %bb.i ], [ %i.cw, %bb.k ] ; 2 uses
-  %i.cx = getelementptr i8, ptr %0, i64 %4
+  %i.cx = getelementptr i8, ptr %0, i64 %3
   %i.cy = getelementptr i8, ptr %i.cx, i64 3
   %i.cz = load i8, ptr %i.cy, align 1             ; 2 uses
   %i.da = zext i8 %i.cz to i64
-  %i.db = getelementptr [2 x i8], ptr %3, i64 %i.da
+  %i.db = getelementptr [2 x i8], ptr %4, i64 %i.da
   %i.dc = load i16, ptr %i.db, align 2
   %i.dd = zext i16 %i.dc to i32                   ; 2 uses
   %i.de = and i32 %i.dd, 256
@@ -423,11 +421,11 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.l
   %.1.3 = phi i32 [ %.1.2, %bb.l ], [ %i.dj, %bb.n ] ; 2 uses
-  %i.dk = getelementptr i8, ptr %0, i64 %4
+  %i.dk = getelementptr i8, ptr %0, i64 %3
   %i.dl = getelementptr i8, ptr %i.dk, i64 4
   %i.dm = load i8, ptr %i.dl, align 1             ; 2 uses
   %i.dn = zext i8 %i.dm to i64
-  %i.do = getelementptr [2 x i8], ptr %3, i64 %i.dn
+  %i.do = getelementptr [2 x i8], ptr %4, i64 %i.dn
   %i.dp = load i16, ptr %i.do, align 2
   %i.dq = zext i16 %i.dp to i32                   ; 2 uses
   %i.dr = and i32 %i.dq, 256
@@ -449,10 +447,15 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.o
   %.1.4 = phi i32 [ %.1.3, %bb.o ], [ %i.dw, %bb.q ]
   %.not = icmp eq i32 %.1.4, %2
-  br i1 %.not, label %.preheader, label %.loopexit
+  br i1 %.not, label %.preheader.preheader, label %.loopexit
 
-.preheader:                                       ; preds = %bb.r, %bb.s
-  %.236 = phi i32 [ %i.ea, %bb.s ], [ %5, %bb.r ] ; 3 uses
+.preheader.preheader:                             ; preds = %bb.r
+  %5 = trunc nuw nsw i64 %3 to i32
+  %6 = add nuw nsw i32 %5, 5
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %bb.s
+  %.236 = phi i32 [ %i.ea, %bb.s ], [ %6, %.preheader.preheader ] ; 3 uses
   %i.dx = sext i32 %.236 to i64
   %i.dy = getelementptr i8, ptr %0, i64 %i.dx
   %i.dz = load i8, ptr %i.dy, align 1

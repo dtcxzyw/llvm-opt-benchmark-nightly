@@ -205,17 +205,16 @@ bb.a:
   %i.n = alloca [4 x i8], align 4                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   store i32 35, ptr %i.n, align 4
-  %i.o = call noundef zeroext i1 @"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17hd671bd7262d5b917E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.n, i64 noundef 1) ; 3 uses
+  %i.o = call noundef zeroext i1 @"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17hd671bd7262d5b917E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.n, i64 noundef 1) ; 2 uses
   %i.p = add i64 %2, -1                           ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 4 uses
-  %.sroa.0.0.i = select i1 %i.o, ptr %i.q, ptr null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   br i1 %i.o, label %.preheader, label %"_ZN4core3str21_$LT$impl$u20$str$GT$10split_once17hda5393399a9b2fe1E.exit.thread"
 
 .preheader:                                       ; preds = %bb.a, %bb.e
   %i.r = phi i64 [ %i.ag, %bb.e ], [ 0, %bb.a ]   ; 4 uses
   %i.s = sub nuw i64 %i.p, %i.r                   ; 5 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 %i.r ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.r ; 2 uses
   %i.u = icmp ult i64 %i.s, 16
   br i1 %i.u, label %.preheader.i.i.i, label %bb.b
 
@@ -618,7 +617,7 @@ bb.q:                                             ; preds = %bb.o
           to label %bb.r unwind label %bb.cd
 
 bb.r:                                             ; preds = %bb.q
-  %i.dn = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !13202)
   call void @llvm.experimental.noalias.scope.decl(metadata !13203)
   %i.do = load i32, ptr %i.u, align 4, !range !16, !alias.scope !13202, !noundef !3 ; 3 uses
@@ -659,10 +658,9 @@ bb.u:                                             ; preds = %._crit_edge, %bb.v
 
 .sink.split.i:                                    ; preds = %bb.x, %bb.w
   %.sink.i.sroa.phi = phi ptr [ %.sink.i.sroa.gep, %bb.w ], [ %.sink.i.sroa.gep233, %bb.x ]
-  %.sink2.i = phi i64 [ 24, %bb.w ], [ 20, %bb.x ]
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 44
+  %.sink2.i = phi i64 [ 28, %bb.w ], [ 24, %bb.x ]
   %i.eb = load i32, ptr %.sink.i.sroa.phi, align 4, !alias.scope !13202, !noundef !3
-  %i.ec = getelementptr inbounds nuw i8, ptr %3, i64 %.sink2.i
+  %i.ec = getelementptr inbounds nuw i8, ptr %i.dn, i64 %.sink2.i
   store i32 %i.eb, ptr %i.ec, align 4, !alias.scope !13203
   br label %"_ZN4anki9scheduler9answering46_$LT$impl$u20$anki..collection..Collection$GT$22set_elapsed_secs_equal17hcf47531e09d811c5E.exit"
 

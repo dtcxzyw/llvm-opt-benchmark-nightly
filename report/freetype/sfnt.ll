@@ -205,8 +205,7 @@ bb.db:                                            ; preds = %bb.da
 
 bb.dc:                                            ; preds = %bb.db
   %.fr.i = freeze i16 %i.tb
-  %.not62.i = icmp eq i16 %.fr.i, 0               ; 2 uses
-  %8 = select i1 %.not62.i, i64 2, i64 4          ; 2 uses
+  %.not62.i = icmp eq i16 %.fr.i, 0
   %i.td = zext i16 %i.sv to i64                   ; 3 uses
   %i.te = call ptr @ft_mem_qrealloc(ptr noundef %7, i64 noundef 2, i64 noundef 0, i64 noundef %i.td, ptr noundef null, ptr noundef nonnull %i.f) #27 ; 2 uses
   store ptr %i.te, ptr %i.be, align 8, !tbaa !159
@@ -238,7 +237,7 @@ bb.de:                                            ; preds = %bb.di
   br i1 %exitcond103.not.i, label %get_x_mins.exit, label %.lr.ph.split.us.i, !llvm.loop !679
 
 bb.df:                                            ; preds = %.lr.ph.split.us.i
-  %i.tk = add i64 %.04289.us.i, %8
+  %i.tk = add i64 %.04289.us.i, 2
   %i.tl = call zeroext i16 @FT_Stream_ReadUShort(ptr noundef %i.ba, ptr noundef nonnull %i.f) #27
   %i.tm = load i32, ptr %i.f, align 4, !tbaa !30
   %.not66.us.i = icmp eq i32 %i.tm, 0
@@ -285,7 +284,7 @@ bb.dj:                                            ; preds = %bb.dn
   br i1 %.not64.i, label %bb.dk, label %get_x_mins.exit.thread
 
 bb.dk:                                            ; preds = %.lr.ph.split.i
-  %i.ua = add i64 %.04289.i, %8
+  %i.ua = add i64 %.04289.i, 4
   %i.ub = call i32 @FT_Stream_ReadULong(ptr noundef %i.ba, ptr noundef nonnull %i.f) #27
   %i.uc = load i32, ptr %i.f, align 4, !tbaa !30
   %.not67.i = icmp eq i32 %i.uc, 0

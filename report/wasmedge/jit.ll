@@ -202,11 +202,10 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15, !noalias !83
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !29, !noalias !83
-  %i.e = call ptr @LLVMOrcLLJITLookup(ptr noundef %i.d, ptr noundef nonnull %i.a, ptr noundef nonnull @.str) #15, !noalias !83 ; 3 uses
-  %.not.i = icmp eq ptr %i.e, null                ; 2 uses
+  %i.e = call ptr @LLVMOrcLLJITLookup(ptr noundef %i.d, ptr noundef nonnull %i.a, ptr noundef nonnull @.str) #15, !noalias !83 ; 2 uses
+  %.not.i = icmp eq ptr %i.e, null
   %i.f = load i64, ptr %i.a, align 8, !noalias !83
   %i.g = inttoptr i64 %i.f to ptr
-  %.sink.i = select i1 %.not.i, ptr %i.g, ptr %i.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15, !noalias !83
   br i1 %.not.i, label %bb.b, label %.thread
 
@@ -263,7 +262,7 @@ bb.f:                                             ; preds = %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.i, ptr %i.w, align 8, !tbaa !38, !alias.scope !84
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sink.i, ptr %i.x, align 8, !tbaa !90, !alias.scope !84
+  store ptr %i.g, ptr %i.x, align 8, !tbaa !90, !alias.scope !84
   br label %_ZN5cxx206detail21expected_storage_baseIPPA38_KPvN8WasmEdge4LLVM5ErrorELb1ELb0EED2Ev.exit
 
 _ZN5cxx206detail21expected_storage_baseIPPA38_KPvN8WasmEdge4LLVM5ErrorELb1ELb0EED2Ev.exit: ; preds = %bb.f, %.thread
@@ -328,11 +327,10 @@ bb.d:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %i.q = load ptr, ptr %5, align 8, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15, !noalias !104
   %i.r = load ptr, ptr %i.p, align 8, !tbaa !29, !noalias !104
-  %i.s = call ptr @LLVMOrcLLJITLookup(ptr noundef %i.r, ptr noundef nonnull %i.a, ptr noundef %i.q) #15, !noalias !104 ; 3 uses
-  %.not.i = icmp eq ptr %i.s, null                ; 2 uses
+  %i.s = call ptr @LLVMOrcLLJITLookup(ptr noundef %i.r, ptr noundef nonnull %i.a, ptr noundef %i.q) #15, !noalias !104 ; 2 uses
+  %.not.i = icmp eq ptr %i.s, null
   %i.t = load i64, ptr %i.a, align 8, !noalias !104
-  %i.u = inttoptr i64 %i.t to ptr
-  %.sink.i = select i1 %.not.i, ptr %i.u, ptr %i.s ; 2 uses
+  %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15, !noalias !104
   br i1 %.not.i, label %bb.e, label %bb.q
 
@@ -368,7 +366,7 @@ _ZNK8WasmEdge10Executable12createSymbolIFvPvS2_PKNS_7VariantIJjimlfdonDv2_mDv2_l
   %i.ad = load ptr, ptr %i.l, align 8, !tbaa !34, !noalias !106 ; 2 uses
   store ptr %i.ad, ptr %6, align 8, !tbaa !37, !alias.scope !105
   store ptr %i.v, ptr %i.m, align 8, !tbaa !38, !alias.scope !105
-  store ptr %.sink.i, ptr %i.n, align 8, !tbaa !51, !alias.scope !105
+  store ptr %i.u, ptr %i.n, align 8, !tbaa !51, !alias.scope !105
   %i.ae = load ptr, ptr %i.j, align 8, !tbaa !43  ; 6 uses
   %i.af = load ptr, ptr %i.c, align 8, !tbaa !44
   %.not.i.i = icmp eq ptr %i.ae, %i.af
@@ -383,7 +381,7 @@ bb.i:                                             ; preds = %_ZNK8WasmEdge10Exec
   store ptr %i.ah, ptr %i.ag, align 8, !tbaa !38
   store ptr null, ptr %6, align 8, !tbaa !37
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
-  store ptr %.sink.i, ptr %i.ai, align 8, !tbaa !51
+  store ptr %i.u, ptr %i.ai, align 8, !tbaa !51
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
   store ptr %i.aj, ptr %i.j, align 8, !tbaa !43
   br label %_ZNSt6vectorIN8WasmEdge6SymbolIFvPvS2_PKNS0_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEEPSF_EEESaISK_EE9push_backEOSK_.exit
@@ -549,11 +547,10 @@ bb.d:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %i.r = load ptr, ptr %6, align 8, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15, !noalias !121
   %i.s = load ptr, ptr %i.q, align 8, !tbaa !29, !noalias !121
-  %i.t = call ptr @LLVMOrcLLJITLookup(ptr noundef %i.s, ptr noundef nonnull %i.a, ptr noundef %i.r) #15, !noalias !121 ; 3 uses
-  %.not.i = icmp eq ptr %i.t, null                ; 2 uses
+  %i.t = call ptr @LLVMOrcLLJITLookup(ptr noundef %i.s, ptr noundef nonnull %i.a, ptr noundef %i.r) #15, !noalias !121 ; 2 uses
+  %.not.i = icmp eq ptr %i.t, null
   %i.u = load i64, ptr %i.a, align 8, !noalias !121
-  %i.v = inttoptr i64 %i.u to ptr
-  %.sink.i = select i1 %.not.i, ptr %i.v, ptr %i.t ; 2 uses
+  %i.v = inttoptr i64 %i.u to ptr                 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15, !noalias !121
   br i1 %.not.i, label %bb.e, label %bb.q
 
@@ -589,7 +586,7 @@ _ZNK8WasmEdge10Executable12createSymbolIvEENS_6SymbolIT_EEPS3_.exit: ; preds = %
   %i.ae = load ptr, ptr %i.l, align 8, !tbaa !34, !noalias !123 ; 2 uses
   store ptr %i.ae, ptr %7, align 8, !tbaa !37, !alias.scope !122
   store ptr %i.w, ptr %i.m, align 8, !tbaa !38, !alias.scope !122
-  store ptr %.sink.i, ptr %i.n, align 8, !tbaa !62, !alias.scope !122
+  store ptr %i.v, ptr %i.n, align 8, !tbaa !62, !alias.scope !122
   %i.af = load ptr, ptr %i.j, align 8, !tbaa !59  ; 6 uses
   %i.ag = load ptr, ptr %i.c, align 8, !tbaa !60
   %.not.i.i = icmp eq ptr %i.af, %i.ag
@@ -604,7 +601,7 @@ bb.i:                                             ; preds = %_ZNK8WasmEdge10Exec
   store ptr %i.ai, ptr %i.ah, align 8, !tbaa !38
   store ptr null, ptr %7, align 8, !tbaa !37
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 16
-  store ptr %.sink.i, ptr %i.aj, align 8, !tbaa !62
+  store ptr %i.v, ptr %i.aj, align 8, !tbaa !62
   %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   store ptr %i.ak, ptr %i.j, align 8, !tbaa !59
   br label %_ZNSt6vectorIN8WasmEdge6SymbolIvEESaIS2_EE9push_backEOS2_.exit

@@ -69,11 +69,10 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 3 uses
   %i.ae = load i32, ptr %i.ad, align 8, !tbaa !36
   %.fr8.i = freeze i32 %i.ae                      ; 4 uses
-  %.not.i = icmp eq i32 %.fr8.i, 0                ; 2 uses
+  %.not.i = icmp eq i32 %.fr8.i, 0
   %i.af = sitofp i32 %.fr8.i to double
   %i.ag = fdiv double 3.600000e+02, %i.af
   %i.ah = fptrunc double %i.ag to float
-  %5 = select i1 %.not.i, float 0.000000e+00, float %i.ah
   %i.ai = mul i32 %.fr8.i, %.fr8.i
   %i.aj = tail call noundef zeroext i1 @_Z9availableP8_IO_FILEPKviPKc(ptr noundef %0, ptr noundef nonnull %i.ad, i32 noundef %i.a, ptr noundef nonnull @.str.5)
   br i1 %i.aj, label %bb.b, label %_ZL7pr_cmapP8_IO_FILEiPKcPK10gmx_cmap_tb.exit
@@ -117,7 +116,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.us.i
 bb.d:                                             ; preds = %bb.c
   %i.ba = fpext float %.0421.us.i to double
   %i.bb = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.13, double noundef %i.ba) #5 ; 0 uses
-  %i.bc = fadd float %5, %.0421.us.i
+  %i.bc = fadd float %.0421.us.i, %i.ah
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c

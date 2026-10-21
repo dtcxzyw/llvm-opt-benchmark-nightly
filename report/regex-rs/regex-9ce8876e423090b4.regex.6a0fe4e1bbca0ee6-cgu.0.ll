@@ -202,7 +202,7 @@ bb.a:
   store i64 0, ptr %i.a, align 8, !dbg !12847
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !12847 ; 5 uses
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12847
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !12847 ; 6 uses
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !12847 ; 7 uses
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12847
     #dbg_declare(ptr poison, !12778, !DIExpression(DW_OP_LLVM_fragment, 96, 32), !12667)
     #dbg_value(ptr %i.a, !12782, !DIExpression(), !12668)
@@ -251,12 +251,15 @@ bb.b:                                             ; preds = %.noexc
   %i.r = or disjoint i8 %i.q, -16
   %i.s = or disjoint i8 %i.m, -32
   %i.t = or disjoint i8 %i.i, -64
-  %.pre15.i.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12851, !alias.scope !12826 ; 4 uses
-  br i1 %i.c, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.i.i.i.i, label %.split.i.i.i.i
+  br i1 %i.c, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.preheader.i.i.i.i, label %.split.i.i.i.i
 
-_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.i.i.i.i: ; preds = %bb.b, %.noexc4
-  %i.u = phi i64 [ %i.y, %.noexc4 ], [ %.pre15.i.i.i.i, %bb.b ], !dbg !12851 ; 3 uses
-  %.sroa.01.0.us.i.i.i.i = phi i64 [ %i.aa, %.noexc4 ], [ %i.b, %bb.b ], !dbg !12852 ; 2 uses
+_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.preheader.i.i.i.i: ; preds = %bb.b
+  %.pre15.i.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12851, !alias.scope !12826
+  br label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.i.i.i.i, !dbg !12852
+
+_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.i.i.i.i: ; preds = %.noexc4, %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.preheader.i.i.i.i
+  %i.u = phi i64 [ %i.y, %.noexc4 ], [ %.pre15.i.i.i.i, %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.preheader.i.i.i.i ], !dbg !12851 ; 3 uses
+  %.sroa.01.0.us.i.i.i.i = phi i64 [ %i.aa, %.noexc4 ], [ %i.b, %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.preheader.i.i.i.i ], !dbg !12853 ; 2 uses
     #dbg_value(i64 %.sroa.01.0.us.i.i.i.i, !12816, !DIExpression(), !12691)
     #dbg_value(i32 %2, !12817, !DIExpression(), !12709)
     #dbg_value(ptr poison, !12838, !DIExpression(DW_OP_deref), !12710)
@@ -272,18 +275,18 @@ _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
     #dbg_value(i32 %2, !3889, !DIExpression(), !12715)
     #dbg_value(i64 %i.u, !3890, !DIExpression(), !12719)
     #dbg_value(i64 %i.u, !3896, !DIExpression(), !12721)
-  %i.v = icmp sgt i64 %i.u, -1, !dbg !12853
-  call void @llvm.assume(i1 %i.v), !dbg !12854
+  %i.v = icmp sgt i64 %i.u, -1, !dbg !12854
+  call void @llvm.assume(i1 %i.v), !dbg !12855
     #dbg_value(i64 1, !3891, !DIExpression(), !12722)
     #dbg_value(i64 1, !3894, !DIExpression(), !12718)
   invoke void @_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCs96z5GJ9HwjO_5regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 1)
-          to label %.noexc4 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12855
+          to label %.noexc4 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12856
 
 .noexc4:                                          ; preds = %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.i.i.i.i
     #dbg_value(ptr %i.a, !3901, !DIExpression(), !12724)
-  %i.w = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12856, !alias.scope !12826, !nonnull !1140, !noundef !1140
+  %i.w = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12857, !alias.scope !12826, !nonnull !1140, !noundef !1140
     #dbg_value(ptr %i.w, !3899, !DIExpression(), !12721)
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.u, !dbg !12857
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.u, !dbg !12858
     #dbg_value(i32 %2, !3918, !DIExpression(), !12729)
     #dbg_value(ptr %i.x, !3923, !DIExpression(), !12729)
     #dbg_value(ptr %i.x, !3930, !DIExpression(), !12731)
@@ -299,22 +302,23 @@ _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
     #dbg_value(i64 2, !3931, !DIExpression(), !12739)
     #dbg_value(i64 3, !3931, !DIExpression(), !12741)
     #dbg_value(i64 1, !3924, !DIExpression(), !12742)
-  store i8 %i.e, ptr %i.x, align 1, !dbg !12858
+  store i8 %i.e, ptr %i.x, align 1, !dbg !12859
     #dbg_value(ptr %i.a, !3933, !DIExpression(), !12744)
-  %i.y = add nuw i64 %i.u, 1, !dbg !12859         ; 2 uses
+  %i.y = add nuw i64 %i.u, 1, !dbg !12860         ; 2 uses
     #dbg_value(i64 %i.y, !3937, !DIExpression(), !12745)
-  store i64 %i.y, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12860, !alias.scope !12826
-  %i.z = icmp eq i64 %.sroa.01.0.us.i.i.i.i, 0, !dbg !12861
-  %i.aa = add i64 %.sroa.01.0.us.i.i.i.i, -1, !dbg !12861
-  br i1 %i.z, label %_RINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB6_6StringINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendcE6extendINtNtNtBS_8adapters4take4TakeINtNtNtBS_7sources6repeat6RepeatcEEECs96z5GJ9HwjO_5regex.exit, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.i.i.i.i, !dbg !12862
+  store i64 %i.y, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12861, !alias.scope !12826
+  %i.z = icmp eq i64 %.sroa.01.0.us.i.i.i.i, 0, !dbg !12862
+  %i.aa = add i64 %.sroa.01.0.us.i.i.i.i, -1, !dbg !12862
+  br i1 %i.z, label %_RINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB6_6StringINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendcE6extendINtNtNtBS_8adapters4take4TakeINtNtNtBS_7sources6repeat6RepeatcEEECs96z5GJ9HwjO_5regex.exit, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.i.i.i.i, !dbg !12852
 
 .split.i.i.i.i:                                   ; preds = %bb.b
   %i.ab = icmp samesign ult i32 %2, 2048
+  %.pre14.i.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12851, !alias.scope !12826 ; 3 uses
   br i1 %i.ab, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us4.i.i.i.i, label %.split.split.i.i.i.i
 
 _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us4.i.i.i.i: ; preds = %.split.i.i.i.i, %.noexc5
-  %i.ac = phi i64 [ %i.ah, %.noexc5 ], [ %.pre15.i.i.i.i, %.split.i.i.i.i ], !dbg !12851 ; 3 uses
-  %.sroa.01.0.us3.i.i.i.i = phi i64 [ %i.aj, %.noexc5 ], [ %i.b, %.split.i.i.i.i ], !dbg !12852 ; 2 uses
+  %i.ac = phi i64 [ %i.ah, %.noexc5 ], [ %.pre14.i.i.i.i, %.split.i.i.i.i ], !dbg !12851 ; 3 uses
+  %.sroa.01.0.us3.i.i.i.i = phi i64 [ %i.aj, %.noexc5 ], [ %i.b, %.split.i.i.i.i ], !dbg !12853 ; 2 uses
     #dbg_value(i64 %.sroa.01.0.us3.i.i.i.i, !12816, !DIExpression(), !12691)
     #dbg_value(i32 %2, !12817, !DIExpression(), !12709)
     #dbg_value(ptr poison, !12838, !DIExpression(DW_OP_deref), !12710)
@@ -330,18 +334,18 @@ _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
     #dbg_value(i32 %2, !3889, !DIExpression(), !12715)
     #dbg_value(i64 %i.ac, !3890, !DIExpression(), !12719)
     #dbg_value(i64 %i.ac, !3896, !DIExpression(), !12721)
-  %i.ad = icmp sgt i64 %i.ac, -1, !dbg !12853
-  call void @llvm.assume(i1 %i.ad), !dbg !12854
+  %i.ad = icmp sgt i64 %i.ac, -1, !dbg !12854
+  call void @llvm.assume(i1 %i.ad), !dbg !12855
     #dbg_value(i64 poison, !3891, !DIExpression(), !12722)
     #dbg_value(i64 poison, !3894, !DIExpression(), !12718)
   invoke void @_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCs96z5GJ9HwjO_5regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 2)
-          to label %.noexc5 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12855
+          to label %.noexc5 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12856
 
 .noexc5:                                          ; preds = %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us4.i.i.i.i
     #dbg_value(ptr %i.a, !3901, !DIExpression(), !12724)
-  %i.ae = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12856, !alias.scope !12826, !nonnull !1140, !noundef !1140
+  %i.ae = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12857, !alias.scope !12826, !nonnull !1140, !noundef !1140
     #dbg_value(ptr %i.ae, !3899, !DIExpression(), !12721)
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ac, !dbg !12857 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ac, !dbg !12858 ; 2 uses
     #dbg_value(i32 %2, !3918, !DIExpression(), !12729)
     #dbg_value(ptr %i.af, !3923, !DIExpression(), !12729)
     #dbg_value(ptr %i.af, !3930, !DIExpression(), !12731)
@@ -365,19 +369,19 @@ _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 1, !dbg !12864
   store i8 %i.g, ptr %i.ag, align 1, !dbg !12865
     #dbg_value(ptr %i.a, !3933, !DIExpression(), !12744)
-  %i.ah = add nuw i64 %i.ac, 2, !dbg !12859       ; 2 uses
+  %i.ah = add nuw i64 %i.ac, 2, !dbg !12860       ; 2 uses
     #dbg_value(i64 %i.ah, !3937, !DIExpression(), !12745)
-  store i64 %i.ah, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12860, !alias.scope !12826
-  %i.ai = icmp eq i64 %.sroa.01.0.us3.i.i.i.i, 0, !dbg !12861
-  %i.aj = add i64 %.sroa.01.0.us3.i.i.i.i, -1, !dbg !12861
-  br i1 %i.ai, label %_RINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB6_6StringINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendcE6extendINtNtNtBS_8adapters4take4TakeINtNtNtBS_7sources6repeat6RepeatcEEECs96z5GJ9HwjO_5regex.exit, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us4.i.i.i.i, !dbg !12862
+  store i64 %i.ah, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12861, !alias.scope !12826
+  %i.ai = icmp eq i64 %.sroa.01.0.us3.i.i.i.i, 0, !dbg !12862
+  %i.aj = add i64 %.sroa.01.0.us3.i.i.i.i, -1, !dbg !12862
+  br i1 %i.ai, label %_RINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB6_6StringINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendcE6extendINtNtNtBS_8adapters4take4TakeINtNtNtBS_7sources6repeat6RepeatcEEECs96z5GJ9HwjO_5regex.exit, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us4.i.i.i.i, !dbg !12852
 
 .split.split.i.i.i.i:                             ; preds = %.split.i.i.i.i
   br i1 %i.d, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us7.i.i.i.i, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.i.i.i.i
 
 _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us7.i.i.i.i: ; preds = %.split.split.i.i.i.i, %.noexc6
-  %i.ak = phi i64 [ %i.aq, %.noexc6 ], [ %.pre15.i.i.i.i, %.split.split.i.i.i.i ], !dbg !12851 ; 3 uses
-  %.sroa.01.0.us6.i.i.i.i = phi i64 [ %i.as, %.noexc6 ], [ %i.b, %.split.split.i.i.i.i ], !dbg !12852 ; 2 uses
+  %i.ak = phi i64 [ %i.aq, %.noexc6 ], [ %.pre14.i.i.i.i, %.split.split.i.i.i.i ], !dbg !12851 ; 3 uses
+  %.sroa.01.0.us6.i.i.i.i = phi i64 [ %i.as, %.noexc6 ], [ %i.b, %.split.split.i.i.i.i ], !dbg !12853 ; 2 uses
     #dbg_value(i64 %.sroa.01.0.us6.i.i.i.i, !12816, !DIExpression(), !12691)
     #dbg_value(i32 %2, !12817, !DIExpression(), !12709)
     #dbg_value(ptr poison, !12838, !DIExpression(DW_OP_deref), !12710)
@@ -393,18 +397,18 @@ _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
     #dbg_value(i32 %2, !3889, !DIExpression(), !12715)
     #dbg_value(i64 %i.ak, !3890, !DIExpression(), !12719)
     #dbg_value(i64 %i.ak, !3896, !DIExpression(), !12721)
-  %i.al = icmp sgt i64 %i.ak, -1, !dbg !12853
-  call void @llvm.assume(i1 %i.al), !dbg !12854
+  %i.al = icmp sgt i64 %i.ak, -1, !dbg !12854
+  call void @llvm.assume(i1 %i.al), !dbg !12855
     #dbg_value(i64 poison, !3891, !DIExpression(), !12722)
     #dbg_value(i64 poison, !3894, !DIExpression(), !12718)
   invoke void @_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCs96z5GJ9HwjO_5regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 3)
-          to label %.noexc6 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12855
+          to label %.noexc6 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12856
 
 .noexc6:                                          ; preds = %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us7.i.i.i.i
     #dbg_value(ptr %i.a, !3901, !DIExpression(), !12724)
-  %i.am = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12856, !alias.scope !12826, !nonnull !1140, !noundef !1140
+  %i.am = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12857, !alias.scope !12826, !nonnull !1140, !noundef !1140
     #dbg_value(ptr %i.am, !3899, !DIExpression(), !12721)
-  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ak, !dbg !12857 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ak, !dbg !12858 ; 3 uses
     #dbg_value(i32 %2, !3918, !DIExpression(), !12729)
     #dbg_value(ptr %i.an, !3923, !DIExpression(), !12729)
     #dbg_value(ptr %i.an, !3930, !DIExpression(), !12731)
@@ -430,16 +434,16 @@ _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 2, !dbg !12869
   store i8 %i.g, ptr %i.ap, align 1, !dbg !12870
     #dbg_value(ptr %i.a, !3933, !DIExpression(), !12744)
-  %i.aq = add nuw i64 %i.ak, 3, !dbg !12859       ; 2 uses
+  %i.aq = add nuw i64 %i.ak, 3, !dbg !12860       ; 2 uses
     #dbg_value(i64 %i.aq, !3937, !DIExpression(), !12745)
-  store i64 %i.aq, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12860, !alias.scope !12826
-  %i.ar = icmp eq i64 %.sroa.01.0.us6.i.i.i.i, 0, !dbg !12861
-  %i.as = add i64 %.sroa.01.0.us6.i.i.i.i, -1, !dbg !12861
-  br i1 %i.ar, label %_RINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB6_6StringINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendcE6extendINtNtNtBS_8adapters4take4TakeINtNtNtBS_7sources6repeat6RepeatcEEECs96z5GJ9HwjO_5regex.exit, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us7.i.i.i.i, !dbg !12862
+  store i64 %i.aq, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12861, !alias.scope !12826
+  %i.ar = icmp eq i64 %.sroa.01.0.us6.i.i.i.i, 0, !dbg !12862
+  %i.as = add i64 %.sroa.01.0.us6.i.i.i.i, -1, !dbg !12862
+  br i1 %i.ar, label %_RINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB6_6StringINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendcE6extendINtNtNtBS_8adapters4take4TakeINtNtNtBS_7sources6repeat6RepeatcEEECs96z5GJ9HwjO_5regex.exit, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us7.i.i.i.i, !dbg !12852
 
 _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.i.i.i.i: ; preds = %.split.split.i.i.i.i, %.noexc7
-  %i.at = phi i64 [ %i.ba, %.noexc7 ], [ %.pre15.i.i.i.i, %.split.split.i.i.i.i ], !dbg !12851 ; 3 uses
-  %.sroa.01.0.i.i.i.i = phi i64 [ %i.bc, %.noexc7 ], [ %i.b, %.split.split.i.i.i.i ], !dbg !12852 ; 2 uses
+  %i.at = phi i64 [ %i.ba, %.noexc7 ], [ %.pre14.i.i.i.i, %.split.split.i.i.i.i ], !dbg !12851 ; 3 uses
+  %.sroa.01.0.i.i.i.i = phi i64 [ %i.bc, %.noexc7 ], [ %i.b, %.split.split.i.i.i.i ], !dbg !12853 ; 2 uses
     #dbg_value(i64 %.sroa.01.0.i.i.i.i, !12816, !DIExpression(), !12691)
     #dbg_value(i32 %2, !12817, !DIExpression(), !12709)
     #dbg_value(ptr poison, !12838, !DIExpression(DW_OP_deref), !12710)
@@ -455,18 +459,18 @@ _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
     #dbg_value(i32 %2, !3889, !DIExpression(), !12715)
     #dbg_value(i64 %i.at, !3890, !DIExpression(), !12719)
     #dbg_value(i64 %i.at, !3896, !DIExpression(), !12721)
-  %i.au = icmp sgt i64 %i.at, -1, !dbg !12853
-  call void @llvm.assume(i1 %i.au), !dbg !12854
+  %i.au = icmp sgt i64 %i.at, -1, !dbg !12854
+  call void @llvm.assume(i1 %i.au), !dbg !12855
     #dbg_value(i64 poison, !3891, !DIExpression(), !12722)
     #dbg_value(i64 poison, !3894, !DIExpression(), !12718)
   invoke void @_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCs96z5GJ9HwjO_5regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 4)
-          to label %.noexc7 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12855
+          to label %.noexc7 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12856
 
 .noexc7:                                          ; preds = %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.i.i.i.i
     #dbg_value(ptr %i.a, !3901, !DIExpression(), !12724)
-  %i.av = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12856, !alias.scope !12826, !nonnull !1140, !noundef !1140
+  %i.av = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !12857, !alias.scope !12826, !nonnull !1140, !noundef !1140
     #dbg_value(ptr %i.av, !3899, !DIExpression(), !12721)
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.at, !dbg !12857 ; 4 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.at, !dbg !12858 ; 4 uses
     #dbg_value(i32 %2, !3918, !DIExpression(), !12729)
     #dbg_value(ptr %i.aw, !3923, !DIExpression(), !12729)
     #dbg_value(ptr %i.aw, !3930, !DIExpression(), !12731)
@@ -494,12 +498,12 @@ _RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8Spec
   %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 3, !dbg !12876
   store i8 %i.g, ptr %i.az, align 1, !dbg !12877
     #dbg_value(ptr %i.a, !3933, !DIExpression(), !12744)
-  %i.ba = add nuw i64 %i.at, 4, !dbg !12859       ; 2 uses
+  %i.ba = add nuw i64 %i.at, 4, !dbg !12860       ; 2 uses
     #dbg_value(i64 %i.ba, !3937, !DIExpression(), !12745)
-  store i64 %i.ba, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12860, !alias.scope !12826
-  %i.bb = icmp eq i64 %.sroa.01.0.i.i.i.i, 0, !dbg !12861
-  %i.bc = add i64 %.sroa.01.0.i.i.i.i, -1, !dbg !12861
-  br i1 %i.bb, label %_RINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB6_6StringINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendcE6extendINtNtNtBS_8adapters4take4TakeINtNtNtBS_7sources6repeat6RepeatcEEECs96z5GJ9HwjO_5regex.exit, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.i.i.i.i, !dbg !12862
+  store i64 %i.ba, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !12861, !alias.scope !12826
+  %i.bb = icmp eq i64 %.sroa.01.0.i.i.i.i, 0, !dbg !12862
+  %i.bc = add i64 %.sroa.01.0.i.i.i.i, -1, !dbg !12862
+  br i1 %i.bb, label %_RINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB6_6StringINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendcE6extendINtNtNtBS_8adapters4take4TakeINtNtNtBS_7sources6repeat6RepeatcEEECs96z5GJ9HwjO_5regex.exit, label %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.i.i.i.i, !dbg !12852
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us7.i.i.i.i, %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us4.i.i.i.i, %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.us.i.i.i.i, %_RNCINvNvXs7_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkcNCINvXsd_NtCs4wP2HXfJTCR_5alloc6stringNtB1O_6StringINtNtNtBe_6traits7collect6ExtendcE6extendIBT_INtNtNtBe_7sources6repeat6RepeatcEEE0E0Cs96z5GJ9HwjO_5regex.exit.i.i.i.i, %bb.a
   %lpad.loopexit.split-lp53 = landingpad { ptr, i32 }
@@ -902,17 +906,17 @@ begin_hunk_1_@llvm.umax.i64
 !12849 = !DILocation(line: 300, column: 12, scope: !12678, inlinedAt: !12680)
 !12850 = !DILocation(line: 301, column: 32, scope: !12678, inlinedAt: !12680)
 !12851 = !DILocation(line: 3101, column: 19, scope: !789, inlinedAt: !12708)
-!12852 = !DILocation(line: 0, scope: !12688, inlinedAt: !12689)
-!12853 = !DILocation(line: 3106, column: 37, scope: !789, inlinedAt: !12708)
-!12854 = !DILocation(line: 3106, column: 18, scope: !789, inlinedAt: !12708)
-!12855 = !DILocation(line: 1236, column: 18, scope: !794, inlinedAt: !12717)
-!12856 = !DILocation(line: 611, column: 9, scope: !797, inlinedAt: !12727)
-!12857 = !DILocation(line: 970, column: 18, scope: !795, inlinedAt: !12720)
-!12858 = !DILocation(line: 2558, column: 13, scope: !804, inlinedAt: !12728)
-!12859 = !DILocation(line: 1440, column: 30, scope: !791, inlinedAt: !12706)
-!12860 = !DILocation(line: 2224, column: 9, scope: !807, inlinedAt: !12743)
-!12861 = !DILocation(line: 1092, column: 16, scope: !12711, inlinedAt: !12712)
-!12862 = !DILocation(line: 2490, column: 21, scope: !12686, inlinedAt: !12689)
+!12852 = !DILocation(line: 2490, column: 21, scope: !12686, inlinedAt: !12689)
+!12853 = !DILocation(line: 0, scope: !12688, inlinedAt: !12689)
+!12854 = !DILocation(line: 3106, column: 37, scope: !789, inlinedAt: !12708)
+!12855 = !DILocation(line: 3106, column: 18, scope: !789, inlinedAt: !12708)
+!12856 = !DILocation(line: 1236, column: 18, scope: !794, inlinedAt: !12717)
+!12857 = !DILocation(line: 611, column: 9, scope: !797, inlinedAt: !12727)
+!12858 = !DILocation(line: 970, column: 18, scope: !795, inlinedAt: !12720)
+!12859 = !DILocation(line: 2558, column: 13, scope: !804, inlinedAt: !12728)
+!12860 = !DILocation(line: 1440, column: 30, scope: !791, inlinedAt: !12706)
+!12861 = !DILocation(line: 2224, column: 9, scope: !807, inlinedAt: !12743)
+!12862 = !DILocation(line: 1092, column: 16, scope: !12711, inlinedAt: !12712)
 !12863 = !DILocation(line: 2568, column: 13, scope: !800, inlinedAt: !12728)
 !12864 = !DILocation(line: 970, column: 18, scope: !806, inlinedAt: !12730)
 !12865 = !DILocation(line: 2569, column: 13, scope: !800, inlinedAt: !12728)

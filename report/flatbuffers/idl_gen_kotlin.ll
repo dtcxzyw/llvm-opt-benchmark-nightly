@@ -204,18 +204,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit95: ; preds = %_ZN
 
 ._crit_edge.i.i96:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit95
   store i8 92, ptr %i.ax, align 8, !tbaa !25
+  %.pre = load i64, ptr %i.a, align 8, !tbaa !52
   br label %bb.n
 
 bb.m:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit95
   %i.gg = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %9, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.gg, ptr %9, align 8, !tbaa !24
-  %i.gh = load i64, ptr %i.a, align 8, !tbaa !52
+  %i.gh = load i64, ptr %i.a, align 8, !tbaa !52  ; 2 uses
   store i64 %i.gh, ptr %i.ax, align 8, !tbaa !25
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %i.gg, ptr noundef nonnull align 1 dereferenceable(23) @.str.246, i64 23, i1 false)
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %._crit_edge.i.i96
-  %17 = load i64, ptr %i.a, align 8, !tbaa !52    ; 2 uses
+  %17 = phi i64 [ %i.gh, %bb.m ], [ %.pre, %._crit_edge.i.i96 ] ; 2 uses
   store i64 %17, ptr %i.ay, align 8, !tbaa !34
   %i.gi = load ptr, ptr %9, align 8, !tbaa !24
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 %17

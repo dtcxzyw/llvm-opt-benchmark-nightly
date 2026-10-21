@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.a = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %2, i1 true)
   %narrow = sub nuw nsw i64 64, %i.a              ; 5 uses
-  %i.b = icmp ult i64 %2, 4294967296              ; 3 uses
+  %i.b = icmp ult i64 %2, 4294967296              ; 2 uses
   %i.c = select i1 %i.b, i32 4, i32 8             ; 2 uses
   %i.d = shl nsw i64 -1, %narrow                  ; 3 uses
   %i.e = xor i64 %i.d, -1                         ; 2 uses
@@ -213,7 +213,6 @@ bb.c:                                             ; preds = %bb.b
   %i.h = zext nneg i32 %i.g to i64
   %i.i = shl nsw i64 -1, %i.h
   %i.j = xor i64 %i.i, -1
-  %4 = select i1 %i.b, i64 %i.j, i64 -1           ; 2 uses
   br i1 %i.b, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.c, %bb.e
@@ -233,7 +232,7 @@ bb.d:                                             ; preds = %.split.us
 
 bb.e:                                             ; preds = %bb.d, %.split.us
   %.128.us = phi i64 [ %i.n, %bb.d ], [ %.027.us, %.split.us ] ; 2 uses
-  %.1.us = phi i64 [ %4, %bb.d ], [ %.0.us, %.split.us ]
+  %.1.us = phi i64 [ %i.j, %bb.d ], [ %.0.us, %.split.us ]
   %i.o = lshr i64 %.128.us, %narrow
   %i.p = lshr i64 %.1.us, %narrow
   %i.q = and i64 %.128.us, %i.e                   ; 2 uses
@@ -256,7 +255,7 @@ bb.f:                                             ; preds = %.split
 
 bb.g:                                             ; preds = %bb.f, %.split
   %.128 = phi i64 [ %i.u, %bb.f ], [ %.027, %.split ] ; 2 uses
-  %.1 = phi i64 [ %4, %bb.f ], [ %.0, %.split ]
+  %.1 = phi i64 [ -1, %bb.f ], [ %.0, %.split ]
   %i.v = lshr i64 %.128, %narrow
   %i.w = lshr i64 %.1, %narrow
   %i.x = and i64 %.128, %i.e                      ; 2 uses

@@ -95,7 +95,7 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.t
 
 bb.j:                                             ; preds = %bb.i
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 5 ; 3 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 5 ; 2 uses
   store i8 2, ptr %i.m, align 1, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
@@ -104,9 +104,8 @@ bb.j:                                             ; preds = %bb.i
   %i.ae = trunc i64 %i.v to i32
   %i.af = call i64 @ZS_HUF_writeCTable(ptr noundef nonnull %i.ac, i64 noundef %gepdiff178, ptr noundef nonnull %i.a, i32 noundef %i.ad, i32 noundef %i.ae) #5 ; 3 uses
   %i.ag = call i32 @ZS_HUF_isError(i64 noundef %i.af) #5
-  %.not154 = icmp eq i32 %i.ag, 0                 ; 2 uses
+  %.not154 = icmp eq i32 %i.ag, 0
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.af ; 3 uses
-  %.1131 = select i1 %.not154, ptr %i.ah, ptr %i.ac
   br i1 %.not154, label %bb.k, label %bb.t
 
 bb.k:                                             ; preds = %bb.j
@@ -242,7 +241,7 @@ bb.s:                                             ; preds = %._crit_edge
   %i.cj = sub i64 %i.cg, %i.ai
   %i.ck = trunc i64 %i.cj to i32
   %i.cl = add i32 %i.ck, -4
-  store i32 %i.cl, ptr %.1131, align 1
+  store i32 %i.cl, ptr %i.ah, align 1
   %i.cm = zext nneg i32 %.0141.lcssa to i64       ; 3 uses
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.cm
   %i.co = load i32, ptr %i.cn, align 4

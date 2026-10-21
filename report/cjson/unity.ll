@@ -204,8 +204,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   unreachable
 
 .split.us:                                        ; preds = %bb.f
-  %.not46 = icmp eq i32 %5, 1                     ; 2 uses
-  %spec.select = select i1 %.not46, ptr null, ptr %0 ; 2 uses
+  %.not46 = icmp eq i32 %5, 1
   %wide.trip.count125 = zext i32 %2 to i64        ; 2 uses
   br i1 %.not46, label %.split.us.split.us, label %.split.us.split.split
 
@@ -276,7 +275,7 @@ bb.h:                                             ; preds = %.split.us.split.us
   br i1 %exitcond.not, label %.loopexit56, label %.split.us.split.split
 
 .thread:                                          ; preds = %.split.us.split.split, %.critedge.us, %bb.h, %.critedge.us.us
-  %.267 = phi ptr [ %spec.select, %.critedge.us ], [ %i.o, %.critedge.us.us ], [ %i.o, %bb.h ], [ %spec.select, %.split.us.split.split ]
+  %.267 = phi ptr [ %0, %.critedge.us ], [ %i.o, %.critedge.us.us ], [ %i.o, %bb.h ], [ %0, %.split.us.split.split ]
   %i.af = phi i64 [ %indvars.iv, %.critedge.us ], [ %indvars.iv122, %.critedge.us.us ], [ %indvars.iv122, %bb.h ], [ %indvars.iv, %.split.us.split.split ]
   %i.ag = phi ptr [ %i.y, %.critedge.us ], [ %i.m, %.critedge.us.us ], [ %i.m, %bb.h ], [ null, %.split.us.split.split ]
   store i64 1, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19

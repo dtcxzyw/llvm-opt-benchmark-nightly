@@ -205,7 +205,7 @@ bb.ob:                                            ; preds = %.loopexit
   %i.awt = load i32, ptr %i.aji, align 1, !tbaa !39
   %i.awu = getelementptr inbounds nuw i8, ptr %2, i64 164 ; 4 uses
   %i.awv = load i32, ptr %i.awu, align 4, !tbaa !39 ; 3 uses
-  %i.aww = sub i32 %i.awt, %i.awv                 ; 5 uses
+  %i.aww = sub i32 %i.awt, %i.awv                 ; 4 uses
   %i.awx = getelementptr inbounds nuw i8, ptr %2, i64 92
   %i.awy = load i32, ptr %i.awx, align 4, !tbaa !96
   %i.awz = icmp ult i32 %i.aww, %i.awy
@@ -239,7 +239,7 @@ bb.od:                                            ; preds = %bb.oc
 cli_rawaddr.exit2929:                             ; preds = %bb.od
   %i.axq = load i32, ptr %i.km, align 8, !tbaa !31
   %i.axr = icmp uge i32 %i.aww, %i.axq
-  %i.axs = zext i32 %i.aww to i64
+  %i.axs = zext i32 %i.aww to i64                 ; 2 uses
   %.not36.i2926 = icmp ule i64 %i.ae, %i.axs
   %narrow3151 = select i1 %i.axr, i1 true, i1 %.not36.i2926 ; 2 uses
   %.sink.i2924 = zext i1 %narrow3151 to i32
@@ -327,10 +327,9 @@ bb.op:                                            ; preds = %bb.oo
   br label %.thread2995
 
 bb.oq:                                            ; preds = %bb.oo
-  %3 = zext i32 %i.aww to i64
   %i.ayx = getelementptr inbounds nuw i8, ptr %i.ac, i64 104 ; 2 uses
   %i.ayy = load ptr, ptr %i.ayx, align 8, !tbaa !38
-  %i.ayz = call ptr %i.ayy(ptr noundef %i.ac, i64 noundef range(i64 0, 8589934855) %3, i64 noundef %i.ayv, i32 noundef 0) #22, !inline_history !0 ; 6 uses
+  %i.ayz = call ptr %i.ayy(ptr noundef %i.ac, i64 noundef range(i64 0, 8589934855) %i.axs, i64 noundef %i.ayv, i32 noundef 0) #22, !inline_history !0 ; 6 uses
   %.not2649 = icmp eq ptr %i.ayz, null
   br i1 %.not2649, label %bb.or, label %.preheader3184
 
@@ -733,7 +732,7 @@ bb.s:                                             ; preds = %.thread145
   br label %.thread
 
 bb.t:                                             ; preds = %.thread145
-  %i.bd = add i32 %i.ba, %0                       ; 5 uses
+  %i.bd = add i32 %i.ba, %0                       ; 4 uses
   %i.be = load ptr, ptr %3, align 8, !tbaa !29
   %i.bf = load i16, ptr %i.b, align 8, !tbaa !30  ; 2 uses
   %i.bg = load i32, ptr %i.d, align 8, !tbaa !31
@@ -773,18 +772,18 @@ cli_rawaddr.exit124.thread152:                    ; preds = %bb.v
   %i.br = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !15
   %i.bt = add i32 %i.bs, %i.bo
+  %.pre = zext i32 %i.bt to i64
   br label %bb.x
 
 cli_rawaddr.exit124:                              ; preds = %bb.t
-  %i.bu = zext i32 %i.bd to i64
+  %i.bu = zext i32 %i.bd to i64                   ; 2 uses
   %.not36.i121.not = icmp samesign ugt i64 %4, %i.bu
   br i1 %.not36.i121.not, label %bb.x, label %.thread
 
 bb.x:                                             ; preds = %cli_rawaddr.exit124.thread152, %cli_rawaddr.exit124
-  %.030.i120156 = phi i32 [ %i.bt, %cli_rawaddr.exit124.thread152 ], [ %i.bd, %cli_rawaddr.exit124 ]
-  %9 = zext i32 %.030.i120156 to i64
+  %.pre-phi = phi i64 [ %.pre, %cli_rawaddr.exit124.thread152 ], [ %i.bu, %cli_rawaddr.exit124 ]
   %i.bv = load ptr, ptr %i.x, align 8, !tbaa !38
-  %i.bw = tail call ptr %i.bv(ptr noundef nonnull %2, i64 noundef range(i64 0, 8589934855) %9, i64 noundef 16, i32 noundef 0) #22, !inline_history !0 ; 3 uses
+  %i.bw = tail call ptr %i.bv(ptr noundef nonnull %2, i64 noundef range(i64 0, 8589934855) %.pre-phi, i64 noundef 16, i32 noundef 0) #22, !inline_history !0 ; 3 uses
   %.not105 = icmp eq ptr %i.bw, null
   br i1 %.not105, label %.thread, label %bb.y
 
@@ -1187,7 +1186,7 @@ bb.q:                                             ; preds = %bb.p
   %.090231 = phi ptr [ %i.bw, %.preheader ], [ %i.am, %.preheader.preheader ] ; 4 uses
   %.sroa.0.0.copyload = load i32, ptr %.090231, align 4
   %.sroa.5125.0..090.sroa_idx = getelementptr inbounds nuw i8, ptr %.090231, i64 12
-  %.sroa.5125.0.copyload = load i32, ptr %.sroa.5125.0..090.sroa_idx, align 4 ; 6 uses
+  %.sroa.5125.0.copyload = load i32, ptr %.sroa.5125.0..090.sroa_idx, align 4 ; 5 uses
   %.sroa.6.0..090.sroa_idx = getelementptr inbounds nuw i8, ptr %.090231, i64 16
   %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..090.sroa_idx, align 4
   %i.bt = icmp eq i32 %.sroa.5125.0.copyload, 0
@@ -1236,17 +1235,17 @@ cli_rawaddr.exit121.thread138:                    ; preds = %bb.t
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !15
   %i.cm = add i32 %i.cl, %i.ch
+  %.pre = zext i32 %i.cm to i64
   br label %bb.v
 
 cli_rawaddr.exit121:                              ; preds = %bb.r
-  %i.cn = zext i32 %.sroa.5125.0.copyload to i64
+  %i.cn = zext i32 %.sroa.5125.0.copyload to i64  ; 2 uses
   %.not36.i118.not = icmp ugt i64 %i.f, %i.cn
   br i1 %.not36.i118.not, label %bb.v, label %cli_rawaddr.exit121.thread
 
 bb.v:                                             ; preds = %cli_rawaddr.exit121.thread138, %cli_rawaddr.exit121
-  %.030.i117142 = phi i32 [ %i.cm, %cli_rawaddr.exit121.thread138 ], [ %.sroa.5125.0.copyload, %cli_rawaddr.exit121 ]
-  %5 = zext i32 %.030.i117142 to i64              ; 3 uses
-  %i.co = icmp ult i64 %i.f, %5
+  %.pre-phi = phi i64 [ %.pre, %cli_rawaddr.exit121.thread138 ], [ %i.cn, %cli_rawaddr.exit121 ] ; 3 uses
+  %i.co = icmp ult i64 %i.f, %.pre-phi
   br i1 %i.co, label %cli_rawaddr.exit121.thread, label %bb.w
 
 cli_rawaddr.exit121.thread:                       ; preds = %bb.s, %bb.v, %cli_rawaddr.exit121, %bb.u
@@ -1254,10 +1253,10 @@ cli_rawaddr.exit121.thread:                       ; preds = %bb.s, %bb.v, %cli_r
   br label %.loopexit
 
 bb.w:                                             ; preds = %bb.v
-  %i.cp = sub nuw i64 %i.f, %5
+  %i.cp = sub nuw i64 %i.f, %.pre-phi
   %i.cq = tail call i64 @llvm.umin.i64(i64 %i.cp, i64 256) ; 2 uses
   %i.cr = load ptr, ptr %i.ak, align 8, !tbaa !38
-  %i.cs = tail call ptr %i.cr(ptr noundef %i.d, i64 noundef range(i64 0, 8589934855) %5, i64 noundef %i.cq, i32 noundef 0) #22, !inline_history !0 ; 2 uses
+  %i.cs = tail call ptr %i.cr(ptr noundef %i.d, i64 noundef range(i64 0, 8589934855) %.pre-phi, i64 noundef %i.cq, i32 noundef 0) #22, !inline_history !0 ; 2 uses
   %i.ct = icmp eq ptr %i.cs, null
   br i1 %i.ct, label %bb.x, label %bb.y
 

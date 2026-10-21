@@ -205,8 +205,7 @@ _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE18split_at_spa
   tail call void @llvm.experimental.noalias.scope.decl(metadata !152)
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i.i, i64 %i.aa ; 15 uses
   %i.av = sub nuw i64 %.val3.i.i.i, %i.aa
-  %.not.i.i.i.i43.i.i = icmp ugt i64 %i.d, %i.av  ; 2 uses
-  %.sroa.0.0.i.i.i.i = select i1 %.not.i.i.i.i43.i.i, ptr null, ptr %i.au
+  %.not.i.i.i.i43.i.i = icmp ugt i64 %i.d, %i.av
   br i1 %.not.i.i.i.i43.i.i, label %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtBg_3rsa1NEs_0Bg_.exit.i, label %bb.k, !prof !16
 
 bb.k:                                             ; preds = %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE18split_at_spare_mutB9_.exit.i.i.i
@@ -324,7 +323,7 @@ bb.v:                                             ; preds = %bb.u
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.u
   %i.ce = lshr i64 -1, %i.ca
-  %i.cf = getelementptr [8 x i8], ptr %.sroa.0.0.i.i.i.i, i64 %i.bv
+  %i.cf = getelementptr [8 x i8], ptr %i.au, i64 %i.bv
   %i.cg = getelementptr i8, ptr %i.cf, i64 -8     ; 2 uses
   %i.ch = load i64, ptr %i.cg, align 8, !alias.scope !166, !noalias !156, !noundef !15
   %i.ci = and i64 %i.ch, %i.ce
@@ -727,8 +726,8 @@ bb.ad:                                            ; preds = %_RNvMs6_NtNtNtNtCs5
 
 _RNvMNtNtNtCs5yxAJGbRKSL_4ring10arithmetic8limbs5127storageINtB2_14AlignedStorageKj460_E18aligned_chunks_mutB8_.exit.i.i.i.i: ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !3231
-  %9 = icmp samesign ult i64 %i.cz, 80
-  br i1 %9, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSAINtNtNtB4_3mem12maybe_uninit11MaybeUninityEj8_12split_at_mutCs5yxAJGbRKSL_4ring.exit.i.i.i.i, label %_RINvNtNtCs5yxAJGbRKSL_4ring3rsa7keypair18elem_exp_consttimeNtB2_1PEB6_.exit.thread211.i
+  %9 = icmp samesign ugt i64 %i.cz, 79
+  br i1 %9, label %_RINvNtNtCs5yxAJGbRKSL_4ring3rsa7keypair18elem_exp_consttimeNtB2_1PEB6_.exit.thread211.i, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSAINtNtNtB4_3mem12maybe_uninit11MaybeUninityEj8_12split_at_mutCs5yxAJGbRKSL_4ring.exit.i.i.i.i
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSAINtNtNtB4_3mem12maybe_uninit11MaybeUninityEj8_12split_at_mutCs5yxAJGbRKSL_4ring.exit.i.i.i.i: ; preds = %_RNvMNtNtNtCs5yxAJGbRKSL_4ring10arithmetic8limbs5127storageINtB2_14AlignedStorageKj460_E18aligned_chunks_mutB8_.exit.i.i.i.i
   %i.dr = shl nuw nsw i64 %i.do, 5                ; 5 uses
@@ -1131,8 +1130,8 @@ bb.bc:                                            ; preds = %_RNvMs6_NtNtNtNtCs5
 
 _RNvMNtNtNtCs5yxAJGbRKSL_4ring10arithmetic8limbs5127storageINtB2_14AlignedStorageKj460_E18aligned_chunks_mutB8_.exit.i.i.i103.i: ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !3280
-  %10 = icmp samesign ult i64 %i.hv, 80
-  br i1 %10, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSAINtNtNtB4_3mem12maybe_uninit11MaybeUninityEj8_12split_at_mutCs5yxAJGbRKSL_4ring.exit.i.i.i106.i, label %_RINvNtNtCs5yxAJGbRKSL_4ring3rsa7keypair18elem_exp_consttimeNtB2_1QEB6_.exit.thread215.i
+  %10 = icmp samesign ugt i64 %i.hv, 79
+  br i1 %10, label %_RINvNtNtCs5yxAJGbRKSL_4ring3rsa7keypair18elem_exp_consttimeNtB2_1QEB6_.exit.thread215.i, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSAINtNtNtB4_3mem12maybe_uninit11MaybeUninityEj8_12split_at_mutCs5yxAJGbRKSL_4ring.exit.i.i.i106.i
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSAINtNtNtB4_3mem12maybe_uninit11MaybeUninityEj8_12split_at_mutCs5yxAJGbRKSL_4ring.exit.i.i.i106.i: ; preds = %_RNvMNtNtNtCs5yxAJGbRKSL_4ring10arithmetic8limbs5127storageINtB2_14AlignedStorageKj460_E18aligned_chunks_mutB8_.exit.i.i.i103.i
   %i.in = shl nuw nsw i64 %i.ik, 5                ; 5 uses

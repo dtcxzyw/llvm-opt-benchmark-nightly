@@ -204,9 +204,8 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
 
 .noexc17:                                         ; preds = %bb.g
   %i.bj = extractvalue { i32, i32 } %i.bi, 0
-  %i.bk = trunc i32 %i.bj to i1                   ; 2 uses
+  %i.bk = trunc i32 %i.bj to i1
   %i.bl = extractvalue { i32, i32 } %i.bi, 1
-  %spec.select.i.i.i.i.i.i = select i1 %i.bk, i32 undef, i32 %i.bl
   br i1 %i.bk, label %_RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v116DatabaseSnapshotEENtB6_15DeserializeSeed11deserializeNtNtNtCs87O7Q65ve1k_7bitcode5serde2de14DecoderWrapperEB21_.exit.thread39.i, label %bb.h
 
 bb.h:                                             ; preds = %.noexc17
@@ -239,9 +238,8 @@ bb.j:                                             ; preds = %._crit_edge.i.i.i.i
 
 .noexc19:                                         ; preds = %bb.j
   %i.bv = extractvalue { i32, i32 } %i.bu, 0
-  %i.bw = trunc i32 %i.bv to i1                   ; 2 uses
+  %i.bw = trunc i32 %i.bv to i1
   %i.bx = extractvalue { i32, i32 } %i.bu, 1
-  %spec.select.i.i.i.i.i.i.i.i.i.i = select i1 %i.bw, i32 undef, i32 %i.bx
   br i1 %i.bw, label %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer17deserialize_tuple6AccessNtB17_9SeqAccess12next_elementNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v116DatabaseSnapshotEB2S_.exit.thread.i.i.i.i, label %bb.k
 
 bb.k:                                             ; preds = %.noexc19
@@ -644,7 +642,7 @@ _RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11Phantom
 bb.ce:                                            ; preds = %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer17deserialize_tuple6AccessNtB17_9SeqAccess12next_elementNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v116DatabaseSnapshotEB2S_.exit.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %.sroa.10, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.7.i.i.i.i, i64 120, i1 false), !noalias !2502
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i.i.i)
-  %.sroa.0.0.insert.ext = zext i32 %spec.select.i.i.i.i.i.i to i64
+  %.sroa.0.0.insert.ext = zext i32 %i.bl to i64
   br label %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer15deserialize_seq6AccessNtB17_9SeqAccess12next_elementTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v116DatabaseSnapshotEEB3q_.exit
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.k, %bb.j, %bb.i, %bb.g, %bb.f, %.invoke, %bb.cd
@@ -682,7 +680,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtCsbFl
 _RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer15deserialize_seq6AccessNtB17_9SeqAccess12next_elementTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v116DatabaseSnapshotEEB3q_.exit: ; preds = %bb.d, %bb.ce
   %i.gy = phi i64 [ %i.ay, %bb.ce ], [ 0, %bb.d ]
   %.sroa.15.0 = phi i8 [ %i.gb, %bb.ce ], [ undef, %bb.d ]
-  %.sroa.14.0 = phi i32 [ %spec.select.i.i.i.i.i.i.i.i.i.i, %bb.ce ], [ undef, %bb.d ]
+  %.sroa.14.0 = phi i32 [ %i.bx, %bb.ce ], [ undef, %bb.d ]
   %.sroa.13.0 = phi i64 [ %i.gt, %bb.ce ], [ undef, %bb.d ]
   %.sroa.12.0 = phi ptr [ %i.gs, %bb.ce ], [ undef, %bb.d ]
   %.sroa.526.0 = phi i64 [ %.sroa.031.i.i.i.sroa.0.0.copyload.i.i.i.i.i, %bb.ce ], [ -1, %bb.d ] ; 2 uses
@@ -1085,9 +1083,8 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i
 
 .noexc17:                                         ; preds = %bb.f
   %i.cc = extractvalue { i32, i32 } %i.cb, 0
-  %i.cd = trunc i32 %i.cc to i1                   ; 2 uses
+  %i.cd = trunc i32 %i.cc to i1
   %i.ce = extractvalue { i32, i32 } %i.cb, 1
-  %spec.select.i.i.i.i.i.i = select i1 %i.cd, i32 undef, i32 %i.ce
   br i1 %i.cd, label %_RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataTNtCsbFlE7Gjht9i_12influxdb3_id7TableIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v113TableSnapshotEENtB6_15DeserializeSeed11deserializeNtNtNtCs87O7Q65ve1k_7bitcode5serde2de14DecoderWrapperEB24_.exit.thread39.i, label %bb.g
 
 bb.g:                                             ; preds = %.noexc17
@@ -1120,9 +1117,8 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i.i
 
 .noexc19:                                         ; preds = %bb.i
   %i.co = extractvalue { i32, i32 } %i.cn, 0
-  %i.cp = trunc i32 %i.co to i1                   ; 2 uses
+  %i.cp = trunc i32 %i.co to i1
   %i.cq = extractvalue { i32, i32 } %i.cn, 1
-  %spec.select.i.i.i.i.i.i.i.i.i.i = select i1 %i.cp, i32 undef, i32 %i.cq
   br i1 %i.cp, label %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer17deserialize_tuple6AccessNtB17_9SeqAccess12next_elementNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v113TableSnapshotEB2S_.exit.thread.i.i.i.i, label %bb.j
 
 bb.j:                                             ; preds = %.noexc19
@@ -1525,7 +1521,7 @@ _RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11Phantom
 bb.dl:                                            ; preds = %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer17deserialize_tuple6AccessNtB17_9SeqAccess12next_elementNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v113TableSnapshotEB2S_.exit.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %.sroa.10, ptr noundef nonnull align 8 dereferenceable(208) %.sroa.7.i.i.i.i, i64 208, i1 false), !noalias !2940
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i.i.i)
-  %.sroa.0.0.insert.ext = zext i32 %spec.select.i.i.i.i.i.i to i64
+  %.sroa.0.0.insert.ext = zext i32 %i.ce to i64
   br label %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer15deserialize_seq6AccessNtB17_9SeqAccess12next_elementTNtCsbFlE7Gjht9i_12influxdb3_id7TableIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v113TableSnapshotEEB3t_.exit
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.j, %bb.i, %bb.h, %bb.f, %bb.e, %.invoke, %bb.dk
@@ -1563,7 +1559,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtCsbFl
 _RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer15deserialize_seq6AccessNtB17_9SeqAccess12next_elementTNtCsbFlE7Gjht9i_12influxdb3_id7TableIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v113TableSnapshotEEB3t_.exit: ; preds = %.split, %bb.dl
   %i.ju = phi i64 [ %i.br, %bb.dl ], [ 0, %.split ]
   %.sroa.15.0 = phi i8 [ %i.iv, %bb.dl ], [ undef, %.split ]
-  %.sroa.14.0 = phi i32 [ %spec.select.i.i.i.i.i.i.i.i.i.i, %bb.dl ], [ undef, %.split ]
+  %.sroa.14.0 = phi i32 [ %i.cq, %bb.dl ], [ undef, %.split ]
   %.sroa.13.0 = phi i64 [ %i.jp, %bb.dl ], [ undef, %.split ]
   %.sroa.12.0 = phi ptr [ %i.jo, %bb.dl ], [ undef, %.split ]
   %.sroa.526.0 = phi i64 [ %.sroa.047.i.i.i.sroa.0.0.copyload.i.i.i.i.i, %bb.dl ], [ -1, %.split ] ; 2 uses

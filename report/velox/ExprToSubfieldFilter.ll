@@ -205,22 +205,23 @@ bb.dy:                                            ; preds = %.thread.thread.i.i.
   %i.abv = load double, ptr %i.abu, align 8, !tbaa !166, !noalias !900 ; 5 uses
   %i.abw = getelementptr inbounds nuw i8, ptr %i.aae, i64 32
   %i.abx = load double, ptr %i.abw, align 8, !tbaa !166, !noalias !900 ; 3 uses
-  %i.aby = fcmp ogt double %i.abv, %i.abx         ; 2 uses
-  %brmerge.i.i.i = fcmp ueq double %i.abv, %i.abx
-  %.mux.i.i.i = select i1 %i.aby, ptr %i.aac, ptr %i.aae
-  %.sroa.speculated.mux.i.i.i = select i1 %i.aby, double %i.abv, double %i.abx
-  br i1 %brmerge.i.i.i, label %bb.dz, label %.thread51.sink.split.i.i.i
+  %i.aby = fcmp ogt double %i.abv, %i.abx
+  br i1 %i.aby, label %.thread51.sink.split.i.i.i, label %17
 
-bb.dz:                                            ; preds = %bb.dy
+17:                                               ; preds = %bb.dy
+  %18 = fcmp olt double %i.abv, %i.abx
+  br i1 %18, label %.thread51.sink.split.i.i.i, label %bb.dz
+
+bb.dz:                                            ; preds = %17
   %i.abz = getelementptr inbounds nuw i8, ptr %i.aac, i64 19
   %i.aca = load i8, ptr %i.abz, align 1, !tbaa !215, !range !205, !noalias !900, !noundef !206
   %i.acb = trunc nuw i8 %i.aca to i1
   br i1 %i.acb, label %.thread51.sink.split.i.i.i, label %.thread51.i.i.i
 
-.thread51.sink.split.i.i.i:                       ; preds = %bb.dz, %bb.dy
-  %.sink71.i.i.i = phi ptr [ %.mux.i.i.i, %bb.dy ], [ %i.aae, %bb.dz ]
-  %.ph.i.i.i = phi double [ %.sroa.speculated.mux.i.i.i, %bb.dy ], [ %i.abv, %bb.dz ]
-  %i.acc = getelementptr inbounds nuw i8, ptr %.sink71.i.i.i, i64 19
+.thread51.sink.split.i.i.i:                       ; preds = %bb.dz, %17, %bb.dy
+  %.sink73.i.i.i = phi ptr [ %i.aac, %bb.dy ], [ %i.aae, %17 ], [ %i.aae, %bb.dz ]
+  %.ph.i.i.i = phi double [ %i.abv, %bb.dy ], [ %i.abx, %17 ], [ %i.abv, %bb.dz ]
+  %i.acc = getelementptr inbounds nuw i8, ptr %.sink73.i.i.i, i64 19
   %i.acd = load i8, ptr %i.acc, align 1, !tbaa !215, !range !205, !noalias !900, !noundef !206
   br label %.thread51.i.i.i
 
@@ -623,22 +624,23 @@ bb.gf:                                            ; preds = %.thread.thread.i.i.
   %i.arj = load float, ptr %i.ari, align 8, !tbaa !172, !noalias !925 ; 5 uses
   %i.ark = getelementptr inbounds nuw i8, ptr %i.aps, i64 24
   %i.arl = load float, ptr %i.ark, align 8, !tbaa !172, !noalias !925 ; 3 uses
-  %i.arm = fcmp ogt float %i.arj, %i.arl          ; 2 uses
-  %brmerge.i.i.i195 = fcmp ueq float %i.arj, %i.arl
-  %.mux.i.i.i196 = select i1 %i.arm, ptr %i.apq, ptr %i.aps
-  %.sroa.speculated.v.mux.i.i.i = select i1 %i.arm, float %i.arj, float %i.arl
-  br i1 %brmerge.i.i.i195, label %bb.gg, label %.thread51.sink.split.i.i.i197
+  %i.arm = fcmp ogt float %i.arj, %i.arl
+  br i1 %i.arm, label %.thread51.sink.split.i.i.i197, label %19
 
-bb.gg:                                            ; preds = %bb.gf
+19:                                               ; preds = %bb.gf
+  %20 = fcmp olt float %i.arj, %i.arl
+  br i1 %20, label %.thread51.sink.split.i.i.i197, label %bb.gg
+
+bb.gg:                                            ; preds = %19
   %i.arn = getelementptr inbounds nuw i8, ptr %i.apq, i64 19
   %i.aro = load i8, ptr %i.arn, align 1, !tbaa !215, !range !205, !noalias !925, !noundef !206
   %i.arp = trunc nuw i8 %i.aro to i1
   br i1 %i.arp, label %.thread51.sink.split.i.i.i197, label %.thread51.i.i.i200
 
-.thread51.sink.split.i.i.i197:                    ; preds = %bb.gg, %bb.gf
-  %.sink71.i.i.i198 = phi ptr [ %.mux.i.i.i196, %bb.gf ], [ %i.aps, %bb.gg ]
-  %.ph.i.i.i199 = phi float [ %.sroa.speculated.v.mux.i.i.i, %bb.gf ], [ %i.arj, %bb.gg ]
-  %i.arq = getelementptr inbounds nuw i8, ptr %.sink71.i.i.i198, i64 19
+.thread51.sink.split.i.i.i197:                    ; preds = %bb.gg, %19, %bb.gf
+  %.sink73.i.i.i211 = phi ptr [ %i.apq, %bb.gf ], [ %i.aps, %19 ], [ %i.aps, %bb.gg ]
+  %.ph.i.i.i212 = phi float [ %i.arj, %bb.gf ], [ %i.arl, %19 ], [ %i.arj, %bb.gg ]
+  %i.arq = getelementptr inbounds nuw i8, ptr %.sink73.i.i.i211, i64 19
   %i.arr = load i8, ptr %i.arq, align 1, !tbaa !215, !range !205, !noalias !925, !noundef !206
   br label %.thread51.i.i.i200
 
@@ -647,7 +649,7 @@ bb.gg:                                            ; preds = %bb.gf
   %.04966.i.i.i201 = phi i8 [ %.04967.i.i.i194, %.thread51.sink.split.i.i.i197 ], [ %.04967.i.i.i194, %bb.gg ], [ %.049.i.i.i193, %.thread.i.i.i192 ]
   %i.art = phi float [ %i.arh, %.thread51.sink.split.i.i.i197 ], [ %i.arh, %bb.gg ], [ %.sroa.speculated36.v.i.i.i, %.thread.i.i.i192 ] ; 2 uses
   %.054.i.i.i202 = phi i8 [ %i.arr, %.thread51.sink.split.i.i.i197 ], [ 0, %bb.gg ], [ 1, %.thread.i.i.i192 ]
-  %i.aru = phi float [ %.ph.i.i.i199, %.thread51.sink.split.i.i.i197 ], [ %i.arj, %bb.gg ], [ f0x7F7FFFFF, %.thread.i.i.i192 ] ; 2 uses
+  %i.aru = phi float [ %.ph.i.i.i212, %.thread51.sink.split.i.i.i197 ], [ %i.arj, %bb.gg ], [ f0x7F7FFFFF, %.thread.i.i.i192 ] ; 2 uses
   %i.arv = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #38
           to label %.noexc39.i.i203 unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i135.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !923 ; 13 uses
 
@@ -1050,7 +1052,7 @@ bb.hv:                                            ; preds = %.lr.ph.i329
           to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !941
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit.i: ; preds = %bb.hv, %_ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJRKS5_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit.i.i
-  %i.bcm = icmp eq ptr %i.bbt, %.sroa.01.039.i
+  %i.bcm = icmp eq ptr %.sroa.01.039.i, %i.bbt
   br i1 %i.bcm, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit41.i, label %.lr.ph.i329, !prof !44
 
 bb.hw:                                            ; preds = %bb.ho

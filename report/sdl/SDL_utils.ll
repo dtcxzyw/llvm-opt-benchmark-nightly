@@ -204,13 +204,13 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %SDL_URIDecode.exit
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.032 = phi ptr [ %i.e, %bb.b ], [ %0, %bb.c ]  ; 6 uses
+  %.032 = phi ptr [ %i.e, %bb.b ], [ %0, %bb.c ]  ; 5 uses
   %i.g = load i8, ptr %.032, align 1
   %.not39 = icmp eq i8 %i.g, 47
   br i1 %.not39, label %bb.e, label %.thread51
 
 bb.e:                                             ; preds = %bb.d
-  %i.h = getelementptr inbounds nuw i8, ptr %.032, i64 1 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.032, i64 1 ; 5 uses
   %i.i = load i8, ptr %i.h, align 1
   %i.j = icmp eq i8 %i.i, 47
   br i1 %i.j, label %.thread51, label %bb.f
@@ -262,8 +262,7 @@ bb.j:                                             ; preds = %bb.i
   br label %SDL_URIDecode.exit
 
 bb.k:                                             ; preds = %.thread45
-  %2 = getelementptr inbounds nuw i8, ptr %.032, i64 1
-  %i.aa = call i32 @SDL_strncasecmp_REAL(ptr noundef nonnull %2, ptr noundef nonnull @.str.3, i64 noundef %i.p) #11
+  %i.aa = call i32 @SDL_strncasecmp_REAL(ptr noundef nonnull %i.h, ptr noundef nonnull @.str.3, i64 noundef %i.p) #11
   %i.ab = icmp eq i32 %i.aa, 0
   %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11

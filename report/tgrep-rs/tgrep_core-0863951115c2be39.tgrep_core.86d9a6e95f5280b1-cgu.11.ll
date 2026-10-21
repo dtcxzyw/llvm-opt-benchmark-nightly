@@ -202,8 +202,8 @@ bb.ao:                                            ; preds = %bb.am
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.outer, %bb.cg
-  %.sroa.882.0 = phi i64 [ %.sroa.882.2641, %bb.cg ], [ %.sroa.882.0.ph, %.outer ]
-  %.sroa.075.0 = phi i32 [ %.sroa.075.2652, %bb.cg ], [ %.sroa.075.0.ph, %.outer ]
+  %.sroa.882.0 = phi i64 [ %.sroa.882.2641841859, %bb.cg ], [ %.sroa.882.0.ph, %.outer ]
+  %.sroa.075.0 = phi i32 [ %.sroa.075.2652840860, %bb.cg ], [ %.sroa.075.0.ph, %.outer ]
   %i.eb = load i64, ptr %i.ab, align 8, !noundef !5 ; 2 uses
   %i.ec = load i64, ptr %i.ad, align 8, !noundef !5
   %i.ed = icmp ult i64 %i.eb, %i.ec
@@ -458,14 +458,14 @@ bb.bw:                                            ; preds = %bb.bt
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRShE6map_orjNCNvNtCsbzNSmZPCnTx_10tgrep_core7builder22merge_index_with_deltas3_0EB10_.exit: ; preds = %.thread517, %..thread530_crit_edge, %bb.bw, %bb.bv
   %.sink868 = phi i64 [ %i.fg, %bb.bv ], [ %i.eq, %bb.bw ], [ %.pre, %..thread530_crit_edge ], [ %i.ei, %.thread517 ]
   %.sink867 = phi ptr [ %i.ab, %bb.bv ], [ %i.aa, %bb.bw ], [ %i.ab, %..thread530_crit_edge ], [ %i.ab, %.thread517 ]
-  %.sroa.075.2653 = phi i32 [ %.sroa.075.2650, %bb.bv ], [ %.sroa.075.2650, %bb.bw ], [ %.sroa.075.2650, %..thread530_crit_edge ], [ %.sroa.485.8.copyload, %.thread517 ] ; 3 uses
-  %.sroa.378.1648 = phi ptr [ %.sroa.378.1646, %bb.bv ], [ %.sroa.378.1646, %bb.bw ], [ %.sroa.378.1646, %..thread530_crit_edge ], [ %.sroa.787.8.copyload, %.thread517 ] ; 3 uses
+  %.sroa.075.2653 = phi i32 [ %.sroa.075.2650, %bb.bv ], [ %.sroa.075.2650, %bb.bw ], [ %.sroa.075.2650, %..thread530_crit_edge ], [ %.sroa.485.8.copyload, %.thread517 ] ; 6 uses
+  %.sroa.378.1648 = phi ptr [ %.sroa.378.1646, %bb.bv ], [ %.sroa.378.1646, %bb.bw ], [ %.sroa.378.1646, %..thread530_crit_edge ], [ %.sroa.787.8.copyload, %.thread517 ] ; 4 uses
   %.sroa.882.2642 = phi i64 [ %.sroa.882.2645, %bb.bv ], [ %.sroa.882.2645, %bb.bw ], [ %.sroa.882.2645, %..thread530_crit_edge ], [ %.sroa.888.8.copyload, %.thread517 ]
-  %.sroa.8129.0.ph = phi i64 [ undef, %bb.bv ], [ %.sroa.8108.8.copyload, %bb.bw ], [ undef, %..thread530_crit_edge ], [ undef, %.thread517 ] ; 2 uses
-  %.sroa.0126.0.ph = phi ptr [ null, %bb.bv ], [ %.sroa.7107.8.copyload, %bb.bw ], [ null, %..thread530_crit_edge ], [ null, %.thread517 ] ; 2 uses
+  %.sroa.8129.0.ph = phi i64 [ undef, %bb.bv ], [ %.sroa.8108.8.copyload, %bb.bw ], [ undef, %..thread530_crit_edge ], [ undef, %.thread517 ] ; 4 uses
+  %.sroa.0126.0.ph = phi ptr [ null, %bb.bv ], [ %.sroa.7107.8.copyload, %bb.bw ], [ null, %..thread530_crit_edge ], [ null, %.thread517 ] ; 4 uses
   %i.fj = add i64 %.sink868, 1
   store i64 %i.fj, ptr %.sink867, align 8
-  %.sroa.882.2642.fr = freeze i64 %.sroa.882.2642 ; 6 uses
+  %.sroa.882.2642.fr = freeze i64 %.sroa.882.2642 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   store i32 %.sroa.075.2653, ptr %i.v, align 4
   %i.fk = udiv i64 %.sroa.882.2642.fr, 6
@@ -476,7 +476,12 @@ bb.bx:                                            ; preds = %_RINvMNtCsf3Ta7LF99
   %.idx742 = sub nuw i64 %.sroa.882.2642.fr, %i.fl
   %i.fm = getelementptr inbounds nuw i8, ptr %.sroa.378.1648, i64 %.idx742
   %i.fn = icmp ult i64 %.sroa.882.2642.fr, 6
-  br i1 %i.fn, label %.loopexit677, label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6expectCsbzNSmZPCnTx_10tgrep_core.exit.lr.ph
+  br i1 %i.fn, label %.loopexit677.thread, label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6expectCsbzNSmZPCnTx_10tgrep_core.exit.lr.ph
+
+.loopexit677.thread:                              ; preds = %bb.bx
+  %.not.i450827 = icmp eq ptr %.sroa.0126.0.ph, null
+  %9 = udiv i64 %.sroa.8129.0.ph, 6
+  br i1 %.not.i450827, label %bb.cg, label %bb.cc
 
 _RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6expectCsbzNSmZPCnTx_10tgrep_core.exit.lr.ph: ; preds = %bb.bx
   %i.fo = load i64, ptr %i.bd, align 8, !noundef !5
@@ -535,8 +540,8 @@ bb.cb:                                            ; preds = %bb.dp, %bb.dq, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
   br label %bb.bp
 
-.loopexit677:                                     ; preds = %bb.bz, %bb.bx, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRShE6map_orjNCNvNtCsbzNSmZPCnTx_10tgrep_core7builder22merge_index_with_deltas3_0EB10_.exit
-  %.sroa.0132.0 = phi i64 [ %i.fk, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRShE6map_orjNCNvNtCsbzNSmZPCnTx_10tgrep_core7builder22merge_index_with_deltas3_0EB10_.exit ], [ 0, %bb.bx ], [ %i.fz, %bb.bz ] ; 2 uses
+.loopexit677:                                     ; preds = %bb.bz, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRShE6map_orjNCNvNtCsbzNSmZPCnTx_10tgrep_core7builder22merge_index_with_deltas3_0EB10_.exit
+  %.sroa.0132.0 = phi i64 [ %i.fk, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRShE6map_orjNCNvNtCsbzNSmZPCnTx_10tgrep_core7builder22merge_index_with_deltas3_0EB10_.exit ], [ %i.fz, %bb.bz ] ; 2 uses
   %.not.i450 = icmp eq ptr %.sroa.0126.0.ph, null ; 2 uses
   %i.gb = udiv i64 %.sroa.8129.0.ph, 6
   %.sroa.03.0.i451 = select i1 %.not.i450, i64 0, i64 %i.gb
@@ -544,18 +549,18 @@ bb.cb:                                            ; preds = %bb.dp, %bb.dq, %bb.
   %i.gd = icmp ult i64 %i.gc, %.sroa.0132.0
   br i1 %i.gd, label %bb.cd, label %bb.cc, !prof !631
 
-bb.cc:                                            ; preds = %.thread, %.loopexit677
-  %.sroa.075.2652 = phi i32 [ %.sroa.075.2650, %.thread ], [ %.sroa.075.2653, %.loopexit677 ] ; 2 uses
-  %.sroa.882.2641 = phi i64 [ %.sroa.882.2645, %.thread ], [ %.sroa.882.2642.fr, %.loopexit677 ] ; 2 uses
-  %9 = phi i64 [ %i.fe, %.thread ], [ %i.gc, %.loopexit677 ] ; 4 uses
-  %.not.i450604 = phi i1 [ false, %.thread ], [ %.not.i450, %.loopexit677 ]
-  %.not.i566577603 = phi i1 [ true, %.thread ], [ false, %.loopexit677 ]
-  %.sroa.0115.0564578602 = phi i32 [ %.sroa.4105.8.copyload, %.thread ], [ %.sroa.075.2653, %.loopexit677 ]
-  %.sroa.0117.0562579601 = phi ptr [ null, %.thread ], [ %.sroa.378.1648, %.loopexit677 ] ; 3 uses
-  %.sroa.10.0560580600 = phi i64 [ 0, %.thread ], [ %.sroa.882.2642.fr, %.loopexit677 ] ; 6 uses
-  %.sroa.0126.0558581599 = phi ptr [ %.sroa.7107.8.copyload, %.thread ], [ %.sroa.0126.0.ph, %.loopexit677 ]
-  %.sroa.8129.0556582598 = phi i64 [ %.sroa.8108.8.copyload, %.thread ], [ %.sroa.8129.0.ph, %.loopexit677 ]
-  %i.ge = icmp ugt i64 %9, 4294967295
+bb.cc:                                            ; preds = %.loopexit677.thread, %.thread, %.loopexit677
+  %.sroa.075.2652 = phi i32 [ %.sroa.075.2650, %.thread ], [ %.sroa.075.2653, %.loopexit677 ], [ %.sroa.075.2653, %.loopexit677.thread ] ; 2 uses
+  %.sroa.882.2641 = phi i64 [ %.sroa.882.2645, %.thread ], [ %.sroa.882.2642.fr, %.loopexit677 ], [ %.sroa.882.2642.fr, %.loopexit677.thread ] ; 2 uses
+  %10 = phi i64 [ %i.fe, %.thread ], [ %i.gc, %.loopexit677 ], [ %9, %.loopexit677.thread ] ; 4 uses
+  %.not.i450604 = phi i1 [ false, %.thread ], [ %.not.i450, %.loopexit677 ], [ false, %.loopexit677.thread ]
+  %.not.i566577603 = phi i1 [ true, %.thread ], [ false, %.loopexit677 ], [ false, %.loopexit677.thread ]
+  %.sroa.0115.0564578602 = phi i32 [ %.sroa.4105.8.copyload, %.thread ], [ %.sroa.075.2653, %.loopexit677 ], [ %.sroa.075.2653, %.loopexit677.thread ]
+  %.sroa.0117.0562579601 = phi ptr [ null, %.thread ], [ %.sroa.378.1648, %.loopexit677 ], [ %.sroa.378.1648, %.loopexit677.thread ] ; 3 uses
+  %.sroa.10.0560580600 = phi i64 [ 0, %.thread ], [ %.sroa.882.2642.fr, %.loopexit677 ], [ %.sroa.882.2642.fr, %.loopexit677.thread ] ; 6 uses
+  %.sroa.0126.0558581599 = phi ptr [ %.sroa.7107.8.copyload, %.thread ], [ %.sroa.0126.0.ph, %.loopexit677 ], [ %.sroa.0126.0.ph, %.loopexit677.thread ]
+  %.sroa.8129.0556582598 = phi i64 [ %.sroa.8108.8.copyload, %.thread ], [ %.sroa.8129.0.ph, %.loopexit677 ], [ %.sroa.8129.0.ph, %.loopexit677.thread ]
+  %i.ge = icmp ugt i64 %10, 4294967295
   br i1 %i.ge, label %bb.cf, label %bb.ce
 
 bb.cd:                                            ; preds = %.loopexit677
@@ -564,7 +569,7 @@ bb.cd:                                            ; preds = %.loopexit677
           to label %bb.dq unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ce:                                            ; preds = %bb.cc
-  %i.gf = icmp eq i64 %9, 0
+  %i.gf = icmp eq i64 %10, 0
   br i1 %i.gf, label %bb.cg, label %bb.ch
 
 bb.cf:                                            ; preds = %bb.cc
@@ -577,13 +582,15 @@ bb.cf:                                            ; preds = %bb.cc
   invoke void @_RNvNvNtCsgCecv3eZDcN_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.gg, ptr noundef nonnull @13, ptr noundef nonnull %i.a)
           to label %bb.dp unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.cg:                                            ; preds = %bb.ce
+bb.cg:                                            ; preds = %.loopexit677.thread, %bb.ce
+  %.sroa.075.2652840860 = phi i32 [ %.sroa.075.2652, %bb.ce ], [ %.sroa.075.2653, %.loopexit677.thread ]
+  %.sroa.882.2641841859 = phi i64 [ %.sroa.882.2641, %bb.ce ], [ %.sroa.882.2642.fr, %.loopexit677.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
   br label %bb.ap
 
 bb.ch:                                            ; preds = %bb.ce
   %.sroa.8129.0556582598.fr.le = freeze i64 %.sroa.8129.0556582598 ; 2 uses
-  %i.gh = trunc nuw i64 %9 to i32
+  %i.gh = trunc nuw i64 %10 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   store i32 %.sroa.0115.0564578602, ptr %i.dx, align 8
@@ -763,7 +770,7 @@ bb.db:                                            ; preds = %bb.da
   br label %bb.cb
 
 .loopexit669:                                     ; preds = %bb.do, %.loopexit673
-  %i.ij = mul nuw nsw i64 %9, 6
+  %i.ij = mul nuw nsw i64 %10, 6
   %i.ik = add i64 %i.ij, %.sroa.071.0.ph
   %i.il = add i64 %.sroa.073.0.ph, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
@@ -1166,7 +1173,7 @@ begin_hunk_1_@llvm.umax.i64
 !628 = !{!611, !610}
 !629 = !{!611}
 !630 = !{!613}
-!631 = !{!"branch_weights", !"expected", i32 1544329, i32 2145939319}
+!631 = !{!"branch_weights", !"expected", i32 2457019, i32 2145026629}
 !632 = !{!615}
 !633 = !{!617}
 !634 = !{!619}

@@ -202,12 +202,12 @@ bb.d:                                             ; preds = %lbmr_tag_find.exit
   br label %bb.e
 
 bb.e:                                             ; preds = %lbmr_tag_find.exit.thread, %bb.d, %lbmr_tag_find.exit
-  %.not381 = phi i1 [ true, %lbmr_tag_find.exit.thread ], [ false, %bb.d ], [ true, %lbmr_tag_find.exit ] ; 6 uses
+  %.not381 = phi i1 [ true, %lbmr_tag_find.exit.thread ], [ false, %bb.d ], [ true, %lbmr_tag_find.exit ] ; 4 uses
   %.0324380 = phi ptr [ null, %lbmr_tag_find.exit.thread ], [ %i.y, %bb.d ], [ null, %lbmr_tag_find.exit ] ; 7 uses
   %i.ab = load ptr, ptr %i.p, align 8
   tail call void @col_set_fence(ptr noundef %i.ab, i32 noundef 25)
   %i.ac = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0) ; 4 uses
-  %i.ad = lshr i8 %i.ac, 4                        ; 6 uses
+  %i.ad = lshr i8 %i.ac, 4                        ; 4 uses
   %i.ae = and i8 %i.ac, 7                         ; 8 uses
   %i.af = tail call i32 @tvb_reported_length(ptr noundef %0) ; 7 uses
   %i.ag = and i8 %i.ac, 8
@@ -244,7 +244,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.g, %bb.i, %bb.h, %bb.f, %bb.e
   %.2315 = phi ptr [ %0, %bb.e ], [ %0, %bb.f ], [ %0, %bb.g ], [ %i.av, %bb.i ], [ %0, %bb.h ] ; 227 uses
-  %i.aw = zext nneg i8 %i.ae to i32               ; 11 uses
+  %i.aw = zext nneg i8 %i.ae to i32               ; 9 uses
   %i.ax = icmp eq i8 %i.ae, 7
   %i.ay = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1) ; 7 uses
   br i1 %i.ax, label %bb.k, label %bb.am
@@ -647,26 +647,41 @@ bb.am:                                            ; preds = %bb.j
   br i1 %or.cond11, label %.thread404, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %.not542 = icmp eq i8 %i.ae, 4
-  %cond = icmp eq i8 %i.ae, 6
-  br i1 %cond, label %bb.ar, label %bb.ao
-
-bb.ao:                                            ; preds = %bb.an
   %11 = and i8 %i.ac, 6
-  %or.cond14 = icmp eq i8 %11, 2
-  %or.cond334 = select i1 %or.cond9, i1 %or.cond14, i1 false
-  br i1 %or.cond334, label %bb.ap, label %bb.aq
+  %.not542 = icmp eq i8 %11, 2
+  %or.cond334 = select i1 %or.cond9, i1 %.not542, i1 false ; 2 uses
+  %12 = icmp ne i8 %i.ae, 4                       ; 2 uses
+  %spec.select.not = select i1 %or.cond334, i1 true, i1 %12 ; 2 uses
+  %cond = icmp eq i8 %i.ae, 6
+  br i1 %cond, label %bb.ar, label %13
+
+13:                                               ; preds = %bb.an
+  br i1 %or.cond334, label %bb.ao, label %bb.aq
+
+bb.ao:                                            ; preds = %13
+  %or.cond14 = icmp eq i8 %i.ae, 2
+  %14 = load ptr, ptr %i.p, align 8               ; 2 uses
+  br i1 %or.cond14, label %15, label %bb.ap
+
+15:                                               ; preds = %bb.ao
+  tail call void @col_append_sep_str(ptr noundef %14, i32 noundef 25, ptr noundef @.str.809, ptr noundef @.str.816)
+  br label %.thread510
 
 bb.ap:                                            ; preds = %bb.ao
-  %12 = icmp eq i8 %i.ae, 2
-  %13 = load ptr, ptr %i.p, align 8
-  %.str.816..str.817 = select i1 %12, ptr @.str.816, ptr @.str.817
-  tail call void @col_append_sep_str(ptr noundef %13, i32 noundef 25, ptr noundef @.str.809, ptr noundef %.str.816..str.817)
-  br i1 %.not381, label %.thread514, label %.thread513
+  tail call void @col_append_sep_str(ptr noundef %14, i32 noundef 25, ptr noundef @.str.809, ptr noundef @.str.817)
+  br label %.thread510
 
-bb.aq:                                            ; preds = %bb.ao
+bb.aq:                                            ; preds = %13
   %i.ou = load ptr, ptr %i.p, align 8             ; 2 uses
-  br i1 %.not542, label %.thread510, label %.thread512
+  br i1 %12, label %17, label %16
+
+16:                                               ; preds = %bb.aq
+  tail call void @col_append_sep_str(ptr noundef %i.ou, i32 noundef 25, ptr noundef @.str.809, ptr noundef @.str.818)
+  br label %.thread510
+
+17:                                               ; preds = %bb.aq
+  tail call void (ptr, i32, ptr, ptr, ...) @col_append_sep_fstr(ptr noundef %i.ou, i32 noundef 25, ptr noundef @.str.809, ptr noundef @.str.819, i32 noundef %i.op, i32 noundef %i.or)
+  br label %.thread510
 
 bb.ar:                                            ; preds = %bb.an
   %i.ov = load ptr, ptr %i.p, align 8
@@ -686,18 +701,13 @@ bb.at:                                            ; preds = %bb.ar
   %i.pc = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %i.ow, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.821, i32 noundef %i.ox, i32 noundef 6, ptr noundef %i.pa, i32 noundef %i.op, i32 noundef %i.or)
   br label %.thread420
 
-.thread512:                                       ; preds = %bb.aq
-  tail call void (ptr, i32, ptr, ptr, ...) @col_append_sep_fstr(ptr noundef %i.ou, i32 noundef 25, ptr noundef @.str.809, ptr noundef @.str.819, i32 noundef %i.op, i32 noundef %i.or)
-  br i1 %.not381, label %.thread514, label %.thread513
-
-.thread510:                                       ; preds = %bb.aq
-  tail call void @col_append_sep_str(ptr noundef %i.ou, i32 noundef 25, ptr noundef @.str.809, ptr noundef @.str.818)
-  %i.pd = load i32, ptr @proto_lbmr, align 4      ; 2 uses
-  %i.pe = zext nneg i8 %i.ad to i32               ; 2 uses
+.thread510:                                       ; preds = %16, %17, %15, %bb.ap
+  %i.pd = load i32, ptr @proto_lbmr, align 4      ; 4 uses
+  %i.pe = zext nneg i8 %i.ad to i32               ; 4 uses
   %i.pf = getelementptr i8, ptr %1, i64 416
   %i.pg = load ptr, ptr %i.pf, align 8
-  %i.ph = tail call ptr @val_to_str(ptr noundef %i.pg, i32 noundef %i.aw, ptr noundef @lbmr_packet_type, ptr noundef @.str.808) ; 2 uses
-  br i1 %.not381, label %.thread515, label %.thread511
+  %i.ph = tail call ptr @val_to_str(ptr noundef %i.pg, i32 noundef %i.aw, ptr noundef @lbmr_packet_type, ptr noundef @.str.808) ; 4 uses
+  br i1 %.not381, label %19, label %18
 
 .thread404:                                       ; preds = %bb.am
   %i.pi = load ptr, ptr %i.p, align 8
@@ -713,34 +723,30 @@ bb.at:                                            ; preds = %bb.ar
   %i.po = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %i.pj, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.822, ptr noundef nonnull %.0324380, i32 noundef %i.pk, i32 noundef %i.aw, ptr noundef %i.pn)
   br label %bb.au
 
-.thread511:                                       ; preds = %.thread510
+18:                                               ; preds = %.thread510
+  br i1 %spec.select.not, label %.thread513, label %.thread511
+
+.thread511:                                       ; preds = %18
   %i.pp = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %i.pd, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.823, ptr noundef nonnull %.0324380, i32 noundef %i.pe, i32 noundef %i.aw, ptr noundef %i.ph)
   br label %bb.au
 
-.thread513:                                       ; preds = %bb.ap, %.thread512
-  %14 = load i32, ptr @proto_lbmr, align 4
-  %15 = zext nneg i8 %i.ad to i32
-  %16 = getelementptr i8, ptr %1, i64 416
-  %17 = load ptr, ptr %16, align 8
-  %18 = tail call ptr @val_to_str(ptr noundef %17, i32 noundef %i.aw, ptr noundef @lbmr_packet_type, ptr noundef @.str.808)
-  %i.pq = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %14, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.824, ptr noundef nonnull %.0324380, i32 noundef %15, i32 noundef %i.aw, ptr noundef %18, i32 noundef %i.op, i32 noundef %i.or)
+.thread513:                                       ; preds = %18
+  %i.pq = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %i.pd, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.824, ptr noundef nonnull %.0324380, i32 noundef %i.pe, i32 noundef %i.aw, ptr noundef %i.ph, i32 noundef %i.op, i32 noundef %i.or)
   br label %bb.au
 
 .thread415:                                       ; preds = %.thread404
   %i.pr = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %i.pj, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.825, i32 noundef %i.pk, i32 noundef %i.aw, ptr noundef %i.pn)
   br label %.thread420
 
-.thread515:                                       ; preds = %.thread510
+19:                                               ; preds = %.thread510
+  br i1 %spec.select.not, label %.thread514, label %.thread515
+
+.thread515:                                       ; preds = %19
   %i.ps = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %i.pd, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.826, i32 noundef %i.pe, i32 noundef %i.aw, ptr noundef %i.ph)
   br label %.thread420
 
-.thread514:                                       ; preds = %bb.ap, %.thread512
-  %19 = load i32, ptr @proto_lbmr, align 4
-  %20 = zext nneg i8 %i.ad to i32
-  %21 = getelementptr i8, ptr %1, i64 416
-  %22 = load ptr, ptr %21, align 8
-  %23 = tail call ptr @val_to_str(ptr noundef %22, i32 noundef %i.aw, ptr noundef @lbmr_packet_type, ptr noundef @.str.808)
-  %i.pt = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %19, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.827, i32 noundef %20, i32 noundef %i.aw, ptr noundef %23, i32 noundef %i.op, i32 noundef %i.or)
+.thread514:                                       ; preds = %19
+  %i.pt = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_protocol_format(ptr noundef %2, i32 noundef %i.pd, ptr noundef %0, i32 noundef 0, i32 noundef -1, ptr noundef @.str.827, i32 noundef %i.pe, i32 noundef %i.aw, ptr noundef %i.ph, i32 noundef %i.op, i32 noundef %i.or)
   br label %.thread420
 
 .thread420:                                       ; preds = %.thread515, %.thread514, %.thread415, %bb.at

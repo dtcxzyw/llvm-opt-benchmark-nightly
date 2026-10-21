@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d, %getSegLen.exit.thread93
-  %.260 = phi i32 [ %.058119, %getSegLen.exit.thread93 ], [ %.058119, %bb.d ], [ %.058119, %bb.e ], [ 3, %bb.f ] ; 3 uses
+  %.260 = phi i32 [ %.058119, %getSegLen.exit.thread93 ], [ %.058119, %bb.d ], [ %.058119, %bb.e ], [ 3, %bb.f ] ; 4 uses
   %.054 = phi double [ %.0.i97, %getSegLen.exit.thread93 ], [ %.055120, %bb.d ], [ %.055120, %bb.e ], [ %.055120, %bb.f ] ; 3 uses
-  %i.s = fsub double %.055120, %.054              ; 3 uses
+  %i.s = fsub double %.055120, %.054              ; 4 uses
   %i.t = fcmp ogt double %.054, 0.000000e+00
   %spec.select = zext i1 %i.t to i8
   %.not69 = icmp eq i64 %.sroa.5.096, 0
@@ -291,7 +291,7 @@ bb.q:                                             ; preds = %bb.g, %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.am, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !tbaa.struct !218
   %i.an = call double @llvm.fabs.f64(double %i.s)
   %or.cond4 = fcmp uge double %i.an, 1.000000e-05
-  br i1 %or.cond4, label %bb.r, label %.thread103
+  br i1 %or.cond4, label %bb.r, label %.loopexit
 
 bb.r:                                             ; preds = %bb.q
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.6.0118, i64 %.sroa.11.0117 ; 3 uses
@@ -306,14 +306,13 @@ tok_next.exit:                                    ; preds = %bb.r
   %i.au = call i64 @strcspn(ptr noundef nonnull %i.at, ptr noundef nonnull @.str.48) #31
   br label %bb.b, !llvm.loop !212
 
-.thread103:                                       ; preds = %bb.r, %bb.q
-  %.257110 = phi double [ %i.s, %bb.r ], [ 0.000000e+00, %bb.q ] ; 2 uses
-  %i.av = fcmp ogt double %.257110, 0.000000e+00
+.thread103:                                       ; preds = %bb.r
+  %i.av = fcmp ogt double %i.s, 0.000000e+00
   br i1 %i.av, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %bb.a, %.thread103
   %.5109164 = phi i32 [ %.260, %.thread103 ], [ 0, %bb.a ] ; 3 uses
-  %.257110162 = phi double [ %.257110, %.thread103 ], [ 1.000000e+00, %bb.a ] ; 2 uses
+  %.257110162 = phi double [ %i.s, %.thread103 ], [ 1.000000e+00, %bb.a ] ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %.val85128 = load i64, ptr %i.aw, align 8, !tbaa !109
   %.not145 = icmp eq i64 %.val85128, 0
@@ -377,8 +376,8 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph137
   store double %i.bw, ptr %i.bu, align 8, !tbaa !118
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.u, %bb.s, %._crit_edge.thread, %.thread103
-  %.5109163 = phi i32 [ %.260, %.thread103 ], [ %.5109164, %bb.s ], [ %.5109164, %._crit_edge.thread ], [ %.5109164, %bb.u ]
+.loopexit:                                        ; preds = %bb.q, %bb.u, %bb.s, %._crit_edge.thread, %.thread103
+  %.5109163 = phi i32 [ %.5109164, %bb.u ], [ %.5109164, %bb.s ], [ %.5109164, %._crit_edge.thread ], [ %.260, %.thread103 ], [ %.260, %bb.q ]
   %i.bx = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %.val82138 = load i64, ptr %i.bx, align 8, !tbaa !109 ; 2 uses
   %.not71139 = icmp eq i64 %.val82138, 0

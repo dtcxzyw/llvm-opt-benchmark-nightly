@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge:                                        ; preds = %bb.b, %bb.c
   %i.f = icmp eq ptr %1, %.0481                   ; 3 uses
-  %spec.select = select i1 %i.f, i32 0, i32 %0    ; 19 uses
+  %spec.select = select i1 %i.f, i32 0, i32 %0    ; 15 uses
   %i.g = and i32 %7, 1024
   %.not = icmp eq i32 %i.g, 0
   br i1 %.not, label %bb.d, label %bb.as
@@ -608,7 +608,7 @@ integer_pack_fill_dd.exit392:                     ; preds = %bb.bh, %bb.bi
   br i1 %or.cond13, label %bb.bj, label %bb.bk
 
 bb.bj:                                            ; preds = %integer_pack_fill_dd.exit392
-  %i.kz = shl nsw i32 %spec.select, 1
+  %i.kz = shl nsw i32 %0, 1
   br label %bb.bq
 
 bb.bk:                                            ; preds = %integer_pack_fill_dd.exit392
@@ -618,7 +618,7 @@ bb.bk:                                            ; preds = %integer_pack_fill_d
 bb.bl:                                            ; preds = %bb.bk
   %i.lb = and i32 %7, 128
   %i.lc = icmp eq i32 %i.lb, 0
-  %i.ld = icmp sgt i32 %spec.select, -1
+  %i.ld = icmp sgt i32 %0, -1
   %or.cond15 = or i1 %i.lc, %i.ld
   br i1 %or.cond15, label %bb.bm, label %.preheader555
 
@@ -626,7 +626,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.b, label %.lr.ph580, label %.critedge17
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.le = shl nsw i32 %spec.select, 1
+  %i.le = shl nsw i32 %0, 1
   br label %bb.bq
 
 .lr.ph580:                                        ; preds = %.preheader555, %bb.bn
@@ -658,7 +658,7 @@ bb.bp:                                            ; preds = %bb.av, %bb.aw, %bb.
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bj, %bb.bm, %bb.bp, %bb.bk, %bb.bo, %bb.aw, %bb.ay, %bb.au
-  %.4293 = phi i32 [ %i.hr, %bb.au ], [ %0, %bb.ay ], [ -2, %bb.bp ], [ -1, %bb.bo ], [ -1, %bb.aw ], [ %i.kz, %bb.bj ], [ %i.le, %bb.bm ], [ %spec.select, %bb.bk ] ; 3 uses
+  %.4293 = phi i32 [ %i.hr, %bb.au ], [ %0, %bb.ay ], [ -2, %bb.bp ], [ -1, %bb.bo ], [ -1, %bb.aw ], [ %i.kz, %bb.bj ], [ %i.le, %bb.bm ], [ %0, %bb.bk ] ; 3 uses
   %i.lq = and i32 %7, 128
   %i.lr = icmp ne i32 %i.lq, 0
   %i.ls = icmp slt i32 %.4293, 0
@@ -678,7 +678,7 @@ bb.br:                                            ; preds = %bb.bq
   %.033.i395 = select i1 %i.lv, i64 0, i64 %i.lx
   %i.lz = trunc i64 %6 to i32
   %i.ma = and i32 %i.lz, 7                        ; 3 uses
-  %i.mb = icmp ne i32 %i.ma, 0                    ; 3 uses
+  %i.mb = icmp ne i32 %i.ma, 0                    ; 2 uses
   %i.mc = lshr i64 %6, 3                          ; 2 uses
   %i.md = sub i64 %5, %i.mc
   %i.me = sext i1 %i.mb to i64                    ; 2 uses
@@ -689,8 +689,7 @@ bb.br:                                            ; preds = %bb.bq
   %.032.i397 = select i1 %i.mg, i64 %i.mh, i64 0
   %.0.i398 = select i1 %i.mg, i64 -1, i64 1       ; 3 uses
   %i.mi = sub nuw nsw i32 8, %i.ma
-  %i.mj = lshr i32 255, %i.ma
-  %8 = select i1 %i.mb, i32 %i.mj, i32 0          ; 2 uses
+  %i.mj = lshr i32 255, %i.ma                     ; 2 uses
   %i.mk = getelementptr i8, ptr %3, i64 %.035.i393
   %i.ml = getelementptr i8, ptr %3, i64 %.033.i395
   %.not613 = icmp eq i64 %spec.select.i396, 0
@@ -762,9 +761,9 @@ bb.bt:                                            ; preds = %._crit_edge589
   %i.nk = load i8, ptr %.0.lcssa, align 1, !tbaa !49
   %i.nl = zext i8 %i.nk to i32
   %i.nm = xor i32 %i.nl, -1
-  %i.nn = and i32 %8, %i.nm
+  %i.nn = and i32 %i.mj, %i.nm
   %i.no = add i32 %i.nn, %.1.lcssa                ; 2 uses
-  %i.np = and i32 %i.no, %8
+  %i.np = and i32 %i.no, %i.mj
   %i.nq = trunc nuw nsw i32 %i.np to i8
   store i8 %i.nq, ptr %.0.lcssa, align 1, !tbaa !49
   %i.nr = ashr i32 %i.no, %i.mi
@@ -1167,7 +1166,7 @@ bb.am:                                            ; preds = %bb.al
   %.033.i = select i1 %i.er, i64 0, i64 %i.et
   %i.ev = trunc i64 %5 to i32
   %i.ew = and i32 %i.ev, 7                        ; 3 uses
-  %i.ex = icmp ne i32 %i.ew, 0                    ; 3 uses
+  %i.ex = icmp ne i32 %i.ew, 0                    ; 2 uses
   %i.ey = lshr i64 %5, 3
   %i.ez = sub i64 %4, %i.ey
   %i.fa = sext i1 %i.ex to i64
@@ -1181,7 +1180,6 @@ bb.am:                                            ; preds = %bb.al
   %i.ff = getelementptr i8, ptr %2, i64 %.033.i
   %.not371 = icmp eq i64 %spec.select.i, 0
   %i.fg = lshr i32 255, %i.ew
-  %8 = select i1 %i.ex, i32 %i.fg, i32 0
   %invariant.op = sub i32 8, %i.ew
   br label %bb.an
 
@@ -1286,7 +1284,7 @@ integer_unpack_push_bits.exit:                    ; preds = %.lr.ph.i234.prol.lo
 bb.ao:                                            ; preds = %._crit_edge
   %i.gq = load i8, ptr %.0.lcssa, align 1, !tbaa !49
   %i.gr = zext i8 %i.gq to i32
-  %i.gs = and i32 %8, %i.gr
+  %i.gs = and i32 %i.fg, %i.gr
   %i.gt = zext nneg i32 %i.gs to i64
   %i.gu = zext nneg i32 %.1284.lcssa to i64
   %i.gv = shl i64 %i.gt, %i.gu
@@ -1689,7 +1687,7 @@ bb.e:                                             ; preds = %bb.c
 rb_integer_pack.exit:                             ; preds = %BIGNUM_LEN.exit.loopexit.i, %bb.d, %bb.e
   %.019.i = phi ptr [ %i.an, %bb.d ], [ %i.aq, %bb.e ], [ %i.b, %BIGNUM_LEN.exit.loopexit.i ] ; 7 uses
   %.018.i = phi i64 [ %i.ap, %bb.d ], [ %i.as, %bb.e ], [ 2, %BIGNUM_LEN.exit.loopexit.i ]
-  %.117.i = phi i32 [ %i.ak, %bb.d ], [ %i.ak, %bb.e ], [ %.016.i, %BIGNUM_LEN.exit.loopexit.i ]
+  %.117.i = phi i32 [ %i.ak, %bb.d ], [ %i.ak, %bb.e ], [ %.016.i, %BIGNUM_LEN.exit.loopexit.i ] ; 2 uses
   %i.at = getelementptr [4 x i8], ptr %.019.i, i64 %.018.i
   br label %bb.f
 
@@ -1705,8 +1703,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ax, label %bb.f, label %.critedge.i, !llvm.loop !20
 
 .critedge.i:                                      ; preds = %bb.g, %bb.f
-  %i.ay = icmp eq ptr %.019.i, %.0481.i           ; 2 uses
-  %spec.select.i = select i1 %i.ay, i32 0, i32 %.117.i ; 2 uses
+  %i.ay = icmp eq ptr %.019.i, %.0481.i
   br i1 %i.ay, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.critedge.i
@@ -1742,7 +1739,7 @@ bb.k:                                             ; preds = %.critedge5.thread.i
 
 ruby_nonempty_memcpy.exit364.i:                   ; preds = %.critedge5.thread.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull readonly align 1 dereferenceable(16) %.019.i, i64 noundef range(i64 1, 0) 16, i1 noundef false) #23
-  %i.bi = shl nsw i32 %spec.select.i, 1
+  %i.bi = shl nsw i32 %.117.i, 1
   br label %bary_pack.exit
 
 .thread530.i:                                     ; preds = %bb.j, %bb.k
@@ -1753,7 +1750,7 @@ ruby_nonempty_memcpy.exit364.i:                   ; preds = %.critedge5.thread.i
   br label %bary_pack.exit
 
 bary_pack.exit:                                   ; preds = %ruby_nonempty_memcpy.exit364.i, %bb.h, %.thread530.i
-  %.4.i = phi i32 [ %i.bi, %ruby_nonempty_memcpy.exit364.i ], [ 0, %bb.h ], [ %spec.select.i, %.thread530.i ] ; 2 uses
+  %.4.i = phi i32 [ %i.bi, %ruby_nonempty_memcpy.exit364.i ], [ 0, %bb.h ], [ %.117.i, %.thread530.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.4.i.lobit = lshr i32 %.4.i, 31                ; 2 uses

@@ -204,9 +204,8 @@ stbtt__sort_edges_ins_sort.exit:                  ; preds = %bb.e, %bb.a
 define void @stbtt__rasterize(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, float noundef %4, float noundef %5, float noundef %6, float noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10, ptr nofree readnone captures(none) %11) local_unnamed_addr #21 {
 bb.a:
   %.sroa.5.i.i = alloca { float, float, i32 }, align 8 ; 4 uses
-  %.not = icmp eq i32 %10, 0                      ; 2 uses
+  %.not = icmp eq i32 %10, 0
   %i.a = fneg float %5
-  %12 = select i1 %.not, float %5, float %i.a     ; 2 uses
   %i.b = icmp sgt i32 %3, 0
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge.thread
 
@@ -274,7 +273,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph104.split.preheader:                        ; preds = %.lr.ph104
   %i.s = insertelement <4 x float> poison, float %4, i64 0
-  %i.t = insertelement <4 x float> %i.s, float %12, i64 1
+  %i.t = insertelement <4 x float> %i.s, float %i.a, i64 1
   %i.u = shufflevector <4 x float> %i.t, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.v = insertelement <4 x float> poison, float %6, i64 0
   %i.w = insertelement <4 x float> %i.v, float %7, i64 1
@@ -283,7 +282,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph104.split.us.preheader:                     ; preds = %.lr.ph104
   %i.y = insertelement <4 x float> poison, float %4, i64 0
-  %i.z = insertelement <4 x float> %i.y, float %12, i64 1
+  %i.z = insertelement <4 x float> %i.y, float %5, i64 1
   %i.aa = shufflevector <4 x float> %i.z, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.ab = insertelement <4 x float> poison, float %6, i64 0
   %i.ac = insertelement <4 x float> %i.ab, float %7, i64 1

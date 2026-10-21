@@ -205,10 +205,10 @@ bb.a:
   %i.e = alloca [64 x i8], align 8                ; 10 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
   %i.g = alloca [16 x i8], align 8                ; 4 uses
-  %i.h = alloca [8 x i8], align 8                 ; 4 uses
-  %i.i = alloca [72 x i8], align 8                ; 6 uses
-  %i.j = alloca [1 x i8], align 1                 ; 4 uses
-  %i.k = alloca [8 x i8], align 8                 ; 4 uses
+  %i.h = alloca [8 x i8], align 8                 ; 6 uses
+  %i.i = alloca [72 x i8], align 8                ; 7 uses
+  %i.j = alloca [1 x i8], align 1                 ; 5 uses
+  %i.k = alloca [8 x i8], align 8                 ; 5 uses
   %i.l = alloca [32 x i8], align 8                ; 6 uses
   %i.m = alloca [16 x i8], align 8                ; 4 uses
   %i.n = alloca [16 x i8], align 8                ; 4 uses
@@ -417,20 +417,23 @@ bb.j:                                             ; preds = %bb.h
   store i8 %storemerge, ptr %i.j, align 1
   br i1 %i.bw, label %bb.k, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service14ipc_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
-bb.k:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service14ipc_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.j
-  %0 = phi i8 [ -1, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service14ipc_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ], [ %i.by, %bb.j ]
+bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   store ptr %i.j, ptr %i.k, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr @489, ptr %i.h, align 8, !captures !11
-  %i.bz = icmp eq i8 %0, 2
-  br i1 %i.bz, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service14ipc_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit50, label %bb.l, !prof !26
+  %i.bz = icmp eq i8 %i.by, 2
+  br i1 %i.bz, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service14ipc_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit50, label %bb.l, !prof !18
 
 _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service14ipc_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %bb.j
   call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtBG_7service14ipc_threadsafe7ServiceShuyuEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.i) #15
-  br label %bb.k
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  store ptr %i.j, ptr %i.k, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
+  store ptr @489, ptr %i.h, align 8, !captures !11
+  br label %bb.l
 
-bb.l:                                             ; preds = %bb.k
+bb.l:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service14ipc_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.ca = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #15 ; 2 uses
   %spec.select65 = select i1 %i.ca, ptr @15, ptr inttoptr (i64 1 to ptr)
@@ -534,10 +537,10 @@ bb.a:
   %i.e = alloca [64 x i8], align 8                ; 10 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
   %i.g = alloca [16 x i8], align 8                ; 4 uses
-  %i.h = alloca [8 x i8], align 8                 ; 4 uses
-  %i.i = alloca [72 x i8], align 8                ; 6 uses
-  %i.j = alloca [1 x i8], align 1                 ; 4 uses
-  %i.k = alloca [8 x i8], align 8                 ; 4 uses
+  %i.h = alloca [8 x i8], align 8                 ; 6 uses
+  %i.i = alloca [72 x i8], align 8                ; 7 uses
+  %i.j = alloca [1 x i8], align 1                 ; 5 uses
+  %i.k = alloca [8 x i8], align 8                 ; 5 uses
   %i.l = alloca [32 x i8], align 8                ; 6 uses
   %i.m = alloca [16 x i8], align 8                ; 4 uses
   %i.n = alloca [16 x i8], align 8                ; 4 uses
@@ -746,20 +749,23 @@ bb.j:                                             ; preds = %bb.h
   store i8 %storemerge, ptr %i.j, align 1
   br i1 %i.bw, label %bb.k, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service16local_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
-bb.k:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service16local_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.j
-  %0 = phi i8 [ -1, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service16local_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ], [ %i.by, %bb.j ]
+bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   store ptr %i.j, ptr %i.k, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr @489, ptr %i.h, align 8, !captures !11
-  %i.bz = icmp eq i8 %0, 2
-  br i1 %i.bz, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service16local_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit50, label %bb.l, !prof !26
+  %i.bz = icmp eq i8 %i.by, 2
+  br i1 %i.bz, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service16local_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit50, label %bb.l, !prof !18
 
 _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service16local_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %bb.j
   call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtBG_7service16local_threadsafe7ServiceShuyuEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.i) #15
-  br label %bb.k
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  store ptr %i.j, ptr %i.k, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
+  store ptr @489, ptr %i.h, align 8, !captures !11
+  br label %bb.l
 
-bb.l:                                             ; preds = %bb.k
+bb.l:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service16local_threadsafe7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.ca = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #15 ; 2 uses
   %spec.select65 = select i1 %i.ca, ptr @15, ptr inttoptr (i64 1 to ptr)
@@ -863,10 +869,10 @@ bb.a:
   %i.e = alloca [64 x i8], align 8                ; 10 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
   %i.g = alloca [16 x i8], align 8                ; 4 uses
-  %i.h = alloca [8 x i8], align 8                 ; 4 uses
-  %i.i = alloca [72 x i8], align 8                ; 6 uses
-  %i.j = alloca [1 x i8], align 1                 ; 4 uses
-  %i.k = alloca [8 x i8], align 8                 ; 4 uses
+  %i.h = alloca [8 x i8], align 8                 ; 6 uses
+  %i.i = alloca [72 x i8], align 8                ; 7 uses
+  %i.j = alloca [1 x i8], align 1                 ; 5 uses
+  %i.k = alloca [8 x i8], align 8                 ; 5 uses
   %i.l = alloca [32 x i8], align 8                ; 6 uses
   %i.m = alloca [16 x i8], align 8                ; 4 uses
   %i.n = alloca [16 x i8], align 8                ; 4 uses
@@ -1075,20 +1081,23 @@ bb.j:                                             ; preds = %bb.h
   store i8 %storemerge, ptr %i.j, align 1
   br i1 %i.bw, label %bb.k, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service3ipc7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
-bb.k:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service3ipc7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.j
-  %0 = phi i8 [ -1, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service3ipc7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ], [ %i.by, %bb.j ]
+bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   store ptr %i.j, ptr %i.k, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr @489, ptr %i.h, align 8, !captures !11
-  %i.bz = icmp eq i8 %0, 2
-  br i1 %i.bz, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service3ipc7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit50, label %bb.l, !prof !26
+  %i.bz = icmp eq i8 %i.by, 2
+  br i1 %i.bz, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service3ipc7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit50, label %bb.l, !prof !18
 
 _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service3ipc7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %bb.j
   call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtBG_7service3ipc7ServiceShuyuEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.i) #15
-  br label %bb.k
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  store ptr %i.j, ptr %i.k, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
+  store ptr @489, ptr %i.h, align 8, !captures !11
+  br label %bb.l
 
-bb.l:                                             ; preds = %bb.k
+bb.l:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service3ipc7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.ca = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #15 ; 2 uses
   %spec.select65 = select i1 %i.ca, ptr @15, ptr inttoptr (i64 1 to ptr)
@@ -1193,10 +1202,10 @@ bb.a:
   %i.e = alloca [64 x i8], align 8                ; 10 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
   %i.g = alloca [16 x i8], align 8                ; 4 uses
-  %i.h = alloca [8 x i8], align 8                 ; 4 uses
-  %i.i = alloca [72 x i8], align 8                ; 6 uses
-  %i.j = alloca [1 x i8], align 1                 ; 4 uses
-  %i.k = alloca [8 x i8], align 8                 ; 4 uses
+  %i.h = alloca [8 x i8], align 8                 ; 6 uses
+  %i.i = alloca [72 x i8], align 8                ; 7 uses
+  %i.j = alloca [1 x i8], align 1                 ; 5 uses
+  %i.k = alloca [8 x i8], align 8                 ; 5 uses
   %i.l = alloca [32 x i8], align 8                ; 6 uses
   %i.m = alloca [16 x i8], align 8                ; 4 uses
   %i.n = alloca [16 x i8], align 8                ; 4 uses
@@ -1405,20 +1414,23 @@ bb.j:                                             ; preds = %bb.h
   store i8 %storemerge, ptr %i.j, align 1
   br i1 %i.bw, label %bb.k, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service5local7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
-bb.k:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service5local7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.j
-  %0 = phi i8 [ -1, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service5local7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit ], [ %i.by, %bb.j ]
+bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   store ptr %i.j, ptr %i.k, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr @489, ptr %i.h, align 8, !captures !11
-  %i.bz = icmp eq i8 %0, 2
-  br i1 %i.bz, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service5local7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit50, label %bb.l, !prof !26
+  %i.bz = icmp eq i8 %i.by, 2
+  br i1 %i.bz, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service5local7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit50, label %bb.l, !prof !18
 
 _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service5local7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %bb.j
   call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtBG_7service5local7ServiceShuyuEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.i) #15
-  br label %bb.k
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  store ptr %i.j, ptr %i.k, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
+  store ptr @489, ptr %i.h, align 8, !captures !11
+  br label %bb.l
 
-bb.l:                                             ; preds = %bb.k
+bb.l:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsg6ZEkMtNi4J_8iceoryx211request_mut10RequestMutNtNtNtB12_7service5local7ServiceShuyuENtNtB12_4port9LoanErrorEECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.ca = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #15 ; 2 uses
   %spec.select65 = select i1 %i.ca, ptr @15, ptr inttoptr (i64 1 to ptr)

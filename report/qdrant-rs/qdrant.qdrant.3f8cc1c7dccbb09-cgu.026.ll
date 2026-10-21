@@ -204,11 +204,9 @@ bb.c:                                             ; preds = %_RNCINvNtNtNtCskKLD
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 504
   %i.n = load i64, ptr %i.m, align 8, !range !19, !alias.scope !1839, !noalias !1840
   %i.o = icmp ne i64 %i.n, 1
-  %or.cond.i.not.i.i.i.i = select i1 %.not.i.i.i.i.i, i1 true, i1 %i.o ; 3 uses
+  %or.cond.i.not.i.i.i.i = select i1 %.not.i.i.i.i.i, i1 true, i1 %i.o
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 512
   %i.q = load i64, ptr %i.p, align 8, !alias.scope !1839, !noalias !1840 ; 2 uses
-  %.sroa.3.0.i.i.i.i.i = select i1 %or.cond.i.not.i.i.i.i, ptr null, ptr %i.j
-  %.sroa.0.0.i.i.i.i.i = select i1 %or.cond.i.not.i.i.i.i, i64 undef, i64 %i.q
   br i1 %or.cond.i.not.i.i.i.i, label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map15filter_map_foldRNtNtNtCsl8OoimOLbh_6qdrant6common9telemetry13TelemetryDataTyB1a_EuNCNvMNtNtB1f_13telemetry_ops21distributed_telemetryNtB2k_24DistributedTelemetryData19resolve_telemetriess_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB27_NCINvXs1i_NtCsjqcU1oJFKXj_9hashbrown3mapINtB55_7HashMapyB1a_NtNtNtCsG258MDvU3F_3std4hash6random11RandomStateEINtNtB49_7collect6ExtendB27_E6extendINtB4_9FilterMapINtNtNtBa_5slice4iter4IterB1b_EB2f_EE0E0E0B1h_.exit.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -326,7 +324,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bq = sub nsw i64 0, %.sroa.3.0.i.ph.i.i.i.i.i.i.i.i
   %i.br = getelementptr inbounds [16 x i8], ptr %i.bd, i64 %i.bq ; 2 uses
   %i.bs = getelementptr inbounds i8, ptr %i.br, i64 -16
-  store i64 %.sroa.0.0.i.i.i.i.i, ptr %i.bs, align 8, !noalias !1853
+  store i64 %i.q, ptr %i.bs, align 8, !noalias !1853
   br label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTyRNtNtNtCsl8OoimOLbh_6qdrant6common9telemetry13TelemetryDataENCINvXs1i_NtCsjqcU1oJFKXj_9hashbrown3mapINtB2p_7HashMapyB1h_NtNtNtCsG258MDvU3F_3std4hash6random11RandomStateEINtNtBa_7collect6ExtendB1f_E6extendINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterB1i_ENCNvMNtNtB1m_13telemetry_ops21distributed_telemetryNtB5O_24DistributedTelemetryData19resolve_telemetriess_0EE0E0B1o_.exit.i.i.i.i
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
@@ -337,7 +335,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTyRNtNtNtCsl8OoimOLbh_6qdrant6common9telemetry13TelemetryDataENCINvXs1i_NtCsjqcU1oJFKXj_9hashbrown3mapINtB2p_7HashMapyB1h_NtNtNtCsG258MDvU3F_3std4hash6random11RandomStateEINtNtBa_7collect6ExtendB1f_E6extendINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBe_5slice4iter4IterB1i_ENCNvMNtNtB1m_13telemetry_ops21distributed_telemetryNtB5O_24DistributedTelemetryData19resolve_telemetriess_0EE0E0B1o_.exit.i.i.i.i: ; preds = %bb.l, %bb.k
   %.sink6.i.i.i.i.i.i = phi ptr [ %i.br, %bb.k ], [ %i.bu, %bb.l ]
   %i.bv = getelementptr inbounds i8, ptr %.sink6.i.i.i.i.i.i, i64 -8
-  store ptr %.sroa.3.0.i.i.i.i.i, ptr %i.bv, align 8, !noalias !1844
+  store ptr %i.j, ptr %i.bv, align 8, !noalias !1844
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1842
   br label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map15filter_map_foldRNtNtNtCsl8OoimOLbh_6qdrant6common9telemetry13TelemetryDataTyB1a_EuNCNvMNtNtB1f_13telemetry_ops21distributed_telemetryNtB2k_24DistributedTelemetryData19resolve_telemetriess_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB27_NCINvXs1i_NtCsjqcU1oJFKXj_9hashbrown3mapINtB55_7HashMapyB1a_NtNtNtCsG258MDvU3F_3std4hash6random11RandomStateEINtNtB49_7collect6ExtendB27_E6extendINtB4_9FilterMapINtNtNtBa_5slice4iter4IterB1b_EB2f_EE0E0E0B1h_.exit.i.i.i
 

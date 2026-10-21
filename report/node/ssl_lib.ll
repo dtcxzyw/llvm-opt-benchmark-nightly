@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %.thread16
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @ossl_bytes_to_cipher_list(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [3 x i8], align 1                 ; 6 uses
+  %i.a = alloca [3 x i8], align 2                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
-  %.not81.not = icmp ne i32 %4, 0                 ; 3 uses
+  %.not80 = icmp eq i32 %4, 0                     ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 8          ; 6 uses
   %.val62 = load i64, ptr %i.b, align 8, !tbaa !337 ; 2 uses
   %i.c = icmp eq i64 %.val62, 0
@@ -229,7 +229,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.af
 
 bb.e:                                             ; preds = %bb.a
-  %i.d = select i1 %.not81.not, i64 3, i64 2      ; 10 uses
+  %i.d = select i1 %.not80, i64 2, i64 3          ; 2 uses
   %i.e = urem i64 %.val62, %i.d
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %bb.i, label %bb.f
@@ -263,19 +263,19 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.j, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = zext i1 %.not81.not to i64
-  %.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx ; 2 uses
-  br i1 %.not81.not, label %.lr.ph.split, label %.lr.ph.split.us
+  %.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  br i1 %.not80, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.backedge.us
   %.val.i.i68.us = phi i64 [ %.val.i.i.us, %.backedge.us ], [ %.val.i.i67, %.lr.ph ]
   %i.k = load ptr, ptr %1, align 8, !tbaa !336    ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(2) %i.a, ptr noundef nonnull align 1 dereferenceable(2) %i.k, i64 range(i64 2, 4) %i.d, i1 false)
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.d
+  %6 = load i16, ptr %i.k, align 1
+  store i16 %6, ptr %i.a, align 2
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 2
   store ptr %i.l, ptr %1, align 8, !tbaa !336
-  %6 = sub nuw i64 %.val.i.i68.us, %i.d
-  store i64 %6, ptr %i.b, align 8, !tbaa !337
-  %i.m = call ptr @ssl_get_cipher_by_char(ptr noundef %0, ptr noundef nonnull %.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel, i32 noundef 1) #17 ; 5 uses
+  %7 = add i64 %.val.i.i68.us, -2
+  store i64 %7, ptr %i.b, align 8, !tbaa !337
+  %i.m = call ptr @ssl_get_cipher_by_char(ptr noundef %0, ptr noundef nonnull %i.a, i32 noundef 1) #17 ; 5 uses
   %.not52.us = icmp eq ptr %i.m, null
   br i1 %.not52.us, label %.backedge.us, label %bb.j
 
@@ -301,7 +301,7 @@ bb.l:                                             ; preds = %bb.k
 
 .backedge.us:                                     ; preds = %.thread.us, %bb.l, %.lr.ph.split.us
   %.val.i.i.us = load i64, ptr %i.b, align 8, !tbaa !337 ; 3 uses
-  %i.q = icmp ult i64 %.val.i.i.us, %i.d
+  %i.q = icmp ult i64 %.val.i.i.us, 2
   br i1 %i.q, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !529
 
 bb.m:                                             ; preds = %bb.i
@@ -322,19 +322,19 @@ bb.o:                                             ; preds = %bb.m
 .lr.ph.split:                                     ; preds = %.lr.ph, %.backedge
   %.val.i.i68 = phi i64 [ %.val.i.i, %.backedge ], [ %.val.i.i67, %.lr.ph ]
   %i.r = load ptr, ptr %1, align 8, !tbaa !336    ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(2) %i.a, ptr noundef nonnull align 1 dereferenceable(2) %i.r, i64 range(i64 2, 4) %i.d, i1 false)
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.d
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(3) %i.a, ptr noundef nonnull align 1 dereferenceable(3) %i.r, i64 range(i64 2, 4) 3, i1 false)
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 3
   store ptr %i.s, ptr %1, align 8, !tbaa !336
-  %7 = sub nuw i64 %.val.i.i68, %i.d
-  store i64 %7, ptr %i.b, align 8, !tbaa !337
-  %i.t = load i8, ptr %i.a, align 1
+  %8 = add i64 %.val.i.i68, -3                    ; 2 uses
+  store i64 %8, ptr %i.b, align 8, !tbaa !337
+  %i.t = load i8, ptr %i.a, align 2
   %.not69 = icmp eq i8 %i.t, 0
   br i1 %.not69, label %bb.p, label %.backedge
 
 bb.p:                                             ; preds = %.lr.ph.split
   %i.u = call ptr @ssl_get_cipher_by_char(ptr noundef %0, ptr noundef nonnull %.idx.sroa.sel.idx.sroa.sel.idx.sroa.sel, i32 noundef 1) #17 ; 5 uses
   %.not52 = icmp eq ptr %i.u, null
-  br i1 %.not52, label %.backedge, label %bb.q
+  br i1 %.not52, label %.backedgethread-pre-split, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.v = load i32, ptr %i.u, align 8, !tbaa !530
@@ -349,14 +349,14 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %.pr = load i32, ptr %i.u, align 8, !tbaa !530
   %.not55 = icmp eq i32 %.pr, 0
-  br i1 %.not55, label %.thread, label %.backedge
+  br i1 %.not55, label %.thread, label %.backedgethread-pre-split
 
 .thread:                                          ; preds = %bb.q, %bb.s
   %i.x = call i32 @OPENSSL_sk_push(ptr noundef %i.g, ptr noundef nonnull %i.u) #17
   %.not56 = icmp eq i32 %i.x, 0
-  br i1 %.not56, label %.split.us, label %.backedge
+  br i1 %.not56, label %.split.us, label %.backedgethread-pre-split
 
-.split.us:                                        ; preds = %bb.k, %.thread.us, %bb.r, %.thread
+.split.us:                                        ; preds = %bb.r, %.thread, %bb.k, %.thread.us
   %.not57 = icmp eq i32 %5, 0
   call void @ERR_new() #17
   br i1 %.not57, label %bb.u, label %bb.t
@@ -371,13 +371,17 @@ bb.u:                                             ; preds = %.split.us
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 20, i32 noundef 524303, ptr noundef null) #17
   br label %bb.ae
 
-.backedge:                                        ; preds = %bb.p, %.thread, %bb.s, %.lr.ph.split
-  %.val.i.i = load i64, ptr %i.b, align 8, !tbaa !337 ; 3 uses
-  %i.y = icmp ult i64 %.val.i.i, %i.d
+.backedgethread-pre-split:                        ; preds = %bb.s, %.thread, %bb.p
+  %.val.i.i.pr = load i64, ptr %i.b, align 8, !tbaa !337
+  br label %.backedge
+
+.backedge:                                        ; preds = %.backedgethread-pre-split, %.lr.ph.split
+  %.val.i.i = phi i64 [ %.val.i.i.pr, %.backedgethread-pre-split ], [ %8, %.lr.ph.split ] ; 3 uses
+  %i.y = icmp ult i64 %.val.i.i, 3
   br i1 %i.y, label %._crit_edge, label %.lr.ph.split, !llvm.loop !529
 
-._crit_edge:                                      ; preds = %.backedge.us, %.backedge, %.preheader
-  %.val = phi i64 [ %.val.i.i, %.backedge ], [ %.val.i.i67, %.preheader ], [ %.val.i.i.us, %.backedge.us ]
+._crit_edge:                                      ; preds = %.backedge, %.backedge.us, %.preheader
+  %.val = phi i64 [ %.val.i.i.us, %.backedge.us ], [ %.val.i.i67, %.preheader ], [ %.val.i.i, %.backedge ]
   %.not48 = icmp eq i64 %.val, 0
   br i1 %.not48, label %bb.y, label %bb.v
 

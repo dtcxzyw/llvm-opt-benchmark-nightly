@@ -205,12 +205,11 @@ bb.e:                                             ; preds = %bb.b
   %.sroa.0.0 = phi ptr [ %i.b, %bb.c ], [ %i.e, %bb.d ], [ @_RNvNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB6_10SyntaxNode9leaf_text5EMPTY, %bb.b ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 15
   %i.j = load i8, ptr %i.i, align 1, !alias.scope !7324, !noalias !7325, !noundef !19 ; 2 uses
-  %.not.i.i.i = icmp sgt i8 %i.j, -1              ; 2 uses
+  %.not.i.i.i = icmp sgt i8 %i.j, -1
   %i.k = and i8 %i.j, 127
-  %i.l = zext nneg i8 %i.k to i64
+  %i.l = zext nneg i8 %i.k to i64                 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
-  %i.n = load i64, ptr %i.m, align 8, !alias.scope !7324, !noalias !7325
-  %.sroa.3.0.i.i.i = select i1 %.not.i.i.i, i64 %i.n, i64 %i.l ; 4 uses
+  %i.n = load i64, ptr %i.m, align 8, !alias.scope !7324, !noalias !7325 ; 2 uses
   br i1 %.not.i.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %_RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.thread.us.i
@@ -219,13 +218,13 @@ bb.e:                                             ; preds = %bb.b
   %.add11 = add nuw nsw i64 %.idx10, 24           ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.ptr12, i64 8
   %i.p = load i64, ptr %i.o, align 8, !noalias !7325, !noundef !19
-  %i.q = icmp eq i64 %i.p, %.sroa.3.0.i.i.i
+  %i.q = icmp eq i64 %i.p, %i.n
   br i1 %i.q, label %_RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.us.i, label %_RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.thread.us.i
 
 _RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.us.i: ; preds = %.lr.ph.split.us.i
   %i.r = load ptr, ptr %.sroa.0.0, align 8, !alias.scope !7324, !noalias !7325, !nonnull !19
   %i.s = load ptr, ptr %.ptr12, align 8, !noalias !7325, !nonnull !19, !noundef !19
-  %bcmp.i.us.i = tail call i32 @bcmp(ptr nonnull %i.s, ptr nonnull %i.r, i64 %.sroa.3.0.i.i.i), !noalias !7325
+  %bcmp.i.us.i = tail call i32 @bcmp(ptr nonnull %i.s, ptr nonnull %i.r, i64 %i.n), !noalias !7325
   %i.t = icmp eq i32 %bcmp.i.us.i, 0
   br i1 %i.t, label %.loopexit, label %_RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.thread.us.i
 
@@ -239,12 +238,12 @@ _RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.th
   %.add = add nuw nsw i64 %.idx, 24               ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.ptr, i64 8
   %i.w = load i64, ptr %i.v, align 8, !noalias !7325, !noundef !19
-  %i.x = icmp eq i64 %i.w, %.sroa.3.0.i.i.i
+  %i.x = icmp eq i64 %i.w, %i.l
   br i1 %i.x, label %_RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.i, label %_RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.thread.i
 
 _RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.i: ; preds = %.lr.ph.split.i
   %i.y = load ptr, ptr %.ptr, align 8, !noalias !7325, !nonnull !19, !noundef !19
-  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull %i.y, ptr nonnull %.sroa.0.0, i64 %.sroa.3.0.i.i.i), !noalias !7325
+  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull %i.y, ptr nonnull %.sroa.0.0, i64 %i.l), !noalias !7325
   %i.z = icmp eq i32 %bcmp.i.i, 0
   br i1 %i.z, label %.loopexit, label %_RNCNvMsr_NtCs5PEMdK7bMAG_12typst_syntax3astNtB7_13MathShorthand3get0B9_.exit.thread.i
 

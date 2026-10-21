@@ -204,7 +204,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5erro
   br label %_RNCNvMs2_CskVyUMSjkkSy_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threads0B7_.exit
 
 _RNCNvMs2_CskVyUMSjkkSy_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threads0B7_.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskVyUMSjkkSy_10rayon_core.exit.i77, %bb.ak, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskVyUMSjkkSy_10rayon_core.exit.i, %bb.s, %_RNCNvMs2_CskVyUMSjkkSy_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0B7_.exit, %bb.r, %bb.a
-  %.sroa.0.1 = phi i64 [ %.sroa.102.0.i, %bb.r ], [ %i.h, %bb.a ], [ %.sroa.3.0.i56, %_RNCNvMs2_CskVyUMSjkkSy_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0B7_.exit ], [ %i.bf, %bb.s ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskVyUMSjkkSy_10rayon_core.exit.i ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskVyUMSjkkSy_10rayon_core.exit.i77 ], [ %i.dc, %bb.ak ]
+  %.sroa.0.1 = phi i64 [ %.sroa.102.0.i, %bb.r ], [ %i.h, %bb.a ], [ %.sroa.102.0.i47, %_RNCNvMs2_CskVyUMSjkkSy_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0B7_.exit ], [ %i.bf, %bb.s ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskVyUMSjkkSy_10rayon_core.exit.i ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskVyUMSjkkSy_10rayon_core.exit.i77 ], [ %i.dc, %bb.ak ]
   ret i64 %.sroa.0.1
 
 common.resume.sink.split.i33:                     ; preds = %bb.y
@@ -335,8 +335,8 @@ bb.ae:                                            ; preds = %.lr.ph.i.i69
   br i1 %.not53.i.i73, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i46, label %.lr.ph.i.i69
 
 _RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i46: ; preds = %bb.ad, %.preheader56.i.i61.preheader, %.preheader56.i.i61, %bb.ae, %.lr.ph.i.i69, %.preheader.i.i67, %bb.ab, %bb.ab, %bb.aa
-  %.sroa.102.0.i47 = phi i64 [ undef, %bb.ab ], [ 0, %.preheader.i.i67 ], [ undef, %bb.aa ], [ undef, %bb.ab ], [ undef, %.lr.ph.i.i69 ], [ %i.ct, %bb.ae ], [ undef, %bb.ad ], [ undef, %.preheader56.i.i61.preheader ], [ %i.cj, %.preheader56.i.i61 ]
-  %.sink.i.i48 = phi i1 [ true, %bb.ab ], [ false, %.preheader.i.i67 ], [ true, %bb.aa ], [ true, %bb.ab ], [ %i.co, %bb.ae ], [ %i.co, %.lr.ph.i.i69 ], [ true, %bb.ad ], [ true, %.preheader56.i.i61.preheader ], [ false, %.preheader56.i.i61 ] ; 2 uses
+  %.sroa.102.0.i47 = phi i64 [ undef, %bb.ab ], [ 0, %.preheader.i.i67 ], [ undef, %bb.aa ], [ undef, %bb.ab ], [ undef, %.lr.ph.i.i69 ], [ %i.ct, %bb.ae ], [ undef, %bb.ad ], [ undef, %.preheader56.i.i61.preheader ], [ %i.cj, %.preheader56.i.i61 ] ; 2 uses
+  %.sink.i.i48 = phi i1 [ true, %bb.ab ], [ false, %.preheader.i.i67 ], [ true, %bb.aa ], [ true, %bb.ab ], [ %i.co, %bb.ae ], [ %i.co, %.lr.ph.i.i69 ], [ true, %bb.ad ], [ true, %.preheader56.i.i61.preheader ], [ false, %.preheader56.i.i61 ]
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCskVyUMSjkkSy_10rayon_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c)
           to label %bb.ah unwind label %bb.af
 
@@ -363,10 +363,9 @@ bb.ai:                                            ; preds = %bb.ah
   br label %_RNCNvMs2_CskVyUMSjkkSy_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0B7_.exit
 
 _RNCNvMs2_CskVyUMSjkkSy_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threadss0_0B7_.exit: ; preds = %bb.ah, %bb.ai
-  %.sroa.3.0.i56 = select i1 %.sink.i.i48, i64 undef, i64 %.sroa.102.0.i47 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.715)
-  %i.cx = icmp eq i64 %.sroa.3.0.i56, 0
+  %i.cx = icmp eq i64 %.sroa.102.0.i47, 0
   %or.cond.not = select i1 %.sink.i.i48, i1 true, i1 %i.cx
   br i1 %or.cond.not, label %bb.ak, label %_RNCNvMs2_CskVyUMSjkkSy_10rayon_coreNtB7_17ThreadPoolBuilder15get_num_threads0B7_.exit
 

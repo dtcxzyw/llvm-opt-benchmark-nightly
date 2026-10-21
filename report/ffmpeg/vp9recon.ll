@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.eu = sub nsw i64 0, %i.dm
-  %i.ev = getelementptr inbounds i8, ptr %.0177.i106.us, i64 %i.eu ; 2 uses
+  %i.ev = getelementptr inbounds i8, ptr %.0177.i106.us, i64 %i.eu ; 3 uses
   %i.ew = sub nsw i64 0, %i.dl
   %i.ex = getelementptr inbounds i8, ptr %.0176.i109.us, i64 %i.ew ; 2 uses
   %i.ey = select i1 %i.ce, ptr %i.ex, ptr %i.ev   ; 2 uses
@@ -210,7 +210,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ez = icmp eq i64 %indvars.iv169, 0
-  %or.cond7.i.us = or i1 %i.ce, %i.ez
+  %or.cond7.i.us = or i1 %i.ce, %i.ez             ; 2 uses
+  %spec.select = select i1 %or.cond7.i.us, ptr %i.ey, ptr %i.ev
   %spec.select.a = select i1 %or.cond7.i.us, ptr %i.ex, ptr %i.ev
   br label %.thread61.us
 
@@ -223,7 +224,7 @@ bb.j:                                             ; preds = %bb.i
   br label %.thread61.us
 
 .thread61.us:                                     ; preds = %bb.j, %.thread.us, %bb.i
-  %.0280.i.ph.us = phi ptr [ %i.fe, %.thread.us ], [ %i.ey, %bb.j ], [ %i.ey, %bb.i ] ; 7 uses
+  %.0280.i.ph.us = phi ptr [ %i.fe, %.thread.us ], [ %spec.select, %bb.j ], [ %i.ey, %bb.i ] ; 7 uses
   %.0279.i.ph.us = phi ptr [ %i.fe, %.thread.us ], [ %spec.select.a, %bb.j ], [ undef, %bb.i ] ; 3 uses
   %i.ff = and i64 %i.ec, 2189                     ; 3 uses
   %.not289.not.i.us = icmp ne i64 %i.ff, 0
@@ -626,7 +627,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   %i.qu = sub nsw i64 0, %i.pi
-  %i.qv = getelementptr inbounds i8, ptr %.0175.i131.us.us, i64 %i.qu ; 2 uses
+  %i.qv = getelementptr inbounds i8, ptr %.0175.i131.us.us, i64 %i.qu ; 3 uses
   %i.qw = sub nsw i64 0, %i.ph
   %i.qx = getelementptr inbounds i8, ptr %.0.i134.us.us, i64 %i.qw ; 2 uses
   %i.qy = select i1 %i.os, ptr %i.qx, ptr %i.qv   ; 2 uses
@@ -634,7 +635,8 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.an
   %i.qz = icmp eq i32 %.1185.i128.us.us, 0
-  %or.cond7.i41.us.us = or i1 %i.os, %i.qz
+  %or.cond7.i41.us.us = or i1 %i.os, %i.qz        ; 2 uses
+  %spec.select244 = select i1 %or.cond7.i41.us.us, ptr %i.qy, ptr %i.qv
   %spec.select243 = select i1 %or.cond7.i41.us.us, ptr %i.qx, ptr %i.qv
   br label %.thread72.us.us
 
@@ -651,7 +653,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %.thread72.us.us
 
 .thread72.us.us:                                  ; preds = %bb.ao, %.thread71.us.us, %bb.an
-  %.0280.i18.ph.us.us = phi ptr [ %i.ri, %.thread71.us.us ], [ %i.qy, %bb.ao ], [ %i.qy, %bb.an ] ; 7 uses
+  %.0280.i18.ph.us.us = phi ptr [ %i.ri, %.thread71.us.us ], [ %spec.select244, %bb.ao ], [ %i.qy, %bb.an ] ; 7 uses
   %.0279.i19.ph.us.us = phi ptr [ %i.ri, %.thread71.us.us ], [ %spec.select243, %bb.ao ], [ undef, %bb.an ] ; 3 uses
   %i.rj = and i64 %i.qc, 2189                     ; 3 uses
   %.not289.not.i29.us.us = icmp ne i64 %i.rj, 0
@@ -1054,7 +1056,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.er = sub nsw i64 0, %i.dm
-  %i.es = getelementptr inbounds i8, ptr %.0177.i144.us, i64 %i.er ; 2 uses
+  %i.es = getelementptr inbounds i8, ptr %.0177.i144.us, i64 %i.er ; 3 uses
   %i.et = sub nsw i64 0, %i.dl
   %i.eu = getelementptr inbounds i8, ptr %.0176.i147.us, i64 %i.et ; 2 uses
   %i.ev = select i1 %i.cf, ptr %i.eu, ptr %i.es   ; 2 uses
@@ -1062,7 +1064,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ew = icmp eq i64 %indvars.iv251, 0
-  %or.cond7.i.us = or i1 %i.cf, %i.ew
+  %or.cond7.i.us = or i1 %i.cf, %i.ew             ; 2 uses
+  %spec.select = select i1 %or.cond7.i.us, ptr %i.ev, ptr %i.es
   %spec.select.a = select i1 %or.cond7.i.us, ptr %i.eu, ptr %i.es
   br label %.thread72.us
 
@@ -1076,7 +1079,7 @@ bb.j:                                             ; preds = %bb.i
   br label %.thread72.us
 
 .thread72.us:                                     ; preds = %bb.j, %.thread.us, %bb.i
-  %.0280.i.ph.us = phi ptr [ %i.fc, %.thread.us ], [ %i.ev, %bb.j ], [ %i.ev, %bb.i ] ; 10 uses
+  %.0280.i.ph.us = phi ptr [ %i.fc, %.thread.us ], [ %spec.select, %bb.j ], [ %i.ev, %bb.i ] ; 10 uses
   %.0279.i.ph.us = phi ptr [ %i.fc, %.thread.us ], [ %spec.select.a, %bb.j ], [ undef, %bb.i ] ; 6 uses
   %i.fd = and i64 %i.ec, 2189
   %.not289.not.i.us = icmp ne i64 %i.fd, 0
@@ -1479,7 +1482,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai
   %i.xk = sub nsw i64 0, %i.vo
-  %i.xl = getelementptr inbounds i8, ptr %.0175.i182.us.us, i64 %i.xk ; 2 uses
+  %i.xl = getelementptr inbounds i8, ptr %.0175.i182.us.us, i64 %i.xk ; 3 uses
   %i.xm = sub nsw i64 0, %i.vn
   %i.xn = getelementptr inbounds i8, ptr %.0.i185.us.us, i64 %i.xm ; 2 uses
   %i.xo = select i1 %i.uy, ptr %i.xn, ptr %i.xl   ; 2 uses
@@ -1487,7 +1490,8 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   %i.xp = icmp eq i32 %.1185.i179.us.us, 0
-  %or.cond7.i48.us.us = or i1 %i.uy, %i.xp
+  %or.cond7.i48.us.us = or i1 %i.uy, %i.xp        ; 2 uses
+  %spec.select354 = select i1 %or.cond7.i48.us.us, ptr %i.xo, ptr %i.xl
   %spec.select353 = select i1 %or.cond7.i48.us.us, ptr %i.xn, ptr %i.xl
   br label %.thread83.us.us
 
@@ -1504,7 +1508,7 @@ bb.ak:                                            ; preds = %bb.aj
   br label %.thread83.us.us
 
 .thread83.us.us:                                  ; preds = %bb.ak, %.thread82.us.us, %bb.aj
-  %.0280.i22.ph.us.us = phi ptr [ %i.xy, %.thread82.us.us ], [ %i.xo, %bb.ak ], [ %i.xo, %bb.aj ] ; 10 uses
+  %.0280.i22.ph.us.us = phi ptr [ %i.xy, %.thread82.us.us ], [ %spec.select354, %bb.ak ], [ %i.xo, %bb.aj ] ; 10 uses
   %.0279.i23.ph.us.us = phi ptr [ %i.xy, %.thread82.us.us ], [ %spec.select353, %bb.ak ], [ undef, %bb.aj ] ; 6 uses
   %i.xz = and i64 %i.wi, 2189
   %.not289.not.i35.us.us = icmp ne i64 %i.xz, 0
