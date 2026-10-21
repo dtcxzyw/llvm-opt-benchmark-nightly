@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
 ; Function Attrs: nounwind uwtable
 define void @distort_mask(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5) local_unnamed_addr #4 {
 bb.a:
-  %i.a = alloca [4 x float], align 16             ; 5 uses
+  %i.a = alloca [4 x float], align 16             ; 4 uses
   %i.b = alloca float, align 4                    ; 4 uses
   %i.c = alloca float, align 4                    ; 4 uses
   %i.d = alloca float, align 4                    ; 4 uses
@@ -259,7 +259,6 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c,
   %i.af = load float, ptr %i.ae, align 4, !tbaa !85
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.ag = getelementptr inbounds nuw i8, ptr %i.i, i64 100
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.i, i64 108
   %i.ai = getelementptr inbounds nuw i8, ptr %i.i, i64 116
   %i.aj = getelementptr inbounds nuw i8, ptr %i.i, i64 124
@@ -273,10 +272,10 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c,
   %i.ar = fmul reassoc nsz arcp contract afn <2 x float> %i.aq, %i.ao ; 5 uses
   %i.as = load <2 x float>, ptr %i.ag, align 4, !tbaa !13
   %i.at = fmul reassoc nsz arcp contract afn <2 x float> %i.as, %i.ar ; 2 uses
-  store <2 x float> %i.at, ptr %i.a, align 16, !tbaa !13
-  %7 = load <2 x float>, ptr %i.ah, align 4, !tbaa !13
-  %8 = fmul reassoc nsz arcp contract afn <2 x float> %7, %i.ar
-  store <2 x float> %8, ptr %6, align 8, !tbaa !13
+  %6 = load <2 x float>, ptr %i.ah, align 4, !tbaa !13
+  %7 = fmul reassoc nsz arcp contract afn <2 x float> %6, %i.ar
+  %8 = shufflevector <2 x float> %i.at, <2 x float> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.a, align 16, !tbaa !13
   %i.au = load <2 x float>, ptr %i.ai, align 4, !tbaa !13
   %i.av = fmul reassoc nsz arcp contract afn <2 x float> %i.au, %i.ar ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.i, i64 128
@@ -627,7 +626,6 @@ bb.g:                                             ; preds = %bb.f
   %i.bj = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bm = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.ar ; 2 uses
   %invariant.op = fmul reassoc nsz arcp contract afn float %i.bm, %i.bg
   %i.bn = shufflevector <2 x float> %i.bh, <2 x float> %i.ba, <2 x i32> <i32 0, i32 2>
@@ -810,11 +808,10 @@ bb.x:                                             ; preds = %bb.w
   %i.fb = fsub reassoc nsz arcp contract afn <2 x float> splat (float 5.000000e-01), %i.ez
   %i.fc = fmul reassoc nsz arcp contract afn <2 x float> %i.ex, %i.fb
   %i.fd = fsub reassoc nsz arcp contract afn <2 x float> %i.bh, %i.fc
-  %6 = fptosi <2 x float> %i.fd to <2 x i32>
-  store <2 x i32> %6, ptr %2, align 4, !tbaa !14
-  %7 = fmul reassoc nsz arcp contract afn <2 x float> %i.ex, %i.fa
-  %8 = fptosi <2 x float> %7 to <2 x i32>
-  store <2 x i32> %8, ptr %5, align 4, !tbaa !14
+  %5 = fmul reassoc nsz arcp contract afn <2 x float> %i.ex, %i.fa
+  %6 = shufflevector <2 x float> %i.fd, <2 x float> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = fptosi <4 x float> %6 to <4 x i32>
+  store <4 x i32> %7, ptr %2, align 4, !tbaa !14
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
@@ -1217,7 +1214,7 @@ declare float @llvm.ceil.f32(float) #9
 ; Function Attrs: nounwind uwtable
 define void @process(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #4 {
 bb.a:
-  %i.a = alloca [4 x float], align 16             ; 5 uses
+  %i.a = alloca [4 x float], align 16             ; 4 uses
   %i.b = alloca float, align 4                    ; 4 uses
   %i.c = alloca float, align 4                    ; 4 uses
   %i.d = alloca float, align 4                    ; 4 uses
@@ -1281,7 +1278,6 @@ bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !85
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.al = getelementptr inbounds nuw i8, ptr %i.l, i64 100
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 108
   %i.an = getelementptr inbounds nuw i8, ptr %i.l, i64 116
   %i.ao = getelementptr inbounds nuw i8, ptr %i.l, i64 124
@@ -1295,10 +1291,10 @@ bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %i.aw = fmul reassoc nsz arcp contract afn <2 x float> %i.av, %i.at ; 5 uses
   %i.ax = load <2 x float>, ptr %i.al, align 4, !tbaa !13
   %i.ay = fmul reassoc nsz arcp contract afn <2 x float> %i.ax, %i.aw ; 2 uses
-  store <2 x float> %i.ay, ptr %i.a, align 16, !tbaa !13
-  %7 = load <2 x float>, ptr %i.am, align 4, !tbaa !13
-  %8 = fmul reassoc nsz arcp contract afn <2 x float> %7, %i.aw
-  store <2 x float> %8, ptr %6, align 8, !tbaa !13
+  %6 = load <2 x float>, ptr %i.am, align 4, !tbaa !13
+  %7 = fmul reassoc nsz arcp contract afn <2 x float> %6, %i.aw
+  %8 = shufflevector <2 x float> %i.ay, <2 x float> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.a, align 16, !tbaa !13
   %i.az = load <2 x float>, ptr %i.an, align 4, !tbaa !13
   %i.ba = fmul reassoc nsz arcp contract afn <2 x float> %i.az, %i.aw ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.l, i64 128

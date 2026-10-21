@@ -138,18 +138,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %wide.load = load <2 x i64>, ptr %i.d, align 8, !tbaa !15
   %wide.load10 = load <2 x i64>, ptr %i.e, align 8, !tbaa !15
-  %4 = sitofp reassoc nsz arcp <2 x i64> %wide.load to <2 x float>
-  %5 = sitofp reassoc nsz arcp <2 x i64> %wide.load10 to <2 x float>
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %wide.load11 = load <2 x float>, ptr %i.f, align 4, !tbaa !10
   %wide.load12 = load <2 x float>, ptr %i.g, align 4, !tbaa !10
-  %6 = fmul reassoc nsz arcp <2 x float> %wide.load11, %4
-  %7 = fmul reassoc nsz arcp <2 x float> %wide.load12, %5
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %index ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store <2 x float> %6, ptr %8, align 4, !tbaa !10
-  store <2 x float> %7, ptr %9, align 4, !tbaa !10
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %index
+  %5 = shufflevector <2 x float> %wide.load11, <2 x float> %wide.load12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = shufflevector <2 x i64> %wide.load, <2 x i64> %wide.load10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = sitofp reassoc nsz arcp <4 x i64> %6 to <4 x float>
+  %8 = fmul reassoc nsz arcp <4 x float> %5, %7
+  store <4 x float> %8, ptr %4, align 4, !tbaa !10
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.h = icmp eq i64 %index.next, %n.vec
   br i1 %i.h, label %middle.block, label %vector.body, !llvm.loop !20
@@ -528,18 +526,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %wide.load = load <2 x i64>, ptr %i.o, align 8, !tbaa !15
   %wide.load57 = load <2 x i64>, ptr %i.p, align 8, !tbaa !15
-  %6 = sitofp reassoc nsz arcp <2 x i64> %wide.load to <2 x float>
-  %7 = sitofp reassoc nsz arcp <2 x i64> %wide.load57 to <2 x float>
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %wide.load58 = load <2 x float>, ptr %i.q, align 4, !tbaa !10
   %wide.load59 = load <2 x float>, ptr %i.r, align 4, !tbaa !10
-  %8 = fmul reassoc nsz arcp <2 x float> %wide.load58, %6
-  %9 = fmul reassoc nsz arcp <2 x float> %wide.load59, %7
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %index ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store <2 x float> %8, ptr %10, align 4, !tbaa !10
-  store <2 x float> %9, ptr %11, align 4, !tbaa !10
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %index
+  %7 = shufflevector <2 x float> %wide.load58, <2 x float> %wide.load59, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = shufflevector <2 x i64> %wide.load, <2 x i64> %wide.load57, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = sitofp reassoc nsz arcp <4 x i64> %8 to <4 x float>
+  %10 = fmul reassoc nsz arcp <4 x float> %7, %9
+  store <4 x float> %10, ptr %6, align 4, !tbaa !10
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.s = icmp eq i64 %index.next, %n.vec
   br i1 %i.s, label %middle.block, label %vector.body, !llvm.loop !26
@@ -661,19 +657,17 @@ vector.body69:                                    ; preds = %vector.body69, %vec
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   %wide.load71 = load <2 x i64>, ptr %i.cd, align 8, !tbaa !15
   %wide.load72 = load <2 x i64>, ptr %i.ce, align 8, !tbaa !15
-  %12 = sitofp reassoc nsz arcp <2 x i64> %wide.load71 to <2 x float>
-  %13 = sitofp reassoc nsz arcp <2 x i64> %wide.load72 to <2 x float>
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %index70 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %gep, i64 8
   %wide.load73 = load <2 x float>, ptr %gep, align 4, !tbaa !10
   %wide.load74 = load <2 x float>, ptr %i.cf, align 4, !tbaa !10
-  %14 = fmul reassoc nsz arcp <2 x float> %wide.load73, %12
-  %15 = fmul reassoc nsz arcp <2 x float> %wide.load74, %13
-  %16 = zext i32 %i.ca to i64
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %16 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 8
-  store <2 x float> %14, ptr %17, align 4, !tbaa !10
-  store <2 x float> %15, ptr %18, align 4, !tbaa !10
+  %11 = zext i32 %i.ca to i64
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %11
+  %13 = shufflevector <2 x float> %wide.load73, <2 x float> %wide.load74, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = shufflevector <2 x i64> %wide.load71, <2 x i64> %wide.load72, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %15 = sitofp reassoc nsz arcp <4 x i64> %14 to <4 x float>
+  %16 = fmul reassoc nsz arcp <4 x float> %13, %15
+  store <4 x float> %16, ptr %12, align 4, !tbaa !10
   %index.next75 = add nuw i64 %index70, 4         ; 2 uses
   %i.cg = icmp eq i64 %index.next75, %n.vec68
   br i1 %i.cg, label %middle.block76, label %vector.body69, !llvm.loop !28
@@ -1076,12 +1070,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load90 = load <2 x double>, ptr %i.ax, align 16, !tbaa !17
   %i.ay = fptrunc reassoc nsz arcp <2 x double> %wide.load to <2 x float>
   %i.az = fptrunc reassoc nsz arcp <2 x double> %wide.load90 to <2 x float>
-  %4 = fneg reassoc nsz arcp <2 x float> %i.ay
-  %5 = fneg reassoc nsz arcp <2 x float> %i.az
-  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %index ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
-  store <2 x float> %4, ptr %i.ba, align 4, !tbaa !10
-  store <2 x float> %5, ptr %6, align 4, !tbaa !10
+  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %index
+  %4 = shufflevector <2 x float> %i.ay, <2 x float> %i.az, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %5 = fneg reassoc nsz arcp <4 x float> %4
+  store <4 x float> %5, ptr %i.ba, align 4, !tbaa !10
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bb = icmp eq i64 %index.next, %n.vec
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !46

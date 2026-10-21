@@ -205,7 +205,6 @@ _RNvMNtNtNtCslssDYltVX0B_6memchr4arch7generic10packedpairINtB2_6FinderNtNtNtCskK
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %i.a
   %i.f = load i8, ptr %i.e, align 1, !alias.scope !2976, !noundef !5 ; 2 uses
   %i.g = insertelement <16 x i8> poison, i8 %i.f, i64 0
-  %5 = shufflevector <16 x i8> %i.g, <16 x i8> poison, <16 x i32> zeroinitializer
   %..i = tail call noundef i8 @llvm.umax.i8(i8 %4, i8 %3)
   %i.h = zext i8 %..i to i64                      ; 2 uses
   %i.i = add nuw nsw i64 %i.h, 16
@@ -213,7 +212,6 @@ _RNvMNtNtNtCslssDYltVX0B_6memchr4arch7generic10packedpairINtB2_6FinderNtNtNtCskK
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 %i.c
   %i.k = load i8, ptr %i.j, align 1, !alias.scope !2976, !noundef !5 ; 2 uses
   %i.l = insertelement <16 x i8> poison, i8 %i.k, i64 0
-  %6 = shufflevector <16 x i8> %i.l, <16 x i8> poison, <16 x i32> zeroinitializer
   %i.m = add nuw nsw i64 %i.h, 32
   %..i3 = tail call noundef range(i64 16, -9223372036854775808) i64 @llvm.umax.i64(i64 range(i64 16, 288) %i.m, i64 range(i64 2, -9223372036854775808) %2)
   %i.n = insertelement <32 x i8> poison, i8 %i.f, i64 0
@@ -221,9 +219,8 @@ _RNvMNtNtNtCslssDYltVX0B_6memchr4arch7generic10packedpairINtB2_6FinderNtNtNtCskK
   %i.p = insertelement <32 x i8> poison, i8 %i.k, i64 0
   %i.q = shufflevector <32 x i8> %i.p, <32 x i8> poison, <32 x i32> zeroinitializer
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store <16 x i8> %5, ptr %i.r, align 32
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store <16 x i8> %6, ptr %.sroa.4.0..sroa_idx, align 16
+  %5 = shufflevector <16 x i8> %i.g, <16 x i8> %i.l, <32 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16>
+  store <32 x i8> %5, ptr %i.r, align 32
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
   store i64 %..i1, ptr %.sroa.5.0..sroa_idx, align 32
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136

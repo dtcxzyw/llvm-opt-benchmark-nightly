@@ -15,9 +15,9 @@ target triple = "x86_64-pc-linux-gnu"
 define internal noundef i32 @encrypt_detached(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6, ptr nofree noundef readonly captures(none) %7, ptr nofree noundef readonly captures(none) %8) #0 {
 bb.a:
   %i.a = alloca [32 x i8], align 32               ; 10 uses
-  %9 = alloca [32 x i8], align 32                 ; 5 uses
+  %.sroa.0 = alloca <4 x i64>, align 32           ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %.val = load <2 x i64>, ptr %8, align 1         ; 13 uses
   %.val44 = load <2 x i64>, ptr %7, align 1       ; 11 uses
   %i.b = xor <2 x i64> %.val44, %.val             ; 4 uses
@@ -327,9 +327,8 @@ bb.d:                                             ; preds = %._crit_edge159
   %i.go = xor <2 x i64> %i.gn, %.sroa.74.3.lcssa
   %i.gp = xor <2 x i64> %i.go, %.sroa.30.3.lcssa
   %i.gq = xor <2 x i64> %i.gp, %.val50
-  store <2 x i64> %i.gm, ptr %9, align 32
-  %.16..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 16
-  store <2 x i64> %i.gq, ptr %.16..sroa_idx, align 16
+  %9 = shufflevector <2 x i64> %i.gm, <2 x i64> %i.gq, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %9, ptr %.sroa.0, align 32
   %i.gr = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %.sroa.90.3.lcssa, <2 x i64> %.sroa.106.3.lcssa)
   %i.gs = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %.sroa.74.3.lcssa, <2 x i64> %.sroa.90.3.lcssa)
   %i.gt = call <2 x i64> @llvm.x86.aesni.aesenc(<2 x i64> %.sroa.60.3.lcssa, <2 x i64> %.sroa.74.3.lcssa)
@@ -341,7 +340,7 @@ bb.d:                                             ; preds = %._crit_edge159
   %i.gz = xor <2 x i64> %i.gy, %.val49
   %i.ha = xor <2 x i64> %i.gu, %.val50
   %i.hb = getelementptr i8, ptr %0, i64 %.2.lcssa
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.hb, ptr noundef nonnull align 32 %9, i64 noundef range(i64 1, 32) %i.gf, i1 noundef false) #7
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.hb, ptr noundef nonnull align 32 %.sroa.0, i64 noundef range(i64 1, 32) %i.gf, i1 noundef false) #7
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge159
@@ -459,7 +458,7 @@ bb.h:                                             ; preds = %bb.e
   br label %aegis128l_mac.exit
 
 aegis128l_mac.exit:                               ; preds = %bb.f, %bb.g, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 0
 }
@@ -471,7 +470,7 @@ bb.a:
   %i.b = alloca [32 x i8], align 16               ; 10 uses
   %i.c = alloca [32 x i8], align 32               ; 6 uses
   %i.d = alloca [32 x i8], align 32               ; 6 uses
-  %i.e = alloca [32 x i8], align 16               ; 8 uses
+  %i.e = alloca [32 x i8], align 16               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #7
@@ -843,7 +842,7 @@ bb.d:                                             ; preds = %.loopexit170
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, i8 noundef 0, i64 noundef 32, i1 noundef false) #7
   %i.hk = call ptr @__memcpy_chk(ptr noundef nonnull %i.b, ptr noundef nonnull readonly %i.hj, i64 noundef range(i64 1, 32) %i.hg, i64 noundef 32) #7, !alias.scope !33 ; 0 uses
   %i.hl = load <2 x i64>, ptr %i.b, align 16
-  %i.hm = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
+  %i.hm = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.hn = load <2 x i64>, ptr %i.hm, align 16
   %i.ho = and <2 x i64> %.sroa.40.5, %.sroa.61.5
   %i.hp = xor <2 x i64> %i.ho, %i.hl
@@ -853,8 +852,8 @@ bb.d:                                             ; preds = %.loopexit170
   %i.ht = xor <2 x i64> %i.hs, %i.hn
   %i.hu = xor <2 x i64> %i.ht, %.sroa.100.5
   %i.hv = xor <2 x i64> %i.hu, %.sroa.40.5
-  store <2 x i64> %i.hr, ptr %i.b, align 16
-  store <2 x i64> %i.hv, ptr %i.hm, align 16
+  %9 = shufflevector <2 x i64> %i.hr, <2 x i64> %i.hv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %9, ptr %i.b, align 16
   %i.hw = getelementptr i8, ptr %i.b, i64 %i.hg
   %i.hx = sub nuw nsw i64 32, %i.hg
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.hw, i8 noundef 0, i64 noundef %i.hx, i1 noundef false) #7
@@ -880,7 +879,7 @@ bb.d:                                             ; preds = %.loopexit170
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 noundef 0, i64 noundef 32, i1 noundef false) #7
   %i.il = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull readonly %i.ik, i64 noundef range(i64 1, 32) %i.hh, i64 noundef 32) #7, !alias.scope !34 ; 0 uses
   %i.im = load <2 x i64>, ptr %i.a, align 16
-  %i.in = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
+  %i.in = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.io = load <2 x i64>, ptr %i.in, align 16
   %i.ip = and <2 x i64> %.sroa.40.4.lcssa, %.sroa.61.4.lcssa
   %i.iq = xor <2 x i64> %i.ip, %i.im
@@ -890,8 +889,8 @@ bb.d:                                             ; preds = %.loopexit170
   %i.iu = xor <2 x i64> %i.it, %i.io
   %i.iv = xor <2 x i64> %i.iu, %.sroa.100.4.lcssa
   %i.iw = xor <2 x i64> %i.iv, %.sroa.40.4.lcssa
-  store <2 x i64> %i.is, ptr %i.a, align 16
-  store <2 x i64> %i.iw, ptr %i.in, align 16
+  %10 = shufflevector <2 x i64> %i.is, <2 x i64> %i.iw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %10, ptr %i.a, align 16
   %i.ix = getelementptr i8, ptr %i.a, i64 %i.hh
   %i.iy = sub nuw nsw i64 32, %i.hh
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ix, i8 noundef 0, i64 noundef %i.iy, i1 noundef false) #7
@@ -1014,12 +1013,11 @@ aegis128l_mac.exit.thread165:                     ; preds = %bb.e
   %i.mp = xor <2 x i64> %i.mc, %i.mb
   %i.mq = xor <2 x i64> %i.mp, %i.md
   %i.mr = xor <2 x i64> %i.mq, %i.mf
-  store <2 x i64> %i.mr, ptr %i.e, align 16
   %i.ms = xor <2 x i64> %i.ly, %i.mo
   %i.mt = xor <2 x i64> %i.ms, %i.lz
   %i.mu = xor <2 x i64> %i.mt, %i.mg
-  %9 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  store <2 x i64> %i.mu, ptr %9, align 16
+  %11 = shufflevector <2 x i64> %i.mr, <2 x i64> %i.mu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %11, ptr %i.e, align 16
   %i.mv = call i32 @crypto_verify_32(ptr noundef nonnull %i.e, ptr noundef %3) #7
   br label %bb.f
 

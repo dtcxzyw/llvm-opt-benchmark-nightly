@@ -202,13 +202,13 @@ _ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTr
   br i1 %.not.i27, label %_ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit, label %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.preheader.i
 
 _ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.preheader.i: ; preds = %_ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTrackEEEvRKT_PNS5_9KeyframesE.exit
-  %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 3 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 2 uses
   %i.by = load <2 x float>, ptr %i.bx, align 4, !tbaa !25 ; 4 uses
   %foldExtExtBinop = fmul <2 x float> %i.by, %i.by
   %i.bz = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.ca = extractelement <2 x float> %i.by, i64 0 ; 2 uses
   %i.cb = call float @llvm.fmuladd.f32(float %i.ca, float %i.ca, float %i.bz)
-  %i.cc = getelementptr inbounds nuw i8, ptr %.val, i64 16 ; 3 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.cd = load <2 x float>, ptr %i.cc, align 4, !tbaa !25 ; 3 uses
   %i.ce = extractelement <2 x float> %i.cd, i64 0 ; 2 uses
   %i.cf = call float @llvm.fmuladd.f32(float %i.ce, float %i.ce, float %i.cb)
@@ -229,25 +229,18 @@ bb.t:                                             ; preds = %_ZNSt6vectorIN3ozz9
 bb.u:                                             ; preds = %bb.t, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.preheader.i
   %.sroa.04.0.peel.i = phi <2 x float> [ %i.cn, %bb.t ], [ zeroinitializer, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.preheader.i ] ; 2 uses
   %.sroa.6.0.peel.i = phi <2 x float> [ %i.co, %bb.t ], [ <float 0.000000e+00, float 1.000000e+00>, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.preheader.i ] ; 3 uses
-  store <2 x float> %.sroa.04.0.peel.i, ptr %i.bx, align 4, !tbaa !25
-  store <2 x float> %.sroa.6.0.peel.i, ptr %i.cc, align 4, !tbaa !25
-  %7 = extractelement <2 x float> %.sroa.6.0.peel.i, i64 1
-  %8 = fcmp olt float %7, 0.000000e+00
-  br i1 %8, label %9, label %12
-
-9:                                                ; preds = %bb.u
-  %10 = fneg <2 x float> %.sroa.04.0.peel.i
-  %11 = fneg <2 x float> %.sroa.6.0.peel.i
-  store <2 x float> %10, ptr %i.bx, align 4, !tbaa !25
-  store <2 x float> %11, ptr %i.cc, align 4, !tbaa !25
-  br label %12
-
-12:                                               ; preds = %9, %bb.u
+  %7 = shufflevector <2 x float> %.sroa.04.0.peel.i, <2 x float> %.sroa.6.0.peel.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = extractelement <2 x float> %.sroa.6.0.peel.i, i64 1
+  %9 = fcmp olt float %8, 0.000000e+00
+  %10 = shufflevector <2 x float> %.sroa.04.0.peel.i, <2 x float> %.sroa.6.0.peel.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = fneg <4 x float> %10
+  %storemerge = select i1 %9, <4 x float> %11, <4 x float> %7
+  store <4 x float> %storemerge, ptr %i.bx, align 4, !tbaa !25
   %exitcond.peel.not.i = icmp eq i64 %.pre35, 24
   br i1 %exitcond.peel.not.i, label %_ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit, label %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i
 
-_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i: ; preds = %12, %bb.x
-  %.017.i = phi i64 [ %i.dz, %bb.x ], [ 1, %12 ]  ; 2 uses
+_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i: ; preds = %bb.u, %bb.x
+  %.017.i = phi i64 [ %i.dz, %bb.x ], [ 1, %bb.u ] ; 2 uses
   %i.cp = getelementptr [24 x i8], ptr %.val, i64 %.017.i ; 6 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8 ; 3 uses
   %i.cr = load <2 x float>, ptr %i.cq, align 4, !tbaa !25 ; 4 uses
@@ -255,7 +248,7 @@ _ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEEN
   %i.cs = extractelement <2 x float> %foldExtExtBinop63, i64 1
   %i.ct = extractelement <2 x float> %i.cr, i64 0 ; 2 uses
   %i.cu = call float @llvm.fmuladd.f32(float %i.ct, float %i.ct, float %i.cs)
-  %i.cv = getelementptr inbounds nuw i8, ptr %i.cp, i64 16 ; 3 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.cp, i64 16
   %i.cw = load <2 x float>, ptr %i.cv, align 4, !tbaa !25 ; 3 uses
   %i.cx = extractelement <2 x float> %i.cw, i64 0 ; 2 uses
   %i.cy = call float @llvm.fmuladd.f32(float %i.cx, float %i.cx, float %i.cu)
@@ -276,8 +269,8 @@ bb.v:                                             ; preds = %_ZNSt6vectorIN3ozz9
 _ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i: ; preds = %bb.v, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i
   %.sroa.04.0.i = phi <2 x float> [ %i.dg, %bb.v ], [ zeroinitializer, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i ] ; 4 uses
   %.sroa.6.0.i = phi <2 x float> [ %i.dh, %bb.v ], [ <float 0.000000e+00, float 1.000000e+00>, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i ] ; 4 uses
-  store <2 x float> %.sroa.04.0.i, ptr %i.cq, align 4, !tbaa !25
-  store <2 x float> %.sroa.6.0.i, ptr %i.cv, align 4, !tbaa !25
+  %12 = shufflevector <2 x float> %.sroa.04.0.i, <2 x float> %.sroa.6.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %i.cq, align 4, !tbaa !25
   %i.di = extractelement <2 x float> %.sroa.04.0.i, i64 0
   %i.dj = extractelement <2 x float> %.sroa.04.0.i, i64 1
   %i.dk = extractelement <2 x float> %.sroa.6.0.i, i64 0
@@ -298,10 +291,9 @@ _ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEEN
   br i1 %i.dy, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i
-  %13 = fneg <2 x float> %.sroa.04.0.i
-  %14 = fneg <2 x float> %.sroa.6.0.i
-  store <2 x float> %13, ptr %i.cq, align 4, !tbaa !25
-  store <2 x float> %14, ptr %i.cv, align 4, !tbaa !25
+  %13 = shufflevector <2 x float> %.sroa.04.0.i, <2 x float> %.sroa.6.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = fneg <4 x float> %13
+  store <4 x float> %14, ptr %i.cq, align 4, !tbaa !25
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i
@@ -309,8 +301,8 @@ bb.x:                                             ; preds = %bb.w, %_ZNSt6vector
   %exitcond.not.i = icmp eq i64 %i.dz, %.pre37
   br i1 %exitcond.not.i, label %_ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit, label %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i, !llvm.loop !149
 
-_ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit: ; preds = %bb.x, %_ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTrackEEEvRKT_PNS5_9KeyframesE.exit, %12
-  %.pre-phi38 = phi i64 [ %.pre37, %_ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTrackEEEvRKT_PNS5_9KeyframesE.exit ], [ 1, %12 ], [ %.pre37, %bb.x ]
+_ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit: ; preds = %bb.x, %_ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTrackEEEvRKT_PNS5_9KeyframesE.exit, %bb.u
+  %.pre-phi38 = phi i64 [ %.pre37, %_ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTrackEEEvRKT_PNS5_9KeyframesE.exit ], [ 1, %bb.u ], [ %.pre37, %bb.x ]
   %i.ea = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.eb = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !34 ; 2 uses

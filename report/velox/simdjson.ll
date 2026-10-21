@@ -204,13 +204,12 @@ bb.g:                                             ; preds = %bb.b
 
 bb.h:                                             ; preds = %.backedge1838, %bb.g
   %.0814 = phi ptr [ %i.bg, %bb.g ], [ %.0814.be, %.backedge1838 ] ; 6 uses
-  %.0811 = phi ptr [ %i.bf, %bb.g ], [ %.0811.be, %.backedge1838 ] ; 7 uses
+  %.0811 = phi ptr [ %i.bf, %bb.g ], [ %.0811.be, %.backedge1838 ] ; 6 uses
   %i.bh = load <2 x i64>, ptr %.0814, align 1, !tbaa !31 ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.0814, i64 16
   %i.bj = load <2 x i64>, ptr %i.bi, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.bh, ptr %.0811, align 1, !tbaa !31
-  %2 = getelementptr inbounds nuw i8, ptr %.0811, i64 16
-  store <2 x i64> %i.bj, ptr %2, align 1, !tbaa !31
+  %2 = shufflevector <2 x i64> %i.bh, <2 x i64> %i.bj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %2, ptr %.0811, align 1, !tbaa !31
   %i.bk = shufflevector <2 x i64> %i.bh, <2 x i64> %i.bj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.bl = bitcast <4 x i64> %i.bk to <32 x i8>
   %i.bm = icmp eq <32 x i8> %i.bl, splat (i8 92)
@@ -613,14 +612,13 @@ bb.bx:                                            ; preds = %bb.bw
   br label %bb.by
 
 bb.by:                                            ; preds = %.backedge1834, %bb.bx
-  %.0916 = phi ptr [ %i.rq, %bb.bx ], [ %.0916.be, %.backedge1834 ] ; 7 uses
+  %.0916 = phi ptr [ %i.rq, %bb.bx ], [ %.0916.be, %.backedge1834 ] ; 6 uses
   %.0908 = phi ptr [ %i.rr, %bb.bx ], [ %.0908.be, %.backedge1834 ] ; 6 uses
   %i.rs = load <2 x i64>, ptr %.0908, align 1, !tbaa !31 ; 3 uses
   %i.rt = getelementptr inbounds nuw i8, ptr %.0908, i64 16
   %i.ru = load <2 x i64>, ptr %i.rt, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.rs, ptr %.0916, align 1, !tbaa !31
-  %3 = getelementptr inbounds nuw i8, ptr %.0916, i64 16
-  store <2 x i64> %i.ru, ptr %3, align 1, !tbaa !31
+  %3 = shufflevector <2 x i64> %i.rs, <2 x i64> %i.ru, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %3, ptr %.0916, align 1, !tbaa !31
   %i.rv = shufflevector <2 x i64> %i.rs, <2 x i64> %i.ru, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.rw = bitcast <4 x i64> %i.rv to <32 x i8>
   %i.rx = icmp eq <32 x i8> %i.rw, splat (i8 92)
@@ -931,14 +929,13 @@ bb.cs:                                            ; preds = %bb.cp
   br label %bb.ct
 
 bb.ct:                                            ; preds = %.backedge1829, %bb.cs
-  %.0881 = phi ptr [ %i.yx, %bb.cs ], [ %.0881.be, %.backedge1829 ] ; 7 uses
+  %.0881 = phi ptr [ %i.yx, %bb.cs ], [ %.0881.be, %.backedge1829 ] ; 6 uses
   %.0873 = phi ptr [ %i.yy, %bb.cs ], [ %.0873.be, %.backedge1829 ] ; 6 uses
   %i.yz = load <2 x i64>, ptr %.0873, align 1, !tbaa !31 ; 3 uses
   %i.za = getelementptr inbounds nuw i8, ptr %.0873, i64 16
   %i.zb = load <2 x i64>, ptr %i.za, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.yz, ptr %.0881, align 1, !tbaa !31
-  %4 = getelementptr inbounds nuw i8, ptr %.0881, i64 16
-  store <2 x i64> %i.zb, ptr %4, align 1, !tbaa !31
+  %4 = shufflevector <2 x i64> %i.yz, <2 x i64> %i.zb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %4, ptr %.0881, align 1, !tbaa !31
   %i.zc = shufflevector <2 x i64> %i.yz, <2 x i64> %i.zb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.zd = bitcast <4 x i64> %i.zc to <32 x i8>
   %i.ze = icmp eq <32 x i8> %i.zd, splat (i8 92)
@@ -1341,14 +1338,13 @@ bb.fg:                                            ; preds = %bb.ff
   br label %bb.fh
 
 bb.fh:                                            ; preds = %.backedge, %bb.fg
-  %.0930 = phi ptr [ %i.aof, %bb.fg ], [ %.0930.be, %.backedge ] ; 7 uses
+  %.0930 = phi ptr [ %i.aof, %bb.fg ], [ %.0930.be, %.backedge ] ; 6 uses
   %.0922 = phi ptr [ %i.aog, %bb.fg ], [ %.0922.be, %.backedge ] ; 6 uses
   %i.aoh = load <2 x i64>, ptr %.0922, align 1, !tbaa !31 ; 3 uses
   %i.aoi = getelementptr inbounds nuw i8, ptr %.0922, i64 16
   %i.aoj = load <2 x i64>, ptr %i.aoi, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.aoh, ptr %.0930, align 1, !tbaa !31
-  %5 = getelementptr inbounds nuw i8, ptr %.0930, i64 16
-  store <2 x i64> %i.aoj, ptr %5, align 1, !tbaa !31
+  %5 = shufflevector <2 x i64> %i.aoh, <2 x i64> %i.aoj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %5, ptr %.0930, align 1, !tbaa !31
   %i.aok = shufflevector <2 x i64> %i.aoh, <2 x i64> %i.aoj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.aol = bitcast <4 x i64> %i.aok to <32 x i8>
   %i.aom = icmp eq <32 x i8> %i.aol, splat (i8 92)
@@ -1712,14 +1708,13 @@ bb.ge:                                            ; preds = %bb.gb
   br label %bb.gf
 
 bb.gf:                                            ; preds = %.backedge1818, %bb.ge
-  %.0846 = phi ptr [ %i.aww, %bb.ge ], [ %.0846.be, %.backedge1818 ] ; 7 uses
+  %.0846 = phi ptr [ %i.aww, %bb.ge ], [ %.0846.be, %.backedge1818 ] ; 6 uses
   %.0838 = phi ptr [ %i.awx, %bb.ge ], [ %.0838.be, %.backedge1818 ] ; 6 uses
   %i.awy = load <2 x i64>, ptr %.0838, align 1, !tbaa !31 ; 3 uses
   %i.awz = getelementptr inbounds nuw i8, ptr %.0838, i64 16
   %i.axa = load <2 x i64>, ptr %i.awz, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.awy, ptr %.0846, align 1, !tbaa !31
-  %6 = getelementptr inbounds nuw i8, ptr %.0846, i64 16
-  store <2 x i64> %i.axa, ptr %6, align 1, !tbaa !31
+  %6 = shufflevector <2 x i64> %i.awy, <2 x i64> %i.axa, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %6, ptr %.0846, align 1, !tbaa !31
   %i.axb = shufflevector <2 x i64> %i.awy, <2 x i64> %i.axa, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.axc = bitcast <4 x i64> %i.axb to <32 x i8>
   %i.axd = icmp eq <32 x i8> %i.axc, splat (i8 92)
@@ -2122,13 +2117,12 @@ bb.g:                                             ; preds = %bb.b
 
 bb.h:                                             ; preds = %.backedge1622, %bb.g
   %.0598 = phi ptr [ %i.aw, %bb.g ], [ %.0598.be, %.backedge1622 ] ; 6 uses
-  %.0595 = phi ptr [ %i.av, %bb.g ], [ %.0595.be, %.backedge1622 ] ; 7 uses
+  %.0595 = phi ptr [ %i.av, %bb.g ], [ %.0595.be, %.backedge1622 ] ; 6 uses
   %i.ax = load <2 x i64>, ptr %.0598, align 1, !tbaa !31 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.0598, i64 16
   %i.az = load <2 x i64>, ptr %i.ay, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.ax, ptr %.0595, align 1, !tbaa !31
-  %2 = getelementptr inbounds nuw i8, ptr %.0595, i64 16
-  store <2 x i64> %i.az, ptr %2, align 1, !tbaa !31
+  %2 = shufflevector <2 x i64> %i.ax, <2 x i64> %i.az, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %2, ptr %.0595, align 1, !tbaa !31
   %i.ba = shufflevector <2 x i64> %i.ax, <2 x i64> %i.az, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.bb = bitcast <4 x i64> %i.ba to <32 x i8>
   %i.bc = icmp eq <32 x i8> %i.bb, splat (i8 92)
@@ -2531,14 +2525,13 @@ bb.by:                                            ; preds = %bb.bx
   br label %bb.bz
 
 bb.bz:                                            ; preds = %.backedge1618, %bb.by
-  %.0714 = phi ptr [ %i.rj, %bb.by ], [ %.0714.be, %.backedge1618 ] ; 7 uses
+  %.0714 = phi ptr [ %i.rj, %bb.by ], [ %.0714.be, %.backedge1618 ] ; 6 uses
   %.0706 = phi ptr [ %i.rk, %bb.by ], [ %.0706.be, %.backedge1618 ] ; 6 uses
   %i.rl = load <2 x i64>, ptr %.0706, align 1, !tbaa !31 ; 3 uses
   %i.rm = getelementptr inbounds nuw i8, ptr %.0706, i64 16
   %i.rn = load <2 x i64>, ptr %i.rm, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.rl, ptr %.0714, align 1, !tbaa !31
-  %3 = getelementptr inbounds nuw i8, ptr %.0714, i64 16
-  store <2 x i64> %i.rn, ptr %3, align 1, !tbaa !31
+  %3 = shufflevector <2 x i64> %i.rl, <2 x i64> %i.rn, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %3, ptr %.0714, align 1, !tbaa !31
   %i.ro = shufflevector <2 x i64> %i.rl, <2 x i64> %i.rn, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.rp = bitcast <4 x i64> %i.ro to <32 x i8>
   %i.rq = icmp eq <32 x i8> %i.rp, splat (i8 92)
@@ -2849,14 +2842,13 @@ bb.ct:                                            ; preds = %bb.cq
   br label %bb.cu
 
 bb.cu:                                            ; preds = %.backedge1613, %bb.ct
-  %.0665 = phi ptr [ %i.yq, %bb.ct ], [ %.0665.be, %.backedge1613 ] ; 7 uses
+  %.0665 = phi ptr [ %i.yq, %bb.ct ], [ %.0665.be, %.backedge1613 ] ; 6 uses
   %.0657 = phi ptr [ %i.yr, %bb.ct ], [ %.0657.be, %.backedge1613 ] ; 6 uses
   %i.ys = load <2 x i64>, ptr %.0657, align 1, !tbaa !31 ; 3 uses
   %i.yt = getelementptr inbounds nuw i8, ptr %.0657, i64 16
   %i.yu = load <2 x i64>, ptr %i.yt, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.ys, ptr %.0665, align 1, !tbaa !31
-  %4 = getelementptr inbounds nuw i8, ptr %.0665, i64 16
-  store <2 x i64> %i.yu, ptr %4, align 1, !tbaa !31
+  %4 = shufflevector <2 x i64> %i.ys, <2 x i64> %i.yu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %4, ptr %.0665, align 1, !tbaa !31
   %i.yv = shufflevector <2 x i64> %i.ys, <2 x i64> %i.yu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.yw = bitcast <4 x i64> %i.yv to <32 x i8>
   %i.yx = icmp eq <32 x i8> %i.yw, splat (i8 92)
@@ -3259,14 +3251,13 @@ bb.fh:                                            ; preds = %bb.fg
   br label %bb.fi
 
 bb.fi:                                            ; preds = %.backedge, %bb.fh
-  %.0700 = phi ptr [ %i.any, %bb.fh ], [ %.0700.be, %.backedge ] ; 7 uses
+  %.0700 = phi ptr [ %i.any, %bb.fh ], [ %.0700.be, %.backedge ] ; 6 uses
   %.0692 = phi ptr [ %i.anz, %bb.fh ], [ %.0692.be, %.backedge ] ; 6 uses
   %i.aoa = load <2 x i64>, ptr %.0692, align 1, !tbaa !31 ; 3 uses
   %i.aob = getelementptr inbounds nuw i8, ptr %.0692, i64 16
   %i.aoc = load <2 x i64>, ptr %i.aob, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.aoa, ptr %.0700, align 1, !tbaa !31
-  %5 = getelementptr inbounds nuw i8, ptr %.0700, i64 16
-  store <2 x i64> %i.aoc, ptr %5, align 1, !tbaa !31
+  %5 = shufflevector <2 x i64> %i.aoa, <2 x i64> %i.aoc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %5, ptr %.0700, align 1, !tbaa !31
   %i.aod = shufflevector <2 x i64> %i.aoa, <2 x i64> %i.aoc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.aoe = bitcast <4 x i64> %i.aod to <32 x i8>
   %i.aof = icmp eq <32 x i8> %i.aoe, splat (i8 92)
@@ -3630,14 +3621,13 @@ bb.gf:                                            ; preds = %bb.gc
   br label %bb.gg
 
 bb.gg:                                            ; preds = %.backedge1602, %bb.gf
-  %.0630 = phi ptr [ %i.awp, %bb.gf ], [ %.0630.be, %.backedge1602 ] ; 7 uses
+  %.0630 = phi ptr [ %i.awp, %bb.gf ], [ %.0630.be, %.backedge1602 ] ; 6 uses
   %.0622 = phi ptr [ %i.awq, %bb.gf ], [ %.0622.be, %.backedge1602 ] ; 6 uses
   %i.awr = load <2 x i64>, ptr %.0622, align 1, !tbaa !31 ; 3 uses
   %i.aws = getelementptr inbounds nuw i8, ptr %.0622, i64 16
   %i.awt = load <2 x i64>, ptr %i.aws, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.awr, ptr %.0630, align 1, !tbaa !31
-  %6 = getelementptr inbounds nuw i8, ptr %.0630, i64 16
-  store <2 x i64> %i.awt, ptr %6, align 1, !tbaa !31
+  %6 = shufflevector <2 x i64> %i.awr, <2 x i64> %i.awt, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %6, ptr %.0630, align 1, !tbaa !31
   %i.awu = shufflevector <2 x i64> %i.awr, <2 x i64> %i.awt, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.awv = bitcast <4 x i64> %i.awu to <32 x i8>
   %i.aww = icmp eq <32 x i8> %i.awv, splat (i8 92)
@@ -4040,13 +4030,12 @@ bb.a:
 
 .noexc:                                           ; preds = %.noexc.backedge, %bb.a
   %.080 = phi ptr [ %1, %bb.a ], [ %.080.be, %.noexc.backedge ] ; 6 uses
-  %.0 = phi ptr [ %2, %bb.a ], [ %.0.be, %.noexc.backedge ] ; 7 uses
+  %.0 = phi ptr [ %2, %bb.a ], [ %.0.be, %.noexc.backedge ] ; 6 uses
   %i.a = load <2 x i64>, ptr %.080, align 1, !tbaa !31 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.080, i64 16
   %i.c = load <2 x i64>, ptr %i.b, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.a, ptr %.0, align 1, !tbaa !31
-  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  store <2 x i64> %i.c, ptr %4, align 1, !tbaa !31
+  %4 = shufflevector <2 x i64> %i.a, <2 x i64> %i.c, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %4, ptr %.0, align 1, !tbaa !31
   %i.d = shufflevector <2 x i64> %i.a, <2 x i64> %i.c, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.e = bitcast <4 x i64> %i.d to <32 x i8>
   %i.f = icmp eq <32 x i8> %i.e, splat (i8 92)
@@ -4282,13 +4271,12 @@ bb.a:
 
 .noexc:                                           ; preds = %.noexc.backedge, %bb.a
   %.077 = phi ptr [ %1, %bb.a ], [ %.077.be, %.noexc.backedge ] ; 6 uses
-  %.0 = phi ptr [ %2, %bb.a ], [ %.0.be, %.noexc.backedge ] ; 7 uses
+  %.0 = phi ptr [ %2, %bb.a ], [ %.0.be, %.noexc.backedge ] ; 6 uses
   %i.a = load <2 x i64>, ptr %.077, align 1, !tbaa !31 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.077, i64 16
   %i.c = load <2 x i64>, ptr %i.b, align 1, !tbaa !31 ; 3 uses
-  store <2 x i64> %i.a, ptr %.0, align 1, !tbaa !31
-  %3 = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  store <2 x i64> %i.c, ptr %3, align 1, !tbaa !31
+  %3 = shufflevector <2 x i64> %i.a, <2 x i64> %i.c, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %3, ptr %.0, align 1, !tbaa !31
   %i.d = shufflevector <2 x i64> %i.a, <2 x i64> %i.c, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.e = bitcast <4 x i64> %i.d to <32 x i8>
   %i.f = icmp eq <32 x i8> %i.e, splat (i8 92)

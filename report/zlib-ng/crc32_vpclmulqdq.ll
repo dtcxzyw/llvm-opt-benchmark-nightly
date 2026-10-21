@@ -40,11 +40,11 @@ bb.a:
   %i.c = bitcast <4 x i32> %i.b to <2 x i64>      ; 6 uses
   %i.d = icmp ne i32 %3, 0                        ; 2 uses
   %i.e = load <2 x i64>, ptr %0, align 16, !tbaa !8 ; 8 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load <2 x i64>, ptr %i.f, align 16, !tbaa !8 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.i = load <2 x i64>, ptr %i.h, align 16, !tbaa !8 ; 6 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.k = load <2 x i64>, ptr %i.j, align 16, !tbaa !8 ; 6 uses
   %i.l = icmp ult i64 %2, 16
   br i1 %i.l, label %bb.b, label %bb.c
@@ -447,10 +447,10 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.6546 = phi <2 x i64> [ %.5545, %bb.p ], [ %i.nq, %bb.q ]
   %.6539 = phi <2 x i64> [ %.5538, %bb.p ], [ %i.nv, %bb.q ]
   %.6 = phi <2 x i64> [ %.5532, %bb.p ], [ %i.od, %bb.q ]
-  store <2 x i64> %.6553, ptr %0, align 16, !tbaa !8
-  store <2 x i64> %.6546, ptr %i.f, align 16, !tbaa !8
-  store <2 x i64> %.6539, ptr %i.h, align 16, !tbaa !8
-  store <2 x i64> %.6, ptr %i.j, align 16, !tbaa !8
+  %4 = shufflevector <2 x i64> %.6553, <2 x i64> %.6546, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %4, ptr %0, align 16, !tbaa !8
+  %5 = shufflevector <2 x i64> %.6539, <2 x i64> %.6, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %5, ptr %i.h, align 16, !tbaa !8
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.b, %bb.r
@@ -475,11 +475,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   store <2 x i64> zeroinitializer, ptr %.sroa.0, align 16
   %i.b = load <2 x i64>, ptr %0, align 16, !tbaa !8 ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load <2 x i64>, ptr %i.c, align 16, !tbaa !8 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.f = load <2 x i64>, ptr %i.e, align 16, !tbaa !8 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.h = load <2 x i64>, ptr %i.g, align 16, !tbaa !8 ; 3 uses
   %i.i = icmp ult i64 %3, 16
   br i1 %i.i, label %bb.b, label %bb.c
@@ -810,7 +810,7 @@ fold_16_vpclmulqdq_copy.exit:                     ; preds = %.lr.ph.i.prol.loope
   br i1 %i.hn, label %.lr.ph650, label %._crit_edge
 
 .lr.ph650:                                        ; preds = %.preheader, %.lr.ph650
-  %.3649 = phi ptr [ %i.ig, %.lr.ph650 ], [ %.1, %.preheader ] ; 5 uses
+  %.3649 = phi ptr [ %i.ig, %.lr.ph650 ], [ %.1, %.preheader ] ; 3 uses
   %.3405648 = phi ptr [ %i.hw, %.lr.ph650 ], [ %.1403, %.preheader ] ; 5 uses
   %.3410647 = phi i64 [ %i.ho, %.lr.ph650 ], [ %.1408, %.preheader ]
   %.3592646 = phi <2 x i64> [ %i.io, %.lr.ph650 ], [ %.1590, %.preheader ] ; 2 uses
@@ -834,13 +834,11 @@ fold_16_vpclmulqdq_copy.exit:                     ; preds = %.lr.ph.i.prol.loope
   %i.ic = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %.3597645, <2 x i64> <i64 poison, i64 5708721108>, i8 16)
   %i.id = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %.3592646, <2 x i64> <i64 7631803798, i64 poison>, i8 1)
   %i.ie = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %.3592646, <2 x i64> <i64 poison, i64 5708721108>, i8 16)
-  store <2 x i64> %i.hp, ptr %.3649, align 1, !tbaa !8
-  %4 = getelementptr inbounds nuw i8, ptr %.3649, i64 16
-  store <2 x i64> %i.hr, ptr %4, align 1, !tbaa !8
+  %4 = shufflevector <2 x i64> %i.hp, <2 x i64> %i.hr, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %4, ptr %.3649, align 1, !tbaa !8
   %i.if = getelementptr inbounds nuw i8, ptr %.3649, i64 32
-  store <2 x i64> %i.ht, ptr %i.if, align 1, !tbaa !8
-  %5 = getelementptr inbounds nuw i8, ptr %.3649, i64 48
-  store <2 x i64> %i.hv, ptr %5, align 1, !tbaa !8
+  %5 = shufflevector <2 x i64> %i.ht, <2 x i64> %i.hv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %5, ptr %i.if, align 1, !tbaa !8
   %i.ig = getelementptr inbounds nuw i8, ptr %.3649, i64 64 ; 2 uses
   %i.ih = xor <2 x i64> %i.hx, %i.hy
   %i.ii = xor <2 x i64> %i.ih, %i.hp              ; 2 uses
@@ -860,7 +858,7 @@ fold_16_vpclmulqdq_copy.exit:                     ; preds = %.lr.ph.i.prol.loope
   %.3592.lcssa = phi <2 x i64> [ %.1590, %.preheader ], [ %i.io, %.lr.ph650 ] ; 4 uses
   %.3410.lcssa = phi i64 [ %.1408, %.preheader ], [ %i.ho, %.lr.ph650 ] ; 7 uses
   %.3405.lcssa = phi ptr [ %.1403, %.preheader ], [ %i.hw, %.lr.ph650 ] ; 10 uses
-  %.3.lcssa = phi ptr [ %.1, %.preheader ], [ %i.ig, %.lr.ph650 ] ; 10 uses
+  %.3.lcssa = phi ptr [ %.1, %.preheader ], [ %i.ig, %.lr.ph650 ] ; 8 uses
   %i.iq = icmp samesign ugt i64 %.3410.lcssa, 47
   br i1 %i.iq, label %bb.g, label %bb.h
 
@@ -872,9 +870,8 @@ bb.g:                                             ; preds = %._crit_edge
   %i.iv = getelementptr inbounds nuw i8, ptr %.3405.lcssa, i64 32
   %i.iw = load <2 x i64>, ptr %i.iv, align 16, !tbaa !8 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %.3405.lcssa, i64 48
-  store <2 x i64> %i.is, ptr %.3.lcssa, align 1, !tbaa !8
-  %6 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 16
-  store <2 x i64> %i.iu, ptr %6, align 1, !tbaa !8
+  %6 = shufflevector <2 x i64> %i.is, <2 x i64> %i.iu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %6, ptr %.3.lcssa, align 1, !tbaa !8
   %i.iy = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 32
   store <2 x i64> %i.iw, ptr %i.iy, align 1, !tbaa !8
   %i.iz = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 48
@@ -902,9 +899,8 @@ bb.i:                                             ; preds = %bb.h
   %i.jp = getelementptr inbounds nuw i8, ptr %.3405.lcssa, i64 16
   %i.jq = load <2 x i64>, ptr %i.jp, align 16, !tbaa !8 ; 2 uses
   %i.jr = getelementptr inbounds nuw i8, ptr %.3405.lcssa, i64 32
-  store <2 x i64> %i.jo, ptr %.3.lcssa, align 1, !tbaa !8
-  %7 = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 16
-  store <2 x i64> %i.jq, ptr %7, align 1, !tbaa !8
+  %7 = shufflevector <2 x i64> %i.jo, <2 x i64> %i.jq, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %7, ptr %.3.lcssa, align 1, !tbaa !8
   %i.js = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 32
   %i.jt = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %.3603.lcssa, <2 x i64> <i64 7631803798, i64 poison>, i8 1)
   %i.ju = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %.3603.lcssa, <2 x i64> <i64 poison, i64 5708721108>, i8 16)
@@ -994,10 +990,10 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %.5605 = phi <2 x i64> [ %.4604, %bb.l ], [ %i.la, %bb.m ]
   %.5599 = phi <2 x i64> [ %.4598, %bb.l ], [ %i.lf, %bb.m ]
   %.5 = phi <2 x i64> [ %.4593, %bb.l ], [ %i.ln, %bb.m ]
-  store <2 x i64> %.5611, ptr %0, align 16, !tbaa !8
-  store <2 x i64> %.5605, ptr %i.c, align 16, !tbaa !8
-  store <2 x i64> %.5599, ptr %i.e, align 16, !tbaa !8
-  store <2 x i64> %.5, ptr %i.g, align 16, !tbaa !8
+  %8 = shufflevector <2 x i64> %.5611, <2 x i64> %.5605, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %8, ptr %0, align 16, !tbaa !8
+  %9 = shufflevector <2 x i64> %.5599, <2 x i64> %.5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %9, ptr %i.e, align 16, !tbaa !8
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.b, %bb.n

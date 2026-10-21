@@ -15,7 +15,7 @@ define range(i64 0, 4294967296) i64 @zfp_encode_block_float_3(ptr nofree noundef
 bb.a:
   %i.a = alloca [64 x i32], align 256             ; 4 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  %i.c = alloca [64 x i32], align 256             ; 61 uses
+  %i.c = alloca [64 x i32], align 256             ; 57 uses
   %i.d = alloca [64 x i32], align 256             ; 5 uses
   %i.e = alloca [64 x float], align 256           ; 23 uses
   %i.f = alloca i32, align 4                      ; 6 uses
@@ -418,7 +418,6 @@ vector.body324:                                   ; preds = %.preheader29.i.i.i
   %i.aky = getelementptr inbounds nuw i8, ptr %i.c, i64 64 ; 2 uses
   %i.akz = getelementptr inbounds nuw i8, ptr %i.c, i64 128 ; 2 uses
   %i.ala = getelementptr inbounds nuw i8, ptr %i.c, i64 192 ; 2 uses
-  %gep37.2.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.alb = load <4 x i32>, ptr %i.c, align 256, !tbaa !12
   %i.alc = load <4 x i32>, ptr %i.aky, align 64, !tbaa !12 ; 2 uses
   %i.ald = load <4 x i32>, ptr %i.akz, align 128, !tbaa !12
@@ -438,19 +437,15 @@ vector.body324:                                   ; preds = %.preheader29.i.i.i
   %i.alr = sub nsw <4 x i32> %i.aln, %i.alq
   store <4 x i32> %i.alp, ptr %i.ala, align 64, !tbaa !12
   %i.als = add nsw <4 x i32> %i.alg, %i.ali
-  %i.alt = ashr <4 x i32> %i.als, splat (i32 1)   ; 3 uses
-  %2 = shufflevector <4 x i32> %i.alt, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %2, ptr %i.c, align 256, !tbaa !12
+  %i.alt = ashr <4 x i32> %i.als, splat (i32 1)   ; 2 uses
   %i.alu = sub nsw <4 x i32> %i.ali, %i.alt
   store <4 x i32> %i.alu, ptr %i.akz, align 128, !tbaa !12
   store <4 x i32> %i.alr, ptr %i.aky, align 64, !tbaa !12
-  %3 = shufflevector <4 x i32> %i.alt, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %3, ptr %gep37.2.i.i.i, align 8, !tbaa !12
+  store <4 x i32> %i.alt, ptr %i.c, align 256, !tbaa !12
   %invariant.gep36.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.alv = getelementptr inbounds nuw i8, ptr %i.c, i64 80 ; 2 uses
   %i.alw = getelementptr inbounds nuw i8, ptr %i.c, i64 144 ; 2 uses
   %i.alx = getelementptr inbounds nuw i8, ptr %i.c, i64 208 ; 2 uses
-  %gep37.2.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.aly = load <4 x i32>, ptr %invariant.gep36.i.i.i.1, align 16, !tbaa !12
   %i.alz = load <4 x i32>, ptr %i.alv, align 16, !tbaa !12 ; 2 uses
   %i.ama = load <4 x i32>, ptr %i.alw, align 16, !tbaa !12
@@ -470,19 +465,15 @@ vector.body324:                                   ; preds = %.preheader29.i.i.i
   %i.amo = sub nsw <4 x i32> %i.amk, %i.amn
   store <4 x i32> %i.amm, ptr %i.alx, align 16, !tbaa !12
   %i.amp = add nsw <4 x i32> %i.amd, %i.amf
-  %i.amq = ashr <4 x i32> %i.amp, splat (i32 1)   ; 3 uses
-  %4 = shufflevector <4 x i32> %i.amq, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %4, ptr %invariant.gep36.i.i.i.1, align 16, !tbaa !12
+  %i.amq = ashr <4 x i32> %i.amp, splat (i32 1)   ; 2 uses
   %i.amr = sub nsw <4 x i32> %i.amf, %i.amq
   store <4 x i32> %i.amr, ptr %i.alw, align 16, !tbaa !12
   store <4 x i32> %i.amo, ptr %i.alv, align 16, !tbaa !12
-  %5 = shufflevector <4 x i32> %i.amq, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %5, ptr %gep37.2.i.i.i.1, align 8, !tbaa !12
+  store <4 x i32> %i.amq, ptr %invariant.gep36.i.i.i.1, align 16, !tbaa !12
   %invariant.gep36.i.i.i.2 = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
   %i.ams = getelementptr inbounds nuw i8, ptr %i.c, i64 96 ; 2 uses
   %i.amt = getelementptr inbounds nuw i8, ptr %i.c, i64 160 ; 2 uses
   %i.amu = getelementptr inbounds nuw i8, ptr %i.c, i64 224 ; 2 uses
-  %gep37.2.i.i.i.2 = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.amv = load <4 x i32>, ptr %invariant.gep36.i.i.i.2, align 32, !tbaa !12
   %i.amw = load <4 x i32>, ptr %i.ams, align 32, !tbaa !12 ; 2 uses
   %i.amx = load <4 x i32>, ptr %i.amt, align 32, !tbaa !12
@@ -502,19 +493,15 @@ vector.body324:                                   ; preds = %.preheader29.i.i.i
   %i.anl = sub nsw <4 x i32> %i.anh, %i.ank
   store <4 x i32> %i.anj, ptr %i.amu, align 32, !tbaa !12
   %i.anm = add nsw <4 x i32> %i.ana, %i.anc
-  %i.ann = ashr <4 x i32> %i.anm, splat (i32 1)   ; 3 uses
-  %6 = shufflevector <4 x i32> %i.ann, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %6, ptr %invariant.gep36.i.i.i.2, align 32, !tbaa !12
+  %i.ann = ashr <4 x i32> %i.anm, splat (i32 1)   ; 2 uses
   %i.ano = sub nsw <4 x i32> %i.anc, %i.ann
   store <4 x i32> %i.ano, ptr %i.amt, align 32, !tbaa !12
   store <4 x i32> %i.anl, ptr %i.ams, align 32, !tbaa !12
-  %7 = shufflevector <4 x i32> %i.ann, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %7, ptr %gep37.2.i.i.i.2, align 8, !tbaa !12
+  store <4 x i32> %i.ann, ptr %invariant.gep36.i.i.i.2, align 32, !tbaa !12
   %invariant.gep36.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
   %i.anp = getelementptr inbounds nuw i8, ptr %i.c, i64 112 ; 2 uses
   %i.anq = getelementptr inbounds nuw i8, ptr %i.c, i64 176 ; 2 uses
   %i.anr = getelementptr inbounds nuw i8, ptr %i.c, i64 240 ; 2 uses
-  %gep37.2.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %i.ans = load <4 x i32>, ptr %invariant.gep36.i.i.i.3, align 16, !tbaa !12
   %i.ant = load <4 x i32>, ptr %i.anp, align 16, !tbaa !12 ; 2 uses
   %i.anu = load <4 x i32>, ptr %i.anq, align 16, !tbaa !12
@@ -534,14 +521,11 @@ vector.body324:                                   ; preds = %.preheader29.i.i.i
   %i.aoi = sub nsw <4 x i32> %i.aoe, %i.aoh
   store <4 x i32> %i.aog, ptr %i.anr, align 16, !tbaa !12
   %i.aoj = add nsw <4 x i32> %i.anx, %i.anz
-  %i.aok = ashr <4 x i32> %i.aoj, splat (i32 1)   ; 3 uses
-  %8 = shufflevector <4 x i32> %i.aok, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %8, ptr %invariant.gep36.i.i.i.3, align 16, !tbaa !12
+  %i.aok = ashr <4 x i32> %i.aoj, splat (i32 1)   ; 2 uses
   %i.aol = sub nsw <4 x i32> %i.anz, %i.aok
   store <4 x i32> %i.aol, ptr %i.anq, align 16, !tbaa !12
   store <4 x i32> %i.aoi, ptr %i.anp, align 16, !tbaa !12
-  %9 = shufflevector <4 x i32> %i.aok, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %9, ptr %gep37.2.i.i.i.3, align 8, !tbaa !12
+  store <4 x i32> %i.aok, ptr %invariant.gep36.i.i.i.3, align 16, !tbaa !12
   br label %fwd_xform_int32_3.exit.i.i
 
 fwd_xform_int32_3.exit.i.i:                       ; preds = %fwd_xform_int32_3.exit.i.i, %vector.body324

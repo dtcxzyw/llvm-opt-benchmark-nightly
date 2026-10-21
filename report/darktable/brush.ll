@@ -205,33 +205,31 @@ bb.f:                                             ; preds = %._crit_edge
   br label %common.ret119
 
 common.ret:                                       ; preds = %._crit_edge
-  %i.db = tail call noalias dereferenceable_or_null(44) ptr @malloc(i64 noundef 44) #19 ; 5 uses
+  %i.db = tail call noalias dereferenceable_or_null(44) ptr @malloc(i64 noundef 44) #19 ; 4 uses
   %i.dc = load <2 x float>, ptr %0, align 4, !tbaa !102
   store <2 x float> %i.dc, ptr %i.db, align 4, !tbaa !102
-  %4 = getelementptr inbounds nuw i8, ptr %i.db, i64 8
-  store <4 x float> splat (float -1.000000e+00), ptr %4, align 4, !tbaa !102
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.db, i64 24
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.db, i64 8
   %i.de = load <3 x float>, ptr %2, align 4, !tbaa !102
   %i.df = shufflevector <3 x float> %i.de, <3 x float> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 1>
-  store <4 x float> %i.df, ptr %i.dd, align 4, !tbaa !102
+  %4 = shufflevector <4 x float> splat (float -1.000000e+00), <4 x float> %i.df, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %4, ptr %i.dd, align 4, !tbaa !102
   %i.dg = getelementptr inbounds nuw i8, ptr %i.db, i64 40
   store i32 1, ptr %i.dg, align 4, !tbaa !167
   %i.dh = tail call ptr @g_list_append(ptr noundef null, ptr noundef nonnull %i.db) #18
-  %i.di = tail call noalias dereferenceable_or_null(44) ptr @malloc(i64 noundef 44) #19 ; 5 uses
+  %i.di = tail call noalias dereferenceable_or_null(44) ptr @malloc(i64 noundef 44) #19 ; 4 uses
   %i.dj = shl nsw i32 %i.a, 1
   %i.dk = sext i32 %i.dj to i64
   %i.dl = getelementptr inbounds [4 x i8], ptr %0, i64 %i.dk
   %i.dm = load <2 x float>, ptr %i.dl, align 4, !tbaa !102
   store <2 x float> %i.dm, ptr %i.di, align 4, !tbaa !102
   %i.dn = getelementptr inbounds nuw i8, ptr %i.di, i64 8
-  store <4 x float> splat (float -1.000000e+00), ptr %i.dn, align 4, !tbaa !102
   %i.do = shl nsw i32 %i.a, 2
   %i.dp = sext i32 %i.do to i64
   %i.dq = getelementptr inbounds [4 x i8], ptr %2, i64 %i.dp
-  %5 = getelementptr inbounds nuw i8, ptr %i.di, i64 24
-  %6 = load <3 x float>, ptr %i.dq, align 4, !tbaa !102
-  %7 = shufflevector <3 x float> %6, <3 x float> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 1>
-  store <4 x float> %7, ptr %5, align 4, !tbaa !102
+  %5 = load <3 x float>, ptr %i.dq, align 4, !tbaa !102
+  %6 = shufflevector <3 x float> %5, <3 x float> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 1>
+  %7 = shufflevector <4 x float> splat (float -1.000000e+00), <4 x float> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %7, ptr %i.dn, align 4, !tbaa !102
   %i.dr = getelementptr inbounds nuw i8, ptr %i.di, i64 40
   store i32 1, ptr %i.dr, align 4, !tbaa !167
   %i.ds = tail call ptr @g_list_append(ptr noundef %i.dh, ptr noundef nonnull %i.di) #18

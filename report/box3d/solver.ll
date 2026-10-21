@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.qr = getelementptr inbounds nuw i8, ptr %i.ov, i64 36 ; 2 uses
   %i.qs = fmul float %i.oh, %.sroa.14.0.i314
   %i.qt = load <2 x float>, ptr %i.qr, align 4    ; 6 uses
-  %i.qu = getelementptr inbounds nuw i8, ptr %i.ov, i64 44 ; 2 uses
+  %i.qu = getelementptr inbounds nuw i8, ptr %i.ov, i64 44
   %i.qv = load <2 x float>, ptr %i.qu, align 4    ; 5 uses
   %i.qw = fmul float %i.qs, 5.000000e-01          ; 4 uses
   %.sroa.03.4.vec.extract.i.i.i.i321 = extractelement <2 x float> %i.qt, i64 1
@@ -267,8 +267,8 @@ bb.y:                                             ; preds = %bb.x
 b3IntegrateRotation.exit.i:                       ; preds = %bb.y, %bb.x
   %.sroa.010.0.i.i.i = phi <2 x float> [ %i.sn, %bb.y ], [ zeroinitializer, %bb.x ]
   %.sroa.4.0.i.i.i = phi <2 x float> [ %i.so, %bb.y ], [ <float 0.000000e+00, float 1.000000e+00>, %bb.x ]
-  store <2 x float> %.sroa.010.0.i.i.i, ptr %i.qr, align 4, !tbaa !146
-  store <2 x float> %.sroa.4.0.i.i.i, ptr %i.qu, align 4, !tbaa !146
+  %3 = shufflevector <2 x float> %.sroa.010.0.i.i.i, <2 x float> %.sroa.4.0.i.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.qr, align 4, !tbaa !146
   %indvars.iv.next.i323 = add nsw i64 %indvars.iv.i312, 1 ; 2 uses
   %i.sp = icmp slt i64 %indvars.iv.next.i323, %i.os
   br i1 %i.sp, label %.lr.ph.i311, label %b3PrepareJointsTask.exit, !llvm.loop !367
@@ -506,11 +506,11 @@ declare void @b3Log(ptr noundef, ...) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @b3SolveContinuous(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(none) %2) unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.b3Transform, align 8        ; 7 uses
+  %3 = alloca %struct.b3Transform, align 8        ; 6 uses
   %4 = alloca %struct.b3ContinuousContext, align 8 ; 32 uses
   %5 = alloca %struct.b3AABB, align 8             ; 5 uses
   %6 = alloca %struct.b3AABB, align 8             ; 9 uses
-  %7 = alloca %struct.b3Transform, align 8        ; 9 uses
+  %7 = alloca %struct.b3Transform, align 8        ; 8 uses
   %8 = alloca %struct.b3AABB, align 8             ; 9 uses
   %i.a = tail call i64 @b3GetTicks() #11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3920
@@ -571,9 +571,8 @@ bb.a:
   %i.an = fsub <2 x float> %i.k, %i.am
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 12
-  store <2 x float> %.sroa.34.52.copyload465, ptr %i.ao, align 4, !tbaa !146
-  %.sroa.38.52..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 20
-  store <2 x float> %.sroa.38.52.copyload467, ptr %.sroa.38.52..sroa_idx, align 4, !tbaa !146
+  %9 = shufflevector <2 x float> %.sroa.34.52.copyload465, <2 x float> %.sroa.38.52.copyload467, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.ao, align 4, !tbaa !146
   %.sroa.011.0.vec.extract.i.i296 = extractelement <2 x float> %.sroa.34.52.copyload465, i64 0 ; 2 uses
   %foldExtExtBinop585 = fmul <2 x float> %.sroa.38.52.copyload467, %.sroa.0449.0.copyload452
   %i.ap = extractelement <2 x float> %foldExtExtBinop585, i64 0
@@ -928,9 +927,8 @@ b3NLerp.exit:                                     ; preds = %bb.h, %bb.i
   %.sroa.295.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
   store float %i.io, ptr %.sroa.295.0..sroa_idx, align 8
   %i.ip = getelementptr inbounds nuw i8, ptr %7, i64 12
-  store <2 x float> %.sroa.010.0.i.i, ptr %i.ip, align 4, !tbaa !146
-  %.sroa.6131.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 20
-  store <2 x float> %.sroa.4.0.i.i, ptr %.sroa.6131.0..sroa_idx, align 4, !tbaa !146
+  %10 = shufflevector <2 x float> %.sroa.010.0.i.i, <2 x float> %.sroa.4.0.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.ip, align 4, !tbaa !146
   %i.iq = fadd <2 x float> %.sroa.0218.0.copyload, %i.hm ; 2 uses
   %i.ir = fadd float %.sroa.8.0.copyload, %i.hl   ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.g, ptr noundef nonnull align 8 dereferenceable(28) %7, i64 28, i1 false), !tbaa.struct !165

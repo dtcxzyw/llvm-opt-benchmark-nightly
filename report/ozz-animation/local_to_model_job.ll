@@ -204,14 +204,12 @@ bb.e:                                             ; preds = %.outer, %._crit_edg
   %i.he = fmul <4 x float> %i.fq, %i.hd
   %i.hf = fadd <4 x float> %i.he, %i.gz
   %i.hg = fadd <4 x float> %i.hc, %i.hf
-  %i.hh = getelementptr inbounds nuw [64 x i8], ptr %.pre, i64 %indvars.iv ; 4 uses
-  store <4 x float> %i.ft, ptr %i.hh, align 16
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hh, i64 16
-  store <4 x float> %i.gg, ptr %.sroa.5.0..sroa_idx, align 16
+  %i.hh = getelementptr inbounds nuw [64 x i8], ptr %.pre, i64 %indvars.iv ; 2 uses
+  %2 = shufflevector <4 x float> %i.ft, <4 x float> %i.gg, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %2, ptr %i.hh, align 16
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hh, i64 32
-  store <4 x float> %i.gt, ptr %.sroa.7.0..sroa_idx, align 16
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hh, i64 48
-  store <4 x float> %i.hg, ptr %.sroa.9.0..sroa_idx, align 16, !tbaa !40
+  %3 = shufflevector <4 x float> %i.gt, <4 x float> %i.hg, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %3, ptr %.sroa.7.0..sroa_idx, align 16
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 5 uses
   %i.hi = icmp samesign ult i64 %indvars.iv.next, %i.bc
   br i1 %i.hi, label %bb.f, label %._crit_edge.loopexit.thread

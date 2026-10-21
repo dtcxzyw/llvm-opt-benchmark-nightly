@@ -204,9 +204,8 @@ _RNvMNtNtNtCsdnbpgXzNiEQ_6memchr4arch7generic10packedpairINtB2_6FinderNtNtNtCsj6
     #dbg_value(i8 %i.f, !1527, !DIExpression(), !6762)
     #dbg_value(i8 %i.f, !1533, !DIExpression(), !6764)
   %i.g = insertelement <16 x i8> poison, i8 %i.f, i64 0, !dbg !6860
-  %5 = shufflevector <16 x i8> %i.g, <16 x i8> poison, <16 x i32> zeroinitializer, !dbg !6860
-    #dbg_value(<16 x i8> %5, !1488, !DIExpression(), !6765)
-    #dbg_value(<16 x i8> %5, !1488, !DIExpression(), !6765)
+    #dbg_value(<16 x i8> poison, !1488, !DIExpression(), !6765)
+    #dbg_value(<16 x i8> poison, !1488, !DIExpression(), !6765)
   %..i = tail call noundef i8 @llvm.umax.i8(i8 %4, i8 %3), !dbg !6861
     #dbg_value(i8 %..i, !1486, !DIExpression(), !6751)
     #dbg_value(i8 %..i, !1491, !DIExpression(), !6753)
@@ -223,11 +222,10 @@ _RNvMNtNtNtCsdnbpgXzNiEQ_6memchr4arch7generic10packedpairINtB2_6FinderNtNtNtCsj6
     #dbg_value(i8 %i.k, !1527, !DIExpression(), !6770)
     #dbg_value(i8 %i.k, !1533, !DIExpression(), !6772)
   %i.l = insertelement <16 x i8> poison, i8 %i.k, i64 0, !dbg !6865
-  %6 = shufflevector <16 x i8> %i.l, <16 x i8> poison, <16 x i32> zeroinitializer, !dbg !6865
     #dbg_value(i8 %3, !6811, !DIExpression(DW_OP_LLVM_fragment, 320, 8), !6817)
     #dbg_value(i8 %4, !6811, !DIExpression(DW_OP_LLVM_fragment, 328, 8), !6817)
-    #dbg_value(<16 x i8> %5, !6811, !DIExpression(DW_OP_LLVM_fragment, 0, 128), !6817)
-    #dbg_value(<16 x i8> %6, !6811, !DIExpression(DW_OP_LLVM_fragment, 128, 128), !6817)
+    #dbg_value(<16 x i8> poison, !6811, !DIExpression(DW_OP_LLVM_fragment, 0, 128), !6817)
+    #dbg_value(<16 x i8> poison, !6811, !DIExpression(DW_OP_LLVM_fragment, 128, 128), !6817)
     #dbg_value(i64 %..i3, !6811, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !6817)
     #dbg_value(ptr %1, !6818, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6779)
     #dbg_value(i64 %2, !6818, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6779)
@@ -260,9 +258,8 @@ _RNvMNtNtNtCsdnbpgXzNiEQ_6memchr4arch7generic10packedpairINtB2_6FinderNtNtNtCsj6
     #dbg_value(<32 x i8> %i.q, !6812, !DIExpression(DW_OP_LLVM_fragment, 256, 256), !6853)
     #dbg_value(i64 %..i5, !6812, !DIExpression(DW_OP_LLVM_fragment, 512, 64), !6853)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 96, !dbg !6870
-  store <16 x i8> %5, ptr %i.r, align 32, !dbg !6870
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !6870
-  store <16 x i8> %6, ptr %.sroa.4.0..sroa_idx, align 16, !dbg !6870
+  %5 = shufflevector <16 x i8> %i.g, <16 x i8> %i.l, <32 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16>, !dbg !6870
+  store <32 x i8> %5, ptr %i.r, align 32, !dbg !6870
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128, !dbg !6870
   store i64 %..i3, ptr %.sroa.5.0..sroa_idx, align 32, !dbg !6870
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136, !dbg !6870

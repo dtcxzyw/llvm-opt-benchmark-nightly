@@ -182,15 +182,14 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #23 ; 5 uses
+  %i.a = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #23 ; 4 uses
   store i32 0, ptr %i.a, align 4, !tbaa !160
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.c = load <2 x float>, ptr %1, align 4, !tbaa !13
-  store <2 x float> %i.c, ptr %i.b, align 4, !tbaa !13
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   store i32 0, ptr %i.d, align 4, !tbaa !161
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store <2 x float> <float 5.000000e+01, float -4.000000e+00>, ptr %6, align 4, !tbaa !13
+  %6 = shufflevector <2 x float> %i.c, <2 x float> <float 5.000000e+01, float -4.000000e+00>, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.b, align 4, !tbaa !13
   br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a

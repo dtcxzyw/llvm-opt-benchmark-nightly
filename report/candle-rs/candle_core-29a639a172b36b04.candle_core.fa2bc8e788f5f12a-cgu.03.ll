@@ -204,12 +204,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %wide.load = load <2 x double>, ptr %i.p, align 8, !alias.scope !4392, !noalias !4393
   %wide.load4 = load <2 x double>, ptr %i.q, align 8, !alias.scope !4392, !noalias !4393
-  %2 = fptrunc <2 x double> %wide.load to <2 x float>
-  %3 = fptrunc <2 x double> %wide.load4 to <2 x float>
-  %i.r = getelementptr [4 x i8], ptr %i.o, i64 %index ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  store <2 x float> %2, ptr %i.r, align 4, !alias.scope !4394, !noalias !4395
-  store <2 x float> %3, ptr %4, align 4, !alias.scope !4394, !noalias !4395
+  %i.r = getelementptr [4 x i8], ptr %i.o, i64 %index
+  %2 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %3 = fptrunc <4 x double> %2 to <4 x float>
+  store <4 x float> %3, ptr %i.r, align 4, !alias.scope !4394, !noalias !4395
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.s = icmp eq i64 %index.next, %n.vec
   br i1 %i.s, label %middle.block, label %vector.body, !llvm.loop !4389
@@ -612,12 +610,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %wide.load = load <2 x i64>, ptr %i.p, align 8, !alias.scope !5967, !noalias !5968
   %wide.load4 = load <2 x i64>, ptr %i.q, align 8, !alias.scope !5967, !noalias !5968
-  %2 = sitofp <2 x i64> %wide.load to <2 x float>
-  %3 = sitofp <2 x i64> %wide.load4 to <2 x float>
-  %i.r = getelementptr [4 x i8], ptr %i.o, i64 %index ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  store <2 x float> %2, ptr %i.r, align 4, !alias.scope !5969, !noalias !5970
-  store <2 x float> %3, ptr %4, align 4, !alias.scope !5969, !noalias !5970
+  %i.r = getelementptr [4 x i8], ptr %i.o, i64 %index
+  %2 = shufflevector <2 x i64> %wide.load, <2 x i64> %wide.load4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %3 = sitofp <4 x i64> %2 to <4 x float>
+  store <4 x float> %3, ptr %i.r, align 4, !alias.scope !5969, !noalias !5970
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.s = icmp eq i64 %index.next, %n.vec
   br i1 %i.s, label %middle.block, label %vector.body, !llvm.loop !5964

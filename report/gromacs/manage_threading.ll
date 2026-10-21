@@ -205,14 +205,12 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %wide.masked.gather95 = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 %wide.gep91, <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !13
   %wide.masked.gather96 = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 %wide.gep92, <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !13
   %wide.masked.gather97 = tail call <4 x i32> @llvm.masked.gather.v4i32.v4p0(<4 x ptr> align 4 %wide.gep93, <4 x i1> splat (i1 true), <4 x i32> poison), !tbaa !13
-  %i.hn = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %index ; 4 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.hn, i64 16
-  %9 = getelementptr inbounds nuw i8, ptr %i.hn, i64 32
-  %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 48
-  store <4 x i32> %wide.masked.gather94, ptr %i.hn, align 4, !tbaa !13
-  store <4 x i32> %wide.masked.gather95, ptr %8, align 4, !tbaa !13
-  store <4 x i32> %wide.masked.gather96, ptr %9, align 4, !tbaa !13
-  store <4 x i32> %wide.masked.gather97, ptr %i.ho, align 4, !tbaa !13
+  %i.hn = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %index ; 2 uses
+  %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 32
+  %8 = shufflevector <4 x i32> %wide.masked.gather94, <4 x i32> %wide.masked.gather95, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x i32> %8, ptr %i.hn, align 4, !tbaa !13
+  %9 = shufflevector <4 x i32> %wide.masked.gather96, <4 x i32> %wide.masked.gather97, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x i32> %9, ptr %i.ho, align 4, !tbaa !13
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.hp = icmp eq i64 %index.next, %n.vec
   br i1 %i.hp, label %vec.epilog.iter.check, label %vector.body, !llvm.loop !80

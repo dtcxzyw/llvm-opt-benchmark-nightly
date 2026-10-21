@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.pbrt::LightSampleContext", align 8 ; 4 uses
   %5 = alloca %class.anon.388, align 8            ; 5 uses
   %6 = alloca %class.anon.372, align 8            ; 5 uses
-  %7 = alloca %"class.pbrt::Ray", align 8         ; 8 uses
+  %7 = alloca %"class.pbrt::Ray", align 8         ; 7 uses
   %8 = alloca %"class.pbrt::LightSampleContext", align 4 ; 5 uses
   %9 = alloca %"class.pbrt::Light", align 8       ; 4 uses
   %10 = alloca %"struct.pbrt::EscapedRayWorkItem", align 8 ; 29 uses
@@ -406,9 +406,8 @@ bb.a:
   br i1 %.not91.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.a
-  %.sroa.27.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.dg = getelementptr inbounds nuw i8, ptr %7, i64 12
-  %.sroa.23.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 20
+  %i.dg = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.sroa.23.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.dh = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.di = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dj = getelementptr inbounds nuw i8, ptr %.val.val, i64 88
@@ -436,10 +435,10 @@ bb.b:                                             ; preds = %bb.f, %.lr.ph.i.i.i
   %.sroa.09.0.copyload.i.i.i.i = load <2 x float>, ptr %.sroa.3.0..sroa_idx.i.i.i, align 4
   %.sroa.210.0.copyload.i.i.i.i = load float, ptr %.sroa.4.0..sroa_idx.i.i.i, align 4
   store <2 x float> %.sroa.011.0.copyload.i.i.i.i, ptr %7, align 8
-  store float %.sroa.212.0.copyload.i.i.i.i, ptr %.sroa.27.0..sroa_idx.i.i.i.i.i, align 8
-  store <2 x float> %.sroa.09.0.copyload.i.i.i.i, ptr %i.dg, align 4
+  store float %.sroa.212.0.copyload.i.i.i.i, ptr %i.dg, align 8
   %11 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %.sroa.210.0.copyload.i.i.i.i, i64 0
-  store <2 x float> %11, ptr %.sroa.23.0..sroa_idx.i.i.i.i.i, align 4
+  %12 = shufflevector <2 x float> %.sroa.09.0.copyload.i.i.i.i, <2 x float> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %.sroa.23.0..sroa_idx.i.i.i.i.i, align 4
   store i64 0, ptr %i.dh, align 8, !tbaa !1104
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   store ptr %7, ptr %6, align 8, !tbaa !1105
@@ -580,14 +579,14 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   %i.gp = sext i32 %i.gm to i64
   %i.gq = getelementptr inbounds [16 x i8], ptr %i.go, i64 %i.gp ; 3 uses
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load <2 x float>, ptr %i.gq, align 16
-  %.sroa.2.0..0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.gq, i64 8 ; 2 uses
+  %.sroa.2.0..0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.gq, i64 8
   %.sroa.2.0.copyload.i.i.i.i.i.i.i.i = load <2 x float>, ptr %.sroa.2.0..0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !tbaa !122
   %i.gr = shufflevector <4 x float> %.sroa.037.0.lcssa.i.i.i.i, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.gs = fadd <2 x float> %i.gr, %.sroa.0.0.copyload.i.i.i.i.i.i.i.i
   %i.gt = shufflevector <4 x float> %.sroa.037.0.lcssa.i.i.i.i, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.gu = fadd <2 x float> %i.gt, %.sroa.2.0.copyload.i.i.i.i.i.i.i.i
-  store <2 x float> %i.gs, ptr %i.gq, align 16
-  store <2 x float> %i.gu, ptr %.sroa.2.0..0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !tbaa !122
+  %13 = shufflevector <2 x float> %i.gs, <2 x float> %i.gu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %i.gq, align 16
   br label %"_ZSt10__invoke_rIvRZN4pbrt12ForAllQueuedIZNS0_23WavefrontPathIntegrator17HandleEscapedRaysEvE3$_0NS0_18EscapedRayWorkItemEEEvPKcPKNS0_9WorkQueueIT0_EEiOT_EUliE_JlEENSt9enable_ifIX16is_invocable_r_vISC_S8_DpT1_EESC_E4typeEOS8_DpOSH_.exit"
 
 "_ZSt10__invoke_rIvRZN4pbrt12ForAllQueuedIZNS0_23WavefrontPathIntegrator17HandleEscapedRaysEvE3$_0NS0_18EscapedRayWorkItemEEEvPKcPKNS0_9WorkQueueIT0_EEiOT_EUliE_JlEENSt9enable_ifIX16is_invocable_r_vISC_S8_DpT1_EESC_E4typeEOS8_DpOSH_.exit": ; preds = %._crit_edge.i.i.i.i, %bb.g
@@ -990,14 +989,14 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.gz = sext i32 %i.gw to i64
   %i.ha = getelementptr inbounds [16 x i8], ptr %i.gy, i64 %i.gz ; 3 uses
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load <2 x float>, ptr %i.ha, align 16
-  %.sroa.2.0..0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ha, i64 8 ; 2 uses
+  %.sroa.2.0..0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ha, i64 8
   %.sroa.2.0.copyload.i.i.i.i.i.i.i.i = load <2 x float>, ptr %.sroa.2.0..0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !tbaa !122
   %i.hb = shufflevector <4 x float> %.sroa.015.0.i.i.i.i, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.hc = fadd <2 x float> %i.hb, %.sroa.0.0.copyload.i.i.i.i.i.i.i.i
   %i.hd = shufflevector <4 x float> %.sroa.015.0.i.i.i.i, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.he = fadd <2 x float> %i.hd, %.sroa.2.0.copyload.i.i.i.i.i.i.i.i
-  store <2 x float> %i.hc, ptr %i.ha, align 16
-  store <2 x float> %i.he, ptr %.sroa.2.0..0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !tbaa !122
+  %9 = shufflevector <2 x float> %i.hc, <2 x float> %i.he, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.ha, align 16
   br label %"_ZSt10__invoke_rIvRZN4pbrt12ForAllQueuedIZNS0_23WavefrontPathIntegrator26HandleEmissiveIntersectionEvE3$_0NS0_20HitAreaLightWorkItemEEEvPKcPKNS0_9WorkQueueIT0_EEiOT_EUliE_JlEENSt9enable_ifIX16is_invocable_r_vISC_S8_DpT1_EESC_E4typeEOS8_DpOSH_.exit"
 
 "_ZSt10__invoke_rIvRZN4pbrt12ForAllQueuedIZNS0_23WavefrontPathIntegrator26HandleEmissiveIntersectionEvE3$_0NS0_20HitAreaLightWorkItemEEEvPKcPKNS0_9WorkQueueIT0_EEiOT_EUliE_JlEENSt9enable_ifIX16is_invocable_r_vISC_S8_DpT1_EESC_E4typeEOS8_DpOSH_.exit": ; preds = %_ZNK4pbrt5Light1LENS_6Point3IfEENS_7Normal3IfEENS_6Point2IfEENS_7Vector3IfEERKNS_18SampledWavelengthsE.exit.i.i.i.i, %bb.h

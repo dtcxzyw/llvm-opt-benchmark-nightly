@@ -205,29 +205,23 @@ vec.epilog.middle.block172:                       ; preds = %vec.epilog.vector.b
   %niter183 = phi i64 [ 0, %.preheader71.i.preheader.new ], [ %niter183.next.1, %.preheader71.i ]
   %i.cn = shl nuw nsw i64 %.05377.i, 4
   %i.co = getelementptr i8, ptr %0, i64 %i.cn     ; 2 uses
-  %i.cp = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.co) ; 2 uses
+  %i.cp = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.co)
   %i.cq = getelementptr i8, ptr %i.co, i64 %3
-  %i.cr = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.cq) ; 2 uses
-  %5 = shufflevector <16 x i8> %i.cp, <16 x i8> %i.cr, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %6 = shufflevector <16 x i8> %i.cp, <16 x i8> %i.cr, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.cr = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.cq)
   %i.cs = shl nuw i64 %.05377.i, 5
-  %i.ct = getelementptr i8, ptr %4, i64 %i.cs     ; 2 uses
-  store <16 x i8> %5, ptr %i.ct, align 1, !tbaa !7
-  %.sroa.8.32..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
-  store <16 x i8> %6, ptr %.sroa.8.32..sroa_idx.i, align 1, !tbaa !7
+  %i.ct = getelementptr i8, ptr %4, i64 %i.cs
+  %5 = shufflevector <16 x i8> %i.cp, <16 x i8> %i.cr, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %5, ptr %i.ct, align 1, !tbaa !7
   %i.cu = or disjoint i64 %.05377.i, 1            ; 2 uses
   %i.cv = shl nuw nsw i64 %i.cu, 4
   %i.cw = getelementptr i8, ptr %0, i64 %i.cv     ; 2 uses
-  %i.cx = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.cw) ; 2 uses
+  %i.cx = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.cw)
   %i.cy = getelementptr i8, ptr %i.cw, i64 %3
-  %i.cz = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.cy) ; 2 uses
-  %7 = shufflevector <16 x i8> %i.cx, <16 x i8> %i.cz, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %8 = shufflevector <16 x i8> %i.cx, <16 x i8> %i.cz, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.cz = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.cy)
   %i.da = shl nuw i64 %i.cu, 5
-  %i.db = getelementptr i8, ptr %4, i64 %i.da     ; 2 uses
-  store <16 x i8> %7, ptr %i.db, align 1, !tbaa !7
-  %.sroa.8.32..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %i.db, i64 16
-  store <16 x i8> %8, ptr %.sroa.8.32..sroa_idx.i.1, align 1, !tbaa !7
+  %i.db = getelementptr i8, ptr %4, i64 %i.da
+  %6 = shufflevector <16 x i8> %i.cx, <16 x i8> %i.cz, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %6, ptr %i.db, align 1, !tbaa !7
   %i.dc = add nuw nsw i64 %.05377.i, 2            ; 2 uses
   %niter183.next.1 = add i64 %niter183, 2         ; 2 uses
   %niter183.ncmp.1 = icmp eq i64 %niter183.next.1, %unroll_iter182
@@ -443,16 +437,13 @@ _ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi
   tail call void @llvm.assume(i1 %lcmp.mod181)
   %i.gv = shl nuw nsw i64 %.05377.i.epil.init, 4
   %i.gw = getelementptr i8, ptr %0, i64 %i.gv     ; 2 uses
-  %i.gx = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.gw) ; 2 uses
+  %i.gx = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.gw)
   %i.gy = getelementptr i8, ptr %i.gw, i64 %3
-  %i.gz = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.gy) ; 2 uses
-  %9 = shufflevector <16 x i8> %i.gx, <16 x i8> %i.gz, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %10 = shufflevector <16 x i8> %i.gx, <16 x i8> %i.gz, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.gz = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.gy)
   %i.ha = shl nuw i64 %.05377.i.epil.init, 5
-  %i.hb = getelementptr i8, ptr %4, i64 %i.ha     ; 2 uses
-  store <16 x i8> %9, ptr %i.hb, align 1, !tbaa !7
-  %.sroa.8.32..sroa_idx.i.epil = getelementptr inbounds nuw i8, ptr %i.hb, i64 16
-  store <16 x i8> %10, ptr %.sroa.8.32..sroa_idx.i.epil, align 1, !tbaa !7
+  %i.hb = getelementptr i8, ptr %4, i64 %i.ha
+  %7 = shufflevector <16 x i8> %i.gx, <16 x i8> %i.gz, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %7, ptr %i.hb, align 1, !tbaa !7
   br label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit
 
 _ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi2EEEvPKhillPh.exit.loopexit175.unr-lcssa: ; preds = %.preheader75
@@ -686,23 +677,17 @@ middle.block188:                                  ; preds = %vector.body181
   %i.bz = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.by) ; 2 uses
   %i.ca = getelementptr i8, ptr %i.bu, i64 %i.be
   %i.cb = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.ca) ; 2 uses
-  %5 = shufflevector <16 x i8> %i.bv, <16 x i8> %i.bz, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %6 = shufflevector <16 x i8> %i.bv, <16 x i8> %i.bz, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %7 = shufflevector <16 x i8> %i.bx, <16 x i8> %i.cb, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %8 = shufflevector <16 x i8> %i.bx, <16 x i8> %i.cb, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.cc = shufflevector <16 x i8> %5, <16 x i8> %7, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %i.cd = shufflevector <16 x i8> %5, <16 x i8> %7, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
-  %i.ce = shufflevector <16 x i8> %6, <16 x i8> %8, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %i.cf = shufflevector <16 x i8> %6, <16 x i8> %8, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.cc = shufflevector <16 x i8> %i.bv, <16 x i8> %i.bz, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
+  %i.cd = shufflevector <16 x i8> %i.bv, <16 x i8> %i.bz, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.ce = shufflevector <16 x i8> %i.bx, <16 x i8> %i.cb, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
+  %i.cf = shufflevector <16 x i8> %i.bx, <16 x i8> %i.cb, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
   %i.cg = shl i64 %.05379.i, 6
-  %i.ch = getelementptr i8, ptr %4, i64 %i.cg     ; 4 uses
-  store <16 x i8> %i.cc, ptr %i.ch, align 1, !tbaa !7
-  %.sroa.20.128..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  store <16 x i8> %i.cd, ptr %.sroa.20.128..sroa_idx.i, align 1, !tbaa !7
+  %i.ch = getelementptr i8, ptr %4, i64 %i.cg     ; 2 uses
+  %5 = shufflevector <16 x i8> %i.cc, <16 x i8> %i.ce, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %5, ptr %i.ch, align 1, !tbaa !7
   %.sroa.21.128..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ch, i64 32
-  store <16 x i8> %i.ce, ptr %.sroa.21.128..sroa_idx.i, align 1, !tbaa !7
-  %.sroa.22.128..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ch, i64 48
-  store <16 x i8> %i.cf, ptr %.sroa.22.128..sroa_idx.i, align 1, !tbaa !7
+  %6 = shufflevector <16 x i8> %i.cd, <16 x i8> %i.cf, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %6, ptr %.sroa.21.128..sroa_idx.i, align 1, !tbaa !7
   %i.ci = add nuw nsw i64 %.05379.i, 1            ; 2 uses
   %exitcond87.not.i = icmp eq i64 %i.ci, %i.b
   br i1 %exitcond87.not.i, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi4EEEvPKhillPh.exit, label %.preheader.preheader.i, !llvm.loop !51
@@ -1105,22 +1090,14 @@ middle.block280:                                  ; preds = %vector.body269
   %i.dj = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.di) ; 2 uses
   %i.dk = getelementptr i8, ptr %i.cw, i64 %i.cj
   %i.dl = tail call <16 x i8> @llvm.x86.sse3.ldu.dq(ptr %i.dk) ; 2 uses
-  %5 = shufflevector <16 x i8> %i.cx, <16 x i8> %i.df, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %6 = shufflevector <16 x i8> %i.cx, <16 x i8> %i.df, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %7 = shufflevector <16 x i8> %i.cz, <16 x i8> %i.dh, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %8 = shufflevector <16 x i8> %i.cz, <16 x i8> %i.dh, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %9 = shufflevector <16 x i8> %i.db, <16 x i8> %i.dj, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %10 = shufflevector <16 x i8> %i.db, <16 x i8> %i.dj, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %11 = shufflevector <16 x i8> %i.dd, <16 x i8> %i.dl, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %12 = shufflevector <16 x i8> %i.dd, <16 x i8> %i.dl, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.dm = shufflevector <16 x i8> %5, <16 x i8> %9, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %i.dn = shufflevector <16 x i8> %5, <16 x i8> %9, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.do = shufflevector <16 x i8> %6, <16 x i8> %10, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %i.dp = shufflevector <16 x i8> %6, <16 x i8> %10, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.dq = shufflevector <16 x i8> %7, <16 x i8> %11, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %i.dr = shufflevector <16 x i8> %7, <16 x i8> %11, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.ds = shufflevector <16 x i8> %8, <16 x i8> %12, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %i.dt = shufflevector <16 x i8> %8, <16 x i8> %12, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
+  %i.dm = shufflevector <16 x i8> %i.cx, <16 x i8> %i.df, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
+  %i.dn = shufflevector <16 x i8> %i.cx, <16 x i8> %i.df, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
+  %i.do = shufflevector <16 x i8> %i.cz, <16 x i8> %i.dh, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
+  %i.dp = shufflevector <16 x i8> %i.cz, <16 x i8> %i.dh, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
+  %i.dq = shufflevector <16 x i8> %i.db, <16 x i8> %i.dj, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
+  %i.dr = shufflevector <16 x i8> %i.db, <16 x i8> %i.dj, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
+  %i.ds = shufflevector <16 x i8> %i.dd, <16 x i8> %i.dl, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
+  %i.dt = shufflevector <16 x i8> %i.dd, <16 x i8> %i.dl, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
   %i.du = shufflevector <16 x i8> %i.dm, <16 x i8> %i.dq, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.dv = shufflevector <16 x i8> %i.dm, <16 x i8> %i.dq, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
   %i.dw = shufflevector <16 x i8> %i.dn, <16 x i8> %i.dr, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
@@ -1130,22 +1107,18 @@ middle.block280:                                  ; preds = %vector.body269
   %i.ea = shufflevector <16 x i8> %i.dp, <16 x i8> %i.dt, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.eb = shufflevector <16 x i8> %i.dp, <16 x i8> %i.dt, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
   %i.ec = shl i64 %.05379.i, 7
-  %i.ed = getelementptr i8, ptr %4, i64 %i.ec     ; 8 uses
-  store <16 x i8> %i.du, ptr %i.ed, align 1, !tbaa !7
-  %.sroa.52.384..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ed, i64 16
-  store <16 x i8> %i.dv, ptr %.sroa.52.384..sroa_idx.i, align 1, !tbaa !7
+  %i.ed = getelementptr i8, ptr %4, i64 %i.ec     ; 4 uses
+  %5 = shufflevector <16 x i8> %i.du, <16 x i8> %i.dy, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %5, ptr %i.ed, align 1, !tbaa !7
   %.sroa.53.384..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ed, i64 32
-  store <16 x i8> %i.dw, ptr %.sroa.53.384..sroa_idx.i, align 1, !tbaa !7
-  %.sroa.54.384..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ed, i64 48
-  store <16 x i8> %i.dx, ptr %.sroa.54.384..sroa_idx.i, align 1, !tbaa !7
+  %6 = shufflevector <16 x i8> %i.dv, <16 x i8> %i.dz, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %6, ptr %.sroa.53.384..sroa_idx.i, align 1, !tbaa !7
   %.sroa.55.384..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ed, i64 64
-  store <16 x i8> %i.dy, ptr %.sroa.55.384..sroa_idx.i, align 1, !tbaa !7
-  %.sroa.56.384..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ed, i64 80
-  store <16 x i8> %i.dz, ptr %.sroa.56.384..sroa_idx.i, align 1, !tbaa !7
+  %7 = shufflevector <16 x i8> %i.dw, <16 x i8> %i.ea, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %7, ptr %.sroa.55.384..sroa_idx.i, align 1, !tbaa !7
   %.sroa.57.384..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ed, i64 96
-  store <16 x i8> %i.ea, ptr %.sroa.57.384..sroa_idx.i, align 1, !tbaa !7
-  %.sroa.58.384..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ed, i64 112
-  store <16 x i8> %i.eb, ptr %.sroa.58.384..sroa_idx.i, align 1, !tbaa !7
+  %8 = shufflevector <16 x i8> %i.dx, <16 x i8> %i.eb, <32 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  store <32 x i8> %8, ptr %.sroa.57.384..sroa_idx.i, align 1, !tbaa !7
   %i.ee = add nuw nsw i64 %.05379.i, 1            ; 2 uses
   %exitcond89.not.i = icmp eq i64 %i.ee, %i.b
   br i1 %exitcond89.not.i, label %_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi8EEEvPKhillPh.exit, label %.preheader.preheader.i, !llvm.loop !90

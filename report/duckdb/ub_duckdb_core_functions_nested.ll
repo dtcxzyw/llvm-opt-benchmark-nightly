@@ -205,10 +205,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
   %wide.load = load <2 x float>, ptr %i.dz, align 4, !tbaa !358
   %wide.load161 = load <2 x float>, ptr %i.ea, align 4, !tbaa !358
-  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %i.dy ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.eb, i64 8
-  store <2 x float> %wide.load, ptr %i.eb, align 4, !tbaa !358
-  store <2 x float> %wide.load161, ptr %11, align 4, !tbaa !358
+  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %i.dy
+  %11 = shufflevector <2 x float> %wide.load, <2 x float> %wide.load161, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %i.eb, align 4, !tbaa !358
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.do, i64 %index ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 16
   %wide.load162 = load <2 x i64>, ptr %i.ec, align 8, !tbaa !132

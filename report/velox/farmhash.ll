@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define internal fastcc noundef i64 @_ZN5folly8external8farmhash10farmhashteL10Hash64LongEPKcmmm(ptr nofree noundef readonly captures(address) %0, i64 noundef range(i64 512, 0) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [8 x <2 x i64>], align 16         ; 11 uses
+  %i.a = alloca [8 x <2 x i64>], align 16         ; 7 uses
   %i.b = add i64 %2, 113
   %i.c = add i64 %3, 9
   %i.d = mul i64 %i.c, %i.b                       ; 2 uses
@@ -506,21 +506,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.it = add <2 x i64> %i.iq, %i.gt
   %i.iu = xor <2 x i64> %i.ir, %i.hl
   %i.iv = add <2 x i64> %i.io, %i.gh
-  store <2 x i64> %i.io, ptr %i.a, align 16, !tbaa !12
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store <2 x i64> %i.ip, ptr %4, align 16, !tbaa !12
+  %4 = shufflevector <2 x i64> %i.io, <2 x i64> %i.ip, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %4, ptr %i.a, align 16, !tbaa !12
   %i.iw = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store <2 x i64> %i.iq, ptr %i.iw, align 16, !tbaa !12
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store <2 x i64> %i.ir, ptr %5, align 16, !tbaa !12
+  %5 = shufflevector <2 x i64> %i.iq, <2 x i64> %i.ir, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %5, ptr %i.iw, align 16, !tbaa !12
   %i.ix = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store <2 x i64> %i.is, ptr %i.ix, align 16, !tbaa !12
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  store <2 x i64> %i.it, ptr %6, align 16, !tbaa !12
+  %6 = shufflevector <2 x i64> %i.is, <2 x i64> %i.it, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %6, ptr %i.ix, align 16, !tbaa !12
   %i.iy = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  store <2 x i64> %i.iu, ptr %i.iy, align 16, !tbaa !12
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  store <2 x i64> %i.iv, ptr %7, align 16, !tbaa !12
+  %7 = shufflevector <2 x i64> %i.iu, <2 x i64> %i.iv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %7, ptr %i.iy, align 16, !tbaa !12
   %i.iz = call noundef i64 @_ZN5folly8external8farmhash10farmhashna6Hash64EPKcm(ptr noundef nonnull readonly %i.a, i64 noundef 128)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i64 %i.iz

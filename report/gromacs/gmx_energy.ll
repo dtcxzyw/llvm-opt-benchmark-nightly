@@ -205,9 +205,9 @@ vector.body2227:                                  ; preds = %vector.ph2223, %vec
   %i.cny = uitofp nneg <4 x i32> %step.add.22231 to <4 x double>
   %i.cnz = uitofp nneg <4 x i32> %step.add.32232 to <4 x double>
   %i.coa = getelementptr inbounds nuw [4 x i8], ptr %i.cnq, i64 %index2228 ; 5 uses
-  %i.cob = getelementptr inbounds nuw i8, ptr %i.coa, i64 16 ; 2 uses
+  %i.cob = getelementptr inbounds nuw i8, ptr %i.coa, i64 16
   %i.coc = getelementptr inbounds nuw i8, ptr %i.coa, i64 32 ; 2 uses
-  %i.cod = getelementptr inbounds nuw i8, ptr %i.coa, i64 48 ; 2 uses
+  %i.cod = getelementptr inbounds nuw i8, ptr %i.coa, i64 48
   %wide.load2233 = load <4 x float>, ptr %i.coa, align 4, !tbaa !54, !alias.scope !305, !noalias !306
   %wide.load2234 = load <4 x float>, ptr %i.cob, align 4, !tbaa !54, !alias.scope !305, !noalias !306
   %wide.load2235 = load <4 x float>, ptr %i.coc, align 4, !tbaa !54, !alias.scope !305, !noalias !306
@@ -224,14 +224,12 @@ vector.body2227:                                  ; preds = %vector.ph2223, %vec
   %i.con = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.coj, <4 x double> %broadcast.splat2226, <4 x double> %i.cof)
   %i.coo = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.cok, <4 x double> %broadcast.splat2226, <4 x double> %i.cog)
   %i.cop = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.col, <4 x double> %broadcast.splat2226, <4 x double> %i.coh)
-  %54 = fptrunc <4 x double> %i.com to <4 x float>
-  %55 = fptrunc <4 x double> %i.con to <4 x float>
-  %56 = fptrunc <4 x double> %i.coo to <4 x float>
-  %57 = fptrunc <4 x double> %i.cop to <4 x float>
-  store <4 x float> %54, ptr %i.coa, align 4, !tbaa !54, !alias.scope !305, !noalias !306
-  store <4 x float> %55, ptr %i.cob, align 4, !tbaa !54, !alias.scope !305, !noalias !306
-  store <4 x float> %56, ptr %i.coc, align 4, !tbaa !54, !alias.scope !305, !noalias !306
-  store <4 x float> %57, ptr %i.cod, align 4, !tbaa !54, !alias.scope !305, !noalias !306
+  %54 = shufflevector <4 x double> %i.com, <4 x double> %i.con, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %55 = fptrunc <8 x double> %54 to <8 x float>
+  store <8 x float> %55, ptr %i.coa, align 4, !tbaa !54, !alias.scope !305, !noalias !306
+  %56 = shufflevector <4 x double> %i.coo, <4 x double> %i.cop, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %57 = fptrunc <8 x double> %56 to <8 x float>
+  store <8 x float> %57, ptr %i.coc, align 4, !tbaa !54, !alias.scope !305, !noalias !306
   %i.coq = getelementptr inbounds nuw [8 x i8], ptr %i.cns, i64 %index2228
   %i.cor = getelementptr inbounds nuw [8 x i8], ptr %i.cns, i64 %index2228
   %i.cos = getelementptr inbounds nuw i8, ptr %i.cor, i64 32
@@ -421,9 +419,9 @@ vector.body2182:                                  ; preds = %vector.ph2178, %vec
   %i.crn = uitofp nneg <4 x i32> %step.add.2 to <4 x double>
   %i.cro = uitofp nneg <4 x i32> %step.add.3 to <4 x double>
   %i.crp = getelementptr inbounds nuw [4 x i8], ptr %i.cri, i64 %index2183 ; 5 uses
-  %i.crq = getelementptr inbounds nuw i8, ptr %i.crp, i64 16 ; 2 uses
+  %i.crq = getelementptr inbounds nuw i8, ptr %i.crp, i64 16
   %i.crr = getelementptr inbounds nuw i8, ptr %i.crp, i64 32 ; 2 uses
-  %i.crs = getelementptr inbounds nuw i8, ptr %i.crp, i64 48 ; 2 uses
+  %i.crs = getelementptr inbounds nuw i8, ptr %i.crp, i64 48
   %wide.load2185 = load <4 x float>, ptr %i.crp, align 4, !tbaa !54, !alias.scope !308, !noalias !309
   %wide.load2186 = load <4 x float>, ptr %i.crq, align 4, !tbaa !54, !alias.scope !308, !noalias !309
   %wide.load2187 = load <4 x float>, ptr %i.crr, align 4, !tbaa !54, !alias.scope !308, !noalias !309
@@ -440,14 +438,12 @@ vector.body2182:                                  ; preds = %vector.ph2178, %vec
   %i.csc = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.cry, <4 x double> %broadcast.splat2181, <4 x double> %i.cru)
   %i.csd = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.crz, <4 x double> %broadcast.splat2181, <4 x double> %i.crv)
   %i.cse = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.csa, <4 x double> %broadcast.splat2181, <4 x double> %i.crw)
-  %58 = fptrunc <4 x double> %i.csb to <4 x float>
-  %59 = fptrunc <4 x double> %i.csc to <4 x float>
-  %60 = fptrunc <4 x double> %i.csd to <4 x float>
-  %61 = fptrunc <4 x double> %i.cse to <4 x float>
-  store <4 x float> %58, ptr %i.crp, align 4, !tbaa !54, !alias.scope !308, !noalias !309
-  store <4 x float> %59, ptr %i.crq, align 4, !tbaa !54, !alias.scope !308, !noalias !309
-  store <4 x float> %60, ptr %i.crr, align 4, !tbaa !54, !alias.scope !308, !noalias !309
-  store <4 x float> %61, ptr %i.crs, align 4, !tbaa !54, !alias.scope !308, !noalias !309
+  %58 = shufflevector <4 x double> %i.csb, <4 x double> %i.csc, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %59 = fptrunc <8 x double> %58 to <8 x float>
+  store <8 x float> %59, ptr %i.crp, align 4, !tbaa !54, !alias.scope !308, !noalias !309
+  %60 = shufflevector <4 x double> %i.csd, <4 x double> %i.cse, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %61 = fptrunc <8 x double> %60 to <8 x float>
+  store <8 x float> %61, ptr %i.crr, align 4, !tbaa !54, !alias.scope !308, !noalias !309
   %i.csf = getelementptr inbounds nuw [8 x i8], ptr %i.crk, i64 %index2183
   %i.csg = getelementptr inbounds nuw [8 x i8], ptr %i.crk, i64 %index2183
   %i.csh = getelementptr inbounds nuw i8, ptr %i.csg, i64 32

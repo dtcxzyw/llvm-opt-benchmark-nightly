@@ -205,7 +205,7 @@ bb.a:
   %9 = alloca %"class.std::__1::basic_string", align 8 ; 12 uses
   %10 = alloca %"class.std::__1::function.1119", align 16 ; 11 uses
   %11 = alloca %"class.tev::Task.1130", align 8   ; 11 uses
-  %12 = alloca %class.anon.1133, align 16         ; 16 uses
+  %12 = alloca %class.anon.1133, align 16         ; 15 uses
   %13 = alloca %"class.std::__1::chrono::duration", align 8 ; 4 uses
   %14 = alloca %"class.std::__1::unique_ptr.652", align 8 ; 6 uses
   %15 = alloca %"class.std::__1::unique_ptr.670", align 8 ; 5 uses
@@ -608,9 +608,9 @@ bb.zr:                                            ; preds = %bb.zp, %bb.zq
   %i.dlu = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.dlv = getelementptr inbounds nuw i8, ptr %11, i64 24
   %i.dlw = getelementptr inbounds nuw i8, ptr %12, i64 32
-  %.sroa.62056.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 52
-  %i.dlx = insertelement <2 x float> poison, float %i.dkh, i64 0
-  %234 = insertelement <2 x float> %i.dlx, float %i.dkn, i64 1
+  %234 = insertelement <2 x float> poison, float %i.dkh, i64 0
+  %i.dlx = insertelement <2 x float> %234, float %i.dkn, i64 1
+  %235 = shufflevector <2 x float> %.sroa.02055.0, <2 x float> %.sroa.62056.0, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   br label %bb.zs
 
 bb.zs:                                            ; preds = %_ZN4tlog5errorENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit.i, %bb.zr
@@ -986,10 +986,9 @@ bb.abb:                                           ; preds = %_ZNSt3__110shared_p
 
 _ZNSt3__14__fs10filesystem4pathC2B8ne180100ERKS2_.exit.i: ; preds = %bb.abb, %bb.aba
   store i32 %i.diq, ptr %i.dln, align 8, !tbaa !269
-  store <2 x float> %.sroa.02055.0, ptr %i.dlo, align 4
-  store <2 x float> %.sroa.62056.0, ptr %.sroa.62056.0..sroa_idx, align 4
+  store <4 x float> %235, ptr %i.dlo, align 4
   store i32 %i.dkb, ptr %i.dlp, align 4, !tbaa !270
-  store <2 x float> %234, ptr %i.dlq, align 16, !tbaa !91
+  store <2 x float> %i.dlx, ptr %i.dlq, align 16, !tbaa !91
   store float %i.dkt, ptr %i.dlr, align 8, !tbaa !271
   invoke fastcc void @"_ZN3tev10ThreadPool16enqueueCoroutineITkNS_13TaskCoroutineEZNS_L9convertToERKNSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKNS2_10shared_ptrINS_22BackgroundImagesLoaderEEENS_7EMetricERKN7nanogui5ColorENS_8ETonemapEfffE3$_1EENS2_13invoke_resultIT_JEE4typeEOSO_i"(ptr dead_on_unwind nonnull writable sret(%"class.tev::Task.1130") align 8 %11, ptr noundef nonnull align 8 dereferenceable(216) @_ZZN3tev10ThreadPool6globalEvE4pool, ptr noundef nonnull align 8 dereferenceable(76) %12, i32 noundef 2147483647)
           to label %bb.abc unwind label %bb.abl

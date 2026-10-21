@@ -205,9 +205,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %.1.2 = phi i8 [ %.1.1, %bb.f ], [ 1, %bb.g ], [ 1, %bb.h ]
   %.sroa.07.2.2 = phi <2 x float> [ %.sroa.07.2.1, %bb.f ], [ %i.v, %bb.g ], [ %i.z, %bb.h ]
   %.sroa.7.2.2 = phi <2 x float> [ %.sroa.7.2.1, %bb.f ], [ %i.w, %bb.g ], [ %i.ab, %bb.h ]
-  store <2 x float> %.sroa.07.2.2, ptr %1, align 4, !tbaa !142
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store <2 x float> %.sroa.7.2.2, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !142
+  %2 = shufflevector <2 x float> %.sroa.07.2.2, <2 x float> %.sroa.7.2.2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %1, align 4, !tbaa !142
   %i.ac = trunc nuw i8 %.1.2 to i1
   ret i1 %i.ac
 }
@@ -610,7 +609,7 @@ declare void @b2RecW_SHAPEPROXY(ptr noundef, ptr noundef byval(%struct.b2ShapePr
 ; Function Attrs: nounwind uwtable
 define internal zeroext i1 @TreeOverlapCallback(i32 %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2) #7 {
 bb.a:
-  %3 = alloca %struct.b2DistanceInput, align 4    ; 8 uses
+  %3 = alloca %struct.b2DistanceInput, align 4    ; 7 uses
   %4 = alloca %struct.b2SimplexCache, align 8     ; 4 uses
   %5 = alloca %struct.b2DistanceOutput, align 4   ; 4 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !284    ; 4 uses
@@ -654,9 +653,8 @@ bb.b:                                             ; preds = %bb.a
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 72
   call void @b2MakeShapeDistanceProxy(ptr dead_on_unwind nonnull writable sret(%struct.b2ShapeProxy) align 4 %i.af, ptr noundef nonnull %i.f) #23
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 144
-  store <2 x float> %i.ac, ptr %i.ag, align 4, !tbaa !142
-  %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 152
-  store <2 x float> %i.z, ptr %.sroa.43.0..sroa_idx, align 4, !tbaa !142
+  %6 = shufflevector <2 x float> %i.ac, <2 x float> %i.z, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.ag, align 4, !tbaa !142
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 160
   store i8 1, ptr %i.ah, align 4, !tbaa !289
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
@@ -708,7 +706,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d
 define i64 @b2World_CastRay(i32 %0, <2 x float> %1, <2 x float> %2, i64 %3, i64 %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #7 {
 bb.a:
   %7 = alloca %struct.b2RecQueryWriter, align 8   ; 12 uses
-  %8 = alloca %struct.b2RayCastInput, align 8     ; 8 uses
+  %8 = alloca %struct.b2RayCastInput, align 16    ; 7 uses
   %9 = alloca %struct.WorldRayCastContext, align 8 ; 13 uses
   %i.a = and i32 %0, 65535
   %i.b = zext nneg i32 %i.a to i64
@@ -744,11 +742,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.037 = phi ptr [ @b2RecCastTrampoline, %bb.c ], [ %5, %bb.b ]
   %.036 = phi ptr [ %7, %bb.c ], [ %6, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
-  store <2 x float> %1, ptr %8, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store <2 x float> %2, ptr %10, align 8, !tbaa !142
+  %10 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %8, align 16
   %i.m = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
-  store float 1.000000e+00, ptr %i.m, align 8, !tbaa !293
+  store float 1.000000e+00, ptr %i.m, align 16, !tbaa !293
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
   store ptr %i.d, ptr %9, align 8, !tbaa !295
   %i.n = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -775,7 +772,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.w, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  store float %i.v, ptr %i.m, align 8, !tbaa !293
+  store float %i.v, ptr %i.m, align 16, !tbaa !293
   %i.x = getelementptr i8, ptr %i.c, i64 -2632
   %i.y = call i64 @b2DynamicTree_RayCast(ptr noundef nonnull %i.x, ptr noundef nonnull %8, i64 noundef %4, ptr noundef nonnull @RayCastCallback, ptr noundef nonnull %9) #23 ; 2 uses
   %.sroa.0.0.extract.trunc.1 = trunc i64 %i.y to i32
@@ -788,7 +785,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ac, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %bb.e
-  store float %i.ab, ptr %i.m, align 8, !tbaa !293
+  store float %i.ab, ptr %i.m, align 16, !tbaa !293
   %i.ad = getelementptr i8, ptr %i.c, i64 -2560
   %i.ae = call i64 @b2DynamicTree_RayCast(ptr noundef nonnull %i.ad, ptr noundef nonnull %8, i64 noundef %4, ptr noundef nonnull @RayCastCallback, ptr noundef nonnull %9) #23 ; 2 uses
   %.sroa.0.0.extract.trunc.2 = trunc i64 %i.ae to i32
@@ -801,7 +798,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ai, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
-  store float %i.ah, ptr %i.m, align 8, !tbaa !293
+  store float %i.ah, ptr %i.m, align 16, !tbaa !293
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.g, %bb.f, %bb.e, %bb.d
@@ -960,7 +957,7 @@ bb.h:                                             ; preds = %bb.g, %bb.b
 ; Function Attrs: nounwind uwtable
 define void @b2World_CastRayClosest(ptr dead_on_unwind noalias writable sret(%struct.b2RayResult) align 4 initializes((0, 40)) %0, i32 %1, <2 x float> %2, <2 x float> %3, i64 %4, i64 %5) local_unnamed_addr #7 {
 bb.a:
-  %6 = alloca %struct.b2RayCastInput, align 8     ; 8 uses
+  %6 = alloca %struct.b2RayCastInput, align 16    ; 7 uses
   %7 = alloca %struct.WorldRayCastContext, align 8 ; 13 uses
   %8 = alloca %struct.b2RecBuffer, align 8        ; 11 uses
   %9 = alloca %struct.b2RayResult, align 8        ; 4 uses
@@ -976,11 +973,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %i.c, i64 -2744
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
-  store <2 x float> %2, ptr %6, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store <2 x float> %3, ptr %10, align 8, !tbaa !142
+  %10 = shufflevector <2 x float> %2, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %6, align 16
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
-  store float 1.000000e+00, ptr %i.h, align 8, !tbaa !293
+  store float 1.000000e+00, ptr %i.h, align 16, !tbaa !293
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
   store ptr %i.g, ptr %7, align 8, !tbaa !295
   %i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -1009,7 +1005,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.v, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
-  store float %i.u, ptr %i.h, align 8, !tbaa !293
+  store float %i.u, ptr %i.h, align 16, !tbaa !293
   %i.w = getelementptr i8, ptr %i.c, i64 -2632
   %i.x = call i64 @b2DynamicTree_RayCast(ptr noundef nonnull %i.w, ptr noundef nonnull %6, i64 noundef %5, ptr noundef nonnull @RayCastCallback, ptr noundef nonnull %7) #23
   %i.y = load <2 x i32>, ptr %i.p, align 4, !tbaa !72
@@ -1021,7 +1017,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ac, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  store float %i.ab, ptr %i.h, align 8, !tbaa !293
+  store float %i.ab, ptr %i.h, align 16, !tbaa !293
   %i.ad = getelementptr i8, ptr %i.c, i64 -2560
   %i.ae = call i64 @b2DynamicTree_RayCast(ptr noundef nonnull %i.ad, ptr noundef nonnull %6, i64 noundef %5, ptr noundef nonnull @RayCastCallback, ptr noundef nonnull %7) #23
   %i.af = load <2 x i32>, ptr %i.p, align 4, !tbaa !72
@@ -1033,7 +1029,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aj, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  store float %i.ai, ptr %i.h, align 8, !tbaa !293
+  store float %i.ai, ptr %i.h, align 16, !tbaa !293
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.e, %bb.d, %bb.c, %bb.b
@@ -1080,9 +1076,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store i64 %0, ptr %4, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store <2 x float> %1, ptr %i.b, align 4, !tbaa !142
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store <2 x float> %2, ptr %5, align 4, !tbaa !142
+  %5 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.b, align 4, !tbaa !142
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 24
   store float %3, ptr %i.c, align 4, !tbaa !510
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 36
@@ -1106,7 +1101,7 @@ bb.a:
   %8 = alloca %struct.b2RecQueryWriter, align 8   ; 12 uses
   %9 = alloca %struct.b2ShapeProxy, align 8       ; 4 uses
   %10 = alloca %struct.WorldShapeCastContext, align 8 ; 16 uses
-  %11 = alloca %struct.b2BoxCastInput, align 8    ; 9 uses
+  %11 = alloca %struct.b2BoxCastInput, align 16   ; 8 uses
   %i.a = and i32 %0, 65535
   %i.b = zext nneg i32 %i.a to i64
   %i.c = getelementptr [2744 x i8], ptr @b2_worlds, i64 %i.b ; 6 uses
@@ -1232,15 +1227,14 @@ b2MakeAABB.exit:                                  ; preds = %.lr.ph.i.epil.prehe
   %i.av = insertelement <2 x float> poison, float %i.y, i64 0
   %i.aw = shufflevector <2 x float> %i.av, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ax = fsub <2 x float> %.sroa.016.0.lcssa.i, %i.aw
-  %12 = fadd <2 x float> %1, %i.ax
   %i.ay = fadd <2 x float> %i.aw, %.sroa.6.0.lcssa.i
-  %13 = fadd <2 x float> %1, %i.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
-  store <2 x float> %12, ptr %11, align 8, !tbaa !142
-  %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 8
-  store <2 x float> %13, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !142
+  %12 = shufflevector <2 x float> %1, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %13 = shufflevector <2 x float> %i.ax, <2 x float> %i.ay, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = fadd <4 x float> %12, %13
+  store <4 x float> %14, ptr %11, align 16, !tbaa !142
   %i.az = getelementptr inbounds nuw i8, ptr %11, i64 16
-  store <2 x float> %3, ptr %i.az, align 8, !tbaa !142
+  store <2 x float> %3, ptr %i.az, align 16, !tbaa !142
   %i.ba = getelementptr inbounds nuw i8, ptr %11, i64 24 ; 4 uses
   store float 1.000000e+00, ptr %i.ba, align 8, !tbaa !313
   %i.bb = getelementptr i8, ptr %i.c, i64 -2704
@@ -1438,7 +1432,7 @@ bb.h:                                             ; preds = %bb.g, %bb.b
 define float @b2World_CastMover(i32 %0, <2 x float> %1, ptr nofree noundef readonly captures(none) %2, <2 x float> %3, i64 %4, i64 %5) local_unnamed_addr #7 {
 bb.a:
   %6 = alloca %struct.WorldMoverCastContext, align 8 ; 18 uses
-  %7 = alloca %struct.b2BoxCastInput, align 8     ; 9 uses
+  %7 = alloca %struct.b2BoxCastInput, align 16    ; 8 uses
   %8 = alloca %struct.b2RecBuffer, align 8        ; 12 uses
   %9 = alloca %struct.b2Capsule, align 8          ; 4 uses
   %i.a = and i32 %0, 65535
@@ -1489,17 +1483,16 @@ bb.a:
   %i.z = insertelement <2 x float> poison, float %i.s, i64 0
   %i.aa = shufflevector <2 x float> %i.z, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ab = fsub <2 x float> %i.y, %i.aa
-  %10 = fadd <2 x float> %1, %i.ab
   %i.ac = fcmp ogt <2 x float> %.sroa.016.0.copyload.i.cast, %.cast
   %i.ad = select <2 x i1> %i.ac, <2 x float> %.sroa.016.0.copyload.i.cast, <2 x float> %.cast
   %i.ae = fadd <2 x float> %i.aa, %i.ad
-  %11 = fadd <2 x float> %1, %i.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
-  store <2 x float> %10, ptr %7, align 8, !tbaa !142
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store <2 x float> %11, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !142
+  %10 = shufflevector <2 x float> %1, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %11 = shufflevector <2 x float> %i.ab, <2 x float> %i.ae, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = fadd <4 x float> %10, %11
+  store <4 x float> %12, ptr %7, align 16, !tbaa !142
   %i.af = getelementptr inbounds nuw i8, ptr %7, i64 16
-  store <2 x float> %3, ptr %i.af, align 8, !tbaa !142
+  store <2 x float> %3, ptr %i.af, align 16, !tbaa !142
   %i.ag = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 4 uses
   store float 1.000000e+00, ptr %i.ag, align 8, !tbaa !313
   %i.ah = getelementptr i8, ptr %i.c, i64 -2704
@@ -1902,7 +1895,7 @@ bb.a:
 define void @b2World_Explode(i32 %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %2 = alloca %struct.b2RecArgs_WorldExplode, align 8 ; 6 uses
-  %3 = alloca %struct.ExplosionContext, align 8   ; 8 uses
+  %3 = alloca %struct.ExplosionContext, align 8   ; 7 uses
   %i.a = load i64, ptr %1, align 8, !tbaa !524
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.018.0.copyload = load <2 x float>, ptr %i.b, align 8, !tbaa !142 ; 3 uses
@@ -1940,9 +1933,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   store ptr %i.j, ptr %3, align 8, !tbaa !324
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store <2 x float> %.sroa.018.0.copyload, ptr %i.r, align 8, !tbaa !142
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store <2 x float> %i.d, ptr %4, align 8, !tbaa !142
+  %4 = shufflevector <2 x float> %.sroa.018.0.copyload, <2 x float> %i.d, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.r, align 8, !tbaa !142
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 24
   store float %i.f, ptr %i.s, align 8, !tbaa !325
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 28

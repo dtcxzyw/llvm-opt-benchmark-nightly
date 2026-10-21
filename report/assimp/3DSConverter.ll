@@ -205,7 +205,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.ws = and i64 %i.wp, 4294967295               ; 4 uses
   %i.wt = shl nuw nsw i64 %i.ws, 5
   %i.wu = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.wt) #28
-          to label %bb.bc unwind label %.loopexit.split-lp.loopexit.split-lp ; 7 uses
+          to label %bb.bc unwind label %.loopexit.split-lp.loopexit.split-lp ; 6 uses
 
 bb.bc:                                            ; preds = %bb.bb
   %i.wv = icmp eq i64 %i.ws, 0
@@ -322,9 +322,8 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit.peel:      ; preds = %.loopexit394
   %.sroa.15.1.peel = select i1 %i.yn, <2 x float> %i.yr, <2 x float> %.sroa.6.0.copyload.peel ; 2 uses
   %.sroa.0.1.peel = select i1 %i.yn, <2 x float> %i.ys, <2 x float> %.sroa.0.0.copyload.peel ; 2 uses
   %i.yt = getelementptr inbounds nuw i8, ptr %i.wu, i64 8
-  store <2 x float> %.sroa.0.1.peel, ptr %i.yt, align 8
-  %.sroa.15.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %i.wu, i64 16
-  store <2 x float> %.sroa.15.1.peel, ptr %.sroa.15.0..sroa_idx.peel, align 8
+  %7 = shufflevector <2 x float> %.sroa.0.1.peel, <2 x float> %.sroa.15.1.peel, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.yt, align 8
   %.not557 = icmp eq i32 %i.ye, 1
   br i1 %.not557, label %.loopexit393, label %.lr.ph463.peel.next
 
@@ -384,11 +383,10 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit.peel:      ; preds = %.loopexit394
   %.sroa.15.1 = select i1 %i.aai, <2 x float> %i.aam, <2 x float> %i.zm ; 2 uses
   %.sroa.0.1 = select i1 %i.aai, <2 x float> %i.aan, <2 x float> %i.zw ; 2 uses
   %i.aao = load ptr, ptr %i.uu, align 8
-  %i.aap = getelementptr inbounds nuw [32 x i8], ptr %i.aao, i64 %indvars.iv483 ; 2 uses
+  %i.aap = getelementptr inbounds nuw [32 x i8], ptr %i.aao, i64 %indvars.iv483
   %i.aaq = getelementptr inbounds nuw i8, ptr %i.aap, i64 8
-  store <2 x float> %.sroa.0.1, ptr %i.aaq, align 8
-  %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aap, i64 16
-  store <2 x float> %.sroa.15.1, ptr %.sroa.15.0..sroa_idx, align 8
+  %8 = shufflevector <2 x float> %.sroa.0.1, <2 x float> %.sroa.15.1, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.aaq, align 8
   %indvars.iv.next484 = add nuw nsw i64 %indvars.iv483, 1 ; 2 uses
   %i.aar = load i32, ptr %i.wr, align 8
   %i.aas = zext i32 %i.aar to i64

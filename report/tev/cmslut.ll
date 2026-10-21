@@ -205,14 +205,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   %wide.load = load <2 x double>, ptr %i.bz, align 8, !tbaa !45
   %wide.load69 = load <2 x double>, ptr %i.ca, align 8, !tbaa !45
-  %3 = fadd <2 x double> %wide.load, zeroinitializer
-  %4 = fadd <2 x double> %wide.load69, zeroinitializer
-  %5 = fptrunc <2 x double> %3 to <2 x float>
-  %6 = fptrunc <2 x double> %4 to <2 x float>
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store <2 x float> %5, ptr %7, align 4, !tbaa !40
-  store <2 x float> %6, ptr %8, align 4, !tbaa !40
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
+  %4 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load69, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %5 = fadd <4 x double> %4, zeroinitializer
+  %6 = fptrunc <4 x double> %5 to <4 x float>
+  store <4 x float> %6, ptr %3, align 4, !tbaa !40
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.cb = icmp eq i64 %index.next, %n.vec
   br i1 %i.cb, label %middle.block, label %vector.body, !llvm.loop !94

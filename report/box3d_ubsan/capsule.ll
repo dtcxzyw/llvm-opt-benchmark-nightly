@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nounwind uwtable
 define zeroext i1 @b3OverlapCapsule(ptr noundef %0, ptr nofree noundef readonly byval(%struct.b3Transform) align 8 captures(none) %1, ptr noundef %2) local_unnamed_addr #0 !func_sanitize !31 {
 bb.a:
-  %3 = alloca %struct.b3DistanceInput, align 8    ; 12 uses
+  %3 = alloca %struct.b3DistanceInput, align 8    ; 11 uses
   %4 = alloca %struct.b3SimplexCache, align 4     ; 4 uses
   %5 = alloca %struct.b3DistanceOutput, align 4   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
@@ -304,9 +304,8 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 40
   store float %i.ap, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !12
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 44
-  store <2 x float> %i.be, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !12
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 52
-  store <2 x float> %.sroa.231.12.vec.insert.i, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !12
+  %6 = shufflevector <2 x float> %i.be, <2 x float> %.sroa.231.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !12
   %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 60
   store i8 1, ptr %i.bj, align 4, !tbaa !33
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -335,7 +334,7 @@ bb.a:
   %3 = alloca %struct.b3Sphere, align 8           ; 6 uses
   %4 = alloca %struct.b3Sphere, align 8           ; 6 uses
   %5 = alloca %struct.b3Sphere, align 8           ; 6 uses
-  %6 = alloca %struct.b3Sphere, align 8           ; 5 uses
+  %6 = alloca %struct.b3Sphere, align 16          ; 4 uses
   %i.a = icmp ne ptr %1, null, !nosanitize !9
   %i.b = ptrtoint ptr %1 to i64, !nosanitize !9   ; 2 uses
   %i.c = and i64 %i.b, 3, !nosanitize !9
@@ -679,9 +678,8 @@ bb.x:                                             ; preds = %bb.v
 
 bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
-  store <2 x float> %.sroa.0303.0.copyload, ptr %6, align 8, !tbaa !12
-  %.sroa.5305.0..sroa_idx306 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store <2 x float> %i.g, ptr %.sroa.5305.0..sroa_idx306, align 8, !tbaa !12
+  %7 = shufflevector <2 x float> %.sroa.0303.0.copyload, <2 x float> %i.g, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %6, align 16, !tbaa !12
   call void @b3RayCastSphere(ptr dead_on_unwind writable sret(%struct.b3CastOutput) align 4 %0, ptr noundef nonnull %6, ptr noundef nonnull %2) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   br label %bb.ab

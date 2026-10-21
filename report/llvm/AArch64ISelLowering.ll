@@ -205,11 +205,9 @@ bb.cx:                                            ; preds = %.critedge2
   %i.aod = getelementptr inbounds nuw i8, ptr %i.ans, i64 211
   store i8 %.sink3869, ptr %i.aod, align 1, !tbaa !218
   %i.aoe = getelementptr inbounds nuw [528 x i8], ptr %i.zo, i64 %.sroa.02437.03257 ; 18 uses
-  %i.aof = getelementptr inbounds nuw [264 x i8], ptr %i.adh, i64 %.sroa.02437.03257 ; 18 uses
-  %68 = getelementptr inbounds nuw i8, ptr %i.aof, i64 19
-  %i.aog = getelementptr inbounds nuw i8, ptr %i.aof, i64 27
-  store <8 x i8> splat (i8 2), ptr %68, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.aog, align 1, !tbaa !218
+  %i.aof = getelementptr inbounds nuw [264 x i8], ptr %i.adh, i64 %.sroa.02437.03257 ; 9 uses
+  %i.aog = getelementptr inbounds nuw i8, ptr %i.aof, i64 19
+  store <16 x i8> splat (i8 2), ptr %i.aog, align 1, !tbaa !218
   %i.aoh = getelementptr inbounds nuw i8, ptr %i.aoe, i64 38 ; 2 uses
   %i.aoi = getelementptr inbounds nuw i8, ptr %i.aoe, i64 54 ; 2 uses
   %wide.load3893 = load <8 x i16>, ptr %i.aoh, align 2, !tbaa !228
@@ -220,10 +218,8 @@ bb.cx:                                            ; preds = %.critedge2
   %i.aom = or disjoint <8 x i16> %i.aok, splat (i16 8736)
   store <8 x i16> %i.aol, ptr %i.aoh, align 2, !tbaa !228
   store <8 x i16> %i.aom, ptr %i.aoi, align 2, !tbaa !228
-  %69 = getelementptr inbounds nuw i8, ptr %i.aof, i64 35
-  %i.aon = getelementptr inbounds nuw i8, ptr %i.aof, i64 43
-  store <8 x i8> splat (i8 2), ptr %69, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.aon, align 1, !tbaa !218
+  %i.aon = getelementptr inbounds nuw i8, ptr %i.aof, i64 35
+  store <16 x i8> splat (i8 2), ptr %i.aon, align 1, !tbaa !218
   %i.aoo = getelementptr inbounds nuw i8, ptr %i.aoe, i64 70 ; 2 uses
   %i.aop = getelementptr inbounds nuw i8, ptr %i.aoe, i64 86 ; 2 uses
   %wide.load3893.1 = load <8 x i16>, ptr %i.aoo, align 2, !tbaa !228
@@ -234,10 +230,8 @@ bb.cx:                                            ; preds = %.critedge2
   %i.aot = or disjoint <8 x i16> %i.aor, splat (i16 8736)
   store <8 x i16> %i.aos, ptr %i.aoo, align 2, !tbaa !228
   store <8 x i16> %i.aot, ptr %i.aop, align 2, !tbaa !228
-  %70 = getelementptr inbounds nuw i8, ptr %i.aof, i64 51
-  %i.aou = getelementptr inbounds nuw i8, ptr %i.aof, i64 59
-  store <8 x i8> splat (i8 2), ptr %70, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.aou, align 1, !tbaa !218
+  %i.aou = getelementptr inbounds nuw i8, ptr %i.aof, i64 51
+  store <16 x i8> splat (i8 2), ptr %i.aou, align 1, !tbaa !218
   %i.aov = getelementptr inbounds nuw i8, ptr %i.aoe, i64 102 ; 2 uses
   %i.aow = getelementptr inbounds nuw i8, ptr %i.aoe, i64 118 ; 2 uses
   %wide.load3893.2 = load <8 x i16>, ptr %i.aov, align 2, !tbaa !228
@@ -248,10 +242,8 @@ bb.cx:                                            ; preds = %.critedge2
   %i.apa = or disjoint <8 x i16> %i.aoy, splat (i16 8736)
   store <8 x i16> %i.aoz, ptr %i.aov, align 2, !tbaa !228
   store <8 x i16> %i.apa, ptr %i.aow, align 2, !tbaa !228
-  %71 = getelementptr inbounds nuw i8, ptr %i.aof, i64 67
-  %i.apb = getelementptr inbounds nuw i8, ptr %i.aof, i64 75
-  store <8 x i8> splat (i8 2), ptr %71, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.apb, align 1, !tbaa !218
+  %i.apb = getelementptr inbounds nuw i8, ptr %i.aof, i64 67
+  store <16 x i8> splat (i8 2), ptr %i.apb, align 1, !tbaa !218
   %i.apc = getelementptr inbounds nuw i8, ptr %i.aoe, i64 134 ; 2 uses
   %i.apd = getelementptr inbounds nuw i8, ptr %i.aoe, i64 150 ; 2 uses
   %wide.load3893.3 = load <8 x i16>, ptr %i.apc, align 2, !tbaa !228
@@ -262,10 +254,8 @@ bb.cx:                                            ; preds = %.critedge2
   %i.aph = or disjoint <8 x i16> %i.apf, splat (i16 8736)
   store <8 x i16> %i.apg, ptr %i.apc, align 2, !tbaa !228
   store <8 x i16> %i.aph, ptr %i.apd, align 2, !tbaa !228
-  %72 = getelementptr inbounds nuw i8, ptr %i.aof, i64 83
-  %i.api = getelementptr inbounds nuw i8, ptr %i.aof, i64 91
-  store <8 x i8> splat (i8 2), ptr %72, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.api, align 1, !tbaa !218
+  %i.api = getelementptr inbounds nuw i8, ptr %i.aof, i64 83
+  store <16 x i8> splat (i8 2), ptr %i.api, align 1, !tbaa !218
   %i.apj = getelementptr inbounds nuw i8, ptr %i.aoe, i64 166 ; 2 uses
   %i.apk = getelementptr inbounds nuw i8, ptr %i.aoe, i64 182 ; 2 uses
   %wide.load3893.4 = load <8 x i16>, ptr %i.apj, align 2, !tbaa !228
@@ -276,10 +266,8 @@ bb.cx:                                            ; preds = %.critedge2
   %i.apo = or disjoint <8 x i16> %i.apm, splat (i16 8736)
   store <8 x i16> %i.apn, ptr %i.apj, align 2, !tbaa !228
   store <8 x i16> %i.apo, ptr %i.apk, align 2, !tbaa !228
-  %73 = getelementptr inbounds nuw i8, ptr %i.aof, i64 99
-  %i.app = getelementptr inbounds nuw i8, ptr %i.aof, i64 107
-  store <8 x i8> splat (i8 2), ptr %73, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.app, align 1, !tbaa !218
+  %i.app = getelementptr inbounds nuw i8, ptr %i.aof, i64 99
+  store <16 x i8> splat (i8 2), ptr %i.app, align 1, !tbaa !218
   %i.apq = getelementptr inbounds nuw i8, ptr %i.aoe, i64 198 ; 2 uses
   %i.apr = getelementptr inbounds nuw i8, ptr %i.aoe, i64 214 ; 2 uses
   %wide.load3893.5 = load <8 x i16>, ptr %i.apq, align 2, !tbaa !228
@@ -290,10 +278,8 @@ bb.cx:                                            ; preds = %.critedge2
   %i.apv = or disjoint <8 x i16> %i.apt, splat (i16 8736)
   store <8 x i16> %i.apu, ptr %i.apq, align 2, !tbaa !228
   store <8 x i16> %i.apv, ptr %i.apr, align 2, !tbaa !228
-  %74 = getelementptr inbounds nuw i8, ptr %i.aof, i64 115
-  %i.apw = getelementptr inbounds nuw i8, ptr %i.aof, i64 123
-  store <8 x i8> splat (i8 2), ptr %74, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.apw, align 1, !tbaa !218
+  %i.apw = getelementptr inbounds nuw i8, ptr %i.aof, i64 115
+  store <16 x i8> splat (i8 2), ptr %i.apw, align 1, !tbaa !218
   %i.apx = getelementptr inbounds nuw i8, ptr %i.aoe, i64 230 ; 2 uses
   %i.apy = getelementptr inbounds nuw i8, ptr %i.aoe, i64 246 ; 2 uses
   %wide.load3893.6 = load <8 x i16>, ptr %i.apx, align 2, !tbaa !228
@@ -304,10 +290,8 @@ bb.cx:                                            ; preds = %.critedge2
   %i.aqc = or disjoint <8 x i16> %i.aqa, splat (i16 8736)
   store <8 x i16> %i.aqb, ptr %i.apx, align 2, !tbaa !228
   store <8 x i16> %i.aqc, ptr %i.apy, align 2, !tbaa !228
-  %75 = getelementptr inbounds nuw i8, ptr %i.aof, i64 131
-  %i.aqd = getelementptr inbounds nuw i8, ptr %i.aof, i64 139
-  store <8 x i8> splat (i8 2), ptr %75, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.aqd, align 1, !tbaa !218
+  %i.aqd = getelementptr inbounds nuw i8, ptr %i.aof, i64 131
+  store <16 x i8> splat (i8 2), ptr %i.aqd, align 1, !tbaa !218
   %i.aqe = getelementptr inbounds nuw i8, ptr %i.aoe, i64 262 ; 2 uses
   %i.aqf = getelementptr inbounds nuw i8, ptr %i.aoe, i64 278 ; 2 uses
   %wide.load3893.7 = load <8 x i16>, ptr %i.aqe, align 2, !tbaa !228
@@ -318,10 +302,8 @@ bb.cx:                                            ; preds = %.critedge2
   %i.aqj = or disjoint <8 x i16> %i.aqh, splat (i16 8736)
   store <8 x i16> %i.aqi, ptr %i.aqe, align 2, !tbaa !228
   store <8 x i16> %i.aqj, ptr %i.aqf, align 2, !tbaa !228
-  %76 = getelementptr inbounds nuw i8, ptr %i.aof, i64 147
-  %i.aqk = getelementptr inbounds nuw i8, ptr %i.aof, i64 155
-  store <8 x i8> splat (i8 2), ptr %76, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.aqk, align 1, !tbaa !218
+  %i.aqk = getelementptr inbounds nuw i8, ptr %i.aof, i64 147
+  store <16 x i8> splat (i8 2), ptr %i.aqk, align 1, !tbaa !218
   %i.aql = getelementptr inbounds nuw i8, ptr %i.aoe, i64 294 ; 2 uses
   %i.aqm = getelementptr inbounds nuw i8, ptr %i.aoe, i64 310 ; 2 uses
   %wide.load3893.8 = load <8 x i16>, ptr %i.aql, align 2, !tbaa !228
@@ -724,11 +706,9 @@ bb.di:                                            ; preds = %_ZNK4llvm3MVT14is12
 
 vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZNK4llvm3MVT14is128BitVectorEv.exit
   %i.awl = getelementptr inbounds nuw [528 x i8], ptr %i.zo, i64 %.sroa.02252.03243 ; 18 uses
-  %i.awm = getelementptr inbounds nuw [264 x i8], ptr %i.adh, i64 %.sroa.02252.03243 ; 18 uses
-  %77 = getelementptr inbounds nuw i8, ptr %i.awm, i64 19
-  %i.awn = getelementptr inbounds nuw i8, ptr %i.awm, i64 27
-  store <8 x i8> splat (i8 2), ptr %77, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.awn, align 1, !tbaa !218
+  %i.awm = getelementptr inbounds nuw [264 x i8], ptr %i.adh, i64 %.sroa.02252.03243 ; 9 uses
+  %i.awn = getelementptr inbounds nuw i8, ptr %i.awm, i64 19
+  store <16 x i8> splat (i8 2), ptr %i.awn, align 1, !tbaa !218
   %i.awo = getelementptr inbounds nuw i8, ptr %i.awl, i64 38 ; 2 uses
   %i.awp = getelementptr inbounds nuw i8, ptr %i.awl, i64 54 ; 2 uses
   %wide.load3887 = load <8 x i16>, ptr %i.awo, align 2, !tbaa !228
@@ -739,10 +719,8 @@ vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZN
   %i.awt = or disjoint <8 x i16> %i.awr, splat (i16 8736)
   store <8 x i16> %i.aws, ptr %i.awo, align 2, !tbaa !228
   store <8 x i16> %i.awt, ptr %i.awp, align 2, !tbaa !228
-  %78 = getelementptr inbounds nuw i8, ptr %i.awm, i64 35
-  %i.awu = getelementptr inbounds nuw i8, ptr %i.awm, i64 43
-  store <8 x i8> splat (i8 2), ptr %78, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.awu, align 1, !tbaa !218
+  %i.awu = getelementptr inbounds nuw i8, ptr %i.awm, i64 35
+  store <16 x i8> splat (i8 2), ptr %i.awu, align 1, !tbaa !218
   %i.awv = getelementptr inbounds nuw i8, ptr %i.awl, i64 70 ; 2 uses
   %i.aww = getelementptr inbounds nuw i8, ptr %i.awl, i64 86 ; 2 uses
   %wide.load3887.1 = load <8 x i16>, ptr %i.awv, align 2, !tbaa !228
@@ -753,10 +731,8 @@ vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZN
   %i.axa = or disjoint <8 x i16> %i.awy, splat (i16 8736)
   store <8 x i16> %i.awz, ptr %i.awv, align 2, !tbaa !228
   store <8 x i16> %i.axa, ptr %i.aww, align 2, !tbaa !228
-  %79 = getelementptr inbounds nuw i8, ptr %i.awm, i64 51
-  %i.axb = getelementptr inbounds nuw i8, ptr %i.awm, i64 59
-  store <8 x i8> splat (i8 2), ptr %79, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.axb, align 1, !tbaa !218
+  %i.axb = getelementptr inbounds nuw i8, ptr %i.awm, i64 51
+  store <16 x i8> splat (i8 2), ptr %i.axb, align 1, !tbaa !218
   %i.axc = getelementptr inbounds nuw i8, ptr %i.awl, i64 102 ; 2 uses
   %i.axd = getelementptr inbounds nuw i8, ptr %i.awl, i64 118 ; 2 uses
   %wide.load3887.2 = load <8 x i16>, ptr %i.axc, align 2, !tbaa !228
@@ -767,10 +743,8 @@ vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZN
   %i.axh = or disjoint <8 x i16> %i.axf, splat (i16 8736)
   store <8 x i16> %i.axg, ptr %i.axc, align 2, !tbaa !228
   store <8 x i16> %i.axh, ptr %i.axd, align 2, !tbaa !228
-  %80 = getelementptr inbounds nuw i8, ptr %i.awm, i64 67
-  %i.axi = getelementptr inbounds nuw i8, ptr %i.awm, i64 75
-  store <8 x i8> splat (i8 2), ptr %80, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.axi, align 1, !tbaa !218
+  %i.axi = getelementptr inbounds nuw i8, ptr %i.awm, i64 67
+  store <16 x i8> splat (i8 2), ptr %i.axi, align 1, !tbaa !218
   %i.axj = getelementptr inbounds nuw i8, ptr %i.awl, i64 134 ; 2 uses
   %i.axk = getelementptr inbounds nuw i8, ptr %i.awl, i64 150 ; 2 uses
   %wide.load3887.3 = load <8 x i16>, ptr %i.axj, align 2, !tbaa !228
@@ -781,10 +755,8 @@ vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZN
   %i.axo = or disjoint <8 x i16> %i.axm, splat (i16 8736)
   store <8 x i16> %i.axn, ptr %i.axj, align 2, !tbaa !228
   store <8 x i16> %i.axo, ptr %i.axk, align 2, !tbaa !228
-  %81 = getelementptr inbounds nuw i8, ptr %i.awm, i64 83
-  %i.axp = getelementptr inbounds nuw i8, ptr %i.awm, i64 91
-  store <8 x i8> splat (i8 2), ptr %81, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.axp, align 1, !tbaa !218
+  %i.axp = getelementptr inbounds nuw i8, ptr %i.awm, i64 83
+  store <16 x i8> splat (i8 2), ptr %i.axp, align 1, !tbaa !218
   %i.axq = getelementptr inbounds nuw i8, ptr %i.awl, i64 166 ; 2 uses
   %i.axr = getelementptr inbounds nuw i8, ptr %i.awl, i64 182 ; 2 uses
   %wide.load3887.4 = load <8 x i16>, ptr %i.axq, align 2, !tbaa !228
@@ -795,10 +767,8 @@ vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZN
   %i.axv = or disjoint <8 x i16> %i.axt, splat (i16 8736)
   store <8 x i16> %i.axu, ptr %i.axq, align 2, !tbaa !228
   store <8 x i16> %i.axv, ptr %i.axr, align 2, !tbaa !228
-  %82 = getelementptr inbounds nuw i8, ptr %i.awm, i64 99
-  %i.axw = getelementptr inbounds nuw i8, ptr %i.awm, i64 107
-  store <8 x i8> splat (i8 2), ptr %82, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.axw, align 1, !tbaa !218
+  %i.axw = getelementptr inbounds nuw i8, ptr %i.awm, i64 99
+  store <16 x i8> splat (i8 2), ptr %i.axw, align 1, !tbaa !218
   %i.axx = getelementptr inbounds nuw i8, ptr %i.awl, i64 198 ; 2 uses
   %i.axy = getelementptr inbounds nuw i8, ptr %i.awl, i64 214 ; 2 uses
   %wide.load3887.5 = load <8 x i16>, ptr %i.axx, align 2, !tbaa !228
@@ -809,10 +779,8 @@ vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZN
   %i.ayc = or disjoint <8 x i16> %i.aya, splat (i16 8736)
   store <8 x i16> %i.ayb, ptr %i.axx, align 2, !tbaa !228
   store <8 x i16> %i.ayc, ptr %i.axy, align 2, !tbaa !228
-  %83 = getelementptr inbounds nuw i8, ptr %i.awm, i64 115
-  %i.ayd = getelementptr inbounds nuw i8, ptr %i.awm, i64 123
-  store <8 x i8> splat (i8 2), ptr %83, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.ayd, align 1, !tbaa !218
+  %i.ayd = getelementptr inbounds nuw i8, ptr %i.awm, i64 115
+  store <16 x i8> splat (i8 2), ptr %i.ayd, align 1, !tbaa !218
   %i.aye = getelementptr inbounds nuw i8, ptr %i.awl, i64 230 ; 2 uses
   %i.ayf = getelementptr inbounds nuw i8, ptr %i.awl, i64 246 ; 2 uses
   %wide.load3887.6 = load <8 x i16>, ptr %i.aye, align 2, !tbaa !228
@@ -823,10 +791,8 @@ vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZN
   %i.ayj = or disjoint <8 x i16> %i.ayh, splat (i16 8736)
   store <8 x i16> %i.ayi, ptr %i.aye, align 2, !tbaa !228
   store <8 x i16> %i.ayj, ptr %i.ayf, align 2, !tbaa !228
-  %84 = getelementptr inbounds nuw i8, ptr %i.awm, i64 131
-  %i.ayk = getelementptr inbounds nuw i8, ptr %i.awm, i64 139
-  store <8 x i8> splat (i8 2), ptr %84, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.ayk, align 1, !tbaa !218
+  %i.ayk = getelementptr inbounds nuw i8, ptr %i.awm, i64 131
+  store <16 x i8> splat (i8 2), ptr %i.ayk, align 1, !tbaa !218
   %i.ayl = getelementptr inbounds nuw i8, ptr %i.awl, i64 262 ; 2 uses
   %i.aym = getelementptr inbounds nuw i8, ptr %i.awl, i64 278 ; 2 uses
   %wide.load3887.7 = load <8 x i16>, ptr %i.ayl, align 2, !tbaa !228
@@ -837,10 +803,8 @@ vector.body3886:                                  ; preds = %bb.di, %bb.dh, %_ZN
   %i.ayq = or disjoint <8 x i16> %i.ayo, splat (i16 8736)
   store <8 x i16> %i.ayp, ptr %i.ayl, align 2, !tbaa !228
   store <8 x i16> %i.ayq, ptr %i.aym, align 2, !tbaa !228
-  %85 = getelementptr inbounds nuw i8, ptr %i.awm, i64 147
-  %i.ayr = getelementptr inbounds nuw i8, ptr %i.awm, i64 155
-  store <8 x i8> splat (i8 2), ptr %85, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.ayr, align 1, !tbaa !218
+  %i.ayr = getelementptr inbounds nuw i8, ptr %i.awm, i64 147
+  store <16 x i8> splat (i8 2), ptr %i.ayr, align 1, !tbaa !218
   %i.ays = getelementptr inbounds nuw i8, ptr %i.awl, i64 294 ; 2 uses
   %i.ayt = getelementptr inbounds nuw i8, ptr %i.awl, i64 310 ; 2 uses
   %wide.load3887.8 = load <8 x i16>, ptr %i.ays, align 2, !tbaa !228
@@ -1243,12 +1207,10 @@ begin_hunk_2_@_ZN4llvm21AArch64TargetLoweringC2ERKNS_13TargetMachineERKNS_16AArc
 
 iter.check:                                       ; preds = %.preheader3215, %iter.check
   %.sroa.02081.03287 = phi i64 [ 163, %.preheader3215 ], [ %i.bof, %iter.check ] ; 3 uses
-  %i.bmz = getelementptr inbounds nuw [264 x i8], ptr %i.adh, i64 %.sroa.02081.03287 ; 8 uses
+  %i.bmz = getelementptr inbounds nuw [264 x i8], ptr %i.adh, i64 %.sroa.02081.03287 ; 5 uses
   %i.bna = getelementptr inbounds nuw [528 x i8], ptr %i.zo, i64 %.sroa.02081.03287 ; 8 uses
-  %86 = getelementptr inbounds nuw i8, ptr %i.bmz, i64 163
-  %i.bnb = getelementptr inbounds nuw i8, ptr %i.bmz, i64 171
-  store <8 x i8> splat (i8 2), ptr %86, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.bnb, align 1, !tbaa !218
+  %i.bnb = getelementptr inbounds nuw i8, ptr %i.bmz, i64 163
+  store <16 x i8> splat (i8 2), ptr %i.bnb, align 1, !tbaa !218
   %i.bnc = getelementptr inbounds nuw i8, ptr %i.bna, i64 326 ; 2 uses
   %i.bnd = getelementptr inbounds nuw i8, ptr %i.bna, i64 342 ; 2 uses
   %wide.load3900 = load <8 x i16>, ptr %i.bnc, align 2, !tbaa !228
@@ -1259,10 +1221,8 @@ iter.check:                                       ; preds = %.preheader3215, %it
   %i.bnh = or disjoint <8 x i16> %i.bnf, splat (i16 8736)
   store <8 x i16> %i.bng, ptr %i.bnc, align 2, !tbaa !228
   store <8 x i16> %i.bnh, ptr %i.bnd, align 2, !tbaa !228
-  %87 = getelementptr inbounds nuw i8, ptr %i.bmz, i64 179
-  %i.bni = getelementptr inbounds nuw i8, ptr %i.bmz, i64 187
-  store <8 x i8> splat (i8 2), ptr %87, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.bni, align 1, !tbaa !218
+  %i.bni = getelementptr inbounds nuw i8, ptr %i.bmz, i64 179
+  store <16 x i8> splat (i8 2), ptr %i.bni, align 1, !tbaa !218
   %i.bnj = getelementptr inbounds nuw i8, ptr %i.bna, i64 358 ; 2 uses
   %i.bnk = getelementptr inbounds nuw i8, ptr %i.bna, i64 374 ; 2 uses
   %wide.load3900.1 = load <8 x i16>, ptr %i.bnj, align 2, !tbaa !228
@@ -1273,10 +1233,8 @@ iter.check:                                       ; preds = %.preheader3215, %it
   %i.bno = or disjoint <8 x i16> %i.bnm, splat (i16 8736)
   store <8 x i16> %i.bnn, ptr %i.bnj, align 2, !tbaa !228
   store <8 x i16> %i.bno, ptr %i.bnk, align 2, !tbaa !228
-  %88 = getelementptr inbounds nuw i8, ptr %i.bmz, i64 195
-  %i.bnp = getelementptr inbounds nuw i8, ptr %i.bmz, i64 203
-  store <8 x i8> splat (i8 2), ptr %88, align 1, !tbaa !218
-  store <8 x i8> splat (i8 2), ptr %i.bnp, align 1, !tbaa !218
+  %i.bnp = getelementptr inbounds nuw i8, ptr %i.bmz, i64 195
+  store <16 x i8> splat (i8 2), ptr %i.bnp, align 1, !tbaa !218
   %i.bnq = getelementptr inbounds nuw i8, ptr %i.bna, i64 390 ; 2 uses
   %i.bnr = getelementptr inbounds nuw i8, ptr %i.bna, i64 406 ; 2 uses
   %wide.load3900.2 = load <8 x i16>, ptr %i.bnq, align 2, !tbaa !228

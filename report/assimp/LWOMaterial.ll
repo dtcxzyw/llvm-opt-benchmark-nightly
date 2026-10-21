@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 18 uses
   %4 = alloca %struct.aiString, align 4           ; 10 uses
   %5 = alloca %class.aiVector3t, align 8          ; 5 uses
-  %6 = alloca %struct.aiUVTransform, align 8      ; 6 uses
+  %6 = alloca %struct.aiUVTransform, align 16     ; 5 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.d = alloca i32, align 4                      ; 4 uses
@@ -217,8 +217,7 @@ bb.a:
   br i1 %.not121, label %._crit_edge127, label %.lr.ph126
 
 .lr.ph126:                                        ; preds = %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 74
@@ -311,18 +310,17 @@ bb.n:                                             ; preds = %bb.k, %bb.m, %bb.l
   %.sink = phi float [ 1.000000e+00, %bb.m ], [ 0.000000e+00, %bb.l ], [ 0.000000e+00, %bb.k ]
   %i.ae = phi <2 x float> [ zeroinitializer, %bb.m ], [ <float 0.000000e+00, float 1.000000e+00>, %bb.l ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.k ]
   store <2 x float> %i.ae, ptr %5, align 8
-  store float %.sink, ptr %8, align 8
+  store float %.sink, ptr %i.e, align 8
   %i.af = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %5, i32 noundef 12, ptr noundef nonnull @.str.2, i32 noundef %3, i32 noundef %.066122, i32 noundef 1) ; 0 uses
   br i1 %or.cond.ph, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
-  store <2 x float> zeroinitializer, ptr %6, align 8
-  store float 0.000000e+00, ptr %i.f, align 8
+  store float 0.000000e+00, ptr %i.f, align 16
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0105.0124, i64 120
   %i.ah = load <2 x float>, ptr %i.ag, align 8
-  %9 = shufflevector <2 x float> %i.ah, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x float> %9, ptr %i.e, align 8
+  %8 = shufflevector <2 x float> zeroinitializer, <2 x float> %i.ah, <4 x i32> <i32 0, i32 1, i32 3, i32 2>
+  store <4 x float> %8, ptr %6, align 16
   %i.ai = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %6, i32 noundef 20, ptr noundef nonnull @.str.3, i32 noundef %3, i32 noundef %.066122, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
   br label %bb.p

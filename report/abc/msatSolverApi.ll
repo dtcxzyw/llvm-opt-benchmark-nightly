@@ -200,10 +200,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   store <2 x double> zeroinitializer, ptr %i.y, align 8, !tbaa !47
   store <2 x double> zeroinitializer, ptr %i.z, align 8, !tbaa !47
-  %i.aa = getelementptr inbounds [4 x i8], ptr %i.r, i64 %i.x ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store <2 x float> splat (float 1.000000e+00), ptr %i.aa, align 4, !tbaa !49
-  store <2 x float> splat (float 1.000000e+00), ptr %2, align 4, !tbaa !49
+  %i.aa = getelementptr inbounds [4 x i8], ptr %i.r, i64 %i.x
+  store <4 x float> splat (float 1.000000e+00), ptr %i.aa, align 4, !tbaa !49
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !74
@@ -402,10 +400,8 @@ vector.body185:                                   ; preds = %vector.body185, %ve
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 16
   store <2 x ptr> splat (ptr null), ptr %i.cy, align 8, !tbaa !62
   store <2 x ptr> splat (ptr null), ptr %i.cz, align 8, !tbaa !62
-  %i.da = getelementptr inbounds [4 x i8], ptr %i.cr, i64 %i.cx ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.da, i64 8
-  store <2 x i32> splat (i32 -1), ptr %i.da, align 4, !tbaa !31
-  store <2 x i32> splat (i32 -1), ptr %3, align 4, !tbaa !31
+  %i.da = getelementptr inbounds [4 x i8], ptr %i.cr, i64 %i.cx
+  store <4 x i32> splat (i32 -1), ptr %i.da, align 4, !tbaa !31
   %index.next187 = add nuw i64 %index186, 4       ; 2 uses
   %i.db = icmp eq i64 %index.next187, %n.vec184
   br i1 %i.db, label %middle.block188, label %vector.body185, !llvm.loop !78

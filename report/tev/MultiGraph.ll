@@ -205,9 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 324
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
   store <4 x float> <float f0x3DA0A0A1, float f0x3DA0A0A1, float f0x3DA0A0A1, float f0x3F008081>, ptr %i.q, align 8
-  store <2 x float> <float 1.000000e+00, float f0x3F40C0C1>, ptr %i.r, align 8
-  %.sroa.517.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 248
-  store <2 x float> <float 0.000000e+00, float f0x3F008081>, ptr %.sroa.517.0..sroa_idx, align 8
+  store <4 x float> <float 1.000000e+00, float f0x3F40C0C1, float 0.000000e+00, float f0x3F008081>, ptr %i.r, align 8
   store <4 x float> <float f0x3F70F0F1, float f0x3F70F0F1, float f0x3F70F0F1, float f0x3F40C0C1>, ptr %i.s, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i8 0, ptr %i.v, align 8, !tbaa !231

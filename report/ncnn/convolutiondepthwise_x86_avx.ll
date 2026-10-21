@@ -205,7 +205,7 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %.1162635 = phi ptr [ %i.ib, %.lr.ph ], [ %.0161676, %.preheader631 ] ; 10 uses
   %.1166634 = phi ptr [ %i.hz, %.lr.ph ], [ %.0165675, %.preheader631 ] ; 10 uses
   %.1171633 = phi ptr [ %i.hx, %.lr.ph ], [ %.0170674, %.preheader631 ] ; 10 uses
-  %.1176632 = phi ptr [ %i.jv, %.lr.ph ], [ %.0175673, %.preheader631 ] ; 9 uses
+  %.1176632 = phi ptr [ %i.jv, %.lr.ph ], [ %.0175673, %.preheader631 ] ; 8 uses
   %i.bw = load <4 x float>, ptr %.1171633, align 16, !tbaa !87
   %i.bx = getelementptr inbounds nuw i8, ptr %.1171633, i64 16
   %i.by = load <4 x float>, ptr %i.bx, align 16, !tbaa !87 ; 2 uses
@@ -401,7 +401,6 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.ja = getelementptr inbounds nuw i8, ptr %.1162635, i64 144
   %i.jb = load <4 x float>, ptr %i.ja, align 16, !tbaa !87
   %i.jc = getelementptr inbounds nuw i8, ptr %.1176632, i64 96
-  store <4 x float> %i.iv, ptr %i.jc, align 16, !tbaa !87
   %i.jd = fmul fast <4 x float> %i.gz, %i.al
   %i.je = fadd fast <4 x float> %i.jd, %i.ad
   %i.jf = fmul fast <4 x float> %i.hy, %i.an
@@ -420,8 +419,8 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.js = fadd fast <4 x float> %i.jr, %i.jg
   %i.jt = fadd fast <4 x float> %i.js, %i.jj
   %i.ju = fadd fast <4 x float> %i.jt, %i.jm
-  %9 = getelementptr inbounds nuw i8, ptr %.1176632, i64 112
-  store <4 x float> %i.ju, ptr %9, align 16, !tbaa !87
+  %9 = shufflevector <4 x float> %i.iv, <4 x float> %i.ju, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %9, ptr %i.jc, align 16, !tbaa !87
   %i.jv = getelementptr inbounds nuw i8, ptr %.1176632, i64 128 ; 2 uses
   %i.jw = add nuw nsw i32 %.0636, 8               ; 3 uses
   %i.jx = or disjoint i32 %i.jw, 7
@@ -445,7 +444,7 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %.2163644 = phi ptr [ %i.mm, %.lr.ph646 ], [ %.1162.lcssa, %.preheader630 ] ; 6 uses
   %.2167643 = phi ptr [ %i.mk, %.lr.ph646 ], [ %.1166.lcssa, %.preheader630 ] ; 6 uses
   %.2172642 = phi ptr [ %i.mi, %.lr.ph646 ], [ %.1171.lcssa, %.preheader630 ] ; 6 uses
-  %.2177641 = phi ptr [ %i.og, %.lr.ph646 ], [ %.1176.lcssa, %.preheader630 ] ; 5 uses
+  %.2177641 = phi ptr [ %i.og, %.lr.ph646 ], [ %.1176.lcssa, %.preheader630 ] ; 4 uses
   %i.kd = load <4 x float>, ptr %.2172642, align 16, !tbaa !87
   %i.ke = getelementptr inbounds nuw i8, ptr %.2172642, i64 16
   %i.kf = load <4 x float>, ptr %i.ke, align 16, !tbaa !87 ; 2 uses
@@ -537,7 +536,6 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.nl = getelementptr inbounds nuw i8, ptr %.2163644, i64 80
   %i.nm = load <4 x float>, ptr %i.nl, align 16, !tbaa !87
   %i.nn = getelementptr inbounds nuw i8, ptr %.2177641, i64 32
-  store <4 x float> %i.ng, ptr %i.nn, align 16, !tbaa !87
   %i.no = fmul fast <4 x float> %i.ll, %i.al
   %i.np = fadd fast <4 x float> %i.no, %i.ad
   %i.nq = fmul fast <4 x float> %i.mj, %i.an
@@ -556,8 +554,8 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.od = fadd fast <4 x float> %i.oc, %i.nr
   %i.oe = fadd fast <4 x float> %i.od, %i.nu
   %i.of = fadd fast <4 x float> %i.oe, %i.nx
-  %10 = getelementptr inbounds nuw i8, ptr %.2177641, i64 48
-  store <4 x float> %i.of, ptr %10, align 16, !tbaa !87
+  %10 = shufflevector <4 x float> %i.ng, <4 x float> %i.of, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %10, ptr %i.nn, align 16, !tbaa !87
   %i.og = getelementptr inbounds nuw i8, ptr %.2177641, i64 64 ; 2 uses
   %i.oh = add nuw nsw i32 %.1645, 4               ; 3 uses
   %i.oi = or disjoint i32 %i.oh, 3
@@ -580,7 +578,7 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %.3164655 = phi ptr [ %i.pa, %.lr.ph657 ], [ %.2163.lcssa, %.preheader629 ] ; 4 uses
   %.3168654 = phi ptr [ %i.ov, %.lr.ph657 ], [ %.2167.lcssa, %.preheader629 ] ; 4 uses
   %.3173653 = phi ptr [ %i.oq, %.lr.ph657 ], [ %.2172.lcssa, %.preheader629 ] ; 4 uses
-  %.3178652 = phi ptr [ %i.qs, %.lr.ph657 ], [ %.2177.lcssa, %.preheader629 ] ; 3 uses
+  %.3178652 = phi ptr [ %i.qs, %.lr.ph657 ], [ %.2177.lcssa, %.preheader629 ] ; 2 uses
   %i.on = load <4 x float>, ptr %.3173653, align 16, !tbaa !87
   %i.oo = getelementptr inbounds nuw i8, ptr %.3173653, i64 16
   %i.op = load <4 x float>, ptr %i.oo, align 16, !tbaa !87 ; 2 uses
@@ -620,7 +618,6 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.px = load <4 x float>, ptr %i.pw, align 16, !tbaa !87
   %i.py = getelementptr inbounds nuw i8, ptr %.3164655, i64 48
   %i.pz = load <4 x float>, ptr %i.py, align 16, !tbaa !87
-  store <4 x float> %i.pt, ptr %.3178652, align 16, !tbaa !87
   %i.qa = fmul fast <4 x float> %i.op, %i.al
   %i.qb = fadd fast <4 x float> %i.qa, %i.ad
   %i.qc = fmul fast <4 x float> %i.or, %i.an
@@ -639,8 +636,8 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.qp = fadd fast <4 x float> %i.qo, %i.qe
   %i.qq = fadd fast <4 x float> %i.qp, %i.qh
   %i.qr = fadd fast <4 x float> %i.qq, %i.qk
-  %11 = getelementptr inbounds nuw i8, ptr %.3178652, i64 16
-  store <4 x float> %i.qr, ptr %11, align 16, !tbaa !87
+  %11 = shufflevector <4 x float> %i.pt, <4 x float> %i.qr, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %11, ptr %.3178652, align 16, !tbaa !87
   %i.qs = getelementptr inbounds nuw i8, ptr %.3178652, i64 32 ; 2 uses
   %i.qt = add nuw nsw i32 %.2656, 2               ; 3 uses
   %i.qu = or disjoint i32 %i.qt, 1
@@ -859,7 +856,7 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %.1123368 = phi ptr [ %i.fw, %.lr.ph ], [ %.0122398, %.preheader364 ] ; 9 uses
   %.1126367 = phi ptr [ %i.fu, %.lr.ph ], [ %.0125397, %.preheader364 ] ; 9 uses
   %.1130366 = phi ptr [ %i.fs, %.lr.ph ], [ %.0129396, %.preheader364 ] ; 9 uses
-  %.1134365 = phi ptr [ %i.gr, %.lr.ph ], [ %.0133395, %.preheader364 ] ; 5 uses
+  %.1134365 = phi ptr [ %i.gr, %.lr.ph ], [ %.0133395, %.preheader364 ] ; 4 uses
   %i.bw = load <4 x float>, ptr %.1130366, align 16, !tbaa !87
   %i.bx = getelementptr inbounds nuw i8, ptr %.1130366, i64 16
   %i.by = load <4 x float>, ptr %i.bx, align 16, !tbaa !87
@@ -969,7 +966,6 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.fw = getelementptr inbounds nuw i8, ptr %.1123368, i64 128 ; 3 uses
   %i.fx = load <4 x float>, ptr %i.fw, align 16, !tbaa !87
   %i.fy = getelementptr inbounds nuw i8, ptr %.1134365, i64 32
-  store <4 x float> %i.fl, ptr %i.fy, align 16, !tbaa !87
   %i.fz = fmul fast <4 x float> %i.eo, %i.al
   %i.ga = fadd fast <4 x float> %i.fz, %i.ad
   %i.gb = fmul fast <4 x float> %i.fn, %i.an
@@ -988,8 +984,8 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.go = fadd fast <4 x float> %i.gn, %i.gc
   %i.gp = fadd fast <4 x float> %i.go, %i.gf
   %i.gq = fadd fast <4 x float> %i.gp, %i.gi
-  %10 = getelementptr inbounds nuw i8, ptr %.1134365, i64 48
-  store <4 x float> %i.gq, ptr %10, align 16, !tbaa !87
+  %10 = shufflevector <4 x float> %i.fl, <4 x float> %i.gq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %10, ptr %i.fy, align 16, !tbaa !87
   %i.gr = getelementptr inbounds nuw i8, ptr %.1134365, i64 64 ; 2 uses
   %i.gs = add nuw nsw i32 %.0369, 4               ; 3 uses
   %i.gt = or disjoint i32 %i.gs, 3
@@ -1012,7 +1008,7 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %.2124377 = phi ptr [ %i.ip, %.lr.ph379 ], [ %.1123.lcssa, %.preheader363 ] ; 5 uses
   %.2127376 = phi ptr [ %i.in, %.lr.ph379 ], [ %.1126.lcssa, %.preheader363 ] ; 5 uses
   %.2131375 = phi ptr [ %i.il, %.lr.ph379 ], [ %.1130.lcssa, %.preheader363 ] ; 5 uses
-  %.2135374 = phi ptr [ %i.jj, %.lr.ph379 ], [ %.1134.lcssa, %.preheader363 ] ; 3 uses
+  %.2135374 = phi ptr [ %i.jj, %.lr.ph379 ], [ %.1134.lcssa, %.preheader363 ] ; 2 uses
   %i.gy = load <4 x float>, ptr %.2131375, align 16, !tbaa !87
   %i.gz = getelementptr inbounds nuw i8, ptr %.2131375, i64 16
   %i.ha = load <4 x float>, ptr %i.gz, align 16, !tbaa !87
@@ -1058,7 +1054,6 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.io = load <4 x float>, ptr %i.in, align 16, !tbaa !87
   %i.ip = getelementptr inbounds nuw i8, ptr %.2124377, i64 64 ; 3 uses
   %i.iq = load <4 x float>, ptr %i.ip, align 16, !tbaa !87
-  store <4 x float> %i.ie, ptr %.2135374, align 16, !tbaa !87
   %i.ir = fmul fast <4 x float> %i.hc, %i.al
   %i.is = fadd fast <4 x float> %i.ir, %i.ad
   %i.it = fmul fast <4 x float> %i.ig, %i.an
@@ -1077,8 +1072,8 @@ _ZNK4ncnn3Mat7channelEi.exit:                     ; preds = %_ZN4ncnn3Mat7channe
   %i.jg = fadd fast <4 x float> %i.jf, %i.iu
   %i.jh = fadd fast <4 x float> %i.jg, %i.ix
   %i.ji = fadd fast <4 x float> %i.jh, %i.ja
-  %11 = getelementptr inbounds nuw i8, ptr %.2135374, i64 16
-  store <4 x float> %i.ji, ptr %11, align 16, !tbaa !87
+  %11 = shufflevector <4 x float> %i.ie, <4 x float> %i.ji, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %11, ptr %.2135374, align 16, !tbaa !87
   %i.jj = getelementptr inbounds nuw i8, ptr %.2135374, i64 32 ; 2 uses
   %i.jk = add nuw nsw i32 %.1378, 2               ; 3 uses
   %i.jl = or disjoint i32 %i.jk, 1
@@ -1481,7 +1476,7 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge423, %.p
 
 .lr.ph422:                                        ; preds = %.preheader, %bb.h
   %.1421 = phi ptr [ %.2, %bb.h ], [ %.080428, %.preheader ] ; 3 uses
-  %.182420 = phi ptr [ %.283, %bb.h ], [ %.081427, %.preheader ] ; 4 uses
+  %.182420 = phi ptr [ %.283, %bb.h ], [ %.081427, %.preheader ] ; 3 uses
   %.085419 = phi i32 [ %i.qz, %bb.h ], [ 0, %.preheader ] ; 2 uses
   %i.bp = load i32, ptr %i.r, align 8, !tbaa !65
   %i.bq = mul nsw i32 %i.bp, %.084426
@@ -1884,9 +1879,8 @@ bb.f:                                             ; preds = %_ZL14activation_sse
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit
-  store <4 x float> %.0.i110391, ptr %.182420, align 1, !tbaa !87
-  %11 = getelementptr inbounds nuw i8, ptr %.182420, i64 16
-  store <4 x float> %.0.i, ptr %11, align 1, !tbaa !87
+  %11 = shufflevector <4 x float> %.0.i110391, <4 x float> %.0.i, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %11, ptr %.182420, align 1, !tbaa !87
   %i.qy = getelementptr inbounds nuw i8, ptr %.182420, i64 32
   br label %bb.h
 

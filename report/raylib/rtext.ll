@@ -205,27 +205,26 @@ bb.p:                                             ; preds = %bb.m, %.loopexit249
   %indvars.iv307 = phi i64 [ 0, %bb.m ], [ %indvars.iv.next308, %.loopexit249 ] ; 4 uses
   %i.gu = getelementptr inbounds nuw [24 x i8], ptr %i.fr, i64 %indvars.iv307 ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 12
-  %i.gw = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %indvars.iv307 ; 2 uses
+  %i.gw = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %indvars.iv307
   %i.gx = load <2 x i32>, ptr %i.gv, align 4      ; 3 uses
   %i.gy = sitofp <2 x i32> %i.gx to <2 x float>
   %i.gz = fadd <2 x float> %i.gf, %i.gy
-  store <2 x float> %i.gz, ptr %i.gw, align 4
   %i.ha = getelementptr inbounds nuw [40 x i8], ptr %1, i64 %indvars.iv307 ; 3 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 16 ; 3 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %i.ha, i64 24
-  %7 = getelementptr inbounds nuw i8, ptr %i.gw, i64 8
-  %8 = load <2 x i32>, ptr %i.hc, align 8         ; 3 uses
-  %9 = sitofp <2 x i32> %8 to <2 x float>
-  store <2 x float> %9, ptr %7, align 4
+  %7 = load <2 x i32>, ptr %i.hc, align 8         ; 3 uses
+  %8 = sitofp <2 x i32> %7 to <2 x float>
+  %9 = shufflevector <2 x float> %i.gz, <2 x float> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.gw, align 4
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gu, i64 20
   %i.he = load i32, ptr %i.hd, align 4
   %.not = icmp eq i32 %i.he, 0
   br i1 %.not, label %bb.u, label %.preheader248
 
 .preheader248:                                    ; preds = %bb.p
-  %i.hf = extractelement <2 x i32> %8, i64 1      ; 2 uses
+  %i.hf = extractelement <2 x i32> %7, i64 1      ; 2 uses
   %i.hg = icmp sgt i32 %i.hf, 0
-  %i.hh = extractelement <2 x i32> %8, i64 0      ; 4 uses
+  %i.hh = extractelement <2 x i32> %7, i64 0      ; 4 uses
   %i.hi = icmp sgt i32 %i.hh, 0
   %or.cond359 = select i1 %i.hg, i1 %i.hi, i1 false
   br i1 %or.cond359, label %.preheader247.lr.ph.split, label %.loopexit249

@@ -204,7 +204,7 @@ bb.ce:                                            ; preds = %bb.cd
   %i.ox = extractelement <2 x float> %i.ol, i64 1
   %i.oy = fmul float %i.ny, %i.ox                 ; 3 uses
   %.sroa.05.4.vec.insert.i366 = insertelement <2 x float> %i.ow, float %i.oy, i64 1
-  %i.oz = getelementptr inbounds nuw [16 x i8], ptr %.0.i323, i64 %indvars.iv1795 ; 3 uses
+  %i.oz = getelementptr inbounds nuw [16 x i8], ptr %.0.i323, i64 %indvars.iv1795 ; 2 uses
   %i.pa = shl nuw nsw i64 %indvars.iv1795, 4
   %i.pb = add i64 %i.pa, %i.kt, !nosanitize !12   ; 3 uses
   %i.pc = icmp eq i64 %i.pb, 0
@@ -236,9 +236,8 @@ bb.ci:                                            ; preds = %bb.cg
   %i.po = extractelement <2 x float> %i.pk, i64 0
   %i.pp = fadd float %i.po, %i.pn
   %.sroa.211.12.vec.insert.i = insertelement <2 x float> %i.ov, float %i.pp, i64 1
-  store <2 x float> %.sroa.05.4.vec.insert.i366, ptr %i.oz, align 4, !tbaa !28
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.oz, i64 8
-  store <2 x float> %.sroa.211.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !28
+  %4 = shufflevector <2 x float> %.sroa.05.4.vec.insert.i366, <2 x float> %.sroa.211.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.oz, align 4, !tbaa !28
   %i.pq = getelementptr inbounds nuw [4 x i8], ptr %.0.i324, i64 %indvars.iv1795 ; 2 uses
   %i.pr = shl nuw nsw i64 %indvars.iv1795, 2      ; 3 uses
   %i.ps = add i64 %i.pr, %i.jy, !nosanitize !12   ; 3 uses
@@ -641,7 +640,7 @@ begin_hunk_1_@b3ComputeSweptHullAABB:bb.a
 ; Function Attrs: nounwind uwtable
 define zeroext i1 @b3OverlapHull(ptr noundef %0, ptr nofree noundef readonly byval(%struct.b3Transform) align 8 captures(none) %1, ptr noundef %2) local_unnamed_addr #0 !func_sanitize !278 {
 bb.a:
-  %3 = alloca %struct.b3DistanceInput, align 8    ; 12 uses
+  %3 = alloca %struct.b3DistanceInput, align 8    ; 11 uses
   %4 = alloca %struct.b3SimplexCache, align 4     ; 4 uses
   %5 = alloca %struct.b3DistanceOutput, align 4   ; 4 uses
   %i.a = icmp ne ptr %0, null, !nosanitize !12
@@ -765,9 +764,8 @@ bb.i:                                             ; preds = %bb.g
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 40
   store float %i.ax, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !28
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 44
-  store <2 x float> %i.bm, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !28
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 52
-  store <2 x float> %.sroa.231.12.vec.insert.i, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !28
+  %6 = shufflevector <2 x float> %i.bm, <2 x float> %.sroa.231.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !28
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 60
   store i8 1, ptr %i.br, align 4, !tbaa !146
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
@@ -1170,7 +1168,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %.sroa.0180.0.copyload = load <2 x float>, ptr %i.f, align 4, !tbaa !28 ; 8 uses
-  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
+  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20
   %.sroa.10.0.copyload = load <2 x float>, ptr %.sroa.10.0..sroa_idx, align 4, !tbaa !28 ; 6 uses
   %i.g = fcmp olt <2 x float> %2, zeroinitializer ; 3 uses
   %i.h = extractelement <2 x i1> %i.g, i64 0      ; 2 uses
@@ -1517,8 +1515,8 @@ bb.p:                                             ; preds = %bb.n
   %i.hz = fmul float %3, %.sroa.22.0.copyload
   store <2 x float> %i.hy, ptr %1, align 4, !tbaa !28
   store float %i.hz, ptr %.sroa.22.0..sroa_idx, align 4, !tbaa !28
-  store <2 x float> %.sroa.0180.0, ptr %i.f, align 4, !tbaa !28
-  store <2 x float> %.sroa.10.0, ptr %.sroa.10.0..sroa_idx, align 4, !tbaa !28
+  %6 = shufflevector <2 x float> %.sroa.0180.0, <2 x float> %.sroa.10.0, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.f, align 4, !tbaa !28
   ret void
 }
 
@@ -1921,9 +1919,8 @@ bb.s:                                             ; preds = %bb.r
   %i.cx = fmul float %i.cm, %i.cp
   %i.cy = fadd float %i.cx, %i.cw
   %.sroa.211.12.vec.insert.i = insertelement <2 x float> %.sroa.211.8.vec.insert.i, float %i.cy, i64 1
-  store <2 x float> %.sroa.05.4.vec.insert.i117, ptr %i.cr, align 8, !tbaa !28
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store <2 x float> %.sroa.211.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !28
+  %1 = shufflevector <2 x float> %.sroa.05.4.vec.insert.i117, <2 x float> %.sroa.211.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %1, ptr %i.cr, align 8, !tbaa !28
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.da = fmul float %i.cc, 5.000000e-01
   store float %i.da, ptr %i.cz, align 4, !tbaa !98

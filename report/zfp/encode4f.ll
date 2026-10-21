@@ -205,15 +205,14 @@ bb.s:                                             ; preds = %.preheader56.i.i.i
 .preheader51.i.i.i:                               ; preds = %.preheader54.i.i.i, %.preheader51.i.i.i
   %indvars.iv129.i.i.i = phi i64 [ %indvars.iv.next130.i.i.i, %.preheader51.i.i.i ], [ 0, %.preheader54.i.i.i ] ; 2 uses
   %invariant.gep87.idx.i.i.i = shl nuw nsw i64 %indvars.iv129.i.i.i, 6
-  %invariant.gep87.i.i.i16 = getelementptr inbounds nuw i8, ptr %i.c, i64 %invariant.gep87.idx.i.i.i ; 21 uses
-  %i.bkj = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 256 ; 2 uses
-  %i.bkk = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 512 ; 2 uses
-  %i.bkl = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 768 ; 2 uses
-  %gep85.2.i.i.i18 = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 8
-  %i.bkm = load <4 x i32>, ptr %invariant.gep87.i.i.i16, align 64, !tbaa !12
-  %i.bkn = load <4 x i32>, ptr %i.bkj, align 64, !tbaa !12 ; 2 uses
-  %i.bko = load <4 x i32>, ptr %i.bkk, align 64, !tbaa !12
-  %i.bkp = load <4 x i32>, ptr %i.bkl, align 64, !tbaa !12 ; 2 uses
+  %i.bkj = getelementptr inbounds nuw i8, ptr %i.c, i64 %invariant.gep87.idx.i.i.i ; 17 uses
+  %i.bkk = getelementptr inbounds nuw i8, ptr %i.bkj, i64 256 ; 2 uses
+  %i.bkl = getelementptr inbounds nuw i8, ptr %i.bkj, i64 512 ; 2 uses
+  %gep85.2.i.i.i18 = getelementptr inbounds nuw i8, ptr %i.bkj, i64 768 ; 2 uses
+  %i.bkm = load <4 x i32>, ptr %i.bkj, align 64, !tbaa !12
+  %i.bkn = load <4 x i32>, ptr %i.bkk, align 64, !tbaa !12 ; 2 uses
+  %i.bko = load <4 x i32>, ptr %i.bkl, align 64, !tbaa !12
+  %i.bkp = load <4 x i32>, ptr %gep85.2.i.i.i18, align 64, !tbaa !12 ; 2 uses
   %i.bkq = add nsw <4 x i32> %i.bkp, %i.bkm
   %i.bkr = ashr <4 x i32> %i.bkq, splat (i32 1)   ; 2 uses
   %i.bks = add nsw <4 x i32> %i.bko, %i.bkn
@@ -227,25 +226,21 @@ bb.s:                                             ; preds = %.preheader56.i.i.i
   %i.bla = add nsw <4 x i32> %i.bkz, %i.bkx       ; 2 uses
   %i.blb = ashr <4 x i32> %i.bla, splat (i32 1)
   %i.blc = sub nsw <4 x i32> %i.bky, %i.blb
-  store <4 x i32> %i.bla, ptr %i.bkl, align 64, !tbaa !12
+  store <4 x i32> %i.bla, ptr %gep85.2.i.i.i18, align 64, !tbaa !12
   %i.bld = add nsw <4 x i32> %i.bkr, %i.bkt
-  %i.ble = ashr <4 x i32> %i.bld, splat (i32 1)   ; 3 uses
-  %2 = shufflevector <4 x i32> %i.ble, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %2, ptr %invariant.gep87.i.i.i16, align 64, !tbaa !12
+  %i.ble = ashr <4 x i32> %i.bld, splat (i32 1)   ; 2 uses
   %i.blf = sub nsw <4 x i32> %i.bkt, %i.ble
-  store <4 x i32> %i.blf, ptr %i.bkk, align 64, !tbaa !12
-  store <4 x i32> %i.blc, ptr %i.bkj, align 64, !tbaa !12
-  %3 = shufflevector <4 x i32> %i.ble, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %3, ptr %gep85.2.i.i.i18, align 8, !tbaa !12
-  %gep88.i.i.i.1 = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 16 ; 2 uses
-  %i.blg = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 272 ; 2 uses
-  %i.blh = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 528 ; 2 uses
-  %i.bli = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 784 ; 2 uses
-  %gep85.2.i.i.i18.1 = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 24
-  %i.blj = load <4 x i32>, ptr %gep88.i.i.i.1, align 16, !tbaa !12
-  %i.blk = load <4 x i32>, ptr %i.blg, align 16, !tbaa !12 ; 2 uses
-  %i.bll = load <4 x i32>, ptr %i.blh, align 16, !tbaa !12
-  %i.blm = load <4 x i32>, ptr %i.bli, align 16, !tbaa !12 ; 2 uses
+  store <4 x i32> %i.blf, ptr %i.bkl, align 64, !tbaa !12
+  store <4 x i32> %i.blc, ptr %i.bkk, align 64, !tbaa !12
+  store <4 x i32> %i.ble, ptr %i.bkj, align 64, !tbaa !12
+  %i.blg = getelementptr inbounds nuw i8, ptr %i.bkj, i64 16 ; 2 uses
+  %i.blh = getelementptr inbounds nuw i8, ptr %i.bkj, i64 272 ; 2 uses
+  %i.bli = getelementptr inbounds nuw i8, ptr %i.bkj, i64 528 ; 2 uses
+  %gep85.2.i.i.i18.1 = getelementptr inbounds nuw i8, ptr %i.bkj, i64 784 ; 2 uses
+  %i.blj = load <4 x i32>, ptr %i.blg, align 16, !tbaa !12
+  %i.blk = load <4 x i32>, ptr %i.blh, align 16, !tbaa !12 ; 2 uses
+  %i.bll = load <4 x i32>, ptr %i.bli, align 16, !tbaa !12
+  %i.blm = load <4 x i32>, ptr %gep85.2.i.i.i18.1, align 16, !tbaa !12 ; 2 uses
   %i.bln = add nsw <4 x i32> %i.blm, %i.blj
   %i.blo = ashr <4 x i32> %i.bln, splat (i32 1)   ; 2 uses
   %i.blp = add nsw <4 x i32> %i.bll, %i.blk
@@ -259,25 +254,21 @@ bb.s:                                             ; preds = %.preheader56.i.i.i
   %i.blx = add nsw <4 x i32> %i.blw, %i.blu       ; 2 uses
   %i.bly = ashr <4 x i32> %i.blx, splat (i32 1)
   %i.blz = sub nsw <4 x i32> %i.blv, %i.bly
-  store <4 x i32> %i.blx, ptr %i.bli, align 16, !tbaa !12
+  store <4 x i32> %i.blx, ptr %gep85.2.i.i.i18.1, align 16, !tbaa !12
   %i.bma = add nsw <4 x i32> %i.blo, %i.blq
-  %i.bmb = ashr <4 x i32> %i.bma, splat (i32 1)   ; 3 uses
-  %4 = shufflevector <4 x i32> %i.bmb, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %4, ptr %gep88.i.i.i.1, align 16, !tbaa !12
+  %i.bmb = ashr <4 x i32> %i.bma, splat (i32 1)   ; 2 uses
   %i.bmc = sub nsw <4 x i32> %i.blq, %i.bmb
-  store <4 x i32> %i.bmc, ptr %i.blh, align 16, !tbaa !12
-  store <4 x i32> %i.blz, ptr %i.blg, align 16, !tbaa !12
-  %5 = shufflevector <4 x i32> %i.bmb, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %5, ptr %gep85.2.i.i.i18.1, align 8, !tbaa !12
-  %gep88.i.i.i.2 = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 32 ; 2 uses
-  %i.bmd = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 288 ; 2 uses
-  %i.bme = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 544 ; 2 uses
-  %i.bmf = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 800 ; 2 uses
-  %gep85.2.i.i.i18.2 = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 40
-  %i.bmg = load <4 x i32>, ptr %gep88.i.i.i.2, align 32, !tbaa !12
-  %i.bmh = load <4 x i32>, ptr %i.bmd, align 32, !tbaa !12 ; 2 uses
-  %i.bmi = load <4 x i32>, ptr %i.bme, align 32, !tbaa !12
-  %i.bmj = load <4 x i32>, ptr %i.bmf, align 32, !tbaa !12 ; 2 uses
+  store <4 x i32> %i.bmc, ptr %i.bli, align 16, !tbaa !12
+  store <4 x i32> %i.blz, ptr %i.blh, align 16, !tbaa !12
+  store <4 x i32> %i.bmb, ptr %i.blg, align 16, !tbaa !12
+  %i.bmd = getelementptr inbounds nuw i8, ptr %i.bkj, i64 32 ; 2 uses
+  %i.bme = getelementptr inbounds nuw i8, ptr %i.bkj, i64 288 ; 2 uses
+  %i.bmf = getelementptr inbounds nuw i8, ptr %i.bkj, i64 544 ; 2 uses
+  %gep85.2.i.i.i18.2 = getelementptr inbounds nuw i8, ptr %i.bkj, i64 800 ; 2 uses
+  %i.bmg = load <4 x i32>, ptr %i.bmd, align 32, !tbaa !12
+  %i.bmh = load <4 x i32>, ptr %i.bme, align 32, !tbaa !12 ; 2 uses
+  %i.bmi = load <4 x i32>, ptr %i.bmf, align 32, !tbaa !12
+  %i.bmj = load <4 x i32>, ptr %gep85.2.i.i.i18.2, align 32, !tbaa !12 ; 2 uses
   %i.bmk = add nsw <4 x i32> %i.bmj, %i.bmg
   %i.bml = ashr <4 x i32> %i.bmk, splat (i32 1)   ; 2 uses
   %i.bmm = add nsw <4 x i32> %i.bmi, %i.bmh
@@ -291,25 +282,21 @@ bb.s:                                             ; preds = %.preheader56.i.i.i
   %i.bmu = add nsw <4 x i32> %i.bmt, %i.bmr       ; 2 uses
   %i.bmv = ashr <4 x i32> %i.bmu, splat (i32 1)
   %i.bmw = sub nsw <4 x i32> %i.bms, %i.bmv
-  store <4 x i32> %i.bmu, ptr %i.bmf, align 32, !tbaa !12
+  store <4 x i32> %i.bmu, ptr %gep85.2.i.i.i18.2, align 32, !tbaa !12
   %i.bmx = add nsw <4 x i32> %i.bml, %i.bmn
-  %i.bmy = ashr <4 x i32> %i.bmx, splat (i32 1)   ; 3 uses
-  %6 = shufflevector <4 x i32> %i.bmy, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %6, ptr %gep88.i.i.i.2, align 32, !tbaa !12
+  %i.bmy = ashr <4 x i32> %i.bmx, splat (i32 1)   ; 2 uses
   %i.bmz = sub nsw <4 x i32> %i.bmn, %i.bmy
-  store <4 x i32> %i.bmz, ptr %i.bme, align 32, !tbaa !12
-  store <4 x i32> %i.bmw, ptr %i.bmd, align 32, !tbaa !12
-  %7 = shufflevector <4 x i32> %i.bmy, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %7, ptr %gep85.2.i.i.i18.2, align 8, !tbaa !12
-  %gep88.i.i.i.3 = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 48 ; 2 uses
-  %i.bna = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 304 ; 2 uses
-  %i.bnb = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 560 ; 2 uses
-  %i.bnc = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 816 ; 2 uses
-  %gep85.2.i.i.i18.3 = getelementptr inbounds nuw i8, ptr %invariant.gep87.i.i.i16, i64 56
-  %i.bnd = load <4 x i32>, ptr %gep88.i.i.i.3, align 16, !tbaa !12
-  %i.bne = load <4 x i32>, ptr %i.bna, align 16, !tbaa !12 ; 2 uses
-  %i.bnf = load <4 x i32>, ptr %i.bnb, align 16, !tbaa !12
-  %i.bng = load <4 x i32>, ptr %i.bnc, align 16, !tbaa !12 ; 2 uses
+  store <4 x i32> %i.bmz, ptr %i.bmf, align 32, !tbaa !12
+  store <4 x i32> %i.bmw, ptr %i.bme, align 32, !tbaa !12
+  store <4 x i32> %i.bmy, ptr %i.bmd, align 32, !tbaa !12
+  %i.bna = getelementptr inbounds nuw i8, ptr %i.bkj, i64 48 ; 2 uses
+  %i.bnb = getelementptr inbounds nuw i8, ptr %i.bkj, i64 304 ; 2 uses
+  %i.bnc = getelementptr inbounds nuw i8, ptr %i.bkj, i64 560 ; 2 uses
+  %gep85.2.i.i.i18.3 = getelementptr inbounds nuw i8, ptr %i.bkj, i64 816 ; 2 uses
+  %i.bnd = load <4 x i32>, ptr %i.bna, align 16, !tbaa !12
+  %i.bne = load <4 x i32>, ptr %i.bnb, align 16, !tbaa !12 ; 2 uses
+  %i.bnf = load <4 x i32>, ptr %i.bnc, align 16, !tbaa !12
+  %i.bng = load <4 x i32>, ptr %gep85.2.i.i.i18.3, align 16, !tbaa !12 ; 2 uses
   %i.bnh = add nsw <4 x i32> %i.bng, %i.bnd
   %i.bni = ashr <4 x i32> %i.bnh, splat (i32 1)   ; 2 uses
   %i.bnj = add nsw <4 x i32> %i.bnf, %i.bne
@@ -323,16 +310,13 @@ bb.s:                                             ; preds = %.preheader56.i.i.i
   %i.bnr = add nsw <4 x i32> %i.bnq, %i.bno       ; 2 uses
   %i.bns = ashr <4 x i32> %i.bnr, splat (i32 1)
   %i.bnt = sub nsw <4 x i32> %i.bnp, %i.bns
-  store <4 x i32> %i.bnr, ptr %i.bnc, align 16, !tbaa !12
+  store <4 x i32> %i.bnr, ptr %gep85.2.i.i.i18.3, align 16, !tbaa !12
   %i.bnu = add nsw <4 x i32> %i.bni, %i.bnk
-  %i.bnv = ashr <4 x i32> %i.bnu, splat (i32 1)   ; 3 uses
-  %8 = shufflevector <4 x i32> %i.bnv, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %8, ptr %gep88.i.i.i.3, align 16, !tbaa !12
+  %i.bnv = ashr <4 x i32> %i.bnu, splat (i32 1)   ; 2 uses
   %i.bnw = sub nsw <4 x i32> %i.bnk, %i.bnv
-  store <4 x i32> %i.bnw, ptr %i.bnb, align 16, !tbaa !12
-  store <4 x i32> %i.bnt, ptr %i.bna, align 16, !tbaa !12
-  %9 = shufflevector <4 x i32> %i.bnv, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %9, ptr %gep85.2.i.i.i18.3, align 8, !tbaa !12
+  store <4 x i32> %i.bnw, ptr %i.bnc, align 16, !tbaa !12
+  store <4 x i32> %i.bnt, ptr %i.bnb, align 16, !tbaa !12
+  store <4 x i32> %i.bnv, ptr %i.bna, align 16, !tbaa !12
   %indvars.iv.next130.i.i.i = add nuw nsw i64 %indvars.iv129.i.i.i, 1 ; 2 uses
   %exitcond132.not.i.i.i = icmp eq i64 %indvars.iv.next130.i.i.i, 4
   br i1 %exitcond132.not.i.i.i, label %fwd_xform_int32_4.exit.i.i, label %.preheader51.i.i.i

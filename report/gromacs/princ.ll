@@ -138,18 +138,16 @@ bb.a:                                             ; preds = %.lr.ph, %bb.a
   %i.cd = insertelement <4 x double> %i.cc, double %i.ca, i64 3
   %i.ce = shufflevector <2 x double> %i.cb, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.cf = shufflevector <4 x double> %i.ce, <4 x double> %i.cd, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %6 = fptrunc <4 x double> %i.cf to <4 x float>
-  store <4 x float> %6, ptr %4, align 4, !tbaa !17
   %i.cg = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.ch = load double, ptr %i.cg, align 8, !tbaa !26
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ci = load double, ptr %i.w, align 8, !tbaa !26
   %i.cj = insertelement <4 x double> poison, double %i.ch, i64 0
   %i.ck = insertelement <4 x double> %i.cj, double %i.bx, i64 1
   %i.cl = insertelement <4 x double> %i.ck, double %i.ci, i64 2
   %i.cm = shufflevector <4 x double> %i.cl, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
-  %8 = fptrunc <4 x double> %i.cm to <4 x float>
-  store <4 x float> %8, ptr %7, align 4, !tbaa !17
+  %6 = shufflevector <4 x double> %i.cf, <4 x double> %i.cm, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %7 = fptrunc <8 x double> %6 to <8 x float>
+  store <8 x float> %7, ptr %4, align 4, !tbaa !17
   %i.cn = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.co = load double, ptr %i.cn, align 8, !tbaa !26
   %i.cp = fptrunc double %i.co to float

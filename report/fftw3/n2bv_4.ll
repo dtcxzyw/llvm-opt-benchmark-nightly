@@ -61,12 +61,11 @@ bb.a:
   %i.s = fadd <2 x double> %.val63.prol, %.val.prol ; 2 uses
   %i.t = fsub <2 x double> %i.f, %i.r
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 16
   store <2 x double> %i.t, ptr %i.u, align 16, !tbaa !12
   %i.v = fadd <2 x double> %i.g, %i.s
-  store <2 x double> %i.v, ptr %3, align 16, !tbaa !12
-  %10 = fadd <2 x double> %i.f, %i.r
-  store <2 x double> %10, ptr %9, align 16, !tbaa !12
+  %9 = fadd <2 x double> %i.f, %i.r
+  %10 = shufflevector <2 x double> %i.v, <2 x double> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %10, ptr %3, align 16, !tbaa !12
   %i.w = fsub <2 x double> %i.g, %i.s
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 32
   store <2 x double> %i.w, ptr %i.x, align 16, !tbaa !12
@@ -88,7 +87,7 @@ bb.a:
   %.068 = phi ptr [ %i.cb, %.lr.ph.new ], [ %.068.unr, %.prol.loopexit ] ; 4 uses
   %.06067 = phi i64 [ %i.by, %.lr.ph.new ], [ %.06067.unr, %.prol.loopexit ] ; 2 uses
   %.06166 = phi ptr [ %i.bz, %.lr.ph.new ], [ %.06166.unr, %.prol.loopexit ] ; 5 uses
-  %.06265 = phi ptr [ %i.ca, %.lr.ph.new ], [ %.06265.unr, %.prol.loopexit ] ; 5 uses
+  %.06265 = phi ptr [ %i.ca, %.lr.ph.new ], [ %.06265.unr, %.prol.loopexit ] ; 4 uses
   %.061.val = load <2 x double>, ptr %.06166, align 16, !tbaa !12 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.068, i64 16
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !11
@@ -111,18 +110,17 @@ bb.a:
   %i.as = shufflevector <2 x double> %i.ar, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.at = fadd <2 x double> %.val63, %.val        ; 2 uses
   %i.au = fsub <2 x double> %i.ag, %i.as
-  %11 = getelementptr inbounds nuw i8, ptr %.06265, i64 48
-  %i.av = getelementptr inbounds nuw i8, ptr %.06265, i64 16
-  store <2 x double> %i.au, ptr %11, align 16, !tbaa !12
+  %i.av = getelementptr inbounds nuw i8, ptr %.06265, i64 48
+  store <2 x double> %i.au, ptr %i.av, align 16, !tbaa !12
   %i.aw = fadd <2 x double> %i.ah, %i.at
-  store <2 x double> %i.aw, ptr %.06265, align 16, !tbaa !12
-  %12 = fadd <2 x double> %i.ag, %i.as
-  store <2 x double> %12, ptr %i.av, align 16, !tbaa !12
+  %11 = fadd <2 x double> %i.ag, %i.as
+  %12 = shufflevector <2 x double> %i.aw, <2 x double> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %12, ptr %.06265, align 16, !tbaa !12
   %i.ax = fsub <2 x double> %i.ah, %i.at
   %i.ay = getelementptr inbounds nuw i8, ptr %.06265, i64 32
   store <2 x double> %i.ax, ptr %i.ay, align 16, !tbaa !12
   %i.az = getelementptr inbounds [8 x i8], ptr %.06166, i64 %7 ; 5 uses
-  %i.ba = getelementptr inbounds [8 x i8], ptr %.06265, i64 %8 ; 5 uses
+  %i.ba = getelementptr inbounds [8 x i8], ptr %.06265, i64 %8 ; 4 uses
   %i.bb = getelementptr inbounds [8 x i8], ptr %.068, i64 %i.b ; 4 uses
   %.061.val.1 = load <2 x double>, ptr %i.az, align 16, !tbaa !12 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
@@ -146,13 +144,12 @@ bb.a:
   %i.br = shufflevector <2 x double> %i.bq, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.bs = fadd <2 x double> %.val63.1, %.val.1    ; 2 uses
   %i.bt = fsub <2 x double> %i.bf, %i.br
-  %13 = getelementptr inbounds nuw i8, ptr %i.ba, i64 48
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.ba, i64 16
-  store <2 x double> %i.bt, ptr %13, align 16, !tbaa !12
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.ba, i64 48
+  store <2 x double> %i.bt, ptr %i.bu, align 16, !tbaa !12
   %i.bv = fadd <2 x double> %i.bg, %i.bs
-  store <2 x double> %i.bv, ptr %i.ba, align 16, !tbaa !12
-  %14 = fadd <2 x double> %i.bf, %i.br
-  store <2 x double> %14, ptr %i.bu, align 16, !tbaa !12
+  %13 = fadd <2 x double> %i.bf, %i.br
+  %14 = shufflevector <2 x double> %i.bv, <2 x double> %13, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %14, ptr %i.ba, align 16, !tbaa !12
   %i.bw = fsub <2 x double> %i.bg, %i.bs
   %i.bx = getelementptr inbounds nuw i8, ptr %i.ba, i64 32
   store <2 x double> %i.bw, ptr %i.bx, align 16, !tbaa !12

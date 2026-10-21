@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %8 = alloca %struct.aiString, align 4           ; 7 uses
   %i.b = alloca i32, align 4                      ; 6 uses
-  %9 = alloca %class.aiColor4t, align 8           ; 20 uses
+  %9 = alloca %class.aiColor4t, align 16          ; 19 uses
   %10 = alloca %struct.aiColor3D, align 8         ; 20 uses
   %i.c = alloca i32, align 4                      ; 6 uses
   %i.d = alloca float, align 4                    ; 5 uses
@@ -608,7 +608,7 @@ bb.ac:                                            ; preds = %bb.aa
   %i.nj = phi ptr [ %i.aq, %bb.ab ], [ %i.n, %bb.n ], [ %i.aq, %.preheader ] ; 6 uses
   %.0107 = phi ptr [ %i.nh, %bb.ab ], [ %i.v, %bb.n ], [ %1, %.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %9, i8 0, i64 16, i1 false)
   %i.nk = getelementptr inbounds nuw i8, ptr %i.nj, i64 4
   %i.nl = load i32, ptr %i.nk, align 4            ; 2 uses
   %.not.i = icmp eq i32 %i.nl, 0
@@ -688,9 +688,8 @@ _ZNK7aiTexelneERKS_.exit.i:                       ; preds = %bb.ai
 .loopexit:                                        ; preds = %bb.ag, %bb.ah, %bb.ai, %_ZNK7aiTexelneERKS_.exit.i, %.loopexit221, %bb.ad, %.critedge.i
   %.sroa.5.0.i = phi <2 x float> [ zeroinitializer, %.loopexit221 ], [ zeroinitializer, %bb.ad ], [ %i.or, %.critedge.i ], [ zeroinitializer, %_ZNK7aiTexelneERKS_.exit.i ], [ zeroinitializer, %bb.ai ], [ zeroinitializer, %bb.ah ], [ zeroinitializer, %bb.ag ]
   %.sroa.0.0.i = phi <2 x float> [ <float +qnan, float 0.000000e+00>, %.loopexit221 ], [ <float +qnan, float 0.000000e+00>, %bb.ad ], [ %i.ok, %.critedge.i ], [ <float +qnan, float 0.000000e+00>, %_ZNK7aiTexelneERKS_.exit.i ], [ <float +qnan, float 0.000000e+00>, %bb.ai ], [ <float +qnan, float 0.000000e+00>, %bb.ah ], [ <float +qnan, float 0.000000e+00>, %bb.ag ] ; 2 uses
-  store <2 x float> %.sroa.0.0.i, ptr %9, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store <2 x float> %.sroa.5.0.i, ptr %.sroa.5.0..sroa_idx, align 8
+  %12 = shufflevector <2 x float> %.sroa.0.0.i, <2 x float> %.sroa.5.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %9, align 16
   %i.os = and i32 %4, 16
   %.not128 = icmp eq i32 %i.os, 0
   br i1 %.not128, label %bb.be, label %bb.aj
@@ -700,7 +699,7 @@ _ZNK7aiTexelneERKS_.exit.i:                       ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
   %i.ot = getelementptr inbounds nuw i8, ptr %9, i64 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ot, i8 0, i64 12, i1 false)
-  store float +qnan, ptr %9, align 8
+  store float +qnan, ptr %9, align 16
   %i.ou = and i32 %4, 16
   %.not128204 = icmp eq i32 %i.ou, 0
   br i1 %.not128204, label %_ZNSt10unique_ptrI9aiTextureSt14default_deleteIS0_EE5resetEPS0_.exit152, label %bb.aj
@@ -724,7 +723,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.pa = getelementptr inbounds nuw i8, ptr %.0107198209, i64 4
   %i.pb = load <2 x float>, ptr %i.pa, align 1    ; 2 uses
   store <2 x float> %i.pb, ptr %i.ox, align 4
-  %i.pc = load float, ptr %9, align 8             ; 2 uses
+  %i.pc = load float, ptr %9, align 16            ; 2 uses
   %i.pd = fcmp ord float %i.pc, 0.000000e+00
   br i1 %i.pd, label %bb.al, label %bb.ao
 
@@ -758,7 +757,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.pn = getelementptr inbounds nuw i8, ptr %.0107198209, i64 36
   %i.po = load <2 x float>, ptr %i.pn, align 1    ; 2 uses
   store <2 x float> %i.po, ptr %i.ox, align 4
-  %i.pp = load float, ptr %9, align 8             ; 2 uses
+  %i.pp = load float, ptr %9, align 16            ; 2 uses
   %i.pq = fcmp ord float %i.pp, 0.000000e+00
   br i1 %i.pq, label %bb.aq, label %bb.ar
 
@@ -782,7 +781,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.py = getelementptr inbounds nuw i8, ptr %.0107198209, i64 20
   %i.pz = load <2 x float>, ptr %i.py, align 1    ; 2 uses
   store <2 x float> %i.pz, ptr %i.ox, align 4
-  %i.qa = load float, ptr %9, align 8             ; 2 uses
+  %i.qa = load float, ptr %9, align 16            ; 2 uses
   %i.qb = fcmp ord float %i.qa, 0.000000e+00
   br i1 %i.qb, label %bb.at, label %bb.au
 
@@ -813,7 +812,7 @@ bb.av:                                            ; preds = %_ZN10aiMaterial11Ad
   %i.qm = getelementptr inbounds nuw i8, ptr %.0107198209, i64 28
   %i.qn = load float, ptr %i.qm, align 1          ; 2 uses
   store float %i.qn, ptr %10, align 8
-  %i.qo = load float, ptr %9, align 8
+  %i.qo = load float, ptr %9, align 16
   %i.qp = fcmp ord float %i.qo, 0.000000e+00
   br i1 %i.qp, label %bb.aw, label %bb.ax
 
@@ -894,7 +893,7 @@ thread-pre-split:                                 ; preds = %_ZN10aiMaterial11Ad
   %i.rf = phi ptr [ %i.nj, %_ZN10aiMaterial11AddPropertyI9aiColor4tIfEEE8aiReturnPKT_jPKcjj.exit ], [ %i.ov, %_ZN10aiMaterial11AddPropertyIiEE8aiReturnPKT_jPKcjj.exit148 ]
   %.not157200206 = phi i1 [ false, %_ZN10aiMaterial11AddPropertyI9aiColor4tIfEEE8aiReturnPKT_jPKcjj.exit ], [ %.not157200207, %_ZN10aiMaterial11AddPropertyIiEE8aiReturnPKT_jPKcjj.exit148 ]
   %.1.ph = phi ptr [ %.0107, %_ZN10aiMaterial11AddPropertyI9aiColor4tIfEEE8aiReturnPKT_jPKcjj.exit ], [ %i.ow, %_ZN10aiMaterial11AddPropertyIiEE8aiReturnPKT_jPKcjj.exit148 ]
-  %.pr = load float, ptr %9, align 8
+  %.pr = load float, ptr %9, align 16
   br label %bb.bg
 
 bb.bg:                                            ; preds = %thread-pre-split, %bb.be

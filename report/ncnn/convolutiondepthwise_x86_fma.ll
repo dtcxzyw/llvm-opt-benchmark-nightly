@@ -205,7 +205,7 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge415, %.p
 
 .lr.ph414:                                        ; preds = %.preheader, %bb.h
   %.1413 = phi ptr [ %.2, %bb.h ], [ %.080420, %.preheader ] ; 3 uses
-  %.182412 = phi ptr [ %.283, %bb.h ], [ %.081419, %.preheader ] ; 4 uses
+  %.182412 = phi ptr [ %.283, %bb.h ], [ %.081419, %.preheader ] ; 3 uses
   %.085411 = phi i32 [ %i.pn, %bb.h ], [ 0, %.preheader ] ; 2 uses
   %i.bp = load i32, ptr %i.r, align 8, !tbaa !65
   %i.bq = mul nsw i32 %i.bp, %.084418
@@ -608,9 +608,8 @@ bb.f:                                             ; preds = %_ZL14activation_sse
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit
-  store <4 x float> %.0.i110391, ptr %.182412, align 1, !tbaa !87
-  %11 = getelementptr inbounds nuw i8, ptr %.182412, i64 16
-  store <4 x float> %.0.i, ptr %11, align 1, !tbaa !87
+  %11 = shufflevector <4 x float> %.0.i110391, <4 x float> %.0.i, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %11, ptr %.182412, align 1, !tbaa !87
   %i.pm = getelementptr inbounds nuw i8, ptr %.182412, i64 32
   br label %bb.h
 

@@ -205,7 +205,7 @@ bb.a:
   %i.d = fcmp olt <2 x float> %i.c, %2
   %i.e = select <2 x i1> %i.d, <2 x float> %2, <2 x float> %i.c
   %i.f = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.b, <2 x float> splat (float -2.000000e+00), <2 x float> %i.e) ; 8 uses
-  %i.g = fadd <2 x float> %1, %i.b                ; 16 uses
+  %i.g = fadd <2 x float> %1, %i.b                ; 15 uses
   %i.h = extractelement <2 x float> %i.f, i64 0
   %i.i = fmul float %i.h, 5.000000e-01            ; 2 uses
   %i.j = extractelement <2 x float> %i.f, i64 1
@@ -220,21 +220,19 @@ bb.b:                                             ; preds = %bb.a
   %i.l = extractelement <2 x float> %i.g, i64 0
   %i.m = fadd float %i.l, %i.i
   %i.n = insertelement <2 x float> %i.g, float %i.m, i64 0
-  store <2 x float> %i.n, ptr %0, align 4, !tbaa !54
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %7 = fadd <2 x float> %i.g, %i.f                ; 2 uses
-  store <2 x float> %7, ptr %6, align 4, !tbaa !54
+  %6 = fadd <2 x float> %i.g, %i.f                ; 2 uses
+  %7 = shufflevector <2 x float> %i.n, <2 x float> %6, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %0, align 4, !tbaa !54
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.p = shufflevector <2 x float> %i.g, <2 x float> %7, <2 x i32> <i32 0, i32 3>
+  %i.p = shufflevector <2 x float> %i.g, <2 x float> %6, <2 x i32> <i32 0, i32 3>
   store <2 x float> %i.p, ptr %i.o, align 4, !tbaa !54
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  store <2 x float> %i.g, ptr %0, align 4, !tbaa !54
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = insertelement <2 x float> %i.f, float %i.k, i64 1
   %i.r = fadd <2 x float> %i.g, %i.q
-  store <2 x float> %i.r, ptr %8, align 4, !tbaa !54
+  %8 = shufflevector <2 x float> %i.g, <2 x float> %i.r, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %0, align 4, !tbaa !54
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   %foldExtExtBinop = fadd <2 x float> %i.g, %i.f
   %.sroa.0.4.vec.insert.i135 = shufflevector <2 x float> %i.g, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 3>
@@ -242,11 +240,9 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.a
-  store <2 x float> %i.g, ptr %0, align 4, !tbaa !54
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %foldExtExtBinop149 = fadd <2 x float> %i.g, %i.f
-  %10 = shufflevector <2 x float> %foldExtExtBinop149, <2 x float> %i.g, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %10, ptr %9, align 4, !tbaa !54
+  %9 = shufflevector <2 x float> %i.g, <2 x float> %foldExtExtBinop149, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  store <4 x float> %9, ptr %0, align 4, !tbaa !54
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.u = insertelement <2 x float> %i.f, float %i.i, i64 0
   %i.v = fadd <2 x float> %i.g, %i.u
@@ -257,12 +253,11 @@ bb.e:                                             ; preds = %bb.a
   %i.w = extractelement <2 x float> %i.g, i64 1
   %i.x = fadd float %i.w, %i.k
   %.sroa.0.4.vec.insert.i143 = insertelement <2 x float> %i.g, float %i.x, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i143, ptr %0, align 4, !tbaa !54
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.z = fadd <2 x float> %i.g, %i.f              ; 2 uses
   %i.aa = shufflevector <2 x float> %i.z, <2 x float> %i.g, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.aa, ptr %11, align 4, !tbaa !54
+  %10 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i143, <2 x float> %i.aa, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %0, align 4, !tbaa !54
   store <2 x float> %i.z, ptr %i.y, align 4, !tbaa !54
   br label %bb.f
 
@@ -665,16 +660,15 @@ nk_draw_list_command_last.exit:                   ; preds = %bb.a
   %i.ac = add i32 %i.b, -1
   %i.ad = zext i32 %i.ac to i64
   %i.ae = sub nsw i64 0, %i.ad
-  %i.af = getelementptr inbounds [32 x i8], ptr %i.ab, i64 %i.ae ; 4 uses
+  %i.af = getelementptr inbounds [32 x i8], ptr %i.ab, i64 %i.ae ; 3 uses
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !167
   %i.ah = icmp eq i32 %i.ag, 0
   br i1 %i.ah, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %nk_draw_list_command_last.exit
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 4
-  store <2 x float> %1, ptr %i.ai, align 4, !tbaa !54
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 12
-  store <2 x float> %2, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !54
+  %3 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.ai, align 4, !tbaa !54
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %nk_draw_list_command_last.exit
@@ -712,21 +706,19 @@ nk_buffer_total.exit.i18:                         ; preds = %bb.j, %bb.i
   br label %nk_draw_list_push_command.exit.sink.split
 
 nk_draw_list_push_command.exit.sink.split:        ; preds = %bb.h, %nk_buffer_total.exit.i18, %bb.c, %nk_buffer_total.exit.i
-  %.sink32 = phi ptr [ %i.g, %bb.c ], [ %i.g, %nk_buffer_total.exit.i ], [ %i.al, %nk_buffer_total.exit.i18 ], [ %i.al, %bb.h ] ; 4 uses
+  %.sink32 = phi ptr [ %i.g, %bb.c ], [ %i.g, %nk_buffer_total.exit.i ], [ %i.al, %nk_buffer_total.exit.i18 ], [ %i.al, %bb.h ] ; 3 uses
   %.sink = phi ptr [ %i.d, %bb.c ], [ %i.d, %nk_buffer_total.exit.i ], [ %i.ak, %nk_buffer_total.exit.i18 ], [ %i.ak, %bb.h ]
   store i32 0, ptr %.sink32, align 8, !tbaa !167
   %i.aw = getelementptr inbounds nuw i8, ptr %.sink32, i64 4
-  store <2 x float> %1, ptr %i.aw, align 4, !tbaa !54
-  %.sroa.3.0..sroa_idx.i15 = getelementptr inbounds nuw i8, ptr %.sink32, i64 12
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx.i15, align 4, !tbaa !54
+  %4 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.aw, align 4, !tbaa !54
   %i.ax = getelementptr inbounds nuw i8, ptr %.sink32, i64 24
   store ptr %.sink, ptr %i.ax, align 8, !tbaa !56
   %i.ay = load i32, ptr %i.a, align 8, !tbaa !161
   %i.az = add i32 %i.ay, 1
   store i32 %i.az, ptr %i.a, align 8, !tbaa !161
-  store <2 x float> %1, ptr %0, align 8, !tbaa !54
-  %.sroa.3.0..sroa_idx17.i16 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx17.i16, align 8, !tbaa !54
+  %5 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %0, align 8, !tbaa !54
   br label %nk_draw_list_push_command.exit
 
 nk_draw_list_push_command.exit:                   ; preds = %nk_draw_list_push_command.exit.sink.split, %bb.g, %bb.b
@@ -744,7 +736,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %nk_draw_list_command_last.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call fastcc ptr @nk_buffer_alloc(ptr noundef %i.d, i32 noundef 1, i64 noundef 32, i64 noundef 8) ; 6 uses
+  %i.e = tail call fastcc ptr @nk_buffer_alloc(ptr noundef %i.d, i32 noundef 1, i64 noundef 32, i64 noundef 8) ; 5 uses
   %.not.i = icmp eq ptr %i.e, null
   br i1 %.not.i, label %nk_draw_list_push_command.exit, label %bb.c
 
@@ -779,17 +771,13 @@ nk_buffer_total.exit.i:                           ; preds = %bb.e, %bb.d
 bb.f:                                             ; preds = %nk_buffer_total.exit.i, %bb.c
   store i32 0, ptr %i.e, align 8, !tbaa !167
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  store <2 x float> splat (float -8.192000e+03), ptr %i.q, align 4, !tbaa !54
-  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  store <2 x float> splat (float 1.638400e+04), ptr %.sroa.3.0..sroa_idx.i, align 4, !tbaa !54
+  store <4 x float> <float -8.192000e+03, float -8.192000e+03, float 1.638400e+04, float 1.638400e+04>, ptr %i.q, align 4, !tbaa !54
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store ptr %1, ptr %i.r, align 8, !tbaa !56
   %i.s = load i32, ptr %i.a, align 8, !tbaa !161
   %i.t = add i32 %i.s, 1
   store i32 %i.t, ptr %i.a, align 8, !tbaa !161
-  store <2 x float> splat (float -8.192000e+03), ptr %0, align 8, !tbaa !54
-  %.sroa.3.0..sroa_idx17.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> splat (float 1.638400e+04), ptr %.sroa.3.0..sroa_idx17.i, align 8, !tbaa !54
+  store <4 x float> <float -8.192000e+03, float -8.192000e+03, float 1.638400e+04, float 1.638400e+04>, ptr %0, align 8, !tbaa !54
   br label %nk_draw_list_push_command.exit
 
 nk_draw_list_command_last.exit:                   ; preds = %bb.a
@@ -826,7 +814,7 @@ bb.i:                                             ; preds = %bb.h
   %i.am = load <2 x float>, ptr %i.al, align 4    ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.af, i64 12
   %i.ao = load <2 x float>, ptr %i.an, align 4    ; 2 uses
-  %i.ap = tail call fastcc ptr @nk_buffer_alloc(ptr noundef nonnull %i.d, i32 noundef 1, i64 noundef 32, i64 noundef 8) ; 6 uses
+  %i.ap = tail call fastcc ptr @nk_buffer_alloc(ptr noundef nonnull %i.d, i32 noundef 1, i64 noundef 32, i64 noundef 8) ; 5 uses
   %.not.i13 = icmp eq ptr %i.ap, null
   br i1 %.not.i13, label %nk_draw_list_push_command.exit, label %bb.j
 
@@ -860,17 +848,15 @@ nk_buffer_total.exit.i18:                         ; preds = %bb.l, %bb.k
 bb.m:                                             ; preds = %nk_buffer_total.exit.i18, %bb.j
   store i32 0, ptr %i.ap, align 8, !tbaa !167
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ap, i64 4
-  store <2 x float> %i.am, ptr %i.ba, align 4, !tbaa !54
-  %.sroa.3.0..sroa_idx.i15 = getelementptr inbounds nuw i8, ptr %i.ap, i64 12
-  store <2 x float> %i.ao, ptr %.sroa.3.0..sroa_idx.i15, align 4, !tbaa !54
+  %2 = shufflevector <2 x float> %i.am, <2 x float> %i.ao, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.ba, align 4, !tbaa !54
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   store ptr %1, ptr %i.bb, align 8, !tbaa !56
   %i.bc = load i32, ptr %i.a, align 8, !tbaa !161
   %i.bd = add i32 %i.bc, 1
   store i32 %i.bd, ptr %i.a, align 8, !tbaa !161
-  store <2 x float> %i.am, ptr %0, align 8, !tbaa !54
-  %.sroa.3.0..sroa_idx17.i16 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %i.ao, ptr %.sroa.3.0..sroa_idx17.i16, align 8, !tbaa !54
+  %3 = shufflevector <2 x float> %i.am, <2 x float> %i.ao, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %0, align 8, !tbaa !54
   br label %nk_draw_list_push_command.exit
 
 nk_draw_list_push_command.exit:                   ; preds = %bb.m, %bb.i, %bb.f, %bb.b, %bb.g, %bb.h
@@ -1273,7 +1259,7 @@ nk_strlen.exit:                                   ; preds = %.lr.ph.i.preheader,
   br i1 %.not23.i, label %.loopexit, label %.lr.ph25.i
 
 .lr.ph25.i:                                       ; preds = %nk_strlen.exit, %nk_stricmpn.exit.i
-  %.01124.i = phi ptr [ %.011.i, %nk_stricmpn.exit.i ], [ %.01122.i, %nk_strlen.exit ] ; 13 uses
+  %.01124.i = phi ptr [ %.011.i, %nk_stricmpn.exit.i ], [ %.01122.i, %nk_strlen.exit ] ; 12 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.01124.i, i64 4
   %i.m = load i32, ptr %i.l, align 4, !tbaa !474
   %i.n = icmp eq i32 %i.m, %i.j
@@ -1501,9 +1487,8 @@ nk_find_window.exit:                              ; preds = %nk_strlen.exit.preh
 
 bb.p:                                             ; preds = %nk_find_window.exit
   %i.cj = getelementptr inbounds nuw i8, ptr %.01124.i, i64 76
-  store <2 x float> %3, ptr %i.cj, align 4, !tbaa !54
-  %.sroa.3.0..sroa_idx214 = getelementptr inbounds nuw i8, ptr %.01124.i, i64 84
-  store <2 x float> %4, ptr %.sroa.3.0..sroa_idx214, align 4, !tbaa !54
+  %6 = shufflevector <2 x float> %3, <2 x float> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.cj, align 4, !tbaa !54
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %nk_find_window.exit
@@ -1906,15 +1891,14 @@ bb.a:
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call ptr @nk_window_find(ptr noundef nonnull %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call ptr @nk_window_find(ptr noundef nonnull %0, ptr noundef %1) ; 2 uses
   %.not6 = icmp eq ptr %i.a, null
   br i1 %.not6, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 76
-  store <2 x float> %2, ptr %i.b, align 4, !tbaa !54
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 84
-  store <2 x float> %3, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !54
+  %4 = shufflevector <2 x float> %2, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.b, align 4, !tbaa !54
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
@@ -2317,11 +2301,10 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %nk_in
   br i1 %.not76, label %.loopexit, label %.lr.ph, !llvm.loop !1061
 
 bb.l:                                             ; preds = %.thread, %bb.k
-  %.06891 = phi ptr [ %i.g, %.thread ], [ %i.f, %bb.k ] ; 13 uses
+  %.06891 = phi ptr [ %i.g, %.thread ], [ %i.f, %bb.k ] ; 12 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.06891, i64 76
-  store <2 x float> %2, ptr %i.au, align 4, !tbaa !54
-  %.sroa.364.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.06891, i64 84
-  store <2 x float> %3, ptr %.sroa.364.0..sroa_idx, align 4, !tbaa !54
+  %7 = shufflevector <2 x float> %2, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.au, align 4, !tbaa !54
   %i.av = getelementptr inbounds nuw i8, ptr %.06891, i64 544
   store ptr %i.b, ptr %i.av, align 8, !tbaa !506
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 18568 ; 2 uses
@@ -2617,10 +2600,9 @@ bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c,
 define internal fastcc zeroext i1 @nk_do_button_text(ptr nofree noundef nonnull captures(none) %0, ptr noundef nonnull %1, <2 x float> %2, <2 x float> %3, ptr noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, ptr nofree noundef nonnull readonly captures(none) %8, ptr nofree noundef readonly captures(address_is_null) %9, ptr noundef %10) unnamed_addr #20 {
 bb.a:
   %11 = alloca %struct.nk_text, align 8           ; 6 uses
-  %12 = alloca %struct.nk_rect, align 8           ; 3 uses
-  store <2 x float> %2, ptr %12, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  store <2 x float> %3, ptr %13, align 8
+  %12 = alloca %struct.nk_rect, align 16          ; 2 uses
+  %13 = shufflevector <2 x float> %2, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %12, align 16
   %i.a = icmp ne ptr %10, null
   %i.b = icmp ne ptr %4, null
   %or.cond5 = and i1 %i.b, %i.a
@@ -2942,10 +2924,9 @@ nk_contextual_close.exit:                         ; preds = %nk_popup_close.exit
 define internal fastcc zeroext i1 @nk_do_button_text_image(ptr nofree noundef nonnull captures(none) %0, ptr noundef nonnull %1, <2 x float> %2, <2 x float> %3, ptr nofree noundef readonly byval(%struct.nk_image) align 8 captures(none) %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, ptr nofree noundef readonly captures(address_is_null) %9, ptr noundef %10, ptr nofree noundef readonly captures(address_is_null) %11) unnamed_addr #20 {
 bb.a:
   %12 = alloca %struct.nk_text, align 8           ; 6 uses
-  %13 = alloca %struct.nk_rect, align 8           ; 3 uses
-  store <2 x float> %2, ptr %13, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 8
-  store <2 x float> %3, ptr %14, align 8
+  %13 = alloca %struct.nk_rect, align 16          ; 2 uses
+  %14 = shufflevector <2 x float> %2, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %13, align 16
   %i.a = icmp ne ptr %10, null
   %i.b = icmp ne ptr %9, null
   %or.cond3 = and i1 %i.b, %i.a
@@ -3285,10 +3266,9 @@ nk_contextual_close.exit:                         ; preds = %nk_popup_close.exit
 define internal fastcc zeroext i1 @nk_do_button_text_symbol(ptr nofree noundef nonnull captures(none) %0, ptr noundef nonnull %1, <2 x float> %2, <2 x float> %3, i32 noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, ptr nofree noundef readonly captures(address_is_null) %9, ptr noundef %10, ptr nofree noundef readonly captures(address_is_null) %11) unnamed_addr #20 {
 bb.a:
   %12 = alloca %struct.nk_text, align 8           ; 6 uses
-  %13 = alloca %struct.nk_rect, align 8           ; 3 uses
-  store <2 x float> %2, ptr %13, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 8
-  store <2 x float> %3, ptr %14, align 8
+  %13 = alloca %struct.nk_rect, align 16          ; 2 uses
+  %14 = shufflevector <2 x float> %2, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %13, align 16
   %i.a = icmp ne ptr %9, null
   %i.b = icmp ne ptr %10, null
   %or.cond3 = and i1 %i.a, %i.b
@@ -3691,7 +3671,7 @@ nk_strlen.exit:                                   ; preds = %.lr.ph.i.preheader6
 ; Function Attrs: nounwind uwtable
 define noundef zeroext i1 @nk_menu_begin_image(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef readonly byval(%struct.nk_image) align 8 captures(none) %2, <2 x float> %3) local_unnamed_addr #20 {
 bb.a:
-  %4 = alloca %struct.nk_rect, align 8            ; 5 uses
+  %4 = alloca %struct.nk_rect, align 16           ; 4 uses
   %5 = alloca %struct.nk_rect, align 8            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #50
   %.not = icmp eq ptr %0, null
@@ -3734,9 +3714,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.p = load <2 x float>, ptr %i.o, align 8      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  store <2 x float> %i.n, ptr %4, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store <2 x float> %i.p, ptr %6, align 8
+  %6 = shufflevector <2 x float> %i.n, <2 x float> %i.p, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %4, align 16
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1088
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1080
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1084
@@ -4000,10 +3979,9 @@ nk_menu_begin.exit:                               ; preds = %bb.m, %bb.l, %bb.k,
 ; Function Attrs: nounwind uwtable
 define internal fastcc zeroext i1 @nk_do_button_symbol(ptr nofree noundef nonnull captures(none) %0, ptr noundef %1, <2 x float> %2, <2 x float> %3, i32 noundef %4, i32 noundef %5, ptr nofree noundef readonly captures(address_is_null) %6, ptr nofree noundef readonly captures(address_is_null) %7, ptr noundef %8) unnamed_addr #20 {
 bb.a:
-  %9 = alloca %struct.nk_rect, align 8            ; 3 uses
-  store <2 x float> %2, ptr %9, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store <2 x float> %3, ptr %10, align 8
+  %9 = alloca %struct.nk_rect, align 16           ; 2 uses
+  %10 = shufflevector <2 x float> %2, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %9, align 16
   %i.a = icmp ne ptr %1, null
   %i.b = icmp ne ptr %6, null
   %or.cond = and i1 %i.a, %i.b
@@ -4406,15 +4384,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 168
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !416  ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !416  ; 2 uses
   %.not9 = icmp eq ptr %i.d, null
   br i1 %.not9, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 160
-  store <2 x float> %1, ptr %i.e, align 8, !tbaa !54
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 168
-  store <2 x float> %2, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !54
+  %3 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.e, align 8, !tbaa !54
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d
@@ -4817,7 +4794,7 @@ bb.g:                                             ; preds = %bb.a, %nk_button_sy
 ; Function Attrs: nounwind uwtable
 define zeroext i1 @nk_button_image_styled(ptr nofree noundef captures(address_is_null) %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef readonly byval(%struct.nk_image) align 8 captures(none) %2) local_unnamed_addr #20 {
 bb.a:
-  %3 = alloca %struct.nk_rect, align 8            ; 5 uses
+  %3 = alloca %struct.nk_rect, align 16           ; 4 uses
   %4 = alloca %struct.nk_rect, align 8            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #50
   %.not = icmp eq ptr %0, null
@@ -4860,9 +4837,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.p = load <2 x float>, ptr %i.o, align 8      ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store <2 x float> %i.n, ptr %3, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store <2 x float> %i.p, ptr %5, align 8
+  %5 = shufflevector <2 x float> %i.n, <2 x float> %i.p, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %3, align 16
   %.not.i = icmp eq ptr %1, null
   br i1 %.not.i, label %nk_do_button_image.exit, label %bb.g
 
@@ -5265,7 +5241,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ae = insertelement <2 x float> %i.u, float %i.ad, i64 0 ; 2 uses
   %.not169.i = icmp eq i32 %2, 1                  ; 2 uses
   %i.af = load <2 x float>, ptr %1, align 4       ; 4 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.ah = load <2 x float>, ptr %i.ag, align 4    ; 4 uses
   %.sroa.0.4.vec.extract.i.i.i.i = extractelement <2 x float> %i.af, i64 1
   %.sroa.18.8.vec.extract.i.i.i.i = extractelement <2 x float> %i.ah, i64 0
@@ -5439,8 +5415,8 @@ nk_hsva_colorfv.exit.i.i:                         ; preds = %bb.x, %bb.q
   %.sroa.16.8.vec.insert73.sink.i.i.i.i = phi <2 x float> [ %.sroa.16.8.vec.insert73.i.i.i.i, %bb.x ], [ %i.cn, %bb.q ]
   %.sroa.0.1.i.i95.i.i = phi <2 x float> [ %.sroa.0.4.vec.insert60.i.i.i.i, %bb.x ], [ %.sroa.0.4.vec.insert.i.i94.i.i, %bb.q ]
   %.sroa.16.12.vec.insert75.i.i.i.i = insertelement <2 x float> %.sroa.16.8.vec.insert73.sink.i.i.i.i, float %.sroa.11.0.i.i, i64 1
-  store <2 x float> %.sroa.0.1.i.i95.i.i, ptr %1, align 4, !tbaa !54
-  store <2 x float> %.sroa.16.12.vec.insert75.i.i.i.i, ptr %i.ag, align 4, !tbaa !54
+  %4 = shufflevector <2 x float> %.sroa.0.1.i.i95.i.i, <2 x float> %.sroa.16.12.vec.insert75.i.i.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %1, align 4, !tbaa !54
   store i32 34, ptr %i.m, align 8, !tbaa !55
   br label %bb.y
 
@@ -5843,12 +5819,12 @@ nk_do_color_picker.exit:                          ; preds = %bb.as, %nk_stroke_l
 ; Function Attrs: nounwind uwtable
 define { <2 x float>, <2 x float> } @nk_color_picker(ptr nofree noundef captures(address) %0, <2 x float> %1, <2 x float> %2, i32 noundef %3) local_unnamed_addr #20 {
 bb.a:
-  %4 = alloca %struct.nk_colorf, align 8          ; 4 uses
-  store <2 x float> %1, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store <2 x float> %2, ptr %5, align 8
+  %4 = alloca %struct.nk_colorf, align 16         ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %4, align 16
   %i.a = call zeroext i1 @nk_color_pick(ptr noundef %0, ptr noundef nonnull %4, i32 noundef %3) ; 0 uses
-  %.sroa.0.0.copyload = load <2 x float>, ptr %4, align 8, !tbaa !54
+  %.sroa.0.0.copyload = load <2 x float>, ptr %4, align 16, !tbaa !54
   %.sroa.2.0.copyload = load <2 x float>, ptr %5, align 8, !tbaa !54
   %.fca.0.insert = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %.sroa.0.0.copyload, 0
   %.fca.1.insert = insertvalue { <2 x float>, <2 x float> } %.fca.0.insert, <2 x float> %.sroa.2.0.copyload, 1
