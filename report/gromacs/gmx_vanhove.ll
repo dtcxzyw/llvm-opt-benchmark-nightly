@@ -205,6 +205,7 @@ bb.ci:                                            ; preds = %.loopexit560
   %i.xu = load i32, ptr %i.n, align 4, !tbaa !10
   %i.xv = icmp sgt i32 %.0242, 0
   %wide.trip.count779 = zext nneg i32 %.1244 to i64
+  %.pre832 = load float, ptr @_ZZ11gmx_vanhoveiPPcE4rbin, align 4, !tbaa !82
   %wide.trip.count774 = zext i32 %.0242 to i64    ; 2 uses
   %xtraiter1208 = and i64 %wide.trip.count774, 3  ; 3 uses
   %i.xw = icmp ult i32 %.0242, 4
@@ -214,13 +215,13 @@ bb.ci:                                            ; preds = %.loopexit560
   br label %bb.cj
 
 bb.cj:                                            ; preds = %.lr.ph660, %._crit_edge656
+  %26 = phi float [ %.pre832, %.lr.ph660 ], [ %27, %._crit_edge656 ] ; 2 uses
   %indvars.iv776 = phi i64 [ 0, %.lr.ph660 ], [ %indvars.iv.next777, %._crit_edge656 ] ; 5 uses
   %.0230659 = phi float [ 0.000000e+00, %.lr.ph660 ], [ %.1231.lcssa, %._crit_edge656 ] ; 3 uses
   %i.xx = getelementptr inbounds nuw [4 x i8], ptr %.0548, i64 %indvars.iv776
   %i.xy = load i32, ptr %i.xx, align 4, !tbaa !10
   %i.xz = mul nsw i32 %i.xu, %i.xy
   %i.ya = sitofp i32 %i.xz to float
-  %26 = load float, ptr @_ZZ11gmx_vanhoveiPPcE4rbin, align 4, !tbaa !82
   %i.yb = fmul float %26, %i.ya
   %i.yc = fdiv float 1.000000e+00, %i.yb          ; 5 uses
   br i1 %i.xv, label %.lr.ph655, label %._crit_edge656
@@ -270,7 +271,7 @@ bb.cj:                                            ; preds = %.lr.ph660, %._crit_
   br i1 %niter1214.ncmp.3, label %._crit_edge656.loopexit.unr-lcssa, label %.lr.ph655.new, !llvm.loop !48
 
 ._crit_edge656.loopexit.unr-lcssa:                ; preds = %.lr.ph655.new
-  br i1 %lcmp.mod1210.not, label %._crit_edge656, label %.epil.preheader1207
+  br i1 %lcmp.mod1210.not, label %._crit_edge656.loopexit, label %.epil.preheader1207
 
 .epil.preheader1207:                              ; preds = %._crit_edge656.loopexit.unr-lcssa, %.lr.ph655
   %indvars.iv771.epil.init = phi i64 [ 0, %.lr.ph655 ], [ %indvars.iv.next772.3, %._crit_edge656.loopexit.unr-lcssa ]
@@ -294,10 +295,16 @@ bb.ck:                                            ; preds = %bb.ck, %.epil.prehe
   %indvars.iv.next772.epil = add nuw nsw i64 %indvars.iv771.epil, 1
   %epil.iter1209.next = add i64 %epil.iter1209, 1 ; 2 uses
   %epil.iter1209.cmp.not = icmp eq i64 %epil.iter1209.next, %xtraiter1208
-  br i1 %epil.iter1209.cmp.not, label %._crit_edge656, label %bb.ck, !llvm.loop !49
+  br i1 %epil.iter1209.cmp.not, label %._crit_edge656.loopexit, label %bb.ck, !llvm.loop !49
 
-._crit_edge656:                                   ; preds = %._crit_edge656.loopexit.unr-lcssa, %bb.ck, %bb.cj
-  %.1231.lcssa = phi float [ %.0230659, %bb.cj ], [ %.2232.3, %._crit_edge656.loopexit.unr-lcssa ], [ %.2232.epil, %bb.ck ] ; 2 uses
+._crit_edge656.loopexit:                          ; preds = %bb.ck, %._crit_edge656.loopexit.unr-lcssa
+  %.2232.lcssa = phi float [ %.2232.3, %._crit_edge656.loopexit.unr-lcssa ], [ %.2232.epil, %bb.ck ]
+  %.pre831 = load float, ptr @_ZZ11gmx_vanhoveiPPcE4rbin, align 4, !tbaa !82
+  br label %._crit_edge656
+
+._crit_edge656:                                   ; preds = %._crit_edge656.loopexit, %bb.cj
+  %27 = phi float [ %26, %bb.cj ], [ %.pre831, %._crit_edge656.loopexit ]
+  %.1231.lcssa = phi float [ %.0230659, %bb.cj ], [ %.2232.lcssa, %._crit_edge656.loopexit ] ; 2 uses
   %indvars.iv.next777 = add nuw nsw i64 %indvars.iv776, 1 ; 2 uses
   %exitcond780.not = icmp eq i64 %indvars.iv.next777, %wide.trip.count779
   br i1 %exitcond780.not, label %._crit_edge661, label %bb.cj, !llvm.loop !50

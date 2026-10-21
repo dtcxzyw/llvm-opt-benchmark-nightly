@@ -205,11 +205,12 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2INS_13CwiseBinaryOpINS_8internal20sca
 .split.i.i:                                       ; preds = %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2INS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKS1_KNS_7ProductINS_12SparseMatrixIdLi0EiEES1_Li0EEEEEEERKT_.exit
   %i.o = icmp eq ptr %i.n, null
   %i.p = load ptr, ptr %0, align 8                ; 4 uses
+  %.pre39.i.i = load double, ptr %3, align 8, !tbaa !68 ; 2 uses
   br i1 %i.o, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us.i.i, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us.i.i: ; preds = %.split.i.i, %._crit_edge.us.us.i.i
+  %6 = phi double [ %7, %._crit_edge.us.us.i.i ], [ %.pre39.i.i, %.split.i.i ] ; 2 uses
   %.01623.us.us.i.i = phi i64 [ %i.ba, %._crit_edge.us.us.i.i ], [ 0, %.split.i.i ] ; 3 uses
-  %6 = load double, ptr %3, align 8, !tbaa !68
   %gep26.us.us.i.i = getelementptr [8 x i8], ptr %i.f, i64 %.01623.us.us.i.i
   %i.q = load double, ptr %gep26.us.us.i.i, align 8, !tbaa !68
   %i.r = fmul double %6, %i.q                     ; 3 uses
@@ -245,7 +246,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %.sroa.8.022.us.us.i.i.unr = phi i64 [ %i.y, %.lr.ph.us.us.preheader.i.i ], [ %i.ah, %.lr.ph.us.us.i.i.prol ]
   %i.ai = add nsw i64 %i.w, -1
   %i.aj = icmp eq i64 %i.ai, %i.y
-  br i1 %i.aj, label %._crit_edge.us.us.i.i, label %.lr.ph.us.us.i.i
+  br i1 %i.aj, label %._crit_edge.us.us.loopexit.i.i, label %.lr.ph.us.us.i.i
 
 .lr.ph.us.us.i.i:                                 ; preds = %.lr.ph.us.us.i.i.prol.loopexit, %.lr.ph.us.us.i.i
   %.sroa.8.022.us.us.i.i = phi i64 [ %i.az, %.lr.ph.us.us.i.i ], [ %.sroa.8.022.us.us.i.i.unr, %.lr.ph.us.us.i.i.prol.loopexit ] ; 4 uses
@@ -270,19 +271,24 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   store double %i.ay, ptr %gep.us.us.i.i.1, align 8, !tbaa !68
   %i.az = add nsw i64 %.sroa.8.022.us.us.i.i, 2   ; 2 uses
   %exitcond35.not.i.i.1 = icmp eq i64 %i.az, %i.w
-  br i1 %exitcond35.not.i.i.1, label %._crit_edge.us.us.i.i, label %.lr.ph.us.us.i.i, !llvm.loop !12
+  br i1 %exitcond35.not.i.i.1, label %._crit_edge.us.us.loopexit.i.i, label %.lr.ph.us.us.i.i, !llvm.loop !12
 
-._crit_edge.us.us.i.i:                            ; preds = %.lr.ph.us.us.i.i.prol.loopexit, %.lr.ph.us.us.i.i, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us.i.i
+._crit_edge.us.us.loopexit.i.i:                   ; preds = %.lr.ph.us.us.i.i, %.lr.ph.us.us.i.i.prol.loopexit
+  %.pre38.i.i = load double, ptr %3, align 8, !tbaa !68
+  br label %._crit_edge.us.us.i.i
+
+._crit_edge.us.us.i.i:                            ; preds = %._crit_edge.us.us.loopexit.i.i, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us.i.i
+  %7 = phi double [ %.pre38.i.i, %._crit_edge.us.us.loopexit.i.i ], [ %6, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us.i.i ]
   %i.ba = add nuw nsw i64 %.01623.us.us.i.i, 1    ; 2 uses
   %exitcond36.not.i.i = icmp eq i64 %i.ba, %i.d
   br i1 %exitcond36.not.i.i, label %_ZN5Eigen8internal25sparse_time_dense_productINS_12SparseMatrixIdLi0EiEENS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEES5_dEEvRKT_RKT0_RT1_RKT2_.exit, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.us.i.i, !llvm.loop !13
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i: ; preds = %.split.i.i, %._crit_edge.i.i
+  %8 = phi double [ %9, %._crit_edge.i.i ], [ %.pre39.i.i, %.split.i.i ] ; 2 uses
   %.01623.i.i = phi i64 [ %i.bl, %._crit_edge.i.i ], [ 0, %.split.i.i ] ; 4 uses
-  %7 = load double, ptr %3, align 8, !tbaa !68
   %gep26.i.i = getelementptr [8 x i8], ptr %i.f, i64 %.01623.i.i
   %i.bb = load double, ptr %gep26.i.i, align 8, !tbaa !68
-  %i.bc = fmul double %7, %i.bb
+  %i.bc = fmul double %8, %i.bb
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.01623.i.i
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !78
   %i.bf = sext i32 %i.be to i64                   ; 2 uses
@@ -293,7 +299,12 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.bk = icmp sgt i32 %i.bh, 0
   br i1 %i.bk, label %.lr.ph.i.i, label %._crit_edge.i.i
 
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
+  %.pre.i.i = load double, ptr %3, align 8, !tbaa !68
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i
+  %9 = phi double [ %.pre.i.i, %._crit_edge.loopexit.i.i ], [ %8, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i ]
   %i.bl = add nuw nsw i64 %.01623.i.i, 1          ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.bl, %i.d
   br i1 %exitcond.not.i.i, label %_ZN5Eigen8internal25sparse_time_dense_productINS_12SparseMatrixIdLi0EiEENS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEES5_dEEvRKT_RKT0_RT1_RKT2_.exit, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i, !llvm.loop !13
@@ -311,7 +322,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   store double %i.bs, ptr %gep.i.i, align 8, !tbaa !68
   %i.bt = add nsw i64 %.sroa.8.022.i.i, 1         ; 2 uses
   %i.bu = icmp slt i64 %i.bt, %i.bj
-  br i1 %i.bu, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !12
+  br i1 %i.bu, label %.lr.ph.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !12
 
 _ZN5Eigen8internal25sparse_time_dense_productINS_12SparseMatrixIdLi0EiEENS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEES5_dEEvRKT_RKT0_RT1_RKT2_.exit: ; preds = %._crit_edge.i.i, %._crit_edge.us.us.i.i, %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2INS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKS1_KNS_7ProductINS_12SparseMatrixIdLi0EiEES1_Li0EEEEEEERKT_.exit
   call void @free(ptr noundef %i.f) #32

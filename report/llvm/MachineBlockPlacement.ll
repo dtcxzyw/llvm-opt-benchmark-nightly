@@ -205,6 +205,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEZN12_GLOBAL__N_121M
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 308 ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
+  %.pre273.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL18TriangleChainCount, i64 120), align 8, !tbaa !252
   br label %bb.at
 
 bb.v:                                             ; preds = %_ZZN12_GLOBAL__N_121MachineBlockPlacement24precomputeTriangleChainsEvEN13TriangleChainD2Ev.exit.i, %.lr.ph243.i
@@ -607,6 +608,7 @@ _ZN4llvm8DenseMapIPKNS_17MachineBasicBlockEZN12_GLOBAL__N_121MachineBlockPlaceme
   br label %_ZN12_GLOBAL__N_121MachineBlockPlacement24precomputeTriangleChainsEv.exit
 
 bb.at:                                            ; preds = %_ZN4llvm16DenseMapIteratorIPKNS_17MachineBasicBlockEZN12_GLOBAL__N_121MachineBlockPlacement24precomputeTriangleChainsEvE13TriangleChainNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EELb0EEppEv.exit.i, %.lr.ph251.i
+  %27 = phi i32 [ %.pre273.i, %.lr.ph251.i ], [ %28, %_ZN4llvm16DenseMapIteratorIPKNS_17MachineBasicBlockEZN12_GLOBAL__N_121MachineBlockPlacement24precomputeTriangleChainsEvE13TriangleChainNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EELb0EEppEv.exit.i ] ; 3 uses
   %.pn339.i = phi i64 [ %i.es, %.lr.ph251.i ], [ %i.rt, %_ZN4llvm16DenseMapIteratorIPKNS_17MachineBasicBlockEZN12_GLOBAL__N_121MachineBlockPlacement24precomputeTriangleChainsEvE13TriangleChainNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EELb0EEppEv.exit.i ] ; 2 uses
   %.sroa.0149.0250.i = getelementptr i8, ptr %.val2.i.pre.i, i64 %.pn339.i ; 2 uses
   %i.ne = getelementptr inbounds nuw i8, ptr %.sroa.0149.0250.i, i64 8
@@ -619,7 +621,6 @@ bb.at:                                            ; preds = %_ZN4llvm16DenseMapI
   %i.nj = lshr exact i64 %i.ni, 3
   %i.nk = trunc i64 %i.nj to i32
   %i.nl = add i32 %i.nk, -1
-  %27 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL18TriangleChainCount, i64 120), align 8, !tbaa !252
   %i.nm = icmp ult i32 %i.nl, %27
   br i1 %i.nm, label %.loopexit.i, label %bb.au
 
@@ -768,9 +769,14 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEN12_GLOBAL__N_121Ma
   %i.qx = phi ptr [ %i.qh, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEN12_GLOBAL__N_121MachineBlockPlacement21BlockAndTailDupResultENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S7_EEEES4_S7_S9_SC_E22findBucketForInsertionIS4_EEPSC_RKT_SG_.exit.i.i.i.i ], [ %i.np, %.lr.ph.i.i.i.i131.i ]
   %i.qy = phi ptr [ %i.qi, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEN12_GLOBAL__N_121MachineBlockPlacement21BlockAndTailDupResultENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S7_EEEES4_S7_S9_SC_E22findBucketForInsertionIS4_EEPSC_RKT_SG_.exit.i.i.i.i ], [ %i.nq, %.lr.ph.i.i.i.i131.i ]
   %.not215.i = icmp eq ptr %i.nr, %.val69.i
-  br i1 %.not215.i, label %.loopexit.i, label %.lr.ph248.i
+  br i1 %.not215.i, label %.loopexit.loopexit.i, label %.lr.ph248.i
 
-.loopexit.i:                                      ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEN12_GLOBAL__N_121MachineBlockPlacement21BlockAndTailDupResultENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S7_EEEES4_S7_S9_SC_E6insertEOSt4pairIS4_S7_E.exit.i, %bb.au, %bb.at
+.loopexit.loopexit.i:                             ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_17MachineBasicBlockEN12_GLOBAL__N_121MachineBlockPlacement21BlockAndTailDupResultENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S7_EEEES4_S7_S9_SC_E6insertEOSt4pairIS4_S7_E.exit.i
+  %.pre.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL18TriangleChainCount, i64 120), align 8, !tbaa !252
+  br label %.loopexit.i
+
+.loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %bb.au, %bb.at
+  %28 = phi i32 [ %.pre.i, %.loopexit.loopexit.i ], [ %27, %bb.au ], [ %27, %bb.at ]
   %i.qz = add i64 %.pn339.i, 32
   %i.ra = ashr exact i64 %i.qz, 5                 ; 3 uses
   %.not.i.i133.i = icmp ult i64 %i.ra, %i.ed

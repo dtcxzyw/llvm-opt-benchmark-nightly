@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @ZS_tokenLzMatchFinder_parseAny(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr noundef %2, i64 noundef %3, i32 noundef %4, i1 noundef zeroext %5) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [2 x i32], align 4                ; 8 uses
+  %i.a = alloca [2 x i32], align 4                ; 9 uses
   %6 = alloca %struct.ZS_HashCache, align 8       ; 43 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 %3 ; 5 uses
   %i.c = tail call i32 @llvm.umax.i32(i32 %4, i32 16)
@@ -607,15 +607,16 @@ ZS_HashCache_init.exit.preheader:                 ; preds = %.preheader448.split
   %i.kp = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.kq = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.kr = sub nsw i64 0, %i.w                     ; 7 uses
+  %.pre1037 = load i32, ptr %i.a, align 4
   %cond = icmp eq i32 %.0.i67, 4
   %cond1092 = icmp eq i32 %.0.i67, 4
   %cond1091 = icmp eq i32 %.0.i67, 4
   br label %.preheader447
 
 .preheader447:                                    ; preds = %.preheader447.lr.ph, %ZS_HashCache_skip.exit
-  %.0132.i742 = phi ptr [ %2, %.preheader447.lr.ph ], [ %.1133.i, %ZS_HashCache_skip.exit ] ; 8 uses
-  %.0134.i741.a = phi ptr [ %i.x, %.preheader447.lr.ph ], [ %.5.i, %ZS_HashCache_skip.exit ]
-  %7 = load i32, ptr %i.a, align 4                ; 2 uses
+  %7 = phi i32 [ %.pre1037, %.preheader447.lr.ph ], [ %9, %ZS_HashCache_skip.exit ] ; 4 uses
+  %.0134.i741.a = phi ptr [ %2, %.preheader447.lr.ph ], [ %.1133.i, %ZS_HashCache_skip.exit ] ; 8 uses
+  %.0134.i741 = phi ptr [ %i.x, %.preheader447.lr.ph ], [ %.5.i, %ZS_HashCache_skip.exit ]
   %i.ks = zext i32 %7 to i64
   %i.kt = sub nsw i64 0, %i.ks                    ; 3 uses
   %i.ku = load i32, ptr %i.u, align 4             ; 2 uses
@@ -626,7 +627,7 @@ ZS_HashCache_init.exit.preheader:                 ; preds = %.preheader448.split
   br label %bb.t
 
 bb.t:                                             ; preds = %.preheader447, %bb.au
-  %.1135.i = phi ptr [ %i.oh, %bb.au ], [ %.0134.i741.a, %.preheader447 ] ; 27 uses
+  %.1135.i = phi ptr [ %i.oh, %bb.au ], [ %.0134.i741, %.preheader447 ] ; 27 uses
   %i.kz = ptrtoint ptr %.1135.i to i64            ; 5 uses
   %i.la = sub i64 %i.kz, %i.ac                    ; 3 uses
   %i.lb = lshr i64 %i.la, %i.ae
@@ -1029,14 +1030,14 @@ findMatchDFast.exit:                              ; preds = %.split350, %.split3
   %.pn.in = phi ptr [ %.1135.i, %.critedge.i15 ], [ %.1135.i, %.split489 ], [ %.0.i9704, %ZS_checkMatch.exit.i ], [ %.1135.i, %.critedge68.i ], [ %.0.i73.i696, %.split344 ], [ %i.ou, %bb.an ], [ %.0.i9704, %.split311 ], [ %.0.i9704, %.split312 ], [ %.0.i9704, %.split313 ], [ %.0.i73.i696, %.split343 ], [ %.0.i73.i696, %.split342 ], [ %.0.i73.i696, %ZS_checkMatch.exit.i74.i ], [ %i.pq, %bb.aq ], [ %.0.i71.i688, %.split350 ], [ %.0.i71.i688, %.split349 ], [ %.0.i71.i688, %.split348 ], [ %.0.i71.i688, %ZS_checkMatch.exit.i.i ], [ %i.ql, %bb.at ]
   %.sroa.12.3 = phi i32 [ %i.pk, %.critedge.i15 ], [ %.us-phi496, %.split489 ], [ %.us-phi496, %ZS_checkMatch.exit.i ], [ %i.qf, %.critedge68.i ], [ %i.pk, %.split344 ], [ %.us-phi496, %.split313 ], [ %.us-phi496, %.split312 ], [ %.us-phi496, %.split311 ], [ %.us-phi496, %bb.an ], [ %i.pk, %bb.aq ], [ %i.pk, %ZS_checkMatch.exit.i74.i ], [ %i.pk, %.split342 ], [ %i.pk, %.split343 ], [ %i.qf, %bb.at ], [ %i.qf, %ZS_checkMatch.exit.i.i ], [ %i.qf, %.split348 ], [ %i.qf, %.split349 ], [ %i.qf, %.split350 ] ; 5 uses
   %.3 = phi ptr [ %i.pc, %.critedge.i15 ], [ %.us-phi495, %.split489 ], [ %.us-phi495, %ZS_checkMatch.exit.i ], [ %i.px, %.critedge68.i ], [ %i.pc, %.split344 ], [ %.us-phi495, %.split313 ], [ %.us-phi495, %.split312 ], [ %.us-phi495, %.split311 ], [ %.us-phi495, %bb.an ], [ %i.pc, %bb.aq ], [ %i.pc, %ZS_checkMatch.exit.i74.i ], [ %i.pc, %.split342 ], [ %i.pc, %.split343 ], [ %i.px, %bb.at ], [ %i.px, %ZS_checkMatch.exit.i.i ], [ %i.px, %.split348 ], [ %i.px, %.split349 ], [ %i.px, %.split350 ] ; 2 uses
-  %.pn442 = ptrtoint ptr %.0132.i742 to i64
+  %.pn442 = ptrtoint ptr %.0134.i741.a to i64
   %.sroa.0.3.in = sub i64 %i.kz, %.pn442          ; 2 uses
   %.sroa.0.3 = trunc i64 %.sroa.0.3.in to i32     ; 2 uses
   %.pn = ptrtoint ptr %.pn.in to i64
   %.sroa.20.3.in = sub i64 %.pn, %i.kz
   %.sroa.20.3 = trunc i64 %.sroa.20.3.in to i32   ; 2 uses
   %i.qq = and i64 %.sroa.0.3.in, 4294967295       ; 2 uses
-  %i.qr = getelementptr inbounds nuw i8, ptr %.0132.i742, i64 %i.qq ; 2 uses
+  %i.qr = getelementptr inbounds nuw i8, ptr %.0134.i741.a, i64 %i.qq ; 2 uses
   %i.qs = icmp ne i64 %i.qq, 0
   %i.qt = icmp ugt ptr %.3, %i.kn
   %or.cond711 = select i1 %i.qs, i1 %i.qt, i1 false
@@ -1082,7 +1083,7 @@ ZS_checkMatch.exit8:                              ; preds = %.lr.ph716
 bb.aw:                                            ; preds = %.split398, %.split397, %.split396, %ZS_checkMatch.exit8
   %i.ra = add i32 %.sroa.20.4712, %4              ; 2 uses
   %i.rb = sub i32 %.sroa.0.4713, %4               ; 2 uses
-  %i.rc = icmp ugt ptr %i.qu, %.0132.i742
+  %i.rc = icmp ugt ptr %i.qu, %.0134.i741.a
   %i.rd = icmp ugt ptr %i.qv, %i.kn
   %or.cond = select i1 %i.rc, i1 %i.rd, i1 false
   br i1 %or.cond, label %.lr.ph716, label %.critedge.i, !llvm.loop !4
@@ -1112,12 +1113,13 @@ bb.az:                                            ; preds = %bb.ay
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.ax, %bb.az
-  %.sink = phi i32 [ %i.rh, %bb.az ], [ %i.re, %bb.ax ]
+  %.sink = phi i32 [ %i.rh, %bb.az ], [ %i.re, %bb.ax ] ; 2 uses
   %.sroa.12.4.ph = phi i32 [ 1, %bb.az ], [ %.sroa.12.3, %bb.ax ]
   store i32 %.sink, ptr %i.a, align 4, !tbaa !22
   br label %bb.ba
 
 bb.ba:                                            ; preds = %.sink.split, %bb.ay
+  %8 = phi i32 [ %7, %bb.ay ], [ %.sink, %.sink.split ] ; 5 uses
   %.sroa.12.4 = phi i32 [ 0, %bb.ay ], [ %.sroa.12.4.ph, %.sink.split ] ; 2 uses
   %i.rk = load i32, ptr @ZL_g_logLevel, align 4, !tbaa !22
   %i.rl = icmp sgt i32 %i.rk, 1023
@@ -1129,14 +1131,14 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %i.rm = zext i32 %.sroa.0.4.lcssa to i64        ; 4 uses
-  %i.rn = getelementptr inbounds nuw i8, ptr %.0132.i742, i64 %i.rm
+  %i.rn = getelementptr inbounds nuw i8, ptr %.0134.i741.a, i64 %i.rm
   %i.ro = icmp ult ptr %i.rn, %i.ko
   %i.rp = load ptr, ptr %i.kp, align 8, !tbaa !42 ; 4 uses
   br i1 %i.ro, label %bb.bd, label %bb.be, !prof !43
 
 bb.bd:                                            ; preds = %bb.bc
   %i.rq = getelementptr inbounds nuw i8, ptr %i.rp, i64 %i.rm
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.rp, ptr noundef nonnull readonly align 1 dereferenceable(16) %.0132.i742, i64 16, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.rp, ptr noundef nonnull readonly align 1 dereferenceable(16) %.0134.i741.a, i64 16, i1 false)
   %.not.i.i = icmp ugt i32 %.sroa.0.4.lcssa, 16
   br i1 %.not.i.i, label %.preheader.preheader.i, label %ZS_seqStore_store.exit
 
@@ -1146,7 +1148,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 .preheader.i:                                     ; preds = %.preheader.i, %.preheader.preheader.i
   %.012.i.i = phi ptr [ %i.ru, %.preheader.i ], [ %i.rr, %.preheader.preheader.i ] ; 3 uses
-  %.pn.i.i = phi ptr [ %i.rt, %.preheader.i ], [ %.0132.i742, %.preheader.preheader.i ] ; 2 uses
+  %.pn.i.i = phi ptr [ %i.rt, %.preheader.i ], [ %.0134.i741.a, %.preheader.preheader.i ] ; 2 uses
   %.0.i.i131 = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.012.i.i, ptr noundef nonnull align 1 dereferenceable(16) %.0.i.i131, i64 16, i1 false)
   %i.rs = getelementptr inbounds nuw i8, ptr %.012.i.i, i64 16
@@ -1157,7 +1159,7 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.rv, label %.preheader.i, label %ZS_seqStore_store.exit, !llvm.loop !5
 
 bb.be:                                            ; preds = %bb.bc
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.rp, ptr readonly align 1 %.0132.i742, i64 %i.rm, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.rp, ptr readonly align 1 %.0134.i741.a, i64 %i.rm, i1 false)
   br label %ZS_seqStore_store.exit
 
 ZS_seqStore_store.exit:                           ; preds = %.preheader.i, %bb.bd, %bb.be
@@ -1560,11 +1562,16 @@ ZS_HashCache_update.exit.i:                       ; preds = %.thread441, %.threa
   %i.ajv = getelementptr inbounds nuw i8, ptr %.0.i18737, i64 %i.jz ; 3 uses
   store ptr %i.ajv, ptr %i.ka, align 8, !tbaa !37
   %i.ajw = icmp ult ptr %i.ajv, %i.sb
-  br i1 %i.ajw, label %.lr.ph740, label %ZS_HashCache_skip.exit, !llvm.loop !6
+  br i1 %i.ajw, label %.lr.ph740, label %ZS_HashCache_skip.exit.loopexit, !llvm.loop !6
 
-ZS_HashCache_skip.exit:                           ; preds = %ZS_HashCache_update.exit.i, %bb.cc, %bb.cb, %.preheader, %ZS_seqStore_store.exit, %bb.bf, %bb.av
-  %.5.i = phi ptr [ %i.oh, %bb.av ], [ %i.sb, %ZS_seqStore_store.exit ], [ %i.sb, %.preheader ], [ %i.sb, %bb.bf ], [ %i.sb, %bb.cc ], [ %i.sb, %bb.cb ], [ %i.sb, %ZS_HashCache_update.exit.i ] ; 2 uses
-  %.1133.i = phi ptr [ %.0132.i742, %bb.av ], [ %i.sb, %ZS_seqStore_store.exit ], [ %i.sb, %.preheader ], [ %i.sb, %bb.bf ], [ %i.sb, %bb.cc ], [ %i.sb, %bb.cb ], [ %i.sb, %ZS_HashCache_update.exit.i ] ; 2 uses
+ZS_HashCache_skip.exit.loopexit:                  ; preds = %ZS_HashCache_update.exit.i
+  %.pre = load i32, ptr %i.a, align 4
+  br label %ZS_HashCache_skip.exit
+
+ZS_HashCache_skip.exit:                           ; preds = %bb.cc, %bb.cb, %ZS_HashCache_skip.exit.loopexit, %.preheader, %ZS_seqStore_store.exit, %bb.bf, %bb.av
+  %9 = phi i32 [ %7, %bb.av ], [ %8, %ZS_seqStore_store.exit ], [ %8, %.preheader ], [ %8, %bb.bf ], [ %.pre, %ZS_HashCache_skip.exit.loopexit ], [ %8, %bb.cb ], [ %8, %bb.cc ]
+  %.5.i = phi ptr [ %i.oh, %bb.av ], [ %i.sb, %ZS_seqStore_store.exit ], [ %i.sb, %.preheader ], [ %i.sb, %bb.bf ], [ %i.sb, %ZS_HashCache_skip.exit.loopexit ], [ %i.sb, %bb.cb ], [ %i.sb, %bb.cc ] ; 2 uses
+  %.1133.i = phi ptr [ %.0134.i741.a, %bb.av ], [ %i.sb, %ZS_seqStore_store.exit ], [ %i.sb, %.preheader ], [ %i.sb, %bb.bf ], [ %i.sb, %ZS_HashCache_skip.exit.loopexit ], [ %i.sb, %bb.cb ], [ %i.sb, %bb.cc ] ; 2 uses
   %i.ajx = icmp ult ptr %.5.i, %i.f
   br i1 %i.ajx, label %.preheader447, label %ZS_tokenLzMatchFinder_parseT.exit
 

@@ -27,21 +27,23 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %dce_marksnap.exit, label %.lr.ph21.i
 
 .lr.ph21.i:                                       ; preds = %bb.b
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %wide.trip.count28.i = zext i16 %i.f to i64
+  %.pre30.i = load ptr, ptr %i.g, align 8, !tbaa !33
+  %.pre32.i = load ptr, ptr %i.h, align 8, !tbaa !34
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i, %.lr.ph21.i
+  %1 = phi ptr [ %.pre32.i, %.lr.ph21.i ], [ %4, %._crit_edge.i ] ; 2 uses
+  %2 = phi ptr [ %.pre30.i, %.lr.ph21.i ], [ %5, %._crit_edge.i ] ; 2 uses
   %indvars.iv25.i = phi i64 [ 0, %.lr.ph21.i ], [ %indvars.iv.next26.i, %._crit_edge.i ] ; 2 uses
-  %1 = load ptr, ptr %i.g, align 8, !tbaa !33
-  %2 = getelementptr inbounds nuw [12 x i8], ptr %1, i64 %indvars.iv25.i ; 2 uses
-  %3 = load ptr, ptr %i.h, align 8, !tbaa !34
-  %i.j = load i32, ptr %2, align 4, !tbaa !36
+  %3 = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %indvars.iv25.i ; 2 uses
+  %i.j = load i32, ptr %3, align 4, !tbaa !36
   %i.k = zext i32 %i.j to i64
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.k ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 10
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.k ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 10
   %i.n = load i8, ptr %i.m, align 2, !tbaa !37    ; 4 uses
   %.not23.i = icmp eq i8 %i.n, 0
   br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.preheader.i
@@ -101,7 +103,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.1
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %bb.f
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge.loopexit.i, label %.lr.ph.i.epil.preheader
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %._crit_edge.i.loopexit.unr-lcssa ]
@@ -111,7 +113,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.1
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !38
   %i.am = and i32 %i.al, 65535                    ; 2 uses
   %i.an = icmp samesign ugt i32 %i.am, 32768
-  br i1 %i.an, label %bb.g, label %._crit_edge.i
+  br i1 %i.an, label %bb.g, label %._crit_edge.loopexit.i
 
 bb.g:                                             ; preds = %.lr.ph.i.epil.preheader
   %i.ao = load ptr, ptr %i.i, align 8, !tbaa !39
@@ -121,9 +123,16 @@ bb.g:                                             ; preds = %.lr.ph.i.epil.prehe
   %i.as = load i8, ptr %i.ar, align 4, !tbaa !40
   %i.at = or i8 %i.as, 32
   store i8 %i.at, ptr %i.ar, align 4, !tbaa !40
+  br label %._crit_edge.loopexit.i
+
+._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i.epil.preheader, %bb.g, %._crit_edge.i.loopexit.unr-lcssa
+  %.pre.i = load ptr, ptr %i.g, align 8, !tbaa !33
+  %.pre31.i = load ptr, ptr %i.h, align 8, !tbaa !34
   br label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit.unr-lcssa, %bb.g, %.lr.ph.i.epil.preheader, %bb.c
+._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.c
+  %4 = phi ptr [ %.pre31.i, %._crit_edge.loopexit.i ], [ %1, %bb.c ]
+  %5 = phi ptr [ %.pre.i, %._crit_edge.loopexit.i ], [ %2, %bb.c ]
   %indvars.iv.next26.i = add nuw nsw i64 %indvars.iv25.i, 1 ; 2 uses
   %exitcond29.not.i = icmp eq i64 %indvars.iv.next26.i, %wide.trip.count28.i
   br i1 %exitcond29.not.i, label %dce_marksnap.exit, label %bb.c, !llvm.loop !10

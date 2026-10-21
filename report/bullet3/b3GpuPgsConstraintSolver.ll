@@ -204,6 +204,7 @@ _ZN13b3ProfileZoneD2Ev.exit76:                    ; preds = %bb.o, %_ZN13b3Profi
   br i1 %exitcond155.not, label %._crit_edge146, label %.lr.ph145.split, !llvm.loop !285
 
 .lr.ph143:                                        ; preds = %.lr.ph143.preheader, %_ZN13b3ProfileZoneD2Ev.exit86
+  %.pre156 = phi i32 [ 0, %.lr.ph143.preheader ], [ %i.jd, %_ZN13b3ProfileZoneD2Ev.exit86 ] ; 2 uses
   %indvars.iv150 = phi i64 [ 0, %.lr.ph143.preheader ], [ %indvars.iv.next151, %_ZN13b3ProfileZoneD2Ev.exit86 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   %i.ce = load ptr, ptr %i.e, align 8, !tbaa !70
@@ -218,7 +219,11 @@ _ZN13b3ProfileZoneD2Ev.exit76:                    ; preds = %bb.o, %_ZN13b3Profi
 
 .preheader:                                       ; preds = %.lr.ph143
   %i.cl = icmp sgt i32 %i.ci, 0
-  br i1 %i.cl, label %.lr.ph141, label %_ZN13b3ProfileZoneD2Ev.exit86
+  br i1 %i.cl, label %.lr.ph141.preheader, label %_ZN13b3ProfileZoneD2Ev.exit86
+
+.lr.ph141.preheader:                              ; preds = %.preheader
+  %.pre158 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL16batchConstraints, i64 16), align 8, !tbaa !120
+  br label %.lr.ph141
 
 bb.s:                                             ; preds = %.lr.ph143
   invoke void @b3EnterProfileZone(ptr noundef nonnull @.str.19)
@@ -610,6 +615,7 @@ bb.an:                                            ; preds = %bb.am, %.noexc85
 
 ._ZN13b3ProfileZoneD2Ev.exit86_crit_edge:         ; preds = %bb.an
   %.pre156.a = load i32, ptr %i.d, align 4, !tbaa !106
+  %.pre161 = load i32, ptr %i.c, align 4, !tbaa !106
   br label %_ZN13b3ProfileZoneD2Ev.exit86
 
 bb.ao:                                            ; preds = %bb.an
@@ -648,14 +654,14 @@ bb.at:                                            ; preds = %bb.as
   call void @__clang_call_terminate(ptr %i.hp) #25
   unreachable
 
-.lr.ph141:                                        ; preds = %.preheader, %.loopexit
-  %i.hq = phi i32 [ %i.iz, %.loopexit ], [ %i.ci, %.preheader ] ; 2 uses
-  %.046140 = phi i32 [ %i.ja, %.loopexit ], [ 0, %.preheader ] ; 2 uses
-  %5 = load i32, ptr %i.c, align 4, !tbaa !106
-  %6 = add nsw i32 %5, %.046140
-  %7 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL16batchConstraints, i64 16), align 8, !tbaa !120
-  %i.hr = sext i32 %6 to i64
-  %i.hs = getelementptr inbounds [16 x i8], ptr %7, i64 %i.hr
+.lr.ph141:                                        ; preds = %.lr.ph141.preheader, %.loopexit
+  %i.hq = phi i32 [ %i.iz, %.loopexit ], [ %i.ci, %.lr.ph141.preheader ] ; 2 uses
+  %5 = phi ptr [ %8, %.loopexit ], [ %.pre158, %.lr.ph141.preheader ] ; 3 uses
+  %6 = phi i32 [ %9, %.loopexit ], [ %.pre156, %.lr.ph141.preheader ] ; 3 uses
+  %.046140 = phi i32 [ %i.ja, %.loopexit ], [ 0, %.lr.ph141.preheader ] ; 2 uses
+  %7 = add nsw i32 %6, %.046140
+  %i.hr = sext i32 %7 to i64
+  %i.hs = getelementptr inbounds [16 x i8], ptr %5, i64 %i.hr
   %i.ht = load ptr, ptr %i.e, align 8, !tbaa !70  ; 3 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hs, i64 8
   %i.hv = load i32, ptr %i.hu, align 4, !tbaa !173
@@ -706,19 +712,23 @@ bb.au:                                            ; preds = %.lr.ph141
   br i1 %exitcond149.not, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !286
 
 .loopexit.loopexit:                               ; preds = %.lr.ph
+  %.pre = load i32, ptr %i.c, align 4, !tbaa !106
+  %.pre157 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL16batchConstraints, i64 16), align 8, !tbaa !120
   %.pre.a = load i32, ptr %i.d, align 4, !tbaa !106
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.au, %.lr.ph141
   %i.iz = phi i32 [ %.pre.a, %.loopexit.loopexit ], [ %i.hq, %bb.au ], [ %i.hq, %.lr.ph141 ] ; 3 uses
+  %8 = phi ptr [ %.pre157, %.loopexit.loopexit ], [ %5, %bb.au ], [ %5, %.lr.ph141 ]
+  %9 = phi i32 [ %.pre, %.loopexit.loopexit ], [ %6, %bb.au ], [ %6, %.lr.ph141 ] ; 2 uses
   %i.ja = add nuw nsw i32 %.046140, 1             ; 2 uses
   %i.jb = icmp slt i32 %i.ja, %i.iz
   br i1 %i.jb, label %.lr.ph141, label %_ZN13b3ProfileZoneD2Ev.exit86, !llvm.loop !287
 
 _ZN13b3ProfileZoneD2Ev.exit86:                    ; preds = %.loopexit, %._ZN13b3ProfileZoneD2Ev.exit86_crit_edge, %.preheader
-  %i.jc = phi i32 [ %.pre156.a, %._ZN13b3ProfileZoneD2Ev.exit86_crit_edge ], [ %i.ci, %.preheader ], [ %i.iz, %.loopexit ]
-  %8 = load i32, ptr %i.c, align 4, !tbaa !106
-  %i.jd = add nsw i32 %8, %i.jc
+  %i.jc = phi i32 [ %.pre161, %._ZN13b3ProfileZoneD2Ev.exit86_crit_edge ], [ %.pre156, %.preheader ], [ %9, %.loopexit ]
+  %10 = phi i32 [ %.pre156.a, %._ZN13b3ProfileZoneD2Ev.exit86_crit_edge ], [ %i.ci, %.preheader ], [ %i.iz, %.loopexit ]
+  %i.jd = add nsw i32 %i.jc, %10                  ; 2 uses
   store i32 %i.jd, ptr %i.c, align 4, !tbaa !106
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
   %indvars.iv.next151 = add nuw nsw i64 %indvars.iv150, 1 ; 2 uses

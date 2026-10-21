@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.j = load i32, ptr %i.i, align 8
   %i.k = icmp slt i32 %i.j, 2
   br i1 %i.k, label %bb.g, label %switch.edge
@@ -238,20 +238,21 @@ bb.e:                                             ; preds = %bb.d
   %i.v = phi i32 [ %i.g, %.thread77 ], [ %.pre, %bb.e ]
   %i.w = zext nneg i32 %i.l to i64                ; 13 uses
   %i.x = sub nsw i64 0, %i.w                      ; 3 uses
+  %.pre75 = load i32, ptr %i.i, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph71, %._crit_edge
-  %.in.a = phi i32 [ %i.v, %.lr.ph71 ], [ %1, %._crit_edge ]
+  %.in.a = phi i32 [ %.pre75, %.lr.ph71 ], [ %2, %._crit_edge ] ; 5 uses
+  %.in = phi i32 [ %i.v, %.lr.ph71 ], [ %1, %._crit_edge ]
   %.04669 = phi ptr [ %i.n, %.lr.ph71 ], [ %i.ap, %._crit_edge ] ; 6 uses
-  %1 = add nsw i32 %.in.a, -1                     ; 2 uses
-  %2 = load i32, ptr %i.i, align 8                ; 4 uses
-  %.off = add i32 %2, 1
+  %1 = add nsw i32 %.in, -1                       ; 2 uses
+  %.off = add i32 %.in.a, 1
   %.not5864 = icmp ult i32 %.off, 3
   br i1 %.not5864, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f
-  %i.y = sdiv i32 %2, 2                           ; 3 uses
-  %i.z = add nsw i32 %2, -1
+  %i.y = sdiv i32 %.in.a, 2                       ; 3 uses
+  %i.z = add nsw i32 %.in.a, -1
   %i.aa = mul nsw i32 %i.z, %i.l
   %i.ab = sext i32 %i.aa to i64
   %i.ac = getelementptr inbounds i8, ptr %.04669, i64 %i.ab ; 4 uses
@@ -272,9 +273,9 @@ bb.f:                                             ; preds = %.lr.ph71, %._crit_e
   %.067.unr = phi i32 [ %i.y, %.lr.ph.preheader ], [ %i.ad, %.lr.ph.prol ]
   %.04466.unr = phi ptr [ %i.ac, %.lr.ph.preheader ], [ %i.af, %.lr.ph.prol ]
   %.04565.unr = phi ptr [ %.04669, %.lr.ph.preheader ], [ %i.ae, %.lr.ph.prol ]
-  %i.ag = and i32 %2, -2
+  %i.ag = and i32 %.in.a, -2
   %i.ah = icmp eq i32 %i.ag, 2
-  br i1 %i.ah, label %._crit_edge, label %.lr.ph
+  br i1 %i.ah, label %._crit_edge.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %.067 = phi i32 [ %i.ak, %.lr.ph ], [ %.067.unr, %.lr.ph.prol.loopexit ]
@@ -292,9 +293,14 @@ bb.f:                                             ; preds = %.lr.ph71, %._crit_e
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.w
   %i.am = getelementptr inbounds i8, ptr %i.aj, i64 %i.x
   %.not58.1 = icmp eq i32 %i.ak, 0
-  br i1 %.not58.1, label %._crit_edge, label %.lr.ph, !llvm.loop !19
+  br i1 %.not58.1, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !19
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.f
+._crit_edge.loopexit:                             ; preds = %.lr.ph, %.lr.ph.prol.loopexit
+  %.pre74 = load i32, ptr %i.i, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.f
+  %2 = phi i32 [ %.pre74, %._crit_edge.loopexit ], [ %.in.a, %bb.f ]
   %i.an = load i32, ptr %i.o, align 8
   %i.ao = sext i32 %i.an to i64
   %i.ap = getelementptr inbounds i8, ptr %.04669, i64 %i.ao
@@ -697,18 +703,10 @@ bb.k:                                             ; preds = %SDL_LockSurface_REA
   %broadcast.splat97 = shufflevector <4 x i32> %broadcast.splatinsert96, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %.lr.ph164.split
 
-.lr.ph164.splitthread-pre-split:                  ; preds = %._crit_edge160
-  %1 = load i32, ptr %i.aj, align 8
-  %2 = sdiv i32 %1, 2
-  %3 = sext i32 %2 to i64
-  %4 = getelementptr inbounds [2 x i8], ptr %.0102162, i64 %3
-  %.pr = load i32, ptr %i.ai, align 8
-  br label %.lr.ph164.split
-
-.lr.ph164.split:                                  ; preds = %.lr.ph164.splitthread-pre-split, %.lr.ph164.split.preheader
-  %i.ap = phi i32 [ %.pr, %.lr.ph164.splitthread-pre-split ], [ %i.ak, %.lr.ph164.split.preheader ] ; 7 uses
-  %.in178 = phi i32 [ %i.aq, %.lr.ph164.splitthread-pre-split ], [ %i.ah, %.lr.ph164.split.preheader ]
-  %.0102162 = phi ptr [ %4, %.lr.ph164.splitthread-pre-split ], [ %i.an, %.lr.ph164.split.preheader ] ; 24 uses
+.lr.ph164.split:                                  ; preds = %.lr.ph164.split.preheader, %._crit_edge160
+  %i.ap = phi i32 [ %1, %._crit_edge160 ], [ %i.ak, %.lr.ph164.split.preheader ] ; 7 uses
+  %.in178 = phi i32 [ %i.aq, %._crit_edge160 ], [ %i.ah, %.lr.ph164.split.preheader ]
+  %.0102162 = phi ptr [ %5, %._crit_edge160 ], [ %i.an, %.lr.ph164.split.preheader ] ; 24 uses
   %i.aq = add nsw i32 %.in178, -1                 ; 2 uses
   %.not133156 = icmp eq i32 %i.ap, 0
   br i1 %.not133156, label %._crit_edge160, label %iter.check
@@ -908,7 +906,7 @@ pred.store.continue87:                            ; preds = %pred.store.if86, %p
 
 middle.block89:                                   ; preds = %pred.store.continue87
   %cmp.n90 = icmp eq i64 %n.vec31, %i.ar
-  br i1 %cmp.n90, label %._crit_edge160, label %vec.epilog.iter.check
+  br i1 %cmp.n90, label %._crit_edge160.loopexit, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block89
   %min.epilog.iters.check = icmp eq i64 %i.as, 0
@@ -975,7 +973,7 @@ pred.store.continue111:                           ; preds = %pred.store.if110, %
 
 vec.epilog.middle.block:                          ; preds = %pred.store.continue111
   %cmp.n113 = icmp eq i64 %n.vec93, %i.ar
-  br i1 %cmp.n113, label %._crit_edge160, label %.lr.ph159.preheader
+  br i1 %cmp.n113, label %._crit_edge160.loopexit, label %.lr.ph159.preheader
 
 .lr.ph159.preheader:                              ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.in165.ph = phi i32 [ %i.ap, %iter.check ], [ %i.au, %vec.epilog.iter.check ], [ %i.cm, %vec.epilog.middle.block ]
@@ -999,11 +997,20 @@ bb.l:                                             ; preds = %.lr.ph159
 bb.m:                                             ; preds = %bb.l, %.lr.ph159
   %i.dg = getelementptr inbounds nuw i8, ptr %.0100157, i64 2
   %.not133 = icmp eq i32 %i.db, 0
-  br i1 %.not133, label %._crit_edge160, label %.lr.ph159, !llvm.loop !53
+  br i1 %.not133, label %._crit_edge160.loopexit, label %.lr.ph159, !llvm.loop !53
 
-._crit_edge160:                                   ; preds = %bb.m, %middle.block89, %vec.epilog.middle.block, %.lr.ph164.split
+._crit_edge160.loopexit:                          ; preds = %bb.m, %vec.epilog.middle.block, %middle.block89
+  %.pre170 = load i32, ptr %i.ai, align 8
+  br label %._crit_edge160
+
+._crit_edge160:                                   ; preds = %._crit_edge160.loopexit, %.lr.ph164.split
+  %1 = phi i32 [ %.pre170, %._crit_edge160.loopexit ], [ 0, %.lr.ph164.split ]
+  %2 = load i32, ptr %i.aj, align 8
+  %3 = sdiv i32 %2, 2
+  %4 = sext i32 %3 to i64
+  %5 = getelementptr inbounds [2 x i8], ptr %.0102162, i64 %4
   %.not132 = icmp eq i32 %i.aq, 0
-  br i1 %.not132, label %.loopexit, label %.lr.ph164.splitthread-pre-split, !llvm.loop !54
+  br i1 %.not132, label %.loopexit, label %.lr.ph164.split, !llvm.loop !54
 
 bb.n:                                             ; preds = %SDL_LockSurface_REAL.exit
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -1035,18 +1042,10 @@ bb.n:                                             ; preds = %SDL_LockSurface_REA
   %broadcast.splat3 = shufflevector <4 x i32> %broadcast.splatinsert2, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %.lr.ph155.split
 
-.lr.ph155.splitthread-pre-split:                  ; preds = %._crit_edge
-  %5 = load i32, ptr %i.ds, align 8
-  %6 = sdiv i32 %5, 4
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr inbounds [4 x i8], ptr %.098153, i64 %7
-  %.pr181 = load i32, ptr %i.dr, align 8
-  br label %.lr.ph155.split
-
-.lr.ph155.split:                                  ; preds = %.lr.ph155.splitthread-pre-split, %.lr.ph155.split.preheader
-  %i.dx = phi i32 [ %.pr181, %.lr.ph155.splitthread-pre-split ], [ %i.dt, %.lr.ph155.split.preheader ] ; 5 uses
-  %.in177 = phi i32 [ %i.dy, %.lr.ph155.splitthread-pre-split ], [ %i.dq, %.lr.ph155.split.preheader ]
-  %.098153 = phi ptr [ %8, %.lr.ph155.splitthread-pre-split ], [ %i.dw, %.lr.ph155.split.preheader ] ; 11 uses
+.lr.ph155.split:                                  ; preds = %.lr.ph155.split.preheader, %._crit_edge
+  %i.dx = phi i32 [ %6, %._crit_edge ], [ %i.dt, %.lr.ph155.split.preheader ] ; 5 uses
+  %.in177 = phi i32 [ %i.dy, %._crit_edge ], [ %i.dq, %.lr.ph155.split.preheader ]
+  %.098153 = phi ptr [ %10, %._crit_edge ], [ %i.dw, %.lr.ph155.split.preheader ] ; 11 uses
   %i.dy = add nsw i32 %.in177, -1                 ; 2 uses
   %.not131150 = icmp eq i32 %i.dx, 0
   br i1 %.not131150, label %._crit_edge, label %.lr.ph.preheader
@@ -1159,7 +1158,7 @@ pred.store.continue25:                            ; preds = %pred.store.if24, %p
 
 middle.block:                                     ; preds = %pred.store.continue25
   %cmp.n = icmp eq i64 %n.vec, %i.dz
-  br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader116
+  br i1 %cmp.n, label %._crit_edge.loopexit, label %.lr.ph.preheader116
 
 .lr.ph.preheader116:                              ; preds = %.lr.ph.preheader, %middle.block
   %.in.ph = phi i32 [ %i.dx, %.lr.ph.preheader ], [ %i.eb, %middle.block ]
@@ -1182,11 +1181,20 @@ bb.o:                                             ; preds = %.lr.ph
 bb.p:                                             ; preds = %bb.o, %.lr.ph
   %i.fe = getelementptr inbounds nuw i8, ptr %.0151, i64 4
   %.not131 = icmp eq i32 %i.fa, 0
-  br i1 %.not131, label %._crit_edge, label %.lr.ph, !llvm.loop !56
+  br i1 %.not131, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !56
 
-._crit_edge:                                      ; preds = %bb.p, %middle.block, %.lr.ph155.split
+._crit_edge.loopexit:                             ; preds = %bb.p, %middle.block
+  %.pre = load i32, ptr %i.dr, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph155.split
+  %6 = phi i32 [ %.pre, %._crit_edge.loopexit ], [ 0, %.lr.ph155.split ]
+  %7 = load i32, ptr %i.ds, align 8
+  %8 = sdiv i32 %7, 4
+  %9 = sext i32 %8 to i64
+  %10 = getelementptr inbounds [4 x i8], ptr %.098153, i64 %9
   %.not130 = icmp eq i32 %i.dy, 0
-  br i1 %.not130, label %.loopexit, label %.lr.ph155.splitthread-pre-split, !llvm.loop !57
+  br i1 %.not130, label %.loopexit, label %.lr.ph155.split, !llvm.loop !57
 
 .loopexit:                                        ; preds = %._crit_edge, %._crit_edge160, %.lr.ph155, %.lr.ph164, %bb.n, %bb.k, %SDL_LockSurface_REAL.exit
   %i.ff = load ptr, ptr %i.a, align 8

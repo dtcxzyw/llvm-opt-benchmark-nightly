@@ -205,8 +205,9 @@ bb.a:
   br i1 %i.c, label %.lr.ph16, label %._crit_edge17
 
 .lr.ph16:                                         ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 200
+  %.pre26 = load ptr, ptr %i.d, align 8, !tbaa !100
   br label %bb.b
 
 ._crit_edge17:                                    ; preds = %._crit_edge, %bb.a
@@ -214,9 +215,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph16, %._crit_edge
   %i.f = phi i32 [ %i.b, %.lr.ph16 ], [ %i.o, %._crit_edge ]
+  %1 = phi ptr [ %.pre26, %.lr.ph16 ], [ %2, %._crit_edge ] ; 2 uses
   %indvars.iv23 = phi i64 [ 0, %.lr.ph16 ], [ %indvars.iv.next24, %._crit_edge ] ; 2 uses
   %.01013 = phi i32 [ 0, %.lr.ph16 ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
-  %1 = load ptr, ptr %i.d, align 8, !tbaa !100
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv23
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !154  ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 932 ; 2 uses
@@ -231,11 +232,13 @@ bb.b:                                             ; preds = %.lr.ph16, %._crit_e
 
 ._crit_edge.loopexit:                             ; preds = %bb.c
   %i.n = trunc nsw i64 %indvars.iv.next19 to i32
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !100
   %.pre.a = load i32, ptr %i.a, align 4, !tbaa !101
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %i.o = phi i32 [ %i.f, %bb.b ], [ %.pre.a, %._crit_edge.loopexit ] ; 2 uses
+  %2 = phi ptr [ %1, %bb.b ], [ %.pre, %._crit_edge.loopexit ]
   %.1.lcssa = phi i32 [ %.01013, %bb.b ], [ %i.n, %._crit_edge.loopexit ]
   %indvars.iv.next24 = add nuw nsw i64 %indvars.iv23, 1 ; 2 uses
   %i.p = sext i32 %i.o to i64
@@ -492,8 +495,9 @@ bb.a:
   br i1 %i.c, label %.lr.ph16, label %._crit_edge17
 
 .lr.ph16:                                         ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 200
+  %.pre26 = load ptr, ptr %i.d, align 8, !tbaa !100
   br label %bb.b
 
 ._crit_edge17:                                    ; preds = %._crit_edge, %bb.a
@@ -501,9 +505,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph16, %._crit_edge
   %i.f = phi i32 [ %i.b, %.lr.ph16 ], [ %i.o, %._crit_edge ]
+  %1 = phi ptr [ %.pre26, %.lr.ph16 ], [ %2, %._crit_edge ] ; 2 uses
   %indvars.iv23 = phi i64 [ 0, %.lr.ph16 ], [ %indvars.iv.next24, %._crit_edge ] ; 2 uses
   %.01013 = phi i32 [ 0, %.lr.ph16 ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
-  %1 = load ptr, ptr %i.d, align 8, !tbaa !100
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv23
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !154  ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 932 ; 2 uses
@@ -518,11 +522,13 @@ bb.b:                                             ; preds = %.lr.ph16, %._crit_e
 
 ._crit_edge.loopexit:                             ; preds = %bb.c
   %i.n = trunc nsw i64 %indvars.iv.next19 to i32
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !100
   %.pre.a = load i32, ptr %i.a, align 4, !tbaa !101
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %i.o = phi i32 [ %i.f, %bb.b ], [ %.pre.a, %._crit_edge.loopexit ] ; 2 uses
+  %2 = phi ptr [ %1, %bb.b ], [ %.pre, %._crit_edge.loopexit ]
   %.1.lcssa = phi i32 [ %.01013, %bb.b ], [ %i.n, %._crit_edge.loopexit ]
   %indvars.iv.next24 = add nuw nsw i64 %indvars.iv23, 1 ; 2 uses
   %i.p = sext i32 %i.o to i64

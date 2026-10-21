@@ -205,16 +205,17 @@ _ZN4Luau11SmallVectorINS_8Bytecode11BcBlockEdgeELj2EE5clearEv.exit: ; preds = %_
   br i1 %.not81248, label %_ZNKSt13unordered_mapIjN4Luau8Bytecode4BcOpESt4hashIjESt8equal_toIjESaISt4pairIKjS2_EEE5countERS8_.exit, label %.lr.ph250.preheader
 
 .lr.ph250.preheader:                              ; preds = %_ZN4Luau11SmallVectorINS_8Bytecode11BcBlockEdgeELj2EE5clearEv.exit
+  %.pre288 = load ptr, ptr %0, align 8, !tbaa !181
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.cy, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %.lr.ph250
 
 .lr.ph250:                                        ; preds = %.lr.ph250.preheader, %._crit_edge
-  %.073249.a = phi ptr [ %i.fm, %._crit_edge ], [ %i.dm, %.lr.ph250.preheader ] ; 2 uses
-  %3 = load ptr, ptr %0, align 8, !tbaa !181, !nonnull !182, !align !183
-  %i.dr = getelementptr inbounds nuw i8, ptr %.073249.a, i64 4
+  %.073249.a = phi ptr [ %3, %._crit_edge ], [ %.pre288, %.lr.ph250.preheader ] ; 2 uses
+  %.073249 = phi ptr [ %i.fm, %._crit_edge ], [ %i.dm, %.lr.ph250.preheader ] ; 2 uses
+  %i.dr = getelementptr inbounds nuw i8, ptr %.073249, i64 4
   %.sroa.013.0.copyload = load i32, ptr %i.dr, align 4, !tbaa !48
-  %i.ds = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ds = getelementptr inbounds nuw i8, ptr %.073249.a, i64 8
   %i.dt = lshr i32 %.sroa.013.0.copyload, 4
   %i.du = zext nneg i32 %i.dt to i64
   %i.dv = load ptr, ptr %i.ds, align 8, !tbaa !185
@@ -342,8 +343,13 @@ pred.store.continue383:                           ; preds = %pred.store.if382, %
   %i.fl = icmp eq i64 %index.next, %n.vec
   br i1 %i.fl, label %.lr.ph.preheader385, label %vector.body, !llvm.loop !816
 
-._crit_edge:                                      ; preds = %bb.x, %.lr.ph250
-  %i.fm = getelementptr inbounds nuw i8, ptr %.073249.a, i64 8 ; 2 uses
+._crit_edge.loopexit:                             ; preds = %bb.x
+  %.pre = load ptr, ptr %0, align 8, !tbaa !181
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph250
+  %3 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.073249.a, %.lr.ph250 ]
+  %i.fm = getelementptr inbounds nuw i8, ptr %.073249, i64 8 ; 2 uses
   %.not81 = icmp eq ptr %i.fm, %i.dq
   br i1 %.not81, label %_ZNKSt13unordered_mapIjN4Luau8Bytecode4BcOpESt4hashIjESt8equal_toIjESaISt4pairIKjS2_EEE5countERS8_.exit, label %.lr.ph250
 
@@ -361,7 +367,7 @@ bb.w:                                             ; preds = %.lr.ph
 bb.x:                                             ; preds = %bb.w, %.lr.ph
   %i.fq = getelementptr inbounds nuw i8, ptr %.072247, i64 8 ; 2 uses
   %.not83 = icmp eq ptr %i.fq, %i.ec
-  br i1 %.not83, label %._crit_edge, label %.lr.ph, !llvm.loop !817
+  br i1 %.not83, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !817
 
 _ZNKSt13unordered_mapIjN4Luau8Bytecode4BcOpESt4hashIjESt8equal_toIjESaISt4pairIKjS2_EEE5countERS8_.exit: ; preds = %bb.l, %bb.i, %._crit_edge, %_ZN4Luau11SmallVectorINS_8Bytecode11BcBlockEdgeELj2EE5clearEv.exit, %bb.k, %.loopexit224
   %i.fr = zext nneg i32 %.071188 to i64           ; 2 uses
@@ -764,6 +770,7 @@ bb.a:
   br i1 %.not121, label %._crit_edge125, label %.lr.ph124.preheader
 
 .lr.ph124.preheader:                              ; preds = %._crit_edge
+  %.pre128 = load ptr, ptr %1, align 8, !tbaa !524
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.sroa.047.0.copyload, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %.lr.ph124
@@ -831,11 +838,11 @@ _ZN4Luau11SmallVectorINS_8Bytecode11BcBlockEdgeELj2EE5clearEv.exit: ; preds = %.
   ret void
 
 .lr.ph124:                                        ; preds = %.lr.ph124.preheader, %._crit_edge120
-  %.0122.a = phi ptr [ %i.ew, %._crit_edge120 ], [ %i.br, %.lr.ph124.preheader ] ; 2 uses
-  %3 = load ptr, ptr %1, align 8, !tbaa !524, !nonnull !182, !align !183
-  %i.db = getelementptr inbounds nuw i8, ptr %.0122.a, i64 4
+  %.0122.a = phi ptr [ %3, %._crit_edge120 ], [ %.pre128, %.lr.ph124.preheader ] ; 2 uses
+  %.0122 = phi ptr [ %i.ew, %._crit_edge120 ], [ %i.br, %.lr.ph124.preheader ] ; 2 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %.0122, i64 4
   %.sroa.020.0.copyload = load i32, ptr %i.db, align 4, !tbaa !48
-  %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.dc = getelementptr inbounds nuw i8, ptr %.0122.a, i64 8
   %i.dd = lshr i32 %.sroa.020.0.copyload, 4
   %i.de = zext nneg i32 %i.dd to i64
   %i.df = load ptr, ptr %i.dc, align 8, !tbaa !185
@@ -963,8 +970,13 @@ pred.store.continue157:                           ; preds = %pred.store.if156, %
   %i.ev = icmp eq i64 %index.next, %n.vec
   br i1 %i.ev, label %.lr.ph119.preheader158, label %vector.body, !llvm.loop !1031
 
-._crit_edge120:                                   ; preds = %bb.c, %.lr.ph124
-  %i.ew = getelementptr inbounds nuw i8, ptr %.0122.a, i64 8 ; 2 uses
+._crit_edge120.loopexit:                          ; preds = %bb.c
+  %.pre = load ptr, ptr %1, align 8, !tbaa !524
+  br label %._crit_edge120
+
+._crit_edge120:                                   ; preds = %._crit_edge120.loopexit, %.lr.ph124
+  %3 = phi ptr [ %.pre, %._crit_edge120.loopexit ], [ %.0122.a, %.lr.ph124 ]
+  %i.ew = getelementptr inbounds nuw i8, ptr %.0122, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ew, %i.bv
   br i1 %.not, label %._crit_edge125.loopexit, label %.lr.ph124
 
@@ -982,7 +994,7 @@ bb.b:                                             ; preds = %.lr.ph119
 bb.c:                                             ; preds = %bb.b, %.lr.ph119
   %i.fa = getelementptr inbounds nuw i8, ptr %.054117, i64 8 ; 2 uses
   %.not55 = icmp eq ptr %i.fa, %i.dm
-  br i1 %.not55, label %._crit_edge120, label %.lr.ph119, !llvm.loop !1032
+  br i1 %.not55, label %._crit_edge120.loopexit, label %.lr.ph119, !llvm.loop !1032
 }
 
 ; Function Attrs: mustprogress uwtable

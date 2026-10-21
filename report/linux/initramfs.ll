@@ -133,9 +133,9 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not55, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.m
+  %2 = phi i64 [ %3, %bb.m ], [ 0, %bb.c ]        ; 3 uses
   %.054 = phi ptr [ %.1, %bb.m ], [ %0, %bb.c ]   ; 7 uses
   %.03153 = phi i64 [ %.132, %bb.m ], [ %1, %bb.c ] ; 6 uses
-  %2 = load i64, ptr @this_header, align 8        ; 3 uses
   %i.e = load i8, ptr %.054, align 1              ; 2 uses
   %i.f = icmp eq i8 %i.e, 48
   %i.g = and i64 %2, 3
@@ -162,6 +162,7 @@ write_buffer.exit:                                ; preds = %bb.e
   %i.m = load i64, ptr @byte_count, align 8       ; 2 uses
   %i.n = sub i64 %.03153, %i.m
   %i.o = getelementptr i8, ptr %.054, i64 %i.n
+  %.pre = load i64, ptr @this_header, align 8
   %.pre.a = load ptr, ptr @message, align 8
   br label %bb.m, !llvm.loop !14
 
@@ -172,7 +173,7 @@ bb.f:                                             ; preds = %.lr.ph
 bb.g:                                             ; preds = %bb.f
   %i.p = getelementptr i8, ptr %.054, i64 1
   %i.q = add i64 %.03153, -1
-  %i.r = add i64 %2, 1
+  %i.r = add i64 %2, 1                            ; 2 uses
   store i64 %i.r, ptr @this_header, align 8
   br label %bb.m, !llvm.loop !14
 
@@ -221,7 +222,7 @@ error.exit49.sink.split:                          ; preds = %error.exit, %bb.l, 
 error.exit49:                                     ; preds = %error.exit49.sink.split, %bb.k, %bb.l, %error.exit
   %i.aa = phi ptr [ %i.x, %bb.k ], [ %i.u, %error.exit ], [ %i.y, %bb.l ], [ %.str.1.sink, %error.exit49.sink.split ]
   %i.ab = load i64, ptr @my_inptr, align 8        ; 3 uses
-  %i.ac = add i64 %i.ab, %2
+  %i.ac = add i64 %i.ab, %2                       ; 2 uses
   store i64 %i.ac, ptr @this_header, align 8
   %i.ad = getelementptr i8, ptr %.054, i64 %i.ab
   %i.ae = sub i64 %.03153, %i.ab
@@ -229,6 +230,7 @@ error.exit49:                                     ; preds = %error.exit49.sink.s
 
 bb.m:                                             ; preds = %error.exit49, %bb.g, %write_buffer.exit
   %i.af = phi ptr [ %i.aa, %error.exit49 ], [ null, %bb.g ], [ %.pre.a, %write_buffer.exit ]
+  %3 = phi i64 [ %i.ac, %error.exit49 ], [ %i.r, %bb.g ], [ %.pre, %write_buffer.exit ]
   %.132 = phi i64 [ %i.ae, %error.exit49 ], [ %i.q, %bb.g ], [ %i.m, %write_buffer.exit ] ; 2 uses
   %.1 = phi ptr [ %i.ad, %error.exit49 ], [ %i.p, %bb.g ], [ %i.o, %write_buffer.exit ]
   %.not36 = icmp eq ptr %i.af, null

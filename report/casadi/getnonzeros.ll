@@ -205,10 +205,11 @@ bb.a:
 
 .lr.ph21:                                         ; preds = %bb.a
   %i.f = load ptr, ptr %2, align 8, !tbaa !11
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %.pre23 = load i64, ptr %i.g, align 8, !tbaa !58
   %.pre.a = load i64, ptr %i.h, align 8, !tbaa !59
   br label %bb.b
 
@@ -217,27 +218,29 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph21, %._crit_edge
   %i.k = phi i64 [ %i.e, %.lr.ph21 ], [ %i.n, %._crit_edge ]
-  %i.l = phi i64 [ %.pre.a, %.lr.ph21 ], [ %i.o, %._crit_edge ] ; 2 uses
-  %.01119.a = phi i64 [ %i.c, %.lr.ph21 ], [ %i.q, %._crit_edge ] ; 3 uses
+  %i.l = phi i64 [ %.pre.a, %.lr.ph21 ], [ %5, %._crit_edge ] ; 3 uses
+  %.01119.a = phi i64 [ %.pre23, %.lr.ph21 ], [ %i.o, %._crit_edge ] ; 2 uses
+  %.01119 = phi i64 [ %i.c, %.lr.ph21 ], [ %i.q, %._crit_edge ] ; 3 uses
   %.01218 = phi ptr [ %i.f, %.lr.ph21 ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
-  %5 = load i64, ptr %i.g, align 8, !tbaa !58     ; 2 uses
-  %.not1314 = icmp eq i64 %5, %i.l
+  %.not1314 = icmp eq i64 %.01119.a, %i.l
   br i1 %.not1314, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %i.m = add nsw i64 %5, %.01119.a
+  %i.m = add nsw i64 %.01119.a, %.01119
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load i64, ptr %i.g, align 8, !tbaa !58
   %.pre23.a = load i64, ptr %i.d, align 8, !tbaa !57
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %i.n = phi i64 [ %i.k, %bb.b ], [ %.pre23.a, %._crit_edge.loopexit ] ; 2 uses
-  %i.o = phi i64 [ %i.l, %bb.b ], [ %i.w, %._crit_edge.loopexit ]
+  %5 = phi i64 [ %i.l, %bb.b ], [ %i.w, %._crit_edge.loopexit ]
+  %i.o = phi i64 [ %i.l, %bb.b ], [ %.pre, %._crit_edge.loopexit ]
   %.1.lcssa = phi ptr [ %.01218, %bb.b ], [ %i.t, %._crit_edge.loopexit ]
   %i.p = load i64, ptr %i.j, align 8, !tbaa !60
-  %i.q = add nsw i64 %i.p, %.01119.a              ; 2 uses
+  %i.q = add nsw i64 %i.p, %.01119                ; 2 uses
   %.not = icmp eq i64 %i.q, %i.n
   br i1 %.not, label %._crit_edge22, label %bb.b, !llvm.loop !144
 
@@ -251,7 +254,7 @@ bb.b:                                             ; preds = %.lr.ph21, %._crit_e
   %i.u = load i64, ptr %i.i, align 8, !tbaa !61
   %i.v = add nsw i64 %i.u, %.016                  ; 2 uses
   %i.w = load i64, ptr %i.h, align 8, !tbaa !59   ; 2 uses
-  %i.x = add nsw i64 %i.w, %.01119.a
+  %i.x = add nsw i64 %i.w, %.01119
   %.not13 = icmp eq i64 %i.v, %i.x
   br i1 %.not13, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !145
 }
@@ -269,10 +272,11 @@ bb.a:
 
 .lr.ph22:                                         ; preds = %bb.a
   %i.f = load ptr, ptr %2, align 8, !tbaa !11
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %.pre24 = load i64, ptr %i.g, align 8, !tbaa !58
   %.pre.a = load i64, ptr %i.h, align 8, !tbaa !59
   br label %bb.b
 
@@ -281,27 +285,29 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph22, %._crit_edge
   %i.k = phi i64 [ %i.e, %.lr.ph22 ], [ %i.n, %._crit_edge ]
-  %i.l = phi i64 [ %.pre.a, %.lr.ph22 ], [ %i.o, %._crit_edge ] ; 2 uses
-  %.01220.a = phi i64 [ %i.c, %.lr.ph22 ], [ %i.q, %._crit_edge ] ; 3 uses
+  %i.l = phi i64 [ %.pre.a, %.lr.ph22 ], [ %5, %._crit_edge ] ; 3 uses
+  %.01220.a = phi i64 [ %.pre24, %.lr.ph22 ], [ %i.o, %._crit_edge ] ; 2 uses
+  %.01220 = phi i64 [ %i.c, %.lr.ph22 ], [ %i.q, %._crit_edge ] ; 3 uses
   %.01319 = phi ptr [ %i.f, %.lr.ph22 ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
-  %5 = load i64, ptr %i.g, align 8, !tbaa !58     ; 2 uses
-  %.not1415 = icmp eq i64 %5, %i.l
+  %.not1415 = icmp eq i64 %.01220.a, %i.l
   br i1 %.not1415, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %i.m = add nsw i64 %5, %.01220.a
+  %i.m = add nsw i64 %.01220.a, %.01220
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load i64, ptr %i.g, align 8, !tbaa !58
   %.pre24.a = load i64, ptr %i.d, align 8, !tbaa !57
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %i.n = phi i64 [ %i.k, %bb.b ], [ %.pre24.a, %._crit_edge.loopexit ] ; 2 uses
-  %i.o = phi i64 [ %i.l, %bb.b ], [ %i.y, %._crit_edge.loopexit ]
+  %5 = phi i64 [ %i.l, %bb.b ], [ %i.y, %._crit_edge.loopexit ]
+  %i.o = phi i64 [ %i.l, %bb.b ], [ %.pre, %._crit_edge.loopexit ]
   %.1.lcssa = phi ptr [ %.01319, %bb.b ], [ %i.v, %._crit_edge.loopexit ]
   %i.p = load i64, ptr %i.j, align 8, !tbaa !60
-  %i.q = add nsw i64 %i.p, %.01220.a              ; 2 uses
+  %i.q = add nsw i64 %i.p, %.01220                ; 2 uses
   %.not = icmp eq i64 %i.q, %i.n
   br i1 %.not, label %._crit_edge23, label %bb.b, !llvm.loop !146
 
@@ -318,7 +324,7 @@ bb.b:                                             ; preds = %.lr.ph22, %._crit_e
   %i.w = load i64, ptr %i.i, align 8, !tbaa !61
   %i.x = add nsw i64 %i.w, %.017                  ; 2 uses
   %i.y = load i64, ptr %i.h, align 8, !tbaa !59   ; 2 uses
-  %i.z = add nsw i64 %i.y, %.01220.a
+  %i.z = add nsw i64 %i.y, %.01220
   %.not14 = icmp eq i64 %i.x, %i.z
   br i1 %.not14, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !147
 }

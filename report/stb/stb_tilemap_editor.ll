@@ -204,20 +204,21 @@ bb.h:                                             ; preds = %bb.g
   %i.aw = icmp sgt i32 %i.av, 0
   br i1 %i.aw, label %.lr.ph45.split, label %.loopexit34
 
-.loopexit.a:                                      ; preds = %.lr.ph41, %.lr.ph45.split
-  %3 = icmp samesign ugt i32 %.043.in, 1
-  br i1 %3, label %.lr.ph45.splitthread-pre-split, label %.loopexit34, !llvm.loop !205
+.loopexit.a:                                      ; preds = %.lr.ph41
+  %.pre49 = load i32, ptr %i.au, align 8, !tbaa !42
+  br label %.lr.ph45.splitthread-pre-split
 
-.lr.ph45.splitthread-pre-split:                   ; preds = %.loopexit.a
-  %.pr = load i32, ptr %i.au, align 8, !tbaa !42
-  br label %.lr.ph45.split
+.lr.ph45.splitthread-pre-split:                   ; preds = %.loopexit.a, %.lr.ph45.split
+  %3 = phi i32 [ %.pre49, %.loopexit.a ], [ %i.ax, %.lr.ph45.split ]
+  %4 = icmp samesign ugt i32 %.043.in, 1
+  br i1 %4, label %.lr.ph45.split, label %.loopexit34, !llvm.loop !205
 
 .lr.ph45.split:                                   ; preds = %.lr.ph45, %.lr.ph45.splitthread-pre-split
-  %i.ax = phi i32 [ %.pr, %.lr.ph45.splitthread-pre-split ], [ %i.av, %.lr.ph45 ] ; 2 uses
+  %i.ax = phi i32 [ %3, %.lr.ph45.splitthread-pre-split ], [ %i.av, %.lr.ph45 ] ; 3 uses
   %.043.in = phi i32 [ %.043, %.lr.ph45.splitthread-pre-split ], [ %i.ap, %.lr.ph45 ] ; 2 uses
   %.043 = add nsw i32 %.043.in, -1                ; 2 uses
   %i.ay = icmp sgt i32 %i.ax, 0
-  br i1 %i.ay, label %.lr.ph41, label %.loopexit.a
+  br i1 %i.ay, label %.lr.ph41, label %.lr.ph45.splitthread-pre-split
 
 .lr.ph41:                                         ; preds = %.lr.ph45.split, %.lr.ph41
   %.030.in39 = phi i32 [ %.030, %.lr.ph41 ], [ %i.ax, %.lr.ph45.split ] ; 2 uses
@@ -252,7 +253,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bj = icmp slt i32 %i.bi, %i.bg
   br i1 %i.bj, label %.preheader, label %.loopexit34, !llvm.loop !208
 
-.loopexit34:                                      ; preds = %._crit_edge, %.loopexit.a, %.lr.ph45, %.preheader.lr.ph, %.preheader35, %bb.h
+.loopexit34:                                      ; preds = %._crit_edge, %.lr.ph45.splitthread-pre-split, %.lr.ph45, %.preheader.lr.ph, %.preheader35, %bb.h
   %i.bk = load i32, ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5292), align 4, !tbaa !80
   %.not.i33 = icmp eq i32 %i.bk, 0
   br i1 %.not.i33, label %stbte__end_undo.exit, label %bb.i

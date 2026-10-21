@@ -205,17 +205,23 @@ bb.a:
   %i.v = load ptr, ptr %i.q, align 8, !tbaa !75   ; 2 uses
   %i.w = load ptr, ptr %i.p, align 8, !tbaa !93   ; 2 uses
   %i.x = icmp eq ptr %i.w, null
-  br i1 %i.x, label %.preheader.us, label %.preheader
+  br i1 %i.x, label %.preheader.us.preheader, label %.preheader
 
-.preheader.us:                                    ; preds = %.preheader.lr.ph.split, %._crit_edge28.split.us.us
-  %.01831.us = phi i64 [ %i.bs, %._crit_edge28.split.us.us ], [ 0, %.preheader.lr.ph.split ] ; 3 uses
+.preheader.us.preheader:                          ; preds = %.preheader.lr.ph.split
+  %.pre41.pre = load double, ptr %3, align 8, !tbaa !54
+  br label %.preheader.us
+
+.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge28.split.us.us
+  %.pre41 = phi double [ %.pre4142, %._crit_edge28.split.us.us ], [ %.pre41.pre, %.preheader.us.preheader ] ; 2 uses
+  %.01831.us = phi i64 [ %i.bs, %._crit_edge28.split.us.us ], [ 0, %.preheader.us.preheader ] ; 3 uses
   %i.y = mul nsw i64 %i.l, %.01831.us
   %invariant.gep29.us = getelementptr [8 x i8], ptr %i.j, i64 %i.y
   br label %_ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEENS_9TransposeIKNS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEELi0EE13InnerIteratorC2ERKS9_l.exit.us.us
 
 _ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEENS_9TransposeIKNS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEELi0EE13InnerIteratorC2ERKS9_l.exit.us.us: ; preds = %._crit_edge.us.us, %.preheader.us
+  %.pre4143 = phi double [ %.pre41, %.preheader.us ], [ %.pre4142, %._crit_edge.us.us ]
+  %4 = phi double [ %.pre41, %.preheader.us ], [ %5, %._crit_edge.us.us ] ; 2 uses
   %.01726.us.us = phi i64 [ 0, %.preheader.us ], [ %i.br, %._crit_edge.us.us ] ; 4 uses
-  %4 = load double, ptr %3, align 8, !tbaa !54
   %gep30.us.us = getelementptr [8 x i8], ptr %invariant.gep29.us, i64 %.01726.us.us
   %i.z = load double, ptr %gep30.us.us, align 8, !tbaa !54
   %i.aa = fmul double %4, %i.z                    ; 3 uses
@@ -258,7 +264,7 @@ _ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEE
   %.sroa.8.025.us.us.unr = phi i64 [ %i.aj, %.lr.ph.us.us ], [ %i.aw, %.prol.loopexit.unr-lcssa ]
   %i.ax = add nsw i64 %i.af, -1
   %i.ay = icmp eq i64 %i.ax, %i.aj
-  br i1 %i.ay, label %._crit_edge.us.us, label %.lr.ph.us.us.new
+  br i1 %i.ay, label %._crit_edge.us.us.loopexit, label %.lr.ph.us.us.new
 
 .lr.ph.us.us.new:                                 ; preds = %.prol.loopexit, %.lr.ph.us.us.new
   %.sroa.8.025.us.us = phi i64 [ %i.bq, %.lr.ph.us.us.new ], [ %.sroa.8.025.us.us.unr, %.prol.loopexit ] ; 4 uses
@@ -285,9 +291,15 @@ _ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEE
   store double %i.bp, ptr %gep.us.us.1, align 8, !tbaa !54
   %i.bq = add nsw i64 %.sroa.8.025.us.us, 2       ; 2 uses
   %exitcond38.not.1 = icmp eq i64 %i.bq, %i.af
-  br i1 %exitcond38.not.1, label %._crit_edge.us.us, label %.lr.ph.us.us.new, !llvm.loop !418
+  br i1 %exitcond38.not.1, label %._crit_edge.us.us.loopexit, label %.lr.ph.us.us.new, !llvm.loop !418
 
-._crit_edge.us.us:                                ; preds = %.prol.loopexit, %.lr.ph.us.us.new, %_ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEENS_9TransposeIKNS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEELi0EE13InnerIteratorC2ERKS9_l.exit.us.us
+._crit_edge.us.us.loopexit:                       ; preds = %.lr.ph.us.us.new, %.prol.loopexit
+  %.pre = load double, ptr %3, align 8, !tbaa !54 ; 2 uses
+  br label %._crit_edge.us.us
+
+._crit_edge.us.us:                                ; preds = %._crit_edge.us.us.loopexit, %_ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEENS_9TransposeIKNS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEELi0EE13InnerIteratorC2ERKS9_l.exit.us.us
+  %.pre4142 = phi double [ %.pre, %._crit_edge.us.us.loopexit ], [ %.pre4143, %_ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEENS_9TransposeIKNS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEELi0EE13InnerIteratorC2ERKS9_l.exit.us.us ] ; 2 uses
+  %5 = phi double [ %.pre, %._crit_edge.us.us.loopexit ], [ %4, %_ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEENS_9TransposeIKNS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEELi0EE13InnerIteratorC2ERKS9_l.exit.us.us ]
   %i.br = add nuw nsw i64 %.01726.us.us, 1        ; 2 uses
   %exitcond39.not = icmp eq i64 %i.br, %i.h
   br i1 %exitcond39.not, label %._crit_edge28.split.us.us, label %_ZN5Eigen8internal33sparse_diagonal_product_evaluatorINS_12SparseMatrixIdLi0EiEENS_9TransposeIKNS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEELi0EE13InnerIteratorC2ERKS9_l.exit.us.us, !llvm.loop !419

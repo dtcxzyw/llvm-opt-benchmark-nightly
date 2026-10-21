@@ -202,20 +202,20 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond, label %.critedge97, label %.critedge99
 
 .critedge99:                                      ; preds = %bb.d, %bb.c
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 7 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 6 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.l = load i32, ptr %i.k, align 8              ; 2 uses
   %.not150 = icmp eq i32 %i.l, 0
+  %.pre187.pre = load i32, ptr %i.j, align 8      ; 2 uses
   br i1 %.not150, label %.critedge2, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.critedge99
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.pre181 = load i32, ptr %i.j, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.h
   %i.n = phi i32 [ %i.l, %.lr.ph ], [ %i.y, %bb.h ] ; 2 uses
-  %i.o = phi i32 [ %.pre181, %.lr.ph ], [ %i.z, %bb.h ] ; 2 uses
+  %i.o = phi i32 [ %.pre187.pre, %.lr.ph ], [ %i.z, %bb.h ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 3 uses
   %.085105 = phi i32 [ 0, %.lr.ph ], [ %.186, %bb.h ] ; 4 uses
   %i.p = icmp ult i32 %.085105, %i.o
@@ -240,7 +240,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.g
   %i.y = phi i32 [ %.pre182, %bb.g ], [ %i.n, %bb.f ] ; 3 uses
-  %i.z = phi i32 [ %.pre, %bb.g ], [ %i.o, %bb.f ]
+  %i.z = phi i32 [ %.pre, %bb.g ], [ %i.o, %bb.f ] ; 2 uses
   %.186 = phi i32 [ %i.x, %bb.g ], [ %.085105, %bb.f ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.aa = zext i32 %i.y to i64
@@ -248,6 +248,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br i1 %i.ab, label %bb.e, label %.critedge, !llvm.loop !51
 
 .critedge:                                        ; preds = %bb.e, %bb.h
+  %.pre187 = phi i32 [ %i.z, %bb.h ], [ %i.o, %bb.e ] ; 2 uses
   %i.ac = phi i32 [ %i.y, %bb.h ], [ %i.n, %bb.e ] ; 2 uses
   %.085.lcssa = phi i32 [ %.186, %bb.h ], [ %.085105, %bb.e ] ; 2 uses
   %.not151 = icmp eq i32 %i.ac, 0
@@ -259,9 +260,9 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 bb.i:                                             ; preds = %.lr.ph115, %.critedge4
   %i.ae = phi i32 [ %i.ac, %.lr.ph115 ], [ %i.ax, %.critedge4 ] ; 2 uses
+  %2 = phi i32 [ %.pre187, %.lr.ph115 ], [ %3, %.critedge4 ] ; 3 uses
   %indvars.iv165 = phi i64 [ 0, %.lr.ph115 ], [ %indvars.iv.next166, %.critedge4 ] ; 4 uses
   %.2114 = phi i32 [ %.085.lcssa, %.lr.ph115 ], [ %.3.lcssa, %.critedge4 ] ; 4 uses
-  %2 = load i32, ptr %i.j, align 8
   %i.af = icmp ult i32 %.2114, %2
   br i1 %i.af, label %.preheader103, label %.critedge2
 
@@ -278,7 +279,7 @@ bb.i:                                             ; preds = %.lr.ph115, %.crited
   %i.am = phi i16 [ %i.au, %bb.j ], [ %i.aj, %.preheader103 ]
   %i.an = phi ptr [ %i.at, %bb.j ], [ %i.ai, %.preheader103 ]
   %.3108 = phi i32 [ %i.ar, %bb.j ], [ %.2114, %.preheader103 ] ; 3 uses
-  %i.ao = load i32, ptr %i.j, align 8
+  %i.ao = load i32, ptr %i.j, align 8             ; 2 uses
   %i.ap = icmp ult i32 %.3108, %i.ao
   br i1 %i.ap, label %bb.j, label %.critedge4.loopexit
 
@@ -291,15 +292,21 @@ bb.j:                                             ; preds = %.lr.ph109
   %i.au = load i16, ptr %i.at, align 2            ; 2 uses
   %i.av = load i16, ptr %i.ag, align 2
   %i.aw = icmp ult i16 %i.au, %i.av
-  br i1 %i.aw, label %.lr.ph109, label %.critedge4.loopexit, !llvm.loop !52
+  br i1 %i.aw, label %.lr.ph109, label %..critedge4.loopexit_crit_edge, !llvm.loop !52
 
-.critedge4.loopexit:                              ; preds = %.lr.ph109, %bb.j
-  %.3.lcssa.ph = phi i32 [ %i.ar, %bb.j ], [ %.3108, %.lr.ph109 ]
+..critedge4.loopexit_crit_edge:                   ; preds = %bb.j
+  %.pre183.pre = load i32, ptr %i.j, align 8
+  br label %.critedge4.loopexit, !llvm.loop !52
+
+.critedge4.loopexit:                              ; preds = %.lr.ph109, %..critedge4.loopexit_crit_edge
+  %.pre183 = phi i32 [ %.pre183.pre, %..critedge4.loopexit_crit_edge ], [ %i.ao, %.lr.ph109 ]
+  %.3.lcssa.ph = phi i32 [ %i.ar, %..critedge4.loopexit_crit_edge ], [ %.3108, %.lr.ph109 ]
   %.pre183.a = load i32, ptr %i.k, align 8
   br label %.critedge4
 
 .critedge4:                                       ; preds = %.critedge4.loopexit, %.preheader103
   %i.ax = phi i32 [ %i.ae, %.preheader103 ], [ %.pre183.a, %.critedge4.loopexit ] ; 3 uses
+  %3 = phi i32 [ %2, %.preheader103 ], [ %.pre183, %.critedge4.loopexit ] ; 2 uses
   %.3.lcssa = phi i32 [ %.2114, %.preheader103 ], [ %.3.lcssa.ph, %.critedge4.loopexit ] ; 2 uses
   %indvars.iv.next166 = add nuw nsw i64 %indvars.iv165, 1 ; 2 uses
   %i.ay = zext i32 %i.ax to i64
@@ -308,9 +315,9 @@ bb.j:                                             ; preds = %.lr.ph109
 
 .critedge2:                                       ; preds = %bb.i, %.critedge4, %.critedge99, %.critedge
   %i.ba = phi i32 [ 0, %.critedge ], [ 0, %.critedge99 ], [ %i.ae, %bb.i ], [ %i.ax, %.critedge4 ] ; 4 uses
-  %.2.lcssa.a = phi i32 [ %.085.lcssa, %.critedge ], [ 0, %.critedge99 ], [ %.2114, %bb.i ], [ %.3.lcssa, %.critedge4 ] ; 2 uses
-  %3 = load i32, ptr %i.j, align 8                ; 2 uses
-  %i.bb = icmp ult i32 %.2.lcssa.a, %3
+  %.2.lcssa.a = phi i32 [ %.pre187, %.critedge ], [ %.pre187.pre, %.critedge99 ], [ %2, %bb.i ], [ %3, %.critedge4 ] ; 2 uses
+  %.2.lcssa = phi i32 [ %.085.lcssa, %.critedge ], [ 0, %.critedge99 ], [ %.2114, %bb.i ], [ %.3.lcssa, %.critedge4 ] ; 2 uses
+  %i.bb = icmp ult i32 %.2.lcssa, %.2.lcssa.a
   br i1 %i.bb, label %.preheader101.lr.ph, label %.loopexit
 
 .preheader101.lr.ph:                              ; preds = %.critedge2
@@ -323,9 +330,9 @@ bb.j:                                             ; preds = %.lr.ph109
 
 .preheader101:                                    ; preds = %.preheader101.lr.ph, %.critedge6
   %i.bd = phi i32 [ %i.bs, %.critedge6 ], [ %i.ba, %.preheader101.lr.ph ] ; 2 uses
-  %i.be = phi i32 [ %i.bt, %.critedge6 ], [ %3, %.preheader101.lr.ph ]
+  %i.be = phi i32 [ %i.bt, %.critedge6 ], [ %.2.lcssa.a, %.preheader101.lr.ph ]
   %i.bf = phi i32 [ %i.bu, %.critedge6 ], [ %i.ba, %.preheader101.lr.ph ] ; 2 uses
-  %.4125 = phi i32 [ %.5.lcssa, %.critedge6 ], [ %.2.lcssa.a, %.preheader101.lr.ph ] ; 4 uses
+  %.4125 = phi i32 [ %.5.lcssa, %.critedge6 ], [ %.2.lcssa, %.preheader101.lr.ph ] ; 4 uses
   %.not153 = icmp eq i32 %i.bf, 0
   br i1 %.not153, label %.critedge6, label %.lr.ph121.preheader
 

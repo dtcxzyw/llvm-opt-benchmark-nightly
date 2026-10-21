@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_ZN4mlir21FlatLinea
   call void @_ZN4mlir10presburger6MatrixIN4llvm12DynamicAPIntEEC1Ejjjj(ptr noundef nonnull align 8 dereferenceable(288) %7, i32 noundef %i.q, i32 noundef %i.u, i32 noundef 0, i32 noundef 0) #15
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !27
-  %i.x = load ptr, ptr %5, align 8, !tbaa !19
+  %i.x = load ptr, ptr %5, align 8, !tbaa !19     ; 2 uses
   %i.y = ptrtoint ptr %i.w to i64
   %i.z = ptrtoint ptr %i.x to i64
   %i.aa = sub i64 %i.y, %i.z
@@ -607,8 +607,8 @@ _ZN4mlir10presburger12DivisionReprD2Ev.exit:      ; preds = %_ZN4llvm23SmallVect
   br label %bb.ag
 
 bb.ac:                                            ; preds = %.lr.ph58, %._crit_edge
+  %12 = phi ptr [ %i.x, %.lr.ph58 ], [ %13, %._crit_edge ] ; 2 uses
   %indvars.iv63 = phi i64 [ 0, %.lr.ph58 ], [ %indvars.iv.next64, %._crit_edge ] ; 4 uses
-  %12 = load ptr, ptr %5, align 8, !tbaa !19
   %i.fg = getelementptr inbounds nuw [80 x i8], ptr %12, i64 %indvars.iv63
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 8
   %i.fi = load i32, ptr %i.fh, align 8, !tbaa !21 ; 2 uses
@@ -620,7 +620,12 @@ bb.ac:                                            ; preds = %.lr.ph58, %._crit_e
   %i.fj = trunc nuw i64 %indvars.iv63 to i32
   br label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZN4llvm12DynamicAPInt9initSmallEl.exit, %bb.ac
+._crit_edge.loopexit:                             ; preds = %_ZN4llvm12DynamicAPInt9initSmallEl.exit
+  %.pre = load ptr, ptr %5, align 8, !tbaa !19
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.ac
+  %13 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %12, %bb.ac ]
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
   %exitcond67.not = icmp eq i64 %indvars.iv.next64, %wide.trip.count66
   br i1 %exitcond67.not, label %._crit_edge59, label %bb.ac, !llvm.loop !314
@@ -664,7 +669,7 @@ _ZN4llvm12DynamicAPInt9initSmallEl.exit:          ; preds = %bb.af, %bb.ae, %bb.
   store i32 0, ptr %i.fy, align 8, !tbaa !50
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !315
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !315
 
 bb.ag:                                            ; preds = %_ZN4mlir21FlatLinearConstraintsC2Ejjj.exit, %_ZN4mlir10presburger12DivisionReprD2Ev.exit
   %.sroa.011.0 = phi i8 [ 1, %_ZN4mlir10presburger12DivisionReprD2Ev.exit ], [ 0, %_ZN4mlir21FlatLinearConstraintsC2Ejjj.exit ]

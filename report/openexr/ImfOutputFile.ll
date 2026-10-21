@@ -204,7 +204,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fs, i64 44
   %i.gf = load i32, ptr %i.ge, align 4, !tbaa !118 ; 2 uses
   %i.gg = getelementptr i8, ptr %i.fs, i64 8
-  %.val66 = load ptr, ptr %i.gg, align 8, !tbaa !70
+  %.val66 = load ptr, ptr %i.gg, align 8, !tbaa !70 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store ptr %.val66, ptr %i.a, align 8, !tbaa !107
   %.not5.i = icmp sgt i32 %i.gd, %i.gf
@@ -220,15 +220,15 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.av:                                            ; preds = %._crit_edge.i, %.lr.ph8.i
-  %.val2119.i = phi ptr [ %.val212.pre.i, %.lr.ph8.i ], [ %.val2120.i.a, %._crit_edge.i ] ; 2 uses
-  %.val15.i = phi ptr [ %.val1.pre.i, %.lr.ph8.i ], [ %.val16.i, %._crit_edge.i ] ; 2 uses
-  %.val212.i = phi ptr [ %.val212.pre.i, %.lr.ph8.i ], [ %.val21213.i, %._crit_edge.i ] ; 2 uses
-  %.val1.i = phi ptr [ %.val1.pre.i, %.lr.ph8.i ], [ %.val111.i, %._crit_edge.i ] ; 3 uses
+  %.val2120.i = phi ptr [ %.val212.pre.i, %.lr.ph8.i ], [ %.val2121.i, %._crit_edge.i ] ; 2 uses
+  %.val2119.i = phi ptr [ %.val1.pre.i, %.lr.ph8.i ], [ %.val2120.i.a, %._crit_edge.i ] ; 2 uses
+  %.val15.i = phi ptr [ %.val212.pre.i, %.lr.ph8.i ], [ %.val16.i, %._crit_edge.i ] ; 2 uses
+  %.val212.i = phi ptr [ %.val1.pre.i, %.lr.ph8.i ], [ %.val21213.i, %._crit_edge.i ] ; 3 uses
+  %.val1.i = phi ptr [ %.val66, %.lr.ph8.i ], [ %.val111.i, %._crit_edge.i ] ; 2 uses
   %.06.i = phi i32 [ %i.gd, %.lr.ph8.i ], [ %i.gn, %._crit_edge.i ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !107
-  store ptr %1, ptr %i.b, align 8, !tbaa !107
-  %.not10.i = icmp eq ptr %.val212.i, %.val1.i
+  store ptr %.val1.i, ptr %i.b, align 8, !tbaa !107
+  %.not10.i = icmp eq ptr %.val15.i, %.val212.i
   br i1 %.not10.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.av
@@ -236,20 +236,25 @@ bb.av:                                            ; preds = %._crit_edge.i, %.lr
   %i.gm = xor i32 %.06.i, -1
   br label %bb.aw
 
-._crit_edge.i:                                    ; preds = %bb.bq, %bb.av
-  %.val2120.i.a = phi ptr [ %.val2119.i, %bb.av ], [ %.val21.i, %bb.bq ]
-  %.val16.i = phi ptr [ %.val15.i, %bb.av ], [ %.val.i, %bb.bq ]
-  %.val21213.i = phi ptr [ %.val212.i, %bb.av ], [ %.val21.i, %bb.bq ]
-  %.val111.i = phi ptr [ %.val1.i, %bb.av ], [ %.val.i, %bb.bq ]
+._crit_edge.loopexit.i:                           ; preds = %bb.bq
+  %.pre.i = load ptr, ptr %i.a, align 8, !tbaa !107
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.av
+  %.val2121.i = phi ptr [ %.val21.i, %._crit_edge.loopexit.i ], [ %.val2120.i, %bb.av ]
+  %.val2120.i.a = phi ptr [ %.val.i, %._crit_edge.loopexit.i ], [ %.val2119.i, %bb.av ]
+  %.val16.i = phi ptr [ %.val21.i, %._crit_edge.loopexit.i ], [ %.val15.i, %bb.av ]
+  %.val21213.i = phi ptr [ %.val.i, %._crit_edge.loopexit.i ], [ %.val212.i, %bb.av ]
+  %.val111.i = phi ptr [ %.pre.i, %._crit_edge.loopexit.i ], [ %.val1.i, %bb.av ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   %i.gn = add i32 %.06.i, 1
   %exitcond.not.i = icmp eq i32 %.06.i, %i.gf
   br i1 %exitcond.not.i, label %_ZN7Imf_3_412_GLOBAL__N_112convertToXdrEPNS_10OutputFile4DataERNS_5ArrayIcEEiii.exit.loopexit, label %bb.av, !llvm.loop !214
 
 bb.aw:                                            ; preds = %bb.bq, %.lr.ph.i
-  %.val2121.i.a = phi ptr [ %.val2119.i, %.lr.ph.i ], [ %.val21.i, %bb.bq ]
-  %.val17.i = phi ptr [ %.val15.i, %.lr.ph.i ], [ %.val.i, %bb.bq ]
-  %.val4.i = phi ptr [ %.val1.i, %.lr.ph.i ], [ %.val.i, %bb.bq ]
+  %.val2121.i.a = phi ptr [ %.val2120.i, %.lr.ph.i ], [ %.val21.i, %bb.bq ]
+  %.val17.i = phi ptr [ %.val2119.i, %.lr.ph.i ], [ %.val.i, %bb.bq ]
+  %.val4.i = phi ptr [ %.val212.i, %.lr.ph.i ], [ %.val.i, %bb.bq ]
   %i.go = phi i64 [ 0, %.lr.ph.i ], [ %i.ir, %bb.bq ]
   %.0183.i = phi i32 [ 0, %.lr.ph.i ], [ %i.iq, %bb.bq ]
   %i.gp = getelementptr inbounds nuw [48 x i8], ptr %.val4.i, i64 %i.go ; 3 uses
@@ -391,7 +396,7 @@ bb.bq:                                            ; preds = %.noexc, %_ZN9Imath_
   %i.iu = sub i64 %i.is, %i.it
   %i.iv = sdiv exact i64 %i.iu, 48
   %i.iw = icmp ugt i64 %i.iv, %i.ir
-  br i1 %i.iw, label %bb.aw, label %._crit_edge.i, !llvm.loop !215
+  br i1 %i.iw, label %bb.aw, label %._crit_edge.loopexit.i, !llvm.loop !215
 
 _ZN7Imf_3_412_GLOBAL__N_112convertToXdrEPNS_10OutputFile4DataERNS_5ArrayIcEEiii.exit.loopexit: ; preds = %._crit_edge.i
   %.pre85.pre.pre = load ptr, ptr %i.ex, align 8, !tbaa !115

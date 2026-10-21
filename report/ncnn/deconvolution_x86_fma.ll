@@ -162,7 +162,7 @@ bb.a:
   %9 = alloca %"class.ncnn::ParamDict", align 8   ; 9 uses
   %10 = alloca %"class.ncnn::ParamDict", align 8  ; 18 uses
   %11 = alloca %"class.ncnn::Mat", align 16       ; 17 uses
-  %12 = alloca %"class.ncnn::Mat", align 8        ; 14 uses
+  %12 = alloca %"class.ncnn::Mat", align 8        ; 15 uses
   %13 = alloca [1 x %"class.ncnn::Mat"], align 16 ; 20 uses
   %14 = alloca %"class.ncnn::ModelBinFromMatArray", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 352
@@ -513,6 +513,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.do = zext nneg i32 %i.dm to i64
   %i.dp = zext nneg i32 %i.dh to i64
   %wide.trip.count247 = zext nneg i32 %i.bu to i64
+  %.pre249 = load ptr, ptr %12, align 8
   %wide.trip.count239 = zext nneg i32 %i.bo to i64
   %xtraiter958 = and i64 %i.dn, 3                 ; 3 uses
   %i.dq = add nsw i32 %.053, -1
@@ -597,9 +598,9 @@ bb.ba:                                            ; preds = %bb.ar
   br i1 %.not.i82, label %_ZN4ncnn3MatD2Ev.exit65, label %bb.bv
 
 .preheader171.lr.ph:                              ; preds = %.preheader171.lr.ph.preheader, %._crit_edge205
+  %15 = phi ptr [ %.pre249, %.preheader171.lr.ph.preheader ], [ %16, %._crit_edge205 ] ; 2 uses
   %indvars.iv244 = phi i64 [ 0, %.preheader171.lr.ph.preheader ], [ %indvars.iv.next245, %._crit_edge205 ] ; 3 uses
   %i.eq = load i32, ptr %i.dj, align 4
-  %15 = load ptr, ptr %12, align 8
   %i.er = load i64, ptr %i.dk, align 8
   %i.es = load i64, ptr %i.dl, align 8            ; 2 uses
   %factor.op.mul = mul i64 %i.er, %i.es           ; 5 uses
@@ -695,9 +696,14 @@ bb.ba:                                            ; preds = %bb.ar
   %indvars.iv.next242 = add nuw nsw i64 %indvars.iv241, %i.dn ; 2 uses
   %i.fm = add nuw nsw i64 %indvars.iv.next242, %i.do
   %i.fn = icmp samesign ult i64 %i.fm, %i.dp
-  br i1 %i.fn, label %.preheader171.us, label %._crit_edge205, !llvm.loop !98
+  br i1 %i.fn, label %.preheader171.us, label %._crit_edge205.loopexit, !llvm.loop !98
 
-._crit_edge205:                                   ; preds = %._crit_edge.us, %.preheader171.lr.ph
+._crit_edge205.loopexit:                          ; preds = %._crit_edge.us
+  %.pre = load ptr, ptr %12, align 8
+  br label %._crit_edge205
+
+._crit_edge205:                                   ; preds = %.preheader171.lr.ph, %._crit_edge205.loopexit
+  %16 = phi ptr [ %.pre, %._crit_edge205.loopexit ], [ %15, %.preheader171.lr.ph ]
   %indvars.iv.next245 = add nuw nsw i64 %indvars.iv244, 1 ; 2 uses
   %exitcond248.not = icmp eq i64 %indvars.iv.next245, %wide.trip.count247
   br i1 %exitcond248.not, label %._crit_edge.split, label %.preheader171.lr.ph, !llvm.loop !99

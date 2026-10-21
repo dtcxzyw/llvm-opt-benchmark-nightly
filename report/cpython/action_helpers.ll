@@ -205,14 +205,15 @@ _get_flattened_seq_size.exit.thread:              ; preds = %bb.b
   br i1 %i.al, label %.lr.ph37, label %.loopexit
 
 .lr.ph37:                                         ; preds = %.thread32
-  %i.am = getelementptr i8, ptr %1, i64 8
+  %i.am = getelementptr i8, ptr %1, i64 8         ; 2 uses
   %i.an = getelementptr i8, ptr %i.aj, i64 8      ; 3 uses
+  %.pre40 = load ptr, ptr %i.am, align 8, !tbaa !29
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph37, %._crit_edge
+  %2 = phi ptr [ %.pre40, %.lr.ph37 ], [ %3, %._crit_edge ] ; 3 uses
   %.02136 = phi i64 [ 0, %.lr.ph37 ], [ %i.bc, %._crit_edge ] ; 2 uses
   %.02235 = phi i32 [ 0, %.lr.ph37 ], [ %.1.lcssa, %._crit_edge ] ; 4 uses
-  %2 = load ptr, ptr %i.am, align 8, !tbaa !29
   %i.ao = getelementptr [8 x i8], ptr %2, i64 %.02136
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !30 ; 3 uses
   %i.aq = icmp eq ptr %i.ap, null
@@ -235,7 +236,7 @@ bb.j:                                             ; preds = %bb.i
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.k
   %lcmp.mod58.not = icmp eq i64 %xtraiter57, 0
-  br i1 %lcmp.mod58.not, label %._crit_edge, label %.epil.preheader56
+  br i1 %lcmp.mod58.not, label %._crit_edge.loopexit, label %.epil.preheader56
 
 .epil.preheader56:                                ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %.034.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.bs, %._crit_edge.loopexit.unr-lcssa ]
@@ -250,10 +251,16 @@ bb.j:                                             ; preds = %bb.i
   %i.ba = sext i32 %.133.epil.init to i64
   %i.bb = getelementptr [8 x i8], ptr %i.ay, i64 %i.ba
   store ptr %i.ax, ptr %i.bb, align 8, !tbaa !30
+  br label %._crit_edge.loopexit
+
+._crit_edge.loopexit:                             ; preds = %._crit_edge.loopexit.unr-lcssa, %.epil.preheader56
+  %.lcssa = phi i32 [ %i.bp, %._crit_edge.loopexit.unr-lcssa ], [ %i.az, %.epil.preheader56 ]
+  %.pre = load ptr, ptr %i.am, align 8, !tbaa !29
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.epil.preheader56, %._crit_edge.loopexit.unr-lcssa, %bb.i, %bb.j
-  %.1.lcssa = phi i32 [ %.02235, %bb.j ], [ %.02235, %bb.i ], [ %i.bp, %._crit_edge.loopexit.unr-lcssa ], [ %i.az, %.epil.preheader56 ]
+._crit_edge:                                      ; preds = %bb.i, %._crit_edge.loopexit, %bb.j
+  %3 = phi ptr [ %2, %bb.j ], [ %.pre, %._crit_edge.loopexit ], [ %2, %bb.i ]
+  %.1.lcssa = phi i32 [ %.02235, %bb.j ], [ %.lcssa, %._crit_edge.loopexit ], [ %.02235, %bb.i ]
   %i.bc = add nuw nsw i64 %.02136, 1              ; 2 uses
   %exitcond39.not = icmp eq i64 %i.bc, %i.ak
   br i1 %exitcond39.not, label %.loopexit, label %bb.i, !llvm.loop !112

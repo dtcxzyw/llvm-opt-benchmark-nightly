@@ -205,7 +205,7 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit37.i: ; preds = %bb.bd
   %i.qc = trunc i64 %indvars.iv.i218 to i32
   %i.qd = add i32 %i.h, %i.qc
   %i.qe = sext i32 %i.qd to i64
-  %i.qf = mul nsw i64 %i.qe, %i.qb                ; 2 uses
+  %i.qf = mul nsw i64 %i.qb, %i.qe                ; 2 uses
   %i.qg = getelementptr inbounds i8, ptr %i.pz, i64 %i.qf ; 2 uses
   %i.qh = add nsw i64 %i.qb, -1
   %i.qi = sdiv i64 %i.qh, 8                       ; 3 uses
@@ -379,7 +379,7 @@ bb.bg:                                            ; preds = %_ZN5arrow6ResultINS
   %i.sw = select i1 %i.ss, i1 %i.sv, i1 false, !prof !37
   %i.sx = getelementptr inbounds nuw i8, ptr %i.sp, i64 16
   %i.sy = load ptr, ptr %i.sx, align 8            ; 12 uses
-  %i.sz = select i1 %i.sw, ptr %i.sy, ptr null, !prof !37 ; 3 uses
+  %i.sz = select i1 %i.sw, ptr %i.sy, ptr null, !prof !37 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #20
   br i1 %i.j, label %bb.bi, label %bb.bh
 
@@ -782,6 +782,7 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit34.i: ; preds = %bb.bz
   br label %common.resume
 
 bb.ca:                                            ; preds = %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit.i", %.lr.ph.i259
+  %19 = phi ptr [ %i.sy, %.lr.ph.i259 ], [ %20, %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit.i" ] ; 2 uses
   %indvars.iv.i261 = phi i64 [ 0, %.lr.ph.i259 ], [ %indvars.iv.next.i267, %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit.i" ] ; 3 uses
   %i.zo = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv.i261
   %i.zp = load i16, ptr %i.zo, align 2, !tbaa !137
@@ -800,7 +801,7 @@ bb.ca:                                            ; preds = %"_ZZN5arrow7compute
   %i.aac = trunc nuw nsw i64 %indvars.iv.i261 to i32
   %i.aad = add nsw i32 %i.h, %i.aac
   %i.aae = sext i32 %i.aad to i64
-  %i.aaf = getelementptr inbounds [4 x i8], ptr %i.sy, i64 %i.aae
+  %i.aaf = getelementptr inbounds [4 x i8], ptr %19, i64 %i.aae
   %i.aag = load i32, ptr %i.aaf, align 4, !tbaa !22
   %i.aah = sext i32 %i.aag to i64                 ; 2 uses
   %i.aai = getelementptr inbounds i8, ptr %i.aaa, i64 %i.aah ; 2 uses
@@ -869,6 +870,7 @@ middle.block404:                                  ; preds = %vector.body400
   br i1 %.not.i.i266, label %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit.i", label %.lr.ph.split.i.i262, !llvm.loop !322
 
 "_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_7clEiPKhi.exit.i": ; preds = %.lr.ph.split.i.i262, %middle.block404, %bb.ca
+  %20 = phi ptr [ %19, %bb.ca ], [ %i.sz, %middle.block404 ], [ %i.sz, %.lr.ph.split.i.i262 ]
   %indvars.iv.next.i267 = add nuw nsw i64 %indvars.iv.i261, 1 ; 2 uses
   %exitcond.not.i268 = icmp eq i64 %indvars.iv.next.i267, %wide.trip.count.i260
   br i1 %exitcond.not.i268, label %"_ZN5arrow7compute16ExecBatchBuilder5VisitIZNS1_14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEE3$_7EEvS7_iSB_T_.exit", label %bb.ca, !llvm.loop !323

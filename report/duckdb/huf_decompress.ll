@@ -205,14 +205,14 @@ bb.h:                                             ; preds = %.lr.ph78.i
   %i.fi = shl i32 %i.ey, 16
   %i.fj = add i32 %i.fi, 16777216                 ; 9 uses
   %i.fk = zext nneg i32 %spec.store.select.i to i64 ; 2 uses
-  %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %i.fk ; 2 uses
+  %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %i.fk ; 3 uses
   %.not61.i = icmp sgt i32 %i.fe, %.091
   %i.fm = add i32 %i.ey, %i.q
   %i.fn = sext i32 %i.eu to i64                   ; 12 uses
   br i1 %.not61.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  switch i32 %i.fd, label %.preheader.i.us.i [
+  switch i32 %i.fd, label %.preheader.i.us.preheader.i [
     i32 2, label %.loopexit.i.us.us.i.preheader
     i32 4, label %.loopexit.i.us.us74.i.preheader
   ]
@@ -360,6 +360,10 @@ middle.block268:                                  ; preds = %vector.body261
   %i.id = icmp eq i32 %i.ew, %.neg
   br i1 %i.id, label %.loopexit.i, label %.loopexit.i.us.us74.i
 
+.preheader.i.us.preheader.i:                      ; preds = %.lr.ph.split.us.i
+  %.pre99.i = load i32, ptr %i.fl, align 4, !tbaa !14
+  br label %.preheader.i.us.i
+
 .loopexit.i.us.us.i:                              ; preds = %.loopexit.i.us.us.i.prol.loopexit, %.loopexit.i.us.us.i
   %indvars.iv90.i = phi i64 [ %indvars.iv.next91.i.1, %.loopexit.i.us.us.i ], [ %indvars.iv90.i.unr, %.loopexit.i.us.us.i.prol.loopexit ] ; 3 uses
   %.05267.us.us.i = phi i32 [ %i.iw, %.loopexit.i.us.us.i ], [ %.05267.us.us.i.unr, %.loopexit.i.us.us.i.prol.loopexit ] ; 3 uses
@@ -422,12 +426,12 @@ middle.block268:                                  ; preds = %vector.body261
   %.not57.us.us75.i.1 = icmp eq i32 %i.ew, %i.jt
   br i1 %.not57.us.us75.i.1, label %.loopexit.i, label %.loopexit.i.us.us74.i, !llvm.loop !90
 
-.preheader.i.us.i:                                ; preds = %.lr.ph.split.us.i, %.loopexit.i.us.i
-  %indvars.iv93.i = phi i64 [ %indvars.iv.next94.i, %.loopexit.i.us.i ], [ %i.fn, %.lr.ph.split.us.i ] ; 2 uses
-  %.05267.us.i = phi i32 [ %i.la, %.loopexit.i.us.i ], [ %i.fb, %.lr.ph.split.us.i ] ; 2 uses
+.preheader.i.us.i:                                ; preds = %.loopexit.i.us.i, %.preheader.i.us.preheader.i
+  %6 = phi i32 [ %.pre99.i, %.preheader.i.us.preheader.i ], [ %7, %.loopexit.i.us.i ] ; 4 uses
+  %indvars.iv93.i = phi i64 [ %i.fn, %.preheader.i.us.preheader.i ], [ %indvars.iv.next94.i, %.loopexit.i.us.i ] ; 2 uses
+  %.05267.us.i = phi i32 [ %i.fb, %.preheader.i.us.preheader.i ], [ %i.la, %.loopexit.i.us.i ] ; 2 uses
   %i.ju = sext i32 %.05267.us.i to i64
   %i.jv = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.ju ; 9 uses
-  %6 = load i32, ptr %i.fl, align 4, !tbaa !14    ; 3 uses
   %i.jw = icmp sgt i32 %6, 0
   br i1 %i.jw, label %.lr.ph.preheader.i.us.i, label %.loopexit.i.us.i
 
@@ -485,7 +489,7 @@ middle.block268:                                  ; preds = %vector.body261
 
 .loopexit.i.us.i.loopexit.unr-lcssa:              ; preds = %.lr.ph.i.us.i
   %lcmp.mod382.not = icmp eq i64 %xtraiter380, 0
-  br i1 %lcmp.mod382.not, label %.loopexit.i.us.i, label %.lr.ph.i.us.i.epil.preheader
+  br i1 %lcmp.mod382.not, label %.loopexit.i.us.loopexit.i, label %.lr.ph.i.us.i.epil.preheader
 
 .lr.ph.i.us.i.epil.preheader:                     ; preds = %.loopexit.i.us.i.loopexit.unr-lcssa, %.lr.ph.preheader.i.us.i
   %indvars.iv.i.us.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i.us.i ], [ %indvars.iv.next.i.us.i.7, %.loopexit.i.us.i.loopexit.unr-lcssa ]
@@ -501,9 +505,14 @@ middle.block268:                                  ; preds = %vector.body261
   %indvars.iv.next.i.us.i.epil = add nuw nsw i64 %indvars.iv.i.us.i.epil, 8
   %epil.iter381.next = add i64 %epil.iter381, 1   ; 2 uses
   %epil.iter381.cmp.not = icmp eq i64 %epil.iter381.next, %xtraiter380
-  br i1 %epil.iter381.cmp.not, label %.loopexit.i.us.i, label %.lr.ph.i.us.i.epil, !llvm.loop !92
+  br i1 %epil.iter381.cmp.not, label %.loopexit.i.us.loopexit.i, label %.lr.ph.i.us.i.epil, !llvm.loop !92
 
-.loopexit.i.us.i:                                 ; preds = %.loopexit.i.us.i.loopexit.unr-lcssa, %.lr.ph.i.us.i.epil, %.preheader.i.us.i
+.loopexit.i.us.loopexit.i:                        ; preds = %.lr.ph.i.us.i.epil, %.loopexit.i.us.i.loopexit.unr-lcssa
+  %.pre.i = load i32, ptr %i.fl, align 4, !tbaa !14
+  br label %.loopexit.i.us.i
+
+.loopexit.i.us.i:                                 ; preds = %.loopexit.i.us.loopexit.i, %.preheader.i.us.i
+  %7 = phi i32 [ %.pre.i, %.loopexit.i.us.loopexit.i ], [ %6, %.preheader.i.us.i ]
   %i.la = add i32 %.05267.us.i, %i.fd
   %indvars.iv.next94.i = add nsw i64 %indvars.iv93.i, 1 ; 2 uses
   %i.lb = trunc nsw i64 %indvars.iv.next94.i to i32

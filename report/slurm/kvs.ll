@@ -202,12 +202,16 @@ define dso_local noundef i32 @kvs_clear() local_unnamed_addr #0 {
 bb.a:
   %i.a = load i32, ptr @hash_size, align 4        ; 2 uses
   %.not = icmp eq i32 %i.a, 0
-  br i1 %.not, label %._crit_edge14, label %.lr.ph13
+  br i1 %.not, label %._crit_edge14, label %.lr.ph13.preheader
 
-.lr.ph13:                                         ; preds = %bb.a, %._crit_edge
-  %i.b = phi i32 [ %i.o, %._crit_edge ], [ %i.a, %bb.a ]
-  %indvars.iv17 = phi i64 [ %indvars.iv.next18, %._crit_edge ], [ 0, %bb.a ] ; 2 uses
-  %0 = load ptr, ptr @kvs_hash, align 8
+.lr.ph13.preheader:                               ; preds = %bb.a
+  %.pre20 = load ptr, ptr @kvs_hash, align 8
+  br label %.lr.ph13
+
+.lr.ph13:                                         ; preds = %.lr.ph13.preheader, %._crit_edge
+  %i.b = phi i32 [ %i.a, %.lr.ph13.preheader ], [ %i.o, %._crit_edge ]
+  %0 = phi ptr [ %.pre20, %.lr.ph13.preheader ], [ %1, %._crit_edge ] ; 2 uses
+  %indvars.iv17 = phi i64 [ 0, %.lr.ph13.preheader ], [ %indvars.iv.next18, %._crit_edge ] ; 2 uses
   %i.c = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %indvars.iv17 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.e = load i32, ptr %i.d, align 8
@@ -231,11 +235,13 @@ bb.a:
   br i1 %i.n, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !14
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load ptr, ptr @kvs_hash, align 8
   %.pre.a = load i32, ptr @hash_size, align 4
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph13
   %i.o = phi i32 [ %.pre.a, %._crit_edge.loopexit ], [ %i.b, %.lr.ph13 ] ; 2 uses
+  %1 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %0, %.lr.ph13 ]
   %indvars.iv.next18 = add nuw nsw i64 %indvars.iv17, 1 ; 2 uses
   %i.p = zext i32 %i.o to i64
   %i.q = icmp samesign ult i64 %indvars.iv.next18, %i.p

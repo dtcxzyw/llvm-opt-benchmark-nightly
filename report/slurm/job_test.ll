@@ -202,13 +202,17 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
   br i1 %.not32.us, label %.loopexit38, label %.lr.ph43.split.us.split, !llvm.loop !59
 
 .lr.ph43.split:                                   ; preds = %.lr.ph43
-  br i1 %2, label %.lr.ph43.split.split.us, label %.lr.ph43.split.split
+  br i1 %2, label %.lr.ph43.split.split.us.preheader, label %.lr.ph43.split.split
 
-.lr.ph43.split.split.us:                          ; preds = %.lr.ph43.split, %..loopexit_crit_edge.split.us.us
-  %.02842.us49 = phi ptr [ %i.bc, %..loopexit_crit_edge.split.us.us ], [ %0, %.lr.ph43.split ] ; 4 uses
+.lr.ph43.split.split.us.preheader:                ; preds = %.lr.ph43.split
+  %.pre82 = load i8, ptr @preempt_by_qos, align 1, !range !8
+  br label %.lr.ph43.split.split.us
+
+.lr.ph43.split.split.us:                          ; preds = %.lr.ph43.split.split.us.preheader, %..loopexit_crit_edge.split.us.us
+  %6 = phi i8 [ %7, %..loopexit_crit_edge.split.us.us ], [ %.pre82, %.lr.ph43.split.split.us.preheader ] ; 4 uses
+  %.02842.us49 = phi ptr [ %i.bc, %..loopexit_crit_edge.split.us.us ], [ %0, %.lr.ph43.split.split.us.preheader ] ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.02842.us49, i64 8
   %i.am = load i16, ptr %i.al, align 8
-  %6 = load i8, ptr @preempt_by_qos, align 1, !range !8, !noundef !9
   %i.an = trunc nuw i8 %6 to i1
   %not.or.cond.us50 = and i1 %.not37, %i.an
   %i.ao = sext i1 %not.or.cond.us50 to i16
@@ -254,9 +258,14 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %indvars.iv.next78 = add nuw nsw i64 %indvars.iv77, 1 ; 2 uses
   %exitcond81.not = icmp eq i64 %indvars.iv.next78, %wide.trip.count80
-  br i1 %exitcond81.not, label %..loopexit_crit_edge.split.us.us, label %bb.o, !llvm.loop !58
+  br i1 %exitcond81.not, label %..loopexit_crit_edge.split.us.us.loopexit, label %bb.o, !llvm.loop !58
 
-..loopexit_crit_edge.split.us.us:                 ; preds = %bb.r, %bb.n, %bb.m, %.lr.ph43.split.split.us
+..loopexit_crit_edge.split.us.us.loopexit:        ; preds = %bb.r
+  %.pre = load i8, ptr @preempt_by_qos, align 1, !range !8
+  br label %..loopexit_crit_edge.split.us.us
+
+..loopexit_crit_edge.split.us.us:                 ; preds = %..loopexit_crit_edge.split.us.us.loopexit, %bb.n, %bb.m, %.lr.ph43.split.split.us
+  %7 = phi i8 [ %.pre, %..loopexit_crit_edge.split.us.us.loopexit ], [ %6, %bb.n ], [ %6, %bb.m ], [ %6, %.lr.ph43.split.split.us ]
   %i.bc = load ptr, ptr %.02842.us49, align 8     ; 2 uses
   %.not32.us56 = icmp eq ptr %i.bc, null
   br i1 %.not32.us56, label %.loopexit38, label %.lr.ph43.split.split.us, !llvm.loop !59

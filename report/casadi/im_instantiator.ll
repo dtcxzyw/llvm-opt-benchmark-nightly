@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph38.i:                                       ; preds = %.lr.ph43.split.i
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %.03042.i ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8 ; 2 uses
-  %i.aq = load i64, ptr %i.ao, align 8, !tbaa !28
+  %i.aq = load i64, ptr %i.ao, align 8, !tbaa !28 ; 2 uses
   %i.ar = load i64, ptr %i.ap, align 8, !tbaa !28 ; 2 uses
   %i.as = icmp slt i64 %i.aq, %i.ar
   br i1 %i.as, label %.lr.ph38.split.i, label %._crit_edge39.i
@@ -220,33 +220,35 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph38.split.i:                                 ; preds = %.lr.ph38.i, %._crit_edge.i
   %i.aw = phi i64 [ %i.ba, %._crit_edge.i ], [ %i.ak, %.lr.ph38.i ]
-  %i.ax = phi i64 [ %i.bb, %._crit_edge.i ], [ %i.ar, %.lr.ph38.i ] ; 2 uses
-  %.02936.i.a = phi i64 [ %i.bc, %._crit_edge.i ], [ %i.am, %.lr.ph38.i ] ; 2 uses
-  %.235.i.a = phi i64 [ %.3.lcssa.i, %._crit_edge.i ], [ %.141.i, %.lr.ph38.i ] ; 2 uses
-  %5 = getelementptr inbounds [8 x i8], ptr %i.r, i64 %.02936.i.a
-  %6 = load i64, ptr %5, align 8, !tbaa !28
-  %i.ay = load i64, ptr %i.ao, align 8, !tbaa !28 ; 2 uses
-  %i.az = icmp slt i64 %i.ay, %i.ax
+  %i.ax = phi i64 [ %6, %._crit_edge.i ], [ %i.ar, %.lr.ph38.i ] ; 2 uses
+  %.02936.i.a = phi i64 [ %i.bb, %._crit_edge.i ], [ %i.aq, %.lr.ph38.i ] ; 3 uses
+  %.235.i.a = phi i64 [ %i.bc, %._crit_edge.i ], [ %i.am, %.lr.ph38.i ] ; 2 uses
+  %.235.i = phi i64 [ %.3.lcssa.i, %._crit_edge.i ], [ %.141.i, %.lr.ph38.i ] ; 2 uses
+  %5 = getelementptr inbounds [8 x i8], ptr %i.r, i64 %.235.i.a
+  %i.ay = load i64, ptr %5, align 8, !tbaa !28
+  %i.az = icmp slt i64 %.02936.i.a, %i.ax
   br i1 %i.az, label %.lr.ph.i, label %._crit_edge.i
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
+  %.pre.i = load i64, ptr %i.ao, align 8, !tbaa !28
   %.pre.i.a = load i64, ptr %i.af, align 8, !tbaa !28
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.lr.ph38.split.i
   %i.ba = phi i64 [ %i.aw, %.lr.ph38.split.i ], [ %.pre.i.a, %._crit_edge.loopexit.i ] ; 4 uses
-  %i.bb = phi i64 [ %i.ax, %.lr.ph38.split.i ], [ %i.bk, %._crit_edge.loopexit.i ]
-  %.3.lcssa.i = phi i64 [ %.235.i.a, %.lr.ph38.split.i ], [ %i.bh, %._crit_edge.loopexit.i ] ; 2 uses
-  %i.bc = add nsw i64 %.02936.i.a, 1              ; 2 uses
+  %6 = phi i64 [ %i.ax, %.lr.ph38.split.i ], [ %i.bk, %._crit_edge.loopexit.i ]
+  %i.bb = phi i64 [ %.02936.i.a, %.lr.ph38.split.i ], [ %.pre.i, %._crit_edge.loopexit.i ]
+  %.3.lcssa.i = phi i64 [ %.235.i, %.lr.ph38.split.i ], [ %i.bh, %._crit_edge.loopexit.i ] ; 2 uses
+  %i.bc = add nsw i64 %.235.i.a, 1                ; 2 uses
   %i.bd = icmp slt i64 %i.bc, %i.ba
   br i1 %i.bd, label %.lr.ph38.split.i, label %._crit_edge39.i, !llvm.loop !1089
 
 .lr.ph.i:                                         ; preds = %.lr.ph38.split.i, %.lr.ph.i
-  %.034.i = phi i64 [ %i.bj, %.lr.ph.i ], [ %i.ay, %.lr.ph38.split.i ] ; 2 uses
-  %.333.i = phi i64 [ %i.bh, %.lr.ph.i ], [ %.235.i.a, %.lr.ph38.split.i ] ; 2 uses
+  %.034.i = phi i64 [ %i.bj, %.lr.ph.i ], [ %.02936.i.a, %.lr.ph38.split.i ] ; 2 uses
+  %.333.i = phi i64 [ %i.bh, %.lr.ph.i ], [ %.235.i, %.lr.ph38.split.i ] ; 2 uses
   %i.be = getelementptr inbounds [8 x i8], ptr %i.u, i64 %.034.i
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !28
-  %i.bg = mul nsw i64 %i.bf, %6
+  %i.bg = mul nsw i64 %i.bf, %i.ay
   %i.bh = add nsw i64 %.333.i, 1                  ; 2 uses
   %i.bi = getelementptr inbounds [8 x i8], ptr %i.o, i64 %.333.i
   store i64 %i.bg, ptr %i.bi, align 8, !tbaa !28

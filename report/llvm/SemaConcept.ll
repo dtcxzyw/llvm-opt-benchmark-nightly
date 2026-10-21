@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
 
 _ZN4llvm23SmallVectorTemplateBaseINS_14PointerIntPairIPN5clang4StmtELj1EbNS_21PointerLikeTypeTraitsIS4_EENS_18PointerIntPairInfoIS4_Lj1ES6_EEEELb1EE9push_backES9_.exit23: ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.l, ptr %3, align 8, !tbaa !85
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 12
@@ -217,18 +217,20 @@ _ZN4llvm23SmallVectorTemplateBaseINS_14PointerIntPairIPN5clang4StmtELj1EbNS_21Po
   br label %bb.f
 
 thread-pre-split.loopexit:                        ; preds = %.lr.ph.i.i
+  %.pre = load ptr, ptr %3, align 8, !tbaa !85
   %.pr.pre = load i32, ptr %i.m, align 8, !tbaa !84
   br label %thread-pre-split
 
 thread-pre-split:                                 ; preds = %thread-pre-split.loopexit, %_ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTraverseNodeEPNS_4StmtEPN4llvm15SmallVectorImplINS6_14PointerIntPairIS5_Lj1EbNS6_21PointerLikeTypeTraitsIS5_EENS6_18PointerIntPairInfoIS5_Lj1ESA_EEEEEE.exit.thread, %bb.g
   %.pr = phi i32 [ %.pr.pre, %thread-pre-split.loopexit ], [ %i.lc, %_ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTraverseNodeEPNS_4StmtEPN4llvm15SmallVectorImplINS6_14PointerIntPairIS5_Lj1EbNS6_21PointerLikeTypeTraitsIS5_EENS6_18PointerIntPairInfoIS5_Lj1ESA_EEEEEE.exit.thread ], [ %i.w, %bb.g ] ; 2 uses
+  %4 = phi ptr [ %.pre, %thread-pre-split.loopexit ], [ %7, %_ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTraverseNodeEPNS_4StmtEPN4llvm15SmallVectorImplINS6_14PointerIntPairIS5_Lj1EbNS6_21PointerLikeTypeTraitsIS5_EENS6_18PointerIntPairInfoIS5_Lj1ESA_EEEEEE.exit.thread ], [ %5, %bb.g ]
   %.not.i24 = icmp eq i32 %.pr, 0
   br i1 %.not.i24, label %_ZSt7reverseIPN4llvm14PointerIntPairIPN5clang4StmtELj1EbNS0_21PointerLikeTypeTraitsIS4_EENS0_18PointerIntPairInfoIS4_Lj1ES6_EEEEEvT_SB_.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_14PointerIntPairIPN5clang4StmtELj1EbNS_21PointerLikeTypeTraitsIS4_EENS_18PointerIntPairInfoIS4_Lj1ES6_EEEELb1EE9push_backES9_.exit23, %thread-pre-split
-  %4 = phi i32 [ 1, %_ZN4llvm23SmallVectorTemplateBaseINS_14PointerIntPairIPN5clang4StmtELj1EbNS_21PointerLikeTypeTraitsIS4_EENS_18PointerIntPairInfoIS4_Lj1ES6_EEEELb1EE9push_backES9_.exit23 ], [ %.pr, %thread-pre-split ] ; 2 uses
-  %5 = load ptr, ptr %3, align 8, !tbaa !85
-  %i.q = zext i32 %4 to i64
+  %5 = phi ptr [ %i.l, %_ZN4llvm23SmallVectorTemplateBaseINS_14PointerIntPairIPN5clang4StmtELj1EbNS_21PointerLikeTypeTraitsIS4_EENS_18PointerIntPairInfoIS4_Lj1ES6_EEEELb1EE9push_backES9_.exit23 ], [ %4, %thread-pre-split ] ; 2 uses
+  %6 = phi i32 [ 1, %_ZN4llvm23SmallVectorTemplateBaseINS_14PointerIntPairIPN5clang4StmtELj1EbNS_21PointerLikeTypeTraitsIS4_EENS_18PointerIntPairInfoIS4_Lj1ES6_EEEELb1EE9push_backES9_.exit23 ], [ %.pr, %thread-pre-split ] ; 2 uses
+  %i.q = zext i32 %6 to i64
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.q
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 -8 ; 2 uses
   %.0.copyload.i.i.i = load i64, ptr %i.s, align 8 ; 3 uses
@@ -239,7 +241,7 @@ bb.f:                                             ; preds = %_ZN4llvm23SmallVect
   br i1 %.not296, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.w = add i32 %4, -1                           ; 2 uses
+  %i.w = add i32 %6, -1                           ; 2 uses
   store i32 %i.w, ptr %i.m, align 8, !tbaa !84
   br label %thread-pre-split, !llvm.loop !2630
 
@@ -642,6 +644,7 @@ _ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTrav
   br i1 %i.lb, label %_ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTraverseNodeEPNS_4StmtEPN4llvm15SmallVectorImplINS6_14PointerIntPairIS5_Lj1EbNS6_21PointerLikeTypeTraitsIS5_EENS6_18PointerIntPairInfoIS5_Lj1ESA_EEEEEE.exit.thread, label %_ZSt7reverseIPN4llvm14PointerIntPairIPN5clang4StmtELj1EbNS0_21PointerLikeTypeTraitsIS4_EENS0_18PointerIntPairInfoIS4_Lj1ES6_EEEEEvT_SB_.exit.thread
 
 _ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTraverseNodeEPNS_4StmtEPN4llvm15SmallVectorImplINS6_14PointerIntPairIS5_Lj1EbNS6_21PointerLikeTypeTraitsIS5_EENS6_18PointerIntPairInfoIS5_Lj1ESA_EEEEEE.exit.thread: ; preds = %bb.h, %bb.i, %.split293, %.split292, %.split291, %.split290, %.split289, %.split288, %.split287, %.split286, %.split285, %.split284, %.split283, %.split282, %.split281, %.split280, %.split279, %.split278, %.split277, %.split276, %.split275, %.split274, %.split273, %.split272, %.split271, %.split270, %.split269, %.split268, %.split267, %.split266, %.split265, %.split264, %.split263, %.split262, %.split261, %.split260, %.split259, %.split258, %.split257, %.split256, %.split255, %.split254, %.split253, %.split252, %.split251, %.split250, %.split249, %.split248, %.split247, %.split246, %.split245, %.split244, %.split243, %.split242, %.split241, %.split240, %.split239, %.split238, %.split237, %.split236, %.split235, %.split234, %.split233, %.split232, %.split231, %.split230, %.split229, %.split228, %.split227, %.split226, %.split225, %.split224, %.split223, %.split222, %.split221, %.split220, %.split219, %.split218, %.split217, %.split216, %.split215, %.split214, %.split213, %.split212, %.split211, %.split210, %.split209, %.split208, %.split207, %.split206, %.split205, %.split204, %.split203, %.split202, %.split201, %.split200, %.split199, %.split198, %.split197, %.split196, %.split195, %.split194, %.split193, %.split192, %.split191, %.split190, %.split189, %.split188, %.split187, %.split186, %.split185, %.split184, %.split183, %.split182, %.split181, %.split180, %.split179, %.split178, %.split177, %.split176, %.split175, %.split174, %.split173, %.split172, %.split171, %.split170, %.split169, %.split168, %.split167, %.split166, %.split165, %.split164, %.split163, %.split162, %.split161, %.split160, %.split159, %.split158, %.split157, %.split156, %.split155, %.split154, %.split153, %.split152, %.split151, %.split150, %.split149, %.split148, %.split147, %.split146, %.split145, %.split144, %.split143, %.split142, %.split141, %.split140, %.split139, %.split138, %.split137, %.split136, %.split135, %.split134, %.split133, %.split132, %.split131, %.split130, %.split129, %.split128, %.split127, %.split126, %.split125, %.split124, %.split123, %.split122, %.split121, %.split120, %.split119, %.split118, %.split117, %.split116, %.split115, %.split114, %.split113, %.split112, %.split111, %.split110, %.split109, %.split108, %.split107, %.split106, %.split105, %.split104, %.split103, %.split102, %.split101, %.split100, %.split99, %.split98, %.split97, %.split96, %.split95, %.split94, %.split93, %.split92, %.split91, %.split90, %.split89, %.split88, %.split87, %.split86, %.split85, %.split84, %.split83, %.split82, %.split81, %.split80, %.split79, %.split78, %.split77, %.split76, %.split75, %.split74, %.split73, %.split72, %.split71, %.split70, %.split69, %.split68, %.split67, %.split66, %.split65, %.split64, %.split63, %.split62, %.split61, %.split60, %.split59, %.split58, %.split57, %.split56, %.split55, %.split54, %.split53, %.split52, %.split51, %.split50, %.split49, %.split48, %.split47, %.split46, %.split45, %.split44, %.split43, %.split42, %.split41, %.split40, %.split39, %.split38, %.split37, %.split36, %.split35, %.split34, %.split33, %.split32, %.split31, %.split, %_ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTraverseNodeEPNS_4StmtEPN4llvm15SmallVectorImplINS6_14PointerIntPairIS5_Lj1EbNS6_21PointerLikeTypeTraitsIS5_EENS6_18PointerIntPairInfoIS5_Lj1ESA_EEEEEE.exit
+  %7 = load ptr, ptr %3, align 8, !tbaa !85       ; 3 uses
   %.idx = shl nuw nsw i64 %i.z, 3                 ; 2 uses
   %i.lc = load i32, ptr %i.m, align 8, !tbaa !84  ; 3 uses
   %i.ld = zext i32 %i.lc to i64
@@ -653,9 +656,8 @@ _ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTrav
   br i1 %or.cond.i.i, label %.lr.ph.i.i.preheader, label %thread-pre-split
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN5clang19RecursiveASTVisitorIN12_GLOBAL__N_120HashParameterMappingEE16dataTraverseNodeEPNS_4StmtEPN4llvm15SmallVectorImplINS6_14PointerIntPairIS5_Lj1EbNS6_21PointerLikeTypeTraitsIS5_EENS6_18PointerIntPairInfoIS5_Lj1ESA_EEEEEE.exit.thread
-  %6 = load ptr, ptr %3, align 8, !tbaa !85       ; 2 uses
-  %.012.i.i = getelementptr inbounds nuw i8, ptr %6, i64 %i.lf
-  %i.lh = getelementptr inbounds nuw i8, ptr %6, i64 %.idx
+  %.012.i.i = getelementptr inbounds nuw i8, ptr %7, i64 %i.lf
+  %i.lh = getelementptr inbounds nuw i8, ptr %7, i64 %.idx
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i

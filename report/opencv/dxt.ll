@@ -205,7 +205,7 @@ declare void @_ZdaPv(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN2cvL7DFTInitEiiPKiPiiPvi(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(address) %3, i32 noundef range(i32 8, 17) %4, ptr nofree noundef captures(address) %5, i32 noundef range(i32 0, 2) %6) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [34 x i32], align 16              ; 11 uses
+  %i.a = alloca [34 x i32], align 16              ; 12 uses
   %i.b = alloca [34 x i32], align 16              ; 13 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %8 = alloca %"class.std::allocator", align 1    ; 3 uses
@@ -402,6 +402,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !42
   %wide.trip.count329 = zext nneg i32 %0 to i64
+  %.pre368 = load i32, ptr %i.a, align 16, !tbaa !42
   br label %bb.v
 
 bb.o:                                             ; preds = %bb.n
@@ -743,8 +744,13 @@ bb.u:                                             ; preds = %._crit_edge292
   %.not241 = icmp slt i32 %i.hb, %i.hd
   br i1 %.not241, label %.loopexit268, label %.lr.ph297, !llvm.loop !432
 
-.loopexit273:                                     ; preds = %.lr.ph281, %bb.v
-  %.3.lcssa = phi i32 [ %i.hf, %bb.v ], [ %i.ho, %.lr.ph281 ] ; 2 uses
+.loopexit273.loopexit:                            ; preds = %.lr.ph281
+  %.pre = load i32, ptr %i.a, align 16, !tbaa !42
+  br label %.loopexit273
+
+.loopexit273:                                     ; preds = %.loopexit273.loopexit, %bb.v
+  %11 = phi i32 [ %i.hg, %bb.v ], [ %.pre, %.loopexit273.loopexit ]
+  %.3.lcssa = phi i32 [ %i.hf, %bb.v ], [ %i.ho, %.loopexit273.loopexit ] ; 2 uses
   %i.he = getelementptr inbounds nuw [4 x i8], ptr %.0, i64 %indvars.iv326
   store i32 %.3.lcssa, ptr %i.he, align 4, !tbaa !42
   %indvars.iv.next327 = add nuw nsw i64 %indvars.iv326, 1 ; 2 uses
@@ -752,11 +758,11 @@ bb.u:                                             ; preds = %._crit_edge292
   br i1 %exitcond330.not, label %.loopexit270, label %bb.v, !llvm.loop !433
 
 bb.v:                                             ; preds = %.lr.ph284, %.loopexit273
+  %12 = phi i32 [ %.pre368, %.lr.ph284 ], [ %11, %.loopexit273 ]
   %indvars.iv326 = phi i64 [ 1, %.lr.ph284 ], [ %indvars.iv.next327, %.loopexit273 ] ; 2 uses
   %.2222283 = phi i32 [ 0, %.lr.ph284 ], [ %.3.lcssa, %.loopexit273 ]
   %i.hf = add nsw i32 %i.bd, %.2222283            ; 2 uses
-  %11 = load i32, ptr %i.a, align 16, !tbaa !42
-  %i.hg = add nsw i32 %11, 1                      ; 2 uses
+  %i.hg = add nsw i32 %12, 1                      ; 3 uses
   store i32 %i.hg, ptr %i.a, align 16, !tbaa !42
   %i.hh = load i32, ptr %2, align 4, !tbaa !42
   %.not238277 = icmp slt i32 %i.hg, %i.hh
@@ -781,7 +787,7 @@ bb.v:                                             ; preds = %.lr.ph284, %.loopex
   %i.hs = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.next324
   %i.ht = load i32, ptr %i.hs, align 4, !tbaa !42
   %.not238 = icmp slt i32 %i.hr, %i.ht
-  br i1 %.not238, label %.loopexit273, label %.lr.ph281, !llvm.loop !434
+  br i1 %.not238, label %.loopexit273.loopexit, label %.lr.ph281, !llvm.loop !434
 
 .loopexit270:                                     ; preds = %.loopexit273, %._crit_edge292, %bb.t, %.loopexit271
   %.1 = phi i32 [ %.0210, %bb.t ], [ %.0210, %.loopexit271 ], [ %.0210, %._crit_edge292 ], [ 0, %.loopexit273 ] ; 2 uses

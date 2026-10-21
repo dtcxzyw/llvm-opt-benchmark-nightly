@@ -205,7 +205,7 @@ _ZN4llvh23SmallVectorTemplateBaseIPN6hermes10BasicBlockELb1EE9push_backERKS3_.ex
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr hidden void @_ZN4llvh15DomTreeNodeBaseIN6hermes10BasicBlockEE11UpdateLevelEv(ptr noundef nonnull align 8 dereferenceable(56) %0) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %1 = alloca %"class.llvh::SmallVector.45", align 8 ; 10 uses
+  %1 = alloca %"class.llvh::SmallVector.45", align 8 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !81
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -218,7 +218,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   store ptr %i.i, ptr %1, align 8, !tbaa !39
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
@@ -227,13 +227,14 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
-  %2 = phi i32 [ 1, %bb.b ], [ %.pr, %._crit_edge ] ; 2 uses
-  %3 = load ptr, ptr %1, align 8, !tbaa !39
-  %i.l = zext i32 %2 to i64
+  %2 = phi ptr [ %i.i, %bb.b ], [ %5, %._crit_edge ]
+  %3 = phi ptr [ %i.i, %bb.b ], [ %6, %._crit_edge ] ; 2 uses
+  %4 = phi i32 [ 1, %bb.b ], [ %.pr, %._crit_edge ] ; 2 uses
+  %i.l = zext i32 %4 to i64
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.l
   %i.n = getelementptr inbounds i8, ptr %i.m, i64 -8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !64   ; 4 uses
-  %i.p = add i32 %2, -1                           ; 3 uses
+  %i.p = add i32 %4, -1                           ; 3 uses
   store i32 %i.p, ptr %i.j, align 8, !tbaa !40
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !94
@@ -249,8 +250,14 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   %.not1112 = icmp eq ptr %i.x, %i.z
   br i1 %.not1112, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.f, %bb.c
-  %.pr = phi i32 [ %i.p, %bb.c ], [ %i.ar, %bb.f ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %bb.f
+  %.pre = load ptr, ptr %1, align 8, !tbaa !39    ; 2 uses
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
+  %5 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %2, %bb.c ] ; 3 uses
+  %.pr = phi i32 [ %i.ar, %._crit_edge.loopexit ], [ %i.p, %bb.c ] ; 2 uses
+  %6 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %3, %bb.c ]
   %.not.i = icmp eq i32 %.pr, 0
   br i1 %.not.i, label %bb.g, label %bb.c, !llvm.loop !261
 
@@ -294,15 +301,14 @@ bb.f:                                             ; preds = %_ZN4llvh23SmallVect
   %i.ar = phi i32 [ %i.aq, %_ZN4llvh23SmallVectorTemplateBaseIPNS_15DomTreeNodeBaseIN6hermes10BasicBlockEEELb1EE9push_backERKS5_.exit ], [ %i.aa, %.lr.ph ] ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.07.013, i64 8 ; 2 uses
   %.not11 = icmp eq ptr %i.as, %i.z
-  br i1 %.not11, label %._crit_edge, label %.lr.ph
+  br i1 %.not11, label %._crit_edge.loopexit, label %.lr.ph
 
 bb.g:                                             ; preds = %._crit_edge
-  %4 = load ptr, ptr %1, align 8, !tbaa !39       ; 2 uses
-  %i.at = icmp eq ptr %4, %i.i
+  %i.at = icmp eq ptr %5, %i.i
   br i1 %i.at, label %_ZN4llvh11SmallVectorIPNS_15DomTreeNodeBaseIN6hermes10BasicBlockEEELj64EED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  call void @free(ptr noundef %4) #14
+  call void @free(ptr noundef %5) #14
   br label %_ZN4llvh11SmallVectorIPNS_15DomTreeNodeBaseIN6hermes10BasicBlockEEELj64EED2Ev.exit
 
 _ZN4llvh11SmallVectorIPNS_15DomTreeNodeBaseIN6hermes10BasicBlockEEELj64EED2Ev.exit: ; preds = %bb.g, %bb.h

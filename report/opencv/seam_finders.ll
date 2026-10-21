@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %_ZN2cv6detail12DpSe
   br i1 %i.bj, label %.lr.ph258, label %._crit_edge259
 
 .lr.ph258:                                        ; preds = %bb.h
-  %i.bk = load i32, ptr %i.bc, align 4, !tbaa !138
+  %i.bk = load i32, ptr %i.bc, align 4, !tbaa !138 ; 2 uses
   %i.bl = load i32, ptr %i.bg, align 4, !tbaa !138 ; 3 uses
   %i.bm = icmp slt i32 %i.bk, %i.bl
   br i1 %i.bm, label %.lr.ph258.split.preheader, label %._crit_edge259
@@ -223,10 +223,10 @@ bb.h:                                             ; preds = %_ZN2cv6detail12DpSe
 
 .lr.ph258.split:                                  ; preds = %.lr.ph258.split.preheader, %._crit_edge
   %i.br = phi i32 [ %i.bi, %.lr.ph258.split.preheader ], [ %i.bx, %._crit_edge ]
-  %i.bs = phi i32 [ %i.bl, %.lr.ph258.split.preheader ], [ %i.by, %._crit_edge ] ; 2 uses
-  %i.bt = phi i32 [ %i.bl, %.lr.ph258.split.preheader ], [ %i.bz, %._crit_edge ] ; 2 uses
+  %i.bs = phi i32 [ %i.bl, %.lr.ph258.split.preheader ], [ %13, %._crit_edge ] ; 2 uses
+  %i.bt = phi i32 [ %i.bl, %.lr.ph258.split.preheader ], [ %i.by, %._crit_edge ] ; 2 uses
+  %12 = phi i32 [ %i.bk, %.lr.ph258.split.preheader ], [ %i.bz, %._crit_edge ] ; 3 uses
   %indvars.iv289 = phi i64 [ %i.bn, %.lr.ph258.split.preheader ], [ %indvars.iv.next290, %._crit_edge ] ; 2 uses
-  %12 = load i32, ptr %i.bc, align 4, !tbaa !138  ; 2 uses
   %i.bu = icmp slt i32 %12, %i.bt
   br i1 %i.bu, label %.lr.ph255, label %._crit_edge
 
@@ -238,13 +238,15 @@ bb.h:                                             ; preds = %_ZN2cv6detail12DpSe
   br label %bb.i
 
 ._crit_edge.loopexit:                             ; preds = %bb.k
+  %.pre = load i32, ptr %i.bc, align 4, !tbaa !138
   %.pre323 = load i32, ptr %i.bh, align 4, !tbaa !139
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph258.split
   %i.bx = phi i32 [ %.pre323, %._crit_edge.loopexit ], [ %i.br, %.lr.ph258.split ] ; 3 uses
-  %i.by = phi i32 [ %i.ck, %._crit_edge.loopexit ], [ %i.bs, %.lr.ph258.split ]
-  %i.bz = phi i32 [ %i.ck, %._crit_edge.loopexit ], [ %i.bt, %.lr.ph258.split ]
+  %13 = phi i32 [ %i.ck, %._crit_edge.loopexit ], [ %i.bs, %.lr.ph258.split ]
+  %i.by = phi i32 [ %i.ck, %._crit_edge.loopexit ], [ %i.bt, %.lr.ph258.split ]
+  %i.bz = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %12, %.lr.ph258.split ]
   %indvars.iv.next290 = add nsw i64 %indvars.iv289, 1 ; 2 uses
   %i.ca = sext i32 %i.bx to i64
   %i.cb = icmp slt i64 %indvars.iv.next290, %i.ca

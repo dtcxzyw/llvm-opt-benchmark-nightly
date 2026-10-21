@@ -64,50 +64,59 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_Z15pj_acquire_lockv()
-  %i.c = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14 ; 2 uses
+  %i.c = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14
   %i.d = icmp sgt i32 %i.c, 0
+  %.pre19 = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !17 ; 2 uses
+  %.pre21 = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !19 ; 2 uses
   br i1 %i.d, label %.lr.ph12, label %._crit_edge13
 
 .lr.ph12:                                         ; preds = %bb.b, %._crit_edge
-  %0 = phi i32 [ %3, %._crit_edge ], [ %i.c, %bb.b ]
+  %0 = phi ptr [ %2, %._crit_edge ], [ %.pre19, %bb.b ] ; 2 uses
+  %1 = phi ptr [ %3, %._crit_edge ], [ %.pre21, %bb.b ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %bb.b ] ; 3 uses
-  %1 = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !17
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
-  %2 = load ptr, ptr %i.e, align 8, !tbaa !12     ; 2 uses
-  %i.f = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !19
-  %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !12   ; 2 uses
+  %i.g = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !21
   tail call void @free(ptr noundef %i.h) #10
-  %.not8 = icmp eq ptr %2, null
+  %.not8 = icmp eq ptr %i.f, null
   br i1 %.not8, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph12, %.lr.ph
-  %.09 = phi ptr [ %i.i, %.lr.ph ], [ %2, %.lr.ph12 ] ; 2 uses
+  %.09 = phi ptr [ %i.i, %.lr.ph ], [ %i.f, %.lr.ph12 ] ; 2 uses
   %i.i = load ptr, ptr %.09, align 8, !tbaa !12   ; 2 uses
   tail call void @free(ptr noundef nonnull %.09) #10
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !22
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %.pre = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14
+  %.pre = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !19
+  %.pre16 = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !17
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph12
-  %3 = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %0, %.lr.ph12 ] ; 2 uses
+  %2 = phi ptr [ %.pre16, %._crit_edge.loopexit ], [ %0, %.lr.ph12 ]
+  %3 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %1, %.lr.ph12 ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.j = sext i32 %3 to i64
+  %4 = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14
+  %i.j = sext i32 %4 to i64
   %i.k = icmp slt i64 %indvars.iv.next, %i.j
-  br i1 %i.k, label %.lr.ph12, label %._crit_edge13, !llvm.loop !23
+  br i1 %i.k, label %.lr.ph12, label %._crit_edge13.loopexit, !llvm.loop !23
 
-._crit_edge13:                                    ; preds = %._crit_edge, %bb.b
-  %4 = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !19
-  tail call void @free(ptr noundef %4) #10
-  %5 = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !17
+._crit_edge13.loopexit:                           ; preds = %._crit_edge
+  %.pre18 = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !17
+  %.pre20 = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !19
+  br label %._crit_edge13
+
+._crit_edge13:                                    ; preds = %._crit_edge13.loopexit, %bb.b
+  %5 = phi ptr [ %.pre20, %._crit_edge13.loopexit ], [ %.pre21, %bb.b ]
+  %6 = phi ptr [ %.pre18, %._crit_edge13.loopexit ], [ %.pre19, %bb.b ]
+  tail call void @free(ptr noundef %6) #10
   tail call void @free(ptr noundef %5) #10
   store i32 0, ptr @_ZL11cache_count, align 4, !tbaa !14
   store i32 0, ptr @_ZL11cache_alloc, align 4, !tbaa !14
-  store ptr null, ptr @_ZL9cache_key, align 8, !tbaa !19
-  store ptr null, ptr @_ZL14cache_paralist, align 8, !tbaa !17
+  store ptr null, ptr @_ZL9cache_key, align 8, !tbaa !17
+  store ptr null, ptr @_ZL14cache_paralist, align 8, !tbaa !19
   tail call void @_Z15pj_release_lockv()
   br label %bb.c
 
@@ -131,7 +140,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.c = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !19
+  %i.c = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !17
   %i.d = load ptr, ptr @_ZL14cache_paralist, align 8
   %i.e = zext nneg i32 %i.a to i64
   br label %bb.b
@@ -200,7 +209,7 @@ bb.a:
   %i.a = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14 ; 7 uses
   %i.b = load i32, ptr @_ZL11cache_alloc, align 4, !tbaa !14
   %i.c = icmp eq i32 %i.a, %i.b
-  %.pre = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !19 ; 4 uses
+  %.pre = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !17 ; 4 uses
   br i1 %i.c, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
@@ -223,9 +232,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   tail call void @free(ptr noundef %.pre) #10
-  store ptr %i.h, ptr @_ZL9cache_key, align 8, !tbaa !19
+  store ptr %i.h, ptr @_ZL9cache_key, align 8, !tbaa !17
   %i.m = tail call noalias ptr @malloc(i64 noundef %i.g) #9 ; 2 uses
-  %i.n = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !17 ; 3 uses
+  %i.n = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !19 ; 3 uses
   %i.o = icmp ne ptr %i.n, null
   %or.cond3 = and i1 %i.j, %i.o
   br i1 %or.cond3, label %bb.e, label %bb.f
@@ -238,7 +247,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   tail call void @free(ptr noundef %i.n) #10
-  store ptr %i.m, ptr @_ZL14cache_paralist, align 8, !tbaa !17
+  store ptr %i.m, ptr @_ZL14cache_paralist, align 8, !tbaa !19
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.a
@@ -281,7 +290,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i
 
 _Z17pj_clone_paralistPK8ARG_list.exit:            ; preds = %bb.i, %bb.g
   %.013.lcssa.i = phi ptr [ null, %bb.g ], [ %.1.i, %bb.i ]
-  %i.ag = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !17
+  %i.ag = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !19
   %i.ah = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.v
   store ptr %.013.lcssa.i, ptr %i.ah, align 8, !tbaa !12
   %i.ai = add nsw i32 %i.a, 1
@@ -325,9 +334,9 @@ attributes #10 = { nounwind }
 !13 = !{!"llvm.loop.mustprogress"}
 !14 = !{!6, !6, i64 0}
 !15 = !{!"any p2 pointer", !10, i64 0}
-!16 = !{!"p2 _ZTS8ARG_list", !15, i64 0}
+!16 = !{!"p2 omnipotent char", !15, i64 0}
 !17 = !{!16, !16, i64 0}
-!18 = !{!"p2 omnipotent char", !15, i64 0}
+!18 = !{!"p2 _ZTS8ARG_list", !15, i64 0}
 !19 = !{!18, !18, i64 0}
 !20 = !{!"p1 omnipotent char", !10, i64 0}
 !21 = !{!20, !20, i64 0}

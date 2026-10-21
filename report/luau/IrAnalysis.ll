@@ -161,7 +161,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN4Luau7CodeGen22updateLastUseLocationsERNS0_10IrFunctionERKSt6vectorIjSaIjEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(928) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !38
   %i.d = load ptr, ptr %1, align 8, !tbaa !39     ; 2 uses
@@ -292,14 +292,18 @@ _ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEE4findERKj.exit.thread: ; preds
   %.not41 = icmp eq ptr %.1, null
   %i.bh = getelementptr inbounds nuw i8, ptr %.1, i64 32
   %i.bi = getelementptr inbounds nuw i8, ptr %.1, i64 40
-  br i1 %.not41, label %.lr.ph70.split.us, label %.lr.ph70.split
+  br i1 %.not41, label %.lr.ph70.split.us.preheader, label %.lr.ph70.split
 
-.lr.ph70.split.us:                                ; preds = %.lr.ph70, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us
-  %i.bj = phi i32 [ %i.bt, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us ], [ %i.bg, %.lr.ph70 ] ; 5 uses
-  %.03467.us = phi i32 [ %i.bu, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us ], [ %i.be, %.lr.ph70 ] ; 3 uses
-  %2 = zext i32 %.03467.us to i64
-  %3 = load ptr, ptr %i.a, align 8, !tbaa !58
-  %i.bk = getelementptr inbounds nuw [64 x i8], ptr %3, i64 %2 ; 3 uses
+.lr.ph70.split.us.preheader:                      ; preds = %.lr.ph70
+  %.pre85 = load ptr, ptr %i.a, align 8, !tbaa !58
+  br label %.lr.ph70.split.us
+
+.lr.ph70.split.us:                                ; preds = %.lr.ph70.split.us.preheader, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us
+  %i.bj = phi i32 [ %i.bt, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us ], [ %i.bg, %.lr.ph70.split.us.preheader ] ; 5 uses
+  %2 = phi ptr [ %4, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us ], [ %.pre85, %.lr.ph70.split.us.preheader ] ; 6 uses
+  %.03467.us = phi i32 [ %i.bu, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us ], [ %i.be, %.lr.ph70.split.us.preheader ] ; 3 uses
+  %3 = zext i32 %.03467.us to i64
+  %i.bk = getelementptr inbounds nuw [64 x i8], ptr %2, i64 %3 ; 3 uses
   %i.bl = load i8, ptr %i.bk, align 8, !tbaa !59
   switch i8 %i.bl, label %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.us [
     i8 -84, label %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us
@@ -328,11 +332,13 @@ _ZSt4findIPN4Luau7CodeGen4IrOpES2_ET_S4_S4_RKT0_.exit.thread.us.us: ; preds = %_
   br i1 %.not40.us.us, label %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us.loopexit, label %_ZSt4findIPN4Luau7CodeGen4IrOpES2_ET_S4_S4_RKT0_.exit.thread.us.us
 
 _ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us.loopexit: ; preds = %_ZSt4findIPN4Luau7CodeGen4IrOpES2_ET_S4_S4_RKT0_.exit.thread.us.us
+  %.pre84 = load ptr, ptr %i.a, align 8, !tbaa !58
   %.pre84.a = load i32, ptr %i.bf, align 4, !tbaa !56
   br label %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us
 
 _ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us: ; preds = %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us.loopexit, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.us, %.lr.ph70.split.us, %.lr.ph70.split.us, %.lr.ph70.split.us, %.lr.ph70.split.us
   %i.bt = phi i32 [ %.pre84.a, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us.loopexit ], [ %i.bj, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.us ], [ %i.bj, %.lr.ph70.split.us ], [ %i.bj, %.lr.ph70.split.us ], [ %i.bj, %.lr.ph70.split.us ], [ %i.bj, %.lr.ph70.split.us ] ; 2 uses
+  %4 = phi ptr [ %.pre84, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.thread.us.loopexit ], [ %2, %_ZN4Luau7CodeGen8isPseudoENS0_5IrCmdE.exit.us ], [ %2, %.lr.ph70.split.us ], [ %2, %.lr.ph70.split.us ], [ %2, %.lr.ph70.split.us ], [ %2, %.lr.ph70.split.us ]
   %i.bu = add i32 %.03467.us, 1                   ; 2 uses
   %.not39.us = icmp ugt i32 %i.bu, %i.bt
   br i1 %.not39.us, label %.loopexit, label %.lr.ph70.split.us, !llvm.loop !118

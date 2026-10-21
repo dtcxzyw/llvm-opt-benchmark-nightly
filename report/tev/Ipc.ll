@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b, %bb.c
 .lr.ph:                                           ; preds = %bb.e
   %i.t = load ptr, ptr %1, align 8, !tbaa !1567, !nonnull !190, !align !235 ; 3 uses
   %i.u = getelementptr i8, ptr %i.t, i64 8
-  %i.v = load ptr, ptr %i.t, align 8
+  %i.v = load ptr, ptr %i.t, align 8              ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 28
   %i.x = load i32, ptr %i.w, align 4, !tbaa !120
   %i.y = icmp sgt i32 %i.x, 0
@@ -296,8 +296,8 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
   br i1 %.not.i, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, label %AfterCoroSuspend
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit"
+  %.val = phi ptr [ %.val24, %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit" ], [ %i.v, %.lr.ph ] ; 5 uses
   %.020 = phi i64 [ %i.da, %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit" ], [ %2, %.lr.ph ] ; 7 uses
-  %.val = load ptr, ptr %i.t, align 8             ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.val, i64 28
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !120 ; 4 uses
   %i.bk = icmp sgt i32 %i.bj, 0
@@ -356,7 +356,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 
 "_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit.unr-lcssa": ; preds = %.from.42
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit", label %.from.42.epil.preheader
+  br i1 %lcmp.mod.not, label %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.from._ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit", label %.from.42.epil.preheader
 
 .from.42.epil.preheader:                          ; preds = %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit.unr-lcssa", %.from..lr.ph.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.from..lr.ph.i ], [ %indvars.iv.next.i.1, %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit.unr-lcssa" ] ; 3 uses
@@ -374,9 +374,14 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !103
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %.020
   store float %i.cw, ptr %i.cz, align 4, !tbaa !95
+  br label %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.from._ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit"
+
+"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.from._ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit": ; preds = %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit.unr-lcssa", %.from.42.epil.preheader
+  %.val.pre = load ptr, ptr %i.t, align 8
   br label %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit"
 
-"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit": ; preds = %.from.42.epil.preheader, %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit.unr-lcssa", %.lr.ph.split
+"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit": ; preds = %.lr.ph.split, %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.from._ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit"
+  %.val24 = phi ptr [ %.val.pre, %"_ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.from._ZZNK3tev9IpcPacket22interpretAsUpdateImageEvENK3$_0clEm.exit.loopexit" ], [ %.val, %.lr.ph.split ]
   %i.da = add nuw i64 %.020, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.da, %3
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !1560

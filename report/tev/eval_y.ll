@@ -205,6 +205,7 @@ bb.ct:                                            ; preds = %bb.cs
   br label %.loopexit
 
 bb.cu:                                            ; preds = %.lr.ph2447, %._crit_edge2444
+  %3 = phi i64 [ 1, %.lr.ph2447 ], [ %4, %._crit_edge2444 ]
   %.014832446 = phi i64 [ 0, %.lr.ph2447 ], [ %i.aca, %._crit_edge2444 ] ; 3 uses
   %i.abl = load i64, ptr %i.abc, align 8, !tbaa !26
   %i.abm = load ptr, ptr %i.abd, align 8, !tbaa !10
@@ -213,8 +214,7 @@ bb.cu:                                            ; preds = %.lr.ph2447, %._crit
   %i.abo = load ptr, ptr %i.abe, align 8, !tbaa !37
   %i.abp = getelementptr inbounds nuw i8, ptr %i.abo, i64 %.014832446
   store i8 0, ptr %i.abp, align 1, !tbaa !10
-  %3 = load i64, ptr %i.d, align 16, !tbaa !26
-  %i.abq = add nsw i64 %3, 1
+  %i.abq = add nsw i64 %3, 1                      ; 2 uses
   store i64 %i.abq, ptr %i.d, align 16, !tbaa !26
   br i1 %i.abf, label %.lr.ph2443, label %._crit_edge2444
 
@@ -225,7 +225,7 @@ bb.cu:                                            ; preds = %.lr.ph2447, %._crit
   %i.abt = getelementptr inbounds nuw [8 x i8], ptr %i.abg, i64 %indvars.iv2713
   %i.abu = load i64, ptr %i.abt, align 8, !tbaa !26
   %i.abv = icmp sgt i64 %i.abs, %i.abu
-  br i1 %i.abv, label %bb.cv, label %._crit_edge2444
+  br i1 %i.abv, label %bb.cv, label %._crit_edge2444.loopexit
 
 bb.cv:                                            ; preds = %.lr.ph2443
   store i64 1, ptr %i.abr, align 8, !tbaa !26
@@ -242,9 +242,14 @@ bb.cw:                                            ; preds = %bb.cv
 bb.cx:                                            ; preds = %bb.cw, %bb.cv
   %indvars.iv.next2714 = add nuw nsw i64 %indvars.iv2713, 1 ; 2 uses
   %exitcond2716.not = icmp eq i64 %indvars.iv.next2714, %wide.trip.count
-  br i1 %exitcond2716.not, label %._crit_edge2444, label %.lr.ph2443, !llvm.loop !270
+  br i1 %exitcond2716.not, label %._crit_edge2444.loopexit, label %.lr.ph2443, !llvm.loop !270
 
-._crit_edge2444:                                  ; preds = %.lr.ph2443, %bb.cx, %bb.cu
+._crit_edge2444.loopexit:                         ; preds = %bb.cx, %.lr.ph2443
+  %.pre2798 = load i64, ptr %i.d, align 16, !tbaa !26
+  br label %._crit_edge2444
+
+._crit_edge2444:                                  ; preds = %._crit_edge2444.loopexit, %bb.cu
+  %4 = phi i64 [ %.pre2798, %._crit_edge2444.loopexit ], [ %i.abq, %bb.cu ]
   %i.aca = add nuw nsw i64 %.014832446, 1         ; 2 uses
   %exitcond2717.not = icmp eq i64 %i.aca, %i.og
   br i1 %exitcond2717.not, label %.loopexit, label %bb.cu, !llvm.loop !271

@@ -204,25 +204,31 @@ _ZN2v88internal4Zone13AllocateArrayIjA_jEEPT_m.exit: ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.lr.ph23.split.preheader, label %.loopexit
 
 .lr.ph23.split.preheader:                         ; preds = %_ZN2v88internal4Zone13AllocateArrayIjA_jEEPT_m.exit
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 232
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
   %i.ai = sext i32 %i.c to i64
   %wide.trip.count = and i64 %i.m, 2147483647
+  %.pre29 = load ptr, ptr %i.ah, align 8
   br label %.lr.ph23.split
 
 .lr.ph23.split:                                   ; preds = %.lr.ph23.split.preheader, %._crit_edge
   %i.aj = phi i32 [ %i.ae, %.lr.ph23.split.preheader ], [ %i.aq, %._crit_edge ] ; 3 uses
+  %1 = phi ptr [ %.pre29, %.lr.ph23.split.preheader ], [ %2, %._crit_edge ] ; 2 uses
   %indvars.iv26 = phi i64 [ 0, %.lr.ph23.split.preheader ], [ %indvars.iv.next27, %._crit_edge ] ; 3 uses
   %i.ak = mul nsw i64 %indvars.iv26, %i.ai
   %i.al = getelementptr inbounds [4 x i8], ptr %i.ac, i64 %i.ak
-  %1 = load ptr, ptr %i.ah, align 8
   %i.am = sext i32 %i.aj to i64
   %i.an = mul nsw i64 %indvars.iv26, %i.am
   %i.ao = getelementptr inbounds [4 x i8], ptr %1, i64 %i.an
   %i.ap = icmp sgt i32 %i.aj, 0
   br i1 %i.ap, label %.lr.ph, label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph23.split
-  %i.aq = phi i32 [ %i.aj, %.lr.ph23.split ], [ %i.au, %.lr.ph ]
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load ptr, ptr %i.ah, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph23.split
+  %i.aq = phi i32 [ %i.au, %._crit_edge.loopexit ], [ %i.aj, %.lr.ph23.split ]
+  %2 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %1, %.lr.ph23.split ]
   %indvars.iv.next27 = add nuw nsw i64 %indvars.iv26, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next27, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph23.split, !llvm.loop !37
@@ -237,7 +243,7 @@ _ZN2v88internal4Zone13AllocateArrayIjA_jEEPT_m.exit: ; preds = %bb.c, %bb.d
   %i.au = load i32, ptr %i.a, align 4             ; 2 uses
   %i.av = sext i32 %i.au to i64
   %i.aw = icmp slt i64 %indvars.iv.next, %i.av
-  br i1 %i.aw, label %.lr.ph, label %._crit_edge, !llvm.loop !38
+  br i1 %i.aw, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !38
 
 .loopexit:                                        ; preds = %._crit_edge, %_ZN2v88internal4Zone13AllocateArrayIjA_jEEPT_m.exit
   store i32 %i.c, ptr %i.a, align 4

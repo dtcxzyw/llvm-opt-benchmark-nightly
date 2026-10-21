@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m, %.noexc128
   br i1 %.not83179, label %._crit_edge185, label %.lr.ph184
 
 .lr.ph184:                                        ; preds = %._crit_edge168
-  %i.gf = load i32, ptr %1, align 16, !tbaa !132
+  %i.gf = load i32, ptr %1, align 16, !tbaa !132  ; 2 uses
   %i.gg = load i32, ptr %i.z, align 8, !tbaa !134 ; 2 uses
   %i.gh = icmp sgt i32 %i.gf, %i.gg
   br i1 %i.gh, label %._crit_edge185, label %.lr.ph184.split.preheader
@@ -326,31 +326,33 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br label %._crit_edge209
 
 .lr.ph184.split:                                  ; preds = %.lr.ph184.split.preheader, %._crit_edge176
-  %i.iw = phi i32 [ %i.gd, %.lr.ph184.split.preheader ], [ %i.ja, %._crit_edge176 ]
-  %i.ix = phi i32 [ %i.gg, %.lr.ph184.split.preheader ], [ %i.jb, %._crit_edge176 ] ; 2 uses
+  %6 = phi i32 [ %i.gd, %.lr.ph184.split.preheader ], [ %7, %._crit_edge176 ]
+  %i.iw = phi i32 [ %i.gg, %.lr.ph184.split.preheader ], [ %i.ja, %._crit_edge176 ] ; 2 uses
+  %i.ix = phi i32 [ %i.gf, %.lr.ph184.split.preheader ], [ %i.jb, %._crit_edge176 ] ; 3 uses
   %indvars.iv199 = phi i64 [ %i.gl, %.lr.ph184.split.preheader ], [ %indvars.iv.next200, %._crit_edge176 ] ; 3 uses
   %.059181 = phi i32 [ 0, %.lr.ph184.split.preheader ], [ %.1.lcssa, %._crit_edge176 ] ; 2 uses
   %.0144180 = phi ptr [ %i.gj, %.lr.ph184.split.preheader ], [ %.1145.lcssa, %._crit_edge176 ] ; 2 uses
-  %6 = load i32, ptr %1, align 16, !tbaa !132     ; 2 uses
-  %.not89169 = icmp sgt i32 %6, %i.ix
+  %.not89169 = icmp sgt i32 %i.ix, %i.iw
   br i1 %.not89169, label %._crit_edge176, label %.lr.ph175
 
 .lr.ph175:                                        ; preds = %.lr.ph184.split
   %i.iy = sub nsw i64 %indvars.iv199, %i.gm
-  %i.iz = sext i32 %6 to i64
+  %i.iz = sext i32 %i.ix to i64
   br label %bb.s
 
 ._crit_edge176.loopexit:                          ; preds = %bb.s
+  %.pre204 = load i32, ptr %1, align 16, !tbaa !132
   %.pre204.a = load i32, ptr %i.aa, align 4, !tbaa !138
   br label %._crit_edge176
 
 ._crit_edge176:                                   ; preds = %._crit_edge176.loopexit, %.lr.ph184.split
-  %i.ja = phi i32 [ %i.iw, %.lr.ph184.split ], [ %.pre204.a, %._crit_edge176.loopexit ] ; 2 uses
-  %i.jb = phi i32 [ %i.ix, %.lr.ph184.split ], [ %i.jv, %._crit_edge176.loopexit ]
+  %7 = phi i32 [ %6, %.lr.ph184.split ], [ %.pre204.a, %._crit_edge176.loopexit ] ; 2 uses
+  %i.ja = phi i32 [ %i.iw, %.lr.ph184.split ], [ %i.jv, %._crit_edge176.loopexit ]
+  %i.jb = phi i32 [ %i.ix, %.lr.ph184.split ], [ %.pre204, %._crit_edge176.loopexit ]
   %.1145.lcssa = phi ptr [ %.0144180, %.lr.ph184.split ], [ %i.jt, %._crit_edge176.loopexit ]
   %.1.lcssa = phi i32 [ %.059181, %.lr.ph184.split ], [ %i.ju, %._crit_edge176.loopexit ] ; 2 uses
   %indvars.iv.next200 = add nsw i64 %indvars.iv199, 1
-  %i.jc = sext i32 %i.ja to i64
+  %i.jc = sext i32 %7 to i64
   %.not83.not = icmp slt i64 %indvars.iv199, %i.jc
   br i1 %.not83.not, label %.lr.ph184.split, label %._crit_edge185.loopexit191, !llvm.loop !285
 

@@ -205,13 +205,9 @@ bb.a:
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %.loopexit, label %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.i
 
-_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.ithread-pre-split: ; preds = %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit
-  %.pr152 = load i64, ptr %i.j, align 8, !tbaa !351, !noalias !1147
-  br label %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.i
-
-_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.i:      ; preds = %.lr.ph107.split, %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.ithread-pre-split
-  %i.p = phi i64 [ %.pr152, %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.ithread-pre-split ], [ %i.n, %.lr.ph107.split ] ; 6 uses
-  %.049106 = phi i64 [ %i.az, %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.ithread-pre-split ], [ 0, %.lr.ph107.split ] ; 2 uses
+_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.i:      ; preds = %.lr.ph107.split, %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit
+  %i.p = phi i64 [ %9, %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit ], [ %i.n, %.lr.ph107.split ] ; 6 uses
+  %.049106 = phi i64 [ %i.az, %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit ], [ 0, %.lr.ph107.split ] ; 2 uses
   %i.q = mul i64 %i.p, %.049106
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.q ; 3 uses
   %.not.i55 = icmp eq i64 %i.p, 0
@@ -279,7 +275,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 _ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit.unr-lcssa: ; preds = %bb.g
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit.unr-lcssa, %.lr.ph.i
   %.epil.init = phi float [ %.pre9.i, %.lr.ph.i ], [ %i.ao, %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit.unr-lcssa ]
@@ -291,7 +287,7 @@ _ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFu
   %i.as = fcmp ord float %i.ar, 0.000000e+00
   %i.at = fcmp une float %i.ar, %.epil.init
   %i.au = select i1 %i.as, i1 %i.at, i1 false
-  br i1 %i.au, label %bb.h, label %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit
+  br i1 %i.au, label %bb.h, label %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit
 
 bb.h:                                             ; preds = %.epil.preheader
   %i.av = load ptr, ptr %i.g, align 8, !tbaa !176
@@ -299,12 +295,17 @@ bb.h:                                             ; preds = %.epil.preheader
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !78
   %i.ay = add i64 %i.ax, 1
   store i64 %i.ay, ptr %i.aw, align 8, !tbaa !78
+  br label %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit
+
+_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit: ; preds = %.epil.preheader, %bb.h, %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit.unr-lcssa
+  %.pre = load i64, ptr %i.j, align 8, !tbaa !351, !noalias !1147
   br label %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit
 
-_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit: ; preds = %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit.unr-lcssa, %bb.h, %.epil.preheader, %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.i
+_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit: ; preds = %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit, %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.i
+  %9 = phi i64 [ %.pre, %_ZZN7xgboost6common14CalcColumnSizeINS_4data17DenseAdapterBatchERNS2_14IsValidFunctorEEESt6vectorImSaImEERKT_jmOT0_ENKUlmE_clEm.exit.loopexit ], [ 0, %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.i ]
   %i.az = add nuw i64 %.049106, 1                 ; 2 uses
   %exitcond137.not = icmp eq i64 %i.az, %0
-  br i1 %exitcond137.not, label %.loopexit, label %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.ithread-pre-split, !llvm.loop !1138
+  br i1 %exitcond137.not, label %.loopexit, label %_ZNSt6vectorIS_ImSaImEESaIS1_EE2atEm.exit.i, !llvm.loop !1138
 
 bb.i:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15

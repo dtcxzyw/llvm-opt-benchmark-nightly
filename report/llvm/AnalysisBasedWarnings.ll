@@ -205,10 +205,11 @@ _ZN4llvm9BitVectorC2Ejb.exit.i:                   ; preds = %_ZN4llvm9BitVectorC
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !905 ; 2 uses
   %.not38.i = icmp eq ptr %i.ab, %i.ad
+  %.pre43.i = load ptr, ptr %3, align 8, !tbaa !760 ; 2 uses
   br i1 %.not38.i, label %._crit_edge.i, label %.lr.ph40.i
 
 ._crit_edge.i:                                    ; preds = %.loopexit.i, %_ZN4llvm9BitVectorC2Ejb.exit.i
-  %5 = load ptr, ptr %3, align 8, !tbaa !760      ; 2 uses
+  %5 = phi ptr [ %.pre43.i, %_ZN4llvm9BitVectorC2Ejb.exit.i ], [ %7, %.loopexit.i ] ; 2 uses
   %i.ae = icmp eq ptr %5, %i.s
   br i1 %i.ae, label %_ZL20visitReachableThrowsPN5clang3CFGEN4llvm12function_refIFvPKNS_12CXXThrowExprERNS_8CFGBlockEEEE.exit, label %bb.d
 
@@ -217,13 +218,13 @@ bb.d:                                             ; preds = %._crit_edge.i
   br label %_ZL20visitReachableThrowsPN5clang3CFGEN4llvm12function_refIFvPKNS_12CXXThrowExprERNS_8CFGBlockEEEE.exit
 
 .lr.ph40.i:                                       ; preds = %_ZN4llvm9BitVectorC2Ejb.exit.i, %.loopexit.i
+  %6 = phi ptr [ %7, %.loopexit.i ], [ %.pre43.i, %_ZN4llvm9BitVectorC2Ejb.exit.i ] ; 3 uses
   %.039.i = phi ptr [ %i.bg, %.loopexit.i ], [ %i.ab, %_ZN4llvm9BitVectorC2Ejb.exit.i ] ; 2 uses
   %i.af = load ptr, ptr %.039.i, align 8, !tbaa !906 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 48
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !916 ; 2 uses
   %i.ai = lshr i32 %i.ah, 6
   %i.aj = zext nneg i32 %i.ai to i64
-  %6 = load ptr, ptr %3, align 8, !tbaa !760
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.aj
   %i.al = and i32 %i.ah, 63
   %i.am = load i64, ptr %i.ak, align 8, !tbaa !826
@@ -270,9 +271,14 @@ bb.g:                                             ; preds = %bb.f
 
 _ZNK5clang10CFGElement5getAsINS_7CFGStmtEEESt8optionalIT_Ev.exit.i: ; preds = %bb.g, %bb.f, %.lr.ph.i
   %.not32.i = icmp eq ptr %i.at, %i.as
-  br i1 %.not32.i, label %.loopexit.i, label %.lr.ph.i
+  br i1 %.not32.i, label %.loopexit.loopexit.i, label %.lr.ph.i
 
-.loopexit.i:                                      ; preds = %_ZNK5clang10CFGElement5getAsINS_7CFGStmtEEESt8optionalIT_Ev.exit.i, %bb.e, %.lr.ph40.i
+.loopexit.loopexit.i:                             ; preds = %_ZNK5clang10CFGElement5getAsINS_7CFGStmtEEESt8optionalIT_Ev.exit.i
+  %.pre.i = load ptr, ptr %3, align 8, !tbaa !760
+  br label %.loopexit.i
+
+.loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %bb.e, %.lr.ph40.i
+  %7 = phi ptr [ %.pre.i, %.loopexit.loopexit.i ], [ %6, %bb.e ], [ %6, %.lr.ph40.i ] ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.039.i, i64 8 ; 2 uses
   %.not.i = icmp eq ptr %i.bg, %i.ad
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph40.i

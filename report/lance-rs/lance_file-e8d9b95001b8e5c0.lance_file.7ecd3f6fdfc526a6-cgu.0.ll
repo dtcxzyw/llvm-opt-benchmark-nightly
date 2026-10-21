@@ -205,7 +205,7 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsaSXGK
 
 bb.o:                                             ; preds = %.lr.ph, %_RNvMs18_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB6_5EntrylINtNtCscI6d9CVNmLh_4core6option6OptionjEE9or_insertCsaSXGKSfiU2E_10lance_file.exit
   %i.cl = phi ptr [ %i.ax, %.lr.ph ], [ %i.jb, %_RNvMs18_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB6_5EntrylINtNtCscI6d9CVNmLh_4core6option6OptionjEE9or_insertCsaSXGKSfiU2E_10lance_file.exit ] ; 2 uses
-  %i.cm = phi i64 [ 0, %.lr.ph ], [ %i.jd, %_RNvMs18_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB6_5EntrylINtNtCscI6d9CVNmLh_4core6option6OptionjEE9or_insertCsaSXGKSfiU2E_10lance_file.exit ] ; 10 uses
+  %i.cm = phi i64 [ 0, %.lr.ph ], [ %i.jd, %_RNvMs18_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB6_5EntrylINtNtCscI6d9CVNmLh_4core6option6OptionjEE9or_insertCsaSXGKSfiU2E_10lance_file.exit ] ; 11 uses
   %i.cn = phi ptr [ %.sroa.0.0.i.i, %.lr.ph ], [ %i.lr, %_RNvMs18_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB6_5EntrylINtNtCscI6d9CVNmLh_4core6option6OptionjEE9or_insertCsaSXGKSfiU2E_10lance_file.exit ] ; 2 uses
   %i.co = phi i64 [ %.sroa.6.0.i.i, %.lr.ph ], [ %i.ls, %_RNvMs18_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB6_5EntrylINtNtCscI6d9CVNmLh_4core6option6OptionjEE9or_insertCsaSXGKSfiU2E_10lance_file.exit ] ; 2 uses
   %.sroa.0.0515 = phi ptr [ %i.ce, %.lr.ph ], [ %i.cp, %_RNvMs18_NtNtNtCsgczF5crJ4sT_3std11collections4hash3mapINtB6_5EntrylINtNtCscI6d9CVNmLh_4core6option6OptionjEE9or_insertCsaSXGKSfiU2E_10lance_file.exit ] ; 6 uses
@@ -464,6 +464,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.
 _RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.prol.loopexit
   %.lcssa908 = phi i64 [ %.lcssa908.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ], [ %i.fv, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
   %i.fx = icmp eq i64 %.lcssa908, 0
+  %.val6.i.pre = load i64, ptr %i.l, align 8, !noalias !47019 ; 2 uses
   br i1 %i.fx, label %._crit_edge.i, label %.lr.ph.i
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ai, %bb.ac, %bb.af
@@ -480,16 +481,16 @@ bb.ad:                                            ; preds = %.loopexit.split-lp.
   br label %.thread676
 
 ._crit_edge.i:                                    ; preds = %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i.i, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i
-  %.val6.i = load i64, ptr %i.l, align 8, !noalias !47019 ; 2 uses
+  %.val6.i = phi i64 [ %3, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i ], [ %.val6.i.pre, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit.i ], [ %i.cm, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i.i ] ; 2 uses
   %i.ga = icmp eq i64 %.val6.i, 0
   br i1 %i.ga, label %.loopexit405, label %.loopexit405.loopexit
 
 .lr.ph.i:                                         ; preds = %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit.i, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i
-  %i.gb = phi ptr [ %3, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i ], [ %i.fa, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit.i ] ; 4 uses
+  %2 = phi i64 [ %3, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i ], [ %.val6.i.pre, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit.i ] ; 4 uses
+  %i.gb = phi ptr [ %4, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i ], [ %i.fa, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit.i ] ; 4 uses
   %storemerge38.i = phi i64 [ %.val5.i.i.i.i.i15.i, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i ], [ %.lcssa908, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit.i ] ; 2 uses
   %i.gc = add nsw i64 %storemerge38.i, -1         ; 7 uses
   store i64 %i.gc, ptr %i.cj, align 8, !noalias !47019
-  %2 = load i64, ptr %i.l, align 8, !range !61, !noalias !47019, !noundef !58 ; 3 uses
   %i.gd = icmp samesign ult i64 %i.gc, %2
   call void @llvm.assume(i1 %i.gd)
   %i.ge = icmp samesign ult i64 %storemerge38.i, 1152921504606846977
@@ -540,7 +541,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.
 
 .lr.ph.i.i.i.i.i12.preheader.i:                   ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.thread.i
   %i.gu = phi i64 [ %.pre.i16.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.thread.i ], [ %i.gc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i ] ; 2 uses
-  %i.gv = phi ptr [ %.pre53.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.thread.i ], [ %i.gb, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i ] ; 7 uses
+  %i.gv = phi ptr [ %.pre53.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.thread.i ], [ %i.gb, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i ] ; 6 uses
   %i.gw = add i64 %.idx27.i, -8                   ; 2 uses
   %i.gx = lshr exact i64 %i.gw, 3
   %i.gy = add nuw nsw i64 %i.gx, 1
@@ -566,7 +567,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.
   %.unr968 = phi i64 [ %i.gu, %.lr.ph.i.i.i.i.i12.preheader.i ], [ %i.hc, %.lr.ph.i.i.i.i.i12.i.prol ]
   %.sroa.2.012.i.i.i.i.i13.i.unr = phi ptr [ %i.gq, %.lr.ph.i.i.i.i.i12.preheader.i ], [ %i.ha, %.lr.ph.i.i.i.i.i12.i.prol ]
   %i.hd = icmp ult i64 %i.gw, 24
-  br i1 %i.hd, label %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i, label %.lr.ph.i.i.i.i.i12.i
+  br i1 %i.hd, label %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i.loopexit, label %.lr.ph.i.i.i.i.i12.i
 
 .lr.ph.i.i.i.i.i12.i:                             ; preds = %.lr.ph.i.i.i.i.i12.i.prol.loopexit, %.lr.ph.i.i.i.i.i12.i
   %i.he = phi i64 [ %i.hq, %.lr.ph.i.i.i.i.i12.i ], [ %.unr968, %.lr.ph.i.i.i.i.i12.i.prol.loopexit ] ; 5 uses
@@ -592,11 +593,17 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.
   store i64 %.val8.i.i.i.i.i14.i.3, ptr %i.hp, align 8, !noalias !47026
   %i.hq = add i64 %i.he, 4                        ; 2 uses
   %i.hr = icmp eq ptr %i.gn, %i.hn
-  br i1 %i.hr, label %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i, label %.lr.ph.i.i.i.i.i12.i
+  br i1 %i.hr, label %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i.loopexit, label %.lr.ph.i.i.i.i.i12.i
 
-_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i: ; preds = %.lr.ph.i.i.i.i.i12.i.prol.loopexit, %.lr.ph.i.i.i.i.i12.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i
-  %3 = phi ptr [ %i.gb, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i ], [ %i.gv, %.lr.ph.i.i.i.i.i12.i ], [ %i.gv, %.lr.ph.i.i.i.i.i12.i.prol.loopexit ]
-  %.val5.i.i.i.i.i15.i = phi i64 [ %i.gc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i ], [ %.lcssa909.unr, %.lr.ph.i.i.i.i.i12.i.prol.loopexit ], [ %i.hq, %.lr.ph.i.i.i.i.i12.i ] ; 3 uses
+_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i.loopexit: ; preds = %.lr.ph.i.i.i.i.i12.i, %.lr.ph.i.i.i.i.i12.i.prol.loopexit
+  %.lcssa915 = phi i64 [ %.lcssa909.unr, %.lr.ph.i.i.i.i.i12.i.prol.loopexit ], [ %i.hq, %.lr.ph.i.i.i.i.i12.i ]
+  %.pre = load i64, ptr %i.l, align 8, !noalias !47019
+  br label %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i
+
+_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i: ; preds = %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i.loopexit, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i
+  %3 = phi i64 [ %2, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i ], [ %.pre, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i.loopexit ] ; 2 uses
+  %4 = phi ptr [ %i.gb, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i ], [ %i.gv, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i.loopexit ]
+  %.val5.i.i.i.i.i15.i = phi i64 [ %i.gc, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecjE7reserveCsaSXGKSfiU2E_10lance_file.exit.i11.i ], [ %.lcssa915, %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VecjE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtB13_3rev3RevINtNtNtB17_5slice4iter4IterjEEEECsaSXGKSfiU2E_10lance_file.exit18.i.loopexit ] ; 3 uses
   store i64 %.val5.i.i.i.i.i15.i, ptr %i.cj, align 8, !noalias !47019
   %i.hs = icmp eq i64 %.val5.i.i.i.i.i15.i, 0
   br i1 %i.hs, label %._crit_edge.i, label %.lr.ph.i

@@ -31,15 +31,17 @@ _ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit: ; preds = %bb.a, %bb.b
 
 .preheader.lr.ph:                                 ; preds = %_ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit
   %i.k = icmp sgt i32 %i.g, 0
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   br i1 %i.k, label %.preheader.preheader, label %._crit_edge44.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.m = zext nneg i32 %i.g to i64                ; 2 uses
   %wide.trip.count49 = zext nneg i32 %i.i to i64
+  %.pre51.pre = load ptr, ptr %i.l, align 8, !tbaa !68
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge42
+  %.pre51 = phi ptr [ %.pre51.pre, %.preheader.preheader ], [ %.pre5152, %._crit_edge42 ] ; 2 uses
   %indvars.iv46 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next47, %._crit_edge42 ] ; 2 uses
   %i.n = mul nuw nsw i64 %indvars.iv46, %i.m
   br label %bb.d
@@ -53,7 +55,7 @@ bb.c:                                             ; preds = %._crit_edge44.split
   %i.q = load ptr, ptr %0, align 8, !tbaa !21
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 48
   %i.s = load ptr, ptr %i.r, align 8
-  tail call void %i.s(ptr noundef nonnull align 8 dereferenceable(10) %0, i32 noundef 10) #3, !call_target !68, !inline_history !3
+  tail call void %i.s(ptr noundef nonnull align 8 dereferenceable(10) %0, i32 noundef 10) #3, !call_target !69, !inline_history !3
   br label %_ZN13rcScopedTimerD2Ev.exit
 
 _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %._crit_edge44.split, %bb.c
@@ -65,15 +67,22 @@ _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %._crit_edge44.split
   br i1 %exitcond50.not, label %._crit_edge44.split, label %.preheader
 
 bb.d:                                             ; preds = %.preheader, %._crit_edge
+  %.pre5153 = phi ptr [ %.pre51, %.preheader ], [ %.pre5152, %._crit_edge ]
+  %3 = phi ptr [ %.pre51, %.preheader ], [ %4, %._crit_edge ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %3 = load ptr, ptr %i.l, align 8, !tbaa !69
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.n
   %.034 = load ptr, ptr %i.u, align 8, !tbaa !70  ; 2 uses
   %.not3235 = icmp eq ptr %.034, null
   br i1 %.not3235, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.g, %bb.d
+._crit_edge.loopexit:                             ; preds = %bb.g
+  %.pre = load ptr, ptr %i.l, align 8, !tbaa !68  ; 2 uses
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d
+  %.pre5152 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.pre5153, %bb.d ] ; 2 uses
+  %4 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %3, %bb.d ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.m
   br i1 %exitcond.not, label %._crit_edge42, label %bb.d
@@ -109,7 +118,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %.lr.p
   %i.af = getelementptr inbounds nuw i8, ptr %.039, i64 8
   %.0 = load ptr, ptr %i.af, align 8, !tbaa !70   ; 2 uses
   %.not32 = icmp eq ptr %.0, null
-  br i1 %.not32, label %._crit_edge, label %.lr.ph
+  br i1 %.not32, label %._crit_edge.loopexit, label %.lr.ph
 }
 
 ; Function Attrs: nounwind uwtable
@@ -173,7 +182,7 @@ bb.c:                                             ; preds = %._crit_edge169.spli
   %i.ac = load ptr, ptr %0, align 8, !tbaa !21
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
   %i.ae = load ptr, ptr %i.ad, align 8
-  tail call void %i.ae(ptr noundef nonnull align 8 dereferenceable(10) %0, i32 noundef 7) #3, !call_target !68, !inline_history !3
+  tail call void %i.ae(ptr noundef nonnull align 8 dereferenceable(10) %0, i32 noundef 7) #3, !call_target !69, !inline_history !3
   br label %_ZN13rcScopedTimerD2Ev.exit
 
 _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %._crit_edge169.split, %bb.c
@@ -186,7 +195,7 @@ _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %._crit_edge169.spli
 
 bb.d:                                             ; preds = %.preheader135, %._crit_edge164
   %indvars.iv = phi i64 [ 0, %.preheader135 ], [ %indvars.iv.next, %._crit_edge164 ] ; 7 uses
-  %i.af = load ptr, ptr %i.l, align 8, !tbaa !69
+  %i.af = load ptr, ptr %i.l, align 8, !tbaa !68
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.r
   %.094159 = load ptr, ptr %i.ah, align 8, !tbaa !70 ; 2 uses
@@ -233,7 +242,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %.not202, label %.thread127, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.as = load ptr, ptr %i.l, align 8, !tbaa !69  ; 4 uses
+  %i.as = load ptr, ptr %i.l, align 8, !tbaa !68  ; 4 uses
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.q
   %i.au = getelementptr [8 x i8], ptr %i.at, i64 %indvars.iv
   %i.av = getelementptr i8, ptr %i.au, i64 -8
@@ -577,15 +586,17 @@ _ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit: ; preds = %bb.a, %bb.b
 
 .preheader.lr.ph:                                 ; preds = %_ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit
   %i.k = icmp sgt i32 %i.g, 0
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   br i1 %i.k, label %.preheader.preheader, label %._crit_edge33.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.m = zext nneg i32 %i.g to i64                ; 2 uses
   %wide.trip.count38 = zext nneg i32 %i.i to i64
+  %.pre40.pre = load ptr, ptr %i.l, align 8, !tbaa !68
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge31
+  %.pre40 = phi ptr [ %.pre40.pre, %.preheader.preheader ], [ %.pre4041, %._crit_edge31 ] ; 2 uses
   %indvars.iv35 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next36, %._crit_edge31 ] ; 2 uses
   %i.n = mul nuw nsw i64 %indvars.iv35, %i.m
   br label %bb.d
@@ -599,7 +610,7 @@ bb.c:                                             ; preds = %._crit_edge33.split
   %i.q = load ptr, ptr %0, align 8, !tbaa !21
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 48
   %i.s = load ptr, ptr %i.r, align 8
-  tail call void %i.s(ptr noundef nonnull align 8 dereferenceable(10) %0, i32 noundef 8) #3, !call_target !68, !inline_history !3
+  tail call void %i.s(ptr noundef nonnull align 8 dereferenceable(10) %0, i32 noundef 8) #3, !call_target !69, !inline_history !3
   br label %_ZN13rcScopedTimerD2Ev.exit
 
 _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %._crit_edge33.split, %bb.c
@@ -611,15 +622,22 @@ _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %._crit_edge33.split
   br i1 %exitcond39.not, label %._crit_edge33.split, label %.preheader
 
 bb.d:                                             ; preds = %.preheader, %._crit_edge
+  %.pre4042 = phi ptr [ %.pre40, %.preheader ], [ %.pre4041, %._crit_edge ]
+  %3 = phi ptr [ %.pre40, %.preheader ], [ %4, %._crit_edge ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %3 = load ptr, ptr %i.l, align 8, !tbaa !69
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.n
   %.026 = load ptr, ptr %i.u, align 8, !tbaa !70  ; 2 uses
   %.not27 = icmp eq ptr %.026, null
   br i1 %.not27, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.h, %bb.d
+._crit_edge.loopexit:                             ; preds = %bb.h
+  %.pre = load ptr, ptr %i.l, align 8, !tbaa !68  ; 2 uses
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d
+  %.pre4041 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.pre4042, %bb.d ] ; 2 uses
+  %4 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %3, %bb.d ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.m
   br i1 %exitcond.not, label %._crit_edge31, label %bb.d
@@ -651,7 +669,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  br i1 %.not25, label %._crit_edge, label %.lr.ph
+  br i1 %.not25, label %._crit_edge.loopexit, label %.lr.ph
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -743,8 +761,8 @@ attributes #3 = { nounwind }
 !65 = !{!"_ZTS13rcHeightfield", !12, i64 0, !12, i64 4, !11, i64 8, !11, i64 20, !59, i64 32, !59, i64 36, !62, i64 40, !63, i64 48, !64, i64 56}
 !66 = !{!65, !12, i64 0}
 !67 = !{!65, !12, i64 4}
-!68 = !DISubprogram(name: "doStopTimer", linkageName: "_ZN9rcContext11doStopTimerE12rcTimerLabel", scope: !1, file: !22, line: 180, type: !26, scopeLine: 180, containingType: !1, virtualIndex: 6, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!69 = !{!65, !62, i64 40}
+!68 = !{!65, !62, i64 40}
+!69 = !DISubprogram(name: "doStopTimer", linkageName: "_ZN9rcContext11doStopTimerE12rcTimerLabel", scope: !1, file: !22, line: 180, type: !26, scopeLine: 180, containingType: !1, virtualIndex: 6, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
 !70 = !{!64, !64, i64 0}
 !71 = !{!"_ZTS6rcSpan", !12, i64 0, !12, i64 1, !12, i64 3, !64, i64 8}
 !72 = !{!71, !64, i64 8}

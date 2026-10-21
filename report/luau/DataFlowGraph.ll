@@ -204,14 +204,15 @@ define dso_local void @_ZN4Luau20DataFlowGraphBuilder13visitTypePackEPNS_11AstTy
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %3 = alloca %"class.std::allocator.1", align 1  ; 3 uses
+  %.pre26 = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !26
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %._crit_edge, %bb.a
+  %4 = phi i32 [ %.pre26, %bb.a ], [ %6, %._crit_edge ] ; 2 uses
   %.tr19 = phi ptr [ %1, %bb.a ], [ %.sroa.517.0.copyload, %._crit_edge ] ; 5 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.tr19, i64 8
-  %5 = load i32, ptr %4, align 8, !tbaa !211      ; 3 uses
-  %i.a = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !26
-  %.not = icmp eq i32 %5, %i.a
+  %5 = getelementptr inbounds nuw i8, ptr %.tr19, i64 8
+  %i.a = load i32, ptr %5, align 8, !tbaa !211    ; 3 uses
+  %.not = icmp eq i32 %i.a, %4
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %tailrecurse
@@ -226,7 +227,12 @@ bb.b:                                             ; preds = %tailrecurse
   %.not.i22 = icmp eq i64 %.sroa.4.0.copyload, 0
   br i1 %.not.i22, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.b
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackExplicitEE5valueE, align 4, !tbaa !26
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
+  %6 = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %4, %bb.b ]
   %.not9.i = icmp eq ptr %.sroa.517.0.copyload, null
   br i1 %.not9.i, label %_ZN4Luau20DataFlowGraphBuilder13visitTypeListENS_11AstTypeListE.exit, label %tailrecurse
 
@@ -236,11 +242,11 @@ bb.b:                                             ; preds = %tailrecurse
   tail call void @_ZN4Luau20DataFlowGraphBuilder9visitTypeEPNS_7AstTypeE(ptr noundef nonnull align 8 dereferenceable(336) %0, ptr noundef %i.d), !inline_history !532
   %i.e = getelementptr inbounds nuw i8, ptr %.0.i23, i64 8 ; 2 uses
   %.not.i = icmp eq ptr %i.e, %i.c
-  br i1 %.not.i, label %._crit_edge, label %.lr.ph
+  br i1 %.not.i, label %._crit_edge.loopexit, label %.lr.ph
 
 bb.c:                                             ; preds = %tailrecurse
   %i.f = load i32, ptr @_ZN4Luau7AstRttiINS_19AstTypePackVariadicEE5valueE, align 4, !tbaa !26
-  %.not18 = icmp eq i32 %5, %i.f
+  %.not18 = icmp eq i32 %i.a, %i.f
   br i1 %.not18, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -251,7 +257,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.i = load i32, ptr @_ZN4Luau7AstRttiINS_18AstTypePackGenericEE5valueE, align 4, !tbaa !26
-  %i.j = icmp eq i32 %5, %i.i
+  %i.j = icmp eq i32 %i.a, %i.i
   br i1 %i.j, label %_ZN4Luau20DataFlowGraphBuilder13visitTypeListENS_11AstTypeListE.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

@@ -82,12 +82,13 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %.pre152 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 112), align 8, !tbaa !16
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph133, %.loopexit115
   %i.g = phi i32 [ %i.a, %.lr.ph133 ], [ %i.ek, %.loopexit115 ] ; 2 uses
+  %2 = phi ptr [ %.pre152, %.lr.ph133 ], [ %3, %.loopexit115 ] ; 3 uses
   %indvars.iv146 = phi i64 [ 0, %.lr.ph133 ], [ %indvars.iv.next147, %.loopexit115 ] ; 9 uses
-  %2 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 112), align 8, !tbaa !16
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv146
   %i.i = load i32, ptr %i.h, align 4, !tbaa !7
   %.not108 = icmp eq i32 %i.i, 0
@@ -321,11 +322,13 @@ bb.q:                                             ; preds = %._crit_edge125, %bb
   br i1 %.not109.not, label %.lr.ph129, label %.loopexit115.loopexit
 
 .loopexit115.loopexit:                            ; preds = %bb.q
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 112), align 8, !tbaa !16
   %.pre154 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !15
   br label %.loopexit115
 
 .loopexit115:                                     ; preds = %.loopexit115.loopexit, %bb.c, %bb.b
   %i.ek = phi i32 [ %.pre154, %.loopexit115.loopexit ], [ %i.g, %bb.c ], [ %i.g, %bb.b ] ; 2 uses
+  %3 = phi ptr [ %.pre, %.loopexit115.loopexit ], [ %2, %bb.c ], [ %2, %bb.b ]
   %indvars.iv.next147 = add nuw nsw i64 %indvars.iv146, 1 ; 2 uses
   %i.el = sext i32 %i.ek to i64
   %i.em = icmp slt i64 %indvars.iv.next147, %i.el
@@ -341,13 +344,14 @@ bb.q:                                             ; preds = %._crit_edge125, %bb
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.er = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.es = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %.pre158 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 112), align 8, !tbaa !16
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph140, %.loopexit
   %i.et = phi i32 [ %i.eo, %.lr.ph140 ], [ %i.fr, %.loopexit ] ; 2 uses
+  %4 = phi ptr [ %.pre158, %.lr.ph140 ], [ %5, %.loopexit ] ; 3 uses
   %indvars.iv149 = phi i64 [ 0, %.lr.ph140 ], [ %indvars.iv.next150, %.loopexit ] ; 3 uses
-  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 112), align 8, !tbaa !16
-  %i.eu = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv149
+  %i.eu = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv149
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !7
   %.not105 = icmp eq i32 %i.ev, 0
   br i1 %.not105, label %.loopexit, label %bb.s
@@ -395,11 +399,13 @@ bb.v:                                             ; preds = %.lr.ph137, %bb.u, %
   br i1 %i.fq, label %.lr.ph137, label %.loopexit.loopexit
 
 .loopexit.loopexit:                               ; preds = %bb.v
+  %.pre157 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 112), align 8, !tbaa !16
   %.pre155 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !15
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.s, %bb.r
   %i.fr = phi i32 [ %.pre155, %.loopexit.loopexit ], [ %i.et, %bb.s ], [ %i.et, %bb.r ] ; 2 uses
+  %5 = phi ptr [ %.pre157, %.loopexit.loopexit ], [ %4, %bb.s ], [ %4, %bb.r ]
   %indvars.iv.next150 = add nuw nsw i64 %indvars.iv149, 1 ; 2 uses
   %i.fs = sext i32 %i.fr to i64
   %i.ft = icmp slt i64 %indvars.iv.next150, %i.fs

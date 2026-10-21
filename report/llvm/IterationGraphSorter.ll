@@ -204,10 +204,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.idx137 = shl nuw nsw i64 %i.ai, 3
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.idx137
   %.not77125 = icmp eq i32 %i.ah, 0
+  %.pre140 = load ptr, ptr %10, align 8, !tbaa !12 ; 2 uses
   br i1 %.not77125, label %._crit_edge129, label %.lr.ph128
 
 ._crit_edge129:                                   ; preds = %._crit_edge124, %bb.d
-  %21 = load ptr, ptr %10, align 8, !tbaa !12     ; 2 uses
+  %21 = phi ptr [ %.pre140, %bb.d ], [ %23, %._crit_edge124 ] ; 2 uses
   %i.ak = icmp eq ptr %21, %i.v
   br i1 %i.ak, label %_ZN12_GLOBAL__N_118AffineDimCollectorD2Ev.exit, label %bb.e
 
@@ -230,11 +231,11 @@ _ZN12_GLOBAL__N_118AffineDimCollectorD2Ev.exit86: ; preds = %_ZN12_GLOBAL__N_118
   br label %bb.s
 
 .lr.ph128:                                        ; preds = %bb.d, %._crit_edge124
+  %22 = phi ptr [ %23, %._crit_edge124 ], [ %.pre140, %bb.d ] ; 3 uses
   %.070126 = phi ptr [ %i.ar, %._crit_edge124 ], [ %i.ag, %bb.d ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #12
   %i.an = load i64, ptr %.070126, align 8
   store i64 %i.an, ptr %11, align 8
-  %22 = load ptr, ptr %10, align 8, !tbaa !12     ; 2 uses
   %i.ao = load i32, ptr %i.w, align 8, !tbaa !13  ; 2 uses
   %i.ap = zext i32 %i.ao to i64
   %.idx138 = shl nuw nsw i64 %i.ap, 3
@@ -242,7 +243,12 @@ _ZN12_GLOBAL__N_118AffineDimCollectorD2Ev.exit86: ; preds = %_ZN12_GLOBAL__N_118
   %.not78120 = icmp eq i32 %i.ao, 0
   br i1 %.not78120, label %._crit_edge124, label %.lr.ph123
 
-._crit_edge124:                                   ; preds = %"_ZZN4mlir13sparse_tensor20IterationGraphSorter14addConstraintsENS_5ValueENS_9AffineMapEENK3$_0clEjj.exit", %.lr.ph128
+._crit_edge124.loopexit:                          ; preds = %"_ZZN4mlir13sparse_tensor20IterationGraphSorter14addConstraintsENS_5ValueENS_9AffineMapEENK3$_0clEjj.exit"
+  %.pre = load ptr, ptr %10, align 8, !tbaa !12
+  br label %._crit_edge124
+
+._crit_edge124:                                   ; preds = %._crit_edge124.loopexit, %.lr.ph128
+  %23 = phi ptr [ %.pre, %._crit_edge124.loopexit ], [ %22, %.lr.ph128 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #12
   %i.ar = getelementptr inbounds nuw i8, ptr %.070126, i64 8 ; 2 uses
   %.not77 = icmp eq ptr %i.ar, %i.aj
@@ -286,7 +292,7 @@ bb.g:                                             ; preds = %.lr.ph123
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #12
   %i.bn = getelementptr inbounds nuw i8, ptr %.071121, i64 8 ; 2 uses
   %.not78 = icmp eq ptr %i.bn, %i.aq
-  br i1 %.not78, label %._crit_edge124, label %.lr.ph123
+  br i1 %.not78, label %._crit_edge124.loopexit, label %.lr.ph123
 
 bb.h:                                             ; preds = %bb.c
   store i64 0, ptr %8, align 8, !tbaa !55

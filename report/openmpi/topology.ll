@@ -205,16 +205,17 @@ bb.a:
   br i1 %.not, label %._crit_edge20, label %.lr.ph19
 
 .lr.ph19:                                         ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %.pre26 = load ptr, ptr %i.c, align 8, !tbaa !66
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph19, %bb.c
   %.pre26.a = phi i32 [ %i.b, %.lr.ph19 ], [ %.pre27, %bb.c ] ; 2 uses
   %i.e = phi i32 [ %i.b, %.lr.ph19 ], [ %i.aa, %bb.c ]
+  %1 = phi ptr [ %.pre26, %.lr.ph19 ], [ %3, %bb.c ] ; 3 uses
   %indvars.iv23 = phi i64 [ 0, %.lr.ph19 ], [ %indvars.iv.next24, %bb.c ] ; 5 uses
   %.01416 = phi i32 [ 0, %.lr.ph19 ], [ %.1, %bb.c ] ; 3 uses
-  %1 = load ptr, ptr %i.c, align 8, !tbaa !66
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv23
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !67
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !68
@@ -248,17 +249,20 @@ bb.b:                                             ; preds = %.lr.ph19, %bb.c
   br i1 %i.y, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !182
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.pre = load ptr, ptr %i.c, align 8, !tbaa !66
   %.pre.pre = load i32, ptr %i.a, align 4, !tbaa !107
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
   %.pre.a = phi i32 [ %.pre.pre, %._crit_edge.loopexit ], [ %.pre26.a, %.preheader ] ; 2 uses
+  %2 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %1, %.preheader ]
   %i.z = add i32 %.01416, 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
   %.pre27 = phi i32 [ %.pre.a, %._crit_edge ], [ %.pre26.a, %bb.b ]
   %i.aa = phi i32 [ %.pre.a, %._crit_edge ], [ %i.e, %bb.b ] ; 2 uses
+  %3 = phi ptr [ %2, %._crit_edge ], [ %1, %bb.b ]
   %.1 = phi i32 [ %i.z, %._crit_edge ], [ %.01416, %bb.b ]
   %indvars.iv.next24 = add nuw nsw i64 %indvars.iv23, 1 ; 2 uses
   %i.ab = zext i32 %i.aa to i64

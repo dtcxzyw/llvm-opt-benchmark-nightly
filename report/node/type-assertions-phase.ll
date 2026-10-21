@@ -205,26 +205,28 @@ _ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE12
   br i1 %.not2266, label %._crit_edge, label %.lr.ph67
 
 .lr.ph67:                                         ; preds = %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE12SnapshotData14CommonAncestorEPS7_.exit39
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
+  %.pre84 = load ptr, ptr %i.ap, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph67, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21RevertCurrentSnapshotIKNS2_16NoChangeCallbackEEEvRT_.exit
-  %i.aq = phi ptr [ %i.y, %.lr.ph67 ], [ %i.bb, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21RevertCurrentSnapshotIKNS2_16NoChangeCallbackEEEvRT_.exit ] ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
-  %5 = load i64, ptr %4, align 8                  ; 2 uses
-  %6 = load ptr, ptr %i.ap, align 8               ; 2 uses
-  %i.ar = getelementptr inbounds nuw [56 x i8], ptr %6, i64 %5
-  %i.as = getelementptr inbounds nuw i8, ptr %i.aq, i64 24
+  %i.aq = phi ptr [ %.pre84, %.lr.ph67 ], [ %7, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21RevertCurrentSnapshotIKNS2_16NoChangeCallbackEEEvRT_.exit ] ; 3 uses
+  %4 = phi ptr [ %i.y, %.lr.ph67 ], [ %i.bb, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21RevertCurrentSnapshotIKNS2_16NoChangeCallbackEEEvRT_.exit ] ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %6 = load i64, ptr %5, align 8                  ; 2 uses
+  %i.ar = getelementptr inbounds nuw [56 x i8], ptr %i.aq, i64 %6
+  %i.as = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.at = load i64, ptr %i.as, align 8            ; 2 uses
-  %i.au = icmp samesign eq i64 %i.at, %5
+  %i.au = icmp samesign eq i64 %i.at, %6
   br i1 %i.au, label %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21RevertCurrentSnapshotIKNS2_16NoChangeCallbackEEEvRT_.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.d
-  %i.av = getelementptr inbounds nuw [56 x i8], ptr %6, i64 %i.at
+  %i.av = getelementptr inbounds nuw [56 x i8], ptr %i.aq, i64 %i.at
   br label %.lr.ph.i40
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i40
   %.pre.i = load ptr, ptr %i.x, align 8
+  %.pre = load ptr, ptr %i.ap, align 8
   br label %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21RevertCurrentSnapshotIKNS2_16NoChangeCallbackEEEvRT_.exit
 
 .lr.ph.i40:                                       ; preds = %.lr.ph.i40, %.lr.ph.preheader.i
@@ -237,7 +239,8 @@ bb.d:                                             ; preds = %.lr.ph67, %_ZN2v88i
   br i1 %i.az, label %._crit_edge.loopexit.i, label %.lr.ph.i40
 
 _ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21RevertCurrentSnapshotIKNS2_16NoChangeCallbackEEEvRT_.exit: ; preds = %bb.d, %._crit_edge.loopexit.i
-  %i.ba = phi ptr [ %.pre.i, %._crit_edge.loopexit.i ], [ %i.aq, %bb.d ]
+  %7 = phi ptr [ %.pre, %._crit_edge.loopexit.i ], [ %i.aq, %bb.d ]
+  %i.ba = phi ptr [ %.pre.i, %._crit_edge.loopexit.i ], [ %4, %bb.d ]
   %i.bb = load ptr, ptr %i.ba, align 8            ; 3 uses
   store ptr %i.bb, ptr %i.x, align 8
   %.not22 = icmp eq ptr %i.bb, %.1.lcssa.i34
@@ -250,7 +253,7 @@ _ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 5 uses
   store ptr %i.be, ptr %i.bf, align 8
   %.not2368 = icmp eq ptr %.1, %.1.lcssa.i34
-  br i1 %.not2368, label %._crit_edge76, label %.lr.ph71
+  br i1 %.not2368, label %._crit_edge72.._crit_edge76_crit_edge, label %.lr.ph71
 
 .lr.ph71:                                         ; preds = %._crit_edge
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 336
@@ -260,10 +263,16 @@ _ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE21
   %.pre.a = load ptr, ptr %i.bf, align 8, !noalias !131 ; 2 uses
   %.pre84.a = load ptr, ptr %i.bd, align 8, !noalias !132 ; 2 uses
   %i.bh = icmp eq ptr %.pre.a, %.pre84.a
-  br i1 %i.bh, label %._crit_edge76, label %.lr.ph75
+  br i1 %i.bh, label %._crit_edge72.._crit_edge76_crit_edge, label %.lr.ph75
+
+._crit_edge72.._crit_edge76_crit_edge:            ; preds = %._crit_edge, %._crit_edge72
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %.pre89 = load ptr, ptr %.phi.trans.insert, align 8
+  br label %._crit_edge76
 
 .lr.ph75:                                         ; preds = %._crit_edge72
-  %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
+  %.pre88 = load ptr, ptr %i.bi, align 8
   br label %bb.l
 
 bb.e:                                             ; preds = %.lr.ph71, %_ZN2v88internal10ZoneVectorIPNS0_8compiler10turboshaft13SnapshotTableINS3_4TypeENS3_9NoKeyDataEE12SnapshotDataEE9push_backERKS9_.exit
@@ -293,16 +302,15 @@ _ZN2v88internal10ZoneVectorIPNS0_8compiler10turboshaft13SnapshotTableINS3_4TypeE
   %.not23 = icmp eq ptr %i.bu, %.1.lcssa.i34
   br i1 %.not23, label %._crit_edge72, label %bb.e, !llvm.loop !128
 
-._crit_edge76:                                    ; preds = %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit, %._crit_edge, %._crit_edge72
+._crit_edge76:                                    ; preds = %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit, %._crit_edge72.._crit_edge76_crit_edge
+  %8 = phi ptr [ %.pre89, %._crit_edge72.._crit_edge76_crit_edge ], [ %10, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %.1, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 216
-  %7 = load ptr, ptr %i.bv, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.bw = load ptr, ptr %8, align 8
-  %i.bx = ptrtoint ptr %7 to i64
-  %i.by = ptrtoint ptr %i.bw to i64
+  %i.bw = load ptr, ptr %i.bv, align 8
+  %i.bx = ptrtoint ptr %i.bw to i64
+  %i.by = ptrtoint ptr %8 to i64
   %i.bz = sub i64 %i.bx, %i.by
   %i.ca = sdiv exact i64 %i.bz, 56                ; 2 uses
   store i64 %i.ca, ptr %i.b, align 8
@@ -367,12 +375,12 @@ _ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE11
   ret ptr %i.cz
 
 bb.l:                                             ; preds = %.lr.ph75, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit
+  %9 = phi ptr [ %.pre88, %.lr.ph75 ], [ %10, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit ] ; 3 uses
   %.sroa.045.073 = phi ptr [ %.pre.a, %.lr.ph75 ], [ %i.da, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit ]
   %i.da = getelementptr inbounds i8, ptr %.sroa.045.073, i64 -8 ; 3 uses
   %i.db = load ptr, ptr %i.da, align 8            ; 3 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 16
   %i.dd = load i64, ptr %i.dc, align 8            ; 2 uses
-  %9 = load ptr, ptr %i.bi, align 8               ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.db, i64 24
   %i.df = load i64, ptr %i.de, align 8            ; 2 uses
   %i.dg = getelementptr inbounds nuw [56 x i8], ptr %9, i64 %i.df
@@ -390,9 +398,14 @@ bb.l:                                             ; preds = %.lr.ph75, %_ZN2v88i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dj, ptr noundef nonnull align 8 dereferenceable(24) %i.di, i64 24, i1 false)
   %i.dk = getelementptr inbounds nuw i8, ptr %.018.i, i64 56 ; 2 uses
   %.not.i44 = icmp eq ptr %i.dk, %i.dg
-  br i1 %.not.i44, label %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit, label %.lr.ph.i43
+  br i1 %.not.i44, label %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit.loopexit, label %.lr.ph.i43
 
-_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit: ; preds = %.lr.ph.i43, %bb.l
+_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit.loopexit: ; preds = %.lr.ph.i43
+  %.pre87 = load ptr, ptr %i.bi, align 8
+  br label %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit
+
+_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit: ; preds = %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit.loopexit, %bb.l
+  %10 = phi ptr [ %.pre87, %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS2_4TypeENS2_9NoKeyDataEE14ReplaySnapshotIKNS2_16NoChangeCallbackEEEvPNS6_12SnapshotDataERT_.exit.loopexit ], [ %9, %bb.l ] ; 2 uses
   store ptr %i.db, ptr %i.x, align 8
   %i.dl = icmp eq ptr %i.da, %.pre84.a
   br i1 %i.dl, label %._crit_edge76, label %bb.l

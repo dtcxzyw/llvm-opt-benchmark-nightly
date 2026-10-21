@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.lr.ph79.i
   %i.er = shl i32 %i.eh, 16
   %i.es = add i32 %i.er, 16777216                 ; 8 uses
   %i.et = zext nneg i32 %spec.store.select.i to i64 ; 2 uses
-  %i.eu = getelementptr [4 x i8], ptr %i.ep, i64 %i.et ; 2 uses
+  %i.eu = getelementptr [4 x i8], ptr %i.ep, i64 %i.et ; 3 uses
   %i.ev = icmp slt i32 %spec.store.select.i, %i.x
   %i.ew = add i32 %i.eh, %i.p
   br i1 %i.ev, label %.lr.ph.split.us.i, label %.lr.ph.split.i
@@ -608,7 +608,7 @@ HUF_fillDTableX2Level2.exit.loopexit.us.i:        ; preds = %HUF_fillDTableX2For
   br i1 %i.eq, label %.lr.ph.split.split.i, label %.loopexit.i
 
 .lr.ph.split.split.i:                             ; preds = %.lr.ph.split.i
-  switch i32 %i.em, label %.preheader.i.i [
+  switch i32 %i.em, label %.preheader.i.preheader.i [
     i32 2, label %.loopexit.i.us69.i.preheader
     i32 4, label %.loopexit.i.us76.i.preheader
   ]
@@ -670,6 +670,10 @@ HUF_fillDTableX2Level2.exit.loopexit.us.i:        ; preds = %HUF_fillDTableX2For
   %.05265.us68.i.unr = phi i32 [ %i.ek, %.loopexit.i.us69.i.preheader ], [ %i.ou, %.loopexit.i.us69.i.prol ]
   %i.ow = icmp eq i32 %i.ef, %.neg310
   br i1 %i.ow, label %.loopexit.i, label %.loopexit.i.us69.i
+
+.preheader.i.preheader.i:                         ; preds = %.lr.ph.split.split.i
+  %.pre88.i = load i32, ptr %i.eu, align 4
+  br label %.preheader.i.i
 
 .loopexit.i.us69.i:                               ; preds = %.loopexit.i.us69.i.prol.loopexit, %.loopexit.i.us69.i
   %.066.us67.i = phi i32 [ %i.ps, %.loopexit.i.us69.i ], [ %.066.us67.i.unr, %.loopexit.i.us69.i.prol.loopexit ] ; 3 uses
@@ -735,9 +739,10 @@ HUF_fillDTableX2Level2.exit.loopexit.us.i:        ; preds = %HUF_fillDTableX2For
   %.not56.us77.i.1 = icmp eq i32 %i.qq, %i.ef
   br i1 %.not56.us77.i.1, label %.loopexit.i, label %.loopexit.i.us76.i, !llvm.loop !64
 
-.preheader.i.i:                                   ; preds = %.lr.ph.split.split.i, %.loopexit.i.i
-  %.066.i = phi i32 [ %i.se, %.loopexit.i.i ], [ %i.ed, %.lr.ph.split.split.i ] ; 2 uses
-  %.05265.i = phi i32 [ %i.sd, %.loopexit.i.i ], [ %i.ek, %.lr.ph.split.split.i ] ; 2 uses
+.preheader.i.i:                                   ; preds = %.loopexit.i.i, %.preheader.i.preheader.i
+  %6 = phi i32 [ %7, %.loopexit.i.i ], [ %.pre88.i, %.preheader.i.preheader.i ] ; 4 uses
+  %.066.i = phi i32 [ %i.se, %.loopexit.i.i ], [ %i.ed, %.preheader.i.preheader.i ] ; 2 uses
+  %.05265.i = phi i32 [ %i.sd, %.loopexit.i.i ], [ %i.ek, %.preheader.i.preheader.i ] ; 2 uses
   %i.qr = sext i32 %.05265.i to i64
   %i.qs = getelementptr [4 x i8], ptr %i.d, i64 %i.qr ; 5 uses
   %i.qt = sext i32 %.066.i to i64
@@ -747,7 +752,6 @@ HUF_fillDTableX2Level2.exit.loopexit.us.i:        ; preds = %HUF_fillDTableX2For
   %i.qx = or disjoint i32 %i.es, %i.qw
   %i.qy = zext i32 %i.qx to i64
   %i.qz = mul nuw i64 %i.qy, 4294967297           ; 20 uses
-  %6 = load i32, ptr %i.eu, align 4               ; 3 uses
   %i.ra = icmp sgt i32 %6, 0
   br i1 %i.ra, label %.lr.ph.preheader.i.i, label %.loopexit.i.i
 
@@ -809,7 +813,7 @@ HUF_fillDTableX2Level2.exit.loopexit.us.i:        ; preds = %HUF_fillDTableX2For
 
 .loopexit.i.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i.i
   %lcmp.mod266.not = icmp eq i64 %xtraiter264, 0
-  br i1 %lcmp.mod266.not, label %.loopexit.i.i, label %.lr.ph.i.i.epil.preheader
+  br i1 %lcmp.mod266.not, label %.loopexit.i.loopexit.i, label %.lr.ph.i.i.epil.preheader
 
 .lr.ph.i.i.epil.preheader:                        ; preds = %.loopexit.i.i.loopexit.unr-lcssa, %.lr.ph.preheader.i.i
   %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i.3, %.loopexit.i.i.loopexit.unr-lcssa ]
@@ -831,9 +835,14 @@ HUF_fillDTableX2Level2.exit.loopexit.us.i:        ; preds = %HUF_fillDTableX2For
   %indvars.iv.next.i.i.epil = add nuw nsw i64 %indvars.iv.i.i.epil, 8
   %epil.iter265.next = add i64 %epil.iter265, 1   ; 2 uses
   %epil.iter265.cmp.not = icmp eq i64 %epil.iter265.next, %xtraiter264
-  br i1 %epil.iter265.cmp.not, label %.loopexit.i.i, label %.lr.ph.i.i.epil, !llvm.loop !65
+  br i1 %epil.iter265.cmp.not, label %.loopexit.i.loopexit.i, label %.lr.ph.i.i.epil, !llvm.loop !65
 
-.loopexit.i.i:                                    ; preds = %.loopexit.i.i.loopexit.unr-lcssa, %.lr.ph.i.i.epil, %.preheader.i.i
+.loopexit.i.loopexit.i:                           ; preds = %.lr.ph.i.i.epil, %.loopexit.i.i.loopexit.unr-lcssa
+  %.pre.i = load i32, ptr %i.eu, align 4
+  br label %.loopexit.i.i
+
+.loopexit.i.i:                                    ; preds = %.loopexit.i.loopexit.i, %.preheader.i.i
+  %7 = phi i32 [ %.pre.i, %.loopexit.i.loopexit.i ], [ %6, %.preheader.i.i ]
   %i.sd = add i32 %.05265.i, %i.em
   %i.se = add i32 %.066.i, 1                      ; 2 uses
   %.not56.i = icmp eq i32 %i.se, %i.ef

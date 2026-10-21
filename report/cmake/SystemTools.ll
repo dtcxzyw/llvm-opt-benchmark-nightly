@@ -204,20 +204,16 @@ bb.a:
   %i.c = icmp eq i8 %i.b, 0
   br i1 %i.c, label %.loopexit, label %.preheader
 
-.preheaderthread-pre-split:                       ; preds = %._crit_edge
-  %.pr = load i8, ptr %1, align 1, !tbaa !24
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.lr.ph, %.preheaderthread-pre-split
-  %i.d = phi i8 [ %.pr, %.preheaderthread-pre-split ], [ %i.b, %.preheader.lr.ph ] ; 2 uses
-  %.011.promoted = phi i8 [ %i.l, %.preheaderthread-pre-split ], [ %i.a, %.preheader.lr.ph ]
-  %.01120 = phi ptr [ %i.k, %.preheaderthread-pre-split ], [ %0, %.preheader.lr.ph ] ; 2 uses
-  %.not1517 = icmp eq i8 %i.d, 0
+.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
+  %i.d = phi i8 [ %i.l, %._crit_edge ], [ %i.a, %.preheader.lr.ph ]
+  %.011.promoted = phi i8 [ %3, %._crit_edge ], [ %i.b, %.preheader.lr.ph ] ; 2 uses
+  %.01120 = phi ptr [ %i.k, %._crit_edge ], [ %0, %.preheader.lr.ph ] ; 2 uses
+  %.not1517 = icmp eq i8 %.011.promoted, 0
   br i1 %.not1517, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %bb.c
-  %i.e = phi i8 [ %i.h, %bb.c ], [ %.011.promoted, %.preheader ] ; 2 uses
-  %i.f = phi i8 [ %i.j, %bb.c ], [ %i.d, %.preheader ]
+  %i.e = phi i8 [ %i.h, %bb.c ], [ %i.d, %.preheader ] ; 2 uses
+  %i.f = phi i8 [ %i.j, %bb.c ], [ %.011.promoted, %.preheader ]
   %.018 = phi ptr [ %i.i, %bb.c ], [ %1, %.preheader ]
   %i.g = icmp eq i8 %i.e, %i.f
   br i1 %i.g, label %bb.b, label %bb.c
@@ -231,13 +227,18 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %.018, i64 1 ; 2 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !24    ; 2 uses
   %.not15 = icmp eq i8 %i.j, 0
-  br i1 %.not15, label %._crit_edge, label %.lr.ph, !llvm.loop !99
+  br i1 %.not15, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !99
 
-._crit_edge:                                      ; preds = %bb.c, %.preheader
+._crit_edge.loopexit:                             ; preds = %bb.c
+  %.pre = load i8, ptr %1, align 1, !tbaa !24
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
+  %3 = phi i8 [ %.pre, %._crit_edge.loopexit ], [ 0, %.preheader ]
   %i.k = getelementptr inbounds nuw i8, ptr %.01120, i64 1 ; 2 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !24    ; 2 uses
   %.not14 = icmp eq i8 %i.l, 0
-  br i1 %.not14, label %.loopexit, label %.preheaderthread-pre-split, !llvm.loop !100
+  br i1 %.not14, label %.loopexit, label %.preheader, !llvm.loop !100
 
 .loopexit:                                        ; preds = %._crit_edge, %.preheader.lr.ph, %.preheader16, %bb.a
   ret ptr %0
